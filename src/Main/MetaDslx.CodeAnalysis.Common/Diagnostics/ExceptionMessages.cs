@@ -19,5 +19,8 @@ namespace Microsoft.CodeAnalysis
         public const string SpanDoesNotIncludeStartOfLine = "The span does not include the start of a line.";
         public const string SpanDoesNotIncludeEndOfLine = "The span does not include the end of a line.";
 
+        public const string DiagnosticIdCantBeNullOrWhitespace = "A DiagnosticDescriptor must have an Id that is neither null nor an empty string nor a string that only contains white space.";
+        public const string SuppressionIdCantBeNullOrWhitespace = "A SuppressionDescriptor must have an Id that is neither null nor an empty string nor a string that only contains white space.";
+
     }
 }
