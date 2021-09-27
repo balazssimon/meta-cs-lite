@@ -22,6 +22,8 @@
     <Nullable>enable</Nullable>
     <LangVersion>preview</LangVersion>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>CS1573</NoWarn>
+    <NoWarn>CS1591</NoWarn>    
   </PropertyGroup>
 
   <!-- 
@@ -29,7 +31,8 @@
   -->
   <PropertyGroup>
     <!-- Versions used by several individual references below -->
-    <Antlr4RuntimeStandardVersion>4.9.1</Antlr4RuntimeStandardVersion>
+    <SystemCollectionsImmutableVersion>5.0.0</SystemCollectionsImmutableVersion>
+    <SystemReflectionMetadataVersion>5.0.0</SystemReflectionMetadataVersion>
     <MicrosoftDependencyInjectionVersion>5.0.1</MicrosoftDependencyInjectionVersion>
     <MicrosoftBuildVersion>16.8.0</MicrosoftBuildVersion>
     <MicrosoftCodeAnalysisCSharpVersion>3.11.0</MicrosoftCodeAnalysisCSharpVersion>
@@ -37,5 +40,6 @@
     <MicrosoftSourceLinkGitHubVersion>1.0.0</MicrosoftSourceLinkGitHubVersion>
     <MicrosoftNetDskTestVersion>16.6.1</MicrosoftNetDskTestVersion>
     <XUnitVersion>2.4.1</XUnitVersion>
+    <Antlr4RuntimeStandardVersion>4.9.1</Antlr4RuntimeStandardVersion>
   </PropertyGroup>
 </Project>

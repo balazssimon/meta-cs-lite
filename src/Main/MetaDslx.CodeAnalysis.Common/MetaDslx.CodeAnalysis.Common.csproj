@@ -6,4 +6,8 @@
     <RootNamespace>MetaDslx.CodeAnalysis</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="System.Collections.Immutable" Version="$(SystemCollectionsImmutableVersion)" />
+    <PackageReference Include="System.Reflection.Metadata" Version="$(SystemReflectionMetadataVersion)" />
+  </ItemGroup>  
 </Project>
