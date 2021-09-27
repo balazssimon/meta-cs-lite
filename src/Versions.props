@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (c)  Microsoft.  All Rights Reserved.  Licensed under the Apache License, Version 2.0.  See License.txt in the project root for license information. -->
+<Project>
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+  </PropertyGroup>
+  <PropertyGroup>
+    <MajorVersion>0</MajorVersion>
+    <MinorVersion>1</MinorVersion>
+    <PatchVersion>0</PatchVersion>
+    <PreReleaseVersionLabel>0</PreReleaseVersionLabel>
+    <VersionPrefix>$(MajorVersion).$(MinorVersion).$(PatchVersion)</VersionPrefix>
+    <!--
+      By default the assembly version in official builds is "$(MajorVersion).$(MinorVersion).0.0".
+      Keep the setting conditional. The toolset sets the assembly version to 42.42.42.42 if not set explicitly.
+    -->
+    <AssemblyVersion Condition="'$(OfficialBuild)' == 'true' or '$(DotNetUseShippingVersions)' == 'true'">$(MajorVersion).$(MinorVersion).0.0</AssemblyVersion>
+    <BootstrapVersion>0.0.0</BootstrapVersion>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Nullable>enable</Nullable>
+    <LangVersion>preview</LangVersion>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <!-- 
+    Dependency versions
+  -->
+  <PropertyGroup>
+    <!-- Versions used by several individual references below -->
+    <Antlr4RuntimeStandardVersion>4.9.1</Antlr4RuntimeStandardVersion>
+    <MicrosoftDependencyInjectionVersion>5.0.1</MicrosoftDependencyInjectionVersion>
+    <MicrosoftBuildVersion>16.8.0</MicrosoftBuildVersion>
+    <MicrosoftCodeAnalysisCSharpVersion>3.11.0</MicrosoftCodeAnalysisCSharpVersion>
+    <MicrosoftCodeAnalysisAnalyzersVersion>3.3.2</MicrosoftCodeAnalysisAnalyzersVersion>
+    <MicrosoftSourceLinkGitHubVersion>1.0.0</MicrosoftSourceLinkGitHubVersion>
+    <MicrosoftNetDskTestVersion>16.6.1</MicrosoftNetDskTestVersion>
+    <XUnitVersion>2.4.1</XUnitVersion>
+  </PropertyGroup>
+</Project>
