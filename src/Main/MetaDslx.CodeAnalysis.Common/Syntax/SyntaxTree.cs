@@ -10,10 +10,11 @@ using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.Text;
+using MetaDslx.CodeAnalysis.Debugging;
+using MetaDslx.CodeAnalysis.Text;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis
+namespace MetaDslx.CodeAnalysis
 {
     /// <summary>
     /// The parsed representation of a source document.
@@ -334,7 +335,7 @@ namespace Microsoft.CodeAnalysis
         /// <summary>
         /// Gets the checksum + algorithm id to use in the PDB.
         /// </summary>
-        internal Cci.DebugSourceInfo GetDebugSourceInfo()
+        internal DebugSourceInfo GetDebugSourceInfo()
         {
             if (_lazyChecksum.IsDefault)
             {
@@ -348,7 +349,7 @@ namespace Microsoft.CodeAnalysis
 
             // NOTE: If this tree is to be embedded, it's debug source info should have
             // been obtained via EmbeddedText.GetDebugSourceInfo() and not here.
-            return new Cci.DebugSourceInfo(_lazyChecksum, _lazyHashAlgorithm);
+            return new DebugSourceInfo(_lazyChecksum, _lazyHashAlgorithm);
         }
 
         /// <summary>

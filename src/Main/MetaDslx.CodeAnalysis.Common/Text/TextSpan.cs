@@ -6,7 +6,7 @@ using System;
 using System.Runtime.Serialization;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Text
+namespace MetaDslx.CodeAnalysis.Text
 {
     /// <summary>
     /// Immutable abstract representation of a span of text.  For example, in an error diagnostic that reports a

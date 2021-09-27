@@ -8,7 +8,7 @@ using System.IO;
 using System.Text;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Text
+namespace MetaDslx.CodeAnalysis.Text
 {
     internal static class EncodedStringText
     {

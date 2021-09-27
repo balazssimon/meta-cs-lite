@@ -5,7 +5,7 @@
 using System;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Text
+namespace MetaDslx.CodeAnalysis.Text
 {
     /// <summary>
     /// Immutable representation of a line number and position within a SourceText instance.

@@ -4,10 +4,10 @@
 
 using System;
 using System.Globalization;
-using Microsoft.CodeAnalysis.Text;
+using MetaDslx.CodeAnalysis.Text;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis
+namespace MetaDslx.CodeAnalysis
 {
     /// <summary>
     /// Formats <see cref="Diagnostic"/> messages.

@@ -5,7 +5,7 @@
 using System.Diagnostics;
 using System.Text;
 
-namespace Microsoft.CodeAnalysis.PooledObjects
+namespace MetaDslx.CodeAnalysis.PooledObjects
 {
     /// <summary>
     /// The usage is:

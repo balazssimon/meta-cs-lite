@@ -10,11 +10,11 @@ using System.IO.Compression;
 using System.Reflection.Metadata;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.Debugging;
-using Microsoft.CodeAnalysis.Text;
+using MetaDslx.CodeAnalysis.Debugging;
+using MetaDslx.CodeAnalysis.Text;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis
+namespace MetaDslx.CodeAnalysis
 {
     /// <summary>
     /// Represents text to be embedded in a PDB.
@@ -228,7 +228,7 @@ namespace Microsoft.CodeAnalysis
 
             if (length < CompressionThreshold)
             {
-                using (var builder = Cci.PooledBlobBuilder.GetInstance())
+                using (var builder = PooledBlobBuilder.GetInstance())
                 {
                     builder.WriteInt32(0);
                     int bytesWritten = builder.TryWriteBytes(stream, length);
@@ -268,7 +268,7 @@ namespace Microsoft.CodeAnalysis
 
             if (bytes.Count < CompressionThreshold)
             {
-                using (var builder = Cci.PooledBlobBuilder.GetInstance())
+                using (var builder = PooledBlobBuilder.GetInstance())
                 {
                     builder.WriteInt32(0);
                     builder.WriteBytes(bytes.Array, bytes.Offset, bytes.Count);
@@ -341,9 +341,9 @@ namespace Microsoft.CodeAnalysis
             }
         }
 
-        internal Cci.DebugSourceInfo GetDebugSourceInfo()
+        internal DebugSourceInfo GetDebugSourceInfo()
         {
-            return new Cci.DebugSourceInfo(Checksum, ChecksumAlgorithm, Blob);
+            return new DebugSourceInfo(Checksum, ChecksumAlgorithm, Blob);
         }
 
         private sealed class CountingDeflateStream : DeflateStream

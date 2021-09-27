@@ -5,7 +5,7 @@
 using System;
 using System.Diagnostics;
 
-namespace Microsoft.CodeAnalysis.Syntax.InternalSyntax
+namespace MetaDslx.CodeAnalysis.Syntax.InternalSyntax
 {
     public struct SeparatedSyntaxList<TNode> : IEquatable<SeparatedSyntaxList<TNode>> where TNode : GreenNode
     {

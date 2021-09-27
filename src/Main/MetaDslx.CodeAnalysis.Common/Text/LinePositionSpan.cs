@@ -5,7 +5,7 @@
 using System;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Text
+namespace MetaDslx.CodeAnalysis.Text
 {
     /// <summary>
     /// Immutable span represented by a pair of line number and index within the line.

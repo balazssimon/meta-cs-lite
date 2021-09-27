@@ -4,9 +4,9 @@
 
 using System.Collections.Generic;
 using System.Diagnostics;
-using Microsoft.CodeAnalysis.Text;
+using MetaDslx.CodeAnalysis.Text;
 
-namespace Microsoft.CodeAnalysis
+namespace MetaDslx.CodeAnalysis
 {
     internal class SyntaxNodeLocationComparer : IComparer<SyntaxNode>
     {

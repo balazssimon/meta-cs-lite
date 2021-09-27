@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Text
+namespace MetaDslx.CodeAnalysis.Text
 {
     /// <summary>
     /// Represents the change to a span of text.

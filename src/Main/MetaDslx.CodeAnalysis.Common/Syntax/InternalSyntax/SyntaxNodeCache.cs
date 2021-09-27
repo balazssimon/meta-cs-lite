@@ -2,7 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using Microsoft.CodeAnalysis.Syntax.InternalSyntax;
+using MetaDslx.CodeAnalysis.Syntax.InternalSyntax;
 
 using System;
 using System.Diagnostics;
@@ -11,7 +11,7 @@ using Roslyn.Utilities;
 #if STATS
 using System.Threading;
 #endif
-namespace Microsoft.CodeAnalysis.Syntax.InternalSyntax
+namespace MetaDslx.CodeAnalysis.Syntax.InternalSyntax
 {
     /// <summary>
     /// Provides caching functionality for green nonterminals with up to 3 children.

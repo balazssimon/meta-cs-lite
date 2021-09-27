@@ -4,9 +4,8 @@
 
 using System;
 using System.ComponentModel;
-using Microsoft.CodeAnalysis.Text;
 
-namespace Microsoft.CodeAnalysis
+namespace MetaDslx.CodeAnalysis
 {
     /// <summary>
     /// Specifies the C# or VB source code kind.

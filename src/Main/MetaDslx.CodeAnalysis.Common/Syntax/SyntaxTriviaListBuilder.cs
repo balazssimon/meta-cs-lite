@@ -6,7 +6,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Microsoft.CodeAnalysis.Syntax
+namespace MetaDslx.CodeAnalysis.Syntax
 {
     internal class SyntaxTriviaListBuilder
     {

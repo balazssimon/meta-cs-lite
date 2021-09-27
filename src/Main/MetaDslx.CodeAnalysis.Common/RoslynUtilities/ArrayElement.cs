@@ -5,7 +5,7 @@
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Microsoft.CodeAnalysis
+namespace MetaDslx.CodeAnalysis
 {
     [DebuggerDisplay("{Value,nq}")]
     public struct ArrayElement<T>

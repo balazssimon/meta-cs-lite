@@ -5,10 +5,10 @@
 #nullable disable
 
 using System;
-using Microsoft.CodeAnalysis.Text;
+using MetaDslx.CodeAnalysis.Text;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Debugging
+namespace MetaDslx.CodeAnalysis.Debugging
 {
     /// <summary>
     /// Hash algorithms supported by the debugger used for source file checksums stored in the PDB.

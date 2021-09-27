@@ -7,7 +7,7 @@ using System.Diagnostics;
 using System.Text;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Text
+namespace MetaDslx.CodeAnalysis.Text
 {
     /// <summary>
     /// Implementation of <see cref="SourceText"/> based on a <see cref="StringBuilder"/> input

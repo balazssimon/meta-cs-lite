@@ -5,7 +5,7 @@
 using System.Diagnostics;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Syntax.InternalSyntax
+namespace MetaDslx.CodeAnalysis.Syntax.InternalSyntax
 {
     internal abstract partial class SyntaxList : GreenNode
     {

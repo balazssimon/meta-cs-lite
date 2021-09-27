@@ -8,7 +8,7 @@ using System.Diagnostics;
 using System.Runtime.Serialization;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Text
+namespace MetaDslx.CodeAnalysis.Text
 {
     /// <summary>
     /// Describes a single change when a particular span is replaced with a new text.

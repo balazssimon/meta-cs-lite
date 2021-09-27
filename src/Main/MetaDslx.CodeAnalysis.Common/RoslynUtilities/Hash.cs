@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
-using Microsoft.CodeAnalysis;
+using MetaDslx.CodeAnalysis;
 
 namespace Roslyn.Utilities
 {

@@ -10,7 +10,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis
+namespace MetaDslx.CodeAnalysis
 {
     public static partial class SyntaxNodeExtensions
     {

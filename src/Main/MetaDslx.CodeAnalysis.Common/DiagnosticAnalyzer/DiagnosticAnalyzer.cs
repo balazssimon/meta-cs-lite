@@ -5,7 +5,7 @@
 using System.Collections.Immutable;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Diagnostics
+namespace MetaDslx.CodeAnalysis.Diagnostics
 {
     /// <summary>
     /// The base type for diagnostic analyzers.

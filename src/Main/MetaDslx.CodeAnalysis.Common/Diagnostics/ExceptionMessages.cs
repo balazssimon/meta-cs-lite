@@ -1,6 +1,6 @@
 using System;
 
-namespace Microsoft.CodeAnalysis
+namespace MetaDslx.CodeAnalysis
 {
     internal static class ExceptionMessages
     {

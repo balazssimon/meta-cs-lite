@@ -4,9 +4,9 @@
 
 using System.Diagnostics;
 using System.Threading;
-using Microsoft.CodeAnalysis.Text;
+using MetaDslx.CodeAnalysis.Text;
 
-namespace Microsoft.CodeAnalysis.Syntax
+namespace MetaDslx.CodeAnalysis.Syntax
 {
     /// <summary>
     /// This is a SyntaxReference implementation that lazily translates the result (SyntaxNode) of the

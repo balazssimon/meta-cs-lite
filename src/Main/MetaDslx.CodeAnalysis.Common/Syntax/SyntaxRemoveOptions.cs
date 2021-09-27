@@ -4,7 +4,7 @@
 
 using System;
 
-namespace Microsoft.CodeAnalysis
+namespace MetaDslx.CodeAnalysis
 {
     [Flags]
     public enum SyntaxRemoveOptions

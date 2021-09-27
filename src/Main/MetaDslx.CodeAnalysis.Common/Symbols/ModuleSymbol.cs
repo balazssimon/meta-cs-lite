@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Microsoft.CodeAnalysis.Symbols
+namespace MetaDslx.CodeAnalysis.Symbols
 {
     public class ModuleSymbol : Symbol
     {

@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Immutable;
 
-namespace Microsoft.CodeAnalysis.Diagnostics
+namespace MetaDslx.CodeAnalysis.Diagnostics
 {
     /// <summary>
     /// The base type for diagnostic suppressors that can programmatically suppress analyzer and/or compiler non-error diagnostics.

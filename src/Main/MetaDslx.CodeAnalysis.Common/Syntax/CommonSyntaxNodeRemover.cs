@@ -4,7 +4,7 @@
 
 using System.Diagnostics;
 
-namespace Microsoft.CodeAnalysis.Syntax
+namespace MetaDslx.CodeAnalysis.Syntax
 {
     internal static class CommonSyntaxNodeRemover
     {

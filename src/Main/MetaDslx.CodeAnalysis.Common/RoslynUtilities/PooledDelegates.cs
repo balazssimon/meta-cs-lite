@@ -4,7 +4,7 @@
 
 using System;
 
-namespace Microsoft.CodeAnalysis.PooledObjects
+namespace MetaDslx.CodeAnalysis.PooledObjects
 {
     /// <summary>
     /// Provides pooled delegate instances to help avoid closure allocations for delegates that require a state argument

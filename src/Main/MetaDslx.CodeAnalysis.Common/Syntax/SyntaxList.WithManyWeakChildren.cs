@@ -5,7 +5,7 @@
 using System;
 using System.Threading;
 
-namespace Microsoft.CodeAnalysis.Syntax
+namespace MetaDslx.CodeAnalysis.Syntax
 {
     internal partial class SyntaxList
     {

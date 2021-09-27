@@ -6,10 +6,10 @@ using System.Collections.Immutable;
 using System;
 using System.Threading.Tasks;
 using Roslyn.Utilities;
-using Microsoft.CodeAnalysis.Text;
+using MetaDslx.CodeAnalysis.Text;
 using System.Diagnostics;
 
-namespace Microsoft.Cci
+namespace MetaDslx.CodeAnalysis.Debugging
 {
     internal sealed class DebugSourceDocument
     {

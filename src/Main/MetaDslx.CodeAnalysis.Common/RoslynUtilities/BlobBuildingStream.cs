@@ -7,8 +7,8 @@ using System.Collections.Immutable;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection.Metadata;
-using Microsoft.CodeAnalysis.PooledObjects;
-using Microsoft.CodeAnalysis;
+using MetaDslx.CodeAnalysis.PooledObjects;
+using MetaDslx.CodeAnalysis;
 
 namespace Roslyn.Utilities
 {

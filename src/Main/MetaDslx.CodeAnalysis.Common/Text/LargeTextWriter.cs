@@ -5,9 +5,9 @@
 using System;
 using System.Collections.Immutable;
 using System.Text;
-using Microsoft.CodeAnalysis.PooledObjects;
+using MetaDslx.CodeAnalysis.PooledObjects;
 
-namespace Microsoft.CodeAnalysis.Text
+namespace MetaDslx.CodeAnalysis.Text
 {
     internal sealed class LargeTextWriter : SourceTextWriter
     {

@@ -4,10 +4,10 @@
 
 using System;
 using System.Reflection.Metadata;
-using Microsoft.CodeAnalysis.PooledObjects;
-using Microsoft.CodeAnalysis;
+using MetaDslx.CodeAnalysis.PooledObjects;
+using MetaDslx.CodeAnalysis;
 
-namespace Microsoft.Cci
+namespace MetaDslx.CodeAnalysis.Debugging
 {
     internal sealed class PooledBlobBuilder : BlobBuilder, IDisposable
     {

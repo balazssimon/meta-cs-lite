@@ -10,7 +10,7 @@ using System.Text;
 using System.Threading;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Text
+namespace MetaDslx.CodeAnalysis.Text
 {
     /// <summary>
     /// Implementation of SourceText based on a <see cref="String"/> input

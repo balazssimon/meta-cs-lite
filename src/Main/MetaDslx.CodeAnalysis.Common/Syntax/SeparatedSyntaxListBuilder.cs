@@ -5,7 +5,7 @@
 using System;
 using System.Diagnostics;
 
-namespace Microsoft.CodeAnalysis.Syntax
+namespace MetaDslx.CodeAnalysis.Syntax
 {
     internal struct SeparatedSyntaxListBuilder<TNode> where TNode : SyntaxNode
     {

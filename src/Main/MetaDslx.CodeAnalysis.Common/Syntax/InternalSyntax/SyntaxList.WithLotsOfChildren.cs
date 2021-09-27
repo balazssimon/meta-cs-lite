@@ -6,7 +6,7 @@ using System;
 using Roslyn.Utilities;
 using System.Diagnostics;
 
-namespace Microsoft.CodeAnalysis.Syntax.InternalSyntax
+namespace MetaDslx.CodeAnalysis.Syntax.InternalSyntax
 {
     internal partial class SyntaxList
     {

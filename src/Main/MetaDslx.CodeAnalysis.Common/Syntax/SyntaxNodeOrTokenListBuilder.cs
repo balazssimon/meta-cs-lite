@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Syntax
+namespace MetaDslx.CodeAnalysis.Syntax
 {
     internal class SyntaxNodeOrTokenListBuilder
     {

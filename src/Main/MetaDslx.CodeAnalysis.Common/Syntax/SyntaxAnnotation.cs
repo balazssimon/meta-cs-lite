@@ -6,7 +6,7 @@ using System;
 using System.Diagnostics;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis
+namespace MetaDslx.CodeAnalysis
 {
     /// <summary>
     /// A SyntaxAnnotation is used to annotate syntax elements with additional information. 

@@ -20,7 +20,7 @@ using System.Threading;
 using System.Runtime.CompilerServices;
 #endif
 
-namespace Microsoft.CodeAnalysis.PooledObjects
+namespace MetaDslx.CodeAnalysis.PooledObjects
 {
 #if NET20
     internal delegate TReturn Func<TArg, TReturn>(TArg arg);

@@ -12,7 +12,7 @@ using System.Text;
 using System.Threading;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Text
+namespace MetaDslx.CodeAnalysis.Text
 {
     internal class StringTextWriter : SourceTextWriter
     {
