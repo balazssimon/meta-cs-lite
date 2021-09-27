@@ -15,6 +15,8 @@ namespace Microsoft.CodeAnalysis
     /// </summary>
     public sealed class DiagnosticDescriptor : IEquatable<DiagnosticDescriptor?>
     {
+        internal const string CompilerCategory = "Compiler";
+
         /// <summary>
         /// An unique identifier for the diagnostic.
         /// </summary>
@@ -130,6 +132,16 @@ namespace Microsoft.CodeAnalysis
             this.Description = description ?? string.Empty;
             this.HelpLinkUri = helpLinkUri ?? string.Empty;
             this.CustomTags = customTags;
+        }
+
+        public static DiagnosticDescriptor CompilerError(string id, string title, string messageFormat)
+        {
+            return new DiagnosticDescriptor(id, title, messageFormat, CompilerCategory, DiagnosticSeverity.Error, true);
+        }
+
+        public static DiagnosticDescriptor CompilerWarning(string id, string title, string messageFormat)
+        {
+            return new DiagnosticDescriptor(id, title, messageFormat, CompilerCategory, DiagnosticSeverity.Warning, true);
         }
 
         public bool Equals(DiagnosticDescriptor? other)

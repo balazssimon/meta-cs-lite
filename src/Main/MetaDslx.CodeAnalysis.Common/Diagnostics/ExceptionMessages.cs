@@ -22,5 +22,15 @@ namespace Microsoft.CodeAnalysis
         public const string DiagnosticIdCantBeNullOrWhitespace = "A DiagnosticDescriptor must have an Id that is neither null nor an empty string nor a string that only contains white space.";
         public const string SuppressionIdCantBeNullOrWhitespace = "A SuppressionDescriptor must have an Id that is neither null nor an empty string nor a string that only contains white space.";
 
+        public const string ReferenceResolverShouldReturnReadableNonNullStream = "Reference resolver should return readable non-null stream.";
+
+        public const string SourceTextCannotBeEmbedded = "SourceText cannot be embedded. Provide encoding or canBeEmbedded=true at construction.";
+
+        public const string ArgumentCannotBeEmpty = "Argument cannot be empty.";
+
+        public const string SeparatorIsExpected = "separator is expected";
+        public const string ElementIsExpected = "element is expected";
+
+        public const string InvalidNodeToTrack = "Node to track is not a descendant of the root.";
     }
 }

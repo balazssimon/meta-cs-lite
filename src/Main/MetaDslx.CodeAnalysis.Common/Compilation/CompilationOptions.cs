@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Microsoft.CodeAnalysis
 {
-    public class  CompilationOptions
+    public class CompilationOptions
     {
         public ReportDiagnostic GetEffectiveSeverity(DiagnosticDescriptor descriptor)
         {

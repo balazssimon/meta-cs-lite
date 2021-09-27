@@ -33,6 +33,7 @@
     <!-- Versions used by several individual references below -->
     <SystemCollectionsImmutableVersion>5.0.0</SystemCollectionsImmutableVersion>
     <SystemReflectionMetadataVersion>5.0.0</SystemReflectionMetadataVersion>
+    <SystemTextEncodingCodePagesVersion>4.5.1</SystemTextEncodingCodePagesVersion>
     <MicrosoftDependencyInjectionVersion>5.0.1</MicrosoftDependencyInjectionVersion>
     <MicrosoftBuildVersion>16.8.0</MicrosoftBuildVersion>
     <MicrosoftCodeAnalysisCSharpVersion>3.11.0</MicrosoftCodeAnalysisCSharpVersion>
