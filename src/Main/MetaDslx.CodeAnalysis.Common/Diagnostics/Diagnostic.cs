@@ -166,6 +166,11 @@ namespace MetaDslx.CodeAnalysis
             return new DiagnosticWithInfo(info, Location.None);
         }
 
+        internal static Diagnostic Create(DiagnosticInfo info, Location location)
+        {
+            return new DiagnosticWithInfo(info, location);
+        }
+
         /// <summary>
         /// Gets the diagnostic descriptor, which provides a description about a <see cref="Diagnostic"/>.
         /// </summary>

@@ -54,7 +54,7 @@ namespace MetaDslx.CodeAnalysis
         /// <summary>
         /// Gets the source language ("C#" or "Visual Basic").
         /// </summary>
-        public abstract string Language { get; }
+        public abstract Language Language { get; }
 
         /// <summary>
         /// Errors collection related to an incompatible set of parse options
@@ -124,7 +124,7 @@ namespace MetaDslx.CodeAnalysis
         /// <summary>
         /// Names of defined preprocessor symbols.
         /// </summary>
-        public abstract IEnumerable<string> PreprocessorSymbolNames { get; }
+        public abstract IEnumerable<string> PreprocessorSymbols { get; }
 
         public abstract override bool Equals(object? obj);
 
@@ -139,7 +139,7 @@ namespace MetaDslx.CodeAnalysis
                 this.SpecifiedKind == other.SpecifiedKind &&
                 this.DocumentationMode == other.DocumentationMode &&
                 this.Features.SequenceEqual(other.Features) &&
-                (this.PreprocessorSymbolNames == null ? other.PreprocessorSymbolNames == null : this.PreprocessorSymbolNames.SequenceEqual(other.PreprocessorSymbolNames, StringComparer.Ordinal));
+                (this.PreprocessorSymbols == null ? other.PreprocessorSymbols == null : this.PreprocessorSymbols.SequenceEqual(other.PreprocessorSymbols, StringComparer.Ordinal));
         }
 
         public abstract override int GetHashCode();
@@ -150,7 +150,7 @@ namespace MetaDslx.CodeAnalysis
                 Hash.Combine((int)this.SpecifiedKind,
                 Hash.Combine((int)this.DocumentationMode,
                 Hash.Combine(HashFeatures(this.Features),
-                Hash.Combine(Hash.CombineValues(this.PreprocessorSymbolNames, StringComparer.Ordinal), 0))));
+                Hash.Combine(Hash.CombineValues(this.PreprocessorSymbols, StringComparer.Ordinal), 0))));
         }
 
         private static int HashFeatures(IReadOnlyDictionary<string, string> features)

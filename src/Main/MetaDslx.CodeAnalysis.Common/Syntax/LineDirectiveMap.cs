@@ -1,136 +1,157 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
+﻿// Copyright (c) Microsoft.  All Rights Reserved.  Licensed under the Apache License, Version 2.0.  See License.txt in the project root for license information.
 
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
+using Microsoft.CodeAnalysis;
 using MetaDslx.CodeAnalysis.Text;
 using Roslyn.Utilities;
 
-namespace MetaDslx.CodeAnalysis
+namespace MetaDslx.CodeAnalysis.Syntax
 {
     /// <summary>
-    /// The LineDirectiveMap is created to enable translating positions, using the #line directives
-    /// in a file. The basic implementation creates an ordered array of line mapping entries, one
-    /// for each #line directive in the file (plus one at the beginning). If the file has no
-    /// directives, then the array has just one element in it. To map line numbers, a binary search
-    /// of the mapping entries is done and nearest line mapping is applied.
+    /// Adds C# specific parts to the line directive map.
     /// </summary>
-    internal abstract partial class LineDirectiveMap<TDirective>
-        where TDirective : SyntaxNode
+    internal class LineDirectiveMap : LineDirectiveMap<SyntaxNode>
     {
-        protected readonly LineMappingEntry[] Entries;
+        public LineDirectiveMap(SyntaxTree syntaxTree)
+            : base(syntaxTree)
+        {
+        }
 
-        // Get all active #line directives under trivia into the list, in source code order.
-        protected abstract bool ShouldAddDirective(TDirective directive);
+        // Add all active #line directives under trivia into the list, in source code order.
+        protected override bool ShouldAddDirective(SyntaxNode directiveNode)
+        {
+            var directive = (directiveNode as IDirectiveTriviaSyntax)?.Directive;
+            if (directive == null) return false;
+            return directive.IsActive && directive.Kind == DirectiveKind.Line;
+        }
 
         // Given a directive and the previous entry, create a new entry.
-        protected abstract LineMappingEntry GetEntry(TDirective directive, SourceText sourceText, LineMappingEntry previous);
-
-        // Creates the first entry with language specific content
-        protected abstract LineMappingEntry InitializeFirstEntry();
-
-        protected LineDirectiveMap(SyntaxTree syntaxTree)
+        protected override LineMappingEntry GetEntry(SyntaxNode directiveNode, SourceText sourceText, LineMappingEntry previous)
         {
-            // Accumulate all the directives, in source code order
-            var syntaxRoot = (SyntaxNodeOrToken)syntaxTree.GetRoot();
-            IList<TDirective> directives = syntaxRoot.GetDirectives<TDirective>(filter: ShouldAddDirective);
-            Debug.Assert(directives != null);
+            Debug.Assert(ShouldAddDirective(directiveNode));
+            var directive = (directiveNode as IDirectiveTriviaSyntax)?.Directive as LineDirective;
 
-            // Create the entry map.
-            this.Entries = CreateEntryMap(syntaxTree, directives);
-        }
+            // Get line number of NEXT line, hence the +1.
+            var directiveLineNumber = sourceText.Lines.IndexOf(directiveNode.SpanStart) + 1;
 
-        // Given a span and a default file name, return a FileLinePositionSpan that is the mapped
-        // span, taking into account line directives.
-        public FileLinePositionSpan TranslateSpan(SourceText sourceText, string treeFilePath, TextSpan span)
-        {
-            var unmappedStartPos = sourceText.Lines.GetLinePosition(span.Start);
-            var unmappedEndPos = sourceText.Lines.GetLinePosition(span.End);
-            var entry = FindEntry(unmappedStartPos.Line);
+            // The default for the current entry does the same thing as the previous entry, except
+            // resetting hidden.
+            var unmappedLine = directiveLineNumber;
+            var mappedLine = previous.MappedLine + directiveLineNumber - previous.UnmappedLine;
+            var mappedPathOpt = previous.MappedPathOpt;
+            PositionState state = PositionState.Unmapped;
 
-            return TranslateSpan(entry, treeFilePath, unmappedStartPos, unmappedEndPos);
-        }
-
-        protected FileLinePositionSpan TranslateSpan(LineMappingEntry entry, string treeFilePath, LinePosition unmappedStartPos, LinePosition unmappedEndPos)
-        {
-            string path = entry.MappedPathOpt ?? treeFilePath;
-            int mappedStartLine = unmappedStartPos.Line - entry.UnmappedLine + entry.MappedLine;
-            int mappedEndLine = unmappedEndPos.Line - entry.UnmappedLine + entry.MappedLine;
-
-            return new FileLinePositionSpan(
-                path,
-                new LinePositionSpan(
-                    (mappedStartLine == -1) ? new LinePosition(unmappedStartPos.Character) : new LinePosition(mappedStartLine, unmappedStartPos.Character),
-                    (mappedEndLine == -1) ? new LinePosition(unmappedEndPos.Character) : new LinePosition(mappedEndLine, unmappedEndPos.Character)),
-                hasMappedPath: entry.MappedPathOpt != null);
-        }
-
-        /// <summary>
-        /// Determines whether the position is considered to be hidden from the debugger or not.
-        /// </summary>
-        public abstract LineVisibility GetLineVisibility(SourceText sourceText, int position);
-
-        /// <summary>
-        /// Combines TranslateSpan and IsHiddenPosition to not search the entries twice when emitting sequence points
-        /// </summary>
-        internal abstract FileLinePositionSpan TranslateSpanAndVisibility(SourceText sourceText, string treeFilePath, TextSpan span, out bool isHiddenPosition);
-
-        /// <summary>
-        /// Are there any hidden regions in the map?
-        /// </summary>
-        /// <returns>True if there's at least one hidden region in the map.</returns>
-        public bool HasAnyHiddenRegions()
-        {
-            return this.Entries.Any(e => e.State == PositionState.Hidden);
-        }
-
-        // Find the line mapped entry with the largest unmapped line number <= lineNumber.
-        protected LineMappingEntry FindEntry(int lineNumber)
-        {
-            int r = FindEntryIndex(lineNumber);
-
-            return this.Entries[r];
-        }
-
-        // Find the index of the line mapped entry with the largest unmapped line number <= lineNumber.
-        protected int FindEntryIndex(int lineNumber)
-        {
-            int r = Array.BinarySearch(this.Entries, new LineMappingEntry(lineNumber));
-            return r >= 0 ? r : ((~r) - 1);
-        }
-
-        // Given the ordered list of all directives in the file, return the ordered line mapping
-        // entry for the file. This always starts with the null mapped that maps line 0 to line 0.
-        private LineMappingEntry[] CreateEntryMap(SyntaxTree tree, IList<TDirective> directives)
-        {
-            var entries = new LineMappingEntry[directives.Count + 1];
-            var current = InitializeFirstEntry();
-            var index = 0;
-            entries[index] = current;
-
-            if (directives.Count > 0)
+            // Modify the current entry based on the directive.
+            if (directive is not null)
             {
-                var sourceText = tree.GetText();
-                foreach (var directive in directives)
+                switch (directive.LineKind)
                 {
-                    current = GetEntry(directive, sourceText, current);
-                    ++index;
-                    entries[index] = current;
+                    case LineDirectiveKind.Hidden:
+                        state = PositionState.Hidden;
+                        break;
+
+                    case LineDirectiveKind.Default:
+                        mappedLine = unmappedLine;
+                        mappedPathOpt = null;
+                        state = PositionState.Unmapped;
+                        break;
+
+                    case LineDirectiveKind.Number:
+                        // skip both the mapped line and the filename if the line number is not valid
+                        if (!directiveNode.ContainsDiagnostics)
+                        {
+                            // convert one-based line number into zero-based line number
+                            mappedLine = directive.Line - 1;
+                            mappedPathOpt = directive.File;
+                            state = PositionState.Remapped;
+                        }
+                        break;
                 }
             }
+            return new LineMappingEntry(
+                unmappedLine,
+                mappedLine,
+                mappedPathOpt,
+                state);
+        }
 
-#if DEBUG
-            // Make sure the entries array is correctly sorted. 
-            for (int i = 0; i < entries.Length - 1; ++i)
+        protected override LineMappingEntry InitializeFirstEntry()
+        {
+            // The first entry of the map is always 0,0,null,Unmapped -- the default mapping.
+            return new LineMappingEntry(0, 0, null, PositionState.Unmapped);
+        }
+
+        public override LineVisibility GetLineVisibility(SourceText sourceText, int position)
+        {
+            var unmappedPos = sourceText.Lines.GetLinePosition(position);
+
+            // if there's only one entry (which is created as default for each file), all lines
+            // are treated as being visible
+            if (Entries.Length == 1)
             {
-                Debug.Assert(entries[i].CompareTo(entries[i + 1]) < 0);
+                Debug.Assert(Entries[0].State == PositionState.Unmapped);
+                return LineVisibility.Visible;
             }
-#endif
 
-            return entries;
+            var index = FindEntryIndex(unmappedPos.Line);
+            var entry = Entries[index];
+
+            // the state should not be set to the ones used for VB only.
+            Debug.Assert(entry.State != PositionState.Unknown &&
+                         entry.State != PositionState.RemappedAfterHidden &&
+                         entry.State != PositionState.RemappedAfterUnknown);
+
+            switch (entry.State)
+            {
+                case PositionState.Unmapped:
+                    if (index == 0)
+                    {
+                        return LineVisibility.BeforeFirstLineDirective;
+                    }
+                    else
+                    {
+                        return LineVisibility.Visible;
+                    }
+
+                case PositionState.Remapped:
+                    return LineVisibility.Visible;
+
+                case PositionState.Hidden:
+                    return LineVisibility.Hidden;
+
+                default:
+                    throw ExceptionUtilities.UnexpectedValue(entry.State);
+            }
+        }
+
+        internal override FileLinePositionSpan TranslateSpanAndVisibility(SourceText sourceText, string treeFilePath, TextSpan span, out bool isHiddenPosition)
+        {
+            var lines = sourceText.Lines;
+            var unmappedStartPos = lines.GetLinePosition(span.Start);
+            var unmappedEndPos = lines.GetLinePosition(span.End);
+
+            // most common case is where we have only one mapping entry.
+            if (this.Entries.Length == 1)
+            {
+                Debug.Assert(this.Entries[0].State == PositionState.Unmapped);
+                Debug.Assert(this.Entries[0].MappedLine == this.Entries[0].UnmappedLine);
+                Debug.Assert(this.Entries[0].MappedLine == 0);
+                Debug.Assert(this.Entries[0].MappedPathOpt == null);
+
+                isHiddenPosition = false;
+                return new FileLinePositionSpan(treeFilePath, unmappedStartPos, unmappedEndPos);
+            }
+
+            var entry = FindEntry(unmappedStartPos.Line);
+
+            // the state should not be set to the ones used for VB only.
+            Debug.Assert(entry.State != PositionState.Unknown &&
+                            entry.State != PositionState.RemappedAfterHidden &&
+                            entry.State != PositionState.RemappedAfterUnknown);
+
+            isHiddenPosition = entry.State == PositionState.Hidden;
+
+            return TranslateSpan(entry, treeFilePath, unmappedStartPos, unmappedEndPos);
         }
     }
 }
