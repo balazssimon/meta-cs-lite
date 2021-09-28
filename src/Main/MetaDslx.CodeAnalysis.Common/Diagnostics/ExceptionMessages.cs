@@ -32,5 +32,11 @@ namespace MetaDslx.CodeAnalysis
         public const string ElementIsExpected = "element is expected";
 
         public const string InvalidNodeToTrack = "Node to track is not a descendant of the root.";
+
+        public const string MissingListItem = "The item specified is not the element of a list.";
+        public const string NodeOrTokenOutOfSequence = "A node or token is out of sequence.";
+        public const string UnexpectedTypeOfNodeInList = "A node in the list is not of the expected type.";
+
+        public const string SyntaxTreeIsNotASubmission = "Syntax tree should be created from a submission.";
     }
 }

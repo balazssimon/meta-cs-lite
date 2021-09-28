@@ -27,17 +27,17 @@ namespace MetaDslx.CodeAnalysis
         /// <param name="computeReplacementTrivia">A function that computes replacement trivia for
         /// the specified arguments. The first argument is the original trivia. The second argument is
         /// the same trivia with potentially rewritten sub structure.</param>
-        public static TRoot ReplaceSyntax<TRoot>(
+        public static TRoot? ReplaceSyntax<TRoot>(
             this TRoot root,
             IEnumerable<SyntaxNode> nodes,
-            Func<SyntaxNode, SyntaxNode, SyntaxNode> computeReplacementNode,
+            Func<SyntaxNode, SyntaxNode?, SyntaxNode?> computeReplacementNode,
             IEnumerable<SyntaxToken> tokens,
             Func<SyntaxToken, SyntaxToken, SyntaxToken> computeReplacementToken,
             IEnumerable<SyntaxTrivia> trivia,
             Func<SyntaxTrivia, SyntaxTrivia, SyntaxTrivia> computeReplacementTrivia)
             where TRoot : SyntaxNode
         {
-            return (TRoot)root.ReplaceCore(
+            return (TRoot?)root.ReplaceCore(
                 nodes: nodes, computeReplacementNode: computeReplacementNode,
                 tokens: tokens, computeReplacementToken: computeReplacementToken,
                 trivia: trivia, computeReplacementTrivia: computeReplacementTrivia);
@@ -53,11 +53,11 @@ namespace MetaDslx.CodeAnalysis
         /// <param name="computeReplacementNode">A function that computes a replacement node for the
         /// argument nodes. The first argument is the original node. The second argument is the same
         /// node potentially rewritten with replaced descendants.</param>
-        public static TRoot ReplaceNodes<TRoot, TNode>(this TRoot root, IEnumerable<TNode> nodes, Func<TNode, TNode, SyntaxNode> computeReplacementNode)
+        public static TRoot? ReplaceNodes<TRoot, TNode>(this TRoot root, IEnumerable<TNode> nodes, Func<TNode, TNode?, SyntaxNode?> computeReplacementNode)
             where TRoot : SyntaxNode
             where TNode : SyntaxNode
         {
-            return (TRoot)root.ReplaceCore(nodes: nodes, computeReplacementNode: computeReplacementNode);
+            return (TRoot?)root.ReplaceCore(nodes: nodes, computeReplacementNode: computeReplacementNode);
         }
 
         /// <summary>
@@ -67,7 +67,7 @@ namespace MetaDslx.CodeAnalysis
         /// <param name="root">The root node of the tree of nodes.</param>
         /// <param name="oldNode">The node to be replaced; a descendant of the root node.</param>
         /// <param name="newNode">The new node to use in the new tree in place of the old node.</param>
-        public static TRoot ReplaceNode<TRoot>(this TRoot root, SyntaxNode oldNode, SyntaxNode newNode)
+        public static TRoot? ReplaceNode<TRoot>(this TRoot root, SyntaxNode oldNode, SyntaxNode newNode)
             where TRoot : SyntaxNode
         {
             if (oldNode == newNode)
@@ -75,7 +75,7 @@ namespace MetaDslx.CodeAnalysis
                 return root;
             }
 
-            return (TRoot)root.ReplaceCore(nodes: new[] { oldNode }, computeReplacementNode: (o, r) => newNode);
+            return (TRoot?)root.ReplaceCore(nodes: new[] { oldNode }, computeReplacementNode: (o, r) => newNode);
         }
 
         /// <summary>
@@ -204,10 +204,10 @@ namespace MetaDslx.CodeAnalysis
         /// <param name="computeReplacementToken">A function that computes a replacement token for
         /// the argument tokens. The first argument is the original token. The second argument is
         /// the same token potentially rewritten with replaced trivia.</param>
-        public static TRoot ReplaceTokens<TRoot>(this TRoot root, IEnumerable<SyntaxToken> tokens, Func<SyntaxToken, SyntaxToken, SyntaxToken> computeReplacementToken)
+        public static TRoot? ReplaceTokens<TRoot>(this TRoot root, IEnumerable<SyntaxToken> tokens, Func<SyntaxToken, SyntaxToken, SyntaxToken> computeReplacementToken)
             where TRoot : SyntaxNode
         {
-            return (TRoot)root.ReplaceCore<SyntaxNode>(tokens: tokens, computeReplacementToken: computeReplacementToken);
+            return (TRoot?)root.ReplaceCore<SyntaxNode>(tokens: tokens, computeReplacementToken: computeReplacementToken);
         }
 
         /// <summary>
@@ -218,10 +218,10 @@ namespace MetaDslx.CodeAnalysis
         /// <param name="oldToken">The token to be replaced.</param>
         /// <param name="newToken">The new token to use in the new tree in place of the old
         /// token.</param>
-        public static TRoot ReplaceToken<TRoot>(this TRoot root, SyntaxToken oldToken, SyntaxToken newToken)
+        public static TRoot? ReplaceToken<TRoot>(this TRoot root, SyntaxToken oldToken, SyntaxToken newToken)
             where TRoot : SyntaxNode
         {
-            return (TRoot)root.ReplaceCore<SyntaxNode>(tokens: new[] { oldToken }, computeReplacementToken: (o, r) => newToken);
+            return (TRoot?)root.ReplaceCore<SyntaxNode>(tokens: new[] { oldToken }, computeReplacementToken: (o, r) => newToken);
         }
 
         /// <summary>
@@ -233,10 +233,10 @@ namespace MetaDslx.CodeAnalysis
         /// <param name="computeReplacementTrivia">A function that computes replacement trivia for
         /// the specified arguments. The first argument is the original trivia. The second argument is
         /// the same trivia with potentially rewritten sub structure.</param>
-        public static TRoot ReplaceTrivia<TRoot>(this TRoot root, IEnumerable<SyntaxTrivia> trivia, Func<SyntaxTrivia, SyntaxTrivia, SyntaxTrivia> computeReplacementTrivia)
+        public static TRoot? ReplaceTrivia<TRoot>(this TRoot root, IEnumerable<SyntaxTrivia> trivia, Func<SyntaxTrivia, SyntaxTrivia, SyntaxTrivia> computeReplacementTrivia)
             where TRoot : SyntaxNode
         {
-            return (TRoot)root.ReplaceCore<SyntaxNode>(trivia: trivia, computeReplacementTrivia: computeReplacementTrivia);
+            return (TRoot?)root.ReplaceCore<SyntaxNode>(trivia: trivia, computeReplacementTrivia: computeReplacementTrivia);
         }
 
         /// <summary>
@@ -246,10 +246,10 @@ namespace MetaDslx.CodeAnalysis
         /// <param name="root">The root node of the tree of nodes.</param>
         /// <param name="trivia">The trivia to be replaced.</param>
         /// <param name="newTrivia">The new trivia to use in the new tree in place of the old trivia.</param>
-        public static TRoot ReplaceTrivia<TRoot>(this TRoot root, SyntaxTrivia trivia, SyntaxTrivia newTrivia)
+        public static TRoot? ReplaceTrivia<TRoot>(this TRoot root, SyntaxTrivia trivia, SyntaxTrivia newTrivia)
             where TRoot : SyntaxNode
         {
-            return (TRoot)root.ReplaceCore<SyntaxNode>(trivia: new[] { trivia }, computeReplacementTrivia: (o, r) => newTrivia);
+            return (TRoot?)root.ReplaceCore<SyntaxNode>(trivia: new[] { trivia }, computeReplacementTrivia: (o, r) => newTrivia);
         }
 
         /// <summary>
@@ -349,7 +349,7 @@ namespace MetaDslx.CodeAnalysis
         {
             var first = node.GetFirstToken(includeZeroWidth: true);
             var newFirst = first.WithLeadingTrivia(trivia);
-            return node.ReplaceToken(first, newFirst);
+            return node.ReplaceToken(first, newFirst)!;
         }
 
         /// <summary>
@@ -361,7 +361,7 @@ namespace MetaDslx.CodeAnalysis
         {
             var first = node.GetFirstToken(includeZeroWidth: true);
             var newFirst = first.WithLeadingTrivia(trivia);
-            return node.ReplaceToken(first, newFirst);
+            return node.ReplaceToken(first, newFirst)!;
         }
 
         /// <summary>
@@ -393,7 +393,7 @@ namespace MetaDslx.CodeAnalysis
         {
             var last = node.GetLastToken(includeZeroWidth: true);
             var newLast = last.WithTrailingTrivia(trivia);
-            return node.ReplaceToken(last, newLast);
+            return node.ReplaceToken(last, newLast)!;
         }
 
         /// <summary>
@@ -405,7 +405,7 @@ namespace MetaDslx.CodeAnalysis
         {
             var last = node.GetLastToken(includeZeroWidth: true);
             var newLast = last.WithTrailingTrivia(trivia);
-            return node.ReplaceToken(last, newLast);
+            return node.ReplaceToken(last, newLast)!;
         }
 
         /// <summary>

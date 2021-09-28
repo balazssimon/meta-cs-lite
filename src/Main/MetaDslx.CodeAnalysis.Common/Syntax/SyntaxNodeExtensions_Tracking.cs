@@ -49,7 +49,7 @@ namespace MetaDslx.CodeAnalysis
                 s_nodeToIdMap.GetValue(node, n => new SyntaxAnnotation(IdAnnotationKind));
             }
 
-            return root.ReplaceNodes(nodes, (n, r) => n.HasAnnotation(GetId(n)!) ? r : r.WithAdditionalAnnotations(GetId(n)!));
+            return root.ReplaceNodes(nodes, (n, r) => n.HasAnnotation(GetId(n)!) || r == null ? r : r.WithAdditionalAnnotations(GetId(n)!))!;
         }
 
         /// <summary>

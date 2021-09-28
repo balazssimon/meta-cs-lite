@@ -15,63 +15,24 @@ namespace MetaDslx.CodeAnalysis.Syntax
         {
         }
 
-        public override Language Language
-        {
-            get
-            {
-                throw ExceptionUtilities.Unreachable;
-            }
-        }
+        public override Language Language => this.Parent?.Language ?? Language.NoLanguage;
 
-        // https://github.com/dotnet/roslyn/issues/40733
-        protected override SyntaxTree SyntaxTreeCore => this.Parent!.SyntaxTree;
-
-        protected internal override SyntaxNode ReplaceCore<TNode>(IEnumerable<TNode>? nodes = null, Func<TNode, TNode, SyntaxNode>? computeReplacementNode = null, IEnumerable<SyntaxToken>? tokens = null, Func<SyntaxToken, SyntaxToken, SyntaxToken>? computeReplacementToken = null, IEnumerable<SyntaxTrivia>? trivia = null, Func<SyntaxTrivia, SyntaxTrivia, SyntaxTrivia>? computeReplacementTrivia = null)
+        protected override SyntaxTree CreateSyntaxTreeForRoot()
         {
             throw ExceptionUtilities.Unreachable;
         }
 
-        protected internal override SyntaxNode ReplaceNodeInListCore(SyntaxNode originalNode, IEnumerable<SyntaxNode> replacementNodes)
+        public override TResult Accept<TArg, TResult>(SyntaxVisitor<TArg, TResult> visitor, TArg argument)
         {
             throw ExceptionUtilities.Unreachable;
         }
 
-        protected internal override SyntaxNode InsertNodesInListCore(SyntaxNode nodeInList, IEnumerable<SyntaxNode> nodesToInsert, bool insertBefore)
+        public override TResult Accept<TResult>(SyntaxVisitor<TResult> visitor)
         {
             throw ExceptionUtilities.Unreachable;
         }
 
-        protected internal override SyntaxNode ReplaceTokenInListCore(SyntaxToken originalToken, IEnumerable<SyntaxToken> newTokens)
-        {
-            throw ExceptionUtilities.Unreachable;
-        }
-
-        protected internal override SyntaxNode InsertTokensInListCore(SyntaxToken originalToken, IEnumerable<SyntaxToken> newTokens, bool insertBefore)
-        {
-            throw ExceptionUtilities.Unreachable;
-        }
-
-        protected internal override SyntaxNode ReplaceTriviaInListCore(SyntaxTrivia originalTrivia, IEnumerable<SyntaxTrivia> newTrivia)
-        {
-            throw ExceptionUtilities.Unreachable;
-        }
-
-        protected internal override SyntaxNode InsertTriviaInListCore(SyntaxTrivia originalTrivia, IEnumerable<SyntaxTrivia> newTrivia, bool insertBefore)
-        {
-            throw ExceptionUtilities.Unreachable;
-        }
-
-        protected internal override SyntaxNode RemoveNodesCore(IEnumerable<SyntaxNode> nodes, SyntaxRemoveOptions options)
-        {
-            throw ExceptionUtilities.Unreachable;
-        }
-
-        protected internal override SyntaxNode NormalizeWhitespaceCore(string indentation, string eol, bool elasticTrivia)
-        {
-            throw ExceptionUtilities.Unreachable;
-        }
-
-        protected override bool IsEquivalentToCore(SyntaxNode node, bool topLevel = false)
+        public override void Accept(SyntaxVisitor visitor)
         {
             throw ExceptionUtilities.Unreachable;
         }

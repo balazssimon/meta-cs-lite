@@ -38,7 +38,7 @@ namespace MetaDslx.CodeAnalysis.Syntax.InternalSyntax
                 _child2 = child2;
             }
 
-            internal override GreenNode? GetSlot(int index)
+            internal protected override GreenNode? GetSlot(int index)
             {
                 switch (index)
                 {
@@ -60,7 +60,7 @@ namespace MetaDslx.CodeAnalysis.Syntax.InternalSyntax
                 array[offset + 2].Value = _child2;
             }
 
-            internal override SyntaxNode CreateRed(SyntaxNode? parent, int position)
+            internal protected override SyntaxNode CreateRed(SyntaxNode? parent, int position)
             {
                 return new Syntax.SyntaxList.WithThreeChildren(this, parent, position);
             }

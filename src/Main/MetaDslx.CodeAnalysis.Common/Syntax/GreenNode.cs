@@ -23,7 +23,7 @@ namespace MetaDslx.CodeAnalysis
             return this.GetType().Name + " " + this.KindText + " " + this.ToString();
         }
 
-        internal const int ListKind = 1;
+        internal const int ListKind = (int)InternalSyntaxKind.List;
 
         private readonly ushort _kind;
         protected NodeFlags flags;
@@ -156,9 +156,9 @@ namespace MetaDslx.CodeAnalysis
             }
         }
 
-        internal abstract GreenNode? GetSlot(int index);
+        internal protected abstract GreenNode? GetSlot(int index);
 
-        internal GreenNode GetRequiredSlot(int index)
+        internal protected GreenNode GetRequiredSlot(int index)
         {
             var node = GetSlot(index);
             Debug.Assert(node is object);
@@ -839,7 +839,7 @@ namespace MetaDslx.CodeAnalysis
         }
         #endregion
 
-        public abstract SyntaxNode GetStructure(SyntaxTrivia parentTrivia);
+        public abstract SyntaxNode? GetStructure(SyntaxTrivia parentTrivia);
 
         #region Factories 
 
@@ -911,7 +911,7 @@ namespace MetaDslx.CodeAnalysis
             return CreateRed(null, 0);
         }
 
-        internal abstract SyntaxNode CreateRed(SyntaxNode? parent, int position);
+        internal protected abstract SyntaxNode CreateRed(SyntaxNode? parent, int position);
 
         #endregion
 

@@ -50,7 +50,7 @@ namespace MetaDslx.CodeAnalysis.Syntax.InternalSyntax
                 return children.Length;
             }
 
-            internal override GreenNode GetSlot(int index)
+            internal protected override GreenNode GetSlot(int index)
             {
                 return this.children[index];
             }
@@ -60,7 +60,7 @@ namespace MetaDslx.CodeAnalysis.Syntax.InternalSyntax
                 Array.Copy(this.children, 0, array, offset, this.children.Length);
             }
 
-            internal override SyntaxNode CreateRed(SyntaxNode? parent, int position)
+            internal protected override SyntaxNode CreateRed(SyntaxNode? parent, int position)
             {
                 var separated = this.SlotCount > 1 && HasNodeTokenPattern();
                 if (parent != null && parent.ShouldCreateWeakList())

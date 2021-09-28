@@ -10,24 +10,23 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using MetaDslx.CodeAnalysis.PooledObjects;
+using MetaDslx.CodeAnalysis.Syntax;
 using MetaDslx.CodeAnalysis.Text;
 using Roslyn.Utilities;
 
 namespace MetaDslx.CodeAnalysis
 {
-#pragma warning disable CA1200 // Avoid using cref tags with a prefix
     /// <summary>
-    /// Represents a non-terminal node in the syntax tree. This is the language agnostic equivalent of <see
-    /// cref="T:MetaDslx.CodeAnalysis.CSharp.CSharpSyntaxNode"/> and <see cref="T:MetaDslx.CodeAnalysis.VisualBasic.VisualBasicSyntaxNode"/>.
+    /// Represents a non-terminal node in the syntax tree.
     /// </summary>
-#pragma warning restore CA1200 // Avoid using cref tags with a prefix
     [DebuggerDisplay("{GetDebuggerDisplay(), nq}")]
     public abstract partial class SyntaxNode
     {
         private readonly SyntaxNode? _parent;
-        internal SyntaxTree? _syntaxTree;
+        private SyntaxTree? _syntaxTree;
 
-        internal SyntaxNode(GreenNode green, SyntaxNode? parent, int position)
+        public SyntaxNode(GreenNode green, SyntaxNode? parent, int position)
         {
             Debug.Assert(position >= 0, "position cannot be negative");
             Debug.Assert(parent?.Green.IsList != true, "list cannot be a parent");
@@ -41,7 +40,7 @@ namespace MetaDslx.CodeAnalysis
         /// Used by structured trivia which has "parent == null", and therefore must know its
         /// SyntaxTree explicitly when created.
         /// </summary>
-        internal SyntaxNode(GreenNode green, int position, SyntaxTree syntaxTree)
+        public SyntaxNode(GreenNode green, int position, SyntaxTree syntaxTree)
             : this(green, null, position)
         {
             this._syntaxTree = syntaxTree;
@@ -55,7 +54,7 @@ namespace MetaDslx.CodeAnalysis
         /// <summary>
         /// An integer representing the language specific kind of this node.
         /// </summary>
-        public int RawKind => Green.RawKind;
+        internal protected int RawKind => Green.RawKind;
 
         protected string KindText => Green.KindText;
 
@@ -64,7 +63,7 @@ namespace MetaDslx.CodeAnalysis
         /// </summary>
         public abstract Language Language { get; }
 
-        internal GreenNode Green { get; }
+        internal protected GreenNode Green { get; }
 
         internal int Position { get; }
 
@@ -74,7 +73,75 @@ namespace MetaDslx.CodeAnalysis
         /// Returns SyntaxTree that owns the node or null if node does not belong to a
         /// SyntaxTree
         /// </summary>
-        public SyntaxTree SyntaxTree => this.SyntaxTreeCore;
+        public SyntaxTree SyntaxTree
+        {
+            get
+            {
+                var result = this._syntaxTree ?? ComputeSyntaxTree(this);
+                Debug.Assert(result != null);
+                return result;
+            }
+        }
+
+        protected abstract SyntaxTree CreateSyntaxTreeForRoot();
+
+        private static SyntaxTree ComputeSyntaxTree(SyntaxNode node)
+        {
+            ArrayBuilder<SyntaxNode>? nodes = null;
+            SyntaxTree? tree = null;
+
+            // Find the nearest parent with a non-null syntax tree
+            while (true)
+            {
+                tree = node._syntaxTree;
+                if (tree != null)
+                {
+                    break;
+                }
+
+                var parent = node.Parent;
+                if (parent == null)
+                {
+                    // set the tree on the root node atomically
+                    Interlocked.CompareExchange(ref node._syntaxTree, node.CreateSyntaxTreeForRoot(), null);
+                    tree = node._syntaxTree;
+                    break;
+                }
+
+                tree = parent._syntaxTree;
+                if (tree != null)
+                {
+                    node._syntaxTree = tree;
+                    break;
+                }
+
+                (nodes ?? (nodes = ArrayBuilder<SyntaxNode>.GetInstance())).Add(node);
+                node = parent;
+            }
+
+            // Propagate the syntax tree downwards if necessary
+            if (nodes != null)
+            {
+                Debug.Assert(tree != null);
+
+                foreach (var n in nodes)
+                {
+                    var existingTree = n._syntaxTree;
+                    if (existingTree != null)
+                    {
+                        Debug.Assert(existingTree == tree, "how could this node belong to a different tree?");
+
+                        // yield the race
+                        break;
+                    }
+                    n._syntaxTree = tree;
+                }
+
+                nodes.Free();
+            }
+
+            return tree;
+        }
 
         internal bool IsList => this.Green.IsList;
 
@@ -589,6 +656,95 @@ namespace MetaDslx.CodeAnalysis
         {
             return this.SyntaxTree.GetReference(this);
         }
+
+        #region Directives
+
+        internal IList<SyntaxNode> GetDirectives(Func<SyntaxNode, bool>? filter = null)
+        {
+            return ((SyntaxNodeOrToken)this).GetDirectives(filter);
+        }
+
+        /// <summary>
+        /// Gets the first directive of the tree rooted by this node.
+        /// </summary>
+        public IDirectiveTriviaSyntax? GetFirstDirective(Func<IDirectiveTriviaSyntax, bool>? predicate = null)
+        {
+            foreach (var child in this.ChildNodesAndTokens())
+            {
+                if (child.ContainsDirectives)
+                {
+                    if (child.IsNode)
+                    {
+                        var d = child.AsNode()!.GetFirstDirective(predicate);
+                        if (d != null)
+                        {
+                            return d;
+                        }
+                    }
+                    else
+                    {
+                        var token = child.AsToken();
+
+                        // directives can only occur in leading trivia
+                        foreach (var tr in token.LeadingTrivia)
+                        {
+                            if (tr.IsDirective)
+                            {
+                                var d = (IDirectiveTriviaSyntax)tr.GetStructure()!;
+                                if (predicate == null || predicate(d))
+                                {
+                                    return d;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Gets the last directive of the tree rooted by this node.
+        /// </summary>
+        public IDirectiveTriviaSyntax? GetLastDirective(Func<IDirectiveTriviaSyntax, bool>? predicate = null)
+        {
+            foreach (var child in this.ChildNodesAndTokens().Reverse())
+            {
+                if (child.ContainsDirectives)
+                {
+                    if (child.IsNode)
+                    {
+                        var d = child.AsNode()!.GetLastDirective(predicate);
+                        if (d != null)
+                        {
+                            return d;
+                        }
+                    }
+                    else
+                    {
+                        var token = child.AsToken();
+
+                        // directives can only occur in leading trivia
+                        foreach (var tr in token.LeadingTrivia.Reverse())
+                        {
+                            if (tr.IsDirective)
+                            {
+                                var d = (IDirectiveTriviaSyntax)tr.GetStructure()!;
+                                if (predicate == null || predicate(d))
+                                {
+                                    return d;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            return null;
+        }
+
+        #endregion
 
         #region Node Lookup
 
@@ -1276,12 +1432,6 @@ recurse:
         }
 
         /// <summary>
-        /// Returns SyntaxTree that owns the node. If the node does not belong to a tree then
-        /// one will be generated.
-        /// </summary>
-        protected abstract SyntaxTree SyntaxTreeCore { get; }
-
-        /// <summary>
         /// Finds a descendant token of this node whose span includes the supplied position. 
         /// </summary>
         /// <param name="position">The character position of the token relative to the beginning of the file.</param>
@@ -1428,30 +1578,60 @@ recurse:
         /// <summary>
         /// Creates a new tree of nodes with the specified nodes, tokens or trivia replaced.
         /// </summary>
-        protected internal abstract SyntaxNode ReplaceCore<TNode>(
+        protected internal SyntaxNode? ReplaceCore<TNode>(
             IEnumerable<TNode>? nodes = null,
-            Func<TNode, TNode, SyntaxNode>? computeReplacementNode = null,
+            Func<TNode, TNode?, SyntaxNode?>? computeReplacementNode = null,
             IEnumerable<SyntaxToken>? tokens = null,
             Func<SyntaxToken, SyntaxToken, SyntaxToken>? computeReplacementToken = null,
             IEnumerable<SyntaxTrivia>? trivia = null,
             Func<SyntaxTrivia, SyntaxTrivia, SyntaxTrivia>? computeReplacementTrivia = null)
-            where TNode : SyntaxNode;
+            where TNode : SyntaxNode
+        {
+            return SyntaxReplacer.Replace(this, nodes, computeReplacementNode, tokens, computeReplacementToken, trivia, computeReplacementTrivia).AsRootOfNewTreeWithOptionsFrom(this.SyntaxTree);
+        }
 
-        protected internal abstract SyntaxNode ReplaceNodeInListCore(SyntaxNode originalNode, IEnumerable<SyntaxNode> replacementNodes);
-        protected internal abstract SyntaxNode InsertNodesInListCore(SyntaxNode nodeInList, IEnumerable<SyntaxNode> nodesToInsert, bool insertBefore);
-        protected internal abstract SyntaxNode ReplaceTokenInListCore(SyntaxToken originalToken, IEnumerable<SyntaxToken> newTokens);
-        protected internal abstract SyntaxNode InsertTokensInListCore(SyntaxToken originalToken, IEnumerable<SyntaxToken> newTokens, bool insertBefore);
-        protected internal abstract SyntaxNode ReplaceTriviaInListCore(SyntaxTrivia originalTrivia, IEnumerable<SyntaxTrivia> newTrivia);
-        protected internal abstract SyntaxNode InsertTriviaInListCore(SyntaxTrivia originalTrivia, IEnumerable<SyntaxTrivia> newTrivia, bool insertBefore);
+        protected internal SyntaxNode ReplaceNodeInListCore(SyntaxNode originalNode, IEnumerable<SyntaxNode> replacementNodes)
+        {
+            return SyntaxReplacer.ReplaceNodeInList(this, originalNode, replacementNodes).AsRootOfNewTreeWithOptionsFrom(this.SyntaxTree);
+        }
+
+        protected internal SyntaxNode InsertNodesInListCore(SyntaxNode nodeInList, IEnumerable<SyntaxNode> nodesToInsert, bool insertBefore)
+        {
+            return SyntaxReplacer.InsertNodeInList(this, nodeInList, nodesToInsert, insertBefore).AsRootOfNewTreeWithOptionsFrom(this.SyntaxTree);
+        }
+
+        protected internal SyntaxNode ReplaceTokenInListCore(SyntaxToken originalToken, IEnumerable<SyntaxToken> newTokens)
+        {
+            return SyntaxReplacer.ReplaceTokenInList(this, originalToken, newTokens).AsRootOfNewTreeWithOptionsFrom(this.SyntaxTree);
+        }
+
+        protected internal SyntaxNode InsertTokensInListCore(SyntaxToken originalToken, IEnumerable<SyntaxToken> newTokens, bool insertBefore)
+        {
+            return SyntaxReplacer.InsertTokenInList(this, originalToken, newTokens, insertBefore).AsRootOfNewTreeWithOptionsFrom(this.SyntaxTree);
+        }
+
+        protected internal SyntaxNode ReplaceTriviaInListCore(SyntaxTrivia originalTrivia, IEnumerable<SyntaxTrivia> newTrivia)
+        {
+            return SyntaxReplacer.ReplaceTriviaInList(this, originalTrivia, newTrivia).AsRootOfNewTreeWithOptionsFrom(this.SyntaxTree);
+        }
+
+        protected internal SyntaxNode InsertTriviaInListCore(SyntaxTrivia originalTrivia, IEnumerable<SyntaxTrivia> newTrivia, bool insertBefore)
+        {
+            return SyntaxReplacer.InsertTriviaInList(this, originalTrivia, newTrivia, insertBefore).AsRootOfNewTreeWithOptionsFrom(this.SyntaxTree);
+        }
 
         /// <summary>
         /// Creates a new tree of nodes with the specified node removed.
         /// </summary>
-        protected internal abstract SyntaxNode? RemoveNodesCore(
-            IEnumerable<SyntaxNode> nodes,
-            SyntaxRemoveOptions options);
+        protected internal SyntaxNode? RemoveNodesCore(IEnumerable<SyntaxNode> nodes, SyntaxRemoveOptions options)
+        {
+            return SyntaxNodeRemover.RemoveNodes(this, nodes, options).AsRootOfNewTreeWithOptionsFrom(this.SyntaxTree);
+        }
 
-        protected internal abstract SyntaxNode NormalizeWhitespaceCore(string indentation, string eol, bool elasticTrivia);
+        protected internal SyntaxNode NormalizeWhitespaceCore(string indentation, string eol, bool elasticTrivia)
+        {
+            return SyntaxNormalizer.Normalize(this, indentation, eol, elasticTrivia).AsRootOfNewTreeWithOptionsFrom(this.SyntaxTree);
+        }
 
         /// <summary>
         /// Determines if two nodes are the same, disregarding trivia differences.
@@ -1462,7 +1642,10 @@ recurse:
         /// differences of nodes inside method bodies or initializer expressions, otherwise all
         /// nodes and tokens must be equivalent. 
         /// </param>
-        protected abstract bool IsEquivalentToCore(SyntaxNode node, bool topLevel = false);
+        protected bool IsEquivalentToCore(SyntaxNode node, bool topLevel = false)
+        {
+            return Language.SyntaxFactory.AreEquivalent(this, node, topLevel);
+        }
 
         #endregion
 
@@ -1507,5 +1690,11 @@ recurse:
 
             return clone;
         }
+
+        public abstract TResult Accept<TArg, TResult>(SyntaxVisitor<TArg, TResult> visitor, TArg argument);
+
+        public abstract TResult Accept<TResult>(SyntaxVisitor<TResult> visitor);
+
+        public abstract void Accept(SyntaxVisitor visitor);
     }
 }
