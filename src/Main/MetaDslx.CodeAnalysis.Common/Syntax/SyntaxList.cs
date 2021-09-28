@@ -15,7 +15,7 @@ namespace MetaDslx.CodeAnalysis.Syntax
         {
         }
 
-        public override string Language
+        public override Language Language
         {
             get
             {

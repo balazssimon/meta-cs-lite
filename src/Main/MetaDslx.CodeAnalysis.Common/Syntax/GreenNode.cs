@@ -109,7 +109,7 @@ namespace MetaDslx.CodeAnalysis
             _fullWidth += node._fullWidth;
         }
 
-        public abstract string Language { get; }
+        public abstract Language Language { get; }
 
         #region Kind 
         public int RawKind

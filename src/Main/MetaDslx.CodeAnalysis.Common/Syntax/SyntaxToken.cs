@@ -56,9 +56,9 @@ namespace MetaDslx.CodeAnalysis
         public int RawKind => Node?.RawKind ?? 0;
 
         /// <summary>
-        /// The language name that this token is syntax of.
+        /// The language that this token is syntax of.
         /// </summary>
-        public string Language => Node?.Language ?? string.Empty;
+        public Language Language => Node?.Language ?? Language.NoLanguage;
 
         /// <summary>
         /// The kind of token, given its position in the syntax. This differs from <see

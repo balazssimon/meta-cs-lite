@@ -44,9 +44,9 @@ namespace MetaDslx.CodeAnalysis
         }
 
         /// <summary>
-        /// The language name that this trivia is syntax of.
+        /// The language that this trivia is syntax of.
         /// </summary>
-        public string Language => UnderlyingNode?.Language ?? string.Empty;
+        public Language Language => UnderlyingNode?.Language ?? Language.NoLanguage;
 
         /// <summary>
         /// The parent token that contains this token in its LeadingTrivia or TrailingTrivia collection.

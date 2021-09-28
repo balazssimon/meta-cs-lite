@@ -92,9 +92,9 @@ namespace MetaDslx.CodeAnalysis
         public int RawKind => _token?.RawKind ?? _nodeOrParent?.RawKind ?? 0;
 
         /// <summary>
-        /// The language name that this node or token is syntax of.
+        /// The language that this node or token is syntax of.
         /// </summary>
-        public string Language
+        public Language Language
         {
             get
             {
@@ -108,7 +108,7 @@ namespace MetaDslx.CodeAnalysis
                     return _nodeOrParent.Language;
                 }
 
-                return string.Empty;
+                return Language.NoLanguage;
             }
         }
 

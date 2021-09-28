@@ -60,9 +60,9 @@ namespace MetaDslx.CodeAnalysis
         protected string KindText => Green.KindText;
 
         /// <summary>
-        /// The language name that this node is syntax of.
+        /// The language that this node is syntax of.
         /// </summary>
-        public abstract string Language { get; }
+        public abstract Language Language { get; }
 
         internal GreenNode Green { get; }
 

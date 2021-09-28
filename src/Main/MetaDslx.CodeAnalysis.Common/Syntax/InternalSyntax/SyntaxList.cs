@@ -141,7 +141,7 @@ namespace MetaDslx.CodeAnalysis.Syntax.InternalSyntax
             }
         }
 
-        public sealed override string Language
+        public sealed override Language Language
         {
             get
             {
