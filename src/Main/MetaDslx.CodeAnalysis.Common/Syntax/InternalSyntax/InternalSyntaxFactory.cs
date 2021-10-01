@@ -1,7 +1,9 @@
 ﻿using MetaDslx.CodeAnalysis.PooledObjects;
+using MetaDslx.CodeAnalysis.Text;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 
 namespace MetaDslx.CodeAnalysis.Syntax.InternalSyntax
 {
@@ -213,6 +215,8 @@ namespace MetaDslx.CodeAnalysis.Syntax.InternalSyntax
 
         public abstract IEnumerable<InternalSyntaxToken> GetWellKnownTokens();
 
+        public abstract AbstractLexer CreateLexer(SourceText text, ParseOptions options);
+        public abstract AbstractParser CreateParser(AbstractLexer lexer, SyntaxNode? oldTree, ParseData? oldParseData, IEnumerable<TextChangeRange>? changes, CancellationToken cancellationToken = default);
 
     }
 }

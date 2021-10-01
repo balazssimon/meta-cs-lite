@@ -32,5 +32,10 @@ namespace MetaDslx.CodeAnalysis
         /// Could not read file '{0}' -- {1}
         /// </summary>
         public static readonly DiagnosticDescriptor ERR_FileReadError = DiagnosticDescriptor.CompilerError(nameof(ERR_FileReadError), "File read error", "Could not read file '{0}' -- {1}");
+
+        /// <summary>
+        /// Unrecognized escape sequence
+        /// </summary>
+        public static readonly DiagnosticDescriptor ERR_IllegalEscape = DiagnosticDescriptor.CompilerError(nameof(ERR_IllegalEscape), "Illegal escape", "Unrecognized escape sequence");
     }
 }
