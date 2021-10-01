@@ -13,6 +13,7 @@ namespace MetaDslx.CodeAnalysis
         public abstract InternalSyntaxFactory InternalSyntaxFactory { get; }
         public abstract SyntaxFacts SyntaxFacts { get; }
         public abstract SyntaxFactory SyntaxFactory { get; }
+        public abstract CompilationFactory CompilationFactory { get; }
 
         private class NoLanguageImplementation : Language
         {
@@ -21,6 +22,8 @@ namespace MetaDslx.CodeAnalysis
             public override InternalSyntaxFactory InternalSyntaxFactory => throw new NotImplementedException();
 
             public override SyntaxFactory SyntaxFactory => throw new NotImplementedException();
+
+            public override CompilationFactory CompilationFactory => throw new NotImplementedException();
         }
     }
 }

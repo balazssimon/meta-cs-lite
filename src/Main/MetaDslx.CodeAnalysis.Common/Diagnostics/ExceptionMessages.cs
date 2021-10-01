@@ -38,5 +38,6 @@ namespace MetaDslx.CodeAnalysis
         public const string UnexpectedTypeOfNodeInList = "A node in the list is not of the expected type.";
 
         public const string SyntaxTreeIsNotASubmission = "Syntax tree should be created from a submission.";
+        public const string CouldNotFindFile = "Could not find file.";
     }
 }

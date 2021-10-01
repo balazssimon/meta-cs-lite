@@ -531,6 +531,19 @@ namespace MetaDslx.CodeAnalysis
             return result;
         }
 
+        internal static bool HasAnyErrors<T>(this ImmutableArray<T> diagnostics) where T : Diagnostic
+        {
+            foreach (var diagnostic in diagnostics)
+            {
+                if (diagnostic.Severity == DiagnosticSeverity.Error)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         // In DEBUG, swap the first and last elements of a read-only array, yielding a new read only array.
         // This helps to avoid depending on accidentally sorted arrays.
         internal static ImmutableArray<T> ConditionallyDeOrder<T>(this ImmutableArray<T> array)
@@ -710,6 +723,11 @@ namespace MetaDslx.CodeAnalysis
             }
 
             return dictionary;
+        }
+
+        internal static Location FirstOrNone(this ImmutableArray<Location> items)
+        {
+            return items.IsEmpty ? Location.None : items[0];
         }
 
         internal static bool SequenceEqual<TElement, TArg>(this ImmutableArray<TElement> array1, ImmutableArray<TElement> array2, TArg arg, Func<TElement, TElement, TArg, bool> predicate)

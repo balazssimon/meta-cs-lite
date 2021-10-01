@@ -13,7 +13,7 @@ namespace MetaDslx.CodeAnalysis.Declarations
         private readonly SyntaxReference _syntaxReference;
         private readonly Type _modelObjectType;
 
-        private SingleDeclaration(SyntaxReference syntaxReference, Type modelObjectType)
+        protected SingleDeclaration(SyntaxReference syntaxReference, Type modelObjectType)
         {
             _syntaxReference = syntaxReference;
             _modelObjectType = modelObjectType;
@@ -26,8 +26,12 @@ namespace MetaDslx.CodeAnalysis.Declarations
         public abstract ImmutableArray<Declaration> Children { get; }
         public abstract ImmutableArray<string> ChildNames { get; }
 
+        public static RootSingleDeclaration CreateRoot(SyntaxReference syntaxReference, Type modelObjectType, ImmutableArray<SingleDeclaration> children, ImmutableArray<Syntax.ReferenceDirective> referenceDirectives, ImmutableArray<Diagnostic> diagnostics)
+        {
+            return new RootSingleDeclaration(syntaxReference, modelObjectType, children, referenceDirectives, diagnostics);
+        }
 
-        public static SingleDeclaration Create(SyntaxReference syntaxReference, Type modelObjectType, string? name, string? metadataName, SourceLocation? nameLocation, bool canMerge, ImmutableArray<Declaration> children, ImmutableArray<Diagnostic> diagnostics)
+        public static SingleDeclaration Create(SyntaxReference syntaxReference, Type modelObjectType, string? name, string? metadataName, SourceLocation? nameLocation, bool canMerge, ImmutableArray<SingleDeclaration> children, ImmutableArray<Diagnostic> diagnostics)
         {
             if (name is not null)
             {
@@ -124,10 +128,10 @@ namespace MetaDslx.CodeAnalysis.Declarations
             private readonly ImmutableArray<Declaration> _children;
             private ImmutableArray<string> _childNames;
 
-            public WithChildren(SyntaxReference syntaxReference, Type modelObjectType, ImmutableArray<Declaration> children)
+            public WithChildren(SyntaxReference syntaxReference, Type modelObjectType, ImmutableArray<SingleDeclaration> children)
                 : base(syntaxReference, modelObjectType)
             {
-                _children = children;
+                _children = children.Cast<SingleDeclaration, Declaration>();
             }
 
             public override string? Name => null;
@@ -161,14 +165,14 @@ namespace MetaDslx.CodeAnalysis.Declarations
             private readonly ImmutableArray<Declaration> _children;
             private ImmutableArray<string> _childNames;
 
-            public WithNameAndChildren(SyntaxReference syntaxReference, Type modelObjectType, string name, string metadataName, SourceLocation nameLocation, bool canMerge, ImmutableArray<Declaration> children)
+            public WithNameAndChildren(SyntaxReference syntaxReference, Type modelObjectType, string name, string metadataName, SourceLocation nameLocation, bool canMerge, ImmutableArray<SingleDeclaration> children)
                 : base(syntaxReference, modelObjectType)
             {
                 _name = name;
                 _metadataName = metadataName;
                 _nameLocation = nameLocation;
                 _canMerge = canMerge;
-                _children = children;
+                _children = children.Cast<SingleDeclaration, Declaration>();
             }
 
             public override string? Name => _name;
