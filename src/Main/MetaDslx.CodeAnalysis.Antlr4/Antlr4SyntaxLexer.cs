@@ -62,12 +62,12 @@ namespace MetaDslx.CodeAnalysis.Antlr4
 
         IToken ITokenFactory.Create(Tuple<ITokenSource, ICharStream> source, int type, string text, int channel, int start, int stop, int line, int charPositionInLine)
         {
-            return (IToken)this.CreateToken(null, Antlr4SyntaxKind.FromAntlr4(type), text, null);
+            return (IToken)this.CreateToken(null, Antlr4SyntaxKind.FromAntlr4(type), text ?? string.Empty, null);
         }
 
         IToken ITokenFactory.Create(int type, string text)
         {
-            return (IToken)this.CreateToken(null, Antlr4SyntaxKind.FromAntlr4(type), text, null);
+            return (IToken)this.CreateToken(null, Antlr4SyntaxKind.FromAntlr4(type), text ?? string.Empty, null);
         }
 
         protected class Antlr4LexerStateManager : LexerStateManager

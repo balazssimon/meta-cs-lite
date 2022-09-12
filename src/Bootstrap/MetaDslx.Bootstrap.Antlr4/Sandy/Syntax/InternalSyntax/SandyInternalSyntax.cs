@@ -245,7 +245,7 @@ namespace MetaDslx.Bootstrap.Antlr4.Sandy.Syntax.InternalSyntax
 		}
     }
 
-	internal partial class GreenSyntaxToken : InternalSyntaxToken
+	internal partial class GreenSyntaxToken : Antlr4SyntaxToken
 	{
 	    //====================
 	    // Optimization: Normally, we wouldn't accept this much duplicate code, but these constructors

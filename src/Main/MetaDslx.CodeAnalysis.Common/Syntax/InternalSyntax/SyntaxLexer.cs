@@ -38,6 +38,8 @@ namespace MetaDslx.CodeAnalysis.Syntax.InternalSyntax
 
         public override LexerState? State => _state;
 
+        public IEnumerable<SyntaxDiagnosticInfo> Errors => _errors;
+
         /// <summary>
         /// Scans a token or syntax trivia. End of line should be scanned as a separate trivia.
         /// </summary>

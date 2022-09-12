@@ -22,7 +22,7 @@ namespace MetaDslx.Bootstrap.Antlr4.Sandy.Syntax.InternalSyntax
             : base(text, options)
         {
         }
-        protected override InternalSyntaxToken CreateToken(GreenNode leadingTrivia, int kind, string text, GreenNode trailingTrivia)
+        protected override InternalSyntaxToken CreateToken(GreenNode? leadingTrivia, int kind, string text, GreenNode? trailingTrivia)
         {
             return SandyLanguage.Instance.InternalSyntaxFactory.Token(leadingTrivia, (SandySyntaxKind)kind, text, trailingTrivia);
         }
