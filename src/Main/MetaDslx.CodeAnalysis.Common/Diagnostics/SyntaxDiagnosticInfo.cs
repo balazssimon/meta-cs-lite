@@ -11,7 +11,7 @@ namespace MetaDslx.CodeAnalysis
         public readonly int Offset;
         public readonly int Width;
 
-        internal SyntaxDiagnosticInfo(int offset, int width, DiagnosticDescriptor descriptor, params object[] args)
+        public SyntaxDiagnosticInfo(int offset, int width, DiagnosticDescriptor descriptor, params object[] args)
             : base(descriptor, args)
         {
             Debug.Assert(width >= 0);
@@ -19,17 +19,17 @@ namespace MetaDslx.CodeAnalysis
             this.Width = width;
         }
 
-        internal SyntaxDiagnosticInfo(int offset, int width, DiagnosticDescriptor descriptor)
+        public SyntaxDiagnosticInfo(int offset, int width, DiagnosticDescriptor descriptor)
             : this(offset, width, descriptor, Array.Empty<object>())
         {
         }
 
-        internal SyntaxDiagnosticInfo(DiagnosticDescriptor descriptor, params object[] args)
+        public SyntaxDiagnosticInfo(DiagnosticDescriptor descriptor, params object[] args)
             : this(0, 0, descriptor, args)
         {
         }
 
-        internal SyntaxDiagnosticInfo(DiagnosticDescriptor descriptor)
+        public SyntaxDiagnosticInfo(DiagnosticDescriptor descriptor)
             : this(0, 0, descriptor)
         {
         }

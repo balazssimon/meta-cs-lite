@@ -40,8 +40,8 @@ namespace MetaDslx.CodeAnalysis
         /// Used by structured trivia which has "parent == null", and therefore must know its
         /// SyntaxTree explicitly when created.
         /// </summary>
-        public SyntaxNode(GreenNode green, int position, SyntaxTree syntaxTree)
-            : this(green, null, position)
+        public SyntaxNode(GreenNode green, SyntaxTree syntaxTree, int position)
+            : this(green, (SyntaxNode?)null, position)
         {
             this._syntaxTree = syntaxTree;
         }
@@ -559,9 +559,9 @@ namespace MetaDslx.CodeAnalysis
         /// Gets a node at given node index without forcing its creation.
         /// If node was not created it would return null.
         /// </summary>
-        internal abstract SyntaxNode? GetCachedSlot(int index);
+        internal protected abstract SyntaxNode? GetCachedSlot(int index);
 
-        internal int GetChildIndex(int slot)
+        internal protected int GetChildIndex(int slot)
         {
             int index = 0;
             for (int i = 0; i < slot; i++)
@@ -591,7 +591,7 @@ namespace MetaDslx.CodeAnalysis
         /// the number of children could be large (lists) this function is overridden with more
         /// efficient implementations.
         /// </summary>
-        internal virtual int GetChildPosition(int index)
+        internal protected virtual int GetChildPosition(int index)
         {
             int offset = 0;
             var green = this.Green;
@@ -802,9 +802,9 @@ namespace MetaDslx.CodeAnalysis
         /// This WILL force node creation if node has not yet been created.
         /// Can still return null for invalid slot numbers
         /// </summary>
-        internal abstract SyntaxNode? GetNodeSlot(int slot);
+        internal protected abstract SyntaxNode? GetNodeSlot(int slot);
 
-        internal SyntaxNode GetRequiredNodeSlot(int slot)
+        internal protected SyntaxNode GetRequiredNodeSlot(int slot)
         {
             var syntaxNode = GetNodeSlot(slot);
             Debug.Assert(syntaxNode is object);
@@ -1275,7 +1275,7 @@ recurse:
             return this.Green.GetAnnotations(annotationKinds);
         }
 
-        internal SyntaxAnnotation[] GetAnnotations()
+        internal protected SyntaxAnnotation[] GetAnnotations()
         {
             return this.Green.GetAnnotations();
         }

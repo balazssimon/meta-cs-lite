@@ -26,20 +26,13 @@ namespace MetaDslx.CodeAnalysis
         public SourceCodeKind Kind { get; protected set; }
 
         /// <summary>
-        /// Gets the specified source code kind, which is the value that was specified in
-        /// the call to the constructor, or modified using the <see cref="WithKind(SourceCodeKind)"/> method.
-        /// </summary>
-        public SourceCodeKind SpecifiedKind { get; protected set; }
-
-        /// <summary>
         /// Gets a value indicating whether the documentation comments are parsed.
         /// </summary>
         /// <value><c>true</c> if documentation comments are parsed, <c>false</c> otherwise.</value>
         public DocumentationMode DocumentationMode { get; protected set; }
 
-        internal ParseOptions(SourceCodeKind kind, DocumentationMode documentationMode)
+        protected ParseOptions(SourceCodeKind kind, DocumentationMode documentationMode)
         {
-            this.SpecifiedKind = kind;
             this.Kind = kind;
             this.DocumentationMode = documentationMode;
 
@@ -77,18 +70,20 @@ namespace MetaDslx.CodeAnalysis
         /// </summary>
         protected abstract void CommonValidateOptions(ArrayBuilder<Diagnostic> builder);
 
-        internal void ValidateOptions(ArrayBuilder<Diagnostic> builder)
+        public void ValidateOptions(ArrayBuilder<Diagnostic> builder)
         {
             // Validate SpecifiedKind not Kind, to catch deprecated specified kinds:
-            if (!SpecifiedKind.IsValid())
+            if (!Kind.IsValid())
             {
-                builder.Add(Diagnostic.Create(ErrorCode.ERR_BadSourceCodeKind, Location.None, SpecifiedKind));
+                builder.Add(Diagnostic.Create(ErrorCode.ERR_BadSourceCodeKind, Location.None, Kind));
             }
 
             if (!DocumentationMode.IsValid())
             {
                 builder.Add(Diagnostic.Create(ErrorCode.ERR_BadDocumentationMode, Location.None, DocumentationMode));
             }
+
+            CommonValidateOptions(builder);
         }
 
         protected abstract ParseOptions CommonWithKind(SourceCodeKind kind);
@@ -103,28 +98,13 @@ namespace MetaDslx.CodeAnalysis
 
         protected abstract ParseOptions CommonWithDocumentationMode(DocumentationMode documentationMode);
 
-        /// <summary>
-        /// Enable some experimental language features for testing.
-        /// </summary>
-        public ParseOptions WithFeatures(IEnumerable<KeyValuePair<string, string>> features)
-        {
-            return CommonWithFeatures(features);
-        }
-
-        protected abstract ParseOptions CommonWithFeatures(IEnumerable<KeyValuePair<string, string>> features);
-
-        /// <summary>
-        /// Returns the experimental features.
-        /// </summary>
-        public abstract IReadOnlyDictionary<string, string> Features
-        {
-            get;
-        }
+        protected abstract bool IsFeatureEnabled(string feature);
+        public abstract Diagnostic? GetDiagnosticForFeature(string feature);
 
         /// <summary>
         /// Names of defined preprocessor symbols.
         /// </summary>
-        public abstract IEnumerable<string> PreprocessorSymbols { get; }
+        public abstract ImmutableArray<string> PreprocessorSymbols { get; }
 
         public abstract override bool Equals(object? obj);
 
@@ -136,9 +116,8 @@ namespace MetaDslx.CodeAnalysis
             }
 
             return
-                this.SpecifiedKind == other.SpecifiedKind &&
+                this.Kind == other.Kind &&
                 this.DocumentationMode == other.DocumentationMode &&
-                this.Features.SequenceEqual(other.Features) &&
                 (this.PreprocessorSymbols == null ? other.PreprocessorSymbols == null : this.PreprocessorSymbols.SequenceEqual(other.PreprocessorSymbols, StringComparer.Ordinal));
         }
 
@@ -147,10 +126,9 @@ namespace MetaDslx.CodeAnalysis
         protected int GetHashCodeHelper()
         {
             return
-                Hash.Combine((int)this.SpecifiedKind,
+                Hash.Combine((int)this.Kind,
                 Hash.Combine((int)this.DocumentationMode,
-                Hash.Combine(HashFeatures(this.Features),
-                Hash.Combine(Hash.CombineValues(this.PreprocessorSymbols, StringComparer.Ordinal), 0))));
+                Hash.Combine(Hash.CombineValues(this.PreprocessorSymbols, StringComparer.Ordinal), 0)));
         }
 
         private static int HashFeatures(IReadOnlyDictionary<string, string> features)

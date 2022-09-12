@@ -134,12 +134,12 @@ namespace MetaDslx.CodeAnalysis
             this.CustomTags = customTags;
         }
 
-        public static DiagnosticDescriptor CompilerError(string id, string title, string messageFormat)
+        public static DiagnosticDescriptor Error(string id, string title, string messageFormat)
         {
             return new DiagnosticDescriptor(id, title, messageFormat, CompilerCategory, DiagnosticSeverity.Error, true);
         }
 
-        public static DiagnosticDescriptor CompilerWarning(string id, string title, string messageFormat)
+        public static DiagnosticDescriptor Warning(string id, string title, string messageFormat)
         {
             return new DiagnosticDescriptor(id, title, messageFormat, CompilerCategory, DiagnosticSeverity.Warning, true);
         }

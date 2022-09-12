@@ -74,6 +74,11 @@ namespace MetaDslx.CodeAnalysis.Syntax.InternalSyntax
             {
                 return new WithThreeChildren(GetDiagnostics(), annotations, _child0, _child1, _child2);
             }
+
+            public override GreenNode Clone()
+            {
+                return new WithThreeChildren(GetDiagnostics(), GetAnnotations(), _child0, _child1, _child2);
+            }
         }
     }
 }

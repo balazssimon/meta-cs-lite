@@ -7,8 +7,8 @@ namespace MetaDslx.CodeAnalysis.Syntax.InternalSyntax
 {
     public sealed class IncrementalNodeData : IEquatable<IncrementalNodeData>
     {
-        public readonly State? StartState;
-        public readonly State? EndState;
+        public readonly ParserState? StartState;
+        public readonly ParserState? EndState;
         public readonly int LookaheadBefore;
         public readonly int LookaheadAfter;
 #if DEBUG
@@ -16,9 +16,9 @@ namespace MetaDslx.CodeAnalysis.Syntax.InternalSyntax
 #endif
 
 #if DEBUG
-        public IncrementalNodeData(State? startState, State? endState, int lookaheadBefore, int lookaheadAfter, int version)
+        public IncrementalNodeData(ParserState? startState, ParserState? endState, int lookaheadBefore, int lookaheadAfter, int version)
 #else
-        public IncrementalNodeData(State? startState, State? endState, int lookaheadBefore, int lookaheadAfter)
+        public IncrementalNodeData(ParserState? startState, ParserState? endState, int lookaheadBefore, int lookaheadAfter)
 #endif
         {
             StartState = startState;
@@ -30,7 +30,7 @@ namespace MetaDslx.CodeAnalysis.Syntax.InternalSyntax
 #endif
         }
 
-        public bool Equals(State? startState, State? endState, int lookaheadBefore, int lookaheadAfter)
+        public bool Equals(ParserState? startState, ParserState? endState, int lookaheadBefore, int lookaheadAfter)
         {
             return startState == this.StartState &&
                 endState == this.EndState &&

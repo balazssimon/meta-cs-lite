@@ -30,9 +30,9 @@ namespace MetaDslx.CodeAnalysis.Syntax.InternalSyntax
             Lexer.Dispose();
         }
 
-        public abstract InternalSyntaxNode Parse();
+        public abstract SyntaxNode Parse();
 
-        public abstract (InternalSyntaxNode?, IncrementalNodeData) IncrementalParse();
+        public abstract (SyntaxNode?, IncrementalNodeData) IncrementalParse();
 
         protected abstract ParserStateManager? CreateStateManager();
     }

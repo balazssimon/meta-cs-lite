@@ -19,7 +19,7 @@ namespace MetaDslx.CodeAnalysis.Syntax
             {
             }
 
-            internal override SyntaxNode? GetNodeSlot(int index)
+            internal protected override SyntaxNode? GetNodeSlot(int index)
             {
                 switch (index)
                 {
@@ -34,7 +34,7 @@ namespace MetaDslx.CodeAnalysis.Syntax
                 }
             }
 
-            internal override SyntaxNode? GetCachedSlot(int index)
+            internal protected override SyntaxNode? GetCachedSlot(int index)
             {
                 switch (index)
                 {

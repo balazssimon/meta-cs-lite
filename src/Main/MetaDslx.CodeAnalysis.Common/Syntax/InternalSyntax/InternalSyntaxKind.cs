@@ -13,6 +13,8 @@ namespace MetaDslx.CodeAnalysis.Syntax.InternalSyntax
         SkippedTokensTrivia,
         DisabledTextTrivia,
         ConflictMarkerTrivia,
-        Eof
+        Eof,
+        LastWellKnownSyntaxKind = Eof
     }
+
 }

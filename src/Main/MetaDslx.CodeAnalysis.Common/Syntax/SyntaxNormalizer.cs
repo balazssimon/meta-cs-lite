@@ -44,10 +44,10 @@ namespace MetaDslx.CodeAnalysis.Syntax
             _eolTrivia = useElasticTrivia ? SyntaxFactory.ElasticEndOfLine(eolWhitespace) : SyntaxFactory.EndOfLine(eolWhitespace);
             _afterLineBreak = true;
 
-            DefaultEndOfLineKind = language.SyntaxFacts.DefaultEndOfLineKind;
-            DefaultWhitespaceKind = language.SyntaxFacts.DefaultWhitespaceKind;
-            DefaultIdentifierKind = language.SyntaxFacts.DefaultIdentifierKind;
-            EndOfDirectiveTokenKind = language.SyntaxFacts.EndOfDirectiveTokenKind;
+            DefaultEndOfLineKind = language.SyntaxFacts.DefaultEndOfLineRawKind;
+            DefaultWhitespaceKind = language.SyntaxFacts.DefaultWhitespaceRawKind;
+            DefaultIdentifierKind = language.SyntaxFacts.DefaultIdentifierRawKind;
+            EndOfDirectiveTokenKind = language.SyntaxFacts.EndOfDirectiveTokenRawKind;
         }
 
         public static TNode Normalize<TNode>(TNode node, string indentWhitespace, string eolWhitespace, bool useElasticTrivia = false)

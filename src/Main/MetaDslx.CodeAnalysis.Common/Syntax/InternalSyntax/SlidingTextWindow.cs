@@ -184,8 +184,6 @@ namespace MetaDslx.CodeAnalysis.Syntax.InternalSyntax
 
         public void ResetTo(int position)
         {
-            //if (position < _basis) throw new ArgumentOutOfRangeException(nameof(position), $"Reset position {position} cannot be less than the basis position {_basis}.");
-
             // if position is within already read character range then just use what we have
             int relative = position - _basis;
             if (relative >= 0 && relative <= _characterWindowCount)

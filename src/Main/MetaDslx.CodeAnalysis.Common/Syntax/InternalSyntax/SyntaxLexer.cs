@@ -20,16 +20,18 @@ namespace MetaDslx.CodeAnalysis.Syntax.InternalSyntax
         private readonly SyntaxListBuilder _trailingTriviaCache = new SyntaxListBuilder(10);
         private int _position;
         private LexerState? _state;
+        private List<SyntaxDiagnosticInfo> _errors;
 
-        protected SyntaxLexer(Language language, SourceText text, ParseOptions parseOptions) 
-            : base(language, text, parseOptions)
+        protected SyntaxLexer(SourceText text, ParseOptions parseOptions) 
+            : base(text, parseOptions)
         {
             _buffer = new List<BufferedLexeme>();
             _tokenCache = TextKeyedCache<InternalSyntaxToken>.GetInstance();
             _triviaCache = TextKeyedCache<InternalSyntaxTrivia>.GetInstance();
-            _keywordKindMap = language.InternalSyntaxFactory.KeywordKindPool.Allocate();
+            _keywordKindMap = Language.InternalSyntaxFactory.KeywordKindPool.Allocate();
             _position = 0;
             _state = null;
+            _errors = new List<SyntaxDiagnosticInfo>();
         }
 
         public override int Position => _position;
@@ -51,12 +53,12 @@ namespace MetaDslx.CodeAnalysis.Syntax.InternalSyntax
             return this.LexSyntaxToken();
         }
 
-        public override (InternalSyntaxToken?, IncrementalNodeData) IncrementalLex()
+        public override (InternalSyntaxToken?, IncrementalTokenData) IncrementalLex()
         {
             var startState = _state;
             var token = this.LexSyntaxToken();
             var endState = _state;
-            return (token, new IncrementalNodeData(startState, endState, TextWindow.MinLookahead, TextWindow.MaxLookahead, 0));
+            return (token, new IncrementalTokenData(startState, endState, TextWindow.MinLookahead, TextWindow.MaxLookahead));
         }
 
         public override void ResetTo(int position, LexerState? state)
@@ -324,6 +326,11 @@ namespace MetaDslx.CodeAnalysis.Syntax.InternalSyntax
             }
 
             return value;
+        }
+
+        protected void AddError(SyntaxDiagnosticInfo error)
+        {
+            _errors.Add(error);
         }
 
         private struct BufferedLexeme

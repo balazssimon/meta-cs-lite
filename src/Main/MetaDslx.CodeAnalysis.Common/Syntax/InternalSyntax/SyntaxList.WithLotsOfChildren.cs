@@ -61,12 +61,17 @@ namespace MetaDslx.CodeAnalysis.Syntax.InternalSyntax
 
             internal override GreenNode SetDiagnostics(DiagnosticInfo[]? errors)
             {
-                return new WithLotsOfChildren(errors, this.GetAnnotations(), children, _childOffsets);
+                return new WithLotsOfChildren(errors, GetAnnotations(), children, _childOffsets);
             }
 
             internal override GreenNode SetAnnotations(SyntaxAnnotation[]? annotations)
             {
                 return new WithLotsOfChildren(GetDiagnostics(), annotations, children, _childOffsets);
+            }
+
+            public override GreenNode Clone()
+            {
+                return new WithLotsOfChildren(GetDiagnostics(), GetAnnotations(), children, _childOffsets);
             }
         }
     }

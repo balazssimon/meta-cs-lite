@@ -1,15 +1,20 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="..\..\Versions.props" />
-  
-  <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
-    <RootNamespace>MetaDslx.CodeAnalysis</RootNamespace>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-  </PropertyGroup>
+	<Import Project="..\..\Versions.props" />
 
-  <ItemGroup>
-    <PackageReference Include="System.Collections.Immutable" Version="$(SystemCollectionsImmutableVersion)" />
-    <PackageReference Include="System.Reflection.Metadata" Version="$(SystemReflectionMetadataVersion)" />
-    <PackageReference Include="System.Text.Encoding.CodePages" Version="$(SystemTextEncodingCodePagesVersion)" />
-  </ItemGroup>  
+	<PropertyGroup>
+		<TargetFramework>netstandard2.1</TargetFramework>
+		<RootNamespace>MetaDslx.CodeAnalysis</RootNamespace>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="System.Collections.Immutable" Version="$(SystemCollectionsImmutableVersion)" />
+		<PackageReference Include="System.Reflection.Metadata" Version="$(SystemReflectionMetadataVersion)" />
+		<PackageReference Include="System.Text.Encoding.CodePages" Version="$(SystemTextEncodingCodePagesVersion)" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<InternalsVisibleTo Include="MetaDslx.CodeAnalysis.Antlr4" />
+	</ItemGroup>
+
 </Project>

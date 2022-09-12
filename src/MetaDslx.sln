@@ -5,13 +5,15 @@ VisualStudioVersion = 16.0.31702.278
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetaDslx.CodeAnalysis.Common", "Main\MetaDslx.CodeAnalysis.Common\MetaDslx.CodeAnalysis.Common.csproj", "{43539253-8FEC-4C54-8D81-8BDF7BAA7DA7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetaDslx.Bootstrap.Core", "Bootstrap\MetaDslx.Bootstrap.Core\MetaDslx.Bootstrap.Core.csproj", "{BC479ABC-754D-4685-B5E3-EBE37BA66EEC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetaDslx.Bootstrap.Core", "Bootstrap\MetaDslx.Bootstrap.Core\MetaDslx.Bootstrap.Core.csproj", "{BC479ABC-754D-4685-B5E3-EBE37BA66EEC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetaDslx.CodeAnalysis.Analyzers", "Main\MetaDslx.CodeAnalysis.Analyzers\MetaDslx.CodeAnalysis.Analyzers.csproj", "{328E490B-D892-420D-8E22-397AF278A9A5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetaDslx.CodeAnalysis.Analyzers", "Main\MetaDslx.CodeAnalysis.Analyzers\MetaDslx.CodeAnalysis.Analyzers.csproj", "{328E490B-D892-420D-8E22-397AF278A9A5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetaDslx.CodeAnalysis", "Main\MetaDslx.CodeAnalysis\MetaDslx.CodeAnalysis.csproj", "{D89EFDC3-9EF5-4F8D-9612-133CE1F6F8A7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetaDslx.CodeAnalysis", "Main\MetaDslx.CodeAnalysis\MetaDslx.CodeAnalysis.csproj", "{D89EFDC3-9EF5-4F8D-9612-133CE1F6F8A7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetaDslx.CodeAnalysis.Antlr4", "Main\MetaDslx.CodeAnalysis.Antlr4\MetaDslx.CodeAnalysis.Antlr4.csproj", "{FF66A465-A45B-4129-B159-9385A685481A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetaDslx.CodeAnalysis.Antlr4", "Main\MetaDslx.CodeAnalysis.Antlr4\MetaDslx.CodeAnalysis.Antlr4.csproj", "{FF66A465-A45B-4129-B159-9385A685481A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetaDslx.Bootstrap.Antlr4", "Bootstrap\MetaDslx.Bootstrap.Antlr4\MetaDslx.Bootstrap.Antlr4.csproj", "{5BC0FE38-F930-4CD7-A13F-4178D2B5C3AE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{FF66A465-A45B-4129-B159-9385A685481A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FF66A465-A45B-4129-B159-9385A685481A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FF66A465-A45B-4129-B159-9385A685481A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5BC0FE38-F930-4CD7-A13F-4178D2B5C3AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5BC0FE38-F930-4CD7-A13F-4178D2B5C3AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5BC0FE38-F930-4CD7-A13F-4178D2B5C3AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5BC0FE38-F930-4CD7-A13F-4178D2B5C3AE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

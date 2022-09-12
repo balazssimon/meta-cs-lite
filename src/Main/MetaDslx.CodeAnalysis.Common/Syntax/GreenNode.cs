@@ -553,7 +553,7 @@ namespace MetaDslx.CodeAnalysis
         #endregion
 
         #region Diagnostics
-        internal DiagnosticInfo[] GetDiagnostics()
+        internal protected DiagnosticInfo[] GetDiagnostics()
         {
             if (this.ContainsDiagnostics)
             {
@@ -1006,5 +1006,7 @@ namespace MetaDslx.CodeAnalysis
             // Get a new green node with the errors added on.
             return SetDiagnostics(errorInfos);
         }
+
+        public abstract GreenNode Clone();
     }
 }

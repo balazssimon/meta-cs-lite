@@ -36,10 +36,10 @@ namespace MetaDslx.CodeAnalysis.Syntax.InternalSyntax
                             512,
                             (key) =>
                             {
-                                var kind = syntaxFacts.GetReservedKeywordKind(key);
+                                var kind = syntaxFacts.GetReservedKeywordRawKind(key);
                                 if (kind == (int)InternalSyntaxKind.None)
                                 {
-                                    kind = syntaxFacts.GetContextualKeywordKind(key);
+                                    kind = syntaxFacts.GetContextualKeywordRawKind(key);
                                 }
                                 return kind;
                             });
@@ -61,7 +61,7 @@ namespace MetaDslx.CodeAnalysis.Syntax.InternalSyntax
 
         public virtual InternalSyntaxToken DefaultSeparator
         {
-            get { return this.Token(_syntaxFacts.DefaultSeparatorKind); }
+            get { return this.Token(_syntaxFacts.DefaultSeparatorRawKind); }
         }
 
         public virtual InternalSyntaxToken EndOfFile
@@ -93,7 +93,7 @@ namespace MetaDslx.CodeAnalysis.Syntax.InternalSyntax
                 return trivia;
             }
 
-            trivia = this.Trivia(_syntaxFacts.DefaultEndOfLineKind, text);
+            trivia = this.Trivia(_syntaxFacts.DefaultEndOfLineRawKind, text);
             if (!elastic)
             {
                 return trivia;
@@ -104,7 +104,7 @@ namespace MetaDslx.CodeAnalysis.Syntax.InternalSyntax
 
         public InternalSyntaxTrivia Whitespace(string text, bool elastic = false)
         {
-            var trivia = this.Trivia(_syntaxFacts.DefaultWhitespaceKind, text);
+            var trivia = this.Trivia(_syntaxFacts.DefaultWhitespaceRawKind, text);
             if (!elastic)
             {
                 return trivia;
@@ -113,18 +113,27 @@ namespace MetaDslx.CodeAnalysis.Syntax.InternalSyntax
             return trivia.WithAnnotationsGreen(new[] { SyntaxAnnotation.ElasticAnnotation });
         }
 
-        public abstract InternalSyntaxTrivia Trivia(int kind, string text, bool elastic = false);
-        public abstract InternalSyntaxTrivia ConflictMarker(string text);
-        public abstract InternalSyntaxTrivia DisabledText(string text);
-        public abstract InternalSyntaxNode SkippedTokensTrivia(GreenNode? token);
-        public abstract InternalSyntaxToken Token(int kind);
-        public abstract InternalSyntaxToken Token(GreenNode? leading, int kind, GreenNode? trailing);
-        public abstract InternalSyntaxToken Token(GreenNode? leading, int kind, string text, GreenNode? trailing);
-        public abstract InternalSyntaxToken Token(GreenNode? leading, int kind, string text, string valueText, GreenNode? trailing);
-        public abstract InternalSyntaxToken Token(GreenNode? leading, int kind, string text, object value, GreenNode? trailing);
-        public abstract InternalSyntaxToken MissingToken(int kind);
-        public abstract InternalSyntaxToken MissingToken(GreenNode? leading, int kind, GreenNode? trailing);
+        internal protected abstract InternalSyntaxTrivia Trivia(int kind, string text, bool elastic = false);
+        internal protected abstract InternalSyntaxToken Token(int kind);
+        internal protected abstract InternalSyntaxToken Token(GreenNode? leading, int kind, GreenNode? trailing);
+        internal protected abstract InternalSyntaxToken Token(GreenNode? leading, int kind, string text, GreenNode? trailing);
+        internal protected abstract InternalSyntaxToken Token(GreenNode? leading, int kind, string text, string valueText, GreenNode? trailing);
+        internal protected abstract InternalSyntaxToken Token(GreenNode? leading, int kind, string text, object value, GreenNode? trailing);
+        internal protected abstract InternalSyntaxToken MissingToken(int kind);
+        internal protected abstract InternalSyntaxToken MissingToken(GreenNode? leading, int kind, GreenNode? trailing);
+
+        public abstract InternalSyntaxNode SkippedTokensTrivia(GreenNode token);
         public abstract InternalSyntaxToken BadToken(GreenNode? leading, string text, GreenNode? trailing);
+
+        public InternalSyntaxTrivia ConflictMarker(string text)
+        {
+            return Trivia((int)InternalSyntaxKind.ConflictMarkerTrivia, text);
+        }
+
+        public InternalSyntaxTrivia DisabledText(string text)
+        {
+            return Trivia((int)InternalSyntaxKind.DisabledTextTrivia, text);
+        }
 
         public InternalSyntax.SyntaxList<TNode> List<TNode>() where TNode : InternalSyntaxNode
         {

@@ -10,6 +10,7 @@ namespace MetaDslx.CodeAnalysis
     {
         internal static readonly Language NoLanguage = new NoLanguageImplementation();
 
+        public abstract string Name { get; }
         public abstract InternalSyntaxFactory InternalSyntaxFactory { get; }
         public abstract SyntaxFacts SyntaxFacts { get; }
         public abstract SyntaxFactory SyntaxFactory { get; }
@@ -17,6 +18,8 @@ namespace MetaDslx.CodeAnalysis
 
         private class NoLanguageImplementation : Language
         {
+            public override string Name => throw new NotImplementedException();
+
             public override SyntaxFacts SyntaxFacts => throw new NotImplementedException();
 
             public override InternalSyntaxFactory InternalSyntaxFactory => throw new NotImplementedException();

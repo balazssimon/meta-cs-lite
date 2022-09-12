@@ -128,7 +128,7 @@ namespace MetaDslx.CodeAnalysis.Syntax
             /// </summary>
             private SyntaxTrivia? GetEndOfLine(SyntaxTriviaList list)
             {
-                var eolKind = Language.SyntaxFacts.DefaultEndOfLineKind;
+                var eolKind = Language.SyntaxFacts.DefaultEndOfLineRawKind;
                 foreach (var trivia in list)
                 {
                     if (trivia.RawKind == eolKind)
@@ -199,7 +199,7 @@ namespace MetaDslx.CodeAnalysis.Syntax
             // deal with separated lists and removal of associated separators
             public override SeparatedSyntaxList<TNode> VisitList<TNode>(SeparatedSyntaxList<TNode> list)
             {
-                var eolKind = Language.SyntaxFacts.DefaultEndOfLineKind;
+                var eolKind = Language.SyntaxFacts.DefaultEndOfLineRawKind;
                 var withSeps = list.GetWithSeparators();
                 bool removeNextSeparator = false;
 

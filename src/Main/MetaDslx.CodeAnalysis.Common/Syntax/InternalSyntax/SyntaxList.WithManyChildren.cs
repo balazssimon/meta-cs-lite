@@ -113,6 +113,11 @@ namespace MetaDslx.CodeAnalysis.Syntax.InternalSyntax
             {
                 return new WithManyChildren(GetDiagnostics(), annotations, children);
             }
+
+            public override GreenNode Clone()
+            {
+                return new WithManyChildren(GetDiagnostics(), GetAnnotations(), children);
+            }
         }
     }
 }

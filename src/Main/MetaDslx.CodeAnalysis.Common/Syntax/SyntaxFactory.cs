@@ -38,10 +38,9 @@ namespace MetaDslx.CodeAnalysis.Syntax
             ElasticMarker = internalSyntaxFactory.ElasticZeroSpace;
         }
 
-        public Language Language => this.LanguageCore;
-        protected abstract Language LanguageCore { get; }
-
+        public abstract Language Language { get; }
         public abstract ParseOptions DefaultParseOptions { get; }
+
         public SyntaxToken EndOfFile
         {
             get
@@ -443,7 +442,7 @@ namespace MetaDslx.CodeAnalysis.Syntax
 
         public SeparatedSyntaxList<TNode> SeparatedList<TNode>(IEnumerable<TNode> nodes) where TNode : SyntaxNode
         {
-            return this.SeparatedList<TNode>(nodes, Language.SyntaxFacts.DefaultSeparatorKind);
+            return this.SeparatedList<TNode>(nodes, Language.SyntaxFacts.DefaultSeparatorRawKind);
         }
 
         /// <summary>

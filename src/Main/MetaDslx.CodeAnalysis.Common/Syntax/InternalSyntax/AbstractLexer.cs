@@ -12,15 +12,15 @@ namespace MetaDslx.CodeAnalysis.Syntax.InternalSyntax
         protected readonly SlidingTextWindow TextWindow;
         private Lazy<LexerStateManager?> _stateManager;
 
-        protected AbstractLexer(Language language, SourceText text, ParseOptions parseOptions)
+        protected AbstractLexer(SourceText text, ParseOptions parseOptions)
         {
-            Language = language;
+            Language = parseOptions.Language;
             TextWindow = new SlidingTextWindow(text);
             ParseOptions = parseOptions;
             _stateManager = new Lazy<LexerStateManager?>(CreateStateManager, false);
         }
 
-        protected LexerStateManager? StateManager => _stateManager.Value;
+        internal protected LexerStateManager? StateManager => _stateManager.Value;
 
         public SourceText SourceText => TextWindow.SourceText;
 
@@ -35,7 +35,7 @@ namespace MetaDslx.CodeAnalysis.Syntax.InternalSyntax
 
         public abstract InternalSyntaxToken? Lex();
 
-        public abstract (InternalSyntaxToken?, IncrementalNodeData) IncrementalLex();
+        public abstract (InternalSyntaxToken?, IncrementalTokenData) IncrementalLex();
 
         protected abstract LexerStateManager? CreateStateManager();
 

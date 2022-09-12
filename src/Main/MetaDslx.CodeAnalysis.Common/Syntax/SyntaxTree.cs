@@ -53,17 +53,15 @@ namespace MetaDslx.CodeAnalysis
         /// </summary>
         public abstract bool HasCompilationUnitRoot { get; }
 
-        public Language Language => this.Options.Language;
+        /// <summary>
+        /// The language of the source code represented by the syntax tree.
+        /// </summary>
+        public abstract Language Language { get; }
 
         /// <summary>
         /// The options used by the parser to produce the syntax tree.
         /// </summary>
-        public ParseOptions Options => this.OptionsCore;
-
-        /// <summary>
-        /// The options used by the parser to produce the syntax tree.
-        /// </summary>
-        protected abstract ParseOptions OptionsCore { get; }
+        public abstract ParseOptions Options { get; }
 
         /// <summary>
         /// The length of the text of the syntax tree.
@@ -241,7 +239,7 @@ namespace MetaDslx.CodeAnalysis
             return this.GetText(CancellationToken.None).ToString();
         }
 
-        internal virtual bool SupportsLocations
+        internal protected virtual bool SupportsLocations
         {
             get { return this.HasCompilationUnitRoot; }
         }

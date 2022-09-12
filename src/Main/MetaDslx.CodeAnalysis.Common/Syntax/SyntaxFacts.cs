@@ -3,11 +3,14 @@ using Roslyn.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace MetaDslx.CodeAnalysis.Syntax
 {
     public abstract class SyntaxFacts
     {
+        private static readonly Regex s_IdentifierPattern = new Regex(@"[a-zA-Z_][a-zA-Z_0-9]*", RegexOptions.Compiled);
+
         // Maximum size of tokens/trivia that we cache and use in quick scanner.
         // From what I see in our own codebase, tokens longer then 40-50 chars are 
         // not very common. 
@@ -18,52 +21,56 @@ namespace MetaDslx.CodeAnalysis.Syntax
         {
         }
 
-        public abstract int DefaultWhitespaceKind { get; }
-        public abstract int DefaultEndOfLineKind { get; }
-        public abstract int DefaultSeparatorKind { get; }
-        public abstract int DefaultIdentifierKind { get; }
-        public virtual int EndOfDirectiveTokenKind => (int)InternalSyntaxKind.None;
-        public virtual int CompilationUnitKind => (int)InternalSyntaxKind.None;
+        internal protected abstract int DefaultWhitespaceRawKind { get; }
+        internal protected abstract int DefaultEndOfLineRawKind { get; }
+        internal protected abstract int DefaultSeparatorRawKind { get; }
+        internal protected abstract int DefaultIdentifierRawKind { get; }
+        internal protected virtual int EndOfDirectiveTokenRawKind => (int)InternalSyntaxKind.None;
+        internal protected virtual int CompilationUnitRawKind => (int)InternalSyntaxKind.None;
 
-        public abstract bool IsToken(int rawKind);
-        public abstract bool IsFixedToken(int rawKind);
-        public abstract bool IsTrivia(int rawKind);
-        public abstract bool IsReservedKeyword(int rawKind);
-        public abstract bool IsContextualKeyword(int rawKind);
-        public abstract bool IsPreprocessorKeyword(int rawKind);
-        public abstract bool IsPreprocessorContextualKeyword(int rawKind);
-        public abstract bool IsPreprocessorDirective(int rawKind);
-        public abstract bool IsIdentifier(int rawKind);
-        public abstract bool IsGeneralCommentTrivia(int rawKind);
-        public abstract bool IsDocumentationCommentTrivia(int rawKind);
-        public abstract string GetKindText(int rawKind);
-        public abstract string GetText(int rawKind);
-        public abstract object GetValue(int rawKind);
-        public abstract int GetReservedKeywordKind(string text);
-        public abstract int GetContextualKeywordKind(string text);
-        public abstract int GetFixedTokenKind(string text);
+        internal protected abstract bool IsToken(int rawKind);
+        internal protected abstract bool IsFixedToken(int rawKind);
+        internal protected abstract bool IsTrivia(int rawKind);
+        internal protected abstract bool IsReservedKeyword(int rawKind);
+        internal protected abstract bool IsContextualKeyword(int rawKind);
+        internal protected abstract bool IsPreprocessorKeyword(int rawKind);
+        internal protected abstract bool IsPreprocessorContextualKeyword(int rawKind);
+        internal protected abstract bool IsPreprocessorDirective(int rawKind);
+        internal protected abstract bool IsIdentifier(int rawKind);
+        internal protected abstract bool IsGeneralCommentTrivia(int rawKind);
+        internal protected abstract bool IsDocumentationCommentTrivia(int rawKind);
+        internal protected abstract string GetText(int rawKind);
+        internal protected abstract object? GetValue(int rawKind);
+        internal protected abstract int GetReservedKeywordRawKind(string text);
+        internal protected abstract int GetContextualKeywordRawKind(string text);
+        internal protected abstract int GetFixedTokenRawKind(string text);
 
-        protected abstract IEnumerable<int> GetRawReservedKeywordKinds();
-        protected abstract IEnumerable<int> GetRawContextualKeywordKinds();
+        internal protected abstract IEnumerable<int> GetReservedKeywordRawKinds();
+        internal protected abstract IEnumerable<int> GetContextualKeywordRawKinds();
 
-        public bool IsCommentTrivia(int rawKind)
+        public virtual bool IsValidIdentifier(string identifier)
+        {
+            return s_IdentifierPattern.IsMatch(identifier);
+        }
+
+        internal protected bool IsCommentTrivia(int rawKind)
         {
             return IsGeneralCommentTrivia(rawKind) || IsDocumentationCommentTrivia(rawKind);
         }
 
-        public bool IsKeyword(int rawKind)
+        internal protected bool IsKeyword(int rawKind)
         {
             return IsReservedKeyword(rawKind) || IsContextualKeyword(rawKind);
         }
 
-        protected IEnumerable<int> GetRawKeywordKinds()
+        internal protected IEnumerable<int> GetRawKeywordKinds()
         {
-            foreach (var reserved in GetRawReservedKeywordKinds())
+            foreach (var reserved in GetReservedKeywordRawKinds())
             {
                 yield return reserved;
             }
 
-            foreach (var contextual in GetRawContextualKeywordKinds())
+            foreach (var contextual in GetContextualKeywordRawKinds())
             {
                 yield return contextual;
             }
@@ -171,7 +178,7 @@ namespace MetaDslx.CodeAnalysis.Syntax
                 }
                 else if (node.Parent != null)
                 {
-                    if (node.Parent.RawKind == CompilationUnitKind)
+                    if (node.Parent.RawKind == CompilationUnitRawKind)
                     {
                         return 0;
                     }
