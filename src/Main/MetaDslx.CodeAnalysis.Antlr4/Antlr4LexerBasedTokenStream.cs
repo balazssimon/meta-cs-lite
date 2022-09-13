@@ -1,6 +1,7 @@
 ﻿using Antlr4.Runtime;
 using Antlr4.Runtime.Misc;
 using MetaDslx.CodeAnalysis.PooledObjects;
+using MetaDslx.CodeAnalysis.Syntax.InternalSyntax;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -10,7 +11,7 @@ using System.Text;
 
 namespace MetaDslx.CodeAnalysis.Antlr4
 {
-    public class Antlr4LexerBasedTokenStream : IDisposable, ITokenSource, ITokenStream, ITokenFactory
+    public class Antlr4LexerBasedTokenStream : IDisposable, ITokenSource, ITokenStream
     {
         private const int DefaultWindowLength = 32;
 
@@ -36,10 +37,15 @@ namespace MetaDslx.CodeAnalysis.Antlr4
         private int _minLookahead;
         private int _maxLookahead;
 
+        private List<Antlr4SyntaxToken> _unprocessedTokens;
+        private int _realPosition;
+
         private static readonly Antlr4SyntaxToken[] s_disposedWindow = new Antlr4SyntaxToken[0];
         private static readonly ObjectPool<Antlr4SyntaxToken[]> s_windowPool = new ObjectPool<Antlr4SyntaxToken[]>(() => new Antlr4SyntaxToken[DefaultWindowLength]);
         private static readonly List<int> s_disposedResetStack = new List<int>();
         private static readonly ObjectPool<List<int>> s_resetStackPool = new ObjectPool<List<int>>(() => new List<int>());
+        private static readonly List<Antlr4SyntaxToken> s_disposedUnprocessedTokens = new List<Antlr4SyntaxToken>();
+        private static readonly ObjectPool<List<Antlr4SyntaxToken>> s_unprocessedTokensPool = new ObjectPool<List<Antlr4SyntaxToken>>(() => new List<Antlr4SyntaxToken>());
 
         public Antlr4LexerBasedTokenStream(Antlr4SyntaxLexer lexer)
         {
@@ -55,6 +61,7 @@ namespace MetaDslx.CodeAnalysis.Antlr4
             _previousToken = null;
             _minLookahead = int.MaxValue;
             _maxLookahead = int.MinValue;
+            _unprocessedTokens = s_unprocessedTokensPool.Allocate();
         }
 
         public void Dispose()
@@ -63,8 +70,12 @@ namespace MetaDslx.CodeAnalysis.Antlr4
             {
                 s_windowPool.Free(_window);
                 _window = s_disposedWindow;
+                _resetStack.Clear();
                 s_resetStackPool.Free(_resetStack);
                 _resetStack = s_disposedResetStack;
+                _unprocessedTokens.Clear();
+                s_unprocessedTokensPool.Free(_unprocessedTokens);
+                _unprocessedTokens = s_disposedUnprocessedTokens;
             }
         }
 
@@ -73,6 +84,8 @@ namespace MetaDslx.CodeAnalysis.Antlr4
         public int Index => _basis + _offset;
 
         public int Position => _position;
+
+        public int RealPosition => _realPosition;
 
         public int Size => throw new NotImplementedException();
 
@@ -84,11 +97,12 @@ namespace MetaDslx.CodeAnalysis.Antlr4
 
         public ICharStream InputStream => _lexer.InputStream;
 
-        public ITokenFactory TokenFactory { get => this; set => throw new NotImplementedException(); }
+        public ITokenFactory TokenFactory { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         public void Consume()
         {
             _previousToken = PeekToken(0);
+            _unprocessedTokens.Add(_previousToken);
             ++_offset;
         }
 
@@ -269,15 +283,111 @@ namespace MetaDslx.CodeAnalysis.Antlr4
             throw new NotImplementedException();
         }
 
-        IToken ITokenFactory.Create(Tuple<ITokenSource, ICharStream> source, int type, string text, int channel, int start, int stop, int line, int charPositionInLine)
+        public InternalSyntaxToken ConsumeRealToken(Antlr4SyntaxToken token, Antlr4SyntaxParser parser)
         {
-            var green = _lexer.Language.InternalSyntaxFactory.MissingToken(Antlr4SyntaxKind.FromAntlr4(type));
-            return new Antlr4SyntaxToken(green, -1, start, line, charPositionInLine);
+            var currentRealPosition = _realPosition;
+            var green = token.Green;
+            SyntaxListBuilder? skippedTokens = null;
+            while (_unprocessedTokens.Count > 0)
+            {
+                var currentToken = _unprocessedTokens[0];
+                _unprocessedTokens.RemoveAt(0);
+                _realPosition += currentToken.Green.FullWidth;
+                if (!object.ReferenceEquals(token, currentToken))
+                {
+                    if (skippedTokens == null) skippedTokens = new SyntaxListBuilder(4);
+                    skippedTokens.Add(currentToken.Green);
+                }
+                else
+                {
+                    break;
+                }
+            }
+            if (skippedTokens != null && skippedTokens.Count > 0)
+            {
+                green = AddSkippedSyntax(green, skippedTokens.ToListNode());
+            }
+            var errors = parser.GetErrorsForToken(currentRealPosition, green);
+            if (errors != null && errors.Length > 0)
+            {
+                green = green.WithAdditionalDiagnosticsGreen(errors);
+            }
+            return green;
         }
 
-        IToken ITokenFactory.Create(int type, string text)
+        /// <summary>
+        /// Converts skippedSyntax node into tokens and adds these as trivia on the target token.
+        /// Also adds the first error (in depth-first preorder) found in the skipped syntax tree to the target token.
+        /// </summary>
+        internal InternalSyntaxToken AddSkippedSyntax(InternalSyntaxToken target, GreenNode skippedSyntax)
         {
-            throw new NotImplementedException();
+            var diagnostics = ArrayBuilder<SyntaxDiagnosticInfo>.GetInstance();
+            var builder = new SyntaxListBuilder(4);
+            int currentOffset = 0;
+            foreach (var node in skippedSyntax.EnumerateNodes())
+            {
+                InternalSyntaxToken? token = node as InternalSyntaxToken;
+                if (token != null)
+                {
+                    builder.Add(token.GetLeadingTrivia());
+
+                    // separate trivia from the tokens
+                    InternalSyntaxToken tk = (InternalSyntaxToken)token.WithLeadingTrivia(null).WithTrailingTrivia(null);
+
+                    // adjust relative offsets of diagnostics attached to the token:
+                    int leadingWidth = token.GetLeadingTriviaWidth();
+                    if (leadingWidth > 0)
+                    {
+                        var tokenDiagnostics = tk.GetDiagnostics();
+                        for (int i = 0; i < tokenDiagnostics.Length; i++)
+                        {
+                            var d = (SyntaxDiagnosticInfo)tokenDiagnostics[i];
+                            var newDiag = new SyntaxDiagnosticInfo(d.Offset - leadingWidth, d.Width, d.Descriptor, d.Arguments);
+                            if (token.Width > 0) tokenDiagnostics[i] = newDiag;
+                            else diagnostics.Add(newDiag);
+                        }
+                    }
+
+                    if (token.Width > 0)
+                    {
+                        builder.Add(_lexer.Language.InternalSyntaxFactory.SkippedTokensTrivia(tk));
+                    }
+
+                    builder.Add(token.GetTrailingTrivia());
+
+                    currentOffset += token.FullWidth;
+                }
+                else if (node.ContainsDiagnostics)
+                {
+                    var nodeDiagnostics = node.GetDiagnostics();
+                    for (int i = 0; i < nodeDiagnostics.Length; i++)
+                    {
+                        var d = (SyntaxDiagnosticInfo)nodeDiagnostics[i];
+                        var newDiag = new SyntaxDiagnosticInfo(currentOffset + d.Offset, d.Width, d.Descriptor, d.Arguments);
+                        diagnostics.Add(newDiag);
+                    }
+                }
+            }
+
+            int triviaWidth = currentOffset;
+            var trivia = builder.ToListNode();
+
+            // Since we're adding triviaWidth before the token, we have to add that much to
+            // the offset of each of its diagnostics.
+            if (triviaWidth > 0)
+            {
+                var targetDiagnostics = target.GetDiagnostics();
+                for (int i = 0; i < targetDiagnostics.Length; i++)
+                {
+                    var d = (SyntaxDiagnosticInfo)targetDiagnostics[i];
+                    targetDiagnostics[i] = new SyntaxDiagnosticInfo(d.Offset + triviaWidth, d.Width, d.Descriptor, d.Arguments);
+                }
+            }
+
+            var leadingTrivia = target.GetLeadingTrivia();
+            target = (InternalSyntaxToken)target.WithLeadingTrivia(SyntaxList.Concat(trivia, leadingTrivia));
+            diagnostics.Free();
+            return target;
         }
     }
 }

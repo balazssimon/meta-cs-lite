@@ -3,24 +3,30 @@ using MetaDslx.CodeAnalysis.Syntax.InternalSyntax;
 using MetaDslx.CodeAnalysis.Text;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using System.Threading;
 
 namespace MetaDslx.CodeAnalysis.Antlr4
 {
-    public abstract class Antlr4SyntaxParser : SyntaxParser
+    public abstract class Antlr4SyntaxParser : SyntaxParser, IAntlrErrorListener<IToken>
     {
+        private readonly Antlr4LexerBasedTokenStream _tokenStream;
         private readonly Antlr4Parser _parser;
         private readonly Dictionary<RuleContext, GreenNode> _nodeCache;
 
         protected Antlr4SyntaxParser(Antlr4SyntaxLexer lexer, SyntaxNode? oldTree, ParseData? oldParseData, IEnumerable<TextChangeRange>? changes, CancellationToken cancellationToken)
             : base(lexer, oldTree, oldParseData, changes, cancellationToken)
         {
-            _parser = ((IAntlr4SyntaxFactory)Language.InternalSyntaxFactory).CreateAntlr4Parser(new Antlr4LexerBasedTokenStream(lexer));
+            _tokenStream = new Antlr4LexerBasedTokenStream(lexer);
+            _parser = ((IAntlr4SyntaxFactory)Language.InternalSyntaxFactory).CreateAntlr4Parser(_tokenStream);
+            _parser.RemoveErrorListeners();
+            _parser.AddErrorListener(this);
             _nodeCache = new Dictionary<RuleContext, GreenNode>();
         }
 
         public Antlr4Parser Antlr4Parser => _parser;
+        public new Antlr4SyntaxLexer Lexer => (Antlr4SyntaxLexer)base.Lexer;
 
         public bool IsIncremental => false;
         public SyntaxNode? CurrentNode => null;
@@ -74,6 +80,30 @@ namespace MetaDslx.CodeAnalysis.Antlr4
         protected override ParserStateManager? CreateStateManager()
         {
             return new Antlr4ParserStateManager(this);
+        }
+
+        public void SyntaxError(TextWriter output, IRecognizer recognizer, IToken offendingSymbol, int line, int charPositionInLine, string msg, RecognitionException e)
+        {
+            IToken startToken;
+            IToken endToken;
+            if (e is NoViableAltException nvae)
+            {
+                startToken = nvae.StartToken;
+                endToken = nvae.OffendingToken;
+            }
+            else
+            {
+                startToken = offendingSymbol;
+                endToken = offendingSymbol;
+            }
+            var position = startToken.StartIndex;
+            var width = Math.Max(endToken.StopIndex - startToken.StartIndex + 1, 0);
+            this.AddError(new SyntaxDiagnosticInfo(position, width, ErrorCode.ERR_SyntaxError, msg));
+        }
+
+        public InternalSyntaxToken ConsumeRealToken(Antlr4SyntaxToken token)
+        {
+            return _tokenStream.ConsumeRealToken(token, this);
         }
 
         protected class Antlr4ParserStateManager : ParserStateManager

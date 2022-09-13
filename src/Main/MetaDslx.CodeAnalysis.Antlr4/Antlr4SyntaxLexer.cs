@@ -23,7 +23,6 @@ namespace MetaDslx.CodeAnalysis.Antlr4
         {
             _stream = new Antlr4InputStream(this, this.TextWindow);
             _lexer = ((IAntlr4SyntaxFactory)Language.InternalSyntaxFactory).CreateAntlr4Lexer(_stream);
-            //_lexer.TokenFactory = this;
             _lexer.RemoveErrorListeners();
             _lexer.AddErrorListener(this);
             _syntaxFacts = Language.SyntaxFacts;

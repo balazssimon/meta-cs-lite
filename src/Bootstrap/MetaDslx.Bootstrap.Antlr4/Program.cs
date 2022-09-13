@@ -11,10 +11,17 @@ namespace MetaDslx.Bootstrap.Antlr4
     {
         static void Main(string[] args)
         {
-            var lexer = SandyLanguage.Instance.InternalSyntaxFactory.CreateLexer(SourceText.From("var a @ = 3\r\nvar b = 5\r\nvar c = a + b\r\n\r\n@"), null);
-            var parser = SandyLanguage.Instance.InternalSyntaxFactory.CreateParser(lexer, null, null, null, default);
-            var main = parser.Parse();
-            Console.WriteLine(main);
+
+            //string source = "var a @ = 3\r\nvar b = 5\r\nvar c = + b\r\n\r\n@";
+            string source = "var a = 3\r\nvar b = 5\r\nvar c = a + b";
+            var tree = SandySyntaxTree.ParseText(source);
+            Console.WriteLine(tree);
+
+            foreach (var diag in tree.GetDiagnostics())
+            {
+                Console.WriteLine(diag);
+            }
+
             /*var parser = new SandyParser(new Antlr4LexerBasedTokenStream(lexer));
             parser.ErrorHandler = new DefaultErrorStrategy();
             var main = parser.main();

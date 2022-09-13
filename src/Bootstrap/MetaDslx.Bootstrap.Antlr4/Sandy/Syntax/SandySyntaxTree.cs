@@ -142,7 +142,7 @@ namespace MetaDslx.Bootstrap.Antlr4.Sandy
                 throw new ArgumentNullException(nameof(text));
             }
             options = options ?? SandyParseOptions.Default;
-            using (var lexer = SandyLanguage.Instance.InternalSyntaxFactory.CreateLexer(text, options))
+            var lexer = SandyLanguage.Instance.InternalSyntaxFactory.CreateLexer(text, options);
             using (var parser = SandyLanguage.Instance.InternalSyntaxFactory.CreateParser(lexer, oldTree: null, oldParseData: ParseData.Empty, changes: null, cancellationToken: cancellationToken))
             {
                 var compilationUnit = (MainSyntax)parser.Parse();
@@ -192,7 +192,7 @@ namespace MetaDslx.Bootstrap.Antlr4.Sandy
                 changes = null;
                 oldTree = null;
             }
-            using (var lexer = SandyLanguage.Instance.InternalSyntaxFactory.CreateLexer(newText, Options))
+            var lexer = SandyLanguage.Instance.InternalSyntaxFactory.CreateLexer(newText, Options);
             using (var parser = SandyLanguage.Instance.InternalSyntaxFactory.CreateParser(lexer, oldTree?.GetRoot(), oldTree?.ParseData ?? ParseData.Empty, changes))
             {
                 var compilationUnit = (MainSyntax)parser.Parse();

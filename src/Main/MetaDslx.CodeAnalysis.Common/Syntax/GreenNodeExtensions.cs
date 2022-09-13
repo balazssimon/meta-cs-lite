@@ -107,6 +107,102 @@ namespace MetaDslx.CodeAnalysis
             }
         }
 
+        public static TNode WithDiagnosticsGreen<TNode>(this TNode node, IEnumerable<DiagnosticInfo> diagnostics) where TNode : GreenNode
+        {
+            var newDiagnostics = ArrayBuilder<DiagnosticInfo>.GetInstance();
+            foreach (var candidate in diagnostics)
+            {
+                if (!newDiagnostics.Contains(candidate))
+                {
+                    newDiagnostics.Add(candidate);
+                }
+            }
+
+            if (newDiagnostics.Count == 0)
+            {
+                newDiagnostics.Free();
+                var existingDiagnostics = node.GetDiagnostics();
+                if (existingDiagnostics == null || existingDiagnostics.Length == 0)
+                {
+                    return node;
+                }
+                else
+                {
+                    return (TNode)node.SetDiagnostics(null);
+                }
+            }
+            else
+            {
+                return (TNode)node.SetDiagnostics(newDiagnostics.ToArrayAndFree());
+            }
+        }
+
+        public static TNode WithAdditionalDiagnosticsGreen<TNode>(this TNode node, IEnumerable<DiagnosticInfo>? diagnostics) where TNode : GreenNode
+        {
+            var existingDiagnostics = node.GetDiagnostics();
+
+            if (diagnostics == null)
+            {
+                return node;
+            }
+
+            var newDiagnostics = ArrayBuilder<DiagnosticInfo>.GetInstance();
+            newDiagnostics.AddRange(existingDiagnostics);
+
+            foreach (var candidate in diagnostics)
+            {
+                if (!newDiagnostics.Contains(candidate))
+                {
+                    newDiagnostics.Add(candidate);
+                }
+            }
+
+            if (newDiagnostics.Count == existingDiagnostics.Length)
+            {
+                newDiagnostics.Free();
+                return node;
+            }
+            else
+            {
+                return (TNode)node.SetDiagnostics(newDiagnostics.ToArrayAndFree());
+            }
+        }
+
+        public static TNode WithoutDiagnosticsGreen<TNode>(this TNode node, IEnumerable<DiagnosticInfo>? diagnostics) where TNode : GreenNode
+        {
+            var existingDiagnostics = node.GetDiagnostics();
+
+            if (diagnostics == null || existingDiagnostics.Length == 0)
+            {
+                return node;
+            }
+
+            var removalDiagnostics = ArrayBuilder<DiagnosticInfo>.GetInstance();
+            removalDiagnostics.AddRange(diagnostics);
+            try
+            {
+                if (removalDiagnostics.Count == 0)
+                {
+                    return node;
+                }
+
+                var newDiagnostics = ArrayBuilder<DiagnosticInfo>.GetInstance();
+                foreach (var candidate in existingDiagnostics)
+                {
+                    if (!removalDiagnostics.Contains(candidate))
+                    {
+                        newDiagnostics.Add(candidate);
+                    }
+                }
+
+                return (TNode)node.SetDiagnostics(newDiagnostics.ToArrayAndFree());
+            }
+            finally
+            {
+                removalDiagnostics.Free();
+            }
+        }
+
         public static TNode WithDiagnosticsGreen<TNode>(this TNode node, DiagnosticInfo[]? diagnostics) where TNode : GreenNode
         {
             return (TNode)node.SetDiagnostics(diagnostics);

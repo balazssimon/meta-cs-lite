@@ -464,29 +464,17 @@ namespace MetaDslx.Bootstrap.Antlr4.Sandy.Syntax.InternalSyntax
             }
             private GreenNode VisitTerminal(IToken token, SandySyntaxKind kind)
             {
-				if (kind == SandySyntaxKind.Eof)
+				if (token != null)
 				{
-					return _syntaxParser.EatToken();
+					var green = ((Antlr4SyntaxToken)token).Green;
+					Debug.Assert(kind == null || green.RawKind == (int)kind);
+					return ConsumeRealToken((Antlr4SyntaxToken)token);
 				}
-				if (token == null)
-				{
-					if (kind != null)
-					{
-						return _factory.MissingToken(kind);
-					}
-					else
-					{
-						return null;
-					}
-				}
-                var green = ((Antlr4SyntaxToken)token).Green;
-				Debug.Assert(kind == null || green.RawKind == (int)kind);
-				return green;
-            }
+				throw new NotImplementedException("Should not reach this point.");
+			}
             public GreenNode VisitTerminal(IToken token)
             {
-				var green = ((Antlr4SyntaxToken)token).Green;
-				return green;
+				return ConsumeRealToken((Antlr4SyntaxToken)token);
 			}
             private GreenNode VisitTerminal(ITerminalNode node, SandySyntaxKind kind)
             {
@@ -494,26 +482,18 @@ namespace MetaDslx.Bootstrap.Antlr4.Sandy.Syntax.InternalSyntax
                 {
 					var green = ((Antlr4SyntaxToken)node.Symbol).Green;
 					Debug.Assert(kind == null || green.RawKind == (int)kind);
-					return green;
+					return ConsumeRealToken((Antlr4SyntaxToken)node.Symbol);
 				}
-				if (kind == SandySyntaxKind.Eof)
-				{
-					return _syntaxParser.EatToken();
-				}
-                if (node == null || node.Symbol == null)
-				{
-					if (kind != null)
-					{
-						return _factory.MissingToken(kind);
-					}
-				}
-				return null;
+				throw new NotImplementedException("Should not reach this point.");
 			}
 			public override GreenNode VisitTerminal(ITerminalNode node)
             {
-				var green = ((Antlr4SyntaxToken)node.Symbol).Green;
-				return green;
+				return ConsumeRealToken((Antlr4SyntaxToken)node.Symbol);
 			}
+			private InternalSyntaxToken ConsumeRealToken(Antlr4SyntaxToken token)
+            {
+				return _syntaxParser.ConsumeRealToken(token);
+            }
 			public override GreenNode Visit(IParseTree tree)
 			{
                 if (tree is ICachedRuleContext cached)
