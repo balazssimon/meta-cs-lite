@@ -13,7 +13,10 @@ namespace MetaDslx.Bootstrap.Antlr4
         {
 
             //string source = "var a @ = 3\r\nvar b = 5\r\nvar c = + b\r\n\r\n@";
-            string source = "var a = 3\r\nvar b = 5\r\nvar c = a + b";
+            //string source = "var a = 3\r\nvar b = 5\r\nvar c = a + b";
+            //string source = "var a = 3\r\nvar b = 5\r\nvar c = ((a + b\r\n";
+            //string source = "var a = 3\r\nvar b = 5\r\nvar c = (a + b)\r\n";
+            string source = "var a = 3\r\nvar b = 5\r\nvar c = (a + b\r\n";
             var tree = SandySyntaxTree.ParseText(source);
             Console.WriteLine(tree);
 

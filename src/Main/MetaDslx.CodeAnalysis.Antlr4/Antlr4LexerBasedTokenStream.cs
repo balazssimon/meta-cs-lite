@@ -11,7 +11,7 @@ using System.Text;
 
 namespace MetaDslx.CodeAnalysis.Antlr4
 {
-    public class Antlr4LexerBasedTokenStream : IDisposable, ITokenSource, ITokenStream
+    public class Antlr4LexerBasedTokenStream : IDisposable, ITokenSource, ITokenStream, ITokenFactory
     {
         private const int DefaultWindowLength = 32;
 
@@ -97,7 +97,7 @@ namespace MetaDslx.CodeAnalysis.Antlr4
 
         public ICharStream InputStream => _lexer.InputStream;
 
-        public ITokenFactory TokenFactory { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public ITokenFactory TokenFactory { get => this; set => throw new NotImplementedException(); }
 
         public void Consume()
         {
@@ -388,6 +388,24 @@ namespace MetaDslx.CodeAnalysis.Antlr4
             target = (InternalSyntaxToken)target.WithLeadingTrivia(SyntaxList.Concat(trivia, leadingTrivia));
             diagnostics.Free();
             return target;
+        }
+
+        public InternalSyntaxToken ConsumeMissingToken(int rawKind, Antlr4SyntaxParser parser)
+        {
+            return _lexer.Language.InternalSyntaxFactory.MissingToken(rawKind);
+        }
+
+        [return: NotNull]
+        public IToken Create(Tuple<ITokenSource, ICharStream> source, int type, string text, int channel, int start, int stop, int line, int charPositionInLine)
+        {
+            var green = _lexer.Language.InternalSyntaxFactory.MissingToken(Antlr4SyntaxKind.FromAntlr4(type));
+            return new Antlr4SyntaxToken(green, -1, -1, line, charPositionInLine);
+        }
+
+        [return: NotNull]
+        public IToken Create(int type, string text)
+        {
+            throw new NotImplementedException();
         }
     }
 }

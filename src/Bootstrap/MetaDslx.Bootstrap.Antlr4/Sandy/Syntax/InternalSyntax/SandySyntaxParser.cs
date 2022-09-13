@@ -470,7 +470,10 @@ namespace MetaDslx.Bootstrap.Antlr4.Sandy.Syntax.InternalSyntax
 					Debug.Assert(kind == null || green.RawKind == (int)kind);
 					return ConsumeRealToken((Antlr4SyntaxToken)token);
 				}
-				throw new NotImplementedException("Should not reach this point.");
+				else
+				{
+					return ConsumeMissingToken(kind);
+				}
 			}
             public GreenNode VisitTerminal(IToken token)
             {
@@ -484,7 +487,10 @@ namespace MetaDslx.Bootstrap.Antlr4.Sandy.Syntax.InternalSyntax
 					Debug.Assert(kind == null || green.RawKind == (int)kind);
 					return ConsumeRealToken((Antlr4SyntaxToken)node.Symbol);
 				}
-				throw new NotImplementedException("Should not reach this point.");
+				else
+                {
+					return ConsumeMissingToken(kind);
+				}
 			}
 			public override GreenNode VisitTerminal(ITerminalNode node)
             {
@@ -494,6 +500,10 @@ namespace MetaDslx.Bootstrap.Antlr4.Sandy.Syntax.InternalSyntax
             {
 				return _syntaxParser.ConsumeRealToken(token);
             }
+			private InternalSyntaxToken ConsumeMissingToken(SandySyntaxKind kind)
+			{
+				return _syntaxParser.ConsumeMissingToken((int)kind);
+			}
 			public override GreenNode Visit(IParseTree tree)
 			{
                 if (tree is ICachedRuleContext cached)

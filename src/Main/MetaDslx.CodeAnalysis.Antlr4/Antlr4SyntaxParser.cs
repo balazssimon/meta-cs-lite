@@ -22,6 +22,7 @@ namespace MetaDslx.CodeAnalysis.Antlr4
             _parser = ((IAntlr4SyntaxFactory)Language.InternalSyntaxFactory).CreateAntlr4Parser(_tokenStream);
             _parser.RemoveErrorListeners();
             _parser.AddErrorListener(this);
+            _parser.ErrorHandler = new DefaultErrorStrategy();
             _nodeCache = new Dictionary<RuleContext, GreenNode>();
         }
 
@@ -104,6 +105,11 @@ namespace MetaDslx.CodeAnalysis.Antlr4
         public InternalSyntaxToken ConsumeRealToken(Antlr4SyntaxToken token)
         {
             return _tokenStream.ConsumeRealToken(token, this);
+        }
+
+        public InternalSyntaxToken ConsumeMissingToken(int rawKind)
+        {
+            return _tokenStream.ConsumeMissingToken(rawKind, this);
         }
 
         protected class Antlr4ParserStateManager : ParserStateManager
