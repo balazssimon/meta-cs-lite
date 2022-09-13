@@ -6,50 +6,49 @@ using System.Text;
 
 namespace MetaDslx.CodeAnalysis.Antlr4
 {
-    public abstract class Antlr4SyntaxToken : InternalSyntaxToken, IToken
+    public class Antlr4SyntaxToken : IToken
     {
-        protected Antlr4SyntaxToken(ushort kind) : base(kind)
+        private readonly int _index;
+        private readonly int _position;
+        private readonly int _line;
+        private readonly int _column;
+
+        public Antlr4SyntaxToken(InternalSyntaxToken green, int index, int position, int line, int column)
         {
+            Green = green;
+            _index = index;
+            _position = position;
+            _line = line;
+            _column = column;
         }
 
-        protected Antlr4SyntaxToken(ushort kind, DiagnosticInfo[]? diagnostics) : base(kind, diagnostics)
+        public InternalSyntaxToken Green { get; }
+
+        public string Text => Green.Text;
+
+        public int Type => Antlr4SyntaxKind.ToAntlr4(Green.RawKind);
+
+        public int Line => _line + 1;
+
+        public int Column => _column + 1;
+
+        public int Channel => 0;
+
+        public int TokenIndex => _index;
+
+        public int StartIndex => _position;
+
+        public int StopIndex => _position + Green.FullWidth - 1;
+
+        public ITokenSource TokenSource => throw new NotImplementedException();
+
+        public ICharStream InputStream => throw new NotImplementedException();
+
+        public override string ToString()
         {
+            string? text = Text?.Replace("\t", "\\t")?.Replace("\r", "\\r")?.Replace("\n", "\\n");
+            if (Type == IntStreamConstants.EOF) text = "<EOF>";
+            return $"[@{TokenIndex},{StartIndex}:{StopIndex}={text},<{Type}>,{Line}:{Column}]";
         }
-
-        protected Antlr4SyntaxToken(ushort kind, int fullWidth) : base(kind, fullWidth)
-        {
-        }
-
-        protected Antlr4SyntaxToken(ushort kind, DiagnosticInfo[]? diagnostics, SyntaxAnnotation[]? annotations) : base(kind, diagnostics, annotations)
-        {
-        }
-
-        protected Antlr4SyntaxToken(ushort kind, int fullWidth, DiagnosticInfo[]? diagnostics) : base(kind, fullWidth, diagnostics)
-        {
-        }
-
-        protected Antlr4SyntaxToken(ushort kind, int fullWidth, DiagnosticInfo[]? diagnostics, SyntaxAnnotation[]? annotations) : base(kind, fullWidth, diagnostics, annotations)
-        {
-        }
-
-        string IToken.Text => this.Text;
-
-        int IToken.Type => Antlr4SyntaxKind.ToAntlr4(this.RawKind);
-
-        int IToken.Line => -1;
-
-        int IToken.Column => -1;
-
-        int IToken.Channel => 0;
-
-        int IToken.TokenIndex => -1;
-
-        int IToken.StartIndex => -1;
-
-        int IToken.StopIndex => -1;
-
-        ITokenSource IToken.TokenSource => null!;
-
-        ICharStream IToken.InputStream => null!;
     }
 }

@@ -46,7 +46,7 @@ namespace MetaDslx.CodeAnalysis.Syntax.InternalSyntax
         /// <returns>The syntax kind of the token or trivia and whether to try to cache the result.</returns>
         protected abstract (int rawKind, bool isTrivia, bool cache) ScanLexeme();
 
-        protected abstract InternalSyntaxToken CreateToken(GreenNode? leadingTrivia, int rawKind, string text, GreenNode? trailingTrivia);
+        internal protected abstract InternalSyntaxToken CreateToken(GreenNode? leadingTrivia, int rawKind, string text, GreenNode? trailingTrivia);
 
         protected abstract InternalSyntaxTrivia CreateTrivia(int rawKind, string text);
 

@@ -6,13 +6,13 @@ using System.Text;
 
 namespace MetaDslx.CodeAnalysis.Antlr4
 {
-    public class Antlr4TokenStream : ITokenStream
+    public class Antlr4ParserBasedTokenStream : ITokenStream
     {
-        private readonly Antlr4SyntaxLexer _lexer;
+        private readonly Antlr4SyntaxParser _parser;
 
-        public Antlr4TokenStream(Antlr4SyntaxLexer lexer)
+        public Antlr4ParserBasedTokenStream(Antlr4SyntaxParser parser)
         {
-            _lexer = lexer;
+            _parser = parser;
         }
 
         public ITokenSource TokenSource => throw new NotImplementedException();

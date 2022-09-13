@@ -159,6 +159,100 @@ namespace MetaDslx.Bootstrap.Antlr4.Sandy.Syntax
 			return GetValue((SandySyntaxKind)rawKind);
 		}
 
+		public string GetKindText(SandySyntaxKind kind)
+		{
+			switch (kind)
+			{
+				case SandySyntaxKind.List:
+					return "List";
+				case SandySyntaxKind.BadToken:
+					return "BadToken";
+				case SandySyntaxKind.MissingToken:
+					return "MissingToken";
+				case SandySyntaxKind.SkippedTokensTrivia:
+					return "SkippedTokensTrivia";
+				case SandySyntaxKind.DisabledTextTrivia:
+					return "DisabledTextTrivia";
+				case SandySyntaxKind.ConflictMarkerTrivia:
+					return "ConflictMarkerTrivia";
+				case SandySyntaxKind.Eof:
+					return "Eof";
+				case SandySyntaxKind.NEWLINE:
+					return "NEWLINE";
+				case SandySyntaxKind.WS:
+					return "WS";
+				case SandySyntaxKind.VAR:
+					return "VAR";
+				case SandySyntaxKind.PRINT:
+					return "PRINT";
+				case SandySyntaxKind.AS:
+					return "AS";
+				case SandySyntaxKind.INT:
+					return "INT";
+				case SandySyntaxKind.DECIMAL:
+					return "DECIMAL";
+				case SandySyntaxKind.INTLIT:
+					return "INTLIT";
+				case SandySyntaxKind.DECLIT:
+					return "DECLIT";
+				case SandySyntaxKind.PLUS:
+					return "PLUS";
+				case SandySyntaxKind.MINUS:
+					return "MINUS";
+				case SandySyntaxKind.ASTERISK:
+					return "*";
+				case SandySyntaxKind.DIVISION:
+					return "ASTERISK";
+				case SandySyntaxKind.ASSIGN:
+					return "ASSIGN";
+				case SandySyntaxKind.LPAREN:
+					return "LPAREN";
+				case SandySyntaxKind.RPAREN:
+					return "RPAREN";
+				case SandySyntaxKind.COMMA:
+					return "COMMA";
+				case SandySyntaxKind.ID:
+					return "ID";
+				case SandySyntaxKind.Main:
+					return "Main";
+				case SandySyntaxKind.Line:
+					return "Line";
+				case SandySyntaxKind.Statement:
+					return "Statement";
+				case SandySyntaxKind.Print:
+					return "Print";
+				case SandySyntaxKind.VarDeclaration:
+					return "VarDeclaration";
+				case SandySyntaxKind.Assignment:
+					return "Assignment";
+				case SandySyntaxKind.BinaryMulOperation:
+					return "BinaryMulOperation";
+				case SandySyntaxKind.BinaryAddOperation:
+					return "BinaryAddOperation";
+				case SandySyntaxKind.TypeConversion:
+					return "TypeConversion";
+				case SandySyntaxKind.ParenExpression:
+					return "ParenExpression";
+				case SandySyntaxKind.VarReference:
+					return "VarReference";
+				case SandySyntaxKind.MinusExpression:
+					return "MinusExpression";
+				case SandySyntaxKind.IntLiteral:
+					return "IntLiteral";
+				case SandySyntaxKind.DecimalLiteral:
+					return "DecimalLiteral";
+				case SandySyntaxKind.Type:
+					return "Type";
+				default:
+					return string.Empty;
+			}
+		}
+
+		protected override string GetKindText(int rawKind)
+		{
+			return GetKindText((SandySyntaxKind)rawKind);
+		}
+
 		public string GetText(SandySyntaxKind kind)
 		{
 			switch (kind)
@@ -194,7 +288,7 @@ namespace MetaDslx.Bootstrap.Antlr4.Sandy.Syntax
 			}
 		}
 
-        protected override string GetText(int rawKind)
+		protected override string GetText(int rawKind)
         {
 			return GetText((SandySyntaxKind)rawKind);
         }
@@ -226,6 +320,9 @@ namespace MetaDslx.Bootstrap.Antlr4.Sandy.Syntax
 		{
 			switch(kind)
 			{
+				case SandySyntaxKind.NEWLINE:
+				case SandySyntaxKind.WS: 
+					return true;
 				default:
 					return false;
 			}

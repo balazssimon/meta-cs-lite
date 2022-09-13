@@ -39,6 +39,7 @@ namespace MetaDslx.CodeAnalysis.Syntax
         internal protected abstract bool IsIdentifier(int rawKind);
         internal protected abstract bool IsGeneralCommentTrivia(int rawKind);
         internal protected abstract bool IsDocumentationCommentTrivia(int rawKind);
+        internal protected abstract string GetKindText(int rawKind);
         internal protected abstract string GetText(int rawKind);
         internal protected abstract object? GetValue(int rawKind);
         internal protected abstract int GetReservedKeywordRawKind(string text);

@@ -273,15 +273,6 @@ namespace MetaDslx.Bootstrap.Antlr4.Sandy.Syntax
 		{ 
 			get { return this.GetRed(ref this.statement, 0); } 
 		}
-	    public SyntaxToken NEWLINE 
-		{ 
-			get 
-			{ 
-				var green = (global::MetaDslx.Bootstrap.Antlr4.Sandy.Syntax.InternalSyntax.LineGreen)this.Green;
-				var greenToken = green.NEWLINE;
-				return new SyntaxToken(this, greenToken, this.GetChildPosition(1), this.GetChildIndex(1));
-			}
-		}
 	
 	    protected override SyntaxNode GetNodeSlot(int index)
 	    {
@@ -303,20 +294,14 @@ namespace MetaDslx.Bootstrap.Antlr4.Sandy.Syntax
 	
 	    public LineSyntax WithStatement(StatementSyntax statement)
 		{
-			return this.Update(Statement, this.NEWLINE);
+			return this.Update(statement);
 		}
 	
-	    public LineSyntax WithNEWLINE(SyntaxToken nEWLINE)
-		{
-			return this.Update(this.Statement, NEWLINE);
-		}
-	
-	    public LineSyntax Update(StatementSyntax statement, SyntaxToken nEWLINE)
+	    public LineSyntax Update(StatementSyntax statement)
 	    {
-	        if (this.Statement != statement ||
-				this.NEWLINE != nEWLINE)
+	        if (this.Statement != statement)
 	        {
-	            var newNode = SandyLanguage.Instance.SyntaxFactory.Line(statement, nEWLINE);
+	            var newNode = SandyLanguage.Instance.SyntaxFactory.Line(statement);
 	            var annotations = this.GetAnnotations();
 	            if (annotations != null && annotations.Length > 0)
 	               newNode = newNode.WithAnnotations(annotations);
@@ -1941,8 +1926,7 @@ namespace MetaDslx.Bootstrap.Antlr4.Sandy.Syntax
 		public virtual SyntaxNode VisitLine(LineSyntax node)
 		{
 		    var statement = (StatementSyntax)this.Visit(node.Statement);
-		    var nEWLINE = this.VisitToken(node.NEWLINE);
-			return node.Update(statement, nEWLINE);
+			return node.Update(statement);
 		}
 		
 		public virtual SyntaxNode VisitStatement(StatementSyntax node)
@@ -2176,12 +2160,10 @@ namespace MetaDslx.Bootstrap.Antlr4.Sandy.Syntax
 			return this.Main(default, eOF);
 		}
 		
-		public LineSyntax Line(StatementSyntax statement, SyntaxToken nEWLINE)
+		public LineSyntax Line(StatementSyntax statement)
 		{
 		    if (statement == null) throw new ArgumentNullException(nameof(statement));
-		    if (nEWLINE == null) throw new ArgumentNullException(nameof(nEWLINE));
-		    if (nEWLINE.RawKind != (int)SandySyntaxKind.NEWLINE) throw new ArgumentException(nameof(nEWLINE));
-		    return (LineSyntax)SandyLanguage.Instance.InternalSyntaxFactory.Line((Syntax.InternalSyntax.StatementGreen)statement.Green, (InternalSyntaxToken)nEWLINE.Node).CreateRed();
+		    return (LineSyntax)SandyLanguage.Instance.InternalSyntaxFactory.Line((Syntax.InternalSyntax.StatementGreen)statement.Green).CreateRed();
 		}
 		
 		public StatementSyntax Statement(VarDeclarationSyntax varDeclaration)

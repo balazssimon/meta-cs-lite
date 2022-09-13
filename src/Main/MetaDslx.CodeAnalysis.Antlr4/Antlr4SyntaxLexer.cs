@@ -10,7 +10,7 @@ using System.Text;
 
 namespace MetaDslx.CodeAnalysis.Antlr4
 {
-    public abstract class Antlr4SyntaxLexer : SyntaxLexer, IAntlrErrorListener<int>, ITokenFactory
+    public abstract class Antlr4SyntaxLexer : SyntaxLexer, IAntlrErrorListener<int>
     {
         private readonly Antlr4InputStream _stream;
         private readonly Antlr4Lexer _lexer;
@@ -23,7 +23,7 @@ namespace MetaDslx.CodeAnalysis.Antlr4
         {
             _stream = new Antlr4InputStream(this, this.TextWindow);
             _lexer = ((IAntlr4SyntaxFactory)Language.InternalSyntaxFactory).CreateAntlr4Lexer(_stream);
-            _lexer.TokenFactory = this;
+            //_lexer.TokenFactory = this;
             _lexer.RemoveErrorListeners();
             _lexer.AddErrorListener(this);
             _syntaxFacts = Language.SyntaxFacts;
@@ -50,24 +50,18 @@ namespace MetaDslx.CodeAnalysis.Antlr4
 
         public void SyntaxError(TextWriter output, IRecognizer recognizer, int offendingSymbol, int line, int charPositionInLine, string msg, RecognitionException e)
         {
+            //TextWindow.NextChar();
             this.AddError(new SyntaxDiagnosticInfo(TextWindow.LexemeStartPosition, TextWindow.Width, ErrorCode.ERR_SyntaxError, msg));
-            this.AppendLexeme((int)InternalSyntaxKind.BadToken, true, false);
-            this.StartLexeme();
+            if (TextWindow.Width > 0)
+            {
+                this.AppendLexeme((int)InternalSyntaxKind.BadToken, true, false);
+                this.StartLexeme();
+            }
         }
 
         protected override LexerStateManager? CreateStateManager()
         {
             return new Antlr4LexerStateManager(this);
-        }
-
-        IToken ITokenFactory.Create(Tuple<ITokenSource, ICharStream> source, int type, string text, int channel, int start, int stop, int line, int charPositionInLine)
-        {
-            return (IToken)this.CreateToken(null, Antlr4SyntaxKind.FromAntlr4(type), text ?? string.Empty, null);
-        }
-
-        IToken ITokenFactory.Create(int type, string text)
-        {
-            return (IToken)this.CreateToken(null, Antlr4SyntaxKind.FromAntlr4(type), text ?? string.Empty, null);
         }
 
         protected class Antlr4LexerStateManager : LexerStateManager

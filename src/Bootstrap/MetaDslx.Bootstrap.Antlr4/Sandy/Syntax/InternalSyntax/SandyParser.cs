@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// Generated from obj\Debug\net5.0\Syntax\InternalSyntax\SandyParser.g4 by ANTLR 4.9.1
+// Generated from obj\Release\net6.0\Syntax\InternalSyntax\SandyParser.g4 by ANTLR 4.9.1
 
 // Unreachable code detected
 #pragma warning disable 0162
@@ -33,7 +33,7 @@ using DFA = global::Antlr4.Runtime.Dfa.DFA;
 
 [System.CodeDom.Compiler.GeneratedCode("ANTLR", "4.9.1")]
 [System.CLSCompliant(false)]
-public partial class SandyParser : global::MetaDslx.CodeAnalysis.Antlr4.Antlr4Parser {
+public partial class SandyParser : MetaDslx.CodeAnalysis.Antlr4.Antlr4Parser {
     private SandySyntaxParser SyntaxParser => (SandySyntaxParser)this.IncrementalAntlr4Parser;
 	protected static DFA[] decisionToDFA;
 	protected static PredictionContextCache sharedContextCache = new PredictionContextCache();
@@ -113,7 +113,7 @@ public partial class SandyParser : global::MetaDslx.CodeAnalysis.Antlr4.Antlr4Pa
 
 	[RuleVersion(0)]
 	public MainContext main() {
-		return this.SyntaxParser != null ? this.SyntaxParser._Antlr4ParseMain() : _DoParseMain();
+		return this.SyntaxParser != null && this.SyntaxParser.IsIncremental ? this.SyntaxParser._Antlr4ParseMain() : _DoParseMain();
 	}
 
 	internal MainContext _DoParseMain() {
@@ -156,7 +156,6 @@ public partial class SandyParser : global::MetaDslx.CodeAnalysis.Antlr4.Antlr4Pa
 		[System.Diagnostics.DebuggerNonUserCode] public StatementContext statement() {
 			return GetRuleContext<StatementContext>(0);
 		}
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode NEWLINE() { return GetToken(SandyParser.NEWLINE, 0); }
 		public LineContext(ParserRuleContext parent, int invokingState)
 			: base(parent, invokingState)
 		{
@@ -172,7 +171,7 @@ public partial class SandyParser : global::MetaDslx.CodeAnalysis.Antlr4.Antlr4Pa
 
 	[RuleVersion(0)]
 	public LineContext line() {
-		return this.SyntaxParser != null ? this.SyntaxParser._Antlr4ParseLine() : _DoParseLine();
+		return this.SyntaxParser != null && this.SyntaxParser.IsIncremental ? this.SyntaxParser._Antlr4ParseLine() : _DoParseLine();
 	}
 
 	internal LineContext _DoParseLine() {
@@ -183,8 +182,6 @@ public partial class SandyParser : global::MetaDslx.CodeAnalysis.Antlr4.Antlr4Pa
 			{
 			State = 24;
 			statement();
-			State = 25;
-			Match(NEWLINE);
 			}
 		}
 		catch (RecognitionException re) {
@@ -223,34 +220,34 @@ public partial class SandyParser : global::MetaDslx.CodeAnalysis.Antlr4.Antlr4Pa
 
 	[RuleVersion(0)]
 	public StatementContext statement() {
-		return this.SyntaxParser != null ? this.SyntaxParser._Antlr4ParseStatement() : _DoParseStatement();
+		return this.SyntaxParser != null && this.SyntaxParser.IsIncremental ? this.SyntaxParser._Antlr4ParseStatement() : _DoParseStatement();
 	}
 
 	internal StatementContext _DoParseStatement() {
 		StatementContext _localctx = new StatementContext(Context, State);
 		EnterRule(_localctx, 4, RULE_statement);
 		try {
-			State = 30;
+			State = 29;
 			ErrorHandler.Sync(this);
 			switch (TokenStream.LA(1)) {
 			case VAR:
 				EnterOuterAlt(_localctx, 1);
 				{
-				State = 27;
+				State = 26;
 				varDeclaration();
 				}
 				break;
 			case ID:
 				EnterOuterAlt(_localctx, 2);
 				{
-				State = 28;
+				State = 27;
 				assignment();
 				}
 				break;
 			case PRINT:
 				EnterOuterAlt(_localctx, 3);
 				{
-				State = 29;
+				State = 28;
 				print();
 				}
 				break;
@@ -291,7 +288,7 @@ public partial class SandyParser : global::MetaDslx.CodeAnalysis.Antlr4.Antlr4Pa
 
 	[RuleVersion(0)]
 	public PrintContext print() {
-		return this.SyntaxParser != null ? this.SyntaxParser._Antlr4ParsePrint() : _DoParsePrint();
+		return this.SyntaxParser != null && this.SyntaxParser.IsIncremental ? this.SyntaxParser._Antlr4ParsePrint() : _DoParsePrint();
 	}
 
 	internal PrintContext _DoParsePrint() {
@@ -300,13 +297,13 @@ public partial class SandyParser : global::MetaDslx.CodeAnalysis.Antlr4.Antlr4Pa
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 32;
+			State = 31;
 			Match(PRINT);
-			State = 33;
+			State = 32;
 			Match(LPAREN);
-			State = 34;
+			State = 33;
 			expression(0);
-			State = 35;
+			State = 34;
 			Match(RPAREN);
 			}
 		}
@@ -341,7 +338,7 @@ public partial class SandyParser : global::MetaDslx.CodeAnalysis.Antlr4.Antlr4Pa
 
 	[RuleVersion(0)]
 	public VarDeclarationContext varDeclaration() {
-		return this.SyntaxParser != null ? this.SyntaxParser._Antlr4ParseVarDeclaration() : _DoParseVarDeclaration();
+		return this.SyntaxParser != null && this.SyntaxParser.IsIncremental ? this.SyntaxParser._Antlr4ParseVarDeclaration() : _DoParseVarDeclaration();
 	}
 
 	internal VarDeclarationContext _DoParseVarDeclaration() {
@@ -350,9 +347,9 @@ public partial class SandyParser : global::MetaDslx.CodeAnalysis.Antlr4.Antlr4Pa
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 37;
+			State = 36;
 			Match(VAR);
-			State = 38;
+			State = 37;
 			assignment();
 			}
 		}
@@ -388,7 +385,7 @@ public partial class SandyParser : global::MetaDslx.CodeAnalysis.Antlr4.Antlr4Pa
 
 	[RuleVersion(0)]
 	public AssignmentContext assignment() {
-		return this.SyntaxParser != null ? this.SyntaxParser._Antlr4ParseAssignment() : _DoParseAssignment();
+		return this.SyntaxParser != null && this.SyntaxParser.IsIncremental ? this.SyntaxParser._Antlr4ParseAssignment() : _DoParseAssignment();
 	}
 
 	internal AssignmentContext _DoParseAssignment() {
@@ -397,11 +394,11 @@ public partial class SandyParser : global::MetaDslx.CodeAnalysis.Antlr4.Antlr4Pa
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 40;
+			State = 39;
 			Match(ID);
-			State = 41;
+			State = 40;
 			Match(ASSIGN);
-			State = 42;
+			State = 41;
 			expression(0);
 			}
 		}
@@ -550,7 +547,7 @@ public partial class SandyParser : global::MetaDslx.CodeAnalysis.Antlr4.Antlr4Pa
 	}
 
 	private ExpressionContext expression(int _p) {
-		return this.SyntaxParser != null ? this.SyntaxParser._Antlr4ParseExpression(_p) : _DoParseExpression(_p);
+		return this.SyntaxParser != null && this.SyntaxParser.IsIncremental ? this.SyntaxParser._Antlr4ParseExpression(_p) : _DoParseExpression(_p);
 	}
 
 	internal ExpressionContext _DoParseExpression(int _p) {
@@ -565,7 +562,7 @@ public partial class SandyParser : global::MetaDslx.CodeAnalysis.Antlr4.Antlr4Pa
 			int _alt;
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 54;
+			State = 53;
 			ErrorHandler.Sync(this);
 			switch (TokenStream.LA(1)) {
 			case LPAREN:
@@ -574,11 +571,11 @@ public partial class SandyParser : global::MetaDslx.CodeAnalysis.Antlr4.Antlr4Pa
 				Context = _localctx;
 				_prevctx = _localctx;
 
-				State = 45;
+				State = 44;
 				Match(LPAREN);
-				State = 46;
+				State = 45;
 				expression(0);
-				State = 47;
+				State = 46;
 				Match(RPAREN);
 				}
 				break;
@@ -587,7 +584,7 @@ public partial class SandyParser : global::MetaDslx.CodeAnalysis.Antlr4.Antlr4Pa
 				_localctx = new VarReferenceContext(_localctx);
 				Context = _localctx;
 				_prevctx = _localctx;
-				State = 49;
+				State = 48;
 				Match(ID);
 				}
 				break;
@@ -596,9 +593,9 @@ public partial class SandyParser : global::MetaDslx.CodeAnalysis.Antlr4.Antlr4Pa
 				_localctx = new MinusExpressionContext(_localctx);
 				Context = _localctx;
 				_prevctx = _localctx;
-				State = 50;
+				State = 49;
 				Match(MINUS);
-				State = 51;
+				State = 50;
 				expression(3);
 				}
 				break;
@@ -607,7 +604,7 @@ public partial class SandyParser : global::MetaDslx.CodeAnalysis.Antlr4.Antlr4Pa
 				_localctx = new IntLiteralContext(_localctx);
 				Context = _localctx;
 				_prevctx = _localctx;
-				State = 52;
+				State = 51;
 				Match(INTLIT);
 				}
 				break;
@@ -616,7 +613,7 @@ public partial class SandyParser : global::MetaDslx.CodeAnalysis.Antlr4.Antlr4Pa
 				_localctx = new DecimalLiteralContext(_localctx);
 				Context = _localctx;
 				_prevctx = _localctx;
-				State = 53;
+				State = 52;
 				Match(DECLIT);
 				}
 				break;
@@ -624,7 +621,7 @@ public partial class SandyParser : global::MetaDslx.CodeAnalysis.Antlr4.Antlr4Pa
 				throw new NoViableAltException(this);
 			}
 			Context.Stop = TokenStream.LT(-1);
-			State = 67;
+			State = 66;
 			ErrorHandler.Sync(this);
 			_alt = Interpreter.AdaptivePredict(TokenStream,4,Context);
 			while ( _alt!=2 && _alt!=global::Antlr4.Runtime.Atn.ATN.INVALID_ALT_NUMBER ) {
@@ -633,7 +630,7 @@ public partial class SandyParser : global::MetaDslx.CodeAnalysis.Antlr4.Antlr4Pa
 						TriggerExitRuleEvent();
 					_prevctx = _localctx;
 					{
-					State = 65;
+					State = 64;
 					ErrorHandler.Sync(this);
 					switch ( Interpreter.AdaptivePredict(TokenStream,3,Context) ) {
 					case 1:
@@ -641,9 +638,9 @@ public partial class SandyParser : global::MetaDslx.CodeAnalysis.Antlr4.Antlr4Pa
 						_localctx = new BinaryMulOperationContext(new ExpressionContext(_parentctx, _parentState));
 						((BinaryMulOperationContext)_localctx).left = _prevctx;
 						PushNewRecursionContext(_localctx, _startState, RULE_expression);
-						State = 56;
+						State = 55;
 						if (!(Precpred(Context, 8))) throw new FailedPredicateException(this, "Precpred(Context, 8)");
-						State = 57;
+						State = 56;
 						((BinaryMulOperationContext)_localctx).op = TokenStream.LT(1);
 						_la = TokenStream.LA(1);
 						if ( !(_la==ASTERISK || _la==DIVISION) ) {
@@ -653,7 +650,7 @@ public partial class SandyParser : global::MetaDslx.CodeAnalysis.Antlr4.Antlr4Pa
 							ErrorHandler.ReportMatch(this);
 						    Consume();
 						}
-						State = 58;
+						State = 57;
 						((BinaryMulOperationContext)_localctx).right = expression(9);
 						}
 						break;
@@ -662,9 +659,9 @@ public partial class SandyParser : global::MetaDslx.CodeAnalysis.Antlr4.Antlr4Pa
 						_localctx = new BinaryAddOperationContext(new ExpressionContext(_parentctx, _parentState));
 						((BinaryAddOperationContext)_localctx).left = _prevctx;
 						PushNewRecursionContext(_localctx, _startState, RULE_expression);
-						State = 59;
+						State = 58;
 						if (!(Precpred(Context, 7))) throw new FailedPredicateException(this, "Precpred(Context, 7)");
-						State = 60;
+						State = 59;
 						((BinaryAddOperationContext)_localctx).op = TokenStream.LT(1);
 						_la = TokenStream.LA(1);
 						if ( !(_la==PLUS || _la==MINUS) ) {
@@ -674,7 +671,7 @@ public partial class SandyParser : global::MetaDslx.CodeAnalysis.Antlr4.Antlr4Pa
 							ErrorHandler.ReportMatch(this);
 						    Consume();
 						}
-						State = 61;
+						State = 60;
 						((BinaryAddOperationContext)_localctx).right = expression(8);
 						}
 						break;
@@ -683,18 +680,18 @@ public partial class SandyParser : global::MetaDslx.CodeAnalysis.Antlr4.Antlr4Pa
 						_localctx = new TypeConversionContext(new ExpressionContext(_parentctx, _parentState));
 						((TypeConversionContext)_localctx).value = _prevctx;
 						PushNewRecursionContext(_localctx, _startState, RULE_expression);
-						State = 62;
+						State = 61;
 						if (!(Precpred(Context, 6))) throw new FailedPredicateException(this, "Precpred(Context, 6)");
-						State = 63;
+						State = 62;
 						Match(AS);
-						State = 64;
+						State = 63;
 						((TypeConversionContext)_localctx).targetType = type();
 						}
 						break;
 					}
 					} 
 				}
-				State = 69;
+				State = 68;
 				ErrorHandler.Sync(this);
 				_alt = Interpreter.AdaptivePredict(TokenStream,4,Context);
 			}
@@ -729,7 +726,7 @@ public partial class SandyParser : global::MetaDslx.CodeAnalysis.Antlr4.Antlr4Pa
 
 	[RuleVersion(0)]
 	public TypeContext type() {
-		return this.SyntaxParser != null ? this.SyntaxParser._Antlr4ParseType() : _DoParseType();
+		return this.SyntaxParser != null && this.SyntaxParser.IsIncremental ? this.SyntaxParser._Antlr4ParseType() : _DoParseType();
 	}
 
 	internal TypeContext _DoParseType() {
@@ -739,7 +736,7 @@ public partial class SandyParser : global::MetaDslx.CodeAnalysis.Antlr4.Antlr4Pa
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 70;
+			State = 69;
 			_la = TokenStream.LA(1);
 			if ( !(_la==INT || _la==DECIMAL) ) {
 			ErrorHandler.RecoverInline(this);
@@ -778,66 +775,65 @@ public partial class SandyParser : global::MetaDslx.CodeAnalysis.Antlr4.Antlr4Pa
 
 	private static char[] _serializedATN = {
 		'\x3', '\x608B', '\xA72A', '\x8133', '\xB9ED', '\x417C', '\x3BE7', '\x7786', 
-		'\x5964', '\x3', '\x14', 'K', '\x4', '\x2', '\t', '\x2', '\x4', '\x3', 
+		'\x5964', '\x3', '\x14', 'J', '\x4', '\x2', '\t', '\x2', '\x4', '\x3', 
 		'\t', '\x3', '\x4', '\x4', '\t', '\x4', '\x4', '\x5', '\t', '\x5', '\x4', 
 		'\x6', '\t', '\x6', '\x4', '\a', '\t', '\a', '\x4', '\b', '\t', '\b', 
 		'\x4', '\t', '\t', '\t', '\x3', '\x2', '\a', '\x2', '\x14', '\n', '\x2', 
 		'\f', '\x2', '\xE', '\x2', '\x17', '\v', '\x2', '\x3', '\x2', '\x3', '\x2', 
-		'\x3', '\x3', '\x3', '\x3', '\x3', '\x3', '\x3', '\x4', '\x3', '\x4', 
-		'\x3', '\x4', '\x5', '\x4', '!', '\n', '\x4', '\x3', '\x5', '\x3', '\x5', 
-		'\x3', '\x5', '\x3', '\x5', '\x3', '\x5', '\x3', '\x6', '\x3', '\x6', 
-		'\x3', '\x6', '\x3', '\a', '\x3', '\a', '\x3', '\a', '\x3', '\a', '\x3', 
+		'\x3', '\x3', '\x3', '\x3', '\x3', '\x4', '\x3', '\x4', '\x3', '\x4', 
+		'\x5', '\x4', ' ', '\n', '\x4', '\x3', '\x5', '\x3', '\x5', '\x3', '\x5', 
+		'\x3', '\x5', '\x3', '\x5', '\x3', '\x6', '\x3', '\x6', '\x3', '\x6', 
+		'\x3', '\a', '\x3', '\a', '\x3', '\a', '\x3', '\a', '\x3', '\b', '\x3', 
 		'\b', '\x3', '\b', '\x3', '\b', '\x3', '\b', '\x3', '\b', '\x3', '\b', 
-		'\x3', '\b', '\x3', '\b', '\x3', '\b', '\x3', '\b', '\x5', '\b', '\x39', 
-		'\n', '\b', '\x3', '\b', '\x3', '\b', '\x3', '\b', '\x3', '\b', '\x3', 
-		'\b', '\x3', '\b', '\x3', '\b', '\x3', '\b', '\x3', '\b', '\a', '\b', 
-		'\x44', '\n', '\b', '\f', '\b', '\xE', '\b', 'G', '\v', '\b', '\x3', '\t', 
-		'\x3', '\t', '\x3', '\t', '\x2', '\x3', '\xE', '\n', '\x2', '\x4', '\x6', 
-		'\b', '\n', '\f', '\xE', '\x10', '\x2', '\x5', '\x3', '\x2', '\xE', '\xF', 
-		'\x3', '\x2', '\f', '\r', '\x3', '\x2', '\b', '\t', '\x2', 'L', '\x2', 
-		'\x15', '\x3', '\x2', '\x2', '\x2', '\x4', '\x1A', '\x3', '\x2', '\x2', 
-		'\x2', '\x6', ' ', '\x3', '\x2', '\x2', '\x2', '\b', '\"', '\x3', '\x2', 
-		'\x2', '\x2', '\n', '\'', '\x3', '\x2', '\x2', '\x2', '\f', '*', '\x3', 
-		'\x2', '\x2', '\x2', '\xE', '\x38', '\x3', '\x2', '\x2', '\x2', '\x10', 
-		'H', '\x3', '\x2', '\x2', '\x2', '\x12', '\x14', '\x5', '\x4', '\x3', 
-		'\x2', '\x13', '\x12', '\x3', '\x2', '\x2', '\x2', '\x14', '\x17', '\x3', 
-		'\x2', '\x2', '\x2', '\x15', '\x13', '\x3', '\x2', '\x2', '\x2', '\x15', 
-		'\x16', '\x3', '\x2', '\x2', '\x2', '\x16', '\x18', '\x3', '\x2', '\x2', 
-		'\x2', '\x17', '\x15', '\x3', '\x2', '\x2', '\x2', '\x18', '\x19', '\a', 
-		'\x2', '\x2', '\x3', '\x19', '\x3', '\x3', '\x2', '\x2', '\x2', '\x1A', 
-		'\x1B', '\x5', '\x6', '\x4', '\x2', '\x1B', '\x1C', '\a', '\x3', '\x2', 
-		'\x2', '\x1C', '\x5', '\x3', '\x2', '\x2', '\x2', '\x1D', '!', '\x5', 
-		'\n', '\x6', '\x2', '\x1E', '!', '\x5', '\f', '\a', '\x2', '\x1F', '!', 
-		'\x5', '\b', '\x5', '\x2', ' ', '\x1D', '\x3', '\x2', '\x2', '\x2', ' ', 
-		'\x1E', '\x3', '\x2', '\x2', '\x2', ' ', '\x1F', '\x3', '\x2', '\x2', 
-		'\x2', '!', '\a', '\x3', '\x2', '\x2', '\x2', '\"', '#', '\a', '\x6', 
-		'\x2', '\x2', '#', '$', '\a', '\x11', '\x2', '\x2', '$', '%', '\x5', '\xE', 
-		'\b', '\x2', '%', '&', '\a', '\x12', '\x2', '\x2', '&', '\t', '\x3', '\x2', 
-		'\x2', '\x2', '\'', '(', '\a', '\x5', '\x2', '\x2', '(', ')', '\x5', '\f', 
-		'\a', '\x2', ')', '\v', '\x3', '\x2', '\x2', '\x2', '*', '+', '\a', '\x14', 
-		'\x2', '\x2', '+', ',', '\a', '\x10', '\x2', '\x2', ',', '-', '\x5', '\xE', 
-		'\b', '\x2', '-', '\r', '\x3', '\x2', '\x2', '\x2', '.', '/', '\b', '\b', 
-		'\x1', '\x2', '/', '\x30', '\a', '\x11', '\x2', '\x2', '\x30', '\x31', 
-		'\x5', '\xE', '\b', '\x2', '\x31', '\x32', '\a', '\x12', '\x2', '\x2', 
-		'\x32', '\x39', '\x3', '\x2', '\x2', '\x2', '\x33', '\x39', '\a', '\x14', 
-		'\x2', '\x2', '\x34', '\x35', '\a', '\r', '\x2', '\x2', '\x35', '\x39', 
-		'\x5', '\xE', '\b', '\x5', '\x36', '\x39', '\a', '\n', '\x2', '\x2', '\x37', 
-		'\x39', '\a', '\v', '\x2', '\x2', '\x38', '.', '\x3', '\x2', '\x2', '\x2', 
-		'\x38', '\x33', '\x3', '\x2', '\x2', '\x2', '\x38', '\x34', '\x3', '\x2', 
-		'\x2', '\x2', '\x38', '\x36', '\x3', '\x2', '\x2', '\x2', '\x38', '\x37', 
-		'\x3', '\x2', '\x2', '\x2', '\x39', '\x45', '\x3', '\x2', '\x2', '\x2', 
-		':', ';', '\f', '\n', '\x2', '\x2', ';', '<', '\t', '\x2', '\x2', '\x2', 
-		'<', '\x44', '\x5', '\xE', '\b', '\v', '=', '>', '\f', '\t', '\x2', '\x2', 
-		'>', '?', '\t', '\x3', '\x2', '\x2', '?', '\x44', '\x5', '\xE', '\b', 
-		'\n', '@', '\x41', '\f', '\b', '\x2', '\x2', '\x41', '\x42', '\a', '\a', 
-		'\x2', '\x2', '\x42', '\x44', '\x5', '\x10', '\t', '\x2', '\x43', ':', 
-		'\x3', '\x2', '\x2', '\x2', '\x43', '=', '\x3', '\x2', '\x2', '\x2', '\x43', 
-		'@', '\x3', '\x2', '\x2', '\x2', '\x44', 'G', '\x3', '\x2', '\x2', '\x2', 
-		'\x45', '\x43', '\x3', '\x2', '\x2', '\x2', '\x45', '\x46', '\x3', '\x2', 
-		'\x2', '\x2', '\x46', '\xF', '\x3', '\x2', '\x2', '\x2', 'G', '\x45', 
-		'\x3', '\x2', '\x2', '\x2', 'H', 'I', '\t', '\x4', '\x2', '\x2', 'I', 
-		'\x11', '\x3', '\x2', '\x2', '\x2', '\a', '\x15', ' ', '\x38', '\x43', 
-		'\x45',
+		'\x3', '\b', '\x3', '\b', '\x3', '\b', '\x5', '\b', '\x38', '\n', '\b', 
+		'\x3', '\b', '\x3', '\b', '\x3', '\b', '\x3', '\b', '\x3', '\b', '\x3', 
+		'\b', '\x3', '\b', '\x3', '\b', '\x3', '\b', '\a', '\b', '\x43', '\n', 
+		'\b', '\f', '\b', '\xE', '\b', '\x46', '\v', '\b', '\x3', '\t', '\x3', 
+		'\t', '\x3', '\t', '\x2', '\x3', '\xE', '\n', '\x2', '\x4', '\x6', '\b', 
+		'\n', '\f', '\xE', '\x10', '\x2', '\x5', '\x3', '\x2', '\xE', '\xF', '\x3', 
+		'\x2', '\f', '\r', '\x3', '\x2', '\b', '\t', '\x2', 'K', '\x2', '\x15', 
+		'\x3', '\x2', '\x2', '\x2', '\x4', '\x1A', '\x3', '\x2', '\x2', '\x2', 
+		'\x6', '\x1F', '\x3', '\x2', '\x2', '\x2', '\b', '!', '\x3', '\x2', '\x2', 
+		'\x2', '\n', '&', '\x3', '\x2', '\x2', '\x2', '\f', ')', '\x3', '\x2', 
+		'\x2', '\x2', '\xE', '\x37', '\x3', '\x2', '\x2', '\x2', '\x10', 'G', 
+		'\x3', '\x2', '\x2', '\x2', '\x12', '\x14', '\x5', '\x4', '\x3', '\x2', 
+		'\x13', '\x12', '\x3', '\x2', '\x2', '\x2', '\x14', '\x17', '\x3', '\x2', 
+		'\x2', '\x2', '\x15', '\x13', '\x3', '\x2', '\x2', '\x2', '\x15', '\x16', 
+		'\x3', '\x2', '\x2', '\x2', '\x16', '\x18', '\x3', '\x2', '\x2', '\x2', 
+		'\x17', '\x15', '\x3', '\x2', '\x2', '\x2', '\x18', '\x19', '\a', '\x2', 
+		'\x2', '\x3', '\x19', '\x3', '\x3', '\x2', '\x2', '\x2', '\x1A', '\x1B', 
+		'\x5', '\x6', '\x4', '\x2', '\x1B', '\x5', '\x3', '\x2', '\x2', '\x2', 
+		'\x1C', ' ', '\x5', '\n', '\x6', '\x2', '\x1D', ' ', '\x5', '\f', '\a', 
+		'\x2', '\x1E', ' ', '\x5', '\b', '\x5', '\x2', '\x1F', '\x1C', '\x3', 
+		'\x2', '\x2', '\x2', '\x1F', '\x1D', '\x3', '\x2', '\x2', '\x2', '\x1F', 
+		'\x1E', '\x3', '\x2', '\x2', '\x2', ' ', '\a', '\x3', '\x2', '\x2', '\x2', 
+		'!', '\"', '\a', '\x6', '\x2', '\x2', '\"', '#', '\a', '\x11', '\x2', 
+		'\x2', '#', '$', '\x5', '\xE', '\b', '\x2', '$', '%', '\a', '\x12', '\x2', 
+		'\x2', '%', '\t', '\x3', '\x2', '\x2', '\x2', '&', '\'', '\a', '\x5', 
+		'\x2', '\x2', '\'', '(', '\x5', '\f', '\a', '\x2', '(', '\v', '\x3', '\x2', 
+		'\x2', '\x2', ')', '*', '\a', '\x14', '\x2', '\x2', '*', '+', '\a', '\x10', 
+		'\x2', '\x2', '+', ',', '\x5', '\xE', '\b', '\x2', ',', '\r', '\x3', '\x2', 
+		'\x2', '\x2', '-', '.', '\b', '\b', '\x1', '\x2', '.', '/', '\a', '\x11', 
+		'\x2', '\x2', '/', '\x30', '\x5', '\xE', '\b', '\x2', '\x30', '\x31', 
+		'\a', '\x12', '\x2', '\x2', '\x31', '\x38', '\x3', '\x2', '\x2', '\x2', 
+		'\x32', '\x38', '\a', '\x14', '\x2', '\x2', '\x33', '\x34', '\a', '\r', 
+		'\x2', '\x2', '\x34', '\x38', '\x5', '\xE', '\b', '\x5', '\x35', '\x38', 
+		'\a', '\n', '\x2', '\x2', '\x36', '\x38', '\a', '\v', '\x2', '\x2', '\x37', 
+		'-', '\x3', '\x2', '\x2', '\x2', '\x37', '\x32', '\x3', '\x2', '\x2', 
+		'\x2', '\x37', '\x33', '\x3', '\x2', '\x2', '\x2', '\x37', '\x35', '\x3', 
+		'\x2', '\x2', '\x2', '\x37', '\x36', '\x3', '\x2', '\x2', '\x2', '\x38', 
+		'\x44', '\x3', '\x2', '\x2', '\x2', '\x39', ':', '\f', '\n', '\x2', '\x2', 
+		':', ';', '\t', '\x2', '\x2', '\x2', ';', '\x43', '\x5', '\xE', '\b', 
+		'\v', '<', '=', '\f', '\t', '\x2', '\x2', '=', '>', '\t', '\x3', '\x2', 
+		'\x2', '>', '\x43', '\x5', '\xE', '\b', '\n', '?', '@', '\f', '\b', '\x2', 
+		'\x2', '@', '\x41', '\a', '\a', '\x2', '\x2', '\x41', '\x43', '\x5', '\x10', 
+		'\t', '\x2', '\x42', '\x39', '\x3', '\x2', '\x2', '\x2', '\x42', '<', 
+		'\x3', '\x2', '\x2', '\x2', '\x42', '?', '\x3', '\x2', '\x2', '\x2', '\x43', 
+		'\x46', '\x3', '\x2', '\x2', '\x2', '\x44', '\x42', '\x3', '\x2', '\x2', 
+		'\x2', '\x44', '\x45', '\x3', '\x2', '\x2', '\x2', '\x45', '\xF', '\x3', 
+		'\x2', '\x2', '\x2', '\x46', '\x44', '\x3', '\x2', '\x2', '\x2', 'G', 
+		'H', '\t', '\x4', '\x2', '\x2', 'H', '\x11', '\x3', '\x2', '\x2', '\x2', 
+		'\a', '\x15', '\x1F', '\x37', '\x42', '\x44',
 	};
 
 	public static readonly ATN _ATN =

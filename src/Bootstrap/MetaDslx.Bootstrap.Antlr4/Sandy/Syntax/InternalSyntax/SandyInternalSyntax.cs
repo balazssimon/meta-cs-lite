@@ -71,10 +71,10 @@ namespace MetaDslx.Bootstrap.Antlr4.Sandy.Syntax.InternalSyntax
 
         public override SandyLanguage Language => SandyLanguage.Instance;
         public SandySyntaxKind Kind => (SandySyntaxKind)this.RawKind;
-        public override string KindText => Kind.ToString();
+		public override string KindText => SandyLanguage.Instance.SyntaxFacts.GetKindText(Kind);
 
-        // Use conditional weak table so we always return same identity for structured trivia
-        private static readonly ConditionalWeakTable<SyntaxNode, Dictionary<SyntaxTrivia, SyntaxNode>> s_structuresTable
+		// Use conditional weak table so we always return same identity for structured trivia
+		private static readonly ConditionalWeakTable<SyntaxNode, Dictionary<SyntaxTrivia, SyntaxNode>> s_structuresTable
 			= new ConditionalWeakTable<SyntaxNode, Dictionary<SyntaxTrivia, SyntaxNode>>();
 
 		/// <summary>
@@ -132,7 +132,7 @@ namespace MetaDslx.Bootstrap.Antlr4.Sandy.Syntax.InternalSyntax
 
 		public override SandyLanguage Language => SandyLanguage.Instance;
 		public SandySyntaxKind Kind => (SandySyntaxKind)this.RawKind;
-		public override string KindText => Kind.ToString();
+		public override string KindText => SandyLanguage.Instance.SyntaxFacts.GetKindText(Kind);
 
 		internal static GreenSyntaxTrivia Create(SandySyntaxKind kind, string text)
         {
@@ -245,7 +245,7 @@ namespace MetaDslx.Bootstrap.Antlr4.Sandy.Syntax.InternalSyntax
 		}
     }
 
-	internal partial class GreenSyntaxToken : Antlr4SyntaxToken
+	internal partial class GreenSyntaxToken : InternalSyntaxToken
 	{
 	    //====================
 	    // Optimization: Normally, we wouldn't accept this much duplicate code, but these constructors
@@ -278,7 +278,7 @@ namespace MetaDslx.Bootstrap.Antlr4.Sandy.Syntax.InternalSyntax
 
 	    public override SandyLanguage Language => SandyLanguage.Instance;
 	    public SandySyntaxKind Kind => (SandySyntaxKind)this.RawKind;
-		public override string KindText => Kind.ToString();
+		public override string KindText => SandyLanguage.Instance.SyntaxFacts.GetKindText(Kind);
 
 		//====================
 		internal static GreenSyntaxToken Create(SandySyntaxKind kind)
@@ -420,7 +420,15 @@ namespace MetaDslx.Bootstrap.Antlr4.Sandy.Syntax.InternalSyntax
 	    }
 	    public new virtual SandySyntaxKind ContextualKind => this.Kind;
 	    public override int RawContextualKind => (int)this.ContextualKind;
-	    public virtual InternalSyntaxToken TokenWithLeadingTrivia(GreenNode? trivia)
+        public override GreenNode WithLeadingTrivia(GreenNode? trivia)
+        {
+            return TokenWithLeadingTrivia(trivia);
+        }
+		public override GreenNode WithTrailingTrivia(GreenNode? trivia)
+		{
+			return TokenWithTrailingTrivia(trivia);
+		}
+		public virtual InternalSyntaxToken TokenWithLeadingTrivia(GreenNode? trivia)
 	    {
 	        return new SyntaxTokenWithTrivia(this.Kind, trivia, null, this.GetDiagnostics(), this.GetAnnotations());
 	    }
@@ -1034,9 +1042,8 @@ namespace MetaDslx.Bootstrap.Antlr4.Sandy.Syntax.InternalSyntax
 	{
 		internal static readonly LineGreen __Missing = new LineGreen();
 		private StatementGreen statement;
-		private InternalSyntaxToken nEWLINE;
 
-		public LineGreen(SandySyntaxKind kind, StatementGreen statement, InternalSyntaxToken nEWLINE)
+		public LineGreen(SandySyntaxKind kind, StatementGreen statement)
 			: base(kind, null, null)
 		{
 			this.SlotCount = 2;
@@ -1045,14 +1052,9 @@ namespace MetaDslx.Bootstrap.Antlr4.Sandy.Syntax.InternalSyntax
 				this.AdjustFlagsAndWidth(statement);
 				this.statement = statement;
 			}
-			if (nEWLINE != null)
-			{
-				this.AdjustFlagsAndWidth(nEWLINE);
-				this.nEWLINE = nEWLINE;
-			}
 		}
 
-		public LineGreen(SandySyntaxKind kind, StatementGreen statement, InternalSyntaxToken nEWLINE, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
+		public LineGreen(SandySyntaxKind kind, StatementGreen statement, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
 			: base(kind, diagnostics, annotations)
 		{
 			this.SlotCount = 2;
@@ -1060,11 +1062,6 @@ namespace MetaDslx.Bootstrap.Antlr4.Sandy.Syntax.InternalSyntax
 			{
 				this.AdjustFlagsAndWidth(statement);
 				this.statement = statement;
-			}
-			if (nEWLINE != null)
-			{
-				this.AdjustFlagsAndWidth(nEWLINE);
-				this.nEWLINE = nEWLINE;
 			}
 		}
 
@@ -1075,7 +1072,6 @@ namespace MetaDslx.Bootstrap.Antlr4.Sandy.Syntax.InternalSyntax
 		}
 
 		public StatementGreen Statement { get { return this.statement; } }
-		public InternalSyntaxToken NEWLINE { get { return this.nEWLINE; } }
 
 		protected override SyntaxNode CreateRed(SyntaxNode parent, int position)
 		{
@@ -1087,7 +1083,6 @@ namespace MetaDslx.Bootstrap.Antlr4.Sandy.Syntax.InternalSyntax
 			switch (index)
 			{
 				case 0: return this.statement;
-				case 1: return this.nEWLINE;
 				default: return null;
 			}
 		}
@@ -1098,26 +1093,25 @@ namespace MetaDslx.Bootstrap.Antlr4.Sandy.Syntax.InternalSyntax
 
 		public override InternalSyntaxNode WithDiagnostics(DiagnosticInfo[] diagnostics)
 		{
-			return new LineGreen(this.Kind, this.statement, this.nEWLINE, diagnostics, this.GetAnnotations());
+			return new LineGreen(this.Kind, this.statement, diagnostics, this.GetAnnotations());
 		}
 
 		public override InternalSyntaxNode WithAnnotations(SyntaxAnnotation[] annotations)
 		{
-			return new LineGreen(this.Kind, this.statement, this.nEWLINE, this.GetDiagnostics(), annotations);
+			return new LineGreen(this.Kind, this.statement, this.GetDiagnostics(), annotations);
 		}
 
 		public override GreenNode Clone()
 		{
-			return new LineGreen(this.Kind, this.statement, this.nEWLINE, this.GetDiagnostics(), this.GetAnnotations());
+			return new LineGreen(this.Kind, this.statement, this.GetDiagnostics(), this.GetAnnotations());
 		}
 
 
 		public LineGreen Update(StatementGreen statement, InternalSyntaxToken nEWLINE)
 		{
-			if (this.Statement != statement ||
-				this.NEWLINE != nEWLINE)
+			if (this.Statement != statement)
 			{
-				InternalSyntaxNode newNode = SandyLanguage.Instance.InternalSyntaxFactory.Line(statement, nEWLINE);
+				InternalSyntaxNode newNode = SandyLanguage.Instance.InternalSyntaxFactory.Line(statement);
 				var diags = this.GetDiagnostics();
 				if (diags != null && diags.Length > 0)
 					newNode = newNode.WithDiagnostics(diags);
@@ -2774,17 +2768,15 @@ namespace MetaDslx.Bootstrap.Antlr4.Sandy.Syntax.InternalSyntax
 			return result;
 		}
 
-		internal LineGreen Line(StatementGreen statement, InternalSyntaxToken nEWLINE)
+		internal LineGreen Line(StatementGreen statement)
 		{
 #if DEBUG
 			if (statement == null) throw new ArgumentNullException(nameof(statement));
-			if (nEWLINE == null) throw new ArgumentNullException(nameof(nEWLINE));
-			if (nEWLINE.RawKind != (int)SandySyntaxKind.NEWLINE) throw new ArgumentException(nameof(nEWLINE));
 #endif
 			int hash;
-			var cached = SyntaxNodeCache.TryGetNode((int)(SandySyntaxKind)SandySyntaxKind.Line, statement, nEWLINE, out hash);
+			var cached = SyntaxNodeCache.TryGetNode((int)(SandySyntaxKind)SandySyntaxKind.Line, statement, out hash);
 			if (cached != null) return (LineGreen)cached;
-			var result = new LineGreen(SandySyntaxKind.Line, statement, nEWLINE);
+			var result = new LineGreen(SandySyntaxKind.Line, statement);
 			if (hash >= 0)
 			{
 				SyntaxNodeCache.AddNode(result, hash);
