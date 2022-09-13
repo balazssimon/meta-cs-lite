@@ -32,5 +32,6 @@
   <ItemGroup>
     <ProjectReference Include="..\MetaDslx.CodeAnalysis.Common\MetaDslx.CodeAnalysis.Common.csproj" PrivateAssets="all" />
     <ProjectReference Include="..\MetaDslx.CodeAnalysis.Antlr4\MetaDslx.CodeAnalysis.Antlr4.csproj" PrivateAssets="all" />
+    <ProjectReference Include="..\MetaDslx.Languages.Core\MetaDslx.Languages.Core.csproj" />
   </ItemGroup>  
 </Project>
