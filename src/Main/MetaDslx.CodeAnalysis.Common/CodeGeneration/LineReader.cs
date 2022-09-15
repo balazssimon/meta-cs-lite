@@ -17,6 +17,7 @@ namespace MetaDslx.CodeGeneration
             {
                 --lastIndex;
             }
+            _hasFinalLineEnd = false;
             if (lastIndex + 2 < _code.Length)
             {
                 if (_code[lastIndex + 1] == '\r' && _code[lastIndex + 2] == '\n') lastIndex += 2;

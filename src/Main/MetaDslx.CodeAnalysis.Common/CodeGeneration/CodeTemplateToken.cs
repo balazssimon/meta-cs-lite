@@ -6,39 +6,28 @@ using System.Text;
 
 namespace MetaDslx.CodeAnalysis.CodeGeneration
 {
-    public class CodeTemplateToken : InternalSyntaxToken
+    public struct CodeTemplateToken
     {
+        public static readonly CodeTemplateToken None = new CodeTemplateToken(CodeTemplateTokenKind.None, string.Empty, -1);
+
         private CodeTemplateTokenKind _kind;
         private string _text;
+        private int _position;
 
-        public CodeTemplateToken(CodeTemplateTokenKind kind, string text)
-            : base((ushort)kind, text.Length)
+        public CodeTemplateToken(CodeTemplateTokenKind kind, string text, int position)
         {
             _kind = kind;
             _text = text;
+            _position = position;
         }
-
-        public override Language Language => Language.NoLanguage;
 
         public CodeTemplateTokenKind Kind => _kind;
+        public string Text => _text;
+        public int Position => _position;
 
-        public override string KindText => _kind.ToString();
-
-        public override string Text => _text;
-
-        public override GreenNode Clone()
+        public override string ToString()
         {
-            return new CodeTemplateToken(_kind, _text);
-        }
-
-        public override InternalSyntaxNode WithAnnotations(SyntaxAnnotation[]? annotations)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override InternalSyntaxNode WithDiagnostics(DiagnosticInfo[]? diagnostics)
-        {
-            throw new NotImplementedException();
+            return $"{_kind}[{_position}]: '{_text.Replace("\t","\\t").Replace("\r", "\\r").Replace("\n", "\\n")}'";
         }
     }
 }

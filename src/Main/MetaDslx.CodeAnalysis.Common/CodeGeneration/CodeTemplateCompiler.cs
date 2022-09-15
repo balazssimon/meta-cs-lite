@@ -1,4 +1,5 @@
-﻿using MetaDslx.CodeAnalysis.Text;
+﻿using MetaDslx.CodeAnalysis.PooledObjects;
+using MetaDslx.CodeAnalysis.Text;
 using MetaDslx.CodeGeneration;
 using System;
 using System.Collections.Generic;
@@ -12,24 +13,39 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
 {
     public class CodeTemplateCompiler
     {
+        private enum ParserState
+        {
+            None,
+            BeginNamespace,
+            EndNamespace,
+            BeginGenerator,
+            EndGenerator,
+            BeginControl,
+            EndControl,
+            BeginUsing,
+            EndUsing,
+            BeginTemplate,
+            TemplateBody,
+            EndTemplate,
+        }
 
-        private string _fileName;
+        private string _filePath;
         private string _templateCode;
         private string? _compiledCode;
+        private CodeTemplateLexer _lexer;
+        private CodeTemplateLexerState _lexerState;
+        private ParserState _state;
         private CodeBuilder? _sb;
         private DiagnosticBag? _diagnosticBag;
-        private State _state;
+        private CodeTemplateToken _token;
         private int _position;
         private int _line;
         private int _column;
-        private string? _text;
-        private char _openChar = '[';
-        private char _closeChar = ']';
         private ImmutableArray<Diagnostic> _diagnostics;
 
-        public CodeTemplateCompiler(string fileName, string templateCode)
+        public CodeTemplateCompiler(string filePath, string templateCode)
         {
-            _fileName = fileName;
+            _filePath = filePath;
             _templateCode = templateCode;
         }
 
@@ -37,195 +53,242 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
         {
             if (_compiledCode != null) return _compiledCode;
             string? generatorName = null;
-            _sb = CodeBuilder.GetInstance();
-            _diagnosticBag = DiagnosticBag.GetInstance();
-            _state = State.None;
-            _position = 0;
             _line = 0;
             _column = 0;
-            using (var reader = new StringReader(_templateCode))
+            using (_lexer = new CodeTemplateLexer(_filePath, SourceText.From(_templateCode), true))
             {
+                _lexerState = CodeTemplateLexerState.None;
+                _sb = CodeBuilder.GetInstance();
+                _diagnosticBag = DiagnosticBag.GetInstance();
+                _state = ParserState.None;
                 while (true)
                 {
-                    var line = reader.ReadLine();
-                    if (line == null) break;
-                    _text = line;
-                    while (_text != null)
+                    _token = NextToken();
+                    if (_token.Kind == CodeTemplateTokenKind.None || _token.Kind == CodeTemplateTokenKind.EndOfFile) break;
+                    if (IsWhitespaceOrComment())
                     {
-                        if (_state != State.TemplateOutput)
-                        {
-                            if (string.IsNullOrWhiteSpace(_text))
-                            {
-                                Skip(line);
-                                _text = null;
-                                break;
-                            }
-                        }
-                        var prevLength = _text.Length;
-                        if (_text != null && _state == State.None)
-                        {
-                            if (!string.IsNullOrEmpty(_text) && Match("namespace "))
-                            {
-                                if (_text.EndsWith(';')) _text = _text.TrimEnd(';');
-                                _sb.WriteLine($"namespace {_text}");
-                                _sb.WriteLine("{");
-                                _sb.Push();
-                                _state = State.MatchedNamespace;
-                                _text = null;
-                                Skip(line);
-                            }
-                        }
-                        if (_text != null && _state == State.MatchedNamespace)
-                        {
-                            if (!string.IsNullOrEmpty(_text) && Match("generator "))
-                            {
-                                if (_text.EndsWith(';')) _text = _text.TrimEnd(';');
-                                generatorName = _text;
-                                _state = State.MatchedGenerator;
-                                _text = null;
-                                Skip(line);
-                            }
-                        }
-                        if (_text != null && _state == State.MatchedGenerator)
-                        {
-                            if (!string.IsNullOrEmpty(_text) && TryMatch("control "))
-                            {
-                                _text = _text.Trim();
-                                if (_text.Length == 3 && _text[0] != ' ' && _text[1] == ' ' && _text[2] != ' ')
-                                {
-                                    _openChar = _text[0];
-                                    _closeChar = _text[2];
-                                }
-                                else
-                                {
-                                    Error($"Invalid control characters '{_text}'. Control characters must be separated by a single space.");
-                                }
-                                _state = State.MatchedControl;
-                                _text = null;
-                                Skip(line);
-                            }
-                        }
-                        if (_text != null && (_state == State.MatchedGenerator || _state == State.MatchedControl || _state == State.MatchedUsings))
-                        {
-                            if (_state != State.MatchedUsings)
-                            {
-                                _sb.WriteLine($"public class {generatorName}");
-                                _sb.WriteLine("{");
-                                _sb.Push();
-                            }
-                            if (TryMatch("using "))
-                            {
-                                if (_text.EndsWith(';')) _text = _text.TrimEnd(';');
-                                _sb.WriteLine($"using {_text};");
-                                _state = State.MatchedUsings;
-                                _text = null;
-                                Skip(line);
-                            }
-                            else if (TryMatch("template "))
-                            {
-                                _state = State.TemplateName;
-                            }
-                            else
-                            {
-                                if (_state == State.MatchedGenerator) Error("'control' or 'using' or 'template' expected.");
-                                else Error("'using' or 'template' expected.");
-                            }
-                        }
-                        if (_text != null && _state == State.MatchedTemplate)
-                        {
-                            if (TryMatch("template "))
-                            {
-                                _state = State.TemplateName;
-                            }
-                            else
-                            {
-                                Error("'template' expected.");
-                            }
-                        }
-                        if (_text != null && _state == State.TemplateName)
-                        {
-                            var index = _text.IndexOf('(');
-                            if (index >= 0)
-                            {
-                                _sb.WriteLine($"public string {_text}");
-                                _sb.WriteLine("{");
-                                _sb.Push();
-                                _state = State.TemplateOutput;
-                                _text = null;
-                                Skip(line);
-                            }
-                            else
-                            {
-                                Error($"'(' is expected."); // TODO
-                                _text = null;
-                            }
-                        }
-                        if (_text != null && _state == State.TemplateOutput)
-                        {
-                            if (TryMatch("end template"))
-                            {
-                                _sb.Pop();
-                                _sb.WriteLine("}");
-                                _sb.WriteLine();
-                                _state = State.MatchedTemplate;
-                                _text = null;
-                                Skip(line);
-                            }
-                        }
-                        if (_text != null && _text.Length == prevLength)
-                        {
-                            Error($"Unexpected character sequence '{_text}'");
-                            _text = null;
-                        }
+                        _sb.Write(_token.Text);
+                        continue;
                     }
-                    ++_line;
-                    _column = 0;
+                    if (_state == ParserState.None)
+                    {
+                        if (MatchKeyword("namespace"))
+                        {
+                            _sb.WriteLine(_token.Text);
+                            _state = ParserState.BeginNamespace;
+                        }
+                        else
+                        {
+                            Expected("namespace");
+                        }
+                        continue;
+                    }
+                    if (_state == ParserState.BeginNamespace)
+                    {
+                        if (_token.Kind == CodeTemplateTokenKind.Other && _token.Text == ";")
+                        {
+                            _sb.WriteLine("{");
+                            _sb.Push();
+                            _state = ParserState.EndNamespace;
+                        }
+                        else
+                        {
+                            _sb.Write(_token.Text);
+                        }
+                        continue;
+                    }
+                    if (_state == ParserState.EndNamespace)
+                    {
+                        if (MatchKeyword("generator"))
+                        {
+                            _state = ParserState.BeginGenerator;
+                            generatorName = "";
+                        }
+                        else
+                        {
+                            Expected("generator");
+                        }
+                        continue;
+                    }
+                    if (_state == ParserState.BeginGenerator)
+                    {
+                        if (_token.Kind == CodeTemplateTokenKind.Other && _token.Text == ";")
+                        {
+                            _state = ParserState.EndGenerator;
+                        }
+                        else
+                        {
+                            generatorName += _token.Text;
+                        }
+                        continue;
+                    }
+                    if (_state == ParserState.EndGenerator)
+                    {
+                        if (IsKeyword("control"))
+                        {
+                            _state = ParserState.BeginControl;
+                        }
+                        else if (IsKeyword("using"))
+                        {
+                            _state = ParserState.BeginUsing;
+                        }
+                        else
+                        {
+                            Expected("generator");
+                        }
+                        continue;
+                    }
+                    if (_state == ParserState.BeginControl)
+                    {
+                        if (_token.Kind == CodeTemplateTokenKind.Other && _token.Text == ";")
+                        {
+                            _state = ParserState.EndControl;
+                        }
+                        continue;
+                    }
+                    if (_state == ParserState.EndGenerator || _state == ParserState.EndControl || _state == ParserState.EndUsing)
+                    {
+                        if (IsKeyword("using"))
+                        {
+                            _state = ParserState.BeginUsing;
+                        }
+                        else if (IsKeyword("template"))
+                        {
+                            _sb.WriteLine($"public class {generatorName}");
+                            _sb.WriteLine("{");
+                            _sb.Push();
+                            _sb.Write("public string");
+                            _state = ParserState.BeginTemplate;
+                        }
+                        else if (_state == ParserState.EndGenerator)
+                        {
+                            Expected("control", "using", "template");
+                        }
+                        else
+                        {
+                            Expected("using", "template"); 
+                        }
+                        continue;
+                    }
+                    if (_state == ParserState.BeginUsing)
+                    {
+                        _sb.Write(_token.Text);
+                        if (_token.Kind == CodeTemplateTokenKind.Other && _token.Text == ";")
+                        {
+                            _state = ParserState.EndUsing;
+                        }
+                        continue;
+                    }
+                    if (_state == ParserState.BeginTemplate)
+                    {
+                        _sb.Write(_token.Text);
+                        if (_lexerState == CodeTemplateLexerState.TemplateHeaderEnd)
+                        {
+                            _sb.WriteLine("{");
+                            _sb.Push();
+                            _sb.WriteLine("var _sb = CodeBuilder.GetInstance();");
+                            _state = ParserState.TemplateBody;
+                        }
+                        continue;
+                    }
+                    if (_state == ParserState.TemplateBody)
+                    {
+                        if (_lexerState == CodeTemplateLexerState.TemplateEnd)
+                        {
+                            _sb.AppendLine();
+                            _sb.WriteLine("return _sb.ToStringAndFree();");
+                            _sb.WriteLine("}");
+                            _sb.Pop();
+                        }
+                        else if (_lexerState == CodeTemplateLexerState.TemplateOutput)
+                        {
+                            if (_token.Kind == CodeTemplateTokenKind.EndOfLine)
+                            {
+                                _sb.WriteLine("_sb.WriteLine();");
+                            }
+                            else
+                            {
+                                _sb.WriteLine($"_sb.Write(\"{_token.Text}\");");
+                            }
+                        }
+                        else if (IsKeyword("end"))
+                        {
+                            _sb.AppendLine();
+                            _sb.WriteLine("}");
+                            _sb.Pop();
+                        }
+                        else if (_token.Kind != CodeTemplateTokenKind.TemplateControlBegin && _token.Kind != CodeTemplateTokenKind.TemplateControlEnd)
+                        {
+                            _sb.Write(_token.Text);
+                        }
+                        continue;
+                    }
                 }
+                _sb.Pop();
+                _sb.WriteLine("}");
+                _sb.Pop();
+                _sb.WriteLine("}");
+                _compiledCode = _sb.ToStringAndFree();
+                _sb = null;
+                _diagnosticBag.AddRange(_lexer.GetDiagnostics());
+                _diagnostics = _diagnosticBag.ToReadOnlyAndFree();
+                _diagnosticBag = null;
             }
-            _sb.Pop();
-            _sb.WriteLine("}");
-            _sb.Pop();
-            _sb.WriteLine("}");
-            _compiledCode = _sb.ToStringAndFree();
-            _sb = null;
-            _diagnostics = _diagnosticBag.ToReadOnlyAndFree();
-            _diagnosticBag = null;
             return _compiledCode;
         }
 
-        private void Error(string message)
+        private CodeTemplateToken NextToken()
         {
-            _diagnosticBag.Add(Diagnostic.Create(ErrorCode.ERR_SyntaxError, Location.Create(_fileName, new TextSpan(_position, 1), new LinePositionSpan(new LinePosition(_line, _column), new LinePosition(_line, _column)))));
-        }
-
-        private void Skip(string token)
-        {
-            _column += token.Length;
-            _position += token.Length;
-        }
-
-        private bool TryMatch(string token)
-        {
-            if (_text != null && _text.StartsWith(token))
+            if (_lexer != null)
             {
-                _text = _text.Substring(token.Length);
+                var token = _lexer.Lex(ref _lexerState);
+                _line = _lexer.Line;
+                _column = _lexer.Column;
+                return token;
+            }
+            return CodeTemplateToken.None;
+        }
+
+        private bool IsKeyword(string text)
+        {
+            return _token.Kind == CodeTemplateTokenKind.Keyword && _token.Text == text;
+        }
+
+        private bool MatchKeyword(string text)
+        {
+            if (IsKeyword(text))
+            {
                 return true;
             }
             else
             {
+                Error($"{text} is expected but {_token.Text} is found");
                 return false;
             }
         }
 
-        private bool Match(string token)
+        private bool IsWhitespaceOrComment()
         {
-            if (!TryMatch(token))
-            {
-                Error($"'{token.Trim()}' expected.");
-                return false;
-            }
-            return true;
+            return _token.Kind == CodeTemplateTokenKind.EndOfLine || _token.Kind == CodeTemplateTokenKind.Whitespace || _token.Kind == CodeTemplateTokenKind.SingleLineComment || _token.Kind == CodeTemplateTokenKind.MultiLineComment;
         }
 
+        private void Error(string message)
+        {
+            _diagnosticBag.Add(Diagnostic.Create(ErrorCode.ERR_SyntaxError, Location.Create(_filePath, new TextSpan(_token.Position, _token.Text.Length), new LinePositionSpan(new LinePosition(_line, _column), new LinePosition(_line, _column))), message));
+        }
+
+        private void Expected(params string[] texts)
+        {
+            var sb = PooledStringBuilder.GetInstance();
+            foreach (var text in texts)
+            {
+                if (sb.Length > 0) sb.Builder.Append(" or ");
+                sb.Builder.Append('\'');
+                sb.Builder.Append(text);
+                sb.Builder.Append('\'');
+            }
+            sb.Builder.Append($"is expected but '{_token.Text}' is found");
+            Error(sb.ToStringAndFree());
+        }
     }
 }

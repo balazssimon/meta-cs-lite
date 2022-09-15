@@ -62,7 +62,7 @@ namespace MetaDslx.CodeGeneration
 
         public void Pop()
         {
-            if (_indentStack.Count == 0) throw new InvalidOperationException("Push-Pop mismatch.");
+            if (_indentStack.Count == 0) return;//throw new InvalidOperationException("Push-Pop mismatch.");
             AppendLine();
             var indent = _indentStack[_indentStack.Count - 1];
             _indentStack.RemoveAt(_indentStack.Count - 1);
@@ -210,14 +210,15 @@ namespace MetaDslx.CodeGeneration
             if (value.Length > 0) _isAtLineStart = IsLineEnd(value[value.Length - 1]);
         }
 
-        public void Write(object obj)
+        public void Write(object? obj)
         {
             if (obj == null) return;
             else Write(obj.ToString());
         }
 
-        public void Write(string text)
+        public void Write(string? text)
         {
+            if (text == null) return;
             Write(text.AsSpan());
         }
 
@@ -322,13 +323,13 @@ namespace MetaDslx.CodeGeneration
             AppendLine();
         }
 
-        public void WriteLine(object obj)
+        public void WriteLine(object? obj)
         {
             Write(obj);
             AppendLine();
         }
 
-        public void WriteLine(string text)
+        public void WriteLine(string? text)
         {
             Write(text);
             AppendLine();

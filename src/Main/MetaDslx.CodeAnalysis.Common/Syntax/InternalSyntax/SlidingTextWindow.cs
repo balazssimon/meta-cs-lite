@@ -334,8 +334,8 @@ namespace MetaDslx.CodeAnalysis.Syntax.InternalSyntax
         /// </returns>
         public char PeekChar(int delta)
         {
-            _minLexemeLookahead = Math.Min(_minLexemeLookahead, delta);
-            _maxLexemeLookahead = Math.Max(_maxLexemeLookahead, delta);
+            _minLexemeLookahead = Math.Min(_minLexemeLookahead, delta + 1);
+            _maxLexemeLookahead = Math.Max(_maxLexemeLookahead, delta + 1);
             _minLookahead = Math.Min(_minLookahead, _minLexemeLookahead);
             _maxLookahead = Math.Max(_maxLookahead, _maxLexemeLookahead);
 
@@ -357,7 +357,7 @@ namespace MetaDslx.CodeAnalysis.Syntax.InternalSyntax
         /// If the next characters in the window match the given string,
         /// then advance past those characters.  Otherwise, do nothing.
         /// </summary>
-        private bool AdvanceIfMatches(string desired)
+        public bool AdvanceIfMatches(string desired)
         {
             int length = desired.Length;
 
