@@ -12,22 +12,6 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
 {
     public class CodeTemplateCompiler
     {
-        private enum State
-        {
-            None,
-            MatchedNamespace,
-            MatchedGenerator,
-            MatchedControl,
-            MatchedUsings,
-            MatchedTemplate,
-            TemplateName,
-            TemplateParams,
-            TemplateOutput,
-            TemplateControl
-        }
-
-        private static readonly Regex IdentifierRegex = new Regex("[a-zA-Z_][a-zA-Z_0-9]*");
-        private static readonly Regex StringRegex = new Regex(@"""[^""\\]*(?:\\.[^""\\]*)*(""|\r\n|\n)");
 
         private string _fileName;
         private string _templateCode;
