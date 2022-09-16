@@ -24,10 +24,12 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
         public CodeTemplateTokenKind Kind => _kind;
         public string Text => _text;
         public int Position => _position;
+        public string EscapedText => _text.Replace("\t", "\\t").Replace("\r", "\\r").Replace("\n", "\\n");
+        public string EscapedTextForString => _text.Replace("\\", "\\\\").Replace("\"", "\\\"").Replace("\t", "\\t").Replace("\r", "\\r").Replace("\n", "\\n");
 
         public override string ToString()
         {
-            return $"{_kind}[{_position}]: '{_text.Replace("\t","\\t").Replace("\r", "\\r").Replace("\n", "\\n")}'";
+            return $"{_kind}[{_position}]: '{EscapedText}'";
         }
     }
 }

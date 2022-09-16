@@ -19,12 +19,9 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
         private int _parenthesisCounter = 0;
         private int _bracketsCounter = 0;
         private int _bracesCounter = 0;
-        private int _elseCounter = 0;
 
         private string _controlBegin = "[";
         private string _controlEnd = "]";
-
-        private List<string> _controlStack;
 
         private DiagnosticBag? _diagnosticBag;
 
@@ -32,13 +29,14 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
         {
             _filePath = filePath;
             _text = new SlidingTextWindow(text);
-            _controlStack = new List<string>();
             if (collectErrors) _diagnosticBag = new DiagnosticBag();
         }
 
         public int Position => _text.Position;
         public int Line => _line;
         public int Column => _column;
+        public string ControlBegin { get => _controlBegin; internal set => _controlBegin = value; }
+        public string ControlEnd { get => _controlEnd; internal set => _controlEnd = value; }
 
         public void Dispose()
         {
@@ -97,6 +95,8 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
             if (token.Kind != CodeTemplateTokenKind.None) return token;
             token = MatchTemplateOutput(ref state);
             if (token.Kind != CodeTemplateTokenKind.None) return token;
+            token = MatchTemplateControlEnd(ref state);
+            if (token.Kind != CodeTemplateTokenKind.None) return token;
             token = MatchWhitespace();
             if (token.Kind != CodeTemplateTokenKind.None) return token;
             token = MatchComment();
@@ -106,8 +106,6 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
             token = MatchNumber();
             if (token.Kind != CodeTemplateTokenKind.None) return token;
             token = MatchString();
-            if (token.Kind != CodeTemplateTokenKind.None) return token;
-            token = MatchTemplateControlEnd(ref state);
             if (token.Kind != CodeTemplateTokenKind.None) return token;
             token = MatchOther(ref state);
             if (token.Kind != CodeTemplateTokenKind.None) return token;
@@ -142,7 +140,7 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
                 var ch = _text.PeekChar();
                 var isControlBegin = IsControlBegin();
                 var isTemplateEnd = IsTemplateEnd();
-                while (!_text.IsReallyAtEnd() && isControlBegin && isTemplateEnd && ch != '\r' && ch != '\n')
+                while (!_text.IsReallyAtEnd() && !isControlBegin && !isTemplateEnd && ch != '\r' && ch != '\n')
                 {
                     hasOutput = true;
                     _text.NextChar();
@@ -150,24 +148,20 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
                     isControlBegin = IsControlBegin();
                     isTemplateEnd = IsTemplateEnd();
                 }
+                if (hasOutput)
+                {
+                    return new CodeTemplateToken(CodeTemplateTokenKind.TemplateOutput, _text.GetText(false), _text.LexemeStartPosition);
+                }
                 if (isControlBegin)
                 {
-                    if (hasOutput)
-                    {
-                        return new CodeTemplateToken(CodeTemplateTokenKind.TemplateOutput, _text.GetText(false), _text.LexemeStartPosition);
-                    }
-                    else
-                    {
-                        _text.AdvanceChar(_controlBegin.Length);
-                        state = CodeTemplateLexerState.TemplateControl;
-                        _parenthesisCounter = 0;
-                        _bracketsCounter = 0;
-                        _bracesCounter = 0;
-                        _elseCounter = 0;
-                        return new CodeTemplateToken(CodeTemplateTokenKind.TemplateControlBegin, _text.GetText(true), _text.LexemeStartPosition);
-                    }
+                    _text.AdvanceChar(_controlBegin.Length);
+                    state = CodeTemplateLexerState.TemplateControl;
+                    _parenthesisCounter = 0;
+                    _bracketsCounter = 0;
+                    _bracesCounter = 0;
+                    return new CodeTemplateToken(CodeTemplateTokenKind.TemplateControlBegin, _text.GetText(true), _text.LexemeStartPosition);
                 }
-                else if (isTemplateEnd)
+                if (isTemplateEnd)
                 {
                     state = CodeTemplateLexerState.TemplateControl;
                 }
@@ -243,9 +237,13 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
             if (ch == '/' && _text.PeekChar(1) == '*')
             {
                 _text.AdvanceChar(2);
-                while (!_text.IsReallyAtEnd() && _text.PeekChar(0) != '*' && _text.PeekChar(1) != '/')
+                while (!_text.IsReallyAtEnd() && (_text.PeekChar(0) != '*' || _text.PeekChar(1) != '/'))
                 {
                     _text.NextChar();
+                }
+                if (_text.PeekChar(0) == '*' && _text.PeekChar(1) == '/')
+                {
+                    _text.AdvanceChar(2);
                 }
                 return new CodeTemplateToken(CodeTemplateTokenKind.MultiLineComment, _text.GetText(false), _text.LexemeStartPosition);
             }
@@ -273,9 +271,11 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
                     ch = _text.PeekChar();
                 }
                 var lexeme = _text.GetText(false);
-                if (s_keywords.Contains(lexeme))
+                if (s_Keywords.Contains(lexeme) || s_ContextualKeywords.Contains(lexeme)) kind = CodeTemplateTokenKind.Keyword;
+                if (state == CodeTemplateLexerState.None && s_TemplateKeywords.Contains(lexeme)) kind = CodeTemplateTokenKind.Keyword;
+                if (state == CodeTemplateLexerState.TemplateControl && s_TemplateControlKeywords.Contains(lexeme)) kind = CodeTemplateTokenKind.Keyword;
+                if (kind == CodeTemplateTokenKind.Keyword)
                 {
-                    kind = CodeTemplateTokenKind.Keyword;
                     if (lexeme == "end")
                     {
                         if (state == CodeTemplateLexerState.TemplateControl)
@@ -291,25 +291,11 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
                     {
                         if (state == CodeTemplateLexerState.End)
                         {
-                            if (_controlStack.Count > 0)
-                            {
-                                var start = _controlStack[0];
-                                var expected = start == "do" ? "while" : start;
-                                Error($"'[end {expected}]' is expected but 'end {lexeme}' is found");
-                            }
                             state = CodeTemplateLexerState.None;
                         }
                         else if (state == CodeTemplateLexerState.None)
                         {
                             state = CodeTemplateLexerState.TemplateHeader;
-                            _controlStack.Clear();
-                        }
-                    }
-                    if (lexeme == "else")
-                    {
-                        if (state == CodeTemplateLexerState.TemplateControl)
-                        {
-                            _elseCounter += 1;
                         }
                     }
                     if (lexeme == "if" || lexeme == "switch" || lexeme == "do" || lexeme == "for" || lexeme == "foreach" || 
@@ -317,32 +303,7 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
                     {
                         if (state == CodeTemplateLexerState.End)
                         {
-                            if (_controlStack.Count > 0)
-                            {
-                                var start = _controlStack[0];
-                                if (start == "do" && lexeme == "while" || start != "do" && lexeme == start)
-                                {
-                                    state = CodeTemplateLexerState.TemplateControl;
-                                }
-                                else
-                                {
-                                    var expected = start == "do" ? "while" : start;
-                                    Error($"'{expected}' is expected but '{lexeme}' is found");
-                                    state = CodeTemplateLexerState.TemplateControl;
-                                }
-                            }
-                            else
-                            {
-                                Error($"'end {lexeme}' is unexpected here");
-                                state = CodeTemplateLexerState.TemplateControl;
-                            }
-                        }
-                        else
-                        {
-                            if (lexeme != "if" || _elseCounter == 0)
-                            {
-                                _controlStack.Add(lexeme);
-                            }
+                            state = CodeTemplateLexerState.TemplateControl;
                         }
                     }
                 }
@@ -441,7 +402,6 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
                     _parenthesisCounter = 0;
                     _bracketsCounter = 0;
                     _bracesCounter = 0;
-                    _elseCounter = 0;
                     return new CodeTemplateToken(CodeTemplateTokenKind.TemplateControlEnd, _text.GetText(true), _text.LexemeStartPosition);
                 }
             }
@@ -499,7 +459,7 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
             }
         }
 
-        private static readonly HashSet<string> s_keywords = new HashSet<string>()
+        private static readonly HashSet<string> s_Keywords = new HashSet<string>()
         {
             "abstract", "as", "base", "bool", "break", "byte", "case", "catch", "char", "checked", "class", "const", "continue", 
             "decimal", "default", "delegate", "do", "double", "else", "enum", "event", "explicit", "extern", "false", "finally", 
@@ -512,6 +472,25 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
             "nameof", "nint", "not", "notnull", "nuint", "on", "or", "orderby", "partial", "partial", "record", "remove", 
             "required", "select", "set", "unmanaged", "value", "var", "when", "where", "with", "yield", 
             "control", "generator", "template", "end"
+        };
+
+        private static readonly HashSet<string> s_ContextualKeywords = new HashSet<string>()
+        {
+            /*"add",*/ "and", "alias", "ascending", "args", "async", "await", "by",
+            "descending", "dynamic", "equals", "from", /*"get",*/ "global", "group", /*"init",*/ "into", "join", "let", "managed",
+            "nameof", "nint", "not", "notnull", "nuint", "on", "or", "orderby", "partial", "partial", "record", /*"remove",*/
+            "required", "select", /*"set",*/ "unmanaged", "value", "var", "when", "where", "with", "yield",
+            "control", "generator", "template", "end"
+        };
+
+        private static readonly HashSet<string> s_TemplateKeywords = new HashSet<string>()
+        {
+            "control", "generator", "template"
+        };
+
+        private static readonly HashSet<string> s_TemplateControlKeywords = new HashSet<string>()
+        {
+            "end", "template", "separator"
         };
     }
 }

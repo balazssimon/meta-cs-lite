@@ -2,6 +2,7 @@
 using MetaDslx.CodeAnalysis.Text;
 using MetaDslx.CodeGeneration;
 using System;
+using System.Diagnostics.Metrics;
 
 namespace MetaDslx.Bootstrap.CodeGeneration
 {
@@ -35,16 +36,21 @@ namespace HelloNs.X.Y;
 
 generator AAA;
 
-control < >;
+control [ ]
+
+using System.C;
+using System.D
 
 template Q(int a, int b = 5)
-[if (a > 3)]
-Hello, [name(a[5])]!
-[else if (b < 3)]
-aaa
-[else]
-bbb
-[end if]
+  aaa!
+  [var a = 5; a*2]
+  [var b = a]
+  [B b = a]
+  [b = a]
+  [if (a > n)]xx[end if]
+    vv
+  [end if]
+  bbb
 end template";
             /*var lexer = new CodeTemplateLexer("hello.mgen", SourceText.From(templateCode), true);
             var state = CodeTemplateLexerState.None;
@@ -58,9 +64,13 @@ end template";
             {
                 Console.WriteLine(diag);
             }*/
-            var compiler = new CodeTemplateCompiler("hello.mgen", templateCode);
+            var compiler = new CodeTemplateParser("hello.mgen", templateCode);
             var compiledCode = compiler.Compile();
             Console.WriteLine(compiledCode);
+            foreach (var diag in compiler.Diagnostics)
+            {
+                Console.WriteLine(diag);
+            }
         }
     }
 }
