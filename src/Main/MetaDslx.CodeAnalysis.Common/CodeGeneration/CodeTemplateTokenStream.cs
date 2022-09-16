@@ -47,12 +47,6 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
             return CodeTemplateToken.None;
         }
 
-        public CodeTemplateToken NextToken()
-        {
-            EatToken();
-            return PeekToken(0);
-        }
-
         public CodeTemplateToken PeekToken(int index = 0)
         {
             if (FetchTokens(index + 1))

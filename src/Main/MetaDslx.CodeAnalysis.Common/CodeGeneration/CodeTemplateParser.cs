@@ -13,20 +13,27 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
 {
     public class CodeTemplateParser
     {
-        private enum ParserState
+        private struct ControlStatement
         {
-            None,
-            BeginNamespace,
-            EndNamespace,
-            BeginGenerator,
-            EndGenerator,
-            BeginControl,
-            EndControl,
-            BeginUsing,
-            EndUsing,
-            BeginTemplate,
-            TemplateBody,
-            EndTemplate,
+            public string Text;
+            public bool IsExpression;
+            public CodeTemplateToken BeginKeyword;
+            public CodeTemplateToken EndKeyword;
+            public string? Separator;
+
+            public ControlStatement()
+            {
+                Text = "";
+                IsExpression = false;
+                BeginKeyword = CodeTemplateToken.None;
+                EndKeyword = CodeTemplateToken.None;
+                Separator = null;
+            }
+
+            public override string ToString()
+            {
+                return Text;
+            }
         }
 
         private string _filePath;
@@ -34,7 +41,6 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
         private string? _compiledCode;
         private CodeTemplateLexer _lexer;
         private CodeTemplateTokenStream _tokens;
-        private ParserState _state;
         private CodeBuilder? _sb;
         private string? _generatorName;
         private (int,int) _generatorLineMap;
@@ -73,11 +79,12 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
             var map = LineMap();
             if (MatchKeyword("namespace"))
             {
-                _sb.Write("namespace ");
+                _sb.Write("namespace");
                 while (true)
                 {
-                    var token = _tokens.NextToken();
+                    var token = _tokens.CurrentToken;
                     if (TryMatchEndOfLine()) break;
+                    else _tokens.EatToken();
                     _sb.Write(token.Text);
                 }
                 _sb.WriteLine(LineMapComment(map));
@@ -88,7 +95,7 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
                     ParseControl();
                     while (ParseUsing());
                     _sb.WriteLine();
-                    _sb.Write("public partial class ");
+                    _sb.Write("public partial class");
                     _sb.Write(_generatorName);
                     _sb.WriteLine(LineMapComment(_generatorLineMap));
                     _sb.WriteLine("{");
@@ -112,8 +119,9 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
                 var gnsb = PooledStringBuilder.GetInstance();
                 while (true)
                 {
-                    var token = _tokens.NextToken();
+                    var token = _tokens.CurrentToken;
                     if (TryMatchEndOfLine()) break;
+                    else _tokens.EatToken();
                     gnsb.Builder.Append(token.Text);
                 }
                 _generatorName = gnsb.ToStringAndFree();
@@ -133,9 +141,10 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
                 var counter = 0;
                 while (true)
                 {
-                    var token = _tokens.NextToken();
+                    var token = _tokens.CurrentToken;
                     if (TryMatchEndOfLine()) break;
-                    if (IsWhitespaceOrComment())
+                    else _tokens.EatToken();
+                    if (IsWhitespaceOrComment(token))
                     {
                         if (incCounter) ++counter;
                         incCounter = false;
@@ -170,11 +179,13 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
             var map = LineMap();
             if (IsKeyword("using"))
             {
+                _tokens.EatToken();
                 _sb.Write("using");
                 while (true)
                 {
-                    var token = _tokens.NextToken();
+                    var token = _tokens.CurrentToken;
                     if (TryMatchEndOfLine()) break;
+                    else _tokens.EatToken();
                     _sb.Write(token.Text);
                 }
                 _sb.Write(";");
@@ -191,20 +202,24 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
             if (IsKeyword("template"))
             {
                 _tokens.EatToken();
-                _sb.Write("public string ");
+                _sb.Write("public string");
                 while (_tokens.State == CodeTemplateLexerState.TemplateHeader)
                 {
-                    var token = _tokens.NextToken();
+                    var token = _tokens.CurrentToken;
                     if (_tokens.State == CodeTemplateLexerState.TemplateHeader)
                     {
                         _sb.Write(token.Text);
                     }
+                    _tokens.EatToken();
                 }
+                SkipWs();
                 _sb.WriteLine(LineMapComment(map));
                 _sb.WriteLine("{");
                 _sb.Push();
                 _sb.WriteLine("var __cb = CodeBuilder.GetInstance();");
-                ParseTemplateOutput();
+                string? indent = null;
+                bool indentWritten = false;
+                ParseTemplateContent(CodeTemplateToken.None, ref indent, ref indentWritten);
                 _sb.WriteLine("return __cb.ToStringAndFree();");
                 _sb.Pop();
                 _sb.WriteLine("}");
@@ -214,96 +229,146 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
             return false;
         }
 
-        private void ParseTemplateOutput()
+        private void ParseTemplateContent(CodeTemplateToken beginKeyword, ref string? indent, ref bool indentWritten)
         {
-            string? indent = null;
-            var hasExpression = false;
             while (!_tokens.EndOfFile)
             {
-                var token = _tokens.NextToken();
-                if (token.Kind == CodeTemplateTokenKind.TemplateOutput)
+                var token = _tokens.CurrentToken;
+                if (IsTemplateEnd())
                 {
-                    if (_tokens.Column == 0 && string.IsNullOrWhiteSpace(token.Text))
+                    if (beginKeyword.Kind == CodeTemplateTokenKind.Keyword)
                     {
-                        indent = token.EscapedTextForString;
+                        if (indentWritten)
+                        {
+                            _sb.WriteLine("__cb.Pop();");
+                            indentWritten = false;
+                        }
+                        _sb.Pop();
+                        _sb.WriteLine("}");
+                        Error($"[end {beginKeyword.Text}] is expected");
                     }
-                    else
-                    {
-                        _sb.Write("__cb.Write(\"");
-                        _sb.Write(token.EscapedTextForString);
-                        _sb.WriteLine("\");");
-                        hasExpression = true;
-                    }
+                    return;
                 }
-                else if (token.Kind == CodeTemplateTokenKind.EndOfLine)
+                else if (_tokens.State == CodeTemplateLexerState.TemplateOutput)
                 {
-                    if (hasExpression)
-                    {
-                        _sb.WriteLine("__cb.WriteLine();");
-                        hasExpression = false;
-                    }
-                    indent = null;
+                    ParseTemplateOutput(ref indent, ref indentWritten);
                 }
-                else if (token.Kind == CodeTemplateTokenKind.TemplateControlBegin)
+                else if (_tokens.State == CodeTemplateLexerState.TemplateControl)
                 {
-                    if (ParseTemplateControl(indent))
-                    {
-                        hasExpression = true;
-                    }
+                    if (ParseTemplateControl(beginKeyword, ref indent, ref indentWritten)) return;
+                }
+                else
+                {
+                    break;
                 }
             }
         }
 
-        private bool ParseTemplateControl(string? indent)
+        private void ParseTemplateOutput(ref string? indent, ref bool indentWritten)
         {
-            var hasExpression = false;
-            var indentWritten = false;
-            _tokens.EatToken();
-            while (true)
+            var token = _tokens.CurrentToken;
+            if (token.Kind == CodeTemplateTokenKind.TemplateOutput)
             {
-                var stmt = TryMatchControlStatement();
-                if (stmt.TokenCount > 0)
+                if (_tokens.Column == 0 && string.IsNullOrWhiteSpace(token.Text))
                 {
-                    if (stmt.IsExpression)
-                    {
-                        if (!indentWritten)
-                        {
-                            if (indent != null)
-                            {
-                                _sb.Write("__cb.Push(\"");
-                                _sb.Write(indent);
-                                _sb.WriteLine("\");");
-                            }
-                            indentWritten = true;
-                        }
-                        _sb.Write("__cb.Write(");
-                        for (int i = 0; i < stmt.TokenCount; i++)
-                        {
-                            var token = _tokens.EatToken();
-                            _sb.Write(token.Text);
-                        }
-                        _sb.WriteLine(");");
-                        hasExpression = true;
-                    }
-                    else
-                    {
-                        for (int i = 0; i < stmt.TokenCount; i++)
-                        {
-                            var token = _tokens.EatToken();
-                            _sb.Write(token.Text);
-                        }
-                        _sb.WriteLine();
-                    }
+                    indent = token.EscapedTextForString;
+                    indentWritten = false;
                 }
                 else
                 {
-                    if (indentWritten && indent != null)
+                    if (!indentWritten && indent != null)
+                    {
+                        _sb.Write("__cb.Push(\"");
+                        _sb.Write(indent);
+                        _sb.WriteLine("\");");
+                        indentWritten = true;
+                    }
+                    _sb.Write("__cb.Write(\"");
+                    _sb.Write(token.EscapedTextForString);
+                    _sb.WriteLine("\");");
+                }
+                _tokens.EatToken();
+            }
+            else if (token.Kind == CodeTemplateTokenKind.EndOfLine)
+            {
+                if (indentWritten)
+                {
+                    _sb.WriteLine("__cb.WriteLine();");
+                    _sb.WriteLine("__cb.Pop();");
+                    indentWritten = false;
+                }
+                indent = null;
+                _tokens.EatToken();
+            }
+            else if (token.Kind == CodeTemplateTokenKind.TemplateControlBegin)
+            {
+                _tokens.EatToken();
+            }
+        }
+
+        private bool ParseTemplateControl(CodeTemplateToken beginKeyword, ref string? indent, ref bool indentWritten)
+        {
+            var stmt = TryMatchControlStatement();
+            if (!string.IsNullOrWhiteSpace(stmt.Text) || stmt.EndKeyword.Kind == CodeTemplateTokenKind.Keyword)
+            {
+                if (stmt.IsExpression)
+                {
+                    if (!indentWritten && indent != null)
+                    {
+                        _sb.Write("__cb.Push(\"");
+                        _sb.Write(indent);
+                        _sb.WriteLine("\");");
+                        indentWritten = true;
+                    }
+                    _sb.Write("__cb.Write(");
+                    _sb.Write(stmt.Text);
+                    _sb.WriteLine(");");
+                }
+                else if (stmt.BeginKeyword.Kind != CodeTemplateTokenKind.None)
+                {
+                    var lexeme = stmt.BeginKeyword.Text;
+                    if (stmt.Separator != null && (lexeme == "do" || lexeme == "for" || lexeme == "foreach" || lexeme == "while"))
+                    {
+                        _sb.WriteLine("var __first = true;");
+                    }
+                    _sb.WriteLine(stmt.Text);
+                    _sb.WriteLine("{");
+                    _sb.Push();
+                    if (stmt.Separator != null && (lexeme == "do" || lexeme == "for" || lexeme == "foreach" || lexeme == "while"))
+                    {
+                        _sb.WriteLine("if (__first) __first = false;");
+                        _sb.Write($"else __cb.Write(");
+                        _sb.Write(stmt.Separator);
+                        _sb.WriteLine(");");
+                    }
+                    ParseTemplateContent(stmt.BeginKeyword, ref indent, ref indentWritten);
+                }
+                else if (stmt.EndKeyword.Kind != CodeTemplateTokenKind.None)
+                {
+                    if (beginKeyword.Kind == CodeTemplateTokenKind.None)
+                    {
+                        Error($"[end {stmt.EndKeyword.Text}] is unexpected here");
+                        return false;
+                    }
+                    else if (beginKeyword.Kind == CodeTemplateTokenKind.Keyword && stmt.EndKeyword.Text != beginKeyword.Text)
+                    {
+                        Error($"[end {beginKeyword.Text}] is expected but [end {stmt.EndKeyword.Text}] was found");
+                    }
+                    if (indentWritten)
                     {
                         _sb.WriteLine("__cb.Pop();");
+                        indentWritten = false;
                     }
-                    return hasExpression;
+                    _sb.Pop();
+                    _sb.WriteLine("}");
+                    return true;
+                }
+                else
+                {
+                    _sb.WriteLine(stmt.Text);
                 }
             }
+            return false;
         }
 
         private void SkipWs()
@@ -311,35 +376,131 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
             while (IsWhitespaceOrComment()) _tokens.EatToken();
         }
 
-        private (int TokenCount, bool IsExpression) TryMatchControlStatement()
+        private ControlStatement TryMatchControlStatement()
         {
             SkipWs();
+            ControlStatement result = new ControlStatement();
             var token = _tokens.CurrentToken;
             int parenthesisCounter = 0;
             int bracketCounter = 0;
             int bracesCounter = 0;
-            int tokenCounter = 0;
-            bool isExpression = token.Kind != CodeTemplateTokenKind.Keyword;
+            if (token.Kind == CodeTemplateTokenKind.Keyword)
+            {
+                var lexeme = token.Text;
+                if (lexeme == "if" || lexeme == "switch" || lexeme == "do" || lexeme == "for" || lexeme == "foreach" ||
+                    lexeme == "while" || lexeme == "try" || lexeme == "catch" || lexeme == "finally" || lexeme == "lock")
+                {
+                    result.BeginKeyword = token;
+                }
+                else if (lexeme == "end")
+                {
+                    _tokens.EatToken();
+                    while (IsWhitespaceOrComment()) _tokens.EatToken();
+                    token = _tokens.CurrentToken;
+                    if (token.Kind == CodeTemplateTokenKind.Keyword)
+                    {
+                        lexeme = token.Text;
+                        if (lexeme == "if" || lexeme == "switch" || lexeme == "do" || lexeme == "for" || lexeme == "foreach" ||
+                            lexeme == "while" || lexeme == "try" || lexeme == "lock")
+                        {
+                            result.EndKeyword = token;
+                            _tokens.EatToken();
+                            token = _tokens.CurrentToken;
+                        }
+                    }
+                    bool error = false;
+                    while (token.Kind != CodeTemplateTokenKind.EndOfFile && token.Kind != CodeTemplateTokenKind.TemplateControlEnd)
+                    {
+                        if (!IsWhitespaceOrComment() && !error)
+                        {
+                            Unexpected();
+                            error = true;
+                        }
+                        _tokens.EatToken();
+                        token = _tokens.CurrentToken;
+                    }
+                    return result;
+                }
+            }
+            else
+            {
+                result.IsExpression = true;
+            }
+            bool collectSeparator = false;
+            var sb = PooledStringBuilder.GetInstance();
             while (token.Kind != CodeTemplateTokenKind.None)
             {
-                token = _tokens.PeekToken(tokenCounter);
+                token = _tokens.CurrentToken;
+                _tokens.EatToken();
                 if (token.Kind == CodeTemplateTokenKind.EndOfFile || token.Kind == CodeTemplateTokenKind.TemplateControlEnd)
                 {
-                    return (tokenCounter, isExpression);
+                    if (collectSeparator)
+                    {
+                        result.Separator = sb.ToStringAndFree();
+                    }
+                    else
+                    {
+                        if (!result.IsExpression) sb.Builder.Append(";");
+                        result.Text = sb.ToStringAndFree();
+                    }
+                    return result;
                 }
+                sb.Builder.Append(token.Text);
                 if (token.Kind == CodeTemplateTokenKind.Other)
                 {
-                    if (token.Text == ";" && parenthesisCounter == 0 && bracketCounter == 0 && bracesCounter == 0) return (tokenCounter + 1, false);
+                    if (!collectSeparator && token.Text == "=")
+                    {
+                        if (parenthesisCounter == 0 && bracketCounter == 0 && bracesCounter == 0)
+                        {
+                            var nextToken = _tokens.PeekToken();
+                            if (!(nextToken.Kind == CodeTemplateTokenKind.Other && nextToken.Text == "="))
+                            {
+                                result.IsExpression = false;
+                            }
+                        }
+                    }
                     if (token.Text == "(") ++parenthesisCounter;
-                    if (token.Text == ")") --parenthesisCounter;
+                    if (token.Text == ")")
+                    {
+                        --parenthesisCounter;
+                        if (result.BeginKeyword.Kind == CodeTemplateTokenKind.Keyword && !collectSeparator && TryMatchSeparator())
+                        {
+                            var lexeme = result.BeginKeyword.Text;
+                            if (lexeme == "do" || lexeme == "for" || lexeme == "foreach" || lexeme == "while")
+                            {
+                                result.Text = sb.ToStringAndFree();
+                                sb = PooledStringBuilder.GetInstance();
+                                collectSeparator = true;
+                            }
+                            else
+                            {
+                                Unexpected();
+                            }
+                        }
+                    }
                     if (token.Text == "[") ++bracketCounter;
                     if (token.Text == "]") --bracketCounter;
                     if (token.Text == "{") ++bracesCounter;
                     if (token.Text == "}") --bracesCounter;
+                    if (token.Text == ";" && parenthesisCounter == 0 && bracketCounter == 0 && bracesCounter == 0)
+                    {
+                        if (collectSeparator) result.Separator = sb.ToStringAndFree();
+                        else result.Text = sb.ToStringAndFree();
+                        result.IsExpression = false;
+                        return result;
+                    }
                 }
-                ++tokenCounter;
             }
-            return (0, isExpression);
+            if (collectSeparator)
+            {
+                result.Separator = sb.ToStringAndFree();
+            }
+            else
+            {
+                if (!result.IsExpression) sb.Builder.Append(";");
+                result.Text = sb.ToStringAndFree();
+            }
+            return result;
         }
 
         private bool TryMatchEndOfLine(bool allowSemicolon = true)
@@ -356,6 +517,51 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
                 return true;
             }
             if (token.Kind == CodeTemplateTokenKind.EndOfFile)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private bool TryMatchSeparator()
+        {
+            int index = 0;
+            var token = _tokens.PeekToken(index++);
+            if (IsKeyword(token, "separator"))
+            {
+                _tokens.EatToken();
+                return true;
+            }
+            while (IsWhitespaceOrComment(token))
+            {
+                token = _tokens.PeekToken(index++);
+                if (IsKeyword(token, "separator"))
+                {
+                    for (int i = 0; i < index; i++)
+                    {
+                        _tokens.EatToken();
+                    }
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private bool IsTemplateEnd()
+        {
+            int index = 0;
+            var token = _tokens.PeekToken(index++);
+            while (IsWhitespaceOrComment(token)) token = _tokens.PeekToken(index++);
+            if (IsKeyword(token, "end"))
+            {
+                token = _tokens.PeekToken(index++);
+            }
+            else
+            {
+                return false;
+            }
+            while (IsWhitespaceOrComment(token)) token = _tokens.PeekToken(index++);
+            if (IsKeyword(token, "template"))
             {
                 return true;
             }
@@ -413,7 +619,7 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
                 sb.Builder.Append(text);
                 sb.Builder.Append('\'');
             }
-            sb.Builder.Append($" is expected but '{token.EscapedText}' is found");
+            sb.Builder.Append($" is expected but '{token.EscapedText}' was found");
             Error(sb.ToStringAndFree());
         }
 

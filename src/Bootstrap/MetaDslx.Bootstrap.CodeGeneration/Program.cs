@@ -47,9 +47,14 @@ template Q(int a, int b = 5)
   [var b = a]
   [B b = a]
   [b = a]
-  [if (a > n)]xx[end if]
-    vv
-  [end if]
+  [while (x == y)]cc
+    [if (a > n)]
+      xx
+      vv
+    [end if]
+    bb
+    [if (a > n)]yy[end if]
+  [end while]
   bbb
 end template";
             /*var lexer = new CodeTemplateLexer("hello.mgen", SourceText.From(templateCode), true);
