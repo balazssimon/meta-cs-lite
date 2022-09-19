@@ -1,4 +1,5 @@
 ﻿using MetaDslx.CodeAnalysis.PooledObjects;
+using MetaDslx.CodeAnalysis.Text;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -15,6 +16,8 @@ namespace MetaDslx.CodeGeneration
         private bool _isAtLineStart;
         private bool _dontSplitMultiLineValues;
         private List<(string prefix, string suffix)> _indentStack;
+        private int _line;
+        private int _character;
 
         private CodeBuilder()
         {
@@ -23,6 +26,8 @@ namespace MetaDslx.CodeGeneration
             _suffix = "";
             _isAtLineStart = true;
             _dontSplitMultiLineValues = false;
+            _line = 0;
+            _character = 0;
             _indentStack = new List<(string prefix, string suffix)>();
         }
 
@@ -35,6 +40,10 @@ namespace MetaDslx.CodeGeneration
         public string Prefix => _prefix;
         public string Suffix => _suffix;
         public bool IsAtLineStart => _isAtLineStart;
+        public int Line => _line;
+        public int Character => _character;
+        public LinePosition LinePosition => new LinePosition(_line, _character);
+
         public bool DontSplitMultiLineValues 
         {
             get => _dontSplitMultiLineValues; 
@@ -48,6 +57,8 @@ namespace MetaDslx.CodeGeneration
             _suffix = "";
             _isAtLineStart = true;
             _dontSplitMultiLineValues = false;
+            _line = 0;
+            _character = 0;
             _indentStack.Clear();
             s_pool.Free(this);
         }
@@ -70,99 +81,150 @@ namespace MetaDslx.CodeGeneration
             _suffix = indent.suffix;
         }
 
-        public void WritePrefix()
+        public void WritePrefix(bool force = false)
         {
-            _sb.Append(_prefix);
-            if (!string.IsNullOrEmpty(_prefix)) _isAtLineStart = IsLineEnd(_prefix[_prefix.Length - 1]);
+            if (force || _isAtLineStart)
+            {
+                _sb.Append(_prefix);
+                if (!string.IsNullOrEmpty(_prefix))
+                {
+                    _isAtLineStart = IsLineEnd(_prefix[_prefix.Length - 1]);
+                    if (_isAtLineStart)
+                    {
+                        ++_line;
+                        _character = 0;
+                    }
+                    else
+                    {
+                        _character += _prefix.Length;
+                    }
+                }
+            }
         }
 
         public void WriteSuffix()
         {
             _sb.Append(_suffix);
-            if (!string.IsNullOrEmpty(_suffix)) _isAtLineStart = IsLineEnd(_suffix[_suffix.Length - 1]);
+            if (!string.IsNullOrEmpty(_suffix))
+            {
+                _isAtLineStart = IsLineEnd(_suffix[_suffix.Length - 1]);
+                if (_isAtLineStart)
+                {
+                    ++_line;
+                    _character = 0;
+                }
+                else
+                {
+                    _character += _suffix.Length;
+                }
+            }
         }
 
         public void Write(bool value)
         {
             BeginLine();
+            var prevLength = _sb.Length;
             _sb.Append(value);
+            _character += _sb.Length - prevLength;
             _isAtLineStart = false;
         }
 
         public void Write(byte value)
         {
             BeginLine();
+            var prevLength = _sb.Length;
             _sb.Append(value);
+            _character += _sb.Length - prevLength;
             _isAtLineStart = false;
         }
 
         public void Write(sbyte value)
         {
             BeginLine();
+            var prevLength = _sb.Length;
             _sb.Append(value);
+            _character += _sb.Length - prevLength;
             _isAtLineStart = false;
         }
 
         public void Write(short value)
         {
             BeginLine();
+            var prevLength = _sb.Length;
             _sb.Append(value);
+            _character += _sb.Length - prevLength;
             _isAtLineStart = false;
         }
 
         public void Write(int value)
         {
             BeginLine();
+            var prevLength = _sb.Length;
             _sb.Append(value);
+            _character += _sb.Length - prevLength;
             _isAtLineStart = false;
         }
 
         public void Write(long value)
         {
             BeginLine();
+            var prevLength = _sb.Length;
             _sb.Append(value);
+            _character += _sb.Length - prevLength;
             _isAtLineStart = false;
         }
 
         public void Write(ushort value)
         {
             BeginLine();
+            var prevLength = _sb.Length;
             _sb.Append(value);
+            _character += _sb.Length - prevLength;
             _isAtLineStart = false;
         }
 
         public void Write(uint value)
         {
             BeginLine();
+            var prevLength = _sb.Length;
             _sb.Append(value);
+            _character += _sb.Length - prevLength;
             _isAtLineStart = false;
         }
 
         public void Write(ulong value)
         {
             BeginLine();
+            var prevLength = _sb.Length;
             _sb.Append(value);
+            _character += _sb.Length - prevLength;
             _isAtLineStart = false;
         }
 
         public void Write(float value)
         {
             BeginLine();
+            var prevLength = _sb.Length;
             _sb.Append(value);
+            _character += _sb.Length - prevLength;
             _isAtLineStart = false;
         }
 
         public void Write(double value)
         {
             BeginLine();
+            var prevLength = _sb.Length;
             _sb.Append(value);
+            _character += _sb.Length - prevLength;
             _isAtLineStart = false;
         }
 
         public void Write(decimal value)
         {
             BeginLine();
+            var prevLength = _sb.Length;
             _sb.Append(value);
+            _character += _sb.Length - prevLength;
             _isAtLineStart = false;
         }
 
@@ -171,10 +233,17 @@ namespace MetaDslx.CodeGeneration
             BeginLine();
             if (value == '\r' || (value == '\n' && _sb[_sb.Length - 1] != '\r'))
             {
-                EndLine();
+                WriteSuffix();
+                _sb.Append(value);
+                _isAtLineStart = true;
+                ++_line;
+                _character = 0;
             }
-            _sb.Append(value);
-            _isAtLineStart = IsLineEnd(value);
+            else
+            {
+                _sb.Append(value);
+                ++_character;
+            }
         }
 
         public void Write(char[] value)
@@ -208,6 +277,31 @@ namespace MetaDslx.CodeGeneration
             BeginLine();
             _sb.Append(value);
             if (value.Length > 0) _isAtLineStart = IsLineEnd(value[value.Length - 1]);
+            if (_dontSplitMultiLineValues)
+            {
+                for (int i = 0; i < value.Length; i++)
+                {
+                    if (value[i] == '\r')
+                    {
+                        if (i + 1 < value.Length && value[i + 1] == '\n') ++i;
+                        ++_line;
+                        _character = 0;
+                    }
+                    else if (value[i] == '\n')
+                    {
+                        ++_line;
+                        _character = 0;
+                    }
+                    else
+                    {
+                        ++_character;
+                    }
+                }
+            }
+            else
+            {
+                _character += value.Length;
+            }
         }
 
         public void Write(object? obj)
@@ -351,7 +445,7 @@ namespace MetaDslx.CodeGeneration
 
         private void BeginLine()
         {
-            if (_isAtLineStart) WritePrefix();
+            WritePrefix(false);
         }
 
         private void EndLine()
@@ -359,6 +453,8 @@ namespace MetaDslx.CodeGeneration
             WriteSuffix();
             _sb.AppendLine();
             _isAtLineStart = true;
+            ++_line;
+            _character = 0;
         }
 
         private bool IsLineEnd(char ch)

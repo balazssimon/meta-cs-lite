@@ -47,14 +47,58 @@ template Q(int a, int b = 5)
   [var b = a]
   [B b = a]
   [b = a]
-  [while (x == y)]cc
+  [while (x == y) separator x+1]cc
     [if (a > n)]
       xx
       vv
+      [try]
+          aaa
+      [catch(Exception ex)]
+          bbb
+      [catch(Exception2 ex2)]
+          ccc
+      [catch]
+          ddd
+      [finally]
+          eee
+      [end try]
     [end if]
     bb
     [if (a > n)]yy[end if]
   [end while]
+  [switch(c)]
+    [case X:]
+      aaa
+      [switch(c)]
+        [case X:]
+          aaa
+        [case Y:]
+          bbb
+        [default:]
+          ccc
+      [end switch]
+    [case Y:]
+      bbb
+      [switch(c)]
+        [case X:]
+          aaa
+        [case Y:]
+          bbb
+        [default:]
+          ccc
+      [end switch]
+    [default:]
+      ccc
+      [switch(c)]
+        [case X:]
+          aaa
+        [case Y:]
+          bbb
+        [default:]
+          ccc
+      [end switch]
+      eee
+  [end switch]
   bbb
 end template";
             /*var lexer = new CodeTemplateLexer("hello.mgen", SourceText.From(templateCode), true);

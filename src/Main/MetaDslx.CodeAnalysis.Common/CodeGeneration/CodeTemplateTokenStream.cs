@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MetaDslx.CodeAnalysis.Text;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -11,7 +12,7 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
             public CodeTemplateToken Token;
             public CodeTemplateLexerState LexerState;
             public int Line;
-            public int Column;
+            public int Character;
         }
 
         private CodeTemplateLexer _lexer;
@@ -29,7 +30,8 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
         public CodeTemplateToken CurrentToken => PeekToken(0);
         public CodeTemplateLexerState State => PeekEntry(0).LexerState;
         public int Line => PeekEntry(0).Line;
-        public int Column => PeekEntry(0).Column;
+        public int Character => PeekEntry(0).Character;
+        public LinePosition LinePosition => new LinePosition(Line, Character);
         public bool EndOfFile => _endOfFile;
 
         public CodeTemplateToken EatToken()
@@ -71,7 +73,7 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
         {
             if (_fetchState != CodeTemplateLexerState.Eof)
             {
-                var entry = new Entry() { Token = CodeTemplateToken.None, LexerState = _fetchState, Line = _lexer.Line, Column = _lexer.Column };
+                var entry = new Entry() { Token = CodeTemplateToken.None, LexerState = _fetchState, Line = _lexer.Line, Character = _lexer.Column };
                 entry.Token = _lexer.Lex(ref _fetchState);
                 _tokens.Add(entry);
                 return true;

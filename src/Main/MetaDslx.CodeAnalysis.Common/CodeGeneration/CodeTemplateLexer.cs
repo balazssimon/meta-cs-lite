@@ -271,9 +271,9 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
                     ch = _text.PeekChar();
                 }
                 var lexeme = _text.GetText(false);
-                if (s_Keywords.Contains(lexeme) || s_ContextualKeywords.Contains(lexeme)) kind = CodeTemplateTokenKind.Keyword;
-                if (state == CodeTemplateLexerState.None && s_TemplateKeywords.Contains(lexeme)) kind = CodeTemplateTokenKind.Keyword;
-                if (state == CodeTemplateLexerState.TemplateControl && s_TemplateControlKeywords.Contains(lexeme)) kind = CodeTemplateTokenKind.Keyword;
+                if (Keywords.Contains(lexeme) || ContextualKeywords.Contains(lexeme)) kind = CodeTemplateTokenKind.Keyword;
+                if (state == CodeTemplateLexerState.None && TemplateKeywords.Contains(lexeme)) kind = CodeTemplateTokenKind.Keyword;
+                if (state == CodeTemplateLexerState.TemplateControl && TemplateControlKeywords.Contains(lexeme)) kind = CodeTemplateTokenKind.Keyword;
                 if (kind == CodeTemplateTokenKind.Keyword)
                 {
                     if (lexeme == "end")
@@ -359,6 +359,7 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
                         ch = _text.PeekChar();
                     }
                 }
+                if (ch == '"') _text.NextChar();
                 return new CodeTemplateToken(CodeTemplateTokenKind.String, _text.GetText(false), _text.LexemeStartPosition);
             }
             if (ch == '@' && nextCh == '"')
@@ -459,7 +460,7 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
             }
         }
 
-        private static readonly HashSet<string> s_Keywords = new HashSet<string>()
+        public static readonly HashSet<string> Keywords = new HashSet<string>()
         {
             "abstract", "as", "base", "bool", "break", "byte", "case", "catch", "char", "checked", "class", "const", "continue", 
             "decimal", "default", "delegate", "do", "double", "else", "enum", "event", "explicit", "extern", "false", "finally", 
@@ -474,7 +475,37 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
             "control", "generator", "template", "end"
         };
 
-        private static readonly HashSet<string> s_ContextualKeywords = new HashSet<string>()
+        public static readonly HashSet<string> BlockKeywords = new HashSet<string>()
+        {
+            "if", "case", "catch", "default", "do", "finally", "for", "foreach", "lock", "switch", "try", "while"
+        };
+
+        public static readonly HashSet<string> BlockEndKeywords = new HashSet<string>()
+        {
+            "if", "for", "foreach", "lock", "switch", "try", "while"
+        };
+
+        public static readonly HashSet<string> BlockWithoutEndKeywords = new HashSet<string>()
+        {
+            "case", "catch", "default", "finally"
+        };
+
+        public static readonly HashSet<string> SwitchBlockKeywords = new HashSet<string>()
+        {
+            "case", "default"
+        };
+
+        public static readonly HashSet<string> TryBlockKeywords = new HashSet<string>()
+        {
+            "catch", "finally"
+        };
+
+        public static readonly HashSet<string> LoopKeywords = new HashSet<string>()
+        {
+            "do", "for", "foreach", "while"
+        };
+
+        public static readonly HashSet<string> ContextualKeywords = new HashSet<string>()
         {
             /*"add",*/ "and", "alias", "ascending", "args", "async", "await", "by",
             "descending", "dynamic", "equals", "from", /*"get",*/ "global", "group", /*"init",*/ "into", "join", "let", "managed",
@@ -483,12 +514,12 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
             "control", "generator", "template", "end"
         };
 
-        private static readonly HashSet<string> s_TemplateKeywords = new HashSet<string>()
+        public static readonly HashSet<string> TemplateKeywords = new HashSet<string>()
         {
             "control", "generator", "template"
         };
 
-        private static readonly HashSet<string> s_TemplateControlKeywords = new HashSet<string>()
+        public static readonly HashSet<string> TemplateControlKeywords = new HashSet<string>()
         {
             "end", "template", "separator"
         };
