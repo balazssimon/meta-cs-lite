@@ -16,7 +16,7 @@ namespace MetaDslx.LanguageServer
 {
     internal class TextDocumentSyncHandler : ITextDocumentSyncHandler
     {
-        private readonly ILanguageServer _router;
+        private readonly ILanguageServerFacade _languageServer;
         private readonly BufferManager _bufferManager;
 
         private readonly DocumentSelector _documentSelector = new DocumentSelector(
@@ -28,9 +28,9 @@ namespace MetaDslx.LanguageServer
 
         private SynchronizationCapability _capability;
 
-        public TextDocumentSyncHandler(ILanguageServer router, BufferManager bufferManager)
+        public TextDocumentSyncHandler(ILanguageServerFacade languageServer, BufferManager bufferManager)
         {
-            _router = router;
+            _languageServer = languageServer;
             _bufferManager = bufferManager;
         }
 
@@ -88,7 +88,7 @@ namespace MetaDslx.LanguageServer
             if (text != null)
             {
                 _bufferManager.UpdateBuffer(documentPath, SourceText.From(text));
-                _router.Window.LogInfo($"Updated buffer for document: {documentPath}\n{text}");
+                _languageServer.Window.LogInfo($"Updated buffer for document: {documentPath}\n{text}");
             }
 
             return Unit.Task;

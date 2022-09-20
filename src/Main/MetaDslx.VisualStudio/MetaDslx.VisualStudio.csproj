@@ -47,6 +47,7 @@
     <IncludeDebugSymbolsInLocalVSIXDeployment>false</IncludeDebugSymbolsInLocalVSIXDeployment>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="IMetaDslxLanguageClient.cs" />
     <Compile Include="Languages\MetaGenerator\Classification\MetaGeneratorClassificationDefinitions.cs" />
     <Compile Include="Languages\MetaGenerator\Classification\MetaGeneratorClassificationProvider.cs" />
     <Compile Include="Languages\MetaGenerator\Classification\MetaGeneratorClassificationTypes.cs" />
@@ -59,13 +60,11 @@
     <Compile Include="Utilities\MetaDslxMefServices.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="LanguageServer\MetaDslx.LanguageServer.Host.Stdio.deps.json">
+    <Content Include="LanguageServer\net6.0\MetaDslx.LanguageServer.Host.Stdio.deps.json">
       <IncludeInVSIX>true</IncludeInVSIX>
-      <VSIXSubPath>LanguageServer</VSIXSubPath>
     </Content>
-    <Content Include="LanguageServer\MetaDslx.LanguageServer.Host.Stdio.runtimeconfig.json">
+    <Content Include="LanguageServer\net6.0\MetaDslx.LanguageServer.Host.Stdio.runtimeconfig.json">
       <IncludeInVSIX>true</IncludeInVSIX>
-      <VSIXSubPath>LanguageServer</VSIXSubPath>
     </Content>
     <None Include="source.extension.vsixmanifest">
       <SubType>Designer</SubType>
@@ -85,121 +84,104 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Content Include="LanguageServer\MediatR.dll">
+    <Content Include="LanguageServer\net6.0\MediatR.dll">
       <IncludeInVSIX>true</IncludeInVSIX>
-      <VSIXSubPath>LanguageServer</VSIXSubPath>
     </Content>
-    <Content Include="LanguageServer\MetaDslx.CodeAnalysis.Common.dll">
+    <Content Include="LanguageServer\net6.0\MetaDslx.CodeAnalysis.Common.dll">
       <IncludeInVSIX>true</IncludeInVSIX>
-      <VSIXSubPath>LanguageServer</VSIXSubPath>
     </Content>
-    <Content Include="LanguageServer\MetaDslx.CodeAnalysis.Common.pdb">
+    <Content Include="LanguageServer\net6.0\MetaDslx.CodeAnalysis.Common.pdb">
       <IncludeInVSIX>true</IncludeInVSIX>
-      <VSIXSubPath>LanguageServer</VSIXSubPath>
     </Content>
-    <Content Include="LanguageServer\MetaDslx.LanguageServer.dll">
+    <Content Include="LanguageServer\net6.0\MetaDslx.LanguageServer.dll">
       <IncludeInVSIX>true</IncludeInVSIX>
-      <VSIXSubPath>LanguageServer</VSIXSubPath>
     </Content>
-    <Content Include="LanguageServer\MetaDslx.LanguageServer.Host.Stdio.dll">
+    <Content Include="LanguageServer\net6.0\MetaDslx.LanguageServer.Host.Stdio.dll">
       <IncludeInVSIX>true</IncludeInVSIX>
-      <VSIXSubPath>LanguageServer</VSIXSubPath>
     </Content>
-    <Content Include="LanguageServer\MetaDslx.LanguageServer.Host.Stdio.exe">
+    <Content Include="LanguageServer\net6.0\MetaDslx.LanguageServer.Host.Stdio.exe">
       <IncludeInVSIX>true</IncludeInVSIX>
-      <VSIXSubPath>LanguageServer</VSIXSubPath>
     </Content>
-    <Content Include="LanguageServer\MetaDslx.LanguageServer.Host.Stdio.pdb">
+    <Content Include="LanguageServer\net6.0\MetaDslx.LanguageServer.Host.Stdio.pdb">
       <IncludeInVSIX>true</IncludeInVSIX>
-      <VSIXSubPath>LanguageServer</VSIXSubPath>
     </Content>
-    <Content Include="LanguageServer\MetaDslx.LanguageServer.pdb">
+    <Content Include="LanguageServer\net6.0\MetaDslx.LanguageServer.pdb">
       <IncludeInVSIX>true</IncludeInVSIX>
-      <VSIXSubPath>LanguageServer</VSIXSubPath>
     </Content>
-    <Content Include="LanguageServer\Microsoft.Bcl.AsyncInterfaces.dll">
+    <Content Include="LanguageServer\net6.0\Microsoft.Bcl.AsyncInterfaces.dll">
       <IncludeInVSIX>true</IncludeInVSIX>
-      <VSIXSubPath>LanguageServer</VSIXSubPath>
     </Content>
-    <Content Include="LanguageServer\Microsoft.Extensions.Configuration.Abstractions.dll">
+    <Content Include="LanguageServer\net6.0\Microsoft.Extensions.Configuration.Abstractions.dll">
       <IncludeInVSIX>true</IncludeInVSIX>
-      <VSIXSubPath>LanguageServer</VSIXSubPath>
     </Content>
-    <Content Include="LanguageServer\Microsoft.Extensions.Configuration.Binder.dll">
+    <Content Include="LanguageServer\net6.0\Microsoft.Extensions.Configuration.Binder.dll">
       <IncludeInVSIX>true</IncludeInVSIX>
-      <VSIXSubPath>LanguageServer</VSIXSubPath>
     </Content>
-    <Content Include="LanguageServer\Microsoft.Extensions.Configuration.dll">
+    <Content Include="LanguageServer\net6.0\Microsoft.Extensions.Configuration.dll">
       <IncludeInVSIX>true</IncludeInVSIX>
-      <VSIXSubPath>LanguageServer</VSIXSubPath>
     </Content>
-    <Content Include="LanguageServer\Microsoft.Extensions.DependencyInjection.Abstractions.dll">
+    <Content Include="LanguageServer\net6.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll">
       <IncludeInVSIX>true</IncludeInVSIX>
-      <VSIXSubPath>LanguageServer</VSIXSubPath>
     </Content>
-    <Content Include="LanguageServer\Microsoft.Extensions.DependencyInjection.dll">
+    <Content Include="LanguageServer\net6.0\Microsoft.Extensions.DependencyInjection.dll">
       <IncludeInVSIX>true</IncludeInVSIX>
-      <VSIXSubPath>LanguageServer</VSIXSubPath>
     </Content>
-    <Content Include="LanguageServer\Microsoft.Extensions.Logging.Abstractions.dll">
+    <Content Include="LanguageServer\net6.0\Microsoft.Extensions.Logging.Abstractions.dll">
       <IncludeInVSIX>true</IncludeInVSIX>
-      <VSIXSubPath>LanguageServer</VSIXSubPath>
     </Content>
-    <Content Include="LanguageServer\Microsoft.Extensions.Logging.dll">
+    <Content Include="LanguageServer\net6.0\Microsoft.Extensions.Logging.dll">
       <IncludeInVSIX>true</IncludeInVSIX>
-      <VSIXSubPath>LanguageServer</VSIXSubPath>
     </Content>
-    <Content Include="LanguageServer\Microsoft.Extensions.Options.ConfigurationExtensions.dll">
+    <Content Include="LanguageServer\net6.0\Microsoft.Extensions.Options.ConfigurationExtensions.dll">
       <IncludeInVSIX>true</IncludeInVSIX>
-      <VSIXSubPath>LanguageServer</VSIXSubPath>
     </Content>
-    <Content Include="LanguageServer\Microsoft.Extensions.Options.dll">
+    <Content Include="LanguageServer\net6.0\Microsoft.Extensions.Options.dll">
       <IncludeInVSIX>true</IncludeInVSIX>
-      <VSIXSubPath>LanguageServer</VSIXSubPath>
     </Content>
-    <Content Include="LanguageServer\Microsoft.Extensions.Primitives.dll">
+    <Content Include="LanguageServer\net6.0\Microsoft.Extensions.Primitives.dll">
       <IncludeInVSIX>true</IncludeInVSIX>
-      <VSIXSubPath>LanguageServer</VSIXSubPath>
     </Content>
-    <Content Include="LanguageServer\Microsoft.VisualStudio.Threading.dll">
+    <Content Include="LanguageServer\net6.0\Microsoft.VisualStudio.Threading.dll">
       <IncludeInVSIX>true</IncludeInVSIX>
-      <VSIXSubPath>LanguageServer</VSIXSubPath>
     </Content>
-    <Content Include="LanguageServer\Microsoft.VisualStudio.Validation.dll">
+    <Content Include="LanguageServer\net6.0\Microsoft.VisualStudio.Validation.dll">
       <IncludeInVSIX>true</IncludeInVSIX>
-      <VSIXSubPath>LanguageServer</VSIXSubPath>
     </Content>
-    <Content Include="LanguageServer\Nerdbank.Streams.dll">
+    <Content Include="LanguageServer\net6.0\Nerdbank.Streams.dll">
       <IncludeInVSIX>true</IncludeInVSIX>
-      <VSIXSubPath>LanguageServer</VSIXSubPath>
     </Content>
-    <Content Include="LanguageServer\Newtonsoft.Json.dll">
+    <Content Include="LanguageServer\net6.0\Newtonsoft.Json.dll">
       <IncludeInVSIX>true</IncludeInVSIX>
-      <VSIXSubPath>LanguageServer</VSIXSubPath>
     </Content>
-    <Content Include="LanguageServer\OmniSharp.Extensions.JsonRpc.dll">
+    <Content Include="LanguageServer\net6.0\OmniSharp.Extensions.JsonRpc.dll">
       <IncludeInVSIX>true</IncludeInVSIX>
-      <VSIXSubPath>LanguageServer</VSIXSubPath>
     </Content>
-    <Content Include="LanguageServer\OmniSharp.Extensions.LanguageProtocol.dll">
+    <Content Include="LanguageServer\net6.0\OmniSharp.Extensions.LanguageProtocol.dll">
       <IncludeInVSIX>true</IncludeInVSIX>
-      <VSIXSubPath>LanguageServer</VSIXSubPath>
     </Content>
-    <Content Include="LanguageServer\OmniSharp.Extensions.LanguageServer.dll">
+    <Content Include="LanguageServer\net6.0\OmniSharp.Extensions.LanguageServer.dll">
       <IncludeInVSIX>true</IncludeInVSIX>
-      <VSIXSubPath>LanguageServer</VSIXSubPath>
     </Content>
-    <Content Include="LanguageServer\OmniSharp.Extensions.LanguageServer.Shared.dll">
+    <Content Include="LanguageServer\net6.0\OmniSharp.Extensions.LanguageServer.Shared.dll">
       <IncludeInVSIX>true</IncludeInVSIX>
-      <VSIXSubPath>LanguageServer</VSIXSubPath>
     </Content>
-    <Content Include="LanguageServer\System.IO.Pipelines.dll">
+    <Content Include="LanguageServer\net6.0\Serilog.dll">
       <IncludeInVSIX>true</IncludeInVSIX>
-      <VSIXSubPath>LanguageServer</VSIXSubPath>
     </Content>
-    <Content Include="LanguageServer\System.Reactive.dll">
+    <Content Include="LanguageServer\net6.0\Serilog.Extensions.Logging.dll">
       <IncludeInVSIX>true</IncludeInVSIX>
-      <VSIXSubPath>LanguageServer</VSIXSubPath>
+    </Content>
+    <Content Include="LanguageServer\net6.0\Serilog.Sinks.Console.dll">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="LanguageServer\net6.0\Serilog.Sinks.File.dll">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="LanguageServer\net6.0\System.IO.Pipelines.dll">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="LanguageServer\net6.0\System.Reactive.dll">
+      <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

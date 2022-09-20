@@ -24,7 +24,7 @@ namespace MetaDslx.VisualStudio.Languages.MetaGenerator
         [Export(typeof(ContentTypeDefinition))]
         [Name(MetaGeneratorDefinition.ContentType)]
         [BaseDefinition(CodeRemoteContentDefinition.CodeRemoteContentTypeName)]
-        public ContentTypeDefinition MetaGeneratorContentType { get; set; }
+        public static ContentTypeDefinition MetaGeneratorContentType { get; set; }
 
         /// <summary>
         /// Exports the MetaGenerator file extension
@@ -32,7 +32,7 @@ namespace MetaDslx.VisualStudio.Languages.MetaGenerator
 		[Export(typeof(FileExtensionToContentTypeDefinition))]
         [ContentType(MetaGeneratorDefinition.ContentType)]
         [FileExtension(MetaGeneratorDefinition.FileExtension)]
-        public FileExtensionToContentTypeDefinition MetaGeneratorFileExtension { get; set; }
+        public static FileExtensionToContentTypeDefinition MetaGeneratorFileExtension { get; set; }
 
     }
 }

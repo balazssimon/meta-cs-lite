@@ -16,6 +16,7 @@ namespace MetaDslx.VisualStudio.Languages.MetaGenerator
 {
     [ContentType(MetaGeneratorDefinition.ContentType)]
     [Export(typeof(ILanguageClient))]
+    [RunOnContext(RunningContext.RunOnHost)]
     public class MetaGeneratorLanguageClient : ILanguageClient
     {
         public string Name => "MetaGenerator Language Extension";
@@ -36,8 +37,8 @@ namespace MetaDslx.VisualStudio.Languages.MetaGenerator
             await Task.Yield();
 
             ProcessStartInfo info = new ProcessStartInfo();
-            info.FileName = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "LanguageServer", @"MetaDslx.LanguageServer.Host.Stdio.exe");
-            info.Arguments = "mgen";
+            info.FileName = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"LanguageServer", @"net6.0", @"MetaDslx.LanguageServer.Host.Stdio.exe");
+            info.Arguments = $"--pid {Process.GetCurrentProcess().Id}";
             info.RedirectStandardInput = true;
             info.RedirectStandardOutput = true;
             info.UseShellExecute = false;
@@ -45,7 +46,7 @@ namespace MetaDslx.VisualStudio.Languages.MetaGenerator
 
             Process process = new Process();
             process.StartInfo = info;
-
+            
             if (process.Start())
             {
                 return new Connection(process.StandardOutput.BaseStream, process.StandardInput.BaseStream);
@@ -56,7 +57,18 @@ namespace MetaDslx.VisualStudio.Languages.MetaGenerator
 
         public async Task OnLoadedAsync()
         {
-            await StartAsync.InvokeAsync(this, EventArgs.Empty);
+            if (StartAsync != null)
+            {
+                await StartAsync.InvokeAsync(this, EventArgs.Empty);
+            }
+        }
+
+        public async Task StopServerAsync()
+        {
+            if (StopAsync != null)
+            {
+                await StopAsync.InvokeAsync(this, EventArgs.Empty);
+            }
         }
 
         public Task OnServerInitializeFailedAsync(Exception e)
