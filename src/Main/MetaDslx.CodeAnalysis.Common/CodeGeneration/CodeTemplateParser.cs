@@ -14,7 +14,7 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
     public class CodeTemplateParser
     {
         private string _filePath;
-        private string _templateCode;
+        private SourceText _templateCode;
         private string? _compiledCode;
         private CodeTemplateLexer _lexer;
         private CodeTemplateTokenStream _tokens;
@@ -28,7 +28,7 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
         private List<FilePositionMap> _positionMap;
         private Dictionary<string, FileLinePositionSpan> _namedPositionMap;
 
-        public CodeTemplateParser(string filePath, string templateCode)
+        public CodeTemplateParser(string filePath, SourceText templateCode)
         {
             _filePath = filePath;
             _templateCode = templateCode;
@@ -39,7 +39,7 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
         public string Compile()
         {
             if (_compiledCode != null) return _compiledCode;
-            using (_lexer = new CodeTemplateLexer(_filePath, SourceText.From(_templateCode)))
+            using (_lexer = new CodeTemplateLexer(_filePath, _templateCode))
             {
                 _tokens = new CodeTemplateTokenStream(_lexer);
                 _sb = CodeBuilder.GetInstance();
@@ -79,7 +79,6 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
                 _sb.Push();
                 if (ParseGenerator())
                 {
-                    ParseControl();
                     while (ParseUsing()) ;
                     _sb.WriteLine();
                     _sb.Write("public partial class");
@@ -89,13 +88,17 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
                     _sb.AppendLine();
                     _sb.WriteLine("{");
                     _sb.Push();
-                    ParseTemplate();
-                    //while (ParseTemplate()) ;
+                    while (ParseControlOrTemplate()) ;
+                    if (!_tokens.EndOfFile) Expected("template", "control");
                     _sb.Pop();
                     _sb.Write("}");
                 }
                 _sb.Pop();
                 _sb.Write("}");
+            }
+            else
+            {
+                Expected("namespace");
             }
         }
 
@@ -116,6 +119,34 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
                 }
                 EndInputSpan("GeneratorName");
                 _generatorName = gnsb.ToStringAndFree();
+                return true;
+            }
+            else
+            {
+                Expected("generator");
+            }
+            return false;
+        }
+
+        private bool ParseUsing()
+        {
+            SkipWs();
+            if (IsKeyword("using"))
+            {
+                _tokens.EatToken();
+                _sb.Write("using");
+                StartInputSpan();
+                StartOutputSpan();
+                while (true)
+                {
+                    var token = _tokens.CurrentToken;
+                    if (TryMatchEndOfLine()) break;
+                    else _tokens.EatToken();
+                    _sb.Write(token.Text);
+                }
+                EndInputSpan();
+                EndOutputSpan();
+                _sb.WriteLine(";");
                 return true;
             }
             return false;
@@ -159,28 +190,17 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
             return false;
         }
 
-        private bool ParseUsing()
+        private bool ParseControlOrTemplate()
         {
-            SkipWs();
-            if (IsKeyword("using"))
+            if (ParseControl() || ParseTemplate())
             {
-                _tokens.EatToken();
-                _sb.Write("using");
-                StartInputSpan();
-                StartOutputSpan();
-                while (true)
-                {
-                    var token = _tokens.CurrentToken;
-                    if (TryMatchEndOfLine()) break;
-                    else _tokens.EatToken();
-                    _sb.Write(token.Text);
-                }
-                EndInputSpan();
-                EndOutputSpan();
-                _sb.WriteLine(";");
                 return true;
             }
-            return false;
+            else
+            {
+                if (_tokens.CurrentToken.Kind == CodeTemplateTokenKind.EndOfFile) _tokens.EatToken();
+                return false;
+            }
         }
 
         private bool ParseTemplate()
@@ -192,10 +212,10 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
                 _sb.Write("public string");
                 StartInputSpan();
                 StartOutputSpan();
-                while (_tokens.State == CodeTemplateLexerState.TemplateHeader)
+                while (_tokens.State == CodeTemplateLexerState.TemplateHeader || _tokens.State == CodeTemplateLexerState.TemplateHeaderEnd)
                 {
                     var token = _tokens.CurrentToken;
-                    if (_tokens.State == CodeTemplateLexerState.TemplateHeader)
+                    if (_tokens.State == CodeTemplateLexerState.TemplateHeader || _tokens.State == CodeTemplateLexerState.TemplateHeaderEnd)
                     {
                         _sb.Write(token.Text);
                     }
@@ -221,27 +241,46 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
 
         private void ParseTemplateContent(ParserState state)
         {
+            var isOutput = true;
             while (!_tokens.EndOfFile)
             {
-                if (IsTemplateEnd())
+                var token = _tokens.CurrentToken;
+                if (token.Kind == CodeTemplateTokenKind.TemplateControlBegin)
                 {
+                    token = _tokens.EatToken();
+                    isOutput = false;
+                }
+                else if(token.Kind == CodeTemplateTokenKind.TemplateControlEnd)
+                {
+                    token = _tokens.EatToken();
+                    isOutput = true;
+                }
+                var position = _tokens.LinePosition;
+                var templateEnd = FindTemplateEnd();
+                if (templateEnd > 0)
+                {
+                    for (int i = 0; i < templateEnd; i++)
+                    {
+                        _tokens.EatToken();
+                    }
                     if (state.BeginKeyword.Kind == CodeTemplateTokenKind.Keyword)
                     {
                         EndCurrentBlock(state, true, true);
                     }
                     return;
                 }
-                else if (_tokens.State == CodeTemplateLexerState.TemplateOutput)
+                else if (isOutput)
                 {
                     ParseTemplateOutput(state);
                 }
-                else if (_tokens.State == CodeTemplateLexerState.TemplateControl)
+                else 
                 {
                     if (ParseTemplateControl(state)) return;
                 }
-                else
+                if (_tokens.LinePosition == position)
                 {
-                    break;
+                    Unexpected();
+                    token = _tokens.EatToken();
                 }
             }
         }
@@ -287,16 +326,12 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
                 state.Indent = null;
                 _tokens.EatToken();
             }
-            else if (token.Kind == CodeTemplateTokenKind.TemplateControlBegin)
-            {
-                _tokens.EatToken();
-            }
         }
 
         private bool ParseTemplateControl(ParserState state)
         {
             var stmt = TryMatchControlStatement();
-            if (!string.IsNullOrWhiteSpace(stmt.Text) || stmt.EndKeyword.Kind == CodeTemplateTokenKind.Keyword)
+            if (!string.IsNullOrWhiteSpace(stmt.Text) || stmt.EndKeyword.Kind != CodeTemplateTokenKind.None)
             {
                 if (stmt.IsExpression)
                 {
@@ -473,8 +508,9 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
                 {
                     _tokens.EatToken();
                     while (IsWhitespaceOrComment()) _tokens.EatToken();
+                    result.EndKeyword = _tokens.EatToken();
                     token = _tokens.CurrentToken;
-                    if (token.Kind == CodeTemplateTokenKind.Keyword)
+                    /*if (token.Kind == CodeTemplateTokenKind.Keyword)
                     {
                         lexeme = token.Text;
                         if (CodeTemplateLexer.BlockEndKeywords.Contains(lexeme))
@@ -483,7 +519,7 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
                             _tokens.EatToken();
                             token = _tokens.CurrentToken;
                         }
-                    }
+                    }*/
                     result.StatementSpan = EndInputSpan();
                     bool error = false;
                     while (token.Kind != CodeTemplateTokenKind.EndOfFile && token.Kind != CodeTemplateTokenKind.TemplateControlEnd)
@@ -508,11 +544,11 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
             while (token.Kind != CodeTemplateTokenKind.None)
             {
                 token = _tokens.CurrentToken;
-                _tokens.EatToken();
                 if (token.Kind == CodeTemplateTokenKind.EndOfFile || token.Kind == CodeTemplateTokenKind.TemplateControlEnd)
                 {
                     break;
                 }
+                _tokens.EatToken();
                 sb.Builder.Append(token.Text);
                 if (token.Kind == CodeTemplateTokenKind.Other)
                 {
@@ -635,8 +671,9 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
             else return -1;
         }
 
-        private bool IsTemplateEnd()
+        private int FindTemplateEnd()
         {
+            if (_tokens.Character > 0) return 0;
             int index = 0;
             var token = _tokens.PeekToken(index++);
             while (IsWhitespaceOrComment(token)) token = _tokens.PeekToken(index++);
@@ -646,14 +683,16 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
             }
             else
             {
-                return false;
+                return 0;
             }
             while (IsWhitespaceOrComment(token)) token = _tokens.PeekToken(index++);
             if (IsKeyword(token, "template"))
             {
-                return true;
+                token = _tokens.PeekToken(index++);
+                while (IsWhitespaceOrComment(token)) token = _tokens.PeekToken(index++);
+                return index - 1;
             }
-            return false;
+            return 0;
         }
 
         private bool IsKeyword(string text)

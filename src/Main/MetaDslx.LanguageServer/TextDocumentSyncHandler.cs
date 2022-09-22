@@ -17,7 +17,7 @@ namespace MetaDslx.LanguageServer
     internal class TextDocumentSyncHandler : ITextDocumentSyncHandler
     {
         private readonly ILanguageServerFacade _languageServer;
-        private readonly BufferManager _bufferManager;
+        private readonly DocumentManager _documentManager;
 
         private readonly DocumentSelector _documentSelector = new DocumentSelector(
             new DocumentFilter()
@@ -28,10 +28,10 @@ namespace MetaDslx.LanguageServer
 
         private SynchronizationCapability _capability;
 
-        public TextDocumentSyncHandler(ILanguageServerFacade languageServer, BufferManager bufferManager)
+        public TextDocumentSyncHandler(ILanguageServerFacade languageServer, DocumentManager documentManager)
         {
             _languageServer = languageServer;
-            _bufferManager = bufferManager;
+            _documentManager = documentManager;
         }
 
         public TextDocumentSyncKind Change { get; } = TextDocumentSyncKind.Full;
@@ -82,13 +82,13 @@ namespace MetaDslx.LanguageServer
 
         Task<Unit> IRequestHandler<DidChangeTextDocumentParams, Unit>.Handle(DidChangeTextDocumentParams request, CancellationToken cancellationToken)
         {
-            var documentPath = request.TextDocument.Uri.ToString();
+            var document = request.TextDocument.Uri;
             var text = request.ContentChanges.FirstOrDefault()?.Text;
 
             if (text != null)
             {
-                _bufferManager.UpdateBuffer(documentPath, SourceText.From(text));
-                _languageServer.Window.LogInfo($"Updated buffer for document: {documentPath}\n{text}");
+                _documentManager.UpdateDocument(document, request.TextDocument.Version, SourceText.From(text));
+                _languageServer.Window.LogInfo($"Updated buffer for document: {document}\n{text}");
             }
 
             return Unit.Task;
@@ -96,12 +96,14 @@ namespace MetaDslx.LanguageServer
 
         Task<Unit> IRequestHandler<DidOpenTextDocumentParams, Unit>.Handle(DidOpenTextDocumentParams request, CancellationToken cancellationToken)
         {
-            _bufferManager.UpdateBuffer(request.TextDocument.Uri.ToString(), SourceText.From(request.TextDocument.Text));
+            _documentManager.AddDocument(_languageServer, request.TextDocument.Uri);
+            _documentManager.UpdateDocument(request.TextDocument.Uri, request.TextDocument.Version, SourceText.From(request.TextDocument.Text));
             return Unit.Task;
         }
 
         Task<Unit> IRequestHandler<DidCloseTextDocumentParams, Unit>.Handle(DidCloseTextDocumentParams request, CancellationToken cancellationToken)
         {
+            _documentManager.RemoveDocument(request.TextDocument.Uri);
             return Unit.Task;
         }
 

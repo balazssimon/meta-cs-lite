@@ -30,18 +30,18 @@ namespace MetaDslx.Bootstrap.CodeGeneration
             cb.WriteLine("fff");
             Console.WriteLine(cb.ToStringAndFree());
 
-            var templateCode =
+            var templateCode2 =
 @"
 namespace HelloNs.X.Y;
 
 generator AAA;
 
-control [ ]
-
 using System.C;
 using System.D
 
-template Q(int a, int b = 5)
+control [ ]
+
+template Q()
   aaa!
   [var a = 5; a*2]
   [var b = a]
@@ -62,9 +62,9 @@ template Q(int a, int b = 5)
       [finally]
           eee
       [end try]
-    [end if]
+    [end ifx]
     bb
-    [if (a > n)]yy[end if]
+    [if (a > n)]yy[end while]
   [end while]
   [switch(c)]
     [case X:]
@@ -100,7 +100,13 @@ template Q(int a, int b = 5)
       eee
   [end switch]
   bbb
-end template";
+end template
+
+template Q(string name)
+hello
+end template
+
+";
             /*var lexer = new CodeTemplateLexer("hello.mgen", SourceText.From(templateCode), true);
             var state = CodeTemplateLexerState.None;
             while (true)
@@ -113,7 +119,18 @@ end template";
             {
                 Console.WriteLine(diag);
             }*/
-            var compiler = new CodeTemplateParser("hello.mgen", templateCode);
+            var templateCode = @"
+namespace HelloNs
+generator G
+template A()
+  [if (a)]
+    xxx
+  [else]
+    yyy
+  [end if]
+end template
+";
+            var compiler = new CodeTemplateParser("hello.mgen", SourceText.From(templateCode));
             var compiledCode = compiler.Compile();
             Console.WriteLine(compiledCode);
             foreach (var diag in compiler.Diagnostics)

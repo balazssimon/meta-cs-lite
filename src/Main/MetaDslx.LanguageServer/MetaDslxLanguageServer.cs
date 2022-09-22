@@ -27,15 +27,15 @@ namespace MetaDslx.LanguageServer
 
         internal void InitServer(LanguageServerOptions options)
         {
-            options.OnCompletion(this.Completion, (_, _) => new CompletionRegistrationOptions());
+            options.OnCompletion(Completion, (_, _) => new CompletionRegistrationOptions());
         }
 
         public async Task<CompletionList> Completion(CompletionParams completionParams, CancellationToken cancellationToken)
         {
             var completions = new CompletionList(
-                new CompletionItem() { Label = "Ook!", InsertText = "Ook!" },
+                /*new CompletionItem() { Label = "Ook!", InsertText = "Ook!" },
                 new CompletionItem() { Label = "Ook.", InsertText = "Ook." },
-                new CompletionItem() { Label = "Ook?", InsertText = "Ook?" }
+                new CompletionItem() { Label = "Ook?", InsertText = "Ook?" }*/
                 );
             return completions;
         }

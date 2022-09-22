@@ -492,7 +492,7 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
 
         public static readonly HashSet<string> BlockKeywords = new HashSet<string>()
         {
-            "if", "case", "catch", "default", "do", "finally", "for", "foreach", "lock", "switch", "try", "while"
+            "if", "case", "catch", "default", "do", "else", "finally", "for", "foreach", "lock", "switch", "try", "while"
         };
 
         public static readonly HashSet<string> BlockEndKeywords = new HashSet<string>()
@@ -502,7 +502,7 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
 
         public static readonly HashSet<string> BlockWithoutEndKeywords = new HashSet<string>()
         {
-            "case", "catch", "default", "finally"
+            "case", "catch", "default", "else", "finally"
         };
 
         public static readonly HashSet<string> SwitchBlockKeywords = new HashSet<string>()

@@ -14,4 +14,8 @@
     <ProjectReference Include="..\MetaDslx.CodeAnalysis.Common\MetaDslx.CodeAnalysis.Common.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="MetaGenerator\" />
+  </ItemGroup>
+
 </Project>
