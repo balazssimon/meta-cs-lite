@@ -69,9 +69,6 @@
       <IncludeInVSIX>true</IncludeInVSIX>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Grammars\MDart.tmLanguage">
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
     <Content Include="Grammars\MetaGenerator.tmLanguage">
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
