@@ -30,7 +30,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;VSIX</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <IncludeDebugSymbolsInVSIXContainer>true</IncludeDebugSymbolsInVSIXContainer>
@@ -40,12 +40,20 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineConstants>TRACE;VSIX</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <IncludeDebugSymbolsInVSIXContainer>false</IncludeDebugSymbolsInVSIXContainer>
     <IncludeDebugSymbolsInLocalVSIXDeployment>false</IncludeDebugSymbolsInLocalVSIXDeployment>
   </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="..\MetaDslx.CodeAnalysis.Common\CodeGeneration\CodeTemplateLexer.cs" />
+    <Compile Include="..\MetaDslx.CodeAnalysis.Common\CodeGeneration\CodeTemplateLexerState.cs" />
+    <Compile Include="..\MetaDslx.CodeAnalysis.Common\CodeGeneration\CodeTemplateToken.cs" />
+    <Compile Include="..\MetaDslx.CodeAnalysis.Common\CodeGeneration\CodeTemplateTokenKind.cs" />
+    <Compile Include="Text\SlidingTextWindow.cs" />
+    <Compile Include="Utilities\ObjectPool`1.cs" />
+  </ItemGroup>
   <ItemGroup>
     <Compile Include="Languages\MetaGenerator\Classification\MetaGeneratorClassificationDefinitions.cs" />
     <Compile Include="Languages\MetaGenerator\Classification\MetaGeneratorClassificationProvider.cs" />
@@ -69,10 +77,6 @@
       <IncludeInVSIX>true</IncludeInVSIX>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Grammars\MetaGenerator.tmLanguage">
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <None Include="Grammars\MetaGenerator.tmLanguage.json" />
     <None Include="source.extension.vsixmanifest">
       <SubType>Designer</SubType>
     </None>
@@ -89,7 +93,9 @@
     <PackageReference Include="Microsoft.VisualStudio.SDK" Version="17.0.32112.339" ExcludeAssets="runtime" />
     <PackageReference Include="Microsoft.VSSDK.BuildTools" Version="17.2.2186" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Grammars\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="LanguageServer\net6.0\MediatR.dll">
       <IncludeInVSIX>true</IncludeInVSIX>

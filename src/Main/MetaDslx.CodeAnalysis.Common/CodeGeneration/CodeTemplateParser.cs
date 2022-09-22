@@ -39,7 +39,7 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
         public string Compile()
         {
             if (_compiledCode != null) return _compiledCode;
-            using (_lexer = new CodeTemplateLexer(_filePath, SourceText.From(_templateCode), true))
+            using (_lexer = new CodeTemplateLexer(_filePath, SourceText.From(_templateCode)))
             {
                 _tokens = new CodeTemplateTokenStream(_lexer);
                 _sb = CodeBuilder.GetInstance();
@@ -50,7 +50,6 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
                 WriteLineMap();
                 _compiledCode = _sb.ToStringAndFree();
                 _sb = null;
-                _diagnosticBag.AddRange(_lexer.GetDiagnostics());
                 _diagnostics = _diagnosticBag.ToReadOnlyAndFree();
                 _diagnosticBag = null;
             }
@@ -154,11 +153,6 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
                 else if (counter == 1)
                 {
                     Error("Template control end sequence is expected");
-                }
-                else
-                {
-                    _lexer.ControlBegin = _controlBegin;
-                    _lexer.ControlEnd = _controlEnd;
                 }
                 return true;
             }

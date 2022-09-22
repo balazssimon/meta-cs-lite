@@ -10,7 +10,6 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
         private struct Entry
         {
             public CodeTemplateToken Token;
-            public CodeTemplateLexerState LexerState;
             public int Line;
             public int Character;
         }
@@ -28,10 +27,11 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
         }
 
         public CodeTemplateToken CurrentToken => PeekToken(0);
-        public CodeTemplateLexerState State => PeekEntry(0).LexerState;
+        public CodeTemplateLexerState State => PeekToken(0).LexerState;
         public int Line => PeekEntry(0).Line;
         public int Character => PeekEntry(0).Character;
         public LinePosition LinePosition => new LinePosition(Line, Character);
+        public int MaxLookahead => _lexer.MaxLookahead;
         public bool EndOfFile => _endOfFile;
 
         public CodeTemplateToken EatToken()
@@ -73,7 +73,7 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
         {
             if (_fetchState != CodeTemplateLexerState.Eof)
             {
-                var entry = new Entry() { Token = CodeTemplateToken.None, LexerState = _fetchState, Line = _lexer.Line, Character = _lexer.Column };
+                var entry = new Entry() { Token = CodeTemplateToken.None, Line = _lexer.Line, Character = _lexer.Column };
                 entry.Token = _lexer.Lex(ref _fetchState);
                 _tokens.Add(entry);
                 return true;

@@ -7,6 +7,10 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
     public enum CodeTemplateLexerState
     {
         None,
+        ControlBeginWs,
+        ControlBegin,
+        ControlEndWs,
+        ControlEnd,
         TemplateHeader,
         TemplateHeaderEnd,
         TemplateOutput,

@@ -12,7 +12,7 @@ using MetaDslx.VisualStudio.Utilities;
 
 namespace MetaDslx.VisualStudio.Languages.MetaGenerator.Classification
 {
-    /*[Export(typeof(IClassifierProvider))]
+    [Export(typeof(IClassifierProvider))]
     [ContentType(MetaGeneratorDefinition.ContentType)]
     internal class MetaGeneratorClassificationProvider : IClassifierProvider
     {
@@ -24,5 +24,5 @@ namespace MetaDslx.VisualStudio.Languages.MetaGenerator.Classification
             return textBuffer.Properties.GetOrCreateSingletonProperty(() => new MetaGeneratorClassifier(textBuffer, _mefServices));
         }
 
-    }*/
+    }
 }
