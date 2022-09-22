@@ -65,6 +65,17 @@
     <Content Include="LanguageServer\net6.0\MetaDslx.LanguageServer.Host.Stdio.runtimeconfig.json">
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
+    <Content Include="MetaDslx.pkgdef">
+      <IncludeInVSIX>true</IncludeInVSIX>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Grammars\MDart.tmLanguage">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="Grammars\MetaGenerator.tmLanguage">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <None Include="Grammars\MetaGenerator.tmLanguage.json" />
     <None Include="source.extension.vsixmanifest">
       <SubType>Designer</SubType>
     </None>
