@@ -21,9 +21,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetaDslx.Bootstrap.CodeGene
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetaDslx.VisualStudio", "Main\MetaDslx.VisualStudio\MetaDslx.VisualStudio.csproj", "{B17A0FB8-AE2A-4E90-8635-5D779F546402}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetaDslx.LanguageServer", "Main\MetaDslx.LanguageServer\MetaDslx.LanguageServer.csproj", "{93DFE236-1BE9-40EE-938E-BCC7C6EEF9CF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetaDslx.LanguageServer", "Main\MetaDslx.LanguageServer\MetaDslx.LanguageServer.csproj", "{93DFE236-1BE9-40EE-938E-BCC7C6EEF9CF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetaDslx.LanguageServer.Host.Stdio", "Main\MetaDslx.LanguageServer.Host.Stdio\MetaDslx.LanguageServer.Host.Stdio.csproj", "{B04D836B-3504-45F0-8EB4-AAC561C5E4FD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetaDslx.LanguageServer.Host.Stdio", "Main\MetaDslx.LanguageServer.Host.Stdio\MetaDslx.LanguageServer.Host.Stdio.csproj", "{B04D836B-3504-45F0-8EB4-AAC561C5E4FD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetaDslx.Bootstrap.NuGet", "Bootstrap\MetaDslx.Bootstrap.NuGet\MetaDslx.Bootstrap.NuGet.csproj", "{C0FC4ED1-6752-4BD2-85B4-7C0C051FDB21}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -121,6 +123,14 @@ Global
 		{B04D836B-3504-45F0-8EB4-AAC561C5E4FD}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B04D836B-3504-45F0-8EB4-AAC561C5E4FD}.Release|x86.ActiveCfg = Release|Any CPU
 		{B04D836B-3504-45F0-8EB4-AAC561C5E4FD}.Release|x86.Build.0 = Release|Any CPU
+		{C0FC4ED1-6752-4BD2-85B4-7C0C051FDB21}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C0FC4ED1-6752-4BD2-85B4-7C0C051FDB21}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C0FC4ED1-6752-4BD2-85B4-7C0C051FDB21}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C0FC4ED1-6752-4BD2-85B4-7C0C051FDB21}.Debug|x86.Build.0 = Debug|Any CPU
+		{C0FC4ED1-6752-4BD2-85B4-7C0C051FDB21}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C0FC4ED1-6752-4BD2-85B4-7C0C051FDB21}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C0FC4ED1-6752-4BD2-85B4-7C0C051FDB21}.Release|x86.ActiveCfg = Release|Any CPU
+		{C0FC4ED1-6752-4BD2-85B4-7C0C051FDB21}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

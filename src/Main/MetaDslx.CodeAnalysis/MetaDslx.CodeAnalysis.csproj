@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <Import Project="..\..\Versions.props" />
 
   <PropertyGroup>
@@ -31,7 +31,24 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MetaDslx.CodeAnalysis.Common\MetaDslx.CodeAnalysis.Common.csproj" PrivateAssets="all" />
-    <ProjectReference Include="..\MetaDslx.CodeAnalysis.Antlr4\MetaDslx.CodeAnalysis.Antlr4.csproj" PrivateAssets="all" />
-    <ProjectReference Include="..\MetaDslx.Languages.Core\MetaDslx.Languages.Core.csproj" />
-  </ItemGroup>  
+	<ProjectReference Include="..\MetaDslx.CodeAnalysis.Antlr4\MetaDslx.CodeAnalysis.Antlr4.csproj" PrivateAssets="all" />
+	  <ProjectReference Include="..\MetaDslx.CodeAnalysis.Analyzers\MetaDslx.CodeAnalysis.Analyzers.csproj" PrivateAssets="all" />
+	  <!--ProjectReference Include="..\MetaDslx.Languages.Core\MetaDslx.Languages.Core.csproj" PrivateAssets="all" /-->
+  </ItemGroup>
+
+	<ItemGroup>
+		<None Include="$(OutputPath)\MetaDslx.CodeAnalysis.Common.dll" Pack="true" PackagePath="lib\$(TargetFramework)" Visible="true" />
+		<None Include="$(OutputPath)\MetaDslx.CodeAnalysis.Antlr4.dll" Pack="true" PackagePath="lib\$(TargetFramework)" Visible="true" />
+		<None Include="$(OutputPath)\MetaDslx.CodeAnalysis.Common.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+		<None Include="$(OutputPath)\MetaDslx.CodeAnalysis.Analyzers.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+		<!--None Include="$(OutputPath)\netstandard2.0\MetaDslx.Languages.Core.dll" Pack="true" PackagePath="lib\netstandard2.0" Visible="true" /-->
+
+		<None Include="$(OutputPath)\MetaDslx.CodeAnalysis.Common.xml" Pack="true" PackagePath="lib\$(TargetFramework)" Visible="true" />
+		<None Include="$(OutputPath)\MetaDslx.CodeAnalysis.Antlr4.xml" Pack="true" PackagePath="lib\$(TargetFramework)" Visible="true" />
+		<!--None Include="$(OutputPath)\netstandard2.0\MetaDslx.Languages.Core.xml" Pack="true" PackagePath="lib\netstandard2.0" Visible="true" /-->
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="license.txt" Pack="true" PackagePath="" />
+	</ItemGroup>
 </Project>

@@ -23,11 +23,12 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
         private string? _generatorName;
         private DiagnosticBag? _diagnosticBag;
         private ImmutableArray<Diagnostic> _diagnostics;
-        private LinePosition _inputStartPosition;
-        private LinePosition _outputStartPosition;
-        private LinePositionSpan _inputPositionSpan;
-        private List<FilePositionMap> _positionMap;
-        private Dictionary<string, LinePositionSpan> _namedPositionMap;
+        private (int Position, LinePosition LinePosition) _inputStartPosition;
+        private (int Position, LinePosition LinePosition) _outputStartPosition;
+        private (int Position, LinePosition LinePosition) _outputStartLinePosition;
+        private (TextSpan TextSpan, LinePositionSpan LinePositionSpan) _inputSpan;
+        private List<PositionMap> _positionMap;
+        private Dictionary<string, (TextSpan TextSpan, LinePositionSpan LinePositionSpan)> _namedPositionMap;
         private TemplateInfo? _currentTemplateInfo;
         private List<ControlInfo> _controlInfos;
         private List<TemplateInfo> _templateInfos;
@@ -48,8 +49,8 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
                 _tokens = new CodeTemplateTokenStream(_lexer);
                 _sb = CodeBuilder.GetInstance();
                 _diagnosticBag = DiagnosticBag.GetInstance();
-                _positionMap = new List<FilePositionMap>();
-                _namedPositionMap = new Dictionary<string, LinePositionSpan>();
+                _positionMap = new List<PositionMap>();
+                _namedPositionMap = new Dictionary<string, (TextSpan TextSpan, LinePositionSpan LinePositionSpan)>();
                 _controlInfos = new List<ControlInfo>();
                 _controlInfos.Add(new ControlInfo() { Position = new LinePosition(0, 0), Begin = "[", End = "]" });
                 _templateInfos = new List<TemplateInfo>();
@@ -72,7 +73,7 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
                 {
                     foreach (var output in info.Outputs)
                     {
-                        if (position >= output.Start && position <= output.End)
+                        if (position >= output.LinePositionSpan.Start && position <= output.LinePositionSpan.End)
                         {
                             return true;
                         }
@@ -92,6 +93,44 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
                 prevInfo = info;
             }
             return (string.IsNullOrEmpty(prevInfo.Begin) ? "[" : prevInfo.Begin, string.IsNullOrEmpty(prevInfo.End) ? "]" : prevInfo.End);
+        }
+
+        public bool FromCSharpToMgen(LinePositionSpan span, out LinePositionSpan result)
+        {
+            foreach (var map in _positionMap)
+            {
+                if (map.OutputSpan.LinePositionSpan.Start < span.End && map.OutputSpan.LinePositionSpan.End > span.Start)
+                {
+                    var start = span.Start.Character;
+                    if (start < map.OutputSpan.LinePositionSpan.Start.Character) start = map.OutputSpan.LinePositionSpan.Start.Character;
+                    start = start - map.OutputSpan.LinePositionSpan.Start.Character;
+                    start = map.InputSpan.LinePositionSpan.Start.Character + start;
+                    var length = span.Start.Line == span.End.Line ? span.End.Character - span.Start.Character : 0;
+                    if (length < 0) length = 0;
+                    result = new LinePositionSpan(new LinePosition(map.InputSpan.LinePositionSpan.Start.Line, start), new LinePosition(map.InputSpan.LinePositionSpan.Start.Line, start + length));
+                    return true;
+                }
+            }
+            result = new LinePositionSpan(LinePosition.Zero, LinePosition.Zero);
+            return false;
+        }
+
+        public bool FromCSharpToMgen(TextSpan span, out TextSpan result)
+        {
+            foreach (var map in _positionMap)
+            {
+                if (map.OutputSpan.TextSpan.Start < span.End && map.OutputSpan.TextSpan.End > span.Start)
+                {
+                    var start = span.Start;
+                    if (start < map.OutputSpan.TextSpan.Start) start = map.OutputSpan.TextSpan.Start;
+                    start = start - map.OutputSpan.TextSpan.Start;
+                    start = map.InputSpan.TextSpan.Start + start;
+                    result = new TextSpan(start, span.Length);
+                    return true;
+                }
+            }
+            result = new TextSpan(0, 0);
+            return false;
         }
 
         private void ParseNamespace()
@@ -311,7 +350,7 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
                         _sb.WriteLine("__cb.Pop();");
                         state.IsIndentWritten = false;
                     }
-                    if (!state.IsEndWritten)
+                    if (!state.IsEndWritten && state.BeginKeyword.Text != "template")
                     {
                         _sb.Pop();
                         _sb.WriteLine("}");
@@ -757,37 +796,37 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
             Error($"'{token.EscapedText}' is unexpected here");
         }
 
-        private LinePosition StartInputSpan()
+        private (int Position, LinePosition LinePosition) StartInputSpan()
         {
-            _inputStartPosition = _tokens.LinePosition;
+            _inputStartPosition = (_tokens.Position, _tokens.LinePosition);
             return _inputStartPosition;
         }
 
-        private LinePositionSpan EndInputSpan(string? name = null)
+        private (TextSpan TextSpan, LinePositionSpan LinePositionSpan) EndInputSpan(string? name = null)
         {
-            _inputPositionSpan = new LinePositionSpan(_inputStartPosition, _tokens.LinePosition);
+            _inputSpan = (TextSpan.FromBounds(_inputStartPosition.Position, _tokens.Position), new LinePositionSpan(_inputStartPosition.LinePosition, _tokens.LinePosition));
             if (name != null)
             {
-                _namedPositionMap.Add(name, _inputPositionSpan);
+                _namedPositionMap.Add(name, _inputSpan);
             }
-            _inputStartPosition = LinePosition.Zero;
-            return _inputPositionSpan;
+            _inputStartPosition = (0, LinePosition.Zero);
+            return _inputSpan;
         }
 
-        private LinePosition StartOutputSpan()
+        private (int Position, LinePosition LinePosition) StartOutputSpan()
         {
-            _outputStartPosition = _sb.LinePosition;
+            _outputStartPosition = (_sb.Length, _sb.LinePosition);
             return _outputStartPosition;
         }
 
-        private LinePositionSpan EndOutputSpan(string? name = null, LinePositionSpan? inputSpan = null)
+        private (TextSpan TextSpan, LinePositionSpan LinePositionSpan) EndOutputSpan(string? name = null)
         {
-            var inputPositionSpan = (LinePositionSpan)(inputSpan != null ? inputSpan : name != null ? _namedPositionMap[name] : _inputPositionSpan);
-            var outputPositionSpan = new LinePositionSpan(_outputStartPosition, _sb.LinePosition);
-            _outputStartPosition = LinePosition.Zero;
-            var map = new FilePositionMap() { InputSpan = inputPositionSpan, OutputSpan = outputPositionSpan };
+            var inputSpan = name != null ? _namedPositionMap[name] : _inputSpan;
+            var outputSpan = (TextSpan.FromBounds(_outputStartPosition.Position, _sb.Length), new LinePositionSpan(_outputStartPosition.LinePosition, _sb.LinePosition));
+            _outputStartPosition = (0, LinePosition.Zero);
+            var map = new PositionMap() { InputSpan = inputSpan, OutputSpan = outputSpan };
             _positionMap.Add(map);
-            return outputPositionSpan;
+            return outputSpan;
         }
 
         private void WriteLineMap()
@@ -851,14 +890,14 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
             }
         }
 
-        private struct FilePositionMap
+        private struct PositionMap
         {
-            public LinePositionSpan InputSpan;
-            public LinePositionSpan OutputSpan;
+            public (TextSpan TextSpan, LinePositionSpan LinePositionSpan) InputSpan;
+            public (TextSpan TextSpan, LinePositionSpan LinePositionSpan) OutputSpan;
 
             public override string ToString()
             {
-                return $"{InputSpan.Start.Line}:{InputSpan.Start.Character}-{InputSpan.End.Line}:{InputSpan.End.Character}=>{OutputSpan.Start.Line}:{OutputSpan.Start.Character}-{OutputSpan.End.Line}:{OutputSpan.End.Character}";
+                return $"{InputSpan.LinePositionSpan.Start.Line}:{InputSpan.LinePositionSpan.Start.Character}-{InputSpan.LinePositionSpan.End.Line}:{InputSpan.LinePositionSpan.End.Character}=>{OutputSpan.LinePositionSpan.Start.Line}:{OutputSpan.LinePositionSpan.Start.Character}-{OutputSpan.LinePositionSpan.End.Line}:{OutputSpan.LinePositionSpan.End.Character}";
             }
         }
 
@@ -873,7 +912,7 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
         private class TemplateInfo
         {
             public LinePositionSpan Span;
-            public List<LinePositionSpan> Outputs = new List<LinePositionSpan>();
+            public List<(TextSpan TextSpan, LinePositionSpan LinePositionSpan)> Outputs = new List<(TextSpan TextSpan, LinePositionSpan LinePositionSpan)>();
         }
     }
 }

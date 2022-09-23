@@ -6,7 +6,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <MajorVersion>0</MajorVersion>
-    <MinorVersion>1</MinorVersion>
+    <MinorVersion>3</MinorVersion>
     <PatchVersion>0</PatchVersion>
     <PreReleaseVersionLabel>0</PreReleaseVersionLabel>
     <VersionPrefix>$(MajorVersion).$(MinorVersion).$(PatchVersion)</VersionPrefix>
@@ -31,16 +31,16 @@
   -->
   <PropertyGroup>
     <!-- Versions used by several individual references below -->
-    <SystemCollectionsImmutableVersion>5.0.0</SystemCollectionsImmutableVersion>
-    <SystemReflectionMetadataVersion>5.0.0</SystemReflectionMetadataVersion>
-    <SystemTextEncodingCodePagesVersion>4.5.1</SystemTextEncodingCodePagesVersion>
-    <MicrosoftDependencyInjectionVersion>5.0.1</MicrosoftDependencyInjectionVersion>
+    <SystemCollectionsImmutableVersion>6.0.0</SystemCollectionsImmutableVersion>
+    <SystemReflectionMetadataVersion>6.0.1</SystemReflectionMetadataVersion>
+    <SystemTextEncodingCodePagesVersion>6.0.0</SystemTextEncodingCodePagesVersion>
+    <MicrosoftDependencyInjectionVersion>6.0.0</MicrosoftDependencyInjectionVersion>
     <MicrosoftBuildVersion>16.8.0</MicrosoftBuildVersion>
-    <MicrosoftCodeAnalysisCSharpVersion>3.11.0</MicrosoftCodeAnalysisCSharpVersion>
-    <MicrosoftCodeAnalysisAnalyzersVersion>3.3.2</MicrosoftCodeAnalysisAnalyzersVersion>
-    <MicrosoftSourceLinkGitHubVersion>1.0.0</MicrosoftSourceLinkGitHubVersion>
+    <MicrosoftCodeAnalysisCSharpVersion>4.3.0</MicrosoftCodeAnalysisCSharpVersion>
+    <MicrosoftCodeAnalysisAnalyzersVersion>3.3.3</MicrosoftCodeAnalysisAnalyzersVersion>
+    <MicrosoftSourceLinkGitHubVersion>1.1.1</MicrosoftSourceLinkGitHubVersion>
     <MicrosoftNetDskTestVersion>16.6.1</MicrosoftNetDskTestVersion>
     <XUnitVersion>2.4.1</XUnitVersion>
-    <Antlr4RuntimeStandardVersion>4.9.2</Antlr4RuntimeStandardVersion>
+    <Antlr4RuntimeStandardVersion>4.11.1</Antlr4RuntimeStandardVersion>
   </PropertyGroup>
 </Project>

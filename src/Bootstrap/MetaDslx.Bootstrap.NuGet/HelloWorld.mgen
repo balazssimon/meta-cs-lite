@@ -1,0 +1,7 @@
+﻿namespace MetaDslx.Bootstrap.NuGet
+
+generator HelloWorld
+
+template SayHello(string name)
+Hello, [name]!
+end template
