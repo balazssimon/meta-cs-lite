@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using OmniSharp.Extensions.LanguageServer.Server;
+using MetaDslx.LanguageServer.MetaGenerator;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -12,9 +13,7 @@ namespace MetaDslx.LanguageServer
         {
             options.WithServices(ConfigureServices);
             options.WithHandler<TextDocumentSyncHandler>();
-
-            var metaDslx = new MetaDslxLanguageServer(options.LoggerFactory);
-            metaDslx.InitServer(options);
+            options.WithHandler<CompletionHandler>();
             return options;
         }
 

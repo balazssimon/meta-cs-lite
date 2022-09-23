@@ -27,7 +27,7 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
         public string Text => _text;
         public int Position => _position;
         public CodeTemplateLexerState LexerState => _lexerState;
-        public string EscapedText => _text == null ? null : _text.Replace("\t", "\\t").Replace("\r", "\\r").Replace("\n", "\\n");
+        public string EscapedText => _kind == CodeTemplateTokenKind.EndOfFile ? "<EOF>" : _text == null ? null : _text.Replace("\t", "\\t").Replace("\r", "\\r").Replace("\n", "\\n");
         public string EscapedTextForString => _text == null ? null : _text.Replace("\\", "\\\\").Replace("\"", "\\\"").Replace("\t", "\\t").Replace("\r", "\\r").Replace("\n", "\\n");
 
         public override string ToString()

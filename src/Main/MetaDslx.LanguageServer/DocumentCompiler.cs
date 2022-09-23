@@ -40,7 +40,6 @@ namespace MetaDslx.LanguageServer
             SourceUpdated();
         }
 
-        public abstract ImmutableArray<Diagnostic> Diagnostics { get; }
         protected abstract void SourceUpdated();
     }
 }

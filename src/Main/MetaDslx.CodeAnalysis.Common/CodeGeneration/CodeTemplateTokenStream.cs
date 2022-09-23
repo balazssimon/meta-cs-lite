@@ -17,7 +17,9 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
         private CodeTemplateLexer _lexer;
         private CodeTemplateLexerState _fetchState;
         private List<Entry> _tokens;
+        private int _position;
         private bool _endOfFile;
+        private Entry _eofEntry;
 
         public CodeTemplateTokenStream(CodeTemplateLexer lexer)
         {
@@ -28,25 +30,39 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
 
         public CodeTemplateToken CurrentToken => PeekToken(0);
         public CodeTemplateLexerState State => PeekToken(0).LexerState;
-        public int Line => PeekEntry(0).Line;
-        public int Character => PeekEntry(0).Character;
-        public LinePosition LinePosition => new LinePosition(Line, Character);
+        public int Position => _position;
+        public int Line => _endOfFile ? _eofEntry.Line : PeekEntry(0).Line;
+        public int Character => _endOfFile ? _eofEntry.Character : PeekEntry(0).Character;
+        public LinePosition LinePosition => new LinePosition(_endOfFile ? _eofEntry.Line : Line, _endOfFile ? _eofEntry.Character : Character);
         public int MaxLookahead => _lexer.MaxLookahead;
         public bool EndOfFile => _endOfFile;
+        public string ControlBegin => _lexer.ControlBegin;
+        public string ControlEnd => _lexer.ControlEnd;
 
         public CodeTemplateToken EatToken()
         {
             if (_tokens.Count > 0 || FetchToken())
             {
-                var token = _tokens[0].Token;
+                var entry = _tokens[0];
                 _tokens.RemoveAt(0);
+                var token = entry.Token;
+                _position += token.Text.Length;
                 if (token.Kind == CodeTemplateTokenKind.EndOfFile)
                 {
+                    _eofEntry = entry;
                     _endOfFile = true;
                 }
                 return token;
             }
             return CodeTemplateToken.None;
+        }
+
+        public void EatTokens(int count)
+        {
+            for (int i = 0; i < count; i++)
+            {
+                this.EatToken();
+            }
         }
 
         public CodeTemplateToken PeekToken(int index = 0)

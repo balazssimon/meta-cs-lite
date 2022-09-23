@@ -13,7 +13,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace MetaDslx.LanguageServer
+namespace MetaDslx.LanguageServer.MetaGenerator
 {
     using OmniDiagnostic = OmniSharp.Extensions.LanguageServer.Protocol.Models.Diagnostic;
     using OmniRange = OmniSharp.Extensions.LanguageServer.Protocol.Models.Range;
@@ -22,15 +22,17 @@ namespace MetaDslx.LanguageServer
 
     internal class MetaGeneratorDocumentCompiler : DocumentCompiler
     {
+        private CodeTemplateParser? _parser;
         private ImmutableArray<Diagnostic> _diagnostics;
 
-        public MetaGeneratorDocumentCompiler(ILanguageServerFacade languageServer, DocumentUri document) 
+        public MetaGeneratorDocumentCompiler(ILanguageServerFacade languageServer, DocumentUri document)
             : base(languageServer, document)
         {
             _diagnostics = ImmutableArray<Diagnostic>.Empty;
         }
 
-        public override ImmutableArray<Diagnostic> Diagnostics => _diagnostics;
+        public CodeTemplateParser? Parser => _parser;
+        public ImmutableArray<Diagnostic> Diagnostics => _diagnostics;
 
         protected override void SourceUpdated()
         {
@@ -39,10 +41,10 @@ namespace MetaDslx.LanguageServer
 
         private async Task Compile()
         {
-            Debugger.Break();
             if (CancellationToken.IsCancellationRequested) return;
             var parser = new CodeTemplateParser(Uri.ToString(), SourceText);
             parser.Compile();
+            Interlocked.Exchange(ref _parser, parser);
             var uri = Uri;
             var version = Version;
             if (CancellationToken.IsCancellationRequested) return;

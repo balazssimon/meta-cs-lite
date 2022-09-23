@@ -1,4 +1,5 @@
 ﻿using MetaDslx.CodeAnalysis.Text;
+using MetaDslx.LanguageServer.MetaGenerator;
 using OmniSharp.Extensions.LanguageServer.Protocol;
 using OmniSharp.Extensions.LanguageServer.Protocol.Server;
 using System;

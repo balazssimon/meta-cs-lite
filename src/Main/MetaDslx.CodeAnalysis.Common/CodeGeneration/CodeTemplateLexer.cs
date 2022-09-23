@@ -248,6 +248,15 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
                 if (Keywords.Contains(lexeme) || ContextualKeywords.Contains(lexeme)) kind = CodeTemplateTokenKind.Keyword;
                 if (state == CodeTemplateLexerState.None && TemplateKeywords.Contains(lexeme)) kind = CodeTemplateTokenKind.Keyword;
                 if (state == CodeTemplateLexerState.TemplateControl && TemplateControlKeywords.Contains(lexeme)) kind = CodeTemplateTokenKind.Keyword;
+                if (state == CodeTemplateLexerState.ControlBeginWs && ControlShortcutKeywords.Contains(lexeme))
+                {
+                    kind = CodeTemplateTokenKind.Keyword;
+                    if (lexeme == "quot")
+                    {
+                        _controlBegin = "«";
+                        _controlEnd = "»";
+                    }
+                }
                 if (state == CodeTemplateLexerState.ControlBeginWs || state == CodeTemplateLexerState.ControlEndWs ||
                     state == CodeTemplateLexerState.ControlBegin || state == CodeTemplateLexerState.ControlEnd) state = CodeTemplateLexerState.None;
                 if (kind == CodeTemplateTokenKind.Keyword)
@@ -537,6 +546,11 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
         public static readonly HashSet<string> TemplateControlKeywords = new HashSet<string>()
         {
             "end", "template", "separator"
+        };
+
+        public static readonly HashSet<string> ControlShortcutKeywords = new HashSet<string>()
+        {
+            "quot"
         };
     }
 }

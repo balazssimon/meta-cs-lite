@@ -127,7 +127,7 @@ template A()
     xxx
   [else]
     yyy
-  [end if]
+  [end while]
 end template
 ";
             var compiler = new CodeTemplateParser("hello.mgen", SourceText.From(templateCode));

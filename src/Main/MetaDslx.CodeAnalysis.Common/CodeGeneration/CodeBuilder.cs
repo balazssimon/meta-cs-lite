@@ -73,7 +73,7 @@ namespace MetaDslx.CodeGeneration
 
         public void Pop()
         {
-            if (_indentStack.Count == 0) throw new InvalidOperationException("Push-Pop mismatch.");
+            if (_indentStack.Count == 0) return;// throw new InvalidOperationException("Push-Pop mismatch.");
             AppendLine();
             var indent = _indentStack[_indentStack.Count - 1];
             _indentStack.RemoveAt(_indentStack.Count - 1);
