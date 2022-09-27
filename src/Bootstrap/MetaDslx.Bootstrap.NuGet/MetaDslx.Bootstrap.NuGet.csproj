@@ -9,8 +9,12 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="MetaDslx.CodeAnalysis" Version="0.7.0" />
+		<ProjectReference Include="..\..\Main\MetaDslx.CodeAnalysis.Analyzers\MetaDslx.CodeAnalysis.Analyzers.csproj"
+						  OutputItemType="Analyzer"
+						  ReferenceOutputAssembly="false" />
+		<ProjectReference Include="..\..\Main\MetaDslx.CodeAnalysis.Common\MetaDslx.CodeAnalysis.Common.csproj"
+						  OutputItemType="Analyzer"
+						  ReferenceOutputAssembly="false" />
 	</ItemGroup>
-
 
 </Project>
