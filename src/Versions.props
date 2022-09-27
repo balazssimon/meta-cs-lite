@@ -6,7 +6,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <MajorVersion>0</MajorVersion>
-    <MinorVersion>3</MinorVersion>
+    <MinorVersion>7</MinorVersion>
     <PatchVersion>0</PatchVersion>
     <PreReleaseVersionLabel>0</PreReleaseVersionLabel>
     <VersionPrefix>$(MajorVersion).$(MinorVersion).$(PatchVersion)</VersionPrefix>
@@ -31,12 +31,15 @@
   -->
   <PropertyGroup>
     <!-- Versions used by several individual references below -->
-    <SystemCollectionsImmutableVersion>6.0.0</SystemCollectionsImmutableVersion>
-    <SystemReflectionMetadataVersion>6.0.1</SystemReflectionMetadataVersion>
+    <SystemCollectionsImmutableVersion>5.0.0</SystemCollectionsImmutableVersion>
+    <SystemReflectionMetadataVersion>5.0.0</SystemReflectionMetadataVersion>
     <SystemTextEncodingCodePagesVersion>6.0.0</SystemTextEncodingCodePagesVersion>
+    <SystemThreadingTasksExtensionsVersion>4.5.4</SystemThreadingTasksExtensionsVersion>
+    <SystemMemoryVersion>4.5.4</SystemMemoryVersion>
+    <SystemRuntimeCompilerServicesUnsafeVersion>6.0.0</SystemRuntimeCompilerServicesUnsafeVersion>
     <MicrosoftDependencyInjectionVersion>6.0.0</MicrosoftDependencyInjectionVersion>
     <MicrosoftBuildVersion>16.8.0</MicrosoftBuildVersion>
-    <MicrosoftCodeAnalysisCSharpVersion>4.3.0</MicrosoftCodeAnalysisCSharpVersion>
+    <MicrosoftCodeAnalysisCSharpVersion>4.0.1</MicrosoftCodeAnalysisCSharpVersion>
     <MicrosoftCodeAnalysisAnalyzersVersion>3.3.3</MicrosoftCodeAnalysisAnalyzersVersion>
     <MicrosoftSourceLinkGitHubVersion>1.1.1</MicrosoftSourceLinkGitHubVersion>
     <MicrosoftNetDskTestVersion>16.6.1</MicrosoftNetDskTestVersion>

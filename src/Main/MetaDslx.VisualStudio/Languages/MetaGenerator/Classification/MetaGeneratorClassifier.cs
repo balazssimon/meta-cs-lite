@@ -1,4 +1,5 @@
 ﻿using MetaDslx.CodeAnalysis.CodeGeneration;
+using MetaDslx.CodeAnalysis.Text;
 using MetaDslx.VisualStudio.Utilities;
 using Microsoft.VisualStudio.Language.StandardClassification;
 using Microsoft.VisualStudio.Text;
@@ -58,7 +59,7 @@ namespace MetaDslx.VisualStudio.Languages.MetaGenerator.Classification
         {
             _classificationSpans = new List<ClassificationSpan>();
             var text = snapshot.GetText();
-            var lexer = new CodeTemplateLexer("", text);
+            var lexer = new CodeTemplateLexer("", SourceText.From(text, Encoding.UTF8));
             var state = CodeTemplateLexerState.None;
             var token = lexer.Lex(ref state);
             while (token.Kind != CodeTemplateTokenKind.None && token.Kind != CodeTemplateTokenKind.EndOfFile)

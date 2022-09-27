@@ -383,11 +383,11 @@ namespace Roslyn.Utilities
             {
                 if (builder.Count > 0)
                 {
-                    var last = builder[^1];
+                    var last = builder[builder.Count-1];
                     if (last.Span.End == change.Span.Start)
                     {
                         // merge changes together if they are adjacent
-                        builder[^1] = new TextChangeRange(new TextSpan(last.Span.Start, last.Span.Length + change.Span.Length), last.NewLength + change.NewLength);
+                        builder[builder.Count - 1] = new TextChangeRange(new TextSpan(last.Span.Start, last.Span.Length + change.Span.Length), last.NewLength + change.NewLength);
                         return;
                     }
                     else if (last.Span.End > change.Span.Start)

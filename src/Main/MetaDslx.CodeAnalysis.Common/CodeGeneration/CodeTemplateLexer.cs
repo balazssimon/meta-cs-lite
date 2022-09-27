@@ -25,11 +25,7 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
         private string _controlBegin = "[";
         private string _controlEnd = "]";
 
-#if VSIX
-        internal CodeTemplateLexer(string filePath, string text)
-#else
         public CodeTemplateLexer(string filePath, SourceText text)
-#endif
         {
             _filePath = filePath;
             _text = new SlidingTextWindow(text);

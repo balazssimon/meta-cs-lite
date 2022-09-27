@@ -3,5 +3,5 @@
 generator HelloWorld
 
 template SayHello(string name)
-Hello, [name]!
+Hello, [namex]!
 end template

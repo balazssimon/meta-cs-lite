@@ -25,7 +25,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetaDslx.LanguageServer", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetaDslx.LanguageServer.Host.Stdio", "Main\MetaDslx.LanguageServer.Host.Stdio\MetaDslx.LanguageServer.Host.Stdio.csproj", "{B04D836B-3504-45F0-8EB4-AAC561C5E4FD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetaDslx.Bootstrap.NuGet", "Bootstrap\MetaDslx.Bootstrap.NuGet\MetaDslx.Bootstrap.NuGet.csproj", "{C0FC4ED1-6752-4BD2-85B4-7C0C051FDB21}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetaDslx.Bootstrap.NuGet", "Bootstrap\MetaDslx.Bootstrap.NuGet\MetaDslx.Bootstrap.NuGet.csproj", "{C0FC4ED1-6752-4BD2-85B4-7C0C051FDB21}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetaDslx.NetStandard20Extensions", "Main\MetaDslx.NetStandard20Extensions\MetaDslx.NetStandard20Extensions.csproj", "{32E5BBB2-84EB-4847-9E85-DC3652A841FF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -131,6 +133,14 @@ Global
 		{C0FC4ED1-6752-4BD2-85B4-7C0C051FDB21}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C0FC4ED1-6752-4BD2-85B4-7C0C051FDB21}.Release|x86.ActiveCfg = Release|Any CPU
 		{C0FC4ED1-6752-4BD2-85B4-7C0C051FDB21}.Release|x86.Build.0 = Release|Any CPU
+		{32E5BBB2-84EB-4847-9E85-DC3652A841FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32E5BBB2-84EB-4847-9E85-DC3652A841FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32E5BBB2-84EB-4847-9E85-DC3652A841FF}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{32E5BBB2-84EB-4847-9E85-DC3652A841FF}.Debug|x86.Build.0 = Debug|Any CPU
+		{32E5BBB2-84EB-4847-9E85-DC3652A841FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32E5BBB2-84EB-4847-9E85-DC3652A841FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{32E5BBB2-84EB-4847-9E85-DC3652A841FF}.Release|x86.ActiveCfg = Release|Any CPU
+		{32E5BBB2-84EB-4847-9E85-DC3652A841FF}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
