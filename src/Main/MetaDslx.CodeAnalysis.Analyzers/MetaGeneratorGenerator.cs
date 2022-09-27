@@ -19,6 +19,7 @@ namespace MetaDslx.CodeAnalysis.Analyzers
         {
             try
             {
+                //Debugger.Launch();
                 var csharpFilePaths = new HashSet<string>();
                 var csharpCodes = new List<Entry>();
                 foreach (var mgenFile in context.AdditionalFiles.Where(file => Path.GetExtension(file.Path) == ".mgen"))
@@ -62,8 +63,9 @@ namespace MetaDslx.CodeAnalysis.Analyzers
                         {
                             if (!csharpCode.Compiler.FromCSharpToMgen(diagnostic.Location.SourceSpan.ToMetaDslx(), out var mgenTextSpan)) continue;
                             if (!csharpCode.Compiler.FromCSharpToMgen(diagnostic.Location.GetLineSpan().Span.ToMetaDslx(), out var mgenLinePositionSpan)) continue;
-                            var mgenLocation = Microsoft.CodeAnalysis.Location.Create(csharpCode.MgenPath, mgenTextSpan.ToMicrosoft(), mgenLinePositionSpan.ToMicrosoft());
-                            context.ReportDiagnostic(Microsoft.CodeAnalysis.Diagnostic.Create(descriptor: diagnostic.Descriptor, location: mgenLocation));
+                            var mgenLocation = Location.Create(csharpCode.MgenPath, mgenTextSpan, mgenLinePositionSpan);
+                            var mgenDiagnostic = diagnostic.ToMetaDslx().WithLocation(mgenLocation);
+                            context.ReportDiagnostic(mgenDiagnostic.ToMicrosoft());
                             if (diagnostic.Severity == Microsoft.CodeAnalysis.DiagnosticSeverity.Error)
                             {
                                 csharpCode.HasErrors = true;
@@ -78,7 +80,7 @@ namespace MetaDslx.CodeAnalysis.Analyzers
             }
             catch(Exception ex)
             {
-                Debug.WriteLine(ex);
+                Console.WriteLine(ex);
             }
         }
 

@@ -7,11 +7,14 @@ namespace MetaDslx.CodeAnalysis.Analyzers
 {
     internal static class RoslynUtils
     {
+        private static readonly Microsoft.CodeAnalysis.DiagnosticFormatter Formatter = new Microsoft.CodeAnalysis.DiagnosticFormatter();
+
         public static Microsoft.CodeAnalysis.Diagnostic ToMicrosoft(this MetaDslx.CodeAnalysis.Diagnostic diagnostic)
         {
             return Microsoft.CodeAnalysis.Diagnostic.Create(
                 descriptor: diagnostic.Descriptor.ToMicrosoft(),
-                location: diagnostic.Location.ToMicrosoft());
+                location: diagnostic.Location.ToMicrosoft(),
+                diagnostic.Arguments.ToArray());
         }
 
         public static Microsoft.CodeAnalysis.DiagnosticDescriptor ToMicrosoft(this MetaDslx.CodeAnalysis.DiagnosticDescriptor descriptor)
@@ -68,14 +71,14 @@ namespace MetaDslx.CodeAnalysis.Analyzers
         public static MetaDslx.CodeAnalysis.Diagnostic ToMetaDslx(this Microsoft.CodeAnalysis.Diagnostic diagnostic)
         {
             return MetaDslx.CodeAnalysis.Diagnostic.Create(
-                descriptor: diagnostic.Descriptor.ToMetaDslx(),
+                descriptor: diagnostic.Descriptor.ToMetaDslx(Formatter.Format(diagnostic)),
                 location: diagnostic.Location.ToMetaDslx());
         }
 
-        public static MetaDslx.CodeAnalysis.DiagnosticDescriptor ToMetaDslx(this Microsoft.CodeAnalysis.DiagnosticDescriptor descriptor)
+        public static MetaDslx.CodeAnalysis.DiagnosticDescriptor ToMetaDslx(this Microsoft.CodeAnalysis.DiagnosticDescriptor descriptor, string message)
         {
             return new MetaDslx.CodeAnalysis.DiagnosticDescriptor(
-                id: descriptor.Id, title: descriptor.Title.ToString(), messageFormat: descriptor.MessageFormat.ToString(),
+                id: descriptor.Id, title: descriptor.Title.ToString(), messageFormat: message,
                 category: descriptor.Category, defaultSeverity: descriptor.DefaultSeverity.ToMetaDslx(),
                 isEnabledByDefault: descriptor.IsEnabledByDefault, description: descriptor.Description.ToString(),
                 helpLinkUri: descriptor.HelpLinkUri, customTags: descriptor.CustomTags.ToArray());

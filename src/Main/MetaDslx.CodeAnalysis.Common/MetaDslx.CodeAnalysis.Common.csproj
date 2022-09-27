@@ -2,7 +2,7 @@
 	<Import Project="..\..\Versions.props" />
 
 	<PropertyGroup>
-		<TargetFrameworks>netstandard2.0</TargetFrameworks>
+		<TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
 		<RootNamespace>MetaDslx.CodeAnalysis</RootNamespace>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 	</PropertyGroup>
@@ -27,10 +27,6 @@
 	</ItemGroup>
 	<ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
 	  <ProjectReference Include="..\MetaDslx.NetStandard20Extensions\MetaDslx.NetStandard20Extensions.csproj" />
-	</ItemGroup>
-	<ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
-		<PackageReference Include="System.Memory" Version="$(SystemMemoryVersion)" />
-		<PackageReference Include="System.Threading.Tasks.Extensions" Version="$(SystemThreadingTasksExtensionsVersion)" />
 	</ItemGroup>
 
 </Project>

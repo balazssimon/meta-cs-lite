@@ -9,12 +9,17 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\..\Main\MetaDslx.CodeAnalysis.Analyzers\MetaDslx.CodeAnalysis.Analyzers.csproj"
-						  OutputItemType="Analyzer"
-						  ReferenceOutputAssembly="false" />
-		<ProjectReference Include="..\..\Main\MetaDslx.CodeAnalysis.Common\MetaDslx.CodeAnalysis.Common.csproj"
-						  OutputItemType="Analyzer"
-						  ReferenceOutputAssembly="false" />
+	  <AdditionalFiles Include="HelloWorld.mgen" />
 	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="MetaDslx.CodeAnalysis" Version="0.7.0" />
+	</ItemGroup>
+
+	<!--ItemGroup>
+		<ProjectReference Include="..\..\Main\MetaDslx.CodeAnalysis.Analyzers\MetaDslx.CodeAnalysis.Analyzers.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+		<ProjectReference Include="..\..\Main\MetaDslx.CodeAnalysis.Common\MetaDslx.CodeAnalysis.Common.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+		<ProjectReference Include="..\..\Main\MetaDslx.NetStandard20Extensions\MetaDslx.NetStandard20Extensions.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+	</ItemGroup-->
 
 </Project>

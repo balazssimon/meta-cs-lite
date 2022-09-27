@@ -313,7 +313,7 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
                 _sb.AppendLine();
                 _sb.WriteLine("{");
                 _sb.Push();
-                _sb.WriteLine("var __cb = CodeBuilder.GetInstance();");
+                _sb.WriteLine("var __cb = global::MetaDslx.CodeGeneration.CodeBuilder.GetInstance();");
                 ParserState state = new ParserState();
                 state.BeginKeyword = templateToken;
                 ParseTemplateContent(ref state);
