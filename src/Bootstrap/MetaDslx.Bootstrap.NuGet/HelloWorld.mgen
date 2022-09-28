@@ -3,5 +3,18 @@
 generator HelloWorld
 
 template SayHello(string name)
+Hello, [name]!
+end template
+
+template SayHello2(string name)
 Hello, [name]2!
+end template
+
+template SayHello3(string name)
+Hello, [name]3!
+[if (true)]
+T
+[else]
+F
+[end if]
 end template

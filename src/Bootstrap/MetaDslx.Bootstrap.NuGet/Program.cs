@@ -5,3 +5,6 @@ Console.WriteLine("Hello, World2!");
 
 var hello = new HelloWorld();
 Console.WriteLine(hello.SayHello("me"));
+Console.WriteLine(hello.SayHello2("me"));
+Console.WriteLine(hello.SayHello3("me"));
+

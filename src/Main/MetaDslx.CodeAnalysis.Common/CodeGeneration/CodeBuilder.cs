@@ -52,6 +52,12 @@ namespace MetaDslx.CodeGeneration
 
         public void Free()
         {
+            Clear();
+            s_pool.Free(this);
+        }
+
+        public void Clear()
+        {
             _sb.Clear();
             _prefix = "";
             _suffix = "";
@@ -60,7 +66,6 @@ namespace MetaDslx.CodeGeneration
             _line = 0;
             _character = 0;
             _indentStack.Clear();
-            s_pool.Free(this);
         }
 
         public void Push(string prefix = "    ", string suffix = "")

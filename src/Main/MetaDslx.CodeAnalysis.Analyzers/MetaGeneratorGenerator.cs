@@ -11,7 +11,6 @@ using System.Text;
 
 namespace MetaDslx.CodeAnalysis.Analyzers
 {
-    // TODO: Target netstandard2.0!!!
     [Generator]
     public class MetaGeneratorGenerator : ISourceGenerator
     {
@@ -20,8 +19,6 @@ namespace MetaDslx.CodeAnalysis.Analyzers
             try
             {
                 //Debugger.Launch();
-                var csharpFilePaths = new HashSet<string>();
-                var csharpCodes = new List<Entry>();
                 foreach (var mgenFile in context.AdditionalFiles.Where(file => Path.GetExtension(file.Path) == ".mgen"))
                 {
                     var source = mgenFile.GetText()?.ToString();
@@ -38,44 +35,10 @@ namespace MetaDslx.CodeAnalysis.Analyzers
                         }
                         else
                         {
-                            var csharpFilePath = Path.GetFileNameWithoutExtension(mgenFile.Path) + ".Generated.cs";
-                            csharpFilePaths.Add(csharpFilePath);
-                            csharpCodes.Add(
-                                new Entry() 
-                                {
-                                    MgenPath = mgenFile.Path,
-                                    CSharpPath = csharpFilePath,
-                                    Compiler = mgenCompiler,
-                                    SourceText = Microsoft.CodeAnalysis.Text.SourceText.From(csharpCode, Encoding.UTF8) 
-                                });
+                            var csharpFilePath = Path.GetFileNameWithoutExtension(mgenFile.Path) + ".g.cs";
+                            context.AddSource(csharpFilePath, csharpCode);
                         }
                     }
-                }
-                var syntaxTrees = csharpCodes.Select(code => CSharpSyntaxTree.ParseText(text: code.SourceText, path: code.CSharpPath));
-                var compilation = context.Compilation.AddSyntaxTrees(syntaxTrees);
-                foreach (var diagnostic in compilation.GetDiagnostics())
-                {
-                    var path = diagnostic.Location.GetLineSpan().Path;
-                    if (diagnostic.Location.IsInSource && csharpFilePaths.Contains(path))
-                    {
-                        var csharpCode = csharpCodes.FirstOrDefault(code => code.CSharpPath == path);
-                        if (csharpCode.CSharpPath == path)
-                        {
-                            if (!csharpCode.Compiler.FromCSharpToMgen(diagnostic.Location.SourceSpan.ToMetaDslx(), out var mgenTextSpan)) continue;
-                            if (!csharpCode.Compiler.FromCSharpToMgen(diagnostic.Location.GetLineSpan().Span.ToMetaDslx(), out var mgenLinePositionSpan)) continue;
-                            var mgenLocation = Location.Create(csharpCode.MgenPath, mgenTextSpan, mgenLinePositionSpan);
-                            var mgenDiagnostic = diagnostic.ToMetaDslx().WithLocation(mgenLocation);
-                            context.ReportDiagnostic(mgenDiagnostic.ToMicrosoft());
-                            if (diagnostic.Severity == Microsoft.CodeAnalysis.DiagnosticSeverity.Error)
-                            {
-                                csharpCode.HasErrors = true;
-                            }
-                        }
-                    }
-                }
-                foreach (var csharpCode in csharpCodes)
-                {
-                    context.AddSource(csharpCode.CSharpPath, csharpCode.SourceText);
                 }
             }
             catch(Exception ex)
