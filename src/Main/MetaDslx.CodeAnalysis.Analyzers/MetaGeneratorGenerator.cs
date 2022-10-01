@@ -7,57 +7,40 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
+using System.Threading;
 
 namespace MetaDslx.CodeAnalysis.Analyzers
 {
     [Generator]
-    public class MetaGeneratorGenerator : ISourceGenerator
+    public class MetaGeneratorGenerator : IIncrementalGenerator
     {
-        public void Execute(GeneratorExecutionContext context)
+        public void Initialize(IncrementalGeneratorInitializationContext initContext)
         {
-            try
+            IncrementalValuesProvider<AdditionalText> textFiles = initContext.AdditionalTextsProvider
+                .Where(static file => file.Path.EndsWith(".mgen"));
+            IncrementalValuesProvider<(string path, string content)> pathsAndContents = textFiles
+                .Select((text, cancellationToken) => (path: text.Path, content: text.GetText(cancellationToken)!.ToString()));
+            initContext.RegisterSourceOutput(pathsAndContents, (spc, pathAndContent) =>
             {
-                //Debugger.Launch();
-                foreach (var mgenFile in context.AdditionalFiles.Where(file => Path.GetExtension(file.Path) == ".mgen"))
+                var filePath = Path.GetFileNameWithoutExtension(pathAndContent.path);
+                var csharpFilePath = $"MetaGenerator.{filePath}.g.cs";
+                var mgenCompiler = new MetaGeneratorParser(pathAndContent.path, SourceText.From(pathAndContent.content));
+                var csharpCode = mgenCompiler.Compile();
+                if (mgenCompiler.Diagnostics.Length > 0)
                 {
-                    var source = mgenFile.GetText()?.ToString();
-                    if (source != null)
+                    foreach (var diag in mgenCompiler.Diagnostics)
                     {
-                        var mgenCompiler = new CodeTemplateParser(mgenFile.Path, SourceText.From(source));
-                        var csharpCode = mgenCompiler.Compile();
-                        if (mgenCompiler.Diagnostics.Length > 0)
-                        {
-                            foreach (var diag in mgenCompiler.Diagnostics)
-                            {
-                                context.ReportDiagnostic(diag.ToMicrosoft());
-                            }
-                        }
-                        else
-                        {
-                            var csharpFilePath = Path.GetFileNameWithoutExtension(mgenFile.Path) + ".g.cs";
-                            context.AddSource(csharpFilePath, csharpCode);
-                        }
+                        spc.ReportDiagnostic(diag.ToMicrosoft());
                     }
                 }
-            }
-            catch(Exception ex)
-            {
-                Console.WriteLine(ex);
-            }
+                else
+                {
+                    spc.AddSource(csharpFilePath, csharpCode);
+                }
+            });
         }
 
-        public void Initialize(GeneratorInitializationContext context)
-        {
-        }
-
-        private struct Entry
-        {
-            public string MgenPath;
-            public string CSharpPath;
-            public CodeTemplateParser Compiler;
-            public Microsoft.CodeAnalysis.Text.SourceText SourceText;
-            public bool HasErrors;
-        }
     }
 }

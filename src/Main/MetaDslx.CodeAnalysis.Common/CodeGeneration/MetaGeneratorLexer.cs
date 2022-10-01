@@ -10,7 +10,7 @@ using System.Text.RegularExpressions;
 
 namespace MetaDslx.CodeAnalysis.CodeGeneration
 {
-    public class CodeTemplateLexer : IDisposable
+    public class MetaGeneratorLexer : IDisposable
     {
         private string _filePath;
         private SlidingTextWindow _text;
@@ -25,7 +25,7 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
         private string _controlBegin = "[";
         private string _controlEnd = "]";
 
-        public CodeTemplateLexer(string filePath, SourceText text)
+        public MetaGeneratorLexer(string filePath, SourceText text)
         {
             _filePath = filePath;
             _text = new SlidingTextWindow(text);
@@ -44,15 +44,15 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
             _text.Dispose();
         }
 
-        public CodeTemplateToken Lex(ref CodeTemplateLexerState state)
+        public MetaGeneratorToken Lex(ref MetaGeneratorLexerState state)
         {
             var token = NextToken(ref state);
-            if (token.Kind == CodeTemplateTokenKind.EndOfLine)
+            if (token.Kind == MetaGeneratorTokenKind.EndOfLine)
             {
                 ++_line;
                 _column = 0;
             }
-            else if (token.Kind == CodeTemplateTokenKind.MultiLineComment || token.Kind == CodeTemplateTokenKind.VerbatimString)
+            else if (token.Kind == MetaGeneratorTokenKind.MultiLineComment || token.Kind == MetaGeneratorTokenKind.VerbatimString)
             {
                 for (int i = 0; i < token.Text.Length; i++)
                 {
@@ -75,66 +75,66 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
             return token;
         }
 
-        private CodeTemplateToken NextToken(ref CodeTemplateLexerState state)
+        private MetaGeneratorToken NextToken(ref MetaGeneratorLexerState state)
         {
-            if (state == CodeTemplateLexerState.Eof)
+            if (state == MetaGeneratorLexerState.Eof)
             {
-                return CodeTemplateToken.None;
+                return MetaGeneratorToken.None;
             }
             if (_text.IsReallyAtEnd())
             {
-                state = CodeTemplateLexerState.Eof;
-                return new CodeTemplateToken(CodeTemplateTokenKind.EndOfFile, string.Empty, _text.LexemeStartPosition, state);
+                state = MetaGeneratorLexerState.Eof;
+                return new MetaGeneratorToken(MetaGeneratorTokenKind.EndOfFile, string.Empty, _text.LexemeStartPosition, state);
             }
             _text.Start();
             var token = MatchLineEnd(ref state);
-            if (token.Kind != CodeTemplateTokenKind.None) return token;
+            if (token.Kind != MetaGeneratorTokenKind.None) return token;
             token = MatchTemplateOutput(ref state);
-            if (token.Kind != CodeTemplateTokenKind.None) return token;
+            if (token.Kind != MetaGeneratorTokenKind.None) return token;
             token = MatchTemplateControlEnd(ref state);
-            if (token.Kind != CodeTemplateTokenKind.None) return token;
+            if (token.Kind != MetaGeneratorTokenKind.None) return token;
             token = MatchWhitespace(ref state);
-            if (token.Kind != CodeTemplateTokenKind.None) return token;
+            if (token.Kind != MetaGeneratorTokenKind.None) return token;
             token = MatchComment(ref state);
-            if (token.Kind != CodeTemplateTokenKind.None) return token;
+            if (token.Kind != MetaGeneratorTokenKind.None) return token;
             token = MatchIdentifier(ref state);
-            if (token.Kind != CodeTemplateTokenKind.None) return token;
+            if (token.Kind != MetaGeneratorTokenKind.None) return token;
             token = MatchNumber(ref state);
-            if (token.Kind != CodeTemplateTokenKind.None) return token;
+            if (token.Kind != MetaGeneratorTokenKind.None) return token;
             token = MatchString(ref state);
-            if (token.Kind != CodeTemplateTokenKind.None) return token;
+            if (token.Kind != MetaGeneratorTokenKind.None) return token;
             token = MatchOther(ref state);
-            if (token.Kind != CodeTemplateTokenKind.None) return token;
-            return CodeTemplateToken.None;
+            if (token.Kind != MetaGeneratorTokenKind.None) return token;
+            return MetaGeneratorToken.None;
         }
 
-        private CodeTemplateToken MatchLineEnd(ref CodeTemplateLexerState state)
+        private MetaGeneratorToken MatchLineEnd(ref MetaGeneratorLexerState state)
         {
             var ch = _text.PeekChar();
             if (ch == '\r' && _text.PeekChar(1) == '\n')
             {
                 _text.AdvanceChar(2);
-                if (state == CodeTemplateLexerState.TemplateHeaderEnd) state = CodeTemplateLexerState.TemplateOutput;
-                if (state == CodeTemplateLexerState.ControlBeginWs || state == CodeTemplateLexerState.ControlEndWs ||
-                    state == CodeTemplateLexerState.ControlBegin || state == CodeTemplateLexerState.ControlEnd || 
-                    state == CodeTemplateLexerState.TemplateEnd) state = CodeTemplateLexerState.None;
-                return new CodeTemplateToken(CodeTemplateTokenKind.EndOfLine, _text.GetText(true), _text.LexemeStartPosition, state);
+                if (state == MetaGeneratorLexerState.TemplateHeaderEnd) state = MetaGeneratorLexerState.TemplateOutput;
+                if (state == MetaGeneratorLexerState.ControlBeginWs || state == MetaGeneratorLexerState.ControlEndWs ||
+                    state == MetaGeneratorLexerState.ControlBegin || state == MetaGeneratorLexerState.ControlEnd || 
+                    state == MetaGeneratorLexerState.TemplateEnd) state = MetaGeneratorLexerState.None;
+                return new MetaGeneratorToken(MetaGeneratorTokenKind.EndOfLine, _text.GetText(true), _text.LexemeStartPosition, state);
             }
             if (ch == '\n')
             {
                 _text.AdvanceChar(1);
-                if (state == CodeTemplateLexerState.TemplateHeaderEnd) state = CodeTemplateLexerState.TemplateOutput;
-                if (state == CodeTemplateLexerState.ControlBeginWs || state == CodeTemplateLexerState.ControlEndWs ||
-                    state == CodeTemplateLexerState.ControlBegin || state == CodeTemplateLexerState.ControlEnd ||
-                    state == CodeTemplateLexerState.TemplateEnd) state = CodeTemplateLexerState.None;
-                return new CodeTemplateToken(CodeTemplateTokenKind.EndOfLine, _text.GetText(true), _text.LexemeStartPosition, state);
+                if (state == MetaGeneratorLexerState.TemplateHeaderEnd) state = MetaGeneratorLexerState.TemplateOutput;
+                if (state == MetaGeneratorLexerState.ControlBeginWs || state == MetaGeneratorLexerState.ControlEndWs ||
+                    state == MetaGeneratorLexerState.ControlBegin || state == MetaGeneratorLexerState.ControlEnd ||
+                    state == MetaGeneratorLexerState.TemplateEnd) state = MetaGeneratorLexerState.None;
+                return new MetaGeneratorToken(MetaGeneratorTokenKind.EndOfLine, _text.GetText(true), _text.LexemeStartPosition, state);
             }
-            return CodeTemplateToken.None;
+            return MetaGeneratorToken.None;
         }
 
-        private CodeTemplateToken MatchTemplateOutput(ref CodeTemplateLexerState state)
+        private MetaGeneratorToken MatchTemplateOutput(ref MetaGeneratorLexerState state)
         {
-            if (state == CodeTemplateLexerState.TemplateOutput)
+            if (state == MetaGeneratorLexerState.TemplateOutput)
             {
                 var hasOutput = false;
                 var ch = _text.PeekChar();
@@ -150,26 +150,26 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
                 }
                 if (hasOutput)
                 {
-                    return new CodeTemplateToken(CodeTemplateTokenKind.TemplateOutput, _text.GetText(false), _text.LexemeStartPosition, state);
+                    return new MetaGeneratorToken(MetaGeneratorTokenKind.TemplateOutput, _text.GetText(false), _text.LexemeStartPosition, state);
                 }
                 if (isControlBegin)
                 {
                     _text.AdvanceChar(_controlBegin.Length);
-                    state = CodeTemplateLexerState.TemplateControl;
+                    state = MetaGeneratorLexerState.TemplateControl;
                     _parenthesisCounter = 0;
                     _bracketsCounter = 0;
                     _bracesCounter = 0;
-                    return new CodeTemplateToken(CodeTemplateTokenKind.TemplateControlBegin, _text.GetText(true), _text.LexemeStartPosition, state);
+                    return new MetaGeneratorToken(MetaGeneratorTokenKind.TemplateControlBegin, _text.GetText(true), _text.LexemeStartPosition, state);
                 }
                 if (isTemplateEnd)
                 {
-                    state = CodeTemplateLexerState.TemplateControl;
+                    state = MetaGeneratorLexerState.TemplateControl;
                 }
             }
-            return CodeTemplateToken.None;
+            return MetaGeneratorToken.None;
         }
 
-        private CodeTemplateToken MatchWhitespace(ref CodeTemplateLexerState state)
+        private MetaGeneratorToken MatchWhitespace(ref MetaGeneratorLexerState state)
         {
             var ch = _text.PeekChar();
             if (ch == ' ' || ch == '\t')
@@ -179,14 +179,14 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
                     _text.NextChar();
                     ch = _text.PeekChar();
                 }
-                if (state == CodeTemplateLexerState.ControlBegin) state = CodeTemplateLexerState.ControlEndWs;
-                if (state == CodeTemplateLexerState.ControlEnd) state = CodeTemplateLexerState.None;
-                return new CodeTemplateToken(CodeTemplateTokenKind.Whitespace, _text.GetText(_text.Width == 1), _text.LexemeStartPosition, state);
+                if (state == MetaGeneratorLexerState.ControlBegin) state = MetaGeneratorLexerState.ControlEndWs;
+                if (state == MetaGeneratorLexerState.ControlEnd) state = MetaGeneratorLexerState.None;
+                return new MetaGeneratorToken(MetaGeneratorTokenKind.Whitespace, _text.GetText(_text.Width == 1), _text.LexemeStartPosition, state);
             }
-            return CodeTemplateToken.None;
+            return MetaGeneratorToken.None;
         }
 
-        private CodeTemplateToken MatchComment(ref CodeTemplateLexerState state)
+        private MetaGeneratorToken MatchComment(ref MetaGeneratorLexerState state)
         {
             var ch = _text.PeekChar();
             if (ch == '/' && _text.PeekChar(1) == '/')
@@ -196,9 +196,9 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
                     _text.NextChar();
                     ch = _text.PeekChar();
                 }
-                if (state == CodeTemplateLexerState.ControlBeginWs || state == CodeTemplateLexerState.ControlBegin) state = CodeTemplateLexerState.None;
-                if (state == CodeTemplateLexerState.ControlEndWs || state == CodeTemplateLexerState.ControlEnd) state = CodeTemplateLexerState.None;
-                return new CodeTemplateToken(CodeTemplateTokenKind.SingleLineComment, _text.GetText(false), _text.LexemeStartPosition, state);
+                if (state == MetaGeneratorLexerState.ControlBeginWs || state == MetaGeneratorLexerState.ControlBegin) state = MetaGeneratorLexerState.None;
+                if (state == MetaGeneratorLexerState.ControlEndWs || state == MetaGeneratorLexerState.ControlEnd) state = MetaGeneratorLexerState.None;
+                return new MetaGeneratorToken(MetaGeneratorTokenKind.SingleLineComment, _text.GetText(false), _text.LexemeStartPosition, state);
             }
             if (ch == '/' && _text.PeekChar(1) == '*')
             {
@@ -213,24 +213,24 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
                 {
                     _text.AdvanceChar(2);
                 }
-                if (state == CodeTemplateLexerState.ControlBegin) state = hasNewLine ? CodeTemplateLexerState.None : CodeTemplateLexerState.ControlEndWs;
-                if (state == CodeTemplateLexerState.ControlEnd) state = CodeTemplateLexerState.None;
-                return new CodeTemplateToken(CodeTemplateTokenKind.MultiLineComment, _text.GetText(false), _text.LexemeStartPosition, state);
+                if (state == MetaGeneratorLexerState.ControlBegin) state = hasNewLine ? MetaGeneratorLexerState.None : MetaGeneratorLexerState.ControlEndWs;
+                if (state == MetaGeneratorLexerState.ControlEnd) state = MetaGeneratorLexerState.None;
+                return new MetaGeneratorToken(MetaGeneratorTokenKind.MultiLineComment, _text.GetText(false), _text.LexemeStartPosition, state);
             }
-            return CodeTemplateToken.None;
+            return MetaGeneratorToken.None;
         }
 
-        private CodeTemplateToken MatchIdentifier(ref CodeTemplateLexerState state)
+        private MetaGeneratorToken MatchIdentifier(ref MetaGeneratorLexerState state)
         {
             var ch = _text.PeekChar();
             var nextCh = _text.PeekChar(1);
             if ((ch >= 'a' && ch <= 'z' || ch >= 'A' && ch <= 'Z' || ch == '_') ||
                 ch == '@' && (nextCh >= 'a' && nextCh <= 'z' || nextCh >= 'A' && nextCh <= 'Z' || nextCh == '_'))
             {
-                var kind = CodeTemplateTokenKind.Identifier;
+                var kind = MetaGeneratorTokenKind.Identifier;
                 if (ch == '@')
                 {
-                    kind = CodeTemplateTokenKind.VerbatimIdentifier;
+                    kind = MetaGeneratorTokenKind.VerbatimIdentifier;
                     _text.NextChar();
                 }
                 _text.NextChar();
@@ -241,61 +241,61 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
                     ch = _text.PeekChar();
                 }
                 var lexeme = _text.GetText(false);
-                if (Keywords.Contains(lexeme) || ContextualKeywords.Contains(lexeme)) kind = CodeTemplateTokenKind.Keyword;
-                if (state == CodeTemplateLexerState.None && TemplateKeywords.Contains(lexeme)) kind = CodeTemplateTokenKind.Keyword;
-                if (state == CodeTemplateLexerState.TemplateControl && TemplateControlKeywords.Contains(lexeme)) kind = CodeTemplateTokenKind.Keyword;
-                if (state == CodeTemplateLexerState.ControlBeginWs && ControlShortcutKeywords.Contains(lexeme))
+                if (Keywords.Contains(lexeme) || ContextualKeywords.Contains(lexeme)) kind = MetaGeneratorTokenKind.Keyword;
+                if (state == MetaGeneratorLexerState.None && TemplateKeywords.Contains(lexeme)) kind = MetaGeneratorTokenKind.Keyword;
+                if (state == MetaGeneratorLexerState.TemplateControl && TemplateControlKeywords.Contains(lexeme)) kind = MetaGeneratorTokenKind.Keyword;
+                if (state == MetaGeneratorLexerState.ControlBeginWs && ControlShortcutKeywords.Contains(lexeme))
                 {
-                    kind = CodeTemplateTokenKind.Keyword;
+                    kind = MetaGeneratorTokenKind.Keyword;
                     if (lexeme == "quot")
                     {
                         _controlBegin = "«";
                         _controlEnd = "»";
                     }
                 }
-                if (state == CodeTemplateLexerState.ControlBeginWs || state == CodeTemplateLexerState.ControlEndWs ||
-                    state == CodeTemplateLexerState.ControlBegin || state == CodeTemplateLexerState.ControlEnd) state = CodeTemplateLexerState.None;
-                if (kind == CodeTemplateTokenKind.Keyword)
+                if (state == MetaGeneratorLexerState.ControlBeginWs || state == MetaGeneratorLexerState.ControlEndWs ||
+                    state == MetaGeneratorLexerState.ControlBegin || state == MetaGeneratorLexerState.ControlEnd) state = MetaGeneratorLexerState.None;
+                if (kind == MetaGeneratorTokenKind.Keyword)
                 {
-                    if (state == CodeTemplateLexerState.None && lexeme == "control")
+                    if (state == MetaGeneratorLexerState.None && lexeme == "control")
                     {
-                        state = CodeTemplateLexerState.ControlBeginWs;
+                        state = MetaGeneratorLexerState.ControlBeginWs;
                         _controlBegin = "";
                         _controlEnd = "";
                     }
                     if (lexeme == "end")
                     {
-                        if (state == CodeTemplateLexerState.TemplateControl)
+                        if (state == MetaGeneratorLexerState.TemplateControl)
                         {
-                            state = CodeTemplateLexerState.End;
+                            state = MetaGeneratorLexerState.End;
                         }
                     }
                     if (lexeme == "template")
                     {
-                        if (state == CodeTemplateLexerState.End)
+                        if (state == MetaGeneratorLexerState.End)
                         {
-                            state = CodeTemplateLexerState.None;
+                            state = MetaGeneratorLexerState.None;
                         }
-                        else if (state == CodeTemplateLexerState.None)
+                        else if (state == MetaGeneratorLexerState.None)
                         {
-                            state = CodeTemplateLexerState.TemplateHeader;
+                            state = MetaGeneratorLexerState.TemplateHeader;
                         }
                     }
                     if (lexeme == "if" || lexeme == "switch" || lexeme == "do" || lexeme == "for" || lexeme == "foreach" || 
                         lexeme == "while" || lexeme == "try" || lexeme == "lock")
                     {
-                        if (state == CodeTemplateLexerState.End)
+                        if (state == MetaGeneratorLexerState.End)
                         {
-                            state = CodeTemplateLexerState.TemplateControl;
+                            state = MetaGeneratorLexerState.TemplateControl;
                         }
                     }
                 }
-                return new CodeTemplateToken(kind, lexeme, _text.LexemeStartPosition, state);
+                return new MetaGeneratorToken(kind, lexeme, _text.LexemeStartPosition, state);
             }
-            return CodeTemplateToken.None;
+            return MetaGeneratorToken.None;
         }
 
-        private CodeTemplateToken MatchNumber(ref CodeTemplateLexerState state)
+        private MetaGeneratorToken MatchNumber(ref MetaGeneratorLexerState state)
         {
             var ch = _text.PeekChar();
             var nextCh = _text.PeekChar(1);
@@ -319,14 +319,14 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
                         ch = _text.PeekChar();
                     }
                 }
-                if (state == CodeTemplateLexerState.ControlBeginWs || state == CodeTemplateLexerState.ControlEndWs ||
-                    state == CodeTemplateLexerState.ControlBegin || state == CodeTemplateLexerState.ControlEnd) state = CodeTemplateLexerState.None;
-                return new CodeTemplateToken(CodeTemplateTokenKind.Number, _text.GetText(false), _text.LexemeStartPosition, state);
+                if (state == MetaGeneratorLexerState.ControlBeginWs || state == MetaGeneratorLexerState.ControlEndWs ||
+                    state == MetaGeneratorLexerState.ControlBegin || state == MetaGeneratorLexerState.ControlEnd) state = MetaGeneratorLexerState.None;
+                return new MetaGeneratorToken(MetaGeneratorTokenKind.Number, _text.GetText(false), _text.LexemeStartPosition, state);
             }
-            return CodeTemplateToken.None;
+            return MetaGeneratorToken.None;
         }
 
-        private CodeTemplateToken MatchString(ref CodeTemplateLexerState state)
+        private MetaGeneratorToken MatchString(ref MetaGeneratorLexerState state)
         {
             var ch = _text.PeekChar();
             var nextCh = _text.PeekChar(1);
@@ -345,9 +345,9 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
                     }
                 }
                 if (ch == '"') _text.NextChar();
-                if (state == CodeTemplateLexerState.ControlBeginWs || state == CodeTemplateLexerState.ControlEndWs ||
-                    state == CodeTemplateLexerState.ControlBegin || state == CodeTemplateLexerState.ControlEnd) state = CodeTemplateLexerState.None;
-                return new CodeTemplateToken(CodeTemplateTokenKind.String, _text.GetText(false), _text.LexemeStartPosition, state);
+                if (state == MetaGeneratorLexerState.ControlBeginWs || state == MetaGeneratorLexerState.ControlEndWs ||
+                    state == MetaGeneratorLexerState.ControlBegin || state == MetaGeneratorLexerState.ControlEnd) state = MetaGeneratorLexerState.None;
+                return new MetaGeneratorToken(MetaGeneratorTokenKind.String, _text.GetText(false), _text.LexemeStartPosition, state);
             }
             if (ch == '@' && nextCh == '"')
             {
@@ -374,54 +374,54 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
                         ch = _text.PeekChar();
                     }
                 }
-                if (state == CodeTemplateLexerState.ControlBeginWs || state == CodeTemplateLexerState.ControlEndWs ||
-                    state == CodeTemplateLexerState.ControlBegin || state == CodeTemplateLexerState.ControlEnd) state = CodeTemplateLexerState.None;
-                return new CodeTemplateToken(CodeTemplateTokenKind.VerbatimString, _text.GetText(false), _text.LexemeStartPosition, state);
+                if (state == MetaGeneratorLexerState.ControlBeginWs || state == MetaGeneratorLexerState.ControlEndWs ||
+                    state == MetaGeneratorLexerState.ControlBegin || state == MetaGeneratorLexerState.ControlEnd) state = MetaGeneratorLexerState.None;
+                return new MetaGeneratorToken(MetaGeneratorTokenKind.VerbatimString, _text.GetText(false), _text.LexemeStartPosition, state);
             }
-            return CodeTemplateToken.None;
+            return MetaGeneratorToken.None;
         }
 
-        private CodeTemplateToken MatchTemplateControlEnd(ref CodeTemplateLexerState state)
+        private MetaGeneratorToken MatchTemplateControlEnd(ref MetaGeneratorLexerState state)
         {
-            if (state == CodeTemplateLexerState.TemplateControl)
+            if (state == MetaGeneratorLexerState.TemplateControl)
             {
                 if (IsControlEnd())
                 {
                     _text.AdvanceChar(_controlEnd.Length);
-                    state = CodeTemplateLexerState.TemplateOutput;
+                    state = MetaGeneratorLexerState.TemplateOutput;
                     _parenthesisCounter = 0;
                     _bracketsCounter = 0;
                     _bracesCounter = 0;
-                    return new CodeTemplateToken(CodeTemplateTokenKind.TemplateControlEnd, _text.GetText(true), _text.LexemeStartPosition, state);
+                    return new MetaGeneratorToken(MetaGeneratorTokenKind.TemplateControlEnd, _text.GetText(true), _text.LexemeStartPosition, state);
                 }
             }
-            return CodeTemplateToken.None;
+            return MetaGeneratorToken.None;
         }
 
-        private CodeTemplateToken MatchOther(ref CodeTemplateLexerState state)
+        private MetaGeneratorToken MatchOther(ref MetaGeneratorLexerState state)
         {
             var ch = _text.NextChar();
-            if (state == CodeTemplateLexerState.ControlBeginWs || state == CodeTemplateLexerState.ControlBegin)
+            if (state == MetaGeneratorLexerState.ControlBeginWs || state == MetaGeneratorLexerState.ControlBegin)
             {
                 _controlBegin += ch;
-                state = CodeTemplateLexerState.ControlBegin;
+                state = MetaGeneratorLexerState.ControlBegin;
             }
-            if (state == CodeTemplateLexerState.ControlEndWs || state == CodeTemplateLexerState.ControlEnd)
+            if (state == MetaGeneratorLexerState.ControlEndWs || state == MetaGeneratorLexerState.ControlEnd)
             {
                 _controlEnd += ch;
-                state = CodeTemplateLexerState.ControlEnd;
+                state = MetaGeneratorLexerState.ControlEnd;
             }
             if (ch == '(') ++_parenthesisCounter;
             if (ch == ')')
             {
                 --_parenthesisCounter;
-                if (_parenthesisCounter == 0 && state == CodeTemplateLexerState.TemplateHeader) state = CodeTemplateLexerState.TemplateHeaderEnd;
+                if (_parenthesisCounter == 0 && state == MetaGeneratorLexerState.TemplateHeader) state = MetaGeneratorLexerState.TemplateHeaderEnd;
             }
             if (ch == '[') ++_bracketsCounter;
             if (ch == ']') --_bracketsCounter;
             if (ch == '{') ++_bracesCounter;
             if (ch == '}') --_bracesCounter;
-            return new CodeTemplateToken(CodeTemplateTokenKind.Other, _text.GetText(false), _text.LexemeStartPosition, state);
+            return new MetaGeneratorToken(MetaGeneratorTokenKind.Other, _text.GetText(false), _text.LexemeStartPosition, state);
         }
 
         private bool IsControlBegin()

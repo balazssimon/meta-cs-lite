@@ -12,13 +12,13 @@ using System.Threading;
 
 namespace MetaDslx.CodeAnalysis.CodeGeneration
 {
-    public class CodeTemplateParser
+    public class MetaGeneratorParser
     {
         private string _filePath;
         private SourceText _templateCode;
         private string? _compiledCode;
-        private CodeTemplateLexer _lexer;
-        private CodeTemplateTokenStream _tokens;
+        private MetaGeneratorLexer _lexer;
+        private MetaGeneratorTokenStream _tokens;
         private CodeBuilder? _osb;
         private CodeBuilder? _isb;
         private bool _collectInput;
@@ -32,7 +32,7 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
         private List<ControlInfo> _controlInfos;
         private List<TemplateInfo> _templateInfos;
 
-        public CodeTemplateParser(string filePath, SourceText templateCode)
+        public MetaGeneratorParser(string filePath, SourceText templateCode)
         {
             _filePath = filePath;
             _templateCode = templateCode;
@@ -43,9 +43,9 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
         public string Compile()
         {
             if (_compiledCode != null) return _compiledCode;
-            using (_lexer = new CodeTemplateLexer(_filePath, _templateCode))
+            using (_lexer = new MetaGeneratorLexer(_filePath, _templateCode))
             {
-                _tokens = new CodeTemplateTokenStream(_lexer);
+                _tokens = new MetaGeneratorTokenStream(_lexer);
                 _osb = CodeBuilder.GetInstance();
                 _isb = CodeBuilder.GetInstance();
                 _diagnosticBag = DiagnosticBag.GetInstance();
@@ -218,7 +218,7 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
                 {
                     Error("Template control begin sequence is expected");
                 }
-                else if (counter == 1 && !CodeTemplateLexer.ControlShortcutKeywords.Contains(controlBegin))
+                else if (counter == 1 && !MetaGeneratorLexer.ControlShortcutKeywords.Contains(controlBegin))
                 {
                     Error("Template control end sequence is expected");
                 }
@@ -241,7 +241,7 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
             }
             else
             {
-                if (_tokens.CurrentToken.Kind == CodeTemplateTokenKind.EndOfFile) EatToken();
+                if (_tokens.CurrentToken.Kind == MetaGeneratorTokenKind.EndOfFile) EatToken();
                 return false;
             }
         }
@@ -256,7 +256,7 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
                 var templateToken = _tokens.CurrentToken;
                 EatToken();
                 StartInputSpan();
-                while (_tokens.State == CodeTemplateLexerState.TemplateHeader || _tokens.State == CodeTemplateLexerState.TemplateHeaderEnd)
+                while (_tokens.State == MetaGeneratorLexerState.TemplateHeader || _tokens.State == MetaGeneratorLexerState.TemplateHeaderEnd)
                 {
                     EatToken();
                 }
@@ -324,7 +324,7 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
         private void ParseTemplateOutput(ref ParserState state)
         {
             var token = _tokens.CurrentToken;
-            if (token.Kind == CodeTemplateTokenKind.TemplateOutput)
+            if (token.Kind == MetaGeneratorTokenKind.TemplateOutput)
             {
                 StartInputSpan();
                 var lineStart = _tokens.Character == 0;
@@ -355,7 +355,7 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
                     EndOutputSpan();
                 }
             }
-            else if (token.Kind == CodeTemplateTokenKind.EndOfLine)
+            else if (token.Kind == MetaGeneratorTokenKind.EndOfLine)
             {
                 if (state.IsIndentWritten)
                 {
@@ -366,12 +366,12 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
                 state.Indent = null;
                 EatToken();
             }
-            else if (token.Kind == CodeTemplateTokenKind.TemplateControlBegin)
+            else if (token.Kind == MetaGeneratorTokenKind.TemplateControlBegin)
             {
                 state.IsControl = true;
                 EatToken();
             }
-            else if (token.Kind == CodeTemplateTokenKind.Keyword && token.Text == "end")
+            else if (token.Kind == MetaGeneratorTokenKind.Keyword && token.Text == "end")
             {
                 var stmt = TryMatchControlStatement();
                 if (stmt.Kind == ControlStatementKind.EndStatement && stmt.Keyword.Text == "template")
@@ -434,7 +434,7 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
             }
             else if (stmt.Kind == ControlStatementKind.BeginStatement)
             {
-                if (CodeTemplateLexer.BlockWithoutEndKeywords.Contains(stmt.Keyword.Text))
+                if (MetaGeneratorLexer.BlockWithoutEndKeywords.Contains(stmt.Keyword.Text))
                 {
                     if (state.IsIndentWritten)
                     {
@@ -470,7 +470,7 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
                     _osb.WriteLine(");");
                     EndOutputSpan();
                 }
-                if (!CodeTemplateLexer.BlockWithoutEndKeywords.Contains(stmt.Keyword.Text))
+                if (!MetaGeneratorLexer.BlockWithoutEndKeywords.Contains(stmt.Keyword.Text))
                 {
                     var innerState = new ParserState();
                     innerState.BeginKeyword = stmt.Keyword;
@@ -526,7 +526,7 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
             while (IsWhitespaceOrComment()) _tokens.EatToken();
         }
 
-        private CodeTemplateToken SkipWs(ref int index)
+        private MetaGeneratorToken SkipWs(ref int index)
         {
             while (IsWhitespaceOrComment(_tokens.PeekToken(index))) ++index;
             return _tokens.PeekToken(index++);
@@ -538,14 +538,14 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
             var index = 0;
             var token = SkipWs(ref index);
 
-            if (token.Kind == CodeTemplateTokenKind.TemplateControlEnd)
+            if (token.Kind == MetaGeneratorTokenKind.TemplateControlEnd)
             {
                 result.Kind = ControlStatementKind.TemplateControlEnd;
                 result.TokenCount = index;
                 return result;
             }
 
-            if (token.Kind == CodeTemplateTokenKind.Keyword && token.Text == "end")
+            if (token.Kind == MetaGeneratorTokenKind.Keyword && token.Text == "end")
             {
                 result.Kind = ControlStatementKind.EndStatement;
                 result.Keyword = SkipWs(ref index);
@@ -553,7 +553,7 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
                 return result;
             }
 
-            if (token.Kind == CodeTemplateTokenKind.Keyword && CodeTemplateLexer.BlockKeywords.Contains(token.Text))
+            if (token.Kind == MetaGeneratorTokenKind.Keyword && MetaGeneratorLexer.BlockKeywords.Contains(token.Text))
             {
                 result.Kind = ControlStatementKind.BeginStatement;
                 result.Keyword = token;
@@ -567,23 +567,23 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
             int bracketCounter = 0;
             int bracesCounter = 0;
             bool collectSeparator = false;
-            while (token.Kind != CodeTemplateTokenKind.None)
+            while (token.Kind != MetaGeneratorTokenKind.None)
             {
                 token = _tokens.PeekToken(index++);
-                if (token.Kind == CodeTemplateTokenKind.EndOfFile || token.Kind == CodeTemplateTokenKind.TemplateControlEnd)
+                if (token.Kind == MetaGeneratorTokenKind.EndOfFile || token.Kind == MetaGeneratorTokenKind.TemplateControlEnd)
                 {
                     if (collectSeparator) result.SeparatorTokenCount = index - 1;
                     else result.TokenCount = index - 1;
                     return result;
                 }
-                if (token.Kind == CodeTemplateTokenKind.Other)
+                if (token.Kind == MetaGeneratorTokenKind.Other)
                 {
                     if (parenthesisCounter == 0 && bracketCounter == 0 && bracesCounter == 0)
                     {
                         if (token.Text == "=")
                         {
                             var nextToken = _tokens.PeekToken(index);
-                            if (!(nextToken.Kind == CodeTemplateTokenKind.Other && nextToken.Text == "="))
+                            if (!(nextToken.Kind == MetaGeneratorTokenKind.Other && nextToken.Text == "="))
                             {
                                 if (result.Kind == ControlStatementKind.Expression) result.Kind = ControlStatementKind.Statement;
                             }
@@ -602,11 +602,11 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
                         --parenthesisCounter;
                         if (parenthesisCounter == 0 && bracketCounter == 0 && bracesCounter == 0 && !collectSeparator)
                         {
-                            if (result.Keyword.Kind == CodeTemplateTokenKind.Keyword && CodeTemplateLexer.LoopKeywords.Contains(result.Keyword.Text))
+                            if (result.Keyword.Kind == MetaGeneratorTokenKind.Keyword && MetaGeneratorLexer.LoopKeywords.Contains(result.Keyword.Text))
                             {
                                 var separatorIndex = index;
                                 var separatorKeyword = SkipWs(ref separatorIndex);
-                                if (separatorKeyword.Kind == CodeTemplateTokenKind.Keyword && separatorKeyword.Text == "separator")
+                                if (separatorKeyword.Kind == MetaGeneratorTokenKind.Keyword && separatorKeyword.Text == "separator")
                                 {
                                     result.TokenCount = index;
                                     collectSeparator = true;
@@ -628,17 +628,17 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
         private bool TryMatchEndOfLine(bool allowSemicolon = true)
         {
             var token = _tokens.CurrentToken;
-            if (allowSemicolon && token.Kind == CodeTemplateTokenKind.Other && token.Text == ";")
+            if (allowSemicolon && token.Kind == MetaGeneratorTokenKind.Other && token.Text == ";")
             {
                 EatToken();
                 return true;
             }
-            if (token.Kind == CodeTemplateTokenKind.EndOfLine)
+            if (token.Kind == MetaGeneratorTokenKind.EndOfLine)
             {
                 EatToken();
                 return true;
             }
-            if (token.Kind == CodeTemplateTokenKind.EndOfFile)
+            if (token.Kind == MetaGeneratorTokenKind.EndOfFile)
             {
                 return true;
             }
@@ -650,9 +650,9 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
             return IsKeyword(_tokens.CurrentToken, text);
         }
 
-        private bool IsKeyword(CodeTemplateToken token, string text)
+        private bool IsKeyword(MetaGeneratorToken token, string text)
         {
-            return token.Kind == CodeTemplateTokenKind.Keyword && token.Text == text;
+            return token.Kind == MetaGeneratorTokenKind.Keyword && token.Text == text;
         }
 
         private bool IsWhitespaceOrComment()
@@ -660,9 +660,9 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
             return IsWhitespaceOrComment(_tokens.CurrentToken);
         }
 
-        private bool IsWhitespaceOrComment(CodeTemplateToken token)
+        private bool IsWhitespaceOrComment(MetaGeneratorToken token)
         {
-            return token.Kind == CodeTemplateTokenKind.EndOfLine || token.Kind == CodeTemplateTokenKind.Whitespace || token.Kind == CodeTemplateTokenKind.SingleLineComment || token.Kind == CodeTemplateTokenKind.MultiLineComment;
+            return token.Kind == MetaGeneratorTokenKind.EndOfLine || token.Kind == MetaGeneratorTokenKind.Whitespace || token.Kind == MetaGeneratorTokenKind.SingleLineComment || token.Kind == MetaGeneratorTokenKind.MultiLineComment;
         }
 
         private void Error(string message)
@@ -717,7 +717,7 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
             _osb.AppendLine();
             var start = _inputSpan.LinePositionSpan.Start;
             var end = _inputSpan.LinePositionSpan.End;
-            _osb.WriteLine($"#line ({start.Line + 1},{start.Character + 1})-({end.Line + 1},{end.Character + 1}) {ignoreChars} \"{_filePath}\"");
+            _osb.WriteLine($"#line ({start.Line + 1},{start.Character + 1})-({end.Line + 1},{end.Character + 1}) {ignoreChars + 1} \"{_filePath}\"");
         }
 
         private void EndOutputSpan(string? name = null)
@@ -740,14 +740,14 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
         private struct ControlStatement
         {
             public ControlStatementKind Kind;
-            public CodeTemplateToken Keyword;
+            public MetaGeneratorToken Keyword;
             public int TokenCount;
             public int SeparatorTokenCount;
 
             public ControlStatement()
             {
                 Kind = ControlStatementKind.None;
-                Keyword = CodeTemplateToken.None;
+                Keyword = MetaGeneratorToken.None;
                 TokenCount = 0;
                 SeparatorTokenCount = 0;
             }
@@ -760,8 +760,8 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
 
         private ref struct ParserState
         {
-            public CodeTemplateToken BeginKeyword;
-            public CodeTemplateToken BlockKeyword;
+            public MetaGeneratorToken BeginKeyword;
+            public MetaGeneratorToken BlockKeyword;
             public string? Indent;
             public bool IsIndentWritten;
             public bool IsEndWritten;

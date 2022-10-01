@@ -72,7 +72,7 @@ template A()
   [end while]
 end template
 ";
-            var compiler = new CodeTemplateParser("hello.mgen", SourceText.From(templateCode));
+            var compiler = new MetaGeneratorParser("hello.mgen", SourceText.From(templateCode));
             var compiledCode = compiler.Compile();
             Console.WriteLine(compiledCode);
             foreach (var diag in compiler.Diagnostics)

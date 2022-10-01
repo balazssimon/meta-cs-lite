@@ -6,14 +6,19 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
+		<!--CompilerGeneratedFilesOutputPath>Generated</CompilerGeneratedFilesOutputPath-->
 	</PropertyGroup>
 
+	<!--Target Name="CleanSourceGeneratedFiles" BeforeTargets="BeforeBuild" DependsOnTargets="$(BeforeBuildDependsOn)">
+		<RemoveDir Directories="Generated" />
+	</Target-->
+
 	<ItemGroup>
-	  <AdditionalFiles Include="HelloWorld.mgen" />
+		<AdditionalFiles Include="HelloWorld.mgen" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="MetaDslx.CodeAnalysis" Version="0.7.0" />
+		<PackageReference Include="MetaDslx.CodeAnalysis" Version="0.7.0" />
 	</ItemGroup>
 
 	<!--ItemGroup>

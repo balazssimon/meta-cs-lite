@@ -4,7 +4,7 @@ using System.Text;
 
 namespace MetaDslx.CodeAnalysis.CodeGeneration
 {
-    public enum CodeTemplateLexerState
+    public enum MetaGeneratorLexerState
     {
         None,
         ControlBeginWs,

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace MetaDslx.CodeAnalysis.CodeGeneration
 {
-    public enum CodeTemplateTokenKind
+    public enum MetaGeneratorTokenKind
     {
         None,
         EndOfFile,

@@ -6,16 +6,16 @@ using System.Text;
 
 namespace MetaDslx.CodeAnalysis.CodeGeneration
 {
-    public struct CodeTemplateToken
+    public struct MetaGeneratorToken
     {
-        public static readonly CodeTemplateToken None = new CodeTemplateToken(CodeTemplateTokenKind.None, string.Empty, -1, CodeTemplateLexerState.None);
+        public static readonly MetaGeneratorToken None = new MetaGeneratorToken(MetaGeneratorTokenKind.None, string.Empty, -1, MetaGeneratorLexerState.None);
 
-        private CodeTemplateTokenKind _kind;
+        private MetaGeneratorTokenKind _kind;
         private string _text;
         private int _position;
-        private CodeTemplateLexerState _lexerState;
+        private MetaGeneratorLexerState _lexerState;
 
-        public CodeTemplateToken(CodeTemplateTokenKind kind, string text, int position, CodeTemplateLexerState lexerState)
+        public MetaGeneratorToken(MetaGeneratorTokenKind kind, string text, int position, MetaGeneratorLexerState lexerState)
         {
             _kind = kind;
             _text = text;
@@ -23,11 +23,11 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
             _lexerState = lexerState;
         }
 
-        public CodeTemplateTokenKind Kind => _kind;
+        public MetaGeneratorTokenKind Kind => _kind;
         public string Text => _text;
         public int Position => _position;
-        public CodeTemplateLexerState LexerState => _lexerState;
-        public string EscapedText => _kind == CodeTemplateTokenKind.EndOfFile ? "<EOF>" : _text == null ? null : _text.Replace("\t", "\\t").Replace("\r", "\\r").Replace("\n", "\\n");
+        public MetaGeneratorLexerState LexerState => _lexerState;
+        public string EscapedText => _kind == MetaGeneratorTokenKind.EndOfFile ? "<EOF>" : _text == null ? null : _text.Replace("\t", "\\t").Replace("\r", "\\r").Replace("\n", "\\n");
         public string EscapedTextForString => _text == null ? null : _text.Replace("\\", "\\\\").Replace("\"", "\\\"").Replace("\t", "\\t").Replace("\r", "\\r").Replace("\n", "\\n");
 
         public override string ToString()

@@ -5,31 +5,31 @@ using System.Text;
 
 namespace MetaDslx.CodeAnalysis.CodeGeneration
 {
-    internal class CodeTemplateTokenStream
+    internal class MetaGeneratorTokenStream
     {
         private struct Entry
         {
-            public CodeTemplateToken Token;
+            public MetaGeneratorToken Token;
             public int Line;
             public int Character;
         }
 
-        private CodeTemplateLexer _lexer;
-        private CodeTemplateLexerState _fetchState;
+        private MetaGeneratorLexer _lexer;
+        private MetaGeneratorLexerState _fetchState;
         private List<Entry> _tokens;
         private int _position;
         private bool _endOfFile;
         private Entry _eofEntry;
 
-        public CodeTemplateTokenStream(CodeTemplateLexer lexer)
+        public MetaGeneratorTokenStream(MetaGeneratorLexer lexer)
         {
             _lexer = lexer;
-            _fetchState = CodeTemplateLexerState.None;
+            _fetchState = MetaGeneratorLexerState.None;
             _tokens = new List<Entry>();
         }
 
-        public CodeTemplateToken CurrentToken => PeekToken(0);
-        public CodeTemplateLexerState State => PeekToken(0).LexerState;
+        public MetaGeneratorToken CurrentToken => PeekToken(0);
+        public MetaGeneratorLexerState State => PeekToken(0).LexerState;
         public int Position => _position;
         public int Line => _endOfFile ? _eofEntry.Line : PeekEntry(0).Line;
         public int Character => _endOfFile ? _eofEntry.Character : PeekEntry(0).Character;
@@ -39,7 +39,7 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
         public string ControlBegin => _lexer.ControlBegin;
         public string ControlEnd => _lexer.ControlEnd;
 
-        public CodeTemplateToken EatToken()
+        public MetaGeneratorToken EatToken()
         {
             if (_tokens.Count > 0 || FetchToken())
             {
@@ -47,14 +47,14 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
                 _tokens.RemoveAt(0);
                 var token = entry.Token;
                 _position += token.Text.Length;
-                if (token.Kind == CodeTemplateTokenKind.EndOfFile)
+                if (token.Kind == MetaGeneratorTokenKind.EndOfFile)
                 {
                     _eofEntry = entry;
                     _endOfFile = true;
                 }
                 return token;
             }
-            return CodeTemplateToken.None;
+            return MetaGeneratorToken.None;
         }
 
         public void EatTokens(int count)
@@ -65,14 +65,14 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
             }
         }
 
-        public CodeTemplateToken PeekToken(int index = 0)
+        public MetaGeneratorToken PeekToken(int index = 0)
         {
             if (FetchTokens(index + 1))
             {
                 var token = _tokens[index];
                 return token.Token;
             }
-            return CodeTemplateToken.None;
+            return MetaGeneratorToken.None;
         }
 
         private Entry PeekEntry(int index = 0)
@@ -87,9 +87,9 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
 
         private bool FetchToken()
         {
-            if (_fetchState != CodeTemplateLexerState.Eof)
+            if (_fetchState != MetaGeneratorLexerState.Eof)
             {
-                var entry = new Entry() { Token = CodeTemplateToken.None, Line = _lexer.Line, Character = _lexer.Column };
+                var entry = new Entry() { Token = MetaGeneratorToken.None, Line = _lexer.Line, Character = _lexer.Column };
                 entry.Token = _lexer.Lex(ref _fetchState);
                 _tokens.Add(entry);
                 return true;

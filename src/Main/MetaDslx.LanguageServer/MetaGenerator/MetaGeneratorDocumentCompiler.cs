@@ -22,7 +22,7 @@ namespace MetaDslx.LanguageServer.MetaGenerator
 
     internal class MetaGeneratorDocumentCompiler : DocumentCompiler
     {
-        private CodeTemplateParser? _parser;
+        private MetaGeneratorParser? _parser;
         private ImmutableArray<Diagnostic> _diagnostics;
 
         public MetaGeneratorDocumentCompiler(ILanguageServerFacade languageServer, DocumentUri document)
@@ -31,7 +31,7 @@ namespace MetaDslx.LanguageServer.MetaGenerator
             _diagnostics = ImmutableArray<Diagnostic>.Empty;
         }
 
-        public CodeTemplateParser? Parser => _parser;
+        public MetaGeneratorParser? Parser => _parser;
         public ImmutableArray<Diagnostic> Diagnostics => _diagnostics;
 
         protected override void SourceUpdated()
@@ -42,7 +42,7 @@ namespace MetaDslx.LanguageServer.MetaGenerator
         private async Task Compile()
         {
             if (CancellationToken.IsCancellationRequested) return;
-            var parser = new CodeTemplateParser(Uri.ToString(), SourceText);
+            var parser = new MetaGeneratorParser(Uri.ToString(), SourceText);
             parser.Compile();
             Interlocked.Exchange(ref _parser, parser);
             var uri = Uri;

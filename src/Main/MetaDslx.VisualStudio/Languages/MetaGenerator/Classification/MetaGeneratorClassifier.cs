@@ -59,10 +59,10 @@ namespace MetaDslx.VisualStudio.Languages.MetaGenerator.Classification
         {
             _classificationSpans = new List<ClassificationSpan>();
             var text = snapshot.GetText();
-            var lexer = new CodeTemplateLexer("", SourceText.From(text, Encoding.UTF8));
-            var state = CodeTemplateLexerState.None;
+            var lexer = new MetaGeneratorLexer("", SourceText.From(text, Encoding.UTF8));
+            var state = MetaGeneratorLexerState.None;
             var token = lexer.Lex(ref state);
-            while (token.Kind != CodeTemplateTokenKind.None && token.Kind != CodeTemplateTokenKind.EndOfFile)
+            while (token.Kind != MetaGeneratorTokenKind.None && token.Kind != MetaGeneratorTokenKind.EndOfFile)
             {
                 var tokenSpan = new Span(token.Position, token.Text.Length);
                 _classificationSpans.Add(new ClassificationSpan(new SnapshotSpan(snapshot, tokenSpan), GetClassificationType(token.Kind)));
@@ -70,27 +70,27 @@ namespace MetaDslx.VisualStudio.Languages.MetaGenerator.Classification
             }
         }
 
-        private IClassificationType GetClassificationType(CodeTemplateTokenKind tokenKind)
+        private IClassificationType GetClassificationType(MetaGeneratorTokenKind tokenKind)
         {
             switch (tokenKind)
             {
-                case CodeTemplateTokenKind.SingleLineComment:
-                case CodeTemplateTokenKind.MultiLineComment:
+                case MetaGeneratorTokenKind.SingleLineComment:
+                case MetaGeneratorTokenKind.MultiLineComment:
                     return StandardClassificationService.Comment;
-                case CodeTemplateTokenKind.Identifier:
-                case CodeTemplateTokenKind.VerbatimIdentifier:
+                case MetaGeneratorTokenKind.Identifier:
+                case MetaGeneratorTokenKind.VerbatimIdentifier:
                     return StandardClassificationService.Identifier;
-                case CodeTemplateTokenKind.Keyword:
+                case MetaGeneratorTokenKind.Keyword:
                     return StandardClassificationService.Keyword;
-                case CodeTemplateTokenKind.Number:
+                case MetaGeneratorTokenKind.Number:
                     return StandardClassificationService.NumberLiteral;
-                case CodeTemplateTokenKind.String:
-                case CodeTemplateTokenKind.VerbatimString:
+                case MetaGeneratorTokenKind.String:
+                case MetaGeneratorTokenKind.VerbatimString:
                     return StandardClassificationService.StringLiteral;
-                case CodeTemplateTokenKind.TemplateControlBegin:
-                case CodeTemplateTokenKind.TemplateControlEnd:
+                case MetaGeneratorTokenKind.TemplateControlBegin:
+                case MetaGeneratorTokenKind.TemplateControlEnd:
                     return ClassificationTypeRegistryService.GetClassificationType(MetaGeneratorClassificationTypes.TemplateControl);
-                case CodeTemplateTokenKind.TemplateOutput:
+                case MetaGeneratorTokenKind.TemplateOutput:
                     return ClassificationTypeRegistryService.GetClassificationType(MetaGeneratorClassificationTypes.TemplateOutput);
                 default:
                     return StandardClassificationService.Other;
