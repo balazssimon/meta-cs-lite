@@ -2,18 +2,22 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace MetaDslx.CodeAnalysis.Modeling
+namespace MetaDslx.Modeling
 {
-    [AttributeUsage(AttributeTargets.Interface, AllowMultiple = false, Inherited = true)]
+    [AttributeUsage(AttributeTargets.Interface, AllowMultiple = false, Inherited = false)]
     public class MetaModelAttribute : Attribute
     {
-        public bool AutoLookupNamespace { get; set; } = true;
     }
 
     [AttributeUsage(AttributeTargets.Interface, AllowMultiple = false, Inherited = false)]
     public class MetaClassAttribute : Attribute
     {
         public bool IsAbstract { get; set; }
+    }
+
+    [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
+    public class ContainsAttribute : Attribute
+    {
     }
 
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = true, Inherited = false)]
@@ -25,7 +29,7 @@ namespace MetaDslx.CodeAnalysis.Modeling
             Property = property;
         }
 
-        public Type Type { get; set; }
-        public string Property { get; set; }
+        public Type Type { get; }
+        public string Property { get; }
     }
 }

@@ -1,4 +1,4 @@
-﻿using MetaDslx.CodeAnalysis.Modeling;
+﻿using MetaDslx.Modeling;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -14,30 +14,43 @@ namespace MetaDslx.Bootstrap.MetaModel
     }
 
     [MetaClass(IsAbstract = true)]
-    public interface SimpleClass
+    public partial interface SimpleClass
     {
-        public string Name { get; set; }
+        public string? Name { get; set; }
     }
 
-    public interface Husband : SimpleClass
+    public partial interface Husband : SimpleClass
     {
         [Opposite(typeof(Wife), "Husband")]
-        Wife Wife { get; set; }
+        Wife? Wife { get; set; }
     }
 
-    public interface Wife : SimpleClass
+    public partial interface Wife : SimpleClass
     {
         [Opposite(typeof(Husband), "Wife")]
-        Husband Husband { get; set; }
+        Husband? Husband { get; set; }
     }
 
-    public interface User : SimpleClass
+    public partial interface Node : SimpleClass
+    {
+        [Opposite(typeof(Composite), "Children")]
+        Composite Parent { get; set; }
+    }
+
+    public partial interface Composite : Node
+    {
+        [Contains]
+        [Opposite(typeof(Node), "Parent")]
+        IList<Node> Children { get; }
+    }
+
+    public partial interface User : SimpleClass
     {
         [Opposite(typeof(Role), "Users")]
         IList<Role> Roles { get; }
     }
 
-    public interface Role : SimpleClass
+    public partial interface Role : SimpleClass
     {
         [Opposite(typeof(User), "Roles")]
         IList<User> Users { get; }
