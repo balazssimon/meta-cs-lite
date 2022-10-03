@@ -14,7 +14,7 @@
 	</ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MetaDslx.CodeAnalysis.Common\MetaDslx.CodeAnalysis.Common.csproj" OutputItemType="Analyzer"/>
+    <ProjectReference Include="..\MetaDslx.CodeAnalysis.Common\MetaDslx.CodeAnalysis.Common.csproj" OutputItemType="Analyzer" />
   </ItemGroup>
 
 </Project>

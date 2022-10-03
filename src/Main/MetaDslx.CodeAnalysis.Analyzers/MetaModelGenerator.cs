@@ -5,13 +5,27 @@ using System.Text;
 
 namespace MetaDslx.CodeAnalysis.Analyzers
 {
+    using MetaDslx.CodeAnalysis.Analyzers.Modeling;
+    using MetaDslx.CodeAnalysis.PooledObjects;
     using Microsoft.CodeAnalysis;
     using Microsoft.CodeAnalysis.CSharp.Syntax;
     using Microsoft.CodeAnalysis.Text;
+    using System.Diagnostics;
+    using System.Linq;
+    using System.Xml.Linq;
 
     [Generator]
     public class MetaModelGenerator : IIncrementalGenerator
     {
+        private const string MetaModelAttributeName = "MetaDslx.Modeling.MetaModelAttribute";
+        private const string MetaClassAttributeName = "MetaDslx.Modeling.MetaClassAttribute";
+        private static readonly DiagnosticDescriptor MultipleMetaModelsInNamespace =
+            new DiagnosticDescriptor("MM0001", "Multiple metamodels", "There is already another metamodel '{0}' defined in the namespace '{1}' of '{2}'", "Generator", DiagnosticSeverity.Error, true);
+        private static readonly DiagnosticDescriptor MetaModelAndClassAttributesMixed =
+            new DiagnosticDescriptor("MM0002", "Mixed attributes", "MetaModelAttribute and MetaClassAttribute cannot be used at the same time", "Generator", DiagnosticSeverity.Error, true);
+        private static readonly DiagnosticDescriptor MetaModelIsMissingInNamespace =
+            new DiagnosticDescriptor("MM0003", "Missing metamodel", "An interface with a MetaModelAttribute is missing in the namespace '{0}' of '{1}'", "Generator", DiagnosticSeverity.Error, true);
+
         public void Initialize(IncrementalGeneratorInitializationContext context)
         {
             IncrementalValuesProvider<InterfaceDeclarationSyntax?> interfaceDeclarations = 
@@ -31,36 +45,101 @@ namespace MetaDslx.CodeAnalysis.Analyzers
             var interfaceDeclarationSyntax = (InterfaceDeclarationSyntax)context.Node;
             var intf = (INamedTypeSymbol?)context.SemanticModel.GetDeclaredSymbol(interfaceDeclarationSyntax);
             if (intf == null) return null;
-            if (HasAttribute(intf, "MetaDslx.Modeling.MetaModelAttribute")) return interfaceDeclarationSyntax;
-            if (HasAttribute(intf, "MetaDslx.Modeling.MetaClassAttribute")) return interfaceDeclarationSyntax;
-            foreach (var type in intf.AllInterfaces)
-            {
-                if (HasAttribute(type, "MetaDslx.Modeling.MetaClassAttribute")) return interfaceDeclarationSyntax;
-            }
+            if (HasAttribute(intf, MetaModelAttributeName, false)) return interfaceDeclarationSyntax;
+            if (HasAttribute(intf, MetaClassAttributeName, true)) return interfaceDeclarationSyntax;
             return null;
         }
 
-        private static bool HasAttribute(INamedTypeSymbol type, string attributeName)
+        private static bool HasAttribute(INamedTypeSymbol type, string attributeName, bool checkBaseTypes)
         {
             foreach (var attr in type.GetAttributes())
             {
                 var attrName = attr.AttributeClass?.ToDisplayString();
                 if (attrName == attributeName) return true;
             }
+            if (checkBaseTypes)
+            {
+                foreach (var baseType in type.AllInterfaces)
+                {
+                    if (HasAttribute(baseType, attributeName, false)) return true;
+                }
+            }
             return false;
         }
+
 
         private static void Execute(Compilation compilation, ImmutableArray<InterfaceDeclarationSyntax> metaInterfaces, SourceProductionContext context)
         {
             if (metaInterfaces.IsDefaultOrEmpty)
             {
-                // nothing to do yet
                 return;
             }
-
-            context.AddSource("MetaModel.Implementation.g.cs", SourceText.From(result, Encoding.UTF8));
+            var models = new Dictionary<string, ModelNamespace>();
+            foreach (var metaInterface in metaInterfaces)
+            {
+                var sm = compilation.GetSemanticModel(metaInterface.SyntaxTree);
+                var intf = sm.GetDeclaredSymbol(metaInterface) as INamedTypeSymbol;
+                if (intf != null)
+                {
+                    var ns = intf.ContainingNamespace;
+                    if (ns != null)
+                    {
+                        var nsName = ns.ToDisplayString();
+                        if (!models.TryGetValue(nsName, out var modelNs))
+                        {
+                            modelNs = new ModelNamespace() { Namespace = ns };
+                            models.Add(nsName, modelNs);
+                        }
+                        if (HasAttribute(intf, MetaModelAttributeName, false))
+                        {
+                            if (modelNs.Model != null && modelNs.Model.Name != intf.Name)
+                            {
+                                context.ReportDiagnostic(Diagnostic.Create(MultipleMetaModelsInNamespace, intf.Locations.FirstOrDefault(), modelNs.Model.Name, nsName, intf.Name));
+                            }
+                            else if (modelNs.Model == null)
+                            {
+                                modelNs.Model = intf;
+                            }
+                            if (HasAttribute(intf, MetaClassAttributeName, true))
+                            {
+                                context.ReportDiagnostic(Diagnostic.Create(MetaModelAndClassAttributesMixed, intf.Locations.FirstOrDefault()));
+                            }
+                        }
+                        else if (HasAttribute(intf, MetaClassAttributeName, true))
+                        {
+                            if (modelNs.Classes == null)
+                            {
+                                modelNs.Classes = ArrayBuilder<INamedTypeSymbol>.GetInstance();
+                            }
+                            modelNs.Classes.Add(intf);
+                        }
+                    }
+                }
+            }
+            var metaModels = ArrayBuilder<MetaModel>.GetInstance();
+            foreach (var nsName in models.Keys)
+            {
+                var modelNs = models[nsName];
+                if (modelNs.Model != null)
+                {
+                    var metaModel = new MetaModel(modelNs.Model, modelNs.Classes?.ToImmutable() ?? ImmutableArray<INamedTypeSymbol>.Empty);
+                    metaModels.Add(metaModel);
+                }
+                else if (modelNs.Classes != null && modelNs.Classes.Count > 0)
+                {
+                    context.ReportDiagnostic(Diagnostic.Create(MetaModelIsMissingInNamespace, modelNs.Classes[0].Locations.FirstOrDefault(), nsName, modelNs.Classes[0].Name));
+                }
+                modelNs.Classes?.Free();
+            }
+            var metaModelImplementationCode = ModelImplementationGenerator.Generate(metaModels.ToImmutableAndFree());
+            context.AddSource("MetaModel.Implementation.g.cs", SourceText.From(metaModelImplementationCode, Encoding.UTF8));
         }
 
-
+        private class ModelNamespace
+        {
+            public INamespaceSymbol Namespace;
+            public INamedTypeSymbol? Model;
+            public ArrayBuilder<INamedTypeSymbol>? Classes;
+        }
     }
 }

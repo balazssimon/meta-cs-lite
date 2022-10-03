@@ -12,35 +12,6 @@ namespace MetaDslx.Bootstrap.MetaModel
     {
     }
 
-    public partial class SimpleModelFactory : global::MetaDslx.Modeling.ModelFactory
-    {
-        public SimpleModelFactory(Model model)
-            : base(model)
-        {
-        }
-
-        public Husband Husband()
-        {
-            var result = new HusbandImpl();
-            ((IModel)Model).AddObject(result);
-            return result;
-        }
-
-        public Wife Wife()
-        {
-            var result = new WifeImpl();
-            ((IModel)Model).AddObject(result);
-            return result;
-        }
-
-        public User User()
-        {
-            var result = new UserImpl();
-            ((IModel)Model).AddObject(result);
-            return result;
-        }
-    }
-
     public partial interface SimpleClass
     {
         public static readonly ModelProperty MProperty_Name = new ModelProperty(typeof(SimpleClass), nameof(Name), ModelPropertyKind.SingleValue, typeof(string), false);
