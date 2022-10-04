@@ -35,5 +35,10 @@ namespace MetaDslx.Modeling
         {
             ImmutableInterlocked.InterlockedCompareExchange(ref _oppositeProperties, oppositeProperties, default(ImmutableArray<ModelProperty>));
         }
+
+        public override string ToString()
+        {
+            return $"{DeclaringType.Name}.{Name}";
+        }
     }
 }

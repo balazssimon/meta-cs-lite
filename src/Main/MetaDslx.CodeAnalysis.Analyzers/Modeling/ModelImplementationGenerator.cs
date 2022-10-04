@@ -155,6 +155,8 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
             cb.WriteLine($"internal {metaClass.ImplName}()");
             cb.WriteLine("{");
             cb.Push();
+            MetaProperty? nameProperty = null;
+            MetaProperty? typeProperty = null;
             foreach (var prop in metaClass.AllDeclaredProperties)
             {
                 if (prop.Flags.HasFlag(ModelPropertyFlags.Collection))
@@ -168,13 +170,28 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
                         cb.WriteLine($"(({IModelObjectType})this).MInit({prop.QualifiedPropertyName}, new global::System.Collections.Generic.List<{prop.CSharpType}>());");
                     }
                 }
+                if (prop.Flags.HasFlag(ModelPropertyFlags.Name) && nameProperty == null)
+                {
+                    nameProperty = prop;
+                }
+                if (prop.Flags.HasFlag(ModelPropertyFlags.Type) && typeProperty == null)
+                {
+                    typeProperty = prop;
+                }
             }
             cb.Pop();
             cb.WriteLine("}");
             cb.WriteLine();
+            cb.WriteLine("[global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)]");
             cb.WriteLine($"protected override {ImmutableArrayType}<{ModelPropertyType}> MDeclaredProperties => {metaClass.Name}.MDeclaredProperties;");
+            cb.WriteLine("[global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)]");
             cb.WriteLine($"protected override {ImmutableArrayType}<{ModelPropertyType}> MAllDeclaredProperties => {metaClass.Name}.MAllDeclaredProperties;");
+            cb.WriteLine("[global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)]");
             cb.WriteLine($"protected override {ImmutableArrayType}<{ModelPropertyType}> MPublicProperties => {metaClass.Name}.MPublicProperties;");
+            cb.WriteLine("[global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)]");
+            cb.WriteLine($"protected override {ModelPropertyType}? MNameProperty => {nameProperty?.QualifiedPropertyName ?? "null"};");
+            cb.WriteLine("[global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)]");
+            cb.WriteLine($"protected override {ModelPropertyType}? MTypeProperty => {typeProperty?.QualifiedPropertyName ?? "null"};");
             cb.WriteLine();
             foreach (var prop in metaClass.PublicProperties)
             {
@@ -191,6 +208,7 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
             }
             foreach (var prop in metaClass.AllDeclaredProperties)
             {
+                cb.WriteLine("[global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)]");
                 cb.WriteLine($"{prop.CSharpType} {prop.MetaClass.Name}.{prop.Name}");
                 cb.WriteLine("{");
                 cb.Push();

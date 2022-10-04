@@ -1,13 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Diagnostics;
 using System.Text;
+using System.Xml.Linq;
 
 namespace MetaDslx.Modeling
 {
     public abstract class ModelObject : IModelObject
     {
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private static readonly ModelProperty MParentProperty = new ModelProperty(typeof(ModelObject), "MParent", typeof(IModelObject), ModelPropertyFlags.NullableType | ModelPropertyFlags.ReferenceType | ModelPropertyFlags.MetaClassType);
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private static readonly ModelProperty MChildrenProperty = new ModelProperty(typeof(ModelObject), "MChildren", typeof(IModelObject), ModelPropertyFlags.ReferenceType | ModelPropertyFlags.MetaClassType | ModelPropertyFlags.Collection | ModelPropertyFlags.Containment);
 
         static ModelObject()
@@ -16,9 +20,13 @@ namespace MetaDslx.Modeling
             MChildrenProperty.SetOppositeProperties(ImmutableArray.Create(MParentProperty));
         }
 
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private IModel? _model;
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private IModelObject? _parent;
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private ModelObjectList<IModelObject> _children;
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Dictionary<ModelProperty, object?> _properties;
 
         public ModelObject()
@@ -27,20 +35,31 @@ namespace MetaDslx.Modeling
             _children = new ModelObjectList<IModelObject>(this, MChildrenProperty);
         }
 
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         protected abstract ImmutableArray<ModelProperty> MDeclaredProperties { get; }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         protected abstract ImmutableArray<ModelProperty> MAllDeclaredProperties { get; }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         protected abstract ImmutableArray<ModelProperty> MPublicProperties { get; }
-        
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        protected abstract ModelProperty? MNameProperty { get; }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        protected abstract ModelProperty? MTypeProperty { get; }
 
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         IModelObject? IModelObject.MParent => _parent;
-
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         IList<IModelObject> IModelObject.MChildren => _children;
-
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         IModel? IModelObject.MModel => _model;
 
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         ImmutableArray<ModelProperty> IModelObject.MDeclaredProperties => this.MDeclaredProperties;
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         ImmutableArray<ModelProperty> IModelObject.MAllDeclaredProperties => this.MAllDeclaredProperties;
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         ImmutableArray<ModelProperty> IModelObject.MPublicProperties => this.MPublicProperties;
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         IEnumerable<ModelProperty> IModelObject.MProperties
         {
             get
@@ -55,6 +74,7 @@ namespace MetaDslx.Modeling
                 }
             }
         }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         IEnumerable<ModelProperty> IModelObject.MAttachedProperties
         {
             get
@@ -68,6 +88,11 @@ namespace MetaDslx.Modeling
                 }
             }
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        ModelProperty? IModelObject.MNameProperty => MNameProperty;
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        ModelProperty? IModelObject.MTypeProperty => MTypeProperty;
 
         void IModelObject.MAdd(ModelProperty property, object? item)
         {
@@ -170,9 +195,18 @@ namespace MetaDslx.Modeling
 
         public override string ToString()
         {
-            var typeName = this.GetType().Name;
-            if (typeName.EndsWith("Impl")) typeName = typeName.Substring(0, typeName.Length - 4);
-            return typeName;
+            var metaTypeName = this.GetType().Name;
+            if (metaTypeName.EndsWith("Impl")) metaTypeName = metaTypeName.Substring(0, metaTypeName.Length - 4);
+            var nameProp = MNameProperty;
+            string? name = null;
+            if (nameProp != null) name = ((IModelObject)this).MGet(nameProp)?.ToString();
+            var typeProp = MTypeProperty;
+            string? type = null;
+            if (typeProp != null) type = ((IModelObject)this).MGet(typeProp)?.ToString();
+            if (!string.IsNullOrWhiteSpace(name) && !string.IsNullOrWhiteSpace(type)) return $"{name}: {type}";
+            else if (!string.IsNullOrWhiteSpace(name)) return $"{name}";
+            else if (!string.IsNullOrWhiteSpace(type)) return $":{type}";
+            else return $"({metaTypeName})";
         }
     }
 }

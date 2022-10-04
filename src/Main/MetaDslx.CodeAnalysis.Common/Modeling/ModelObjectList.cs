@@ -1,14 +1,19 @@
-﻿using System;
+﻿using MetaDslx.CodeAnalysis.PooledObjects;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 
 namespace MetaDslx.Modeling
 {
     public class ModelObjectList<T> : IList<T>, IModelCollection
     {
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private ModelObject _owner;
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private ModelProperty _property;
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<T> _items;
 
         public ModelObjectList(ModelObject owner, ModelProperty property)
@@ -19,7 +24,6 @@ namespace MetaDslx.Modeling
         }
 
         public IModelObject Owner => _owner;
-
         public ModelProperty Property => _property;
 
         public T this[int index] 
@@ -122,6 +126,22 @@ namespace MetaDslx.Modeling
         void IModelCollection.MRemove(object? item)
         {
             this.Remove((T)item);
+        }
+
+        public override string ToString()
+        {
+            var psb = PooledStringBuilder.GetInstance();
+            var sb = psb.Builder;
+            var first = true;
+            sb.Append('[');
+            foreach (var item in _items)
+            {
+                if (first) first = false;
+                else sb.Append(", ");
+                sb.Append(item.ToString());
+            }
+            sb.Append(']');
+            return psb.ToStringAndFree();
         }
     }
 }

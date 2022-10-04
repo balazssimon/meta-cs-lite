@@ -16,6 +16,7 @@ namespace MetaDslx.Bootstrap.MetaModel
     [MetaClass(IsAbstract = true)]
     public partial interface SimpleClass
     {
+        [Name]
         public string? Name { get; set; }
     }
 

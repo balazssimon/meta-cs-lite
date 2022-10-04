@@ -20,6 +20,8 @@ namespace MetaDslx.Modeling
         NonUnique = 0x0200,
         Readonly = 0x0400,
         Derived = 0x0800,
-        DerivedUnion = 0x1000
+        DerivedUnion = 0x1000,
+        Name = 0x2000,
+        Type = 0x4000
     }
 }

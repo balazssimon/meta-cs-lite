@@ -49,6 +49,14 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
                 {
                     _flags |= ModelPropertyFlags.DerivedUnion;
                 }
+                if (attr.AttributeClass?.ToDisplayString() == "MetaDslx.Modeling.NameAttribute")
+                {
+                    _flags |= ModelPropertyFlags.Name;
+                }
+                if (attr.AttributeClass?.ToDisplayString() == "MetaDslx.Modeling.TypeAttribute")
+                {
+                    _flags |= ModelPropertyFlags.Type;
+                }
             }
         }
 

@@ -13,6 +13,8 @@ namespace MetaDslx.Modeling
         ImmutableArray<ModelProperty> MPublicProperties { get; }
         IEnumerable<ModelProperty> MProperties { get; }
         IEnumerable<ModelProperty> MAttachedProperties { get; }
+        ModelProperty? MNameProperty { get; }
+        ModelProperty? MTypeProperty { get; }
         IModelObject? MParent { get; }
         IList<IModelObject> MChildren { get; }
         void MSetModel(IModel? model);

@@ -16,6 +16,16 @@ namespace MetaDslx.Modeling
     }
 
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
+    public class NameAttribute : Attribute
+    {
+    }
+
+    [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
+    public class TypeAttribute : Attribute
+    {
+    }
+
+    [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
     public class UntrackedAttribute : Attribute
     {
     }
