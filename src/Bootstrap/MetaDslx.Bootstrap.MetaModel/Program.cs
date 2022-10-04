@@ -11,4 +11,5 @@ var wife = factory.Wife();
 husband.Wife = wife;
 
 var user = factory.User();
-
+var role = factory.Role();
+user.Roles.Add(role);

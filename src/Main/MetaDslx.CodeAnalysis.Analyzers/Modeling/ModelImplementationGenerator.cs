@@ -14,10 +14,13 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
     {
         private const string ModelType = "global::MetaDslx.Modeling.Model";
         private const string IModelType = "global::MetaDslx.Modeling.IModel";
+        private const string ModelObjectType = "global::MetaDslx.Modeling.ModelObject";
+        private const string IModelObjectType = "global::MetaDslx.Modeling.IModelObject";
         private const string ModelFactoryType = "global::MetaDslx.Modeling.ModelFactory";
         private const string ModelPropertyType = "global::MetaDslx.Modeling.ModelProperty";
         private const string ModelPropertyFlagsType = "global::MetaDslx.Modeling.ModelPropertyFlags";
-        private const string PropertyArrayType = "global::System.Collections.Immutable.ImmutableArray<global::MetaDslx.Modeling.ModelProperty>";
+        private const string ModelObjectListType = "global::MetaDslx.Modeling.ModelObjectList";
+        private const string ImmutableArrayType = "global::System.Collections.Immutable.ImmutableArray";
 
         public static string Generate(ImmutableArray<MetaModel> metaModels)
         {
@@ -42,11 +45,16 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
                 GenerateMetaClassInterface(cb, metaClass);
                 cb.WriteLine();
             }
+            cb.WriteLine("namespace Internal");
+            cb.WriteLine("{");
+            cb.Push();
             foreach (var metaClass in metaModel.MetaClasses.Where(mc => !mc.IsAbstract))
             {
                 GenerateMetaClassImplementation(cb, metaClass);
                 cb.WriteLine();
             }
+            cb.Pop();
+            cb.WriteLine("}");
             cb.Pop();
             cb.WriteLine("}");
         }
@@ -66,7 +74,7 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
                 cb.WriteLine($"public {metaClass.Name} {metaClass.Name}()");
                 cb.WriteLine("{");
                 cb.Push();
-                cb.WriteLine($"var result = new {metaClass.ImplName}();");
+                cb.WriteLine($"var result = new Internal.{metaClass.ImplName}();");
                 cb.WriteLine($"(({IModelType})Model).AddObject(result);");
                 cb.WriteLine("return result;");
                 cb.Pop();
@@ -83,18 +91,18 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
             cb.WriteLine("{");
             cb.Push();
             var newKeyword = metaClass.IsRoot ? "" : "new ";
-            cb.Write($"public static {newKeyword}readonly {PropertyArrayType} MDeclaredProperties = ");
+            cb.Write($"public static {newKeyword}readonly {ImmutableArrayType}<{ModelPropertyType}> MDeclaredProperties = ");
             GeneratePropertyArray(cb, metaClass.DeclaredProperties);
             cb.WriteLine(";");
-            cb.Write($"public static {newKeyword}readonly {PropertyArrayType} MPublicProperties = ");
-            GeneratePropertyArray(cb, metaClass.PublicProperties);
+            cb.Write($"public static {newKeyword}readonly {ImmutableArrayType}<{ModelPropertyType}> MAllDeclaredProperties = ");
+            GeneratePropertyArray(cb, metaClass.AllDeclaredProperties);
             cb.WriteLine(";");
-            cb.Write($"public static {newKeyword}readonly {PropertyArrayType} MAllProperties = ");
-            GeneratePropertyArray(cb, metaClass.AllProperties);
+            cb.Write($"public static {newKeyword}readonly {ImmutableArrayType}<{ModelPropertyType}> MPublicProperties = ");
+            GeneratePropertyArray(cb, metaClass.PublicProperties);
             cb.WriteLine(";");
             foreach (var prop in metaClass.DeclaredProperties)
             {
-                cb.Write($"public static readonly {ModelPropertyType} MProperty_{metaClass.Name}_{prop.Name} = new {ModelPropertyType}(typeof({metaClass.Name}), nameof({prop.Name}), typeof({prop.Type?.ToDisplayString()}), ");
+                cb.Write($"public static readonly {ModelPropertyType} {prop.PropertyName} = new {ModelPropertyType}(typeof({metaClass.Name}), nameof({prop.Name}), typeof({prop.Type?.ToDisplayString(NullableFlowState.None)}), ");
                 GenerateModelPropertyFlags(cb, prop.Flags);
                 cb.WriteLine(");");
             }
@@ -106,25 +114,37 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
         {
             if (properties.Length > 0)
             {
-                cb.Write($"{PropertyArrayType}.Create(");
+                cb.Write($"{ImmutableArrayType}.Create<{ModelPropertyType}>(");
                 var comma = "";
                 foreach (var prop in properties)
                 {
                     cb.Write(comma);
-                    cb.Write($"MProperty_{prop.MetaClass.Name}_{prop.Name}");
+                    cb.Write(prop.QualifiedPropertyName);
                     comma = ", ";
                 }
                 cb.Write(")");
             }
             else
             {
-                cb.Write($"{PropertyArrayType}.Empty");
+                cb.Write($"{ImmutableArrayType}<{ModelPropertyType}>.Empty");
             }
         }
 
         private static void GenerateModelPropertyFlags(CodeBuilder cb, ModelPropertyFlags flags)
         {
-            // TODO
+            var empty = true;
+            foreach (ModelPropertyFlags flag in Enum.GetValues(typeof(ModelPropertyFlags)))
+            {
+                if (flag != ModelPropertyFlags.None && flags.HasFlag(flag))
+                {
+                    if (!empty) cb.Write(" | ");
+                    cb.Write(ModelPropertyFlagsType);
+                    cb.Write(".");
+                    cb.Write(Enum.GetName(typeof(ModelPropertyFlags), flag));
+                    empty = false;
+                }
+            }
+            if (empty) cb.Write($"{ModelPropertyFlagsType}.None");
         }
 
         private static void GenerateMetaClassImplementation(CodeBuilder cb, MetaClass metaClass)
@@ -132,19 +152,55 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
             cb.WriteLine($"internal partial class {metaClass.ImplName} : global::MetaDslx.Modeling.ModelObject, {metaClass.Name}");
             cb.WriteLine("{");
             cb.Push();
-            cb.WriteLine($"protected override {PropertyArrayType} MDeclaredProperties = {metaClass.Name}.MDeclaredProperties;");
-            cb.WriteLine($"protected override {PropertyArrayType} MPublicProperties = {metaClass.Name}.MPublicProperties;");
-            cb.WriteLine($"protected override {PropertyArrayType} MAllProperties = {metaClass.Name}.MAllProperties;");
-            cb.WriteLine();
-            foreach (var prop in metaClass.AllProperties)
+            cb.WriteLine($"internal {metaClass.ImplName}()");
+            cb.WriteLine("{");
+            cb.Push();
+            foreach (var prop in metaClass.AllDeclaredProperties)
             {
-                cb.WriteLine($"{prop.PropertySymbol.ToDisplayString()} {prop.MetaClass.Name}.{prop.Name}");
+                if (prop.Flags.HasFlag(ModelPropertyFlags.Collection))
+                {
+                    if (prop.Flags.HasFlag(ModelPropertyFlags.MetaClassType))
+                    {
+                        cb.WriteLine($"(({IModelObjectType})this).MInit({prop.QualifiedPropertyName}, new {ModelObjectListType}<{prop.Type.ToDisplayString()}>(this, {prop.QualifiedPropertyName}));");
+                    }
+                    else
+                    {
+                        cb.WriteLine($"(({IModelObjectType})this).MInit({prop.QualifiedPropertyName}, new global::System.Collections.Generic.List<{prop.CSharpType}>());");
+                    }
+                }
+            }
+            cb.Pop();
+            cb.WriteLine("}");
+            cb.WriteLine();
+            cb.WriteLine($"protected override {ImmutableArrayType}<{ModelPropertyType}> MDeclaredProperties => {metaClass.Name}.MDeclaredProperties;");
+            cb.WriteLine($"protected override {ImmutableArrayType}<{ModelPropertyType}> MAllDeclaredProperties => {metaClass.Name}.MAllDeclaredProperties;");
+            cb.WriteLine($"protected override {ImmutableArrayType}<{ModelPropertyType}> MPublicProperties => {metaClass.Name}.MPublicProperties;");
+            cb.WriteLine();
+            foreach (var prop in metaClass.PublicProperties)
+            {
+                cb.WriteLine($"public {prop.CSharpType} {prop.Name}");
                 cb.WriteLine("{");
                 cb.Push();
-                cb.WriteLine("");
+                cb.WriteLine($"get => MGet<{prop.CSharpType}>({prop.QualifiedPropertyName});");
+                if (!prop.Flags.HasFlag(ModelPropertyFlags.Readonly) && !prop.Flags.HasFlag(ModelPropertyFlags.Collection))
+                {
+                    cb.WriteLine($"set => MSet<{prop.CSharpType}>({prop.QualifiedPropertyName}, value);");
+                }
                 cb.Pop();
                 cb.WriteLine("}");
-                cb.WriteLine("Wife? Husband.Wife { get => (Wife?)((IModelObject)this).MGet(Husband.MProperty_Wife); set => ((IModelObject)this).MSet(Husband.MProperty_Wife, value); }");
+            }
+            foreach (var prop in metaClass.AllDeclaredProperties)
+            {
+                cb.WriteLine($"{prop.CSharpType} {prop.MetaClass.Name}.{prop.Name}");
+                cb.WriteLine("{");
+                cb.Push();
+                cb.WriteLine($"get => MGet<{prop.CSharpType}>({prop.QualifiedPropertyName});");
+                if (!prop.Flags.HasFlag(ModelPropertyFlags.Readonly) && !prop.Flags.HasFlag(ModelPropertyFlags.Collection))
+                {
+                    cb.WriteLine($"set => MSet<{prop.CSharpType}>({prop.QualifiedPropertyName}, value);");
+                }
+                cb.Pop();
+                cb.WriteLine("}");
             }
             cb.Pop();
             cb.WriteLine("}");

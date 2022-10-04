@@ -57,6 +57,10 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
         public MetaClass MetaClass => _metaClass;
         public IPropertySymbol PropertySymbol => _propertySymbol;
         public string Name => _propertySymbol.Name;
+        public string PropertyName => $"MProperty_{_metaClass.Name}_{_propertySymbol.Name}";
+        public string QualifiedPropertyName => $"{_metaClass.Name}.MProperty_{_metaClass.Name}_{_propertySymbol.Name}";
+        public string FullyQualifiedPropertyName => $"global::{MetaModel.NamespaceName}.{_metaClass.Name}.MProperty_{_metaClass.Name}_{_propertySymbol.Name}";
+        public string CSharpType => _propertySymbol.Type.ToDisplayString();
 
         public ModelPropertyFlags Flags
         {
@@ -67,12 +71,12 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
             }
         }
 
-        public ITypeSymbol? Type
+        public ITypeSymbol Type
         {
             get
             {
                 if (_type == null) ComputeType();
-                return _type;
+                return _type!;
             }
         }
 
@@ -87,11 +91,15 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
                 {
                     _type = _propertySymbol.Type;
                     _flags |= flags;
+                    if (_propertySymbol.IsReadOnly) _flags |= ModelPropertyFlags.Readonly;
                 }
-                else if (propType.IsGenericType && propType.TypeArguments.Length == 1)
+                else if (propType.IsGenericType && propType.TypeArguments.Length == 1 && propType.TypeArguments[0] is INamedTypeSymbol innerType)
                 {
-                    var innerType = propType.TypeArguments[0] as INamedTypeSymbol;
-                    var innerFlags = UpdateFlagsWithType(ModelPropertyFlags.None, propType);
+                    var innerFlags = UpdateFlagsWithType(ModelPropertyFlags.None, innerType);
+                    if (!_propertySymbol.IsReadOnly)
+                    {
+                        // TODO: error, must not have setter
+                    }
                     if (innerFlags.HasFlag(ModelPropertyFlags.BuiltInType) || innerFlags.HasFlag(ModelPropertyFlags.MetaClassType))
                     {
                         var fullTypeName = propType.ConstructedFrom.ToDisplayString();
@@ -127,7 +135,7 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
                 if (!_flags.HasFlag(ModelPropertyFlags.Untracked))
                 {
                     _flags |= ModelPropertyFlags.Untracked;
-                    // TODO: error
+                    // TODO: error, must be untracked or primitive or meta class or collection
                 }
             }
         }

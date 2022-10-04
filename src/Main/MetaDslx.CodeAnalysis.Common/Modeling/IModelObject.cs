@@ -8,7 +8,11 @@ namespace MetaDslx.Modeling
     public interface IModelObject
     {
         IModel? MModel { get; }
-        ImmutableArray<ModelProperty> MProperties { get; }
+        ImmutableArray<ModelProperty> MDeclaredProperties { get; }
+        ImmutableArray<ModelProperty> MAllDeclaredProperties { get; }
+        ImmutableArray<ModelProperty> MPublicProperties { get; }
+        IEnumerable<ModelProperty> MProperties { get; }
+        IEnumerable<ModelProperty> MAttachedProperties { get; }
         IModelObject? MParent { get; }
         IList<IModelObject> MChildren { get; }
         void MSetModel(IModel? model);

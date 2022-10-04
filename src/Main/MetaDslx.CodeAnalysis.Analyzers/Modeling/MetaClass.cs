@@ -16,8 +16,8 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
         private bool _isAbstract;
         private ImmutableArray<MetaClass> _baseTypes;
         private ImmutableArray<MetaProperty> _declaredProperties;
+        private ImmutableArray<MetaProperty> _allDeclaredProperties;
         private ImmutableArray<MetaProperty> _publicProperties;
-        private ImmutableArray<MetaProperty> _allProperties;
 
         public MetaClass(MetaModel metaModel, INamedTypeSymbol classInterface)
         {
@@ -81,21 +81,21 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
             }
         }
 
+        public ImmutableArray<MetaProperty> AllDeclaredProperties
+        {
+            get
+            {
+                if (_allDeclaredProperties.IsDefault) ComputeAllProperties();
+                return _allDeclaredProperties;
+            }
+        }
+
         public ImmutableArray<MetaProperty> PublicProperties
         {
             get
             {
                 if (_publicProperties.IsDefault) ComputeAllProperties();
                 return _publicProperties;
-            }
-        }
-
-        public ImmutableArray<MetaProperty> AllProperties
-        {
-            get
-            {
-                if (_allProperties.IsDefault) ComputeAllProperties();
-                return _allProperties;
             }
         }
 
@@ -117,8 +117,9 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
 
         private void ComputeAllProperties()
         {
-            var allProperties = ArrayBuilder<MetaProperty>.GetInstance();
+            var allDeclaredProperties = ArrayBuilder<MetaProperty>.GetInstance();
             var publicProperties = ArrayBuilder<MetaProperty>.GetInstance();
+            allDeclaredProperties.AddRange(DeclaredProperties);
             publicProperties.AddRange(DeclaredProperties);
             foreach (var baseType in _classInterface.AllInterfaces)
             {
@@ -127,7 +128,7 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
                 {
                     foreach (var prop in baseMetaClass.DeclaredProperties)
                     {
-                        allProperties.Add(prop);
+                        allDeclaredProperties.Add(prop);
                         if (!publicProperties.Any(p => p.Name == prop.Name))
                         {
                             publicProperties.Add(prop);
@@ -135,7 +136,7 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
                     }
                 }
             }
-            ImmutableInterlocked.InterlockedExchange(ref _allProperties, allProperties.ToImmutableAndFree());
+            ImmutableInterlocked.InterlockedExchange(ref _allDeclaredProperties, allDeclaredProperties.ToImmutableAndFree());
             ImmutableInterlocked.InterlockedExchange(ref _publicProperties, publicProperties.ToImmutableAndFree());
         }
     }
