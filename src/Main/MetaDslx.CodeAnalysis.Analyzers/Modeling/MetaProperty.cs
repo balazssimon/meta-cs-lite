@@ -1,7 +1,9 @@
-﻿using MetaDslx.Modeling;
+﻿using MetaDslx.CodeAnalysis.PooledObjects;
+using MetaDslx.Modeling;
 using Microsoft.CodeAnalysis;
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -14,6 +16,7 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
         private IPropertySymbol _propertySymbol;
         private ModelPropertyFlags _flags;
         private ITypeSymbol? _type;
+        private ImmutableArray<MetaProperty> _oppositeProperties;
 
         public MetaProperty(MetaClass metaClass, IPropertySymbol propertySymbol)
         {
@@ -192,6 +195,38 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
             return false;
         }
 
-
+        public ImmutableArray<MetaProperty> OppositeProperties
+        {
+            get
+            {
+                if (_oppositeProperties.IsDefault)
+                {
+                    var oppositeProperties = ArrayBuilder<MetaProperty>.GetInstance();
+                    foreach (var attr in _propertySymbol.GetAttributes())
+                    {
+                        if (attr.AttributeClass?.ToDisplayString() == "MetaDslx.Modeling.OppositeAttribute")
+                        {
+                            var oppositeType = attr.ConstructorArguments[0].Value as INamedTypeSymbol;
+                            var oppositePropertyName = attr.ConstructorArguments[1].Value as string;
+                            if (oppositeType != null && oppositePropertyName != null)
+                            {
+                                var oppositeClass = MetaModel.GetMetaClass(oppositeType);
+                                if (oppositeClass != null)
+                                {
+                                    var oppositeProperty = oppositeClass.DeclaredProperties.FirstOrDefault(p => p.Name == oppositePropertyName);
+                                    if (oppositeProperty != null)
+                                    {
+                                        oppositeProperties.Add(oppositeProperty);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    ImmutableInterlocked.InterlockedExchange(ref _oppositeProperties, oppositeProperties.ToImmutableAndFree());
+                    
+                }
+                return _oppositeProperties;
+            }
+        }
     }
 }

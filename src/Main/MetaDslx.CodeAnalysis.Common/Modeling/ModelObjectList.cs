@@ -45,7 +45,9 @@ namespace MetaDslx.Modeling
 
         public int Count => _items.Count;
 
-        public bool IsReadOnly => false;
+        public bool IsReadOnly => _property.IsReadonly;
+
+        int IModelCollection.MCount => Count;
 
         public void Add(T item)
         {
@@ -142,6 +144,12 @@ namespace MetaDslx.Modeling
             }
             sb.Append(']');
             return psb.ToStringAndFree();
+        }
+
+        bool IModelCollection.MContains(object? item)
+        {
+            if (item is T titem) return Contains(titem);
+            else return false;
         }
     }
 }

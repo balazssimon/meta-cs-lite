@@ -8,5 +8,7 @@ namespace MetaDslx.Modeling
     {
         void MAdd(object? item);
         void MRemove(object? item);
+        bool MContains(object? item);
+        int MCount { get; }
     }
 }

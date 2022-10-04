@@ -19,7 +19,10 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
         private const string ModelFactoryType = "global::MetaDslx.Modeling.ModelFactory";
         private const string ModelPropertyType = "global::MetaDslx.Modeling.ModelProperty";
         private const string ModelPropertyFlagsType = "global::MetaDslx.Modeling.ModelPropertyFlags";
+        private const string ModelPropertyInfoType = "global::MetaDslx.Modeling.ModelPropertyInfo";
         private const string ModelObjectListType = "global::MetaDslx.Modeling.ModelObjectList";
+        private const string ListType = "global::System.Collections.Generic.List";
+        private const string DictionaryType = "global::System.Collections.Generic.Dictionary";
         private const string ImmutableArrayType = "global::System.Collections.Immutable.ImmutableArray";
 
         public static string Generate(ImmutableArray<MetaModel> metaModels)
@@ -90,6 +93,12 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
             cb.WriteLine($"public partial interface {metaClass.Name}");
             cb.WriteLine("{");
             cb.Push();
+            foreach (var prop in metaClass.DeclaredProperties)
+            {
+                cb.Write($"public static readonly {ModelPropertyType} {prop.PropertyName} = new {ModelPropertyType}(typeof({metaClass.Name}), nameof({prop.Name}), typeof({prop.Type?.ToDisplayString(NullableFlowState.None)}), ");
+                GenerateModelPropertyFlags(cb, prop.Flags);
+                cb.WriteLine(");");
+            }
             var newKeyword = metaClass.IsRoot ? "" : "new ";
             cb.Write($"public static {newKeyword}readonly {ImmutableArrayType}<{ModelPropertyType}> MDeclaredProperties = ");
             GeneratePropertyArray(cb, metaClass.DeclaredProperties);
@@ -100,12 +109,6 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
             cb.Write($"public static {newKeyword}readonly {ImmutableArrayType}<{ModelPropertyType}> MPublicProperties = ");
             GeneratePropertyArray(cb, metaClass.PublicProperties);
             cb.WriteLine(";");
-            foreach (var prop in metaClass.DeclaredProperties)
-            {
-                cb.Write($"public static readonly {ModelPropertyType} {prop.PropertyName} = new {ModelPropertyType}(typeof({metaClass.Name}), nameof({prop.Name}), typeof({prop.Type?.ToDisplayString(NullableFlowState.None)}), ");
-                GenerateModelPropertyFlags(cb, prop.Flags);
-                cb.WriteLine(");");
-            }
             cb.Pop();
             cb.WriteLine("}");
         }
@@ -152,6 +155,24 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
             cb.WriteLine($"internal partial class {metaClass.ImplName} : global::MetaDslx.Modeling.ModelObject, {metaClass.Name}");
             cb.WriteLine("{");
             cb.Push();
+            cb.WriteLine("[global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)]");
+            cb.WriteLine($"private static readonly {DictionaryType}<{ModelPropertyType}, {ModelPropertyInfoType}> s_PropertyInfo =");
+            cb.Push();
+            cb.WriteLine($"new {DictionaryType}<{ModelPropertyType}, {ModelPropertyInfoType}>()");
+            cb.Push();
+            cb.WriteLine("{");
+            cb.Push();
+            foreach (var prop in metaClass.AllDeclaredProperties.Where(p => p.Flags.HasFlag(ModelPropertyFlags.MetaClassType)))
+            {
+                cb.Write($"[{prop.QualifiedPropertyName}] = new {ModelPropertyInfoType}(oppositeProperties: ");
+                GeneratePropertyArray(cb, prop.OppositeProperties);
+                cb.WriteLine("),");
+            }
+            cb.Pop();
+            cb.WriteLine("};");
+            cb.Pop();
+            cb.Pop();
+            cb.WriteLine();
             cb.WriteLine($"internal {metaClass.ImplName}()");
             cb.WriteLine("{");
             cb.Push();
@@ -167,7 +188,7 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
                     }
                     else
                     {
-                        cb.WriteLine($"(({IModelObjectType})this).MInit({prop.QualifiedPropertyName}, new global::System.Collections.Generic.List<{prop.CSharpType}>());");
+                        cb.WriteLine($"(({IModelObjectType})this).MInit({prop.QualifiedPropertyName}, new {ListType}<{prop.CSharpType}>());");
                     }
                 }
                 if (prop.Flags.HasFlag(ModelPropertyFlags.Name) && nameProperty == null)
@@ -192,6 +213,8 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
             cb.WriteLine($"protected override {ModelPropertyType}? MNameProperty => {nameProperty?.QualifiedPropertyName ?? "null"};");
             cb.WriteLine("[global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)]");
             cb.WriteLine($"protected override {ModelPropertyType}? MTypeProperty => {typeProperty?.QualifiedPropertyName ?? "null"};");
+            cb.WriteLine("[global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)]");
+            cb.WriteLine($"protected override {DictionaryType}<{ModelPropertyType}, {ModelPropertyInfoType}> MModelPropertyInfos => s_PropertyInfo;");
             cb.WriteLine();
             foreach (var prop in metaClass.PublicProperties)
             {

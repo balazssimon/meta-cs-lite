@@ -14,25 +14,15 @@ namespace MetaDslx.Modeling
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private static readonly ModelProperty MChildrenProperty = new ModelProperty(typeof(ModelObject), "MChildren", typeof(IModelObject), ModelPropertyFlags.ReferenceType | ModelPropertyFlags.MetaClassType | ModelPropertyFlags.Collection | ModelPropertyFlags.Containment);
 
-        static ModelObject()
-        {
-            MParentProperty.SetOppositeProperties(ImmutableArray.Create(MChildrenProperty));
-            MChildrenProperty.SetOppositeProperties(ImmutableArray.Create(MParentProperty));
-        }
-
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private IModel? _model;
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private IModelObject? _parent;
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private ModelObjectList<IModelObject> _children;
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Dictionary<ModelProperty, object?> _properties;
 
         public ModelObject()
         {
             _properties = new Dictionary<ModelProperty, object?>();
-            _children = new ModelObjectList<IModelObject>(this, MChildrenProperty);
+            ((IModelObject)this).MInit(MChildrenProperty, new ModelObjectList<IModelObject>(this, MChildrenProperty));
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -45,13 +35,12 @@ namespace MetaDslx.Modeling
         protected abstract ModelProperty? MNameProperty { get; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         protected abstract ModelProperty? MTypeProperty { get; }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        protected abstract Dictionary<ModelProperty, ModelPropertyInfo> MModelPropertyInfos { get; }
 
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IModelObject? IModelObject.MParent => _parent;
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IList<IModelObject> IModelObject.MChildren => _children;
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IModel? IModelObject.MModel => _model;
+        public IModelObject? MParent => MGet<IModelObject>(MParentProperty);
+        public IList<IModelObject> MChildren => MGet<IList<IModelObject>>(MChildrenProperty);
+        public IModel? MModel => _model;
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         ImmutableArray<ModelProperty> IModelObject.MDeclaredProperties => this.MDeclaredProperties;
@@ -171,14 +160,84 @@ namespace MetaDslx.Modeling
             }
         }
 
-        internal void ValueAdded(ModelProperty property, object? value)
+        internal void ValueAdded(ModelProperty property, object value)
         {
-
+            if (property.Flags.HasFlag(ModelPropertyFlags.Untracked)) return;
+            if (property.Flags.HasFlag(ModelPropertyFlags.MetaClassType) && value is IModelObject mobj)
+            {
+                var mthis = (IModelObject)this;
+                if (object.ReferenceEquals(property, MParentProperty))
+                {
+                    mobj.MAdd(MChildrenProperty, this);
+                }
+                else if (object.ReferenceEquals(property, MChildrenProperty))
+                {
+                    var mobjParent = mobj.MGet(MParentProperty);
+                    if (mobjParent == null) mobj.MSet(MParentProperty, this);
+                    else if (!object.ReferenceEquals(mobjParent, this))
+                    {
+                        throw new InvalidOperationException($"The object '{mobj}' is already contained by '{mobjParent}', cannot set its container to '{this}'. Set the parent to 'null' first.");
+                    }
+                }
+                else if (property.Flags.HasFlag(ModelPropertyFlags.Containment))
+                {
+                    mthis.MAdd(MChildrenProperty, mobj);
+                }
+                foreach (var oppositeProperty in GetOppositeProperties(property))
+                {
+                    if (oppositeProperty.Flags.HasFlag(ModelPropertyFlags.Collection)) mobj.MAdd(oppositeProperty, this);
+                    else mobj.MSet(oppositeProperty, this);
+                }
+            }
         }
 
         internal void ValueRemoved(ModelProperty property, object? value)
         {
-
+            if (property.Flags.HasFlag(ModelPropertyFlags.Untracked)) return;
+            if (property.Flags.HasFlag(ModelPropertyFlags.MetaClassType) && value is IModelObject mobj)
+            {
+                var mthis = (IModelObject)this;
+                if (object.ReferenceEquals(property, MParentProperty))
+                {
+                    mobj.MRemove(MChildrenProperty, this);
+                }
+                else if (object.ReferenceEquals(property, MChildrenProperty))
+                {
+                    mobj.MSet(MParentProperty, null);
+                }
+                else if (property.Flags.HasFlag(ModelPropertyFlags.Containment))
+                {
+                    var stillContained = false;
+                    foreach (var prop in MAllDeclaredProperties)
+                    {
+                        if (prop.Flags.HasFlag(ModelPropertyFlags.Containment))
+                        {
+                            if (prop.Flags.HasFlag(ModelPropertyFlags.Collection))
+                            {
+                                var collection = mthis.MGet(prop) as IModelCollection;
+                                if (collection != null)
+                                {
+                                    stillContained |= collection.MContains(mobj);
+                                }
+                            }
+                            else
+                            {
+                                stillContained |= object.ReferenceEquals(mthis.MGet(prop), mobj);
+                            }
+                        }
+                        if (stillContained) break;
+                    }
+                    if (!stillContained)
+                    {
+                        mthis.MRemove(MChildrenProperty, mobj);
+                    }
+                }
+                foreach (var oppositeProperty in GetOppositeProperties(property))
+                {
+                    if (oppositeProperty.Flags.HasFlag(ModelPropertyFlags.Collection)) mobj.MRemove(oppositeProperty, this);
+                    else mobj.MSet(oppositeProperty, null);
+                }
+            }
         }
 
         void IModelObject.MSetModel(IModel? model)
@@ -207,6 +266,12 @@ namespace MetaDslx.Modeling
             else if (!string.IsNullOrWhiteSpace(name)) return $"{name}";
             else if (!string.IsNullOrWhiteSpace(type)) return $":{type}";
             else return $"({metaTypeName})";
+        }
+
+        private ImmutableArray<ModelProperty> GetOppositeProperties(ModelProperty property)
+        {
+            if (MModelPropertyInfos.TryGetValue(property, out var info)) return info.OppositeProperties;
+            else return ImmutableArray<ModelProperty>.Empty;
         }
     }
 }
