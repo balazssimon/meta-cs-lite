@@ -45,7 +45,7 @@ namespace MetaDslx.Modeling
 
         public void Add(T item)
         {
-            if (!_property.IsUnique || !_items.Contains(item))
+            if (_property.IsNonUnique || !_items.Contains(item))
             {
                 _items.Add(item);
                 _owner.ValueAdded(_property, item);
@@ -79,7 +79,7 @@ namespace MetaDslx.Modeling
 
         public void Insert(int index, T item)
         {
-            if (!_property.IsUnique || !_items.Contains(item))
+            if (!_property.IsNonUnique || !_items.Contains(item))
             {
                 _items.Insert(index, item);
                 _owner.ValueAdded(_property, item);
@@ -90,7 +90,7 @@ namespace MetaDslx.Modeling
         {
             if (_items.Remove(item))
             {
-                if (_property.IsUnique || !_items.Contains(item))
+                if (_property.IsNonUnique || !_items.Contains(item))
                 {
                     _owner.ValueRemoved(_property, item);
                 }
@@ -103,7 +103,7 @@ namespace MetaDslx.Modeling
         {
             var oldItem = _items[index];
             _items.RemoveAt(index);
-            if (_property.IsUnique || !_items.Contains(oldItem))
+            if (_property.IsNonUnique || !_items.Contains(oldItem))
             {
                 _owner.ValueRemoved(_property, oldItem);
             }

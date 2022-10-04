@@ -16,7 +16,37 @@ namespace MetaDslx.Modeling
     }
 
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
-    public class ContainsAttribute : Attribute
+    public class UntrackedAttribute : Attribute
+    {
+    }
+
+    [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
+    public class NonUniqueAttribute : Attribute
+    {
+    }
+
+    [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
+    public class UnorderedAttribute : Attribute
+    {
+    }
+
+    [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
+    public class ContainmentAttribute : Attribute
+    {
+    }
+
+    [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
+    public class ReadonlyAttribute : Attribute
+    {
+    }
+
+    [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
+    public class DerivedAttribute : Attribute
+    {
+    }
+
+    [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
+    public class DerivedUnionAttribute : Attribute
     {
     }
 
@@ -24,6 +54,32 @@ namespace MetaDslx.Modeling
     public class OppositeAttribute : Attribute
     {
         public OppositeAttribute(Type type, string property)
+        {
+            Type = type;
+            Property = property;
+        }
+
+        public Type Type { get; }
+        public string Property { get; }
+    }
+
+    [AttributeUsage(AttributeTargets.Property, AllowMultiple = true, Inherited = false)]
+    public class RedefinesAttribute : Attribute
+    {
+        public RedefinesAttribute(Type type, string property)
+        {
+            Type = type;
+            Property = property;
+        }
+
+        public Type Type { get; }
+        public string Property { get; }
+    }
+
+    [AttributeUsage(AttributeTargets.Property, AllowMultiple = true, Inherited = false)]
+    public class SubsetsAttribute : Attribute
+    {
+        public SubsetsAttribute(Type type, string property)
         {
             Type = type;
             Property = property;

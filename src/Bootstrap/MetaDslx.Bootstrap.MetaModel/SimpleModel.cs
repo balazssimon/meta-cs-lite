@@ -39,7 +39,7 @@ namespace MetaDslx.Bootstrap.MetaModel
 
     public partial interface Composite : Node
     {
-        [Contains]
+        [Containment]
         [Opposite(typeof(Node), "Parent")]
         IList<Node> Children { get; }
     }

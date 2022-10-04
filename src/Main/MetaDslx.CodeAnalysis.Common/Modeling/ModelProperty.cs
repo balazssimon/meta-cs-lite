@@ -9,27 +9,25 @@ namespace MetaDslx.Modeling
     {
         private Type _declaringType;
         private string _name;
-        private ModelPropertyKind _kind;
         private Type _type;
-        private bool _isContainment;
+        private ModelPropertyFlags _flags;
         private ImmutableArray<ModelProperty> _oppositeProperties;
 
-        public ModelProperty(Type declaringType, string name, ModelPropertyKind kind, Type type, bool isContainment)
+        public ModelProperty(Type declaringType, string name, Type type, ModelPropertyFlags flags)
         {
             _declaringType = declaringType;
             _name = name;
-            _kind = kind;
             _type = type;
-            _isContainment = isContainment;
+            _flags = flags;
         }
 
         public Type DeclaringType => _declaringType;
         public string Name => _name;
-        public ModelPropertyKind Kind => _kind;
+        public ModelPropertyFlags Flags => _flags;
         public Type Type => _type;
-        public bool IsContainment => _isContainment;
-        public bool IsUnique => _kind == ModelPropertyKind.SingleValue || _kind == ModelPropertyKind.List || _kind == ModelPropertyKind.Set;
-        public bool IsCollection => _kind != ModelPropertyKind.SingleValue;
+        public bool IsContainment => _flags.HasFlag(ModelPropertyFlags.Containment);
+        public bool IsNonUnique => _flags.HasFlag(ModelPropertyFlags.NonUnique);
+        public bool IsCollection => _flags.HasFlag(ModelPropertyFlags.Collection);
         public ImmutableArray<ModelProperty> OpositeProperties => _oppositeProperties;
 
         internal void SetOppositeProperties(ImmutableArray<ModelProperty> oppositeProperties)

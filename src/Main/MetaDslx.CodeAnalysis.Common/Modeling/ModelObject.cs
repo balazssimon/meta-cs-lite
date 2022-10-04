@@ -7,8 +7,8 @@ namespace MetaDslx.Modeling
 {
     public abstract class ModelObject : IModelObject
     {
-        private static readonly ModelProperty MParentProperty = new ModelProperty(typeof(ModelObject), "MParent", ModelPropertyKind.SingleValue, typeof(IModelObject), false);
-        private static readonly ModelProperty MChildrenProperty = new ModelProperty(typeof(ModelObject), "MChildren", ModelPropertyKind.List, typeof(IModelObject), true);
+        private static readonly ModelProperty MParentProperty = new ModelProperty(typeof(ModelObject), "MParent", typeof(IModelObject), ModelPropertyFlags.NullableType | ModelPropertyFlags.ReferenceType | ModelPropertyFlags.MetaClassType);
+        private static readonly ModelProperty MChildrenProperty = new ModelProperty(typeof(ModelObject), "MChildren", typeof(IModelObject), ModelPropertyFlags.ReferenceType | ModelPropertyFlags.MetaClassType | ModelPropertyFlags.Collection | ModelPropertyFlags.Containment);
 
         static ModelObject()
         {

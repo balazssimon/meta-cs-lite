@@ -17,8 +17,6 @@ namespace MetaDslx.CodeAnalysis.Analyzers
     [Generator]
     public class MetaModelGenerator : IIncrementalGenerator
     {
-        private const string MetaModelAttributeName = "MetaDslx.Modeling.MetaModelAttribute";
-        private const string MetaClassAttributeName = "MetaDslx.Modeling.MetaClassAttribute";
         private static readonly DiagnosticDescriptor MultipleMetaModelsInNamespace =
             new DiagnosticDescriptor("MM0001", "Multiple metamodels", "There is already another metamodel '{0}' defined in the namespace '{1}' of '{2}'", "Generator", DiagnosticSeverity.Error, true);
         private static readonly DiagnosticDescriptor MetaModelAndClassAttributesMixed =
@@ -45,8 +43,8 @@ namespace MetaDslx.CodeAnalysis.Analyzers
             var interfaceDeclarationSyntax = (InterfaceDeclarationSyntax)context.Node;
             var intf = (INamedTypeSymbol?)context.SemanticModel.GetDeclaredSymbol(interfaceDeclarationSyntax);
             if (intf == null) return null;
-            if (HasAttribute(intf, MetaModelAttributeName, false)) return interfaceDeclarationSyntax;
-            if (HasAttribute(intf, MetaClassAttributeName, true)) return interfaceDeclarationSyntax;
+            if (HasAttribute(intf, MetaModel.MetaModelAttributeName, false)) return interfaceDeclarationSyntax;
+            if (HasAttribute(intf, MetaClass.MetaClassAttributeName, true)) return interfaceDeclarationSyntax;
             return null;
         }
 
@@ -90,7 +88,7 @@ namespace MetaDslx.CodeAnalysis.Analyzers
                             modelNs = new ModelNamespace() { Namespace = ns };
                             models.Add(nsName, modelNs);
                         }
-                        if (HasAttribute(intf, MetaModelAttributeName, false))
+                        if (HasAttribute(intf, MetaModel.MetaModelAttributeName, false))
                         {
                             if (modelNs.Model != null && modelNs.Model.Name != intf.Name)
                             {
@@ -100,12 +98,12 @@ namespace MetaDslx.CodeAnalysis.Analyzers
                             {
                                 modelNs.Model = intf;
                             }
-                            if (HasAttribute(intf, MetaClassAttributeName, true))
+                            if (HasAttribute(intf, MetaClass.MetaClassAttributeName, true))
                             {
                                 context.ReportDiagnostic(Diagnostic.Create(MetaModelAndClassAttributesMixed, intf.Locations.FirstOrDefault()));
                             }
                         }
-                        else if (HasAttribute(intf, MetaClassAttributeName, true))
+                        else if (HasAttribute(intf, MetaClass.MetaClassAttributeName, true))
                         {
                             if (modelNs.Classes == null)
                             {
@@ -122,7 +120,7 @@ namespace MetaDslx.CodeAnalysis.Analyzers
                 var modelNs = models[nsName];
                 if (modelNs.Model != null)
                 {
-                    var metaModel = new MetaModel(modelNs.Model, modelNs.Classes?.ToImmutable() ?? ImmutableArray<INamedTypeSymbol>.Empty);
+                    var metaModel = new MetaModel(context, modelNs.Model, modelNs.Classes?.ToImmutable() ?? ImmutableArray<INamedTypeSymbol>.Empty);
                     metaModels.Add(metaModel);
                 }
                 else if (modelNs.Classes != null && modelNs.Classes.Count > 0)
