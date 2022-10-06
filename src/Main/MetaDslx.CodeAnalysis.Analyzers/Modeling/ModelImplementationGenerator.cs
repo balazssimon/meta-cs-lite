@@ -323,7 +323,7 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
                 cb.WriteLine("{");
                 cb.Push();
                 cb.WriteLine($"get => MGet<{prop.CSharpType}>({prop.QualifiedPropertyName});");
-                if (!prop.Flags.HasFlag(ModelPropertyFlags.Readonly) && !prop.Flags.HasFlag(ModelPropertyFlags.Collection))
+                if (!prop.Flags.HasFlag(ModelPropertyFlags.ReadOnly) && !prop.Flags.HasFlag(ModelPropertyFlags.Collection))
                 {
                     cb.WriteLine($"set => MAdd<{prop.CSharpType}>({prop.QualifiedPropertyName}, value);");
                 }
@@ -337,7 +337,7 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
                 cb.WriteLine("{");
                 cb.Push();
                 cb.WriteLine($"get => MGet<{prop.CSharpType}>({prop.QualifiedPropertyName});");
-                if (!prop.Flags.HasFlag(ModelPropertyFlags.Readonly) && !prop.Flags.HasFlag(ModelPropertyFlags.Collection))
+                if (!prop.Flags.HasFlag(ModelPropertyFlags.ReadOnly) && !prop.Flags.HasFlag(ModelPropertyFlags.Collection))
                 {
                     cb.WriteLine($"set => MAdd<{prop.CSharpType}>({prop.QualifiedPropertyName}, value);");
                 }

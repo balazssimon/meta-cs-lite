@@ -8,7 +8,9 @@ namespace MetaDslx.Modeling
     {
         string Id { get; set; }
         string Name { get; set; }
-        IEnumerable<IModelObject> ModelObjects { get; }
+        bool IsReadOnly { get; set; }
+        IModelGroup ModelGroup { get; set; }
+        IEnumerable<IModelObject> Objects { get; }
         void AddObject(IModelObject modelObject);
         void RemoveObject(IModelObject modelObject);
     }

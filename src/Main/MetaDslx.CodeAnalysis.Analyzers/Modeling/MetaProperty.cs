@@ -46,7 +46,7 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
                 }
                 if (attr.AttributeClass?.ToDisplayString() == "MetaDslx.Modeling.ReadonlyAttribute")
                 {
-                    _flags |= ModelPropertyFlags.Readonly;
+                    _flags |= ModelPropertyFlags.ReadOnly;
                 }
                 if (attr.AttributeClass?.ToDisplayString() == "MetaDslx.Modeling.DerivedAttribute")
                 {
@@ -107,7 +107,7 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
                     _type = _propertySymbol.Type;
                     _flags |= flags;
                     _flags |= ModelPropertyFlags.SingleItem;
-                    if (_propertySymbol.IsReadOnly) _flags |= ModelPropertyFlags.Readonly;
+                    if (_propertySymbol.IsReadOnly) _flags |= ModelPropertyFlags.ReadOnly;
                 }
                 else if (propType.IsGenericType && propType.TypeArguments.Length == 1 && propType.TypeArguments[0] is INamedTypeSymbol innerType)
                 {

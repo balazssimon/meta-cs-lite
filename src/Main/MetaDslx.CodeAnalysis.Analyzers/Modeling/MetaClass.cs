@@ -260,7 +260,7 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
                         flag == ModelPropertyFlags.Containment ||
                         flag == ModelPropertyFlags.SingleItem ||
                         flag == ModelPropertyFlags.Collection ||
-                        flag == ModelPropertyFlags.Readonly ||
+                        flag == ModelPropertyFlags.ReadOnly ||
                         flag == ModelPropertyFlags.Derived ||
                         flag == ModelPropertyFlags.DerivedUnion)
                     {

@@ -19,7 +19,7 @@ namespace MetaDslx.Modeling
         Collection = 0x0100,
         Unordered = 0x0200,
         NonUnique = 0x0400,
-        Readonly = 0x0800,
+        ReadOnly = 0x0800,
         Derived = 0x1000,
         DerivedUnion = 0x2000,
         Name = 0x4000,

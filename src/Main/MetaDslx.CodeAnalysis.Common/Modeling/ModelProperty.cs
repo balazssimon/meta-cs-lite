@@ -27,7 +27,7 @@ namespace MetaDslx.Modeling
         public bool IsContainment => _flags.HasFlag(ModelPropertyFlags.Containment);
         public bool IsNonUnique => _flags.HasFlag(ModelPropertyFlags.NonUnique);
         public bool IsCollection => _flags.HasFlag(ModelPropertyFlags.Collection);
-        public bool IsReadonly => _flags.HasFlag(ModelPropertyFlags.Readonly);
+        public bool IsReadonly => _flags.HasFlag(ModelPropertyFlags.ReadOnly);
 
         public override string ToString()
         {

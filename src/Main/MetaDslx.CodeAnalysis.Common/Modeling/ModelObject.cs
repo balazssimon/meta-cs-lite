@@ -126,6 +126,7 @@ namespace MetaDslx.Modeling
         void IModelObject.Init(ModelProperty property, object? value)
         {
             //if (value != null && !property.Type.IsAssignableFrom(value.GetType())) throw new ArgumentException($"The type '{value.GetType()}' of '{value}' is not assignable to the type '{property.Type}' of '{property}'.");
+            CheckReadOnly();
             var slot = GetSlot(property);
             _properties[slot.SlotProperty] = value;
         }
@@ -181,10 +182,11 @@ namespace MetaDslx.Modeling
 
         void IModelObject.Add(ModelProperty property, object? item)
         {
+            CheckReadOnly();
             var slot = GetSlot(property);
             foreach (var slotProperty in slot.SlotProperties)
             {
-                if (slotProperty.Flags.HasFlag(ModelPropertyFlags.Readonly)) throw new ArgumentException($"The property '{slotProperty.Name}' is read only.");
+                if (slotProperty.Flags.HasFlag(ModelPropertyFlags.ReadOnly)) throw new ArgumentException($"The property '{slotProperty.Name}' is read only.");
                 if (slotProperty.Flags.HasFlag(ModelPropertyFlags.NullableType) && item == null) throw new ArgumentException($"Null value cannot be assigned to the property '{slotProperty.Name}'.");
                 if (item != null && !slotProperty.Type.IsAssignableFrom(item.GetType())) throw new ArgumentException($"'{item}' of type '{item.GetType()}' is not assignable to the property '{slotProperty.Name}' of type '{slotProperty.Type}'.");
             }
@@ -245,11 +247,12 @@ namespace MetaDslx.Modeling
 
         void IModelObject.Remove(ModelProperty property, object? item)
         {
+            CheckReadOnly();
             if (item == null) throw new ArgumentNullException(nameof(item));
             var slot = GetSlot(property);
             foreach (var slotProperty in slot.SlotProperties)
             {
-                if (slotProperty.Flags.HasFlag(ModelPropertyFlags.Readonly)) throw new ArgumentException($"The property '{slotProperty.Name}' is read only.");
+                if (slotProperty.Flags.HasFlag(ModelPropertyFlags.ReadOnly)) throw new ArgumentException($"The property '{slotProperty.Name}' is read only.");
                 if (slotProperty.Flags.HasFlag(ModelPropertyFlags.NullableType) && item == null) throw new ArgumentException($"Null value cannot be assigned to the property '{slotProperty.Name}'.");
                 if (item != null && !slotProperty.Type.IsAssignableFrom(item.GetType())) throw new ArgumentException($"'{item}' of type '{item.GetType()}' is not assignable to the property '{slotProperty.Name}' of type '{slotProperty.Type}'.");
             }
@@ -416,6 +419,11 @@ namespace MetaDslx.Modeling
         {
             if (MModelPropertyInfos.TryGetValue(property, out var info)) return info.RedefiningProperties;
             else return ImmutableArray<ModelProperty>.Empty;
+        }
+
+        private void CheckReadOnly()
+        {
+            if (((IModelObject)this).Model.IsReadOnly) throw new ModelException("The model is read only");
         }
     }
 }

@@ -40,7 +40,7 @@ namespace MetaDslx.Modeling
 
         public int Count => _items.Count;
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        public bool IsReadOnly => _slot.Flags.HasFlag(ModelPropertyFlags.Readonly);
+        public bool IsReadOnly => _slot.Flags.HasFlag(ModelPropertyFlags.ReadOnly);
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         public bool NonUnique => _slot.Flags.HasFlag(ModelPropertyFlags.NonUnique);
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
