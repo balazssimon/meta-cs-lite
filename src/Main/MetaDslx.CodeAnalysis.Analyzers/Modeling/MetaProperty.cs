@@ -16,12 +16,16 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
         private IPropertySymbol _propertySymbol;
         private ModelPropertyFlags _flags;
         private ITypeSymbol? _type;
+        private string _csharpType;
         private ImmutableArray<MetaProperty> _oppositeProperties;
+        private ImmutableArray<MetaProperty> _subsettedProperties;
+        private ImmutableArray<MetaProperty> _redefinedProperties;
 
         public MetaProperty(MetaClass metaClass, IPropertySymbol propertySymbol)
         {
             _metaClass = metaClass;
             _propertySymbol = propertySymbol;
+            _csharpType = _propertySymbol.Type.ToDisplayString();
             foreach (var attr in propertySymbol.GetAttributes())
             {
                 if (attr.AttributeClass?.ToDisplayString() == "MetaDslx.Modeling.UntrackedAttribute")
@@ -71,7 +75,7 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
         public string PropertyName => $"MProperty_{_metaClass.Name}_{_propertySymbol.Name}";
         public string QualifiedPropertyName => $"{_metaClass.Name}.MProperty_{_metaClass.Name}_{_propertySymbol.Name}";
         public string FullyQualifiedPropertyName => $"global::{MetaModel.NamespaceName}.{_metaClass.Name}.MProperty_{_metaClass.Name}_{_propertySymbol.Name}";
-        public string CSharpType => _propertySymbol.Type.ToDisplayString();
+        public string CSharpType => _csharpType;
 
         public ModelPropertyFlags Flags
         {
@@ -201,32 +205,90 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
             {
                 if (_oppositeProperties.IsDefault)
                 {
-                    var oppositeProperties = ArrayBuilder<MetaProperty>.GetInstance();
-                    foreach (var attr in _propertySymbol.GetAttributes())
-                    {
-                        if (attr.AttributeClass?.ToDisplayString() == "MetaDslx.Modeling.OppositeAttribute")
-                        {
-                            var oppositeType = attr.ConstructorArguments[0].Value as INamedTypeSymbol;
-                            var oppositePropertyName = attr.ConstructorArguments[1].Value as string;
-                            if (oppositeType != null && oppositePropertyName != null)
-                            {
-                                var oppositeClass = MetaModel.GetMetaClass(oppositeType);
-                                if (oppositeClass != null)
-                                {
-                                    var oppositeProperty = oppositeClass.DeclaredProperties.FirstOrDefault(p => p.Name == oppositePropertyName);
-                                    if (oppositeProperty != null)
-                                    {
-                                        oppositeProperties.Add(oppositeProperty);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    ImmutableInterlocked.InterlockedExchange(ref _oppositeProperties, oppositeProperties.ToImmutableAndFree());
-                    
+                    ImmutableInterlocked.InterlockedExchange(ref _oppositeProperties, CollectPropertiesFromAttribute("MetaDslx.Modeling.OppositeAttribute", allowSameProperty: true, onlySelfOrAncestors: false));
                 }
                 return _oppositeProperties;
             }
+        }
+
+        public ImmutableArray<MetaProperty> SubsettedProperties
+        {
+            get
+            {
+                if (_subsettedProperties.IsDefault)
+                {
+                    ImmutableInterlocked.InterlockedExchange(ref _subsettedProperties, CollectPropertiesFromAttribute("MetaDslx.Modeling.SubsetsAttribute", allowSameProperty: false, onlySelfOrAncestors: true));
+                }
+                return _subsettedProperties;
+            }
+        }
+
+        public ImmutableArray<MetaProperty> RedefinedProperties
+        {
+            get
+            {
+                if (_redefinedProperties.IsDefault)
+                {
+                    ImmutableInterlocked.InterlockedExchange(ref _redefinedProperties, CollectPropertiesFromAttribute("MetaDslx.Modeling.RedefinesAttribute", allowSameProperty: false, onlySelfOrAncestors: true));
+                }
+                return _redefinedProperties;
+            }
+        }
+
+        public ImmutableArray<MetaProperty> GetSubsettingProperties(MetaClass cls)
+        {
+            var result = ArrayBuilder<MetaProperty>.GetInstance();
+            foreach (var prop in cls.AllDeclaredProperties)
+            {
+                if (prop.SubsettedProperties.Contains(this)) result.Add(prop);
+            }
+            return result.ToImmutableAndFree();
+        }
+
+        public ImmutableArray<MetaProperty> GetRedefiningProperties(MetaClass cls)
+        {
+            var result = ArrayBuilder<MetaProperty>.GetInstance();
+            foreach (var prop in cls.AllDeclaredProperties)
+            {
+                if (prop.RedefinedProperties.Contains(this)) result.Add(prop);
+            }
+            return result.ToImmutableAndFree();
+        }
+
+        private ImmutableArray<MetaProperty> CollectPropertiesFromAttribute(string attributeName, bool allowSameProperty, bool onlySelfOrAncestors)
+        {
+            var result = ArrayBuilder<MetaProperty>.GetInstance();
+            foreach (var attr in _propertySymbol.GetAttributes())
+            {
+                if (attr.AttributeClass?.ToDisplayString() == attributeName)
+                {
+                    var referencedPropertyType = attr.ConstructorArguments[0].Value as INamedTypeSymbol;
+                    var referencedPropertyName = attr.ConstructorArguments[1].Value as string;
+                    if (referencedPropertyType != null && referencedPropertyName != null)
+                    {
+                        var referencedClass = MetaModel.GetMetaClass(referencedPropertyType);
+                        if (referencedClass != null)
+                        {
+                            if (onlySelfOrAncestors && !object.ReferenceEquals(referencedClass, this) && !MetaClass.BaseTypes.Contains(referencedClass))
+                            {
+                                // TODO: error
+                                continue;
+                            }
+                            var referencedProperty = referencedClass.DeclaredProperties.FirstOrDefault(p => p.Name == referencedPropertyName);
+                            if (referencedProperty != null)
+                            {
+                                if (!allowSameProperty && object.ReferenceEquals(referencedProperty, this))
+                                {
+                                    // TODO: error
+                                    continue;
+                                }
+                                result.Add(referencedProperty);
+                            }
+                        }
+                    }
+                }
+            }
+            return result.ToImmutableAndFree();
         }
     }
 }

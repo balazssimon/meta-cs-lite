@@ -301,11 +301,6 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
                 }
                 if (state.IsEnd)
                 {
-                    if (state.IsIndentWritten)
-                    {
-                        _osb.WriteLine("__cb.Pop();");
-                        state.IsIndentWritten = false;
-                    }
                     if (!state.IsEndWritten && state.BeginKeyword.Text != "template")
                     {
                         _osb.Pop();
@@ -324,10 +319,10 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
         private void ParseTemplateOutput(ref ParserState state)
         {
             var token = _tokens.CurrentToken;
+            var lineStart = _tokens.Character == 0;
             if (token.Kind == MetaGeneratorTokenKind.TemplateOutput)
             {
                 StartInputSpan();
-                var lineStart = _tokens.Character == 0;
                 EatToken();
                 var templateOutputSpan = EndInputSpan();
                 if (_currentTemplateInfo != null)
@@ -336,18 +331,13 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
                 }
                 if (lineStart && string.IsNullOrWhiteSpace(token.Text))
                 {
-                    state.Indent = token.EscapedTextForString;
-                    state.IsIndentWritten = false;
+                    _osb.Write("__cb.Push(\"");
+                    _osb.Write(token.EscapedTextForString);
+                    _osb.WriteLine("\");");
                 }
                 else
                 {
-                    if (!state.IsIndentWritten && state.Indent != null)
-                    {
-                        _osb.Write("__cb.Push(\"");
-                        _osb.Write(state.Indent);
-                        _osb.WriteLine("\");");
-                        state.IsIndentWritten = true;
-                    }
+                    if (lineStart) _osb.Write("__cb.Push(\"\");");
                     StartOutputSpan(_osb.Prefix.Length + 12);
                     _osb.Write("__cb.Write(\"");
                     _osb.Write(token.EscapedTextForString);
@@ -357,13 +347,8 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
             }
             else if (token.Kind == MetaGeneratorTokenKind.EndOfLine)
             {
-                if (state.IsIndentWritten)
-                {
-                    _osb.WriteLine("__cb.WriteLine();");
-                    _osb.WriteLine("__cb.Pop();");
-                    state.IsIndentWritten = false;
-                }
-                state.Indent = null;
+                _osb.WriteLine("__cb.AppendLine();");
+                _osb.WriteLine("__cb.Pop();");
                 EatToken();
             }
             else if (token.Kind == MetaGeneratorTokenKind.TemplateControlBegin)
@@ -405,13 +390,6 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
             }
             else if (stmt.Kind == ControlStatementKind.Expression)
             {
-                if (!state.IsIndentWritten && state.Indent != null)
-                {
-                    _osb.Write("__cb.Push(\"");
-                    _osb.Write(state.Indent);
-                    _osb.WriteLine("\");");
-                    state.IsIndentWritten = true;
-                }
                 StartInputSpan();
                 EatTokens(stmt.TokenCount);
                 EndInputSpan();
@@ -428,19 +406,14 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
                 EndInputSpan();
                 StartOutputSpan(_osb.Prefix.Length);
                 _osb.Write(_isb.ToString());
+                if (stmt.Kind == ControlStatementKind.Statement) _osb.Write(";");
                 EndOutputSpan();
-                if (stmt.Kind == ControlStatementKind.Statement) _osb.WriteLine(";");
-                else _osb.WriteLine();
+                _osb.WriteLine();
             }
             else if (stmt.Kind == ControlStatementKind.BeginStatement)
             {
                 if (MetaGeneratorLexer.BlockWithoutEndKeywords.Contains(stmt.Keyword.Text))
                 {
-                    if (state.IsIndentWritten)
-                    {
-                        _osb.WriteLine("__cb.Pop();");
-                        state.IsIndentWritten = false;
-                    }
                     _osb.Pop();
                     _osb.WriteLine("}");
                 }
@@ -461,12 +434,13 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
                 if (stmt.SeparatorTokenCount > 0)
                 {
                     _osb.WriteLine($"if ({first}) {first} = false;");
+                    EatTokens(stmt.SeparatorTokenSkip);
                     StartInputSpan();
                     EatTokens(stmt.SeparatorTokenCount);
                     EndInputSpan();
                     StartOutputSpan(_osb.Prefix.Length + 16);
                     _osb.Write($"else __cb.Write(");
-                    _osb.Write(_isb.Prefix.Length);
+                    _osb.Write(_isb.ToString());
                     _osb.WriteLine(");");
                     EndOutputSpan();
                 }
@@ -572,7 +546,7 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
                 token = _tokens.PeekToken(index++);
                 if (token.Kind == MetaGeneratorTokenKind.EndOfFile || token.Kind == MetaGeneratorTokenKind.TemplateControlEnd)
                 {
-                    if (collectSeparator) result.SeparatorTokenCount = index - 1;
+                    if (collectSeparator) result.SeparatorTokenCount = index - result.SeparatorTokenSkip - result.TokenCount - 1;
                     else result.TokenCount = index - 1;
                     return result;
                 }
@@ -583,7 +557,11 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
                         if (token.Text == "=")
                         {
                             var nextToken = _tokens.PeekToken(index);
-                            if (!(nextToken.Kind == MetaGeneratorTokenKind.Other && nextToken.Text == "="))
+                            if (nextToken.Kind == MetaGeneratorTokenKind.Other && nextToken.Text == "=")
+                            {
+                                ++index;
+                            }
+                            else
                             {
                                 if (result.Kind == ControlStatementKind.Expression) result.Kind = ControlStatementKind.Statement;
                             }
@@ -591,8 +569,8 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
                         if (token.Text == ";")
                         {
                             if (result.Kind == ControlStatementKind.Expression || result.Kind == ControlStatementKind.Statement) result.Kind = ControlStatementKind.StatementWithSemicolon;
-                            if (collectSeparator) result.SeparatorTokenCount = index - 1;
-                            else result.TokenCount = index - 1;
+                            if (collectSeparator) result.SeparatorTokenCount = index - result.SeparatorTokenSkip - result.TokenCount;
+                            else result.TokenCount = index;
                             return result;
                         }
                     }
@@ -609,6 +587,9 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
                                 if (separatorKeyword.Kind == MetaGeneratorTokenKind.Keyword && separatorKeyword.Text == "separator")
                                 {
                                     result.TokenCount = index;
+                                    SkipWs(ref separatorIndex);
+                                    index = separatorIndex - 1;
+                                    result.SeparatorTokenSkip = index - result.TokenCount;
                                     collectSeparator = true;
                                 }
                             }
@@ -620,7 +601,7 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
                     if (token.Text == "}") --bracesCounter;
                 }
             }
-            if (collectSeparator) result.SeparatorTokenCount = index - 1;
+            if (collectSeparator) result.SeparatorTokenCount = index - result.SeparatorTokenSkip - result.TokenCount - 1;
             else result.TokenCount = index - 1;
             return result;
         }
@@ -742,6 +723,7 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
             public ControlStatementKind Kind;
             public MetaGeneratorToken Keyword;
             public int TokenCount;
+            public int SeparatorTokenSkip;
             public int SeparatorTokenCount;
 
             public ControlStatement()
@@ -749,6 +731,7 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
                 Kind = ControlStatementKind.None;
                 Keyword = MetaGeneratorToken.None;
                 TokenCount = 0;
+                SeparatorTokenSkip = 0;
                 SeparatorTokenCount = 0;
             }
 
@@ -762,8 +745,6 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
         {
             public MetaGeneratorToken BeginKeyword;
             public MetaGeneratorToken BlockKeyword;
-            public string? Indent;
-            public bool IsIndentWritten;
             public bool IsEndWritten;
             public bool IsControl;
             public bool IsEnd;

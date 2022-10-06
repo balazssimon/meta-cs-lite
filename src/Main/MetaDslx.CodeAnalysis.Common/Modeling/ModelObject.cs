@@ -10,19 +10,18 @@ namespace MetaDslx.Modeling
     public abstract class ModelObject : IModelObject
     {
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private static readonly ModelProperty MParentProperty = new ModelProperty(typeof(ModelObject), "MParent", typeof(IModelObject), ModelPropertyFlags.NullableType | ModelPropertyFlags.ReferenceType | ModelPropertyFlags.MetaClassType);
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private static readonly ModelProperty MChildrenProperty = new ModelProperty(typeof(ModelObject), "MChildren", typeof(IModelObject), ModelPropertyFlags.ReferenceType | ModelPropertyFlags.MetaClassType | ModelPropertyFlags.Collection | ModelPropertyFlags.Containment);
-
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private IModel? _model;
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private IModelObject? _parent;
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private List<IModelObject> _children;
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Dictionary<ModelProperty, object?> _properties;
 
         public ModelObject()
         {
             _properties = new Dictionary<ModelProperty, object?>();
-            ((IModelObject)this).MInit(MChildrenProperty, new ModelObjectList<IModelObject>(this, MChildrenProperty));
+            _children = new List<IModelObject>();
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -38,8 +37,8 @@ namespace MetaDslx.Modeling
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         protected abstract Dictionary<ModelProperty, ModelPropertyInfo> MModelPropertyInfos { get; }
 
-        public IModelObject? MParent => MGet<IModelObject>(MParentProperty);
-        public IList<IModelObject> MChildren => MGet<IList<IModelObject>>(MChildrenProperty);
+        public IModelObject? MParent => _parent;
+        public IList<IModelObject> MChildren => _children;
         public IModel? MModel => _model;
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -83,12 +82,76 @@ namespace MetaDslx.Modeling
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         ModelProperty? IModelObject.MTypeProperty => MTypeProperty;
 
+        void IModelObject.MSetModel(IModel? model)
+        {
+            if (_model != null && model != null) throw new ArgumentException(nameof(model), $"Model object '{this}' is already contained by the model '{_model}.'");
+            _model = model;
+        }
+
+        void IModelObject.MInit(ModelProperty property, object? value)
+        {
+            //if (value != null && !property.Type.IsAssignableFrom(value.GetType())) throw new ArgumentException($"The type '{value.GetType()}' of '{value}' is not assignable to the type '{property.Type}' of '{property}'.");
+            var slot = GetSlot(property);
+            _properties[slot.SlotProperty] = value;
+        }
+
+        public T MGet<T>(ModelProperty property)
+        {
+            var value = ((IModelObject)this).MGet(property);
+            if (value == null) return default(T);
+            else return (T)value;
+        }
+
+        object? IModelObject.MGet(ModelProperty property)
+        {
+            var slot = GetSlot(property);
+            if (_properties.TryGetValue(slot.SlotProperty, out var value)) return value;
+            else return null;
+        }
+
+        public void MSet<T>(ModelProperty property, T value)
+        {
+            ((IModelObject)this).MSet(property, value);
+        }
+
+        void IModelObject.MSet(ModelProperty property, object? value)
+        {
+            if (property.IsReadonly) throw new ArgumentException($"Property '{property.Name}' is readonly, its value cannot be set.", nameof(property));
+            if (property.IsCollection) throw new ArgumentException($"Property '{property.Name}' is a collection, its value cannot be set.", nameof(property));
+            var slot = GetSlot(property);
+            if (value != null)
+            {
+                foreach (var slotProperty in slot.SlotProperties)
+                {
+                    if (!slotProperty.Type.IsAssignableFrom(value.GetType())) throw new ArgumentException($"The type '{value.GetType()}' of '{value}' is not assignable to the type '{slotProperty.Type}' of '{slotProperty}'.");
+                }
+            }
+            if (_properties.TryGetValue(slot.SlotProperty, out var oldValue))
+            {
+                if (oldValue == null && value == null) return;
+                if (oldValue != null && oldValue.Equals(value)) return;
+                _properties[slot.SlotProperty] = null;
+                if (oldValue != null) ValueRemoved(slot, oldValue);
+                _properties[slot.SlotProperty] = value;
+                if (value != null) ValueAdded(slot, value);
+            }
+            else
+            {
+                _properties[slot.SlotProperty] = value;
+                if (value != null) ValueAdded(slot, value);
+            }
+        }
+
         void IModelObject.MAdd(ModelProperty property, object? item)
         {
             if (!property.IsCollection) throw new ArgumentException($"Property '{property.Name}' must be a collection.", nameof(property));
             if (item == null) throw new ArgumentNullException(nameof(item));
-            if (!property.Type.IsAssignableFrom(item.GetType())) throw new ArgumentException($"The type '{item.GetType()}' of '{item}' is not assignable to the type '{property.Type}' of '{property}'.");
-            if (!_properties.TryGetValue(property, out var collection))
+            var slot = GetSlot(property);
+            foreach (var slotProperty in slot.SlotProperties)
+            {
+                if (!slotProperty.Type.IsAssignableFrom(item.GetType())) throw new ArgumentException($"The type '{item.GetType()}' of '{item}' is not assignable to the type '{slotProperty.Type}' of '{slotProperty}'.");
+            }
+            if (!_properties.TryGetValue(slot.SlotProperty, out var collection))
             {
                 throw new InvalidOperationException($"Collection property '{property.Name}' must be initialized in the constructor.");
             }
@@ -102,30 +165,16 @@ namespace MetaDslx.Modeling
             }
         }
 
-        public T MGet<T>(ModelProperty property)
-        {
-            var value = ((IModelObject)this).MGet(property);
-            if (value == null) return default(T);
-            else return (T)value;
-        }
-
-        public void MSet<T>(ModelProperty property, T value)
-        {
-            ((IModelObject)this).MSet(property, value);
-        }
-
-        object? IModelObject.MGet(ModelProperty property)
-        {
-            if (_properties.TryGetValue(property, out var value)) return value;
-            else return null;
-        }
-
         void IModelObject.MRemove(ModelProperty property, object? item)
         {
             if (!property.IsCollection) throw new ArgumentException($"Property '{property.Name}' must be a collection.", nameof(property));
             if (item == null) throw new ArgumentNullException(nameof(item));
-            if (!property.Type.IsAssignableFrom(item.GetType())) throw new ArgumentException($"The type '{item.GetType()}' of '{item}' is not assignable to the type '{property.Type}' of '{property}'.");
-            if (!_properties.TryGetValue(property, out var collection))
+            var slot = GetSlot(property);
+            foreach (var slotProperty in slot.SlotProperties)
+            {
+                if (!slotProperty.Type.IsAssignableFrom(item.GetType())) throw new ArgumentException($"The type '{item.GetType()}' of '{item}' is not assignable to the type '{slotProperty.Type}' of '{slotProperty}'.");
+            }
+            if (!_properties.TryGetValue(slot.SlotProperty, out var collection))
             {
                 throw new InvalidOperationException($"Collection property '{property.Name}' must be initialized in the constructor.");
             }
@@ -139,82 +188,57 @@ namespace MetaDslx.Modeling
             }
         }
 
-        void IModelObject.MSet(ModelProperty property, object? value)
+        internal void ValueAdded(ModelPropertySlot slot, object value)
         {
-            if (value != null && !property.Type.IsAssignableFrom(value.GetType())) throw new ArgumentException($"The type '{value.GetType()}' of '{value}' is not assignable to the type '{property.Type}' of '{property}'.");
-            if (property.IsReadonly) throw new ArgumentException($"Property '{property.Name}' is readonly, its value cannot be set.", nameof(property));
-            if (property.IsCollection) throw new ArgumentException($"Property '{property.Name}' is a collection, its value cannot be set.", nameof(property));
-            if (_properties.TryGetValue(property, out var oldValue))
-            {
-                if (oldValue == null && value == null) return;
-                if (oldValue != null && oldValue.Equals(value)) return;
-                _properties[property] = null;
-                if (oldValue != null) ValueRemoved(property, oldValue);
-                _properties[property] = value;
-                if (value != null) ValueAdded(property, value);
-            }
-            else
-            {
-                _properties[property] = value;
-                if (value != null) ValueAdded(property, value);
-            }
-        }
-
-        internal void ValueAdded(ModelProperty property, object value)
-        {
-            if (property.Flags.HasFlag(ModelPropertyFlags.Untracked)) return;
-            if (property.Flags.HasFlag(ModelPropertyFlags.MetaClassType) && value is IModelObject mobj)
+            if (slot.Flags.HasFlag(ModelPropertyFlags.Untracked)) return;
+            if (slot.Flags.HasFlag(ModelPropertyFlags.MetaClassType) && value is IModelObject mobj)
             {
                 var mthis = (IModelObject)this;
-                if (object.ReferenceEquals(property, MParentProperty))
+                if (slot.Flags.HasFlag(ModelPropertyFlags.Containment))
                 {
-                    mobj.MAdd(MChildrenProperty, this);
-                }
-                else if (object.ReferenceEquals(property, MChildrenProperty))
-                {
-                    var mobjParent = mobj.MGet(MParentProperty);
-                    if (mobjParent == null) mobj.MSet(MParentProperty, this);
+                    var mobjParent = mobj.MParent;
+                    if (mobjParent == null) ((ModelObject)mobj)._parent = mthis;
                     else if (!object.ReferenceEquals(mobjParent, this))
                     {
                         throw new InvalidOperationException($"The object '{mobj}' is already contained by '{mobjParent}', cannot set its container to '{this}'. Set the parent to 'null' first.");
                     }
+                    if (!_children.Contains(mobj))
+                    {
+                        _children.Add(mobj);
+                    }
                 }
-                else if (property.Flags.HasFlag(ModelPropertyFlags.Containment))
+                foreach (var slotProperty in slot.SlotProperties)
                 {
-                    mthis.MAdd(MChildrenProperty, mobj);
-                }
-                foreach (var oppositeProperty in GetOppositeProperties(property))
-                {
-                    if (oppositeProperty.Flags.HasFlag(ModelPropertyFlags.Collection)) mobj.MAdd(oppositeProperty, this);
-                    else mobj.MSet(oppositeProperty, this);
+                    foreach (var oppositeProperty in GetOppositeProperties(slotProperty))
+                    {
+                        if (oppositeProperty.Flags.HasFlag(ModelPropertyFlags.Collection)) mobj.MAdd(oppositeProperty, this);
+                        else mobj.MSet(oppositeProperty, this);
+                    }
+                    foreach (var subsettedProperty in GetSubsettedProperties(slotProperty))
+                    {
+                        if (subsettedProperty.Flags.HasFlag(ModelPropertyFlags.Collection)) mthis.MAdd(subsettedProperty, mobj);
+                        else mthis.MSet(subsettedProperty, mobj);
+                    }
                 }
             }
         }
 
-        internal void ValueRemoved(ModelProperty property, object? value)
+        internal void ValueRemoved(ModelPropertySlot slot, object? value)
         {
-            if (property.Flags.HasFlag(ModelPropertyFlags.Untracked)) return;
-            if (property.Flags.HasFlag(ModelPropertyFlags.MetaClassType) && value is IModelObject mobj)
+            if (slot.Flags.HasFlag(ModelPropertyFlags.Untracked)) return;
+            if (slot.Flags.HasFlag(ModelPropertyFlags.MetaClassType) && value is IModelObject mobj)
             {
                 var mthis = (IModelObject)this;
-                if (object.ReferenceEquals(property, MParentProperty))
-                {
-                    mobj.MRemove(MChildrenProperty, this);
-                }
-                else if (object.ReferenceEquals(property, MChildrenProperty))
-                {
-                    mobj.MSet(MParentProperty, null);
-                }
-                else if (property.Flags.HasFlag(ModelPropertyFlags.Containment))
+                if (slot.Flags.HasFlag(ModelPropertyFlags.Containment))
                 {
                     var stillContained = false;
-                    foreach (var prop in MAllDeclaredProperties)
+                    foreach (var slotProperty in slot.SlotProperties)
                     {
-                        if (prop.Flags.HasFlag(ModelPropertyFlags.Containment))
+                        if (slotProperty.Flags.HasFlag(ModelPropertyFlags.Containment))
                         {
-                            if (prop.Flags.HasFlag(ModelPropertyFlags.Collection))
+                            if (slotProperty.Flags.HasFlag(ModelPropertyFlags.Collection))
                             {
-                                var collection = mthis.MGet(prop) as IModelCollection;
+                                var collection = mthis.MGet(slotProperty) as IModelCollection;
                                 if (collection != null)
                                 {
                                     stillContained |= collection.MContains(mobj);
@@ -222,34 +246,31 @@ namespace MetaDslx.Modeling
                             }
                             else
                             {
-                                stillContained |= object.ReferenceEquals(mthis.MGet(prop), mobj);
+                                stillContained |= object.ReferenceEquals(mthis.MGet(slotProperty), mobj);
                             }
                         }
                         if (stillContained) break;
                     }
                     if (!stillContained)
                     {
-                        mthis.MRemove(MChildrenProperty, mobj);
+                        _children.Remove(mobj);
+                        ((ModelObject)mobj)._parent = null;
                     }
                 }
-                foreach (var oppositeProperty in GetOppositeProperties(property))
+                foreach (var slotProperty in slot.SlotProperties)
                 {
-                    if (oppositeProperty.Flags.HasFlag(ModelPropertyFlags.Collection)) mobj.MRemove(oppositeProperty, this);
-                    else mobj.MSet(oppositeProperty, null);
+                    foreach (var oppositeProperty in GetOppositeProperties(slotProperty))
+                    {
+                        if (oppositeProperty.Flags.HasFlag(ModelPropertyFlags.Collection)) mobj.MRemove(oppositeProperty, this);
+                        else mobj.MSet(oppositeProperty, null);
+                    }
+                    foreach (var subsettingProperty in GetSubsettingProperties(slotProperty))
+                    {
+                        if (subsettingProperty.Flags.HasFlag(ModelPropertyFlags.Collection)) mthis.MRemove(subsettingProperty, mobj);
+                        else mthis.MSet(subsettingProperty, null);
+                    }
                 }
             }
-        }
-
-        void IModelObject.MSetModel(IModel? model)
-        {
-            if (_model != null && model != null) throw new ArgumentException(nameof(model), $"Model object '{this}' is already contained by the model '{_model}.'");
-            _model = model;
-        }
-
-        void IModelObject.MInit(ModelProperty property, object? value)
-        {
-            //if (value != null && !property.Type.IsAssignableFrom(value.GetType())) throw new ArgumentException($"The type '{value.GetType()}' of '{value}' is not assignable to the type '{property.Type}' of '{property}'.");
-            _properties[property] = value;
         }
 
         public override string ToString()
@@ -268,9 +289,39 @@ namespace MetaDslx.Modeling
             else return $"({metaTypeName})";
         }
 
+        private ModelPropertySlot? GetSlot(ModelProperty property)
+        {
+            if (MModelPropertyInfos.TryGetValue(property, out var info)) return info.Slot;
+            else return null;
+        }
+
         private ImmutableArray<ModelProperty> GetOppositeProperties(ModelProperty property)
         {
             if (MModelPropertyInfos.TryGetValue(property, out var info)) return info.OppositeProperties;
+            else return ImmutableArray<ModelProperty>.Empty;
+        }
+
+        private ImmutableArray<ModelProperty> GetSubsettedProperties(ModelProperty property)
+        {
+            if (MModelPropertyInfos.TryGetValue(property, out var info)) return info.SubsettedProperties;
+            else return ImmutableArray<ModelProperty>.Empty;
+        }
+
+        private ImmutableArray<ModelProperty> GetSubsettingProperties(ModelProperty property)
+        {
+            if (MModelPropertyInfos.TryGetValue(property, out var info)) return info.SubsettingProperties;
+            else return ImmutableArray<ModelProperty>.Empty;
+        }
+
+        private ImmutableArray<ModelProperty> GetRedefinedProperties(ModelProperty property)
+        {
+            if (MModelPropertyInfos.TryGetValue(property, out var info)) return info.RedefinedProperties;
+            else return ImmutableArray<ModelProperty>.Empty;
+        }
+
+        private ImmutableArray<ModelProperty> GetRedefiningProperties(ModelProperty property)
+        {
+            if (MModelPropertyInfos.TryGetValue(property, out var info)) return info.RedefiningProperties;
             else return ImmutableArray<ModelProperty>.Empty;
         }
     }

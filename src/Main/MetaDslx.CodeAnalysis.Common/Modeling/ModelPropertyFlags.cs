@@ -15,13 +15,14 @@ namespace MetaDslx.Modeling
         BuiltInType = 0x0010,
         MetaClassType = 0x0020,
         Containment = 0x0040,
-        Collection = 0x0080,
-        Unordered = 0x0100,
-        NonUnique = 0x0200,
-        Readonly = 0x0400,
-        Derived = 0x0800,
-        DerivedUnion = 0x1000,
-        Name = 0x2000,
-        Type = 0x4000
+        SingleItem = 0x0080,
+        Collection = 0x0100,
+        Unordered = 0x0200,
+        NonUnique = 0x0400,
+        Readonly = 0x0800,
+        Derived = 0x1000,
+        DerivedUnion = 0x2000,
+        Name = 0x4000,
+        Type = 0x8000
     }
 }

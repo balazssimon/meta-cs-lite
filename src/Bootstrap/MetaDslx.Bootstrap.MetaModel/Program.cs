@@ -10,11 +10,15 @@ var husband = factory.Husband();
 var wife = factory.Wife();
 husband.Wife = wife;
 
-var user = factory.User();
+var user = factory.User2();
 var role = factory.Role();
 user.Roles.Add(role);
 user.Name = "Alice";
 role.Name = "Admin";
+role.Users.Remove(user);
+user.Roles2.Add(role);
+user.Roles2.Remove(role);
+
 
 var composite = factory.Composite();
 var node = factory.Node();

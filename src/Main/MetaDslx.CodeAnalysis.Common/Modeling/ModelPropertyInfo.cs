@@ -7,19 +7,22 @@ namespace MetaDslx.Modeling
 {
     public struct ModelPropertyInfo
     {
-        private ImmutableArray<ModelProperty> _oppositeProperties;
-        private ImmutableArray<ModelProperty> _subsettedProperties;
-        private ImmutableArray<ModelProperty> _subsettingProperties;
-        private ImmutableArray<ModelProperty> _redefinedProperties;
-        private ImmutableArray<ModelProperty> _redefiningProperties;
+        private readonly ModelPropertySlot _slot;
+        private readonly ImmutableArray<ModelProperty> _oppositeProperties;
+        private readonly ImmutableArray<ModelProperty> _subsettedProperties;
+        private readonly ImmutableArray<ModelProperty> _subsettingProperties;
+        private readonly ImmutableArray<ModelProperty> _redefinedProperties;
+        private readonly ImmutableArray<ModelProperty> _redefiningProperties;
 
         public ModelPropertyInfo(
+            ModelPropertySlot slot,
             ImmutableArray<ModelProperty> oppositeProperties = default, 
             ImmutableArray<ModelProperty> subsettedProperties = default, 
             ImmutableArray<ModelProperty> subsettingProperties = default, 
             ImmutableArray<ModelProperty> redefinedProperties = default, 
             ImmutableArray<ModelProperty> redefiningProperties = default)
         {
+            _slot = slot;
             _oppositeProperties = oppositeProperties.IsDefault ? ImmutableArray<ModelProperty>.Empty : oppositeProperties;
             _subsettedProperties = subsettedProperties.IsDefault ? ImmutableArray<ModelProperty>.Empty : subsettedProperties;
             _subsettingProperties = subsettingProperties.IsDefault ? ImmutableArray<ModelProperty>.Empty : subsettingProperties;
@@ -27,6 +30,7 @@ namespace MetaDslx.Modeling
             _redefiningProperties = redefiningProperties.IsDefault ? ImmutableArray<ModelProperty>.Empty : redefiningProperties;
         }
 
+        public ModelPropertySlot Slot => _slot;
         public ImmutableArray<ModelProperty> OppositeProperties => _oppositeProperties;
         public ImmutableArray<ModelProperty> SubsettedProperties => _subsettedProperties;
         public ImmutableArray<ModelProperty> SubsettingProperties => _subsettingProperties;

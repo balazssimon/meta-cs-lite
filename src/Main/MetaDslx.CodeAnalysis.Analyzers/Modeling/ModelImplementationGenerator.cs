@@ -20,6 +20,7 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
         private const string ModelPropertyType = "global::MetaDslx.Modeling.ModelProperty";
         private const string ModelPropertyFlagsType = "global::MetaDslx.Modeling.ModelPropertyFlags";
         private const string ModelPropertyInfoType = "global::MetaDslx.Modeling.ModelPropertyInfo";
+        private const string ModelPropertySlotType = "global::MetaDslx.Modeling.ModelPropertySlot";
         private const string ModelObjectListType = "global::MetaDslx.Modeling.ModelObjectList";
         private const string ListType = "global::System.Collections.Generic.List";
         private const string DictionaryType = "global::System.Collections.Generic.Dictionary";
@@ -162,10 +163,32 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
             cb.Push();
             cb.WriteLine("{");
             cb.Push();
-            foreach (var prop in metaClass.AllDeclaredProperties.Where(p => p.Flags.HasFlag(ModelPropertyFlags.MetaClassType)))
+            foreach (var prop in metaClass.AllDeclaredProperties)
             {
-                cb.Write($"[{prop.QualifiedPropertyName}] = new {ModelPropertyInfoType}(oppositeProperties: ");
+                var slot = metaClass.GetSlot(prop);
+                cb.WriteLine($"[{prop.QualifiedPropertyName}] = new {ModelPropertyInfoType}(");
+                cb.Push();
+                cb.Write($"slot: new {ModelPropertySlotType}({slot.SlotProperty.QualifiedPropertyName}, ");
+                GeneratePropertyArray(cb, slot.SlotProperties);
+                cb.Write(", ");
+                GenerateModelPropertyFlags(cb, slot.Flags);
+                cb.WriteLine("),");
+                cb.Write($"oppositeProperties: ");
                 GeneratePropertyArray(cb, prop.OppositeProperties);
+                cb.WriteLine(",");
+                cb.Write($"subsettedProperties: ");
+                GeneratePropertyArray(cb, prop.SubsettedProperties);
+                cb.WriteLine(",");
+                cb.Write($"subsettingProperties: ");
+                GeneratePropertyArray(cb, prop.GetSubsettingProperties(metaClass));
+                cb.WriteLine(",");
+                cb.Write($"redefinedProperties: ");
+                GeneratePropertyArray(cb, prop.RedefinedProperties);
+                cb.WriteLine(",");
+                cb.Write($"redefiningProperties: ");
+                GeneratePropertyArray(cb, prop.GetRedefiningProperties(metaClass));
+                cb.WriteLine();
+                cb.Pop();
                 cb.WriteLine("),");
             }
             cb.Pop();
@@ -180,17 +203,6 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
             MetaProperty? typeProperty = null;
             foreach (var prop in metaClass.AllDeclaredProperties)
             {
-                if (prop.Flags.HasFlag(ModelPropertyFlags.Collection))
-                {
-                    if (prop.Flags.HasFlag(ModelPropertyFlags.MetaClassType))
-                    {
-                        cb.WriteLine($"(({IModelObjectType})this).MInit({prop.QualifiedPropertyName}, new {ModelObjectListType}<{prop.Type.ToDisplayString()}>(this, {prop.QualifiedPropertyName}));");
-                    }
-                    else
-                    {
-                        cb.WriteLine($"(({IModelObjectType})this).MInit({prop.QualifiedPropertyName}, new {ListType}<{prop.CSharpType}>());");
-                    }
-                }
                 if (prop.Flags.HasFlag(ModelPropertyFlags.Name) && nameProperty == null)
                 {
                     nameProperty = prop;
@@ -198,6 +210,20 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
                 if (prop.Flags.HasFlag(ModelPropertyFlags.Type) && typeProperty == null)
                 {
                     typeProperty = prop;
+                }
+            }
+            foreach (var slot in metaClass.GetSlots())
+            {
+                if (slot.Flags.HasFlag(ModelPropertyFlags.Collection))
+                {
+                    if (slot.Flags.HasFlag(ModelPropertyFlags.MetaClassType))
+                    {
+                        cb.WriteLine($"(({IModelObjectType})this).MInit({slot.SlotProperty.QualifiedPropertyName}, new {ModelObjectListType}<{slot.SlotProperty.Type.ToDisplayString()}>(this, s_PropertyInfo[{slot.SlotProperty.QualifiedPropertyName}].Slot));");
+                    }
+                    else
+                    {
+                        cb.WriteLine($"(({IModelObjectType})this).MInit({slot.SlotProperty.QualifiedPropertyName}, new {ListType}<{slot.SlotProperty.CSharpType}>());");
+                    }
                 }
             }
             cb.Pop();

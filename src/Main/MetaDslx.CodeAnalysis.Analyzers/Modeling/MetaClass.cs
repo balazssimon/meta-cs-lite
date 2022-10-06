@@ -3,6 +3,7 @@ using Microsoft.CodeAnalysis;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Linq;
 using System.Text;
 
 namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
@@ -18,6 +19,8 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
         private ImmutableArray<MetaProperty> _declaredProperties;
         private ImmutableArray<MetaProperty> _allDeclaredProperties;
         private ImmutableArray<MetaProperty> _publicProperties;
+        private Dictionary<MetaProperty, MetaProperty>? _slotProperties;
+        private Dictionary<MetaProperty, MetaSlot>? _slots;
 
         public MetaClass(MetaModel metaModel, INamedTypeSymbol classInterface)
         {
@@ -138,6 +141,85 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
             }
             ImmutableInterlocked.InterlockedExchange(ref _allDeclaredProperties, allDeclaredProperties.ToImmutableAndFree());
             ImmutableInterlocked.InterlockedExchange(ref _publicProperties, publicProperties.ToImmutableAndFree());
+        }
+
+        public MetaProperty GetSlotProperty(MetaProperty property)
+        {
+            if (_slots == null) ComputeSlots();
+            return _slotProperties!.TryGetValue(property, out var result) ? result : property;
+        }
+
+        public MetaSlot GetSlot(MetaProperty property)
+        {
+            if (_slots == null) ComputeSlots();
+            var slotProperty = GetSlotProperty(property);
+            return _slots!.TryGetValue(slotProperty, out var result) ? result : new MetaSlot(property, ImmutableArray.Create(property), property.Flags);
+        }
+
+        public IEnumerable<MetaSlot> GetSlots()
+        {
+            if (_slots == null) ComputeSlots();
+            return _slots!.Values;
+        }
+
+        private void ComputeSlots()
+        {
+            if (_slots != null) return;
+            var components = new Dictionary<MetaProperty, int>();
+            var index = 0;
+            foreach (var prop in AllDeclaredProperties)
+            {
+                components.Add(prop, index++);
+            }
+            var combined = true;
+            while (combined)
+            {
+                combined = false;
+                foreach (var prop in AllDeclaredProperties)
+                {
+                    var propIndex = components[prop];
+                    foreach (var redefProp in prop.RedefinedProperties)
+                    {
+                        var redefPropIndex = components[redefProp];
+                        if (redefPropIndex != propIndex)
+                        {
+                            components[redefProp] = propIndex;
+                            combined = true;
+                        }
+                    }
+                }
+            }
+            var slots = new Dictionary<int, MetaProperty>();
+            foreach (var prop in AllDeclaredProperties)
+            {
+                var propIndex = components[prop];
+                if (!slots.ContainsKey(propIndex))
+                {
+                    slots.Add(propIndex, prop);
+                }
+            }
+            _slotProperties = new Dictionary<MetaProperty, MetaProperty>();
+            foreach (var prop in AllDeclaredProperties)
+            {
+                var propIndex = components[prop];
+                _slotProperties.Add(prop, slots[propIndex]);
+            }
+            _slots = new Dictionary<MetaProperty, MetaSlot>();
+            var builder = ArrayBuilder<MetaProperty>.GetInstance();
+            foreach (var slotIndex in slots.Keys)
+            {
+                foreach (var prop in AllDeclaredProperties)
+                {
+                    var propIndex = components[prop];
+                    if (propIndex == slotIndex)
+                    {
+                        builder.Add(prop);
+                    }
+                }
+                var slotFlags = slots[slotIndex].Flags;
+                _slots.Add(slots[slotIndex], new MetaSlot(slots[slotIndex], builder.ToImmutableAndClear(), slotFlags));
+            }
+            builder.Free();
         }
     }
 }

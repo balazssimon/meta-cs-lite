@@ -15,8 +15,54 @@ namespace MetaDslx.Bootstrap.CodeGeneration
     {
         static void Main(string[] args)
         {
-            //CompileCodeTemplate();
-            GenerateCSharp();
+            CompileCodeTemplate();
+            //GenerateCSharp();
+        }
+        static void CompileCodeTemplate()
+        {
+            var templateCode = @"
+namespace HelloNs
+generator G
+
+template SayHello(string name)
+  [--i;]
+end template
+
+template SayHello(string name)
+  [if (a)][name][else]X[end if]!
+DDD
+  [if (b)]
+    A
+  [else]
+    B
+  [end if]
+DDD
+  [if (b)]
+    A
+  [else]B[end if]
+DDD
+  [if (b)]A[else]
+    B
+  [end if]
+DDD
+  [if (b)]A
+  [else]B
+  [end if]
+DDD
+  [while(i > 0) separator "",""]X[i -= 1][end while]
+DDD
+  [while(true)]
+    X
+  [end while]
+end template
+";
+            var compiler = new MetaGeneratorParser("hello.mgen", SourceText.From(templateCode));
+            var compiledCode = compiler.Compile();
+            Console.WriteLine(compiledCode);
+            foreach (var diag in compiler.Diagnostics)
+            {
+                Console.WriteLine(diag);
+            }
         }
 
         static void GenerateCSharp()
@@ -40,7 +86,25 @@ namespace MetaDslx.Bootstrap.NuGet
 generator HelloWorld
 
 template SayHello(string name)
-Hello, [name]!
+  [if (a)][name][else]X[end if]!
+DDD
+  [if (b)]
+    A
+  [else]
+    B
+  [end if]
+DDD
+  [if (b)]
+    A
+  [else]B[end if]
+DDD
+  [if (b)]A[else]
+    B
+  [end if]
+DDD
+  [if (b)]A
+  [else]B
+  [end if]
 end template
 ");
             driver = driver.AddAdditionalTexts(ImmutableArray.Create<AdditionalText>(helloMgen));
@@ -52,33 +116,12 @@ end template
         private static Compilation CreateCompilation(string source)
             => CSharpCompilation.Create("compilation",
                 new[] { CSharpSyntaxTree.ParseText(source) },
-                new[] 
-                { 
+                new[]
+                {
                     MetadataReference.CreateFromFile(typeof(Binder).GetTypeInfo().Assembly.Location),
                     MetadataReference.CreateFromFile(typeof(CodeBuilder).GetTypeInfo().Assembly.Location)
                 },
                 new CSharpCompilationOptions(OutputKind.ConsoleApplication));
 
-        static void CompileCodeTemplate()
-        {
-            var templateCode = @"
-namespace HelloNs
-generator G
-template A()
-  [if (a)]
-    xxx
-  [else]
-    yyy
-  [end while]
-end template
-";
-            var compiler = new MetaGeneratorParser("hello.mgen", SourceText.From(templateCode));
-            var compiledCode = compiler.Compile();
-            Console.WriteLine(compiledCode);
-            foreach (var diag in compiler.Diagnostics)
-            {
-                Console.WriteLine(diag);
-            }
-        }
     }
 }

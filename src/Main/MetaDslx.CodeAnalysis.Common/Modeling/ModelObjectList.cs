@@ -12,19 +12,21 @@ namespace MetaDslx.Modeling
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private ModelObject _owner;
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private ModelProperty _property;
+        private ModelPropertySlot _slot;
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<T> _items;
 
-        public ModelObjectList(ModelObject owner, ModelProperty property)
+        public ModelObjectList(ModelObject owner, ModelPropertySlot slot)
         {
             _owner = owner;
-            _property = property;
+            _slot = slot;
             _items = new List<T>();
         }
 
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         public IModelObject Owner => _owner;
-        public ModelProperty Property => _property;
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        public ModelPropertySlot Slot => _slot;
 
         public T this[int index] 
         {
@@ -36,25 +38,27 @@ namespace MetaDslx.Modeling
                 if (!value.Equals(oldValue))
                 {
                     _items[index] = default(T);
-                    _owner.ValueRemoved(_property, oldValue);
+                    _owner.ValueRemoved(_slot, oldValue);
                     _items[index] = value;
-                    _owner.ValueAdded(_property, value);
+                    _owner.ValueAdded(_slot, value);
                 }
             }
         }
 
         public int Count => _items.Count;
 
-        public bool IsReadOnly => _property.IsReadonly;
+        public bool IsReadOnly => _slot.Flags.HasFlag(ModelPropertyFlags.Readonly);
+
+        public bool NonUnique => _slot.Flags.HasFlag(ModelPropertyFlags.NonUnique);
 
         int IModelCollection.MCount => Count;
 
         public void Add(T item)
         {
-            if (_property.IsNonUnique || !_items.Contains(item))
+            if (NonUnique || !_items.Contains(item))
             {
                 _items.Add(item);
-                _owner.ValueAdded(_property, item);
+                _owner.ValueAdded(_slot, item);
             }
         }
 
@@ -85,10 +89,10 @@ namespace MetaDslx.Modeling
 
         public void Insert(int index, T item)
         {
-            if (!_property.IsNonUnique || !_items.Contains(item))
+            if (!NonUnique || !_items.Contains(item))
             {
                 _items.Insert(index, item);
-                _owner.ValueAdded(_property, item);
+                _owner.ValueAdded(_slot, item);
             }
         }
 
@@ -96,9 +100,9 @@ namespace MetaDslx.Modeling
         {
             if (_items.Remove(item))
             {
-                if (_property.IsNonUnique || !_items.Contains(item))
+                if (NonUnique || !_items.Contains(item))
                 {
-                    _owner.ValueRemoved(_property, item);
+                    _owner.ValueRemoved(_slot, item);
                 }
                 return true;
             }
@@ -109,9 +113,9 @@ namespace MetaDslx.Modeling
         {
             var oldItem = _items[index];
             _items.RemoveAt(index);
-            if (_property.IsNonUnique || !_items.Contains(oldItem))
+            if (NonUnique || !_items.Contains(oldItem))
             {
-                _owner.ValueRemoved(_property, oldItem);
+                _owner.ValueRemoved(_slot, oldItem);
             }
         }
 

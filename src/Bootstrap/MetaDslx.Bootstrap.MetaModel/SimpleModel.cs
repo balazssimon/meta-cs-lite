@@ -56,4 +56,14 @@ namespace MetaDslx.Bootstrap.MetaModel
         [Opposite(typeof(User), "Roles")]
         IList<User> Users { get; }
     }
+
+    public partial interface User2 : User
+    {
+        [Subsets(typeof(User), "Roles")]
+        IList<Role> Roles2 { get; }
+        [Redefines(typeof(User), "Roles")]
+        IList<Role> Roles3 { get; }
+        [Redefines(typeof(Role), "Users")]
+        IList<Role> Roles4 { get; }
+    }
 }
