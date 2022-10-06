@@ -50,11 +50,11 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
                 }
                 if (attr.AttributeClass?.ToDisplayString() == "MetaDslx.Modeling.DerivedAttribute")
                 {
-                    _flags |= ModelPropertyFlags.Derived;
+                    _flags |= ModelPropertyFlags.Derived | ModelPropertyFlags.ReadOnly;
                 }
                 if (attr.AttributeClass?.ToDisplayString() == "MetaDslx.Modeling.DerivedUnionAttribute")
                 {
-                    _flags |= ModelPropertyFlags.DerivedUnion;
+                    _flags |= ModelPropertyFlags.DerivedUnion | ModelPropertyFlags.Derived | ModelPropertyFlags.ReadOnly;
                 }
                 if (attr.AttributeClass?.ToDisplayString() == "MetaDslx.Modeling.NameAttribute")
                 {
@@ -102,7 +102,7 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
             var flags = UpdateFlagsWithType(ModelPropertyFlags.None, _propertySymbol.Type);
             if (_propertySymbol.Type is INamedTypeSymbol propType)
             {
-                if (flags.HasFlag(ModelPropertyFlags.BuiltInType) || flags.HasFlag(ModelPropertyFlags.MetaClassType))
+                if (flags.HasFlag(ModelPropertyFlags.BuiltInType) || flags.HasFlag(ModelPropertyFlags.ModelObjectType))
                 {
                     _type = _propertySymbol.Type;
                     _flags |= flags;
@@ -116,7 +116,7 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
                     {
                         // TODO: error, must not have setter
                     }
-                    if (innerFlags.HasFlag(ModelPropertyFlags.BuiltInType) || innerFlags.HasFlag(ModelPropertyFlags.MetaClassType))
+                    if (innerFlags.HasFlag(ModelPropertyFlags.BuiltInType) || innerFlags.HasFlag(ModelPropertyFlags.ModelObjectType))
                     {
                         var fullTypeName = propType.ConstructedFrom.ToDisplayString();
                         if (fullTypeName == "System.Collections.Generic.IList<T>")
@@ -163,7 +163,7 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
             if (type.IsValueType) flags |= ModelPropertyFlags.ValueType;
             if (type.IsReferenceType) flags |= ModelPropertyFlags.ReferenceType;
             if (IsBuiltInType(type)) flags |= ModelPropertyFlags.BuiltInType;
-            if (IsMetaClass(type)) flags |= ModelPropertyFlags.MetaClassType;
+            if (IsMetaClass(type)) flags |= ModelPropertyFlags.ModelObjectType;
             return flags;
         }
 

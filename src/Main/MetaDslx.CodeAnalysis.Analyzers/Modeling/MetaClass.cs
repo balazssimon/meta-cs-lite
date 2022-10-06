@@ -256,7 +256,7 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
                     if (flag == ModelPropertyFlags.ValueType || 
                         flag == ModelPropertyFlags.ReferenceType ||
                         flag == ModelPropertyFlags.BuiltInType ||
-                        flag == ModelPropertyFlags.MetaClassType ||
+                        flag == ModelPropertyFlags.ModelObjectType ||
                         flag == ModelPropertyFlags.Containment ||
                         flag == ModelPropertyFlags.SingleItem ||
                         flag == ModelPropertyFlags.Collection ||

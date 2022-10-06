@@ -24,10 +24,14 @@ namespace MetaDslx.Modeling
         public string Name => _name;
         public ModelPropertyFlags Flags => _flags;
         public Type Type => _type;
+        public bool IsDerived => _flags.HasFlag(ModelPropertyFlags.Derived);
+        public bool IsDerivedUnion => _flags.HasFlag(ModelPropertyFlags.DerivedUnion);
         public bool IsContainment => _flags.HasFlag(ModelPropertyFlags.Containment);
         public bool IsNonUnique => _flags.HasFlag(ModelPropertyFlags.NonUnique);
         public bool IsCollection => _flags.HasFlag(ModelPropertyFlags.Collection);
-        public bool IsReadonly => _flags.HasFlag(ModelPropertyFlags.ReadOnly);
+        public bool IsReadOnly => _flags.HasFlag(ModelPropertyFlags.ReadOnly);
+        public bool IsModelObject => _flags.HasFlag(ModelPropertyFlags.ModelObjectType);
+        public bool IsName => _flags.HasFlag(ModelPropertyFlags.Name);
 
         public override string ToString()
         {

@@ -9,7 +9,7 @@ namespace MetaDslx.Modeling
         private string _id;
         private string? _name;
         private bool _readOnly;
-        private IModelGroup? _modelGroup;
+        private ModelGroup? _modelGroup;
         private List<IModelObject> _modelObjects;
 
         public Model(string? id = null, string? name = null)
@@ -37,7 +37,7 @@ namespace MetaDslx.Modeling
             set => _readOnly = value;
         }
 
-        IModelGroup? IModel.ModelGroup
+        public ModelGroup? ModelGroup
         {
             get => _modelGroup;
             set
@@ -70,7 +70,13 @@ namespace MetaDslx.Modeling
 
         public IEnumerable<IModelObject> Objects => _modelObjects;
 
-        void IModel.AddObject(IModelObject modelObject)
+        IModelGroup IModel.ModelGroup 
+        {
+            get => this.ModelGroup; 
+            set => this.ModelGroup = (ModelGroup)value; 
+        }
+
+        public void AddObject(IModelObject modelObject)
         {
             CheckReadOnly();
             if (!_modelObjects.Contains(modelObject))
@@ -88,7 +94,7 @@ namespace MetaDslx.Modeling
             }
         }
 
-        void IModel.RemoveObject(IModelObject modelObject)
+        public void RemoveObject(IModelObject modelObject)
         {
             CheckReadOnly();
             var index = _modelObjects.IndexOf(modelObject);

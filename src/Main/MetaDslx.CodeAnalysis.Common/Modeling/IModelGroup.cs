@@ -10,8 +10,10 @@ namespace MetaDslx.Modeling
         IEnumerable<IModel> Models { get; }
         IEnumerable<IModelObject> Objects { get; }
 
-        void AddReference(IModel model);
+        void AddReference(IEnumerable<IModel> model);
+        void AddReference(params IModel[] model);
         void RemoveReference(IModel model);
+        IModel CreateModel(string? id = null, string? name = null);
         void AddModel(IModel model);
         void RemoveModel(IModel model);
     }

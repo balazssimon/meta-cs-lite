@@ -63,5 +63,11 @@ namespace MetaDslx.CodeAnalysis
         /// Syntax warning: {0}
         /// </summary>
         public static readonly DiagnosticDescriptor WRN_SyntaxWarning = DiagnosticDescriptor.Warning(nameof(WRN_SyntaxWarning), "Syntax warning", "{0}");
+
+        /// <summary>
+        /// XMI error: {0}
+        /// </summary>
+        public static readonly DiagnosticDescriptor ERR_XmiError = DiagnosticDescriptor.Error(nameof(ERR_XmiError), "XMI error", "{0}");
+
     }
 }

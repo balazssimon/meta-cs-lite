@@ -16,6 +16,14 @@ namespace MetaDslx.Modeling
     [AttributeUsage(AttributeTargets.Interface, AllowMultiple = false, Inherited = false)]
     public class MetaClassAttribute : Attribute
     {
+        private readonly Type? _type;
+
+        public MetaClassAttribute(Type? type = null)
+        {
+            _type = type;
+        }
+
+        public Type? Type => _type;
         public bool IsAbstract { get; set; }
     }
 

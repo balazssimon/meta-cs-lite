@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace MetaDslx.CodeAnalysis.Modeling
+namespace MetaDslx.Modeling
 {
     public class ModelGroup : IModelGroup
     {
@@ -48,22 +48,44 @@ namespace MetaDslx.CodeAnalysis.Modeling
             }
         }
 
-        void IModelGroup.AddReference(IModel model)
+        public void AddReference(IEnumerable<IModel> models)
         {
             CheckReadOnly();
-            if (!_references.Contains(model))
+            foreach (var model in models)
             {
-                _references.Add(model);
+                if (!_references.Contains(model))
+                {
+                    _references.Add(model);
+                }
             }
         }
 
-        void IModelGroup.RemoveReference(IModel model)
+        public void AddReference(params IModel[] models)
+        {
+            CheckReadOnly();
+            foreach (var model in models)
+            {
+                if (!_references.Contains(model))
+                {
+                    _references.Add(model);
+                }
+            }
+        }
+
+        public void RemoveReference(IModel model)
         {
             CheckReadOnly();
             _references.Remove(model);
         }
 
-        void IModelGroup.AddModel(IModel model)
+        public IModel CreateModel(string? id = null, string? name = null)
+        {
+            var model = new Model(id, name);
+            AddModel(model);
+            return model;
+        }
+
+        public void AddModel(IModel model)
         {
             CheckReadOnly();
             if (!_models.Contains(model))
@@ -81,7 +103,7 @@ namespace MetaDslx.CodeAnalysis.Modeling
             }
         }
 
-        void IModelGroup.RemoveModel(IModel model)
+        public void RemoveModel(IModel model)
         {
             CheckReadOnly();
             var index = _models.IndexOf(model);

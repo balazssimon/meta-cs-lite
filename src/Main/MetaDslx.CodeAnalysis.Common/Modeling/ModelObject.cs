@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Xml.Linq;
@@ -29,6 +30,12 @@ namespace MetaDslx.Modeling
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        protected abstract IMetaModel MMetaModel { get; }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        protected abstract IModelObject? MMetaClass { get; }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        protected abstract Type MMetaType { get; }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         protected abstract ImmutableArray<ModelProperty> MDeclaredProperties { get; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         protected abstract ImmutableArray<ModelProperty> MAllDeclaredProperties { get; }
@@ -46,7 +53,14 @@ namespace MetaDslx.Modeling
             get => _id;
             set => _id = value;
         }
-        
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        IMetaModel IModelObject.MetaModel => MMetaModel;
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        IModelObject? IModelObject.MetaClass => MMetaClass;
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        Type IModelObject.MetaType => MMetaType;
+
         IModel? IModelObject.Model
         {
             get => _model;
@@ -118,6 +132,17 @@ namespace MetaDslx.Modeling
             }
         }
 
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        string? IModelObject.Name
+        {
+            get
+            {
+                var nameProp = MNameProperty;
+                string? name = null;
+                if (nameProp != null) name = ((IModelObject)this).Get(nameProp)?.ToString();
+                return name;
+            }
+        }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         ModelProperty? IModelObject.NameProperty => MNameProperty;
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -291,7 +316,7 @@ namespace MetaDslx.Modeling
         internal void ValueAdded(ModelPropertySlot slot, object value)
         {
             if (slot.Flags.HasFlag(ModelPropertyFlags.Untracked)) return;
-            if (slot.Flags.HasFlag(ModelPropertyFlags.MetaClassType) && value is IModelObject mobj)
+            if (slot.Flags.HasFlag(ModelPropertyFlags.ModelObjectType) && value is IModelObject mobj)
             {
                 var mthis = (IModelObject)this;
                 if (slot.Flags.HasFlag(ModelPropertyFlags.Containment))
@@ -309,11 +334,11 @@ namespace MetaDslx.Modeling
                 }
                 foreach (var slotProperty in slot.SlotProperties)
                 {
-                    foreach (var oppositeProperty in GetOppositeProperties(slotProperty))
+                    foreach (var oppositeProperty in ((IModelObject)this).GetOppositeProperties(slotProperty))
                     {
                         mobj.Add(oppositeProperty, this);
                     }
-                    foreach (var subsettedProperty in GetSubsettedProperties(slotProperty))
+                    foreach (var subsettedProperty in ((IModelObject)this).GetSubsettedProperties(slotProperty))
                     {
                         mthis.Add(subsettedProperty, mobj);
                     }
@@ -324,7 +349,7 @@ namespace MetaDslx.Modeling
         internal void ValueRemoved(ModelPropertySlot slot, object? value)
         {
             if (slot.Flags.HasFlag(ModelPropertyFlags.Untracked)) return;
-            if (slot.Flags.HasFlag(ModelPropertyFlags.MetaClassType) && value is IModelObject mobj)
+            if (slot.Flags.HasFlag(ModelPropertyFlags.ModelObjectType) && value is IModelObject mobj)
             {
                 var mthis = (IModelObject)this;
                 if (slot.Flags.HasFlag(ModelPropertyFlags.Containment))
@@ -357,11 +382,11 @@ namespace MetaDslx.Modeling
                 }
                 foreach (var slotProperty in slot.SlotProperties)
                 {
-                    foreach (var oppositeProperty in GetOppositeProperties(slotProperty))
+                    foreach (var oppositeProperty in  ((IModelObject)this).GetOppositeProperties(slotProperty))
                     {
                         mobj.Remove(oppositeProperty, this);
                     }
-                    foreach (var subsettingProperty in GetSubsettingProperties(slotProperty))
+                    foreach (var subsettingProperty in ((IModelObject)this).GetSubsettingProperties(slotProperty))
                     {
                         mthis.Remove(subsettingProperty, mobj);
                     }
@@ -391,31 +416,36 @@ namespace MetaDslx.Modeling
             else return null;
         }
 
-        private ImmutableArray<ModelProperty> GetOppositeProperties(ModelProperty property)
+        ModelProperty? IModelObject.GetProperty(string name)
+        {
+            return MPublicProperties.FirstOrDefault(p => p.Name == name);
+        }
+
+        ImmutableArray<ModelProperty> IModelObject.GetOppositeProperties(ModelProperty property)
         {
             if (MModelPropertyInfos.TryGetValue(property, out var info)) return info.OppositeProperties;
             else return ImmutableArray<ModelProperty>.Empty;
         }
 
-        private ImmutableArray<ModelProperty> GetSubsettedProperties(ModelProperty property)
+        ImmutableArray<ModelProperty> IModelObject.GetSubsettedProperties(ModelProperty property)
         {
             if (MModelPropertyInfos.TryGetValue(property, out var info)) return info.SubsettedProperties;
             else return ImmutableArray<ModelProperty>.Empty;
         }
 
-        private ImmutableArray<ModelProperty> GetSubsettingProperties(ModelProperty property)
+        ImmutableArray<ModelProperty> IModelObject.GetSubsettingProperties(ModelProperty property)
         {
             if (MModelPropertyInfos.TryGetValue(property, out var info)) return info.SubsettingProperties;
             else return ImmutableArray<ModelProperty>.Empty;
         }
 
-        private ImmutableArray<ModelProperty> GetRedefinedProperties(ModelProperty property)
+        ImmutableArray<ModelProperty> IModelObject.GetRedefinedProperties(ModelProperty property)
         {
             if (MModelPropertyInfos.TryGetValue(property, out var info)) return info.RedefinedProperties;
             else return ImmutableArray<ModelProperty>.Empty;
         }
 
-        private ImmutableArray<ModelProperty> GetRedefiningProperties(ModelProperty property)
+        ImmutableArray<ModelProperty> IModelObject.GetRedefiningProperties(ModelProperty property)
         {
             if (MModelPropertyInfos.TryGetValue(property, out var info)) return info.RedefiningProperties;
             else return ImmutableArray<ModelProperty>.Empty;

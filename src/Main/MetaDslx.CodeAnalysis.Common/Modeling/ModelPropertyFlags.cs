@@ -13,7 +13,7 @@ namespace MetaDslx.Modeling
         ReferenceType = 0x0004,
         NullableType = 0x0008,
         BuiltInType = 0x0010,
-        MetaClassType = 0x0020,
+        ModelObjectType = 0x0020,
         Containment = 0x0040,
         SingleItem = 0x0080,
         Collection = 0x0100,

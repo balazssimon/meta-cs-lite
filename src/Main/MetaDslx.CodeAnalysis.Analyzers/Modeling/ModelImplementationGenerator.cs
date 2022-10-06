@@ -305,6 +305,12 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
             cb.WriteLine("}");
             cb.WriteLine();
             cb.WriteLine("[global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)]");
+            cb.WriteLine($"protected override {IMetaModelType} MMetaModel => {metaClass.MetaModel.MetaModelImplName}.Instance;");
+            cb.WriteLine("[global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)]");
+            cb.WriteLine($"protected override {IModelObjectType}? MMetaClass => null;");
+            cb.WriteLine("[global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)]");
+            cb.WriteLine($"protected override global::System.Type MMetaType => typeof({metaClass.Name});");
+            cb.WriteLine("[global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)]");
             cb.WriteLine($"protected override {ImmutableArrayType}<{ModelPropertyType}> MDeclaredProperties => {metaClass.Name}.MDeclaredProperties;");
             cb.WriteLine("[global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)]");
             cb.WriteLine($"protected override {ImmutableArrayType}<{ModelPropertyType}> MAllDeclaredProperties => {metaClass.Name}.MAllDeclaredProperties;");

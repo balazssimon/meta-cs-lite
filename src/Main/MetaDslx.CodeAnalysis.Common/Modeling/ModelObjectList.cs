@@ -246,7 +246,7 @@ namespace MetaDslx.Modeling
         {
             foreach (var slotProperty in _slot.SlotProperties)
             {
-                if (slotProperty.IsReadonly) throw new InvalidOperationException($"Collection property '{slotProperty.Name}' is read only.");
+                if (slotProperty.IsReadOnly) throw new InvalidOperationException($"Collection property '{slotProperty.Name}' is read only.");
             }
         }
     }
