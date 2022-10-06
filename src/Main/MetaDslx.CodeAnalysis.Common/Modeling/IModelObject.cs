@@ -20,7 +20,6 @@ namespace MetaDslx.Modeling
         void MSetModel(IModel? model);
         void MInit(ModelProperty property, object? value);
         object? MGet(ModelProperty property);
-        void MSet(ModelProperty property, object? value);
         void MAdd(ModelProperty property, object? item);
         void MRemove(ModelProperty property, object? item);
     }

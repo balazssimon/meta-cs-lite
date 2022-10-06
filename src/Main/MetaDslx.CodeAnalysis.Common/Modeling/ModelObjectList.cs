@@ -49,6 +49,27 @@ namespace MetaDslx.Modeling
         public bool SingleItem => _slot.Flags.HasFlag(ModelPropertyFlags.SingleItem);
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         int IModelCollection.MCount => Count;
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        object? IModelCollection.MSingleItem
+        {
+            get
+            {
+                return _slot.Flags.HasFlag(ModelPropertyFlags.SingleItem) && _items.Count == 1 ? _items[0] : null;
+            }
+            set
+            {
+                if (_slot.Flags.HasFlag(ModelPropertyFlags.SingleItem))
+                {
+                    if (_items.Count == 0) Add((T)value);
+                    else this[0] = (T)value;
+                }
+                else
+                {
+                    throw new InvalidOperationException($"This collection is not a single item collection.");
+                }
+            }
+        }
+        
 
         public void Add(T item)
         {

@@ -105,102 +105,148 @@ namespace MetaDslx.Modeling
         object? IModelObject.MGet(ModelProperty property)
         {
             var slot = GetSlot(property);
-            if (_properties.TryGetValue(slot.SlotProperty, out var value)) return value;
-            else return null;
-        }
-
-        public void MSet<T>(ModelProperty property, T value)
-        {
-            ((IModelObject)this).MSet(property, value);
-        }
-
-        void IModelObject.MSet(ModelProperty property, object? value)
-        {
-            if (property.IsReadonly) throw new ArgumentException($"Property '{property.Name}' is readonly, its value cannot be set.", nameof(property));
-            if (property.IsCollection) throw new ArgumentException($"Property '{property.Name}' is a collection, its value cannot be set.", nameof(property));
-            var slot = GetSlot(property);
-            if (value != null)
+            if (_properties.TryGetValue(slot.SlotProperty, out var value))
             {
-                foreach (var slotProperty in slot.SlotProperties)
+                if (slot.Flags.HasFlag(ModelPropertyFlags.Collection) && property.Flags.HasFlag(ModelPropertyFlags.SingleItem))
                 {
-                    if (!slotProperty.Type.IsAssignableFrom(value.GetType())) throw new ArgumentException($"The type '{value.GetType()}' of '{value}' is not assignable to the type '{slotProperty.Type}' of '{slotProperty}'.");
+                    var collection = value as IModelCollection;
+                    if (collection != null)
+                    {
+                        return collection.MSingleItem;
+                    }
+                    else
+                    {
+                        throw new InvalidOperationException($"Collection property '{property.Name}' must be initialized in the constructor with an IModelCollection implementation using MInit().");
+                    }
                 }
-            }
-            if (_properties.TryGetValue(slot.SlotProperty, out var oldValue))
-            {
-                if (oldValue == null && value == null) return;
-                if (oldValue != null && oldValue.Equals(value)) return;
-                try
-                {
-                    _properties[slot.SlotProperty] = null;
-                    if (oldValue != null) ValueRemoved(slot, oldValue);
-                    _properties[slot.SlotProperty] = value;
-                    if (value != null) ValueAdded(slot, value);
-                }
-                catch
-                {
-                    _properties[slot.SlotProperty] = oldValue;
-                    throw;
-                }
+                return value;
             }
             else
             {
-                try
+                if (slot.Flags.HasFlag(ModelPropertyFlags.Collection))
                 {
-                    _properties[slot.SlotProperty] = value;
-                    if (value != null) ValueAdded(slot, value);
+                    throw new InvalidOperationException($"Collection property '{property.Name}' must be initialized in the constructor with an IModelCollection implementation using MInit().");
                 }
-                catch
+                else
                 {
-                    _properties[slot.SlotProperty] = null;
-                    throw;
+                    return null;
                 }
             }
+        }
+
+        public void MAdd<T>(ModelProperty property, T value)
+        {
+            ((IModelObject)this).MAdd(property, value);
+        }
+
+        public void MRemove<T>(ModelProperty property, T value)
+        {
+            ((IModelObject)this).MRemove(property, value);
         }
 
         void IModelObject.MAdd(ModelProperty property, object? item)
         {
-            if (!property.IsCollection) throw new ArgumentException($"Property '{property.Name}' must be a collection.", nameof(property));
-            if (item == null) throw new ArgumentNullException(nameof(item));
             var slot = GetSlot(property);
             foreach (var slotProperty in slot.SlotProperties)
             {
-                if (!slotProperty.Type.IsAssignableFrom(item.GetType())) throw new ArgumentException($"The type '{item.GetType()}' of '{item}' is not assignable to the type '{slotProperty.Type}' of '{slotProperty}'.");
+                if (slotProperty.Flags.HasFlag(ModelPropertyFlags.Readonly)) throw new ArgumentException($"The property '{slotProperty.Name}' is read only.");
+                if (slotProperty.Flags.HasFlag(ModelPropertyFlags.NullableType) && item == null) throw new ArgumentException($"Null value cannot be assigned to the property '{slotProperty.Name}'.");
+                if (item != null && !slotProperty.Type.IsAssignableFrom(item.GetType())) throw new ArgumentException($"'{item}' of type '{item.GetType()}' is not assignable to the property '{slotProperty.Name}' of type '{slotProperty.Type}'.");
             }
-            if (!_properties.TryGetValue(slot.SlotProperty, out var collection))
+            if (_properties.TryGetValue(slot.SlotProperty, out var oldValue))
             {
-                throw new InvalidOperationException($"Collection property '{property.Name}' must be initialized in the constructor.");
+                if (slot.Flags.HasFlag(ModelPropertyFlags.Collection))
+                {
+                    if (oldValue is IModelCollection collection)
+                    {
+                        if (property.Flags.HasFlag(ModelPropertyFlags.Collection))
+                        {
+                            collection.MAdd(item);
+                        }
+                        else
+                        {
+                            collection.MSingleItem = item;
+                        }
+                    }
+                    else
+                    {
+                        throw new InvalidOperationException($"Collection property '{property.Name}' must be initialized in the constructor with an IModelCollection implementation using MInit().");
+                    }
+                }
+                else
+                {
+                    if (oldValue == null && item == null) return;
+                    if ((oldValue != null && !oldValue.Equals(item)) || (oldValue == null && item != null))
+                    {
+                        try
+                        {
+                            _properties[slot.SlotProperty] = null;
+                            if (oldValue != null) ValueRemoved(slot, oldValue);
+                            _properties[slot.SlotProperty] = item;
+                            if (item != null) ValueAdded(slot, item);
+                        }
+                        catch
+                        {
+                            _properties[slot.SlotProperty] = oldValue;
+                            throw;
+                        }
+                    }
+                }
             }
-            if (collection is IModelCollection modelCollection)
+            else if (!slot.Flags.HasFlag(ModelPropertyFlags.Collection))
             {
-                modelCollection.MAdd(item);
-            }
-            else
-            {
-                throw new InvalidOperationException($"The value of the collection property '{property.Name}' must be initialized with an IModelCollection implementation.");
+                try
+                {
+                    _properties[slot.SlotProperty] = item;
+                    if (item != null) ValueAdded(slot, item);
+                }
+                catch
+                {
+                    _properties.Remove(slot.SlotProperty);
+                    throw;
+                }
             }
         }
 
         void IModelObject.MRemove(ModelProperty property, object? item)
         {
-            if (!property.IsCollection) throw new ArgumentException($"Property '{property.Name}' must be a collection.", nameof(property));
             if (item == null) throw new ArgumentNullException(nameof(item));
             var slot = GetSlot(property);
             foreach (var slotProperty in slot.SlotProperties)
             {
-                if (!slotProperty.Type.IsAssignableFrom(item.GetType())) throw new ArgumentException($"The type '{item.GetType()}' of '{item}' is not assignable to the type '{slotProperty.Type}' of '{slotProperty}'.");
+                if (slotProperty.Flags.HasFlag(ModelPropertyFlags.Readonly)) throw new ArgumentException($"The property '{slotProperty.Name}' is read only.");
+                if (slotProperty.Flags.HasFlag(ModelPropertyFlags.NullableType) && item == null) throw new ArgumentException($"Null value cannot be assigned to the property '{slotProperty.Name}'.");
+                if (item != null && !slotProperty.Type.IsAssignableFrom(item.GetType())) throw new ArgumentException($"'{item}' of type '{item.GetType()}' is not assignable to the property '{slotProperty.Name}' of type '{slotProperty.Type}'.");
             }
-            if (!_properties.TryGetValue(slot.SlotProperty, out var collection))
+            if (_properties.TryGetValue(slot.SlotProperty, out var oldValue))
             {
-                throw new InvalidOperationException($"Collection property '{property.Name}' must be initialized in the constructor.");
-            }
-            if (collection is IModelCollection modelCollection)
-            {
-                modelCollection.MRemove(item);
-            }
-            else
-            {
-                throw new InvalidOperationException($"The value of the collection property '{property.Name}' must be initialized with an IModelCollection implementation.");
+                if (slot.Flags.HasFlag(ModelPropertyFlags.Collection))
+                {
+                    if (oldValue is IModelCollection collection)
+                    {
+                        collection.MRemove(item);
+                    }
+                    else
+                    {
+                        throw new InvalidOperationException($"Collection property '{property.Name}' must be initialized in the constructor with an IModelCollection implementation using MInit().");
+                    }
+                }
+                else
+                {
+                    if (oldValue != null && oldValue.Equals(item))
+                    {
+                        try
+                        {
+                            _properties[slot.SlotProperty] = null;
+                            if (oldValue != null) ValueRemoved(slot, oldValue);
+                        }
+                        catch
+                        {
+                            _properties[slot.SlotProperty] = oldValue;
+                            throw;
+                        }
+                    }
+                }
             }
         }
 
@@ -227,13 +273,11 @@ namespace MetaDslx.Modeling
                 {
                     foreach (var oppositeProperty in GetOppositeProperties(slotProperty))
                     {
-                        if (oppositeProperty.Flags.HasFlag(ModelPropertyFlags.Collection)) mobj.MAdd(oppositeProperty, this);
-                        else mobj.MSet(oppositeProperty, this);
+                        mobj.MAdd(oppositeProperty, this);
                     }
                     foreach (var subsettedProperty in GetSubsettedProperties(slotProperty))
                     {
-                        if (subsettedProperty.Flags.HasFlag(ModelPropertyFlags.Collection)) mthis.MAdd(subsettedProperty, mobj);
-                        else mthis.MSet(subsettedProperty, mobj);
+                        mthis.MAdd(subsettedProperty, mobj);
                     }
                 }
             }
@@ -277,13 +321,11 @@ namespace MetaDslx.Modeling
                 {
                     foreach (var oppositeProperty in GetOppositeProperties(slotProperty))
                     {
-                        if (oppositeProperty.Flags.HasFlag(ModelPropertyFlags.Collection)) mobj.MRemove(oppositeProperty, this);
-                        else mobj.MSet(oppositeProperty, null);
+                        mobj.MRemove(oppositeProperty, this);
                     }
                     foreach (var subsettingProperty in GetSubsettingProperties(slotProperty))
                     {
-                        if (subsettingProperty.Flags.HasFlag(ModelPropertyFlags.Collection)) mthis.MRemove(subsettingProperty, mobj);
-                        else mthis.MSet(subsettingProperty, null);
+                        mthis.MRemove(subsettingProperty, mobj);
                     }
                 }
             }

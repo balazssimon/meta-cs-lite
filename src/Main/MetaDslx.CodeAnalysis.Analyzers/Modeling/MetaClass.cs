@@ -4,6 +4,7 @@ using Microsoft.CodeAnalysis;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 
@@ -184,7 +185,15 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
                         var redefPropIndex = components[redefProp];
                         if (redefPropIndex != propIndex)
                         {
-                            components[redefProp] = propIndex;
+                            var minIndex = Math.Min(propIndex, redefPropIndex);
+                            foreach (var mergedProp in AllDeclaredProperties)
+                            {
+                                var mergedPropIndex = components[mergedProp];
+                                if (mergedPropIndex == propIndex || mergedPropIndex == redefPropIndex)
+                                {
+                                    components[mergedProp] = minIndex;
+                                }
+                            }
                             combined = true;
                         }
                     }
@@ -272,5 +281,9 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
             return flags;
         }
 
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

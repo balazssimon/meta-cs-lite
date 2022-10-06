@@ -18,7 +18,12 @@ role.Name = "Admin";
 role.Users.Remove(user);
 user.Roles2.Add(role);
 user.Roles2.Remove(role);
-
+user.Roles.Add(role);
+var role2 = factory.Role();
+role2.Name = "Engineer";
+user.Roles5 = role2;
+//user.Roles2.Add(role);
+Console.WriteLine(user.Roles5);
 
 var composite = factory.Composite();
 var node = factory.Node();

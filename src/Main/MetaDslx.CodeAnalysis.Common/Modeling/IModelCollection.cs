@@ -10,5 +10,6 @@ namespace MetaDslx.Modeling
         void MRemove(object? item);
         bool MContains(object? item);
         int MCount { get; }
+        object? MSingleItem { get; set; }
     }
 }

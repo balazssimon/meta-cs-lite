@@ -83,5 +83,10 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
             }
             ImmutableInterlocked.InterlockedExchange(ref _metaClasses, builder.ToImmutableAndFree());
         }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

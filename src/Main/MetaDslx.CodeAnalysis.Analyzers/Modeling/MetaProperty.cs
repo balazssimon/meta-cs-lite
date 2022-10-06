@@ -106,6 +106,7 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
                 {
                     _type = _propertySymbol.Type;
                     _flags |= flags;
+                    _flags |= ModelPropertyFlags.SingleItem;
                     if (_propertySymbol.IsReadOnly) _flags |= ModelPropertyFlags.Readonly;
                 }
                 else if (propType.IsGenericType && propType.TypeArguments.Length == 1 && propType.TypeArguments[0] is INamedTypeSymbol innerType)
@@ -147,6 +148,7 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
             {
                 _type = _propertySymbol.Type;
                 _flags |= flags;
+                _flags |= ModelPropertyFlags.Collection;
                 if (!_flags.HasFlag(ModelPropertyFlags.Untracked))
                 {
                     _flags |= ModelPropertyFlags.Untracked;
@@ -289,6 +291,11 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
                 }
             }
             return result.ToImmutableAndFree();
+        }
+
+        public override string ToString()
+        {
+            return $"{MetaClass.Name}.{Name}";
         }
     }
 }

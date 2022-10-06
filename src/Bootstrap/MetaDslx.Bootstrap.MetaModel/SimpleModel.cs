@@ -65,5 +65,7 @@ namespace MetaDslx.Bootstrap.MetaModel
         IList<Role> Roles3 { get; }
         [Redefines(typeof(Role), "Users")]
         IList<Role> Roles4 { get; }
+        [Redefines(typeof(User), "Roles")]
+        Role Roles5 { get; set; }
     }
 }
