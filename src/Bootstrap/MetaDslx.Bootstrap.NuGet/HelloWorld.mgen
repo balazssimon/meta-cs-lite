@@ -2,7 +2,18 @@
 
 generator HelloWorld
 
-template SayHello(string name)
+template GenerateEntity(Entity entity)
+class [entity.Name]
+{
+    [foreach (var prop in entity.Properties)]
+    [prop.Type.Name] [prop.Name] { get; set; }
+    [end foreach]
+}
+end template
+
+
+
+template SayHelloXY(string name)
 Hello, [name]!
 [SayHello2(name)]
 end template
@@ -13,7 +24,7 @@ Hello, [name]2!
 end template
 
 template SayHello3(string name)
-Hello, [name]4!
+Hello, [name]3!
 [if (true)]
 T
 [else]

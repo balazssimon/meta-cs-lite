@@ -130,15 +130,31 @@ namespace MetaDslx.Modeling
             {
                 if (oldValue == null && value == null) return;
                 if (oldValue != null && oldValue.Equals(value)) return;
-                _properties[slot.SlotProperty] = null;
-                if (oldValue != null) ValueRemoved(slot, oldValue);
-                _properties[slot.SlotProperty] = value;
-                if (value != null) ValueAdded(slot, value);
+                try
+                {
+                    _properties[slot.SlotProperty] = null;
+                    if (oldValue != null) ValueRemoved(slot, oldValue);
+                    _properties[slot.SlotProperty] = value;
+                    if (value != null) ValueAdded(slot, value);
+                }
+                catch
+                {
+                    _properties[slot.SlotProperty] = oldValue;
+                    throw;
+                }
             }
             else
             {
-                _properties[slot.SlotProperty] = value;
-                if (value != null) ValueAdded(slot, value);
+                try
+                {
+                    _properties[slot.SlotProperty] = value;
+                    if (value != null) ValueAdded(slot, value);
+                }
+                catch
+                {
+                    _properties[slot.SlotProperty] = null;
+                    throw;
+                }
             }
         }
 

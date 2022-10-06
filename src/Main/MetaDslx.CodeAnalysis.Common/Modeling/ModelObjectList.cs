@@ -33,38 +33,33 @@ namespace MetaDslx.Modeling
             get => _items[index]; 
             set
             {
-                if (value == null) throw new ArgumentNullException(nameof(value));
-                var oldValue = _items[index];
-                if (!value.Equals(oldValue))
-                {
-                    _items[index] = default(T);
-                    _owner.ValueRemoved(_slot, oldValue);
-                    _items[index] = value;
-                    _owner.ValueAdded(_slot, value);
-                }
+                CheckReadonly();
+                SafeReplace(index, value);
             }
         }
 
         public int Count => _items.Count;
-
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         public bool IsReadOnly => _slot.Flags.HasFlag(ModelPropertyFlags.Readonly);
-
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         public bool NonUnique => _slot.Flags.HasFlag(ModelPropertyFlags.NonUnique);
-
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        public bool NullableType => _slot.Flags.HasFlag(ModelPropertyFlags.NullableType);
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        public bool SingleItem => _slot.Flags.HasFlag(ModelPropertyFlags.SingleItem);
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         int IModelCollection.MCount => Count;
 
         public void Add(T item)
         {
-            if (NonUnique || !_items.Contains(item))
-            {
-                _items.Add(item);
-                _owner.ValueAdded(_slot, item);
-            }
+            CheckReadonly();
+            SafeInsert(_items.Count, item);
         }
 
         public void Clear()
         {
-            while (_items.Count > 0) RemoveAt(_items.Count - 1);
+            CheckReadonly();
+            while (_items.Count > 0) SafeRemoveAt(_items.Count - 1);
         }
 
         public bool Contains(T item)
@@ -89,34 +84,21 @@ namespace MetaDslx.Modeling
 
         public void Insert(int index, T item)
         {
-            if (!NonUnique || !_items.Contains(item))
-            {
-                _items.Insert(index, item);
-                _owner.ValueAdded(_slot, item);
-            }
+            CheckReadonly();
+            SafeInsert(index, item);
         }
 
         public bool Remove(T item)
         {
-            if (_items.Remove(item))
-            {
-                if (NonUnique || !_items.Contains(item))
-                {
-                    _owner.ValueRemoved(_slot, item);
-                }
-                return true;
-            }
-            return false;
+            var index = _items.IndexOf(item);
+            if (index >= 0) RemoveAt(index);
+            return index >= 0;
         }
 
         public void RemoveAt(int index)
         {
-            var oldItem = _items[index];
-            _items.RemoveAt(index);
-            if (NonUnique || !_items.Contains(oldItem))
-            {
-                _owner.ValueRemoved(_slot, oldItem);
-            }
+            CheckReadonly();
+            SafeRemoveAt(index);
         }
 
         IEnumerator IEnumerable.GetEnumerator()
@@ -126,12 +108,22 @@ namespace MetaDslx.Modeling
 
         void IModelCollection.MAdd(object? item)
         {
-            this.Add((T)item);
+            foreach (var slotProperty in _slot.SlotProperties)
+            {
+                if (!slotProperty.Type.IsAssignableFrom(item.GetType())) throw new ArgumentException($"The type '{item.GetType()}' of '{item}' is not assignable to the type '{slotProperty.Type}' of '{slotProperty}'.");
+            }
+            if (item is T typedItem)
+            {
+                this.Add(typedItem);
+            }
         }
 
         void IModelCollection.MRemove(object? item)
         {
-            this.Remove((T)item);
+            if (item is T typedItem)
+            {
+                this.Remove(typedItem);
+            }
         }
 
         public override string ToString()
@@ -154,6 +146,87 @@ namespace MetaDslx.Modeling
         {
             if (item is T titem) return Contains(titem);
             else return false;
+        }
+
+        private void SafeReplace(int index, T item)
+        {
+            if (!NullableType && item == null) throw new ArgumentNullException(nameof(item));
+            var valueReplaced = false;
+            var oldValue = _items[index];
+            try
+            {
+                if (!item.Equals(oldValue))
+                {
+                    _items[index] = default(T);
+                    _owner.ValueRemoved(_slot, oldValue);
+                    if (NonUnique || !_items.Contains(item))
+                    {
+                        _items[index] = item;
+                        _owner.ValueAdded(_slot, item);
+                    }
+                    else
+                    {
+                        throw new InvalidOperationException($"Value '{item}' will not be unique.");
+                    }
+                }
+            }
+            catch
+            {
+                if (valueReplaced) _items[index] = oldValue;
+                throw;
+            }
+        }
+
+        private void SafeInsert(int index, T item)
+        {
+            if (!NullableType && item == null) throw new ArgumentNullException(nameof(item));
+            var valueAdded = false;
+            try
+            {
+                if (NonUnique || !_items.Contains(item))
+                {
+                    if (SingleItem && _items.Count >= 1)
+                    {
+                        throw new InvalidOperationException($"Only one item is allowed in this collection.");
+                    }
+                    _items.Insert(index, item);
+                    valueAdded = true;
+                    _owner.ValueAdded(_slot, item);
+                }
+            }
+            catch
+            {
+                if (valueAdded) _items.RemoveAt(_items.Count - 1);
+                throw;
+            }
+        }
+
+        private void SafeRemoveAt(int index)
+        {
+            var valueRemoved = false;
+            var oldItem = _items[index];
+            try
+            {
+                _items.RemoveAt(index);
+                valueRemoved = true;
+                if (NonUnique || !_items.Contains(oldItem))
+                {
+                    _owner.ValueRemoved(_slot, oldItem);
+                }
+            }
+            catch
+            {
+                if (valueRemoved) _items.Insert(index, oldItem);
+                throw;
+            }
+        }
+
+        private void CheckReadonly()
+        {
+            foreach (var slotProperty in _slot.SlotProperties)
+            {
+                if (slotProperty.IsReadonly) throw new InvalidOperationException($"Collection property '{slotProperty.Name}' is read only.");
+            }
         }
     }
 }

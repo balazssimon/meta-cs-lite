@@ -1,4 +1,5 @@
 ﻿using MetaDslx.CodeAnalysis.PooledObjects;
+using MetaDslx.Modeling;
 using Microsoft.CodeAnalysis;
 using System;
 using System.Collections.Generic;
@@ -216,10 +217,60 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
                         builder.Add(prop);
                     }
                 }
-                var slotFlags = slots[slotIndex].Flags;
-                _slots.Add(slots[slotIndex], new MetaSlot(slots[slotIndex], builder.ToImmutableAndClear(), slotFlags));
+                var slotProperties = builder.ToImmutableAndClear();
+                var slotFlags = ComputeSlotFlags(slotProperties);
+                _slots.Add(slots[slotIndex], new MetaSlot(slots[slotIndex], slotProperties, slotFlags));
             }
             builder.Free();
         }
+
+        private ModelPropertyFlags ComputeSlotFlags(ImmutableArray<MetaProperty> properties)
+        {
+            var flags = ModelPropertyFlags.None;
+            foreach (ModelPropertyFlags flag in Enum.GetValues(typeof(ModelPropertyFlags)))
+            {
+                var allSet = true;
+                var atLeastOneSet = false;
+                foreach (var prop in properties)
+                {
+                    if (prop.Flags.HasFlag(flag))
+                    {
+                        atLeastOneSet = true;
+                    }
+                    else
+                    {
+                        allSet = false;
+                    }
+                }
+                if (atLeastOneSet)
+                {
+                    if (flag == ModelPropertyFlags.ValueType || 
+                        flag == ModelPropertyFlags.ReferenceType ||
+                        flag == ModelPropertyFlags.BuiltInType ||
+                        flag == ModelPropertyFlags.MetaClassType ||
+                        flag == ModelPropertyFlags.Containment ||
+                        flag == ModelPropertyFlags.SingleItem ||
+                        flag == ModelPropertyFlags.Collection ||
+                        flag == ModelPropertyFlags.Readonly ||
+                        flag == ModelPropertyFlags.Derived ||
+                        flag == ModelPropertyFlags.DerivedUnion)
+                    {
+                        flags |= flag;
+                    }
+                }
+                if (allSet)
+                {
+                    if (flag == ModelPropertyFlags.Untracked ||
+                        flag == ModelPropertyFlags.NullableType ||
+                        flag == ModelPropertyFlags.Unordered ||
+                        flag == ModelPropertyFlags.NonUnique)
+                    {
+                        flags |= flag;
+                    }
+                }
+            }
+            return flags;
+        }
+
     }
 }
