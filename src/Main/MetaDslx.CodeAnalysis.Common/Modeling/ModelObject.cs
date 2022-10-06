@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics;
+using System.Reflection;
 using System.Text;
 using System.Xml.Linq;
 
@@ -9,6 +10,8 @@ namespace MetaDslx.Modeling
 {
     public abstract class ModelObject : IModelObject
     {
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private string _id;
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private IModel? _model;
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -18,8 +21,9 @@ namespace MetaDslx.Modeling
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Dictionary<ModelProperty, object?> _properties;
 
-        public ModelObject()
+        public ModelObject(string? id = null)
         {
+            _id = id ?? Guid.NewGuid().ToString();
             _properties = new Dictionary<ModelProperty, object?>();
             _children = new List<IModelObject>();
         }
@@ -37,18 +41,55 @@ namespace MetaDslx.Modeling
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         protected abstract Dictionary<ModelProperty, ModelPropertyInfo> MModelPropertyInfos { get; }
 
-        public IModelObject? MParent => _parent;
-        public IList<IModelObject> MChildren => _children;
-        public IModel? MModel => _model;
+        string IModelObject.Id
+        {
+            get => _id;
+            set => _id = value;
+        }
+        
+        IModel? IModelObject.Model
+        {
+            get => _model;
+            set
+            {
+                if (_model != null && value != null) throw new ArgumentException(nameof(value), $"Model object '{this}' is already contained by the model '{_model}. To change the model of an object, remove the object from the old model first.'");
+                if (!object.ReferenceEquals(_model, value))
+                {
+                    var originalModel = _model;
+                    try
+                    {
+                        if (originalModel != null)
+                        {
+                            _model = null;
+                            originalModel.RemoveObject(this);
+                        }
+                        _model = value;
+                        if (_model != null)
+                        {
+                            _model.AddObject(this);
+                        }
+                    }
+                    catch
+                    {
+                        _model = originalModel;
+                        throw;
+                    }
+                }
+            }
+        }
+
+        IModelObject? IModelObject.Parent => _parent;
+
+        IList<IModelObject> IModelObject.Children => _children;
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ImmutableArray<ModelProperty> IModelObject.MDeclaredProperties => this.MDeclaredProperties;
+        ImmutableArray<ModelProperty> IModelObject.DeclaredProperties => this.MDeclaredProperties;
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ImmutableArray<ModelProperty> IModelObject.MAllDeclaredProperties => this.MAllDeclaredProperties;
+        ImmutableArray<ModelProperty> IModelObject.AllDeclaredProperties => this.MAllDeclaredProperties;
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ImmutableArray<ModelProperty> IModelObject.MPublicProperties => this.MPublicProperties;
+        ImmutableArray<ModelProperty> IModelObject.PublicProperties => this.MPublicProperties;
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IEnumerable<ModelProperty> IModelObject.MProperties
+        IEnumerable<ModelProperty> IModelObject.Properties
         {
             get
             {
@@ -56,14 +97,14 @@ namespace MetaDslx.Modeling
                 {
                     yield return prop;
                 }
-                foreach (var prop in ((IModelObject)this).MAttachedProperties)
+                foreach (var prop in ((IModelObject)this).AttachedProperties)
                 {
                     yield return prop;
                 }
             }
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IEnumerable<ModelProperty> IModelObject.MAttachedProperties
+        IEnumerable<ModelProperty> IModelObject.AttachedProperties
         {
             get
             {
@@ -78,17 +119,11 @@ namespace MetaDslx.Modeling
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ModelProperty? IModelObject.MNameProperty => MNameProperty;
+        ModelProperty? IModelObject.NameProperty => MNameProperty;
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ModelProperty? IModelObject.MTypeProperty => MTypeProperty;
+        ModelProperty? IModelObject.TypeProperty => MTypeProperty;
 
-        void IModelObject.MSetModel(IModel? model)
-        {
-            if (_model != null && model != null) throw new ArgumentException(nameof(model), $"Model object '{this}' is already contained by the model '{_model}.'");
-            _model = model;
-        }
-
-        void IModelObject.MInit(ModelProperty property, object? value)
+        void IModelObject.Init(ModelProperty property, object? value)
         {
             //if (value != null && !property.Type.IsAssignableFrom(value.GetType())) throw new ArgumentException($"The type '{value.GetType()}' of '{value}' is not assignable to the type '{property.Type}' of '{property}'.");
             var slot = GetSlot(property);
@@ -97,12 +132,12 @@ namespace MetaDslx.Modeling
 
         public T MGet<T>(ModelProperty property)
         {
-            var value = ((IModelObject)this).MGet(property);
+            var value = ((IModelObject)this).Get(property);
             if (value == null) return default(T);
             else return (T)value;
         }
 
-        object? IModelObject.MGet(ModelProperty property)
+        object? IModelObject.Get(ModelProperty property)
         {
             var slot = GetSlot(property);
             if (_properties.TryGetValue(slot.SlotProperty, out var value))
@@ -112,7 +147,7 @@ namespace MetaDslx.Modeling
                     var collection = value as IModelCollection;
                     if (collection != null)
                     {
-                        return collection.MSingleItem;
+                        return collection.SingleItem;
                     }
                     else
                     {
@@ -136,15 +171,15 @@ namespace MetaDslx.Modeling
 
         public void MAdd<T>(ModelProperty property, T value)
         {
-            ((IModelObject)this).MAdd(property, value);
+            ((IModelObject)this).Add(property, value);
         }
 
         public void MRemove<T>(ModelProperty property, T value)
         {
-            ((IModelObject)this).MRemove(property, value);
+            ((IModelObject)this).Remove(property, value);
         }
 
-        void IModelObject.MAdd(ModelProperty property, object? item)
+        void IModelObject.Add(ModelProperty property, object? item)
         {
             var slot = GetSlot(property);
             foreach (var slotProperty in slot.SlotProperties)
@@ -161,11 +196,11 @@ namespace MetaDslx.Modeling
                     {
                         if (property.Flags.HasFlag(ModelPropertyFlags.Collection))
                         {
-                            collection.MAdd(item);
+                            collection.Add(item);
                         }
                         else
                         {
-                            collection.MSingleItem = item;
+                            collection.SingleItem = item;
                         }
                     }
                     else
@@ -208,7 +243,7 @@ namespace MetaDslx.Modeling
             }
         }
 
-        void IModelObject.MRemove(ModelProperty property, object? item)
+        void IModelObject.Remove(ModelProperty property, object? item)
         {
             if (item == null) throw new ArgumentNullException(nameof(item));
             var slot = GetSlot(property);
@@ -224,7 +259,7 @@ namespace MetaDslx.Modeling
                 {
                     if (oldValue is IModelCollection collection)
                     {
-                        collection.MRemove(item);
+                        collection.Remove(item);
                     }
                     else
                     {
@@ -258,7 +293,7 @@ namespace MetaDslx.Modeling
                 var mthis = (IModelObject)this;
                 if (slot.Flags.HasFlag(ModelPropertyFlags.Containment))
                 {
-                    var mobjParent = mobj.MParent;
+                    var mobjParent = mobj.Parent;
                     if (mobjParent == null) ((ModelObject)mobj)._parent = mthis;
                     else if (!object.ReferenceEquals(mobjParent, this))
                     {
@@ -273,11 +308,11 @@ namespace MetaDslx.Modeling
                 {
                     foreach (var oppositeProperty in GetOppositeProperties(slotProperty))
                     {
-                        mobj.MAdd(oppositeProperty, this);
+                        mobj.Add(oppositeProperty, this);
                     }
                     foreach (var subsettedProperty in GetSubsettedProperties(slotProperty))
                     {
-                        mthis.MAdd(subsettedProperty, mobj);
+                        mthis.Add(subsettedProperty, mobj);
                     }
                 }
             }
@@ -298,15 +333,15 @@ namespace MetaDslx.Modeling
                         {
                             if (slotProperty.Flags.HasFlag(ModelPropertyFlags.Collection))
                             {
-                                var collection = mthis.MGet(slotProperty) as IModelCollection;
+                                var collection = mthis.Get(slotProperty) as IModelCollection;
                                 if (collection != null)
                                 {
-                                    stillContained |= collection.MContains(mobj);
+                                    stillContained |= collection.Contains(mobj);
                                 }
                             }
                             else
                             {
-                                stillContained |= object.ReferenceEquals(mthis.MGet(slotProperty), mobj);
+                                stillContained |= object.ReferenceEquals(mthis.Get(slotProperty), mobj);
                             }
                         }
                         if (stillContained) break;
@@ -321,11 +356,11 @@ namespace MetaDslx.Modeling
                 {
                     foreach (var oppositeProperty in GetOppositeProperties(slotProperty))
                     {
-                        mobj.MRemove(oppositeProperty, this);
+                        mobj.Remove(oppositeProperty, this);
                     }
                     foreach (var subsettingProperty in GetSubsettingProperties(slotProperty))
                     {
-                        mthis.MRemove(subsettingProperty, mobj);
+                        mthis.Remove(subsettingProperty, mobj);
                     }
                 }
             }
@@ -337,10 +372,10 @@ namespace MetaDslx.Modeling
             if (metaTypeName.EndsWith("Impl")) metaTypeName = metaTypeName.Substring(0, metaTypeName.Length - 4);
             var nameProp = MNameProperty;
             string? name = null;
-            if (nameProp != null) name = ((IModelObject)this).MGet(nameProp)?.ToString();
+            if (nameProp != null) name = ((IModelObject)this).Get(nameProp)?.ToString();
             var typeProp = MTypeProperty;
             string? type = null;
-            if (typeProp != null) type = ((IModelObject)this).MGet(typeProp)?.ToString();
+            if (typeProp != null) type = ((IModelObject)this).Get(typeProp)?.ToString();
             if (!string.IsNullOrWhiteSpace(name) && !string.IsNullOrWhiteSpace(type)) return $"{name}: {type}";
             else if (!string.IsNullOrWhiteSpace(name)) return $"{name}";
             else if (!string.IsNullOrWhiteSpace(type)) return $":{type}";

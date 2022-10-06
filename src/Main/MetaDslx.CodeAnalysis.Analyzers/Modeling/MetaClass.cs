@@ -35,9 +35,9 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
                 {
                     foreach (var arg in attr.NamedArguments)
                     {
-                        if (arg.Key == "IsAbstract" && arg.Value.Equals(true))
+                        if (arg.Key == "IsAbstract" && arg.Value.Value != null)
                         {
-                            _isAbstract = true;
+                            _isAbstract = (bool)arg.Value.Value;
                         }
                     }
                 }

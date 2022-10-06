@@ -1,4 +1,5 @@
 ﻿using MetaDslx.CodeAnalysis.PooledObjects;
+using MetaDslx.Modeling;
 using Microsoft.CodeAnalysis;
 using Roslyn.Utilities;
 using System;
@@ -15,6 +16,9 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
 
         private SourceProductionContext _context;
         private INamedTypeSymbol _modelInterface;
+        private ModelVersion _version;
+        private string? _uri;
+        private string? _prefix;
         private ImmutableArray<INamedTypeSymbol> _classInterfaces;
         private ImmutableArray<MetaClass> _metaClasses;
         private Dictionary<string, MetaClass>? _metaClassMap;
@@ -23,6 +27,23 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
         {
             _context = context;
             _modelInterface = modelInterface;
+            ushort majorVersion = 0;
+            ushort minorVersion = 0;
+            foreach (var attr in modelInterface.GetAttributes())
+            {
+                var attrName = attr.AttributeClass?.ToDisplayString();
+                if (attrName == MetaModelAttributeName)
+                {
+                    foreach (var arg in attr.NamedArguments)
+                    {
+                        if (arg.Key == "MajorVersion") majorVersion = (ushort)arg.Value.Value;
+                        if (arg.Key == "MinorVersion") minorVersion = (ushort)arg.Value.Value;
+                        if (arg.Key == "Uri") _uri = (string?)arg.Value.Value;
+                        if (arg.Key == "Prefix") _prefix = (string?)arg.Value.Value;
+                    }
+                }
+            }
+            _version = new ModelVersion(majorVersion, minorVersion);
             var builder = new List<INamedTypeSymbol>();
             foreach (var nts in classInterfaces)
             {
@@ -36,11 +57,15 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
 
         public SourceProductionContext Context => _context;
         public INamedTypeSymbol ModelInterface => _modelInterface;
+        public ModelVersion Version => _version;
+        public string Uri => _uri;
+        public string Prefix => _prefix;
         public ImmutableArray<INamedTypeSymbol> ClassInterfaces => _classInterfaces;
 
         public string NamespaceName => _modelInterface.ContainingNamespace.ToDisplayString();
         public string Name => _modelInterface.Name;
         public string FactoryName => Name + "Factory";
+        public string MetaModelImplName => Name + "Impl";
 
         public ImmutableArray<MetaClass> MetaClasses
         {

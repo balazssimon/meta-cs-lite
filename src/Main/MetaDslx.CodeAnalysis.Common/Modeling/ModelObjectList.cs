@@ -48,9 +48,9 @@ namespace MetaDslx.Modeling
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         public bool SingleItem => _slot.Flags.HasFlag(ModelPropertyFlags.SingleItem);
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        int IModelCollection.MCount => Count;
+        int IModelCollection.Count => Count;
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        object? IModelCollection.MSingleItem
+        object? IModelCollection.SingleItem
         {
             get
             {
@@ -127,7 +127,7 @@ namespace MetaDslx.Modeling
             return this.GetEnumerator();
         }
 
-        void IModelCollection.MAdd(object? item)
+        void IModelCollection.Add(object? item)
         {
             foreach (var slotProperty in _slot.SlotProperties)
             {
@@ -139,7 +139,7 @@ namespace MetaDslx.Modeling
             }
         }
 
-        void IModelCollection.MRemove(object? item)
+        void IModelCollection.Remove(object? item)
         {
             if (item is T typedItem)
             {
@@ -163,7 +163,7 @@ namespace MetaDslx.Modeling
             return psb.ToStringAndFree();
         }
 
-        bool IModelCollection.MContains(object? item)
+        bool IModelCollection.Contains(object? item)
         {
             if (item is T titem) return Contains(titem);
             else return false;

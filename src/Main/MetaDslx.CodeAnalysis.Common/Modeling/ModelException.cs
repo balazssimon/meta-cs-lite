@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace MetaDslx.CodeAnalysis.Modeling
+namespace MetaDslx.Modeling
 {
     public class ModelException : Exception
     {

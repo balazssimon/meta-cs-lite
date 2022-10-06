@@ -12,11 +12,15 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
 {
     internal static class ModelImplementationGenerator
     {
-        private const string ModelType = "global::MetaDslx.Modeling.Model";
+        private const string IMetaModelType = "global::MetaDslx.Modeling.IMetaModel";
         private const string IModelType = "global::MetaDslx.Modeling.IModel";
-        private const string ModelObjectType = "global::MetaDslx.Modeling.ModelObject";
+        private const string ModelType = "global::MetaDslx.Modeling.Model";
+        private const string ModelVersionType = "global::MetaDslx.Modeling.ModelVersion";
         private const string IModelObjectType = "global::MetaDslx.Modeling.IModelObject";
+        private const string ModelObjectType = "global::MetaDslx.Modeling.ModelObject";
+        private const string IModelFactoryType = "global::MetaDslx.Modeling.IModelFactory";
         private const string ModelFactoryType = "global::MetaDslx.Modeling.ModelFactory";
+        private const string ModelExceptionType = "global::MetaDslx.Modeling.ModelException";
         private const string ModelPropertyType = "global::MetaDslx.Modeling.ModelProperty";
         private const string ModelPropertyFlagsType = "global::MetaDslx.Modeling.ModelPropertyFlags";
         private const string ModelPropertyInfoType = "global::MetaDslx.Modeling.ModelPropertyInfo";
@@ -42,6 +46,8 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
             cb.WriteLine($"namespace {metaModel.NamespaceName}");
             cb.WriteLine("{");
             cb.Push();
+            GenerateMetaModel(cb, metaModel);
+            cb.WriteLine();
             GenerateMetaModelFactory(cb, metaModel);
             cb.WriteLine();
             foreach (var metaClass in metaModel.MetaClasses)
@@ -52,6 +58,8 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
             cb.WriteLine("namespace Internal");
             cb.WriteLine("{");
             cb.Push();
+            GenerateMetaModelImplementation(cb, metaModel);
+            cb.WriteLine();
             foreach (var metaClass in metaModel.MetaClasses.Where(mc => !mc.IsAbstract))
             {
                 GenerateMetaClassImplementation(cb, metaClass);
@@ -63,22 +71,69 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
             cb.WriteLine("}");
         }
 
-        private static void GenerateMetaModelFactory(CodeBuilder cb, MetaModel metaModel)
+        private static void GenerateMetaModel(CodeBuilder cb, MetaModel metaModel)
         {
-            cb.WriteLine($"public partial class {metaModel.FactoryName} : {ModelFactoryType}");
+            cb.WriteLine($"public partial interface {metaModel.Name} : {IMetaModelType}");
             cb.WriteLine("{");
             cb.Push();
-            cb.WriteLine($"public {metaModel.FactoryName}({ModelType} model)");
-            cb.WriteLine("    : base(model)");
+            cb.WriteLine($"public static {metaModel.Name} Instance => Internal.{metaModel.MetaModelImplName}.Instance;");
+            cb.Pop();
+            cb.WriteLine("}");
+        }
+
+        private static void GenerateMetaModelFactory(CodeBuilder cb, MetaModel metaModel)
+        {
+            cb.WriteLine($"public partial class {metaModel.FactoryName} : {IModelFactoryType}");
             cb.WriteLine("{");
+            cb.Push();
+            cb.WriteLine($"private {ModelType} _model;");
+            cb.WriteLine();
+            cb.WriteLine($"public {metaModel.FactoryName}({ModelType} model)");
+            cb.WriteLine("{");
+            cb.Push();
+            cb.WriteLine("_model = model;");
+            cb.Pop();
+            cb.WriteLine("}");
+            cb.WriteLine();
+            cb.WriteLine($"public {ModelType} Model => _model;");
+            cb.WriteLine();
+            cb.WriteLine($"{IModelType} {IModelFactoryType}.Model => this.Model;");
+            cb.WriteLine();
+            cb.WriteLine($"public {metaModel.Name} MetaModel => {metaModel.Name}.Instance;");
+            cb.WriteLine();
+            cb.WriteLine($"{IMetaModelType} {IModelFactoryType}.MetaModel => this.MetaModel;");
+            cb.WriteLine();
+            cb.WriteLine($"{IModelObjectType} {IModelFactoryType}.Create(global::System.Type type, string? id)");
+            cb.WriteLine("{");
+            cb.Push();
+            cb.WriteLine($"return (({IModelFactoryType})this).Create(type.Name);");
+            cb.Pop();
+            cb.WriteLine("}");
+            cb.WriteLine();
+            cb.WriteLine($"{IModelObjectType} {IModelFactoryType}.Create(string type, string? id)");
+            cb.WriteLine("{");
+            cb.Push();
+            cb.WriteLine($"switch (type)");
+            cb.WriteLine("{");
+            cb.Push();
+            foreach (var metaClass in metaModel.MetaClasses.Where(mc => !mc.IsAbstract))
+            {
+                cb.WriteLine($"case \"{metaClass.Name}\": return ({IModelObjectType}){metaClass.Name}(id);");
+            }
+            cb.Write($"default: throw new {ModelExceptionType}($\"");
+            cb.Write("Unknown type '{type}' in metamodel ");
+            cb.WriteLine($"'{metaModel.Name}'\");");
+            cb.Pop();
+            cb.WriteLine("}");
+            cb.Pop();
             cb.WriteLine("}");
             cb.WriteLine();
             foreach (var metaClass in metaModel.MetaClasses.Where(mc => !mc.IsAbstract))
             {
-                cb.WriteLine($"public {metaClass.Name} {metaClass.Name}()");
+                cb.WriteLine($"public {metaClass.Name} {metaClass.Name}(string? id = null)");
                 cb.WriteLine("{");
                 cb.Push();
-                cb.WriteLine($"var result = new Internal.{metaClass.ImplName}();");
+                cb.WriteLine($"var result = new Internal.{metaClass.ImplName}(id);");
                 cb.WriteLine($"(({IModelType})Model).AddObject(result);");
                 cb.WriteLine("return result;");
                 cb.Pop();
@@ -151,6 +206,32 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
             if (empty) cb.Write($"{ModelPropertyFlagsType}.None");
         }
 
+        private static void GenerateMetaModelImplementation(CodeBuilder cb, MetaModel metaModel)
+        {
+            cb.WriteLine($"public partial class {metaModel.MetaModelImplName} : {metaModel.Name}");
+            cb.WriteLine("{");
+            cb.Push();
+            cb.WriteLine($"public static readonly {metaModel.MetaModelImplName} Instance = new {metaModel.MetaModelImplName}();");
+            cb.WriteLine();
+            cb.WriteLine($"private {ModelVersionType} _version;");
+            cb.WriteLine();
+            cb.WriteLine($"private {metaModel.MetaModelImplName}()");
+            cb.WriteLine("{");
+            cb.Push();
+            cb.WriteLine($"_version = new {ModelVersionType}({metaModel.Version.Major}, {metaModel.Version.Minor});");
+            cb.Pop();
+            cb.WriteLine("}");
+            cb.WriteLine();
+            cb.WriteLine($"public string Name => \"{metaModel.Name}\";");
+            cb.WriteLine($"public {ModelVersionType} Version => _version;");
+            cb.WriteLine($"public string Uri => \"{metaModel.Uri}\";");
+            cb.WriteLine($"public string Prefix => \"{metaModel.Prefix}\";");
+            cb.WriteLine();
+            cb.WriteLine($"{IModelFactoryType} {IMetaModelType}.CreateFactory({IModelType} model) => new {metaModel.FactoryName}(({ModelType})model);");
+            cb.Pop();
+            cb.WriteLine("}");
+        }
+
         private static void GenerateMetaClassImplementation(CodeBuilder cb, MetaClass metaClass)
         {
             cb.WriteLine($"internal partial class {metaClass.ImplName} : global::MetaDslx.Modeling.ModelObject, {metaClass.Name}");
@@ -196,7 +277,8 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
             cb.Pop();
             cb.Pop();
             cb.WriteLine();
-            cb.WriteLine($"internal {metaClass.ImplName}()");
+            cb.WriteLine($"internal {metaClass.ImplName}(string? id = null)");
+            cb.WriteLine("    : base(id)");
             cb.WriteLine("{");
             cb.Push();
             MetaProperty? nameProperty = null;
@@ -216,14 +298,7 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
             {
                 if (slot.Flags.HasFlag(ModelPropertyFlags.Collection))
                 {
-                    if (slot.Flags.HasFlag(ModelPropertyFlags.MetaClassType))
-                    {
-                        cb.WriteLine($"(({IModelObjectType})this).MInit({slot.SlotProperty.QualifiedPropertyName}, new {ModelObjectListType}<{slot.SlotProperty.Type.ToDisplayString()}>(this, s_PropertyInfo[{slot.SlotProperty.QualifiedPropertyName}].Slot));");
-                    }
-                    else
-                    {
-                        cb.WriteLine($"(({IModelObjectType})this).MInit({slot.SlotProperty.QualifiedPropertyName}, new {ListType}<{slot.SlotProperty.CSharpType}>());");
-                    }
+                    cb.WriteLine($"(({IModelObjectType})this).Init({slot.SlotProperty.QualifiedPropertyName}, new {ModelObjectListType}<{slot.SlotProperty.Type.ToDisplayString()}>(this, s_PropertyInfo[{slot.SlotProperty.QualifiedPropertyName}].Slot));");
                 }
             }
             cb.Pop();

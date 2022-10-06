@@ -6,10 +6,10 @@ namespace MetaDslx.Modeling
 {
     public interface IModelCollection
     {
-        void MAdd(object? item);
-        void MRemove(object? item);
-        bool MContains(object? item);
-        int MCount { get; }
-        object? MSingleItem { get; set; }
+        void Add(object? item);
+        void Remove(object? item);
+        bool Contains(object? item);
+        int Count { get; }
+        object? SingleItem { get; set; }
     }
 }

@@ -7,6 +7,10 @@ namespace MetaDslx.Modeling
     [AttributeUsage(AttributeTargets.Interface, AllowMultiple = false, Inherited = false)]
     public class MetaModelAttribute : Attribute
     {
+        public string Uri { get; set; }
+        public string Prefix { get; set; }
+        public ushort MajorVersion { get; set; }
+        public ushort MinorVersion { get; set; }
     }
 
     [AttributeUsage(AttributeTargets.Interface, AllowMultiple = false, Inherited = false)]

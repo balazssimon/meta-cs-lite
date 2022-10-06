@@ -7,20 +7,20 @@ namespace MetaDslx.Modeling
 {
     public interface IModelObject
     {
-        IModel? MModel { get; }
-        ImmutableArray<ModelProperty> MDeclaredProperties { get; }
-        ImmutableArray<ModelProperty> MAllDeclaredProperties { get; }
-        ImmutableArray<ModelProperty> MPublicProperties { get; }
-        IEnumerable<ModelProperty> MProperties { get; }
-        IEnumerable<ModelProperty> MAttachedProperties { get; }
-        ModelProperty? MNameProperty { get; }
-        ModelProperty? MTypeProperty { get; }
-        IModelObject? MParent { get; }
-        IList<IModelObject> MChildren { get; }
-        void MSetModel(IModel? model);
-        void MInit(ModelProperty property, object? value);
-        object? MGet(ModelProperty property);
-        void MAdd(ModelProperty property, object? item);
-        void MRemove(ModelProperty property, object? item);
+        string Id { get; set; }
+        IModel? Model { get; set; }
+        ImmutableArray<ModelProperty> DeclaredProperties { get; }
+        ImmutableArray<ModelProperty> AllDeclaredProperties { get; }
+        ImmutableArray<ModelProperty> PublicProperties { get; }
+        IEnumerable<ModelProperty> Properties { get; }
+        IEnumerable<ModelProperty> AttachedProperties { get; }
+        ModelProperty? NameProperty { get; }
+        ModelProperty? TypeProperty { get; }
+        IModelObject? Parent { get; }
+        IList<IModelObject> Children { get; }
+        void Init(ModelProperty property, object? value);
+        object? Get(ModelProperty property);
+        void Add(ModelProperty property, object? item);
+        void Remove(ModelProperty property, object? item);
     }
 }

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace MetaDslx.Bootstrap.MetaModel
 {
     [MetaModel]
-    public partial interface SimpleModel
+    public partial interface SimpleModel 
     {
     }
 
