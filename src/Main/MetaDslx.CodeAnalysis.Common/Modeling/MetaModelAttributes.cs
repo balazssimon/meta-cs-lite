@@ -71,7 +71,7 @@ namespace MetaDslx.Modeling
     }
 
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
-    public class ReadonlyAttribute : Attribute
+    public class ReadOnlyAttribute : Attribute
     {
     }
 

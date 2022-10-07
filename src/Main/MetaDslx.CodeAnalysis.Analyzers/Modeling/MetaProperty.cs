@@ -71,7 +71,7 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
                 {
                     _flags |= ModelPropertyFlags.Containment;
                 }
-                if (attr.AttributeClass?.ToDisplayString() == "MetaDslx.Modeling.ReadonlyAttribute")
+                if (attr.AttributeClass?.ToDisplayString() == "MetaDslx.Modeling.ReadOnlyAttribute")
                 {
                     _flags |= ModelPropertyFlags.ReadOnly;
                 }
@@ -139,7 +139,7 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
             var flags = UpdateFlagsWithType(ModelPropertyFlags.None, _propertySymbol.Type);
             if (_propertySymbol.Type is INamedTypeSymbol propType)
             {
-                if (flags.HasFlag(ModelPropertyFlags.BuiltInType) || flags.HasFlag(ModelPropertyFlags.ModelObjectType))
+                if (flags.HasFlag(ModelPropertyFlags.BuiltInType) || flags.HasFlag(ModelPropertyFlags.EnumType) || flags.HasFlag(ModelPropertyFlags.ModelObjectType))
                 {
                     _type = _propertySymbol.Type;
                     _flags |= flags;
@@ -153,7 +153,7 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
                     {
                         // TODO: error, must not have setter
                     }
-                    if (innerFlags.HasFlag(ModelPropertyFlags.BuiltInType) || innerFlags.HasFlag(ModelPropertyFlags.ModelObjectType))
+                    if (innerFlags.HasFlag(ModelPropertyFlags.BuiltInType) || innerFlags.HasFlag(ModelPropertyFlags.EnumType) || innerFlags.HasFlag(ModelPropertyFlags.ModelObjectType))
                     {
                         var fullTypeName = propType.ConstructedFrom.ToDisplayString();
                         if (fullTypeName == "System.Collections.Generic.IList<T>")
@@ -199,6 +199,7 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
             if (type.NullableAnnotation == NullableAnnotation.Annotated) flags |= ModelPropertyFlags.NullableType;
             if (type.IsValueType) flags |= ModelPropertyFlags.ValueType;
             if (type.IsReferenceType) flags |= ModelPropertyFlags.ReferenceType;
+            if (type.TypeKind == TypeKind.Enum) flags |= ModelPropertyFlags.EnumType;
             if (IsBuiltInType(type)) flags |= ModelPropertyFlags.BuiltInType;
             if (IsMetaClass(type)) flags |= ModelPropertyFlags.ModelObjectType;
             return flags;

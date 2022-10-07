@@ -71,7 +71,9 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
         public string NamespaceName => _modelInterface.ContainingNamespace.ToDisplayString();
         public string Name => _modelInterface.Name;
         public string FactoryName => Name + "Factory";
+        public string FullyQualifiedFactoryName => $"global::{NamespaceName}.{FactoryName}";
         public string MetaModelImplName => Name + "Impl";
+        public string FullyQualifiedMetaModelImplName => $"global::{NamespaceName}.Internal.{MetaModelImplName}";
 
         public ImmutableArray<MetaClass> MetaClasses
         {

@@ -77,7 +77,7 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
             cb.WriteLine($"public partial interface {metaModel.Name} : {IMetaModelType}");
             cb.WriteLine("{");
             cb.Push();
-            cb.WriteLine($"public static {metaModel.Name} Instance => Internal.{metaModel.MetaModelImplName}.Instance;");
+            cb.WriteLine($"public static {metaModel.Name} Instance => {metaModel.FullyQualifiedMetaModelImplName}.Instance;");
             cb.Pop();
             cb.WriteLine("}");
         }
@@ -87,7 +87,7 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
             cb.WriteLine($"public partial class {metaModel.FactoryName} : {IModelFactoryType}");
             cb.WriteLine("{");
             cb.Push();
-            cb.WriteLine($"private {ModelType} _model;");
+            cb.WriteLine($"private {IModelType} _model;");
             cb.WriteLine();
             cb.WriteLine($"public {metaModel.FactoryName}({ModelType} model)");
             cb.WriteLine("{");
@@ -96,13 +96,9 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
             cb.Pop();
             cb.WriteLine("}");
             cb.WriteLine();
-            cb.WriteLine($"public {ModelType} Model => _model;");
+            cb.WriteLine($"{IModelType} {IModelFactoryType}.Model => _model;");
             cb.WriteLine();
-            cb.WriteLine($"{IModelType} {IModelFactoryType}.Model => this.Model;");
-            cb.WriteLine();
-            cb.WriteLine($"public {metaModel.Name} MetaModel => {metaModel.Name}.Instance;");
-            cb.WriteLine();
-            cb.WriteLine($"{IMetaModelType} {IModelFactoryType}.MetaModel => this.MetaModel;");
+            cb.WriteLine($"{IMetaModelType} {IModelFactoryType}.MetaModel => {metaModel.Name}.Instance;");
             cb.WriteLine();
             cb.WriteLine($"{IModelObjectType} {IModelFactoryType}.Create(global::System.Type type, string? id)");
             cb.WriteLine("{");
@@ -131,11 +127,11 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
             cb.WriteLine();
             foreach (var metaClass in metaModel.MetaClasses.Where(mc => !mc.IsAbstract))
             {
-                cb.WriteLine($"public {metaClass.Name} {metaClass.Name}(string? id = null)");
+                cb.WriteLine($"public {metaClass.FullyQualifiedName} {metaClass.Name}(string? id = null)");
                 cb.WriteLine("{");
                 cb.Push();
-                cb.WriteLine($"var result = new Internal.{metaClass.ImplName}(id);");
-                cb.WriteLine($"(({IModelType})Model).AddObject(result);");
+                cb.WriteLine($"var result = new {metaClass.FullyQualifiedImplName}(id);");
+                cb.WriteLine($"_model.AddObject(result);");
                 cb.WriteLine("return result;");
                 cb.Pop();
                 cb.WriteLine("}");
@@ -152,7 +148,7 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
             cb.Push();
             foreach (var prop in metaClass.DeclaredProperties)
             {
-                cb.Write($"public static readonly {ModelPropertyType} {prop.PropertyName} = new {ModelPropertyType}(typeof({metaClass.Name}), nameof({prop.Name}), typeof({prop.Type?.ToDisplayString(NullableFlowState.None)}), {prop.CSharpDefaultValue}, ");
+                cb.Write($"public static readonly {ModelPropertyType} {prop.PropertyName} = new {ModelPropertyType}(typeof({metaClass.FullyQualifiedName}), nameof({prop.Name}), typeof({prop.Type?.ToDisplayString(NullableFlowState.None)}), {prop.CSharpDefaultValue}, ");
                 GenerateModelPropertyFlags(cb, prop.Flags);
                 cb.WriteLine(");");
             }
@@ -179,7 +175,7 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
                 foreach (var prop in properties)
                 {
                     cb.Write(comma);
-                    cb.Write(prop.QualifiedPropertyName);
+                    cb.Write(prop.FullyQualifiedPropertyName);
                     comma = ", ";
                 }
                 cb.Write(")");
@@ -229,14 +225,14 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
             cb.WriteLine($"public string Uri => \"{metaModel.Uri}\";");
             cb.WriteLine($"public string Prefix => \"{metaModel.Prefix}\";");
             cb.WriteLine();
-            cb.WriteLine($"{IModelFactoryType} {IMetaModelType}.CreateFactory({IModelType} model) => new {metaModel.FactoryName}(({ModelType})model);");
+            cb.WriteLine($"{IModelFactoryType} {IMetaModelType}.CreateFactory({IModelType} model) => new {metaModel.FullyQualifiedFactoryName}(({ModelType})model);");
             cb.Pop();
             cb.WriteLine("}");
         }
 
         private static void GenerateMetaClassImplementation(CodeBuilder cb, MetaClass metaClass)
         {
-            cb.WriteLine($"internal partial class {metaClass.ImplName} : global::MetaDslx.Modeling.ModelObject, {metaClass.Name}");
+            cb.WriteLine($"internal partial class {metaClass.ImplName} : global::MetaDslx.Modeling.ModelObject, {metaClass.FullyQualifiedName}");
             cb.WriteLine("{");
             cb.Push();
             cb.WriteLine("[global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)]");
@@ -249,9 +245,9 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
             foreach (var prop in metaClass.AllDeclaredProperties)
             {
                 var slot = metaClass.GetSlot(prop);
-                cb.WriteLine($"[{prop.QualifiedPropertyName}] = new {ModelPropertyInfoType}(");
+                cb.WriteLine($"[{prop.FullyQualifiedPropertyName}] = new {ModelPropertyInfoType}(");
                 cb.Push();
-                cb.Write($"slot: new {ModelPropertySlotType}({slot.SlotProperty.QualifiedPropertyName}, ");
+                cb.Write($"slot: new {ModelPropertySlotType}({slot.SlotProperty.FullyQualifiedPropertyName}, ");
                 GeneratePropertyArray(cb, slot.SlotProperties);
                 cb.Write(", ");
                 cb.Write(slot.SlotProperty.CSharpDefaultValue);
@@ -302,32 +298,32 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
             {
                 if (slot.Flags.HasFlag(ModelPropertyFlags.Collection))
                 {
-                    cb.WriteLine($"(({IModelObjectType})this).Init({slot.SlotProperty.QualifiedPropertyName}, new {ModelObjectListType}<{slot.SlotProperty.Type.ToDisplayString()}>(this, s_PropertyInfo[{slot.SlotProperty.QualifiedPropertyName}].Slot));");
+                    cb.WriteLine($"(({IModelObjectType})this).Init({slot.SlotProperty.FullyQualifiedPropertyName}, new {ModelObjectListType}<{slot.SlotProperty.Type.ToDisplayString()}>(this, s_PropertyInfo[{slot.SlotProperty.FullyQualifiedPropertyName}].Slot));");
                 }
                 else if (slot.SlotProperty.DefaultValue != null)
                 {
-                    cb.WriteLine($"(({IModelObjectType})this).Init({slot.SlotProperty.QualifiedPropertyName}, {slot.SlotProperty.CSharpDefaultValue});");
+                    cb.WriteLine($"(({IModelObjectType})this).Init({slot.SlotProperty.FullyQualifiedPropertyName}, {slot.SlotProperty.CSharpDefaultValue});");
                 }
             }
             cb.Pop();
             cb.WriteLine("}");
             cb.WriteLine();
             cb.WriteLine("[global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)]");
-            cb.WriteLine($"protected override {IMetaModelType} MMetaModel => {metaClass.MetaModel.MetaModelImplName}.Instance;");
+            cb.WriteLine($"protected override {IMetaModelType} MMetaModel => {metaClass.MetaModel.FullyQualifiedMetaModelImplName}.Instance;");
             cb.WriteLine("[global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)]");
             cb.WriteLine($"protected override {IModelObjectType}? MMetaClass => null;");
             cb.WriteLine("[global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)]");
-            cb.WriteLine($"protected override global::System.Type MMetaType => typeof({metaClass.Name});");
+            cb.WriteLine($"protected override global::System.Type MMetaType => typeof({metaClass.FullyQualifiedName});");
             cb.WriteLine("[global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)]");
-            cb.WriteLine($"protected override {ImmutableArrayType}<{ModelPropertyType}> MDeclaredProperties => {metaClass.Name}.MDeclaredProperties;");
+            cb.WriteLine($"protected override {ImmutableArrayType}<{ModelPropertyType}> MDeclaredProperties => {metaClass.FullyQualifiedName}.MDeclaredProperties;");
             cb.WriteLine("[global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)]");
-            cb.WriteLine($"protected override {ImmutableArrayType}<{ModelPropertyType}> MAllDeclaredProperties => {metaClass.Name}.MAllDeclaredProperties;");
+            cb.WriteLine($"protected override {ImmutableArrayType}<{ModelPropertyType}> MAllDeclaredProperties => {metaClass.FullyQualifiedName}.MAllDeclaredProperties;");
             cb.WriteLine("[global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)]");
-            cb.WriteLine($"protected override {ImmutableArrayType}<{ModelPropertyType}> MPublicProperties => {metaClass.Name}.MPublicProperties;");
+            cb.WriteLine($"protected override {ImmutableArrayType}<{ModelPropertyType}> MPublicProperties => {metaClass.FullyQualifiedName}.MPublicProperties;");
             cb.WriteLine("[global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)]");
-            cb.WriteLine($"protected override {ModelPropertyType}? MNameProperty => {nameProperty?.QualifiedPropertyName ?? "null"};");
+            cb.WriteLine($"protected override {ModelPropertyType}? MNameProperty => {nameProperty?.FullyQualifiedPropertyName ?? "null"};");
             cb.WriteLine("[global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)]");
-            cb.WriteLine($"protected override {ModelPropertyType}? MTypeProperty => {typeProperty?.QualifiedPropertyName ?? "null"};");
+            cb.WriteLine($"protected override {ModelPropertyType}? MTypeProperty => {typeProperty?.FullyQualifiedPropertyName ?? "null"};");
             cb.WriteLine("[global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)]");
             cb.WriteLine($"protected override {DictionaryType}<{ModelPropertyType}, {ModelPropertyInfoType}> MModelPropertyInfos => s_PropertyInfo;");
             cb.WriteLine();
@@ -336,10 +332,10 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
                 cb.WriteLine($"public {prop.CSharpType} {prop.Name}");
                 cb.WriteLine("{");
                 cb.Push();
-                cb.WriteLine($"get => MGet<{prop.CSharpType}>({prop.QualifiedPropertyName});");
+                cb.WriteLine($"get => MGet<{prop.CSharpType}>({prop.FullyQualifiedPropertyName});");
                 if (!prop.Flags.HasFlag(ModelPropertyFlags.ReadOnly) && !prop.Flags.HasFlag(ModelPropertyFlags.Collection))
                 {
-                    cb.WriteLine($"set => MAdd<{prop.CSharpType}>({prop.QualifiedPropertyName}, value);");
+                    cb.WriteLine($"set => MAdd<{prop.CSharpType}>({prop.FullyQualifiedPropertyName}, value);");
                 }
                 cb.Pop();
                 cb.WriteLine("}");
@@ -347,13 +343,13 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
             foreach (var prop in metaClass.AllDeclaredProperties)
             {
                 cb.WriteLine("[global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)]");
-                cb.WriteLine($"{prop.CSharpType} {prop.MetaClass.Name}.{prop.Name}");
+                cb.WriteLine($"{prop.CSharpType} {prop.MetaClass.FullyQualifiedName}.{prop.Name}");
                 cb.WriteLine("{");
                 cb.Push();
-                cb.WriteLine($"get => MGet<{prop.CSharpType}>({prop.QualifiedPropertyName});");
+                cb.WriteLine($"get => MGet<{prop.CSharpType}>({prop.FullyQualifiedPropertyName});");
                 if (!prop.Flags.HasFlag(ModelPropertyFlags.ReadOnly) && !prop.Flags.HasFlag(ModelPropertyFlags.Collection))
                 {
-                    cb.WriteLine($"set => MAdd<{prop.CSharpType}>({prop.QualifiedPropertyName}, value);");
+                    cb.WriteLine($"set => MAdd<{prop.CSharpType}>({prop.FullyQualifiedPropertyName}, value);");
                 }
                 cb.Pop();
                 cb.WriteLine("}");

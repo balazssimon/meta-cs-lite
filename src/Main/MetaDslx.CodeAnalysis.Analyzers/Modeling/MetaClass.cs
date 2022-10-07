@@ -73,7 +73,9 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
         }
 
         public string Name => _classInterface.Name;
+        public string FullyQualifiedName => $"global::{MetaModel.NamespaceName}.{Name}";
         public string ImplName => _classInterface.Name + "Impl";
+        public string FullyQualifiedImplName => $"global::{MetaModel.NamespaceName}.Internal.{ImplName}";
         public bool IsAbstract => _isAbstract;
         public bool IsRoot => BaseTypes.Length == 0;
 
