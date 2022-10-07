@@ -156,10 +156,17 @@ namespace MetaDslx.Modeling
             _properties[slot.SlotProperty] = value;
         }
 
+        bool IModelObject.IsDefault(ModelProperty property)
+        {
+            var value = ((IModelObject)this).Get(property);
+            if (value is null) return property.DefaultValue is null;
+            else return value.Equals(property.DefaultValue);
+        }
+
         public T MGet<T>(ModelProperty property)
         {
             var value = ((IModelObject)this).Get(property);
-            if (value == null) return default(T);
+            if (value is null) return default(T);
             else return (T)value;
         }
 
@@ -453,7 +460,8 @@ namespace MetaDslx.Modeling
 
         private void CheckReadOnly()
         {
-            if (((IModelObject)this).Model.IsReadOnly) throw new ModelException("The model is read only");
+            var model = ((IModelObject)this).Model;
+            if (model != null && model.IsReadOnly) throw new ModelException("The model is read only");
         }
     }
 }

@@ -28,6 +28,19 @@ namespace MetaDslx.Modeling
     }
 
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
+    public class DefaultValueAttribute : Attribute
+    {
+        private readonly object? _value;
+
+        public DefaultValueAttribute(object? value = null)
+        {
+            _value = value;
+        }
+
+        public object? Value => _value;
+    }
+
+    [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
     public class NameAttribute : Attribute
     {
     }

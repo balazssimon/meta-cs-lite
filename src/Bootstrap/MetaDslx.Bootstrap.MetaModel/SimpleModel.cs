@@ -17,7 +17,8 @@ namespace MetaDslx.Bootstrap.MetaModel
     public partial interface SimpleClass
     {
         [Name]
-        public string? Name { get; set; }
+        [DefaultValue("Hello")]
+        public string? Name { get; set; } 
     }
 
     public partial interface Husband : SimpleClass

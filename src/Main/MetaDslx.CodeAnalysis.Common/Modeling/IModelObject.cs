@@ -16,6 +16,7 @@ namespace MetaDslx.Modeling
         IModelObject? Parent { get; }
         IList<IModelObject> Children { get; }
         void Init(ModelProperty property, object? value);
+        bool IsDefault(ModelProperty property);
         object? Get(ModelProperty property);
         void Add(ModelProperty property, object? item);
         void Remove(ModelProperty property, object? item);

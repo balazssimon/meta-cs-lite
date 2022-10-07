@@ -10,13 +10,15 @@ namespace MetaDslx.Modeling
         private Type _declaringType;
         private string _name;
         private Type _type;
+        private object? _defaultValue;
         private ModelPropertyFlags _flags;
 
-        public ModelProperty(Type declaringType, string name, Type type, ModelPropertyFlags flags)
+        public ModelProperty(Type declaringType, string name, Type type, object? defaultValue, ModelPropertyFlags flags)
         {
             _declaringType = declaringType;
             _name = name;
             _type = type;
+            _defaultValue = defaultValue;
             _flags = flags;
         }
 
@@ -24,6 +26,7 @@ namespace MetaDslx.Modeling
         public string Name => _name;
         public ModelPropertyFlags Flags => _flags;
         public Type Type => _type;
+        public object? DefaultValue => _defaultValue;
         public bool IsDerived => _flags.HasFlag(ModelPropertyFlags.Derived);
         public bool IsDerivedUnion => _flags.HasFlag(ModelPropertyFlags.DerivedUnion);
         public bool IsContainment => _flags.HasFlag(ModelPropertyFlags.Containment);

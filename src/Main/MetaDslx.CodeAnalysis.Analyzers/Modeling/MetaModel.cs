@@ -6,14 +6,18 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
 {
+    using Compilation = Microsoft.CodeAnalysis.Compilation;
+
     internal class MetaModel
     {
         internal const string MetaModelAttributeName = "MetaDslx.Modeling.MetaModelAttribute";
 
+        private Compilation _compilation;
         private SourceProductionContext _context;
         private INamedTypeSymbol _modelInterface;
         private ModelVersion _version;
@@ -23,8 +27,9 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
         private ImmutableArray<MetaClass> _metaClasses;
         private Dictionary<string, MetaClass>? _metaClassMap;
 
-        public MetaModel(SourceProductionContext context, INamedTypeSymbol modelInterface, ImmutableArray<INamedTypeSymbol> classInterfaces)
+        public MetaModel(Compilation compilation, SourceProductionContext context, INamedTypeSymbol modelInterface, ImmutableArray<INamedTypeSymbol> classInterfaces)
         {
+            _compilation = compilation;
             _context = context;
             _modelInterface = modelInterface;
             ushort majorVersion = 0;
@@ -55,6 +60,7 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
             _classInterfaces = builder.OrderBy(s => s.Name).ToImmutableArray();
         }
 
+        public Compilation Compilation => _compilation;
         public SourceProductionContext Context => _context;
         public INamedTypeSymbol ModelInterface => _modelInterface;
         public ModelVersion Version => _version;

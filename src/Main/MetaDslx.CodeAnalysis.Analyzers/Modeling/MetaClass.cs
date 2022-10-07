@@ -10,6 +10,8 @@ using System.Text;
 
 namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
 {
+    using Compilation = Microsoft.CodeAnalysis.Compilation;
+
     internal class MetaClass
     {
         internal const string MetaClassAttributeName = "MetaDslx.Modeling.MetaClassAttribute";
@@ -44,6 +46,7 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
             }
         }
 
+        public Compilation Compilation => _metaModel.Compilation;
         public SourceProductionContext Context => _metaModel.Context;
         public MetaModel MetaModel => _metaModel;
         public INamedTypeSymbol ClassInterface => _classInterface;

@@ -10,12 +10,15 @@ using System.Text;
 
 namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
 {
+    using Compilation = Microsoft.CodeAnalysis.Compilation;
+
     internal class MetaProperty
     {
         private MetaClass _metaClass;
         private IPropertySymbol _propertySymbol;
         private ModelPropertyFlags _flags;
         private ITypeSymbol? _type;
+        private object? _defaultValue;
         private string _csharpType;
         private ImmutableArray<MetaProperty> _oppositeProperties;
         private ImmutableArray<MetaProperty> _subsettedProperties;
@@ -28,6 +31,30 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
             _csharpType = _propertySymbol.Type.ToDisplayString();
             foreach (var attr in propertySymbol.GetAttributes())
             {
+                if (attr.AttributeClass?.ToDisplayString() == "MetaDslx.Modeling.DefaultValueAttribute")
+                {
+                    var arg = attr.ConstructorArguments[0];
+                    if (arg.Type != null)
+                    {
+                        var conversion = metaClass.Compilation.ClassifyCommonConversion(arg.Type, _propertySymbol.Type);
+                        if (conversion.Exists)
+                        {
+                            _defaultValue = arg.Value;
+                        }
+                        else
+                        {
+                            // TODO: error
+                        }
+                    }
+                }
+                if (attr.AttributeClass?.ToDisplayString() == "MetaDslx.Modeling.NameAttribute")
+                {
+                    _flags |= ModelPropertyFlags.Name;
+                }
+                if (attr.AttributeClass?.ToDisplayString() == "MetaDslx.Modeling.TypeAttribute")
+                {
+                    _flags |= ModelPropertyFlags.Type;
+                }
                 if (attr.AttributeClass?.ToDisplayString() == "MetaDslx.Modeling.UntrackedAttribute")
                 {
                     _flags |= ModelPropertyFlags.Untracked;
@@ -56,26 +83,36 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
                 {
                     _flags |= ModelPropertyFlags.DerivedUnion | ModelPropertyFlags.Derived | ModelPropertyFlags.ReadOnly;
                 }
-                if (attr.AttributeClass?.ToDisplayString() == "MetaDslx.Modeling.NameAttribute")
-                {
-                    _flags |= ModelPropertyFlags.Name;
-                }
-                if (attr.AttributeClass?.ToDisplayString() == "MetaDslx.Modeling.TypeAttribute")
-                {
-                    _flags |= ModelPropertyFlags.Type;
-                }
             }
         }
 
+        public Compilation Compilation => _metaClass.Compilation;
         public SourceProductionContext Context => _metaClass.Context;
         public MetaModel MetaModel => _metaClass.MetaModel;
         public MetaClass MetaClass => _metaClass;
         public IPropertySymbol PropertySymbol => _propertySymbol;
+        public object? DefaultValue => _defaultValue;
         public string Name => _propertySymbol.Name;
         public string PropertyName => $"MProperty_{_metaClass.Name}_{_propertySymbol.Name}";
         public string QualifiedPropertyName => $"{_metaClass.Name}.MProperty_{_metaClass.Name}_{_propertySymbol.Name}";
         public string FullyQualifiedPropertyName => $"global::{MetaModel.NamespaceName}.{_metaClass.Name}.MProperty_{_metaClass.Name}_{_propertySymbol.Name}";
         public string CSharpType => _csharpType;
+        public string CSharpDefaultValue
+        {
+            get
+            {
+                if (_defaultValue == null) return $"default({CSharpType})";
+                var type = _defaultValue.GetType();
+                if (type == typeof(bool)) return ((bool)_defaultValue) ? "true" : "false";
+                if (type == typeof(string))
+                {
+                    var escapedValue = ((string)_defaultValue).Replace("\\", "\\\\").Replace("\"", "\\\"").Replace("\t", "\\t").Replace("\r", "\\r").Replace("\n", "\\n");
+                    return $"\"{escapedValue}\"";
+                }
+                if (type.IsPrimitive) return _defaultValue.ToString();
+                return _defaultValue.ToString();
+            }
+        }
 
         public ModelPropertyFlags Flags
         {

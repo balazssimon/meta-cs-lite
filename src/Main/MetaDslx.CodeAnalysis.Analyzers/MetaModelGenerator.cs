@@ -8,6 +8,7 @@ namespace MetaDslx.CodeAnalysis.Analyzers
     using MetaDslx.CodeAnalysis.Analyzers.Modeling;
     using MetaDslx.CodeAnalysis.PooledObjects;
     using Microsoft.CodeAnalysis;
+    using Microsoft.CodeAnalysis.CSharp;
     using Microsoft.CodeAnalysis.CSharp.Syntax;
     using Microsoft.CodeAnalysis.Text;
     using System.Diagnostics;
@@ -120,7 +121,7 @@ namespace MetaDslx.CodeAnalysis.Analyzers
                 var modelNs = models[nsName];
                 if (modelNs.Model != null)
                 {
-                    var metaModel = new MetaModel(context, modelNs.Model, modelNs.Classes?.ToImmutable() ?? ImmutableArray<INamedTypeSymbol>.Empty);
+                    var metaModel = new MetaModel(compilation, context, modelNs.Model, modelNs.Classes?.ToImmutable() ?? ImmutableArray<INamedTypeSymbol>.Empty);
                     metaModels.Add(metaModel);
                 }
                 else if (modelNs.Classes != null && modelNs.Classes.Count > 0)

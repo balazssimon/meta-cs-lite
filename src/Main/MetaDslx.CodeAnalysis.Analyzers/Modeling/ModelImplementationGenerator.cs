@@ -7,6 +7,7 @@ using System.Collections.Immutable;
 using System.Linq;
 using System.Text;
 using System.Xml.Linq;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
 {
@@ -151,7 +152,7 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
             cb.Push();
             foreach (var prop in metaClass.DeclaredProperties)
             {
-                cb.Write($"public static readonly {ModelPropertyType} {prop.PropertyName} = new {ModelPropertyType}(typeof({metaClass.Name}), nameof({prop.Name}), typeof({prop.Type?.ToDisplayString(NullableFlowState.None)}), ");
+                cb.Write($"public static readonly {ModelPropertyType} {prop.PropertyName} = new {ModelPropertyType}(typeof({metaClass.Name}), nameof({prop.Name}), typeof({prop.Type?.ToDisplayString(NullableFlowState.None)}), {prop.CSharpDefaultValue}, ");
                 GenerateModelPropertyFlags(cb, prop.Flags);
                 cb.WriteLine(");");
             }
@@ -252,6 +253,8 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
                 cb.Write($"slot: new {ModelPropertySlotType}({slot.SlotProperty.QualifiedPropertyName}, ");
                 GeneratePropertyArray(cb, slot.SlotProperties);
                 cb.Write(", ");
+                cb.Write(slot.SlotProperty.CSharpDefaultValue);
+                cb.Write(", ");
                 GenerateModelPropertyFlags(cb, slot.Flags);
                 cb.WriteLine("),");
                 cb.Write($"oppositeProperties: ");
@@ -299,6 +302,10 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
                 if (slot.Flags.HasFlag(ModelPropertyFlags.Collection))
                 {
                     cb.WriteLine($"(({IModelObjectType})this).Init({slot.SlotProperty.QualifiedPropertyName}, new {ModelObjectListType}<{slot.SlotProperty.Type.ToDisplayString()}>(this, s_PropertyInfo[{slot.SlotProperty.QualifiedPropertyName}].Slot));");
+                }
+                else if (slot.SlotProperty.DefaultValue != null)
+                {
+                    cb.WriteLine($"(({IModelObjectType})this).Init({slot.SlotProperty.QualifiedPropertyName}, {slot.SlotProperty.CSharpDefaultValue});");
                 }
             }
             cb.Pop();
@@ -353,5 +360,6 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
             cb.Pop();
             cb.WriteLine("}");
         }
+
     }
 }
