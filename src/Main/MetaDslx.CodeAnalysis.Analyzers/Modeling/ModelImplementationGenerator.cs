@@ -44,6 +44,8 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
 
         private static void Generate(CodeBuilder cb, MetaModel metaModel)
         {
+            cb.WriteLine("#nullable enable");
+            cb.WriteLine();
             cb.WriteLine($"namespace {metaModel.NamespaceName}");
             cb.WriteLine("{");
             cb.Push();
