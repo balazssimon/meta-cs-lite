@@ -12,7 +12,7 @@ using System.Xml;
 using System.Xml.Linq;
 
 namespace MetaDslx.Modeling
-{/*
+{
     public class XmiReadOptions
     {
         public XmiReadOptions()
@@ -95,7 +95,7 @@ namespace MetaDslx.Modeling
             if (xmiCode == null) throw new ArgumentNullException(nameof(xmiCode));
             if (options == null) throw new ArgumentNullException(nameof(options));
             XmiReader reader = new XmiReader(options);
-            reader.LoadXmiCode(null, xmiCode);
+            reader.LoadXmiCode(new Uri("http://metadslx/in-memory-code"), xmiCode);
             diagnostics = reader.Diagnostics.ToReadOnly();
             return reader.Model;
         }
@@ -423,7 +423,7 @@ namespace MetaDslx.Modeling
         private string _currentFile;
         private Dictionary<IMetaModel, (string, string)> _namespaces;
         private Dictionary<IModel, Dictionary<string, IModelObject>> _nameMap;
-        private Dictionary<IModel, List<MetaConstant>> _constantMap;
+        //private Dictionary<IModel, List<MetaConstant>> _constantMap;
         private IModelGroup _modelGroup;
         private IModel _currentModel;
         private XmiWriteOptions _options;
@@ -439,7 +439,7 @@ namespace MetaDslx.Modeling
             _options = options;
             _namespaces = new Dictionary<IMetaModel, (string, string)>();
             _nameMap = new Dictionary<IModel, Dictionary<string, IModelObject>>();
-            _constantMap = new Dictionary<IModel, List<MetaConstant>>();
+            //_constantMap = new Dictionary<IModel, List<MetaConstant>>();
             _diagnostics = new DiagnosticBag();
             _modelGroup = modelGroup;
         }
@@ -561,7 +561,7 @@ namespace MetaDslx.Modeling
                     }
                     else
                     {
-                        if (!obj.MHasDefaultValue(prop))
+                        if (!obj.IsDefault(prop))
                         {
                             var value = obj.Get(prop);
                             if (value != null)
@@ -675,13 +675,14 @@ namespace MetaDslx.Modeling
 
         private IModelObject ModelObjectToConstant(IModelObject obj)
         {
-            if (!_constantMap.TryGetValue(obj.Model, out var constants))
+            /*if (!_constantMap.TryGetValue(obj.Model, out var constants))
             {
                 constants = obj.Model.Objects.OfType<MetaConstant>().ToList();
                 _constantMap.Add(obj.Model, constants);
             }
             var cst = constants.Where(c => c.Value == obj).FirstOrDefault();
-            return cst ?? obj;
+            return cst ?? obj;*/
+            return obj;
         }
 
         private string GetRelativePath(IModel model)
@@ -870,6 +871,7 @@ namespace MetaDslx.Modeling
     internal class XmiFileReader
     {
         private static readonly XNamespace _xsiNamespace = "http://www.w3.org/2001/XMLSchema-instance";
+        private static readonly string ByteOrderMarkUtf8 = Encoding.UTF8.GetString(Encoding.UTF8.GetPreamble());
         private bool _isMainReader;
         private bool _isFinished;
         private Uri _fileUri;
@@ -886,6 +888,7 @@ namespace MetaDslx.Modeling
         {
             _isMainReader = isMainReader;
             _fileUri = fileUri;
+            if (xmiCode.StartsWith(ByteOrderMarkUtf8)) xmiCode = xmiCode.Remove(0, ByteOrderMarkUtf8.Length);
             _xmiCode = xmiCode;
             _xmiReader = xmiReader;
             _model = _xmiReader.ModelGroup.CreateModel();
@@ -934,7 +937,7 @@ namespace MetaDslx.Modeling
             var metaModel = ResolveMetadataByNamespace(nsName);
             if (metaModel != null)
             {
-                factory = metaModel.CreateFactory((Model)_model, ModelFactoryFlags.DontMakeObjectsCreated);
+                factory = metaModel.CreateFactory(_model);
                 _namespaceToFactoryMap.Add(nsName, factory);
                 return factory;
             }
@@ -1004,10 +1007,6 @@ namespace MetaDslx.Modeling
         public void ReadObjects()
         {
             this.ReadObject(_root, null);
-            foreach (var mobj in ((Model)_model).Objects)
-            {
-                mobj.MMakeCreated();
-            }
             _isFinished = true;
         }
 
@@ -1064,7 +1063,7 @@ namespace MetaDslx.Modeling
             {
                 try
                 {
-                    obj = (IModelObject)factory.Create(typeName);
+                    obj = factory.Create(typeName);
                 }
                 catch (ModelException mex)
                 {
@@ -1184,6 +1183,7 @@ namespace MetaDslx.Modeling
             else
             {
                 _objectsById.Add(id, mobj);
+                mobj.Id = id;
                 return true;
             }
         }
@@ -1344,11 +1344,11 @@ namespace MetaDslx.Modeling
 
         private object ResolveMetaConstantValue(ModelProperty property, object value)
         {
-            if (property.Type != typeof(MetaConstant))
+            /*if (property.Type != typeof(MetaConstant))
             {
                 if (value is MetaConstant metaConstant) return metaConstant.Value;
                 else if (value is MetaConstantBuilder metaConstantBuilder) return metaConstantBuilder.Value;
-            }
+            }*/
             return value;
         }
 
@@ -1595,5 +1595,5 @@ namespace MetaDslx.Modeling
             }
         }
 
-    }*/
+    }
 }

@@ -224,6 +224,7 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
             cb.WriteLine("}");
             cb.WriteLine();
             cb.WriteLine($"public string Name => \"{metaModel.Name}\";");
+            cb.WriteLine($"public string FullName => \"{metaModel.ModelInterface.ToDisplayString()}\";");
             cb.WriteLine($"public {ModelVersionType} Version => _version;");
             cb.WriteLine($"public string Uri => \"{metaModel.Uri}\";");
             cb.WriteLine($"public string Prefix => \"{metaModel.Prefix}\";");

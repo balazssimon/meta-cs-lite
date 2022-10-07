@@ -1,4 +1,5 @@
-﻿using MetaDslx.Modeling;
+﻿using MetaDslx.Bootstrap.MetaModel.Internal;
+using MetaDslx.Modeling;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -8,9 +9,10 @@ using System.Threading.Tasks;
 
 namespace MetaDslx.Bootstrap.MetaModel
 {
-    [MetaModel]
+    [MetaModel(MajorVersion = 1, MinorVersion = 2, Prefix = "sm", Uri = "http://metadslx/SimpleModel")]
     public partial interface SimpleModel 
     {
+        public static readonly Husband Husband1 = new HusbandImpl() { Name = "a" };
     }
 
     [MetaClass(IsAbstract = true)]
@@ -19,12 +21,22 @@ namespace MetaDslx.Bootstrap.MetaModel
         [Name]
         [DefaultValue("Hello")]
         public string? Name { get; set; } 
+
+        public virtual bool IsHusband()
+        {
+            return false;
+        }
     }
 
     public partial interface Husband : SimpleClass
     {
         [Opposite(typeof(Wife), "Husband")]
         Wife? Wife { get; set; }
+
+        public new bool IsHusband()
+        {
+            return true;
+        }
     }
 
     public partial interface Wife : SimpleClass

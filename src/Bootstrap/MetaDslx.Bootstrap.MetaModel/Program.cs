@@ -16,6 +16,10 @@ var husband = factory.Husband();
 var wife = factory.Wife();
 husband.Wife = wife;
 
+Console.WriteLine(SimpleModel.Husband1);
+Console.WriteLine(husband.IsHusband());
+Console.WriteLine(wife.IsHusband());
+
 var user = factory.User2();
 var role = factory.Role();
 user.Roles.Add(role);
@@ -37,6 +41,16 @@ composite.Children.Add(node);
 node.Parent = null;
 node.Parent = composite;
 composite.Children.Remove(node);
+node.Parent = composite;
 
 IModelObject muser = (IModelObject)user;
 Console.WriteLine(muser);
+
+Console.WriteLine();
+
+var serializer = new XmiSerializer();
+var savedModel = serializer.WriteModel(model);
+Console.WriteLine(savedModel);
+var loadedModel = serializer.ReadModel(savedModel, SimpleModel.Instance);
+Console.WriteLine(loadedModel);
+Console.WriteLine(serializer.WriteModel(loadedModel));

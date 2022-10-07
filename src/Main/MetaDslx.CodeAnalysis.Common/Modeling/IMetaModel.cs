@@ -7,6 +7,7 @@ namespace MetaDslx.Modeling
     public interface IMetaModel
     {
         string Name { get; }
+        string FullName { get; }
         ModelVersion Version { get; }
         string Uri { get; }
         string Prefix { get; }
