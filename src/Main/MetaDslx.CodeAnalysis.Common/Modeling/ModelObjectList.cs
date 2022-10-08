@@ -7,7 +7,7 @@ using System.Text;
 
 namespace MetaDslx.Modeling
 {
-    public class ModelObjectList<T> : IList<T>, IModelCollection
+    public class ModelObjectList<T> : IList<T>, IModelCollection, IModelCollectionCore
     {
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private ModelObject _owner;
@@ -248,6 +248,17 @@ namespace MetaDslx.Modeling
             {
                 if (slotProperty.IsReadOnly) throw new InvalidOperationException($"Collection property '{slotProperty.Name}' is read only.");
             }
+        }
+
+        void IModelCollectionCore.AddCore(object? item)
+        {
+            SafeInsert(_items.Count, (T)item);
+        }
+
+        void IModelCollectionCore.RemoveCore(object? item)
+        {
+            var index = _items.IndexOf((T)item);
+            if (index >= 0) SafeRemoveAt(index);
         }
     }
 }

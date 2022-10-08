@@ -833,8 +833,7 @@ namespace MetaDslx.Modeling
             {
                 reader = new XmiFileReader(fileUri, model, this);
                 _readers.Add(absoluteUri, reader);
-                if (model is Model mutableModel) _modelGroup.AddReference(mutableModel);
-                else if (model is Model immmutableModel) _modelGroup.AddReference(immmutableModel);
+                _modelGroup.AddReference(model);
             }
             return reader;
         }

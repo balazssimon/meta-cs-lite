@@ -219,6 +219,15 @@ namespace MetaDslx.Modeling
             foreach (var slotProperty in slot.SlotProperties)
             {
                 if (slotProperty.Flags.HasFlag(ModelPropertyFlags.ReadOnly)) throw new ArgumentException($"The property '{slotProperty.Name}' is read only.");
+            }
+            AddCore(property, item);
+        }
+
+        internal void AddCore(ModelProperty property, object? item)
+        {
+            var slot = GetSlot(property);
+            foreach (var slotProperty in slot.SlotProperties)
+            {
                 if (slotProperty.Flags.HasFlag(ModelPropertyFlags.NullableType) && item == null) throw new ArgumentException($"Null value cannot be assigned to the property '{slotProperty.Name}'.");
                 if (item != null && !slotProperty.Type.IsAssignableFrom(item.GetType())) throw new ArgumentException($"'{item}' of type '{item.GetType()}' is not assignable to the property '{slotProperty.Name}' of type '{slotProperty.Type}'.");
             }
@@ -230,7 +239,10 @@ namespace MetaDslx.Modeling
                     {
                         if (property.Flags.HasFlag(ModelPropertyFlags.Collection))
                         {
-                            collection.Add(item);
+                            if (collection is IModelCollectionCore collectionCore)
+                            {
+                                collectionCore.AddCore(item);
+                            }
                         }
                         else
                         {
@@ -280,11 +292,19 @@ namespace MetaDslx.Modeling
         void IModelObject.Remove(ModelProperty property, object? item)
         {
             CheckReadOnly();
-            if (item == null) throw new ArgumentNullException(nameof(item));
             var slot = GetSlot(property);
             foreach (var slotProperty in slot.SlotProperties)
             {
                 if (slotProperty.Flags.HasFlag(ModelPropertyFlags.ReadOnly)) throw new ArgumentException($"The property '{slotProperty.Name}' is read only.");
+            }
+            RemoveCore(property, item);
+        }
+
+        internal void RemoveCore(ModelProperty property, object? item)
+        {
+            var slot = GetSlot(property);
+            foreach (var slotProperty in slot.SlotProperties)
+            {
                 if (slotProperty.Flags.HasFlag(ModelPropertyFlags.NullableType) && item == null) throw new ArgumentException($"Null value cannot be assigned to the property '{slotProperty.Name}'.");
                 if (item != null && !slotProperty.Type.IsAssignableFrom(item.GetType())) throw new ArgumentException($"'{item}' of type '{item.GetType()}' is not assignable to the property '{slotProperty.Name}' of type '{slotProperty.Type}'.");
             }
@@ -292,9 +312,9 @@ namespace MetaDslx.Modeling
             {
                 if (slot.Flags.HasFlag(ModelPropertyFlags.Collection))
                 {
-                    if (oldValue is IModelCollection collection)
+                    if (oldValue is IModelCollectionCore collection)
                     {
-                        collection.Remove(item);
+                        collection.RemoveCore(item);
                     }
                     else
                     {
@@ -343,11 +363,11 @@ namespace MetaDslx.Modeling
                 {
                     foreach (var oppositeProperty in ((IModelObject)this).GetOppositeProperties(slotProperty))
                     {
-                        mobj.Add(oppositeProperty, this);
+                        ((ModelObject)mobj).AddCore(oppositeProperty, this);
                     }
                     foreach (var subsettedProperty in ((IModelObject)this).GetSubsettedProperties(slotProperty))
                     {
-                        mthis.Add(subsettedProperty, mobj);
+                        this.AddCore(subsettedProperty, mobj);
                     }
                 }
             }
@@ -391,11 +411,11 @@ namespace MetaDslx.Modeling
                 {
                     foreach (var oppositeProperty in  ((IModelObject)this).GetOppositeProperties(slotProperty))
                     {
-                        mobj.Remove(oppositeProperty, this);
+                        ((ModelObject)mobj).RemoveCore(oppositeProperty, this);
                     }
                     foreach (var subsettingProperty in ((IModelObject)this).GetSubsettingProperties(slotProperty))
                     {
-                        mthis.Remove(subsettingProperty, mobj);
+                        this.RemoveCore(subsettingProperty, mobj);
                     }
                 }
             }
