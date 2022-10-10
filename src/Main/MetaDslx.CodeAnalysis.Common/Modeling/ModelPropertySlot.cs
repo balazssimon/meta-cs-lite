@@ -26,5 +26,12 @@ namespace MetaDslx.Modeling
         public object? DefaultValue => _defaultValue;
         public ModelPropertyFlags Flags => _flags;
 
+        internal void ThrowModelException(Func<ModelProperty, bool> condition, Func<ModelProperty, string> message)
+        {
+            foreach (var slotProperty in _slotProperties)
+            {
+                if (condition(slotProperty)) throw new ModelException(string.Format(message(slotProperty), slotProperty.QualifiedName));
+            }
+        }
     }
 }

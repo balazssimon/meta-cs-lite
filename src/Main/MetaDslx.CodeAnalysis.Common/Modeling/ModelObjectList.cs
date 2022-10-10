@@ -2,7 +2,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
+using System.Reflection;
 using System.Text;
 
 namespace MetaDslx.Modeling
@@ -33,8 +35,12 @@ namespace MetaDslx.Modeling
             get => _items[index]; 
             set
             {
-                CheckReadonly();
-                SafeReplace(index, value);
+                if (Owner.Model.IsReadOnly) throw new ModelException($"Error assigning '{value}' to '{_slot.SlotProperty.QualifiedName}[{index}]' in '{Owner}': the model '{Owner.Model}' is read only.");
+                if (Owner.Model.ValidationFlags.HasFlag(ModelValidationFlags.Readonly) && _slot.Flags.HasFlag(ModelPropertyFlags.ReadOnly))
+                {
+                    _slot.ThrowModelException(mp => mp.IsReadOnly, mp => $"Error assigning '{value}' to '{mp.QualifiedName}[{index}]' in '{Owner}': the property is read only.");
+                }
+                ReplaceCore(index, value);
             }
         }
 
@@ -65,7 +71,7 @@ namespace MetaDslx.Modeling
                 }
                 else
                 {
-                    throw new InvalidOperationException($"This collection is not a single item collection.");
+                    _slot.ThrowModelException(mp => mp.IsSingleItem, mp => $"Error assigning '{value}' to '{mp.QualifiedName}' in '{Owner}': this collection is not a single item collection.");
                 }
             }
         }
@@ -73,14 +79,22 @@ namespace MetaDslx.Modeling
 
         public void Add(T item)
         {
-            CheckReadonly();
-            SafeInsert(_items.Count, item);
+            if (Owner.Model.IsReadOnly) throw new ModelException($"Error adding '{item}' to '{_slot.SlotProperty.QualifiedName}' in '{Owner}': the model '{Owner.Model}' is read only.");
+            if (Owner.Model.ValidationFlags.HasFlag(ModelValidationFlags.Readonly) && _slot.Flags.HasFlag(ModelPropertyFlags.ReadOnly))
+            {
+                _slot.ThrowModelException(mp => mp.IsReadOnly, mp => $"Error adding '{item}' to '{mp.QualifiedName}' in '{Owner}': the property is read only.");
+            }
+            InsertCore(_items.Count, item);
         }
 
         public void Clear()
         {
-            CheckReadonly();
-            while (_items.Count > 0) SafeRemoveAt(_items.Count - 1);
+            if (Owner.Model.IsReadOnly) throw new ModelException($"Error clearing '{_slot.SlotProperty.QualifiedName}' in '{Owner}': the model '{Owner.Model}' is read only.");
+            if (Owner.Model.ValidationFlags.HasFlag(ModelValidationFlags.Readonly) && _slot.Flags.HasFlag(ModelPropertyFlags.ReadOnly))
+            {
+                _slot.ThrowModelException(mp => mp.IsReadOnly, mp => $"Error clearing '{mp.QualifiedName}' in '{Owner}': the property is read only.");
+            }
+            while (_items.Count > 0) RemoveAtCore(_items.Count - 1);
         }
 
         public bool Contains(T item)
@@ -105,8 +119,12 @@ namespace MetaDslx.Modeling
 
         public void Insert(int index, T item)
         {
-            CheckReadonly();
-            SafeInsert(index, item);
+            if (Owner.Model.IsReadOnly) throw new ModelException($"Error inserting '{item}' at '{_slot.SlotProperty.QualifiedName}[{index}]' in '{Owner}': the model '{Owner.Model}' is read only.");
+            if (Owner.Model.ValidationFlags.HasFlag(ModelValidationFlags.Readonly) && _slot.Flags.HasFlag(ModelPropertyFlags.ReadOnly))
+            {
+                _slot.ThrowModelException(mp => mp.IsReadOnly, mp => $"Error inserting '{item}' at '{mp.QualifiedName}[{index}]' in '{Owner}': the property is read only.");
+            }
+            InsertCore(index, item);
         }
 
         public bool Remove(T item)
@@ -118,8 +136,12 @@ namespace MetaDslx.Modeling
 
         public void RemoveAt(int index)
         {
-            CheckReadonly();
-            SafeRemoveAt(index);
+            if (Owner.Model.IsReadOnly) throw new ModelException($"Error removing item at '{_slot.SlotProperty.QualifiedName}[{index}]' in '{Owner}': the model '{Owner.Model}' is read only.");
+            if (Owner.Model.ValidationFlags.HasFlag(ModelValidationFlags.Readonly) && _slot.Flags.HasFlag(ModelPropertyFlags.ReadOnly))
+            {
+                _slot.ThrowModelException(mp => mp.IsReadOnly, mp => $"Error removing item at '{mp.QualifiedName}[{index}]' in '{Owner}': the property is read only.");
+            }
+            RemoveAtCore(index);
         }
 
         IEnumerator IEnumerable.GetEnumerator()
@@ -129,9 +151,9 @@ namespace MetaDslx.Modeling
 
         void IModelCollection.Add(object? item)
         {
-            foreach (var slotProperty in _slot.SlotProperties)
+            if (item != null)
             {
-                if (!slotProperty.Type.IsAssignableFrom(item.GetType())) throw new ArgumentException($"The type '{item.GetType()}' of '{item}' is not assignable to the type '{slotProperty.Type}' of '{slotProperty}'.");
+                _slot.ThrowModelException(mp => !mp.Type.IsAssignableFrom(item.GetType()), mp => $"Error adding '{item}' to '{mp.QualifiedName}' in '{Owner}': the item type '{item.GetType()}' is not assignable to the property type '{mp.Type}'.");
             }
             if (item is T typedItem)
             {
@@ -169,14 +191,17 @@ namespace MetaDslx.Modeling
             else return false;
         }
 
-        private void SafeReplace(int index, T item)
+        private void ReplaceCore(int index, T item)
         {
-            if (!NullableType && item == null) throw new ArgumentNullException(nameof(item));
+            if (Owner.Model.ValidationFlags.HasFlag(ModelValidationFlags.Nullable) && !NullableType && item == null)
+            {
+                _slot.ThrowModelException(mp => mp.IsNullable, mp => $"Error assigning '{item}' to '{mp.QualifiedName}[{index}]' in '{Owner}': the item cannot be null.");
+            }
             var valueReplaced = false;
             var oldValue = _items[index];
             try
             {
-                if (!item.Equals(oldValue))
+                if ((item is null && oldValue is not null) || (item is not null && !item.Equals(oldValue)))
                 {
                     _items[index] = default(T);
                     _owner.ValueRemoved(_slot, oldValue);
@@ -187,7 +212,7 @@ namespace MetaDslx.Modeling
                     }
                     else
                     {
-                        throw new InvalidOperationException($"Value '{item}' will not be unique.");
+                        _slot.ThrowModelException(mp => !mp.Type.IsAssignableFrom(item.GetType()), mp => $"Error assigning '{item}' to '{mp.QualifiedName}[{index}]' in '{Owner}': the item will not be unique in the collection.");
                     }
                 }
             }
@@ -198,9 +223,12 @@ namespace MetaDslx.Modeling
             }
         }
 
-        private void SafeInsert(int index, T item)
+        private void InsertCore(int index, T item)
         {
-            if (!NullableType && item == null) throw new ArgumentNullException(nameof(item));
+            if (Owner.Model.ValidationFlags.HasFlag(ModelValidationFlags.Nullable) && !NullableType && item == null)
+            {
+                _slot.ThrowModelException(mp => mp.IsNullable, mp => $"Error inserting '{item}' at '{mp.QualifiedName}[{index}]' in '{Owner}': the item cannot be null.");
+            }
             var valueAdded = false;
             try
             {
@@ -208,7 +236,7 @@ namespace MetaDslx.Modeling
                 {
                     if (SingleItem && _items.Count >= 1)
                     {
-                        throw new InvalidOperationException($"Only one item is allowed in this collection.");
+                        _slot.ThrowModelException(mp => mp.IsSingleItem, mp => $"Error inserting '{item}' at '{mp.QualifiedName}[{index}]' in '{Owner}': this collection can only contain a single item.");
                     }
                     _items.Insert(index, item);
                     valueAdded = true;
@@ -222,7 +250,7 @@ namespace MetaDslx.Modeling
             }
         }
 
-        private void SafeRemoveAt(int index)
+        private void RemoveAtCore(int index)
         {
             var valueRemoved = false;
             var oldItem = _items[index];
@@ -242,23 +270,24 @@ namespace MetaDslx.Modeling
             }
         }
 
-        private void CheckReadonly()
-        {
-            foreach (var slotProperty in _slot.SlotProperties)
-            {
-                if (slotProperty.IsReadOnly) throw new InvalidOperationException($"Collection property '{slotProperty.Name}' is read only.");
-            }
-        }
-
         void IModelCollectionCore.AddCore(object? item)
         {
-            SafeInsert(_items.Count, (T)item);
+            if (item is not null)
+            {
+                _slot.ThrowModelException(mp => !mp.Type.IsAssignableFrom(item.GetType()), mp => $"Error adding '{item}' to '{mp.QualifiedName}' in '{Owner}': the item type '{item.GetType()}' is not assignable to the property type '{mp.Type}'.");
+            }
+            InsertCore(_items.Count, (T)item);
         }
 
         void IModelCollectionCore.RemoveCore(object? item)
         {
+            if (item is not null)
+            {
+                _slot.ThrowModelException(mp => !mp.Type.IsAssignableFrom(item.GetType()), mp => $"Error removing '{item}' from '{mp.QualifiedName}' in '{Owner}': the item type '{item.GetType()}' is not assignable to the property type '{mp.Type}'.");
+            }
             var index = _items.IndexOf((T)item);
-            if (index >= 0) SafeRemoveAt(index);
+            if (index >= 0) RemoveAtCore(index);
         }
+
     }
 }

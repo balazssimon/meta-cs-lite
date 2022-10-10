@@ -66,7 +66,8 @@ namespace MetaDslx.Modeling
             get => _model;
             set
             {
-                if (_model != null && value != null) throw new ArgumentException(nameof(value), $"Model object '{this}' is already contained by the model '{_model}. To change the model of an object, remove the object from the old model first.'");
+                if (_model != null && value != null) throw new ModelException($"Model object '{this}' is already contained by the model '{_model}. To change the model of an object, remove the object from the old model first.'");
+                if (_model != null && _model.IsReadOnly) throw new ModelException($"Error changing the model '{_model}' of '{this}' to {value}: the model containing the object is read only.");
                 if (!object.ReferenceEquals(_model, value))
                 {
                     var originalModel = _model;
@@ -150,8 +151,7 @@ namespace MetaDslx.Modeling
 
         void IModelObject.Init(ModelProperty property, object? value)
         {
-            //if (value != null && !property.Type.IsAssignableFrom(value.GetType())) throw new ArgumentException($"The type '{value.GetType()}' of '{value}' is not assignable to the type '{property.Type}' of '{property}'.");
-            CheckReadOnly();
+            if (_model != null && _model.IsReadOnly) throw new ModelException($"Error initializing '{property.QualifiedName}' in '{this}' with '{value}': the model '{_model}' is read only.");
             var slot = GetSlot(property);
             _properties[slot.SlotProperty] = value;
         }
@@ -184,7 +184,7 @@ namespace MetaDslx.Modeling
                     }
                     else
                     {
-                        throw new InvalidOperationException($"Collection property '{property.Name}' must be initialized in the constructor with an IModelCollection implementation using MInit().");
+                        throw new ModelException($"Error getting value of '{property.QualifiedName}' in '{this}': the property must be initialized in the constructor with an IModelCollection implementation using Init().");
                     }
                 }
                 return value;
@@ -193,7 +193,7 @@ namespace MetaDslx.Modeling
             {
                 if (slot.Flags.HasFlag(ModelPropertyFlags.Collection))
                 {
-                    throw new InvalidOperationException($"Collection property '{property.Name}' must be initialized in the constructor with an IModelCollection implementation using MInit().");
+                    throw new ModelException($"Error getting value of '{property.QualifiedName}' in '{this}': the property must be initialized in the constructor with an IModelCollection implementation using Init().");
                 }
                 else
                 {
@@ -214,11 +214,11 @@ namespace MetaDslx.Modeling
 
         void IModelObject.Add(ModelProperty property, object? item)
         {
-            CheckReadOnly();
+            if (_model != null && _model.IsReadOnly) throw new ModelException($"{GetAddMessage(property, item)}: the model '{_model}' is read only.");
             var slot = GetSlot(property);
-            foreach (var slotProperty in slot.SlotProperties)
+            if (_model.ValidationFlags.HasFlag(ModelValidationFlags.Readonly) && slot.Flags.HasFlag(ModelPropertyFlags.ReadOnly))
             {
-                if (slotProperty.Flags.HasFlag(ModelPropertyFlags.ReadOnly)) throw new ArgumentException($"The property '{slotProperty.Name}' is read only.");
+                slot.ThrowModelException(mp => mp.IsReadOnly, mp => $"{GetAddMessage(property, item)}: the property is read only.");
             }
             AddCore(property, item);
         }
@@ -226,10 +226,13 @@ namespace MetaDslx.Modeling
         internal void AddCore(ModelProperty property, object? item)
         {
             var slot = GetSlot(property);
-            foreach (var slotProperty in slot.SlotProperties)
+            if (item is not null)
             {
-                if (slotProperty.Flags.HasFlag(ModelPropertyFlags.NullableType) && item == null) throw new ArgumentException($"Null value cannot be assigned to the property '{slotProperty.Name}'.");
-                if (item != null && !slotProperty.Type.IsAssignableFrom(item.GetType())) throw new ArgumentException($"'{item}' of type '{item.GetType()}' is not assignable to the property '{slotProperty.Name}' of type '{slotProperty.Type}'.");
+                slot.ThrowModelException(mp => !mp.Type.IsAssignableFrom(item.GetType()), mp => $"{GetAddMessage(mp, item)}: the item type '{item.GetType()}' is not assignable to the property type '{mp.Type}'.");
+            }
+            else if (_model.ValidationFlags.HasFlag(ModelValidationFlags.Nullable))
+            {
+                slot.ThrowModelException(mp => mp.IsNullable, mp => $"{GetAddMessage(mp, item)}: value cannot be null.");
             }
             if (_properties.TryGetValue(slot.SlotProperty, out var oldValue))
             {
@@ -251,7 +254,7 @@ namespace MetaDslx.Modeling
                     }
                     else
                     {
-                        throw new InvalidOperationException($"Collection property '{property.Name}' must be initialized in the constructor with an IModelCollection implementation using MInit().");
+                        slot.ThrowModelException(mp => mp.IsCollection, mp => $"{GetAddMessage(mp, item)}: the property must be initialized in the constructor with an IModelCollection implementation using Init().");
                     }
                 }
                 else
@@ -291,11 +294,11 @@ namespace MetaDslx.Modeling
 
         void IModelObject.Remove(ModelProperty property, object? item)
         {
-            CheckReadOnly();
+            if (_model != null && _model.IsReadOnly) throw new ModelException($"{GetRemoveMessage(property, item)}: the model '{_model}' is read only.");
             var slot = GetSlot(property);
-            foreach (var slotProperty in slot.SlotProperties)
+            if (_model.ValidationFlags.HasFlag(ModelValidationFlags.Readonly) && slot.Flags.HasFlag(ModelPropertyFlags.ReadOnly))
             {
-                if (slotProperty.Flags.HasFlag(ModelPropertyFlags.ReadOnly)) throw new ArgumentException($"The property '{slotProperty.Name}' is read only.");
+                slot.ThrowModelException(mp => mp.IsReadOnly, mp => $"{GetRemoveMessage(property, item)}: the property is read only.");
             }
             RemoveCore(property, item);
         }
@@ -303,10 +306,13 @@ namespace MetaDslx.Modeling
         internal void RemoveCore(ModelProperty property, object? item)
         {
             var slot = GetSlot(property);
-            foreach (var slotProperty in slot.SlotProperties)
+            if (item is not null)
             {
-                if (slotProperty.Flags.HasFlag(ModelPropertyFlags.NullableType) && item == null) throw new ArgumentException($"Null value cannot be assigned to the property '{slotProperty.Name}'.");
-                if (item != null && !slotProperty.Type.IsAssignableFrom(item.GetType())) throw new ArgumentException($"'{item}' of type '{item.GetType()}' is not assignable to the property '{slotProperty.Name}' of type '{slotProperty.Type}'.");
+                slot.ThrowModelException(mp => !mp.Type.IsAssignableFrom(item.GetType()), mp => $"{GetRemoveMessage(mp, item)}: the item type '{item.GetType()}' is not assignable to the property type '{mp.Type}'.");
+            }
+            else if (_model.ValidationFlags.HasFlag(ModelValidationFlags.Nullable))
+            {
+                slot.ThrowModelException(mp => mp.IsNullable, mp => $"{GetRemoveMessage(mp, item)}: value cannot be null.");
             }
             if (_properties.TryGetValue(slot.SlotProperty, out var oldValue))
             {
@@ -318,7 +324,7 @@ namespace MetaDslx.Modeling
                     }
                     else
                     {
-                        throw new InvalidOperationException($"Collection property '{property.Name}' must be initialized in the constructor with an IModelCollection implementation using MInit().");
+                        slot.ThrowModelException(mp => mp.IsCollection, mp => $"{GetAddMessage(mp, item)}: the property must be initialized in the constructor with an IModelCollection implementation using Init().");
                     }
                 }
                 else
@@ -352,7 +358,7 @@ namespace MetaDslx.Modeling
                     if (mobjParent == null) ((ModelObject)mobj)._parent = mthis;
                     else if (!object.ReferenceEquals(mobjParent, this))
                     {
-                        throw new InvalidOperationException($"The object '{mobj}' is already contained by '{mobjParent}', cannot set its container to '{this}'. Set the parent to 'null' first.");
+                        throw new ModelException($"Cannot set the container of object '{mobj}' to '{this}': the object is already contained by the parent '{mobjParent}'. Remove the object from the parent first.");
                     }
                     if (!_children.Contains(mobj))
                     {
@@ -478,10 +484,16 @@ namespace MetaDslx.Modeling
             else return ImmutableArray<ModelProperty>.Empty;
         }
 
-        private void CheckReadOnly()
+        private string GetAddMessage(ModelProperty property, object? item)
         {
-            var model = ((IModelObject)this).Model;
-            if (model != null && model.IsReadOnly) throw new ModelException("The model is read only");
+            if (property.IsSingleItem) return $"Error assigning '{item}' to {property.QualifiedName} in {this}";
+            else return $"Error adding '{item}' to {property.QualifiedName} in {this}";
+        }
+
+        private string GetRemoveMessage(ModelProperty property, object? item)
+        {
+            if (property.IsSingleItem) return $"Error assigning '{item}' to {property.QualifiedName} in {this}";
+            else return $"Error removing '{item}' from {property.QualifiedName} in {this}";
         }
     }
 }

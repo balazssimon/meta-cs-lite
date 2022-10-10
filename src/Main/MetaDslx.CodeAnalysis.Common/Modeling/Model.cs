@@ -9,6 +9,7 @@ namespace MetaDslx.Modeling
         private string _id;
         private string? _name;
         private bool _readOnly;
+        private ModelValidationFlags _validationFlags;
         private ModelGroup? _modelGroup;
         private List<IModelObject> _modelObjects;
 
@@ -76,6 +77,12 @@ namespace MetaDslx.Modeling
             set => this.ModelGroup = (ModelGroup)value; 
         }
 
+        public ModelValidationFlags ValidationFlags
+        {
+            get => _validationFlags;
+            set => _validationFlags = value;
+        }
+
         public void AddObject(IModelObject modelObject)
         {
             CheckReadOnly();
@@ -115,7 +122,7 @@ namespace MetaDslx.Modeling
 
         private void CheckReadOnly()
         {
-            if (_readOnly) throw new ModelException("The model is read only");
+            if (_validationFlags.HasFlag(ModelValidationFlags.Readonly) && _readOnly) throw new ModelException("The model is read only");
         }
 
         public override string ToString()
