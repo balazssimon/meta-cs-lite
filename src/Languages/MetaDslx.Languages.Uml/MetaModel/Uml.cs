@@ -5215,10 +5215,11 @@ namespace MetaDslx.Languages.Uml.MetaModel
     			throw new NotImplementedException();
     		}
     	}
-    
-    	/// <summary>
-    	/// The name of the NamedElement.
-    	/// </summary>
+
+        /// <summary>
+        /// The name of the NamedElement.
+        /// </summary>
+        [Name]
     	string Name { get; set; }
     
     	/// <summary>
@@ -5769,9 +5770,10 @@ namespace MetaDslx.Languages.Uml.MetaModel
     [MetaClass(IsAbstract = true)]
     public partial interface TypedElement : NamedElement
     {
-    	/// <summary>
-    	/// The type of the TypedElement.
-    	/// </summary>
+        /// <summary>
+        /// The type of the TypedElement.
+        /// </summary>
+        [Type]
     	Type Type { get; set; }
     
     }

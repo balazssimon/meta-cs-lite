@@ -284,10 +284,7 @@ namespace MetaDslx.Modeling
 
         void IModelCollectionCore.RemoveCore(object? item)
         {
-            if (item is not null)
-            {
-                _slot.ThrowModelException(mp => !mp.Type.IsAssignableFrom(item.GetType()), mp => $"Error removing '{item}' from '{mp.QualifiedName}' in '{Owner}': the item type '{item.GetType()}' is not assignable to the property type '{mp.Type}'.");
-            }
+            if (item is not null && item.GetType() != typeof(T)) return;
             var index = _items.IndexOf((T)item);
             if (index >= 0) RemoveAtCore(index);
         }

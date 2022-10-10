@@ -12,12 +12,14 @@ namespace MetaDslx.Modeling
         private bool _readOnly;
         private ModelGroup? _modelGroup;
         private List<IModelObject> _modelObjects;
+        private ModelValidationOptions _validationOptions;
 
         public Model(string? id = null, string? name = null)
         {
             _id = id ?? Guid.NewGuid().ToString();
             _name = name;
             _modelObjects = new List<IModelObject>();
+            _validationOptions = new ModelValidationOptions();
         }
 
         public string Id
@@ -38,7 +40,7 @@ namespace MetaDslx.Modeling
             set => _readOnly = value;
         }
 
-        public ModelValidationOptions ValidationOptions => _modelGroup?.ValidationOptions ?? ModelValidationOptions.Default;
+        public ModelValidationOptions ValidationOptions => _validationOptions;
 
         public ModelGroup? ModelGroup
         {

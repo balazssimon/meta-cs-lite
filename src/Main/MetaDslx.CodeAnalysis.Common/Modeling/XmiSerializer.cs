@@ -589,16 +589,19 @@ namespace MetaDslx.Modeling
                         {
                             foreach (IModelObject value in values)
                             {
-                                _currentXmlWriter.WriteStartElement(prop.Name.ToCamelCase());
-                                if (value.Model == _currentModel)
+                                if (value != null)
                                 {
-                                    _currentXmlWriter.WriteAttributeString(Xmi, "idref", _options.XmiNamespace, value.Id);
+                                    _currentXmlWriter.WriteStartElement(prop.Name.ToCamelCase());
+                                    if (value.Model == _currentModel)
+                                    {
+                                        _currentXmlWriter.WriteAttributeString(Xmi, "idref", _options.XmiNamespace, value.Id);
+                                    }
+                                    else
+                                    {
+                                        _currentXmlWriter.WriteAttributeString(Xmi, "idref", _options.XmiNamespace, ExternalIdRef(value));
+                                    }
+                                    _currentXmlWriter.WriteEndElement();
                                 }
-                                else
-                                {
-                                    _currentXmlWriter.WriteAttributeString(Xmi, "idref", _options.XmiNamespace, ExternalIdRef(value));
-                                }
-                                _currentXmlWriter.WriteEndElement();
                             }
                         }
                     }

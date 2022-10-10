@@ -308,14 +308,6 @@ namespace MetaDslx.Modeling
         internal void RemoveCore(ModelProperty property, object? item)
         {
             var slot = GetSlot(property);
-            if (item is not null)
-            {
-                slot.ThrowModelException(mp => !mp.Type.IsAssignableFrom(item.GetType()), mp => $"{GetRemoveMessage(mp, item)}: the item type '{item.GetType()}' is not assignable to the property type '{mp.Type}'.");
-            }
-            else if (_model.ValidationOptions.ValidateNullable)
-            {
-                slot.ThrowModelException(mp => mp.IsNullable, mp => $"{GetRemoveMessage(mp, item)}: value cannot be null.");
-            }
             if (_properties.TryGetValue(slot.SlotProperty, out var oldValue))
             {
                 if (slot.Flags.HasFlag(ModelPropertyFlags.Collection))

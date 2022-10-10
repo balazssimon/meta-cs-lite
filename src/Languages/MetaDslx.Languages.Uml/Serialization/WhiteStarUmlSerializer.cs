@@ -86,7 +86,7 @@ namespace MetaDslx.Languages.Uml.Serialization
             _fileUri = fileUri;
             _umlCode = umlCode;
             _model = new Model();
-            ((Model)_model).Name = _fileUri;
+            _model.Name = _fileUri;
             _factory = new UmlMetaModelFactory(_model);
             _diagnostics = new DiagnosticBag();
             _objectsById = new Dictionary<string, IModelObject>();
@@ -131,11 +131,15 @@ namespace MetaDslx.Languages.Uml.Serialization
 
         public void ReadModel()
         {
+            //_model.ValidationOptions.ValidateReadOnly = false;
+            _model.ValidationOptions.FullPropertyModificationStackInExceptions = false;
             this.CreateObjects();
             if (_body == null) return;
             this.ReadObjects();
             this.ReadSequenceViews();
             this.PostProcessObjects();
+            _model.ValidationOptions.ValidateReadOnly = true;
+            _model.ValidationOptions.FullPropertyModificationStackInExceptions = true;
         }
 
         private void CreateObjects()
@@ -319,7 +323,7 @@ namespace MetaDslx.Languages.Uml.Serialization
                                 }
                                 if (view.Key is CombinedFragment combinedFragment)
                                 {
-                                    if (((IModelObject)currentFragment).Parent == null)
+                                    if ((currentFragment as IModelObject)?.Parent == null)
                                     {
                                         if (currentFragment != null)
                                         {
@@ -422,7 +426,7 @@ namespace MetaDslx.Languages.Uml.Serialization
                     }
                 }
             }
-            foreach (var inter in _model.Objects.OfType<Interaction>())
+            foreach (var inter in _model.Objects.OfType<Interaction>().ToList())
             {
                 var collaboration = _factory.Collaboration();
                 collaboration.Name = "locals";
@@ -1180,7 +1184,7 @@ namespace MetaDslx.Languages.Uml.Serialization
                     var cls = ResolveValue(location, typeof(IModelObject), propertyValue) as BehavioredClassifier;
                     if (cls != null)
                     {
-                        //interfaceRealization.Owner = null;
+                        (interfaceRealization.Namespace as Package)?.PackagedElement.Remove(interfaceRealization);
                         cls.InterfaceRealization.Add(interfaceRealization);
                         return true;
                     }
@@ -1287,11 +1291,7 @@ namespace MetaDslx.Languages.Uml.Serialization
 
         private object ResolveValue(XObject location, System.Type type, string propertyValue)
         {
-            if (typeof(IModelObject).IsAssignableFrom(type))
-            {
-                return this.ResolveObjectById(location, propertyValue);
-            }
-            else if (type.IsEnum)
+            if (type.IsEnum)
             {
                 try
                 {
@@ -1333,10 +1333,9 @@ namespace MetaDslx.Languages.Uml.Serialization
                 double.TryParse(propertyValue, out double doubleValue);
                 return doubleValue;
             }
-            else
+            else 
             {
-                this.AddError(location, $"Unhandled value type: {type.FullName}.");
-                return null;
+                return this.ResolveObjectById(location, propertyValue);
             }
         }
 
@@ -1370,7 +1369,7 @@ namespace MetaDslx.Languages.Uml.Serialization
         };
         private static readonly HashSet<string> UmlIgnoredProperties = new HashSet<string>()
         {
-            "Associations", "TypedParameters", "SupplierDependencies", "ClientDependencies", "Instances"
+            "Associations", "TypedParameters", "SupplierDependencies", "ClientDependencies", "Instances", "Namespace", "Owner"
         };
         private static readonly HashSet<string> UmlIgnoredQualifiedProperties = new HashSet<string>()
         {
@@ -1380,10 +1379,6 @@ namespace MetaDslx.Languages.Uml.Serialization
             "UseCase.Specializations",
             "Actor.StereotypeName",
             "Actor.Specializations",
-            "Include.Namespace",
-            "Extend.Namespace",
-            "Generalization.Namespace",
-            "InterfaceRealization.Namespace",
             "Class.Specializations",
             "Class.StereotypeName",
             "Class.TypedFeatures",
