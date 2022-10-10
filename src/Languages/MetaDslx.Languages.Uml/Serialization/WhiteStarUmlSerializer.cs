@@ -131,15 +131,11 @@ namespace MetaDslx.Languages.Uml.Serialization
 
         public void ReadModel()
         {
-            //_model.ValidationOptions.ValidateReadOnly = false;
-            _model.ValidationOptions.FullPropertyModificationStackInExceptions = false;
             this.CreateObjects();
             if (_body == null) return;
             this.ReadObjects();
             this.ReadSequenceViews();
             this.PostProcessObjects();
-            _model.ValidationOptions.ValidateReadOnly = true;
-            _model.ValidationOptions.FullPropertyModificationStackInExceptions = true;
         }
 
         private void CreateObjects()
