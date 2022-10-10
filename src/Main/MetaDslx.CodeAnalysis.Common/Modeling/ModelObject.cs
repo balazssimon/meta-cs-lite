@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -168,7 +169,9 @@ namespace MetaDslx.Modeling
             var value = ((IModelObject)this).Get(property);
             if (value is null) return default(T);
             else return (T)value;
+            //Convert.ChangeType(value, typeof(T), CultureInfo.InvariantCulture);
         }
+
 
         object? IModelObject.Get(ModelProperty property)
         {

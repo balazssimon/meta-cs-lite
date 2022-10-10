@@ -12,6 +12,7 @@
 		<MetaDslxDisableAntlr4RoslynGenerator>false</MetaDslxDisableAntlr4RoslynGenerator>
 		<AssemblyVersion>0.3.1.0</AssemblyVersion>
 		<VersionPrefix>0.3.1</VersionPrefix>
+		<EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
 
 		<!-- NuGet -->
 		<IsPackable>true</IsPackable>
@@ -35,11 +36,13 @@
 	</PropertyGroup>
 	
 	<ItemGroup>
-	  <Compile Remove="CodeGeneration\**" />
-	  <EmbeddedResource Remove="CodeGeneration\**" />
-	  <None Remove="CodeGeneration\**" />
+	  <None Remove="CodeGeneration\UmlModelToMetaModelGenerator.mgen" />
 	</ItemGroup>
-
+	
+	<ItemGroup>
+	  <AdditionalFiles Include="CodeGeneration\UmlModelToMetaModelGenerator.mgen" />
+	</ItemGroup>
+	
 	<ItemGroup>
 		<PackageReference Include="MetaDslx.CodeAnalysis" Version="0.7.0" />
 	</ItemGroup>

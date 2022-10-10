@@ -890,7 +890,7 @@ namespace MetaDslx.Modeling
         {
             _isMainReader = isMainReader;
             _fileUri = fileUri;
-            if (xmiCode.StartsWith(ByteOrderMarkUtf8)) xmiCode = xmiCode.Substring(ByteOrderMarkUtf8.Length);
+           xmiCode = xmiCode.Trim(new char[] { '\uFEFF', '\u200B' });
             _xmiCode = xmiCode;
             _xmiReader = xmiReader;
             _model = _xmiReader.ModelGroup.CreateModel();

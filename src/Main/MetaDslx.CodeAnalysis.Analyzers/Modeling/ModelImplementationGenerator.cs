@@ -304,7 +304,7 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
                 }
                 else if (slot.SlotProperty.DefaultValue != null)
                 {
-                    cb.WriteLine($"(({IModelObjectType})this).Init({slot.SlotProperty.FullyQualifiedPropertyName}, {slot.SlotProperty.CSharpDefaultValue});");
+                    cb.WriteLine($"(({IModelObjectType})this).Init({slot.SlotProperty.FullyQualifiedPropertyName}, ({slot.SlotProperty.Type.ToDisplayString()}){slot.SlotProperty.CSharpDefaultValue});");
                 }
             }
             cb.Pop();

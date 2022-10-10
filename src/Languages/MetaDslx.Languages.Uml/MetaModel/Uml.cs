@@ -1308,7 +1308,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// <summary>
     	/// The specified UnlimitedNatural value.
     	/// </summary>
-    	[DefaultValue(0)]
+    	[DefaultValue((long)0)]
     	long Value { get; set; }
     
     	/// <summary>

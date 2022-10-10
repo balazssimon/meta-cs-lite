@@ -1,9 +1,10 @@
-﻿namespace MetaDslx.Languages.Uml.CodeGeneration;
-generator UmlModelToMetaModelGenerator;
+﻿namespace MetaDslx.Languages.Uml.CodeGeneration
+generator UmlModelToMetaModelGenerator
 
 using MetaDslx.Modeling;
 using MetaDslx.Languages.Uml.MetaModel;
 using System.Collections.Immutable;
+using System.Linq;
 using Roslyn.Utilities;
 
 template Generate()
@@ -19,14 +20,18 @@ namespace [Namespace]
 	public partial interface [ModelName]
 	{
 	}
+
 	[foreach (var pt in Objects.OfType<PrimitiveType>())]
     [GeneratePrimitiveType(pt)]
+
 	[end foreach]
-	[foreach (var pt in Objects.OfType<Enumeration>())]
+	[foreach (var enm in Objects.OfType<Enumeration>())]
     [GenerateEnum(enm)]
+
 	[end foreach]
-	[foreach (var pt in Objects.OfType<Class>())]
+	[foreach (var cls in Objects.OfType<Class>())]
     [GenerateClass(cls)]
+
 	[end foreach]
 }
 end template
@@ -52,23 +57,20 @@ template GenerateClass(Class cls)
 [cls.IsAbstract ? "[MetaClass(IsAbstract = true)]" : "[MetaClass]"]
 public partial interface [cls.Name][GenerateBaseClasses(cls)]
 {
-	[loop(cls->prop:OwnedAttribute)]
+	[foreach (var prop in cls.OwnedAttribute)]
 	[GenerateProperty(prop)]
-^
-	[end loop]
-	[loop(cls->op:OwnedOperation)]
+
+	[end foreach]
+	[foreach (var op in cls.OwnedOperation)]
 	[GenerateOperation(op)]
-^
-	[end loop]
+
+	[end foreach]
 }
 end template
 
 template GenerateBaseClasses(Class cls)
 [string sep = " : "]
-[loop(cls->Generalization->gen:General)]
-[sep][gen.Name]\
-[sep = ", "]
-[end loop]
+[foreach (var gen in cls.Generalization.Select(g => g.General))][sep][gen.Name][sep = ", ";][end foreach]
 end template
 
 template GenerateProperty(Property prop)
@@ -81,10 +83,10 @@ template GenerateProperty(Property prop)
 [else if (prop.IsDerived)]
 ["["]Derived["]"]
 [end if]
-[if (prop.IsCollection() && !prop.IsUnique)]
+[if (IsCollection(prop) && !prop.IsUnique)]
 ["["]NonUnique["]"]
 [end if]
-[if (prop.IsCollection() && !prop.IsOrdered)]
+[if (IsCollection(prop) && !prop.IsOrdered)]
 ["["]Unordered["]"]
 [end if]
 [if (prop.IsReadOnly)]
@@ -94,7 +96,7 @@ template GenerateProperty(Property prop)
 [GenerateRedefines(prop)]
 [GenerateSubsets(prop)]
 [if (prop.DefaultValue != null)]
-["["]DefaultValue([prop.GenerateDefaultValue()])["]"]
+["["]DefaultValue([GenerateDefaultValue(prop)])["]"]
 [end if]
 [if (prop.IsDerived && !prop.IsDerivedUnion)]
 public [GenerateType(prop, prop.Type)] [prop.Name.ToPascalCase()]
@@ -105,50 +107,40 @@ public [GenerateType(prop, prop.Type)] [prop.Name.ToPascalCase()]
 	}
 }
 [else]
-[GenerateType(prop, prop.Type)] [prop.Name.ToPascalCase()] { get;[if (!prop.IsReadOnly && !prop.IsCollection())] set;[end if] }
+[GenerateType(prop, prop.Type)] [prop.Name.ToPascalCase()] { get;[if (!prop.IsReadOnly && !IsCollection(prop))] set;[end if] }
 [end if]
 end template
 
-template GenerateType(MultiplicityElement me, MetaDslx.Languages.Uml.Model.Type t)
-[me.IsCollection() ? "IList<" : ""][GeneratePrimitiveType(t)][me.IsCollection() ? ">" : ""]
+template GenerateType(MultiplicityElement me, MetaDslx.Languages.Uml.MetaModel.Type t)
+[IsCollection(me) ? "IList<" : ""][GeneratePrimitiveType(t)][IsCollection(me) ? ">" : ""]
 end template
 
-function string GeneratePrimitiveType(MetaDslx.Languages.Uml.Model.Type t)
-	switch (t.Name)
-		case "Boolean": return "bool";
-		case "String": return "string";
-		case "Integer": return "int";
-		case "Real": return "double";
-		case "UnlimitedNatural": return "long";
-		default: return t.Name;
-	end switch
-end function
-
 template GenerateRedefines(Property prop)
-[loop(prop->rprop:RedefinedProperty)]
+[foreach (var rprop in prop.RedefinedProperty)]
 	[if (rprop.Class != null)]
 ["["]Redefines(typeof([rprop.Class.Name]), "[rprop.Name.ToPascalCase()]")["]"]
 	[end if]
-[end loop]
+[end foreach]
 end template
 
 template GenerateSubsets(Property prop)
-[loop(prop->rprop:SubsettedProperty)]
+[foreach (var rprop in prop.SubsettedProperty)]
 	[if (rprop.Class != null)]
 ["["]Subsets(typeof([rprop.Class.Name]), "[rprop.Name.ToPascalCase()]")["]"]
 	[end if]
-[end loop]
+[end foreach]
 end template
 
 template GenerateOpposite(Property prop)
-[Property opposite = prop.GetOpposite()]
+[Property opposite = GetOpposite(prop)]
 [if (opposite != null && opposite.Class != null)]
 ["["]Opposite(typeof([opposite.Class.Name]), "[opposite.Name.ToPascalCase()]")["]"]
 [end if]
 end template
 
 template GenerateOperation(Operation op)
-[if (!hasloop(op->Class->prop:OwnedAttribute where op.Name == prop.Name && prop.IsDerived && !prop.IsDerivedUnion))]
+[var nonPropertyOperations = op.Class.OwnedAttribute.Where(prop => op.Name == prop.Name && prop.IsDerived && !prop.IsDerivedUnion)]
+[if (nonPropertyOperations.Any())]
 [GenerateComment(op)]
 public [GenerateReturnType(op)] [op.Name.ToPascalCase()]([GenerateParams(op)])
 {
@@ -158,38 +150,35 @@ public [GenerateReturnType(op)] [op.Name.ToPascalCase()]([GenerateParams(op)])
 end template
 
 template GenerateReturnType(Operation op)
-[if (hasloop(op->param:OwnedParameter where param.Direction == ParameterDirectionKind.Return))]
-	[loop(op->param:OwnedParameter where param.Direction == ParameterDirectionKind.Return)]
-[GenerateType(param, param.Type)]
-	[end loop]
-[else]
-void
-[end if]
+[var returnParam = op.OwnedParameter.Where(param => param.Direction == ParameterDirectionKind.Return).FirstOrDefault()]
+[if (returnParam != null)][GenerateType(returnParam, returnParam.Type)][else]void[end if]
 end template
 
 template GenerateParams(Operation op)
-[loop(op->param:OwnedParameter where param.Direction != ParameterDirectionKind.Return; separator sep = ", ")]
-[GenerateType(param, param.Type)] [param.Name][sep]\
-[end loop]
+[var incomingParams = op.OwnedParameter.Where(param => param.Direction != ParameterDirectionKind.Return)]
+[foreach (var param in incomingParams) separator ", "][GenerateType(param, param.Type)] [param.Name][end foreach]
 end template
 
 template GenerateComment(Element elem)
-[if (hasloop (elem->OwnedComment where !string.IsNullOrWhiteSpace(OwnedComment.Body)))]
+[var comments = elem.OwnedComment.Where(comm => !string.IsNullOrWhiteSpace(comm.Body))]
+[if (comments.Any())]
 /// <summary>
-	[loop (elem->OwnedComment where !string.IsNullOrWhiteSpace(OwnedComment.Body))]
-		[loop (line:CommentLines(OwnedComment.Body, true))]
+	[foreach (var comm in comments)]
+		[foreach (var line in CommentLines(comm.Body, true))]
 /// [line]
-		[end loop]
-	[end loop]
+		[end foreach]
+	[end foreach]
 /// </summary>
-	[if (elem is Operation)]
-		[loop (elem->typeof(Operation)->param:OwnedParameter->OwnedComment where !string.IsNullOrWhiteSpace(OwnedComment.Body))]
+	[if (elem is Operation op)]
+		[foreach (var param in op.OwnedParameter)]
 /// <param name="[param.Name]">
-			[loop (line:CommentLines(OwnedComment.Body, true))]
+			[foreach (var comm in param.OwnedComment.Where(comm => !string.IsNullOrWhiteSpace(comm.Body)))]
+				[foreach (var line in CommentLines(comm.Body, true))]
 /// [line]
-			[end loop]
+				[end foreach]
+			[end foreach]
 /// </param>
-		[end loop]
+		[end foreach]
 	[end if]
 [end if]
 	[if (elem is Operation)]
@@ -197,27 +186,30 @@ template GenerateComment(Element elem)
 	[else if (elem is Property)]
 		[var prop = (Property)elem]
 		[if (prop.IsDerived && !prop.IsDerivedUnion)]
-		[loop(prop->Class->op:OwnedOperation where op.Name == prop.Name)]
+			[foreach (var op in prop.Class.OwnedOperation.Where(op => op.Name == prop.Name))]
 [GenerateSpecification(op)]
-		[end loop]
+			[end foreach]
 		[end if]
 	[end if]
 end template
 
+//->spec:Specification->expr:typeof(OpaqueExpression)
 template GenerateSpecification(Namespace ns)
-	[loop (ns->rule:OwnedRule->spec:Specification->expr:typeof(OpaqueExpression))]
-		[loop (rule->OwnedComment where !string.IsNullOrWhiteSpace(OwnedComment.Body))]
+	[foreach (var rule in ns.OwnedRule)]
+		[foreach (var comm in rule.OwnedComment.Where(comm => !string.IsNullOrWhiteSpace(comm.Body)))]
 /// <para>
-			[loop (line:CommentLines(OwnedComment.Body, true))]
+			[foreach (var line in CommentLines(comm.Body, true))]
 /// [line]
-			[end loop]
+			[end foreach]
 /// </para>
-		[end loop]
+		[end foreach]
 // [rule.Name]:
-		[loop (expr->Body)]
-			[loop (line:CommentLines(Body, false))]
+		[if (rule.Specification is OpaqueExpression expr)]
+			[foreach (var body in expr.Body)]
+				[foreach (var line in CommentLines(body, false))]
 //     [line]
-			[end loop]
-		[end loop]
-	[end loop]
+				[end foreach]
+			[end foreach]
+		[end if]
+	[end foreach]
 end template

@@ -38,7 +38,7 @@ namespace MetaDslx.Languages.Uml.CodeGeneration
             if (value is LiteralString ls) result = ls.Value.Replace("\\", "\\\\").Replace("\"", "\\\"");
             if (value is InstanceValue iv && iv.Instance is EnumerationLiteral el) result = el.Enumeration.Name + "." + el.Name.ToPascalCase();
             if (result != null) return result;
-            else return "/* unhandled default value: " + value.MId.DisplayTypeName + " */";
+            else return "/* unhandled default value: " + ((IModelObject)value).MetaType.Name + " */";
         }
 
         public IEnumerable<string> CommentLines(string text, bool escapeHtml)
@@ -62,6 +62,19 @@ namespace MetaDslx.Languages.Uml.CodeGeneration
             Property second = assoc.MemberEnd[1];
             if (first == property) return second;
             else return first;
+        }
+
+        private string GeneratePrimitiveType(MetaDslx.Languages.Uml.MetaModel.Type type)
+        {
+            switch (type.Name)
+            {
+                case "Boolean": return "bool";
+                case "String": return "string";
+                case "Integer": return "int";
+                case "Real": return "double";
+                case "UnlimitedNatural": return "long";
+                default: return type.Name;
+            }
         }
     }
 }

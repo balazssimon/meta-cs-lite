@@ -1,5 +1,6 @@
 ﻿
 using MetaDslx.CodeAnalysis;
+using MetaDslx.Languages.Uml.CodeGeneration;
 using MetaDslx.Languages.Uml.MetaModel;
 using MetaDslx.Languages.Uml.Serialization;
 using System.Collections.Immutable;
@@ -24,3 +25,15 @@ foreach (var cls in model.Objects.OfType<Classifier>())
 
 var xmiSerializer = new UmlXmiSerializer();
 xmiSerializer.WriteModelToFile("../../../pacman.xmi", model);
+
+var umlMetaModel = xmiSerializer.ReadModelFromFile("../../../UML.xmi");
+var options = new UmlXmiWriteOptions();
+var mi = 0;
+foreach (var m in umlMetaModel.ModelGroup.Models)
+{
+    options.ModelToFileMap.Add(m, $"../../../output{mi}.xmi");
+    ++mi;
+}
+xmiSerializer.WriteModelGroupToFile(umlMetaModel.ModelGroup, options);
+var generator = new UmlModelToMetaModelGenerator(umlMetaModel);
+File.WriteAllText("../../../Uml.txt", generator.Generate());
