@@ -6,6 +6,8 @@ namespace MetaDslx.Modeling
 {
     public interface IModelGroup
     {
+        string? Name { get; set; }
+        ModelValidationOptions ValidationOptions { get; }
         IEnumerable<IModel> References { get; }
         IEnumerable<IModel> Models { get; }
         IEnumerable<IModelObject> Objects { get; }

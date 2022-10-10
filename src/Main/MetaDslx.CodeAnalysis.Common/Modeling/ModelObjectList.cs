@@ -36,7 +36,7 @@ namespace MetaDslx.Modeling
             set
             {
                 if (Owner.Model.IsReadOnly) throw new ModelException($"Error assigning '{value}' to '{_slot.SlotProperty.QualifiedName}[{index}]' in '{Owner}': the model '{Owner.Model}' is read only.");
-                if (Owner.Model.ValidationFlags.HasFlag(ModelValidationFlags.Readonly) && _slot.Flags.HasFlag(ModelPropertyFlags.ReadOnly))
+                if (Owner.Model.ValidationOptions.ValidateReadOnly && _slot.Flags.HasFlag(ModelPropertyFlags.ReadOnly))
                 {
                     _slot.ThrowModelException(mp => mp.IsReadOnly, mp => $"Error assigning '{value}' to '{mp.QualifiedName}[{index}]' in '{Owner}': the property is read only.");
                 }
@@ -80,7 +80,7 @@ namespace MetaDslx.Modeling
         public void Add(T item)
         {
             if (Owner.Model.IsReadOnly) throw new ModelException($"Error adding '{item}' to '{_slot.SlotProperty.QualifiedName}' in '{Owner}': the model '{Owner.Model}' is read only.");
-            if (Owner.Model.ValidationFlags.HasFlag(ModelValidationFlags.Readonly) && _slot.Flags.HasFlag(ModelPropertyFlags.ReadOnly))
+            if (Owner.Model.ValidationOptions.ValidateReadOnly && _slot.Flags.HasFlag(ModelPropertyFlags.ReadOnly))
             {
                 _slot.ThrowModelException(mp => mp.IsReadOnly, mp => $"Error adding '{item}' to '{mp.QualifiedName}' in '{Owner}': the property is read only.");
             }
@@ -90,7 +90,7 @@ namespace MetaDslx.Modeling
         public void Clear()
         {
             if (Owner.Model.IsReadOnly) throw new ModelException($"Error clearing '{_slot.SlotProperty.QualifiedName}' in '{Owner}': the model '{Owner.Model}' is read only.");
-            if (Owner.Model.ValidationFlags.HasFlag(ModelValidationFlags.Readonly) && _slot.Flags.HasFlag(ModelPropertyFlags.ReadOnly))
+            if (Owner.Model.ValidationOptions.ValidateReadOnly && _slot.Flags.HasFlag(ModelPropertyFlags.ReadOnly))
             {
                 _slot.ThrowModelException(mp => mp.IsReadOnly, mp => $"Error clearing '{mp.QualifiedName}' in '{Owner}': the property is read only.");
             }
@@ -120,7 +120,7 @@ namespace MetaDslx.Modeling
         public void Insert(int index, T item)
         {
             if (Owner.Model.IsReadOnly) throw new ModelException($"Error inserting '{item}' at '{_slot.SlotProperty.QualifiedName}[{index}]' in '{Owner}': the model '{Owner.Model}' is read only.");
-            if (Owner.Model.ValidationFlags.HasFlag(ModelValidationFlags.Readonly) && _slot.Flags.HasFlag(ModelPropertyFlags.ReadOnly))
+            if (Owner.Model.ValidationOptions.ValidateReadOnly && _slot.Flags.HasFlag(ModelPropertyFlags.ReadOnly))
             {
                 _slot.ThrowModelException(mp => mp.IsReadOnly, mp => $"Error inserting '{item}' at '{mp.QualifiedName}[{index}]' in '{Owner}': the property is read only.");
             }
@@ -137,7 +137,7 @@ namespace MetaDslx.Modeling
         public void RemoveAt(int index)
         {
             if (Owner.Model.IsReadOnly) throw new ModelException($"Error removing item at '{_slot.SlotProperty.QualifiedName}[{index}]' in '{Owner}': the model '{Owner.Model}' is read only.");
-            if (Owner.Model.ValidationFlags.HasFlag(ModelValidationFlags.Readonly) && _slot.Flags.HasFlag(ModelPropertyFlags.ReadOnly))
+            if (Owner.Model.ValidationOptions.ValidateReadOnly && _slot.Flags.HasFlag(ModelPropertyFlags.ReadOnly))
             {
                 _slot.ThrowModelException(mp => mp.IsReadOnly, mp => $"Error removing item at '{mp.QualifiedName}[{index}]' in '{Owner}': the property is read only.");
             }
@@ -193,7 +193,7 @@ namespace MetaDslx.Modeling
 
         private void ReplaceCore(int index, T item)
         {
-            if (Owner.Model.ValidationFlags.HasFlag(ModelValidationFlags.Nullable) && !NullableType && item == null)
+            if (Owner.Model.ValidationOptions.ValidateNullable && !NullableType && item == null)
             {
                 _slot.ThrowModelException(mp => mp.IsNullable, mp => $"Error assigning '{item}' to '{mp.QualifiedName}[{index}]' in '{Owner}': the item cannot be null.");
             }
@@ -216,16 +216,17 @@ namespace MetaDslx.Modeling
                     }
                 }
             }
-            catch
+            catch (Exception ex)
             {
                 if (valueReplaced) _items[index] = oldValue;
-                throw;
+                if (Owner.Model.ValidationOptions.FullPropertyModificationStackInExceptions) throw new ModelException($"Error assigning '{item}' to '{_slot.SlotProperty.QualifiedName}[{index}]' in '{Owner}'", ex);
+                else throw;
             }
         }
 
         private void InsertCore(int index, T item)
         {
-            if (Owner.Model.ValidationFlags.HasFlag(ModelValidationFlags.Nullable) && !NullableType && item == null)
+            if (Owner.Model.ValidationOptions.ValidateNullable && !NullableType && item == null)
             {
                 _slot.ThrowModelException(mp => mp.IsNullable, mp => $"Error inserting '{item}' at '{mp.QualifiedName}[{index}]' in '{Owner}': the item cannot be null.");
             }
@@ -243,10 +244,11 @@ namespace MetaDslx.Modeling
                     _owner.ValueAdded(_slot, item);
                 }
             }
-            catch
+            catch (Exception ex)
             {
                 if (valueAdded) _items.RemoveAt(_items.Count - 1);
-                throw;
+                if (Owner.Model.ValidationOptions.FullPropertyModificationStackInExceptions) throw new ModelException($"Error inserting '{item}' at '{_slot.SlotProperty.QualifiedName}[{index}]' in '{Owner}'", ex);
+                else throw;
             }
         }
 
@@ -263,10 +265,11 @@ namespace MetaDslx.Modeling
                     _owner.ValueRemoved(_slot, oldItem);
                 }
             }
-            catch
+            catch (Exception ex)
             {
                 if (valueRemoved) _items.Insert(index, oldItem);
-                throw;
+                if (Owner.Model.ValidationOptions.FullPropertyModificationStackInExceptions) throw new ModelException($"Error removing '{oldItem}' at '{_slot.SlotProperty.QualifiedName}[{index}]' in '{Owner}'", ex);
+                else throw;
             }
         }
 

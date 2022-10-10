@@ -7,14 +7,23 @@ namespace MetaDslx.Modeling
 {
     public class ModelGroup : IModelGroup
     {
+        private string? _name;
         private bool _readOnly;
+        private ModelValidationOptions? _validationOptions;
         private List<IModel> _references;
         private List<IModel> _models;
 
         public ModelGroup()
         {
+            _validationOptions = new ModelValidationOptions();
             _references = new List<IModel>();
             _models = new List<IModel>();
+        }
+
+        public string? Name
+        {
+            get => _name;
+            set => _name = value;
         }
 
         public bool IsReadOnly
@@ -28,6 +37,11 @@ namespace MetaDslx.Modeling
                     model.IsReadOnly = value;
                 }
             }
+        }
+
+        public ModelValidationOptions ValidationOptions
+        {
+            get => _validationOptions;
         }
 
         public IEnumerable<IModel> References => _references;
@@ -124,7 +138,12 @@ namespace MetaDslx.Modeling
 
         private void CheckReadOnly()
         {
-            if (_readOnly) throw new ModelException("The model group is read only");
+            if (_readOnly) throw new ModelException($"The model group '{Name}' is read only");
+        }
+
+        public override string ToString()
+        {
+            return Name;
         }
 
     }

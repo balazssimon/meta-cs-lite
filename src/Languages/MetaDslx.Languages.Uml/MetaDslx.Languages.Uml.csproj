@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 	<Import Project="..\..\Versions.props" />
 	
 	<PropertyGroup>
@@ -33,6 +33,12 @@
 		<!-- This is useful if you generate files during the build -->
 		<EmbedUntrackedSources>true</EmbedUntrackedSources>
 	</PropertyGroup>
+	
+	<ItemGroup>
+	  <Compile Remove="CodeGeneration\**" />
+	  <EmbeddedResource Remove="CodeGeneration\**" />
+	  <None Remove="CodeGeneration\**" />
+	</ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="MetaDslx.CodeAnalysis" Version="0.7.0" />

@@ -6,10 +6,14 @@ using System.Text;
 namespace MetaDslx.Modeling
 {
     [Flags]
-    public enum ModelValidationFlags
+    internal enum ModelValidationFlags
     {
         None = 0x00,
-        Nullable = 0x01,
-        Readonly = 0x02,
+        IsDefault = 0x01,
+        Nullable = 0x02,
+        ReadOnly = 0x04,
+        FullPropertyStack = 0x08,
+
+        All = Nullable | ReadOnly | FullPropertyStack
     }
 }

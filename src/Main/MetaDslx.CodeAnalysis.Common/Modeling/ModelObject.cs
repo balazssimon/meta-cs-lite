@@ -66,7 +66,7 @@ namespace MetaDslx.Modeling
             get => _model;
             set
             {
-                if (_model != null && value != null) throw new ModelException($"Model object '{this}' is already contained by the model '{_model}. To change the model of an object, remove the object from the old model first.'");
+                if (_model != null && value != null) throw new ModelException($"Error changing the model '{_model}' of '{this}' to {value}: to change the model of an object, remove the object from the old model first.'");
                 if (_model != null && _model.IsReadOnly) throw new ModelException($"Error changing the model '{_model}' of '{this}' to {value}: the model containing the object is read only.");
                 if (!object.ReferenceEquals(_model, value))
                 {
@@ -84,10 +84,10 @@ namespace MetaDslx.Modeling
                             _model.AddObject(this);
                         }
                     }
-                    catch
+                    catch (Exception ex)
                     {
                         _model = originalModel;
-                        throw;
+                        throw new ModelException($"Error setting the model of '{this}' to {value}", ex);
                     }
                 }
             }
@@ -216,7 +216,7 @@ namespace MetaDslx.Modeling
         {
             if (_model != null && _model.IsReadOnly) throw new ModelException($"{GetAddMessage(property, item)}: the model '{_model}' is read only.");
             var slot = GetSlot(property);
-            if (_model.ValidationFlags.HasFlag(ModelValidationFlags.Readonly) && slot.Flags.HasFlag(ModelPropertyFlags.ReadOnly))
+            if (_model.ValidationOptions.ValidateReadOnly && slot.Flags.HasFlag(ModelPropertyFlags.ReadOnly))
             {
                 slot.ThrowModelException(mp => mp.IsReadOnly, mp => $"{GetAddMessage(property, item)}: the property is read only.");
             }
@@ -230,7 +230,7 @@ namespace MetaDslx.Modeling
             {
                 slot.ThrowModelException(mp => !mp.Type.IsAssignableFrom(item.GetType()), mp => $"{GetAddMessage(mp, item)}: the item type '{item.GetType()}' is not assignable to the property type '{mp.Type}'.");
             }
-            else if (_model.ValidationFlags.HasFlag(ModelValidationFlags.Nullable))
+            else if (_model.ValidationOptions.ValidateNullable)
             {
                 slot.ThrowModelException(mp => mp.IsNullable, mp => $"{GetAddMessage(mp, item)}: value cannot be null.");
             }
@@ -269,10 +269,11 @@ namespace MetaDslx.Modeling
                             _properties[slot.SlotProperty] = item;
                             if (item != null) ValueAdded(slot, item);
                         }
-                        catch
+                        catch (Exception ex)
                         {
                             _properties[slot.SlotProperty] = oldValue;
-                            throw;
+                            if (_model.ValidationOptions.FullPropertyModificationStackInExceptions) throw new ModelException($"{GetAddMessage(slot.SlotProperty, item)}", ex);
+                            else throw;
                         }
                     }
                 }
@@ -284,10 +285,11 @@ namespace MetaDslx.Modeling
                     _properties[slot.SlotProperty] = item;
                     if (item != null) ValueAdded(slot, item);
                 }
-                catch
+                catch (Exception ex)
                 {
                     _properties.Remove(slot.SlotProperty);
-                    throw;
+                    if (_model.ValidationOptions.FullPropertyModificationStackInExceptions) throw new ModelException($"{GetAddMessage(slot.SlotProperty, item)}", ex);
+                    else throw;
                 }
             }
         }
@@ -296,7 +298,7 @@ namespace MetaDslx.Modeling
         {
             if (_model != null && _model.IsReadOnly) throw new ModelException($"{GetRemoveMessage(property, item)}: the model '{_model}' is read only.");
             var slot = GetSlot(property);
-            if (_model.ValidationFlags.HasFlag(ModelValidationFlags.Readonly) && slot.Flags.HasFlag(ModelPropertyFlags.ReadOnly))
+            if (_model.ValidationOptions.ValidateReadOnly && slot.Flags.HasFlag(ModelPropertyFlags.ReadOnly))
             {
                 slot.ThrowModelException(mp => mp.IsReadOnly, mp => $"{GetRemoveMessage(property, item)}: the property is read only.");
             }
@@ -310,7 +312,7 @@ namespace MetaDslx.Modeling
             {
                 slot.ThrowModelException(mp => !mp.Type.IsAssignableFrom(item.GetType()), mp => $"{GetRemoveMessage(mp, item)}: the item type '{item.GetType()}' is not assignable to the property type '{mp.Type}'.");
             }
-            else if (_model.ValidationFlags.HasFlag(ModelValidationFlags.Nullable))
+            else if (_model.ValidationOptions.ValidateNullable)
             {
                 slot.ThrowModelException(mp => mp.IsNullable, mp => $"{GetRemoveMessage(mp, item)}: value cannot be null.");
             }
@@ -336,10 +338,11 @@ namespace MetaDslx.Modeling
                             _properties[slot.SlotProperty] = null;
                             if (oldValue != null) ValueRemoved(slot, oldValue);
                         }
-                        catch
+                        catch (Exception ex)
                         {
                             _properties[slot.SlotProperty] = oldValue;
-                            throw;
+                            if (_model.ValidationOptions.FullPropertyModificationStackInExceptions) throw new ModelException($"{GetRemoveMessage(slot.SlotProperty, item)}", ex);
+                            else throw;
                         }
                     }
                 }

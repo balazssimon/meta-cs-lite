@@ -1,0 +1,223 @@
+﻿namespace MetaDslx.Languages.Uml.CodeGeneration;
+generator UmlModelToMetaModelGenerator;
+
+using MetaDslx.Modeling;
+using MetaDslx.Languages.Uml.MetaModel;
+using System.Collections.Immutable;
+using Roslyn.Utilities;
+
+template Generate()
+using MetaDslx.Modeling;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Text;
+
+namespace [Namespace]
+{
+    ["["]MetaModel([Uri]="http://www.omg.org/spec/UML/", Prefix="[Prefix]")["]"]
+	public partial interface [ModelName]
+	{
+	}
+	[foreach (var pt in Objects.OfType<PrimitiveType>())]
+    [GeneratePrimitiveType(pt)]
+	[end foreach]
+	[foreach (var pt in Objects.OfType<Enumeration>())]
+    [GenerateEnum(enm)]
+	[end foreach]
+	[foreach (var pt in Objects.OfType<Class>())]
+    [GenerateClass(cls)]
+	[end foreach]
+}
+end template
+
+template GeneratePrimitiveType(PrimitiveType pt)
+[GenerateComment(pt)]
+const PrimitiveType [pt.Name];
+end template
+
+template GenerateEnum(Enumeration enm)
+[GenerateComment(enm)]
+public enum [enm.Name]
+{
+	[foreach (var lit in enm.OwnedLiteral) separator ","]
+    [GenerateComment(lit)]
+    [lit.Name.ToPascalCase()]
+	[end foreach]
+}
+end template
+
+template GenerateClass(Class cls)
+[GenerateComment(cls)]
+[cls.IsAbstract ? "[MetaClass(IsAbstract = true)]" : "[MetaClass]"]
+public partial interface [cls.Name][GenerateBaseClasses(cls)]
+{
+	[loop(cls->prop:OwnedAttribute)]
+	[GenerateProperty(prop)]
+^
+	[end loop]
+	[loop(cls->op:OwnedOperation)]
+	[GenerateOperation(op)]
+^
+	[end loop]
+}
+end template
+
+template GenerateBaseClasses(Class cls)
+[string sep = " : "]
+[loop(cls->Generalization->gen:General)]
+[sep][gen.Name]\
+[sep = ", "]
+[end loop]
+end template
+
+template GenerateProperty(Property prop)
+[GenerateComment(prop)]
+[if (prop.Aggregation == AggregationKind.Composite)]
+["["]Containment["]"]
+[end if]
+[if (prop.IsDerivedUnion)]
+["["]DerivedUnion["]"]
+[else if (prop.IsDerived)]
+["["]Derived["]"]
+[end if]
+[if (prop.IsCollection() && !prop.IsUnique)]
+["["]NonUnique["]"]
+[end if]
+[if (prop.IsCollection() && !prop.IsOrdered)]
+["["]Unordered["]"]
+[end if]
+[if (prop.IsReadOnly)]
+["["]ReadOnly["]"]
+[end if]
+[GenerateOpposite(prop)]
+[GenerateRedefines(prop)]
+[GenerateSubsets(prop)]
+[if (prop.DefaultValue != null)]
+["["]DefaultValue([prop.GenerateDefaultValue()])["]"]
+[end if]
+[if (prop.IsDerived && !prop.IsDerivedUnion)]
+public [GenerateType(prop, prop.Type)] [prop.Name.ToPascalCase()]
+{ 
+	get
+	{
+		throw new NotImplementedException();
+	}
+}
+[else]
+[GenerateType(prop, prop.Type)] [prop.Name.ToPascalCase()] { get;[if (!prop.IsReadOnly && !prop.IsCollection())] set;[end if] }
+[end if]
+end template
+
+template GenerateType(MultiplicityElement me, MetaDslx.Languages.Uml.Model.Type t)
+[me.IsCollection() ? "IList<" : ""][GeneratePrimitiveType(t)][me.IsCollection() ? ">" : ""]
+end template
+
+function string GeneratePrimitiveType(MetaDslx.Languages.Uml.Model.Type t)
+	switch (t.Name)
+		case "Boolean": return "bool";
+		case "String": return "string";
+		case "Integer": return "int";
+		case "Real": return "double";
+		case "UnlimitedNatural": return "long";
+		default: return t.Name;
+	end switch
+end function
+
+template GenerateRedefines(Property prop)
+[loop(prop->rprop:RedefinedProperty)]
+	[if (rprop.Class != null)]
+["["]Redefines(typeof([rprop.Class.Name]), "[rprop.Name.ToPascalCase()]")["]"]
+	[end if]
+[end loop]
+end template
+
+template GenerateSubsets(Property prop)
+[loop(prop->rprop:SubsettedProperty)]
+	[if (rprop.Class != null)]
+["["]Subsets(typeof([rprop.Class.Name]), "[rprop.Name.ToPascalCase()]")["]"]
+	[end if]
+[end loop]
+end template
+
+template GenerateOpposite(Property prop)
+[Property opposite = prop.GetOpposite()]
+[if (opposite != null && opposite.Class != null)]
+["["]Opposite(typeof([opposite.Class.Name]), "[opposite.Name.ToPascalCase()]")["]"]
+[end if]
+end template
+
+template GenerateOperation(Operation op)
+[if (!hasloop(op->Class->prop:OwnedAttribute where op.Name == prop.Name && prop.IsDerived && !prop.IsDerivedUnion))]
+[GenerateComment(op)]
+public [GenerateReturnType(op)] [op.Name.ToPascalCase()]([GenerateParams(op)])
+{
+	throw new NotImplementedException();
+}
+[end if]
+end template
+
+template GenerateReturnType(Operation op)
+[if (hasloop(op->param:OwnedParameter where param.Direction == ParameterDirectionKind.Return))]
+	[loop(op->param:OwnedParameter where param.Direction == ParameterDirectionKind.Return)]
+[GenerateType(param, param.Type)]
+	[end loop]
+[else]
+void
+[end if]
+end template
+
+template GenerateParams(Operation op)
+[loop(op->param:OwnedParameter where param.Direction != ParameterDirectionKind.Return; separator sep = ", ")]
+[GenerateType(param, param.Type)] [param.Name][sep]\
+[end loop]
+end template
+
+template GenerateComment(Element elem)
+[if (hasloop (elem->OwnedComment where !string.IsNullOrWhiteSpace(OwnedComment.Body)))]
+/// <summary>
+	[loop (elem->OwnedComment where !string.IsNullOrWhiteSpace(OwnedComment.Body))]
+		[loop (line:CommentLines(OwnedComment.Body, true))]
+/// [line]
+		[end loop]
+	[end loop]
+/// </summary>
+	[if (elem is Operation)]
+		[loop (elem->typeof(Operation)->param:OwnedParameter->OwnedComment where !string.IsNullOrWhiteSpace(OwnedComment.Body))]
+/// <param name="[param.Name]">
+			[loop (line:CommentLines(OwnedComment.Body, true))]
+/// [line]
+			[end loop]
+/// </param>
+		[end loop]
+	[end if]
+[end if]
+	[if (elem is Operation)]
+[GenerateSpecification((Operation)elem)]
+	[else if (elem is Property)]
+		[var prop = (Property)elem]
+		[if (prop.IsDerived && !prop.IsDerivedUnion)]
+		[loop(prop->Class->op:OwnedOperation where op.Name == prop.Name)]
+[GenerateSpecification(op)]
+		[end loop]
+		[end if]
+	[end if]
+end template
+
+template GenerateSpecification(Namespace ns)
+	[loop (ns->rule:OwnedRule->spec:Specification->expr:typeof(OpaqueExpression))]
+		[loop (rule->OwnedComment where !string.IsNullOrWhiteSpace(OwnedComment.Body))]
+/// <para>
+			[loop (line:CommentLines(OwnedComment.Body, true))]
+/// [line]
+			[end loop]
+/// </para>
+		[end loop]
+// [rule.Name]:
+		[loop (expr->Body)]
+			[loop (line:CommentLines(Body, false))]
+//     [line]
+			[end loop]
+		[end loop]
+	[end loop]
+end template

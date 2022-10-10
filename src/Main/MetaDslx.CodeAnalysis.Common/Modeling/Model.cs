@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MetaDslx.Modeling;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -9,7 +10,6 @@ namespace MetaDslx.Modeling
         private string _id;
         private string? _name;
         private bool _readOnly;
-        private ModelValidationFlags _validationFlags;
         private ModelGroup? _modelGroup;
         private List<IModelObject> _modelObjects;
 
@@ -38,12 +38,15 @@ namespace MetaDslx.Modeling
             set => _readOnly = value;
         }
 
+        public ModelValidationOptions ValidationOptions => _modelGroup?.ValidationOptions ?? ModelValidationOptions.Default;
+
         public ModelGroup? ModelGroup
         {
             get => _modelGroup;
             set
             {
-                if (_modelGroup != null && value != null) throw new ArgumentException(nameof(value), $"Model '{this}' is already contained by the model group '{_modelGroup}. To change the group of a model, remove the model from the old group first.'");
+                if (_modelGroup != null && value != null) throw new ModelException($"Error changing the model group '{_modelGroup}' of '{this}' to {value}: to change the model group of a model, remove the model from the old group first.'");
+                if (_modelGroup != null && _modelGroup.IsReadOnly) throw new ModelException($"Error changing the model group '{_modelGroup}' of '{this}' to {value}: the model group containing the model is read only.");
                 if (!object.ReferenceEquals(_modelGroup, value))
                 {
                     var originalModelGroup = _modelGroup;
@@ -60,10 +63,11 @@ namespace MetaDslx.Modeling
                             _modelGroup.AddModel(this);
                         }
                     }
-                    catch
+                    catch (Exception ex)
                     {
                         _modelGroup = originalModelGroup;
-                        throw;
+                        if (ValidationOptions.FullPropertyModificationStackInExceptions) throw new ModelException($"Error setting the model group of '{this}' to {value}", ex);
+                        else throw;
                     }
                 }
             }
@@ -77,12 +81,6 @@ namespace MetaDslx.Modeling
             set => this.ModelGroup = (ModelGroup)value; 
         }
 
-        public ModelValidationFlags ValidationFlags
-        {
-            get => _validationFlags;
-            set => _validationFlags = value;
-        }
-
         public void AddObject(IModelObject modelObject)
         {
             CheckReadOnly();
@@ -93,10 +91,11 @@ namespace MetaDslx.Modeling
                     _modelObjects.Add(modelObject);
                     modelObject.Model = this;
                 }
-                catch
+                catch (Exception ex)
                 {
                     _modelObjects.RemoveAt(_modelObjects.Count - 1);
-                    throw;
+                    if (ValidationOptions.FullPropertyModificationStackInExceptions) throw new ModelException($"Error adding object '{modelObject}' to the model '{this}'", ex);
+                    else throw;
                 }
             }
         }
@@ -112,17 +111,18 @@ namespace MetaDslx.Modeling
                     _modelObjects.Remove(modelObject);
                     modelObject.Model = null;
                 }
-                catch
+                catch (Exception ex)
                 {
                     _modelObjects.Insert(index, modelObject);
-                    throw;
+                    if (ValidationOptions.FullPropertyModificationStackInExceptions) throw new ModelException($"Error removing object '{modelObject}' from the model '{this}'", ex);
+                    else throw;
                 }
             }
         }
 
         private void CheckReadOnly()
         {
-            if (_validationFlags.HasFlag(ModelValidationFlags.Readonly) && _readOnly) throw new ModelException("The model is read only");
+            if (ValidationOptions.ValidateReadOnly && _readOnly) throw new ModelException("The model is read only");
         }
 
         public override string ToString()

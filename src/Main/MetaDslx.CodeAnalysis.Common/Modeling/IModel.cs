@@ -9,7 +9,7 @@ namespace MetaDslx.Modeling
         string Id { get; set; }
         string Name { get; set; }
         bool IsReadOnly { get; set; }
-        ModelValidationFlags ValidationFlags { get; set; }
+        ModelValidationOptions ValidationOptions { get; }
         IModelGroup ModelGroup { get; set; }
         IEnumerable<IModelObject> Objects { get; }
         void AddObject(IModelObject modelObject);
