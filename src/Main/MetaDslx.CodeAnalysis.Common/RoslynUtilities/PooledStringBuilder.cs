@@ -15,7 +15,7 @@ namespace MetaDslx.CodeAnalysis.PooledObjects
     ///        ... sb.ToString() ...
     ///        inst.Free();
     /// </summary>
-    internal sealed partial class PooledStringBuilder
+    public sealed partial class PooledStringBuilder
     {
         public readonly StringBuilder Builder = new();
         private readonly ObjectPool<PooledStringBuilder> _pool;

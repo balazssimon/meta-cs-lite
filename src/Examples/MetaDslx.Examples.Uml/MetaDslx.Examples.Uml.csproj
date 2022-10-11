@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Languages\MetaDslx.Languages.Uml\MetaDslx.Languages.Uml.csproj" />
+    <ProjectReference Include="..\..\Languages\MetaDslx.Languages.Uml-v2.5.1\MetaDslx.Languages.Uml-v2.5.1.csproj" />
   </ItemGroup>
 
 	<!--ItemGroup>

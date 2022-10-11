@@ -69,8 +69,12 @@ public partial interface [cls.Name][GenerateBaseClasses(cls)]
 end template
 
 template GenerateBaseClasses(Class cls)
+[@single-line]
 [string sep = " : "]
-[foreach (var gen in cls.Generalization.Select(g => g.General))][sep][gen.Name][sep = ", "][end foreach]
+[foreach (var gen in cls.Generalization.Select(g => g.General))]
+[sep][gen.Name]
+[sep = ", "]
+[end foreach]
 end template
 
 template GenerateProperty(Property prop)
