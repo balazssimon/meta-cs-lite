@@ -31,7 +31,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetaDslx.NetStandard20Exten
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetaDslx.Bootstrap.MetaModel", "Bootstrap\MetaDslx.Bootstrap.MetaModel\MetaDslx.Bootstrap.MetaModel.csproj", "{69AB5FD7-1CFF-46DD-A6A2-AF6ACE04DC0E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetaDslx.Languages.Uml", "Languages\MetaDslx.Languages.Uml\MetaDslx.Languages.Uml.csproj", "{EDFA6C05-677C-410B-B510-27F14B9B4E20}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetaDslx.Languages.Uml-v2.5.1", "Languages\MetaDslx.Languages.Uml-v2.5.1\MetaDslx.Languages.Uml-v2.5.1.csproj", "{EDFA6C05-677C-410B-B510-27F14B9B4E20}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetaDslx.Examples.Uml", "Examples\MetaDslx.Examples.Uml\MetaDslx.Examples.Uml.csproj", "{C13F5E78-1CDD-48F9-ADDD-CFB79F2A9155}"
 EndProject
