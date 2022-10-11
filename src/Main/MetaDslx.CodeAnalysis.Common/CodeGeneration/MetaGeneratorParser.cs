@@ -108,6 +108,7 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
                     else EatToken();
                 }
                 EndInputSpan();
+                SkipWs(skipSemicolon: true);
                 StartOutputSpan(_osb.Prefix.Length + 9);
                 _osb.Write("namespace");
                 _osb.Write(_isb.ToString());
@@ -153,6 +154,7 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
                     else EatToken();
                 }
                 EndInputSpan("GeneratorName");
+                SkipWs(skipSemicolon: true);
                 _generatorName = _isb.ToString();
                 return true;
             }
@@ -171,18 +173,16 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
                 StartInputSpan();
                 while (true)
                 {
-                    if (TryMatchEndOfLine(true)) break;
+                    if (TryMatchEndOfLine()) break;
                     else EatToken();
                 }
                 EndInputSpan();
+                SkipWs(skipSemicolon: true);
                 StartOutputSpan(_osb.Prefix.Length);
                 var inputText = _isb.ToString();
-                _osb.WriteLine(inputText);
+                _osb.Write(inputText);
+                _osb.WriteLine(";");
                 EndOutputSpan();
-                if (!inputText.EndsWith(";"))
-                {
-                    _osb.WriteLine(";");
-                }
                 return true;
             }
             return false;
@@ -331,12 +331,14 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
                 }
                 if (lineStart && string.IsNullOrWhiteSpace(token.Text))
                 {
+                    state.IsEmptyLine = true;
                     _osb.Write("__cb.Push(\"");
                     _osb.Write(token.EscapedTextForString);
                     _osb.WriteLine("\");");
                 }
                 else
                 {
+                    state.IsEmptyLine = false;
                     if (lineStart) _osb.Write("__cb.Push(\"\");");
                     StartOutputSpan(_osb.Prefix.Length + 12);
                     _osb.Write("__cb.Write(\"");
@@ -347,17 +349,31 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
             }
             else if (token.Kind == MetaGeneratorTokenKind.EndOfLine)
             {
-                _osb.WriteLine("__cb.AppendLine();");
-                _osb.WriteLine("__cb.Pop();");
+                if (state.IsEmptyLine)
+                {
+                    _osb.WriteLine("__cb.WriteLine();");
+                    _osb.WriteLine("__cb.Pop();");
+                }
+                else if (lineStart)
+                {
+                    _osb.WriteLine("__cb.WriteLine();");
+                }
+                else
+                {
+                    _osb.WriteLine("__cb.AppendLine();");
+                    _osb.WriteLine("__cb.Pop();");
+                }
                 EatToken();
             }
             else if (token.Kind == MetaGeneratorTokenKind.TemplateControlBegin)
             {
+                state.IsEmptyLine = false;
                 state.IsControl = true;
                 EatToken();
             }
             else if (token.Kind == MetaGeneratorTokenKind.Keyword && token.Text == "end")
             {
+                state.IsEmptyLine = false;
                 var stmt = TryMatchControlStatement();
                 if (stmt.Kind == ControlStatementKind.EndStatement && stmt.Keyword.Text == "template")
                 {
@@ -385,8 +401,8 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
             if (stmt.TokenCount <= 0) return;
             if (stmt.Kind == ControlStatementKind.TemplateControlEnd)
             {
-                EatTokens(stmt.TokenCount);
                 state.IsControl = false;
+                EatTokens(stmt.TokenCount);
             }
             else if (stmt.Kind == ControlStatementKind.Expression)
             {
@@ -401,14 +417,26 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
             }
             else if (stmt.Kind == ControlStatementKind.Statement || stmt.Kind == ControlStatementKind.StatementWithSemicolon)
             {
-                StartInputSpan();
-                EatTokens(stmt.TokenCount);
-                EndInputSpan();
-                StartOutputSpan(_osb.Prefix.Length);
-                _osb.Write(_isb.ToString());
-                if (stmt.Kind == ControlStatementKind.Statement) _osb.Write(";");
-                EndOutputSpan();
-                _osb.WriteLine();
+                if (stmt.Keyword.Kind == MetaGeneratorTokenKind.Keyword && MetaGeneratorLexer.TemplateModifierKeywords.Contains(stmt.Keyword.Text))
+                {
+                    EatTokens(stmt.TokenCount);
+                    var keyword = stmt.Keyword.Text;
+                    if (keyword == "@single-line") _osb.WriteLine("__cb.SingleLineMode = true;");
+                    else if (keyword == "@multi-line") _osb.WriteLine("__cb.SingleLineMode = false;");
+                    else if (keyword == "@skip-line-end") _osb.WriteLine("__cb.SkipLineEnd = true;");
+                    else throw new InvalidOperationException("Unknown TemplateModifierKeyword: " + keyword);
+                }
+                else
+                {
+                    StartInputSpan();
+                    EatTokens(stmt.TokenCount);
+                    EndInputSpan();
+                    StartOutputSpan(_osb.Prefix.Length);
+                    _osb.Write(_isb.ToString());
+                    if (stmt.Kind == ControlStatementKind.Statement) _osb.Write(";");
+                    EndOutputSpan();
+                    _osb.WriteLine();
+                }
             }
             else if (stmt.Kind == ControlStatementKind.BeginStatement)
             {
@@ -417,7 +445,7 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
                     _osb.Pop();
                     _osb.WriteLine("}");
                 }
-                var first = state.GetNextVariableName("name");
+                var first = state.GetNextVariableName("first");
                 if (stmt.SeparatorTokenCount > 0)
                 {
                     _osb.WriteLine($"var {first} = true;");
@@ -433,16 +461,27 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
                 _osb.Push();
                 if (stmt.SeparatorTokenCount > 0)
                 {
-                    _osb.WriteLine($"if ({first}) {first} = false;");
+                    _osb.WriteLine($"if ({first})");
+                    _osb.WriteLine("{");
+                    _osb.Push();
+                    _osb.WriteLine($"{first} = false;");
+                    _osb.Pop();
+                    _osb.WriteLine("}");
+                    _osb.WriteLine("else");
+                    _osb.WriteLine("{");
+                    _osb.Push();
                     EatTokens(stmt.SeparatorTokenSkip);
                     StartInputSpan();
                     EatTokens(stmt.SeparatorTokenCount);
                     EndInputSpan();
                     StartOutputSpan(_osb.Prefix.Length + 16);
-                    _osb.Write($"else __cb.Write(");
+                    _osb.Write($"__cb.Write(");
                     _osb.Write(_isb.ToString());
                     _osb.WriteLine(");");
                     EndOutputSpan();
+                    //_osb.WriteLine("__cb.SkipLineEnd = true;");
+                    _osb.Pop();
+                    _osb.WriteLine("}");
                 }
                 if (!MetaGeneratorLexer.BlockWithoutEndKeywords.Contains(stmt.Keyword.Text))
                 {
@@ -495,9 +534,9 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
             }
         }
 
-        private void SkipWs()
+        private void SkipWs(bool skipSemicolon = false)
         {
-            while (IsWhitespaceOrComment()) _tokens.EatToken();
+            while (IsWhitespaceOrComment() || (skipSemicolon && _tokens.CurrentToken.Kind == MetaGeneratorTokenKind.Other && _tokens.CurrentToken.Text == ";")) _tokens.EatToken();
         }
 
         private MetaGeneratorToken SkipWs(ref int index)
@@ -527,14 +566,19 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
                 return result;
             }
 
-            if (token.Kind == MetaGeneratorTokenKind.Keyword && MetaGeneratorLexer.BlockKeywords.Contains(token.Text))
+            result.Kind = ControlStatementKind.Expression;
+            if (token.Kind == MetaGeneratorTokenKind.Keyword)
             {
-                result.Kind = ControlStatementKind.BeginStatement;
-                result.Keyword = token;
-            }
-            else
-            {
-                result.Kind = ControlStatementKind.Expression;
+                if (MetaGeneratorLexer.BlockKeywords.Contains(token.Text))
+                {
+                    result.Kind = ControlStatementKind.BeginStatement;
+                    result.Keyword = token;
+                }
+                else if (MetaGeneratorLexer.TemplateModifierKeywords.Contains(token.Text))
+                {
+                    result.Kind = ControlStatementKind.Statement;
+                    result.Keyword = token;
+                }
             }
 
             int parenthesisCounter = 0;
@@ -611,12 +655,10 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
             var token = _tokens.CurrentToken;
             if (allowSemicolon && token.Kind == MetaGeneratorTokenKind.Other && token.Text == ";")
             {
-                EatToken();
                 return true;
             }
             if (token.Kind == MetaGeneratorTokenKind.EndOfLine)
             {
-                EatToken();
                 return true;
             }
             if (token.Kind == MetaGeneratorTokenKind.EndOfFile)
@@ -745,6 +787,7 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
         {
             public MetaGeneratorToken BeginKeyword;
             public MetaGeneratorToken BlockKeyword;
+            public bool IsEmptyLine;
             public bool IsEndWritten;
             public bool IsControl;
             public bool IsEnd;

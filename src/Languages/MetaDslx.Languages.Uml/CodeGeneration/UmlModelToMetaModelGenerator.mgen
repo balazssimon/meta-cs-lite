@@ -47,7 +47,7 @@ public enum [enm.Name]
 {
 	[foreach (var lit in enm.OwnedLiteral) separator ","]
     [GenerateComment(lit)]
-    [lit.Name.ToPascalCase()]
+    [lit.Name.ToPascalCase()][@skip-line-end]
 	[end foreach]
 }
 end template
@@ -70,7 +70,7 @@ end template
 
 template GenerateBaseClasses(Class cls)
 [string sep = " : "]
-[foreach (var gen in cls.Generalization.Select(g => g.General))][sep][gen.Name][sep = ", ";][end foreach]
+[foreach (var gen in cls.Generalization.Select(g => g.General))][sep][gen.Name][sep = ", "][end foreach]
 end template
 
 template GenerateProperty(Property prop)

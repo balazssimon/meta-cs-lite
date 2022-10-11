@@ -15,6 +15,8 @@ namespace MetaDslx.CodeGeneration
         private string _suffix;
         private bool _isAtLineStart;
         private bool _dontSplitMultiLineValues;
+        private bool _singleLineMode;
+        private bool _skipLineEnd;
         private List<(string prefix, string suffix)> _indentStack;
         private int _line;
         private int _character;
@@ -26,6 +28,8 @@ namespace MetaDslx.CodeGeneration
             _suffix = "";
             _isAtLineStart = true;
             _dontSplitMultiLineValues = false;
+            _singleLineMode = false;
+            _skipLineEnd = false;
             _line = 0;
             _character = 0;
             _indentStack = new List<(string prefix, string suffix)>();
@@ -40,6 +44,16 @@ namespace MetaDslx.CodeGeneration
         public string Prefix => _prefix;
         public string Suffix => _suffix;
         public bool IsAtLineStart => _isAtLineStart;
+        public bool SingleLineMode
+        {
+            get => _singleLineMode;
+            set => _singleLineMode = value;
+        }
+        public bool SkipLineEnd
+        {
+            get => _skipLineEnd;
+            set => _skipLineEnd = value;
+        }
         public int Line => _line;
         public int Character => _character;
         public LinePosition LinePosition => new LinePosition(_line, _character);
@@ -63,6 +77,8 @@ namespace MetaDslx.CodeGeneration
             _suffix = "";
             _isAtLineStart = true;
             _dontSplitMultiLineValues = false;
+            _singleLineMode = false;
+            _skipLineEnd = false;
             _line = 0;
             _character = 0;
             _indentStack.Clear();
@@ -70,7 +86,7 @@ namespace MetaDslx.CodeGeneration
 
         public void Push(string prefix = "    ", string suffix = "")
         {
-            AppendLine();
+            //AppendLine();
             _indentStack.Add((_prefix, _suffix));
             _prefix += prefix;
             _suffix += suffix;
@@ -79,7 +95,7 @@ namespace MetaDslx.CodeGeneration
         public void Pop()
         {
             if (_indentStack.Count == 0) return;// throw new InvalidOperationException("Push-Pop mismatch.");
-            AppendLine();
+            //AppendLine();
             var indent = _indentStack[_indentStack.Count - 1];
             _indentStack.RemoveAt(_indentStack.Count - 1);
             _prefix = indent.prefix;
@@ -273,7 +289,7 @@ namespace MetaDslx.CodeGeneration
                     WriteWithoutSplit(line);
                     first = false;
                 }
-                if (reader.HasFinalLineEnd) AppendLine();
+                //if (reader.HasFinalLineEnd) AppendLine();
             }
         }
 
@@ -455,11 +471,18 @@ namespace MetaDslx.CodeGeneration
 
         private void EndLine()
         {
-            WriteSuffix();
-            _sb.AppendLine();
-            _isAtLineStart = true;
-            ++_line;
-            _character = 0;
+            if (_singleLineMode || _skipLineEnd)
+            {
+                _skipLineEnd = false;
+            }
+            else 
+            {
+                WriteSuffix();
+                _sb.AppendLine();
+                _isAtLineStart = true;
+                ++_line;
+                _character = 0;
+            }
         }
 
         private bool IsLineEnd(char ch)

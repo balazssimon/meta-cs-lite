@@ -24,11 +24,16 @@ namespace MetaDslx.Bootstrap.CodeGeneration
 namespace HelloNs
 generator G
 
+using A
+using B;
+using C
+
 template SayHello(string name)
   [--i;]
 end template
 
 template SayHello(string name)
+    [single_line]
   [if (a)][name][else]X[end if]!
 DDD
   [if (b)]
@@ -36,11 +41,15 @@ DDD
   [else]
     B
   [end if]
+
 DDD
+  
+    [multi_line]
   [if (b)]
     A
   [else]B[end if]
-DDD
+DDD[@skip-line-end]
+EEE
   [if (b)]A[else]
     B
   [end if]

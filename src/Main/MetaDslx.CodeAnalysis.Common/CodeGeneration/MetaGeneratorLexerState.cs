@@ -15,6 +15,7 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
         TemplateHeaderEnd,
         TemplateOutput,
         TemplateControl,
+        TemplateControlContextual,
         TemplateEnd,
         End,
         Eof
