@@ -17,7 +17,7 @@
 		<!-- NuGet -->
 		<IsPackable>true</IsPackable>
 		<Authors>Balazs Simon</Authors>
-		<PackageId>MetaDslx.Languages.Uml</PackageId>
+		<PackageId>MetaDslx.Languages.Uml-v2.5.1</PackageId>
 		<VersionSuffix></VersionSuffix>
 		<PackageDescription>
 			The complete implementation of the OMG UML 2.5.1 metamodel standard with XMI serialization support.
