@@ -12,17 +12,8 @@ properties Properties
 end properties
 
 extern function bool IsCollection(MultiplicityElement me)
-
-extern function List<Property> GetDeclaredAttributes(Class cls)
-extern function List<Property> GetOverridenProperties(Property prop)
-extern function Property GetOpposite(Property property)
-extern function List<Property> GetOpposites(Property property)
-
-extern function List<Operation> GetDeclaredOperations(Class cls)
-extern function List<Operation> GetOverridenOperations(Operation op)
-
+extern function UmlClass GetUmlClass(Class cls)
 extern function string GenerateDefaultValue(Property property)
-
 extern function IEnumerable<string> CommentLines(string text, bool escapeHtml)
 
 
@@ -49,7 +40,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
 	[end loop]
 	[loop(Instances->cls:typeof(Class))]
 ^
-    [GenerateClass(cls, false)]
+    [GenerateClass(GetUmlClass(cls), false)]
 	[end loop]
 }
 end template
@@ -64,7 +55,7 @@ using System.Text;
 namespace MetaDslx.Languages.Uml.MetaModel
 {
 	[loop(Instances->cls:typeof(Class))]
-    [GenerateClass(cls, true)]
+    [GenerateClass(GetUmlClass(cls), true)]
 	[end loop]
 }
 end template
@@ -86,7 +77,8 @@ public enum [enm.Name]
 ^
 end template
 
-template GenerateClass(Class cls, bool implementation)
+template GenerateClass(UmlClass ucls, bool implementation)
+[var cls = ucls.Class]
 [if (!implementation)]
 [GenerateComment(cls)]
 [cls.IsAbstract ? "[MetaClass(IsAbstract = true)]" : "[MetaClass]"]
@@ -95,10 +87,10 @@ public partial interface [cls.Name][GenerateBaseClasses(cls)]
 public partial interface [cls.Name]
 [end if]
 {
-	[loop(prop:GetDeclaredAttributes(cls))]
+	[loop(prop:ucls.Attributes)]
 	[GenerateProperty(prop, implementation)]
 	[end loop]
-	[loop(op:GetDeclaredOperations(cls))]
+	[loop(op:ucls.Operations)]
 	[GenerateOperation(op, implementation)]
 	[end loop]
 }
@@ -113,8 +105,9 @@ template GenerateBaseClasses(Class cls)
 [end loop]
 end template
 
-template GenerateProperty(Property prop, bool implementation)
-[var overridenProps = GetOverridenProperties(prop)]
+template GenerateProperty(UmlProperty uprop, bool implementation)
+[var prop = uprop.Property]
+[var overridenProps = uprop.Overrides]
 	[if (!implementation)]
 		[loop (baseProp: overridenProps where baseProp.IsDerived && !baseProp.IsDerivedUnion)]
 [GenerateType(baseProp, baseProp.Type)] [baseProp.Class.Name].[prop.Name.ToPascalCase()]
@@ -143,7 +136,7 @@ template GenerateProperty(Property prop, bool implementation)
 [if (prop.IsReadOnly)]
 ["["]ReadOnly["]"]
 [end if]
-[GenerateOpposite(prop)]
+[GenerateOpposites(uprop)]
 [GenerateRedefines(prop)]
 [GenerateSubsets(prop)]
 [if (prop.DefaultValue != null)]
@@ -195,15 +188,16 @@ template GenerateSubsets(Property prop)
 [end loop]
 end template
 
-template GenerateOpposite(Property prop)
-[var opposite = GetOpposite(prop)]
-[if (opposite != null)]
-["["]Opposite(typeof([(opposite.Class != null ? opposite.Class : prop.Type).Name]), "[opposite.Name.ToPascalCase()]")["]"]
-[end if]
+template GenerateOpposites(UmlProperty uprop)
+[var prop = uprop.Property]
+[loop (opposite:uprop.Opposites)]
+["["]Opposite(typeof([prop.Type.Name]), "[opposite.ToPascalCase()]")["]"]
+[end loop]
 end template
 
-template GenerateOperation(Operation op, bool implementation)
-	[var overridenOps = GetOverridenOperations(op)]
+template GenerateOperation(UmlOperation uop, bool implementation)
+	[var op = uop.Operation]
+	[var overridenOps = uop.Overrides]
 	[var returnType = GenerateReturnType(op)]
 	[if (implementation)]
 [GenerateComment(op)]

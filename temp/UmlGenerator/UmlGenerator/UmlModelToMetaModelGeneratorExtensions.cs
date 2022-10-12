@@ -8,10 +8,7 @@ namespace UmlGenerator
 {
     internal class UmlModelToMetaModelGeneratorExtensions : IUmlModelToMetaModelGeneratorExtensions
     {
-        private Dictionary<Class, List<Property>> _declaredAttributes = new Dictionary<Class, List<Property>>();
-        private Dictionary<Class, List<Operation>> _declaredOperations = new Dictionary<Class, List<Operation>>();
-        private Dictionary<Property, List<Property>> _overridenProperties = new Dictionary<Property, List<Property>>();
-        private Dictionary<Operation, List<Operation>> _overridenOperations = new Dictionary<Operation, List<Operation>>();
+        private Dictionary<Class, UmlClass> _umlClasses = new Dictionary<Class, UmlClass>();
 
         public UmlModelToMetaModelGeneratorExtensions()
         {
@@ -48,104 +45,123 @@ namespace UmlGenerator
             return me.Upper < 0 || me.Upper > 1;
         }
 
-        public List<Property> GetDeclaredAttributes(Class cls)
+        public UmlClass GetUmlClass(Class cls)
         {
-            if (_declaredAttributes.TryGetValue(cls, out var result)) return result;
-            result = new List<Property>();
-            result.AddRange(cls.OwnedAttribute);
-            /*foreach (var assoc in cls.MModel.Objects.OfType<Association>().Where(assoc => assoc.MemberEnd.Count == 2))
+            if (_umlClasses.TryGetValue(cls, out var result)) return result;
+            result = new UmlClass();
+            result.Class = cls;
+            _umlClasses.Add(cls, result);
+            foreach (var attr in cls.OwnedAttribute)
+            {
+                AddUmlProperty(result, attr);
+            }
+            foreach (var assoc in cls.MModel.Objects.OfType<Association>().Where(assoc => assoc.MemberEnd.Count == 2))
             {
                 Property first = assoc.MemberEnd[0];
                 Property second = assoc.MemberEnd[1];
-                if (first.Type == cls && !result.Contains(second)) result.Add(second);
-                if (second.Type == cls && !result.Contains(first)) result.Add(first);
-            }*/
-            _declaredAttributes.Add(cls, result);
-            return result;
-        }
-
-        public List<Operation> GetDeclaredOperations(Class cls)
-        {
-            if (_declaredOperations.TryGetValue(cls, out var result)) return result;
-            result = new List<Operation>();
-            var attrs = GetDeclaredAttributes(cls);
-            foreach (var op in cls.OwnedOperation.Where(op => !attrs.Any(prop => op.Name == prop.Name && prop.IsDerived && !prop.IsDerivedUnion)))
-            {
-                result.Add(op);
-            }
-            _declaredOperations.Add(cls, result);
-            return result;
-        }
-
-        public List<Property> GetOverridenProperties(Property prop)
-        {
-            if (_overridenProperties.TryGetValue(prop, out var result)) return result;
-            result = new List<Property>();
-            foreach (var baseProp in prop.RedefinedProperty)
-            {
-                if (baseProp.Class.Name != prop.Class.Name && baseProp.Name == prop.Name)
+                if (first.Type == cls)
                 {
-                    if (!result.Contains(baseProp))
+                    var existing = result.Attributes.Where(attr => attr.Name == second.Name).FirstOrDefault();
+                    if (existing == null) existing = AddUmlProperty(result, second);
+                    if (!existing.Opposites.Contains(first.Name)) existing.Opposites.Add(first.Name);
+                }
+                if (second.Type == cls)
+                {
+                    var existing = result.Attributes.Where(attr => attr.Name == first.Name).FirstOrDefault();
+                    if (existing == null) existing = AddUmlProperty(result, first);
+                    if (!existing.Opposites.Contains(second.Name)) existing.Opposites.Add(second.Name);
+                }
+            }
+            foreach (var prop in result.Attributes)
+            {
+                foreach (var baseProp in prop.Property.RedefinedProperty)
+                {
+                    if ((baseProp.Class == null || baseProp.Class.Name != cls.Name) && baseProp.Name == prop.Name)
                     {
-                        result.Add(baseProp);
+                        if (!prop.Overrides.Contains(baseProp))
+                        {
+                            prop.Overrides.Add(baseProp);
+                        }
+                    }
+                }
+                foreach (var baseProp in cls.AllAttributes().OfType<Property>())
+                {
+                    if ((baseProp.Class == null || baseProp.Class.Name != cls.Name) && baseProp.Name == prop.Name)
+                    {
+                        if (!prop.Overrides.Contains(baseProp))
+                        {
+                            prop.Overrides.Add(baseProp);
+                        }
                     }
                 }
             }
-            foreach (var baseProp in prop.Class.AllAttributes().OfType<Property>())
+            foreach (var op in cls.OwnedOperation)
             {
-                if (baseProp.Class.Name != prop.Class.Name && baseProp.Name == prop.Name)
+                var derivedProp = result.Attributes.Where(prop => prop.Name == op.Name && prop.Property.IsDerived && !prop.Property.IsDerivedUnion).FirstOrDefault();
+                if (derivedProp != null)
                 {
-                    if (!result.Contains(baseProp))
+                    derivedProp.Operation = op;
+                }
+                else
+                {
+                    var uop = AddUmlOperation(result, op);
+                    foreach (var baseOp in cls.AllFeatures().OfType<Operation>())
                     {
-                        result.Add(baseProp);
+                        if (baseOp.Class.Name != op.Class.Name && baseOp.Name == op.Name && baseOp.OwnedParameter.Count == op.OwnedParameter.Count)
+                        {
+                            if (!uop.Overrides.Contains(baseOp))
+                            {
+                                uop.Overrides.Add(baseOp);
+                            }
+                        }
                     }
                 }
             }
-            _overridenProperties.Add(prop, result);
             return result;
         }
 
-
-        public List<Operation> GetOverridenOperations(Operation op)
+        private UmlProperty AddUmlProperty(UmlClass ucls, Property prop)
         {
-            if (_overridenOperations.TryGetValue(op, out var result)) return result;
-            result = new List<Operation>();
-            foreach (var baseOp in op.Class.AllFeatures().OfType<Operation>())
-            {
-                if (baseOp.Class.Name != op.Class.Name && baseOp.Name == op.Name && baseOp.OwnedParameter.Count == op.OwnedParameter.Count)
-                {
-                    if (!result.Contains(baseOp))
-                    {
-                        result.Add(baseOp);
-                    }
-                }
-            }
-            _overridenOperations.Add(op, result);
-            return result;
+            var existing = ucls.Attributes.Where(attr => attr.Name == prop.Name).FirstOrDefault();
+            if (existing != null) return existing;
+            var uprop = new UmlProperty() { Class = ucls, Property = prop, Name = prop.Name };
+            ucls.Attributes.Add(uprop);
+            return uprop;
         }
 
-        public Property GetOpposite(Property property)
+        private UmlOperation AddUmlOperation(UmlClass ucls, Operation op)
         {
-            var assoc = property.Association;
-            if (assoc == null || assoc.OwnedEnd.Count > 0) return null;
-            Property first = assoc.MemberEnd[0];
-            Property second = assoc.MemberEnd[1];
-            if (first == property) return second;
-            else return first;
+            var existing = ucls.Operations.Where(attr => attr.Name == op.Name).FirstOrDefault();
+            if (existing != null) return existing;
+            var uop = new UmlOperation() { Class = ucls, Operation = op, Name = op.Name };
+            ucls.Operations.Add(uop);
+            return uop;
         }
 
-        public List<Property> GetOpposites(Property property)
-        {
-            var associations = property.MModel.Objects.OfType<Association>().Where(assoc => assoc.MemberEnd.Count == 2 && assoc.MemberEnd.Any(me => me.Name == property.Name && me.Type == property.Type));
-            var result = new List<Property>();
-            foreach (var assoc in associations)
-            {
-                Property first = assoc.MemberEnd[0];
-                Property second = assoc.MemberEnd[1];
-                if (first.Name == property.Name && first.Type == property.Type) result.Add(second);
-                else result.Add(first);
-            }
-            return result;
-        }
+    }
+
+    public class UmlClass
+    {
+        public Class Class;
+        public List<UmlProperty> Attributes = new List<UmlProperty>();
+        public List<UmlOperation> Operations = new List<UmlOperation>();
+    }
+
+    public class UmlProperty
+    {
+        public string Name;
+        public UmlClass Class;
+        public Property Property;
+        public Operation Operation;
+        public List<Property> Overrides = new List<Property>();
+        public List<string> Opposites = new List<string>();
+    }
+
+    public class UmlOperation
+    {
+        public string Name;
+        public UmlClass Class;
+        public Operation Operation;
+        public List<Operation> Overrides = new List<Operation>();
     }
 }
