@@ -247,7 +247,7 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
                 if (state == MetaGeneratorLexerState.ControlBeginWs && ControlShortcutKeywords.Contains(lexeme))
                 {
                     kind = MetaGeneratorTokenKind.Keyword;
-                    if (lexeme == "quot")
+                    if (lexeme == "quots")
                     {
                         _controlBegin = "«";
                         _controlEnd = "»";
@@ -551,7 +551,7 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
 
         public static readonly HashSet<string> ControlShortcutKeywords = new HashSet<string>()
         {
-            "quot"
+            "quots"
         };
     }
 }
