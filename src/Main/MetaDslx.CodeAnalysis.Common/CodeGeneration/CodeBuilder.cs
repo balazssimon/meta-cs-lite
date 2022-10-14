@@ -289,7 +289,11 @@ namespace MetaDslx.CodeGeneration
                     WriteWithoutSplit(line);
                     first = false;
                 }
-                //if (reader.HasFinalLineEnd) AppendLine();
+                if (reader.HasExtraLineEnd)
+                {
+                    EndLine();
+                    WriteLine();
+                }
             }
         }
 

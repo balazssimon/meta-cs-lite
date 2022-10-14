@@ -1506,7 +1506,6 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// <summary>
     	/// The UseCase that is being extended.
     	/// </summary>
-    	[Opposite(typeof(UseCase), "Extend")]
     	[Subsets(typeof(DirectedRelationship), "Target")]
     	UseCase ExtendedCase { get; set; }
     	
@@ -1552,7 +1551,6 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// <summary>
     	/// The UseCase that is to be included.
     	/// </summary>
-    	[Opposite(typeof(UseCase), "Include")]
     	[Subsets(typeof(DirectedRelationship), "Target")]
     	UseCase Addition { get; set; }
     	
@@ -4879,7 +4877,6 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// <summary>
     	/// The general classifier in the Generalization relationship.
     	/// </summary>
-    	[Opposite(typeof(Classifier), "Generalization")]
     	[Subsets(typeof(DirectedRelationship), "Target")]
     	Classifier General { get; set; }
     	

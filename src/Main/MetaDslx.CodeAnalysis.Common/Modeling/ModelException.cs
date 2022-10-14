@@ -17,7 +17,7 @@ namespace MetaDslx.Modeling
         }
 
         public ModelException(string message, Exception innerException)
-            : base(message, innerException)
+            : base($"{message} -> {innerException.Message}", innerException)
         {
         }
 

@@ -36,4 +36,9 @@ foreach (var m in umlMetaModel.ModelGroup.Models)
 }
 xmiSerializer.WriteModelGroupToFile(umlMetaModel.ModelGroup, options);
 var generator = new UmlModelToMetaModelGenerator(umlMetaModel);
-File.WriteAllText("../../../Uml.txt", generator.Generate());
+generator.Namespace = "MetaDslx.Languages.Uml.MetaModel";
+generator.Uri = "http://www.omg.org/spec/UML/";
+generator.Prefix = "uml";
+generator.ModelName = "UmlMetaModel";
+File.WriteAllText("../../../Uml-intf.txt", generator.GenerateInterface());
+File.WriteAllText("../../../Uml-impl.txt", generator.GenerateImplementation());

@@ -329,7 +329,7 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
             cb.WriteLine("[global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)]");
             cb.WriteLine($"protected override {DictionaryType}<{ModelPropertyType}, {ModelPropertyInfoType}> MModelPropertyInfos => s_PropertyInfo;");
             cb.WriteLine();
-            foreach (var prop in metaClass.PublicProperties)
+            foreach (var prop in metaClass.PublicProperties.Where(p => !(p.Flags.HasFlag(ModelPropertyFlags.Derived) && !p.Flags.HasFlag(ModelPropertyFlags.DerivedUnion))))
             {
                 cb.WriteLine($"public {prop.CSharpType} {prop.Name}");
                 cb.WriteLine("{");
@@ -342,7 +342,7 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
                 cb.Pop();
                 cb.WriteLine("}");
             }
-            foreach (var prop in metaClass.AllDeclaredProperties)
+            foreach (var prop in metaClass.AllDeclaredProperties.Where(p => !(p.Flags.HasFlag(ModelPropertyFlags.Derived) && !p.Flags.HasFlag(ModelPropertyFlags.DerivedUnion))))
             {
                 cb.WriteLine("[global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)]");
                 cb.WriteLine($"{prop.CSharpType} {prop.MetaClass.FullyQualifiedName}.{prop.Name}");

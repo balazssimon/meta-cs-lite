@@ -142,7 +142,7 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
             {
                 if (flags.HasFlag(ModelPropertyFlags.BuiltInType) || flags.HasFlag(ModelPropertyFlags.EnumType) || flags.HasFlag(ModelPropertyFlags.ModelObjectType))
                 {
-                    _type = _propertySymbol.Type;
+                    _type = type;
                     _flags |= flags;
                     _flags |= ModelPropertyFlags.SingleItem;
                     if (_propertySymbol.IsReadOnly) _flags |= ModelPropertyFlags.ReadOnly;
