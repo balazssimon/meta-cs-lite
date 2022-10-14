@@ -225,7 +225,7 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
             var ch = _text.PeekChar();
             var nextCh = _text.PeekChar(1);
             if ((ch >= 'a' && ch <= 'z' || ch >= 'A' && ch <= 'Z' || ch == '_') ||
-                ch == '@' && (nextCh >= 'a' && nextCh <= 'z' || nextCh >= 'A' && nextCh <= 'Z' || nextCh == '_'))
+                (ch == '@' || ch == '$') && (nextCh >= 'a' && nextCh <= 'z' || nextCh >= 'A' && nextCh <= 'Z' || nextCh == '_'))
             {
                 var kind = MetaGeneratorTokenKind.Identifier;
                 if (ch == '@')
@@ -233,9 +233,14 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
                     kind = MetaGeneratorTokenKind.VerbatimIdentifier;
                     _text.NextChar();
                 }
+                else if (ch == '$')
+                {
+                    kind = MetaGeneratorTokenKind.Keyword;
+                    _text.NextChar();
+                }
                 _text.NextChar();
                 ch = _text.PeekChar();
-                while (ch >= 'a' && ch <= 'z' || ch >= 'A' && ch <= 'Z' || ch == '_' || ch >= '0' && ch <= '9' || (kind == MetaGeneratorTokenKind.VerbatimIdentifier && ch == '-'))
+                while (ch >= 'a' && ch <= 'z' || ch >= 'A' && ch <= 'Z' || ch == '_' || ch >= '0' && ch <= '9' || (kind == MetaGeneratorTokenKind.Keyword && ch == '-'))
                 {
                     _text.NextChar();
                     ch = _text.PeekChar();
@@ -247,7 +252,7 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
                 if (state == MetaGeneratorLexerState.ControlBeginWs && ControlShortcutKeywords.Contains(lexeme))
                 {
                     kind = MetaGeneratorTokenKind.Keyword;
-                    if (lexeme == "quots")
+                    if (lexeme == QuotsKeyword)
                     {
                         _controlBegin = "«";
                         _controlEnd = "»";
@@ -539,19 +544,27 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
             "control", "generator", "template"
         };
 
+        public const string SeparatorKeyword = "$separator";
+
         public static readonly HashSet<string> TemplateControlKeywords = new HashSet<string>()
         {
-            "end", "template", "separator"
+            "end", "template", SeparatorKeyword
         };
+
+        public const string MultiLineKeyword = "$multi-line";
+        public const string SingleLineKeyword = "$single-line";
+        public const string SkipLineEndKeyword = "$skip-line-end";
 
         public static readonly HashSet<string> TemplateModifierKeywords = new HashSet<string>()
         {
-            "@multi-line", "@single-line", "@skip-line-end"
+            MultiLineKeyword, SingleLineKeyword, SkipLineEndKeyword
         };
+
+        public const string QuotsKeyword = "quots";
 
         public static readonly HashSet<string> ControlShortcutKeywords = new HashSet<string>()
         {
-            "quots"
+            QuotsKeyword
         };
     }
 }

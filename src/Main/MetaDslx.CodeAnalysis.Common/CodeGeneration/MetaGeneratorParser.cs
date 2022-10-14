@@ -421,10 +421,13 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
                 {
                     EatTokens(stmt.TokenCount);
                     var keyword = stmt.Keyword.Text;
-                    if (keyword == "@single-line") _osb.WriteLine("__cb.SingleLineMode = true;");
-                    else if (keyword == "@multi-line") _osb.WriteLine("__cb.SingleLineMode = false;");
-                    else if (keyword == "@skip-line-end") _osb.WriteLine("__cb.SkipLineEnd = true;");
-                    else throw new InvalidOperationException("Unknown TemplateModifierKeyword: " + keyword);
+                    switch (keyword)
+                    {
+                        case MetaGeneratorLexer.SingleLineKeyword: _osb.WriteLine("__cb.SingleLineMode = true;"); break;
+                        case MetaGeneratorLexer.MultiLineKeyword: _osb.WriteLine("__cb.SingleLineMode = false;"); break;
+                        case MetaGeneratorLexer.SkipLineEndKeyword: _osb.WriteLine("__cb.SkipLineEnd = true;"); break;
+                        default: throw new InvalidOperationException("Unknown TemplateModifierKeyword: " + keyword);
+                    }
                 }
                 else
                 {
@@ -628,7 +631,7 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
                             {
                                 var separatorIndex = index;
                                 var separatorKeyword = SkipWs(ref separatorIndex);
-                                if (separatorKeyword.Kind == MetaGeneratorTokenKind.Keyword && separatorKeyword.Text == "separator")
+                                if (separatorKeyword.Kind == MetaGeneratorTokenKind.Keyword && separatorKeyword.Text == MetaGeneratorLexer.SeparatorKeyword)
                                 {
                                     result.TokenCount = index;
                                     SkipWs(ref separatorIndex);
