@@ -10,8 +10,8 @@
 		<ApplyNgenOptimization>partial</ApplyNgenOptimization>
 		<LangVersion>preview</LangVersion>
 		<MetaDslxDisableAntlr4RoslynGenerator>false</MetaDslxDisableAntlr4RoslynGenerator>
-		<AssemblyVersion>0.3.1.0</AssemblyVersion>
-		<VersionPrefix>0.3.1</VersionPrefix>
+		<AssemblyVersion>0.10.0.0</AssemblyVersion>
+		<VersionPrefix>0.10.0</VersionPrefix>
 		<EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
 
 		<!-- NuGet -->
@@ -44,6 +44,6 @@
 	</ItemGroup>
 	
 	<ItemGroup>
-		<PackageReference Include="MetaDslx.CodeAnalysis" Version="0.7.0" />
+		<PackageReference Include="MetaDslx.CodeAnalysis" Version="0.200.0" />
 	</ItemGroup>
 </Project>

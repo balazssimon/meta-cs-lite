@@ -596,7 +596,9 @@ namespace System.Linq
     {
         public static bool SequenceEqual<T>(this IEnumerable<T>? first, IEnumerable<T>? second, Func<T, T, bool> comparer)
         {
+#if DEBUG
             Debug.Assert(comparer != null);
+#endif
 
             if (first == second)
             {
