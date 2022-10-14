@@ -1,5 +1,8 @@
-﻿using System;
+﻿using MetaDslx.Modeling;
+using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
+using System.Linq;
 using System.Text;
 
 namespace MetaDslx.Languages.Uml.MetaModel
@@ -43,8 +46,8 @@ namespace MetaDslx.Languages.Uml.MetaModel
 
         public static IEnumerable<T> AllInstances<T>(this object mobj)
         {
-            var model = (IModelObject)mobj;
-            return model.Objects.OfType<T>();
+            var model = ((IModelObject)mobj).Model;
+            return model?.Objects.OfType<T>() ?? ImmutableArray<T>.Empty;
         }
 
         /*public static IList<TOutput> CollectItemsOfType<TObject, TInput, TOutput>(this TObject obj, IList<TInput> items)

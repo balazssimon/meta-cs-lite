@@ -223,10 +223,10 @@ namespace MetaDslx.Modeling
             {
                 slot.ThrowModelException(mp => mp.IsReadOnly, mp => $"{GetAddMessage(property, item)}: the property is read only.");
             }
-            AddCore(property, item);
+            AddCore(property, item, false);
         }
 
-        internal void AddCore(ModelProperty property, object? item)
+        internal void AddCore(ModelProperty property, object? item, bool fromOpposite)
         {
             var slot = GetSlot(property);
             if (item is not null)
@@ -247,7 +247,7 @@ namespace MetaDslx.Modeling
                         {
                             if (collection is IModelCollectionCore collectionCore)
                             {
-                                collectionCore.AddCore(item);
+                                collectionCore.AddCore(item, fromOpposite);
                             }
                         }
                         else
@@ -268,9 +268,9 @@ namespace MetaDslx.Modeling
                         try
                         {
                             _properties[slot.SlotProperty] = null;
-                            if (oldValue != null) ValueRemoved(slot, oldValue);
+                            if (oldValue != null) ValueRemoved(slot, oldValue, fromOpposite);
                             _properties[slot.SlotProperty] = item;
-                            if (item != null) ValueAdded(slot, item);
+                            if (item != null) ValueAdded(slot, item, fromOpposite);
                         }
                         catch (Exception ex)
                         {
@@ -286,7 +286,7 @@ namespace MetaDslx.Modeling
                 try
                 {
                     _properties[slot.SlotProperty] = item;
-                    if (item != null) ValueAdded(slot, item);
+                    if (item != null) ValueAdded(slot, item, fromOpposite);
                 }
                 catch (Exception ex)
                 {
@@ -305,10 +305,10 @@ namespace MetaDslx.Modeling
             {
                 slot.ThrowModelException(mp => mp.IsReadOnly, mp => $"{GetRemoveMessage(property, item)}: the property is read only.");
             }
-            RemoveCore(property, item);
+            RemoveCore(property, item, false);
         }
 
-        internal void RemoveCore(ModelProperty property, object? item)
+        internal void RemoveCore(ModelProperty property, object? item, bool fromOpposite)
         {
             var slot = GetSlot(property);
             if (_properties.TryGetValue(slot.SlotProperty, out var oldValue))
@@ -317,7 +317,7 @@ namespace MetaDslx.Modeling
                 {
                     if (oldValue is IModelCollectionCore collection)
                     {
-                        collection.RemoveCore(item);
+                        collection.RemoveCore(item, fromOpposite);
                     }
                     else
                     {
@@ -331,7 +331,7 @@ namespace MetaDslx.Modeling
                         try
                         {
                             _properties[slot.SlotProperty] = null;
-                            if (oldValue != null) ValueRemoved(slot, oldValue);
+                            if (oldValue != null) ValueRemoved(slot, oldValue, fromOpposite);
                         }
                         catch (Exception ex)
                         {
@@ -344,7 +344,7 @@ namespace MetaDslx.Modeling
             }
         }
 
-        internal void ValueAdded(ModelPropertySlot slot, object value)
+        internal void ValueAdded(ModelPropertySlot slot, object value, bool fromOpposite)
         {
             if (slot.Flags.HasFlag(ModelPropertyFlags.Untracked)) return;
             if (slot.Flags.HasFlag(ModelPropertyFlags.ModelObjectType) && value is IModelObject mobj)
@@ -365,19 +365,22 @@ namespace MetaDslx.Modeling
                 }
                 foreach (var slotProperty in slot.SlotProperties)
                 {
-                    foreach (var oppositeProperty in ((IModelObject)this).GetOppositeProperties(slotProperty))
+                    if (!fromOpposite)
                     {
-                        ((ModelObject)mobj).AddCore(oppositeProperty, this);
+                        foreach (var oppositeProperty in ((IModelObject)this).GetOppositeProperties(slotProperty))
+                        {
+                            ((ModelObject)mobj).AddCore(oppositeProperty, this, true);
+                        }
                     }
                     foreach (var subsettedProperty in ((IModelObject)this).GetSubsettedProperties(slotProperty))
                     {
-                        this.AddCore(subsettedProperty, mobj);
+                        this.AddCore(subsettedProperty, mobj, fromOpposite);
                     }
                 }
             }
         }
 
-        internal void ValueRemoved(ModelPropertySlot slot, object? value)
+        internal void ValueRemoved(ModelPropertySlot slot, object? value, bool fromOpposite)
         {
             if (slot.Flags.HasFlag(ModelPropertyFlags.Untracked)) return;
             if (slot.Flags.HasFlag(ModelPropertyFlags.ModelObjectType) && value is IModelObject mobj)
@@ -413,13 +416,16 @@ namespace MetaDslx.Modeling
                 }
                 foreach (var slotProperty in slot.SlotProperties)
                 {
-                    foreach (var oppositeProperty in  ((IModelObject)this).GetOppositeProperties(slotProperty))
+                    if (!fromOpposite)
                     {
-                        ((ModelObject)mobj).RemoveCore(oppositeProperty, this);
+                        foreach (var oppositeProperty in ((IModelObject)this).GetOppositeProperties(slotProperty))
+                        {
+                            ((ModelObject)mobj).RemoveCore(oppositeProperty, this, true);
+                        }
                     }
                     foreach (var subsettingProperty in ((IModelObject)this).GetSubsettingProperties(slotProperty))
                     {
-                        this.RemoveCore(subsettingProperty, mobj);
+                        this.RemoveCore(subsettingProperty, mobj, fromOpposite);
                     }
                 }
             }

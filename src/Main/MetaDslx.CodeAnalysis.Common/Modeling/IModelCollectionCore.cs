@@ -6,7 +6,7 @@ namespace MetaDslx.Modeling
 {
     internal interface IModelCollectionCore
     {
-        void AddCore(object? item);
-        void RemoveCore(object? item);
+        void AddCore(object? item, bool fromOpposite);
+        void RemoveCore(object? item, bool fromOpposite);
     }
 }

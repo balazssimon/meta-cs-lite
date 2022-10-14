@@ -1869,26 +1869,56 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     endif)
     	public bool IsOutsideCF()
     	{
-    		throw new NotImplementedException();
-    	}
-    	
-    	/// <summary>
-    	/// This query returns true if this Gate is attached to the boundary of a CombinedFragment, and its other end (if present) is inside of an InteractionOperator of the same CombinedFragment.
-    	/// </summary>
-    	// spec:
-    	//     result = (self.oppositeEnd()-> notEmpty() and combinedFragment->notEmpty() implies
-    	//     let oppEnd : MessageEnd = self.oppositeEnd()->asOrderedSet()->first() in
-    	//     if oppEnd.oclIsKindOf(MessageOccurrenceSpecification)
-    	//     then let oppMOS : MessageOccurrenceSpecification
-    	//     = oppEnd.oclAsType(MessageOccurrenceSpecification)
-    	//     in combinedFragment = oppMOS.enclosingOperand.combinedFragment
-    	//     else let oppGate : Gate = oppEnd.oclAsType(Gate)
-    	//     in combinedFragment = oppGate.combinedFragment.enclosingOperand.combinedFragment
-    	//     endif)
-    	public bool IsInsideCF()
+            if (CombinedFragment is null) return true;
+            var oppEnd = OppositeEnd().FirstOrDefault();
+            if (oppEnd is null) return true;
+            var teif = CombinedFragment.EnclosingInteraction as InteractionFragment;
+            var toif = CombinedFragment.EnclosingOperand as InteractionFragment;
+            InteractionFragment? oeif = null;
+            InteractionFragment? ooif = null;
+            if (oppEnd is MessageOccurrenceSpecification oppMOS)
+            {
+                oeif = oppMOS.EnclosingInteraction;
+                ooif = oppMOS.EnclosingOperand;
+            }
+            else if (oppEnd is Gate oppGate)
+            {
+                oeif = oppGate.CombinedFragment?.EnclosingInteraction;
+                ooif = oppGate.CombinedFragment?.EnclosingOperand;
+            }
+            if (teif == toif) toif = null;
+            if (oeif == ooif) ooif = null;
+            var tcount = (teif is not null ? 1 : 0) + (toif is not null ? 1 : 0);
+            var ocount = 0;
+            if (teif == oeif) ++ocount;
+            if (teif == ooif) ++ocount;
+            if (toif == oeif) ++ocount;
+            if (toif == ooif) ++ocount;
+            return tcount == ocount;
+        }
+
+        /// <summary>
+        /// This query returns true if this Gate is attached to the boundary of a CombinedFragment, and its other end (if present) is inside of an InteractionOperator of the same CombinedFragment.
+        /// </summary>
+        // spec:
+        //     result = (self.oppositeEnd()-> notEmpty() and combinedFragment->notEmpty() implies
+        //     let oppEnd : MessageEnd = self.oppositeEnd()->asOrderedSet()->first() in
+        //     if oppEnd.oclIsKindOf(MessageOccurrenceSpecification)
+        //     then let oppMOS : MessageOccurrenceSpecification
+        //     = oppEnd.oclAsType(MessageOccurrenceSpecification)
+        //     in combinedFragment = oppMOS.enclosingOperand.combinedFragment
+        //     else let oppGate : Gate = oppEnd.oclAsType(Gate)
+        //     in combinedFragment = oppGate.combinedFragment.enclosingOperand.combinedFragment
+        //     endif)
+        public bool IsInsideCF()
     	{
-    		throw new NotImplementedException();
-    	}
+            if (CombinedFragment is null) return true;
+            var oppEnd = OppositeEnd().FirstOrDefault();
+            if (oppEnd is null) return true;
+            if (oppEnd is MessageOccurrenceSpecification oppMOS) return CombinedFragment == oppMOS.EnclosingOperand?.CombinedFragment;
+            else if (oppEnd is Gate oppGate) return CombinedFragment == oppGate.CombinedFragment?.EnclosingOperand?.CombinedFragment;
+            else return false;
+        }
     	
     	/// <summary>
     	/// This query returns true value if this Gate is an actualGate of an InteractionUse.
@@ -1897,7 +1927,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (interactionUse->notEmpty())
     	public bool IsActual()
     	{
-    		throw new NotImplementedException();
+            return InteractionUse is not null;
     	}
     	
     	/// <summary>
@@ -1910,7 +1940,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (interaction->notEmpty())
     	public bool IsFormal()
     	{
-    		throw new NotImplementedException();
+            return Interaction is not null;
     	}
     	
     	/// <summary>
@@ -1931,8 +1961,18 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     endif)
     	public string GetName()
     	{
-    		throw new NotImplementedException();
-    	}
+            if (Name is not null) return Name;
+            else if (IsActual() && IsOutsideCF())
+            {
+                if (IsSend()) return $"out_{this.Message?.Name}";
+                else return $"in_{this.Message?.Name}";
+            }
+            else
+            {
+                if (IsSend()) return $"in_{this.Message?.Name}";
+                else return $"out_{this.Message?.Name}";
+            }
+        }
     	
     	/// <summary>
     	/// This query returns true if the name of this Gate matches the name of the in parameter Gate, and the messages for the two Gates correspond. The Message for one Gate (say A) corresponds to the Message for another Gate (say B) if (A and B have the same name value) and (if A is a sendEvent then B is a receiveEvent) and (if A is a receiveEvent then B is a sendEvent) and (A and B have the same messageSort value) and (A and B have the same signature value).
@@ -1946,18 +1986,24 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     self.message.signature = gateToMatch.message.signature)
     	public bool Matches(Gate gateToMatch)
     	{
-    		throw new NotImplementedException();
-    	}
-    	
-    	/// <summary>
-    	/// The query isDistinguishableFrom() specifies that two Gates may coexist in the same Namespace, without an explicit name property. The association end formalGate subsets ownedElement, and since the Gate name attribute
-    	/// is optional, it is allowed to have two formal gates without an explicit name, but having derived names which are distinct.
-    	/// </summary>
-    	// spec:
-    	//     result = (true)
-    	public new bool IsDistinguishableFrom(NamedElement n, Namespace ns)
+            if (this.GetName() != gateToMatch.GetName()) return false;
+            if (this.Message is null || gateToMatch.Message is null) return false;
+            if (this.Message.MessageSort != gateToMatch.Message.MessageSort) return false;
+            if (this.Message.SendEvent == this && gateToMatch.Message.ReceiveEvent != gateToMatch) return false;
+            if (this.Message.ReceiveEvent == this && gateToMatch.Message.SendEvent != gateToMatch) return false;
+            if (this.Message.Signature != gateToMatch.Message.Signature) return false;
+            return true;
+        }
+
+        /// <summary>
+        /// The query isDistinguishableFrom() specifies that two Gates may coexist in the same Namespace, without an explicit name property. The association end formalGate subsets ownedElement, and since the Gate name attribute
+        /// is optional, it is allowed to have two formal gates without an explicit name, but having derived names which are distinct.
+        /// </summary>
+        // spec:
+        //     result = (true)
+        public new bool IsDistinguishableFrom(NamedElement n, Namespace ns)
     	{
-    		throw new NotImplementedException();
+            return true;
     	}
     	
     	/// <summary>
@@ -1974,11 +2020,31 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//         endif
     	//       else null
     	//     endif)
-    	public InteractionOperand GetOperand()
+    	public InteractionOperand? GetOperand()
     	{
-    		throw new NotImplementedException();
-    	}
-    	
+    		if (IsInsideCF())
+            {
+                var oppEnd = this.OppositeEnd().FirstOrDefault();
+                if (oppEnd is MessageOccurrenceSpecification oppMOS) return oppMOS.EnclosingOperand;
+                else if (oppEnd is Gate oppGate) return oppGate.CombinedFragment.EnclosingOperand;
+            }
+            return null;
+        }
+
+        [ReadOnly]
+        [Opposite(typeof(CombinedFragment), "CfragmentGate")]
+        [Subsets(typeof(Element), "Owner")]
+        CombinedFragment? CombinedFragment { get; }
+
+        [ReadOnly]
+        [Opposite(typeof(InteractionUse), "ActualGate")]
+        [Subsets(typeof(Element), "Owner")]
+        InteractionUse? InteractionUse { get; }
+
+        [ReadOnly]
+        [Opposite(typeof(Interaction), "FormalGate")]
+        [Subsets(typeof(NamedElement), "Namespace")]
+        Interaction? Interaction { get; }
     }
     
     public partial interface GeneralOrdering
@@ -1999,6 +2065,9 @@ namespace MetaDslx.Languages.Uml.MetaModel
     
     public partial interface InteractionOperand
     {
+        [Opposite(typeof(CombinedFragment), "Operand")]
+        [Subsets(typeof(Element), "Owner")]
+        CombinedFragment CombinedFragment { get; set; }
     }
     
     public partial interface InteractionUse
@@ -2116,7 +2185,34 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     endif)
     	public IList<InteractionFragment> EnclosingFragment()
     	{
-    		throw new NotImplementedException();
+            var result = new List<InteractionFragment>();
+            if (this is MessageOccurrenceSpecification endMOS)
+            {
+                if (endMOS.EnclosingInteraction is not null) return result.Include(endMOS.EnclosingInteraction);
+                else result.Include(endMOS.EnclosingOperand);
+            }
+    		else if (this is Gate endGate)
+            {
+                if (endGate.IsOutsideCF())
+                {
+                    result.Include(endGate.CombinedFragment?.EnclosingInteraction as InteractionFragment);
+                    result.Include(endGate.CombinedFragment?.EnclosingOperand as InteractionFragment);
+                }
+                else if (endGate.IsInsideCF())
+                {
+                    result.Include(endGate.CombinedFragment as InteractionFragment);
+                }
+                else if (endGate.IsFormal())
+                {
+                    result.Include(endGate.Interaction as InteractionFragment);
+                }
+                else if (endGate.IsActual())
+                {
+                    result.Include(endGate.InteractionUse?.EnclosingInteraction as InteractionFragment);
+                    result.Include(endGate.InteractionUse?.EnclosingOperand as InteractionFragment);
+                }
+            }
+            return result;
     	}
 
     }
@@ -2319,7 +2415,8 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = ((self.lowerBound() <= M.lowerBound()) and (self.upperBound() >= M.upperBound()))
     	public bool IncludesMultiplicity(MultiplicityElement M)
     	{
-    		return this.LowerBound() <= M.LowerBound() && this.UpperBound() >= M.UpperBound();
+            return this.LowerBound() <= M.LowerBound() && (this.UpperBound() < 0 || M.UpperBound() >= 0 && M.UpperBound() <= this.UpperBound());
+            //return this.LowerBound() <= M.LowerBound() && this.UpperBound() >= M.UpperBound();
     	}
     	
     	/// <summary>
@@ -3142,7 +3239,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
         [Opposite(typeof(Class), "NestedClassifier")]
         [Subsets(typeof(NamedElement), "Namespace")]
         [Subsets(typeof(RedefinableElement), "RedefinitionContext")]
-        Class NestingClass { get; set; }
+        Class? NestingClass { get; }
     }
     
     public partial interface ClassifierTemplateParameter
@@ -3284,8 +3381,24 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     redefiningElement.isRedefinitionContextValid(self)
     	public new bool IsConsistentWith(RedefinableElement redefiningElement)
     	{
-    		throw new NotImplementedException();
-    	}
+            var op = redefiningElement as Operation;
+            if (op is null) return false;
+            if (this.OwnedParameter.Count != op.OwnedParameter.Count) return false;
+            for (int i = 0; i < this.OwnedParameter.Count; i++)
+            {
+                var redefinedParam = this.OwnedParameter[i];
+                var redefiningParam = op.OwnedParameter[i];
+                if (redefiningParam.IsUnique != redefinedParam.IsUnique) return false;
+                if (redefiningParam.IsOrdered != redefinedParam.IsOrdered) return false;
+                if (redefiningParam.Direction != redefinedParam.Direction) return false;
+                if (redefiningParam.Type is null || redefinedParam.Type is null || !redefiningParam.Type.ConformsTo(redefinedParam.Type) && !redefinedParam.Type.ConformsTo(redefiningParam.Type)) return false;
+                if (redefinedParam.Direction == ParameterDirectionKind.Inout && (!redefiningParam.CompatibleWith(redefinedParam) || !redefinedParam.CompatibleWith(redefiningParam))) return false;
+                if (redefinedParam.Direction == ParameterDirectionKind.In && !redefinedParam.CompatibleWith(redefiningParam)) return false;
+                if ((redefinedParam.Direction == ParameterDirectionKind.Out || redefinedParam.Direction == ParameterDirectionKind.Return) && !redefiningParam.CompatibleWith(redefinedParam)) return false;
+                return true;
+            }
+            return false;
+        }
     	
     	/// <summary>
     	/// The query returnResult() returns the set containing the return parameter of the Operation if one exists, otherwise, it returns an empty set
@@ -3403,7 +3516,12 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//       (self.isComposite implies prop.isComposite)))
     	public new bool IsConsistentWith(RedefinableElement redefiningElement)
     	{
-    		throw new NotImplementedException();
+    		if (redefiningElement is Property prop)
+            {
+                if (this.Type is null || prop.Type is null || !prop.Type.ConformsTo(this.Type)) return false;
+                return this.IncludesMultiplicity(prop);
+            }
+            return false;
     	}
     	
     	/// <summary>
@@ -3609,7 +3727,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
         [ReadOnly]
         [Opposite(typeof(Interaction), "Action")]
         [Subsets(typeof(Element), "Owner")]
-        Interaction Interaction { get; set; }
+        Interaction? Interaction { get; }
     }
     
     public partial interface ActionInputPin

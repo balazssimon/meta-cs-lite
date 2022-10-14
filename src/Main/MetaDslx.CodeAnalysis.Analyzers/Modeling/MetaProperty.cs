@@ -136,8 +136,9 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
         {
             if (_type != null) return;
             //Debugger.Launch();
-            var flags = UpdateFlagsWithType(ModelPropertyFlags.None, _propertySymbol.Type);
-            if (_propertySymbol.Type is INamedTypeSymbol propType)
+            var type = _propertySymbol.Type;
+            var flags = UpdateFlagsWithType(ModelPropertyFlags.None, ref type);
+            if (type is INamedTypeSymbol propType)
             {
                 if (flags.HasFlag(ModelPropertyFlags.BuiltInType) || flags.HasFlag(ModelPropertyFlags.EnumType) || flags.HasFlag(ModelPropertyFlags.ModelObjectType))
                 {
@@ -146,36 +147,40 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
                     _flags |= ModelPropertyFlags.SingleItem;
                     if (_propertySymbol.IsReadOnly) _flags |= ModelPropertyFlags.ReadOnly;
                 }
-                else if (propType.IsGenericType && propType.TypeArguments.Length == 1 && propType.TypeArguments[0] is INamedTypeSymbol innerType)
+                else if (propType.IsGenericType && propType.TypeArguments.Length == 1)
                 {
-                    var innerFlags = UpdateFlagsWithType(ModelPropertyFlags.None, innerType);
-                    if (!_propertySymbol.IsReadOnly)
+                    var innerType = propType.TypeArguments[0];
+                    var innerFlags = UpdateFlagsWithType(ModelPropertyFlags.None, ref innerType);
+                    if (innerType is INamedTypeSymbol innerNamedType)
                     {
-                        // TODO: error, must not have setter
-                    }
-                    if (innerFlags.HasFlag(ModelPropertyFlags.BuiltInType) || innerFlags.HasFlag(ModelPropertyFlags.EnumType) || innerFlags.HasFlag(ModelPropertyFlags.ModelObjectType))
-                    {
-                        var fullTypeName = propType.ConstructedFrom.ToDisplayString();
-                        if (fullTypeName == "System.Collections.Generic.IList<T>")
+                        if (!_propertySymbol.IsReadOnly)
                         {
-                            _type = innerType;
-                            _flags |= innerFlags;
-                            _flags |= ModelPropertyFlags.Collection;
+                            // TODO: error, must not have setter
                         }
-                        else if (fullTypeName == "System.Collections.Generic.ICollection<T>")
+                        if (innerFlags.HasFlag(ModelPropertyFlags.BuiltInType) || innerFlags.HasFlag(ModelPropertyFlags.EnumType) || innerFlags.HasFlag(ModelPropertyFlags.ModelObjectType))
                         {
-                            _type = innerType;
-                            _flags |= innerFlags;
-                            _flags |= ModelPropertyFlags.Collection;
-                        }
-                        else if (fullTypeName == "System.Collections.Generic.ISet<T>")
-                        {
-                            _type = innerType;
-                            _flags |= innerFlags;
-                            _flags |= ModelPropertyFlags.Collection;
-                            if (_flags.HasFlag(ModelPropertyFlags.NonUnique))
+                            var fullTypeName = propType.ConstructedFrom.ToDisplayString();
+                            if (fullTypeName == "System.Collections.Generic.IList<T>")
                             {
-                                // TODO: error
+                                _type = innerNamedType;
+                                _flags |= innerFlags;
+                                _flags |= ModelPropertyFlags.Collection;
+                            }
+                            else if (fullTypeName == "System.Collections.Generic.ICollection<T>")
+                            {
+                                _type = innerNamedType;
+                                _flags |= innerFlags;
+                                _flags |= ModelPropertyFlags.Collection;
+                            }
+                            else if (fullTypeName == "System.Collections.Generic.ISet<T>")
+                            {
+                                _type = innerNamedType;
+                                _flags |= innerFlags;
+                                _flags |= ModelPropertyFlags.Collection;
+                                if (_flags.HasFlag(ModelPropertyFlags.NonUnique))
+                                {
+                                    // TODO: error
+                                }
                             }
                         }
                     }
@@ -183,9 +188,9 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
             }
             if (_type == null)
             {
-                _type = _propertySymbol.Type;
+                _type = type;
                 _flags |= flags;
-                _flags |= ModelPropertyFlags.Collection;
+                //_flags |= ModelPropertyFlags.Collection;
                 if (!_flags.HasFlag(ModelPropertyFlags.Untracked))
                 {
                     _flags |= ModelPropertyFlags.Untracked;
@@ -194,9 +199,16 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
             }
         }
 
-        private ModelPropertyFlags UpdateFlagsWithType(ModelPropertyFlags flags, ITypeSymbol type)
+        private ModelPropertyFlags UpdateFlagsWithType(ModelPropertyFlags flags, ref ITypeSymbol type)
         {
-            if (type.NullableAnnotation == NullableAnnotation.Annotated) flags |= ModelPropertyFlags.NullableType;
+            if (type.NullableAnnotation == NullableAnnotation.Annotated)
+            {
+                flags |= ModelPropertyFlags.NullableType;
+                if (type.TypeKind == TypeKind.Struct && type is INamedTypeSymbol nts && nts.Name == "Nullable" && nts.TypeArguments.Length == 1)
+                {
+                    type = nts.TypeArguments[0];
+                }
+            }
             if (type.IsValueType) flags |= ModelPropertyFlags.ValueType;
             if (type.IsReferenceType) flags |= ModelPropertyFlags.ReferenceType;
             if (type.TypeKind == TypeKind.Enum) flags |= ModelPropertyFlags.EnumType;

@@ -40,7 +40,7 @@ namespace MetaDslx.Modeling
                 {
                     _slot.ThrowModelException(mp => mp.IsReadOnly, mp => $"Error assigning '{value}' to '{mp.QualifiedName}[{index}]' in '{Owner}': the property is read only.");
                 }
-                ReplaceCore(index, value);
+                ReplaceCore(index, value, false);
             }
         }
 
@@ -84,7 +84,7 @@ namespace MetaDslx.Modeling
             {
                 _slot.ThrowModelException(mp => mp.IsReadOnly, mp => $"Error adding '{item}' to '{mp.QualifiedName}' in '{Owner}': the property is read only.");
             }
-            InsertCore(_items.Count, item);
+            InsertCore(_items.Count, item, false);
         }
 
         public void Clear()
@@ -94,7 +94,7 @@ namespace MetaDslx.Modeling
             {
                 _slot.ThrowModelException(mp => mp.IsReadOnly, mp => $"Error clearing '{mp.QualifiedName}' in '{Owner}': the property is read only.");
             }
-            while (_items.Count > 0) RemoveAtCore(_items.Count - 1);
+            while (_items.Count > 0) RemoveAtCore(_items.Count - 1, false);
         }
 
         public bool Contains(T item)
@@ -124,7 +124,7 @@ namespace MetaDslx.Modeling
             {
                 _slot.ThrowModelException(mp => mp.IsReadOnly, mp => $"Error inserting '{item}' at '{mp.QualifiedName}[{index}]' in '{Owner}': the property is read only.");
             }
-            InsertCore(index, item);
+            InsertCore(index, item, false);
         }
 
         public bool Remove(T item)
@@ -141,7 +141,7 @@ namespace MetaDslx.Modeling
             {
                 _slot.ThrowModelException(mp => mp.IsReadOnly, mp => $"Error removing item at '{mp.QualifiedName}[{index}]' in '{Owner}': the property is read only.");
             }
-            RemoveAtCore(index);
+            RemoveAtCore(index, false);
         }
 
         IEnumerator IEnumerable.GetEnumerator()
@@ -191,7 +191,7 @@ namespace MetaDslx.Modeling
             else return false;
         }
 
-        private void ReplaceCore(int index, T item)
+        private void ReplaceCore(int index, T item, bool fromOpposite)
         {
             if (Owner.Model.ValidationOptions.ValidateNullable && !NullableType && item == null)
             {
@@ -204,11 +204,11 @@ namespace MetaDslx.Modeling
                 if ((item is null && oldValue is not null) || (item is not null && !item.Equals(oldValue)))
                 {
                     _items[index] = default(T);
-                    _owner.ValueRemoved(_slot, oldValue);
+                    _owner.ValueRemoved(_slot, oldValue, fromOpposite);
                     if (NonUnique || !_items.Contains(item))
                     {
                         _items[index] = item;
-                        _owner.ValueAdded(_slot, item);
+                        _owner.ValueAdded(_slot, item, fromOpposite);
                     }
                     else
                     {
@@ -224,7 +224,7 @@ namespace MetaDslx.Modeling
             }
         }
 
-        private void InsertCore(int index, T item)
+        private void InsertCore(int index, T item, bool fromOpposite)
         {
             if (Owner.Model.ValidationOptions.ValidateNullable && !NullableType && item == null)
             {
@@ -241,7 +241,7 @@ namespace MetaDslx.Modeling
                     }
                     _items.Insert(index, item);
                     valueAdded = true;
-                    _owner.ValueAdded(_slot, item);
+                    _owner.ValueAdded(_slot, item, fromOpposite);
                 }
             }
             catch (Exception ex)
@@ -252,7 +252,7 @@ namespace MetaDslx.Modeling
             }
         }
 
-        private void RemoveAtCore(int index)
+        private void RemoveAtCore(int index, bool fromOpposite)
         {
             var valueRemoved = false;
             var oldItem = _items[index];
@@ -262,7 +262,7 @@ namespace MetaDslx.Modeling
                 valueRemoved = true;
                 if (NonUnique || !_items.Contains(oldItem))
                 {
-                    _owner.ValueRemoved(_slot, oldItem);
+                    _owner.ValueRemoved(_slot, oldItem, fromOpposite);
                 }
             }
             catch (Exception ex)
@@ -273,20 +273,20 @@ namespace MetaDslx.Modeling
             }
         }
 
-        void IModelCollectionCore.AddCore(object? item)
+        void IModelCollectionCore.AddCore(object? item, bool fromOpposite)
         {
             if (item is not null)
             {
                 _slot.ThrowModelException(mp => !mp.Type.IsAssignableFrom(item.GetType()), mp => $"Error adding '{item}' to '{mp.QualifiedName}' in '{Owner}': the item type '{item.GetType()}' is not assignable to the property type '{mp.Type}'.");
             }
-            InsertCore(_items.Count, (T)item);
+            InsertCore(_items.Count, (T)item, fromOpposite);
         }
 
-        void IModelCollectionCore.RemoveCore(object? item)
+        void IModelCollectionCore.RemoveCore(object? item, bool fromOpposite)
         {
             if (item is not null && item.GetType() != typeof(T)) return;
             var index = _items.IndexOf((T)item);
-            if (index >= 0) RemoveAtCore(index);
+            if (index >= 0) RemoveAtCore(index, fromOpposite);
         }
 
     }

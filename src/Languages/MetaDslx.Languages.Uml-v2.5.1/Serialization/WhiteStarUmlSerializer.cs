@@ -475,7 +475,8 @@ namespace MetaDslx.Languages.Uml.Serialization
                         var target = ((message.ReceiveEvent as MessageOccurrenceSpecification)?.Covered?.Represents as Property)?.Type as Classifier;
                         if (!hasOperation && target != null)
                         {
-                            message.Signature = target.MResolveOperationBySignature(signature);
+                            var operationSignature = target.MResolveOperationBySignature(signature);
+                            if (operationSignature is not null) message.Signature = operationSignature;
                         }
                     }
                 }
