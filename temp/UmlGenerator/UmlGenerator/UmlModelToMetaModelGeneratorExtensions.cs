@@ -45,6 +45,12 @@ namespace UmlGenerator
             return me.Upper < 0 || me.Upper > 1;
         }
 
+        public bool IsNullable(MetaDslx.Languages.Uml.Model.Type t, MultiplicityElement me)
+        {
+            if (t.Name == "Boolean" || t.Name == "Integer" || t.Name == "Real" || t.Name == "String" || t.Name == "UnlimitedNatural") return false;
+            return me.Lower == 0 && me.Upper == 1;
+        }
+
         public UmlClass GetUmlClass(Class cls)
         {
             if (_umlClasses.TryGetValue(cls, out var result)) return result;

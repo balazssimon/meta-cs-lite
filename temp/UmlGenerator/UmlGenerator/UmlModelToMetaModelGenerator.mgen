@@ -12,6 +12,7 @@ properties Properties
 end properties
 
 extern function bool IsCollection(MultiplicityElement me)
+extern function bool IsNullable(MetaDslx.Languages.Uml.Model.Type t, MultiplicityElement me)
 extern function UmlClass GetUmlClass(Class cls)
 extern function string GenerateDefaultValue(Property property)
 extern function IEnumerable<string> CommentLines(string text, bool escapeHtml)
@@ -158,7 +159,7 @@ public [if (overridenProps.Count > 0)]new [end if][GenerateType(prop, prop.Type)
 end template
 
 template GenerateType(MultiplicityElement me, MetaDslx.Languages.Uml.Model.Type t)
-[me.IsCollection() ? "IList<" : ""][GeneratePrimitiveType(t)][me.IsCollection() ? ">" : ""]
+[me.IsCollection() ? "IList<" : ""][GeneratePrimitiveType(t)][me.IsCollection() ? ">" : IsNullable(t, me) ? "?" : ""]
 end template
 
 function string GeneratePrimitiveType(MetaDslx.Languages.Uml.Model.Type t)

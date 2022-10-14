@@ -2,6 +2,7 @@ using MetaDslx.Modeling;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using System.Text;
 namespace MetaDslx.Languages.Uml.MetaModel
 {
@@ -15,7 +16,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (redefiningElement.oclIsKindOf(ActivityEdge))
     	public new bool IsConsistentWith(RedefinableElement redefiningElement)
     	{
-    		throw new NotImplementedException();
+    		return redefiningElement is ActivityEdge;
     	}
     	
     }
@@ -33,9 +34,10 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (if superGroup<>null then superGroup.containingActivity()
     	//     else inActivity
     	//     endif)
-    	public Activity ContainingActivity()
+    	public Activity? ContainingActivity()
     	{
-    		throw new NotImplementedException();
+            if (SuperGroup is not null) return SuperGroup.ContainingActivity();
+            else return InActivity;
     	}
     	
     }
@@ -49,16 +51,17 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (if inStructuredNode<>null then inStructuredNode.containingActivity()
     	//     else activity
     	//     endif)
-    	public Activity ContainingActivity()
+    	public Activity? ContainingActivity()
     	{
-    		throw new NotImplementedException();
+            if (InStructuredNode is not null) return InStructuredNode.ContainingActivity();
+            else return Activity;
     	}
     	
     	// spec:
     	//     result = (redefiningElement.oclIsKindOf(ActivityNode))
     	public new bool IsConsistentWith(RedefinableElement redefiningElement)
     	{
-    		throw new NotImplementedException();
+            return redefiningElement is ActivityNode;
     	}
     	
     }
@@ -146,7 +149,8 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     endif)
     	public bool IsAccessibleBy(Action a)
     	{
-    		throw new NotImplementedException();
+            if (Scope is not null) return Scope.AllOwnedNodes().Contains(a);
+            else return a.ContainingActivity() == ActivityScope;
     	}
     	
     }
@@ -188,7 +192,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (value)
     	public new bool BooleanValue()
     	{
-    		throw new NotImplementedException();
+            return Value;
     	}
     	
     	/// <summary>
@@ -198,7 +202,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (true)
     	public new bool IsComputable()
     	{
-    		throw new NotImplementedException();
+            return true;
     	}
     	
     }
@@ -212,7 +216,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (value)
     	public new int IntegerValue()
     	{
-    		throw new NotImplementedException();
+            return Value;
     	}
     	
     	/// <summary>
@@ -222,7 +226,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (true)
     	public new bool IsComputable()
     	{
-    		throw new NotImplementedException();
+            return true;
     	}
     	
     }
@@ -236,7 +240,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (true)
     	public new bool IsComputable()
     	{
-    		throw new NotImplementedException();
+            return true;
     	}
     	
     	/// <summary>
@@ -246,7 +250,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (true)
     	public new bool IsNull()
     	{
-    		throw new NotImplementedException();
+            return true;
     	}
     	
     }
@@ -260,7 +264,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (true)
     	public new bool IsComputable()
     	{
-    		throw new NotImplementedException();
+            return true;
     	}
     	
     	/// <summary>
@@ -270,7 +274,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (value)
     	public new double RealValue()
     	{
-    		throw new NotImplementedException();
+            return Value;
     	}
     	
     }
@@ -288,7 +292,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (true)
     	public new bool IsComputable()
     	{
-    		throw new NotImplementedException();
+            return true;
     	}
     	
     	/// <summary>
@@ -298,7 +302,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (value)
     	public new string StringValue()
     	{
-    		throw new NotImplementedException();
+            return Value;
     	}
     	
     }
@@ -312,7 +316,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (true)
     	public new bool IsComputable()
     	{
-    		throw new NotImplementedException();
+            return true;
     	}
     	
     	/// <summary>
@@ -322,7 +326,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (value)
     	public new long UnlimitedValue()
     	{
-    		throw new NotImplementedException();
+            return Value;
     	}
     	
     }
@@ -345,11 +349,11 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	[Derived]
     	[ReadOnly]
     	[Opposite(typeof(Parameter), "OpaqueExpression")]
-    	public Parameter Result
+    	public Parameter? Result
     	{ 
     		get
     		{
-    			throw new NotImplementedException();
+                return Behavior?.OwnedParameter.FirstOrDefault();
     		}
     	}
     	
@@ -360,7 +364,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (false)
     	public bool IsIntegral()
     	{
-    		throw new NotImplementedException();
+            return false;
     	}
     	
     	/// <summary>
@@ -372,7 +376,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (false)
     	public bool IsNonNegative()
     	{
-    		throw new NotImplementedException();
+            return false;
     	}
     	
     	/// <summary>
@@ -384,7 +388,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     self.isIntegral()
     	public bool IsPositive()
     	{
-    		throw new NotImplementedException();
+            return false;
     	}
     	
     	/// <summary>
@@ -396,7 +400,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (0)
     	public int Value()
     	{
-    		throw new NotImplementedException();
+            return 0;
     	}
     	
     }
@@ -413,7 +417,22 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     endif)
     	public new string StringValue()
     	{
-    		throw new NotImplementedException();
+            var sb = new StringBuilder();
+            if (SubExpression.Count > 0)
+            {
+                foreach (var se in SubExpression)
+                {
+                    sb.Append(se.StringValue());
+                }
+            }
+            else
+            {
+                foreach (var op in Operand)
+                {
+                    sb.Append(op.StringValue());
+                }
+            }
+            return sb.ToString();
     	}
     	
     }
@@ -443,7 +462,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (null)
     	public bool BooleanValue()
     	{
-    		throw new NotImplementedException();
+            return default;
     	}
     	
     	/// <summary>
@@ -453,8 +472,8 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (null)
     	public int IntegerValue()
     	{
-    		throw new NotImplementedException();
-    	}
+            return default;
+        }
     	
     	/// <summary>
     	/// The query isCompatibleWith() determines if this ValueSpecification is compatible with the specified ParameterableElement. This ValueSpecification is compatible with ParameterableElement p if the kind of this ValueSpecification is the same as or a subtype of the kind of p. Further, if p is a TypedElement, then the type of this ValueSpecification must be conformant with the type of p.
@@ -464,7 +483,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     self.type.conformsTo(p.oclAsType(TypedElement).type)))
     	public new bool IsCompatibleWith(ParameterableElement p)
     	{
-    		throw new NotImplementedException();
+            return p.GetType().IsAssignableFrom(this.GetType()) && (!(p is TypedElement te) || this.Type is not null && te.Type is not null && this.Type.ConformsTo(te.Type));
     	}
     	
     	/// <summary>
@@ -474,7 +493,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (false)
     	public bool IsComputable()
     	{
-    		throw new NotImplementedException();
+            return false;
     	}
     	
     	/// <summary>
@@ -484,7 +503,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (false)
     	public bool IsNull()
     	{
-    		throw new NotImplementedException();
+            return false;
     	}
     	
     	/// <summary>
@@ -494,8 +513,8 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (null)
     	public double RealValue()
     	{
-    		throw new NotImplementedException();
-    	}
+            return default;
+        }
     	
     	/// <summary>
     	/// The query stringValue() gives a single String value when one can be computed.
@@ -504,8 +523,8 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (null)
     	public string StringValue()
     	{
-    		throw new NotImplementedException();
-    	}
+            return String.Empty;
+        }
     	
     	/// <summary>
     	/// The query unlimitedValue() gives a single UnlimitedNatural value when one can be computed.
@@ -514,8 +533,8 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (null)
     	public long UnlimitedValue()
     	{
-    		throw new NotImplementedException();
-    	}
+            return default;
+        }
     	
     }
     
@@ -544,7 +563,14 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (self.include.addition->union(self.include.addition->collect(uc | uc.allIncludedUseCases()))->asSet())
     	public IList<UseCase> AllIncludedUseCases()
     	{
-    		throw new NotImplementedException();
+    		var result = new List<UseCase>();
+            var additions = this.Include.Select(inc => inc.Addition);
+            result.UnionWith(additions);
+            foreach (var uc in additions)
+            {
+                result.UnionWith(uc.AllIncludedUseCases());
+            }
+            return result;
     	}
     	
     }
@@ -565,7 +591,9 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	{ 
     		get
     		{
-    			throw new NotImplementedException();
+                var result = new List<Type>();
+                result.UnionWith(MemberEnd.Where(me => me.Type is not null).Select(me => me.Type!));
+                return result;
     		}
     	}
     	
@@ -592,7 +620,16 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	{ 
     		get
     		{
-    			throw new NotImplementedException();
+                var result = new List<Extension>();
+                foreach (var ext in this.AllInstances<Extension>())
+                {
+                    var endTypes = ext.MemberEnd.OfType<Classifier>();
+                    if (endTypes.Contains(this) || endTypes.Any(et => et.AllParents().Contains(this)))
+                    {
+                        result.Include(ext);
+                    }
+                }
+                return result;
     		}
     	}
     	
@@ -609,7 +646,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	{ 
     		get
     		{
-    			throw new NotImplementedException();
+                return this.General.OfType<Class>().AsListSet();
     		}
     	}
     	
@@ -644,9 +681,19 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	{ 
     		get
     		{
-    			throw new NotImplementedException();
-    		}
-    	}
+                var ris = AllRealizedInterfaces();
+                var realizingClassifiers = this.Realization.SelectMany(r => r.RealizingClassifier).AsListSet().UnionWith(this.AllParents().OfType<Component>().SelectMany(p => p.Realization.SelectMany(r => r.RealizingClassifier)));
+                var allRealizingClassifiers = realizingClassifiers.UnionWith(realizingClassifiers.SelectMany(rc => rc.AllParents()));
+                var realizingClassifierInterfaces = allRealizingClassifiers.SelectMany(c => c.AllRealizedInterfaces()).AsListSet();
+                var ports = this.OwnedPort.AsListSet().UnionWith(this.AllParents().OfType<Component>().SelectMany(p => p.OwnedPort));
+                var providedByPorts = ports.SelectMany(p => p.Provided).AsListSet();
+                var result = new List<Interface>();
+                result.UnionWith(ris);
+                result.UnionWith(realizingClassifierInterfaces);
+                result.UnionWith(providedByPorts);
+                return result;
+            }
+        }
     	
     	/// <summary>
     	/// The Interfaces that the Component requires from other Components in its environment in order to be able to offer its full set of provided functionality. These Interfaces may be used by the Component or any of its realizingClassifiers, or they may be the Interfaces that are required by its public Ports.
@@ -668,8 +715,18 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	{ 
     		get
     		{
-    			throw new NotImplementedException();
-    		}
+                var uis = AllUsedInterfaces();
+                var realizingClassifiers = this.Realization.SelectMany(r => r.RealizingClassifier).AsListSet().UnionWith(this.AllParents().OfType<Component>().SelectMany(p => p.Realization.SelectMany(r => r.RealizingClassifier)));
+                var allRealizingClassifiers = realizingClassifiers.UnionWith(realizingClassifiers.SelectMany(rc => rc.AllParents()));
+                var realizingClassifierInterfaces = allRealizingClassifiers.SelectMany(c => c.AllUsedInterfaces()).AsListSet();
+                var ports = this.OwnedPort.AsListSet().UnionWith(this.AllParents().OfType<Component>().SelectMany(p => p.OwnedPort));
+                var usedByPorts = ports.SelectMany(p => p.Required).AsListSet();
+                var result = new List<Interface>();
+                result.UnionWith(uis);
+                result.UnionWith(realizingClassifierInterfaces);
+                result.UnionWith(usedByPorts);
+                return result;
+            }
     	}
     	
     }
@@ -693,7 +750,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	{ 
     		get
     		{
-    			throw new NotImplementedException();
+                return this.AllInstances<ConnectorEnd>().Where(ce => ce.Role == this).AsListSet();
     		}
     	}
     	
@@ -722,7 +779,8 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	{ 
     		get
     		{
-    			throw new NotImplementedException();
+                if (End.Any(e => e.Role is Port port && e.PartWithPort is null && !port.IsBehavior)) return ConnectorKind.Delegation;
+                else return ConnectorKind.Assembly;
     		}
     	}
     	
@@ -744,7 +802,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	[Derived]
     	[ReadOnly]
     	[Opposite(typeof(Property), "ConnectorEnd")]
-    	public Property DefiningEnd
+    	public Property? DefiningEnd
     	{ 
     		get
     		{
@@ -1593,7 +1651,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     else
     	//     	self.namespace.oclAsType(Package).containingProfile()
     	//     endif)
-    	public Profile ContainingProfile()
+    	public Profile? ContainingProfile()
     	{
     		throw new NotImplementedException();
     	}
@@ -2518,7 +2576,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	[ReadOnly]
     	[Opposite(typeof(BehavioredClassifier), "Behavior")]
     	[Subsets(typeof(RedefinableElement), "RedefinitionContext")]
-    	public BehavioredClassifier Context
+    	public BehavioredClassifier? Context
     	{ 
     		get
     		{
@@ -2539,7 +2597,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     endif
     	//     endif
     	//         
-    	public BehavioredClassifier BehavioredClassifier(Element from)
+    	public BehavioredClassifier? BehavioredClassifier(Element from)
     	{
     		throw new NotImplementedException();
     	}
@@ -2950,7 +3008,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	[Derived]
     	[ReadOnly]
     	[Opposite(typeof(Type), "Operation")]
-    	public Type Type
+    	public Type? Type
     	{ 
     		get
     		{
@@ -3076,7 +3134,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     endif)
     	[Derived]
     	[Opposite(typeof(Property), "Property")]
-    	public Property Opposite
+    	public Property? Opposite
     	{ 
     		get
     		{
@@ -3262,7 +3320,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	[Derived]
     	[ReadOnly]
     	[Opposite(typeof(Classifier), "Action")]
-    	public Classifier Context
+    	public Classifier? Context
     	{ 
     		get
     		{
@@ -3297,7 +3355,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     endif
     	//     endif
     	//     )
-    	public Behavior ContainingBehavior()
+    	public Behavior? ContainingBehavior()
     	{
     		throw new NotImplementedException();
     	}
@@ -3666,7 +3724,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//       null
     	//     endif
     	//     endif)
-    	public Behavior Behavior()
+    	public Behavior? Behavior()
     	{
     		throw new NotImplementedException();
     	}
@@ -3726,7 +3784,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// </summary>
     	// spec:
     	//     result = (self.Action::containingActivity())
-    	public new Activity ContainingActivity()
+    	public new Activity? ContainingActivity()
     	{
     		throw new NotImplementedException();
     	}
