@@ -1,9 +1,7 @@
-using MetaDslx.CodeAnalysis.PooledObjects;
 using MetaDslx.Modeling;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
 using System.Text;
 namespace MetaDslx.Languages.Uml.MetaModel
 {
@@ -17,7 +15,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (redefiningElement.oclIsKindOf(ActivityEdge))
     	public new bool IsConsistentWith(RedefinableElement redefiningElement)
     	{
-            return redefiningElement is ActivityEdge;
+    		throw new NotImplementedException();
     	}
     	
     }
@@ -37,8 +35,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     endif)
     	public Activity ContainingActivity()
     	{
-            if (SuperGroup is not null) return SuperGroup.ContainingActivity();
-            else return SuperGroup.InActivity;
+    		throw new NotImplementedException();
     	}
     	
     }
@@ -54,15 +51,14 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     endif)
     	public Activity ContainingActivity()
     	{
-            if (InStructuredNode is not null) return InStructuredNode.ContainingActivity();
-            else return Activity;
+    		throw new NotImplementedException();
     	}
     	
     	// spec:
     	//     result = (redefiningElement.oclIsKindOf(ActivityNode))
     	public new bool IsConsistentWith(RedefinableElement redefiningElement)
     	{
-            return redefiningElement is ActivityNode;
+    		throw new NotImplementedException();
     	}
     	
     }
@@ -150,10 +146,9 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     endif)
     	public bool IsAccessibleBy(Action a)
     	{
-            if (Scope is not null) return Scope.AllOwnedNodes().Contains(a);
-            else return a.ContainingActivity() == ActivityScope;
-        }
-
+    		throw new NotImplementedException();
+    	}
+    	
     }
     
     public partial interface Duration
@@ -191,19 +186,19 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// </summary>
     	// spec:
     	//     result = (value)
-    	public bool BooleanValue()
+    	public new bool BooleanValue()
     	{
-            return Value;
-        }
-
-        /// <summary>
-        /// The query isComputable() is redefined to be true.
-        /// </summary>
-        // spec:
-        //     result = (true)
-        public bool IsComputable()
+    		throw new NotImplementedException();
+    	}
+    	
+    	/// <summary>
+    	/// The query isComputable() is redefined to be true.
+    	/// </summary>
+    	// spec:
+    	//     result = (true)
+    	public new bool IsComputable()
     	{
-            return true;
+    		throw new NotImplementedException();
     	}
     	
     }
@@ -215,19 +210,19 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// </summary>
     	// spec:
     	//     result = (value)
-    	public int IntegerValue()
+    	public new int IntegerValue()
     	{
-            return Value;
-        }
-
-        /// <summary>
-        /// The query isComputable() is redefined to be true.
-        /// </summary>
-        // spec:
-        //     result = (true)
-        public bool IsComputable()
+    		throw new NotImplementedException();
+    	}
+    	
+    	/// <summary>
+    	/// The query isComputable() is redefined to be true.
+    	/// </summary>
+    	// spec:
+    	//     result = (true)
+    	public new bool IsComputable()
     	{
-            return true;
+    		throw new NotImplementedException();
     	}
     	
     }
@@ -239,20 +234,20 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// </summary>
     	// spec:
     	//     result = (true)
-    	public bool IsComputable()
+    	public new bool IsComputable()
     	{
-            return true;
-        }
+    		throw new NotImplementedException();
+    	}
     	
     	/// <summary>
     	/// The query isNull() returns true.
     	/// </summary>
     	// spec:
     	//     result = (true)
-    	public bool IsNull()
+    	public new bool IsNull()
     	{
-            return true;
-        }
+    		throw new NotImplementedException();
+    	}
     	
     }
     
@@ -263,20 +258,20 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// </summary>
     	// spec:
     	//     result = (true)
-    	public bool IsComputable()
+    	public new bool IsComputable()
     	{
-            return true;
-        }
+    		throw new NotImplementedException();
+    	}
     	
     	/// <summary>
     	/// The query realValue() gives the value.
     	/// </summary>
     	// spec:
     	//     result = (value)
-    	public double RealValue()
+    	public new double RealValue()
     	{
-            return Value;
-        }
+    		throw new NotImplementedException();
+    	}
     	
     }
     
@@ -291,20 +286,20 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// </summary>
     	// spec:
     	//     result = (true)
-    	public bool IsComputable()
+    	public new bool IsComputable()
     	{
-            return true;
-        }
+    		throw new NotImplementedException();
+    	}
     	
     	/// <summary>
     	/// The query stringValue() gives the value.
     	/// </summary>
     	// spec:
     	//     result = (value)
-    	public string StringValue()
+    	public new string StringValue()
     	{
-            return Value;
-        }
+    		throw new NotImplementedException();
+    	}
     	
     }
     
@@ -315,9 +310,9 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// </summary>
     	// spec:
     	//     result = (true)
-    	public bool IsComputable()
+    	public new bool IsComputable()
     	{
-            return true;
+    		throw new NotImplementedException();
     	}
     	
     	/// <summary>
@@ -325,10 +320,10 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// </summary>
     	// spec:
     	//     result = (value)
-    	public long UnlimitedValue()
+    	public new long UnlimitedValue()
     	{
-            return Value;
-        }
+    		throw new NotImplementedException();
+    	}
     	
     }
     
@@ -349,14 +344,14 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     endif)
     	[Derived]
     	[ReadOnly]
+    	[Opposite(typeof(Parameter), "OpaqueExpression")]
     	public Parameter Result
     	{ 
     		get
     		{
-                if (Behavior is null) return null;
-                else return Behavior.OwnedParameter.FirstOrDefault();
-            }
-        }
+    			throw new NotImplementedException();
+    		}
+    	}
     	
     	/// <summary>
     	/// The query isIntegral() tells whether an expression is intended to produce an Integer.
@@ -365,7 +360,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (false)
     	public bool IsIntegral()
     	{
-            return false;
+    		throw new NotImplementedException();
     	}
     	
     	/// <summary>
@@ -377,7 +372,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (false)
     	public bool IsNonNegative()
     	{
-            return false;
+    		throw new NotImplementedException();
     	}
     	
     	/// <summary>
@@ -389,7 +384,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     self.isIntegral()
     	public bool IsPositive()
     	{
-            return false;
+    		throw new NotImplementedException();
     	}
     	
     	/// <summary>
@@ -401,7 +396,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (0)
     	public int Value()
     	{
-            return 0;
+    		throw new NotImplementedException();
     	}
     	
     }
@@ -416,27 +411,11 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     then subExpression->iterate(se; stringValue: String = '' | stringValue.concat(se.stringValue()))
     	//     else operand->iterate(op; stringValue: String = '' | stringValue.concat(op.stringValue()))
     	//     endif)
-    	public string StringValue()
+    	public new string StringValue()
     	{
-            var psb = PooledStringBuilder.GetInstance();
-            var stringValue = psb.Builder;
-            if (SubExpression.Any())
-            {
-                foreach (var se in SubExpression)
-                {
-                    stringValue.Append(se.StringValue());
-                }
-            }
-            else
-            {
-                foreach (var op in Operand)
-                {
-                    stringValue.Append(op.StringValue());
-                }
-            }
-            return psb.ToStringAndFree();
-        }
-
+    		throw new NotImplementedException();
+    	}
+    	
     }
     
     public partial interface TimeConstraint
@@ -464,7 +443,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (null)
     	public bool BooleanValue()
     	{
-            return default;
+    		throw new NotImplementedException();
     	}
     	
     	/// <summary>
@@ -474,8 +453,8 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (null)
     	public int IntegerValue()
     	{
-            return default;
-        }
+    		throw new NotImplementedException();
+    	}
     	
     	/// <summary>
     	/// The query isCompatibleWith() determines if this ValueSpecification is compatible with the specified ParameterableElement. This ValueSpecification is compatible with ParameterableElement p if the kind of this ValueSpecification is the same as or a subtype of the kind of p. Further, if p is a TypedElement, then the type of this ValueSpecification must be conformant with the type of p.
@@ -483,19 +462,19 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	// spec:
     	//     result = (self.oclIsKindOf(p.oclType()) and (p.oclIsKindOf(TypedElement) implies 
     	//     self.type.conformsTo(p.oclAsType(TypedElement).type)))
-    	public bool IsCompatibleWith(ParameterableElement p)
+    	public new bool IsCompatibleWith(ParameterableElement p)
     	{
-            return p.GetType().IsAssignableFrom(this.GetType()) && (!(p is TypedElement te) || this.Type.ConformsTo(te.Type));
-        }
-
-        /// <summary>
-        /// The query isComputable() determines whether a value specification can be computed in a model. This operation cannot be fully defined in OCL. A conforming implementation is expected to deliver true for this operation for all ValueSpecifications that it can compute, and to compute all of those for which the operation is true. A conforming implementation is expected to be able to compute at least the value of all LiteralSpecifications.
-        /// </summary>
-        // spec:
-        //     result = (false)
-        public bool IsComputable()
+    		throw new NotImplementedException();
+    	}
+    	
+    	/// <summary>
+    	/// The query isComputable() determines whether a value specification can be computed in a model. This operation cannot be fully defined in OCL. A conforming implementation is expected to deliver true for this operation for all ValueSpecifications that it can compute, and to compute all of those for which the operation is true. A conforming implementation is expected to be able to compute at least the value of all LiteralSpecifications.
+    	/// </summary>
+    	// spec:
+    	//     result = (false)
+    	public bool IsComputable()
     	{
-            return false;
+    		throw new NotImplementedException();
     	}
     	
     	/// <summary>
@@ -505,7 +484,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (false)
     	public bool IsNull()
     	{
-            return false;
+    		throw new NotImplementedException();
     	}
     	
     	/// <summary>
@@ -515,8 +494,8 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (null)
     	public double RealValue()
     	{
-            return default;
-        }
+    		throw new NotImplementedException();
+    	}
     	
     	/// <summary>
     	/// The query stringValue() gives a single String value when one can be computed.
@@ -525,8 +504,8 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (null)
     	public string StringValue()
     	{
-            return default;
-        }
+    		throw new NotImplementedException();
+    	}
     	
     	/// <summary>
     	/// The query unlimitedValue() gives a single UnlimitedNatural value when one can be computed.
@@ -535,8 +514,8 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (null)
     	public long UnlimitedValue()
     	{
-            return default;
-        }
+    		throw new NotImplementedException();
+    	}
     	
     }
     
@@ -565,22 +544,9 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (self.include.addition->union(self.include.addition->collect(uc | uc.allIncludedUseCases()))->asSet())
     	public IList<UseCase> AllIncludedUseCases()
     	{
-            var result = new List<UseCase>();
-            var directlyIncluded = this.Include.Select(i => i.Addition);
-            foreach (var uc in directlyIncluded)
-            {
-                if (!result.Contains(uc)) result.Add(uc);
-            }
-            foreach (var uc in directlyIncluded)
-            {
-                foreach (var iuc in uc.AllIncludedUseCases())
-                {
-                    if (!result.Contains(uc)) result.Add(uc);
-                }
-            }
-            return result;
-        }
-
+    		throw new NotImplementedException();
+    	}
+    	
     }
     
     public partial interface Association
@@ -593,14 +559,15 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	[Derived]
     	[Unordered]
     	[ReadOnly]
+    	[Opposite(typeof(Type), "Association")]
     	[Subsets(typeof(Relationship), "RelatedElement")]
     	public IList<Type> EndType
     	{ 
     		get
     		{
-                return MemberEnd.Select(me => me.Type).DistinctList();
-            }
-        }
+    			throw new NotImplementedException();
+    		}
+    	}
     	
     }
     
@@ -625,17 +592,9 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	{ 
     		get
     		{
-                var result = new List<Extension>();
-                var mthis = (IModelObject)this;
-                if (mthis.Model is null) return result;
-                foreach (var ext in mthis.Model.Objects.OfType<Extension>())
-                {
-                    var endTypes = ext.MemberEnd.Select(me => me.Type as Classifier).ToHashSet();
-                    if (endTypes.Contains(this) || endTypes.Any(et => et.AllParents().Contains(this))) result.Add(ext);
-                }
-                return result;
-            }
-        }
+    			throw new NotImplementedException();
+    		}
+    	}
     	
     	/// <summary>
     	/// The superclasses of a Class, derived from its Generalizations.
@@ -644,18 +603,14 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (self.general()->select(oclIsKindOf(Class))->collect(oclAsType(Class))->asSet())
     	[Derived]
     	[Unordered]
+    	[Opposite(typeof(Class), "Class")]
     	[Redefines(typeof(Classifier), "General")]
     	public IList<Class> SuperClass
     	{ 
     		get
     		{
-                var result = new List<Class>();
-                foreach (var g in this.General)
-                {
-                    if (g is Class cls && !result.Contains(cls)) result.Add(cls);
-                }
-                return result;
-            }
+    			throw new NotImplementedException();
+    		}
     	}
     	
     }
@@ -684,13 +639,13 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	[Derived]
     	[Unordered]
     	[ReadOnly]
+    	[Opposite(typeof(Interface), "Component")]
     	public IList<Interface> Provided
     	{ 
     		get
     		{
-                var ris = AllRealizedInterfaces();
-
-            }
+    			throw new NotImplementedException();
+    		}
     	}
     	
     	/// <summary>
@@ -708,6 +663,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	[Derived]
     	[Unordered]
     	[ReadOnly]
+    	[Opposite(typeof(Interface), "Component")]
     	public IList<Interface> Required
     	{ 
     		get
@@ -737,13 +693,9 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	{ 
     		get
     		{
-                var result = new List<ConnectorEnd>();
-                var mthis = (IModelObject)this;
-                if (mthis.Model is null) return result;
-                result.AddRange(mthis.Model.Objects.OfType<ConnectorEnd>().Where(ce => ce.Role == this));
-                return result;
-            }
-        }
+    			throw new NotImplementedException();
+    		}
+    	}
     	
     }
     
@@ -770,8 +722,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	{ 
     		get
     		{
-                if (End.Any(end => end.Role is Port port && end.PartWithPort is null && !port.IsBehavior)) return ConnectorKind.Delegation;
-                else return ConnectorKind.Assembly;
+    			throw new NotImplementedException();
     		}
     	}
     	
@@ -792,6 +743,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     endif)
     	[Derived]
     	[ReadOnly]
+    	[Opposite(typeof(Property), "ConnectorEnd")]
     	public Property DefiningEnd
     	{ 
     		get
@@ -813,6 +765,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	[Derived]
     	[Unordered]
     	[ReadOnly]
+    	[Opposite(typeof(Port), "EncapsulatedClassifier")]
     	[Subsets(typeof(StructuredClassifier), "OwnedAttribute")]
     	public IList<Port> OwnedPort
     	{ 
@@ -834,12 +787,12 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	[Derived]
     	[Unordered]
     	[ReadOnly]
+    	[Opposite(typeof(Interface), "Port")]
     	public IList<Interface> Provided
     	{ 
     		get
     		{
-                if (IsConjugated) return BasicRequired();
-                else return BasicProvided();
+    			throw new NotImplementedException();
     		}
     	}
     	
@@ -851,13 +804,13 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	[Derived]
     	[Unordered]
     	[ReadOnly]
+    	[Opposite(typeof(Interface), "Port")]
     	public IList<Interface> Required
     	{ 
     		get
     		{
-                if (IsConjugated) return BasicProvided();
-                else return BasicRequired();
-            }
+    			throw new NotImplementedException();
+    		}
     	}
     	
     	/// <summary>
@@ -895,6 +848,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	[Derived]
     	[Unordered]
     	[ReadOnly]
+    	[Opposite(typeof(Property), "StructuredClassifier")]
     	public IList<Property> Part
     	{ 
     		get
@@ -965,6 +919,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	[Derived]
     	[Unordered]
     	[ReadOnly]
+    	[Opposite(typeof(Operation), "ProtocolTransition")]
     	public IList<Operation> Referred
     	{ 
     		get
@@ -1001,6 +956,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = containingStateMachine()
     	[Derived]
     	[ReadOnly]
+    	[Opposite(typeof(Classifier), "Region")]
     	[Redefines(typeof(RedefinableElement), "RedefinitionContext")]
     	public new Classifier RedefinitionContext
     	{ 
@@ -1212,7 +1168,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// </summary>
     	// spec:
     	//     result = true
-    	public bool IsConsistentWith(RedefinableElement redefiningElement)
+    	public new bool IsConsistentWith(RedefinableElement redefiningElement)
     	{
     		throw new NotImplementedException();
     	}
@@ -1229,7 +1185,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//       else
     	//         parentContext <> null and context.allParents()->includes(parentContext)
     	//       endif)
-    	public bool IsRedefinitionContextValid(RedefinableElement redefinedElement)
+    	public new bool IsRedefinitionContextValid(RedefinableElement redefinedElement)
     	{
     		throw new NotImplementedException();
     	}
@@ -1262,6 +1218,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = containingStateMachine()
     	[Derived]
     	[ReadOnly]
+    	[Opposite(typeof(Classifier), "Transition")]
     	[Redefines(typeof(RedefinableElement), "RedefinitionContext")]
     	public new Classifier RedefinitionContext
     	{ 
@@ -1339,6 +1296,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = containingStateMachine()
     	[Derived]
     	[ReadOnly]
+    	[Opposite(typeof(Classifier), "Vertex")]
     	[Redefines(typeof(RedefinableElement), "RedefinitionContext")]
     	public new Classifier RedefinitionContext
     	{ 
@@ -1445,6 +1403,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (enumeration)
     	[Derived]
     	[ReadOnly]
+    	[Opposite(typeof(Enumeration), "EnumerationLiteral")]
     	[Redefines(typeof(InstanceSpecification), "Classifier")]
     	public new Enumeration Classifier
     	{ 
@@ -1541,7 +1500,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// </summary>
     	// spec:
     	//     result = (if lowerValue=null then 0 else lowerValue.integerValue() endif)
-    	public int LowerBound()
+    	public new int LowerBound()
     	{
     		throw new NotImplementedException();
     	}
@@ -1585,6 +1544,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	[Derived]
     	[Unordered]
     	[ReadOnly]
+    	[Opposite(typeof(Stereotype), "OwningPackage")]
     	[Subsets(typeof(Package), "PackagedElement")]
     	public IList<Stereotype> OwnedStereotype
     	{ 
@@ -1657,7 +1617,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// </summary>
     	// spec:
     	//     result = (false)
-    	public bool MustBeOwned()
+    	public new bool MustBeOwned()
     	{
     		throw new NotImplementedException();
     	}
@@ -1695,6 +1655,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (self.containingProfile())
     	[Derived]
     	[ReadOnly]
+    	[Opposite(typeof(Profile), "Stereotype")]
     	public Profile Profile
     	{ 
     		get
@@ -1855,7 +1816,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// </summary>
     	// spec:
     	//     result = (true)
-    	public bool IsDistinguishableFrom(NamedElement n, Namespace ns)
+    	public new bool IsDistinguishableFrom(NamedElement n, Namespace ns)
     	{
     		throw new NotImplementedException();
     	}
@@ -2073,6 +2034,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	[Derived]
     	[Unordered]
     	[ReadOnly]
+    	[Opposite(typeof(PackageableElement), "DeploymentTarget")]
     	public IList<PackageableElement> DeployedElement
     	{ 
     		get
@@ -2366,6 +2328,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	[Derived]
     	[Unordered]
     	[ReadOnly]
+    	[Opposite(typeof(PackageableElement), "Namespace")]
     	[Subsets(typeof(Namespace), "Member")]
     	public IList<PackageableElement> ImportedMember
     	{ 
@@ -2553,6 +2516,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//             )
     	[Derived]
     	[ReadOnly]
+    	[Opposite(typeof(BehavioredClassifier), "Behavior")]
     	[Subsets(typeof(RedefinableElement), "RedefinitionContext")]
     	public BehavioredClassifier Context
     	{ 
@@ -2665,7 +2629,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//       Tuple { name=p.name, type=p.type,effect=p.effect,direction=p.direction,isException=p.isException,
     	//                   isStream=p.isStream,isOrdered=p.isOrdered,isUnique=p.isUnique,lower=p.lower, upper=p.upper }))
     	//       )
-    	public bool IsDistinguishableFrom(NamedElement n, Namespace ns)
+    	public new bool IsDistinguishableFrom(NamedElement n, Namespace ns)
     	{
     		throw new NotImplementedException();
     	}
@@ -2701,6 +2665,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (parents())
     	[Derived]
     	[Unordered]
+    	[Opposite(typeof(Classifier), "Classifier")]
     	public IList<Classifier> General
     	{ 
     		get
@@ -2717,6 +2682,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	[Derived]
     	[Unordered]
     	[ReadOnly]
+    	[Opposite(typeof(NamedElement), "InheritingClassifier")]
     	[Subsets(typeof(Namespace), "Member")]
     	public IList<NamedElement> InheritedMember
     	{ 
@@ -2983,6 +2949,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (if returnResult()->notEmpty() then returnResult()->any(true).type else null endif)
     	[Derived]
     	[ReadOnly]
+    	[Opposite(typeof(Type), "Operation")]
     	public Type Type
     	{ 
     		get
@@ -3037,7 +3004,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     		))
     	// pre:
     	//     redefiningElement.isRedefinitionContextValid(self)
-    	public bool IsConsistentWith(RedefinableElement redefiningElement)
+    	public new bool IsConsistentWith(RedefinableElement redefiningElement)
     	{
     		throw new NotImplementedException();
     	}
@@ -3108,6 +3075,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//         null
     	//     endif)
     	[Derived]
+    	[Opposite(typeof(Property), "Property")]
     	public Property Opposite
     	{ 
     		get
@@ -3132,7 +3100,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	// spec:
     	//     result = (self.oclIsKindOf(p.oclType()) and (p.oclIsKindOf(TypeElement) implies
     	//     self.type.conformsTo(p.oclAsType(TypedElement).type)))
-    	public bool IsCompatibleWith(ParameterableElement p)
+    	public new bool IsCompatibleWith(ParameterableElement p)
     	{
     		throw new NotImplementedException();
     	}
@@ -3149,7 +3117,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//       ((prop.lowerBound()->notEmpty() and self.lowerBound()->notEmpty()) implies prop.lowerBound() >= self.lowerBound()) and 
     	//       ((prop.upperBound()->notEmpty() and self.upperBound()->notEmpty()) implies prop.lowerBound() <= self.lowerBound()) and 
     	//       (self.isComposite implies prop.isComposite)))
-    	public bool IsConsistentWith(RedefinableElement redefiningElement)
+    	public new bool IsConsistentWith(RedefinableElement redefiningElement)
     	{
     		throw new NotImplementedException();
     	}
@@ -3219,6 +3187,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	[Derived]
     	[Unordered]
     	[ReadOnly]
+    	[Opposite(typeof(TemplateParameter), "RedefinableTemplateSignature")]
     	[Subsets(typeof(TemplateSignature), "Parameter")]
     	public IList<TemplateParameter> InheritedParameter
     	{ 
@@ -3292,6 +3261,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     endif)
     	[Derived]
     	[ReadOnly]
+    	[Opposite(typeof(Classifier), "Action")]
     	public Classifier Context
     	{ 
     		get

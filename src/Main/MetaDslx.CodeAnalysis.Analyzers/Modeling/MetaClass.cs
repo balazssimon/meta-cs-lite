@@ -114,7 +114,7 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
             var declaredProperties = ArrayBuilder<MetaProperty>.GetInstance();
             foreach (var member in _classInterface.GetMembers())
             {
-                if (member is IPropertySymbol propertySymbol && propertySymbol.ExplicitInterfaceImplementations.Length == 0)
+                if (member is IPropertySymbol propertySymbol && !propertySymbol.Name.Contains("."))
                 {
                     if (SymbolEqualityComparer.Default.Equals(propertySymbol.ContainingType, _classInterface))
                     {

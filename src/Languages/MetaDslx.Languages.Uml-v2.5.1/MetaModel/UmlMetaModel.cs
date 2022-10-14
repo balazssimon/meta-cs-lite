@@ -382,6 +382,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// Top-level ActivityPartitions in the Activity.
     	/// </summary>
     	[Unordered]
+    	[Opposite(typeof(ActivityPartition), "Activity")]
     	[Subsets(typeof(Activity), "Group")]
     	IList<ActivityPartition> Partition { get; }
     	
@@ -424,6 +425,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// A ValueSpecification that is evaluated to determine if a token can traverse the ActivityEdge. If an ActivityEdge has no guard, then there is no restriction on tokens traversing the edge.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(ValueSpecification), "ActivityEdge")]
     	[Subsets(typeof(Element), "OwnedElement")]
     	ValueSpecification Guard { get; set; }
     	
@@ -462,6 +464,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// ActivityEdges from a generalization of the Activity containing this ActivityEdge that are redefined by this ActivityEdge.
     	/// </summary>
     	[Unordered]
+    	[Opposite(typeof(ActivityEdge), "ActivityEdge")]
     	[Subsets(typeof(RedefinableElement), "RedefinedElement")]
     	IList<ActivityEdge> RedefinedEdge { get; }
     	
@@ -481,6 +484,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// The minimum number of tokens that must traverse the ActivityEdge at the same time. If no weight is specified, this is equivalent to specifying a constant value of 1.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(ValueSpecification), "ActivityEdge")]
     	[Subsets(typeof(Element), "OwnedElement")]
     	ValueSpecification Weight { get; set; }
     	
@@ -619,6 +623,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// ActivityNodes from a generalization of the Activity containining this ActivityNode that are redefined by this ActivityNode.
     	/// </summary>
     	[Unordered]
+    	[Opposite(typeof(ActivityNode), "ActivityNode")]
     	[Subsets(typeof(RedefinableElement), "RedefinedElement")]
     	IList<ActivityNode> RedefinedNode { get; }
     	
@@ -639,6 +644,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// <summary>
     	/// The Parameter for which the ActivityParameterNode will be accepting or providing values.
     	/// </summary>
+    	[Opposite(typeof(Parameter), "ActivityParameterNode")]
     	Parameter Parameter { get; set; }
     	
     }
@@ -681,6 +687,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// <summary>
     	/// An Element represented by the functionality modeled within the ActivityPartition.
     	/// </summary>
+    	[Opposite(typeof(Element), "ActivityPartition")]
     	Element Represents { get; set; }
     	
     	/// <summary>
@@ -747,11 +754,13 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// <summary>
     	/// A Behavior that is executed to provide an input to guard ValueSpecifications on ActivityEdges outgoing from the DecisionNode.
     	/// </summary>
+    	[Opposite(typeof(Behavior), "DecisionNode")]
     	Behavior DecisionInput { get; set; }
     	
     	/// <summary>
     	/// An additional ActivityEdge incoming to the DecisionNode that provides a decision input value for the guards ValueSpecifications on ActivityEdges outgoing from the DecisionNode.
     	/// </summary>
+    	[Opposite(typeof(ObjectFlow), "DecisionNode")]
     	ObjectFlow DecisionInputFlow { get; set; }
     	
     }
@@ -766,17 +775,20 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// <summary>
     	/// An ObjectNode within the handlerBody. When the ExceptionHandler catches an exception, the exception token is placed on this ObjectNode, causing the handlerBody to execute.
     	/// </summary>
+    	[Opposite(typeof(ObjectNode), "ExceptionHandler")]
     	ObjectNode ExceptionInput { get; set; }
     	
     	/// <summary>
     	/// The Classifiers whose instances the ExceptionHandler catches as exceptions. If an exception occurs whose type is any exceptionType, the ExceptionHandler catches the exception and executes the handlerBody.
     	/// </summary>
     	[Unordered]
+    	[Opposite(typeof(Classifier), "ExceptionHandler")]
     	IList<Classifier> ExceptionType { get; }
     	
     	/// <summary>
     	/// An ExecutableNode that is executed if the ExceptionHandler catches an exception.
     	/// </summary>
+    	[Opposite(typeof(ExecutableNode), "ExceptionHandler")]
     	ExecutableNode HandlerBody { get; set; }
     	
     	/// <summary>
@@ -883,6 +895,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// A ValueSpecification giving the condition under which the JoinNode will offer a token on its outgoing ActivityEdge. If no joinSpec is specified, then the JoinNode will offer an outgoing token if tokens are offered on all of its incoming ActivityEdges (an &quot;and&quot; condition).
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(ValueSpecification), "JoinNode")]
     	[Subsets(typeof(Element), "OwnedElement")]
     	ValueSpecification JoinSpec { get; set; }
     	
@@ -919,11 +932,13 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// <summary>
     	/// A Behavior used to select tokens from a source ObjectNode.
     	/// </summary>
+    	[Opposite(typeof(Behavior), "ObjectFlow")]
     	Behavior Selection { get; set; }
     	
     	/// <summary>
     	/// A Behavior used to change or replace object tokens flowing along the ObjectFlow.
     	/// </summary>
+    	[Opposite(typeof(Behavior), "ObjectFlow")]
     	Behavior Transformation { get; set; }
     	
     }
@@ -939,6 +954,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// The States required to be associated with the values held by tokens on this ObjectNode.
     	/// </summary>
     	[Unordered]
+    	[Opposite(typeof(State), "ObjectNode")]
     	IList<State> InState { get; }
     	
     	/// <summary>
@@ -956,12 +972,14 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// <summary>
     	/// A Behavior used to select tokens to be offered on outgoing ActivityEdges.
     	/// </summary>
+    	[Opposite(typeof(Behavior), "ObjectNode")]
     	Behavior Selection { get; set; }
     	
     	/// <summary>
     	/// The maximum number of tokens that may be held by this ObjectNode. Tokens cannot flow into the ObjectNode if the upperBound is reached. If no upperBound is specified, then there is no limit on how many tokens the ObjectNode can hold.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(ValueSpecification), "ObjectNode")]
     	[Subsets(typeof(Element), "OwnedElement")]
     	ValueSpecification UpperBound { get; set; }
     	
@@ -1001,6 +1019,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// A ValueSpecification that evaluates to the value of the Duration.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(ValueSpecification), "Duration")]
     	[Subsets(typeof(Element), "OwnedElement")]
     	ValueSpecification Expr { get; set; }
     	
@@ -1008,6 +1027,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// Refers to the Observations that are involved in the computation of the Duration value
     	/// </summary>
     	[Unordered]
+    	[Opposite(typeof(Observation), "Duration")]
     	IList<Observation> Observation { get; }
     	
     }
@@ -1029,6 +1049,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// The DurationInterval constraining the duration.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(DurationInterval), "DurationConstraint")]
     	[Redefines(typeof(IntervalConstraint), "Specification")]
     	new DurationInterval Specification { get; set; }
     	
@@ -1044,12 +1065,14 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// <summary>
     	/// Refers to the Duration denoting the maximum value of the range.
     	/// </summary>
+    	[Opposite(typeof(Duration), "DurationInterval")]
     	[Redefines(typeof(Interval), "Max")]
     	new Duration Max { get; set; }
     	
     	/// <summary>
     	/// Refers to the Duration denoting the minimum value of the range.
     	/// </summary>
+    	[Opposite(typeof(Duration), "DurationInterval")]
     	[Redefines(typeof(Interval), "Min")]
     	new Duration Min { get; set; }
     	
@@ -1065,6 +1088,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// <summary>
     	/// The DurationObservation is determined as the duration between the entering or exiting of a single event Element during execution, or the entering/exiting of one event Element and the entering/exiting of a second.
     	/// </summary>
+    	[Opposite(typeof(NamedElement), "DurationObservation")]
     	IList<NamedElement> Event { get; }
     	
     	/// <summary>
@@ -1086,6 +1110,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// Specifies a sequence of operand ValueSpecifications.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(ValueSpecification), "Expression")]
     	[Subsets(typeof(Element), "OwnedElement")]
     	IList<ValueSpecification> Operand { get; }
     	
@@ -1106,11 +1131,13 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// <summary>
     	/// Refers to the ValueSpecification denoting the maximum value of the range.
     	/// </summary>
+    	[Opposite(typeof(ValueSpecification), "Interval")]
     	ValueSpecification Max { get; set; }
     	
     	/// <summary>
     	/// Refers to the ValueSpecification denoting the minimum value of the range.
     	/// </summary>
+    	[Opposite(typeof(ValueSpecification), "Interval")]
     	ValueSpecification Min { get; set; }
     	
     }
@@ -1126,6 +1153,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// The Interval that specifies the condition of the IntervalConstraint.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(Interval), "IntervalConstraint")]
     	[Redefines(typeof(Constraint), "Specification")]
     	new Interval Specification { get; set; }
     	
@@ -1144,6 +1172,16 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	[DefaultValue(false)]
     	bool Value { get; set; }
     	
+    	bool ValueSpecification.BooleanValue()
+    	{
+    		return this.BooleanValue();
+    	}
+    	
+    	bool ValueSpecification.IsComputable()
+    	{
+    		return this.IsComputable();
+    	}
+    	
     }
     
 
@@ -1159,6 +1197,16 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	[DefaultValue(0)]
     	int Value { get; set; }
     	
+    	int ValueSpecification.IntegerValue()
+    	{
+    		return this.IntegerValue();
+    	}
+    	
+    	bool ValueSpecification.IsComputable()
+    	{
+    		return this.IsComputable();
+    	}
+    	
     }
     
 
@@ -1168,6 +1216,16 @@ namespace MetaDslx.Languages.Uml.MetaModel
     [MetaClass]
     public partial interface LiteralNull : LiteralSpecification
     {
+    	bool ValueSpecification.IsComputable()
+    	{
+    		return this.IsComputable();
+    	}
+    	
+    	bool ValueSpecification.IsNull()
+    	{
+    		return this.IsNull();
+    	}
+    	
     }
     
 
@@ -1181,6 +1239,16 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// The specified Real value.
     	/// </summary>
     	double Value { get; set; }
+    	
+    	bool ValueSpecification.IsComputable()
+    	{
+    		return this.IsComputable();
+    	}
+    	
+    	double ValueSpecification.RealValue()
+    	{
+    		return this.RealValue();
+    	}
     	
     }
     
@@ -1205,6 +1273,16 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// </summary>
     	string Value { get; set; }
     	
+    	bool ValueSpecification.IsComputable()
+    	{
+    		return this.IsComputable();
+    	}
+    	
+    	string ValueSpecification.StringValue()
+    	{
+    		return this.StringValue();
+    	}
+    	
     }
     
 
@@ -1219,6 +1297,16 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// </summary>
     	[DefaultValue(0)]
     	long Value { get; set; }
+    	
+    	bool ValueSpecification.IsComputable()
+    	{
+    		return this.IsComputable();
+    	}
+    	
+    	long ValueSpecification.UnlimitedValue()
+    	{
+    		return this.UnlimitedValue();
+    	}
     	
     }
     
@@ -1241,6 +1329,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// <summary>
     	/// Specifies the behavior of the OpaqueExpression as a UML Behavior.
     	/// </summary>
+    	[Opposite(typeof(Behavior), "OpaqueExpression")]
     	Behavior Behavior { get; set; }
     	
     	/// <summary>
@@ -1278,6 +1367,11 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	[Subsets(typeof(Element), "OwnedElement")]
     	IList<StringExpression> SubExpression { get; }
     	
+    	string ValueSpecification.StringValue()
+    	{
+    		return this.StringValue();
+    	}
+    	
     }
     
 
@@ -1297,6 +1391,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// TheTimeInterval constraining the duration.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(TimeInterval), "TimeConstraint")]
     	[Redefines(typeof(IntervalConstraint), "Specification")]
     	new TimeInterval Specification { get; set; }
     	
@@ -1313,6 +1408,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// A ValueSpecification that evaluates to the value of the TimeExpression.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(ValueSpecification), "TimeExpression")]
     	[Subsets(typeof(Element), "OwnedElement")]
     	ValueSpecification Expr { get; set; }
     	
@@ -1320,6 +1416,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// Refers to the Observations that are involved in the computation of the TimeExpression value.
     	/// </summary>
     	[Unordered]
+    	[Opposite(typeof(Observation), "TimeExpression")]
     	IList<Observation> Observation { get; }
     	
     }
@@ -1334,12 +1431,14 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// <summary>
     	/// Refers to the TimeExpression denoting the maximum value of the range.
     	/// </summary>
+    	[Opposite(typeof(TimeExpression), "TimeInterval")]
     	[Redefines(typeof(Interval), "Max")]
     	new TimeExpression Max { get; set; }
     	
     	/// <summary>
     	/// Refers to the TimeExpression denoting the minimum value of the range.
     	/// </summary>
+    	[Opposite(typeof(TimeExpression), "TimeInterval")]
     	[Redefines(typeof(Interval), "Min")]
     	new TimeExpression Min { get; set; }
     	
@@ -1355,6 +1454,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// <summary>
     	/// The TimeObservation is determined by the entering or exiting of the event Element during execution.
     	/// </summary>
+    	[Opposite(typeof(NamedElement), "TimeObservation")]
     	NamedElement Event { get; set; }
     	
     	/// <summary>
@@ -1372,6 +1472,11 @@ namespace MetaDslx.Languages.Uml.MetaModel
     [MetaClass(IsAbstract = true)]
     public partial interface ValueSpecification : TypedElement, PackageableElement
     {
+    	bool ParameterableElement.IsCompatibleWith(ParameterableElement p)
+    	{
+    		return this.IsCompatibleWith(p);
+    	}
+    	
     }
     
 
@@ -1394,12 +1499,14 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// References the condition that must hold when the first ExtensionPoint is reached for the extension to take place. If no constraint is associated with the Extend relationship, the extension is unconditional.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(Constraint), "Extend")]
     	[Subsets(typeof(Element), "OwnedElement")]
     	Constraint Condition { get; set; }
     	
     	/// <summary>
     	/// The UseCase that is being extended.
     	/// </summary>
+    	[Opposite(typeof(UseCase), "Extend")]
     	[Subsets(typeof(DirectedRelationship), "Target")]
     	UseCase ExtendedCase { get; set; }
     	
@@ -1414,6 +1521,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// <summary>
     	/// An ordered list of ExtensionPoints belonging to the extended UseCase, specifying where the respective behavioral fragments of the extending UseCase are to be inserted. The first fragment in the extending UseCase is associated with the first extension point in the list, the second fragment with the second point, and so on. Note that, in most practical cases, the extending UseCase has just a single behavior fragment, so that the list of ExtensionPoints is trivial.
     	/// </summary>
+    	[Opposite(typeof(ExtensionPoint), "Extension")]
     	IList<ExtensionPoint> ExtensionLocation { get; }
     	
     }
@@ -1444,6 +1552,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// <summary>
     	/// The UseCase that is to be included.
     	/// </summary>
+    	[Opposite(typeof(UseCase), "Include")]
     	[Subsets(typeof(DirectedRelationship), "Target")]
     	UseCase Addition { get; set; }
     	
@@ -1524,6 +1633,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// The navigable ends that are owned by the Association itself.
     	/// </summary>
     	[Unordered]
+    	[Opposite(typeof(Property), "Association")]
     	[Subsets(typeof(Association), "OwnedEnd")]
     	IList<Property> NavigableOwnedEnd { get; }
     	
@@ -1572,6 +1682,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// The Classifiers owned by the Class that are not ownedBehaviors.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(Classifier), "NestingClass")]
     	[Subsets(typeof(Namespace), "OwnedMember")]
     	IList<Classifier> NestedClassifier { get; }
     	
@@ -1599,6 +1710,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// </summary>
     	[Containment]
     	[Unordered]
+    	[Opposite(typeof(Reception), "Class")]
     	[Subsets(typeof(Classifier), "Feature")]
     	[Subsets(typeof(Namespace), "OwnedMember")]
     	IList<Reception> OwnedReception { get; }
@@ -1616,6 +1728,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// Represents the participants in the Collaboration.
     	/// </summary>
     	[Unordered]
+    	[Opposite(typeof(ConnectableElement), "Collaboration")]
     	[Subsets(typeof(StructuredClassifier), "Role")]
     	IList<ConnectableElement> CollaborationRole { get; }
     	
@@ -1633,12 +1746,14 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// </summary>
     	[Containment]
     	[Unordered]
+    	[Opposite(typeof(Dependency), "CollaborationUse")]
     	[Subsets(typeof(Element), "OwnedElement")]
     	IList<Dependency> RoleBinding { get; }
     	
     	/// <summary>
     	/// The Collaboration which is used in this CollaborationUse. The Collaboration defines the cooperation between its roles which are mapped to ConnectableElements relating to the Classifier owning the CollaborationUse.
     	/// </summary>
+    	[Opposite(typeof(Collaboration), "CollaborationUse")]
     	Collaboration Type { get; set; }
     	
     }
@@ -1661,6 +1776,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// </summary>
     	[Containment]
     	[Unordered]
+    	[Opposite(typeof(PackageableElement), "Component")]
     	[Subsets(typeof(Namespace), "OwnedMember")]
     	IList<PackageableElement> PackagedElement { get; }
     	
@@ -1694,6 +1810,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// The Classifiers that are involved in the implementation of the Component that owns this Realization.
     	/// </summary>
     	[Unordered]
+    	[Opposite(typeof(Classifier), "ComponentRealization")]
     	[Subsets(typeof(Dependency), "Client")]
     	IList<Classifier> RealizingClassifier { get; }
     	
@@ -1742,12 +1859,14 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// The set of Behaviors that specify the valid interaction patterns across the Connector.
     	/// </summary>
     	[Unordered]
+    	[Opposite(typeof(Behavior), "Connector")]
     	IList<Behavior> Contract { get; }
     	
     	/// <summary>
     	/// A Connector has at least two ConnectorEnds, each representing the participation of instances of the Classifiers typing the ConnectableElements attached to the end. The set of ConnectorEnds is ordered.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(ConnectorEnd), "Connector")]
     	[Subsets(typeof(Element), "OwnedElement")]
     	IList<ConnectorEnd> End { get; }
     	
@@ -1755,12 +1874,14 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// A Connector may be redefined when its containing Classifier is specialized. The redefining Connector may have a type that specializes the type of the redefined Connector. The types of the ConnectorEnds of the redefining Connector may specialize the types of the ConnectorEnds of the redefined Connector. The properties of the ConnectorEnds of the redefining Connector may be replaced.
     	/// </summary>
     	[Unordered]
+    	[Opposite(typeof(Connector), "Connector")]
     	[Subsets(typeof(RedefinableElement), "RedefinedElement")]
     	IList<Connector> RedefinedConnector { get; }
     	
     	/// <summary>
     	/// An optional Association that classifies links corresponding to this Connector.
     	/// </summary>
+    	[Opposite(typeof(Association), "Connector")]
     	Association Type { get; set; }
     	
     }
@@ -1775,6 +1896,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// <summary>
     	/// Indicates the role of the internal structure of a Classifier with the Port to which the ConnectorEnd is attached.
     	/// </summary>
+    	[Opposite(typeof(Property), "ConnectorEnd")]
     	Property PartWithPort { get; set; }
     	
     	/// <summary>
@@ -1822,12 +1944,14 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// <summary>
     	/// An optional ProtocolStateMachine which describes valid interactions at this interaction point.
     	/// </summary>
+    	[Opposite(typeof(ProtocolStateMachine), "Port")]
     	ProtocolStateMachine Protocol { get; set; }
     	
     	/// <summary>
     	/// A Port may be redefined when its containing EncapsulatedClassifier is specialized. The redefining Port may have additional Interfaces to those that are associated with the redefined Port or it may replace an Interface by one of its subtypes.
     	/// </summary>
     	[Unordered]
+    	[Opposite(typeof(Port), "Port")]
     	[Subsets(typeof(Property), "RedefinedProperty")]
     	IList<Port> RedefinedPort { get; }
     	
@@ -1844,6 +1968,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// The Properties owned by the StructuredClassifier.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(Property), "StructuredClassifier")]
     	[Subsets(typeof(Classifier), "Attribute")]
     	[Subsets(typeof(Namespace), "OwnedMember")]
     	[Subsets(typeof(StructuredClassifier), "Role")]
@@ -1854,6 +1979,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// </summary>
     	[Containment]
     	[Unordered]
+    	[Opposite(typeof(Connector), "StructuredClassifier")]
     	[Subsets(typeof(Classifier), "Feature")]
     	[Subsets(typeof(Namespace), "OwnedMember")]
     	IList<Connector> OwnedConnector { get; }
@@ -1864,6 +1990,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	[DerivedUnion]
     	[Unordered]
     	[ReadOnly]
+    	[Opposite(typeof(ConnectableElement), "StructuredClassifier")]
     	[Subsets(typeof(Namespace), "Member")]
     	IList<ConnectableElement> Role { get; }
     	
@@ -1880,12 +2007,14 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// The entryPoint Pseudostates corresponding to this connection point.
     	/// </summary>
     	[Unordered]
+    	[Opposite(typeof(Pseudostate), "ConnectionPointReference")]
     	IList<Pseudostate> Entry { get; }
     	
     	/// <summary>
     	/// The exitPoints kind Pseudostates corresponding to this connection point.
     	/// </summary>
     	[Unordered]
+    	[Opposite(typeof(Pseudostate), "ConnectionPointReference")]
     	IList<Pseudostate> Exit { get; }
     	
     	/// <summary>
@@ -1894,6 +2023,11 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	[Opposite(typeof(State), "Connection")]
     	[Subsets(typeof(NamedElement), "Namespace")]
     	State State { get; set; }
+    	
+    	bool Vertex.IsConsistentWith(RedefinableElement redefiningElement)
+    	{
+    		return this.IsConsistentWith(redefiningElement);
+    	}
     	
     	bool RedefinableElement.IsConsistentWith(RedefinableElement redefiningElement)
     	{
@@ -1909,6 +2043,16 @@ namespace MetaDslx.Languages.Uml.MetaModel
     [MetaClass]
     public partial interface FinalState : State
     {
+    	bool State.IsConsistentWith(RedefinableElement redefiningElement)
+    	{
+    		return this.IsConsistentWith(redefiningElement);
+    	}
+    	
+    	bool Vertex.IsConsistentWith(RedefinableElement redefiningElement)
+    	{
+    		return this.IsConsistentWith(redefiningElement);
+    	}
+    	
     	bool RedefinableElement.IsConsistentWith(RedefinableElement redefiningElement)
     	{
     		return this.IsConsistentWith(redefiningElement);
@@ -1926,6 +2070,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// <summary>
     	/// Specifies the ProtocolStateMachine to which the specific ProtocolStateMachine conforms.
     	/// </summary>
+    	[Opposite(typeof(ProtocolStateMachine), "ProtocolConformance")]
     	[Subsets(typeof(DirectedRelationship), "Target")]
     	ProtocolStateMachine GeneralMachine { get; set; }
     	
@@ -1968,6 +2113,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// Specifies the post condition of the Transition which is the Condition that should be obtained once the Transition is triggered. This post condition is part of the post condition of the Operation connected to the Transition.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(Constraint), "OwningTransition")]
     	[Subsets(typeof(Namespace), "OwnedRule")]
     	Constraint PostCondition { get; set; }
     	
@@ -1975,6 +2121,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// Specifies the precondition of the Transition. It specifies the Condition that should be verified before triggering the Transition. This guard condition added to the source State will be evaluated as part of the precondition of the Operation referred by the Transition if any.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(Constraint), "ProtocolTransition")]
     	[Subsets(typeof(Transition), "Guard")]
     	Constraint PreCondition { get; set; }
     	
@@ -2007,6 +2154,11 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	[Subsets(typeof(NamedElement), "Namespace")]
     	StateMachine StateMachine { get; set; }
     	
+    	bool Vertex.IsConsistentWith(RedefinableElement redefiningElement)
+    	{
+    		return this.IsConsistentWith(redefiningElement);
+    	}
+    	
     	bool RedefinableElement.IsConsistentWith(RedefinableElement redefiningElement)
     	{
     		return this.IsConsistentWith(redefiningElement);
@@ -2024,6 +2176,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// <summary>
     	/// The region of which this region is an extension.
     	/// </summary>
+    	[Opposite(typeof(Region), "Region")]
     	[Subsets(typeof(RedefinableElement), "RedefinedElement")]
     	Region ExtendedRegion { get; set; }
     	
@@ -2101,6 +2254,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// </summary>
     	[Containment]
     	[Unordered]
+    	[Opposite(typeof(Trigger), "State")]
     	[Subsets(typeof(Element), "OwnedElement")]
     	IList<Trigger> DeferrableTrigger { get; }
     	
@@ -2108,6 +2262,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// An optional Behavior that is executed while being in the State. The execution starts when this State is entered, and ceases either by itself when done, or when the State is exited, whichever comes first.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(Behavior), "State")]
     	[Subsets(typeof(Element), "OwnedElement")]
     	Behavior DoActivity { get; set; }
     	
@@ -2115,6 +2270,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// An optional Behavior that is executed whenever this State is entered regardless of the Transition taken to reach the State. If defined, entry Behaviors are always executed to completion prior to any internal Behavior or Transitions performed within the State.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(Behavior), "State")]
     	[Subsets(typeof(Element), "OwnedElement")]
     	Behavior Entry { get; set; }
     	
@@ -2122,6 +2278,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// An optional Behavior that is executed whenever this State is exited regardless of which Transition was taken out of the State. If defined, exit Behaviors are always executed to completion only after all internal and transition Behaviors have completed execution.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(Behavior), "State")]
     	[Subsets(typeof(Element), "OwnedElement")]
     	Behavior Exit { get; set; }
     	
@@ -2138,6 +2295,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// Specifies conditions that are always true when this State is the current State. In ProtocolStateMachines state invariants are additional conditions to the preconditions of the outgoing Transitions, and to the postcondition of the incoming Transitions.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(Constraint), "OwningState")]
     	[Subsets(typeof(Namespace), "OwnedRule")]
     	Constraint StateInvariant { get; set; }
     	
@@ -2150,6 +2308,11 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	StateMachine Vertex.ContainingStateMachine()
     	{
     		return this.ContainingStateMachine();
+    	}
+    	
+    	bool Vertex.IsConsistentWith(RedefinableElement redefiningElement)
+    	{
+    		return this.IsConsistentWith(redefiningElement);
     	}
     	
     	bool RedefinableElement.IsConsistentWith(RedefinableElement redefiningElement)
@@ -2179,6 +2342,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// The StateMachines of which this is an extension.
     	/// </summary>
     	[Unordered]
+    	[Opposite(typeof(StateMachine), "StateMachine")]
     	[Redefines(typeof(Behavior), "RedefinedBehavior")]
     	IList<StateMachine> ExtendedStateMachine { get; }
     	
@@ -2197,6 +2361,16 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	[Unordered]
     	[Opposite(typeof(State), "Submachine")]
     	IList<State> SubmachineState { get; }
+    	
+    	bool RedefinableElement.IsConsistentWith(RedefinableElement redefiningElement)
+    	{
+    		return this.IsConsistentWith(redefiningElement);
+    	}
+    	
+    	bool RedefinableElement.IsRedefinitionContextValid(RedefinableElement redefinedElement)
+    	{
+    		return this.IsRedefinitionContextValid(redefinedElement);
+    	}
     	
     }
     
@@ -2218,6 +2392,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// Specifies an optional behavior to be performed when the Transition fires.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(Behavior), "Transition")]
     	[Subsets(typeof(Element), "OwnedElement")]
     	Behavior Effect { get; set; }
     	
@@ -2225,6 +2400,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// A guard is a Constraint that provides a fine-grained control over the firing of the Transition. The guard is evaluated when an Event occurrence is dispatched by the StateMachine. If the guard is true at that time, the Transition may be enabled, otherwise, it is disabled. Guards should be pure expressions without side effects. Guard expressions with side effects are ill formed.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(Constraint), "Transition")]
     	[Subsets(typeof(Namespace), "OwnedRule")]
     	Constraint Guard { get; set; }
     	
@@ -2237,6 +2413,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// <summary>
     	/// The Transition that is redefined by this Transition.
     	/// </summary>
+    	[Opposite(typeof(Transition), "Transition")]
     	[Subsets(typeof(RedefinableElement), "RedefinedElement")]
     	Transition RedefinedTransition { get; set; }
     	
@@ -2257,6 +2434,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// </summary>
     	[Containment]
     	[Unordered]
+    	[Opposite(typeof(Trigger), "Transition")]
     	[Subsets(typeof(Element), "OwnedElement")]
     	IList<Trigger> Trigger { get; }
     	
@@ -2284,6 +2462,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// <summary>
     	/// The Vertex of which this Vertex is a redefinition.
     	/// </summary>
+    	[Opposite(typeof(Vertex), "Vertex")]
     	[Subsets(typeof(RedefinableElement), "RedefinedElement")]
     	Vertex RedefinedVertex { get; set; }
     	
@@ -2304,6 +2483,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// <summary>
     	/// A Behavior that specifies the behavior of the BehavioredClassifier itself.
     	/// </summary>
+    	[Opposite(typeof(Behavior), "BehavioredClassifier")]
     	[Subsets(typeof(BehavioredClassifier), "OwnedBehavior")]
     	Behavior ClassifierBehavior { get; set; }
     	
@@ -2322,6 +2502,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// </summary>
     	[Containment]
     	[Unordered]
+    	[Opposite(typeof(Behavior), "BehavioredClassifier")]
     	[Subsets(typeof(Namespace), "OwnedMember")]
     	IList<Behavior> OwnedBehavior { get; }
     	
@@ -2398,6 +2579,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// References all the Classifiers that are defined (nested) within the Interface.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(Classifier), "Interface")]
     	[Subsets(typeof(Namespace), "OwnedMember")]
     	IList<Classifier> NestedClassifier { get; }
     	
@@ -2424,6 +2606,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// </summary>
     	[Containment]
     	[Unordered]
+    	[Opposite(typeof(Reception), "Interface")]
     	[Subsets(typeof(Classifier), "Feature")]
     	[Subsets(typeof(Namespace), "OwnedMember")]
     	IList<Reception> OwnedReception { get; }
@@ -2432,6 +2615,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// References a ProtocolStateMachine specifying the legal sequences of the invocation of the BehavioralFeatures described in the Interface.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(ProtocolStateMachine), "Interface")]
     	[Subsets(typeof(Namespace), "OwnedMember")]
     	ProtocolStateMachine Protocol { get; set; }
     	
@@ -2439,6 +2623,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// References all the Interfaces redefined by this Interface.
     	/// </summary>
     	[Unordered]
+    	[Opposite(typeof(Interface), "Interface")]
     	[Subsets(typeof(Classifier), "RedefinedClassifier")]
     	IList<Interface> RedefinedInterface { get; }
     	
@@ -2454,6 +2639,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// <summary>
     	/// References the Interface specifying the conformance contract.
     	/// </summary>
+    	[Opposite(typeof(Interface), "InterfaceRealization")]
     	[Subsets(typeof(Dependency), "Supplier")]
     	Interface Contract { get; set; }
     	
@@ -2486,6 +2672,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// <summary>
     	/// The Signal that this Reception handles.
     	/// </summary>
+    	[Opposite(typeof(Signal), "Reception")]
     	Signal Signal { get; set; }
     	
     }
@@ -2501,6 +2688,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// The attributes owned by the Signal.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(Property), "OwningSignal")]
     	[Subsets(typeof(Classifier), "Attribute")]
     	[Subsets(typeof(Namespace), "OwnedMember")]
     	IList<Property> OwnedAttribute { get; }
@@ -2518,6 +2706,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// References the end of the extension that is typed by a Stereotype.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(ExtensionEnd), "Extension")]
     	[Redefines(typeof(Association), "OwnedEnd")]
     	new ExtensionEnd OwnedEnd { get; set; }
     	
@@ -2539,8 +2728,14 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// <summary>
     	/// References the type of the ExtensionEnd. Note that this association restricts the possible types of an ExtensionEnd to only be Stereotypes.
     	/// </summary>
+    	[Opposite(typeof(Stereotype), "ExtensionEnd")]
     	[Redefines(typeof(TypedElement), "Type")]
     	new Stereotype Type { get; set; }
+    	
+    	int MultiplicityElement.LowerBound()
+    	{
+    		return this.LowerBound();
+    	}
     	
     }
     
@@ -2616,6 +2811,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// </summary>
     	[Containment]
     	[Unordered]
+    	[Opposite(typeof(PackageableElement), "OwningPackage")]
     	[Subsets(typeof(Namespace), "OwnedMember")]
     	IList<PackageableElement> PackagedElement { get; }
     	
@@ -2627,6 +2823,11 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	[Opposite(typeof(ProfileApplication), "ApplyingPackage")]
     	[Subsets(typeof(Element), "OwnedElement")]
     	IList<ProfileApplication> ProfileApplication { get; }
+    	
+    	bool Element.MustBeOwned()
+    	{
+    		return this.MustBeOwned();
+    	}
     	
     }
     
@@ -2640,6 +2841,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// <summary>
     	/// References the Package that is to be merged with the receiving package of the PackageMerge.
     	/// </summary>
+    	[Opposite(typeof(Package), "PackageMerge")]
     	[Subsets(typeof(DirectedRelationship), "Target")]
     	Package MergedPackage { get; set; }
     	
@@ -2665,6 +2867,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// </summary>
     	[Containment]
     	[Unordered]
+    	[Opposite(typeof(ElementImport), "Profile")]
     	[Subsets(typeof(Namespace), "ElementImport")]
     	IList<ElementImport> MetaclassReference { get; }
     	
@@ -2673,6 +2876,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// </summary>
     	[Containment]
     	[Unordered]
+    	[Opposite(typeof(PackageImport), "Profile")]
     	[Subsets(typeof(Namespace), "PackageImport")]
     	IList<PackageImport> MetamodelReference { get; }
     	
@@ -2688,6 +2892,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// <summary>
     	/// References the Profiles that are applied to a Package through this ProfileApplication.
     	/// </summary>
+    	[Opposite(typeof(Profile), "ProfileApplication")]
     	[Subsets(typeof(DirectedRelationship), "Target")]
     	Profile AppliedProfile { get; set; }
     	
@@ -2719,6 +2924,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// </summary>
     	[Containment]
     	[Unordered]
+    	[Opposite(typeof(Image), "Stereotype")]
     	[Subsets(typeof(Element), "OwnedElement")]
     	IList<Image> Icon { get; }
     	
@@ -2734,6 +2940,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// <summary>
     	/// Action whose execution is occurring.
     	/// </summary>
+    	[Opposite(typeof(Action), "ActionExecutionSpecification")]
     	Action Action { get; set; }
     	
     }
@@ -2748,6 +2955,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// <summary>
     	/// Behavior whose execution is occurring.
     	/// </summary>
+    	[Opposite(typeof(Behavior), "BehaviorExecutionSpecification")]
     	Behavior Behavior { get; set; }
     	
     }
@@ -2764,6 +2972,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// </summary>
     	[Containment]
     	[Unordered]
+    	[Opposite(typeof(Gate), "CombinedFragment")]
     	[Subsets(typeof(Element), "OwnedElement")]
     	IList<Gate> CfragmentGate { get; }
     	
@@ -2777,6 +2986,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// The set of operands of the combined fragment.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(InteractionOperand), "CombinedFragment")]
     	[Subsets(typeof(Element), "OwnedElement")]
     	IList<InteractionOperand> Operand { get; }
     	
@@ -2793,6 +3003,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// The set of messages that apply to this fragment.
     	/// </summary>
     	[Unordered]
+    	[Opposite(typeof(NamedElement), "ConsiderIgnoreFragment")]
     	IList<NamedElement> Message { get; }
     	
     }
@@ -2831,6 +3042,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// <summary>
     	/// References the execution specification describing the execution that is started or finished at this execution event.
     	/// </summary>
+    	[Opposite(typeof(ExecutionSpecification), "ExecutionOccurrenceSpecification")]
     	ExecutionSpecification Execution { get; set; }
     	
     }
@@ -2845,11 +3057,13 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// <summary>
     	/// References the OccurrenceSpecification that designates the finish of the Action or Behavior.
     	/// </summary>
+    	[Opposite(typeof(OccurrenceSpecification), "ExecutionSpecification")]
     	OccurrenceSpecification Finish { get; set; }
     	
     	/// <summary>
     	/// References the OccurrenceSpecification that designates the start of the Action or Behavior.
     	/// </summary>
+    	[Opposite(typeof(OccurrenceSpecification), "ExecutionSpecification")]
     	OccurrenceSpecification Start { get; set; }
     	
     }
@@ -2861,6 +3075,11 @@ namespace MetaDslx.Languages.Uml.MetaModel
     [MetaClass]
     public partial interface Gate : MessageEnd
     {
+    	bool NamedElement.IsDistinguishableFrom(NamedElement n, Namespace ns)
+    	{
+    		return this.IsDistinguishableFrom(n, ns);
+    	}
+    	
     }
     
 
@@ -2896,6 +3115,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// </summary>
     	[Containment]
     	[Unordered]
+    	[Opposite(typeof(Action), "Interaction")]
     	[Subsets(typeof(Element), "OwnedElement")]
     	IList<Action> Action { get; }
     	
@@ -2904,6 +3124,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// </summary>
     	[Containment]
     	[Unordered]
+    	[Opposite(typeof(Gate), "Interaction")]
     	[Subsets(typeof(Namespace), "OwnedMember")]
     	IList<Gate> FormalGate { get; }
     	
@@ -2946,6 +3167,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// The maximum number of iterations of a loop
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(ValueSpecification), "InteractionConstraint")]
     	[Subsets(typeof(Element), "OwnedElement")]
     	ValueSpecification Maxint { get; set; }
     	
@@ -2953,6 +3175,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// The minimum number of iterations of a loop
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(ValueSpecification), "InteractionConstraint")]
     	[Subsets(typeof(Element), "OwnedElement")]
     	ValueSpecification Minint { get; set; }
     	
@@ -2991,6 +3214,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// </summary>
     	[Containment]
     	[Unordered]
+    	[Opposite(typeof(GeneralOrdering), "InteractionFragment")]
     	[Subsets(typeof(Element), "OwnedElement")]
     	IList<GeneralOrdering> GeneralOrdering { get; }
     	
@@ -3015,6 +3239,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// Constraint of the operand.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(InteractionConstraint), "InteractionOperand")]
     	[Subsets(typeof(Element), "OwnedElement")]
     	InteractionConstraint Guard { get; set; }
     	
@@ -3032,6 +3257,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// </summary>
     	[Containment]
     	[Unordered]
+    	[Opposite(typeof(Gate), "InteractionUse")]
     	[Subsets(typeof(Element), "OwnedElement")]
     	IList<Gate> ActualGate { get; }
     	
@@ -3039,24 +3265,28 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// The actual arguments of the Interaction.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(ValueSpecification), "InteractionUse")]
     	[Subsets(typeof(Element), "OwnedElement")]
     	IList<ValueSpecification> Argument { get; }
     	
     	/// <summary>
     	/// Refers to the Interaction that defines its meaning.
     	/// </summary>
+    	[Opposite(typeof(Interaction), "InteractionUse")]
     	Interaction RefersTo { get; set; }
     	
     	/// <summary>
     	/// The value of the executed Interaction.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(ValueSpecification), "InteractionUse")]
     	[Subsets(typeof(Element), "OwnedElement")]
     	ValueSpecification ReturnValue { get; set; }
     	
     	/// <summary>
     	/// The recipient of the return value.
     	/// </summary>
+    	[Opposite(typeof(Property), "InteractionUse")]
     	Property ReturnValueRecipient { get; set; }
     	
     }
@@ -3078,6 +3308,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// <summary>
     	/// References the Interaction that represents the decomposition.
     	/// </summary>
+    	[Opposite(typeof(PartDecomposition), "Lifeline")]
     	PartDecomposition DecomposedAs { get; set; }
     	
     	/// <summary>
@@ -3090,12 +3321,14 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// <summary>
     	/// References the ConnectableElement within the classifier that contains the enclosing interaction.
     	/// </summary>
+    	[Opposite(typeof(ConnectableElement), "Lifeline")]
     	ConnectableElement Represents { get; set; }
     	
     	/// <summary>
     	/// If the referenced ConnectableElement is multivalued, then this specifies the specific individual part within that set.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(ValueSpecification), "Lifeline")]
     	[Subsets(typeof(Element), "OwnedElement")]
     	ValueSpecification Selector { get; set; }
     	
@@ -3112,12 +3345,14 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// The arguments of the Message.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(ValueSpecification), "Message")]
     	[Subsets(typeof(Element), "OwnedElement")]
     	IList<ValueSpecification> Argument { get; }
     	
     	/// <summary>
     	/// The Connector on which this Message is sent.
     	/// </summary>
+    	[Opposite(typeof(Connector), "Message")]
     	Connector Connector { get; set; }
     	
     	/// <summary>
@@ -3136,16 +3371,19 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// <summary>
     	/// References the Receiving of the Message.
     	/// </summary>
+    	[Opposite(typeof(MessageEnd), "EndMessage")]
     	MessageEnd ReceiveEvent { get; set; }
     	
     	/// <summary>
     	/// References the Sending of the Message.
     	/// </summary>
+    	[Opposite(typeof(MessageEnd), "EndMessage")]
     	MessageEnd SendEvent { get; set; }
     	
     	/// <summary>
     	/// The signature of the Message is the specification of its content. It refers either an Operation or a Signal.
     	/// </summary>
+    	[Opposite(typeof(NamedElement), "Message")]
     	NamedElement Signature { get; set; }
     	
     	bool NamedElement.IsDistinguishableFrom(NamedElement n, Namespace ns)
@@ -3165,6 +3403,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// <summary>
     	/// References a Message.
     	/// </summary>
+    	[Opposite(typeof(Message), "MessageEnd")]
     	Message Message { get; set; }
     	
     }
@@ -3188,6 +3427,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// <summary>
     	/// References the Lifeline on which the OccurrenceSpecification appears.
     	/// </summary>
+    	[Opposite(typeof(Lifeline), "Events")]
     	[Redefines(typeof(InteractionFragment), "Covered")]
     	new Lifeline Covered { get; set; }
     	
@@ -3226,6 +3466,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// <summary>
     	/// References the Lifeline on which the StateInvariant appears.
     	/// </summary>
+    	[Opposite(typeof(Lifeline), "StateInvariant")]
     	[Redefines(typeof(InteractionFragment), "Covered")]
     	new Lifeline Covered { get; set; }
     	
@@ -3233,6 +3474,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// A Constraint that should hold at runtime for this StateInvariant.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(Constraint), "StateInvariant")]
     	[Subsets(typeof(Element), "OwnedElement")]
     	Constraint Invariant { get; set; }
     	
@@ -3249,12 +3491,14 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// Specifies the information items that may circulate on this information flow.
     	/// </summary>
     	[Unordered]
+    	[Opposite(typeof(Classifier), "ConveyingFlow")]
     	IList<Classifier> Conveyed { get; }
     	
     	/// <summary>
     	/// Defines from which source the conveyed InformationItems are initiated.
     	/// </summary>
     	[Unordered]
+    	[Opposite(typeof(NamedElement), "InformationFlow")]
     	[Subsets(typeof(DirectedRelationship), "Source")]
     	IList<NamedElement> InformationSource { get; }
     	
@@ -3262,6 +3506,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// Defines to which target the conveyed InformationItems are directed.
     	/// </summary>
     	[Unordered]
+    	[Opposite(typeof(NamedElement), "InformationFlow")]
     	[Subsets(typeof(DirectedRelationship), "Target")]
     	IList<NamedElement> InformationTarget { get; }
     	
@@ -3269,24 +3514,28 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// Determines which Relationship will realize the specified flow.
     	/// </summary>
     	[Unordered]
+    	[Opposite(typeof(Relationship), "Abstraction")]
     	IList<Relationship> Realization { get; }
     	
     	/// <summary>
     	/// Determines which ActivityEdges will realize the specified flow.
     	/// </summary>
     	[Unordered]
+    	[Opposite(typeof(ActivityEdge), "InformationFlow")]
     	IList<ActivityEdge> RealizingActivityEdge { get; }
     	
     	/// <summary>
     	/// Determines which Connectors will realize the specified flow.
     	/// </summary>
     	[Unordered]
+    	[Opposite(typeof(Connector), "InformationFlow")]
     	IList<Connector> RealizingConnector { get; }
     	
     	/// <summary>
     	/// Determines which Messages will realize the specified flow.
     	/// </summary>
     	[Unordered]
+    	[Opposite(typeof(Message), "InformationFlow")]
     	IList<Message> RealizingMessage { get; }
     	
     }
@@ -3302,6 +3551,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// Determines the classifiers that will specify the structure and nature of the information. An information item represents all its represented classifiers.
     	/// </summary>
     	[Unordered]
+    	[Opposite(typeof(Classifier), "Representation")]
     	IList<Classifier> Represented { get; }
     	
     }
@@ -3324,6 +3574,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// </summary>
     	[Containment]
     	[Unordered]
+    	[Opposite(typeof(Manifestation), "Artifact")]
     	[Subsets(typeof(Element), "OwnedElement")]
     	[Subsets(typeof(NamedElement), "ClientDependency")]
     	IList<Manifestation> Manifestation { get; }
@@ -3333,6 +3584,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// </summary>
     	[Containment]
     	[Unordered]
+    	[Opposite(typeof(Artifact), "Artifact")]
     	[Subsets(typeof(Namespace), "OwnedMember")]
     	IList<Artifact> NestedArtifact { get; }
     	
@@ -3340,6 +3592,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// The attributes or association ends defined for the Artifact. The association is a specialization of the ownedMember association.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(Property), "Artifact")]
     	[Subsets(typeof(Classifier), "Attribute")]
     	[Subsets(typeof(Namespace), "OwnedMember")]
     	IList<Property> OwnedAttribute { get; }
@@ -3348,6 +3601,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// The Operations defined for the Artifact. The association is a specialization of the ownedMember association.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(Operation), "Artifact")]
     	[Subsets(typeof(Classifier), "Feature")]
     	[Subsets(typeof(Namespace), "OwnedMember")]
     	IList<Operation> OwnedOperation { get; }
@@ -3393,6 +3647,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// The Artifacts that are deployed onto a Node. This association specializes the supplier association.
     	/// </summary>
     	[Unordered]
+    	[Opposite(typeof(DeployedArtifact), "DeploymentForArtifact")]
     	[Subsets(typeof(Dependency), "Supplier")]
     	IList<DeployedArtifact> DeployedArtifact { get; }
     	
@@ -3479,6 +3734,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// <summary>
     	/// The model element that is utilized in the manifestation in an Artifact.
     	/// </summary>
+    	[Opposite(typeof(PackageableElement), "Manifestation")]
     	[Subsets(typeof(Dependency), "Supplier")]
     	PackageableElement UtilizedElement { get; set; }
     	
@@ -3496,6 +3752,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// </summary>
     	[Containment]
     	[Unordered]
+    	[Opposite(typeof(Node), "Node")]
     	[Subsets(typeof(Namespace), "OwnedMember")]
     	IList<Node> NestedNode { get; }
     	
@@ -3512,6 +3769,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// An OpaqueExpression that states the abstraction relationship between the supplier(s) and the client(s). In some cases, such as derivation, it is usually formal and unidirectional; in other cases, such as trace, it is usually informal and bidirectional. The mapping expression is optional and may be omitted if the precise relationship between the Elements is not specified.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(OpaqueExpression), "Abstraction")]
     	[Subsets(typeof(Element), "OwnedElement")]
     	OpaqueExpression Mapping { get; set; }
     	
@@ -3528,6 +3786,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// References the Element(s) being commented.
     	/// </summary>
     	[Unordered]
+    	[Opposite(typeof(Element), "Comment")]
     	IList<Element> AnnotatedElement { get; }
     	
     	/// <summary>
@@ -3547,6 +3806,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// <summary>
     	/// The ordered set of Elements referenced by this Constraint.
     	/// </summary>
+    	[Opposite(typeof(Element), "Constraint")]
     	IList<Element> ConstrainedElement { get; }
     	
     	/// <summary>
@@ -3560,6 +3820,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// A condition that must be true when evaluated in order for the Constraint to be satisfied.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(ValueSpecification), "OwningConstraint")]
     	[Subsets(typeof(Element), "OwnedElement")]
     	ValueSpecification Specification { get; set; }
     	
@@ -3584,6 +3845,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// The Element(s) on which the client Element(s) depend in some respect. The modeler may stipulate a sense of Dependency direction suitable for their domain.
     	/// </summary>
     	[Unordered]
+    	[Opposite(typeof(NamedElement), "SupplierDependency")]
     	[Subsets(typeof(DirectedRelationship), "Target")]
     	IList<NamedElement> Supplier { get; }
     	
@@ -3602,6 +3864,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	[DerivedUnion]
     	[Unordered]
     	[ReadOnly]
+    	[Opposite(typeof(Element), "DirectedRelationship")]
     	[Subsets(typeof(Relationship), "RelatedElement")]
     	IList<Element> Source { get; }
     	
@@ -3611,6 +3874,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	[DerivedUnion]
     	[Unordered]
     	[ReadOnly]
+    	[Opposite(typeof(Element), "DirectedRelationship")]
     	[Subsets(typeof(Relationship), "RelatedElement")]
     	IList<Element> Target { get; }
     	
@@ -3628,6 +3892,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// </summary>
     	[Containment]
     	[Unordered]
+    	[Opposite(typeof(Comment), "OwningElement")]
     	[Subsets(typeof(Element), "OwnedElement")]
     	IList<Comment> OwnedComment { get; }
     	
@@ -3666,6 +3931,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// <summary>
     	/// Specifies the PackageableElement whose name is to be added to a Namespace.
     	/// </summary>
+    	[Opposite(typeof(PackageableElement), "Import")]
     	[Subsets(typeof(DirectedRelationship), "Target")]
     	PackageableElement ImportedElement { get; set; }
     	
@@ -3708,6 +3974,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// The specification of the lower bound for this multiplicity.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(ValueSpecification), "OwningLower")]
     	[Subsets(typeof(Element), "OwnedElement")]
     	ValueSpecification LowerValue { get; set; }
     	
@@ -3715,6 +3982,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// The specification of the upper bound for this multiplicity.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(ValueSpecification), "OwningUpper")]
     	[Subsets(typeof(Element), "OwnedElement")]
     	ValueSpecification UpperValue { get; set; }
     	
@@ -3736,6 +4004,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// The StringExpression used to define the name of this NamedElement.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(StringExpression), "NamedElement")]
     	[Subsets(typeof(Element), "OwnedElement")]
     	StringExpression NameExpression { get; set; }
     	
@@ -3777,6 +4046,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	[DerivedUnion]
     	[Unordered]
     	[ReadOnly]
+    	[Opposite(typeof(NamedElement), "MemberNamespace")]
     	IList<NamedElement> Member { get; }
     	
     	/// <summary>
@@ -3837,6 +4107,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// <summary>
     	/// Specifies the Package whose members are imported into a Namespace.
     	/// </summary>
+    	[Opposite(typeof(Package), "PackageImport")]
     	[Subsets(typeof(DirectedRelationship), "Target")]
     	Package ImportedPackage { get; set; }
     	
@@ -3901,6 +4172,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	[DerivedUnion]
     	[Unordered]
     	[ReadOnly]
+    	[Opposite(typeof(Element), "Relationship")]
     	IList<Element> RelatedElement { get; }
     	
     }
@@ -3958,6 +4230,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// <summary>
     	/// The TemplateSignature for the template that is the target of this TemplateBinding.
     	/// </summary>
+    	[Opposite(typeof(TemplateSignature), "TemplateBinding")]
     	[Subsets(typeof(DirectedRelationship), "Target")]
     	TemplateSignature Signature { get; set; }
     	
@@ -3973,12 +4246,14 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// <summary>
     	/// The ParameterableElement that is the default for this formal TemplateParameter.
     	/// </summary>
+    	[Opposite(typeof(ParameterableElement), "TemplateParameter")]
     	ParameterableElement Default { get; set; }
     	
     	/// <summary>
     	/// The ParameterableElement that is owned by this TemplateParameter for the purpose of providing a default.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(ParameterableElement), "TemplateParameter")]
     	[Subsets(typeof(Element), "OwnedElement")]
     	[Subsets(typeof(TemplateParameter), "Default")]
     	ParameterableElement OwnedDefault { get; set; }
@@ -4017,17 +4292,20 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// <summary>
     	/// The ParameterableElement that is the actual parameter for this TemplateParameterSubstitution.
     	/// </summary>
+    	[Opposite(typeof(ParameterableElement), "TemplateParameterSubstitution")]
     	ParameterableElement Actual { get; set; }
     	
     	/// <summary>
     	/// The formal TemplateParameter that is associated with this TemplateParameterSubstitution.
     	/// </summary>
+    	[Opposite(typeof(TemplateParameter), "TemplateParameterSubstitution")]
     	TemplateParameter Formal { get; set; }
     	
     	/// <summary>
     	/// The ParameterableElement that is owned by this TemplateParameterSubstitution as its actual parameter.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(ParameterableElement), "OwningTemplateParameterSubstitution")]
     	[Subsets(typeof(Element), "OwnedElement")]
     	[Subsets(typeof(TemplateParameterSubstitution), "Actual")]
     	ParameterableElement OwnedActual { get; set; }
@@ -4060,6 +4338,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// <summary>
     	/// The ordered set of all formal TemplateParameters for this TemplateSignature.
     	/// </summary>
+    	[Opposite(typeof(TemplateParameter), "TemplateSignature")]
     	IList<TemplateParameter> Parameter { get; }
     	
     	/// <summary>
@@ -4096,6 +4375,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// <summary>
     	/// The type of the TypedElement.
     	/// </summary>
+    	[Opposite(typeof(Type), "TypedElement")]
     	Type Type { get; set; }
     	
     }
@@ -4135,6 +4415,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// References a list of Parameters to the Behavior which describes the order and type of arguments that can be given when the Behavior is invoked and of the values which will be returned when the Behavior completes its execution.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(Parameter), "Behavior")]
     	[Subsets(typeof(Namespace), "OwnedMember")]
     	IList<Parameter> OwnedParameter { get; }
     	
@@ -4143,6 +4424,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// </summary>
     	[Containment]
     	[Unordered]
+    	[Opposite(typeof(ParameterSet), "Behavior")]
     	[Subsets(typeof(Namespace), "OwnedMember")]
     	IList<ParameterSet> OwnedParameterSet { get; }
     	
@@ -4151,6 +4433,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// </summary>
     	[Containment]
     	[Unordered]
+    	[Opposite(typeof(Constraint), "Behavior")]
     	[Subsets(typeof(Namespace), "OwnedRule")]
     	IList<Constraint> Postcondition { get; }
     	
@@ -4159,6 +4442,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// </summary>
     	[Containment]
     	[Unordered]
+    	[Opposite(typeof(Constraint), "Behavior")]
     	[Subsets(typeof(Namespace), "OwnedRule")]
     	IList<Constraint> Precondition { get; }
     	
@@ -4172,6 +4456,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// References the Behavior that this Behavior redefines. A subtype of Behavior may redefine any other subtype of Behavior. If the Behavior implements a BehavioralFeature, it replaces the redefined Behavior. If the Behavior is a classifierBehavior, it extends the redefined Behavior.
     	/// </summary>
     	[Unordered]
+    	[Opposite(typeof(Behavior), "Behavior")]
     	[Subsets(typeof(Classifier), "RedefinedClassifier")]
     	IList<Behavior> RedefinedBehavior { get; }
     	
@@ -4187,6 +4472,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// <summary>
     	/// Designates the Operation whose invocation raised the CalEvent.
     	/// </summary>
+    	[Opposite(typeof(Operation), "CallEvent")]
     	Operation Operation { get; set; }
     	
     }
@@ -4202,6 +4488,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// A Boolean-valued ValueSpecification that will result in a ChangeEvent whenever its value changes from false to true.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(ValueSpecification), "ChangeEvent")]
     	[Subsets(typeof(Element), "OwnedElement")]
     	ValueSpecification ChangeExpression { get; set; }
     	
@@ -4264,6 +4551,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// <summary>
     	/// The specific Signal that is associated with this SignalEvent.
     	/// </summary>
+    	[Opposite(typeof(Signal), "SignalEvent")]
     	Signal Signal { get; set; }
     	
     }
@@ -4285,6 +4573,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// Specifies the time of the TimeEvent.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(TimeExpression), "TimeEvent")]
     	[Subsets(typeof(Element), "OwnedElement")]
     	TimeExpression When { get; set; }
     	
@@ -4300,12 +4589,14 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// <summary>
     	/// The Event that detected by the Trigger.
     	/// </summary>
+    	[Opposite(typeof(Event), "Trigger")]
     	Event Event { get; set; }
     	
     	/// <summary>
     	/// A optional Port of through which the given effect is detected.
     	/// </summary>
     	[Unordered]
+    	[Opposite(typeof(Port), "Trigger")]
     	IList<Port> Port { get; }
     	
     }
@@ -4320,6 +4611,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// <summary>
     	/// The contract with which the substituting classifier complies.
     	/// </summary>
+    	[Opposite(typeof(Classifier), "Substitution")]
     	[Subsets(typeof(Dependency), "Supplier")]
     	Classifier Contract { get; set; }
     	
@@ -4363,6 +4655,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// The ordered set of formal Parameters of this BehavioralFeature.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(Parameter), "OwnerFormalParam")]
     	[Subsets(typeof(Namespace), "OwnedMember")]
     	IList<Parameter> OwnedParameter { get; }
     	
@@ -4371,6 +4664,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// </summary>
     	[Containment]
     	[Unordered]
+    	[Opposite(typeof(ParameterSet), "BehavioralFeature")]
     	[Subsets(typeof(Namespace), "OwnedMember")]
     	IList<ParameterSet> OwnedParameterSet { get; }
     	
@@ -4378,7 +4672,13 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// The Types representing exceptions that may be raised during an invocation of this BehavioralFeature.
     	/// </summary>
     	[Unordered]
+    	[Opposite(typeof(Type), "BehavioralFeature")]
     	IList<Type> RaisedException { get; }
+    	
+    	bool NamedElement.IsDistinguishableFrom(NamedElement n, Namespace ns)
+    	{
+    		return this.IsDistinguishableFrom(n, ns);
+    	}
     	
     }
     
@@ -4394,6 +4694,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// </summary>
     	[DerivedUnion]
     	[ReadOnly]
+    	[Opposite(typeof(Property), "Classifier")]
     	[Subsets(typeof(Classifier), "Feature")]
     	IList<Property> Attribute { get; }
     	
@@ -4402,6 +4703,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// </summary>
     	[Containment]
     	[Unordered]
+    	[Opposite(typeof(CollaborationUse), "Classifier")]
     	[Subsets(typeof(Element), "OwnedElement")]
     	IList<CollaborationUse> CollaborationUse { get; }
     	
@@ -4449,6 +4751,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// </summary>
     	[Containment]
     	[Unordered]
+    	[Opposite(typeof(UseCase), "Classifier")]
     	[Subsets(typeof(Namespace), "OwnedMember")]
     	IList<UseCase> OwnedUseCase { get; }
     	
@@ -4463,12 +4766,14 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// The Classifiers redefined by this Classifier.
     	/// </summary>
     	[Unordered]
+    	[Opposite(typeof(Classifier), "Classifier")]
     	[Subsets(typeof(RedefinableElement), "RedefinedElement")]
     	IList<Classifier> RedefinedClassifier { get; }
     	
     	/// <summary>
     	/// A CollaborationUse which indicates the Collaboration that represents this Classifier.
     	/// </summary>
+    	[Opposite(typeof(CollaborationUse), "Classifier")]
     	[Subsets(typeof(Classifier), "CollaborationUse")]
     	CollaborationUse Representation { get; set; }
     	
@@ -4525,6 +4830,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// The classifiers that constrain the argument that can be used for the parameter. If the allowSubstitutable attribute is true, then any Classifier that is compatible with this constraining Classifier can be substituted; otherwise, it must be either this Classifier or one of its specializations. If this property is empty, there are no constraints on the Classifier that can be used as an argument.
     	/// </summary>
     	[Unordered]
+    	[Opposite(typeof(Classifier), "ClassifierTemplateParameter")]
     	IList<Classifier> ConstrainingClassifier { get; }
     	
     	/// <summary>
@@ -4569,6 +4875,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// <summary>
     	/// The general classifier in the Generalization relationship.
     	/// </summary>
+    	[Opposite(typeof(Classifier), "Generalization")]
     	[Subsets(typeof(DirectedRelationship), "Target")]
     	Classifier General { get; set; }
     	
@@ -4640,6 +4947,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// The Classifier or Classifiers of the represented instance. If multiple Classifiers are specified, the instance is classified by all of them.
     	/// </summary>
     	[Unordered]
+    	[Opposite(typeof(Classifier), "InstanceSpecification")]
     	IList<Classifier> Classifier { get; }
     	
     	/// <summary>
@@ -4655,6 +4963,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// A specification of how to compute, derive, or construct the instance.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(ValueSpecification), "OwningInstanceSpec")]
     	[Subsets(typeof(Element), "OwnedElement")]
     	ValueSpecification Specification { get; set; }
     	
@@ -4670,6 +4979,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// <summary>
     	/// The InstanceSpecification that represents the specified value.
     	/// </summary>
+    	[Opposite(typeof(InstanceSpecification), "InstanceValue")]
     	InstanceSpecification Instance { get; set; }
     	
     }
@@ -4685,6 +4995,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// An optional Constraint on the result values of an invocation of this Operation.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(Constraint), "BodyContext")]
     	[Subsets(typeof(Namespace), "OwnedRule")]
     	Constraint BodyCondition { get; set; }
     	
@@ -4734,6 +5045,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// </summary>
     	[Containment]
     	[Unordered]
+    	[Opposite(typeof(Constraint), "PostContext")]
     	[Subsets(typeof(Namespace), "OwnedRule")]
     	IList<Constraint> Postcondition { get; }
     	
@@ -4742,6 +5054,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// </summary>
     	[Containment]
     	[Unordered]
+    	[Opposite(typeof(Constraint), "PreContext")]
     	[Subsets(typeof(Namespace), "OwnedRule")]
     	IList<Constraint> Precondition { get; }
     	
@@ -4749,6 +5062,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// The Types representing exceptions that may be raised during an invocation of this operation.
     	/// </summary>
     	[Unordered]
+    	[Opposite(typeof(Type), "Operation")]
     	[Redefines(typeof(BehavioralFeature), "RaisedException")]
     	new IList<Type> RaisedException { get; }
     	
@@ -4756,6 +5070,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// The Operations that are redefined by this Operation.
     	/// </summary>
     	[Unordered]
+    	[Opposite(typeof(Operation), "Operation")]
     	[Subsets(typeof(RedefinableElement), "RedefinedElement")]
     	IList<Operation> RedefinedOperation { get; }
     	
@@ -4765,6 +5080,11 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	[Opposite(typeof(OperationTemplateParameter), "ParameteredElement")]
     	[Redefines(typeof(ParameterableElement), "TemplateParameter")]
     	new OperationTemplateParameter TemplateParameter { get; set; }
+    	
+    	bool RedefinableElement.IsConsistentWith(RedefinableElement redefiningElement)
+    	{
+    		return this.IsConsistentWith(redefiningElement);
+    	}
     	
     }
     
@@ -4795,6 +5115,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// Specifies a ValueSpecification that represents a value to be used when no argument is supplied for the Parameter.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(ValueSpecification), "OwningParameter")]
     	[Subsets(typeof(Element), "OwnedElement")]
     	ValueSpecification DefaultValue { get; set; }
     	
@@ -4848,6 +5169,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// </summary>
     	[Containment]
     	[Unordered]
+    	[Opposite(typeof(Constraint), "ParameterSet")]
     	[Subsets(typeof(Element), "OwnedElement")]
     	IList<Constraint> Condition { get; }
     	
@@ -4904,6 +5226,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// A ValueSpecification that is evaluated to give a default value for the Property when an instance of the owning Classifier is instantiated.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(ValueSpecification), "OwningProperty")]
     	[Subsets(typeof(Element), "OwnedElement")]
     	ValueSpecification DefaultValue { get; set; }
     	
@@ -4954,6 +5277,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// The properties that are redefined by this property, if any.
     	/// </summary>
     	[Unordered]
+    	[Opposite(typeof(Property), "Property")]
     	[Subsets(typeof(RedefinableElement), "RedefinedElement")]
     	IList<Property> RedefinedProperty { get; }
     	
@@ -4961,7 +5285,18 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// The properties of which this Property is constrained to be a subset, if any.
     	/// </summary>
     	[Unordered]
+    	[Opposite(typeof(Property), "Property")]
     	IList<Property> SubsettedProperty { get; }
+    	
+    	bool ParameterableElement.IsCompatibleWith(ParameterableElement p)
+    	{
+    		return this.IsCompatibleWith(p);
+    	}
+    	
+    	bool RedefinableElement.IsConsistentWith(RedefinableElement redefiningElement)
+    	{
+    		return this.IsConsistentWith(redefiningElement);
+    	}
     	
     }
     
@@ -4984,6 +5319,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	[DerivedUnion]
     	[Unordered]
     	[ReadOnly]
+    	[Opposite(typeof(RedefinableElement), "RedefinableElement")]
     	IList<RedefinableElement> RedefinedElement { get; }
     	
     	/// <summary>
@@ -4992,6 +5328,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	[DerivedUnion]
     	[Unordered]
     	[ReadOnly]
+    	[Opposite(typeof(Classifier), "RedefinableElement")]
     	IList<Classifier> RedefinitionContext { get; }
     	
     }
@@ -5015,6 +5352,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// The signatures extended by this RedefinableTemplateSignature.
     	/// </summary>
     	[Unordered]
+    	[Opposite(typeof(RedefinableTemplateSignature), "RedefinableTemplateSignature")]
     	[Subsets(typeof(RedefinableElement), "RedefinedElement")]
     	IList<RedefinableTemplateSignature> ExtendedSignature { get; }
     	
@@ -5035,6 +5373,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// <summary>
     	/// The StructuralFeature that specifies the values that may be held by the Slot.
     	/// </summary>
+    	[Opposite(typeof(StructuralFeature), "Slot")]
     	StructuralFeature DefiningFeature { get; set; }
     	
     	/// <summary>
@@ -5048,6 +5387,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// The value or values held by the Slot.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(ValueSpecification), "OwningSlot")]
     	[Subsets(typeof(Element), "OwnedElement")]
     	IList<ValueSpecification> Value { get; }
     	
@@ -5079,6 +5419,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// The OutputPin on which the result value is placed.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(OutputPin), "ValueSpecificationAction")]
     	[Subsets(typeof(Action), "Output")]
     	OutputPin Result { get; set; }
     	
@@ -5086,6 +5427,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// The ValueSpecification to be evaluated.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(ValueSpecification), "ValueSpecificationAction")]
     	[Subsets(typeof(Element), "OwnedElement")]
     	ValueSpecification Value { get; set; }
     	
@@ -5101,6 +5443,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// <summary>
     	/// The Variable to be read or written.
     	/// </summary>
+    	[Opposite(typeof(Variable), "VariableAction")]
     	Variable Variable { get; set; }
     	
     }
@@ -5125,6 +5468,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// The OutputPin on which is put the input object as modified by the WriteStructuralFeatureAction.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(OutputPin), "WriteStructuralFeatureAction")]
     	[Subsets(typeof(Action), "Output")]
     	OutputPin Result { get; set; }
     	
@@ -5132,6 +5476,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// The InputPin that provides the value to be added or removed from the StructuralFeature.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(InputPin), "WriteStructuralFeatureAction")]
     	[Subsets(typeof(Action), "Input")]
     	InputPin Value { get; set; }
     	
@@ -5148,6 +5493,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// The InputPin that gives the value to be added or removed from the Variable.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(InputPin), "WriteVariableAction")]
     	[Subsets(typeof(Action), "Input")]
     	InputPin Value { get; set; }
     	
@@ -5164,6 +5510,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// An OutputPin where a value is placed containing sufficient information to perform a subsequent ReplyAction and return control to the caller. The contents of this value are opaque. It can be passed and copied but it cannot be manipulated by the model.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(OutputPin), "AcceptCallAction")]
     	[Subsets(typeof(Action), "Output")]
     	OutputPin ReturnInformation { get; set; }
     	
@@ -5186,6 +5533,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// OutputPins holding the values received from an Event occurrence.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(OutputPin), "AcceptEventAction")]
     	[Subsets(typeof(Action), "Output")]
     	IList<OutputPin> Result { get; }
     	
@@ -5194,6 +5542,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// </summary>
     	[Containment]
     	[Unordered]
+    	[Opposite(typeof(Trigger), "AcceptEventAction")]
     	[Subsets(typeof(Element), "OwnedElement")]
     	IList<Trigger> Trigger { get; }
     	
@@ -5212,6 +5561,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	[Containment]
     	[DerivedUnion]
     	[ReadOnly]
+    	[Opposite(typeof(InputPin), "Action")]
     	[Subsets(typeof(Element), "OwnedElement")]
     	IList<InputPin> Input { get; }
     	
@@ -5226,6 +5576,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// </summary>
     	[Containment]
     	[Unordered]
+    	[Opposite(typeof(Constraint), "Action")]
     	[Subsets(typeof(Element), "OwnedElement")]
     	IList<Constraint> LocalPostcondition { get; }
     	
@@ -5234,6 +5585,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// </summary>
     	[Containment]
     	[Unordered]
+    	[Opposite(typeof(Constraint), "Action")]
     	[Subsets(typeof(Element), "OwnedElement")]
     	IList<Constraint> LocalPrecondition { get; }
     	
@@ -5243,6 +5595,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	[Containment]
     	[DerivedUnion]
     	[ReadOnly]
+    	[Opposite(typeof(OutputPin), "Action")]
     	[Subsets(typeof(Element), "OwnedElement")]
     	IList<OutputPin> Output { get; }
     	
@@ -5259,6 +5612,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// The Action used to provide the values of the ActionInputPin.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(Action), "ActionInputPin")]
     	[Subsets(typeof(Element), "OwnedElement")]
     	Action FromAction { get; set; }
     	
@@ -5275,6 +5629,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// The InputPin that gives the position at which to insert the value in an ordered StructuralFeature. The type of the insertAt InputPin is UnlimitedNatural, but the value cannot be zero. It is omitted for unordered StructuralFeatures.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(InputPin), "AddStructuralFeatureValueAction")]
     	[Subsets(typeof(Action), "Input")]
     	InputPin InsertAt { get; set; }
     	
@@ -5297,6 +5652,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// The InputPin that gives the position at which to insert a new value or move an existing value in ordered Variables. The type of the insertAt InputPin is UnlimitedNatural, but the value cannot be zero. It is omitted for unordered Variables.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(InputPin), "AddVariableValueAction")]
     	[Subsets(typeof(Action), "Input")]
     	InputPin InsertAt { get; set; }
     	
@@ -5318,6 +5674,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// <summary>
     	/// The Signal whose instances are to be sent.
     	/// </summary>
+    	[Opposite(typeof(Signal), "BroadcastSignalAction")]
     	Signal Signal { get; set; }
     	
     }
@@ -5339,6 +5696,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// The OutputPins on which the reply values from the invocation are placed (if the call is synchronous).
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(OutputPin), "CallAction")]
     	[Subsets(typeof(Action), "Output")]
     	IList<OutputPin> Result { get; }
     	
@@ -5354,6 +5712,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// <summary>
     	/// The Behavior being invoked.
     	/// </summary>
+    	[Opposite(typeof(Behavior), "CallBehaviorAction")]
     	Behavior Behavior { get; set; }
     	
     	IList<Parameter> CallAction.OutputParameters()
@@ -5378,12 +5737,14 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// <summary>
     	/// The Operation being invoked.
     	/// </summary>
+    	[Opposite(typeof(Operation), "CallOperationAction")]
     	Operation Operation { get; set; }
     	
     	/// <summary>
     	/// The InputPin that provides the target object to which the Operation call request is sent.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(InputPin), "CallOperationAction")]
     	[Subsets(typeof(Action), "Input")]
     	InputPin Target { get; set; }
     	
@@ -5410,16 +5771,19 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// The set of ExecutableNodes that are executed if the test evaluates to true and the Clause is chosen over other Clauses within the ConditionalNode that also have tests that evaluate to true.
     	/// </summary>
     	[Unordered]
+    	[Opposite(typeof(ExecutableNode), "Clause")]
     	IList<ExecutableNode> Body { get; }
     	
     	/// <summary>
     	/// The OutputPins on Actions within the body section whose values are moved to the result OutputPins of the containing ConditionalNode after execution of the body.
     	/// </summary>
+    	[Opposite(typeof(OutputPin), "Clause")]
     	IList<OutputPin> BodyOutput { get; }
     	
     	/// <summary>
     	/// An OutputPin on an Action in the test section whose Boolean value determines the result of the test.
     	/// </summary>
+    	[Opposite(typeof(OutputPin), "Clause")]
     	OutputPin Decider { get; set; }
     	
     	/// <summary>
@@ -5440,6 +5804,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// The set of ExecutableNodes that are executed in order to provide a test result for the Clause.
     	/// </summary>
     	[Unordered]
+    	[Opposite(typeof(ExecutableNode), "Clause")]
     	IList<ExecutableNode> Test { get; }
     	
     }
@@ -5454,12 +5819,14 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// <summary>
     	/// The Association to be cleared.
     	/// </summary>
+    	[Opposite(typeof(Association), "ClearAssociationAction")]
     	Association Association { get; set; }
     	
     	/// <summary>
     	/// The InputPin that gives the object whose participation in the Association is to be cleared.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(InputPin), "ClearAssociationAction")]
     	[Subsets(typeof(Action), "Input")]
     	InputPin Object { get; set; }
     	
@@ -5476,6 +5843,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// The OutputPin on which is put the input object as modified by the ClearStructuralFeatureAction.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(OutputPin), "ClearStructuralFeatureAction")]
     	[Subsets(typeof(Action), "Output")]
     	OutputPin Result { get; set; }
     	
@@ -5502,6 +5870,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// </summary>
     	[Containment]
     	[Unordered]
+    	[Opposite(typeof(Clause), "ConditionalNode")]
     	[Subsets(typeof(Element), "OwnedElement")]
     	IList<Clause> Clause { get; }
     	
@@ -5521,8 +5890,14 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// The OutputPins that onto which are moved values from the bodyOutputs of the Clause selected for execution.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(OutputPin), "ConditionalNode")]
     	[Redefines(typeof(StructuredActivityNode), "StructuredNodeOutput")]
     	IList<OutputPin> Result { get; }
+    	
+    	IList<Action> StructuredActivityNode.AllActions()
+    	{
+    		return this.AllActions();
+    	}
     	
     	IList<Action> Action.AllActions()
     	{
@@ -5543,6 +5918,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// </summary>
     	[Containment]
     	[Unordered]
+    	[Opposite(typeof(LinkEndCreationData), "CreateLinkAction")]
     	[Redefines(typeof(LinkAction), "EndData")]
     	new IList<LinkEndCreationData> EndData { get; }
     	
@@ -5559,6 +5935,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// The output pin on which the newly created link object is placed.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(OutputPin), "CreateLinkObjectAction")]
     	[Subsets(typeof(Action), "Output")]
     	OutputPin Result { get; set; }
     	
@@ -5574,12 +5951,14 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// <summary>
     	/// The Classifier to be instantiated.
     	/// </summary>
+    	[Opposite(typeof(Classifier), "CreateObjectAction")]
     	Classifier Classifier { get; set; }
     	
     	/// <summary>
     	/// The OutputPin on which the newly created object is placed.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(OutputPin), "CreateObjectAction")]
     	[Subsets(typeof(Action), "Output")]
     	OutputPin Result { get; set; }
     	
@@ -5597,6 +5976,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// </summary>
     	[Containment]
     	[Unordered]
+    	[Opposite(typeof(LinkEndDestructionData), "DestroyLinkAction")]
     	[Redefines(typeof(LinkAction), "EndData")]
     	new IList<LinkEndDestructionData> EndData { get; }
     	
@@ -5625,6 +6005,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// The InputPin providing the object to be destroyed.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(InputPin), "DestroyObjectAction")]
     	[Subsets(typeof(Action), "Input")]
     	InputPin Target { get; set; }
     	
@@ -5700,12 +6081,14 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// The InputPins that provide the argument values passed in the invocation request.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(InputPin), "InvocationAction")]
     	[Subsets(typeof(Action), "Input")]
     	IList<InputPin> Argument { get; }
     	
     	/// <summary>
     	/// For CallOperationActions, SendSignalActions, and SendObjectActions, an optional Port of the target object through which the invocation request is sent.
     	/// </summary>
+    	[Opposite(typeof(Port), "InvocationAction")]
     	Port OnPort { get; set; }
     	
     }
@@ -5722,6 +6105,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// </summary>
     	[Containment]
     	[Unordered]
+    	[Opposite(typeof(LinkEndData), "LinkAction")]
     	[Subsets(typeof(Element), "OwnedElement")]
     	IList<LinkEndData> EndData { get; }
     	
@@ -5730,6 +6114,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// </summary>
     	[Containment]
     	[Unordered]
+    	[Opposite(typeof(InputPin), "LinkAction")]
     	[Subsets(typeof(Action), "Input")]
     	IList<InputPin> InputValue { get; }
     	
@@ -5745,6 +6130,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// <summary>
     	/// For ordered Association ends, the InputPin that provides the position where the new link should be inserted or where an existing link should be moved to. The type of the insertAt InputPin is UnlimitedNatural, but the input cannot be zero. It is omitted for Association ends that are not ordered.
     	/// </summary>
+    	[Opposite(typeof(InputPin), "LinkEndCreationData")]
     	InputPin InsertAt { get; set; }
     	
     	/// <summary>
@@ -5770,6 +6156,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// <summary>
     	/// The Association end for which this LinkEndData specifies values.
     	/// </summary>
+    	[Opposite(typeof(Property), "LinkEndData")]
     	Property End { get; set; }
     	
     	/// <summary>
@@ -5777,12 +6164,14 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// </summary>
     	[Containment]
     	[Unordered]
+    	[Opposite(typeof(QualifierValue), "LinkEndData")]
     	[Subsets(typeof(Element), "OwnedElement")]
     	IList<QualifierValue> Qualifier { get; }
     	
     	/// <summary>
     	/// The InputPin that provides the specified value for the given end. This InputPin is omitted if the LinkEndData specifies the &quot;open&quot; end for a ReadLinkAction.
     	/// </summary>
+    	[Opposite(typeof(InputPin), "LinkEndData")]
     	InputPin Value { get; set; }
     	
     }
@@ -5797,6 +6186,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// <summary>
     	/// The InputPin that provides the position of an existing link to be destroyed in an ordered, nonunique Association end. The type of the destroyAt InputPin is UnlimitedNatural, but the value cannot be zero or unlimited.
     	/// </summary>
+    	[Opposite(typeof(InputPin), "LinkEndDestructionData")]
     	InputPin DestroyAt { get; set; }
     	
     	/// <summary>
@@ -5822,17 +6212,20 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// <summary>
     	/// The OutputPins on Actions within the bodyPart, the values of which are moved to the loopVariable OutputPins after the completion of each execution of the bodyPart, before the next iteration of the loop begins or before the loop exits.
     	/// </summary>
+    	[Opposite(typeof(OutputPin), "LoopNode")]
     	IList<OutputPin> BodyOutput { get; }
     	
     	/// <summary>
     	/// The set of ExecutableNodes that perform the repetitive computations of the loop. The bodyPart is executed as long as the test section produces a true value.
     	/// </summary>
     	[Unordered]
+    	[Opposite(typeof(ExecutableNode), "LoopNode")]
     	IList<ExecutableNode> BodyPart { get; }
     	
     	/// <summary>
     	/// An OutputPin on an Action in the test section whose Boolean value determines whether to continue executing the loop bodyPart.
     	/// </summary>
+    	[Opposite(typeof(OutputPin), "LoopNode")]
     	OutputPin Decider { get; set; }
     	
     	/// <summary>
@@ -5845,6 +6238,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// A list of OutputPins that hold the values of the loop variables during an execution of the loop. When the test fails, the values are moved to the result OutputPins of the loop.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(OutputPin), "LoopNode")]
     	[Subsets(typeof(Element), "OwnedElement")]
     	IList<OutputPin> LoopVariable { get; }
     	
@@ -5852,6 +6246,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// A list of InputPins whose values are moved into the loopVariable Pins before the first iteration of the loop.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(InputPin), "LoopNode")]
     	[Redefines(typeof(StructuredActivityNode), "StructuredNodeInput")]
     	IList<InputPin> LoopVariableInput { get; }
     	
@@ -5859,6 +6254,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// A list of OutputPins that receive the loopVariable values after the last iteration of the loop and constitute the output of the LoopNode.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(OutputPin), "LoopNode")]
     	[Redefines(typeof(StructuredActivityNode), "StructuredNodeOutput")]
     	IList<OutputPin> Result { get; }
     	
@@ -5866,13 +6262,20 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// The set of ExecutableNodes executed before the first iteration of the loop, in order to initialize values or perform other setup computations.
     	/// </summary>
     	[Unordered]
+    	[Opposite(typeof(ExecutableNode), "LoopNode")]
     	IList<ExecutableNode> SetupPart { get; }
     	
     	/// <summary>
     	/// The set of ExecutableNodes executed in order to provide the test result for the loop.
     	/// </summary>
     	[Unordered]
+    	[Opposite(typeof(ExecutableNode), "LoopNode")]
     	IList<ExecutableNode> Test { get; }
+    	
+    	IList<Action> StructuredActivityNode.AllActions()
+    	{
+    		return this.AllActions();
+    	}
     	
     	IList<Action> Action.AllActions()
     	{
@@ -5904,6 +6307,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// </summary>
     	[Containment]
     	[Unordered]
+    	[Opposite(typeof(InputPin), "OpaqueAction")]
     	[Subsets(typeof(Action), "Input")]
     	IList<InputPin> InputValue { get; }
     	
@@ -5917,6 +6321,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// </summary>
     	[Containment]
     	[Unordered]
+    	[Opposite(typeof(OutputPin), "OpaqueAction")]
     	[Subsets(typeof(Action), "Output")]
     	IList<OutputPin> OutputValue { get; }
     	
@@ -5956,11 +6361,13 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// <summary>
     	/// The qualifier Property for which the value is to be specified.
     	/// </summary>
+    	[Opposite(typeof(Property), "QualifierValue")]
     	Property Qualifier { get; set; }
     	
     	/// <summary>
     	/// The InputPin from which the specified value for the qualifier is taken.
     	/// </summary>
+    	[Opposite(typeof(InputPin), "QualifierValue")]
     	InputPin Value { get; set; }
     	
     }
@@ -5976,6 +6383,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// An InputPin whose value becomes the exception object.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(InputPin), "RaiseExceptionAction")]
     	[Subsets(typeof(Action), "Input")]
     	InputPin Exception { get; set; }
     	
@@ -5991,12 +6399,14 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// <summary>
     	/// The Classifier whose instances are to be retrieved.
     	/// </summary>
+    	[Opposite(typeof(Classifier), "ReadExtentAction")]
     	Classifier Classifier { get; set; }
     	
     	/// <summary>
     	/// The OutputPin on which the Classifier instances are placed.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(OutputPin), "ReadExtentAction")]
     	[Subsets(typeof(Action), "Output")]
     	OutputPin Result { get; set; }
     	
@@ -6012,6 +6422,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// <summary>
     	/// The Classifier against which the classification of the input object is tested.
     	/// </summary>
+    	[Opposite(typeof(Classifier), "ReadIsClassifiedObjectAction")]
     	Classifier Classifier { get; set; }
     	
     	/// <summary>
@@ -6024,6 +6435,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// The InputPin that holds the object whose classification is to be tested.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(InputPin), "ReadIsClassifiedObjectAction")]
     	[Subsets(typeof(Action), "Input")]
     	InputPin Object { get; set; }
     	
@@ -6031,6 +6443,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// The OutputPin that holds the Boolean result of the test.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(OutputPin), "ReadIsClassifiedObjectAction")]
     	[Subsets(typeof(Action), "Output")]
     	OutputPin Result { get; set; }
     	
@@ -6047,6 +6460,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// The OutputPin on which the objects retrieved from the &quot;open&quot; end of those links whose values on other ends are given by the endData.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(OutputPin), "ReadLinkAction")]
     	[Subsets(typeof(Action), "Output")]
     	OutputPin Result { get; set; }
     	
@@ -6062,12 +6476,14 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// <summary>
     	/// The Association end to be read.
     	/// </summary>
+    	[Opposite(typeof(Property), "ReadLinkObjectEndAction")]
     	Property End { get; set; }
     	
     	/// <summary>
     	/// The input pin from which the link object is obtained.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(InputPin), "ReadLinkObjectEndAction")]
     	[Subsets(typeof(Action), "Input")]
     	InputPin Object { get; set; }
     	
@@ -6075,6 +6491,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// The OutputPin where the result value is placed.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(OutputPin), "ReadLinkObjectEndAction")]
     	[Subsets(typeof(Action), "Output")]
     	OutputPin Result { get; set; }
     	
@@ -6091,18 +6508,21 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// The InputPin from which the link object is obtained.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(InputPin), "ReadLinkObjectEndQualifierAction")]
     	[Subsets(typeof(Action), "Input")]
     	InputPin Object { get; set; }
     	
     	/// <summary>
     	/// The qualifier Property to be read.
     	/// </summary>
+    	[Opposite(typeof(Property), "ReadLinkObjectEndQualifierAction")]
     	Property Qualifier { get; set; }
     	
     	/// <summary>
     	/// The OutputPin where the result value is placed.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(OutputPin), "ReadLinkObjectEndQualifierAction")]
     	[Subsets(typeof(Action), "Output")]
     	OutputPin Result { get; set; }
     	
@@ -6119,6 +6539,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// The OutputPin on which the context object is placed.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(OutputPin), "ReadSelfAction")]
     	[Subsets(typeof(Action), "Output")]
     	OutputPin Result { get; set; }
     	
@@ -6135,6 +6556,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// The OutputPin on which the result values are placed.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(OutputPin), "ReadStructuralFeatureAction")]
     	[Subsets(typeof(Action), "Output")]
     	OutputPin Result { get; set; }
     	
@@ -6151,6 +6573,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// The OutputPin on which the result values are placed.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(OutputPin), "ReadVariableAction")]
     	[Subsets(typeof(Action), "Output")]
     	OutputPin Result { get; set; }
     	
@@ -6173,12 +6596,14 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// A set of Classifiers to be added to the Classifiers of the given object.
     	/// </summary>
     	[Unordered]
+    	[Opposite(typeof(Classifier), "ReclassifyObjectAction")]
     	IList<Classifier> NewClassifier { get; }
     	
     	/// <summary>
     	/// The InputPin that holds the object to be reclassified.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(InputPin), "ReclassifyObjectAction")]
     	[Subsets(typeof(Action), "Input")]
     	InputPin Object { get; set; }
     	
@@ -6186,6 +6611,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// A set of Classifiers to be removed from the Classifiers of the given object.
     	/// </summary>
     	[Unordered]
+    	[Opposite(typeof(Classifier), "ReclassifyObjectAction")]
     	IList<Classifier> OldClassifier { get; }
     	
     }
@@ -6201,6 +6627,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// The InputPin that provides the collection to be reduced.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(InputPin), "ReduceAction")]
     	[Subsets(typeof(Action), "Input")]
     	InputPin Collection { get; set; }
     	
@@ -6213,12 +6640,14 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// <summary>
     	/// A Behavior that is repreatedly applied to two elements of the input collection to produce a value that is of the same type as elements of the collection.
     	/// </summary>
+    	[Opposite(typeof(Behavior), "ReduceAction")]
     	Behavior Reducer { get; set; }
     	
     	/// <summary>
     	/// The output pin on which the result value is placed.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(OutputPin), "ReduceAction")]
     	[Subsets(typeof(Action), "Output")]
     	OutputPin Result { get; set; }
     	
@@ -6241,6 +6670,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// An InputPin that provides the position of an existing value to remove in ordered, nonunique structural features. The type of the removeAt InputPin is UnlimitedNatural, but the value cannot be zero or unlimited.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(InputPin), "RemoveStructuralFeatureValueAction")]
     	[Subsets(typeof(Action), "Input")]
     	InputPin RemoveAt { get; set; }
     	
@@ -6263,6 +6693,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// An InputPin that provides the position of an existing value to remove in ordered, nonunique Variables. The type of the removeAt InputPin is UnlimitedNatural, but the value cannot be zero or unlimited.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(InputPin), "RemoveVariableValueAction")]
     	[Subsets(typeof(Action), "Input")]
     	InputPin RemoveAt { get; set; }
     	
@@ -6278,12 +6709,14 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// <summary>
     	/// The Trigger specifying the Operation whose call is being replied to.
     	/// </summary>
+    	[Opposite(typeof(Trigger), "ReplyAction")]
     	Trigger ReplyToCall { get; set; }
     	
     	/// <summary>
     	/// A list of InputPins providing the values for the output (inout, out, and return) Parameters of the Operation. These values are returned to the caller.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(InputPin), "ReplyAction")]
     	[Subsets(typeof(Action), "Input")]
     	IList<InputPin> ReplyValue { get; }
     	
@@ -6291,6 +6724,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// An InputPin that holds the return information value produced by an earlier AcceptCallAction.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(InputPin), "ReplyAction")]
     	[Subsets(typeof(Action), "Input")]
     	InputPin ReturnInformation { get; set; }
     	
@@ -6307,6 +6741,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// The request object, which is transmitted to the target object. The object may be copied in transmission, so identity might not be preserved.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(InputPin), "SendObjectAction")]
     	[Redefines(typeof(InvocationAction), "Argument")]
     	InputPin Request { get; set; }
     	
@@ -6314,6 +6749,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// The target object to which the object is sent.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(InputPin), "SendObjectAction")]
     	[Subsets(typeof(Action), "Input")]
     	InputPin Target { get; set; }
     	
@@ -6329,12 +6765,14 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// <summary>
     	/// The Signal whose instance is transmitted to the target.
     	/// </summary>
+    	[Opposite(typeof(Signal), "SendSignalAction")]
     	Signal Signal { get; set; }
     	
     	/// <summary>
     	/// The InputPin that provides the target object to which the Signal instance is sent.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(InputPin), "SendSignalAction")]
     	[Subsets(typeof(Action), "Input")]
     	InputPin Target { get; set; }
     	
@@ -6351,6 +6789,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// The ordered set of ExecutableNodes to be sequenced.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(ExecutableNode), "SequenceNode")]
     	[Redefines(typeof(StructuredActivityNode), "Node")]
     	IList<ExecutableNode> ExecutableNode { get; }
     	
@@ -6367,6 +6806,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// The InputPin that holds the object whose classifierBehavior is to be started.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(InputPin), "StartClassifierBehaviorAction")]
     	[Subsets(typeof(Action), "Input")]
     	InputPin Object { get; set; }
     	
@@ -6383,6 +6823,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// An InputPin that holds the object that is either a Behavior to be started or has a classifierBehavior to be started.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(InputPin), "StartObjectBehaviorAction")]
     	[Subsets(typeof(Action), "Input")]
     	InputPin Object { get; set; }
     	
@@ -6409,12 +6850,14 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// The InputPin from which the object whose StructuralFeature is to be read or written is obtained.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(InputPin), "StructuralFeatureAction")]
     	[Subsets(typeof(Action), "Input")]
     	InputPin Object { get; set; }
     	
     	/// <summary>
     	/// The StructuralFeature to be read or written.
     	/// </summary>
+    	[Opposite(typeof(StructuralFeature), "StructuralFeatureAction")]
     	StructuralFeature StructuralFeature { get; set; }
     	
     }
@@ -6465,6 +6908,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// </summary>
     	[Containment]
     	[Unordered]
+    	[Opposite(typeof(InputPin), "StructuredActivityNode")]
     	[Subsets(typeof(Action), "Input")]
     	IList<InputPin> StructuredNodeInput { get; }
     	
@@ -6473,6 +6917,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// </summary>
     	[Containment]
     	[Unordered]
+    	[Opposite(typeof(OutputPin), "StructuredActivityNode")]
     	[Subsets(typeof(Action), "Output")]
     	IList<OutputPin> StructuredNodeOutput { get; }
     	
@@ -6500,6 +6945,11 @@ namespace MetaDslx.Languages.Uml.MetaModel
     		return this.ContainingActivity();
     	}
     	
+    	Activity ActivityNode.ContainingActivity()
+    	{
+    		return this.ContainingActivity();
+    	}
+    	
     }
     
 
@@ -6513,6 +6963,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// The InputPin on which the first input object is placed.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(InputPin), "TestIdentityAction")]
     	[Subsets(typeof(Action), "Input")]
     	InputPin First { get; set; }
     	
@@ -6520,6 +6971,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// The OutputPin whose Boolean value indicates whether the two input objects are identical.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(OutputPin), "TestIdentityAction")]
     	[Subsets(typeof(Action), "Output")]
     	OutputPin Result { get; set; }
     	
@@ -6527,6 +6979,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// The OutputPin on which the second input object is placed.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(InputPin), "TestIdentityAction")]
     	[Subsets(typeof(Action), "Input")]
     	InputPin Second { get; set; }
     	
@@ -6543,6 +6996,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// The InputPin that gives the object to be unmarshalled.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(InputPin), "UnmarshallAction")]
     	[Subsets(typeof(Action), "Input")]
     	InputPin Object { get; set; }
     	
@@ -6550,12 +7004,14 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// The OutputPins on which are placed the values of the StructuralFeatures of the input object.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(OutputPin), "UnmarshallAction")]
     	[Subsets(typeof(Action), "Output")]
     	IList<OutputPin> Result { get; }
     	
     	/// <summary>
     	/// The type of the object to be unmarshalled.
     	/// </summary>
+    	[Opposite(typeof(Classifier), "UnmarshallAction")]
     	Classifier UnmarshallType { get; set; }
     	
     }
@@ -6571,6 +7027,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// The ValueSpecification that is evaluated to obtain the value that the ValuePin will provide.
     	/// </summary>
     	[Containment]
+    	[Opposite(typeof(ValueSpecification), "ValuePin")]
     	[Subsets(typeof(Element), "OwnedElement")]
     	ValueSpecification Value { get; set; }
     	

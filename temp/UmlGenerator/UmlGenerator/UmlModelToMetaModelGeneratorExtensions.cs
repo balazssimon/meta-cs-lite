@@ -53,8 +53,13 @@ namespace UmlGenerator
             _umlClasses.Add(cls, result);
             foreach (var attr in cls.OwnedAttribute)
             {
-                AddUmlProperty(result, attr);
+                var uprop = AddUmlProperty(result, attr);
+                if (attr.Opposite is not null)
+                {
+                    uprop.Opposites.Add(attr.Opposite.Name);
+                }
             }
+            /*/
             foreach (var assoc in cls.MModel.Objects.OfType<Association>().Where(assoc => assoc.MemberEnd.Count == 2))
             {
                 Property first = assoc.MemberEnd[0];
@@ -72,6 +77,7 @@ namespace UmlGenerator
                     if (!existing.Opposites.Contains(second.Name)) existing.Opposites.Add(second.Name);
                 }
             }
+            //*/
             foreach (var prop in result.Attributes)
             {
                 foreach (var baseProp in prop.Property.RedefinedProperty)
@@ -105,13 +111,20 @@ namespace UmlGenerator
                 else
                 {
                     var uop = AddUmlOperation(result, op);
-                    foreach (var baseOp in cls.AllFeatures().OfType<Operation>())
+                    var baseClasses = new List<Class>(cls.Generalization.Select(g => g.General).OfType<Class>());
+                    while (baseClasses.Count > 0)
                     {
-                        if (baseOp.Class.Name != op.Class.Name && baseOp.Name == op.Name && baseOp.OwnedParameter.Count == op.OwnedParameter.Count)
+                        var baseClass = baseClasses[0];
+                        baseClasses.RemoveAt(0);
+                        baseClasses.AddRange(baseClass.Generalization.Select(g => g.General).OfType<Class>());
+                        foreach (var baseOp in baseClass.OwnedMember.OfType<Operation>())
                         {
-                            if (!uop.Overrides.Contains(baseOp))
+                            if (baseOp.Class.Name != op.Class.Name && baseOp.Name == op.Name && baseOp.OwnedParameter.Count == op.OwnedParameter.Count)
                             {
-                                uop.Overrides.Add(baseOp);
+                                if (!uop.Overrides.Contains(baseOp))
+                                {
+                                    uop.Overrides.Add(baseOp);
+                                }
                             }
                         }
                     }
