@@ -349,6 +349,13 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
             }
             else if (token.Kind == MetaGeneratorTokenKind.EndOfLine)
             {
+                StartInputSpan();
+                EatToken();
+                var templateOutputSpan = EndInputSpan();
+                if (_currentTemplateInfo != null)
+                {
+                    _currentTemplateInfo.Outputs.Add(templateOutputSpan);
+                }
                 if (state.IsEmptyLine)
                 {
                     _osb.WriteLine("__cb.WriteLine();");
@@ -363,7 +370,6 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
                     _osb.WriteLine("__cb.AppendLine();");
                     _osb.WriteLine("__cb.Pop();");
                 }
-                EatToken();
             }
             else if (token.Kind == MetaGeneratorTokenKind.TemplateControlBegin)
             {
