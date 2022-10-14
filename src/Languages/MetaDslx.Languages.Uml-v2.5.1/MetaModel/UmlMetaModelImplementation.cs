@@ -376,6 +376,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (false)
     	public bool IsNonNegative()
     	{
+            //if (!this.IsIntegral()) throw new InvalidOperationException("Pre-condition is violated: self.isIntegral()");
             return false;
     	}
     	
@@ -388,6 +389,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     self.isIntegral()
     	public bool IsPositive()
     	{
+            //if (!this.IsIntegral()) throw new InvalidOperationException("Pre-condition is violated: self.isIntegral()");
             return false;
     	}
     	
@@ -400,6 +402,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (0)
     	public int Value()
     	{
+            //if (!this.IsIntegral()) throw new InvalidOperationException("Pre-condition is violated: self.isIntegral()");
             return 0;
     	}
     	
@@ -806,10 +809,16 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	{ 
     		get
     		{
-    			throw new NotImplementedException();
+                if (Connector?.Type is null) return null;
+                var index = Connector.End.IndexOf(this);
+                return Connector.Type.MemberEnd[index];
     		}
     	}
-    	
+
+        // MetaDslx: added manually, since it was missing from the UML standard
+        [Opposite(typeof(Connector), "End")]
+        [Subsets(typeof(Element), "Owner")]
+        Connector? Connector { get; set; }
     }
     
     public partial interface EncapsulatedClassifier
@@ -829,7 +838,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	{ 
     		get
     		{
-    			throw new NotImplementedException();
+                return OwnedAttribute.OfType<Port>().AsListSet();
     		}
     	}
     	
@@ -850,7 +859,8 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	{ 
     		get
     		{
-    			throw new NotImplementedException();
+                if (IsConjugated) return BasicRequired();
+                else return BasicProvided();
     		}
     	}
     	
@@ -867,7 +877,8 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	{ 
     		get
     		{
-    			throw new NotImplementedException();
+                if (IsConjugated) return BasicProvided();
+                else return BasicRequired();
     		}
     	}
     	
@@ -881,7 +892,9 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     endif)
     	public IList<Interface> BasicProvided()
     	{
-    		throw new NotImplementedException();
+            if (Type is Interface intf) return UmlUtils.SingleItemList(intf);
+            else if (Type is Classifier cls) return cls.AllRealizedInterfaces();
+            else return UmlUtils.EmptyList<Interface>();
     	}
     	
     	/// <summary>
@@ -891,7 +904,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = ( type.oclAsType(Classifier).allUsedInterfaces() )
     	public IList<Interface> BasicRequired()
     	{
-    		throw new NotImplementedException();
+            return (Type as Classifier)?.AllUsedInterfaces() ?? UmlUtils.EmptyList<Interface>();
     	}
     	
     }
@@ -911,7 +924,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	{ 
     		get
     		{
-    			throw new NotImplementedException();
+                return OwnedAttribute.Where(attr => attr.IsComposite).AsListSet();
     		}
     	}
     	
@@ -922,7 +935,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (allFeatures()->select(oclIsKindOf(ConnectableElement))->collect(oclAsType(ConnectableElement))->asSet())
     	public IList<ConnectableElement> AllRoles()
     	{
-    		throw new NotImplementedException();
+            return AllFeatures().OfType<ConnectableElement>().AsListSet();
     	}
     	
     }
@@ -938,7 +951,8 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = redefiningElement.oclIsKindOf(ConnectionPointReference)
     	public new bool IsConsistentWith(RedefinableElement redefiningElement)
     	{
-    		throw new NotImplementedException();
+            //if (!redefiningElement.IsRedefinitionContextValid(this)) throw new InvalidOperationException("Pre-condition is violated: redefiningElement.isRedefinitionContextValid(self)");
+            return redefiningElement is ConnectionPointReference;
     	}
     	
     }
@@ -954,7 +968,8 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = redefiningElement.oclIsKindOf(FinalState)
     	public new bool IsConsistentWith(RedefinableElement redefiningElement)
     	{
-    		throw new NotImplementedException();
+            //if (!redefiningElement.IsRedefinitionContextValid(this)) throw new InvalidOperationException("Pre-condition is violated: redefiningElement.isRedefinitionContextValid(self)");
+            return redefiningElement is FinalState;
     	}
     	
     }
@@ -982,7 +997,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	{ 
     		get
     		{
-    			throw new NotImplementedException();
+                return Trigger.Select(tr => tr.Event).OfType<CallEvent>().Select(ev => ev.Operation).AsListSet();
     		}
     	}
     	
@@ -1000,7 +1015,8 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     redefiningElement.oclAsType(Pseudostate).kind = kind)
     	public new bool IsConsistentWith(RedefinableElement redefiningElement)
     	{
-    		throw new NotImplementedException();
+            //if (!redefiningElement.IsRedefinitionContextValid(this)) throw new InvalidOperationException("Pre-condition is violated: redefiningElement.isRedefinitionContextValid(self)");
+            return redefiningElement is Pseudostate ps && ps.Kind == Kind;
     	}
     	
     }
@@ -1020,7 +1036,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	{ 
     		get
     		{
-    			throw new NotImplementedException();
+                return ContainingStateMachine();
     		}
     	}
     	
@@ -1036,7 +1052,8 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     endif )
     	public bool BelongsToPSM()
     	{
-    		throw new NotImplementedException();
+            if (StateMachine is not null) return StateMachine is ProtocolStateMachine;
+            else return State is null || (State.Container?.BelongsToPSM() ?? false);
     	}
     	
     	/// <summary>
@@ -1049,9 +1066,10 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     else
     	//       stateMachine
     	//     endif)
-    	public StateMachine ContainingStateMachine()
+    	public StateMachine? ContainingStateMachine()
     	{
-    		throw new NotImplementedException();
+            if (StateMachine is null) return State?.ContainingStateMachine();
+            else return StateMachine;
     	}
     	
     	/// <summary>
@@ -1063,7 +1081,8 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     redefiningElement.isRedefinitionContextValid(self)
     	public new bool IsConsistentWith(RedefinableElement redefiningElement)
     	{
-    		throw new NotImplementedException();
+            //if (!redefiningElement.IsRedefinitionContextValid(this)) throw new InvalidOperationException("Pre-condition is violated: redefiningElement.isRedefinitionContextValid(self)");
+            return true;
     	}
     	
     	/// <summary>
@@ -1085,7 +1104,19 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     endif)
     	public new bool IsRedefinitionContextValid(RedefinableElement redefinedElement)
     	{
-    		throw new NotImplementedException();
+    		if (redefinedElement is Region redefinedRegion)
+            {
+                if (StateMachine is null) // the Region is owned by a State
+                {
+                    var redefinedState = State?.RedefinedVertex as State;
+                    return redefinedState is not null && redefinedState.Region.Contains(redefinedRegion);
+                }
+                else // the region is owned by a StateMachine
+                {
+                    return StateMachine.ExtendedStateMachine.Count > 0 && StateMachine.ExtendedStateMachine.Any(sm => sm.Region.Contains(redefinedRegion));
+                }
+            }
+            return false;
     	}
     	
     }
@@ -1103,7 +1134,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	{ 
     		get
     		{
-    			throw new NotImplementedException();
+                return Region.Count > 0;
     		}
     	}
     	
@@ -1118,7 +1149,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	{ 
     		get
     		{
-    			throw new NotImplementedException();
+                return Region.Count > 1;
     		}
     	}
     	
@@ -1133,7 +1164,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	{ 
     		get
     		{
-    			throw new NotImplementedException();
+                return Region.Count == 0 && !IsSubmachineState;
     		}
     	}
     	
@@ -1148,7 +1179,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	{ 
     		get
     		{
-    			throw new NotImplementedException();
+                return Submachine is not null;
     		}
     	}
     	
@@ -1157,9 +1188,9 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// </summary>
     	// spec:
     	//     result = (container.containingStateMachine())
-    	public new StateMachine ContainingStateMachine()
+    	public new StateMachine? ContainingStateMachine()
     	{
-    		throw new NotImplementedException();
+            return Container?.ContainingStateMachine();
     	}
     	
     	/// <summary>
@@ -1174,8 +1205,11 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     redefiningElement.isRedefinitionContextValid(self)
     	public new bool IsConsistentWith(RedefinableElement redefiningElement)
     	{
-    		throw new NotImplementedException();
-    	}
+            //if (!redefiningElement.IsRedefinitionContextValid(this)) throw new InvalidOperationException("Pre-condition is violated: redefiningElement.isRedefinitionContextValid(self)");
+            var redefiningState = redefiningElement as State;
+            if (redefiningState is null) return false;
+            return Submachine is null || (redefiningState.Submachine is not null && redefiningState.Submachine.ExtendedStateMachine.Contains(Submachine));
+        }
     	
     }
     
@@ -1194,9 +1228,11 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     	    LCA(s1.container.state, s2.container.state)
     	//     	endif
     	//     endif)
-    	public Region LCA(Vertex s1, Vertex s2)
+    	public Region? LCA(Vertex? s1, Vertex? s2)
     	{
-    		throw new NotImplementedException();
+            if (Ancestor(s1, s2)) return s2?.Container;
+            else if (Ancestor(s2, s1)) return s1?.Container;
+            else return LCA(s1?.Container?.State, s2?.Container?.State);
     	}
     	
     	/// <summary>
@@ -1216,19 +1252,26 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     	     endif
     	//     	 endif
     	//     endif  )
-    	public bool Ancestor(Vertex s1, Vertex s2)
+    	public bool Ancestor(Vertex? s1, Vertex? s2)
     	{
-    		throw new NotImplementedException();
+            if (s1 is null || s2 is null) return false;
+            if (s2 == s1) return true;
+            else if (s1.Container?.StateMachine is not null) return true;
+            else if (s2.Container?.StateMachine is not null) return false;
+            else return Ancestor(s1, s2.Container?.State);
     	}
-    	
-    	/// <summary>
-    	/// The query isConsistentWith specifies that a StateMachine can be redefined by any other StateMachine for which the redefinition context is valid (see the isRedefinitionContextValid operation). Note that consistency requirements for the redefinition of Regions and connectionPoint Pseudostates owned by a StateMachine are specified by the isConsistentWith and isRedefinitionContextValid operations for Region and Vertex (and its subclass Pseudostate).
-    	/// </summary>
-    	// spec:
-    	//     result = true
-    	public new bool IsConsistentWith(RedefinableElement redefiningElement)
+
+        /// <summary>
+        /// The query isConsistentWith specifies that a StateMachine can be redefined by any other StateMachine for which the redefinition context is valid (see the isRedefinitionContextValid operation). Note that consistency requirements for the redefinition of Regions and connectionPoint Pseudostates owned by a StateMachine are specified by the isConsistentWith and isRedefinitionContextValid operations for Region and Vertex (and its subclass Pseudostate).
+        /// </summary>
+        // pre:
+        //     redefiningElement.isRedefinitionContextValid(self)
+        // spec:
+        //     result = true
+        public new bool IsConsistentWith(RedefinableElement redefiningElement)
     	{
-    		throw new NotImplementedException();
+            //if (!redefiningElement.IsRedefinitionContextValid(this)) throw new InvalidOperationException("Pre-condition is violated: redefiningElement.isRedefinitionContextValid(self)");
+            return true;
     	}
     	
     	/// <summary>
@@ -1245,7 +1288,9 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//       endif)
     	public new bool IsRedefinitionContextValid(RedefinableElement redefinedElement)
     	{
-    		throw new NotImplementedException();
+            var parentContext = (redefinedElement as StateMachine)?.Context;
+            if (Context is null) return parentContext is null && this.AllParents().Contains(redefinedElement);
+            else return parentContext is not null && Context.AllParents().Contains(parentContext);
     	}
     	
     	/// <summary>
@@ -1260,11 +1305,16 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     	null.oclAsType(State)
     	//     else LCAState(v1.container.state, v2.container.state)
     	//     endif endif endif)
-    	public State LCAState(Vertex v1, Vertex v2)
+    	public State? LCAState(Vertex? v1, Vertex? v2)
     	{
-    		throw new NotImplementedException();
-    	}
-    	
+            var s1 = v1 as State;
+            var s2 = v2 as State;
+            if (s1 is null && s2 is null) return null;
+            else if (s2 is not null && Ancestor(s1, s2)) return s2;
+            else if (s1 is not null && Ancestor(s2, s1)) return s1;
+            else return LCAState(s1?.Container?.State, s2?.Container?.State);
+        }
+
     }
     
     public partial interface Transition
@@ -1282,7 +1332,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	{ 
     		get
     		{
-    			throw new NotImplementedException();
+                return ContainingStateMachine();
     		}
     	}
     	
@@ -1291,9 +1341,9 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// </summary>
     	// spec:
     	//     result = (container.containingStateMachine())
-    	public StateMachine ContainingStateMachine()
+    	public StateMachine? ContainingStateMachine()
     	{
-    		throw new NotImplementedException();
+            return Container?.ContainingStateMachine();
     	}
     	
     	/// <summary>
@@ -1301,12 +1351,13 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// </summary>
     	// spec:
     	//     result = (redefiningElement.oclIsKindOf(Transition) and
-    	//       redefiningElement.oclAsType(Transition).source.redefinedTransition = source)
+    	//       redefiningElement.oclAsType(Transition).source.redefinedVertex = source)
     	// pre:
     	//     redefiningElement.isRedefinitionContextValid(self)
     	public new bool IsConsistentWith(RedefinableElement redefiningElement)
     	{
-    		throw new NotImplementedException();
+            //if (!redefiningElement.IsRedefinitionContextValid(this)) throw new InvalidOperationException("Pre-condition is violated: redefiningElement.isRedefinitionContextValid(self)");
+            return redefiningElement is Transition transition && transition.Source.RedefinedVertex == Source;
     	}
     	
     }
@@ -1326,7 +1377,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	{ 
     		get
     		{
-    			throw new NotImplementedException();
+                return this.AllInstances<Transition>().Where(tr => tr.Target == this).AsListSet();
     		}
     	}
     	
@@ -1343,8 +1394,8 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	{ 
     		get
     		{
-    			throw new NotImplementedException();
-    		}
+                return this.AllInstances<Transition>().Where(tr => tr.Source == this).AsListSet();
+            }
     	}
     	
     	/// <summary>
@@ -1360,7 +1411,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	{ 
     		get
     		{
-    			throw new NotImplementedException();
+                return ContainingStateMachine();
     		}
     	}
     	
@@ -1384,9 +1435,18 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//        endif
     	//     endif
     	//     )
-    	public StateMachine ContainingStateMachine()
+    	public StateMachine? ContainingStateMachine()
     	{
-    		throw new NotImplementedException();
+    		if (Container is not null)
+            {
+                return Container.ContainingStateMachine();
+            }
+            else
+            {
+                if (this is Pseudostate pstate && (pstate.Kind == PseudostateKind.EntryPoint || pstate.Kind == PseudostateKind.ExitPoint)) return pstate.StateMachine;
+                else if (this is ConnectionPointReference cpr) return cpr.State?.ContainingStateMachine();
+                else return null;
+            }
     	}
     	
     	/// <summary>
@@ -1404,7 +1464,9 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     endif)
     	public bool IsContainedInState(State s)
     	{
-    		throw new NotImplementedException();
+            if (!s.IsComposite || Container?.State is null) return false;
+            if (Container.State == s) return true;
+            else return Container.State.IsContainedInState(s);
     	}
     	
     	/// <summary>
@@ -1422,7 +1484,9 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     endif)
     	public bool IsContainedInRegion(Region r)
     	{
-    		throw new NotImplementedException();
+            if (Container == r) return true;
+            else if (r.State is null) return false;
+            else return Container?.State?.IsContainedInRegion(r) ?? false;
     	}
     	
     	/// <summary>
@@ -1435,7 +1499,10 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//       owner.oclAsType(RedefinableElement).redefinedElement->includes(redefinedElement.owner))
     	public new bool IsConsistentWith(RedefinableElement redefiningElement)
     	{
-    		throw new NotImplementedException();
+            //if (!redefiningElement.IsRedefinitionContextValid(this)) throw new InvalidOperationException("Pre-condition is violated: redefiningElement.isRedefinitionContextValid(self)");
+            var vertex = redefiningElement as Vertex;
+            var redefinedElement = (Owner as RedefinableElement)?.RedefinedElement;
+            return vertex is not null && redefinedElement is not null && redefinedElement.Contains(redefiningElement.Owner);
     	}
     	
     }
@@ -1467,7 +1534,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	{ 
     		get
     		{
-    			throw new NotImplementedException();
+                return Enumeration;
     		}
     	}
     	
@@ -1506,7 +1573,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	{ 
     		get
     		{
-    			throw new NotImplementedException();
+                return OwnedEnd.LowerBound() == 1;
     		}
     	}
     	
@@ -1518,11 +1585,11 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	[Derived]
     	[ReadOnly]
     	[Opposite(typeof(Class), "Extension")]
-    	public Class Metaclass
+    	public Class? Metaclass
     	{ 
     		get
     		{
-    			throw new NotImplementedException();
+                return MetaclassEnd()?.Type as Class;
     		}
     	}
     	
@@ -1531,9 +1598,14 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// </summary>
     	// spec:
     	//     result = (memberEnd->reject(p | ownedEnd->includes(p.oclAsType(ExtensionEnd)))->any(true))
-    	public Property MetaclassEnd()
+    	public Property? MetaclassEnd()
     	{
-    		throw new NotImplementedException();
+            foreach (var p in MemberEnd)
+            {
+                if (OwnedEnd == p) continue;
+                return p;
+            }
+            return null;
     	}
     	
     }
@@ -1549,8 +1621,8 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	{ 
     		get
     		{
-    			throw new NotImplementedException();
-    		}
+                return LowerBound();
+            }
     	}
     	
     	/// <summary>
@@ -1560,7 +1632,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (if lowerValue=null then 0 else lowerValue.integerValue() endif)
     	public new int LowerBound()
     	{
-    		throw new NotImplementedException();
+            return LowerValue?.IntegerValue() ?? 0;
     	}
     	
     }
@@ -1589,7 +1661,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	{ 
     		get
     		{
-    			throw new NotImplementedException();
+                return PackagedElement.OfType<Package>().AsListSet();
     		}
     	}
     	
@@ -1608,8 +1680,8 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	{ 
     		get
     		{
-    			throw new NotImplementedException();
-    		}
+                return PackagedElement.OfType<Stereotype>().AsListSet();
+            }
     	}
     	
     	/// <summary>
@@ -1626,8 +1698,8 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	{ 
     		get
     		{
-    			throw new NotImplementedException();
-    		}
+                return PackagedElement.OfType<Type>().AsListSet();
+            }
     	}
     	
     	/// <summary>
@@ -1639,8 +1711,12 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     )
     	public IList<Stereotype> AllApplicableStereotypes()
     	{
-    		throw new NotImplementedException();
-    	}
+    		var ownedPackages = OwnedMember.OfType<Package>();
+            var result = new List<Stereotype>();
+            result.UnionWith(OwnedStereotype);
+            result.UnionWith(ownedPackages.SelectMany(pkg => pkg.AllApplicableStereotypes()));
+            return result;
+        }
     	
     	/// <summary>
     	/// The query containingProfile() returns the closest profile directly or indirectly containing this package (or this package itself, if it is a profile).
@@ -1653,7 +1729,8 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     endif)
     	public Profile? ContainingProfile()
     	{
-    		throw new NotImplementedException();
+            if (this is Profile profile) return profile;
+            else return (Namespace as Package)?.ContainingProfile();
     	}
     	
     	/// <summary>
@@ -1667,17 +1744,21 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     (packageImport->select(visibility = VisibilityKind::public)->collect(importedPackage.member->includes(el))->notEmpty()))
     	public bool MakesVisible(NamedElement el)
     	{
-    		throw new NotImplementedException();
-    	}
-    	
-    	/// <summary>
-    	/// The query mustBeOwned() indicates whether elements of this type must have an owner.
-    	/// </summary>
-    	// spec:
-    	//     result = (false)
-    	public new bool MustBeOwned()
+            //if (!Member.Contains(el)) throw new InvalidOperationException("Pre-condition is violated: member->includes(el)");
+            if (OwnedMember.Contains(el)) return true;
+            if (ElementImport.Where(ei => ei.ImportedElement.Visibility == VisibilityKind.Public).OfType<NamedElement>().Any(ne => ne == el)) return true;
+            if (PackageImport.Where(pi => pi.Visibility == VisibilityKind.Public).Any(pi => pi.ImportedPackage.Member.Contains(el))) return true;
+            return false;
+        }
+
+        /// <summary>
+        /// The query mustBeOwned() indicates whether elements of this type must have an owner.
+        /// </summary>
+        // spec:
+        //     result = (false)
+        public new bool MustBeOwned()
     	{
-    		throw new NotImplementedException();
+            return false;
     	}
     	
     	/// <summary>
@@ -1687,7 +1768,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (member->select( m | m.oclIsKindOf(PackageableElement) and self.makesVisible(m))->collect(oclAsType(PackageableElement))->asSet())
     	public IList<PackageableElement> VisibleMembers()
     	{
-    		throw new NotImplementedException();
+            return Member.OfType<PackageableElement>().Where(m => MakesVisible(m)).AsListSet();
     	}
     	
     }
@@ -1718,7 +1799,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	{ 
     		get
     		{
-    			throw new NotImplementedException();
+                return ContainingProfile();
     		}
     	}
     	
@@ -1727,9 +1808,9 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// </summary>
     	// spec:
     	//     result = (self.namespace.oclAsType(Package).containingProfile())
-    	public Profile ContainingProfile()
+    	public Profile? ContainingProfile()
     	{
-    		throw new NotImplementedException();
+            return (Namespace as Package)?.ContainingProfile();
     	}
     	
     }
@@ -1931,19 +2012,9 @@ namespace MetaDslx.Languages.Uml.MetaModel
     public partial interface Message
     {
     	/// <summary>
-    	/// The derived kind of the Message (complete, lost, found, or unknown).
+    	/// The kind of the Message (complete, lost, found, or unknown).
     	/// </summary>
-    	// spec:
-    	//     result = (messageKind)
-    	[Derived]
-    	[ReadOnly]
-    	public MessageKind MessageKind
-    	{ 
-    		get
-    		{
-    			throw new NotImplementedException();
-    		}
-    	}
+    	public MessageKind MessageKind { get; set; }
     	
     	/// <summary>
     	/// The query isDistinguishableFrom() specifies that any two Messages may coexist in the same Namespace, regardless of their names.
@@ -1952,11 +2023,17 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (true)
     	public new bool IsDistinguishableFrom(NamedElement n, Namespace ns)
     	{
-    		throw new NotImplementedException();
+            return true;
     	}
-    	
+
+        // MetaDslx: added manually, since it was missing from the UML standard
+        [DerivedUnion]
+        [Unordered]
+        [Opposite(typeof(MessageEnd), "Message")]
+        IList<MessageEnd> MessageEnd { get; }
+
     }
-    
+
     public partial interface MessageEnd
     {
     	/// <summary>
@@ -1968,7 +2045,9 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     message->notEmpty()
     	public IList<MessageEnd> OppositeEnd()
     	{
-    		throw new NotImplementedException();
+            //if (Message is null) throw new InvalidOperationException("Pre-condition is violated: message->notEmpty()");
+            if (Message is null) return UmlUtils.EmptyList<MessageEnd>();
+            return Message.MessageEnd.Where(me => me != this).AsListSet();
     	}
     	
     	/// <summary>
@@ -1980,7 +2059,9 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (message.sendEvent->asSet()->includes(self))
     	public bool IsSend()
     	{
-    		throw new NotImplementedException();
+            //if (Message is null) throw new InvalidOperationException("Pre-condition is violated: message->notEmpty()");
+            if (Message is null) return false;
+            return Message.SendEvent == this;
     	}
     	
     	/// <summary>
@@ -1995,7 +2076,9 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (message.receiveEvent->asSet()->includes(self))
     	public bool IsReceive()
     	{
-    		throw new NotImplementedException();
+            //if (Message is null) throw new InvalidOperationException("Pre-condition is violated: message->notEmpty()");
+            if (Message is null) return false;
+            return Message.ReceiveEvent == this;
     	}
     	
     	/// <summary>
@@ -2035,9 +2118,9 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	{
     		throw new NotImplementedException();
     	}
-    	
+
     }
-    
+
     public partial interface MessageOccurrenceSpecification
     {
     }
@@ -2097,7 +2180,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	{ 
     		get
     		{
-    			throw new NotImplementedException();
+                return Deployment.SelectMany(d => d.DeployedArtifact.OfType<Artifact>().SelectMany(a => a.Manifestation)).Select(m => m.UtilizedElement).AsListSet();
     		}
     	}
     	
@@ -2148,7 +2231,13 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (ownedElement->union(ownedElement->collect(e | e.allOwnedElements()))->asSet())
     	public IList<Element> AllOwnedElements()
     	{
-    		throw new NotImplementedException();
+            var result = new List<Element>();
+            result.UnionWith(OwnedElement);
+            foreach (var e in OwnedElement)
+            {
+                result.UnionWith(e.AllOwnedElements());
+            }
+            return result;
     	}
     	
     	/// <summary>
@@ -2158,7 +2247,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (true)
     	public bool MustBeOwned()
     	{
-    		throw new NotImplementedException();
+            return true;
     	}
     	
     }
@@ -2176,7 +2265,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     endif)
     	public string GetName()
     	{
-    		throw new NotImplementedException();
+            return Alias is not null ? Alias : ImportedElement.Name;
     	}
     	
     }
@@ -2193,7 +2282,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	{ 
     		get
     		{
-    			throw new NotImplementedException();
+                return LowerBound();
     		}
     	}
     	
@@ -2207,7 +2296,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	{ 
     		get
     		{
-    			throw new NotImplementedException();
+                return UpperBound();
     		}
     	}
     	
@@ -2218,7 +2307,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = ((other.lowerBound() <= self.lowerBound()) and ((other.upperBound() = *) or (self.upperBound() <= other.upperBound())))
     	public bool CompatibleWith(MultiplicityElement other)
     	{
-    		throw new NotImplementedException();
+            return other.LowerBound() <= this.LowerBound() && (other.UpperBound() < 0 || this.UpperBound() >= 0 && this.UpperBound() <= other.UpperBound());
     	}
     	
     	/// <summary>
@@ -2230,7 +2319,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = ((self.lowerBound() <= M.lowerBound()) and (self.upperBound() >= M.upperBound()))
     	public bool IncludesMultiplicity(MultiplicityElement M)
     	{
-    		throw new NotImplementedException();
+    		return this.LowerBound() <= M.LowerBound() && this.UpperBound() >= M.UpperBound();
     	}
     	
     	/// <summary>
@@ -2240,7 +2329,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (lowerbound = self.lowerBound() and upperbound = self.upperBound())
     	public bool Is(int lowerbound, long upperbound)
     	{
-    		throw new NotImplementedException();
+            return lowerbound == this.LowerBound() && upperbound == this.UpperBound();
     	}
     	
     	/// <summary>
@@ -2252,7 +2341,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (upperBound() > 1)
     	public bool IsMultivalued()
     	{
-    		throw new NotImplementedException();
+            return UpperBound() > 1;
     	}
     	
     	/// <summary>
@@ -2262,7 +2351,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (if (lowerValue=null or lowerValue.integerValue()=null) then 1 else lowerValue.integerValue() endif)
     	public int LowerBound()
     	{
-    		throw new NotImplementedException();
+            return LowerValue?.IntegerValue() ?? 1;
     	}
     	
     	/// <summary>
@@ -2272,29 +2361,13 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (if (upperValue=null or upperValue.unlimitedValue()=null) then 1 else upperValue.unlimitedValue() endif)
     	public long UpperBound()
     	{
-    		throw new NotImplementedException();
-    	}
-    	
+            return UpperValue?.UnlimitedValue() ?? 1;
+        }
+
     }
     
     public partial interface NamedElement
     {
-    	/// <summary>
-    	/// Indicates the Dependencies that reference this NamedElement as a client.
-    	/// </summary>
-    	// spec:
-    	//     result = (Dependency.allInstances()->select(d | d.client->includes(self)))
-    	[Derived]
-    	[Unordered]
-    	[Opposite(typeof(Dependency), "Client")]
-    	public IList<Dependency> ClientDependency
-    	{ 
-    		get
-    		{
-    			throw new NotImplementedException();
-    		}
-    	}
-    	
     	/// <summary>
     	/// A name that allows the NamedElement to be identified within a hierarchy of nested Namespaces. It is constructed from the names of the containing Namespaces starting at the root of the hierarchy and ending with the name of the NamedElement itself.
     	/// </summary>
@@ -2307,11 +2380,20 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     endif)
     	[Derived]
     	[ReadOnly]
-    	public string QualifiedName
+    	public string? QualifiedName
     	{ 
     		get
     		{
-    			throw new NotImplementedException();
+                var allNamespaces = AllNamespaces();
+                if (Name is null || allNamespaces.Any(ns => ns.Name is null)) return null;
+                var sb = new StringBuilder();
+                foreach (var ns in allNamespaces)
+                {
+                    sb.Append(ns.Name);
+                    sb.Append(this.Separator());
+                }
+                sb.Append(this.Name);
+                return sb.ToString();
     		}
     	}
     	
@@ -2333,7 +2415,22 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     endif)
     	public IList<Namespace> AllNamespaces()
     	{
-    		throw new NotImplementedException();
+    		if (Owner is TemplateParameter tp && tp.Signature.Template is Namespace enclosingNamespace)
+            {
+                var result = enclosingNamespace.AllNamespaces();
+                result.Insert(0, enclosingNamespace);
+                return result;
+            }
+            else if (Namespace is null)
+            {
+                return UmlUtils.EmptyList<Namespace>();
+            }
+            else
+            {
+                var result = Namespace.AllNamespaces();
+                result.Insert(0, Namespace);
+                return result;
+            }
     	}
     	
     	/// <summary>
@@ -2349,7 +2446,13 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     endif)
     	public IList<Package> AllOwningPackages()
     	{
-    		throw new NotImplementedException();
+    		if (Namespace is Package owningPackage)
+            {
+                var result = owningPackage.AllOwningPackages();
+                result.Insert(0, owningPackage);
+                return result;
+            }
+            return UmlUtils.EmptyList<Package>();
     	}
     	
     	/// <summary>
@@ -2361,7 +2464,10 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     )
     	public bool IsDistinguishableFrom(NamedElement n, Namespace ns)
     	{
-    		throw new NotImplementedException();
+            if (!n.GetType().IsAssignableFrom(this.GetType()) && !this.GetType().IsAssignableFrom(ns.GetType())) return true;
+            var thisNames = ns.GetNamesOfMember(this);
+            var nNames = ns.GetNamesOfMember(n);
+            return !thisNames.Any(tn => nNames.Contains(tn));
     	}
     	
     	/// <summary>
@@ -2371,9 +2477,24 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = ('::')
     	public string Separator()
     	{
-    		throw new NotImplementedException();
+            return "::";
     	}
-    	
+
+        /// <summary>
+        /// Indicates the Dependencies that reference this NamedElement as a client.
+        /// </summary>
+        [ReadOnly]
+        [Unordered]
+        [Opposite(typeof(Dependency), "Client")]
+        public IList<Dependency> ClientDependency { get; }
+
+        /// <summary>
+        /// Indicates the dependencies that reference the supplier.
+        /// </summary>
+        [ReadOnly]
+        [Unordered]
+        [Opposite(typeof(Dependency), "Supplier")]
+        IList<Dependency> SupplierDependency { get; }
     }
     
     public partial interface Namespace
@@ -2392,7 +2513,10 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	{ 
     		get
     		{
-    			throw new NotImplementedException();
+                var result = new List<ParameterableElement>();
+                var imps = ElementImport.Select(ei => ei.ImportedElement).AsListSet();
+                imps.AddRange(PackageImport.SelectMany(pi => pi.ImportedPackage.VisibleMembers()));
+                return ImportMembers(imps);
     		}
     	}
     	
@@ -2403,7 +2527,15 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (imps->reject(imp1  | imps->exists(imp2 | not imp1.isDistinguishableFrom(imp2, self))))
     	public IList<PackageableElement> ExcludeCollisions(IList<PackageableElement> imps)
     	{
-    		throw new NotImplementedException();
+            var result = new List<PackageableElement>();
+            foreach (var imp1 in imps)
+            {
+                if (!imps.Any(imp2 => !imp1.IsDistinguishableFrom(imp2, this)))
+                {
+                    result.Add(imp1);
+                }
+            }
+            return result;
     	}
     	
     	/// <summary>
@@ -2422,7 +2554,16 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     endif)
     	public IList<string> GetNamesOfMember(NamedElement element)
     	{
-    		throw new NotImplementedException();
+            if (OwnedMember.Contains(element))
+            {
+                return UmlUtils.SingleItemList(element.Name);
+            }
+            else
+            {
+                var elementImports = ElementImport.Where(ei => ei.ImportedElement == element);
+                if (elementImports.Any()) return elementImports.Select(ei => ei.GetName()).AsListSet();
+                else return PackageImport.Where(pi => pi.ImportedPackage.VisibleMembers().OfType<NamedElement>().Contains(element)).SelectMany(pi => pi.ImportedPackage.GetNamesOfMember(element)).AsListSet();
+            }
     	}
     	
     	/// <summary>
@@ -2432,7 +2573,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (self.excludeCollisions(imps)->select(imp | self.ownedMember->forAll(mem | imp.isDistinguishableFrom(mem, self))))
     	public IList<PackageableElement> ImportMembers(IList<PackageableElement> imps)
     	{
-    		throw new NotImplementedException();
+            return ExcludeCollisions(imps).Where(imp => this.OwnedMember.All(mem => imp.IsDistinguishableFrom(mem, this))).AsListSet();
     	}
     	
     	/// <summary>
@@ -2444,7 +2585,17 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//            memb.isDistinguishableFrom(other, self))))
     	public bool MembersAreDistinguishable()
     	{
-    		throw new NotImplementedException();
+            foreach (var memb in Member)
+            {
+                foreach (var other in Member)
+                {
+                    if (other != memb)
+                    {
+                        if (!memb.IsDistinguishableFrom(other, this)) return false;
+                    }
+                }
+            }
+            return true;
     	}
     	
     }
@@ -2466,7 +2617,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (self.oclIsKindOf(p.oclType()))
     	public bool IsCompatibleWith(ParameterableElement p)
     	{
-    		throw new NotImplementedException();
+            return p.GetType().IsAssignableFrom(this.GetType());
     	}
     	
     	/// <summary>
@@ -2476,7 +2627,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (templateParameter->notEmpty())
     	public bool IsTemplateParameter()
     	{
-    		throw new NotImplementedException();
+            return TemplateParameter is not null;
     	}
     	
     }
@@ -2498,7 +2649,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (ownedTemplateSignature <> null)
     	public bool IsTemplate()
     	{
-    		throw new NotImplementedException();
+    		return OwnedTemplateSignature is not null;
     	}
     	
     	/// <summary>
@@ -2508,7 +2659,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (self.allOwnedElements()->select(oclIsKindOf(ParameterableElement)).oclAsType(ParameterableElement)->asSet())
     	public IList<ParameterableElement> ParameterableElements()
     	{
-    		throw new NotImplementedException();
+            return this.AllOwnedElements().OfType<ParameterableElement>().AsListSet();
     	}
     	
     }
@@ -2538,7 +2689,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (false)
     	public bool ConformsTo(Type other)
     	{
-    		throw new NotImplementedException();
+            return false;
     	}
     	
     }
@@ -2580,7 +2731,16 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	{ 
     		get
     		{
-    			throw new NotImplementedException();
+                if (NestingClass is not null)
+                {
+                    return null;
+                }
+                else
+                {
+                    var b = this.BehavioredClassifier(this.Owner);
+                    if (b is Behavior beh && beh.Context is not null) return beh.Context;
+                    else return b;
+                }
     		}
     	}
     	
@@ -2599,7 +2759,9 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//         
     	public BehavioredClassifier? BehavioredClassifier(Element from)
     	{
-    		throw new NotImplementedException();
+            if (from is BehavioredClassifier bc) return bc;
+            else if (from.Owner is null) return null;
+            else return this.BehavioredClassifier(from.Owner);
     	}
     	
     	/// <summary>
@@ -2609,7 +2771,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (ownedParameter->select(direction=ParameterDirectionKind::_'in' or direction=ParameterDirectionKind::inout))
     	public IList<Parameter> InputParameters()
     	{
-    		throw new NotImplementedException();
+            return OwnedParameter.Where(p => p.Direction == ParameterDirectionKind.In || p.Direction == ParameterDirectionKind.Inout).AsListSet();
     	}
     	
     	/// <summary>
@@ -2619,9 +2781,9 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (ownedParameter->select(direction=ParameterDirectionKind::out or direction=ParameterDirectionKind::inout or direction=ParameterDirectionKind::return))
     	public IList<Parameter> OutputParameters()
     	{
-    		throw new NotImplementedException();
-    	}
-    	
+            return OwnedParameter.Where(p => p.Direction == ParameterDirectionKind.Out || p.Direction == ParameterDirectionKind.Inout || p.Direction == ParameterDirectionKind.Return).AsListSet();
+        }
+
     }
     
     public partial interface CallEvent
@@ -2647,7 +2809,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//           hasAllDataTypeAttributes(a.type.oclAsType(DataType))))
     	public bool HasAllDataTypeAttributes(DataType d)
     	{
-    		throw new NotImplementedException();
+            return d.OwnedAttribute.All(a => a.Type is DataType adt && HasAllDataTypeAttributes(adt));
     	}
     	
     }
@@ -2689,7 +2851,21 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//       )
     	public new bool IsDistinguishableFrom(NamedElement n, Namespace ns)
     	{
-    		throw new NotImplementedException();
+            if (n is not BehavioralFeature bf) return true;
+            var thisNames = ns.GetNamesOfMember(this);
+            var otherNames = ns.GetNamesOfMember(n);
+            if (!thisNames.Any(tn => otherNames.Contains(tn))) return true;
+            if (this.OwnedParameter.Count != bf.OwnedParameter.Count) return true;
+            for (int i = 0; i < this.OwnedParameter.Count; i++)
+            {
+                var p = this.OwnedParameter[i];
+                var otherParam = bf.OwnedParameter.FirstOrDefault(
+                    op => op.Name == p.Name && op.Type == p.Type && op.Effect == p.Effect && op.Direction == p.Direction &&
+                        op.IsException == p.IsException && op.IsStream == p.IsStream && op.IsOrdered == p.IsOrdered &&
+                        op.IsUnique == p.IsUnique && op.Lower == p.Lower && op.Upper == p.Upper);
+                if (otherParam is not null) return false;
+            }
+            return true;
     	}
     	
     	/// <summary>
@@ -2699,8 +2875,8 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (ownedParameter->select(direction=ParameterDirectionKind::_'in' or direction=ParameterDirectionKind::inout))
     	public IList<Parameter> InputParameters()
     	{
-    		throw new NotImplementedException();
-    	}
+            return OwnedParameter.Where(p => p.Direction == ParameterDirectionKind.In || p.Direction == ParameterDirectionKind.Inout).AsListSet();
+        }
     	
     	/// <summary>
     	/// The ownedParameters with direction out, inout, or return.
@@ -2709,8 +2885,8 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (ownedParameter->select(direction=ParameterDirectionKind::out or direction=ParameterDirectionKind::inout or direction=ParameterDirectionKind::return))
     	public IList<Parameter> OutputParameters()
     	{
-    		throw new NotImplementedException();
-    	}
+            return OwnedParameter.Where(p => p.Direction == ParameterDirectionKind.Out || p.Direction == ParameterDirectionKind.Inout || p.Direction == ParameterDirectionKind.Return).AsListSet();
+        }
     	
     }
     
@@ -2728,7 +2904,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	{ 
     		get
     		{
-    			throw new NotImplementedException();
+                return Parents();
     		}
     	}
     	
@@ -2746,7 +2922,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	{ 
     		get
     		{
-    			throw new NotImplementedException();
+                return Inherit(Parents().SelectMany(p => p.InheritableMembers(this)));
     		}
     	}
     	
@@ -2757,7 +2933,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (member->select(oclIsKindOf(Feature))->collect(oclAsType(Feature))->asSet())
     	public IList<Feature> AllFeatures()
     	{
-    		throw new NotImplementedException();
+            return Member.OfType<Feature>().AsListSet();
     	}
     	
     	/// <summary>
@@ -2767,7 +2943,11 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (parents()->union(parents()->collect(allParents())->asSet()))
     	public IList<Classifier> AllParents()
     	{
-    		throw new NotImplementedException();
+            var result = new List<Classifier>();
+            var parents = Parents();
+            result.UnionWith(parents);
+            result.UnionWith(parents.SelectMany(p => p.AllParents()));
+            return result;
     	}
     	
     	/// <summary>
@@ -2782,7 +2962,8 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     endif)
     	public new bool ConformsTo(Type other)
     	{
-    		throw new NotImplementedException();
+            if (other is Classifier otherClassifier) return this == otherClassifier || AllParents().Contains(otherClassifier);
+            else return false;
     	}
     	
     	/// <summary>
@@ -2794,7 +2975,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (n.visibility <> VisibilityKind::private)
     	public bool HasVisibilityOf(NamedElement n)
     	{
-    		throw new NotImplementedException();
+            return n.Visibility != VisibilityKind.Private;
     	}
     	
     	/// <summary>
@@ -2806,9 +2987,15 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//       ownedMember->select(oclIsKindOf(RedefinableElement))->
     	//         select(redefinedElement->includes(inh.oclAsType(RedefinableElement)))
     	//            ->notEmpty()))
-    	public IList<NamedElement> Inherit(IList<NamedElement> inhs)
+    	public IList<NamedElement> Inherit(IEnumerable<NamedElement> inhs)
     	{
-    		throw new NotImplementedException();
+            var result = new List<NamedElement>();
+            foreach (var inh in inhs)
+            {
+                if (inh is RedefinableElement re && OwnedMember.OfType<RedefinableElement>().Where(ore => ore.RedefinedElement.Contains(re)).Any()) continue;
+                result.Include(inh);
+            }
+            return result;
     	}
     	
     	/// <summary>
@@ -2820,7 +3007,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (member->select(m | c.hasVisibilityOf(m)))
     	public IList<NamedElement> InheritableMembers(Classifier c)
     	{
-    		throw new NotImplementedException();
+            return Member.Where(m => c.HasVisibilityOf(m)).AsListSet();
     	}
     	
     	/// <summary>
@@ -2830,7 +3017,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (ownedTemplateSignature <> null or general->exists(g | g.isTemplate()))
     	public new bool IsTemplate()
     	{
-    		throw new NotImplementedException();
+            return OwnedTemplateSignature is not null || General.Any(g => g.IsTemplate());
     	}
     	
     	/// <summary>
@@ -2840,7 +3027,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (self.oclIsKindOf(c.oclType()))
     	public bool MaySpecializeType(Classifier c)
     	{
-    		throw new NotImplementedException();
+            return c.GetType().IsAssignableFrom(this.GetType());
     	}
     	
     	/// <summary>
@@ -2850,7 +3037,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (generalization.general->asSet())
     	public IList<Classifier> Parents()
     	{
-    		throw new NotImplementedException();
+            return Generalization.Select(g => g.General).AsListSet();
     	}
     	
     	/// <summary>
@@ -2862,7 +3049,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//           collect(supplier.oclAsType(Interface))->asSet())
     	public IList<Interface> DirectlyRealizedInterfaces()
     	{
-    		throw new NotImplementedException();
+            return ClientDependency.OfType<Realization>().Where(r => r.Supplier.All(s => s is Interface)).SelectMany(r => r.Supplier.OfType<Interface>()).AsListSet();
     	}
     	
     	/// <summary>
@@ -2874,17 +3061,23 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//         collect(client.oclAsType(Interface))->asSet())
     	public IList<Interface> DirectlyUsedInterfaces()
     	{
-    		throw new NotImplementedException();
-    	}
-    	
-    	/// <summary>
-    	/// The Interfaces realized by this Classifier and all of its generalizations
-    	/// </summary>
-    	// spec:
-    	//     result = (directlyRealizedInterfaces()->union(self.allParents()->collect(directlyRealizedInterfaces()))->asSet())
-    	public IList<Interface> AllRealizedInterfaces()
+            return SupplierDependency.OfType<Realization>().Where(r => r.Client.All(s => s is Interface)).SelectMany(r => r.Client.OfType<Interface>()).AsListSet();
+        }
+
+        /// <summary>
+        /// The Interfaces realized by this Classifier and all of its generalizations
+        /// </summary>
+        // spec:
+        //     result = (directlyRealizedInterfaces()->union(self.allParents()->collect(directlyRealizedInterfaces()))->asSet())
+        public IList<Interface> AllRealizedInterfaces()
     	{
-    		throw new NotImplementedException();
+            var result = new List<Interface>();
+            result.UnionWith(DirectlyRealizedInterfaces());
+            foreach (var parent in AllParents())
+            {
+                result.UnionWith(parent.DirectlyRealizedInterfaces());
+            }
+            return result;
     	}
     	
     	/// <summary>
@@ -2894,14 +3087,20 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (directlyUsedInterfaces()->union(self.allParents()->collect(directlyUsedInterfaces()))->asSet())
     	public IList<Interface> AllUsedInterfaces()
     	{
-    		throw new NotImplementedException();
-    	}
+            var result = new List<Interface>();
+            result.UnionWith(DirectlyUsedInterfaces());
+            foreach (var parent in AllParents())
+            {
+                result.UnionWith(parent.DirectlyUsedInterfaces());
+            }
+            return result;
+        }
     	
     	// spec:
     	//     result = (substitution.contract->includes(contract))
     	public bool IsSubstitutableFor(Classifier contract)
     	{
-    		throw new NotImplementedException();
+            return Substitution.Any(s => s.Contract == this);
     	}
     	
     	/// <summary>
@@ -2911,7 +3110,16 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (attribute->asSequence()->union(parents()->asSequence().allAttributes())->select(p | member->includes(p))->asOrderedSet())
     	public IList<Property> AllAttributes()
     	{
-    		throw new NotImplementedException();
+            var result = new List<Property>();
+            result.UnionWith(Attribute);
+            foreach (var parent in Parents())
+            {
+                foreach (var p in parent.AllAttributes())
+                {
+                    if (Member.Contains(p)) result.Include(p);
+                }
+            }
+            return result;
     	}
     	
     	/// <summary>
@@ -2924,9 +3132,17 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//          collect(oclAsType(StructuralFeature)))->asSet())
     	public IList<StructuralFeature> AllSlottableFeatures()
     	{
-    		throw new NotImplementedException();
+            var result = new List<StructuralFeature>();
+            result.UnionWith(Member.OfType<StructuralFeature>());
+            result.UnionWith(this.Inherit(this.AllParents().SelectMany(p => p.Attribute)).OfType<StructuralFeature>());
+            return result;
     	}
-    	
+
+        [ReadOnly]
+        [Opposite(typeof(Class), "NestedClassifier")]
+        [Subsets(typeof(NamedElement), "Namespace")]
+        [Subsets(typeof(RedefinableElement), "RedefinitionContext")]
+        Class NestingClass { get; set; }
     }
     
     public partial interface ClassifierTemplateParameter
@@ -2966,8 +3182,10 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	{ 
     		get
     		{
-    			throw new NotImplementedException();
-    		}
+                var returnResult = ReturnResult();
+                if (returnResult.Count > 0) return returnResult.Any(rr => rr.IsOrdered);
+                else return false;
+            }
     	}
     	
     	/// <summary>
@@ -2981,8 +3199,10 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	{ 
     		get
     		{
-    			throw new NotImplementedException();
-    		}
+                var returnResult = ReturnResult();
+                if (returnResult.Count > 0) return returnResult.Any(rr => rr.IsUnique);
+                else return true;
+            }
     	}
     	
     	/// <summary>
@@ -2992,11 +3212,11 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (if returnResult()->notEmpty() then returnResult()->any(true).lower else null endif)
     	[Derived]
     	[ReadOnly]
-    	public int Lower
+    	public int? Lower
     	{ 
     		get
     		{
-    			throw new NotImplementedException();
+                return ReturnResult().FirstOrDefault()?.Lower;
     		}
     	}
     	
@@ -3012,8 +3232,8 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	{ 
     		get
     		{
-    			throw new NotImplementedException();
-    		}
+                return ReturnResult().FirstOrDefault()?.Type;
+            }
     	}
     	
     	/// <summary>
@@ -3023,12 +3243,12 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (if returnResult()->notEmpty() then returnResult()->any(true).upper else null endif)
     	[Derived]
     	[ReadOnly]
-    	public long Upper
+    	public long? Upper
     	{ 
     		get
     		{
-    			throw new NotImplementedException();
-    		}
+                return ReturnResult().FirstOrDefault()?.Upper;
+            }
     	}
     	
     	/// <summary>
@@ -3074,7 +3294,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (ownedParameter->select (direction = ParameterDirectionKind::return))
     	public IList<Parameter> ReturnResult()
     	{
-    		throw new NotImplementedException();
+            return OwnedParameter.Where(p => p.Direction == ParameterDirectionKind.Return).AsListSet();
     	}
     	
     }
@@ -3091,11 +3311,12 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	// spec:
     	//     result = (if self.type = String then defaultValue.stringValue() else null endif)
     	[Derived]
-    	public string Default
+    	public string? Default
     	{ 
     		get
     		{
-    			throw new NotImplementedException();
+                if (this.Type is PrimitiveType pt && pt.Name == "String") return DefaultValue?.StringValue();
+                else return null;
     		}
     	}
     	
@@ -3118,7 +3339,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	{ 
     		get
     		{
-    			throw new NotImplementedException();
+                return Aggregation == AggregationKind.Composite;
     		}
     	}
     	
@@ -3138,7 +3359,12 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	{ 
     		get
     		{
-    			throw new NotImplementedException();
+    			if (Association is not null && Association.MemberEnd.Count == 2)
+                {
+                    if (Association.MemberEnd[0] == this) return Association.MemberEnd[1];
+                    if (Association.MemberEnd[1] == this) return Association.MemberEnd[0];
+                }
+                return null;
     		}
     	}
     	
@@ -3149,7 +3375,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (not classifier->isEmpty())
     	public bool IsAttribute()
     	{
-    		throw new NotImplementedException();
+            return Classifier is not null;
     	}
     	
     	/// <summary>
@@ -3160,7 +3386,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     self.type.conformsTo(p.oclAsType(TypedElement).type)))
     	public new bool IsCompatibleWith(ParameterableElement p)
     	{
-    		throw new NotImplementedException();
+            return p.GetType().IsAssignableFrom(this.GetType()) && (!(p is TypedElement te) || this.Type is not null && te.Type is not null && this.Type.ConformsTo(te.Type));
     	}
     	
     	/// <summary>
@@ -3187,7 +3413,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (not classifier->isEmpty() or association.navigableOwnedEnd->includes(self))
     	public bool IsNavigable()
     	{
-    		throw new NotImplementedException();
+            return Classifier is not null || Association is not null && Association.NavigableOwnedEnd.Contains(this);
     	}
     	
     	/// <summary>
@@ -3204,11 +3430,20 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     endif)
     	public IList<Type> SubsettingContext()
     	{
-    		throw new NotImplementedException();
+            if (Association is not null) return Association.MemberEnd.Where(me => me != this && me.Type is not null).Select(me => me.Type!).AsListSet();
+            else if (Classifier is not null) return UmlUtils.SingleItemList<Type>(Classifier);
+            else return UmlUtils.EmptyList<Type>();
     	}
-    	
+
+        [DerivedUnion]
+        [ReadOnly]
+        [Opposite(typeof(Classifier), "Attribute")]
+        [Subsets(typeof(Feature), "FeaturingClassifier")]
+        [Subsets(typeof(RedefinableElement), "RedefinitionContext")]
+        Classifier? Classifier { get; }
+
     }
-    
+
     public partial interface RedefinableElement
     {
     	/// <summary>
@@ -3220,7 +3455,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     redefiningElement.isRedefinitionContextValid(self)
     	public bool IsConsistentWith(RedefinableElement redefiningElement)
     	{
-    		throw new NotImplementedException();
+            return false;
     	}
     	
     	/// <summary>
@@ -3230,7 +3465,12 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (redefinitionContext->exists(c | c.allParents()->includesAll(redefinedElement.redefinitionContext)))
     	public bool IsRedefinitionContextValid(RedefinableElement redefinedElement)
     	{
-    		throw new NotImplementedException();
+            foreach (var c in RedefinitionContext)
+            {
+                var allParents = c.AllParents();
+                if (redefinedElement.RedefinitionContext.All(rc => allParents.Contains(rc))) return true;
+            }
+            return false;
     	}
     	
     }
@@ -3251,7 +3491,8 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	{ 
     		get
     		{
-    			throw new NotImplementedException();
+                if (ExtendedSignature is null) return UmlUtils.EmptyList<TemplateParameter>();
+                else return ExtendedSignature.SelectMany(es => es.Parameter).AsListSet();
     		}
     	}
     	
@@ -3264,7 +3505,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     redefiningElement.isRedefinitionContextValid(self)
     	public new bool IsConsistentWith(RedefinableElement redefiningElement)
     	{
-    		throw new NotImplementedException();
+            return redefiningElement is RedefinableTemplateSignature;
     	}
     	
     }
@@ -3324,7 +3565,8 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	{ 
     		get
     		{
-    			throw new NotImplementedException();
+                var behavior = this.ContainingBehavior();
+                return behavior?.Context ?? behavior;
     		}
     	}
     	
@@ -3335,7 +3577,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (self->asSet())
     	public IList<Action> AllActions()
     	{
-    		throw new NotImplementedException();
+            return UmlUtils.SingleItemList(this);
     	}
     	
     	/// <summary>
@@ -3345,7 +3587,9 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (input.oclAsType(Pin)->asSet()->union(output->asSet()))
     	public IList<ActivityNode> AllOwnedNodes()
     	{
-    		throw new NotImplementedException();
+            var result = Input.AsListSet<ActivityNode>();
+            result.UnionWith(Output);
+            return result;
     	}
     	
     	// spec:
@@ -3357,9 +3601,15 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     )
     	public Behavior? ContainingBehavior()
     	{
-    		throw new NotImplementedException();
+            if (InStructuredNode is not null) return InStructuredNode.ContainingBehavior();
+            else if (Activity is not null) return Activity;
+            else return Interaction;
     	}
-    	
+
+        [ReadOnly]
+        [Opposite(typeof(Interaction), "Action")]
+        [Subsets(typeof(Element), "Owner")]
+        Interaction Interaction { get; set; }
     }
     
     public partial interface ActionInputPin
@@ -3385,7 +3635,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// </summary>
     	public IList<Parameter> InputParameters()
     	{
-    		throw new NotImplementedException();
+    		throw new NotImplementedException("This operation is abstract and should be overridden by subclasses of CallAction.");
     	}
     	
     	/// <summary>
@@ -3393,7 +3643,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// </summary>
     	public IList<Parameter> OutputParameters()
     	{
-    		throw new NotImplementedException();
+    		throw new NotImplementedException("This operation is abstract and should be overridden by subclasses of CallAction.");
     	}
     	
     }
@@ -3407,7 +3657,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (behavior.outputParameters())
     	public new IList<Parameter> OutputParameters()
     	{
-    		throw new NotImplementedException();
+            return Behavior.OutputParameters();
     	}
     	
     	/// <summary>
@@ -3417,7 +3667,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (behavior.inputParameters())
     	public new IList<Parameter> InputParameters()
     	{
-    		throw new NotImplementedException();
+            return Behavior.InputParameters();
     	}
     	
     }
@@ -3431,7 +3681,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (operation.outputParameters())
     	public new IList<Parameter> OutputParameters()
     	{
-    		throw new NotImplementedException();
+            return Operation.OutputParameters();
     	}
     	
     	/// <summary>
@@ -3441,7 +3691,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (operation.inputParameters())
     	public new IList<Parameter> InputParameters()
     	{
-    		throw new NotImplementedException();
+            return Operation.InputParameters();
     	}
     	
     }
@@ -3471,7 +3721,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (self->asSet())
     	public new IList<Action> AllActions()
     	{
-    		throw new NotImplementedException();
+            return UmlUtils.SingleItemList<Action>(this);
     	}
     	
     }
@@ -3519,9 +3769,9 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// </summary>
     	// spec:
     	//     result = (endData->asSequence()->first().end.association)
-    	public Association Association()
+    	public Association? Association()
     	{
-    		throw new NotImplementedException();
+            return EndData.FirstOrDefault()?.End?.Association;
     	}
     	
     }
@@ -3535,7 +3785,11 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (self.LinkEndData::allPins()->including(insertAt))
     	public new IList<InputPin> AllPins()
     	{
-    		throw new NotImplementedException();
+            var result = new List<InputPin>();
+            if (Value is not null) result.Include(Value);
+            result.UnionWith(Qualifier.Select(q => q.Value));
+            if (InsertAt is not null) result.Include(InsertAt);
+            return result;
     	}
     	
     }
@@ -3549,7 +3803,10 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (value->asBag()->union(qualifier.value))
     	public IList<InputPin> AllPins()
     	{
-    		throw new NotImplementedException();
+            var result = new List<InputPin>();
+            if (Value is not null) result.Include(Value);
+            result.UnionWith(Qualifier.Select(q => q.Value));
+            return result;
     	}
     	
     }
@@ -3563,8 +3820,12 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (self.LinkEndData::allPins()->including(destroyAt))
     	public new IList<InputPin> AllPins()
     	{
-    		throw new NotImplementedException();
-    	}
+            var result = new List<InputPin>();
+            if (Value is not null) result.Include(Value);
+            result.UnionWith(Qualifier.Select(q => q.Value));
+            if (DestroyAt is not null) result.Include(DestroyAt);
+            return result;
+        }
     	
     }
     
@@ -3577,7 +3838,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (self->asSet())
     	public new IList<Action> AllActions()
     	{
-    		throw new NotImplementedException();
+            return UmlUtils.SingleItemList<Action>(this);
     	}
     	
     	/// <summary>
@@ -3587,8 +3848,13 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (self.StructuredActivityNode::sourceNodes()->union(loopVariable))
     	public new IList<ActivityNode> SourceNodes()
     	{
-    		throw new NotImplementedException();
-    	}
+            var result = new List<ActivityNode>();
+            result.UnionWith(Node);
+            result.UnionWith(Input.OfType<ActivityNode>());
+            result.UnionWith(Node.OfType<Action>().SelectMany(a => a.Output));
+            result.UnionWith(LoopVariable);
+            return result;
+        }
     	
     }
     
@@ -3629,7 +3895,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (endData->select(value=null).end->asOrderedSet())
     	public IList<Property> OpenEnd()
     	{
-    		throw new NotImplementedException();
+            return EndData.Where(d => d.Value is null).Select(d => d.End).AsListSet();
     	}
     	
     }
@@ -3699,7 +3965,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (self.behavior().outputParameters())
     	public new IList<Parameter> OutputParameters()
     	{
-    		throw new NotImplementedException();
+            return Behavior()?.OutputParameters() ?? UmlUtils.EmptyList<Parameter>();
     	}
     	
     	/// <summary>
@@ -3709,24 +3975,26 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (self.behavior().inputParameters())
     	public new IList<Parameter> InputParameters()
     	{
-    		throw new NotImplementedException();
-    	}
-    	
-    	/// <summary>
-    	/// If the type of the object InputPin is a Behavior, then that Behavior. Otherwise, if the type of the object InputPin is a BehavioredClassifier, then the classifierBehavior of that BehavioredClassifier.
-    	/// </summary>
-    	// spec:
-    	//     result = (if object.type.oclIsKindOf(Behavior) then
-    	//       object.type.oclAsType(Behavior)
-    	//     else if object.type.oclIsKindOf(BehavioredClassifier) then
-    	//       object.type.oclAsType(BehavioredClassifier).classifierBehavior
-    	//     else
-    	//       null
-    	//     endif
-    	//     endif)
-    	public Behavior? Behavior()
+            return Behavior()?.InputParameters() ?? UmlUtils.EmptyList<Parameter>();
+        }
+
+        /// <summary>
+        /// If the type of the object InputPin is a Behavior, then that Behavior. Otherwise, if the type of the object InputPin is a BehavioredClassifier, then the classifierBehavior of that BehavioredClassifier.
+        /// </summary>
+        // spec:
+        //     result = (if object.type.oclIsKindOf(Behavior) then
+        //       object.type.oclAsType(Behavior)
+        //     else if object.type.oclIsKindOf(BehavioredClassifier) then
+        //       object.type.oclAsType(BehavioredClassifier).classifierBehavior
+        //     else
+        //       null
+        //     endif
+        //     endif)
+        public Behavior? Behavior()
     	{
-    		throw new NotImplementedException();
+            if (Object.Type is Behavior ob) return ob;
+            else if (Object.Type is BehavioredClassifier bc) return bc.ClassifierBehavior;
+            else return null;
     	}
     	
     }
@@ -3744,7 +4012,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (node->select(oclIsKindOf(Action)).oclAsType(Action).allActions()->including(self)->asSet())
     	public new IList<Action> AllActions()
     	{
-    		throw new NotImplementedException();
+            return Node.OfType<Action>().SelectMany(a => a.AllActions()).AsListSet().Include(this);
     	}
     	
     	/// <summary>
@@ -3754,8 +4022,12 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (self.Action::allOwnedNodes()->union(node)->union(node->select(oclIsKindOf(Action)).oclAsType(Action).allOwnedNodes())->asSet())
     	public new IList<ActivityNode> AllOwnedNodes()
     	{
-    		throw new NotImplementedException();
-    	}
+            var result = Input.AsListSet<ActivityNode>();
+            result.UnionWith(Output);
+            result.UnionWith(Node);
+            result.UnionWith(Node.OfType<Action>().SelectMany(a => a.AllOwnedNodes()));
+            return result;
+        }
     	
     	/// <summary>
     	/// Return those ActivityNodes contained immediately within the StructuredActivityNode that may act as sources of edges owned by the StructuredActivityNode.
@@ -3765,8 +4037,12 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//       union(node->select(oclIsKindOf(Action)).oclAsType(Action).output)->asSet())
     	public IList<ActivityNode> SourceNodes()
     	{
-    		throw new NotImplementedException();
-    	}
+            var result = new List<ActivityNode>();
+            result.UnionWith(Node);
+            result.UnionWith(Input.OfType<ActivityNode>());
+            result.UnionWith(Node.OfType<Action>().SelectMany(a => a.Output));
+            return result;
+        }
     	
     	/// <summary>
     	/// Return those ActivityNodes contained immediately within the StructuredActivityNode that may act as targets of edges owned by the StructuredActivityNode.
@@ -3776,18 +4052,23 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//       union(node->select(oclIsKindOf(Action)).oclAsType(Action).input)->asSet())
     	public IList<ActivityNode> TargetNodes()
     	{
-    		throw new NotImplementedException();
-    	}
-    	
-    	/// <summary>
-    	/// The Activity that directly or indirectly contains this StructuredActivityNode (considered as an Action).
-    	/// </summary>
-    	// spec:
-    	//     result = (self.Action::containingActivity())
-    	public new Activity? ContainingActivity()
+            var result = new List<ActivityNode>();
+            result.UnionWith(Node);
+            result.UnionWith(Output.OfType<ActivityNode>());
+            result.UnionWith(Node.OfType<Action>().SelectMany(a => a.Input));
+            return result;
+        }
+
+        /// <summary>
+        /// The Activity that directly or indirectly contains this StructuredActivityNode (considered as an Action).
+        /// </summary>
+        // spec:
+        //     result = (self.ActivityNode::containingActivity())
+        public new Activity? ContainingActivity()
     	{
-    		throw new NotImplementedException();
-    	}
+            if (InStructuredNode is not null) return InStructuredNode.ContainingActivity();
+            else return Activity;
+        }
     	
     }
     

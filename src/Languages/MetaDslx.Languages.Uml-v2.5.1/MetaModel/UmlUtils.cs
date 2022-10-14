@@ -6,25 +6,38 @@ namespace MetaDslx.Languages.Uml.MetaModel
 {
     internal static class UmlUtils
     {
-        public static List<T> UnionWith<T>(this List<T> list, IEnumerable<T> items)
+        public static List<T> UnionWith<T>(this List<T> list, IEnumerable<T?> items)
         {
             foreach (var item in items)
             {
-                if (!list.Contains(item)) list.Add(item);
+                if (item is not null && !list.Contains(item)) list.Add(item);
             }
             return list;
         }
 
-        public static List<T> Include<T>(this List<T> list, T item)
+        public static List<T> Include<T>(this List<T> list, T? item)
         {
-            if (!list.Contains(item)) list.Add(item);
+            if (item is not null && !list.Contains(item)) list.Add(item);
             return list;
         }
 
-        public static List<T> AsListSet<T>(this IEnumerable<T> items)
+        public static List<T> AsListSet<T>(this IEnumerable<T?> items)
         {
             var result = new List<T>();
             result.UnionWith(items);
+            return result;
+        }
+
+        public static List<T> SingleItemList<T>(T? item)
+        {
+            var result = new List<T>();
+            if (item is not null) result.Add(item);
+            return result;
+        }
+
+        public static List<T> EmptyList<T>()
+        {
+            var result = new List<T>();
             return result;
         }
 

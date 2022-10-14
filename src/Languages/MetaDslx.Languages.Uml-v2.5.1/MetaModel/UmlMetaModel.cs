@@ -3372,13 +3372,15 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	/// References the Receiving of the Message.
     	/// </summary>
     	[Opposite(typeof(MessageEnd), "EndMessage")]
+        [Subsets(typeof(Message), "MessageEnd")]
     	MessageEnd? ReceiveEvent { get; set; }
     	
     	/// <summary>
     	/// References the Sending of the Message.
     	/// </summary>
     	[Opposite(typeof(MessageEnd), "EndMessage")]
-    	MessageEnd? SendEvent { get; set; }
+        [Subsets(typeof(Message), "MessageEnd")]
+        MessageEnd? SendEvent { get; set; }
     	
     	/// <summary>
     	/// The signature of the Message is the specification of its content. It refers either an Operation or a Signal.
@@ -3995,9 +3997,10 @@ namespace MetaDslx.Languages.Uml.MetaModel
     [MetaClass(IsAbstract = true)]
     public partial interface NamedElement : Element
     {
-    	/// <summary>
-    	/// The name of the NamedElement.
-    	/// </summary>
+        /// <summary>
+        /// The name of the NamedElement.
+        /// </summary>
+        [Name]
     	string Name { get; set; }
     	
     	/// <summary>
@@ -4372,9 +4375,10 @@ namespace MetaDslx.Languages.Uml.MetaModel
     [MetaClass(IsAbstract = true)]
     public partial interface TypedElement : NamedElement
     {
-    	/// <summary>
-    	/// The type of the TypedElement.
-    	/// </summary>
+        /// <summary>
+        /// The type of the TypedElement.
+        /// </summary>
+        [Type]
     	[Opposite(typeof(Type), "TypedElement")]
     	Type? Type { get; set; }
     	
