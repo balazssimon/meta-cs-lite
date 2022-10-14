@@ -235,12 +235,12 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
                 }
                 else if (ch == '$')
                 {
-                    kind = MetaGeneratorTokenKind.Keyword;
+                    kind = MetaGeneratorTokenKind.GeneratorKeyword;
                     _text.NextChar();
                 }
                 _text.NextChar();
                 ch = _text.PeekChar();
-                while (ch >= 'a' && ch <= 'z' || ch >= 'A' && ch <= 'Z' || ch == '_' || ch >= '0' && ch <= '9' || (kind == MetaGeneratorTokenKind.Keyword && ch == '-'))
+                while (ch >= 'a' && ch <= 'z' || ch >= 'A' && ch <= 'Z' || ch == '_' || ch >= '0' && ch <= '9' || (kind == MetaGeneratorTokenKind.GeneratorKeyword && ch == '-'))
                 {
                     _text.NextChar();
                     ch = _text.PeekChar();
@@ -248,7 +248,7 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
                 var lexeme = _text.GetText(false);
                 if (Keywords.Contains(lexeme) || ContextualKeywords.Contains(lexeme)) kind = MetaGeneratorTokenKind.Keyword;
                 if (state == MetaGeneratorLexerState.None && TemplateKeywords.Contains(lexeme)) kind = MetaGeneratorTokenKind.Keyword;
-                if (state == MetaGeneratorLexerState.TemplateControl && (TemplateControlKeywords.Contains(lexeme) || TemplateModifierKeywords.Contains(lexeme))) kind = MetaGeneratorTokenKind.Keyword;
+                if (state == MetaGeneratorLexerState.TemplateControl && kind != MetaGeneratorTokenKind.GeneratorKeyword && (TemplateControlKeywords.Contains(lexeme) || TemplateModifierKeywords.Contains(lexeme))) kind = MetaGeneratorTokenKind.Keyword;
                 if (state == MetaGeneratorLexerState.ControlBeginWs && ControlShortcutKeywords.Contains(lexeme))
                 {
                     kind = MetaGeneratorTokenKind.Keyword;
@@ -544,7 +544,7 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
             "control", "generator", "template"
         };
 
-        public const string SeparatorKeyword = "$separator";
+        public const string SeparatorKeyword = "separator";
 
         public static readonly HashSet<string> TemplateControlKeywords = new HashSet<string>()
         {

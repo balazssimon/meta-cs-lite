@@ -417,7 +417,7 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
             }
             else if (stmt.Kind == ControlStatementKind.Statement || stmt.Kind == ControlStatementKind.StatementWithSemicolon)
             {
-                if (stmt.Keyword.Kind == MetaGeneratorTokenKind.Keyword && MetaGeneratorLexer.TemplateModifierKeywords.Contains(stmt.Keyword.Text))
+                if (stmt.Keyword.Kind == MetaGeneratorTokenKind.GeneratorKeyword && MetaGeneratorLexer.TemplateModifierKeywords.Contains(stmt.Keyword.Text))
                 {
                     EatTokens(stmt.TokenCount);
                     var keyword = stmt.Keyword.Text;
@@ -577,7 +577,10 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
                     result.Kind = ControlStatementKind.BeginStatement;
                     result.Keyword = token;
                 }
-                else if (MetaGeneratorLexer.TemplateModifierKeywords.Contains(token.Text))
+            }
+            else if (token.Kind == MetaGeneratorTokenKind.GeneratorKeyword)
+            {
+                if (MetaGeneratorLexer.TemplateModifierKeywords.Contains(token.Text))
                 {
                     result.Kind = ControlStatementKind.Statement;
                     result.Keyword = token;

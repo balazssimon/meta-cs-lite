@@ -89,6 +89,7 @@ namespace MetaDslx.VisualStudio.Languages.MetaGenerator.Classification
                     return StandardClassificationService.StringLiteral;
                 case MetaGeneratorTokenKind.TemplateControlBegin:
                 case MetaGeneratorTokenKind.TemplateControlEnd:
+                case MetaGeneratorTokenKind.GeneratorKeyword:
                     return ClassificationTypeRegistryService.GetClassificationType(MetaGeneratorClassificationTypes.TemplateControl);
                 case MetaGeneratorTokenKind.TemplateOutput:
                     return ClassificationTypeRegistryService.GetClassificationType(MetaGeneratorClassificationTypes.TemplateOutput);

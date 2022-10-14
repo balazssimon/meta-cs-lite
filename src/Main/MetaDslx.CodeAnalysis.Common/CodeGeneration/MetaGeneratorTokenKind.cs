@@ -16,6 +16,7 @@ namespace MetaDslx.CodeAnalysis.CodeGeneration
         Identifier,
         VerbatimIdentifier,
         Keyword,
+        GeneratorKeyword,
         String,
         VerbatimString,
         Number,
