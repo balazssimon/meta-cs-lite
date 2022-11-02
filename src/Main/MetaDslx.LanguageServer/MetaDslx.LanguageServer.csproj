@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
@@ -13,6 +13,7 @@
 	<ItemGroup>
 		<ProjectReference Include="..\MetaDslx.CodeAnalysis.Common\MetaDslx.CodeAnalysis.Common.csproj" />
 		<ProjectReference Include="..\MetaDslx.Languages.MetaGenerator\MetaDslx.Languages.MetaGenerator.csproj" />
+		<ProjectReference Include="..\MetaDslx.Languages.MetaCompiler\MetaDslx.Languages.MetaCompiler.csproj" />
 	</ItemGroup>
 
 </Project>

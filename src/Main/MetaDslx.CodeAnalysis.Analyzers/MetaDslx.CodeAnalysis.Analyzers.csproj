@@ -16,6 +16,7 @@
 	<ItemGroup>
 		<ProjectReference Include="..\MetaDslx.CodeAnalysis.Common\MetaDslx.CodeAnalysis.Common.csproj" OutputItemType="Analyzer" />
 		<ProjectReference Include="..\MetaDslx.Languages.MetaGenerator\MetaDslx.Languages.MetaGenerator.csproj" OutputItemType="Analyzer" />
+		<ProjectReference Include="..\MetaDslx.Languages.MetaCompiler\MetaDslx.Languages.MetaCompiler.csproj" OutputItemType="Analyzer" />
 	</ItemGroup>
 
 </Project>
