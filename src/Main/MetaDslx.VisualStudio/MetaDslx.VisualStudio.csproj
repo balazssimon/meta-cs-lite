@@ -59,12 +59,6 @@
     <Compile Include="Utilities\MetaDslxMefServices.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="LanguageServer\net6.0\MetaDslx.LanguageServer.Host.Stdio.deps.json">
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="LanguageServer\net6.0\MetaDslx.LanguageServer.Host.Stdio.runtimeconfig.json">
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
     <Content Include="MetaDslx.pkgdef">
       <IncludeInVSIX>true</IncludeInVSIX>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -89,112 +83,22 @@
     <Folder Include="Grammars\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="LanguageServer\net6.0\MediatR.dll">
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="LanguageServer\net6.0\MetaDslx.CodeAnalysis.Common.dll">
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="LanguageServer\net6.0\MetaDslx.CodeAnalysis.Common.pdb">
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="LanguageServer\net6.0\MetaDslx.LanguageServer.dll">
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="LanguageServer\net6.0\MetaDslx.LanguageServer.Host.Stdio.dll">
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="LanguageServer\net6.0\MetaDslx.LanguageServer.Host.Stdio.exe">
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="LanguageServer\net6.0\MetaDslx.LanguageServer.Host.Stdio.pdb">
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="LanguageServer\net6.0\MetaDslx.LanguageServer.pdb">
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="LanguageServer\net6.0\Microsoft.Bcl.AsyncInterfaces.dll">
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="LanguageServer\net6.0\Microsoft.Extensions.Configuration.Abstractions.dll">
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="LanguageServer\net6.0\Microsoft.Extensions.Configuration.Binder.dll">
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="LanguageServer\net6.0\Microsoft.Extensions.Configuration.dll">
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="LanguageServer\net6.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll">
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="LanguageServer\net6.0\Microsoft.Extensions.DependencyInjection.dll">
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="LanguageServer\net6.0\Microsoft.Extensions.Logging.Abstractions.dll">
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="LanguageServer\net6.0\Microsoft.Extensions.Logging.dll">
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="LanguageServer\net6.0\Microsoft.Extensions.Options.ConfigurationExtensions.dll">
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="LanguageServer\net6.0\Microsoft.Extensions.Options.dll">
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="LanguageServer\net6.0\Microsoft.Extensions.Primitives.dll">
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="LanguageServer\net6.0\Microsoft.VisualStudio.Threading.dll">
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="LanguageServer\net6.0\Microsoft.VisualStudio.Validation.dll">
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="LanguageServer\net6.0\Nerdbank.Streams.dll">
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="LanguageServer\net6.0\Newtonsoft.Json.dll">
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="LanguageServer\net6.0\OmniSharp.Extensions.JsonRpc.dll">
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="LanguageServer\net6.0\OmniSharp.Extensions.LanguageProtocol.dll">
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="LanguageServer\net6.0\OmniSharp.Extensions.LanguageServer.dll">
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="LanguageServer\net6.0\OmniSharp.Extensions.LanguageServer.Shared.dll">
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="LanguageServer\net6.0\Serilog.dll">
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="LanguageServer\net6.0\Serilog.Extensions.Logging.dll">
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="LanguageServer\net6.0\Serilog.Sinks.Console.dll">
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="LanguageServer\net6.0\Serilog.Sinks.File.dll">
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="LanguageServer\net6.0\System.IO.Pipelines.dll">
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="LanguageServer\net6.0\System.Reactive.dll">
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\MetaDslx.CodeAnalysis.Common\MetaDslx.CodeAnalysis.Common.csproj">
       <Project>{43539253-8fec-4c54-8d81-8bdf7baa7da7}</Project>
       <Name>MetaDslx.CodeAnalysis.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MetaDslx.Languages.MetaGenerator\MetaDslx.Languages.MetaGenerator.csproj">
+      <Project>{95212699-0E82-40A4-907C-E348A58F6ADE}</Project>
+      <Name>MetaDslx.Languages.MetaGenerator</Name>
+    </ProjectReference>
   </ItemGroup>
+  
+  <ItemGroup>
+      <Content Include="LanguageServer\net6.0\**\*.*">
+          <IncludeInVSIX>true</IncludeInVSIX>
+      </Content>
+  </ItemGroup>
+  
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets" Condition="'$(VSToolsPath)' != ''" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

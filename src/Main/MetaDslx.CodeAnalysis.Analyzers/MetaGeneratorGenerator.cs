@@ -1,5 +1,5 @@
-﻿using MetaDslx.CodeAnalysis.CodeGeneration;
-using MetaDslx.CodeAnalysis.Text;
+﻿using MetaDslx.CodeAnalysis.Text;
+using MetaDslx.Languages.MetaGenerator;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using System;

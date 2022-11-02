@@ -18,7 +18,7 @@ for (int i = 0; i < 10 && i < diagnostics.Length; i++)
     Console.WriteLine(df.Format(diagnostics[i]));
 }
 
-foreach (var cls in model.Objects.OfType<Classifier>())
+foreach (var cls in model.Objects.Where(o => o.MetaType == typeof(Class)))
 {
     Console.WriteLine(cls);
 }

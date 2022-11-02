@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace MetaDslx.CodeAnalysis.CodeGeneration
+namespace MetaDslx.Languages.MetaGenerator
 {
     public enum MetaGeneratorLexerState
     {

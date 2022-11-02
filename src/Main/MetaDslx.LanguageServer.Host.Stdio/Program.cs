@@ -11,8 +11,6 @@ namespace MetaDslx.LanguageServer.Host.Stdio
 {
     internal class Program
     {
-        private static ILanguageServer? _server;
-
         static async Task Main(string[] args)
         {
             Log.Logger = new LoggerConfiguration()
@@ -60,7 +58,6 @@ namespace MetaDslx.LanguageServer.Host.Stdio
                 .WithServices(x => x.AddLogging(b => b.SetMinimumLevel(LogLevel.Trace)))
                 .WithMetaDslx()
                 .OnStarted(async (languageServer, token) => {
-                    _server = languageServer;
                     Log.Information("MetaDslx LanguageServer is up and running.");
                 })
              );

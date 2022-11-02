@@ -1,17 +1,18 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-	<TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
-    <Nullable>enable</Nullable>
-    <LangVersion>9.0</LangVersion>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
+		<Nullable>enable</Nullable>
+		<LangVersion>9.0</LangVersion>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="OmniSharp.Extensions.LanguageServer" Version="0.19.5" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="OmniSharp.Extensions.LanguageServer" Version="0.19.5" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\MetaDslx.CodeAnalysis.Common\MetaDslx.CodeAnalysis.Common.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\MetaDslx.CodeAnalysis.Common\MetaDslx.CodeAnalysis.Common.csproj" />
+		<ProjectReference Include="..\MetaDslx.Languages.MetaGenerator\MetaDslx.Languages.MetaGenerator.csproj" />
+	</ItemGroup>
 
 </Project>

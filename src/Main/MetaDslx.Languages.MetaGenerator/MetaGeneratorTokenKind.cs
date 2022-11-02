@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.Tracing;
 using System.Text;
 
-namespace MetaDslx.CodeAnalysis.CodeGeneration
+namespace MetaDslx.Languages.MetaGenerator
 {
     public enum MetaGeneratorTokenKind
     {

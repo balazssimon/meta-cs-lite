@@ -1,4 +1,5 @@
-﻿using MetaDslx.CodeAnalysis.PooledObjects;
+﻿using MetaDslx.CodeAnalysis;
+using MetaDslx.CodeAnalysis.PooledObjects;
 using MetaDslx.CodeAnalysis.Syntax.InternalSyntax;
 using MetaDslx.CodeAnalysis.Text;
 using MetaDslx.CodeGeneration;
@@ -10,7 +11,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 
-namespace MetaDslx.CodeAnalysis.CodeGeneration
+namespace MetaDslx.Languages.MetaGenerator
 {
     public class MetaGeneratorParser
     {

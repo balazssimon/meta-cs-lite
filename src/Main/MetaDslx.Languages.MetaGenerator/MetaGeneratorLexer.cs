@@ -1,6 +1,4 @@
-﻿#if !VSIX
-using MetaDslx.CodeAnalysis.Text;
-#endif
+﻿using MetaDslx.CodeAnalysis.Text;
 using MetaDslx.CodeAnalysis.Syntax.InternalSyntax;
 using System;
 using System.Collections.Generic;
@@ -8,7 +6,7 @@ using System.Collections.Immutable;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace MetaDslx.CodeAnalysis.CodeGeneration
+namespace MetaDslx.Languages.MetaGenerator
 {
     public class MetaGeneratorLexer : IDisposable
     {
