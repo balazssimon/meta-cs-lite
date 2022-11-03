@@ -13,11 +13,11 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
         SingleLineComment,
         MultiLineComment,
         Identifier,
-        VerbatimIdentifier,
         Keyword,
         Number,
         String,
         VerbatimString,
+        ControlCode,
         Other
     }
 }

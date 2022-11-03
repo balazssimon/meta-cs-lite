@@ -87,6 +87,8 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
             if (token.Kind != MetaCompilerTokenKind.None) return token;
             token = MatchString();
             if (token.Kind != MetaCompilerTokenKind.None) return token;
+            token = MatchControlCode();
+            if (token.Kind != MetaCompilerTokenKind.None) return token;
             token = MatchOther();
             if (token.Kind != MetaCompilerTokenKind.None) return token;
             return MetaCompilerToken.None;
@@ -159,11 +161,7 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                 (ch == '@') && (nextCh >= 'a' && nextCh <= 'z' || nextCh >= 'A' && nextCh <= 'Z' || nextCh == '_'))
             {
                 var kind = MetaCompilerTokenKind.Identifier;
-                if (ch == '@')
-                {
-                    kind = MetaCompilerTokenKind.VerbatimIdentifier;
-                    _text.NextChar();
-                }
+                if (ch == '@') _text.NextChar();
                 _text.NextChar();
                 ch = _text.PeekChar();
                 while (ch >= 'a' && ch <= 'z' || ch >= 'A' && ch <= 'Z' || ch == '_' || ch >= '0' && ch <= '9')
@@ -258,6 +256,30 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
             return MetaCompilerToken.None;
         }
 
+        private MetaCompilerToken MatchControlCode()
+        {
+            var ch = _text.PeekChar();
+            if (ch == '{')
+            {
+                int parenthesisCounter = 0;
+                int bracketsCounter = 0;
+                int bracesCounter = 1;
+                _text.NextChar();
+                while (!_text.IsReallyAtEnd() && (parenthesisCounter > 0 || bracketsCounter > 0 || bracesCounter > 0))
+                {
+                    ch = _text.NextChar();
+                    if (ch == '(') ++parenthesisCounter;
+                    if (ch == ')') --parenthesisCounter;
+                    if (ch == '[') ++bracketsCounter;
+                    if (ch == ']') --bracketsCounter;
+                    if (ch == '{') ++bracesCounter;
+                    if (ch == '}') --bracesCounter;
+                }
+                return new MetaCompilerToken(MetaCompilerTokenKind.ControlCode, _text.GetText(false), _text.LexemeStartPosition);
+            }
+            return MetaCompilerToken.None;
+        }
+
         private MetaCompilerToken MatchOther()
         {
             var ch = _text.NextChar();
@@ -266,7 +288,7 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
 
         public static readonly HashSet<string> Keywords = new HashSet<string>()
         {
-            "namespace", "language", "fragment", "hidden"
+            "namespace", "using", "language", "fragment", "hidden", "def", "use", "eof"
         };
 
     }

@@ -38,9 +38,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetaDslx.Languages.Uml-v2.5
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetaDslx.Examples.Uml", "Examples\MetaDslx.Examples.Uml\MetaDslx.Examples.Uml.csproj", "{C13F5E78-1CDD-48F9-ADDD-CFB79F2A9155}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetaDslx.Languages.MetaGenerator", "Main\MetaDslx.Languages.MetaGenerator\MetaDslx.Languages.MetaGenerator.csproj", "{95212699-0E82-40A4-907C-E348A58F6ADE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetaDslx.Languages.MetaGenerator", "Main\MetaDslx.Languages.MetaGenerator\MetaDslx.Languages.MetaGenerator.csproj", "{95212699-0E82-40A4-907C-E348A58F6ADE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetaDslx.Languages.MetaCompiler", "Main\MetaDslx.Languages.MetaCompiler\MetaDslx.Languages.MetaCompiler.csproj", "{594E745B-CC1E-4BA2-A2D6-BED7FE44B5D2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetaDslx.Languages.MetaCompiler", "Main\MetaDslx.Languages.MetaCompiler\MetaDslx.Languages.MetaCompiler.csproj", "{594E745B-CC1E-4BA2-A2D6-BED7FE44B5D2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetaDslx.Bootstrap.MetaCompiler", "Bootstrap\MetaDslx.Bootstrap.MetaCompiler\MetaDslx.Bootstrap.MetaCompiler.csproj", "{D2ED2231-2234-4AE8-8BEF-4B77D04B3390}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -194,6 +196,14 @@ Global
 		{594E745B-CC1E-4BA2-A2D6-BED7FE44B5D2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{594E745B-CC1E-4BA2-A2D6-BED7FE44B5D2}.Release|x86.ActiveCfg = Release|Any CPU
 		{594E745B-CC1E-4BA2-A2D6-BED7FE44B5D2}.Release|x86.Build.0 = Release|Any CPU
+		{D2ED2231-2234-4AE8-8BEF-4B77D04B3390}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2ED2231-2234-4AE8-8BEF-4B77D04B3390}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2ED2231-2234-4AE8-8BEF-4B77D04B3390}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D2ED2231-2234-4AE8-8BEF-4B77D04B3390}.Debug|x86.Build.0 = Debug|Any CPU
+		{D2ED2231-2234-4AE8-8BEF-4B77D04B3390}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2ED2231-2234-4AE8-8BEF-4B77D04B3390}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D2ED2231-2234-4AE8-8BEF-4B77D04B3390}.Release|x86.ActiveCfg = Release|Any CPU
+		{D2ED2231-2234-4AE8-8BEF-4B77D04B3390}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

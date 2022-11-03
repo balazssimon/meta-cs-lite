@@ -1,16 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Text;
 
 namespace MetaDslx.Languages.MetaCompiler.Model
 {
     public class Language
     {
-        public string Namespace { get; set; }
+        public ImmutableArray<string> Namespace { get; set; }
+        public List<ImmutableArray<string>> Usings { get; } = new List<ImmutableArray<string>>();
         public Grammar Grammar { get; set; }
     }
 
-    public enum AttributeKind
+    public enum AnnotationKind
     {
         None,
         Def,
@@ -39,20 +41,20 @@ namespace MetaDslx.Languages.MetaCompiler.Model
     public class NamedElement
     {
         public string Name { get; set; }
-        public List<Attribute> Attributes { get; } = new List<Attribute>();
+        public List<Annotation> Annotations { get; } = new List<Annotation>();
     }
 
-    public class Attribute
+    public class Annotation
     {
-        public AttributeKind Kind { get; set; }
-        public string Name { get; set; }
-        public List<AttributeProperty> Properties { get; } = new List<AttributeProperty>();
+        public AnnotationKind Kind { get; set; }
+        public ImmutableArray<string> Name { get; set; }
+        public List<AnnotationProperty> Properties { get; } = new List<AnnotationProperty>();
     }
 
-    public class AttributeProperty
+    public class AnnotationProperty
     {
         public string Name { get; set; }
-        public object? Value { get; set; }
+        public string? Value { get; set; }
     }
 
     public class GrammarOptions
@@ -81,7 +83,7 @@ namespace MetaDslx.Languages.MetaCompiler.Model
         public List<ParserRuleElement> Elements { get; } = new List<ParserRuleElement>();
     }
 
-    public class ParserRuleElement : NamedElement
+    public abstract class ParserRuleElement : NamedElement
     {
         public bool IsNegated { get; set; }
         public AssignmentOperator AssignmentOperator { get; set; }
@@ -90,6 +92,7 @@ namespace MetaDslx.Languages.MetaCompiler.Model
 
     public class ParserRuleReferenceElement : ParserRuleElement
     {
+        public ImmutableArray<string> RuleName { get; set; }
         public Rule Rule { get; set; }
     }
 
@@ -123,7 +126,7 @@ namespace MetaDslx.Languages.MetaCompiler.Model
         public List<LexerRuleElement> Elements { get; } = new List<LexerRuleElement>();
     }
 
-    public class LexerRuleElement : NamedElement
+    public abstract class LexerRuleElement : NamedElement
     {
         public bool IsNegated { get; set; }
         public Multiplicity Multiplicity { get; set; }
@@ -131,6 +134,7 @@ namespace MetaDslx.Languages.MetaCompiler.Model
 
     public class LexerRuleReferenceElement : LexerRuleElement
     {
+        public ImmutableArray<string> RuleName { get; set; }
         public LexerRule Rule { get; set; }
     }
 
