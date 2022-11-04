@@ -1,4 +1,5 @@
-﻿using MetaDslx.CodeAnalysis.Text;
+﻿using MetaDslx.CodeAnalysis;
+using MetaDslx.CodeAnalysis.Text;
 using MetaDslx.Languages.MetaCompiler.Syntax;
 using System;
 using System.Collections.Generic;
@@ -36,6 +37,7 @@ namespace MetaDslx.Languages.MetaCompiler
         public int Line => _endOfFile ? _eofEntry.Line : PeekEntry(0).Line;
         public int Character => _endOfFile ? _eofEntry.Character : PeekEntry(0).Character;
         public LinePosition LinePosition => new LinePosition(_endOfFile ? _eofEntry.Line : Line, _endOfFile ? _eofEntry.Character : Character);
+        public Location CurrentLocation => new ExternalFileLocation(_lexer.FilePath, new TextSpan(_position, CurrentToken.Text.Length), new LinePositionSpan(LinePosition, new LinePosition(LinePosition.Line, LinePosition.Character + CurrentToken.Text.Length)));
         public bool EndOfFile => _endOfFile;
         public bool IgnoreWhitespaceAndComments
         {

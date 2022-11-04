@@ -15,6 +15,7 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
         Identifier,
         Keyword,
         Number,
+        Character,
         String,
         VerbatimString,
         ControlCode,

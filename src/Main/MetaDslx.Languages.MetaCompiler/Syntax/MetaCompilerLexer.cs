@@ -209,6 +209,30 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
         {
             var ch = _text.PeekChar();
             var nextCh = _text.PeekChar(1);
+            if (ch == '\'')
+            {
+                _text.NextChar();
+                ch = _text.PeekChar();
+                var count = 0;
+                var unicode = ch == 'u' || ch == 'U';
+                while (!_text.IsReallyAtEnd() && ch != '\'' && ch != '\r' && ch != '\n')
+                {
+                    _text.NextChar();
+                    ch = _text.PeekChar();
+                    if (unicode)
+                    {
+                        if (count >= 4 || !(ch >= '0' && ch <= '9' || ch >= 'a' && ch <= 'f' || ch >= 'A' && ch <= 'F')) unicode = false;
+                    }
+                    if (ch == '\\')
+                    {
+                        _text.NextChar();
+                        ch = _text.PeekChar();
+                    }
+                    ++count;
+                }
+                if (ch == '\'') _text.NextChar();
+                return new MetaCompilerToken(count == 1 || unicode ? MetaCompilerTokenKind.Character : MetaCompilerTokenKind.String, _text.GetText(false), _text.LexemeStartPosition);
+            }
             if (ch == '"')
             {
                 _text.NextChar();
