@@ -8,7 +8,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 
-namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
+namespace MetaDslx.Languages.MetaModel.Model
 {
     using Compilation = Microsoft.CodeAnalysis.Compilation;
 
@@ -88,7 +88,7 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
 
         public Compilation Compilation => _metaClass.Compilation;
         public SourceProductionContext Context => _metaClass.Context;
-        public MetaModel MetaModel => _metaClass.MetaModel;
+        public MetaModelInfo MetaModel => _metaClass.MetaModel;
         public MetaClass MetaClass => _metaClass;
         public IPropertySymbol PropertySymbol => _propertySymbol;
         public object? DefaultValue => _defaultValue;

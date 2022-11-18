@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace MetaDslx.Languages.MetaGenerator
+namespace MetaDslx.Languages.MetaGenerator.Syntax
 {
     internal class MetaGeneratorTokenStream
     {
@@ -61,7 +61,7 @@ namespace MetaDslx.Languages.MetaGenerator
         {
             for (int i = 0; i < count; i++)
             {
-                this.EatToken();
+                EatToken();
             }
         }
 
@@ -99,7 +99,7 @@ namespace MetaDslx.Languages.MetaGenerator
 
         private bool FetchTokens(int count)
         {
-            while (count > _tokens.Count && FetchToken());
+            while (count > _tokens.Count && FetchToken()) ;
             return count <= _tokens.Count;
         }
     }

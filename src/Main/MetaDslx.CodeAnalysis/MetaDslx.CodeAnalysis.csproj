@@ -41,6 +41,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\MetaDslx.CodeAnalysis.Common\MetaDslx.CodeAnalysis.Common.csproj" PrivateAssets="all" />
+		<ProjectReference Include="..\MetaDslx.Languages.MetaModel\MetaDslx.Languages.MetaModel.csproj" PrivateAssets="all" />
 		<ProjectReference Include="..\MetaDslx.Languages.MetaGenerator\MetaDslx.Languages.MetaGenerator.csproj" PrivateAssets="all" />
 		<ProjectReference Include="..\MetaDslx.Languages.MetaCompiler\MetaDslx.Languages.MetaCompiler.csproj" PrivateAssets="all" />
 		<ProjectReference Include="..\MetaDslx.CodeAnalysis.Antlr4\MetaDslx.CodeAnalysis.Antlr4.csproj" PrivateAssets="all" />
@@ -53,6 +54,7 @@
 		<None Include="$(OutputPath)\netstandard2.0\MetaDslx.CodeAnalysis.Common.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
 		<None Include="$(OutputPath)\netstandard2.0\MetaDslx.CodeAnalysis.Analyzers.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
 		<None Include="$(OutputPath)\netstandard2.0\MetaDslx.Languages.Core.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+		<None Include="$(OutputPath)\netstandard2.0\MetaDslx.Languages.MetaModel.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
 		<None Include="$(OutputPath)\netstandard2.0\MetaDslx.Languages.MetaGenerator.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
 		<None Include="$(OutputPath)\netstandard2.0\MetaDslx.Languages.MetaCompiler.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
 	</ItemGroup>
@@ -62,6 +64,7 @@
 		<None Include="$(OutputPath)\netstandard2.0\MetaDslx.CodeAnalysis.Common.dll" Pack="true" PackagePath="lib\netstandard2.0" Visible="true" />
 		<None Include="$(OutputPath)\netstandard2.0\MetaDslx.CodeAnalysis.Antlr4.dll" Pack="true" PackagePath="lib\netstandard2.0" Visible="true" />
 		<None Include="$(OutputPath)\netstandard2.0\MetaDslx.Languages.Core.dll" Pack="true" PackagePath="lib\netstandard2.0" Visible="true" />
+		<None Include="$(OutputPath)\netstandard2.0\MetaDslx.Languages.MetaModel.dll" Pack="true" PackagePath="lib\netstandard2.0" Visible="true" />
 		<None Include="$(OutputPath)\netstandard2.0\MetaDslx.Languages.MetaGenerator.dll" Pack="true" PackagePath="lib\netstandard2.0" Visible="true" />
 		<None Include="$(OutputPath)\netstandard2.0\MetaDslx.Languages.MetaCompiler.dll" Pack="true" PackagePath="lib\netstandard2.0" Visible="true" />
 	</ItemGroup>
@@ -70,6 +73,7 @@
 		<None Include="$(OutputPath)\netstandard2.1\MetaDslx.CodeAnalysis.Common.dll" Pack="true" PackagePath="lib\netstandard2.1" Visible="true" />
 		<None Include="$(OutputPath)\netstandard2.1\MetaDslx.CodeAnalysis.Antlr4.dll" Pack="true" PackagePath="lib\netstandard2.1" Visible="true" />
 		<None Include="$(OutputPath)\netstandard2.1\MetaDslx.Languages.Core.dll" Pack="true" PackagePath="lib\netstandard2.1" Visible="true" />
+		<None Include="$(OutputPath)\netstandard2.1\MetaDslx.Languages.MetaModel.dll" Pack="true" PackagePath="lib\netstandard2.1" Visible="true" />
 		<None Include="$(OutputPath)\netstandard2.1\MetaDslx.Languages.MetaGenerator.dll" Pack="true" PackagePath="lib\netstandard2.1" Visible="true" />
 		<None Include="$(OutputPath)\netstandard2.1\MetaDslx.Languages.MetaCompiler.dll" Pack="true" PackagePath="lib\netstandard2.1" Visible="true" />
 	</ItemGroup>

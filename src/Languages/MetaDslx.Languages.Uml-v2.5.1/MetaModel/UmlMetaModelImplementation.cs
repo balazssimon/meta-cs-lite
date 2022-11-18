@@ -2438,7 +2438,7 @@ namespace MetaDslx.Languages.Uml.MetaModel
     	//     result = (upperBound() > 1)
     	public bool IsMultivalued()
     	{
-            return UpperBound() > 1;
+            return UpperBound() > 1 || UpperBound() < 0;
     	}
     	
     	/// <summary>

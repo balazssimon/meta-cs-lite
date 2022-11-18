@@ -1,16 +1,21 @@
 ﻿using MetaDslx.CodeGeneration;
 using MetaDslx.Modeling;
+using MetaDslx.Languages.MetaModel.Model;
+
 using Microsoft.CodeAnalysis;
+
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using System.Text;
 using System.Xml.Linq;
+
 using static System.Net.Mime.MediaTypeNames;
 
-namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
+namespace MetaDslx.Languages.MetaModel.Generators
 {
+
     internal static class ModelImplementationGenerator
     {
         private const string IMetaModelType = "global::MetaDslx.Modeling.IMetaModel";
@@ -31,7 +36,7 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
         private const string DictionaryType = "global::System.Collections.Generic.Dictionary";
         private const string ImmutableArrayType = "global::System.Collections.Immutable.ImmutableArray";
 
-        public static string Generate(ImmutableArray<MetaModel> metaModels)
+        public static string Generate(ImmutableArray<MetaModelInfo> metaModels)
         {
             var cb = CodeBuilder.GetInstance();
             foreach (var metaModel in metaModels)
@@ -42,7 +47,7 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
             return cb.ToStringAndFree();
         }
 
-        private static void Generate(CodeBuilder cb, MetaModel metaModel)
+        private static void Generate(CodeBuilder cb, MetaModelInfo metaModel)
         {
             cb.WriteLine("#nullable enable");
             cb.WriteLine();
@@ -74,7 +79,7 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
             cb.WriteLine("}");
         }
 
-        private static void GenerateMetaModel(CodeBuilder cb, MetaModel metaModel)
+        private static void GenerateMetaModel(CodeBuilder cb, MetaModelInfo metaModel)
         {
             cb.WriteLine($"public partial interface {metaModel.Name} : {IMetaModelType}");
             cb.WriteLine("{");
@@ -84,7 +89,7 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
             cb.WriteLine("}");
         }
 
-        private static void GenerateMetaModelFactory(CodeBuilder cb, MetaModel metaModel)
+        private static void GenerateMetaModelFactory(CodeBuilder cb, MetaModelInfo metaModel)
         {
             cb.WriteLine($"public partial class {metaModel.FactoryName} : {IModelFactoryType}");
             cb.WriteLine("{");
@@ -205,7 +210,7 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
             if (empty) cb.Write($"{ModelPropertyFlagsType}.None");
         }
 
-        private static void GenerateMetaModelImplementation(CodeBuilder cb, MetaModel metaModel)
+        private static void GenerateMetaModelImplementation(CodeBuilder cb, MetaModelInfo metaModel)
         {
             cb.WriteLine($"public partial class {metaModel.MetaModelImplName} : {metaModel.Name}");
             cb.WriteLine("{");

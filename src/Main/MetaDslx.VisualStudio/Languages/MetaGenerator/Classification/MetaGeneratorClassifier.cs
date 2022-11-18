@@ -1,5 +1,5 @@
 ﻿using MetaDslx.CodeAnalysis.Text;
-using MetaDslx.Languages.MetaGenerator;
+using MetaDslx.Languages.MetaGenerator.Syntax;
 using MetaDslx.VisualStudio.Utilities;
 using Microsoft.VisualStudio.Language.StandardClassification;
 using Microsoft.VisualStudio.Text;

@@ -9,11 +9,11 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 
-namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
+namespace MetaDslx.Languages.MetaModel.Model
 {
     using Compilation = Microsoft.CodeAnalysis.Compilation;
 
-    internal class MetaModel
+    internal class MetaModelInfo
     {
         internal const string MetaModelAttributeName = "MetaDslx.Modeling.MetaModelAttribute";
 
@@ -27,7 +27,7 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
         private ImmutableArray<MetaClass> _metaClasses;
         private Dictionary<string, MetaClass>? _metaClassMap;
 
-        public MetaModel(Compilation compilation, SourceProductionContext context, INamedTypeSymbol modelInterface, ImmutableArray<INamedTypeSymbol> classInterfaces)
+        public MetaModelInfo(Compilation compilation, SourceProductionContext context, INamedTypeSymbol modelInterface, ImmutableArray<INamedTypeSymbol> classInterfaces)
         {
             _compilation = compilation;
             _context = context;

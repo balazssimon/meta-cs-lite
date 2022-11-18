@@ -8,7 +8,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 
-namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
+namespace MetaDslx.Languages.MetaModel.Model
 {
     using Compilation = Microsoft.CodeAnalysis.Compilation;
 
@@ -16,7 +16,7 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
     {
         internal const string MetaClassAttributeName = "MetaDslx.Modeling.MetaClassAttribute";
 
-        private MetaModel _metaModel;
+        private MetaModelInfo _metaModel;
         private INamedTypeSymbol _classInterface;
         private bool _isAbstract;
         private ImmutableArray<MetaClass> _baseTypes;
@@ -26,7 +26,7 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
         private Dictionary<MetaProperty, MetaProperty>? _slotProperties;
         private Dictionary<MetaProperty, MetaSlot>? _slots;
 
-        public MetaClass(MetaModel metaModel, INamedTypeSymbol classInterface)
+        public MetaClass(MetaModelInfo metaModel, INamedTypeSymbol classInterface)
         {
             _metaModel = metaModel;
             _classInterface = classInterface;
@@ -48,7 +48,7 @@ namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
 
         public Compilation Compilation => _metaModel.Compilation;
         public SourceProductionContext Context => _metaModel.Context;
-        public MetaModel MetaModel => _metaModel;
+        public MetaModelInfo MetaModel => _metaModel;
         public INamedTypeSymbol ClassInterface => _classInterface;
 
         public ImmutableArray<MetaClass> BaseTypes

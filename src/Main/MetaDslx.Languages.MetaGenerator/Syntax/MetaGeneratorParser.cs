@@ -11,7 +11,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 
-namespace MetaDslx.Languages.MetaGenerator
+namespace MetaDslx.Languages.MetaGenerator.Syntax
 {
     public class MetaGeneratorParser
     {
@@ -296,7 +296,7 @@ namespace MetaDslx.Languages.MetaGenerator
                 {
                     ParseTemplateControl(ref state);
                 }
-                else 
+                else
                 {
                     ParseTemplateOutput(ref state);
                 }
@@ -526,7 +526,7 @@ namespace MetaDslx.Languages.MetaGenerator
             }
             else
             {
-                throw new InvalidOperationException("Unknown ControlStatementKind: "+stmt.Kind);
+                throw new InvalidOperationException("Unknown ControlStatementKind: " + stmt.Kind);
             }
         }
 
@@ -546,7 +546,7 @@ namespace MetaDslx.Languages.MetaGenerator
 
         private void SkipWs(bool skipSemicolon = false)
         {
-            while (IsWhitespaceOrComment() || (skipSemicolon && _tokens.CurrentToken.Kind == MetaGeneratorTokenKind.Other && _tokens.CurrentToken.Text == ";")) _tokens.EatToken();
+            while (IsWhitespaceOrComment() || skipSemicolon && _tokens.CurrentToken.Kind == MetaGeneratorTokenKind.Other && _tokens.CurrentToken.Text == ";") _tokens.EatToken();
         }
 
         private MetaGeneratorToken SkipWs(ref int index)

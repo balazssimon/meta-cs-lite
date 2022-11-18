@@ -6,13 +6,13 @@ using System.Collections.Immutable;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace MetaDslx.Languages.MetaGenerator
+namespace MetaDslx.Languages.MetaGenerator.Syntax
 {
     public class MetaGeneratorLexer : IDisposable
     {
         private string _filePath;
         private SlidingTextWindow _text;
-        
+
         private int _line;
         private int _column;
 
@@ -114,7 +114,7 @@ namespace MetaDslx.Languages.MetaGenerator
                 _text.AdvanceChar(2);
                 if (state == MetaGeneratorLexerState.TemplateHeaderEnd) state = MetaGeneratorLexerState.TemplateOutput;
                 if (state == MetaGeneratorLexerState.ControlBeginWs || state == MetaGeneratorLexerState.ControlEndWs ||
-                    state == MetaGeneratorLexerState.ControlBegin || state == MetaGeneratorLexerState.ControlEnd || 
+                    state == MetaGeneratorLexerState.ControlBegin || state == MetaGeneratorLexerState.ControlEnd ||
                     state == MetaGeneratorLexerState.TemplateEnd) state = MetaGeneratorLexerState.None;
                 return new MetaGeneratorToken(MetaGeneratorTokenKind.EndOfLine, _text.GetText(true), _text.LexemeStartPosition, state);
             }
@@ -222,7 +222,7 @@ namespace MetaDslx.Languages.MetaGenerator
         {
             var ch = _text.PeekChar();
             var nextCh = _text.PeekChar(1);
-            if ((ch >= 'a' && ch <= 'z' || ch >= 'A' && ch <= 'Z' || ch == '_') ||
+            if (ch >= 'a' && ch <= 'z' || ch >= 'A' && ch <= 'Z' || ch == '_' ||
                 (ch == '@' || ch == '$') && (nextCh >= 'a' && nextCh <= 'z' || nextCh >= 'A' && nextCh <= 'Z' || nextCh == '_'))
             {
                 var kind = MetaGeneratorTokenKind.Identifier;
@@ -238,7 +238,7 @@ namespace MetaDslx.Languages.MetaGenerator
                 }
                 _text.NextChar();
                 ch = _text.PeekChar();
-                while (ch >= 'a' && ch <= 'z' || ch >= 'A' && ch <= 'Z' || ch == '_' || ch >= '0' && ch <= '9' || (kind == MetaGeneratorTokenKind.GeneratorKeyword && ch == '-'))
+                while (ch >= 'a' && ch <= 'z' || ch >= 'A' && ch <= 'Z' || ch == '_' || ch >= '0' && ch <= '9' || kind == MetaGeneratorTokenKind.GeneratorKeyword && ch == '-')
                 {
                     _text.NextChar();
                     ch = _text.PeekChar();
@@ -284,7 +284,7 @@ namespace MetaDslx.Languages.MetaGenerator
                             state = MetaGeneratorLexerState.TemplateHeader;
                         }
                     }
-                    if (lexeme == "if" || lexeme == "switch" || lexeme == "do" || lexeme == "for" || lexeme == "foreach" || 
+                    if (lexeme == "if" || lexeme == "switch" || lexeme == "do" || lexeme == "for" || lexeme == "foreach" ||
                         lexeme == "while" || lexeme == "try" || lexeme == "lock")
                     {
                         if (state == MetaGeneratorLexerState.End)
@@ -485,16 +485,16 @@ namespace MetaDslx.Languages.MetaGenerator
 
         public static readonly HashSet<string> Keywords = new HashSet<string>()
         {
-            "abstract", "as", "base", "bool", "break", "byte", "case", "catch", "char", "checked", "class", "const", "continue", 
-            "decimal", "default", "delegate", "do", "double", "else", "enum", "event", "explicit", "extern", "false", "finally", 
-            "fixed", "float", "for", "foreach", "goto", "if", "implicit", "in", "int", "interface", "internal", "is", "lock", 
-            "long", "namespace", "new", "null", "object", "operator", "out", "override", "params", "private", "protected", 
-            "public", "readonly", "ref", "return", "sbyte", "sealed", "short", "sizeof", "stackalloc", "static", "string", 
-            "struct", "switch", "this", "throw", "true", "try", "typeof", "uint", "ulong", "unchecked", "unsafe", "ushort", 
-            "using", "virtual", "void", "volatile", "while", "add", "and", "alias", "ascending", "args", "async", "await", "by", 
-            "descending", "dynamic", "equals", "from", "get", "global", "group", "init", "into", "join", "let", "managed", 
-            "nameof", "nint", "not", "notnull", "nuint", "on", "or", "orderby", "partial", "partial", "record", "remove", 
-            "required", "select", "set", "unmanaged", "value", "var", "when", "where", "with", "yield", 
+            "abstract", "as", "base", "bool", "break", "byte", "case", "catch", "char", "checked", "class", "const", "continue",
+            "decimal", "default", "delegate", "do", "double", "else", "enum", "event", "explicit", "extern", "false", "finally",
+            "fixed", "float", "for", "foreach", "goto", "if", "implicit", "in", "int", "interface", "internal", "is", "lock",
+            "long", "namespace", "new", "null", "object", "operator", "out", "override", "params", "private", "protected",
+            "public", "readonly", "ref", "return", "sbyte", "sealed", "short", "sizeof", "stackalloc", "static", "string",
+            "struct", "switch", "this", "throw", "true", "try", "typeof", "uint", "ulong", "unchecked", "unsafe", "ushort",
+            "using", "virtual", "void", "volatile", "while", "add", "and", "alias", "ascending", "args", "async", "await", "by",
+            "descending", "dynamic", "equals", "from", "get", "global", "group", "init", "into", "join", "let", "managed",
+            "nameof", "nint", "not", "notnull", "nuint", "on", "or", "orderby", "partial", "partial", "record", "remove",
+            "required", "select", "set", "unmanaged", "value", "var", "when", "where", "with", "yield",
             "control", "generator", "template", "end"
         };
 

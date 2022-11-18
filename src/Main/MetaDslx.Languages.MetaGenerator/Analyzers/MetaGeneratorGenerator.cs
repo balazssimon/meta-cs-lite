@@ -1,5 +1,5 @@
 ﻿using MetaDslx.CodeAnalysis.Text;
-using MetaDslx.Languages.MetaGenerator;
+using MetaDslx.Languages.MetaGenerator.Syntax;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using System;
@@ -10,8 +10,9 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading;
+using Roslyn.Utilities;
 
-namespace MetaDslx.CodeAnalysis.Analyzers
+namespace MetaDslx.Languages.MetaGenerator.Analyzers
 {
     [Generator]
     public class MetaGeneratorGenerator : IIncrementalGenerator

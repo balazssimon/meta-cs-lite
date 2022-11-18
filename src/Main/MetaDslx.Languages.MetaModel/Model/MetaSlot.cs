@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Text;
 
-namespace MetaDslx.CodeAnalysis.Analyzers.Modeling
+namespace MetaDslx.Languages.MetaModel.Model
 {
     internal struct MetaSlot
     {

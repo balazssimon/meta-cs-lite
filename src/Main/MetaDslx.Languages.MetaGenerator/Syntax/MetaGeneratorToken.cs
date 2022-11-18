@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
 
-namespace MetaDslx.Languages.MetaGenerator
+namespace MetaDslx.Languages.MetaGenerator.Syntax
 {
     public struct MetaGeneratorToken
     {

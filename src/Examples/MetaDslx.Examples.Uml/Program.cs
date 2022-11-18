@@ -18,9 +18,15 @@ for (int i = 0; i < 10 && i < diagnostics.Length; i++)
     Console.WriteLine(df.Format(diagnostics[i]));
 }
 
-foreach (var cls in model.Objects.Where(o => o.MetaType == typeof(Class)))
+foreach (var cls in model.Objects.Where(o => o.MetaType == typeof(Class)).OfType<Class>())
 {
-    Console.WriteLine(cls);
+    Console.WriteLine(cls.Name);
+    foreach (var attr in cls.OwnedAttribute)
+    {
+        Console.Write($"  {attr.Name}");
+        if (attr.IsMultivalued()) Console.WriteLine("[]");
+        else Console.WriteLine("");
+    }
 }
 
 var xmiSerializer = new UmlXmiSerializer();

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace MetaDslx.CodeAnalysis.Analyzers
+namespace Roslyn.Utilities
 {
-    internal static class RoslynUtils
+    public static class MetaDslxRoslynUtils
     {
         private static readonly Microsoft.CodeAnalysis.DiagnosticFormatter Formatter = new Microsoft.CodeAnalysis.DiagnosticFormatter();
 

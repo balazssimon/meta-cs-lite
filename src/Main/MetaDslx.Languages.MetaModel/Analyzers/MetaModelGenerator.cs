@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Text;
 
-namespace MetaDslx.CodeAnalysis.Analyzers
+namespace MetaDslx.Languages.MetaModel.Analyzers
 {
-    using MetaDslx.CodeAnalysis.Analyzers.Modeling;
+    using MetaDslx.Languages.MetaModel.Model;
     using MetaDslx.CodeAnalysis.PooledObjects;
     using Microsoft.CodeAnalysis;
     using Microsoft.CodeAnalysis.CSharp;
@@ -14,6 +14,7 @@ namespace MetaDslx.CodeAnalysis.Analyzers
     using System.Diagnostics;
     using System.Linq;
     using System.Xml.Linq;
+    using MetaDslx.Languages.MetaModel.Generators;
 
     [Generator]
     public class MetaModelGenerator : IIncrementalGenerator
@@ -44,7 +45,7 @@ namespace MetaDslx.CodeAnalysis.Analyzers
             var interfaceDeclarationSyntax = (InterfaceDeclarationSyntax)context.Node;
             var intf = (INamedTypeSymbol?)context.SemanticModel.GetDeclaredSymbol(interfaceDeclarationSyntax);
             if (intf == null) return null;
-            if (HasAttribute(intf, MetaModel.MetaModelAttributeName, false)) return interfaceDeclarationSyntax;
+            if (HasAttribute(intf, MetaModelInfo.MetaModelAttributeName, false)) return interfaceDeclarationSyntax;
             if (HasAttribute(intf, MetaClass.MetaClassAttributeName, true)) return interfaceDeclarationSyntax;
             return null;
         }
@@ -89,7 +90,7 @@ namespace MetaDslx.CodeAnalysis.Analyzers
                             modelNs = new ModelNamespace() { Namespace = ns };
                             models.Add(nsName, modelNs);
                         }
-                        if (HasAttribute(intf, MetaModel.MetaModelAttributeName, false))
+                        if (HasAttribute(intf, MetaModelInfo.MetaModelAttributeName, false))
                         {
                             if (modelNs.Model != null && modelNs.Model.Name != intf.Name)
                             {
@@ -115,13 +116,13 @@ namespace MetaDslx.CodeAnalysis.Analyzers
                     }
                 }
             }
-            var metaModels = ArrayBuilder<MetaModel>.GetInstance();
+            var metaModels = ArrayBuilder<MetaModelInfo>.GetInstance();
             foreach (var nsName in models.Keys)
             {
                 var modelNs = models[nsName];
                 if (modelNs.Model != null)
                 {
-                    var metaModel = new MetaModel(compilation, context, modelNs.Model, modelNs.Classes?.ToImmutable() ?? ImmutableArray<INamedTypeSymbol>.Empty);
+                    var metaModel = new MetaModelInfo(compilation, context, modelNs.Model, modelNs.Classes?.ToImmutable() ?? ImmutableArray<INamedTypeSymbol>.Empty);
                     metaModels.Add(metaModel);
                 }
                 else if (modelNs.Classes != null && modelNs.Classes.Count > 0)

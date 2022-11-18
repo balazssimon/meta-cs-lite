@@ -1,0 +1,9 @@
+﻿namespace MetaDslx.Languages.MetaCompiler
+
+generator Antlr4Generator
+
+template GenerateLexer()
+lexer grammar X;
+end template
+
+
