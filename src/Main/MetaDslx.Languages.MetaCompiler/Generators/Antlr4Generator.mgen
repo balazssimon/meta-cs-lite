@@ -2,8 +2,14 @@
 
 generator Antlr4Generator
 
-template GenerateLexer()
-lexer grammar X;
+using MetaDslx.Languages.MetaCompiler.Model
+
+template GenerateLexer(Language language)
+lexer grammar [language.Name]Lexer;
 end template
 
+
+template GenerateParser(Language language)
+parser grammar [language.Name]Parser;
+end template
 
