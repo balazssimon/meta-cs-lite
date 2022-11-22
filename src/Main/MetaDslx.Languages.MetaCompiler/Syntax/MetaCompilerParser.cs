@@ -218,8 +218,37 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
         {
             while (IsKeyword("using"))
             {
-                _tokens.NextToken();
-                language.Usings.Add(ParseQualifier("."));
+                var token = _tokens.NextToken();
+                var usingKind = UsingKind.None;
+                if (token.Kind == MetaCompilerTokenKind.Keyword)
+                {
+                    if (token.Text == "language") usingKind = UsingKind.Language;
+                    else Expected("language");
+                    _tokens.NextToken();
+                }
+                var usingDecl = new Using();
+                usingDecl.Kind = usingKind;
+                var aliasOrReferenceLocation = _tokens.CurrentLocation;
+                var aliasOrReference = ParseQualifier(".");
+                token = _tokens.CurrentToken;
+                if (token.Text == "=")
+                {
+                    _tokens.NextToken();
+                    usingDecl.ReferenceLocation = _tokens.CurrentLocation;
+                    usingDecl.Reference = ParseQualifier(".");
+                    if (aliasOrReference.Length != 1)
+                    {
+                        Error(aliasOrReferenceLocation, "Alias name was expected, but a qualified name was found.");
+                    }
+                    usingDecl.AliasLocation = aliasOrReferenceLocation;
+                    usingDecl.Alias = aliasOrReference.FirstOrDefault();
+                }
+                else
+                {
+                    usingDecl.Reference = aliasOrReference;
+                    usingDecl.ReferenceLocation = aliasOrReferenceLocation;
+                }
+                language.Usings.Add(usingDecl);
                 MatchSemicolon();
             }
         }

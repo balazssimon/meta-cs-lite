@@ -8,6 +8,10 @@ template GenerateLexer(Language language)
 lexer grammar [language.Name]Lexer;
 end template
 
+template GenerateFixedTokens(Grammar grammar)
+[foreach (var t: grammar.)]
+end template
+
 
 template GenerateParser(Language language)
 parser grammar [language.Name]Parser;

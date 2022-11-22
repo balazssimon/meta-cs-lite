@@ -16,11 +16,28 @@ namespace MetaDslx.Languages.MetaCompiler.Model
     public class Language : IElementWithLocation
     {
         public ImmutableArray<string> Namespace { get; set; }
-        public List<ImmutableArray<string>> Usings { get; } = new List<ImmutableArray<string>>();
+        public string QualifiedNamespace => string.Join(".", Namespace);
+        public List<Using> Usings { get; } = new List<Using>();
         public string Name { get; set; }
         public Grammar Grammar { get; set; }
 
         public Location Location { get; set; }
+    }
+
+    public enum UsingKind
+    {
+        None,
+        Language
+    }
+
+    public class Using
+    {
+        public UsingKind Kind { get; set; }
+        public string? Alias { get; set; }
+        public Location AliasLocation { get; set; }
+        public ImmutableArray<string> Reference { get; set; }
+        public string QualifiedReference => string.Join(".", Reference);
+        public Location ReferenceLocation { get; set; }
     }
 
     public enum AnnotationKind
@@ -66,13 +83,14 @@ namespace MetaDslx.Languages.MetaCompiler.Model
     {
         public AnnotationKind Kind { get; set; }
         public ImmutableArray<string> Name { get; set; }
+        public string QualifiedName => string.Join(".", Name);
         public List<AnnotationProperty> Properties { get; } = new List<AnnotationProperty>();
 
         public Location Location { get; set; }
 
         public override string ToString()
         {
-            return string.Join(".", Name);
+            return QualifiedName;
         }
     }
 
@@ -127,11 +145,12 @@ namespace MetaDslx.Languages.MetaCompiler.Model
     public class ParserRuleReferenceElement : ParserRuleElement
     {
         public ImmutableArray<string> RuleName { get; set; }
+        public string QualifiedName => string.Join(".", Name);
         public Rule Rule { get; set; }
 
         public override string ToString()
         {
-            return $"{Name}={string.Join(".", RuleName)}";
+            return $"{Name}={QualifiedName}";
         }
     }
 
@@ -192,12 +211,13 @@ namespace MetaDslx.Languages.MetaCompiler.Model
     {
         public override bool IsFixed => Rule?.IsFixed ?? false;
         public ImmutableArray<string> RuleName { get; set; }
+        public string QualifiedName => string.Join(".", RuleName);
         public LexerRule? Rule { get; set; }
         public Location Location { get; set; }
 
         public override string ToString()
         {
-            return string.Join(".", RuleName);
+            return QualifiedName;
         }
     }
 

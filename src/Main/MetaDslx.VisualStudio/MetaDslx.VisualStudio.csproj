@@ -94,7 +94,7 @@
   </ItemGroup>
   
   <ItemGroup>
-      <Content Include="LanguageServer\net6.0\**\*.*">
+      <Content Include="LanguageServer\net6.0\*.*">
           <IncludeInVSIX>true</IncludeInVSIX>
       </Content>
   </ItemGroup>
