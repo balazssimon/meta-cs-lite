@@ -30,6 +30,9 @@ namespace MetaDslx.Languages.MetaCompiler.Model
     {
         private readonly ComputedLanguage _language;
         private readonly Grammar _grammar;
+        private Dictionary<string, ComputedLexerRule> _fixedLexerRules;
+        private List<ComputedLexerRule> _lexerRules;
+        private List<ComputedParserRule> _parserRules;
 
         public ComputedGrammar(ComputedLanguage language, Grammar grammar)
         {
@@ -46,6 +49,18 @@ namespace MetaDslx.Languages.MetaCompiler.Model
         {
             throw new NotImplementedException();
         }
+
+        private void ComputeRules()
+        {
+            if (_parserRules is not null) return;
+            _fixedLexerRules = new Dictionary<string, ComputedLexerRule>();
+            _lexerRules = new List<ComputedLexerRule>();
+            _parserRules = new List<ComputedParserRule>();
+            foreach (var rule in _grammar.Rules)
+            {
+
+            }
+        }
     }
 
     internal class ComputedLexerRule
@@ -60,6 +75,11 @@ namespace MetaDslx.Languages.MetaCompiler.Model
             _grammar = grammar;
             _lexerRule = lexerRule;
         }
+
+        public bool IsHidden => _lexerRule.IsHidden;
+        public bool IsFragment => _lexerRule.IsFragment;
+        public bool IsFixed => _lexerRule.IsFixed;
+        public string? FixedValue => _lexerRule.FixedValue;
 
         public string? RegexString
         {
