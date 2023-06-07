@@ -9,6 +9,7 @@ using System.IO;
 using System.Text;
 using System.Threading;
 using System.Runtime.InteropServices.ComTypes;
+using System.Diagnostics;
 
 namespace MetaDslx.Languages.MetaCompiler.Antlr.Analyzers
 {
@@ -26,20 +27,27 @@ namespace MetaDslx.Languages.MetaCompiler.Antlr.Analyzers
 
             initContext.RegisterSourceOutput(pathsAndContents, (spc, pathAndContent) =>
             {
-                var filePath = Path.GetFileNameWithoutExtension(pathAndContent.path);
-                var csharpFilePath = $"MetaCompiler.{filePath}.g.cs";
-                var mtextCompiler = new MetaCompilerParser(pathAndContent.path, SourceText.From(pathAndContent.content));
-                var language = mtextCompiler.Parse();
-                if (mtextCompiler.Diagnostics.Length > 0)
+                try
                 {
-                    foreach (var diag in mtextCompiler.Diagnostics)
+                    var filePath = Path.GetFileNameWithoutExtension(pathAndContent.path);
+                    var csharpFilePath = $"MetaCompiler.{filePath}.g.cs";
+                    var mtextCompiler = new MetaCompilerParser(pathAndContent.path, SourceText.From(pathAndContent.content));
+                    var language = mtextCompiler.Parse();
+                    if (mtextCompiler.Diagnostics.Length > 0)
                     {
-                        spc.ReportDiagnostic(diag.ToMicrosoft());
+                        foreach (var diag in mtextCompiler.Diagnostics)
+                        {
+                            spc.ReportDiagnostic(diag.ToMicrosoft());
+                        }
+                    }
+                    else
+                    {
+                        GenerateAntlr(language, spc);
                     }
                 }
-                else
+                catch (Exception ex)
                 {
-                    GenerateAntlr(language, spc);
+                    Debug.WriteLine(ex);
                 }
             });
         }
@@ -54,20 +62,19 @@ namespace MetaDslx.Languages.MetaCompiler.Antlr.Analyzers
                 var lexerCode = generator.GenerateLexer(language);
                 if (lexerCode is not null)
                 {
-                    context.AddSource($"MetaCompiler.{language.Name}Lexer.g4", lexerCode);
-
-                    var lexerFile = Path.Combine(tempDirectory, $"{language.Name}Lexer.g4");
-                    File.WriteAllText(lexerFile, lexerCode);
+                    var lexerFileName = $"{language.Name}Lexer.g4";
+                    var lexerFilePath = Path.Combine(tempDirectory, lexerFileName);
+                    File.WriteAllText(lexerFilePath, lexerCode);
 
                     var antlrTool = new AntlrTool();
-                    antlrTool.GrammarFiles.Add(lexerFile);
-                    antlrTool.OutputPath = tempDirectory;
+                    antlrTool.GrammarFiles.Add(lexerFileName);
+                    antlrTool.WorkingDirectory = tempDirectory;
                     antlrTool.Execute(context.CancellationToken);
                     foreach (var antlrFile in antlrTool.GeneratedFiles)
                     {
-                        var fileName = Path.GetFileName(antlrFile);
-                        var code = File.ReadAllText(antlrFile);
-                        context.AddSource($"MetaCompiler.AntlrLexer.{fileName}.g.cs", code);
+                        var fileName = Path.GetFileNameWithoutExtension(antlrFile);
+                        var code = File.ReadAllText(Path.Combine(tempDirectory, antlrFile));
+                        context.AddSource($"MetaCompiler.Antlr.{fileName}.g.cs", code);
                     }
                 }
             }

@@ -15,7 +15,6 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\..\Main\MetaDslx.CodeAnalysis.Common\MetaDslx.CodeAnalysis.Common.csproj" />
-		<ProjectReference Include="..\..\Main\MetaDslx.CodeAnalysis.Analyzers\MetaDslx.CodeAnalysis.Analyzers.csproj" />
 	</ItemGroup>
 
 </Project>

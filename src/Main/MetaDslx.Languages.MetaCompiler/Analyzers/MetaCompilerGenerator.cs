@@ -8,6 +8,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Threading;
+using MetaDslx.Languages.MetaGenerator.Syntax;
+using System.Diagnostics;
 
 namespace MetaDslx.Languages.MetaCompiler.Analyzers
 {
@@ -22,22 +24,29 @@ namespace MetaDslx.Languages.MetaCompiler.Analyzers
                 .Select((text, cancellationToken) => (path: text.Path, content: text.GetText(cancellationToken)!.ToString()));
             initContext.RegisterSourceOutput(pathsAndContents, (spc, pathAndContent) =>
             {
-                var filePath = Path.GetFileNameWithoutExtension(pathAndContent.path);
-                var csharpFilePath = $"MetaCompiler.{filePath}.g.cs";
-                var mtextCompiler = new MetaCompilerParser(pathAndContent.path, SourceText.From(pathAndContent.content));
-                var language = mtextCompiler.Parse();
-                if (mtextCompiler.Diagnostics.Length > 0)
+                try
                 {
-                    foreach (var diag in mtextCompiler.Diagnostics)
+                    var filePath = Path.GetFileNameWithoutExtension(pathAndContent.path);
+                    var csharpFilePath = $"MetaCompiler.{filePath}.g.cs";
+                    var mtextCompiler = new MetaCompilerParser(pathAndContent.path, SourceText.From(pathAndContent.content));
+                    var language = mtextCompiler.Parse();
+                    if (mtextCompiler.Diagnostics.Length > 0)
                     {
-                        spc.ReportDiagnostic(diag.ToMicrosoft());
+                        foreach (var diag in mtextCompiler.Diagnostics)
+                        {
+                            spc.ReportDiagnostic(diag.ToMicrosoft());
+                        }
+                    }
+                    else
+                    {
+                        var generator = new RoslynApiGenerator();
+                        var syntaxNodesCode = generator.GenerateSyntaxNodes(language);
+                        spc.AddSource($"MetaCompiler.{filePath}.SyntaxNodes.g.cs", syntaxNodesCode);
                     }
                 }
-                else
+                catch (Exception ex)
                 {
-                    var generator = new RoslynApiGenerator();
-                    var syntaxNodesCode = generator.GenerateSyntaxNodes(language);
-                    spc.AddSource($"MetaCompiler.{filePath}.SyntaxNodes.g.cs", syntaxNodesCode);
+                    Debug.WriteLine(ex);
                 }
             });
         }

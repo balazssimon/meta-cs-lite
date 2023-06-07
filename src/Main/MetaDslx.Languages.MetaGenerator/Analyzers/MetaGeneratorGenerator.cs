@@ -25,20 +25,27 @@ namespace MetaDslx.Languages.MetaGenerator.Analyzers
                 .Select((text, cancellationToken) => (path: text.Path, content: text.GetText(cancellationToken)!.ToString()));
             initContext.RegisterSourceOutput(pathsAndContents, (spc, pathAndContent) =>
             {
-                var filePath = Path.GetFileNameWithoutExtension(pathAndContent.path);
-                var csharpFilePath = $"MetaGenerator.{filePath}.g.cs";
-                var mgenCompiler = new MetaGeneratorParser(pathAndContent.path, SourceText.From(pathAndContent.content));
-                var csharpCode = mgenCompiler.Compile();
-                if (mgenCompiler.Diagnostics.Length > 0)
+                try
                 {
-                    foreach (var diag in mgenCompiler.Diagnostics)
+                    var filePath = Path.GetFileNameWithoutExtension(pathAndContent.path);
+                    var csharpFilePath = $"MetaGenerator.{filePath}.g.cs";
+                    var mgenCompiler = new MetaGeneratorParser(pathAndContent.path, SourceText.From(pathAndContent.content));
+                    var csharpCode = mgenCompiler.Compile();
+                    if (mgenCompiler.Diagnostics.Length > 0)
                     {
-                        spc.ReportDiagnostic(diag.ToMicrosoft());
+                        foreach (var diag in mgenCompiler.Diagnostics)
+                        {
+                            spc.ReportDiagnostic(diag.ToMicrosoft());
+                        }
+                    }
+                    else
+                    {
+                        spc.AddSource(csharpFilePath, csharpCode);
                     }
                 }
-                else
+                catch (Exception ex)
                 {
-                    spc.AddSource(csharpFilePath, csharpCode);
+                    Debug.WriteLine(ex);
                 }
             });
         }

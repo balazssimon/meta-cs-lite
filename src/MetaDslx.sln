@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetaDslx.CodeAnalysis.Commo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetaDslx.Bootstrap.Core", "Bootstrap\MetaDslx.Bootstrap.Core\MetaDslx.Bootstrap.Core.csproj", "{BC479ABC-754D-4685-B5E3-EBE37BA66EEC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetaDslx.CodeAnalysis.Analyzers", "Main\MetaDslx.CodeAnalysis.Analyzers\MetaDslx.CodeAnalysis.Analyzers.csproj", "{328E490B-D892-420D-8E22-397AF278A9A5}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetaDslx.CodeAnalysis", "Main\MetaDslx.CodeAnalysis\MetaDslx.CodeAnalysis.csproj", "{D89EFDC3-9EF5-4F8D-9612-133CE1F6F8A7}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetaDslx.Languages.MetaCompiler.Antlr", "Main\MetaDslx.Languages.MetaCompiler.Antlr\MetaDslx.Languages.MetaCompiler.Antlr.csproj", "{FF66A465-A45B-4129-B159-9385A685481A}"
@@ -73,14 +71,6 @@ Global
 		{BC479ABC-754D-4685-B5E3-EBE37BA66EEC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BC479ABC-754D-4685-B5E3-EBE37BA66EEC}.Release|x86.ActiveCfg = Release|Any CPU
 		{BC479ABC-754D-4685-B5E3-EBE37BA66EEC}.Release|x86.Build.0 = Release|Any CPU
-		{328E490B-D892-420D-8E22-397AF278A9A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{328E490B-D892-420D-8E22-397AF278A9A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{328E490B-D892-420D-8E22-397AF278A9A5}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{328E490B-D892-420D-8E22-397AF278A9A5}.Debug|x86.Build.0 = Debug|Any CPU
-		{328E490B-D892-420D-8E22-397AF278A9A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{328E490B-D892-420D-8E22-397AF278A9A5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{328E490B-D892-420D-8E22-397AF278A9A5}.Release|x86.ActiveCfg = Release|Any CPU
-		{328E490B-D892-420D-8E22-397AF278A9A5}.Release|x86.Build.0 = Release|Any CPU
 		{D89EFDC3-9EF5-4F8D-9612-133CE1F6F8A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D89EFDC3-9EF5-4F8D-9612-133CE1F6F8A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D89EFDC3-9EF5-4F8D-9612-133CE1F6F8A7}.Debug|x86.ActiveCfg = Debug|Any CPU

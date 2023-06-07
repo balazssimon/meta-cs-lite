@@ -15,6 +15,7 @@ namespace MetaDslx.Languages.MetaModel.Analyzers
     using System.Linq;
     using System.Xml.Linq;
     using MetaDslx.Languages.MetaModel.Generators;
+    using System.IO;
 
     [Generator]
     public class MetaModelGenerator : IIncrementalGenerator
@@ -71,70 +72,77 @@ namespace MetaDslx.Languages.MetaModel.Analyzers
 
         private static void Execute(Compilation compilation, ImmutableArray<InterfaceDeclarationSyntax> metaInterfaces, SourceProductionContext context)
         {
-            if (metaInterfaces.IsDefaultOrEmpty)
+            try
             {
-                return;
-            }
-            var models = new Dictionary<string, ModelNamespace>();
-            foreach (var metaInterface in metaInterfaces)
-            {
-                var sm = compilation.GetSemanticModel(metaInterface.SyntaxTree);
-                var intf = sm.GetDeclaredSymbol(metaInterface);
-                if (intf != null)
+                if (metaInterfaces.IsDefaultOrEmpty)
                 {
-                    var ns = intf.ContainingNamespace;
-                    if (ns != null)
+                    return;
+                }
+                var models = new Dictionary<string, ModelNamespace>();
+                foreach (var metaInterface in metaInterfaces)
+                {
+                    var sm = compilation.GetSemanticModel(metaInterface.SyntaxTree);
+                    var intf = sm.GetDeclaredSymbol(metaInterface);
+                    if (intf != null)
                     {
-                        var nsName = ns.ToDisplayString();
-                        if (!models.TryGetValue(nsName, out var modelNs))
+                        var ns = intf.ContainingNamespace;
+                        if (ns != null)
                         {
-                            modelNs = new ModelNamespace() { Namespace = ns };
-                            models.Add(nsName, modelNs);
-                        }
-                        if (HasAttribute(intf, MetaModelInfo.MetaModelAttributeName, false))
-                        {
-                            if (modelNs.Model != null && modelNs.Model.Name != intf.Name)
+                            var nsName = ns.ToDisplayString();
+                            if (!models.TryGetValue(nsName, out var modelNs))
                             {
-                                context.ReportDiagnostic(Diagnostic.Create(MultipleMetaModelsInNamespace, intf.Locations.FirstOrDefault(), modelNs.Model.Name, nsName, intf.Name));
+                                modelNs = new ModelNamespace() { Namespace = ns };
+                                models.Add(nsName, modelNs);
                             }
-                            else if (modelNs.Model == null)
+                            if (HasAttribute(intf, MetaModelInfo.MetaModelAttributeName, false))
                             {
-                                modelNs.Model = intf;
+                                if (modelNs.Model != null && modelNs.Model.Name != intf.Name)
+                                {
+                                    context.ReportDiagnostic(Diagnostic.Create(MultipleMetaModelsInNamespace, intf.Locations.FirstOrDefault(), modelNs.Model.Name, nsName, intf.Name));
+                                }
+                                else if (modelNs.Model == null)
+                                {
+                                    modelNs.Model = intf;
+                                }
+                                if (HasAttribute(intf, MetaClass.MetaClassAttributeName, true))
+                                {
+                                    context.ReportDiagnostic(Diagnostic.Create(MetaModelAndClassAttributesMixed, intf.Locations.FirstOrDefault()));
+                                }
                             }
-                            if (HasAttribute(intf, MetaClass.MetaClassAttributeName, true))
+                            else if (HasAttribute(intf, MetaClass.MetaClassAttributeName, true))
                             {
-                                context.ReportDiagnostic(Diagnostic.Create(MetaModelAndClassAttributesMixed, intf.Locations.FirstOrDefault()));
+                                if (modelNs.Classes == null)
+                                {
+                                    modelNs.Classes = ArrayBuilder<INamedTypeSymbol>.GetInstance();
+                                }
+                                modelNs.Classes.Add(intf);
                             }
-                        }
-                        else if (HasAttribute(intf, MetaClass.MetaClassAttributeName, true))
-                        {
-                            if (modelNs.Classes == null)
-                            {
-                                modelNs.Classes = ArrayBuilder<INamedTypeSymbol>.GetInstance();
-                            }
-                            modelNs.Classes.Add(intf);
                         }
                     }
                 }
+                var metaModels = ArrayBuilder<MetaModelInfo>.GetInstance();
+                foreach (var nsName in models.Keys)
+                {
+                    var modelNs = models[nsName];
+                    if (modelNs.Model != null)
+                    {
+                        var metaModel = new MetaModelInfo(compilation, context, modelNs.Model, modelNs.Classes?.ToImmutable() ?? ImmutableArray<INamedTypeSymbol>.Empty);
+                        metaModels.Add(metaModel);
+                    }
+                    else if (modelNs.Classes != null && modelNs.Classes.Count > 0)
+                    {
+                        context.ReportDiagnostic(Diagnostic.Create(MetaModelIsMissingInNamespace, modelNs.Classes[0].Locations.FirstOrDefault(), nsName, modelNs.Classes[0].Name));
+                    }
+                    modelNs.Classes?.Free();
+                }
+                // TODO: separate generated source files
+                var metaModelImplementationCode = ModelImplementationGenerator.Generate(metaModels.ToImmutableAndFree());
+                context.AddSource("MetaModel.Implementation.g.cs", SourceText.From(metaModelImplementationCode, Encoding.UTF8));
             }
-            var metaModels = ArrayBuilder<MetaModelInfo>.GetInstance();
-            foreach (var nsName in models.Keys)
+            catch (Exception ex)
             {
-                var modelNs = models[nsName];
-                if (modelNs.Model != null)
-                {
-                    var metaModel = new MetaModelInfo(compilation, context, modelNs.Model, modelNs.Classes?.ToImmutable() ?? ImmutableArray<INamedTypeSymbol>.Empty);
-                    metaModels.Add(metaModel);
-                }
-                else if (modelNs.Classes != null && modelNs.Classes.Count > 0)
-                {
-                    context.ReportDiagnostic(Diagnostic.Create(MetaModelIsMissingInNamespace, modelNs.Classes[0].Locations.FirstOrDefault(), nsName, modelNs.Classes[0].Name));
-                }
-                modelNs.Classes?.Free();
+                Debug.WriteLine(ex);
             }
-            // TODO: separate generated source files
-            var metaModelImplementationCode = ModelImplementationGenerator.Generate(metaModels.ToImmutableAndFree());
-            context.AddSource("MetaModel.Implementation.g.cs", SourceText.From(metaModelImplementationCode, Encoding.UTF8));
         }
 
         private class ModelNamespace

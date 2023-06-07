@@ -5,3 +5,4 @@ language Test;
 main: Int;
 
 Int: 'int';
+

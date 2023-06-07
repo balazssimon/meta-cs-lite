@@ -44,6 +44,6 @@
     <MicrosoftSourceLinkGitHubVersion>1.1.1</MicrosoftSourceLinkGitHubVersion>
     <MicrosoftNetDskTestVersion>16.6.1</MicrosoftNetDskTestVersion>
     <XUnitVersion>2.4.1</XUnitVersion>
-    <Antlr4RuntimeStandardVersion>4.11.1</Antlr4RuntimeStandardVersion>
+    <Antlr4RuntimeStandardVersion>4.13.0</Antlr4RuntimeStandardVersion>
   </PropertyGroup>
 </Project>
