@@ -1,8 +1,9 @@
-﻿using System;
+﻿using MetaDslx.CodeAnalysis;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace MetaDslx.CodeAnalysis.Antlr4
+namespace MetaDslx.Languages.MetaCompiler.Antlr
 {
     public interface ICachedRuleContext
     {

@@ -1,4 +1,5 @@
 ﻿using Antlr4.Runtime;
+using MetaDslx.CodeAnalysis;
 using MetaDslx.CodeAnalysis.Syntax.InternalSyntax;
 using MetaDslx.CodeAnalysis.Text;
 using System;
@@ -7,27 +8,27 @@ using System.IO;
 using System.Text;
 using System.Threading;
 
-namespace MetaDslx.CodeAnalysis.Antlr4
+namespace MetaDslx.Languages.MetaCompiler.Antlr
 {
-    public abstract class Antlr4SyntaxParser : SyntaxParser, IAntlrErrorListener<IToken>
+    public abstract class AntlrSyntaxParser : SyntaxParser, IAntlrErrorListener<IToken>
     {
-        private readonly Antlr4LexerBasedTokenStream _tokenStream;
-        private readonly Antlr4Parser _parser;
+        private readonly AntlrLexerBasedTokenStream _tokenStream;
+        private readonly AntlrParser _parser;
         private readonly Dictionary<RuleContext, GreenNode> _nodeCache;
 
-        protected Antlr4SyntaxParser(Antlr4SyntaxLexer lexer, SyntaxNode? oldTree, ParseData? oldParseData, IEnumerable<TextChangeRange>? changes, CancellationToken cancellationToken)
+        protected AntlrSyntaxParser(AntlrSyntaxLexer lexer, SyntaxNode? oldTree, ParseData? oldParseData, IEnumerable<TextChangeRange>? changes, CancellationToken cancellationToken)
             : base(lexer, oldTree, oldParseData, changes, cancellationToken)
         {
-            _tokenStream = new Antlr4LexerBasedTokenStream(lexer);
-            _parser = ((IAntlr4SyntaxFactory)Language.InternalSyntaxFactory).CreateAntlr4Parser(_tokenStream);
+            _tokenStream = new AntlrLexerBasedTokenStream(lexer);
+            _parser = ((IAntlrSyntaxFactory)Language.InternalSyntaxFactory).CreateAntlrParser(_tokenStream);
             _parser.RemoveErrorListeners();
             _parser.AddErrorListener(this);
             _parser.ErrorHandler = new DefaultErrorStrategy();
             _nodeCache = new Dictionary<RuleContext, GreenNode>();
         }
 
-        public Antlr4Parser Antlr4Parser => _parser;
-        public new Antlr4SyntaxLexer Lexer => (Antlr4SyntaxLexer)base.Lexer;
+        public AntlrParser AntlrParser => _parser;
+        public new AntlrSyntaxLexer Lexer => (AntlrSyntaxLexer)base.Lexer;
 
         public bool IsIncremental => false;
         public SyntaxNode? CurrentNode => null;
@@ -80,7 +81,7 @@ namespace MetaDslx.CodeAnalysis.Antlr4
 
         protected override ParserStateManager? CreateStateManager()
         {
-            return new Antlr4ParserStateManager(this);
+            return new AntlrParserStateManager(this);
         }
 
         public void SyntaxError(TextWriter output, IRecognizer recognizer, IToken offendingSymbol, int line, int charPositionInLine, string msg, RecognitionException e)
@@ -102,7 +103,7 @@ namespace MetaDslx.CodeAnalysis.Antlr4
             this.AddError(new SyntaxDiagnosticInfo(position, width, ErrorCode.ERR_SyntaxError, msg));
         }
 
-        public InternalSyntaxToken ConsumeRealToken(Antlr4SyntaxToken token)
+        public InternalSyntaxToken ConsumeRealToken(AntlrSyntaxToken token)
         {
             return _tokenStream.ConsumeRealToken(token, this);
         }
@@ -112,49 +113,49 @@ namespace MetaDslx.CodeAnalysis.Antlr4
             return _tokenStream.ConsumeMissingToken(rawKind, this);
         }
 
-        protected class Antlr4ParserStateManager : ParserStateManager
+        protected class AntlrParserStateManager : ParserStateManager
         {
-            public Antlr4ParserStateManager(Antlr4SyntaxParser parser)
+            public AntlrParserStateManager(AntlrSyntaxParser parser)
                 : base(parser)
             {
             }
 
-            public new Antlr4SyntaxParser Parser => (Antlr4SyntaxParser)base.Parser;
-            public Antlr4Parser Antlr4Parser => Parser.Antlr4Parser;
+            public new AntlrSyntaxParser Parser => (AntlrSyntaxParser)base.Parser;
+            public AntlrParser AntlrParser => Parser.AntlrParser;
 
             protected override int ComputeStateHash()
             {
-                return this.Antlr4Parser.State.GetHashCode();
+                return this.AntlrParser.State.GetHashCode();
             }
 
             protected override bool IsInState(ParserState? state)
             {
-                var antlr4Parser = Antlr4Parser;
-                if (state == null) return antlr4Parser.State == -1;
-                var antlr4State = (Antlr4ParserState)state;
-                if (antlr4Parser.State != antlr4State.State) return false;
+                var antlrParser = AntlrParser;
+                if (state == null) return antlrParser.State == -1;
+                var antlrState = (AntlrParserState)state;
+                if (antlrParser.State != antlrState.State) return false;
                 return true;
             }
 
             protected override void RestoreState(ParserState? state)
             {
-                var antlr4State = state as Antlr4ParserState;
-                var antlr4Parser = Antlr4Parser;
-                if (antlr4State != null)
+                var antlrState = state as AntlrParserState;
+                var antlrParser = AntlrParser;
+                if (antlrState != null)
                 {
-                    antlr4Parser.State = antlr4State.State;
+                    antlrParser.State = antlrState.State;
                 }
                 else
                 {
-                    antlr4Parser.State = -1;
+                    antlrParser.State = -1;
                 }
             }
 
             protected override ParserState? SaveState(int hashCode)
             {
-                var antlr4Parser = Antlr4Parser;
-                if (antlr4Parser.State == -1) return null;
-                else return new Antlr4ParserState(hashCode, antlr4Parser.State);
+                var antlrParser = AntlrParser;
+                if (antlrParser.State == -1) return null;
+                else return new AntlrParserState(hashCode, antlrParser.State);
             }
         }
 

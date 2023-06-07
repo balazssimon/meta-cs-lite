@@ -1,11 +1,10 @@
 ﻿using MetaDslx.Bootstrap.Antlr4.Sandy;
 using MetaDslx.Bootstrap.Antlr4.Sandy.Syntax.InternalSyntax;
-using MetaDslx.CodeAnalysis.Antlr4;
 using MetaDslx.CodeAnalysis.Syntax.InternalSyntax;
 using MetaDslx.CodeAnalysis.Text;
 using System;
 
-namespace MetaDslx.Bootstrap.Antlr4
+namespace MetaDslx.Bootstrap.Antlr
 {
     class Program
     {

@@ -3,13 +3,13 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace MetaDslx.CodeAnalysis.Antlr4
+namespace MetaDslx.Languages.MetaCompiler.Antlr
 {
-    public class Antlr4ParserState : ParserState
+    public class AntlrParserState : ParserState
     {
         public readonly int State;
 
-        public Antlr4ParserState(int hashCode, int state)
+        public AntlrParserState(int hashCode, int state)
             : base(hashCode)
         {
             State = state;

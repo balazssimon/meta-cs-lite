@@ -4,11 +4,11 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace MetaDslx.CodeAnalysis.Antlr4
+namespace MetaDslx.Languages.MetaCompiler.Antlr
 {
-    internal static class Antlr4SyntaxKind
+    internal static class AntlrSyntaxKind
     {
-        public static int ToAntlr4(int rawKind)
+        public static int ToAntlr(int rawKind)
         {
             if (rawKind == (int)InternalSyntaxKind.Eof) return TokenConstants.EOF;
             else if (rawKind == (int)InternalSyntaxKind.BadToken) return TokenConstants.InvalidType;
@@ -16,12 +16,12 @@ namespace MetaDslx.CodeAnalysis.Antlr4
             else throw new ArgumentOutOfRangeException(nameof(rawKind));
         }
 
-        public static int FromAntlr4(int antlr4TokenKind)
+        public static int FromAntlr(int antlrTokenKind)
         {
-            if (antlr4TokenKind == TokenConstants.EOF) return (int)InternalSyntaxKind.Eof;
-            else if (antlr4TokenKind == TokenConstants.InvalidType) return (int)InternalSyntaxKind.BadToken;
-            else if (antlr4TokenKind >= 1) return antlr4TokenKind + (int)InternalSyntaxKind.LastWellKnownSyntaxKind;
-            else throw new ArgumentOutOfRangeException(nameof(antlr4TokenKind));
+            if (antlrTokenKind == TokenConstants.EOF) return (int)InternalSyntaxKind.Eof;
+            else if (antlrTokenKind == TokenConstants.InvalidType) return (int)InternalSyntaxKind.BadToken;
+            else if (antlrTokenKind >= 1) return antlrTokenKind + (int)InternalSyntaxKind.LastWellKnownSyntaxKind;
+            else throw new ArgumentOutOfRangeException(nameof(antlrTokenKind));
         }
     }
 }

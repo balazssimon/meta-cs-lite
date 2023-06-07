@@ -4,13 +4,13 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace MetaDslx.CodeAnalysis.Antlr4
+namespace MetaDslx.Languages.MetaCompiler.Antlr
 {
-    public class Antlr4ParserBasedTokenStream : ITokenStream
+    public class AntlrParserBasedTokenStream : ITokenStream
     {
-        private readonly Antlr4SyntaxParser _parser;
+        private readonly AntlrSyntaxParser _parser;
 
-        public Antlr4ParserBasedTokenStream(Antlr4SyntaxParser parser)
+        public AntlrParserBasedTokenStream(AntlrSyntaxParser parser)
         {
             _parser = parser;
         }

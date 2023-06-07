@@ -28,11 +28,12 @@ namespace MetaDslx.Languages.MetaModel.Analyzers
 
         public void Initialize(IncrementalGeneratorInitializationContext context)
         {
-            IncrementalValuesProvider<InterfaceDeclarationSyntax?> interfaceDeclarations = 
+            IncrementalValuesProvider<InterfaceDeclarationSyntax> interfaceDeclarations = 
                 context.SyntaxProvider.CreateSyntaxProvider(
                     predicate: static (s, _) => IsSyntaxTargetForGeneration(s),
                     transform: static (ctx, _) => GetSemanticTargetForGeneration(ctx))
-                .Where(static intf => intf is not null);
+                .Where(static intf => intf is not null)
+                .Select(static (intf, _) => intf!);
             IncrementalValueProvider<(Compilation, ImmutableArray<InterfaceDeclarationSyntax>)> compilationAndInterfaces
                  = context.CompilationProvider.Combine(interfaceDeclarations.Collect());
             context.RegisterSourceOutput(compilationAndInterfaces, static (spc, source) => Execute(source.Item1, source.Item2, spc));
@@ -43,7 +44,7 @@ namespace MetaDslx.Languages.MetaModel.Analyzers
         private static InterfaceDeclarationSyntax? GetSemanticTargetForGeneration(GeneratorSyntaxContext context)
         {
             var interfaceDeclarationSyntax = (InterfaceDeclarationSyntax)context.Node;
-            var intf = (INamedTypeSymbol?)context.SemanticModel.GetDeclaredSymbol(interfaceDeclarationSyntax);
+            var intf = context.SemanticModel.GetDeclaredSymbol(interfaceDeclarationSyntax);
             if (intf == null) return null;
             if (HasAttribute(intf, MetaModelInfo.MetaModelAttributeName, false)) return interfaceDeclarationSyntax;
             if (HasAttribute(intf, MetaClass.MetaClassAttributeName, true)) return interfaceDeclarationSyntax;
@@ -78,7 +79,7 @@ namespace MetaDslx.Languages.MetaModel.Analyzers
             foreach (var metaInterface in metaInterfaces)
             {
                 var sm = compilation.GetSemanticModel(metaInterface.SyntaxTree);
-                var intf = sm.GetDeclaredSymbol(metaInterface) as INamedTypeSymbol;
+                var intf = sm.GetDeclaredSymbol(metaInterface);
                 if (intf != null)
                 {
                     var ns = intf.ContainingNamespace;
@@ -131,6 +132,7 @@ namespace MetaDslx.Languages.MetaModel.Analyzers
                 }
                 modelNs.Classes?.Free();
             }
+            // TODO: separate generated source files
             var metaModelImplementationCode = ModelImplementationGenerator.Generate(metaModels.ToImmutableAndFree());
             context.AddSource("MetaModel.Implementation.g.cs", SourceText.From(metaModelImplementationCode, Encoding.UTF8));
         }

@@ -5,15 +5,15 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace MetaDslx.CodeAnalysis.Antlr4
+namespace MetaDslx.Languages.MetaCompiler.Antlr
 {
-    public class Antlr4InputStream : ICharStream, IIntStream
+    public class AntlrInputStream : ICharStream, IIntStream
     {
-        private readonly Antlr4SyntaxLexer _lexer;
+        private readonly AntlrSyntaxLexer _lexer;
         private readonly SlidingTextWindow _textWindow;
         private int _resetCounter;
 
-        public Antlr4InputStream(Antlr4SyntaxLexer lexer, SlidingTextWindow textWindow)
+        public AntlrInputStream(AntlrSyntaxLexer lexer, SlidingTextWindow textWindow)
         {
             _textWindow = textWindow;
             _lexer = lexer;

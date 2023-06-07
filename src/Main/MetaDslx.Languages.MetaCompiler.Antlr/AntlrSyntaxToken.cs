@@ -4,16 +4,16 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace MetaDslx.CodeAnalysis.Antlr4
+namespace MetaDslx.Languages.MetaCompiler.Antlr
 {
-    public class Antlr4SyntaxToken : IToken
+    public class AntlrSyntaxToken : IToken
     {
         private readonly int _index;
         private readonly int _position;
         private readonly int _line;
         private readonly int _column;
 
-        public Antlr4SyntaxToken(InternalSyntaxToken green, int index, int position, int line, int column)
+        public AntlrSyntaxToken(InternalSyntaxToken green, int index, int position, int line, int column)
         {
             Green = green;
             _index = index;
@@ -26,7 +26,7 @@ namespace MetaDslx.CodeAnalysis.Antlr4
 
         public string Text => Green.Text;
 
-        public int Type => Antlr4SyntaxKind.ToAntlr4(Green.RawKind);
+        public int Type => AntlrSyntaxKind.ToAntlr(Green.RawKind);
 
         public int Line => _line + 1;
 

@@ -6,11 +6,11 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Text;
 
-namespace MetaDslx.CodeAnalysis.Antlr4
+namespace MetaDslx.Languages.MetaCompiler.Antlr
 {
-    public class Antlr4LexerState : LexerState
+    public class AntlrLexerState : LexerState
     {
-        public Antlr4LexerState(int hashCode, int mode, int[]? modeStackReversed)
+        public AntlrLexerState(int hashCode, int mode, int[]? modeStackReversed)
             : base(hashCode)
         {
             this.Mode = mode;

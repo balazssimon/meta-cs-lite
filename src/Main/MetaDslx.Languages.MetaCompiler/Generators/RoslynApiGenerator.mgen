@@ -1,0 +1,10 @@
+﻿namespace MetaDslx.Languages.MetaCompiler.Generators
+
+generator RoslynApiGenerator
+
+using MetaDslx.Languages.MetaCompiler.Model
+using System.Linq
+
+template GenerateSyntaxNodes(Language language)
+end template
+

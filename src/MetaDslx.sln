@@ -11,11 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetaDslx.CodeAnalysis.Analy
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetaDslx.CodeAnalysis", "Main\MetaDslx.CodeAnalysis\MetaDslx.CodeAnalysis.csproj", "{D89EFDC3-9EF5-4F8D-9612-133CE1F6F8A7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetaDslx.CodeAnalysis.Antlr4", "Main\MetaDslx.CodeAnalysis.Antlr4\MetaDslx.CodeAnalysis.Antlr4.csproj", "{FF66A465-A45B-4129-B159-9385A685481A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetaDslx.Languages.MetaCompiler.Antlr", "Main\MetaDslx.Languages.MetaCompiler.Antlr\MetaDslx.Languages.MetaCompiler.Antlr.csproj", "{FF66A465-A45B-4129-B159-9385A685481A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetaDslx.Bootstrap.Antlr4", "Bootstrap\MetaDslx.Bootstrap.Antlr4\MetaDslx.Bootstrap.Antlr4.csproj", "{5BC0FE38-F930-4CD7-A13F-4178D2B5C3AE}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetaDslx.Languages.Core", "Main\MetaDslx.Languages.Core\MetaDslx.Languages.Core.csproj", "{D5B99DBB-6CB5-470A-9D8E-08EB837BF4EE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetaDslx.Bootstrap.Antlr", "Bootstrap\MetaDslx.Bootstrap.Antlr\MetaDslx.Bootstrap.Antlr.csproj", "{5BC0FE38-F930-4CD7-A13F-4178D2B5C3AE}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetaDslx.Bootstrap.CodeGeneration", "Bootstrap\MetaDslx.Bootstrap.CodeGeneration\MetaDslx.Bootstrap.CodeGeneration.csproj", "{39592F1C-C6DF-4552-BF66-698E8E8DA95E}"
 EndProject
@@ -44,7 +42,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetaDslx.Languages.MetaComp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetaDslx.Bootstrap.MetaCompiler", "Bootstrap\MetaDslx.Bootstrap.MetaCompiler\MetaDslx.Bootstrap.MetaCompiler.csproj", "{D2ED2231-2234-4AE8-8BEF-4B77D04B3390}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetaDslx.Languages.MetaModel", "Main\MetaDslx.Languages.MetaModel\MetaDslx.Languages.MetaModel.csproj", "{441E9F61-FCD4-44DA-A9F4-7124E1214C55}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetaDslx.Languages.MetaModel", "Main\MetaDslx.Languages.MetaModel\MetaDslx.Languages.MetaModel.csproj", "{441E9F61-FCD4-44DA-A9F4-7124E1214C55}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetaDslx.CodeAnalysis.Providers.Antlr", "Main\MetaDslx.CodeAnalysis.Providers.Antlr\MetaDslx.CodeAnalysis.Providers.Antlr.csproj", "{05CC7340-0ACF-410A-BCD6-36820686E028}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D89EFDC3-9EF5-4F8D-9612-133CE1F6F8A7} = {D89EFDC3-9EF5-4F8D-9612-133CE1F6F8A7}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -102,14 +105,6 @@ Global
 		{5BC0FE38-F930-4CD7-A13F-4178D2B5C3AE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5BC0FE38-F930-4CD7-A13F-4178D2B5C3AE}.Release|x86.ActiveCfg = Release|Any CPU
 		{5BC0FE38-F930-4CD7-A13F-4178D2B5C3AE}.Release|x86.Build.0 = Release|Any CPU
-		{D5B99DBB-6CB5-470A-9D8E-08EB837BF4EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D5B99DBB-6CB5-470A-9D8E-08EB837BF4EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D5B99DBB-6CB5-470A-9D8E-08EB837BF4EE}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{D5B99DBB-6CB5-470A-9D8E-08EB837BF4EE}.Debug|x86.Build.0 = Debug|Any CPU
-		{D5B99DBB-6CB5-470A-9D8E-08EB837BF4EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D5B99DBB-6CB5-470A-9D8E-08EB837BF4EE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D5B99DBB-6CB5-470A-9D8E-08EB837BF4EE}.Release|x86.ActiveCfg = Release|Any CPU
-		{D5B99DBB-6CB5-470A-9D8E-08EB837BF4EE}.Release|x86.Build.0 = Release|Any CPU
 		{39592F1C-C6DF-4552-BF66-698E8E8DA95E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{39592F1C-C6DF-4552-BF66-698E8E8DA95E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{39592F1C-C6DF-4552-BF66-698E8E8DA95E}.Debug|x86.ActiveCfg = Debug|Any CPU
@@ -214,6 +209,14 @@ Global
 		{441E9F61-FCD4-44DA-A9F4-7124E1214C55}.Release|Any CPU.Build.0 = Release|Any CPU
 		{441E9F61-FCD4-44DA-A9F4-7124E1214C55}.Release|x86.ActiveCfg = Release|Any CPU
 		{441E9F61-FCD4-44DA-A9F4-7124E1214C55}.Release|x86.Build.0 = Release|Any CPU
+		{05CC7340-0ACF-410A-BCD6-36820686E028}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05CC7340-0ACF-410A-BCD6-36820686E028}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05CC7340-0ACF-410A-BCD6-36820686E028}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{05CC7340-0ACF-410A-BCD6-36820686E028}.Debug|x86.Build.0 = Debug|Any CPU
+		{05CC7340-0ACF-410A-BCD6-36820686E028}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05CC7340-0ACF-410A-BCD6-36820686E028}.Release|Any CPU.Build.0 = Release|Any CPU
+		{05CC7340-0ACF-410A-BCD6-36820686E028}.Release|x86.ActiveCfg = Release|Any CPU
+		{05CC7340-0ACF-410A-BCD6-36820686E028}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

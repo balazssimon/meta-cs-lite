@@ -432,8 +432,18 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                 }
                 else
                 {
-                    var nextToken1 = _tokens.PeekToken(1);
-                    var nextToken2 = _tokens.PeekToken(2);
+                    var nextToken1 = MetaCompilerToken.None;
+                    var nextToken2 = MetaCompilerToken.None;
+                    try
+                    {
+                        _tokens.IgnoreWhitespaceAndComments = false;
+                        nextToken1 = _tokens.PeekToken(1);
+                        nextToken2 = _tokens.PeekToken(2);
+                    }
+                    finally
+                    {
+                        _tokens.IgnoreWhitespaceAndComments = true;
+                    }
                     var nextToken3 = _tokens.PeekToken(3);
                     if (token.Kind == MetaCompilerTokenKind.Character && nextToken1.Text == "." && nextToken2.Text == "." && nextToken3.Kind == MetaCompilerTokenKind.Character)
                     {
@@ -580,8 +590,18 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                 var propertyAssignment = AssignmentOperator.Assign;
                 var propertyAnnotations = new List<Annotation>();
                 var negated = false;
-                var nextToken = _tokens.PeekToken(1);
-                var nextToken2 = _tokens.PeekToken(2);
+                var nextToken = MetaCompilerToken.None;
+                var nextToken2 = MetaCompilerToken.None;
+                try
+                {
+                    _tokens.IgnoreWhitespaceAndComments = false;
+                    nextToken = _tokens.PeekToken(1);
+                    nextToken2 = _tokens.PeekToken(2);
+                }
+                finally
+                {
+                    _tokens.IgnoreWhitespaceAndComments = true;
+                }
                 if (token.Kind == MetaCompilerTokenKind.Identifier && (nextToken.Text == "=" || (nextToken2.Text == "=" && (nextToken.Text == "?" || nextToken.Text == "!" || nextToken.Text == "+"))))
                 {
                     propertyLocation = _tokens.CurrentLocation;
@@ -737,9 +757,9 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
             int parenthesisCounter = 0;
             int bracketsCounter = 0;
             int bracesCounter = 0;
-            _tokens.IgnoreWhitespaceAndComments = false;
             try
             {
+                _tokens.IgnoreWhitespaceAndComments = false;
                 var token = _tokens.CurrentToken;
                 while (!_tokens.EndOfFile && (parenthesisCounter > 0 || bracketsCounter > 0 || bracesCounter > 0 || !untilOther.Contains(token.Text)))
                 {

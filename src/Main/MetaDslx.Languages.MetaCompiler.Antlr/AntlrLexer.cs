@@ -7,11 +7,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace MetaDslx.CodeAnalysis.Antlr4
+namespace MetaDslx.Languages.MetaCompiler.Antlr
 {
-    public abstract class Antlr4Lexer : Lexer
+    public abstract class AntlrLexer : Lexer
     {
-        protected Antlr4Lexer(ICharStream input, TextWriter output, TextWriter errorOutput)
+        protected AntlrLexer(ICharStream input, TextWriter output, TextWriter errorOutput)
             : base(input, output, errorOutput)
         {
         }

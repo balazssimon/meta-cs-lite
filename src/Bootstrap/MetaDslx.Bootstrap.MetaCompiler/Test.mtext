@@ -1,0 +1,7 @@
+﻿namespace X;
+
+language Test;
+
+main: Int;
+
+Int: 'int';

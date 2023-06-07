@@ -4,18 +4,18 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace MetaDslx.CodeAnalysis.Antlr4
+namespace MetaDslx.Languages.MetaCompiler.Antlr
 {
-    public abstract class Antlr4Parser : Parser
+    public abstract class AntlrParser : Parser
     {
-        internal Antlr4SyntaxParser _incrementalParser;
+        internal AntlrSyntaxParser _incrementalParser;
 
-        public Antlr4Parser(ITokenStream input, TextWriter output, TextWriter errorOutput)
+        public AntlrParser(ITokenStream input, TextWriter output, TextWriter errorOutput)
             : base(input, output, errorOutput)
         {
         }
 
-        protected Antlr4SyntaxParser IncrementalAntlr4Parser => _incrementalParser;
+        protected AntlrSyntaxParser IncrementalAntlrParser => _incrementalParser;
 
         public override void NotifyErrorListeners(IToken offendingToken, string msg, RecognitionException e)
         {

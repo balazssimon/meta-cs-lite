@@ -1,0 +1,35 @@
+﻿namespace MetaDslx.Languages.MetaCompiler.Antlr.Generators
+
+generator AntlrGenerator
+
+using MetaDslx.Languages.MetaCompiler.Model
+using System.Linq
+
+template GenerateLexer(Language language)
+lexer grammar [language.Name]Lexer;
+
+[foreach (var rule in language.Grammar.Rules.OfType<LexerRule>())]
+[GenerateLexerRule(rule)]
+[end foreach]
+end template
+
+template GenerateLexerRule(LexerRule rule)
+Int: 'int';
+end template
+
+template GenerateParser(Language language)
+parser grammar [language.Name]Parser;
+
+options
+{
+    tokenVocab = [language.Name]Lexer; 
+} 
+
+[foreach (var rule in language.Grammar.Rules.OfType<ParserRule>())]
+[GenerateParserRule(rule)]
+[end foreach]
+end template
+
+template GenerateParserRule(ParserRule rule)
+main: Int;
+end template

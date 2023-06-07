@@ -6,7 +6,7 @@ using Antlr4.Runtime;
 using Antlr4.Runtime.Atn;
 using Antlr4.Runtime.Misc;
 
-namespace MetaDslx.CodeAnalysis.Antlr4
+namespace MetaDslx.Languages.MetaCompiler.Antlr
 {
     /// <summary>
     /// This is the default implementation of
@@ -250,7 +250,7 @@ namespace MetaDslx.CodeAnalysis.Antlr4
         /// some reason speed is suffering for you, you can turn off this
         /// functionality by simply overriding this method as a blank { }.</p>
         /// </summary>
-        /// <exception cref="Antlr4.Runtime.RecognitionException"/>
+        /// <exception cref="Antlr.Runtime.RecognitionException"/>
         public virtual void Sync(Parser recognizer)
         {
             ATNState s = recognizer.Interpreter.atn.states[recognizer.State];
@@ -524,7 +524,7 @@ namespace MetaDslx.CodeAnalysis.Antlr4
         /// <c>')'</c>
         /// .
         /// </summary>
-        /// <exception cref="Antlr4.Runtime.RecognitionException"/>
+        /// <exception cref="Antlr.Runtime.RecognitionException"/>
         public virtual IToken RecoverInline(Parser recognizer)
         {
             // SINGLE TOKEN DELETION

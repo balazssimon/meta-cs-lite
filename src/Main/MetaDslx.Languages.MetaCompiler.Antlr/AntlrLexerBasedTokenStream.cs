@@ -1,5 +1,6 @@
 ﻿using Antlr4.Runtime;
 using Antlr4.Runtime.Misc;
+using MetaDslx.CodeAnalysis;
 using MetaDslx.CodeAnalysis.PooledObjects;
 using MetaDslx.CodeAnalysis.Syntax.InternalSyntax;
 using System;
@@ -9,17 +10,17 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace MetaDslx.CodeAnalysis.Antlr4
+namespace MetaDslx.Languages.MetaCompiler.Antlr
 {
-    public class Antlr4LexerBasedTokenStream : IDisposable, ITokenSource, ITokenStream, ITokenFactory
+    public class AntlrLexerBasedTokenStream : IDisposable, ITokenSource, ITokenStream, ITokenFactory
     {
         private const int DefaultWindowLength = 32;
 
-        private readonly Antlr4SyntaxLexer _lexer;
+        private readonly AntlrSyntaxLexer _lexer;
 
         private int _basis;                       // Start index of the window
         private int _offset;                      // Offset index from the start of the window
-        private Antlr4SyntaxToken[] _window;      // Moveable window of tokens
+        private AntlrSyntaxToken[] _window;      // Moveable window of tokens
         private int _windowCount;                 // # of valid tokens in token buffer
         private int _position;                    // Character position in the source text
         private bool _reachedEnd;                 // Indicates whether the end of the source text has been reached
@@ -30,24 +31,24 @@ namespace MetaDslx.CodeAnalysis.Antlr4
         private int _line;
         private int _column;
 
-        private Antlr4SyntaxToken? _previousToken;
-        private Antlr4SyntaxToken? _lastTokenRead;
-        private Antlr4SyntaxToken? _eofToken;
+        private AntlrSyntaxToken? _previousToken;
+        private AntlrSyntaxToken? _lastTokenRead;
+        private AntlrSyntaxToken? _eofToken;
 
         private int _minLookahead;
         private int _maxLookahead;
 
-        private List<Antlr4SyntaxToken> _unprocessedTokens;
+        private List<AntlrSyntaxToken> _unprocessedTokens;
         private int _realPosition;
 
-        private static readonly Antlr4SyntaxToken[] s_disposedWindow = new Antlr4SyntaxToken[0];
-        private static readonly ObjectPool<Antlr4SyntaxToken[]> s_windowPool = new ObjectPool<Antlr4SyntaxToken[]>(() => new Antlr4SyntaxToken[DefaultWindowLength]);
+        private static readonly AntlrSyntaxToken[] s_disposedWindow = new AntlrSyntaxToken[0];
+        private static readonly ObjectPool<AntlrSyntaxToken[]> s_windowPool = new ObjectPool<AntlrSyntaxToken[]>(() => new AntlrSyntaxToken[DefaultWindowLength]);
         private static readonly List<int> s_disposedResetStack = new List<int>();
         private static readonly ObjectPool<List<int>> s_resetStackPool = new ObjectPool<List<int>>(() => new List<int>());
-        private static readonly List<Antlr4SyntaxToken> s_disposedUnprocessedTokens = new List<Antlr4SyntaxToken>();
-        private static readonly ObjectPool<List<Antlr4SyntaxToken>> s_unprocessedTokensPool = new ObjectPool<List<Antlr4SyntaxToken>>(() => new List<Antlr4SyntaxToken>());
+        private static readonly List<AntlrSyntaxToken> s_disposedUnprocessedTokens = new List<AntlrSyntaxToken>();
+        private static readonly ObjectPool<List<AntlrSyntaxToken>> s_unprocessedTokensPool = new ObjectPool<List<AntlrSyntaxToken>>(() => new List<AntlrSyntaxToken>());
 
-        public Antlr4LexerBasedTokenStream(Antlr4SyntaxLexer lexer)
+        public AntlrLexerBasedTokenStream(AntlrSyntaxLexer lexer)
         {
             _lexer = lexer;
             _basis = 0;
@@ -89,7 +90,7 @@ namespace MetaDslx.CodeAnalysis.Antlr4
 
         public int Size => throw new NotImplementedException();
 
-        public string SourceName => _lexer.Antlr4Lexer.SourceName;
+        public string SourceName => _lexer.AntlrLexer.SourceName;
 
         public int Line => _line + 1;
 
@@ -183,14 +184,14 @@ namespace MetaDslx.CodeAnalysis.Antlr4
             Debug.Assert(_offset >= 0);
         }
 
-        private Antlr4SyntaxToken GetToken(int index)
+        private AntlrSyntaxToken GetToken(int index)
         {
             var indexInWindow = index - _basis;
             Debug.Assert(indexInWindow >= 0 && indexInWindow < _windowCount);
             return _window[indexInWindow];
         }
 
-        private Antlr4SyntaxToken PeekToken(int delta)
+        private AntlrSyntaxToken PeekToken(int delta)
         {
             _minLookahead = Math.Min(_minLookahead, delta);
             _maxLookahead = Math.Max(_maxLookahead, delta);
@@ -228,9 +229,9 @@ namespace MetaDslx.CodeAnalysis.Antlr4
                 if (_offset + delta >= _window.Length)
                 {
                     // grow char array, since we need more contiguous space
-                    Antlr4SyntaxToken[] oldWindow = _window;
+                    AntlrSyntaxToken[] oldWindow = _window;
                     var newWindowCount = Math.Max(_offset + delta, _window.Length * 2);
-                    Antlr4SyntaxToken[] newWindow = new Antlr4SyntaxToken[newWindowCount];
+                    AntlrSyntaxToken[] newWindow = new AntlrSyntaxToken[newWindowCount];
                     Array.Copy(oldWindow, 0, newWindow, 0, _windowCount);
                     s_windowPool.ForgetTrackedObject(oldWindow, newWindow);
                     _window = newWindow;
@@ -245,9 +246,9 @@ namespace MetaDslx.CodeAnalysis.Antlr4
                     {
                         nextToken = nextToken.WithDiagnosticsGreen(errors.Select(error => error.WithOffset(error.Offset - _position)).ToArray());
                     }
-                    var nextAntlr4Token = new Antlr4SyntaxToken(nextToken, _windowCount, _position, _line, _column);
-                    _lastTokenRead = nextAntlr4Token;
-                    _window[_windowCount++] = nextAntlr4Token;
+                    var nextAntlrToken = new AntlrSyntaxToken(nextToken, _windowCount, _position, _line, _column);
+                    _lastTokenRead = nextAntlrToken;
+                    _window[_windowCount++] = nextAntlrToken;
                     if (_lastTokenRead.Type == TokenConstants.EOF) _eofToken = _lastTokenRead;
                     _position += nextToken.FullWidth;
                     AdjustLineAndColumn(nextToken.ToFullString());
@@ -283,7 +284,7 @@ namespace MetaDslx.CodeAnalysis.Antlr4
             throw new NotImplementedException();
         }
 
-        public InternalSyntaxToken ConsumeRealToken(Antlr4SyntaxToken token, Antlr4SyntaxParser parser)
+        public InternalSyntaxToken ConsumeRealToken(AntlrSyntaxToken token, AntlrSyntaxParser parser)
         {
             var currentRealPosition = _realPosition;
             var green = token.Green;
@@ -390,7 +391,7 @@ namespace MetaDslx.CodeAnalysis.Antlr4
             return target;
         }
 
-        public InternalSyntaxToken ConsumeMissingToken(int rawKind, Antlr4SyntaxParser parser)
+        public InternalSyntaxToken ConsumeMissingToken(int rawKind, AntlrSyntaxParser parser)
         {
             return _lexer.Language.InternalSyntaxFactory.MissingToken(rawKind);
         }
@@ -398,8 +399,8 @@ namespace MetaDslx.CodeAnalysis.Antlr4
         [return: NotNull]
         public IToken Create(Tuple<ITokenSource, ICharStream> source, int type, string text, int channel, int start, int stop, int line, int charPositionInLine)
         {
-            var green = _lexer.Language.InternalSyntaxFactory.MissingToken(Antlr4SyntaxKind.FromAntlr4(type));
-            return new Antlr4SyntaxToken(green, -1, -1, line, charPositionInLine);
+            var green = _lexer.Language.InternalSyntaxFactory.MissingToken(AntlrSyntaxKind.FromAntlr(type));
+            return new AntlrSyntaxToken(green, -1, -1, line, charPositionInLine);
         }
 
         [return: NotNull]
