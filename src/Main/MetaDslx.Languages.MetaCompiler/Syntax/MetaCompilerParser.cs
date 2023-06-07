@@ -218,8 +218,37 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
         {
             while (IsKeyword("using"))
             {
-                _tokens.NextToken();
-                language.Usings.Add(ParseQualifier("."));
+                var token = _tokens.NextToken();
+                var usingKind = UsingKind.None;
+                if (token.Kind == MetaCompilerTokenKind.Keyword)
+                {
+                    if (token.Text == "language") usingKind = UsingKind.Language;
+                    else Expected("language");
+                    _tokens.NextToken();
+                }
+                var usingDecl = new Using();
+                usingDecl.Kind = usingKind;
+                var aliasOrReferenceLocation = _tokens.CurrentLocation;
+                var aliasOrReference = ParseQualifier(".");
+                token = _tokens.CurrentToken;
+                if (token.Text == "=")
+                {
+                    _tokens.NextToken();
+                    usingDecl.ReferenceLocation = _tokens.CurrentLocation;
+                    usingDecl.Reference = ParseQualifier(".");
+                    if (aliasOrReference.Length != 1)
+                    {
+                        Error(aliasOrReferenceLocation, "Alias name was expected, but a qualified name was found.");
+                    }
+                    usingDecl.AliasLocation = aliasOrReferenceLocation;
+                    usingDecl.Alias = aliasOrReference.FirstOrDefault();
+                }
+                else
+                {
+                    usingDecl.Reference = aliasOrReference;
+                    usingDecl.ReferenceLocation = aliasOrReferenceLocation;
+                }
+                language.Usings.Add(usingDecl);
                 MatchSemicolon();
             }
         }
@@ -449,9 +478,7 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                     {
                         var range = new LexerRuleRangeElement();
                         range.StartText = token.Text;
-                        range.Start = DecodeChar(token.Text);
                         range.EndText = nextToken3.Text;
-                        range.End = DecodeChar(nextToken3.Text);
                         element = range;
                         _tokens.EatTokens(4);
                     }
@@ -459,7 +486,6 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                     {
                         var str = new LexerRuleFixedStringElement();
                         str.ValueText = token.Text;
-                        str.Value = DecodeString(token.Text);
                         element = str;
                         _tokens.NextToken();
                     }
@@ -645,7 +671,6 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                     {
                         var str = new ParserRuleFixedStringElement();
                         str.ValueText = token.Text;
-                        str.Value = DecodeString(token.Text);
                         element = str;
                         _tokens.NextToken();
                     }
@@ -854,84 +879,6 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
         {
             var token = _tokens.CurrentToken;
             Error($"'{token.EscapedText}' is unexpected here");
-        }
-
-        private string DecodeString(string text)
-        {
-            var sb = PooledStringBuilder.GetInstance();
-            for (int i = 1; i < text.Length - 1; i++)
-            {
-                if (text[i] == '\\')
-                {
-                    ++i;
-                    if (text[i] == 'u' || text[i] == 'U')
-                    {
-                        sb.Builder.Append(UnicodeChar(text.Substring(i + 1, 4)));
-                        i += 5;
-                    }
-                    else
-                    {
-                        sb.Builder.Append(SpecialChar(text[i]));
-                    }
-                }
-                else
-                {
-                    sb.Builder.Append(text[i]);
-                }
-            }
-            return sb.ToStringAndFree();
-        }
-
-        private char DecodeChar(string text)
-        {
-            if (text.Length >= 3)
-            {
-                if (text[1] == '\\')
-                {
-                    if (text[2] == 'u' || text[2] == 'U')
-                    {
-                        if (text.Length >= 7)
-                        {
-                            return UnicodeChar(text.Substring(3, 4));
-                        }
-                        else
-                        {
-                            return '\0';
-                        }
-                    }
-                    else
-                    {
-                        return SpecialChar(text[2]);
-                    }
-                }
-                else
-                {
-                    return text[1];
-                }
-            }
-            return '\0';
-        }
-
-        private char SpecialChar(char escape)
-        {
-            switch (escape)
-            {
-                case '0': return '\0';
-                case 'a': return '\a';
-                case 'b': return '\b';
-                case 'f': return '\f';
-                case 'n': return '\n';
-                case 'r': return '\r';
-                case 't': return '\t';
-                case 'v': return '\v';
-                default:
-                    return escape;
-            }
-        }
-
-        private char UnicodeChar(string hex)
-        {
-            return Convert.ToChar(Convert.ToInt32(hex, 16));
         }
     }
 }

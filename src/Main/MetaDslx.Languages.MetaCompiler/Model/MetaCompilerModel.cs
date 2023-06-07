@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Text;
 using System.Xml.Linq;
 
@@ -16,11 +17,28 @@ namespace MetaDslx.Languages.MetaCompiler.Model
     public class Language : IElementWithLocation
     {
         public ImmutableArray<string> Namespace { get; set; }
-        public List<ImmutableArray<string>> Usings { get; } = new List<ImmutableArray<string>>();
+        public string QualifiedNamespace => string.Join(".", Namespace);
+        public List<Using> Usings { get; } = new List<Using>();
         public string Name { get; set; }
         public Grammar Grammar { get; set; }
 
         public Location Location { get; set; }
+    }
+
+    public enum UsingKind
+    {
+        None,
+        Language
+    }
+
+    public class Using
+    {
+        public UsingKind Kind { get; set; }
+        public string? Alias { get; set; }
+        public Location AliasLocation { get; set; }
+        public ImmutableArray<string> Reference { get; set; }
+        public string QualifiedReference => string.Join(".", Reference);
+        public Location ReferenceLocation { get; set; }
     }
 
     public enum AnnotationKind
@@ -66,13 +84,14 @@ namespace MetaDslx.Languages.MetaCompiler.Model
     {
         public AnnotationKind Kind { get; set; }
         public ImmutableArray<string> Name { get; set; }
+        public string QualifiedName => string.Join(".", Name);
         public List<AnnotationProperty> Properties { get; } = new List<AnnotationProperty>();
 
         public Location Location { get; set; }
 
         public override string ToString()
         {
-            return string.Join(".", Name);
+            return QualifiedName;
         }
     }
 
@@ -127,11 +146,12 @@ namespace MetaDslx.Languages.MetaCompiler.Model
     public class ParserRuleReferenceElement : ParserRuleElement
     {
         public ImmutableArray<string> RuleName { get; set; }
+        public string QualifiedName => string.Join(".", Name);
         public Rule Rule { get; set; }
 
         public override string ToString()
         {
-            return $"{Name}={string.Join(".", RuleName)}";
+            return $"{Name}={QualifiedName}";
         }
     }
 
@@ -141,8 +161,17 @@ namespace MetaDslx.Languages.MetaCompiler.Model
 
     public class ParserRuleFixedStringElement : ParserRuleElement
     {
+        private string _value;
+
         public string ValueText { get; set; }
-        public string Value { get; set; }
+        public string Value
+        {
+            get
+            {
+                if (_value is null) _value = StringUtils.DecodeString(ValueText);
+                return _value;
+            }
+        }
 
         public override string ToString()
         {
@@ -172,18 +201,21 @@ namespace MetaDslx.Languages.MetaCompiler.Model
         public bool IsFragment { get; set; }
         public bool IsHidden { get; set; }
         public bool IsFixed => Alternatives.Count == 1 && Alternatives[0].IsFixed;
+        public string? FixedValue => IsFixed ? Alternatives[0].FixedValue : null;
         public List<LexerRuleAlternative> Alternatives { get; } = new List<LexerRuleAlternative>();
     }
 
     public class LexerRuleAlternative : NamedElement
     {
         public bool IsFixed => Elements.All(e => e.IsFixed);
+        public string? FixedValue => IsFixed ? string.Concat(Elements.Select(e => e.FixedValue)) : null;
         public List<LexerRuleElement> Elements { get; } = new List<LexerRuleElement>();
     }
 
     public abstract class LexerRuleElement
     {
         public abstract bool IsFixed { get; }
+        public abstract string? FixedValue { get; }
         public bool IsNegated { get; set; }
         public Multiplicity Multiplicity { get; set; }
     }
@@ -191,21 +223,33 @@ namespace MetaDslx.Languages.MetaCompiler.Model
     public class LexerRuleReferenceElement : LexerRuleElement, IElementWithLocation
     {
         public override bool IsFixed => Rule?.IsFixed ?? false;
+        public override string? FixedValue => Rule?.FixedValue;
         public ImmutableArray<string> RuleName { get; set; }
+        public string QualifiedName => string.Join(".", RuleName);
         public LexerRule? Rule { get; set; }
         public Location Location { get; set; }
 
         public override string ToString()
         {
-            return string.Join(".", RuleName);
+            return QualifiedName;
         }
     }
 
     public class LexerRuleFixedStringElement : LexerRuleElement
     {
+        private string _value;
+
         public override bool IsFixed => true;
+        public override string? FixedValue => Value;
         public string ValueText { get; set; }
-        public string Value { get; set; }
+        public string Value
+        {
+            get
+            {
+                if (_value is null) _value = StringUtils.DecodeString(ValueText);
+                return _value;
+            }
+        }
 
         public override string ToString()
         {
@@ -216,21 +260,24 @@ namespace MetaDslx.Languages.MetaCompiler.Model
     public class LexerRuleWildcardElement : LexerRuleElement
     {
         public override bool IsFixed => false;
+        public override string? FixedValue => null;
     }
 
     public class LexerRuleBlockElement : LexerRuleElement
     {
         public override bool IsFixed => Alternatives.Count == 1 && Alternatives[0].IsFixed;
+        public override string? FixedValue => IsFixed ? Alternatives[0].FixedValue : null;
         public List<LexerRuleAlternative> Alternatives { get; } = new List<LexerRuleAlternative>();
     }
 
     public class LexerRuleRangeElement : LexerRuleElement
     {
-        public override bool IsFixed => false;
+        public override bool IsFixed => Start == End;
+        public override string? FixedValue => IsFixed ? Start.ToString() : null;
         public string StartText { get; set; }
-        public char Start { get; set; }
+        public char Start => StringUtils.DecodeChar(StartText);
         public string EndText { get; set; }
-        public char End { get; set; }
+        public char End => StringUtils.DecodeChar(EndText);
 
         public override string ToString()
         {
