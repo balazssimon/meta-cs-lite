@@ -8,6 +8,7 @@ using System.Reflection.Emit;
 using System.Collections.Immutable;
 using MetaDslx.CodeGeneration;
 using System.Reflection;
+using MetaDslx.Languages.MetaCompiler.Analyzers;
 /*
 var code = @"
 namespace A.B.C;
@@ -19,8 +20,8 @@ language Sample;
 
 [B(x = true, y = 'a'+3)]
 g: [Q] aa# [T] a+= [R] A*? eof
- | bb# b=B
- ;
+| bb# b=B
+;
 
 [def A]
 f: a;
@@ -51,13 +52,14 @@ namespace MyCode
     }
 }
 ");
+var compilerGenerator = new MetaCompilerGenerator();
 var antlrGenerator = new AntlrCompilerGenerator();
-GeneratorDriver driver = CSharpGeneratorDriver.Create(antlrGenerator);
+GeneratorDriver driver = CSharpGeneratorDriver.Create(compilerGenerator, antlrGenerator);
 var testMText = new AdditionalTextFile("Test.mlang", @"namespace X;
 
 language Test;
 
-main: Int a='int' s?='string' r!=Az?;
+main: Int a='int' s?='string' r!=Az? '""';
 
 foo: i+='int' (',' i+='int')*;
 bar: f+=foo (';' f+=foo)+;

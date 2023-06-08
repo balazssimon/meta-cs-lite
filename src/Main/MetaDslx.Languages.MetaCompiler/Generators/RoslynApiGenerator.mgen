@@ -1,9 +1,506 @@
 ﻿namespace MetaDslx.Languages.MetaCompiler.Generators
 
 using MetaDslx.Languages.MetaCompiler.Model
+using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq
 
 generator RoslynApiGenerator
+
+template GenerateSyntaxKind(Language language)
+using MetaDslx.CodeAnalysis.Syntax.InternalSyntax;
+
+namespace [language.QualifiedNamespace].Syntax
+{
+	public enum [language.Name]SyntaxKind
+	{
+		[if (language.Grammar.LexerRules.Length > 0)]
+		__FirstToken = [language.Grammar.LexerRules.FirstOrDefault()?.CSharpName],
+		__LastToken = [language.Grammar.LexerRules.LastOrDefault()?.CSharpName],
+		[end if]
+		[if (language.Grammar.FixedLexerRules.Length > 0)]
+		__FirstFixedToken = [language.Grammar.FixedLexerRules.FirstOrDefault()?.CSharpName],
+		__LastFixedToken = [language.Grammar.FixedLexerRules.LastOrDefault()?.CSharpName],
+		[end if]
+		[if (language.Grammar.ParserRules.Length > 0)]
+		__FirstRule = [language.Grammar.ParserRules.FirstOrDefault()?.CSharpName],
+		__LastRule = [language.Grammar.ParserRules.LastOrDefault()?.CSharpName],
+		[end if]
+
+		// Built-in:
+		None = InternalSyntaxKind.None,
+		List = InternalSyntaxKind.List,
+		BadToken = InternalSyntaxKind.BadToken,
+		MissingToken = InternalSyntaxKind.MissingToken,
+		SkippedTokensTrivia = InternalSyntaxKind.SkippedTokensTrivia,
+		DisabledTextTrivia = InternalSyntaxKind.DisabledTextTrivia,
+		ConflictMarkerTrivia = InternalSyntaxKind.ConflictMarkerTrivia,
+		Eof = InternalSyntaxKind.Eof,
+
+		// Tokens:
+		[foreach (var rule in language.Grammar.LexerRules)]
+		[rule.CSharpName],
+		[end foreach]
+
+		// Rules:
+		[foreach (var rule in language.Grammar.ParserRules)]
+		[rule.CSharpName],
+		[end foreach]
+	}
+}
+end template
+
+template GenerateSyntaxFacts(Language language)
+[var hiddenRules = language.Grammar.LexerRules.Where(lr => lr.IsHidden).ToImmutableArray()]
+[var keywordRules = language.Grammar.LexerRules.Where(lr => lr.IsKeyword).ToImmutableArray()]
+using System.Collections.Generic;
+using System.Linq;
+using MetaDslx.CodeAnalysis;
+using MetaDslx.CodeAnalysis.Syntax;
+
+namespace [language.QualifiedNamespace].Syntax
+{
+	public class [language.Name]SyntaxFacts : SyntaxFacts
+	{
+		public bool IsToken([language.Name]SyntaxKind kind)
+        {
+			switch (kind)
+			{
+				case [language.Name]SyntaxKind.Eof:
+				[foreach (var rule in language.Grammar.LexerRules)]
+				case [language.Name]SyntaxKind.[rule.CSharpName]:
+				[end foreach]
+					return true;
+				default:
+					return false;
+			}
+		}
+
+		protected override bool IsToken(int rawKind)
+		{
+			return IsToken(([language.Name]SyntaxKind)rawKind);
+		}
+
+		public bool IsFixedToken([language.Name]SyntaxKind kind)
+        {
+			switch (kind)
+			{
+				[if (language.Grammar.FixedLexerRules.Length > 0)]
+					[foreach (var rule in language.Grammar.FixedLexerRules)]
+				case [language.Name]SyntaxKind.[rule.CSharpName]:
+					[end foreach]
+					return true;
+				[end if]
+				default:
+					return false;
+			}
+		}
+
+		protected override bool IsFixedToken(int rawKind)
+		{
+			return IsFixedToken(([language.Name]SyntaxKind)rawKind);
+		}
+
+        public [language.Name]SyntaxKind GetFixedTokenKind(string text)
+		{
+			switch (text)
+			{
+				[foreach (var rule in language.Grammar.FixedLexerRules)]
+				case [StringUtils.EncodeString(rule.FixedValue)]: 
+					return [language.Name]SyntaxKind.[rule.CSharpName];
+				[end foreach]
+				default:
+					return [language.Name]SyntaxKind.None;
+			}
+		}
+
+        protected override int GetFixedTokenRawKind(string text)
+        {
+			return (int)GetFixedTokenKind(text);
+        }
+
+
+        public object? GetValue([language.Name]SyntaxKind kind)
+        {
+			return null;
+        }
+
+        protected override object? GetValue(int rawKind)
+		{
+			return GetValue(([language.Name]SyntaxKind)rawKind);
+		}
+
+		public string GetKindText([language.Name]SyntaxKind kind)
+		{
+			switch (kind)
+			{
+				case [language.Name]SyntaxKind.List:
+					return "List";
+				case [language.Name]SyntaxKind.BadToken:
+					return "BadToken";
+				case [language.Name]SyntaxKind.MissingToken:
+					return "MissingToken";
+				case [language.Name]SyntaxKind.SkippedTokensTrivia:
+					return "SkippedTokensTrivia";
+				case [language.Name]SyntaxKind.DisabledTextTrivia:
+					return "DisabledTextTrivia";
+				case [language.Name]SyntaxKind.ConflictMarkerTrivia:
+					return "ConflictMarkerTrivia";
+				case [language.Name]SyntaxKind.Eof:
+					return "Eof";
+				[foreach (var rule in language.Grammar.Rules)]
+				case [language.Name]SyntaxKind.[rule.CSharpName]: 
+					return "[rule.CSharpName]";
+				[end foreach]
+				default:
+					return string.Empty;
+			}
+		}
+
+		protected override string GetKindText(int rawKind)
+		{
+			return GetKindText(([language.Name]SyntaxKind)rawKind);
+		}
+
+		public string GetText([language.Name]SyntaxKind kind)
+		{
+			switch (kind)
+			{
+				[foreach (var rule in language.Grammar.FixedLexerRules)]
+				case [language.Name]SyntaxKind.[rule.CSharpName]: 
+					return [StringUtils.EncodeString(rule.FixedValue)];
+				[end foreach]
+				default:
+					return string.Empty;
+			}
+		}
+
+		protected override string GetText(int rawKind)
+        {
+			return GetText(([language.Name]SyntaxKind)rawKind);
+        }
+
+		public bool IsTrivia([language.Name]SyntaxKind kind)
+		{
+			switch(kind)
+			{
+				[if (hiddenRules.Length > 0)]
+				[foreach (var rule in hiddenRules)]
+				case [language.Name]SyntaxKind.[rule.CSharpName]: 
+				[end foreach]
+					return true;
+				[end if]
+				default:
+					return false;
+			}
+		}
+
+        protected override bool IsTrivia(int rawKind)
+        {
+			return IsTrivia(([language.Name]SyntaxKind)rawKind);
+        }
+
+        public bool IsReservedKeyword([language.Name]SyntaxKind kind)
+		{
+			switch(kind)
+			{
+				[if (keywordRules.Length > 0)]
+				[foreach (var rule in keywordRules)]
+				case [language.Name]SyntaxKind.[rule.CSharpName]: 
+				[end foreach]
+					return true;
+				[end if]
+				default:
+					return false;
+			}
+		}
+
+        protected override bool IsReservedKeyword(int rawKind)
+        {
+			return IsReservedKeyword(([language.Name]SyntaxKind)rawKind);
+        }
+
+        public IEnumerable<[language.Name]SyntaxKind> GetReservedKeywordKinds()
+        {
+			[foreach (var rule in keywordRules)]
+			yield return [language.Name]SyntaxKind.[rule.CSharpName];
+			[end foreach]
+			yield break;
+        }
+
+        protected override IEnumerable<int> GetReservedKeywordRawKinds()
+        {
+			return GetReservedKeywordKinds().Select(kind => (int)kind);
+        }
+
+        public [language.Name]SyntaxKind GetReservedKeywordKind(string text)
+        {
+			switch(text)
+			{
+				[foreach (var rule in keywordRules)]
+				case [StringUtils.EncodeString(rule.FixedValue)]: 
+					return [language.Name]SyntaxKind.[rule.CSharpName];
+				[end foreach]
+				default:
+					return [language.Name]SyntaxKind.None;
+			}
+        }
+
+        protected override int GetReservedKeywordRawKind(string text)
+        {
+			return (int)GetReservedKeywordKind(text);
+        }
+
+        public bool IsContextualKeyword([language.Name]SyntaxKind kind)
+		{
+			switch(kind)
+			{
+				default:
+					return false;
+			}
+		}
+
+        protected override bool IsContextualKeyword(int rawKind)
+        {
+			return IsContextualKeyword(([language.Name]SyntaxKind)rawKind);
+        }
+
+        public IEnumerable<[language.Name]SyntaxKind> GetContextualKeywordKinds()
+        {
+			yield break;
+        }
+
+		protected override IEnumerable<int> GetContextualKeywordRawKinds()
+		{
+			return GetContextualKeywordKinds().Select(kind => (int)kind);
+		}
+
+		public [language.Name]SyntaxKind GetContextualKeywordKind(string text)
+        {
+			switch(text)
+			{
+				default:
+					return [language.Name]SyntaxKind.None;
+			}
+        }
+
+        protected override int GetContextualKeywordRawKind(string text)
+        {
+			return (int)GetContextualKeywordKind(text);
+        }
+
+        public bool IsPreprocessorKeyword([language.Name]SyntaxKind kind)
+		{
+			switch (kind)
+			{
+				default:
+					return false;
+			}
+		}
+
+        protected override bool IsPreprocessorKeyword(int rawKind)
+        {
+			return IsPreprocessorKeyword(([language.Name]SyntaxKind)rawKind);
+        }
+
+        public bool IsPreprocessorContextualKeyword([language.Name]SyntaxKind kind)
+		{
+			switch (kind)
+			{
+				default:
+					return false;
+			}
+		}
+
+        protected override bool IsPreprocessorContextualKeyword(int rawKind)
+        {
+			return IsPreprocessorContextualKeyword(([language.Name]SyntaxKind)rawKind);
+        }
+
+        public bool IsPreprocessorDirective([language.Name]SyntaxKind kind)
+		{
+			switch (kind)
+			{
+				default:
+					return false;
+			}
+		}
+
+        protected override bool IsPreprocessorDirective(int rawKind)
+        {
+			return IsPreprocessorDirective(([language.Name]SyntaxKind)rawKind);
+        }
+
+        public bool IsIdentifier([language.Name]SyntaxKind kind)
+		{
+			switch (kind)
+			{
+				default:
+					return false;
+			}
+		}
+
+        protected override bool IsIdentifier(int rawKind)
+        {
+            return IsIdentifier(([language.Name]SyntaxKind)rawKind);
+        }
+
+        public bool IsGeneralCommentTrivia([language.Name]SyntaxKind kind)
+		{
+			switch (kind)
+			{
+				default:
+					return false;
+			}
+		}
+
+        protected override bool IsGeneralCommentTrivia(int rawKind)
+        {
+            return IsGeneralCommentTrivia(([language.Name]SyntaxKind)rawKind);
+        }
+
+        public bool IsDocumentationCommentTrivia([language.Name]SyntaxKind kind)
+		{
+			switch (kind)
+			{
+				default:
+					return false;
+			}
+		}
+
+        protected override bool IsDocumentationCommentTrivia(int rawKind)
+        {
+			return IsDocumentationCommentTrivia(([language.Name]SyntaxKind)rawKind);
+        }
+
+        public [language.Name]LanguageVersion GetRequiredLanguageVersion(string feature)
+        {
+			return [language.Name]LanguageVersion.Version1;
+        }
+	}
+}
+end template
+
+template GenerateLanguageVersion(Language language)
+using MetaDslx.CodeAnalysis;
+using Roslyn.Utilities;
+
+namespace [language.QualifiedNamespace]
+{
+    /// <summary>
+    /// Specifies the language version.
+    /// </summary>
+    public enum [language.Name]LanguageVersion
+    {
+        /// <summary>
+        /// Language version 1
+        /// </summary>
+        Version1 = 1,
+
+        /// <summary>
+        /// The latest major supported version.
+        /// </summary>
+        LatestMajor = int.MaxValue - 2,
+
+        /// <summary>
+        /// Preview of the next language version.
+        /// </summary>
+        Preview = int.MaxValue - 1,
+
+        /// <summary>
+        /// The latest supported version of the language.
+        /// </summary>
+        Latest = int.MaxValue,
+
+        /// <summary>
+        /// The default language version, which is the latest supported version.
+        /// </summary>
+        Default = 0,
+    }
+
+    public static class [language.Name]LanguageVersionFacts
+    {
+        internal static bool IsValid(this [language.Name]LanguageVersion value)
+        {
+            switch (value)
+            {
+                case [language.Name]LanguageVersion.Version1:
+                case [language.Name]LanguageVersion.Preview:
+                    return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Displays the version number in the format expected on the command-line (/langver flag).
+        /// For instance, "6", "7", "7.1", "latest".
+        /// </summary>
+        public static string ToDisplayString(this [language.Name]LanguageVersion version)
+        {
+            if (version == [language.Name]LanguageVersion.Version1) return "1";
+            if (version == [language.Name]LanguageVersion.Default) return "default";
+            if (version == [language.Name]LanguageVersion.Latest) return "latest";
+            if (version == [language.Name]LanguageVersion.LatestMajor) return "latestmajor";
+            if (version == [language.Name]LanguageVersion.Preview) return "preview";
+            throw ExceptionUtilities.UnexpectedValue(version);
+        }
+
+        /// <summary>
+        /// Try parse a <see cref="[language.Name]LanguageVersion"/> from a string input, returning default if input was null.
+        /// </summary>
+        public static bool TryParse(string version, out [language.Name]LanguageVersion result)
+        {
+            if (version == null)
+            {
+                result = [language.Name]LanguageVersion.Default;
+                return true;
+            }
+            switch (CaseInsensitiveComparison.ToLower(version))
+            {
+                case "default":
+                    result = [language.Name]LanguageVersion.Default;
+                    return true;
+                case "latest":
+                    result = [language.Name]LanguageVersion.Latest;
+                    return true;
+                case "latestmajor":
+                    result = [language.Name]LanguageVersion.LatestMajor;
+                    return true;
+                case "preview":
+                    result = [language.Name]LanguageVersion.Preview;
+                    return true;
+                case "1":
+                case "1.0":
+                    result = [language.Name]LanguageVersion.Version1;
+                    return true;
+                default:
+                    result = [language.Name]LanguageVersion.Default;
+                    return false;
+            }
+        }
+
+        /// <summary>
+        /// Map a language version (such as Default, Latest, or VersionN) to a specific version (VersionM).
+        /// </summary>
+        internal static [language.Name]LanguageVersion MapSpecifiedToEffectiveVersion(this [language.Name]LanguageVersion version)
+        {
+            switch (version)
+            {
+                case [language.Name]LanguageVersion.Latest:
+                case [language.Name]LanguageVersion.Default:
+                case [language.Name]LanguageVersion.LatestMajor:
+                    return [language.Name]LanguageVersion.Version1;
+                default:
+                    return version;
+            }
+        }
+
+        public static [language.Name]LanguageVersion CurrentVersion => [language.Name]LanguageVersion.Version1;
+    }
+
+}
+end template
 
 template GenerateSyntaxNodes(Language language)
 end template

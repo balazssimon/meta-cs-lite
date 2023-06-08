@@ -2,6 +2,7 @@
 
 language Test;
 
+
 main: Int a='int' s?='string' r!=Az?;
 
 foo: i+='int' (',' i+='int')*;

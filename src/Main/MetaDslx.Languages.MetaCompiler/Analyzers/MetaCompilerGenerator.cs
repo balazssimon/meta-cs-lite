@@ -26,8 +26,8 @@ namespace MetaDslx.Languages.MetaCompiler.Analyzers
             {
                 try
                 {
-                    var filePath = Path.GetFileNameWithoutExtension(pathAndContent.path);
-                    var csharpFilePath = $"MetaCompiler.{filePath}.g.cs";
+                    var fileName = Path.GetFileNameWithoutExtension(pathAndContent.path);
+                    var csharpFilePath = $"MetaCompiler.{fileName}.g.cs";
                     var mlangCompiler = new MetaCompilerParser(pathAndContent.path, SourceText.From(pathAndContent.content));
                     var language = mlangCompiler.Parse();
                     if (mlangCompiler.Diagnostics.Length > 0)
@@ -40,8 +40,14 @@ namespace MetaDslx.Languages.MetaCompiler.Analyzers
                     else
                     {
                         var generator = new RoslynApiGenerator();
+                        var syntaxKindCode = generator.GenerateSyntaxKind(language);
+                        spc.AddSource($"{fileName}.MetaCompiler.SyntaxKind.g.cs", syntaxKindCode);
+                        var syntaxFactsCode = generator.GenerateSyntaxFacts(language);
+                        spc.AddSource($"{fileName}.MetaCompiler.SyntaxFacts.g.cs", syntaxFactsCode);
+                        var languageVersionCode = generator.GenerateLanguageVersion(language);
+                        spc.AddSource($"{fileName}.MetaCompiler.LanguageVersion.g.cs", languageVersionCode);
                         var syntaxNodesCode = generator.GenerateSyntaxNodes(language);
-                        spc.AddSource($"MetaCompiler.{filePath}.SyntaxNodes.g.cs", syntaxNodesCode);
+                        spc.AddSource($"{fileName}.MetaCompiler.SyntaxNodes.g.cs", syntaxNodesCode);
                     }
                 }
                 catch (Exception ex)

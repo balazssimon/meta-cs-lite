@@ -1,4 +1,6 @@
 ﻿using MetaDslx.CodeAnalysis;
+using MetaDslx.CodeAnalysis.PooledObjects;
+using Roslyn.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -71,6 +73,7 @@ namespace MetaDslx.Languages.MetaCompiler.Model
     public class NamedElement : IElementWithLocation
     {
         public string Name { get; set; }
+        public string CSharpName => Name.ToPascalCase();
         public List<Annotation> Annotations { get; } = new List<Annotation>();
 
         public Location Location { get; set; }
@@ -117,8 +120,51 @@ namespace MetaDslx.Languages.MetaCompiler.Model
 
     public class Grammar : NamedElement
     {
+        private ImmutableArray<LexerRule> _fixedLexerRules;
+        private ImmutableArray<LexerRule> _nonFixedLexerRules;
+        private ImmutableArray<LexerRule> _lexerRules;
+        private ImmutableArray<ParserRule> _parserRules;
+
         public GrammarOptions Options { get; set; }
         public List<Rule> Rules { get; } = new List<Rule>();
+        public ImmutableArray<LexerRule> FixedLexerRules
+        {
+            get
+            {
+                if (_fixedLexerRules == null) _fixedLexerRules = Rules.OfType<LexerRule>().Where(lr => lr.IsFixed).ToImmutableArray();
+                return _fixedLexerRules;
+            }
+        }
+        public ImmutableArray<LexerRule> NonFixedLexerRules
+        {
+            get
+            {
+                if (_nonFixedLexerRules == null) _nonFixedLexerRules = Rules.OfType<LexerRule>().Where(lr => !lr.IsFixed).ToImmutableArray();
+                return _nonFixedLexerRules;
+            }
+        }
+        public ImmutableArray<LexerRule> LexerRules
+        {
+            get
+            {
+                if (_lexerRules == null)
+                {
+                    var lexerRules = ArrayBuilder<LexerRule>.GetInstance();
+                    lexerRules.AddRange(FixedLexerRules);
+                    lexerRules.AddRange(NonFixedLexerRules);
+                    _lexerRules = lexerRules.ToImmutableAndFree();
+                }
+                return _lexerRules;
+            }
+        }
+        public ImmutableArray<ParserRule> ParserRules
+        {
+            get
+            {
+                if (_parserRules == null) _parserRules = Rules.OfType<ParserRule>().ToImmutableArray();
+                return _parserRules;
+            }
+        }
     }
 
     public abstract class Rule : NamedElement
@@ -204,6 +250,7 @@ namespace MetaDslx.Languages.MetaCompiler.Model
         public bool IsFragment { get; set; }
         public bool IsHidden { get; set; }
         public bool IsFixed => Alternatives.Count == 1 && Alternatives[0].IsFixed;
+        public bool IsKeyword => !IsHidden && IsFixed && StringUtils.IsIdentifier(FixedValue);
         public string? FixedValue => IsFixed ? Alternatives[0].FixedValue : null;
         public List<LexerRuleAlternative> Alternatives { get; } = new List<LexerRuleAlternative>();
     }

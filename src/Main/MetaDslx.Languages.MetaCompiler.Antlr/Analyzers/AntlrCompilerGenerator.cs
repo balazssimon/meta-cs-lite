@@ -78,7 +78,7 @@ namespace MetaDslx.Languages.MetaCompiler.Antlr.Analyzers
                     {
                         var fileName = Path.GetFileNameWithoutExtension(antlrFile);
                         var code = File.ReadAllText(Path.Combine(tempDirectory, antlrFile));
-                        context.AddSource($"MetaCompiler.Antlr.{fileName}.g.cs", code);
+                        context.AddSource($"{fileName}.MetaCompiler.Antlr.g.cs", code);
                     }
                 }
                 if (parserCode is not null)
@@ -91,6 +91,7 @@ namespace MetaDslx.Languages.MetaCompiler.Antlr.Analyzers
                     antlrTool.GrammarFiles.Add(parserFileName);
                     antlrTool.WorkingDirectory = tempDirectory;
                     antlrTool.TargetNamespace = language.QualifiedNamespace;
+                    antlrTool.GenerateVisitor = true;
                     antlrTool.Execute(context.CancellationToken);
                     if (antlrTool.Diagnostics.Length > 0)
                     {
@@ -104,7 +105,7 @@ namespace MetaDslx.Languages.MetaCompiler.Antlr.Analyzers
                     {
                         var fileName = Path.GetFileNameWithoutExtension(antlrFile);
                         var code = File.ReadAllText(Path.Combine(tempDirectory, antlrFile));
-                        context.AddSource($"MetaCompiler.Antlr.{fileName}.g.cs", code);
+                        context.AddSource($"{fileName}.MetaCompiler.Antlr.g.cs", code);
                     }
                 }
             }
