@@ -61,6 +61,7 @@ namespace MetaDslx.Languages.MetaCompiler.Model
 
     public enum AssignmentOperator
     {
+        None,
         Assign,
         QuestionAssign,
         NegatedAssign,
@@ -173,6 +174,8 @@ namespace MetaDslx.Languages.MetaCompiler.Model
             }
         }
 
+        public LexerRule LexerRule { get; set; }
+
         public override string ToString()
         {
             return $"{Name}={ValueText}";
@@ -191,7 +194,7 @@ namespace MetaDslx.Languages.MetaCompiler.Model
     public class ParserRuleListElement : ParserRuleElement
     {
         public ParserRuleReferenceElement First { get; set; }
-        public object Separator { get; set; }
+        public LexerRule Separator { get; set; }
         public ParserRuleReferenceElement Next { get; set; }
         public ParserRuleBlockElement Block { get; set; }
     }

@@ -60,7 +60,8 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
         private void ResolveRules(Language language)
         {
             var ruleNames = new HashSet<string>();
-            foreach (var rule in language.Grammar.Rules)
+            var rules = language.Grammar.Rules.ToList();
+            foreach (var rule in rules)
             {
                 if (rule is LexerRule lr)
                 {
@@ -143,6 +144,118 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                         ResolveRules(language, blockAlt);
                     }
                 }
+                else if (elem is ParserRuleFixedStringElement fixedStringElem)
+                {
+                    var lexerRule = ResolveFixedLexerRule(language.Grammar, fixedStringElem.Value);
+                    if (lexerRule is null)
+                    {
+                        lexerRule = new LexerRule() { Location = fixedStringElem.Location };
+                        var singleAlt = new LexerRuleAlternative();
+                        singleAlt.Elements.Add(new LexerRuleFixedStringElement() { ValueText = fixedStringElem.ValueText });
+                        lexerRule.Alternatives.Add(singleAlt);
+                        lexerRule.Name = MakeFixedLexerRuleName(language.Grammar, fixedStringElem.Value);
+                        language.Grammar.Rules.Add(lexerRule);
+                    }
+                    fixedStringElem.LexerRule = lexerRule;
+                }
+            }
+        }
+
+        private LexerRule? ResolveFixedLexerRule(Grammar grammar, string value)
+        {
+            var rules = grammar.Rules.OfType<LexerRule>().Where(lr => lr.FixedValue == value).ToImmutableArray();
+            if (rules.Length >= 1) return rules[0];
+            else return null;
+        }
+
+        private string MakeFixedLexerRuleName(Grammar grammar, string value)
+        {
+            var keyword = PooledStringBuilder.GetInstance();
+            var keywordBuilder = keyword.Builder;
+            var other = PooledStringBuilder.GetInstance();
+            var otherBuilder = other.Builder;
+            var isKeyword = true;
+            var first = true;
+            keywordBuilder.Append('K');
+            otherBuilder.Append('T');
+            foreach (var ch in value)
+            {
+                if (ch >= 'a' && ch <= 'z' || ch >= 'A' && ch <= 'Z' || ch == '_' || !first && ch >= '0' && ch <= '9')
+                {
+                    keywordBuilder.Append(first ? char.ToUpper(ch) : ch);
+                    otherBuilder.Append(first ? char.ToUpper(ch) : ch);
+                }
+                else
+                {
+                    isKeyword = false;
+                    var otherName = GetOtherCharacterName(ch);
+                    if (otherName is not null) otherBuilder.Append(otherName);
+                    else otherBuilder.Append('_');
+                }
+                first = false;
+            }
+            var result = other.ToStringAndFree();
+            if (isKeyword) result = keyword.ToStringAndFree();
+            else keyword.Free();
+            if (HasRuleName(grammar, result))
+            {
+                var index = 0;
+                while (true)
+                {
+                    ++index;
+                    var name = $"{result}{index}";
+                    if (!HasRuleName(grammar, name)) return name;
+                }
+            }
+            return result;
+        }
+
+        private bool HasRuleName(Grammar grammar, string name)
+        {
+            foreach (var rule in grammar.Rules)
+            {
+                if (rule.Name == name) return true;
+            }
+            return false;
+        }
+
+        private string? GetOtherCharacterName(char ch)
+        {
+            switch (ch)
+            {
+                case '!': return "Excl";
+                case '"': return "Quote";
+                case '#': return "Hash";
+                case '$': return "Dollar";
+                case '%': return "Percent";
+                case '&': return "Amp";
+                case '\'': return "Apos";
+                case '(': return "LParen";
+                case ')': return "RParen";
+                case '*': return "Asterisk";
+                case '+': return "Plus";
+                case ',': return "Comma";
+                case '-': return "Minus";
+                case '.': return "Dot";
+                case '/': return "Slash";
+                case ':': return "Colon";
+                case ';': return "Semicolon";
+                case '<': return "Lt";
+                case '=': return "Eq";
+                case '>': return "Gt";
+                case '?': return "Question";
+                case '@': return "At";
+                case '[': return "LBracket";
+                case '\\': return "Backslash";
+                case ']': return "RBracket";
+                case '^': return "Hat";
+                case '_': return "Underscore";
+                case '`': return "Accent";
+                case '{': return "LBrace";
+                case '|': return "Bar";
+                case '}': return "RBrace";
+                case '~': return "Tilde";
+                default: return null;
             }
         }
 
@@ -177,14 +290,14 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                     {
                         if (firstRule == nextRule)
                         {
-                            object? separator = null;
+                            LexerRule? separator = null;
                             if (sep is ParserRuleReferenceElement sepRef && sepRef.Rule is LexerRule sepLexerRule && sepLexerRule.IsFixed)
                             {
                                 separator = sepLexerRule;
                             }
                             else if (sep is ParserRuleFixedStringElement sepFixed)
                             {
-                                separator = sepFixed;
+                                separator = sepFixed.LexerRule;
                             }
                             if (separator is not null)
                             {
@@ -461,19 +574,10 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                 }
                 else
                 {
-                    var nextToken1 = MetaCompilerToken.None;
-                    var nextToken2 = MetaCompilerToken.None;
-                    try
-                    {
-                        _tokens.IgnoreWhitespaceAndComments = false;
-                        nextToken1 = _tokens.PeekToken(1);
-                        nextToken2 = _tokens.PeekToken(2);
-                    }
-                    finally
-                    {
-                        _tokens.IgnoreWhitespaceAndComments = true;
-                    }
+                    var nextToken1 = _tokens.PeekToken(1);
+                    var nextToken2 = _tokens.PeekToken(2);
                     var nextToken3 = _tokens.PeekToken(3);
+                    if (nextToken2.Position > nextToken1.Position + nextToken1.Text.Length) nextToken2 = MetaCompilerToken.None;
                     if (token.Kind == MetaCompilerTokenKind.Character && nextToken1.Text == "." && nextToken2.Text == "." && nextToken3.Kind == MetaCompilerTokenKind.Character)
                     {
                         var range = new LexerRuleRangeElement();
@@ -613,34 +717,26 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
             {
                 string? propertyName = null;
                 Location? propertyLocation = null;
-                var propertyAssignment = AssignmentOperator.Assign;
+                var propertyAssignment = AssignmentOperator.None;
                 var propertyAnnotations = new List<Annotation>();
                 var negated = false;
-                var nextToken = MetaCompilerToken.None;
-                var nextToken2 = MetaCompilerToken.None;
-                try
-                {
-                    _tokens.IgnoreWhitespaceAndComments = false;
-                    nextToken = _tokens.PeekToken(1);
-                    nextToken2 = _tokens.PeekToken(2);
-                }
-                finally
-                {
-                    _tokens.IgnoreWhitespaceAndComments = true;
-                }
-                if (token.Kind == MetaCompilerTokenKind.Identifier && (nextToken.Text == "=" || (nextToken2.Text == "=" && (nextToken.Text == "?" || nextToken.Text == "!" || nextToken.Text == "+"))))
+                var nextToken1 = _tokens.PeekToken(1);
+                var nextToken2 = _tokens.PeekToken(2);
+                if (nextToken2.Position > nextToken1.Position + nextToken1.Text.Length) nextToken2 = MetaCompilerToken.None;
+                if (token.Kind == MetaCompilerTokenKind.Identifier && (nextToken1.Text == "=" || (nextToken2.Text == "=" && (nextToken1.Text == "?" || nextToken1.Text == "!" || nextToken1.Text == "+"))))
                 {
                     propertyLocation = _tokens.CurrentLocation;
                     propertyName = token.Text;
-                    if (nextToken.Text == "=")
+                    propertyAssignment = AssignmentOperator.Assign;
+                    if (nextToken1.Text == "=")
                     {
                         _tokens.EatTokens(2);
                     }
                     else if (nextToken2.Text == "=")
                     {
-                        if (nextToken.Text == "?") propertyAssignment = AssignmentOperator.QuestionAssign;
-                        if (nextToken.Text == "!") propertyAssignment = AssignmentOperator.NegatedAssign;
-                        if (nextToken.Text == "+") propertyAssignment = AssignmentOperator.PlusAssign;
+                        if (nextToken1.Text == "?") propertyAssignment = AssignmentOperator.QuestionAssign;
+                        if (nextToken1.Text == "!") propertyAssignment = AssignmentOperator.NegatedAssign;
+                        if (nextToken1.Text == "+") propertyAssignment = AssignmentOperator.PlusAssign;
                         _tokens.EatTokens(3);
                     }
                     propertyAnnotations.AddRange(_annotations);
@@ -702,9 +798,9 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                 _annotations.Clear();
                 alt.Elements.Add(element);
                 token = _tokens.CurrentToken;
-                nextToken = _tokens.PeekToken(1);
+                nextToken1 = _tokens.PeekToken(1);
                 element.Multiplicity = Multiplicity.ExactlyOne;
-                if (nextToken.Text == "?")
+                if (nextToken1.Text == "?")
                 {
                     if (token.Text == "?") element.Multiplicity = Multiplicity.NonGreedyZeroOrOne;
                     if (token.Text == "*") element.Multiplicity = Multiplicity.NonGreedyZeroOrMore;

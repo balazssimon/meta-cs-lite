@@ -1,21 +1,68 @@
 ﻿namespace MetaDslx.Languages.MetaCompiler.Antlr.Generators
 
-generator AntlrGenerator
-
 using MetaDslx.Languages.MetaCompiler.Model
+using System.Collections.Generic
 using System.Linq
+
+generator AntlrGenerator
 
 template GenerateLexer(Language language)
 lexer grammar [language.Name]Lexer;
 
-[foreach (var rule in language.Grammar.Rules.OfType<LexerRule>())]
+[foreach (var rule in language.Grammar.Rules.OfType<LexerRule>().Where(lr => lr.IsFixed))]
+[GenerateLexerRule(rule)]
+[end foreach]
+[foreach (var rule in language.Grammar.Rules.OfType<LexerRule>().Where(lr => !lr.IsFixed))]
 [GenerateLexerRule(rule)]
 [end foreach]
 end template
 
 template GenerateLexerRule(LexerRule rule)
-Int: 'int';
+[rule.IsFragment ? "fragment " : ""][rule.Name]: [GenerateLexerRuleAlts(rule.Alternatives)][rule.IsHidden ? " -> channel(HIDDEN)" : ""];
 end template
+
+template GenerateLexerRuleAlts(List<LexerRuleAlternative> alternatives)
+[$single-line]
+[foreach (var alt in alternatives) separator " | "]
+[GenerateLexerRuleElements(alt)]
+[end foreach]
+end template
+
+template GenerateLexerRuleElements(LexerRuleAlternative alt)
+[$single-line]
+[foreach (var elem in alt.Elements) separator " "]
+[elem.IsNegated ? "~" : ""][GenerateLexerRuleElement(elem)][GenerateMultiplicity(elem.Multiplicity)]
+[end foreach]
+end template
+
+template GenerateLexerRuleElement(LexerRuleElement elem)
+[$single-line]
+[if (elem is LexerRuleReferenceElement ruleRefElem)]
+[ruleRefElem.Rule.Name]
+[else if (elem is LexerRuleFixedStringElement fixedElem)]
+[fixedElem.ValueText]
+[else if (elem is LexerRuleWildcardElement wildcardElem)]
+.
+[else if (elem is LexerRuleBlockElement blockElem)]
+([GenerateLexerRuleAlts(blockElem.Alternatives)])
+[else if (elem is LexerRuleRangeElement rangeElem)]
+[rangeElem.StartText]..[rangeElem.EndText]
+[else]
+!!! ERROR: unknown lexer rule element type [elem.GetType()]
+[end if]
+end template
+
+template GenerateMultiplicity(Multiplicity multiplicity)
+[$single-line]
+[if (multiplicity == Multiplicity.ZeroOrOne)]?
+[else if (multiplicity == Multiplicity.ZeroOrMore)]*
+[else if (multiplicity == Multiplicity.OneOrMore)]+
+[else if (multiplicity == Multiplicity.NonGreedyZeroOrOne)]??
+[else if (multiplicity == Multiplicity.NonGreedyZeroOrMore)]*?
+[else if (multiplicity == Multiplicity.NonGreedyOneOrMore)]+?
+[end if]
+end template
+
 
 template GenerateParser(Language language)
 parser grammar [language.Name]Parser;
@@ -31,5 +78,47 @@ options
 end template
 
 template GenerateParserRule(ParserRule rule)
-main: Int;
+[rule.Name]: [GenerateParserRuleAlts(rule.Alternatives)];
+end template
+
+template GenerateParserRuleAlts(List<ParserRuleAlternative> alternatives)
+[$single-line]
+[foreach (var alt in alternatives) separator " | "]
+[GenerateParserRuleElements(alt)]
+[end foreach]
+end template
+
+template GenerateParserRuleElements(ParserRuleAlternative alt)
+[$single-line]
+[foreach (var elem in alt.Elements) separator " "]
+[GenerateParserRuleElement(elem)]
+[end foreach]
+end template
+
+template GenerateAssignment(AssignmentOperator op)
+[$single-line]
+[if (op == AssignmentOperator.Assign)]=
+[else if (op == AssignmentOperator.QuestionAssign)]=
+[else if (op == AssignmentOperator.NegatedAssign)]=
+[else if (op == AssignmentOperator.PlusAssign)]+=
+[end if]
+end template
+
+template GenerateParserRuleElement(ParserRuleElement elem)
+[$single-line]
+[if (elem is ParserRuleReferenceElement ruleRefElem)]
+[elem.Name][GenerateAssignment(elem.AssignmentOperator)][elem.IsNegated ? "~" : ""][ruleRefElem.Rule.Name][GenerateMultiplicity(elem.Multiplicity)]
+[else if (elem is ParserRuleEofElement eofElem)]
+[elem.Name][GenerateAssignment(elem.AssignmentOperator)]EOF
+[else if (elem is ParserRuleFixedStringElement fixedElem)]
+[elem.Name][GenerateAssignment(elem.AssignmentOperator)][elem.IsNegated ? "~" : ""][fixedElem.LexerRule.Name][GenerateMultiplicity(elem.Multiplicity)]
+[else if (elem is ParserRuleWildcardElement wildcardElem)]
+[elem.Name][GenerateAssignment(elem.AssignmentOperator)][elem.IsNegated ? "~" : ""].[GenerateMultiplicity(elem.Multiplicity)]
+[else if (elem is ParserRuleBlockElement blockElem)]
+[elem.Name][GenerateAssignment(elem.AssignmentOperator)][elem.IsNegated ? "~" : ""]([GenerateParserRuleAlts(blockElem.Alternatives)])[GenerateMultiplicity(elem.Multiplicity)]
+[else if (elem is ParserRuleListElement listElem)]
+[elem.Name][elem.Name is not null ? "+=" : ""][GenerateParserRuleElement(listElem.First)] ([listElem.Separator.Name] [elem.Name][elem.Name is not null ? "+=" : ""][GenerateParserRuleElement(listElem.Next)])[GenerateMultiplicity(listElem.Block.Multiplicity)]
+[else]
+!!! ERROR: unknown lexer rule element type [elem.GetType()]
+[end if]
 end template

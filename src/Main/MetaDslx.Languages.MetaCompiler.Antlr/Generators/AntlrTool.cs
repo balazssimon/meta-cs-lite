@@ -58,6 +58,9 @@ namespace MetaDslx.Languages.MetaCompiler.Antlr.Generators
 
         public bool Execute(CancellationToken cancellationToken)
         {
+            GeneratedFiles = ImmutableArray<string>.Empty;
+            Diagnostics = ImmutableArray<AntlrToolMessage>.Empty;
+
             bool success = false;
             _generatedFiles.Clear();
             _diagnostics.Clear();
@@ -177,6 +180,10 @@ namespace MetaDslx.Languages.MetaCompiler.Antlr.Generators
             {
                 ProcessException(exception);
                 success = false;
+            }
+            finally
+            {
+                Diagnostics = _diagnostics.ToImmutable();
             }
 
             return success;

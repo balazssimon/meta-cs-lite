@@ -117,9 +117,9 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
                 _osb.WriteLine();
                 _osb.Write("{");
                 _osb.Push();
+                while (ParseUsing()) ;
                 if (ParseGenerator())
                 {
-                    while (ParseUsing()) ;
                     _osb.WriteLine();
                     StartOutputSpan(_osb.Prefix.Length + 20);
                     _osb.Write("public partial class");

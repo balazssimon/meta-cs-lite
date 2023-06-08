@@ -19,7 +19,7 @@ namespace MetaDslx.Languages.MetaCompiler.Analyzers
         public void Initialize(IncrementalGeneratorInitializationContext initContext)
         {
             IncrementalValuesProvider<AdditionalText> textFiles = initContext.AdditionalTextsProvider
-                .Where(static file => file.Path.EndsWith(".mtext"));
+                .Where(static file => file.Path.EndsWith(".mlang"));
             IncrementalValuesProvider<(string path, string content)> pathsAndContents = textFiles
                 .Select((text, cancellationToken) => (path: text.Path, content: text.GetText(cancellationToken)!.ToString()));
             initContext.RegisterSourceOutput(pathsAndContents, (spc, pathAndContent) =>
@@ -28,11 +28,11 @@ namespace MetaDslx.Languages.MetaCompiler.Analyzers
                 {
                     var filePath = Path.GetFileNameWithoutExtension(pathAndContent.path);
                     var csharpFilePath = $"MetaCompiler.{filePath}.g.cs";
-                    var mtextCompiler = new MetaCompilerParser(pathAndContent.path, SourceText.From(pathAndContent.content));
-                    var language = mtextCompiler.Parse();
-                    if (mtextCompiler.Diagnostics.Length > 0)
+                    var mlangCompiler = new MetaCompilerParser(pathAndContent.path, SourceText.From(pathAndContent.content));
+                    var language = mlangCompiler.Parse();
+                    if (mlangCompiler.Diagnostics.Length > 0)
                     {
-                        foreach (var diag in mtextCompiler.Diagnostics)
+                        foreach (var diag in mlangCompiler.Diagnostics)
                         {
                             spc.ReportDiagnostic(diag.ToMicrosoft());
                         }

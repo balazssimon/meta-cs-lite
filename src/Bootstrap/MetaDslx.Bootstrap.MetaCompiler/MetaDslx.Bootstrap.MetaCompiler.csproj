@@ -32,6 +32,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<AdditionalFiles Include="Test.mtext"/>
+		<AdditionalFiles Include="Test.mlang" />
 	</ItemGroup>
 </Project>
