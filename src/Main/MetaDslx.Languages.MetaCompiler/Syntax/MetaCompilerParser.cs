@@ -54,6 +54,8 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
             ParseGrammar(language);
             ResolveRules(language);
             ResolveLists(language);
+            ResolveNames(language);
+            ResolveAnnotations(language);
             return language;
         }
 
@@ -314,6 +316,145 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                             }
                         }
                     }
+                }
+            }
+        }
+
+        private void ResolveNames(Language language)
+        {
+            var usedAlternativeNames = new HashSet<string>();
+            var usedElementNames = new HashSet<string>();
+            foreach (var rule in language.Grammar.ParserRules)
+            {
+                ResolveAlternativeNames(rule.Name, rule.Alternatives, usedAlternativeNames);
+            }
+            foreach (var rule in language.Grammar.ParserRules)
+            {
+                ResolveElementNames(rule.Alternatives, usedElementNames, true);
+            }
+        }
+
+        private void ResolveAlternativeNames(string parentName, List<ParserRuleAlternative> alternatives, HashSet<string> usedAlternativeNames)
+        {
+            if (alternatives.Count == 1)
+            {
+                if (string.IsNullOrEmpty(alternatives[0].Name))
+                {
+                    alternatives[0].Name = parentName;
+                }
+            }
+            else
+            {
+                var altIndex = 0;
+                foreach (var alt in alternatives)
+                {
+                    ++altIndex;
+                    if (string.IsNullOrEmpty(alt.Name))
+                    {
+                        alt.Name = $"{parentName}{altIndex}";
+                    }
+                }
+            }
+            foreach (var alt in alternatives)
+            {
+                usedAlternativeNames.Add(alt.Name);
+            }
+            foreach (var alt in alternatives)
+            {
+                foreach (var blockElem in alt.Elements.OfType<ParserRuleBlockElement>())
+                {
+                    var blockName = blockElem.Name;
+                    if (string.IsNullOrEmpty(blockName))
+                    {
+                        var defaultName = $"{parentName}Block";
+                        var name = defaultName;
+                        var index = 0;
+                        while (usedAlternativeNames.Contains(name)) name = $"{defaultName}{++index}";
+                        blockElem.Name = name;
+                    }
+                    ResolveAlternativeNames(blockName, blockElem.Alternatives, usedAlternativeNames);
+                }
+            }
+        }
+
+        private void ResolveElementNames(List<ParserRuleAlternative> alternatives, HashSet<string> usedElementNames, bool clearUsedElementNames)
+        {
+            foreach (var alt in alternatives)
+            {
+                if (clearUsedElementNames) usedElementNames.Clear();
+                ResolveElementNames(alt, usedElementNames);
+            }
+        }
+
+        private void ResolveElementNames(ParserRuleAlternative alternative, HashSet<string> usedElementNames)
+        {
+            foreach (var elem in alternative.Elements)
+            {
+                ResolveElementNames(elem, usedElementNames);
+            }
+        }
+
+        private void ResolveElementNames(ParserRuleElement elem, HashSet<string> usedElementNames)
+        {
+            if (string.IsNullOrEmpty(elem.Name))
+            {
+                var name = $"{elem.DefaultName}";
+                var index = 0;
+                while (usedElementNames.Contains(name)) name = $"{elem.DefaultName}{++index}";
+                elem.Name = name;
+            }
+            else if (usedElementNames.Contains(elem.Name))
+            {
+                //Error(elem.NameLocation, $"Element name '{elem.Name}' is defined multiple times.");
+            }
+            usedElementNames.Add(elem.Name);
+            if (elem is ParserRuleBlockElement blockElem)
+            {
+                ResolveElementNames(blockElem.Alternatives, usedElementNames, false);
+            }
+        }
+
+        private void ResolveAnnotations(Language language)
+        {
+            var grammar = language.Grammar;
+            LexerRule? _defaultWhitespace = null;
+            LexerRule? _defaultEndOfLine = null;
+            LexerRule? _defaultIdentifier = null;
+            LexerRule? _defaultSeparator = null;
+            foreach (var rule in grammar.LexerRules)
+            {
+                var isDefault = rule.Annotations.Any(annot => annot.QualifiedName == "Default");
+                if (isDefault)
+                {
+                    ResolveDefaultLexerRule(ref _defaultWhitespace, rule, "Whitespace");
+                    ResolveDefaultLexerRule(ref _defaultEndOfLine, rule, "EndOfLine");
+                    ResolveDefaultLexerRule(ref _defaultIdentifier, rule, "Identifier");
+                    ResolveDefaultLexerRule(ref _defaultSeparator, rule, "Separator");
+                }
+            }
+            grammar.DefaultWhitespace = _defaultWhitespace;
+            grammar.DefaultEndOfLine = _defaultEndOfLine;
+            grammar.DefaultIdentifier = _defaultIdentifier;
+            grammar.DefaultSeparator = _defaultSeparator;
+            if (grammar.DefaultWhitespace is null) Error(language.Location, $"Missing lexer rule with annotations [Default] and [Whitespace].");
+            if (grammar.DefaultEndOfLine is null) Error(language.Location, $"Missing lexer rule with annotations [Default] and [EndOfLine].");
+            if (grammar.DefaultIdentifier is null) Error(language.Location, $"Missing lexer rule with annotations [Default] and [Identifier].");
+            if (grammar.DefaultSeparator is null) Error(language.Location, $"Missing lexer rule with annotations [Default] and [Separator].");
+            grammar.MainRule = grammar.ParserRules.FirstOrDefault();
+        }
+
+        private void ResolveDefaultLexerRule(ref LexerRule? lexerRule, LexerRule defaultRule, string annotationName)
+        {
+            var isMatch = defaultRule.Annotations.Any(annot => annot.QualifiedName == annotationName);
+            if (isMatch)
+            {
+                if (lexerRule is null)
+                {
+                    lexerRule = defaultRule;
+                }
+                else
+                {
+                    Error(defaultRule.Location, $"There is already another {annotationName} lexer rule called '{lexerRule.Name}' defined in the grammar. There must be exactly one lexer rule with this annotation.");
                 }
             }
         }

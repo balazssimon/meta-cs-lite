@@ -46,8 +46,10 @@ namespace MetaDslx.Languages.MetaCompiler.Analyzers
                         spc.AddSource($"{fileName}.MetaCompiler.SyntaxFacts.g.cs", syntaxFactsCode);
                         var languageVersionCode = generator.GenerateLanguageVersion(language);
                         spc.AddSource($"{fileName}.MetaCompiler.LanguageVersion.g.cs", languageVersionCode);
-                        var syntaxNodesCode = generator.GenerateSyntaxNodes(language);
-                        spc.AddSource($"{fileName}.MetaCompiler.SyntaxNodes.g.cs", syntaxNodesCode);
+                        var parseOptionsCode = generator.GenerateParseOptions(language);
+                        spc.AddSource($"{fileName}.MetaCompiler.ParseOptions.g.cs", parseOptionsCode);
+                        var internalSyntaxCode = generator.GenerateInternalSyntax(language);
+                        spc.AddSource($"{fileName}.MetaCompiler.InternalSyntax.g.cs", internalSyntaxCode);
                     }
                 }
                 catch (Exception ex)

@@ -62,6 +62,18 @@ namespace [language.QualifiedNamespace].Syntax
 {
 	public class [language.Name]SyntaxFacts : SyntaxFacts
 	{
+		public [language.Name]SyntaxKind DefaultWhitespaceKind => [language.Name]SyntaxKind.[language.Grammar.DefaultWhitespace?.CSharpName ?? "None"];
+		public [language.Name]SyntaxKind DefaultEndOfLineKind => [language.Name]SyntaxKind.[language.Grammar.DefaultEndOfLine?.CSharpName ?? "None"];
+		public [language.Name]SyntaxKind DefaultSeparatorKind => [language.Name]SyntaxKind.[language.Grammar.DefaultSeparator?.CSharpName ?? "None"];
+		public [language.Name]SyntaxKind DefaultIdentifierKind => [language.Name]SyntaxKind.[language.Grammar.DefaultIdentifier?.CSharpName ?? "None"];
+		public [language.Name]SyntaxKind CompilationUnitKind => [language.Name]SyntaxKind.[language.Grammar.MainRule?.CSharpName ?? "None"];
+
+		protected override int DefaultWhitespaceRawKind => (int)DefaultWhitespaceKind;
+		protected override int DefaultEndOfLineRawKind => (int)DefaultEndOfLineKind;
+		protected override int DefaultSeparatorRawKind => (int)DefaultSeparatorKind;
+		protected override int DefaultIdentifierRawKind => (int)DefaultIdentifierKind;
+		protected override int CompilationUnitRawKind => (int)CompilationUnitKind;
+
 		public bool IsToken([language.Name]SyntaxKind kind)
         {
 			switch (kind)
@@ -502,6 +514,218 @@ namespace [language.QualifiedNamespace]
 }
 end template
 
-template GenerateSyntaxNodes(Language language)
+template GenerateParseOptions(Language language)
+using System;
+using System.Collections.Generic;
+using System.Collections.Immutable;
+using System.Diagnostics;
+using MetaDslx.CodeAnalysis;
+using MetaDslx.CodeAnalysis.Syntax;
+using MetaDslx.CodeAnalysis.PooledObjects;
+using Roslyn.Utilities;
+
+namespace [language.QualifiedNamespace].Syntax
+{
+    /// <summary>
+    /// This class stores several source parsing related options and offers access to their values.
+    /// </summary>
+    public sealed class [language.Name]ParseOptions : ParseOptions, IEquatable<[language.Name]ParseOptions>
+    {
+        /// <summary>
+        /// The default parse options.
+        /// </summary>
+        public static [language.Name]ParseOptions Default { get; } = new [language.Name]ParseOptions();
+
+        private ImmutableArray<string> _preprocessorSymbols;
+        private ImmutableDictionary<string, string> _features;
+
+        /// <summary>
+        /// Gets the effective language version, which the compiler uses to select the
+        /// language rules to apply to the program.
+        /// </summary>
+        public [language.Name]LanguageVersion LanguageVersion { get; private set; }
+
+        /// <summary>
+        /// Gets the specified language version, which is the value that was specified in
+        /// the call to the constructor, or modified using the <see cref="WithLanguageVersion"/> method,
+        /// or provided on the command line.
+        /// </summary>
+        public [language.Name]LanguageVersion SpecifiedLanguageVersion { get; private set; }
+
+        public override ImmutableArray<string> PreprocessorSymbols => _preprocessorSymbols;
+
+        public [language.Name]ParseOptions(
+            [language.Name]LanguageVersion languageVersion = [language.Name]LanguageVersion.Default,
+            DocumentationMode documentationMode = DocumentationMode.Parse,
+            SourceCodeKind kind = SourceCodeKind.Regular,
+            IEnumerable<string>? preprocessorSymbols = null)
+            : this(languageVersion,
+                  documentationMode,
+                  kind,
+                  preprocessorSymbols.ToImmutableArrayOrEmpty(),
+                  ImmutableDictionary<string, string>.Empty)
+        {
+        }
+
+        internal [language.Name]ParseOptions(
+            [language.Name]LanguageVersion languageVersion,
+            DocumentationMode documentationMode,
+            SourceCodeKind kind,
+            ImmutableArray<string> preprocessorSymbols,
+            IReadOnlyDictionary<string, string>? features)
+            : base(kind, documentationMode)
+        {
+            this.SpecifiedLanguageVersion = languageVersion;
+            this.LanguageVersion = languageVersion.MapSpecifiedToEffectiveVersion();
+            _preprocessorSymbols = preprocessorSymbols.ToImmutableArrayOrEmpty();
+            _features = features?.ToImmutableDictionary() ?? ImmutableDictionary<string, string>.Empty;
+        }
+
+        private [language.Name]ParseOptions([language.Name]ParseOptions other) : this(
+            languageVersion: other.SpecifiedLanguageVersion,
+            documentationMode: other.DocumentationMode,
+            kind: other.Kind,
+            preprocessorSymbols: other.PreprocessorSymbols)
+        {
+        }
+
+        public override [language.Name]Language Language => [language.Name]Language.Instance;
+
+        public new [language.Name]ParseOptions WithKind(SourceCodeKind kind)
+        {
+            if (kind == this.Kind)
+            {
+                return this;
+            }
+
+            return new [language.Name]ParseOptions(this) { Kind = kind };
+        }
+
+        public [language.Name]ParseOptions WithLanguageVersion([language.Name]LanguageVersion version)
+        {
+            if (version == this.SpecifiedLanguageVersion)
+            {
+                return this;
+            }
+
+            var effectiveLanguageVersion = version.MapSpecifiedToEffectiveVersion();
+            return new [language.Name]ParseOptions(this) { SpecifiedLanguageVersion = version, LanguageVersion = effectiveLanguageVersion };
+        }
+
+        public [language.Name]ParseOptions WithPreprocessorSymbols(IEnumerable<string>? preprocessorSymbols)
+        {
+            return WithPreprocessorSymbols(preprocessorSymbols.AsImmutableOrNull());
+        }
+
+        public [language.Name]ParseOptions WithPreprocessorSymbols(params string["[]"]? preprocessorSymbols)
+        {
+            return WithPreprocessorSymbols(preprocessorSymbols.AsImmutableOrNull());
+        }
+
+        public [language.Name]ParseOptions WithPreprocessorSymbols(ImmutableArray<string> symbols)
+        {
+            if (symbols.IsDefault)
+            {
+                symbols = ImmutableArray<string>.Empty;
+            }
+
+            if (symbols.Equals(this.PreprocessorSymbols))
+            {
+                return this;
+            }
+
+            return new [language.Name]ParseOptions(this) { _preprocessorSymbols = symbols };
+        }
+
+        public new [language.Name]ParseOptions WithDocumentationMode(DocumentationMode documentationMode)
+        {
+            if (documentationMode == this.DocumentationMode)
+            {
+                return this;
+            }
+
+            return new [language.Name]ParseOptions(this) { DocumentationMode = documentationMode };
+        }
+
+        protected override ParseOptions CommonWithKind(SourceCodeKind kind)
+        {
+            return WithKind(kind);
+        }
+
+        protected override ParseOptions CommonWithDocumentationMode(DocumentationMode documentationMode)
+        {
+            return WithDocumentationMode(documentationMode);
+        }
+
+        protected override bool IsFeatureEnabled(string feature)
+        {
+            [language.Name]LanguageVersion availableVersion = LanguageVersion;
+            [language.Name]LanguageVersion requiredVersion = Language.SyntaxFacts.GetRequiredLanguageVersion(feature);
+            return availableVersion >= requiredVersion;
+        }
+
+        public override Diagnostic? GetDiagnosticForFeature(string feature)
+        {
+            [language.Name]LanguageVersion availableVersion = LanguageVersion;
+            [language.Name]LanguageVersion requiredVersion = Language.SyntaxFacts.GetRequiredLanguageVersion(feature);
+            if (availableVersion < requiredVersion)
+            {
+                return Diagnostic.Create(ErrorCode.ERR_FeatureNotAvailableInVersion, Location.None, feature, Language.Name, availableVersion.ToDisplayString(), requiredVersion.ToDisplayString());
+            }
+            return null;
+        }
+
+        protected override void CommonValidateOptions(ArrayBuilder<Diagnostic> builder)
+        {
+            // Validate LanguageVersion not SpecifiedLanguageVersion, after Latest/Default has been converted:
+            if (!LanguageVersion.IsValid())
+            {
+                builder.Add(Diagnostic.Create(ErrorCode.ERR_BadLanguageVersion, Location.None, LanguageVersion.ToString()));
+            }
+
+            if (!PreprocessorSymbols.IsDefaultOrEmpty)
+            {
+                foreach (var symbol in PreprocessorSymbols)
+                {
+                    if (symbol == null)
+                    {
+                        builder.Add(Diagnostic.Create(ErrorCode.ERR_InvalidPreprocessingSymbol, Location.None, "null"));
+                    }
+                    else if (!Language.SyntaxFacts.IsValidIdentifier(symbol))
+                    {
+                        builder.Add(Diagnostic.Create(ErrorCode.ERR_InvalidPreprocessingSymbol, Location.None, symbol));
+                    }
+                }
+            }
+        }
+
+        public override bool Equals(object? obj)
+        {
+            return this.Equals(obj as [language.Name]ParseOptions);
+        }
+
+        public bool Equals([language.Name]ParseOptions? other)
+        {
+            if (object.ReferenceEquals(this, other))
+            {
+                return true;
+            }
+
+            if (!base.EqualsHelper(other))
+            {
+                return false;
+            }
+
+            return this.SpecifiedLanguageVersion == other.SpecifiedLanguageVersion;
+        }
+
+        public override int GetHashCode()
+        {
+            return
+                Hash.Combine(base.GetHashCodeHelper(),
+                Hash.Combine((int)this.SpecifiedLanguageVersion, 0));
+        }
+    }
+}
 end template
 

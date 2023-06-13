@@ -30,7 +30,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<AdditionalFiles Include="Generators\RoslynApiGenerator.mgen" />
+		<AdditionalFiles Include="Generators\*.mgen" />
 	</ItemGroup>
 
 </Project>

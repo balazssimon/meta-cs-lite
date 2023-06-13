@@ -64,9 +64,25 @@ main: Int a='int' s?='string' r!=Az? '""';
 foo: i+='int' (',' i+='int')*;
 bar: f+=foo (';' f+=foo)+;
 
+[Default]
+[Identifier]
 Az: ('a'..'z')+;
 
-Int: 'int';");
+[Default]
+[Separator]
+Comma: ',';
+
+Int: 'int';
+
+[Default]
+[Whitespace]
+WS: ' ' | '\t';
+
+[Default]
+[EndOfLine]
+EOL: '\r'? '\n';
+
+");
 driver = driver.AddAdditionalTexts(ImmutableArray.Create<AdditionalText>(testMText));
 driver = driver.RunGeneratorsAndUpdateCompilation(inputCompilation, out var outputCompilation, out var diagnostics);
 GeneratorDriverRunResult runResult = driver.GetRunResult();
