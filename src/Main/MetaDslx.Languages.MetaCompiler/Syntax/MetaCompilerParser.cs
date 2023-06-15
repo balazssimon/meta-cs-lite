@@ -9,8 +9,10 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
 {
     using MetaDslx.CodeAnalysis.PooledObjects;
     using MetaDslx.Languages.MetaCompiler.Model;
+    using Roslyn.Utilities;
     using System.Data;
     using System.Linq;
+    using System.Xml.Linq;
 
     public class MetaCompilerParser
     {
@@ -53,6 +55,7 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
             ParseLanguageDeclaration(language);
             ParseGrammar(language);
             ResolveRules(language);
+            ResolveBlocks(language);
             ResolveLists(language);
             ResolveNames(language);
             ResolveAnnotations(language);
@@ -261,6 +264,75 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
             }
         }
 
+        private void ResolveBlocks(Language language)
+        {
+            var rules = language.Grammar.Rules;
+            var usedNames = new HashSet<string>(rules.OfType<ParserRule>().Select(r => r.Name));
+            for (int i = 0; i < rules.Count; ++i)
+            {
+                if (rules[i] is ParserRule pr)
+                {
+                    ResolveBlocks(language, pr.Name, pr.Alternatives, usedNames);
+                }
+            }
+        }
+
+        private void ResolveBlocks(Language language, string parentName, List<ParserRuleAlternative> alternatives, HashSet<string> usedNames)
+        {
+            if (alternatives.Count == 1)
+            {
+                if (string.IsNullOrEmpty(alternatives[0].Name))
+                {
+                    alternatives[0].Name = parentName;
+                }
+            }
+            else
+            {
+                foreach (var alt in alternatives)
+                {
+                    if (string.IsNullOrEmpty(alt.Name))
+                    {
+                        var index = 0;
+                        var altName = $"{parentName}Alt{++index}";
+                        while (usedNames.Contains(altName)) altName = $"{parentName}Alt{++index}";
+                        alt.Name = altName;
+                        usedNames.Add(alt.Name);
+                    }
+                }
+            }
+            foreach (var alt in alternatives)
+            {
+                for (int i = 0; i < alt.Elements.Count; ++i)
+                {
+                    var blockElem = alt.Elements[i] as ParserRuleBlockElement;
+                    if (blockElem is not null)
+                    {
+                        var blockName = string.IsNullOrEmpty(blockElem.Name) ? "Block" : blockElem.Name.ToPascalCase();
+                        var index = 0;
+                        var ruleName = $"{alt.Name}{blockName}{++index}";
+                        while (usedNames.Contains(ruleName)) ruleName = $"{alt.Name}{blockName}{++index}";
+                        var rule = new ParserRule();
+                        rule.Name = ruleName;
+                        rule.Location = blockElem.Location;
+                        rule.Annotations.AddRange(blockElem.Annotations);
+                        rule.Alternatives.AddRange(blockElem.Alternatives);
+                        language.Grammar.Rules.Add(rule);
+                        usedNames.Add(rule.Name);
+                        var refElem = new ParserRuleReferenceElement();
+                        refElem.Annotations.AddRange(blockElem.NameAnnotations);
+                        refElem.Name = blockElem.Name;
+                        refElem.NameLocation = blockElem.NameLocation;
+                        refElem.Location = blockElem.Location;
+                        refElem.AssignmentOperator = blockElem.AssignmentOperator;
+                        refElem.Rule = rule;
+                        refElem.IsNegated = blockElem.IsNegated;
+                        refElem.Multiplicity = blockElem.Multiplicity;
+                        alt.Elements[i] = refElem;
+                    }
+                }
+            }
+        }
+
         private void ResolveLists(Language language)
         {
             foreach (var rule in language.Grammar.Rules)
@@ -322,58 +394,10 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
 
         private void ResolveNames(Language language)
         {
-            var usedAlternativeNames = new HashSet<string>();
             var usedElementNames = new HashSet<string>();
             foreach (var rule in language.Grammar.ParserRules)
             {
-                ResolveAlternativeNames(rule.Name, rule.Alternatives, usedAlternativeNames);
-            }
-            foreach (var rule in language.Grammar.ParserRules)
-            {
                 ResolveElementNames(rule.Alternatives, usedElementNames, true);
-            }
-        }
-
-        private void ResolveAlternativeNames(string parentName, List<ParserRuleAlternative> alternatives, HashSet<string> usedAlternativeNames)
-        {
-            if (alternatives.Count == 1)
-            {
-                if (string.IsNullOrEmpty(alternatives[0].Name))
-                {
-                    alternatives[0].Name = parentName;
-                }
-            }
-            else
-            {
-                var altIndex = 0;
-                foreach (var alt in alternatives)
-                {
-                    ++altIndex;
-                    if (string.IsNullOrEmpty(alt.Name))
-                    {
-                        alt.Name = $"{parentName}{altIndex}";
-                    }
-                }
-            }
-            foreach (var alt in alternatives)
-            {
-                usedAlternativeNames.Add(alt.Name);
-            }
-            foreach (var alt in alternatives)
-            {
-                foreach (var blockElem in alt.Elements.OfType<ParserRuleBlockElement>())
-                {
-                    var blockName = blockElem.Name;
-                    if (string.IsNullOrEmpty(blockName))
-                    {
-                        var defaultName = $"{parentName}Block";
-                        var name = defaultName;
-                        var index = 0;
-                        while (usedAlternativeNames.Contains(name)) name = $"{defaultName}{++index}";
-                        blockElem.Name = name;
-                    }
-                    ResolveAlternativeNames(blockName, blockElem.Alternatives, usedAlternativeNames);
-                }
             }
         }
 
@@ -402,16 +426,13 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                 var index = 0;
                 while (usedElementNames.Contains(name)) name = $"{elem.DefaultName}{++index}";
                 elem.Name = name;
+                if (elem.IsList) elem.AssignmentOperator = AssignmentOperator.PlusAssign;
             }
             else if (usedElementNames.Contains(elem.Name))
             {
                 //Error(elem.NameLocation, $"Element name '{elem.Name}' is defined multiple times.");
             }
             usedElementNames.Add(elem.Name);
-            if (elem is ParserRuleBlockElement blockElem)
-            {
-                ResolveElementNames(blockElem.Alternatives, usedElementNames, false);
-            }
         }
 
         private void ResolveAnnotations(Language language)
@@ -858,7 +879,7 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
             {
                 string? propertyName = null;
                 Location? propertyLocation = null;
-                var propertyAssignment = AssignmentOperator.None;
+                var propertyAssignment = AssignmentOperator.Assign;
                 var propertyAnnotations = new List<Annotation>();
                 var negated = false;
                 var nextToken1 = _tokens.PeekToken(1);

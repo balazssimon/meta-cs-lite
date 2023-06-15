@@ -31,7 +31,4 @@
 		<ProjectReference Include="..\..\Main\MetaDslx.Languages.MetaCompiler.Antlr\MetaDslx.Languages.MetaCompiler.Antlr.csproj" OutputItemType="Analyzer" />
 	</ItemGroup>
 
-	<ItemGroup>
-		<AdditionalFiles Include="Test.mlang0" />
-	</ItemGroup>
 </Project>

@@ -78,13 +78,16 @@ options
 end template
 
 template GenerateParserRule(ParserRule rule)
-[rule.Name]: [GenerateParserRuleAlts(rule.Alternatives)];
+[rule.Name]
+    [GenerateParserRuleAlts(rule.Alternatives)]
+    ;
 end template
 
 template GenerateParserRuleAlts(List<ParserRuleAlternative> alternatives)
-[$single-line]
-[foreach (var alt in alternatives) separator " | "]
-[GenerateParserRuleElements(alt)]
+[var sep = ":"]
+[foreach (var alt in alternatives)]
+[sep] [GenerateParserRuleElements(alt)][if (alternatives.Count > 1)] #[alt.Name][end if]
+[sep = "|"]
 [end foreach]
 end template
 
@@ -107,7 +110,7 @@ end template
 template GenerateParserRuleElement(ParserRuleElement elem)
 [$single-line]
 [if (elem is ParserRuleReferenceElement ruleRefElem)]
-[elem.Name][GenerateAssignment(elem.AssignmentOperator)][elem.IsNegated ? "~" : ""][ruleRefElem.Rule.Name][GenerateMultiplicity(elem.Multiplicity)]
+[if (elem.Name != ruleRefElem.Rule.Name)][elem.Name][GenerateAssignment(elem.AssignmentOperator)][end if][elem.IsNegated ? "~" : ""][ruleRefElem.Rule.Name][GenerateMultiplicity(elem.Multiplicity)]
 [else if (elem is ParserRuleEofElement eofElem)]
 [elem.Name][GenerateAssignment(elem.AssignmentOperator)]EOF
 [else if (elem is ParserRuleFixedStringElement fixedElem)]

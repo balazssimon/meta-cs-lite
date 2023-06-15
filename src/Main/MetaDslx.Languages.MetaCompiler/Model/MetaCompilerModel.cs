@@ -64,7 +64,6 @@ namespace MetaDslx.Languages.MetaCompiler.Model
 
     public enum AssignmentOperator
     {
-        None,
         Assign,
         QuestionAssign,
         NegatedAssign,
@@ -212,7 +211,7 @@ namespace MetaDslx.Languages.MetaCompiler.Model
 
     public abstract class ParserRuleElement : NamedElement
     {
-        public virtual string DefaultName => Name;
+        public virtual string DefaultName => Name.ToCamelCase();
         public string GreenFieldName => "_"+Name.ToCamelCase();
         public string GreenParameterName => Name.ToCamelCase().EscapeCSharpKeyword();
         public string GreenPropertyName => Name.ToPascalCase();
@@ -231,7 +230,7 @@ namespace MetaDslx.Languages.MetaCompiler.Model
 
     public class ParserRuleReferenceElement : ParserRuleElement
     {
-        public override string DefaultName => Rule?.Name;
+        public override string DefaultName => Rule?.Name.ToCamelCase();
         public ImmutableArray<string> RuleName { get; set; }
         public string QualifiedName => string.Join(".", Name);
         public Rule? Rule { get; set; }
@@ -266,7 +265,7 @@ namespace MetaDslx.Languages.MetaCompiler.Model
 
         public LexerRule LexerRule { get; set; }
         public override string GreenItemType => "InternalSyntaxToken";
-        public override string DefaultName => StringUtils.IsIdentifier(Value) ? Value : "token";
+        public override string DefaultName => LexerRule?.Name.ToCamelCase() ?? "token";
 
         public override string ToString()
         {

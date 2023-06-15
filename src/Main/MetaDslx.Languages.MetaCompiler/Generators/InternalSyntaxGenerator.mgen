@@ -1003,7 +1003,7 @@ internal class [alt.GreenName] : [parent.Alternatives.Count == 1 ? "GreenSyntaxN
 	}
 
 	private [alt.GreenName]()
-		: base(([language.Name]SyntaxKind)[language.Name]SyntaxKind.[alt.CSharpName()], null, null)
+		: base(([language.Name]SyntaxKind)[language.Name]SyntaxKind.[alt.CSharpName], null, null)
 	{
 		this.flags &= ~NodeFlags.IsNotMissing;
 	}

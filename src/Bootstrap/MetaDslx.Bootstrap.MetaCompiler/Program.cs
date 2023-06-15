@@ -59,28 +59,52 @@ var testMText = new AdditionalTextFile("Test.mlang", @"namespace X;
 
 language Test;
 
-main: Int a='int' s?='string' r!=Az? '""';
 
-foo: i+='int' (',' i+='int')*;
-bar: f+=foo (';' f+=foo)+;
+main : line* eof;
+
+line      : statement NEWLINE;
+
+statement : varDeclaration
+          | assignment    
+          | print         
+          ;
+
+print : 'print' '(' expression ')' ;
+
+varDeclaration : 'var' assignment ;
+
+assignment : ID '=' expression ;
+
+expression : binaryMulOperation# left=expression op=('/'|'*') right=expression
+           | binaryAddOperation# left=expression op=('+'|'-') right=expression 
+           | typeConversion#     value=expression 'as' targetType=type                           
+           | parenExpression#    '(' expression ')'
+           | varReference#       ID                                                            
+           | minusExpression#    '-' expression                                              
+           | intLiteral#         INTLIT                                                        
+           | decimalLiteral#     DECLIT 
+           ;
+           
+type : 'Int' | 'Decimal' ;
+
+INTLIT : '0'| '1'..'9' ('0'..'9')* ;
+DECLIT : ('0'|'1'..'9' ('0'..'9')*) '.' ('0'..'9')+ ;
 
 [Default]
 [Identifier]
-Az: ('a'..'z')+;
+ID : ('_'|'a'..'z'|'A'..'Z')+('_'|'a'..'z'|'A'..'Z'|'0'..'9')*;
 
 [Default]
 [Separator]
-Comma: ',';
-
-Int: 'int';
+COMMA : ',' ;
 
 [Default]
 [Whitespace]
-WS: ' ' | '\t';
+hidden WS : ('\t'|' ') +;
 
 [Default]
 [EndOfLine]
-EOL: '\r'? '\n';
+NEWLINE : ('\r\n' | 'r' | '\n');
 
 ");
 driver = driver.AddAdditionalTexts(ImmutableArray.Create<AdditionalText>(testMText));
