@@ -115,6 +115,11 @@ foreach (var diag in runResult.Diagnostics)
 {
     Console.WriteLine(diag);
 }
+var outputDir = @"..\..\..\..\..\Examples\MetaDslx.Examples.Sandy";
+foreach (var tree in runResult.GeneratedTrees)
+{
+    File.WriteAllText(Path.Combine(outputDir, Path.GetFileName(tree.FilePath)), tree.GetText().ToString());
+}
 
 static Compilation CreateCompilation(string source)
     => CSharpCompilation.Create("compilation",
