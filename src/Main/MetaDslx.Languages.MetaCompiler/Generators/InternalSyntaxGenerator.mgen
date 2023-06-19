@@ -18,6 +18,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
+#nullable enable
+
 namespace [language.QualifiedNamespace].Syntax.InternalSyntax
 {
     using System.Runtime.CompilerServices;
@@ -957,12 +959,11 @@ end template
 
 template GenerateInternalSyntaxRuleBase(Language language, ParserRule parent)
 [if (parent.Alternatives.Count > 1)]
-internal class [parent.GreenName] : GreenSyntaxNode
+internal abstract class [parent.GreenName] : GreenSyntaxNode
 {
     protected [parent.GreenName]([language.Name]SyntaxKind kind, DiagnosticInfo["[]"] diagnostics, SyntaxAnnotation["[]"] annotations)
         : base(kind, diagnostics, annotations)
     {
-		this.SlotCount = [parent.Alternatives.Count];
     }
 }
 
@@ -1058,7 +1059,7 @@ internal class [alt.GreenName] : [parent.Alternatives.Count == 1 ? "GreenSyntaxN
 	{
 		if ([foreach (var elem in alt.Elements) separator " || "][elem.FieldName] != [elem.ParameterName][elem.IsList ? ".Node" : ""][end foreach])
 		{
-			InternalSyntaxNode newNode = [language.Name]Language.Instance.InternalSyntaxFactory.Main([alt.GreenUpdateArguments]);
+			InternalSyntaxNode newNode = [language.Name]Language.Instance.InternalSyntaxFactory.[alt.CSharpName]([alt.GreenUpdateArguments]);
 			var diags = this.GetDiagnostics();
 			if (diags != null && diags.Length > 0)
 				newNode = newNode.WithDiagnostics(diags);
@@ -1075,6 +1076,8 @@ end template
 
 template GenerateInternalSyntaxVisitor(Language language)
 using System;
+
+#nullable enable
 
 namespace [language.QualifiedNamespace].Syntax.InternalSyntax
 {
@@ -1107,6 +1110,8 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics;
+
+#nullable enable
 
 namespace [language.QualifiedNamespace].Syntax.InternalSyntax
 {
@@ -1264,7 +1269,7 @@ namespace [language.QualifiedNamespace].Syntax.InternalSyntax
 end template
 
 template GenerateInternalSyntaxFactoryCreate(Language language, ParserRuleAlternative alt)
-		public [alt.GreenName] [alt.CSharpName]([alt.GreenUpdateParameters])
+		internal [alt.GreenName] [alt.CSharpName]([alt.GreenUpdateParameters])
 		{
 #if DEBUG
 			[foreach (var elem in alt.Elements)]
@@ -1273,11 +1278,11 @@ template GenerateInternalSyntaxFactoryCreate(Language language, ParserRuleAltern
 			if ([elem.ParameterName] is null) throw new ArgumentNullException(nameof([elem.ParameterName]));
 					[end if]
 					[if (elem.IsToken && !elem.IsList)]
-			if ([elem.ParameterName].Kind != [language.Name]SyntaxKind.[elem.CSharpName]) throw new ArgumentException(nameof([elem.ParameterName]));
+			if ([elem.ParameterName].RawKind != (int)[language.Name]SyntaxKind.[elem.CSharpName]) throw new ArgumentException(nameof([elem.ParameterName]));
 					[end if]
 				[else]
 					[if (elem.IsToken && !elem.IsList)]
-			if ([elem.ParameterName] is not null && [elem.ParameterName].Kind != [language.Name]SyntaxKind.[elem.CSharpName]) throw new ArgumentException(nameof([elem.ParameterName]));
+			if ([elem.ParameterName] is not null && [elem.ParameterName].RawKind != (int)[language.Name]SyntaxKind.[elem.CSharpName]) throw new ArgumentException(nameof([elem.ParameterName]));
 					[end if]
 				[end if]
 			[end foreach]

@@ -1,0 +1,104 @@
+namespace MetaDslx.Languages.MetaCompiler.Antlr.Generators
+
+using MetaDslx.Languages.MetaCompiler.Model
+using System.Collections.Generic
+using System.Linq
+
+generator AntlrGenerator
+
+
+template GenerateSyntaxLexer(Language language)
+using MetaDslx.CodeAnalysis;
+using MetaDslx.CodeAnalysis.Syntax;
+using MetaDslx.CodeAnalysis.Syntax.InternalSyntax;
+using MetaDslx.CodeAnalysis.Text;
+using MetaDslx.Languages.MetaCompiler.Antlr;
+
+#nullable enable
+
+namespace [language.QualifiedNamespace].Syntax
+{
+    public partial class [language.Name]SyntaxLexer : AntlrSyntaxLexer
+    {
+        public [language.Name]SyntaxLexer(SourceText text, [language.Name]ParseOptions options) 
+            : base(text, options)
+        {
+        }
+
+        protected new [language.Name]Lexer AntlrLexer => ([language.Name]Lexer)base.AntlrLexer;
+
+        protected override InternalSyntaxToken CreateToken(GreenNode? leadingTrivia, int kind, string text, GreenNode? trailingTrivia)
+        {
+            return [language.Name]Language.Instance.InternalSyntaxFactory.Token(leadingTrivia, ([language.Name]SyntaxKind)kind, text, trailingTrivia);
+        }
+
+        protected override InternalSyntaxTrivia CreateTrivia(int kind, string text)
+        {
+            return [language.Name]Language.Instance.InternalSyntaxFactory.Trivia(([language.Name]SyntaxKind)kind, text);
+        }
+    }
+}
+end template
+
+template GenerateSyntaxParser(Language language)
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using MetaDslx.CodeAnalysis;
+using MetaDslx.CodeAnalysis.Syntax;
+using MetaDslx.CodeAnalysis.Syntax.InternalSyntax;
+using MetaDslx.CodeAnalysis.Text;
+using MetaDslx.Languages.MetaCompiler.Antlr;
+using [language.QualifiedNamespace].Syntax.InternalSyntax;
+
+#nullable enable
+
+namespace [language.QualifiedNamespace].Syntax
+{
+    public partial class [language.Name]SyntaxParser : AntlrSyntaxParser
+    {
+        private readonly AntlrToRoslynVisitor _visitor;
+
+        public [language.Name]SyntaxParser(
+            [language.Name]SyntaxLexer lexer,
+            [language.Name]SyntaxNode oldTree, 
+			ParseData oldParseData,
+            IEnumerable<TextChangeRange> changes,
+            CancellationToken cancellationToken = default)
+            : base(lexer, oldTree, oldParseData, changes, cancellationToken)
+        {
+            _visitor = new AntlrToRoslynVisitor(this);
+        }
+
+        protected new [language.Name]Parser AntlrParser => ([language.Name]Parser)base.AntlrParser;
+
+		public override SyntaxNode Parse()
+		{
+			BeginRoot();
+            ParserState? state = null;
+			GreenNode? green = this.Parse[language.Grammar.MainRule?.CSharpName](ref state);
+			EndRoot(ref green);
+			var red = ([language.Name]SyntaxNode)green!.CreateRed();
+			return red;
+		}
+
+        private [language.Grammar.MainRule?.GreenName]? Parse[language.Grammar.MainRule?.CSharpName](ref ParserState? state)
+        {
+            return null;
+        }
+
+        private class AntlrToRoslynVisitor
+        {
+            private [language.Name]SyntaxParser _parser;
+
+            public AntlrToRoslynVisitor([language.Name]SyntaxParser parser)
+            {
+                _parser = parser;
+            }
+        }
+    }
+}
+end template

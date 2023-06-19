@@ -1,0 +1,28 @@
+namespace MetaDslx.Languages.MetaCompiler.Generators
+
+using MetaDslx.Languages.MetaCompiler.Model
+using System.Collections.Generic;
+using System.Collections.Immutable;
+using System.Linq
+
+generator RoslynApiGenerator
+
+
+template GenerateCompilationFactory(Language language)
+using System;
+using MetaDslx.CodeAnalysis;
+using MetaDslx.CodeAnalysis.Declarations;
+
+#nullable enable
+
+namespace [language.QualifiedNamespace]
+{
+    public class [language.Name]CompilationFactory : CompilationFactory
+    {
+        public override RootSingleDeclaration CreateDeclarationTree(SyntaxTree syntaxTree, string scriptClassName, bool isSubmission)
+        {
+            throw new NotImplementedException();
+        }
+    }
+}
+end template

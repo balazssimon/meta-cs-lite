@@ -37,7 +37,7 @@ namespace MetaDslx.Languages.MetaCompiler.Antlr
         {
         }
 
-        protected void EndRoot(ref GreenNode green)
+        protected void EndRoot(ref GreenNode? green)
         {
         }
 
@@ -45,7 +45,7 @@ namespace MetaDslx.Languages.MetaCompiler.Antlr
         {
         }
 
-        protected void EndNode(ref GreenNode green)
+        protected void EndNode(ref GreenNode? green)
         {
         }
 

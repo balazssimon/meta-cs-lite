@@ -217,15 +217,15 @@ namespace MetaDslx.Languages.MetaCompiler.Model
     public abstract class ParserRuleElement : NamedElement
     {
         public virtual string DefaultName => Name.ToCamelCase();
-        public string FieldName => "_"+Name.ToCamelCase();
-        public string ParameterName => Name.ToCamelCase().EscapeCSharpKeyword();
-        public string PropertyName => Name.ToPascalCase();
+        public virtual string FieldName => "_"+Name.ToCamelCase();
+        public virtual string ParameterName => Name.ToCamelCase().EscapeCSharpKeyword();
+        public virtual string PropertyName => Name.ToPascalCase();
         public abstract string GreenItemType { get; }
         public virtual string GreenFieldType => IsList ? "GreenNode" : GreenItemType;
         public virtual string GreenPropertyType => IsList ? $"MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<{GreenItemType}>" : GreenItemType;
         public abstract string RedItemType { get; }
-        public virtual string RedFieldType => IsList ? "MetaDslx.CodeAnalysis.Syntax.SyntaxNode" : RedItemType;
-        public virtual string RedPropertyType => IsList ? $"MetaDslx.CodeAnalysis.Syntax.SyntaxList<{GreenItemType}>" : RedItemType;
+        public virtual string RedFieldType => IsList ? "MetaDslx.CodeAnalysis.SyntaxNode" : RedItemType;
+        public virtual string RedPropertyType => IsList ? $"MetaDslx.CodeAnalysis.SyntaxList<{RedItemType}>" : RedItemType;
         public virtual string RedToGreenArgument => IsList ? $"{ParameterName}.Node.ToGreenList<{GreenItemType}>()" : IsOptional && !IsToken ? $"({GreenPropertyType}?){ParameterName}?.Green" : $"({GreenPropertyType}){ParameterName}{(IsToken ? ".Node" : ".Green")}";
         public virtual string RedToGreenOptionalArgument => IsOptional ? "default" : ParameterName;
 
@@ -266,6 +266,7 @@ namespace MetaDslx.Languages.MetaCompiler.Model
         public override bool IsList => false;
         public override bool IsToken => true;
         public override bool IsFixedToken => true;
+        public override string PropertyName => "EndOfFileToken";
         public override string GreenItemType => "InternalSyntaxToken";
         public override string RedItemType => "SyntaxToken";
         public override string RedToGreenOptionalArgument => "this.Token(SyntaxKind.Eof)";
@@ -326,7 +327,7 @@ namespace MetaDslx.Languages.MetaCompiler.Model
         public override string GreenItemType => First.GreenItemType;
         public override string GreenPropertyType => $"MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<{GreenItemType}>";
         public override string RedItemType => First.RedItemType;
-        public override string RedPropertyType => $"MetaDslx.CodeAnalysis.Syntax.SeparatedSyntaxList<{RedItemType}>";
+        public override string RedPropertyType => $"MetaDslx.CodeAnalysis.SeparatedSyntaxList<{RedItemType}>";
         public override string RedToGreenArgument => $"{ParameterName}.Node.ToGreenSeparatedList<{GreenItemType}>()";
         public ParserRuleReferenceElement First { get; set; }
         public LexerRule Separator { get; set; }

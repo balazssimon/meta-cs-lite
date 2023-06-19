@@ -11,6 +11,8 @@ generator RoslynApiGenerator
 template GenerateSyntaxKind(Language language)
 using MetaDslx.CodeAnalysis.Syntax.InternalSyntax;
 
+#nullable enable
+
 namespace [language.QualifiedNamespace].Syntax
 {
 	public enum [language.Name]SyntaxKind
@@ -25,7 +27,7 @@ namespace [language.QualifiedNamespace].Syntax
 		[end if]
 		[if (language.Grammar.ParserRules.Length > 0)]
 		__FirstRule = [language.Grammar.ParserRules.FirstOrDefault()?.CSharpName],
-		__LastRule = [language.Grammar.ParserRules.LastOrDefault()?.CSharpName],
+		__LastRule = [language.Grammar.ParserRules.LastOrDefault()?.Alternatives?.LastOrDefault()?.CSharpName],
 		[end if]
 
 		// Built-in:
@@ -45,7 +47,9 @@ namespace [language.QualifiedNamespace].Syntax
 
 		// Rules:
 		[foreach (var rule in language.Grammar.ParserRules)]
-		[rule.CSharpName],
+            [foreach (var alt in rule.Alternatives)]
+		[alt.CSharpName],
+            [end foreach]
 		[end foreach]
 	}
 }
@@ -58,6 +62,8 @@ using System.Collections.Generic;
 using System.Linq;
 using MetaDslx.CodeAnalysis;
 using MetaDslx.CodeAnalysis.Syntax;
+
+#nullable enable
 
 namespace [language.QualifiedNamespace].Syntax
 {
@@ -161,9 +167,15 @@ namespace [language.QualifiedNamespace].Syntax
 					return "ConflictMarkerTrivia";
 				case [language.Name]SyntaxKind.Eof:
 					return "Eof";
-				[foreach (var rule in language.Grammar.Rules)]
+				[foreach (var rule in language.Grammar.LexerRules)]
 				case [language.Name]SyntaxKind.[rule.CSharpName]: 
 					return "[rule.CSharpName]";
+				[end foreach]
+				[foreach (var rule in language.Grammar.ParserRules)]
+                    [foreach (var alt in rule.Alternatives)]
+				case [language.Name]SyntaxKind.[alt.CSharpName]: 
+					return "[alt.CSharpName]";
+       				[end foreach]
 				[end foreach]
 				default:
 					return string.Empty;
@@ -402,13 +414,15 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MetaDslx.CodeAnalysis;
+using MetaDslx.CodeAnalysis.Syntax;
+using MetaDslx.CodeAnalysis.Syntax.InternalSyntax;
+using [language.QualifiedNamespace].Syntax.InternalSyntax;
+
+#nullable enable
 
 namespace [language.QualifiedNamespace].Syntax
 {
-    using MetaDslx.CodeAnalysis;
-    using MetaDslx.CodeAnalysis;
-    using MetaDslx.CodeAnalysis.Syntax;
-    using MetaDslx.CodeAnalysis.Syntax.InternalSyntax;
 
     public abstract class [language.Name]SyntaxNode : SyntaxNode
     {
@@ -489,7 +503,7 @@ namespace [language.QualifiedNamespace].Syntax
         {
             get
             {
-				var slot = ((global::MetaDslx.Bootstrap.Antlr4.[language.Name].Syntax.InternalSyntax.GreenSkippedTokensTriviaSyntax)this.Green).Tokens;
+				var slot = ((global::[language.QualifiedNamespace].Syntax.InternalSyntax.GreenSkippedTokensTriviaSyntax)this.Green).Tokens;
 				if (slot != null)
 				{
 					return new SyntaxTokenList(this, slot.Node, this.GetChildPosition(0), this.GetChildIndex(0));
@@ -547,7 +561,7 @@ namespace [language.QualifiedNamespace].Syntax
             return this.Update(tokens);
         }
 
-        public [language.Name]SkippedTokensTriviaSyntax AddTokens(params SyntaxToken[] items)
+        public [language.Name]SkippedTokensTriviaSyntax AddTokens(params SyntaxToken["[]"] items)
         {
             return this.WithTokens(this.Tokens.AddRange(items));
         }
@@ -591,12 +605,12 @@ public sealed class [alt.RedName] : [parent.Alternatives.Count > 1 ? parent.RedN
 	private [elem.RedFieldType] [elem.FieldName];
 	[end foreach]
 
-    public [parent.RedName](InternalSyntaxNode green, [language.Name]SyntaxTree syntaxTree, int position)
+    public [alt.RedName](InternalSyntaxNode green, [language.Name]SyntaxTree syntaxTree, int position)
         : base(green, syntaxTree, position)
     {
     }
 
-    public [parent.RedName](InternalSyntaxNode green, [language.Name]SyntaxNode parent, int position)
+    public [alt.RedName](InternalSyntaxNode green, [language.Name]SyntaxNode parent, int position)
         : base(green, parent, position)
     {
     }
@@ -647,7 +661,7 @@ public sealed class [alt.RedName] : [parent.Alternatives.Count > 1 ? parent.RedN
 		[end if]
 	[end foreach]
 
-    public override SyntaxNode GetNodeSlot(int index)
+    protected override SyntaxNode GetNodeSlot(int index)
     {
         switch (index)
         {
@@ -658,7 +672,7 @@ public sealed class [alt.RedName] : [parent.Alternatives.Count > 1 ? parent.RedN
         }
     }
 
-    public override SyntaxNode GetCachedSlot(int index)
+    protected override SyntaxNode GetCachedSlot(int index)
     {
         switch (index)
         {
@@ -672,7 +686,7 @@ public sealed class [alt.RedName] : [parent.Alternatives.Count > 1 ? parent.RedN
 
     public [alt.RedName] With[elem.PropertyName]([elem.RedPropertyType] [elem.ParameterName])
 	{
-		return this.Update([foreach (var field in alt.Elements) separator ", "][field == elem ? elem.ParameterName : field.FieldName][end foreach]);
+		return this.Update([foreach (var field in alt.Elements) separator ", "][field == elem ? field.ParameterName : "this."+field.PropertyName][end foreach]);
 	}
 		[if (elem.IsList && !elem.IsToken)]
 
@@ -685,7 +699,7 @@ public sealed class [alt.RedName] : [parent.Alternatives.Count > 1 ? parent.RedN
 
     public [alt.RedName] Update([alt.RedUpdateParameters])
     {
-        if ([foreach (var elem in alt.Elements) separator " || "][elem.FieldName] != [elem.ParameterName][end foreach])
+        if ([foreach (var field in alt.Elements) separator " || "]this.[field.PropertyName] != [field.ParameterName][end foreach])
         {
             var newNode = [language.Name]Language.Instance.SyntaxFactory.[alt.CSharpName]([alt.RedUpdateArguments]);
             var annotations = this.GetAnnotations();
@@ -723,15 +737,17 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using MetaDslx.CodeAnalysis;
+using MetaDslx.CodeAnalysis.Syntax;
+using MetaDslx.CodeAnalysis.Syntax.InternalSyntax;
+using MetaDslx.CodeAnalysis.Text;
+using [language.QualifiedNamespace].Syntax;
+using [language.QualifiedNamespace].Syntax.InternalSyntax;
+
+#nullable enable
 
 namespace [language.QualifiedNamespace]
 {
-    using MetaDslx.CodeAnalysis;
-    using MetaDslx.CodeAnalysis.Syntax;
-    using MetaDslx.CodeAnalysis.Syntax.InternalSyntax;
-    using MetaDslx.CodeAnalysis.Text;
-    using [language.QualifiedNamespace].Syntax;
-    using [language.QualifiedNamespace].Syntax.InternalSyntax;
     
     /// <summary>
     /// The parsed representation of a [language.Name] source document.
@@ -1158,13 +1174,14 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MetaDslx.CodeAnalysis;
+using MetaDslx.CodeAnalysis.Syntax;
+using MetaDslx.CodeAnalysis.Syntax.InternalSyntax;
+
+#nullable enable
 
 namespace [language.QualifiedNamespace].Syntax
 {
-    using MetaDslx.CodeAnalysis;
-    using MetaDslx.CodeAnalysis;
-    using MetaDslx.CodeAnalysis.Syntax;
-    using MetaDslx.CodeAnalysis.Syntax.InternalSyntax;
 
 	public interface I[language.Name]SyntaxVisitor
 	{
@@ -1295,13 +1312,16 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MetaDslx.CodeAnalysis;
+using MetaDslx.CodeAnalysis.Syntax;
+using MetaDslx.CodeAnalysis.Syntax.InternalSyntax;
+using MetaDslx.CodeAnalysis.Text;
+using [language.QualifiedNamespace].Syntax.InternalSyntax;
+
+#nullable enable
 
 namespace [language.QualifiedNamespace].Syntax
 {
-    using MetaDslx.CodeAnalysis;
-    using MetaDslx.CodeAnalysis;
-    using MetaDslx.CodeAnalysis.Syntax;
-    using MetaDslx.CodeAnalysis.Syntax.InternalSyntax;
 
 	public class [language.Name]SyntaxFactory : SyntaxFactory
 	{
@@ -1419,5 +1439,223 @@ public [alt.RedName] [alt.CSharpName]([alt.RedOptionalUpdateParameters])
 }
 [end if]
 end template
+
+template GenerateParseOptions(Language language)
+using System;
+using System.Collections.Generic;
+using System.Collections.Immutable;
+using System.Diagnostics;
+using MetaDslx.CodeAnalysis;
+using MetaDslx.CodeAnalysis.Syntax;
+using MetaDslx.CodeAnalysis.PooledObjects;
+using Roslyn.Utilities;
+
+#nullable enable
+
+namespace [language.QualifiedNamespace].Syntax
+{
+    /// <summary>
+    /// This class stores several source parsing related options and offers access to their values.
+    /// </summary>
+    public sealed class [language.Name]ParseOptions : ParseOptions, IEquatable<[language.Name]ParseOptions>
+    {
+        /// <summary>
+        /// The default parse options.
+        /// </summary>
+        public static [language.Name]ParseOptions Default { get; } = new [language.Name]ParseOptions();
+
+        private ImmutableArray<string> _preprocessorSymbols;
+        private ImmutableDictionary<string, string> _features;
+
+        /// <summary>
+        /// Gets the effective language version, which the compiler uses to select the
+        /// language rules to apply to the program.
+        /// </summary>
+        public [language.Name]LanguageVersion LanguageVersion { get; private set; }
+
+        /// <summary>
+        /// Gets the specified language version, which is the value that was specified in
+        /// the call to the constructor, or modified using the <see cref="WithLanguageVersion"/> method,
+        /// or provided on the command line.
+        /// </summary>
+        public [language.Name]LanguageVersion SpecifiedLanguageVersion { get; private set; }
+
+        public override ImmutableArray<string> PreprocessorSymbols => _preprocessorSymbols;
+
+        public [language.Name]ParseOptions(
+            [language.Name]LanguageVersion languageVersion = [language.Name]LanguageVersion.Default,
+            DocumentationMode documentationMode = DocumentationMode.Parse,
+            SourceCodeKind kind = SourceCodeKind.Regular,
+            IEnumerable<string>? preprocessorSymbols = null)
+            : this(languageVersion,
+                  documentationMode,
+                  kind,
+                  preprocessorSymbols.ToImmutableArrayOrEmpty(),
+                  ImmutableDictionary<string, string>.Empty)
+        {
+        }
+
+        internal [language.Name]ParseOptions(
+            [language.Name]LanguageVersion languageVersion,
+            DocumentationMode documentationMode,
+            SourceCodeKind kind,
+            ImmutableArray<string> preprocessorSymbols,
+            IReadOnlyDictionary<string, string>? features)
+            : base(kind, documentationMode)
+        {
+            this.SpecifiedLanguageVersion = languageVersion;
+            this.LanguageVersion = languageVersion.MapSpecifiedToEffectiveVersion();
+            _preprocessorSymbols = preprocessorSymbols.ToImmutableArrayOrEmpty();
+            _features = features?.ToImmutableDictionary() ?? ImmutableDictionary<string, string>.Empty;
+        }
+
+        private [language.Name]ParseOptions([language.Name]ParseOptions other) : this(
+            languageVersion: other.SpecifiedLanguageVersion,
+            documentationMode: other.DocumentationMode,
+            kind: other.Kind,
+            preprocessorSymbols: other.PreprocessorSymbols)
+        {
+        }
+
+        public override [language.Name]Language Language => [language.Name]Language.Instance;
+
+        public new [language.Name]ParseOptions WithKind(SourceCodeKind kind)
+        {
+            if (kind == this.Kind)
+            {
+                return this;
+            }
+
+            return new [language.Name]ParseOptions(this) { Kind = kind };
+        }
+
+        public [language.Name]ParseOptions WithLanguageVersion([language.Name]LanguageVersion version)
+        {
+            if (version == this.SpecifiedLanguageVersion)
+            {
+                return this;
+            }
+
+            var effectiveLanguageVersion = version.MapSpecifiedToEffectiveVersion();
+            return new [language.Name]ParseOptions(this) { SpecifiedLanguageVersion = version, LanguageVersion = effectiveLanguageVersion };
+        }
+
+        public [language.Name]ParseOptions WithPreprocessorSymbols(IEnumerable<string>? preprocessorSymbols)
+        {
+            return WithPreprocessorSymbols(preprocessorSymbols.AsImmutableOrNull());
+        }
+
+        public [language.Name]ParseOptions WithPreprocessorSymbols(params string["[]"]? preprocessorSymbols)
+        {
+            return WithPreprocessorSymbols(preprocessorSymbols.AsImmutableOrNull());
+        }
+
+        public [language.Name]ParseOptions WithPreprocessorSymbols(ImmutableArray<string> symbols)
+        {
+            if (symbols.IsDefault)
+            {
+                symbols = ImmutableArray<string>.Empty;
+            }
+
+            if (symbols.Equals(this.PreprocessorSymbols))
+            {
+                return this;
+            }
+
+            return new [language.Name]ParseOptions(this) { _preprocessorSymbols = symbols };
+        }
+
+        public new [language.Name]ParseOptions WithDocumentationMode(DocumentationMode documentationMode)
+        {
+            if (documentationMode == this.DocumentationMode)
+            {
+                return this;
+            }
+
+            return new [language.Name]ParseOptions(this) { DocumentationMode = documentationMode };
+        }
+
+        protected override ParseOptions CommonWithKind(SourceCodeKind kind)
+        {
+            return WithKind(kind);
+        }
+
+        protected override ParseOptions CommonWithDocumentationMode(DocumentationMode documentationMode)
+        {
+            return WithDocumentationMode(documentationMode);
+        }
+
+        protected override bool IsFeatureEnabled(string feature)
+        {
+            [language.Name]LanguageVersion availableVersion = LanguageVersion;
+            [language.Name]LanguageVersion requiredVersion = Language.SyntaxFacts.GetRequiredLanguageVersion(feature);
+            return availableVersion >= requiredVersion;
+        }
+
+        public override Diagnostic? GetDiagnosticForFeature(string feature)
+        {
+            [language.Name]LanguageVersion availableVersion = LanguageVersion;
+            [language.Name]LanguageVersion requiredVersion = Language.SyntaxFacts.GetRequiredLanguageVersion(feature);
+            if (availableVersion < requiredVersion)
+            {
+                return Diagnostic.Create(ErrorCode.ERR_FeatureNotAvailableInVersion, Location.None, feature, Language.Name, availableVersion.ToDisplayString(), requiredVersion.ToDisplayString());
+            }
+            return null;
+        }
+
+        protected override void CommonValidateOptions(ArrayBuilder<Diagnostic> builder)
+        {
+            // Validate LanguageVersion not SpecifiedLanguageVersion, after Latest/Default has been converted:
+            if (!LanguageVersion.IsValid())
+            {
+                builder.Add(Diagnostic.Create(ErrorCode.ERR_BadLanguageVersion, Location.None, LanguageVersion.ToString()));
+            }
+
+            if (!PreprocessorSymbols.IsDefaultOrEmpty)
+            {
+                foreach (var symbol in PreprocessorSymbols)
+                {
+                    if (symbol == null)
+                    {
+                        builder.Add(Diagnostic.Create(ErrorCode.ERR_InvalidPreprocessingSymbol, Location.None, "null"));
+                    }
+                    else if (!Language.SyntaxFacts.IsValidIdentifier(symbol))
+                    {
+                        builder.Add(Diagnostic.Create(ErrorCode.ERR_InvalidPreprocessingSymbol, Location.None, symbol));
+                    }
+                }
+            }
+        }
+
+        public override bool Equals(object? obj)
+        {
+            return this.Equals(obj as [language.Name]ParseOptions);
+        }
+
+        public bool Equals([language.Name]ParseOptions? other)
+        {
+            if (object.ReferenceEquals(this, other))
+            {
+                return true;
+            }
+
+            if (!base.EqualsHelper(other))
+            {
+                return false;
+            }
+
+            return this.SpecifiedLanguageVersion == other.SpecifiedLanguageVersion;
+        }
+
+        public override int GetHashCode()
+        {
+            return
+                Hash.Combine(base.GetHashCodeHelper(),
+                Hash.Combine((int)this.SpecifiedLanguageVersion, 0));
+        }
+    }
+}
+end template
+
 
 

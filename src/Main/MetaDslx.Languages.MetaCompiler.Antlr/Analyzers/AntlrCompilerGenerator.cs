@@ -11,6 +11,7 @@ using System.Threading;
 using System.Runtime.InteropServices.ComTypes;
 using System.Diagnostics;
 using MetaDslx.CodeAnalysis;
+using MetaDslx.CodeAnalysis.PooledObjects;
 
 namespace MetaDslx.Languages.MetaCompiler.Antlr.Analyzers
 {
@@ -77,8 +78,19 @@ namespace MetaDslx.Languages.MetaCompiler.Antlr.Analyzers
                     foreach (var antlrFile in antlrTool.GeneratedFiles)
                     {
                         var fileName = Path.GetFileNameWithoutExtension(antlrFile);
-                        var code = File.ReadAllText(Path.Combine(tempDirectory, antlrFile));
-                        context.AddSource($"{fileName}.MetaCompiler.Antlr.g.cs", code);
+                        string? code;
+                        if (antlrFile == $"{language.Name}Lexer.cs")
+                        {
+                            code = GetLexerCode(Path.Combine(tempDirectory, antlrFile));
+                        }
+                        else
+                        {
+                            code = File.ReadAllText(Path.Combine(tempDirectory, antlrFile));
+                        }
+                        if (code is not null)
+                        {
+                            context.AddSource($"{fileName}.MetaCompiler.Antlr.g.cs", code);
+                        }
                     }
                 }
                 if (parserCode is not null)
@@ -104,9 +116,24 @@ namespace MetaDslx.Languages.MetaCompiler.Antlr.Analyzers
                     foreach (var antlrFile in antlrTool.GeneratedFiles)
                     {
                         var fileName = Path.GetFileNameWithoutExtension(antlrFile);
-                        var code = File.ReadAllText(Path.Combine(tempDirectory, antlrFile));
-                        context.AddSource($"{fileName}.MetaCompiler.Antlr.g.cs", code);
+                        string? code;
+                        if (antlrFile == $"{language.Name}Parser.cs")
+                        {
+                            code = GetParserCode(Path.Combine(tempDirectory, antlrFile));
+                        }
+                        else
+                        {
+                            code = File.ReadAllText(Path.Combine(tempDirectory, antlrFile));
+                        }
+                        if (code is not null)
+                        {
+                            context.AddSource($"{fileName}.MetaCompiler.Antlr.g.cs", code);
+                        }
                     }
+                    var syntaxLexerCode = generator.GenerateSyntaxLexer(language);
+                    context.AddSource($"{language.Name}.MetaCompiler.SyntaxLexer.g.cs", syntaxLexerCode);
+                    var syntaxParserCode = generator.GenerateSyntaxParser(language);
+                    context.AddSource($"{language.Name}.MetaCompiler.SyntaxParser.g.cs", syntaxParserCode);
                 }
             }
             finally
@@ -120,6 +147,48 @@ namespace MetaDslx.Languages.MetaCompiler.Antlr.Analyzers
                     // nop
                 }
             }
+        }
+
+        private string GetLexerCode(string filePath)
+        {
+            var builder = PooledStringBuilder.GetInstance();
+            using (var reader = new StreamReader(filePath))
+            {
+                while (!reader.EndOfStream)
+                {
+                    var line = reader.ReadLine();
+                    if (line is not null)
+                    {
+                        if (line.Contains("public partial class") && line.Contains(": Lexer {"))
+                        {
+                            line = line.Replace(": Lexer {", ": global::MetaDslx.Languages.MetaCompiler.Antlr.AntlrLexer {");
+                        }
+                        builder.Builder.AppendLine(line);
+                    }
+                }
+            }
+            return builder.ToStringAndFree();
+        }
+
+        private string GetParserCode(string filePath)
+        {
+            var builder = PooledStringBuilder.GetInstance();
+            using (var reader = new StreamReader(filePath))
+            {
+                while (!reader.EndOfStream)
+                {
+                    var line = reader.ReadLine();
+                    if (line is not null)
+                    {
+                        if (line.Contains("public partial class") && line.Contains(": Parser {"))
+                        {
+                            line = line.Replace(": Parser {", ": global::MetaDslx.Languages.MetaCompiler.Antlr.AntlrParser {");
+                        }
+                        builder.Builder.AppendLine(line);
+                    }
+                }
+            }
+            return builder.ToStringAndFree();
         }
     }
 }
