@@ -433,6 +433,17 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                 //Error(elem.NameLocation, $"Element name '{elem.Name}' is defined multiple times.");
             }
             usedElementNames.Add(elem.Name);
+            if (elem is ParserRuleReferenceElement refElem && elem.Name == refElem.Name)
+            {
+                var index = 0;
+                var name = $"{elem.Name}Antlr{++index}";
+                while (usedElementNames.Contains(name)) name = $"{elem.Name}Antlr{++index}";
+                elem.AntlrName = name;
+            }
+            else
+            {
+                elem.AntlrName = elem.Name;
+            }
         }
 
         private void ResolveAnnotations(Language language)

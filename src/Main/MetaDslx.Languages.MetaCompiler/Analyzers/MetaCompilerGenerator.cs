@@ -40,16 +40,30 @@ namespace MetaDslx.Languages.MetaCompiler.Analyzers
                     else
                     {
                         var generator = new RoslynApiGenerator();
-                        var syntaxKindCode = generator.GenerateSyntaxKind(language);
-                        spc.AddSource($"{fileName}.MetaCompiler.SyntaxKind.g.cs", syntaxKindCode);
-                        var syntaxFactsCode = generator.GenerateSyntaxFacts(language);
-                        spc.AddSource($"{fileName}.MetaCompiler.SyntaxFacts.g.cs", syntaxFactsCode);
+                        var languageCode = generator.GenerateLanguage(language);
+                        spc.AddSource($"{fileName}.MetaCompiler.Language.g.cs", languageCode);
                         var languageVersionCode = generator.GenerateLanguageVersion(language);
                         spc.AddSource($"{fileName}.MetaCompiler.LanguageVersion.g.cs", languageVersionCode);
                         var parseOptionsCode = generator.GenerateParseOptions(language);
                         spc.AddSource($"{fileName}.MetaCompiler.ParseOptions.g.cs", parseOptionsCode);
+                        var syntaxKindCode = generator.GenerateSyntaxKind(language);
+                        spc.AddSource($"{fileName}.MetaCompiler.SyntaxKind.g.cs", syntaxKindCode);
+                        var syntaxFactsCode = generator.GenerateSyntaxFacts(language);
+                        spc.AddSource($"{fileName}.MetaCompiler.SyntaxFacts.g.cs", syntaxFactsCode);
                         var internalSyntaxCode = generator.GenerateInternalSyntax(language);
                         spc.AddSource($"{fileName}.MetaCompiler.InternalSyntax.g.cs", internalSyntaxCode);
+                        var internalSyntaxVisitorCode = generator.GenerateInternalSyntaxVisitor(language);
+                        spc.AddSource($"{fileName}.MetaCompiler.InternalSyntaxVisitor.g.cs", internalSyntaxVisitorCode);
+                        var internalSyntaxFactoryCode = generator.GenerateInternalSyntaxFactory(language);
+                        spc.AddSource($"{fileName}.MetaCompiler.InternalSyntaxFactory.g.cs", internalSyntaxFactoryCode);
+                        var syntaxCode = generator.GenerateSyntax(language);
+                        spc.AddSource($"{fileName}.MetaCompiler.Syntax.g.cs", syntaxCode);
+                        var syntaxTreeCode = generator.GenerateSyntaxTree(language);
+                        spc.AddSource($"{fileName}.MetaCompiler.SyntaxTree.g.cs", syntaxTreeCode);
+                        var syntaxVisitorCode = generator.GenerateSyntaxVisitor(language);
+                        spc.AddSource($"{fileName}.MetaCompiler.SyntaxVisitor.g.cs", syntaxVisitorCode);
+                        var syntaxFactoryCode = generator.GenerateSyntaxFactory(language);
+                        spc.AddSource($"{fileName}.MetaCompiler.SyntaxFactory.g.cs", syntaxFactoryCode);
                     }
                 }
                 catch (Exception ex)

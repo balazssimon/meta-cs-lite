@@ -7,389 +7,41 @@ using System.Linq
 
 generator RoslynApiGenerator
 
-template GenerateSyntaxKind(Language language)
-using MetaDslx.CodeAnalysis.Syntax.InternalSyntax;
-
-namespace [language.QualifiedNamespace].Syntax
-{
-	public enum [language.Name]SyntaxKind
-	{
-		[if (language.Grammar.LexerRules.Length > 0)]
-		__FirstToken = [language.Grammar.LexerRules.FirstOrDefault()?.CSharpName],
-		__LastToken = [language.Grammar.LexerRules.LastOrDefault()?.CSharpName],
-		[end if]
-		[if (language.Grammar.FixedLexerRules.Length > 0)]
-		__FirstFixedToken = [language.Grammar.FixedLexerRules.FirstOrDefault()?.CSharpName],
-		__LastFixedToken = [language.Grammar.FixedLexerRules.LastOrDefault()?.CSharpName],
-		[end if]
-		[if (language.Grammar.ParserRules.Length > 0)]
-		__FirstRule = [language.Grammar.ParserRules.FirstOrDefault()?.CSharpName],
-		__LastRule = [language.Grammar.ParserRules.LastOrDefault()?.CSharpName],
-		[end if]
-
-		// Built-in:
-		None = InternalSyntaxKind.None,
-		List = InternalSyntaxKind.List,
-		BadToken = InternalSyntaxKind.BadToken,
-		MissingToken = InternalSyntaxKind.MissingToken,
-		SkippedTokensTrivia = InternalSyntaxKind.SkippedTokensTrivia,
-		DisabledTextTrivia = InternalSyntaxKind.DisabledTextTrivia,
-		ConflictMarkerTrivia = InternalSyntaxKind.ConflictMarkerTrivia,
-		Eof = InternalSyntaxKind.Eof,
-
-		// Tokens:
-		[foreach (var rule in language.Grammar.LexerRules)]
-		[rule.CSharpName],
-		[end foreach]
-
-		// Rules:
-		[foreach (var rule in language.Grammar.ParserRules)]
-		[rule.CSharpName],
-		[end foreach]
-	}
-}
-end template
-
-template GenerateSyntaxFacts(Language language)
-[var hiddenRules = language.Grammar.LexerRules.Where(lr => lr.IsHidden).ToImmutableArray()]
-[var keywordRules = language.Grammar.LexerRules.Where(lr => lr.IsKeyword).ToImmutableArray()]
-using System.Collections.Generic;
-using System.Linq;
+template GenerateLanguage(Language language)
 using MetaDslx.CodeAnalysis;
-using MetaDslx.CodeAnalysis.Syntax;
 
-namespace [language.QualifiedNamespace].Syntax
+namespace [language.QualifiedNamespace]
 {
-	public class [language.Name]SyntaxFacts : SyntaxFacts
-	{
-		public [language.Name]SyntaxKind DefaultWhitespaceKind => [language.Name]SyntaxKind.[language.Grammar.DefaultWhitespace?.CSharpName ?? "None"];
-		public [language.Name]SyntaxKind DefaultEndOfLineKind => [language.Name]SyntaxKind.[language.Grammar.DefaultEndOfLine?.CSharpName ?? "None"];
-		public [language.Name]SyntaxKind DefaultSeparatorKind => [language.Name]SyntaxKind.[language.Grammar.DefaultSeparator?.CSharpName ?? "None"];
-		public [language.Name]SyntaxKind DefaultIdentifierKind => [language.Name]SyntaxKind.[language.Grammar.DefaultIdentifier?.CSharpName ?? "None"];
-		public [language.Name]SyntaxKind CompilationUnitKind => [language.Name]SyntaxKind.[language.Grammar.MainRule?.CSharpName ?? "None"];
+    using [language.QualifiedNamespace].Syntax;
+    using [language.QualifiedNamespace].Syntax.InternalSyntax;
 
-		protected override int DefaultWhitespaceRawKind => (int)DefaultWhitespaceKind;
-		protected override int DefaultEndOfLineRawKind => (int)DefaultEndOfLineKind;
-		protected override int DefaultSeparatorRawKind => (int)DefaultSeparatorKind;
-		protected override int DefaultIdentifierRawKind => (int)DefaultIdentifierKind;
-		protected override int CompilationUnitRawKind => (int)CompilationUnitKind;
+    public sealed class [language.Name]Language : Language
+    {
+        public static [language.Name]Language Instance = new [language.Name]Language();
 
-		public bool IsToken([language.Name]SyntaxKind kind)
+        private [language.Name]SyntaxFacts _syntaxFacts;
+        private [language.Name]InternalSyntaxFactory _internalSyntaxFactory;
+        private [language.Name]SyntaxFactory _syntaxFactory;
+        private [language.Name]CompilationFactory _compilationFactory;
+
+        private [language.Name]Language()
         {
-			switch (kind)
-			{
-				case [language.Name]SyntaxKind.Eof:
-				[foreach (var rule in language.Grammar.LexerRules)]
-				case [language.Name]SyntaxKind.[rule.CSharpName]:
-				[end foreach]
-					return true;
-				default:
-					return false;
-			}
-		}
-
-		protected override bool IsToken(int rawKind)
-		{
-			return IsToken(([language.Name]SyntaxKind)rawKind);
-		}
-
-		public bool IsFixedToken([language.Name]SyntaxKind kind)
-        {
-			switch (kind)
-			{
-				[if (language.Grammar.FixedLexerRules.Length > 0)]
-					[foreach (var rule in language.Grammar.FixedLexerRules)]
-				case [language.Name]SyntaxKind.[rule.CSharpName]:
-					[end foreach]
-					return true;
-				[end if]
-				default:
-					return false;
-			}
-		}
-
-		protected override bool IsFixedToken(int rawKind)
-		{
-			return IsFixedToken(([language.Name]SyntaxKind)rawKind);
-		}
-
-        public [language.Name]SyntaxKind GetFixedTokenKind(string text)
-		{
-			switch (text)
-			{
-				[foreach (var rule in language.Grammar.FixedLexerRules)]
-				case [StringUtils.EncodeString(rule.FixedValue)]: 
-					return [language.Name]SyntaxKind.[rule.CSharpName];
-				[end foreach]
-				default:
-					return [language.Name]SyntaxKind.None;
-			}
-		}
-
-        protected override int GetFixedTokenRawKind(string text)
-        {
-			return (int)GetFixedTokenKind(text);
+            _syntaxFacts = new [language.Name]SyntaxFacts();
+            _internalSyntaxFactory = new [language.Name]InternalSyntaxFactory(_syntaxFacts);
+            _syntaxFactory = new [language.Name]SyntaxFactory(_internalSyntaxFactory);
+            _compilationFactory = new [language.Name]CompilationFactory();
         }
 
+        public override string Name => "[language.Name]";
 
-        public object? GetValue([language.Name]SyntaxKind kind)
-        {
-			return null;
-        }
+        public override [language.Name]InternalSyntaxFactory InternalSyntaxFactory => _internalSyntaxFactory;
 
-        protected override object? GetValue(int rawKind)
-		{
-			return GetValue(([language.Name]SyntaxKind)rawKind);
-		}
+        public override [language.Name]SyntaxFacts SyntaxFacts => _syntaxFacts;
 
-		public string GetKindText([language.Name]SyntaxKind kind)
-		{
-			switch (kind)
-			{
-				case [language.Name]SyntaxKind.List:
-					return "List";
-				case [language.Name]SyntaxKind.BadToken:
-					return "BadToken";
-				case [language.Name]SyntaxKind.MissingToken:
-					return "MissingToken";
-				case [language.Name]SyntaxKind.SkippedTokensTrivia:
-					return "SkippedTokensTrivia";
-				case [language.Name]SyntaxKind.DisabledTextTrivia:
-					return "DisabledTextTrivia";
-				case [language.Name]SyntaxKind.ConflictMarkerTrivia:
-					return "ConflictMarkerTrivia";
-				case [language.Name]SyntaxKind.Eof:
-					return "Eof";
-				[foreach (var rule in language.Grammar.Rules)]
-				case [language.Name]SyntaxKind.[rule.CSharpName]: 
-					return "[rule.CSharpName]";
-				[end foreach]
-				default:
-					return string.Empty;
-			}
-		}
+        public override [language.Name]SyntaxFactory SyntaxFactory => _syntaxFactory;
 
-		protected override string GetKindText(int rawKind)
-		{
-			return GetKindText(([language.Name]SyntaxKind)rawKind);
-		}
-
-		public string GetText([language.Name]SyntaxKind kind)
-		{
-			switch (kind)
-			{
-				[foreach (var rule in language.Grammar.FixedLexerRules)]
-				case [language.Name]SyntaxKind.[rule.CSharpName]: 
-					return [StringUtils.EncodeString(rule.FixedValue)];
-				[end foreach]
-				default:
-					return string.Empty;
-			}
-		}
-
-		protected override string GetText(int rawKind)
-        {
-			return GetText(([language.Name]SyntaxKind)rawKind);
-        }
-
-		public bool IsTrivia([language.Name]SyntaxKind kind)
-		{
-			switch(kind)
-			{
-				[if (hiddenRules.Length > 0)]
-				[foreach (var rule in hiddenRules)]
-				case [language.Name]SyntaxKind.[rule.CSharpName]: 
-				[end foreach]
-					return true;
-				[end if]
-				default:
-					return false;
-			}
-		}
-
-        protected override bool IsTrivia(int rawKind)
-        {
-			return IsTrivia(([language.Name]SyntaxKind)rawKind);
-        }
-
-        public bool IsReservedKeyword([language.Name]SyntaxKind kind)
-		{
-			switch(kind)
-			{
-				[if (keywordRules.Length > 0)]
-				[foreach (var rule in keywordRules)]
-				case [language.Name]SyntaxKind.[rule.CSharpName]: 
-				[end foreach]
-					return true;
-				[end if]
-				default:
-					return false;
-			}
-		}
-
-        protected override bool IsReservedKeyword(int rawKind)
-        {
-			return IsReservedKeyword(([language.Name]SyntaxKind)rawKind);
-        }
-
-        public IEnumerable<[language.Name]SyntaxKind> GetReservedKeywordKinds()
-        {
-			[foreach (var rule in keywordRules)]
-			yield return [language.Name]SyntaxKind.[rule.CSharpName];
-			[end foreach]
-			yield break;
-        }
-
-        protected override IEnumerable<int> GetReservedKeywordRawKinds()
-        {
-			return GetReservedKeywordKinds().Select(kind => (int)kind);
-        }
-
-        public [language.Name]SyntaxKind GetReservedKeywordKind(string text)
-        {
-			switch(text)
-			{
-				[foreach (var rule in keywordRules)]
-				case [StringUtils.EncodeString(rule.FixedValue)]: 
-					return [language.Name]SyntaxKind.[rule.CSharpName];
-				[end foreach]
-				default:
-					return [language.Name]SyntaxKind.None;
-			}
-        }
-
-        protected override int GetReservedKeywordRawKind(string text)
-        {
-			return (int)GetReservedKeywordKind(text);
-        }
-
-        public bool IsContextualKeyword([language.Name]SyntaxKind kind)
-		{
-			switch(kind)
-			{
-				default:
-					return false;
-			}
-		}
-
-        protected override bool IsContextualKeyword(int rawKind)
-        {
-			return IsContextualKeyword(([language.Name]SyntaxKind)rawKind);
-        }
-
-        public IEnumerable<[language.Name]SyntaxKind> GetContextualKeywordKinds()
-        {
-			yield break;
-        }
-
-		protected override IEnumerable<int> GetContextualKeywordRawKinds()
-		{
-			return GetContextualKeywordKinds().Select(kind => (int)kind);
-		}
-
-		public [language.Name]SyntaxKind GetContextualKeywordKind(string text)
-        {
-			switch(text)
-			{
-				default:
-					return [language.Name]SyntaxKind.None;
-			}
-        }
-
-        protected override int GetContextualKeywordRawKind(string text)
-        {
-			return (int)GetContextualKeywordKind(text);
-        }
-
-        public bool IsPreprocessorKeyword([language.Name]SyntaxKind kind)
-		{
-			switch (kind)
-			{
-				default:
-					return false;
-			}
-		}
-
-        protected override bool IsPreprocessorKeyword(int rawKind)
-        {
-			return IsPreprocessorKeyword(([language.Name]SyntaxKind)rawKind);
-        }
-
-        public bool IsPreprocessorContextualKeyword([language.Name]SyntaxKind kind)
-		{
-			switch (kind)
-			{
-				default:
-					return false;
-			}
-		}
-
-        protected override bool IsPreprocessorContextualKeyword(int rawKind)
-        {
-			return IsPreprocessorContextualKeyword(([language.Name]SyntaxKind)rawKind);
-        }
-
-        public bool IsPreprocessorDirective([language.Name]SyntaxKind kind)
-		{
-			switch (kind)
-			{
-				default:
-					return false;
-			}
-		}
-
-        protected override bool IsPreprocessorDirective(int rawKind)
-        {
-			return IsPreprocessorDirective(([language.Name]SyntaxKind)rawKind);
-        }
-
-        public bool IsIdentifier([language.Name]SyntaxKind kind)
-		{
-			switch (kind)
-			{
-				default:
-					return false;
-			}
-		}
-
-        protected override bool IsIdentifier(int rawKind)
-        {
-            return IsIdentifier(([language.Name]SyntaxKind)rawKind);
-        }
-
-        public bool IsGeneralCommentTrivia([language.Name]SyntaxKind kind)
-		{
-			switch (kind)
-			{
-				default:
-					return false;
-			}
-		}
-
-        protected override bool IsGeneralCommentTrivia(int rawKind)
-        {
-            return IsGeneralCommentTrivia(([language.Name]SyntaxKind)rawKind);
-        }
-
-        public bool IsDocumentationCommentTrivia([language.Name]SyntaxKind kind)
-		{
-			switch (kind)
-			{
-				default:
-					return false;
-			}
-		}
-
-        protected override bool IsDocumentationCommentTrivia(int rawKind)
-        {
-			return IsDocumentationCommentTrivia(([language.Name]SyntaxKind)rawKind);
-        }
-
-        public [language.Name]LanguageVersion GetRequiredLanguageVersion(string feature)
-        {
-			return [language.Name]LanguageVersion.Version1;
-        }
-	}
+        public override [language.Name]CompilationFactory CompilationFactory => _compilationFactory;
+    }
 }
 end template
 

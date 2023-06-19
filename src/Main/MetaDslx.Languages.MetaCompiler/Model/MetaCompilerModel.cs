@@ -203,27 +203,41 @@ namespace MetaDslx.Languages.MetaCompiler.Model
         public string RedName => Name.ToPascalCase() + "Syntax";
 
         public List<ParserRuleElement> Elements { get; } = new List<ParserRuleElement>();
-        public string GreenConstructorParameters => string.Concat(Elements.Select(e => $", {e.GreenFieldType} {e.GreenParameterName}"));
-        public string GreenConstructorArguments => string.Concat(Elements.Select(e => $", {e.GreenFieldName}"));
-        public string GreenUpdateParameters => string.Join(", ", Elements.Select(e => $"{e.GreenPropertyType} {e.GreenParameterName}"));
-        public string GreenUpdateArguments => string.Join(", ", Elements.Select(e => $"{e.GreenParameterName}"));
+        public string GreenConstructorParameters => string.Concat(Elements.Select(e => $", {e.GreenFieldType} {e.ParameterName}"));
+        public string GreenConstructorArguments => string.Concat(Elements.Select(e => $", {e.FieldName}"));
+        public string GreenUpdateParameters => string.Join(", ", Elements.Select(e => $"{e.GreenPropertyType} {e.ParameterName}"));
+        public string GreenUpdateArguments => string.Join(", ", Elements.Select(e => e.ParameterName));
+        public string RedUpdateParameters => string.Join(", ", Elements.Select(e => $"{e.RedPropertyType} {e.ParameterName}"));
+        public string RedUpdateArguments => string.Join(", ", Elements.Select(e => e.ParameterName));
+        public string RedOptionalUpdateParameters => string.Join(", ", Elements.Where(e => !e.IsOptional && (!e.IsToken || e.IsList)).Select(e => $"{e.RedPropertyType} {e.ParameterName}"));
+        public string RedToGreenArgumentList => string.Join(", ", Elements.Select(e => e.RedToGreenArgument));
+        public string RedToGreenOptionalArgumentList => string.Join(", ", Elements.Select(e => e.RedToGreenOptionalArgument));
     }
 
     public abstract class ParserRuleElement : NamedElement
     {
         public virtual string DefaultName => Name.ToCamelCase();
-        public string GreenFieldName => "_"+Name.ToCamelCase();
-        public string GreenParameterName => Name.ToCamelCase().EscapeCSharpKeyword();
-        public string GreenPropertyName => Name.ToPascalCase();
+        public string FieldName => "_"+Name.ToCamelCase();
+        public string ParameterName => Name.ToCamelCase().EscapeCSharpKeyword();
+        public string PropertyName => Name.ToPascalCase();
         public abstract string GreenItemType { get; }
         public virtual string GreenFieldType => IsList ? "GreenNode" : GreenItemType;
         public virtual string GreenPropertyType => IsList ? $"MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<{GreenItemType}>" : GreenItemType;
+        public abstract string RedItemType { get; }
+        public virtual string RedFieldType => IsList ? "MetaDslx.CodeAnalysis.Syntax.SyntaxNode" : RedItemType;
+        public virtual string RedPropertyType => IsList ? $"MetaDslx.CodeAnalysis.Syntax.SyntaxList<{GreenItemType}>" : RedItemType;
+        public virtual string RedToGreenArgument => IsList ? $"{ParameterName}.Node.ToGreenList<{GreenItemType}>()" : IsOptional && !IsToken ? $"({GreenPropertyType}?){ParameterName}?.Green" : $"({GreenPropertyType}){ParameterName}{(IsToken ? ".Node" : ".Green")}";
+        public virtual string RedToGreenOptionalArgument => IsOptional ? "default" : ParameterName;
 
+        public string? AntlrName { get; set; }
         public Location? NameLocation { get; set; }
         public List<Annotation> NameAnnotations { get; } = new List<Annotation>();
         public bool IsNegated { get; set; }
         public AssignmentOperator AssignmentOperator { get; set; }
         public Multiplicity Multiplicity { get; set; }
+        public virtual bool IsToken => false;
+        public virtual bool IsFixedToken => false;
+        public virtual bool IsSeparated => false;
         public virtual bool IsList => Multiplicity == Multiplicity.ZeroOrMore || Multiplicity == Multiplicity.OneOrMore || Multiplicity == Multiplicity.NonGreedyZeroOrMore || Multiplicity == Multiplicity.NonGreedyOneOrMore;
         public virtual bool IsOptional => Multiplicity == Multiplicity.ZeroOrOne || Multiplicity == Multiplicity.NonGreedyZeroOrOne;
     }
@@ -235,6 +249,10 @@ namespace MetaDslx.Languages.MetaCompiler.Model
         public string QualifiedName => string.Join(".", Name);
         public Rule? Rule { get; set; }
         public override string GreenItemType => Rule?.GreenName;
+        public override string RedItemType => Rule?.RedName;
+        public override bool IsToken => Rule is LexerRule;
+        public override bool IsFixedToken => Rule is LexerRule lr && lr.IsFixed;
+        public override string RedToGreenOptionalArgument => IsFixedToken && !IsList && !IsOptional ? $"this.Token(SyntaxKind.{Rule.CSharpName})" : base.RedToGreenOptionalArgument;
 
         public override string ToString()
         {
@@ -246,7 +264,11 @@ namespace MetaDslx.Languages.MetaCompiler.Model
     {
         public override string DefaultName => "eof";
         public override bool IsList => false;
+        public override bool IsToken => true;
+        public override bool IsFixedToken => true;
         public override string GreenItemType => "InternalSyntaxToken";
+        public override string RedItemType => "SyntaxToken";
+        public override string RedToGreenOptionalArgument => "this.Token(SyntaxKind.Eof)";
     }
 
     public class ParserRuleFixedStringElement : ParserRuleElement
@@ -265,7 +287,11 @@ namespace MetaDslx.Languages.MetaCompiler.Model
 
         public LexerRule LexerRule { get; set; }
         public override string GreenItemType => "InternalSyntaxToken";
-        public override string DefaultName => LexerRule?.Name.ToCamelCase() ?? "token";
+        public override string RedItemType => "SyntaxToken";
+        public override string DefaultName => LexerRule.Name.ToCamelCase();
+        public override bool IsToken => true;
+        public override bool IsFixedToken => true;
+        public override string RedToGreenOptionalArgument => !IsList && !IsOptional ? $"this.Token(SyntaxKind.{LexerRule.CSharpName})" : base.RedToGreenOptionalArgument;
 
         public override string ToString()
         {
@@ -277,6 +303,7 @@ namespace MetaDslx.Languages.MetaCompiler.Model
     {
         public override string DefaultName => "any";
         public override string GreenItemType => "GreenNode";
+        public override string RedItemType => "SyntaxNode";
     }
 
     public class ParserRuleBlockElement : ParserRuleElement, IParserRuleAlternativeParent
@@ -286,6 +313,7 @@ namespace MetaDslx.Languages.MetaCompiler.Model
         public string RedName => Name.ToPascalCase() + "Syntax";
 
         public override string GreenItemType => GreenName;
+        public override string RedItemType => RedName;
 
         public List<ParserRuleAlternative> Alternatives { get; } = new List<ParserRuleAlternative>();
     }
@@ -294,8 +322,12 @@ namespace MetaDslx.Languages.MetaCompiler.Model
     {
         public override string DefaultName => First.DefaultName+"List";
         public override bool IsList => true;
+        public override bool IsSeparated => true;
         public override string GreenItemType => First.GreenItemType;
         public override string GreenPropertyType => $"MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<{GreenItemType}>";
+        public override string RedItemType => First.RedItemType;
+        public override string RedPropertyType => $"MetaDslx.CodeAnalysis.Syntax.SeparatedSyntaxList<{RedItemType}>";
+        public override string RedToGreenArgument => $"{ParameterName}.Node.ToGreenSeparatedList<{GreenItemType}>()";
         public ParserRuleReferenceElement First { get; set; }
         public LexerRule Separator { get; set; }
         public ParserRuleReferenceElement Next { get; set; }
