@@ -187,3 +187,29 @@ namespace [language.QualifiedNamespace].Syntax
 }
 end template
 
+template GenerateInternalSyntaxFactory(Language language)
+using MetaDslx.CodeAnalysis;
+using MetaDslx.CodeAnalysis.Syntax;
+using MetaDslx.CodeAnalysis.Syntax.InternalSyntax;
+using MetaDslx.Languages.MetaCompiler.Antlr;
+using Antlr4.Runtime;
+
+#nullable enable
+
+namespace [language.QualifiedNamespace].Syntax.InternalSyntax
+{
+    public partial class [language.Name]InternalSyntaxFactory : IAntlrSyntaxFactory
+    {
+	    AntlrLexer IAntlrSyntaxFactory.CreateAntlrLexer(ICharStream input)
+	    {
+	        return new [language.Name]Lexer(input);
+	    }
+	
+	    AntlrParser IAntlrSyntaxFactory.CreateAntlrParser(ITokenStream input)
+	    {
+	        return new [language.Name]Parser(input);
+	    }
+    }
+}
+end template
+

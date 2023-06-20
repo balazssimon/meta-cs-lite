@@ -131,9 +131,11 @@ namespace MetaDslx.Languages.MetaCompiler.Antlr.Analyzers
                         }
                     }
                     var syntaxLexerCode = generator.GenerateSyntaxLexer(language);
-                    context.AddSource($"{language.Name}.MetaCompiler.SyntaxLexer.g.cs", syntaxLexerCode);
+                    context.AddSource($"{language.Name}.MetaCompiler.Antlr.SyntaxLexer.g.cs", syntaxLexerCode);
                     var syntaxParserCode = generator.GenerateSyntaxParser(language);
-                    context.AddSource($"{language.Name}.MetaCompiler.SyntaxParser.g.cs", syntaxParserCode);
+                    context.AddSource($"{language.Name}.MetaCompiler.Antlr.SyntaxParser.g.cs", syntaxParserCode);
+                    var syntaxFactoryCode = generator.GenerateInternalSyntaxFactory(language);
+                    context.AddSource($"{language.Name}.MetaCompiler.Antlr.InternalSyntaxFactory.g.cs", syntaxFactoryCode);
                 }
             }
             finally
