@@ -89,7 +89,7 @@ namespace [language.QualifiedNamespace].Syntax
 
         private [language.Grammar.MainRule?.GreenName]? Parse[language.Grammar.MainRule?.CSharpName](ref ParserState? state)
         {
-            return null;
+            return _visitor.Visit[language.Grammar.MainRule?.CSharpName](AntlrParser.[language.Grammar.MainRule?.Name]());
         }
 
         private class AntlrToRoslynVisitor : [language.Name]ParserBaseVisitor<GreenNode?>
