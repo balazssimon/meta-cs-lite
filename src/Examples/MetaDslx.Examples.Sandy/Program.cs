@@ -5,3 +5,4 @@ Console.WriteLine("Hello, World!");
 
 var tree = TestSyntaxTree.ParseText("var a = 3+4;");
 Console.WriteLine(tree.ToString());
+
