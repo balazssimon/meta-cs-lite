@@ -230,6 +230,7 @@ namespace MetaDslx.Languages.MetaCompiler.Model
         public virtual string RedToGreenOptionalArgument => IsOptional ? "default" : ParameterName;
 
         public string? AntlrName { get; set; }
+        public virtual string? SeparatorAntlrName { get; set; }
         public Location? NameLocation { get; set; }
         public List<Annotation> NameAnnotations { get; } = new List<Annotation>();
         public bool IsNegated { get; set; }
@@ -329,6 +330,7 @@ namespace MetaDslx.Languages.MetaCompiler.Model
         public override string RedItemType => First.RedItemType;
         public override string RedPropertyType => $"MetaDslx.CodeAnalysis.SeparatedSyntaxList<{RedItemType}>";
         public override string RedToGreenArgument => $"{ParameterName}.Node.ToGreenSeparatedList<{GreenItemType}>()";
+        public override string? SeparatorAntlrName => $"{AntlrName}Separator";
         public ParserRuleReferenceElement First { get; set; }
         public LexerRule Separator { get; set; }
         public ParserRuleReferenceElement Next { get; set; }

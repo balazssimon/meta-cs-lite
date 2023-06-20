@@ -957,11 +957,14 @@ template GenerateInternalSyntaxRule(Language language, ParserRule rule)
 [end foreach]
 end template
 
-template GenerateInternalSyntaxRuleBase(Language language, ParserRule parent)
-[if (parent.Alternatives.Count > 1)]
-internal abstract class [parent.GreenName] : GreenSyntaxNode
+template GenerateInternalSyntaxRuleBase(Language language, ParserRule rule)
+[if (rule.Alternatives.Count > 1)]
+internal abstract class [rule.GreenName] : GreenSyntaxNode
 {
-    protected [parent.GreenName]([language.Name]SyntaxKind kind, DiagnosticInfo["[]"] diagnostics, SyntaxAnnotation["[]"] annotations)
+	[var firstAlt = rule.Alternatives[0]]
+	internal static readonly [rule.GreenName] __Missing = [firstAlt.GreenName].__Missing;
+
+    protected [rule.GreenName]([language.Name]SyntaxKind kind, DiagnosticInfo["[]"] diagnostics, SyntaxAnnotation["[]"] annotations)
         : base(kind, diagnostics, annotations)
     {
     }
@@ -970,10 +973,10 @@ internal abstract class [parent.GreenName] : GreenSyntaxNode
 [end if]
 end template
 
-template GenerateInternalSyntaxRuleAlt(Language language, ParserRule parent, ParserRuleAlternative alt)
-internal class [alt.GreenName] : [parent.Alternatives.Count == 1 ? "GreenSyntaxNode" : parent.GreenName]
+template GenerateInternalSyntaxRuleAlt(Language language, ParserRule rule, ParserRuleAlternative alt)
+internal class [alt.GreenName] : [rule.Alternatives.Count == 1 ? "GreenSyntaxNode" : rule.GreenName]
 {
-	internal static readonly [alt.GreenName] __Missing = new [alt.GreenName]();
+	internal static new readonly [alt.GreenName] __Missing = new [alt.GreenName]();
 	[foreach (var elem in alt.Elements)]
 	private [elem.GreenFieldType] [elem.FieldName];
 	[end foreach]

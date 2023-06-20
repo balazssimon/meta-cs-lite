@@ -47,6 +47,8 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Antlr4.Runtime;
+using Antlr4.Runtime.Tree;
 using MetaDslx.CodeAnalysis;
 using MetaDslx.CodeAnalysis.Syntax;
 using MetaDslx.CodeAnalysis.Syntax.InternalSyntax;
@@ -90,15 +92,98 @@ namespace [language.QualifiedNamespace].Syntax
             return null;
         }
 
-        private class AntlrToRoslynVisitor
+        private class AntlrToRoslynVisitor : [language.Name]ParserBaseVisitor<GreenNode?>
         {
+			// list pools - allocators for lists that are used to build sequences of nodes. The lists
+			// can be reused (hence pooled) since the syntax factory methods don't keep references to
+			// them
+			private readonly SyntaxListPool _pool = new SyntaxListPool(); // Don't need to reset this.
+
             private [language.Name]SyntaxParser _parser;
+			private readonly [language.Name]InternalSyntaxFactory _factory;
 
             public AntlrToRoslynVisitor([language.Name]SyntaxParser parser)
             {
                 _parser = parser;
+				_factory = ([language.Name]InternalSyntaxFactory)_parser.Language.InternalSyntaxFactory;
             }
+
+            private InternalSyntaxToken? VisitTerminal(IToken? token, [language.Name]SyntaxKind kind)
+            {
+				if (token == null)
+				{
+					if (kind != [language.Name]SyntaxKind.None) return _factory.MissingToken(kind);
+					else return null;
+				}
+                var green = ((AntlrSyntaxToken)token).Green;
+				Debug.Assert(kind == [language.Name]SyntaxKind.None || green.RawKind == (int)kind);
+				return green;
+            }
+
+            public InternalSyntaxToken? VisitTerminal(IToken? token)
+            {
+				return VisitTerminal(token, [language.Name]SyntaxKind.None);
+            }
+
+            private InternalSyntaxToken? VisitTerminal(ITerminalNode? node, [language.Name]SyntaxKind kind)
+            {
+                if (node?.Symbol == null)
+				{
+					if (kind != [language.Name]SyntaxKind.None) return _factory.MissingToken(kind);
+					else return null;
+				}
+				var green = ((AntlrSyntaxToken)node.Symbol).Green;
+				Debug.Assert(kind == [language.Name]SyntaxKind.None || green.RawKind == (int)kind);
+				return green;
+			}
+
+            public override InternalSyntaxToken? VisitTerminal(ITerminalNode? node)
+            {
+                return VisitTerminal(node, [language.Name]SyntaxKind.None);
+            }
+
+            [foreach (var rule in language.Grammar.ParserRules)]
+                [foreach (var alt in rule.Alternatives)]
+            public override [alt.GreenName]? Visit[alt.CSharpName]([language.Name]Parser.[alt.CSharpName]Context? context)
+            {
+               	if (context == null) return [alt.GreenName].__Missing;
+                [foreach (var elem in alt.Elements)]
+                    [if (elem.IsList)]
+                var [elem.ParameterName]Context = context._[elem.AntlrName];
+                var [elem.ParameterName]Builder = _pool.Allocate[if (elem.IsSeparated)]Separated[end if]<[elem.GreenItemType]>();
+                        [if (elem.IsSeparated)]
+                var [elem.ParameterName]SeparatorContext = context.[elem.SeparatorAntlrName];
+                        [end if]
+                for (int i = 0; i < [elem.ParameterName]Context.Count; ++i)
+                {
+                        [if(elem.IsToken)]
+                    [elem.ParameterName]Builder.Add(this.VisitTerminal([elem.ParameterName]Context["[i]"]));
+                        [else]
+                    [elem.ParameterName]Builder.Add(([elem.GreenItemType]?)this.Visit([elem.ParameterName]Context["[i]"]) ?? [elem.GreenItemType].__Missing);
+                        [end if]
+                        [if (elem.IsSeparated)]
+                    if (i < [elem.ParameterName]SeparatorContext.Count)
+                    {
+                        [elem.ParameterName]Builder.AddSeparator(this.VisitTerminal([elem.ParameterName]SeparatorContext["[i]"], [language.Name]SyntaxKind.[((ParserRuleListElement)elem).Separator.CSharpName]));
+                    }
+                        [end if]
+                }
+                var [elem.ParameterName] = [elem.ParameterName]Builder.ToList();
+                _pool.Free([elem.ParameterName]Builder);
+                    [else]
+                        [if(elem.IsToken)]
+                var [elem.ParameterName] = this.VisitTerminal(context.[elem.AntlrName][if (!elem.IsOptional)], [language.Name]SyntaxKind.[elem.CSharpName][end if]);
+                        [else]
+                var [elem.ParameterName] = ([elem.GreenItemType]?)this.Visit(context.[elem.AntlrName])[if (!elem.IsOptional)] ?? [elem.GreenItemType].__Missing[end if];
+                        [end if]
+                    [end if]
+                [end foreach]
+            	return _factory.[alt.CSharpName]([alt.GreenUpdateArguments]);
+            }
+                [end foreach]
+            [end foreach]
         }
     }
 }
 end template
+
