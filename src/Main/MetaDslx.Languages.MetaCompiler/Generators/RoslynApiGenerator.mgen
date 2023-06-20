@@ -9,6 +9,10 @@ generator RoslynApiGenerator
 
 template GenerateLanguage(Language language)
 using MetaDslx.CodeAnalysis;
+using MetaDslx.CodeAnalysis.Syntax;
+using MetaDslx.CodeAnalysis.Syntax.InternalSyntax;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 #nullable enable
 
@@ -17,32 +21,30 @@ namespace [language.QualifiedNamespace]
     using [language.QualifiedNamespace].Syntax;
     using [language.QualifiedNamespace].Syntax.InternalSyntax;
 
-    public sealed class [language.Name]Language : Language
+    public sealed partial class [language.Name]Language : Language
     {
         public static [language.Name]Language Instance = new [language.Name]Language();
 
-        private [language.Name]SyntaxFacts _syntaxFacts;
-        private [language.Name]InternalSyntaxFactory _internalSyntaxFactory;
-        private [language.Name]SyntaxFactory _syntaxFactory;
-        private [language.Name]CompilationFactory _compilationFactory;
-
-        private [language.Name]Language()
-        {
-            _syntaxFacts = new [language.Name]SyntaxFacts();
-            _internalSyntaxFactory = new [language.Name]InternalSyntaxFactory(_syntaxFacts);
-            _syntaxFactory = new [language.Name]SyntaxFactory(_internalSyntaxFactory);
-            _compilationFactory = new [language.Name]CompilationFactory();
-        }
-
         public override string Name => "[language.Name]";
 
-        public override [language.Name]InternalSyntaxFactory InternalSyntaxFactory => _internalSyntaxFactory;
+        public new [language.Name]InternalSyntaxFactory InternalSyntaxFactory => ([language.Name]InternalSyntaxFactory)base.InternalSyntaxFactory;
 
-        public override [language.Name]SyntaxFacts SyntaxFacts => _syntaxFacts;
+        public new [language.Name]SyntaxFacts SyntaxFacts => ([language.Name]SyntaxFacts)base.SyntaxFacts;
 
-        public override [language.Name]SyntaxFactory SyntaxFactory => _syntaxFactory;
+        public new [language.Name]SyntaxFactory SyntaxFactory => ([language.Name]SyntaxFactory)base.SyntaxFactory;
 
-        public override [language.Name]CompilationFactory CompilationFactory => _compilationFactory;
+        public new [language.Name]CompilationFactory CompilationFactory => ([language.Name]CompilationFactory)base.CompilationFactory;
+
+        protected override void RegisterServicesCore(ServiceCollection services)
+        {
+            RegisterServices(services);
+            services.TryAddSingleton<SyntaxFacts, [language.Name]SyntaxFacts>();
+            services.TryAddSingleton<InternalSyntaxFactory, [language.Name]InternalSyntaxFactory>();
+            services.TryAddSingleton<SyntaxFactory, [language.Name]SyntaxFactory>();
+            services.TryAddSingleton<CompilationFactory, [language.Name]CompilationFactory>();
+        }
+
+        partial void RegisterServices(ServiceCollection services);
     }
 }
 end template

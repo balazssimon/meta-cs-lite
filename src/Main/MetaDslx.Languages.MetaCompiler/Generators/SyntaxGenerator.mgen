@@ -1325,7 +1325,7 @@ namespace [language.QualifiedNamespace].Syntax
 
 	public class [language.Name]SyntaxFactory : SyntaxFactory
 	{
-		internal [language.Name]SyntaxFactory([language.Name]InternalSyntaxFactory internalSyntaxFactory) 
+		public [language.Name]SyntaxFactory(InternalSyntaxFactory internalSyntaxFactory) 
 			: base(internalSyntaxFactory)
 		{
 		}

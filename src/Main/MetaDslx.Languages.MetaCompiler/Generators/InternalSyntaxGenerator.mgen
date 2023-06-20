@@ -1126,7 +1126,7 @@ namespace [language.QualifiedNamespace].Syntax.InternalSyntax
 
 	public partial class [language.Name]InternalSyntaxFactory : InternalSyntaxFactory
 	{
-		public [language.Name]InternalSyntaxFactory([language.Name]SyntaxFacts syntaxFacts) 
+		public [language.Name]InternalSyntaxFactory(SyntaxFacts syntaxFacts) 
 		    : base(syntaxFacts)
 		{
 		}
