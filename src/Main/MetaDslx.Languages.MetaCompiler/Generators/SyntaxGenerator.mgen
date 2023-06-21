@@ -1418,14 +1418,14 @@ template GenerateSyntaxFactoryCreate(Language language, ParserRuleAlternative al
 public [alt.RedName] [alt.CSharpName]([alt.RedUpdateParameters])
 {
 	[foreach (var elem in alt.Elements)]
-		[if (!elem.IsOptional)]
-    if ([elem.ParameterName] == null) throw new ArgumentNullException(nameof([elem.ParameterName]));
-			[if (elem.IsToken && !elem.IsList)]
-    if ([elem.ParameterName].RawKind != (int)[language.Name]SyntaxKind.[elem.CSharpName]) throw new ArgumentException(nameof([elem.ParameterName]));
+		[if (!elem.IsList)]
+			[if (!elem.IsOptional && !elem.IsToken)]
+	if ([elem.ParameterName] is null) throw new ArgumentNullException(nameof([elem.ParameterName]));
 			[end if]
-		[else]
-			[if (elem.IsToken && !elem.IsList)]
-    if ([elem.ParameterName] != null && [elem.ParameterName].RawKind != (int)[language.Name]SyntaxKind.[elem.CSharpName]) throw new ArgumentException(nameof([elem.ParameterName]));
+			[if (elem is ParserRuleFixedStringAlternativesElement fixedAlts)]
+	if ([foreach (var fixedAlt in fixedAlts.Alternatives) separator " && "][elem.ParameterName].RawKind != (int)[language.Name]SyntaxKind.[fixedAlt.CSharpName][end foreach]) throw new ArgumentException(nameof([elem.ParameterName]));
+			[else if (elem.IsToken)]
+	if ([elem.ParameterName].RawKind != (int)[language.Name]SyntaxKind.[elem.CSharpName]) throw new ArgumentException(nameof([elem.ParameterName]));
 			[end if]
 		[end if]
 	[end foreach]

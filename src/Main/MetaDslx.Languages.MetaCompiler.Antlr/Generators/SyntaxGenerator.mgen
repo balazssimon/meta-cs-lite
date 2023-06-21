@@ -149,29 +149,76 @@ namespace [language.QualifiedNamespace].Syntax
                	if (context == null) return [alt.GreenName].__Missing;
                 [foreach (var elem in alt.Elements)]
                     [if (elem.IsList)]
-                var [elem.ParameterName]Context = context._[elem.AntlrName];
-                var [elem.ParameterName]Builder = _pool.Allocate[if (elem.IsSeparated)]Separated[end if]<[elem.GreenItemType]>();
-                        [if (elem.IsSeparated)]
-                var [elem.ParameterName]SeparatorContext = context.[elem.SeparatorAntlrName];
-                        [end if]
+                        [if (elem.IsSeparated && elem is ParserRuleListElement listElem)]
+                var [elem.ParameterName]Builder = _pool.AllocateSeparated<[elem.GreenItemType]>();
+                            [if (listElem.ListKind == ListKind.WithFirstItem || listElem.ListKind == ListKind.WithFirstItemSeparator)]
+                var [listElem.FirstItem.ParameterName]Context = context.[listElem.FirstItem.AntlrName];
+                                [if (listElem.FirstItem.IsOptional)]
+                if ([listElem.FirstItem.ParameterName]Context is not null)
+                {
+                    [elem.ParameterName]Builder.Add(([listElem.FirstItem.GreenItemType]?)this.Visit([listElem.FirstItem.ParameterName]Context) ?? [listElem.FirstItem.GreenItemType].__Missing);
+                }
+                                [else]
+                [elem.ParameterName]Builder.Add(([listElem.FirstItem.GreenItemType]?)this.Visit([listElem.FirstItem.ParameterName]Context) ?? [listElem.FirstItem.GreenItemType].__Missing);
+                                [end if]
+                            [end if]
+                var [elem.ParameterName]Context = context._[listElem.RepeatedRule.AntlrName];
                 for (int i = 0; i < [elem.ParameterName]Context.Count; ++i)
                 {
-                        [if(elem.IsToken)]
-                    [elem.ParameterName]Builder.Add(this.VisitTerminal([elem.ParameterName]Context["[i]"]));
-                        [else]
-                    [elem.ParameterName]Builder.Add(([elem.GreenItemType]?)this.Visit([elem.ParameterName]Context["[i]"]) ?? [elem.GreenItemType].__Missing);
-                        [end if]
-                        [if (elem.IsSeparated)]
-                    if (i < [elem.ParameterName]SeparatorContext.Count)
+                    var itemContext = [elem.ParameterName]Context["[i]"];
+                    if (itemContext is not null)
                     {
-                        [elem.ParameterName]Builder.AddSeparator(this.VisitTerminal([elem.ParameterName]SeparatorContext["[i]"], [language.Name]SyntaxKind.[((ParserRuleListElement)elem).Separator.CSharpName]));
+                        var item = itemContext.[listElem.RepeatedItem.AntlrName];
+                        var separator = itemContext.[listElem.RepeatedSeparator.AntlrName];
+                        [elem.ParameterName]Builder.Add(([elem.GreenItemType]?)this.Visit(item) ?? [elem.GreenItemType].__Missing);
+                        [elem.ParameterName]Builder.AddSeparator(this.VisitTerminal(separator, [language.Name]SyntaxKind.[listElem.RepeatedSeparator.CSharpName]));
                     }
-                        [end if]
+                }
+                            [if (listElem.ListKind == ListKind.WithLastItem || listElem.ListKind == ListKind.WithLastItemSeparator)]
+                var [listElem.LastItem.ParameterName]Context = context.[listElem.LastItem.AntlrName];
+                                [if (listElem.LastItem.IsOptional)]
+                if ([listElem.LastItem.ParameterName]Context is not null)
+                {
+                    [elem.ParameterName]Builder.Add(([listElem.LastItem.GreenItemType]?)this.Visit([listElem.LastItem.ParameterName]Context) ?? [listElem.LastItem.GreenItemType].__Missing);
+                }
+                                [else]
+                [elem.ParameterName]Builder.Add(([listElem.LastItem.GreenItemType]?)this.Visit([listElem.LastItem.ParameterName]Context) ?? [listElem.LastItem.GreenItemType].__Missing);
+                                [end if]
+                            [end if]
+                            [if (listElem.ListKind == ListKind.WithFirstItemSeparator || listElem.ListKind == ListKind.WithLastItemSeparator)]
+                var [listElem.LastSeparator.ParameterName]Context = context.[listElem.LastSeparator.AntlrName];
+                                [if (listElem.LastSeparator.IsOptional)]
+                if ([listElem.LastSeparator.ParameterName]Context is not null)
+                {
+                    [elem.ParameterName]Builder.AddSeparator(this.VisitTerminal([listElem.LastSeparator.ParameterName]Context));
+                }
+                                [else]
+                [elem.ParameterName]Builder.AddSeparator(this.VisitTerminal([listElem.LastSeparator.ParameterName]Context, [language.Name]SyntaxKind.[listElem.LastSeparator.CSharpName]));
+                                [end if]
+                            [end if]
+                var [elem.ParameterName] = [elem.ParameterName]Builder.ToList();
+                _pool.Free([elem.ParameterName]Builder);
+                        [else]
+                var [elem.ParameterName]Context = context._[elem.AntlrName];
+                var [elem.ParameterName]Builder = _pool.Allocate<[elem.GreenItemType]>();
+                for (int i = 0; i < [elem.ParameterName]Context.Count; ++i)
+                {
+                            [if(elem.IsToken)]
+                    [elem.ParameterName]Builder.Add(this.VisitTerminal([elem.ParameterName]Context["[i]"]));
+                            [else]
+                    [elem.ParameterName]Builder.Add(([elem.GreenItemType]?)this.Visit([elem.ParameterName]Context["[i]"]) ?? [elem.GreenItemType].__Missing);
+                            [end if]
                 }
                 var [elem.ParameterName] = [elem.ParameterName]Builder.ToList();
                 _pool.Free([elem.ParameterName]Builder);
+                        [end if]
                     [else]
-                        [if(elem.IsToken)]
+                        [if(elem is ParserRuleFixedStringAlternativesElement fixedAlts)]
+                InternalSyntaxToken? [elem.ParameterName] = null;
+                            [foreach (var fixedAlt in fixedAlts.Alternatives)]
+                if (context.[fixedAlt.AntlrName] is not null) [elem.ParameterName] = this.VisitTerminal(context.[fixedAlt.AntlrName]);
+                            [end foreach]
+                        [else if(elem.IsToken)]
                 var [elem.ParameterName] = this.VisitTerminal(context.[elem.AntlrName][if (!elem.IsOptional)], [language.Name]SyntaxKind.[elem.CSharpName][end if]);
                         [else]
                 var [elem.ParameterName] = ([elem.GreenItemType]?)this.Visit(context.[elem.AntlrName])[if (!elem.IsOptional)] ?? [elem.GreenItemType].__Missing[end if];

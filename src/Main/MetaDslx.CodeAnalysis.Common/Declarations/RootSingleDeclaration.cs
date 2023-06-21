@@ -28,7 +28,7 @@ namespace MetaDslx.CodeAnalysis.Declarations
 
         public ImmutableArray<Syntax.ReferenceDirective> ReferenceDirectives => _referenceDirectives;
 
-        public ImmutableArray<Diagnostic> Diagnostics => _diagnostics;
+        public override ImmutableArray<Diagnostic> Diagnostics => _diagnostics;
 
         public override string? Name => null;
 

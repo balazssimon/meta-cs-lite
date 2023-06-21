@@ -4,6 +4,7 @@ using Roslyn.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.ComponentModel;
 using System.Linq;
 using System.Net.NetworkInformation;
 using System.Runtime.CompilerServices;
@@ -24,7 +25,6 @@ namespace MetaDslx.Languages.MetaCompiler.Model
         public List<Using> Usings { get; } = new List<Using>();
         public string Name { get; set; }
         public Grammar Grammar { get; set; }
-
         public Location Location { get; set; }
     }
 
@@ -50,7 +50,17 @@ namespace MetaDslx.Languages.MetaCompiler.Model
         Def,
         Use
     }
-    
+
+    public enum ListKind
+    {
+        SeparatorItem, // (, item)*
+        ItemSeparator, // (item, )*
+        WithFirstItem, // item (, item)*
+        WithFirstItemSeparator, // item (, item)* ,
+        WithLastItem, // (item, )* item
+        WithLastItemSeparator, // (item, )* item ,
+    }
+
     public enum Multiplicity
     {
         ExactlyOne,
@@ -60,6 +70,19 @@ namespace MetaDslx.Languages.MetaCompiler.Model
         NonGreedyZeroOrOne,
         NonGreedyZeroOrMore,
         NonGreedyOneOrMore
+    }
+
+    public static class MultiplicityExtensions
+    {
+        public static bool IsList(this Multiplicity multiplicity)
+        {
+            return multiplicity == Multiplicity.ZeroOrMore || multiplicity == Multiplicity.OneOrMore || multiplicity == Multiplicity.NonGreedyZeroOrMore || multiplicity == Multiplicity.NonGreedyOneOrMore;
+        }
+
+        public static bool IsOptional(this Multiplicity multiplicity)
+        {
+            return multiplicity == Multiplicity.ZeroOrOne || multiplicity == Multiplicity.NonGreedyZeroOrOne;
+        }
     }
 
     public enum AssignmentOperator
@@ -120,10 +143,18 @@ namespace MetaDslx.Languages.MetaCompiler.Model
 
     public class Grammar : NamedElement
     {
+        private readonly Language _language;
         private ImmutableArray<LexerRule> _fixedLexerRules;
         private ImmutableArray<LexerRule> _nonFixedLexerRules;
         private ImmutableArray<LexerRule> _lexerRules;
         private ImmutableArray<ParserRule> _parserRules;
+
+        public Grammar(Language language)
+        {
+            _language = language;
+        }
+
+        public Language Language => _language;
 
         public GrammarOptions Options { get; set; }
         public List<Rule> Rules { get; } = new List<Rule>();
@@ -177,12 +208,24 @@ namespace MetaDslx.Languages.MetaCompiler.Model
 
     public abstract class Rule : NamedElement
     {
+        private readonly Grammar _grammar;
+
+        public Rule(Grammar grammar)
+        {
+            _grammar = grammar;
+        }
+
+        public Grammar Grammar => _grammar;
+        public Language Language => _grammar.Language;
+
         public abstract string GreenName { get; }
         public abstract string RedName { get; }
     }
 
     public interface IParserRuleAlternativeParent
     {
+        Language Language { get; }
+        Grammar Grammar { get; }
         string Name { get; }
         string GreenName { get; }
         string RedName { get; }
@@ -191,14 +234,36 @@ namespace MetaDslx.Languages.MetaCompiler.Model
 
     public class ParserRule : Rule, IParserRuleAlternativeParent
     {
+        public ParserRule(Grammar grammar)
+            : base(grammar)
+        {
+            
+        }
+
         public override string GreenName => Name.ToPascalCase() + "Green";
         public override string RedName => Name.ToPascalCase() + "Syntax";
 
         public List<ParserRuleAlternative> Alternatives { get; } = new List<ParserRuleAlternative>();
+        public List<ParserRuleAlternative> ReferencedBy { get; } = new List<ParserRuleAlternative>();
     }
 
     public class ParserRuleAlternative : NamedElement
     {
+        private IParserRuleAlternativeParent _parent;
+
+        public ParserRuleAlternative(IParserRuleAlternativeParent parent)
+        {
+            _parent = parent;
+        }
+
+        public Language Language => _parent.Language;
+        public Grammar Grammar => _parent.Grammar;
+        public IParserRuleAlternativeParent Parent
+        {
+            get => _parent;
+            set => _parent = value;
+        }
+
         public string GreenName => Name.ToPascalCase() + "Green";
         public string RedName => Name.ToPascalCase() + "Syntax";
 
@@ -216,6 +281,21 @@ namespace MetaDslx.Languages.MetaCompiler.Model
 
     public abstract class ParserRuleElement : NamedElement
     {
+        private ParserRuleAlternative _parserRuleAlternative;
+
+        public ParserRuleElement(ParserRuleAlternative parserRuleAlternative)
+        {
+            _parserRuleAlternative = parserRuleAlternative;
+        }
+
+        public Language Language => _parserRuleAlternative.Language;
+        public Grammar Grammar => _parserRuleAlternative.Grammar;
+        public ParserRuleAlternative ParserRuleAlternative
+        {
+            get => _parserRuleAlternative;
+            set => _parserRuleAlternative = value;
+        }
+
         public virtual string DefaultName => Name.ToCamelCase();
         public virtual string FieldName => "_"+Name.ToCamelCase();
         public virtual string ParameterName => Name.ToCamelCase().EscapeCSharpKeyword();
@@ -230,7 +310,6 @@ namespace MetaDslx.Languages.MetaCompiler.Model
         public virtual string RedToGreenOptionalArgument => IsOptional ? "default" : ParameterName;
 
         public string? AntlrName { get; set; }
-        public virtual string? SeparatorAntlrName { get; set; }
         public Location? NameLocation { get; set; }
         public List<Annotation> NameAnnotations { get; } = new List<Annotation>();
         public bool IsNegated { get; set; }
@@ -238,13 +317,19 @@ namespace MetaDslx.Languages.MetaCompiler.Model
         public Multiplicity Multiplicity { get; set; }
         public virtual bool IsToken => false;
         public virtual bool IsFixedToken => false;
+        public virtual bool IsFixedTokenAlt => false;
         public virtual bool IsSeparated => false;
-        public virtual bool IsList => Multiplicity == Multiplicity.ZeroOrMore || Multiplicity == Multiplicity.OneOrMore || Multiplicity == Multiplicity.NonGreedyZeroOrMore || Multiplicity == Multiplicity.NonGreedyOneOrMore;
-        public virtual bool IsOptional => Multiplicity == Multiplicity.ZeroOrOne || Multiplicity == Multiplicity.NonGreedyZeroOrOne;
+        public virtual bool IsList => Multiplicity.IsList();
+        public virtual bool IsOptional => Multiplicity.IsOptional();
     }
 
     public class ParserRuleReferenceElement : ParserRuleElement
     {
+        public ParserRuleReferenceElement(ParserRuleAlternative parserRuleAlternative)
+            : base(parserRuleAlternative)
+        {
+        }
+
         public override string DefaultName => Rule?.Name.ToCamelCase();
         public ImmutableArray<string> RuleName { get; set; }
         public string QualifiedName => string.Join(".", Name);
@@ -253,7 +338,7 @@ namespace MetaDslx.Languages.MetaCompiler.Model
         public override string RedItemType => Rule?.RedName;
         public override bool IsToken => Rule is LexerRule;
         public override bool IsFixedToken => Rule is LexerRule lr && lr.IsFixed;
-        public override string RedToGreenOptionalArgument => IsFixedToken && !IsList && !IsOptional ? $"this.Token(SyntaxKind.{Rule.CSharpName})" : base.RedToGreenOptionalArgument;
+        public override string RedToGreenOptionalArgument => IsFixedToken && !IsList && !IsOptional ? $"this.Token({Language.Name}SyntaxKind.{Rule.CSharpName})" : base.RedToGreenOptionalArgument;
 
         public override string ToString()
         {
@@ -263,6 +348,11 @@ namespace MetaDslx.Languages.MetaCompiler.Model
 
     public class ParserRuleEofElement : ParserRuleElement
     {
+        public ParserRuleEofElement(ParserRuleAlternative parserRuleAlternative)
+            : base(parserRuleAlternative)
+        {
+        }
+
         public override string DefaultName => "eof";
         public override bool IsList => false;
         public override bool IsToken => true;
@@ -270,12 +360,17 @@ namespace MetaDslx.Languages.MetaCompiler.Model
         public override string PropertyName => "EndOfFileToken";
         public override string GreenItemType => "InternalSyntaxToken";
         public override string RedItemType => "SyntaxToken";
-        public override string RedToGreenOptionalArgument => "this.Token(SyntaxKind.Eof)";
+        public override string RedToGreenOptionalArgument => $"this.Token({Language.Name}SyntaxKind.Eof)";
     }
 
     public class ParserRuleFixedStringElement : ParserRuleElement
     {
         private string _value;
+
+        public ParserRuleFixedStringElement(ParserRuleAlternative parserRuleAlternative) 
+            : base(parserRuleAlternative)
+        {
+        }
 
         public string ValueText { get; set; }
         public string Value
@@ -293,7 +388,7 @@ namespace MetaDslx.Languages.MetaCompiler.Model
         public override string DefaultName => LexerRule.Name.ToCamelCase();
         public override bool IsToken => true;
         public override bool IsFixedToken => true;
-        public override string RedToGreenOptionalArgument => !IsList && !IsOptional ? $"this.Token(SyntaxKind.{LexerRule.CSharpName})" : base.RedToGreenOptionalArgument;
+        public override string RedToGreenOptionalArgument => !IsList && !IsOptional ? $"this.Token({Language.Name}SyntaxKind.{LexerRule.CSharpName})" : base.RedToGreenOptionalArgument;
 
         public override string ToString()
         {
@@ -301,8 +396,34 @@ namespace MetaDslx.Languages.MetaCompiler.Model
         }
     }
 
+    public class ParserRuleFixedStringAlternativesElement : ParserRuleElement
+    {
+        public ParserRuleFixedStringAlternativesElement(ParserRuleAlternative parserRuleAlternative)
+            : base(parserRuleAlternative)
+        {
+        }
+
+        public List<ParserRuleFixedStringElement> Alternatives { get; } = new List<ParserRuleFixedStringElement>();
+        public override string GreenItemType => "InternalSyntaxToken";
+        public override string RedItemType => "SyntaxToken";
+        public override bool IsToken => true;
+        public override bool IsFixedToken => true;
+        public override bool IsFixedTokenAlt => true;
+        public override bool IsOptional => base.IsOptional || Alternatives.Any(alt => alt.IsOptional);
+
+        public override string ToString()
+        {
+            return $"{Name}=[{string.Join(", ", Alternatives.Select(alt => alt.ValueText))}]";
+        }
+    }
+
     public class ParserRuleWildcardElement : ParserRuleElement
     {
+        public ParserRuleWildcardElement(ParserRuleAlternative parserRuleAlternative) 
+            : base(parserRuleAlternative)
+        {
+        }
+
         public override string DefaultName => "any";
         public override string GreenItemType => "GreenNode";
         public override string RedItemType => "SyntaxNode";
@@ -310,6 +431,11 @@ namespace MetaDslx.Languages.MetaCompiler.Model
 
     public class ParserRuleBlockElement : ParserRuleElement, IParserRuleAlternativeParent
     {
+        public ParserRuleBlockElement(ParserRuleAlternative parserRuleAlternative) 
+            : base(parserRuleAlternative)
+        {
+        }
+
         public override string DefaultName => "block";
         public string GreenName => Name.ToPascalCase() + "Green";
         public string RedName => Name.ToPascalCase() + "Syntax";
@@ -322,23 +448,37 @@ namespace MetaDslx.Languages.MetaCompiler.Model
 
     public class ParserRuleListElement : ParserRuleElement
     {
-        public override string DefaultName => First.DefaultName+"List";
+        public ParserRuleListElement(ParserRuleAlternative parserRuleAlternative)
+            : base(parserRuleAlternative)
+        {
+        }
+
+        public override string DefaultName => RepeatedItem.DefaultName+"List";
         public override bool IsList => true;
         public override bool IsSeparated => true;
-        public override string GreenItemType => First.GreenItemType;
+        public override string GreenItemType => RepeatedItem.GreenItemType;
         public override string GreenPropertyType => $"MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<{GreenItemType}>";
-        public override string RedItemType => First.RedItemType;
+        public override string RedItemType => RepeatedItem.RedItemType;
         public override string RedPropertyType => $"MetaDslx.CodeAnalysis.SeparatedSyntaxList<{RedItemType}>";
         public override string RedToGreenArgument => $"{ParameterName}.Node.ToGreenSeparatedList<{GreenItemType}>()";
-        public override string? SeparatorAntlrName => $"{AntlrName}Separator";
-        public ParserRuleReferenceElement First { get; set; }
-        public LexerRule Separator { get; set; }
-        public ParserRuleReferenceElement Next { get; set; }
-        public ParserRuleBlockElement Block { get; set; }
+        public string SeparatorAntlrName => $"{AntlrName}Separator";
+        public ListKind ListKind { get; set; }
+        public ParserRuleReferenceElement FirstItem { get; set; }
+        public ParserRuleReferenceElement RepeatedRule { get; set; }
+        public ParserRuleElement RepeatedSeparator { get; set; }
+        public ParserRuleReferenceElement RepeatedItem { get; set; }
+        public ParserRuleElement LastSeparator { get; set; }
+        public ParserRuleReferenceElement LastItem { get; set; }
     }
 
     public class LexerRule : Rule
     {
+        public LexerRule(Grammar grammar)
+            : base(grammar)
+        {
+
+        }
+
         public override string GreenName => "InternalSyntaxToken";
         public override string RedName => "SyntaxToken";
         public bool IsFragment { get; set; }

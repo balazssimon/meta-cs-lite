@@ -55,7 +55,9 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
             ParseLanguageDeclaration(language);
             ParseGrammar(language);
             ResolveRules(language);
-            ResolveBlocks(language);
+            var ruleNames = new HashSet<string>();
+            ResolveBlocks(language, ruleNames);
+            ResolveAlternatives(language, ruleNames);
             ResolveLists(language);
             ResolveNames(language);
             ResolveAnnotations(language);
@@ -141,6 +143,10 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                             Error(refElem.Location, $"Lexer rule '{string.Join(".", refElem.RuleName)}' is hidden, it cannot be referenced from a parser rule.");
                         }
                     }
+                    else if (refElem.Rule is ParserRule parserRule)
+                    {
+                        parserRule.ReferencedBy.Add(alt);
+                    }
                 }
                 else if (elem is ParserRuleBlockElement blockElem)
                 {
@@ -154,7 +160,7 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                     var lexerRule = ResolveFixedLexerRule(language.Grammar, fixedStringElem.Value);
                     if (lexerRule is null)
                     {
-                        lexerRule = new LexerRule() { Location = fixedStringElem.Location };
+                        lexerRule = new LexerRule(language.Grammar) { Location = fixedStringElem.Location };
                         var singleAlt = new LexerRuleAlternative();
                         singleAlt.Elements.Add(new LexerRuleFixedStringElement() { ValueText = fixedStringElem.ValueText });
                         lexerRule.Alternatives.Add(singleAlt);
@@ -264,15 +270,15 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
             }
         }
 
-        private void ResolveBlocks(Language language)
+        private void ResolveBlocks(Language language, HashSet<string> ruleNames)
         {
             var rules = language.Grammar.Rules;
-            var usedNames = new HashSet<string>(rules.OfType<ParserRule>().Select(r => r.Name));
+            ruleNames.UnionWith(rules.OfType<ParserRule>().Select(r => r.Name));
             for (int i = 0; i < rules.Count; ++i)
             {
                 if (rules[i] is ParserRule pr)
                 {
-                    ResolveBlocks(language, pr.Name, pr.Alternatives, usedNames);
+                    ResolveBlocks(language, pr.Name, pr.Alternatives, ruleNames);
                 }
             }
         }
@@ -311,14 +317,14 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                         var index = 0;
                         var ruleName = $"{alt.Name}{blockName}{++index}";
                         while (usedNames.Contains(ruleName)) ruleName = $"{alt.Name}{blockName}{++index}";
-                        var rule = new ParserRule();
+                        var rule = new ParserRule(language.Grammar);
                         rule.Name = ruleName;
                         rule.Location = blockElem.Location;
                         rule.Annotations.AddRange(blockElem.Annotations);
                         rule.Alternatives.AddRange(blockElem.Alternatives);
                         language.Grammar.Rules.Add(rule);
                         usedNames.Add(rule.Name);
-                        var refElem = new ParserRuleReferenceElement();
+                        var refElem = new ParserRuleReferenceElement(alt);
                         refElem.Annotations.AddRange(blockElem.NameAnnotations);
                         refElem.Name = blockElem.Name;
                         refElem.NameLocation = blockElem.NameLocation;
@@ -328,9 +334,120 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                         refElem.IsNegated = blockElem.IsNegated;
                         refElem.Multiplicity = blockElem.Multiplicity;
                         alt.Elements[i] = refElem;
+                        rule.ReferencedBy.Add(alt);
                     }
                 }
             }
+        }
+
+        private void ResolveAlternatives(Language language, HashSet<string> ruleNames)
+        {
+            var rules = language.Grammar.Rules;
+            for (int i = 0; i < rules.Count; ++i)
+            {
+                if (rules[i] is ParserRule targetRule && targetRule.ReferencedBy.Count == 1)
+                {
+                    var sourceAlt = targetRule.ReferencedBy[0];
+                    if (sourceAlt.Parent is ParserRule sourceRule && sourceAlt.Elements.Count == 1 && sourceAlt.Elements[0].Multiplicity == Multiplicity.ExactlyOne)
+                    {
+                        var sourceAltIndex = sourceRule.Alternatives.IndexOf(sourceAlt);
+                        if (sourceAltIndex >= 0)
+                        {
+                            if (targetRule.Alternatives.Count == 1 && string.IsNullOrEmpty(targetRule.Alternatives[0].Name))
+                            {
+                                targetRule.Alternatives[0].Name = targetRule.Name;
+                            }
+                            sourceRule.Alternatives.RemoveAt(sourceAltIndex);
+                            sourceRule.Alternatives.InsertRange(sourceAltIndex, targetRule.Alternatives);
+                            foreach (var alt in targetRule.Alternatives)
+                            {
+                                alt.Parent = sourceRule;
+                                alt.Annotations.InsertRange(0, targetRule.Annotations);
+                            }
+                            targetRule.ReferencedBy.Clear();
+                            rules.Remove(targetRule);
+                            --i;
+                        }
+                    }
+                }
+            }
+            for (int i = 0; i < rules.Count; ++i)
+            {
+                if (rules[i] is ParserRule targetRule)
+                {
+                    var tokens = targetRule.Alternatives.Where(alt => alt.Elements.Count == 1 && alt.Elements[0] is ParserRuleFixedStringElement).Select(alt => (ParserRuleFixedStringElement)alt.Elements[0]).ToList();
+                    if (tokens.Count >= 2)
+                    {
+                        if (tokens.Count == targetRule.Alternatives.Count)
+                        {
+                            foreach (var sourceAlt in targetRule.ReferencedBy)
+                            {
+                                for (int j = 0; j < sourceAlt.Elements.Count; j++)
+                                {
+                                    var sourceElement = sourceAlt.Elements[j] as ParserRuleReferenceElement;
+                                    if (sourceElement is not null && sourceElement.Rule == targetRule)
+                                    {
+                                        sourceAlt.Elements[j] = MakeFixedStringAlternativesElement(targetRule, sourceAlt, sourceElement, tokens);
+                                    }
+                                }
+                            }
+                            targetRule.ReferencedBy.Clear();
+                            rules.Remove(targetRule);
+                            --i;
+                        }
+                        else
+                        {
+                            var tokensAlt = new ParserRuleAlternative(targetRule);
+                            var tokensAltName = $"{targetRule.Name}Tokens";
+                            var tokensAltNameIndex = 0;
+                            while (ruleNames.Contains(tokensAltName)) tokensAltName = $"{targetRule.Name}Tokens{++tokensAltNameIndex}";
+                            tokensAlt.Name = tokensAltName;
+                            ruleNames.Add(tokensAlt.Name);
+                            foreach (var token in tokens)
+                            {
+                                token.Annotations.InsertRange(0, token.ParserRuleAlternative.Annotations);
+                                targetRule.Alternatives.Remove(token.ParserRuleAlternative);
+                            }
+                            var tokensElement = MakeFixedStringAlternativesElement(null, tokensAlt, null, tokens);
+                            tokensAlt.Elements.Add(tokensElement);
+                            targetRule.Alternatives.Add(tokensAlt);
+                        }
+                    }
+
+                }
+            }
+        }
+
+        private ParserRuleFixedStringAlternativesElement MakeFixedStringAlternativesElement(ParserRule? targetRule, ParserRuleAlternative sourceAlternative, ParserRuleElement? sourceElement, List<ParserRuleFixedStringElement> tokens)
+        {
+            var result = new ParserRuleFixedStringAlternativesElement(sourceAlternative);
+            if (sourceElement is not null) result.Annotations.AddRange(sourceElement.Annotations);
+            if (targetRule is not null) result.Annotations.AddRange(targetRule.Annotations);
+            if (sourceElement is not null)
+            {
+                result.Name = sourceElement.Name;
+                result.NameLocation = sourceElement.NameLocation;
+                result.NameAnnotations.AddRange(sourceElement.NameAnnotations);
+                result.Location = sourceElement.Location;
+                result.AssignmentOperator = sourceElement.AssignmentOperator;
+                result.IsNegated = sourceElement.IsNegated;
+                result.Multiplicity = sourceElement.Multiplicity;
+            }
+            foreach (var token in tokens)
+            {
+                var alt = new ParserRuleFixedStringElement(sourceAlternative);
+                alt.Annotations.AddRange(token.Annotations);
+                alt.Name = token.Name;
+                alt.NameLocation = token.NameLocation;
+                alt.NameAnnotations.AddRange(token.NameAnnotations);
+                alt.Location = token.Location;
+                alt.AssignmentOperator = token.AssignmentOperator;
+                alt.IsNegated = token.IsNegated;
+                alt.Multiplicity = token.Multiplicity;
+                alt.LexerRule = token.LexerRule;
+                result.Alternatives.Add(alt);
+            }
+            return result;
         }
 
         private void ResolveLists(Language language)
@@ -349,47 +466,177 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
 
         private void ResolveLists(ParserRuleAlternative alt)
         {
-            for (int i = 0; i < alt.Elements.Count - 1; i++)
+            for (int i = 0; i < alt.Elements.Count; i++)
             {
-                var elem = alt.Elements[i];
-                var nextElem = alt.Elements[i + 1];
-                if (elem is ParserRuleReferenceElement firstRef && elem.Multiplicity == Multiplicity.ExactlyOne && firstRef.Rule is ParserRule firstRule && 
-                    nextElem is ParserRuleBlockElement block && block.Alternatives.Count == 1 && block.Alternatives[0].Elements.Count == 2 &&
-                    (block.Multiplicity == Multiplicity.ZeroOrMore || block.Multiplicity == Multiplicity.OneOrMore || 
-                    block.Multiplicity == Multiplicity.NonGreedyZeroOrMore || block.Multiplicity == Multiplicity.NonGreedyOneOrMore))
+                var first = alt.Elements[i];
+                if (first is ParserRuleReferenceElement firstRef && firstRef.Rule is ParserRule firstRule && !firstRef.IsNegated)
                 {
-                    var sep = block.Alternatives[0].Elements[0];
-                    var next = block.Alternatives[0].Elements[1];
-                    if (next is ParserRuleReferenceElement nextRef && nextRef.Rule is ParserRule nextRule)
+                    if (firstRef.Multiplicity.IsList())
                     {
-                        if (firstRule == nextRule)
+                        if (IsSeparatedList(firstRule, out var separatorFirst, out var item, out var itemElement, out var separatorElement))
                         {
-                            LexerRule? separator = null;
-                            if (sep is ParserRuleReferenceElement sepRef && sepRef.Rule is LexerRule sepLexerRule && sepLexerRule.IsFixed)
+                            if (separatorFirst)
                             {
-                                separator = sepLexerRule;
+                                // (, item)*
+                                var listElem = new ParserRuleListElement(alt);
+                                listElem.ListKind = ListKind.SeparatorItem;
+                                listElem.RepeatedRule = firstRef;
+                                listElem.RepeatedSeparator = separatorElement;
+                                listElem.RepeatedItem = itemElement;
+                                alt.Elements[i] = listElem;
                             }
-                            else if (sep is ParserRuleFixedStringElement sepFixed)
+                            else
                             {
-                                separator = sepFixed.LexerRule;
+                                var hasSecond = false;
+                                if (i + 1 < alt.Elements.Count)
+                                {
+                                    var second = alt.Elements[i + 1];
+                                    if (second is ParserRuleReferenceElement secondRef && secondRef.Rule is ParserRule secondRule && !secondRef.Multiplicity.IsList() && !secondRef.IsNegated && secondRef.Name == itemElement.Name && secondRule == item)
+                                    {
+                                        hasSecond = true;
+                                        var hasThird = false;
+                                        if (secondRef.Multiplicity == Multiplicity.ExactlyOne && i + 2 < alt.Elements.Count)
+                                        {
+                                            var third = alt.Elements[i + 2];
+                                            if (third.IsToken && !third.Multiplicity.IsList() && !third.IsNegated)
+                                            {
+                                                if (separatorElement is ParserRuleFixedStringElement firstSep && third is ParserRuleFixedStringElement secondSep && firstSep.Name == secondSep.Name && firstSep.LexerRule == secondSep.LexerRule)
+                                                {
+                                                    // (item ,)* item ,
+                                                    hasThird = true;
+                                                    var listElem = new ParserRuleListElement(alt);
+                                                    listElem.ListKind = ListKind.WithLastItemSeparator;
+                                                    listElem.RepeatedRule = firstRef;
+                                                    listElem.RepeatedSeparator = separatorElement;
+                                                    listElem.RepeatedItem = itemElement;
+                                                    listElem.LastItem = secondRef;
+                                                    listElem.LastSeparator = secondSep;
+                                                    alt.Elements.RemoveAt(i + 2);
+                                                    alt.Elements.RemoveAt(i + 1);
+                                                    alt.Elements[i] = listElem;
+                                                }
+                                            }
+                                        }
+                                        if (!hasThird)
+                                        {
+                                            // (item ,)* item
+                                            var listElem = new ParserRuleListElement(alt);
+                                            listElem.ListKind = ListKind.WithLastItem;
+                                            listElem.RepeatedRule = firstRef;
+                                            listElem.RepeatedSeparator = separatorElement;
+                                            listElem.RepeatedItem = itemElement;
+                                            listElem.LastItem = secondRef;
+                                            alt.Elements.RemoveAt(i + 1);
+                                            alt.Elements[i] = listElem;
+                                        }
+                                    }
+                                }
+                                if (!hasSecond)
+                                {
+                                    // (item ,)*
+                                    var listElem = new ParserRuleListElement(alt);
+                                    listElem.ListKind = ListKind.ItemSeparator;
+                                    listElem.RepeatedRule = firstRef;
+                                    listElem.RepeatedSeparator = separatorElement;
+                                    listElem.RepeatedItem = itemElement;
+                                    alt.Elements[i] = listElem;
+                                }
                             }
-                            if (separator is not null)
+                        }
+                    }
+                    else
+                    {
+                        if (i + 1 < alt.Elements.Count)
+                        {
+                            var second = alt.Elements[i + 1];
+                            if (second is ParserRuleReferenceElement secondRef && secondRef.Rule is ParserRule secondRule && secondRef.Multiplicity.IsList() && !secondRef.IsNegated)
                             {
-                                var list = new ParserRuleListElement();
-                                list.Block = block;
-                                list.First = firstRef;
-                                list.Separator = separator;
-                                list.Next = nextRef;
-                                list.Annotations.AddRange(block.Annotations);
-                                list.Name = block.Name;
-                                list.NameAnnotations.AddRange(block.NameAnnotations);
-                                alt.Elements.RemoveAt(i + 1);
-                                alt.Elements[i] = list;
+                                if (IsSeparatedList(secondRule, out var separatorFirst, out var item, out var itemElement, out var separatorElement) && separatorFirst && firstRef.Name == itemElement.Name && firstRule == item)
+                                {
+                                    var hasThird = false;
+                                    if (i + 2 < alt.Elements.Count)
+                                    {
+                                        var third = alt.Elements[i + 2];
+                                        if (third.IsToken && !third.Multiplicity.IsList() && !third.IsNegated)
+                                        {
+                                            if (separatorElement is ParserRuleFixedStringElement firstSep && third is ParserRuleFixedStringElement secondSep && firstRef.Name == third.Name && firstSep.LexerRule == secondSep.LexerRule)
+                                            {
+                                                // item (, item)* ,
+                                                hasThird = true;
+                                                var listElem = new ParserRuleListElement(alt);
+                                                listElem.ListKind = ListKind.WithFirstItemSeparator;
+                                                listElem.RepeatedRule = secondRef;
+                                                listElem.RepeatedSeparator = separatorElement;
+                                                listElem.RepeatedItem = itemElement;
+                                                listElem.FirstItem = firstRef;
+                                                listElem.LastSeparator = secondSep;
+                                                alt.Elements.RemoveAt(i + 2);
+                                                alt.Elements.RemoveAt(i + 1);
+                                                alt.Elements[i] = listElem;
+                                            }
+                                        }
+                                    }
+                                    if (!hasThird)
+                                    {
+                                        // item (, item)*
+                                        var listElem = new ParserRuleListElement(alt);
+                                        listElem.ListKind = ListKind.WithFirstItem;
+                                        listElem.RepeatedRule = secondRef;
+                                        listElem.RepeatedSeparator = separatorElement;
+                                        listElem.RepeatedItem = itemElement;
+                                        listElem.FirstItem = firstRef;
+                                        alt.Elements.RemoveAt(i + 1);
+                                        alt.Elements[i] = listElem;
+                                    }
+                                }
                             }
                         }
                     }
                 }
             }
+        }
+
+        private bool IsSeparatedList(ParserRule rule, out bool separatorFirst, out ParserRule? item, out ParserRuleReferenceElement? itemElement, out ParserRuleElement? separatorElement)
+        {
+            separatorFirst = true;
+            item = null;
+            itemElement = null;
+            separatorElement = null;
+            if (rule.Alternatives.Count != 1) return false;
+            var alt = rule.Alternatives[0];
+            if (alt.Elements.Count != 2) return false;
+            var first = alt.Elements[0];
+            var second = alt.Elements[1];
+            return IsSeparatedList(first, second, out separatorFirst, out item, out itemElement, out separatorElement);
+        }
+
+        private bool IsSeparatedList(ParserRuleElement first, ParserRuleElement second, out bool separatorFirst, out ParserRule? item, out ParserRuleReferenceElement? itemElement, out ParserRuleElement? separatorElement)
+        {
+            separatorFirst = true;
+            item = null;
+            itemElement = null;
+            separatorElement = null;
+            if (first.Multiplicity == Multiplicity.ExactlyOne && !first.IsNegated &&
+                second.Multiplicity == Multiplicity.ExactlyOne && !second.IsNegated)
+            {
+                if (first.IsToken && second is ParserRuleReferenceElement secondRef && secondRef.Rule is ParserRule secondRule)
+                {
+                    item = secondRule;
+                    itemElement = secondRef;
+                    separatorElement = first;
+                    separatorFirst = true;
+                    return true;
+                }
+                if (second.IsToken && first is ParserRuleReferenceElement firstRef && firstRef.Rule is ParserRule firstRule)
+                {
+                    item = firstRule;
+                    itemElement = firstRef;
+                    separatorElement = second;
+                    separatorFirst = false;
+                    return true;
+                }
+            }
+            return false;
         }
 
         private void ResolveNames(Language language)
@@ -430,7 +677,7 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
             }
             else if (usedElementNames.Contains(elem.Name))
             {
-                //Error(elem.NameLocation, $"Element name '{elem.Name}' is defined multiple times.");
+                Error(elem.NameLocation, $"Element name '{elem.Name}' is defined multiple times.");
             }
             usedElementNames.Add(elem.Name);
             if (elem is ParserRuleReferenceElement refElem && elem.Name == refElem.Name)
@@ -439,6 +686,20 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                 var name = $"{elem.Name}Antlr{++index}";
                 while (usedElementNames.Contains(name)) name = $"{elem.Name}Antlr{++index}";
                 elem.AntlrName = name;
+            }
+            else if (elem is ParserRuleFixedStringAlternativesElement fixedAlts)
+            {
+                foreach (var alt in fixedAlts.Alternatives)
+                {
+                    ResolveElementNames(alt, usedElementNames);
+                }
+            }
+            else if (elem is ParserRuleListElement listElem)
+            {
+                ResolveElementNames(listElem.RepeatedRule, usedElementNames);
+                if (listElem.FirstItem is not null) ResolveElementNames(listElem.FirstItem, usedElementNames);
+                if (listElem.LastItem is not null) ResolveElementNames(listElem.LastItem, usedElementNames);
+                if (listElem.LastSeparator is not null) ResolveElementNames(listElem.LastSeparator, usedElementNames);
             }
             else
             {
@@ -560,7 +821,7 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
 
         private void ParseGrammar(Language language)
         {
-            language.Grammar = new Grammar();
+            language.Grammar = new Grammar(language);
             while (true)
             {
                 var advanced = false;
@@ -678,7 +939,7 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
             }
             if (token.Kind == MetaCompilerTokenKind.Identifier && token.Text.Length > 0 && char.IsUpper(token.Text[0]))
             {
-                var rule = new LexerRule();
+                var rule = new LexerRule(grammar);
                 grammar.Rules.Add(rule);
                 rule.IsFragment = isFragment;
                 rule.IsHidden = isHidden;
@@ -822,7 +1083,7 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
             var token = _tokens.CurrentToken;
             if (token.Kind == MetaCompilerTokenKind.Identifier && token.Text.Length > 0 && char.IsLower(token.Text[0]))
             {
-                var rule = new ParserRule();
+                var rule = new ParserRule(grammar);
                 grammar.Rules.Add(rule);
                 rule.Location = _tokens.CurrentLocation;
                 rule.Name = token.Text;
@@ -831,7 +1092,7 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                 token = _tokens.NextToken();
                 if (token.Text == ":")
                 {
-                    ParseParserRuleAlternatives(rule.Alternatives, ";");
+                    ParseParserRuleAlternatives(rule, rule.Alternatives, ";");
                     token = _tokens.CurrentToken;
                     if (token.Text == ";") _tokens.NextToken();
                 }
@@ -844,12 +1105,12 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
             return false;
         }
 
-        private void ParseParserRuleAlternatives(List<ParserRuleAlternative> alternatives, string end)
+        private void ParseParserRuleAlternatives(IParserRuleAlternativeParent parent, List<ParserRuleAlternative> alternatives, string end)
         {
             _tokens.NextToken();
             while (true)
             {
-                var alt = new ParserRuleAlternative();
+                var alt = new ParserRuleAlternative(parent);
                 alternatives.Add(alt);
                 ParseAnnotations();
                 var token = _tokens.PeekToken(0);
@@ -927,30 +1188,30 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                 }
                 if (token.Text == "(")
                 {
-                    element = ParseParserRuleBlockElement();
+                    element = ParseParserRuleBlockElement(alt);
                 }
                 else
                 {
                     if (token.Text == ".")
                     {
-                        element = new ParserRuleWildcardElement();
+                        element = new ParserRuleWildcardElement(alt);
                         _tokens.NextToken();
                     }
                     else if (token.Kind == MetaCompilerTokenKind.String || token.Kind == MetaCompilerTokenKind.VerbatimString || token.Kind == MetaCompilerTokenKind.Character)
                     {
-                        var str = new ParserRuleFixedStringElement();
+                        var str = new ParserRuleFixedStringElement(alt);
                         str.ValueText = token.Text;
                         element = str;
                         _tokens.NextToken();
                     }
                     else if (token.Kind == MetaCompilerTokenKind.Keyword && token.Text == "eof")
                     {
-                        element = new ParserRuleEofElement();
+                        element = new ParserRuleEofElement(alt);
                         _tokens.NextToken();
                     }
                     else if (token.Kind == MetaCompilerTokenKind.Identifier)
                     {
-                        var reference = new ParserRuleReferenceElement();
+                        var reference = new ParserRuleReferenceElement(alt);
                         reference.Location = _tokens.CurrentLocation;
                         reference.RuleName = ParseQualifier("::");
                         element = reference;
@@ -991,10 +1252,10 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
             }
         }
 
-        private ParserRuleElement ParseParserRuleBlockElement()
+        private ParserRuleElement ParseParserRuleBlockElement(ParserRuleAlternative alt)
         {
-            var block = new ParserRuleBlockElement();
-            ParseParserRuleAlternatives(block.Alternatives, ")");
+            var block = new ParserRuleBlockElement(alt);
+            ParseParserRuleAlternatives(block, block.Alternatives, ")");
             var token = _tokens.CurrentToken;
             if (token.Text == ")") _tokens.NextToken();
             return block;

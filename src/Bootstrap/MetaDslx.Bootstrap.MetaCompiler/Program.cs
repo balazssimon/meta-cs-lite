@@ -66,7 +66,8 @@ line      : statement NEWLINE;
 
 statement : varDeclaration
           | assignment    
-          | print         
+          | print 
+          | list
           ;
 
 print : 'print' '(' expression ')' ;
@@ -74,6 +75,17 @@ print : 'print' '(' expression ')' ;
 varDeclaration : 'var' assignment ;
 
 assignment : ID '=' expression ;
+
+list : listItemSep | listSepItem | listWithFirst | listWithFirstSep | listWithLast | listWithLastSep;
+
+listItemSep : 'ItemSep' dummy (',' expression)* dummy;
+listSepItem : 'SepItem' dummy (expression ',')* dummy;
+listWithFirst : 'WithFirst' dummy expression (',' expression)* dummy;
+listWithFirstSep : 'WithFirstSep' dummy expression (',' expression)* ',' dummy;
+listWithLast : 'WithLast' dummy (expression ',')* expression dummy;
+listWithLastSep : 'WithLastSep' dummy (expression ',')* expression ',' dummy;
+
+dummy : 'dummy' '[' expression ']';
 
 expression : binaryMulOperation# left=expression op=('/'|'*') right=expression
            | binaryAddOperation# left=expression op=('+'|'-') right=expression 
