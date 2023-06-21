@@ -278,7 +278,7 @@ namespace MetaDslx.CodeAnalysis.Syntax
 
                 if (alternate != null)
                 {
-                    return alternate.ToList().AsSeparatedList<TNode>();
+                    return alternate.ToList().AsSeparatedList<TNode>(list.IsReversed);
                 }
 
                 return list;

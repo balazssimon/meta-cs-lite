@@ -13,11 +13,11 @@ namespace MetaDslx.CodeAnalysis.Syntax.InternalSyntax
                 default(SyntaxList<T>);
         }
 
-        public static SeparatedSyntaxList<T> ToGreenSeparatedList<T>(this SyntaxNode? node) where T : GreenNode
+        public static SeparatedSyntaxList<T> ToGreenSeparatedList<T>(this SyntaxNode? node, bool reversed) where T : GreenNode
         {
             return node != null ?
-                new SeparatedSyntaxList<T>(ToGreenList<T>(node.Green)) :
-                default(SeparatedSyntaxList<T>);
+                new SeparatedSyntaxList<T>(ToGreenList<T>(node.Green), reversed) :
+                new SeparatedSyntaxList<T>(default, reversed);
         }
 
         public static SyntaxList<T> ToGreenList<T>(this GreenNode? node) where T : GreenNode

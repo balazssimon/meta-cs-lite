@@ -78,8 +78,8 @@ assignment : ID '=' expression ;
 
 list : listItemSep | listSepItem | listWithFirst | listWithFirstSep | listWithLast | listWithLastSep;
 
-listItemSep : 'ItemSep' dummy (',' expression)* dummy;
-listSepItem : 'SepItem' dummy (expression ',')* dummy;
+listItemSep : 'ItemSep' dummy (expression ',')* dummy;
+listSepItem : 'SepItem' dummy (',' expression)* dummy;
 listWithFirst : 'WithFirst' dummy expression (',' expression)* dummy;
 listWithFirstSep : 'WithFirstSep' dummy expression (',' expression)* ',' dummy;
 listWithLast : 'WithLast' dummy (expression ',')* expression dummy;

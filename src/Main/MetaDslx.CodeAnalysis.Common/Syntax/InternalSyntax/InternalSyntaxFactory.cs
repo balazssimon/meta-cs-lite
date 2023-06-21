@@ -182,27 +182,52 @@ namespace MetaDslx.CodeAnalysis.Syntax.InternalSyntax
 
         public InternalSyntax.SeparatedSyntaxList<TNode> SeparatedList<TNode>(TNode node) where TNode : InternalSyntaxNode
         {
-            return new InternalSyntax.SeparatedSyntaxList<TNode>(new InternalSyntax.SyntaxList<InternalSyntaxNode>(node));
+            return new InternalSyntax.SeparatedSyntaxList<TNode>(new InternalSyntax.SyntaxList<InternalSyntaxNode>(node), false);
         }
 
         public InternalSyntax.SeparatedSyntaxList<TNode> SeparatedList<TNode>(InternalSyntaxToken token) where TNode : InternalSyntaxNode
         {
-            return new InternalSyntax.SeparatedSyntaxList<TNode>(new InternalSyntax.SyntaxList<InternalSyntaxNode>(token));
+            return new InternalSyntax.SeparatedSyntaxList<TNode>(new InternalSyntax.SyntaxList<InternalSyntaxNode>(token), false);
         }
 
         public InternalSyntax.SeparatedSyntaxList<TNode> SeparatedList<TNode>(TNode node1, InternalSyntaxToken token, TNode node2) where TNode : InternalSyntaxNode
         {
-            return new InternalSyntax.SeparatedSyntaxList<TNode>(new InternalSyntax.SyntaxList<InternalSyntaxNode>(InternalSyntax.SyntaxList.List(node1, token, node2)));
+            return new InternalSyntax.SeparatedSyntaxList<TNode>(new InternalSyntax.SyntaxList<InternalSyntaxNode>(InternalSyntax.SyntaxList.List(node1, token, node2)), false);
         }
 
         public InternalSyntax.SeparatedSyntaxList<TNode> SeparatedList<TNode>(params InternalSyntaxNode[] nodes) where TNode : InternalSyntaxNode
         {
             if (nodes != null)
             {
-                return new InternalSyntax.SeparatedSyntaxList<TNode>(InternalSyntax.SyntaxList.List(nodes));
+                return new InternalSyntax.SeparatedSyntaxList<TNode>(InternalSyntax.SyntaxList.List(nodes), false);
             }
 
             return default(InternalSyntax.SeparatedSyntaxList<TNode>);
+        }
+
+        public InternalSyntax.SeparatedSyntaxList<TNode> ReversedSeparatedList<TNode>(TNode node) where TNode : InternalSyntaxNode
+        {
+            return new InternalSyntax.SeparatedSyntaxList<TNode>(new InternalSyntax.SyntaxList<InternalSyntaxNode>(node), true);
+        }
+
+        public InternalSyntax.SeparatedSyntaxList<TNode> ReversedSeparatedList<TNode>(InternalSyntaxToken token) where TNode : InternalSyntaxNode
+        {
+            return new InternalSyntax.SeparatedSyntaxList<TNode>(new InternalSyntax.SyntaxList<InternalSyntaxNode>(token), true);
+        }
+
+        public InternalSyntax.SeparatedSyntaxList<TNode> ReversedSeparatedList<TNode>(InternalSyntaxToken token, TNode node1) where TNode : InternalSyntaxNode
+        {
+            return new InternalSyntax.SeparatedSyntaxList<TNode>(new InternalSyntax.SyntaxList<InternalSyntaxNode>(InternalSyntax.SyntaxList.List(token, node1)), true);
+        }
+
+        public InternalSyntax.SeparatedSyntaxList<TNode> ReversedSeparatedList<TNode>(params InternalSyntaxNode[] nodes) where TNode : InternalSyntaxNode
+        {
+            if (nodes != null)
+            {
+                return new InternalSyntax.SeparatedSyntaxList<TNode>(InternalSyntax.SyntaxList.List(nodes), true);
+            }
+
+            return new InternalSyntax.SeparatedSyntaxList<TNode>(default, true);
         }
 
         public virtual IEnumerable<InternalSyntaxTrivia> GetWellKnownTrivia()

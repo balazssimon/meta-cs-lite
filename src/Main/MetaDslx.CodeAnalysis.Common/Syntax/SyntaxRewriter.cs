@@ -174,65 +174,124 @@ namespace MetaDslx.CodeAnalysis
             var count = list.Count;
             var sepCount = list.SeparatorCount;
 
-            SeparatedSyntaxListBuilder<TNode> alternate = default(SeparatedSyntaxListBuilder<TNode>);
+            SeparatedSyntaxListBuilder<TNode> alternate = new SeparatedSyntaxListBuilder<TNode>(default, list.IsReversed);
 
+            var maxCount = list.IsReversed ? count : sepCount;
             int i = 0;
-            for (; i < sepCount; i++)
+            for (; i < maxCount; i++)
             {
                 var node = list[i];
-                var visitedNode = this.VisitListElement(node);
-
                 var separator = list.GetSeparator(i);
-                var visitedSeparator = this.VisitListSeparator(separator);
+
+                TNode? visitedNode;
+                SyntaxToken visitedSeparator;
+                if (list.IsReversed)
+                {
+                    visitedSeparator = this.VisitListSeparator(separator);
+                    visitedNode = this.VisitListElement(node);
+                }
+                else
+                {
+                    visitedNode = this.VisitListElement(node);
+                    visitedSeparator = this.VisitListSeparator(separator);
+                }
 
                 if (alternate.IsNull)
                 {
                     if (node != visitedNode || separator != visitedSeparator)
                     {
-                        alternate = new SeparatedSyntaxListBuilder<TNode>(count);
+                        alternate = new SeparatedSyntaxListBuilder<TNode>(list.IsReversed, count);
                         alternate.AddRange(list, i);
                     }
                 }
 
                 if (!alternate.IsNull)
                 {
-                    if (visitedNode != null)
+                    if (list.IsReversed)
                     {
-                        alternate.Add(visitedNode);
-
-                        if (visitedSeparator.RawKind == 0)
+                        if (visitedNode != null)
                         {
-                            throw new InvalidOperationException(ExceptionMessages.SeparatorIsExpected);
+                            alternate.AddSeparator(visitedSeparator);
+
+                            if (visitedNode == null)
+                            {
+                                throw new InvalidOperationException(ExceptionMessages.ElementIsExpected);
+                            }
+                            alternate.Add(visitedNode);
                         }
-                        alternate.AddSeparator(visitedSeparator);
+                        else
+                        {
+                            if (visitedSeparator.RawKind == 0)
+                            {
+                                throw new InvalidOperationException(ExceptionMessages.SeparatorIsExpected);
+                            }
+                        }
                     }
                     else
                     {
-                        if (visitedNode == null)
+                        if (visitedNode != null)
                         {
-                            throw new InvalidOperationException(ExceptionMessages.ElementIsExpected);
+                            alternate.Add(visitedNode);
+
+                            if (visitedSeparator.RawKind == 0)
+                            {
+                                throw new InvalidOperationException(ExceptionMessages.SeparatorIsExpected);
+                            }
+                            alternate.AddSeparator(visitedSeparator);
+                        }
+                        else
+                        {
+                            if (visitedNode == null)
+                            {
+                                throw new InvalidOperationException(ExceptionMessages.ElementIsExpected);
+                            }
                         }
                     }
                 }
             }
 
-            if (i < count)
+            if (list.IsReversed)
             {
-                var node = list[i];
-                var visitedNode = this.VisitListElement(node);
-
-                if (alternate.IsNull)
+                if (i < sepCount)
                 {
-                    if (node != visitedNode)
+                    var separator = list.GetSeparator(i);
+                    var visitedSeparator = this.VisitListSeparator(separator);
+
+                    if (alternate.IsNull)
                     {
-                        alternate = new SeparatedSyntaxListBuilder<TNode>(count);
-                        alternate.AddRange(list, i);
+                        if (separator != visitedSeparator)
+                        {
+                            alternate = new SeparatedSyntaxListBuilder<TNode>(list.IsReversed, count);
+                            alternate.AddRange(list, i);
+                        }
+                    }
+
+                    if (!alternate.IsNull && visitedSeparator.RawKind != 0)
+                    {
+                        alternate.AddSeparator(visitedSeparator);
                     }
                 }
-
-                if (!alternate.IsNull && visitedNode != null)
+            }
+            else
+            {
+                if (i < count)
                 {
-                    alternate.Add(visitedNode);
+                    var node = list[i];
+                    var visitedNode = this.VisitListElement(node);
+
+                    if (alternate.IsNull)
+                    {
+                        if (node != visitedNode)
+                        {
+                            alternate = new SeparatedSyntaxListBuilder<TNode>(list.IsReversed, count);
+                            alternate.AddRange(list, i);
+                        }
+                    }
+
+                    if (!alternate.IsNull && visitedNode != null)
+                    {
+                        alternate.Add(visitedNode);
+                    }
                 }
             }
 

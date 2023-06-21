@@ -150,7 +150,7 @@ namespace [language.QualifiedNamespace].Syntax
                 [foreach (var elem in alt.Elements)]
                     [if (elem.IsList)]
                         [if (elem.IsSeparated && elem is ParserRuleListElement listElem)]
-                var [elem.ParameterName]Builder = _pool.AllocateSeparated<[elem.GreenItemType]>();
+                var [elem.ParameterName]Builder = _pool.AllocateSeparated<[elem.GreenItemType]>(reversed: [listElem.IsReversed ? "true" : "false"]);
                             [if (listElem.ListKind == ListKind.WithFirstItem || listElem.ListKind == ListKind.WithFirstItemSeparator)]
                 var [listElem.FirstItem.ParameterName]Context = context.[listElem.FirstItem.AntlrName];
                                 [if (listElem.FirstItem.IsOptional)]
@@ -170,8 +170,13 @@ namespace [language.QualifiedNamespace].Syntax
                     {
                         var item = itemContext.[listElem.RepeatedItem.AntlrName];
                         var separator = itemContext.[listElem.RepeatedSeparator.AntlrName];
+                            [if (listElem.ListKind == ListKind.SeparatorItem || listElem.ListKind == ListKind.WithFirstItem || listElem.ListKind == ListKind.WithFirstItemSeparator)]
+                        [elem.ParameterName]Builder.AddSeparator(this.VisitTerminal(separator, [language.Name]SyntaxKind.[listElem.RepeatedSeparator.CSharpName]));
+                        [elem.ParameterName]Builder.Add(([elem.GreenItemType]?)this.Visit(item) ?? [elem.GreenItemType].__Missing);
+                            [else]
                         [elem.ParameterName]Builder.Add(([elem.GreenItemType]?)this.Visit(item) ?? [elem.GreenItemType].__Missing);
                         [elem.ParameterName]Builder.AddSeparator(this.VisitTerminal(separator, [language.Name]SyntaxKind.[listElem.RepeatedSeparator.CSharpName]));
+                            [end if]
                     }
                 }
                             [if (listElem.ListKind == ListKind.WithLastItem || listElem.ListKind == ListKind.WithLastItemSeparator)]

@@ -10,29 +10,47 @@ namespace MetaDslx.CodeAnalysis.Syntax.InternalSyntax
     public struct SeparatedSyntaxList<TNode> : IEquatable<SeparatedSyntaxList<TNode>> where TNode : GreenNode
     {
         private readonly SyntaxList<GreenNode> _list;
+        private readonly bool _reversed;
 
-        public SeparatedSyntaxList(SyntaxList<GreenNode> list)
+        public SeparatedSyntaxList(SyntaxList<GreenNode> list, bool reversed)
         {
-            Validate(list);
+            Validate(list, reversed);
             _list = list;
+            _reversed = reversed;
         }
 
         [Conditional("DEBUG")]
-        private static void Validate(SyntaxList<GreenNode> list)
+        private static void Validate(SyntaxList<GreenNode> list, bool reversed)
         {
             for (int i = 0; i < list.Count; i++)
             {
                 var item = list.GetRequiredItem(i);
-                if ((i & 1) == 0)
+                if (reversed)
                 {
-                    Debug.Assert(!item.IsToken, "even elements of a separated list must be nodes");
+                    if ((i & 1) == 0)
+                    {
+                        Debug.Assert(item.IsToken, "even elements of a separated list must be tokens");
+                    }
+                    else
+                    {
+                        Debug.Assert(!item.IsToken, "odd elements of a separated list must be nodes");
+                    }
                 }
                 else
                 {
-                    Debug.Assert(item.IsToken, "odd elements of a separated list must be tokens");
+                    if ((i & 1) == 0)
+                    {
+                        Debug.Assert(!item.IsToken, "even elements of a separated list must be nodes");
+                    }
+                    else
+                    {
+                        Debug.Assert(item.IsToken, "odd elements of a separated list must be tokens");
+                    }
                 }
             }
         }
+
+        public bool IsReversed => _reversed;
 
         public GreenNode? Node => _list.Node;
 
@@ -40,7 +58,7 @@ namespace MetaDslx.CodeAnalysis.Syntax.InternalSyntax
         {
             get
             {
-                return (_list.Count + 1) >> 1;
+                return (_list.Count + (_reversed ? 0 : 1)) >> 1;
             }
         }
 
@@ -48,7 +66,7 @@ namespace MetaDslx.CodeAnalysis.Syntax.InternalSyntax
         {
             get
             {
-                return _list.Count >> 1;
+                return (_list.Count + (_reversed ? 1 : 0)) >> 1;
             }
         }
 
@@ -56,7 +74,7 @@ namespace MetaDslx.CodeAnalysis.Syntax.InternalSyntax
         {
             get
             {
-                return (TNode?)_list[index << 1];
+                return (TNode?)_list[(index << 1) + (_reversed ? 1 : 0)];
             }
         }
 
@@ -67,7 +85,7 @@ namespace MetaDslx.CodeAnalysis.Syntax.InternalSyntax
         /// <returns></returns>
         public GreenNode? GetSeparator(int index)
         {
-            return _list[(index << 1) + 1];
+            return _list[(index << 1) + (_reversed ? 0 : 1)];
         }
 
         public SyntaxList<GreenNode> GetWithSeparators()
@@ -102,7 +120,7 @@ namespace MetaDslx.CodeAnalysis.Syntax.InternalSyntax
 
         public static implicit operator SeparatedSyntaxList<GreenNode>(SeparatedSyntaxList<TNode> list)
         {
-            return new SeparatedSyntaxList<GreenNode>(list.GetWithSeparators());
+            return new SeparatedSyntaxList<GreenNode>(list.GetWithSeparators(), list._reversed);
         }
 
 #if DEBUG

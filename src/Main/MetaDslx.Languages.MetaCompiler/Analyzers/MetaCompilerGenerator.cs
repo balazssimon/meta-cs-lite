@@ -63,7 +63,7 @@ namespace MetaDslx.Languages.MetaCompiler.Analyzers
                         var syntaxVisitorCode = generator.GenerateSyntaxVisitor(language);
                         spc.AddSource($"{fileName}.MetaCompiler.SyntaxVisitor.g.cs", syntaxVisitorCode);
                         var syntaxFactoryCode = generator.GenerateSyntaxFactory(language);
-                        spc.AddSource($"{fileName}.MetaCompiler.SyntaxVisitor.g.cs", syntaxVisitorCode);
+                        spc.AddSource($"{fileName}.MetaCompiler.SyntaxFactory.g.cs", syntaxFactoryCode);
                         var compilationFactoryCode = generator.GenerateCompilationFactory(language);
                         spc.AddSource($"{fileName}.MetaCompiler.CompilationFactory.g.cs", compilationFactoryCode);
                     }

@@ -12,20 +12,22 @@ namespace MetaDslx.CodeAnalysis.Syntax.InternalSyntax
     public struct SeparatedSyntaxListBuilder<TNode> where TNode : GreenNode
     {
         private readonly SyntaxListBuilder? _builder;
+        private readonly bool _reversed;
 
-        public SeparatedSyntaxListBuilder(int size)
-            : this(new SyntaxListBuilder(size))
+        public SeparatedSyntaxListBuilder(bool reversed, int size)
+            : this(new SyntaxListBuilder(size), reversed)
         {
         }
 
-        public static SeparatedSyntaxListBuilder<TNode> Create()
+        public static SeparatedSyntaxListBuilder<TNode> Create(bool reversed = false)
         {
-            return new SeparatedSyntaxListBuilder<TNode>(8);
+            return new SeparatedSyntaxListBuilder<TNode>(reversed, 8);
         }
 
-        internal SeparatedSyntaxListBuilder(SyntaxListBuilder builder)
+        internal SeparatedSyntaxListBuilder(SyntaxListBuilder builder, bool reversed)
         {
             _builder = builder;
+            _reversed = reversed;
         }
 
         public bool IsNull
@@ -103,7 +105,7 @@ namespace MetaDslx.CodeAnalysis.Syntax.InternalSyntax
         {
             return _builder == null
                 ? default(SeparatedSyntaxList<TNode>)
-                : new SeparatedSyntaxList<TNode>(new SyntaxList<GreenNode>(_builder.ToListNode()));
+                : new SeparatedSyntaxList<TNode>(new SyntaxList<GreenNode>(_builder.ToListNode()), _reversed);
         }
 
         /// <summary>

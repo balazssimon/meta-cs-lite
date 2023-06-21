@@ -425,9 +425,9 @@ namespace MetaDslx.CodeAnalysis.Syntax
         /// Creates an empty separated list.
         /// </summary>
         /// <typeparam name="TNode">The specific type of the element nodes.</typeparam>
-        public virtual SeparatedSyntaxList<TNode> SeparatedList<TNode>() where TNode : SyntaxNode
+        public virtual SeparatedSyntaxList<TNode> SeparatedList<TNode>(bool reversed) where TNode : SyntaxNode
         {
-            return default(SeparatedSyntaxList<TNode>);
+            return new SeparatedSyntaxList<TNode>(default, reversed);
         }
 
         /// <summary>
@@ -435,14 +435,15 @@ namespace MetaDslx.CodeAnalysis.Syntax
         /// </summary>
         /// <typeparam name="TNode">The specific type of the element nodes.</typeparam>
         /// <param name="node">A single node.</param>
-        public virtual SeparatedSyntaxList<TNode> SingletonSeparatedList<TNode>(TNode node) where TNode : SyntaxNode
+        /// <param name="reversed">True if separators come before nodes.</param>
+        public virtual SeparatedSyntaxList<TNode> SingletonSeparatedList<TNode>(TNode node, bool reversed) where TNode : SyntaxNode
         {
-            return new SeparatedSyntaxList<TNode>(new SyntaxNodeOrTokenList(node, index: 0));
+            return new SeparatedSyntaxList<TNode>(new SyntaxNodeOrTokenList(node, index: 0), reversed);
         }
 
-        public SeparatedSyntaxList<TNode> SeparatedList<TNode>(IEnumerable<TNode> nodes) where TNode : SyntaxNode
+        public SeparatedSyntaxList<TNode> SeparatedList<TNode>(IEnumerable<TNode> nodes, bool reversed) where TNode : SyntaxNode
         {
-            return this.SeparatedList<TNode>(nodes, Language.SyntaxFacts.DefaultSeparatorRawKind);
+            return this.SeparatedList<TNode>(nodes, Language.SyntaxFacts.DefaultSeparatorRawKind, reversed);
         }
 
         /// <summary>
@@ -451,40 +452,39 @@ namespace MetaDslx.CodeAnalysis.Syntax
         /// <typeparam name="TNode">The specific type of the element nodes.</typeparam>
         /// <param name="nodes">A sequence of syntax nodes.</param>
         /// <param name="separatorKind">The syntax kind of the separator tokens.</param>
-        public virtual SeparatedSyntaxList<TNode> SeparatedList<TNode>(IEnumerable<TNode> nodes, int separatorKind) where TNode : SyntaxNode
+        /// <param name="reversed">True if separators come before nodes.</param>
+        public virtual SeparatedSyntaxList<TNode> SeparatedList<TNode>(IEnumerable<TNode> nodes, int separatorKind, bool reversed) where TNode : SyntaxNode
         {
             if (nodes == null)
             {
-                return default(SeparatedSyntaxList<TNode>);
+                return new SeparatedSyntaxList<TNode>(default, reversed);
             }
 
             var collection = nodes as ICollection<TNode>;
 
             if (collection != null && collection.Count == 0)
             {
-                return default(SeparatedSyntaxList<TNode>);
+                return new SeparatedSyntaxList<TNode>(default, reversed);
             }
 
             using (var enumerator = nodes.GetEnumerator())
             {
                 if (!enumerator.MoveNext())
                 {
-                    return default(SeparatedSyntaxList<TNode>);
+                    return new SeparatedSyntaxList<TNode>(default, reversed);
                 }
 
                 var firstNode = enumerator.Current;
 
                 if (!enumerator.MoveNext())
                 {
-                    return SingletonSeparatedList<TNode>(firstNode);
+                    return SingletonSeparatedList<TNode>(firstNode, reversed);
                 }
 
-                var builder = new SeparatedSyntaxListBuilder<TNode>(collection != null ? collection.Count : 3);
-
-                builder.Add(firstNode);
-
+                var builder = new SeparatedSyntaxListBuilder<TNode>(reversed, collection != null ? collection.Count : 3);
                 var commaToken = Token(separatorKind);
-
+                if (reversed) builder.AddSeparator(commaToken);
+                builder.Add(firstNode);
                 do
                 {
                     builder.AddSeparator(commaToken);
@@ -502,7 +502,7 @@ namespace MetaDslx.CodeAnalysis.Syntax
         /// <typeparam name="TNode">The specific type of the element nodes.</typeparam>
         /// <param name="nodes">A sequence of syntax nodes.</param>
         /// <param name="separators">A sequence of token to be interleaved between the nodes. The number of tokens must
-        /// be one less than the number of nodes.</param>
+        /// be one less or equal to than the number of nodes.</param>
         public virtual SeparatedSyntaxList<TNode> SeparatedList<TNode>(IEnumerable<TNode> nodes, IEnumerable<SyntaxToken> separators) where TNode : SyntaxNode
         {
             // Interleave the nodes and the separators.  The number of separators must be equal to or 1 less than the number of nodes or
@@ -511,14 +511,14 @@ namespace MetaDslx.CodeAnalysis.Syntax
             if (nodes != null)
             {
                 IEnumerator<TNode> enumerator = nodes.GetEnumerator();
-                SeparatedSyntaxListBuilder<TNode> builder = SeparatedSyntaxListBuilder<TNode>.Create();
+                SeparatedSyntaxListBuilder<TNode> builder = SeparatedSyntaxListBuilder<TNode>.Create(reversed: false);
                 if (separators != null)
                 {
                     foreach (SyntaxToken token in separators)
                     {
                         if (!enumerator.MoveNext())
                         {
-                            throw new ArgumentException($"{nameof(nodes)} must not be empty.", nameof(nodes));
+                            throw new ArgumentException($"{nameof(nodes)} must have one less of equal number of elements as {nameof(separators)}", nameof(nodes));
                         }
 
                         builder.Add(enumerator.Current);
@@ -531,7 +531,7 @@ namespace MetaDslx.CodeAnalysis.Syntax
                     builder.Add(enumerator.Current);
                     if (enumerator.MoveNext())
                     {
-                        throw new ArgumentException($"{nameof(separators)} must have 1 fewer element than {nameof(nodes)}", nameof(separators));
+                        throw new ArgumentException($"{nameof(separators)} must have one less of equal number of elements as {nameof(nodes)}", nameof(separators));
                     }
                 }
 
@@ -543,7 +543,49 @@ namespace MetaDslx.CodeAnalysis.Syntax
                 throw new ArgumentException($"When {nameof(nodes)} is null, {nameof(separators)} must also be null.", nameof(separators));
             }
 
-            return default(SeparatedSyntaxList<TNode>);
+            return new SeparatedSyntaxList<TNode>(default, false);
+        }
+
+        /// <summary>
+        /// Creates a separated list of nodes from a sequence of separator tokens and a sequence of nodes.
+        /// </summary>
+        /// <typeparam name="TNode">The specific type of the element nodes.</typeparam>
+        /// <param name="separators">A sequence of tokens to be interleaved between the nodes.</param>
+        /// <param name="nodes">A sequence of syntax nodes. The number of tokens must be equal to the number of nodes.</param>
+        public virtual SeparatedSyntaxList<TNode> ReversedSeparatedList<TNode>(IEnumerable<SyntaxToken> separators, IEnumerable<TNode> nodes) where TNode : SyntaxNode
+        {
+            if (nodes != null)
+            {
+                IEnumerator<TNode> enumerator = nodes.GetEnumerator();
+                SeparatedSyntaxListBuilder<TNode> builder = SeparatedSyntaxListBuilder<TNode>.Create(reversed: true);
+                if (separators != null)
+                {
+                    foreach (SyntaxToken token in separators)
+                    {
+                        if (!enumerator.MoveNext())
+                        {
+                            throw new ArgumentException($"{nameof(nodes)} must have the same number of elements as {nameof(separators)}", nameof(nodes));
+                        }
+
+                        builder.AddSeparator(token);
+                        builder.Add(enumerator.Current);
+                    }
+                }
+
+                if (enumerator.MoveNext())
+                {
+                    throw new ArgumentException($"{nameof(separators)} must have the same number of elements as {nameof(nodes)}", nameof(separators));
+                }
+
+                return builder.ToList();
+            }
+
+            if (separators != null)
+            {
+                throw new ArgumentException($"When {nameof(nodes)} is null, {nameof(separators)} must also be null.", nameof(separators));
+            }
+
+            return new SeparatedSyntaxList<TNode>(default, true);
         }
 
         /// <summary>
@@ -564,7 +606,7 @@ namespace MetaDslx.CodeAnalysis.Syntax
         /// <param name="nodesAndTokens">The list of nodes and tokens.</param>
         public virtual SeparatedSyntaxList<TNode> SeparatedList<TNode>(SyntaxNodeOrTokenList nodesAndTokens) where TNode : SyntaxNode
         {
-            if (!HasSeparatedNodeTokenPattern(nodesAndTokens))
+            if (!HasSeparatedNodeTokenPattern(nodesAndTokens, reversed: false))
             {
                 throw new ArgumentException(ExceptionMessages.NodeOrTokenOutOfSequence);
             }
@@ -574,7 +616,28 @@ namespace MetaDslx.CodeAnalysis.Syntax
                 throw new ArgumentException(ExceptionMessages.UnexpectedTypeOfNodeInList);
             }
 
-            return new SeparatedSyntaxList<TNode>(nodesAndTokens);
+            return new SeparatedSyntaxList<TNode>(nodesAndTokens, reversed: false);
+        }
+
+        /// <summary>
+        /// Creates a separated list from a <see cref="SyntaxNodeOrTokenList"/>, where the list elements start with a separator and then alternate between
+        /// additional nodes and separator tokens.
+        /// </summary>
+        /// <typeparam name="TNode">The specific type of the element nodes.</typeparam>
+        /// <param name="nodesAndTokens">The list of nodes and tokens.</param>
+        public virtual SeparatedSyntaxList<TNode> ReversedSeparatedList<TNode>(SyntaxNodeOrTokenList nodesAndTokens) where TNode : SyntaxNode
+        {
+            if (!HasSeparatedNodeTokenPattern(nodesAndTokens, reversed: true))
+            {
+                throw new ArgumentException(ExceptionMessages.NodeOrTokenOutOfSequence);
+            }
+
+            if (!NodesAreCorrectType<TNode>(nodesAndTokens))
+            {
+                throw new ArgumentException(ExceptionMessages.UnexpectedTypeOfNodeInList);
+            }
+
+            return new SeparatedSyntaxList<TNode>(nodesAndTokens, reversed: true);
         }
 
         private static bool NodesAreCorrectType<TNode>(SyntaxNodeOrTokenList list)
@@ -591,12 +654,12 @@ namespace MetaDslx.CodeAnalysis.Syntax
             return true;
         }
 
-        private static bool HasSeparatedNodeTokenPattern(SyntaxNodeOrTokenList list)
+        private static bool HasSeparatedNodeTokenPattern(SyntaxNodeOrTokenList list, bool reversed)
         {
             for (int i = 0, n = list.Count; i < n; i++)
             {
                 var element = list[i];
-                if (element.IsToken == ((i & 1) == 0))
+                if (element.IsToken == ((i & 1) == (reversed ? 1 : 0)))
                 {
                     return false;
                 }

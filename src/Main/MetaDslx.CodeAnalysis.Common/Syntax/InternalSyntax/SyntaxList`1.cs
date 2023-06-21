@@ -158,9 +158,9 @@ namespace MetaDslx.CodeAnalysis.Syntax.InternalSyntax
             return _node != null ? _node.GetHashCode() : 0;
         }
 
-        public SeparatedSyntaxList<TOther> AsSeparatedList<TOther>() where TOther : GreenNode
+        public SeparatedSyntaxList<TOther> AsSeparatedList<TOther>(bool reversed) where TOther : GreenNode
         {
-            return new SeparatedSyntaxList<TOther>(this);
+            return new SeparatedSyntaxList<TOther>(this, reversed);
         }
 
         public static implicit operator SyntaxList<TNode>(TNode node)

@@ -287,9 +287,9 @@ namespace MetaDslx.CodeAnalysis
         /// </summary>
         /// <typeparam name="TOther">The type of the list elements in the separated list.</typeparam>
         /// <returns></returns>
-        internal static SeparatedSyntaxList<TOther> AsSeparatedList<TOther>(this SyntaxNodeOrTokenList list) where TOther : SyntaxNode
+        internal static SeparatedSyntaxList<TOther> AsSeparatedList<TOther>(this SyntaxNodeOrTokenList list, bool reversed) where TOther : SyntaxNode
         {
-            var builder = SeparatedSyntaxListBuilder<TOther>.Create();
+            var builder = SeparatedSyntaxListBuilder<TOther>.Create(reversed);
             foreach (var i in list)
             {
                 var node = i.AsNode();

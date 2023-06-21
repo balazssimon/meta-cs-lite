@@ -47,7 +47,18 @@ namespace MetaDslx.CodeAnalysis.Syntax
                 return default;
             }
 
-            return new SeparatedSyntaxList<TNode>(new SyntaxNodeOrTokenList(listNode.CreateRed(), 0));
+            return new SeparatedSyntaxList<TNode>(new SyntaxNodeOrTokenList(listNode.CreateRed(), 0), false);
+        }
+
+        public static SeparatedSyntaxList<TNode> ToReversedSeparatedList<TNode>(this SyntaxListBuilder? builder) where TNode : SyntaxNode
+        {
+            var listNode = builder?.ToListNode();
+            if (listNode is null)
+            {
+                return default;
+            }
+
+            return new SeparatedSyntaxList<TNode>(new SyntaxNodeOrTokenList(listNode.CreateRed(), 0), true);
         }
     }
 }

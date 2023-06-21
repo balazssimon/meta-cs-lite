@@ -10,22 +10,24 @@ namespace MetaDslx.CodeAnalysis.Syntax
     internal struct SeparatedSyntaxListBuilder<TNode> where TNode : SyntaxNode
     {
         private readonly SyntaxListBuilder _builder;
+        private readonly bool _reversed;
         private bool _expectedSeparator;
 
-        public SeparatedSyntaxListBuilder(int size)
-            : this(new SyntaxListBuilder(size))
+        public SeparatedSyntaxListBuilder(bool reversed, int size)
+            : this(new SyntaxListBuilder(size), reversed)
         {
         }
 
-        public static SeparatedSyntaxListBuilder<TNode> Create()
+        public static SeparatedSyntaxListBuilder<TNode> Create(bool reversed)
         {
-            return new SeparatedSyntaxListBuilder<TNode>(8);
+            return new SeparatedSyntaxListBuilder<TNode>(reversed, 8);
         }
 
-        internal SeparatedSyntaxListBuilder(SyntaxListBuilder builder)
+        internal SeparatedSyntaxListBuilder(SyntaxListBuilder builder, bool reversed)
         {
             _builder = builder;
-            _expectedSeparator = false;
+            _reversed = reversed;
+            _expectedSeparator = _reversed;
         }
 
         public bool IsNull
@@ -87,7 +89,7 @@ namespace MetaDslx.CodeAnalysis.Syntax
             CheckExpectedElement();
             SyntaxNodeOrTokenList list = nodes.GetWithSeparators();
             _builder.AddRange(list);
-            _expectedSeparator = ((_builder.Count & 1) != 0);
+            _expectedSeparator = ((_builder.Count & 1) != (_reversed ? 1 : 0));
             return this;
         }
 
@@ -96,7 +98,7 @@ namespace MetaDslx.CodeAnalysis.Syntax
             CheckExpectedElement();
             SyntaxNodeOrTokenList list = nodes.GetWithSeparators();
             _builder.AddRange(list, this.Count, Math.Min(count << 1, list.Count));
-            _expectedSeparator = ((_builder.Count & 1) != 0);
+            _expectedSeparator = ((_builder.Count & 1) != (_reversed ? 1 : 0));
             return this;
         }
 

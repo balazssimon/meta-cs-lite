@@ -17,43 +17,61 @@ namespace MetaDslx.CodeAnalysis
         private readonly SyntaxNodeOrTokenList _list;
         private readonly int _count;
         private readonly int _separatorCount;
+        private readonly bool _reversed;
 
-        public SeparatedSyntaxList(SyntaxNodeOrTokenList list)
+        public SeparatedSyntaxList(SyntaxNodeOrTokenList list, bool reversed)
             : this()
         {
-            Validate(list);
+            Validate(list, reversed);
 
             // calculating counts is very cheap when list interleaves nodes and tokens
             // so lets just do it here.
+            _reversed = reversed;
 
             int allCount = list.Count;
-            _count = (allCount + 1) >> 1;
-            _separatorCount = allCount >> 1;
+            _count = (allCount + (_reversed ? 0 : 1)) >> 1;
+            _separatorCount = (allCount + (_reversed ? 1 : 0)) >> 1;
 
             _list = list;
         }
 
         [Conditional("DEBUG")]
-        private static void Validate(SyntaxNodeOrTokenList list)
+        private static void Validate(SyntaxNodeOrTokenList list, bool reversed)
         {
             for (int i = 0; i < list.Count; i++)
             {
                 var item = list[i];
-                if ((i & 1) == 0)
+                if (reversed)
                 {
-                    Debug.Assert(item.IsNode, "Node missing in separated list.");
+                    if ((i & 1) == 0)
+                    {
+                        Debug.Assert(item.IsToken, "even elements of a separated list must be tokens");
+                    }
+                    else
+                    {
+                        Debug.Assert(!item.IsToken, "odd elements of a separated list must be nodes");
+                    }
                 }
                 else
                 {
-                    Debug.Assert(item.IsToken, "Separator token missing in separated list.");
+                    if ((i & 1) == 0)
+                    {
+                        Debug.Assert(!item.IsToken, "even elements of a separated list must be nodes");
+                    }
+                    else
+                    {
+                        Debug.Assert(item.IsToken, "odd elements of a separated list must be tokens");
+                    }
                 }
             }
         }
 
-        public SeparatedSyntaxList(SyntaxNode node, int index)
-            : this(new SyntaxNodeOrTokenList(node, index))
+        public SeparatedSyntaxList(SyntaxNode node, int index, bool reversed)
+            : this(new SyntaxNodeOrTokenList(node, index), reversed)
         {
         }
+
+        public bool IsReversed => _reversed;
 
         public SyntaxNode? Node
         {
@@ -88,7 +106,7 @@ namespace MetaDslx.CodeAnalysis
                 {
                     if (!node.IsList)
                     {
-                        if (index == 0)
+                        if (index == 0 && !_reversed)
                         {
                             return (TNode)node;
                         }
@@ -116,13 +134,24 @@ namespace MetaDslx.CodeAnalysis
             var node = _list.Node;
             if (node != null)
             {
-                Debug.Assert(node.IsList, "separated list cannot be a singleton separator");
-                if (unchecked((uint)index < (uint)_separatorCount))
+                if (!node.IsList)
                 {
-                    index = (index << 1) + 1;
-                    var green = node.Green.GetRequiredSlot(index);
-                    Debug.Assert(green.IsToken);
-                    return new SyntaxToken(node.Parent, green, node.GetChildPosition(index), _list.index + index);
+                    if (index == 0 && _reversed)
+                    {
+                        var green = node.Green;
+                        Debug.Assert(green.IsToken);
+                        return new SyntaxToken(node.Parent, green, node.GetChildPosition(0), _list.index);
+                    }
+                }
+                else
+                {
+                    if (unchecked((uint)index < (uint)_separatorCount))
+                    {
+                        index = (index << 1) + (_reversed ? 0 : 1);
+                        var green = node.Green.GetRequiredSlot(index);
+                        Debug.Assert(green.IsToken);
+                        return new SyntaxToken(node.Parent, green, node.GetChildPosition(index), _list.index + index);
+                    }
                 }
             }
 
@@ -314,7 +343,7 @@ namespace MetaDslx.CodeAnalysis
 
         public bool Equals(SeparatedSyntaxList<TNode> other)
         {
-            return _list == other._list;
+            return _list == other._list && _reversed == other._reversed;
         }
 
         public override bool Equals(object? obj)
@@ -324,7 +353,7 @@ namespace MetaDslx.CodeAnalysis
 
         public override int GetHashCode()
         {
-            return _list.GetHashCode();
+            return Hash.Combine(_list.GetHashCode(), _reversed.GetHashCode());
         }
 
         /// <summary>
@@ -397,7 +426,7 @@ namespace MetaDslx.CodeAnalysis
                 if (item != null)
                 {
                     // if item before insertion point is a node, add a separator
-                    if (nodesToInsertWithSeparators.Count > 0 || (insertionIndex > 0 && nodesWithSeps[insertionIndex - 1].IsNode))
+                    if (nodesToInsertWithSeparators.Count > 0 || (insertionIndex > 0 && nodesWithSeps[insertionIndex - 1].IsNode) || (insertionIndex == 0 && _reversed))
                     {
                         nodesToInsertWithSeparators.Add(item.Green.CreateSeparator<TNode>(item));
                     }
@@ -414,7 +443,7 @@ namespace MetaDslx.CodeAnalysis
                 nodesToInsertWithSeparators.Add(node.Green.CreateSeparator<TNode>(node)); // separator
             }
 
-            return new SeparatedSyntaxList<TNode>(nodesWithSeps.InsertRange(insertionIndex, nodesToInsertWithSeparators));
+            return new SeparatedSyntaxList<TNode>(nodesWithSeps.InsertRange(insertionIndex, nodesToInsertWithSeparators), _reversed);
         }
 
         private static bool KeepSeparatorWithPreviousNode(in SyntaxToken separator)
@@ -470,7 +499,7 @@ namespace MetaDslx.CodeAnalysis
                     nodesWithSeps = nodesWithSeps.RemoveAt(index - 1);
                 }
 
-                return new SeparatedSyntaxList<TNode>(nodesWithSeps);
+                return new SeparatedSyntaxList<TNode>(nodesWithSeps, _reversed);
             }
 
             return this;
@@ -491,7 +520,7 @@ namespace MetaDslx.CodeAnalysis
             var index = this.IndexOf(nodeInList);
             if (index >= 0 && index < this.Count)
             {
-                return new SeparatedSyntaxList<TNode>(this.GetWithSeparators().Replace(nodeInList, newNode));
+                return new SeparatedSyntaxList<TNode>(this.GetWithSeparators().Replace(nodeInList, newNode), _reversed);
             }
 
             throw new ArgumentOutOfRangeException(nameof(nodeInList));
@@ -552,7 +581,7 @@ namespace MetaDslx.CodeAnalysis
                 throw new ArgumentException("newSeparator");
             }
 
-            return new SeparatedSyntaxList<TNode>(nodesWithSeps.Replace(separatorToken, newSeparator));
+            return new SeparatedSyntaxList<TNode>(nodesWithSeps.Replace(separatorToken, newSeparator), _reversed);
         }
 
         // for debugging
@@ -593,12 +622,12 @@ namespace MetaDslx.CodeAnalysis
 
         public static implicit operator SeparatedSyntaxList<SyntaxNode>(SeparatedSyntaxList<TNode> nodes)
         {
-            return new SeparatedSyntaxList<SyntaxNode>(nodes._list);
+            return new SeparatedSyntaxList<SyntaxNode>(nodes._list, nodes._reversed);
         }
 
         public static implicit operator SeparatedSyntaxList<TNode>(SeparatedSyntaxList<SyntaxNode> nodes)
         {
-            return new SeparatedSyntaxList<TNode>(nodes._list);
+            return new SeparatedSyntaxList<TNode>(nodes._list, nodes._reversed);
         }
     }
 }

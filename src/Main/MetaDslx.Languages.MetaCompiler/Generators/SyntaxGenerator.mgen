@@ -626,7 +626,7 @@ public sealed class [alt.RedName] : [parent.Alternatives.Count > 1 ? parent.RedN
 			var red = this.GetRed(ref this.[elem.FieldName], [elemIndex]);
 			if (red != null)
 			{
-				return new [elem.RedPropertyType](red, this.GetChildIndex([elemIndex]));
+				return new [elem.RedPropertyType](red, this.GetChildIndex([elemIndex]), reversed: [elem.IsReversed ? "true" : "false"]);
 			}
 			return default;
 			[else if (elem.IsToken)]

@@ -319,6 +319,7 @@ namespace MetaDslx.Languages.MetaCompiler.Model
         public virtual bool IsFixedToken => false;
         public virtual bool IsFixedTokenAlt => false;
         public virtual bool IsSeparated => false;
+        public virtual bool IsReversed => false;
         public virtual bool IsList => Multiplicity.IsList();
         public virtual bool IsOptional => Multiplicity.IsOptional();
     }
@@ -456,11 +457,12 @@ namespace MetaDslx.Languages.MetaCompiler.Model
         public override string DefaultName => RepeatedItem.DefaultName+"List";
         public override bool IsList => true;
         public override bool IsSeparated => true;
+        public override bool IsReversed => ListKind == ListKind.SeparatorItem;
         public override string GreenItemType => RepeatedItem.GreenItemType;
         public override string GreenPropertyType => $"MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<{GreenItemType}>";
         public override string RedItemType => RepeatedItem.RedItemType;
         public override string RedPropertyType => $"MetaDslx.CodeAnalysis.SeparatedSyntaxList<{RedItemType}>";
-        public override string RedToGreenArgument => $"{ParameterName}.Node.ToGreenSeparatedList<{GreenItemType}>()";
+        public override string RedToGreenArgument => $"{ParameterName}.Node.ToGreenSeparatedList<{GreenItemType}>(reversed: {(IsReversed ? "true" : "false")})";
         public string SeparatorAntlrName => $"{AntlrName}Separator";
         public ListKind ListKind { get; set; }
         public ParserRuleReferenceElement FirstItem { get; set; }

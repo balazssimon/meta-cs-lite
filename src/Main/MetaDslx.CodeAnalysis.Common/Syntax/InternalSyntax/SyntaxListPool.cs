@@ -48,9 +48,9 @@ namespace MetaDslx.CodeAnalysis.Syntax.InternalSyntax
             return new SyntaxListBuilder<TNode>(this.Allocate());
         }
 
-        public SeparatedSyntaxListBuilder<TNode> AllocateSeparated<TNode>() where TNode : GreenNode
+        public SeparatedSyntaxListBuilder<TNode> AllocateSeparated<TNode>(bool reversed) where TNode : GreenNode
         {
-            return new SeparatedSyntaxListBuilder<TNode>(this.Allocate());
+            return new SeparatedSyntaxListBuilder<TNode>(this.Allocate(), reversed);
         }
 
         public void Free<TNode>(in SeparatedSyntaxListBuilder<TNode> item) where TNode : GreenNode

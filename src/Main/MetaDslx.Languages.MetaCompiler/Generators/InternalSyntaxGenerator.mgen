@@ -1015,7 +1015,11 @@ internal class [alt.GreenName] : [rule.Alternatives.Count == 1 ? "GreenSyntaxNod
 
 	[foreach (var elem in alt.Elements)]
 		[if (elem.IsList)]
+			[if (elem.IsSeparated)]
+	public [elem.GreenPropertyType] [elem.PropertyName] { get { return new [elem.GreenPropertyType]([elem.FieldName], reversed: [elem.IsReversed ? "true" : "false"]); } }
+			[else]
 	public [elem.GreenPropertyType] [elem.PropertyName] { get { return new [elem.GreenPropertyType]([elem.FieldName]); } }
+			[end if]
 		[else]
 	public [elem.GreenPropertyType] [elem.PropertyName] { get { return [elem.FieldName]; } }
 		[end if]
@@ -1284,6 +1288,12 @@ template GenerateInternalSyntaxFactoryCreate(Language language, ParserRuleAltern
 			if ([if (elem.IsOptional)][elem.ParameterName] is not null && [end if][foreach (var fixedAlt in fixedAlts.Alternatives) separator " && "][elem.ParameterName].RawKind != (int)[language.Name]SyntaxKind.[fixedAlt.CSharpName][end foreach]) throw new ArgumentException(nameof([elem.ParameterName]));
 					[else if (elem.IsToken)]
 			if ([if (elem.IsOptional)][elem.ParameterName] is not null && [end if][elem.ParameterName].RawKind != (int)[language.Name]SyntaxKind.[elem.CSharpName]) throw new ArgumentException(nameof([elem.ParameterName]));
+					[end if]
+				[else if (elem.IsSeparated)]
+					[if (elem.IsReversed)]
+			if (![elem.ParameterName].IsReversed) throw new ArgumentException(nameof([elem.ParameterName]));
+					[else]
+			if ([elem.ParameterName].IsReversed) throw new ArgumentException(nameof([elem.ParameterName]));
 					[end if]
 				[end if]
 			[end foreach]
