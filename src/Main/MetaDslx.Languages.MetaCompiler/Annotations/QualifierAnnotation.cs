@@ -4,9 +4,9 @@ using System.Text;
 
 namespace MetaDslx.Languages.MetaCompiler.Annotations
 {
-    [AnnotationUsage(AnnotationTargets.LexerRuleName)]
+    [AnnotationUsage(AnnotationTargets.All)]
     [DeclarationTable]
-    public class IdentifierAnnotation : Annotation
+    public class QualifierAnnotation : Annotation
     {
     }
 }

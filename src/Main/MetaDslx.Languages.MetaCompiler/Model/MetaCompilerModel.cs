@@ -472,6 +472,19 @@ namespace MetaDslx.Languages.MetaCompiler.Model
         public ParserRuleReferenceElement RepeatedItem { get; set; }
         public ParserRuleElement LastSeparator { get; set; }
         public ParserRuleReferenceElement LastItem { get; set; }
+
+        public IEnumerable<ParserRuleElement> AllElements
+        {
+            get
+            {
+                if (FirstItem is not null) yield return FirstItem;
+                if (RepeatedRule is not null) yield return RepeatedRule;
+                if (RepeatedSeparator is not null) yield return RepeatedSeparator;
+                if (RepeatedItem is not null) yield return RepeatedItem;
+                if (LastSeparator is not null) yield return LastSeparator;
+                if (LastItem is not null) yield return LastItem;
+            }
+        }
     }
 
     public class LexerRule : Rule

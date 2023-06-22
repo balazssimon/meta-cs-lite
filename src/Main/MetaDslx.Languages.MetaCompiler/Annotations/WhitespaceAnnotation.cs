@@ -4,7 +4,7 @@ using System.Text;
 
 namespace MetaDslx.Languages.MetaCompiler.Annotations
 {
-    [AnnotationUsage(AnnotationTargets.LexerRule)]
+    [AnnotationUsage(AnnotationTargets.LexerRuleName)]
     public class WhitespaceAnnotation : Annotation
     {
     }

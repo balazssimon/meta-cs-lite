@@ -724,11 +724,36 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
             }
             foreach (var rule in grammar.LexerRules)
             {
-                ResolveAnnotations(language, AnnotationTargets.LexerRule, rule.Annotations);
+                ResolveAnnotations(language, AnnotationTargets.LexerRuleName, rule.Annotations);
             }
             foreach (var rule in grammar.ParserRules)
             {
-                ResolveAnnotations(language, AnnotationTargets.ParserRule, rule.Annotations);
+                ResolveAnnotations(language, AnnotationTargets.ParserRuleName, rule.Annotations);
+                foreach (var alt in rule.Alternatives)
+                {
+                    ResolveAnnotations(language, AnnotationTargets.ParserRuleAlternativeName, alt.Annotations);
+                    foreach (var elem in alt.Elements)
+                    {
+                        ResolveAnnotations(language, AnnotationTargets.ParserRuleElementName, elem.NameAnnotations);
+                        ResolveAnnotations(language, AnnotationTargets.ParserRuleElementValue, elem.Annotations);
+                        if (elem is ParserRuleFixedStringAlternativesElement fixedAltsElement)
+                        {
+                            foreach (var fixedAlt in fixedAltsElement.Alternatives)
+                            {
+                                ResolveAnnotations(language, AnnotationTargets.ParserRuleElementName, fixedAlt.NameAnnotations);
+                                ResolveAnnotations(language, AnnotationTargets.ParserRuleElementValue, fixedAlt.Annotations);
+                            }
+                        }
+                        if (elem is ParserRuleListElement listElement)
+                        {
+                            foreach (var listElem in listElement.AllElements)
+                            {
+                                ResolveAnnotations(language, AnnotationTargets.ParserRuleElementName, listElem.NameAnnotations);
+                                ResolveAnnotations(language, AnnotationTargets.ParserRuleElementValue, listElem.Annotations);
+                            }
+                        }
+                    }
+                }
             }
             LexerRule? _defaultWhitespace = null;
             LexerRule? _defaultEndOfLine = null;
@@ -829,6 +854,10 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                             {
                                 candidates.Add(csharpClass);
                             }
+                            else if (csharpClass is not null)
+                            {
+                                Error(annotation.Location, $"Annotation '{csharpClass.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat)}' must be a descendant of 'MetaDslx.Languages.MetaCompiler.Annotations.Annotation'.");
+                            }
                         }
                         sb.Append(name);
                     }
@@ -888,7 +917,7 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                     }
                 }
             }
-            return AnnotationTargets.LexerRule | AnnotationTargets.ParserRule;
+            return AnnotationTargets.All;
         }
 
         private void ResolveDefaultLexerRule(Language language, ref LexerRule? lexerRule, LexerRule defaultRule, string annotationName)

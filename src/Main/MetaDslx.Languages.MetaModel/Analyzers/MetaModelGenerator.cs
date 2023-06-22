@@ -37,6 +37,7 @@ namespace MetaDslx.Languages.MetaModel.Analyzers
                 .Select(static (intf, _) => intf!);
             IncrementalValueProvider<(Compilation, ImmutableArray<InterfaceDeclarationSyntax>)> compilationAndInterfaces
                  = context.CompilationProvider.Combine(interfaceDeclarations.Collect());
+            // TODO: https://stackoverflow.com/questions/74377676/cant-access-arguments-of-attribute-from-system-library-using-source-generator
             context.RegisterSourceOutput(compilationAndInterfaces, static (spc, source) => Execute(source.Item1, source.Item2, spc));
         }
 

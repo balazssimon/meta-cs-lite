@@ -1,0 +1,20 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace MetaDslx.Languages.MetaCompiler.Annotations
+{
+    [AnnotationUsage(AnnotationTargets.All)]
+    [DeclarationTable]
+    public class ConstantAnnotation : Annotation
+    {
+        private readonly object? _value;
+
+        public ConstantAnnotation(object? value)
+        {
+            _value = value;
+        }
+
+        public object? Type => _value;
+    }
+}

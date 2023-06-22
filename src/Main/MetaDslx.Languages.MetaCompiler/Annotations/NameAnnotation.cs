@@ -6,7 +6,7 @@ namespace MetaDslx.Languages.MetaCompiler.Annotations
 {
     [AnnotationUsage(AnnotationTargets.LexerRuleName)]
     [DeclarationTable]
-    public class IdentifierAnnotation : Annotation
+    public class NameAnnotation : Annotation
     {
     }
 }
