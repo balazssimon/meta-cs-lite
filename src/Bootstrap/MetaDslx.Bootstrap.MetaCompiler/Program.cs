@@ -9,6 +9,8 @@ using System.Collections.Immutable;
 using MetaDslx.CodeGeneration;
 using System.Reflection;
 using MetaDslx.Languages.MetaCompiler.Analyzers;
+using MetaDslx.Languages.MetaCompiler.Annotations;
+using System.Diagnostics.CodeAnalysis;
 /*
 var code = @"
 namespace A.B.C;
@@ -52,13 +54,19 @@ namespace MyCode
     }
 }
 ");
+var formatter = new DiagnosticFormatter();
+foreach (var diag in inputCompilation.GetDiagnostics())
+{
+    Console.WriteLine(formatter.Format(diag));
+}
 var compilerGenerator = new MetaCompilerGenerator();
 var antlrGenerator = new AntlrCompilerGenerator();
 GeneratorDriver driver = CSharpGeneratorDriver.Create(compilerGenerator, antlrGenerator);
 var testMText = new AdditionalTextFile("Test.mlang", @"namespace X;
 
-language Test;
+using MetaDslx.Languages.MetaCompiler.Annotations;
 
+language Test;
 
 main : line* eof;
 
@@ -138,7 +146,10 @@ static Compilation CreateCompilation(string source)
         new[] { CSharpSyntaxTree.ParseText(source) },
         new[]
         {
+            MetadataReference.CreateFromFile(typeof(Attribute).GetTypeInfo().Assembly.Location),
             MetadataReference.CreateFromFile(typeof(Binder).GetTypeInfo().Assembly.Location),
-            MetadataReference.CreateFromFile(typeof(CodeBuilder).GetTypeInfo().Assembly.Location)
+            MetadataReference.CreateFromFile(typeof(CodeBuilder).GetTypeInfo().Assembly.Location),
+            MetadataReference.CreateFromFile(typeof(MetaDslx.CodeAnalysis.SyntaxTree).GetTypeInfo().Assembly.Location),
+            MetadataReference.CreateFromFile(typeof(Annotation).GetTypeInfo().Assembly.Location)
         },
         new CSharpCompilationOptions(OutputKind.ConsoleApplication));

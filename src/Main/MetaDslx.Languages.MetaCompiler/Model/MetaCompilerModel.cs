@@ -42,6 +42,7 @@ namespace MetaDslx.Languages.MetaCompiler.Model
         public ImmutableArray<string> Reference { get; set; }
         public string QualifiedReference => string.Join(".", Reference);
         public Location ReferenceLocation { get; set; }
+        public Microsoft.CodeAnalysis.INamespaceSymbol? CSharpNamespace { get; set; }
     }
 
     public enum AnnotationKind
@@ -113,8 +114,8 @@ namespace MetaDslx.Languages.MetaCompiler.Model
         public ImmutableArray<string> Name { get; set; }
         public string QualifiedName => string.Join(".", Name);
         public List<AnnotationProperty> Properties { get; } = new List<AnnotationProperty>();
-
         public Location Location { get; set; }
+        public Microsoft.CodeAnalysis.INamedTypeSymbol? CSharpClass { get; set; }
 
         public override string ToString()
         {
@@ -491,7 +492,7 @@ namespace MetaDslx.Languages.MetaCompiler.Model
         public List<LexerRuleAlternative> Alternatives { get; } = new List<LexerRuleAlternative>();
     }
 
-    public class LexerRuleAlternative : NamedElement
+    public class LexerRuleAlternative 
     {
         public bool IsFixed => Elements.All(e => e.IsFixed);
         public string? FixedValue => IsFixed ? string.Concat(Elements.Select(e => e.FixedValue)) : null;

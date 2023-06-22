@@ -12,10 +12,13 @@ using System.Runtime.InteropServices.ComTypes;
 using System.Diagnostics;
 using MetaDslx.CodeAnalysis;
 using MetaDslx.CodeAnalysis.PooledObjects;
+using System.Collections.Immutable;
+using Microsoft.CodeAnalysis.CSharp;
 
 namespace MetaDslx.Languages.MetaCompiler.Antlr.Analyzers
 {
     using Language = MetaDslx.Languages.MetaCompiler.Model.Language;
+    using Compilation = Microsoft.CodeAnalysis.Compilation;
 
     [Generator]
     public class AntlrCompilerGenerator : IIncrementalGenerator
@@ -26,18 +29,23 @@ namespace MetaDslx.Languages.MetaCompiler.Antlr.Analyzers
                 .Where(static file => file.Path.EndsWith(".mlang"));
             IncrementalValuesProvider<(string path, string content)> pathsAndContents = textFiles
                 .Select((text, cancellationToken) => (path: text.Path, content: text.GetText(cancellationToken)!.ToString()));
-
-            initContext.RegisterSourceOutput(pathsAndContents, (spc, pathAndContent) =>
+            IncrementalValueProvider<(Compilation Compilation, ImmutableArray<(string path, string content)> PathsAndContents)> compilationAndContent =
+                initContext.CompilationProvider.Combine(pathsAndContents.Collect());
+            initContext.RegisterSourceOutput(compilationAndContent, (spc, compilationAndContent) =>
             {
                 try
                 {
-                    var filePath = Path.GetFileNameWithoutExtension(pathAndContent.path);
-                    var csharpFilePath = $"MetaCompiler.{filePath}.g.cs";
-                    var mlangCompiler = new MetaCompilerParser(pathAndContent.path, SourceText.From(pathAndContent.content));
-                    var language = mlangCompiler.Parse();
-                    if (mlangCompiler.Diagnostics.Length == 0)
+                    var compilation = compilationAndContent.Compilation;
+                    foreach (var pathAndContent in compilationAndContent.PathsAndContents)
                     {
-                        GenerateAntlr(language, spc);
+                        var filePath = Path.GetFileNameWithoutExtension(pathAndContent.path);
+                        var csharpFilePath = $"MetaCompiler.{filePath}.g.cs";
+                        var mlangCompiler = new MetaCompilerParser((CSharpCompilation)compilation, pathAndContent.path, SourceText.From(pathAndContent.content));
+                        var language = mlangCompiler.Parse();
+                        if (mlangCompiler.Diagnostics.Length == 0)
+                        {
+                            GenerateAntlr(language, spc);
+                        }
                     }
                 }
                 catch (Exception ex)
