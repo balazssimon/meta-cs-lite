@@ -42,7 +42,7 @@ namespace MetaDslx.Languages.MetaCompiler.Model
         public ImmutableArray<string> Reference { get; set; }
         public string QualifiedReference => string.Join(".", Reference);
         public Location ReferenceLocation { get; set; }
-        public Microsoft.CodeAnalysis.INamespaceSymbol? CSharpNamespace { get; set; }
+        public Microsoft.CodeAnalysis.INamespaceOrTypeSymbol? CSharpSymbol { get; set; }
     }
 
     public enum AnnotationKind

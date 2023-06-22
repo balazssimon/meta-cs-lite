@@ -17,6 +17,7 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
     using AnnotationTargets = Annotations.AnnotationTargets;
     using CSharpCompilation = Microsoft.CodeAnalysis.CSharp.CSharpCompilation;
     using INamespaceSymbol = Microsoft.CodeAnalysis.INamespaceSymbol;
+    using INamespaceOrTypeSymbol = Microsoft.CodeAnalysis.INamespaceOrTypeSymbol;
     using INamedTypeSymbol = Microsoft.CodeAnalysis.INamedTypeSymbol;
     using SymbolDisplayFormat = Microsoft.CodeAnalysis.SymbolDisplayFormat;
 
@@ -781,32 +782,32 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
             grammar.MainRule = grammar.ParserRules.FirstOrDefault();
         }
 
-        private INamespaceSymbol? ResolveUsingNamespace(Language language, Using use)
+        private INamespaceOrTypeSymbol? ResolveUsingNamespace(Language language, Using use)
         {
             if (use.Reference.IsDefaultOrEmpty)
             {
                 Error(use.ReferenceLocation, "Namespace name is missing.");
                 return null;
             }
-            var csharpNs = _compilation.GlobalNamespace;
-            if (csharpNs is null) return null;
+            INamespaceOrTypeSymbol? csharpSymbol = _compilation.GlobalNamespace;
+            if (csharpSymbol is null) return null;
             var builder = PooledStringBuilder.GetInstance();
             var sb = builder.Builder;
             foreach (var name in use.Reference)
             {
                 if (sb.Length > 0) sb.Append(".");
-                csharpNs = csharpNs.GetNamespaceMembers().Where(ns => ns.Name == name).FirstOrDefault();
-                if (csharpNs is null) 
+                csharpSymbol = csharpSymbol.GetMembers().Where(ns => ns.Name == name).OfType<INamespaceOrTypeSymbol>().FirstOrDefault();
+                if (csharpSymbol is null) 
                 {
-                    if (sb.Length > 0) Error(use.ReferenceLocation, $"The namespace '{name}' does not exist in '{sb}' (are you missing an assembly reference?).");
-                    else Error(use.ReferenceLocation, $"The namespace name '{name}' could not be found (are you missing an assembly reference?).");
+                    if (sb.Length > 0) Error(use.ReferenceLocation, $"The type or namespace '{name}' does not exist in '{sb}' (are you missing an assembly reference?).");
+                    else Error(use.ReferenceLocation, $"The type or namespace '{name}' could not be found (are you missing an assembly reference?).");
                     break;
                 }
                 sb.Append(name);
             }
             builder.Free();
-            use.CSharpNamespace = csharpNs;
-            return csharpNs;
+            use.CSharpSymbol = csharpSymbol;
+            return csharpSymbol;
         }
 
         private void ResolveAnnotations(Language language, AnnotationTargets target, IEnumerable<Annotation> annotations)
@@ -824,59 +825,27 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                 Error(annotation.Location, "Annotation name is missing.");
                 return null;
             }
-            var candidates = ArrayBuilder<INamedTypeSymbol>.GetInstance();
-            var builder = PooledStringBuilder.GetInstance();
-            var sb = builder.Builder;
-            foreach (var use in language.Usings)
+            var candidates = ResolveSymbols(language, annotation.Location, annotation.Name, "Annotation").OfType<INamedTypeSymbol>().ToImmutableArray();
+            foreach (var csharpSymbol in candidates)
             {
-                var csharpNs = use.CSharpNamespace;
-                if (csharpNs is not null)
+                if (!IsMetaCompilerAnnotation(csharpSymbol))
                 {
-                    sb.Clear();
-                    for (int i = 0; i < annotation.Name.Length; ++i)
-                    {
-                        var name = annotation.Name[i];
-                        if (sb.Length > 0) sb.Append(".");
-                        if (i + 1 < annotation.Name.Length)
-                        {
-                            csharpNs = csharpNs.GetNamespaceMembers().Where(ns => ns.Name == name).FirstOrDefault();
-                            if (csharpNs is null)
-                            {
-                                if (sb.Length > 0) Error(annotation.Location, $"The namespace '{name}' does not exist in '{sb}' (are you missing an assembly reference?).");
-                                else Error(annotation.Location, $"The namespace name '{name}' could not be found (are you missing an assembly reference?).");
-                                break;
-                            }
-                        }
-                        else
-                        {
-                            var csharpClass = csharpNs.GetTypeMembers($"{name}Annotation").FirstOrDefault();
-                            if (IsMetaCompilerAnnotation(csharpClass))
-                            {
-                                candidates.Add(csharpClass);
-                            }
-                            else if (csharpClass is not null)
-                            {
-                                Error(annotation.Location, $"Annotation '{csharpClass.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat)}' must be a descendant of 'MetaDslx.Languages.MetaCompiler.Annotations.Annotation'.");
-                            }
-                        }
-                        sb.Append(name);
-                    }
+                    Error(annotation.Location, $"Annotation '{csharpSymbol.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat)}' must be a descendant of 'MetaDslx.Languages.MetaCompiler.Annotations.Annotation'.");
                 }
             }
-            builder.Free();
             INamedTypeSymbol? result = null;
-            if (candidates.Count == 1)
+            if (candidates.Length == 1)
             {
                 result = candidates[0];
-                annotation.CSharpClass = result;
                 var targets = GetMetaCompilerAnnotationUsage(result);
                 if (!targets.HasFlag(target))
                 {
                     Error(annotation.Location, $"The annotation '{annotation.QualifiedName}' cannot be applied to a {target}.");
                     result = null;
                 }
+                annotation.CSharpClass = result;
             }
-            else if (candidates.Count == 0)
+            else if (candidates.Length == 0)
             {
                 Error(annotation.Location, $"The annotation name '{annotation.QualifiedName}' could not be found (are you missing a using directive or an assembly reference?).");
             }
@@ -884,8 +853,66 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
             {
                 Error(annotation.Location, $"'{annotation.QualifiedName}' is an ambiguous reference between '{candidates[0].ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat)}' and '{candidates[1].ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat)}'.");
             }
-            candidates.Free();
             return result;
+        }
+
+        private ImmutableArray<INamespaceOrTypeSymbol> ResolveSymbols(Language language, Location location, ImmutableArray<string> qualifiedName, string suffix = default)
+        {
+            if (qualifiedName.Length == 0) return ImmutableArray<INamespaceOrTypeSymbol>.Empty;
+            var candidates = ArrayBuilder<INamespaceOrTypeSymbol>.GetInstance();
+            var builder = PooledStringBuilder.GetInstance();
+            var sb = builder.Builder;
+            foreach (var use in language.Usings)
+            {
+                sb.Clear();
+                var csharpSymbol = use.CSharpSymbol;
+                if (csharpSymbol is not null)
+                {
+                    var startIndex = 0;
+                    if (!string.IsNullOrEmpty(use.Alias))
+                    {
+                        if (qualifiedName[0] == use.Alias)
+                        {
+                            if (qualifiedName.Length == 1)
+                            {
+                                candidates.Add(csharpSymbol);
+                                continue;
+                            }
+                            else
+                            {
+                                startIndex = 1;
+                                sb.Append(qualifiedName[0]);
+                            }
+                        }
+                        else
+                        {
+                            continue;
+                        }
+                    }
+                    for (int i = startIndex; i < qualifiedName.Length; ++i)
+                    {
+                        var name = qualifiedName[i];
+                        if (sb.Length > 0) sb.Append(".");
+                        if (i + 1 < qualifiedName.Length)
+                        {
+                            csharpSymbol = csharpSymbol.GetMembers().Where(ns => ns.Name == name).OfType<INamespaceOrTypeSymbol>().FirstOrDefault();
+                            if (csharpSymbol is null)
+                            {
+                                if (sb.Length > 0) Error(location, $"The type or namespace '{name}' does not exist in '{sb}' (are you missing an assembly reference?).");
+                                else Error(location, $"The type or namespace '{name}' could not be found (are you missing an assembly reference?).");
+                                break;
+                            }
+                        }
+                        else
+                        {
+                            candidates.AddRange(csharpSymbol.GetMembers($"{name}{suffix}").OfType<INamespaceOrTypeSymbol>());
+                        }
+                        sb.Append(name);
+                    }
+                }
+            }
+            builder.Free();
+            return candidates.ToImmutableAndFree();
         }
 
         private bool IsMetaCompilerAnnotation(INamedTypeSymbol? csharpClass)
@@ -918,6 +945,14 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                 }
             }
             return AnnotationTargets.All;
+        }
+
+        private void ResolveAnnotationProperties(Language language, Annotation annotation)
+        {
+            if (annotation.CSharpClass is null) return;
+            var csharpClass = annotation.CSharpClass;
+            var paramCount = annotation.Properties.Count;
+            // TODO: modify parser to allow unnamed properties
         }
 
         private void ResolveDefaultLexerRule(Language language, ref LexerRule? lexerRule, LexerRule defaultRule, string annotationName)
