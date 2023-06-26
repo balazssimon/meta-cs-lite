@@ -116,6 +116,7 @@ namespace MetaDslx.Languages.MetaCompiler.Model
         public List<AnnotationProperty> Properties { get; } = new List<AnnotationProperty>();
         public Location Location { get; set; }
         public Microsoft.CodeAnalysis.INamedTypeSymbol? CSharpClass { get; set; }
+        public Microsoft.CodeAnalysis.IMethodSymbol? CSharpConstructor { get; set; }
 
         public override string ToString()
         {
@@ -126,13 +127,15 @@ namespace MetaDslx.Languages.MetaCompiler.Model
     public class AnnotationProperty : IElementWithLocation
     {
         public string? Name { get; set; }
-        public string? Value { get; set; }
+        public string? ValueText { get; set; }
+        public object? Value { get; set; }
+        public Microsoft.CodeAnalysis.ITypeSymbol? CSharpType { get; set; }
 
         public Location Location { get; set; }
 
         public override string ToString()
         {
-            return $"{Name}={Value}";
+            return $"{Name}={ValueText}";
         }
     }
 

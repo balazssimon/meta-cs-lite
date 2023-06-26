@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MetaDslx.CodeAnalysis.Syntax.InternalSyntax;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -8,24 +9,13 @@ namespace MetaDslx.Languages.MetaCompiler.Annotations
     [DeclarationTable]
     public class DefineAnnotation : Annotation
     {
-        private readonly Type? _modelObjectType;
-        private readonly Type? _nestingModelObjectType;
-        private readonly string? _nestingProperty;
+        private readonly Type? _type;
 
-        public DefineAnnotation(Type? modelObjectType = null)
+        public DefineAnnotation(Type? type = null)
         {
-            _modelObjectType = modelObjectType;
+            _type = type;
         }
-
-        public DefineAnnotation(Type nestingModelObjectType, string nestingProperty, Type? modelObjectType = null)
-        {
-            _nestingModelObjectType = nestingModelObjectType;
-            _nestingProperty = nestingProperty;
-            _modelObjectType = modelObjectType;
-        }
-
-        public Type? ModelObjectType => _modelObjectType;
-        public Type? NestingModelObjectType => _nestingModelObjectType;
-        public string? NestingProperty => _nestingProperty;
+        
+        public Type? Type => _type;
     }
 }

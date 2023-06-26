@@ -33,6 +33,7 @@ var antlrGenerator = new AntlrCompilerGenerator();
 GeneratorDriver driver = CSharpGeneratorDriver.Create(compilerGenerator, antlrGenerator);
 var testMText = new AdditionalTextFile("Test.mlang", @"namespace X;
 
+using System;
 using MetaDslx.Languages.MetaCompiler.Annotations;
 
 language Test;
@@ -40,10 +41,10 @@ language Test;
 [Define]
 main : line* eof;
 
-[Define(BBB)]
+[DefineNested(Int32,hello)]
 line      : statement NEWLINE;
 
-[Define(modelObjectType: AAA)]
+[Define(Int64)]
 statement : varDeclaration
           | assignment    
           | print 

@@ -6,7 +6,7 @@ namespace MetaDslx.Languages.MetaCompiler.Annotations
 {
     [AnnotationUsage(AnnotationTargets.All)]
     [DeclarationTable]
-    public class LocalAnnotation
+    public class LocalScopeAnnotation
     {
     }
 }

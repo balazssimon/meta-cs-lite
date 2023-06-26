@@ -41,7 +41,7 @@ namespace MetaDslx.Languages.MetaCompiler.Antlr.Analyzers
                         var filePath = Path.GetFileNameWithoutExtension(pathAndContent.path);
                         var csharpFilePath = $"MetaCompiler.{filePath}.g.cs";
                         var mlangCompiler = new MetaCompilerParser((CSharpCompilation)compilation, pathAndContent.path, SourceText.From(pathAndContent.content));
-                        var language = mlangCompiler.Parse();
+                        var language = mlangCompiler.Parse(resolveAnnotations: false);
                         if (mlangCompiler.Diagnostics.Length == 0)
                         {
                             GenerateAntlr(language, spc);

@@ -38,7 +38,7 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
 
         public ImmutableArray<Diagnostic> Diagnostics => _diagnostics;
 
-        public Language Parse()
+        public Language Parse(bool resolveAnnotations)
         {
             if (_language != null) return _language;
             using (_lexer = new MetaCompilerLexer(_filePath, _compilerCode))
@@ -46,9 +46,12 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                 _tokens = new MetaCompilerTokenStream(_lexer);
                 _diagnosticBag = DiagnosticBag.GetInstance();
                 _language = ParseLanguage();
-                var annotationResolver = new MetaCompilerAnnotationResolver(_compilation, _language, _diagnosticBag);
-                annotationResolver.ResolveAnnotations();
-                ResolveDefaultRules();
+                if (resolveAnnotations)
+                {
+                    var annotationResolver = new MetaCompilerAnnotationResolver(_compilation, _language, _diagnosticBag);
+                    annotationResolver.ResolveAnnotations();
+                    ResolveDefaultRules();
+                }
                 _diagnostics = _diagnosticBag.ToReadOnlyAndFree();
                 _diagnosticBag = null;
             }
@@ -68,6 +71,7 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
             ResolveAlternatives(language, ruleNames);
             ResolveLists(language);
             ResolveNames(language);
+            language.Grammar.MainRule = language.Grammar.ParserRules.FirstOrDefault();
             return language;
         }
 
@@ -740,7 +744,6 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
             if (grammar.DefaultEndOfLine is null) Error(_language.Location, $"Missing lexer rule with annotations [Default] and [EndOfLine].");
             if (grammar.DefaultIdentifier is null) Error(_language.Location, $"Missing lexer rule with annotations [Default] and [Identifier].");
             if (grammar.DefaultSeparator is null) Error(_language.Location, $"Missing lexer rule with annotations [Default] and [Separator].");
-            grammar.MainRule = grammar.ParserRules.FirstOrDefault();
         }
 
         private void ResolveDefaultLexerRule(Language language, ref LexerRule? lexerRule, LexerRule defaultRule, string annotationName)
@@ -884,6 +887,7 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
 
         private void ParseAnnotationProperties(Annotation annotation)
         {
+            var allowComma = false;
             while (!_tokens.EndOfFile)
             {
                 var token = _tokens.CurrentToken;
@@ -892,7 +896,13 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                 {
                     return;
                 }
-                else if(token.Kind == MetaCompilerTokenKind.Identifier && (nextToken.Text == ":" || nextToken.Text == "="))
+                else if (token.Kind == MetaCompilerTokenKind.Other && token.Text == ",")
+                {
+                    if (!allowComma) Unexpected();
+                    _tokens.NextToken();
+                    allowComma = false;
+                }
+                else if (token.Kind == MetaCompilerTokenKind.Identifier && (nextToken.Text == ":" || nextToken.Text == "="))
                 {
                     var property = new AnnotationProperty();
                     if (nextToken.Text == "=") annotation.Properties.Add(property);
@@ -901,15 +911,16 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                     property.Location = _tokens.CurrentLocation;
                     property.Name = token.Text;
                     _tokens.NextToken();
-                    property.Value = MatchCSharpExpressionUntil(",", ")", "]", ";");
+                    property.ValueText = MatchCSharpExpressionUntil(",", ")", "]");
+                    allowComma = true;
                 }
                 else 
                 {
                     var property = new AnnotationProperty();
-                    annotation.Properties.Add(property);
-                    property.Location = _tokens.CurrentLocation;
-                    property.Value = MatchCSharpExpressionUntil(",", ")", "]", ";");
                     annotation.ConstructorArguments.Add(property);
+                    property.Location = _tokens.CurrentLocation;
+                    property.ValueText = MatchCSharpExpressionUntil(",", ")", "]");
+                    allowComma = true;
                 }
             }
         }

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.ConstrainedExecution;
 using System.Text;
 
 namespace MetaDslx.Languages.MetaCompiler.Syntax
@@ -248,18 +249,28 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
             var csharpClass = annotation.CSharpClass;
             var candidates = ArrayBuilder<IMethodSymbol>.GetInstance();
             var hasDefaultConstructor = csharpClass.Constructors.Length == 0;
+            var invalidArgIndex = -1;
             foreach (var ctr in csharpClass.Constructors)
             {
-                var positionalIndex = 0;
-                var positionalArgs = true;
-                var goodCandidate = true;
                 if (ctr.Parameters.Length == 0 || ctr.Parameters[0].HasExplicitDefaultValue) hasDefaultConstructor = true;
                 foreach (var param in ctr.Parameters)
                 {
                     paramNames.Add(param.Name);
                 }
-                foreach (var arg in annotation.ConstructorArguments)
+            }
+            foreach (var ctr in csharpClass.Constructors)
+            {
+                var positionalIndex = 0;
+                var positionalArgs = true;
+                var goodCandidate = true;
+                for (int argIndex = 0; argIndex < annotation.ConstructorArguments.Count; ++argIndex)
                 {
+                    var arg = annotation.ConstructorArguments[argIndex];
+                    if (!string.IsNullOrWhiteSpace(arg.Name) && !paramNames.Contains(arg.Name))
+                    {
+                        invalidArgIndex = argIndex;
+                        break;
+                    }
                     if (positionalArgs && positionalIndex < ctr.Parameters.Length)
                     {
                         if (arg.Name is null || arg.Name == ctr.Parameters[positionalIndex].Name)
@@ -269,35 +280,40 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                         else
                         {
                             positionalArgs = false;
-                            for (int i = positionalIndex; i < ctr.Parameters.Length; i++)
+                            if (!ctr.Parameters[positionalIndex].HasExplicitDefaultValue)
                             {
-                                if (!ctr.Parameters[i].HasExplicitDefaultValue)
-                                {
-                                    goodCandidate = false;
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                    else if (arg.Name is not null)
-                    {
-                        var goodArg = false;
-                        for (int i = positionalIndex; i < ctr.Parameters.Length; i++)
-                        {
-                            if (ctr.Parameters[i].Name == arg.Name)
-                            {
-                                goodArg = true;
+                                goodCandidate = false;
                                 break;
                             }
                         }
-                        if (!goodArg)
+                    }
+                    if (!positionalArgs)
+                    {
+                        if (string.IsNullOrWhiteSpace(arg.Name))
                         {
                             goodCandidate = false;
                             break;
                         }
+                        else
+                        {
+                            var goodArg = false;
+                            for (int i = positionalIndex; i < ctr.Parameters.Length; i++)
+                            {
+                                if (ctr.Parameters[i].Name == arg.Name)
+                                {
+                                    goodArg = true;
+                                    break;
+                                }
+                            }
+                            if (!goodArg)
+                            {
+                                goodCandidate = false;
+                                break;
+                            }
+                        }
                     }
                 }
-                if (positionalArgs && positionalIndex < ctr.Parameters.Length && !ctr.Parameters[positionalIndex].HasExplicitDefaultValue)
+                if (positionalArgs && (positionalIndex > ctr.Parameters.Length || positionalIndex < ctr.Parameters.Length && !ctr.Parameters[positionalIndex].HasExplicitDefaultValue))
                 {
                     goodCandidate = false;
                 }
@@ -306,7 +322,19 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                     candidates.Add(ctr);
                 }
             }
-            if (candidates.Count == 0)
+            if (invalidArgIndex >= 0)
+            {
+                var arg = annotation.ConstructorArguments[invalidArgIndex];
+                var builder = PooledStringBuilder.GetInstance();
+                var sb = builder.Builder;
+                foreach (var name in paramNames.OrderBy(n => n))
+                {
+                    if (sb.Length > 0) sb.Append(", ");
+                    sb.Append(name);
+                }
+                Error(arg.Location, $"'{arg.Name}' is an invalid argument for '{annotation.QualifiedName}'. Possible arguments are: {builder.ToStringAndFree()}");
+            }
+            else if (candidates.Count == 0 && annotation.ConstructorArguments.Count == 0)
             {
                 if (!hasDefaultConstructor)
                 {
@@ -317,64 +345,206 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                         if (sb.Length > 0) sb.Append(", ");
                         sb.Append(name);
                     }
-                    Error(annotation.Location, $"Missing arguments for the annotation '{annotation.QualifiedName}': {builder.ToStringAndFree()}");
+                    Error(annotation.Location, $"Some arguments are missing for the annotation '{annotation.QualifiedName}'. Possible arguments are: {builder.ToStringAndFree()}");
                 }
             }
-            else if (candidates.Count == 1)
+            else
             {
-                var ctr = candidates[0];
-                var positionalIndex = 0;
-                var positionalArgs = true;
-                foreach (var arg in annotation.ConstructorArguments)
+                var goodCandidates = ArrayBuilder<IMethodSymbol>.GetInstance();
+                var hasErrors = false;
+                foreach (var ctr in candidates)
                 {
-                    IParameterSymbol? param = null;
-                    if (positionalArgs && positionalIndex < ctr.Parameters.Length)
+                    if (IsGoodCandidate(ctr, annotation, addDiagnostics: false, out var ctrHasErrors)) goodCandidates.Add(ctr);
+                    if (ctrHasErrors) hasErrors = true;
+                } 
+                if (goodCandidates.Count == 1)
+                {
+                    annotation.CSharpConstructor = goodCandidates[0];
+                    if (hasErrors) IsGoodCandidate(annotation.CSharpConstructor, annotation, addDiagnostics: true, out var _);
+                }
+                else
+                {
+                    if (candidates.Count == 1 && goodCandidates.Count == 0) IsGoodCandidate(candidates[0], annotation, addDiagnostics: true, out var _);
+                    else Error(annotation.Location, $"Could not resolve a unique constructor for the annotation '{annotation.QualifiedName}'");
+                }
+                goodCandidates.Free();
+            }
+            candidates.Free();
+        }
+
+        private bool IsGoodCandidate(IMethodSymbol ctr, Annotation annotation, bool addDiagnostics, out bool hasErrors)
+        {
+            hasErrors = false;
+            var positionalIndex = 0;
+            var positionalArgs = true;
+            foreach (var arg in annotation.ConstructorArguments)
+            {
+                IParameterSymbol? param = null;
+                if (positionalArgs)
+                {
+                    if (positionalIndex < ctr.Parameters.Length)
                     {
                         if (arg.Name is null || arg.Name == ctr.Parameters[positionalIndex].Name)
                         {
                             param = ctr.Parameters[positionalIndex++];
                         }
                     }
-                    if (param is null && arg.Name is not null)
+                    else
                     {
-                        for (int i = positionalIndex; i < ctr.Parameters.Length; i++)
+                        if (addDiagnostics) Error(arg.Location, $"Too many arguments are specified for the annotation");
+                        hasErrors = true;
+                    }
+                }
+                if (param is null && arg.Name is not null)
+                {
+                    for (int i = positionalIndex; i < ctr.Parameters.Length; i++)
+                    {
+                        if (ctr.Parameters[i].Name == arg.Name)
                         {
-                            if (ctr.Parameters[i].Name == arg.Name)
-                            {
-                                param = ctr.Parameters[i];
-                                break;
-                            }
+                            param = ctr.Parameters[i];
+                            break;
                         }
                     }
-                    Debug.Assert(param is not null);
-                    if (param is not null)
+                }
+                if (param is not null)
+                {
+                    var nullable = false;
+                    var paramType = param.Type;
+                    var paramTypeName = paramType.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat);
+                    if (param.Type is INamedTypeSymbol namedType && namedType.IsGenericType && namedType.TypeArguments.Length == 1 &&
+                        namedType.OriginalDefinition.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat) == "System.Nullable<>")
                     {
-                        var paramTypeName = param.Type.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat);
-                        if (paramTypeName == "System.Type" || paramTypeName == "System.Type?")
+                        nullable = true;
+                        paramType = namedType.TypeArguments[0];
+                    }
+                    else if (param.Type.NullableAnnotation == Microsoft.CodeAnalysis.NullableAnnotation.Annotated)
+                    {
+                        nullable = true;
+                        paramType = param.Type.OriginalDefinition;
+                    }
+                    var innerParamTypeName = paramType.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat);
+                    arg.CSharpType = param.Type;
+                    if (string.IsNullOrWhiteSpace(arg.ValueText) || arg.ValueText == "null")
+                    {
+                        arg.Value = null;
+                        if (!nullable)
                         {
-                            if (!string.IsNullOrWhiteSpace(arg.Value))
+                            if (addDiagnostics) Error(arg.Location, $"'null' is an invalid value for {paramTypeName}");
+                            hasErrors = true;
+                        }
+                    }
+                    else
+                    {
+                        if (innerParamTypeName == "System.Type")
+                        {
+                            var typeSymbols = ResolveSymbols(arg.Location, arg.ValueText.Split('.').ToImmutableArray()).OfType<INamedTypeSymbol>().ToImmutableArray();
+                            if (typeSymbols.Length == 0)
                             {
-                                var typeSymbols = ResolveSymbols(arg.Location, arg.Value.Split('.').ToImmutableArray()).OfType<INamedTypeSymbol>().ToImmutableArray();
-                                if (typeSymbols.Length == 0)
-                                {
-                                    Error(arg.Location, $"The type '{arg.Value}' could not be found (are you missing a using directive or an assembly reference?).");
-                                }
-                                else
-                                {
-                                    Error(arg.Location, $"'{arg.Value}' is an ambiguous reference between '{candidates[0].ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat)}' and '{candidates[1].ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat)}'.");
-                                }
+                                if (addDiagnostics) Error(arg.Location, $"The type '{arg.ValueText}' could not be found (are you missing a using directive or an assembly reference?).");
+                                hasErrors = true;
+                            }
+                            else if (typeSymbols.Length == 1)
+                            {
+                                arg.Value = typeSymbols[0];
                             }
                             else
                             {
-                                Error(arg.Location, "Type name is missing.");
+                                if (addDiagnostics) Error(arg.Location, $"'{arg.ValueText}' is an ambiguous reference between '{typeSymbols[0].ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat)}' and '{typeSymbols[1].ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat)}'.");
+                                hasErrors = true;
                             }
                         }
+                        else if (paramType is INamedTypeSymbol enumType && enumType.BaseType.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat) == "System.Enum")
+                        {
+                            var enumLiterals = enumType.GetMembers(arg.ValueText);
+                            if (enumLiterals.Length == 0)
+                            {
+                                if (addDiagnostics)
+                                {
+                                    var builder = PooledStringBuilder.GetInstance();
+                                    var sb = builder.Builder;
+                                    foreach (var member in enumType.GetMembers())
+                                    {
+                                        if (sb.Length > 0) sb.Append(", ");
+                                        sb.Append(member.Name);
+                                    }
+                                    Error(arg.Location, $"'{arg.ValueText}' is an invalid enum literal for '{paramTypeName}'. Valid literals are: {builder.ToStringAndFree()}");
+                                }
+                                hasErrors = true;
+                            }
+                            else if (enumLiterals.Length == 1)
+                            {
+                                arg.Value = arg.ValueText;
+                            }
+                            else
+                            {
+                                if (addDiagnostics) Error(arg.Location, $"'{arg.ValueText}' enum literal is not unique in '{paramTypeName}'");
+                                hasErrors = true;
+                            }
+                        }
+                        else if (TryParseValue(innerParamTypeName, arg.ValueText, out var primitiveValue))
+                        {
+                            arg.Value = primitiveValue;
+                        }
+                        else
+                        {
+                            if (addDiagnostics) Error(arg.Location, $"The type '{paramTypeName}' is invalid for annotation parameters and properties");
+                            hasErrors = true;
+                            return false;
+                        }
                     }
+                }
+                else
+                {
+                    hasErrors = false;
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        private bool TryParseValue(string typeName, string valueText, out object? value)
+        {
+            value = null;
+            if (valueText == "null")
+            {
+                value = null;
+                switch (typeName)
+                {
+                    case "System.Nullable<bool>?":
+                    case "System.Nullable<byte>?":
+                    case "System.Nullable<short>?":
+                    case "System.Nullable<ushort>?":
+                    case "System.Nullable<int>?":
+                    case "System.Nullable<uint>?":
+                    case "System.Nullable<long>?":
+                    case "System.Nullable<ulong>?":
+                    case "System.Nullable<float>?":
+                    case "System.Nullable<double>?":
+                    case "System.Nullable<char>?":
+                    case "System.Nullable<string>?":
+                        return true;
+                    default: 
+                        return false;
                 }
             }
             else
             {
-                Error(annotation.Location, $"Could not resolve a unique constructor for the annotation '{annotation.QualifiedName}'");
+                switch (typeName)
+                {
+                    case "bool": case "System.Nullable<bool>?": if (bool.TryParse(valueText, out var boolValue)) { value = boolValue; return true; } else { return false; };
+                    case "byte": case "System.Nullable<byte>?": if (byte.TryParse(valueText, out var byteValue)) { value = byteValue; return true; } else { return false; };
+                    case "short": case "System.Nullable<short>?": if (short.TryParse(valueText, out var shortValue)) { value = shortValue; return true; } else { return false; };
+                    case "ushort": case "System.Nullable<ushort>?": if (ushort.TryParse(valueText, out var ushortValue)) { value = ushortValue; return true; } else { return false; };
+                    case "int": case "System.Nullable<int>?": if (int.TryParse(valueText, out var intValue)) { value = intValue; return true; } else { return false; };
+                    case "uint": case "System.Nullable<uint>?": if (uint.TryParse(valueText, out var uintValue)) { value = uintValue; return true; } else { return false; };
+                    case "long": case "System.Nullable<long>?": if (long.TryParse(valueText, out var longValue)) { value = longValue; return true; } else { return false; };
+                    case "ulong": case "System.Nullable<ulong>?": if (ulong.TryParse(valueText, out var ulongValue)) { value = ulongValue; return true; } else { return false; };
+                    case "float": case "System.Nullable<float>?": if (float.TryParse(valueText, out var floatValue)) { value = floatValue; return true; } else { return false; };
+                    case "double": case "System.Nullable<double>?": if (double.TryParse(valueText, out var doubleValue)) { value = doubleValue; return true; } else { return false; };
+                    case "char": case "System.Nullable<char>?": if (valueText.StartsWith("'") && valueText.EndsWith("'")) { value = StringUtils.DecodeChar(valueText); return true; } else { return false; };
+                    case "string": case "System.Nullable<string>?": if (valueText.StartsWith("\"") && valueText.EndsWith("\"")) { value = StringUtils.DecodeString(valueText); return true; } else if (StringUtils.IsIdentifier(valueText)) { value = valueText; return true; } else { return false; };
+                    default: return false;
+                }
             }
         }
 

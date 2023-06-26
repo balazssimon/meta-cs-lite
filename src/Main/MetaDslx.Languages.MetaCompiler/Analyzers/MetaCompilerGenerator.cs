@@ -38,7 +38,7 @@ namespace MetaDslx.Languages.MetaCompiler.Analyzers
                         var fileName = Path.GetFileNameWithoutExtension(pathAndContent.path);
                         var csharpFilePath = $"MetaCompiler.{fileName}.g.cs";
                         var mlangCompiler = new MetaCompilerParser((CSharpCompilation)compilation, pathAndContent.path, SourceText.From(pathAndContent.content));
-                        var language = mlangCompiler.Parse();
+                        var language = mlangCompiler.Parse(resolveAnnotations: true);
                         if (mlangCompiler.Diagnostics.Length > 0)
                         {
                             foreach (var diag in mlangCompiler.Diagnostics)
