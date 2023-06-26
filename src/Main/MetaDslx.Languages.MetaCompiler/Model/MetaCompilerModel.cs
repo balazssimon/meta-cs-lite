@@ -110,9 +110,9 @@ namespace MetaDslx.Languages.MetaCompiler.Model
 
     public class Annotation : IElementWithLocation
     {
-        public AnnotationKind Kind { get; set; }
         public ImmutableArray<string> Name { get; set; }
         public string QualifiedName => string.Join(".", Name);
+        public List<AnnotationProperty> ConstructorArguments { get; } = new List<AnnotationProperty>();
         public List<AnnotationProperty> Properties { get; } = new List<AnnotationProperty>();
         public Location Location { get; set; }
         public Microsoft.CodeAnalysis.INamedTypeSymbol? CSharpClass { get; set; }
@@ -125,7 +125,7 @@ namespace MetaDslx.Languages.MetaCompiler.Model
 
     public class AnnotationProperty : IElementWithLocation
     {
-        public string Name { get; set; }
+        public string? Name { get; set; }
         public string? Value { get; set; }
 
         public Location Location { get; set; }

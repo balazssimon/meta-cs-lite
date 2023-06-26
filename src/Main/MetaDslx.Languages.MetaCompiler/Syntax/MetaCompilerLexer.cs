@@ -312,7 +312,7 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
 
         public static readonly HashSet<string> Keywords = new HashSet<string>()
         {
-            "namespace", "using", "language", "fragment", "hidden", "def", "use", "eof"
+            "namespace", "using", "language", "fragment", "hidden", "eof"
         };
 
     }

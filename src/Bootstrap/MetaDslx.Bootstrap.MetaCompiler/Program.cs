@@ -37,10 +37,13 @@ using MetaDslx.Languages.MetaCompiler.Annotations;
 
 language Test;
 
+[Define]
 main : line* eof;
 
+[Define(BBB)]
 line      : statement NEWLINE;
 
+[Define(modelObjectType: AAA)]
 statement : varDeclaration
           | assignment    
           | print 

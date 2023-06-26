@@ -14,11 +14,7 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
     using System.Data;
     using System.Linq;
     using System.Xml.Linq;
-    using AnnotationTargets = Annotations.AnnotationTargets;
     using CSharpCompilation = Microsoft.CodeAnalysis.CSharp.CSharpCompilation;
-    using INamespaceSymbol = Microsoft.CodeAnalysis.INamespaceSymbol;
-    using INamespaceOrTypeSymbol = Microsoft.CodeAnalysis.INamespaceOrTypeSymbol;
-    using INamedTypeSymbol = Microsoft.CodeAnalysis.INamedTypeSymbol;
     using SymbolDisplayFormat = Microsoft.CodeAnalysis.SymbolDisplayFormat;
 
     public class MetaCompilerParser
@@ -50,6 +46,9 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                 _tokens = new MetaCompilerTokenStream(_lexer);
                 _diagnosticBag = DiagnosticBag.GetInstance();
                 _language = ParseLanguage();
+                var annotationResolver = new MetaCompilerAnnotationResolver(_compilation, _language, _diagnosticBag);
+                annotationResolver.ResolveAnnotations();
+                ResolveDefaultRules();
                 _diagnostics = _diagnosticBag.ToReadOnlyAndFree();
                 _diagnosticBag = null;
             }
@@ -69,7 +68,6 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
             ResolveAlternatives(language, ruleNames);
             ResolveLists(language);
             ResolveNames(language);
-            ResolveAnnotations(language);
             return language;
         }
 
@@ -716,46 +714,9 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
             }
         }
 
-        private void ResolveAnnotations(Language language)
+        private void ResolveDefaultRules()
         {
-            var grammar = language.Grammar;
-            foreach (var use in language.Usings)
-            {
-                ResolveUsingNamespace(language, use);
-            }
-            foreach (var rule in grammar.LexerRules)
-            {
-                ResolveAnnotations(language, AnnotationTargets.LexerRuleName, rule.Annotations);
-            }
-            foreach (var rule in grammar.ParserRules)
-            {
-                ResolveAnnotations(language, AnnotationTargets.ParserRuleName, rule.Annotations);
-                foreach (var alt in rule.Alternatives)
-                {
-                    ResolveAnnotations(language, AnnotationTargets.ParserRuleAlternativeName, alt.Annotations);
-                    foreach (var elem in alt.Elements)
-                    {
-                        ResolveAnnotations(language, AnnotationTargets.ParserRuleElementName, elem.NameAnnotations);
-                        ResolveAnnotations(language, AnnotationTargets.ParserRuleElementValue, elem.Annotations);
-                        if (elem is ParserRuleFixedStringAlternativesElement fixedAltsElement)
-                        {
-                            foreach (var fixedAlt in fixedAltsElement.Alternatives)
-                            {
-                                ResolveAnnotations(language, AnnotationTargets.ParserRuleElementName, fixedAlt.NameAnnotations);
-                                ResolveAnnotations(language, AnnotationTargets.ParserRuleElementValue, fixedAlt.Annotations);
-                            }
-                        }
-                        if (elem is ParserRuleListElement listElement)
-                        {
-                            foreach (var listElem in listElement.AllElements)
-                            {
-                                ResolveAnnotations(language, AnnotationTargets.ParserRuleElementName, listElem.NameAnnotations);
-                                ResolveAnnotations(language, AnnotationTargets.ParserRuleElementValue, listElem.Annotations);
-                            }
-                        }
-                    }
-                }
-            }
+            var grammar = _language.Grammar;
             LexerRule? _defaultWhitespace = null;
             LexerRule? _defaultEndOfLine = null;
             LexerRule? _defaultIdentifier = null;
@@ -765,194 +726,21 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                 var isDefault = HasAnnotation(rule.Annotations, "MetaDslx.Languages.MetaCompiler.Annotations.DefaultAnnotation");
                 if (isDefault)
                 {
-                    ResolveDefaultLexerRule(language, ref _defaultWhitespace, rule, "MetaDslx.Languages.MetaCompiler.Annotations.WhitespaceAnnotation");
-                    ResolveDefaultLexerRule(language, ref _defaultEndOfLine, rule, "MetaDslx.Languages.MetaCompiler.Annotations.EndOfLineAnnotation");
-                    ResolveDefaultLexerRule(language, ref _defaultIdentifier, rule, "MetaDslx.Languages.MetaCompiler.Annotations.IdentifierAnnotation");
-                    ResolveDefaultLexerRule(language, ref _defaultSeparator, rule, "MetaDslx.Languages.MetaCompiler.Annotations.SeparatorAnnotation");
+                    ResolveDefaultLexerRule(_language, ref _defaultWhitespace, rule, "MetaDslx.Languages.MetaCompiler.Annotations.WhitespaceAnnotation");
+                    ResolveDefaultLexerRule(_language, ref _defaultEndOfLine, rule, "MetaDslx.Languages.MetaCompiler.Annotations.EndOfLineAnnotation");
+                    ResolveDefaultLexerRule(_language, ref _defaultIdentifier, rule, "MetaDslx.Languages.MetaCompiler.Annotations.IdentifierAnnotation");
+                    ResolveDefaultLexerRule(_language, ref _defaultSeparator, rule, "MetaDslx.Languages.MetaCompiler.Annotations.SeparatorAnnotation");
                 }
             }
             grammar.DefaultWhitespace = _defaultWhitespace;
             grammar.DefaultEndOfLine = _defaultEndOfLine;
             grammar.DefaultIdentifier = _defaultIdentifier;
             grammar.DefaultSeparator = _defaultSeparator;
-            if (grammar.DefaultWhitespace is null) Error(language.Location, $"Missing lexer rule with annotations [Default] and [Whitespace].");
-            if (grammar.DefaultEndOfLine is null) Error(language.Location, $"Missing lexer rule with annotations [Default] and [EndOfLine].");
-            if (grammar.DefaultIdentifier is null) Error(language.Location, $"Missing lexer rule with annotations [Default] and [Identifier].");
-            if (grammar.DefaultSeparator is null) Error(language.Location, $"Missing lexer rule with annotations [Default] and [Separator].");
+            if (grammar.DefaultWhitespace is null) Error(_language.Location, $"Missing lexer rule with annotations [Default] and [Whitespace].");
+            if (grammar.DefaultEndOfLine is null) Error(_language.Location, $"Missing lexer rule with annotations [Default] and [EndOfLine].");
+            if (grammar.DefaultIdentifier is null) Error(_language.Location, $"Missing lexer rule with annotations [Default] and [Identifier].");
+            if (grammar.DefaultSeparator is null) Error(_language.Location, $"Missing lexer rule with annotations [Default] and [Separator].");
             grammar.MainRule = grammar.ParserRules.FirstOrDefault();
-        }
-
-        private INamespaceOrTypeSymbol? ResolveUsingNamespace(Language language, Using use)
-        {
-            if (use.Reference.IsDefaultOrEmpty)
-            {
-                Error(use.ReferenceLocation, "Namespace name is missing.");
-                return null;
-            }
-            INamespaceOrTypeSymbol? csharpSymbol = _compilation.GlobalNamespace;
-            if (csharpSymbol is null) return null;
-            var builder = PooledStringBuilder.GetInstance();
-            var sb = builder.Builder;
-            foreach (var name in use.Reference)
-            {
-                if (sb.Length > 0) sb.Append(".");
-                csharpSymbol = csharpSymbol.GetMembers().Where(ns => ns.Name == name).OfType<INamespaceOrTypeSymbol>().FirstOrDefault();
-                if (csharpSymbol is null) 
-                {
-                    if (sb.Length > 0) Error(use.ReferenceLocation, $"The type or namespace '{name}' does not exist in '{sb}' (are you missing an assembly reference?).");
-                    else Error(use.ReferenceLocation, $"The type or namespace '{name}' could not be found (are you missing an assembly reference?).");
-                    break;
-                }
-                sb.Append(name);
-            }
-            builder.Free();
-            use.CSharpSymbol = csharpSymbol;
-            return csharpSymbol;
-        }
-
-        private void ResolveAnnotations(Language language, AnnotationTargets target, IEnumerable<Annotation> annotations)
-        {
-            foreach (var annotation in annotations)
-            {
-                ResolveAnnotation(language, target, annotation);
-            }
-        }
-
-        private INamedTypeSymbol? ResolveAnnotation(Language language, AnnotationTargets target, Annotation annotation)
-        {
-            if (annotation.Name.IsDefaultOrEmpty)
-            {
-                Error(annotation.Location, "Annotation name is missing.");
-                return null;
-            }
-            var candidates = ResolveSymbols(language, annotation.Location, annotation.Name, "Annotation").OfType<INamedTypeSymbol>().ToImmutableArray();
-            foreach (var csharpSymbol in candidates)
-            {
-                if (!IsMetaCompilerAnnotation(csharpSymbol))
-                {
-                    Error(annotation.Location, $"Annotation '{csharpSymbol.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat)}' must be a descendant of 'MetaDslx.Languages.MetaCompiler.Annotations.Annotation'.");
-                }
-            }
-            INamedTypeSymbol? result = null;
-            if (candidates.Length == 1)
-            {
-                result = candidates[0];
-                var targets = GetMetaCompilerAnnotationUsage(result);
-                if (!targets.HasFlag(target))
-                {
-                    Error(annotation.Location, $"The annotation '{annotation.QualifiedName}' cannot be applied to a {target}.");
-                    result = null;
-                }
-                annotation.CSharpClass = result;
-            }
-            else if (candidates.Length == 0)
-            {
-                Error(annotation.Location, $"The annotation name '{annotation.QualifiedName}' could not be found (are you missing a using directive or an assembly reference?).");
-            }
-            else
-            {
-                Error(annotation.Location, $"'{annotation.QualifiedName}' is an ambiguous reference between '{candidates[0].ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat)}' and '{candidates[1].ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat)}'.");
-            }
-            return result;
-        }
-
-        private ImmutableArray<INamespaceOrTypeSymbol> ResolveSymbols(Language language, Location location, ImmutableArray<string> qualifiedName, string suffix = default)
-        {
-            if (qualifiedName.Length == 0) return ImmutableArray<INamespaceOrTypeSymbol>.Empty;
-            var candidates = ArrayBuilder<INamespaceOrTypeSymbol>.GetInstance();
-            var builder = PooledStringBuilder.GetInstance();
-            var sb = builder.Builder;
-            foreach (var use in language.Usings)
-            {
-                sb.Clear();
-                var csharpSymbol = use.CSharpSymbol;
-                if (csharpSymbol is not null)
-                {
-                    var startIndex = 0;
-                    if (!string.IsNullOrEmpty(use.Alias))
-                    {
-                        if (qualifiedName[0] == use.Alias)
-                        {
-                            if (qualifiedName.Length == 1)
-                            {
-                                candidates.Add(csharpSymbol);
-                                continue;
-                            }
-                            else
-                            {
-                                startIndex = 1;
-                                sb.Append(qualifiedName[0]);
-                            }
-                        }
-                        else
-                        {
-                            continue;
-                        }
-                    }
-                    for (int i = startIndex; i < qualifiedName.Length; ++i)
-                    {
-                        var name = qualifiedName[i];
-                        if (sb.Length > 0) sb.Append(".");
-                        if (i + 1 < qualifiedName.Length)
-                        {
-                            csharpSymbol = csharpSymbol.GetMembers().Where(ns => ns.Name == name).OfType<INamespaceOrTypeSymbol>().FirstOrDefault();
-                            if (csharpSymbol is null)
-                            {
-                                if (sb.Length > 0) Error(location, $"The type or namespace '{name}' does not exist in '{sb}' (are you missing an assembly reference?).");
-                                else Error(location, $"The type or namespace '{name}' could not be found (are you missing an assembly reference?).");
-                                break;
-                            }
-                        }
-                        else
-                        {
-                            candidates.AddRange(csharpSymbol.GetMembers($"{name}{suffix}").OfType<INamespaceOrTypeSymbol>());
-                        }
-                        sb.Append(name);
-                    }
-                }
-            }
-            builder.Free();
-            return candidates.ToImmutableAndFree();
-        }
-
-        private bool IsMetaCompilerAnnotation(INamedTypeSymbol? csharpClass)
-        {
-            if (csharpClass is null) return false;
-            var baseType = csharpClass;
-            while (baseType is not null)
-            {
-                var baseTypeName = baseType.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat);
-                if (baseTypeName == "MetaDslx.Languages.MetaCompiler.Annotations.Annotation") return true;
-                baseType = baseType.BaseType;
-            }
-            return false;
-        }
-
-        private AnnotationTargets GetMetaCompilerAnnotationUsage(INamedTypeSymbol? csharpClass)
-        {
-            if (csharpClass is null) return AnnotationTargets.None;
-            foreach (var attr in csharpClass.GetAttributes())
-            {
-                var attrName = attr.AttributeClass?.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat);
-                if (attrName == "MetaDslx.Languages.MetaCompiler.Annotations.AnnotationUsageAttribute")
-                {
-                    // TODO: Roslyn returns an empty array...
-                    if (attr.ConstructorArguments.Length > 0)
-                    {
-                        var targets = attr.ConstructorArguments[0];
-                        return (AnnotationTargets)targets.Value;
-                    }
-                }
-            }
-            return AnnotationTargets.All;
-        }
-
-        private void ResolveAnnotationProperties(Language language, Annotation annotation)
-        {
-            if (annotation.CSharpClass is null) return;
-            var csharpClass = annotation.CSharpClass;
-            var paramCount = annotation.Properties.Count;
-            // TODO: modify parser to allow unnamed properties
         }
 
         private void ResolveDefaultLexerRule(Language language, ref LexerRule? lexerRule, LexerRule defaultRule, string annotationName)
@@ -1065,28 +853,13 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
         private void ParseAnnotations()
         {
             var token = _tokens.CurrentToken;
-            while (!_tokens.EndOfFile && token.Text == "[")
+            var parseNext = token.Text == "[";
+            while (!_tokens.EndOfFile && parseNext)
             {
+                parseNext = false;
                 token = _tokens.NextToken();
                 var annotation = new Annotation();
                 _annotations.Add(annotation);
-                annotation.Kind = AnnotationKind.None;
-                if (token.Kind == MetaCompilerTokenKind.Keyword)
-                {
-                    switch (token.Text)
-                    {
-                        case "def":
-                            annotation.Kind = AnnotationKind.Def;
-                            break;
-                        case "use":
-                            annotation.Kind = AnnotationKind.Use;
-                            break;
-                        default:
-                            Expected("def", "use");
-                            break;
-                    }
-                    _tokens.NextToken();
-                }
                 annotation.Location = _tokens.CurrentLocation;
                 annotation.Name = ParseQualifier(".");
                 token = _tokens.CurrentToken;
@@ -1100,58 +873,43 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                 if (token.Text == "]")
                 {
                     token = _tokens.NextToken();
+                    parseNext = token.Text == "[";
+                }
+                if (token.Text == ",")
+                {
+                    parseNext = true;
                 }
             }
         }
 
         private void ParseAnnotationProperties(Annotation annotation)
         {
-            bool propertyExpected = true;
             while (!_tokens.EndOfFile)
             {
                 var token = _tokens.CurrentToken;
-                if (propertyExpected)
+                var nextToken = _tokens.PeekToken(1);
+                if (token.Text == ")" || token.Text == "]")
                 {
-                    if (token.Kind == MetaCompilerTokenKind.Identifier)
-                    {
-                        var property = new AnnotationProperty();
-                        annotation.Properties.Add(property);
-                        property.Location = _tokens.CurrentLocation;
-                        property.Name = token.Text;
-                        token = _tokens.NextToken();
-                        if (token.Text == "=")
-                        {
-                            _tokens.NextToken();
-                            property.Value = MatchCSharpExpressionUntil(",", ")", "]", ";");
-                        }
-                        else
-                        {
-                            Expected("=");
-                        }
-                        propertyExpected = false;
-                    }
-                    else
-                    {
-                        Error("Identifier expected");
-                        _tokens.NextToken();
-                    }
+                    return;
+                }
+                else if(token.Kind == MetaCompilerTokenKind.Identifier && (nextToken.Text == ":" || nextToken.Text == "="))
+                {
+                    var property = new AnnotationProperty();
+                    if (nextToken.Text == "=") annotation.Properties.Add(property);
+                    else annotation.ConstructorArguments.Add(property);
+                    _tokens.NextToken();
+                    property.Location = _tokens.CurrentLocation;
+                    property.Name = token.Text;
+                    _tokens.NextToken();
+                    property.Value = MatchCSharpExpressionUntil(",", ")", "]", ";");
                 }
                 else 
                 {
-                    if (token.Text == ",")
-                    {
-                        propertyExpected = true;
-                        _tokens.NextToken();
-                    }
-                    else if (token.Text == ")")
-                    {
-                        return;
-                    }
-                    else
-                    {
-                        Expected(",", ")", "identifier");
-                        _tokens.NextToken();
-                    }
+                    var property = new AnnotationProperty();
+                    annotation.Properties.Add(property);
+                    property.Location = _tokens.CurrentLocation;
+                    property.Value = MatchCSharpExpressionUntil(",", ")", "]", ";");
+                    annotation.ConstructorArguments.Add(property);
                 }
             }
         }
