@@ -99,12 +99,14 @@ namespace [language.QualifiedNamespace].Syntax
 			// them
 			private readonly SyntaxListPool _pool = new SyntaxListPool(); // Don't need to reset this.
 
-            private [language.Name]SyntaxParser _parser;
+            private readonly [language.Name]SyntaxParser _parser;
+            private readonly AntlrLexerBasedTokenStream _tokenStream;
 			private readonly [language.Name]InternalSyntaxFactory _factory;
 
             public AntlrToRoslynVisitor([language.Name]SyntaxParser parser)
             {
                 _parser = parser;
+                _tokenStream = (AntlrLexerBasedTokenStream)_parser.AntlrParser.InputStream;
 				_factory = ([language.Name]InternalSyntaxFactory)_parser.Language.InternalSyntaxFactory;
             }
 
@@ -115,8 +117,8 @@ namespace [language.QualifiedNamespace].Syntax
 					if (kind != [language.Name]SyntaxKind.None) return _factory.MissingToken(kind);
 					else return null;
 				}
-                var green = ((AntlrSyntaxToken)token).Green;
-				Debug.Assert(kind == [language.Name]SyntaxKind.None || green.RawKind == (int)kind);
+                var green = _tokenStream.ConsumeRealToken((AntlrSyntaxToken)token, _parser);
+				Debug.Assert(kind == TestSyntaxKind.None || green.RawKind == (int)kind);
 				return green;
             }
 
@@ -132,8 +134,8 @@ namespace [language.QualifiedNamespace].Syntax
 					if (kind != [language.Name]SyntaxKind.None) return _factory.MissingToken(kind);
 					else return null;
 				}
-				var green = ((AntlrSyntaxToken)node.Symbol).Green;
-				Debug.Assert(kind == [language.Name]SyntaxKind.None || green.RawKind == (int)kind);
+                var green = _tokenStream.ConsumeRealToken((AntlrSyntaxToken)node.Symbol, _parser);
+				Debug.Assert(kind == TestSyntaxKind.None || green.RawKind == (int)kind);
 				return green;
 			}
 

@@ -80,16 +80,18 @@ namespace MetaDslx.Languages.MetaCompiler.Antlr
                 var hash = Hash.Combine(antlrLexer.CurrentMode, antlrLexer.ModeStack.Count);
                 foreach (var item in antlrLexer.ModeStack)
                 {
-                    hash = Hash.Combine(item, hash);
+                    hash = Hash.Combine(hash, item);
                 }
+                hash = Hash.Combine(hash, antlrLexer.HitEOF.GetHashCode());
                 return hash;
             }
 
             protected override bool IsInState(LexerState? state)
             {
                 var antlrLexer = AntlrLexer;
-                if (state == null) return antlrLexer.CurrentMode == 0 && antlrLexer.ModeStack.Count == 0;
+                if (state == null) return !antlrLexer.HitEOF && antlrLexer.CurrentMode == 0 && antlrLexer.ModeStack.Count == 0;
                 var antlrState = (AntlrLexerState)state;
+                if (antlrLexer.HitEOF != antlrState.HitEof) return false;
                 if (antlrLexer.CurrentMode != antlrState.Mode) return false;
                 if (antlrState.ModeStackReversed == null) return antlrLexer.ModeStack.Count == 0;
                 if (antlrLexer.ModeStack.Count != antlrState.ModeStackReversed.Length) return false;
@@ -119,6 +121,7 @@ namespace MetaDslx.Languages.MetaCompiler.Antlr
                         }
                     }
                     antlrLexer.CurrentMode = antlrState.Mode;
+                    antlrLexer.HitEOF = antlrState.HitEof;
                 }
                 Lexer._hitEof = false;
             }
@@ -126,8 +129,8 @@ namespace MetaDslx.Languages.MetaCompiler.Antlr
             protected override LexerState? SaveState(int hashCode)
             {
                 var antlrLexer = AntlrLexer;
-                if (antlrLexer.CurrentMode == 0 && antlrLexer.ModeStack.Count == 0) return null;
-                else return new AntlrLexerState(hashCode, AntlrLexer.CurrentMode, AntlrLexer.ModeStack.Count == 0 ? null : AntlrLexer.ModeStack.ToArray());
+                if (!AntlrLexer.HitEOF && antlrLexer.CurrentMode == 0 && antlrLexer.ModeStack.Count == 0) return null;
+                else return new AntlrLexerState(hashCode, AntlrLexer.HitEOF, AntlrLexer.CurrentMode, AntlrLexer.ModeStack.Count == 0 ? null : AntlrLexer.ModeStack.ToArray());
             }
         }
 
