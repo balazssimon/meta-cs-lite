@@ -6,7 +6,7 @@ namespace MetaDslx.CodeAnalysis.Annotations
 {
     [AnnotationUsage(AnnotationTargets.LexerRuleName)]
     [DeclarationTable]
-    public class IdentifierAnnotation : Annotation
+    public class IdentifierAnnotation : Annotation, IValueAnnotation
     {
     }
 }

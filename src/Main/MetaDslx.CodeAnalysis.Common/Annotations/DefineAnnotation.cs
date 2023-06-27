@@ -7,7 +7,7 @@ namespace MetaDslx.CodeAnalysis.Annotations
 {
     [AnnotationUsage(AnnotationTargets.All)]
     [DeclarationTable]
-    public class DefineAnnotation : Annotation
+    public class DefineAnnotation : Annotation, IValueAnnotation
     {
         private readonly Type? _type;
 

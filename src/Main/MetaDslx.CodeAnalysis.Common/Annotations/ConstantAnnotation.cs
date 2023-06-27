@@ -6,7 +6,7 @@ namespace MetaDslx.CodeAnalysis.Annotations
 {
     [AnnotationUsage(AnnotationTargets.All)]
     [DeclarationTable]
-    public class ConstantAnnotation : Annotation
+    public class ConstantAnnotation : Annotation, IValueAnnotation
     {
         private readonly object? _value;
 

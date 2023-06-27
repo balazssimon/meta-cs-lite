@@ -4,9 +4,7 @@ using System.Text;
 
 namespace MetaDslx.CodeAnalysis.Annotations
 {
-    [AnnotationUsage(AnnotationTargets.All)]
-    [DeclarationTable]
-    public class LocalScopeAnnotation
+    public interface IValueAnnotation
     {
     }
 }

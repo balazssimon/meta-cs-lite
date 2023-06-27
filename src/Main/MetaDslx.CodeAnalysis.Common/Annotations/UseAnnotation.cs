@@ -6,7 +6,7 @@ using System.Text;
 namespace MetaDslx.CodeAnalysis.Annotations
 {
     [AnnotationUsage(AnnotationTargets.All)]
-    public class UseAnnotation : Annotation
+    public class UseAnnotation : Annotation, IValueAnnotation
     {
         private readonly ImmutableArray<Type> _types;
 

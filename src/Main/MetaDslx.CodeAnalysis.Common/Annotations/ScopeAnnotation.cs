@@ -6,15 +6,15 @@ namespace MetaDslx.CodeAnalysis.Annotations
 {
     [AnnotationUsage(AnnotationTargets.All)]
     [DeclarationTable]
-    public class DefinedTypeAnnotation : Annotation
+    public class ScopeAnnotation : Annotation, IScopeAnnotation
     {
-        private readonly Type _type;
+        private bool _local;
 
-        public DefinedTypeAnnotation(Type type)
+        public ScopeAnnotation(bool local = false)
         {
-            _type = type;
+            _local = local;
         }
 
-        public Type Type => _type;
+        public bool IsLocal => _local;
     }
 }

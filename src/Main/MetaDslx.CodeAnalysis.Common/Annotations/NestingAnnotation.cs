@@ -6,15 +6,18 @@ namespace MetaDslx.CodeAnalysis.Annotations
 {
     [AnnotationUsage(AnnotationTargets.All)]
     [DeclarationTable]
-    public class ValueAnnotation : Annotation, IValueAnnotation
+    public class NestingAnnotation : Annotation
     {
         private readonly Type? _type;
+        private readonly string? _property;
 
-        public ValueAnnotation(Type? type)
+        public NestingAnnotation(Type type, string property)
         {
             _type = type;
+            _property = property;
         }
 
         public Type? Type => _type;
+        public string? Property => _property;
     }
 }
