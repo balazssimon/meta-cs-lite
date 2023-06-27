@@ -902,24 +902,26 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                     _tokens.NextToken();
                     allowComma = false;
                 }
-                else if (token.Kind == MetaCompilerTokenKind.Identifier && (nextToken.Text == ":" || nextToken.Text == "="))
+                else
                 {
                     var property = new AnnotationProperty();
-                    if (nextToken.Text == "=") annotation.Properties.Add(property);
-                    else annotation.ConstructorArguments.Add(property);
-                    _tokens.NextToken();
-                    property.Location = _tokens.CurrentLocation;
-                    property.Name = token.Text;
-                    _tokens.NextToken();
-                    property.ValueText = MatchCSharpExpressionUntil(",", ")", "]");
-                    allowComma = true;
-                }
-                else 
-                {
-                    var property = new AnnotationProperty();
-                    annotation.ConstructorArguments.Add(property);
-                    property.Location = _tokens.CurrentLocation;
-                    property.ValueText = MatchCSharpExpressionUntil(",", ")", "]");
+                    if (token.Kind == MetaCompilerTokenKind.Identifier && (nextToken.Text == ":" || nextToken.Text == "="))
+                    {
+                        if (nextToken.Text == "=") annotation.Properties.Add(property);
+                        else annotation.ConstructorArguments.Add(property);
+                        _tokens.NextToken();
+                        property.Location = _tokens.CurrentLocation;
+                        property.Name = token.Text;
+                        _tokens.NextToken();
+                    }
+                    else
+                    {
+                        annotation.ConstructorArguments.Add(property);
+                        property.Location = _tokens.CurrentLocation;
+                    }
+                    var expressions = MatchAnnotationExpressionsUntil(",", ")", "]");
+                    property.ValueTexts = expressions.Values;
+                    property.IsArray = expressions.IsArray;
                     allowComma = true;
                 }
             }
@@ -1305,32 +1307,72 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
             return result.ToImmutableAndFree();
         }
 
-        private string MatchCSharpExpressionUntil(params string[] untilOther)
+        private (ImmutableArray<string> Values, bool IsArray) MatchAnnotationExpressionsUntil(params string[] untilOther)
         {
-            var sb = PooledStringBuilder.GetInstance();
+            var builder = PooledStringBuilder.GetInstance();
+            var sb = builder.Builder;
             int parenthesisCounter = 0;
             int bracketsCounter = 0;
             int bracesCounter = 0;
             try
             {
+                var items = ArrayBuilder<string>.GetInstance();
                 _tokens.IgnoreWhitespaceAndComments = false;
                 var token = _tokens.CurrentToken;
+                var isArray = token.Text == "{";
                 while (!_tokens.EndOfFile && (parenthesisCounter > 0 || bracketsCounter > 0 || bracesCounter > 0 || !untilOther.Contains(token.Text)))
                 {
-                    sb.Builder.Append(token.Text);
                     if (token.Text == "(") ++parenthesisCounter;
                     if (token.Text == ")") --parenthesisCounter;
                     if (token.Text == "[") ++bracketsCounter;
                     if (token.Text == "]") --bracketsCounter;
                     if (token.Text == "{") ++bracesCounter;
                     if (token.Text == "}") --bracesCounter;
+                    if (isArray && parenthesisCounter == 0 && bracketsCounter == 0)
+                    {
+                        if (bracesCounter == 1)
+                        {
+                            if (token.Text == ",")
+                            {
+                                items.Add(sb.ToString().Trim());
+                                sb.Clear();
+                            }
+                            else if (token.Text != "{")
+                            {
+                                sb.Append(token.Text);
+                            }
+                        }
+                        else if (bracesCounter == 0 && token.Text == "}")
+                        {
+                            items.Add(sb.ToString().Trim());
+                            sb.Clear();
+                            break;
+                        }
+                        else 
+                        {
+                            sb.Append(token.Text);
+                        }
+                    }
+                    else
+                    {
+                        sb.Append(token.Text);
+                    }
                     token = _tokens.NextToken();
                 }
-                return sb.ToStringAndFree().Trim();
+                if (!isArray)
+                {
+                    var valueText = sb.ToString().Trim();
+                    if (!string.IsNullOrEmpty(valueText))
+                    {
+                        items.Add(valueText);
+                    }
+                }
+                return (items.ToImmutableAndFree(), isArray);
             }
             finally
             {
                 _tokens.IgnoreWhitespaceAndComments = true;
+                builder.Free();
             }
         }
 

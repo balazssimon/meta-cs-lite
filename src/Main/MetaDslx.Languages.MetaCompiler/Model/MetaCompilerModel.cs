@@ -45,11 +45,36 @@ namespace MetaDslx.Languages.MetaCompiler.Model
         public Microsoft.CodeAnalysis.INamespaceOrTypeSymbol? CSharpSymbol { get; set; }
     }
 
-    public enum AnnotationKind
+    public enum AnnotationValueKind
     {
-        None,
-        Def,
-        Use
+        Single,
+        Array,
+        ImmutableCollection,
+        GenericCollection
+    }
+
+    [Flags]
+    public enum AnnotationItemTypeKind
+    {
+        None = 0,
+        Nullable = 0x00001,
+        SystemType = 0x00002,
+        EnumType = 0x00004,
+        PrimitiveType = 0x00008,
+        BoolType = 0x00010,
+        CharType = 0x00020,
+        StringType = 0x00040,
+        ByteType = 0x00080,
+        SByteType = 0x00100,
+        ShortType = 0x00200,
+        UShortType = 0x00400,
+        IntType = 0x00800,
+        UIntType = 0x01000,
+        LongType = 0x02000,
+        ULongType = 0x04000,
+        FloatType = 0x08000,
+        DoubleType = 0x10000,
+        DecimalType = 0x20000
     }
 
     public enum ListKind
@@ -127,15 +152,29 @@ namespace MetaDslx.Languages.MetaCompiler.Model
     public class AnnotationProperty : IElementWithLocation
     {
         public string? Name { get; set; }
-        public string? ValueText { get; set; }
-        public object? Value { get; set; }
+        public bool IsArray { get; set; }
+        public AnnotationItemTypeKind ItemTypeKind { get; set; }
+        public AnnotationValueKind ValueKind { get; set; }
+        public ImmutableArray<string?> ValueTexts { get; set; }
+        public ImmutableArray<object?> Values { get; set; }
         public Microsoft.CodeAnalysis.ITypeSymbol? CSharpType { get; set; }
+        public Microsoft.CodeAnalysis.ITypeSymbol? CSharpItemType { get; set; }
+        public Microsoft.CodeAnalysis.ITypeSymbol? CSharpCoreType { get; set; }
 
         public Location Location { get; set; }
 
         public override string ToString()
         {
-            return $"{Name}={ValueText}";
+            var builder = PooledStringBuilder.GetInstance();
+            var sb = builder.Builder;
+            if (IsArray) sb.Append("{");
+            foreach (var valueText in ValueTexts)
+            {
+                if (IsArray && sb.Length > 1) sb.Append(", ");
+                sb.Append(valueText);
+            }
+            if (IsArray) sb.Append("}");
+            return $"{Name}={builder.ToStringAndFree()}";
         }
     }
 

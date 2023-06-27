@@ -8,18 +8,15 @@ namespace MetaDslx.Languages.MetaCompiler.Annotations
     [DeclarationTable]
     public class DefineNestedAnnotation : Annotation
     {
-        private readonly Type? _type;
         private readonly Type? _nestingType;
         private readonly string? _nestingProperty;
 
-        public DefineNestedAnnotation(Type nestingType, string nestingProperty, Type? type = null)
+        public DefineNestedAnnotation(Type nestingType, string nestingProperty)
         {
             _nestingType = nestingType;
             _nestingProperty = nestingProperty;
-            _type = type;
         }
 
-        public Type? Type => _type;
         public Type? NestingType => _nestingType;
         public string? NestingProperty => _nestingProperty;
     }

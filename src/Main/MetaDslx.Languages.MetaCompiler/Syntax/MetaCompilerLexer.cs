@@ -282,7 +282,7 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
 
         private MetaCompilerToken MatchControlCode()
         {
-            var ch = _text.PeekChar();
+            /*var ch = _text.PeekChar();
             if (ch == '{')
             {
                 int parenthesisCounter = 0;
@@ -300,7 +300,7 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                     if (ch == '}') --bracesCounter;
                 }
                 return new MetaCompilerToken(MetaCompilerTokenKind.ControlCode, _text.GetText(false), _text.LexemeStartPosition);
-            }
+            }*/
             return MetaCompilerToken.None;
         }
 

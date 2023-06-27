@@ -15,6 +15,6 @@ namespace MetaDslx.Languages.MetaCompiler.Annotations
             _value = value;
         }
 
-        public object? Type => _value;
+        public object? Value => _value;
     }
 }

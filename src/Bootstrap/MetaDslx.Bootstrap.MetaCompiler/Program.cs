@@ -51,6 +51,7 @@ statement : varDeclaration
           | list
           ;
 
+[Use(Int64,TypesList=Int32)]
 print : 'print' '(' expression ')' ;
 
 varDeclaration : 'var' assignment ;
@@ -119,6 +120,8 @@ static Compilation CreateCompilation(string source)
         new[] { CSharpSyntaxTree.ParseText(source) },
         new[]
         {
+            MetadataReference.CreateFromFile(typeof(object).GetTypeInfo().Assembly.Location),
+            MetadataReference.CreateFromFile(typeof(System.Collections.Generic.List<>).GetTypeInfo().Assembly.Location),
             MetadataReference.CreateFromFile(typeof(Attribute).GetTypeInfo().Assembly.Location),
             MetadataReference.CreateFromFile(typeof(Binder).GetTypeInfo().Assembly.Location),
             MetadataReference.CreateFromFile(typeof(CodeBuilder).GetTypeInfo().Assembly.Location),
