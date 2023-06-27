@@ -1,0 +1,40 @@
+﻿namespace MetaDslx.Languages.MetaCompiler.Generators
+
+using MetaDslx.Languages.MetaCompiler.Model
+using System.Collections.Generic;
+using System.Collections.Immutable;
+using System.Linq
+
+generator RoslynApiGenerator
+
+
+template GenerateDeclarationTreeBuilderVisitor(Language language)
+using System;
+using MetaDslx.CodeAnalysis;
+
+#nullable enable
+
+namespace [language.QualifiedNamespace].Declarations
+{
+    using [language.QualifiedNamespace].Syntax;
+
+    public class [language.Name]DeclarationTreeBuilderVisitor : MetaDslx.CodeAnalysis.Declarations.DeclarationTreeBuilderVisitor, I[Properties.LanguageName]SyntaxVisitor
+    {
+        protected [Properties.LanguageName]DeclarationTreeBuilderVisitor([Properties.LanguageName]SyntaxTree syntaxTree, string scriptClassName, bool isSubmission)
+            : base(syntaxTree, scriptClassName, isSubmission)
+        {
+        }
+
+        public static MetaDslx.CodeAnalysis.Declarations.RootSingleDeclaration ForTree([Properties.LanguageName]SyntaxTree syntaxTree, string scriptClassName, bool isSubmission)
+        {
+            var builder = new [Properties.LanguageName]DeclarationTreeBuilderVisitor(syntaxTree, scriptClassName, isSubmission);
+            return builder.CreateRoot(syntaxTree.GetRoot(), [Instances.MainRule().Annotations.GetObjectType(MetaCompilerAnnotationInfo.Root)]);
+        }
+
+        public override RootSingleDeclaration CreateDeclarationTree(SyntaxTree syntaxTree, string scriptClassName, bool isSubmission)
+        {
+            throw new NotImplementedException();
+        }
+    }
+}
+end template
