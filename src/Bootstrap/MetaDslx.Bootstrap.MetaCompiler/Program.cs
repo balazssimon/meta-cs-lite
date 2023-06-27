@@ -9,7 +9,6 @@ using System.Collections.Immutable;
 using MetaDslx.CodeGeneration;
 using System.Reflection;
 using MetaDslx.Languages.MetaCompiler.Analyzers;
-using MetaDslx.Languages.MetaCompiler.Annotations;
 using System.Diagnostics.CodeAnalysis;
 
 Compilation inputCompilation = CreateCompilation(@"
@@ -34,7 +33,7 @@ GeneratorDriver driver = CSharpGeneratorDriver.Create(compilerGenerator, antlrGe
 var testMText = new AdditionalTextFile("Test.mlang", @"namespace X;
 
 using System;
-using MetaDslx.Languages.MetaCompiler.Annotations;
+using MetaDslx.CodeAnalysis.Annotations;
 
 language Test;
 
@@ -126,6 +125,5 @@ static Compilation CreateCompilation(string source)
             MetadataReference.CreateFromFile(typeof(Binder).GetTypeInfo().Assembly.Location),
             MetadataReference.CreateFromFile(typeof(CodeBuilder).GetTypeInfo().Assembly.Location),
             MetadataReference.CreateFromFile(typeof(MetaDslx.CodeAnalysis.SyntaxTree).GetTypeInfo().Assembly.Location),
-            MetadataReference.CreateFromFile(typeof(Annotation).GetTypeInfo().Assembly.Location)
         },
         new CSharpCompilationOptions(OutputKind.ConsoleApplication));

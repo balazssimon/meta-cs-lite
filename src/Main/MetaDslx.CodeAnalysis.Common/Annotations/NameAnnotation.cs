@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace MetaDslx.Languages.MetaCompiler.Annotations
+namespace MetaDslx.CodeAnalysis.Annotations
 {
     [AnnotationUsage(AnnotationTargets.LexerRuleName)]
-    public class EndOfLineAnnotation : Annotation
+    [DeclarationTable]
+    public class NameAnnotation : Annotation
     {
     }
 }

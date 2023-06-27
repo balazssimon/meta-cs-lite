@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace MetaDslx.Languages.MetaCompiler.Annotations
+namespace MetaDslx.CodeAnalysis.Annotations
 {
     [AnnotationUsage(AnnotationTargets.LexerRuleName)]
-    [DeclarationTable]
-    public class NameAnnotation : Annotation
+    public class WhitespaceAnnotation : Annotation
     {
     }
 }

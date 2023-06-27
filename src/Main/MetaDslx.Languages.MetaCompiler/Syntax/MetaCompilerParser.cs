@@ -1,6 +1,5 @@
 ﻿using MetaDslx.CodeAnalysis;
 using MetaDslx.CodeAnalysis.Text;
-using MetaDslx.Languages.MetaCompiler.Annotations;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -727,13 +726,13 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
             LexerRule? _defaultSeparator = null;
             foreach (var rule in grammar.LexerRules)
             {
-                var isDefault = HasAnnotation(rule.Annotations, "MetaDslx.Languages.MetaCompiler.Annotations.DefaultAnnotation");
+                var isDefault = HasAnnotation(rule.Annotations, $"{MetaCompilerAnnotationResolver.MetaDslxAnnotationsNamespace}.DefaultAnnotation");
                 if (isDefault)
                 {
-                    ResolveDefaultLexerRule(_language, ref _defaultWhitespace, rule, "MetaDslx.Languages.MetaCompiler.Annotations.WhitespaceAnnotation");
-                    ResolveDefaultLexerRule(_language, ref _defaultEndOfLine, rule, "MetaDslx.Languages.MetaCompiler.Annotations.EndOfLineAnnotation");
-                    ResolveDefaultLexerRule(_language, ref _defaultIdentifier, rule, "MetaDslx.Languages.MetaCompiler.Annotations.IdentifierAnnotation");
-                    ResolveDefaultLexerRule(_language, ref _defaultSeparator, rule, "MetaDslx.Languages.MetaCompiler.Annotations.SeparatorAnnotation");
+                    ResolveDefaultLexerRule(_language, ref _defaultWhitespace, rule, $"{MetaCompilerAnnotationResolver.MetaDslxAnnotationsNamespace}.WhitespaceAnnotation");
+                    ResolveDefaultLexerRule(_language, ref _defaultEndOfLine, rule, $"{MetaCompilerAnnotationResolver.MetaDslxAnnotationsNamespace}.EndOfLineAnnotation");
+                    ResolveDefaultLexerRule(_language, ref _defaultIdentifier, rule, $"{MetaCompilerAnnotationResolver.MetaDslxAnnotationsNamespace}.IdentifierAnnotation");
+                    ResolveDefaultLexerRule(_language, ref _defaultSeparator, rule, $"{MetaCompilerAnnotationResolver.MetaDslxAnnotationsNamespace}.SeparatorAnnotation");
                 }
             }
             grammar.DefaultWhitespace = _defaultWhitespace;

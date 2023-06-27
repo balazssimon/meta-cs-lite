@@ -12,7 +12,7 @@ using System.Text;
 namespace MetaDslx.Languages.MetaCompiler.Syntax
 {
     using Language = MetaDslx.Languages.MetaCompiler.Model.Language;
-    using AnnotationTargets = Annotations.AnnotationTargets;
+    using AnnotationTargets = MetaDslx.CodeAnalysis.Annotations.AnnotationTargets;
     using CSharpCompilation = Microsoft.CodeAnalysis.CSharp.CSharpCompilation;
     using INamespaceSymbol = Microsoft.CodeAnalysis.INamespaceSymbol;
     using INamespaceOrTypeSymbol = Microsoft.CodeAnalysis.INamespaceOrTypeSymbol;
@@ -26,6 +26,7 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
 
     internal class MetaCompilerAnnotationResolver
     {
+        internal const string MetaDslxAnnotationsNamespace = "MetaDslx.CodeAnalysis.Annotations";
         private readonly CSharpCompilation _compilation;
         private readonly Language _language;
         private readonly DiagnosticBag _diagnostics;
@@ -127,7 +128,7 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
             {
                 if (!IsMetaCompilerAnnotation(csharpSymbol))
                 {
-                    Error(annotation.Location, $"Annotation '{csharpSymbol.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat)}' must be a descendant of 'MetaDslx.Languages.MetaCompiler.Annotations.Annotation'.");
+                    Error(annotation.Location, $"Annotation '{csharpSymbol.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat)}' must be a descendant of '{MetaDslxAnnotationsNamespace}.Annotation'.");
                 }
             }
             INamedTypeSymbol? result = null;
@@ -220,7 +221,7 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
             while (baseType is not null)
             {
                 var baseTypeName = baseType.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat);
-                if (baseTypeName == "MetaDslx.Languages.MetaCompiler.Annotations.Annotation") return true;
+                if (baseTypeName == $"{MetaDslxAnnotationsNamespace}.Annotation") return true;
                 baseType = baseType.BaseType;
             }
             return false;
@@ -232,7 +233,7 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
             foreach (var attr in csharpClass.GetAttributes())
             {
                 var attrName = attr.AttributeClass?.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat);
-                if (attrName == "MetaDslx.Languages.MetaCompiler.Annotations.AnnotationUsageAttribute")
+                if (attrName == $"{MetaDslxAnnotationsNamespace}.AnnotationUsageAttribute")
                 {
                     // TODO: Roslyn returns an empty array...
                     if (attr.ConstructorArguments.Length > 0)
