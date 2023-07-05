@@ -9,25 +9,35 @@ language MetaModel;
 [Root(MetaNamespace)]
 main : namespaceDeclaration usingDeclaration* declaration* eof;
 
-namespaceDeclaration : 'namespace' qualifiedName ';';
+[Define(MetaNamespace)]
+namespaceDeclaration : 'namespace' [Nesting(MetaNamespace,Declarations)] qualifiedName ';';
 
 usingDeclaration : 'using' qualifier ';';
 
 declaration : enumDeclaration | classDeclaration | associationDeclaration;
 
+[Define(MetaEnum)]
 enumDeclaration : 'enum' name '{' enumLiterals? '}';
 
-enumLiterals : identifier (',' identifier)* ','?;
+enumLiterals : enumLiteral (',' enumLiteral)* ','?;
 
-classDeclaration : 'abstract'? 'class' name (':' qualifier (',' qualifier)*)? '{' propertyDeclaration* '}';
+[Define(MetaEnumLiteral)]
+enumLiteral : name;
 
+[Define(MetaClass)]
+classDeclaration : isAbstract?='abstract'? 'class' name (':' qualifier (',' qualifier)*)? '{' propertyDeclaration* '}';
+
+[Define(MetaProperty)]
 propertyDeclaration : typeReference name ';';
 
 associationDeclaration : 'association' qualifier 'with' qualifier ';';
 
 typeReference : primitiveType | collectionType | qualifier;
 
-primitiveType : 'int' | 'string' | 'bool';
+primitiveType 
+	: [Constant(Meta.Int)] 'int' 
+	| [Constant(Meta.String)] 'string' 
+	| [Constant(Meta.Bool)] 'bool';
 
 collectionType : ('list' | 'set') '<' typeReference '>';
 

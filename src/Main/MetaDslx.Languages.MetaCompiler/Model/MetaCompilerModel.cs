@@ -74,7 +74,8 @@ namespace MetaDslx.Languages.MetaCompiler.Model
         ULongType = 0x04000,
         FloatType = 0x08000,
         DoubleType = 0x10000,
-        DecimalType = 0x20000
+        DecimalType = 0x20000,
+        ObjectType = 0x40000
     }
 
     public enum ListKind

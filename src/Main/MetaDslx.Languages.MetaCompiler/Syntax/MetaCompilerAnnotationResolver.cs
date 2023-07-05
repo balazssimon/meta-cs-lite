@@ -570,6 +570,9 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                     case "string":
                         prop.ItemTypeKind |= AnnotationItemTypeKind.PrimitiveType | AnnotationItemTypeKind.StringType;
                         break;
+                    case "object":
+                        prop.ItemTypeKind |= AnnotationItemTypeKind.ObjectType;
+                        break;
                     default: 
                         return false;
                 }
@@ -669,6 +672,10 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                         if (addDiagnostics) Error(prop.Location, $"'{valueText}' enum literal is not unique in '{prop.CSharpItemType.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat)}'");
                         hasErrors = true;
                     }
+                }
+                else if (prop.ItemTypeKind.HasFlag(AnnotationItemTypeKind.ObjectType))
+                {
+                    value = valueText;
                 }
                 else if (TryParseValue(prop.ItemTypeKind, valueText, out var primitiveValue))
                 {

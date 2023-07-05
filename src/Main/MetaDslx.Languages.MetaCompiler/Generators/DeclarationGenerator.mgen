@@ -38,7 +38,7 @@ namespace [language.QualifiedNamespace].Declarations
 		[foreach (var rule in language.Grammar.ParserRules)]
 			[foreach (var alt in rule.Alternatives)]
 
-        [GenerateDeclarationTreeBuilderVisit(language, alt)]
+        [GenerateDeclarationTreeBuilderVisit(language, rule, alt)]
 			[end foreach]
 		[end foreach]
 
@@ -49,8 +49,55 @@ namespace [language.QualifiedNamespace].Declarations
 }
 end template
 
-template GenerateDeclarationTreeBuilderVisit(Language language, ParserRuleAlternative alt)
+template GenerateDeclarationTreeBuilderVisit(Language language, ParserRule rule, ParserRuleAlternative alt)
 public virtual void Visit[alt.CSharpName]([alt.RedName] node)
 {
+    [var annotIndex = 0]
+	[var body = GenerateDeclarationTreeBuilderVisitBody(language, alt, ref annotIndex)]
+    [body = GenerateDeclarationTreeBuilderVisitAnnotations(alt.Annotations, body, ref annotIndex)]
+    [body = GenerateDeclarationTreeBuilderVisitAnnotations(rule.Annotations, body, ref annotIndex)]
+    [body]
 }
 end template
+
+template GenerateDeclarationTreeBuilderVisitBody(Language language, ParserRuleAlternative alt, ref int annotIndex)
+[foreach (var elem in alt.Elements)]
+[var body = GenerateDeclarationTreeBuilderVisitElement(language, alt, elem)]
+[GenerateDeclarationTreeBuilderVisitAnnotations(elem.Annotations, body, ref annotIndex)]
+[end foreach]    
+end template
+
+template GenerateDeclarationTreeBuilderVisitAnnotations(IEnumerable<Annotation> annotations, string body, ref int annotIndex)
+[foreach (var annot in annotations.Reverse())]
+[body = GenerateDeclarationTreeBuilderVisitAnnotation(annot, body, ref annotIndex)]
+[end foreach]
+[body]
+end template
+
+template GenerateDeclarationTreeBuilderVisitAnnotation(Annotation annot, string body, ref int annotIndex)
+[var annotVarName = "annot"+(annotIndex++)]
+[var annotName = annot.Name.LastOrDefault()]
+var [annotVarName] = new [annot.QualifiedName]Annotation();
+try
+{
+    this.Begin[annotName](node, [annotVarName]);
+    [body]
+}
+finally
+{
+    this.End[annotName](node, [annotVarName]);
+}
+end template
+
+template GenerateDeclarationTreeBuilderVisitElement(Language language, ParserRuleAlternative alt, ParserRuleElement elem)
+	[if (elem.IsList)]
+this.VisitList(node.[elem.PropertyName]);
+	[else]
+		[if (elem.IsToken)]
+this.VisitToken(node.[elem.PropertyName]);
+		[else]
+this.Visit(node.[elem.PropertyName]);
+		[end if]
+	[end if]
+end template
+
