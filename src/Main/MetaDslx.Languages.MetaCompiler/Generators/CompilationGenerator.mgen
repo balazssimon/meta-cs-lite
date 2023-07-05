@@ -21,7 +21,7 @@ namespace [language.QualifiedNamespace]
     {
         public override RootSingleDeclaration CreateDeclarationTree(SyntaxTree syntaxTree, string scriptClassName, bool isSubmission)
         {
-            throw new NotImplementedException();
+            return [language.QualifiedNamespace].Declarations.[language.Name]DeclarationTreeBuilderVisitor.ForTree(([language.Name]SyntaxTree)syntaxTree, scriptClassName, isSubmission);
         }
     }
 }

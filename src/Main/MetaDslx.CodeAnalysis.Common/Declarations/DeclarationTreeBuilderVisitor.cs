@@ -35,7 +35,7 @@ namespace MetaDslx.CodeAnalysis.Declarations
         public bool IsSubmission => _isSubmission;
         public bool IsEnabled => _enabled;
 
-        protected RootSingleDeclaration CreateRoot(SyntaxNode syntax, Type type)
+        protected RootSingleDeclaration CreateRoot(SyntaxNode syntax, Type? type)
         {
             if (_syntaxTree.Options.Kind != SourceCodeKind.Regular)
             {
@@ -47,7 +47,7 @@ namespace MetaDslx.CodeAnalysis.Declarations
             }
         }
 
-        protected RootSingleDeclaration CreateRootDeclaration(SyntaxNode syntax, Type type)
+        protected RootSingleDeclaration CreateRootDeclaration(SyntaxNode syntax, Type? type)
         {
             RootSingleDeclaration result;
             _rootSyntax = syntax;

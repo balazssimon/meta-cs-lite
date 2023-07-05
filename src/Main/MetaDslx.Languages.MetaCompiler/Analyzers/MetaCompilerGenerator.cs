@@ -35,51 +35,66 @@ namespace MetaDslx.Languages.MetaCompiler.Analyzers
                     var compDiags = compilation.GetDiagnostics();
                     foreach (var pathAndContent in compilationAndContent.PathsAndContents)
                     {
-                        var fileName = Path.GetFileNameWithoutExtension(pathAndContent.path);
-                        var csharpFilePath = $"MetaCompiler.{fileName}.g.cs";
-                        var mlangCompiler = new MetaCompilerParser((CSharpCompilation)compilation, pathAndContent.path, SourceText.From(pathAndContent.content));
-                        var language = mlangCompiler.Parse(resolveAnnotations: true);
-                        if (mlangCompiler.Diagnostics.Length > 0)
+                        try
                         {
-                            foreach (var diag in mlangCompiler.Diagnostics)
+                            var fileName = Path.GetFileNameWithoutExtension(pathAndContent.path);
+                            var csharpFilePath = $"MetaCompiler.{fileName}.g.cs";
+                            var mlangCompiler = new MetaCompilerParser((CSharpCompilation)compilation, pathAndContent.path, SourceText.From(pathAndContent.content));
+                            var language = mlangCompiler.Parse(resolveAnnotations: true);
+                            if (mlangCompiler.Diagnostics.Length > 0)
                             {
-                                spc.ReportDiagnostic(diag.ToMicrosoft());
+                                foreach (var diag in mlangCompiler.Diagnostics)
+                                {
+                                    spc.ReportDiagnostic(diag.ToMicrosoft());
+                                }
+                            }
+                            else
+                            {
+                                var generator = new RoslynApiGenerator();
+                                var languageCode = generator.GenerateLanguage(language);
+                                spc.AddSource($"{fileName}.MetaCompiler.Language.g.cs", languageCode);
+                                var languageVersionCode = generator.GenerateLanguageVersion(language);
+                                spc.AddSource($"{fileName}.MetaCompiler.LanguageVersion.g.cs", languageVersionCode);
+                                var parseOptionsCode = generator.GenerateParseOptions(language);
+                                spc.AddSource($"{fileName}.MetaCompiler.ParseOptions.g.cs", parseOptionsCode);
+                                var syntaxKindCode = generator.GenerateSyntaxKind(language);
+                                spc.AddSource($"{fileName}.MetaCompiler.SyntaxKind.g.cs", syntaxKindCode);
+                                var syntaxFactsCode = generator.GenerateSyntaxFacts(language);
+                                spc.AddSource($"{fileName}.MetaCompiler.SyntaxFacts.g.cs", syntaxFactsCode);
+                                var internalSyntaxCode = generator.GenerateInternalSyntax(language);
+                                spc.AddSource($"{fileName}.MetaCompiler.InternalSyntax.g.cs", internalSyntaxCode);
+                                var internalSyntaxVisitorCode = generator.GenerateInternalSyntaxVisitor(language);
+                                spc.AddSource($"{fileName}.MetaCompiler.InternalSyntaxVisitor.g.cs", internalSyntaxVisitorCode);
+                                var internalSyntaxFactoryCode = generator.GenerateInternalSyntaxFactory(language);
+                                spc.AddSource($"{fileName}.MetaCompiler.InternalSyntaxFactory.g.cs", internalSyntaxFactoryCode);
+                                var syntaxCode = generator.GenerateSyntax(language);
+                                spc.AddSource($"{fileName}.MetaCompiler.Syntax.g.cs", syntaxCode);
+                                var syntaxTreeCode = generator.GenerateSyntaxTree(language);
+                                spc.AddSource($"{fileName}.MetaCompiler.SyntaxTree.g.cs", syntaxTreeCode);
+                                var syntaxVisitorCode = generator.GenerateSyntaxVisitor(language);
+                                spc.AddSource($"{fileName}.MetaCompiler.SyntaxVisitor.g.cs", syntaxVisitorCode);
+                                var syntaxFactoryCode = generator.GenerateSyntaxFactory(language);
+                                spc.AddSource($"{fileName}.MetaCompiler.SyntaxFactory.g.cs", syntaxFactoryCode);
+                                var declarationTreeBuilderVisitorCode = generator.GenerateDeclarationTreeBuilderVisitor(language);
+                                spc.AddSource($"{fileName}.MetaCompiler.DeclarationTreeBuilderVisitor.g.cs", declarationTreeBuilderVisitorCode);
+                                var compilationFactoryCode = generator.GenerateCompilationFactory(language);
+                                spc.AddSource($"{fileName}.MetaCompiler.CompilationFactory.g.cs", compilationFactoryCode);
                             }
                         }
-                        else
+                        catch (Exception ex)
                         {
-                            var generator = new RoslynApiGenerator();
-                            var languageCode = generator.GenerateLanguage(language);
-                            spc.AddSource($"{fileName}.MetaCompiler.Language.g.cs", languageCode);
-                            var languageVersionCode = generator.GenerateLanguageVersion(language);
-                            spc.AddSource($"{fileName}.MetaCompiler.LanguageVersion.g.cs", languageVersionCode);
-                            var parseOptionsCode = generator.GenerateParseOptions(language);
-                            spc.AddSource($"{fileName}.MetaCompiler.ParseOptions.g.cs", parseOptionsCode);
-                            var syntaxKindCode = generator.GenerateSyntaxKind(language);
-                            spc.AddSource($"{fileName}.MetaCompiler.SyntaxKind.g.cs", syntaxKindCode);
-                            var syntaxFactsCode = generator.GenerateSyntaxFacts(language);
-                            spc.AddSource($"{fileName}.MetaCompiler.SyntaxFacts.g.cs", syntaxFactsCode);
-                            var internalSyntaxCode = generator.GenerateInternalSyntax(language);
-                            spc.AddSource($"{fileName}.MetaCompiler.InternalSyntax.g.cs", internalSyntaxCode);
-                            var internalSyntaxVisitorCode = generator.GenerateInternalSyntaxVisitor(language);
-                            spc.AddSource($"{fileName}.MetaCompiler.InternalSyntaxVisitor.g.cs", internalSyntaxVisitorCode);
-                            var internalSyntaxFactoryCode = generator.GenerateInternalSyntaxFactory(language);
-                            spc.AddSource($"{fileName}.MetaCompiler.InternalSyntaxFactory.g.cs", internalSyntaxFactoryCode);
-                            var syntaxCode = generator.GenerateSyntax(language);
-                            spc.AddSource($"{fileName}.MetaCompiler.Syntax.g.cs", syntaxCode);
-                            var syntaxTreeCode = generator.GenerateSyntaxTree(language);
-                            spc.AddSource($"{fileName}.MetaCompiler.SyntaxTree.g.cs", syntaxTreeCode);
-                            var syntaxVisitorCode = generator.GenerateSyntaxVisitor(language);
-                            spc.AddSource($"{fileName}.MetaCompiler.SyntaxVisitor.g.cs", syntaxVisitorCode);
-                            var syntaxFactoryCode = generator.GenerateSyntaxFactory(language);
-                            spc.AddSource($"{fileName}.MetaCompiler.SyntaxFactory.g.cs", syntaxFactoryCode);
-                            var compilationFactoryCode = generator.GenerateCompilationFactory(language);
-                            spc.AddSource($"{fileName}.MetaCompiler.CompilationFactory.g.cs", compilationFactoryCode);
+                            var exLocation = MetaDslx.CodeAnalysis.ExternalFileLocation.Create(pathAndContent.path, TextSpan.FromBounds(0, 0), new LinePositionSpan(LinePosition.Zero, LinePosition.Zero));
+                            var exDiag = MetaDslx.CodeAnalysis.Diagnostic.Create(MetaDslx.CodeAnalysis.ErrorCode.ERR_CodeGenerationError, exLocation, ex.ToString());
+                            spc.ReportDiagnostic(exDiag.ToMicrosoft());
+                            Debug.WriteLine(ex);
                         }
                     }
                 }
                 catch (Exception ex)
                 {
+                    var exLocation = MetaDslx.CodeAnalysis.ExternalFileLocation.Create(compilationAndContent.PathsAndContents[0].path, TextSpan.FromBounds(0, 0), new LinePositionSpan(LinePosition.Zero, LinePosition.Zero));
+                    var exDiag = MetaDslx.CodeAnalysis.Diagnostic.Create(MetaDslx.CodeAnalysis.ErrorCode.ERR_CodeGenerationError, exLocation, ex.ToString());
+                    spc.ReportDiagnostic(exDiag.ToMicrosoft());
                     Debug.WriteLine(ex);
                 }
             });

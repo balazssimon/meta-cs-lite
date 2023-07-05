@@ -2,9 +2,11 @@ namespace MetaDslx.Examples.MetaModel;
 
 using System;
 using MetaDslx.CodeAnalysis.Annotations;
+using MetaDslx.Examples.MetaModel.Model;
 
 language MetaModel;
 
+[Root(MetaNamespace)]
 main : namespaceDeclaration usingDeclaration* declaration* eof;
 
 namespaceDeclaration : 'namespace' qualifiedName ';';

@@ -10,6 +10,7 @@ using MetaDslx.CodeGeneration;
 using System.Reflection;
 using MetaDslx.Languages.MetaCompiler.Analyzers;
 using System.Diagnostics.CodeAnalysis;
+using MetaDslx.Examples.MetaModel.Model;
 
 Compilation inputCompilation = CreateCompilation(@"
 namespace MyCode
@@ -132,5 +133,6 @@ static Compilation CreateCompilation(string source)
             MetadataReference.CreateFromFile(typeof(Binder).GetTypeInfo().Assembly.Location),
             MetadataReference.CreateFromFile(typeof(CodeBuilder).GetTypeInfo().Assembly.Location),
             MetadataReference.CreateFromFile(typeof(MetaDslx.CodeAnalysis.SyntaxTree).GetTypeInfo().Assembly.Location),
+            MetadataReference.CreateFromFile(typeof(MetaModel).GetTypeInfo().Assembly.Location),
         },
         new CSharpCompilationOptions(OutputKind.ConsoleApplication));

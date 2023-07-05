@@ -44,7 +44,7 @@ namespace MetaDslx.Languages.MetaCompiler.Antlr.Analyzers
                         var language = mlangCompiler.Parse(resolveAnnotations: false);
                         if (mlangCompiler.Diagnostics.Length == 0)
                         {
-                            GenerateAntlr(language, spc);
+                            GenerateAntlr(language, pathAndContent.path, spc);
                         }
                     }
                 }
@@ -55,7 +55,7 @@ namespace MetaDslx.Languages.MetaCompiler.Antlr.Analyzers
             });
         }
 
-        private void GenerateAntlr(Language language, SourceProductionContext context)
+        private void GenerateAntlr(Language language, string path, SourceProductionContext context)
         {
             string tempDirectory = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
             try
@@ -145,6 +145,13 @@ namespace MetaDslx.Languages.MetaCompiler.Antlr.Analyzers
                     var syntaxFactoryCode = generator.GenerateInternalSyntaxFactory(language);
                     context.AddSource($"{language.Name}.MetaCompiler.Antlr.InternalSyntaxFactory.g.cs", syntaxFactoryCode);
                 }
+            }
+            catch (Exception ex)
+            {
+                var exLocation = MetaDslx.CodeAnalysis.ExternalFileLocation.Create(path, TextSpan.FromBounds(0, 0), new LinePositionSpan(LinePosition.Zero, LinePosition.Zero));
+                var exDiag = MetaDslx.CodeAnalysis.Diagnostic.Create(MetaDslx.CodeAnalysis.ErrorCode.ERR_CodeGenerationError, exLocation, ex.ToString());
+                context.ReportDiagnostic(exDiag.ToMicrosoft());
+                Debug.WriteLine(ex);
             }
             finally
             {

@@ -16,6 +16,7 @@ namespace MetaDslx.Languages.MetaModel.Analyzers
     using System.Xml.Linq;
     using MetaDslx.Languages.MetaModel.Generators;
     using System.IO;
+    using Roslyn.Utilities;
 
     [Generator]
     public class MetaModelGenerator : IIncrementalGenerator
@@ -142,6 +143,9 @@ namespace MetaDslx.Languages.MetaModel.Analyzers
             }
             catch (Exception ex)
             {
+                var exLocation = metaInterfaces[0].GetLocation().ToMetaDslx();
+                var exDiag = MetaDslx.CodeAnalysis.Diagnostic.Create(MetaDslx.CodeAnalysis.ErrorCode.ERR_CodeGenerationError, exLocation, ex.ToString());
+                context.ReportDiagnostic(exDiag.ToMicrosoft());
                 Debug.WriteLine(ex);
             }
         }

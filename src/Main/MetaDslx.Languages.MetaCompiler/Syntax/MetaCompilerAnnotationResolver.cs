@@ -358,16 +358,16 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                 var hasErrors = false;
                 foreach (var ctr in candidates)
                 {
-                    if (IsGoodCandidate(ctr, annotation, addDiagnostics: false, ref hasErrors)) goodCandidates.Add(ctr);
+                    if (TryConstructor(ctr, annotation, assignValues: false, ref hasErrors)) goodCandidates.Add(ctr);
                 } 
                 if (goodCandidates.Count == 1)
                 {
                     annotation.CSharpConstructor = goodCandidates[0];
-                    if (hasErrors) IsGoodCandidate(annotation.CSharpConstructor, annotation, addDiagnostics: true, ref hasErrors);
+                    if (hasErrors) TryConstructor(annotation.CSharpConstructor, annotation, assignValues: true, ref hasErrors);
                 }
                 else
                 {
-                    if (candidates.Count == 1 && goodCandidates.Count == 0) IsGoodCandidate(candidates[0], annotation, addDiagnostics: true, ref hasErrors);
+                    if (candidates.Count == 1 && goodCandidates.Count == 0) TryConstructor(candidates[0], annotation, assignValues: true, ref hasErrors);
                     else Error(annotation.Location, $"Could not resolve a unique constructor for the annotation '{annotation.QualifiedName}'");
                 }
                 goodCandidates.Free();
@@ -405,7 +405,7 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
             }
         }
 
-        private bool IsGoodCandidate(IMethodSymbol ctr, Annotation annotation, bool addDiagnostics, ref bool hasErrors)
+        private bool TryConstructor(IMethodSymbol ctr, Annotation annotation, bool assignValues, ref bool hasErrors)
         {
             var positionalIndex = 0;
             var positionalArgs = true;
@@ -418,12 +418,13 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                     {
                         if (arg.Name is null || arg.Name == ctr.Parameters[positionalIndex].Name)
                         {
+                            arg.Name = ctr.Parameters[positionalIndex].Name;
                             param = ctr.Parameters[positionalIndex++];
                         }
                     }
                     else
                     {
-                        if (addDiagnostics) Error(arg.Location, $"{annotation.ConstructorArguments.Count} arguments are specified for the annotation, but only {ctr.Parameters.Length} are expected");
+                        if (assignValues) Error(arg.Location, $"{annotation.ConstructorArguments.Count} arguments are specified for the annotation, but only {ctr.Parameters.Length} are expected");
                         hasErrors = true;
                     }
                 }
@@ -441,7 +442,7 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                 if (param is not null && param.Type is not null)
                 {
                     ResolveArrayType(arg, param.Type);
-                    return TryResolveValues(arg, addDiagnostics, ref hasErrors);
+                    return TryResolveValues(arg, assignValues, ref hasErrors);
                 }
                 else
                 {

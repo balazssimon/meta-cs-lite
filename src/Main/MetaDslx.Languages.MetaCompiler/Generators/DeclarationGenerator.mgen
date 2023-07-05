@@ -28,13 +28,29 @@ namespace [language.QualifiedNamespace].Declarations
         public static MetaDslx.CodeAnalysis.Declarations.RootSingleDeclaration ForTree([language.Name]SyntaxTree syntaxTree, string scriptClassName, bool isSubmission)
         {
             var builder = new [language.Name]DeclarationTreeBuilderVisitor(syntaxTree, scriptClassName, isSubmission);
-            return builder.CreateRoot(syntaxTree.GetRoot(), [language.Grammar.RootType.ToDisplayString(Microsoft.CodeAnalysis.SymbolDisplayFormat.FullyQualifiedFormat)]);
+            [if (language.Grammar.RootType is not null)]
+            return builder.CreateRoot(syntaxTree.GetRoot(), typeof([language.Grammar.RootType.ToDisplayString(Microsoft.CodeAnalysis.SymbolDisplayFormat.FullyQualifiedFormat)]));
+            [else]
+            return builder.CreateRoot(syntaxTree.GetRoot(), null);
+            [end if]
         }
 
-        public override RootSingleDeclaration CreateDeclarationTree(SyntaxTree syntaxTree, string scriptClassName, bool isSubmission)
-        {
-            throw new NotImplementedException();
-        }
+		[foreach (var rule in language.Grammar.ParserRules)]
+			[foreach (var alt in rule.Alternatives)]
+
+        [GenerateDeclarationTreeBuilderVisit(language, alt)]
+			[end foreach]
+		[end foreach]
+
+		public virtual void VisitSkippedTokensTrivia([language.Name]SkippedTokensTriviaSyntax node)
+		{
+		}
     }
+}
+end template
+
+template GenerateDeclarationTreeBuilderVisit(Language language, ParserRuleAlternative alt)
+public virtual void Visit[alt.CSharpName]([alt.RedName] node)
+{
 }
 end template

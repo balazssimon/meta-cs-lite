@@ -787,7 +787,7 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                 var name = annot.CSharpClass?.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat);
                 if (name == $"{MetaCompilerAnnotationResolver.MetaDslxAnnotationsNamespace}.RootAnnotation")
                 {
-                    var typeProp = annot.Properties.Where(p => p.Name == "Type").FirstOrDefault();
+                    var typeProp = annot.ConstructorArguments.Where(p => p.Name == "type").FirstOrDefault();
                     grammar.RootType = typeProp?.Values.FirstOrDefault() as INamedTypeSymbol;
                 }
             }

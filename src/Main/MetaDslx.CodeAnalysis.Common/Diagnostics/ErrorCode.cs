@@ -70,6 +70,11 @@ namespace MetaDslx.CodeAnalysis
         public static readonly DiagnosticDescriptor ERR_DeclarationError = DiagnosticDescriptor.Error(nameof(ERR_DeclarationError), "Declaration error", "{0}");
 
         /// <summary>
+        /// Code generation error: {0}
+        /// </summary>
+        public static readonly DiagnosticDescriptor ERR_CodeGenerationError = DiagnosticDescriptor.Error(nameof(ERR_CodeGenerationError), "Code generation error", "{0}");
+
+        /// <summary>
         /// XMI error: {0}
         /// </summary>
         public static readonly DiagnosticDescriptor ERR_XmiError = DiagnosticDescriptor.Error(nameof(ERR_XmiError), "XMI error", "{0}");
