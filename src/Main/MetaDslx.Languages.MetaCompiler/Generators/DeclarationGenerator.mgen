@@ -18,17 +18,17 @@ namespace [language.QualifiedNamespace].Declarations
 {
     using [language.QualifiedNamespace].Syntax;
 
-    public class [language.Name]DeclarationTreeBuilderVisitor : MetaDslx.CodeAnalysis.Declarations.DeclarationTreeBuilderVisitor, I[Properties.LanguageName]SyntaxVisitor
+    public class [language.Name]DeclarationTreeBuilderVisitor : MetaDslx.CodeAnalysis.Declarations.DeclarationTreeBuilderVisitor, I[language.Name]SyntaxVisitor
     {
-        protected [Properties.LanguageName]DeclarationTreeBuilderVisitor([Properties.LanguageName]SyntaxTree syntaxTree, string scriptClassName, bool isSubmission)
+        protected [language.Name]DeclarationTreeBuilderVisitor([language.Name]SyntaxTree syntaxTree, string scriptClassName, bool isSubmission)
             : base(syntaxTree, scriptClassName, isSubmission)
         {
         }
 
-        public static MetaDslx.CodeAnalysis.Declarations.RootSingleDeclaration ForTree([Properties.LanguageName]SyntaxTree syntaxTree, string scriptClassName, bool isSubmission)
+        public static MetaDslx.CodeAnalysis.Declarations.RootSingleDeclaration ForTree([language.Name]SyntaxTree syntaxTree, string scriptClassName, bool isSubmission)
         {
-            var builder = new [Properties.LanguageName]DeclarationTreeBuilderVisitor(syntaxTree, scriptClassName, isSubmission);
-            return builder.CreateRoot(syntaxTree.GetRoot(), [Instances.MainRule().Annotations.GetObjectType(MetaCompilerAnnotationInfo.Root)]);
+            var builder = new [language.Name]DeclarationTreeBuilderVisitor(syntaxTree, scriptClassName, isSubmission);
+            return builder.CreateRoot(syntaxTree.GetRoot(), [language.Grammar.RootType.ToDisplayString(Microsoft.CodeAnalysis.SymbolDisplayFormat.FullyQualifiedFormat)]);
         }
 
         public override RootSingleDeclaration CreateDeclarationTree(SyntaxTree syntaxTree, string scriptClassName, bool isSubmission)

@@ -1,0 +1,64 @@
+namespace MetaDslx.Examples.MetaModel;
+
+using System;
+using MetaDslx.CodeAnalysis.Annotations;
+
+language MetaModel;
+
+main : namespaceDeclaration usingDeclaration* declaration* eof;
+
+namespaceDeclaration : 'namespace' qualifiedName ';';
+
+usingDeclaration : 'using' qualifier ';';
+
+declaration : enumDeclaration | classDeclaration | associationDeclaration;
+
+enumDeclaration : 'enum' name '{' enumLiterals? '}';
+
+enumLiterals : identifier (',' identifier)* ','?;
+
+classDeclaration : 'abstract'? 'class' name (':' qualifier (',' qualifier)*)? '{' propertyDeclaration* '}';
+
+propertyDeclaration : typeReference name ';';
+
+associationDeclaration : 'association' qualifier 'with' qualifier ';';
+
+typeReference : primitiveType | collectionType | qualifier;
+
+primitiveType : 'int' | 'string' | 'bool';
+
+collectionType : ('list' | 'set') '<' typeReference '>';
+
+[Name]
+qualifiedName : qualifier;
+
+[Qualifier]
+qualifier : identifier ('.' identifier)*;
+
+[Name]
+name : identifier;
+
+identifier : TIdentifier;
+
+TInteger : '0'| '1'..'9' ('0'..'9')* ;
+TDecimal : ('0'|'1'..'9' ('0'..'9')*) '.' ('0'..'9')+ ;
+
+[Default]
+[Identifier]
+TIdentifier : ('_'|'a'..'z'|'A'..'Z')+('_'|'a'..'z'|'A'..'Z'|'0'..'9')*;
+
+[Default]
+[Separator]
+TComma : ',' ;
+
+[Default]
+[Whitespace]
+hidden TWhitespace : ('\t'|' ') +;
+
+[Default]
+[EndOfLine]
+hidden TLineEnd : ('\r\n' | '\r' | '\n');
+
+hidden TSingleLineComment : '//' ('\r' | '\n')*?;
+
+hidden TMultiLineComment : '/*' .*? '*/';

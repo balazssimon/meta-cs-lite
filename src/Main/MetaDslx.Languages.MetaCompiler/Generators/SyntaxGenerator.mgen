@@ -1381,6 +1381,68 @@ namespace [language.QualifiedNamespace].Syntax
 			return [language.Name]SyntaxTree.Create(([language.Name]SyntaxNode)root, ParseData.Empty, ([language.Name]ParseOptions)options, path, null, encoding);
 		}
 
+        /// <summary>
+        /// Creates a token corresponding to a syntax kind. This method can be used for token syntax kinds whose text
+        /// can be inferred by the kind alone.
+        /// </summary>
+        /// <param name="kind">A syntax kind value for a token. These have the suffix Token or Keyword.</param>
+        /// <returns></returns>
+        public virtual SyntaxToken Token([language.Name]SyntaxKind kind)
+        {
+            return this.Token((int)kind);
+        }
+
+        /// <summary>
+        /// Creates a token corresponding to syntax kind. This method can be used for token syntax kinds whose text can
+        /// be inferred by the kind alone.
+        /// </summary>
+        /// <param name="leading">A list of trivia immediately preceding the token.</param>
+        /// <param name="kind">A syntax kind value for a token. These have the suffix Token or Keyword.</param>
+        /// <param name="trailing">A list of trivia immediately following the token.</param>
+        public virtual SyntaxToken Token(SyntaxTriviaList leading, [language.Name]SyntaxKind kind, SyntaxTriviaList trailing)
+        {
+            return this.Token(leading, (int)kind, trailing);
+        }
+
+        /// <summary>
+        /// Creates a token corresponding to syntax kind. This method gives control over token Text and ValueText.
+        /// 
+        /// For example, consider the text '&lt;see cref="operator &amp;#43;"/&gt;'.  To create a token for the value of
+        /// the operator symbol (&amp;#43;), one would call 
+        /// Token(default(SyntaxTriviaList), int.PlusToken, "&amp;#43;", "+", default(SyntaxTriviaList)).
+        /// </summary>
+        /// <param name="leading">A list of trivia immediately preceding the token.</param>
+        /// <param name="kind">A syntax kind value for a token. These have the suffix Token or Keyword.</param>
+        /// <param name="text">The text from which this token was created (e.g. lexed).</param>
+        /// <param name="valueText">How C# should interpret the text of this token.</param>
+        /// <param name="trailing">A list of trivia immediately following the token.</param>
+        public virtual SyntaxToken Token(SyntaxTriviaList leading, [language.Name]SyntaxKind kind, string text, string valueText, SyntaxTriviaList trailing)
+        {
+            return this.Token(leading, (int)kind, text, valueText, trailing);
+        }
+
+        /// <summary>
+        /// Creates a missing token corresponding to syntax kind. A missing token is produced by the parser when an
+        /// expected token is not found. A missing token has no text and normally has associated diagnostics.
+        /// </summary>
+        /// <param name="kind">A syntax kind value for a token. These have the suffix Token or Keyword.</param>
+        public virtual SyntaxToken MissingToken([language.Name]SyntaxKind kind)
+        {
+            return this.MissingToken((int)kind);
+        }
+
+        /// <summary>
+        /// Creates a missing token corresponding to syntax kind. A missing token is produced by the parser when an
+        /// expected token is not found. A missing token has no text and normally has associated diagnostics.
+        /// </summary>
+        /// <param name="leading">A list of trivia immediately preceding the token.</param>
+        /// <param name="kind">A syntax kind value for a token. These have the suffix Token or Keyword.</param>
+        /// <param name="trailing">A list of trivia immediately following the token.</param>
+        public virtual SyntaxToken MissingToken(SyntaxTriviaList leading, [language.Name]SyntaxKind kind, SyntaxTriviaList trailing)
+        {
+            return this.MissingToken(leading, (int)kind, trailing);
+        }
+
         [foreach (var rule in language.Grammar.NonFixedLexerRules)]
 
         public SyntaxToken [rule.CSharpName](string text)

@@ -30,6 +30,8 @@ foreach (var diag in inputCompilation.GetDiagnostics())
 var compilerGenerator = new MetaCompilerGenerator();
 var antlrGenerator = new AntlrCompilerGenerator();
 GeneratorDriver driver = CSharpGeneratorDriver.Create(compilerGenerator, antlrGenerator);
+
+/*
 var testMText = new AdditionalTextFile("Test.mlang", @"namespace X;
 
 using System;
@@ -100,7 +102,12 @@ hidden WS : ('\t'|' ') +;
 NEWLINE : ('\r\n' | 'r' | '\n');
 
 ");
-driver = driver.AddAdditionalTexts(ImmutableArray.Create<AdditionalText>(testMText));
+*/
+
+var mmCode = File.ReadAllText(@"..\..\..\MetaModel.txt");
+var mmLang = new AdditionalTextFile("MetaModel.mlang", mmCode);
+
+driver = driver.AddAdditionalTexts(ImmutableArray.Create<AdditionalText>(mmLang));
 driver = driver.RunGeneratorsAndUpdateCompilation(inputCompilation, out var outputCompilation, out var diagnostics);
 GeneratorDriverRunResult runResult = driver.GetRunResult();
 Console.WriteLine(runResult.GeneratedTrees.Length);
@@ -108,7 +115,7 @@ foreach (var diag in runResult.Diagnostics)
 {
     Console.WriteLine(diag);
 }
-var outputDir = @"..\..\..\..\..\Examples\MetaDslx.Examples.Sandy";
+var outputDir = @"..\..\..\..\..\Examples\MetaDslx.Examples.MetaModel\Compiler";
 foreach (var tree in runResult.GeneratedTrees)
 {
     File.WriteAllText(Path.Combine(outputDir, Path.GetFileName(tree.FilePath)), tree.GetText().ToString());
@@ -120,7 +127,7 @@ static Compilation CreateCompilation(string source)
         new[]
         {
             MetadataReference.CreateFromFile(typeof(object).GetTypeInfo().Assembly.Location),
-            MetadataReference.CreateFromFile(typeof(System.Collections.Generic.List<>).GetTypeInfo().Assembly.Location),
+            MetadataReference.CreateFromFile(typeof(List<>).GetTypeInfo().Assembly.Location),
             MetadataReference.CreateFromFile(typeof(Attribute).GetTypeInfo().Assembly.Location),
             MetadataReference.CreateFromFile(typeof(Binder).GetTypeInfo().Assembly.Location),
             MetadataReference.CreateFromFile(typeof(CodeBuilder).GetTypeInfo().Assembly.Location),

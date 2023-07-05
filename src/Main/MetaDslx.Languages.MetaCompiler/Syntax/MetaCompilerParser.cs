@@ -15,6 +15,7 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
     using System.Xml.Linq;
     using CSharpCompilation = Microsoft.CodeAnalysis.CSharp.CSharpCompilation;
     using SymbolDisplayFormat = Microsoft.CodeAnalysis.SymbolDisplayFormat;
+    using INamedTypeSymbol = Microsoft.CodeAnalysis.INamedTypeSymbol;
 
     public class MetaCompilerParser
     {
@@ -50,6 +51,7 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                     var annotationResolver = new MetaCompilerAnnotationResolver(_compilation, _language, _diagnosticBag);
                     annotationResolver.ResolveAnnotations();
                     ResolveDefaultRules();
+                    ResolveRootType();
                 }
                 _diagnostics = _diagnosticBag.ToReadOnlyAndFree();
                 _diagnosticBag = null;
@@ -419,6 +421,7 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                                 targetRule.Alternatives.Remove(token.ParserRuleAlternative);
                             }
                             var tokensElement = MakeFixedStringAlternativesElement(null, tokensAlt, null, tokens);
+                            tokensElement.Name = "tokens";
                             tokensAlt.Elements.Add(tokensElement);
                             targetRule.Alternatives.Add(tokensAlt);
                         }
@@ -679,9 +682,11 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
         {
             if (string.IsNullOrEmpty(elem.Name))
             {
-                var name = $"{elem.DefaultName}";
+                var defaultName = elem.DefaultName;
+                if (string.IsNullOrEmpty(defaultName)) defaultName = "element";
+                var name = defaultName;
                 var index = 0;
-                while (usedElementNames.Contains(name)) name = $"{elem.DefaultName}{++index}";
+                while (usedElementNames.Contains(name)) name = $"{defaultName}{++index}";
                 elem.Name = name;
                 if (elem.IsList) elem.AssignmentOperator = AssignmentOperator.PlusAssign;
             }
@@ -770,6 +775,22 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                 if (name == annotationName) return true;
             }
             return false;
+        }
+
+        private void ResolveRootType()
+        {
+            var grammar = _language.Grammar;
+            var mainRule = grammar.MainRule;
+            if (mainRule is null) return;
+            foreach (var annot in mainRule.Annotations)
+            {
+                var name = annot.CSharpClass?.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat);
+                if (name == $"{MetaCompilerAnnotationResolver.MetaDslxAnnotationsNamespace}.RootAnnotation")
+                {
+                    var typeProp = annot.Properties.Where(p => p.Name == "Type").FirstOrDefault();
+                    grammar.RootType = typeProp?.Values.FirstOrDefault() as INamedTypeSymbol;
+                }
+            }
         }
 
         private void ParseNamespace(Language language)
@@ -1424,7 +1445,7 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
             Error(_tokens.CurrentLocation, message);
         }
 
-        private void Error(Location location, string message)
+        private void Error(Location? location, string message)
         {
             var token = _tokens.CurrentToken;
             _diagnosticBag.Add(Diagnostic.Create(ErrorCode.ERR_SyntaxError, location, message));

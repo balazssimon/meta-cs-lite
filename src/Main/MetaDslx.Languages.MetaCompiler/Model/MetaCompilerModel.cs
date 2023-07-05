@@ -207,6 +207,7 @@ namespace MetaDslx.Languages.MetaCompiler.Model
         public LexerRule? DefaultSeparator { get; set; }
         public LexerRule? DefaultIdentifier { get; set; }
         public ParserRule? MainRule { get; set; }
+        public Microsoft.CodeAnalysis.INamedTypeSymbol? RootType { get; set; }
 
         public ImmutableArray<LexerRule> FixedLexerRules
         {

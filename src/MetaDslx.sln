@@ -47,7 +47,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetaDslx.CodeAnalysis.Provi
 		{D89EFDC3-9EF5-4F8D-9612-133CE1F6F8A7} = {D89EFDC3-9EF5-4F8D-9612-133CE1F6F8A7}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetaDslx.Examples.Sandy", "Examples\MetaDslx.Examples.Sandy\MetaDslx.Examples.Sandy.csproj", "{4E33E782-F37F-40C8-8D0D-D281A5A0EBA2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetaDslx.Examples.Sandy", "Examples\MetaDslx.Examples.Sandy\MetaDslx.Examples.Sandy.csproj", "{4E33E782-F37F-40C8-8D0D-D281A5A0EBA2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetaDslx.Examples.MetaModel", "Examples\MetaDslx.Examples.MetaModel\MetaDslx.Examples.MetaModel.csproj", "{D9AA545D-FE15-4AE3-AF1D-53573A0877A6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -217,6 +219,14 @@ Global
 		{4E33E782-F37F-40C8-8D0D-D281A5A0EBA2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4E33E782-F37F-40C8-8D0D-D281A5A0EBA2}.Release|x86.ActiveCfg = Release|Any CPU
 		{4E33E782-F37F-40C8-8D0D-D281A5A0EBA2}.Release|x86.Build.0 = Release|Any CPU
+		{D9AA545D-FE15-4AE3-AF1D-53573A0877A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D9AA545D-FE15-4AE3-AF1D-53573A0877A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D9AA545D-FE15-4AE3-AF1D-53573A0877A6}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D9AA545D-FE15-4AE3-AF1D-53573A0877A6}.Debug|x86.Build.0 = Debug|Any CPU
+		{D9AA545D-FE15-4AE3-AF1D-53573A0877A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D9AA545D-FE15-4AE3-AF1D-53573A0877A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D9AA545D-FE15-4AE3-AF1D-53573A0877A6}.Release|x86.ActiveCfg = Release|Any CPU
+		{D9AA545D-FE15-4AE3-AF1D-53573A0877A6}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

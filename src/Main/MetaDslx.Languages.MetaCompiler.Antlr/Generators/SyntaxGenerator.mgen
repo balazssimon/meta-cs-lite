@@ -118,7 +118,7 @@ namespace [language.QualifiedNamespace].Syntax
 					else return null;
 				}
                 var green = _tokenStream.ConsumeRealToken((AntlrSyntaxToken)token, _parser);
-				Debug.Assert(kind == TestSyntaxKind.None || green.RawKind == (int)kind);
+				Debug.Assert(kind == [language.Name]SyntaxKind.None || green.RawKind == (int)kind);
 				return green;
             }
 
@@ -135,7 +135,7 @@ namespace [language.QualifiedNamespace].Syntax
 					else return null;
 				}
                 var green = _tokenStream.ConsumeRealToken((AntlrSyntaxToken)node.Symbol, _parser);
-				Debug.Assert(kind == TestSyntaxKind.None || green.RawKind == (int)kind);
+				Debug.Assert(kind == [language.Name]SyntaxKind.None || green.RawKind == (int)kind);
 				return green;
 			}
 
