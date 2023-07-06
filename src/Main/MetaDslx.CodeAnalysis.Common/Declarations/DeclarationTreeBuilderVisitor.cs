@@ -211,5 +211,10 @@ namespace MetaDslx.CodeAnalysis.Declarations
         {
             if (!_enabled) return;
         }
+
+        protected virtual void VisitToken(SyntaxToken token)
+        {
+
+        }
     }
 }

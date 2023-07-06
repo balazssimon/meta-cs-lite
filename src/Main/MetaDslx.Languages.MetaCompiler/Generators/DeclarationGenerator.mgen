@@ -11,6 +11,9 @@ generator RoslynApiGenerator
 template GenerateDeclarationTreeBuilderVisitor(Language language)
 using System;
 using MetaDslx.CodeAnalysis;
+[foreach (var use in language.Usings)]
+using [if (use.Alias is not null)][use.Alias] = [end if][use.QualifiedReference];
+[end foreach]
 
 #nullable enable
 
@@ -62,8 +65,7 @@ end template
 
 template GenerateDeclarationTreeBuilderVisitBody(Language language, ParserRuleAlternative alt, ref int annotIndex)
 [foreach (var elem in alt.Elements)]
-[var body = GenerateDeclarationTreeBuilderVisitElement(language, alt, elem)]
-[GenerateDeclarationTreeBuilderVisitAnnotations(elem.Annotations, body, ref annotIndex)]
+[GenerateDeclarationTreeBuilderVisitElement(language, alt, elem, ref annotIndex)]
 [end foreach]    
 end template
 
@@ -89,15 +91,89 @@ finally
 }
 end template
 
-template GenerateDeclarationTreeBuilderVisitElement(Language language, ParserRuleAlternative alt, ParserRuleElement elem)
+template GenerateDeclarationTreeBuilderVisitElement(Language language, ParserRuleAlternative alt, ParserRuleElement elem, ref int annotIndex)
 	[if (elem.IsList)]
-this.VisitList(node.[elem.PropertyName]);
+var [elem.ParameterName]List = node.[elem.PropertyName];
+for (var [elem.ParameterName]Index = 0; [elem.ParameterName]Index < [elem.ParameterName]List.Count; ++[elem.ParameterName]Index)
+{
+    [if (elem.IsSeparated && elem is ParserRuleListElement listElem)]
+    [if (listElem.ListKind == ListKind.WithFirstItem || listElem.ListKind == ListKind.WithFirstItemSeparator)]
+    if ([elem.ParameterName]Index == 0)
+    {
+        [var elemBody = "this.Visit(node."+elem.PropertyName+"["+elem.ParameterName+"Index]);"]
+        [GenerateDeclarationTreeBuilderVisitAnnotations(listElem.FirstItem.Annotations, elemBody, ref annotIndex)]
+    }
+    [end if]
+    [if (listElem.ListKind == ListKind.WithLastItem || listElem.ListKind == ListKind.WithLastItemSeparator || listElem.ListKind == ListKind.WithFirstItemSeparator)]
+    [if (listElem.ListKind == ListKind.WithFirstItemSeparator)]else [end if]if ([elem.ParameterName]Index == [elem.ParameterName]List.Count - 1)
+    {
+        [if (listElem.ListKind == ListKind.WithLastItem || listElem.ListKind == ListKind.WithLastItemSeparator)]
+            [var elemBody = "this.Visit(node."+elem.PropertyName+"["+elem.ParameterName+"Index]);"]
+        [GenerateDeclarationTreeBuilderVisitAnnotations(listElem.LastItem.Annotations, elemBody, ref annotIndex)]
+        [end if]
+        [if (listElem.ListKind == ListKind.WithFirstItemSeparator || listElem.ListKind == ListKind.WithLastItemSeparator)]
+        if ([elem.ParameterName]Index == [elem.ParameterName]List.SeparatorCount - 1)
+        {
+            [var elemBody = "this.VisitToken(node."+elem.PropertyName+".GetSeparator("+elem.ParameterName+"Index));"]
+            [GenerateDeclarationTreeBuilderVisitAnnotations(listElem.LastSeparator.Annotations, elemBody, ref annotIndex)]
+        }
+        [end if]
+    }
+    [end if]
+    [if (listElem.ListKind == ListKind.WithFirstItem || listElem.ListKind == ListKind.WithLastItem || listElem.ListKind == ListKind.WithLastItemSeparator || listElem.ListKind == ListKind.WithFirstItemSeparator)]
+    else
+    {
+        [var elemBody = GenerateDeclarationTreeBuilderVisitListElement(listElem, ref annotIndex)]
+        [GenerateDeclarationTreeBuilderVisitAnnotations(listElem.RepeatedRule.Annotations, elemBody, ref annotIndex)]
+    }
+    [else]
+    [var elemBody = GenerateDeclarationTreeBuilderVisitListElement(listElem, ref annotIndex)]
+    [GenerateDeclarationTreeBuilderVisitAnnotations(listElem.RepeatedRule.Annotations, elemBody, ref annotIndex)]
+    [end if]
+        [else if (elem.IsToken)]
+            [var elemBody = "this.VisitToken(node."+elem.PropertyName+"["+elem.ParameterName+"Index]);"]
+    [GenerateDeclarationTreeBuilderVisitAnnotations(elem.Annotations, elemBody, ref annotIndex)]
+        [else]
+            [var elemBody = "this.Visit(node."+elem.PropertyName+"["+elem.ParameterName+"Index]);"]
+    [GenerateDeclarationTreeBuilderVisitAnnotations(elem.Annotations, elemBody, ref annotIndex)]
+        [end if]
+}
 	[else]
 		[if (elem.IsToken)]
-this.VisitToken(node.[elem.PropertyName]);
+            [var elemBody = "this.VisitToken(node."+elem.PropertyName+");"]
+            [if (elem is ParserRuleFixedStringAlternativesElement fixedAltsElem)]
+switch (([language.Name]SyntaxKind)node.[elem.PropertyName].RawKind)
+{
+                [foreach (var fixedAlt in fixedAltsElem.Alternatives)]
+case [language.Name]SyntaxKind.[fixedAlt.CSharpName]:
+    [GenerateDeclarationTreeBuilderVisitAnnotations(fixedAlt.Annotations, elemBody, ref annotIndex)]
+    break;
+                [end foreach]
+}
+            [else]
+if (node.[elem.PropertyName].RawKind != (int)[language.Name]SyntaxKind.None)
+{
+    [GenerateDeclarationTreeBuilderVisitAnnotations(elem.Annotations, elemBody, ref annotIndex)]
+}
+            [end if]
 		[else]
-this.Visit(node.[elem.PropertyName]);
+            [var elemBody = "this.Visit(node."+elem.PropertyName+");"]
+    [GenerateDeclarationTreeBuilderVisitAnnotations(elem.Annotations, elemBody, ref annotIndex)]
 		[end if]
 	[end if]
+end template
+
+template GenerateDeclarationTreeBuilderVisitListElement(ParserRuleListElement listElem, ref int annotIndex)
+    [if (listElem.IsReversed)]
+        [var sepBody = "this.VisitToken(node."+listElem.PropertyName+".GetSeparator("+listElem.ParameterName+"Index));"]
+[GenerateDeclarationTreeBuilderVisitAnnotations(listElem.RepeatedSeparator.Annotations, sepBody, ref annotIndex)]
+        [var itemBody = "this.Visit(node."+listElem.PropertyName+"["+listElem.ParameterName+"Index]);"]
+[GenerateDeclarationTreeBuilderVisitAnnotations(listElem.RepeatedItem.Annotations, itemBody, ref annotIndex)]
+    [else]
+        [var itemBody = "this.Visit(node."+listElem.PropertyName+"["+listElem.ParameterName+"Index]);"]
+[GenerateDeclarationTreeBuilderVisitAnnotations(listElem.RepeatedItem.Annotations, itemBody, ref annotIndex)]
+        [var sepBody = "this.VisitToken(node."+listElem.PropertyName+".GetSeparator("+listElem.ParameterName+"Index));"]
+[GenerateDeclarationTreeBuilderVisitAnnotations(listElem.RepeatedSeparator.Annotations, sepBody, ref annotIndex)]
+    [end if]
 end template
 
