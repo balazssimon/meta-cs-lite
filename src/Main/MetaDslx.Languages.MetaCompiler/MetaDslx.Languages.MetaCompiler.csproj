@@ -33,4 +33,8 @@
 		<AdditionalFiles Include="Generators\*.mgen" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <None Remove="generators\BinderGenerator.mgen" />
+	</ItemGroup>
+
 </Project>

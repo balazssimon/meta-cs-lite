@@ -1,0 +1,181 @@
+namespace MetaDslx.Languages.MetaCompiler.Generators
+
+using MetaDslx.Languages.MetaCompiler.Model
+using System.Collections.Generic;
+using System.Collections.Immutable;
+using System.Linq
+
+generator RoslynApiGenerator
+
+
+template GenerateBinderFactoryVisitor(Language language)
+using System;
+using MetaDslx.CodeAnalysis;
+[foreach (var use in language.Usings)]
+using [if (use.Alias is not null)][use.Alias] = [end if][use.QualifiedReference];
+[end foreach]
+
+#nullable enable
+
+namespace [language.QualifiedNamespace].Syntax
+{
+    public class [language.Name]BinderFactoryVisitor : MetaDslx.CodeAnalysis.Binding.BinderFactoryVisitor, I[language.Name]SyntaxVisitor
+    {
+        internal [language.Name]BinderFactoryVisitor(MetaDslx.CodeAnalysis.Binding.BinderFactory binderFactory)
+            : base(binderFactory)
+        {
+        }
+
+		[foreach (var rule in language.Grammar.ParserRules)]
+			[foreach (var alt in rule.Alternatives)]
+
+        [GenerateBinderFactoryVisit(language, rule, alt)]
+			[end foreach]
+		[end foreach]
+
+		public virtual void VisitSkippedTokensTrivia([language.Name]SkippedTokensTriviaSyntax node)
+		{
+		}
+    }
+}
+end template
+
+template GenerateBinderFactoryVisit(Language language, ParserRule rule, ParserRuleAlternative alt)
+public virtual void Visit[alt.CSharpName]([alt.RedName] node)
+{
+    [var annotIndex = 0]
+	[var body = GenerateBinderFactoryVisitBody(language, alt, ref annotIndex)]
+    [body = GenerateBinderFactoryVisitAnnotations(alt.Annotations, body, ref annotIndex)]
+    [body = GenerateBinderFactoryVisitAnnotations(rule.Annotations, body, ref annotIndex)]
+    [body]
+}
+end template
+
+template GenerateBinderFactoryVisitBody(Language language, ParserRuleAlternative alt, ref int annotIndex)
+[foreach (var elem in alt.Elements)]
+[GenerateBinderFactoryVisitElement(language, alt, elem, ref annotIndex)]
+[end foreach]    
+end template
+
+template GenerateBinderFactoryVisitAnnotations(IEnumerable<Annotation> annotations, string body, ref int annotIndex)
+[foreach (var annot in annotations.Reverse())]
+[body = GenerateBinderFactoryVisitAnnotation(annot, body, ref annotIndex)]
+[end foreach]
+[body]
+end template
+
+template GenerateBinderFactoryVisitAnnotation(Annotation annot, string body, ref int annotIndex)
+[var annotVarName = "annot"+(annotIndex++)]
+[var annotName = annot.Name.LastOrDefault()]
+var [annotVarName] = new [annot.QualifiedName]Annotation([GenerateAnnotationConstructorArguments(annot)]) { [GenerateAnnotationPropertyInitializers(annot)] };
+try
+{
+    this.Begin([annotVarName], node);
+    [body]
+}
+finally
+{
+    this.End([annotVarName]);
+}
+end template
+
+template GenerateAnnotationConstructorArguments(Annotation annot)
+[$single-line]
+[foreach (var arg in annot.ConstructorArguments) separator ", "]
+[arg.Name]: [arg.CSharpValue]
+[end foreach]
+end template
+
+template GenerateAnnotationPropertyInitializers(Annotation annot)
+[$single-line]
+[foreach (var prop in annot.Properties) separator ", "]
+[prop.Name]: [prop.CSharpValue]
+[end foreach]
+end template
+
+template GenerateBinderFactoryVisitElement(Language language, ParserRuleAlternative alt, ParserRuleElement elem, ref int annotIndex)
+	[if (elem.IsList)]
+var [elem.ParameterName]List = node.[elem.PropertyName];
+for (var [elem.ParameterName]Index = 0; [elem.ParameterName]Index < [elem.ParameterName]List.Count; ++[elem.ParameterName]Index)
+{
+    [if (elem.IsSeparated && elem is ParserRuleListElement listElem)]
+    [if (listElem.ListKind == ListKind.WithFirstItem || listElem.ListKind == ListKind.WithFirstItemSeparator)]
+    if ([elem.ParameterName]Index == 0)
+    {
+        [var elemBody = "this.Visit(node."+elem.PropertyName+"["+elem.ParameterName+"Index]);"]
+        [GenerateBinderFactoryVisitAnnotations(listElem.FirstItem.Annotations, elemBody, ref annotIndex)]
+    }
+    [end if]
+    [if (listElem.ListKind == ListKind.WithLastItem || listElem.ListKind == ListKind.WithLastItemSeparator || listElem.ListKind == ListKind.WithFirstItemSeparator)]
+    [if (listElem.ListKind == ListKind.WithFirstItemSeparator)]else [end if]if ([elem.ParameterName]Index == [elem.ParameterName]List.Count - 1)
+    {
+        [if (listElem.ListKind == ListKind.WithLastItem || listElem.ListKind == ListKind.WithLastItemSeparator)]
+            [var elemBody = "this.Visit(node."+elem.PropertyName+"["+elem.ParameterName+"Index]);"]
+        [GenerateBinderFactoryVisitAnnotations(listElem.LastItem.Annotations, elemBody, ref annotIndex)]
+        [end if]
+        [if (listElem.ListKind == ListKind.WithFirstItemSeparator || listElem.ListKind == ListKind.WithLastItemSeparator)]
+        if ([elem.ParameterName]Index == [elem.ParameterName]List.SeparatorCount - 1)
+        {
+            [var elemBody = "this.VisitToken(node."+elem.PropertyName+".GetSeparator("+elem.ParameterName+"Index));"]
+            [GenerateBinderFactoryVisitAnnotations(listElem.LastSeparator.Annotations, elemBody, ref annotIndex)]
+        }
+        [end if]
+    }
+    [end if]
+    [if (listElem.ListKind == ListKind.WithFirstItem || listElem.ListKind == ListKind.WithLastItem || listElem.ListKind == ListKind.WithLastItemSeparator || listElem.ListKind == ListKind.WithFirstItemSeparator)]
+    else
+    {
+        [var elemBody = GenerateBinderFactoryVisitListElement(listElem, ref annotIndex)]
+        [GenerateBinderFactoryVisitAnnotations(listElem.RepeatedRule.Annotations, elemBody, ref annotIndex)]
+    }
+    [else]
+    [var elemBody = GenerateBinderFactoryVisitListElement(listElem, ref annotIndex)]
+    [GenerateBinderFactoryVisitAnnotations(listElem.RepeatedRule.Annotations, elemBody, ref annotIndex)]
+    [end if]
+        [else if (elem.IsToken)]
+            [var elemBody = "// this.VisitToken(node."+elem.PropertyName+"["+elem.ParameterName+"Index]);"]
+    [GenerateBinderFactoryVisitAnnotations(elem.Annotations, "", ref annotIndex)]
+        [else]
+            [var elemBody = "this.Visit(node."+elem.PropertyName+"["+elem.ParameterName+"Index]);"]
+    [GenerateBinderFactoryVisitAnnotations(elem.Annotations, elemBody, ref annotIndex)]
+        [end if]
+}
+	[else]
+		[if (elem.IsToken)]
+            [var elemBody = "// this.VisitToken(node."+elem.PropertyName+");"]
+            [if (elem is ParserRuleFixedStringAlternativesElement fixedAltsElem)]
+switch (node.[elem.PropertyName].Get[language.Name]Kind())
+{
+                [foreach (var fixedAlt in fixedAltsElem.Alternatives)]
+case [language.Name]SyntaxKind.[fixedAlt.CSharpName]:
+    [GenerateBinderFactoryVisitAnnotations(fixedAlt.Annotations, elemBody, ref annotIndex)]
+    break;
+                [end foreach]
+}
+            [else]
+if (node.[elem.PropertyName].Get[language.Name]Kind() != [language.Name]SyntaxKind.None)
+{
+    [GenerateBinderFactoryVisitAnnotations(elem.Annotations, elemBody, ref annotIndex)]
+}
+            [end if]
+		[else]
+            [var elemBody = "this.Visit(node."+elem.PropertyName+");"]
+[GenerateBinderFactoryVisitAnnotations(elem.Annotations, elemBody, ref annotIndex)]
+		[end if]
+	[end if]
+end template
+
+template GenerateBinderFactoryVisitListElement(ParserRuleListElement listElem, ref int annotIndex)
+    [if (listElem.IsReversed)]
+        [var sepBody = "// this.VisitToken(node."+listElem.PropertyName+".GetSeparator("+listElem.ParameterName+"Index));"]
+[GenerateBinderFactoryVisitAnnotations(listElem.RepeatedSeparator.Annotations, sepBody, ref annotIndex)]
+        [var itemBody = "this.Visit(node."+listElem.PropertyName+"["+listElem.ParameterName+"Index]);"]
+[GenerateBinderFactoryVisitAnnotations(listElem.RepeatedItem.Annotations, itemBody, ref annotIndex)]
+    [else]
+        [var itemBody = "this.Visit(node."+listElem.PropertyName+"["+listElem.ParameterName+"Index]);"]
+[GenerateBinderFactoryVisitAnnotations(listElem.RepeatedItem.Annotations, itemBody, ref annotIndex)]
+        [var sepBody = "// this.VisitToken(node."+listElem.PropertyName+".GetSeparator("+listElem.ParameterName+"Index));"]
+[GenerateBinderFactoryVisitAnnotations(listElem.RepeatedSeparator.Annotations, sepBody, ref annotIndex)]
+    [end if]
+end template
+

@@ -4,11 +4,13 @@ using MetaDslx.Languages.MetaCompiler.Model
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq
+using Roslyn.Utilities;
 
 generator RoslynApiGenerator
 
 
 template GenerateSyntaxKind(Language language)
+using MetaDslx.CodeAnalysis;
 using MetaDslx.CodeAnalysis.Syntax.InternalSyntax;
 
 #nullable enable
@@ -52,6 +54,14 @@ namespace [language.QualifiedNamespace].Syntax
             [end foreach]
 		[end foreach]
 	}
+
+    public static class [language.Name]SyntaxKindExtensions
+    {
+        public static [language.Name]SyntaxKind Get[language.Name]Kind(this SyntaxToken token)
+        {
+            return ([language.Name]SyntaxKind)token.RawKind;
+        }
+    }
 }
 end template
 
@@ -1472,6 +1482,12 @@ namespace [language.QualifiedNamespace].Syntax
             [end foreach]
 		    };
         }
+
+        public override MetaDslx.CodeAnalysis.Binding.BinderFactoryVisitor CreateBinderFactoryVisitor(MetaDslx.CodeAnalysis.Binding.BinderFactory binderFactory)
+        {
+            return new [language.Name]BinderFactoryVisitor(binderFactory);
+        }
+
     }
 }	
 end template
@@ -1487,7 +1503,7 @@ public [alt.RedName] [alt.CSharpName]([alt.RedUpdateParameters])
 			[if (elem is ParserRuleFixedStringAlternativesElement fixedAlts)]
 	if ([foreach (var fixedAlt in fixedAlts.Alternatives) separator " && "][elem.ParameterName].RawKind != (int)[language.Name]SyntaxKind.[fixedAlt.CSharpName][end foreach]) throw new ArgumentException(nameof([elem.ParameterName]));
 			[else if (elem.IsToken)]
-	if ([elem.ParameterName].RawKind != (int)[language.Name]SyntaxKind.[elem.CSharpName]) throw new ArgumentException(nameof([elem.ParameterName]));
+	if ([elem.ParameterName].RawKind != (int)[language.Name]SyntaxKind.[elem.DefaultName.ToPascalCase()]) throw new ArgumentException(nameof([elem.ParameterName]));
 			[end if]
 		[end if]
 	[end foreach]

@@ -79,7 +79,7 @@ end template
 template GenerateDeclarationTreeBuilderVisitAnnotation(Annotation annot, string body, ref int annotIndex)
 [var annotVarName = "annot"+(annotIndex++)]
 [var annotName = annot.Name.LastOrDefault()]
-var [annotVarName] = new [annot.QualifiedName]Annotation();
+var [annotVarName] = new [annot.QualifiedName]Annotation([GenerateAnnotationConstructorArguments(annot)]) { [GenerateAnnotationPropertyInitializers(annot)] };
 try
 {
     this.Begin[annotName](node, [annotVarName]);
@@ -142,7 +142,7 @@ for (var [elem.ParameterName]Index = 0; [elem.ParameterName]Index < [elem.Parame
 		[if (elem.IsToken)]
             [var elemBody = "this.VisitToken(node."+elem.PropertyName+");"]
             [if (elem is ParserRuleFixedStringAlternativesElement fixedAltsElem)]
-switch (([language.Name]SyntaxKind)node.[elem.PropertyName].RawKind)
+switch (node.[elem.PropertyName].Get[language.Name]Kind())
 {
                 [foreach (var fixedAlt in fixedAltsElem.Alternatives)]
 case [language.Name]SyntaxKind.[fixedAlt.CSharpName]:
@@ -151,14 +151,14 @@ case [language.Name]SyntaxKind.[fixedAlt.CSharpName]:
                 [end foreach]
 }
             [else]
-if (node.[elem.PropertyName].RawKind != (int)[language.Name]SyntaxKind.None)
+if (node.[elem.PropertyName].Get[language.Name]Kind() != [language.Name]SyntaxKind.None)
 {
     [GenerateDeclarationTreeBuilderVisitAnnotations(elem.Annotations, elemBody, ref annotIndex)]
 }
             [end if]
 		[else]
             [var elemBody = "this.Visit(node."+elem.PropertyName+");"]
-    [GenerateDeclarationTreeBuilderVisitAnnotations(elem.Annotations, elemBody, ref annotIndex)]
+[GenerateDeclarationTreeBuilderVisitAnnotations(elem.Annotations, elemBody, ref annotIndex)]
 		[end if]
 	[end if]
 end template

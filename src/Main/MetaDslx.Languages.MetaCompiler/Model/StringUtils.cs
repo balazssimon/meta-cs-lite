@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace MetaDslx.Languages.MetaCompiler.Model
 {
@@ -88,6 +89,60 @@ namespace MetaDslx.Languages.MetaCompiler.Model
                     sb.Builder.Append(text[i]);
                 }
             }
+            return sb.ToStringAndFree();
+        }
+
+        public static string EncodeChar(char ch)
+        {
+            var sb = PooledStringBuilder.GetInstance();
+            var builder = sb.Builder;
+            builder.Append("'");
+            if (ch == 34 || ch == 92)
+            {
+                builder.Append("\\");
+                builder.Append(ch);
+            }
+            else if (ch == 0)
+            {
+                builder.Append("\\0");
+            }
+            else if (ch == 7)
+            {
+                builder.Append("\\a");
+            }
+            else if (ch == 8)
+            {
+                builder.Append("\\b");
+            }
+            else if (ch == 9)
+            {
+                builder.Append("\\t");
+            }
+            else if (ch == 10)
+            {
+                builder.Append("\\n");
+            }
+            else if (ch == 11)
+            {
+                builder.Append("\\v");
+            }
+            else if (ch == 12)
+            {
+                builder.Append("\\f");
+            }
+            else if (ch == 13)
+            {
+                builder.Append("\\r");
+            }
+            else if (ch >= 32 && ch <= 127) //ascii
+            {
+                builder.Append(ch);
+            }
+            else
+            {
+                builder.Append(string.Format(@"\u{0:x4}", (int)ch));
+            }
+            builder.Append("'");
             return sb.ToStringAndFree();
         }
 

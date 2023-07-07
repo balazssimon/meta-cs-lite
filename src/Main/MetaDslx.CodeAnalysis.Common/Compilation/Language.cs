@@ -1,4 +1,5 @@
-﻿using MetaDslx.CodeAnalysis.Declarations;
+﻿using MetaDslx.CodeAnalysis.Binding;
+using MetaDslx.CodeAnalysis.Declarations;
 using MetaDslx.CodeAnalysis.Syntax;
 using MetaDslx.CodeAnalysis.Syntax.InternalSyntax;
 using MetaDslx.CodeAnalysis.Text;
@@ -24,6 +25,7 @@ namespace MetaDslx.CodeAnalysis
         public Language()
         {
             var services = new ServiceCollection();
+            services.AddSingleton<Language>(this);
             RegisterServicesCore(services);
             _serviceProvider = services.BuildServiceProvider(validateScopes: true);
             _syntaxFacts = _serviceProvider.GetRequiredService<SyntaxFacts>();
@@ -254,6 +256,12 @@ namespace MetaDslx.CodeAnalysis
             {
                 throw new NotImplementedException();
             }
+
+            public override BinderFactoryVisitor CreateBinderFactoryVisitor(BinderFactory binderFactory)
+            {
+                throw new NotImplementedException();
+            }
+
         }
 
         private class NoCompilationFactory : CompilationFactory

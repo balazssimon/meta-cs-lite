@@ -10,6 +10,7 @@ using System.Xml.Linq;
 using Roslyn.Utilities;
 using MetaDslx.CodeAnalysis.Text;
 using MetaDslx.CodeAnalysis.Syntax.InternalSyntax;
+using MetaDslx.CodeAnalysis.Binding;
 
 namespace MetaDslx.CodeAnalysis.Syntax
 {
@@ -901,6 +902,8 @@ namespace MetaDslx.CodeAnalysis.Syntax
             CancellationToken cancellationToken = default);
 
         public abstract SyntaxTree MakeSyntaxTree(SyntaxNode root, ParseOptions? options = null, string path = "", Encoding? encoding = null);
+
+        public abstract BinderFactoryVisitor CreateBinderFactoryVisitor(BinderFactory binderFactory);
 
     }
 }

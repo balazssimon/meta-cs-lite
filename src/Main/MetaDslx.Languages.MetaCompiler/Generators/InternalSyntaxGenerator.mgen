@@ -4,6 +4,7 @@ using MetaDslx.Languages.MetaCompiler.Model
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq
+using Roslyn.Utilities;
 
 generator RoslynApiGenerator
 
@@ -1287,7 +1288,7 @@ template GenerateInternalSyntaxFactoryCreate(Language language, ParserRuleAltern
 					[if (elem is ParserRuleFixedStringAlternativesElement fixedAlts)]
 			if ([if (elem.IsOptional)][elem.ParameterName] is not null && [end if][foreach (var fixedAlt in fixedAlts.Alternatives) separator " && "][elem.ParameterName].RawKind != (int)[language.Name]SyntaxKind.[fixedAlt.CSharpName][end foreach]) throw new ArgumentException(nameof([elem.ParameterName]));
 					[else if (elem.IsToken)]
-			if ([if (elem.IsOptional)][elem.ParameterName] is not null && [end if][elem.ParameterName].RawKind != (int)[language.Name]SyntaxKind.[elem.CSharpName]) throw new ArgumentException(nameof([elem.ParameterName]));
+			if ([if (elem.IsOptional)][elem.ParameterName] is not null && [end if][elem.ParameterName].RawKind != (int)[language.Name]SyntaxKind.[elem.DefaultName.ToPascalCase()]) throw new ArgumentException(nameof([elem.ParameterName]));
 					[end if]
 				[else if (elem.IsSeparated)]
 					[if (elem.IsReversed)]

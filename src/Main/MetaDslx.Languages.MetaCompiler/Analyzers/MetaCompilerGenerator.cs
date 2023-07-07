@@ -75,8 +75,10 @@ namespace MetaDslx.Languages.MetaCompiler.Analyzers
                                 spc.AddSource($"{fileName}.MetaCompiler.SyntaxVisitor.g.cs", syntaxVisitorCode);
                                 var syntaxFactoryCode = generator.GenerateSyntaxFactory(language);
                                 spc.AddSource($"{fileName}.MetaCompiler.SyntaxFactory.g.cs", syntaxFactoryCode);
-                                var declarationTreeBuilderVisitorCode = generator.GenerateDeclarationTreeBuilderVisitor(language);
-                                spc.AddSource($"{fileName}.MetaCompiler.DeclarationTreeBuilderVisitor.g.cs", declarationTreeBuilderVisitorCode);
+                                //var declarationTreeBuilderVisitorCode = generator.GenerateDeclarationTreeBuilderVisitor(language);
+                                //spc.AddSource($"{fileName}.MetaCompiler.DeclarationTreeBuilderVisitor.g.cs", declarationTreeBuilderVisitorCode);
+                                var binderFactoryVisitorCode = generator.GenerateBinderFactoryVisitor(language);
+                                spc.AddSource($"{fileName}.MetaCompiler.BinderFactoryVisitor.g.cs", binderFactoryVisitorCode);
                                 var compilationFactoryCode = generator.GenerateCompilationFactory(language);
                                 spc.AddSource($"{fileName}.MetaCompiler.CompilationFactory.g.cs", compilationFactoryCode);
                             }

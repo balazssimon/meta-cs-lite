@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.NetworkInformation;
 using System.Runtime.CompilerServices;
@@ -49,7 +50,10 @@ namespace MetaDslx.Languages.MetaCompiler.Model
     {
         Single,
         Array,
-        ImmutableCollection,
+        ImmutableArray,
+        ImmutableList,
+        ImmutableHashSet,
+        ImmutableSortedSet,
         GenericCollection
     }
 
@@ -163,6 +167,132 @@ namespace MetaDslx.Languages.MetaCompiler.Model
         public Microsoft.CodeAnalysis.ITypeSymbol? CSharpCoreType { get; set; }
 
         public Location Location { get; set; }
+
+        public string CSharpValue
+        {
+            get
+            {
+                var builder = PooledStringBuilder.GetInstance();
+                var sb = builder.Builder;
+                var separator = "";
+                switch (ValueKind)
+                {
+                    case AnnotationValueKind.Array:
+                    case AnnotationValueKind.ImmutableArray:
+                    case AnnotationValueKind.ImmutableList:
+                    case AnnotationValueKind.ImmutableHashSet:
+                    case AnnotationValueKind.ImmutableSortedSet:
+                        sb.Append("new ");
+                        sb.Append(CSharpItemType.ToDisplayString(Microsoft.CodeAnalysis.SymbolDisplayFormat.FullyQualifiedFormat));
+                        sb.Append("[] ");
+                        break;
+                    default:
+                        break;
+                }
+                switch (ValueKind)
+                {
+                    case AnnotationValueKind.Single:
+                        if (!Values.IsDefaultOrEmpty && Values.Length >= 1) AppendItemValue(sb, Values[0]);
+                        break;
+                    case AnnotationValueKind.Array:
+                    case AnnotationValueKind.ImmutableArray:
+                    case AnnotationValueKind.ImmutableList:
+                    case AnnotationValueKind.ImmutableHashSet:
+                    case AnnotationValueKind.ImmutableSortedSet:
+                    case AnnotationValueKind.GenericCollection:
+                        sb.Append("{");
+                        if (!Values.IsDefaultOrEmpty)
+                        {
+                            foreach (var value in Values)
+                            {
+                                sb.Append(separator);
+                                AppendItemValue(sb, value);
+                                separator = ", ";
+                            }
+                        }
+                        sb.Append("}");
+                        break;
+                    default:
+                        break;
+                }
+                switch (ValueKind)
+                {
+                    case AnnotationValueKind.ImmutableArray:
+                    case AnnotationValueKind.ImmutableList:
+                    case AnnotationValueKind.ImmutableHashSet:
+                    case AnnotationValueKind.ImmutableSortedSet:
+                        sb.Append(".To");
+                        sb.Append(ValueKind.ToString());
+                        sb.Append("()");
+                        break;
+                    default:
+                        break;
+                }
+                return builder.ToStringAndFree();
+            }
+        }
+
+        private void AppendItemValue(StringBuilder sb, object? value)
+        {
+            if (value is null)
+            {
+                if (ItemTypeKind.HasFlag(AnnotationItemTypeKind.Nullable)) sb.Append("null");
+                else sb.Append("default");
+            }
+            else if (ItemTypeKind.HasFlag(AnnotationItemTypeKind.SystemType))
+            {
+                sb.Append("typeof(");
+                var nts = value as Microsoft.CodeAnalysis.INamedTypeSymbol;
+                if (nts != null)
+                {
+                    sb.Append(nts.ToDisplayString(Microsoft.CodeAnalysis.SymbolDisplayFormat.FullyQualifiedFormat));
+                }
+                sb.Append(")");
+            }
+            else if (ItemTypeKind.HasFlag(AnnotationItemTypeKind.EnumType))
+            {
+                sb.Append(CSharpCoreType.ToDisplayString(Microsoft.CodeAnalysis.SymbolDisplayFormat.FullyQualifiedFormat));
+                sb.Append(".");
+                sb.Append(value.ToString());
+            }
+            else if (ItemTypeKind.HasFlag(AnnotationItemTypeKind.BoolType))
+            {
+                if (value is bool boolValue && boolValue) sb.Append("true");
+                else sb.Append("false");
+            }
+            else if (ItemTypeKind.HasFlag(AnnotationItemTypeKind.CharType))
+            {
+                if (value is char charValue) sb.Append(StringUtils.EncodeChar(charValue));
+                else sb.Append("'\\0'");
+            }
+            else if (ItemTypeKind.HasFlag(AnnotationItemTypeKind.StringType))
+            {
+                if (value is string stringValue) sb.Append(StringUtils.EncodeString(stringValue));
+                else sb.Append("\"\"");
+            }
+            else if (ItemTypeKind.HasFlag(AnnotationItemTypeKind.ByteType) ||
+                ItemTypeKind.HasFlag(AnnotationItemTypeKind.SByteType) ||
+                ItemTypeKind.HasFlag(AnnotationItemTypeKind.ShortType) ||
+                ItemTypeKind.HasFlag(AnnotationItemTypeKind.UShortType) ||
+                ItemTypeKind.HasFlag(AnnotationItemTypeKind.IntType) ||
+                ItemTypeKind.HasFlag(AnnotationItemTypeKind.UIntType) ||
+                ItemTypeKind.HasFlag(AnnotationItemTypeKind.LongType) ||
+                ItemTypeKind.HasFlag(AnnotationItemTypeKind.ULongType) ||
+                ItemTypeKind.HasFlag(AnnotationItemTypeKind.FloatType) ||
+                ItemTypeKind.HasFlag(AnnotationItemTypeKind.DoubleType) ||
+                ItemTypeKind.HasFlag(AnnotationItemTypeKind.DecimalType))
+            {
+                sb.Append(value.ToString());
+            }
+            else if (ItemTypeKind.HasFlag(AnnotationItemTypeKind.ObjectType))
+            {
+                sb.Append(value.ToString());
+            }
+            else 
+            {
+                Debug.Assert(false);
+            }
+        }
 
         public override string ToString()
         {

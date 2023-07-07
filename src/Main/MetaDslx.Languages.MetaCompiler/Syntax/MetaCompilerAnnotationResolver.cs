@@ -363,7 +363,7 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                 if (goodCandidates.Count == 1)
                 {
                     annotation.CSharpConstructor = goodCandidates[0];
-                    if (hasErrors) TryConstructor(annotation.CSharpConstructor, annotation, assignValues: true, ref hasErrors);
+                    TryConstructor(annotation.CSharpConstructor, annotation, assignValues: true, ref hasErrors);
                 }
                 else
                 {
@@ -442,7 +442,7 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                 if (param is not null && param.Type is not null)
                 {
                     ResolveArrayType(arg, param.Type);
-                    return TryResolveValues(arg, assignValues, ref hasErrors);
+                    if (!TryResolveValues(arg, assignValues, ref hasErrors)) return false;
                 }
                 else
                 {
@@ -475,7 +475,24 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                 var originalTypeName = genericType.OriginalDefinition.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat);
                 if (WellKnownImmutableCollectionTypes.Contains(originalTypeName))
                 {
-                    prop.ValueKind = AnnotationValueKind.ImmutableCollection;
+                    switch (originalTypeName)
+                    {
+                        case "System.Collections.Immutable.ImmutableArray<>":
+                            prop.ValueKind = AnnotationValueKind.ImmutableArray;
+                            break;
+                        case "System.Collections.Immutable.ImmutableList<>":
+                            prop.ValueKind = AnnotationValueKind.ImmutableList;
+                            break;
+                        case "System.Collections.Immutable.ImmutableHashSet<>":
+                            prop.ValueKind = AnnotationValueKind.ImmutableHashSet;
+                            break;
+                        case "System.Collections.Immutable.ImmutableSortedSet<>":
+                            prop.ValueKind = AnnotationValueKind.ImmutableSortedSet;
+                            break;
+                        default:
+                            Debug.Assert(false);
+                            break;
+                    }
                     return ResolveItemType(prop, genericType.TypeArguments[0]);
                 }
                 else if (WellKnownGenericCollectionTypes.Contains(originalTypeName) || 
@@ -701,7 +718,8 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
             }
             else
             {
-                switch (kind)
+                var coreKind = kind & ~AnnotationItemTypeKind.PrimitiveType & ~AnnotationItemTypeKind.Nullable;
+                switch (coreKind)
                 {
                     case AnnotationItemTypeKind.BoolType: if (bool.TryParse(valueText, out var boolValue)) { value = boolValue; return true; } else { return false; };
                     case AnnotationItemTypeKind.ByteType: if (byte.TryParse(valueText, out var byteValue)) { value = byteValue; return true; } else { return false; };
