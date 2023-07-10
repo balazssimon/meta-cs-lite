@@ -1483,11 +1483,6 @@ namespace [language.QualifiedNamespace].Syntax
 		    };
         }
 
-        public override MetaDslx.CodeAnalysis.Binding.BinderFactoryVisitor CreateBinderFactoryVisitor(MetaDslx.CodeAnalysis.Binding.BinderFactory binderFactory)
-        {
-            return new [language.Name]BinderFactoryVisitor(binderFactory);
-        }
-
     }
 }	
 end template

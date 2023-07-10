@@ -3,6 +3,7 @@ using MetaDslx.CodeAnalysis.PooledObjects;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 
@@ -39,7 +40,8 @@ namespace MetaDslx.CodeAnalysis.Declarations
         }
         public static MergedDeclaration Create(ImmutableArray<SingleDeclaration> declarations)
         {
-            if (declarations.IsDefaultOrEmpty) throw new ArgumentException("The declarations array must not be empty.", nameof(declarations));
+            //Debug.Assert(!declarations.IsDefaultOrEmpty, "The declarations array must not be empty.");
+            if (declarations.IsDefaultOrEmpty) return new Error();
             Type modelObjectType = declarations[0].ModelObjectType;
             string? name = declarations[0].Name;
             string? metadataName = declarations[0].MetadataName;
@@ -56,6 +58,19 @@ namespace MetaDslx.CodeAnalysis.Declarations
             if (!hasChildren) return new Empty(declarations);
             else if (!hasChildrenWithName) return new WithAnonymousChildren(declarations);
             else return new WithChildren(declarations);
+        }
+
+        private class Error : MergedDeclaration
+        {
+            public Error()
+                : base(ImmutableArray.Create(SingleDeclaration.Create(null, null, null, null, null, false, ImmutableArray<SingleDeclaration>.Empty, ImmutableArray<Diagnostic>.Empty)))
+            {
+                
+            }
+
+            public override ImmutableArray<MergedDeclaration> Children => ImmutableArray<MergedDeclaration>.Empty;
+
+            public override ImmutableArray<string> ChildNames => ImmutableArray<string>.Empty;
         }
 
         private class Empty : MergedDeclaration

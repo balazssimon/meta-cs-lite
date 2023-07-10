@@ -17,8 +17,10 @@ using [if (use.Alias is not null)][use.Alias] = [end if][use.QualifiedReference]
 
 #nullable enable
 
-namespace [language.QualifiedNamespace].Syntax
+namespace [language.QualifiedNamespace].Binding
 {
+    using [language.QualifiedNamespace].Syntax;
+
     public class [language.Name]BinderFactoryVisitor : MetaDslx.CodeAnalysis.Binding.BinderFactoryVisitor, I[language.Name]SyntaxVisitor
     {
         internal [language.Name]BinderFactoryVisitor(MetaDslx.CodeAnalysis.Binding.BinderFactory binderFactory)

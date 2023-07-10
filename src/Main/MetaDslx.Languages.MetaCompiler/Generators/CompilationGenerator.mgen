@@ -12,6 +12,7 @@ template GenerateCompilationFactory(Language language)
 using System;
 using MetaDslx.CodeAnalysis;
 using MetaDslx.CodeAnalysis.Declarations;
+using MetaDslx.CodeAnalysis.Binding;
 
 #nullable enable
 
@@ -23,6 +24,11 @@ namespace [language.QualifiedNamespace]
         {
             throw new NotImplementedException();
             //return [language.QualifiedNamespace].Declarations.[language.Name]DeclarationTreeBuilderVisitor.ForTree(([language.Name]SyntaxTree)syntaxTree, scriptClassName, isSubmission);
+        }
+
+        public override BinderFactoryVisitor CreateBinderFactoryVisitor(BinderFactory binderFactory)
+        {
+            return new [language.QualifiedNamespace].Binding.[language.Name]BinderFactoryVisitor(binderFactory);
         }
     }
 }

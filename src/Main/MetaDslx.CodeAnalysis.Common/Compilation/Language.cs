@@ -257,16 +257,16 @@ namespace MetaDslx.CodeAnalysis
                 throw new NotImplementedException();
             }
 
-            public override BinderFactoryVisitor CreateBinderFactoryVisitor(BinderFactory binderFactory)
-            {
-                throw new NotImplementedException();
-            }
-
         }
 
         private class NoCompilationFactory : CompilationFactory
         {
             public override RootSingleDeclaration CreateDeclarationTree(SyntaxTree syntaxTree, string scriptClassName, bool isSubmission)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override BinderFactoryVisitor CreateBinderFactoryVisitor(BinderFactory binderFactory)
             {
                 throw new NotImplementedException();
             }

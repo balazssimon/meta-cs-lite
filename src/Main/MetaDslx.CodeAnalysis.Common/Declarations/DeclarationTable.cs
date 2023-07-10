@@ -106,7 +106,7 @@ namespace MetaDslx.CodeAnalysis.Declarations
         // old singles forest                 new single tree
         public MergedDeclaration GetMergedRoot(Compilation compilation)
         {
-            Debug.Assert(compilation.Declarations == this);
+            Debug.Assert(compilation.DeclarationTable == this);
             if (_mergedRoot == null)
             {
                 Interlocked.CompareExchange(ref _mergedRoot, CalculateMergedRoot(compilation), null);

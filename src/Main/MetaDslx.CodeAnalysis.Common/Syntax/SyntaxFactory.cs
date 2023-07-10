@@ -903,7 +903,5 @@ namespace MetaDslx.CodeAnalysis.Syntax
 
         public abstract SyntaxTree MakeSyntaxTree(SyntaxNode root, ParseOptions? options = null, string path = "", Encoding? encoding = null);
 
-        public abstract BinderFactoryVisitor CreateBinderFactoryVisitor(BinderFactory binderFactory);
-
     }
 }

@@ -20,7 +20,7 @@ declaration : enumDeclaration | classDeclaration | associationDeclaration;
 [Define(MetaEnum)]
 enumDeclaration : 'enum' name '{' enumLiterals? '}';
 
-enumLiterals : enumLiteral (',' enumLiteral)* ','?;
+enumLiterals : enumLiteral (',' enumLiteral)* ;
 
 [Define(MetaEnumLiteral)]
 enumLiteral : name;
@@ -29,7 +29,11 @@ enumLiteral : name;
 classDeclaration : isAbstract?='abstract'? 'class' name (':' qualifier (',' qualifier)*)? '{' propertyDeclaration* '}';
 
 [Define(MetaProperty)]
-propertyDeclaration : typeReference name ';';
+propertyDeclaration : propertyModifier? typeReference name propertyRedefinition? propertySubsetting? ';';
+
+propertyModifier : 'derived' | 'containment' | 'readonly';
+propertyRedefinition : 'redefines' qualifiedName (',' qualifiedName);
+propertySubsetting : 'subsets' qualifiedName (',' qualifiedName);
 
 associationDeclaration : 'association' qualifier 'with' qualifier ';';
 

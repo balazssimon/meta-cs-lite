@@ -7,6 +7,14 @@ namespace MetaDslx.CodeAnalysis
 {
     public class CompilationOptions
     {
+        public static readonly CompilationOptions Default = new CompilationOptions();
+
+
+        /// <summary>
+        /// Apply additional disambiguation rules during resolution of referenced assemblies.
+        /// </summary>
+        internal bool ReferencesSupersedeLowerVersions { get; private protected set; } = true;
+
         public ReportDiagnostic GetEffectiveSeverity(DiagnosticDescriptor descriptor)
         {
             switch (descriptor.DefaultSeverity)
