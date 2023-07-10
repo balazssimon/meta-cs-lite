@@ -575,7 +575,7 @@ namespace MetaDslx.CodeAnalysis
 
         #region Binding
 
-        internal BinderFactory GetBinderFactory(SyntaxTree syntaxTree, bool ignoreAccessibility = false)
+        public BinderFactory GetBinderFactory(SyntaxTree syntaxTree, bool ignoreAccessibility = false)
         {
             return GetBinderFactory(syntaxTree, ignoreAccessibility: false, ref _binderFactories);
         }

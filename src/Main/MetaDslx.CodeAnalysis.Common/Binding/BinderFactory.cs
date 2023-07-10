@@ -36,8 +36,8 @@ namespace MetaDslx.CodeAnalysis.Binding
             Debug.Assert(root != null);
             Binder rootBinder = lazyBinder is null ? _buckStopsHereBinder : lazyBinder;
             BinderFactoryVisitor visitor = _pool.Allocate();
-            visitor.Begin(rootBinder, root);
             visitor.Initialize(root.SpanStart, root.IsToken, -1);
+            visitor.Begin(rootBinder, root);
             visitor.Visit(root.IsNode ? root.AsNode() : root.Parent);
             visitor.End(rootBinder);
             _pool.Free(visitor);

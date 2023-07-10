@@ -43,6 +43,11 @@ namespace MetaDslx.CodeAnalysis.Binding
             var parentBinder = _binderStack.Count > 0 ? _binderStack.Peek() : null;
             binder.InitBinder(parentBinder, syntax);
             _binderStack.Push(binder);
+            if (_childBindersStack.Count > 0)
+            {
+                var children = _childBindersStack.Peek();
+                children.Add(binder);
+            }
             _childBindersStack.Push(ArrayBuilder<Binder>.GetInstance());
         }
 
