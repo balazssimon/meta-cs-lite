@@ -2,15 +2,13 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace MetaDslx.CodeAnalysis.Annotations
+namespace MetaDslx.CodeAnalysis.Binding
 {
-    [AnnotationUsage(AnnotationTargets.All)]
-    [DeclarationTable]
-    public class DefinedTypeAnnotation : Annotation
+    public class DefinedTypeBinder : Binder
     {
         private readonly Type _type;
 
-        public DefinedTypeAnnotation(Type type)
+        public DefinedTypeBinder(Type type)
         {
             _type = type;
         }

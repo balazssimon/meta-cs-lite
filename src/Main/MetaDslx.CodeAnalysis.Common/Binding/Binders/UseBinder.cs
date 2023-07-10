@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Text;
 
-namespace MetaDslx.CodeAnalysis.Annotations
+namespace MetaDslx.CodeAnalysis.Binding
 {
-    [AnnotationUsage(AnnotationTargets.All)]
-    public class UseAnnotation : Annotation, IValueAnnotation
+    public class UseBinder : Binder, IValueBinder
     {
         private readonly ImmutableArray<Type> _types;
 
-        public UseAnnotation(ImmutableArray<Type> types)
+        public UseBinder(ImmutableArray<Type> types)
         {
             _types = types;
         }

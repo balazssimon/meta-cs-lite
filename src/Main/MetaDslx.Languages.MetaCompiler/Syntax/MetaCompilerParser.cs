@@ -731,50 +731,70 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
             LexerRule? _defaultSeparator = null;
             foreach (var rule in grammar.LexerRules)
             {
-                var isDefault = HasAnnotation(rule.Annotations, $"{MetaCompilerAnnotationResolver.MetaDslxAnnotationsNamespace}.DefaultAnnotation");
-                if (isDefault)
+                var tokenKind = GetAnnotation(rule.Annotations, $"{MetaCompilerAnnotationResolver.MetaDslxAnnotationsNamespace}.TokenKindAnnotation");
+                if (tokenKind is not null)
                 {
-                    ResolveDefaultLexerRule(_language, ref _defaultWhitespace, rule, $"{MetaCompilerAnnotationResolver.MetaDslxAnnotationsNamespace}.WhitespaceAnnotation");
-                    ResolveDefaultLexerRule(_language, ref _defaultEndOfLine, rule, $"{MetaCompilerAnnotationResolver.MetaDslxAnnotationsNamespace}.EndOfLineAnnotation");
-                    ResolveDefaultLexerRule(_language, ref _defaultIdentifier, rule, $"{MetaCompilerAnnotationResolver.MetaDslxAnnotationsNamespace}.IdentifierAnnotation");
-                    ResolveDefaultLexerRule(_language, ref _defaultSeparator, rule, $"{MetaCompilerAnnotationResolver.MetaDslxAnnotationsNamespace}.SeparatorAnnotation");
+                    var kind = tokenKind.ConstructorArguments.Where(a => a.Name == "kind").FirstOrDefault();
+                    var isDefault = tokenKind.ConstructorArguments.Where(a => a.Name == "isDefault").FirstOrDefault();
+                    if (kind is not null && kind.ValueTexts.Length == 1 &&
+                        isDefault is not null && isDefault.ValueTexts.Length == 1 && isDefault.ValueTexts[0] == "true")
+                    {
+                        switch (kind.ValueTexts[0])
+                        {
+                            case "Whitespace":
+                                ResolveDefaultLexerRule(ref _defaultWhitespace, rule, "Whitespace");
+                                break;
+                            case "EndOfLine":
+                                ResolveDefaultLexerRule(ref _defaultEndOfLine, rule, "EndOfLine");
+                                break;
+                            case "Identifier":
+                                ResolveDefaultLexerRule(ref _defaultIdentifier, rule, "Identifier");
+                                break;
+                            case "Separator":
+                                ResolveDefaultLexerRule(ref _defaultSeparator, rule, "Separator");
+                                break;
+                            default:
+                                break;
+                        }
+                    }
                 }
             }
             grammar.DefaultWhitespace = _defaultWhitespace;
             grammar.DefaultEndOfLine = _defaultEndOfLine;
             grammar.DefaultIdentifier = _defaultIdentifier;
             grammar.DefaultSeparator = _defaultSeparator;
-            if (grammar.DefaultWhitespace is null) Error(_language.Location, $"Missing lexer rule with annotations [Default] and [Whitespace].");
-            if (grammar.DefaultEndOfLine is null) Error(_language.Location, $"Missing lexer rule with annotations [Default] and [EndOfLine].");
-            if (grammar.DefaultIdentifier is null) Error(_language.Location, $"Missing lexer rule with annotations [Default] and [Identifier].");
-            if (grammar.DefaultSeparator is null) Error(_language.Location, $"Missing lexer rule with annotations [Default] and [Separator].");
+            if (grammar.DefaultWhitespace is null) Error(_language.Location, $"Missing lexer rule with annotation [TokenKind(Whitespace,isDefault:true)].");
+            if (grammar.DefaultEndOfLine is null) Error(_language.Location, $"Missing lexer rule with annotations [TokenKind(EndOfLine,isDefault:true)].");
+            if (grammar.DefaultIdentifier is null) Error(_language.Location, $"Missing lexer rule with annotations [TokenKind(Identifier,isDefault:true)].");
+            if (grammar.DefaultSeparator is null) Error(_language.Location, $"Missing lexer rule with annotations [TokenKind(Separator,isDefault:true)].");
         }
 
-        private void ResolveDefaultLexerRule(Language language, ref LexerRule? lexerRule, LexerRule defaultRule, string annotationName)
+        private void ResolveDefaultLexerRule(ref LexerRule? lexerRule, LexerRule defaultRule, string annotationName)
         {
-            var isMatch = HasAnnotation(defaultRule.Annotations, annotationName);
-            if (isMatch)
+            if (lexerRule is null)
             {
-                if (lexerRule is null)
-                {
-                    lexerRule = defaultRule;
-                }
-                else
-                {
-                    Error(defaultRule.Location, $"There is already another {annotationName} lexer rule called '{lexerRule.Name}' defined in the grammar. There must be exactly one lexer rule with this annotation.");
-                }
+                lexerRule = defaultRule;
             }
+            else
+            {
+                Error(defaultRule.Location, $"There is already another default {annotationName} lexer rule called '{lexerRule.Name}' defined in the grammar. There must be exactly one default lexer rule with this annotation.");
+            }
+        }
+
+        private Annotation? GetAnnotation(IEnumerable<Annotation> annotations, string annotationName)
+        {
+            if (string.IsNullOrEmpty(annotationName)) return null;
+            foreach (var annotation in annotations)
+            {
+                var name = annotation.CSharpClass?.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat);
+                if (name == annotationName) return annotation;
+            }
+            return null;
         }
 
         private bool HasAnnotation(IEnumerable<Annotation> annotations, string annotationName)
         {
-            if (string.IsNullOrEmpty(annotationName)) return false;
-            foreach (var annotation in annotations)
-            {
-                var name = annotation.CSharpClass?.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat);
-                if (name == annotationName) return true;
-            }
-            return false;
+            return GetAnnotation(annotations, annotationName) is not null;
         }
 
         private void ResolveRootType()
@@ -785,7 +805,7 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
             foreach (var annot in mainRule.Annotations)
             {
                 var name = annot.CSharpClass?.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat);
-                if (name == $"{MetaCompilerAnnotationResolver.MetaDslxAnnotationsNamespace}.RootAnnotation")
+                if (name == $"{MetaCompilerAnnotationResolver.MetaDslxBindersNamespace}.RootBinder")
                 {
                     var typeProp = annot.ConstructorArguments.Where(p => p.Name == "type").FirstOrDefault();
                     grammar.RootType = typeProp?.Values.FirstOrDefault() as INamedTypeSymbol;
@@ -925,10 +945,9 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                 else
                 {
                     var property = new AnnotationProperty();
-                    if (token.Kind == MetaCompilerTokenKind.Identifier && (nextToken.Text == ":" || nextToken.Text == "="))
+                    if (token.Kind == MetaCompilerTokenKind.Identifier && nextToken.Text == ":")
                     {
-                        if (nextToken.Text == "=") annotation.Properties.Add(property);
-                        else annotation.ConstructorArguments.Add(property);
+                        annotation.ConstructorArguments.Add(property);
                         _tokens.NextToken();
                         property.Location = _tokens.CurrentLocation;
                         property.Name = token.Text;

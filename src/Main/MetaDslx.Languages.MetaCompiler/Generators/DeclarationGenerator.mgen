@@ -79,7 +79,7 @@ end template
 template GenerateDeclarationTreeBuilderVisitAnnotation(Annotation annot, string body, ref int annotIndex)
 [var annotVarName = "annot"+(annotIndex++)]
 [var annotName = annot.Name.LastOrDefault()]
-var [annotVarName] = new [annot.QualifiedName]Annotation([GenerateAnnotationConstructorArguments(annot)]) { [GenerateAnnotationPropertyInitializers(annot)] };
+var [annotVarName] = new [annot.QualifiedName]Annotation([GenerateAnnotationConstructorArguments(annot)]);
 try
 {
     this.Begin[annotName](node, [annotVarName]);

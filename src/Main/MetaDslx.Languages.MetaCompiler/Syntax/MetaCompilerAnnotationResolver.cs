@@ -6,13 +6,13 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Linq;
+using System.Numerics;
 using System.Runtime.ConstrainedExecution;
 using System.Text;
 
 namespace MetaDslx.Languages.MetaCompiler.Syntax
 {
     using Language = MetaDslx.Languages.MetaCompiler.Model.Language;
-    using AnnotationTargets = MetaDslx.CodeAnalysis.Annotations.AnnotationTargets;
     using CSharpCompilation = Microsoft.CodeAnalysis.CSharp.CSharpCompilation;
     using INamespaceSymbol = Microsoft.CodeAnalysis.INamespaceSymbol;
     using INamespaceOrTypeSymbol = Microsoft.CodeAnalysis.INamespaceOrTypeSymbol;
@@ -27,6 +27,7 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
     internal class MetaCompilerAnnotationResolver
     {
         internal const string MetaDslxAnnotationsNamespace = "MetaDslx.CodeAnalysis.Annotations";
+        internal const string MetaDslxBindersNamespace = "MetaDslx.CodeAnalysis.Binding";
         private readonly CSharpCompilation _compilation;
         private readonly Language _language;
         private readonly DiagnosticBag _diagnostics;
@@ -47,37 +48,38 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
             }
             foreach (var rule in grammar.LexerRules)
             {
-                ResolveAnnotations(AnnotationTargets.LexerRuleName, rule.Annotations);
+                ResolveAnnotations(rule.Annotations);
             }
             foreach (var rule in grammar.ParserRules)
             {
-                ResolveAnnotations(AnnotationTargets.ParserRuleName, rule.Annotations);
+                ResolveAnnotations(rule.Annotations);
                 foreach (var alt in rule.Alternatives)
                 {
-                    ResolveAnnotations(AnnotationTargets.ParserRuleAlternativeName, alt.Annotations);
+                    ResolveAnnotations(alt.Annotations);
                     foreach (var elem in alt.Elements)
                     {
-                        ResolveAnnotations(AnnotationTargets.ParserRuleElementName, elem.NameAnnotations);
-                        ResolveAnnotations(AnnotationTargets.ParserRuleElementValue, elem.Annotations);
+                        ResolveAnnotations(elem.NameAnnotations);
+                        ResolveAnnotations(elem.Annotations);
                         if (elem is ParserRuleFixedStringAlternativesElement fixedAltsElement)
                         {
                             foreach (var fixedAlt in fixedAltsElement.Alternatives)
                             {
-                                ResolveAnnotations(AnnotationTargets.ParserRuleElementName, fixedAlt.NameAnnotations);
-                                ResolveAnnotations(AnnotationTargets.ParserRuleElementValue, fixedAlt.Annotations);
+                                ResolveAnnotations(fixedAlt.NameAnnotations);
+                                ResolveAnnotations(fixedAlt.Annotations);
                             }
                         }
                         if (elem is ParserRuleListElement listElement)
                         {
                             foreach (var listElem in listElement.AllElements)
                             {
-                                ResolveAnnotations(AnnotationTargets.ParserRuleElementName, listElem.NameAnnotations);
-                                ResolveAnnotations(AnnotationTargets.ParserRuleElementValue, listElem.Annotations);
+                                ResolveAnnotations(listElem.NameAnnotations);
+                                ResolveAnnotations(listElem.Annotations);
                             }
                         }
                     }
                 }
             }
+            ResolveAnnotationContainment();
         }
 
         private INamespaceOrTypeSymbol? ResolveUsingNamespace(Using use)
@@ -108,45 +110,41 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
             return csharpSymbol;
         }
 
-        private void ResolveAnnotations(AnnotationTargets target, IEnumerable<Annotation> annotations)
+        private void ResolveAnnotations(IEnumerable<Annotation> annotations)
         {
             foreach (var annotation in annotations)
             {
-                ResolveAnnotation(target, annotation);
+                ResolveAnnotation(annotation);
             }
         }
 
-        private INamedTypeSymbol? ResolveAnnotation(AnnotationTargets target, Annotation annotation)
+        private INamedTypeSymbol? ResolveAnnotation(Annotation annotation)
         {
             if (annotation.Name.IsDefaultOrEmpty)
             {
-                Error(annotation.Location, "Annotation name is missing.");
+                Error(annotation.Location, "Binder or annotation name is missing.");
                 return null;
             }
-            var candidates = ResolveSymbols(annotation.Location, annotation.Name, "Annotation").OfType<INamedTypeSymbol>().ToImmutableArray();
+            var candidates = ResolveSymbols(annotation.Location, annotation.Name, "Annotation", "Binder").OfType<INamedTypeSymbol>().ToImmutableArray();
             foreach (var csharpSymbol in candidates)
             {
                 if (!IsMetaCompilerAnnotation(csharpSymbol))
                 {
-                    Error(annotation.Location, $"Annotation '{csharpSymbol.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat)}' must be a descendant of '{MetaDslxAnnotationsNamespace}.Annotation'.");
+                    Error(annotation.Location, $"'{csharpSymbol.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat)}' must be either a descendant of '{MetaDslxBindersNamespace}.Binder' or '{MetaDslxAnnotationsNamespace}.Annotation', and its name should end with 'Binder' or 'Annotation', respectively.");
                 }
             }
             INamedTypeSymbol? result = null;
             if (candidates.Length == 1)
             {
                 result = candidates[0];
-                var targets = GetMetaCompilerAnnotationUsage(result);
-                if (!targets.HasFlag(target))
-                {
-                    Error(annotation.Location, $"The annotation '{annotation.QualifiedName}' cannot be applied to a {target}.");
-                    result = null;
-                }
                 annotation.CSharpClass = result;
+                if (result.Name.EndsWith("Binder")) annotation.Kind = AnnotationKind.Binder;
+                if (result.Name.EndsWith("Annotation")) annotation.Kind = AnnotationKind.Annotation;
                 ResolveAnnotationProperties(annotation);
             }
             else if (candidates.Length == 0)
             {
-                Error(annotation.Location, $"The annotation name '{annotation.QualifiedName}' could not be found (are you missing a using directive or an assembly reference?).");
+                Error(annotation.Location, $"The binder or annotation name '{annotation.QualifiedName}' could not be found (are you missing a using directive or an assembly reference?).");
             }
             else
             {
@@ -155,7 +153,7 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
             return result;
         }
 
-        private ImmutableArray<INamespaceOrTypeSymbol> ResolveSymbols(Location location, ImmutableArray<string> qualifiedName, string suffix = default)
+        private ImmutableArray<INamespaceOrTypeSymbol> ResolveSymbols(Location location, ImmutableArray<string> qualifiedName, params string[] suffixes)
         {
             if (qualifiedName.Length == 0) return ImmutableArray<INamespaceOrTypeSymbol>.Empty;
             var candidates = ArrayBuilder<INamespaceOrTypeSymbol>.GetInstance();
@@ -204,7 +202,17 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                         }
                         else
                         {
-                            candidates.AddRange(csharpSymbol.GetMembers($"{name}{suffix}").OfType<INamespaceOrTypeSymbol>());
+                            if (suffixes.Length == 0)
+                            {
+                                candidates.AddRange(csharpSymbol.GetMembers($"{name}").OfType<INamespaceOrTypeSymbol>());
+                            }
+                            else
+                            {
+                                foreach (var suffix in suffixes)
+                                {
+                                    candidates.AddRange(csharpSymbol.GetMembers($"{name}{suffix}").OfType<INamespaceOrTypeSymbol>());
+                                }
+                            }
                         }
                         sb.Append(name);
                     }
@@ -217,33 +225,17 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
         private bool IsMetaCompilerAnnotation(INamedTypeSymbol? csharpClass)
         {
             if (csharpClass is null) return false;
+            var isBinder = csharpClass.Name.EndsWith("Binder");
+            var isAnnotation = csharpClass.Name.EndsWith("Annotation");
             var baseType = csharpClass;
             while (baseType is not null)
             {
                 var baseTypeName = baseType.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat);
-                if (baseTypeName == $"{MetaDslxAnnotationsNamespace}.Annotation") return true;
+                if (isAnnotation && baseTypeName == $"{MetaDslxAnnotationsNamespace}.Annotation" ||
+                    isBinder && baseTypeName == $"{MetaDslxBindersNamespace}.Binder") return true;
                 baseType = baseType.BaseType;
             }
             return false;
-        }
-
-        private AnnotationTargets GetMetaCompilerAnnotationUsage(INamedTypeSymbol? csharpClass)
-        {
-            if (csharpClass is null) return AnnotationTargets.None;
-            foreach (var attr in csharpClass.GetAttributes())
-            {
-                var attrName = attr.AttributeClass?.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat);
-                if (attrName == $"{MetaDslxAnnotationsNamespace}.AnnotationUsageAttribute")
-                {
-                    // TODO: Roslyn returns an empty array...
-                    if (attr.ConstructorArguments.Length > 0)
-                    {
-                        var targets = attr.ConstructorArguments[0];
-                        return (AnnotationTargets)targets.Value;
-                    }
-                }
-            }
-            return AnnotationTargets.All;
         }
 
         private void ResolveAnnotationProperties(Annotation annotation)
@@ -349,7 +341,7 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                         if (sb.Length > 0) sb.Append(", ");
                         sb.Append(name);
                     }
-                    Error(annotation.Location, $"Some arguments are missing for the annotation '{annotation.QualifiedName}'. Possible arguments are: {builder.ToStringAndFree()}");
+                    Error(annotation.Location, $"Some arguments are missing for '{annotation.QualifiedName}'. Possible arguments are: {builder.ToStringAndFree()}");
                 }
             }
             else
@@ -368,12 +360,12 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                 else
                 {
                     if (candidates.Count == 1 && goodCandidates.Count == 0) TryConstructor(candidates[0], annotation, assignValues: true, ref hasErrors);
-                    else Error(annotation.Location, $"Could not resolve a unique constructor for the annotation '{annotation.QualifiedName}'");
+                    else Error(annotation.Location, $"Could not resolve a unique constructor for '{annotation.QualifiedName}'");
                 }
                 goodCandidates.Free();
             }
             candidates.Free();
-            foreach (var prop in annotation.Properties)
+            /*foreach (var prop in annotation.Properties)
             {
                 var members = annotation.CSharpClass.GetMembers(prop.Name);
                 var foundProp = false;
@@ -395,14 +387,14 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                 {
                     var builder = PooledStringBuilder.GetInstance();
                     var sb = builder.Builder;
-                    foreach (var name in annotation.CSharpClass.GetMembers().OfType<IPropertySymbol>().OrderBy(p => p.Name))
+                    foreach (var name in annotation.CSharpClass.GetMembers().OfType<IPropertySymbol>().Where(p => p.SetMethod is not null).OrderBy(p => p.Name))
                     {
                         if (sb.Length > 0) sb.Append(", ");
                         sb.Append(name);
                     }
                     Error(prop.Location, $"'{prop.Name}' is an invalid property name for '{annotation.QualifiedName}'. Valid property names are: {builder.ToStringAndFree()}");
                 }
-            }
+            }*/
         }
 
         private bool TryConstructor(IMethodSymbol ctr, Annotation annotation, bool assignValues, ref bool hasErrors)
@@ -424,7 +416,7 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                     }
                     else
                     {
-                        if (assignValues) Error(arg.Location, $"{annotation.ConstructorArguments.Count} arguments are specified for the annotation, but only {ctr.Parameters.Length} are expected");
+                        if (assignValues) Error(arg.Location, $"{annotation.ConstructorArguments.Count} arguments are specified, but only {ctr.Parameters.Length} are expected");
                         hasErrors = true;
                     }
                 }
@@ -495,12 +487,12 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                     }
                     return ResolveItemType(prop, genericType.TypeArguments[0]);
                 }
-                else if (WellKnownGenericCollectionTypes.Contains(originalTypeName) || 
+                /*else if (WellKnownGenericCollectionTypes.Contains(originalTypeName) || 
                     genericType.AllInterfaces.Any(itf => itf.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat) == "System.Collections.Generic.ICollection<>"))
                 {
                     prop.ValueKind = AnnotationValueKind.GenericCollection;
                     return ResolveItemType(prop, genericType.TypeArguments[0]);
-                }
+                }*/
                 else
                 {
                     prop.ValueKind = AnnotationValueKind.Single;
@@ -700,7 +692,7 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                 }
                 else
                 {
-                    if (addDiagnostics) Error(prop.Location, $"'{prop.CSharpItemType.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat)}' is an invalid type for annotation parameters and properties. The type must be either a primitive type, a string, an enum or System.Type.");
+                    if (addDiagnostics) Error(prop.Location, $"'{prop.CSharpItemType.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat)}' is an invalid type for binder and annotation parameters. The type must be either a primitive type, a string, an enum or System.Type.");
                     hasErrors = true;
                     return false;
                 }
@@ -740,6 +732,88 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
             }
         }
 
+        private void ResolveAnnotationContainment()
+        {
+            foreach (var rule in _language.Grammar.Rules)
+            {
+                if (rule.Annotations.Any(a => a.Kind == AnnotationKind.Annotation)) rule.ContainsAnnotations = true;
+                if (rule.Annotations.Any(a => a.Kind == AnnotationKind.Binder)) rule.ContainsBinders = true;
+            }
+            foreach (var rule in _language.Grammar.ParserRules)
+            {
+                foreach (var alt in rule.Alternatives)
+                {
+                    if (alt.Annotations.Any(a => a.Kind == AnnotationKind.Annotation))
+                    {
+                        alt.ContainsAnnotations = true;
+                        rule.ContainsAnnotations = true;
+                    }
+                    if (alt.Annotations.Any(a => a.Kind == AnnotationKind.Binder))
+                    {
+                        alt.ContainsBinders = true;
+                        rule.ContainsBinders = true;
+                    }
+                }
+            }
+            bool updated = true;
+            while (updated)
+            {
+                updated = false;
+                foreach (var rule in _language.Grammar.ParserRules)
+                {
+                    foreach (var alt in rule.Alternatives)
+                    {
+                        foreach (var elem in alt.Elements)
+                        {
+                            bool containsAnnotations = elem.ContainsAnnotations;
+                            bool containsBinders = elem.ContainsBinders;
+                            if (CheckAnnotationContainment(elem, ref containsAnnotations, ref containsBinders)) updated = true;
+                        }
+                    }
+                }
+            }
+        }
+
+        private bool CheckAnnotationContainment(ParserRuleElement? elem, ref bool containsAnnotations, ref bool containsBinders)
+        {
+            if (elem is null) return false;
+            bool result = false;
+            if (elem.Annotations.Any(a => a.Kind == AnnotationKind.Annotation)) containsAnnotations = true;
+            if (elem.Annotations.Any(a => a.Kind == AnnotationKind.Binder)) containsBinders = true;
+            if (elem is ParserRuleReferenceElement refElem)
+            {
+                if (refElem.Rule?.ContainsAnnotations ?? false) containsAnnotations = true;
+                if (refElem.Rule?.ContainsBinders ?? false) containsBinders = true;
+            }
+            else if (elem is ParserRuleFixedStringAlternativesElement fixedAltsElem)
+            {
+                foreach (var fixedAlt in fixedAltsElem.Alternatives)
+                {
+                    if (CheckAnnotationContainment(fixedAlt, ref containsAnnotations, ref containsBinders)) result = true;
+                }
+            }
+            else if (elem is ParserRuleListElement listElem)
+            {
+                if (CheckAnnotationContainment(listElem.FirstItem, ref containsAnnotations, ref containsBinders)) result = true;
+                if (CheckAnnotationContainment(listElem.RepeatedRule, ref containsAnnotations, ref containsBinders)) result = true;
+                if (CheckAnnotationContainment(listElem.RepeatedItem, ref containsAnnotations, ref containsBinders)) result = true;
+                if (CheckAnnotationContainment(listElem.RepeatedSeparator, ref containsAnnotations, ref containsBinders)) result = true;
+                if (CheckAnnotationContainment(listElem.LastItem, ref containsAnnotations, ref containsBinders)) result = true;
+                if (CheckAnnotationContainment(listElem.LastSeparator, ref containsAnnotations, ref containsBinders)) result = true;
+            }
+            if (!elem.ContainsAnnotations && containsAnnotations)
+            {
+                elem.ContainsAnnotations = true;
+                result = true;
+            }
+            if (!elem.ContainsBinders && containsBinders)
+            {
+                elem.ContainsBinders = true;
+                result = true;
+            }
+            return result;
+        }
+
         private void Error(Location location, string message)
         {
             _diagnostics.Add(Diagnostic.Create(ErrorCode.ERR_SyntaxError, location, message));
@@ -753,12 +827,12 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
             "System.Collections.Immutable.ImmutableSortedSet<>",
         };
 
-        private static readonly string[] WellKnownGenericCollectionTypes = new string[]
+        /*private static readonly string[] WellKnownGenericCollectionTypes = new string[]
         {
             "System.Collections.Generic.List<>",
             "System.Collections.Generic.LinkedList<>",
             "System.Collections.Generic.HashSet<>",
             "System.Collections.Generic.SortedSet<>",
-        };
+        };*/
     }
 }

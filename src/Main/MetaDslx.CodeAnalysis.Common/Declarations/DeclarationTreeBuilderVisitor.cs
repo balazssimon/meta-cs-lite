@@ -1,4 +1,4 @@
-﻿using MetaDslx.CodeAnalysis.Annotations;
+﻿using MetaDslx.CodeAnalysis.Binding;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -98,26 +98,26 @@ namespace MetaDslx.CodeAnalysis.Declarations
             _enabled = _enabledStack.Pop();
         }
 
-        protected virtual void BeginAnnotation(SyntaxNodeOrToken syntax, Annotation annotation)
+        protected virtual void BeginAnnotation(SyntaxNodeOrToken syntax, Binder binder)
         {
-            if (annotation is IValueAnnotation) Disable();
-            if (annotation is IScopeAnnotation scope && scope.IsLocal && syntax != _rootSyntax) Disable();
+            if (binder is IValueBinder) Disable();
+            if (binder is IScopeBinder scope && scope.IsLocal && syntax != _rootSyntax) Disable();
         }
 
-        protected virtual void EndAnnotation(SyntaxNodeOrToken syntax, Annotation annotation)
+        protected virtual void EndAnnotation(SyntaxNodeOrToken syntax, Binder binder)
         {
-            if (annotation is IScopeAnnotation scope && scope.IsLocal && syntax != _rootSyntax) Enable();
-            if (annotation is IValueAnnotation) Enable();
+            if (binder is IScopeBinder scope && scope.IsLocal && syntax != _rootSyntax) Enable();
+            if (binder is IValueBinder) Enable();
         }
 
-        protected virtual void BeginDefine(SyntaxNodeOrToken syntax, DefineAnnotation annotation)
+        protected virtual void BeginDefine(SyntaxNodeOrToken syntax, DefineBinder binder)
         {
             if (!_enabled) return;
             _declarationStack.Push(_currentDeclaration);
-            _currentDeclaration = new SingleDeclarationBuilder(syntax.GetReference(), annotation.Type);
+            _currentDeclaration = new SingleDeclarationBuilder(syntax.GetReference(), binder.Type);
         }
 
-        protected virtual void EndDefine(SyntaxNodeOrToken syntax, DefineAnnotation annotation)
+        protected virtual void EndDefine(SyntaxNodeOrToken syntax, DefineBinder binder)
         {
             if (!_enabled) return;
             var declarations = _currentDeclaration.ToImmutableAndFree(root: false);
@@ -125,89 +125,89 @@ namespace MetaDslx.CodeAnalysis.Declarations
             _currentDeclaration = _declarationStack.Pop();
         }
 
-        protected virtual void BeginName(SyntaxNodeOrToken syntax, NameAnnotation annotation)
+        protected virtual void BeginName(SyntaxNodeOrToken syntax, NameBinder binder)
         {
             if (!_enabled) return;
             _isNameStack.Push(_isName); 
             _isName = true;
             if (_currentDeclaration == _rootDeclaration)
             {
-                _rootDeclaration.AddDiagnostic(Diagnostic.Create(ErrorCode.ERR_DeclarationError, syntax.GetLocation(), "The root declaration should not have a name (are you missing a [Define] annotation?)"));
+                _rootDeclaration.AddDiagnostic(Diagnostic.Create(ErrorCode.ERR_DeclarationError, syntax.GetLocation(), "The root declaration should not have a name (are you missing a [Define] binder?)"));
             }
         }
 
-        protected virtual void EndName(SyntaxNodeOrToken syntax, NameAnnotation annotation)
+        protected virtual void EndName(SyntaxNodeOrToken syntax, NameBinder binder)
         {
             if (!_enabled) return;
             _isName = _isNameStack.Pop();
         }
 
-        protected virtual void BeginQualifier(SyntaxNodeOrToken syntax, QualifierAnnotation annotation)
+        protected virtual void BeginQualifier(SyntaxNodeOrToken syntax, QualifierBinder binder)
         {
             if (!_enabled) return;
             if (_isName && _currentDeclaration is not null) _currentDeclaration.BeginQualifier(); 
         }
 
-        protected virtual void EndQualifier(SyntaxNodeOrToken syntax, QualifierAnnotation annotation)
+        protected virtual void EndQualifier(SyntaxNodeOrToken syntax, QualifierBinder binder)
         {
             if (!_enabled) return;
             if (_isName && _currentDeclaration is not null) _currentDeclaration.EndQualifier();
         }
 
-        protected virtual void BeginIdentifier(SyntaxNodeOrToken syntax, IdentifierAnnotation annotation)
+        protected virtual void BeginIdentifier(SyntaxNodeOrToken syntax, IdentifierBinder binder)
         {
             if (_enabled && _isName && _currentDeclaration is not null) _currentDeclaration.AddIdentifier(syntax.ToString(), syntax.ToString(), (SourceLocation)syntax.GetLocation());
             Disable();
         }
 
-        protected virtual void EndIdentifier(SyntaxNodeOrToken syntax, IdentifierAnnotation annotation)
+        protected virtual void EndIdentifier(SyntaxNodeOrToken syntax, IdentifierBinder binder)
         {
             Enable();
         }
 
-        protected virtual void BeginScope(SyntaxNodeOrToken syntax, ScopeAnnotation annotation)
+        protected virtual void BeginScope(SyntaxNodeOrToken syntax, ScopeBinder binder)
         {
             if (!_enabled) return;
             _currentScopeStack.Push(_currentScope);
             _currentScope = _currentDeclaration;
         }
 
-        protected virtual void EndScope(SyntaxNodeOrToken syntax, ScopeAnnotation annotation)
+        protected virtual void EndScope(SyntaxNodeOrToken syntax, ScopeBinder binder)
         {
             if (!_enabled) return;
             _currentScope = _currentScopeStack.Pop();
         }
 
-        protected virtual void BeginDefinedType(SyntaxNodeOrToken syntax, DefinedTypeAnnotation annotation)
+        protected virtual void BeginDefinedType(SyntaxNodeOrToken syntax, DefinedTypeBinder binder)
         {
             if (!_enabled) return;
-            _currentDeclaration.Type = annotation.Type;
+            _currentDeclaration.Type = binder.Type;
         }
 
-        protected virtual void EndDefinedType(SyntaxNodeOrToken syntax, DefinedTypeAnnotation annotation)
-        {
-            if (!_enabled) return;
-        }
-
-        protected virtual void BeginMerge(SyntaxNodeOrToken syntax, MergeAnnotation annotation)
-        {
-            if (!_enabled) return;
-            _currentDeclaration.CanMerge = annotation.Allow;
-        }
-
-        protected virtual void EndMerge(SyntaxNodeOrToken syntax, MergeAnnotation annotation)
+        protected virtual void EndDefinedType(SyntaxNodeOrToken syntax, DefinedTypeBinder binder)
         {
             if (!_enabled) return;
         }
 
-        protected virtual void BeginNesting(SyntaxNodeOrToken syntax, NestingAnnotation annotation)
+        protected virtual void BeginMerge(SyntaxNodeOrToken syntax, MergeBinder binder)
         {
             if (!_enabled) return;
-            _currentDeclaration.NestingType = annotation.Type;
-            _currentDeclaration.NestingProperty = annotation.Property;
+            _currentDeclaration.CanMerge = binder.Allow;
         }
 
-        protected virtual void EndNesting(SyntaxNodeOrToken syntax, NestingAnnotation annotation)
+        protected virtual void EndMerge(SyntaxNodeOrToken syntax, MergeBinder binder)
+        {
+            if (!_enabled) return;
+        }
+
+        protected virtual void BeginNesting(SyntaxNodeOrToken syntax, NestingBinder binder)
+        {
+            if (!_enabled) return;
+            _currentDeclaration.NestingType = binder.Type;
+            _currentDeclaration.NestingProperty = binder.Property;
+        }
+
+        protected virtual void EndNesting(SyntaxNodeOrToken syntax, NestingBinder binder)
         {
             if (!_enabled) return;
         }

@@ -3,19 +3,17 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace MetaDslx.CodeAnalysis.Annotations
+namespace MetaDslx.CodeAnalysis.Binding
 {
-    [AnnotationUsage(AnnotationTargets.All)]
-    [DeclarationTable]
-    public class DefineAnnotation : Annotation, IValueAnnotation
+    public class DefineBinder : Binder, IValueBinder
     {
         private readonly Type? _type;
 
-        public DefineAnnotation(Type? type = null)
+        public DefineBinder(Type? type = null)
         {
             _type = type;
         }
-        
+
         public Type? Type => _type;
     }
 }

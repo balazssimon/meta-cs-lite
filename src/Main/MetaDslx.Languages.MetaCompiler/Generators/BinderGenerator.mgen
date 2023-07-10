@@ -52,13 +52,13 @@ public virtual void Visit[alt.CSharpName]([alt.RedName] node)
 end template
 
 template GenerateBinderFactoryVisitBody(Language language, ParserRuleAlternative alt, ref int annotIndex)
-[foreach (var elem in alt.Elements)]
+[foreach (var elem in alt.Elements.Where(e => e.ContainsBinders))]
 [GenerateBinderFactoryVisitElement(language, alt, elem, ref annotIndex)]
 [end foreach]    
 end template
 
 template GenerateBinderFactoryVisitAnnotations(IEnumerable<Annotation> annotations, string body, ref int annotIndex)
-[foreach (var annot in annotations.Reverse())]
+[foreach (var annot in annotations.Where(a => a.Kind == AnnotationKind.Binder).Reverse())]
 [body = GenerateBinderFactoryVisitAnnotation(annot, body, ref annotIndex)]
 [end foreach]
 [body]
@@ -67,7 +67,7 @@ end template
 template GenerateBinderFactoryVisitAnnotation(Annotation annot, string body, ref int annotIndex)
 [var annotVarName = "annot"+(annotIndex++)]
 [var annotName = annot.Name.LastOrDefault()]
-var [annotVarName] = new [annot.QualifiedName]Annotation([GenerateAnnotationConstructorArguments(annot)]) { [GenerateAnnotationPropertyInitializers(annot)] };
+var [annotVarName] = new [annot.QualifiedName]Binder([GenerateAnnotationConstructorArguments(annot)]);
 try
 {
     this.Begin([annotVarName], node);
@@ -83,13 +83,6 @@ template GenerateAnnotationConstructorArguments(Annotation annot)
 [$single-line]
 [foreach (var arg in annot.ConstructorArguments) separator ", "]
 [arg.Name]: [arg.CSharpValue]
-[end foreach]
-end template
-
-template GenerateAnnotationPropertyInitializers(Annotation annot)
-[$single-line]
-[foreach (var prop in annot.Properties) separator ", "]
-[prop.Name]: [prop.CSharpValue]
 [end foreach]
 end template
 
@@ -116,7 +109,7 @@ for (var [elem.ParameterName]Index = 0; [elem.ParameterName]Index < [elem.Parame
         [if (listElem.ListKind == ListKind.WithFirstItemSeparator || listElem.ListKind == ListKind.WithLastItemSeparator)]
         if ([elem.ParameterName]Index == [elem.ParameterName]List.SeparatorCount - 1)
         {
-            [var elemBody = "this.VisitToken(node."+elem.PropertyName+".GetSeparator("+elem.ParameterName+"Index));"]
+            [var elemBody = "// this.VisitToken(node."+elem.PropertyName+".GetSeparator("+elem.ParameterName+"Index));"]
             [GenerateBinderFactoryVisitAnnotations(listElem.LastSeparator.Annotations, elemBody, ref annotIndex)]
         }
         [end if]

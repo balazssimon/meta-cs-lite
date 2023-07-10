@@ -10,7 +10,7 @@ namespace MetaDslx.CodeAnalysis.Binding
     /// A Binder converts names in to symbols and syntax nodes into bound trees. It is context
     /// dependent, relative to a location in source code.
     /// </summary>
-    public partial class Binder
+    public abstract partial class Binder
     {
         private Compilation _compilation;
         private Binder? _parentBinder;

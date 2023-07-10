@@ -2,16 +2,14 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace MetaDslx.CodeAnalysis.Annotations
+namespace MetaDslx.CodeAnalysis.Binding
 {
-    [AnnotationUsage(AnnotationTargets.All)]
-    [DeclarationTable]
-    public class NestingAnnotation : Annotation
+    public class NestingBinder : Binder
     {
         private readonly Type? _type;
         private readonly string? _property;
 
-        public NestingAnnotation(Type type, string property)
+        public NestingBinder(Type type, string property)
         {
             _type = type;
             _property = property;

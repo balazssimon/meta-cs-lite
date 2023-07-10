@@ -46,6 +46,13 @@ namespace MetaDslx.Languages.MetaCompiler.Model
         public Microsoft.CodeAnalysis.INamespaceOrTypeSymbol? CSharpSymbol { get; set; }
     }
 
+    public enum AnnotationKind
+    {
+        None,
+        Binder,
+        Annotation
+    }
+
     public enum AnnotationValueKind
     {
         Single,
@@ -129,7 +136,8 @@ namespace MetaDslx.Languages.MetaCompiler.Model
         public string Name { get; set; }
         public string CSharpName => Name.ToPascalCase();
         public List<Annotation> Annotations { get; } = new List<Annotation>();
-
+        public bool ContainsAnnotations { get; set; }
+        public bool ContainsBinders { get; set; }
         public Location Location { get; set; }
 
         public override string ToString()
@@ -140,10 +148,11 @@ namespace MetaDslx.Languages.MetaCompiler.Model
 
     public class Annotation : IElementWithLocation
     {
+        public AnnotationKind Kind { get; set; }
         public ImmutableArray<string> Name { get; set; }
         public string QualifiedName => string.Join(".", Name);
         public List<AnnotationProperty> ConstructorArguments { get; } = new List<AnnotationProperty>();
-        public List<AnnotationProperty> Properties { get; } = new List<AnnotationProperty>();
+        //public List<AnnotationProperty> Properties { get; } = new List<AnnotationProperty>();
         public Location Location { get; set; }
         public Microsoft.CodeAnalysis.INamedTypeSymbol? CSharpClass { get; set; }
         public Microsoft.CodeAnalysis.IMethodSymbol? CSharpConstructor { get; set; }
@@ -640,12 +649,12 @@ namespace MetaDslx.Languages.MetaCompiler.Model
         public override string RedToGreenArgument => $"{ParameterName}.Node.ToGreenSeparatedList<{GreenItemType}>(reversed: {(IsReversed ? "true" : "false")})";
         public string SeparatorAntlrName => $"{AntlrName}Separator";
         public ListKind ListKind { get; set; }
-        public ParserRuleReferenceElement FirstItem { get; set; }
+        public ParserRuleReferenceElement? FirstItem { get; set; }
         public ParserRuleReferenceElement RepeatedRule { get; set; }
         public ParserRuleElement RepeatedSeparator { get; set; }
         public ParserRuleReferenceElement RepeatedItem { get; set; }
-        public ParserRuleElement LastSeparator { get; set; }
-        public ParserRuleReferenceElement LastItem { get; set; }
+        public ParserRuleElement? LastSeparator { get; set; }
+        public ParserRuleReferenceElement? LastItem { get; set; }
 
         public IEnumerable<ParserRuleElement> AllElements
         {

@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace MetaDslx.CodeAnalysis.Annotations
+namespace MetaDslx.CodeAnalysis.Binding
 {
-    public interface IScopeAnnotation
+    public interface IScopeBinder
     {
         bool IsLocal { get; }
     }
