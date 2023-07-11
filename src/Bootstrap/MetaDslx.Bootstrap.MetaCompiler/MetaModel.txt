@@ -8,12 +8,18 @@ using MetaDslx.Examples.MetaModel.Model;
 language MetaModel;
 
 [Root(MetaNamespace)]
-main : namespaceDeclaration usingDeclaration* declaration* eof;
+main : namespaceDeclaration eof;
 
 [Define(MetaNamespace)]
-namespaceDeclaration : 'namespace' [Nesting(MetaNamespace,Declarations)] qualifiedName ';';
+namespaceDeclaration : 'namespace' [Nesting(MetaNamespace,Declarations)] qualifiedName ';' declarations;
 
+declarations : usingDeclaration* metaModelDeclaration declaration*;
+
+[Import]
 usingDeclaration : 'using' qualifier ';';
+
+[Define(MetaModel)]
+metaModelDeclaration : 'metamodel' name ';';
 
 declaration : enumDeclaration | classDeclaration | associationDeclaration;
 
@@ -32,8 +38,8 @@ classDeclaration : isAbstract?='abstract'? 'class' name (':' qualifier (',' qual
 propertyDeclaration : propertyModifier? typeReference name propertyRedefinition? propertySubsetting? ';';
 
 propertyModifier : 'derived' | 'containment' | 'readonly';
-propertyRedefinition : 'redefines' qualifiedName (',' qualifiedName);
-propertySubsetting : 'subsets' qualifiedName (',' qualifiedName);
+propertyRedefinition : 'redefines' qualifiedName (',' qualifiedName)*;
+propertySubsetting : 'subsets' qualifiedName (',' qualifiedName)*;
 
 associationDeclaration : 'association' qualifier 'with' qualifier ';';
 

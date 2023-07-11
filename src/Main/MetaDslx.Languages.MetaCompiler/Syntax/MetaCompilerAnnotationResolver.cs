@@ -768,6 +768,16 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                             bool containsAnnotations = elem.ContainsAnnotations;
                             bool containsBinders = elem.ContainsBinders;
                             if (CheckAnnotationContainment(elem, ref containsAnnotations, ref containsBinders)) updated = true;
+                            if (containsAnnotations)
+                            {
+                                alt.ContainsAnnotations = true;
+                                rule.ContainsAnnotations = true;
+                            }
+                            if (containsBinders)
+                            {
+                                alt.ContainsBinders = true;
+                                rule.ContainsBinders = true;
+                            }
                         }
                     }
                 }

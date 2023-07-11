@@ -5,6 +5,12 @@ using MetaDslx.Examples.MetaModel;
 var mmCode = File.ReadAllText(@"..\..\..\ImmutableMetaModel.txt");
 
 var mmTree = MetaModelSyntaxTree.ParseText(mmCode);
+
+foreach (var diag in mmTree.GetDiagnostics())
+{
+    Console.WriteLine(diag);
+}
+
 var mmComp = Compilation.Create("ImmutableMetaModel", new[] {mmTree});
 
 //*/
