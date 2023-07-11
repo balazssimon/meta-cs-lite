@@ -804,8 +804,7 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
             if (mainRule is null) return;
             foreach (var annot in mainRule.Annotations)
             {
-                var name = annot.CSharpClass?.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat);
-                if (name == $"{MetaCompilerAnnotationResolver.MetaDslxBindersNamespace}.RootBinder")
+                if (annot.IsRoot)
                 {
                     var typeProp = annot.ConstructorArguments.Where(p => p.Name == "type").FirstOrDefault();
                     grammar.RootType = typeProp?.Values.FirstOrDefault() as INamedTypeSymbol;

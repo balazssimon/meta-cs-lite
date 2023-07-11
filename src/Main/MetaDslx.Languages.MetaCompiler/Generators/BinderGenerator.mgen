@@ -45,34 +45,62 @@ end template
 template GenerateBinderFactoryVisit(Language language, ParserRule rule, ParserRuleAlternative alt)
 public virtual void Visit[alt.CSharpName]([alt.RedName] node)
 {
-    [var annotIndex = 0]
-	[var body = GenerateBinderFactoryVisitBody(language, alt, ref annotIndex)]
-    [body = GenerateBinderFactoryVisitAnnotations(alt.Annotations, body, ref annotIndex)]
-    [body = GenerateBinderFactoryVisitAnnotations(rule.Annotations, body, ref annotIndex)]
-    [body]
+    [if (rule == language.Grammar.MainRule)]
+    if (this.IsRoot)
+    {
+        [if (language.Grammar.RootType is not null)]
+        var __rootAnnot = new global::MetaDslx.CodeAnalysis.Binding.RootBinder(type: typeof([language.Grammar.RootType.ToDisplayString(Microsoft.CodeAnalysis.SymbolDisplayFormat.FullyQualifiedFormat)]));
+        [else]
+        var __rootAnnot = new global::MetaDslx.CodeAnalysis.Binding.RootBinder(type: null);
+        [end if]
+        this.Begin(__rootAnnot, node);
+        try
+        {
+            [GenerateBinderFactoryVisitBody(language, rule, alt)]
+        }
+        finally
+        {
+            this.End(__rootAnnot);
+        }
+    }
+    else
+    {
+    	[GenerateBinderFactoryVisitBody(language, rule, alt)]
+    }
+    [else]
+	[GenerateBinderFactoryVisitBody(language, rule, alt)]
+    [end if]
 }
 end template
 
-template GenerateBinderFactoryVisitBody(Language language, ParserRuleAlternative alt, ref int annotIndex)
+template GenerateBinderFactoryVisitBody(Language language, ParserRule rule, ParserRuleAlternative alt)
+[var annotIndex = 0]
+[var body = GenerateBinderFactoryVisitElements(language, alt, ref annotIndex)]
+[body = GenerateBinderFactoryVisitAnnotations(alt.Annotations, body, ref annotIndex)]
+[body = GenerateBinderFactoryVisitAnnotations(rule.Annotations, body, ref annotIndex)]
+[body]
+end template
+
+template GenerateBinderFactoryVisitElements(Language language, ParserRuleAlternative alt, ref int annotIndex)
 [foreach (var elem in alt.Elements.Where(e => e.ContainsBinders))]
 [GenerateBinderFactoryVisitElement(language, alt, elem, ref annotIndex)]
 [end foreach]    
 end template
 
 template GenerateBinderFactoryVisitAnnotations(IEnumerable<Annotation> annotations, string body, ref int annotIndex)
-[foreach (var annot in annotations.Where(a => a.Kind == AnnotationKind.Binder).Reverse())]
+[foreach (var annot in annotations.Where(a => a.Kind == AnnotationKind.Binder && !a.IsRoot).Reverse())]
 [body = GenerateBinderFactoryVisitAnnotation(annot, body, ref annotIndex)]
 [end foreach]
 [body]
 end template
 
 template GenerateBinderFactoryVisitAnnotation(Annotation annot, string body, ref int annotIndex)
-[var annotVarName = "annot"+(annotIndex++)]
+[var annotVarName = "__annot"+(annotIndex++)]
 [var annotName = annot.Name.LastOrDefault()]
 var [annotVarName] = new [annot.QualifiedName]Binder([GenerateAnnotationConstructorArguments(annot)]);
+this.Begin([annotVarName], node);
 try
 {
-    this.Begin([annotVarName], node);
     [body]
 }
 finally

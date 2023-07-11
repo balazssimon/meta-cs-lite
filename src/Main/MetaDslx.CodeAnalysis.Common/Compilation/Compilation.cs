@@ -162,17 +162,38 @@ namespace MetaDslx.CodeAnalysis
 
         internal int CompareSourceLocations(Location location1, Location location2)
         {
-            throw new NotImplementedException();
+            Debug.Assert(location1.IsInSource);
+            Debug.Assert(location2.IsInSource);
+
+            var comparison = CompareSyntaxTreeOrdering(location1.SourceTree!, location2.SourceTree!);
+            if (comparison != 0)
+            {
+                return comparison;
+            }
+
+            return location1.SourceSpan.Start - location2.SourceSpan.Start;
         }
 
         internal int CompareSourceLocations(SyntaxReference location1, SyntaxReference location2)
         {
-            throw new NotImplementedException();
+            var comparison = CompareSyntaxTreeOrdering(location1.SyntaxTree, location2.SyntaxTree);
+            if (comparison != 0)
+            {
+                return comparison;
+            }
+
+            return location1.Span.Start - location2.Span.Start;
         }
 
         internal int CompareSourceLocations(SyntaxNodeOrToken location1, SyntaxNodeOrToken location2)
         {
-            throw new NotImplementedException();
+            var comparison = CompareSyntaxTreeOrdering(location1.SyntaxTree, location2.SyntaxTree);
+            if (comparison != 0)
+            {
+                return comparison;
+            }
+
+            return location1.Span.Start - location2.Span.Start;
         }
 
 
@@ -268,7 +289,7 @@ namespace MetaDslx.CodeAnalysis
         /// </summary>
         public ImmutableArray<SyntaxTree> SyntaxTrees
         {
-            get { return _syntaxAndDeclarations.GetLazyState().SyntaxTrees; }
+            get { return _syntaxAndDeclarations.GetLazyState(this).SyntaxTrees; }
         }
 
         /// <summary>
@@ -276,7 +297,7 @@ namespace MetaDslx.CodeAnalysis
         /// </summary>
         public bool ContainsSyntaxTree(SyntaxTree? syntaxTree)
         {
-            return syntaxTree != null && _syntaxAndDeclarations.GetLazyState().RootNamespaces.ContainsKey(syntaxTree);
+            return syntaxTree != null && _syntaxAndDeclarations.GetLazyState(this).RootNamespaces.ContainsKey(syntaxTree);
         }
 
         /// <summary>
@@ -390,7 +411,7 @@ namespace MetaDslx.CodeAnalysis
                 if (!externalSyntaxTrees.Contains(tree))
                 {
                     // Check to make sure this is not a #load'ed tree.
-                    var loadedSyntaxTreeMap = syntaxAndDeclarations.GetLazyState().LoadedSyntaxTreeMap;
+                    var loadedSyntaxTreeMap = syntaxAndDeclarations.GetLazyState(this).LoadedSyntaxTreeMap;
                     if (SyntaxAndDeclarationManager.IsLoadedSyntaxTree(tree, loadedSyntaxTreeMap))
                     {
                         throw new ArgumentException("SyntaxTree resulted from a #load directive and cannot be removed or replaced directly.", $"{nameof(trees)}[{i}]");
@@ -454,7 +475,7 @@ namespace MetaDslx.CodeAnalysis
             if (!externalSyntaxTrees.Contains(oldTree))
             {
                 // Check to see if this is a #load'ed tree.
-                var loadedSyntaxTreeMap = syntaxAndDeclarations.GetLazyState().LoadedSyntaxTreeMap;
+                var loadedSyntaxTreeMap = syntaxAndDeclarations.GetLazyState(this).LoadedSyntaxTreeMap;
                 if (SyntaxAndDeclarationManager.IsLoadedSyntaxTree(oldTree, loadedSyntaxTreeMap))
                 {
                     throw new ArgumentException("SyntaxTree resulted from a #load directive and cannot be removed or replaced directly.", nameof(oldTree));
@@ -482,7 +503,27 @@ namespace MetaDslx.CodeAnalysis
         internal int GetSyntaxTreeOrdinal(SyntaxTree tree)
         {
             Debug.Assert(this.ContainsSyntaxTree(tree));
-            return _syntaxAndDeclarations.GetLazyState().OrdinalMap[tree];
+            return _syntaxAndDeclarations.GetLazyState(this).OrdinalMap[tree];
+        }
+
+        /// <summary>
+        /// The compiler needs to define an ordering among different partial class in different syntax trees
+        /// in some cases, because emit order for fields in structures, for example, is semantically important.
+        /// This function defines an ordering among syntax trees in this compilation.
+        /// </summary>
+        internal int CompareSyntaxTreeOrdering(SyntaxTree tree1, SyntaxTree tree2)
+        {
+            if (tree1 == tree2)
+            {
+                return 0;
+            }
+            if (tree1 == null) return -1;
+            if (tree2 == null) return 1;
+
+            Debug.Assert(this.ContainsSyntaxTree(tree1));
+            Debug.Assert(this.ContainsSyntaxTree(tree2));
+
+            return this.GetSyntaxTreeOrdinal(tree1) - this.GetSyntaxTreeOrdinal(tree2);
         }
 
         #endregion
@@ -570,7 +611,7 @@ namespace MetaDslx.CodeAnalysis
 
         #region Declarations
 
-        internal protected DeclarationTable DeclarationTable => _syntaxAndDeclarations.GetLazyState().DeclarationTable;
+        internal protected DeclarationTable DeclarationTable => _syntaxAndDeclarations.GetLazyState(this).DeclarationTable;
 
         public MergedDeclaration RootDeclaration => DeclarationTable.GetMergedRoot(this);
 
@@ -582,7 +623,7 @@ namespace MetaDslx.CodeAnalysis
 
         public BinderFactory GetBinderFactory(SyntaxTree syntaxTree, bool ignoreAccessibility = false)
         {
-            return GetBinderFactory(syntaxTree, ignoreAccessibility: false, ref _binderFactories);
+            return GetBinderFactory(syntaxTree, ignoreAccessibility, ref _binderFactories);
         }
 
         private BinderFactory GetBinderFactory(SyntaxTree syntaxTree, bool ignoreAccessibility, ref WeakReference<BinderFactory>[]? cachedBinderFactories)
@@ -627,6 +668,12 @@ namespace MetaDslx.CodeAnalysis
                     return newFactory;
                 }
             }
+        }
+
+        public RootBinder? GetRootBinder(SyntaxTree syntaxTree)
+        {
+            var factory = GetBinderFactory(syntaxTree);
+            return factory.RootBinder;
         }
 
         /*public Binder GetBinder(SyntaxNodeOrToken syntax)

@@ -42,6 +42,7 @@ namespace MetaDslx.CodeAnalysis.Declarations
         {
             //Debug.Assert(!declarations.IsDefaultOrEmpty, "The declarations array must not be empty.");
             if (declarations.IsDefaultOrEmpty) return new Error();
+            bool isRoot = declarations[0] is RootSingleDeclaration;
             Type modelObjectType = declarations[0].ModelObjectType;
             string? name = declarations[0].Name;
             string? metadataName = declarations[0].MetadataName;
@@ -49,13 +50,28 @@ namespace MetaDslx.CodeAnalysis.Declarations
             bool hasChildrenWithName = declarations[0].Children.Any(child => !string.IsNullOrEmpty(child.Name));
             for (int i = 1; i < declarations.Length; i++)
             {
-                if (declarations[i].ModelObjectType != modelObjectType) throw new ArgumentException("The merged declarations must have the same model object type.", nameof(declarations));
-                if (declarations[i].Name != name) throw new ArgumentException("The merged declarations must have the same name.", nameof(declarations));
-                if (declarations[i].MetadataName != metadataName) throw new ArgumentException("The merged declarations must have the same metadata name.", nameof(declarations));
-                hasChildren |= declarations[i].Children.Length > 0;
-                hasChildrenWithName |= declarations[i].Children.Any(child => !string.IsNullOrEmpty(child.Name));
+                var declaration = declarations[i];
+                if (declaration is RootSingleDeclaration) isRoot = true;
+                if (declaration.ModelObjectType != null)
+                {
+                    if (modelObjectType == null) modelObjectType = declaration.ModelObjectType;
+                    else throw new ArgumentException("The merged declarations must have the same model object type.", nameof(declarations));
+                }
+                if (!string.IsNullOrEmpty(declaration.Name))
+                {
+                    if (string.IsNullOrEmpty(name)) name = declaration.Name;
+                    else throw new ArgumentException("The merged declarations must have the same name.", nameof(declarations));
+                }
+                if (!string.IsNullOrEmpty(declaration.MetadataName))
+                {
+                    if (string.IsNullOrEmpty(metadataName)) metadataName = declaration.MetadataName;
+                    else throw new ArgumentException("The merged declarations must have the same metadata name.", nameof(declarations));
+                }
+                hasChildren |= declaration.Children.Length > 0;
+                hasChildrenWithName |= declaration.Children.Any(child => !string.IsNullOrEmpty(child.Name));
             }
-            if (!hasChildren) return new Empty(declarations);
+            if (isRoot) return new Root(name, metadataName, modelObjectType, declarations);
+            else if (!hasChildren) return new Empty(declarations);
             else if (!hasChildrenWithName) return new WithAnonymousChildren(declarations);
             else return new WithChildren(declarations);
         }
@@ -174,6 +190,25 @@ namespace MetaDslx.CodeAnalysis.Declarations
             }
 
 
+        }
+
+        private class Root : WithChildren
+        {
+            private readonly string _name;
+            private readonly string _metadataName;
+            private readonly Type _modelObjectType;
+
+            public Root(string name, string metadataName, Type modelObjectType, ImmutableArray<SingleDeclaration> declarations) 
+                : base(declarations)
+            {
+                _name = name;
+                _metadataName = metadataName;
+                _modelObjectType = modelObjectType;
+            }
+
+            public override string? Name => _name;
+            public override string? MetadataName => _metadataName;
+            public override Type ModelObjectType => _modelObjectType;
         }
     }
 }

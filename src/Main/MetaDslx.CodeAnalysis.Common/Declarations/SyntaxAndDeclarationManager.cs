@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading;
 using MetaDslx.CodeAnalysis.PooledObjects;
 using MetaDslx.CodeAnalysis.Syntax;
+using Roslyn.Utilities;
 
 namespace MetaDslx.CodeAnalysis.Declarations
 {
@@ -34,17 +35,18 @@ namespace MetaDslx.CodeAnalysis.Declarations
             _lazyState = state;
         }
 
-        public State GetLazyState()
+        public State GetLazyState(Compilation compilation)
         {
             if (_lazyState == null)
             {
-                Interlocked.CompareExchange(ref _lazyState, CreateState(this.ExternalSyntaxTrees, this.ScriptClassName, this.Resolver, this.Language, this.IsSubmission), null);
+                Interlocked.CompareExchange(ref _lazyState, CreateState(compilation, this.ExternalSyntaxTrees, this.ScriptClassName, this.Resolver, this.Language, this.IsSubmission), null);
             }
 
             return _lazyState;
         }
 
         private static State CreateState(
+            Compilation compilation,
             ImmutableArray<SyntaxTree> externalSyntaxTrees,
             string scriptClassName,
             SourceReferenceResolver resolver,
@@ -55,8 +57,8 @@ namespace MetaDslx.CodeAnalysis.Declarations
             var ordinalMapBuilder = PooledDictionary<SyntaxTree, int>.GetInstance();
             var loadDirectiveMapBuilder = PooledDictionary<SyntaxTree, ImmutableArray<DeclarationLoadDirective>>.GetInstance();
             var loadedSyntaxTreeMapBuilder = PooledDictionary<string, SyntaxTree>.GetInstance();
-            var declMapBuilder = PooledDictionary<SyntaxTree, Lazy<RootSingleDeclaration>>.GetInstance();
-            var declTable = DeclarationTable.Empty;
+            var declMapBuilder = PooledDictionary<SyntaxTree, LazyRootDeclaration>.GetInstance();
+            var declTable = DeclarationTable.CreateEmpty(compilation);
 
             foreach (var tree in externalSyntaxTrees)
             {
@@ -151,7 +153,7 @@ namespace MetaDslx.CodeAnalysis.Declarations
             IDictionary<SyntaxTree, int> ordinalMapBuilder,
             IDictionary<SyntaxTree, ImmutableArray<DeclarationLoadDirective>> loadDirectiveMapBuilder,
             IDictionary<string, SyntaxTree> loadedSyntaxTreeMapBuilder,
-            IDictionary<SyntaxTree, Lazy<RootSingleDeclaration>> declMapBuilder,
+            IDictionary<SyntaxTree, LazyRootDeclaration> declMapBuilder,
             ref DeclarationTable declTable)
         {
             var sourceCodeKind = tree.Options.Kind;
@@ -177,7 +179,7 @@ namespace MetaDslx.CodeAnalysis.Declarations
             IDictionary<SyntaxTree, int> ordinalMapBuilder,
             IDictionary<SyntaxTree, ImmutableArray<DeclarationLoadDirective>> loadDirectiveMapBuilder,
             IDictionary<string, SyntaxTree> loadedSyntaxTreeMapBuilder,
-            IDictionary<SyntaxTree, Lazy<RootSingleDeclaration>> declMapBuilder,
+            IDictionary<SyntaxTree, LazyRootDeclaration> declMapBuilder,
             ref DeclarationTable declTable)
         {
             ArrayBuilder<DeclarationLoadDirective>? loadDirectives = null;
@@ -263,11 +265,11 @@ namespace MetaDslx.CodeAnalysis.Declarations
             SyntaxTree tree,
             string scriptClassName,
             bool isSubmission,
-            IDictionary<SyntaxTree, Lazy<RootSingleDeclaration>> declMapBuilder,
+            IDictionary<SyntaxTree, LazyRootDeclaration> declMapBuilder,
             ref DeclarationTable declTable)
         {
             var language = tree.Language;
-            var lazyRoot = new Lazy<RootSingleDeclaration>(() => language.CompilationFactory.CreateDeclarationTree(tree, scriptClassName, isSubmission));
+            var lazyRoot = new LazyRootDeclaration(tree, scriptClassName, isSubmission);
             declMapBuilder.Add(tree, lazyRoot); // Callers are responsible for checking for existing entries.
             declTable = declTable.AddRootDeclaration(lazyRoot);
         }
@@ -422,7 +424,7 @@ namespace MetaDslx.CodeAnalysis.Declarations
 
         private static void RemoveSyntaxTreeFromDeclarationMapAndTable(
             SyntaxTree tree,
-            IDictionary<SyntaxTree, Lazy<RootSingleDeclaration>> declMap,
+            IDictionary<SyntaxTree, LazyRootDeclaration> declMap,
             ref DeclarationTable declTable)
         {
             var lazyRoot = declMap[tree];

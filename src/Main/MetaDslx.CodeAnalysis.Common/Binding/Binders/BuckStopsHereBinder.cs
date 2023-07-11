@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 
 namespace MetaDslx.CodeAnalysis.Binding
 {
@@ -9,14 +10,28 @@ namespace MetaDslx.CodeAnalysis.Binding
     /// </summary>
     public sealed class BuckStopsHereBinder : Binder
     {
-        private Language _language;
+        private SyntaxTree _syntaxTree;
+        private RootBinder? _rootBinder;
 
-        public BuckStopsHereBinder(Compilation compilation, Language language)
+        public BuckStopsHereBinder(Compilation compilation, SyntaxTree syntaxTree)
         {
             this.Compilation = compilation;
-            _language = language;
+            _syntaxTree = syntaxTree;
         }
 
-        public override Language Language => _language;
+        public override Language Language => _syntaxTree.Language;
+        public override SyntaxTree SyntaxTree => _syntaxTree;
+
+        public RootBinder? RootBinder
+        {
+            get
+            {
+                if (_rootBinder is null)
+                {
+                    Interlocked.CompareExchange(ref _rootBinder, GetRootBinder(), null);
+                }
+                return _rootBinder;
+            }
+        }
     }
 }

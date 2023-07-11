@@ -1,5 +1,6 @@
 ﻿using MetaDslx.CodeAnalysis;
 using MetaDslx.CodeAnalysis.PooledObjects;
+using MetaDslx.Languages.MetaCompiler.Syntax;
 using Roslyn.Utilities;
 using System;
 using System.Collections.Generic;
@@ -156,6 +157,7 @@ namespace MetaDslx.Languages.MetaCompiler.Model
         public Location Location { get; set; }
         public Microsoft.CodeAnalysis.INamedTypeSymbol? CSharpClass { get; set; }
         public Microsoft.CodeAnalysis.IMethodSymbol? CSharpConstructor { get; set; }
+        public bool IsRoot => CSharpClass?.ToDisplayString(Microsoft.CodeAnalysis.SymbolDisplayFormat.CSharpErrorMessageFormat) == $"{MetaCompilerAnnotationResolver.MetaDslxBindersNamespace}.RootBinder";
 
         public override string ToString()
         {

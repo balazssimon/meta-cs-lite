@@ -1,5 +1,7 @@
-﻿using System;
+﻿using MetaDslx.CodeAnalysis.Declarations;
+using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Text;
 
 namespace MetaDslx.CodeAnalysis.Binding
@@ -14,5 +16,10 @@ namespace MetaDslx.CodeAnalysis.Binding
         }
 
         public Type? Type => _type;
+
+        protected override ImmutableArray<SingleDeclaration> BuildDeclarationTree(SingleDeclarationBuilder builder)
+        {
+            return ImmutableArray<SingleDeclaration>.Empty;
+        }
     }
 }

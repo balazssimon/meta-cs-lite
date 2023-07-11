@@ -8,8 +8,6 @@ namespace MetaDslx.CodeAnalysis
 {
     public abstract class CompilationFactory
     {
-        public abstract RootSingleDeclaration CreateDeclarationTree(SyntaxTree syntaxTree, string scriptClassName, bool isSubmission);
-
         public abstract BinderFactoryVisitor CreateBinderFactoryVisitor(BinderFactory binderFactory);
 
     }

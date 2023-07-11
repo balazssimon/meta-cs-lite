@@ -6,7 +6,7 @@ using System.Text;
 
 namespace MetaDslx.CodeAnalysis.Binding
 {
-    public class RootBinder : Binder, IValueBinder
+    public sealed class RootBinder : Binder, IValueBinder
     {
         private readonly Type? _type;
 
@@ -17,12 +17,16 @@ namespace MetaDslx.CodeAnalysis.Binding
 
         public Type? Type => _type;
 
-        public virtual RootSingleDeclaration BuildDeclarationTree()
+        public RootSingleDeclaration BuildDeclarationTree(string? scriptClassName, bool isSubmission)
         {
             var builder = new SingleDeclarationBuilder(this.Syntax, this.Type);
             builder.AddChildren(this.BuildDeclarationTree(builder));
-            return (RootSingleDeclaration)builder.ToImmutableAndFree(root: true)[0];
+            return (RootSingleDeclaration)builder.ToImmutableAndFree(root: true, rootName: scriptClassName)[0];
         }
 
+        internal override RootBinder? GetRootBinder()
+        {
+            return this;
+        }
     }
 }

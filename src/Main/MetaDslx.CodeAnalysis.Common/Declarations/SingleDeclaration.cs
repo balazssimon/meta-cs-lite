@@ -28,9 +28,9 @@ namespace MetaDslx.CodeAnalysis.Declarations
         public abstract ImmutableArray<string> ChildNames { get; }
         public abstract ImmutableArray<Diagnostic> Diagnostics { get; }
 
-        public static RootSingleDeclaration CreateRoot(SyntaxNodeOrToken syntax, Type modelObjectType, ImmutableArray<SingleDeclaration> children, ImmutableArray<Syntax.ReferenceDirective> referenceDirectives, ImmutableArray<Diagnostic> diagnostics)
+        public static RootSingleDeclaration CreateRoot(SyntaxNodeOrToken syntax, string? name, Type modelObjectType, ImmutableArray<SingleDeclaration> children, ImmutableArray<Syntax.ReferenceDirective> referenceDirectives, ImmutableArray<Diagnostic> diagnostics)
         {
-            return new RootSingleDeclaration(syntax, modelObjectType, children, referenceDirectives, diagnostics);
+            return new RootSingleDeclaration(syntax, name, modelObjectType, children, referenceDirectives, diagnostics);
         }
 
         public static SingleDeclaration Create(SyntaxNodeOrToken syntax, Type modelObjectType, string? name, string? metadataName, SourceLocation? nameLocation, bool canMerge, ImmutableArray<SingleDeclaration> children, ImmutableArray<Diagnostic> diagnostics)

@@ -8,6 +8,7 @@ namespace MetaDslx.CodeAnalysis.Declarations
 {
     public sealed class RootSingleDeclaration : SingleDeclaration
     {
+        private readonly string? _name;
         private readonly ImmutableArray<Declaration> _children;
         private ImmutableArray<string> _childNames;
         private readonly ImmutableArray<Syntax.ReferenceDirective> _referenceDirectives;
@@ -15,12 +16,14 @@ namespace MetaDslx.CodeAnalysis.Declarations
 
         internal RootSingleDeclaration(
             SyntaxNodeOrToken syntax,
+            string? name,
             Type modelObjectType,
             ImmutableArray<SingleDeclaration> children,
             ImmutableArray<Syntax.ReferenceDirective> referenceDirectives,
             ImmutableArray<Diagnostic> diagnostics)
             : base(syntax, modelObjectType)
         {
+            _name = name;
             _children = children.Cast<SingleDeclaration, Declaration>();
             _referenceDirectives = referenceDirectives;
             _diagnostics = diagnostics;
@@ -30,9 +33,9 @@ namespace MetaDslx.CodeAnalysis.Declarations
 
         public override ImmutableArray<Diagnostic> Diagnostics => _diagnostics;
 
-        public override string? Name => null;
+        public override string? Name => _name;
 
-        public override string? MetadataName => null;
+        public override string? MetadataName => _name;
 
         public override Location NameLocation => Location.None;
 

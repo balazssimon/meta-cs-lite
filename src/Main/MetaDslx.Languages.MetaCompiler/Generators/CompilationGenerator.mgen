@@ -20,12 +20,6 @@ namespace [language.QualifiedNamespace]
 {
     public class [language.Name]CompilationFactory : CompilationFactory
     {
-        public override RootSingleDeclaration CreateDeclarationTree(SyntaxTree syntaxTree, string scriptClassName, bool isSubmission)
-        {
-            throw new NotImplementedException();
-            //return [language.QualifiedNamespace].Declarations.[language.Name]DeclarationTreeBuilderVisitor.ForTree(([language.Name]SyntaxTree)syntaxTree, scriptClassName, isSubmission);
-        }
-
         public override BinderFactoryVisitor CreateBinderFactoryVisitor(BinderFactory binderFactory)
         {
             return new [language.QualifiedNamespace].Binding.[language.Name]BinderFactoryVisitor(binderFactory);

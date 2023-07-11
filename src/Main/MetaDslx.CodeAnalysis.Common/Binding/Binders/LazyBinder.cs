@@ -67,10 +67,10 @@ namespace MetaDslx.CodeAnalysis.Binding
         {
             var builder = new SingleDeclarationBuilder(this.Syntax, null);
             BuildChildDeclarationTree(builder, true);
-            return builder.ToImmutableAndFree(root: false);
+            return builder.ToImmutableAndFree();
         }
 
-        protected override ImmutableArray<SingleDeclaration> BuildDeclarationTree(SingleDeclarationBuilder builder, bool resolveLazy = false)
+        protected override ImmutableArray<SingleDeclaration> BuildDeclarationTree(SingleDeclarationBuilder builder)
         {
             return ImmutableArray.Create<SingleDeclaration>(new LazySingleDeclaration(Syntax, null, this));
         }

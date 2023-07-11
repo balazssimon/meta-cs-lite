@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Diagnostics;
 using System.Text;
 using System.Xml.Linq;
 
@@ -13,6 +14,7 @@ namespace MetaDslx.CodeAnalysis.Declarations
         private ArrayBuilder<Syntax.ReferenceDirective>? _referenceDirectives;
         private ArrayBuilder<SingleDeclaration>? _children;
         private ArrayBuilder<Diagnostic>? _diagnostics;
+        private int _nameStack;
         private ArrayBuilder<QualifierBuilder>? _qualifiedNames;
         private QualifierBuilder? _currentQualifier;
         private int _currentQualifierStack;
@@ -28,6 +30,7 @@ namespace MetaDslx.CodeAnalysis.Declarations
         public Type? NestingType { get; set; }
         public string? NestingProperty { get; set; }
         public bool CanMerge { get; set; }
+        public bool IsName => _nameStack > 0;
 
         public void AddDiagnostic(Diagnostic diagnostic)
         {
@@ -62,8 +65,20 @@ namespace MetaDslx.CodeAnalysis.Declarations
             return _children is null ? ImmutableArray<SingleDeclaration>.Empty : _children.ToImmutable();
         }
 
+        public void BeginName()
+        {
+            ++_nameStack;
+        }
+
+        public void EndName()
+        {
+            --_nameStack;
+            Debug.Assert(_nameStack >= 0);
+        }
+
         public void BeginQualifier()
         {
+            if (!IsName) return;
             if (_qualifiedNames is null) _qualifiedNames = ArrayBuilder<QualifierBuilder>.GetInstance();
             if (_currentQualifier is null)
             {
@@ -75,6 +90,7 @@ namespace MetaDslx.CodeAnalysis.Declarations
 
         public void EndQualifier()
         {
+            if (!IsName) return;
             --_currentQualifierStack;
             if (_currentQualifierStack == 0)
             {
@@ -84,6 +100,7 @@ namespace MetaDslx.CodeAnalysis.Declarations
 
         public void AddIdentifier(string name, string metadataName, SourceLocation nameLocation)
         {
+            if (!IsName) return;
             if (_currentQualifier is null)
             {
                 BeginQualifier();
@@ -96,14 +113,14 @@ namespace MetaDslx.CodeAnalysis.Declarations
             }
         }
 
-        public virtual ImmutableArray<SingleDeclaration> ToImmutableAndFree(bool root)
+        public virtual ImmutableArray<SingleDeclaration> ToImmutableAndFree(bool root = false, string? rootName = null)
         {
             var result = ImmutableArray<SingleDeclaration>.Empty;
             try
             {
                 if (root)
                 {
-                    result = ImmutableArray.Create<SingleDeclaration>(SingleDeclaration.CreateRoot(_syntax, Type, GetChildren(), GetReferenceDirectives(), GetDiagnostics()));
+                    result = ImmutableArray.Create<SingleDeclaration>(SingleDeclaration.CreateRoot(_syntax, rootName, Type, GetChildren(), GetReferenceDirectives(), GetDiagnostics()));
                 }
                 else
                 {

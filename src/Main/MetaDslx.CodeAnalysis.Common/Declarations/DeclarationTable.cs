@@ -22,14 +22,18 @@ namespace MetaDslx.CodeAnalysis.Declarations
     public sealed partial class DeclarationTable
     {
         public static readonly DeclarationTable Empty = new DeclarationTable(
+            compilation: null,
             allOlderRootDeclarations: ImmutableSetWithInsertionOrder<RootSingleDeclaration>.Empty,
             latestLazyRootDeclaration: null,
             cache: null);
 
+        // A compilation is needed to realize a lazy root declaration
+        private readonly Compilation _compilation;
+
         // All our root declarations.  We split these so we can separate out the unchanging 'older'
         // declarations from the constantly changing 'latest' declaration.
         private readonly ImmutableSetWithInsertionOrder<RootSingleDeclaration> _allOlderRootDeclarations;
-        private readonly Lazy<RootSingleDeclaration>? _latestLazyRootDeclaration;
+        private readonly LazyRootDeclaration _latestLazyRootDeclaration;
 
         // The cache of computed values for the old declarations.
         private readonly Cache _cache;
@@ -42,10 +46,12 @@ namespace MetaDslx.CodeAnalysis.Declarations
         private readonly Lazy<ICollection<ReferenceDirective>> _referenceDirectives;
 
         private DeclarationTable(
+            Compilation compilation,
             ImmutableSetWithInsertionOrder<RootSingleDeclaration> allOlderRootDeclarations,
-            Lazy<RootSingleDeclaration>? latestLazyRootDeclaration,
+            LazyRootDeclaration? latestLazyRootDeclaration,
             Cache? cache)
         {
+            _compilation = compilation;
             _allOlderRootDeclarations = allOlderRootDeclarations;
             _latestLazyRootDeclaration = latestLazyRootDeclaration;
             _cache = cache ?? new Cache(this);
@@ -54,29 +60,38 @@ namespace MetaDslx.CodeAnalysis.Declarations
             _referenceDirectives = new Lazy<ICollection<ReferenceDirective>>(GetMergedReferenceDirectives);
         }
 
-        public DeclarationTable AddRootDeclaration(Lazy<RootSingleDeclaration> lazyRootDeclaration)
+        public static DeclarationTable CreateEmpty(Compilation compilation)
+        {
+            return new DeclarationTable(
+                compilation: compilation,
+                allOlderRootDeclarations: ImmutableSetWithInsertionOrder<RootSingleDeclaration>.Empty,
+                latestLazyRootDeclaration: null,
+                cache: null);
+        }
+
+        public DeclarationTable AddRootDeclaration(LazyRootDeclaration lazyRootDeclaration)
         {
             // We can only re-use the cache if we don't already have a 'latest' item for the decl
             // table.
             if (_latestLazyRootDeclaration == null)
             {
-                return new DeclarationTable(_allOlderRootDeclarations, lazyRootDeclaration, _cache);
+                return new DeclarationTable(_compilation, _allOlderRootDeclarations, lazyRootDeclaration, _cache);
             }
             else
             {
                 // we already had a 'latest' item.  This means we're hearing about a change to a
                 // different tree.  Realize the old latest item, add it to the 'oldest' collection
                 // and don't reuse the cache.
-                return new DeclarationTable(_allOlderRootDeclarations.Add(_latestLazyRootDeclaration.Value), lazyRootDeclaration, cache: null);
+                return new DeclarationTable(_compilation, _allOlderRootDeclarations.Add(_latestLazyRootDeclaration.GetValue(_compilation)), lazyRootDeclaration, cache: null);
             }
         }
 
-        public DeclarationTable RemoveRootDeclaration(Lazy<RootSingleDeclaration> lazyRootDeclaration)
+        public DeclarationTable RemoveRootDeclaration(LazyRootDeclaration lazyRootDeclaration)
         {
             // We can only reuse the cache if we're removing the decl that was just added.
             if (_latestLazyRootDeclaration == lazyRootDeclaration)
             {
-                return new DeclarationTable(_allOlderRootDeclarations, latestLazyRootDeclaration: null, cache: _cache);
+                return new DeclarationTable(_compilation, _allOlderRootDeclarations, latestLazyRootDeclaration: null, cache: _cache);
             }
             else
             {
@@ -86,7 +101,7 @@ namespace MetaDslx.CodeAnalysis.Declarations
                 //
                 // Note: we can keep around the 'latestLazyRootDeclaration'.  There's no need to
                 // realize it if we don't have to.
-                return new DeclarationTable(_allOlderRootDeclarations.Remove(lazyRootDeclaration.Value), _latestLazyRootDeclaration, cache: null);
+                return new DeclarationTable(_compilation, _allOlderRootDeclarations.Remove(lazyRootDeclaration.GetValue(_compilation)), _latestLazyRootDeclaration, cache: null);
             }
         }
 
@@ -124,14 +139,14 @@ namespace MetaDslx.CodeAnalysis.Declarations
             }
             else if (oldRoot == null)
             {
-                return MergedDeclaration.Create(_latestLazyRootDeclaration.Value);
+                return MergedDeclaration.Create(_latestLazyRootDeclaration.GetValue(compilation));
             }
             else
             {
                 var oldRootDeclarations = oldRoot.Declarations;
                 var builder = ArrayBuilder<SingleDeclaration>.GetInstance(oldRootDeclarations.Length + 1);
                 builder.AddRange(oldRootDeclarations);
-                builder.Add(_latestLazyRootDeclaration.Value);
+                builder.Add(_latestLazyRootDeclaration.GetValue(compilation));
                 // Sort the root namespace declarations to match the order of SyntaxTrees.
                 if (compilation != null)
                 {
@@ -195,7 +210,7 @@ namespace MetaDslx.CodeAnalysis.Declarations
             }
             else
             {
-                return UnionCollection<Syntax.ReferenceDirective>.Create(cachedReferenceDirectives, _latestLazyRootDeclaration.Value.ReferenceDirectives);
+                return UnionCollection<Syntax.ReferenceDirective>.Create(cachedReferenceDirectives, _latestLazyRootDeclaration.GetValue(_compilation).ReferenceDirectives);
             }
         }
         /*

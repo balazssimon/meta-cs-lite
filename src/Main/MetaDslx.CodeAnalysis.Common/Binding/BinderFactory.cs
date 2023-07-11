@@ -22,7 +22,7 @@ namespace MetaDslx.CodeAnalysis.Binding
         {
             _compilation = compilation;
             _syntaxTree = syntaxTree;
-            _buckStopsHereBinder = new BuckStopsHereBinder(compilation, _syntaxTree.Language);
+            _buckStopsHereBinder = new BuckStopsHereBinder(compilation, _syntaxTree);
             _pool = new ObjectPool<BinderFactoryVisitor>(() => _syntaxTree.Language.CompilationFactory.CreateBinderFactoryVisitor(this), 64);
         }
 
@@ -30,13 +30,15 @@ namespace MetaDslx.CodeAnalysis.Binding
         public SyntaxTree SyntaxTree => _syntaxTree;
         public Language Language => _syntaxTree.Language;
         public Binder BuckStopsHereBinder => _buckStopsHereBinder;
+        public RootBinder? RootBinder => _buckStopsHereBinder.RootBinder;
 
         public ImmutableArray<Binder> BuildBinderTree(SyntaxNodeOrToken root, LazyBinder? lazyBinder = null)
         {
             Debug.Assert(root != null);
-            Binder rootBinder = lazyBinder is null ? _buckStopsHereBinder : lazyBinder;
+            var isRoot = lazyBinder is null;
+            Binder rootBinder = isRoot ? _buckStopsHereBinder : lazyBinder;
             BinderFactoryVisitor visitor = _pool.Allocate();
-            visitor.Initialize(root.SpanStart, root.IsToken, -1);
+            visitor.Initialize(isRoot, root.SpanStart, root.IsToken, -1);
             visitor.Begin(rootBinder, root);
             visitor.Visit(root.IsNode ? root.AsNode() : root.Parent);
             var result = visitor.End(rootBinder);

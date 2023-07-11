@@ -14,6 +14,7 @@ namespace MetaDslx.CodeAnalysis.Binding
         private readonly Stack<Binder> _binderStack = new Stack<Binder>();
         private readonly Stack<ArrayBuilder<Binder>> _childBindersStack = new Stack<ArrayBuilder<Binder>>();
 
+        private bool _isRoot;
         private int _position;
         private bool _forChild;
         private int _lazyIndex;
@@ -24,15 +25,17 @@ namespace MetaDslx.CodeAnalysis.Binding
         }
 
         public Language Language => _factory.Language;
+        protected bool IsRoot => _isRoot;
         protected int Position => _position;
         protected bool ForChild => _forChild;
         protected int LazyIndex => _lazyIndex;
 
-        internal void Initialize(int position, bool forChild, int lazyIndex)
+        internal void Initialize(bool isRoot, int position, bool forChild, int lazyIndex)
         {
             _binderStack.Clear();
             _childBindersStack.Clear();
 
+            _isRoot = isRoot;
             _position = position;
             _forChild = forChild;
             _lazyIndex = lazyIndex;

@@ -20,17 +20,45 @@ namespace MetaDslx.CodeAnalysis.Binding
         private SyntaxNodeOrToken _syntax;
 
         public virtual Language Language => _syntax == null ? Language.NoLanguage : _syntax.Language;
+        public virtual SyntaxTree SyntaxTree => _parentBinder.SyntaxTree;
         public Binder ParentBinder => _parentBinder;
         public SyntaxNodeOrToken Syntax => _syntax;
+        public SourceLocation? Location => (SourceLocation?)_syntax.GetLocation();
         public Compilation Compilation
         {
             get => _compilation;
             internal set => _compilation = value;
         }
 
-        public ImmutableArray<Binder> GetChildBinders(bool resolveLazy = false)
+        internal virtual RootBinder? GetRootBinder()
         {
-            if (this is LazyBinder lazyBinder)
+            foreach (var child in GetChildBinders())
+            {
+                var root = child.GetRootBinder();
+                if (root is not null) return root;
+            }
+            return null;
+        }
+
+        public ImmutableArray<Binder> GetChildBinders(bool resolveLazy = false, CancellationToken cancellationToken = default)
+        {
+            if (this is BuckStopsHereBinder buckStopsHereBinder)
+            {
+                if (_childBinders.IsDefault)
+                {
+                    var syntaxTree = buckStopsHereBinder.SyntaxTree;
+                    var factory = Compilation.GetBinderFactory(syntaxTree);
+                    if (syntaxTree.TryGetRoot(out var root) && root is not null)
+                    {
+                        return factory.BuildBinderTree(root);
+                    }
+                    else
+                    {
+                        return ImmutableArray<Binder>.Empty;
+                    }
+                }
+            }
+            else if (this is LazyBinder lazyBinder)
             {
                 if (!resolveLazy)
                 {
@@ -44,7 +72,7 @@ namespace MetaDslx.CodeAnalysis.Binding
             return _childBinders;
         }
 
-        internal virtual void InitBinder(Binder? parent, SyntaxNodeOrToken syntax)
+        internal void InitBinder(Binder? parent, SyntaxNodeOrToken syntax)
         {
             _syntax = syntax;
             if (parent is not null)
@@ -60,12 +88,12 @@ namespace MetaDslx.CodeAnalysis.Binding
             return children;
         }
 
-        protected virtual ImmutableArray<SingleDeclaration> BuildDeclarationTree(SingleDeclarationBuilder builder, bool resolveLazy = false)
+        protected virtual ImmutableArray<SingleDeclaration> BuildDeclarationTree(SingleDeclarationBuilder builder)
         {
-            return BuildChildDeclarationTree(builder, resolveLazy);
+            return BuildChildDeclarationTree(builder);
         }
 
-        protected virtual ImmutableArray<SingleDeclaration> BuildChildDeclarationTree(SingleDeclarationBuilder builder, bool resolveLazy = false)
+        protected ImmutableArray<SingleDeclaration> BuildChildDeclarationTree(SingleDeclarationBuilder builder, bool resolveLazy = false)
         {
             if (_childBinders.IsDefault) return ImmutableArray<SingleDeclaration>.Empty;
             var arrayBuilder = ArrayBuilder<ImmutableArray<SingleDeclaration>>.GetInstance();
@@ -73,7 +101,7 @@ namespace MetaDslx.CodeAnalysis.Binding
             {
                 foreach (var child in GetChildBinders(resolveLazy))
                 {
-                    var decls = child.BuildDeclarationTree(builder, false);
+                    var decls = child.BuildDeclarationTree(builder);
                     if (!decls.IsDefaultOrEmpty) arrayBuilder.Add(decls);
                 }
                 if (arrayBuilder.Count == 0) return ImmutableArray<SingleDeclaration>.Empty;
