@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MetaDslx.CodeAnalysis.Text;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
@@ -32,6 +33,26 @@ namespace MetaDslx.CodeAnalysis.Binding
                 }
                 return _rootBinder;
             }
+        }
+
+        public override Binder GetBinder(SyntaxNodeOrToken syntax)
+        {
+            var rootBinder = RootBinder;
+            if (rootBinder is not null)
+            {
+                return base.GetBinder(syntax) ?? this;
+            }
+            return this;
+        }
+
+        public override Binder GetEnclosingBinder(TextSpan span)
+        {
+            var rootBinder = RootBinder;
+            if (rootBinder is not null)
+            {
+                return base.GetEnclosingBinder(span) ?? this;
+            }
+            return this;
         }
     }
 }

@@ -12,6 +12,8 @@ using System.Xml.Linq;
 using System.Reflection;
 using MetaDslx.CodeAnalysis.Symbols;
 using System.Linq;
+using Microsoft.CodeAnalysis;
+using MetaDslx.CodeAnalysis.Text;
 
 namespace MetaDslx.CodeAnalysis
 {
@@ -676,10 +678,23 @@ namespace MetaDslx.CodeAnalysis
             return factory.RootBinder;
         }
 
-        /*public Binder GetBinder(SyntaxNodeOrToken syntax)
+        public MetaDslx.CodeAnalysis.Binding.Binder GetBinder(SyntaxNodeOrToken syntax)
         {
-            return GetBinderFactory(syntax.SyntaxTree).GetBinder(syntax);
-        }*/
+            var factory = GetBinderFactory(syntax.SyntaxTree);
+            return factory.GetBinder(syntax);
+        }
+
+        public MetaDslx.CodeAnalysis.Binding.Binder GetEnclosingBinder(SyntaxNodeOrToken syntax)
+        {
+            var factory = GetBinderFactory(syntax.SyntaxTree);
+            return factory.GetEnclosingBinder(syntax);
+        }
+
+        public MetaDslx.CodeAnalysis.Binding.Binder GetEnclosingBinder(SyntaxTree syntaxTree, TextSpan span)
+        {
+            var factory = GetBinderFactory(syntaxTree);
+            return factory.GetEnclosingBinder(span);
+        }
 
         #endregion
 

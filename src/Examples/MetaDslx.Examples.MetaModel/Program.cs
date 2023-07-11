@@ -13,6 +13,10 @@ foreach (var diag in mmTree.GetDiagnostics())
 
 var mmComp = Compilation.Create("ImmutableMetaModel", new[] {mmTree});
 
+var root = mmTree.GetRoot();
+var rootBinder = mmComp.GetBinder(root);
+Console.WriteLine(rootBinder);
+
 //*/
 var rootDecl = mmComp.RootDeclaration;
 Console.WriteLine(rootDecl.Name);

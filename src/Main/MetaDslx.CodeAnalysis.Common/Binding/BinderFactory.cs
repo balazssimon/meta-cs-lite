@@ -1,4 +1,5 @@
 ﻿using MetaDslx.CodeAnalysis.PooledObjects;
+using MetaDslx.CodeAnalysis.Text;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -46,5 +47,19 @@ namespace MetaDslx.CodeAnalysis.Binding
             return result;
         }
 
+        public Binder GetBinder(SyntaxNodeOrToken syntax)
+        {
+            return _buckStopsHereBinder.GetBinder(syntax);
+        }
+
+        public Binder GetEnclosingBinder(SyntaxNodeOrToken syntax)
+        {
+            return _buckStopsHereBinder.GetEnclosingBinder(syntax);
+        }
+
+        public Binder GetEnclosingBinder(TextSpan span)
+        {
+            return _buckStopsHereBinder.GetEnclosingBinder(span);
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using MetaDslx.CodeAnalysis.Declarations;
+using MetaDslx.CodeAnalysis.Text;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -27,6 +28,18 @@ namespace MetaDslx.CodeAnalysis.Binding
         internal override RootBinder? GetRootBinder()
         {
             return this;
+        }
+
+        public override Binder GetBinder(SyntaxNodeOrToken syntax)
+        {
+            var result = base.GetBinder(syntax);
+            return result ?? this;
+        }
+
+        public override Binder GetEnclosingBinder(TextSpan span)
+        {
+            var result = base.GetEnclosingBinder(span);
+            return result ?? this;
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using MetaDslx.CodeAnalysis.Declarations;
 using MetaDslx.CodeAnalysis.PooledObjects;
+using MetaDslx.CodeAnalysis.Text;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -24,6 +25,8 @@ namespace MetaDslx.CodeAnalysis.Binding
         public Binder ParentBinder => _parentBinder;
         public SyntaxNodeOrToken Syntax => _syntax;
         public SourceLocation? Location => (SourceLocation?)_syntax.GetLocation();
+        public TextSpan FullSpan => _syntax.FullSpan;
+
         public Compilation Compilation
         {
             get => _compilation;
@@ -38,6 +41,78 @@ namespace MetaDslx.CodeAnalysis.Binding
                 if (root is not null) return root;
             }
             return null;
+        }
+
+        public virtual Binder GetBinder(SyntaxNodeOrToken syntax)
+        {
+            var span = syntax.FullSpan;
+            if (this.FullSpan.Contains(span))
+            {
+                return this.GetBinder(this, syntax);
+            }
+            return null;
+        }
+
+        public Binder GetEnclosingBinder(SyntaxNodeOrToken syntax)
+        {
+            return GetEnclosingBinder(syntax.FullSpan);
+        }
+
+        public virtual Binder GetEnclosingBinder(TextSpan span)
+        {
+            if (this.FullSpan.Contains(span))
+            {
+                return this.GetBinder(this, span);
+            }
+            return null;
+        }
+
+        private Binder? GetBinder(Binder parent, SyntaxNodeOrToken syntax)
+        {
+            var span = syntax.FullSpan;
+            var parentStack = ArrayBuilder<Binder>.GetInstance();
+            parentStack.Add(parent);
+            var repeat = true;
+            while (repeat)
+            {
+                repeat = false;
+                var currentParent = parentStack[parentStack.Count - 1];
+                foreach (var child in currentParent.GetChildBinders(resolveLazy: true))
+                {
+                    if (child.FullSpan.Contains(span))
+                    {
+                        parentStack.Add(child);
+                        repeat = true;
+                        break;
+                    }
+                }
+            }
+            for (int i = parentStack.Count - 1; i >= 0; --i)
+            {
+                var currentParent = parentStack[i];
+                if (currentParent.Syntax == syntax) return currentParent;
+            }
+            return null;
+        }
+
+        private Binder? GetBinder(Binder parent, TextSpan span)
+        {
+            var currentParent = parent;
+            var repeat = true;
+            while (repeat)
+            {
+                repeat = false;
+                foreach (var child in currentParent.GetChildBinders(resolveLazy: true))
+                {
+                    if (child.FullSpan.Contains(span))
+                    {
+                        currentParent = child;
+                        repeat = true;
+                        break;
+                    }
+                }
+            }
+            return parent;
         }
 
         public ImmutableArray<Binder> GetChildBinders(bool resolveLazy = false, CancellationToken cancellationToken = default)
