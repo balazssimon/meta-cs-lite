@@ -28,12 +28,12 @@ namespace MetaDslx.CodeAnalysis.Declarations
                 var identifier = _identifiers[i];
                 if (i == _identifiers.Count - 1)
                 {
-                    result = SingleDeclaration.Create(declaration.SyntaxReference, declaration.Type, identifier.Name, identifier.MetadataName, identifier.NameLocation,
+                    result = SingleDeclaration.Create(declaration.Syntax, declaration.Type, identifier.Name, identifier.MetadataName, identifier.NameLocation,
                        declaration.CanMerge, declaration.GetChildren(), declaration.GetDiagnostics());
                 }
                 else
                 {
-                    result = SingleDeclaration.Create(declaration.SyntaxReference, declaration.NestingType, identifier.Name, identifier.MetadataName, identifier.NameLocation, 
+                    result = SingleDeclaration.Create(declaration.Syntax, declaration.NestingType, identifier.Name, identifier.MetadataName, identifier.NameLocation, 
                         true, ImmutableArray.Create(result), ImmutableArray<Diagnostic>.Empty);
                 }
             }

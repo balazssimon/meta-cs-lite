@@ -14,12 +14,12 @@ namespace MetaDslx.CodeAnalysis.Declarations
         private readonly ImmutableArray<Diagnostic> _diagnostics;
 
         internal RootSingleDeclaration(
-            SyntaxReference syntaxReference,
+            SyntaxNodeOrToken syntax,
             Type modelObjectType,
             ImmutableArray<SingleDeclaration> children,
             ImmutableArray<Syntax.ReferenceDirective> referenceDirectives,
             ImmutableArray<Diagnostic> diagnostics)
-            : base(syntaxReference, modelObjectType)
+            : base(syntax, modelObjectType)
         {
             _children = children.Cast<SingleDeclaration, Declaration>();
             _referenceDirectives = referenceDirectives;

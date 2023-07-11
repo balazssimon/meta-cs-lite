@@ -31,7 +31,7 @@ namespace MetaDslx.CodeAnalysis.Binding
         public Language Language => _syntaxTree.Language;
         public Binder BuckStopsHereBinder => _buckStopsHereBinder;
 
-        public void BuildBinderTree(SyntaxNodeOrToken root, LazyBinder? lazyBinder = null)
+        public ImmutableArray<Binder> BuildBinderTree(SyntaxNodeOrToken root, LazyBinder? lazyBinder = null)
         {
             Debug.Assert(root != null);
             Binder rootBinder = lazyBinder is null ? _buckStopsHereBinder : lazyBinder;
@@ -39,8 +39,9 @@ namespace MetaDslx.CodeAnalysis.Binding
             visitor.Initialize(root.SpanStart, root.IsToken, -1);
             visitor.Begin(rootBinder, root);
             visitor.Visit(root.IsNode ? root.AsNode() : root.Parent);
-            visitor.End(rootBinder);
+            var result = visitor.End(rootBinder);
             _pool.Free(visitor);
+            return result;
         }
 
     }

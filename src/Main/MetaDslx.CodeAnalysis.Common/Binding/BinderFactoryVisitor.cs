@@ -51,12 +51,12 @@ namespace MetaDslx.CodeAnalysis.Binding
             _childBindersStack.Push(ArrayBuilder<Binder>.GetInstance());
         }
 
-        internal protected void End(Binder binder)
+        internal protected ImmutableArray<Binder> End(Binder binder)
         {
             var parentBinder = _binderStack.Pop();
             Debug.Assert(object.ReferenceEquals(parentBinder, binder));
             var childBinders = _childBindersStack.Pop();
-            binder.InitChildBinders(childBinders.ToImmutableAndFree());
+            return binder.InitChildBinders(childBinders.ToImmutableAndFree());
         }
 
     }

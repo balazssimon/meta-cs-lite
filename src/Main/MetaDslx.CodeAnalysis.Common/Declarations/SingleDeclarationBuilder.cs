@@ -9,7 +9,7 @@ namespace MetaDslx.CodeAnalysis.Declarations
 {
     public class SingleDeclarationBuilder
     {
-        private readonly SyntaxReference _syntaxReference;
+        private readonly SyntaxNodeOrToken _syntax;
         private ArrayBuilder<Syntax.ReferenceDirective>? _referenceDirectives;
         private ArrayBuilder<SingleDeclaration>? _children;
         private ArrayBuilder<Diagnostic>? _diagnostics;
@@ -17,13 +17,13 @@ namespace MetaDslx.CodeAnalysis.Declarations
         private QualifierBuilder? _currentQualifier;
         private int _currentQualifierStack;
 
-        public SingleDeclarationBuilder(SyntaxReference syntaxReference, Type? type)
+        public SingleDeclarationBuilder(SyntaxNodeOrToken syntax, Type? type)
         {
-            _syntaxReference = syntaxReference;
+            _syntax = syntax;
             Type = type;
         }
 
-        public SyntaxReference SyntaxReference => _syntaxReference;
+        public SyntaxNodeOrToken Syntax => _syntax;
         public Type? Type { get; set; }
         public Type? NestingType { get; set; }
         public string? NestingProperty { get; set; }
@@ -103,13 +103,13 @@ namespace MetaDslx.CodeAnalysis.Declarations
             {
                 if (root)
                 {
-                    result = ImmutableArray.Create<SingleDeclaration>(SingleDeclaration.CreateRoot(_syntaxReference, Type, GetChildren(), GetReferenceDirectives(), GetDiagnostics()));
+                    result = ImmutableArray.Create<SingleDeclaration>(SingleDeclaration.CreateRoot(_syntax, Type, GetChildren(), GetReferenceDirectives(), GetDiagnostics()));
                 }
                 else
                 {
                     if (_qualifiedNames is null)
                     {
-                        result = ImmutableArray.Create(SingleDeclaration.Create(_syntaxReference, Type, null, null, null, CanMerge, GetChildren(), GetDiagnostics()));
+                        result = ImmutableArray.Create(SingleDeclaration.Create(_syntax, Type, null, null, null, CanMerge, GetChildren(), GetDiagnostics()));
                     }
                     else
                     {

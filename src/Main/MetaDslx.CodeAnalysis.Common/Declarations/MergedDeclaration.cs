@@ -26,7 +26,7 @@ namespace MetaDslx.CodeAnalysis.Declarations
 
         public ImmutableArray<SingleDeclaration> Declarations => _declarations;
 
-        public ImmutableArray<SyntaxReference> SyntaxReferences => _declarations.SelectAsArray(decl => decl.SyntaxReference);
+        public ImmutableArray<SyntaxNodeOrToken> SyntaxReferences => _declarations.SelectAsArray(decl => decl.SyntaxReference);
 
         public ImmutableArray<Location> NameLocations => _declarations.SelectAsArray(decl => decl.NameLocation);
 

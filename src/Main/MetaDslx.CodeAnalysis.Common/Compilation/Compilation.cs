@@ -170,6 +170,11 @@ namespace MetaDslx.CodeAnalysis
             throw new NotImplementedException();
         }
 
+        internal int CompareSourceLocations(SyntaxNodeOrToken location1, SyntaxNodeOrToken location2)
+        {
+            throw new NotImplementedException();
+        }
+
 
         #region Submissions
 

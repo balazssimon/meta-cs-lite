@@ -51,7 +51,7 @@ namespace MetaDslx.CodeAnalysis.Declarations
         {
             RootSingleDeclaration result;
             _rootSyntax = syntax;
-            _rootDeclaration = new SingleDeclarationBuilder(syntax.GetReference(), type);
+            _rootDeclaration = new SingleDeclarationBuilder(syntax, type);
             _declarationStack = new Stack<SingleDeclarationBuilder>();
             _enabledStack = new Stack<bool>();
             _isNameStack = new Stack<bool>();
@@ -114,7 +114,7 @@ namespace MetaDslx.CodeAnalysis.Declarations
         {
             if (!_enabled) return;
             _declarationStack.Push(_currentDeclaration);
-            _currentDeclaration = new SingleDeclarationBuilder(syntax.GetReference(), binder.Type);
+            _currentDeclaration = new SingleDeclarationBuilder(syntax, binder.Type);
         }
 
         protected virtual void EndDefine(SyntaxNodeOrToken syntax, DefineBinder binder)

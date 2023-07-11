@@ -1,6 +1,9 @@
-﻿using System;
+﻿using MetaDslx.CodeAnalysis.Declarations;
+using MetaDslx.CodeAnalysis.PooledObjects;
+using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Diagnostics;
 using System.Text;
 
 namespace MetaDslx.CodeAnalysis.Binding
@@ -8,6 +11,15 @@ namespace MetaDslx.CodeAnalysis.Binding
     public sealed class LazyBinder : Binder
     {
         private int _lazyIndex;
+        private readonly bool _weak;
+        private ImmutableArray<WeakReference<Binder>> _childBinders;
+
+        public LazyBinder(bool weak = false)
+        {
+            _weak = weak;
+        }
+
+        public bool IsWeak => _weak;
 
         internal int LazyIndex
         {
@@ -15,10 +27,52 @@ namespace MetaDslx.CodeAnalysis.Binding
             set => _lazyIndex = value;
         }
 
-        internal void ResolveChildren()
+        internal override ImmutableArray<Binder> InitChildBinders(ImmutableArray<Binder> children)
+        {
+            if (_weak)
+            {
+                // don't call base InitChildBinders, which stores children in a strong reference
+                Debug.Assert(_childBinders.IsDefault || _childBinders.Length == children.Length);
+                var result = ArrayBuilder<Binder>.GetInstance();
+                var builder = ArrayBuilder<WeakReference<Binder>>.GetInstance();
+                for (int i = 0; i < children.Length; ++i)
+                {
+                    var newChild = children[i];
+                    if (!_childBinders.IsDefault && i < _childBinders.Length && _childBinders[i].TryGetTarget(out var oldChild))
+                    {
+                        result.Add(oldChild);
+                    }
+                    else
+                    {
+                        result.Add(newChild);
+                        builder.Add(new WeakReference<Binder>(newChild));
+                    }
+                }
+                ImmutableInterlocked.InterlockedExchange(ref _childBinders, builder.ToImmutableAndFree());
+                return result.ToImmutableAndFree();
+            }
+            else
+            {
+                return base.InitChildBinders(children);
+            }
+        }
+
+        internal ImmutableArray<Binder> ResolveChildren()
         {
             var binderFactory = Compilation.GetBinderFactory(Syntax.SyntaxTree);
-            binderFactory.BuildBinderTree(this.Syntax, this);
+            return binderFactory.BuildBinderTree(this.Syntax, this);
+        }
+
+        internal ImmutableArray<SingleDeclaration> BuildDeclarationTree()
+        {
+            var builder = new SingleDeclarationBuilder(this.Syntax, null);
+            BuildChildDeclarationTree(builder, true);
+            return builder.ToImmutableAndFree(root: false);
+        }
+
+        protected override ImmutableArray<SingleDeclaration> BuildDeclarationTree(SingleDeclarationBuilder builder, bool resolveLazy = false)
+        {
+            return ImmutableArray.Create<SingleDeclaration>(new LazySingleDeclaration(Syntax, null, this));
         }
     }
 }
