@@ -47,6 +47,8 @@ namespace MetaDslx.Modeling
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         protected abstract ModelProperty? MTypeProperty { get; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        protected abstract Type MSymbolType { get; }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         protected abstract Dictionary<ModelProperty, ModelPropertyInfo> MModelPropertyInfos { get; }
 
         string IModelObject.Id
@@ -149,6 +151,8 @@ namespace MetaDslx.Modeling
         ModelProperty? IModelObject.NameProperty => MNameProperty;
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         ModelProperty? IModelObject.TypeProperty => MTypeProperty;
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        Type? IModelObject.SymbolType => MSymbolType;
 
         void IModelObject.Init(ModelProperty property, object? value)
         {

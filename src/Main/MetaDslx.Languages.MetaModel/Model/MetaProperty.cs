@@ -20,6 +20,7 @@ namespace MetaDslx.Languages.MetaModel.Model
         private ITypeSymbol? _type;
         private object? _defaultValue;
         private string _csharpType;
+        private string? _symbolProperty;
         private ImmutableArray<MetaProperty> _oppositeProperties;
         private ImmutableArray<MetaProperty> _subsettedProperties;
         private ImmutableArray<MetaProperty> _redefinedProperties;
@@ -83,6 +84,10 @@ namespace MetaDslx.Languages.MetaModel.Model
                 {
                     _flags |= ModelPropertyFlags.DerivedUnion | ModelPropertyFlags.Derived | ModelPropertyFlags.ReadOnly;
                 }
+                if (attr.AttributeClass?.ToDisplayString() == "MetaDslx.Modeling.SymbolPropertyAttribute")
+                {
+                    _symbolProperty = attr.ConstructorArguments[0].Value as string;
+                }
             }
         }
 
@@ -96,6 +101,7 @@ namespace MetaDslx.Languages.MetaModel.Model
         public string PropertyName => $"MProperty_{_metaClass.Name}_{_propertySymbol.Name}";
         public string QualifiedPropertyName => $"{_metaClass.Name}.MProperty_{_metaClass.Name}_{_propertySymbol.Name}";
         public string FullyQualifiedPropertyName => $"global::{MetaModel.NamespaceName}.{_metaClass.Name}.MProperty_{_metaClass.Name}_{_propertySymbol.Name}";
+        public string? SymbolProperty => _symbolProperty;
         public string CSharpType => _csharpType;
         public string CSharpDefaultValue
         {

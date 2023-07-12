@@ -23,6 +23,7 @@ namespace MetaDslx.Modeling
 
         ModelProperty? NameProperty { get; }
         ModelProperty? TypeProperty { get; }
+        Type? SymbolType { get; }
         ImmutableArray<ModelProperty> DeclaredProperties { get; }
         ImmutableArray<ModelProperty> AllDeclaredProperties { get; }
         ImmutableArray<ModelProperty> PublicProperties { get; }

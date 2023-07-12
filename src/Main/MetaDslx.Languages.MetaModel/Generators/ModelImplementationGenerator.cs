@@ -110,7 +110,7 @@ namespace MetaDslx.Languages.MetaModel.Generators
             cb.WriteLine($"{IModelObjectType} {IModelFactoryType}.Create(global::System.Type type, string? id)");
             cb.WriteLine("{");
             cb.Push();
-            cb.WriteLine($"return (({IModelFactoryType})this).Create(type.Name);");
+            cb.WriteLine($"return (({IModelFactoryType})this).Create(type.Name, id);");
             cb.Pop();
             cb.WriteLine("}");
             cb.WriteLine();
@@ -123,6 +123,33 @@ namespace MetaDslx.Languages.MetaModel.Generators
             foreach (var metaClass in metaModel.MetaClasses.Where(mc => !mc.IsAbstract))
             {
                 cb.WriteLine($"case \"{metaClass.Name}\": return ({IModelObjectType}){metaClass.Name}(id);");
+            }
+            cb.Write($"default: throw new {ModelExceptionType}($\"");
+            cb.Write("Unknown type '{type}' in metamodel ");
+            cb.WriteLine($"'{metaModel.Name}'\");");
+            cb.Pop();
+            cb.WriteLine("}");
+            cb.Pop();
+            cb.WriteLine("}");
+            cb.WriteLine();
+            cb.WriteLine($"global::System.Type? {IModelFactoryType}.GetSymbolType(global::System.Type type)");
+            cb.WriteLine("{");
+            cb.Push();
+            cb.WriteLine($"return (({IModelFactoryType})this).GetSymbolType(type.Name);");
+            cb.Pop();
+            cb.WriteLine("}");
+            cb.WriteLine();
+            cb.WriteLine($"global::System.Type? {IModelFactoryType}.GetSymbolType(string type)");
+            cb.WriteLine("{");
+            cb.Push();
+            cb.WriteLine($"switch (type)");
+            cb.WriteLine("{");
+            cb.Push();
+            foreach (var metaClass in metaModel.MetaClasses.Where(mc => !mc.IsAbstract))
+            {
+                cb.Write($"case \"{metaClass.Name}\": return ");
+                if (metaClass.SymbolType is not null) cb.WriteLine($"typeof({metaClass.SymbolType.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)});");
+                else cb.WriteLine("null;");
             }
             cb.Write($"default: throw new {ModelExceptionType}($\"");
             cb.Write("Unknown type '{type}' in metamodel ");
@@ -157,6 +184,12 @@ namespace MetaDslx.Languages.MetaModel.Generators
             {
                 cb.Write($"public static readonly {ModelPropertyType} {prop.PropertyName} = new {ModelPropertyType}(typeof({metaClass.FullyQualifiedName}), nameof({prop.Name}), typeof({prop.Type?.ToDisplayString(NullableFlowState.None)}), {prop.CSharpDefaultValue}, ");
                 GenerateModelPropertyFlags(cb, prop.Flags);
+                if (prop.SymbolProperty is not null)
+                {
+                    cb.Write(", \"");
+                    cb.Write(prop.SymbolProperty);
+                    cb.Write("\"");
+                }
                 cb.WriteLine(");");
             }
             var newKeyword = metaClass.IsRoot ? "" : "new ";
@@ -321,6 +354,10 @@ namespace MetaDslx.Languages.MetaModel.Generators
             cb.WriteLine($"protected override {IModelObjectType}? MMetaClass => null;");
             cb.WriteLine("[global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)]");
             cb.WriteLine($"protected override global::System.Type MMetaType => typeof({metaClass.FullyQualifiedName});");
+            cb.WriteLine("[global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)]");
+            cb.Write($"protected override global::System.Type MSymbolType => ");
+            if (metaClass.SymbolType is null) cb.WriteLine("null;");
+            else cb.WriteLine($"typeof({metaClass.SymbolType.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)});");
             cb.WriteLine("[global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)]");
             cb.WriteLine($"protected override {ImmutableArrayType}<{ModelPropertyType}> MDeclaredProperties => {metaClass.FullyQualifiedName}.MDeclaredProperties;");
             cb.WriteLine("[global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)]");

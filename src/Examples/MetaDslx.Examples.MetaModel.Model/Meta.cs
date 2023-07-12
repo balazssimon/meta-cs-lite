@@ -4,6 +4,8 @@ using System;
 namespace MetaDslx.Examples.MetaModel.Model
 {
     using Internal;
+    using MetaDslx.Modeling;
+    using MetaDslx.CodeAnalysis.Symbols;
 
     [MetaModel(MajorVersion = 1, MinorVersion = 0, Prefix = "mm", Uri = "http://metadslx/MetaModel")]
     public partial interface Meta
@@ -25,6 +27,7 @@ namespace MetaDslx.Examples.MetaModel.Model
     }
 
     [MetaClass]
+    [Symbol(typeof(Symbol))]
     public partial interface MetaElement
     {
         public IList<MetaAttribute> Attributes { get; }
@@ -37,6 +40,7 @@ namespace MetaDslx.Examples.MetaModel.Model
 
     public partial interface MetaNamedElement : MetaDocumentedElement
     {
+        [SymbolProperty("Name")]
         public string Name { get; set; }
     }
 
@@ -53,6 +57,7 @@ namespace MetaDslx.Examples.MetaModel.Model
         }
     }
 
+    [Symbol(typeof(NamedTypeSymbol))]
     public partial interface MetaNamedType : MetaType, MetaDeclaration
     {
     }
@@ -61,6 +66,7 @@ namespace MetaDslx.Examples.MetaModel.Model
     {
     }
 
+    [Symbol(typeof(DeclaredSymbol))]
     public partial interface MetaDeclaration : MetaNamedElement
     {
         [Opposite(typeof(MetaNamespace), "Declarations")]
@@ -71,16 +77,21 @@ namespace MetaDslx.Examples.MetaModel.Model
         public string FullName => $"{Namespace.FullName}{Name}";
     }
 
+    [Symbol(typeof(NamespaceSymbol))]
     public partial interface MetaNamespace : MetaDeclaration
     {
+        [SymbolProperty("Members")]
         [Opposite(typeof(MetaModel), "Namespace")]
         [Containment]
         public MetaModel? DefinedMetaModel { get; set; }
+
+        [SymbolProperty("Members")]
         [Opposite(typeof(MetaDeclaration), "Namespace")]
         [Containment]
         public IList<MetaDeclaration> Declarations { get; }
     }
 
+    [Symbol(typeof(MemberSymbol))]
     public partial interface MetaModel : MetaNamedElement
     {
         public int MajorVersion { get; set; }
@@ -147,6 +158,8 @@ namespace MetaDslx.Examples.MetaModel.Model
     {
         public bool IsAbstract { get; set; }
         public IList<MetaClass> BaseClasses { get; }
+
+        [SymbolProperty("Members")]
         [Opposite(typeof(MetaProperty), "Class")]
         [Containment]
         public IList<MetaProperty> Properties { get; }
@@ -161,6 +174,7 @@ namespace MetaDslx.Examples.MetaModel.Model
         DerivedUnion
     }
 
+    [Symbol(typeof(MemberSymbol))]
     public partial interface MetaProperty : MetaNamedElement, MetaTypedElement
     {
         public MetaPropertyKind Kind { get; set; }

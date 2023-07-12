@@ -15,10 +15,12 @@ namespace MetaDslx.Languages.MetaModel.Model
     internal class MetaClass
     {
         internal const string MetaClassAttributeName = "MetaDslx.Modeling.MetaClassAttribute";
+        internal const string SymbolAttributeName = "MetaDslx.Modeling.SymbolAttribute";
 
         private MetaModelInfo _metaModel;
         private INamedTypeSymbol _classInterface;
         private bool _isAbstract;
+        private INamedTypeSymbol? _symbolType;
         private ImmutableArray<MetaClass> _baseTypes;
         private ImmutableArray<MetaProperty> _declaredProperties;
         private ImmutableArray<MetaProperty> _allDeclaredProperties;
@@ -42,6 +44,10 @@ namespace MetaDslx.Languages.MetaModel.Model
                             _isAbstract = (bool)arg.Value.Value;
                         }
                     }
+                }
+                else if (attrName == SymbolAttributeName)
+                {
+                    _symbolType = attr.ConstructorArguments[0].Value as INamedTypeSymbol;
                 }
             }
         }
@@ -78,6 +84,15 @@ namespace MetaDslx.Languages.MetaModel.Model
         public string FullyQualifiedImplName => $"global::{MetaModel.NamespaceName}.Internal.{ImplName}";
         public bool IsAbstract => _isAbstract;
         public bool IsRoot => BaseTypes.Length == 0;
+
+        public INamedTypeSymbol? SymbolType
+        {
+            get
+            {
+                if (_allDeclaredProperties.IsDefault) ComputeAllProperties();
+                return _symbolType;
+            }
+        }
 
         public ImmutableArray<MetaProperty> DeclaredProperties
         {
@@ -142,6 +157,18 @@ namespace MetaDslx.Languages.MetaModel.Model
                         if (!publicProperties.Any(p => p.Name == prop.Name))
                         {
                             publicProperties.Add(prop);
+                        }
+                    }
+                    if (_symbolType is null)
+                    {
+                        foreach (var attr in baseType.GetAttributes())
+                        {
+                            var attrName = attr.AttributeClass?.ToDisplayString();
+                            if (attrName == SymbolAttributeName)
+                            {
+                                _symbolType = attr.ConstructorArguments[0].Value as INamedTypeSymbol;
+                                if (_symbolType is not null) break;
+                            }
                         }
                     }
                 }

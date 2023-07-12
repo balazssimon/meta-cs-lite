@@ -32,5 +32,15 @@ namespace MetaDslx.Modeling
         {
             return _metaFactory.Create(type, id);
         }
+
+        Type IModelFactory.GetSymbolType(Type type)
+        {
+            return _metaFactory.GetSymbolType(type);
+        }
+
+        Type IModelFactory.GetSymbolType(string type)
+        {
+            return _metaFactory.GetSymbolType(type);
+        }
     }
 }
