@@ -15,5 +15,6 @@ namespace MetaDslx.CodeAnalysis.Symbols.Model
         }
 
         public IModel Model => _model;
+        public override Symbol? ContainingSymbol => null;
     }
 }

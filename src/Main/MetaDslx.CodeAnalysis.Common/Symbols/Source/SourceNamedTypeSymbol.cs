@@ -2,6 +2,7 @@
 using MetaDslx.Modeling;
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Text;
 
 namespace MetaDslx.CodeAnalysis.Symbols.Source
@@ -17,8 +18,9 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
             _declaration = declaration;
         }
 
-        public Symbol ContainingSymbol => _containingSymbol;
-
+        public override Symbol ContainingSymbol => _containingSymbol;
         public MergedDeclaration Declaration => _declaration;
+        public override ImmutableArray<Location> Locations => _declaration.NameLocations;
+        public override ImmutableArray<SyntaxNodeOrToken> DeclaringSyntax => _declaration.SyntaxReferences;
     }
 }

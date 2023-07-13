@@ -15,5 +15,6 @@ namespace MetaDslx.CodeAnalysis.Symbols.CSharp
         }
 
         public IModuleSymbol CSharpSymbol => _csharpSymbol;
+        public override Symbol? ContainingSymbol => null;
     }
 }

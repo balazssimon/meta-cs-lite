@@ -42,6 +42,8 @@ namespace MetaDslx.CodeAnalysis
         internal ReferenceManager _referenceManager;
         internal AssemblySymbol? _lazyAssemblySymbol;
 
+        private readonly DiagnosticBag _declarationDiagnostics = new DiagnosticBag();
+
         internal protected Compilation(
             string? assemblyName,
             Language? mainLanguage,
@@ -620,6 +622,7 @@ namespace MetaDslx.CodeAnalysis
 
         public MergedDeclaration RootDeclaration => DeclarationTable.GetMergedRoot(this);
 
+        internal DiagnosticBag DeclarationDiagnostics => _declarationDiagnostics;
 
         #endregion
 
@@ -702,6 +705,8 @@ namespace MetaDslx.CodeAnalysis
         #endregion
 
         #region Semantic Analysis
+
+
 
         #endregion
 

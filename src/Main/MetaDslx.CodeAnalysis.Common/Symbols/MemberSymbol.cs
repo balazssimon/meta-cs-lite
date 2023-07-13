@@ -4,7 +4,7 @@ using System.Text;
 
 namespace MetaDslx.CodeAnalysis.Symbols
 {
-    public class MemberSymbol : DeclaredSymbol
+    public abstract class MemberSymbol : DeclaredSymbol
     {
     }
 }

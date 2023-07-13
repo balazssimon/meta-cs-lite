@@ -13,6 +13,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
         private Compilation _compilation;
         private string _assemblySimpleName;
         private SourceModuleSymbol _sourceModule;
+        private ImmutableArray<Symbol> _containedSymbols;
 
         /// <summary>
         /// A list of modules the assembly consists of. 
@@ -33,6 +34,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
                 moduleBuilder.Add(reference);
             }
             _modules = moduleBuilder.ToImmutable();
+            _containedSymbols = ImmutableArray.Create<Symbol>(_sourceModule);
         }
 
         public Compilation Compilation => _compilation;
@@ -40,5 +42,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
         public SourceModuleSymbol SourceModule => _sourceModule;
 
         public ImmutableArray<ModuleSymbol> Modules => _modules;
+
+        public override ImmutableArray<Symbol> ContainedSymbols => _containedSymbols;
     }
 }
