@@ -82,6 +82,8 @@ namespace MetaDslx.Languages.MetaModel.Model
         public string FullyQualifiedName => $"global::{MetaModel.NamespaceName}.{Name}";
         public string ImplName => _classInterface.Name + "Impl";
         public string FullyQualifiedImplName => $"global::{MetaModel.NamespaceName}.Internal.{ImplName}";
+        public string InfoName => $"{MetaModel.InfoName}.{Name}";
+        public string FullyQualifiedInfoName => $"{MetaModel.FullyQualifiedInfoName}.{Name}";
         public bool IsAbstract => _isAbstract;
         public bool IsRoot => BaseTypes.Length == 0;
 
@@ -121,6 +123,38 @@ namespace MetaDslx.Languages.MetaModel.Model
             {
                 if (_publicProperties.IsDefault) ComputeAllProperties();
                 return _publicProperties;
+            }
+        }
+
+        public MetaProperty? NameProperty
+        {
+            get
+            {
+                MetaProperty? property = null;
+                foreach (var prop in AllDeclaredProperties)
+                {
+                    if (prop.Flags.HasFlag(ModelPropertyFlags.Name) && property == null)
+                    {
+                        property = prop;
+                    }
+                }
+                return property;
+            }
+        }
+
+        public MetaProperty? TypeProperty
+        {
+            get
+            {
+                MetaProperty? property = null;
+                foreach (var prop in AllDeclaredProperties)
+                {
+                    if (prop.Flags.HasFlag(ModelPropertyFlags.Type) && property == null)
+                    {
+                        property = prop;
+                    }
+                }
+                return property;
             }
         }
 

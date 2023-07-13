@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MetaDslx.CodeAnalysis.Modeling;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -11,6 +12,9 @@ namespace MetaDslx.Modeling
         ModelVersion Version { get; }
         string Uri { get; }
         string Prefix { get; }
+       
+        IMetaModelInfo Info { get; }
+        IMultiModelFactory CreateFactory();
         IModelFactory CreateFactory(IModel model);
     }
 }

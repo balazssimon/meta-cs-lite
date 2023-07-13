@@ -30,26 +30,8 @@ namespace MetaDslx.Modeling
             _children = new List<IModelObject>();
         }
 
+        protected abstract IModelObjectInfo MInfo { get; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected abstract IMetaModel MMetaModel { get; }
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected abstract IModelObject? MMetaClass { get; }
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected abstract Type MMetaType { get; }
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected abstract ImmutableArray<ModelProperty> MDeclaredProperties { get; }
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected abstract ImmutableArray<ModelProperty> MAllDeclaredProperties { get; }
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected abstract ImmutableArray<ModelProperty> MPublicProperties { get; }
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected abstract ModelProperty? MNameProperty { get; }
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected abstract ModelProperty? MTypeProperty { get; }
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected abstract Type MSymbolType { get; }
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected abstract Dictionary<ModelProperty, ModelPropertyInfo> MModelPropertyInfos { get; }
 
         string IModelObject.Id
         {
@@ -58,11 +40,13 @@ namespace MetaDslx.Modeling
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IMetaModel IModelObject.MetaModel => MMetaModel;
+        IMetaModel IModelObject.MetaModel => MInfo.MetaModel;
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IModelObject? IModelObject.MetaClass => MMetaClass;
+        IModelObject? IModelObject.MetaClass => MInfo.MetaClass;
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        Type IModelObject.MetaType => MMetaType;
+        Type IModelObject.MetaType => MInfo.MetaType;
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        IModelObjectInfo IModelObject.Info => MInfo;
 
         IModel? IModelObject.Model
         {
@@ -101,17 +85,17 @@ namespace MetaDslx.Modeling
         IList<IModelObject> IModelObject.Children => _children;
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ImmutableArray<ModelProperty> IModelObject.DeclaredProperties => this.MDeclaredProperties;
+        ImmutableArray<ModelProperty> IModelObject.DeclaredProperties => MInfo.DeclaredProperties;
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ImmutableArray<ModelProperty> IModelObject.AllDeclaredProperties => this.MAllDeclaredProperties;
+        ImmutableArray<ModelProperty> IModelObject.AllDeclaredProperties => MInfo.AllDeclaredProperties;
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ImmutableArray<ModelProperty> IModelObject.PublicProperties => this.MPublicProperties;
+        ImmutableArray<ModelProperty> IModelObject.PublicProperties => MInfo.PublicProperties;
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         IEnumerable<ModelProperty> IModelObject.Properties
         {
             get
             {
-                foreach (var prop in MPublicProperties)
+                foreach (var prop in MInfo.PublicProperties)
                 {
                     yield return prop;
                 }
@@ -128,7 +112,7 @@ namespace MetaDslx.Modeling
             {
                 foreach (var prop in _properties.Keys)
                 {
-                    if (!MAllDeclaredProperties.Contains(prop))
+                    if (!MInfo.AllDeclaredProperties.Contains(prop))
                     {
                         yield return prop;
                     }
@@ -141,18 +125,18 @@ namespace MetaDslx.Modeling
         {
             get
             {
-                var nameProp = MNameProperty;
+                var nameProp = MInfo.NameProperty;
                 string? name = null;
                 if (nameProp != null) name = ((IModelObject)this).Get(nameProp)?.ToString();
                 return name;
             }
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ModelProperty? IModelObject.NameProperty => MNameProperty;
+        ModelProperty? IModelObject.NameProperty => MInfo.NameProperty;
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ModelProperty? IModelObject.TypeProperty => MTypeProperty;
+        ModelProperty? IModelObject.TypeProperty => MInfo.TypeProperty;
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        Type? IModelObject.SymbolType => MSymbolType;
+        Type? IModelObject.SymbolType => MInfo.SymbolType;
 
         void IModelObject.Init(ModelProperty property, object? value)
         {
@@ -439,10 +423,10 @@ namespace MetaDslx.Modeling
         {
             var metaTypeName = this.GetType().Name;
             if (metaTypeName.EndsWith("Impl")) metaTypeName = metaTypeName.Substring(0, metaTypeName.Length - 4);
-            var nameProp = MNameProperty;
+            var nameProp = MInfo.NameProperty;
             string? name = null;
             if (nameProp != null) name = ((IModelObject)this).Get(nameProp)?.ToString();
-            var typeProp = MTypeProperty;
+            var typeProp = MInfo.TypeProperty;
             string? type = null;
             if (typeProp != null) type = ((IModelObject)this).Get(typeProp)?.ToString();
             if (!string.IsNullOrWhiteSpace(name) && !string.IsNullOrWhiteSpace(type)) return $"{name}: {type}";
@@ -453,43 +437,37 @@ namespace MetaDslx.Modeling
 
         private ModelPropertySlot? GetSlot(ModelProperty property)
         {
-            if (MModelPropertyInfos.TryGetValue(property, out var info)) return info.Slot;
-            else return null;
+            return ((ModelObjectInfo)MInfo).GetSlot(property);
         }
 
         ModelProperty? IModelObject.GetProperty(string name)
         {
-            return MPublicProperties.FirstOrDefault(p => p.Name == name);
+            return MInfo.PublicProperties.FirstOrDefault(p => p.Name == name);
         }
 
         ImmutableArray<ModelProperty> IModelObject.GetOppositeProperties(ModelProperty property)
         {
-            if (MModelPropertyInfos.TryGetValue(property, out var info)) return info.OppositeProperties;
-            else return ImmutableArray<ModelProperty>.Empty;
+            return ((ModelObjectInfo)MInfo).GetOppositeProperties(property);
         }
 
         ImmutableArray<ModelProperty> IModelObject.GetSubsettedProperties(ModelProperty property)
         {
-            if (MModelPropertyInfos.TryGetValue(property, out var info)) return info.SubsettedProperties;
-            else return ImmutableArray<ModelProperty>.Empty;
+            return ((ModelObjectInfo)MInfo).GetSubsettedProperties(property);
         }
 
         ImmutableArray<ModelProperty> IModelObject.GetSubsettingProperties(ModelProperty property)
         {
-            if (MModelPropertyInfos.TryGetValue(property, out var info)) return info.SubsettingProperties;
-            else return ImmutableArray<ModelProperty>.Empty;
+            return ((ModelObjectInfo)MInfo).GetSubsettingProperties(property);
         }
 
         ImmutableArray<ModelProperty> IModelObject.GetRedefinedProperties(ModelProperty property)
         {
-            if (MModelPropertyInfos.TryGetValue(property, out var info)) return info.RedefinedProperties;
-            else return ImmutableArray<ModelProperty>.Empty;
+            return ((ModelObjectInfo)MInfo).GetRedefinedProperties(property);
         }
 
         ImmutableArray<ModelProperty> IModelObject.GetRedefiningProperties(ModelProperty property)
         {
-            if (MModelPropertyInfos.TryGetValue(property, out var info)) return info.RedefiningProperties;
-            else return ImmutableArray<ModelProperty>.Empty;
+            return ((ModelObjectInfo)MInfo).GetRedefiningProperties(property);
         }
 
         private string GetAddMessage(ModelProperty property, object? item)

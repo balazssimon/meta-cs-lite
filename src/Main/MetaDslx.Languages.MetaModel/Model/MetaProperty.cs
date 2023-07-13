@@ -98,9 +98,9 @@ namespace MetaDslx.Languages.MetaModel.Model
         public IPropertySymbol PropertySymbol => _propertySymbol;
         public object? DefaultValue => _defaultValue;
         public string Name => _propertySymbol.Name;
-        public string PropertyName => $"MProperty_{_metaClass.Name}_{_propertySymbol.Name}";
-        public string QualifiedPropertyName => $"{_metaClass.Name}.MProperty_{_metaClass.Name}_{_propertySymbol.Name}";
-        public string FullyQualifiedPropertyName => $"global::{MetaModel.NamespaceName}.{_metaClass.Name}.MProperty_{_metaClass.Name}_{_propertySymbol.Name}";
+        public string PropertyName => $"{_propertySymbol.Name}";
+        public string QualifiedPropertyName => $"{MetaModel.InfoName}.{_metaClass.Name}.{_propertySymbol.Name}";
+        public string FullyQualifiedPropertyName => $"global::{MetaModel.NamespaceName}.{MetaModel.InfoName}.{_metaClass.Name}.{_propertySymbol.Name}";
         public string? SymbolProperty => _symbolProperty;
         public string CSharpType => _csharpType;
         public string CSharpDefaultValue

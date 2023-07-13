@@ -19,28 +19,19 @@ namespace MetaDslx.Modeling
 
         public Model Model => _model;
 
-        IModel IModelFactory.Model => this.Model;
+        IModel IModelFactory.Model => _model;
 
         IMetaModel IModelFactory.MetaModel => _metaModel;
 
-        IModelObject IModelFactory.Create(Type type, string? id)
+        IModelObject? IModelFactory.Create(Type modelObjectType, string? id)
         {
-            return _metaFactory.Create(type, id);
+            return _metaFactory.Create(modelObjectType, id);
         }
 
-        IModelObject IModelFactory.Create(string type, string? id)
+        IModelObject? IModelFactory.Create(string modelObjectTypeName, string? id)
         {
-            return _metaFactory.Create(type, id);
+            return _metaFactory.Create(modelObjectTypeName, id);
         }
 
-        Type IModelFactory.GetSymbolType(Type type)
-        {
-            return _metaFactory.GetSymbolType(type);
-        }
-
-        Type IModelFactory.GetSymbolType(string type)
-        {
-            return _metaFactory.GetSymbolType(type);
-        }
     }
 }

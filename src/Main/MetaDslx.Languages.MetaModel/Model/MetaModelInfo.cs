@@ -70,8 +70,13 @@ namespace MetaDslx.Languages.MetaModel.Model
 
         public string NamespaceName => _modelInterface.ContainingNamespace.ToDisplayString();
         public string Name => _modelInterface.Name;
-        public string FactoryName => Name + "Factory";
-        public string FullyQualifiedFactoryName => $"global::{NamespaceName}.{FactoryName}";
+        public string FullyQualifiedName => $"global::{NamespaceName}.{Name}";
+        public string InfoName => Name + "Info";
+        public string FullyQualifiedInfoName => $"global::{NamespaceName}.{InfoName}";
+        public string SingleFactoryName => Name + "Factory";
+        public string FullyQualifiedSingleFactoryName => $"global::{NamespaceName}.{SingleFactoryName}";
+        public string MultiFactoryName => Name + "MultiFactory";
+        public string FullyQualifiedMultiFactoryName => $"global::{NamespaceName}.{MultiFactoryName}";
         public string MetaModelImplName => Name + "Impl";
         public string FullyQualifiedMetaModelImplName => $"global::{NamespaceName}.Internal.{MetaModelImplName}";
 

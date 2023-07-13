@@ -8,9 +8,7 @@ namespace MetaDslx.Modeling
     {
         IModel Model { get; }
         IMetaModel MetaModel { get; }
-        IModelObject Create(Type type, string? id = null);
-        IModelObject Create(string type, string? id = null);
-        Type GetSymbolType(Type type);
-        Type GetSymbolType(string type);
+        IModelObject? Create(Type modelObjectType, string? id = null);
+        IModelObject? Create(string modelObjectTypeName, string? id = null);
     }
 }
