@@ -9,11 +9,28 @@ namespace MetaDslx.CodeAnalysis
     {
         public static readonly CompilationOptions Default = new CompilationOptions();
 
+        private readonly bool _referencesSupersedeLowerVersions;
+
+        public CompilationOptions(bool referencesSupersedeLowerVersions = true)
+        {
+            _referencesSupersedeLowerVersions = referencesSupersedeLowerVersions;
+        }
 
         /// <summary>
         /// Apply additional disambiguation rules during resolution of referenced assemblies.
         /// </summary>
-        internal bool ReferencesSupersedeLowerVersions { get; private protected set; } = true;
+        public bool ReferencesSupersedeLowerVersions => _referencesSupersedeLowerVersions;
+
+        public CompilationOptions WithReferencesSupersedeLowerVersions(bool referencesSupersedeLowerVersions)
+        {
+            if (_referencesSupersedeLowerVersions != referencesSupersedeLowerVersions) return Update(referencesSupersedeLowerVersions);
+            else return this;
+        }
+
+        protected virtual CompilationOptions Update(bool referencesSupersedeLowerVersions)
+        {
+            return new CompilationOptions(referencesSupersedeLowerVersions);
+        }
 
         public ReportDiagnostic GetEffectiveSeverity(DiagnosticDescriptor descriptor)
         {

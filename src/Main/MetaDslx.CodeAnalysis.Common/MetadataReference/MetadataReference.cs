@@ -104,5 +104,41 @@ namespace MetaDslx.CodeAnalysis
             if (metaModel is null) throw new ArgumentNullException(nameof(metaModel));
             return new MetaModelReference(metaModel, default);
         }
+
+        /// <summary>
+        /// Creates a reference to a model.
+        /// </summary>
+        /// <param name="model">The model instance.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="model"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="model"/> is invalid.</exception>
+        public static MetadataReference CreateFromModel(IModel model)
+        {
+            if (model is null) throw new ArgumentNullException(nameof(model));
+            return new ModelReference(model, default);
+        }
+
+        /// <summary>
+        /// Creates a reference to another compilation.
+        /// </summary>
+        /// <param name="compilation">The referenced compilation.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="compilation"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="compilation"/> is invalid.</exception>
+        public static MetadataReference CreateFromCompilation(Compilation compilation)
+        {
+            if (compilation is null) throw new ArgumentNullException(nameof(compilation));
+            return new CompilationReference(compilation, default);
+        }
+
+        /// <summary>
+        /// Creates a reference from an original Roslyn metadata reference.
+        /// </summary>
+        /// <param name="reference">The Roslyn metadata reference.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="reference"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="reference"/> is invalid.</exception>
+        public static MetadataReference CreateFromMicrosoft(Microsoft.CodeAnalysis.MetadataReference reference)
+        {
+            if (reference is null) throw new ArgumentNullException(nameof(reference));
+            return new CSharpMetadataReference(reference);
+        }
     }
 }

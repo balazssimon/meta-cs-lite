@@ -75,12 +75,14 @@ namespace MetaDslx.Languages.MetaCompiler.Analyzers
                                 spc.AddSource($"{fileName}.MetaCompiler.SyntaxVisitor.g.cs", syntaxVisitorCode);
                                 var syntaxFactoryCode = generator.GenerateSyntaxFactory(language);
                                 spc.AddSource($"{fileName}.MetaCompiler.SyntaxFactory.g.cs", syntaxFactoryCode);
-                                //var declarationTreeBuilderVisitorCode = generator.GenerateDeclarationTreeBuilderVisitor(language);
-                                //spc.AddSource($"{fileName}.MetaCompiler.DeclarationTreeBuilderVisitor.g.cs", declarationTreeBuilderVisitorCode);
                                 var binderFactoryVisitorCode = generator.GenerateBinderFactoryVisitor(language);
                                 spc.AddSource($"{fileName}.MetaCompiler.BinderFactoryVisitor.g.cs", binderFactoryVisitorCode);
+                                var semanticsFactoryCode = generator.GenerateSemanticsFactory(language);
+                                spc.AddSource($"{fileName}.MetaCompiler.SemanticsFactory.g.cs", semanticsFactoryCode);
                                 var compilationFactoryCode = generator.GenerateCompilationFactory(language);
                                 spc.AddSource($"{fileName}.MetaCompiler.CompilationFactory.g.cs", compilationFactoryCode);
+                                //var compilationCode = generator.GenerateCompilation(language);
+                                //spc.AddSource($"{fileName}.MetaCompiler.Compilation.g.cs", compilationCode);
                             }
                         }
                         catch (Exception ex)

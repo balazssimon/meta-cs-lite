@@ -33,6 +33,8 @@ namespace [language.QualifiedNamespace]
 
         public new [language.Name]SyntaxFactory SyntaxFactory => ([language.Name]SyntaxFactory)base.SyntaxFactory;
 
+        public new [language.Name]SemanticsFactory SemanticsFactory => ([language.Name]SemanticsFactory)base.SemanticsFactory;
+
         public new [language.Name]CompilationFactory CompilationFactory => ([language.Name]CompilationFactory)base.CompilationFactory;
 
         protected override void RegisterServicesCore(ServiceCollection services)
@@ -41,6 +43,7 @@ namespace [language.QualifiedNamespace]
             services.TryAddSingleton<SyntaxFacts, [language.Name]SyntaxFacts>();
             services.TryAddSingleton<InternalSyntaxFactory, [language.Name]InternalSyntaxFactory>();
             services.TryAddSingleton<SyntaxFactory, [language.Name]SyntaxFactory>();
+            services.TryAddSingleton<SemanticsFactory, [language.Name]SemanticsFactory>();
             services.TryAddSingleton<CompilationFactory, [language.Name]CompilationFactory>();
         }
 

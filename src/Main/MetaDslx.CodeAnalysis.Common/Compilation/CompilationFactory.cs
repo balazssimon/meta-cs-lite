@@ -8,9 +8,26 @@ using System.Text;
 
 namespace MetaDslx.CodeAnalysis
 {
-    public abstract class CompilationFactory
+    public class CompilationFactory
     {
-        public abstract BinderFactoryVisitor CreateBinderFactoryVisitor(BinderFactory binderFactory);
+        public virtual Compilation CreateCompilation(
+            string? assemblyName,
+            Language? mainLanguage,
+            CompilationOptions options,
+            ImmutableArray<MetadataReference> references,
+            ScriptCompilationInfo? scriptCompilationInfo,
+            ReferenceManager? referenceManager,
+            bool reuseReferenceManager,
+            SyntaxAndDeclarationManager syntaxAndDeclarations)
+        {
+            return new Compilation(assemblyName, mainLanguage, options, references, scriptCompilationInfo,
+                    referenceManager, reuseReferenceManager, syntaxAndDeclarations);
+        }
+
+        public virtual ReferenceManager CreateReferenceManager()
+        {
+            return new ReferenceManager();
+        }
 
     }
 }

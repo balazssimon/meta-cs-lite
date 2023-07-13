@@ -12,7 +12,17 @@ foreach (var diag in mmTree.GetDiagnostics())
     Console.WriteLine(diag);
 }
 
-var mmComp = Compilation.Create("ImmutableMetaModel", new[] {mmTree}, new[] { MetadataReference.CreateFromMetaModel(Meta.Instance), MetadataReference.CreateFromFile(typeof(string).Assembly.Location) } );
+var mmComp = Compilation.Create(
+    "ImmutableMetaModel", 
+    syntaxTrees: new[] 
+    {
+        mmTree
+    }, 
+    references: new[] 
+    {
+        MetadataReference.CreateFromMetaModel(Meta.Instance),
+        MetadataReference.CreateFromFile(typeof(string).Assembly.Location) 
+    });
 
 var root = mmTree.GetRoot();
 var rootBinder = mmComp.GetBinder(root);

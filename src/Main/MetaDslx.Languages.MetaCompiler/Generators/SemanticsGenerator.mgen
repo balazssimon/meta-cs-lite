@@ -8,6 +8,27 @@ using System.Linq
 generator RoslynApiGenerator
 
 
+template GenerateSemanticsFactory(Language language)
+using System;
+using MetaDslx.CodeAnalysis;
+using MetaDslx.CodeAnalysis.Declarations;
+using MetaDslx.CodeAnalysis.Binding;
+
+#nullable enable
+
+namespace [language.QualifiedNamespace]
+{
+    public class [language.Name]SemanticsFactory : SemanticsFactory
+    {
+        public override BinderFactoryVisitor CreateBinderFactoryVisitor(BinderFactory binderFactory)
+        {
+            return new [language.QualifiedNamespace].Binding.[language.Name]BinderFactoryVisitor(binderFactory);
+        }
+    }
+}
+end template
+
+
 template GenerateBinderFactoryVisitor(Language language)
 using System;
 using MetaDslx.CodeAnalysis;

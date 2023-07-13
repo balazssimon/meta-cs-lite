@@ -20,6 +20,7 @@ namespace MetaDslx.CodeAnalysis
         private SyntaxFacts _syntaxFacts;
         private InternalSyntaxFactory _internalSyntaxFactory;
         private SyntaxFactory _syntaxFactory;
+        private SemanticsFactory _semanticsFactory;
         private CompilationFactory _compilationFactory;
 
         public Language()
@@ -31,6 +32,7 @@ namespace MetaDslx.CodeAnalysis
             _syntaxFacts = _serviceProvider.GetRequiredService<SyntaxFacts>();
             _internalSyntaxFactory = _serviceProvider.GetRequiredService<InternalSyntaxFactory>();
             _syntaxFactory = _serviceProvider.GetRequiredService<SyntaxFactory>();
+            _semanticsFactory = _serviceProvider.GetRequiredService<SemanticsFactory>();
             _compilationFactory = _serviceProvider.GetRequiredService<CompilationFactory>();
         }
 
@@ -39,6 +41,7 @@ namespace MetaDslx.CodeAnalysis
         public InternalSyntaxFactory InternalSyntaxFactory => _internalSyntaxFactory;
         public SyntaxFacts SyntaxFacts => _syntaxFacts;
         public SyntaxFactory SyntaxFactory => _syntaxFactory;
+        public SemanticsFactory SemanticsFactory => _semanticsFactory;
         public CompilationFactory CompilationFactory => _compilationFactory;
 
         protected abstract void RegisterServicesCore(ServiceCollection services);
@@ -52,6 +55,7 @@ namespace MetaDslx.CodeAnalysis
                 services.AddSingleton<SyntaxFacts, NoSyntaxFacts>();
                 services.AddSingleton<InternalSyntaxFactory, NoInternalSyntaxFactory>();
                 services.AddSingleton<SyntaxFactory, NoSyntaxFactory>();
+                services.AddSingleton<SemanticsFactory, NoSemanticsFactory>();
                 services.AddSingleton<CompilationFactory, NoCompilationFactory>();
             }
 
@@ -259,12 +263,17 @@ namespace MetaDslx.CodeAnalysis
 
         }
 
-        private class NoCompilationFactory : CompilationFactory
+        private class NoSemanticsFactory : SemanticsFactory
         {
             public override BinderFactoryVisitor CreateBinderFactoryVisitor(BinderFactory binderFactory)
             {
                 throw new NotImplementedException();
             }
+        }
+
+        private class NoCompilationFactory : CompilationFactory
+        {
+
         }
     }
 }
