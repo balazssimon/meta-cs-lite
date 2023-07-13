@@ -273,12 +273,12 @@ namespace MetaDslx.Languages.MetaCompiler.Model
             }
             else if (ItemTypeKind.HasFlag(AnnotationItemTypeKind.CharType))
             {
-                if (value is char charValue) sb.Append(StringUtils.EncodeChar(charValue));
+                if (value is char charValue) sb.Append(StringUtilities.EncodeChar(charValue));
                 else sb.Append("'\\0'");
             }
             else if (ItemTypeKind.HasFlag(AnnotationItemTypeKind.StringType))
             {
-                if (value is string stringValue) sb.Append(StringUtils.EncodeString(stringValue));
+                if (value is string stringValue) sb.Append(StringUtilities.EncodeString(stringValue));
                 else sb.Append("\"\"");
             }
             else if (ItemTypeKind.HasFlag(AnnotationItemTypeKind.ByteType) ||
@@ -484,7 +484,7 @@ namespace MetaDslx.Languages.MetaCompiler.Model
 
         public virtual string DefaultName => Name.ToCamelCase();
         public virtual string FieldName => "_"+Name.ToCamelCase();
-        public virtual string ParameterName => Name.ToCamelCase().EscapeCSharpKeyword();
+        public virtual string ParameterName => StringUtilities.EscapeCSharpKeyword(Name.ToCamelCase());
         public virtual string PropertyName => Name.ToPascalCase();
         public abstract string GreenItemType { get; }
         public virtual string GreenFieldType => IsList ? "GreenNode" : GreenItemType;
@@ -564,7 +564,7 @@ namespace MetaDslx.Languages.MetaCompiler.Model
         {
             get
             {
-                if (_value is null) _value = StringUtils.DecodeString(ValueText);
+                if (_value is null) _value = StringUtilities.DecodeString(ValueText);
                 return _value;
             }
         }
@@ -685,7 +685,7 @@ namespace MetaDslx.Languages.MetaCompiler.Model
         public bool IsFragment { get; set; }
         public bool IsHidden { get; set; }
         public bool IsFixed => Alternatives.Count == 1 && Alternatives[0].IsFixed;
-        public bool IsKeyword => !IsHidden && IsFixed && StringUtils.IsIdentifier(FixedValue);
+        public bool IsKeyword => !IsHidden && IsFixed && StringUtilities.IsIdentifier(FixedValue);
         public string? FixedValue => IsFixed ? Alternatives[0].FixedValue : null;
         public List<LexerRuleAlternative> Alternatives { get; } = new List<LexerRuleAlternative>();
     }
@@ -731,7 +731,7 @@ namespace MetaDslx.Languages.MetaCompiler.Model
         {
             get
             {
-                if (_value is null) _value = StringUtils.DecodeString(ValueText);
+                if (_value is null) _value = StringUtilities.DecodeString(ValueText);
                 return _value;
             }
         }
@@ -760,9 +760,9 @@ namespace MetaDslx.Languages.MetaCompiler.Model
         public override bool IsFixed => Start == End;
         public override string? FixedValue => IsFixed ? Start.ToString() : null;
         public string StartText { get; set; }
-        public char Start => StringUtils.DecodeChar(StartText);
+        public char Start => StringUtilities.DecodeChar(StartText);
         public string EndText { get; set; }
-        public char End => StringUtils.DecodeChar(EndText);
+        public char End => StringUtilities.DecodeChar(EndText);
 
         public override string ToString()
         {

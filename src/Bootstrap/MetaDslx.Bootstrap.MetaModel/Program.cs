@@ -4,7 +4,14 @@ using MetaDslx.Modeling;
 
 Console.WriteLine("Hello, World!");
 
-
+foreach (var info in SimpleModel.Instance.Info.ModelObjectInfos)
+{
+    Console.WriteLine(info.MetaType);
+	foreach (var prop in info.PublicProperties)
+	{
+        Console.WriteLine($"  {prop.Name}: {prop.Type}");
+    }
+}
 
 var model = new Model();
 var factory = new SimpleModelFactory(model);

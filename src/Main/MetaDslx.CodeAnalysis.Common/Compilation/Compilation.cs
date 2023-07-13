@@ -14,13 +14,13 @@ using MetaDslx.CodeAnalysis.Symbols;
 using System.Linq;
 using Microsoft.CodeAnalysis;
 using MetaDslx.CodeAnalysis.Text;
+using MetaDslx.CodeAnalysis.Symbols.CSharp;
 
 namespace MetaDslx.CodeAnalysis
 {
     using CSharpCompilation = Microsoft.CodeAnalysis.CSharp.CSharpCompilation;
-    using MetadataReference = Microsoft.CodeAnalysis.MetadataReference;
 
-    public class Compilation
+    public partial class Compilation
     {
         private readonly SyntaxAndDeclarationManager _syntaxAndDeclarations;
 
@@ -34,12 +34,11 @@ namespace MetaDslx.CodeAnalysis
         private WeakReference<BinderFactory>[]? _binderFactories;
         private WeakReference<BinderFactory>[]? _ignoreAccessibilityBinderFactories;
 
-        private readonly string _assemblyName;
+        private readonly string? _assemblyName;
         private readonly CompilationOptions _options;
         private readonly ImmutableArray<MetadataReference> _externalReferences;
         private readonly ScriptCompilationInfo? _scriptCompilationInfo;
-        private readonly CSharpCompilation _referenceManager;
-
+        private ReferenceManager _referenceManager;
         private AssemblySymbol? _lazyAssemblySymbol;
 
         protected Compilation(
@@ -47,7 +46,7 @@ namespace MetaDslx.CodeAnalysis
             CompilationOptions options,
             ImmutableArray<MetadataReference> references,
             ScriptCompilationInfo? scriptCompilationInfo,
-            CSharpCompilation? referenceManager, 
+            ReferenceManager? referenceManager, 
             bool reuseReferenceManager,
             SyntaxAndDeclarationManager syntaxAndDeclarations)
         {
@@ -72,24 +71,20 @@ namespace MetaDslx.CodeAnalysis
             //var csharpReferences = ReferenceManager.CSharpReferences(references);
             //CSharpCompilationForReferenceManager = CSharpCompilation.Create(assemblyName, null, csharpReferences, options.ToCSharp());
             //
-            //// Can't reuse reference manager if there are embedded references
-            //var customReferences = ReferenceManager.CustomReferences(references);
-            //if (customReferences.Any(cr => cr.EmbedInCompilation)) reuseReferenceManager = false;
-            //
-            //if (reuseReferenceManager)
-            //{
-            //    if (referenceManager is null)
-            //    {
-            //        throw new ArgumentNullException(nameof(referenceManager));
-            //    }
-            //
-            //    referenceManager.AssertCanReuseForCompilation(this);
-            //    _referenceManager = referenceManager;
-            //}
-            //else
-            //{
-            //    _referenceManager = new ReferenceManager(MakeSourceAssemblySimpleName());
-            //}
+            if (reuseReferenceManager)
+            {
+                if (referenceManager is null)
+                {
+                    throw new ArgumentNullException(nameof(referenceManager));
+                }
+            
+                referenceManager.AssertCanReuseForCompilation(this);
+                _referenceManager = referenceManager;
+            }
+            else
+            {
+                _referenceManager = new ReferenceManager(assemblyName);
+            }
 
             if (reuseReferenceManager)
             {
@@ -98,7 +93,7 @@ namespace MetaDslx.CodeAnalysis
             }
             else
             {
-                _referenceManager = CSharpCompilation.Create(assemblyName, references: references);
+                _referenceManager = new ReferenceManager(assemblyName);
             }
 
             _syntaxAndDeclarations = syntaxAndDeclarations;
@@ -109,15 +104,16 @@ namespace MetaDslx.CodeAnalysis
 
         public string? Name => _assemblyName;
         public CompilationOptions Options => _options;
-        public CSharpCompilation ReferenceManager => _referenceManager;
         public ScriptCompilationInfo? ScriptCompilationInfo => _scriptCompilationInfo;
+        internal CSharpCompilation CSharpCompilationForReferenceManager => _referenceManager.CSharpCompilation;
+        internal CSharpSymbolMap CSharpSymbolMap => _referenceManager.CSharpSymbolMap;
 
         protected virtual Compilation Update(
             string? assemblyName,
             CompilationOptions options,
             ImmutableArray<MetadataReference> externalReferences,
             ScriptCompilationInfo? scriptCompilationInfo,
-            CSharpCompilation? referenceManager,
+            ReferenceManager? referenceManager,
             bool reuseReferenceManager,
             SyntaxAndDeclarationManager syntaxAndDeclarations)
         {
@@ -530,10 +526,22 @@ namespace MetaDslx.CodeAnalysis
 
         #endregion
 
-
         #region References
 
         // TODO
+
+        internal ReferenceManager GetBoundReferenceManager()
+        {
+            if (_lazyAssemblySymbol is null)
+            {
+                _referenceManager.CreateSourceAssemblyForCompilation(this);
+                Debug.Assert(_lazyAssemblySymbol is object);
+            }
+
+            // referenceManager can only be accessed after we initialized the lazyAssemblySymbol.
+            // In fact, initialization of the assembly symbol might change the reference manager.
+            return _referenceManager;
+        }
 
         /// <summary>
         /// Creates a new compilation with additional metadata references.
@@ -700,13 +708,16 @@ namespace MetaDslx.CodeAnalysis
 
         #region Semantic Analysis
 
+        #endregion
+
+        #region Emit
+
         public bool HasCodeToEmit()
         {
+            GetBoundReferenceManager();
             return true;
         }
 
         #endregion
-
-
     }
 }

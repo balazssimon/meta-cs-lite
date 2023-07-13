@@ -1,6 +1,7 @@
 ﻿using MetaDslx.CodeAnalysis;
 using MetaDslx.CodeAnalysis.PooledObjects;
 using MetaDslx.Languages.MetaCompiler.Model;
+using Roslyn.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -725,8 +726,8 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                     case AnnotationItemTypeKind.FloatType: if (float.TryParse(valueText, out var floatValue)) { value = floatValue; return true; } else { return false; };
                     case AnnotationItemTypeKind.DoubleType: if (double.TryParse(valueText, out var doubleValue)) { value = doubleValue; return true; } else { return false; };
                     case AnnotationItemTypeKind.DecimalType: if (decimal.TryParse(valueText, out var decimalValue)) { value = decimalValue; return true; } else { return false; };
-                    case AnnotationItemTypeKind.CharType: if (valueText.StartsWith("'") && valueText.EndsWith("'")) { value = StringUtils.DecodeChar(valueText); return true; } else { return false; };
-                    case AnnotationItemTypeKind.StringType: if (valueText.StartsWith("\"") && valueText.EndsWith("\"")) { value = StringUtils.DecodeString(valueText); return true; } else if (StringUtils.IsIdentifier(valueText)) { value = valueText; return true; } else { return false; };
+                    case AnnotationItemTypeKind.CharType: if (valueText.StartsWith("'") && valueText.EndsWith("'")) { value = StringUtilities.DecodeChar(valueText); return true; } else { return false; };
+                    case AnnotationItemTypeKind.StringType: if (valueText.StartsWith("\"") && valueText.EndsWith("\"")) { value = StringUtilities.DecodeString(valueText); return true; } else if (StringUtilities.IsIdentifier(valueText)) { value = valueText; return true; } else { return false; };
                     default: return false;
                 }
             }

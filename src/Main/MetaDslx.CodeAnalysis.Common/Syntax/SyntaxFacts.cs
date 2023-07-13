@@ -104,7 +104,7 @@ namespace MetaDslx.CodeAnalysis.Syntax
             }
             else if (value.Length >= 2 && value.StartsWith("\'") && value.EndsWith("\'"))
             {
-                return StringUtilities.UnescapeCharLiteralValue(value.Substring(1, value.Length - 2));
+                return StringUtilities.DecodeChar(value);
             }
             else if (value.Length >= 3 && value.StartsWith("@\"") && value.EndsWith("\""))
             {
@@ -112,7 +112,7 @@ namespace MetaDslx.CodeAnalysis.Syntax
             }
             else if (value.Length >= 2 && value.StartsWith("\"") && value.EndsWith("\""))
             {
-                return StringUtilities.UnescapeStringLiteralValue(value.Substring(1, value.Length - 2));
+                return StringUtilities.DecodeString(value);
             }
             bool boolValue;
             if (bool.TryParse(value, out boolValue))

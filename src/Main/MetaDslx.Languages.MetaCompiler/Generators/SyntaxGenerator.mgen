@@ -135,7 +135,7 @@ namespace [language.QualifiedNamespace].Syntax
 			switch (text)
 			{
 				[foreach (var rule in language.Grammar.FixedLexerRules)]
-				case [StringUtils.EncodeString(rule.FixedValue)]: 
+				case [StringUtilities.EncodeString(rule.FixedValue)]: 
 					return [language.Name]SyntaxKind.[rule.CSharpName];
 				[end foreach]
 				default:
@@ -203,7 +203,7 @@ namespace [language.QualifiedNamespace].Syntax
 			{
 				[foreach (var rule in language.Grammar.FixedLexerRules)]
 				case [language.Name]SyntaxKind.[rule.CSharpName]: 
-					return [StringUtils.EncodeString(rule.FixedValue)];
+					return [StringUtilities.EncodeString(rule.FixedValue)];
 				[end foreach]
 				default:
 					return string.Empty;
@@ -273,7 +273,7 @@ namespace [language.QualifiedNamespace].Syntax
 			switch(text)
 			{
 				[foreach (var rule in keywordRules)]
-				case [StringUtils.EncodeString(rule.FixedValue)]: 
+				case [StringUtilities.EncodeString(rule.FixedValue)]: 
 					return [language.Name]SyntaxKind.[rule.CSharpName];
 				[end foreach]
 				default:

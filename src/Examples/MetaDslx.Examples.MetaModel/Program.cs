@@ -1,6 +1,7 @@
 ﻿
 using MetaDslx.CodeAnalysis;
 using MetaDslx.Examples.MetaModel;
+using MetaDslx.Examples.MetaModel.Model;
 
 var mmCode = File.ReadAllText(@"..\..\..\ImmutableMetaModel.txt");
 
@@ -11,7 +12,7 @@ foreach (var diag in mmTree.GetDiagnostics())
     Console.WriteLine(diag);
 }
 
-var mmComp = Compilation.Create("ImmutableMetaModel", new[] {mmTree});
+var mmComp = Compilation.Create("ImmutableMetaModel", new[] {mmTree}, new[] { MetadataReference.CreateFromMetaModel(Meta.Instance), MetadataReference.CreateFromFile(typeof(string).Assembly.Location) } );
 
 var root = mmTree.GetRoot();
 var rootBinder = mmComp.GetBinder(root);
@@ -22,6 +23,9 @@ var rootDecl = mmComp.RootDeclaration;
 Console.WriteLine(rootDecl.Name);
 Console.WriteLine(rootDecl.Children.Length);
 //*/
+
+Console.WriteLine(mmComp.HasCodeToEmit());
+Console.WriteLine(mmComp.Name);
 
 /*/
 var bf = mmComp.GetBinderFactory(mmTree);

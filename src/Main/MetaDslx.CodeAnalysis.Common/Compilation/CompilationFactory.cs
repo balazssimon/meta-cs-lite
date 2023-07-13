@@ -1,7 +1,9 @@
 ﻿using MetaDslx.CodeAnalysis.Binding;
 using MetaDslx.CodeAnalysis.Declarations;
+using MetaDslx.CodeAnalysis.Symbols;
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Text;
 
 namespace MetaDslx.CodeAnalysis

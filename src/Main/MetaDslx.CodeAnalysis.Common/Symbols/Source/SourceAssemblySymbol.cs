@@ -1,5 +1,6 @@
 ﻿using MetaDslx.CodeAnalysis.PooledObjects;
 using MetaDslx.CodeAnalysis.Symbols.CSharp;
+using MetaDslx.Modeling;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -19,19 +20,17 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
         /// </summary>
         private readonly ImmutableArray<ModuleSymbol> _modules;
 
-        public SourceAssemblySymbol(Compilation compilation, string assemblySimpleName, string moduleName)
+        public SourceAssemblySymbol(Compilation compilation, string assemblySimpleName, string moduleName, ImmutableArray<ModuleSymbol> referencedModules)
         {
             _compilation = compilation;
             _assemblySimpleName = assemblySimpleName;
 
-            var referencedModules = compilation.ReferenceManager.Assembly.Modules.ToImmutableArray();
             ArrayBuilder<ModuleSymbol> moduleBuilder = new ArrayBuilder<ModuleSymbol>(1 + referencedModules.Length);
             _sourceModule = new SourceModuleSymbol(this, compilation.DeclarationTable, moduleName);
             moduleBuilder.Add(_sourceModule);
             foreach (var reference in referencedModules)
             {
-                var moduleSymbol = new CSharpModuleSymbol(reference);
-                moduleBuilder.Add(moduleSymbol);
+                moduleBuilder.Add(reference);
             }
             _modules = moduleBuilder.ToImmutable();
         }
