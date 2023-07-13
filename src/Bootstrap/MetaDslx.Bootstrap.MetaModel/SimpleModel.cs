@@ -12,7 +12,14 @@ namespace MetaDslx.Bootstrap.MetaModel
     [MetaModel(MajorVersion = 1, MinorVersion = 2, Prefix = "sm", Uri = "http://metadslx/SimpleModel")]
     public partial interface SimpleModel 
     {
-        public static readonly Husband Husband1 = new HusbandImpl() { Name = "a" };
+        public static readonly Husband Husband1;
+
+        static SimpleModel()
+        {
+            var f = new SimpleModelFactory(new Model());
+            Husband1 = f.Husband();
+            Husband1.Name = "a";
+        }
     }
 
     [MetaClass(IsAbstract = true)]

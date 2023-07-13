@@ -261,7 +261,7 @@ namespace MetaDslx.Languages.MetaModel.Generators
             cb.WriteLine($"var infosBuilder = {ImmutableArrayType}.CreateBuilder<{IModelObjectInfoType}>();");
             cb.WriteLine($"_modelObjectInfosByType = new {DictionaryType}<global::System.Type, {IModelObjectInfoType}>();");
             cb.WriteLine($"_modelObjectInfosByName = new {DictionaryType}<string, {IModelObjectInfoType}>();");
-            foreach (var metaClass in metaModel.MetaClasses)
+            foreach (var metaClass in metaModel.MetaClasses.Where(cls => !cls.IsAbstract))
             {
                 cb.WriteLine($"typesBuilder.Add(typeof({metaClass.FullyQualifiedName}));");
                 cb.WriteLine($"infosBuilder.Add({metaClass.FullyQualifiedImplName}.s_Info);");

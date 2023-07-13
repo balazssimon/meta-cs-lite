@@ -11,7 +11,7 @@ var factory = new SimpleModelFactory(model);
 var ifactory = SimpleModel.Instance.CreateFactory(model);
 var ihusband = ifactory.Create("Husband");
 var iwife = ifactory.Create(typeof(Wife));
-ihusband.Add(Husband.MProperty_Husband_Wife, iwife);
+ihusband.Add(SimpleModelInfo.Husband.Wife, iwife);
 var husband = factory.Husband();
 var wife = factory.Wife();
 husband.Wife = wife;
