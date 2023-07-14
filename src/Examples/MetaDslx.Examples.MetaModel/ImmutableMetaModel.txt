@@ -1,0 +1,169 @@
+﻿namespace MetaDslx.Languages.Meta.Model;
+
+using MetaDslx.CodeAnalysis.Symbols;
+
+metamodel Meta;
+
+/**
+Represents an element.
+*/
+abstract class MetaElement
+{
+	// List of attributes
+	list<MetaAttribute> Attributes; 
+}
+
+abstract class MetaDocumentedElement : MetaElement
+{
+	string Documentation;
+}
+
+abstract class MetaNamedElement : MetaDocumentedElement
+{
+	string Name;
+}
+
+abstract class MetaTypedElement : MetaElement
+{
+	MetaType Type;
+}
+
+abstract class MetaType : MetaElement
+{
+}
+	
+class MetaNamedType : MetaType, MetaDeclaration
+{
+}
+
+class MetaAttribute : MetaNamedType
+{
+}
+	
+abstract class MetaDeclaration : MetaNamedElement
+{
+	MetaNamespace Namespace;
+	derived MetaModel MetaModel;
+	derived string FullName;
+}
+	
+class MetaNamespace : MetaDeclaration
+{
+	containment MetaModel DefinedMetaModel;
+	containment list<MetaDeclaration> Declarations;
+}
+
+association MetaNamespace.Declarations with MetaDeclaration.Namespace;
+
+class MetaModel : MetaNamedElement
+{
+	int MajorVersion;
+	int MinorVersion;
+	string Uri;
+	string Prefix;
+	MetaNamespace Namespace;
+}
+
+association MetaNamespace.DefinedMetaModel with MetaModel.Namespace;
+
+enum MetaCollectionKind
+{
+	List,
+	Set,
+	MultiList,
+	MultiSet,
+	Enumerable
+}
+
+class MetaCollectionType : MetaType
+{
+	MetaCollectionKind Kind;
+	MetaType InnerType;
+}
+
+class MetaNullableType : MetaType
+{
+	MetaType InnerType;
+}
+
+class MetaPrimitiveType : MetaNamedType
+{
+	string DotNetName;
+}
+
+class MetaEnum : MetaNamedType
+{
+	containment list<MetaEnumLiteral> EnumLiterals;
+	containment list<MetaOperation> Operations;
+}
+
+class MetaEnumLiteral : MetaNamedElement, MetaTypedElement
+{
+	MetaEnum Enum redefines MetaTypedElement.Type;
+}
+
+association MetaEnumLiteral.Enum with MetaEnum.EnumLiterals;
+
+class MetaConstant : MetaDeclaration, MetaTypedElement
+{
+	MetaType Type redefines MetaTypedElement.Type;
+	readonly object Value;
+}
+
+class MetaClass : MetaNamedType
+{
+	SystemType SymbolType;
+	bool IsAbstract;
+	list<MetaClass> SuperClasses;
+	containment list<MetaProperty> Properties;
+	containment list<MetaOperation> Operations;
+}
+	
+class MetaOperation : MetaNamedElement
+{
+	MetaClass Class;
+	MetaEnum Enum;
+	bool IsBuilder;
+	bool IsReadonly;
+	containment list<MetaParameter> Parameters;
+	MetaParameter Result;
+}
+
+association MetaOperation.Class with MetaClass.Operations;
+association MetaOperation.Enum with MetaEnum.Operations;
+
+class MetaParameter : MetaNamedElement, MetaTypedElement
+{
+	MetaType Type redefines MetaTypedElement.Type;
+	MetaOperation Operation;
+}
+
+association MetaOperation.Parameters with MetaParameter.Operation;
+
+enum MetaPropertyKind
+{
+	Normal,
+	Readonly,
+	Lazy,
+	Derived,
+	DerivedUnion
+}
+
+class MetaProperty : MetaNamedElement, MetaTypedElement
+{
+	string SymbolProperty;
+	MetaPropertyKind Kind;
+	MetaClass Class;
+	string DefaultValue;
+	bool IsContainment;
+	list<MetaProperty> OppositeProperties;
+	list<MetaProperty> SubsettedProperties;
+	list<MetaProperty> SubsettingProperties;
+	list<MetaProperty> RedefinedProperties;
+	list<MetaProperty> RedefiningProperties;
+}
+
+association MetaProperty.Class with MetaClass.Properties;
+association MetaProperty.OppositeProperties with MetaProperty.OppositeProperties;
+association MetaProperty.SubsettedProperties with MetaProperty.SubsettingProperties;
+association MetaProperty.RedefinedProperties with MetaProperty.RedefiningProperties;

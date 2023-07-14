@@ -20,7 +20,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.CSharp
         public INamespaceSymbol CSharpSymbol => _csharpSymbol;
         public override Symbol? ContainingSymbol => _containingSymbol;
         public override ImmutableArray<Location> Locations => ImmutableArray<Location>.Empty;
-        public override ImmutableArray<SyntaxNodeOrToken> DeclaringSyntax => ImmutableArray<SyntaxNodeOrToken>.Empty;
+        public override ImmutableArray<SyntaxNodeOrToken> DeclaringSyntaxReferences => ImmutableArray<SyntaxNodeOrToken>.Empty;
 
     }
 }

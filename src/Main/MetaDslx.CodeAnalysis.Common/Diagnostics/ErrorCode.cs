@@ -84,5 +84,14 @@ namespace MetaDslx.CodeAnalysis
         /// </summary>
         public static readonly DiagnosticDescriptor WRN_XmiWarning = DiagnosticDescriptor.Warning(nameof(WRN_XmiWarning), "XMI warning", "{0}");
 
+        /// <summary>
+        /// '{0}' is a type not supported by the language
+        /// </summary>
+        public static readonly DiagnosticDescriptor ERR_BogusType = DiagnosticDescriptor.Error(nameof(ERR_BogusType), "Bogus type", "'{0}' is a type not supported by the language");
+
+        /// <summary>
+        /// '{0}' is not supported by the language
+        /// </summary>
+        public static readonly DiagnosticDescriptor ERR_BindToBogus = DiagnosticDescriptor.Error(nameof(ERR_BindToBogus), "Bind to bogus", "'{0}' is not supported by the language");
     }
 }

@@ -15,6 +15,7 @@ using System.Linq;
 using Microsoft.CodeAnalysis;
 using MetaDslx.CodeAnalysis.Text;
 using MetaDslx.CodeAnalysis.Symbols.CSharp;
+using MetaDslx.CodeAnalysis.Symbols.Source;
 
 namespace MetaDslx.CodeAnalysis
 {
@@ -39,8 +40,11 @@ namespace MetaDslx.CodeAnalysis
         private readonly CompilationOptions _options;
         private readonly ImmutableArray<MetadataReference> _externalReferences;
         private readonly ScriptCompilationInfo? _scriptCompilationInfo;
+
         internal ReferenceManager _referenceManager;
-        internal AssemblySymbol? _lazyAssemblySymbol;
+        internal SourceAssemblySymbol? _lazyAssemblySymbol;
+
+        private AccessCheck? _lazyAccessCheck;
 
         private readonly DiagnosticBag _declarationDiagnostics = new DiagnosticBag();
 
@@ -101,6 +105,19 @@ namespace MetaDslx.CodeAnalysis
         public ScriptCompilationInfo? ScriptCompilationInfo => _scriptCompilationInfo;
         public ReferenceManager ReferenceManager => _referenceManager;
         public ImmutableArray<MetadataReference> ExternalReferences => _externalReferences;
+
+        public AccessCheck AccessCheck
+        {
+            get
+            {
+                if (_lazyAccessCheck is null)
+                {
+                    var accessCheck = MainLanguage.CompilationFactory.CreateAccessCheck();
+                    Interlocked.CompareExchange(ref _lazyAccessCheck, accessCheck, null);
+                }
+                return _lazyAccessCheck;
+            }
+        }
 
         protected virtual Compilation Update(
             string? assemblyName,
@@ -700,6 +717,36 @@ namespace MetaDslx.CodeAnalysis
         {
             var factory = GetBinderFactory(syntaxTree);
             return factory.GetEnclosingBinder(span);
+        }
+
+        #endregion
+
+        #region Symbols
+
+        /// <summary>
+        /// The AssemblySymbol that represents the assembly being created.
+        /// </summary>
+        public SourceAssemblySymbol SourceAssembly
+        {
+            get
+            {
+                GetBoundReferenceManager();
+                Debug.Assert(_lazyAssemblySymbol is object);
+                return _lazyAssemblySymbol;
+            }
+        }
+
+        /// <summary>
+        /// Get a ModuleSymbol that refers to the module being created by compiling all of the code.
+        /// By getting the GlobalNamespace property of that module, all of the namespaces and types
+        /// defined in source code can be obtained.
+        /// </summary>
+        public SourceModuleSymbol SourceModule
+        {
+            get
+            {
+                return SourceAssembly.SourceModuleSymbol;
+            }
         }
 
         #endregion

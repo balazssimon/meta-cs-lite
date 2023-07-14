@@ -7,55 +7,24 @@ namespace MetaDslx.CodeAnalysis.Symbols
 {
     public class SymbolDisplayFormat
     {
-        public readonly SymbolDisplayFormat Default = new SymbolDisplayFormat();
-        public readonly SymbolDisplayFormat QualifiedNameOnlyFormat = new QualifiedNameOnlySymbolFormat();
-        public readonly SymbolDisplayFormat FullyQualifiedFormat = new FullyQualifiedFormatSymbolFormat();
+        public static readonly SymbolDisplayFormat Default = new SymbolDisplayFormat(includeSymbolKind: true);
+        public static readonly SymbolDisplayFormat QualifiedNameOnlyFormat = new SymbolDisplayFormat(includeQualifier: true);
+        public static readonly SymbolDisplayFormat FullyQualifiedFormat = new SymbolDisplayFormat(includeQualifier: true, includeGlobalScope: true);
 
-        protected SymbolDisplayFormat() 
-        { 
-        }
+        private readonly bool _includeSymbolKind;
+        private readonly bool _includeQualifier;
+        private readonly bool _includeGlobalScope;
 
-        public virtual string Format(Symbol? symbol)
+        protected SymbolDisplayFormat(bool includeSymbolKind = false, bool includeQualifier = false, bool includeGlobalScope = false) 
         {
-            if (symbol is null) return string.Empty;
-            return symbol.MetadataName + " (" + symbol.GetKindText() + ")";
+            _includeSymbolKind = includeSymbolKind;
+            _includeQualifier = includeQualifier;
+            _includeGlobalScope = includeGlobalScope;
         }
+
+        public bool IncludeSymbolKind => _includeSymbolKind;
+        public bool IncludeQualifier => _includeQualifier;
+        public bool IncludeGlobalScope => _includeGlobalScope;
     }
 
-    internal class QualifiedNameOnlySymbolFormat : SymbolDisplayFormat
-    {
-        public override string Format(Symbol? symbol)
-        {
-            if (symbol is null) return string.Empty;
-            var builder = PooledStringBuilder.GetInstance();
-            var sb = builder.Builder;
-            var container = symbol;
-            while (container is not null) 
-            {
-                if (sb.Length > 0) sb.Append(".");
-                sb.Append(container.MetadataName);
-                container = container.ContainingSymbol as DeclaredSymbol;
-            }
-            return builder.ToStringAndFree();
-        }
-    }
-
-    internal class FullyQualifiedFormatSymbolFormat : SymbolDisplayFormat
-    {
-        public override string Format(Symbol? symbol)
-        {
-            if (symbol is null) return string.Empty;
-            var builder = PooledStringBuilder.GetInstance();
-            var sb = builder.Builder;
-            var container = symbol;
-            while (container is not null)
-            {
-                if (sb.Length > 0) sb.Append(".");
-                else sb.Append("global::");
-                sb.Append(container.MetadataName);
-                container = container.ContainingSymbol as DeclaredSymbol;
-            }
-            return builder.ToStringAndFree();
-        }
-    }
 }

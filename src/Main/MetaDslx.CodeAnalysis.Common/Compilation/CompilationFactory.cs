@@ -29,5 +29,9 @@ namespace MetaDslx.CodeAnalysis
             return new ReferenceManager();
         }
 
+        public virtual AccessCheck CreateAccessCheck()
+        {
+            return new AccessCheck();
+        }
     }
 }

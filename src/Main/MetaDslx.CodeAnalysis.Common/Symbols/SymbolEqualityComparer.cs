@@ -15,11 +15,16 @@ namespace MetaDslx.CodeAnalysis.Symbols
         /// <summary>
         /// Compares two <see cref="Symbol"/> instances based on the default comparison rules, equivalent to calling <see cref="IEquatable{Symbol}.Equals(Symbol)"/>
         /// </summary>
-        public static readonly SymbolEqualityComparer Default = new SymbolEqualityComparer();
+        public static readonly SymbolEqualityComparer Default = new SymbolEqualityComparer(TypeEqualityComparer.Default);
 
-        protected SymbolEqualityComparer()
+        private TypeEqualityComparer _typeEqualityComparer;
+
+        protected SymbolEqualityComparer(TypeEqualityComparer typeEqualityComparer)
         {
+            _typeEqualityComparer = typeEqualityComparer;
         }
+
+        public TypeEqualityComparer TypeEqualityComparer => _typeEqualityComparer;
 
         /// <summary>
         /// Determines if two <see cref="Symbol" /> instances are equal according to the rules of this comparer

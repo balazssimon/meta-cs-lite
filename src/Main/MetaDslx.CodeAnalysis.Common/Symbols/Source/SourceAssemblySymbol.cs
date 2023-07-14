@@ -37,12 +37,10 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
             _containedSymbols = ImmutableArray.Create<Symbol>(_sourceModule);
         }
 
-        public Compilation Compilation => _compilation;
-
-        public SourceModuleSymbol SourceModule => _sourceModule;
-
+        public override string Name => _assemblySimpleName;
+        public override Compilation? DeclaringCompilation => _compilation;
+        public SourceModuleSymbol SourceModuleSymbol => _sourceModule;
         public ImmutableArray<ModuleSymbol> Modules => _modules;
-
         public override ImmutableArray<Symbol> ContainedSymbols => _containedSymbols;
     }
 }

@@ -222,10 +222,13 @@ namespace MetaDslx.CodeAnalysis
             var referencedModulesBuilder = ArrayBuilder<ModuleSymbol>.GetInstance();
             foreach (var csharpAssembly in csharpCompilation.SourceModule.ReferencedAssemblySymbols)
             {
+                var assembly = new CSharpAssemblySymbol(csharpAssembly);
+                var modulesBuilder = ArrayBuilder<CSharpModuleSymbol>.GetInstance();
                 foreach (var csharpModule in csharpAssembly.Modules)
                 {
-                    referencedModulesBuilder.Add(new CSharpModuleSymbol(csharpModule));
+                    referencedModulesBuilder.Add(new CSharpModuleSymbol(assembly, csharpModule));
                 }
+                assembly.DangerousSetModules(modulesBuilder.ToImmutableAndFree());
             }
             foreach (var reference in compilation.ExternalReferences.OfType<MetaModelReference>())
             {
@@ -235,7 +238,7 @@ namespace MetaDslx.CodeAnalysis
             {
                 referencedModulesBuilder.Add(new ModelModuleSymbol(reference.Model));
             }
-            // TODO: provide extension point for custom module symbols
+            referencedModulesBuilder.AddRange(CreateModules(compilation));
             var referencedModules = referencedModulesBuilder.ToImmutableAndFree();
             var assemblySymbol = new SourceAssemblySymbol(compilation, csharpCompilation.SourceModule.ContainingAssembly.Name, csharpCompilation.SourceModule.Name, referencedModules);
             if ((object)compilation._lazyAssemblySymbol == null)

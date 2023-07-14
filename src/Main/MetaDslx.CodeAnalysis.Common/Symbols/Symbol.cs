@@ -20,12 +20,6 @@ namespace MetaDslx.CodeAnalysis.Symbols
     {
         private static ConditionalWeakTable<Symbol, DiagnosticBag> s_diagnostics = new ConditionalWeakTable<Symbol, DiagnosticBag>();
 
-        // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        // Changes to the public interface of this class should remain synchronized with the VB version of Symbol.
-        // Do not make any changes to the public interface without making the corresponding change
-        // to the VB version.
-        // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        // Prevent anyone else from deriving from this class.
         public Symbol()
         {
         }
@@ -75,9 +69,9 @@ namespace MetaDslx.CodeAnalysis.Symbols
         }
 
         /// <summary>
-        /// Get the symbol that directly contains this symbol. 
+        /// Get the symbol that logically contains this symbol. 
         /// </summary>
-        public abstract Symbol? ContainingSymbol { get; }
+        public abstract Symbol ContainingSymbol { get; }
 
         /// <summary>
         /// Get the symbols that are directly contained by this symbol. 
@@ -224,11 +218,11 @@ namespace MetaDslx.CodeAnalysis.Symbols
             }
         }
 
-        protected bool CollectSymbolDiagnostics(DiagnosticBag diagnostics)
+        protected bool AddSymbolDiagnostics(DiagnosticBag diagnostics)
         {
             if (!diagnostics.IsEmptyWithoutResolution)
             {
-                //var compilation = this.DeclaringCompilation;
+                //Compilation compilation = this.DeclaringCompilation;
                 //Debug.Assert(compilation != null);
                 var symbolDiagnostics = s_diagnostics.GetOrCreateValue(this);
                 symbolDiagnostics.AddRange(diagnostics);
@@ -237,11 +231,11 @@ namespace MetaDslx.CodeAnalysis.Symbols
             return false;
         }
 
-        protected bool CollectSymbolDiagnostics(HashSet<DiagnosticInfo>? diagnostics)
+        protected bool AddSymbolDiagnostics(HashSet<DiagnosticInfo>? diagnostics)
         {
             if (diagnostics is not null && diagnostics.Count > 0)
             {
-                //var compilation = this.DeclaringCompilation;
+                //Compilation compilation = this.DeclaringCompilation;
                 //Debug.Assert(compilation != null);
                 var symbolDiagnostics = s_diagnostics.GetOrCreateValue(this);
                 symbolDiagnostics.AddRange(diagnostics.Select(diag => Diagnostic.Create(diag, this.Locations.FirstOrNone())));
@@ -303,21 +297,21 @@ namespace MetaDslx.CodeAnalysis.Symbols
         /// To go the opposite direction (from syntax node to symbol), see <see
         /// cref="CSharpSemanticModel.GetDeclaredSymbol(MemberDeclarationSyntax, CancellationToken)"/>.
         /// </remarks>
-        public abstract ImmutableArray<SyntaxNodeOrToken> DeclaringSyntax { get; }
+        public abstract ImmutableArray<SyntaxNodeOrToken> DeclaringSyntaxReferences { get; }
 
         /// <summary>
         /// Helper for implementing <see cref="DeclaringSyntaxReferences"/> for derived classes that store a location but not a 
-        /// <see cref="CSharpSyntaxNode"/> or <see cref="SyntaxReference"/>.
+        /// <see cref="SyntaxNode"/> or <see cref="SyntaxNodeOrToken"/>.
         /// </summary>
-        internal static ImmutableArray<SyntaxReference> GetDeclaringSyntaxReferenceHelper<TNode>(ImmutableArray<Location> locations)
+        internal static ImmutableArray<SyntaxNodeOrToken> GetDeclaringSyntaxReferenceHelper<TNode>(ImmutableArray<Location> locations)
             where TNode : SyntaxNode
         {
             if (locations.IsEmpty)
             {
-                return ImmutableArray<SyntaxReference>.Empty;
+                return ImmutableArray<SyntaxNodeOrToken>.Empty;
             }
 
-            ArrayBuilder<SyntaxReference> builder = ArrayBuilder<SyntaxReference>.GetInstance();
+            ArrayBuilder<SyntaxNodeOrToken> builder = ArrayBuilder<SyntaxNodeOrToken>.GetInstance();
             foreach (Location location in locations)
             {
                 // Location may be null. See https://github.com/dotnet/roslyn/issues/28862.
@@ -327,12 +321,11 @@ namespace MetaDslx.CodeAnalysis.Symbols
                 }
                 if (location.IsInSource)
                 {
-                    SyntaxToken token = location.SourceTree.GetRoot().FindToken(location.SourceSpan.Start);
+                    SyntaxToken token = (SyntaxToken)location.SourceTree.GetRoot().FindToken(location.SourceSpan.Start);
                     if (token.RawKind != (int)InternalSyntaxKind.None)
                     {
                         SyntaxNode node = token.Parent.FirstAncestorOrSelf<TNode>();
-                        if (node != null)
-                            builder.Add(node.GetReference());
+                        if (node != null) builder.Add(node);
                     }
                 }
             }
@@ -348,58 +341,29 @@ namespace MetaDslx.CodeAnalysis.Symbols
             return ImmutableArray<AttributeData>.Empty;
         }
 
-        /*
         public virtual bool IsSpecialSymbol(object specialSymbolId, Language? language = null)
         {
-            if (specialSymbolId is null) throw new ArgumentNullException(nameof(specialSymbolId));
-            if (specialSymbolId is SpecialType st) specialSymbolId = st.ToSpecialSymbol();
-            if (language is null) language = this.Language;
-            var metadataName = language.SymbolFacts.GetMetadataNameOfSpecialSymbol(specialSymbolId);
-            if (!string.IsNullOrEmpty(metadataName) && (this.ToDisplayString(SymbolDisplayFormat.QualifiedNameOnlyFormat) == metadataName || this.ContainingSymbol is ModuleSymbol && this.MetadataName == metadataName)) return true;
-            var specialModelObject = language.SymbolFacts.GetModelObjectOfSpecialSymbol(specialSymbolId);
-            if (this is IModelSymbol modelSymbol && modelSymbol.ModelObject is not null) return modelSymbol.ModelObject.Equals(specialModelObject);
+            // TODO:MetaDslx
             return false;
         }
 
         public virtual object? GetSpecialSymbol(Language? language = null)
         {
-            if (language is null) language = this.Language;
-            var metadataName = this.ToDisplayString(SymbolDisplayFormat.QualifiedNameOnlyFormat);
-            var specialSymbolId = language.SymbolFacts.GetSpecialSymbolOfMetadataName(metadataName);
-            if (specialSymbolId is not null) return specialSymbolId;
-            if (this is IModelSymbol modelSymbol && modelSymbol.ModelObject is not null)
-            {
-                specialSymbolId = language.SymbolFacts.GetSpecialSymbolOfModelObject(modelSymbol.ModelObject);
-            }
-            return specialSymbolId;
+            // TODO:MetaDslx
+            return null;
         }
 
         public virtual bool IsSpecialModelObject(object specialModelObject, Language? language = null)
         {
-            if (specialModelObject is null) throw new ArgumentNullException(nameof(specialModelObject));
-            if (language is null) language = this.Language;
-            var specialSymbolId = language.SymbolFacts.GetSpecialSymbolOfModelObject(specialModelObject);
-            if (specialSymbolId is not null)
-            {
-                var metadataName = language.SymbolFacts.GetMetadataNameOfSpecialSymbol(specialSymbolId);
-                if (!string.IsNullOrEmpty(metadataName) && this.ToDisplayString(SymbolDisplayFormat.QualifiedNameOnlyFormat) == metadataName) return true;
-                else if (this is IModelSymbol modelSymbol && modelSymbol.ModelObject is not null) return modelSymbol.ModelObject.Equals(specialModelObject);
-                else return false;
-            }
+            // TODO:MetaDslx
             return false;
         }
 
         public virtual object? GetSpecialModelObject(Language? language = null)
         {
-            if (language is null) language = this.Language;
-            if (this is IModelSymbol modelSymbol && modelSymbol.ModelObject is not null)
-            {
-                var specialSymbolId = language.SymbolFacts.GetSpecialSymbolOfModelObject(modelSymbol.ModelObject);
-                if (specialSymbolId is not null) return modelSymbol.ModelObject;
-            }
+            // TODO:MetaDslx
             return null;
         }
-        */
 
         /// <summary>
         /// Returns a string representation of this symbol, suitable for debugging purposes, or
@@ -537,7 +501,6 @@ namespace MetaDslx.CodeAnalysis.Symbols
             return info.Severity == DiagnosticSeverity.Error;
         }
 
-        /*
         internal static bool GetUnificationUseSiteDiagnosticRecursive<T>(ref DiagnosticInfo result, ImmutableArray<T> types, Symbol owner, ref HashSet<TypeSymbol> checkedTypes)
             where T : TypeSymbol
         {
@@ -564,14 +527,38 @@ namespace MetaDslx.CodeAnalysis.Symbols
 
             return false;
         }
-        */
 
         #endregion
 
-        public string ToDisplayString(SymbolDisplayFormat? format = null)
+        public string ToDisplayString(SymbolDisplayFormat format = null)
         {
-            if (format is null) format = SymbolDisplayFormat.Default;
-            return format.Format(this);
+            var builder = PooledStringBuilder.GetInstance();
+            var sb = builder.Builder;
+            if (format.IncludeQualifier)
+            {
+                var container = this;
+                while (container is not null)
+                {
+                    if (sb.Length > 0) sb.Insert(0, ".");
+                    sb.Insert(0, container.MetadataName);
+                    container = container.ContainingSymbol as DeclaredSymbol;
+                }
+                if (format.IncludeGlobalScope)
+                {
+                    sb.Insert(0, "global::");
+                }
+            }
+            else
+            {
+                sb.Append(this.MetadataName);
+            }
+            if (format.IncludeSymbolKind)
+            {
+                sb.Append(" [");
+                sb.Append(GetKindText());
+                sb.Append("]");
+            }
+            return builder.ToStringAndFree();
         }
 
         public string GetKindText()
@@ -772,7 +759,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
             return this.Equals(obj as Symbol, SymbolEqualityComparer.Default);
         }
 
-        // By default we don't consider the comparer, and do reference equality. This can be overridden.
+        // By default we don't consider the compareKind, and do reference equality. This can be overridden.
         public virtual bool Equals(Symbol? other, SymbolEqualityComparer comparer)
         {
             return comparer.Equals(this, other);
@@ -786,10 +773,8 @@ namespace MetaDslx.CodeAnalysis.Symbols
 
         public static bool Equals(Symbol first, Symbol second, SymbolEqualityComparer comparer)
         {
-            if (first is null) return second is null;
-            return first.Equals(second, comparer);
+            return comparer.Equals(first, second);
         }
-
 
     }
 }

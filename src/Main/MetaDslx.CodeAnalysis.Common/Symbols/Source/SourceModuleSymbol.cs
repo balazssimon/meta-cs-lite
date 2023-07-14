@@ -24,9 +24,9 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
             _declarations = declarations;
         }
 
-        public SourceAssemblySymbol AssemblySymbol => _assemblySymbol;
+        public SourceAssemblySymbol SourceAssemblySymbol => _assemblySymbol;
         public override Symbol? ContainingSymbol => _assemblySymbol;
-        public Compilation Compilation => AssemblySymbol.Compilation;
+        public override Compilation? DeclaringCompilation => SourceAssemblySymbol.DeclaringCompilation;
         public DeclarationTable DeclarationTable => _declarations;
         public Model Model => _model;
 

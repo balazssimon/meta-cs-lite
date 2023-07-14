@@ -21,6 +21,6 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
         public override Symbol ContainingSymbol => _containingSymbol;
         public MergedDeclaration Declaration => _declaration;
         public override ImmutableArray<Location> Locations => _declaration.NameLocations;
-        public override ImmutableArray<SyntaxNodeOrToken> DeclaringSyntax => _declaration.SyntaxReferences;
+        public override ImmutableArray<SyntaxNodeOrToken> DeclaringSyntaxReferences => _declaration.SyntaxReferences;
     }
 }

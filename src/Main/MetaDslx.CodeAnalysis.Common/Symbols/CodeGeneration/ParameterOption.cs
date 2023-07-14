@@ -4,8 +4,10 @@ using System.Text;
 
 namespace MetaDslx.CodeAnalysis.Symbols
 {
-    [AttributeUsage(AttributeTargets.Property)]
-    public class ModelPropertyAttribute : Attribute
+    public enum ParameterOption
     {
+        Required,
+        Optional,
+        Disabled
     }
 }

@@ -11,6 +11,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.CSharp
     internal class CSharpAssemblySymbol : AssemblySymbol
     {
         private IAssemblySymbol _csharpSymbol;
+        private ImmutableArray<CSharpModuleSymbol> _modules;
 
         public CSharpAssemblySymbol(IAssemblySymbol csharpSymbol)
         {
@@ -18,6 +19,11 @@ namespace MetaDslx.CodeAnalysis.Symbols.CSharp
         }
 
         public IAssemblySymbol CSharpSymbol => _csharpSymbol;
+        public override ImmutableArray<Symbol> ContainedSymbols => _modules.Cast<CSharpModuleSymbol, Symbol>();
 
+        internal void DangerousSetModules(ImmutableArray<CSharpModuleSymbol> modules)
+        {
+            _modules = modules;
+        }
     }
 }
