@@ -220,30 +220,6 @@ namespace MetaDslx.CodeAnalysis
         public abstract bool IsSuppressed { get; }
 
         /// <summary>
-        /// Gets the <see cref="SuppressionInfo"/> for suppressed diagnostics, i.e. <see cref="IsSuppressed"/> = true.
-        /// Otherwise, returns null.
-        /// </summary>
-        public SuppressionInfo? GetSuppressionInfo(Compilation compilation)
-        {
-            if (!IsSuppressed)
-            {
-                return null;
-            }
-
-            AttributeData? attribute = null;
-            /* TODO:MetaDslx
-            var suppressMessageState = new SuppressMessageAttributeState(compilation);
-            if (!suppressMessageState.IsDiagnosticSuppressed(
-                    this,
-                    out attribute))
-            {
-                attribute = null;
-            }
-            */
-            return new SuppressionInfo(this.Id, attribute);
-        }
-
-        /// <summary>
         /// Returns true if this diagnostic is enabled by default by the author of the diagnostic.
         /// </summary>
         internal virtual bool IsEnabledByDefault { get { return this.Descriptor.IsEnabledByDefault; } }
@@ -344,42 +320,6 @@ namespace MetaDslx.CodeAnalysis
             get { return SpecializedCollections.EmptyReadOnlyList<object?>(); }
         }
 
-        /// <summary>
-        /// Returns true if the diagnostic location (or any additional location) is within the given tree and intersects with the filterSpanWithinTree, if non-null.
-        /// </summary>
-        internal bool HasIntersectingLocation(SyntaxTree tree, TextSpan? filterSpanWithinTree = null)
-        {
-            if (isLocationWithinSpan(Location, tree, filterSpanWithinTree))
-            {
-                return true;
-            }
-
-            if (AdditionalLocations is null || AdditionalLocations.Count == 0)
-            {
-                // Avoid possible enumerator allocations if there are no additional locations.
-                return false;
-            }
-
-            foreach (var location in AdditionalLocations)
-            {
-                if (isLocationWithinSpan(location, tree, filterSpanWithinTree))
-                {
-                    return true;
-                }
-            }
-
-            return false;
-
-            static bool isLocationWithinSpan(Location location, SyntaxTree tree, TextSpan? filterSpan)
-            {
-                if (location.SourceTree != tree)
-                {
-                    return false;
-                }
-
-                return !filterSpan.HasValue || filterSpan.GetValueOrDefault().IntersectsWith(location.SourceSpan);
-            }
-        }
 
         internal Diagnostic? WithReportDiagnostic(ReportDiagnostic reportAction)
         {

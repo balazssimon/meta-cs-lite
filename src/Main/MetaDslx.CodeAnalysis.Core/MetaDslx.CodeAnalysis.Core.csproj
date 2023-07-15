@@ -12,6 +12,7 @@
 
 	<ItemGroup>
 		<InternalsVisibleTo Include="MetaDslx.Languages.MetaCompiler.Antlr" />
+		<InternalsVisibleTo Include="MetaDslx.CodeAnalysis.Common" />
 		<InternalsVisibleTo Include="MetaDslx.CodeAnalysis.Analyzers" />
 	</ItemGroup>
 
@@ -22,19 +23,13 @@
 		<PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="$(SystemRuntimeCompilerServicesUnsafeVersion)" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="$(MicrosoftDependencyInjectionVersion)" />
 		<PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="$(MicrosoftCodeAnalysisCSharpVersion)" />
-	</ItemGroup>	
+	</ItemGroup>
 	<ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
 		<PackageReference Include="System.Memory" Version="$(SystemMemoryVersion)" />
 		<PackageReference Include="System.Threading.Tasks.Extensions" Version="$(SystemThreadingTasksExtensionsVersion)" />
 	</ItemGroup>
 	<ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
-	  <ProjectReference Include="..\MetaDslx.NetStandard20Extensions\MetaDslx.NetStandard20Extensions.csproj" />
-	</ItemGroup>
-	<ItemGroup>
-		<ProjectReference Include="..\MetaDslx.CodeAnalysis.Core\MetaDslx.CodeAnalysis.Core.csproj" OutputItemType="Analyzer" />
-		<ProjectReference Include="..\MetaDslx.Modeling\MetaDslx.Modeling.csproj" OutputItemType="Analyzer" />
-		<ProjectReference Include="..\MetaDslx.Languages.MetaGenerator\MetaDslx.Languages.MetaGenerator.csproj" OutputItemType="Analyzer" />
-		<ProjectReference Include="..\MetaDslx.Languages.MetaSymbols\MetaDslx.Languages.MetaSymbols.csproj" OutputItemType="Analyzer" />
+		<ProjectReference Include="..\MetaDslx.NetStandard20Extensions\MetaDslx.NetStandard20Extensions.csproj" />
 	</ItemGroup>
 
 </Project>

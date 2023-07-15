@@ -6,10 +6,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
 using MetaDslx.CodeAnalysis.PooledObjects;
-using MetaDslx.CodeAnalysis.Text;
 using Roslyn.Utilities;
 
-namespace MetaDslx.CodeAnalysis.Syntax.InternalSyntax
+namespace MetaDslx.CodeAnalysis.Text
 {
     /// <summary>
     /// Keeps a sliding buffer over the SourceText of a file for the lexer. Also

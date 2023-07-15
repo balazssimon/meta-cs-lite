@@ -3,7 +3,6 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
-using MetaDslx.CodeAnalysis.Diagnostics;
 using Roslyn.Utilities;
 
 namespace MetaDslx.CodeAnalysis

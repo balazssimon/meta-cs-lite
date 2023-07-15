@@ -21,6 +21,10 @@ namespace MetaDslx.CodeAnalysis
             get { return LocationKind.None; }
         }
 
+        public override bool IsInSource => false;
+
+        public override bool IsInMetadata => false;
+
         public override bool Equals(object? obj)
         {
             return (object)this == obj;

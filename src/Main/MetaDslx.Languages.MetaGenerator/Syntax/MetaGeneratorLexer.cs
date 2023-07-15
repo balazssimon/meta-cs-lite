@@ -1,5 +1,4 @@
 ﻿using MetaDslx.CodeAnalysis.Text;
-using MetaDslx.CodeAnalysis.Syntax.InternalSyntax;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;

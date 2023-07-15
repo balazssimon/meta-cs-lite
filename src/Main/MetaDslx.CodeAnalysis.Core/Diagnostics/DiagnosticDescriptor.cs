@@ -180,21 +180,6 @@ namespace MetaDslx.CodeAnalysis
                     this.Title.GetHashCode())))))));
         }
 
-        /// <summary>
-        /// Gets the effective severity of diagnostics created based on this descriptor and the given <see cref="CompilationOptions"/>.
-        /// </summary>
-        /// <param name="compilationOptions">Compilation options</param>
-        public ReportDiagnostic GetEffectiveSeverity(CompilationOptions compilationOptions)
-        {
-            if (compilationOptions == null)
-            {
-                throw new ArgumentNullException(nameof(compilationOptions));
-            }
-
-            // Create a dummy diagnostic to compute the effective diagnostic severity for given compilation options
-            return compilationOptions.GetEffectiveSeverity(this);
-        }
-
         // internal for testing purposes.
         internal static ReportDiagnostic MapSeverityToReport(DiagnosticSeverity severity)
         {

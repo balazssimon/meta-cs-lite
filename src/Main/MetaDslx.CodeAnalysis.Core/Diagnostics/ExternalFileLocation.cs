@@ -50,6 +50,10 @@ namespace MetaDslx.CodeAnalysis
             }
         }
 
+        public override bool IsInSource => false;
+
+        public override bool IsInMetadata => false;
+
         public override bool Equals(object? obj)
         {
             return this.Equals(obj as ExternalFileLocation);

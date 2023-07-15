@@ -10,6 +10,7 @@
 		<PackageReference Include="System.Threading.Tasks.Extensions" Version="$(SystemThreadingTasksExtensionsVersion)" />
 	</ItemGroup>	
 	<ItemGroup>
+		<InternalsVisibleTo Include="MetaDslx.CodeAnalysis.Core" />
 		<InternalsVisibleTo Include="MetaDslx.CodeAnalysis.Common" />
 	</ItemGroup>
 </Project>

@@ -5,7 +5,6 @@
 using System;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
-using MetaDslx.CodeAnalysis.Symbols;
 using MetaDslx.CodeAnalysis.Text;
 
 namespace MetaDslx.CodeAnalysis
@@ -28,13 +27,16 @@ namespace MetaDslx.CodeAnalysis
         /// <summary>
         /// Returns true if the location represents a specific location in a source code file.
         /// </summary>
-        public bool IsInSource { get { return SourceTree != null; } }
+        //public bool IsInSource { get { return SourceTree != null; } }
+        public abstract bool IsInSource { get; }
 
         /// <summary>
         /// Returns true if the location is in metadata.
         /// </summary>
-        public bool IsInMetadata { get { return MetadataModule != null; } }
+        //public bool IsInMetadata { get { return MetadataModule != null; } }
+        public abstract bool IsInMetadata { get; }
 
+        /*
         /// <summary>
         /// The syntax tree this location is located in or <c>null</c> if not in a syntax tree.
         /// </summary>
@@ -48,6 +50,7 @@ namespace MetaDslx.CodeAnalysis
         /// for example, if the location is serialized and deserialized.
         /// </remarks>
         public virtual ModuleSymbol? MetadataModule { get { return null; } }
+        */
 
         /// <summary>
         /// The location within the syntax tree that this location is associated with.
@@ -92,7 +95,7 @@ namespace MetaDslx.CodeAnalysis
         public override string ToString()
         {
             string result = Kind.ToString();
-            if (IsInSource)
+            /*if (IsInSource)
             {
                 result += "(" + this.SourceTree?.FilePath + this.SourceSpan + ")";
             }
@@ -103,7 +106,7 @@ namespace MetaDslx.CodeAnalysis
                     result += "(" + this.MetadataModule.Name + ")";
                 }
             }
-            else
+            else*/
             {
                 var pos = GetLineSpan();
                 if (pos.Path != null)
@@ -148,7 +151,7 @@ namespace MetaDslx.CodeAnalysis
         /// A location of kind LocationKind.None. 
         /// </summary>
         public static Location None { get { return NoLocation.Singleton; } }
-
+        /*
         /// <summary>
         /// Creates an instance of a <see cref="Location"/> for a span in a <see cref="SyntaxTree"/>.
         /// </summary>
@@ -161,7 +164,7 @@ namespace MetaDslx.CodeAnalysis
 
             return new SourceLocation(syntaxTree, textSpan);
         }
-
+        */
         /// <summary>
         /// Creates an instance of a <see cref="Location"/> for a span in a file.
         /// </summary>

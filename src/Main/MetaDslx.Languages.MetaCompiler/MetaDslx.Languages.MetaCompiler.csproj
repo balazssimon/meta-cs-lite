@@ -25,17 +25,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\MetaDslx.CodeAnalysis.Common\MetaDslx.CodeAnalysis.Common.csproj" OutputItemType="Analyzer" />
+		<ProjectReference Include="..\MetaDslx.CodeAnalysis.Core\MetaDslx.CodeAnalysis.Core.csproj" OutputItemType="Analyzer" />
 		<ProjectReference Include="..\MetaDslx.Languages.MetaGenerator\MetaDslx.Languages.MetaGenerator.csproj" OutputItemType="Analyzer" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<AdditionalFiles Include="Generators\*.mgen" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <None Remove="Generators\SemanticsGenerator.mgen" />
-	  <None Remove="generators\SymbolGenerator.mgen" />
 	</ItemGroup>
 
 </Project>
