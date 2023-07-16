@@ -27,7 +27,7 @@ namespace MetaDslx.CodeAnalysis
             get { return LocationKind.MetadataFile; }
         }
 
-        public override ModuleSymbol MetadataModule
+        public ModuleSymbol MetadataModule
         {
             get { return _module; }
         }

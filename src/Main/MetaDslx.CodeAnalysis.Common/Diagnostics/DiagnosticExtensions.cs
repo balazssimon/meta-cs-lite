@@ -1,4 +1,5 @@
-﻿using Microsoft.CodeAnalysis;
+﻿using MetaDslx.CodeAnalysis.Text;
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
 using System;
@@ -26,10 +27,10 @@ namespace MetaDslx.CodeAnalysis
         }
 
         /// <summary>
-        /// Gets the <see cref="SuppressionInfo"/> for suppressed diagnostics, i.e. <see cref="DiagnosticDescriptor.IsSuppressed"/> = true.
+        /// Gets the <see cref="SuppressionInfo"/> for suppressed diagnostics, i.e. <see cref="Diagnostic.IsSuppressed"/> = true.
         /// Otherwise, returns null.
         /// </summary>
-        public static SuppressionInfo? GetSuppressionInfo(this DiagnosticDescriptor descriptor, Compilation compilation)
+        public static SuppressionInfo? GetSuppressionInfo(this Diagnostic descriptor, Compilation compilation)
         {
             if (!descriptor.IsSuppressed)
             {
@@ -77,7 +78,7 @@ namespace MetaDslx.CodeAnalysis
 
             static bool isLocationWithinSpan(Location location, SyntaxTree tree, TextSpan? filterSpan)
             {
-                if (location.SourceTree != tree)
+                if (location is SourceLocation sourceLocation && sourceLocation.SourceTree != tree)
                 {
                     return false;
                 }

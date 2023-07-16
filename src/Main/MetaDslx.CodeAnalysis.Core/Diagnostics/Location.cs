@@ -25,38 +25,10 @@ namespace MetaDslx.CodeAnalysis
         public abstract LocationKind Kind { get; }
 
         /// <summary>
-        /// Returns true if the location represents a specific location in a source code file.
-        /// </summary>
-        //public bool IsInSource { get { return SourceTree != null; } }
-        public abstract bool IsInSource { get; }
-
-        /// <summary>
-        /// Returns true if the location is in metadata.
-        /// </summary>
-        //public bool IsInMetadata { get { return MetadataModule != null; } }
-        public abstract bool IsInMetadata { get; }
-
-        /*
-        /// <summary>
-        /// The syntax tree this location is located in or <c>null</c> if not in a syntax tree.
-        /// </summary>
-        public virtual SyntaxTree? SourceTree { get { return null; } }
-
-        /// <summary>
-        /// Returns the metadata module the location is associated with or <c>null</c> if the module is not available.
-        /// </summary>
-        /// <remarks>
-        /// Might return null even if <see cref="IsInMetadata"/> returns true. The module symbol might not be available anymore, 
-        /// for example, if the location is serialized and deserialized.
-        /// </remarks>
-        public virtual ModuleSymbol? MetadataModule { get { return null; } }
-        */
-
-        /// <summary>
         /// The location within the syntax tree that this location is associated with.
         /// </summary>
         /// <remarks>
-        /// If <see cref="IsInSource"/> returns False this method returns an empty <see cref="TextSpan"/> which starts at position 0.
+        /// If <see cref="Kind"/> returns <see cref="LocationKind.SourceFile"/> this method returns an empty <see cref="TextSpan"/> which starts at position 0.
         /// </remarks>
         public virtual TextSpan SourceSpan { get { return default(TextSpan); } }
 

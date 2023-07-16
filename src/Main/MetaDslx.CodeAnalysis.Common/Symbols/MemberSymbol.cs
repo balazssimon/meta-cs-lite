@@ -8,7 +8,7 @@ using System.Text;
 
 namespace MetaDslx.CodeAnalysis.Symbols
 {
-    public abstract class MemberSymbol : DeclaredSymbol
+    public abstract partial class MemberSymbol : DeclaredSymbol
     {
         /// <summary>
         /// Returns true if this symbol is "static"; i.e., declared with the <c>static</c> modifier or

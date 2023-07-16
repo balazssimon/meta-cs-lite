@@ -13,7 +13,7 @@ using System.Threading;
 
 namespace MetaDslx.CodeAnalysis.Symbols
 {
-    public abstract class DeclaredSymbol : Symbol
+    public abstract partial class DeclaredSymbol : Symbol
     {
         private static MemberLookupCache EmptyMemberCache = new MemberLookupCache(null);
         private static ConditionalWeakTable<DeclaredSymbol, MemberLookupCache> s_memberLookup = new ConditionalWeakTable<DeclaredSymbol, MemberLookupCache>();

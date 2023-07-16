@@ -69,7 +69,7 @@ namespace MetaDslx.CodeAnalysis
             }
         }
 
-        public override SyntaxTree SourceTree
+        public SyntaxTree SourceTree
         {
             get
             {

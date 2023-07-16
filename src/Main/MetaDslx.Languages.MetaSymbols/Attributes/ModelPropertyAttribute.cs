@@ -4,7 +4,8 @@ using System.Text;
 
 namespace MetaDslx.CodeAnalysis.Symbols
 {
-    public abstract partial class NamespaceOrTypeSymbol : DeclaredSymbol
+    [AttributeUsage(AttributeTargets.Property)]
+    public class ModelPropertyAttribute : Attribute
     {
     }
 }
