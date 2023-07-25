@@ -4,7 +4,11 @@ using System.Text;
 
 namespace MetaDslx.CodeAnalysis.Symbols
 {
-    public abstract class AttributeSymbol : Symbol
+    public abstract partial class AttributeSymbol : Symbol
     {
+        protected AttributeSymbol(Symbol container) 
+            : base(container)
+        {
+        }
     }
 }

@@ -19,9 +19,9 @@ namespace MetaDslx.CodeAnalysis.Symbols
 
         public string Name => _name;
 
-        public static ImmutableHashSet<CompletionPart> Combine(params CompletionPart[] parts)
+        public static ImmutableArray<CompletionPart> Combine(params CompletionPart[] parts)
         {
-            return ImmutableHashSet.CreateRange<CompletionPart>(parts);
+            return ImmutableArray.CreateRange<CompletionPart>(parts);
         }
 
         public override string ToString()
@@ -37,15 +37,12 @@ namespace MetaDslx.CodeAnalysis.Symbols
 
         public static readonly CompletionPart StartInitializing = new CompletionPart(nameof(StartInitializing));
         public static readonly CompletionPart FinishInitializing = new CompletionPart(nameof(FinishInitializing));
-        public static readonly CompletionPart StartCreatingChildren = new CompletionPart(nameof(StartCreatingChildren));
-        public static readonly CompletionPart FinishCreatingChildren = new CompletionPart(nameof(FinishCreatingChildren));
-        public static readonly CompletionPart ChildrenCompleted = new CompletionPart(nameof(ChildrenCompleted));
+        public static readonly CompletionPart StartCreatingContainedSymbols = new CompletionPart(nameof(StartCreatingContainedSymbols));
+        public static readonly CompletionPart FinishCreatingContainedSymbols = new CompletionPart(nameof(FinishCreatingContainedSymbols));
+        public static readonly CompletionPart ContainedSymbolsCompleted = new CompletionPart(nameof(ContainedSymbolsCompleted));
         public static readonly CompletionPart StartComputingNonSymbolProperties = new CompletionPart(nameof(StartComputingNonSymbolProperties));
         public static readonly CompletionPart FinishComputingNonSymbolProperties = new CompletionPart(nameof(FinishComputingNonSymbolProperties));
         public static readonly CompletionPart StartValidatingSymbol = new CompletionPart(nameof(StartValidatingSymbol));
         public static readonly CompletionPart FinishValidatingSymbol = new CompletionPart(nameof(FinishValidatingSymbol));
-
-        public static readonly CompletionPart StartCustomBinders = new CompletionPart(nameof(StartCustomBinders));
-        public static readonly CompletionPart FinishCustomBinders = new CompletionPart(nameof(FinishCustomBinders));
     }
 }

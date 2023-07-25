@@ -13,23 +13,108 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
+using System.Xml.Linq;
 
 namespace MetaDslx.CodeAnalysis.Symbols
 {
-    public abstract partial class Symbol : IFormattable
+    public abstract partial class Symbol
     {
-        private static ConditionalWeakTable<Symbol, DiagnosticBag> s_diagnostics = new ConditionalWeakTable<Symbol, DiagnosticBag>();
-
-        public Symbol()
+        public static class CompletionParts
         {
+            public static readonly CompletionPart StartComputingProperty_Attributes = new CompletionPart(nameof(StartComputingProperty_Attributes));
+            public static readonly CompletionPart FinishComputingProperty_Attributes = new CompletionPart(nameof(FinishComputingProperty_Attributes));
+            public static readonly CompletionGraph CompletionGraph = CompletionGraph.CreateFromParts(CompletionGraph.StartInitializing, CompletionGraph.FinishInitializing, CompletionGraph.StartCreatingContainedSymbols, CompletionGraph.FinishCreatingContainedSymbols, StartComputingProperty_Attributes, FinishComputingProperty_Attributes, CompletionGraph.StartComputingNonSymbolProperties, CompletionGraph.FinishComputingNonSymbolProperties, CompletionGraph.ContainedSymbolsCompleted, CompletionGraph.StartValidatingSymbol, CompletionGraph.FinishValidatingSymbol);
+        }
+
+        private static ConditionalWeakTable<Symbol, DiagnosticBag> s_diagnostics = new ConditionalWeakTable<Symbol, DiagnosticBag>();
+        private static ConditionalWeakTable<Symbol, string> s_names = new ConditionalWeakTable<Symbol, string>();
+        private static ConditionalWeakTable<Symbol, string> s_metadataNames = new ConditionalWeakTable<Symbol, string>();
+        private static ConditionalWeakTable<Symbol, object> s_attributes = new ConditionalWeakTable<Symbol, object>();
+
+        /// <summary>
+        /// This field keeps track of the <see cref="CompletionPart"/>s for which we already retrieved
+        /// diagnostics. We shouldn't return from ForceComplete (i.e. indicate that diagnostics are
+        /// available) until this is equal to <see cref="CompletionPart.All"/>, except that when completing
+        /// with a given position, we might not complete <see cref="CompletionPart"/>.Member*.
+        /// 
+        /// Since completeParts is used as a flag indicating completion of other assignments 
+        /// it must be volatile to ensure the read is not reordered/optimized to happen 
+        /// before the writes.
+        /// </summary>
+        private volatile int _completeParts;
+
+        private readonly Symbol _container;
+        private ImmutableArray<Symbol> _containedSymbols;
+
+        public Symbol(Symbol container)
+        {
+            _completeParts = -1;
+            _container = container;
         }
 
         /// <summary>
-        /// Gets the name of this symbol. Symbols without a name return the empty string; null is
-        /// never returned.
+        /// Returns true if the symbol could not be resolved, 
+        /// and this symbol serves as a placeholder, instead.
+        /// </summary>
+        public virtual bool IsError => false;
+
+        /// <summary>
+        /// Returns true if this symbol was automatically created by the compiler, and does not
+        /// have an explicit corresponding source code declaration.  
+        /// 
+        /// This is intended for symbols that are ordinary symbols in the language sense,
+        /// and may be used by code, but that are simply declared implicitly rather than
+        /// with explicit language syntax.
+        /// 
+        /// Examples include (this list is not exhaustive):
+        ///   the default constructor for a class or struct that is created if one is not provided,
+        ///   the BeginInvoke/Invoke/EndInvoke methods for a delegate,
+        ///   the generated backing field for an auto property or a field-like event,
+        ///   the "this" parameter for non-static methods,
+        ///   the "value" parameter for a property setter,
+        ///   the parameters on indexer accessor methods (not on the indexer itself),
+        ///   methods in anonymous types,
+        ///   anonymous functions
+        /// </summary>
+        public virtual bool IsImplicitlyDeclared => false;
+
+        /// <summary>
+        /// Get the symbol that directly contains this symbol. 
+        /// </summary>
+        public Symbol ContainingSymbol => _container;
+
+        /// <summary>
+        /// Get the symbols that are directly contained by this symbol. 
+        /// </summary>
+        public ImmutableArray<Symbol> ContainedSymbols
+        {
+            get
+            {
+                this.ForceComplete(CompletionGraph.FinishCreatingContainedSymbols, null, default);
+                return _containedSymbols;
+            }
+        }
+
+        /// <summary>
+        /// Gets the name of this symbol. Symbols without a name return the empty string; 
+        /// null is never returned.
         /// </summary>
         [ModelProperty]
-        public virtual string Name => string.Empty;
+        public string Name
+        {
+            get
+            {
+                this.ForceComplete(CompletionGraph.FinishInitializing, null, default);
+                if (s_names.TryGetValue(this, out var name))
+                {
+                    return name;
+                }
+                else
+                {
+                    return string.Empty;
+                }
+            }
+        }
 
         /// <summary>
         /// Gets the name of a symbol as it appears in metadata. Most of the time, this
@@ -40,43 +125,44 @@ namespace MetaDslx.CodeAnalysis.Symbols
         /// 2) The metadata name of explicit interface names have spaces removed, compared to
         /// the name property.
         /// </summary>
-        public virtual string MetadataName => this.Name;
+        [ModelProperty]
+        public string MetadataName
+        {
+            get
+            {
+                this.ForceComplete(CompletionGraph.FinishInitializing, null, default);
+                if (s_metadataNames.TryGetValue(this, out var metadataName))
+                {
+                    return metadataName;
+                }
+                else
+                {
+                    return this.Name;
+                }
+            }
+        }
 
         /// <summary>
         /// Should the name returned by Name property be mangled with any suffix in order to get metadata name.
         /// </summary>
         public virtual bool MangleName => this.Name != this.MetadataName;
 
-        public virtual bool IsError => false;
-
-        /// <summary>
-        /// True if this Symbol should be completed by calling ForceComplete.
-        /// Intuitively, true for source entities (from any compilation).
-        /// </summary>
-        public virtual bool RequiresCompletion => false;
-
-        public virtual void ForceComplete(CompletionPart completionPart, SourceLocation? locationOpt, CancellationToken cancellationToken)
+        [ModelProperty]
+        public ImmutableArray<AttributeSymbol> Attributes
         {
-            // must be overridden by source symbols, no-op for other symbols
-            Debug.Assert(!this.RequiresCompletion);
+            get
+            {
+                this.ForceComplete(CompletionParts.FinishComputingProperty_Attributes, null, default);
+                if (s_attributes.TryGetValue(this, out var attributes))
+                {
+                    return (ImmutableArray<AttributeSymbol>)attributes;
+                }
+                else
+                {
+                    return ImmutableArray<AttributeSymbol>.Empty;
+                }
+            }
         }
-
-        public virtual bool HasComplete(CompletionPart part)
-        {
-            // must be overridden by source symbols, no-op for other symbols
-            Debug.Assert(!this.RequiresCompletion);
-            return true;
-        }
-
-        /// <summary>
-        /// Get the symbol that logically contains this symbol. 
-        /// </summary>
-        public abstract Symbol ContainingSymbol { get; }
-
-        /// <summary>
-        /// Get the symbols that are directly contained by this symbol. 
-        /// </summary>
-        public abstract ImmutableArray<Symbol> ContainedSymbols { get; }
 
         /// <summary>
         /// Returns the assembly containing this symbol. If this symbol is shared across multiple
@@ -86,8 +172,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
         {
             get
             {
-                // Default implementation gets the containers assembly.
-
+                // Default implementation gets the container's assembly.
                 var container = this.ContainingSymbol;
                 return container?.ContainingAssembly;
             }
@@ -96,7 +181,8 @@ namespace MetaDslx.CodeAnalysis.Symbols
         /// <summary>
         /// For a source assembly, the associated compilation.
         /// For any other assembly, null.
-        /// For a source module and modules from embedded references, the DeclaringCompilation of the associated source assembly.
+        /// For a source module and modules from embedded references, 
+        /// the DeclaringCompilation of the associated source assembly.
         /// For any other module, null.
         /// For any other symbol, the DeclaringCompilation of the associated module.
         /// </summary>
@@ -132,7 +218,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
         {
             get
             {
-                // Default implementation gets the containers module.
+                // Default implementation gets the container's module.
                 var container = this.ContainingSymbol;
                 if (container is ModuleSymbol moduleSymbol) return moduleSymbol;
                 return container?.ContainingModule;
@@ -140,7 +226,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
         }
 
         /// <summary>
-        /// Returns the nearest lexically enclosing declaration, or null if there is none.
+        /// Returns the nearest lexically enclosing named declaration, or null if there is none.
         /// </summary>
         public virtual DeclaredSymbol? ContainingDeclaration
         {
@@ -160,16 +246,16 @@ namespace MetaDslx.CodeAnalysis.Symbols
         }
 
         /// <summary>
-        /// Returns the nearest lexically enclosing type, or null if there is none.
+        /// Returns the nearest lexically enclosing named type, or null if there is none.
         /// </summary>
-        public virtual NamedTypeSymbol? ContainingType
+        public virtual TypeSymbol? ContainingType
         {
             get
             {
                 Symbol container = this.ContainingSymbol;
                 while (container is not null)
                 {
-                    if (container is NamedTypeSymbol result)
+                    if (container is TypeSymbol result)
                     {
                         return result;
                     }
@@ -180,7 +266,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
         }
 
         /// <summary>
-        /// Gets the nearest enclosing namespace for this namespace or type. For a nested type,
+        /// Gets the nearest enclosing namespace for this symbol. For a nested type,
         /// returns the namespace that contains its container.
         /// </summary>
         public virtual NamespaceSymbol? ContainingNamespace
@@ -199,6 +285,60 @@ namespace MetaDslx.CodeAnalysis.Symbols
                 return null;
             }
         }
+
+        /// <summary>
+        /// <para>
+        /// Get a source location key for sorting. For performance, it's important that this
+        /// be able to be returned from a symbol without doing any additional allocations (even
+        /// if nothing is cached yet.)
+        /// </para>
+        /// <para>
+        /// Only (original) source symbols and namespaces that can be merged
+        /// need implement this function if they want to do so for efficiency.
+        /// </para>
+        /// </summary>
+        public virtual LexicalSortKey GetLexicalSortKey()
+        {
+            var declaringCompilation = this.DeclaringCompilation;
+            if (declaringCompilation is null) return LexicalSortKey.NotInSource;
+            var sourceLocation = this.Locations.OfType<SourceLocation>().FirstOrDefault();
+            if (sourceLocation is null) return LexicalSortKey.NotInSource;
+            else return new LexicalSortKey(sourceLocation, declaringCompilation);
+        }
+
+        /// <summary>
+        /// Gets the locations where this symbol was originally defined, either in source or
+        /// metadata. Some symbols (for example, partial classes) may be defined in more than one
+        /// location.
+        /// </summary>
+        public abstract ImmutableArray<Location> Locations { get; }
+
+
+        /// <summary>
+        /// <para>
+        /// Get the syntax node(s) where this symbol was declared in source. Some symbols (for
+        /// example, partial classes) may be defined in more than one location. This property should
+        /// return one or more syntax nodes only if the symbol was declared in source code and also
+        /// was not implicitly declared (see the <see cref="IsImplicitlyDeclared"/> property). 
+        /// </para>
+        /// <para>
+        /// Note that for namespace symbol, the declaring syntax might be declaring a nested
+        /// namespace. For example, the declaring syntax node for N1 in "namespace N1.N2 {...}" is
+        /// the entire namespace declaration syntax for N1.N2. For the global namespace, the declaring
+        /// syntax will be the compilation unit.
+        /// </para>
+        /// </summary>
+        /// <returns>
+        /// The syntax node(s) that declared the symbol. If the symbol was declared in metadata or
+        /// was implicitly declared, returns an empty read-only array.
+        /// </returns>
+        /// <remarks>
+        /// To go the opposite direction (from syntax node to symbol), see <see
+        /// cref="SemanticModel.GetDeclaredSymbol(SyntaxNodeOrToken, CancellationToken)"/>.
+        /// </remarks>
+        public abstract ImmutableArray<SyntaxNodeOrToken> DeclaringSyntaxReferences { get; }
+
+        #region Diagnostics
 
         public virtual ImmutableArray<Diagnostic> Diagnostics
         {
@@ -222,8 +362,6 @@ namespace MetaDslx.CodeAnalysis.Symbols
         {
             if (!diagnostics.IsEmptyWithoutResolution)
             {
-                //Compilation compilation = this.DeclaringCompilation;
-                //Debug.Assert(compilation != null);
                 var symbolDiagnostics = s_diagnostics.GetOrCreateValue(this);
                 symbolDiagnostics.AddRange(diagnostics);
                 return true;
@@ -235,8 +373,6 @@ namespace MetaDslx.CodeAnalysis.Symbols
         {
             if (diagnostics is not null && diagnostics.Count > 0)
             {
-                //Compilation compilation = this.DeclaringCompilation;
-                //Debug.Assert(compilation != null);
                 var symbolDiagnostics = s_diagnostics.GetOrCreateValue(this);
                 symbolDiagnostics.AddRange(diagnostics.Select(diag => Diagnostic.Create(diag, this.Locations.FirstOrNone())));
                 return true;
@@ -244,171 +380,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
             return false;
         }
 
-        protected virtual void CompleteValidatingSymbol(DiagnosticBag diagnostics, CancellationToken cancellationToken)
-        {
-        }
-
-        /// <summary>
-        /// <para>
-        /// Get a source location key for sorting. For performance, it's important that this
-        /// be able to be returned from a symbol without doing any additional allocations (even
-        /// if nothing is cached yet.)
-        /// </para>
-        /// <para>
-        /// Only (original) source symbols and namespaces that can be merged
-        /// need implement this function if they want to do so for efficiency.
-        /// </para>
-        /// </summary>
-        public virtual LexicalSortKey GetLexicalSortKey()
-        {
-            var locations = this.Locations;
-            var declaringCompilation = this.DeclaringCompilation;
-            Debug.Assert(declaringCompilation != null); // require that it is a source symbol
-            return (locations.Length > 0) ? new LexicalSortKey(locations[0], declaringCompilation) : LexicalSortKey.NotInSource;
-        }
-
-        /// <summary>
-        /// Gets the locations where this symbol was originally defined, either in source or
-        /// metadata. Some symbols (for example, partial classes) may be defined in more than one
-        /// location.
-        /// </summary>
-        public abstract ImmutableArray<Location> Locations { get; }
-
-
-        /// <summary>
-        /// <para>
-        /// Get the syntax node(s) where this symbol was declared in source. Some symbols (for
-        /// example, partial classes) may be defined in more than one location. This property should
-        /// return one or more syntax nodes only if the symbol was declared in source code and also
-        /// was not implicitly declared (see the <see cref="IsImplicitlyDeclared"/> property). 
-        /// </para>
-        /// <para>
-        /// Note that for namespace symbol, the declaring syntax might be declaring a nested
-        /// namespace. For example, the declaring syntax node for N1 in "namespace N1.N2 {...}" is
-        /// the entire <see cref="NamespaceDeclarationSyntax"/> for N1.N2. For the global namespace, the declaring
-        /// syntax will be the <see cref="CompilationUnitSyntax"/>.
-        /// </para>
-        /// </summary>
-        /// <returns>
-        /// The syntax node(s) that declared the symbol. If the symbol was declared in metadata or
-        /// was implicitly declared, returns an empty read-only array.
-        /// </returns>
-        /// <remarks>
-        /// To go the opposite direction (from syntax node to symbol), see <see
-        /// cref="CSharpSemanticModel.GetDeclaredSymbol(MemberDeclarationSyntax, CancellationToken)"/>.
-        /// </remarks>
-        public abstract ImmutableArray<SyntaxNodeOrToken> DeclaringSyntaxReferences { get; }
-
-        /// <summary>
-        /// Helper for implementing <see cref="DeclaringSyntaxReferences"/> for derived classes that store a location but not a 
-        /// <see cref="SyntaxNode"/> or <see cref="SyntaxNodeOrToken"/>.
-        /// </summary>
-        internal static ImmutableArray<SyntaxNodeOrToken> GetDeclaringSyntaxReferenceHelper<TNode>(ImmutableArray<Location> locations)
-            where TNode : SyntaxNode
-        {
-            if (locations.IsEmpty)
-            {
-                return ImmutableArray<SyntaxNodeOrToken>.Empty;
-            }
-
-            ArrayBuilder<SyntaxNodeOrToken> builder = ArrayBuilder<SyntaxNodeOrToken>.GetInstance();
-            foreach (Location location in locations)
-            {
-                // Location may be null. See https://github.com/dotnet/roslyn/issues/28862.
-                if (location == null)
-                {
-                    continue;
-                }
-                if (location.IsInSource)
-                {
-                    SyntaxToken token = (SyntaxToken)location.SourceTree.GetRoot().FindToken(location.SourceSpan.Start);
-                    if (token.RawKind != (int)InternalSyntaxKind.None)
-                    {
-                        SyntaxNode node = token.Parent.FirstAncestorOrSelf<TNode>();
-                        if (node != null) builder.Add(node);
-                    }
-                }
-            }
-
-            return builder.ToImmutableAndFree();
-        }
-
-        [ModelProperty]
-        public virtual ImmutableArray<AttributeSymbol> Attributes => ImmutableArray<AttributeSymbol>.Empty;
-
-        public virtual ImmutableArray<AttributeData> GetAttributes()
-        {
-            return ImmutableArray<AttributeData>.Empty;
-        }
-
-        public virtual bool IsSpecialSymbol(object specialSymbolId, Language? language = null)
-        {
-            // TODO:MetaDslx
-            return false;
-        }
-
-        public virtual object? GetSpecialSymbol(Language? language = null)
-        {
-            // TODO:MetaDslx
-            return null;
-        }
-
-        public virtual bool IsSpecialModelObject(object specialModelObject, Language? language = null)
-        {
-            // TODO:MetaDslx
-            return false;
-        }
-
-        public virtual object? GetSpecialModelObject(Language? language = null)
-        {
-            // TODO:MetaDslx
-            return null;
-        }
-
-        /// <summary>
-        /// Returns a string representation of this symbol, suitable for debugging purposes, or
-        /// for placing in an error message.
-        /// </summary>
-        /// <remarks>
-        /// This will provide a useful representation, but it would be clearer to call <see cref="ToDisplayString"/>
-        /// directly and provide an explicit format.
-        /// Sealed so that <see cref="ToString"/> and <see cref="ToDisplayString"/> can't get out of sync.
-        /// </remarks>
-        public sealed override string ToString()
-        {
-            return this.ToDisplayString();
-        }
-
-        // ---- End of Public Definition ---
-        // Below here can be various useful virtual methods that are useful to the compiler, but we don't
-        // want to expose publicly.
-        // ---- End of Public Definition ---
-
-        internal bool IsFromCompilation(Compilation compilation)
-        {
-            Debug.Assert(compilation != null);
-            return compilation == this.DeclaringCompilation;
-        }
-
-        /// <summary>
-        /// Always prefer <see cref="IsFromCompilation"/>.
-        /// </summary>
-        /// <remarks>
-        /// <para>
-        /// Unfortunately, when determining overriding/hiding/implementation relationships, we don't 
-        /// have the "current" compilation available.  We could, but that would clutter up the API 
-        /// without providing much benefit.  As a compromise, we consider all compilations "current".
-        /// </para>
-        /// <para>
-        /// Unlike in VB, we are not allowing retargeting symbols.  This method is used as an approximation
-        /// for <see cref="IsFromCompilation"/> when a compilation is not available and that method will never return
-        /// true for retargeting symbols.
-        /// </para>
-        /// </remarks>
-        internal bool Dangerous_IsFromSomeCompilation
-        {
-            get { return this.DeclaringCompilation != null; }
-        }
+        #endregion
 
         #region Use-Site Diagnostics
 
@@ -501,157 +473,238 @@ namespace MetaDslx.CodeAnalysis.Symbols
             return info.Severity == DiagnosticSeverity.Error;
         }
 
-        internal static bool GetUnificationUseSiteDiagnosticRecursive<T>(ref DiagnosticInfo result, ImmutableArray<T> types, Symbol owner, ref HashSet<TypeSymbol> checkedTypes)
-            where T : TypeSymbol
-        {
-            foreach (var t in types)
-            {
-                if (t.GetUnificationUseSiteDiagnosticRecursive(ref result, owner, ref checkedTypes))
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        internal static bool GetUnificationUseSiteDiagnosticRecursive(ref DiagnosticInfo result, ImmutableArray<CustomModifier> modifiers, Symbol owner, ref HashSet<TypeSymbol> checkedTypes)
-        {
-            foreach (var modifier in modifiers)
-            {
-                if (((TypeSymbol)modifier.Modifier).GetUnificationUseSiteDiagnosticRecursive(ref result, owner, ref checkedTypes))
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
         #endregion
 
-        public string ToDisplayString(SymbolDisplayFormat format = null)
+        /// <summary>
+        /// Returns a string representation of this symbol, suitable for debugging purposes, or
+        /// for placing in an error message.
+        /// </summary>
+        /// <remarks>
+        /// This will provide a useful representation, but it would be clearer to call <see cref="ToDisplayString"/>
+        /// directly and provide an explicit format.
+        /// Sealed so that <see cref="ToString"/> and <see cref="ToDisplayString"/> can't get out of sync.
+        /// </remarks>
+        public sealed override string ToString()
         {
-            var builder = PooledStringBuilder.GetInstance();
-            var sb = builder.Builder;
-            if (format.IncludeQualifier)
-            {
-                var container = this;
-                while (container is not null)
-                {
-                    if (sb.Length > 0) sb.Insert(0, ".");
-                    sb.Insert(0, container.MetadataName);
-                    container = container.ContainingSymbol as DeclaredSymbol;
-                }
-                if (format.IncludeGlobalScope)
-                {
-                    sb.Insert(0, "global::");
-                }
-            }
-            else
-            {
-                sb.Append(this.MetadataName);
-            }
-            if (format.IncludeSymbolKind)
-            {
-                sb.Append(" [");
-                sb.Append(GetKindText());
-                sb.Append("]");
-            }
-            return builder.ToStringAndFree();
+            return SymbolDisplayFormat.Default.ToString(this);
         }
-
-        public string GetKindText()
-        {
-            var type = this.GetType();
-            var typeName = type.Name;
-            bool error = false;
-            if (typeName == "Error" && type.DeclaringType != null)
-            {
-                error = true;
-                typeName = type.DeclaringType.Name;
-            }
-            if (typeName.StartsWith("Source")) typeName = typeName.Substring(6);
-            if (typeName.StartsWith("Metadata")) typeName = typeName.Substring(8);
-            if (typeName.EndsWith("Symbol")) typeName = typeName.Substring(0, typeName.Length - 6);
-            if (error) return "Error:" + typeName;
-            else return typeName;
-        }
-
-        private string GetDebuggerDisplay()
-        {
-            return this.ToDisplayString();
-        }
-
-        string IFormattable.ToString(string format, IFormatProvider formatProvider)
-        {
-            return ToString();
-        }
-
-        #region Obsolete checks
 
         /// <summary>
-        /// True if this symbol has been marked with the <see cref="ObsoleteAttribute"/> attribute. 
-        /// This property returns <see cref="ThreeState.Unknown"/> if the <see cref="ObsoleteAttribute"/> attribute hasn't been cracked yet.
+        /// Returns the Documentation Comment ID for the symbol, or null if the symbol doesn't
+        /// support documentation comments.
         /// </summary>
-        public ThreeState ObsoleteState
+        public virtual string GetDocumentationCommentId()
+        {
+            return "";
+        }
+
+        /// <summary>
+        /// Fetches the documentation comment for this element with a cancellation token.
+        /// </summary>
+        /// <param name="preferredCulture">Optionally, retrieve the comments formatted for a particular culture. No impact on source documentation comments.</param>
+        /// <param name="expandIncludes">Optionally, expand <![CDATA[<include>]]> elements. No impact on non-source documentation comments.</param>
+        /// <param name="cancellationToken">Optionally, allow cancellation of documentation comment retrieval.</param>
+        /// <returns>The XML that would be written to the documentation file for the symbol.</returns>
+        public virtual string GetDocumentationCommentXml(CultureInfo preferredCulture = null, bool expandIncludes = false, CancellationToken cancellationToken = default)
+        {
+            return "";
+        }
+
+        #region Completion graph
+
+        protected virtual CompletionGraph CompletionGraph => CompletionParts.CompletionGraph;
+
+        public void ForceComplete(CompletionPart completionPart, SourceLocation? locationOpt, CancellationToken cancellationToken)
+        {
+            if (completionPart != null && HasComplete(completionPart)) return;
+            if (completionPart != null && !CompletionGraph.Contains(completionPart)) throw new ArgumentException(nameof(completionPart));
+            while (true)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                var incompletePart = NextIncompletePart;
+                if (incompletePart == CompletionGraph.StartInitializing || incompletePart == CompletionGraph.FinishInitializing)
+                {
+                    if (NotePartComplete(CompletionGraph.StartInitializing))
+                    {
+                        var diagnostics = DiagnosticBag.GetInstance();
+                        CompletePart_InitializeSymbol(diagnostics, cancellationToken);
+                        var name = CompleteProperty_Name(diagnostics, cancellationToken);
+                        var metadataName = CompleteProperty_MetadataName(diagnostics, cancellationToken);
+                        if (!string.IsNullOrEmpty(name))
+                        {
+                            s_names.Add(this, name);
+                        }
+                        if (!string.IsNullOrEmpty(metadataName) && metadataName != name)
+                        {
+                            s_metadataNames.Add(this, metadataName);
+                        }
+                        AddSymbolDiagnostics(diagnostics);
+                        diagnostics.Free();
+                        NotePartComplete(CompletionGraph.FinishInitializing);
+                    }
+                }
+                else if (incompletePart == CompletionGraph.StartCreatingContainedSymbols || incompletePart == CompletionGraph.FinishCreatingContainedSymbols)
+                {
+                    if (NotePartComplete(CompletionGraph.StartCreatingContainedSymbols))
+                    {
+                        var diagnostics = DiagnosticBag.GetInstance();
+                        _containedSymbols = CompletePart_CreateContainedSymbols(diagnostics, cancellationToken);
+                        AddSymbolDiagnostics(diagnostics);
+                        diagnostics.Free();
+                        NotePartComplete(CompletionGraph.FinishCreatingContainedSymbols);
+                    }
+                }
+                else if (incompletePart == CompletionGraph.ContainedSymbolsCompleted)
+                {
+                    // TODO:MetaDslx:
+                    //var diagnostics = DiagnosticBag.GetInstance();
+                    //CompleteImports(locationOpt, diagnostics, cancellationToken);
+                    //AddSymbolDiagnostics(diagnostics);
+                    //diagnostics.Free();
+                    bool allCompleted = true;
+                    if (locationOpt == null)
+                    {
+                        foreach (var child in _containedSymbols)
+                        {
+                            cancellationToken.ThrowIfCancellationRequested();
+                            child.ForceComplete(null, locationOpt, cancellationToken);
+                        }
+                    }
+                    else
+                    {
+                        foreach (var child in _containedSymbols)
+                        {
+                            ForceCompleteChildByLocation(locationOpt, child, cancellationToken);
+                            allCompleted = allCompleted && child.HasComplete(CompletionGraph.All);
+                        }
+                    }
+                    if (!allCompleted)
+                    {
+                        // We did not complete all members, so just kick out now.
+                        var allParts = CompletionGraph.AllPartsWithLocation;
+                        SpinWaitComplete(allParts, cancellationToken);
+                        return;
+                    }
+                    // We've completed all members, proceed to the next iteration.
+                    NotePartComplete(CompletionGraph.ContainedSymbolsCompleted);
+                }
+                else if (incompletePart == CompletionGraph.StartValidatingSymbol || incompletePart == CompletionGraph.FinishValidatingSymbol)
+                {
+                    if (NotePartComplete(CompletionGraph.StartValidatingSymbol))
+                    {
+                        var diagnostics = DiagnosticBag.GetInstance();
+                        CompletePart_ValidateSymbol(diagnostics, cancellationToken);
+                        AddSymbolDiagnostics(diagnostics);
+                        diagnostics.Free();
+                        NotePartComplete(CompletionGraph.FinishValidatingSymbol);
+                    }
+                }
+                else if (ForceCompletePart(ref incompletePart, locationOpt, cancellationToken))
+                {
+                    // incompletePart was handled by ForceCompletePart()
+                }
+                else if (incompletePart == null)
+                {
+                    // if the next incompletePart is null, it means we have completed everything
+                    return;
+                }
+                else
+                {
+                    // This assert will trigger if we forgot to handle any of the completion parts
+                    Debug.Assert(!CompletionGraph.Contains(incompletePart));
+                    // any other values are completion parts intended for other kinds of symbols
+                    NotePartComplete(incompletePart);
+                }
+                if (completionPart != null && HasComplete(completionPart)) return;
+                SpinWaitComplete(incompletePart, cancellationToken);
+            }
+            throw ExceptionUtilities.Unreachable;
+        }
+
+        public bool HasComplete(CompletionPart part)
+        {
+            return CompletionGraph.HasComplete(part, _completeParts);
+        }
+
+        protected bool NotePartComplete(CompletionPart part)
+        {
+            // passing volatile completeParts byref is ok here.
+            // ThreadSafeFlagOperations.Set performs interlocked assignments
+            int index = CompletionGraph.IndexOf(part);
+            if (index <= _completeParts) return false;
+            int oldIndex = _completeParts;
+            return Interlocked.CompareExchange(ref _completeParts, index, oldIndex) == oldIndex;
+        }
+
+        /// <summary>
+        /// Produce the next (i.e. lowest) CompletionPart (bit) that is not set.
+        /// </summary>
+        protected CompletionPart NextIncompletePart
         {
             get
             {
-                switch (ObsoleteKind)
+                // NOTE: It's very important to store this value in a local.
+                // If we were to inline the field access, the value of the
+                // field could change between the two accesses and the formula
+                // might not produce a result with a single 1-bit.
+                return CompletionGraph.NextIncompletePart(_completeParts);
+            }
+        }
+
+        private void SpinWaitComplete(CompletionPart part, CancellationToken cancellationToken)
+        {
+            if (HasComplete(part))
+            {
+                return;
+            }
+
+            // Don't return until we've seen all of the requested CompletionParts. This ensures all
+            // diagnostics have been reported (not necessarily on this thread).
+            var spinWait = new SpinWait();
+            while (!HasComplete(part))
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                spinWait.SpinOnce();
+            }
+        }
+
+        private void SpinWaitComplete(IEnumerable<CompletionPart> parts, CancellationToken cancellationToken)
+        {
+            if (!parts.Any()) return;
+            int index = parts.Select(p => CompletionGraph.IndexOf(p)).Max();
+            if (index < 0) return;
+            CompletionPart part = CompletionGraph.Parts[index];
+            this.SpinWaitComplete(part, cancellationToken);
+        }
+
+        protected virtual bool ForceCompletePart(ref CompletionPart incompletePart, SourceLocation? locationOpt, CancellationToken cancellationToken)
+        {
+            if (incompletePart == CompletionParts.StartComputingProperty_Attributes || incompletePart == CompletionParts.FinishComputingProperty_Attributes)
+            {
+                if (NotePartComplete(CompletionParts.StartComputingProperty_Attributes))
                 {
-                    case ObsoleteAttributeKind.None:
-                    case ObsoleteAttributeKind.Experimental:
-                        return ThreeState.False;
-                    case ObsoleteAttributeKind.Uninitialized:
-                        return ThreeState.Unknown;
-                    default:
-                        return ThreeState.True;
+                    var diagnostics = DiagnosticBag.GetInstance();
+                    var attributes = CompleteProperty_Attributes(diagnostics, cancellationToken);
+                    if (!attributes.IsDefaultOrEmpty)
+                    {
+                        s_attributes.Add(this, attributes);
+                    }
+                    AddSymbolDiagnostics(diagnostics);
+                    diagnostics.Free();
+                    NotePartComplete(CompletionParts.FinishComputingProperty_Attributes);
                 }
             }
+            return false;
         }
 
-        public ObsoleteAttributeKind ObsoleteKind
+
+        internal bool IsFromCompilation(Compilation compilation)
         {
-            get
-            {
-                var data = this.ObsoleteAttributeData;
-                return (data == null) ? ObsoleteAttributeKind.None : data.Kind;
-            }
+            Debug.Assert(compilation != null);
+            return compilation == this.DeclaringCompilation;
         }
 
-
-        /// <summary>
-        /// Returns data decoded from <see cref="ObsoleteAttribute"/> attribute or null if there is no <see cref="ObsoleteAttribute"/> attribute.
-        /// This property returns <see cref="MetaDslx.CodeAnalysis.ObsoleteAttributeData.Uninitialized"/> if attribute arguments haven't been decoded yet.
-        /// </summary>
-        public virtual ObsoleteAttributeData ObsoleteAttributeData => null; // TODO:MetaDslx
-
-        /// <summary>
-        /// Ensure that attributes are bound and the ObsoleteState of this symbol is known.
-        /// </summary>
-        public void ForceCompleteObsoleteAttribute()
-        {
-            if (this.ObsoleteState == ThreeState.Unknown)
-            {
-                this.GetAttributes();
-            }
-            Debug.Assert(this.ObsoleteState != ThreeState.Unknown, "ObsoleteState should be true or false now.");
-        }
-
-        #endregion
-
-        internal virtual void AddDeclarationDiagnostics(DiagnosticBag diagnostics)
-        {
-            if (!diagnostics.IsEmptyWithoutResolution)
-            {
-                Compilation compilation = this.DeclaringCompilation;
-                Debug.Assert(compilation != null);
-                compilation.DeclarationDiagnostics.AddRange(diagnostics);
-            }
-        }
-
-        public virtual bool IsDefinedInSourceTree(SyntaxTree tree, TextSpan? definedWithinSpan, CancellationToken cancellationToken = default(CancellationToken))
+        public virtual bool IsDefinedInSourceTree(SyntaxTree tree, TextSpan? definedWithinSpan, CancellationToken cancellationToken = default)
         {
             var declaringReferences = this.DeclaringSyntaxReferences;
             var container = this.ContainingSymbol;
@@ -683,98 +736,35 @@ namespace MetaDslx.CodeAnalysis.Symbols
             }
         }
 
-        /// <summary>
-        /// Returns the Documentation Comment ID for the symbol, or null if the symbol doesn't
-        /// support documentation comments.
-        /// </summary>
-        public virtual string GetDocumentationCommentId()
+        protected virtual void CompletePart_InitializeSymbol(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            return "";
         }
 
-        /// <summary>
-        /// Fetches the documentation comment for this element with a cancellation token.
-        /// </summary>
-        /// <param name="preferredCulture">Optionally, retrieve the comments formatted for a particular culture. No impact on source documentation comments.</param>
-        /// <param name="expandIncludes">Optionally, expand <![CDATA[<include>]]> elements. No impact on non-source documentation comments.</param>
-        /// <param name="cancellationToken">Optionally, allow cancellation of documentation comment retrieval.</param>
-        /// <returns>The XML that would be written to the documentation file for the symbol.</returns>
-        public virtual string GetDocumentationCommentXml(
-            CultureInfo preferredCulture = null,
-            bool expandIncludes = false,
-            CancellationToken cancellationToken = default(CancellationToken))
+        protected virtual string? CompleteProperty_Name(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            return "";
+            return null;
         }
 
-        /// <summary>
-        /// Compare two symbol objects to see if they refer to the same symbol. You should always
-        /// use <see cref="operator =="/> and <see cref="operator !="/>, or the <see cref="Equals(object)"/> method, to compare two symbols for equality.
-        /// </summary>
-        public static bool operator ==(Symbol left, Symbol right)
+        protected virtual string? CompleteProperty_MetadataName(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            //PERF: this function is often called with
-            //      1) left referencing same object as the right 
-            //      2) right being null
-            //      The code attempts to check for these conditions before 
-            //      resorting to .Equals
-
-            // the condition is expected to be folded when inlining "someSymbol == null"
-            if (right is null)
-            {
-                return left is null;
-            }
-
-            // this part is expected to disappear when inlining "someSymbol == null"
-            return (object)left == (object)right || right.Equals(left);
+            return null;
         }
 
-        /// <summary>
-        /// Compare two symbol objects to see if they refer to the same symbol. You should always
-        /// use == and !=, or the Equals method, to compare two symbols for equality.
-        /// </summary>
-        public static bool operator !=(Symbol left, Symbol right)
+        protected virtual ImmutableArray<Symbol> CompletePart_CreateContainedSymbols(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            //PERF: this function is often called with
-            //      1) left referencing same object as the right 
-            //      2) right being null
-            //      The code attempts to check for these conditions before 
-            //      resorting to .Equals
-            //
-            //NOTE: we do not implement this as !(left == right) 
-            //      since that sometimes results in a worse code
-
-            // the condition is expected to be folded when inlining "someSymbol != null"
-            if (right is null)
-            {
-                return left is object;
-            }
-
-            // this part is expected to disappear when inlining "someSymbol != null"
-            return (object)left != (object)right && !right.Equals(left);
+            return ImmutableArray<Symbol>.Empty;
         }
 
-        public override bool Equals(object obj)
+        protected virtual ImmutableArray<AttributeSymbol> CompleteProperty_Attributes(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            return this.Equals(obj as Symbol, SymbolEqualityComparer.Default);
+            return ImmutableArray<AttributeSymbol>.Empty;
         }
 
-        // By default we don't consider the compareKind, and do reference equality. This can be overridden.
-        public virtual bool Equals(Symbol? other, SymbolEqualityComparer comparer)
+        protected virtual void CompletePart_ValidateSymbol(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            return comparer.Equals(this, other);
         }
 
-        // By default, we do reference equality. This can be overridden.
-        public override int GetHashCode()
-        {
-            return RuntimeHelpers.GetHashCode(this);
-        }
-
-        public static bool Equals(Symbol first, Symbol second, SymbolEqualityComparer comparer)
-        {
-            return comparer.Equals(first, second);
-        }
+        #endregion
 
     }
 }

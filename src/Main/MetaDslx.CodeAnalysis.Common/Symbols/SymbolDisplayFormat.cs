@@ -15,7 +15,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
         private readonly bool _includeQualifier;
         private readonly bool _includeGlobalScope;
 
-        protected SymbolDisplayFormat(bool includeSymbolKind = false, bool includeQualifier = false, bool includeGlobalScope = false) 
+        protected SymbolDisplayFormat(bool includeSymbolKind = false, bool includeQualifier = false, bool includeGlobalScope = false)
         {
             _includeSymbolKind = includeSymbolKind;
             _includeQualifier = includeQualifier;
@@ -25,6 +25,45 @@ namespace MetaDslx.CodeAnalysis.Symbols
         public bool IncludeSymbolKind => _includeSymbolKind;
         public bool IncludeQualifier => _includeQualifier;
         public bool IncludeGlobalScope => _includeGlobalScope;
-    }
 
+        public string ToString(Symbol? symbol)
+        {
+            if (symbol is null) return string.Empty;
+            var builder = PooledStringBuilder.GetInstance();
+            var sb = builder.Builder;
+            if (symbol is DeclaredSymbol declaredSymbol)
+            {
+                if (IncludeQualifier)
+                {
+                    var container = declaredSymbol;
+                    while (container is not null)
+                    {
+                        if (sb.Length > 0) sb.Insert(0, ".");
+                        sb.Insert(0, container.MetadataName);
+                        container = container.ContainingSymbol as DeclaredSymbol;
+                    }
+                    if (IncludeGlobalScope)
+                    {
+                        sb.Insert(0, "global::");
+                    }
+                }
+                else
+                {
+                    sb.Append(declaredSymbol.MetadataName);
+                }
+            }
+            else if (symbol is NamedSymbol namedSymbol)
+            {
+                sb.Append(namedSymbol.MetadataName);
+            }
+            if (IncludeSymbolKind)
+            {
+                if (sb.Length > 0) sb.Append(" ");
+                sb.Append("[");
+                sb.Append(symbol.GetType().Name);
+                sb.Append("]");
+            }
+            return builder.ToStringAndFree();
+        }
+    }
 }

@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Immutable;
 using System.Text;
 
 namespace MetaDslx.CodeAnalysis.Symbols
 {
-    public abstract class AssemblySymbol : Symbol
+    public abstract partial class AssemblySymbol : Symbol
     {
-        public override ImmutableArray<Location> Locations => ImmutableArray<Location>.Empty;
-        public override ImmutableArray<SyntaxNodeOrToken> DeclaringSyntaxReferences => ImmutableArray<SyntaxNodeOrToken>.Empty;
-
-        public override Symbol? ContainingSymbol => null;
+        protected AssemblySymbol() 
+            : base(null)
+        {
+        }
     }
 }
