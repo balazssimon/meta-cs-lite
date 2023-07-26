@@ -48,14 +48,12 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
         }
 
         public SourceModuleSymbol SourceModuleSymbol => _sourceModule;
-
         public override ImmutableArray<ModuleSymbol> Modules => _modules;
 
         public override Compilation? DeclaringCompilation => _compilation;
 
+        public ImmutableArray<SyntaxNodeOrToken> DeclaringSyntaxReferences => ImmutableArray<SyntaxNodeOrToken>.Empty;
         public override ImmutableArray<Location> Locations => Modules.SelectMany(m => m.Locations).AsImmutable();
-
-        public override ImmutableArray<SyntaxNodeOrToken> DeclaringSyntaxReferences => ImmutableArray<SyntaxNodeOrToken>.Empty;
 
         public IModelGroup ModelGroup => _modelGroup;
 

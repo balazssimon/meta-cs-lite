@@ -7,19 +7,17 @@ using System.Text;
 
 namespace MetaDslx.CodeAnalysis.Symbols.Source
 {
-    public class SourceNamespaceSymbol : NamespaceSymbol, ISourceSymbol
+    public class SourceNamedTypeSymbol : NamedTypeSymbol, ISourceSymbol
     {
         private readonly MergedDeclaration _declaration;
         private readonly IModelObject _modelObject;
 
-        public SourceNamespaceSymbol(Symbol container, MergedDeclaration declaration, IModelObject modelObject) 
+        public SourceNamedTypeSymbol(Symbol container, MergedDeclaration declaration, IModelObject modelObject)
             : base(container)
         {
             _declaration = declaration;
             _modelObject = modelObject;
         }
-
-        public override NamespaceExtent Extent => new NamespaceExtent(ContainingModule);
 
         public IModel Model => _modelObject.Model;
         public IModelObject ModelObject => _modelObject;

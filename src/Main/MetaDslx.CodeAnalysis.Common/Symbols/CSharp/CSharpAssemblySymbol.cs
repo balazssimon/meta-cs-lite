@@ -11,7 +11,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.CSharp
 {
     internal class CSharpAssemblySymbol : AssemblySymbol
     {
-        private IAssemblySymbol _csharpSymbol;
+        private readonly IAssemblySymbol _csharpSymbol;
         private ImmutableArray<CSharpModuleSymbol> _modules;
 
         public CSharpAssemblySymbol(IAssemblySymbol csharpSymbol)
@@ -20,12 +20,9 @@ namespace MetaDslx.CodeAnalysis.Symbols.CSharp
         }
 
         public IAssemblySymbol CSharpSymbol => _csharpSymbol;
-
-        public override ImmutableArray<ModuleSymbol> Modules => _modules.Cast<CSharpModuleSymbol, ModuleSymbol>();
-
         public override ImmutableArray<Location> Locations => _csharpSymbol.Locations.SelectAsArray(l => l.ToMetaDslx());
 
-        public override ImmutableArray<SyntaxNodeOrToken> DeclaringSyntaxReferences => ImmutableArray<SyntaxNodeOrToken>.Empty;
+        public override ImmutableArray<ModuleSymbol> Modules => _modules.Cast<CSharpModuleSymbol, ModuleSymbol>();
 
         internal void DangerousSetModules(ImmutableArray<CSharpModuleSymbol> modules)
         {

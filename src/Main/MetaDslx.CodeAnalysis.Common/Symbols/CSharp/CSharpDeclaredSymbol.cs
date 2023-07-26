@@ -8,25 +8,22 @@ using System.Threading;
 
 namespace MetaDslx.CodeAnalysis.Symbols.CSharp
 {
-    internal class CSharpNamedTypeSymbol : NamedTypeSymbol
+    public class CSharpDeclaredSymbol : DeclaredSymbol
     {
-        private readonly INamedTypeSymbol _csharpSymbol;
+        private readonly ISymbol _csharpSymbol;
 
-        public CSharpNamedTypeSymbol(Symbol container, INamedTypeSymbol csharpSymbol)
+        public CSharpDeclaredSymbol(Symbol container, ISymbol csharpSymbol) 
             : base(container)
         {
             _csharpSymbol = csharpSymbol;
         }
 
-        public INamedTypeSymbol CSharpSymbol => _csharpSymbol;
+        public ISymbol CSharpSymbol => _csharpSymbol;
         public override ImmutableArray<Location> Locations => _csharpSymbol.Locations.SelectAsArray(l => l.ToMetaDslx());
 
         public override bool IsImplicitlyDeclared => _csharpSymbol.IsImplicitlyDeclared;
         public override bool IsStatic => _csharpSymbol.IsStatic;
         public override bool IsExtern => _csharpSymbol.IsExtern;
-        public override bool IsError => _csharpSymbol.TypeKind == TypeKind.Error;
-        public override bool IsReferenceType => _csharpSymbol.IsReferenceType;
-        public override bool IsValueType => _csharpSymbol.IsValueType;
 
         protected override string? CompleteProperty_Name(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {

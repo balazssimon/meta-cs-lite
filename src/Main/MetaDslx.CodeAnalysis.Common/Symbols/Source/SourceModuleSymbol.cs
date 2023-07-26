@@ -30,23 +30,16 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
         }
 
         public SourceAssemblySymbol SourceAssemblySymbol => _assemblySymbol;
-
         public override Compilation? DeclaringCompilation => SourceAssemblySymbol.DeclaringCompilation;
 
         public DeclarationTable DeclarationTable => _declarations;
-
         public MergedDeclaration Declaration => _declarations.GetMergedRoot(DeclaringCompilation);
-
+        public ImmutableArray<SyntaxNodeOrToken> DeclaringSyntaxReferences => Declaration.SyntaxReferences;
         public override ImmutableArray<Location> Locations => Declaration.NameLocations;
 
-        public override ImmutableArray<SyntaxNodeOrToken> DeclaringSyntaxReferences => Declaration.SyntaxReferences;
-
-        public IModelGroup ModelGroup => _modelGroup;
-
         public IMultiModelFactory ModelFactory => _modelFactory;
-
+        public IModelGroup ModelGroup => _modelGroup;
         public IModel Model => _model;
-
         public IModelObject ModelObject => null;
 
         public NamespaceSymbol GlobalNamespace

@@ -17,8 +17,6 @@ namespace MetaDslx.CodeAnalysis.Symbols
 
         public override ImmutableArray<Location> Locations => this.ContainingModule.Locations;
 
-        public override ImmutableArray<SyntaxNodeOrToken> DeclaringSyntaxReferences => ImmutableArray<SyntaxNodeOrToken>.Empty;
-
         protected override ImmutableArray<Symbol> CompletePart_CreateContainedSymbols(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             // TODO:MetaDslx

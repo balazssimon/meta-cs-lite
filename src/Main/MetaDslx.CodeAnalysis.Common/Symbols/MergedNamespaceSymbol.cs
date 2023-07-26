@@ -96,8 +96,6 @@ namespace MetaDslx.CodeAnalysis.Symbols
 
         public override ImmutableArray<Location> Locations => _namespacesToMerge.SelectMany(namespaceSymbol => namespaceSymbol.Locations).AsImmutable();
 
-        public override ImmutableArray<SyntaxNodeOrToken> DeclaringSyntaxReferences => _namespacesToMerge.SelectMany(namespaceSymbol => namespaceSymbol.DeclaringSyntaxReferences).AsImmutable();
-
         public override ImmutableArray<Diagnostic> Diagnostics => _namespacesToMerge.SelectMany(namespaceSymbol => namespaceSymbol.Diagnostics).AsImmutable();
 
         public override AssemblySymbol ContainingAssembly

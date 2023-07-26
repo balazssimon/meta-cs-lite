@@ -6,21 +6,18 @@ using System.Text;
 
 namespace MetaDslx.CodeAnalysis.Symbols.Model
 {
-    public class ModelNamespaceSymbol : NamespaceSymbol, IModelSymbol
+    public class ModelDeclaredSymbol : DeclaredSymbol, IModelSymbol
     {
         private IModelObject _modelObject;
 
-        public ModelNamespaceSymbol(Symbol container, IModelObject modelObject)
+        public ModelDeclaredSymbol(Symbol container, IModelObject modelObject)
             : base(container)
         {
             _modelObject = modelObject;
         }
 
-        public override NamespaceExtent Extent => new NamespaceExtent(ContainingModule);
-
         public IModelObject ModelObject => _modelObject;
         public IModel Model => _modelObject.Model;
-
         public override ImmutableArray<Location> Locations => ImmutableArray<Location>.Empty;
 
     }

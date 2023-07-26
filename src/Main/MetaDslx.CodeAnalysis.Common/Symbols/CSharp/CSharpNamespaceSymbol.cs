@@ -10,7 +10,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.CSharp
 {
     internal class CSharpNamespaceSymbol : NamespaceSymbol
     {
-        private INamespaceSymbol _csharpSymbol;
+        private readonly INamespaceSymbol _csharpSymbol;
 
         public CSharpNamespaceSymbol(Symbol container, INamespaceSymbol csharpSymbol)
             : base(container)
@@ -19,10 +19,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.CSharp
         }
 
         public INamespaceSymbol CSharpSymbol => _csharpSymbol;
-
         public override ImmutableArray<Location> Locations => _csharpSymbol.Locations.SelectAsArray(l => l.ToMetaDslx());
-
-        public override ImmutableArray<SyntaxNodeOrToken> DeclaringSyntaxReferences => ImmutableArray<SyntaxNodeOrToken>.Empty;
 
         public override NamespaceExtent Extent => new NamespaceExtent(ContainingModule);
 

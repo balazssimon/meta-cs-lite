@@ -22,7 +22,5 @@ namespace MetaDslx.CodeAnalysis.Symbols.Model
 
         public override ImmutableArray<Location> Locations => ImmutableArray<Location>.Empty;
 
-        public override ImmutableArray<SyntaxNodeOrToken> DeclaringSyntaxReferences => ImmutableArray<SyntaxNodeOrToken>.Empty;
-
     }
 }
