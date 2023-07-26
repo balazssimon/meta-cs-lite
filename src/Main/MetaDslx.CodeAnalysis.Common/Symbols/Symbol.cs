@@ -23,7 +23,14 @@ namespace MetaDslx.CodeAnalysis.Symbols
         {
             public static readonly CompletionPart StartComputingProperty_Attributes = new CompletionPart(nameof(StartComputingProperty_Attributes));
             public static readonly CompletionPart FinishComputingProperty_Attributes = new CompletionPart(nameof(FinishComputingProperty_Attributes));
-            public static readonly CompletionGraph CompletionGraph = CompletionGraph.CreateFromParts(CompletionGraph.StartInitializing, CompletionGraph.FinishInitializing, CompletionGraph.StartCreatingContainedSymbols, CompletionGraph.FinishCreatingContainedSymbols, StartComputingProperty_Attributes, FinishComputingProperty_Attributes, CompletionGraph.StartComputingNonSymbolProperties, CompletionGraph.FinishComputingNonSymbolProperties, CompletionGraph.ContainedSymbolsCompleted, CompletionGraph.StartValidatingSymbol, CompletionGraph.FinishValidatingSymbol);
+            public static readonly CompletionGraph CompletionGraph = 
+                CompletionGraph.CreateFromParts(
+                    CompletionGraph.StartInitializing, CompletionGraph.FinishInitializing, 
+                    CompletionGraph.StartCreatingContainedSymbols, CompletionGraph.FinishCreatingContainedSymbols, 
+                    StartComputingProperty_Attributes, FinishComputingProperty_Attributes, 
+                    CompletionGraph.StartComputingNonSymbolProperties, CompletionGraph.FinishComputingNonSymbolProperties, 
+                    CompletionGraph.ContainedSymbolsCompleted, 
+                    CompletionGraph.StartValidatingSymbol, CompletionGraph.FinishValidatingSymbol);
         }
 
         private static ConditionalWeakTable<Symbol, DiagnosticBag> s_diagnostics = new ConditionalWeakTable<Symbol, DiagnosticBag>();
@@ -514,7 +521,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
 
         protected virtual CompletionGraph CompletionGraph => CompletionParts.CompletionGraph;
 
-        public void ForceComplete(CompletionPart completionPart, SourceLocation? locationOpt, CancellationToken cancellationToken)
+        public virtual void ForceComplete(CompletionPart completionPart, SourceLocation? locationOpt, CancellationToken cancellationToken)
         {
             if (completionPart != null && HasComplete(completionPart)) return;
             if (completionPart != null && !CompletionGraph.Contains(completionPart)) throw new ArgumentException(nameof(completionPart));

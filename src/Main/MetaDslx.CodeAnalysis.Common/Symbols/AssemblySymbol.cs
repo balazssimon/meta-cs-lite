@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Text;
 
 namespace MetaDslx.CodeAnalysis.Symbols
@@ -10,5 +11,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
             : base(null)
         {
         }
+
+        public abstract ImmutableArray<ModuleSymbol> Modules { get; }
     }
 }

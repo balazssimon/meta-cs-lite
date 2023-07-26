@@ -57,7 +57,7 @@ namespace MetaDslx.Examples.MetaModel.Model
         }
     }
 
-    [Symbol(typeof(NamedTypeSymbol))]
+    [Symbol(typeof(TypeSymbol))]
     public partial interface MetaNamedType : MetaType, MetaDeclaration
     {
     }

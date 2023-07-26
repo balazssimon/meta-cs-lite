@@ -59,7 +59,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
 
         // WARNING: Only use this if the location is obtainable without allocating it (even if cached later). E.g., only
         // if the location object is stored in the constructor of the symbol.
-        public LexicalSortKey(Location location, Compilation compilation)
+        public LexicalSortKey(SourceLocation location, Compilation compilation)
             : this((SyntaxTree)location.SourceTree, location.SourceSpan.Start, compilation)
         {
         }

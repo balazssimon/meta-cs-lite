@@ -52,9 +52,9 @@ namespace MetaDslx.CodeAnalysis.Symbols
                     sb.Append(declaredSymbol.MetadataName);
                 }
             }
-            else if (symbol is NamedSymbol namedSymbol)
+            else 
             {
-                sb.Append(namedSymbol.MetadataName);
+                sb.Append(symbol.MetadataName);
             }
             if (IncludeSymbolKind)
             {

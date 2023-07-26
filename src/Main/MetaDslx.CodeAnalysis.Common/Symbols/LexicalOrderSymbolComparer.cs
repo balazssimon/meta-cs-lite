@@ -35,11 +35,12 @@ namespace MetaDslx.CodeAnalysis.Symbols
                 return comparison;
             }
 
-            comparison = ((ISymbol)x).Kind.ToSortOrder() - ((ISymbol)y).Kind.ToSortOrder();
-            if (comparison != 0)
-            {
-                return comparison;
-            }
+            // TODO:MetaDslx
+            //comparison = ((ISymbol)x).Kind.ToSortOrder() - ((ISymbol)y).Kind.ToSortOrder();
+            //if (comparison != 0)
+            //{
+            //    return comparison;
+            //}
 
             comparison = string.CompareOrdinal(x.Name, y.Name);
             Debug.Assert(comparison != 0);

@@ -1,7 +1,6 @@
 ﻿using MetaDslx.CodeAnalysis.PooledObjects;
 using MetaDslx.CodeAnalysis.Symbols;
 using MetaDslx.CodeAnalysis.Symbols.CSharp;
-using MetaDslx.CodeAnalysis.Symbols.MetaModel;
 using MetaDslx.CodeAnalysis.Symbols.Model;
 using MetaDslx.CodeAnalysis.Symbols.Source;
 using Microsoft.CodeAnalysis;
@@ -229,10 +228,6 @@ namespace MetaDslx.CodeAnalysis
                     referencedModulesBuilder.Add(new CSharpModuleSymbol(assembly, csharpModule));
                 }
                 assembly.DangerousSetModules(modulesBuilder.ToImmutableAndFree());
-            }
-            foreach (var reference in compilation.ExternalReferences.OfType<MetaModelReference>())
-            {
-                referencedModulesBuilder.Add(new MetaModelModuleSymbol(reference.MetaModel));
             }
             foreach (var reference in compilation.ExternalReferences.OfType<ModelReference>())
             {

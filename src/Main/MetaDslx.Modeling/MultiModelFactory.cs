@@ -21,7 +21,7 @@ namespace MetaDslx.CodeAnalysis.Modeling
 
         public ImmutableArray<IMetaModel> MetaModels => _metaModels;
 
-        public IModelObject? Create(Model model, Type modelObjectType, string? id = null)
+        public IModelObject? Create(IModel model, Type modelObjectType, string? id = null)
         {
             if (factoriesByType.TryGetValue(modelObjectType, out var factory))
             {
@@ -42,7 +42,7 @@ namespace MetaDslx.CodeAnalysis.Modeling
             return null;
         }
 
-        public IModelObject? Create(Model model, string modelObjectTypeName, string? id = null)
+        public IModelObject? Create(IModel model, string modelObjectTypeName, string? id = null)
         {
             if (factoriesByName.TryGetValue(modelObjectTypeName, out var factory))
             {

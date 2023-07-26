@@ -89,7 +89,7 @@ namespace MetaDslx.CodeAnalysis
             }
             else
             {
-                _referenceManager = new ReferenceManager();
+                _referenceManager = MainLanguage.CompilationFactory.CreateReferenceManager(this);
                 _referenceManager._simpleAssemblyName = assemblyName;
             }
 
@@ -112,7 +112,7 @@ namespace MetaDslx.CodeAnalysis
             {
                 if (_lazyAccessCheck is null)
                 {
-                    var accessCheck = MainLanguage.CompilationFactory.CreateAccessCheck();
+                    var accessCheck = MainLanguage.CompilationFactory.CreateAccessCheck(this);
                     Interlocked.CompareExchange(ref _lazyAccessCheck, accessCheck, null);
                 }
                 return _lazyAccessCheck;
@@ -174,16 +174,18 @@ namespace MetaDslx.CodeAnalysis
 
         internal int CompareSourceLocations(Location location1, Location location2)
         {
-            Debug.Assert(location1.IsInSource);
-            Debug.Assert(location2.IsInSource);
-
-            var comparison = CompareSyntaxTreeOrdering(location1.SourceTree!, location2.SourceTree!);
-            if (comparison != 0)
+            Debug.Assert(location1.Kind == LocationKind.SourceFile);
+            Debug.Assert(location2.Kind == LocationKind.SourceFile);
+            if (location1 is SourceLocation sloc1 && location2 is SourceLocation sloc2)
             {
-                return comparison;
+                var comparison = CompareSyntaxTreeOrdering(sloc1.SourceTree!, sloc2.SourceTree!);
+                if (comparison != 0)
+                {
+                    return comparison;
+                }
+                return sloc1.SourceSpan.Start - sloc2.SourceSpan.Start;
             }
-
-            return location1.SourceSpan.Start - location2.SourceSpan.Start;
+            return 0;
         }
 
         internal int CompareSourceLocations(SyntaxReference location1, SyntaxReference location2)
