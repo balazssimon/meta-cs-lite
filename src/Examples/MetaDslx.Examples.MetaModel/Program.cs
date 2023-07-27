@@ -1,5 +1,6 @@
 ﻿
 using MetaDslx.CodeAnalysis;
+using MetaDslx.CodeAnalysis.Symbols;
 using MetaDslx.Examples.MetaModel;
 using MetaDslx.Examples.MetaModel.Model;
 
@@ -21,6 +22,7 @@ var mmComp = Compilation.Create(
     references: new[] 
     {
         MetadataReference.CreateFromMetaModel(Meta.Instance),
+        MetadataReference.CreateFromModel(Meta.Model),
         MetadataReference.CreateFromFile(typeof(string).Assembly.Location) 
     });
 
@@ -38,9 +40,18 @@ Console.WriteLine(mmComp.HasCodeToEmit());
 Console.WriteLine(mmComp.Name);
 Console.WriteLine(mmComp.SourceModule.GlobalNamespace.Name);
 
-foreach (var decl in mmComp.SourceModule.GlobalNamespace.ContainedSymbols)
+foreach (var module in mmComp.SourceAssembly.Modules)
 {
-    Console.WriteLine(decl.Name);
+    PrintSymbols(string.Empty, module);
+}
+
+static void PrintSymbols(string indent, Symbol symbol)
+{
+    Console.WriteLine($"{indent}{symbol}");
+    foreach (var child in symbol.ContainedSymbols)
+    {
+        PrintSymbols(indent+"  ", child);
+    }
 }
 
 /*/

@@ -48,6 +48,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
 
         protected Symbol? CreateSymbol(Type symbolType, ISourceSymbol container, MergedDeclaration declaration)
         {
+            if (declaration.ModelObjectType is null) return null;
             var module = container is ModuleSymbol moduleSymbol ? moduleSymbol : ((Symbol)container).ContainingModule;
             var sourceModule = module as SourceModuleSymbol;
             var modelFactory = sourceModule?.ModelFactory;

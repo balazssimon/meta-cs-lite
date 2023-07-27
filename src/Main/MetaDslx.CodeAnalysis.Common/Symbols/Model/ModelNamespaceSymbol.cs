@@ -12,16 +12,17 @@ namespace MetaDslx.CodeAnalysis.Symbols.Model
     public class ModelNamespaceSymbol : NamespaceSymbol, IModelSymbol
     {
         private IModelObject _modelObject;
+        private ModuleSymbol _module;
 
         public ModelNamespaceSymbol(Symbol container, IModelObject modelObject)
             : base(container)
         {
             _modelObject = modelObject;
+            _module = container is ModuleSymbol moduleSymbol ? moduleSymbol : container.ContainingModule;
         }
 
-        public override NamespaceExtent Extent => new NamespaceExtent(ContainingModule);
+        public override NamespaceExtent Extent => new NamespaceExtent(_module);
 
-        public ModelSymbolFactory SymbolFactory => ((ModelModuleSymbol)ContainingModule).SymbolFactory;
         public IModelObject ModelObject => _modelObject;
         public IModel Model => _modelObject.Model;
         public override ImmutableArray<Location> Locations => ImmutableArray<Location>.Empty;
@@ -33,12 +34,12 @@ namespace MetaDslx.CodeAnalysis.Symbols.Model
 
         protected override ImmutableArray<Symbol> CompletePart_CreateContainedSymbols(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            return SymbolFactory.GetSymbols<Symbol>(_modelObject.Children);
+            return ((ModelModuleSymbol)ContainingModule).SymbolFactory.GetSymbols<Symbol>(_modelObject.Children);
         }
 
         protected override ImmutableArray<DeclaredSymbol> CompleteProperty_Members(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            return SymbolFactory.GetSymbolPropertyValues<DeclaredSymbol>(_modelObject, nameof(Members));
+            return ((ModelModuleSymbol)ContainingModule).SymbolFactory.GetSymbolPropertyValues<DeclaredSymbol>(_modelObject, nameof(Members));
         }
     }
 }

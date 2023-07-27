@@ -11,18 +11,20 @@ namespace MetaDslx.CodeAnalysis.Symbols.CSharp
     internal class CSharpNamespaceSymbol : NamespaceSymbol
     {
         private readonly INamespaceSymbol _csharpSymbol;
+        private readonly ModuleSymbol _module;
 
         public CSharpNamespaceSymbol(Symbol container, INamespaceSymbol csharpSymbol)
             : base(container)
         {
             _csharpSymbol = csharpSymbol;
+            _module = container is ModuleSymbol moduleSymbol ? moduleSymbol : container.ContainingModule;
         }
 
         public CSharpSymbolFactory SymbolFactory => ((CSharpModuleSymbol)ContainingModule).SymbolFactory;
         public INamespaceSymbol CSharpSymbol => _csharpSymbol;
         public override ImmutableArray<Location> Locations => _csharpSymbol.Locations.SelectAsArray(l => l.ToMetaDslx());
 
-        public override NamespaceExtent Extent => new NamespaceExtent(ContainingModule);
+        public override NamespaceExtent Extent => new NamespaceExtent(_module);
 
         protected override string? CompleteProperty_Name(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {

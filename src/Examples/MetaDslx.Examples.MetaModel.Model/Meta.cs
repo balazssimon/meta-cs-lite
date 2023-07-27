@@ -10,13 +10,15 @@ namespace MetaDslx.Examples.MetaModel.Model
     [MetaModel(MajorVersion = 1, MinorVersion = 0, Prefix = "mm", Uri = "http://metadslx/MetaModel")]
     public partial interface Meta
     {
+        public static readonly Model Model;
         public static readonly MetaPrimitiveType String;
         public static readonly MetaPrimitiveType Int;
         public static readonly MetaPrimitiveType Bool;
 
         static Meta()
         {
-            var factory = new MetaFactory(new MetaDslx.Modeling.Model());
+            Model = new MetaDslx.Modeling.Model();
+            var factory = new MetaFactory(Model);
             String = factory.MetaPrimitiveType();
             String.Name = "string";
             Int = factory.MetaPrimitiveType();
