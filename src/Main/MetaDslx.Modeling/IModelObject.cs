@@ -13,12 +13,13 @@ namespace MetaDslx.Modeling
         Type MetaType { get; }
         IModelObjectInfo Info { get; }
         IModel? Model { get; set; }
-        string? Name { get; }
+        string? Name { get; set; }
         IModelObject? Parent { get; }
         IList<IModelObject> Children { get; }
         void Init(ModelProperty property, object? value);
         bool IsDefault(ModelProperty property);
         object? Get(ModelProperty property);
+        IEnumerable<object> GetValues(ModelProperty property);
         void Add(ModelProperty property, object? item);
         void Remove(ModelProperty property, object? item);
 

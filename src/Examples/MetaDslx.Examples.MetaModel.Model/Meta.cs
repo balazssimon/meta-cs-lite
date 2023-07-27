@@ -49,6 +49,7 @@ namespace MetaDslx.Examples.MetaModel.Model
         public MetaType Type { get; set; }
     }
 
+    [Symbol(typeof(TypeSymbol))]
     public partial interface MetaType : MetaElement
     {
         public virtual bool ConformsTo(MetaType @type)
@@ -57,7 +58,7 @@ namespace MetaDslx.Examples.MetaModel.Model
         }
     }
 
-    [Symbol(typeof(TypeSymbol))]
+    [Symbol(typeof(NamedTypeSymbol))]
     public partial interface MetaNamedType : MetaType, MetaDeclaration
     {
     }
@@ -91,7 +92,7 @@ namespace MetaDslx.Examples.MetaModel.Model
         public IList<MetaDeclaration> Declarations { get; }
     }
 
-    [Symbol(typeof(MemberSymbol))]
+    [Symbol(typeof(DeclaredSymbol))]
     public partial interface MetaModel : MetaNamedElement
     {
         public int MajorVersion { get; set; }
@@ -174,7 +175,7 @@ namespace MetaDslx.Examples.MetaModel.Model
         DerivedUnion
     }
 
-    [Symbol(typeof(MemberSymbol))]
+    [Symbol(typeof(DeclaredSymbol))]
     public partial interface MetaProperty : MetaNamedElement, MetaTypedElement
     {
         public MetaPropertyKind Kind { get; set; }

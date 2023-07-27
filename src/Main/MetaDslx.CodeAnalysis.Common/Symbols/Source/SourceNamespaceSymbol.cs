@@ -26,6 +26,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
         public IModel Model => _modelObject.Model;
         public IModelObject ModelObject => _modelObject;
 
+        public new SourceModuleSymbol ContainingModule => (SourceModuleSymbol)base.ContainingModule;
         public MergedDeclaration Declaration => _declaration;
         public ImmutableArray<SyntaxNodeOrToken> DeclaringSyntaxReferences => _declaration.SyntaxReferences;
         public override ImmutableArray<Location> Locations => _declaration.NameLocations;
@@ -42,13 +43,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
 
         protected override ImmutableArray<Symbol> CompletePart_CreateContainedSymbols(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            var symbols = ArrayBuilder<Symbol>.GetInstance();
-            // TODO: make a SymbolFactory class to create symbols
-            foreach (var childDecl in _declaration.Children)
-            {
-                
-            }
-            return symbols.ToImmutableAndFree();
+            return ContainingModule.SymbolFactory.CreateContainedSymbols(this);
         }
     }
 }

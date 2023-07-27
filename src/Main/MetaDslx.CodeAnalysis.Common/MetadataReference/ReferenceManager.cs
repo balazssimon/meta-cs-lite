@@ -44,7 +44,12 @@ namespace MetaDslx.CodeAnalysis
         /// <summary>
         /// Maps C# symbols to MetaDslx symbols
         /// </summary>
-        private CSharpSymbolMap? _lazyCSharpSymbolMap;
+        private CSharpSymbolFactory? _lazyCSharpSymbolFactory;
+
+        /// <summary>
+        /// Maps model objects to MetaDslx symbols
+        /// </summary>
+        private ModelSymbolFactory? _lazyModelSymbolFactory;
 
         private ImmutableArray<ModuleSymbol> _lazyReferencedModules;
 
@@ -85,12 +90,21 @@ namespace MetaDslx.CodeAnalysis
             }
         }
 
-        internal CSharpSymbolMap CSharpSymbolMap
+        internal CSharpSymbolFactory CSharpSymbolFactory
         {
             get
             {
                 AssertBound();
-                return _lazyCSharpSymbolMap;
+                return _lazyCSharpSymbolFactory;
+            }
+        }
+
+        internal ModelSymbolFactory ModelSymbolFactory
+        {
+            get
+            {
+                AssertBound();
+                return _lazyModelSymbolFactory;
             }
         }
 
@@ -152,7 +166,8 @@ namespace MetaDslx.CodeAnalysis
             Debug.Assert(_isBound == 0);
             Debug.Assert(_lazyHasCircularReference == ThreeState.Unknown);
             Debug.Assert(_lazyCSharpCompilation == null);
-            Debug.Assert(_lazyCSharpSymbolMap == null);
+            Debug.Assert(_lazyCSharpSymbolFactory == null);
+            Debug.Assert(_lazyModelSymbolFactory == null);
             Debug.Assert(_lazyReferencedModules.IsDefault);
         }
 
@@ -162,7 +177,8 @@ namespace MetaDslx.CodeAnalysis
             Debug.Assert(_isBound != 0);
             Debug.Assert(_lazyHasCircularReference != ThreeState.Unknown);
             Debug.Assert(_lazyCSharpCompilation != null);
-            Debug.Assert(_lazyCSharpSymbolMap != null);
+            Debug.Assert(_lazyCSharpSymbolFactory != null);
+            Debug.Assert(_lazyModelSymbolFactory != null);
             Debug.Assert(!_lazyReferencedModules.IsDefault);
         }
 
@@ -175,13 +191,14 @@ namespace MetaDslx.CodeAnalysis
         /// <summary>
         /// Call only while holding <see cref="CommonReferenceManager.SymbolCacheAndReferenceManagerStateGuard"/>.
         /// </summary>
-        internal void InitializeNoLock(CSharpCompilation csharpCompilation, bool containsCircularReferences, ImmutableArray<ModuleSymbol> referencedModules)
+        internal void InitializeNoLock(CSharpCompilation csharpCompilation, bool containsCircularReferences, ImmutableArray<ModuleSymbol> referencedModules, CSharpSymbolFactory csharpSymbolFactory, ModelSymbolFactory modelSymbolFactory)
         {
             AssertUnbound();
 
             _lazyCSharpCompilation = csharpCompilation;
             _lazyHasCircularReference = containsCircularReferences.ToThreeState();
-            _lazyCSharpSymbolMap = new CSharpSymbolMap();
+            _lazyCSharpSymbolFactory = csharpSymbolFactory;
+            _lazyModelSymbolFactory = modelSymbolFactory;
             _lazyReferencedModules = referencedModules;
 
             // once we flip this bit the state of the manager is immutable and available to any readers:
@@ -212,26 +229,34 @@ namespace MetaDslx.CodeAnalysis
         // Returns false if another compilation sharing this manager finished binding earlier and we should reuse its results.
         private bool CreateAndSetSourceAssemblyFullBind(Compilation compilation)
         {
+            var compilationFactory = compilation.MainLanguage.CompilationFactory;
             var csharpReferences = ArrayBuilder<Microsoft.CodeAnalysis.MetadataReference>.GetInstance();
             foreach (var reference in compilation.ExternalReferences.OfType<CSharpMetadataReference>())
             {
                 csharpReferences.Add(reference.CSharpReference);
             }
             var csharpCompilation = CSharpCompilation.Create(_simpleAssemblyName, references: csharpReferences.ToImmutableAndFree());
+            var csharpSymbolFactory = compilationFactory.CreateCSharpSymbolFactory(compilation);
             var referencedModulesBuilder = ArrayBuilder<ModuleSymbol>.GetInstance();
             foreach (var csharpAssembly in csharpCompilation.SourceModule.ReferencedAssemblySymbols)
             {
                 var assembly = new CSharpAssemblySymbol(csharpAssembly);
+                csharpSymbolFactory.AddSymbol(csharpAssembly, assembly);
                 var modulesBuilder = ArrayBuilder<CSharpModuleSymbol>.GetInstance();
                 foreach (var csharpModule in csharpAssembly.Modules)
                 {
-                    referencedModulesBuilder.Add(new CSharpModuleSymbol(assembly, csharpModule));
+                    var module = new CSharpModuleSymbol(assembly, csharpSymbolFactory, csharpModule);
+                    csharpSymbolFactory.AddSymbol(csharpModule, module);
+                    referencedModulesBuilder.Add(module);
                 }
                 assembly.DangerousSetModules(modulesBuilder.ToImmutableAndFree());
             }
+            var modelSymbolFactory = compilationFactory.CreateModelSymbolFactory(compilation);
             foreach (var reference in compilation.ExternalReferences.OfType<ModelReference>())
             {
-                referencedModulesBuilder.Add(new ModelModuleSymbol(reference.Model));
+                var module = new ModelModuleSymbol(modelSymbolFactory, reference.Model);
+                modelSymbolFactory.AddSymbol(reference.Model, module);
+                referencedModulesBuilder.Add(module);
             }
             referencedModulesBuilder.AddRange(CreateModules(compilation));
             var referencedModules = referencedModulesBuilder.ToImmutableAndFree();
@@ -249,7 +274,7 @@ namespace MetaDslx.CodeAnalysis
                             return false;
                         }
 
-                        InitializeNoLock(csharpCompilation, false, referencedModules);
+                        InitializeNoLock(csharpCompilation, false, referencedModules, csharpSymbolFactory, modelSymbolFactory);
 
                         // Make sure that the given compilation holds on this instance of reference manager.
                         Debug.Assert(ReferenceEquals(compilation._referenceManager, this) || HasCircularReference);

@@ -36,6 +36,12 @@ Console.WriteLine(rootDecl.Children.Length);
 
 Console.WriteLine(mmComp.HasCodeToEmit());
 Console.WriteLine(mmComp.Name);
+Console.WriteLine(mmComp.SourceModule.GlobalNamespace.Name);
+
+foreach (var decl in mmComp.SourceModule.GlobalNamespace.Members)
+{
+    Console.WriteLine(decl.Name);
+}
 
 /*/
 var bf = mmComp.GetBinderFactory(mmTree);

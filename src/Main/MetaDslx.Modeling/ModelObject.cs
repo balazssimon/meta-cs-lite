@@ -130,6 +130,11 @@ namespace MetaDslx.Modeling
                 if (nameProp != null) name = ((IModelObject)this).Get(nameProp)?.ToString();
                 return name;
             }
+            set
+            {
+                var nameProp = MInfo.NameProperty;
+                if (nameProp != null) ((IModelObject)this).Add(nameProp, value);
+            }
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         ModelProperty? IModelObject.NameProperty => MInfo.NameProperty;
@@ -189,6 +194,44 @@ namespace MetaDslx.Modeling
                 else
                 {
                     return null;
+                }
+            }
+        }
+
+        IEnumerable<object> IModelObject.GetValues(ModelProperty property)
+        {
+            var slot = GetSlot(property);
+            if (_properties.TryGetValue(slot.SlotProperty, out var value))
+            {
+                if (slot.Flags.HasFlag(ModelPropertyFlags.Collection))
+                {
+                    var collection = value as IModelCollection;
+                    if (collection != null)
+                    {
+                        foreach (var item in collection)
+                        {
+                            yield return item;
+                        }
+                    }
+                    else
+                    {
+                        throw new ModelException($"Error getting value of '{property.QualifiedName}' in '{this}': the property must be initialized in the constructor with an IModelCollection implementation using Init().");
+                    }
+                }
+                else
+                {
+                    yield return value;
+                }
+            }
+            else
+            {
+                if (slot.Flags.HasFlag(ModelPropertyFlags.Collection))
+                {
+                    throw new ModelException($"Error getting value of '{property.QualifiedName}' in '{this}': the property must be initialized in the constructor with an IModelCollection implementation using Init().");
+                }
+                else
+                {
+                    yield break;
                 }
             }
         }

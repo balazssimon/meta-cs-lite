@@ -13,6 +13,7 @@ namespace MetaDslx.CodeAnalysis
     {
         public static TNode WithAnnotationsGreen<TNode>(this TNode node, IEnumerable<SyntaxAnnotation> annotations) where TNode : GreenNode
         {
+            if (node == null) return null;
             var newAnnotations = ArrayBuilder<SyntaxAnnotation>.GetInstance();
             foreach (var candidate in annotations)
             {

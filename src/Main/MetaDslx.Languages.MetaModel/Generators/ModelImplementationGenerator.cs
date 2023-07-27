@@ -177,14 +177,14 @@ namespace MetaDslx.Languages.MetaModel.Generators
             cb.WriteLine("{");
             cb.Push();
             cb.WriteLine($"private static readonly {ImmutableArrayType}<{IMetaModelType}> s_metaModels;");
-            cb.WriteLine($"private static readonly {DictionaryType}<global::System.Type, global::System.Func<{metaModel.MultiFactoryName}, {ModelType}, string?, {IModelObjectType}>> s_factoryMethodsByType;");
-            cb.WriteLine($"private static readonly {DictionaryType}<string, global::System.Func<{metaModel.MultiFactoryName}, {ModelType}, string?, {IModelObjectType}>> s_factoryMethodsByName;");
+            cb.WriteLine($"private static readonly {DictionaryType}<global::System.Type, global::System.Func<{metaModel.MultiFactoryName}, {IModelType}, string?, {IModelObjectType}>> s_factoryMethodsByType;");
+            cb.WriteLine($"private static readonly {DictionaryType}<string, global::System.Func<{metaModel.MultiFactoryName}, {IModelType}, string?, {IModelObjectType}>> s_factoryMethodsByName;");
             cb.WriteLine();
             cb.WriteLine($"static {metaModel.MultiFactoryName}()");
             cb.WriteLine("{");
             cb.Push();
             cb.WriteLine($"s_metaModels = {ImmutableArrayType}.Create<{IMetaModelType}>({metaModel.Name}.Instance);");
-            cb.WriteLine($"s_factoryMethodsByType = new {DictionaryType}<global::System.Type, global::System.Func<{metaModel.MultiFactoryName}, {ModelType}, string?, {IModelObjectType}>>()");
+            cb.WriteLine($"s_factoryMethodsByType = new {DictionaryType}<global::System.Type, global::System.Func<{metaModel.MultiFactoryName}, {IModelType}, string?, {IModelObjectType}>>()");
             cb.WriteLine("{");
             cb.Push();
             foreach (var metaClass in metaModel.MetaClasses.Where(mc => !mc.IsAbstract))
@@ -193,7 +193,7 @@ namespace MetaDslx.Languages.MetaModel.Generators
             }
             cb.Pop();
             cb.WriteLine("};");
-            cb.WriteLine($"s_factoryMethodsByName = new {DictionaryType}<string, global::System.Func<{metaModel.MultiFactoryName}, {ModelType}, string?, {IModelObjectType}>>()");
+            cb.WriteLine($"s_factoryMethodsByName = new {DictionaryType}<string, global::System.Func<{metaModel.MultiFactoryName}, {IModelType}, string?, {IModelObjectType}>>()");
             cb.WriteLine("{");
             cb.Push();
             foreach (var metaClass in metaModel.MetaClasses.Where(mc => !mc.IsAbstract))
@@ -207,17 +207,19 @@ namespace MetaDslx.Languages.MetaModel.Generators
             cb.WriteLine();
             cb.WriteLine($"{ImmutableArrayType}<{IMetaModelType}> {IMultiModelFactoryType}.MetaModels => s_metaModels;");
             cb.WriteLine();
-            cb.WriteLine($"{IModelObjectType}? {IMultiModelFactoryType}.Create({ModelType} model, global::System.Type modelObjectType, string? id)");
+            cb.WriteLine($"{IModelObjectType}? {IMultiModelFactoryType}.Create({IModelType} model, global::System.Type? modelObjectType, string? id)");
             cb.WriteLine("{");
             cb.Push();
+            cb.WriteLine($"if (modelObjectType is null) return null;");
             cb.WriteLine($"if (s_factoryMethodsByType.TryGetValue(modelObjectType, out var factoryMethod)) return factoryMethod(this, model, id);");
             cb.WriteLine("else return null;");
             cb.Pop();
             cb.WriteLine("}");
             cb.WriteLine();
-            cb.WriteLine($"{IModelObjectType}? {IMultiModelFactoryType}.Create({ModelType} model, string modelObjectTypeName, string? id)");
+            cb.WriteLine($"{IModelObjectType}? {IMultiModelFactoryType}.Create({IModelType} model, string? modelObjectTypeName, string? id)");
             cb.WriteLine("{");
             cb.Push();
+            cb.WriteLine($"if (modelObjectTypeName is null) return null;");
             cb.WriteLine($"if (s_factoryMethodsByName.TryGetValue(modelObjectTypeName, out var factoryMethod)) return factoryMethod(this, model, id);");
             cb.WriteLine("else return null;");
             cb.Pop();
@@ -225,7 +227,7 @@ namespace MetaDslx.Languages.MetaModel.Generators
             cb.WriteLine();
             foreach (var metaClass in metaModel.MetaClasses.Where(mc => !mc.IsAbstract))
             {
-                cb.WriteLine($"public {metaClass.FullyQualifiedName} {metaClass.Name}({ModelType} model, string? id = null)");
+                cb.WriteLine($"public {metaClass.FullyQualifiedName} {metaClass.Name}({IModelType} model, string? id = null)");
                 cb.WriteLine("{");
                 cb.Push();
                 cb.WriteLine($"var result = new {metaClass.FullyQualifiedImplName}(id);");

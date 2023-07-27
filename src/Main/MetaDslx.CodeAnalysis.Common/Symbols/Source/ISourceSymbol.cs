@@ -1,4 +1,6 @@
-﻿using MetaDslx.CodeAnalysis.Symbols.Model;
+﻿using MetaDslx.CodeAnalysis.Declarations;
+using MetaDslx.CodeAnalysis.Symbols.Model;
+using MetaDslx.Modeling;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -8,6 +10,10 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
 {
     public interface ISourceSymbol : IModelSymbol
     {
+        SourceModuleSymbol ContainingModule { get; }
+
+        MergedDeclaration Declaration { get; }
+
         /// <summary>
         /// <para>
         /// Get the syntax node(s) where this symbol was declared in source. Some symbols (for

@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections;
 using System.Text;
 
 namespace MetaDslx.Modeling
 {
-    public interface IModelCollection
+    public interface IModelCollection : IEnumerable
     {
         void Add(object? item);
         void Remove(object? item);

@@ -18,6 +18,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.CSharp
             _csharpSymbol = csharpSymbol;
         }
 
+        public CSharpSymbolFactory SymbolFactory => ((CSharpModuleSymbol)ContainingModule).SymbolFactory;
         public INamedTypeSymbol CSharpSymbol => _csharpSymbol;
         public override ImmutableArray<Location> Locations => _csharpSymbol.Locations.SelectAsArray(l => l.ToMetaDslx());
 
@@ -36,6 +37,16 @@ namespace MetaDslx.CodeAnalysis.Symbols.CSharp
         protected override string? CompleteProperty_MetadataName(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             return _csharpSymbol.MetadataName;
+        }
+
+        protected override ImmutableArray<Symbol> CompletePart_CreateContainedSymbols(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        {
+            return SymbolFactory.GetSymbols<Symbol>(_csharpSymbol.GetMembers());
+        }
+
+        protected override ImmutableArray<DeclaredSymbol> CompleteProperty_Members(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        {
+            return SymbolFactory.GetSymbols<DeclaredSymbol>(_csharpSymbol.GetMembers());
         }
     }
 }

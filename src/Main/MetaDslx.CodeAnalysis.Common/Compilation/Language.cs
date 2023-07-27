@@ -48,7 +48,7 @@ namespace MetaDslx.CodeAnalysis
 
         private class NoLanguageImplementation : Language
         {
-            public override string Name => throw new NotImplementedException();
+            public override string Name => "<none>";
 
             protected override void RegisterServicesCore(ServiceCollection services)
             {
@@ -63,13 +63,13 @@ namespace MetaDslx.CodeAnalysis
 
         private class NoSyntaxFacts : SyntaxFacts
         {
-            protected internal override int DefaultWhitespaceRawKind => throw new NotImplementedException();
+            protected internal override int DefaultWhitespaceRawKind => -1;
 
-            protected internal override int DefaultEndOfLineRawKind => throw new NotImplementedException();
+            protected internal override int DefaultEndOfLineRawKind => -1;
 
-            protected internal override int DefaultSeparatorRawKind => throw new NotImplementedException();
+            protected internal override int DefaultSeparatorRawKind => -1;
 
-            protected internal override int DefaultIdentifierRawKind => throw new NotImplementedException();
+            protected internal override int DefaultIdentifierRawKind => -1;
 
             protected internal override int GetContextualKeywordRawKind(string text)
             {
@@ -236,7 +236,7 @@ namespace MetaDslx.CodeAnalysis
 
             protected internal override InternalSyntaxTrivia Trivia(int kind, string text, bool elastic = false)
             {
-                throw new NotImplementedException();
+                return null;
             }
         }
 

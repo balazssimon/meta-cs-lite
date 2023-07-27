@@ -11,16 +11,17 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
     public class SourceModuleSymbol : ModuleSymbol, ISourceSymbol
     {
         private readonly SourceAssemblySymbol _assemblySymbol;
+        private readonly SourceSymbolFactory _symbolFactory;
         private readonly IModelGroup _modelGroup;
         private readonly IModel _model;
         private readonly IMultiModelFactory _modelFactory;
         private readonly DeclarationTable _declarations;
-        private SourceNamespaceSymbol? _globalNamespace;
 
-        public SourceModuleSymbol(SourceAssemblySymbol assemblySymbol, string moduleName, DeclarationTable declarations)
+        public SourceModuleSymbol(SourceAssemblySymbol assemblySymbol, SourceSymbolFactory symbolFactory, string moduleName, DeclarationTable declarations)
             : base(assemblySymbol)
         {
             _assemblySymbol = assemblySymbol;
+            _symbolFactory = symbolFactory;
             _declarations = declarations;
             var compilation = assemblySymbol.DeclaringCompilation;
             var compilationFactory = compilation.MainLanguage.CompilationFactory;
@@ -28,6 +29,10 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
             _model = compilationFactory.CreateModel(compilation);
             _model.Name = moduleName;
         }
+
+        SourceModuleSymbol ISourceSymbol.ContainingModule => null;
+
+        public SourceSymbolFactory SymbolFactory => _symbolFactory;
 
         public SourceAssemblySymbol SourceAssemblySymbol => _assemblySymbol;
         public override Compilation? DeclaringCompilation => SourceAssemblySymbol.DeclaringCompilation;
@@ -42,23 +47,9 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
         public IModel Model => _model;
         public IModelObject ModelObject => null;
 
-        public NamespaceSymbol GlobalNamespace
+        protected override NamespaceSymbol CompleteProperty_GlobalNamespace(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            get
-            {
-                ForceComplete(CompletionGraph.FinishInitializing, null, default);
-                return _globalNamespace;
-            }
-        }
-
-        protected override void CompletePart_InitializeSymbol(DiagnosticBag diagnostics, CancellationToken cancellationToken)
-        {
-            if (_globalNamespace is null)
-            {
-                var rootObject = ModelFactory.Create(Model, Declaration.ModelObjectType);
-                var globalNS = new SourceNamespaceSymbol(this, Declaration, rootObject);
-                Interlocked.CompareExchange(ref _globalNamespace, globalNS, null);
-            }
+            return SymbolFactory.CreateSymbol<NamespaceSymbol>(this, Declaration);
         }
     }
 }

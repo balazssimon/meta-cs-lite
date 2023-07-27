@@ -3,6 +3,9 @@ using MetaDslx.CodeAnalysis.Declarations;
 using MetaDslx.CodeAnalysis.Modeling;
 using MetaDslx.CodeAnalysis.PooledObjects;
 using MetaDslx.CodeAnalysis.Symbols;
+using MetaDslx.CodeAnalysis.Symbols.CSharp;
+using MetaDslx.CodeAnalysis.Symbols.Model;
+using MetaDslx.CodeAnalysis.Symbols.Source;
 using MetaDslx.Modeling;
 using System;
 using System.Collections.Generic;
@@ -55,6 +58,21 @@ namespace MetaDslx.CodeAnalysis
         public virtual IModel CreateModel(Compilation compilation)
         {
             return new Model();
+        }
+
+        public virtual ModelSymbolFactory CreateModelSymbolFactory(Compilation compilation)
+        {
+            return new ModelSymbolFactory();
+        }
+
+        public virtual SourceSymbolFactory CreateSourceSymbolFactory(Compilation compilation)
+        {
+            return new SourceSymbolFactory();
+        }
+
+        internal virtual CSharpSymbolFactory CreateCSharpSymbolFactory(Compilation compilation)
+        {
+            return new CSharpSymbolFactory();
         }
     }
 }
