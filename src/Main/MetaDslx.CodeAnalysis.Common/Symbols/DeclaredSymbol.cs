@@ -45,6 +45,8 @@ namespace MetaDslx.CodeAnalysis.Symbols
         {
         }
 
+        protected override CompletionGraph CompletionGraph => CompletionParts.CompletionGraph;
+
         /// <summary>
         /// The original definition of this symbol. If this symbol is constructed from another
         /// symbol by type substitution then OriginalDefinition gets the original symbol as it was defined in
@@ -218,11 +220,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
 
         protected override bool ForceCompletePart(ref CompletionPart incompletePart, SourceLocation? locationOpt, CancellationToken cancellationToken)
         {
-            if (base.ForceCompletePart(ref incompletePart, locationOpt, cancellationToken))
-            {
-                return true;
-            }
-            else if (incompletePart == CompletionParts.StartComputingProperty_TypeArguments || incompletePart == CompletionParts.FinishComputingProperty_TypeArguments)
+            if (incompletePart == CompletionParts.StartComputingProperty_TypeArguments || incompletePart == CompletionParts.FinishComputingProperty_TypeArguments)
             {
                 if (NotePartComplete(CompletionParts.StartComputingProperty_TypeArguments))
                 {
@@ -236,6 +234,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
                     diagnostics.Free();
                     NotePartComplete(CompletionParts.FinishComputingProperty_TypeArguments);
                 }
+                return true;
             }
             else if (incompletePart == CompletionParts.StartComputingProperty_Imports || incompletePart == CompletionParts.FinishComputingProperty_Imports)
             {
@@ -251,6 +250,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
                     diagnostics.Free();
                     NotePartComplete(CompletionParts.FinishComputingProperty_Imports);
                 }
+                return true;
             }
             else if (incompletePart == CompletionParts.StartComputingProperty_Members || incompletePart == CompletionParts.FinishComputingProperty_Members)
             {
@@ -266,6 +266,11 @@ namespace MetaDslx.CodeAnalysis.Symbols
                     diagnostics.Free();
                     NotePartComplete(CompletionParts.FinishComputingProperty_Members);
                 }
+                return true;
+            }
+            else if (base.ForceCompletePart(ref incompletePart, locationOpt, cancellationToken))
+            {
+                return true;
             }
             return false;
         }

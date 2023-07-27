@@ -49,6 +49,8 @@ namespace MetaDslx.CodeAnalysis.Symbols
         {
         }
 
+        protected override CompletionGraph CompletionGraph => CompletionParts.CompletionGraph;
+
         [ModelProperty]
         public virtual bool IsReferenceType => false;
 
@@ -107,11 +109,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
 
         protected override bool ForceCompletePart(ref CompletionPart incompletePart, SourceLocation? locationOpt, CancellationToken cancellationToken)
         {
-            if (base.ForceCompletePart(ref incompletePart, locationOpt, cancellationToken))
-            {
-                return true;
-            }
-            else if (incompletePart == CompletionParts.StartComputingProperty_TypeParameters || incompletePart == CompletionParts.FinishComputingProperty_TypeParameters)
+            if (incompletePart == CompletionParts.StartComputingProperty_TypeParameters || incompletePart == CompletionParts.FinishComputingProperty_TypeParameters)
             {
                 if (NotePartComplete(CompletionParts.StartComputingProperty_TypeParameters))
                 {
@@ -125,6 +123,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
                     diagnostics.Free();
                     NotePartComplete(CompletionParts.FinishComputingProperty_TypeParameters);
                 }
+                return true;
             }
             else if (incompletePart == CompletionParts.StartComputingProperty_BaseTypes || incompletePart == CompletionParts.FinishComputingProperty_BaseTypes)
             {
@@ -140,6 +139,11 @@ namespace MetaDslx.CodeAnalysis.Symbols
                     diagnostics.Free();
                     NotePartComplete(CompletionParts.FinishComputingProperty_BaseTypes);
                 }
+                return true;
+            }
+            else if (base.ForceCompletePart(ref incompletePart, locationOpt, cancellationToken))
+            {
+                return true;
             }
             return false;
         }

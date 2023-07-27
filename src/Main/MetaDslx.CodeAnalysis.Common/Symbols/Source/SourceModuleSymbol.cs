@@ -30,8 +30,6 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
             _model.Name = moduleName;
         }
 
-        SourceModuleSymbol ISourceSymbol.ContainingModule => null;
-
         public SourceSymbolFactory SymbolFactory => _symbolFactory;
 
         public SourceAssemblySymbol SourceAssemblySymbol => _assemblySymbol;

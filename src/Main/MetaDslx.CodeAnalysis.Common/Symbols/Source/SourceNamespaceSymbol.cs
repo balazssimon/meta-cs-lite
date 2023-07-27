@@ -13,20 +13,21 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
     {
         private readonly MergedDeclaration _declaration;
         private readonly IModelObject _modelObject;
+        private readonly ModuleSymbol _module;
 
         public SourceNamespaceSymbol(Symbol container, MergedDeclaration declaration, IModelObject modelObject) 
             : base(container)
         {
             _declaration = declaration;
             _modelObject = modelObject;
+            _module = container is ModuleSymbol moduleSymbol ? moduleSymbol : container.ContainingModule;
         }
 
-        public override NamespaceExtent Extent => new NamespaceExtent(ContainingModule);
+        public override NamespaceExtent Extent => new NamespaceExtent(_module);
 
         public IModel Model => _modelObject.Model;
         public IModelObject ModelObject => _modelObject;
 
-        public new SourceModuleSymbol ContainingModule => (SourceModuleSymbol)base.ContainingModule;
         public MergedDeclaration Declaration => _declaration;
         public ImmutableArray<SyntaxNodeOrToken> DeclaringSyntaxReferences => _declaration.SyntaxReferences;
         public override ImmutableArray<Location> Locations => _declaration.NameLocations;
@@ -43,7 +44,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
 
         protected override ImmutableArray<Symbol> CompletePart_CreateContainedSymbols(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            return ContainingModule.SymbolFactory.CreateContainedSymbols(this);
+            return ((SourceModuleSymbol)ContainingModule).SymbolFactory.CreateContainedSymbols(this);
         }
     }
 }

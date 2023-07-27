@@ -38,7 +38,7 @@ Console.WriteLine(mmComp.HasCodeToEmit());
 Console.WriteLine(mmComp.Name);
 Console.WriteLine(mmComp.SourceModule.GlobalNamespace.Name);
 
-foreach (var decl in mmComp.SourceModule.GlobalNamespace.Members)
+foreach (var decl in mmComp.SourceModule.GlobalNamespace.ContainedSymbols)
 {
     Console.WriteLine(decl.Name);
 }

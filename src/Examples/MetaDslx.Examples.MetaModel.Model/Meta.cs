@@ -41,11 +41,13 @@ namespace MetaDslx.Examples.MetaModel.Model
     public partial interface MetaNamedElement : MetaDocumentedElement
     {
         [SymbolProperty("Name")]
+        [Name]
         public string Name { get; set; }
     }
 
     public partial interface MetaTypedElement : MetaElement
     {
+        [Type]
         public MetaType Type { get; set; }
     }
 

@@ -10,8 +10,6 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
 {
     public interface ISourceSymbol : IModelSymbol
     {
-        SourceModuleSymbol ContainingModule { get; }
-
         MergedDeclaration Declaration { get; }
 
         /// <summary>
