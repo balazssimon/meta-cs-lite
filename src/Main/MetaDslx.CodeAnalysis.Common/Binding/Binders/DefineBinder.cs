@@ -1,4 +1,6 @@
 ﻿using MetaDslx.CodeAnalysis.Declarations;
+using MetaDslx.CodeAnalysis.PooledObjects;
+using MetaDslx.CodeAnalysis.Symbols;
 using MetaDslx.CodeAnalysis.Syntax.InternalSyntax;
 using System;
 using System.Collections.Generic;
@@ -24,6 +26,20 @@ namespace MetaDslx.CodeAnalysis.Binding
             var children = this.BuildChildDeclarationTree(declaration);
             declaration.AddChildren(children);
             return declaration.ToImmutableAndFree();
+        }
+
+        public override ImmutableArray<Symbol> GetDefinedSymbols()
+        {
+            var containingSymbols = this.GetContainingSymbols();
+            var definedSymbols = ArrayBuilder<Symbol>.GetInstance();
+            foreach (var containingSymbol in containingSymbols)
+            {
+                foreach (var childSymbol in containingSymbol.ContainedSymbols)
+                {
+                    // TODO:MetaDslx 
+                }
+            }
+            return definedSymbols.ToImmutableAndFree();
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using MetaDslx.CodeAnalysis.Declarations;
 using MetaDslx.CodeAnalysis.PooledObjects;
+using MetaDslx.CodeAnalysis.Symbols;
 using MetaDslx.CodeAnalysis.Text;
 using System;
 using System.Collections.Generic;
@@ -195,6 +196,16 @@ namespace MetaDslx.CodeAnalysis.Binding
             {
                 arrayBuilder.Free();
             }
+        }
+
+        public virtual ImmutableArray<Symbol> GetDefinedSymbols()
+        {
+            return ImmutableArray<Symbol>.Empty;
+        }
+
+        public virtual ImmutableArray<Symbol> GetContainingSymbols()
+        {
+            return ImmutableArray<Symbol>.Empty;
         }
     }
 }

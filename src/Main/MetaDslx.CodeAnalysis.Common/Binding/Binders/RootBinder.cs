@@ -1,4 +1,5 @@
 ﻿using MetaDslx.CodeAnalysis.Declarations;
+using MetaDslx.CodeAnalysis.Symbols;
 using MetaDslx.CodeAnalysis.Text;
 using System;
 using System.Collections.Generic;
@@ -40,6 +41,11 @@ namespace MetaDslx.CodeAnalysis.Binding
         {
             var result = base.GetEnclosingBinder(span);
             return result ?? this;
+        }
+
+        public override ImmutableArray<Symbol> GetDefinedSymbols()
+        {
+            return ImmutableArray.Create<Symbol>(Compilation.SourceModule.GlobalNamespace);
         }
     }
 }
