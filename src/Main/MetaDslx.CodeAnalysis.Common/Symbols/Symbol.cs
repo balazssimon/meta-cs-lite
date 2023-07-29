@@ -1,8 +1,10 @@
-﻿using MetaDslx.CodeAnalysis.PooledObjects;
+﻿using MetaDslx.CodeAnalysis.Declarations;
+using MetaDslx.CodeAnalysis.PooledObjects;
 using MetaDslx.CodeAnalysis.Symbols.Source;
 using MetaDslx.CodeAnalysis.Syntax.InternalSyntax;
 using MetaDslx.CodeAnalysis.Text;
 using MetaDslx.Modeling;
+using Microsoft.CodeAnalysis;
 using Roslyn.Utilities;
 using System;
 using System.Collections.Generic;
@@ -319,7 +321,6 @@ namespace MetaDslx.CodeAnalysis.Symbols
         /// location.
         /// </summary>
         public abstract ImmutableArray<Location> Locations { get; }
-
 
         #region Diagnostics
 
@@ -687,26 +688,44 @@ namespace MetaDslx.CodeAnalysis.Symbols
             return compilation == this.DeclaringCompilation;
         }
 
-        public virtual bool IsDefinedInSourceTree(SyntaxTree tree, TextSpan? definedWithinSpan, CancellationToken cancellationToken = default)
+        public virtual ImmutableArray<SingleDeclaration> GetSingleDeclarations(CancellationToken cancellationToken = default)
         {
-            if (this is ISourceSymbol sourceSymbol)
+            if (this is ISourceSymbol sourceSymbol) return sourceSymbol.Declaration.Declarations;
+            else return ImmutableArray<SingleDeclaration>.Empty;
+        }
+
+        public ImmutableArray<SingleDeclaration> GetSingleDeclarations(SyntaxNodeOrToken syntax, CancellationToken cancellationToken = default)
+        {
+            var result = ArrayBuilder<SingleDeclaration>.GetInstance();
+            foreach (var decl in this.GetSingleDeclarations(cancellationToken))
             {
-                var declaringReferences = sourceSymbol.DeclaringSyntaxReferences;
-                var container = this.ContainingSymbol;
-                if (declaringReferences.Length == 0 && container != null)
+                if (decl.SyntaxReference == syntax) result.Add(decl);
+            }
+            return result.ToImmutableAndFree();
+        }
+
+        public bool IsDefinedInSourceTree(SyntaxTree tree, TextSpan? definedWithinSpan, CancellationToken cancellationToken = default)
+        {
+            foreach (var decl in this.GetSingleDeclarations(cancellationToken))
+            {
+                var syntaxRef = decl.SyntaxReference;
+                if (syntaxRef.SyntaxTree == tree &&
+                    (!definedWithinSpan.HasValue || syntaxRef.Span.IntersectsWith(definedWithinSpan.Value)))
                 {
-                    return container.IsDefinedInSourceTree(tree, definedWithinSpan, cancellationToken);
+                    return true;
                 }
+            }
+            return false;
+        }
 
-                foreach (var syntaxRef in declaringReferences)
+        public bool IsDefinedBySyntax(SyntaxNodeOrToken syntax, CancellationToken cancellationToken = default)
+        {
+            foreach (var decl in this.GetSingleDeclarations(cancellationToken))
+            {
+                var syntaxRef = decl.SyntaxReference;
+                if (syntaxRef == syntax)
                 {
-                    cancellationToken.ThrowIfCancellationRequested();
-
-                    if (syntaxRef.SyntaxTree == tree &&
-                        (!definedWithinSpan.HasValue || syntaxRef.Span.IntersectsWith(definedWithinSpan.Value)))
-                    {
-                        return true;
-                    }
+                    return true;
                 }
             }
             return false;

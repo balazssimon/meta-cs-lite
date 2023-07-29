@@ -79,7 +79,7 @@ namespace MetaDslx.CodeAnalysis.Declarations
         private class Error : MergedDeclaration
         {
             public Error()
-                : base(ImmutableArray.Create(SingleDeclaration.Create(null, null, null, null, null, false, ImmutableArray<SingleDeclaration>.Empty, ImmutableArray<Diagnostic>.Empty)))
+                : base(ImmutableArray.Create(SingleDeclaration.Create(null, null, null, null, null, false, false, ImmutableArray<SingleDeclaration>.Empty, ImmutableArray<Diagnostic>.Empty)))
             {
                 
             }

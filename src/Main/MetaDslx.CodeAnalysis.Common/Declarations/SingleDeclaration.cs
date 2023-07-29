@@ -9,6 +9,14 @@ using System.Text;
 
 namespace MetaDslx.CodeAnalysis.Declarations
 {
+    [Flags]
+    internal enum SingleDeclarationFlags
+    {
+        None = 0,
+        CanMerge = 0x01,
+        IsNesting = 0x02
+    }
+
     public abstract class SingleDeclaration : Declaration
     {
         private readonly SyntaxNodeOrToken _syntax;
@@ -21,6 +29,7 @@ namespace MetaDslx.CodeAnalysis.Declarations
         }
 
         public virtual bool CanMerge => false;
+        public virtual bool IsNesting => false;
         public SyntaxNodeOrToken SyntaxReference => _syntax;
         public override Type ModelObjectType => _modelObjectType;
         public abstract Location NameLocation { get; }
@@ -33,16 +42,19 @@ namespace MetaDslx.CodeAnalysis.Declarations
             return new RootSingleDeclaration(syntax, name, modelObjectType, children, referenceDirectives, diagnostics);
         }
 
-        public static SingleDeclaration Create(SyntaxNodeOrToken syntax, Type modelObjectType, string? name, string? metadataName, SourceLocation? nameLocation, bool canMerge, ImmutableArray<SingleDeclaration> children, ImmutableArray<Diagnostic> diagnostics)
+        public static SingleDeclaration Create(SyntaxNodeOrToken syntax, Type modelObjectType, string? name, string? metadataName, SourceLocation? nameLocation, bool canMerge, bool isNesting, ImmutableArray<SingleDeclaration> children, ImmutableArray<Diagnostic> diagnostics)
         {
             if (name is not null && nameLocation is null) throw new ArgumentNullException(nameof(nameLocation), "Name location must not be null if the name is not null.");
+            var flags = SingleDeclarationFlags.None;
+            if (canMerge) flags |= SingleDeclarationFlags.CanMerge;
+            if (isNesting) flags |= SingleDeclarationFlags.IsNesting;
             if (diagnostics.IsDefaultOrEmpty)
             {
                 if (name is not null)
                 {
-                    if (canMerge)
+                    if (flags != SingleDeclarationFlags.None)
                     {
-                        return children.IsDefaultOrEmpty ? new MergableWithName(syntax, modelObjectType, name, metadataName ?? name, nameLocation!) : new MergableWithNameAndChildren(syntax, modelObjectType, name, metadataName ?? name, nameLocation!, children);
+                        return children.IsDefaultOrEmpty ? new WithNameAndFlags(syntax, flags, modelObjectType, name, metadataName ?? name, nameLocation!) : new WithNameAndChildrenAndFlags(syntax, flags, modelObjectType, name, metadataName ?? name, nameLocation!, children);
                     }
                     else
                     {
@@ -51,9 +63,9 @@ namespace MetaDslx.CodeAnalysis.Declarations
                 }
                 else
                 {
-                    if (canMerge)
+                    if (flags != SingleDeclarationFlags.None)
                     {
-                        return children.IsDefaultOrEmpty ? new Mergable(syntax, modelObjectType) : new MergableWithChildren(syntax, modelObjectType, children);
+                        return children.IsDefaultOrEmpty ? new WithFlags(syntax, flags, modelObjectType) : new WithChildrenAndFlags(syntax, flags, modelObjectType, children);
                     }
                     else
                     {
@@ -65,17 +77,17 @@ namespace MetaDslx.CodeAnalysis.Declarations
             {
                 if (name is not null)
                 {
-                    return children.IsDefaultOrEmpty ? new WithNameAndDiagnostics(syntax, modelObjectType, name, metadataName ?? name, nameLocation!, canMerge, diagnostics) : new WithNameAndChildrenAndDiagnostics(syntax, modelObjectType, name, metadataName ?? name, nameLocation!, canMerge, children, diagnostics);
+                    return children.IsDefaultOrEmpty ? new WithNameAndFlagsAndDiagnostics(syntax, flags, modelObjectType, name, metadataName ?? name, nameLocation!, diagnostics) : new WithNameAndChildrenAndFlagsAndDiagnostics(syntax, flags, modelObjectType, name, metadataName ?? name, nameLocation!, children, diagnostics);
                 }
                 else
                 {
-                    if (canMerge)
+                    if (flags != SingleDeclarationFlags.None)
                     {
-                        return children.IsDefaultOrEmpty ? new MergableWithDiagnostics(syntax, modelObjectType, diagnostics) : new WithChildrenAndDiagnostics(syntax, modelObjectType, canMerge, children, diagnostics);
+                        return children.IsDefaultOrEmpty ? new WithFlagsAndDiagnostics(syntax, flags, modelObjectType, diagnostics) : new WithChildrenAndFlagsAndDiagnostics(syntax, flags, modelObjectType, children, diagnostics);
                     }
                     else
                     {
-                        return children.IsDefaultOrEmpty ? new EmptyWithDiagnostics(syntax, modelObjectType, diagnostics) : new WithChildrenAndDiagnostics(syntax, modelObjectType, canMerge, children, diagnostics);
+                        return children.IsDefaultOrEmpty ? new WithDiagnostics(syntax, modelObjectType, diagnostics) : new WithChildrenAndFlagsAndDiagnostics(syntax, flags, modelObjectType, children, diagnostics);
                     }
                 }
             }
@@ -134,21 +146,25 @@ namespace MetaDslx.CodeAnalysis.Declarations
             public override ImmutableArray<Diagnostic> Diagnostics => ImmutableArray<Diagnostic>.Empty;
         }
 
-        private class Mergable : Empty
+        private class WithFlags : Empty
         {
-            public Mergable(SyntaxNodeOrToken syntax, Type modelObjectType) 
+            private readonly SingleDeclarationFlags _flags;
+
+            public WithFlags(SyntaxNodeOrToken syntax, SingleDeclarationFlags flags, Type modelObjectType) 
                 : base(syntax, modelObjectType)
             {
+                _flags = flags;
             }
 
-            public override bool CanMerge => true;
+            public override bool CanMerge => _flags.HasFlag(SingleDeclarationFlags.CanMerge);
+            public override bool IsNesting => _flags.HasFlag(SingleDeclarationFlags.IsNesting);
         }
 
-        private class EmptyWithDiagnostics : Empty
+        private class WithDiagnostics : Empty
         {
             private readonly ImmutableArray<Diagnostic> _diagnostics;
 
-            public EmptyWithDiagnostics(SyntaxNodeOrToken syntax, Type modelObjectType, ImmutableArray<Diagnostic> diagnostics) 
+            public WithDiagnostics(SyntaxNodeOrToken syntax, Type modelObjectType, ImmutableArray<Diagnostic> diagnostics) 
                 : base(syntax, modelObjectType)
             {
                 _diagnostics = diagnostics;
@@ -157,14 +173,17 @@ namespace MetaDslx.CodeAnalysis.Declarations
             public override ImmutableArray<Diagnostic> Diagnostics => _diagnostics;
         }
 
-        private class MergableWithDiagnostics : EmptyWithDiagnostics
+        private class WithFlagsAndDiagnostics : WithFlags
         {
-            public MergableWithDiagnostics(SyntaxNodeOrToken syntax, Type modelObjectType, ImmutableArray<Diagnostic> diagnostics) 
-                : base(syntax, modelObjectType, diagnostics)
+            private readonly ImmutableArray<Diagnostic> _diagnostics;
+
+            public WithFlagsAndDiagnostics(SyntaxNodeOrToken syntax, SingleDeclarationFlags flags, Type modelObjectType, ImmutableArray<Diagnostic> diagnostics) 
+                : base(syntax, flags, modelObjectType)
             {
+                _diagnostics = diagnostics;
             }
 
-            public override bool CanMerge => true;
+            public override ImmutableArray<Diagnostic> Diagnostics => _diagnostics;
         }
 
         private class WithName : SingleDeclaration
@@ -194,29 +213,30 @@ namespace MetaDslx.CodeAnalysis.Declarations
             public override ImmutableArray<Diagnostic> Diagnostics => ImmutableArray<Diagnostic>.Empty;
         }
 
-        private class MergableWithName : WithName
+        private class WithNameAndFlags : WithName
         {
-            public MergableWithName(SyntaxNodeOrToken syntax, Type modelObjectType, string name, string metadataName, SourceLocation nameLocation) 
+            private readonly SingleDeclarationFlags _flags;
+
+            public WithNameAndFlags(SyntaxNodeOrToken syntax, SingleDeclarationFlags flags, Type modelObjectType, string name, string metadataName, SourceLocation nameLocation) 
                 : base(syntax, modelObjectType, name, metadataName, nameLocation)
             {
+                _flags = flags;
             }
 
-            public override bool CanMerge => true;
+            public override bool CanMerge => _flags.HasFlag(SingleDeclarationFlags.CanMerge);
+            public override bool IsNesting => _flags.HasFlag(SingleDeclarationFlags.IsNesting);
         }
 
-        private class WithNameAndDiagnostics : WithName
+        private class WithNameAndFlagsAndDiagnostics : WithNameAndFlags
         {
             private readonly ImmutableArray<Diagnostic> _diagnostics;
-            private readonly bool _canMerge;
 
-            public WithNameAndDiagnostics(SyntaxNodeOrToken syntax, Type modelObjectType, string name, string metadataName, SourceLocation nameLocation, bool canMerge, ImmutableArray<Diagnostic> diagnostics) 
-                : base(syntax, modelObjectType, name, metadataName, nameLocation)
+            public WithNameAndFlagsAndDiagnostics(SyntaxNodeOrToken syntax, SingleDeclarationFlags flags, Type modelObjectType, string name, string metadataName, SourceLocation nameLocation, ImmutableArray<Diagnostic> diagnostics) 
+                : base(syntax, flags, modelObjectType, name, metadataName, nameLocation)
             {
                 _diagnostics = diagnostics;
-                _canMerge = canMerge;
             }
 
-            public override bool CanMerge => _canMerge;
             public override ImmutableArray<Diagnostic> Diagnostics => _diagnostics;
         }
 
@@ -255,29 +275,30 @@ namespace MetaDslx.CodeAnalysis.Declarations
             }
         }
 
-        private class MergableWithChildren : WithChildren
+        private class WithChildrenAndFlags : WithChildren
         {
-            public MergableWithChildren(SyntaxNodeOrToken syntax, Type modelObjectType, ImmutableArray<SingleDeclaration> children) 
+            private readonly SingleDeclarationFlags _flags;
+
+            public WithChildrenAndFlags(SyntaxNodeOrToken syntax, SingleDeclarationFlags flags, Type modelObjectType, ImmutableArray<SingleDeclaration> children) 
                 : base(syntax, modelObjectType, children)
             {
+                _flags = flags;
             }
 
-            public override bool CanMerge => true;
+            public override bool CanMerge => _flags.HasFlag(SingleDeclarationFlags.CanMerge);
+            public override bool IsNesting => _flags.HasFlag(SingleDeclarationFlags.IsNesting);
         }
 
-        private class WithChildrenAndDiagnostics : WithChildren
+        private class WithChildrenAndFlagsAndDiagnostics : WithChildrenAndFlags
         {
             private readonly ImmutableArray<Diagnostic> _diagnostics;
-            private readonly bool _canMerge;
 
-            public WithChildrenAndDiagnostics(SyntaxNodeOrToken syntax, Type modelObjectType, bool canMerge, ImmutableArray<SingleDeclaration> children, ImmutableArray<Diagnostic> diagnostics) 
-                : base(syntax, modelObjectType, children)
+            public WithChildrenAndFlagsAndDiagnostics(SyntaxNodeOrToken syntax, SingleDeclarationFlags flags, Type modelObjectType, ImmutableArray<SingleDeclaration> children, ImmutableArray<Diagnostic> diagnostics) 
+                : base(syntax, flags, modelObjectType, children)
             {
                 _diagnostics = diagnostics;
-                _canMerge = canMerge;
             }
 
-            public override bool CanMerge => _canMerge;
             public override ImmutableArray<Diagnostic> Diagnostics => _diagnostics;
         }
 
@@ -322,29 +343,30 @@ namespace MetaDslx.CodeAnalysis.Declarations
             }
         }
 
-        private class MergableWithNameAndChildren : WithNameAndChildren
+        private class WithNameAndChildrenAndFlags : WithNameAndChildren
         {
-            public MergableWithNameAndChildren(SyntaxNodeOrToken syntax, Type modelObjectType, string name, string metadataName, SourceLocation nameLocation, ImmutableArray<SingleDeclaration> children) 
+            private readonly SingleDeclarationFlags _flags;
+
+            public WithNameAndChildrenAndFlags(SyntaxNodeOrToken syntax, SingleDeclarationFlags flags, Type modelObjectType, string name, string metadataName, SourceLocation nameLocation, ImmutableArray<SingleDeclaration> children) 
                 : base(syntax, modelObjectType, name, metadataName, nameLocation, children)
             {
+                _flags = flags;
             }
 
-            public override bool CanMerge => true;
+            public override bool CanMerge => _flags.HasFlag(SingleDeclarationFlags.CanMerge);
+            public override bool IsNesting => _flags.HasFlag(SingleDeclarationFlags.IsNesting);
         }
 
-        private class WithNameAndChildrenAndDiagnostics : WithNameAndChildren
+        private class WithNameAndChildrenAndFlagsAndDiagnostics : WithNameAndChildrenAndFlags
         {
             private readonly ImmutableArray<Diagnostic> _diagnostics;
-            private readonly bool _canMerge;
 
-            public WithNameAndChildrenAndDiagnostics(SyntaxNodeOrToken syntax, Type modelObjectType, string name, string metadataName, SourceLocation nameLocation, bool canMerge, ImmutableArray<SingleDeclaration> children, ImmutableArray<Diagnostic> diagnostics) 
-                : base(syntax, modelObjectType, name, metadataName, nameLocation, children)
+            public WithNameAndChildrenAndFlagsAndDiagnostics(SyntaxNodeOrToken syntax, SingleDeclarationFlags flags, Type modelObjectType, string name, string metadataName, SourceLocation nameLocation, ImmutableArray<SingleDeclaration> children, ImmutableArray<Diagnostic> diagnostics)
+                : base(syntax, flags, modelObjectType, name, metadataName, nameLocation, children)
             {
                 _diagnostics = diagnostics;
-                _canMerge = canMerge;
             }
 
-            public override bool CanMerge => _canMerge;
             public override ImmutableArray<Diagnostic> Diagnostics => _diagnostics;
         }
 

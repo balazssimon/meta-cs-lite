@@ -1,5 +1,6 @@
 ﻿
 using MetaDslx.CodeAnalysis;
+using MetaDslx.CodeAnalysis.Binding;
 using MetaDslx.CodeAnalysis.Symbols;
 using MetaDslx.Examples.MetaModel;
 using MetaDslx.Examples.MetaModel.Model;
@@ -26,10 +27,6 @@ var mmComp = Compilation.Create(
         MetadataReference.CreateFromFile(typeof(string).Assembly.Location) 
     });
 
-var root = mmTree.GetRoot();
-var rootBinder = mmComp.GetBinder(root);
-Console.WriteLine(rootBinder);
-
 //*/
 var rootDecl = mmComp.RootDeclaration;
 Console.WriteLine(rootDecl.Name);
@@ -45,6 +42,10 @@ foreach (var module in mmComp.SourceAssembly.Modules)
     PrintSymbols(string.Empty, module);
 }
 
+var root = mmTree.GetRoot();
+var rootBinder = mmComp.GetBinder(root);
+PrintBinders(string.Empty, rootBinder);
+
 static void PrintSymbols(string indent, Symbol symbol)
 {
     Console.WriteLine($"{indent}{symbol}");
@@ -54,6 +55,14 @@ static void PrintSymbols(string indent, Symbol symbol)
     }
 }
 
+static void PrintBinders(string indent, Binder binder)
+{
+    Console.WriteLine($"{indent}{binder}");
+    foreach (var child in binder.GetChildBinders(resolveLazy: true))
+    {
+        PrintBinders(indent + "  ", child);
+    }
+}
 /*/
 var bf = mmComp.GetBinderFactory(mmTree);
 if (mmTree.TryGetRoot(out var root) && root is not null)

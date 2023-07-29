@@ -147,6 +147,7 @@ namespace MetaDslx.Examples.MetaModel.Model
         public IList<MetaEnumLiteral> EnumLiterals { get; }
     }
 
+    [Symbol(typeof(DeclaredSymbol))]
     public partial interface MetaEnumLiteral : MetaNamedElement, MetaTypedElement
     {
         [Opposite(typeof(MetaEnum), "EnumLiterals")]

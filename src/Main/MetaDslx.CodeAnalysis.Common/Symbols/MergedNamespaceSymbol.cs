@@ -6,7 +6,11 @@ using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
+using MetaDslx.CodeAnalysis.Declarations;
 using MetaDslx.CodeAnalysis.PooledObjects;
+using MetaDslx.CodeAnalysis.Symbols.Model;
+using MetaDslx.CodeAnalysis.Symbols.Source;
+using MetaDslx.CodeAnalysis.Text;
 using MetaDslx.Modeling;
 
 namespace MetaDslx.CodeAnalysis.Symbols
@@ -28,7 +32,6 @@ namespace MetaDslx.CodeAnalysis.Symbols
     {
         private readonly NamespaceExtent _extent;
         private readonly ImmutableArray<NamespaceSymbol> _namespacesToMerge;
-        private readonly NamespaceSymbol _containingNamespace;
 
         // used when this namespace is constructed as the result of an extern alias directive
         private readonly string _nameOpt;
@@ -39,7 +42,6 @@ namespace MetaDslx.CodeAnalysis.Symbols
         {
             _extent = extent;
             _namespacesToMerge = namespacesToMerge;
-            _containingNamespace = containingNamespace;
             _nameOpt = nameOpt;
 
 #if DEBUG
@@ -89,14 +91,15 @@ namespace MetaDslx.CodeAnalysis.Symbols
         }
 
         public override Compilation? DeclaringCompilation => _extent.DeclaringCompilation;
-
         public override NamespaceExtent Extent => _extent;
-
         public override ImmutableArray<NamespaceSymbol> ConstituentNamespaces => _namespacesToMerge;
-
         public override ImmutableArray<Location> Locations => _namespacesToMerge.SelectMany(namespaceSymbol => namespaceSymbol.Locations).AsImmutable();
-
         public override ImmutableArray<Diagnostic> Diagnostics => _namespacesToMerge.SelectMany(namespaceSymbol => namespaceSymbol.Diagnostics).AsImmutable();
+
+        public ImmutableArray<IModel> Model => _namespacesToMerge.OfType<IModelSymbol>().Select(namespaceSymbol => namespaceSymbol.Model).AsImmutable();
+        public ImmutableArray<IModelObject> ModelObject => _namespacesToMerge.OfType<IModelSymbol>().Select(namespaceSymbol => namespaceSymbol.ModelObject).AsImmutable();
+        public ImmutableArray<MergedDeclaration> Declaration => _namespacesToMerge.OfType<ISourceSymbol>().Select(namespaceSymbol => namespaceSymbol.Declaration).AsImmutable();
+        public ImmutableArray<SyntaxNodeOrToken> DeclaringSyntaxReferences => _namespacesToMerge.OfType<ISourceSymbol>().SelectMany(namespaceSymbol => namespaceSymbol.DeclaringSyntaxReferences).AsImmutable();
 
         public override AssemblySymbol ContainingAssembly
         {
@@ -134,6 +137,16 @@ namespace MetaDslx.CodeAnalysis.Symbols
                 }
                 return null;
             }
+        }
+
+        public override ImmutableArray<SingleDeclaration> GetSingleDeclarations(CancellationToken cancellationToken = default)
+        {
+            var result = ArrayBuilder<SingleDeclaration>.GetInstance();
+            foreach (var n in _namespacesToMerge)
+            {
+                result.AddRange(n.GetSingleDeclarations(cancellationToken));
+            }
+            return result.ToImmutableAndFree();
         }
 
         internal NamespaceSymbol GetConstituentForCompilation(Compilation compilation)

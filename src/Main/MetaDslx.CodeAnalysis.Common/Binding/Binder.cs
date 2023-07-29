@@ -207,5 +207,10 @@ namespace MetaDslx.CodeAnalysis.Binding
         {
             return ImmutableArray<Symbol>.Empty;
         }
+
+        public override string ToString()
+        {
+            return this.GetType().Name;
+        }
     }
 }

@@ -24,7 +24,9 @@ metaModelDeclaration : 'metamodel' name ';';
 declaration : enumDeclaration | classDeclaration | associationDeclaration;
 
 [Define(MetaEnum)]
-enumDeclaration : 'enum' name '{' enumLiterals? '}';
+enumDeclaration : 'enum' name enumBody;
+[Scope]
+enumBody : '{' enumLiterals? '}';
 
 enumLiterals : enumLiteral (',' enumLiteral)* ;
 
@@ -32,7 +34,9 @@ enumLiterals : enumLiteral (',' enumLiteral)* ;
 enumLiteral : name;
 
 [Define(MetaClass)]
-classDeclaration : isAbstract?='abstract'? 'class' name (':' qualifier (',' qualifier)*)? '{' propertyDeclaration* '}';
+classDeclaration : isAbstract?='abstract'? 'class' name (':' qualifier (',' qualifier)*)? classBody;
+[Scope]
+classBody : '{' propertyDeclaration* '}';
 
 [Define(MetaProperty)]
 propertyDeclaration : propertyModifier? typeReference name propertyRedefinition? propertySubsetting? ';';
