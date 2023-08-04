@@ -1,4 +1,7 @@
 ﻿using MetaDslx.CodeAnalysis.PooledObjects;
+using MetaDslx.CodeAnalysis.Symbols;
+using MetaDslx.CodeAnalysis.Symbols.Model;
+using MetaDslx.Modeling;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -12,6 +15,8 @@ namespace MetaDslx.CodeAnalysis.Binding
     {
         private readonly string _name;
         private readonly Optional<object?> _valueOpt;
+        private Type? _valueType;
+        private ImmutableArray<Type> _modelObjectTypes;
 
         public PropertyBinder(string name)
         {
@@ -43,9 +48,9 @@ namespace MetaDslx.CodeAnalysis.Binding
             base.CollectPropertyBinders(propertyBinders, cancellationToken);
         }
 
-        protected override void CollectValueBinders(ImmutableArray<IPropertyBinder> propertyBinders, ArrayBuilder<IValueBinder> valueBinders, CancellationToken cancellationToken)
+        protected override void CollectValueBinders(IPropertyBinder propertyBinder, ArrayBuilder<IValueBinder> valueBinders, CancellationToken cancellationToken)
         {
-            if (propertyBinders.Contains(this))
+            if (propertyBinder == this)
             {
                 if (_valueOpt.HasValue)
                 {
@@ -53,7 +58,7 @@ namespace MetaDslx.CodeAnalysis.Binding
                 }
                 else
                 {
-                    base.CollectValueBinders(propertyBinders, valueBinders, cancellationToken);
+                    base.CollectValueBinders(propertyBinder, valueBinders, cancellationToken);
                 }
             }
         }
@@ -66,67 +71,125 @@ namespace MetaDslx.CodeAnalysis.Binding
 
         protected override ImmutableArray<object?> BindValues(BindingContext context)
         {
-            if (_valueOpt.HasValue) return ImmutableArray.Create(_valueOpt.Value);
-            else return ImmutableArray<object?>.Empty;
+            if (_valueOpt.HasValue)
+            {
+                return ImmutableArray.Create(_valueOpt.Value);
+            }
+            else
+            {
+                var valueType = GetValueType(context);
+                var result = ArrayBuilder<object?>.GetInstance();
+                var valueBinders = GetValueBinders(this, context.CancellationToken);
+                foreach (var valueBinder in valueBinders)
+                {
+                    var binder = (Binder)valueBinder;
+                    var values = binder.Bind(context);
+                    foreach (var value in values)
+                    {
+                        if (value is null)
+                        {
+                            if (valueType is null || !valueType.IsValueType)
+                            {
+                                result.Add(value);
+                            }
+                            else
+                            {
+                                var modelObjectTypeNames = string.Join(",", _modelObjectTypes.Select(t => t.FullName));
+                                context.AddDiagnostic(Diagnostic.Create(ErrorCode.ERR_BindingError, binder.Location, $"Cannot assign value 'null' to property '{Name}':'{valueType}' (of {modelObjectTypeNames})"));
+                            }
+                        }
+                        else if (value is Symbol symbol && value is IModelSymbol modelSymbol && modelSymbol.ModelObject is not null)
+                        {
+                            if (valueType is null || valueType.IsAssignableFrom(modelSymbol.ModelObject.GetType()))
+                            {
+                                result.Add(symbol);
+                            }
+                            else
+                            {
+                                var modelObjectTypeNames = string.Join(",", _modelObjectTypes.Select(t => t.FullName));
+                                context.AddDiagnostic(Diagnostic.Create(ErrorCode.ERR_BindingError, binder.Location, $"Cannot assign value '{modelSymbol.ModelObject}':'{modelSymbol.ModelObject.GetType()}' to property '{Name}':'{valueType}' (of {modelObjectTypeNames})"));
+                            }
+                        }
+                        else
+                        {
+                            if (valueType is null || valueType.IsAssignableFrom(value.GetType()))
+                            {
+                                result.Add(value);
+                            }
+                            else
+                            {
+                                var modelObjectTypeNames = string.Join(",", _modelObjectTypes.Select(t => t.FullName));
+                                context.AddDiagnostic(Diagnostic.Create(ErrorCode.ERR_BindingError, binder.Location, $"Cannot assign value '{value}':'{value.GetType()}' to property '{Name}':'{valueType}' (of {modelObjectTypeNames})"));
+                            }
+                        }
+                    }
+                }
+                return result.ToImmutableAndFree();
+            }
         }
 
         public Type? GetValueType(BindingContext context)
         {
-            Type? result = null;
-            var modelObjectTypes = PooledHashSet<Type>.GetInstance();
-            foreach (var symbol in ContainingDefinedSymbols)
+            if (_modelObjectTypes.IsDefault)
             {
-                foreach (var decl in symbol.GetSingleDeclarations(context.CancellationToken))
+                Type? valueType = null;
+                var modelObjectTypes = PooledHashSet<Type>.GetInstance();
+                foreach (var symbol in ContainingDefinedSymbols)
                 {
-                    var modelObjectType = decl.ModelObjectType;
-                    if (modelObjectType is not null) modelObjectTypes.Add(modelObjectType);
-                }
-            }
-            var module = Compilation.SourceModule;
-            var symbolFactory = module.SymbolFactory;
-            var valueTypes = PooledHashSet<Type>.GetInstance();
-            foreach (var modelObjectType in modelObjectTypes)
-            {
-                var info = symbolFactory.GetModelObjectInfo(modelObjectType);
-                if (info is not null)
-                {
-                    var modelProperty = info.GetProperty(this.Name);
-                    if (modelProperty is not null)
+                    foreach (var decl in symbol.GetSingleDeclarations(context.CancellationToken))
                     {
-                        var valueType = modelProperty.Type;
-                        if (valueType is not null)
+                        var modelObjectType = decl.ModelObjectType;
+                        if (modelObjectType is not null) modelObjectTypes.Add(modelObjectType);
+                    }
+                }
+                var module = Compilation.SourceModule;
+                var symbolFactory = module.SymbolFactory;
+                var valueTypes = PooledHashSet<Type>.GetInstance();
+                foreach (var modelObjectType in modelObjectTypes)
+                {
+                    var info = symbolFactory.GetModelObjectInfo(modelObjectType);
+                    if (info is not null)
+                    {
+                        var modelProperty = info.GetProperty(this.Name);
+                        if (modelProperty is not null)
                         {
-                            valueTypes.Add(valueType);
+                            var modelPropertyType = modelProperty.Type;
+                            if (modelPropertyType is not null)
+                            {
+                                valueTypes.Add(modelPropertyType);
+                            }
+                            else
+                            {
+                                context.AddDiagnostic(Diagnostic.Create(ErrorCode.ERR_BindingError, Location, $"Property '{Name}' of model object '{modelObjectType}' has no type."));
+                            }
                         }
                         else
                         {
-                            context.AddDiagnostic(Diagnostic.Create(ErrorCode.ERR_BindingError, Location, $"Property '{Name}' of model object '{modelObjectType}' has no type."));
+                            context.AddDiagnostic(Diagnostic.Create(ErrorCode.ERR_BindingError, Location, $"Property '{Name}' of model object '{modelObjectType}' does not exist."));
                         }
                     }
-                    else
-                    {
-                        context.AddDiagnostic(Diagnostic.Create(ErrorCode.ERR_BindingError, Location, $"Property '{Name}' of model object '{modelObjectType}' does not exist."));
-                    }
                 }
+                if (valueTypes.Count == 1)
+                {
+                    valueType = valueTypes.First();
+                }
+                else if (valueTypes.Count == 0)
+                {
+                    var modelObjectTypeNames = string.Join(",", modelObjectTypes.Select(t => t.FullName));
+                    context.AddDiagnostic(Diagnostic.Create(ErrorCode.ERR_BindingError, Location, $"Property '{Name}' (of {modelObjectTypeNames}) has no type"));
+                }
+                else
+                {
+                    var modelObjectTypeNames = string.Join(",", modelObjectTypes.Select(t => t.FullName));
+                    var typeNames = string.Join(",", valueTypes.Select(t => t.FullName));
+                    context.AddDiagnostic(Diagnostic.Create(ErrorCode.ERR_BindingError, Location, $"Property '{Name}' (of {modelObjectTypeNames}) has multiple possible types: {typeNames}"));
+                }
+                Interlocked.CompareExchange(ref _valueType, valueType, null);
+                ImmutableInterlocked.InterlockedInitialize(ref _modelObjectTypes, modelObjectTypes.ToImmutableArray());
+                valueTypes.Free();
+                modelObjectTypes.Free();
             }
-            if (valueTypes.Count == 1)
-            {
-                result = valueTypes.First();
-            }
-            else if (valueTypes.Count == 0)
-            {
-                var modelObjectTypeNames = string.Join(",", modelObjectTypes.Select(t => t.FullName));
-                context.AddDiagnostic(Diagnostic.Create(ErrorCode.ERR_BindingError, Location, $"Property '{Name}' (of {modelObjectTypeNames}) has no type"));
-            }
-            else
-            {
-                var modelObjectTypeNames = string.Join(",", modelObjectTypes.Select(t => t.FullName));
-                var typeNames = string.Join(",", valueTypes.Select(t => t.FullName));
-                context.AddDiagnostic(Diagnostic.Create(ErrorCode.ERR_BindingError, Location, $"Property '{Name}' (of {modelObjectTypeNames}) has multiple possible types: {typeNames}"));
-            }
-            valueTypes.Free();
-            modelObjectTypes.Free();
-            return result;
+            return _valueType;
         }
     }
 }

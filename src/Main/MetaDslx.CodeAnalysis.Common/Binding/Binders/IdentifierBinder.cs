@@ -1,6 +1,7 @@
 ﻿using MetaDslx.CodeAnalysis.Declarations;
 using MetaDslx.CodeAnalysis.PooledObjects;
 using MetaDslx.CodeAnalysis.Symbols;
+using Microsoft.CodeAnalysis;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -9,11 +10,12 @@ using System.Threading;
 
 namespace MetaDslx.CodeAnalysis.Binding
 {
-    public class IdentifierBinder : Binder, IQualifierBinder, IIdentifierBinder, IValueBinder
+    public class IdentifierBinder : QualifierBinder, IIdentifierBinder
     {
         private string? _name;
         private string? _metadataName;
         private ImmutableArray<Diagnostic> _nameDiagnostics;
+        private Symbol? _symbol;
 
         protected override ImmutableArray<SingleDeclaration> BuildDeclarationTree(SingleDeclarationBuilder builder)
         {
@@ -75,37 +77,44 @@ namespace MetaDslx.CodeAnalysis.Binding
             return ComputeName(context);
         }
 
-        protected override void CollectNameBinders(ArrayBuilder<INameBinder> nameBinders, CancellationToken cancellationToken)
-        {
-        }
-
-        protected override void CollectQualifierBinders(ArrayBuilder<IQualifierBinder> qualifierBinders, CancellationToken cancellationToken)
-        {
-            qualifierBinders.Add(this);
-        }
-
         protected override void CollectIdentifierBinders(ArrayBuilder<IIdentifierBinder> identifierBinders, CancellationToken cancellationToken)
         {
             identifierBinders.Add(this);
         }
 
-        protected override void CollectValueBinders(ImmutableArray<IPropertyBinder> propertyBinders, ArrayBuilder<IValueBinder> valueBinders, CancellationToken cancellationToken)
-        {
-            valueBinders.Add(this);
-        }
-
         protected override ImmutableArray<object?> BindValues(BindingContext context)
         {
             CacheNameAndMetadataName(context);
-            context.Diagnostics.AddRange(_nameDiagnostics);
-            // TODO:MetaDslx
-            return base.BindValues(context);
+            context.AddDiagnostics(_nameDiagnostics);
+            CacheSymbol(context);
+            if (_symbol is not null) return ImmutableArray.Create<object?>(_symbol);
+            else return ImmutableArray<object?>.Empty;
         }
 
-        public Symbol? GetIdentifierSymbol(BindingContext context, IIdentifierBinder identifier)
+        private void CacheSymbol(BindingContext context)
         {
-            // TODO:MetaDslx
-            throw new NotImplementedException();
+            if (_symbol is null)
+            {
+                var qualifier = GetEnclosingQualifierBinder();
+                if (qualifier is not null)
+                {
+                    var symbol = qualifier.GetIdentifierSymbol(context, this);
+                    Interlocked.CompareExchange(ref _symbol, symbol, null);
+                }
+            }
+        }
+
+        public override string ToString()
+        {
+            var builder = PooledStringBuilder.GetInstance();
+            var sb = builder.Builder;
+            sb.Append(this.GetType().Name);
+            if (_symbol is not null)
+            {
+                sb.Append(": ");
+                sb.Append(_symbol);
+            }
+            return builder.ToStringAndFree();
         }
     }
 }

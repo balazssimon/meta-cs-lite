@@ -10,6 +10,6 @@ namespace MetaDslx.CodeAnalysis.Binding
     {
         string Name { get; }
         Type? GetValueType(BindingContext context);
-        ImmutableArray<IValueBinder> GetValueBinders(ImmutableArray<IPropertyBinder> propertyBinders, CancellationToken cancellationToken = default);
+        ImmutableArray<IValueBinder> GetValueBinders(IPropertyBinder propertyBinder, CancellationToken cancellationToken = default);
     }
 }

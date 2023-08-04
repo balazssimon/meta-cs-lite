@@ -266,18 +266,18 @@ namespace MetaDslx.CodeAnalysis.Binding
             }
         }
 
-        public ImmutableArray<IValueBinder> GetValueBinders(ImmutableArray<IPropertyBinder> propertyBinders, CancellationToken cancellationToken = default)
+        public ImmutableArray<IValueBinder> GetValueBinders(IPropertyBinder propertyBinder, CancellationToken cancellationToken = default)
         {
             var valueBinders = ArrayBuilder<IValueBinder>.GetInstance();
-            CollectValueBinders(propertyBinders, valueBinders, cancellationToken);
+            CollectValueBinders(propertyBinder, valueBinders, cancellationToken);
             return valueBinders.ToImmutableAndFree();
         }
 
-        protected virtual void CollectValueBinders(ImmutableArray<IPropertyBinder> propertyBinders, ArrayBuilder<IValueBinder> valueBinders, CancellationToken cancellationToken)
+        protected virtual void CollectValueBinders(IPropertyBinder propertyBinder, ArrayBuilder<IValueBinder> valueBinders, CancellationToken cancellationToken)
         {
             foreach (var child in GetChildBinders(false, cancellationToken))
             {
-                child.CollectValueBinders(propertyBinders, valueBinders, cancellationToken);
+                child.CollectValueBinders(propertyBinder, valueBinders, cancellationToken);
             }
         }
 
@@ -291,7 +291,7 @@ namespace MetaDslx.CodeAnalysis.Binding
                 {
                     lastName = nameBinder;
                 }
-                else if (currentBinder is IValueBinder || currentBinder is IScopeBinder)
+                else if (currentBinder is IDefineBinder || currentBinder is IScopeBinder)
                 {
                     break;
                 }
@@ -310,7 +310,7 @@ namespace MetaDslx.CodeAnalysis.Binding
                 {
                     lastQualifier = qualifierBinder;
                 }
-                else if (currentBinder is IValueBinder || currentBinder is IScopeBinder)
+                else if (currentBinder is IDefineBinder || currentBinder is IScopeBinder)
                 {
                     break;
                 }
@@ -324,6 +324,15 @@ namespace MetaDslx.CodeAnalysis.Binding
             return ParentBinder?.GetEnclosingPropertyBinder();
         }
 
+        public void CompleteBind(BindingContext context, bool resolveLazy = false)
+        {
+            Bind(context);
+            foreach (var childBinder in GetChildBinders(resolveLazy, context.CancellationToken))
+            {
+                childBinder.CompleteBind(context, resolveLazy);
+            }
+        }
+
         public ImmutableArray<object?> Bind(BindingContext context)
         {
             if (_boundValues.IsDefault)
@@ -333,7 +342,7 @@ namespace MetaDslx.CodeAnalysis.Binding
                 ImmutableInterlocked.InterlockedInitialize(ref _boundValues, boundValues);
                 ImmutableInterlocked.InterlockedInitialize(ref _diagnostics, diagnosticBag.ToReadOnlyAndFree());
             }
-            context.Diagnostics.AddRange(_diagnostics);
+            context.AddDiagnostics(_diagnostics);
             return _boundValues;
         }
 

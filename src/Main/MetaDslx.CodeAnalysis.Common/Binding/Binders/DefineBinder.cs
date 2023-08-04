@@ -12,7 +12,7 @@ using System.Threading;
 
 namespace MetaDslx.CodeAnalysis.Binding
 {
-    public class DefineBinder : Binder, IValueBinder
+    public class DefineBinder : Binder, IDefineBinder, IValueBinder
     {
         private enum CandidateSymbolKind
         {
@@ -109,7 +109,7 @@ namespace MetaDslx.CodeAnalysis.Binding
         {
         }
 
-        protected override void CollectValueBinders(ImmutableArray<IPropertyBinder> propertyBinders, ArrayBuilder<IValueBinder> valueBinders, CancellationToken cancellationToken)
+        protected override void CollectValueBinders(IPropertyBinder propertyBinder, ArrayBuilder<IValueBinder> valueBinders, CancellationToken cancellationToken)
         {
             valueBinders.Add(this);
         }

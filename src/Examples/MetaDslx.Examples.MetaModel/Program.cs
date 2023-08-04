@@ -37,13 +37,16 @@ Console.WriteLine(mmComp.HasCodeToEmit());
 Console.WriteLine(mmComp.Name);
 Console.WriteLine(mmComp.SourceModule.GlobalNamespace.Name);
 
+/*/
 foreach (var module in mmComp.SourceAssembly.Modules)
 {
     PrintSymbols(string.Empty, module);
 }
+//*/
 
 var root = mmTree.GetRoot();
 var rootBinder = mmComp.GetBinder(root);
+rootBinder.CompleteBind(default, true);
 PrintBinders(string.Empty, rootBinder);
 
 static void PrintSymbols(string indent, Symbol symbol)
