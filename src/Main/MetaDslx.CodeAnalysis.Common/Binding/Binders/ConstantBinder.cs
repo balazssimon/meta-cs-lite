@@ -1,6 +1,11 @@
-﻿using System;
+﻿using MetaDslx.CodeAnalysis.Declarations;
+using MetaDslx.CodeAnalysis.PooledObjects;
+using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
+using System.Net.Http.Headers;
 using System.Text;
+using System.Threading;
 
 namespace MetaDslx.CodeAnalysis.Binding
 {
@@ -14,5 +19,29 @@ namespace MetaDslx.CodeAnalysis.Binding
         }
 
         public object? Value => _value;
+
+        protected override ImmutableArray<SingleDeclaration> BuildDeclarationTree(SingleDeclarationBuilder builder)
+        {
+            return ImmutableArray<SingleDeclaration>.Empty;
+        }
+
+
+        protected override void CollectQualifierBinders(ArrayBuilder<IQualifierBinder> qualifierBinders, CancellationToken cancellationToken)
+        {
+        }
+
+        protected override void CollectIdentifierBinders(ArrayBuilder<IIdentifierBinder> identifierBinders, CancellationToken cancellationToken)
+        {
+        }
+
+        protected override void CollectValueBinders(ImmutableArray<IPropertyBinder> propertyBinders, ArrayBuilder<IValueBinder> valueBinders, CancellationToken cancellationToken)
+        {
+            valueBinders.Add(this);
+        }
+
+        protected override ImmutableArray<object?> BindValues(BindingContext context)
+        {
+            return ImmutableArray.Create(Value);
+        }
     }
 }

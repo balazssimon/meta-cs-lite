@@ -6,12 +6,21 @@ using MetaDslx.CodeAnalysis.Syntax.InternalSyntax;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Linq;
 using System.Text;
+using System.Threading;
 
 namespace MetaDslx.CodeAnalysis.Binding
 {
     public class DefineBinder : Binder, IValueBinder
     {
+        private enum CandidateSymbolKind
+        {
+            None,
+            Nesting,
+            Defined
+        }
+
         private readonly Type? _type;
         private ImmutableArray<Symbol> _definedSymbols;
 
@@ -30,37 +39,23 @@ namespace MetaDslx.CodeAnalysis.Binding
             return declaration.ToImmutableAndFree();
         }
 
-        public override string ToString()
+        public override ImmutableArray<Symbol> DefinedSymbols
         {
-            var builder = PooledStringBuilder.GetInstance();
-            var sb = builder.Builder;
-            sb.Append(this.GetType().Name);
-            sb.Append(": [");
-            var delim = string.Empty;
-            foreach (var symbol in GetDefinedSymbols())
+            get
             {
-                sb.Append(delim);
-                sb.Append(symbol);
-                delim = ", ";
+                if (!_definedSymbols.IsDefault) return _definedSymbols;
+                var parent = ParentBinder;
+                var parentSymbols = parent?.DefinedSymbols ?? ImmutableArray<Symbol>.Empty;
+                while (parent is not null && parentSymbols.IsDefaultOrEmpty)
+                {
+                    parent = parent.ParentBinder;
+                    parentSymbols = parent?.DefinedSymbols ?? ImmutableArray<Symbol>.Empty;
+                }
+                if (parentSymbols.IsDefaultOrEmpty) return ImmutableArray<Symbol>.Empty;
+                var definedSymbols = GetDefinedSymbols(parentSymbols);
+                ImmutableInterlocked.InterlockedInitialize(ref _definedSymbols, definedSymbols);
+                return _definedSymbols;
             }
-            sb.Append("]");
-            return builder.ToStringAndFree();
-        }
-
-        public override ImmutableArray<Symbol> GetDefinedSymbols()
-        {
-            if (!_definedSymbols.IsDefault) return _definedSymbols;
-            var parent = ParentBinder;
-            var parentSymbols = parent?.GetDefinedSymbols() ?? ImmutableArray<Symbol>.Empty;
-            while (parent is not null && parentSymbols.IsDefaultOrEmpty)
-            {
-                parent = parent.ParentBinder;
-                parentSymbols = parent?.GetDefinedSymbols() ?? ImmutableArray<Symbol>.Empty;
-            }
-            if (parentSymbols.IsDefaultOrEmpty) return ImmutableArray<Symbol>.Empty;
-            var definedSymbols = GetDefinedSymbols(parentSymbols);
-            ImmutableInterlocked.InterlockedInitialize(ref _definedSymbols, definedSymbols);
-            return _definedSymbols;
         }
 
         private ImmutableArray<Symbol> GetDefinedSymbols(ImmutableArray<Symbol> containingSymbols)
@@ -96,11 +91,50 @@ namespace MetaDslx.CodeAnalysis.Binding
             return CandidateSymbolKind.None;
         }
 
-        private enum CandidateSymbolKind
+        public override ImmutableArray<Symbol> ContainingDefinedSymbols => this.DefinedSymbols;
+
+        protected override void CollectNameBinders(ArrayBuilder<INameBinder> nameBinders, CancellationToken cancellationToken)
         {
-            None,
-            Nesting,
-            Defined
         }
+
+        protected override void CollectQualifierBinders(ArrayBuilder<IQualifierBinder> qualifierBinders, CancellationToken cancellationToken)
+        {
+        }
+
+        protected override void CollectIdentifierBinders(ArrayBuilder<IIdentifierBinder> identifierBinders, CancellationToken cancellationToken)
+        {
+        }
+
+        protected override void CollectPropertyBinders(ArrayBuilder<IPropertyBinder> propertyBinders, CancellationToken cancellationToken)
+        {
+        }
+
+        protected override void CollectValueBinders(ImmutableArray<IPropertyBinder> propertyBinders, ArrayBuilder<IValueBinder> valueBinders, CancellationToken cancellationToken)
+        {
+            valueBinders.Add(this);
+        }
+
+        protected override ImmutableArray<object?> BindValues(BindingContext context)
+        {
+            return DefinedSymbols.Cast<Symbol, object?>();
+        }
+
+        public override string ToString()
+        {
+            var builder = PooledStringBuilder.GetInstance();
+            var sb = builder.Builder;
+            sb.Append(this.GetType().Name);
+            sb.Append(": [");
+            var delim = string.Empty;
+            foreach (var symbol in DefinedSymbols)
+            {
+                sb.Append(delim);
+                sb.Append(symbol);
+                delim = ", ";
+            }
+            sb.Append("]");
+            return builder.ToStringAndFree();
+        }
+
     }
 }

@@ -1,6 +1,9 @@
-﻿using MetaDslx.CodeAnalysis.Text;
+﻿using MetaDslx.CodeAnalysis.PooledObjects;
+using MetaDslx.CodeAnalysis.Symbols;
+using MetaDslx.CodeAnalysis.Text;
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Text;
 using System.Threading;
 
@@ -53,6 +56,37 @@ namespace MetaDslx.CodeAnalysis.Binding
                 return base.GetEnclosingBinder(span) ?? this;
             }
             return this;
+        }
+
+        public override ImmutableArray<Symbol> DefinedSymbols => ImmutableArray<Symbol>.Empty;
+
+        public override ImmutableArray<Symbol> ContainingSymbols => ImmutableArray<Symbol>.Empty;
+
+        public override ImmutableArray<Symbol> ContainingDefinedSymbols => ImmutableArray<Symbol>.Empty;
+
+        protected override void CollectNameBinders(ArrayBuilder<INameBinder> nameBinders, CancellationToken cancellationToken)
+        {
+        }
+
+        protected override void CollectQualifierBinders(ArrayBuilder<IQualifierBinder> qualifierBinders, CancellationToken cancellationToken)
+        {
+        }
+
+        protected override void CollectIdentifierBinders(ArrayBuilder<IIdentifierBinder> identifierBinders, CancellationToken cancellationToken)
+        {
+        }
+
+        protected override void CollectPropertyBinders(ArrayBuilder<IPropertyBinder> propertyBinders, CancellationToken cancellationToken)
+        {
+        }
+
+        protected override void CollectValueBinders(ImmutableArray<IPropertyBinder> propertyBinders, ArrayBuilder<IValueBinder> valueBinders, CancellationToken cancellationToken)
+        {
+        }
+
+        protected override IPropertyBinder? GetEnclosingPropertyBinder()
+        {
+            return null;
         }
     }
 }

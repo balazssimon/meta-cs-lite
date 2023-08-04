@@ -93,5 +93,10 @@ namespace MetaDslx.CodeAnalysis
         /// '{0}' is not supported by the language
         /// </summary>
         public static readonly DiagnosticDescriptor ERR_BindToBogus = DiagnosticDescriptor.Error(nameof(ERR_BindToBogus), "Bind to bogus", "'{0}' is not supported by the language");
+
+        /// <summary>
+        /// Binding error: {0}
+        /// </summary>
+        public static readonly DiagnosticDescriptor ERR_BindingError = DiagnosticDescriptor.Error(nameof(ERR_BindingError), "Binding error", "Binding error: {0}");
     }
 }

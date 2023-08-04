@@ -11,17 +11,16 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
     public class SourceModuleSymbol : ModuleSymbol, ISourceSymbol
     {
         private readonly SourceAssemblySymbol _assemblySymbol;
-        private readonly SourceSymbolFactory _symbolFactory;
+        private SourceSymbolFactory _symbolFactory;
         private readonly IModelGroup _modelGroup;
         private readonly IModel _model;
         private readonly IMultiModelFactory _modelFactory;
         private readonly DeclarationTable _declarations;
 
-        public SourceModuleSymbol(SourceAssemblySymbol assemblySymbol, SourceSymbolFactory symbolFactory, string moduleName, DeclarationTable declarations)
+        public SourceModuleSymbol(SourceAssemblySymbol assemblySymbol, string moduleName, DeclarationTable declarations)
             : base(assemblySymbol)
         {
             _assemblySymbol = assemblySymbol;
-            _symbolFactory = symbolFactory;
             _declarations = declarations;
             var compilation = assemblySymbol.DeclaringCompilation;
             var compilationFactory = compilation.MainLanguage.CompilationFactory;
@@ -30,7 +29,11 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
             _model.Name = moduleName;
         }
 
-        public SourceSymbolFactory SymbolFactory => _symbolFactory;
+        public SourceSymbolFactory SymbolFactory
+        {
+            get => _symbolFactory;
+            internal set => _symbolFactory = value;
+        }
 
         public SourceAssemblySymbol SourceAssemblySymbol => _assemblySymbol;
         public override Compilation? DeclaringCompilation => SourceAssemblySymbol.DeclaringCompilation;

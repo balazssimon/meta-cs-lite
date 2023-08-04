@@ -6,7 +6,8 @@ using System.Threading;
 
 namespace MetaDslx.CodeAnalysis.Binding
 {
-    public interface IValueBinder
+    public interface INameBinder
     {
+        ImmutableArray<IQualifierBinder> GetQualifierBinders(CancellationToken cancellationToken = default);
     }
 }

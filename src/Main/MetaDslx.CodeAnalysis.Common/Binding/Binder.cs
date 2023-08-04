@@ -20,6 +20,8 @@ namespace MetaDslx.CodeAnalysis.Binding
         private Binder? _parentBinder;
         private ImmutableArray<Binder> _childBinders;
         private SyntaxNodeOrToken _syntax;
+        private ImmutableArray<Diagnostic> _diagnostics;
+        private ImmutableArray<object?> _boundValues;
 
         public virtual Language Language => _syntax == null ? Language.NoLanguage : _syntax.Language;
         public virtual SyntaxTree SyntaxTree => _parentBinder.SyntaxTree;
@@ -191,21 +193,153 @@ namespace MetaDslx.CodeAnalysis.Binding
                     }
                     return resultBuilder.ToImmutableAndFree();
                 }
-            } 
+            }
             finally
             {
                 arrayBuilder.Free();
             }
         }
 
-        public virtual ImmutableArray<Symbol> GetDefinedSymbols()
+        public virtual ImmutableArray<Symbol> DefinedSymbols => ImmutableArray<Symbol>.Empty;
+
+        public virtual ImmutableArray<Symbol> ContainingSymbols => ParentBinder?.ContainingSymbols ?? ImmutableArray<Symbol>.Empty;
+
+        public virtual ImmutableArray<Symbol> ContainingDefinedSymbols => ParentBinder?.ContainingDefinedSymbols ?? ImmutableArray<Symbol>.Empty;
+
+        public ImmutableArray<INameBinder> GetNameBinders(CancellationToken cancellationToken = default)
         {
-            return ImmutableArray<Symbol>.Empty;
+            var nameBinders = ArrayBuilder<INameBinder>.GetInstance();
+            CollectNameBinders(nameBinders, cancellationToken);
+            return nameBinders.ToImmutableAndFree();
         }
 
-        public virtual ImmutableArray<Symbol> GetContainingSymbols()
+        protected virtual void CollectNameBinders(ArrayBuilder<INameBinder> nameBinders, CancellationToken cancellationToken)
         {
-            return ImmutableArray<Symbol>.Empty;
+            foreach (var child in GetChildBinders(false, cancellationToken))
+            {
+                child.CollectNameBinders(nameBinders, cancellationToken);
+            }
+        }
+
+        public ImmutableArray<IQualifierBinder> GetQualifierBinders(CancellationToken cancellationToken = default)
+        {
+            var qualifierBinders = ArrayBuilder<IQualifierBinder>.GetInstance();
+            CollectQualifierBinders(qualifierBinders, cancellationToken);
+            return qualifierBinders.ToImmutableAndFree();
+        }
+
+        protected virtual void CollectQualifierBinders(ArrayBuilder<IQualifierBinder> qualifierBinders, CancellationToken cancellationToken)
+        {
+            foreach (var child in GetChildBinders(false, cancellationToken))
+            {
+                child.CollectQualifierBinders(qualifierBinders, cancellationToken);
+            }
+        }
+
+        public ImmutableArray<IIdentifierBinder> GetIdentifierBinders(CancellationToken cancellationToken = default)
+        {
+            var identifierBinders = ArrayBuilder<IIdentifierBinder>.GetInstance();
+            CollectIdentifierBinders(identifierBinders, cancellationToken);
+            return identifierBinders.ToImmutableAndFree();
+        }
+
+        protected virtual void CollectIdentifierBinders(ArrayBuilder<IIdentifierBinder> identifierBinders, CancellationToken cancellationToken)
+        {
+            foreach (var child in GetChildBinders(false, cancellationToken))
+            {
+                child.CollectIdentifierBinders(identifierBinders, cancellationToken);
+            }
+        }
+
+        public ImmutableArray<IPropertyBinder> GetPropertyBinders(CancellationToken cancellationToken = default)
+        {
+            var propertyBinders = ArrayBuilder<IPropertyBinder>.GetInstance();
+            CollectPropertyBinders(propertyBinders, cancellationToken);
+            return propertyBinders.ToImmutableAndFree();
+        }
+
+        protected virtual void CollectPropertyBinders(ArrayBuilder<IPropertyBinder> propertyBinders, CancellationToken cancellationToken)
+        {
+            foreach (var child in GetChildBinders(false, cancellationToken))
+            {
+                child.CollectPropertyBinders(propertyBinders, cancellationToken);
+            }
+        }
+
+        public ImmutableArray<IValueBinder> GetValueBinders(ImmutableArray<IPropertyBinder> propertyBinders, CancellationToken cancellationToken = default)
+        {
+            var valueBinders = ArrayBuilder<IValueBinder>.GetInstance();
+            CollectValueBinders(propertyBinders, valueBinders, cancellationToken);
+            return valueBinders.ToImmutableAndFree();
+        }
+
+        protected virtual void CollectValueBinders(ImmutableArray<IPropertyBinder> propertyBinders, ArrayBuilder<IValueBinder> valueBinders, CancellationToken cancellationToken)
+        {
+            foreach (var child in GetChildBinders(false, cancellationToken))
+            {
+                child.CollectValueBinders(propertyBinders, valueBinders, cancellationToken);
+            }
+        }
+
+        protected INameBinder? GetEnclosingNameBinder()
+        {
+            INameBinder? lastName = null;
+            var currentBinder = this;
+            while (currentBinder != null)
+            {
+                if (currentBinder is INameBinder nameBinder)
+                {
+                    lastName = nameBinder;
+                }
+                else if (currentBinder is IValueBinder || currentBinder is IScopeBinder)
+                {
+                    break;
+                }
+                currentBinder = currentBinder.ParentBinder;
+            }
+            return lastName;
+        }
+
+        protected IQualifierBinder? GetEnclosingQualifierBinder()
+        {
+            IQualifierBinder? lastQualifier = null;
+            var currentBinder = this;
+            while (currentBinder != null)
+            {
+                if (currentBinder is IQualifierBinder qualifierBinder)
+                {
+                    lastQualifier = qualifierBinder;
+                }
+                else if (currentBinder is IValueBinder || currentBinder is IScopeBinder)
+                {
+                    break;
+                }
+                currentBinder = currentBinder.ParentBinder;
+            }
+            return lastQualifier;
+        }
+
+        protected virtual IPropertyBinder? GetEnclosingPropertyBinder()
+        {
+            return ParentBinder?.GetEnclosingPropertyBinder();
+        }
+
+        public ImmutableArray<object?> Bind(BindingContext context)
+        {
+            if (_boundValues.IsDefault)
+            {
+                var diagnosticBag = DiagnosticBag.GetInstance();
+                var boundValues = BindValues(context);
+                ImmutableInterlocked.InterlockedInitialize(ref _boundValues, boundValues);
+                ImmutableInterlocked.InterlockedInitialize(ref _diagnostics, diagnosticBag.ToReadOnlyAndFree());
+            }
+            context.Diagnostics.AddRange(_diagnostics);
+            return _boundValues;
+        }
+
+        protected virtual ImmutableArray<object?> BindValues(BindingContext context)
+        {
+            return ImmutableArray<object?>.Empty;
         }
 
         public override string ToString()

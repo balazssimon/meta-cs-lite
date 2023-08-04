@@ -6,6 +6,5 @@ namespace MetaDslx.CodeAnalysis.Binding
 {
     public interface IScopeBinder
     {
-        bool IsLocal { get; }
     }
 }

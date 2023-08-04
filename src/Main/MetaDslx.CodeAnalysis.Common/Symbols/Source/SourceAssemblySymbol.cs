@@ -32,8 +32,9 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
             var compilationFactory = compilation.MainLanguage.CompilationFactory;
             _modelGroup = compilationFactory.CreateModelGroup(compilation);
 
-            var sourceSymbolFactory = compilationFactory.CreateSourceSymbolFactory(compilation);
-            _sourceModule = new SourceModuleSymbol(this, sourceSymbolFactory, moduleName, compilation.DeclarationTable);
+            _sourceModule = new SourceModuleSymbol(this, moduleName, compilation.DeclarationTable);
+            var sourceSymbolFactory = compilationFactory.CreateSourceSymbolFactory(compilation, _sourceModule);
+            _sourceModule.SymbolFactory = sourceSymbolFactory;
 
             ArrayBuilder<ModuleSymbol> moduleBuilder = new ArrayBuilder<ModuleSymbol>(1 + referencedModules.Length);
             moduleBuilder.Add(_sourceModule);

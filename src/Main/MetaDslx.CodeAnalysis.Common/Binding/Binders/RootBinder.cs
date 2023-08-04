@@ -1,16 +1,19 @@
 ﻿using MetaDslx.CodeAnalysis.Declarations;
+using MetaDslx.CodeAnalysis.PooledObjects;
 using MetaDslx.CodeAnalysis.Symbols;
 using MetaDslx.CodeAnalysis.Text;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Text;
+using System.Threading;
 
 namespace MetaDslx.CodeAnalysis.Binding
 {
-    public sealed class RootBinder : Binder, IValueBinder
+    public sealed class RootBinder : Binder
     {
         private readonly Type? _type;
+        private ImmutableArray<Symbol> _definedSymbols;
 
         public RootBinder(Type? type = null)
         {
@@ -43,9 +46,45 @@ namespace MetaDslx.CodeAnalysis.Binding
             return result ?? this;
         }
 
-        public override ImmutableArray<Symbol> GetDefinedSymbols()
+        public override ImmutableArray<Symbol> DefinedSymbols
         {
-            return ImmutableArray.Create<Symbol>(Compilation.SourceModule.GlobalNamespace);
+            get
+            {
+                if (_definedSymbols.IsDefault)
+                {
+                    ImmutableInterlocked.InterlockedInitialize(ref _definedSymbols, ImmutableArray.Create<Symbol>(Compilation.SourceModule.GlobalNamespace));
+                }
+                return _definedSymbols;
+            }
+        }
+
+        public override ImmutableArray<Symbol> ContainingSymbols => ImmutableArray<Symbol>.Empty;
+
+        public override ImmutableArray<Symbol> ContainingDefinedSymbols => ImmutableArray<Symbol>.Empty;
+
+        protected override void CollectNameBinders(ArrayBuilder<INameBinder> nameBinders, CancellationToken cancellationToken)
+        {
+        }
+
+        protected override void CollectQualifierBinders(ArrayBuilder<IQualifierBinder> qualifierBinders, CancellationToken cancellationToken)
+        {
+        }
+
+        protected override void CollectIdentifierBinders(ArrayBuilder<IIdentifierBinder> identifierBinders, CancellationToken cancellationToken)
+        {
+        }
+
+        protected override void CollectPropertyBinders(ArrayBuilder<IPropertyBinder> propertyBinders, CancellationToken cancellationToken)
+        {
+        }
+
+        protected override void CollectValueBinders(ImmutableArray<IPropertyBinder> propertyBinders, ArrayBuilder<IValueBinder> valueBinders, CancellationToken cancellationToken)
+        {
+        }
+
+        protected override IPropertyBinder? GetEnclosingPropertyBinder()
+        {
+            return null;
         }
     }
 }

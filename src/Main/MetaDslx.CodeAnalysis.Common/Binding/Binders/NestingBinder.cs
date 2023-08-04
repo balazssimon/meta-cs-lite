@@ -11,10 +11,10 @@ namespace MetaDslx.CodeAnalysis.Binding
         private readonly Type? _type;
         private readonly string? _property;
 
-        public NestingBinder(Type type, string property)
+        public NestingBinder(Type type, string propertyName)
         {
             _type = type;
-            _property = property;
+            _property = propertyName;
         }
 
         public Type? Type => _type;

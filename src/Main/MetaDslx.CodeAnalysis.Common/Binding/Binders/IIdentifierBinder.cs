@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Immutable;
 using System.Text;
 using System.Threading;
 
 namespace MetaDslx.CodeAnalysis.Binding
 {
-    public interface IValueBinder
+    public interface IIdentifierBinder
     {
+        string GetName(BindingContext context);
+        string GetMetadataName(BindingContext context);
     }
 }

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Text;
+using System.Threading;
 
 namespace MetaDslx.CodeAnalysis.Binding
 {
@@ -74,5 +75,6 @@ namespace MetaDslx.CodeAnalysis.Binding
         {
             return ImmutableArray.Create<SingleDeclaration>(new LazySingleDeclaration(Syntax, null, this));
         }
+
     }
 }

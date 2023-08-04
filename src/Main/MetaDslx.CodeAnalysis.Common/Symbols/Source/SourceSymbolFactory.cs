@@ -4,6 +4,7 @@ using MetaDslx.Modeling;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Xml.Linq;
@@ -14,9 +15,11 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
     {
         private static readonly ConditionalWeakTable<Type, IModelObjectInfo> s_infosByType = new();
         private readonly Dictionary<Type, Func<Symbol, MergedDeclaration, IModelObject, Symbol>> _constructors = new();
+        private readonly SourceModuleSymbol _module;
 
-        public SourceSymbolFactory()
+        public SourceSymbolFactory(SourceModuleSymbol module)
         {
+            _module = module;
             Register<NamespaceSymbol>((s, d, mo) => new SourceNamespaceSymbol(s, d, mo));
             Register<NamedTypeSymbol>((s, d, mo) => new SourceNamedTypeSymbol(s, d, mo));
             Register<DeclaredSymbol>((s, d, mo) => new SourceDeclaredSymbol(s, d, mo));
@@ -49,22 +52,10 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
         protected Symbol? CreateSymbol(Type symbolType, ISourceSymbol container, MergedDeclaration declaration)
         {
             if (declaration.ModelObjectType is null) return null;
-            var module = container is ModuleSymbol moduleSymbol ? moduleSymbol : ((Symbol)container).ContainingModule;
-            var sourceModule = module as SourceModuleSymbol;
-            var modelFactory = sourceModule?.ModelFactory;
-            if (modelFactory is null) return null;
-            if (!s_infosByType.TryGetValue(declaration.ModelObjectType, out var info))
-            {
-                foreach (var metaModel in modelFactory.MetaModels)
-                {
-                    if (metaModel.Info.TryGetInfo(declaration.ModelObjectType, out info))
-                    {
-                        s_infosByType.Add(declaration.ModelObjectType, info);
-                        break;
-                    }
-                }
-            }
+            var info = GetModelObjectInfo(declaration.ModelObjectType);
             if (info is null || info.SymbolType is null || !symbolType.IsAssignableFrom(info.SymbolType)) return null;
+            var modelFactory = _module.ModelFactory;
+            if (modelFactory is null) return null;
             if (_constructors.TryGetValue(info.SymbolType, out var constructor)) 
             {
                 var modelObject = modelFactory.Create(container.Model, declaration.ModelObjectType);
@@ -79,6 +70,25 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
             {
                 return null;
             }
+        }
+
+        public IModelObjectInfo? GetModelObjectInfo(Type modelObjectType)
+        {
+            if (modelObjectType is null) return null;
+            var modelFactory = _module.ModelFactory;
+            if (modelFactory is null) return null;
+            if (!s_infosByType.TryGetValue(modelObjectType, out var info))
+            {
+                foreach (var metaModel in modelFactory.MetaModels)
+                {
+                    if (metaModel.Info.TryGetInfo(modelObjectType, out info))
+                    {
+                        s_infosByType.Add(modelObjectType, info);
+                        break;
+                    }
+                }
+            }
+            return info;
         }
     }
 }
