@@ -35,5 +35,13 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
         /// cref="SemanticModel.GetDeclaredSymbol(SyntaxNodeOrToken, CancellationToken)"/>.
         /// </remarks>
         ImmutableArray<SyntaxNodeOrToken> DeclaringSyntaxReferences { get; }
+
+        /// <summary>
+        /// Gets the locations where this symbol was originally defined. 
+        /// Some symbols (for example, partial classes) may be defined in more than one
+        /// location.
+        /// </summary>
+        ImmutableArray<SourceLocation> Locations { get; }
+
     }
 }

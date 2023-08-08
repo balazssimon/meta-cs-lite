@@ -83,7 +83,7 @@ namespace MetaDslx.CodeAnalysis.Binding
             var propertyBinder = GetEnclosingPropertyBinder();
             if (propertyBinder is null)
             {
-                context.AddDiagnostic(Diagnostic.Create(ErrorCode.ERR_BindingError, Location, $"Value '{RawValue}' is not enclosed in an IPropertyBinder."));
+                context.AddDiagnostic(Diagnostic.Create(CommonErrorCode.ERR_BindingError, Location, $"Value '{RawValue}' is not enclosed in an IPropertyBinder."));
             }
             var expectedType = propertyBinder?.GetValueType(context);
             if (expectedType is not null)
@@ -95,11 +95,24 @@ namespace MetaDslx.CodeAnalysis.Binding
                 }
                 catch (NotSupportedException)
                 {
-                    context.AddDiagnostic(Diagnostic.Create(ErrorCode.ERR_BindingError, Location, $"Value '{RawValue}' cannot be converted to type '{expectedType.FullName}'. Are you missing a TypeConverter?"));
+                    context.AddDiagnostic(Diagnostic.Create(CommonErrorCode.ERR_BindingError, Location, $"Value '{RawValue}' cannot be converted to type '{expectedType.FullName}'. Are you missing a TypeConverter?"));
                 }
                 return null;
             }
             return null;
+        }
+
+        public override string ToString()
+        {
+            var builder = PooledStringBuilder.GetInstance();
+            var sb = builder.Builder;
+            sb.Append(this.GetType().Name);
+            sb.Append(": [");
+            sb.Append(_rawValue);
+            sb.Append(": ");
+            sb.Append(_type);
+            sb.Append("]");
+            return builder.ToStringAndFree();
         }
     }
 }

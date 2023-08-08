@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Text;
 using System.Threading;
+using System.Xml.Linq;
 
 namespace MetaDslx.CodeAnalysis.Symbols.Source
 {
@@ -41,12 +42,14 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
         public DeclarationTable DeclarationTable => _declarations;
         public MergedDeclaration Declaration => _declarations.GetMergedRoot(DeclaringCompilation);
         public ImmutableArray<SyntaxNodeOrToken> DeclaringSyntaxReferences => Declaration.SyntaxReferences;
-        public override ImmutableArray<Location> Locations => Declaration.NameLocations;
+        public override ImmutableArray<Location> Locations => Declaration.NameLocations.Cast<SourceLocation, Location>();
+        ImmutableArray<SourceLocation> ISourceSymbol.Locations => Declaration.NameLocations;
 
         public IMultiModelFactory ModelFactory => _modelFactory;
         public IModelGroup ModelGroup => _modelGroup;
         public IModel Model => _model;
         public IModelObject ModelObject => null;
+        public Type ModelObjectType => null;
 
         protected override NamespaceSymbol CompleteProperty_GlobalNamespace(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {

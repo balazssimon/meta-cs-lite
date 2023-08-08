@@ -9,21 +9,25 @@ namespace MetaDslx.CodeAnalysis.Symbols
     {
         public static readonly SymbolDisplayFormat Default = new SymbolDisplayFormat(includeSymbolKind: true);
         public static readonly SymbolDisplayFormat QualifiedNameOnlyFormat = new SymbolDisplayFormat(includeQualifier: true);
+        public static readonly SymbolDisplayFormat QualifiedNameArityFormat = new SymbolDisplayFormat(includeQualifier: true, includeArity: true);
         public static readonly SymbolDisplayFormat FullyQualifiedFormat = new SymbolDisplayFormat(includeQualifier: true, includeGlobalScope: true);
 
         private readonly bool _includeSymbolKind;
         private readonly bool _includeQualifier;
+        private readonly bool _includeArity;
         private readonly bool _includeGlobalScope;
 
-        protected SymbolDisplayFormat(bool includeSymbolKind = false, bool includeQualifier = false, bool includeGlobalScope = false)
+        protected SymbolDisplayFormat(bool includeSymbolKind = false, bool includeQualifier = false, bool includeArity = false, bool includeGlobalScope = false)
         {
             _includeSymbolKind = includeSymbolKind;
             _includeQualifier = includeQualifier;
             _includeGlobalScope = includeGlobalScope;
+            _includeArity = includeArity;
         }
 
         public bool IncludeSymbolKind => _includeSymbolKind;
         public bool IncludeQualifier => _includeQualifier;
+        public bool IncludeArity => _includeArity;
         public bool IncludeGlobalScope => _includeGlobalScope;
 
         public string ToString(Symbol? symbol)
@@ -39,7 +43,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
                     while (container is not null)
                     {
                         if (sb.Length > 0) sb.Insert(0, ".");
-                        sb.Insert(0, container.MetadataName);
+                        sb.Insert(0, IncludeArity ? container.MetadataName : container.Name);
                         container = container.ContainingSymbol as DeclaredSymbol;
                     }
                     if (IncludeGlobalScope)
@@ -49,12 +53,12 @@ namespace MetaDslx.CodeAnalysis.Symbols
                 }
                 else
                 {
-                    sb.Append(declaredSymbol.MetadataName);
+                    sb.Append(IncludeArity ? declaredSymbol.MetadataName : declaredSymbol.Name);
                 }
             }
             else 
             {
-                sb.Append(symbol.MetadataName);
+                sb.Append(IncludeArity ? symbol.MetadataName : symbol.Name);
             }
             if (IncludeSymbolKind)
             {

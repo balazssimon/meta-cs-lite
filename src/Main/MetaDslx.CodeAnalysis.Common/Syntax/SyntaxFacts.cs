@@ -191,5 +191,10 @@ namespace MetaDslx.CodeAnalysis.Syntax
 
             return 0;
         }
+
+        public virtual bool IsGlobalAlias(SyntaxNodeOrToken alias)
+        {
+            return alias.IsToken && alias.AsToken().Text == "global";
+        }
     }
 }

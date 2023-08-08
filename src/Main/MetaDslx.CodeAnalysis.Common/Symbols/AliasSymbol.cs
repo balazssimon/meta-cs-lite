@@ -1,5 +1,7 @@
-﻿using System;
+﻿using MetaDslx.CodeAnalysis.Binding;
+using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Text;
 
 namespace MetaDslx.CodeAnalysis.Symbols
@@ -36,11 +38,18 @@ namespace MetaDslx.CodeAnalysis.Symbols
     ///     IList&lt;Symbol&gt; SemanticModel.LookupSymbols(CSharpSyntaxNode location, NamespaceOrTypeSymbol container = null, string name = null, int? arity = null, LookupOptions options = LookupOptions.Default, List&lt;Symbol> results = null);
     /// </pre>
     /// </summary>
-    public abstract partial class AliasSymbol : ImportSymbol
+    public sealed class AliasSymbol : ImportSymbol
     {
         protected AliasSymbol(Symbol container) 
             : base(container)
         {
+        }
+
+        public override ImmutableArray<Location> Locations => throw new NotImplementedException();
+
+        public DeclaredSymbol GetAliasTarget(LookupContext context)
+        {
+            throw new NotImplementedException("TODO:MetaDslx");
         }
     }
 }

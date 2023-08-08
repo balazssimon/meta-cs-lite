@@ -1,4 +1,5 @@
 ﻿using MetaDslx.CodeAnalysis.Declarations;
+using MetaDslx.CodeAnalysis.PooledObjects;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -25,6 +26,19 @@ namespace MetaDslx.CodeAnalysis.Binding
             builder.NestingType = Type;
             builder.NestingProperty = Property;
             return base.BuildDeclarationTree(builder);
+        }
+
+        public override string ToString()
+        {
+            var builder = PooledStringBuilder.GetInstance();
+            var sb = builder.Builder;
+            sb.Append(this.GetType().Name);
+            sb.Append(": [");
+            sb.Append(Type);
+            sb.Append(".");
+            sb.Append(Property);
+            sb.Append("]");
+            return builder.ToStringAndFree();
         }
     }
 }

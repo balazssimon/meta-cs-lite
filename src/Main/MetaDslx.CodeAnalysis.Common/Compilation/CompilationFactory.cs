@@ -16,6 +16,15 @@ namespace MetaDslx.CodeAnalysis
 {
     public class CompilationFactory
     {
+        private ObjectPool<LookupContext> _lookupContextPool;
+
+        public CompilationFactory()
+        {
+            _lookupContextPool = new ObjectPool<LookupContext>(() => CreateLookupContext(_lookupContextPool), 128); 
+        }
+
+        internal ObjectPool<LookupContext> LookupContextPool => _lookupContextPool;
+
         public virtual Compilation CreateCompilation(
             string? assemblyName,
             Language? mainLanguage,
@@ -73,6 +82,16 @@ namespace MetaDslx.CodeAnalysis
         internal virtual CSharpSymbolFactory CreateCSharpSymbolFactory(Compilation compilation)
         {
             return new CSharpSymbolFactory();
+        }
+
+        public virtual LookupContext CreateLookupContext(ObjectPool<LookupContext> pool)
+        {
+            return new LookupContext(pool);
+        }
+
+        public virtual ILookupValidator CreateDefaultLookupValidator(Compilation compilation)
+        {
+            return new DefaultLookupValidator();
         }
     }
 }

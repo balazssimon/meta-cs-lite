@@ -27,6 +27,13 @@ namespace MetaDslx.CodeAnalysis
             _additionalLocations = ImmutableArray<Location>.Empty;
         }
 
+        public SymbolDiagnosticInfo(ImmutableArray<Symbol> symbols, DiagnosticDescriptor descriptor, Location? additionalLocation, params object[] arguments)
+            : base(descriptor, arguments)
+        {
+            _symbols = symbols;
+            _additionalLocations = additionalLocation is not null ? ImmutableArray.Create(additionalLocation) : ImmutableArray<Location>.Empty;
+        }
+
         public SymbolDiagnosticInfo(ImmutableArray<Symbol> symbols, DiagnosticDescriptor descriptor, ImmutableArray<Location> additionalLocations, params object[] arguments)
             : base(descriptor, arguments)
         {

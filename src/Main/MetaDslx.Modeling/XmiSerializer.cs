@@ -499,7 +499,7 @@ namespace MetaDslx.Modeling
                 {
                     if (rootObjects.Count > 1)
                     {
-                        this.Diagnostics.Add(Diagnostic.Create(ErrorCode.ERR_XmiError, Location.None, "Multiple root model objects found. If the XMI root is not used the number model objects with no parent must be exactly one."));
+                        this.Diagnostics.Add(Diagnostic.Create(ModelErrorCode.ERR_XmiError, Location.None, "Multiple root model objects found. If the XMI root is not used the number model objects with no parent must be exactly one."));
                     }
                     xmiRoot = rootObjects.FirstOrDefault();
                     this.WriteObject(xmiRoot, null);
@@ -671,7 +671,7 @@ namespace MetaDslx.Modeling
             }
             else
             {
-                this.Diagnostics.Add(Diagnostic.Create(ErrorCode.ERR_XmiError, Location.None, string.Format("There is no external file or URI defined for model '{0}'. Use the XmiWriteOptions.ModelToFileMap or XmiWriteOptions.ModelToUriMap property to specify the external file or URI, respectively.", obj.Model.ToString())));
+                this.Diagnostics.Add(Diagnostic.Create(ModelErrorCode.ERR_XmiError, Location.None, string.Format("There is no external file or URI defined for model '{0}'. Use the XmiWriteOptions.ModelToFileMap or XmiWriteOptions.ModelToUriMap property to specify the external file or URI, respectively.", obj.Model.ToString())));
                 return "***ERROR***";
             }
         }
@@ -924,12 +924,12 @@ namespace MetaDslx.Modeling
 
         internal void AddError(XObject location, string message)
         {
-            _xmiReader.Diagnostics.Add(Diagnostic.Create(ErrorCode.ERR_XmiError, GetLocation(location), message));
+            _xmiReader.Diagnostics.Add(Diagnostic.Create(ModelErrorCode.ERR_XmiError, GetLocation(location), message));
         }
 
         internal void AddError(XObject location, ModelException mex)
         {
-            _xmiReader.Diagnostics.Add(Diagnostic.Create(ErrorCode.ERR_XmiError, GetLocation(location), mex.Message));
+            _xmiReader.Diagnostics.Add(Diagnostic.Create(ModelErrorCode.ERR_XmiError, GetLocation(location), mex.Message));
         }
 
         private IModelFactory GetFactory(XObject location, string nsName, bool reportError = true)

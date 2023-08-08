@@ -59,6 +59,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
         public override ImmutableArray<Location> Locations => Modules.SelectMany(m => m.Locations).AsImmutable();
 
         public IModelGroup ModelGroup => _modelGroup;
+        public Type ModelObjectType => null;
 
         protected override string? CompleteProperty_Name(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {

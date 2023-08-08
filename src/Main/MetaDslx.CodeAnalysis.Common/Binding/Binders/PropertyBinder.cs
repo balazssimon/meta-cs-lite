@@ -95,7 +95,7 @@ namespace MetaDslx.CodeAnalysis.Binding
                             else
                             {
                                 var modelObjectTypeNames = string.Join(",", _modelObjectTypes.Select(t => t.FullName));
-                                context.AddDiagnostic(Diagnostic.Create(ErrorCode.ERR_BindingError, binder.Location, $"Cannot assign value 'null' to property '{Name}':'{valueType}' (of {modelObjectTypeNames})"));
+                                context.AddDiagnostic(Diagnostic.Create(CommonErrorCode.ERR_BindingError, binder.Location, $"Cannot assign value 'null' to property '{Name}':'{valueType}' (of {modelObjectTypeNames})"));
                             }
                         }
                         else if (value is Symbol symbol && value is IModelSymbol modelSymbol && modelSymbol.ModelObject is not null)
@@ -107,7 +107,7 @@ namespace MetaDslx.CodeAnalysis.Binding
                             else
                             {
                                 var modelObjectTypeNames = string.Join(",", _modelObjectTypes.Select(t => t.FullName));
-                                context.AddDiagnostic(Diagnostic.Create(ErrorCode.ERR_BindingError, binder.Location, $"Cannot assign value '{modelSymbol.ModelObject}':'{modelSymbol.ModelObject.GetType()}' to property '{Name}':'{valueType}' (of {modelObjectTypeNames})"));
+                                context.AddDiagnostic(Diagnostic.Create(CommonErrorCode.ERR_BindingError, binder.Location, $"Cannot assign value '{modelSymbol.ModelObject}':'{modelSymbol.ModelObject.GetType()}' to property '{Name}':'{valueType}' (of {modelObjectTypeNames})"));
                             }
                         }
                         else
@@ -119,7 +119,7 @@ namespace MetaDslx.CodeAnalysis.Binding
                             else
                             {
                                 var modelObjectTypeNames = string.Join(",", _modelObjectTypes.Select(t => t.FullName));
-                                context.AddDiagnostic(Diagnostic.Create(ErrorCode.ERR_BindingError, binder.Location, $"Cannot assign value '{value}':'{value.GetType()}' to property '{Name}':'{valueType}' (of {modelObjectTypeNames})"));
+                                context.AddDiagnostic(Diagnostic.Create(CommonErrorCode.ERR_BindingError, binder.Location, $"Cannot assign value '{value}':'{value.GetType()}' to property '{Name}':'{valueType}' (of {modelObjectTypeNames})"));
                             }
                         }
                     }
@@ -160,12 +160,12 @@ namespace MetaDslx.CodeAnalysis.Binding
                             }
                             else
                             {
-                                context.AddDiagnostic(Diagnostic.Create(ErrorCode.ERR_BindingError, Location, $"Property '{Name}' of model object '{modelObjectType}' has no type."));
+                                context.AddDiagnostic(Diagnostic.Create(CommonErrorCode.ERR_BindingError, Location, $"Property '{Name}' of model object '{modelObjectType}' has no type."));
                             }
                         }
                         else
                         {
-                            context.AddDiagnostic(Diagnostic.Create(ErrorCode.ERR_BindingError, Location, $"Property '{Name}' of model object '{modelObjectType}' does not exist."));
+                            context.AddDiagnostic(Diagnostic.Create(CommonErrorCode.ERR_BindingError, Location, $"Property '{Name}' of model object '{modelObjectType}' does not exist."));
                         }
                     }
                 }
@@ -176,13 +176,13 @@ namespace MetaDslx.CodeAnalysis.Binding
                 else if (valueTypes.Count == 0)
                 {
                     var modelObjectTypeNames = string.Join(",", modelObjectTypes.Select(t => t.FullName));
-                    context.AddDiagnostic(Diagnostic.Create(ErrorCode.ERR_BindingError, Location, $"Property '{Name}' (of {modelObjectTypeNames}) has no type"));
+                    context.AddDiagnostic(Diagnostic.Create(CommonErrorCode.ERR_BindingError, Location, $"Property '{Name}' (of {modelObjectTypeNames}) has no type"));
                 }
                 else
                 {
                     var modelObjectTypeNames = string.Join(",", modelObjectTypes.Select(t => t.FullName));
                     var typeNames = string.Join(",", valueTypes.Select(t => t.FullName));
-                    context.AddDiagnostic(Diagnostic.Create(ErrorCode.ERR_BindingError, Location, $"Property '{Name}' (of {modelObjectTypeNames}) has multiple possible types: {typeNames}"));
+                    context.AddDiagnostic(Diagnostic.Create(CommonErrorCode.ERR_BindingError, Location, $"Property '{Name}' (of {modelObjectTypeNames}) has multiple possible types: {typeNames}"));
                 }
                 Interlocked.CompareExchange(ref _valueType, valueType, null);
                 ImmutableInterlocked.InterlockedInitialize(ref _modelObjectTypes, modelObjectTypes.ToImmutableArray());
@@ -190,6 +190,24 @@ namespace MetaDslx.CodeAnalysis.Binding
                 modelObjectTypes.Free();
             }
             return _valueType;
+        }
+
+        public override string ToString()
+        {
+            var builder = PooledStringBuilder.GetInstance();
+            var sb = builder.Builder;
+            sb.Append(this.GetType().Name);
+            sb.Append(": [");
+            sb.Append(Name);
+            sb.Append(": ");
+            sb.Append(_valueType);
+            if (_valueOpt.HasValue)
+            {
+                sb.Append(" = ");
+                sb.Append(_valueOpt.Value);
+            }
+            sb.Append("]");
+            return builder.ToStringAndFree();
         }
     }
 }

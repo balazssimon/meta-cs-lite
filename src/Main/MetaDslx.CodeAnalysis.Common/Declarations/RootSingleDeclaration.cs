@@ -37,7 +37,7 @@ namespace MetaDslx.CodeAnalysis.Declarations
 
         public override string? MetadataName => _name;
 
-        public override Location NameLocation => Location.None;
+        public override SourceLocation? NameLocation => null;
 
         public override ImmutableArray<Declaration> Children => _children;
 

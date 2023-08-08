@@ -8,7 +8,7 @@ using System.Threading;
 
 namespace MetaDslx.CodeAnalysis.Binding
 {
-    public class UseBinder : Binder
+    public class UseBinder : Binder, IUseBinder
     {
         private readonly ImmutableArray<Type> _types;
 

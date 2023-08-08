@@ -16,7 +16,7 @@ namespaceDeclaration : 'namespace' [Nesting(MetaNamespace,Declarations)] qualifi
 declarations : usingDeclaration* metaModelDeclaration declaration*;
 
 [Import]
-usingDeclaration : 'using' qualifier ';';
+usingDeclaration : 'using' [Use(MetaNamespace)] qualifier ';';
 
 [Define(MetaModel)]
 metaModelDeclaration : 'metamodel' name ';';
@@ -27,37 +27,42 @@ declaration : enumDeclaration | classDeclaration | associationDeclaration;
 enumDeclaration : 'enum' name enumBody;
 [Scope]
 enumBody : '{' enumLiterals? '}';
-
+[Property(EnumLiterals)]
 enumLiterals : enumLiteral (',' enumLiteral)* ;
 
 [Define(MetaEnumLiteral)]
 enumLiteral : name;
 
 [Define(MetaClass)]
-classDeclaration : isAbstract?='abstract'? 'class' name (':' qualifier (',' qualifier)*)? classBody;
+classDeclaration : [Property(IsAbstract,true)] 'abstract'? 'class' name (':' [Property(BaseClasses)][Use(MetaClass)] qualifierList)? classBody;
 [Scope]
-classBody : '{' propertyDeclaration* '}';
+classBody : '{' [Property(Properties)] propertyDeclaration* '}';
 
 [Define(MetaProperty)]
-propertyDeclaration : propertyModifier? typeReference name propertyRedefinition? propertySubsetting? ';';
+propertyDeclaration : [Property(Kind)] propertyModifier? [Property(Type)] typeReference name propertyRedefinition? propertySubsetting? ';';
 
-propertyModifier : 'derived' | 'containment' | 'readonly';
-propertyRedefinition : 'redefines' qualifiedName (',' qualifiedName)*;
-propertySubsetting : 'subsets' qualifiedName (',' qualifiedName)*;
+propertyModifier : [Constant(MetaPropertyKind.Derived)] 'derived' | [Property(IsContainment,true)] 'containment' | [Constant(MetaPropertyKind.Derived)] 'readonly';
+propertyRedefinition : 'redefines' [Property(RedefinedProperties)][Use(MetaProperty)] qualifierList;
+propertySubsetting : 'subsets' [Property(SubsettedProperties)][Use(MetaProperty)] qualifierList;
 
-associationDeclaration : 'association' qualifier 'with' qualifier ';';
+associationDeclaration : 'association' [Use(MetaProperty)] qualifier 'with' [Use(MetaProperty)] qualifier ';';
 
-typeReference : primitiveType | collectionType | qualifier;
+typeReference : primitiveType | collectionType | nullableType | [Use(MetaType)] qualifier;
 
 primitiveType 
 	: [Constant(Meta.Int)] 'int' 
 	| [Constant(Meta.String)] 'string' 
 	| [Constant(Meta.Bool)] 'bool';
 
-collectionType : ('list' | 'set') '<' typeReference '>';
+[Define(MetaCollectionType)]
+collectionType : ([Property(Kind,MetaCollectionKind.List)] 'list' | [Property(Kind,MetaCollectionKind.Set)] 'set') '<' [Property(InnerType)] typeReference '>';
+[Define(MetaNullableType)]
+nullableType : [Property(InnerType)] typeReference '?';
 
 [Name]
 qualifiedName : qualifier;
+
+qualifierList : qualifier (',' qualifier)*;
 
 [Qualifier]
 qualifier : identifier ('.' identifier)*;

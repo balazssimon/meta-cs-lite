@@ -23,6 +23,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Model
         public ModelSymbolFactory SymbolFactory => _symbolFactory;
         public IModel Model => _model;
         public IModelObject ModelObject => null;
+        public Type ModelObjectType => null;
         public override ImmutableArray<Location> Locations => ImmutableArray<Location>.Empty;
 
         protected override NamespaceSymbol CompleteProperty_GlobalNamespace(DiagnosticBag diagnostics, CancellationToken cancellationToken)

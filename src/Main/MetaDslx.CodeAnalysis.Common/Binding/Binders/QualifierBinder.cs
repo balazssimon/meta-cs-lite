@@ -88,7 +88,8 @@ namespace MetaDslx.CodeAnalysis.Binding
             {
                 var parent = result[i]?.ContainingSymbol;
                 result[--i] = parent;
-                Debug.Assert(parent is null || parent.Locations.Contains(((Binder)_identifiers[i]).Location));
+                //Debug.Assert(parent is null || parent.Locations.Contains(((Binder)_identifiers[i]).Location));
+                Debug.Assert(parent is not null && parent.Locations.Contains(((Binder)_identifiers[i]).Location));
             }
             return result.ToImmutableArray();
         }

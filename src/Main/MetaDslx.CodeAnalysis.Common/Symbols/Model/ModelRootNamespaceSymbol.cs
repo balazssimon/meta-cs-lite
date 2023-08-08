@@ -21,10 +21,6 @@ namespace MetaDslx.CodeAnalysis.Symbols.Model
         }
 
         public override NamespaceExtent Extent => new NamespaceExtent(_module);
-
-        public IModelObject ModelObject => null;
-        public IModel Model => _model;
-
         public override ImmutableArray<Location> Locations => ImmutableArray<Location>.Empty;
 
         protected override string? CompleteProperty_Name(DiagnosticBag diagnostics, CancellationToken cancellationToken)

@@ -32,7 +32,7 @@ namespace MetaDslx.CodeAnalysis.Declarations
         public virtual bool IsNesting => false;
         public SyntaxNodeOrToken SyntaxReference => _syntax;
         public override Type ModelObjectType => _modelObjectType;
-        public abstract Location NameLocation { get; }
+        public abstract SourceLocation? NameLocation { get; }
         public abstract ImmutableArray<Declaration> Children { get; }
         public abstract ImmutableArray<string> ChildNames { get; }
         public abstract ImmutableArray<Diagnostic> Diagnostics { get; }
@@ -141,7 +141,7 @@ namespace MetaDslx.CodeAnalysis.Declarations
 
             public override ImmutableArray<string> ChildNames => ImmutableArray<string>.Empty;
 
-            public override Location NameLocation => Location.None;
+            public override SourceLocation? NameLocation => null;
 
             public override ImmutableArray<Diagnostic> Diagnostics => ImmutableArray<Diagnostic>.Empty;
         }
@@ -208,7 +208,7 @@ namespace MetaDslx.CodeAnalysis.Declarations
 
             public override ImmutableArray<string> ChildNames => ImmutableArray<string>.Empty;
 
-            public override Location NameLocation => _nameLocation;
+            public override SourceLocation? NameLocation => _nameLocation;
 
             public override ImmutableArray<Diagnostic> Diagnostics => ImmutableArray<Diagnostic>.Empty;
         }
@@ -255,7 +255,7 @@ namespace MetaDslx.CodeAnalysis.Declarations
 
             public override string? MetadataName => null;
 
-            public override Location NameLocation => Location.None;
+            public override SourceLocation? NameLocation => null;
 
             public override ImmutableArray<Diagnostic> Diagnostics => ImmutableArray<Diagnostic>.Empty;
 
@@ -323,7 +323,7 @@ namespace MetaDslx.CodeAnalysis.Declarations
 
             public override string? MetadataName => _metadataName;
 
-            public override Location NameLocation => _nameLocation;
+            public override SourceLocation? NameLocation => _nameLocation;
 
             public override ImmutableArray<Diagnostic> Diagnostics => ImmutableArray<Diagnostic>.Empty;
 

@@ -291,7 +291,7 @@ namespace MetaDslx.CodeAnalysis.Binding
                 {
                     lastName = nameBinder;
                 }
-                else if (currentBinder is IDefineBinder || currentBinder is IScopeBinder)
+                else if (currentBinder is IDefineBinder || currentBinder is IUseBinder || currentBinder is IScopeBinder)
                 {
                     break;
                 }

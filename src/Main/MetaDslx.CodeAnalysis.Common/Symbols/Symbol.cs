@@ -104,6 +104,19 @@ namespace MetaDslx.CodeAnalysis.Symbols
             }
         }
 
+        public virtual string Kind
+        {
+            get
+            {
+                var typeName = this.GetType().Name;
+                if (typeName.EndsWith("Symbol")) typeName = typeName.Substring(0, typeName.Length - 6);
+                if (typeName.StartsWith("Source")) typeName = typeName.Substring(6);
+                else if (typeName.StartsWith("Model")) typeName = typeName.Substring(5);
+                else if (typeName.StartsWith("CSharp")) typeName = typeName.Substring(6);
+                return typeName;
+            }
+        }
+
         /// <summary>
         /// Gets the name of this symbol. Symbols without a name return the empty string; 
         /// null is never returned.

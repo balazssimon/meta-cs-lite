@@ -48,6 +48,8 @@ namespace MetaDslx.CodeAnalysis
 
         private readonly DiagnosticBag _declarationDiagnostics = new DiagnosticBag();
 
+        private ILookupValidator _defaultLookupValidator;
+
         internal protected Compilation(
             string? assemblyName,
             Language? mainLanguage,
@@ -721,6 +723,18 @@ namespace MetaDslx.CodeAnalysis
             return factory.GetEnclosingBinder(span);
         }
 
+        internal ILookupValidator DefaultLookupValidator
+        {
+            get
+            {
+                if (_defaultLookupValidator is null)
+                {
+                    Interlocked.CompareExchange(ref _defaultLookupValidator, MainLanguage.CompilationFactory.CreateDefaultLookupValidator(this), null);
+                }
+                return _defaultLookupValidator;
+            }
+        }
+
         #endregion
 
         #region Symbols
@@ -750,6 +764,8 @@ namespace MetaDslx.CodeAnalysis
                 return SourceAssembly.SourceModuleSymbol;
             }
         }
+
+        public NamespaceSymbol GlobalNamespace => SourceModule.GlobalNamespace;
 
         #endregion
 

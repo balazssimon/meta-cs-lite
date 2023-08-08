@@ -9,5 +9,6 @@ namespace MetaDslx.CodeAnalysis.Symbols.Model
     {
         IModel Model { get; }
         IModelObject ModelObject { get; }
+        Type ModelObjectType { get; }
     }
 }

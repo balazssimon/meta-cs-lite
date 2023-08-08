@@ -43,5 +43,16 @@ namespace MetaDslx.CodeAnalysis.Binding
         {
             return ImmutableArray.Create(Value);
         }
+
+        public override string ToString()
+        {
+            var builder = PooledStringBuilder.GetInstance();
+            var sb = builder.Builder;
+            sb.Append(this.GetType().Name);
+            sb.Append(": [");
+            sb.Append(Value);
+            sb.Append("]");
+            return builder.ToStringAndFree();
+        }
     }
 }

@@ -28,7 +28,7 @@ namespace MetaDslx.CodeAnalysis.Declarations
 
         public ImmutableArray<SyntaxNodeOrToken> SyntaxReferences => _declarations.SelectAsArray(decl => decl.SyntaxReference);
 
-        public ImmutableArray<Location> NameLocations => _declarations.SelectAsArray(decl => decl.NameLocation);
+        public ImmutableArray<SourceLocation> NameLocations => _declarations.Where(decl => decl.NameLocation is not null).Select(decl => decl.NameLocation).ToImmutableArray();
 
         public abstract ImmutableArray<MergedDeclaration> Children { get; }
 

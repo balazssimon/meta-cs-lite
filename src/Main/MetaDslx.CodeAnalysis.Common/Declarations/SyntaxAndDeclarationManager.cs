@@ -200,14 +200,14 @@ namespace MetaDslx.CodeAnalysis.Declarations
                 string? resolvedFilePath = null;
                 if (resolver == null)
                 {
-                    diagnostics.Add(Diagnostic.Create(ErrorCode.ERR_SourceFileReferencesNotSupported, node.Location));
+                    diagnostics.Add(Diagnostic.Create(CommonErrorCode.ERR_SourceFileReferencesNotSupported, node.Location));
                 }
                 else
                 {
                     resolvedFilePath = resolver.ResolveReference(path, baseFilePath: tree.FilePath);
                     if (resolvedFilePath == null)
                     {
-                        diagnostics.Add(Diagnostic.Create(ErrorCode.ERR_NoSourceFile, node.Location, path, ExceptionMessages.CouldNotFindFile));
+                        diagnostics.Add(Diagnostic.Create(CommonErrorCode.ERR_NoSourceFile, node.Location, path, ExceptionMessages.CouldNotFindFile));
                     }
                     else if (!loadedSyntaxTreeMapBuilder.ContainsKey(resolvedFilePath))
                     {

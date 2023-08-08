@@ -75,12 +75,12 @@ namespace MetaDslx.CodeAnalysis
             // Validate SpecifiedKind not Kind, to catch deprecated specified kinds:
             if (!Kind.IsValid())
             {
-                builder.Add(Diagnostic.Create(ErrorCode.ERR_BadSourceCodeKind, Location.None, Kind));
+                builder.Add(Diagnostic.Create(CommonErrorCode.ERR_BadSourceCodeKind, Location.None, Kind));
             }
 
             if (!DocumentationMode.IsValid())
             {
-                builder.Add(Diagnostic.Create(ErrorCode.ERR_BadDocumentationMode, Location.None, DocumentationMode));
+                builder.Add(Diagnostic.Create(CommonErrorCode.ERR_BadDocumentationMode, Location.None, DocumentationMode));
             }
 
             CommonValidateOptions(builder);

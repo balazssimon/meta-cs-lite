@@ -26,7 +26,9 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
         public new SourceModuleSymbol ContainingModule => (SourceModuleSymbol)base.ContainingModule;
         public MergedDeclaration Declaration => _declaration;
         public ImmutableArray<SyntaxNodeOrToken> DeclaringSyntaxReferences => _declaration.SyntaxReferences;
-        public override ImmutableArray<Location> Locations => _declaration.NameLocations;
+        public override ImmutableArray<Location> Locations => _declaration.NameLocations.Cast<SourceLocation, Location>();
+        ImmutableArray<SourceLocation> ISourceSymbol.Locations => _declaration.NameLocations;
+        public Type ModelObjectType => _declaration.ModelObjectType;
 
         protected override string? CompleteProperty_Name(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {

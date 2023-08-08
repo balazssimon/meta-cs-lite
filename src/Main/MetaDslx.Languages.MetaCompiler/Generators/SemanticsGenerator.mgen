@@ -31,6 +31,7 @@ end template
 
 template GenerateBinderFactoryVisitor(Language language)
 using System;
+using System.Collections.Immutable;
 using MetaDslx.CodeAnalysis;
 [foreach (var use in language.Usings)]
 using [if (use.Alias is not null)][use.Alias] = [end if][use.QualifiedReference];
