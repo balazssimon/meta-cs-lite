@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using Autofac.Core;
 using MetaDslx.CodeAnalysis.Binding;
 using MetaDslx.CodeAnalysis.Declarations;
 using MetaDslx.CodeAnalysis.Syntax;
@@ -14,7 +15,9 @@ namespace MetaDslx.CodeAnalysis
     public abstract class Language
     {
         internal static readonly Language NoLanguage = new NoLanguageImplementation();
+        internal const string CompilationScopeTag = "Compilation";
 
+        private ContainerBuilder _containerBuilder;
         private IContainer _serviceProvider;
         private SyntaxFacts _syntaxFacts;
         private InternalSyntaxFactory _internalSyntaxFactory;
@@ -23,10 +26,10 @@ namespace MetaDslx.CodeAnalysis
 
         public Language()
         {
-            var services = new ContainerBuilder();
-            services.RegisterInstance<Language>(this);
-            RegisterServicesCore(services);
-            _serviceProvider = services.Build();
+            _containerBuilder = new ContainerBuilder();
+            _containerBuilder.RegisterInstance<Language>(this).SingleInstance();
+            RegisterServicesCore();
+            _serviceProvider = _containerBuilder.Build();
             _syntaxFacts = _serviceProvider.Resolve<SyntaxFacts>();
             _internalSyntaxFactory = _serviceProvider.Resolve<InternalSyntaxFactory>();
             _syntaxFactory = _serviceProvider.Resolve<SyntaxFactory>();
@@ -34,25 +37,46 @@ namespace MetaDslx.CodeAnalysis
         }
 
         public abstract string Name { get; }
+        protected ContainerBuilder ContainerBuilder => _containerBuilder;
         public IContainer ServiceProvider => _serviceProvider;
         public InternalSyntaxFactory InternalSyntaxFactory => _internalSyntaxFactory;
         public SyntaxFacts SyntaxFacts => _syntaxFacts;
         public SyntaxFactory SyntaxFactory => _syntaxFactory;
         public CompilationFactory CompilationFactory => _compilationFactory;
 
-        protected abstract void RegisterServicesCore(ContainerBuilder services);
+        protected abstract void RegisterServicesCore();
+
+        protected void RegisterGlobal<TService, TCustomService>() where TCustomService : class, TService
+        {
+            _containerBuilder.RegisterType<TCustomService>().As<TService>().SingleInstance();
+        }
+
+        protected void RegisterCompilationScoped<TService, TCustomService>() where TCustomService : class, TService
+        {
+            _containerBuilder.RegisterType<TCustomService>().As<TService>().InstancePerMatchingLifetimeScope(CompilationScopeTag);
+        }
+
+        protected void TryRegisterGlobal<TService, TCustomService>() where TCustomService : class, TService
+        {
+            _containerBuilder.RegisterType<TCustomService>().As<TService>().SingleInstance().IfNotRegistered(typeof(TService));
+        }
+
+        protected void TryRegisterCompilationScoped<TService, TCustomService>() where TCustomService : class, TService
+        {
+            _containerBuilder.RegisterType<TCustomService>().As<TService>().InstancePerMatchingLifetimeScope(CompilationScopeTag).IfNotRegistered(typeof(TService));
+        }
 
         private class NoLanguageImplementation : Language
         {
             public override string Name => "<none>";
 
-            protected override void RegisterServicesCore(ContainerBuilder services)
+            protected override void RegisterServicesCore()
             {
-                services.RegisterType<NoSyntaxFacts>().As<SyntaxFacts>().SingleInstance();
-                services.RegisterType<NoInternalSyntaxFactory>().As<InternalSyntaxFactory>().SingleInstance();
-                services.RegisterType<NoSyntaxFactory>().As<SyntaxFactory>().SingleInstance();
-                services.RegisterType<NoCompilationFactory>().As<CompilationFactory>().SingleInstance();
-                services.RegisterType<NoSemanticsFactory>().As<SemanticsFactory>().InstancePerLifetimeScope();
+                RegisterGlobal<SyntaxFacts, NoSyntaxFacts>();
+                RegisterGlobal<InternalSyntaxFactory, NoInternalSyntaxFactory>();
+                RegisterGlobal<SyntaxFactory, NoSyntaxFactory>();
+                RegisterGlobal<CompilationFactory, NoCompilationFactory>();
+                RegisterCompilationScoped<SemanticsFactory, NoSemanticsFactory>();
             }
 
         }
@@ -261,8 +285,8 @@ namespace MetaDslx.CodeAnalysis
 
         private class NoSemanticsFactory : SemanticsFactory
         {
-            public NoSemanticsFactory(Compilation compilation) 
-                : base(compilation)
+            public NoSemanticsFactory(Compilation compilation, Language language) 
+                : base(compilation, language)
             {
             }
 

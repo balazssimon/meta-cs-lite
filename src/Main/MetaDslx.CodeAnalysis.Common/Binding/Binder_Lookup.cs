@@ -19,7 +19,7 @@ namespace MetaDslx.CodeAnalysis.Binding
             bool isLookup = false,
             IEnumerable<ILookupValidator> validators = default)
         {
-            var context = Compilation.SemanticsFactory.LookupContextPool.Allocate();
+            var context = Compilation[Language].SemanticsFactory.LookupContextPool.Allocate();
             context.OriginalBinder = this;
             context.Location = this.Location;
             context.Validators.UnionWith(validators);

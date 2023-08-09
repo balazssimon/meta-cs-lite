@@ -42,7 +42,7 @@ namespace MetaDslx.CodeAnalysis.Binding
             if (result.IsEmpty)
             {
                 DiagnosticInfo errorInfo = NotFound(context, diagnostics);
-                resultSymbol = _compilation.ErrorSymbolFactory.CreateSymbol<DeclaredSymbol>(context.Qualifier ?? _compilation.GlobalNamespace, errorInfo);
+                resultSymbol = context.ErrorSymbolFactory.CreateSymbol<DeclaredSymbol>(context.Qualifier ?? _compilation.GlobalNamespace, errorInfo);
                 return false;
             }
             if (result.IsMultiViable && symbols.Count > 1)
@@ -107,7 +107,7 @@ namespace MetaDslx.CodeAnalysis.Binding
                 {
                     diagnostics.Add(Diagnostic.Create(errorInfo, location));
                 }
-                resultSymbol = _compilation.ErrorSymbolFactory.CreateSymbol<DeclaredSymbol>(best.ContainingDeclaration ?? _compilation.GlobalNamespace, errorInfo);
+                resultSymbol = context.ErrorSymbolFactory.CreateSymbol<DeclaredSymbol>(best.ContainingDeclaration ?? _compilation.GlobalNamespace, errorInfo);
                 return errorInfo;
             }
         }

@@ -34,17 +34,17 @@ namespace [language.QualifiedNamespace]
 
         public new [language.Name]CompilationFactory CompilationFactory => ([language.Name]CompilationFactory)base.CompilationFactory;
 
-        protected override void RegisterServicesCore(ContainerBuilder services)
+        protected override void RegisterServicesCore()
         {
-            RegisterServices(services);
-            services.RegisterType<[language.Name]SyntaxFacts>().As<SyntaxFacts>().SingleInstance().IfNotRegistered(typeof(SyntaxFacts));
-            services.RegisterType<[language.Name]InternalSyntaxFactory>().As<InternalSyntaxFactory>().SingleInstance().IfNotRegistered(typeof(InternalSyntaxFactory));
-            services.RegisterType<[language.Name]SyntaxFactory>().As<SyntaxFactory>().SingleInstance().IfNotRegistered(typeof(SyntaxFactory));
-            services.RegisterType<[language.Name]CompilationFactory>().As<CompilationFactory>().SingleInstance().IfNotRegistered(typeof(CompilationFactory));
-            services.RegisterType<[language.Name]SemanticsFactory>().As<SemanticsFactory>().InstancePerLifetimeScope().IfNotRegistered(typeof(SemanticsFactory));
+            RegisterServices();
+            TryRegisterGlobal<SyntaxFacts, [language.Name]SyntaxFacts>();
+            TryRegisterGlobal<InternalSyntaxFactory, [language.Name]InternalSyntaxFactory>();
+            TryRegisterGlobal<SyntaxFactory, [language.Name]SyntaxFactory>();
+            TryRegisterGlobal<CompilationFactory, [language.Name]CompilationFactory>();
+            TryRegisterCompilationScoped<SemanticsFactory, [language.Name]SemanticsFactory>();
         }
 
-        partial void RegisterServices(ContainerBuilder services);
+        partial void RegisterServices();
     }
 }
 end template

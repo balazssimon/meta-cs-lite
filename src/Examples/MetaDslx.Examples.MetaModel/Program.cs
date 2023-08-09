@@ -16,7 +16,7 @@ foreach (var diag in mmTree.GetDiagnostics())
 
 var mmComp = Compilation.Create(
     "ImmutableMetaModel", 
-    MetaModelLanguage.Instance,
+    //MetaModelLanguage.Instance,
     syntaxTrees: new[] 
     {
         mmTree

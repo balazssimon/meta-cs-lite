@@ -27,9 +27,6 @@ namespace MetaDslx.CodeAnalysis
     {
         private readonly SyntaxAndDeclarationManager _syntaxAndDeclarations;
 
-        private ILifetimeScope _serviceScope;
-        private SemanticsFactory _semanticsFactory;
-
         // When building symbols from the declaration table (lazily), or inside a type, or when
         // compiling a method body, we may not have a Binder in hand for the enclosing
         // scopes.  Therefore, we build them when needed (and cache them) using a BinderFactory.
@@ -41,10 +38,13 @@ namespace MetaDslx.CodeAnalysis
         private WeakReference<BinderFactory>[]? _ignoreAccessibilityBinderFactories;
 
         private readonly string? _assemblyName;
+        private readonly ImmutableArray<Language> _languages;
         private readonly Language _mainLanguage;
         private readonly CompilationOptions _options;
         private readonly ImmutableArray<MetadataReference> _externalReferences;
         private readonly ScriptCompilationInfo? _scriptCompilationInfo;
+
+        private Dictionary<Language, LanguageScope> _languageScopes;
 
         internal ReferenceManager _referenceManager;
         internal SourceAssemblySymbol? _lazyAssemblySymbol;
@@ -52,9 +52,6 @@ namespace MetaDslx.CodeAnalysis
         private AccessCheck? _lazyAccessCheck;
 
         private readonly DiagnosticBag _declarationDiagnostics = new DiagnosticBag();
-
-        private DefaultLookupValidator _defaultLookupValidator;
-        private ErrorSymbolFactory _errorSymbolFactory;
 
         internal protected Compilation(
             string? assemblyName,
@@ -71,9 +68,25 @@ namespace MetaDslx.CodeAnalysis
             Debug.Assert(scriptCompilationInfo is not null || options.ReferencesSupersedeLowerVersions);
 
             _assemblyName = assemblyName;
-            _mainLanguage = mainLanguage ?? Language.NoLanguage;
-            _serviceScope = _mainLanguage.ServiceProvider.BeginLifetimeScope(
-                builder => builder.RegisterInstance<Compilation>(this));
+            _mainLanguage = mainLanguage ?? syntaxAndDeclarations.ExternalSyntaxTrees.FirstOrDefault()?.Language ?? Language.NoLanguage;
+
+            var languagesBuilder = ArrayBuilder<Language>.GetInstance();
+            languagesBuilder.Add(Language.NoLanguage);
+            if (_mainLanguage is not null && !languagesBuilder.Contains(_mainLanguage)) languagesBuilder.Add(_mainLanguage);
+            foreach (var language in syntaxAndDeclarations.ExternalSyntaxTrees.Select(st => st.Language).Distinct().OrderBy(l => l.Name))
+            {
+                if (!languagesBuilder.Contains(language)) languagesBuilder.Add(language);
+            }
+            _languages = languagesBuilder.ToImmutableAndFree();
+
+            _languageScopes = new Dictionary<Language, LanguageScope>();
+            foreach (var language in _languages)
+            {
+                var scope = language.ServiceProvider.BeginLifetimeScope(Language.CompilationScopeTag,
+                    builder => builder.RegisterInstance<Compilation>(this));
+                var languageScope = new LanguageScope(this, language, scope);
+                _languageScopes.Add(language, languageScope);
+            }
             
             _options = options;
             _externalReferences = references;
@@ -112,28 +125,28 @@ namespace MetaDslx.CodeAnalysis
 
         public void Dispose()
         {
-            _serviceScope.Dispose();
+            foreach (var language in _languageScopes.Keys)
+            {
+                var scope = _languageScopes[language];
+                scope.ServiceScope.Dispose();
+            }
         }
 
         public string? Name => _assemblyName;
         public Language MainLanguage => _mainLanguage;
-        public ILifetimeScope ServiceScope => _serviceScope;
+        public ImmutableArray<Language> Languages => _languages;
+        public LanguageScope this[Language language]
+        {
+            get
+            {
+                if (!_languageScopes.ContainsKey(language)) throw new ArgumentException(nameof(language));
+                return _languageScopes[language];
+            }
+        }
         public CompilationOptions Options => _options;
         public ScriptCompilationInfo? ScriptCompilationInfo => _scriptCompilationInfo;
         public ReferenceManager ReferenceManager => _referenceManager;
         public ImmutableArray<MetadataReference> ExternalReferences => _externalReferences;
-
-        public SemanticsFactory SemanticsFactory
-        {
-            get
-            {
-                if (_semanticsFactory is null)
-                {
-                    Interlocked.CompareExchange(ref _semanticsFactory, _serviceScope.Resolve<SemanticsFactory>(), null);
-                }
-                return _semanticsFactory;
-            }
-        }
 
         public AccessCheck AccessCheck
         {
@@ -158,8 +171,8 @@ namespace MetaDslx.CodeAnalysis
             bool reuseReferenceManager,
             SyntaxAndDeclarationManager syntaxAndDeclarations)
         {
-            var language = mainLanguage ?? Language.NoLanguage;
-            return language.CompilationFactory.CreateCompilation(assemblyName, language, options, externalReferences, scriptCompilationInfo,
+            var defaultLanguage = mainLanguage ?? Language.NoLanguage;
+            return defaultLanguage.CompilationFactory.CreateCompilation(assemblyName, mainLanguage, options, externalReferences, scriptCompilationInfo,
                     referenceManager, reuseReferenceManager, syntaxAndDeclarations);
         }
 
@@ -170,11 +183,11 @@ namespace MetaDslx.CodeAnalysis
             IEnumerable<MetadataReference>? references = null, 
             CompilationOptions? options = null)
         {
-            var language = mainLanguage ?? Language.NoLanguage;
+            var defaultLanguage = mainLanguage ?? Language.NoLanguage;
             var externalReferences = references is null ? ImmutableArray<MetadataReference>.Empty : references.ToImmutableArray();
             var externalSyntaxTrees = syntaxTrees is null ? ImmutableArray<SyntaxTree>.Empty : syntaxTrees.ToImmutableArray();
             var declarationManager = new SyntaxAndDeclarationManager(externalSyntaxTrees, null, null, false, null);
-            return language.CompilationFactory.CreateCompilation(assemblyName, language, options ?? CompilationOptions.Default, externalReferences, null, null, false, declarationManager);
+            return defaultLanguage.CompilationFactory.CreateCompilation(assemblyName, mainLanguage, options ?? CompilationOptions.Default, externalReferences, null, null, false, declarationManager);
         }
 
         public static Compilation CreateScriptCompilation(
@@ -187,12 +200,12 @@ namespace MetaDslx.CodeAnalysis
             Type? returnType = null,
             Type? globalsType = null)
         {
-            var language = mainLanguage ?? Language.NoLanguage;
+            var defaultLanguage = mainLanguage ?? Language.NoLanguage;
             var externalReferences = references is null ? ImmutableArray<MetadataReference>.Empty : references.ToImmutableArray();
             var externalSyntaxTrees = syntaxTree is null ? ImmutableArray<SyntaxTree>.Empty : ImmutableArray.Create(syntaxTree);
             var declarationManager = new SyntaxAndDeclarationManager(externalSyntaxTrees, null, null, false, null);
             var scriptCompilationInfo = new ScriptCompilationInfo(previousScriptCompilation, returnType, globalsType);
-            return language.CompilationFactory.CreateCompilation(assemblyName, language, options ?? CompilationOptions.Default, externalReferences, scriptCompilationInfo, null, false, declarationManager);
+            return defaultLanguage.CompilationFactory.CreateCompilation(assemblyName, mainLanguage, options ?? CompilationOptions.Default, externalReferences, scriptCompilationInfo, null, false, declarationManager);
         }
 
         public Compilation WithMainLanguage(Language language)
@@ -750,18 +763,6 @@ namespace MetaDslx.CodeAnalysis
             return factory.GetEnclosingBinder(span);
         }
 
-        internal DefaultLookupValidator DefaultLookupValidator
-        {
-            get
-            {
-                if (_defaultLookupValidator is null)
-                {
-                    Interlocked.CompareExchange(ref _defaultLookupValidator, SemanticsFactory.CreateDefaultLookupValidator(), null);
-                }
-                return _defaultLookupValidator;
-            }
-        }
-
         #endregion
 
         #region Symbols
@@ -798,17 +799,6 @@ namespace MetaDslx.CodeAnalysis
 
         #region Semantic Analysis
 
-        public ErrorSymbolFactory ErrorSymbolFactory
-        {
-            get
-            {
-                if (_errorSymbolFactory is null)
-                {
-                    Interlocked.CompareExchange(ref _errorSymbolFactory, MainLanguage.CompilationFactory.CreateErrorSymbolFactory(this), null);
-                }
-                return _errorSymbolFactory;
-            }
-        }
 
 
         #endregion

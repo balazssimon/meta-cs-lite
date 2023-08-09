@@ -20,8 +20,8 @@ namespace [language.QualifiedNamespace]
 {
     public class [language.Name]SemanticsFactory : SemanticsFactory
     {
-        public [language.Name]SemanticsFactory(Compilation compilation) 
-            : base(compilation)
+        public [language.Name]SemanticsFactory(Compilation compilation, Language language) 
+            : base(compilation, language)
         {
         }
 

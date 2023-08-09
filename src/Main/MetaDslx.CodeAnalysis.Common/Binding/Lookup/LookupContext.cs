@@ -1,5 +1,6 @@
 ﻿using MetaDslx.CodeAnalysis.PooledObjects;
 using MetaDslx.CodeAnalysis.Symbols;
+using MetaDslx.CodeAnalysis.Symbols.Errors;
 using Microsoft.CodeAnalysis;
 using Roslyn.Utilities;
 using System;
@@ -25,6 +26,9 @@ namespace MetaDslx.CodeAnalysis.Binding
 
         private readonly ObjectPool<LookupContext> _pool;
         private readonly Compilation _compilation;
+        private readonly Language _language;
+        private readonly DefaultLookupValidator _defaultLookupValidator;
+        private readonly ErrorSymbolFactory _errorSymbolFactory;
         private Binder _originalBinder;
         private SourceLocation _location;
         private HashSet<ILookupValidator> _validators;
@@ -40,10 +44,13 @@ namespace MetaDslx.CodeAnalysis.Binding
         private DiagnosticBag _diagnostics;
         private HashSet<DiagnosticInfo> _useSiteDiagnostics;
 
-        internal protected LookupContext(ObjectPool<LookupContext> pool, Compilation compilation)
+        internal protected LookupContext(ObjectPool<LookupContext> pool, Compilation compilation, Language language)
         {
             _pool = pool;
             _compilation = compilation;
+            _language = language;
+            _defaultLookupValidator = _compilation[_language].DefaultLookupValidator;
+            _errorSymbolFactory = _compilation[_language].ErrorSymbolFactory;
             _validators = new HashSet<ILookupValidator>();
             _viableNames = new HashSet<string>();
             _viableMetadataNames = new HashSet<string>();
@@ -54,9 +61,11 @@ namespace MetaDslx.CodeAnalysis.Binding
         }
 
         public Compilation Compilation => _compilation;
+        public Language Language => _language;
         public SyntaxNodeOrToken Syntax => _originalBinder?.Syntax ?? default;
-        protected DefaultLookupValidator DefaultLookupValidator => _compilation.DefaultLookupValidator;
-        
+        public DefaultLookupValidator DefaultLookupValidator => _defaultLookupValidator;
+        public ErrorSymbolFactory ErrorSymbolFactory => _errorSymbolFactory;
+
         public Binder OriginalBinder
         {
             get => _originalBinder;
