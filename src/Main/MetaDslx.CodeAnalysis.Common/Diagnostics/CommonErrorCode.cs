@@ -90,19 +90,14 @@ namespace MetaDslx.CodeAnalysis
         public static readonly DiagnosticDescriptor ERR_NonInvocableMemberCalled = DiagnosticDescriptor.Error(nameof(ERR_NonInvocableMemberCalled), "Not invocable", "Non-invocable member '{0}' cannot be used like a method.");
 
         /// <summary>
-        /// The namespace '{1}' in '{0}' conflicts with the imported type '{3}' in '{2}'. Using the namespace defined in '{0}'.
+        /// The {1} in '{0}' conflicts with the imported {3} in '{2}'. Using the symbol defined in '{0}'.
         /// </summary>
-        public static readonly DiagnosticDescriptor WRN_SameFullNameThisNsAgg = DiagnosticDescriptor.Warning(nameof(WRN_SameFullNameThisNsAgg), "Name conflict", "The namespace '{1}' in '{0}' conflicts with the imported type '{3}' in '{2}'. Using the namespace defined in '{0}'.");
+        public static readonly DiagnosticDescriptor WRN_SameFullNameThisAggAgg = DiagnosticDescriptor.Warning(nameof(WRN_SameFullNameThisAggAgg), "Name conflict", "The {1} in '{0}' conflicts with the imported {3} in '{2}'. Using the symbol defined in '{0}'.");
 
         /// <summary>
-        /// The type '{1}' in '{0}' conflicts with the imported namespace '{3}' in '{2}'. Using the type defined in '{0}'.
+        /// '{0}' is an ambiguous reference between {1} and {2}
         /// </summary>
-        public static readonly DiagnosticDescriptor WRN_SameFullNameThisAggNs = DiagnosticDescriptor.Warning(nameof(WRN_SameFullNameThisAggNs), "Name conflict", "The type '{1}' in '{0}' conflicts with the imported namespace '{3}' in '{2}'. Using the type defined in '{0}'.");
-
-        /// <summary>
-        /// The type '{1}' in '{0}' conflicts with the imported type '{3}' in '{2}'. Using the type defined in '{0}'.
-        /// </summary>
-        public static readonly DiagnosticDescriptor WRN_SameFullNameThisAggAgg = DiagnosticDescriptor.Warning(nameof(WRN_SameFullNameThisAggAgg), "Name conflict", "The type '{1}' in '{0}' conflicts with the imported type '{3}' in '{2}'. Using the type defined in '{0}'.");
+        public static readonly DiagnosticDescriptor ERR_AmbigContext = DiagnosticDescriptor.Error(nameof(ERR_AmbigContext), "Name conflict", "'{0}' is an ambiguous reference between {1} and {2}");
 
         /// <summary>
         /// The name '{0}' does not exist in '{1}'

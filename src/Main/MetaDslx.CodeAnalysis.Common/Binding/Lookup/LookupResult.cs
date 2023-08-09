@@ -7,6 +7,7 @@ using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Text;
 using MetaDslx.Modeling;
+using MetaDslx.CodeAnalysis.Syntax.InternalSyntax;
 
 namespace MetaDslx.CodeAnalysis.Binding
 {
@@ -79,6 +80,13 @@ namespace MetaDslx.CodeAnalysis.Binding
             _error = null;
         }
 
+        internal LookupResult()
+        {
+            _kind = LookupResultKind.Empty;
+            _symbolList = new ArrayBuilder<DeclaredSymbol>();
+            _error = null;
+        }
+
         public bool IsClear
         {
             get
@@ -101,6 +109,8 @@ namespace MetaDslx.CodeAnalysis.Binding
                 return _kind;
             }
         }
+
+        public bool IsEmpty => _kind == LookupResultKind.Empty || _symbolList.Count == 0;
 
         /// <summary>
         /// Return the single symbol if there is exactly one, otherwise null.

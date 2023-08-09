@@ -20,6 +20,11 @@ namespace [language.QualifiedNamespace]
 {
     public class [language.Name]SemanticsFactory : SemanticsFactory
     {
+        public [language.Name]SemanticsFactory(Compilation compilation) 
+            : base(compilation)
+        {
+        }
+
         public override BinderFactoryVisitor CreateBinderFactoryVisitor(BinderFactory binderFactory)
         {
             return new [language.QualifiedNamespace].Binding.[language.Name]BinderFactoryVisitor(binderFactory);

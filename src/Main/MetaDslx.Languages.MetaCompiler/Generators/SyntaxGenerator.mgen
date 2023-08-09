@@ -1671,7 +1671,7 @@ namespace [language.QualifiedNamespace].Syntax
             [language.Name]LanguageVersion requiredVersion = Language.SyntaxFacts.GetRequiredLanguageVersion(feature);
             if (availableVersion < requiredVersion)
             {
-                return Diagnostic.Create(ErrorCode.ERR_FeatureNotAvailableInVersion, Location.None, feature, Language.Name, availableVersion.ToDisplayString(), requiredVersion.ToDisplayString());
+                return Diagnostic.Create(CommonErrorCode.ERR_FeatureNotAvailableInVersion, Location.None, feature, Language.Name, availableVersion.ToDisplayString(), requiredVersion.ToDisplayString());
             }
             return null;
         }
@@ -1681,7 +1681,7 @@ namespace [language.QualifiedNamespace].Syntax
             // Validate LanguageVersion not SpecifiedLanguageVersion, after Latest/Default has been converted:
             if (!LanguageVersion.IsValid())
             {
-                builder.Add(Diagnostic.Create(ErrorCode.ERR_BadLanguageVersion, Location.None, LanguageVersion.ToString()));
+                builder.Add(Diagnostic.Create(CommonErrorCode.ERR_BadLanguageVersion, Location.None, LanguageVersion.ToString()));
             }
 
             if (!PreprocessorSymbols.IsDefaultOrEmpty)
@@ -1690,11 +1690,11 @@ namespace [language.QualifiedNamespace].Syntax
                 {
                     if (symbol == null)
                     {
-                        builder.Add(Diagnostic.Create(ErrorCode.ERR_InvalidPreprocessingSymbol, Location.None, "null"));
+                        builder.Add(Diagnostic.Create(CommonErrorCode.ERR_InvalidPreprocessingSymbol, Location.None, "null"));
                     }
                     else if (!Language.SyntaxFacts.IsValidIdentifier(symbol))
                     {
-                        builder.Add(Diagnostic.Create(ErrorCode.ERR_InvalidPreprocessingSymbol, Location.None, symbol));
+                        builder.Add(Diagnostic.Create(CommonErrorCode.ERR_InvalidPreprocessingSymbol, Location.None, symbol));
                     }
                 }
             }

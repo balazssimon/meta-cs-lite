@@ -24,6 +24,17 @@ namespace MetaDslx.CodeAnalysis.Symbols.CSharp
 
         public override ImmutableArray<ModuleSymbol> Modules => _modules.Cast<CSharpModuleSymbol, ModuleSymbol>();
 
+        public override bool IsCorLibrary
+        {
+            get
+            {
+                var systemObject = _csharpSymbol.GetTypeByMetadataName("System.Object");
+                if (systemObject is null) return false;
+                return systemObject.DeclaredAccessibility == Microsoft.CodeAnalysis.Accessibility.Public && 
+                    systemObject.TypeKind == TypeKind.Class;
+            }
+        }
+
         internal void DangerousSetModules(ImmutableArray<CSharpModuleSymbol> modules)
         {
             _modules = modules;

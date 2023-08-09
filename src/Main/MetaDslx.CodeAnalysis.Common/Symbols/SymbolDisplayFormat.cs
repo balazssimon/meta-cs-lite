@@ -7,25 +7,28 @@ namespace MetaDslx.CodeAnalysis.Symbols
 {
     public class SymbolDisplayFormat
     {
-        public static readonly SymbolDisplayFormat Default = new SymbolDisplayFormat(includeSymbolKind: true);
+        public static readonly SymbolDisplayFormat Default = new SymbolDisplayFormat(includeSymbolDisplayKind: true);
         public static readonly SymbolDisplayFormat QualifiedNameOnlyFormat = new SymbolDisplayFormat(includeQualifier: true);
         public static readonly SymbolDisplayFormat QualifiedNameArityFormat = new SymbolDisplayFormat(includeQualifier: true, includeArity: true);
         public static readonly SymbolDisplayFormat FullyQualifiedFormat = new SymbolDisplayFormat(includeQualifier: true, includeGlobalScope: true);
 
         private readonly bool _includeSymbolKind;
+        private readonly bool _includeSymbolDisplayKind;
         private readonly bool _includeQualifier;
         private readonly bool _includeArity;
         private readonly bool _includeGlobalScope;
 
-        protected SymbolDisplayFormat(bool includeSymbolKind = false, bool includeQualifier = false, bool includeArity = false, bool includeGlobalScope = false)
+        protected SymbolDisplayFormat(bool includeSymbolKind = false, bool includeSymbolDisplayKind = false, bool includeQualifier = false, bool includeArity = false, bool includeGlobalScope = false)
         {
             _includeSymbolKind = includeSymbolKind;
+            _includeSymbolDisplayKind = includeSymbolDisplayKind;
             _includeQualifier = includeQualifier;
             _includeGlobalScope = includeGlobalScope;
             _includeArity = includeArity;
         }
 
         public bool IncludeSymbolKind => _includeSymbolKind;
+        public bool IncludeSymbolDisplayKind => _includeSymbolDisplayKind;
         public bool IncludeQualifier => _includeQualifier;
         public bool IncludeArity => _includeArity;
         public bool IncludeGlobalScope => _includeGlobalScope;
@@ -35,6 +38,11 @@ namespace MetaDslx.CodeAnalysis.Symbols
             if (symbol is null) return string.Empty;
             var builder = PooledStringBuilder.GetInstance();
             var sb = builder.Builder;
+            if (IncludeSymbolDisplayKind)
+            {
+                sb.Append(symbol.DisplayKind);
+                sb.Append(" '");
+            }
             if (symbol is DeclaredSymbol declaredSymbol)
             {
                 if (IncludeQualifier)
@@ -59,6 +67,10 @@ namespace MetaDslx.CodeAnalysis.Symbols
             else 
             {
                 sb.Append(IncludeArity ? symbol.MetadataName : symbol.Name);
+            }
+            if (IncludeSymbolDisplayKind)
+            {
+                sb.Append("'");
             }
             if (IncludeSymbolKind)
             {

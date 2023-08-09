@@ -51,5 +51,12 @@ namespace MetaDslx.CodeAnalysis.Symbols
         {
             throw new NotImplementedException("TODO:MetaDslx");
         }
+
+        public static DeclaredSymbol UnwrapAlias(LookupContext context, DeclaredSymbol symbol)
+        {
+            if (symbol is AliasSymbol aliasSymbol) return aliasSymbol.GetAliasTarget(context);
+            else return symbol;
+        }
+
     }
 }

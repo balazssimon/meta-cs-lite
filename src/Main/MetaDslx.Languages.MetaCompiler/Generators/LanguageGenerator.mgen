@@ -8,11 +8,10 @@ using System.Linq
 generator RoslynApiGenerator
 
 template GenerateLanguage(Language language)
+using Autofac;
 using MetaDslx.CodeAnalysis;
 using MetaDslx.CodeAnalysis.Syntax;
 using MetaDslx.CodeAnalysis.Syntax.InternalSyntax;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 
 #nullable enable
 
@@ -33,21 +32,19 @@ namespace [language.QualifiedNamespace]
 
         public new [language.Name]SyntaxFactory SyntaxFactory => ([language.Name]SyntaxFactory)base.SyntaxFactory;
 
-        public new [language.Name]SemanticsFactory SemanticsFactory => ([language.Name]SemanticsFactory)base.SemanticsFactory;
-
         public new [language.Name]CompilationFactory CompilationFactory => ([language.Name]CompilationFactory)base.CompilationFactory;
 
-        protected override void RegisterServicesCore(ServiceCollection services)
+        protected override void RegisterServicesCore(ContainerBuilder services)
         {
             RegisterServices(services);
-            services.TryAddSingleton<SyntaxFacts, [language.Name]SyntaxFacts>();
-            services.TryAddSingleton<InternalSyntaxFactory, [language.Name]InternalSyntaxFactory>();
-            services.TryAddSingleton<SyntaxFactory, [language.Name]SyntaxFactory>();
-            services.TryAddSingleton<SemanticsFactory, [language.Name]SemanticsFactory>();
-            services.TryAddSingleton<CompilationFactory, [language.Name]CompilationFactory>();
+            services.RegisterType<[language.Name]SyntaxFacts>().As<SyntaxFacts>().SingleInstance().IfNotRegistered(typeof(SyntaxFacts));
+            services.RegisterType<[language.Name]InternalSyntaxFactory>().As<InternalSyntaxFactory>().SingleInstance().IfNotRegistered(typeof(InternalSyntaxFactory));
+            services.RegisterType<[language.Name]SyntaxFactory>().As<SyntaxFactory>().SingleInstance().IfNotRegistered(typeof(SyntaxFactory));
+            services.RegisterType<[language.Name]CompilationFactory>().As<CompilationFactory>().SingleInstance().IfNotRegistered(typeof(CompilationFactory));
+            services.RegisterType<[language.Name]SemanticsFactory>().As<SemanticsFactory>().InstancePerLifetimeScope().IfNotRegistered(typeof(SemanticsFactory));
         }
 
-        partial void RegisterServices(ServiceCollection services);
+        partial void RegisterServices(ContainerBuilder services);
     }
 }
 end template

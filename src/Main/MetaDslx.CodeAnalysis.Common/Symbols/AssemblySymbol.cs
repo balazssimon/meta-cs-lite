@@ -13,5 +13,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
         }
 
         public abstract ImmutableArray<ModuleSymbol> Modules { get; }
+
+        public virtual bool IsCorLibrary => false;
     }
 }

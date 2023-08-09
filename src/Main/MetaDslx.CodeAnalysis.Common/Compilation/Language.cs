@@ -1,10 +1,9 @@
-﻿using MetaDslx.CodeAnalysis.Binding;
+﻿using Autofac;
+using MetaDslx.CodeAnalysis.Binding;
 using MetaDslx.CodeAnalysis.Declarations;
 using MetaDslx.CodeAnalysis.Syntax;
 using MetaDslx.CodeAnalysis.Syntax.InternalSyntax;
 using MetaDslx.CodeAnalysis.Text;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -16,47 +15,44 @@ namespace MetaDslx.CodeAnalysis
     {
         internal static readonly Language NoLanguage = new NoLanguageImplementation();
 
-        private IServiceProvider _serviceProvider;
+        private IContainer _serviceProvider;
         private SyntaxFacts _syntaxFacts;
         private InternalSyntaxFactory _internalSyntaxFactory;
         private SyntaxFactory _syntaxFactory;
-        private SemanticsFactory _semanticsFactory;
         private CompilationFactory _compilationFactory;
 
         public Language()
         {
-            var services = new ServiceCollection();
-            services.AddSingleton<Language>(this);
+            var services = new ContainerBuilder();
+            services.RegisterInstance<Language>(this);
             RegisterServicesCore(services);
-            _serviceProvider = services.BuildServiceProvider(validateScopes: true);
-            _syntaxFacts = _serviceProvider.GetRequiredService<SyntaxFacts>();
-            _internalSyntaxFactory = _serviceProvider.GetRequiredService<InternalSyntaxFactory>();
-            _syntaxFactory = _serviceProvider.GetRequiredService<SyntaxFactory>();
-            _semanticsFactory = _serviceProvider.GetRequiredService<SemanticsFactory>();
-            _compilationFactory = _serviceProvider.GetRequiredService<CompilationFactory>();
+            _serviceProvider = services.Build();
+            _syntaxFacts = _serviceProvider.Resolve<SyntaxFacts>();
+            _internalSyntaxFactory = _serviceProvider.Resolve<InternalSyntaxFactory>();
+            _syntaxFactory = _serviceProvider.Resolve<SyntaxFactory>();
+            _compilationFactory = _serviceProvider.Resolve<CompilationFactory>();
         }
 
         public abstract string Name { get; }
-        public IServiceProvider ServiceProvider => _serviceProvider;
+        public IContainer ServiceProvider => _serviceProvider;
         public InternalSyntaxFactory InternalSyntaxFactory => _internalSyntaxFactory;
         public SyntaxFacts SyntaxFacts => _syntaxFacts;
         public SyntaxFactory SyntaxFactory => _syntaxFactory;
-        public SemanticsFactory SemanticsFactory => _semanticsFactory;
         public CompilationFactory CompilationFactory => _compilationFactory;
 
-        protected abstract void RegisterServicesCore(ServiceCollection services);
+        protected abstract void RegisterServicesCore(ContainerBuilder services);
 
         private class NoLanguageImplementation : Language
         {
             public override string Name => "<none>";
 
-            protected override void RegisterServicesCore(ServiceCollection services)
+            protected override void RegisterServicesCore(ContainerBuilder services)
             {
-                services.AddSingleton<SyntaxFacts, NoSyntaxFacts>();
-                services.AddSingleton<InternalSyntaxFactory, NoInternalSyntaxFactory>();
-                services.AddSingleton<SyntaxFactory, NoSyntaxFactory>();
-                services.AddSingleton<SemanticsFactory, NoSemanticsFactory>();
-                services.AddSingleton<CompilationFactory, NoCompilationFactory>();
+                services.RegisterType<NoSyntaxFacts>().As<SyntaxFacts>().SingleInstance();
+                services.RegisterType<NoInternalSyntaxFactory>().As<InternalSyntaxFactory>().SingleInstance();
+                services.RegisterType<NoSyntaxFactory>().As<SyntaxFactory>().SingleInstance();
+                services.RegisterType<NoCompilationFactory>().As<CompilationFactory>().SingleInstance();
+                services.RegisterType<NoSemanticsFactory>().As<SemanticsFactory>().InstancePerLifetimeScope();
             }
 
         }
@@ -265,6 +261,11 @@ namespace MetaDslx.CodeAnalysis
 
         private class NoSemanticsFactory : SemanticsFactory
         {
+            public NoSemanticsFactory(Compilation compilation) 
+                : base(compilation)
+            {
+            }
+
             public override BinderFactoryVisitor CreateBinderFactoryVisitor(BinderFactory binderFactory)
             {
                 throw new NotImplementedException();

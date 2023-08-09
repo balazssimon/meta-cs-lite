@@ -1,5 +1,6 @@
 ﻿using MetaDslx.CodeAnalysis.Declarations;
 using MetaDslx.CodeAnalysis.PooledObjects;
+using MetaDslx.CodeAnalysis.Symbols.Model;
 using MetaDslx.CodeAnalysis.Symbols.Source;
 using MetaDslx.CodeAnalysis.Syntax.InternalSyntax;
 using MetaDslx.CodeAnalysis.Text;
@@ -65,7 +66,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
         /// Returns true if the symbol could not be resolved, 
         /// and this symbol serves as a placeholder, instead.
         /// </summary>
-        public virtual bool IsError => false;
+        public virtual bool IsError => this is IErrorSymbol;
 
         /// <summary>
         /// Returns true if this symbol was automatically created by the compiler, and does not
@@ -114,6 +115,36 @@ namespace MetaDslx.CodeAnalysis.Symbols
                 else if (typeName.StartsWith("Model")) typeName = typeName.Substring(5);
                 else if (typeName.StartsWith("CSharp")) typeName = typeName.Substring(6);
                 return typeName;
+            }
+        }
+
+        public virtual string DisplayKind
+        {
+            get
+            {
+                var kind = this.Kind;
+                if (kind == "Declared") kind = "Declaration";
+                var builder = PooledStringBuilder.GetInstance();
+                var sb = builder.Builder;
+                foreach (var ch in kind)
+                {
+                    if (ch >= 'A' && ch <= 'Z')
+                    {
+                        if (sb.Length > 0) sb.Append(' ');
+                        sb.Append(char.ToLower(ch));
+                    }
+                    else
+                    {
+                        sb.Append(ch);
+                    }
+                }
+                if (this is IModelSymbol modelSymbol)
+                {
+                    sb.Append("[");
+                    sb.Append(modelSymbol.ModelObjectType.Name);
+                    sb.Append("]");
+                }
+                return builder.ToStringAndFree();
             }
         }
 

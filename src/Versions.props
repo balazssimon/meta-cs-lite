@@ -37,7 +37,7 @@
     <SystemThreadingTasksExtensionsVersion>4.5.4</SystemThreadingTasksExtensionsVersion>
     <SystemMemoryVersion>4.5.4</SystemMemoryVersion>
     <SystemRuntimeCompilerServicesUnsafeVersion>6.0.0</SystemRuntimeCompilerServicesUnsafeVersion>
-    <MicrosoftDependencyInjectionVersion>6.0.0</MicrosoftDependencyInjectionVersion>
+    <AutofacVersion>7.0.1</AutofacVersion>
     <MicrosoftBuildVersion>16.8.0</MicrosoftBuildVersion>
     <MicrosoftCodeAnalysisCSharpVersion>4.0.1</MicrosoftCodeAnalysisCSharpVersion>
     <MicrosoftCodeAnalysisAnalyzersVersion>3.3.3</MicrosoftCodeAnalysisAnalyzersVersion>

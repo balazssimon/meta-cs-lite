@@ -16,14 +16,19 @@ using Microsoft.CodeAnalysis;
 using MetaDslx.CodeAnalysis.Text;
 using MetaDslx.CodeAnalysis.Symbols.CSharp;
 using MetaDslx.CodeAnalysis.Symbols.Source;
+using Autofac;
+using MetaDslx.CodeAnalysis.Symbols.Errors;
 
 namespace MetaDslx.CodeAnalysis
 {
     using CSharpCompilation = Microsoft.CodeAnalysis.CSharp.CSharpCompilation;
 
-    public partial class Compilation
+    public partial class Compilation : IDisposable
     {
         private readonly SyntaxAndDeclarationManager _syntaxAndDeclarations;
+
+        private ILifetimeScope _serviceScope;
+        private SemanticsFactory _semanticsFactory;
 
         // When building symbols from the declaration table (lazily), or inside a type, or when
         // compiling a method body, we may not have a Binder in hand for the enclosing
@@ -48,7 +53,8 @@ namespace MetaDslx.CodeAnalysis
 
         private readonly DiagnosticBag _declarationDiagnostics = new DiagnosticBag();
 
-        private ILookupValidator _defaultLookupValidator;
+        private DefaultLookupValidator _defaultLookupValidator;
+        private ErrorSymbolFactory _errorSymbolFactory;
 
         internal protected Compilation(
             string? assemblyName,
@@ -66,6 +72,9 @@ namespace MetaDslx.CodeAnalysis
 
             _assemblyName = assemblyName;
             _mainLanguage = mainLanguage ?? Language.NoLanguage;
+            _serviceScope = _mainLanguage.ServiceProvider.BeginLifetimeScope(
+                builder => builder.RegisterInstance<Compilation>(this));
+            
             _options = options;
             _externalReferences = references;
             _scriptCompilationInfo = scriptCompilationInfo;
@@ -101,12 +110,30 @@ namespace MetaDslx.CodeAnalysis
             //if (EventQueue != null) EventQueue.TryEnqueue(new CompilationStartedEvent(this));
         }
 
+        public void Dispose()
+        {
+            _serviceScope.Dispose();
+        }
+
         public string? Name => _assemblyName;
         public Language MainLanguage => _mainLanguage;
+        public ILifetimeScope ServiceScope => _serviceScope;
         public CompilationOptions Options => _options;
         public ScriptCompilationInfo? ScriptCompilationInfo => _scriptCompilationInfo;
         public ReferenceManager ReferenceManager => _referenceManager;
         public ImmutableArray<MetadataReference> ExternalReferences => _externalReferences;
+
+        public SemanticsFactory SemanticsFactory
+        {
+            get
+            {
+                if (_semanticsFactory is null)
+                {
+                    Interlocked.CompareExchange(ref _semanticsFactory, _serviceScope.Resolve<SemanticsFactory>(), null);
+                }
+                return _semanticsFactory;
+            }
+        }
 
         public AccessCheck AccessCheck
         {
@@ -723,13 +750,13 @@ namespace MetaDslx.CodeAnalysis
             return factory.GetEnclosingBinder(span);
         }
 
-        internal ILookupValidator DefaultLookupValidator
+        internal DefaultLookupValidator DefaultLookupValidator
         {
             get
             {
                 if (_defaultLookupValidator is null)
                 {
-                    Interlocked.CompareExchange(ref _defaultLookupValidator, MainLanguage.CompilationFactory.CreateDefaultLookupValidator(this), null);
+                    Interlocked.CompareExchange(ref _defaultLookupValidator, SemanticsFactory.CreateDefaultLookupValidator(), null);
                 }
                 return _defaultLookupValidator;
             }
@@ -771,6 +798,17 @@ namespace MetaDslx.CodeAnalysis
 
         #region Semantic Analysis
 
+        public ErrorSymbolFactory ErrorSymbolFactory
+        {
+            get
+            {
+                if (_errorSymbolFactory is null)
+                {
+                    Interlocked.CompareExchange(ref _errorSymbolFactory, MainLanguage.CompilationFactory.CreateErrorSymbolFactory(this), null);
+                }
+                return _errorSymbolFactory;
+            }
+        }
 
 
         #endregion
