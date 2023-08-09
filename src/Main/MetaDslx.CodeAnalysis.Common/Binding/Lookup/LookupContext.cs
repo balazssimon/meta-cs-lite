@@ -158,6 +158,30 @@ namespace MetaDslx.CodeAnalysis.Binding
             _useSiteDiagnostics.Clear();
         }
 
+        public virtual void ClearResult()
+        {
+            _result.Clear();
+            _diagnostics.Clear();
+            _useSiteDiagnostics.Clear();
+        }
+
+        public virtual LookupContext AllocateCopy()
+        {
+            var context = Compilation[Language].SemanticsFactory.LookupContextPool.Allocate();
+            context.OriginalBinder = _originalBinder;
+            context.Location = _location;
+            context.Validators.UnionWith(_validators);
+            context.ViableNames.UnionWith(_viableNames);
+            context.ViableMetadataNames.UnionWith(_viableMetadataNames);
+            context.Alias = _alias;
+            context.Qualifier = _qualifier;
+            context.QualifierContext = _qualifierContext;
+            context.BaseTypesBeingResolved.UnionWith(_baseTypesBeingResolved);
+            context.AccessThroughType = _accessThroughType;
+            context._flags = _flags;
+            return context;
+        }
+
         public void SetName(string name, string? metadataName = null)
         {
             _viableNames.Clear();
@@ -170,6 +194,11 @@ namespace MetaDslx.CodeAnalysis.Binding
         {
             _qualifier = qualifier;
             _qualifierContext = qualifierContext;
+        }
+
+        public void AddValidator(ILookupValidator validator)
+        {
+            _validators.Add(validator);
         }
 
         public bool IsViable(DeclaredSymbol symbol)
@@ -218,6 +247,22 @@ namespace MetaDslx.CodeAnalysis.Binding
             _result.MergeEqual(result);
         }
 
+        public void AddResults(IEnumerable<DeclaredSymbol> symbols)
+        {
+            foreach (var symbol in symbols)
+            {
+                AddResult(symbol);
+            }
+        }
+
+        public void AddResults(LookupCandidates candidates)
+        {
+            foreach (var symbol in candidates.Symbols)
+            {
+                AddResult(symbol);
+            }
+            if (this.Diagnose) this.UseSiteDiagnostics.UnionWith(candidates.UseSiteDiagnostics);
+        }
         /// <summary>
         /// Retrieves the single best result of the lookup. Never gives a null result:
         /// if the symbol could not be resolved, an error symbol will be returned.
@@ -227,6 +272,12 @@ namespace MetaDslx.CodeAnalysis.Binding
         public bool TryGetResultSymbol(DiagnosticBag diagnostics, out DeclaredSymbol resultSymbol)
         {
             return DefaultLookupValidator.TryGetResultSymbol(this, diagnostics, out resultSymbol);
+        }
+
+        public void MergeHidingLookupCandidates(LookupCandidates resultHiding, LookupCandidates resultHidden)
+        {
+            // TODO:MetaDslx
+            resultHiding.Merge(resultHidden);
         }
     }
 }
