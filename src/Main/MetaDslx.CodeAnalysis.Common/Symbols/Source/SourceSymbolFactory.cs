@@ -1,12 +1,18 @@
-﻿using MetaDslx.CodeAnalysis.Declarations;
+﻿using MetaDslx.CodeAnalysis.Binding;
+using MetaDslx.CodeAnalysis.Declarations;
 using MetaDslx.CodeAnalysis.PooledObjects;
+using MetaDslx.CodeAnalysis.Symbols.Model;
 using MetaDslx.Modeling;
+using Microsoft.CodeAnalysis;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.ComponentModel;
+using System.Diagnostics;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading;
 using System.Xml.Linq;
 
 namespace MetaDslx.CodeAnalysis.Symbols.Source
@@ -24,6 +30,8 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
             Register<NamedTypeSymbol>((s, d, mo) => new SourceNamedTypeSymbol(s, d, mo));
             Register<DeclaredSymbol>((s, d, mo) => new SourceDeclaredSymbol(s, d, mo));
         }
+
+        protected Compilation Compilation => _module.DeclaringCompilation;
 
         protected void Register<TSymbol>(Func<Symbol, MergedDeclaration, IModelObject, TSymbol> constructor)
             where TSymbol : Symbol
@@ -89,6 +97,144 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
                 }
             }
             return info;
+        }
+
+        public ImmutableArray<TValue> GetSymbolPropertyValues<TValue>(ISourceSymbol? symbol, string symbolProperty, DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        {
+            if (symbol is null) return ImmutableArray<TValue>.Empty;
+            var modelObject = symbol.ModelObject;
+            if (modelObject is null) return ImmutableArray<TValue>.Empty;
+            var builder = ArrayBuilder<TValue>.GetInstance();
+            foreach (var prop in modelObject.PublicProperties.Where(prop => prop.SymbolProperty == symbolProperty))
+            {
+                foreach (var decl in symbol.DeclaringSyntaxReferences)
+                {
+                    cancellationToken.ThrowIfCancellationRequested();
+                    Binder? declBinder = null;
+                    var binder = Compilation.GetBinder(decl);
+                    while (binder is not null)
+                    {
+                        if (binder is IDefineBinder defineBinder && defineBinder.DefinedSymbols.Contains((Symbol)symbol))
+                        {
+                            declBinder = binder;
+                            break;
+                        }
+                        binder = binder.ParentBinder;
+                    }
+                    if (declBinder is null)
+                    {
+                        if (symbolProperty == nameof(DeclaredSymbol.Members))
+                        {
+                            foreach (var location in symbol.Locations)
+                            {
+                                if (decl.SyntaxTree == location.SourceTree && decl.Span.Contains(location.SourceSpan))
+                                {
+                                    binder = Compilation.GetEnclosingBinder(location.SourceTree, location.SourceSpan);
+                                    NestingBinder? nestingBinder = null;
+                                    while (binder is not null)
+                                    {
+                                        if (binder is NestingBinder nestBinder)
+                                        {
+                                            nestingBinder = nestBinder;
+                                            break;
+                                        }
+                                        binder = binder.ParentBinder;
+                                    }
+                                    if (nestingBinder is not null && prop.Name == nestingBinder.Property)
+                                    {
+                                        foreach (var childSymbol in ((Symbol)symbol).ContainedSymbols)
+                                        {
+                                            foreach (var childLocation in childSymbol.Locations)
+                                            {
+                                                if (decl.SyntaxTree == (childLocation as SourceLocation)?.SourceTree && decl.Span.Contains(childLocation.SourceSpan))
+                                                {
+                                                    var value = childSymbol;
+                                                    if (value is TValue tvalue)
+                                                    {
+                                                        builder.Add(tvalue);
+                                                        try
+                                                        {
+                                                            if (value is Symbol symbolValue)
+                                                            {
+                                                                var modelObjectValue = (symbolValue as IModelSymbol)?.ModelObject;
+                                                                if (modelObjectValue is not null)
+                                                                {
+                                                                    modelObject.Add(prop, modelObjectValue);
+                                                                }
+                                                            }
+                                                            else
+                                                            {
+                                                                modelObject.Add(prop, value);
+                                                            }
+                                                        }
+                                                        catch (ModelException ex)
+                                                        {
+                                                            diagnostics.Add(Diagnostic.Create(CommonErrorCode.ERR_InvalidModelObjectPropertyValue, decl.GetLocation(), value, value.GetType(), prop.Name, prop.Type));
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        diagnostics.Add(Diagnostic.Create(CommonErrorCode.ERR_InvalidSymbolPropertyValue, decl.GetLocation(), value, value.GetType(), symbolProperty, typeof(TValue)));
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        else
+                        {
+                            Debug.Assert(false);
+                        }
+                    }
+                    else
+                    {
+                        var propBinders = declBinder.GetPropertyBinders(prop.Name, cancellationToken);
+                        foreach (var propBinder in propBinders)
+                        {
+                            var valueBinders = propBinder.GetValueBinders(propBinder, cancellationToken);
+                            foreach (var ivalueBinder in valueBinders)
+                            {
+                                var valueBinder = (Binder)ivalueBinder;
+                                var bindingContext = new BindingContext(diagnostics, cancellationToken);
+                                var values = valueBinder.Bind(bindingContext);
+                                foreach (var value in values)
+                                {
+                                    if (value is TValue tvalue)
+                                    {
+                                        builder.Add(tvalue);
+                                        try
+                                        {
+                                            if (value is Symbol symbolValue)
+                                            {
+                                                var modelObjectValue = (symbolValue as IModelSymbol)?.ModelObject;
+                                                if (modelObjectValue is not null)
+                                                {
+                                                    modelObject.Add(prop, modelObjectValue);
+                                                }
+                                            }
+                                            else
+                                            {
+                                                modelObject.Add(prop, value);
+                                            }
+                                        }
+                                        catch (ModelException ex)
+                                        {
+                                            diagnostics.Add(Diagnostic.Create(CommonErrorCode.ERR_InvalidModelObjectPropertyValue, decl.GetLocation(), value, value.GetType(), prop.Name, prop.Type));
+                                        }
+                                    }
+                                    else
+                                    {
+                                        diagnostics.Add(Diagnostic.Create(CommonErrorCode.ERR_InvalidSymbolPropertyValue, decl.GetLocation(), value, value.GetType(), symbolProperty, typeof(TValue)));
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            return builder.ToImmutableAndFree();
         }
     }
 }

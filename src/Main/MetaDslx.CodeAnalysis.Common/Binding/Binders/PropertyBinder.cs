@@ -41,11 +41,11 @@ namespace MetaDslx.CodeAnalysis.Binding
         {
             if (_valueOpt.HasValue) base.CollectIdentifierBinders(identifierBinders, cancellationToken);
         }
-
-        protected override void CollectPropertyBinders(ArrayBuilder<IPropertyBinder> propertyBinders, CancellationToken cancellationToken)
+        
+        protected override void CollectPropertyBinders(string? propertyName, ArrayBuilder<IPropertyBinder> propertyBinders, CancellationToken cancellationToken)
         {
-            propertyBinders.Add(this);
-            base.CollectPropertyBinders(propertyBinders, cancellationToken);
+            if (propertyName is null || propertyName == this.Name) propertyBinders.Add(this);
+            base.CollectPropertyBinders(propertyName, propertyBinders, cancellationToken);
         }
 
         protected override void CollectValueBinders(IPropertyBinder propertyBinder, ArrayBuilder<IValueBinder> valueBinders, CancellationToken cancellationToken)

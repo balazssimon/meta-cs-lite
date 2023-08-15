@@ -37,8 +37,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
         private static MemberLookupCache EmptyMemberCache = new MemberLookupCache(ImmutableArray<DeclaredSymbol>.Empty);
         private static ConditionalWeakTable<DeclaredSymbol, object> s_typeArguments = new ConditionalWeakTable<DeclaredSymbol, object>();
         private static ConditionalWeakTable<DeclaredSymbol, object> s_imports = new ConditionalWeakTable<DeclaredSymbol, object>();
-        private static ConditionalWeakTable<DeclaredSymbol, object> s_members = new ConditionalWeakTable<DeclaredSymbol, object>();
-        private static ConditionalWeakTable<DeclaredSymbol, MemberLookupCache> s_memberLookup = new ConditionalWeakTable<DeclaredSymbol, MemberLookupCache>();
+        private static ConditionalWeakTable<DeclaredSymbol, MemberLookupCache> s_members = new ConditionalWeakTable<DeclaredSymbol, MemberLookupCache>();
 
         protected DeclaredSymbol(Symbol container) 
             : base(container)
@@ -214,7 +213,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
         private MemberLookupCache GetMemberLookupCache()
         {
             ForceComplete(CompletionParts.FinishComputingProperty_Members, null, default);
-            if (s_memberLookup.TryGetValue(this, out var members)) return members;
+            if (s_members.TryGetValue(this, out var members)) return members;
             else return EmptyMemberCache;
         }
 
@@ -254,6 +253,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
             }
             else if (incompletePart == CompletionParts.StartComputingProperty_Members || incompletePart == CompletionParts.FinishComputingProperty_Members)
             {
+                //ContainingDeclaration?.ForceComplete(CompletionParts.FinishComputingProperty_Members, null, cancellationToken);
                 if (NotePartComplete(CompletionParts.StartComputingProperty_Members))
                 {
                     var diagnostics = DiagnosticBag.GetInstance();

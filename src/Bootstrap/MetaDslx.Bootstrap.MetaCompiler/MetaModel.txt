@@ -4,6 +4,7 @@ using System;
 using MetaDslx.CodeAnalysis.Annotations;
 using MetaDslx.CodeAnalysis.Binding;
 using MetaDslx.Examples.MetaModel.Model;
+using MetaDslx.Examples.MetaModel;
 
 language MetaModel;
 
@@ -11,12 +12,16 @@ language MetaModel;
 main : namespaceDeclaration eof;
 
 [Define(MetaNamespace)]
-namespaceDeclaration : 'namespace' [Nesting(MetaNamespace,Declarations)] qualifiedName ';' declarations;
+namespaceDeclaration : 'namespace' [Nesting(MetaNamespace,Declarations)] qualifiedName ';' usingDeclarations declarations;
 
-declarations : usingDeclaration* metaModelDeclaration declaration*;
+usingDeclarations : usingDeclaration*;
 
 [Import]
 usingDeclaration : 'using' [Use(MetaNamespace)] qualifier ';';
+
+[Scope]
+[Property(Declarations)]
+declarations : metaModelDeclaration declaration*;
 
 [Define(MetaModel)]
 metaModelDeclaration : 'metamodel' name ';';
@@ -45,6 +50,7 @@ propertyModifier : [Constant(MetaPropertyKind.Derived)] 'derived' | [Property(Is
 propertyRedefinition : 'redefines' [Property(RedefinedProperties)][Use(MetaProperty)] qualifierList;
 propertySubsetting : 'subsets' [Property(SubsettedProperties)][Use(MetaProperty)] qualifierList;
 
+[Association]
 associationDeclaration : 'association' [Use(MetaProperty)] qualifier 'with' [Use(MetaProperty)] qualifier ';';
 
 typeReference : primitiveType | collectionType | nullableType | [Use(MetaType)] qualifier;

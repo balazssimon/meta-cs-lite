@@ -118,5 +118,15 @@ namespace MetaDslx.CodeAnalysis
         /// The name '{0}' could not be found (are you missing a using directive or an assembly reference?)
         /// </summary>
         public static readonly DiagnosticDescriptor ERR_SingleNameNotFound = DiagnosticDescriptor.Error(nameof(ERR_SingleNameNotFound), "Name not found", "The name '{0}' could not be found (are you missing a using directive or an assembly reference?)");
+
+        /// <summary>
+        /// Value '{0}' of type '{1}' cannot be assigned to symbol property '{2}' of type '{3}'
+        /// </summary>
+        public static readonly DiagnosticDescriptor ERR_InvalidSymbolPropertyValue = DiagnosticDescriptor.Error(nameof(ERR_InvalidSymbolPropertyValue), "Invalid value", "Value '{0}' of type '{1}' cannot be assigned to symbol property '{2}' of type '{3}'");
+
+        /// <summary>
+        /// Value '{0}' of type '{1}' cannot be assigned to model property '{2}' of type '{3}'
+        /// </summary>
+        public static readonly DiagnosticDescriptor ERR_InvalidModelObjectPropertyValue = DiagnosticDescriptor.Error(nameof(ERR_InvalidModelObjectPropertyValue), "Invalid value", "Value '{0}' of type '{1}' cannot be assigned to model property '{2}' of type '{3}'");
     }
 }

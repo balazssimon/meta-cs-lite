@@ -50,12 +50,29 @@ namespace MetaDslx.CodeAnalysis.Binding
         {
         }
 
-        protected override void CollectPropertyBinders(ArrayBuilder<IPropertyBinder> propertyBinders, CancellationToken cancellationToken)
+        protected override void CollectValueBinders(IPropertyBinder propertyBinder, ArrayBuilder<IValueBinder> valueBinders, CancellationToken cancellationToken)
         {
         }
 
-        protected override void CollectValueBinders(IPropertyBinder propertyBinder, ArrayBuilder<IValueBinder> valueBinders, CancellationToken cancellationToken)
+        protected override void AddLookupCandidateSymbolsInScope(LookupContext context, LookupCandidates result)
         {
+            if (context.Qualifier is null)
+            {
+                foreach (var containingSymbol in ContainingSymbols)
+                {
+                    var declaredSymbol = containingSymbol as DeclaredSymbol;
+                    if (declaredSymbol is not null)
+                    {
+                        context.Qualifier = declaredSymbol;
+                        base.AddLookupCandidateSymbolsInScope(context, result);
+                        context.Qualifier = null;
+                    }
+                }
+            }
+            else
+            {
+                base.AddLookupCandidateSymbolsInScope(context, result);
+            }
         }
 
         public override string ToString()

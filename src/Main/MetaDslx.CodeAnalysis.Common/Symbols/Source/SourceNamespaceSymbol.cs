@@ -48,5 +48,11 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
         {
             return ((SourceModuleSymbol)ContainingModule).SymbolFactory.CreateContainedSymbols(this);
         }
+
+        protected override ImmutableArray<DeclaredSymbol> CompleteProperty_Members(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        {
+            if (this.IsGlobalNamespace) return ContainedSymbols.OfType<DeclaredSymbol>().ToImmutableArray();
+            else return ((SourceModuleSymbol)ContainingModule).SymbolFactory.GetSymbolPropertyValues<DeclaredSymbol>(this, nameof(Members), diagnostics, cancellationToken);
+        }
     }
 }

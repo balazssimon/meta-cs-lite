@@ -74,48 +74,58 @@ namespace MetaDslx.CodeAnalysis.Binding
         {
             var span = syntax.FullSpan;
             var parentStack = ArrayBuilder<Binder>.GetInstance();
-            parentStack.Add(parent);
-            var repeat = true;
-            while (repeat)
+            try
             {
-                repeat = false;
-                var currentParent = parentStack[parentStack.Count - 1];
-                foreach (var child in currentParent.GetChildBinders(resolveLazy: true))
+                parentStack.Add(parent);
+                var i = 0;
+                while (i < parentStack.Count)
                 {
-                    if (child.FullSpan.Contains(span))
+                    var currentParent = parentStack[i++];
+                    foreach (var child in currentParent.GetChildBinders(resolveLazy: true))
                     {
-                        parentStack.Add(child);
-                        repeat = true;
-                        break;
+                        if (child.FullSpan.Contains(span))
+                        {
+                            parentStack.Add(child);
+                        }
                     }
                 }
+                for (i = parentStack.Count - 1; i >= 0; --i)
+                {
+                    var currentParent = parentStack[i];
+                    if (currentParent.Syntax == syntax) return currentParent;
+                }
+                return null;
             }
-            for (int i = parentStack.Count - 1; i >= 0; --i)
+            finally
             {
-                var currentParent = parentStack[i];
-                if (currentParent.Syntax == syntax) return currentParent;
+                parentStack.Free();
             }
-            return null;
         }
 
         private Binder? GetBinder(Binder parent, TextSpan span)
         {
-            var currentParent = parent;
-            var repeat = true;
-            while (repeat)
+            var parentStack = ArrayBuilder<Binder>.GetInstance();
+            try
             {
-                repeat = false;
-                foreach (var child in currentParent.GetChildBinders(resolveLazy: true))
+                parentStack.Add(parent);
+                var i = 0;
+                while (i < parentStack.Count)
                 {
-                    if (child.FullSpan.Contains(span))
+                    var currentParent = parentStack[i++];
+                    foreach (var child in currentParent.GetChildBinders(resolveLazy: true))
                     {
-                        currentParent = child;
-                        repeat = true;
-                        break;
+                        if (child.FullSpan.Contains(span))
+                        {
+                            parentStack.Add(child);
+                        }
                     }
                 }
+                return parentStack.Count > 0 ? parentStack[parentStack.Count - 1] : null;
             }
-            return parent;
+            finally
+            {
+                parentStack.Free();
+            }
         }
 
         public ImmutableArray<Binder> GetChildBinders(bool resolveLazy = false, CancellationToken cancellationToken = default)
@@ -209,7 +219,10 @@ namespace MetaDslx.CodeAnalysis.Binding
         public ImmutableArray<INameBinder> GetNameBinders(CancellationToken cancellationToken = default)
         {
             var nameBinders = ArrayBuilder<INameBinder>.GetInstance();
-            CollectNameBinders(nameBinders, cancellationToken);
+            foreach (var child in GetChildBinders(false, cancellationToken))
+            {
+                child.CollectNameBinders(nameBinders, cancellationToken);
+            }
             return nameBinders.ToImmutableAndFree();
         }
 
@@ -224,7 +237,10 @@ namespace MetaDslx.CodeAnalysis.Binding
         public ImmutableArray<IQualifierBinder> GetQualifierBinders(CancellationToken cancellationToken = default)
         {
             var qualifierBinders = ArrayBuilder<IQualifierBinder>.GetInstance();
-            CollectQualifierBinders(qualifierBinders, cancellationToken);
+            foreach (var child in GetChildBinders(false, cancellationToken))
+            {
+                child.CollectQualifierBinders(qualifierBinders, cancellationToken);
+            }
             return qualifierBinders.ToImmutableAndFree();
         }
 
@@ -239,7 +255,10 @@ namespace MetaDslx.CodeAnalysis.Binding
         public ImmutableArray<IIdentifierBinder> GetIdentifierBinders(CancellationToken cancellationToken = default)
         {
             var identifierBinders = ArrayBuilder<IIdentifierBinder>.GetInstance();
-            CollectIdentifierBinders(identifierBinders, cancellationToken);
+            foreach (var child in GetChildBinders(false, cancellationToken))
+            {
+                child.CollectIdentifierBinders(identifierBinders, cancellationToken);
+            }
             return identifierBinders.ToImmutableAndFree();
         }
 
@@ -251,25 +270,31 @@ namespace MetaDslx.CodeAnalysis.Binding
             }
         }
 
-        public ImmutableArray<IPropertyBinder> GetPropertyBinders(CancellationToken cancellationToken = default)
+        public ImmutableArray<IPropertyBinder> GetPropertyBinders(string? propertyName = null, CancellationToken cancellationToken = default)
         {
             var propertyBinders = ArrayBuilder<IPropertyBinder>.GetInstance();
-            CollectPropertyBinders(propertyBinders, cancellationToken);
+            foreach (var child in GetChildBinders(false, cancellationToken))
+            {
+                child.CollectPropertyBinders(propertyName, propertyBinders, cancellationToken);
+            }
             return propertyBinders.ToImmutableAndFree();
         }
 
-        protected virtual void CollectPropertyBinders(ArrayBuilder<IPropertyBinder> propertyBinders, CancellationToken cancellationToken)
+        protected virtual void CollectPropertyBinders(string? propertyName, ArrayBuilder<IPropertyBinder> propertyBinders, CancellationToken cancellationToken)
         {
             foreach (var child in GetChildBinders(false, cancellationToken))
             {
-                child.CollectPropertyBinders(propertyBinders, cancellationToken);
+                child.CollectPropertyBinders(propertyName, propertyBinders, cancellationToken);
             }
         }
 
         public ImmutableArray<IValueBinder> GetValueBinders(IPropertyBinder propertyBinder, CancellationToken cancellationToken = default)
         {
             var valueBinders = ArrayBuilder<IValueBinder>.GetInstance();
-            CollectValueBinders(propertyBinder, valueBinders, cancellationToken);
+            foreach (var child in GetChildBinders(false, cancellationToken))
+            {
+                child.CollectValueBinders(propertyBinder, valueBinders, cancellationToken);
+            }
             return valueBinders.ToImmutableAndFree();
         }
 

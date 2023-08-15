@@ -40,7 +40,8 @@ namespace MetaDslx.CodeAnalysis.Symbols.Model
 
         protected override ImmutableArray<DeclaredSymbol> CompleteProperty_Members(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            return ((ModelModuleSymbol)ContainingModule).SymbolFactory.GetSymbolPropertyValues<DeclaredSymbol>(_modelObject, nameof(Members));
+            if (this.IsGlobalNamespace) return ContainedSymbols.OfType<DeclaredSymbol>().ToImmutableArray();
+            else return ((ModelModuleSymbol)ContainingModule).SymbolFactory.GetSymbolPropertyValues<DeclaredSymbol>(_modelObject, nameof(Members), diagnostics, cancellationToken);
         }
     }
 }

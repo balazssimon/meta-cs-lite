@@ -105,7 +105,7 @@ namespace MetaDslx.CodeAnalysis.Binding
         {
         }
 
-        protected override void CollectPropertyBinders(ArrayBuilder<IPropertyBinder> propertyBinders, CancellationToken cancellationToken)
+        protected override void CollectPropertyBinders(string? propertyName, ArrayBuilder<IPropertyBinder> propertyBinders, CancellationToken cancellationToken)
         {
         }
 

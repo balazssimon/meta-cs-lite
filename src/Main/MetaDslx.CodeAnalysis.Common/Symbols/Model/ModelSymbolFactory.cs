@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using System.Text;
+using System.Threading;
 
 namespace MetaDslx.CodeAnalysis.Symbols.Model
 {
@@ -83,7 +84,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Model
             return builder.ToImmutableAndFree();
         }
 
-        public ImmutableArray<TSymbol> GetSymbolPropertyValues<TSymbol>(IModelObject? modelObject, string symbolProperty)
+        public ImmutableArray<TSymbol> GetSymbolPropertyValues<TSymbol>(IModelObject? modelObject, string symbolProperty, DiagnosticBag diagnostics, CancellationToken cancellationToken)
             where TSymbol : Symbol
         {
             if (modelObject is null) return ImmutableArray<TSymbol>.Empty;
@@ -93,10 +94,18 @@ namespace MetaDslx.CodeAnalysis.Symbols.Model
             {
                 foreach (var item in modelObject.GetValues(prop).OfType<IModelObject>())
                 {
+                    cancellationToken.ThrowIfCancellationRequested();
                     if (values.Add(item))
                     {
                         var symbol = GetSymbol(modelObject);
-                        if (symbol is TSymbol typedSymbol) builder.Add(typedSymbol);
+                        if (symbol is TSymbol typedSymbol)
+                        {
+                            builder.Add(typedSymbol);
+                        }
+                        else
+                        {
+                            diagnostics.Add(Diagnostic.Create(CommonErrorCode.ERR_InvalidSymbolPropertyValue, null, symbol, symbol.GetType(), symbolProperty, typeof(TSymbol)));
+                        }
                     }
                 }
             }
