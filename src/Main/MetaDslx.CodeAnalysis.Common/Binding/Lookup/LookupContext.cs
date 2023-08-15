@@ -62,7 +62,6 @@ namespace MetaDslx.CodeAnalysis.Binding
 
         public Compilation Compilation => _compilation;
         public Language Language => _language;
-        public SyntaxNodeOrToken Syntax => _originalBinder?.Syntax ?? default;
         public DefaultLookupValidator DefaultLookupValidator => _defaultLookupValidator;
         public ErrorSymbolFactory ErrorSymbolFactory => _errorSymbolFactory;
 
@@ -217,8 +216,7 @@ namespace MetaDslx.CodeAnalysis.Binding
         public SingleLookupResult Validate(DeclaredSymbol symbol)
         {
             var unwrappedSymbol = AliasSymbol.UnwrapAlias(this, symbol);
-            var aliasSymbol = symbol as AliasSymbol;
-            var result = LookupResult.Good(aliasSymbol);
+            var result = LookupResult.Good(symbol);
             var defaultResult = DefaultLookupValidator.ValidateResult(this, symbol, unwrappedSymbol);
             if (defaultResult.Kind > LookupResultKind.Empty && defaultResult.Kind < result.Kind)
             {
@@ -263,15 +261,20 @@ namespace MetaDslx.CodeAnalysis.Binding
             }
             if (this.Diagnose) this.UseSiteDiagnostics.UnionWith(candidates.UseSiteDiagnostics);
         }
+
+        public void AddDiagnostic(Diagnostic diagnostic)
+        {
+            if (this.Diagnose) this.Diagnostics.Add(diagnostic);
+        }
+
         /// <summary>
         /// Retrieves the single best result of the lookup. Never gives a null result:
         /// if the symbol could not be resolved, an error symbol will be returned.
         /// </summary>
-        /// <param name="resultSymbol">The single best result of the lookup.</param>
-        /// <returns>True if the lookup was successful and resultSymbol is the single viable result, false if there were any errors.</returns>
-        public bool TryGetResultSymbol(DiagnosticBag diagnostics, out DeclaredSymbol resultSymbol)
+        public DeclaredSymbol GetResultSymbol()
         {
-            return DefaultLookupValidator.TryGetResultSymbol(this, diagnostics, out resultSymbol);
+            DefaultLookupValidator.TryGetResultSymbol(this, out var resultSymbol);
+            return resultSymbol;
         }
 
         public void MergeHidingLookupCandidates(LookupCandidates resultHiding, LookupCandidates resultHidden)

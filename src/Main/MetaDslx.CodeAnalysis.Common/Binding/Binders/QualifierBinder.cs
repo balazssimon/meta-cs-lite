@@ -88,7 +88,6 @@ namespace MetaDslx.CodeAnalysis.Binding
             {
                 var parent = result[i]?.ContainingSymbol;
                 result[--i] = parent;
-                //Debug.Assert(parent is null || parent.Locations.Contains(((Binder)_identifiers[i]).Location));
                 Debug.Assert(parent is not null && parent.Locations.Contains(((Binder)_identifiers[i]).Location));
             }
             return result.ToImmutableArray();
@@ -96,7 +95,11 @@ namespace MetaDslx.CodeAnalysis.Binding
 
         private ImmutableArray<Symbol?> ResolveUse(BindingContext context)
         {
-            return ImmutableArray<Symbol?>.Empty;
+            var lookupContext = this.AllocateLookupContext(diagnose: true);
+            var identifiers = _identifiers.SelectAsArray(b => ((Binder)b).Syntax);
+            var symbols = this.BindQualifiedName(lookupContext, identifiers);
+            context.AddDiagnostics(lookupContext.Diagnostics);
+            return symbols.Cast<DeclaredSymbol,Symbol>();
         }
 
         public Symbol? GetIdentifierSymbol(BindingContext context, IIdentifierBinder identifier)

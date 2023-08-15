@@ -86,5 +86,16 @@ namespace MetaDslx.CodeAnalysis.Binding
         {
             return null;
         }
+
+        protected override void AddLookupCandidateSymbolsInSingleBinder(LookupContext context, LookupCandidates result)
+        {
+            foreach (var symbol in Compilation.GlobalNamespace.ContainedSymbols)
+            {
+                if (symbol is DeclaredSymbol declaredSymbol && context.IsViable(declaredSymbol))
+                {
+                    result.Add(declaredSymbol);
+                }
+            }
+        }
     }
 }

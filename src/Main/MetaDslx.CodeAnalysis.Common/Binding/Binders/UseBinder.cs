@@ -28,5 +28,10 @@ namespace MetaDslx.CodeAnalysis.Binding
         protected override void CollectNameBinders(ArrayBuilder<INameBinder> nameBinders, CancellationToken cancellationToken)
         {
         }
+
+        protected override void AdjustLookupContext(LookupContext context)
+        {
+            context.Validators.Add(this);
+        }
     }
 }

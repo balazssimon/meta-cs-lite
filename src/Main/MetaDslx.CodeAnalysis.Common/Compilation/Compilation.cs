@@ -793,7 +793,7 @@ namespace MetaDslx.CodeAnalysis
             }
         }
 
-        public NamespaceSymbol GlobalNamespace => SourceModule.GlobalNamespace;
+        public NamespaceSymbol GlobalNamespace => SourceAssembly.GlobalNamespace;
 
         #endregion
 

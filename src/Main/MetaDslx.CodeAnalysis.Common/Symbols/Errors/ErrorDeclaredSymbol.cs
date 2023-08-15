@@ -12,6 +12,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Errors
         public ErrorDeclaredSymbol(Symbol container, DiagnosticInfo errorInfo) 
             : base(container)
         {
+            _errorInfo = errorInfo;
         }
 
         public override ImmutableArray<Location> Locations => ImmutableArray<Location>.Empty;

@@ -17,6 +17,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
         private readonly string _assemblySimpleName;
         private readonly SourceModuleSymbol _sourceModule;
         private readonly IModelGroup _modelGroup;
+        private NamespaceSymbol _globalNamespace;
 
         /// <summary>
         /// A list of modules the assembly consists of. 
@@ -61,6 +62,15 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
         public IModelGroup ModelGroup => _modelGroup;
         public Type ModelObjectType => null;
 
+        public NamespaceSymbol GlobalNamespace
+        {
+            get
+            {
+                ForceComplete(CompletionGraph.FinishCreatingContainedSymbols, null, default);
+                return _globalNamespace;
+            }
+        }
+
         protected override string? CompleteProperty_Name(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             return _assemblySimpleName;
@@ -68,6 +78,9 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
 
         protected override ImmutableArray<Symbol> CompletePart_CreateContainedSymbols(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
+            var moduleGlobalNamespaces = _modules.Select(m => m.GlobalNamespace).ToImmutableArray();
+            var mergedGlobalNamespace = MergedNamespaceSymbol.Create(new NamespaceExtent(this), null, moduleGlobalNamespaces);
+            Interlocked.CompareExchange(ref _globalNamespace, mergedGlobalNamespace, null);
             return _modules.Cast<ModuleSymbol, Symbol>();
         }
     }

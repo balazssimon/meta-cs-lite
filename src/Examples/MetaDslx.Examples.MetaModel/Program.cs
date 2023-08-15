@@ -25,7 +25,8 @@ var mmComp = Compilation.Create(
     {
         MetadataReference.CreateFromMetaModel(Meta.Instance),
         MetadataReference.CreateFromModel(Meta.Model),
-        MetadataReference.CreateFromFile(typeof(string).Assembly.Location) 
+        MetadataReference.CreateFromFile(typeof(string).Assembly.Location),
+        MetadataReference.CreateFromFile(typeof(Compilation).Assembly.Location),
     });
 
 //*/
