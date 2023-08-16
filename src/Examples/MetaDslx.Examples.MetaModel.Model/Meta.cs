@@ -67,8 +67,12 @@ namespace MetaDslx.Examples.MetaModel.Model
     {
     }
 
-    public partial interface MetaAttribute : MetaNamedType
+    [Symbol(typeof(AttributeSymbol))]
+    public partial interface MetaAttribute : MetaNamedElement, MetaTypedElement
     {
+        [SymbolProperty("AttributeClass")]
+        [Redefines(typeof(MetaTypedElement), "Type")]
+        public new MetaNamedType Type { get; set; }
     }
 
     [Symbol(typeof(DeclaredSymbol))]

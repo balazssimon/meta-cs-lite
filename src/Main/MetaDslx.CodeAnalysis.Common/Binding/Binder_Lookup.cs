@@ -75,12 +75,12 @@ namespace MetaDslx.CodeAnalysis.Binding
                 var binder = this.LookupSymbolsInternal(context);
                 var result = context.Result;
                 Debug.Assert((binder != null) || result.IsClear);
-
+                
                 if (result.Kind != LookupResultKind.Viable && result.Kind != LookupResultKind.Empty)
                 {
                     result.Clear();
                     // retry to get diagnosis
-                    context.Diagnose = true;
+                    context.Diagnose = true; 
                     var otherBinder = this.LookupSymbolsInternal(context);
                     Debug.Assert(binder == otherBinder);
                 }

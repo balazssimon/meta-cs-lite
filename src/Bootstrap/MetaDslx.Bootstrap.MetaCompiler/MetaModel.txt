@@ -24,34 +24,37 @@ usingDeclaration : 'using' [Use(MetaNamespace)] qualifier ';';
 declarations : metaModelDeclaration declaration*;
 
 [Define(MetaModel)]
-metaModelDeclaration : 'metamodel' name ';';
+metaModelDeclaration : attribute* 'metamodel' name ';';
 
 declaration : enumDeclaration | classDeclaration | associationDeclaration;
 
+[Property(Attributes)]
+attribute : '[' [Property(Type)][Use(MetaNamedType)] qualifier ']';
+
 [Define(MetaEnum)]
-enumDeclaration : 'enum' name enumBody;
+enumDeclaration : attribute* 'enum' name enumBody;
 [Scope]
 enumBody : '{' enumLiterals? '}';
 [Property(EnumLiterals)]
 enumLiterals : enumLiteral (',' enumLiteral)* ;
 
 [Define(MetaEnumLiteral)]
-enumLiteral : name;
+enumLiteral : attribute* name;
 
 [Define(MetaClass)]
-classDeclaration : [Property(IsAbstract,true)] 'abstract'? 'class' name (':' [Property(BaseClasses)][Use(MetaClass)] qualifierList)? classBody;
+classDeclaration : attribute* [Property(IsAbstract,true)] 'abstract'? 'class' name (':' [Property(BaseClasses)][Use(MetaClass)] qualifierList)? classBody;
 [Scope]
 classBody : '{' [Property(Properties)] propertyDeclaration* '}';
 
 [Define(MetaProperty)]
-propertyDeclaration : [Property(Kind)] propertyModifier? [Property(Type)] typeReference name propertyRedefinition? propertySubsetting? ';';
+propertyDeclaration : attribute* [Property(Kind)] propertyModifier? [Property(Type)] typeReference name propertyRedefinition? propertySubsetting? ';';
 
 propertyModifier : [Constant(MetaPropertyKind.Derived)] 'derived' | [Property(IsContainment,true)] 'containment' | [Constant(MetaPropertyKind.Derived)] 'readonly';
 propertyRedefinition : 'redefines' [Property(RedefinedProperties)][Use(MetaProperty)] qualifierList;
 propertySubsetting : 'subsets' [Property(SubsettedProperties)][Use(MetaProperty)] qualifierList;
 
 [Association]
-associationDeclaration : 'association' [Use(MetaProperty)] qualifier 'with' [Use(MetaProperty)] qualifier ';';
+associationDeclaration : attribute* 'association' [Use(MetaProperty)] qualifier 'with' [Use(MetaProperty)] qualifier ';';
 
 typeReference : primitiveType | collectionType | nullableType | [Use(MetaType)] qualifier;
 
