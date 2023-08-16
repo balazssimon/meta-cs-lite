@@ -28,6 +28,16 @@ namespace MetaDslx.CodeAnalysis.Symbols
         {
             return _name;
         }
+
+        public override bool Equals(object obj)
+        {
+            return obj is CompletionPart other && other._name == _name;
+        }
+
+        public override int GetHashCode()
+        {
+            return _name.GetHashCode();
+        }
     }
 
     public sealed partial class CompletionGraph

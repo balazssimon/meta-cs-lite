@@ -11,18 +11,19 @@ namespace MetaDslx.CodeAnalysis.Symbols.CSharp
 {
     internal class CSharpModuleSymbol : ModuleSymbol
     {
+        private readonly CSharpAssemblySymbol _containingAssembly;
         private readonly IModuleSymbol _csharpSymbol;
-        private readonly CSharpSymbolFactory _symbolFactory;
         private NamespaceSymbol _globalNamespace;
 
-        public CSharpModuleSymbol(CSharpAssemblySymbol containingAssembly, CSharpSymbolFactory symbolFactory, IModuleSymbol csharpSymbol)
+        public CSharpModuleSymbol(CSharpAssemblySymbol containingAssembly, IModuleSymbol csharpSymbol)
             : base(containingAssembly)
         {
-            _symbolFactory = symbolFactory;
+            _containingAssembly = containingAssembly;
             _csharpSymbol = csharpSymbol;
         }
 
-        public CSharpSymbolFactory SymbolFactory => _symbolFactory;
+        public override AssemblySymbol? ContainingAssembly => _containingAssembly;
+        public CSharpSymbolFactory SymbolFactory => _containingAssembly.SymbolFactory;
         public IModuleSymbol CSharpSymbol => _csharpSymbol;
         public override ImmutableArray<Location> Locations => _csharpSymbol.Locations.SelectAsArray(l => l.ToMetaDslx());
 
@@ -31,9 +32,19 @@ namespace MetaDslx.CodeAnalysis.Symbols.CSharp
             return _csharpSymbol.Name;
         }
 
+        protected override string? CompleteProperty_MetadataName(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        {
+            return _csharpSymbol.MetadataName;
+        }
+
         protected override NamespaceSymbol CompleteProperty_GlobalNamespace(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            return _symbolFactory.GetSymbol<NamespaceSymbol>(_csharpSymbol.GlobalNamespace);
+            return SymbolFactory.GetSymbol<NamespaceSymbol>(_csharpSymbol.GlobalNamespace, diagnostics, cancellationToken);
+        }
+
+        protected override ImmutableArray<AttributeSymbol> CompleteProperty_Attributes(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        {
+            return SymbolFactory.CreateAttributes(_csharpSymbol, diagnostics, cancellationToken);
         }
     }
 }

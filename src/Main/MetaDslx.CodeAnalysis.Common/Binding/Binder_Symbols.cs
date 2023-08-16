@@ -1,5 +1,6 @@
 ﻿using MetaDslx.CodeAnalysis.PooledObjects;
 using MetaDslx.CodeAnalysis.Symbols;
+using MetaDslx.CodeAnalysis.Symbols.Errors;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -110,7 +111,8 @@ namespace MetaDslx.CodeAnalysis.Binding
             var name = context.ViableNames.FirstOrDefault();
             if (string.IsNullOrWhiteSpace(name))
             {
-                return context.ErrorSymbolFactory.CreateSymbol<NamedTypeSymbol>(Compilation.GlobalNamespace, new DiagnosticInfo(CommonErrorCode.ERR_SingleNameNotFound, name));
+                var errorInfo = new ErrorSymbolInfo(string.Empty, string.Empty, ImmutableArray<Symbol>.Empty, Diagnostic.Create(CommonErrorCode.ERR_SingleNameNotFound, context.Location, name));
+                return context.ErrorSymbolFactory.CreateSymbol<TypeSymbol>(Compilation.GlobalNamespace, errorInfo);
             }
             this.AdjustLookupContext(context);
             this.LookupSymbols(context);

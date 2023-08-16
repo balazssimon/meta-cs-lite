@@ -7,11 +7,11 @@ using System.Threading;
 
 namespace MetaDslx.CodeAnalysis.Symbols.Model
 {
-    public class ModelDeclaredSymbol : DeclaredSymbol, IModelSymbol
+    public class ModelTypeSymbol : TypeSymbol, IModelSymbol
     {
         private IModelObject _modelObject;
 
-        public ModelDeclaredSymbol(Symbol container, IModelObject modelObject)
+        public ModelTypeSymbol(Symbol container, IModelObject modelObject)
             : base(container)
         {
             _modelObject = modelObject;
@@ -51,6 +51,16 @@ namespace MetaDslx.CodeAnalysis.Symbols.Model
         protected override ImmutableArray<AttributeSymbol> CompleteProperty_Attributes(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             return SymbolFactory.GetSymbolPropertyValues<AttributeSymbol>(_modelObject, nameof(Attributes), diagnostics, cancellationToken);
+        }
+
+        protected override ImmutableArray<TypeParameterSymbol> CompleteProperty_TypeParameters(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        {
+            return SymbolFactory.GetSymbolPropertyValues<TypeParameterSymbol>(_modelObject, nameof(TypeParameters), diagnostics, cancellationToken);
+        }
+
+        protected override ImmutableArray<TypeSymbol> CompleteProperty_BaseTypes(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        {
+            return SymbolFactory.GetSymbolPropertyValues<TypeSymbol>(_modelObject, nameof(BaseTypes), diagnostics, cancellationToken);
         }
     }
 }

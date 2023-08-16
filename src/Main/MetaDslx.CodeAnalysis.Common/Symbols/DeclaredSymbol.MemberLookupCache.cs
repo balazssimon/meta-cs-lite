@@ -15,11 +15,11 @@ namespace MetaDslx.CodeAnalysis.Symbols
         {
             private HashSet<string> _memberNames;
             private ImmutableArray<DeclaredSymbol> _members;
-            private ImmutableArray<NamedTypeSymbol> _typeMembers;
+            private ImmutableArray<TypeSymbol> _typeMembers;
             private CachingDictionary<string, DeclaredSymbol> _membersByName;
-            private CachingDictionary<string, NamedTypeSymbol> _typeMembersByName;
+            private CachingDictionary<string, TypeSymbol> _typeMembersByName;
             private CachingDictionary<string, DeclaredSymbol> _membersByMetadataName;
-            private CachingDictionary<string, NamedTypeSymbol> _typeMembersByMetadataName;
+            private CachingDictionary<string, TypeSymbol> _typeMembersByMetadataName;
 
             public MemberLookupCache(ImmutableArray<DeclaredSymbol> members)
             {
@@ -59,35 +59,35 @@ namespace MetaDslx.CodeAnalysis.Symbols
                 return _membersByMetadataName[metadataName];
             }
 
-            public ImmutableArray<NamedTypeSymbol> GetTypeMembers()
+            public ImmutableArray<TypeSymbol> GetTypeMembers()
             {
                 if (_typeMembers.IsDefault)
                 {
-                    ImmutableInterlocked.InterlockedInitialize(ref _typeMembers, _members.OfType<NamedTypeSymbol>().ToImmutableArray());
+                    ImmutableInterlocked.InterlockedInitialize(ref _typeMembers, _members.OfType<TypeSymbol>().ToImmutableArray());
                 }
                 return _typeMembers;
             }
 
-            public ImmutableArray<NamedTypeSymbol> GetTypeMembers(string name)
+            public ImmutableArray<TypeSymbol> GetTypeMembers(string name)
             {
-                if (name == null || !GetMemberNames().Contains(name)) return ImmutableArray<NamedTypeSymbol>.Empty;
+                if (name == null || !GetMemberNames().Contains(name)) return ImmutableArray<TypeSymbol>.Empty;
                 var members = this.GetTypeMembers();
-                if (members.IsEmpty) return ImmutableArray<NamedTypeSymbol>.Empty;
+                if (members.IsEmpty) return ImmutableArray<TypeSymbol>.Empty;
                 if (_typeMembersByName is null)
                 {
-                    Interlocked.CompareExchange(ref _typeMembersByName, new CachingDictionary<string, NamedTypeSymbol>(cachedName => this.GetTypeMembers().WhereAsArray(m => m.Name == cachedName), SlowGetTypeMemberNames, EqualityComparer<string>.Default), null);
+                    Interlocked.CompareExchange(ref _typeMembersByName, new CachingDictionary<string, TypeSymbol>(cachedName => this.GetTypeMembers().WhereAsArray(m => m.Name == cachedName), SlowGetTypeMemberNames, EqualityComparer<string>.Default), null);
                 }
                 return _typeMembersByName[name];
             }
 
-            public ImmutableArray<NamedTypeSymbol> GetTypeMembers(string name, string metadataName)
+            public ImmutableArray<TypeSymbol> GetTypeMembers(string name, string metadataName)
             {
-                if (name == null || !GetMemberNames().Contains(name)) return ImmutableArray<NamedTypeSymbol>.Empty;
+                if (name == null || !GetMemberNames().Contains(name)) return ImmutableArray<TypeSymbol>.Empty;
                 var members = this.GetTypeMembers();
-                if (members.IsEmpty) return ImmutableArray<NamedTypeSymbol>.Empty;
+                if (members.IsEmpty) return ImmutableArray<TypeSymbol>.Empty;
                 if (_typeMembersByMetadataName is null)
                 {
-                    Interlocked.CompareExchange(ref _typeMembersByMetadataName, new CachingDictionary<string, NamedTypeSymbol>(cachedName => this.GetTypeMembers().WhereAsArray(m => m.MetadataName == cachedName), SlowGetTypeMemberMetadataNames, EqualityComparer<string>.Default), null);
+                    Interlocked.CompareExchange(ref _typeMembersByMetadataName, new CachingDictionary<string, TypeSymbol>(cachedName => this.GetTypeMembers().WhereAsArray(m => m.MetadataName == cachedName), SlowGetTypeMemberMetadataNames, EqualityComparer<string>.Default), null);
                 }
                 return _typeMembersByMetadataName[metadataName];
             }

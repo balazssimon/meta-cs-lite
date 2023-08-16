@@ -29,6 +29,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
         public IModelObject ModelObject => _modelObject;
 
         public MergedDeclaration Declaration => _declaration;
+        protected SourceSymbolFactory SymbolFactory => ((SourceModuleSymbol)ContainingModule).SymbolFactory;
         public ImmutableArray<SyntaxNodeOrToken> DeclaringSyntaxReferences => _declaration.SyntaxReferences;
         public override ImmutableArray<Location> Locations => _declaration.NameLocations.Cast<SourceLocation, Location>();
         ImmutableArray<SourceLocation> ISourceSymbol.Locations => _declaration.NameLocations;
@@ -46,13 +47,28 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
 
         protected override ImmutableArray<Symbol> CompletePart_CreateContainedSymbols(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            return ((SourceModuleSymbol)ContainingModule).SymbolFactory.CreateContainedSymbols(this);
+            return SymbolFactory.CreateContainedSymbols(this);
         }
 
         protected override ImmutableArray<DeclaredSymbol> CompleteProperty_Members(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            if (this.IsGlobalNamespace) return ContainedSymbols.OfType<DeclaredSymbol>().ToImmutableArray();
-            else return ((SourceModuleSymbol)ContainingModule).SymbolFactory.GetSymbolPropertyValues<DeclaredSymbol>(this, nameof(Members), diagnostics, cancellationToken);
+            return SymbolFactory.GetMemberSymbols(this);
         }
+
+        protected override ImmutableArray<TypeSymbol> CompleteProperty_TypeArguments(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        {
+            return SymbolFactory.GetSymbolPropertyValues<TypeSymbol>(this, nameof(TypeArguments), diagnostics, cancellationToken);
+        }
+
+        protected override ImmutableArray<ImportSymbol> CompleteProperty_Imports(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        {
+            return SymbolFactory.GetSymbolPropertyValues<ImportSymbol>(this, nameof(Imports), diagnostics, cancellationToken);
+        }
+
+        protected override ImmutableArray<AttributeSymbol> CompleteProperty_Attributes(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        {
+            return SymbolFactory.GetSymbolPropertyValues<AttributeSymbol>(this, nameof(Attributes), diagnostics, cancellationToken);
+        }
+
     }
 }

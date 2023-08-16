@@ -212,7 +212,7 @@ namespace MetaDslx.CodeAnalysis.Binding
 
         public virtual ImmutableArray<Symbol> DefinedSymbols => ImmutableArray<Symbol>.Empty;
 
-        public virtual ImmutableArray<Symbol> ContainingSymbols => ParentBinder?.ContainingSymbols ?? ImmutableArray<Symbol>.Empty;
+        public virtual ImmutableArray<DeclaredSymbol> ContainingScopeSymbols => ParentBinder?.ContainingScopeSymbols ?? ImmutableArray<DeclaredSymbol>.Empty;
 
         public virtual ImmutableArray<Symbol> ContainingDefinedSymbols => ParentBinder?.ContainingDefinedSymbols ?? ImmutableArray<Symbol>.Empty;
 

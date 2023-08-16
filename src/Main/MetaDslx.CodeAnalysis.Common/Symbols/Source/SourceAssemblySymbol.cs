@@ -53,6 +53,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
 
         public SourceModuleSymbol SourceModuleSymbol => _sourceModule;
         public override ImmutableArray<ModuleSymbol> Modules => _modules;
+        public SourceSymbolFactory SymbolFactory => _sourceModule.SymbolFactory;
 
         public override Compilation? DeclaringCompilation => _compilation;
 

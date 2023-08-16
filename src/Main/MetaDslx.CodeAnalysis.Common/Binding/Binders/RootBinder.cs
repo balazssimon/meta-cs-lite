@@ -58,7 +58,7 @@ namespace MetaDslx.CodeAnalysis.Binding
             }
         }
 
-        public override ImmutableArray<Symbol> ContainingSymbols => ImmutableArray<Symbol>.Empty;
+        public override ImmutableArray<DeclaredSymbol> ContainingScopeSymbols => ImmutableArray<DeclaredSymbol>.Empty;
 
         public override ImmutableArray<Symbol> ContainingDefinedSymbols => ImmutableArray<Symbol>.Empty;
 

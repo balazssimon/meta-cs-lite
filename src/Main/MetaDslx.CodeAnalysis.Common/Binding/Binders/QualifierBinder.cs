@@ -45,7 +45,7 @@ namespace MetaDslx.CodeAnalysis.Binding
         protected override ImmutableArray<object?> BindValues(BindingContext context)
         {
             CacheIdentifiers(context);
-            if (_identifiers.Length > 0) return ImmutableArray.Create<object?>(_identifiers[_identifiers.Length - 1]);
+            if (_symbols.Length > 0) return ImmutableArray.Create<object?>(_symbols[_symbols.Length - 1]);
             else return ImmutableArray<object?>.Empty;
         }
 

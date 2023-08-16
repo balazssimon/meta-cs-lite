@@ -7,11 +7,11 @@ using System.Threading;
 
 namespace MetaDslx.CodeAnalysis.Symbols.Model
 {
-    public class ModelNamedTypeSymbol : NamedTypeSymbol, IModelSymbol
+    public class ModelAttributeSymbol : AttributeSymbol
     {
         private IModelObject _modelObject;
 
-        public ModelNamedTypeSymbol(Symbol container, IModelObject modelObject)
+        public ModelAttributeSymbol(Symbol container, IModelObject modelObject)
             : base(container)
         {
             _modelObject = modelObject;
@@ -28,14 +28,25 @@ namespace MetaDslx.CodeAnalysis.Symbols.Model
             return _modelObject.Name;
         }
 
-        protected override ImmutableArray<Symbol> CompletePart_CreateContainedSymbols(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        protected override string? CompleteProperty_MetadataName(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            return SymbolFactory.GetSymbols<Symbol>(_modelObject.Children);
+            return SymbolFactory.GetSymbolPropertyValue<string>(_modelObject, nameof(MetadataName), diagnostics, cancellationToken);
         }
 
-        protected override ImmutableArray<DeclaredSymbol> CompleteProperty_Members(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        protected override ImmutableArray<Symbol> CompletePart_CreateContainedSymbols(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            return SymbolFactory.GetSymbolPropertyValues<DeclaredSymbol>(_modelObject, nameof(Members), diagnostics, cancellationToken);
+            return SymbolFactory.CreateChildSymbols(_modelObject);
         }
+
+        protected override TypeSymbol CompleteProperty_AttributeClass(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        {
+            return SymbolFactory.GetSymbolPropertyValue<TypeSymbol>(_modelObject, nameof(AttributeClass), diagnostics, cancellationToken);
+        }
+
+        protected override ImmutableArray<AttributeSymbol> CompleteProperty_Attributes(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        {
+            return SymbolFactory.GetSymbolPropertyValues<AttributeSymbol>(_modelObject, nameof(Attributes), diagnostics, cancellationToken);
+        }
+
     }
 }

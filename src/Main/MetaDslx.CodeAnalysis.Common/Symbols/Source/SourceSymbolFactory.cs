@@ -27,7 +27,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
         {
             _module = module;
             Register<NamespaceSymbol>((s, d, mo) => new SourceNamespaceSymbol(s, d, mo));
-            Register<NamedTypeSymbol>((s, d, mo) => new SourceNamedTypeSymbol(s, d, mo));
+            Register<TypeSymbol>((s, d, mo) => new SourceTypeSymbol(s, d, mo));
             Register<DeclaredSymbol>((s, d, mo) => new SourceDeclaredSymbol(s, d, mo));
         }
 
@@ -55,6 +55,13 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
                 if (symbol is not null) symbols.Add(symbol);
             }
             return symbols.ToImmutableAndFree();
+        }
+
+        public ImmutableArray<DeclaredSymbol> GetMemberSymbols(ISourceSymbol container)
+        {
+            var symbol = (Symbol)container;
+            if (symbol.ContainedSymbols.Length == 0) return ImmutableArray<DeclaredSymbol>.Empty;
+            else return symbol.ContainedSymbols.OfType<DeclaredSymbol>().ToImmutableArray();
         }
 
         protected Symbol? CreateSymbol(Type symbolType, ISourceSymbol container, MergedDeclaration declaration)
@@ -121,74 +128,8 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
                         }
                         binder = binder.ParentBinder;
                     }
-                    if (declBinder is null)
-                    {
-                        if (symbolProperty == nameof(DeclaredSymbol.Members))
-                        {
-                            foreach (var location in symbol.Locations)
-                            {
-                                if (decl.SyntaxTree == location.SourceTree && decl.Span.Contains(location.SourceSpan))
-                                {
-                                    binder = Compilation.GetEnclosingBinder(location.SourceTree, location.SourceSpan);
-                                    NestingBinder? nestingBinder = null;
-                                    while (binder is not null)
-                                    {
-                                        if (binder is NestingBinder nestBinder)
-                                        {
-                                            nestingBinder = nestBinder;
-                                            break;
-                                        }
-                                        binder = binder.ParentBinder;
-                                    }
-                                    if (nestingBinder is not null && prop.Name == nestingBinder.Property)
-                                    {
-                                        foreach (var childSymbol in ((Symbol)symbol).ContainedSymbols)
-                                        {
-                                            foreach (var childLocation in childSymbol.Locations)
-                                            {
-                                                if (decl.SyntaxTree == (childLocation as SourceLocation)?.SourceTree && decl.Span.Contains(childLocation.SourceSpan))
-                                                {
-                                                    var value = childSymbol;
-                                                    if (value is TValue tvalue)
-                                                    {
-                                                        builder.Add(tvalue);
-                                                        try
-                                                        {
-                                                            if (value is Symbol symbolValue)
-                                                            {
-                                                                var modelObjectValue = (symbolValue as IModelSymbol)?.ModelObject;
-                                                                if (modelObjectValue is not null)
-                                                                {
-                                                                    modelObject.Add(prop, modelObjectValue);
-                                                                }
-                                                            }
-                                                            else
-                                                            {
-                                                                modelObject.Add(prop, value);
-                                                            }
-                                                        }
-                                                        catch (ModelException ex)
-                                                        {
-                                                            diagnostics.Add(Diagnostic.Create(CommonErrorCode.ERR_InvalidModelObjectPropertyValue, decl.GetLocation(), value, value.GetType(), prop.Name, prop.Type));
-                                                        }
-                                                    }
-                                                    else
-                                                    {
-                                                        diagnostics.Add(Diagnostic.Create(CommonErrorCode.ERR_InvalidSymbolPropertyValue, decl.GetLocation(), value, value.GetType(), symbolProperty, typeof(TValue)));
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        else
-                        {
-                            Debug.Assert(false);
-                        }
-                    }
-                    else
+                    Debug.Assert(declBinder is not null);
+                    if (declBinder is not null)
                     {
                         var propBinders = declBinder.GetPropertyBinders(prop.Name, cancellationToken);
                         foreach (var propBinder in propBinders)

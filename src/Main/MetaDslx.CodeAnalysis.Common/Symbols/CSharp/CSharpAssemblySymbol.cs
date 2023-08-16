@@ -11,15 +11,18 @@ namespace MetaDslx.CodeAnalysis.Symbols.CSharp
 {
     internal class CSharpAssemblySymbol : AssemblySymbol
     {
+        private readonly CSharpSymbolFactory _symbolFactory;
         private readonly IAssemblySymbol _csharpSymbol;
         private ImmutableArray<CSharpModuleSymbol> _modules;
 
-        public CSharpAssemblySymbol(IAssemblySymbol csharpSymbol)
+        public CSharpAssemblySymbol(CSharpSymbolFactory symbolFactory, IAssemblySymbol csharpSymbol)
         {
+            _symbolFactory = symbolFactory;
             _csharpSymbol = csharpSymbol;
         }
 
         public IAssemblySymbol CSharpSymbol => _csharpSymbol;
+        public CSharpSymbolFactory SymbolFactory => _symbolFactory;
         public override ImmutableArray<Location> Locations => _csharpSymbol.Locations.SelectAsArray(l => l.ToMetaDslx());
 
         public override ImmutableArray<ModuleSymbol> Modules => _modules.Cast<CSharpModuleSymbol, ModuleSymbol>();
@@ -40,9 +43,24 @@ namespace MetaDslx.CodeAnalysis.Symbols.CSharp
             _modules = modules;
         }
 
+        protected override string? CompleteProperty_Name(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        {
+            return _csharpSymbol.Name;
+        }
+
+        protected override string? CompleteProperty_MetadataName(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        {
+            return _csharpSymbol.MetadataName;
+        }
+
         protected override ImmutableArray<Symbol> CompletePart_CreateContainedSymbols(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             return _modules.Cast<CSharpModuleSymbol, Symbol>();
+        }
+
+        protected override ImmutableArray<AttributeSymbol> CompleteProperty_Attributes(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        {
+            return SymbolFactory.CreateAttributes(_csharpSymbol, diagnostics, cancellationToken);
         }
     }
 }

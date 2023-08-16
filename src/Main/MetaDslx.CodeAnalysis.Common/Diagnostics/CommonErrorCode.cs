@@ -100,6 +100,11 @@ namespace MetaDslx.CodeAnalysis
         public static readonly DiagnosticDescriptor ERR_AmbigContext = DiagnosticDescriptor.Error(nameof(ERR_AmbigContext), "Name conflict", "'{0}' is an ambiguous reference between {1} and {2}");
 
         /// <summary>
+        /// '{0}' has an ambiguous value between {1} and {2}
+        /// </summary>
+        public static readonly DiagnosticDescriptor ERR_AmbigValue = DiagnosticDescriptor.Error(nameof(ERR_AmbigValue), "Value conflict", "'{0}' has an ambiguous value between {1} and {2}");
+
+        /// <summary>
         /// The name '{0}' does not exist in '{1}'
         /// </summary>
         public static readonly DiagnosticDescriptor ERR_DottedNameNotFoundInAgg = DiagnosticDescriptor.Error(nameof(ERR_DottedNameNotFoundInAgg), "Name not found", "The name '{0}' does not exist in '{1}'");

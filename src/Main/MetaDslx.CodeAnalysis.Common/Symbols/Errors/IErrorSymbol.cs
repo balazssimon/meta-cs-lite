@@ -1,11 +1,14 @@
-﻿using System;
+﻿using MetaDslx.CodeAnalysis.Symbols.Errors;
+using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Text;
 
 namespace MetaDslx.CodeAnalysis.Symbols
 {
     public interface IErrorSymbol
     {
-        DiagnosticInfo ErrorInfo { get; }
+        ErrorSymbolInfo ErrorInfo { get; }
+        ImmutableArray<Symbol> CandidateSymbols { get; }
     }
 }

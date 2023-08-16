@@ -153,12 +153,31 @@ namespace MetaDslx.CodeAnalysis.Binding
 
         protected virtual void AddLookupCandidateSymbolsInSingleBinder(LookupContext context, LookupCandidates result)
         {
-            this.AddCandidateSymbolsInternal(context, result);
+            var originalQualifier = context.Qualifier;
+            try
+            {
+                if (originalQualifier is null)
+                {
+                    foreach (var scope in this.ContainingScopeSymbols)
+                    {
+                        context.Qualifier = scope;
+                        this.AddCandidateSymbolsInternal(context, result);
+                    }
+                }
+                else
+                {
+                    this.AddCandidateSymbolsInternal(context, result);
+                }
+            }
+            finally
+            {
+                context.Qualifier = originalQualifier;
+            }
         }
 
         private void AddCandidateSymbolsInternal(LookupContext context, LookupCandidates result)
         {
-            var accessThroughType = context.AccessThroughType;
+            var originalAccessThroughType = context.AccessThroughType;
             try
             {
                 var qualifierIsError = context.Qualifier is IErrorSymbol;
@@ -175,14 +194,14 @@ namespace MetaDslx.CodeAnalysis.Binding
             }
             finally
             {
-                context.AccessThroughType = accessThroughType;
+                context.AccessThroughType = originalAccessThroughType;
             }
         }
 
         private void AddLookupCandidateSymbolsInErrorSymbol(LookupContext context, LookupCandidates result)
         {
             var qualifier = context.Qualifier;
-            var candidateSymbols = ((qualifier as IErrorSymbol)?.ErrorInfo as SymbolDiagnosticInfo)?.Symbols ?? ImmutableArray<Symbol>.Empty;
+            var candidateSymbols = ((IErrorSymbol)qualifier).CandidateSymbols;
             if (!candidateSymbols.IsDefault && candidateSymbols.Length == 1 && candidateSymbols[0] is DeclaredSymbol declaredSymbol && declaredSymbol is not IErrorSymbol)
             {
                 try

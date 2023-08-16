@@ -20,8 +20,9 @@ namespace MetaDslx.CodeAnalysis.Symbols.Model
 
         public ModelSymbolFactory()
         {
+            Register<AttributeSymbol>((s, mo) => new ModelAttributeSymbol(s, mo));
             Register<NamespaceSymbol>((s, mo) => new ModelNamespaceSymbol(s, mo));
-            Register<NamedTypeSymbol>((s, mo) => new ModelNamedTypeSymbol(s, mo));
+            Register<TypeSymbol>((s, mo) => new ModelTypeSymbol(s, mo));
             Register<DeclaredSymbol>((s, mo) => new ModelDeclaredSymbol(s, mo));
         }
 
@@ -84,33 +85,86 @@ namespace MetaDslx.CodeAnalysis.Symbols.Model
             return builder.ToImmutableAndFree();
         }
 
-        public ImmutableArray<TSymbol> GetSymbolPropertyValues<TSymbol>(IModelObject? modelObject, string symbolProperty, DiagnosticBag diagnostics, CancellationToken cancellationToken)
-            where TSymbol : Symbol
+        public ImmutableArray<Symbol> CreateChildSymbols(IModelObject? modelObject)
         {
-            if (modelObject is null) return ImmutableArray<TSymbol>.Empty;
-            var builder = ArrayBuilder<TSymbol>.GetInstance();
-            var values = PooledHashSet<IModelObject>.GetInstance();
+            return GetSymbols<Symbol>(modelObject.Children);
+        }
+
+        public ImmutableArray<DeclaredSymbol> GetMemberSymbols(IModelObject? modelObject)
+        {
+            if (modelObject is null) return ImmutableArray<DeclaredSymbol>.Empty;
+            return GetSymbols<DeclaredSymbol>(modelObject.Children);
+        }
+
+        public ImmutableArray<TValue> GetSymbolPropertyValues<TValue>(IModelObject? modelObject, string symbolProperty, DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        {
+            if (modelObject is null) return ImmutableArray<TValue>.Empty;
+            var builder = ArrayBuilder<TValue>.GetInstance();
             foreach (var prop in modelObject.PublicProperties.Where(prop => prop.SymbolProperty == symbolProperty))
             {
-                foreach (var item in modelObject.GetValues(prop).OfType<IModelObject>())
+                if (typeof(Symbol).IsAssignableFrom(typeof(TValue)))
                 {
-                    cancellationToken.ThrowIfCancellationRequested();
-                    if (values.Add(item))
+                    foreach (var item in modelObject.GetValues(prop).OfType<IModelObject>())
                     {
+                        cancellationToken.ThrowIfCancellationRequested();
                         var symbol = GetSymbol(modelObject);
-                        if (symbol is TSymbol typedSymbol)
+                        if (symbol is TValue typedSymbol)
                         {
                             builder.Add(typedSymbol);
                         }
                         else
                         {
-                            diagnostics.Add(Diagnostic.Create(CommonErrorCode.ERR_InvalidSymbolPropertyValue, null, symbol, symbol.GetType(), symbolProperty, typeof(TSymbol)));
+                            diagnostics.Add(Diagnostic.Create(CommonErrorCode.ERR_InvalidSymbolPropertyValue, null, symbol, symbol?.GetType(), symbolProperty, typeof(TValue)));
+                        }
+                    }
+                }
+                else
+                {
+                    foreach (var value in modelObject.GetValues(prop))
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        if (value is TValue typedValue)
+                        {
+                            builder.Add(typedValue);
+                        }
+                        else
+                        {
+                            diagnostics.Add(Diagnostic.Create(CommonErrorCode.ERR_InvalidSymbolPropertyValue, null, value, value?.GetType(), symbolProperty, typeof(TValue)));
                         }
                     }
                 }
             }
-            values.Free();
             return builder.ToImmutableAndFree();
+        }
+
+        public TValue GetSymbolPropertyValue<TValue>(IModelObject? modelObject, string symbolProperty, DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        {
+            var values = GetSymbolPropertyValues<TValue>(modelObject, symbolProperty, diagnostics, cancellationToken);
+            if (values.Length == 1) return values[0];
+            else if (values.Length == 0) return default;
+            else
+            {
+                var first = values[0];
+                for (int i = 1; i < values.Length; i++)
+                {
+                    var next = values[i];
+                    if (first is null)
+                    {
+                        if (next is not null)
+                        {
+                            first = next;
+                        }
+                    }
+                    else
+                    {
+                        if (!first.Equals(next))
+                        {
+                            diagnostics.Add(Diagnostic.Create(CommonErrorCode.ERR_AmbigValue, null, symbolProperty, first, next));
+                        }
+                    }
+                }
+                return first;
+            }
         }
 
         protected Symbol? CreateSymbol(Type symbolType, Symbol container, IModelObject modelObject)

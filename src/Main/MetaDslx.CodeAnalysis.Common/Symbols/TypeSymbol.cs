@@ -14,27 +14,27 @@ namespace MetaDslx.CodeAnalysis.Symbols
     {
         public new static class CompletionParts
         {
-            public static readonly CompletionPart StartComputingProperty_TypeParameters = new CompletionPart(nameof(StartComputingProperty_TypeParameters));
-            public static readonly CompletionPart FinishComputingProperty_TypeParameters = new CompletionPart(nameof(FinishComputingProperty_TypeParameters));
-            public static readonly CompletionPart StartComputingProperty_BaseTypes = new CompletionPart(nameof(StartComputingProperty_BaseTypes));
-            public static readonly CompletionPart FinishComputingProperty_BaseTypes = new CompletionPart(nameof(FinishComputingProperty_BaseTypes));
+            public static readonly CompletionPart StartComputingProperty_Members = DeclaredSymbol.CompletionParts.StartComputingProperty_Members;
+            public static readonly CompletionPart FinishComputingProperty_Members = DeclaredSymbol.CompletionParts.FinishComputingProperty_Members;
             public static readonly CompletionPart StartComputingProperty_TypeArguments = DeclaredSymbol.CompletionParts.StartComputingProperty_TypeArguments;
             public static readonly CompletionPart FinishComputingProperty_TypeArguments = DeclaredSymbol.CompletionParts.FinishComputingProperty_TypeArguments;
             public static readonly CompletionPart StartComputingProperty_Imports = DeclaredSymbol.CompletionParts.StartComputingProperty_Imports;
             public static readonly CompletionPart FinishComputingProperty_Imports = DeclaredSymbol.CompletionParts.FinishComputingProperty_Imports;
-            public static readonly CompletionPart StartComputingProperty_Members = DeclaredSymbol.CompletionParts.StartComputingProperty_Members;
-            public static readonly CompletionPart FinishComputingProperty_Members = DeclaredSymbol.CompletionParts.FinishComputingProperty_Members;
+            public static readonly CompletionPart StartComputingProperty_TypeParameters = new CompletionPart(nameof(StartComputingProperty_TypeParameters));
+            public static readonly CompletionPart FinishComputingProperty_TypeParameters = new CompletionPart(nameof(FinishComputingProperty_TypeParameters));
+            public static readonly CompletionPart StartComputingProperty_BaseTypes = new CompletionPart(nameof(StartComputingProperty_BaseTypes));
+            public static readonly CompletionPart FinishComputingProperty_BaseTypes = new CompletionPart(nameof(FinishComputingProperty_BaseTypes));
             public static readonly CompletionPart StartComputingProperty_Attributes = Symbol.CompletionParts.StartComputingProperty_Attributes;
             public static readonly CompletionPart FinishComputingProperty_Attributes = Symbol.CompletionParts.FinishComputingProperty_Attributes;
             public static readonly CompletionGraph CompletionGraph = 
                 CompletionGraph.CreateFromParts(
                     CompletionGraph.StartInitializing, CompletionGraph.FinishInitializing, 
                     CompletionGraph.StartCreatingContainedSymbols, CompletionGraph.FinishCreatingContainedSymbols,
+                    StartComputingProperty_Members, FinishComputingProperty_Members,
+                    StartComputingProperty_TypeArguments, FinishComputingProperty_TypeArguments,
+                    StartComputingProperty_Imports, FinishComputingProperty_Imports,
                     StartComputingProperty_TypeParameters, FinishComputingProperty_TypeParameters, 
                     StartComputingProperty_BaseTypes, FinishComputingProperty_BaseTypes, 
-                    StartComputingProperty_TypeArguments, FinishComputingProperty_TypeArguments, 
-                    StartComputingProperty_Imports, FinishComputingProperty_Imports, 
-                    StartComputingProperty_Members, FinishComputingProperty_Members, 
                     StartComputingProperty_Attributes, FinishComputingProperty_Attributes, 
                     CompletionGraph.StartComputingNonSymbolProperties, CompletionGraph.FinishComputingNonSymbolProperties, 
                     CompletionGraph.ContainedSymbolsCompleted, 

@@ -7,10 +7,11 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Text;
+using System.Threading;
 
 namespace MetaDslx.CodeAnalysis.Symbols.CSharp
 {
-    public class CSharpSymbolFactory
+    internal class CSharpSymbolFactory
     {
         private readonly Dictionary<Type, Func<Symbol, ISymbol, Symbol>> _constructors = new();
         private readonly List<(Type, Type)> _types = new();
@@ -19,7 +20,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.CSharp
         public CSharpSymbolFactory()
         {
             Register<NamespaceSymbol, INamespaceSymbol>((s, cs) => new CSharpNamespaceSymbol(s, cs));
-            Register<NamedTypeSymbol, INamedTypeSymbol>((s, cs) => new CSharpNamedTypeSymbol(s, cs));
+            Register<TypeSymbol, INamedTypeSymbol>((s, cs) => new CSharpTypeSymbol(s, cs));
             Register<DeclaredSymbol, ISymbol>((s, cs) => new CSharpDeclaredSymbol(s, cs));
         }
 
@@ -45,7 +46,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.CSharp
             _symbols.TryAdd(csharpSymbol, symbol);
         }
 
-        public Symbol? GetSymbol(ISymbol? csharpSymbol)
+        public Symbol? GetSymbol(ISymbol? csharpSymbol, DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             if (csharpSymbol is null) return null;
             if (_symbols.TryGetValue(csharpSymbol, out var oldSymbol))
@@ -56,26 +57,38 @@ namespace MetaDslx.CodeAnalysis.Symbols.CSharp
             {
                 var symbolType = GetSymbolType(csharpSymbol.GetType());
                 if (symbolType is null) return null;
-                var container = GetSymbol(csharpSymbol.ContainingSymbol);
+                var container = GetSymbol(csharpSymbol.ContainingSymbol, diagnostics, cancellationToken);
                 if (container is null) return null;
                 return CreateSymbol(symbolType, container, csharpSymbol);
             }
         }
 
-        public TSymbol? GetSymbol<TSymbol>(ISymbol? csharpSymbol)
+        public TSymbol? GetSymbol<TSymbol>(ISymbol? csharpSymbol, DiagnosticBag diagnostics, CancellationToken cancellationToken)
             where TSymbol : Symbol
         {
-            return GetSymbol(csharpSymbol) as TSymbol;
+            return GetSymbol(csharpSymbol, diagnostics, cancellationToken) as TSymbol;
         }
 
-        public ImmutableArray<TSymbol> GetSymbols<TSymbol>(IEnumerable<ISymbol?> csharpSymbols)
+        public ImmutableArray<TSymbol> GetSymbols<TSymbol>(IEnumerable<ISymbol?> csharpSymbols, DiagnosticBag diagnostics, CancellationToken cancellationToken)
             where TSymbol : Symbol
         {
             var builder = ArrayBuilder<TSymbol>.GetInstance();
             foreach (var csharpSymbol in csharpSymbols)
             {
-                var symbol = GetSymbol(csharpSymbol);
+                var symbol = GetSymbol(csharpSymbol, diagnostics, cancellationToken);
                 if (symbol is TSymbol typedSymbol) builder.Add(typedSymbol);
+            }
+            return builder.ToImmutableAndFree();
+        }
+
+        public ImmutableArray<AttributeSymbol> CreateAttributes(ISymbol csharpSymbol, DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        {
+            var builder = ArrayBuilder<AttributeSymbol>.GetInstance();
+            var container = GetSymbol(csharpSymbol, diagnostics, cancellationToken);
+            foreach (var attr in csharpSymbol.GetAttributes())
+            {
+                var symbol = new CSharpAttributeSymbol(container, attr);
+                builder.Add(symbol);
             }
             return builder.ToImmutableAndFree();
         }

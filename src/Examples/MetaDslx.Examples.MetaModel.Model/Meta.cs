@@ -62,7 +62,7 @@ namespace MetaDslx.Examples.MetaModel.Model
         }
     }
 
-    [Symbol(typeof(NamedTypeSymbol))]
+    [Symbol(typeof(TypeSymbol))]
     public partial interface MetaNamedType : MetaType, MetaDeclaration
     {
     }
@@ -85,12 +85,10 @@ namespace MetaDslx.Examples.MetaModel.Model
     [Symbol(typeof(NamespaceSymbol))]
     public partial interface MetaNamespace : MetaDeclaration
     {
-        [SymbolProperty("Members")]
         [Opposite(typeof(MetaModel), "Namespace")]
         [Containment]
         public MetaModel? DefinedMetaModel { get; set; }
 
-        [SymbolProperty("Members")]
         [Opposite(typeof(MetaDeclaration), "Namespace")]
         [Containment]
         public IList<MetaDeclaration> Declarations { get; }
@@ -163,9 +161,9 @@ namespace MetaDslx.Examples.MetaModel.Model
     public partial interface MetaClass : MetaNamedType
     {
         public bool IsAbstract { get; set; }
+        [SymbolProperty("BaseTypes")]
         public IList<MetaClass> BaseClasses { get; }
 
-        [SymbolProperty("Members")]
         [Opposite(typeof(MetaProperty), "Class")]
         [Containment]
         public IList<MetaProperty> Properties { get; }

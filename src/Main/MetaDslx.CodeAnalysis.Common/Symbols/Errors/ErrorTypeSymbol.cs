@@ -6,12 +6,12 @@ using System.Threading;
 
 namespace MetaDslx.CodeAnalysis.Symbols.Errors
 {
-    public class ErrorDeclaredSymbol : DeclaredSymbol, IErrorSymbol
+    public class ErrorTypeSymbol : TypeSymbol, IErrorSymbol
     {
         private readonly ErrorSymbolInfo _errorInfo;
         private readonly ImmutableArray<Location> _locations;
 
-        public ErrorDeclaredSymbol(Symbol container, ErrorSymbolInfo errorInfo) 
+        public ErrorTypeSymbol(Symbol container, ErrorSymbolInfo errorInfo)
             : base(container)
         {
             _errorInfo = errorInfo;

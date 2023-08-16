@@ -38,12 +38,17 @@ namespace MetaDslx.CodeAnalysis.Symbols.CSharp
 
         protected override ImmutableArray<Symbol> CompletePart_CreateContainedSymbols(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            return SymbolFactory.GetSymbols<Symbol>(_csharpSymbol.GetMembers());
+            return SymbolFactory.GetSymbols<Symbol>(_csharpSymbol.GetMembers(), diagnostics, cancellationToken);
         }
 
         protected override ImmutableArray<DeclaredSymbol> CompleteProperty_Members(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            return SymbolFactory.GetSymbols<DeclaredSymbol>(_csharpSymbol.GetMembers());
+            return SymbolFactory.GetSymbols<DeclaredSymbol>(_csharpSymbol.GetMembers(), diagnostics, cancellationToken);
+        }
+
+        protected override ImmutableArray<AttributeSymbol> CompleteProperty_Attributes(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        {
+            return SymbolFactory.CreateAttributes(_csharpSymbol, diagnostics, cancellationToken);
         }
     }
 }

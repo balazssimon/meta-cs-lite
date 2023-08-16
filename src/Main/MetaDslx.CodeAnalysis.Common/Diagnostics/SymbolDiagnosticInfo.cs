@@ -8,12 +8,10 @@ namespace MetaDslx.CodeAnalysis
 {
     public class SymbolDiagnosticInfo : DiagnosticInfo
     {
-        // not serialized:
         private readonly ImmutableArray<Symbol> _symbols;
-        // not serialized:
         private readonly ImmutableArray<Location> _additionalLocations;
 
-        public SymbolDiagnosticInfo(DiagnosticDescriptor descriptor, params object[] arguments)
+        public SymbolDiagnosticInfo(string name, string metadataName, DiagnosticDescriptor descriptor, params object[] arguments)
             : base(descriptor, arguments)
         {
             _symbols = ImmutableArray<Symbol>.Empty;

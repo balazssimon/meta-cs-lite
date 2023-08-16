@@ -11,7 +11,7 @@ namespace MetaDslx.CodeAnalysis.Binding
     public class ScopeBinder : Binder, IScopeBinder
     {
         private readonly bool _local;
-        private ImmutableArray<Symbol> _containingSymbols;
+        private ImmutableArray<DeclaredSymbol> _containingScopeSymbols;
 
         public ScopeBinder(bool local = false)
         {
@@ -20,11 +20,11 @@ namespace MetaDslx.CodeAnalysis.Binding
 
         public bool IsLocal => _local;
 
-        public override ImmutableArray<Symbol> ContainingSymbols
+        public override ImmutableArray<DeclaredSymbol> ContainingScopeSymbols
         {
             get
             {
-                if (!_containingSymbols.IsDefault) return _containingSymbols;
+                if (!_containingScopeSymbols.IsDefault) return _containingScopeSymbols;
                 var parent = ParentBinder;
                 var parentSymbols = parent?.DefinedSymbols ?? ImmutableArray<Symbol>.Empty;
                 while (parent is not null && parentSymbols.IsDefaultOrEmpty)
@@ -32,9 +32,9 @@ namespace MetaDslx.CodeAnalysis.Binding
                     parent = parent.ParentBinder;
                     parentSymbols = parent?.DefinedSymbols ?? ImmutableArray<Symbol>.Empty;
                 }
-                if (parentSymbols.IsDefaultOrEmpty) return ImmutableArray<Symbol>.Empty;
-                ImmutableInterlocked.InterlockedInitialize(ref _containingSymbols, parentSymbols);
-                return _containingSymbols;
+                if (parentSymbols.IsDefaultOrEmpty) return ImmutableArray<DeclaredSymbol>.Empty;
+                ImmutableInterlocked.InterlockedInitialize(ref _containingScopeSymbols, parentSymbols.OfType<DeclaredSymbol>().ToImmutableArray());
+                return _containingScopeSymbols;
             }
         }
 
@@ -58,7 +58,7 @@ namespace MetaDslx.CodeAnalysis.Binding
         {
             if (context.Qualifier is null)
             {
-                foreach (var containingSymbol in ContainingSymbols)
+                foreach (var containingSymbol in ContainingScopeSymbols)
                 {
                     var declaredSymbol = containingSymbol as DeclaredSymbol;
                     if (declaredSymbol is not null)
@@ -82,7 +82,7 @@ namespace MetaDslx.CodeAnalysis.Binding
             sb.Append(this.GetType().Name);
             sb.Append(": [");
             var delim = string.Empty;
-            foreach (var symbol in ContainingSymbols)
+            foreach (var symbol in ContainingScopeSymbols)
             {
                 sb.Append(delim);
                 sb.Append(symbol);

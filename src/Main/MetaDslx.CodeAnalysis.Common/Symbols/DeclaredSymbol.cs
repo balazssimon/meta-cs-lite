@@ -13,21 +13,21 @@ namespace MetaDslx.CodeAnalysis.Symbols
     {
         public new static class CompletionParts
         {
+            public static readonly CompletionPart StartComputingProperty_Members = new CompletionPart(nameof(StartComputingProperty_Members));
+            public static readonly CompletionPart FinishComputingProperty_Members = new CompletionPart(nameof(FinishComputingProperty_Members));
             public static readonly CompletionPart StartComputingProperty_TypeArguments = new CompletionPart(nameof(StartComputingProperty_TypeArguments));
             public static readonly CompletionPart FinishComputingProperty_TypeArguments = new CompletionPart(nameof(FinishComputingProperty_TypeArguments));
             public static readonly CompletionPart StartComputingProperty_Imports = new CompletionPart(nameof(StartComputingProperty_Imports));
             public static readonly CompletionPart FinishComputingProperty_Imports = new CompletionPart(nameof(FinishComputingProperty_Imports));
-            public static readonly CompletionPart StartComputingProperty_Members = new CompletionPart(nameof(StartComputingProperty_Members));
-            public static readonly CompletionPart FinishComputingProperty_Members = new CompletionPart(nameof(FinishComputingProperty_Members));
             public static readonly CompletionPart StartComputingProperty_Attributes = Symbol.CompletionParts.StartComputingProperty_Attributes;
             public static readonly CompletionPart FinishComputingProperty_Attributes = Symbol.CompletionParts.FinishComputingProperty_Attributes;
             public static readonly CompletionGraph CompletionGraph = 
                 CompletionGraph.CreateFromParts(
                     CompletionGraph.StartInitializing, CompletionGraph.FinishInitializing,
-                    CompletionGraph.StartCreatingContainedSymbols, CompletionGraph.FinishCreatingContainedSymbols, 
-                    StartComputingProperty_TypeArguments, FinishComputingProperty_TypeArguments, 
-                    StartComputingProperty_Imports, FinishComputingProperty_Imports, 
-                    StartComputingProperty_Members, FinishComputingProperty_Members, 
+                    CompletionGraph.StartCreatingContainedSymbols, CompletionGraph.FinishCreatingContainedSymbols,
+                    StartComputingProperty_Members, FinishComputingProperty_Members,
+                    StartComputingProperty_TypeArguments, FinishComputingProperty_TypeArguments,
+                    StartComputingProperty_Imports, FinishComputingProperty_Imports,
                     StartComputingProperty_Attributes, FinishComputingProperty_Attributes, 
                     CompletionGraph.StartComputingNonSymbolProperties, CompletionGraph.FinishComputingNonSymbolProperties, 
                     CompletionGraph.ContainedSymbolsCompleted, 
@@ -119,7 +119,6 @@ namespace MetaDslx.CodeAnalysis.Symbols
         /// </summary>
         /// <returns>An ImmutableArray containing all the members of this symbol. If this symbol has no members,
         /// returns an empty ImmutableArray. Never returns null.</returns>
-        [ModelProperty]
         public ImmutableArray<DeclaredSymbol> Members
         {
             get
@@ -171,7 +170,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
         /// </summary>
         /// <returns>An ImmutableArray containing all the types that are members of this symbol. If this symbol has no type members,
         /// returns an empty ImmutableArray. Never returns null.</returns>
-        internal virtual ImmutableArray<NamedTypeSymbol> GetTypeMembersUnordered()
+        internal virtual ImmutableArray<TypeSymbol> GetTypeMembersUnordered()
         {
             // Default implementation is to use ordered version. When performance indicates, we specialize to have
             // separate implementation.
@@ -183,7 +182,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
         /// </summary>
         /// <returns>An ImmutableArray containing all the types that are members of this symbol. If this symbol has no type members,
         /// returns an empty ImmutableArray. Never returns null.</returns>
-        public ImmutableArray<NamedTypeSymbol> GetTypeMembers()
+        public ImmutableArray<TypeSymbol> GetTypeMembers()
         {
             return GetMemberLookupCache().GetTypeMembers();
         }
@@ -194,7 +193,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
         /// <returns>An ImmutableArray containing all the types that are members of this symbol with the given name.
         /// If this symbol has no type members with this name,
         /// returns an empty ImmutableArray. Never returns null.</returns>
-        public ImmutableArray<NamedTypeSymbol> GetTypeMembers(string name)
+        public ImmutableArray<TypeSymbol> GetTypeMembers(string name)
         {
             return GetMemberLookupCache().GetTypeMembers(name);
         }
@@ -205,7 +204,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
         /// <returns>An IEnumerable containing all the types that are members of this symbol with the given name and metadata name.
         /// If this symbol has no type members with this name and metadata name,
         /// returns an empty IEnumerable. Never returns null.</returns>
-        public ImmutableArray<NamedTypeSymbol> GetTypeMembers(string name, string metadataName)
+        public ImmutableArray<TypeSymbol> GetTypeMembers(string name, string metadataName)
         {
             return GetMemberLookupCache().GetTypeMembers(name, metadataName);
         }

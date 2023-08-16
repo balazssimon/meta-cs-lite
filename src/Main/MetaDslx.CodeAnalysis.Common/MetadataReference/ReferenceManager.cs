@@ -240,12 +240,12 @@ namespace MetaDslx.CodeAnalysis
             var referencedModulesBuilder = ArrayBuilder<ModuleSymbol>.GetInstance();
             foreach (var csharpAssembly in csharpCompilation.SourceModule.ReferencedAssemblySymbols)
             {
-                var assembly = new CSharpAssemblySymbol(csharpAssembly);
+                var assembly = new CSharpAssemblySymbol(csharpSymbolFactory, csharpAssembly);
                 csharpSymbolFactory.AddSymbol(csharpAssembly, assembly);
                 var modulesBuilder = ArrayBuilder<CSharpModuleSymbol>.GetInstance();
                 foreach (var csharpModule in csharpAssembly.Modules)
                 {
-                    var module = new CSharpModuleSymbol(assembly, csharpSymbolFactory, csharpModule);
+                    var module = new CSharpModuleSymbol(assembly, csharpModule);
                     csharpSymbolFactory.AddSymbol(csharpModule, module);
                     referencedModulesBuilder.Add(module);
                 }

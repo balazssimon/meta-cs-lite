@@ -8,7 +8,7 @@ using System.Threading;
 
 namespace MetaDslx.CodeAnalysis.Symbols.CSharp
 {
-    public class CSharpDeclaredSymbol : DeclaredSymbol
+    internal class CSharpDeclaredSymbol : DeclaredSymbol
     {
         private readonly ISymbol _csharpSymbol;
 
@@ -38,14 +38,20 @@ namespace MetaDslx.CodeAnalysis.Symbols.CSharp
 
         protected override ImmutableArray<Symbol> CompletePart_CreateContainedSymbols(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            if (_csharpSymbol is INamespaceOrTypeSymbol nsot) return SymbolFactory.GetSymbols<Symbol>(nsot.GetMembers());
+            if (_csharpSymbol is INamespaceOrTypeSymbol nsot) return SymbolFactory.GetSymbols<Symbol>(nsot.GetMembers(), diagnostics, cancellationToken);
             else return ImmutableArray<Symbol>.Empty;
         }
 
         protected override ImmutableArray<DeclaredSymbol> CompleteProperty_Members(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            if (_csharpSymbol is INamespaceOrTypeSymbol nsot) return SymbolFactory.GetSymbols<DeclaredSymbol>(nsot.GetMembers());
+            if (_csharpSymbol is INamespaceOrTypeSymbol nsot) return SymbolFactory.GetSymbols<DeclaredSymbol>(nsot.GetMembers(), diagnostics, cancellationToken);
             else return ImmutableArray<DeclaredSymbol>.Empty;
         }
+
+        protected override ImmutableArray<AttributeSymbol> CompleteProperty_Attributes(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        {
+            return SymbolFactory.CreateAttributes(_csharpSymbol, diagnostics, cancellationToken);
+        }
+
     }
 }
