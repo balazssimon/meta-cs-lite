@@ -51,6 +51,11 @@ var rootBinder = mmComp.GetBinder(root);
 rootBinder.CompleteBind(default, true);
 PrintBinders(string.Empty, rootBinder);
 
+foreach (var diag in mmComp.GetDiagnostics())
+{
+    Console.WriteLine(diag);
+}
+
 static void PrintSymbols(string indent, Symbol symbol)
 {
     Console.WriteLine($"{indent}{symbol}");

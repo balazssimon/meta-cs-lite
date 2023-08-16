@@ -1,6 +1,8 @@
-﻿using Roslyn.Utilities;
+﻿using MetaDslx.CodeAnalysis.PooledObjects;
+using Roslyn.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Text;
 
 namespace MetaDslx.CodeAnalysis
@@ -9,11 +11,31 @@ namespace MetaDslx.CodeAnalysis
     {
         public static readonly CompilationOptions Default = new CompilationOptions();
 
-        private readonly bool _referencesSupersedeLowerVersions;
+        private readonly Lazy<ImmutableArray<Diagnostic>> _lazyErrors;
 
-        public CompilationOptions(bool referencesSupersedeLowerVersions = true)
+        private readonly bool _referencesSupersedeLowerVersions;
+        private readonly bool _concurrentBuild;
+
+        public CompilationOptions(bool referencesSupersedeLowerVersions = true,
+            bool concurrentBuild = true)
         {
             _referencesSupersedeLowerVersions = referencesSupersedeLowerVersions;
+            _concurrentBuild = concurrentBuild;
+
+            _lazyErrors = new Lazy<ImmutableArray<Diagnostic>>(() =>
+            {
+                var builder = ArrayBuilder<Diagnostic>.GetInstance();
+                ValidateOptions(builder);
+                return builder.ToImmutableAndFree();
+            });
+        }
+
+        /// <summary>
+        /// Errors collection related to an incompatible set of parse options
+        /// </summary>
+        public ImmutableArray<Diagnostic> Errors
+        {
+            get { return _lazyErrors.Value; }
         }
 
         /// <summary>
@@ -21,15 +43,42 @@ namespace MetaDslx.CodeAnalysis
         /// </summary>
         public bool ReferencesSupersedeLowerVersions => _referencesSupersedeLowerVersions;
 
+        /// <summary>
+        /// Specifies whether building compilation may use multiple threads.
+        /// </summary>
+        public bool ConcurrentBuild => _concurrentBuild;
+
         public CompilationOptions WithReferencesSupersedeLowerVersions(bool referencesSupersedeLowerVersions)
         {
-            if (_referencesSupersedeLowerVersions != referencesSupersedeLowerVersions) return Update(referencesSupersedeLowerVersions);
+            if (_referencesSupersedeLowerVersions != referencesSupersedeLowerVersions) return Update(referencesSupersedeLowerVersions, _concurrentBuild);
             else return this;
         }
 
-        protected virtual CompilationOptions Update(bool referencesSupersedeLowerVersions)
+        public CompilationOptions WithConcurrentBuild(bool concurrentBuild)
         {
-            return new CompilationOptions(referencesSupersedeLowerVersions);
+            if (_concurrentBuild != concurrentBuild) return Update(_referencesSupersedeLowerVersions, concurrentBuild);
+            else return this;
+        }
+
+        protected virtual CompilationOptions Update(bool referencesSupersedeLowerVersions, bool concurrentBuild)
+        {
+            return new CompilationOptions(referencesSupersedeLowerVersions, concurrentBuild);
+        }
+
+        /// <summary>
+        /// Performs validation of options compatibilities and generates diagnostics if needed
+        /// </summary>
+        public void ValidateOptions(ArrayBuilder<Diagnostic> builder)
+        {
+            CommonValidateOptions(builder);
+        }
+
+        /// <summary>
+        /// Performs validation of options compatibilities and generates diagnostics if needed
+        /// </summary>
+        protected virtual void CommonValidateOptions(ArrayBuilder<Diagnostic> builder)
+        {
+
         }
 
         public ReportDiagnostic GetEffectiveSeverity(DiagnosticDescriptor descriptor)

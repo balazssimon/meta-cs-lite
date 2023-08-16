@@ -627,6 +627,13 @@ namespace MetaDslx.CodeAnalysis.Symbols
                         NotePartComplete(CompletionGraph.FinishValidatingSymbol);
                     }
                 }
+                else if (incompletePart == CompletionGraph.StartComputingNonSymbolProperties || incompletePart == CompletionGraph.FinishComputingNonSymbolProperties)
+                {
+                    if (NotePartComplete(CompletionGraph.StartComputingNonSymbolProperties))
+                    {
+                        NotePartComplete(CompletionGraph.FinishComputingNonSymbolProperties);
+                    }
+                }
                 else if (ForceCompletePart(ref incompletePart, locationOpt, cancellationToken))
                 {
                     // incompletePart was handled by ForceCompletePart()
@@ -721,6 +728,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
                     diagnostics.Free();
                     NotePartComplete(CompletionParts.FinishComputingProperty_Attributes);
                 }
+                return true;
             }
             return false;
         }

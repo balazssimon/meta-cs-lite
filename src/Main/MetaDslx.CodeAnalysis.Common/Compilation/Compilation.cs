@@ -9,7 +9,6 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using Roslyn.Utilities;
 using System.Xml.Linq;
-using System.Reflection;
 using MetaDslx.CodeAnalysis.Symbols;
 using System.Linq;
 using Microsoft.CodeAnalysis;
@@ -51,7 +50,11 @@ namespace MetaDslx.CodeAnalysis
 
         private AccessCheck? _lazyAccessCheck;
 
-        private readonly DiagnosticBag _declarationDiagnostics = new DiagnosticBag();
+        private ImmutableArray<Diagnostic> _diagnostics;
+        private ImmutableArray<Diagnostic> _parseDiagnostics;
+        private ImmutableArray<Diagnostic> _declareDiagnostics;
+        private ImmutableArray<Diagnostic> _compileDiagnostics;
+        private ImmutableArray<Diagnostic> _emitDiagnostics;
 
         internal protected Compilation(
             string? assemblyName,
@@ -317,7 +320,8 @@ namespace MetaDslx.CodeAnalysis
 
         internal static bool IsValidSubmissionReturnType(Type type)
         {
-            return !(type == typeof(void) || type.IsByRef || type.GetTypeInfo().ContainsGenericParameters);
+            var info = System.Reflection.IntrospectionExtensions.GetTypeInfo(type);
+            return !(type == typeof(void) || type.IsByRef || info.ContainsGenericParameters);
         }
 
         /// <summary>
@@ -327,7 +331,7 @@ namespace MetaDslx.CodeAnalysis
 
         internal static bool IsValidHostObjectType(Type type)
         {
-            var info = type.GetTypeInfo();
+            var info = System.Reflection.IntrospectionExtensions.GetTypeInfo(type);
             return !(info.IsValueType || info.IsPointer || info.IsByRef || info.ContainsGenericParameters);
         }
 
@@ -683,8 +687,6 @@ namespace MetaDslx.CodeAnalysis
 
         public MergedDeclaration RootDeclaration => DeclarationTable.GetMergedRoot(this);
 
-        internal DiagnosticBag DeclarationDiagnostics => _declarationDiagnostics;
-
         #endregion
 
 
@@ -745,19 +747,19 @@ namespace MetaDslx.CodeAnalysis
             return factory.RootBinder;
         }
 
-        public MetaDslx.CodeAnalysis.Binding.Binder GetBinder(SyntaxNodeOrToken syntax)
+        public Binder GetBinder(SyntaxNodeOrToken syntax)
         {
             var factory = GetBinderFactory(syntax.SyntaxTree);
             return factory.GetBinder(syntax);
         }
 
-        public MetaDslx.CodeAnalysis.Binding.Binder GetEnclosingBinder(SyntaxNodeOrToken syntax)
+        public Binder GetEnclosingBinder(SyntaxNodeOrToken syntax)
         {
             var factory = GetBinderFactory(syntax.SyntaxTree);
             return factory.GetEnclosingBinder(syntax);
         }
 
-        public MetaDslx.CodeAnalysis.Binding.Binder GetEnclosingBinder(SyntaxTree syntaxTree, TextSpan span)
+        public Binder GetEnclosingBinder(SyntaxTree syntaxTree, TextSpan span)
         {
             var factory = GetBinderFactory(syntaxTree);
             return factory.GetEnclosingBinder(span);
@@ -799,7 +801,166 @@ namespace MetaDslx.CodeAnalysis
 
         #region Semantic Analysis
 
+        public ImmutableArray<Diagnostic> GetDiagnostics(CancellationToken cancellationToken = default)
+        {
+            if (_diagnostics.IsDefault)
+            {
+                DiagnosticBag? builder = DiagnosticBag.GetInstance();
+                this.ForceComplete(CompilationStage.Emit, builder, cancellationToken);
+                ImmutableInterlocked.InterlockedInitialize(ref _diagnostics, builder.ToReadOnlyAndFree());
+            }
+            return _diagnostics;
+        }
 
+        internal void ForceComplete(CompilationStage stage, DiagnosticBag diagnostics, CancellationToken cancellationToken = default)
+        {
+            var syntaxTrees = this.SyntaxTrees;
+            if (stage >= CompilationStage.Parse)
+            {
+                if (_parseDiagnostics.IsDefault)
+                {
+                    DiagnosticBag? builder = DiagnosticBag.GetInstance();
+                    if (this.Options.ConcurrentBuild)
+                    {
+                        RoslynParallel.For(
+                            0,
+                            syntaxTrees.Length,
+                            UICultureUtilities.WithCurrentUICulture<int>(i =>
+                            {
+                                var syntaxTree = syntaxTrees[i];
+                                AppendLoadDirectiveDiagnostics(builder, _syntaxAndDeclarations, syntaxTree);
+                                builder.AddRange(syntaxTree.GetDiagnostics(cancellationToken));
+                            }),
+                            cancellationToken);
+                    }
+                    else
+                    {
+                        foreach (var syntaxTree in syntaxTrees)
+                        {
+                            cancellationToken.ThrowIfCancellationRequested();
+                            AppendLoadDirectiveDiagnostics(builder, _syntaxAndDeclarations, syntaxTree);
+
+                            cancellationToken.ThrowIfCancellationRequested();
+                            builder.AddRange(syntaxTree.GetDiagnostics(cancellationToken));
+                        }
+                    }
+                    var parseOptionsReported = new HashSet<ParseOptions>();
+                    foreach (var syntaxTree in syntaxTrees)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        if (!syntaxTree.Options.Errors.IsDefaultOrEmpty && parseOptionsReported.Add(syntaxTree.Options))
+                        {
+                            var location = syntaxTree.GetLocation(TextSpan.FromBounds(0, 0));
+                            foreach (var error in syntaxTree.Options.Errors)
+                            {
+                                builder.Add(error.WithLocation(location));
+                            }
+                        }
+                    }
+                    ImmutableInterlocked.InterlockedInitialize(ref _parseDiagnostics, builder.ToReadOnlyAndFree());
+                }
+                diagnostics.AddRange(_parseDiagnostics);
+            }
+            if (stage >= CompilationStage.Declare)
+            {
+                if (_declareDiagnostics.IsDefault)
+                {
+                    DiagnosticBag? builder = DiagnosticBag.GetInstance();
+                    builder.AddRange(Options.Errors);
+
+                    cancellationToken.ThrowIfCancellationRequested();
+
+                    // the set of diagnostics related to establishing references.
+                    var csharpDiagnostics = GetBoundReferenceManager().CSharpCompilation.GetDeclarationDiagnostics(cancellationToken);
+                    builder.AddRange(csharpDiagnostics.Select(d => d.ToMetaDslx()));
+
+                    cancellationToken.ThrowIfCancellationRequested();
+
+                    ImmutableInterlocked.InterlockedInitialize(ref _declareDiagnostics, builder.ToReadOnlyAndFree());
+                }
+                diagnostics.AddRange(_declareDiagnostics);
+            }
+            if (stage >= CompilationStage.Compile)
+            {
+                if (_compileDiagnostics.IsDefault)
+                {
+                    DiagnosticBag? builder = DiagnosticBag.GetInstance();
+                    if (this.Options.ConcurrentBuild)
+                    {
+                        RoslynParallel.For(
+                            0,
+                            syntaxTrees.Length,
+                            UICultureUtilities.WithCurrentUICulture<int>(i =>
+                            {
+                                var syntaxTree = syntaxTrees[i];
+                                var rootBinder = GetRootBinder(syntaxTree);
+                                var context = new BindingContext(builder, cancellationToken);
+                                rootBinder.CompleteBind(context, resolveLazy: true);
+                            }),
+                            cancellationToken);
+                    }
+                    else
+                    {
+                        foreach (var syntaxTree in syntaxTrees)
+                        {
+                            cancellationToken.ThrowIfCancellationRequested();
+                            var rootBinder = GetRootBinder(syntaxTree);
+                            var context = new BindingContext(builder, cancellationToken);
+                            rootBinder.CompleteBind(context, resolveLazy: true);
+                        }
+                    }
+                    this.GlobalNamespace.ForceComplete(null, null, cancellationToken);
+                    AppendDiagnosticsForAllSymbols(builder, cancellationToken);
+                    ImmutableInterlocked.InterlockedInitialize(ref _compileDiagnostics, builder.ToReadOnlyAndFree());
+                }
+                diagnostics.AddRange(_compileDiagnostics);
+            }
+            if (stage >= CompilationStage.Emit)
+            {
+                if (_emitDiagnostics.IsDefault)
+                {
+                    DiagnosticBag? builder = DiagnosticBag.GetInstance();
+                    ImmutableInterlocked.InterlockedInitialize(ref _emitDiagnostics, builder.ToReadOnlyAndFree());
+                }
+                diagnostics.AddRange(_emitDiagnostics);
+            }
+        }
+
+        private void AppendLoadDirectiveDiagnostics(DiagnosticBag builder, SyntaxAndDeclarationManager syntaxAndDeclarations, SyntaxTree syntaxTree, Func<IEnumerable<Diagnostic>, IEnumerable<Diagnostic>>? locationFilterOpt = null)
+        {
+            ImmutableArray<DeclarationLoadDirective> loadDirectives;
+            if (syntaxAndDeclarations.GetLazyState(this).LoadDirectiveMap.TryGetValue(syntaxTree, out loadDirectives))
+            {
+                Debug.Assert(!loadDirectives.IsEmpty);
+                foreach (var directive in loadDirectives)
+                {
+                    IEnumerable<Diagnostic> diagnostics = directive.Diagnostics;
+                    if (locationFilterOpt != null)
+                    {
+                        diagnostics = locationFilterOpt(diagnostics);
+                    }
+                    builder.AddRange(diagnostics);
+                }
+            }
+        }
+
+        private void AppendDiagnosticsForAllSymbols(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        {
+            var rootSymbol = GlobalNamespace;
+            var queue = new List<Symbol>();
+            queue.Add(rootSymbol);
+            int index = 0;
+            while (index < queue.Count)
+            {
+                var symbol = queue[index];
+                diagnostics.AddRange(symbol.Diagnostics);
+                foreach (var child in symbol.ContainedSymbols)
+                {
+                    if (!queue.Contains(child)) queue.Add(child);
+                }
+                ++index;
+            }
+        }
 
         #endregion
 
