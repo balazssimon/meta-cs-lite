@@ -24,6 +24,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
         }
 
         public override NamespaceExtent Extent => new NamespaceExtent(_module);
+        public override ModuleSymbol ContainingModule => _module;
 
         public IModel Model => _modelObject.Model;
         public IModelObject ModelObject => _modelObject;

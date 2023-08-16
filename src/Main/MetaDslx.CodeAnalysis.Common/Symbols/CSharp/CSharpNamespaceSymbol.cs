@@ -25,6 +25,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.CSharp
         public override ImmutableArray<Location> Locations => _csharpSymbol.Locations.SelectAsArray(l => l.ToMetaDslx());
 
         public override NamespaceExtent Extent => new NamespaceExtent(_module);
+        public override ModuleSymbol ContainingModule => _module;
 
         protected override string? CompleteProperty_Name(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {

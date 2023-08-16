@@ -27,7 +27,8 @@ var mmComp = Compilation.Create(
         MetadataReference.CreateFromModel(Meta.Model),
         MetadataReference.CreateFromFile(typeof(string).Assembly.Location),
         MetadataReference.CreateFromFile(typeof(Compilation).Assembly.Location),
-    });
+    },
+    options: CompilationOptions.Default.WithConcurrentBuild(false));
 
 //*/
 var rootDecl = mmComp.RootDeclaration;

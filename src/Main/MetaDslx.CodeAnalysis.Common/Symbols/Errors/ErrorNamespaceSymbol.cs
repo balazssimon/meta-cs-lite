@@ -21,6 +21,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Errors
         }
 
         public override NamespaceExtent Extent => new NamespaceExtent(_module);
+        public override ModuleSymbol ContainingModule => _module;
         public ErrorSymbolInfo ErrorInfo => _errorInfo;
         public ImmutableArray<Symbol> CandidateSymbols => _errorInfo.Symbols;
         public override ImmutableArray<Location> Locations => _locations;

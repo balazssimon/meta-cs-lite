@@ -110,15 +110,43 @@ namespace MetaDslx.CodeAnalysis.Declarations
             {
             }
 
+            private void MakeChildren()
+            {
+                var nestedDeclarations = ArrayBuilder<SingleDeclaration>.GetInstance();
+
+                foreach (var decl in this.Declarations)
+                {
+                    foreach (var child in decl.Children)
+                    {
+                        if (child is SingleDeclaration single)
+                        {
+                            nestedDeclarations.Add(single);
+                        }
+                    }
+                }
+
+                var members = ArrayBuilder<MergedDeclaration>.GetInstance();
+
+                if (nestedDeclarations != null)
+                {
+                    var membersGrouped = nestedDeclarations.ToDictionary(m => m);
+                    nestedDeclarations.Free();
+
+                    foreach (var memberGroup in membersGrouped.Values)
+                    {
+                        var merged = MergedDeclaration.Create(memberGroup);
+                        members.Add(merged);
+                    }
+                }
+
+                ImmutableInterlocked.InterlockedInitialize(ref _lazyChildren, members.ToImmutableAndFree());
+            }
+
             public override ImmutableArray<MergedDeclaration> Children
             {
                 get
                 {
-                    if (_lazyChildren.IsDefault)
-                    {
-                        var children = _declarations.SelectAsArray(decl => Create(decl));
-                        ImmutableInterlocked.InterlockedInitialize(ref _lazyChildren, children);
-                    }
+                    if (_lazyChildren.IsDefault) MakeChildren();
                     return _lazyChildren;
                 }
             }
