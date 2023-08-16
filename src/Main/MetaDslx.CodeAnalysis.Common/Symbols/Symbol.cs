@@ -631,6 +631,10 @@ namespace MetaDslx.CodeAnalysis.Symbols
                 {
                     if (NotePartComplete(CompletionGraph.StartComputingNonSymbolProperties))
                     {
+                        var diagnostics = DiagnosticBag.GetInstance();
+                        CompletePart_ComputeNonSymbolProperties(diagnostics, cancellationToken);
+                        AddSymbolDiagnostics(diagnostics);
+                        diagnostics.Free();
                         NotePartComplete(CompletionGraph.FinishComputingNonSymbolProperties);
                     }
                 }
@@ -814,6 +818,10 @@ namespace MetaDslx.CodeAnalysis.Symbols
         protected virtual ImmutableArray<AttributeSymbol> CompleteProperty_Attributes(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             return ImmutableArray<AttributeSymbol>.Empty;
+        }
+
+        protected virtual void CompletePart_ComputeNonSymbolProperties(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        {
         }
 
         protected virtual void CompletePart_ValidateSymbol(DiagnosticBag diagnostics, CancellationToken cancellationToken)

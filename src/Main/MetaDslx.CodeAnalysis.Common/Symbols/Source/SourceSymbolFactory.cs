@@ -117,6 +117,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
                 foreach (var decl in symbol.DeclaringSyntaxReferences)
                 {
                     cancellationToken.ThrowIfCancellationRequested();
+                    if (decl.IsNull) continue;
                     Binder? declBinder = null;
                     var binder = Compilation.GetBinder(decl);
                     while (binder is not null)
@@ -176,6 +177,70 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
                 }
             }
             return builder.ToImmutableAndFree();
+        }
+
+        public void ComputeNonSymbolProperties(ISourceSymbol? symbol, DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        {
+            if (symbol is null) return;
+            var modelObject = symbol.ModelObject;
+            if (modelObject is null) return;
+            foreach (var decl in symbol.DeclaringSyntaxReferences)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                if (decl.IsNull) continue;
+                Binder? declBinder = null;
+                var binder = Compilation.GetBinder(decl);
+                while (binder is not null)
+                {
+                    if (binder is IDefineBinder defineBinder && defineBinder.DefinedSymbols.Contains((Symbol)symbol))
+                    {
+                        declBinder = binder;
+                        break;
+                    }
+                    binder = binder.ParentBinder;
+                }
+                //Debug.Assert(declBinder is not null || (symbol is NamespaceSymbol ns && ns.IsGlobalNamespace));
+                if (declBinder is not null)
+                {
+                    var propBinders = declBinder.GetPropertyBinders(propertyName: null, cancellationToken);
+                    foreach (var propBinder in propBinders)
+                    {
+                        var prop = modelObject.GetProperty(propBinder.Name);
+                        if (prop is not null && prop.SymbolProperty is null)
+                        {
+                            var valueBinders = propBinder.GetValueBinders(propBinder, cancellationToken);
+                            foreach (var ivalueBinder in valueBinders)
+                            {
+                                var valueBinder = (Binder)ivalueBinder;
+                                var bindingContext = new BindingContext(diagnostics, cancellationToken);
+                                var values = valueBinder.Bind(bindingContext);
+                                foreach (var value in values)
+                                {
+                                    try
+                                    {
+                                        if (value is Symbol symbolValue)
+                                        {
+                                            var modelObjectValue = (symbolValue as IModelSymbol)?.ModelObject;
+                                            if (modelObjectValue is not null)
+                                            {
+                                                modelObject.Add(prop, modelObjectValue);
+                                            }
+                                        }
+                                        else
+                                        {
+                                            modelObject.Add(prop, value);
+                                        }
+                                    }
+                                    catch (ModelException ex)
+                                    {
+                                        diagnostics.Add(Diagnostic.Create(CommonErrorCode.ERR_InvalidModelObjectPropertyValue, decl.GetLocation(), value, value.GetType(), prop.Name, prop.Type));
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }

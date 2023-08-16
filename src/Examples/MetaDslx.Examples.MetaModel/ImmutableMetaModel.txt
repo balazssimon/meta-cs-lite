@@ -112,7 +112,7 @@ class MetaConstant : MetaDeclaration, MetaTypedElement
 
 class MetaClass : MetaNamedType
 {
-	SystemType SymbolType;
+	System.Type SymbolType;
 	bool IsAbstract;
 	list<MetaClass> SuperClasses;
 	containment list<MetaProperty> Properties;

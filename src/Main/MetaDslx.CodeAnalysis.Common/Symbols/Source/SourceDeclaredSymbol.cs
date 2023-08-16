@@ -65,5 +65,10 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
         {
             return SymbolFactory.GetSymbolPropertyValues<AttributeSymbol>(this, nameof(Attributes), diagnostics, cancellationToken);
         }
+
+        protected override void CompletePart_ComputeNonSymbolProperties(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        {
+            SymbolFactory.ComputeNonSymbolProperties(this, diagnostics, cancellationToken);
+        }
     }
 }
