@@ -452,7 +452,7 @@ namespace [language.QualifiedNamespace].Syntax
 
         protected override SyntaxTree CreateSyntaxTreeForRoot()
         {
-            return [language.Name]SyntaxTree.CreateWithoutClone(this, ParseData.Empty);
+            return [language.Name]SyntaxTree.CreateWithoutClone(this, IncrementalParseData.Empty);
         }
 
         public override TResult Accept<TArg, TResult>(SyntaxVisitor<TArg, TResult> visitor, TArg argument)
@@ -815,7 +815,7 @@ namespace [language.QualifiedNamespace]
         /// <summary>
         /// Creates a new syntax tree from a syntax node.
         /// </summary>
-        public static [language.Name]SyntaxTree Create([language.Name]SyntaxNode root, ParseData parseData, [language.Name]ParseOptions? options = null, string path = "", SourceText? text = null, Encoding? encoding = null, SourceHashAlgorithm checksumAlgorithm = SourceHashAlgorithm.Sha1)
+        public static [language.Name]SyntaxTree Create([language.Name]SyntaxNode root, IncrementalParseData parseData, [language.Name]ParseOptions? options = null, string path = "", SourceText? text = null, Encoding? encoding = null, SourceHashAlgorithm checksumAlgorithm = SourceHashAlgorithm.Sha1)
         {
             if (root == null)
             {
@@ -838,7 +838,7 @@ namespace [language.QualifiedNamespace]
         /// Creates a new syntax tree from a syntax node with text that should correspond to the syntax node.
         /// </summary>
         /// <remarks>This is used by the ExpressionEvaluator.</remarks>
-        internal static [language.Name]SyntaxTree CreateForDebugger([language.Name]SyntaxNode root, ParseData parseData, SourceText text, [language.Name]ParseOptions options)
+        internal static [language.Name]SyntaxTree CreateForDebugger([language.Name]SyntaxNode root, IncrementalParseData parseData, SourceText text, [language.Name]ParseOptions options)
         {
             Debug.Assert(root != null);
             return new DebuggerSyntaxTree(root, parseData, text, options);
@@ -852,7 +852,7 @@ namespace [language.QualifiedNamespace]
         /// <para>NOTE: This method is only intended to be used from <see cref="[language.Name]SyntaxNode.SyntaxTree"/> property.</para>
         /// <para>NOTE: Do not use this method elsewhere, instead use <see cref="Create([language.Name]SyntaxNode, CSharpParseOptions, string, Encoding)"/> method for creating a syntax tree.</para>
         /// </summary>
-        internal static [language.Name]SyntaxTree CreateWithoutClone([language.Name]SyntaxNode root, ParseData parseData)
+        internal static [language.Name]SyntaxTree CreateWithoutClone([language.Name]SyntaxNode root, IncrementalParseData parseData)
         {
             Debug.Assert(root != null);
             return new ParsedSyntaxTree(
@@ -894,7 +894,7 @@ namespace [language.QualifiedNamespace]
             }
             options = options ?? [language.Name]ParseOptions.Default;
             var lexer = [language.Name]Language.Instance.InternalSyntaxFactory.CreateLexer(text, options);
-            using (var parser = [language.Name]Language.Instance.InternalSyntaxFactory.CreateParser(lexer, oldTree: null, oldParseData: ParseData.Empty, changes: null, cancellationToken: cancellationToken))
+            using (var parser = [language.Name]Language.Instance.InternalSyntaxFactory.CreateParser(lexer, oldParseData: IncrementalParseData.Empty, changes: null, cancellationToken: cancellationToken))
             {
                 var parseData = parser.Parse();
                 var compilationUnit = ([language.Grammar.MainRule?.RedName])parseData.RootNode;
@@ -946,7 +946,7 @@ namespace [language.QualifiedNamespace]
                 oldTree = null;
             }
             var lexer = [language.Name]Language.Instance.InternalSyntaxFactory.CreateLexer(newText, Options);
-            using (var parser = [language.Name]Language.Instance.InternalSyntaxFactory.CreateParser(lexer, oldTree?.ParseData ?? ParseData.Empty, changes))
+            using (var parser = [language.Name]Language.Instance.InternalSyntaxFactory.CreateParser(lexer, oldTree?.ParseData ?? IncrementalParseData.Empty, changes))
             {
                 var parseData = parser.Parse();
                 var compilationUnit = ([language.Grammar.MainRule?.RedName])parseData.RootNode;
@@ -1038,7 +1038,7 @@ namespace [language.QualifiedNamespace]
             {
                 get { return true; }
             }
-            protected override ParseData ParseData => ParseData.Empty;
+            protected override IncrementalParseData ParseData => IncrementalParseData.Empty;
             public override SyntaxTree WithRootAndOptions(SyntaxNode root, ParseOptions options)
             {
                 return Language.SyntaxFactory.MakeSyntaxTree(([language.Name]SyntaxNode)root, options: ([language.Name]ParseOptions)options, path: FilePath, encoding: null);
@@ -1053,12 +1053,12 @@ namespace [language.QualifiedNamespace]
             private readonly [language.Name]ParseOptions _options;
             private readonly string _path;
             private readonly [language.Name]SyntaxNode _root;
-            private readonly ParseData _parseData;
+            private readonly IncrementalParseData _parseData;
             private readonly bool _hasCompilationUnitRoot;
             private readonly Encoding? _encodingOpt;
             private readonly SourceHashAlgorithm _checksumAlgorithm;
             private SourceText _lazyText;
-            internal ParsedSyntaxTree(SourceText? textOpt, Encoding? encodingOpt, SourceHashAlgorithm checksumAlgorithm, string path, [language.Name]ParseOptions options, [language.Name]SyntaxNode root, ParseData parseData, bool cloneRoot = true)
+            internal ParsedSyntaxTree(SourceText? textOpt, Encoding? encodingOpt, SourceHashAlgorithm checksumAlgorithm, string path, [language.Name]ParseOptions options, [language.Name]SyntaxNode root, IncrementalParseData parseData, bool cloneRoot = true)
             {
                 Debug.Assert(root != null);
                 Debug.Assert(options != null);
@@ -1072,7 +1072,7 @@ namespace [language.QualifiedNamespace]
                 _parseData = parseData;
                 _hasCompilationUnitRoot = root.Kind == [language.Name]SyntaxKind.[language.Grammar.MainRule?.CSharpName];
             }
-            protected override ParseData ParseData => _parseData;
+            protected override IncrementalParseData ParseData => _parseData;
             public override string FilePath
             {
                 get { return _path; }
@@ -1158,7 +1158,7 @@ namespace [language.QualifiedNamespace]
         }
         private class DebuggerSyntaxTree : ParsedSyntaxTree
         {
-            public DebuggerSyntaxTree([language.Name]SyntaxNode root, ParseData parseData, SourceText text, [language.Name]ParseOptions options)
+            public DebuggerSyntaxTree([language.Name]SyntaxNode root, IncrementalParseData parseData, SourceText text, [language.Name]ParseOptions options)
                 : base(
                     text,
                     text.Encoding,
@@ -1351,7 +1351,7 @@ namespace [language.QualifiedNamespace].Syntax
 		/// </summary>
 		public [language.Name]SyntaxTree SyntaxTree(SyntaxNode root, [language.Name]ParseOptions? options = null, string? path = "", Encoding? encoding = null)
 		{
-			return [language.Name]SyntaxTree.Create(([language.Name]SyntaxNode)root, ParseData.Empty, options, path, null, encoding);
+			return [language.Name]SyntaxTree.Create(([language.Name]SyntaxNode)root, IncrementalParseData.Empty, options, path, null, encoding);
 		}
 
 		/// <summary>
@@ -1390,7 +1390,7 @@ namespace [language.QualifiedNamespace].Syntax
 	
 		public override [language.Name]SyntaxTree MakeSyntaxTree(SyntaxNode root, ParseOptions? options = null, string path = "", Encoding? encoding = null)
 		{
-			return [language.Name]SyntaxTree.Create(([language.Name]SyntaxNode)root, ParseData.Empty, ([language.Name]ParseOptions)options, path, null, encoding);
+			return [language.Name]SyntaxTree.Create(([language.Name]SyntaxNode)root, IncrementalParseData.Empty, ([language.Name]ParseOptions)options, path, null, encoding);
 		}
 
         /// <summary>
