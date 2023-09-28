@@ -276,7 +276,7 @@ namespace MetaDslx.CodeAnalysis
 
         #region Preprocessor Symbols
 
-        protected abstract Syntax.InternalSyntax.ParseData ParseData { get; }
+        protected abstract Syntax.InternalSyntax.IncrementalParseData ParseData { get; }
 
         protected DirectiveStack GetDirectives()
         {

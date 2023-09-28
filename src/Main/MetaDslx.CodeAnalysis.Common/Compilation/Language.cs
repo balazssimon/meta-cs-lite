@@ -199,12 +199,12 @@ namespace MetaDslx.CodeAnalysis
                 throw new NotImplementedException();
             }
 
-            public override AbstractLexer CreateLexer(SourceText text, ParseOptions options)
+            public override SyntaxLexer CreateLexer(SourceText text, ParseOptions options)
             {
                 throw new NotImplementedException();
             }
 
-            public override AbstractParser CreateParser(AbstractLexer lexer, SyntaxNode? oldTree, ParseData? oldParseData, IEnumerable<TextChangeRange>? changes, CancellationToken cancellationToken = default)
+            public override SyntaxParser CreateParser(SyntaxLexer lexer, IncrementalParseData? oldParseData, IEnumerable<TextChangeRange>? changes, CancellationToken cancellationToken = default)
             {
                 throw new NotImplementedException();
             }

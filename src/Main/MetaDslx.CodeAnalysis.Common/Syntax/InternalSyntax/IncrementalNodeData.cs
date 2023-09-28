@@ -9,38 +9,38 @@ namespace MetaDslx.CodeAnalysis.Syntax.InternalSyntax
     {
         public readonly ParserState? StartState;
         public readonly ParserState? EndState;
-        public readonly int LookaheadBefore;
-        public readonly int LookaheadAfter;
+        public readonly int LookAhead;
+        public readonly int LookBack;
 #if DEBUG
         public readonly int Version;
 #endif
 
 #if DEBUG
-        public IncrementalNodeData(ParserState? startState, ParserState? endState, int lookaheadBefore, int lookaheadAfter, int version)
+        public IncrementalNodeData(ParserState? startState, ParserState? endState, int lookAhead, int lookBack, int version)
 #else
-        public IncrementalNodeData(ParserState? startState, ParserState? endState, int lookaheadBefore, int lookaheadAfter)
+        public IncrementalNodeData(ParserState? startState, ParserState? endState, int lookAhead, int lookBack)
 #endif
         {
             StartState = startState;
             EndState = endState;
-            LookaheadBefore = lookaheadBefore;
-            LookaheadAfter = lookaheadAfter;
+            LookAhead = lookAhead;
+            LookBack = lookBack;
 #if DEBUG
             Version = version;
 #endif
         }
 
-        public bool Equals(ParserState? startState, ParserState? endState, int lookaheadBefore, int lookaheadAfter)
+        public bool Equals(ParserState? startState, ParserState? endState, int lookAhead, int lookBack)
         {
             return startState == this.StartState &&
                 endState == this.EndState &&
-                lookaheadBefore == this.LookaheadBefore &&
-                lookaheadAfter == this.LookaheadAfter;
+                lookAhead == this.LookAhead &&
+                lookBack == this.LookBack;
         }
 
         public bool Equals(IncrementalNodeData other)
         {
-            return Equals(other.StartState, other.EndState, other.LookaheadBefore, other.LookaheadAfter);
+            return Equals(other.StartState, other.EndState, other.LookAhead, other.LookBack);
         }
 
         public override bool Equals(object obj)
@@ -53,7 +53,7 @@ namespace MetaDslx.CodeAnalysis.Syntax.InternalSyntax
         {
             return Hash.Combine(this.StartState?.GetHashCode() ?? 0, 
                 Hash.Combine(this.EndState?.GetHashCode() ?? 0,
-                Hash.Combine(this.LookaheadBefore, this.LookaheadAfter)));
+                Hash.Combine(this.LookAhead, this.LookBack)));
         }
     }
 }

@@ -1,59 +1,65 @@
 ﻿using MetaDslx.CodeAnalysis.Text;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 
 namespace MetaDslx.CodeAnalysis.Syntax.InternalSyntax
 {
-    public abstract class SyntaxParser : AbstractParser
+    public abstract class SyntaxParser : IDisposable
     {
+        public readonly Language Language;
+        public readonly ParseOptions ParseOptions;
+        protected readonly SyntaxLexer Lexer;
         private CancellationToken _cancellationToken;
-        private int _position;
-        private ParserState? _state;
-        private ParseData _parseData;
-        private List<SyntaxDiagnosticInfo> _errors;
+        private IncrementalParseData _parseData;
 
-        protected SyntaxParser(SyntaxLexer lexer, SyntaxNode? oldTree, ParseData? oldParseData, IEnumerable<TextChangeRange>? changes, CancellationToken cancellationToken) 
-            : base(lexer)
+        public SyntaxParser(SyntaxLexer lexer, IncrementalParseData? oldParseData, IEnumerable<TextChangeRange>? changes, CancellationToken cancellationToken)
         {
+            Language = lexer.Language;
+            Lexer = lexer;
+            ParseOptions = lexer.ParseOptions;
             _cancellationToken = cancellationToken;
-            _position = 0;
-            _state = null;
-            if (oldParseData is not null)
-            {
-                _parseData = new ParseData(oldParseData.Version + 1, oldParseData.LexerStateManager, oldParseData.ParserStateManager, oldParseData.Directives, oldParseData.MinLexerLookahead, oldParseData.MaxLexerLookahead, oldParseData.IncrementalData);
-            }
-            else
-            {
-                _parseData = new ParseData(1, lexer.StateManager, CreateStateManager(), DirectiveStack.Empty, 0, 0, new ConditionalWeakTable<GreenNode, IncrementalNodeData>());
-            }
-            _errors = new List<SyntaxDiagnosticInfo>();
+            _parseData = ComputeIncrementalParseData(oldParseData, changes);
         }
 
         public CancellationToken CancellationToken => _cancellationToken;
 
-        public override int Position => _position;
+        protected ParserStateManager? StateManager => _parseData.ParserStateManager;
 
-        public override ParserState? State => _state;
+        public abstract int Position { get; }
 
-        public ParseData ParseData => _parseData;
+        public abstract ParserState? State { get; }
 
-        public IEnumerable<SyntaxDiagnosticInfo> Errors => _errors;
-
-        protected void AddError(SyntaxDiagnosticInfo error)
+        public void Dispose()
         {
-            _errors.Add(error);
+            Lexer.Dispose();
         }
 
-        public SyntaxDiagnosticInfo[]? GetErrorsForToken(int position, InternalSyntaxToken token)
+        public IncrementalParseData Parse()
         {
-            var errors = _errors.Where(error => error.Offset >= position && (error.Offset < position + token.FullWidth || token.RawKind == (int)InternalSyntaxKind.Eof));
-            errors = errors.Select(error => error.WithOffset(error.Offset - position));
-            if (errors.Any()) return errors.ToArray();
-            else return null;
+            var rootNode = ParseRoot();
+            _parseData.RootNode = rootNode;
+            _parseData.LexerLookAhead = Lexer.LookAhead;
+            _parseData.LexerLookBack = Lexer.LookBack;
+            return _parseData;
+        }
+
+        protected abstract SyntaxNode ParseRoot();
+
+        protected abstract ParserStateManager? CreateStateManager();
+
+        private IncrementalParseData ComputeIncrementalParseData(IncrementalParseData? oldParseData, IEnumerable<TextChangeRange>? changes)
+        {
+            if (oldParseData is not null)
+            {
+                return new IncrementalParseData(oldParseData);
+            }
+            else
+            {
+                return new IncrementalParseData(1, Lexer.StateManager, CreateStateManager(), DirectiveStack.Empty, 0, 0, new ConditionalWeakTable<GreenNode, IncrementalNodeData>());
+            }
         }
     }
 }

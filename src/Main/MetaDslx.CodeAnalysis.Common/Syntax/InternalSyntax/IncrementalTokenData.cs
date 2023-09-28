@@ -5,32 +5,32 @@ using System.Text;
 
 namespace MetaDslx.CodeAnalysis.Syntax.InternalSyntax
 {
-    public sealed class IncrementalTokenData : IEquatable<IncrementalTokenData>
+    public struct IncrementalTokenData : IEquatable<IncrementalTokenData>
     {
         public readonly LexerState? StartState;
         public readonly LexerState? EndState;
-        public readonly int LookaheadBefore;
-        public readonly int LookaheadAfter;
+        public readonly int LookAhead;
+        public readonly int LookBack;
 
-        public IncrementalTokenData(LexerState? startState, LexerState? endState, int lookaheadBefore, int lookaheadAfter)
+        public IncrementalTokenData(LexerState? startState, LexerState? endState, int lookAhead, int lookBack)
         {
             StartState = startState;
             EndState = endState;
-            LookaheadBefore = lookaheadBefore;
-            LookaheadAfter = lookaheadAfter;
+            LookAhead = lookAhead;
+            LookBack = lookBack;
         }
 
-        public bool Equals(LexerState? startState, LexerState? endState, int lookaheadBefore, int lookaheadAfter)
+        public bool Equals(LexerState? startState, LexerState? endState, int lookAhead, int lookBack)
         {
             return startState == this.StartState &&
                 endState == this.EndState &&
-                lookaheadBefore == this.LookaheadBefore &&
-                lookaheadAfter == this.LookaheadAfter;
+                lookAhead == this.LookAhead &&
+                lookBack == this.LookBack;
         }
 
         public bool Equals(IncrementalTokenData other)
         {
-            return Equals(other.StartState, other.EndState, other.LookaheadBefore, other.LookaheadAfter);
+            return Equals(other.StartState, other.EndState, other.LookAhead, other.LookBack);
         }
 
         public override bool Equals(object obj)
@@ -43,7 +43,7 @@ namespace MetaDslx.CodeAnalysis.Syntax.InternalSyntax
         {
             return Hash.Combine(this.StartState?.GetHashCode() ?? 0,
                 Hash.Combine(this.EndState?.GetHashCode() ?? 0,
-                Hash.Combine(this.LookaheadBefore, this.LookaheadAfter)));
+                Hash.Combine(this.LookAhead, this.LookBack)));
         }
     }
 }

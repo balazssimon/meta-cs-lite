@@ -896,8 +896,9 @@ namespace [language.QualifiedNamespace]
             var lexer = [language.Name]Language.Instance.InternalSyntaxFactory.CreateLexer(text, options);
             using (var parser = [language.Name]Language.Instance.InternalSyntaxFactory.CreateParser(lexer, oldTree: null, oldParseData: ParseData.Empty, changes: null, cancellationToken: cancellationToken))
             {
-                var compilationUnit = ([language.Grammar.MainRule?.RedName])parser.Parse();
-                var tree = new ParsedSyntaxTree(text, text.Encoding, text.ChecksumAlgorithm, path, options, compilationUnit, parser.ParseData);
+                var parseData = parser.Parse();
+                var compilationUnit = ([language.Grammar.MainRule?.RedName])parseData.RootNode;
+                var tree = new ParsedSyntaxTree(text, text.Encoding, text.ChecksumAlgorithm, path, options, compilationUnit, parseData);
                 tree.VerifySource();
                 return tree;
             }
@@ -945,10 +946,11 @@ namespace [language.QualifiedNamespace]
                 oldTree = null;
             }
             var lexer = [language.Name]Language.Instance.InternalSyntaxFactory.CreateLexer(newText, Options);
-            using (var parser = [language.Name]Language.Instance.InternalSyntaxFactory.CreateParser(lexer, oldTree?.GetRoot(), oldTree?.ParseData ?? ParseData.Empty, changes))
+            using (var parser = [language.Name]Language.Instance.InternalSyntaxFactory.CreateParser(lexer, oldTree?.ParseData ?? ParseData.Empty, changes))
             {
-                var compilationUnit = ([language.Grammar.MainRule?.RedName])parser.Parse();
-                var tree = new ParsedSyntaxTree(newText, newText.Encoding, newText.ChecksumAlgorithm, this.FilePath, this.Options, compilationUnit, parser.ParseData);
+                var parseData = parser.Parse();
+                var compilationUnit = ([language.Grammar.MainRule?.RedName])parseData.RootNode;
+                var tree = new ParsedSyntaxTree(newText, newText.Encoding, newText.ChecksumAlgorithm, this.FilePath, this.Options, compilationUnit, parseData);
                 tree.VerifySource(changes);
                 return tree;
             }

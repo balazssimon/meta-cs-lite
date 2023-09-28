@@ -1141,9 +1141,9 @@ namespace [language.QualifiedNamespace].Syntax.InternalSyntax
 			return new [language.Name]SyntaxLexer(text, ([language.Name]ParseOptions)(options ?? [language.Name]ParseOptions.Default));
 		}
 
-		public override [language.Name]SyntaxParser CreateParser(AbstractLexer lexer, SyntaxNode? oldTree, ParseData? oldParseData, IEnumerable<TextChangeRange>? changes, CancellationToken cancellationToken = default)
+		public override [language.Name]SyntaxParser CreateParser(AbstractLexer lexer, ParseData? oldParseData, IEnumerable<TextChangeRange>? changes, CancellationToken cancellationToken = default)
         {
-			return new [language.Name]SyntaxParser(([language.Name]SyntaxLexer)lexer, ([language.Name]SyntaxNode?)oldTree, oldParseData, changes, cancellationToken);
+			return new [language.Name]SyntaxParser(([language.Name]SyntaxLexer)lexer, oldParseData, changes, cancellationToken);
 		}
 
 		public InternalSyntaxTrivia Trivia([language.Name]SyntaxKind kind, string text, bool elastic = false)

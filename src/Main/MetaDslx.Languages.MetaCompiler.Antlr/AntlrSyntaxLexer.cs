@@ -13,49 +13,64 @@ namespace MetaDslx.Languages.MetaCompiler.Antlr
 {
     public abstract class AntlrSyntaxLexer : SyntaxLexer, IAntlrErrorListener<int>
     {
-        private readonly AntlrInputStream _stream;
+        private readonly AntlrInputStream _inputStream;
+        private readonly AntlrTokenStream _tokenStream;
         private readonly AntlrLexer _lexer;
-        private readonly SyntaxFacts _syntaxFacts;
         private bool _resetting;
-        private bool _hitEof;
+        private List<SyntaxDiagnosticInfo> _diagnostics;
 
         public AntlrSyntaxLexer(SourceText text, ParseOptions options)
             : base(text, options)
         {
-            _stream = new AntlrInputStream(this, this.TextWindow);
-            _lexer = ((IAntlrSyntaxFactory)Language.InternalSyntaxFactory).CreateAntlrLexer(_stream);
+            _inputStream = new AntlrInputStream(this, this.TextWindow);
+            _lexer = ((IAntlrSyntaxFactory)Language.InternalSyntaxFactory).CreateAntlrLexer(_inputStream);
+            _tokenStream = new AntlrTokenStream(this);
+            _lexer.TokenFactory = _tokenStream;
             _lexer.RemoveErrorListeners();
             _lexer.AddErrorListener(this);
-            _syntaxFacts = Language.SyntaxFacts;
+            _diagnostics = new List<SyntaxDiagnosticInfo>();
         }
 
         public AntlrLexer AntlrLexer => _lexer;
 
-        internal AntlrInputStream InputStream => _stream;
+        internal AntlrInputStream InputStream => _inputStream;
+
+        internal AntlrTokenStream TokenStream => _tokenStream;
 
         internal bool Resetting => _resetting;
 
-        protected override (int rawKind, bool isTrivia, bool cache) ScanLexeme()
+        public override int Position => _lexer.CharIndex;
+
+        public override LexerState? State => null;
+
+        public override int LookAhead => _inputStream.MaxLookAhead;
+
+        public override int LookBack => _inputStream.MaxLookBack;
+
+        public List<SyntaxDiagnosticInfo> Diagnostics => _diagnostics;
+
+        public override (InternalSyntaxToken? NextToken, IncrementalTokenData IncrementalTokenData) Lex()
         {
-            var token = _lexer.NextToken();
-            var kind = AntlrSyntaxKind.FromAntlr(token.Type);
-            if (kind == (int)InternalSyntaxKind.Eof)
-            {
-                if (_hitEof) return ((int)InternalSyntaxKind.None, false, false);
-                else _hitEof = true;
-            }
-            var cache = _syntaxFacts.IsFixedToken(kind);
-            return (kind, token.Channel != 0, cache);
+            return default;
         }
 
         public void SyntaxError(TextWriter output, IRecognizer recognizer, int offendingSymbol, int line, int charPositionInLine, string msg, RecognitionException e)
         {
-            //TextWindow.NextChar();
-            this.AddError(new SyntaxDiagnosticInfo(TextWindow.LexemeStartPosition, TextWindow.Width, ErrorCode.ERR_SyntaxError, msg));
-            if (TextWindow.Width > 0)
+            if (e != null)
             {
-                this.AppendLexeme((int)InternalSyntaxKind.BadToken, true, false);
-                this.StartLexeme();
+                _diagnostics.Add(new SyntaxDiagnosticInfo(e.OffendingToken.StartIndex, e.OffendingToken.Text.Length, ErrorCode.ERR_SyntaxError, msg));
+            }
+            else
+            {
+                var token = _tokenStream.Get(offendingSymbol);
+                if (token != null)
+                {
+                    _diagnostics.Add(new SyntaxDiagnosticInfo(token.StartIndex, token.Text.Length, ErrorCode.ERR_SyntaxError, msg));
+                }
+                else
+                {
+                    _diagnostics.Add(new SyntaxDiagnosticInfo(0, 0, ErrorCode.ERR_SyntaxError, msg));
+                }
             }
         }
 
@@ -123,7 +138,6 @@ namespace MetaDslx.Languages.MetaCompiler.Antlr
                     antlrLexer.CurrentMode = antlrState.Mode;
                     antlrLexer.HitEOF = antlrState.HitEof;
                 }
-                Lexer._hitEof = false;
             }
 
             protected override LexerState? SaveState(int hashCode)

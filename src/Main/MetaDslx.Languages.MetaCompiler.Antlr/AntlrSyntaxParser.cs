@@ -12,14 +12,16 @@ namespace MetaDslx.Languages.MetaCompiler.Antlr
 {
     public abstract class AntlrSyntaxParser : SyntaxParser, IAntlrErrorListener<IToken>
     {
-        private readonly AntlrLexerBasedTokenStream _tokenStream;
+        private readonly AntlrTokenStream _tokenStream;
         private readonly AntlrParser _parser;
+        private List<SyntaxDiagnosticInfo> _diagnostics;
         private readonly Dictionary<RuleContext, GreenNode> _nodeCache;
 
-        protected AntlrSyntaxParser(AntlrSyntaxLexer lexer, SyntaxNode? oldTree, ParseData? oldParseData, IEnumerable<TextChangeRange>? changes, CancellationToken cancellationToken)
-            : base(lexer, oldTree, oldParseData, changes, cancellationToken)
+        protected AntlrSyntaxParser(AntlrSyntaxLexer lexer, IncrementalParseData? oldParseData, IEnumerable<TextChangeRange>? changes, CancellationToken cancellationToken)
+            : base(lexer, oldParseData, changes, cancellationToken)
         {
-            _tokenStream = new AntlrLexerBasedTokenStream(lexer);
+            _diagnostics = new List<SyntaxDiagnosticInfo>();
+            _tokenStream = new AntlrTokenStream(lexer);
             _parser = ((IAntlrSyntaxFactory)Language.InternalSyntaxFactory).CreateAntlrParser(_tokenStream);
             _parser.RemoveErrorListeners();
             _parser.AddErrorListener(this);
@@ -28,41 +30,14 @@ namespace MetaDslx.Languages.MetaCompiler.Antlr
         }
 
         public AntlrParser AntlrParser => _parser;
+
         public new AntlrSyntaxLexer Lexer => (AntlrSyntaxLexer)base.Lexer;
 
-        public bool IsIncremental => false;
-        public SyntaxNode? CurrentNode => null;
+        public override int Position => 0;
 
-        protected void BeginRoot()
-        {
-        }
+        public override ParserState? State => null;
 
-        protected void EndRoot(ref GreenNode? green)
-        {
-        }
-
-        protected void BeginNode()
-        {
-        }
-
-        protected void EndNode(ref GreenNode? green)
-        {
-        }
-
-        protected GreenNode EatNode()
-        {
-            return null;
-        }
-
-        protected GreenNode EatToken()
-        {
-            return null;
-        }
-
-        protected void RestoreParserState(ParserState state)
-        {
-
-        }
+        public List<SyntaxDiagnosticInfo> Diagnostics => _diagnostics;
 
         protected void CacheGreenNode(RuleContext context, GreenNode green)
         {
@@ -74,7 +49,7 @@ namespace MetaDslx.Languages.MetaCompiler.Antlr
             return _nodeCache.TryGetValue(context, out green);
         }
 
-        public override (SyntaxNode?, IncrementalNodeData) IncrementalParse()
+        protected override SyntaxNode ParseRoot()
         {
             throw new NotImplementedException();
         }
@@ -100,17 +75,7 @@ namespace MetaDslx.Languages.MetaCompiler.Antlr
             }
             var position = startToken.StartIndex;
             var width = Math.Max(endToken.StopIndex - startToken.StartIndex + 1, 0);
-            this.AddError(new SyntaxDiagnosticInfo(position, width, ErrorCode.ERR_SyntaxError, msg));
-        }
-
-        public InternalSyntaxToken ConsumeRealToken(AntlrSyntaxToken token)
-        {
-            return _tokenStream.ConsumeRealToken(token, this);
-        }
-
-        public InternalSyntaxToken ConsumeMissingToken(int rawKind)
-        {
-            return _tokenStream.ConsumeMissingToken(rawKind, this);
+            _diagnostics.Add(new SyntaxDiagnosticInfo(position, width, ErrorCode.ERR_SyntaxError, msg));
         }
 
         protected class AntlrParserStateManager : ParserStateManager

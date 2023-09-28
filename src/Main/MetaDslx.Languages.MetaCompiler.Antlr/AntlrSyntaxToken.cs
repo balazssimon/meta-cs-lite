@@ -6,43 +6,54 @@ using System.Text;
 
 namespace MetaDslx.Languages.MetaCompiler.Antlr
 {
-    public class AntlrSyntaxToken : IToken
+    internal class AntlrSyntaxToken : IToken
     {
-        private readonly int _index;
-        private readonly int _position;
-        private readonly int _line;
-        private readonly int _column;
+        private int _type;
+        private int _channel;
+        private string _text;
+        private int _index;
+        private int _position;
+        private int _line;
+        private int _column;
+        private int _lookAhead;
+        private int _lookBack;
 
-        public AntlrSyntaxToken(InternalSyntaxToken green, int index, int position, int line, int column)
+        public AntlrSyntaxToken(int type, int channel, string text, int index, int position, int line, int column, int lookAhead, int lookBack)
         {
-            Green = green;
+            _type = type;
+            _channel = channel;
+            _text = text;
             _index = index;
             _position = position;
             _line = line;
             _column = column;
+            _lookAhead = lookAhead;
+            _lookBack = lookBack;
         }
+        
+        public int Type => _type;
 
-        public InternalSyntaxToken Green { get; }
+        public int Channel => _channel;
 
-        public string Text => Green.Text;
+        public string Text => _text;
 
-        public int Type => AntlrSyntaxKind.ToAntlr(Green.RawKind);
+        public int Line => _line;
 
-        public int Line => _line + 1;
+        public int Column => _column;
 
-        public int Column => _column + 1;
+        public int TokenIndex { get => _index; set => _index = value; }
 
-        public int Channel => 0;
+        public int StartIndex { get => _position; set => _position = value; }
 
-        public int TokenIndex => _index;
+        public int StopIndex => _position + _text.Length - 1;
 
-        public int StartIndex => _position;
+        public int LookAhead => _lookAhead;
 
-        public int StopIndex => _position + Green.FullWidth - 1;
+        public int LookBack => _lookBack;
 
-        public ITokenSource TokenSource => throw new NotImplementedException();
+        public ITokenSource TokenSource => null;
 
-        public ICharStream InputStream => throw new NotImplementedException();
+        public ICharStream InputStream => null;
 
         public override string ToString()
         {
