@@ -8,53 +8,38 @@ using MetaDslx.Examples.MetaModel;
 
 language MetaModel;
 
-[Root(MetaNamespace)]
-main : namespaceDeclaration eof;
+Main returns MetaNamespace: declarations+=MetaNamespace eof;
 
-[Define(MetaNamespace)]
-namespaceDeclaration : 'namespace' [Nesting(MetaNamespace,Declarations)] qualifiedName ';' usingDeclarations declarations;
+MetaNamespace: 'namespace' [Nesting(MetaNamespace,Declarations)] qualifiedName ';' usingDeclarations [Scope] MetaNamespaceDeclarations;
+part MetaNamespaceDclarations : declarations+=MetaModel declarations+=Declaration*;
 
 usingDeclarations : usingDeclaration*;
 
 [Import]
 usingDeclaration : 'using' [Use(MetaNamespace)] qualifier ';';
 
+MetaModel: attributes+=attribute* 'metamodel' name=name ';';
+
+Declaration: MetaEnum | MetaClass | Association;
+
+MetaAttribute: '[' type=[Use(MetaNamedType)]qualifier ']';
+
+MetaEnum: attributes+=attribute* 'enum' name=name EnumBody;
 [Scope]
-[Property(Declarations)]
-declarations : metaModelDeclaration declaration*;
+part EnumBody: '{' enumLiterals+=EnumLiterals? '}';
+part EnumLiterals : MetaEnumLiteral (',' MetaEnumLiteral)* ;
+MetaEnumLiteral: attribute* name;
 
-[Define(MetaModel)]
-metaModelDeclaration : attribute* 'metamodel' name ';';
-
-declaration : enumDeclaration | classDeclaration | associationDeclaration;
-
-[Property(Attributes)]
-attribute : '[' [Property(Type)][Use(MetaNamedType)] qualifier ']';
-
-[Define(MetaEnum)]
-enumDeclaration : attribute* 'enum' name enumBody;
+MetaClass: attributes+=attribute* isAbstract?='abstract'? 'class' name=name (':' baseClasses+=[Use(MetaClass)]qualifierList)? ClassBody;
 [Scope]
-enumBody : '{' enumLiterals? '}';
-[Property(EnumLiterals)]
-enumLiterals : enumLiteral (',' enumLiteral)* ;
+part ClassBody : '{' properties+=propertyDeclaration* '}';
 
-[Define(MetaEnumLiteral)]
-enumLiteral : attribute* name;
+MetaProperty : attributes+=attribute* kind=propertyModifier? type=typeReference name=name propertyRedefinition? propertySubsetting? ';';
+part propertyModifier : [Constant(MetaPropertyKind.Derived)] 'derived' | isContainment?='containment' | [Constant(MetaPropertyKind.Derived)] 'readonly';
+part PropertyRedefinition : 'redefines' [Use(MetaProperty)] redefinedProperties+=qualifierList;
+part PropertySubsetting : 'subsets' [Use(MetaProperty)]subsettedProperties+=qualifierList;
 
-[Define(MetaClass)]
-classDeclaration : attribute* [Property(IsAbstract,true)] 'abstract'? 'class' name (':' [Property(BaseClasses)][Use(MetaClass)] qualifierList)? classBody;
-[Scope]
-classBody : '{' [Property(Properties)] propertyDeclaration* '}';
-
-[Define(MetaProperty)]
-propertyDeclaration : attribute* [Property(Kind)] propertyModifier? [Property(Type)] typeReference name propertyRedefinition? propertySubsetting? ';';
-
-propertyModifier : [Constant(MetaPropertyKind.Derived)] 'derived' | [Property(IsContainment,true)] 'containment' | [Constant(MetaPropertyKind.Derived)] 'readonly';
-propertyRedefinition : 'redefines' [Property(RedefinedProperties)][Use(MetaProperty)] qualifierList;
-propertySubsetting : 'subsets' [Property(SubsettedProperties)][Use(MetaProperty)] qualifierList;
-
-[Association]
-associationDeclaration : attribute* 'association' [Use(MetaProperty)] qualifier 'with' [Use(MetaProperty)] qualifier ';';
+Association: attribute* 'association' [Use(MetaProperty)] qualifier 'with' [Use(MetaProperty)] qualifier ';';
 
 typeReference : primitiveType | collectionType | nullableType | [Use(MetaType)] qualifier;
 

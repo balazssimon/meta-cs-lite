@@ -1166,14 +1166,15 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                 token = _tokens.NextToken();
                 if (token.Text == "returns")
                 {
+                    _tokens.NextToken();
                     rule.ReturnTypeName = ParseCSharpTypeQualifier(".");
-                    token = _tokens.NextToken();
                 }
                 else
                 {
                     rule.ReturnTypeName = ImmutableArray.Create(rule.Name);
                 }
                 rule.CSharpReturnType.Resolve();
+                token = _tokens.CurrentToken;
                 if (token.Text == ":")
                 {
                     ParseParserRuleAlternatives(rule, rule.Alternatives, end: ";", allowAltType: !isPart);
