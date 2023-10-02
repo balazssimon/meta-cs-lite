@@ -16,6 +16,7 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
     using CSharpCompilation = Microsoft.CodeAnalysis.CSharp.CSharpCompilation;
     using SymbolDisplayFormat = Microsoft.CodeAnalysis.SymbolDisplayFormat;
     using INamedTypeSymbol = Microsoft.CodeAnalysis.INamedTypeSymbol;
+    using INamespaceOrTypeSymbol = Microsoft.CodeAnalysis.INamespaceOrTypeSymbol;
 
     public class MetaCompilerParser
     {
@@ -48,11 +49,11 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                 _language = ParseLanguage();
                 if (resolveAnnotations)
                 {
-                    var annotationResolver = new MetaCompilerAnnotationResolver(_compilation, _language, _diagnosticBag);
-                    annotationResolver.ResolveAnnotations();
+                    _language.ResolveAnnotations();
                     ResolveDefaultRules();
                     ResolveRootType();
                 }
+                _diagnosticBag.AddRange(_language.Diagnostics);
                 _diagnostics = _diagnosticBag.ToReadOnlyAndFree();
                 _diagnosticBag = null;
             }
@@ -61,63 +62,63 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
 
         private Language ParseLanguage()
         {
-            var language = new Language();
-            ParseNamespace(language);
-            ParseUsings(language);
-            ParseLanguageDeclaration(language);
-            ParseGrammar(language);
-            ResolveRules(language);
+            _language = new Language(_compilation);
+            ParseNamespace();
+            ParseUsings();
+            ParseLanguageDeclaration();
+            ParseGrammar();
+            ResolveRules();
             var ruleNames = new HashSet<string>();
-            ResolveBlocks(language, ruleNames);
-            ResolveAlternatives(language, ruleNames);
-            ResolveLists(language);
-            ResolveNames(language);
-            language.Grammar.MainRule = language.Grammar.ParserRules.FirstOrDefault();
-            return language;
+            ResolveBlocks(ruleNames);
+            ResolveAlternatives(ruleNames);
+            ResolveLists();
+            ResolveNames();
+            _language.Grammar.MainRule = _language.Grammar.ParserRules.FirstOrDefault();
+            return _language;
         }
 
-        private void ResolveRules(Language language)
+        private void ResolveRules()
         {
             var ruleNames = new HashSet<string>();
-            var rules = language.Grammar.Rules.ToList();
+            var rules = _language.Grammar.Rules.ToList();
             foreach (var rule in rules)
             {
                 if (rule is LexerRule lr)
                 {
                     if (!ruleNames.Add(lr.Name))
                     {
-                        Error(lr.Location, $"Language '{language.Name}' already defines a rule '{lr.Name}'.");
+                        Error(lr.Location, $"Language '{_language.Name}' already defines a rule '{lr.Name}'.");
                     }
                     foreach (var alt in lr.Alternatives)
                     {
-                        ResolveRules(language, alt);
+                        ResolveRules(alt);
                     }
                 }
                 if (rule is ParserRule pr)
                 {
                     if (!ruleNames.Add(pr.Name))
                     {
-                        Error(pr.Location, $"Language '{language.Name}' already defines a rule '{pr.Name}'.");
+                        Error(pr.Location, $"Language '{_language.Name}' already defines a rule '{pr.Name}'.");
                     }
                     foreach (var alt in pr.Alternatives)
                     {
                         if (alt.Name is not null && !ruleNames.Add(alt.Name))
                         {
-                            Error(alt.Location, $"Language '{language.Name}' already defines a rule '{alt.Name}'.");
+                            Error(alt.Location, $"Language '{_language.Name}' already defines a rule '{alt.Name}'.");
                         }
-                        ResolveRules(language, alt);
+                        ResolveRules(alt);
                     }
                 }
             }
         }
 
-        private void ResolveRules(Language language, LexerRuleAlternative alt)
+        private void ResolveRules(LexerRuleAlternative alt)
         {
             foreach (var elem in alt.Elements)
             {
                 if (elem is LexerRuleReferenceElement refElem)
                 {
-                    refElem.Rule = language.Grammar.Rules.OfType<LexerRule>().FirstOrDefault(r => refElem.RuleName.Length == 1 && refElem.RuleName[0] == r.Name);
+                    refElem.Rule = _language.Grammar.Rules.OfType<LexerRule>().FirstOrDefault(r => refElem.RuleName.Length == 1 && refElem.RuleName[0] == r.Name);
                     if (refElem.Rule is null)
                     {
                         Error(refElem.Location, $"Lexer rule '{string.Join(".", refElem.RuleName)}' cannot be found (are you missing a using directive?).");
@@ -127,19 +128,19 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                 {
                     foreach (var blockAlt in blockElem.Alternatives)
                     {
-                        ResolveRules(language, blockAlt);
+                        ResolveRules(blockAlt);
                     }
                 }
             }
         }
 
-        private void ResolveRules(Language language, ParserRuleAlternative alt)
+        private void ResolveRules(ParserRuleAlternative alt)
         {
             foreach (var elem in alt.Elements)
             {
                 if (elem is ParserRuleReferenceElement refElem)
                 {
-                    refElem.Rule = language.Grammar.Rules.FirstOrDefault(r => refElem.RuleName.Length == 1 && refElem.RuleName[0] == r.Name);
+                    refElem.Rule = _language.Grammar.Rules.FirstOrDefault(r => refElem.RuleName.Length == 1 && refElem.RuleName[0] == r.Name);
                     if (refElem.Rule is null)
                     {
                         Error(refElem.Location, $"Rule '{string.Join(".", refElem.RuleName)}' cannot be found (are you missing a using directive?).");
@@ -164,20 +165,20 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                 {
                     foreach (var blockAlt in blockElem.Alternatives)
                     {
-                        ResolveRules(language, blockAlt);
+                        ResolveRules(blockAlt);
                     }
                 }
                 else if (elem is ParserRuleFixedStringElement fixedStringElem)
                 {
-                    var lexerRule = ResolveFixedLexerRule(language.Grammar, fixedStringElem.Value);
+                    var lexerRule = ResolveFixedLexerRule(_language.Grammar, fixedStringElem.Value);
                     if (lexerRule is null)
                     {
-                        lexerRule = new LexerRule(language.Grammar) { Location = fixedStringElem.Location };
+                        lexerRule = new LexerRule(_language.Grammar) { Location = fixedStringElem.Location };
                         var singleAlt = new LexerRuleAlternative();
                         singleAlt.Elements.Add(new LexerRuleFixedStringElement() { ValueText = fixedStringElem.ValueText });
                         lexerRule.Alternatives.Add(singleAlt);
-                        lexerRule.Name = MakeFixedLexerRuleName(language.Grammar, fixedStringElem.Value);
-                        language.Grammar.Rules.Add(lexerRule);
+                        lexerRule.Name = MakeFixedLexerRuleName(_language.Grammar, fixedStringElem.Value);
+                        _language.Grammar.Rules.Add(lexerRule);
                     }
                     fixedStringElem.LexerRule = lexerRule;
                 }
@@ -282,20 +283,20 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
             }
         }
 
-        private void ResolveBlocks(Language language, HashSet<string> ruleNames)
+        private void ResolveBlocks(HashSet<string> ruleNames)
         {
-            var rules = language.Grammar.Rules;
+            var rules = _language.Grammar.Rules;
             ruleNames.UnionWith(rules.OfType<ParserRule>().Select(r => r.Name));
             for (int i = 0; i < rules.Count; ++i)
             {
                 if (rules[i] is ParserRule pr)
                 {
-                    ResolveBlocks(language, pr.Name, pr.Alternatives, ruleNames);
+                    ResolveBlocks(pr.Name, pr.Alternatives, ruleNames);
                 }
             }
         }
 
-        private void ResolveBlocks(Language language, string parentName, List<ParserRuleAlternative> alternatives, HashSet<string> usedNames)
+        private void ResolveBlocks(string parentName, List<ParserRuleAlternative> alternatives, HashSet<string> usedNames)
         {
             if (alternatives.Count == 1)
             {
@@ -329,12 +330,12 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                         var index = 0;
                         var ruleName = $"{alt.Name}{blockName}{++index}";
                         while (usedNames.Contains(ruleName)) ruleName = $"{alt.Name}{blockName}{++index}";
-                        var rule = new ParserRule(language.Grammar);
+                        var rule = new ParserRule(_language.Grammar);
                         rule.Name = ruleName;
                         rule.Location = blockElem.Location;
                         rule.Annotations.AddRange(blockElem.Annotations);
                         rule.Alternatives.AddRange(blockElem.Alternatives);
-                        language.Grammar.Rules.Add(rule);
+                        _language.Grammar.Rules.Add(rule);
                         usedNames.Add(rule.Name);
                         var refElem = new ParserRuleReferenceElement(alt);
                         refElem.Annotations.AddRange(blockElem.NameAnnotations);
@@ -352,9 +353,9 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
             }
         }
 
-        private void ResolveAlternatives(Language language, HashSet<string> ruleNames)
+        private void ResolveAlternatives(HashSet<string> ruleNames)
         {
-            var rules = language.Grammar.Rules;
+            var rules = _language.Grammar.Rules;
             for (int i = 0; i < rules.Count; ++i)
             {
                 if (rules[i] is ParserRule targetRule && targetRule.ReferencedBy.Count == 1)
@@ -463,9 +464,9 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
             return result;
         }
 
-        private void ResolveLists(Language language)
+        private void ResolveLists()
         {
-            foreach (var rule in language.Grammar.Rules)
+            foreach (var rule in _language.Grammar.Rules)
             {
                 if (rule is ParserRule pr)
                 {
@@ -652,10 +653,10 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
             return false;
         }
 
-        private void ResolveNames(Language language)
+        private void ResolveNames()
         {
             var usedElementNames = new HashSet<string>();
-            foreach (var rule in language.Grammar.ParserRules)
+            foreach (var rule in _language.Grammar.ParserRules)
             {
                 ResolveElementNames(rule.Alternatives, usedElementNames, true);
             }
@@ -731,7 +732,7 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
             LexerRule? _defaultSeparator = null;
             foreach (var rule in grammar.LexerRules)
             {
-                var tokenKind = GetAnnotation(rule.Annotations, $"{MetaCompilerAnnotationResolver.MetaDslxAnnotationsNamespace}.TokenKindAnnotation");
+                var tokenKind = GetAnnotation(rule.Annotations, $"{MetaDslxTypes.MetaDslxAnnotationsNamespace}.TokenKindAnnotation");
                 if (tokenKind is not null)
                 {
                     var kind = tokenKind.ConstructorArguments.Where(a => a.Name == "kind").FirstOrDefault();
@@ -812,16 +813,16 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
             }
         }
 
-        private void ParseNamespace(Language language)
+        private void ParseNamespace()
         {
             if (MatchKeyword("namespace"))
             {
-                language.Namespace = ParseQualifier(".");
+                _language.Namespace = ParseQualifier(".");
                 MatchSemicolon();
             }
         }
 
-        private void ParseUsings(Language language)
+        private void ParseUsings()
         {
             while (IsKeyword("using"))
             {
@@ -829,11 +830,11 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                 var usingKind = UsingKind.None;
                 if (token.Kind == MetaCompilerTokenKind.Keyword)
                 {
-                    if (token.Text == "language") usingKind = UsingKind.Language;
-                    else Expected("language");
+                    if (token.Text == "_language") usingKind = UsingKind.Language;
+                    else Expected("_language");
                     _tokens.NextToken();
                 }
-                var usingDecl = new Using();
+                var usingDecl = new Using(_language);
                 usingDecl.Kind = usingKind;
                 var aliasOrReferenceLocation = _tokens.CurrentLocation;
                 var aliasOrReference = ParseQualifier(".");
@@ -855,20 +856,20 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                     usingDecl.Reference = aliasOrReference;
                     usingDecl.ReferenceLocation = aliasOrReferenceLocation;
                 }
-                language.Usings.Add(usingDecl);
+                _language.Usings.Add(usingDecl);
                 MatchSemicolon();
             }
         }
 
-        private void ParseLanguageDeclaration(Language language)
+        private void ParseLanguageDeclaration()
         {
             if (MatchKeyword("language"))
             {
                 var token = _tokens.CurrentToken;
                 if (token.Kind == MetaCompilerTokenKind.Identifier)
                 {
-                    language.Name = token.Text;
-                    language.Location = _tokens.CurrentLocation;
+                    _language.Name = token.Text;
+                    _language.Location = _tokens.CurrentLocation;
                     _tokens.NextToken();
                     MatchSemicolon();
                 }
@@ -879,15 +880,15 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
             }
         }
 
-        private void ParseGrammar(Language language)
+        private void ParseGrammar()
         {
-            language.Grammar = new Grammar(language);
+            _language.Grammar = new Grammar(_language);
             while (true)
             {
                 var advanced = false;
                 ParseAnnotations();
-                if (TryParseLexerRule(language.Grammar)) advanced = true;
-                if (TryParseParserRule(language.Grammar)) advanced = true;
+                if (TryParseLexerRule(_language.Grammar)) advanced = true;
+                if (TryParseParserRule(_language.Grammar)) advanced = true;
                 if (!advanced) break;
             }
         }
@@ -900,7 +901,7 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
             {
                 parseNext = false;
                 token = _tokens.NextToken();
-                var annotation = new Annotation();
+                var annotation = new Annotation(_language.Grammar);
                 _annotations.Add(annotation);
                 annotation.Location = _tokens.CurrentLocation;
                 annotation.Name = ParseQualifier(".");
@@ -943,7 +944,7 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                 }
                 else
                 {
-                    var property = new AnnotationProperty();
+                    var property = new AnnotationProperty(annotation);
                     if (token.Kind == MetaCompilerTokenKind.Identifier && nextToken.Text == ":")
                     {
                         annotation.ConstructorArguments.Add(property);
@@ -967,26 +968,53 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
 
         private bool TryParseLexerRule(Grammar grammar)
         {
+            bool isToken = false;
             bool isFragment = false;
-            bool isHidden = false;
             var token = _tokens.CurrentToken;
             if (token.Kind == MetaCompilerTokenKind.Keyword)
             {
+                isToken = token.Text == "token";
                 isFragment = token.Text == "fragment";
-                isHidden = token.Text == "hidden";
-                if (isFragment || isHidden) token = _tokens.NextToken();
+                if (isToken || isFragment) token = _tokens.NextToken();
             }
-            if (token.Kind == MetaCompilerTokenKind.Identifier && token.Text.Length > 0 && char.IsUpper(token.Text[0]))
+            if ((isToken || isFragment) && token.Kind == MetaCompilerTokenKind.Identifier)
             {
                 var rule = new LexerRule(grammar);
                 grammar.Rules.Add(rule);
                 rule.IsFragment = isFragment;
-                rule.IsHidden = isHidden;
                 rule.Location = _tokens.CurrentLocation;
                 rule.Name = token.Text;
                 rule.Annotations.AddRange(_annotations);
                 _annotations.Clear();
                 token = _tokens.NextToken();
+                if (token.Text == "as")
+                {
+                    _tokens.NextToken();
+                    var nextToken = _tokens.PeekToken();
+                    if (nextToken.Kind == MetaCompilerTokenKind.Keyword && nextToken.Text == "default")
+                    {
+                        rule.IsDefault = true;
+                        _tokens.NextToken();
+                    }
+                    rule.TokenKindName = ParseQualifier(".");
+                }
+                else
+                {
+                    rule.TokenKindName = ImmutableArray.Create("Other");
+                }
+                rule.CSharpTokenKind.Resolve();
+                token = _tokens.CurrentToken;
+                if (token.Text == "returns")
+                {
+                    _tokens.NextToken();
+                    rule.ReturnTypeName = ParseCSharpTypeQualifier(".");
+                }
+                else
+                {
+                    rule.ReturnTypeName = ImmutableArray.Create("string");
+                }
+                rule.CSharpReturnType.Resolve();
+                token = _tokens.CurrentToken;
                 if (token.Text == ":")
                 {
                     ParseLexerRuleAlternatives(rule.Alternatives, ";");
@@ -1119,19 +1147,36 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
 
         private bool TryParseParserRule(Grammar grammar)
         {
+            bool isPart = false;
             var token = _tokens.CurrentToken;
-            if (token.Kind == MetaCompilerTokenKind.Identifier && token.Text.Length > 0 && char.IsLower(token.Text[0]))
+            if (token.Kind == MetaCompilerTokenKind.Keyword)
+            {
+                isPart = token.Text == "part";
+                if (isPart) token = _tokens.NextToken();
+            }
+            if (token.Kind == MetaCompilerTokenKind.Identifier)
             {
                 var rule = new ParserRule(grammar);
                 grammar.Rules.Add(rule);
+                rule.IsPart = isPart;
                 rule.Location = _tokens.CurrentLocation;
                 rule.Name = token.Text;
                 rule.Annotations.AddRange(_annotations);
                 _annotations.Clear();
                 token = _tokens.NextToken();
+                if (token.Text == "returns")
+                {
+                    rule.ReturnTypeName = ParseCSharpTypeQualifier(".");
+                    token = _tokens.NextToken();
+                }
+                else
+                {
+                    rule.ReturnTypeName = ImmutableArray.Create(rule.Name);
+                }
+                rule.CSharpReturnType.Resolve();
                 if (token.Text == ":")
                 {
-                    ParseParserRuleAlternatives(rule, rule.Alternatives, ";");
+                    ParseParserRuleAlternatives(rule, rule.Alternatives, end: ";", allowAltType: !isPart);
                     token = _tokens.CurrentToken;
                     if (token.Text == ";") _tokens.NextToken();
                 }
@@ -1144,23 +1189,39 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
             return false;
         }
 
-        private void ParseParserRuleAlternatives(IParserRuleAlternativeParent parent, List<ParserRuleAlternative> alternatives, string end)
+        private void ParseParserRuleAlternatives(IParserRuleAlternativeParent parent, List<ParserRuleAlternative> alternatives, string end, bool allowAltType)
         {
             _tokens.NextToken();
             while (true)
             {
                 var alt = new ParserRuleAlternative(parent);
                 alternatives.Add(alt);
-                ParseAnnotations();
                 var token = _tokens.PeekToken(0);
-                var hashmark = _tokens.PeekToken(1);
-                if (token.Kind == MetaCompilerTokenKind.Identifier && hashmark.Text == "#")
+                if (token.Text == "{")
                 {
-                    alt.Location = _tokens.CurrentLocation;
-                    alt.Name = token.Text;
-                    _tokens.EatTokens(2);
-                    alt.Annotations.AddRange(_annotations);
-                    _annotations.Clear();
+                    if (allowAltType)
+                    {
+                        _tokens.NextToken();
+                        ParseAnnotations();
+                        alt.Location = _tokens.CurrentLocation;
+                        alt.InstanceTypeName = ParseQualifier(".");
+                        alt.Name = alt.InstanceTypeName.LastOrDefault();
+                        token = _tokens.CurrentToken;
+                        if (token.Text == "}")
+                        {
+                            _tokens.NextToken();
+                        }
+                        else
+                        {
+                            Expected("}");
+                        }
+                        alt.Annotations.AddRange(_annotations);
+                        _annotations.Clear();
+                    }
+                    else
+                    {
+                        Error("Return type specialization is allowed only in rule alternatives.");
+                    }
                 }
                 ParseParserRuleAlternative(alt, end);
                 token = _tokens.CurrentToken;
@@ -1294,10 +1355,21 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
         private ParserRuleElement ParseParserRuleBlockElement(ParserRuleAlternative alt)
         {
             var block = new ParserRuleBlockElement(alt);
-            ParseParserRuleAlternatives(block, block.Alternatives, ")");
+            ParseParserRuleAlternatives(block, block.Alternatives, end: ")", allowAltType: false);
             var token = _tokens.CurrentToken;
             if (token.Text == ")") _tokens.NextToken();
             return block;
+        }
+
+        private ImmutableArray<string> ParseCSharpTypeQualifier(string separator)
+        {
+            var token = _tokens.CurrentToken;
+            if (token.Kind == MetaCompilerTokenKind.Keyword && MetaCompilerLexer.TypeKeywords.Contains(token.Text))
+            {
+                return ImmutableArray.Create(token.Text);
+            }
+
+            return ParseQualifier(separator);
         }
 
         private ImmutableArray<string> ParseQualifier(string separator)

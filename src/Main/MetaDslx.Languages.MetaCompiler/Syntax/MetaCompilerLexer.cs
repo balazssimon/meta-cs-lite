@@ -281,15 +281,25 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
 
         private MetaCompilerToken MatchControlCode()
         {
-            /*var ch = _text.PeekChar();
-            if (ch == '{')
+            var ch = _text.PeekChar();
+            var nextCh = _text.PeekChar(1);
+            if (ch == '@' && nextCh == '{')
             {
                 int parenthesisCounter = 0;
                 int bracketsCounter = 0;
                 int bracesCounter = 1;
                 _text.NextChar();
+                _text.NextChar();
                 while (!_text.IsReallyAtEnd() && (parenthesisCounter > 0 || bracketsCounter > 0 || bracesCounter > 0))
                 {
+                    var token = MatchLineEnd();
+                    if (token.Kind != MetaCompilerTokenKind.None) continue;
+                    token = MatchWhitespace();
+                    if (token.Kind != MetaCompilerTokenKind.None) continue;
+                    token = MatchComment();
+                    if (token.Kind != MetaCompilerTokenKind.None) continue;
+                    token = MatchString();
+                    if (token.Kind != MetaCompilerTokenKind.None) continue;
                     ch = _text.NextChar();
                     if (ch == '(') ++parenthesisCounter;
                     if (ch == ')') --parenthesisCounter;
@@ -299,7 +309,7 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                     if (ch == '}') --bracesCounter;
                 }
                 return new MetaCompilerToken(MetaCompilerTokenKind.ControlCode, _text.GetText(false), _text.LexemeStartPosition);
-            }*/
+            }
             return MetaCompilerToken.None;
         }
 
@@ -311,9 +321,18 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
 
         public static readonly HashSet<string> Keywords = new HashSet<string>()
         {
-            "namespace", "using", "language", "fragment", "hidden", "eof"
+            "namespace", "using", "language",
+            "bool", "char", "string", "byte", "sbyte", "short", "ushort", "int", "uint", "long", "ulong", 
+            "float", "double", "decimal", "object",
+            "token", "as", "default", "fragment",
+            "part", "returns", "eof"
         };
 
+        public static readonly HashSet<string> TypeKeywords = new HashSet<string>()
+        {
+            "bool", "char", "string", "byte", "sbyte", "short", "ushort", "int", "uint", "long", "ulong",
+            "float", "double", "decimal", "object"
+        };
     }
 
 }

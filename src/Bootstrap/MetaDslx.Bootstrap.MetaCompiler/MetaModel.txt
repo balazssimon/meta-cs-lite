@@ -82,29 +82,12 @@ name : identifier;
 [Identifier]
 identifier : TIdentifier;
 
-[TokenKind(Number)]
-TInteger : '0'| '1'..'9' ('0'..'9')* ;
-
-[TokenKind(Number)]
-TDecimal : ('0'|'1'..'9' ('0'..'9')*) '.' ('0'..'9')+ ;
-
-[TokenKind(Identifier,true)]
-TIdentifier : ('_'|'a'..'z'|'A'..'Z')+('_'|'a'..'z'|'A'..'Z'|'0'..'9')*;
-
-[TokenKind(Separator,true)]
-TComma : ',' ;
-
-[TokenKind(String)]
-TString : '"' .*? '"';
-
-[TokenKind(Whitespace,true)]
-hidden TWhitespace : ('\t'|' ') +;
-
-[TokenKind(EndOfLine,true)]
-hidden TLineEnd : ('\r\n' | '\r' | '\n');
-
-[TokenKind(Comment)]
-hidden TSingleLineComment : '//' ~('\r' | '\n')*;
-
-[TokenKind(Comment)]
-hidden TMultiLineComment : '/*' .*? '*/';
+token TInteger as Number: '0'| '1'..'9' ('0'..'9')* ;
+token TDecimal as Number: ('0'|'1'..'9' ('0'..'9')*) '.' ('0'..'9')+ ;
+token TIdentifier as default Identifier: ('_'|'a'..'z'|'A'..'Z')+('_'|'a'..'z'|'A'..'Z'|'0'..'9')*;
+token TComma as default Separator: ',' ;
+token TString as String: '"' .*? '"';
+token TWhitespace as default Whitespace: ('\t'|' ') +;
+token TLineEnd as default EndOfLine: ('\r\n' | '\r' | '\n');
+token TSingleLineComment as SingleLineComment: '//' ~('\r' | '\n')*;
+token TMultiLineComment as MultiLineComment: '/*' .*? '*/';
