@@ -22,6 +22,7 @@ namespace MetaDslx.Languages.MetaCompiler.Model
     using IParameterSymbol = Microsoft.CodeAnalysis.IParameterSymbol;
     using IPropertySymbol = Microsoft.CodeAnalysis.IPropertySymbol;
     using SymbolDisplayFormat = Microsoft.CodeAnalysis.SymbolDisplayFormat;
+    using SpecialType = Microsoft.CodeAnalysis.SpecialType;
 
     public class Language : IElementWithLocation
     {
@@ -43,27 +44,80 @@ namespace MetaDslx.Languages.MetaCompiler.Model
         public Grammar Grammar { get; set; }
         public DiagnosticBag Diagnostics { get; }
 
-        public ImmutableArray<INamespaceOrTypeSymbol> ResolveSymbols(Location location, bool addDiagnostics, ImmutableArray<string> qualifiedName, params string[] suffixes)
+        public ImmutableArray<INamespaceOrTypeSymbol> ResolveSymbols(Location location, bool addDiagnostics, string? diagnosticName, ImmutableArray<string> qualifiedName, params string[] suffixes)
         {
             if (qualifiedName.IsDefaultOrEmpty) return ImmutableArray<INamespaceOrTypeSymbol>.Empty;
+            if (qualifiedName.Length == 1)
+            {
+                INamespaceOrTypeSymbol? result = null;
+                switch (qualifiedName[0])
+                {
+                    case "bool": result = _compilation.GetSpecialType(SpecialType.System_Boolean); break;
+                    case "string": result = _compilation.GetSpecialType(SpecialType.System_String); break;
+                    case "char": result = _compilation.GetSpecialType(SpecialType.System_Char); break;
+                    case "byte": result = _compilation.GetSpecialType(SpecialType.System_Byte); break;
+                    case "sbyte": result = _compilation.GetSpecialType(SpecialType.System_SByte); break;
+                    case "short": result = _compilation.GetSpecialType(SpecialType.System_Int16); break;
+                    case "ushort": result = _compilation.GetSpecialType(SpecialType.System_UInt16); break;
+                    case "int": result = _compilation.GetSpecialType(SpecialType.System_Int32); break;
+                    case "uint": result = _compilation.GetSpecialType(SpecialType.System_UInt32); break;
+                    case "long": result = _compilation.GetSpecialType(SpecialType.System_Int64); break;
+                    case "ulong": result = _compilation.GetSpecialType(SpecialType.System_UInt64); break;
+                    case "float": result = _compilation.GetSpecialType(SpecialType.System_Single); break;
+                    case "double": result = _compilation.GetSpecialType(SpecialType.System_Double); break;
+                    case "decimal": result = _compilation.GetSpecialType(SpecialType.System_Decimal); break;
+                    default:
+                        break;
+                }
+                if (result is not null) return ImmutableArray.Create(result);
+            }
             var candidates = ArrayBuilder<INamespaceOrTypeSymbol>.GetInstance();
-            var builder = PooledStringBuilder.GetInstance();
-            var sb = builder.Builder;
+            //ResolveSymbols(location, addDiagnostics, diagnosticName, qualifiedName, suffixes, null, _compilation.GlobalNamespace, candidates);
             foreach (var use in this.Usings)
             {
-                sb.Clear();
-                var csharpSymbol = use.CSharpSymbol;
-                if (csharpSymbol is not null)
+                ResolveSymbols(location, addDiagnostics, diagnosticName, qualifiedName, suffixes, use.Alias, use.CSharpSymbol, candidates);
+            }
+            if (addDiagnostics)
+            {
+                if (candidates.Count == 0)
+                {
+                    if (suffixes.Length == 0)
+                    {
+                        Error(location, $"The {diagnosticName} '{string.Join(".", qualifiedName)}' could not be found (are you missing a using directive or an assembly reference?).");
+                    }
+                    else
+                    {
+                        foreach (var suffix in suffixes)
+                        {
+                            Error(location, $"The {diagnosticName} '{string.Join(".", qualifiedName)}{suffix}' could not be found (are you missing a using directive or an assembly reference?).");
+                        }
+                    }
+                }
+                else if (candidates.Count >= 2)
+                {
+                    Error(location, $"'{string.Join(".", qualifiedName)}' is an ambiguous reference between '{candidates[0].ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat)}' and '{candidates[1].ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat)}'.");
+                }
+            }
+            return candidates.ToImmutableAndFree();
+        }
+
+        private void ResolveSymbols(Location location, bool addDiagnostics, string? diagnosticName, ImmutableArray<string> qualifiedName, string[] suffixes, string? alias, INamespaceOrTypeSymbol? container, ArrayBuilder<INamespaceOrTypeSymbol> candidates)
+        {
+            if (container is not null)
+            {
+                var builder = PooledStringBuilder.GetInstance();
+                var sb = builder.Builder;
+                try
                 {
                     var startIndex = 0;
-                    if (!string.IsNullOrEmpty(use.Alias))
+                    if (!string.IsNullOrEmpty(alias))
                     {
-                        if (qualifiedName[0] == use.Alias)
+                        if (qualifiedName[0] == alias)
                         {
                             if (qualifiedName.Length == 1)
                             {
-                                candidates.Add(csharpSymbol);
-                                continue;
+                                candidates.Add(container);
+                                return;
                             }
                             else
                             {
@@ -73,9 +127,10 @@ namespace MetaDslx.Languages.MetaCompiler.Model
                         }
                         else
                         {
-                            continue;
+                            return;
                         }
                     }
+                    var csharpSymbol = container;
                     for (int i = startIndex; i < qualifiedName.Length; ++i)
                     {
                         var name = qualifiedName[i];
@@ -110,17 +165,11 @@ namespace MetaDslx.Languages.MetaCompiler.Model
                         sb.Append(name);
                     }
                 }
+                finally
+                {
+                    builder.Free();
+                }
             }
-            builder.Free();
-            if (candidates.Count == 0)
-            {
-                Error(location, $"The type or namespace '{string.Join(".", qualifiedName)}' could not be found (are you missing an assembly reference?).");
-            }
-            else if (candidates.Count >= 2)
-            {
-                Error(location, $"The type or namespace '{string.Join(".", qualifiedName)}' is ambiguous.");
-            }
-            return candidates.ToImmutableAndFree();
         }
 
         public void ResolveAnnotations()

@@ -1166,12 +1166,23 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                 token = _tokens.NextToken();
                 if (token.Text == "returns")
                 {
+                    if (isPart)
+                    {
+                        Error("Rule parts cannot have return types.");
+                    }
                     _tokens.NextToken();
                     rule.ReturnTypeName = ParseCSharpTypeQualifier(".");
                 }
-                else
+                else 
                 {
-                    rule.ReturnTypeName = ImmutableArray.Create(rule.Name);
+                    if (isPart)
+                    {
+                        rule.ReturnTypeName = ImmutableArray<string>.Empty;
+                    }
+                    else
+                    {
+                        rule.ReturnTypeName = ImmutableArray.Create(rule.Name);
+                    }
                 }
                 rule.CSharpReturnType.Resolve();
                 token = _tokens.CurrentToken;
@@ -1246,10 +1257,11 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
 
         private void ParseParserRuleAlternative(ParserRuleAlternative alt, string end)
         {
-            ParseAnnotations();
             var token = _tokens.CurrentToken;
             while (!_tokens.EndOfFile && token.Text != end && token.Text != "|")
             {
+                ParseAnnotations();
+                token = _tokens.CurrentToken;
                 string? propertyName = null;
                 Location? propertyLocation = null;
                 var propertyAssignment = AssignmentOperator.Assign;
@@ -1367,6 +1379,7 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
             var token = _tokens.CurrentToken;
             if (token.Kind == MetaCompilerTokenKind.Keyword && MetaCompilerLexer.TypeKeywords.Contains(token.Text))
             {
+                _tokens.NextToken();
                 return ImmutableArray.Create(token.Text);
             }
 

@@ -309,22 +309,9 @@ namespace MetaDslx.Languages.MetaCompiler.Model
             {
                 if (ItemTypeKind.HasFlag(ItemTypeKind.SystemType))
                 {
-                    var typeSymbols = _language.ResolveSymbols(location, addDiagnostics, valueText.Split('.').ToImmutableArray()).OfType<INamedTypeSymbol>().ToImmutableArray();
-                    if (typeSymbols.Length == 0)
-                    {
-                        if (addDiagnostics) _language.Error(location, $"The type '{valueText}' could not be found (are you missing a using directive or an assembly reference?).");
-                        return false;
-                    }
-                    else if (typeSymbols.Length == 1)
-                    {
-                        value = typeSymbols[0];
-                        return true;
-                    }
-                    else
-                    {
-                        if (addDiagnostics) _language.Error(location, $"'{valueText}' is an ambiguous reference between '{typeSymbols[0].ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat)}' and '{typeSymbols[1].ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat)}'.");
-                        return false;
-                    }
+                    var typeSymbols = _language.ResolveSymbols(location, addDiagnostics, "type", valueText.Split('.').ToImmutableArray()).OfType<INamedTypeSymbol>().ToImmutableArray();
+                    if (typeSymbols.Length == 1) value = typeSymbols[0];
+                    return typeSymbols.Length == 1;
                 }
                 else if (ItemTypeKind.HasFlag(ItemTypeKind.EnumType))
                 {

@@ -56,4 +56,12 @@ namespace MetaDslx.CodeAnalysis.Syntax
     {
     }
 
+    public class SeparatorTokenKind : TokenKind
+    {
+    }
+
+    public class OtherTokenKind : TokenKind
+    {
+    }
+
 }

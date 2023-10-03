@@ -3,6 +3,7 @@ namespace MetaDslx.Examples.MetaModel;
 using System;
 using MetaDslx.CodeAnalysis.Annotations;
 using MetaDslx.CodeAnalysis.Binding;
+using MetaDslx.CodeAnalysis.Syntax;
 using MetaDslx.Examples.MetaModel.Model;
 using MetaDslx.Examples.MetaModel;
 
@@ -10,68 +11,67 @@ language MetaModel;
 
 Main returns MetaNamespace: declarations+=MetaNamespace eof;
 
-MetaNamespace: 'namespace' [Nesting(MetaNamespace,Declarations)] qualifiedName ';' usingDeclarations [Scope] MetaNamespaceDeclarations;
-part MetaNamespaceDclarations : declarations+=MetaModel declarations+=Declaration*;
+MetaNamespace: 'namespace' [Nesting(MetaNamespace,Declarations)] QualifiedName ';' UsingDeclarations MetaNamespaceDeclarations;
 
-usingDeclarations : usingDeclaration*;
+[Scope]
+part MetaNamespaceDeclarations: declarations+=MetaModel declarations+=MetaDeclaration*;
+
+part UsingDeclarations: UsingDeclaration*;
 
 [Import]
-usingDeclaration : 'using' [Use(MetaNamespace)] qualifier ';';
+part UsingDeclaration: 'using' [Use(MetaNamespace)] Qualifier ';';
 
-MetaModel: attributes+=attribute* 'metamodel' name=name ';';
+MetaModel: attributes+=MetaAttribute* 'metamodel' name=Name ';';
 
-Declaration: MetaEnum | MetaClass | Association;
+MetaDeclaration: MetaEnum | MetaClass | Association;
 
-MetaAttribute: '[' type=[Use(MetaNamedType)]qualifier ']';
+MetaAttribute: '[' type=[Use(MetaNamedType)]Qualifier ']';
 
-MetaEnum: attributes+=attribute* 'enum' name=name EnumBody;
+MetaEnum: attributes+=MetaAttribute* 'enum' name=Name EnumBody;
 [Scope]
-part EnumBody: '{' enumLiterals+=EnumLiterals? '}';
-part EnumLiterals : MetaEnumLiteral (',' MetaEnumLiteral)* ;
-MetaEnumLiteral: attribute* name;
+part EnumBody: '{' EnumLiterals? '}';
+part EnumLiterals : enumLiterals+=MetaEnumLiteral (',' enumLiterals+=MetaEnumLiteral)* ;
+MetaEnumLiteral: attributes+=MetaAttribute* name=Name;
 
-MetaClass: attributes+=attribute* isAbstract?='abstract'? 'class' name=name (':' baseClasses+=[Use(MetaClass)]qualifierList)? ClassBody;
+MetaClass: attributes+=MetaAttribute* isAbstract?='abstract'? 'class' name=Name (':' baseClasses+=[Use(MetaClass)]QualifierList)? ClassBody;
 [Scope]
-part ClassBody : '{' properties+=propertyDeclaration* '}';
+part ClassBody: '{' properties+=MetaProperty* '}';
 
-MetaProperty : attributes+=attribute* kind=propertyModifier? type=typeReference name=name propertyRedefinition? propertySubsetting? ';';
-part propertyModifier : [Constant(MetaPropertyKind.Derived)] 'derived' | isContainment?='containment' | [Constant(MetaPropertyKind.Derived)] 'readonly';
-part PropertyRedefinition : 'redefines' [Use(MetaProperty)] redefinedProperties+=qualifierList;
-part PropertySubsetting : 'subsets' [Use(MetaProperty)]subsettedProperties+=qualifierList;
+MetaProperty: attributes+=MetaAttribute* kind=PropertyModifier? type=TypeReference name=Name PropertyRedefinition? PropertySubsetting? ';';
+part PropertyModifier: [Constant(MetaPropertyKind.Derived)] 'derived' | isContainment?='containment' | [Constant(MetaPropertyKind.Derived)] 'readonly';
+part PropertyRedefinition: 'redefines' [Use(MetaProperty)] redefinedProperties+=QualifierList;
+part PropertySubsetting: 'subsets' [Use(MetaProperty)] subsettedProperties+=QualifierList;
 
-Association: attribute* 'association' [Use(MetaProperty)] qualifier 'with' [Use(MetaProperty)] qualifier ';';
+Association: MetaAttribute* 'association' [Use(MetaProperty)] Qualifier 'with' [Use(MetaProperty)] Qualifier ';';
 
-typeReference : primitiveType | collectionType | nullableType | [Use(MetaType)] qualifier;
-
-primitiveType 
+TypeReference returns MetaType: MetaPrimitiveType | MetaCollectionType | MetaNullableType | [Use(MetaType)] Qualifier;
+MetaPrimitiveType
 	: [Constant(Meta.Int)] 'int' 
 	| [Constant(Meta.String)] 'string' 
 	| [Constant(Meta.Bool)] 'bool';
 
-[Define(MetaCollectionType)]
-collectionType : ([Property(Kind,MetaCollectionKind.List)] 'list' | [Property(Kind,MetaCollectionKind.Set)] 'set') '<' [Property(InnerType)] typeReference '>';
-[Define(MetaNullableType)]
-nullableType : [Property(InnerType)] typeReference '?';
+MetaCollectionType: ([Property(Kind,MetaCollectionKind.List)] 'list' | [Property(Kind,MetaCollectionKind.Set)] 'set') '<' innerType=TypeReference '>';
+MetaNullableType: innerType=TypeReference '?';
 
 [Name]
-qualifiedName : qualifier;
+part QualifiedName: Qualifier;
 
-qualifierList : qualifier (',' qualifier)*;
+part QualifierList: Qualifier (',' Qualifier)*;
 
 [Qualifier]
-qualifier : identifier ('.' identifier)*;
+part Qualifier: Identifier ('.' Identifier)*;
 
 [Name]
-name : identifier;
+part Name: Identifier;
 
 [Identifier]
-identifier : TIdentifier;
+part Identifier: TIdentifier;
 
-token TInteger as Number: '0'| '1'..'9' ('0'..'9')* ;
-token TDecimal as Number: ('0'|'1'..'9' ('0'..'9')*) '.' ('0'..'9')+ ;
-token TIdentifier as default Identifier: ('_'|'a'..'z'|'A'..'Z')+('_'|'a'..'z'|'A'..'Z'|'0'..'9')*;
+token TInteger as Number returns int: '0'| '1'..'9' ('0'..'9')* ;
+token TDecimal as Number returns double: ('0'|'1'..'9' ('0'..'9')*) '.' ('0'..'9')+ ;
+token TIdentifier as default Identifier returns string: ('_'|'a'..'z'|'A'..'Z')+('_'|'a'..'z'|'A'..'Z'|'0'..'9')*;
 token TComma as default Separator: ',' ;
-token TString as String: '"' .*? '"';
+token TString as String returns string: '"' .*? '"';
 token TWhitespace as default Whitespace: ('\t'|' ') +;
 token TLineEnd as default EndOfLine: ('\r\n' | '\r' | '\n');
 token TSingleLineComment as SingleLineComment: '//' ~('\r' | '\n')*;

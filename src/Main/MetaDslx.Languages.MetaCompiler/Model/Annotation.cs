@@ -75,7 +75,7 @@ namespace MetaDslx.Languages.MetaCompiler.Model
                 Error(Location, "Binder or annotation name is missing.");
                 return;
             }
-            var candidates = Language.ResolveSymbols(Location, true, Name, "Annotation", "Binder").OfType<INamedTypeSymbol>().ToImmutableArray();
+            var candidates = Language.ResolveSymbols(Location, false, null, Name, "Annotation", "Binder").OfType<INamedTypeSymbol>().ToImmutableArray();
             foreach (var csharpSymbol in candidates)
             {
                 if (!IsMetaCompilerAnnotation(csharpSymbol))

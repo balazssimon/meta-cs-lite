@@ -24,6 +24,7 @@ namespace MetaDslx.Languages.MetaCompiler.Model
         Language Language { get; }
         Grammar Grammar { get; }
         string Name { get; }
+        bool IsPart { get; }
         string GreenName { get; }
         string RedName { get; }
         List<ParserRuleAlternative> Alternatives { get; }
@@ -72,7 +73,7 @@ namespace MetaDslx.Languages.MetaCompiler.Model
             {
                 if (_csharpInstanceType is null)
                 {
-                    var typeSymbol = Language.ResolveSymbols(Location, true, InstanceTypeName).OfType<ITypeSymbol>().FirstOrDefault();
+                    var typeSymbol = _parent.IsPart ? Language.ResolveSymbols(Location, true, "type", InstanceTypeName).OfType<ITypeSymbol>().ToArray().FirstOrDefault() : null;
                     _csharpInstanceType = new CSharpTypeInfo(Language, typeSymbol);
                 }
                 return _csharpInstanceType;
@@ -252,6 +253,7 @@ namespace MetaDslx.Languages.MetaCompiler.Model
         public override string DefaultName => "block";
         public string GreenName => Name.ToPascalCase() + "Green";
         public string RedName => Name.ToPascalCase() + "Syntax";
+        public bool IsPart => false;
 
         public override string GreenItemType => GreenName;
         public override string RedItemType => RedName;

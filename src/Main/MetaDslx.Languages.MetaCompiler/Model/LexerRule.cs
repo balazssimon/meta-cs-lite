@@ -38,7 +38,7 @@ namespace MetaDslx.Languages.MetaCompiler.Model
             {
                 if (_csharpTokenKind is null)
                 {
-                    var typeSymbol = Language.ResolveSymbols(Location, true, TokenKindName, "TokenKind").OfType<ITypeSymbol>().FirstOrDefault();
+                    var typeSymbol = TokenKindName.Length > 0 ? Language.ResolveSymbols(Location, true, "type", TokenKindName, "TokenKind").OfType<ITypeSymbol>().FirstOrDefault() : null;
                     _csharpTokenKind = new CSharpTypeInfo(Language, typeSymbol);
                 }
                 return _csharpTokenKind;

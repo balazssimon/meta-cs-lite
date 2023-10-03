@@ -40,7 +40,7 @@ namespace MetaDslx.Languages.MetaCompiler.Model
             {
                 if (_csharpReturnType is null)
                 {
-                    var typeSymbol = Language.ResolveSymbols(Location, true, ReturnTypeName).OfType<ITypeSymbol>().FirstOrDefault();
+                    var typeSymbol = ReturnTypeName.Length > 0 ? Language.ResolveSymbols(Location, true, "type", ReturnTypeName).OfType<ITypeSymbol>().FirstOrDefault() : null;
                     _csharpReturnType = new CSharpTypeInfo(Language, typeSymbol);
                 }
                 return _csharpReturnType;
