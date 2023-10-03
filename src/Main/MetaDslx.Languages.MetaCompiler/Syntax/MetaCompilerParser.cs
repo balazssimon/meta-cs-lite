@@ -732,31 +732,24 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
             LexerRule? _defaultSeparator = null;
             foreach (var rule in grammar.LexerRules)
             {
-                var tokenKind = GetAnnotation(rule.Annotations, $"{MetaDslxTypes.MetaDslxAnnotationsNamespace}.TokenKindAnnotation");
-                if (tokenKind is not null)
+                if (rule.IsDefault && rule.TokenKindName.Length > 0)
                 {
-                    var kind = tokenKind.ConstructorArguments.Where(a => a.Name == "kind").FirstOrDefault();
-                    var isDefault = tokenKind.ConstructorArguments.Where(a => a.Name == "isDefault").FirstOrDefault();
-                    if (kind is not null && kind.ValueTexts.Length == 1 &&
-                        isDefault is not null && isDefault.ValueTexts.Length == 1 && isDefault.ValueTexts[0] == "true")
+                    switch (rule.TokenKindName[rule.TokenKindName.Length-1])
                     {
-                        switch (kind.ValueTexts[0])
-                        {
-                            case "Whitespace":
-                                ResolveDefaultLexerRule(ref _defaultWhitespace, rule, "Whitespace");
-                                break;
-                            case "EndOfLine":
-                                ResolveDefaultLexerRule(ref _defaultEndOfLine, rule, "EndOfLine");
-                                break;
-                            case "Identifier":
-                                ResolveDefaultLexerRule(ref _defaultIdentifier, rule, "Identifier");
-                                break;
-                            case "Separator":
-                                ResolveDefaultLexerRule(ref _defaultSeparator, rule, "Separator");
-                                break;
-                            default:
-                                break;
-                        }
+                        case "Whitespace":
+                            ResolveDefaultLexerRule(ref _defaultWhitespace, rule, "Whitespace");
+                            break;
+                        case "EndOfLine":
+                            ResolveDefaultLexerRule(ref _defaultEndOfLine, rule, "EndOfLine");
+                            break;
+                        case "Identifier":
+                            ResolveDefaultLexerRule(ref _defaultIdentifier, rule, "Identifier");
+                            break;
+                        case "Separator":
+                            ResolveDefaultLexerRule(ref _defaultSeparator, rule, "Separator");
+                            break;
+                        default:
+                            break;
                     }
                 }
             }
