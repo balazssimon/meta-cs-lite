@@ -74,6 +74,7 @@ namespace MetaDslx.Languages.MetaCompiler.Model
             _type = type;
         }
 
+        public Language Language => _language;
         public ITypeSymbol? Type => _type;
 
         public TypeKind TypeKind
@@ -114,7 +115,7 @@ namespace MetaDslx.Languages.MetaCompiler.Model
 
         public void Resolve()
         {
-            if (_resolved || _type is null) return;
+            if (_resolved || _type is null || _language is null) return;
             _resolved = true;
             var coreType = _type;
             if (_type is INamedTypeSymbol namedType && namedType.IsGenericType && namedType.TypeArguments.Length == 1 &&
@@ -404,6 +405,8 @@ namespace MetaDslx.Languages.MetaCompiler.Model
 
         private static readonly string[] WellKnownGenericCollectionTypes = new string[]
         {
+            "System.Collections.Generic.ICollection<>",
+            "System.Collections.Generic.IList<>",
             "System.Collections.Generic.List<>",
             "System.Collections.Generic.LinkedList<>",
             "System.Collections.Generic.HashSet<>",

@@ -74,14 +74,13 @@ namespace MetaDslx.Languages.MetaCompiler.Model
     {
         public override bool IsFixed => Rule?.IsFixed ?? false;
         public override string? FixedValue => Rule?.FixedValue;
-        public ImmutableArray<string> RuleName { get; set; }
-        public string QualifiedName => string.Join(".", RuleName);
+        public string RuleName { get; set; }
         public LexerRule? Rule { get; set; }
         public Location Location { get; set; }
 
         public override string ToString()
         {
-            return QualifiedName;
+            return RuleName;
         }
     }
 

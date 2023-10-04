@@ -20,7 +20,7 @@ MetaNamespace:
 part UsingDeclaration: 'using' #MetaNamespace ';';
 
 [Scope]
-part MetaNamespaceDeclarations: declarations+=MetaModel declarations+=MetaDeclaration*;
+part MetaNamespaceDeclarations: definedMetaModel+=MetaModel declarations+=MetaDeclaration*;
 
 MetaModel: attributes+=MetaAttribute* 'metamodel' name=Name ';';
 
@@ -86,7 +86,7 @@ token TIdentifier[DefaultIdentifier]: ('_'|'a'..'z'|'A'..'Z')+('_'|'a'..'z'|'A'.
 
 token TComma[DefaultSeparator]: ',' ;
 
-token TString[String]: '"' _*? '"';
+token TString[String]: '"' .*? '"';
 
 token TWhitespace[DefaultWhitespace]: ('\t'|' ') +;
 
@@ -94,4 +94,4 @@ token TLineEnd[DefaultEndOfLine]: ('\r\n' | '\r' | '\n');
 
 token TSingleLineComment[SingleLineComment]: '//' ~('\r' | '\n')*;
 
-token TMultiLineComment[MultiLineComment]: '/*' _*? '*/';
+token TMultiLineComment[MultiLineComment]: '/*' .*? '*/';

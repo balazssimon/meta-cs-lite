@@ -13,6 +13,7 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
     using System.Linq;
     using System.Xml.Linq;
     using CSharpCompilation = Microsoft.CodeAnalysis.CSharp.CSharpCompilation;
+    using ISymbol = Microsoft.CodeAnalysis.ISymbol;
     using INamespaceSymbol = Microsoft.CodeAnalysis.INamespaceSymbol;
     using INamespaceOrTypeSymbol = Microsoft.CodeAnalysis.INamespaceOrTypeSymbol;
     using INamedTypeSymbol = Microsoft.CodeAnalysis.INamedTypeSymbol;
@@ -74,6 +75,7 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
             ResolveDefaults();
             ResolveRules();
             var ruleNames = new HashSet<string>();
+            ResolveProperties();
             ResolveBlocks(ruleNames);
             ResolveAlternatives(ruleNames);
             ResolveLists();
@@ -118,10 +120,10 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
             {
                 if (elem is LexerRuleReferenceElement refElem)
                 {
-                    refElem.Rule = _language.Grammar.Rules.OfType<LexerRule>().FirstOrDefault(r => refElem.RuleName.Length == 1 && refElem.RuleName[0] == r.Name);
+                    refElem.Rule = _language.Grammar.Rules.OfType<LexerRule>().FirstOrDefault(r => refElem.RuleName == r.Name);
                     if (refElem.Rule is null)
                     {
-                        Error(refElem.Location, $"Lexer rule '{string.Join(".", refElem.RuleName)}' cannot be found (are you missing a using directive?).");
+                        Error(refElem.Location, $"Lexer rule '{refElem.RuleName}' cannot be found (are you missing a using directive?).");
                     }
                 }
                 else if (elem is LexerRuleBlockElement blockElem)
@@ -140,26 +142,26 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
             {
                 if (elem is ParserRuleReferenceElement refElem)
                 {
-                    if (refElem.RuleName.IsDefault && !refElem.ReferencedCSharpTypes.IsDefault)
+                    if (string.IsNullOrEmpty(refElem.RuleName) && !refElem.ReferencedCSharpTypes.IsDefault)
                     {
                         refElem.Rule = _language.Grammar.DefaultReference;
-                        refElem.RuleName = ImmutableArray<string>.Empty;
+                        refElem.RuleName = string.Empty;
                         if (refElem.Rule is null)
                         {
                             Error(refElem.Location, $"Rule with annotation [DefaultReference] cannot be found (are you missing a using directive?).");
                         }
                     }
-                    else if (!refElem.RuleName.IsDefault)
+                    else if (!string.IsNullOrEmpty(refElem.RuleName))
                     {
-                        refElem.Rule = _language.Grammar.Rules.FirstOrDefault(r => refElem.RuleName.Length == 1 && refElem.RuleName[0] == r.Name);
+                        refElem.Rule = _language.Grammar.Rules.FirstOrDefault(r => refElem.RuleName == r.Name);
                     }
                     else
                     {
-                        refElem.RuleName = ImmutableArray<string>.Empty;
+                        refElem.RuleName = string.Empty;
                     }
                     if (refElem.Rule is null)
                     {
-                        Error(refElem.Location, $"Rule '{string.Join(".", refElem.RuleName)}' cannot be found (are you missing a using directive?).");
+                        Error(refElem.Location, $"Rule '{refElem.RuleName}' cannot be found (are you missing a using directive?).");
                     }
                     else if (refElem.Rule is LexerRule lexerRule)
                     {
@@ -352,6 +354,7 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                         while (usedNames.Contains(ruleName)) ruleName = $"{alt.Name}Block{++index}";
                         var rule = new ParserRule(_language.Grammar);
                         rule.Name = ruleName;
+                        rule.IsPart = true;
                         usedNames.Add(rule.Name);
                         rule.Location = blockElem.Location;
                         rule.Annotations.AddRange(blockElem.Annotations);
@@ -360,6 +363,7 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                         var refElem = new ParserRuleReferenceElement(alt);
                         refElem.Annotations.AddRange(blockElem.NameAnnotations);
                         refElem.Name = blockElem.Name;
+                        refElem.ModelPropertyName = blockElem.ModelPropertyName;
                         refElem.NameLocation = blockElem.NameLocation;
                         refElem.Location = blockElem.Location;
                         refElem.AssignmentOperator = blockElem.AssignmentOperator;
@@ -460,6 +464,7 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
             if (sourceElement is not null)
             {
                 result.Name = sourceElement.Name;
+                result.ModelPropertyName = sourceElement.ModelPropertyName;
                 result.NameLocation = sourceElement.NameLocation;
                 result.NameAnnotations.AddRange(sourceElement.NameAnnotations);
                 result.Location = sourceElement.Location;
@@ -472,6 +477,7 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                 var alt = new ParserRuleFixedStringElement(sourceAlternative);
                 alt.Annotations.AddRange(token.Annotations);
                 alt.Name = token.Name;
+                alt.ModelPropertyName = token.ModelPropertyName;
                 alt.NameLocation = token.NameLocation;
                 alt.NameAnnotations.AddRange(token.NameAnnotations);
                 alt.Location = token.Location;
@@ -756,6 +762,127 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
             else
             {
                 elem.AntlrName = elem.Name;
+            }
+        }
+
+        private void ResolveProperties()
+        {
+            var ruleStack = new List<ParserRule>();
+            foreach (var rule in _language.Grammar.ParserRules)
+            {
+                if (!rule.IsPart) ResolveProperties(rule, rule.CSharpReturnType, ruleStack);
+            }
+        }
+
+        private void ResolveProperties(ParserRule rule, CSharpTypeInfo modelObjectType, List<ParserRule> ruleStack)
+        {
+            if (ruleStack.Contains(rule)) return;
+            ruleStack.Add(rule);
+            try
+            {
+                foreach (var alt in rule.Alternatives)
+                {
+                    ResolveProperties(alt, alt.CSharpReturnType?.CoreType != null ? alt.CSharpReturnType : modelObjectType, ruleStack);
+                }
+            }
+            finally
+            {
+                ruleStack.RemoveAt(ruleStack.Count - 1);
+            }
+        }
+
+        private void ResolveProperties(ParserRuleAlternative alternative, CSharpTypeInfo modelObjectType, List<ParserRule> ruleStack)
+        {
+            foreach (var elem in alternative.Elements)
+            {
+                var prop = CSharpProperty(modelObjectType, elem.ModelPropertyName);
+                elem.CSharpModelProperty = prop;
+                if (!string.IsNullOrEmpty(elem.ModelPropertyName) && modelObjectType?.CoreType is not null && elem.CSharpModelProperty?.PropertyType?.CoreType is null)
+                {
+                    Error(elem.Location, $"Could not find property '{modelObjectType.CoreType.Name}.{elem.ModelPropertyName}'.");
+                }
+                if (elem.CSharpModelProperty?.PropertyType?.CoreType is not null && !elem.CSharpModelProperty.IsWritable)
+                {
+                    Error(elem.Location, $"Cannot assign value to property '{modelObjectType.CoreType.Name}.{elem.ModelPropertyName}', because is read only.");
+                }
+                var expr = alternative.ReturnValue;
+                if (expr is not null)
+                {
+                    var expectedType = prop.PropertyType?.CoreType != null ? prop.PropertyType : modelObjectType;
+                    if (expr.Type == typeof(object))
+                    {
+                        if (expectedType.ItemTypeKind.HasFlag(ItemTypeKind.EnumType) && expr.Qualifier.Length == 1)
+                        {
+                            expr.Value = expectedType.CoreType.GetMembers(expr.Qualifier[0]).FirstOrDefault();
+                            expr.CSharpType = new CSharpTypeInfo(_language, expectedType.CoreType);
+                        }
+                        if (expr.Value is null && TryGetCSharpSymbol(elem.Location, expr.Qualifier, out var symbol))
+                        {
+                            expr.Value = symbol;
+                            expr.CSharpType = new CSharpTypeInfo(_language, expectedType.CoreType);
+                        }
+                        if (expr.Value is null)
+                        {
+                            Error(expr.Location, $"Could not resolve '{expr.ValueText}'.");
+                        }
+                    }
+                    CheckType(expectedType, expr, expr.Location);
+                }
+                ResolveProperties(elem, modelObjectType, ruleStack);
+            }
+        }
+
+        private void ResolveProperties(ParserRuleElement elem, CSharpTypeInfo modelObjectType, List<ParserRule> ruleStack)
+        {
+            if (elem is ParserRuleReferenceElement refElem)
+            {
+                if (refElem.Rule is ParserRule parserRule)
+                {
+                    if (parserRule.IsPart)
+                    {
+                        ResolveProperties(parserRule, modelObjectType, ruleStack);
+                    }
+                    else
+                    {
+                        if (refElem.ReferencedCSharpTypes.IsDefaultOrEmpty)
+                        {
+                            CheckType(elem.CSharpModelProperty, parserRule.CSharpReturnType, elem.Location);
+                        }
+                        else
+                        {
+                            foreach (var type in refElem.ReferencedCSharpTypes)
+                            {
+                                CheckType(elem.CSharpModelProperty, type, elem.Location);
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    CheckType(elem.CSharpModelProperty, refElem.Rule?.CSharpReturnType, elem.Location);
+                }
+            }
+            else if (elem is ParserRuleFixedStringAlternativesElement fixedAlts)
+            {
+                foreach (var alt in fixedAlts.Alternatives)
+                {
+                    ResolveProperties(alt, modelObjectType, ruleStack);
+                }
+            }
+            else if (elem is ParserRuleListElement listElem)
+            {
+                ResolveProperties(listElem.RepeatedRule, modelObjectType, ruleStack);
+                if (listElem.FirstItem is not null) ResolveProperties(listElem.FirstItem, modelObjectType, ruleStack);
+                if (listElem.LastItem is not null) ResolveProperties(listElem.LastItem, modelObjectType, ruleStack);
+                if (listElem.LastSeparator is not null) ResolveProperties(listElem.LastSeparator, modelObjectType, ruleStack);
+            }
+            else if (elem is ParserRuleBlockElement blockElem)
+            {
+                blockElem.CSharpReturnType = elem.CSharpModelProperty.PropertyType;
+                foreach (var blockAlt in blockElem.Alternatives)
+                {
+                    ResolveProperties(blockAlt, blockElem.CSharpReturnType?.CoreType != null ? blockElem.CSharpReturnType : modelObjectType, ruleStack);
+                }
             }
         }
 
@@ -1114,7 +1241,7 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                         element = str;
                         _tokens.NextToken();
                     }
-                    else if (token.Text == "_")
+                    else if (token.Text == ".")
                     {
                         element = new LexerRuleWildcardElement();
                         _tokens.NextToken();
@@ -1123,8 +1250,9 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                     {
                         var reference = new LexerRuleReferenceElement();
                         reference.Location = _tokens.CurrentLocation;
-                        reference.RuleName = ParseQualifier(".");
+                        reference.RuleName = token.Text;
                         element = reference;
+                        _tokens.NextToken();
                     }
                     else if (!negated && token.Text == "=" && nextToken1.Text == ">")
                     {
@@ -1262,8 +1390,8 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                 _tokens.NextToken();
                 ParseAnnotations();
                 alt.Location = _tokens.CurrentLocation;
-                alt.CSharpInstanceType = ParseCSharpType();
-                alt.Name = alt.CSharpInstanceType?.Type?.Name;
+                alt.CSharpReturnType = ParseCSharpType();
+                alt.Name = alt.CSharpReturnType?.Type?.Name;
                 token = _tokens.CurrentToken;
                 if (token.Text == "}")
                 {
@@ -1324,7 +1452,7 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                 else
                 {
                     nextToken1 = _tokens.PeekToken(1);
-                    if (token.Text == "_")
+                    if (token.Text == ".")
                     {
                         element = new ParserRuleWildcardElement(alt);
                         _tokens.NextToken();
@@ -1368,8 +1496,16 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                             reference.ReferencedCSharpTypes = builder.ToImmutableAndFree();
                             if (token.Text == "|")
                             {
-                                _tokens.NextToken();
-                                reference.RuleName = ParseQualifier(".");
+                                token = _tokens.NextToken();
+                                if (token.Kind == MetaCompilerTokenKind.Identifier)
+                                {
+                                    reference.RuleName = token.Text;
+                                    _tokens.NextToken();
+                                }
+                                else
+                                {
+                                    Error("Identifier expected.");
+                                }
                             }
                             MatchOther("}");
                         }
@@ -1394,8 +1530,9 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                     {
                         var reference = new ParserRuleReferenceElement(alt);
                         reference.Location = _tokens.CurrentLocation;
-                        reference.RuleName = ParseQualifier(".");
+                        reference.RuleName = token.Text;
                         element = reference;
+                        _tokens.NextToken();
                     }
                     else if (!negated && token.Text == "=" && nextToken1.Text == ">")
                     {
@@ -1413,6 +1550,7 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                 element.IsNegated = negated;
                 element.NameLocation = propertyLocation;
                 element.Name = propertyName;
+                element.ModelPropertyName = propertyName.ToPascalCase();
                 element.NameAnnotations.AddRange(propertyAnnotations);
                 element.AssignmentOperator = propertyAssignment;
                 element.Annotations.AddRange(elementAnnotations);
@@ -1497,7 +1635,7 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                     }
                     else
                     {
-                        Error("Identifier expected");
+                        if (addDiagnostics) Error("Identifier expected");
                         qualifier = result.ToImmutableAndFree();
                         return false;
                     }
@@ -1548,23 +1686,57 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                 if (token.Kind == MetaCompilerTokenKind.Keyword && (token.Text == "true" || token.Text == "false"))
                 {
                     result.ValueText = token.Text;
+                    result.Value = token.Text == "true";
                     result.Type = typeof(bool);
+                    result.CSharpType = CSharpType(_tokens.CurrentLocation, ImmutableArray.Create("bool"));
+                    _tokens.NextToken();
                 }
                 else if (token.Kind == MetaCompilerTokenKind.Number)
                 {
                     result.ValueText = token.Text;
-                    if (token.Text.Contains(".")) result.Type = typeof(double);
-                    else result.Type = typeof(int);
+                    if (token.Text.Contains("."))
+                    {
+                        result.Type = typeof(double);
+                        result.CSharpType = CSharpType(_tokens.CurrentLocation, ImmutableArray.Create("double"));
+                        if (double.TryParse(token.Text, out var doubleValue))
+                        {
+                            result.Value = doubleValue;
+                        }
+                        else
+                        {
+                            Error("Invalid double value.");
+                        }
+                    }
+                    else
+                    {
+                        result.Type = typeof(int);
+                        result.CSharpType = CSharpType(_tokens.CurrentLocation, ImmutableArray.Create("int"));
+                        if (int.TryParse(token.Text, out var intValue))
+                        {
+                            result.Value = intValue;
+                        }
+                        else
+                        {
+                            Error("Invalid integer value.");
+                        }
+                    }
+                    _tokens.NextToken();
                 }
                 else if (token.Kind == MetaCompilerTokenKind.Character)
                 {
                     result.ValueText = token.Text;
                     result.Type = typeof(char);
+                    result.Value = StringUtilities.DecodeChar(token.Text);
+                    result.CSharpType = CSharpType(_tokens.CurrentLocation, ImmutableArray.Create("char"));
+                    _tokens.NextToken();
                 }
                 else if (token.Kind == MetaCompilerTokenKind.String || token.Kind == MetaCompilerTokenKind.VerbatimString)
                 {
                     result.ValueText = token.Text;
                     result.Type = typeof(string);
+                    result.Value = StringUtilities.DecodeString(token.Text);
+                    result.CSharpType = CSharpType(_tokens.CurrentLocation, ImmutableArray.Create("string"));
+                    _tokens.NextToken();
                 }
                 else
                 {
@@ -1728,5 +1900,64 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
             return result;
         }
 
+        private bool TryGetCSharpSymbol(Location location, ImmutableArray<string> qualifier, out ISymbol? symbol)
+        {
+            var candidates = _language.ResolveSymbols(location, false, "name", qualifier);
+            if (candidates.Length == 1)
+            {
+                symbol = candidates[0];
+                return true;
+            }
+            else
+            {
+                symbol = candidates.FirstOrDefault();
+                return false;
+            }
+        }
+
+        private CSharpPropertyInfo CSharpProperty(CSharpTypeInfo modelObjectType, string propertyName)
+        {
+            var propertySymbol = GetAllMembers<IPropertySymbol>(modelObjectType?.CoreType, propertyName).FirstOrDefault();
+            var propertyType = propertySymbol?.Type;
+            return new CSharpPropertyInfo(modelObjectType, propertyName, propertyType, propertySymbol?.SetMethod != null);
+        }
+
+        private ImmutableArray<TSymbol> GetAllMembers<TSymbol>(ITypeSymbol? symbol, string? memberName)
+            where TSymbol : ISymbol
+        {
+            if (symbol is null || string.IsNullOrEmpty(memberName)) return ImmutableArray<TSymbol>.Empty;
+            var builder = ArrayBuilder<TSymbol>.GetInstance();
+            builder.AddRange(symbol.GetMembers(memberName).OfType<TSymbol>());
+            foreach (var baseType in symbol.AllInterfaces)
+            {
+                if (builder.Count > 0) break;
+                builder.AddRange(baseType.GetMembers(memberName).OfType<TSymbol>());
+            }
+            return builder.ToImmutableAndFree();
+        }
+
+        private void CheckType(CSharpTypeInfo expectedType, Expression expr, Location location)
+        {
+            if (expectedType?.Type is not null && expr?.CSharpType?.Type is not null)
+            {
+                var conversion = _compilation.ClassifyConversion(expr.CSharpType.CoreType, expectedType.CoreType);
+                if (!conversion.IsImplicit)
+                {
+                    Error(location, $"Value '{expr.ValueText}' of type '{expr.CSharpType.CoreType.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat)}' cannot be assigned to '{expectedType.CoreType.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat)}'.");
+                }
+            }
+        }
+
+        private void CheckType(CSharpPropertyInfo property, CSharpTypeInfo valueType, Location location)
+        {
+            if (property?.PropertyType?.Type is not null && valueType?.Type is not null)
+            {
+                var conversion = _compilation.ClassifyConversion(valueType.CoreType, property.PropertyType.CoreType);
+                if (!conversion.IsImplicit)
+                {
+                    Error(location, $"Value of type '{valueType.CoreType.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat)}' cannot be assigned to property '{property.ModelObjectType?.CoreType?.Name}.{property.PropertyName}' of type '{property.PropertyType.CoreType.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat)}'.");
+                }
+            }
+        }
     }
 }

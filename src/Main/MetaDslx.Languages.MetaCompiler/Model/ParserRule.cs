@@ -29,6 +29,7 @@ namespace MetaDslx.Languages.MetaCompiler.Model
         string GreenName { get; }
         string RedName { get; }
         List<ParserRuleAlternative> Alternatives { get; }
+        CSharpTypeInfo CSharpReturnType { get; }
     }
 
     public class ParserRule : Rule, IParserRuleAlternativeParent
@@ -65,7 +66,7 @@ namespace MetaDslx.Languages.MetaCompiler.Model
             set => _parent = value;
         }
 
-        public CSharpTypeInfo CSharpInstanceType { get; set; }
+        public CSharpTypeInfo CSharpReturnType { get; set; }
         public List<ParserRuleElement> Elements { get; } = new List<ParserRuleElement>();
         public Expression? ReturnValue { get; set; }
 
@@ -115,6 +116,8 @@ namespace MetaDslx.Languages.MetaCompiler.Model
         public virtual string RedToGreenOptionalArgument => IsOptional ? "default" : ParameterName;
 
         public string? AntlrName { get; set; }
+        public string? ModelPropertyName { get; set; }
+        public CSharpPropertyInfo CSharpModelProperty { get; set; }
         public Location? NameLocation { get; set; }
         public List<Annotation> NameAnnotations { get; } = new List<Annotation>();
         public bool IsNegated { get; set; }
@@ -137,8 +140,7 @@ namespace MetaDslx.Languages.MetaCompiler.Model
         }
 
         public override string DefaultName => Rule?.Name.ToCamelCase();
-        public ImmutableArray<string> RuleName { get; set; }
-        public string QualifiedName => string.Join(".", Name);
+        public string RuleName { get; set; }
         public Rule? Rule { get; set; }
         public ImmutableArray<CSharpTypeInfo> ReferencedCSharpTypes { get; set; }
 
@@ -150,7 +152,7 @@ namespace MetaDslx.Languages.MetaCompiler.Model
 
         public override string ToString()
         {
-            return $"{Name}={QualifiedName}";
+            return $"{Name}={RuleName}";
         }
     }
 
@@ -248,6 +250,7 @@ namespace MetaDslx.Languages.MetaCompiler.Model
         public string GreenName => Name.ToPascalCase() + "Green";
         public string RedName => Name.ToPascalCase() + "Syntax";
         public bool IsPart => false;
+        public CSharpTypeInfo CSharpReturnType { get; set; }
 
         public override string GreenItemType => GreenName;
         public override string RedItemType => RedName;
