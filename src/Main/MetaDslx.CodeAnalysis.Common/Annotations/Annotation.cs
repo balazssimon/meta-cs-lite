@@ -7,8 +7,4 @@ namespace MetaDslx.CodeAnalysis.Annotations
     public abstract class Annotation
     {
     }
-
-    public class DefaultReferenceAnnotation : Annotation
-    {
-    }
 }

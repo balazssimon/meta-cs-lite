@@ -42,6 +42,7 @@ namespace MetaDslx.Languages.MetaCompiler.Model
         public bool IsPart { get; set; }
         public override string GreenName => Name.ToPascalCase() + "Green";
         public override string RedName => Name.ToPascalCase() + "Syntax";
+        public override string AntlrName => "pr_"+Name.ToPascalCase();
 
         public List<ParserRuleAlternative> Alternatives { get; } = new List<ParserRuleAlternative>();
         public List<ParserRuleAlternative> ReferencedBy { get; } = new List<ParserRuleAlternative>();
@@ -50,7 +51,6 @@ namespace MetaDslx.Languages.MetaCompiler.Model
     public class ParserRuleAlternative : NamedElement
     {
         private IParserRuleAlternativeParent _parent;
-        private CSharpTypeInfo _csharpInstanceType;
 
         public ParserRuleAlternative(IParserRuleAlternativeParent parent)
         {
@@ -71,6 +71,7 @@ namespace MetaDslx.Languages.MetaCompiler.Model
 
         public string GreenName => Name.ToPascalCase() + "Green";
         public string RedName => Name.ToPascalCase() + "Syntax";
+        public string AntlrName => "pr_" + Name.ToPascalCase();
 
         public string GreenConstructorParameters => string.Concat(Elements.Select(e => $", {e.GreenFieldType} {e.ParameterName}"));
         public string GreenConstructorArguments => string.Concat(Elements.Select(e => $", {e.FieldName}"));

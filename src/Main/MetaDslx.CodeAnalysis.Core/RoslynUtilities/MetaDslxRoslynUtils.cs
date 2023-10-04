@@ -45,7 +45,7 @@ namespace Roslyn.Utilities
 
         public static Microsoft.CodeAnalysis.Location ToMicrosoft(this MetaDslx.CodeAnalysis.Location location)
         {
-            return Microsoft.CodeAnalysis.Location.Create(location.GetLineSpan().Path, location.SourceSpan.ToMicrosoft(), location.GetLineSpan().Span.ToMicrosoft());
+            return Microsoft.CodeAnalysis.Location.Create(location.GetLineSpan().Path ?? string.Empty, location.SourceSpan.ToMicrosoft(), location.GetLineSpan().Span.ToMicrosoft());
         }
 
         public static Microsoft.CodeAnalysis.Text.TextSpan ToMicrosoft(this MetaDslx.CodeAnalysis.Text.TextSpan textSpan)

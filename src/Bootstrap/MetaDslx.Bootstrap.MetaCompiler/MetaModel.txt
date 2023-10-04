@@ -11,7 +11,10 @@ language MetaModel;
 
 Main returns MetaNamespace: declarations+=MetaNamespace eof;
 
-MetaNamespace: 'namespace' name=NamespaceName ';' UsingDeclaration* MetaNamespaceDeclarations;
+MetaNamespace: 
+	'namespace' name=NamespaceName ';'
+	UsingDeclaration*
+	MetaNamespaceDeclarations;
 
 [Import]
 part UsingDeclaration: 'using' #MetaNamespace ';';
@@ -31,7 +34,7 @@ part EnumBody: '{' EnumLiterals? '}';
 part EnumLiterals : enumLiterals+=MetaEnumLiteral (',' enumLiterals+=MetaEnumLiteral)* ;
 MetaEnumLiteral: attributes+=MetaAttribute* name=Name;
 
-MetaClass: attributes+=MetaAttribute* isAbstract?='abstract'? 'class' name=Name BaseClasses? ClassBody;
+MetaClass: {MetaClass} attributes+=MetaAttribute* isAbstract?='abstract'? 'class' name=Name BaseClasses? ClassBody;
 part BaseClasses: (':' baseClasses+=#{MetaClass|QualifierList});
 [Scope]
 part ClassBody: '{' properties+=MetaProperty* '}';

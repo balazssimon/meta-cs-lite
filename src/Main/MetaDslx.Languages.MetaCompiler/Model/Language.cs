@@ -71,7 +71,7 @@ namespace MetaDslx.Languages.MetaCompiler.Model
                 if (result is not null) return ImmutableArray.Create(result);
             }
             var candidates = ArrayBuilder<INamespaceOrTypeSymbol>.GetInstance();
-            //ResolveSymbols(location, addDiagnostics, diagnosticName, qualifiedName, suffixes, null, _compilation.GlobalNamespace, candidates);
+            ResolveSymbols(location, addDiagnostics, diagnosticName, qualifiedName, suffixes, null, _compilation.GlobalNamespace, candidates);
             foreach (var use in this.Usings)
             {
                 ResolveSymbols(location, addDiagnostics, diagnosticName, qualifiedName, suffixes, use.Alias, use.CSharpSymbol, candidates);
@@ -139,12 +139,7 @@ namespace MetaDslx.Languages.MetaCompiler.Model
                             csharpSymbol = csharpSymbol.GetMembers().Where(ns => ns.Name == name).OfType<INamespaceOrTypeSymbol>().FirstOrDefault();
                             if (csharpSymbol is null)
                             {
-                                if (addDiagnostics)
-                                {
-                                    if (sb.Length > 0) Error(location, $"The type or namespace '{name}' does not exist in '{sb}' (are you missing an assembly reference?).");
-                                    else Error(location, $"The type or namespace '{name}' could not be found (are you missing an assembly reference?).");
-                                }
-                                break;
+                                return;
                             }
                         }
                         else

@@ -106,10 +106,6 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                     }
                     foreach (var alt in pr.Alternatives)
                     {
-                        if (alt.Name is not null && !ruleNames.Add(alt.Name))
-                        {
-                            Error(alt.Location, $"Language '{_language.Name}' already defines a rule '{alt.Name}'.");
-                        }
                         ResolveRules(alt);
                     }
                 }
@@ -199,6 +195,14 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                         lexerRule.Alternatives.Add(singleAlt);
                         lexerRule.Name = MakeFixedLexerRuleName(_language.Grammar, fixedStringElem.Value);
                         _language.Grammar.Rules.Add(lexerRule);
+                        if (StringUtilities.IsIdentifier(fixedStringElem.ValueText))
+                        {
+                            lexerRule.CSharpTokenKind = CSharpType(lexerRule.Location, ImmutableArray.Create("MetaDslx", "CodeAnalysis", "Syntax", "KeywordTokenKind"));
+                        }
+                        else
+                        {
+                            lexerRule.CSharpTokenKind = CSharpType(lexerRule.Location, ImmutableArray.Create("MetaDslx", "CodeAnalysis", "Syntax", "OtherTokenKind"));
+                        }
                     }
                     fixedStringElem.LexerRule = lexerRule;
                 }
@@ -329,14 +333,11 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
             {
                 foreach (var alt in alternatives)
                 {
-                    if (string.IsNullOrEmpty(alt.Name))
-                    {
-                        var index = 0;
-                        var altName = $"{parentName}Alt{++index}";
-                        while (usedNames.Contains(altName)) altName = $"{parentName}Alt{++index}";
-                        alt.Name = altName;
-                        usedNames.Add(alt.Name);
-                    }
+                    var index = 0;
+                    var altName = $"{parentName}Alt{++index}";
+                    while (usedNames.Contains(altName)) altName = $"{parentName}Alt{++index}";
+                    alt.Name = altName;
+                    usedNames.Add(alt.Name);
                 }
             }
             foreach (var alt in alternatives)
@@ -346,17 +347,16 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                     var blockElem = alt.Elements[i] as ParserRuleBlockElement;
                     if (blockElem is not null)
                     {
-                        var blockName = string.IsNullOrEmpty(blockElem.Name) ? "Block" : blockElem.Name.ToPascalCase();
                         var index = 0;
-                        var ruleName = $"{alt.Name}{blockName}{++index}";
-                        while (usedNames.Contains(ruleName)) ruleName = $"{alt.Name}{blockName}{++index}";
+                        var ruleName = $"{alt.Name}Block{++index}";
+                        while (usedNames.Contains(ruleName)) ruleName = $"{alt.Name}Block{++index}";
                         var rule = new ParserRule(_language.Grammar);
                         rule.Name = ruleName;
+                        usedNames.Add(rule.Name);
                         rule.Location = blockElem.Location;
                         rule.Annotations.AddRange(blockElem.Annotations);
                         rule.Alternatives.AddRange(blockElem.Alternatives);
                         _language.Grammar.Rules.Add(rule);
-                        usedNames.Add(rule.Name);
                         var refElem = new ParserRuleReferenceElement(alt);
                         refElem.Annotations.AddRange(blockElem.NameAnnotations);
                         refElem.Name = blockElem.Name;
@@ -386,7 +386,7 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                         var sourceAltIndex = sourceRule.Alternatives.IndexOf(sourceAlt);
                         if (sourceAltIndex >= 0)
                         {
-                            if (targetRule.Alternatives.Count == 1 && string.IsNullOrEmpty(targetRule.Alternatives[0].Name))
+                            if (targetRule.Alternatives.Count == 1)
                             {
                                 targetRule.Alternatives[0].Name = targetRule.Name;
                             }
@@ -678,6 +678,10 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
             var usedElementNames = new HashSet<string>();
             foreach (var rule in _language.Grammar.ParserRules)
             {
+                if (rule.Alternatives.Count == 1)
+                {
+                    rule.Alternatives[0].Name = rule.Name;
+                }
                 ResolveElementNames(rule.Alternatives, usedElementNames, true);
             }
         }
@@ -686,7 +690,22 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
         {
             foreach (var alt in alternatives)
             {
-                if (clearUsedElementNames) usedElementNames.Clear();
+                if (clearUsedElementNames)
+                {
+                    usedElementNames.Clear();
+                    usedElementNames.Add("diagnostics");
+                    usedElementNames.Add("annotations");
+                    usedElementNames.Add("fullWidth");
+                    usedElementNames.Add("isDirective");
+                    usedElementNames.Add("isList");
+                    usedElementNames.Add("isToken");
+                    usedElementNames.Add("isTrivia");
+                    usedElementNames.Add("language");
+                    usedElementNames.Add("kind");
+                    usedElementNames.Add("kindText");
+                    usedElementNames.Add("rawKind");
+                    usedElementNames.Add("slotCount");
+                }
                 ResolveElementNames(alt, usedElementNames);
             }
         }
@@ -701,19 +720,16 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
 
         private void ResolveElementNames(ParserRuleElement elem, HashSet<string> usedElementNames)
         {
-            if (string.IsNullOrEmpty(elem.Name))
+            if (string.IsNullOrEmpty(elem.Name) || usedElementNames.Contains(elem.Name))
             {
-                var defaultName = elem.DefaultName;
+                var defaultName = elem.Name;
+                if (string.IsNullOrEmpty(defaultName)) defaultName = elem.DefaultName;
                 if (string.IsNullOrEmpty(defaultName)) defaultName = "element";
                 var name = defaultName;
                 var index = 0;
                 while (usedElementNames.Contains(name)) name = $"{defaultName}{++index}";
                 elem.Name = name;
                 if (elem.IsList) elem.AssignmentOperator = AssignmentOperator.PlusAssign;
-            }
-            else if (usedElementNames.Contains(elem.Name))
-            {
-                Error(elem.NameLocation, $"Element name '{elem.Name}' is defined multiple times.");
             }
             usedElementNames.Add(elem.Name);
             if (elem is ParserRuleReferenceElement refElem && elem.Name == refElem.Name)

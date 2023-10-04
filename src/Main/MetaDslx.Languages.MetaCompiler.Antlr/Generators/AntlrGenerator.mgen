@@ -18,7 +18,7 @@ lexer grammar [language.Name]Lexer;
 end template
 
 template GenerateLexerRule(LexerRule rule)
-[rule.IsFragment ? "fragment " : ""][rule.Name]: [GenerateLexerRuleAlts(rule.Alternatives)][rule.IsHidden ? " -> channel(HIDDEN)" : ""];
+[rule.IsFragment ? "fragment " : ""][rule.AntlrName]: [GenerateLexerRuleAlts(rule.Alternatives)][rule.IsHidden ? " -> channel(HIDDEN)" : ""];
 end template
 
 template GenerateLexerRuleAlts(List<LexerRuleAlternative> alternatives)
@@ -38,7 +38,7 @@ end template
 template GenerateLexerRuleElement(LexerRuleElement elem)
 [$single-line]
 [if (elem is LexerRuleReferenceElement ruleRefElem)]
-[ruleRefElem.Rule.Name]
+[ruleRefElem.Rule.AntlrName]
 [else if (elem is LexerRuleFixedStringElement fixedElem)]
 [fixedElem.ValueText]
 [else if (elem is LexerRuleWildcardElement wildcardElem)]
@@ -63,6 +63,11 @@ template GenerateMultiplicity(Multiplicity multiplicity)
 [end if]
 end template
 
+template GenerateAssignment(Multiplicity multiplicity)
+[$single-line]
+[if (multiplicity.IsList())]+=[else]=[end if]
+end template
+
 
 template GenerateParser(Language language)
 parser grammar [language.Name]Parser;
@@ -78,7 +83,7 @@ options
 end template
 
 template GenerateParserRule(ParserRule rule)
-[rule.Name]
+[rule.AntlrName]
     [GenerateParserRuleAlts(rule.Alternatives)]
     ;
 end template
@@ -86,7 +91,7 @@ end template
 template GenerateParserRuleAlts(List<ParserRuleAlternative> alternatives)
 [var sep = ":"]
 [foreach (var alt in alternatives)]
-[sep] [GenerateParserRuleElements(alt)][if (alternatives.Count > 1)] #[alt.Name][end if]
+[sep] [GenerateParserRuleElements(alt)][if (alternatives.Count > 1)] #[alt.AntlrName][end if]
 [sep = "|"]
 [end foreach]
 end template
@@ -98,29 +103,20 @@ template GenerateParserRuleElements(ParserRuleAlternative alt)
 [end foreach]
 end template
 
-template GenerateAssignment(AssignmentOperator op)
-[$single-line]
-[if (op == AssignmentOperator.Assign)]=
-[else if (op == AssignmentOperator.QuestionAssign)]=
-[else if (op == AssignmentOperator.NegatedAssign)]=
-[else if (op == AssignmentOperator.PlusAssign)]+=
-[end if]
-end template
-
 template GenerateParserRuleElement(ParserRuleElement elem)
 [$single-line]
 [if (elem is ParserRuleReferenceElement ruleRefElem)]
- [elem.AntlrName][GenerateAssignment(elem.AssignmentOperator)][elem.IsNegated ? "~" : ""][ruleRefElem.Rule.Name][GenerateMultiplicity(elem.Multiplicity)]
+ [elem.AntlrName][GenerateAssignment(elem.Multiplicity)][elem.IsNegated ? "~" : ""][ruleRefElem.Rule.AntlrName][GenerateMultiplicity(elem.Multiplicity)]
 [else if (elem is ParserRuleEofElement eofElem)]
- [elem.AntlrName][GenerateAssignment(elem.AssignmentOperator)]EOF
+ [elem.AntlrName][GenerateAssignment(elem.Multiplicity)]EOF
 [else if (elem is ParserRuleFixedStringElement fixedElem)]
- [elem.AntlrName][GenerateAssignment(elem.AssignmentOperator)][elem.IsNegated ? "~" : ""][fixedElem.LexerRule.Name][GenerateMultiplicity(elem.Multiplicity)]
+ [elem.AntlrName][GenerateAssignment(elem.Multiplicity)][elem.IsNegated ? "~" : ""][fixedElem.LexerRule.AntlrName][GenerateMultiplicity(elem.Multiplicity)]
 [else if (elem is ParserRuleFixedStringAlternativesElement fixedAltsElem)]
  [elem.IsNegated ? "~" : ""]([foreach (var fixedAlt in fixedAltsElem.Alternatives) separator " | "][GenerateParserRuleElement(fixedAlt)][end foreach])[GenerateMultiplicity(elem.Multiplicity)]
 [else if (elem is ParserRuleWildcardElement wildcardElem)]
- [elem.AntlrName][GenerateAssignment(elem.AssignmentOperator)][elem.IsNegated ? "~" : ""].[GenerateMultiplicity(elem.Multiplicity)]
+ [elem.AntlrName][GenerateAssignment(elem.Multiplicity)][elem.IsNegated ? "~" : ""].[GenerateMultiplicity(elem.Multiplicity)]
 [else if (elem is ParserRuleBlockElement blockElem)]
- [elem.AntlrName][GenerateAssignment(elem.AssignmentOperator)][elem.IsNegated ? "~" : ""]([GenerateParserRuleAlts(blockElem.Alternatives)])[GenerateMultiplicity(elem.Multiplicity)]
+ [elem.AntlrName][GenerateAssignment(elem.Multiplicity)][elem.IsNegated ? "~" : ""]([GenerateParserRuleAlts(blockElem.Alternatives)])[GenerateMultiplicity(elem.Multiplicity)]
 [else if (elem is ParserRuleListElement listElem)]
     [if (listElem.ListKind == ListKind.WithFirstItem || listElem.ListKind == ListKind.WithFirstItemSeparator)]
  [GenerateParserRuleElement(listElem.FirstItem)]

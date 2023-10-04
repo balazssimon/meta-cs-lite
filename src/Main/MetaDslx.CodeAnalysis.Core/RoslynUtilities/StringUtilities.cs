@@ -230,7 +230,7 @@ namespace Roslyn.Utilities
 
         public static bool IsIdentifier(string? text)
         {
-            if (string.IsNullOrEmpty(text)) return false;
+            if (string.IsNullOrEmpty(text) || text == "_") return false;
             var first = true;
             foreach (var ch in text)
             {

@@ -34,6 +34,7 @@ namespace MetaDslx.Languages.MetaCompiler.Model
 
         public override string GreenName => "InternalSyntaxToken";
         public override string RedName => "SyntaxToken";
+        public override string AntlrName => "LR_" + Name.ToPascalCase();
 
         public bool IsHidden
         {

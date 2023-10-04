@@ -31,6 +31,7 @@ namespace MetaDslx.Languages.MetaCompiler.Model
 
         public abstract string GreenName { get; }
         public abstract string RedName { get; }
+        public abstract string AntlrName { get; }
 
         public CSharpTypeInfo CSharpReturnType { get; set; }
     }

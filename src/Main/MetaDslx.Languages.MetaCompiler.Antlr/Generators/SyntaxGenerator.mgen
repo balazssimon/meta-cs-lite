@@ -3,6 +3,7 @@ namespace MetaDslx.Languages.MetaCompiler.Antlr.Generators
 using MetaDslx.Languages.MetaCompiler.Model
 using System.Collections.Generic
 using System.Linq
+using Roslyn.Utilities
 
 generator AntlrGenerator
 
@@ -77,7 +78,7 @@ namespace [language.QualifiedNamespace].Syntax
 
         private [language.Grammar.MainRule?.GreenName]? Parse[language.Grammar.MainRule?.CSharpName](ref ParserState? state)
         {
-            return _visitor.Visit[language.Grammar.MainRule?.CSharpName](AntlrParser.[language.Grammar.MainRule?.Name]());
+            return _visitor.Visit[language.Grammar.MainRule?.AntlrName?.ToPascalCase()](AntlrParser.[language.Grammar.MainRule?.AntlrName]());
         }
 
         private class AntlrToRoslynVisitor : [language.Name]ParserBaseVisitor<GreenNode?>
@@ -134,7 +135,7 @@ namespace [language.QualifiedNamespace].Syntax
 
             [foreach (var rule in language.Grammar.ParserRules)]
                 [foreach (var alt in rule.Alternatives)]
-            public override [alt.GreenName]? Visit[alt.CSharpName]([language.Name]Parser.[alt.CSharpName]Context? context)
+            public override [alt.GreenName]? Visit[alt.AntlrName.ToPascalCase()]([language.Name]Parser.[alt.AntlrName.ToPascalCase()]Context? context)
             {
                	if (context == null) return [alt.GreenName].__Missing;
                 [foreach (var elem in alt.Elements)]
@@ -205,8 +206,12 @@ namespace [language.QualifiedNamespace].Syntax
                             [foreach (var fixedAlt in fixedAlts.Alternatives)]
                 if (context.[fixedAlt.AntlrName] is not null) [elem.ParameterName] = this.VisitTerminal(context.[fixedAlt.AntlrName]);
                             [end foreach]
+                        [else if(elem is ParserRuleFixedStringElement fixedElem)]
+                var [elem.ParameterName] = this.VisitTerminal(context.[elem.AntlrName][if (!elem.IsOptional)], [language.Name]SyntaxKind.[fixedElem.LexerRule.CSharpName][end if]);
+                        [else if(elem.IsToken && elem is ParserRuleReferenceElement ruleRefElem)]
+                var [elem.ParameterName] = this.VisitTerminal(context.[elem.AntlrName][if (!elem.IsOptional)], [language.Name]SyntaxKind.[ruleRefElem.Rule.CSharpName][end if]);
                         [else if(elem.IsToken)]
-                var [elem.ParameterName] = this.VisitTerminal(context.[elem.AntlrName][if (!elem.IsOptional)], [language.Name]SyntaxKind.[elem.CSharpName][end if]);
+                var [elem.ParameterName] = this.VisitTerminal(context.[elem.AntlrName]);
                         [else]
                 [elem.GreenItemType]? [elem.ParameterName] = null;
                 if (context.[elem.AntlrName] is not null) [elem.ParameterName] = ([elem.GreenItemType]?)this.Visit(context.[elem.AntlrName])[if (!elem.IsOptional)] ?? [elem.GreenItemType].__Missing[end if];
