@@ -1,6 +1,5 @@
 ﻿using MetaDslx.CodeAnalysis;
 using MetaDslx.CodeAnalysis.PooledObjects;
-using MetaDslx.CodeAnalysis.Syntax;
 using Roslyn.Utilities;
 using System;
 using System.Collections.Generic;

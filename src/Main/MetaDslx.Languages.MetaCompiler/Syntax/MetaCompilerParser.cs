@@ -10,13 +10,18 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
     using MetaDslx.CodeAnalysis.PooledObjects;
     using MetaDslx.Languages.MetaCompiler.Model;
     using Roslyn.Utilities;
-    using System.Data;
     using System.Linq;
     using System.Xml.Linq;
     using CSharpCompilation = Microsoft.CodeAnalysis.CSharp.CSharpCompilation;
-    using SymbolDisplayFormat = Microsoft.CodeAnalysis.SymbolDisplayFormat;
-    using INamedTypeSymbol = Microsoft.CodeAnalysis.INamedTypeSymbol;
+    using INamespaceSymbol = Microsoft.CodeAnalysis.INamespaceSymbol;
     using INamespaceOrTypeSymbol = Microsoft.CodeAnalysis.INamespaceOrTypeSymbol;
+    using INamedTypeSymbol = Microsoft.CodeAnalysis.INamedTypeSymbol;
+    using ITypeSymbol = Microsoft.CodeAnalysis.ITypeSymbol;
+    using IArrayTypeSymbol = Microsoft.CodeAnalysis.IArrayTypeSymbol;
+    using IMethodSymbol = Microsoft.CodeAnalysis.IMethodSymbol;
+    using IParameterSymbol = Microsoft.CodeAnalysis.IParameterSymbol;
+    using IPropertySymbol = Microsoft.CodeAnalysis.IPropertySymbol;
+    using SymbolDisplayFormat = Microsoft.CodeAnalysis.SymbolDisplayFormat;
 
     public class MetaCompilerParser
     {
@@ -29,6 +34,7 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
         private MetaCompilerTokenStream _tokens;
         private DiagnosticBag? _diagnosticBag;
         private ImmutableArray<Diagnostic> _diagnostics;
+        private Dictionary<ImmutableArray<string>, CSharpTypeInfo> _typeCache = new Dictionary<ImmutableArray<string>, CSharpTypeInfo>();
 
         public MetaCompilerParser(CSharpCompilation compilation, string filePath, SourceText compilerCode)
         {
@@ -46,12 +52,10 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
             {
                 _tokens = new MetaCompilerTokenStream(_lexer);
                 _diagnosticBag = DiagnosticBag.GetInstance();
-                _language = ParseLanguage();
+                ParseLanguage();
                 if (resolveAnnotations)
                 {
                     _language.ResolveAnnotations();
-                    ResolveDefaultRules();
-                    ResolveRootType();
                 }
                 _diagnosticBag.AddRange(_language.Diagnostics);
                 _diagnostics = _diagnosticBag.ToReadOnlyAndFree();
@@ -60,13 +64,14 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
             return _language;
         }
 
-        private Language ParseLanguage()
+        private void ParseLanguage()
         {
             _language = new Language(_compilation);
             ParseNamespace();
             ParseUsings();
             ParseLanguageDeclaration();
             ParseGrammar();
+            ResolveDefaults();
             ResolveRules();
             var ruleNames = new HashSet<string>();
             ResolveBlocks(ruleNames);
@@ -74,7 +79,6 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
             ResolveLists();
             ResolveNames();
             _language.Grammar.MainRule = _language.Grammar.ParserRules.FirstOrDefault();
-            return _language;
         }
 
         private void ResolveRules()
@@ -140,7 +144,23 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
             {
                 if (elem is ParserRuleReferenceElement refElem)
                 {
-                    refElem.Rule = _language.Grammar.Rules.FirstOrDefault(r => refElem.RuleName.Length == 1 && refElem.RuleName[0] == r.Name);
+                    if (refElem.RuleName.IsDefault && !refElem.ReferencedCSharpTypes.IsDefault)
+                    {
+                        refElem.Rule = _language.Grammar.DefaultReference;
+                        refElem.RuleName = ImmutableArray<string>.Empty;
+                        if (refElem.Rule is null)
+                        {
+                            Error(refElem.Location, $"Rule with annotation [DefaultReference] cannot be found (are you missing a using directive?).");
+                        }
+                    }
+                    else if (!refElem.RuleName.IsDefault)
+                    {
+                        refElem.Rule = _language.Grammar.Rules.FirstOrDefault(r => refElem.RuleName.Length == 1 && refElem.RuleName[0] == r.Name);
+                    }
+                    else
+                    {
+                        refElem.RuleName = ImmutableArray<string>.Empty;
+                    }
                     if (refElem.Rule is null)
                     {
                         Error(refElem.Location, $"Rule '{string.Join(".", refElem.RuleName)}' cannot be found (are you missing a using directive?).");
@@ -723,55 +743,66 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
             }
         }
 
-        private void ResolveDefaultRules()
+        private void ResolveDefaults()
         {
             var grammar = _language.Grammar;
             LexerRule? _defaultWhitespace = null;
             LexerRule? _defaultEndOfLine = null;
             LexerRule? _defaultIdentifier = null;
             LexerRule? _defaultSeparator = null;
-            foreach (var rule in grammar.LexerRules)
+            Rule? _defaultReference = null;
+            foreach (var rule in grammar.Rules)
             {
-                if (rule.IsDefault && rule.TokenKindName.Length > 0)
+                ResolveDefaultRule(ref _defaultReference, rule, "DefaultReference");
+                if (rule is LexerRule lexerRule)
                 {
-                    switch (rule.TokenKindName[rule.TokenKindName.Length-1])
-                    {
-                        case "Whitespace":
-                            ResolveDefaultLexerRule(ref _defaultWhitespace, rule, "Whitespace");
-                            break;
-                        case "EndOfLine":
-                            ResolveDefaultLexerRule(ref _defaultEndOfLine, rule, "EndOfLine");
-                            break;
-                        case "Identifier":
-                            ResolveDefaultLexerRule(ref _defaultIdentifier, rule, "Identifier");
-                            break;
-                        case "Separator":
-                            ResolveDefaultLexerRule(ref _defaultSeparator, rule, "Separator");
-                            break;
-                        default:
-                            break;
-                    }
+                    ResolveDefaultTokenKind(ref _defaultWhitespace, lexerRule, "DefaultWhitespace");
+                    ResolveDefaultTokenKind(ref _defaultEndOfLine, lexerRule, "DefaultEndOfLine");
+                    ResolveDefaultTokenKind(ref _defaultIdentifier, lexerRule, "DefaultIdentifier");
+                    ResolveDefaultTokenKind(ref _defaultSeparator, lexerRule, "DefaultSeparator");
                 }
             }
             grammar.DefaultWhitespace = _defaultWhitespace;
             grammar.DefaultEndOfLine = _defaultEndOfLine;
             grammar.DefaultIdentifier = _defaultIdentifier;
             grammar.DefaultSeparator = _defaultSeparator;
-            if (grammar.DefaultWhitespace is null) Error(_language.Location, $"Missing lexer rule with annotation [TokenKind(Whitespace,isDefault:true)].");
-            if (grammar.DefaultEndOfLine is null) Error(_language.Location, $"Missing lexer rule with annotations [TokenKind(EndOfLine,isDefault:true)].");
-            if (grammar.DefaultIdentifier is null) Error(_language.Location, $"Missing lexer rule with annotations [TokenKind(Identifier,isDefault:true)].");
-            if (grammar.DefaultSeparator is null) Error(_language.Location, $"Missing lexer rule with annotations [TokenKind(Separator,isDefault:true)].");
+            grammar.DefaultReference = _defaultReference;
+            if (grammar.DefaultWhitespace is null) Error(_language.Location, $"Token with kind [DefaultWhitespace] cannot be found (are you missing a using directive?).");
+            if (grammar.DefaultEndOfLine is null) Error(_language.Location, $"Token with kind [DefaultEndOfLine] cannot be found (are you missing a using directive?).");
+            if (grammar.DefaultIdentifier is null) Error(_language.Location, $"Token with kind [DefaultIdentifier] cannot be found (are you missing a using directive?).");
+            if (grammar.DefaultSeparator is null) Error(_language.Location, $"Token with kind [DefaultSeparator] cannot be found (are you missing a using directive?).");
+            if (grammar.DefaultReference is null) Error(_language.Location, $"Rule with annotation [DefaultReference] cannot be found (are you missing a using directive?).");
         }
 
-        private void ResolveDefaultLexerRule(ref LexerRule? lexerRule, LexerRule defaultRule, string annotationName)
+        private void ResolveDefaultRule<TRule>(ref TRule? rule, TRule defaultRule, string kindName)
+            where TRule : Rule
         {
-            if (lexerRule is null)
+            if (defaultRule.Annotations.Any(a => a.Name.LastOrDefault() == kindName))
             {
-                lexerRule = defaultRule;
+                if (rule is null)
+                {
+                    rule = defaultRule;
+                }
+                else
+                {
+                    Error(defaultRule.Location, $"There is already another rule with [{kindName}] defined in the grammar called '{rule.Name}'. There must be exactly one default rule with this annotation.");
+                }
             }
-            else
+        }
+
+        private void ResolveDefaultTokenKind(ref LexerRule? lexerRule, LexerRule defaultRule, string kindName)
+        {
+            var tokenKindName = defaultRule.CSharpTokenKind?.Type?.Name;
+            if (tokenKindName == $"{kindName}TokenKind")
             {
-                Error(defaultRule.Location, $"There is already another default {annotationName} lexer rule called '{lexerRule.Name}' defined in the grammar. There must be exactly one default lexer rule with this annotation.");
+                if (lexerRule is null)
+                {
+                    lexerRule = defaultRule;
+                }
+                else
+                {
+                    Error(defaultRule.Location, $"There is already another token of kind [{kindName}] defined in the grammar called '{lexerRule.Name}'. There must be exactly one default token with this kind.");
+                }
             }
         }
 
@@ -789,21 +820,6 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
         private bool HasAnnotation(IEnumerable<Annotation> annotations, string annotationName)
         {
             return GetAnnotation(annotations, annotationName) is not null;
-        }
-
-        private void ResolveRootType()
-        {
-            var grammar = _language.Grammar;
-            var mainRule = grammar.MainRule;
-            if (mainRule is null) return;
-            foreach (var annot in mainRule.Annotations)
-            {
-                if (annot.IsRoot)
-                {
-                    var typeProp = annot.ConstructorArguments.Where(p => p.Name == "type").FirstOrDefault();
-                    grammar.RootType = typeProp?.Values.FirstOrDefault() as INamedTypeSymbol;
-                }
-            }
         }
 
         private void ParseNamespace()
@@ -980,31 +996,26 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                 rule.Annotations.AddRange(_annotations);
                 _annotations.Clear();
                 token = _tokens.NextToken();
-                if (token.Text == "as")
+                if (token.Text == "[")
                 {
                     _tokens.NextToken();
-                    var nextToken = _tokens.PeekToken();
-                    if (nextToken.Kind == MetaCompilerTokenKind.Keyword && nextToken.Text == "default")
-                    {
-                        rule.IsDefault = true;
-                        _tokens.NextToken();
-                    }
-                    rule.TokenKindName = ParseQualifier(".");
+                    rule.CSharpTokenKind = ParseCSharpType("TokenKind");
+                    MatchOther("]");
                 }
                 else
                 {
-                    rule.TokenKindName = ImmutableArray.Create("Other");
+                    rule.CSharpTokenKind = CSharpType(rule.Location, ImmutableArray.Create("MetaDslx", "CodeAnalysis", "Syntax", "OtherTokenKind"));
                 }
                 rule.CSharpTokenKind.Resolve();
                 token = _tokens.CurrentToken;
                 if (token.Text == "returns")
                 {
                     _tokens.NextToken();
-                    rule.ReturnTypeName = ParseCSharpTypeQualifier(".");
+                    rule.CSharpReturnType = ParseCSharpType();
                 }
                 else
                 {
-                    rule.ReturnTypeName = ImmutableArray.Create("string");
+                    rule.CSharpReturnType = CSharpType(rule.Location, ImmutableArray.Create("string"));
                 }
                 rule.CSharpReturnType.Resolve();
                 token = _tokens.CurrentToken;
@@ -1087,7 +1098,7 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                         element = str;
                         _tokens.NextToken();
                     }
-                    else if (token.Text == ".")
+                    else if (token.Text == "_")
                     {
                         element = new LexerRuleWildcardElement();
                         _tokens.NextToken();
@@ -1096,8 +1107,14 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                     {
                         var reference = new LexerRuleReferenceElement();
                         reference.Location = _tokens.CurrentLocation;
-                        reference.RuleName = ParseQualifier("::");
+                        reference.RuleName = ParseQualifier(".");
                         element = reference;
+                    }
+                    else if (!negated && token.Text == "=" && nextToken1.Text == ">")
+                    {
+                        _tokens.EatTokens(2);
+                        alt.ReturnValue = ParseConstantExpression();
+                        return;
                     }
                     else
                     {
@@ -1164,24 +1181,24 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                         Error("Rule parts cannot have return types.");
                     }
                     _tokens.NextToken();
-                    rule.ReturnTypeName = ParseCSharpTypeQualifier(".");
+                    rule.CSharpReturnType = ParseCSharpType();
                 }
                 else 
                 {
                     if (isPart)
                     {
-                        rule.ReturnTypeName = ImmutableArray<string>.Empty;
+                        rule.CSharpReturnType = CSharpType(rule.Location, ImmutableArray<string>.Empty);
                     }
                     else
                     {
-                        rule.ReturnTypeName = ImmutableArray.Create(rule.Name);
+                        rule.CSharpReturnType = CSharpType(rule.Location, ImmutableArray.Create(rule.Name));
                     }
                 }
                 rule.CSharpReturnType.Resolve();
                 token = _tokens.CurrentToken;
                 if (token.Text == ":")
                 {
-                    ParseParserRuleAlternatives(rule, rule.Alternatives, end: ";", allowAltType: !isPart);
+                    ParseParserRuleAlternatives(rule, rule.Alternatives, end: ";");
                     token = _tokens.CurrentToken;
                     if (token.Text == ";") _tokens.NextToken();
                 }
@@ -1194,42 +1211,15 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
             return false;
         }
 
-        private void ParseParserRuleAlternatives(IParserRuleAlternativeParent parent, List<ParserRuleAlternative> alternatives, string end, bool allowAltType)
+        private void ParseParserRuleAlternatives(IParserRuleAlternativeParent parent, List<ParserRuleAlternative> alternatives, string end)
         {
             _tokens.NextToken();
             while (true)
             {
                 var alt = new ParserRuleAlternative(parent);
                 alternatives.Add(alt);
-                var token = _tokens.PeekToken(0);
-                if (token.Text == "{")
-                {
-                    if (allowAltType)
-                    {
-                        _tokens.NextToken();
-                        ParseAnnotations();
-                        alt.Location = _tokens.CurrentLocation;
-                        alt.InstanceTypeName = ParseQualifier(".");
-                        alt.Name = alt.InstanceTypeName.LastOrDefault();
-                        token = _tokens.CurrentToken;
-                        if (token.Text == "}")
-                        {
-                            _tokens.NextToken();
-                        }
-                        else
-                        {
-                            Expected("}");
-                        }
-                        alt.Annotations.AddRange(_annotations);
-                        _annotations.Clear();
-                    }
-                    else
-                    {
-                        Error("Return type specialization is allowed only in rule alternatives.");
-                    }
-                }
                 ParseParserRuleAlternative(alt, end);
-                token = _tokens.CurrentToken;
+                var token = _tokens.CurrentToken;
                 if (token.Text == "|")
                 {
                     _tokens.NextToken();
@@ -1251,6 +1241,25 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
         private void ParseParserRuleAlternative(ParserRuleAlternative alt, string end)
         {
             var token = _tokens.CurrentToken;
+            if (token.Text == "{")
+            {
+                _tokens.NextToken();
+                ParseAnnotations();
+                alt.Location = _tokens.CurrentLocation;
+                alt.CSharpInstanceType = ParseCSharpType();
+                alt.Name = alt.CSharpInstanceType?.Type?.Name;
+                token = _tokens.CurrentToken;
+                if (token.Text == "}")
+                {
+                    _tokens.NextToken();
+                }
+                else
+                {
+                    Expected("}");
+                }
+                alt.Annotations.AddRange(_annotations);
+                _annotations.Clear();
+            }
             while (!_tokens.EndOfFile && token.Text != end && token.Text != "|")
             {
                 ParseAnnotations();
@@ -1263,7 +1272,7 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                 var nextToken1 = _tokens.PeekToken(1);
                 var nextToken2 = _tokens.PeekToken(2);
                 if (nextToken2.Position > nextToken1.Position + nextToken1.Text.Length) nextToken2 = MetaCompilerToken.None;
-                if (token.Kind == MetaCompilerTokenKind.Identifier && (nextToken1.Text == "=" || (nextToken2.Text == "=" && (nextToken1.Text == "?" || nextToken1.Text == "!" || nextToken1.Text == "+"))))
+                if (token.Kind == MetaCompilerTokenKind.Identifier && ((nextToken1.Text == "=" && nextToken2.Text != ">") || ((nextToken1.Text == "?" || nextToken1.Text == "!" || nextToken1.Text == "+") && nextToken2.Text == "=")))
                 {
                     propertyLocation = _tokens.CurrentLocation;
                     propertyName = token.Text;
@@ -1298,10 +1307,60 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                 }
                 else
                 {
-                    if (token.Text == ".")
+                    nextToken1 = _tokens.PeekToken(1);
+                    if (token.Text == "_")
                     {
                         element = new ParserRuleWildcardElement(alt);
                         _tokens.NextToken();
+                    }
+                    else if (token.Text == "#")
+                    {
+                        var reference = new ParserRuleReferenceElement(alt);
+                        reference.Location = _tokens.CurrentLocation;
+                        reference.RuleName = default;
+                        element = reference;
+                        token = _tokens.NextToken();
+                        if (token.Text == "{")
+                        {
+                            token = _tokens.NextToken();
+                            var builder = ArrayBuilder<CSharpTypeInfo>.GetInstance();
+                            var expectType = true;
+                            while (!_tokens.EndOfFile && token.Text != end)
+                            {
+                                var position = _tokens.Position;
+                                if (expectType)
+                                {
+                                    builder.Add(ParseCSharpType());
+                                    expectType = false;
+                                }
+                                token = _tokens.CurrentToken;
+                                if (!expectType)
+                                {
+                                    if (token.Text == ",")
+                                    {
+                                        _tokens.NextToken();
+                                        expectType = true;
+                                    }
+                                    else if (token.Text == "|")
+                                    {
+                                        break;
+                                    }
+                                }
+                                if (_tokens.Position == position) break;
+                                token = _tokens.CurrentToken;
+                            }
+                            reference.ReferencedCSharpTypes = builder.ToImmutableAndFree();
+                            if (token.Text == "|")
+                            {
+                                _tokens.NextToken();
+                                reference.RuleName = ParseQualifier(".");
+                            }
+                            MatchOther("}");
+                        }
+                        else
+                        {
+                            reference.ReferencedCSharpTypes = ImmutableArray.Create(ParseCSharpType());
+                        }
                     }
                     else if (token.Kind == MetaCompilerTokenKind.String || token.Kind == MetaCompilerTokenKind.VerbatimString || token.Kind == MetaCompilerTokenKind.Character)
                     {
@@ -1319,8 +1378,14 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                     {
                         var reference = new ParserRuleReferenceElement(alt);
                         reference.Location = _tokens.CurrentLocation;
-                        reference.RuleName = ParseQualifier("::");
+                        reference.RuleName = ParseQualifier(".");
                         element = reference;
+                    }
+                    else if (!negated && token.Text == "=" && nextToken1.Text == ">")
+                    {
+                        _tokens.EatTokens(2);
+                        alt.ReturnValue = ParseConstantExpression();
+                        return;
                     }
                     else
                     {
@@ -1361,25 +1426,45 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
         private ParserRuleElement ParseParserRuleBlockElement(ParserRuleAlternative alt)
         {
             var block = new ParserRuleBlockElement(alt);
-            ParseParserRuleAlternatives(block, block.Alternatives, end: ")", allowAltType: false);
+            ParseParserRuleAlternatives(block, block.Alternatives, end: ")");
             var token = _tokens.CurrentToken;
             if (token.Text == ")") _tokens.NextToken();
             return block;
         }
 
+        private CSharpTypeInfo ParseCSharpType(params string[] suffixes)
+        {
+            var location = _tokens.CurrentLocation;
+            var qualifier = ParseCSharpTypeQualifier(".");
+            return CSharpType(location, qualifier, suffixes);
+        }
+
         private ImmutableArray<string> ParseCSharpTypeQualifier(string separator)
+        {
+            if (TryParseCSharpTypeQualifier(separator, true, out var result)) return result;
+            else return ImmutableArray<string>.Empty;
+        }
+
+        private bool TryParseCSharpTypeQualifier(string separator, bool addDiagnostics, out ImmutableArray<string> qualifier)
         {
             var token = _tokens.CurrentToken;
             if (token.Kind == MetaCompilerTokenKind.Keyword && MetaCompilerLexer.TypeKeywords.Contains(token.Text))
             {
                 _tokens.NextToken();
-                return ImmutableArray.Create(token.Text);
+                qualifier = ImmutableArray.Create(token.Text);
+                return true;
             }
 
-            return ParseQualifier(separator);
+            return TryParseQualifier(separator, addDiagnostics, out qualifier);
         }
 
         private ImmutableArray<string> ParseQualifier(string separator)
+        {
+            if (TryParseQualifier(separator, true, out var qualifier)) return qualifier;
+            else return ImmutableArray<string>.Empty;
+        }
+
+        private bool TryParseQualifier(string separator, bool addDiagnostics, out ImmutableArray<string> qualifier)
         {
             var result = ArrayBuilder<string>.GetInstance();
             var idExpected = true;
@@ -1397,7 +1482,8 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                     else
                     {
                         Error("Identifier expected");
-                        return result.ToImmutableAndFree();
+                        qualifier = result.ToImmutableAndFree();
+                        return false;
                     }
                 }
                 else 
@@ -1412,16 +1498,64 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                     {
                         for (int i = 0; i < separator.Length; i++)
                         {
-                            if (_tokens.PeekToken(i).Text != separator[i].ToString()) return result.ToImmutableAndFree();
+                            if (_tokens.PeekToken(i).Text != separator[i].ToString())
+                            {
+                                qualifier = result.ToImmutableAndFree();
+                                return true;
+                            }
                         }
                         _tokens.EatTokens(separator.Length);
                         idExpected = true;
                         continue;
                     }
-                    return result.ToImmutableAndFree();
+                    qualifier = result.ToImmutableAndFree();
+                    return true;
                 }
             }
-            return result.ToImmutableAndFree();
+            qualifier = result.ToImmutableAndFree();
+            return qualifier.Length > 0;
+        }
+
+        private Expression ParseConstantExpression()
+        {
+            var result = new Expression();
+            result.Location = _tokens.CurrentLocation;
+            if (TryParseCSharpTypeQualifier(".", false, out var qualifier))
+            {
+                result.Qualifier = qualifier;
+                result.ValueText = string.Join(".", qualifier);
+                result.Type = typeof(object);
+            }
+            else
+            {
+                var token = _tokens.CurrentToken;
+                if (token.Kind == MetaCompilerTokenKind.Keyword && (token.Text == "true" || token.Text == "false"))
+                {
+                    result.ValueText = token.Text;
+                    result.Type = typeof(bool);
+                }
+                else if (token.Kind == MetaCompilerTokenKind.Number)
+                {
+                    result.ValueText = token.Text;
+                    if (token.Text.Contains(".")) result.Type = typeof(double);
+                    else result.Type = typeof(int);
+                }
+                else if (token.Kind == MetaCompilerTokenKind.Character)
+                {
+                    result.ValueText = token.Text;
+                    result.Type = typeof(char);
+                }
+                else if (token.Kind == MetaCompilerTokenKind.String || token.Kind == MetaCompilerTokenKind.VerbatimString)
+                {
+                    result.ValueText = token.Text;
+                    result.Type = typeof(string);
+                }
+                else
+                {
+                    Unexpected();
+                }
+            }
+            return result;
         }
 
         private (ImmutableArray<string> Values, bool IsArray) MatchAnnotationExpressionsUntil(params string[] untilOther)
@@ -1568,5 +1702,15 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
             var token = _tokens.CurrentToken;
             Error($"'{token.EscapedText}' is unexpected here");
         }
+
+        private CSharpTypeInfo CSharpType(Location location, ImmutableArray<string> qualifier, params string[] suffixes)
+        {
+            if (_typeCache.TryGetValue(qualifier, out var result)) return result;
+            var typeSymbol = qualifier.Length > 0 ? _language.ResolveSymbols(location, true, "type", qualifier, suffixes).OfType<ITypeSymbol>().FirstOrDefault() : null;
+            result = new CSharpTypeInfo(_language, typeSymbol);
+            _typeCache.Add(qualifier, result);
+            return result;
+        }
+
     }
 }

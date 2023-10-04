@@ -64,8 +64,6 @@ namespace MetaDslx.Languages.MetaCompiler.Model
                 return _csharpConstructor;
             }
         }
-        public bool IsRoot => CSharpClass?.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat) == $"{MetaDslxTypes.MetaDslxBindersNamespace}.RootBinder";
-
         public void Resolve()
         {
             if (_resolved) return;

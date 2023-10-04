@@ -20,7 +20,6 @@ namespace MetaDslx.Languages.MetaCompiler.Model
     public abstract class Rule : NamedElement
     {
         private readonly Grammar _grammar;
-        private CSharpTypeInfo _csharpReturnType;
 
         public Rule(Grammar grammar)
         {
@@ -33,19 +32,7 @@ namespace MetaDslx.Languages.MetaCompiler.Model
         public abstract string GreenName { get; }
         public abstract string RedName { get; }
 
-        public ImmutableArray<string> ReturnTypeName { get; set; }
-        public CSharpTypeInfo CSharpReturnType
-        {
-            get
-            {
-                if (_csharpReturnType is null)
-                {
-                    var typeSymbol = ReturnTypeName.Length > 0 ? Language.ResolveSymbols(Location, true, "type", ReturnTypeName).OfType<ITypeSymbol>().FirstOrDefault() : null;
-                    _csharpReturnType = new CSharpTypeInfo(Language, typeSymbol);
-                }
-                return _csharpReturnType;
-            }
-        }
+        public CSharpTypeInfo CSharpReturnType { get; set; }
     }
 
 }

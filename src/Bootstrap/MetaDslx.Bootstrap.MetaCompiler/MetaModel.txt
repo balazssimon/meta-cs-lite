@@ -11,21 +11,19 @@ language MetaModel;
 
 Main returns MetaNamespace: declarations+=MetaNamespace eof;
 
-MetaNamespace: 'namespace' [Nesting(MetaNamespace,Declarations)] QualifiedName ';' UsingDeclarations MetaNamespaceDeclarations;
+MetaNamespace: 'namespace' name=NamespaceName ';' UsingDeclaration* MetaNamespaceDeclarations;
+
+[Import]
+part UsingDeclaration: 'using' #MetaNamespace ';';
 
 [Scope]
 part MetaNamespaceDeclarations: declarations+=MetaModel declarations+=MetaDeclaration*;
-
-part UsingDeclarations: UsingDeclaration*;
-
-[Import]
-part UsingDeclaration: 'using' [Use(MetaNamespace)] Qualifier ';';
 
 MetaModel: attributes+=MetaAttribute* 'metamodel' name=Name ';';
 
 MetaDeclaration: MetaEnum | MetaClass | Association;
 
-MetaAttribute: '[' type=[Use(MetaNamedType)]Qualifier ']';
+MetaAttribute: '[' type=#MetaNamedType ']';
 
 MetaEnum: attributes+=MetaAttribute* 'enum' name=Name EnumBody;
 [Scope]
@@ -33,46 +31,64 @@ part EnumBody: '{' EnumLiterals? '}';
 part EnumLiterals : enumLiterals+=MetaEnumLiteral (',' enumLiterals+=MetaEnumLiteral)* ;
 MetaEnumLiteral: attributes+=MetaAttribute* name=Name;
 
-MetaClass: attributes+=MetaAttribute* isAbstract?='abstract'? 'class' name=Name (':' baseClasses+=[Use(MetaClass)]QualifierList)? ClassBody;
+MetaClass: attributes+=MetaAttribute* isAbstract?='abstract'? 'class' name=Name BaseClasses? ClassBody;
+part BaseClasses: (':' baseClasses+=#{MetaClass|QualifierList});
 [Scope]
 part ClassBody: '{' properties+=MetaProperty* '}';
 
-MetaProperty: attributes+=MetaAttribute* kind=PropertyModifier? type=TypeReference name=Name PropertyRedefinition? PropertySubsetting? ';';
-part PropertyModifier: [Constant(MetaPropertyKind.Derived)] 'derived' | isContainment?='containment' | [Constant(MetaPropertyKind.Derived)] 'readonly';
-part PropertyRedefinition: 'redefines' [Use(MetaProperty)] redefinedProperties+=QualifierList;
-part PropertySubsetting: 'subsets' [Use(MetaProperty)] subsettedProperties+=QualifierList;
+MetaProperty: attributes+=MetaAttribute* (isContainment?='containment' | kind=MetaPropertyKind?) type=TypeReference name=Name PropertyRedefinition? PropertySubsetting? ';';
+MetaPropertyKind: 'derived' => Derived | 'readonly' => Readonly;
+part PropertyRedefinition: 'redefines' redefinedProperties+=#{MetaProperty|QualifierList};
+part PropertySubsetting: 'subsets' subsettedProperties+=#{MetaProperty|QualifierList};
 
-Association: MetaAttribute* 'association' [Use(MetaProperty)] Qualifier 'with' [Use(MetaProperty)] Qualifier ';';
+part Association: MetaAttribute* 'association' #MetaProperty 'with' #MetaProperty ';';
 
-TypeReference returns MetaType: MetaPrimitiveType | MetaCollectionType | MetaNullableType | [Use(MetaType)] Qualifier;
+TypeReference returns MetaType: MetaPrimitiveType | MetaCollectionType | MetaNullableType | #MetaType;
 MetaPrimitiveType
-	: [Constant(Meta.Int)] 'int' 
-	| [Constant(Meta.String)] 'string' 
-	| [Constant(Meta.Bool)] 'bool';
+	: 'int' => Meta.Int
+	| 'string' => Meta.String
+	| 'bool' => Meta.Bool;
 
-MetaCollectionType: ([Property(Kind,MetaCollectionKind.List)] 'list' | [Property(Kind,MetaCollectionKind.Set)] 'set') '<' innerType=TypeReference '>';
+MetaCollectionType: kind=('list' => List | 'set' => Set) '<' innerType=TypeReference '>';
 MetaNullableType: innerType=TypeReference '?';
 
-[Name]
-part QualifiedName: Qualifier;
-
-part QualifierList: Qualifier (',' Qualifier)*;
-
-[Qualifier]
-part Qualifier: Identifier ('.' Identifier)*;
+/*
+Expression
+	: {ReferenceExpression} ref=#Variable
+	| {BinaryExpression} left=Expression operator=('+'=>Add|'-'=>Subtract) right=Expression
+	| {BinaryExpression} left=Expression operator=('*'=>Multiply|'/'=>Divide) right=Expression
+	;
+*/
 
 [Name]
 part Name: Identifier;
 
+[QualifiedName(MetaNamespace,Declarations)]
+part NamespaceName: Qualifier;
+
+[DefaultReference]
+[Qualifier]
+part Qualifier: Identifier ('.' Identifier)*;
+
+part QualifierList: Qualifier (',' Qualifier)*;
+
 [Identifier]
 part Identifier: TIdentifier;
 
-token TInteger as Number returns int: '0'| '1'..'9' ('0'..'9')* ;
-token TDecimal as Number returns double: ('0'|'1'..'9' ('0'..'9')*) '.' ('0'..'9')+ ;
-token TIdentifier as default Identifier returns string: ('_'|'a'..'z'|'A'..'Z')+('_'|'a'..'z'|'A'..'Z'|'0'..'9')*;
-token TComma as default Separator: ',' ;
-token TString as String returns string: '"' .*? '"';
-token TWhitespace as default Whitespace: ('\t'|' ') +;
-token TLineEnd as default EndOfLine: ('\r\n' | '\r' | '\n');
-token TSingleLineComment as SingleLineComment: '//' ~('\r' | '\n')*;
-token TMultiLineComment as MultiLineComment: '/*' .*? '*/';
+token TInteger[Number] returns int: '0'| '1'..'9' ('0'..'9')* ;
+
+token TDecimal[Number] returns double: ('0'|'1'..'9' ('0'..'9')*) '.' ('0'..'9')+ ;
+
+token TIdentifier[DefaultIdentifier]: ('_'|'a'..'z'|'A'..'Z')+('_'|'a'..'z'|'A'..'Z'|'0'..'9')*;
+
+token TComma[DefaultSeparator]: ',' ;
+
+token TString[String]: '"' _*? '"';
+
+token TWhitespace[DefaultWhitespace]: ('\t'|' ') +;
+
+token TLineEnd[DefaultEndOfLine]: ('\r\n' | '\r' | '\n');
+
+token TSingleLineComment[SingleLineComment]: '//' ~('\r' | '\n')*;
+
+token TMultiLineComment[MultiLineComment]: '/*' _*? '*/';

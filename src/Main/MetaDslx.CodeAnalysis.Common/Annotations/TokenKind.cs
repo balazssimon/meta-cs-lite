@@ -2,19 +2,78 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace MetaDslx.CodeAnalysis.Annotations
+namespace MetaDslx.CodeAnalysis.Syntax
 {
-    public enum TokenKind
+    public class TokenKind
     {
-        None,
-        Whitespace,
-        EndOfLine,
-        Comment,
-        Keyword,
-        Identifier,
-        String,
-        Number,
-        Separator,
-        Other
     }
+
+    public class EndOfFileTokenKind : TokenKind
+    {
+    }
+
+    public class HiddenTokenKind : TokenKind
+    {
+    }
+
+    public class WhitespaceTokenKind : HiddenTokenKind
+    {
+    }
+
+    public class DefaultWhitespaceTokenKind : WhitespaceTokenKind
+    {
+    }
+
+    public class EndOfLineTokenKind : HiddenTokenKind
+    {
+    }
+
+    public class DefaultEndOfLineTokenKind : EndOfLineTokenKind
+    {
+    }
+
+    public class CommentTokenKind : HiddenTokenKind
+    {
+    }
+
+    public class SingleLineCommentTokenKind : CommentTokenKind
+    {
+    }
+
+    public class MultiLineCommentTokenKind : CommentTokenKind
+    {
+    }
+
+    public class IdentifierTokenKind : TokenKind
+    {
+    }
+
+    public class DefaultIdentifierTokenKind : IdentifierTokenKind
+    {
+    }
+
+    public class KeywordTokenKind : TokenKind
+    {
+    }
+
+    public class NumberTokenKind : TokenKind
+    {
+    }
+
+    public class StringTokenKind : TokenKind
+    {
+    }
+
+    public class CharacterTokenKind : TokenKind
+    {
+    }
+
+    public class DefaultSeparatorTokenKind : TokenKind
+    {
+    }
+
+    public class OtherTokenKind : TokenKind
+    {
+    }
+
 }

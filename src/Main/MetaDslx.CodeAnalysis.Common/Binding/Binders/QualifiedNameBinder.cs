@@ -7,12 +7,12 @@ using System.Text;
 
 namespace MetaDslx.CodeAnalysis.Binding
 {
-    public class NestingBinder : Binder
+    public class QualifiedNameBinder : Binder
     {
         private readonly Type? _type;
         private readonly string? _property;
 
-        public NestingBinder(Type type, string propertyName)
+        public QualifiedNameBinder(Type type, string propertyName)
         {
             _type = type;
             _property = propertyName;

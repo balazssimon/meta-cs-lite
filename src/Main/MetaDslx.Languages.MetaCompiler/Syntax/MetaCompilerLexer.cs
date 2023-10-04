@@ -156,7 +156,8 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
         {
             var ch = _text.PeekChar();
             var nextCh = _text.PeekChar(1);
-            if ((ch >= 'a' && ch <= 'z' || ch >= 'A' && ch <= 'Z' || ch == '_') ||
+            if ((ch >= 'a' && ch <= 'z' || ch >= 'A' && ch <= 'Z') ||
+                (ch == '_') && (nextCh >= 'a' && nextCh <= 'z' || nextCh >= 'A' && nextCh <= 'Z' || nextCh == '_' || nextCh >= '0' && nextCh <= '9') ||
                 (ch == '@') && (nextCh >= 'a' && nextCh <= 'z' || nextCh >= 'A' && nextCh <= 'Z' || nextCh == '_'))
             {
                 var kind = MetaCompilerTokenKind.Identifier;
@@ -324,8 +325,9 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
             "namespace", "using", "language",
             "bool", "char", "string", "byte", "sbyte", "short", "ushort", "int", "uint", "long", "ulong", 
             "float", "double", "decimal", "object",
-            "token", "as", "default", "fragment",
-            "part", "returns", "eof"
+            "token", "fragment",
+            "part", "returns", "eof",
+            "true", "false"
         };
 
         public static readonly HashSet<string> TypeKeywords = new HashSet<string>()

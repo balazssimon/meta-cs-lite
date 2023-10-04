@@ -1,4 +1,5 @@
 ﻿using MetaDslx.CodeAnalysis;
+using MetaDslx.CodeAnalysis.PooledObjects;
 using Roslyn.Utilities;
 using System;
 using System.Collections.Generic;
@@ -64,23 +65,13 @@ namespace MetaDslx.Languages.MetaCompiler.Model
             set => _parent = value;
         }
 
+        public CSharpTypeInfo CSharpInstanceType { get; set; }
+        public List<ParserRuleElement> Elements { get; } = new List<ParserRuleElement>();
+        public Expression? ReturnValue { get; set; }
+
         public string GreenName => Name.ToPascalCase() + "Green";
         public string RedName => Name.ToPascalCase() + "Syntax";
-        public ImmutableArray<string> InstanceTypeName { get; set; }
-        public CSharpTypeInfo CSharpInstanceType
-        {
-            get
-            {
-                if (_csharpInstanceType is null)
-                {
-                    var typeSymbol = _parent.IsPart ? Language.ResolveSymbols(Location, true, "type", InstanceTypeName).OfType<ITypeSymbol>().ToArray().FirstOrDefault() : null;
-                    _csharpInstanceType = new CSharpTypeInfo(Language, typeSymbol);
-                }
-                return _csharpInstanceType;
-            }
-        }
 
-        public List<ParserRuleElement> Elements { get; } = new List<ParserRuleElement>();
         public string GreenConstructorParameters => string.Concat(Elements.Select(e => $", {e.GreenFieldType} {e.ParameterName}"));
         public string GreenConstructorArguments => string.Concat(Elements.Select(e => $", {e.FieldName}"));
         public string GreenUpdateParameters => string.Join(", ", Elements.Select(e => $"{e.GreenPropertyType} {e.ParameterName}"));
@@ -148,6 +139,8 @@ namespace MetaDslx.Languages.MetaCompiler.Model
         public ImmutableArray<string> RuleName { get; set; }
         public string QualifiedName => string.Join(".", Name);
         public Rule? Rule { get; set; }
+        public ImmutableArray<CSharpTypeInfo> ReferencedCSharpTypes { get; set; }
+
         public override string GreenItemType => Rule?.GreenName;
         public override string RedItemType => Rule?.RedName;
         public override bool IsToken => Rule is LexerRule;

@@ -21,30 +21,20 @@ namespace MetaDslx.Languages.MetaCompiler.Model
 
     public class LexerRule : Rule
     {
-        private CSharpTypeInfo _csharpTokenKind;
-
         public LexerRule(Grammar grammar)
             : base(grammar)
         {
 
         }
 
+        public CSharpTypeInfo CSharpTokenKind { get; set; }
+        public bool IsFragment { get; set; }
+        public List<LexerRuleAlternative> Alternatives { get; } = new List<LexerRuleAlternative>();
+        public Expression? ReturnValue => Alternatives.Count == 1 ? Alternatives[0].ReturnValue : null;
+
         public override string GreenName => "InternalSyntaxToken";
         public override string RedName => "SyntaxToken";
-        public ImmutableArray<string> TokenKindName { get; set; }
-        public CSharpTypeInfo CSharpTokenKind
-        {
-            get
-            {
-                if (_csharpTokenKind is null)
-                {
-                    var typeSymbol = TokenKindName.Length > 0 ? Language.ResolveSymbols(Location, true, "type", TokenKindName, "TokenKind").OfType<ITypeSymbol>().FirstOrDefault() : null;
-                    _csharpTokenKind = new CSharpTypeInfo(Language, typeSymbol);
-                }
-                return _csharpTokenKind;
-            }
-        }
-        public bool IsFragment { get; set; }
+
         public bool IsHidden
         {
             get
@@ -58,11 +48,9 @@ namespace MetaDslx.Languages.MetaCompiler.Model
                 return false;
             }
         }
-        public bool IsDefault { get; set; }
         public bool IsFixed => Alternatives.Count == 1 && Alternatives[0].IsFixed;
         public bool IsKeyword => !IsHidden && IsFixed && StringUtilities.IsIdentifier(FixedValue);
         public string? FixedValue => IsFixed ? Alternatives[0].FixedValue : null;
-        public List<LexerRuleAlternative> Alternatives { get; } = new List<LexerRuleAlternative>();
     }
 
     public class LexerRuleAlternative
@@ -70,6 +58,7 @@ namespace MetaDslx.Languages.MetaCompiler.Model
         public bool IsFixed => Elements.All(e => e.IsFixed);
         public string? FixedValue => IsFixed ? string.Concat(Elements.Select(e => e.FixedValue)) : null;
         public List<LexerRuleElement> Elements { get; } = new List<LexerRuleElement>();
+        public Expression? ReturnValue { get; set; }
     }
 
     public abstract class LexerRuleElement

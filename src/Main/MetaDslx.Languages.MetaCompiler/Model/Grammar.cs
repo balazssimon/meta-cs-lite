@@ -7,6 +7,17 @@ using System.Text;
 
 namespace MetaDslx.Languages.MetaCompiler.Model
 {
+    using CSharpCompilation = Microsoft.CodeAnalysis.CSharp.CSharpCompilation;
+    using INamespaceSymbol = Microsoft.CodeAnalysis.INamespaceSymbol;
+    using INamespaceOrTypeSymbol = Microsoft.CodeAnalysis.INamespaceOrTypeSymbol;
+    using INamedTypeSymbol = Microsoft.CodeAnalysis.INamedTypeSymbol;
+    using ITypeSymbol = Microsoft.CodeAnalysis.ITypeSymbol;
+    using IArrayTypeSymbol = Microsoft.CodeAnalysis.IArrayTypeSymbol;
+    using IMethodSymbol = Microsoft.CodeAnalysis.IMethodSymbol;
+    using IParameterSymbol = Microsoft.CodeAnalysis.IParameterSymbol;
+    using IPropertySymbol = Microsoft.CodeAnalysis.IPropertySymbol;
+    using SymbolDisplayFormat = Microsoft.CodeAnalysis.SymbolDisplayFormat;
+
     public class GrammarOptions
     {
         public bool IsCaseInsensitive { get; set; }
@@ -35,8 +46,9 @@ namespace MetaDslx.Languages.MetaCompiler.Model
         public LexerRule? DefaultEndOfLine { get; set; }
         public LexerRule? DefaultSeparator { get; set; }
         public LexerRule? DefaultIdentifier { get; set; }
+        public Rule? DefaultReference { get; set; }
         public ParserRule? MainRule { get; set; }
-        public Microsoft.CodeAnalysis.INamedTypeSymbol? RootType { get; set; }
+        public INamedTypeSymbol? RootType => MainRule?.CSharpReturnType.Type as INamedTypeSymbol;
 
         public ImmutableArray<LexerRule> FixedLexerRules
         {

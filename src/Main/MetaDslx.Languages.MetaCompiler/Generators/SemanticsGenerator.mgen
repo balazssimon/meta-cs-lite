@@ -115,7 +115,7 @@ template GenerateBinderFactoryVisitElements(Language language, ParserRuleAlterna
 end template
 
 template GenerateBinderFactoryVisitAnnotations(IEnumerable<Annotation> annotations, string nodeName, string body, ref int annotIndex)
-[foreach (var annot in annotations.Where(a => a.Kind == AnnotationKind.Binder && !a.IsRoot).Reverse())]
+[foreach (var annot in annotations.Where(a => a.Kind == AnnotationKind.Binder).Reverse())]
 [body = GenerateBinderFactoryVisitAnnotation(annot, nodeName, body, ref annotIndex)]
 [end foreach]
 [body]
