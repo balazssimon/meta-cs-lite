@@ -77,6 +77,8 @@ namespace MetaDslx.Languages.MetaCompiler.Model
         public Language Language => _language;
         public ITypeSymbol? Type => _type;
 
+        public bool IsDefault => _type == null;
+
         public TypeKind TypeKind
         {
             get

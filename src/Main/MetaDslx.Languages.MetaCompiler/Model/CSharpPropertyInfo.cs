@@ -37,5 +37,6 @@ namespace MetaDslx.Languages.MetaCompiler.Model
         public bool IsCollection => _propertyType.TypeKind != TypeKind.Single;
         public bool IsBool => _propertyType.ItemTypeKind == ItemTypeKind.BoolType;
         public bool IsEnum => _propertyType.ItemTypeKind == ItemTypeKind.EnumType;
+        public bool IsDefault => _propertyType.IsDefault;
     }
 }

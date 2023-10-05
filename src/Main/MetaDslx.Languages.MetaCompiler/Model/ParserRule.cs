@@ -66,8 +66,8 @@ namespace MetaDslx.Languages.MetaCompiler.Model
             set => _parent = value;
         }
 
-        public CSharpTypeInfo CSharpReturnType { get; set; }
         public List<ParserRuleElement> Elements { get; } = new List<ParserRuleElement>();
+        public CSharpTypeInfo CSharpReturnType { get; set; }
         public Expression? ReturnValue { get; set; }
 
         public string GreenName => Name.ToPascalCase() + "Green";
@@ -193,6 +193,8 @@ namespace MetaDslx.Languages.MetaCompiler.Model
         }
 
         public LexerRule LexerRule { get; set; }
+        public CSharpTypeInfo CSharpReturnType { get; set; }
+        public Expression? ReturnValue { get; set; }
         public override string GreenItemType => "InternalSyntaxToken";
         public override string RedItemType => "SyntaxToken";
         public override string DefaultName => LexerRule.Name.ToCamelCase();

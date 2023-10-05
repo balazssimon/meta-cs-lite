@@ -12,6 +12,7 @@ using System.Xml.Linq;
 namespace MetaDslx.Languages.MetaCompiler.Model
 {
     using CSharpCompilation = Microsoft.CodeAnalysis.CSharp.CSharpCompilation;
+    using ISymbol = Microsoft.CodeAnalysis.ISymbol;
     using INamespaceSymbol = Microsoft.CodeAnalysis.INamespaceSymbol;
     using INamespaceOrTypeSymbol = Microsoft.CodeAnalysis.INamespaceOrTypeSymbol;
     using INamedTypeSymbol = Microsoft.CodeAnalysis.INamedTypeSymbol;
@@ -43,12 +44,12 @@ namespace MetaDslx.Languages.MetaCompiler.Model
         public Grammar Grammar { get; set; }
         public DiagnosticBag Diagnostics { get; }
 
-        public ImmutableArray<INamespaceOrTypeSymbol> ResolveSymbols(Location location, bool addDiagnostics, string? diagnosticName, ImmutableArray<string> qualifiedName, params string[] suffixes)
+        public ImmutableArray<ISymbol> ResolveSymbols(Location location, bool addDiagnostics, string? diagnosticName, ImmutableArray<string> qualifiedName, params string[] suffixes)
         {
-            if (qualifiedName.IsDefaultOrEmpty) return ImmutableArray<INamespaceOrTypeSymbol>.Empty;
+            if (qualifiedName.IsDefaultOrEmpty) return ImmutableArray<ISymbol>.Empty;
             if (qualifiedName.Length == 1)
             {
-                INamespaceOrTypeSymbol? result = null;
+                ISymbol? result = null;
                 switch (qualifiedName[0])
                 {
                     case "bool": result = _compilation.GetSpecialType(SpecialType.System_Boolean); break;
@@ -70,7 +71,7 @@ namespace MetaDslx.Languages.MetaCompiler.Model
                 }
                 if (result is not null) return ImmutableArray.Create(result);
             }
-            var candidates = ArrayBuilder<INamespaceOrTypeSymbol>.GetInstance();
+            var candidates = ArrayBuilder<ISymbol>.GetInstance();
             ResolveSymbols(location, addDiagnostics, diagnosticName, qualifiedName, suffixes, null, _compilation.GlobalNamespace, candidates);
             foreach (var use in this.Usings)
             {
@@ -100,7 +101,7 @@ namespace MetaDslx.Languages.MetaCompiler.Model
             return candidates.ToImmutableAndFree();
         }
 
-        private void ResolveSymbols(Location location, bool addDiagnostics, string? diagnosticName, ImmutableArray<string> qualifiedName, string[] suffixes, string? alias, INamespaceOrTypeSymbol? container, ArrayBuilder<INamespaceOrTypeSymbol> candidates)
+        private void ResolveSymbols(Location location, bool addDiagnostics, string? diagnosticName, ImmutableArray<string> qualifiedName, string[] suffixes, string? alias, INamespaceOrTypeSymbol? container, ArrayBuilder<ISymbol> candidates)
         {
             if (container is not null)
             {
@@ -146,13 +147,13 @@ namespace MetaDslx.Languages.MetaCompiler.Model
                         {
                             if (suffixes.Length == 0)
                             {
-                                candidates.AddRange(csharpSymbol.GetMembers($"{name}").OfType<INamespaceOrTypeSymbol>());
+                                candidates.AddRange(csharpSymbol.GetMembers($"{name}"));
                             }
                             else
                             {
                                 foreach (var suffix in suffixes)
                                 {
-                                    candidates.AddRange(csharpSymbol.GetMembers($"{name}{suffix}").OfType<INamespaceOrTypeSymbol>());
+                                    candidates.AddRange(csharpSymbol.GetMembers($"{name}{suffix}"));
                                 }
                             }
                         }

@@ -75,11 +75,11 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
             ResolveDefaults();
             ResolveRules();
             var ruleNames = new HashSet<string>();
-            ResolveProperties();
             ResolveBlocks(ruleNames);
             ResolveAlternatives(ruleNames);
             ResolveLists();
             ResolveNames();
+            ResolveProperties();
             _language.Grammar.MainRule = _language.Grammar.ParserRules.FirstOrDefault();
         }
 
@@ -385,7 +385,8 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                 if (rules[i] is ParserRule targetRule && targetRule.ReferencedBy.Count == 1)
                 {
                     var sourceAlt = targetRule.ReferencedBy[0];
-                    if (sourceAlt.Parent is ParserRule sourceRule && sourceAlt.Elements.Count == 1 && sourceAlt.Elements[0].Multiplicity == Multiplicity.ExactlyOne)
+                    if (sourceAlt.Parent is ParserRule sourceRule && sourceAlt.Elements.Count == 1 && 
+                        sourceAlt.Elements[0].Multiplicity == Multiplicity.ExactlyOne)
                     {
                         var sourceAltIndex = sourceRule.Alternatives.IndexOf(sourceAlt);
                         if (sourceAltIndex >= 0)
@@ -399,6 +400,7 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                             foreach (var alt in targetRule.Alternatives)
                             {
                                 alt.Parent = sourceRule;
+                                if (alt.CSharpReturnType?.Type is null) alt.CSharpReturnType = targetRule.CSharpReturnType;
                                 alt.Annotations.InsertRange(0, targetRule.Annotations);
                             }
                             targetRule.ReferencedBy.Clear();
@@ -412,10 +414,10 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
             {
                 if (rules[i] is ParserRule targetRule)
                 {
-                    var tokens = targetRule.Alternatives.Where(alt => alt.Elements.Count == 1 && alt.Elements[0] is ParserRuleFixedStringElement).Select(alt => (ParserRuleFixedStringElement)alt.Elements[0]).ToList();
-                    if (tokens.Count >= 2)
+                    var tokenAlts = targetRule.Alternatives.Where(alt => alt.Elements.Count == 1 && alt.Elements[0] is ParserRuleFixedStringElement).ToList();
+                    if (tokenAlts.Count >= 2)
                     {
-                        if (tokens.Count == targetRule.Alternatives.Count)
+                        if (tokenAlts.Count == targetRule.Alternatives.Count)
                         {
                             foreach (var sourceAlt in targetRule.ReferencedBy)
                             {
@@ -424,7 +426,7 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                                     var sourceElement = sourceAlt.Elements[j] as ParserRuleReferenceElement;
                                     if (sourceElement is not null && sourceElement.Rule == targetRule)
                                     {
-                                        sourceAlt.Elements[j] = MakeFixedStringAlternativesElement(targetRule, sourceAlt, sourceElement, tokens);
+                                        sourceAlt.Elements[j] = MakeFixedStringAlternativesElement(targetRule, sourceAlt, sourceElement, tokenAlts);
                                     }
                                 }
                             }
@@ -440,12 +442,14 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                             while (ruleNames.Contains(tokensAltName)) tokensAltName = $"{targetRule.Name}Tokens{++tokensAltNameIndex}";
                             tokensAlt.Name = tokensAltName;
                             ruleNames.Add(tokensAlt.Name);
-                            foreach (var token in tokens)
+                            tokensAlt.CSharpReturnType = targetRule.CSharpReturnType;
+                            foreach (var tokenAlt in tokenAlts)
                             {
-                                token.Annotations.InsertRange(0, token.ParserRuleAlternative.Annotations);
-                                targetRule.Alternatives.Remove(token.ParserRuleAlternative);
+                                var token = (ParserRuleFixedStringElement)tokenAlt.Elements[0];
+                                token.Annotations.InsertRange(0, tokenAlt.Annotations);
+                                targetRule.Alternatives.Remove(tokenAlt);
                             }
-                            var tokensElement = MakeFixedStringAlternativesElement(null, tokensAlt, null, tokens);
+                            var tokensElement = MakeFixedStringAlternativesElement(null, tokensAlt, null, tokenAlts);
                             tokensElement.Name = "tokens";
                             tokensAlt.Elements.Add(tokensElement);
                             targetRule.Alternatives.Add(tokensAlt);
@@ -456,7 +460,7 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
             }
         }
 
-        private ParserRuleFixedStringAlternativesElement MakeFixedStringAlternativesElement(ParserRule? targetRule, ParserRuleAlternative sourceAlternative, ParserRuleElement? sourceElement, List<ParserRuleFixedStringElement> tokens)
+        private ParserRuleFixedStringAlternativesElement MakeFixedStringAlternativesElement(ParserRule? targetRule, ParserRuleAlternative sourceAlternative, ParserRuleElement? sourceElement, List<ParserRuleAlternative> tokenAlts)
         {
             var result = new ParserRuleFixedStringAlternativesElement(sourceAlternative);
             if (sourceElement is not null) result.Annotations.AddRange(sourceElement.Annotations);
@@ -472,12 +476,18 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                 result.IsNegated = sourceElement.IsNegated;
                 result.Multiplicity = sourceElement.Multiplicity;
             }
-            foreach (var token in tokens)
+            foreach (var tokenAlt in tokenAlts)
             {
+                var token = (ParserRuleFixedStringElement)tokenAlt.Elements[0];
                 var alt = new ParserRuleFixedStringElement(sourceAlternative);
                 alt.Annotations.AddRange(token.Annotations);
                 alt.Name = token.Name;
                 alt.ModelPropertyName = token.ModelPropertyName;
+                alt.ReturnValue = token.ReturnValue != null ? token.ReturnValue : tokenAlt.ReturnValue;
+                alt.CSharpReturnType = token.CSharpReturnType;
+                if (alt.CSharpReturnType?.Type is null) alt.CSharpReturnType = tokenAlt?.CSharpReturnType;
+                if (alt.CSharpReturnType?.Type is null) alt.CSharpReturnType = targetRule?.CSharpReturnType;
+                if (alt.CSharpReturnType?.Type is null) alt.CSharpReturnType = sourceAlternative?.CSharpReturnType;
                 alt.NameLocation = token.NameLocation;
                 alt.NameAnnotations.AddRange(token.NameAnnotations);
                 alt.Location = token.Location;
@@ -782,7 +792,7 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
             {
                 foreach (var alt in rule.Alternatives)
                 {
-                    ResolveProperties(alt, alt.CSharpReturnType?.CoreType != null ? alt.CSharpReturnType : modelObjectType, ruleStack);
+                    ResolveProperties(alt, alt.CSharpReturnType?.Type is null ? modelObjectType : alt.CSharpReturnType, null, ruleStack);
                 }
             }
             finally
@@ -791,48 +801,18 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
             }
         }
 
-        private void ResolveProperties(ParserRuleAlternative alternative, CSharpTypeInfo modelObjectType, List<ParserRule> ruleStack)
+        private void ResolveProperties(ParserRuleAlternative alternative, CSharpTypeInfo modelObjectType, CSharpPropertyInfo property, List<ParserRule> ruleStack)
         {
             foreach (var elem in alternative.Elements)
             {
-                var prop = CSharpProperty(modelObjectType, elem.ModelPropertyName);
+                var prop = ResolveProperty(modelObjectType, elem.ModelPropertyName, elem.NameLocation, ruleStack);
                 elem.CSharpModelProperty = prop;
-                if (!string.IsNullOrEmpty(elem.ModelPropertyName) && modelObjectType?.CoreType is not null && elem.CSharpModelProperty?.PropertyType?.CoreType is null)
-                {
-                    Error(elem.Location, $"Could not find property '{modelObjectType.CoreType.Name}.{elem.ModelPropertyName}'.");
-                }
-                if (elem.CSharpModelProperty?.PropertyType?.CoreType is not null && !elem.CSharpModelProperty.IsWritable)
-                {
-                    Error(elem.Location, $"Cannot assign value to property '{modelObjectType.CoreType.Name}.{elem.ModelPropertyName}', because is read only.");
-                }
-                var expr = alternative.ReturnValue;
-                if (expr is not null)
-                {
-                    var expectedType = prop.PropertyType?.CoreType != null ? prop.PropertyType : modelObjectType;
-                    if (expr.Type == typeof(object))
-                    {
-                        if (expectedType.ItemTypeKind.HasFlag(ItemTypeKind.EnumType) && expr.Qualifier.Length == 1)
-                        {
-                            expr.Value = expectedType.CoreType.GetMembers(expr.Qualifier[0]).FirstOrDefault();
-                            expr.CSharpType = new CSharpTypeInfo(_language, expectedType.CoreType);
-                        }
-                        if (expr.Value is null && TryGetCSharpSymbol(elem.Location, expr.Qualifier, out var symbol))
-                        {
-                            expr.Value = symbol;
-                            expr.CSharpType = new CSharpTypeInfo(_language, expectedType.CoreType);
-                        }
-                        if (expr.Value is null)
-                        {
-                            Error(expr.Location, $"Could not resolve '{expr.ValueText}'.");
-                        }
-                    }
-                    CheckType(expectedType, expr, expr.Location);
-                }
-                ResolveProperties(elem, modelObjectType, ruleStack);
+                ResolveProperties(elem, modelObjectType, prop, ruleStack);
             }
+            ResolveReturnValue(alternative.ReturnValue, modelObjectType, property, ruleStack);
         }
 
-        private void ResolveProperties(ParserRuleElement elem, CSharpTypeInfo modelObjectType, List<ParserRule> ruleStack)
+        private void ResolveProperties(ParserRuleElement elem, CSharpTypeInfo modelObjectType, CSharpPropertyInfo property, List<ParserRule> ruleStack)
         {
             if (elem is ParserRuleReferenceElement refElem)
             {
@@ -862,27 +842,77 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                     CheckType(elem.CSharpModelProperty, refElem.Rule?.CSharpReturnType, elem.Location);
                 }
             }
+            else if (elem is ParserRuleFixedStringElement fixedElem)
+            {
+                ResolveReturnValue(fixedElem.ReturnValue, modelObjectType, property, ruleStack);
+            }
             else if (elem is ParserRuleFixedStringAlternativesElement fixedAlts)
             {
                 foreach (var alt in fixedAlts.Alternatives)
                 {
-                    ResolveProperties(alt, modelObjectType, ruleStack);
+                    var altModelObjectType = alt.CSharpReturnType?.Type is null ? modelObjectType : alt.CSharpReturnType;
+                    var prop = ResolveProperty(altModelObjectType, alt.ModelPropertyName, alt.NameLocation, ruleStack);
+                    alt.CSharpModelProperty = prop?.PropertyType?.Type is null ? property : prop;
+                    ResolveProperties(alt, altModelObjectType, alt.CSharpModelProperty, ruleStack);
                 }
             }
             else if (elem is ParserRuleListElement listElem)
             {
-                ResolveProperties(listElem.RepeatedRule, modelObjectType, ruleStack);
-                if (listElem.FirstItem is not null) ResolveProperties(listElem.FirstItem, modelObjectType, ruleStack);
-                if (listElem.LastItem is not null) ResolveProperties(listElem.LastItem, modelObjectType, ruleStack);
-                if (listElem.LastSeparator is not null) ResolveProperties(listElem.LastSeparator, modelObjectType, ruleStack);
+                ResolveProperties(listElem.RepeatedRule, modelObjectType, property, ruleStack);
+                if (listElem.FirstItem is not null) ResolveProperties(listElem.FirstItem, modelObjectType, property, ruleStack);
+                if (listElem.LastItem is not null) ResolveProperties(listElem.LastItem, modelObjectType, property, ruleStack);
+                if (listElem.LastSeparator is not null) ResolveProperties(listElem.LastSeparator, modelObjectType, property, ruleStack);
             }
             else if (elem is ParserRuleBlockElement blockElem)
             {
-                blockElem.CSharpReturnType = elem.CSharpModelProperty.PropertyType;
+                if (blockElem.CSharpReturnType?.Type is null) blockElem.CSharpReturnType = elem.CSharpModelProperty.PropertyType;
+                var blockModelObjectType = blockElem.CSharpReturnType?.Type is null ? modelObjectType : blockElem.CSharpReturnType;
+                var prop = ResolveProperty(blockModelObjectType, blockElem.ModelPropertyName, blockElem.NameLocation, ruleStack);
+                blockElem.CSharpModelProperty = prop?.PropertyType?.Type is null ? property : prop;
                 foreach (var blockAlt in blockElem.Alternatives)
                 {
-                    ResolveProperties(blockAlt, blockElem.CSharpReturnType?.CoreType != null ? blockElem.CSharpReturnType : modelObjectType, ruleStack);
+                    ResolveProperties(blockAlt, blockModelObjectType, blockElem.CSharpModelProperty, ruleStack);
                 }
+            }
+        }
+
+        private CSharpPropertyInfo ResolveProperty(CSharpTypeInfo modelObjectType, string propertyName, Location location, List<ParserRule> ruleStack)
+        {
+            var prop = CSharpProperty(modelObjectType, propertyName);
+            if (!string.IsNullOrEmpty(propertyName) && modelObjectType?.Type is not null && prop?.PropertyType?.Type is null)
+            {
+                Error(location, $"Could not find property '{modelObjectType.CoreType.Name}.{propertyName}'.");
+            }
+            if (prop?.PropertyType?.Type is not null && !prop.IsWritable)
+            {
+                Error(location, $"Cannot assign value to property '{modelObjectType.CoreType.Name}.{propertyName}', because is read only.");
+            }
+            return prop;
+        }
+
+        private void ResolveReturnValue(Expression expression, CSharpTypeInfo modelObjectType, CSharpPropertyInfo property, List<ParserRule> ruleStack)
+        {
+            if (expression is not null)
+            {
+                var expectedType = property.PropertyType?.Type is null ? modelObjectType : property.PropertyType;
+                if (expression.Type == typeof(object))
+                {
+                    if (expectedType.ItemTypeKind.HasFlag(ItemTypeKind.EnumType) && expression.Qualifier.Length == 1)
+                    {
+                        expression.Value = expectedType.CoreType.GetMembers(expression.Qualifier[0]).FirstOrDefault();
+                        expression.CSharpType = new CSharpTypeInfo(_language, expectedType.CoreType);
+                    }
+                    if (expression.Value is null && TryGetCSharpSymbol(expression.Location, expression.Qualifier, out var symbol))
+                    {
+                        expression.Value = symbol;
+                        expression.CSharpType = new CSharpTypeInfo(_language, expectedType.CoreType);
+                    }
+                    if (expression.Value is null)
+                    {
+                        Error(expression.Location, $"Could not resolve '{expression.ValueText}'.");
+                    }
+                }
+                CheckType(expectedType, expression, expression.Location);
             }
         }
 
