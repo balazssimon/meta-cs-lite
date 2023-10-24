@@ -43,6 +43,7 @@ namespace MetaDslx.Languages.MetaCompiler.Model
         public Grammar Grammar { get; private set; }
         public Language Language => Grammar.Language;
         public AnnotationKind Kind { get; set; }
+        public bool IsNegated { get; set; }
         public ImmutableArray<string> Name { get; set; }
         public string QualifiedName => string.Join(".", Name);
         public List<AnnotationProperty> ConstructorArguments { get; } = new List<AnnotationProperty>();
@@ -314,7 +315,7 @@ namespace MetaDslx.Languages.MetaCompiler.Model
                 {
                     var csharpTypeInfo = new CSharpTypeInfo(Language, param.Type);
                     if (assignValues) arg.CSharpTypeInfo = csharpTypeInfo;
-                    if (csharpTypeInfo.TryResolveValues(arg.ValueTexts, arg.Location, assignValues, out var values))
+                    if (csharpTypeInfo.TryResolveValues(arg.ValueTexts, arg.Location, assignValues, $"Error in annotation '{QualifiedName}' for parameter '{param.Name}'. ", out var values))
                     {
                         if (assignValues) arg.Values = values;
                     }
@@ -349,6 +350,7 @@ namespace MetaDslx.Languages.MetaCompiler.Model
         private bool _resolved;
         private CSharpTypeInfo? _csharpTypeInfo;
         private ImmutableArray<object> _values;
+        private bool _valuesResolved;
 
         public AnnotationProperty(Annotation annotation)
         {
@@ -372,16 +374,18 @@ namespace MetaDslx.Languages.MetaCompiler.Model
                 _csharpTypeInfo = value;
             }
         }
+
         public ImmutableArray<object?> Values
         {
             get
             {
-                Resolve();
+                if (!_valuesResolved) Resolve();
                 return _values;
             }
             internal set
             {
                 _values = value;
+                _valuesResolved = true;
             }
         }
 
@@ -389,6 +393,7 @@ namespace MetaDslx.Languages.MetaCompiler.Model
         {
             if (_resolved) return;
             _resolved = true;
+            _valuesResolved = true;
             _annotation.Resolve();
         }
 
@@ -475,9 +480,13 @@ namespace MetaDslx.Languages.MetaCompiler.Model
             }
             else if (CSharpTypeInfo.ItemTypeKind.HasFlag(ItemTypeKind.EnumType))
             {
-                sb.Append(CSharpTypeInfo.CoreType.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat));
-                sb.Append(".");
-                sb.Append(value.ToString());
+                var literal = value.ToString();
+                if (!literal.Contains("."))
+                {
+                    sb.Append(CSharpTypeInfo.CoreType.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat));
+                    sb.Append(".");
+                }
+                sb.Append(literal);
             }
             else if (CSharpTypeInfo.ItemTypeKind.HasFlag(ItemTypeKind.BoolType))
             {

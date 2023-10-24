@@ -264,14 +264,14 @@ namespace MetaDslx.Languages.MetaCompiler.Model
             return true;
         }
 
-        public bool TryResolveValues(ImmutableArray<string> valueTexts, Location location, bool addDiagnostics, out ImmutableArray<object> values)
+        public bool TryResolveValues(ImmutableArray<string> valueTexts, Location location, bool addDiagnostics, string? diagnosticContext, out ImmutableArray<object> values)
         {
             if (CoreType is null) return false;
             var builder = ArrayBuilder<object?>.GetInstance();
             var success = true;
             foreach (var valueText in valueTexts)
             {
-                if (TryResolveValue(valueText, location, addDiagnostics, out var argValue))
+                if (TryResolveValue(valueText, location, addDiagnostics, diagnosticContext, out var argValue))
                 {
                     builder.Add(argValue);
                 }
@@ -297,14 +297,14 @@ namespace MetaDslx.Languages.MetaCompiler.Model
             return success;
         }
 
-        public bool TryResolveValue(string valueText, Location location, bool addDiagnostics, out object? value)
+        public bool TryResolveValue(string valueText, Location location, bool addDiagnostics, string? diagnosticContext, out object? value)
         {
             value = null;
             if (string.IsNullOrWhiteSpace(valueText) || valueText == "null")
             {
                 if (!ItemTypeKind.HasFlag(ItemTypeKind.Nullable))
                 {
-                    if (addDiagnostics) _language.Error(location, $"'null' is an invalid value for {ItemType.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat)}");
+                    if (addDiagnostics) _language.Error(location, $"{diagnosticContext}'null' is an invalid value for {ItemType.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat)}");
                     return false;
                 }
             }
@@ -331,7 +331,7 @@ namespace MetaDslx.Languages.MetaCompiler.Model
                                 if (sb.Length > 0) sb.Append(", ");
                                 sb.Append(member.Name);
                             }
-                            _language.Error(location, $"'{valueText}' is an invalid enum literal for '{ItemType.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat)}'. Valid literals are: {builder.ToStringAndFree()}");
+                            _language.Error(location, $"{diagnosticContext}'{valueText}' is an invalid enum literal for '{ItemType.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat)}'. Valid literals are: {builder.ToStringAndFree()}");
                         }
                         return false;
                     }
@@ -342,7 +342,7 @@ namespace MetaDslx.Languages.MetaCompiler.Model
                     }
                     else
                     {
-                        if (addDiagnostics) _language.Error(location, $"'{valueText}' enum literal is not unique in '{ItemType.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat)}'");
+                        if (addDiagnostics) _language.Error(location, $"{diagnosticContext}'{valueText}' enum literal is not unique in '{ItemType.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat)}'");
                         return false;
                     }
                 }
@@ -358,7 +358,7 @@ namespace MetaDslx.Languages.MetaCompiler.Model
                 }
                 else
                 {
-                    if (addDiagnostics) _language.Error(location, $"'{ItemType.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat)}' is an invalid type for binder and annotation parameters. The type must be either a primitive type, a string, an enum or System.Type.");
+                    if (addDiagnostics) _language.Error(location, $"{diagnosticContext}'{ItemType.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat)}' is an invalid type for binder and annotation parameters. The type must be either a primitive type, a string, an enum or System.Type.");
                     return false;
                 }
             }

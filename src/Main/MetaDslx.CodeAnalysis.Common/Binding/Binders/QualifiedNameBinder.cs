@@ -4,10 +4,11 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Text;
+using System.Threading;
 
 namespace MetaDslx.CodeAnalysis.Binding
 {
-    public class QualifiedNameBinder : Binder
+    public class QualifiedNameBinder : Binder, INameBinder
     {
         private readonly Type? _type;
         private readonly string? _property;
@@ -23,9 +24,17 @@ namespace MetaDslx.CodeAnalysis.Binding
 
         protected override ImmutableArray<SingleDeclaration> BuildDeclarationTree(SingleDeclarationBuilder builder)
         {
-            builder.NestingType = Type;
-            builder.NestingProperty = Property;
-            return base.BuildDeclarationTree(builder);
+            builder.BeginName();
+            try
+            {
+                builder.NestingType = Type;
+                builder.NestingProperty = Property;
+                return base.BuildDeclarationTree(builder);
+            }
+            finally
+            {
+                builder.EndName();
+            }
         }
 
         public override string ToString()
@@ -39,6 +48,19 @@ namespace MetaDslx.CodeAnalysis.Binding
             sb.Append(Property);
             sb.Append("]");
             return builder.ToStringAndFree();
+        }
+
+        protected override void CollectNameBinders(ArrayBuilder<INameBinder> nameBinders, CancellationToken cancellationToken)
+        {
+            nameBinders.Add(this);
+        }
+
+        protected override void CollectQualifierBinders(ArrayBuilder<IQualifierBinder> qualifierBinders, CancellationToken cancellationToken)
+        {
+        }
+
+        protected override void CollectIdentifierBinders(ArrayBuilder<IIdentifierBinder> identifierBinders, CancellationToken cancellationToken)
+        {
         }
     }
 }

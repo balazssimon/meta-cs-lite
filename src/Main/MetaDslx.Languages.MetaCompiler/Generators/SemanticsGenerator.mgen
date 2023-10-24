@@ -103,8 +103,8 @@ end template
 template GenerateBinderFactoryVisitBody(Language language, ParserRule rule, ParserRuleAlternative alt)
 [var annotIndex = 0]
 [var body = GenerateBinderFactoryVisitElements(language, alt, ref annotIndex)]
-[body = GenerateBinderFactoryVisitAnnotations(alt.Annotations, "node", body, ref annotIndex)]
-[body = GenerateBinderFactoryVisitAnnotations(rule.Annotations, "node", body, ref annotIndex)]
+[body = GenerateBinderFactoryVisitAnnotations(alt.Annotations, "node", body, false, ref annotIndex)]
+[body = GenerateBinderFactoryVisitAnnotations(rule.Annotations, "node", body, false, ref annotIndex)]
 [body]
 end template
 
@@ -114,8 +114,8 @@ template GenerateBinderFactoryVisitElements(Language language, ParserRuleAlterna
 [end foreach]    
 end template
 
-template GenerateBinderFactoryVisitAnnotations(IEnumerable<Annotation> annotations, string nodeName, string body, ref int annotIndex)
-[foreach (var annot in annotations.Where(a => a.Kind == AnnotationKind.Binder).Reverse())]
+template GenerateBinderFactoryVisitAnnotations(IEnumerable<Annotation> annotations, string nodeName, string body, bool negated, ref int annotIndex)
+[foreach (var annot in annotations.Where(a => a.Kind == AnnotationKind.Binder && a.IsNegated == negated).Reverse())]
 [body = GenerateBinderFactoryVisitAnnotation(annot, nodeName, body, ref annotIndex)]
 [end foreach]
 [body]
@@ -154,7 +154,7 @@ for (var [elem.ParameterName]Index = 0; [elem.ParameterName]Index < [elem.Parame
     {
         [var elemName = "node."+elem.PropertyName+"["+elem.ParameterName+"Index]"]
         [var elemBody = "this.Visit("+elemName+");"]
-        [GenerateBinderFactoryVisitAnnotations(listElem.FirstItem.Annotations, elemName, elemBody, ref annotIndex)]
+        [GenerateBinderFactoryVisitAnnotations(listElem.FirstItem.Annotations, elemName, elemBody, false, ref annotIndex)]
     }
     [end if]
     [if (listElem.ListKind == ListKind.WithLastItem || listElem.ListKind == ListKind.WithLastItemSeparator || listElem.ListKind == ListKind.WithFirstItemSeparator)]
@@ -163,14 +163,18 @@ for (var [elem.ParameterName]Index = 0; [elem.ParameterName]Index < [elem.Parame
         [if (listElem.ListKind == ListKind.WithLastItem || listElem.ListKind == ListKind.WithLastItemSeparator)]
             [var elemName = "node."+elem.PropertyName+"["+elem.ParameterName+"Index]"]
             [var elemBody = "this.Visit("+elemName+");"]
-        [GenerateBinderFactoryVisitAnnotations(listElem.LastItem.Annotations, elemName, elemBody, ref annotIndex)]
+        [GenerateBinderFactoryVisitAnnotations(listElem.LastItem.Annotations, elemName, elemBody, false, ref annotIndex)]
         [end if]
         [if (listElem.ListKind == ListKind.WithFirstItemSeparator || listElem.ListKind == ListKind.WithLastItemSeparator)]
-        if ([elem.ParameterName]Index == [elem.ParameterName]List.SeparatorCount - 1)
-        {
             [var elemName = "node."+elem.PropertyName+".GetSeparator("+elem.ParameterName+"Index)"]
             [var elemBody = "// this.VisitToken("+elemName+");"]
-            [GenerateBinderFactoryVisitAnnotations(listElem.LastSeparator.Annotations, elemName, elemBody, ref annotIndex)]
+        if ([elem.ParameterName]Index == [elem.ParameterName]List.SeparatorCount - 1)
+        {
+            [GenerateBinderFactoryVisitAnnotations(listElem.LastSeparator.Annotations, elemName, elemBody, false, ref annotIndex)]
+        }
+        else
+        {
+            [GenerateBinderFactoryVisitAnnotations(listElem.LastSeparator.Annotations, elemName, elemBody, true, ref annotIndex)]
         }
         [end if]
     }
@@ -179,20 +183,20 @@ for (var [elem.ParameterName]Index = 0; [elem.ParameterName]Index < [elem.Parame
     else
     {
         [var elemBody = GenerateBinderFactoryVisitListElement(listElem, out var elemName, ref annotIndex)]
-        [GenerateBinderFactoryVisitAnnotations(listElem.RepeatedRule.Annotations, elemName, elemBody, ref annotIndex)]
+        [GenerateBinderFactoryVisitAnnotations(listElem.RepeatedRule.Annotations, elemName, elemBody, false, ref annotIndex)]
     }
     [else]
         [var elemBody = GenerateBinderFactoryVisitListElement(listElem, out var elemName, ref annotIndex)]
-    [GenerateBinderFactoryVisitAnnotations(listElem.RepeatedRule.Annotations, elemName, elemBody, ref annotIndex)]
+    [GenerateBinderFactoryVisitAnnotations(listElem.RepeatedRule.Annotations, elemName, elemBody, false, ref annotIndex)]
     [end if]
         [else if (elem.IsToken)]
             [var elemName = "node."+elem.PropertyName+"["+elem.ParameterName+"Index]"]
             [var elemBody = "// this.VisitToken("+elemName+");"]
-    [GenerateBinderFactoryVisitAnnotations(elem.Annotations, elemName, elemBody, ref annotIndex)]
+    [GenerateBinderFactoryVisitAnnotations(elem.Annotations, elemName, elemBody, false, ref annotIndex)]
         [else]
             [var elemName = "node."+elem.PropertyName+"["+elem.ParameterName+"Index]"]
             [var elemBody = "this.Visit("+elemName+");"]
-    [GenerateBinderFactoryVisitAnnotations(elem.Annotations, elemName, elemBody, ref annotIndex)]
+    [GenerateBinderFactoryVisitAnnotations(elem.Annotations, elemName, elemBody, false, ref annotIndex)]
         [end if]
 }
 	[else]
@@ -204,20 +208,27 @@ switch (node.[elem.PropertyName].Get[language.Name]Kind())
 {
                 [foreach (var fixedAlt in fixedAltsElem.Alternatives)]
 case [language.Name]SyntaxKind.[fixedAlt.CSharpName]:
-    [GenerateBinderFactoryVisitAnnotations(fixedAlt.Annotations, elemName, elemBody, ref annotIndex)]
+    [GenerateBinderFactoryVisitAnnotations(fixedAlt.Annotations, elemName, elemBody, false, ref annotIndex)]
     break;
                 [end foreach]
+default:
+    [GenerateBinderFactoryVisitAnnotations(fixedAltsElem.Annotations, elemName, elemBody, true, ref annotIndex)]
+    break;
 }
             [else]
 if (node.[elem.PropertyName].Get[language.Name]Kind() != [language.Name]SyntaxKind.None)
 {
-    [GenerateBinderFactoryVisitAnnotations(elem.Annotations, elemName, elemBody, ref annotIndex)]
+    [GenerateBinderFactoryVisitAnnotations(elem.Annotations, elemName, elemBody, false, ref annotIndex)]
+}
+else
+{
+    [GenerateBinderFactoryVisitAnnotations(elem.Annotations, elemName, elemBody, true, ref annotIndex)]
 }
             [end if]
 		[else]
             [var elemName = "node."+elem.PropertyName]
             [var elemBody = "this.Visit("+elemName+");"]
-[GenerateBinderFactoryVisitAnnotations(elem.Annotations, elemName, elemBody, ref annotIndex)]
+[GenerateBinderFactoryVisitAnnotations(elem.Annotations, elemName, elemBody, false, ref annotIndex)]
 		[end if]
 	[end if]
 end template
@@ -228,11 +239,11 @@ template GenerateBinderFactoryVisitListElement(ParserRuleListElement listElem, o
     [itemName = "node."+listElem.PropertyName+"["+listElem.ParameterName+"Index]"]
     [var itemBody = "this.Visit("+itemName+");"]
     [if (listElem.IsReversed)]
-[GenerateBinderFactoryVisitAnnotations(listElem.RepeatedSeparator.Annotations, sepName, sepBody, ref annotIndex)]
-[GenerateBinderFactoryVisitAnnotations(listElem.RepeatedItem.Annotations, itemName, itemBody, ref annotIndex)]
+[GenerateBinderFactoryVisitAnnotations(listElem.RepeatedSeparator.Annotations, sepName, sepBody, false, ref annotIndex)]
+[GenerateBinderFactoryVisitAnnotations(listElem.RepeatedItem.Annotations, itemName, itemBody, false, ref annotIndex)]
     [else]
-[GenerateBinderFactoryVisitAnnotations(listElem.RepeatedItem.Annotations, itemName, itemBody, ref annotIndex)]
-[GenerateBinderFactoryVisitAnnotations(listElem.RepeatedSeparator.Annotations, sepName, sepBody, ref annotIndex)]
+[GenerateBinderFactoryVisitAnnotations(listElem.RepeatedItem.Annotations, itemName, itemBody, false, ref annotIndex)]
+[GenerateBinderFactoryVisitAnnotations(listElem.RepeatedSeparator.Annotations, sepName, sepBody, false, ref annotIndex)]
     [end if]
 end template
 

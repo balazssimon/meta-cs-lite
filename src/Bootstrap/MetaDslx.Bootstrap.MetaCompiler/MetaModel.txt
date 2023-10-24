@@ -9,12 +9,11 @@ using MetaDslx.Examples.MetaModel;
 
 language MetaModel;
 
-Main returns MetaNamespace: declarations+=MetaNamespace eof;
-
-MetaNamespace: 
+Main returns MetaNamespace:
 	'namespace' name=NamespaceName ';'
 	UsingDeclaration*
-	MetaNamespaceDeclarations;
+	MetaNamespaceDeclarations
+	eof;
 
 [Import]
 part UsingDeclaration: 'using' #MetaNamespace ';';

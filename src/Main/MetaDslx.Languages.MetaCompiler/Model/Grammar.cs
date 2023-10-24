@@ -48,7 +48,7 @@ namespace MetaDslx.Languages.MetaCompiler.Model
         public LexerRule? DefaultIdentifier { get; set; }
         public Rule? DefaultReference { get; set; }
         public ParserRule? MainRule { get; set; }
-        public INamedTypeSymbol? RootType => MainRule?.CSharpReturnType.Type as INamedTypeSymbol;
+        public INamedTypeSymbol? RootType { get; set; }
 
         public ImmutableArray<LexerRule> FixedLexerRules
         {

@@ -26,6 +26,8 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
 
     public class MetaCompilerParser
     {
+        private CSharpTypeInfo SystemTypeTypeInfo;
+
         private readonly CSharpCompilation _compilation;
         private readonly string _filePath;
         private readonly SourceText _compilerCode;
@@ -68,6 +70,7 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
         private void ParseLanguage()
         {
             _language = new Language(_compilation);
+            SystemTypeTypeInfo = CSharpType(Location.None, ImmutableArray.Create("System", "Type"));
             ParseNamespace();
             ParseUsings();
             ParseLanguageDeclaration();
@@ -80,7 +83,25 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
             ResolveLists();
             ResolveNames();
             ResolveProperties();
-            _language.Grammar.MainRule = _language.Grammar.ParserRules.FirstOrDefault();
+            MakeAnnotations();
+            var mainRule = _language.Grammar.ParserRules.FirstOrDefault();
+            _language.Grammar.MainRule = mainRule;
+            if (mainRule is not null)
+            {
+                var found = false;
+                foreach (var annot in mainRule.Annotations)
+                {
+                    if (annot.CSharpClass?.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat) == $"{MetaDslxTypes.MetaDslxBindersNamespace}.RootBinder")
+                    {
+                        _language.Grammar.RootType = annot.ConstructorArguments.Where(a => a.Name == "type").FirstOrDefault()?.Values.FirstOrDefault() as INamedTypeSymbol;
+                        found = true;
+                    }
+                }
+                if (!found)
+                {
+                    _language.Grammar.RootType = mainRule.CSharpReturnType.Type as INamedTypeSymbol;
+                }
+            }
         }
 
         private void ResolveRules()
@@ -382,7 +403,7 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
             var rules = _language.Grammar.Rules;
             for (int i = 0; i < rules.Count; ++i)
             {
-                if (rules[i] is ParserRule targetRule && targetRule.ReferencedBy.Count == 1)
+                if (rules[i] is ParserRule targetRule && !targetRule.IsPart && targetRule.ReferencedBy.Count == 1)
                 {
                     var sourceAlt = targetRule.ReferencedBy[0];
                     if (sourceAlt.Parent is ParserRule sourceRule && sourceAlt.Elements.Count == 1 && 
@@ -894,7 +915,7 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
         {
             if (expression is not null)
             {
-                var expectedType = property.PropertyType?.Type is null ? modelObjectType : property.PropertyType;
+                var expectedType = property?.PropertyType?.Type is null ? modelObjectType : property.PropertyType;
                 if (expression.Type == typeof(object))
                 {
                     if (expectedType.ItemTypeKind.HasFlag(ItemTypeKind.EnumType) && expression.Qualifier.Length == 1)
@@ -913,6 +934,162 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                     }
                 }
                 CheckType(expectedType, expression, expression.Location);
+            }
+        }
+
+        private void MakeAnnotations()
+        {
+            foreach (var rule in _language.Grammar.ParserRules)
+            {
+                MakeAnnotations(rule);
+            }
+        }
+
+        private void MakeAnnotations(ParserRule rule)
+        {
+            if (!rule.IsPart)
+            {
+                var annot = new Annotation(rule.Grammar);
+                annot.Name = ImmutableArray.Create("Define");
+                annot.Location = rule.Location;
+                var typeName = rule.CSharpReturnType?.Type?.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat);
+                if (!string.IsNullOrWhiteSpace(typeName))
+                {
+                    annot.ConstructorArguments.Add(new AnnotationProperty(annot) { Name = "type", ValueTexts = ImmutableArray.Create(typeName) });
+                }
+                rule.Annotations.Add(annot);
+            }
+            foreach (var alt in rule.Alternatives)
+            {
+                MakeAnnotations(alt);
+            }
+        }
+
+        private void MakeAnnotations(ParserRuleAlternative alternative)
+        {
+            if (alternative.CSharpReturnType?.Type is not null)
+            {
+                var annot = new Annotation(alternative.Grammar);
+                annot.Name = ImmutableArray.Create("DefinedType");
+                annot.Location = alternative.Location;
+                var typeName = alternative.CSharpReturnType.Type.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat);
+                annot.ConstructorArguments.Add(new AnnotationProperty(annot) { Name = "type", ValueTexts = ImmutableArray.Create(typeName) });
+                alternative.Annotations.Add(annot);
+            }
+            foreach (var elem in alternative.Elements)
+            {
+                MakeAnnotations(elem);
+            }
+        }
+
+        private void MakeAnnotations(ParserRuleElement elem)
+        {
+            if (elem.CSharpModelProperty?.PropertyType?.Type is not null && !string.IsNullOrWhiteSpace(elem.ModelPropertyName))
+            {
+                var annot = new Annotation(elem.Grammar);
+                annot.Name = ImmutableArray.Create("Property");
+                annot.Location = elem.NameLocation;
+                var nameProp = new AnnotationProperty(annot) { Name = "name", ValueTexts = ImmutableArray.Create(elem.ModelPropertyName) };
+                annot.ConstructorArguments.Add(nameProp);
+                if (elem.AssignmentOperator == AssignmentOperator.QuestionAssign)
+                {
+                    var valueProp = new AnnotationProperty(annot) { Name = "value" };
+                    valueProp.ValueTexts = ImmutableArray.Create("true");
+                    annot.ConstructorArguments.Add(valueProp);
+                }
+                if (elem.AssignmentOperator == AssignmentOperator.NegatedAssign)
+                {
+                    var valueProp = new AnnotationProperty(annot) { Name = "value" };
+                    valueProp.ValueTexts = ImmutableArray.Create("true");
+                    annot.IsNegated = true;
+                    annot.ConstructorArguments.Add(valueProp);
+                }
+                elem.Annotations.Add(annot);
+            }
+            if (elem is ParserRuleReferenceElement refElem)
+            {
+                if (refElem.Rule is ParserRule parserRule)
+                {
+                    if (!parserRule.IsPart)
+                    {
+                        var annot = new Annotation(elem.Grammar);
+                        annot.Name = ImmutableArray.Create("Use");
+                        annot.Location = elem.NameLocation;
+                        var annotProp =
+                            new AnnotationProperty(annot)
+                            {
+                                Name = "types"
+                            };
+                        annot.ConstructorArguments.Add(annotProp);
+                        elem.Annotations.Add(annot);
+                        if (refElem.ReferencedCSharpTypes.IsDefaultOrEmpty)
+                        {
+                            if (parserRule.CSharpReturnType?.Type is not null)
+                            {
+                                annotProp.ValueTexts = ImmutableArray.Create(parserRule.CSharpReturnType.Type.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat));
+                            }
+                        }
+                        else
+                        {
+                            annotProp.ValueTexts = refElem.ReferencedCSharpTypes.Where(t => t.Type is not null).Select(t => t.Type?.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat)).ToImmutableArray();
+                        }
+                    }
+                }
+                else
+                {
+                    if (refElem.Rule?.CSharpReturnType?.Type is not null)
+                    {
+                        var annot = new Annotation(elem.Grammar);
+                        annot.Name = ImmutableArray.Create("Value");
+                        annot.Location = elem.NameLocation;
+                        var annotProp =
+                            new AnnotationProperty(annot)
+                            {
+                                Name = "type",
+                                ValueTexts = ImmutableArray.Create(refElem.Rule.CSharpReturnType.Type.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat)),
+                            };
+                        annot.ConstructorArguments.Add(annotProp);
+                        elem.Annotations.Add(annot);
+                    }
+                }
+            }
+            else if (elem is ParserRuleFixedStringElement fixedElem)
+            {
+                if (fixedElem.ReturnValue?.CSharpType?.Type is not null)
+                {
+                    var annot = new Annotation(elem.Grammar);
+                    annot.Name = ImmutableArray.Create("Constant");
+                    annot.Location = elem.NameLocation;
+                    var annotProp = 
+                        new AnnotationProperty(annot) 
+                        { 
+                            Name = "value", 
+                            ValueTexts = ImmutableArray.Create(fixedElem.ReturnValue.ToCSharpValue())
+                        };
+                    annot.ConstructorArguments.Add(annotProp);
+                    elem.Annotations.Add(annot);
+                }
+            }
+            else if (elem is ParserRuleFixedStringAlternativesElement fixedAlts)
+            {
+                foreach (var alt in fixedAlts.Alternatives)
+                {
+                    MakeAnnotations(alt);
+                }
+            }
+            else if (elem is ParserRuleListElement listElem)
+            {
+                MakeAnnotations(listElem.RepeatedRule);
+                if (listElem.FirstItem is not null) MakeAnnotations(listElem.FirstItem);
+                if (listElem.LastItem is not null) MakeAnnotations(listElem.LastItem);
+                if (listElem.LastSeparator is not null) MakeAnnotations(listElem.LastSeparator);
+            }
+            else if (elem is ParserRuleBlockElement blockElem)
+            {
+                foreach (var blockAlt in blockElem.Alternatives)
+                {
+                    MakeAnnotations(blockAlt);
+                }
             }
         }
 
