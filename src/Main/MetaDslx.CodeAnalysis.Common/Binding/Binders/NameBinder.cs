@@ -55,9 +55,15 @@ namespace MetaDslx.CodeAnalysis.Binding
             var sb = builder.Builder;
             sb.Append(this.GetType().Name);
             sb.Append(": [");
-            sb.Append(QualifierType);
-            sb.Append(".");
-            sb.Append(QualifierProperty);
+            if (QualifierType is not null)
+            {
+                sb.Append(QualifierType);
+                sb.Append(".");
+            }
+            if (QualifierProperty is not null)
+            {
+                sb.Append(QualifierProperty);
+            }
             sb.Append("]");
             return builder.ToStringAndFree();
         }

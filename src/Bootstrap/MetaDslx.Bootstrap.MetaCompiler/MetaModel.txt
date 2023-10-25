@@ -16,8 +16,8 @@ Main returns MetaNamespace:
 	Declarations
 	eof;
 
-[Import]
-part UsingDeclaration: 'using' #NamespaceSymbol ';';
+UsingDeclaration returns ImportSymbol: 'using' (namespaces+=#NamespaceSymbol | aliases+=ImportSymbolAlias) ';';
+ImportSymbolAlias returns AliasSymbol: name=Name '=' target=#DeclaredSymbol;
 
 [Scope]
 part Declarations: definedMetaModel+=MetaModel (declarations+=MetaDeclaration | Association)*;

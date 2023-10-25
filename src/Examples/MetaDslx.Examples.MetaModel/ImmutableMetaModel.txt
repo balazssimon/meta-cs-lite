@@ -1,6 +1,7 @@
 ﻿namespace MetaDslx.Languages.Meta.Model;
 
 using MetaDslx.CodeAnalysis.Symbols;
+using b = MetaDslx.CodeAnalysis.Binding;
 
 metamodel Meta;
 
@@ -10,7 +11,11 @@ Represents an element.
 abstract class MetaElement
 {
 	// List of attributes
-	list<MetaAttribute> Attributes; 
+	list<MetaAttribute> Attributes;
+	TypeSymbol ts;
+	XSymbol xs;
+	b.IdentifierBinder ib;
+	b.XBinder xb;
 }
 
 abstract class MetaDocumentedElement : MetaElement

@@ -213,10 +213,12 @@ namespace MetaDslx.CodeAnalysis.Binding
             if (symbol is null) return false;
             if (_viableNames.Count > 0 && !_viableNames.Contains(symbol.Name)) return false;
             if (_viableMetadataNames.Count > 0 && !_viableMetadataNames.Contains(symbol.MetadataName)) return false;
-            if (!DefaultLookupValidator.IsViable(this, symbol)) return false;
+            var unwrapped = AliasSymbol.UnwrapAlias(this, symbol) as DeclaredSymbol;
+            if (unwrapped is null) return false;
+            if (!DefaultLookupValidator.IsViable(this, unwrapped)) return false;
             foreach (var validator in this.Validators)
             {
-                if (!validator.IsViable(this, symbol)) return false;
+                if (!validator.IsViable(this, unwrapped)) return false;
             }
             return true;
         }

@@ -67,6 +67,7 @@ namespace MetaDslx.Languages.MetaCompiler.Model
         private ItemTypeKind _itemTypeKind;
         private ITypeSymbol? _itemType;
         private ITypeSymbol? _coreType;
+        private bool _isSymbol;
 
         public CSharpTypeInfo(Language language, ITypeSymbol? type)
         {
@@ -112,6 +113,15 @@ namespace MetaDslx.Languages.MetaCompiler.Model
             {
                 Resolve();
                 return _coreType;
+            }
+        }
+
+        public bool IsSymbol
+        {
+            get
+            {
+                Resolve();
+                return _isSymbol;
             }
         }
 
@@ -179,6 +189,19 @@ namespace MetaDslx.Languages.MetaCompiler.Model
                 _itemType = _type;
             }
             ResolveItemType();
+            var type = _coreType;
+            while (type is not null)
+            {
+                if (type.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat) == MetaDslxTypes.MetaDslxSymbolType)
+                {
+                    _isSymbol = true;
+                    break;
+                }
+                else
+                {
+                    type = type.BaseType;
+                }
+            }
         }
 
         private bool ResolveItemType()

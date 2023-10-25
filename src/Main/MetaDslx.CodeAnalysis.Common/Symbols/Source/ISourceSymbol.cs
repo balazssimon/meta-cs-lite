@@ -8,7 +8,7 @@ using System.Text;
 
 namespace MetaDslx.CodeAnalysis.Symbols.Source
 {
-    public interface ISourceSymbol : IModelSymbol
+    public interface ISourceSymbol
     {
         MergedDeclaration Declaration { get; }
 

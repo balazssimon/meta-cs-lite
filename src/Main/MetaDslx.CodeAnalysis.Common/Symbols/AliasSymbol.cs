@@ -52,10 +52,6 @@ namespace MetaDslx.CodeAnalysis.Symbols
             public static readonly CompletionPart FinishComputingProperty_TypeArguments = DeclaredSymbol.CompletionParts.FinishComputingProperty_TypeArguments;
             public static readonly CompletionPart StartComputingProperty_Imports = DeclaredSymbol.CompletionParts.StartComputingProperty_Imports;
             public static readonly CompletionPart FinishComputingProperty_Imports = DeclaredSymbol.CompletionParts.FinishComputingProperty_Imports;
-            public static readonly CompletionPart StartComputingProperty_TypeParameters = new CompletionPart(nameof(StartComputingProperty_TypeParameters));
-            public static readonly CompletionPart FinishComputingProperty_TypeParameters = new CompletionPart(nameof(FinishComputingProperty_TypeParameters));
-            public static readonly CompletionPart StartComputingProperty_BaseTypes = new CompletionPart(nameof(StartComputingProperty_BaseTypes));
-            public static readonly CompletionPart FinishComputingProperty_BaseTypes = new CompletionPart(nameof(FinishComputingProperty_BaseTypes));
             public static readonly CompletionPart StartComputingProperty_Attributes = Symbol.CompletionParts.StartComputingProperty_Attributes;
             public static readonly CompletionPart FinishComputingProperty_Attributes = Symbol.CompletionParts.FinishComputingProperty_Attributes;
             public static readonly CompletionGraph CompletionGraph =
@@ -66,8 +62,6 @@ namespace MetaDslx.CodeAnalysis.Symbols
                     StartComputingProperty_Members, FinishComputingProperty_Members,
                     StartComputingProperty_TypeArguments, FinishComputingProperty_TypeArguments,
                     StartComputingProperty_Imports, FinishComputingProperty_Imports,
-                    StartComputingProperty_TypeParameters, FinishComputingProperty_TypeParameters,
-                    StartComputingProperty_BaseTypes, FinishComputingProperty_BaseTypes,
                     StartComputingProperty_Attributes, FinishComputingProperty_Attributes,
                     CompletionGraph.StartComputingNonSymbolProperties, CompletionGraph.FinishComputingNonSymbolProperties,
                     CompletionGraph.ContainedSymbolsCompleted,
@@ -80,6 +74,8 @@ namespace MetaDslx.CodeAnalysis.Symbols
             : base(container)
         {
         }
+
+        protected override CompletionGraph CompletionGraph => CompletionParts.CompletionGraph;
 
         public AliasSymbol Create(string name, Symbol target, Location? location = null)
         {

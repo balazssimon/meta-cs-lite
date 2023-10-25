@@ -21,11 +21,14 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
     {
         private static readonly ConditionalWeakTable<Type, IModelObjectInfo> s_infosByType = new();
         private readonly Dictionary<Type, Func<Symbol, MergedDeclaration, IModelObject, Symbol>> _constructors = new();
+        private readonly Dictionary<Type, Func<Symbol, MergedDeclaration, Symbol>> _non_mo_constructors = new();
         private readonly SourceModuleSymbol _module;
 
         public SourceSymbolFactory(SourceModuleSymbol module)
         {
             _module = module;
+            Register<AliasSymbol>((s, d) => new SourceAliasSymbol(s, d));
+            Register<ImportSymbol>((s, d) => new SourceImportSymbol(s, d));
             Register<NamespaceSymbol>((s, d, mo) => new SourceNamespaceSymbol(s, d, mo));
             Register<TypeSymbol>((s, d, mo) => new SourceTypeSymbol(s, d, mo));
             Register<DeclaredSymbol>((s, d, mo) => new SourceDeclaredSymbol(s, d, mo));
@@ -38,7 +41,13 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
         {
             _constructors.Add(typeof(TSymbol), constructor);
         }
-        
+
+        protected void Register<TSymbol>(Func<Symbol, MergedDeclaration, TSymbol> constructor)
+            where TSymbol : Symbol
+        {
+            _non_mo_constructors.Add(typeof(TSymbol), constructor);
+        }
+
         public TSymbol? CreateSymbol<TSymbol>(ISourceSymbol container, MergedDeclaration declaration)
             where TSymbol : Symbol
         {
@@ -64,27 +73,38 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
             else return symbol.ContainedSymbols.OfType<DeclaredSymbol>().ToImmutableArray();
         }
 
+        public ImmutableArray<ImportSymbol> GetImportSymbols(ISourceSymbol container)
+        {
+            var symbol = (Symbol)container;
+            if (symbol.ContainedSymbols.Length == 0) return ImmutableArray<ImportSymbol>.Empty;
+            else return symbol.ContainedSymbols.OfType<ImportSymbol>().ToImmutableArray();
+        }
+
         protected Symbol? CreateSymbol(Type symbolType, ISourceSymbol container, MergedDeclaration declaration)
         {
-            if (declaration.ModelObjectType is null) return null;
-            var info = GetModelObjectInfo(declaration.ModelObjectType);
-            if (info is null || info.SymbolType is null || !symbolType.IsAssignableFrom(info.SymbolType)) return null;
-            var modelFactory = _module.ModelFactory;
-            if (modelFactory is null) return null;
-            if (_constructors.TryGetValue(info.SymbolType, out var constructor)) 
+            if (_non_mo_constructors.TryGetValue(declaration.ModelObjectType, out var non_mo_constructor))
             {
-                var modelObject = modelFactory.Create(container.Model, declaration.ModelObjectType);
-                if (modelObject is not null)
+                return non_mo_constructor((Symbol)container, declaration);
+            }
+            else if (container is IModelSymbol containerModelSymbol)
+            {
+                if (declaration.ModelObjectType is null) return null;
+                var info = GetModelObjectInfo(declaration.ModelObjectType);
+                if (info is null || info.SymbolType is null || !symbolType.IsAssignableFrom(info.SymbolType)) return null;
+                var modelFactory = _module.ModelFactory;
+                if (modelFactory is null) return null;
+                if (_constructors.TryGetValue(info.SymbolType, out var constructor))
                 {
-                    modelObject.Name = declaration.Name;
-                    if (container.ModelObject is not null) container.ModelObject.Children.Add(modelObject);
+                    var modelObject = modelFactory.Create(containerModelSymbol.Model, declaration.ModelObjectType);
+                    if (modelObject is not null)
+                    {
+                        modelObject.Name = declaration.Name;
+                        if (containerModelSymbol.ModelObject is not null) containerModelSymbol.ModelObject.Children.Add(modelObject);
+                    }
+                    return constructor((Symbol)container, declaration, modelObject);
                 }
-                return constructor((Symbol)container, declaration, modelObject);
             }
-            else
-            {
-                return null;
-            }
+            return null;
         }
 
         public IModelObjectInfo? GetModelObjectInfo(Type modelObjectType)
@@ -106,10 +126,95 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
             return info;
         }
 
+        public TValue GetSymbolPropertyValue<TValue>(ISourceSymbol? symbol, string symbolProperty, DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        {
+            var values = GetSymbolPropertyValues<TValue>(symbol, symbolProperty, diagnostics, cancellationToken);
+            if (values.Length == 1) return values[0];
+            else if (values.Length == 0) return default;
+            else
+            {
+                var first = values[0];
+                for (int i = 1; i < values.Length; i++)
+                {
+                    var next = values[i];
+                    if (first is null)
+                    {
+                        if (next is not null)
+                        {
+                            first = next;
+                        }
+                    }
+                    else
+                    {
+                        if (!first.Equals(next))
+                        {
+                            diagnostics.Add(Diagnostic.Create(CommonErrorCode.ERR_AmbigValue, null, symbolProperty, first, next));
+                        }
+                    }
+                }
+                return first;
+            }
+        }
+
         public ImmutableArray<TValue> GetSymbolPropertyValues<TValue>(ISourceSymbol? symbol, string symbolProperty, DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             if (symbol is null) return ImmutableArray<TValue>.Empty;
-            var modelObject = symbol.ModelObject;
+            if (symbol is IModelSymbol modelSymbol) return GetModelSymbolPropertyValues<TValue>(symbol, modelSymbol, symbolProperty, diagnostics, cancellationToken);
+            else return GetNonModelSymbolPropertyValues<TValue>(symbol, symbolProperty, diagnostics, cancellationToken);
+        }
+
+        private ImmutableArray<TValue> GetNonModelSymbolPropertyValues<TValue>(ISourceSymbol symbol, string symbolProperty, DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        {
+            var builder = ArrayBuilder<TValue>.GetInstance();
+            foreach (var decl in symbol.DeclaringSyntaxReferences)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                if (decl.IsNull) continue;
+                Binder? declBinder = null;
+                var binder = Compilation.GetBinder(decl);
+                while (binder is not null)
+                {
+                    if (binder is IDefineBinder defineBinder && defineBinder.DefinedSymbols.Contains((Symbol)symbol))
+                    {
+                        declBinder = binder;
+                        break;
+                    }
+                    binder = binder.ParentBinder;
+                }
+                Debug.Assert(declBinder is not null);
+                if (declBinder is not null)
+                {
+                    var propBinders = declBinder.GetPropertyBinders(symbolProperty, cancellationToken);
+                    foreach (var propBinder in propBinders)
+                    {
+                        var valueBinders = propBinder.GetValueBinders(propBinder, cancellationToken);
+                        foreach (var ivalueBinder in valueBinders)
+                        {
+                            var valueBinder = (Binder)ivalueBinder;
+                            var bindingContext = new BindingContext(diagnostics, cancellationToken);
+                            var values = valueBinder.Bind(bindingContext);
+                            foreach (var value in values)
+                            {
+                                if (value is TValue tvalue)
+                                {
+                                    builder.Add(tvalue);
+                                }
+                                else
+                                {
+                                    diagnostics.Add(Diagnostic.Create(CommonErrorCode.ERR_InvalidSymbolPropertyValue, decl.GetLocation(), value, value.GetType(), symbolProperty, typeof(TValue)));
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            return builder.ToImmutableAndFree();
+        }
+
+        private ImmutableArray<TValue> GetModelSymbolPropertyValues<TValue>(ISourceSymbol symbol, IModelSymbol modelSymbol, string symbolProperty, DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        {
+            if (symbol is null) return ImmutableArray<TValue>.Empty;
+            var modelObject = modelSymbol.ModelObject;
             if (modelObject is null) return ImmutableArray<TValue>.Empty;
             var builder = ArrayBuilder<TValue>.GetInstance();
             foreach (var prop in modelObject.PublicProperties.Where(prop => prop.SymbolProperty == symbolProperty))
@@ -182,7 +287,9 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
         public void ComputeNonSymbolProperties(ISourceSymbol? symbol, DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             if (symbol is null) return;
-            var modelObject = symbol.ModelObject;
+            var modelSymbol = symbol as IModelSymbol;
+            if (modelSymbol is null) return;
+            var modelObject = modelSymbol.ModelObject;
             if (modelObject is null) return;
             foreach (var decl in symbol.DeclaringSyntaxReferences)
             {

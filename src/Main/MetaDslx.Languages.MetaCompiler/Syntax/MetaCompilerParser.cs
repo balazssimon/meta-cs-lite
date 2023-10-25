@@ -905,9 +905,9 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
             {
                 Error(location, $"Could not find property '{modelObjectType.CoreType.Name}.{propertyName}'.");
             }
-            if (prop?.PropertyType?.Type is not null && !prop.IsWritable)
+            if (prop?.PropertyType?.Type is not null && !prop.IsWritable && !modelObjectType.IsSymbol)
             {
-                Error(location, $"Cannot assign value to property '{modelObjectType.CoreType.Name}.{propertyName}', because is read only.");
+                Error(location, $"Cannot assign value to property '{modelObjectType.CoreType.Name}.{propertyName}', because it is read only.");
             }
             return prop;
         }
@@ -2158,11 +2158,20 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
         {
             if (symbol is null || string.IsNullOrEmpty(memberName)) return ImmutableArray<TSymbol>.Empty;
             var builder = ArrayBuilder<TSymbol>.GetInstance();
-            builder.AddRange(symbol.GetMembers(memberName).OfType<TSymbol>());
-            foreach (var baseType in symbol.AllInterfaces)
+            var type = symbol;
+            while (type is not null)
             {
+                builder.AddRange(type.GetMembers(memberName).OfType<TSymbol>());
                 if (builder.Count > 0) break;
-                builder.AddRange(baseType.GetMembers(memberName).OfType<TSymbol>());
+                type = type.BaseType;
+            }
+            if (builder.Count == 0)
+            {
+                foreach (var baseType in symbol.AllInterfaces)
+                {
+                    builder.AddRange(baseType.GetMembers(memberName).OfType<TSymbol>());
+                    if (builder.Count > 0) break;
+                }
             }
             return builder.ToImmutableAndFree();
         }

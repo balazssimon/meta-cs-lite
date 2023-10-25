@@ -6,6 +6,7 @@ using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Xml.Linq;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace MetaDslx.CodeAnalysis.Binding
@@ -166,6 +167,7 @@ namespace MetaDslx.CodeAnalysis.Binding
                 }
                 else
                 {
+                    context.Qualifier = AliasSymbol.UnwrapAlias(context, context.Qualifier) as DeclaredSymbol;
                     this.AddCandidateSymbolsInternal(context, result);
                 }
             }
@@ -188,6 +190,7 @@ namespace MetaDslx.CodeAnalysis.Binding
                 }
                 var qualifierIsType = context.Qualifier is TypeSymbol;
                 if (!qualifierIsType) context.AccessThroughType = null;
+                AddLookupCandidateSymbolsFromImports(context, result);
                 AddLookupCandidateSymbolsInScope(context, result);
                 // TODO:MetaDslx: Submissions
                 if (qualifierIsType) AddLookupCandidateSymbolsInBaseTypes(context, result);
@@ -216,22 +219,29 @@ namespace MetaDslx.CodeAnalysis.Binding
             }
         }
 
+        protected virtual void AddLookupCandidateSymbolsFromImports(LookupContext context, LookupCandidates result)
+        {
+            var qualifier = context.Qualifier;
+            if (qualifier is not null)
+            {
+                foreach (var import in qualifier.Imports)
+                {
+                    result.AddRange(import.Aliases.Where(a => context.IsViable(a)));
+                    foreach (var ns in import.Namespaces)
+                    {
+                        result.AddRange(ns.GetMembersUnordered().Where(m => context.IsViable(m)));
+                    }
+                    result.AddRange(import.Symbols.Where(m => context.IsViable(m)));
+                }
+            }
+        }
+
         protected virtual void AddLookupCandidateSymbolsInScope(LookupContext context, LookupCandidates result)
         {
             var qualifier = context.Qualifier;
             if (qualifier is not null)
             {
-                if (context.ViableNames.Count > 0)
-                {
-                    foreach (var name in context.ViableNames)
-                    {
-                        result.AddRange(qualifier.GetMembers(name).Where(m => context.IsViable(m)));
-                    }
-                }
-                else
-                {
-                    result.AddRange(qualifier.GetMembersUnordered().Where(m => context.IsViable(m)));
-                }
+                result.AddRange(qualifier.GetMembersUnordered().Where(m => context.IsViable(m)));
             }
         }
 

@@ -1,4 +1,5 @@
 ﻿using MetaDslx.CodeAnalysis.Declarations;
+using MetaDslx.CodeAnalysis.Symbols.Model;
 using MetaDslx.Modeling;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using System.Xml.Linq;
 
 namespace MetaDslx.CodeAnalysis.Symbols.Source
 {
-    public class SourceModuleSymbol : ModuleSymbol, ISourceSymbol
+    public class SourceModuleSymbol : ModuleSymbol, ISourceSymbol, IModelSymbol
     {
         private readonly SourceAssemblySymbol _assemblySymbol;
         private SourceSymbolFactory _symbolFactory;
@@ -44,7 +45,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
         public ImmutableArray<SyntaxNodeOrToken> DeclaringSyntaxReferences => Declaration.SyntaxReferences;
         public override ImmutableArray<Location> Locations => Declaration.NameLocations.Cast<SourceLocation, Location>();
         ImmutableArray<SourceLocation> ISourceSymbol.Locations => Declaration.NameLocations;
-
+        
         public IMultiModelFactory ModelFactory => _modelFactory;
         public IModelGroup ModelGroup => _modelGroup;
         public IModel Model => _model;
