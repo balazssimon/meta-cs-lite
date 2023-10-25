@@ -14,6 +14,7 @@ namespace MetaDslx.Examples.MetaModel.Model
         public static readonly MetaPrimitiveType String;
         public static readonly MetaPrimitiveType Int;
         public static readonly MetaPrimitiveType Bool;
+        public static readonly MetaPrimitiveType Object;
 
         static Meta()
         {
@@ -25,6 +26,8 @@ namespace MetaDslx.Examples.MetaModel.Model
             Int.Name = "int";
             Bool = factory.MetaPrimitiveType();
             Bool.Name = "bool";
+            Object = factory.MetaPrimitiveType();
+            Object.Name = "object";
         }
     }
 
