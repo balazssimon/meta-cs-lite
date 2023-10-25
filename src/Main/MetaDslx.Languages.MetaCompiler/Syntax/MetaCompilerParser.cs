@@ -939,9 +939,31 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
 
         private void MakeAnnotations()
         {
+            foreach (var rule in _language.Grammar.LexerRules)
+            {
+                MakeAnnotations(rule);
+            }
             foreach (var rule in _language.Grammar.ParserRules)
             {
                 MakeAnnotations(rule);
+            }
+        }
+
+        private void MakeAnnotations(LexerRule rule)
+        {
+            if (rule.CSharpReturnType?.Type is not null)
+            {
+                var annot = new Annotation(rule.Grammar);
+                annot.Name = ImmutableArray.Create("Value");
+                annot.Location = rule.Location;
+                var annotProp =
+                    new AnnotationProperty(annot)
+                    {
+                        Name = "type",
+                        ValueTexts = ImmutableArray.Create(rule.CSharpReturnType.Type.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat)),
+                    };
+                annot.ConstructorArguments.Add(annotProp);
+                rule.Annotations.Add(annot);
             }
         }
 
@@ -1010,7 +1032,7 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
             {
                 if (refElem.Rule is ParserRule parserRule)
                 {
-                    if (!parserRule.IsPart)
+                    if (!parserRule.IsPart && !refElem.ReferencedCSharpTypes.IsDefaultOrEmpty)
                     {
                         var annot = new Annotation(elem.Grammar);
                         annot.Name = ImmutableArray.Create("Use");
@@ -1020,34 +1042,7 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                             {
                                 Name = "types"
                             };
-                        annot.ConstructorArguments.Add(annotProp);
-                        elem.Annotations.Add(annot);
-                        if (refElem.ReferencedCSharpTypes.IsDefaultOrEmpty)
-                        {
-                            if (parserRule.CSharpReturnType?.Type is not null)
-                            {
-                                annotProp.ValueTexts = ImmutableArray.Create(parserRule.CSharpReturnType.Type.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat));
-                            }
-                        }
-                        else
-                        {
-                            annotProp.ValueTexts = refElem.ReferencedCSharpTypes.Where(t => t.Type is not null).Select(t => t.Type?.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat)).ToImmutableArray();
-                        }
-                    }
-                }
-                else
-                {
-                    if (refElem.Rule?.CSharpReturnType?.Type is not null)
-                    {
-                        var annot = new Annotation(elem.Grammar);
-                        annot.Name = ImmutableArray.Create("Value");
-                        annot.Location = elem.NameLocation;
-                        var annotProp =
-                            new AnnotationProperty(annot)
-                            {
-                                Name = "type",
-                                ValueTexts = ImmutableArray.Create(refElem.Rule.CSharpReturnType.Type.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat)),
-                            };
+                        annotProp.ValueTexts = refElem.ReferencedCSharpTypes.Where(t => t.Type is not null).Select(t => t.Type?.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat)).ToImmutableArray();
                         annot.ConstructorArguments.Add(annotProp);
                         elem.Annotations.Add(annot);
                     }
@@ -1065,6 +1060,20 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                         { 
                             Name = "value", 
                             ValueTexts = ImmutableArray.Create(fixedElem.ReturnValue.ToCSharpValue())
+                        };
+                    annot.ConstructorArguments.Add(annotProp);
+                    elem.Annotations.Add(annot);
+                }
+                else if (fixedElem.CSharpReturnType?.Type is not null)
+                {
+                    var annot = new Annotation(elem.Grammar);
+                    annot.Name = ImmutableArray.Create("Value");
+                    annot.Location = elem.NameLocation;
+                    var annotProp =
+                        new AnnotationProperty(annot)
+                        {
+                            Name = "type",
+                            ValueTexts = ImmutableArray.Create(fixedElem.CSharpReturnType.Type.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat)),
                         };
                     annot.ConstructorArguments.Add(annotProp);
                     elem.Annotations.Add(annot);
@@ -1365,7 +1374,7 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                 }
                 else
                 {
-                    rule.CSharpReturnType = CSharpType(rule.Location, ImmutableArray.Create("string"));
+                    rule.CSharpReturnType = CSharpType(rule.Location, ImmutableArray<string>.Empty);
                 }
                 rule.CSharpReturnType.Resolve();
                 token = _tokens.CurrentToken;

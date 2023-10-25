@@ -14,10 +14,10 @@ namespace MetaDslx.CodeAnalysis.Declarations
         { 
         }
 
-        public void AddIdentifier(string name, string metadataName, SourceLocation nameLocation)
+        public void AddIdentifier(string name, string metadataName, SourceLocation nameLocation, Type? type, string? qualifierProperty)
         {
             if (_identifiers == null) _identifiers = ArrayBuilder<IdentifierBuilder>.GetInstance();
-            _identifiers.Add(new IdentifierBuilder(name, metadataName, nameLocation));
+            _identifiers.Add(new IdentifierBuilder(name, metadataName, nameLocation, type, qualifierProperty));
         }
 
         public SingleDeclaration ToImmutableAndFree(SingleDeclarationBuilder declaration)
@@ -33,7 +33,7 @@ namespace MetaDslx.CodeAnalysis.Declarations
                 }
                 else
                 {
-                    result = SingleDeclaration.Create(declaration.Syntax, declaration.NestingType, identifier.Name, identifier.MetadataName, identifier.NameLocation, 
+                    result = SingleDeclaration.Create(declaration.Syntax, identifier.QualifierType ?? declaration.Type, identifier.Name, identifier.MetadataName, identifier.NameLocation, 
                         canMerge: true, isNesting: true, ImmutableArray.Create(result), ImmutableArray<Diagnostic>.Empty);
                 }
             }

@@ -1506,7 +1506,7 @@ public [alt.RedName] [alt.CSharpName]([alt.RedUpdateParameters])
 	[end foreach]
     return ([alt.RedName])[language.Name]Language.Instance.InternalSyntaxFactory.[alt.CSharpName]([alt.RedToGreenArgumentList]).CreateRed();
 }
-[if (alt.Elements.Any(e => e.IsOptional))]
+[if (alt.HasRedToGreenOptionalArguments)]
 
 public [alt.RedName] [alt.CSharpName]([alt.RedOptionalUpdateParameters])
 {

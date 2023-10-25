@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics;
+using System.Linq;
 using System.Text;
 
 namespace MetaDslx.Languages.MetaCompiler.Model
@@ -45,18 +46,15 @@ namespace MetaDslx.Languages.MetaCompiler.Model
                 var nts = Value as INamedTypeSymbol;
                 if (nts != null)
                 {
-                    sb.Append(nts.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat));
+                    sb.Append(nts.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat));
                 }
                 sb.Append(")");
             }
             else if (CSharpType.ItemTypeKind.HasFlag(ItemTypeKind.EnumType))
             {
-                var literal = Value.ToString();
-                if (!literal.Contains("."))
-                {
-                    sb.Append(CSharpType.CoreType.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat));
-                    sb.Append(".");
-                }
+                var literal = Qualifier.LastOrDefault();
+                sb.Append(CSharpType.CoreType.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat));
+                sb.Append(".");
                 sb.Append(literal);
             }
             else if (CSharpType.ItemTypeKind.HasFlag(ItemTypeKind.BoolType))
@@ -96,7 +94,7 @@ namespace MetaDslx.Languages.MetaCompiler.Model
             {
                 if (Value is ISymbol symbol)
                 {
-                    return symbol.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat);
+                    return $"global::{symbol.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat)}";
                 }
                 else
                 {

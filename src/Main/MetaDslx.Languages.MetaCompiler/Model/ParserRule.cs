@@ -80,9 +80,10 @@ namespace MetaDslx.Languages.MetaCompiler.Model
         public string GreenUpdateArguments => string.Join(", ", Elements.Select(e => e.ParameterName));
         public string RedUpdateParameters => string.Join(", ", Elements.Select(e => $"{e.RedPropertyType} {e.ParameterName}"));
         public string RedUpdateArguments => string.Join(", ", Elements.Select(e => e.ParameterName));
-        public string RedOptionalUpdateParameters => string.Join(", ", Elements.Where(e => !e.IsOptional && (!e.IsToken || e.IsList)).Select(e => $"{e.RedPropertyType} {e.ParameterName}"));
+        public string RedOptionalUpdateParameters => string.Join(", ", Elements.Where(e => !e.IsOptional && (!e.IsToken || !e.IsFixedToken || e.IsFixedTokenAlt || e.IsList)).Select(e => $"{e.RedPropertyType} {e.ParameterName}"));
         public string RedToGreenArgumentList => string.Join(", ", Elements.Select(e => e.RedToGreenArgument));
         public string RedToGreenOptionalArgumentList => string.Join(", ", Elements.Select(e => e.RedToGreenOptionalArgument));
+        public bool HasRedToGreenOptionalArguments => Elements.Any(e => e.IsOptional || (e.IsToken && e.IsFixedToken && !e.IsFixedTokenAlt && !e.IsList));
     }
 
     public abstract class ParserRuleElement : NamedElement
@@ -130,6 +131,35 @@ namespace MetaDslx.Languages.MetaCompiler.Model
         public virtual bool IsReversed => false;
         public virtual bool IsList => Multiplicity.IsList();
         public virtual bool IsOptional => Multiplicity.IsOptional();
+
+        public IEnumerable<Annotation> AllAnnotations
+        {
+            get
+            {
+                foreach (var annot in NameAnnotations)
+                {
+                    yield return annot;
+                }
+                foreach (var annot in Annotations)
+                {
+                    yield return annot;
+                }
+                if (this is ParserRuleReferenceElement refElem && refElem.Rule is LexerRule lexerRule)
+                {
+                    foreach (var annot in lexerRule.Annotations)
+                    {
+                        yield return annot;
+                    }
+                }
+                if (this is ParserRuleFixedStringElement fixedElem)
+                {
+                    foreach (var annot in fixedElem.LexerRule.Annotations)
+                    {
+                        yield return annot;
+                    }
+                }
+            }
+        }
     }
 
     public class ParserRuleReferenceElement : ParserRuleElement

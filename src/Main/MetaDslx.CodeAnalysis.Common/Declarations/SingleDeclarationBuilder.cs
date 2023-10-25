@@ -14,7 +14,7 @@ namespace MetaDslx.CodeAnalysis.Declarations
         private ArrayBuilder<Syntax.ReferenceDirective>? _referenceDirectives;
         private ArrayBuilder<SingleDeclaration>? _children;
         private ArrayBuilder<Diagnostic>? _diagnostics;
-        private int _nameStack;
+        private ArrayBuilder<NameBuilder>? _nameStack;
         private ArrayBuilder<QualifierBuilder>? _qualifiedNames;
         private QualifierBuilder? _currentQualifier;
         private int _currentQualifierStack;
@@ -27,10 +27,9 @@ namespace MetaDslx.CodeAnalysis.Declarations
 
         public SyntaxNodeOrToken Syntax => _syntax;
         public Type? Type { get; set; }
-        public Type? NestingType { get; set; }
-        public string? NestingProperty { get; set; }
         public bool CanMerge { get; set; }
-        public bool IsName => _nameStack > 0;
+        public bool IsName => _nameStack != null && _nameStack.Count > 0;
+        public NameBuilder CurrentName => _nameStack != null && _nameStack.Count > 0 ? _nameStack[_nameStack.Count - 1] : default;
 
         public void AddDiagnostic(Diagnostic diagnostic)
         {
@@ -65,15 +64,15 @@ namespace MetaDslx.CodeAnalysis.Declarations
             return _children is null ? ImmutableArray<SingleDeclaration>.Empty : _children.ToImmutable();
         }
 
-        public void BeginName()
+        public void BeginName(Type? qualifierType, string? qualifierProperty)
         {
-            ++_nameStack;
+            if (_nameStack is null) _nameStack = ArrayBuilder<NameBuilder>.GetInstance();
+            _nameStack.Push(new NameBuilder(qualifierType, qualifierProperty));
         }
 
         public void EndName()
         {
-            --_nameStack;
-            Debug.Assert(_nameStack >= 0);
+            _nameStack.Pop();
         }
 
         public void BeginQualifier()
@@ -104,12 +103,12 @@ namespace MetaDslx.CodeAnalysis.Declarations
             if (_currentQualifier is null)
             {
                 BeginQualifier();
-                _currentQualifier.AddIdentifier(name, metadataName, nameLocation);
+                _currentQualifier.AddIdentifier(name, metadataName, nameLocation, CurrentName.QualifierType, CurrentName.QualifierProperty);
                 EndQualifier();
             }
             else
             {
-                _currentQualifier.AddIdentifier(name, metadataName, nameLocation);
+                _currentQualifier.AddIdentifier(name, metadataName, nameLocation, CurrentName.QualifierType, CurrentName.QualifierProperty);
             }
         }
 
@@ -145,6 +144,7 @@ namespace MetaDslx.CodeAnalysis.Declarations
                 if (_diagnostics is not null) _diagnostics.Free();
                 if (_referenceDirectives is not null) _referenceDirectives.Free();
                 if (_qualifiedNames is not null) _qualifiedNames.Free();
+                if (_nameStack is not null) _nameStack.Free();
             }
             return result;
         }

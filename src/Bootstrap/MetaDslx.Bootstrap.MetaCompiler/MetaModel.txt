@@ -10,7 +10,7 @@ using MetaDslx.Examples.MetaModel;
 language MetaModel;
 
 Main returns MetaNamespace:
-	'namespace' name=NamespaceName ';'
+	'namespace' name=[Name(qualifierProperty:Declarations)]Qualifier ';'
 	UsingDeclaration*
 	MetaNamespaceDeclarations
 	eof;
@@ -64,9 +64,6 @@ Expression
 
 [Name]
 part Name: Identifier;
-
-[QualifiedName(MetaNamespace,Declarations)]
-part NamespaceName: Qualifier;
 
 [DefaultReference]
 [Qualifier]
