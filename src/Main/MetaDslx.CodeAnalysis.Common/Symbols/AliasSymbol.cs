@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Text;
+using System.Threading;
 
 namespace MetaDslx.CodeAnalysis.Symbols
 {
@@ -38,24 +39,87 @@ namespace MetaDslx.CodeAnalysis.Symbols
     ///     IList&lt;Symbol&gt; SemanticModel.LookupSymbols(CSharpSyntaxNode location, NamespaceOrTypeSymbol container = null, string name = null, int? arity = null, LookupOptions options = LookupOptions.Default, List&lt;Symbol> results = null);
     /// </pre>
     /// </summary>
-    public sealed class AliasSymbol : ImportSymbol
+    public sealed class AliasSymbol : Symbol
     {
-        protected AliasSymbol(Symbol container) 
+        public new static class CompletionParts
+        {
+            public static readonly CompletionPart StartComputingProperty_Name = new CompletionPart(nameof(StartComputingProperty_Name));
+            public static readonly CompletionPart FinishComputingProperty_Name = new CompletionPart(nameof(FinishComputingProperty_Name));
+            public static readonly CompletionPart StartComputingProperty_Target = new CompletionPart(nameof(StartComputingProperty_Target));
+            public static readonly CompletionPart FinishComputingProperty_Target = new CompletionPart(nameof(FinishComputingProperty_Target));
+            public static readonly CompletionPart StartComputingProperty_Attributes = Symbol.CompletionParts.StartComputingProperty_Attributes;
+            public static readonly CompletionPart FinishComputingProperty_Attributes = Symbol.CompletionParts.FinishComputingProperty_Attributes;
+            public static readonly CompletionGraph CompletionGraph =
+                CompletionGraph.CreateFromParts(
+                    CompletionGraph.StartInitializing, CompletionGraph.FinishInitializing,
+                    CompletionGraph.StartCreatingContainedSymbols, CompletionGraph.FinishCreatingContainedSymbols,
+                    StartComputingProperty_Name, FinishComputingProperty_Name,
+                    StartComputingProperty_Target, FinishComputingProperty_Target,
+                    StartComputingProperty_Attributes, FinishComputingProperty_Attributes,
+                    CompletionGraph.StartComputingNonSymbolProperties, CompletionGraph.FinishComputingNonSymbolProperties,
+                    CompletionGraph.ContainedSymbolsCompleted,
+                    CompletionGraph.StartValidatingSymbol, CompletionGraph.FinishValidatingSymbol);
+        }
+
+        private string _name;
+        private Symbol _target;
+
+        private AliasSymbol(Symbol container) 
             : base(container)
         {
         }
 
-        public override ImmutableArray<Location> Locations => throw new NotImplementedException();
-
-        public DeclaredSymbol GetAliasTarget(LookupContext context)
+        private AliasSymbol(Symbol container, string name, Symbol target)
+            : base(container)
         {
-            throw new NotImplementedException("TODO:MetaDslx");
+            _name = name;
+            _target = target;
         }
 
-        public static DeclaredSymbol UnwrapAlias(LookupContext context, DeclaredSymbol symbol)
+        public override ImmutableArray<Location> Locations => throw new NotImplementedException();
+
+        public Symbol GetAliasTarget(LookupContext context)
+        {
+            ForceComplete(CompletionParts.FinishComputingProperty_Target, null, context.CancellationToken);
+            return _target;
+        }
+
+        public static Symbol UnwrapAlias(LookupContext context, Symbol symbol)
         {
             if (symbol is AliasSymbol aliasSymbol) return aliasSymbol.GetAliasTarget(context);
             else return symbol;
+        }
+
+        protected override bool ForceCompletePart(ref CompletionPart incompletePart, SourceLocation? locationOpt, CancellationToken cancellationToken)
+        {
+            if (incompletePart == CompletionParts.StartComputingProperty_Target || incompletePart == CompletionParts.FinishComputingProperty_Target)
+            {
+                if (NotePartComplete(CompletionParts.StartComputingProperty_Target))
+                {
+                    var diagnostics = DiagnosticBag.GetInstance();
+                    var target = CompleteProperty_Target(diagnostics, cancellationToken);
+                    _target = target;
+                    AddSymbolDiagnostics(diagnostics);
+                    diagnostics.Free();
+                    NotePartComplete(CompletionParts.FinishComputingProperty_Target);
+                }
+                return true;
+            }
+            else if (base.ForceCompletePart(ref incompletePart, locationOpt, cancellationToken))
+            {
+                return true;
+            }
+            return false;
+        }
+
+        protected override string CompleteProperty_Name(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        {
+            return _name;
+        }
+
+        private Symbol CompleteProperty_Target(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        {
+            return _target;
         }
 
     }

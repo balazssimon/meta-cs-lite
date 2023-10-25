@@ -9,6 +9,7 @@ using System.Collections.Immutable;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Text;
+using System.Threading;
 using System.Xml.Linq;
 
 namespace MetaDslx.CodeAnalysis.Binding
@@ -43,6 +44,7 @@ namespace MetaDslx.CodeAnalysis.Binding
         private LookupResult _result;
         private DiagnosticBag _diagnostics;
         private HashSet<DiagnosticInfo> _useSiteDiagnostics;
+        private CancellationToken _cancellationToken;
 
         internal protected LookupContext(ObjectPool<LookupContext> pool, Compilation compilation, Language language)
         {
@@ -58,6 +60,7 @@ namespace MetaDslx.CodeAnalysis.Binding
             _result = new LookupResult();
             _diagnostics = new DiagnosticBag();
             _useSiteDiagnostics = new HashSet<DiagnosticInfo>();
+            _cancellationToken = default;
         }
 
         public Compilation Compilation => _compilation;
@@ -129,6 +132,11 @@ namespace MetaDslx.CodeAnalysis.Binding
         public LookupResult Result => _result;
         public DiagnosticBag Diagnostics => _diagnostics;
         public HashSet<DiagnosticInfo> UseSiteDiagnostics => _useSiteDiagnostics;
+        public CancellationToken CancellationToken
+        {
+            get => _cancellationToken;
+            set => _cancellationToken = value;
+        }
 
         public void Free()
         {
@@ -215,7 +223,7 @@ namespace MetaDslx.CodeAnalysis.Binding
 
         public SingleLookupResult Validate(DeclaredSymbol symbol)
         {
-            var unwrappedSymbol = AliasSymbol.UnwrapAlias(this, symbol);
+            var unwrappedSymbol = AliasSymbol.UnwrapAlias(this, symbol) as DeclaredSymbol;
             var result = LookupResult.Good(symbol);
             var defaultResult = DefaultLookupValidator.ValidateResult(this, symbol, unwrappedSymbol);
             if (defaultResult.Kind > LookupResultKind.Empty && defaultResult.Kind < result.Kind)
