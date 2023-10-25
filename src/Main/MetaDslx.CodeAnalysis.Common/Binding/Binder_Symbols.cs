@@ -83,7 +83,7 @@ namespace MetaDslx.CodeAnalysis.Binding
         {
             this.AdjustLookupContext(context);
             var result = BindDeclaredOrAliasSymbolInternal(context, identifierSyntax);
-            return AliasSymbol.UnwrapAlias(context, result);
+            return AliasSymbol.UnwrapAlias(context, result) as DeclaredSymbol;
         }
 
         /// <summary>

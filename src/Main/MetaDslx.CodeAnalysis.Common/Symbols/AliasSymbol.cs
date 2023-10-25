@@ -1,4 +1,5 @@
 ﻿using MetaDslx.CodeAnalysis.Binding;
+using MetaDslx.CodeAnalysis.Symbols.Fixed;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -39,54 +40,71 @@ namespace MetaDslx.CodeAnalysis.Symbols
     ///     IList&lt;Symbol&gt; SemanticModel.LookupSymbols(CSharpSyntaxNode location, NamespaceOrTypeSymbol container = null, string name = null, int? arity = null, LookupOptions options = LookupOptions.Default, List&lt;Symbol> results = null);
     /// </pre>
     /// </summary>
-    public sealed class AliasSymbol : Symbol
+    public abstract class AliasSymbol : DeclaredSymbol
     {
         public new static class CompletionParts
         {
-            public static readonly CompletionPart StartComputingProperty_Name = new CompletionPart(nameof(StartComputingProperty_Name));
-            public static readonly CompletionPart FinishComputingProperty_Name = new CompletionPart(nameof(FinishComputingProperty_Name));
             public static readonly CompletionPart StartComputingProperty_Target = new CompletionPart(nameof(StartComputingProperty_Target));
             public static readonly CompletionPart FinishComputingProperty_Target = new CompletionPart(nameof(FinishComputingProperty_Target));
+            public static readonly CompletionPart StartComputingProperty_Members = DeclaredSymbol.CompletionParts.StartComputingProperty_Members;
+            public static readonly CompletionPart FinishComputingProperty_Members = DeclaredSymbol.CompletionParts.FinishComputingProperty_Members;
+            public static readonly CompletionPart StartComputingProperty_TypeArguments = DeclaredSymbol.CompletionParts.StartComputingProperty_TypeArguments;
+            public static readonly CompletionPart FinishComputingProperty_TypeArguments = DeclaredSymbol.CompletionParts.FinishComputingProperty_TypeArguments;
+            public static readonly CompletionPart StartComputingProperty_Imports = DeclaredSymbol.CompletionParts.StartComputingProperty_Imports;
+            public static readonly CompletionPart FinishComputingProperty_Imports = DeclaredSymbol.CompletionParts.FinishComputingProperty_Imports;
+            public static readonly CompletionPart StartComputingProperty_TypeParameters = new CompletionPart(nameof(StartComputingProperty_TypeParameters));
+            public static readonly CompletionPart FinishComputingProperty_TypeParameters = new CompletionPart(nameof(FinishComputingProperty_TypeParameters));
+            public static readonly CompletionPart StartComputingProperty_BaseTypes = new CompletionPart(nameof(StartComputingProperty_BaseTypes));
+            public static readonly CompletionPart FinishComputingProperty_BaseTypes = new CompletionPart(nameof(FinishComputingProperty_BaseTypes));
             public static readonly CompletionPart StartComputingProperty_Attributes = Symbol.CompletionParts.StartComputingProperty_Attributes;
             public static readonly CompletionPart FinishComputingProperty_Attributes = Symbol.CompletionParts.FinishComputingProperty_Attributes;
             public static readonly CompletionGraph CompletionGraph =
                 CompletionGraph.CreateFromParts(
                     CompletionGraph.StartInitializing, CompletionGraph.FinishInitializing,
                     CompletionGraph.StartCreatingContainedSymbols, CompletionGraph.FinishCreatingContainedSymbols,
-                    StartComputingProperty_Name, FinishComputingProperty_Name,
                     StartComputingProperty_Target, FinishComputingProperty_Target,
+                    StartComputingProperty_Members, FinishComputingProperty_Members,
+                    StartComputingProperty_TypeArguments, FinishComputingProperty_TypeArguments,
+                    StartComputingProperty_Imports, FinishComputingProperty_Imports,
+                    StartComputingProperty_TypeParameters, FinishComputingProperty_TypeParameters,
+                    StartComputingProperty_BaseTypes, FinishComputingProperty_BaseTypes,
                     StartComputingProperty_Attributes, FinishComputingProperty_Attributes,
                     CompletionGraph.StartComputingNonSymbolProperties, CompletionGraph.FinishComputingNonSymbolProperties,
                     CompletionGraph.ContainedSymbolsCompleted,
                     CompletionGraph.StartValidatingSymbol, CompletionGraph.FinishValidatingSymbol);
         }
 
-        private string _name;
         private Symbol _target;
 
-        private AliasSymbol(Symbol container) 
+        internal AliasSymbol(Symbol container) 
             : base(container)
         {
         }
 
-        private AliasSymbol(Symbol container, string name, Symbol target)
-            : base(container)
+        public AliasSymbol Create(string name, Symbol target, Location? location = null)
         {
-            _name = name;
-            _target = target;
+            return new FixedAliasSymbol(null, name, target, location);
+        }
+
+        public AliasSymbol Create(Symbol container, string name, Symbol target, Location? location = null)
+        {
+            return new FixedAliasSymbol(container, name, target, location);
         }
 
         public override ImmutableArray<Location> Locations => throw new NotImplementedException();
 
-        public Symbol GetAliasTarget(LookupContext context)
+        public Symbol Target
         {
-            ForceComplete(CompletionParts.FinishComputingProperty_Target, null, context.CancellationToken);
-            return _target;
+            get
+            {
+                ForceComplete(CompletionParts.FinishComputingProperty_Target, null, default);
+                return _target;
+            }
         }
 
         public static Symbol UnwrapAlias(LookupContext context, Symbol symbol)
         {
-            if (symbol is AliasSymbol aliasSymbol) return aliasSymbol.GetAliasTarget(context);
+            if (symbol is AliasSymbol aliasSymbol) return aliasSymbol.Target;
             else return symbol;
         }
 
@@ -112,14 +130,9 @@ namespace MetaDslx.CodeAnalysis.Symbols
             return false;
         }
 
-        protected override string CompleteProperty_Name(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        protected virtual Symbol CompleteProperty_Target(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            return _name;
-        }
-
-        private Symbol CompleteProperty_Target(DiagnosticBag diagnostics, CancellationToken cancellationToken)
-        {
-            return _target;
+            throw new NotImplementedException();
         }
 
     }
