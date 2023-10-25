@@ -77,7 +77,7 @@ namespace MetaDslx.CodeAnalysis.Binding
             }
             else
             {
-                var valueType = GetValueType(context);
+                var valueType = GetValueType(context, out var isName);
                 var result = ArrayBuilder<object?>.GetInstance();
                 var valueBinders = GetValueBinders(this, context.CancellationToken);
                 foreach (var valueBinder in valueBinders)
@@ -103,6 +103,10 @@ namespace MetaDslx.CodeAnalysis.Binding
                             if (valueType is null || valueType.IsAssignableFrom(modelSymbol.ModelObject.GetType()))
                             {
                                 result.Add(symbol);
+                            }
+                            else if (isName && valueType == typeof(string))
+                            {
+                                result.Add(symbol.Name);
                             }
                             else
                             {
@@ -130,6 +134,12 @@ namespace MetaDslx.CodeAnalysis.Binding
 
         public Type? GetValueType(BindingContext context)
         {
+            return GetValueType(context, out var _);
+        }
+
+        private Type? GetValueType(BindingContext context, out bool isName)
+        {
+            isName = false;
             if (_modelObjectTypes.IsDefault)
             {
                 Type? valueType = null;
@@ -153,6 +163,7 @@ namespace MetaDslx.CodeAnalysis.Binding
                         var modelProperty = info.GetProperty(this.Name);
                         if (modelProperty is not null)
                         {
+                            if (modelProperty.IsName) isName = true;
                             var modelPropertyType = modelProperty.Type;
                             if (modelPropertyType is not null)
                             {

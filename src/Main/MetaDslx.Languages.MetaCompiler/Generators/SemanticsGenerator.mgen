@@ -204,17 +204,7 @@ for (var [elem.ParameterName]Index = 0; [elem.ParameterName]Index < [elem.Parame
             [var elemName = "node."+elem.PropertyName]
             [var elemBody = "// this.VisitToken("+elemName+");"]
             [if (elem is ParserRuleFixedStringAlternativesElement fixedAltsElem)]
-switch (node.[elem.PropertyName].Get[language.Name]Kind())
-{
-                [foreach (var fixedAlt in fixedAltsElem.Alternatives)]
-case [language.Name]SyntaxKind.[fixedAlt.CSharpName]:
-    [GenerateBinderFactoryVisitAnnotations(fixedAlt.AllAnnotations, elemName, elemBody, false, ref annotIndex)]
-    break;
-                [end foreach]
-default:
-    [GenerateBinderFactoryVisitAnnotations(fixedAltsElem.AllAnnotations, elemName, elemBody, true, ref annotIndex)]
-    break;
-}
+[GenerateBinderFactoryVisitFixedAltsElement(language, fixedAltsElem, elemName, elemBody, ref annotIndex)]
             [else]
 if (node.[elem.PropertyName].Get[language.Name]Kind() != [language.Name]SyntaxKind.None)
 {
@@ -231,6 +221,21 @@ else
 [GenerateBinderFactoryVisitAnnotations(elem.AllAnnotations, elemName, elemBody, false, ref annotIndex)]
 		[end if]
 	[end if]
+end template
+
+template GenerateBinderFactoryVisitFixedAltsElement(Language language, ParserRuleFixedStringAlternativesElement fixedAltsElem, string elemName, string elemBody, ref int annotIndex)
+switch (node.[fixedAltsElem.PropertyName].Get[language.Name]Kind())
+{
+                [foreach (var fixedAlt in fixedAltsElem.Alternatives)]
+case [language.Name]SyntaxKind.[fixedAlt.CSharpName]:
+    [var altBody = GenerateBinderFactoryVisitAnnotations(fixedAlt.AllAnnotations, elemName, elemBody, false, ref annotIndex)]
+    [GenerateBinderFactoryVisitAnnotations(fixedAltsElem.AllAnnotations, elemName, altBody, false, ref annotIndex)]
+    break;
+                [end foreach]
+default:
+    [GenerateBinderFactoryVisitAnnotations(fixedAltsElem.AllAnnotations, elemName, elemBody, true, ref annotIndex)]
+    break;
+}
 end template
 
 template GenerateBinderFactoryVisitListElement(ParserRuleListElement listElem, out string itemName, ref int annotIndex)

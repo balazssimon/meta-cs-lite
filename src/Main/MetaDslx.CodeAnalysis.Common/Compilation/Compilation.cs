@@ -946,7 +946,8 @@ namespace MetaDslx.CodeAnalysis
 
         private void AppendDiagnosticsForAllSymbols(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            var rootSymbol = GlobalNamespace;
+            diagnostics.AddRange(SourceAssembly.Diagnostics);
+            var rootSymbol = SourceModule;
             var queue = new List<Symbol>();
             queue.Add(rootSymbol);
             int index = 0;

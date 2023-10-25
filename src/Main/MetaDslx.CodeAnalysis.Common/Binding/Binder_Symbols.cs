@@ -15,6 +15,7 @@ namespace MetaDslx.CodeAnalysis.Binding
         public ImmutableArray<DeclaredSymbol> BindQualifiedName(LookupContext context, ImmutableArray<SyntaxNodeOrToken> qualifier)
         {
             if (qualifier.Length == 0) return ImmutableArray<DeclaredSymbol>.Empty;
+            this.AdjustLookupContext(context);
             if (qualifier.Length == 1)
             {
                 return ImmutableArray.Create(BindDeclaredOrAliasSymbolInternal(context, qualifier[0]));
@@ -46,6 +47,7 @@ namespace MetaDslx.CodeAnalysis.Binding
         public ImmutableArray<DeclaredSymbol> BindQualifiedName(LookupContext context, ImmutableArray<string> qualifier)
         {
             if (qualifier.Length == 0) return ImmutableArray<DeclaredSymbol>.Empty;
+            this.AdjustLookupContext(context);
             if (qualifier.Length == 1)
             {
                 context.SetName(qualifier[0]);
@@ -79,6 +81,7 @@ namespace MetaDslx.CodeAnalysis.Binding
         [MethodImpl(MethodImplOptions.NoInlining)]
         public DeclaredSymbol BindDeclaredSymbol(LookupContext context, SyntaxNodeOrToken identifierSyntax)
         {
+            this.AdjustLookupContext(context);
             var result = BindDeclaredOrAliasSymbolInternal(context, identifierSyntax);
             return AliasSymbol.UnwrapAlias(context, result);
         }
@@ -89,6 +92,7 @@ namespace MetaDslx.CodeAnalysis.Binding
         [MethodImpl(MethodImplOptions.NoInlining)]
         public DeclaredSymbol BindDeclaredOrAliasSymbol(LookupContext context, SyntaxNodeOrToken identifierSyntax)
         {
+            this.AdjustLookupContext(context);
             var result = BindDeclaredOrAliasSymbolInternal(context, identifierSyntax);
             return result;
         }
@@ -114,7 +118,6 @@ namespace MetaDslx.CodeAnalysis.Binding
                 var errorInfo = new ErrorSymbolInfo(string.Empty, string.Empty, ImmutableArray<Symbol>.Empty, Diagnostic.Create(CommonErrorCode.ERR_SingleNameNotFound, context.Location, name));
                 return context.ErrorSymbolFactory.CreateSymbol<TypeSymbol>(Compilation.GlobalNamespace, errorInfo);
             }
-            this.AdjustLookupContext(context);
             this.LookupSymbols(context);
             return context.GetResultSymbol();
         }

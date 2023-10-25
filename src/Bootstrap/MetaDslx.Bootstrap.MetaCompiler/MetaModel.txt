@@ -4,6 +4,7 @@ using System;
 using MetaDslx.CodeAnalysis.Annotations;
 using MetaDslx.CodeAnalysis.Binding;
 using MetaDslx.CodeAnalysis.Syntax;
+using MetaDslx.CodeAnalysis.Symbols;
 using MetaDslx.Examples.MetaModel.Model;
 using MetaDslx.Examples.MetaModel;
 
@@ -12,18 +13,18 @@ language MetaModel;
 Main returns MetaNamespace:
 	'namespace' name=[Name(qualifierProperty:Declarations)]Qualifier ';'
 	UsingDeclaration*
-	MetaNamespaceDeclarations
+	Declarations
 	eof;
 
 [Import]
-part UsingDeclaration: 'using' #MetaNamespace ';';
+part UsingDeclaration: 'using' #NamespaceSymbol ';';
 
 [Scope]
-part MetaNamespaceDeclarations: definedMetaModel+=MetaModel declarations+=MetaDeclaration*;
+part Declarations: definedMetaModel+=MetaModel (declarations+=MetaDeclaration | Association)*;
 
 MetaModel: attributes+=MetaAttribute* 'metamodel' name=Name ';';
 
-MetaDeclaration: MetaEnum | MetaClass | Association;
+MetaDeclaration: MetaEnum | MetaClass;
 
 MetaAttribute: '[' type=#MetaNamedType ']';
 
@@ -45,7 +46,7 @@ part PropertySubsetting: 'subsets' subsettedProperties+=#{MetaProperty|Qualifier
 
 part Association: MetaAttribute* 'association' #MetaProperty 'with' #MetaProperty ';';
 
-TypeReference returns MetaType: MetaPrimitiveType | MetaCollectionType | MetaNullableType | #MetaType;
+TypeReference returns MetaType: MetaPrimitiveType | MetaCollectionType | MetaNullableType | #TypeSymbol;
 MetaPrimitiveType
 	: 'int' => Meta.Int
 	| 'string' => Meta.String

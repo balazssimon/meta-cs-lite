@@ -45,7 +45,7 @@ namespace MetaDslx.CodeAnalysis
         public static readonly DiagnosticDescriptor ERR_FeatureNotAvailableInVersion = DiagnosticDescriptor.Error(nameof(ERR_FeatureNotAvailableInVersion), "Feature not available in version", "Feature '{0}' is not available in {1} {2}. Please use language version {3} or greater.");
 
         /// <summary>
-        /// Declaration error: {0}
+        /// {0}
         /// </summary>
         public static readonly DiagnosticDescriptor ERR_DeclarationError = DiagnosticDescriptor.Error(nameof(ERR_DeclarationError), "Declaration error", "{0}");
 
@@ -60,9 +60,9 @@ namespace MetaDslx.CodeAnalysis
         public static readonly DiagnosticDescriptor ERR_BindToBogus = DiagnosticDescriptor.Error(nameof(ERR_BindToBogus), "Bind to bogus", "'{0}' is not supported by the language");
 
         /// <summary>
-        /// Binding error: {0}
+        /// {0}
         /// </summary>
-        public static readonly DiagnosticDescriptor ERR_BindingError = DiagnosticDescriptor.Error(nameof(ERR_BindingError), "Binding error", "Binding error: {0}");
+        public static readonly DiagnosticDescriptor ERR_BindingError = DiagnosticDescriptor.Error(nameof(ERR_BindingError), "Binding error", "{0}");
 
         /// <summary>
         /// '{0}' is a {1} but is used like a {2}

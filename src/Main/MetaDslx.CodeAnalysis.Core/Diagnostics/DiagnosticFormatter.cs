@@ -96,8 +96,8 @@ namespace MetaDslx.CodeAnalysis
                 default:
                     throw ExceptionUtilities.UnexpectedValue(diagnostic.Severity);
             }
-
-            return string.Format("{0} {1}", prefix, diagnostic.Id);
+            return prefix;
+            //return string.Format("{0} {1}", prefix, diagnostic.Id);
         }
 
         internal static readonly DiagnosticFormatter Instance = new DiagnosticFormatter();
