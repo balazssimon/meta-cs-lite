@@ -34,9 +34,9 @@ namespace MetaDslx.CodeAnalysis.Binding
                     if (last is null || last.IsError) break;
                     var identifierContext = i + 1 < qualifier.Length ? qualifierContext : context;
                     identifierContext.Qualifier = last;
-                    identifierContext.ClearResult();
+                    if (i + 1 < qualifier.Length) identifierContext.ClearResult();
                     result.Add(this.BindDeclaredOrAliasSymbolInternal(identifierContext, qualifier[i]));
-                    context.Diagnostics.AddRange(identifierContext.Diagnostics);
+                    if (i + 1 < qualifier.Length) context.Diagnostics.AddRange(identifierContext.Diagnostics);
                     last = result[i];
                 }
                 qualifierContext.Free();
@@ -119,7 +119,12 @@ namespace MetaDslx.CodeAnalysis.Binding
                 return context.ErrorSymbolFactory.CreateSymbol<TypeSymbol>(Compilation.GlobalNamespace, errorInfo);
             }
             this.LookupSymbols(context);
-            return context.GetResultSymbol();
+            var result = context.GetResultSymbol();
+            if (context.Diagnose && result is IErrorSymbol errorSymbol)
+            {
+                context.Diagnostics.Add(errorSymbol.ErrorInfo.Diagnostic);
+            }
+            return result;
         }
     }
 }

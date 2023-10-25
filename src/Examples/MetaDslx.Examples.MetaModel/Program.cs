@@ -49,9 +49,16 @@ foreach (var module in mmComp.SourceAssembly.Modules)
 
 var root = mmTree.GetRoot();
 var rootBinder = mmComp.GetBinder(root);
-rootBinder.CompleteBind(default, true);
+var bctx = BindingContext.GetInstance();
+rootBinder.CompleteBind(bctx, true);
 PrintBinders(string.Empty, rootBinder);
 
+Console.WriteLine("----");
+foreach (var diag in bctx.Diagnostics.ToReadOnly())
+{
+    Console.WriteLine(diag);
+}
+Console.WriteLine("----");
 foreach (var diag in mmComp.GetDiagnostics())
 {
     Console.WriteLine(diag);

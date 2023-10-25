@@ -386,6 +386,17 @@ namespace MetaDslx.CodeAnalysis.Symbols
             }
         }
 
+        protected bool AddSymbolDiagnostics(Diagnostic diagnostic)
+        {
+            if (diagnostic is not null)
+            {
+                var symbolDiagnostics = s_diagnostics.GetOrCreateValue(this);
+                symbolDiagnostics.Add(diagnostic);
+                return true;
+            }
+            return false;
+        }
+
         protected bool AddSymbolDiagnostics(DiagnosticBag diagnostics)
         {
             if (!diagnostics.IsEmptyWithoutResolution)
