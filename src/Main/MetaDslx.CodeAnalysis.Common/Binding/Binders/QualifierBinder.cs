@@ -57,7 +57,7 @@ namespace MetaDslx.CodeAnalysis.Binding
         {
             if (_identifiers.IsDefault)
             {
-                var identifiers = IsTopMostQualifier ? GetIdentifierBinders(context.CancellationToken) : ImmutableArray<IIdentifierBinder>.Empty;
+                var identifiers = IsTopMostQualifier ? (this is IdentifierBinder identifier ? ImmutableArray.Create<IIdentifierBinder>(identifier) : GetIdentifierBinders(context.CancellationToken)) : ImmutableArray<IIdentifierBinder>.Empty;
                 ImmutableInterlocked.InterlockedInitialize(ref _identifiers, identifiers);
             }
             if (_symbols.IsDefault)
