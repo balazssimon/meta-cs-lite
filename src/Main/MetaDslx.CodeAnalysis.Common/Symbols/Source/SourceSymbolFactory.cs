@@ -187,22 +187,17 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
                     var propBinders = declBinder.GetPropertyBinders(symbolProperty, cancellationToken);
                     foreach (var propBinder in propBinders)
                     {
-                        var valueBinders = propBinder.GetValueBinders(propBinder, cancellationToken);
-                        foreach (var ivalueBinder in valueBinders)
+                        var bindingContext = new BindingContext(diagnostics, cancellationToken);
+                        var values = ((Binder)propBinder).Bind(bindingContext);
+                        foreach (var value in values)
                         {
-                            var valueBinder = (Binder)ivalueBinder;
-                            var bindingContext = new BindingContext(diagnostics, cancellationToken);
-                            var values = valueBinder.Bind(bindingContext);
-                            foreach (var value in values)
+                            if (value is TValue tvalue)
                             {
-                                if (value is TValue tvalue)
-                                {
-                                    builder.Add(tvalue);
-                                }
-                                else
-                                {
-                                    diagnostics.Add(Diagnostic.Create(CommonErrorCode.ERR_InvalidSymbolPropertyValue, decl.GetLocation(), value, value.GetType(), symbolProperty, typeof(TValue)));
-                                }
+                                builder.Add(tvalue);
+                            }
+                            else
+                            {
+                                diagnostics.Add(Diagnostic.Create(CommonErrorCode.ERR_InvalidSymbolPropertyValue, decl.GetLocation(), value, value.GetType(), symbolProperty, typeof(TValue)));
                             }
                         }
                     }
@@ -240,41 +235,36 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
                         var propBinders = declBinder.GetPropertyBinders(prop.Name, cancellationToken);
                         foreach (var propBinder in propBinders)
                         {
-                            var valueBinders = propBinder.GetValueBinders(propBinder, cancellationToken);
-                            foreach (var ivalueBinder in valueBinders)
+                            var bindingContext = new BindingContext(diagnostics, cancellationToken);
+                            var values = ((Binder)propBinder).Bind(bindingContext);
+                            foreach (var value in values)
                             {
-                                var valueBinder = (Binder)ivalueBinder;
-                                var bindingContext = new BindingContext(diagnostics, cancellationToken);
-                                var values = valueBinder.Bind(bindingContext);
-                                foreach (var value in values)
+                                if (value is TValue tvalue)
                                 {
-                                    if (value is TValue tvalue)
+                                    builder.Add(tvalue);
+                                    try
                                     {
-                                        builder.Add(tvalue);
-                                        try
+                                        if (value is Symbol symbolValue)
                                         {
-                                            if (value is Symbol symbolValue)
+                                            var modelObjectValue = (symbolValue as IModelSymbol)?.ModelObject;
+                                            if (modelObjectValue is not null)
                                             {
-                                                var modelObjectValue = (symbolValue as IModelSymbol)?.ModelObject;
-                                                if (modelObjectValue is not null)
-                                                {
-                                                    modelObject.Add(prop, modelObjectValue);
-                                                }
-                                            }
-                                            else
-                                            {
-                                                modelObject.Add(prop, value);
+                                                modelObject.Add(prop, modelObjectValue);
                                             }
                                         }
-                                        catch (ModelException ex)
+                                        else
                                         {
-                                            diagnostics.Add(Diagnostic.Create(CommonErrorCode.ERR_InvalidModelObjectPropertyValue, decl.GetLocation(), value, value.GetType(), prop.Name, prop.Type));
+                                            modelObject.Add(prop, value);
                                         }
                                     }
-                                    else
+                                    catch (ModelException ex)
                                     {
-                                        diagnostics.Add(Diagnostic.Create(CommonErrorCode.ERR_InvalidSymbolPropertyValue, decl.GetLocation(), value, value.GetType(), symbolProperty, typeof(TValue)));
+                                        diagnostics.Add(Diagnostic.Create(CommonErrorCode.ERR_InvalidModelObjectPropertyValue, decl.GetLocation(), value, value.GetType(), prop.Name, prop.Type));
                                     }
+                                }
+                                else
+                                {
+                                    diagnostics.Add(Diagnostic.Create(CommonErrorCode.ERR_InvalidSymbolPropertyValue, decl.GetLocation(), value, value.GetType(), symbolProperty, typeof(TValue)));
                                 }
                             }
                         }
@@ -315,33 +305,28 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
                         var prop = modelObject.GetProperty(propBinder.Name);
                         if (prop is not null && prop.SymbolProperty is null)
                         {
-                            var valueBinders = propBinder.GetValueBinders(propBinder, cancellationToken);
-                            foreach (var ivalueBinder in valueBinders)
+                            var bindingContext = new BindingContext(diagnostics, cancellationToken);
+                            var values = ((Binder)propBinder).Bind(bindingContext);
+                            foreach (var value in values)
                             {
-                                var valueBinder = (Binder)ivalueBinder;
-                                var bindingContext = new BindingContext(diagnostics, cancellationToken);
-                                var values = valueBinder.Bind(bindingContext);
-                                foreach (var value in values)
+                                try
                                 {
-                                    try
+                                    if (value is Symbol symbolValue)
                                     {
-                                        if (value is Symbol symbolValue)
+                                        var modelObjectValue = (symbolValue as IModelSymbol)?.ModelObject;
+                                        if (modelObjectValue is not null)
                                         {
-                                            var modelObjectValue = (symbolValue as IModelSymbol)?.ModelObject;
-                                            if (modelObjectValue is not null)
-                                            {
-                                                modelObject.Add(prop, modelObjectValue);
-                                            }
-                                        }
-                                        else
-                                        {
-                                            modelObject.Add(prop, value);
+                                            modelObject.Add(prop, modelObjectValue);
                                         }
                                     }
-                                    catch (ModelException ex)
+                                    else
                                     {
-                                        diagnostics.Add(Diagnostic.Create(CommonErrorCode.ERR_InvalidModelObjectPropertyValue, decl.GetLocation(), value, value.GetType(), prop.Name, prop.Type));
+                                        modelObject.Add(prop, value);
                                     }
+                                }
+                                catch (ModelException ex)
+                                {
+                                    diagnostics.Add(Diagnostic.Create(CommonErrorCode.ERR_InvalidModelObjectPropertyValue, decl.GetLocation(), value, value.GetType(), prop.Name, prop.Type));
                                 }
                             }
                         }

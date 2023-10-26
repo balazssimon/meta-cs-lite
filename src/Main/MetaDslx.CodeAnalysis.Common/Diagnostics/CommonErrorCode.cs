@@ -105,9 +105,9 @@ namespace MetaDslx.CodeAnalysis
         public static readonly DiagnosticDescriptor ERR_AmbigValue = DiagnosticDescriptor.Error(nameof(ERR_AmbigValue), "Value conflict", "'{0}' has an ambiguous value between {1} and {2}");
 
         /// <summary>
-        /// The name '{0}' does not exist in '{1}'
+        /// The name '{0}' does not exist in {1}
         /// </summary>
-        public static readonly DiagnosticDescriptor ERR_DottedNameNotFoundInAgg = DiagnosticDescriptor.Error(nameof(ERR_DottedNameNotFoundInAgg), "Name not found", "The name '{0}' does not exist in '{1}'");
+        public static readonly DiagnosticDescriptor ERR_DottedNameNotFoundInAgg = DiagnosticDescriptor.Error(nameof(ERR_DottedNameNotFoundInAgg), "Name not found", "The name '{0}' does not exist in {1}");
 
         /// <summary>
         /// The name '{0}' could not be found in the global namespace (are you missing an assembly reference?)
@@ -125,13 +125,23 @@ namespace MetaDslx.CodeAnalysis
         public static readonly DiagnosticDescriptor ERR_SingleNameNotFound = DiagnosticDescriptor.Error(nameof(ERR_SingleNameNotFound), "Name not found", "The name '{0}' could not be found (are you missing a using directive or an assembly reference?)");
 
         /// <summary>
-        /// Value '{0}' of type '{1}' cannot be assigned to symbol property '{2}' of type '{3}'
+        /// Value '{0}' of type '{1}' cannot be assigned to symbol property '{2}:{3}'
         /// </summary>
-        public static readonly DiagnosticDescriptor ERR_InvalidSymbolPropertyValue = DiagnosticDescriptor.Error(nameof(ERR_InvalidSymbolPropertyValue), "Invalid value", "Value '{0}' of type '{1}' cannot be assigned to symbol property '{2}' of type '{3}'");
+        public static readonly DiagnosticDescriptor ERR_InvalidSymbolPrimitivePropertyValue = DiagnosticDescriptor.Error(nameof(ERR_InvalidSymbolPrimitivePropertyValue), "Invalid value", "Value '{0}' of type '{1}' cannot be assigned to symbol property '{2}:{3}'");
 
         /// <summary>
-        /// Value '{0}' of type '{1}' cannot be assigned to model property '{2}' of type '{3}'
+        /// {0} of type '{1}' cannot be assigned to symbol property '{2}:{3}'
         /// </summary>
-        public static readonly DiagnosticDescriptor ERR_InvalidModelObjectPropertyValue = DiagnosticDescriptor.Error(nameof(ERR_InvalidModelObjectPropertyValue), "Invalid value", "Value '{0}' of type '{1}' cannot be assigned to model property '{2}' of type '{3}'");
+        public static readonly DiagnosticDescriptor ERR_InvalidSymbolPropertyValue = DiagnosticDescriptor.Error(nameof(ERR_InvalidSymbolPropertyValue), "Invalid value", "{0} of type '{1}' cannot be assigned to symbol property '{2}:{3}'");
+
+        /// <summary>
+        /// Value '{0}' of type '{1}' cannot be assigned to model property '{2}:{3}'
+        /// </summary>
+        public static readonly DiagnosticDescriptor ERR_InvalidModelObjectPrimitivePropertyValue = DiagnosticDescriptor.Error(nameof(ERR_InvalidModelObjectPrimitivePropertyValue), "Invalid value", "Value '{0}' of type '{1}' cannot be assigned to model property '{2}:{3}'");
+
+        /// <summary>
+        /// {0} of type '{1}' cannot be assigned to model property '{2}:{3}'
+        /// </summary>
+        public static readonly DiagnosticDescriptor ERR_InvalidModelObjectPropertyValue = DiagnosticDescriptor.Error(nameof(ERR_InvalidModelObjectPropertyValue), "Invalid value", "{0} of type '{1}' cannot be assigned to model property '{2}:{3}'");
     }
 }

@@ -12,10 +12,6 @@ abstract class MetaElement
 {
 	// List of attributes
 	list<MetaAttribute> Attributes;
-	TypeSymbol ts;
-	XSymbol xs;
-	b.IdentifierBinder ib;
-	b.XBinder xb;
 }
 
 abstract class MetaDocumentedElement : MetaElement
@@ -117,7 +113,7 @@ class MetaConstant : MetaDeclaration, MetaTypedElement
 
 class MetaClass : MetaNamedType
 {
-	System.Type SymbolType;
+	//System.Type SymbolType;
 	bool IsAbstract;
 	list<MetaClass> SuperClasses;
 	containment list<MetaProperty> Properties;

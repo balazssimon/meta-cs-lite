@@ -2,10 +2,13 @@
 using MetaDslx.CodeAnalysis.Symbols;
 using MetaDslx.CodeAnalysis.Symbols.Model;
 using MetaDslx.Modeling;
+using Microsoft.CodeAnalysis;
+using Roslyn.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading;
 
@@ -31,6 +34,7 @@ namespace MetaDslx.CodeAnalysis.Binding
 
         public string Name => _name;
         public Optional<object?> ValueOpt => _valueOpt;
+        public bool IsSymbolProperty => _modelObjectTypes.Any(t => typeof(Symbol).IsAssignableFrom(t));
 
         protected override void CollectQualifierBinders(ArrayBuilder<IQualifierBinder> qualifierBinders, CancellationToken cancellationToken)
         {
@@ -77,7 +81,8 @@ namespace MetaDslx.CodeAnalysis.Binding
             }
             else
             {
-                var valueType = GetValueType(context, out var isName);
+                var propertyType = GetValueType(context, out var isName);
+                var isSymbol = IsSymbolProperty;
                 var result = ArrayBuilder<object?>.GetInstance();
                 var valueBinders = GetValueBinders(this, context.CancellationToken);
                 foreach (var valueBinder in valueBinders)
@@ -86,49 +91,73 @@ namespace MetaDslx.CodeAnalysis.Binding
                     var values = binder.Bind(context);
                     foreach (var value in values)
                     {
+                        if (value is IErrorSymbol) continue;
                         if (value is null)
                         {
-                            if (valueType is null || !valueType.IsValueType)
+                            if (propertyType is null || !propertyType.IsValueType)
                             {
                                 result.Add(value);
                             }
                             else
                             {
-                                var modelObjectTypeNames = string.Join(",", _modelObjectTypes.Select(t => t.FullName));
-                                context.AddDiagnostic(Diagnostic.Create(CommonErrorCode.ERR_BindingError, binder.Location, $"Cannot assign value 'null' to property '{Name}':'{valueType}' (of {modelObjectTypeNames})"));
+                                if (isSymbol) context.AddDiagnostic(Diagnostic.Create(CommonErrorCode.ERR_InvalidSymbolPrimitivePropertyValue, binder.Location, "'null'", propertyType.Name, FullName, propertyType.Name));
+                                else context.AddDiagnostic(Diagnostic.Create(CommonErrorCode.ERR_InvalidModelObjectPrimitivePropertyValue, binder.Location, "'null'", propertyType.Name, FullName, propertyType.Name));
                             }
                         }
-                        else if (value is Symbol symbol && value is IModelSymbol modelSymbol && modelSymbol.ModelObject is not null)
+                        else if (value is Symbol symbol)
                         {
-                            if (valueType is null || valueType.IsAssignableFrom(modelSymbol.ModelObject.GetType()))
+                            var modelSymbol = value as IModelSymbol;
+                            var valueType = modelSymbol?.ModelObject is not null ? modelSymbol.ModelObjectType : value.GetType();
+                            if (propertyType is null || propertyType.IsAssignableFrom(valueType))
                             {
                                 result.Add(symbol);
                             }
-                            else if (isName && valueType == typeof(string))
+                            else if (isName && propertyType == typeof(string))
                             {
                                 result.Add(symbol.Name);
                             }
                             else
                             {
-                                var modelObjectTypeNames = string.Join(",", _modelObjectTypes.Select(t => t.FullName));
-                                context.AddDiagnostic(Diagnostic.Create(CommonErrorCode.ERR_BindingError, binder.Location, $"Cannot assign value '{modelSymbol.ModelObject}':'{modelSymbol.ModelObject.GetType()}' to property '{Name}':'{valueType}' (of {modelObjectTypeNames})"));
+                                if (isSymbol) context.AddDiagnostic(Diagnostic.Create(CommonErrorCode.ERR_InvalidSymbolPropertyValue, binder.Location, value.ToString().ToPascalCase(), valueType.Name, FullName, propertyType.Name));
+                                else context.AddDiagnostic(Diagnostic.Create(CommonErrorCode.ERR_InvalidModelObjectPropertyValue, binder.Location, (modelSymbol?.ModelObject ?? value).ToString().ToPascalCase(), valueType.Name, FullName, propertyType.Name));
                             }
                         }
                         else
                         {
-                            if (valueType is null || valueType.IsAssignableFrom(value.GetType()))
+                            if (propertyType is null || propertyType.IsAssignableFrom(value.GetType()))
                             {
                                 result.Add(value);
                             }
                             else
                             {
-                                var modelObjectTypeNames = string.Join(",", _modelObjectTypes.Select(t => t.FullName));
-                                context.AddDiagnostic(Diagnostic.Create(CommonErrorCode.ERR_BindingError, binder.Location, $"Cannot assign value '{value}':'{value.GetType()}' to property '{Name}':'{valueType}' (of {modelObjectTypeNames})"));
+                                if (isSymbol) context.AddDiagnostic(Diagnostic.Create(CommonErrorCode.ERR_InvalidSymbolPrimitivePropertyValue, binder.Location, value, value.GetType(), FullName, propertyType.Name));
+                                else context.AddDiagnostic(Diagnostic.Create(CommonErrorCode.ERR_InvalidModelObjectPrimitivePropertyValue, binder.Location, value, value.GetType(), FullName, propertyType.Name));
                             }
                         }
                     }
                 }
                 return result.ToImmutableAndFree();
+            }
+        }
+
+        public string FullName
+        {
+            get
+            {
+                if (_modelObjectTypes.IsDefaultOrEmpty) return Name;
+                if (_modelObjectTypes.Length == 1) return $"{_modelObjectTypes[0].Name}.{Name}";
+                var builder = PooledStringBuilder.GetInstance();
+                var sb = builder.Builder;
+                var separator = "{";
+                foreach (var type in _modelObjectTypes)
+                {
+                    sb.Append(separator);
+                    sb.Append(type.Name);
+                    separator = ", ";
+                }
+                sb.Append("}.");
+                sb.Append(Name);
+                return builder.ToStringAndFree();
             }
         }
 
@@ -157,26 +186,39 @@ namespace MetaDslx.CodeAnalysis.Binding
                 var valueTypes = PooledHashSet<Type>.GetInstance();
                 foreach (var modelObjectType in modelObjectTypes)
                 {
-                    var info = symbolFactory.GetModelObjectInfo(modelObjectType);
-                    if (info is not null)
+                    if (typeof(Symbol).IsAssignableFrom(modelObjectType))
                     {
-                        var modelProperty = info.GetProperty(this.Name);
-                        if (modelProperty is not null)
+                        if (this.Name == "Name") isName = true;
+                        var symbolProperty = modelObjectType.GetProperty(this.Name, BindingFlags.Public | BindingFlags.Instance);
+                        var propertyType = ExtractCoreType(symbolProperty.PropertyType);
+                        if (propertyType is not null)
                         {
-                            if (modelProperty.IsName) isName = true;
-                            var modelPropertyType = modelProperty.Type;
-                            if (modelPropertyType is not null)
+                            valueTypes.Add(propertyType);
+                        }
+                    }
+                    else
+                    {
+                        var info = symbolFactory.GetModelObjectInfo(modelObjectType);
+                        if (info is not null)
+                        {
+                            var modelProperty = info.GetProperty(this.Name);
+                            if (modelProperty is not null)
                             {
-                                valueTypes.Add(modelPropertyType);
+                                if (modelProperty.IsName) isName = true;
+                                var modelPropertyType = modelProperty.Type;
+                                if (modelPropertyType is not null)
+                                {
+                                    valueTypes.Add(modelPropertyType);
+                                }
+                                else
+                                {
+                                    context.AddDiagnostic(Diagnostic.Create(CommonErrorCode.ERR_BindingError, Location, $"Property '{Name}' of model object '{modelObjectType}' has no type."));
+                                }
                             }
                             else
                             {
-                                context.AddDiagnostic(Diagnostic.Create(CommonErrorCode.ERR_BindingError, Location, $"Property '{Name}' of model object '{modelObjectType}' has no type."));
+                                context.AddDiagnostic(Diagnostic.Create(CommonErrorCode.ERR_BindingError, Location, $"Property '{Name}' of model object '{modelObjectType}' does not exist."));
                             }
-                        }
-                        else
-                        {
-                            context.AddDiagnostic(Diagnostic.Create(CommonErrorCode.ERR_BindingError, Location, $"Property '{Name}' of model object '{modelObjectType}' does not exist."));
                         }
                     }
                 }
@@ -201,6 +243,46 @@ namespace MetaDslx.CodeAnalysis.Binding
                 modelObjectTypes.Free();
             }
             return _valueType;
+        }
+
+        private Type ExtractCoreType(Type type)
+        {
+            if (type is null) return null;
+            return ExtractNullableType(ExtractItemType(ExtractNullableType(type)));
+        }
+
+        private Type ExtractNullableType(Type type)
+        {
+            if (type.Namespace == "System" && type.Name == "Nullable`1")
+            {
+                var targs = type.GenericTypeArguments;
+                if (targs.Length == 1) return targs[0];
+            }
+            return type;
+        }
+
+        private Type ExtractItemType(Type type)
+        {
+            var targs = type.GenericTypeArguments;
+            if (targs.Length == 0) return type;
+            if (type.Namespace == "System.Collections.Immutable")
+            {
+                switch (type.Name)
+                {
+                    case "ImmutableArray`1":
+                    case "ImmutableList`1":
+                    case "ImmutableHashSet`1":
+                    case "ImmutableSortedSet`1":
+                        return targs[0];
+                    default:
+                        break;
+                }
+            }
+            if (typeof(ICollection<>).IsAssignableFrom(type))
+            {
+                return targs[0];
+            }
+            return type;
         }
 
         public override string ToString()

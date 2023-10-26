@@ -801,6 +801,11 @@ namespace MetaDslx.CodeAnalysis
 
         #region Semantic Analysis
 
+        public void Compile(CancellationToken cancellationToken = default)
+        {
+            this.GetDiagnostics(cancellationToken);
+        }
+
         public ImmutableArray<Diagnostic> GetDiagnostics(CancellationToken cancellationToken = default)
         {
             if (_diagnostics.IsDefault)

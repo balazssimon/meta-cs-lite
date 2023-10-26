@@ -48,21 +48,29 @@ foreach (var module in mmComp.SourceAssembly.Modules)
 //*/
 
 var root = mmTree.GetRoot();
+
+Console.WriteLine("----");
+mmComp.Compile();
+
+foreach (var diag in mmComp.GetDiagnostics())
+{
+    Console.WriteLine(diag);
+}
+
+//*/
+Console.WriteLine("----");
 var rootBinder = mmComp.GetBinder(root);
 var bctx = BindingContext.GetInstance();
 rootBinder.CompleteBind(bctx, true);
 PrintBinders(string.Empty, rootBinder);
-
 Console.WriteLine("----");
 foreach (var diag in bctx.Diagnostics.ToReadOnly())
 {
     Console.WriteLine(diag);
 }
+//*/
+
 Console.WriteLine("----");
-foreach (var diag in mmComp.GetDiagnostics())
-{
-    Console.WriteLine(diag);
-}
 
 static void PrintSymbols(string indent, Symbol symbol)
 {

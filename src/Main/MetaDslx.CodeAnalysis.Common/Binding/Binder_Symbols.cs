@@ -34,9 +34,9 @@ namespace MetaDslx.CodeAnalysis.Binding
                     if (last is null || last.IsError) break;
                     var identifierContext = i + 1 < qualifier.Length ? qualifierContext : context;
                     identifierContext.Qualifier = last;
-                    if (i + 1 < qualifier.Length) identifierContext.ClearResult();
+                    qualifierContext.ClearResult(); // intentionally qualifierContext, we don't want to clear the original context
                     result.Add(this.BindDeclaredOrAliasSymbolInternal(identifierContext, qualifier[i]));
-                    if (i + 1 < qualifier.Length) context.Diagnostics.AddRange(identifierContext.Diagnostics);
+                    context.Diagnostics.AddRange(qualifierContext.Diagnostics); // intentionally qualifierContext, diagnostics for the last identifier are collected in the original context
                     last = result[i];
                 }
                 qualifierContext.Free();
@@ -57,9 +57,11 @@ namespace MetaDslx.CodeAnalysis.Binding
             {
                 var result = ArrayBuilder<DeclaredSymbol>.GetInstance();
                 var qualifierContext = context.AllocateCopy();
+                qualifierContext.ClearResult();
                 qualifierContext.Validators.Clear();
                 qualifierContext.SetName(qualifier[0]);
                 result.Add(BindDeclaredOrAliasSymbolInternal(qualifierContext));
+                context.Diagnostics.AddRange(qualifierContext.Diagnostics);
                 var last = result[0];
                 for (int i = 0; i < qualifier.Length; i++)
                 {
@@ -67,7 +69,9 @@ namespace MetaDslx.CodeAnalysis.Binding
                     var identifierContext = i + 1 < qualifier.Length ? qualifierContext : context;
                     identifierContext.Qualifier = last;
                     identifierContext.SetName(qualifier[i]);
+                    qualifierContext.ClearResult(); // intentionally qualifierContext, we don't want to clear the original context
                     result.Add(this.BindDeclaredOrAliasSymbolInternal(identifierContext));
+                    context.Diagnostics.AddRange(qualifierContext.Diagnostics); // intentionally qualifierContext, diagnostics for the last identifier are collected in the original context
                     last = result[i];
                 }
                 qualifierContext.Free();
@@ -116,15 +120,11 @@ namespace MetaDslx.CodeAnalysis.Binding
             if (string.IsNullOrWhiteSpace(name))
             {
                 var errorInfo = new ErrorSymbolInfo(string.Empty, string.Empty, ImmutableArray<Symbol>.Empty, Diagnostic.Create(CommonErrorCode.ERR_SingleNameNotFound, context.Location, name));
+                context.AddDiagnostic(errorInfo.Diagnostic);
                 return context.ErrorSymbolFactory.CreateSymbol<TypeSymbol>(Compilation.GlobalNamespace, errorInfo);
             }
             this.LookupSymbols(context);
-            var result = context.GetResultSymbol();
-            if (context.Diagnose && result is IErrorSymbol errorSymbol)
-            {
-                context.Diagnostics.Add(errorSymbol.ErrorInfo.Diagnostic);
-            }
-            return result;
+            return context.GetResultSymbol();
         }
     }
 }
