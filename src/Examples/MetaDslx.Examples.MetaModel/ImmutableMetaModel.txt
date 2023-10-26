@@ -1,7 +1,9 @@
 ﻿namespace MetaDslx.Languages.Meta.Model;
 
-using MetaDslx.CodeAnalysis.Symbols;
-using b = MetaDslx.CodeAnalysis.Binding;
+//using MetaDslx.CodeAnalysis.Symbols;
+//using b = MetaDslx.CodeAnalysis.Binding;
+//using "imported.txt";
+using ImportedNs;
 
 metamodel Meta;
 
@@ -17,6 +19,8 @@ abstract class MetaElement
 abstract class MetaDocumentedElement : MetaElement
 {
 	string Documentation;
+	ImportedClass c1;
+	ImportedNs.ImportedClass c2;
 }
 
 abstract class MetaNamedElement : MetaDocumentedElement

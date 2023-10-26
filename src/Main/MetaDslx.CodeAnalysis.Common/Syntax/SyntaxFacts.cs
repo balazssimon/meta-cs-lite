@@ -2,6 +2,7 @@
 using Roslyn.Utilities;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -91,55 +92,125 @@ namespace MetaDslx.CodeAnalysis.Syntax
         public virtual object? ExtractValue(SyntaxNodeOrToken nodeOrToken)
         {
             if (nodeOrToken.IsToken) return nodeOrToken.AsToken().Value;
-            else return ExtractValue(nodeOrToken.AsNode()?.ToString());
+            TryExtractValue(null, nodeOrToken.AsNode()?.ToString(), out var value);
+            return value;
         }
 
-        public virtual object? ExtractValue(string? value)
+        public virtual bool TryExtractValue(Type? expectedType, string? valueText, out object? value)
         {
-            if (value == null) return null;
-            if (value == "null") return null;
-            if (value.Length >= 3 && value.StartsWith("@\'") && value.EndsWith("\'"))
+            if (expectedType is null)
             {
-                return value.Substring(2, value.Length - 3).Replace("\'\'", "\'");
+                if (valueText == null)
+                {
+                    value = null;
+                    return true;
+                }
+                if (valueText == "null")
+                {
+                    value = null;
+                    return true;
+                }
+                if (valueText.Length >= 3 && valueText.StartsWith("@\'") && valueText.EndsWith("\'"))
+                {
+                    value = valueText.Substring(2, valueText.Length - 3).Replace("\'\'", "\'");
+                    return true;
+                }
+                else if (valueText.Length >= 2 && valueText.StartsWith("\'") && valueText.EndsWith("\'"))
+                {
+                    value = StringUtilities.DecodeChar(valueText);
+                    return true;
+                }
+                else if (valueText.Length >= 3 && valueText.StartsWith("@\"") && valueText.EndsWith("\""))
+                {
+                    value = valueText.Substring(2, valueText.Length - 3).Replace("\"\"", "\"");
+                    return true;
+                }
+                else if (valueText.Length >= 2 && valueText.StartsWith("\"") && valueText.EndsWith("\""))
+                {
+                    value = StringUtilities.DecodeString(valueText);
+                    return true;
+                }
+                bool boolValue;
+                if (bool.TryParse(valueText, out boolValue))
+                {
+                    value = boolValue;
+                    return true;
+                }
+                int intValue;
+                if (int.TryParse(valueText, out intValue))
+                {
+                    value = intValue;
+                    return true;
+                }
+                long longValue;
+                if (long.TryParse(valueText, out longValue))
+                {
+                    value = longValue;
+                    return true;
+                }
+                float floatValue;
+                if (float.TryParse(valueText, out floatValue))
+                {
+                    value = floatValue;
+                    return true;
+                }
+                double doubleValue;
+                if (double.TryParse(valueText, out doubleValue))
+                {
+                    value = doubleValue;
+                    return true;
+                }
+                value = valueText;
+                return true;
             }
-            else if (value.Length >= 2 && value.StartsWith("\'") && value.EndsWith("\'"))
+            else if (expectedType == typeof(string))
             {
-                return StringUtilities.DecodeChar(value);
+                if (valueText == null)
+                {
+                    value = null;
+                    return true;
+                }
+                if (valueText == "null")
+                {
+                    value = null;
+                    return true;
+                }
+                if (valueText.Length >= 3 && valueText.StartsWith("@\'") && valueText.EndsWith("\'"))
+                {
+                    value = valueText.Substring(2, valueText.Length - 3).Replace("\'\'", "\'");
+                    return true;
+                }
+                else if (valueText.Length >= 2 && valueText.StartsWith("\'") && valueText.EndsWith("\'"))
+                {
+                    value = StringUtilities.DecodeChar(valueText);
+                    return true;
+                }
+                else if (valueText.Length >= 3 && valueText.StartsWith("@\"") && valueText.EndsWith("\""))
+                {
+                    value = valueText.Substring(2, valueText.Length - 3).Replace("\"\"", "\"");
+                    return true;
+                }
+                else if (valueText.Length >= 2 && valueText.StartsWith("\"") && valueText.EndsWith("\""))
+                {
+                    value = StringUtilities.DecodeString(valueText);
+                    return true;
+                }
+                value = valueText;
+                return true;
             }
-            else if (value.Length >= 3 && value.StartsWith("@\"") && value.EndsWith("\""))
+            else
             {
-                return value.Substring(2, value.Length - 3).Replace("\"\"", "\"");
+                try
+                {
+                    value = TypeDescriptor.GetConverter(expectedType).ConvertFromInvariantString(valueText);
+                    return true;
+                }
+                catch (NotSupportedException)
+                {
+                    value = null;
+                    return false;
+                }
             }
-            else if (value.Length >= 2 && value.StartsWith("\"") && value.EndsWith("\""))
-            {
-                return StringUtilities.DecodeString(value);
-            }
-            bool boolValue;
-            if (bool.TryParse(value, out boolValue))
-            {
-                return boolValue;
-            }
-            int intValue;
-            if (int.TryParse(value, out intValue))
-            {
-                return intValue;
-            }
-            long longValue;
-            if (long.TryParse(value, out longValue))
-            {
-                return longValue;
-            }
-            float floatValue;
-            if (float.TryParse(value, out floatValue))
-            {
-                return floatValue;
-            }
-            double doubleValue;
-            if (double.TryParse(value, out doubleValue))
-            {
-                return doubleValue;
-            }
-            return value;
         }
 
         public virtual bool IsTriviaWithEndOfLine(GreenNode trivia)

@@ -108,13 +108,21 @@ namespace MetaDslx.CodeAnalysis.Binding
                         {
                             var modelSymbol = value as IModelSymbol;
                             var valueType = modelSymbol?.ModelObject is not null ? modelSymbol.ModelObjectType : value.GetType();
-                            if (propertyType is null || propertyType.IsAssignableFrom(valueType))
+                            if (propertyType is null)
                             {
                                 result.Add(symbol);
                             }
                             else if (isName && propertyType == typeof(string))
                             {
                                 result.Add(symbol.Name);
+                            }
+                            else if (typeof(Symbol).IsAssignableFrom(propertyType) && propertyType.IsAssignableFrom(symbol.GetType()))
+                            {
+                                result.Add(symbol);
+                            }
+                            else if (propertyType.IsAssignableFrom(valueType))
+                            {
+                                result.Add(value);
                             }
                             else
                             {

@@ -162,7 +162,7 @@ namespace MetaDslx.CodeAnalysis.Declarations
                 AppendAllLoadedSyntaxTrees(treesBuilder, tree, scriptClassName, resolver, language, isSubmission, ordinalMapBuilder, loadDirectiveMapBuilder, loadedSyntaxTreeMapBuilder, declMapBuilder, ref declTable);
             }
 
-            AddSyntaxTreeToDeclarationMapAndTable(tree, scriptClassName, isSubmission, declMapBuilder, ref declTable);
+            AddSyntaxTreeToDeclarationMapAndTable(tree, ordinalMapBuilder.Count, scriptClassName, isSubmission, declMapBuilder, ref declTable);
 
             treesBuilder.Add(tree);
 
@@ -263,13 +263,14 @@ namespace MetaDslx.CodeAnalysis.Declarations
         
         private static void AddSyntaxTreeToDeclarationMapAndTable(
             SyntaxTree tree,
+            int treeNum,
             string scriptClassName,
             bool isSubmission,
             IDictionary<SyntaxTree, LazyRootDeclaration> declMapBuilder,
             ref DeclarationTable declTable)
         {
             var language = tree.Language;
-            var lazyRoot = new LazyRootDeclaration(tree, scriptClassName, isSubmission);
+            var lazyRoot = new LazyRootDeclaration(tree, treeNum, scriptClassName, isSubmission);
             declMapBuilder.Add(tree, lazyRoot); // Callers are responsible for checking for existing entries.
             declTable = declTable.AddRootDeclaration(lazyRoot);
         }
@@ -525,7 +526,7 @@ namespace MetaDslx.CodeAnalysis.Declarations
             }
             else
             {
-                AddSyntaxTreeToDeclarationMapAndTable(newTree, this.ScriptClassName, this.IsSubmission, declMapBuilder, ref declTable);
+                AddSyntaxTreeToDeclarationMapAndTable(newTree, oldOrdinal, this.ScriptClassName, this.IsSubmission, declMapBuilder, ref declTable);
 
                 if (newLoadDirectivesSyntax.Any())
                 {

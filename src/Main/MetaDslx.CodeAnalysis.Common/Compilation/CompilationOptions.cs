@@ -15,12 +15,15 @@ namespace MetaDslx.CodeAnalysis
 
         private readonly bool _referencesSupersedeLowerVersions;
         private readonly bool _concurrentBuild;
+        private readonly bool _mergeGlobalNamespace;
 
         public CompilationOptions(bool referencesSupersedeLowerVersions = true,
-            bool concurrentBuild = true)
+            bool concurrentBuild = true,
+            bool mergeGlobalNamespace = true)
         {
             _referencesSupersedeLowerVersions = referencesSupersedeLowerVersions;
             _concurrentBuild = concurrentBuild;
+            _mergeGlobalNamespace = mergeGlobalNamespace;
 
             _lazyErrors = new Lazy<ImmutableArray<Diagnostic>>(() =>
             {
@@ -48,21 +51,33 @@ namespace MetaDslx.CodeAnalysis
         /// </summary>
         public bool ConcurrentBuild => _concurrentBuild;
 
-        public CompilationOptions WithReferencesSupersedeLowerVersions(bool referencesSupersedeLowerVersions)
+        /// <summary>
+        /// Specifies whether the global namespaces of the individual files should be merged together.
+        /// To force files explicitly import each other, set this property to false.
+        /// </summary>
+        public bool MergeGlobalNamespace => _mergeGlobalNamespace;
+
+        public CompilationOptions WithReferencesSupersedeLowerVersions(bool value)
         {
-            if (_referencesSupersedeLowerVersions != referencesSupersedeLowerVersions) return Update(referencesSupersedeLowerVersions, _concurrentBuild);
+            if (_referencesSupersedeLowerVersions != value) return Update(value, _concurrentBuild, _mergeGlobalNamespace);
             else return this;
         }
 
-        public CompilationOptions WithConcurrentBuild(bool concurrentBuild)
+        public CompilationOptions WithConcurrentBuild(bool value)
         {
-            if (_concurrentBuild != concurrentBuild) return Update(_referencesSupersedeLowerVersions, concurrentBuild);
+            if (_concurrentBuild != value) return Update(_referencesSupersedeLowerVersions, value, _mergeGlobalNamespace);
             else return this;
         }
 
-        protected virtual CompilationOptions Update(bool referencesSupersedeLowerVersions, bool concurrentBuild)
+        public CompilationOptions WithMergeGlobalNamespace(bool value)
         {
-            return new CompilationOptions(referencesSupersedeLowerVersions, concurrentBuild);
+            if (_mergeGlobalNamespace != value) return Update(_referencesSupersedeLowerVersions, _concurrentBuild, value);
+            else return this;
+        }
+
+        protected virtual CompilationOptions Update(bool referencesSupersedeLowerVersions, bool concurrentBuild, bool mergeGlobalNamespace)
+        {
+            return new CompilationOptions(referencesSupersedeLowerVersions, concurrentBuild, mergeGlobalNamespace);
         }
 
         /// <summary>

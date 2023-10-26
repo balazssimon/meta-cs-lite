@@ -1,6 +1,7 @@
 ﻿using MetaDslx.CodeAnalysis.Declarations;
 using MetaDslx.CodeAnalysis.PooledObjects;
 using Microsoft.CodeAnalysis;
+using Roslyn.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -86,18 +87,13 @@ namespace MetaDslx.CodeAnalysis.Binding
                 context.AddDiagnostic(Diagnostic.Create(CommonErrorCode.ERR_BindingError, Location, $"Value '{RawValue}' is not enclosed in an IPropertyBinder."));
             }
             var expectedType = propertyBinder?.GetValueType(context);
-            if (expectedType is not null)
+            if (Language.SyntaxFacts.TryExtractValue(expectedType, RawValue, out var value))
             {
-                try
-                {
-                    var value = TypeDescriptor.GetConverter(expectedType).ConvertFromInvariantString(RawValue);
-                    return value;
-                }
-                catch (NotSupportedException)
-                {
-                    context.AddDiagnostic(Diagnostic.Create(CommonErrorCode.ERR_BindingError, Location, $"Value '{RawValue}' cannot be converted to type '{expectedType.FullName}'. Are you missing a TypeConverter?"));
-                }
-                return null;
+                return value;
+            }
+            else
+            {
+                context.AddDiagnostic(Diagnostic.Create(CommonErrorCode.ERR_BindingError, Location, $"Value '{RawValue}' cannot be converted to type '{expectedType.FullName}'. Are you missing a TypeConverter?"));
             }
             return null;
         }

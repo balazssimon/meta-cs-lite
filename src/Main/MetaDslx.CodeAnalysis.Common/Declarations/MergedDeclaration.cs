@@ -55,17 +55,17 @@ namespace MetaDslx.CodeAnalysis.Declarations
                 if (declaration.ModelObjectType != null)
                 {
                     if (modelObjectType == null) modelObjectType = declaration.ModelObjectType;
-                    else throw new ArgumentException("The merged declarations must have the same model object type.", nameof(declarations));
+                    else if (modelObjectType != declaration.ModelObjectType) throw new ArgumentException("The merged declarations must have the same model object type.", nameof(declarations));
                 }
                 if (!string.IsNullOrEmpty(declaration.Name))
                 {
                     if (string.IsNullOrEmpty(name)) name = declaration.Name;
-                    else throw new ArgumentException("The merged declarations must have the same name.", nameof(declarations));
+                    else if (name != declaration.Name) throw new ArgumentException("The merged declarations must have the same name.", nameof(declarations));
                 }
                 if (!string.IsNullOrEmpty(declaration.MetadataName))
                 {
                     if (string.IsNullOrEmpty(metadataName)) metadataName = declaration.MetadataName;
-                    else throw new ArgumentException("The merged declarations must have the same metadata name.", nameof(declarations));
+                    else if (metadataName != declaration.MetadataName) throw new ArgumentException("The merged declarations must have the same metadata name.", nameof(declarations));
                 }
                 hasChildren |= declaration.Children.Length > 0;
                 hasChildrenWithName |= declaration.Children.Any(child => !string.IsNullOrEmpty(child.Name));

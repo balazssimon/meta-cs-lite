@@ -9,13 +9,15 @@ namespace MetaDslx.CodeAnalysis.Declarations
     public sealed class LazyRootDeclaration
     {
         private readonly SyntaxTree _syntaxTree;
+        private readonly int _treeNum;
         private readonly string? _scriptClassName;
         private readonly bool _isSubmission;
         private RootSingleDeclaration? _rootDeclaration;
 
-        internal LazyRootDeclaration(SyntaxTree syntaxTree, string? scriptClassName, bool isSubmission)
+        internal LazyRootDeclaration(SyntaxTree syntaxTree, int treeNum, string? scriptClassName, bool isSubmission)
         {
             _syntaxTree = syntaxTree;
+            _treeNum = treeNum;
             _scriptClassName = scriptClassName;
             _isSubmission = isSubmission;
         }
@@ -27,7 +29,7 @@ namespace MetaDslx.CodeAnalysis.Declarations
             if (_rootDeclaration is null)
             {
                 RootSingleDeclaration? rootDeclaration;
-                var rootBinder = compilation.GetRootBinder(_syntaxTree);
+                var rootBinder = compilation.GetBinderFactoryForDeclarationTable(_syntaxTree, _treeNum).RootBinder;
                 if (rootBinder != null)
                 {
                     rootDeclaration = rootBinder.BuildDeclarationTree(_scriptClassName, _isSubmission);

@@ -37,7 +37,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
         protected override CompletionGraph CompletionGraph => CompletionParts.CompletionGraph;
 
         [ModelProperty]
-        public ImmutableArray<string> FileNames => ImmutableArray<string>.Empty;
+        public ImmutableArray<string> Files => ImmutableArray<string>.Empty;
 
         [ModelProperty]
         public ImmutableArray<AliasSymbol> Aliases

@@ -23,7 +23,7 @@ namespace MetaDslx.CodeAnalysis.Declarations
     {
         public static readonly DeclarationTable Empty = new DeclarationTable(
             compilation: null,
-            allOlderRootDeclarations: ImmutableSetWithInsertionOrder<RootSingleDeclaration>.Empty,
+            allOlderRootDeclarations: ImmutableSetWithInsertionOrder<LazyRootDeclaration>.Empty,
             latestLazyRootDeclaration: null,
             cache: null);
 
@@ -32,7 +32,7 @@ namespace MetaDslx.CodeAnalysis.Declarations
 
         // All our root declarations.  We split these so we can separate out the unchanging 'older'
         // declarations from the constantly changing 'latest' declaration.
-        private readonly ImmutableSetWithInsertionOrder<RootSingleDeclaration> _allOlderRootDeclarations;
+        private readonly ImmutableSetWithInsertionOrder<LazyRootDeclaration> _allOlderRootDeclarations;
         private readonly LazyRootDeclaration _latestLazyRootDeclaration;
 
         // The cache of computed values for the old declarations.
@@ -47,7 +47,7 @@ namespace MetaDslx.CodeAnalysis.Declarations
 
         private DeclarationTable(
             Compilation compilation,
-            ImmutableSetWithInsertionOrder<RootSingleDeclaration> allOlderRootDeclarations,
+            ImmutableSetWithInsertionOrder<LazyRootDeclaration> allOlderRootDeclarations,
             LazyRootDeclaration? latestLazyRootDeclaration,
             Cache? cache)
         {
@@ -64,7 +64,7 @@ namespace MetaDslx.CodeAnalysis.Declarations
         {
             return new DeclarationTable(
                 compilation: compilation,
-                allOlderRootDeclarations: ImmutableSetWithInsertionOrder<RootSingleDeclaration>.Empty,
+                allOlderRootDeclarations: ImmutableSetWithInsertionOrder<LazyRootDeclaration>.Empty,
                 latestLazyRootDeclaration: null,
                 cache: null);
         }
@@ -82,7 +82,7 @@ namespace MetaDslx.CodeAnalysis.Declarations
                 // we already had a 'latest' item.  This means we're hearing about a change to a
                 // different tree.  Realize the old latest item, add it to the 'oldest' collection
                 // and don't reuse the cache.
-                return new DeclarationTable(_compilation, _allOlderRootDeclarations.Add(_latestLazyRootDeclaration.GetValue(_compilation)), lazyRootDeclaration, cache: null);
+                return new DeclarationTable(_compilation, _allOlderRootDeclarations.Add(_latestLazyRootDeclaration), lazyRootDeclaration, cache: null);
             }
         }
 
@@ -101,7 +101,7 @@ namespace MetaDslx.CodeAnalysis.Declarations
                 //
                 // Note: we can keep around the 'latestLazyRootDeclaration'.  There's no need to
                 // realize it if we don't have to.
-                return new DeclarationTable(_compilation, _allOlderRootDeclarations.Remove(lazyRootDeclaration.GetValue(_compilation)), _latestLazyRootDeclaration, cache: null);
+                return new DeclarationTable(_compilation, _allOlderRootDeclarations.Remove(lazyRootDeclaration), _latestLazyRootDeclaration, cache: null);
             }
         }
 

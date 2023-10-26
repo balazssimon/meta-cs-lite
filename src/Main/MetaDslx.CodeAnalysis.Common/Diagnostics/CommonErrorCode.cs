@@ -143,5 +143,15 @@ namespace MetaDslx.CodeAnalysis
         /// {0} of type '{1}' cannot be assigned to model property '{2}:{3}'
         /// </summary>
         public static readonly DiagnosticDescriptor ERR_InvalidModelObjectPropertyValue = DiagnosticDescriptor.Error(nameof(ERR_InvalidModelObjectPropertyValue), "Invalid value", "{0} of type '{1}' cannot be assigned to model property '{2}:{3}'");
+
+        /// <summary>
+        /// File imports are disabled. To enable file imports set CompilationOptions.MergeGlobalNamespace to false.
+        /// </summary>
+        public static readonly DiagnosticDescriptor ERR_FileImportsDisabled = DiagnosticDescriptor.Error(nameof(ERR_FileImportsDisabled), "File imports disabled", "File imports are disabled. To enable file imports set CompilationOptions.MergeGlobalNamespace to false.");
+
+        /// <summary>
+        /// Imported file '0' ('{1}') could not be found.
+        /// </summary>
+        public static readonly DiagnosticDescriptor ERR_ImportedFileNotFound = DiagnosticDescriptor.Error(nameof(ERR_ImportedFileNotFound), "Import not found", "Imported file '{0}' ('{1}') could not be found.");
     }
 }

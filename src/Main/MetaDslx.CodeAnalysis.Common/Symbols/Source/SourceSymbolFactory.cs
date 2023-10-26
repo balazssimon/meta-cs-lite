@@ -82,6 +82,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
 
         protected Symbol? CreateSymbol(Type symbolType, ISourceSymbol container, MergedDeclaration declaration)
         {
+            if (declaration?.ModelObjectType is null) return null;
             if (_non_mo_constructors.TryGetValue(declaration.ModelObjectType, out var non_mo_constructor))
             {
                 return non_mo_constructor((Symbol)container, declaration);

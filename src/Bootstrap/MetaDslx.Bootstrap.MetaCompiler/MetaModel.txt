@@ -16,7 +16,7 @@ Main returns MetaNamespace:
 	Declarations
 	eof;
 
-UsingDeclaration returns ImportSymbol: 'using' (namespaces+=#NamespaceSymbol | aliases+=ImportSymbolAlias) ';';
+UsingDeclaration returns ImportSymbol: 'using' (namespaces+=#NamespaceSymbol | aliases+=ImportSymbolAlias | files+=TString) ';';
 ImportSymbolAlias returns AliasSymbol: name=Name '=' target=#DeclaredSymbol;
 
 [Scope]
@@ -83,7 +83,7 @@ token TIdentifier[DefaultIdentifier]: ('_'|'a'..'z'|'A'..'Z')+('_'|'a'..'z'|'A'.
 
 token TComma[DefaultSeparator]: ',' ;
 
-token TString[String]: '"' .*? '"';
+token TString[String] returns string: '"' .*? '"';
 
 token TWhitespace[DefaultWhitespace]: ('\t'|' ') +;
 

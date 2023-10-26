@@ -692,16 +692,22 @@ namespace MetaDslx.CodeAnalysis
 
         #region Binding
 
-        public BinderFactory GetBinderFactory(SyntaxTree syntaxTree, bool ignoreAccessibility = false)
+        internal BinderFactory GetBinderFactoryForDeclarationTable(SyntaxTree syntaxTree, int treeNum)
         {
-            return GetBinderFactory(syntaxTree, ignoreAccessibility, ref _binderFactories);
+            return GetBinderFactory(syntaxTree, true, treeNum, ref _ignoreAccessibilityBinderFactories);
         }
 
-        private BinderFactory GetBinderFactory(SyntaxTree syntaxTree, bool ignoreAccessibility, ref WeakReference<BinderFactory>[]? cachedBinderFactories)
+        public BinderFactory GetBinderFactory(SyntaxTree syntaxTree, bool ignoreAccessibility = false)
+        {
+            var treeNum = GetSyntaxTreeOrdinal(syntaxTree);
+            if (ignoreAccessibility) return GetBinderFactory(syntaxTree, ignoreAccessibility, treeNum, ref _ignoreAccessibilityBinderFactories);
+            else return GetBinderFactory(syntaxTree, ignoreAccessibility, treeNum, ref _binderFactories);
+        }
+
+        private BinderFactory GetBinderFactory(SyntaxTree syntaxTree, bool ignoreAccessibility, int treeNum, ref WeakReference<BinderFactory>[]? cachedBinderFactories)
         {
             Debug.Assert(System.Runtime.CompilerServices.Unsafe.AreSame(ref cachedBinderFactories, ref ignoreAccessibility ? ref _ignoreAccessibilityBinderFactories : ref _binderFactories));
 
-            var treeNum = GetSyntaxTreeOrdinal(syntaxTree);
             WeakReference<BinderFactory>[]? binderFactories = cachedBinderFactories;
             if (binderFactories == null)
             {
@@ -796,6 +802,11 @@ namespace MetaDslx.CodeAnalysis
         }
 
         public NamespaceSymbol GlobalNamespace => SourceAssembly.GlobalNamespace;
+
+        public NamespaceSymbol GetRootNamespace(SyntaxTree syntaxTree)
+        {
+            return SourceModule.GetRootNamespace(syntaxTree);
+        }
 
         #endregion
 

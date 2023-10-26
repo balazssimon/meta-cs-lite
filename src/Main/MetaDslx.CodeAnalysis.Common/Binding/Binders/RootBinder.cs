@@ -1,10 +1,13 @@
 ﻿using MetaDslx.CodeAnalysis.Declarations;
 using MetaDslx.CodeAnalysis.PooledObjects;
 using MetaDslx.CodeAnalysis.Symbols;
+using MetaDslx.CodeAnalysis.Symbols.Source;
 using MetaDslx.CodeAnalysis.Text;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Diagnostics;
+using System.Linq;
 using System.Text;
 using System.Threading;
 
@@ -52,7 +55,8 @@ namespace MetaDslx.CodeAnalysis.Binding
             {
                 if (_definedSymbols.IsDefault)
                 {
-                    ImmutableInterlocked.InterlockedInitialize(ref _definedSymbols, ImmutableArray.Create<Symbol>(Compilation.SourceModule.GlobalNamespace));
+                    var rootNamespace = Compilation.GetRootNamespace(this.SyntaxTree);
+                    ImmutableInterlocked.InterlockedInitialize(ref _definedSymbols, ImmutableArray.Create<Symbol>(rootNamespace));
                 }
                 return _definedSymbols;
             }
@@ -89,11 +93,27 @@ namespace MetaDslx.CodeAnalysis.Binding
 
         protected override void AddLookupCandidateSymbolsInSingleBinder(LookupContext context, LookupCandidates result)
         {
-            foreach (var symbol in Compilation.GlobalNamespace.ContainedSymbols)
+            if (Compilation.Options.MergeGlobalNamespace)
             {
-                if (symbol is DeclaredSymbol declaredSymbol && context.IsViable(declaredSymbol))
+                foreach (var symbol in Compilation.GlobalNamespace.ContainedSymbols)
                 {
-                    result.Add(declaredSymbol);
+                    if (symbol is DeclaredSymbol declaredSymbol && context.IsViable(declaredSymbol))
+                    {
+                        result.Add(declaredSymbol);
+                    }
+                }
+            }
+            else
+            {
+                foreach (var rootNamespace in DefinedSymbols)
+                {
+                    foreach (var symbol in rootNamespace.ContainedSymbols.Where(s => s is ISourceSymbol ss && ss.DeclaringSyntaxReferences.Any(d => d.SyntaxTree == this.SyntaxTree)))
+                    {
+                        if (symbol is DeclaredSymbol declaredSymbol && context.IsViable(declaredSymbol))
+                        {
+                            result.Add(declaredSymbol);
+                        }
+                    }
                 }
             }
         }

@@ -1,9 +1,12 @@
 ﻿using MetaDslx.CodeAnalysis.Declarations;
+using MetaDslx.CodeAnalysis.PooledObjects;
 using MetaDslx.CodeAnalysis.Symbols.Model;
 using MetaDslx.Modeling;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Diagnostics;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Xml.Linq;
@@ -18,6 +21,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
         private readonly IModel _model;
         private readonly IMultiModelFactory _modelFactory;
         private readonly DeclarationTable _declarations;
+        private ImmutableArray<NamespaceSymbol> _fileNamespaces;
 
         public SourceModuleSymbol(SourceAssemblySymbol assemblySymbol, string moduleName, DeclarationTable declarations)
             : base(assemblySymbol)
@@ -52,9 +56,50 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
         public IModelObject ModelObject => null;
         public Type ModelObjectType => null;
 
+        public ImmutableArray<NamespaceSymbol> FileNamespaces
+        {
+            get
+            {
+                ForceComplete(CompletionGraph.FinishCreatingContainedSymbols, null, default);
+                return _fileNamespaces;
+            }
+        }
+
+        public NamespaceSymbol GetRootNamespace(SyntaxTree syntaxTree)
+        {
+            if (!DeclaringCompilation.ContainsSyntaxTree(syntaxTree)) throw new ArgumentException(nameof(syntaxTree), "Syntax tree must be from the current compilation.");
+            var globalNamespace = GlobalNamespace;
+            if (!DeclaringCompilation.Options.MergeGlobalNamespace)
+            {
+                var index = DeclaringCompilation.GetSyntaxTreeOrdinal(syntaxTree);
+                return _fileNamespaces[index];
+            }
+            return globalNamespace;
+        }
+
         protected override NamespaceSymbol CompleteProperty_GlobalNamespace(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            return SymbolFactory.CreateSymbol<NamespaceSymbol>(this, Declaration);
+            var globalNamespace = SymbolFactory.CreateSymbol<NamespaceSymbol>(this, Declaration);
+            if (!DeclaringCompilation.Options.MergeGlobalNamespace)
+            {
+                var fileNamespaces = ArrayBuilder<NamespaceSymbol>.GetInstance();
+                foreach (var syntaxTree in DeclaringCompilation.SyntaxTrees)
+                {
+                    var decl = Declaration.Declarations.FirstOrDefault(d => d.SyntaxReference.SyntaxTree == syntaxTree);
+                    Debug.Assert(decl is not null);
+                    /*if (decl is not null)
+                    {
+                        var fileNamespace = SymbolFactory.CreateSymbol<NamespaceSymbol>((ISourceSymbol)globalNamespace, Declaration);
+                        fileNamespaces.Add(fileNamespace);
+                    }
+                    else
+                    {*/
+                        fileNamespaces.Add(globalNamespace);
+                    //}
+                }
+                _fileNamespaces = fileNamespaces.ToImmutableAndFree();
+            }
+            return globalNamespace;
         }
     }
 }

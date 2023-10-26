@@ -32,7 +32,7 @@ namespace MetaDslx.CodeAnalysis.Declarations
             public Cache(DeclarationTable table)
             {
                 this.MergedRoot = new Lazy<MergedDeclaration>(
-                    () => MergedDeclaration.Create(table._allOlderRootDeclarations.InInsertionOrder.AsImmutable<SingleDeclaration>()));
+                    () => MergedDeclaration.Create(table._allOlderRootDeclarations.InInsertionOrder.Select(d => d.GetValue(table._compilation)).AsImmutable<SingleDeclaration>()));
 
                 /*this.TypeNames = new Lazy<ISet<string>>(
                     () => GetTypeNames(this.MergedRoot.Value));

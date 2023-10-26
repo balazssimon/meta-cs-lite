@@ -6,8 +6,10 @@ using MetaDslx.Examples.MetaModel;
 using MetaDslx.Examples.MetaModel.Model;
 
 var mmCode = File.ReadAllText(@"..\..\..\ImmutableMetaModel.txt");
+var importedCode = File.ReadAllText(@"..\..\..\imported.txt");
 
-var mmTree = MetaModelSyntaxTree.ParseText(mmCode);
+var mmTree = MetaModelSyntaxTree.ParseText(mmCode, path: "ImmutableMetaModel.txt");
+var importedTree = MetaModelSyntaxTree.ParseText(importedCode, path: "imported.txt");
 
 foreach (var diag in mmTree.GetDiagnostics())
 {
@@ -19,7 +21,8 @@ var mmComp = Compilation.Create(
     //MetaModelLanguage.Instance,
     syntaxTrees: new[] 
     {
-        mmTree
+        mmTree,
+        importedTree
     }, 
     references: new[] 
     {
@@ -28,7 +31,7 @@ var mmComp = Compilation.Create(
         MetadataReference.CreateFromFile(typeof(string).Assembly.Location),
         MetadataReference.CreateFromFile(typeof(Compilation).Assembly.Location),
     },
-    options: CompilationOptions.Default.WithConcurrentBuild(false));
+    options: CompilationOptions.Default.WithConcurrentBuild(false).WithMergeGlobalNamespace(true));
 
 //*/
 var rootDecl = mmComp.RootDeclaration;
