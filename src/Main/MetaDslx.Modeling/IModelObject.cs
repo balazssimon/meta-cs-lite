@@ -8,14 +8,14 @@ namespace MetaDslx.Modeling
     public interface IModelObject
     {
         string Id { get; set; }
-        IMetaModel MetaModel { get; }
-        IModelObject? MetaClass { get; }
+        MetaModel MetaModel { get; }
         Type MetaType { get; }
-        IModelObjectInfo Info { get; }
-        IModel? Model { get; set; }
+        ModelObjectInfo Info { get; }
+        Model? Model { get; set; }
         string? Name { get; set; }
         IModelObject? Parent { get; }
         IList<IModelObject> Children { get; }
+        object? UnderlyingObject { get; }
         void Init(ModelProperty property, object? value);
         bool IsDefault(ModelProperty property);
         object? Get(ModelProperty property);

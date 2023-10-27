@@ -45,18 +45,15 @@ namespace MetaDslx.Modeling
         }
 
         public int Count => _items.Count;
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         public bool IsReadOnly => _slot.Flags.HasFlag(ModelPropertyFlags.ReadOnly);
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        public bool NonUnique => _slot.Flags.HasFlag(ModelPropertyFlags.NonUnique);
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        public bool NullableType => _slot.Flags.HasFlag(ModelPropertyFlags.NullableType);
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        public bool SingleItem => _slot.Flags.HasFlag(ModelPropertyFlags.SingleItem);
+        public bool IsNonUnique => _slot.Flags.HasFlag(ModelPropertyFlags.NonUnique);
+        public bool IsNullable => _slot.Flags.HasFlag(ModelPropertyFlags.NullableType);
+        public bool IsSingleItem => _slot.Flags.HasFlag(ModelPropertyFlags.SingleItem);
+
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         int IModelCollection.Count => Count;
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        object? IModelCollection.SingleItem
+
+        public object? SingleItem
         {
             get
             {
@@ -151,9 +148,10 @@ namespace MetaDslx.Modeling
 
         void IModelCollection.Add(object? item)
         {
-            if (item != null)
+            if (item is not null)
             {
-                _slot.ThrowModelException(mp => !mp.Type.IsAssignableFrom(item.GetType()), mp => $"Error adding '{item}' to '{mp.QualifiedName}' in '{Owner}': the item type '{item.GetType()}' is not assignable to the property type '{mp.Type}'.");
+                var itemType = GetType(item);
+                _slot.ThrowModelException(mp => !mp.Type.IsAssignableFrom(itemType), mp => $"Error adding '{item}' to '{mp.QualifiedName}' in '{Owner}': the item type '{itemType}' is not assignable to the property type '{mp.Type}'.");
             }
             if (item is T typedItem)
             {
@@ -193,7 +191,7 @@ namespace MetaDslx.Modeling
 
         private void ReplaceCore(int index, T item, bool fromOpposite)
         {
-            if (Owner.Model.ValidationOptions.ValidateNullable && !NullableType && item == null)
+            if (Owner.Model.ValidationOptions.ValidateNullable && !IsNullable && item == null)
             {
                 _slot.ThrowModelException(mp => mp.IsNullable, mp => $"Error assigning '{item}' to '{mp.QualifiedName}[{index}]' in '{Owner}': the item cannot be null.");
             }
@@ -203,16 +201,16 @@ namespace MetaDslx.Modeling
             {
                 if ((item is null && oldValue is not null) || (item is not null && !item.Equals(oldValue)))
                 {
-                    _items[index] = default(T);
+                    _items[index] = default;
                     _owner.ValueRemoved(_slot, oldValue, fromOpposite);
-                    if (NonUnique || !_items.Contains(item))
+                    if (IsNonUnique || !_items.Contains(item))
                     {
                         _items[index] = item;
                         _owner.ValueAdded(_slot, item, fromOpposite);
                     }
                     else
                     {
-                        _slot.ThrowModelException(mp => !mp.Type.IsAssignableFrom(item.GetType()), mp => $"Error assigning '{item}' to '{mp.QualifiedName}[{index}]' in '{Owner}': the item will not be unique in the collection.");
+                        _slot.ThrowModelException(mp => !mp.Type.IsAssignableFrom(GetType(item)), mp => $"Error assigning '{item}' to '{mp.QualifiedName}[{index}]' in '{Owner}': the item will not be unique in the collection.");
                     }
                 }
             }
@@ -226,16 +224,16 @@ namespace MetaDslx.Modeling
 
         private void InsertCore(int index, T item, bool fromOpposite)
         {
-            if (Owner.Model.ValidationOptions.ValidateNullable && !NullableType && item == null)
+            if (Owner.Model.ValidationOptions.ValidateNullable && !IsNullable && item == null)
             {
                 _slot.ThrowModelException(mp => mp.IsNullable, mp => $"Error inserting '{item}' at '{mp.QualifiedName}[{index}]' in '{Owner}': the item cannot be null.");
             }
             var valueAdded = false;
             try
             {
-                if (NonUnique || !_items.Contains(item))
+                if (IsNonUnique || !_items.Contains(item))
                 {
-                    if (SingleItem && _items.Count >= 1)
+                    if (IsSingleItem && _items.Count >= 1)
                     {
                         _slot.ThrowModelException(mp => mp.IsSingleItem, mp => $"Error inserting '{item}' at '{mp.QualifiedName}[{index}]' in '{Owner}': this collection can only contain a single item.");
                     }
@@ -260,7 +258,7 @@ namespace MetaDslx.Modeling
             {
                 _items.RemoveAt(index);
                 valueRemoved = true;
-                if (NonUnique || !_items.Contains(oldItem))
+                if (IsNonUnique || !_items.Contains(oldItem))
                 {
                     _owner.ValueRemoved(_slot, oldItem, fromOpposite);
                 }
@@ -277,17 +275,22 @@ namespace MetaDslx.Modeling
         {
             if (item is not null)
             {
-                _slot.ThrowModelException(mp => !mp.Type.IsAssignableFrom(item.GetType()), mp => $"Error adding '{item}' to '{mp.QualifiedName}' in '{Owner}': the item type '{item.GetType()}' is not assignable to the property type '{mp.Type}'.");
+                var itemType = GetType(item);
+                _slot.ThrowModelException(mp => !mp.Type.IsAssignableFrom(itemType), mp => $"Error adding '{item}' to '{mp.QualifiedName}' in '{Owner}': the item type '{itemType}' is not assignable to the property type '{mp.Type}'.");
             }
             InsertCore(_items.Count, (T)item, fromOpposite);
         }
 
         void IModelCollectionCore.RemoveCore(object? item, bool fromOpposite)
         {
-            if (item is not null && item.GetType() != typeof(T)) return;
+            if (item is not null && GetType(item) != typeof(T)) return;
             var index = _items.IndexOf((T)item);
             if (index >= 0) RemoveAtCore(index, fromOpposite);
         }
 
+        private Type GetType(object item)
+        {
+            return item is IModelObject mobj ? mobj.MetaType : item.GetType();
+        }
     }
 }

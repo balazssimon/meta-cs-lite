@@ -8,62 +8,68 @@ using System.Text;
 
 namespace MetaDslx.CodeAnalysis.Modeling
 {
-    public class MultiModelFactory : IMultiModelFactory
+    public class MultiModelFactory
     {
-        private readonly ImmutableArray<IMetaModel> _metaModels;
-        private readonly ConditionalWeakTable<Type, IMultiModelFactory> factoriesByType = new ConditionalWeakTable<Type, IMultiModelFactory>();
-        private readonly ConditionalWeakTable<string, IMultiModelFactory> factoriesByName = new ConditionalWeakTable<string, IMultiModelFactory>();
+        private static readonly ConditionalWeakTable<Type, ModelObjectInfo> infosByType = new ConditionalWeakTable<Type, ModelObjectInfo>();
+        private static readonly ConditionalWeakTable<string, ModelObjectInfo> infosByName = new ConditionalWeakTable<string, ModelObjectInfo>();
 
-        public MultiModelFactory(IEnumerable<IMetaModel> metaModels)
+        private readonly ImmutableArray<MetaModel> _metaModels;
+
+        public MultiModelFactory(params MetaModel[] metaModels)
         {
             _metaModels = metaModels.ToImmutableArrayOrEmpty();
         }
 
-        public ImmutableArray<IMetaModel> MetaModels => _metaModels;
+        public ImmutableArray<MetaModel> MetaModels => _metaModels;
 
-        public IModelObject? Create(IModel model, Type? modelObjectType, string? id = null)
+        public IModelObject? Create(Model model, Type? modelObjectType, string? id = null)
         {
             if (modelObjectType is null) return null;
-            if (factoriesByType.TryGetValue(modelObjectType, out var factory))
+            var info = infosByType.GetValue(modelObjectType, CreateInfo);
+            if (info is not null)
             {
-                return factory.Create(model, modelObjectType, id);
-            }
-            else
-            {
-                foreach (var metaModel in _metaModels)
-                {
-                    if (metaModel.Info.Contains(modelObjectType))
-                    {
-                        var newFactory = metaModel.CreateFactory();
-                        factoriesByType.Add(modelObjectType, newFactory);
-                        return newFactory.Create(model, modelObjectType, id);
-                    }
-                }
+                var mobj = info.Create(id);
+                if (mobj is not null) mobj.Model = model;
+                return mobj;
             }
             return null;
         }
 
-        public IModelObject? Create(IModel model, string? modelObjectTypeName, string? id = null)
+        public IModelObject? Create(Model model, string? modelObjectTypeName, string? id = null)
         {
             if (modelObjectTypeName is null) return null;
-            if (factoriesByName.TryGetValue(modelObjectTypeName, out var factory))
+            var info = infosByName.GetValue(modelObjectTypeName, CreateInfo);
+            if (info is not null)
             {
-                return factory.Create(model, modelObjectTypeName, id);
+                var mobj = info.Create(id);
+                if (mobj is not null) mobj.Model = model;
+                return mobj;
             }
-            else
+            return null;
+        }
+
+        private ModelObjectInfo? CreateInfo(Type modelObjectType)
+        {
+            foreach (var metaModel in _metaModels)
             {
-                foreach (var metaModel in _metaModels)
+                if (metaModel.TryGetInfo(modelObjectType, out var info))
                 {
-                    if (metaModel.Info.Contains(modelObjectTypeName))
-                    {
-                        var newFactory = metaModel.CreateFactory();
-                        factoriesByName.Add(modelObjectTypeName, newFactory);
-                        return newFactory.Create(model, modelObjectTypeName, id);
-                    }
+                    return info;
                 }
             }
             return null;
         }
 
+        private ModelObjectInfo? CreateInfo(string modelObjectTypeName)
+        {
+            foreach (var metaModel in _metaModels)
+            {
+                if (metaModel.TryGetInfo(modelObjectTypeName, out var info))
+                {
+                    return info;
+                }
+            }
+            return null;
+        }
     }
 }

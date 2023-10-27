@@ -5,19 +5,19 @@ using System.Text;
 
 namespace MetaDslx.Modeling
 {
-    public class ModelGroup : IModelGroup
+    public sealed class ModelGroup
     {
         private string? _name;
         private bool _readOnly;
         private ModelValidationOptions? _validationOptions;
-        private List<IModel> _references;
-        private List<IModel> _models;
+        private List<Model> _references;
+        private List<Model> _models;
 
         public ModelGroup()
         {
             _validationOptions = new ModelValidationOptions();
-            _references = new List<IModel>();
-            _models = new List<IModel>();
+            _references = new List<Model>();
+            _models = new List<Model>();
         }
 
         public string? Name
@@ -44,9 +44,9 @@ namespace MetaDslx.Modeling
             get => _validationOptions;
         }
 
-        public IEnumerable<IModel> References => _references;
+        public IEnumerable<Model> References => _references;
 
-        public IEnumerable<IModel> Models => _models;
+        public IEnumerable<Model> Models => _models;
 
         public IEnumerable<IModelObject> Objects
         {
@@ -62,7 +62,7 @@ namespace MetaDslx.Modeling
             }
         }
 
-        public void AddReference(IEnumerable<IModel> models)
+        public void AddReference(IEnumerable<Model> models)
         {
             CheckReadOnly();
             foreach (var model in models)
@@ -74,7 +74,7 @@ namespace MetaDslx.Modeling
             }
         }
 
-        public void AddReference(params IModel[] models)
+        public void AddReference(params Model[] models)
         {
             CheckReadOnly();
             foreach (var model in models)
@@ -86,20 +86,20 @@ namespace MetaDslx.Modeling
             }
         }
 
-        public void RemoveReference(IModel model)
+        public void RemoveReference(Model model)
         {
             CheckReadOnly();
             _references.Remove(model);
         }
 
-        public IModel CreateModel(string? id = null, string? name = null)
+        public Model CreateModel(string? id = null, string? name = null)
         {
             var model = new Model(id, name);
             AddModel(model);
             return model;
         }
 
-        public void AddModel(IModel model)
+        public void AddModel(Model model)
         {
             CheckReadOnly();
             if (!_models.Contains(model))
@@ -117,7 +117,7 @@ namespace MetaDslx.Modeling
             }
         }
 
-        public void RemoveModel(IModel model)
+        public void RemoveModel(Model model)
         {
             CheckReadOnly();
             var index = _models.IndexOf(model);

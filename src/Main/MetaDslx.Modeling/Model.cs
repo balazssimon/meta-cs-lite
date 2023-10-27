@@ -5,7 +5,7 @@ using System.Text;
 
 namespace MetaDslx.Modeling
 {
-    public class Model : IModel
+    public sealed class Model
     {
         private string _id;
         private string? _name;
@@ -76,12 +76,6 @@ namespace MetaDslx.Modeling
         }
 
         public IEnumerable<IModelObject> Objects => _modelObjects;
-
-        IModelGroup IModel.ModelGroup 
-        {
-            get => this.ModelGroup; 
-            set => this.ModelGroup = (ModelGroup)value; 
-        }
 
         public void AddObject(IModelObject modelObject)
         {

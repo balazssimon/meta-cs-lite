@@ -9,7 +9,12 @@ namespace MetaDslx.Modeling
         void Add(object? item);
         void Remove(object? item);
         bool Contains(object? item);
+        void Clear();
         int Count { get; }
+        bool IsReadOnly { get; }
+        bool IsNonUnique { get; }
+        bool IsNullable { get; }
+        bool IsSingleItem { get; }
         object? SingleItem { get; set; }
     }
 }

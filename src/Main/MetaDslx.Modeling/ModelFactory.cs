@@ -4,33 +4,41 @@ using System.Text;
 
 namespace MetaDslx.Modeling
 {
-    public class ModelFactory : IModelFactory
+    public class ModelFactory
     {
         private Model _model;
-        private IMetaModel _metaModel;
-        private IModelFactory? _metaFactory;
-
-        public ModelFactory(Model model, IMetaModel metaModel)
+        private MetaModel _metaModel;
+    
+        public ModelFactory(Model model, MetaModel metaModel)
         {
             _model = model;
             _metaModel = metaModel;
-            _metaFactory = _metaModel.CreateFactory(_model);
         }
 
         public Model Model => _model;
 
-        IModel IModelFactory.Model => _model;
+        public MetaModel MetaModel => _metaModel;
 
-        IMetaModel IModelFactory.MetaModel => _metaModel;
-
-        IModelObject? IModelFactory.Create(Type modelObjectType, string? id)
+        public IModelObject? Create(Type modelObjectType, string? id = null)
         {
-            return _metaFactory.Create(modelObjectType, id);
+            if (_metaModel.TryGetInfo(modelObjectType, out var info))
+            {
+                var mobj = info.Create(id);
+                if (mobj is not null) mobj.Model = _model;
+                return mobj;
+            }
+            return null;
         }
 
-        IModelObject? IModelFactory.Create(string modelObjectTypeName, string? id)
+        public IModelObject? Create(string modelObjectTypeName, string? id = null)
         {
-            return _metaFactory.Create(modelObjectTypeName, id);
+            if (_metaModel.TryGetInfo(modelObjectTypeName, out var info))
+            {
+                var mobj = info.Create(id);
+                if (mobj is not null) mobj.Model = _model;
+                return mobj;
+            }
+            return null;
         }
 
     }

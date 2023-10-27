@@ -12,6 +12,17 @@ namespace MetaDslx.Modeling
         protected abstract Dictionary<string, ModelProperty> PublicPropertiesByName { get; }
         protected abstract Dictionary<ModelProperty, ModelPropertyInfo> ModelPropertyInfos { get; }
 
+        public abstract MetaModel MetaModel { get; }
+        public abstract Type MetaType { get; }
+        public abstract Type? SymbolType { get; }
+        public abstract ModelProperty? NameProperty { get; }
+        public abstract ModelProperty? TypeProperty { get; }
+        public abstract ImmutableArray<ModelProperty> DeclaredProperties { get; }
+        public abstract ImmutableArray<ModelProperty> AllDeclaredProperties { get; }
+        public abstract ImmutableArray<ModelProperty> PublicProperties { get; }
+
+        public abstract IModelObject Create(string? id = null);
+
         public ModelProperty? GetProperty(string name)
         {
             if (PublicPropertiesByName.TryGetValue(name, out var prop)) return prop;
