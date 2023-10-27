@@ -6,7 +6,7 @@ using System.Text;
 
 namespace MetaDslx.Modeling
 {
-    public sealed class ReflectionModelObject : ModelObjectBase
+    public sealed class ReflectionModelObject : ModelObject
     {
         private static readonly ConditionalWeakTable<ReflectionModelObject, Dictionary<ModelProperty, object?>> _attachedProperties = new ConditionalWeakTable<ReflectionModelObject, Dictionary<ModelProperty, object?>>();
         private readonly object _underlyingObject;

@@ -12,13 +12,13 @@ namespace MetaDslx.Modeling
     public class ModelObjectList<T> : IList<T>, IModelCollection, IModelCollectionCore
     {
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private ModelObject _owner;
+        private MetaModelObject _owner;
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private ModelPropertySlot _slot;
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<T> _items;
 
-        public ModelObjectList(ModelObject owner, ModelPropertySlot slot)
+        public ModelObjectList(MetaModelObject owner, ModelPropertySlot slot)
         {
             _owner = owner;
             _slot = slot;
