@@ -17,9 +17,9 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
     {
         private readonly SourceAssemblySymbol _assemblySymbol;
         private SourceSymbolFactory _symbolFactory;
-        private readonly IModelGroup _modelGroup;
-        private readonly IModel _model;
-        private readonly IMultiModelFactory _modelFactory;
+        private readonly ModelGroup _modelGroup;
+        private readonly MetaDslx.Modeling.Model _model;
+        private readonly MultiModelFactory _modelFactory;
         private readonly DeclarationTable _declarations;
         private ImmutableArray<NamespaceSymbol> _fileNamespaces;
 
@@ -50,9 +50,9 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
         public override ImmutableArray<Location> Locations => Declaration.NameLocations.Cast<SourceLocation, Location>();
         ImmutableArray<SourceLocation> ISourceSymbol.Locations => Declaration.NameLocations;
         
-        public IMultiModelFactory ModelFactory => _modelFactory;
-        public IModelGroup ModelGroup => _modelGroup;
-        public IModel Model => _model;
+        public MultiModelFactory ModelFactory => _modelFactory;
+        public ModelGroup ModelGroup => _modelGroup;
+        public MetaDslx.Modeling.Model Model => _model;
         public IModelObject ModelObject => null;
         public Type ModelObjectType => null;
 

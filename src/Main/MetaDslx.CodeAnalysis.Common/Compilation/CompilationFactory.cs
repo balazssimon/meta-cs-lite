@@ -1,6 +1,5 @@
 ﻿using MetaDslx.CodeAnalysis.Binding;
 using MetaDslx.CodeAnalysis.Declarations;
-using MetaDslx.CodeAnalysis.Modeling;
 using MetaDslx.CodeAnalysis.PooledObjects;
 using MetaDslx.CodeAnalysis.Symbols;
 using MetaDslx.CodeAnalysis.Symbols.CSharp;
@@ -46,22 +45,22 @@ namespace MetaDslx.CodeAnalysis
             return new AccessCheck();
         }
 
-        public virtual IMultiModelFactory CreateModelFactory(Compilation compilation)
+        public virtual MultiModelFactory CreateModelFactory(Compilation compilation)
         {
-            var metaModels = ArrayBuilder<IMetaModel>.GetInstance();
+            var metaModels = new List<MetaModel>();
             foreach (var reference in compilation.ExternalReferences.OfType<MetaModelReference>())
             {
                 metaModels.Add(reference.MetaModel);
             }
-            return new MultiModelFactory(metaModels.ToImmutableAndFree());
+            return new MultiModelFactory(metaModels);
         }
 
-        public virtual IModelGroup CreateModelGroup(Compilation compilation)
+        public virtual ModelGroup CreateModelGroup(Compilation compilation)
         {
             return new ModelGroup();
         }
 
-        public virtual IModel CreateModel(Compilation compilation)
+        public virtual Model CreateModel(Compilation compilation)
         {
             return new Model();
         }

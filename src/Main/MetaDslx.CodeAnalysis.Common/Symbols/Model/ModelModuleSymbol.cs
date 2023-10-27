@@ -11,9 +11,9 @@ namespace MetaDslx.CodeAnalysis.Symbols.Model
     public class ModelModuleSymbol : ModuleSymbol, IModelSymbol
     {
         private readonly ModelSymbolFactory _symbolFactory;
-        private readonly IModel _model;
+        private readonly MetaDslx.Modeling.Model _model;
 
-        public ModelModuleSymbol(ModelSymbolFactory symbolFactory, IModel model)
+        public ModelModuleSymbol(ModelSymbolFactory symbolFactory, MetaDslx.Modeling.Model model)
             : base(null)
         {
             _model = model;
@@ -21,14 +21,14 @@ namespace MetaDslx.CodeAnalysis.Symbols.Model
         }
 
         public ModelSymbolFactory SymbolFactory => _symbolFactory;
-        public IModel Model => _model;
+        public MetaDslx.Modeling.Model Model => _model;
         public IModelObject ModelObject => null;
         public Type ModelObjectType => null;
         public override ImmutableArray<Location> Locations => ImmutableArray<Location>.Empty;
 
         protected override NamespaceSymbol CompleteProperty_GlobalNamespace(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            var rootObjects = _model.Objects.Where(obj => obj.Parent is null).Take(2).ToArray();
+            var rootObjects = _model.ModelObjects.Where(obj => obj.Parent is null).Take(2).ToArray();
             if (rootObjects.Length == 1 && string.IsNullOrEmpty(rootObjects[0].Name) && 
                 rootObjects[0].SymbolType is not null && typeof(NamespaceSymbol).IsAssignableFrom(rootObjects[0].SymbolType))
             {

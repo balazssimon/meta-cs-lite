@@ -46,7 +46,7 @@ namespace MetaDslx.Modeling
             get => _model;
             set
             {
-                if (_model != null && value != null) throw new ModelException($"Error changing the model '{_model}' of '{this}' to {value}: to change the model of an object, remove the object from the old model first.'");
+                if (_model != null && value != null && !object.ReferenceEquals(_model, value)) throw new ModelException($"Error changing the model '{_model}' of '{this}' to {value}: to change the model of an object, remove the object from the old model first.'");
                 if (_model != null && _model.IsReadOnly) throw new ModelException($"Error changing the model '{_model}' of '{this}' to {value}: the model containing the object is read only.");
                 if (!object.ReferenceEquals(_model, value))
                 {
@@ -160,7 +160,6 @@ namespace MetaDslx.Modeling
             else return (T)value;
             //Convert.ChangeType(value, typeof(T), CultureInfo.InvariantCulture);
         }
-
 
         object? IModelObject.Get(ModelProperty property)
         {
@@ -380,7 +379,7 @@ namespace MetaDslx.Modeling
                 if (slot.Flags.HasFlag(ModelPropertyFlags.Containment))
                 {
                     var mobjParent = mobj.Parent;
-                    if (mobjParent == null) ((ModelObject)mobj)._parent = mthis;
+                    if (mobjParent == null) ((ModelObjectBase)mobj)._parent = mthis;
                     else if (!object.ReferenceEquals(mobjParent, this))
                     {
                         throw new ModelException($"Cannot set the container of object '{mobj}' to '{this}': the object is already contained by the parent '{mobjParent}'. Remove the object from the parent first.");
@@ -396,7 +395,7 @@ namespace MetaDslx.Modeling
                     {
                         foreach (var oppositeProperty in ((IModelObject)this).GetOppositeProperties(slotProperty))
                         {
-                            ((ModelObject)mobj).AddCore(oppositeProperty, this, true);
+                            ((ModelObjectBase)mobj).AddCore(oppositeProperty, this, true);
                         }
                     }
                     foreach (var subsettedProperty in ((IModelObject)this).GetSubsettedProperties(slotProperty))
@@ -438,7 +437,7 @@ namespace MetaDslx.Modeling
                     if (!stillContained)
                     {
                         _children.Remove(mobj);
-                        ((ModelObject)mobj)._parent = null;
+                        ((ModelObjectBase)mobj)._parent = null;
                     }
                 }
                 foreach (var slotProperty in slot.SlotProperties)
@@ -447,7 +446,7 @@ namespace MetaDslx.Modeling
                     {
                         foreach (var oppositeProperty in ((IModelObject)this).GetOppositeProperties(slotProperty))
                         {
-                            ((ModelObject)mobj).RemoveCore(oppositeProperty, this, true);
+                            ((ModelObjectBase)mobj).RemoveCore(oppositeProperty, this, true);
                         }
                     }
                     foreach (var subsettingProperty in ((IModelObject)this).GetSubsettingProperties(slotProperty))
@@ -522,7 +521,7 @@ namespace MetaDslx.Modeling
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         protected abstract IEnumerable<ModelProperty> StoredPropertiesCore { get; }
-        protected abstract void SetSlotValueCore (ModelPropertySlot slot, object? value);
+        protected abstract void SetSlotValueCore(ModelPropertySlot slot, object? value);
         protected abstract bool TryGetSlotValueCore(ModelPropertySlot slot, out object? value);
 
     }

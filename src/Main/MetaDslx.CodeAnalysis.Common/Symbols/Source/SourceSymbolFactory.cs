@@ -19,7 +19,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
 {
     public class SourceSymbolFactory
     {
-        private static readonly ConditionalWeakTable<Type, IModelObjectInfo> s_infosByType = new();
+        private static readonly ConditionalWeakTable<Type, ModelObjectInfo> s_infosByType = new();
         private readonly Dictionary<Type, Func<Symbol, MergedDeclaration, IModelObject, Symbol>> _constructors = new();
         private readonly Dictionary<Type, Func<Symbol, MergedDeclaration, Symbol>> _non_mo_constructors = new();
         private readonly SourceModuleSymbol _module;
@@ -108,7 +108,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
             return null;
         }
 
-        public IModelObjectInfo? GetModelObjectInfo(Type modelObjectType)
+        public ModelObjectInfo? GetModelObjectInfo(Type modelObjectType)
         {
             if (modelObjectType is null) return null;
             var modelFactory = _module.ModelFactory;
@@ -117,7 +117,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
             {
                 foreach (var metaModel in modelFactory.MetaModels)
                 {
-                    if (metaModel.Info.TryGetInfo(modelObjectType, out info))
+                    if (metaModel.TryGetInfo(modelObjectType, out info))
                     {
                         s_infosByType.Add(modelObjectType, info);
                         break;

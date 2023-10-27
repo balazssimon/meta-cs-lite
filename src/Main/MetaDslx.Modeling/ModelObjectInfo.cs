@@ -21,7 +21,7 @@ namespace MetaDslx.Modeling
         public abstract ImmutableArray<ModelProperty> AllDeclaredProperties { get; }
         public abstract ImmutableArray<ModelProperty> PublicProperties { get; }
 
-        public abstract IModelObject Create(string? id = null);
+        public abstract IModelObject? Create(string? id = null);
 
         public ModelProperty? GetProperty(string name)
         {

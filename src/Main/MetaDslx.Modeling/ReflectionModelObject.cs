@@ -6,24 +6,26 @@ using System.Text;
 
 namespace MetaDslx.Modeling
 {
-    public class ReflectionModelObject : ModelObjectBase
+    public sealed class ReflectionModelObject : ModelObjectBase
     {
         private static readonly ConditionalWeakTable<ReflectionModelObject, Dictionary<ModelProperty, object?>> _attachedProperties = new ConditionalWeakTable<ReflectionModelObject, Dictionary<ModelProperty, object?>>();
         private readonly object _underlyingObject;
+        private readonly ReflectionModelObjectInfo _info;
         private Dictionary<ModelPropertySlot, ReflectionModelObjectList>? _collections;
 
-        public ReflectionModelObject(object underlyingObject, string? id = null)
+        internal ReflectionModelObject(object underlyingObject, ReflectionModelObjectInfo info, string? id = null)
             : base(id)
         {
-            if (underlyingObject == null) throw new ArgumentNullException(nameof(underlyingObject));
+            if (underlyingObject is null) throw new ArgumentNullException(nameof(underlyingObject));
+            if (info is null) throw new ArgumentNullException(nameof(info));
             _underlyingObject = underlyingObject;
+            _info = info;
         }
-
 
         public object UnderlyingObject => _underlyingObject;
         protected override object MUnderlyingObject => UnderlyingObject;
 
-        protected override ModelObjectInfo MInfo => ReflectionMetaModel.GetModelObjectInfo(_underlyingObject.GetType());
+        protected override ModelObjectInfo MInfo => _info;
 
         protected override IEnumerable<ModelProperty> StoredPropertiesCore
         {
@@ -46,9 +48,10 @@ namespace MetaDslx.Modeling
         protected override void SetSlotValueCore(ModelPropertySlot slot, object? value)
         {
             var found = false;
+            var rawValue = ToValue(value);
             if (slot.Flags.HasFlag(ModelPropertyFlags.Collection))
             {
-                value = GetCollection(slot);
+                //value = GetCollection(slot);
             }
             else
             {
@@ -58,14 +61,14 @@ namespace MetaDslx.Modeling
                     if (propInfo is not null)
                     {
                         found = true;
-                        propInfo.SetValue(_underlyingObject, value);
+                        propInfo.SetValue(_underlyingObject, rawValue);
                     }
                 }
             }
             if (!found)
             {
                 var attachedProperties = _attachedProperties.GetValue(this, mobj => new Dictionary<ModelProperty, object?>());
-                attachedProperties[slot.SlotProperty] = value;
+                attachedProperties[slot.SlotProperty] = rawValue;
             }
         }
 
@@ -80,19 +83,20 @@ namespace MetaDslx.Modeling
                 }
                 else
                 {
-                    value = propInfo.GetValue(_underlyingObject);
+                    value = ToModelObject(propInfo.GetValue(_underlyingObject));
                 }
                 return true;
             }
             else if (_attachedProperties.TryGetValue(this, out var attachedProperties))
             {
-                return attachedProperties.TryGetValue(slot.SlotProperty, out value);
+                if (attachedProperties.TryGetValue(slot.SlotProperty, out value))
+                {
+                    value = ToModelObject(value);
+                    return true;
+                }
             }
-            else
-            {
-                value = null;
-                return false;
-            }
+            value = null;
+            return false;
         }
 
         private ReflectionModelObjectList GetCollection(ModelPropertySlot slot)
@@ -104,6 +108,17 @@ namespace MetaDslx.Modeling
                 _collections.Add(slot, collection);
             }
             return collection;
+        }
+
+        internal object? ToValue(object? modelObject)
+        {
+            if (modelObject is IModelObject mobj) return mobj.UnderlyingObject;
+            else return modelObject;
+        }
+
+        internal object? ToModelObject(object? value)
+        {
+            return value;
         }
     }
 }

@@ -99,7 +99,7 @@ namespace MetaDslx.CodeAnalysis
         /// <param name="metaModel">The meta-model instance.</param>
         /// <exception cref="ArgumentNullException"><paramref name="metaModel"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="metaModel"/> is invalid.</exception>
-        public static MetadataReference CreateFromMetaModel(IMetaModel metaModel)
+        public static MetadataReference CreateFromMetaModel(MetaDslx.Modeling.MetaModel metaModel)
         {
             if (metaModel is null) throw new ArgumentNullException(nameof(metaModel));
             return new MetaModelReference(metaModel, default);
@@ -111,7 +111,7 @@ namespace MetaDslx.CodeAnalysis
         /// <param name="model">The model instance.</param>
         /// <exception cref="ArgumentNullException"><paramref name="model"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="model"/> is invalid.</exception>
-        public static MetadataReference CreateFromModel(IModel model)
+        public static MetadataReference CreateFromModel(MetaDslx.Modeling.Model model)
         {
             if (model is null) throw new ArgumentNullException(nameof(model));
             return new ModelReference(model, default);

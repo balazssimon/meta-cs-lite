@@ -4,12 +4,13 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 
 namespace MetaDslx.Modeling
 {
-    internal class ReflectionModelObjectList : IModelCollection, IModelCollectionCore
+    internal sealed class ReflectionModelObjectList : IModelCollection, IModelCollectionCore
     {
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private ReflectionModelObject _owner;
@@ -23,8 +24,8 @@ namespace MetaDslx.Modeling
             _owner = owner;
             _slot = slot;
             var type = _owner.UnderlyingObject.GetType();
-            var slotInfo = type.GetProperty(slot.SlotProperty.Name, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-            if (slotInfo is not null && typeof(ICollection).IsAssignableFrom(slotInfo.PropertyType))
+            var slotInfo = type.GetProperty(slot.SlotProperty.Name, BindingFlags.Instance | BindingFlags.Public);
+            if (slotInfo is not null && typeof(IEnumerable).IsAssignableFrom(slotInfo.PropertyType))
             {
                 _property = slotInfo;
             }
@@ -32,8 +33,8 @@ namespace MetaDslx.Modeling
             {
                 foreach (var prop in slot.SlotProperties)
                 {
-                    var propInfo = type.GetProperty(prop.Name, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-                    if (propInfo is not null && typeof(ICollection).IsAssignableFrom(slotInfo.PropertyType))
+                    var propInfo = type.GetProperty(prop.Name, BindingFlags.Instance | BindingFlags.Public);
+                    if (propInfo is not null && typeof(IEnumerable).IsAssignableFrom(slotInfo.PropertyType))
                     {
                         _property = propInfo;
                         break;
@@ -48,7 +49,7 @@ namespace MetaDslx.Modeling
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         public ModelPropertySlot Slot => _slot;
 
-        public dynamic Items => _property?.GetValue(_owner.UnderlyingObject);
+        public IEnumerable? Items => _property?.GetValue(_owner.UnderlyingObject) as IEnumerable;
 
         public bool IsReadOnly => _slot.Flags.HasFlag(ModelPropertyFlags.ReadOnly);
         public bool IsNonUnique => _slot.Flags.HasFlag(ModelPropertyFlags.NonUnique);
@@ -61,7 +62,7 @@ namespace MetaDslx.Modeling
             {
                 var items = Items;
                 if (items is null) return null;
-                return _slot.Flags.HasFlag(ModelPropertyFlags.SingleItem) && items.Count == 1 ? FirstOf(items) : null;
+                return _slot.Flags.HasFlag(ModelPropertyFlags.SingleItem) && GetCount(items) == 1 ? FirstValue(items) : null;
             }
             set
             {
@@ -69,7 +70,7 @@ namespace MetaDslx.Modeling
                 {
                     var items = Items;
                     if (items is null) return;
-                    if (items.Count != 1 || value != FirstOf(items))
+                    if (GetCount(items) != 1 || value != FirstValue(items))
                     {
                         Clear();
                         Add(value);
@@ -82,7 +83,7 @@ namespace MetaDslx.Modeling
             }
         }
 
-        public int Count => Items?.Count ?? 0;
+        public int Count => GetCount(Items);
 
         public void Add(object? item)
         {
@@ -91,7 +92,7 @@ namespace MetaDslx.Modeling
             {
                 _slot.ThrowModelException(mp => mp.IsReadOnly, mp => $"Error adding '{item}' to '{mp.QualifiedName}' in '{Owner}': the property is read only.");
             }
-            AddCore(item, false);
+            AddCore(ToItem(item), false);
         }
 
         public void Remove(object? item)
@@ -101,20 +102,20 @@ namespace MetaDslx.Modeling
             {
                 _slot.ThrowModelException(mp => mp.IsReadOnly, mp => $"Error removing '{item}' from '{mp.QualifiedName}' in '{Owner}': the property is read only.");
             }
-            RemoveCore(item, false);
+            RemoveCore(ToItem(item), false);
         }
 
         public bool Contains(object? item)
         {
-            var value = GetValue(item);
-            return Items.Contains(value);
+            var value = ToValue(item);
+            return ContainsValue(Items, value);
         }
 
         public IEnumerator GetEnumerator()
         {
             foreach (var value in Items)
             {
-                yield return GetItem(value);
+                yield return ToItem(value);
             }
         }
 
@@ -125,7 +126,7 @@ namespace MetaDslx.Modeling
             {
                 _slot.ThrowModelException(mp => mp.IsReadOnly, mp => $"Error clearing '{mp.QualifiedName}' in '{Owner}': the property is read only.");
             }
-            while (Items.Count > 0) RemoveCore(FirstOf(Items), false);
+            while (Items.GetEnumerator().MoveNext()) RemoveCore(ToItem(FirstValue(Items)), false);
         }
 
         public void AddCore(object? item, bool fromOpposite)
@@ -136,23 +137,23 @@ namespace MetaDslx.Modeling
             }
             var valueAdded = false;
             var items = Items;
-            var value = GetValue(item);
+            var value = ToValue(item);
             try
             {
-                if (IsNonUnique || !items.Contains(value))
+                if (IsNonUnique || !ContainsValue(items, value))
                 {
-                    if (IsSingleItem && items.Count >= 1)
+                    if (IsSingleItem && GetCount(items) >= 1)
                     {
                         _slot.ThrowModelException(mp => mp.IsSingleItem, mp => $"Error adding '{value}' to '{mp.QualifiedName}' in '{Owner}': this collection can only contain a single item.");
                     }
-                    items.Add(value);
+                    AddValue(items, value);
                     valueAdded = true;
                     _owner.ValueAdded(_slot, item, fromOpposite);
                 }
             }
             catch (Exception ex)
             {
-                if (valueAdded) items.Remove(value);
+                if (valueAdded) RemoveValue(items, value);
                 if (Owner.Model.ValidationOptions.FullPropertyModificationStackInExceptions) throw new ModelException($"Error adding '{value}' to '{_slot.SlotProperty.QualifiedName}' in '{Owner}'", ex);
                 else throw;
             }
@@ -162,29 +163,65 @@ namespace MetaDslx.Modeling
         {
             var valueRemoved = false;
             var items = Items;
-            var value = GetValue(item);
+            var value = ToValue(item);
             try
             {
-                items.Remove(value);
+                RemoveValue(items, value);
                 valueRemoved = true;
-                if (IsNonUnique || !items.Contains(value))
+                if (IsNonUnique || !ContainsValue(items, value))
                 {
                     _owner.ValueRemoved(_slot, item, fromOpposite);
                 }
             }
             catch (Exception ex)
             {
-                if (valueRemoved) items.Add(value);
+                if (valueRemoved) AddValue(items, value);
                 if (Owner.Model.ValidationOptions.FullPropertyModificationStackInExceptions) throw new ModelException($"Error removing '{value}' from '{_slot.SlotProperty.QualifiedName}' in '{Owner}'", ex);
                 else throw;
             }
         }
 
-        private object? FirstOf(ICollection collection)
+        private int GetCount(IEnumerable items)
         {
-            var enumerator = collection.GetEnumerator();
+            if (items is null) return 0;
+            var type = items.GetType();
+            var prop = type.GetProperty("Count");
+            if (prop == null) return 0;
+            return (int)prop.GetValue(items);
+        }
+
+        private object? FirstValue(IEnumerable items)
+        {
+            var enumerator = items.GetEnumerator();
             if (enumerator.MoveNext()) return enumerator.Current;
             else return null;
+        }
+
+        private bool ContainsValue(IEnumerable items, object? value)
+        {
+            if (items is null) return false;
+            var type = items.GetType();
+            var method = type.GetMethods(BindingFlags.Instance | BindingFlags.Public).Where(m => m.Name == "Contains" && m.GetParameters().Length == 1 && m.ReturnType == typeof(bool)).FirstOrDefault();
+            if (method == null) return false;
+            return (bool)method.Invoke(items, new object[] { value });
+        }
+
+        private void AddValue(IEnumerable items, object? value)
+        {
+            if (items is null) return;
+            var type = items.GetType();
+            var method = type.GetMethods(BindingFlags.Instance | BindingFlags.Public).Where(m => m.Name == "Add" && m.GetParameters().Length == 1).FirstOrDefault();
+            if (method == null) return;
+            method.Invoke(items, new object[] { value });
+        }
+
+        private void RemoveValue(IEnumerable items, object? value)
+        {
+            if (items is null) return;
+            var type = items.GetType();
+            var method = type.GetMethods(BindingFlags.Instance | BindingFlags.Public).Where(m => m.Name == "Remove" && m.GetParameters().Length == 1).FirstOrDefault();
+            if (method == null) return;
+            method.Invoke(items, new object[] { value });
         }
 
         private Type GetType(object item)
@@ -192,15 +229,14 @@ namespace MetaDslx.Modeling
             return item is IModelObject mobj ? mobj.MetaType : item.GetType();
         }
 
-        private object? GetValue(object? item)
+        private object? ToValue(object? item)
         {
-            if (item is IModelObject mobj) return mobj.UnderlyingObject;
-            else return item;
+            return _owner.ToValue(item);
         }
 
-        private object? GetItem(object? value)
+        private object? ToItem(object? value)
         {
-            return value;
+            return _owner.ToModelObject(value);
         }
     }
 }

@@ -7,15 +7,15 @@ namespace MetaDslx.CodeAnalysis
 {
     internal sealed class MetaModelReference : MetadataReference
     {
-        private readonly IMetaModel _metaModel;
+        private readonly MetaModel _metaModel;
 
-        public MetaModelReference(IMetaModel metaModel, MetadataReferenceProperties properties)
+        public MetaModelReference(MetaModel metaModel, MetadataReferenceProperties properties)
             : base(properties)
         {
             _metaModel = metaModel;
         }
 
-        public IMetaModel MetaModel => _metaModel;
+        public MetaModel MetaModel => _metaModel;
 
         protected override MetadataReference WithPropertiesCore(MetadataReferenceProperties properties)
         {

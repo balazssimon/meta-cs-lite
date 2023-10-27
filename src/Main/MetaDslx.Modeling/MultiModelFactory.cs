@@ -6,7 +6,7 @@ using System.Collections.Immutable;
 using System.Runtime.CompilerServices;
 using System.Text;
 
-namespace MetaDslx.CodeAnalysis.Modeling
+namespace MetaDslx.Modeling
 {
     public class MultiModelFactory
     {
@@ -15,7 +15,7 @@ namespace MetaDslx.CodeAnalysis.Modeling
 
         private readonly ImmutableArray<MetaModel> _metaModels;
 
-        public MultiModelFactory(params MetaModel[] metaModels)
+        public MultiModelFactory(IEnumerable<MetaModel> metaModels)
         {
             _metaModels = metaModels.ToImmutableArrayOrEmpty();
         }

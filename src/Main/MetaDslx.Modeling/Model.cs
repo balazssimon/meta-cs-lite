@@ -1,6 +1,8 @@
 ﻿using MetaDslx.Modeling;
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace MetaDslx.Modeling
@@ -75,7 +77,8 @@ namespace MetaDslx.Modeling
             }
         }
 
-        public IEnumerable<IModelObject> Objects => _modelObjects;
+        public IEnumerable<object> Objects => ModelObjects.Select(mobj => mobj.UnderlyingObject);
+        public IEnumerable<IModelObject> ModelObjects => _modelObjects;
 
         public void AddObject(IModelObject modelObject)
         {

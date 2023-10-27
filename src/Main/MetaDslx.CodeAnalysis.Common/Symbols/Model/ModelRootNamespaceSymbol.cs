@@ -10,10 +10,10 @@ namespace MetaDslx.CodeAnalysis.Symbols.Model
 {
     public class ModelRootNamespaceSymbol : NamespaceSymbol
     {
-        private readonly IModel _model;
+        private readonly MetaDslx.Modeling.Model _model;
         private readonly ModuleSymbol _module;
 
-        public ModelRootNamespaceSymbol(Symbol container, IModel model)
+        public ModelRootNamespaceSymbol(Symbol container, MetaDslx.Modeling.Model model)
             : base(container)
         {
             _model = model;
@@ -30,12 +30,12 @@ namespace MetaDslx.CodeAnalysis.Symbols.Model
 
         protected override ImmutableArray<Symbol> CompletePart_CreateContainedSymbols(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            return ((ModelModuleSymbol)ContainingModule).SymbolFactory.GetSymbols<Symbol>(_model.Objects.Where(mo => mo.Parent is null));
+            return ((ModelModuleSymbol)ContainingModule).SymbolFactory.GetSymbols<Symbol>(_model.ModelObjects.Where(mo => mo.Parent is null));
         }
 
         protected override ImmutableArray<DeclaredSymbol> CompleteProperty_Members(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            return ((ModelModuleSymbol)ContainingModule).SymbolFactory.GetSymbols<DeclaredSymbol>(_model.Objects.Where(mo => mo.Parent is null));
+            return ((ModelModuleSymbol)ContainingModule).SymbolFactory.GetSymbols<DeclaredSymbol>(_model.ModelObjects.Where(mo => mo.Parent is null));
         }
     }
 }

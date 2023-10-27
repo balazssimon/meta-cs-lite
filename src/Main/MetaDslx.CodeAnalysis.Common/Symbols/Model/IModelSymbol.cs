@@ -7,7 +7,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Model
 {
     public interface IModelSymbol
     {
-        IModel Model { get; }
+        MetaDslx.Modeling.Model Model { get; }
         IModelObject ModelObject { get; }
         Type ModelObjectType { get; }
     }

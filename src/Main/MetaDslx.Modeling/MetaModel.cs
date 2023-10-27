@@ -1,5 +1,4 @@
-﻿using MetaDslx.CodeAnalysis.Modeling;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Text;
@@ -14,7 +13,7 @@ namespace MetaDslx.Modeling
         public abstract string Uri { get; }
         public abstract string Prefix { get; }
 
-        public MultiModelFactory CreateFactory() => new MultiModelFactory(this);
+        public MultiModelFactory CreateFactory() => new MultiModelFactory(new MetaModel[] { this });
         public ModelFactory CreateFactory(Model model) => new ModelFactory(model, this);
 
         public abstract ImmutableArray<Type> ModelObjectTypes { get; }

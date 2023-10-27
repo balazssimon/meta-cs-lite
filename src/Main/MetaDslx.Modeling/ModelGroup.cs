@@ -1,6 +1,7 @@
 ﻿using MetaDslx.Modeling;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace MetaDslx.Modeling
@@ -48,19 +49,21 @@ namespace MetaDslx.Modeling
 
         public IEnumerable<Model> Models => _models;
 
-        public IEnumerable<IModelObject> Objects
+        public IEnumerable<IModelObject> ModelObjects
         {
             get
             {
                 foreach (var model in _models)
                 {
-                    foreach (var mobj in model.Objects)
+                    foreach (var mobj in model.ModelObjects)
                     {
                         yield return mobj;
                     }
                 }
             }
         }
+
+        public IEnumerable<object> Objects => ModelObjects.Select(mobj => mobj.UnderlyingObject);
 
         public void AddReference(IEnumerable<Model> models)
         {

@@ -41,6 +41,7 @@ namespace MetaDslx.Modeling
         public bool IsModelObject => _flags.HasFlag(ModelPropertyFlags.ModelObjectType);
         public bool IsNullable => _flags.HasFlag(ModelPropertyFlags.NullableType);
         public bool IsName => _flags.HasFlag(ModelPropertyFlags.Name);
+        public bool IsType => _flags.HasFlag(ModelPropertyFlags.Type);
 
         public override string ToString()
         {

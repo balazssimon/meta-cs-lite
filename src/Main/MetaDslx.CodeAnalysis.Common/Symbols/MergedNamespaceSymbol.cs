@@ -96,7 +96,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
         public override ImmutableArray<Location> Locations => _namespacesToMerge.SelectMany(namespaceSymbol => namespaceSymbol.Locations).AsImmutable();
         public override ImmutableArray<Diagnostic> Diagnostics => _namespacesToMerge.SelectMany(namespaceSymbol => namespaceSymbol.Diagnostics).AsImmutable();
 
-        public ImmutableArray<IModel> Model => _namespacesToMerge.OfType<IModelSymbol>().Select(namespaceSymbol => namespaceSymbol.Model).AsImmutable();
+        public ImmutableArray<MetaDslx.Modeling.Model> Model => _namespacesToMerge.OfType<IModelSymbol>().Select(namespaceSymbol => namespaceSymbol.Model).AsImmutable();
         public ImmutableArray<IModelObject> ModelObject => _namespacesToMerge.OfType<IModelSymbol>().Select(namespaceSymbol => namespaceSymbol.ModelObject).AsImmutable();
         public ImmutableArray<MergedDeclaration> Declaration => _namespacesToMerge.OfType<ISourceSymbol>().Select(namespaceSymbol => namespaceSymbol.Declaration).AsImmutable();
         public ImmutableArray<SyntaxNodeOrToken> DeclaringSyntaxReferences => _namespacesToMerge.OfType<ISourceSymbol>().SelectMany(namespaceSymbol => namespaceSymbol.DeclaringSyntaxReferences).AsImmutable();

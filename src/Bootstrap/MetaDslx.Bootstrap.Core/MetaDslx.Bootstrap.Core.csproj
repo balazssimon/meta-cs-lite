@@ -8,8 +8,8 @@
   </PropertyGroup>
   
   <ItemGroup>
-    <ProjectReference Include="..\..\Main\MetaDslx.CodeAnalysis.Providers.Antlr\MetaDslx.CodeAnalysis.Providers.Antlr.csproj" />
-    <ProjectReference Include="..\..\Main\MetaDslx.CodeAnalysis.Common\MetaDslx.CodeAnalysis.Common.csproj" />
+    <ProjectReference Include="..\..\Main\MetaDslx.Modeling\MetaDslx.Modeling.csproj" />
+    <ProjectReference Include="..\..\Main\MetaDslx.CodeAnalysis.Core\MetaDslx.CodeAnalysis.Core.csproj" />
   </ItemGroup>
 
 </Project>

@@ -32,7 +32,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Model
             _constructors.Add(typeof(TSymbol), constructor);
         }
 
-        internal void AddSymbol(IModel model, Symbol symbol)
+        internal void AddSymbol(MetaDslx.Modeling.Model model, Symbol symbol)
         {
             _symbols.TryAdd(model, symbol);
         }

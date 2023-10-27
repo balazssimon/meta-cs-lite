@@ -16,7 +16,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
         private readonly Compilation _compilation;
         private readonly string _assemblySimpleName;
         private readonly SourceModuleSymbol _sourceModule;
-        private readonly IModelGroup _modelGroup;
+        private readonly ModelGroup _modelGroup;
         private NamespaceSymbol _globalNamespace;
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
         public ImmutableArray<SyntaxNodeOrToken> DeclaringSyntaxReferences => ImmutableArray<SyntaxNodeOrToken>.Empty;
         public override ImmutableArray<Location> Locations => Modules.SelectMany(m => m.Locations).AsImmutable();
 
-        public IModelGroup ModelGroup => _modelGroup;
+        public ModelGroup ModelGroup => _modelGroup;
         public Type ModelObjectType => null;
 
         public NamespaceSymbol GlobalNamespace

@@ -19,7 +19,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Model
 
         public ModelSymbolFactory SymbolFactory => ((ModelModuleSymbol)ContainingModule).SymbolFactory;
         public IModelObject ModelObject => _modelObject;
-        public IModel Model => _modelObject.Model;
+        public MetaDslx.Modeling.Model Model => _modelObject.Model;
         public override ImmutableArray<Location> Locations => ImmutableArray<Location>.Empty;
         public Type ModelObjectType => _modelObject.MetaType;
 

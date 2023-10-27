@@ -1,5 +1,4 @@
 using MetaDslx.CodeAnalysis;
-using MetaDslx.CodeAnalysis.Modeling;
 using MetaDslx.CodeAnalysis.Text;
 using Roslyn.Utilities;
 using System;
@@ -483,7 +482,7 @@ namespace MetaDslx.Modeling
             {
                 _modelToAbsoluteFileMap.TryGetValue(model, out _currentFile);
                 _modelToRelativeFileMap.Clear();
-                _allObjects = _currentModel.Objects.Where(obj => obj.Parent == null);
+                _allObjects = _currentModel.ModelObjects.Where(obj => obj.Parent == null);
                 List<IModelObject> rootObjects = _allObjects.Where(obj => obj.Parent == null).ToList();
                 IModelObject xmiRoot = null;
                 if (_options.RequireXmiRoot)
@@ -735,7 +734,7 @@ namespace MetaDslx.Modeling
             { 
                 if (!string.IsNullOrWhiteSpace(obj.Name))
                 {
-                    var nameList = obj.Model.Objects.Where(o => o.Name == obj.Name).ToList();
+                    var nameList = obj.Model.ModelObjects.Where(o => o.Name == obj.Name).ToList();
                     if (nameList.Count == 1)
                     {
                         nameToObject.Add(obj.Name, obj);
@@ -1542,8 +1541,8 @@ namespace MetaDslx.Modeling
                 var nextElements = new List<object>();
                 if (currentElements == null)
                 {
-                    if (recursive) nextElements.AddRange(_model.Objects.Where(mobj => mobj.Name == elementName));
-                    else nextElements.AddRange(_model.Objects.Where(mobj => mobj.Parent == null && mobj.Name == elementName));
+                    if (recursive) nextElements.AddRange(_model.ModelObjects.Where(mobj => mobj.Name == elementName));
+                    else nextElements.AddRange(_model.ModelObjects.Where(mobj => mobj.Parent == null && mobj.Name == elementName));
                 }
                 else
                 {
