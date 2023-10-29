@@ -10,7 +10,7 @@ using MetaDslx.CodeGeneration;
 using System.Reflection;
 using MetaDslx.Languages.MetaCompiler.Analyzers;
 using System.Diagnostics.CodeAnalysis;
-using MetaDslx.Examples.MetaModel.Model;
+using MetaDslx.Bootstrap.MetaModel.Core;
 
 Compilation inputCompilation = CreateCompilation(@"
 namespace MyCode
@@ -105,8 +105,8 @@ NEWLINE : ('\r\n' | 'r' | '\n');
 ");
 */
 
-var mmCode = File.ReadAllText(@"..\..\..\MetaModel.txt");
-var mmLang = new AdditionalTextFile("MetaModel.mlang", mmCode);
+var mmCode = File.ReadAllText(@"..\..\..\..\MetaDslx.Bootstrap.MetaModel\Core\MetaCore.mlang");
+var mmLang = new AdditionalTextFile("MetaCore.mlang", mmCode);
 
 driver = driver.AddAdditionalTexts(ImmutableArray.Create<AdditionalText>(mmLang));
 driver = driver.RunGeneratorsAndUpdateCompilation(inputCompilation, out var outputCompilation, out var diagnostics);
@@ -116,7 +116,7 @@ foreach (var diag in runResult.Diagnostics)
 {
     Console.WriteLine(diag);
 }
-var outputDir = @"..\..\..\..\..\Examples\MetaDslx.Examples.MetaModel\Compiler";
+var outputDir = @"..\..\..\..\MetaDslx.Bootstrap.MetaModel\Compiler";
 foreach (var tree in runResult.GeneratedTrees)
 {
     File.WriteAllText(Path.Combine(outputDir, Path.GetFileName(tree.FilePath)), tree.GetText().ToString());
