@@ -26,26 +26,14 @@ namespace MetaDslx.Modeling
         {
             if (modelObjectType is null) return null;
             var info = infosByType.GetValue(modelObjectType, CreateInfo);
-            if (info is not null)
-            {
-                var mobj = info.Create(id);
-                if (mobj is not null) mobj.Model = model;
-                return mobj;
-            }
-            return null;
+            return info?.Create(model, id);
         }
 
         public IModelObject? Create(Model model, string? modelObjectTypeName, string? id = null)
         {
             if (modelObjectTypeName is null) return null;
             var info = infosByName.GetValue(modelObjectTypeName, CreateInfo);
-            if (info is not null)
-            {
-                var mobj = info.Create(id);
-                if (mobj is not null) mobj.Model = model;
-                return mobj;
-            }
-            return null;
+            return info?.Create(model, id);
         }
 
         private ModelObjectInfo? CreateInfo(Type modelObjectType)

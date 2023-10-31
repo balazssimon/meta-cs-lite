@@ -24,6 +24,8 @@ namespace MetaDslx.CodeAnalysis.Declarations
 
         public override Type ModelObjectType => _declarations[0].ModelObjectType;
 
+        public string QualifierProperty => _declarations[0].QualifierProperty;
+
         public ImmutableArray<SingleDeclaration> Declarations => _declarations;
 
         public ImmutableArray<SyntaxNodeOrToken> SyntaxReferences => _declarations.SelectAsArray(decl => decl.SyntaxReference);
@@ -79,7 +81,7 @@ namespace MetaDslx.CodeAnalysis.Declarations
         private class Error : MergedDeclaration
         {
             public Error()
-                : base(ImmutableArray.Create(SingleDeclaration.Create(null, null, null, null, null, false, false, ImmutableArray<SingleDeclaration>.Empty, ImmutableArray<Diagnostic>.Empty)))
+                : base(ImmutableArray.Create(SingleDeclaration.Create(null, null, null, null, null, false, false, null, ImmutableArray<SingleDeclaration>.Empty, ImmutableArray<Diagnostic>.Empty)))
             {
                 
             }

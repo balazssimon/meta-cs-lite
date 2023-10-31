@@ -36,18 +36,24 @@ namespace MetaDslx.CodeAnalysis.Declarations
         public abstract ImmutableArray<Declaration> Children { get; }
         public abstract ImmutableArray<string> ChildNames { get; }
         public abstract ImmutableArray<Diagnostic> Diagnostics { get; }
+        public virtual Type? QualifierType => null;
+        public virtual string? QualifierProperty => null;
 
         public static RootSingleDeclaration CreateRoot(SyntaxNodeOrToken syntax, string? name, Type modelObjectType, ImmutableArray<SingleDeclaration> children, ImmutableArray<Syntax.ReferenceDirective> referenceDirectives, ImmutableArray<Diagnostic> diagnostics)
         {
             return new RootSingleDeclaration(syntax, name, modelObjectType, children, referenceDirectives, diagnostics);
         }
 
-        public static SingleDeclaration Create(SyntaxNodeOrToken syntax, Type modelObjectType, string? name, string? metadataName, SourceLocation? nameLocation, bool canMerge, bool isNesting, ImmutableArray<SingleDeclaration> children, ImmutableArray<Diagnostic> diagnostics)
+        public static SingleDeclaration Create(SyntaxNodeOrToken syntax, Type modelObjectType, string? name, string? metadataName, SourceLocation? nameLocation, bool canMerge, bool isNesting, string? qualifierProperty, ImmutableArray<SingleDeclaration> children, ImmutableArray<Diagnostic> diagnostics)
         {
             if (name is not null && nameLocation is null) throw new ArgumentNullException(nameof(nameLocation), "Name location must not be null if the name is not null.");
             var flags = SingleDeclarationFlags.None;
             if (canMerge) flags |= SingleDeclarationFlags.CanMerge;
             if (isNesting) flags |= SingleDeclarationFlags.IsNesting;
+            if (qualifierProperty is not null)
+            {
+                return children.IsDefaultOrEmpty ? new WithQualifier(syntax, flags, qualifierProperty, modelObjectType, name, metadataName, nameLocation, diagnostics) : new WithQualifierAndChildren(syntax, flags, qualifierProperty, modelObjectType, name, metadataName, nameLocation, children, diagnostics);
+            }
             if (diagnostics.IsDefaultOrEmpty)
             {
                 if (name is not null)
@@ -240,6 +246,19 @@ namespace MetaDslx.CodeAnalysis.Declarations
             public override ImmutableArray<Diagnostic> Diagnostics => _diagnostics;
         }
 
+        private class WithQualifier : WithNameAndFlagsAndDiagnostics
+        {
+            private readonly string? _qualifierProperty;
+
+            public WithQualifier(SyntaxNodeOrToken syntax, SingleDeclarationFlags flags, string? qualifierProperty, Type modelObjectType, string name, string metadataName, SourceLocation nameLocation, ImmutableArray<Diagnostic> diagnostics)
+                : base(syntax, flags, modelObjectType, name, metadataName, nameLocation, diagnostics)
+            {
+                _qualifierProperty = qualifierProperty;
+            }
+
+            public override string? QualifierProperty => _qualifierProperty;
+        }
+
         private class WithChildren : SingleDeclaration
         {
             private readonly ImmutableArray<Declaration> _children;
@@ -368,6 +387,19 @@ namespace MetaDslx.CodeAnalysis.Declarations
             }
 
             public override ImmutableArray<Diagnostic> Diagnostics => _diagnostics;
+        }
+
+        private class WithQualifierAndChildren : WithNameAndChildrenAndFlagsAndDiagnostics
+        {
+            private readonly string? _qualifierProperty;
+
+            public WithQualifierAndChildren(SyntaxNodeOrToken syntax, SingleDeclarationFlags flags, string? qualifierProperty, Type modelObjectType, string name, string metadataName, SourceLocation nameLocation, ImmutableArray<SingleDeclaration> children, ImmutableArray<Diagnostic> diagnostics)
+                : base(syntax, flags, modelObjectType, name, metadataName, nameLocation, children, diagnostics)
+            {
+                _qualifierProperty = qualifierProperty;
+            }
+
+            public override string? QualifierProperty => _qualifierProperty;
         }
 
     }

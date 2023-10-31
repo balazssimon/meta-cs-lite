@@ -16,12 +16,12 @@ namespace MetaDslx.Modeling
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private IModelObject? _parent;
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private List<IModelObject> _children;
+        private ChildList _children;
 
         public ModelObject(string? id = null)
         {
             _id = id ?? Guid.NewGuid().ToString();
-            _children = new List<IModelObject>();
+            _children = new ChildList(this);
         }
 
         protected abstract ModelObjectInfo MInfo { get; }
@@ -73,7 +73,36 @@ namespace MetaDslx.Modeling
             }
         }
 
-        IModelObject? IModelObject.Parent => _parent;
+        IModelObject? IModelObject.Parent
+        {
+            get => _parent;
+            set
+            {
+                if (_parent != null && value != null && !object.ReferenceEquals(_parent, value)) throw new ModelException($"Error changing the parent '{_parent}' of '{this}' to {value}: to change the parent of an object, remove the object from the old parent first.'");
+                if (!object.ReferenceEquals(_parent, value))
+                {
+                    var originalParent = _parent;
+                    try
+                    {
+                        if (originalParent != null)
+                        {
+                            _parent = null;
+                            originalParent.Children.Remove(this);
+                        }
+                        _parent = value;
+                        if (_parent != null)
+                        {
+                            _parent.Children.Add(this);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        _parent = originalParent;
+                        throw new ModelException($"Error setting the parent of '{this}' to {value}", ex);
+                    }
+                }
+            }
+        }
 
         IList<IModelObject> IModelObject.Children => _children;
 
@@ -262,7 +291,7 @@ namespace MetaDslx.Modeling
             }
             else if (_model.ValidationOptions.ValidateNullable)
             {
-                slot.ThrowModelException(mp => mp.IsNullable, mp => $"{GetAddMessage(mp, item)}: value cannot be null.");
+                slot.ThrowModelException(mp => !mp.IsNullable, mp => $"{GetAddMessage(mp, item)}: value cannot be null.");
             }
             if (TryGetSlotValueCore(slot, out var oldValue))
             {

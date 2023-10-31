@@ -5,6 +5,170 @@ using MetaDslx.Bootstrap.MetaModel.Core;
 
 generator MetaModelGenerator;
 
-template GenerateMetaModel(MetaModel mm)
+template Generate(MetaModel mm)
+namespace [mm.NamespaceName]
+{
+	using __MetaModel = global::MetaDslx.Modeling.MetaModel;
+	using __ModelVersion = global::MetaDslx.Modeling.ModelVersion;
+	using __ModelObjectInfo = global::MetaDslx.Modeling.ModelObjectInfo;
+	using __ModelProperty = global::MetaDslx.Modeling.ModelProperty;
+	using __ImmutableArray = global::System.Collections.Immutable.ImmutableArray;
+	using __Type = global::System.Type;
 
+	[GenerateMetaModel(mm)]
+
+	[foreach (var cls in mm.Parent.Declarations.OfType<MetaClass>())]
+	[GenerateInterface(mm, cls)]
+
+	[end foreach]
+}
+
+namespace [mm.NamespaceName].__Impl
+{
+	using __Model = global::MetaDslx.Modeling.Model;
+	using __MetaModel = global::MetaDslx.Modeling.MetaModel;
+	using __IModelObject = global::MetaDslx.Modeling.IModelObject;
+	using __MetaModelObject = global::MetaDslx.Modeling.MetaModelObject;
+	using __ModelObjectInfo = global::MetaDslx.Modeling.ModelObjectInfo;
+	using __ModelProperty = global::MetaDslx.Modeling.ModelProperty;
+	using __ModelPropertyInfo = global::MetaDslx.Modeling.ModelPropertyInfo;
+	using __ImmutableArray = global::System.Collections.Immutable.ImmutableArray;
+	using __Type = global::System.Type;
+
+	[foreach (var cls in mm.Parent.Declarations.OfType<MetaClass>())]
+	[GenerateClass(mm, cls)]
+
+	[end foreach]
+}
+end template
+
+template GenerateMetaModel(MetaModel mm)
+public class [mm.Name] : __MetaModel
+{
+	private static readonly [mm.Name] _instance;
+	public static [mm.Name] Instance => _instance;
+
+	[foreach (var cls in mm.Parent.Declarations.OfType<MetaClass>())]
+	[foreach (var prop in cls.Properties)]
+	private static readonly __ModelProperty _[cls.Name]_[prop.Name];
+	[end foreach]
+	[end foreach]
+
+	static [mm.Name]()
+	{
+		[foreach (var cls in mm.Parent.Declarations.OfType<MetaClass>())]
+		[foreach (var prop in cls.Properties)]
+		_[cls.Name]_[prop.Name] = new __ModelProperty(typeof([cls.Name]), "[prop.Name]");
+		[end foreach]
+		[end foreach]
+		_instance = new [mm.Name]();
+	}
+
+	private readonly global::System.Collections.Immutable.ImmutableArray<__Type> _modelObjectTypes;
+	private readonly global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> _modelObjectInfos;
+	private readonly global::System.Collections.Generic.Dictionary<__Type, __ModelObjectInfo> _modelObjectInfosByType;
+	private readonly global::System.Collections.Generic.Dictionary<string, __ModelObjectInfo> _modelObjectInfosByName;
+
+	private [mm.Name]()
+	{
+		_modelObjectTypes = __ImmutableArray.Create<__Type>([foreach (var cls in mm.Parent.Declarations.OfType<MetaClass>()) separator ", "]typeof([cls.Name])[end foreach]);
+		_modelObjectInfos = __ImmutableArray.Create<__ModelObjectInfo>([foreach (var cls in mm.Parent.Declarations.OfType<MetaClass>()) separator ", "][cls.Name]Info[end foreach]);
+		_modelObjectInfosByType = 
+			new global::System.Collections.Generic.Dictionary<__Type, __ModelObjectInfo>()
+			{
+				[foreach (var cls in mm.Parent.Declarations.OfType<MetaClass>())]
+				{typeof([cls.Name]), [cls.Name]Info},
+				[end foreach]
+			};
+		_modelObjectInfosByName = 
+			new global::System.Collections.Generic.Dictionary<string, __ModelObjectInfo>()
+			{
+				[foreach (var cls in mm.Parent.Declarations.OfType<MetaClass>())]
+				{"[cls.Name]", [cls.Name]Info},
+				[end foreach]
+			};
+	}
+
+    public override string Name => nameof([mm.Name]);
+    public override string FullName => "[mm.FullName]";
+    public override __ModelVersion Version => default;
+    public override string Uri => "[mm.FullName]";
+    public override string Prefix => "[string.Concat(mm.Name.Where(c => char.IsUpper(c)).Select(c => char.ToLower(c)))]";
+
+	public override global::System.Collections.Immutable.ImmutableArray<__Type> ModelObjectTypes => _modelObjectTypes;
+	public override global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> ModelObjectInfos => _modelObjectInfos;
+
+    public override bool Contains(__Type modelObjectType) => _modelObjectInfosByType.Keys.Contains(modelObjectType);
+    public override bool Contains(string modelObjectTypeName) => _modelObjectInfosByName.Keys.Contains(modelObjectTypeName);
+
+    public override bool TryGetInfo(__Type modelObjectType, out __ModelObjectInfo info) => _modelObjectInfosByType.TryGetValue(modelObjectType, out info);
+    public override bool TryGetInfo(string modelObjectTypeName, out __ModelObjectInfo info) => _modelObjectInfosByName.TryGetValue(modelObjectTypeName, out info);
+
+	[foreach (var cls in mm.Parent.Declarations.OfType<MetaClass>())]
+	public static __ModelObjectInfo [cls.Name]Info => __Impl.[cls.Name]_Impl.__Info.Instance;
+	[foreach (var prop in cls.Properties)]
+	public static __ModelProperty [cls.Name]_[prop.Name] => _[cls.Name]_[prop.Name];
+	[end foreach]
+	[end foreach]
+}
+end template
+
+template GenerateInterface(MetaModel mm, MetaClass cls)
+public interface [cls.Name][if (cls.BaseTypes.Any())] : [foreach (var bt in cls.BaseTypes) separator ", "]global::[bt.FullName][end foreach][end if]
+{
+
+}
+end template
+
+template GenerateClass(MetaModel mm, MetaClass cls)
+internal class [cls.Name]_Impl : __MetaModelObject, [cls.Name]
+{
+	private [cls.Name]_Impl(string? id)
+		: base(id)
+	{
+	}
+
+	protected override __ModelObjectInfo MInfo => __Info.Instance;
+
+	internal class __Info : __ModelObjectInfo
+	{
+		public static readonly __Info Instance = new __Info();
+
+		private readonly global::System.Collections.Immutable.ImmutableArray<__ModelProperty> _declaredProperties;
+		private readonly global::System.Collections.Immutable.ImmutableArray<__ModelProperty> _allDeclaredProperties;
+		private readonly global::System.Collections.Immutable.ImmutableArray<__ModelProperty> _publicProperties;
+        private readonly global::System.Collections.Generic.Dictionary<string, __ModelProperty> _publicPropertiesByName;
+        private readonly global::System.Collections.Generic.Dictionary<__ModelProperty, __ModelPropertyInfo> _modelPropertyInfos;
+
+		private __Info() 
+		{
+			_declaredProperties = __ImmutableArray.Create<__ModelProperty>([foreach (var prop in cls.Properties) separator ", "][mm.Name].[cls.Name]_[prop.Name][end foreach]);
+			_allDeclaredProperties = __ImmutableArray.Create<__ModelProperty>(); // TODO
+			_publicProperties = __ImmutableArray.Create<__ModelProperty>(); // TODO
+			_publicPropertiesByName = new global::System.Collections.Generic.Dictionary<string, __ModelProperty>(); // TODO
+			_modelPropertyInfos = new global::System.Collections.Generic.Dictionary<__ModelProperty, __ModelPropertyInfo>(); // TODO
+		}
+
+        public override __MetaModel MetaModel => [mm.Name].Instance;
+        public override global::System.Type MetaType => typeof([cls.Name]);
+
+        public override __Type? SymbolType => null; // TODO
+        public override __ModelProperty? NameProperty => null; // TODO
+        public override __ModelProperty? TypeProperty => null; // TODO
+        public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> DeclaredProperties => _declaredProperties;
+        public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> AllDeclaredProperties => _allDeclaredProperties;
+        public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> PublicProperties => _publicProperties;
+
+        protected override global::System.Collections.Generic.Dictionary<string, __ModelProperty> PublicPropertiesByName => _publicPropertiesByName;
+        protected override global::System.Collections.Generic.Dictionary<__ModelProperty, __ModelPropertyInfo> ModelPropertyInfos => _modelPropertyInfos;
+
+		public override __IModelObject? Create(__Model? model = null, string? id = null)
+		{
+			var result = new [cls.Name]_Impl(id);
+			if (model is not null) model.AddObject(result);
+			return result;
+		}
+
+	}
+}
 end template

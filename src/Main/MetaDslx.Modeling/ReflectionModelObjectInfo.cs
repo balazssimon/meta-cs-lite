@@ -39,11 +39,19 @@ namespace MetaDslx.Modeling
         public override Type MetaType => _metaType;
         public override Type? SymbolType => _symbolType;
 
-        public override IModelObject? Create(string? id = null)
+        public override IModelObject? Create(Model? model = null, string? id = null)
         {
             var ctr = _metaType.GetConstructor(EmptyTypes);
-            if (ctr is not null) return new ReflectionModelObject(ctr.Invoke(EmptyObjects), this, id);
-            else return null;
+            if (ctr is not null)
+            {
+                var mobj = new ReflectionModelObject(ctr.Invoke(EmptyObjects), this, id);
+                if (model is not null) model.AddObject(mobj);
+                return mobj;
+            }
+            else
+            {
+                return null;
+            }
         }
 
         protected override Dictionary<string, ModelProperty> PublicPropertiesByName

@@ -16,7 +16,7 @@ namespace MetaDslx.Modeling
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Dictionary<ModelProperty, object?> _properties;
 
-        public MetaModelObject(string? id = null)
+        public MetaModelObject(string? id)
             : base(id)
         {
             _properties = new Dictionary<ModelProperty, object?>();

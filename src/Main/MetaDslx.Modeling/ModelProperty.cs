@@ -22,6 +22,8 @@ namespace MetaDslx.Modeling
             _defaultValue = defaultValue;
             _flags = flags;
             _symbolProperty = symbolProperty;
+            if (symbolProperty == "Name") _flags |= ModelPropertyFlags.Name;
+            if (symbolProperty == "Type") _flags |= ModelPropertyFlags.Type;
         }
 
         public Type DeclaringType => _declaringType;

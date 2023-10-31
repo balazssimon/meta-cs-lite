@@ -125,7 +125,7 @@ namespace MetaDslx.CodeAnalysis.Declarations
                 {
                     if (_qualifiedNames is null)
                     {
-                        result = ImmutableArray.Create(SingleDeclaration.Create(_syntax, Type, null, null, null, canMerge: CanMerge, isNesting: false, GetChildren(), GetDiagnostics()));
+                        result = ImmutableArray.Create(SingleDeclaration.Create(_syntax, Type, null, null, null, canMerge: CanMerge, isNesting: false, null, GetChildren(), GetDiagnostics()));
                     }
                     else
                     {

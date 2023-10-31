@@ -23,9 +23,7 @@ namespace MetaDslx.Modeling
         {
             if (_metaModel.TryGetInfo(modelObjectType, out var info))
             {
-                var mobj = info.Create(id);
-                if (mobj is not null) mobj.Model = _model;
-                return mobj;
+                return info.Create(_model, id);
             }
             return null;
         }
@@ -34,9 +32,7 @@ namespace MetaDslx.Modeling
         {
             if (_metaModel.TryGetInfo(modelObjectTypeName, out var info))
             {
-                var mobj = info.Create(id);
-                if (mobj is not null) mobj.Model = _model;
-                return mobj;
+                return info.Create(_model, id);
             }
             return null;
         }

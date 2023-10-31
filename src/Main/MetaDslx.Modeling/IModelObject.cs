@@ -13,7 +13,7 @@ namespace MetaDslx.Modeling
         ModelObjectInfo Info { get; }
         Model? Model { get; set; }
         string? Name { get; set; }
-        IModelObject? Parent { get; }
+        IModelObject? Parent { get; set; }
         IList<IModelObject> Children { get; }
         object? UnderlyingObject { get; }
         void Init(ModelProperty property, object? value);

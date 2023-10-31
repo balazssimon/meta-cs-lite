@@ -105,7 +105,18 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
                     if (modelObject is not null)
                     {
                         modelObject.Name = declaration.Name;
-                        if (containerModelSymbol.ModelObject is not null) containerModelSymbol.ModelObject.Children.Add(modelObject);
+                        if (containerModelSymbol.ModelObject is not null)
+                        {
+                            containerModelSymbol.ModelObject.Children.Add(modelObject);
+                            if (declaration.QualifierProperty is not null)
+                            {
+                                var qprop = containerModelSymbol.ModelObject.GetProperty(declaration.QualifierProperty);
+                                if (qprop is not null)
+                                {
+                                    containerModelSymbol.ModelObject.Add(qprop, modelObject);
+                                }
+                            }
+                        }
                     }
                     return constructor((Symbol)container, declaration, modelObject);
                 }
