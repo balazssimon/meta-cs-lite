@@ -44,12 +44,12 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
 
         protected override ImmutableArray<Symbol> CompletePart_CreateContainedSymbols(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            return SymbolFactory.CreateContainedSymbols(this);
+            return SymbolFactory.CreateContainedSymbols(this, diagnostics);
         }
 
         protected override ImmutableArray<DeclaredSymbol> CompleteProperty_Members(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            return SymbolFactory.GetMemberSymbols(this);
+            return SymbolFactory.GetMemberSymbols(this, diagnostics);
         }
 
         protected override ImmutableArray<ImportSymbol> CompleteProperty_Imports(DiagnosticBag diagnostics, CancellationToken cancellationToken)

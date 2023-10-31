@@ -1,4 +1,5 @@
-﻿using MetaDslx.Modeling;
+﻿using MetaDslx.CodeAnalysis.Symbols;
+using MetaDslx.Modeling;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,11 +8,14 @@ using System.Threading.Tasks;
 
 namespace MetaDslx.Bootstrap.MetaModel.Core
 {
+    [Symbol(typeof(DeclaredSymbol))]
     public class MetaDeclaration
     {
+        [SymbolProperty("Name")]
         public string? Name { get; set; }
     }
 
+    [Symbol(typeof(NamespaceSymbol))]
     public class MetaNamespace : MetaDeclaration
     {
         public MetaNamespace()
@@ -19,7 +23,6 @@ namespace MetaDslx.Bootstrap.MetaModel.Core
             Declarations = new List<MetaDeclaration>();
         }
 
-        public string Name { get; set; }
         public List<MetaDeclaration> Declarations { get; }
     }
 
@@ -31,6 +34,7 @@ namespace MetaDslx.Bootstrap.MetaModel.Core
         public static MetaPrimitiveType String => new MetaPrimitiveType() { Name = "string" };
     }
 
+    [Symbol(typeof(TypeSymbol))]
     public class MetaType : MetaDeclaration
     {
     }
@@ -49,8 +53,10 @@ namespace MetaDslx.Bootstrap.MetaModel.Core
         public List<MetaEnumLiteral> Literals { get; }
     }
 
+    [Symbol(typeof(DeclaredSymbol))]
     public class MetaEnumLiteral
     {
+        [SymbolProperty("Name")]
         public string Name { get; set; }
     }
 
@@ -73,9 +79,12 @@ namespace MetaDslx.Bootstrap.MetaModel.Core
         public List<MetaProperty> Properties { get; set; }
     }
 
+    [Symbol(typeof(DeclaredSymbol))]
     public class MetaProperty
     {
+        [SymbolProperty("Name")]
         public string Name { get; set; }
+        [SymbolProperty("Type")]
         public MetaType Type { get; set; }
         public bool IsContainment { get; set; }
         public MetaProperty? Opposite { get; set; }

@@ -52,7 +52,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
 
         protected override ImmutableArray<Symbol> CompletePart_CreateContainedSymbols(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            return SymbolFactory.CreateContainedSymbols(this);
+            return SymbolFactory.CreateContainedSymbols(this, diagnostics);
         }
         
         protected override (ImmutableArray<AliasSymbol> aliases, ImmutableArray<NamespaceSymbol> namespaces, ImmutableArray<DeclaredSymbol> symbols) ComputeImports(DiagnosticBag diagnostics, CancellationToken cancellationToken)

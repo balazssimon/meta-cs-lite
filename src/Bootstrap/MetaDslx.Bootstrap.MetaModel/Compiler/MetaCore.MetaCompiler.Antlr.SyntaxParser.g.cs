@@ -68,7 +68,7 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
             {
 				if (token == null)
 				{
-					if (kind != MetaCoreSyntaxKind.None) return _factory.MissingToken(kind);
+					if (kind != MetaCoreSyntaxKind.None) return _tokenStream.ConsumeGreenToken(_factory.MissingToken(kind), _parser);
 					else return null;
 				}
                 var green = _tokenStream.ConsumeGreenToken(token, _parser);
@@ -105,27 +105,21 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
                 QualifierGreen? name = null;
                 if (context.nameAntlr1 is not null) name = (QualifierGreen?)this.Visit(context.nameAntlr1) ?? QualifierGreen.__Missing;
                 else name = QualifierGreen.__Missing;
-                var qualifierListBuilder = _pool.AllocateSeparated<QualifierGreen>(reversed: true);
-                var qualifierListContext = context._usingAntlr1;
-                for (int i = 0; i < qualifierListContext.Count; ++i)
+                var tSemicolon = this.VisitTerminal(context.tSemicolon, MetaCoreSyntaxKind.TSemicolon);
+                var @usingContext = context._usingAntlr1;
+                var @usingBuilder = _pool.Allocate<UsingGreen>();
+                for (int i = 0; i < @usingContext.Count; ++i)
                 {
-                    var itemContext = qualifierListContext[i];
-                    if (itemContext is not null)
-                    {
-                        var item = itemContext.namespacesAntlr1;
-                        var separator = itemContext.kUsing;
-                        qualifierListBuilder.AddSeparator(this.VisitTerminal(separator, MetaCoreSyntaxKind.KUsing));
-                        if (item is not null) qualifierListBuilder.Add((QualifierGreen?)this.Visit(item) ?? QualifierGreen.__Missing);
-                        else qualifierListBuilder.Add(QualifierGreen.__Missing);
-                    }
+                    if (@usingContext[i] is not null) @usingBuilder.Add((UsingGreen?)this.Visit(@usingContext[i]) ?? UsingGreen.__Missing);
+                    else @usingBuilder.Add(UsingGreen.__Missing);
                 }
-                var qualifierList = qualifierListBuilder.ToList();
-                _pool.Free(qualifierListBuilder);
+                var @using = @usingBuilder.ToList();
+                _pool.Free(@usingBuilder);
                 DeclarationsGreen? declarations = null;
                 if (context.declarationsAntlr1 is not null) declarations = (DeclarationsGreen?)this.Visit(context.declarationsAntlr1) ?? DeclarationsGreen.__Missing;
                 else declarations = DeclarationsGreen.__Missing;
-                var eof = this.VisitTerminal(context.eof);
-            	return _factory.Main(kNamespace, name, qualifierList, declarations, eof);
+                var eof = this.VisitTerminal(context.eof, MetaCoreSyntaxKind.Eof);
+            	return _factory.Main(kNamespace, name, tSemicolon, @using, declarations, eof);
             }
             public override UsingGreen? VisitPr_Using(MetaCoreParser.Pr_UsingContext? context)
             {
@@ -134,14 +128,21 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
                 QualifierGreen? namespaces = null;
                 if (context.namespacesAntlr1 is not null) namespaces = (QualifierGreen?)this.Visit(context.namespacesAntlr1) ?? QualifierGreen.__Missing;
                 else namespaces = QualifierGreen.__Missing;
-            	return _factory.Using(kUsing, namespaces);
+                var tSemicolon = this.VisitTerminal(context.tSemicolon, MetaCoreSyntaxKind.TSemicolon);
+            	return _factory.Using(kUsing, namespaces, tSemicolon);
             }
             public override DeclarationsGreen? VisitPr_Declarations(MetaCoreParser.Pr_DeclarationsContext? context)
             {
                	if (context == null) return DeclarationsGreen.__Missing;
-                MetaDeclarationGreen? declarations = null;
-                if (context.declarationsAntlr1 is not null) declarations = (MetaDeclarationGreen?)this.Visit(context.declarationsAntlr1) ?? MetaDeclarationGreen.__Missing;
-                else declarations = MetaDeclarationGreen.__Missing;
+                var declarationsContext = context._declarationsAntlr1;
+                var declarationsBuilder = _pool.Allocate<MetaDeclarationGreen>();
+                for (int i = 0; i < declarationsContext.Count; ++i)
+                {
+                    if (declarationsContext[i] is not null) declarationsBuilder.Add((MetaDeclarationGreen?)this.Visit(declarationsContext[i]) ?? MetaDeclarationGreen.__Missing);
+                    else declarationsBuilder.Add(MetaDeclarationGreen.__Missing);
+                }
+                var declarations = declarationsBuilder.ToList();
+                _pool.Free(declarationsBuilder);
             	return _factory.Declarations(declarations);
             }
             public override MetaModelGreen? VisitPr_MetaModel(MetaCoreParser.Pr_MetaModelContext? context)
@@ -151,7 +152,8 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
                 NameGreen? name = null;
                 if (context.nameAntlr1 is not null) name = (NameGreen?)this.Visit(context.nameAntlr1) ?? NameGreen.__Missing;
                 else name = NameGreen.__Missing;
-            	return _factory.MetaModel(kMetamodel, name);
+                var tSemicolon = this.VisitTerminal(context.tSemicolon, MetaCoreSyntaxKind.TSemicolon);
+            	return _factory.MetaModel(kMetamodel, name, tSemicolon);
             }
             public override MetaEnumTypeGreen? VisitPr_MetaEnumType(MetaCoreParser.Pr_MetaEnumTypeContext? context)
             {
@@ -248,7 +250,7 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
             public override MetaPropertyGreen? VisitPr_MetaProperty(MetaCoreParser.Pr_MetaPropertyContext? context)
             {
                	if (context == null) return MetaPropertyGreen.__Missing;
-                var isContainment = this.VisitTerminal(context.isContainment, MetaCoreSyntaxKind.KContains);
+                var isContainment = this.VisitTerminal(context.isContainment);
                 TypeReferenceGreen? type = null;
                 if (context.typeAntlr1 is not null) type = (TypeReferenceGreen?)this.Visit(context.typeAntlr1) ?? TypeReferenceGreen.__Missing;
                 else type = TypeReferenceGreen.__Missing;
@@ -257,7 +259,8 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
                 else name = NameGreen.__Missing;
                 PropertyOppositeGreen? propertyOpposite = null;
                 if (context.propertyOppositeAntlr1 is not null) propertyOpposite = (PropertyOppositeGreen?)this.Visit(context.propertyOppositeAntlr1);
-            	return _factory.MetaProperty(isContainment, type, name, propertyOpposite);
+                var tSemicolon = this.VisitTerminal(context.tSemicolon, MetaCoreSyntaxKind.TSemicolon);
+            	return _factory.MetaProperty(isContainment, type, name, propertyOpposite, tSemicolon);
             }
             public override PropertyOppositeGreen? VisitPr_PropertyOpposite(MetaCoreParser.Pr_PropertyOppositeContext? context)
             {

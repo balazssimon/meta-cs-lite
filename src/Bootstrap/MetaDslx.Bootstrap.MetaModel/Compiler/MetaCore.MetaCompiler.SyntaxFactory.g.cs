@@ -217,48 +217,50 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
             return new SyntaxToken(MetaCoreLanguage.Instance.InternalSyntaxFactory.TMultiLineComment(text, value));
         }
 
-        public MainSyntax Main(SyntaxToken kNamespace, QualifierSyntax name, MetaDslx.CodeAnalysis.SeparatedSyntaxList<QualifierSyntax> qualifierList, DeclarationsSyntax declarations, SyntaxToken eof)
+        public MainSyntax Main(SyntaxToken kNamespace, QualifierSyntax name, SyntaxToken tSemicolon, MetaDslx.CodeAnalysis.SyntaxList<UsingSyntax> @using, DeclarationsSyntax declarations, SyntaxToken eof)
         {
         	if (kNamespace.RawKind != (int)MetaCoreSyntaxKind.KNamespace) throw new ArgumentException(nameof(kNamespace));
         	if (name is null) throw new ArgumentNullException(nameof(name));
+        	if (tSemicolon.RawKind != (int)MetaCoreSyntaxKind.TSemicolon) throw new ArgumentException(nameof(tSemicolon));
         	if (declarations is null) throw new ArgumentNullException(nameof(declarations));
         	if (eof.RawKind != (int)MetaCoreSyntaxKind.Eof) throw new ArgumentException(nameof(eof));
-            return (MainSyntax)MetaCoreLanguage.Instance.InternalSyntaxFactory.Main((InternalSyntaxToken)kNamespace.Node, (QualifierGreen)name.Green, qualifierList.Node.ToGreenSeparatedList<QualifierGreen>(reversed: true), (DeclarationsGreen)declarations.Green, (InternalSyntaxToken)eof.Node).CreateRed();
+            return (MainSyntax)MetaCoreLanguage.Instance.InternalSyntaxFactory.Main((InternalSyntaxToken)kNamespace.Node, (QualifierGreen)name.Green, (InternalSyntaxToken)tSemicolon.Node, @using.Node.ToGreenList<UsingGreen>(), (DeclarationsGreen)declarations.Green, (InternalSyntaxToken)eof.Node).CreateRed();
         }
         
-        public MainSyntax Main(QualifierSyntax name, MetaDslx.CodeAnalysis.SeparatedSyntaxList<QualifierSyntax> qualifierList, DeclarationsSyntax declarations)
+        public MainSyntax Main(QualifierSyntax name, MetaDslx.CodeAnalysis.SyntaxList<UsingSyntax> @using, DeclarationsSyntax declarations)
         {
-        	return this.Main(this.Token(MetaCoreSyntaxKind.KNamespace), name, qualifierList, declarations, this.Token(MetaCoreSyntaxKind.Eof));
+        	return this.Main(this.Token(MetaCoreSyntaxKind.KNamespace), name, this.Token(MetaCoreSyntaxKind.TSemicolon), @using, declarations, this.Token(MetaCoreSyntaxKind.Eof));
         }
 
-        public UsingSyntax Using(SyntaxToken kUsing, QualifierSyntax namespaces)
+        public UsingSyntax Using(SyntaxToken kUsing, QualifierSyntax namespaces, SyntaxToken tSemicolon)
         {
         	if (kUsing.RawKind != (int)MetaCoreSyntaxKind.KUsing) throw new ArgumentException(nameof(kUsing));
         	if (namespaces is null) throw new ArgumentNullException(nameof(namespaces));
-            return (UsingSyntax)MetaCoreLanguage.Instance.InternalSyntaxFactory.Using((InternalSyntaxToken)kUsing.Node, (QualifierGreen)namespaces.Green).CreateRed();
+        	if (tSemicolon.RawKind != (int)MetaCoreSyntaxKind.TSemicolon) throw new ArgumentException(nameof(tSemicolon));
+            return (UsingSyntax)MetaCoreLanguage.Instance.InternalSyntaxFactory.Using((InternalSyntaxToken)kUsing.Node, (QualifierGreen)namespaces.Green, (InternalSyntaxToken)tSemicolon.Node).CreateRed();
         }
         
         public UsingSyntax Using(QualifierSyntax namespaces)
         {
-        	return this.Using(this.Token(MetaCoreSyntaxKind.KUsing), namespaces);
+        	return this.Using(this.Token(MetaCoreSyntaxKind.KUsing), namespaces, this.Token(MetaCoreSyntaxKind.TSemicolon));
         }
 
-        public DeclarationsSyntax Declarations(MetaDeclarationSyntax declarations)
+        public DeclarationsSyntax Declarations(MetaDslx.CodeAnalysis.SyntaxList<MetaDeclarationSyntax> declarations)
         {
-        	if (declarations is null) throw new ArgumentNullException(nameof(declarations));
-            return (DeclarationsSyntax)MetaCoreLanguage.Instance.InternalSyntaxFactory.Declarations((MetaDeclarationGreen)declarations.Green).CreateRed();
+            return (DeclarationsSyntax)MetaCoreLanguage.Instance.InternalSyntaxFactory.Declarations(declarations.Node.ToGreenList<MetaDeclarationGreen>()).CreateRed();
         }
 
-        public MetaModelSyntax MetaModel(SyntaxToken kMetamodel, NameSyntax name)
+        public MetaModelSyntax MetaModel(SyntaxToken kMetamodel, NameSyntax name, SyntaxToken tSemicolon)
         {
         	if (kMetamodel.RawKind != (int)MetaCoreSyntaxKind.KMetamodel) throw new ArgumentException(nameof(kMetamodel));
         	if (name is null) throw new ArgumentNullException(nameof(name));
-            return (MetaModelSyntax)MetaCoreLanguage.Instance.InternalSyntaxFactory.MetaModel((InternalSyntaxToken)kMetamodel.Node, (NameGreen)name.Green).CreateRed();
+        	if (tSemicolon.RawKind != (int)MetaCoreSyntaxKind.TSemicolon) throw new ArgumentException(nameof(tSemicolon));
+            return (MetaModelSyntax)MetaCoreLanguage.Instance.InternalSyntaxFactory.MetaModel((InternalSyntaxToken)kMetamodel.Node, (NameGreen)name.Green, (InternalSyntaxToken)tSemicolon.Node).CreateRed();
         }
         
         public MetaModelSyntax MetaModel(NameSyntax name)
         {
-        	return this.MetaModel(this.Token(MetaCoreSyntaxKind.KMetamodel), name);
+        	return this.MetaModel(this.Token(MetaCoreSyntaxKind.KMetamodel), name, this.Token(MetaCoreSyntaxKind.TSemicolon));
         }
 
         public MetaEnumTypeSyntax MetaEnumType(SyntaxToken kEnum, NameSyntax name, EnumBodySyntax enumBody)
@@ -329,17 +331,18 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
         	return this.ClassBody(this.Token(MetaCoreSyntaxKind.TLBrace), properties, this.Token(MetaCoreSyntaxKind.TRBrace));
         }
 
-        public MetaPropertySyntax MetaProperty(SyntaxToken isContainment, TypeReferenceSyntax type, NameSyntax name, PropertyOppositeSyntax propertyOpposite)
+        public MetaPropertySyntax MetaProperty(SyntaxToken isContainment, TypeReferenceSyntax type, NameSyntax name, PropertyOppositeSyntax propertyOpposite, SyntaxToken tSemicolon)
         {
         	if (isContainment.RawKind != (int)MetaCoreSyntaxKind.KContains) throw new ArgumentException(nameof(isContainment));
         	if (type is null) throw new ArgumentNullException(nameof(type));
         	if (name is null) throw new ArgumentNullException(nameof(name));
-            return (MetaPropertySyntax)MetaCoreLanguage.Instance.InternalSyntaxFactory.MetaProperty((InternalSyntaxToken)isContainment.Node, (TypeReferenceGreen)type.Green, (NameGreen)name.Green, (PropertyOppositeGreen?)propertyOpposite?.Green).CreateRed();
+        	if (tSemicolon.RawKind != (int)MetaCoreSyntaxKind.TSemicolon) throw new ArgumentException(nameof(tSemicolon));
+            return (MetaPropertySyntax)MetaCoreLanguage.Instance.InternalSyntaxFactory.MetaProperty((InternalSyntaxToken)isContainment.Node, (TypeReferenceGreen)type.Green, (NameGreen)name.Green, (PropertyOppositeGreen?)propertyOpposite?.Green, (InternalSyntaxToken)tSemicolon.Node).CreateRed();
         }
         
         public MetaPropertySyntax MetaProperty(TypeReferenceSyntax type, NameSyntax name)
         {
-        	return this.MetaProperty(this.Token(MetaCoreSyntaxKind.KContains), type, name, default);
+        	return this.MetaProperty(default, type, name, default, this.Token(MetaCoreSyntaxKind.TSemicolon));
         }
 
         public PropertyOppositeSyntax PropertyOpposite(SyntaxToken kOpposite, QualifierSyntax opposite)

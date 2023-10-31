@@ -103,7 +103,7 @@ namespace [language.QualifiedNamespace].Syntax
             {
 				if (token == null)
 				{
-					if (kind != [language.Name]SyntaxKind.None) return _factory.MissingToken(kind);
+					if (kind != [language.Name]SyntaxKind.None) return _tokenStream.ConsumeGreenToken(_factory.MissingToken(kind), _parser);
 					else return null;
 				}
                 var green = _tokenStream.ConsumeGreenToken(token, _parser);
@@ -210,6 +210,8 @@ namespace [language.QualifiedNamespace].Syntax
                 var [elem.ParameterName] = this.VisitTerminal(context.[elem.AntlrName][if (!elem.IsOptional)], [language.Name]SyntaxKind.[fixedElem.LexerRule.CSharpName][end if]);
                         [else if(elem.IsToken && elem is ParserRuleReferenceElement ruleRefElem)]
                 var [elem.ParameterName] = this.VisitTerminal(context.[elem.AntlrName][if (!elem.IsOptional)], [language.Name]SyntaxKind.[ruleRefElem.Rule.CSharpName][end if]);
+                        [else if(elem.IsToken && elem is ParserRuleEofElement eofElem)]
+                var [elem.ParameterName] = this.VisitTerminal(context.[elem.AntlrName], [language.Name]SyntaxKind.Eof);
                         [else if(elem.IsToken)]
                 var [elem.ParameterName] = this.VisitTerminal(context.[elem.AntlrName]);
                         [else]

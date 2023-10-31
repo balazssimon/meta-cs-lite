@@ -48,25 +48,25 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
             _non_mo_constructors.Add(typeof(TSymbol), constructor);
         }
 
-        public TSymbol? CreateSymbol<TSymbol>(ISourceSymbol container, MergedDeclaration declaration)
+        public TSymbol? CreateSymbol<TSymbol>(ISourceSymbol container, MergedDeclaration declaration, DiagnosticBag diagnostics)
             where TSymbol : Symbol
         {
-            return CreateSymbol(typeof(TSymbol), container, declaration) as TSymbol;
+            return CreateSymbol(typeof(TSymbol), container, declaration, diagnostics) as TSymbol;
         }
 
-        public ImmutableArray<Symbol> CreateContainedSymbols(ISourceSymbol container)
+        public ImmutableArray<Symbol> CreateContainedSymbols(ISourceSymbol container, DiagnosticBag diagnostics)
         {
             var declaration = container.Declaration;
             var symbols = ArrayBuilder<Symbol>.GetInstance();
             foreach (var child in declaration.Children)
             {
-                var symbol = CreateSymbol<Symbol>(container, child);
+                var symbol = CreateSymbol<Symbol>(container, child, diagnostics);
                 if (symbol is not null) symbols.Add(symbol);
             }
             return symbols.ToImmutableAndFree();
         }
 
-        public ImmutableArray<DeclaredSymbol> GetMemberSymbols(ISourceSymbol container)
+        public ImmutableArray<DeclaredSymbol> GetMemberSymbols(ISourceSymbol container, DiagnosticBag diagnostics)
         {
             var symbol = (Symbol)container;
             if (symbol.ContainedSymbols.Length == 0) return ImmutableArray<DeclaredSymbol>.Empty;
@@ -80,7 +80,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
             else return symbol.ContainedSymbols.OfType<ImportSymbol>().ToImmutableArray();
         }
 
-        protected Symbol? CreateSymbol(Type symbolType, ISourceSymbol container, MergedDeclaration declaration)
+        protected Symbol? CreateSymbol(Type symbolType, ISourceSymbol container, MergedDeclaration declaration, DiagnosticBag diagnostics)
         {
             if (declaration?.ModelObjectType is null) return null;
             if (_non_mo_constructors.TryGetValue(declaration.ModelObjectType, out var non_mo_constructor))
@@ -91,7 +91,12 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
             {
                 if (declaration.ModelObjectType is null) return null;
                 var info = GetModelObjectInfo(declaration.ModelObjectType);
-                if (info is null || info.SymbolType is null || !symbolType.IsAssignableFrom(info.SymbolType)) return null;
+                if (info?.SymbolType is null)
+                {
+                    diagnostics.Add(Diagnostic.Create(CommonErrorCode.ERR_DeclarationError, declaration.NameLocations.FirstOrDefault(), $"Could not determine symbol type for '{declaration.Name}'"));
+                    return null;
+                }
+                if (!symbolType.IsAssignableFrom(info.SymbolType)) return null;
                 var modelFactory = _module.ModelFactory;
                 if (modelFactory is null) return null;
                 if (_constructors.TryGetValue(info.SymbolType, out var constructor))

@@ -79,7 +79,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
 
         protected override NamespaceSymbol CompleteProperty_GlobalNamespace(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            var globalNamespace = SymbolFactory.CreateSymbol<NamespaceSymbol>(this, Declaration);
+            var globalNamespace = SymbolFactory.CreateSymbol<NamespaceSymbol>(this, Declaration, diagnostics);
             if (!DeclaringCompilation.Options.MergeGlobalNamespace)
             {
                 var fileNamespaces = ArrayBuilder<NamespaceSymbol>.GetInstance();

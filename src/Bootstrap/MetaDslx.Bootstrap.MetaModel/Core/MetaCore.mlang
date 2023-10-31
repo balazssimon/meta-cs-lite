@@ -10,17 +10,17 @@ using MetaDslx.Bootstrap.MetaModel.Core;
 language MetaCore;
 
 Main returns MetaNamespace:
-	'namespace' name=[Name(qualifierProperty:Declarations)]Qualifier
+	'namespace' name=[Name(qualifierProperty:Declarations)]Qualifier ';'
 	Using*
 	Declarations
 	eof;
 
-Using returns ImportSymbol: 'using' namespaces+=#NamespaceSymbol;
+Using returns ImportSymbol: 'using' namespaces+=#NamespaceSymbol ';';
 
 [Scope]
-part Declarations: declarations+=MetaDeclaration;
+part Declarations: declarations+=MetaDeclaration*;
 
-MetaModel: 'metamodel' name=Name;
+MetaModel: 'metamodel' name=Name ';';
 
 MetaDeclaration: MetaModel | MetaEnumType | MetaClass;
 
@@ -35,7 +35,7 @@ part BaseClasses: (':' baseTypes+=#{MetaClass|QualifierList});
 [Scope]
 part ClassBody: '{' properties+=MetaProperty* '}';
 
-MetaProperty: isContainment?='contains' type=TypeReference name=Name PropertyOpposite?;
+MetaProperty: isContainment?='contains'? type=TypeReference name=Name PropertyOpposite?  ';';
 part PropertyOpposite: 'opposite' Opposite=#MetaProperty;
 
 TypeReference returns MetaType: MetaPrimitiveType | MetaArrayType | #MetaType;

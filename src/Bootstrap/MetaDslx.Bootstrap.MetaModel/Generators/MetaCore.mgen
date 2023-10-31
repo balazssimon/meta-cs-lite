@@ -1,0 +1,10 @@
+namespace MetaDslx.Bootstrap.MetaModel.Generators;
+
+using System;
+using MetaDslx.Bootstrap.MetaModel.Core;
+
+generator MetaModelGenerator;
+
+template GenerateMetaModel(MetaModel mm)
+
+end template

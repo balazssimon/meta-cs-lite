@@ -37,12 +37,12 @@ public partial class MetaCoreParser : global::MetaDslx.Languages.MetaCompiler.An
 	protected static DFA[] decisionToDFA;
 	protected static PredictionContextCache sharedContextCache = new PredictionContextCache();
 	public const int
-		LR_TComma=1, LR_KNamespace=2, LR_KUsing=3, LR_KMetamodel=4, LR_KEnum=5, 
-		LR_TLBrace=6, LR_TRBrace=7, LR_KAbstract=8, LR_KClass=9, LR_TColon=10, 
-		LR_KContains=11, LR_KOpposite=12, LR_KBool=13, LR_KInt=14, LR_KString=15, 
-		LR_TLBracket=16, LR_TRBracket=17, LR_TDot=18, LR_TInteger=19, LR_TDecimal=20, 
-		LR_TIdentifier=21, LR_TString=22, LR_TWhitespace=23, LR_TLineEnd=24, LR_TSingleLineComment=25, 
-		LR_TMultiLineComment=26;
+		LR_TComma=1, LR_KNamespace=2, LR_TSemicolon=3, LR_KUsing=4, LR_KMetamodel=5, 
+		LR_KEnum=6, LR_TLBrace=7, LR_TRBrace=8, LR_KAbstract=9, LR_KClass=10, 
+		LR_TColon=11, LR_KContains=12, LR_KOpposite=13, LR_KBool=14, LR_KInt=15, 
+		LR_KString=16, LR_TLBracket=17, LR_TRBracket=18, LR_TDot=19, LR_TInteger=20, 
+		LR_TDecimal=21, LR_TIdentifier=22, LR_TString=23, LR_TWhitespace=24, LR_TLineEnd=25, 
+		LR_TSingleLineComment=26, LR_TMultiLineComment=27;
 	public const int
 		RULE_pr_Main = 0, RULE_pr_Using = 1, RULE_pr_Declarations = 2, RULE_pr_MetaDeclaration = 3, 
 		RULE_pr_EnumBody = 4, RULE_pr_EnumLiterals = 5, RULE_pr_MetaEnumLiteral = 6, 
@@ -60,13 +60,13 @@ public partial class MetaCoreParser : global::MetaDslx.Languages.MetaCompiler.An
 	};
 
 	private static readonly string[] _LiteralNames = {
-		null, "','", "'namespace'", "'using'", "'metamodel'", "'enum'", "'{'", 
-		"'}'", "'abstract'", "'class'", "':'", "'contains'", "'opposite'", "'bool'", 
-		"'int'", "'string'", "'['", "']'", "'.'"
+		null, "','", "'namespace'", "';'", "'using'", "'metamodel'", "'enum'", 
+		"'{'", "'}'", "'abstract'", "'class'", "':'", "'contains'", "'opposite'", 
+		"'bool'", "'int'", "'string'", "'['", "']'", "'.'"
 	};
 	private static readonly string[] _SymbolicNames = {
-		null, "LR_TComma", "LR_KNamespace", "LR_KUsing", "LR_KMetamodel", "LR_KEnum", 
-		"LR_TLBrace", "LR_TRBrace", "LR_KAbstract", "LR_KClass", "LR_TColon", 
+		null, "LR_TComma", "LR_KNamespace", "LR_TSemicolon", "LR_KUsing", "LR_KMetamodel", 
+		"LR_KEnum", "LR_TLBrace", "LR_TRBrace", "LR_KAbstract", "LR_KClass", "LR_TColon", 
 		"LR_KContains", "LR_KOpposite", "LR_KBool", "LR_KInt", "LR_KString", "LR_TLBracket", 
 		"LR_TRBracket", "LR_TDot", "LR_TInteger", "LR_TDecimal", "LR_TIdentifier", 
 		"LR_TString", "LR_TWhitespace", "LR_TLineEnd", "LR_TSingleLineComment", 
@@ -107,6 +107,7 @@ public partial class MetaCoreParser : global::MetaDslx.Languages.MetaCompiler.An
 	public partial class Pr_MainContext : ParserRuleContext {
 		public IToken kNamespace;
 		public Pr_QualifierContext nameAntlr1;
+		public IToken tSemicolon;
 		public Pr_UsingContext _pr_Using;
 		public IList<Pr_UsingContext> _usingAntlr1 = new List<Pr_UsingContext>();
 		public Pr_DeclarationsContext declarationsAntlr1;
@@ -115,6 +116,7 @@ public partial class MetaCoreParser : global::MetaDslx.Languages.MetaCompiler.An
 		[System.Diagnostics.DebuggerNonUserCode] public Pr_QualifierContext pr_Qualifier() {
 			return GetRuleContext<Pr_QualifierContext>(0);
 		}
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TSemicolon() { return GetToken(MetaCoreParser.LR_TSemicolon, 0); }
 		[System.Diagnostics.DebuggerNonUserCode] public Pr_DeclarationsContext pr_Declarations() {
 			return GetRuleContext<Pr_DeclarationsContext>(0);
 		}
@@ -150,24 +152,26 @@ public partial class MetaCoreParser : global::MetaDslx.Languages.MetaCompiler.An
 			_localctx.kNamespace = Match(LR_KNamespace);
 			State = 41;
 			_localctx.nameAntlr1 = pr_Qualifier();
-			State = 45;
+			State = 42;
+			_localctx.tSemicolon = Match(LR_TSemicolon);
+			State = 46;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			while (_la==LR_KUsing) {
 				{
 				{
-				State = 42;
+				State = 43;
 				_localctx._pr_Using = pr_Using();
 				_localctx._usingAntlr1.Add(_localctx._pr_Using);
 				}
 				}
-				State = 47;
+				State = 48;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 			}
-			State = 48;
-			_localctx.declarationsAntlr1 = pr_Declarations();
 			State = 49;
+			_localctx.declarationsAntlr1 = pr_Declarations();
+			State = 50;
 			_localctx.eof = Match(Eof);
 			}
 		}
@@ -185,10 +189,12 @@ public partial class MetaCoreParser : global::MetaDslx.Languages.MetaCompiler.An
 	public partial class Pr_UsingContext : ParserRuleContext {
 		public IToken kUsing;
 		public Pr_QualifierContext namespacesAntlr1;
+		public IToken tSemicolon;
 		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_KUsing() { return GetToken(MetaCoreParser.LR_KUsing, 0); }
 		[System.Diagnostics.DebuggerNonUserCode] public Pr_QualifierContext pr_Qualifier() {
 			return GetRuleContext<Pr_QualifierContext>(0);
 		}
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TSemicolon() { return GetToken(MetaCoreParser.LR_TSemicolon, 0); }
 		public Pr_UsingContext(ParserRuleContext parent, int invokingState)
 			: base(parent, invokingState)
 		{
@@ -209,10 +215,12 @@ public partial class MetaCoreParser : global::MetaDslx.Languages.MetaCompiler.An
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 51;
-			_localctx.kUsing = Match(LR_KUsing);
 			State = 52;
+			_localctx.kUsing = Match(LR_KUsing);
+			State = 53;
 			_localctx.namespacesAntlr1 = pr_Qualifier();
+			State = 54;
+			_localctx.tSemicolon = Match(LR_TSemicolon);
 			}
 		}
 		catch (RecognitionException re) {
@@ -227,9 +235,13 @@ public partial class MetaCoreParser : global::MetaDslx.Languages.MetaCompiler.An
 	}
 
 	public partial class Pr_DeclarationsContext : ParserRuleContext {
-		public Pr_MetaDeclarationContext declarationsAntlr1;
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_MetaDeclarationContext pr_MetaDeclaration() {
-			return GetRuleContext<Pr_MetaDeclarationContext>(0);
+		public Pr_MetaDeclarationContext _pr_MetaDeclaration;
+		public IList<Pr_MetaDeclarationContext> _declarationsAntlr1 = new List<Pr_MetaDeclarationContext>();
+		[System.Diagnostics.DebuggerNonUserCode] public Pr_MetaDeclarationContext[] pr_MetaDeclaration() {
+			return GetRuleContexts<Pr_MetaDeclarationContext>();
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public Pr_MetaDeclarationContext pr_MetaDeclaration(int i) {
+			return GetRuleContext<Pr_MetaDeclarationContext>(i);
 		}
 		public Pr_DeclarationsContext(ParserRuleContext parent, int invokingState)
 			: base(parent, invokingState)
@@ -248,11 +260,25 @@ public partial class MetaCoreParser : global::MetaDslx.Languages.MetaCompiler.An
 	public Pr_DeclarationsContext pr_Declarations() {
 		Pr_DeclarationsContext _localctx = new Pr_DeclarationsContext(Context, State);
 		EnterRule(_localctx, 4, RULE_pr_Declarations);
+		int _la;
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 54;
-			_localctx.declarationsAntlr1 = pr_MetaDeclaration();
+			State = 59;
+			ErrorHandler.Sync(this);
+			_la = TokenStream.LA(1);
+			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & 1632L) != 0)) {
+				{
+				{
+				State = 56;
+				_localctx._pr_MetaDeclaration = pr_MetaDeclaration();
+				_localctx._declarationsAntlr1.Add(_localctx._pr_MetaDeclaration);
+				}
+				}
+				State = 61;
+				ErrorHandler.Sync(this);
+				_la = TokenStream.LA(1);
+			}
 			}
 		}
 		catch (RecognitionException re) {
@@ -300,10 +326,12 @@ public partial class MetaCoreParser : global::MetaDslx.Languages.MetaCompiler.An
 	public partial class Pr_MetaModelContext : Pr_MetaDeclarationContext {
 		public IToken kMetamodel;
 		public Pr_NameContext nameAntlr1;
+		public IToken tSemicolon;
 		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_KMetamodel() { return GetToken(MetaCoreParser.LR_KMetamodel, 0); }
 		[System.Diagnostics.DebuggerNonUserCode] public Pr_NameContext pr_Name() {
 			return GetRuleContext<Pr_NameContext>(0);
 		}
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TSemicolon() { return GetToken(MetaCoreParser.LR_TSemicolon, 0); }
 		public Pr_MetaModelContext(Pr_MetaDeclarationContext context) { CopyFrom(context); }
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
@@ -344,28 +372,30 @@ public partial class MetaCoreParser : global::MetaDslx.Languages.MetaCompiler.An
 		EnterRule(_localctx, 6, RULE_pr_MetaDeclaration);
 		int _la;
 		try {
-			State = 72;
+			State = 80;
 			ErrorHandler.Sync(this);
 			switch (TokenStream.LA(1)) {
 			case LR_KMetamodel:
 				_localctx = new Pr_MetaModelContext(_localctx);
 				EnterOuterAlt(_localctx, 1);
 				{
-				State = 56;
+				State = 62;
 				((Pr_MetaModelContext)_localctx).kMetamodel = Match(LR_KMetamodel);
-				State = 57;
+				State = 63;
 				((Pr_MetaModelContext)_localctx).nameAntlr1 = pr_Name();
+				State = 64;
+				((Pr_MetaModelContext)_localctx).tSemicolon = Match(LR_TSemicolon);
 				}
 				break;
 			case LR_KEnum:
 				_localctx = new Pr_MetaEnumTypeContext(_localctx);
 				EnterOuterAlt(_localctx, 2);
 				{
-				State = 58;
+				State = 66;
 				((Pr_MetaEnumTypeContext)_localctx).kEnum = Match(LR_KEnum);
-				State = 59;
+				State = 67;
 				((Pr_MetaEnumTypeContext)_localctx).nameAntlr1 = pr_Name();
-				State = 60;
+				State = 68;
 				((Pr_MetaEnumTypeContext)_localctx).enumBodyAntlr1 = pr_EnumBody();
 				}
 				break;
@@ -374,31 +404,31 @@ public partial class MetaCoreParser : global::MetaDslx.Languages.MetaCompiler.An
 				_localctx = new Pr_MetaClassContext(_localctx);
 				EnterOuterAlt(_localctx, 3);
 				{
-				State = 63;
+				State = 71;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 				if (_la==LR_KAbstract) {
 					{
-					State = 62;
+					State = 70;
 					((Pr_MetaClassContext)_localctx).isAbstract = Match(LR_KAbstract);
 					}
 				}
 
-				State = 65;
+				State = 73;
 				((Pr_MetaClassContext)_localctx).kClass = Match(LR_KClass);
-				State = 66;
+				State = 74;
 				((Pr_MetaClassContext)_localctx).nameAntlr1 = pr_Name();
-				State = 68;
+				State = 76;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 				if (_la==LR_TColon) {
 					{
-					State = 67;
+					State = 75;
 					((Pr_MetaClassContext)_localctx).baseClassesAntlr1 = pr_BaseClasses();
 					}
 				}
 
-				State = 70;
+				State = 78;
 				((Pr_MetaClassContext)_localctx).classBodyAntlr1 = pr_ClassBody();
 				}
 				break;
@@ -447,19 +477,19 @@ public partial class MetaCoreParser : global::MetaDslx.Languages.MetaCompiler.An
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 74;
+			State = 82;
 			_localctx.tLBrace = Match(LR_TLBrace);
-			State = 76;
+			State = 84;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			if (_la==LR_TIdentifier) {
 				{
-				State = 75;
+				State = 83;
 				_localctx.enumLiteralsAntlr1 = pr_EnumLiterals();
 				}
 			}
 
-			State = 78;
+			State = 86;
 			_localctx.tRBrace = Match(LR_TRBrace);
 			}
 		}
@@ -508,20 +538,20 @@ public partial class MetaCoreParser : global::MetaDslx.Languages.MetaCompiler.An
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 80;
+			State = 88;
 			_localctx.literalsAntlr1 = pr_MetaEnumLiteral();
-			State = 84;
+			State = 92;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			while (_la==LR_TComma) {
 				{
 				{
-				State = 81;
+				State = 89;
 				_localctx._pr_EnumLiteralsBlock1 = pr_EnumLiteralsBlock1();
 				_localctx._enumLiteralsBlock1Antlr1.Add(_localctx._pr_EnumLiteralsBlock1);
 				}
 				}
-				State = 86;
+				State = 94;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 			}
@@ -563,7 +593,7 @@ public partial class MetaCoreParser : global::MetaDslx.Languages.MetaCompiler.An
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 87;
+			State = 95;
 			_localctx.nameAntlr1 = pr_Name();
 			}
 		}
@@ -603,7 +633,7 @@ public partial class MetaCoreParser : global::MetaDslx.Languages.MetaCompiler.An
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 89;
+			State = 97;
 			_localctx.baseClassesBlock1Antlr1 = pr_BaseClassesBlock1();
 			}
 		}
@@ -652,24 +682,24 @@ public partial class MetaCoreParser : global::MetaDslx.Languages.MetaCompiler.An
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 91;
+			State = 99;
 			_localctx.tLBrace = Match(LR_TLBrace);
-			State = 95;
+			State = 103;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
-			while (_la==LR_KContains) {
+			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & 4313088L) != 0)) {
 				{
 				{
-				State = 92;
+				State = 100;
 				_localctx._pr_MetaProperty = pr_MetaProperty();
 				_localctx._propertiesAntlr1.Add(_localctx._pr_MetaProperty);
 				}
 				}
-				State = 97;
+				State = 105;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 			}
-			State = 98;
+			State = 106;
 			_localctx.tRBrace = Match(LR_TRBrace);
 			}
 		}
@@ -689,13 +719,15 @@ public partial class MetaCoreParser : global::MetaDslx.Languages.MetaCompiler.An
 		public Pr_TypeReferenceContext typeAntlr1;
 		public Pr_NameContext nameAntlr1;
 		public Pr_PropertyOppositeContext propertyOppositeAntlr1;
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_KContains() { return GetToken(MetaCoreParser.LR_KContains, 0); }
+		public IToken tSemicolon;
 		[System.Diagnostics.DebuggerNonUserCode] public Pr_TypeReferenceContext pr_TypeReference() {
 			return GetRuleContext<Pr_TypeReferenceContext>(0);
 		}
 		[System.Diagnostics.DebuggerNonUserCode] public Pr_NameContext pr_Name() {
 			return GetRuleContext<Pr_NameContext>(0);
 		}
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TSemicolon() { return GetToken(MetaCoreParser.LR_TSemicolon, 0); }
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_KContains() { return GetToken(MetaCoreParser.LR_KContains, 0); }
 		[System.Diagnostics.DebuggerNonUserCode] public Pr_PropertyOppositeContext pr_PropertyOpposite() {
 			return GetRuleContext<Pr_PropertyOppositeContext>(0);
 		}
@@ -720,22 +752,32 @@ public partial class MetaCoreParser : global::MetaDslx.Languages.MetaCompiler.An
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 100;
-			_localctx.isContainment = Match(LR_KContains);
-			State = 101;
+			State = 109;
+			ErrorHandler.Sync(this);
+			_la = TokenStream.LA(1);
+			if (_la==LR_KContains) {
+				{
+				State = 108;
+				_localctx.isContainment = Match(LR_KContains);
+				}
+			}
+
+			State = 111;
 			_localctx.typeAntlr1 = pr_TypeReference(0);
-			State = 102;
+			State = 112;
 			_localctx.nameAntlr1 = pr_Name();
-			State = 104;
+			State = 114;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			if (_la==LR_KOpposite) {
 				{
-				State = 103;
+				State = 113;
 				_localctx.propertyOppositeAntlr1 = pr_PropertyOpposite();
 				}
 			}
 
+			State = 116;
+			_localctx.tSemicolon = Match(LR_TSemicolon);
 			}
 		}
 		catch (RecognitionException re) {
@@ -776,9 +818,9 @@ public partial class MetaCoreParser : global::MetaDslx.Languages.MetaCompiler.An
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 106;
+			State = 118;
 			_localctx.kOpposite = Match(LR_KOpposite);
-			State = 107;
+			State = 119;
 			_localctx.OppositeAntlr1 = pr_Qualifier();
 			}
 		}
@@ -867,7 +909,7 @@ public partial class MetaCoreParser : global::MetaDslx.Languages.MetaCompiler.An
 			int _alt;
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 116;
+			State = 128;
 			ErrorHandler.Sync(this);
 			switch (TokenStream.LA(1)) {
 			case LR_TIdentifier:
@@ -876,7 +918,7 @@ public partial class MetaCoreParser : global::MetaDslx.Languages.MetaCompiler.An
 				Context = _localctx;
 				_prevctx = _localctx;
 
-				State = 110;
+				State = 122;
 				((Pr_TypeReferenceAlt3Context)_localctx).qualifierAntlr1 = pr_Qualifier();
 				}
 				break;
@@ -887,24 +929,24 @@ public partial class MetaCoreParser : global::MetaDslx.Languages.MetaCompiler.An
 				_localctx = new Pr_TypeReferenceTokensContext(_localctx);
 				Context = _localctx;
 				_prevctx = _localctx;
-				State = 114;
+				State = 126;
 				ErrorHandler.Sync(this);
 				switch (TokenStream.LA(1)) {
 				case LR_KBool:
 					{
-					State = 111;
+					State = 123;
 					((Pr_TypeReferenceTokensContext)_localctx).kBool = Match(LR_KBool);
 					}
 					break;
 				case LR_KInt:
 					{
-					State = 112;
+					State = 124;
 					((Pr_TypeReferenceTokensContext)_localctx).kInt = Match(LR_KInt);
 					}
 					break;
 				case LR_KString:
 					{
-					State = 113;
+					State = 125;
 					((Pr_TypeReferenceTokensContext)_localctx).kString = Match(LR_KString);
 					}
 					break;
@@ -917,9 +959,9 @@ public partial class MetaCoreParser : global::MetaDslx.Languages.MetaCompiler.An
 				throw new NoViableAltException(this);
 			}
 			Context.Stop = TokenStream.LT(-1);
-			State = 123;
+			State = 135;
 			ErrorHandler.Sync(this);
-			_alt = Interpreter.AdaptivePredict(TokenStream,10,Context);
+			_alt = Interpreter.AdaptivePredict(TokenStream,12,Context);
 			while ( _alt!=2 && _alt!=global::Antlr4.Runtime.Atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					if ( ParseListeners!=null )
@@ -930,18 +972,18 @@ public partial class MetaCoreParser : global::MetaDslx.Languages.MetaCompiler.An
 					_localctx = new Pr_MetaArrayTypeContext(new Pr_TypeReferenceContext(_parentctx, _parentState));
 					((Pr_MetaArrayTypeContext)_localctx).itemTypeAntlr1 = _prevctx;
 					PushNewRecursionContext(_localctx, _startState, RULE_pr_TypeReference);
-					State = 118;
+					State = 130;
 					if (!(Precpred(Context, 3))) throw new FailedPredicateException(this, "Precpred(Context, 3)");
-					State = 119;
+					State = 131;
 					((Pr_MetaArrayTypeContext)_localctx).tLBracket = Match(LR_TLBracket);
-					State = 120;
+					State = 132;
 					((Pr_MetaArrayTypeContext)_localctx).tRBracket = Match(LR_TRBracket);
 					}
 					} 
 				}
-				State = 125;
+				State = 137;
 				ErrorHandler.Sync(this);
-				_alt = Interpreter.AdaptivePredict(TokenStream,10,Context);
+				_alt = Interpreter.AdaptivePredict(TokenStream,12,Context);
 			}
 			}
 		}
@@ -981,7 +1023,7 @@ public partial class MetaCoreParser : global::MetaDslx.Languages.MetaCompiler.An
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 126;
+			State = 138;
 			_localctx.identifierAntlr1 = pr_Identifier();
 			}
 		}
@@ -1030,24 +1072,24 @@ public partial class MetaCoreParser : global::MetaDslx.Languages.MetaCompiler.An
 			int _alt;
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 128;
+			State = 140;
 			_localctx.identifierAntlr1 = pr_Identifier();
-			State = 132;
+			State = 144;
 			ErrorHandler.Sync(this);
-			_alt = Interpreter.AdaptivePredict(TokenStream,11,Context);
+			_alt = Interpreter.AdaptivePredict(TokenStream,13,Context);
 			while ( _alt!=2 && _alt!=global::Antlr4.Runtime.Atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					{
 					{
-					State = 129;
+					State = 141;
 					_localctx._pr_QualifierBlock1 = pr_QualifierBlock1();
 					_localctx._qualifierBlock1Antlr1.Add(_localctx._pr_QualifierBlock1);
 					}
 					} 
 				}
-				State = 134;
+				State = 146;
 				ErrorHandler.Sync(this);
-				_alt = Interpreter.AdaptivePredict(TokenStream,11,Context);
+				_alt = Interpreter.AdaptivePredict(TokenStream,13,Context);
 			}
 			}
 		}
@@ -1096,20 +1138,20 @@ public partial class MetaCoreParser : global::MetaDslx.Languages.MetaCompiler.An
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 135;
+			State = 147;
 			_localctx.qualifierAntlr1 = pr_Qualifier();
-			State = 139;
+			State = 151;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			while (_la==LR_TComma) {
 				{
 				{
-				State = 136;
+				State = 148;
 				_localctx._pr_QualifierListBlock1 = pr_QualifierListBlock1();
 				_localctx._qualifierListBlock1Antlr1.Add(_localctx._pr_QualifierListBlock1);
 				}
 				}
-				State = 141;
+				State = 153;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 			}
@@ -1149,7 +1191,7 @@ public partial class MetaCoreParser : global::MetaDslx.Languages.MetaCompiler.An
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 142;
+			State = 154;
 			_localctx.tIdentifierAntlr1 = Match(LR_TIdentifier);
 			}
 		}
@@ -1191,9 +1233,9 @@ public partial class MetaCoreParser : global::MetaDslx.Languages.MetaCompiler.An
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 144;
+			State = 156;
 			_localctx.tComma = Match(LR_TComma);
-			State = 145;
+			State = 157;
 			_localctx.literalsAntlr1 = pr_MetaEnumLiteral();
 			}
 		}
@@ -1235,9 +1277,9 @@ public partial class MetaCoreParser : global::MetaDslx.Languages.MetaCompiler.An
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 147;
+			State = 159;
 			_localctx.tColon = Match(LR_TColon);
-			State = 148;
+			State = 160;
 			_localctx.baseTypesAntlr1 = pr_QualifierList();
 			}
 		}
@@ -1279,9 +1321,9 @@ public partial class MetaCoreParser : global::MetaDslx.Languages.MetaCompiler.An
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 150;
+			State = 162;
 			_localctx.tDot = Match(LR_TDot);
-			State = 151;
+			State = 163;
 			_localctx.identifierAntlr1 = pr_Identifier();
 			}
 		}
@@ -1323,9 +1365,9 @@ public partial class MetaCoreParser : global::MetaDslx.Languages.MetaCompiler.An
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 153;
+			State = 165;
 			_localctx.tComma = Match(LR_TComma);
-			State = 154;
+			State = 166;
 			_localctx.qualifierAntlr1 = pr_Qualifier();
 			}
 		}
@@ -1354,52 +1396,56 @@ public partial class MetaCoreParser : global::MetaDslx.Languages.MetaCompiler.An
 	}
 
 	private static int[] _serializedATN = {
-		4,1,26,157,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,6,2,7,
+		4,1,27,169,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,6,2,7,
 		7,7,2,8,7,8,2,9,7,9,2,10,7,10,2,11,7,11,2,12,7,12,2,13,7,13,2,14,7,14,
-		2,15,7,15,2,16,7,16,2,17,7,17,2,18,7,18,2,19,7,19,1,0,1,0,1,0,5,0,44,8,
-		0,10,0,12,0,47,9,0,1,0,1,0,1,0,1,1,1,1,1,1,1,2,1,2,1,3,1,3,1,3,1,3,1,3,
-		1,3,1,3,3,3,64,8,3,1,3,1,3,1,3,3,3,69,8,3,1,3,1,3,3,3,73,8,3,1,4,1,4,3,
-		4,77,8,4,1,4,1,4,1,5,1,5,5,5,83,8,5,10,5,12,5,86,9,5,1,6,1,6,1,7,1,7,1,
-		8,1,8,5,8,94,8,8,10,8,12,8,97,9,8,1,8,1,8,1,9,1,9,1,9,1,9,3,9,105,8,9,
-		1,10,1,10,1,10,1,11,1,11,1,11,1,11,1,11,3,11,115,8,11,3,11,117,8,11,1,
-		11,1,11,1,11,5,11,122,8,11,10,11,12,11,125,9,11,1,12,1,12,1,13,1,13,5,
-		13,131,8,13,10,13,12,13,134,9,13,1,14,1,14,5,14,138,8,14,10,14,12,14,141,
-		9,14,1,15,1,15,1,16,1,16,1,16,1,17,1,17,1,17,1,18,1,18,1,18,1,19,1,19,
-		1,19,1,19,0,1,22,20,0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,
-		38,0,0,151,0,40,1,0,0,0,2,51,1,0,0,0,4,54,1,0,0,0,6,72,1,0,0,0,8,74,1,
-		0,0,0,10,80,1,0,0,0,12,87,1,0,0,0,14,89,1,0,0,0,16,91,1,0,0,0,18,100,1,
-		0,0,0,20,106,1,0,0,0,22,116,1,0,0,0,24,126,1,0,0,0,26,128,1,0,0,0,28,135,
-		1,0,0,0,30,142,1,0,0,0,32,144,1,0,0,0,34,147,1,0,0,0,36,150,1,0,0,0,38,
-		153,1,0,0,0,40,41,5,2,0,0,41,45,3,26,13,0,42,44,3,2,1,0,43,42,1,0,0,0,
-		44,47,1,0,0,0,45,43,1,0,0,0,45,46,1,0,0,0,46,48,1,0,0,0,47,45,1,0,0,0,
-		48,49,3,4,2,0,49,50,5,0,0,1,50,1,1,0,0,0,51,52,5,3,0,0,52,53,3,26,13,0,
-		53,3,1,0,0,0,54,55,3,6,3,0,55,5,1,0,0,0,56,57,5,4,0,0,57,73,3,24,12,0,
-		58,59,5,5,0,0,59,60,3,24,12,0,60,61,3,8,4,0,61,73,1,0,0,0,62,64,5,8,0,
-		0,63,62,1,0,0,0,63,64,1,0,0,0,64,65,1,0,0,0,65,66,5,9,0,0,66,68,3,24,12,
-		0,67,69,3,14,7,0,68,67,1,0,0,0,68,69,1,0,0,0,69,70,1,0,0,0,70,71,3,16,
-		8,0,71,73,1,0,0,0,72,56,1,0,0,0,72,58,1,0,0,0,72,63,1,0,0,0,73,7,1,0,0,
-		0,74,76,5,6,0,0,75,77,3,10,5,0,76,75,1,0,0,0,76,77,1,0,0,0,77,78,1,0,0,
-		0,78,79,5,7,0,0,79,9,1,0,0,0,80,84,3,12,6,0,81,83,3,32,16,0,82,81,1,0,
-		0,0,83,86,1,0,0,0,84,82,1,0,0,0,84,85,1,0,0,0,85,11,1,0,0,0,86,84,1,0,
-		0,0,87,88,3,24,12,0,88,13,1,0,0,0,89,90,3,34,17,0,90,15,1,0,0,0,91,95,
-		5,6,0,0,92,94,3,18,9,0,93,92,1,0,0,0,94,97,1,0,0,0,95,93,1,0,0,0,95,96,
-		1,0,0,0,96,98,1,0,0,0,97,95,1,0,0,0,98,99,5,7,0,0,99,17,1,0,0,0,100,101,
-		5,11,0,0,101,102,3,22,11,0,102,104,3,24,12,0,103,105,3,20,10,0,104,103,
-		1,0,0,0,104,105,1,0,0,0,105,19,1,0,0,0,106,107,5,12,0,0,107,108,3,26,13,
-		0,108,21,1,0,0,0,109,110,6,11,-1,0,110,117,3,26,13,0,111,115,5,13,0,0,
-		112,115,5,14,0,0,113,115,5,15,0,0,114,111,1,0,0,0,114,112,1,0,0,0,114,
-		113,1,0,0,0,115,117,1,0,0,0,116,109,1,0,0,0,116,114,1,0,0,0,117,123,1,
-		0,0,0,118,119,10,3,0,0,119,120,5,16,0,0,120,122,5,17,0,0,121,118,1,0,0,
-		0,122,125,1,0,0,0,123,121,1,0,0,0,123,124,1,0,0,0,124,23,1,0,0,0,125,123,
-		1,0,0,0,126,127,3,30,15,0,127,25,1,0,0,0,128,132,3,30,15,0,129,131,3,36,
-		18,0,130,129,1,0,0,0,131,134,1,0,0,0,132,130,1,0,0,0,132,133,1,0,0,0,133,
-		27,1,0,0,0,134,132,1,0,0,0,135,139,3,26,13,0,136,138,3,38,19,0,137,136,
-		1,0,0,0,138,141,1,0,0,0,139,137,1,0,0,0,139,140,1,0,0,0,140,29,1,0,0,0,
-		141,139,1,0,0,0,142,143,5,21,0,0,143,31,1,0,0,0,144,145,5,1,0,0,145,146,
-		3,12,6,0,146,33,1,0,0,0,147,148,5,10,0,0,148,149,3,28,14,0,149,35,1,0,
-		0,0,150,151,5,18,0,0,151,152,3,30,15,0,152,37,1,0,0,0,153,154,5,1,0,0,
-		154,155,3,26,13,0,155,39,1,0,0,0,13,45,63,68,72,76,84,95,104,114,116,123,
-		132,139
+		2,15,7,15,2,16,7,16,2,17,7,17,2,18,7,18,2,19,7,19,1,0,1,0,1,0,1,0,5,0,
+		45,8,0,10,0,12,0,48,9,0,1,0,1,0,1,0,1,1,1,1,1,1,1,1,1,2,5,2,58,8,2,10,
+		2,12,2,61,9,2,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,3,3,72,8,3,1,3,1,3,1,
+		3,3,3,77,8,3,1,3,1,3,3,3,81,8,3,1,4,1,4,3,4,85,8,4,1,4,1,4,1,5,1,5,5,5,
+		91,8,5,10,5,12,5,94,9,5,1,6,1,6,1,7,1,7,1,8,1,8,5,8,102,8,8,10,8,12,8,
+		105,9,8,1,8,1,8,1,9,3,9,110,8,9,1,9,1,9,1,9,3,9,115,8,9,1,9,1,9,1,10,1,
+		10,1,10,1,11,1,11,1,11,1,11,1,11,3,11,127,8,11,3,11,129,8,11,1,11,1,11,
+		1,11,5,11,134,8,11,10,11,12,11,137,9,11,1,12,1,12,1,13,1,13,5,13,143,8,
+		13,10,13,12,13,146,9,13,1,14,1,14,5,14,150,8,14,10,14,12,14,153,9,14,1,
+		15,1,15,1,16,1,16,1,16,1,17,1,17,1,17,1,18,1,18,1,18,1,19,1,19,1,19,1,
+		19,0,1,22,20,0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,0,
+		0,165,0,40,1,0,0,0,2,52,1,0,0,0,4,59,1,0,0,0,6,80,1,0,0,0,8,82,1,0,0,0,
+		10,88,1,0,0,0,12,95,1,0,0,0,14,97,1,0,0,0,16,99,1,0,0,0,18,109,1,0,0,0,
+		20,118,1,0,0,0,22,128,1,0,0,0,24,138,1,0,0,0,26,140,1,0,0,0,28,147,1,0,
+		0,0,30,154,1,0,0,0,32,156,1,0,0,0,34,159,1,0,0,0,36,162,1,0,0,0,38,165,
+		1,0,0,0,40,41,5,2,0,0,41,42,3,26,13,0,42,46,5,3,0,0,43,45,3,2,1,0,44,43,
+		1,0,0,0,45,48,1,0,0,0,46,44,1,0,0,0,46,47,1,0,0,0,47,49,1,0,0,0,48,46,
+		1,0,0,0,49,50,3,4,2,0,50,51,5,0,0,1,51,1,1,0,0,0,52,53,5,4,0,0,53,54,3,
+		26,13,0,54,55,5,3,0,0,55,3,1,0,0,0,56,58,3,6,3,0,57,56,1,0,0,0,58,61,1,
+		0,0,0,59,57,1,0,0,0,59,60,1,0,0,0,60,5,1,0,0,0,61,59,1,0,0,0,62,63,5,5,
+		0,0,63,64,3,24,12,0,64,65,5,3,0,0,65,81,1,0,0,0,66,67,5,6,0,0,67,68,3,
+		24,12,0,68,69,3,8,4,0,69,81,1,0,0,0,70,72,5,9,0,0,71,70,1,0,0,0,71,72,
+		1,0,0,0,72,73,1,0,0,0,73,74,5,10,0,0,74,76,3,24,12,0,75,77,3,14,7,0,76,
+		75,1,0,0,0,76,77,1,0,0,0,77,78,1,0,0,0,78,79,3,16,8,0,79,81,1,0,0,0,80,
+		62,1,0,0,0,80,66,1,0,0,0,80,71,1,0,0,0,81,7,1,0,0,0,82,84,5,7,0,0,83,85,
+		3,10,5,0,84,83,1,0,0,0,84,85,1,0,0,0,85,86,1,0,0,0,86,87,5,8,0,0,87,9,
+		1,0,0,0,88,92,3,12,6,0,89,91,3,32,16,0,90,89,1,0,0,0,91,94,1,0,0,0,92,
+		90,1,0,0,0,92,93,1,0,0,0,93,11,1,0,0,0,94,92,1,0,0,0,95,96,3,24,12,0,96,
+		13,1,0,0,0,97,98,3,34,17,0,98,15,1,0,0,0,99,103,5,7,0,0,100,102,3,18,9,
+		0,101,100,1,0,0,0,102,105,1,0,0,0,103,101,1,0,0,0,103,104,1,0,0,0,104,
+		106,1,0,0,0,105,103,1,0,0,0,106,107,5,8,0,0,107,17,1,0,0,0,108,110,5,12,
+		0,0,109,108,1,0,0,0,109,110,1,0,0,0,110,111,1,0,0,0,111,112,3,22,11,0,
+		112,114,3,24,12,0,113,115,3,20,10,0,114,113,1,0,0,0,114,115,1,0,0,0,115,
+		116,1,0,0,0,116,117,5,3,0,0,117,19,1,0,0,0,118,119,5,13,0,0,119,120,3,
+		26,13,0,120,21,1,0,0,0,121,122,6,11,-1,0,122,129,3,26,13,0,123,127,5,14,
+		0,0,124,127,5,15,0,0,125,127,5,16,0,0,126,123,1,0,0,0,126,124,1,0,0,0,
+		126,125,1,0,0,0,127,129,1,0,0,0,128,121,1,0,0,0,128,126,1,0,0,0,129,135,
+		1,0,0,0,130,131,10,3,0,0,131,132,5,17,0,0,132,134,5,18,0,0,133,130,1,0,
+		0,0,134,137,1,0,0,0,135,133,1,0,0,0,135,136,1,0,0,0,136,23,1,0,0,0,137,
+		135,1,0,0,0,138,139,3,30,15,0,139,25,1,0,0,0,140,144,3,30,15,0,141,143,
+		3,36,18,0,142,141,1,0,0,0,143,146,1,0,0,0,144,142,1,0,0,0,144,145,1,0,
+		0,0,145,27,1,0,0,0,146,144,1,0,0,0,147,151,3,26,13,0,148,150,3,38,19,0,
+		149,148,1,0,0,0,150,153,1,0,0,0,151,149,1,0,0,0,151,152,1,0,0,0,152,29,
+		1,0,0,0,153,151,1,0,0,0,154,155,5,22,0,0,155,31,1,0,0,0,156,157,5,1,0,
+		0,157,158,3,12,6,0,158,33,1,0,0,0,159,160,5,11,0,0,160,161,3,28,14,0,161,
+		35,1,0,0,0,162,163,5,19,0,0,163,164,3,30,15,0,164,37,1,0,0,0,165,166,5,
+		1,0,0,166,167,3,26,13,0,167,39,1,0,0,0,15,46,59,71,76,80,84,92,103,109,
+		114,126,128,135,144,151
 	};
 
 	public static readonly ATN _ATN =

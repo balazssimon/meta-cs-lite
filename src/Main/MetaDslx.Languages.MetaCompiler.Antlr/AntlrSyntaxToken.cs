@@ -6,7 +6,7 @@ using System.Text;
 
 namespace MetaDslx.Languages.MetaCompiler.Antlr
 {
-    internal class AntlrSyntaxToken : IToken
+    public class AntlrSyntaxToken : IToken
     {
         private int _type;
         private int _channel;

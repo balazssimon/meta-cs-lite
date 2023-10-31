@@ -4,7 +4,7 @@ using System.Text;
 
 namespace MetaDslx.Modeling
 {
-    [AttributeUsage(AttributeTargets.Interface)]
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Interface)]
     public class SymbolAttribute : Attribute
     {
         private readonly Type _symbolType;

@@ -30,8 +30,8 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Binding
                 this.Begin(__rootAnnot, node);
                 try
                 {
-                    var __annot4 = new DefineBinder(type: typeof(global::MetaDslx.Bootstrap.MetaModel.Core.MetaNamespace));
-                    this.Begin(__annot4, node);
+                    var __annot2 = new DefineBinder(type: typeof(global::MetaDslx.Bootstrap.MetaModel.Core.MetaNamespace));
+                    this.Begin(__annot2, node);
                     try
                     {
                         var __annot1 = new NameBinder(qualifierProperty: "Declarations");
@@ -53,36 +53,17 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Binding
                         {
                             this.End(__annot1);
                         }
-                        var qualifierListList = node.QualifierList;
-                        for (var qualifierListIndex = 0; qualifierListIndex < qualifierListList.Count; ++qualifierListIndex)
+                        var @usingList = node.Using;
+                        for (var @usingIndex = 0; @usingIndex < @usingList.Count; ++@usingIndex)
                         {
-                            // this.VisitToken(node.QualifierList.GetSeparator(qualifierListIndex));
-                            var __annot3 = new PropertyBinder(name: "Namespaces");
-                            this.Begin(__annot3, node.QualifierList[qualifierListIndex]);
-                            try
-                            {
-                                var __annot2 = new UseBinder(types: new global::System.Type[] {typeof(global::MetaDslx.CodeAnalysis.Symbols.NamespaceSymbol)}.ToImmutableArray());
-                                this.Begin(__annot2, node.QualifierList[qualifierListIndex]);
-                                try
-                                {
-                                    this.Visit(node.QualifierList[qualifierListIndex]);
-                                }
-                                finally
-                                {
-                                    this.End(__annot2);
-                                }
-                            }
-                            finally
-                            {
-                                this.End(__annot3);
-                            }
+                            this.Visit(node.Using[@usingIndex]);
                         }
                         this.Visit(node.Declarations);
                             
                     }
                     finally
                     {
-                        this.End(__annot4);
+                        this.End(__annot2);
                     }
                 }
                 finally
@@ -92,8 +73,8 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Binding
             }
             else
             {
-            	var __annot4 = new DefineBinder(type: typeof(global::MetaDslx.Bootstrap.MetaModel.Core.MetaNamespace));
-            	this.Begin(__annot4, node);
+            	var __annot2 = new DefineBinder(type: typeof(global::MetaDslx.Bootstrap.MetaModel.Core.MetaNamespace));
+            	this.Begin(__annot2, node);
             	try
             	{
             	    var __annot1 = new NameBinder(qualifierProperty: "Declarations");
@@ -115,36 +96,17 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Binding
             	    {
             	        this.End(__annot1);
             	    }
-            	    var qualifierListList = node.QualifierList;
-            	    for (var qualifierListIndex = 0; qualifierListIndex < qualifierListList.Count; ++qualifierListIndex)
+            	    var @usingList = node.Using;
+            	    for (var @usingIndex = 0; @usingIndex < @usingList.Count; ++@usingIndex)
             	    {
-            	        // this.VisitToken(node.QualifierList.GetSeparator(qualifierListIndex));
-            	        var __annot3 = new PropertyBinder(name: "Namespaces");
-            	        this.Begin(__annot3, node.QualifierList[qualifierListIndex]);
-            	        try
-            	        {
-            	            var __annot2 = new UseBinder(types: new global::System.Type[] {typeof(global::MetaDslx.CodeAnalysis.Symbols.NamespaceSymbol)}.ToImmutableArray());
-            	            this.Begin(__annot2, node.QualifierList[qualifierListIndex]);
-            	            try
-            	            {
-            	                this.Visit(node.QualifierList[qualifierListIndex]);
-            	            }
-            	            finally
-            	            {
-            	                this.End(__annot2);
-            	            }
-            	        }
-            	        finally
-            	        {
-            	            this.End(__annot3);
-            	        }
+            	        this.Visit(node.Using[@usingIndex]);
             	    }
             	    this.Visit(node.Declarations);
             	        
             	}
             	finally
             	{
-            	    this.End(__annot4);
+            	    this.End(__annot2);
             	}
             }
         }
@@ -155,14 +117,6 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Binding
         	this.Begin(__annot2, node);
         	try
         	{
-        	    if (node.KUsing.GetMetaCoreKind() != MetaCoreSyntaxKind.None)
-        	    {
-        	        // this.VisitToken(node.KUsing);
-        	    }
-        	    else
-        	    {
-        	        // this.VisitToken(node.KUsing);
-        	    }
         	    var __annot1 = new PropertyBinder(name: "Namespaces");
         	    this.Begin(__annot1, node.Namespaces);
         	    try
@@ -196,15 +150,19 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Binding
         	this.Begin(__annot1, node);
         	try
         	{
-        	    var __annot0 = new PropertyBinder(name: "Declarations");
-        	    this.Begin(__annot0, node.Declarations);
-        	    try
+        	    var declarationsList = node.Declarations;
+        	    for (var declarationsIndex = 0; declarationsIndex < declarationsList.Count; ++declarationsIndex)
         	    {
-        	        this.Visit(node.Declarations);
-        	    }
-        	    finally
-        	    {
-        	        this.End(__annot0);
+        	        var __annot0 = new PropertyBinder(name: "Declarations");
+        	        this.Begin(__annot0, node.Declarations[declarationsIndex]);
+        	        try
+        	        {
+        	            this.Visit(node.Declarations[declarationsIndex]);
+        	        }
+        	        finally
+        	        {
+        	            this.End(__annot0);
+        	        }
         	    }
         	        
         	}

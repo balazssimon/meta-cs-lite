@@ -219,32 +219,35 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax.InternalSyntax
 			return Token(null, MetaCoreSyntaxKind.TMultiLineComment, text, value, null);
 		}
 
-		internal MainGreen Main(InternalSyntaxToken kNamespace, QualifierGreen name, MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<QualifierGreen> qualifierList, DeclarationsGreen declarations, InternalSyntaxToken eof)
+		internal MainGreen Main(InternalSyntaxToken kNamespace, QualifierGreen name, InternalSyntaxToken tSemicolon, MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<UsingGreen> @using, DeclarationsGreen declarations, InternalSyntaxToken eof)
 		{
 #if DEBUG
 			if (kNamespace is null) throw new ArgumentNullException(nameof(kNamespace));
 			if (kNamespace.RawKind != (int)MetaCoreSyntaxKind.KNamespace) throw new ArgumentException(nameof(kNamespace));
 			if (name is null) throw new ArgumentNullException(nameof(name));
-			if (!qualifierList.IsReversed) throw new ArgumentException(nameof(qualifierList));
+			if (tSemicolon is null) throw new ArgumentNullException(nameof(tSemicolon));
+			if (tSemicolon.RawKind != (int)MetaCoreSyntaxKind.TSemicolon) throw new ArgumentException(nameof(tSemicolon));
 			if (declarations is null) throw new ArgumentNullException(nameof(declarations));
 			if (eof is null) throw new ArgumentNullException(nameof(eof));
 			if (eof.RawKind != (int)MetaCoreSyntaxKind.Eof) throw new ArgumentException(nameof(eof));
 #endif
-			return new MainGreen(MetaCoreSyntaxKind.Main, kNamespace, name, qualifierList.Node, declarations, eof);
+			return new MainGreen(MetaCoreSyntaxKind.Main, kNamespace, name, tSemicolon, @using.Node, declarations, eof);
 		}
 
-		internal UsingGreen Using(InternalSyntaxToken kUsing, QualifierGreen namespaces)
+		internal UsingGreen Using(InternalSyntaxToken kUsing, QualifierGreen namespaces, InternalSyntaxToken tSemicolon)
 		{
 #if DEBUG
 			if (kUsing is null) throw new ArgumentNullException(nameof(kUsing));
 			if (kUsing.RawKind != (int)MetaCoreSyntaxKind.KUsing) throw new ArgumentException(nameof(kUsing));
 			if (namespaces is null) throw new ArgumentNullException(nameof(namespaces));
+			if (tSemicolon is null) throw new ArgumentNullException(nameof(tSemicolon));
+			if (tSemicolon.RawKind != (int)MetaCoreSyntaxKind.TSemicolon) throw new ArgumentException(nameof(tSemicolon));
 #endif
 			int hash;
-			var cached = SyntaxNodeCache.TryGetNode((int)(MetaCoreSyntaxKind)MetaCoreSyntaxKind.Using, kUsing, namespaces, out hash);
+			var cached = SyntaxNodeCache.TryGetNode((int)(MetaCoreSyntaxKind)MetaCoreSyntaxKind.Using, kUsing, namespaces, tSemicolon, out hash);
 			if (cached != null) return (UsingGreen)cached;
 		
-			var result = new UsingGreen(MetaCoreSyntaxKind.Using, kUsing, namespaces);
+			var result = new UsingGreen(MetaCoreSyntaxKind.Using, kUsing, namespaces, tSemicolon);
 			if (hash >= 0)
 			{
 				SyntaxNodeCache.AddNode(result, hash);
@@ -253,16 +256,15 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax.InternalSyntax
 			return result;
 		}
 
-		internal DeclarationsGreen Declarations(MetaDeclarationGreen declarations)
+		internal DeclarationsGreen Declarations(MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<MetaDeclarationGreen> declarations)
 		{
 #if DEBUG
-			if (declarations is null) throw new ArgumentNullException(nameof(declarations));
 #endif
 			int hash;
-			var cached = SyntaxNodeCache.TryGetNode((int)(MetaCoreSyntaxKind)MetaCoreSyntaxKind.Declarations, declarations, out hash);
+			var cached = SyntaxNodeCache.TryGetNode((int)(MetaCoreSyntaxKind)MetaCoreSyntaxKind.Declarations, declarations.Node, out hash);
 			if (cached != null) return (DeclarationsGreen)cached;
 		
-			var result = new DeclarationsGreen(MetaCoreSyntaxKind.Declarations, declarations);
+			var result = new DeclarationsGreen(MetaCoreSyntaxKind.Declarations, declarations.Node);
 			if (hash >= 0)
 			{
 				SyntaxNodeCache.AddNode(result, hash);
@@ -271,18 +273,20 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax.InternalSyntax
 			return result;
 		}
 
-		internal MetaModelGreen MetaModel(InternalSyntaxToken kMetamodel, NameGreen name)
+		internal MetaModelGreen MetaModel(InternalSyntaxToken kMetamodel, NameGreen name, InternalSyntaxToken tSemicolon)
 		{
 #if DEBUG
 			if (kMetamodel is null) throw new ArgumentNullException(nameof(kMetamodel));
 			if (kMetamodel.RawKind != (int)MetaCoreSyntaxKind.KMetamodel) throw new ArgumentException(nameof(kMetamodel));
 			if (name is null) throw new ArgumentNullException(nameof(name));
+			if (tSemicolon is null) throw new ArgumentNullException(nameof(tSemicolon));
+			if (tSemicolon.RawKind != (int)MetaCoreSyntaxKind.TSemicolon) throw new ArgumentException(nameof(tSemicolon));
 #endif
 			int hash;
-			var cached = SyntaxNodeCache.TryGetNode((int)(MetaCoreSyntaxKind)MetaCoreSyntaxKind.MetaModel, kMetamodel, name, out hash);
+			var cached = SyntaxNodeCache.TryGetNode((int)(MetaCoreSyntaxKind)MetaCoreSyntaxKind.MetaModel, kMetamodel, name, tSemicolon, out hash);
 			if (cached != null) return (MetaModelGreen)cached;
 		
-			var result = new MetaModelGreen(MetaCoreSyntaxKind.MetaModel, kMetamodel, name);
+			var result = new MetaModelGreen(MetaCoreSyntaxKind.MetaModel, kMetamodel, name, tSemicolon);
 			if (hash >= 0)
 			{
 				SyntaxNodeCache.AddNode(result, hash);
@@ -420,15 +424,16 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax.InternalSyntax
 			return result;
 		}
 
-		internal MetaPropertyGreen MetaProperty(InternalSyntaxToken isContainment, TypeReferenceGreen type, NameGreen name, PropertyOppositeGreen propertyOpposite)
+		internal MetaPropertyGreen MetaProperty(InternalSyntaxToken isContainment, TypeReferenceGreen type, NameGreen name, PropertyOppositeGreen propertyOpposite, InternalSyntaxToken tSemicolon)
 		{
 #if DEBUG
-			if (isContainment is null) throw new ArgumentNullException(nameof(isContainment));
-			if (isContainment.RawKind != (int)MetaCoreSyntaxKind.KContains) throw new ArgumentException(nameof(isContainment));
+			if (isContainment is not null && isContainment.RawKind != (int)MetaCoreSyntaxKind.KContains) throw new ArgumentException(nameof(isContainment));
 			if (type is null) throw new ArgumentNullException(nameof(type));
 			if (name is null) throw new ArgumentNullException(nameof(name));
+			if (tSemicolon is null) throw new ArgumentNullException(nameof(tSemicolon));
+			if (tSemicolon.RawKind != (int)MetaCoreSyntaxKind.TSemicolon) throw new ArgumentException(nameof(tSemicolon));
 #endif
-			return new MetaPropertyGreen(MetaCoreSyntaxKind.MetaProperty, isContainment, type, name, propertyOpposite);
+			return new MetaPropertyGreen(MetaCoreSyntaxKind.MetaProperty, isContainment, type, name, propertyOpposite, tSemicolon);
 		}
 
 		internal PropertyOppositeGreen PropertyOpposite(InternalSyntaxToken kOpposite, QualifierGreen opposite)

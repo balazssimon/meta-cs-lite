@@ -27,6 +27,7 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
 		// Tokens:
 		TComma,
 		KNamespace,
+		TSemicolon,
 		KUsing,
 		KMetamodel,
 		KEnum,

@@ -184,13 +184,7 @@ namespace MetaDslx.Languages.MetaCompiler.Antlr
         public InternalSyntaxToken ConsumeGreenToken(IToken token, AntlrSyntaxParser parser)
         {
             var factory = parser.Language.InternalSyntaxFactory;
-            var startPosition = _greenPosition;
             var currentIndex = token.TokenIndex;
-            if (currentIndex < 0)
-            {
-                var missing = factory.MissingToken(AntlrSyntaxKind.FromAntlr(token.Type));
-                return missing;
-            }
             SyntaxListBuilder? builder = null;
             GreenNode? leadingTrivia = null;
             if (currentIndex > _greenIndex)
@@ -223,7 +217,21 @@ namespace MetaDslx.Languages.MetaCompiler.Antlr
                 trailingTrivia = builder.ToListNode();
                 builder.Clear();
             }
-            var green = factory.Token(leadingTrivia, AntlrSyntaxKind.FromAntlr(token.Type), token.Text, trailingTrivia);
+            InternalSyntaxToken green;
+            if (currentIndex < 0)
+            {
+                green = factory.MissingToken(leadingTrivia, AntlrSyntaxKind.FromAntlr(token.Type), trailingTrivia);
+            }
+            else
+            {
+                green = factory.Token(leadingTrivia, AntlrSyntaxKind.FromAntlr(token.Type), token.Text, trailingTrivia);
+            }
+            return ConsumeGreenToken(green, parser);
+        }
+
+        public InternalSyntaxToken ConsumeGreenToken(InternalSyntaxToken green, AntlrSyntaxParser parser)
+        {
+            var startPosition = _greenPosition;
             _greenPosition += green.FullWidth;
             var errors = ArrayBuilder<SyntaxDiagnosticInfo>.GetInstance();
             for (int i = _lexerErrorPosition; i < _lexer.Diagnostics.Count; ++i)

@@ -6,7 +6,7 @@ using System.Text;
 
 namespace MetaDslx.Languages.MetaCompiler.Antlr
 {
-    internal static class AntlrSyntaxKind
+    public static class AntlrSyntaxKind
     {
         public static int ToAntlr(int rawKind)
         {

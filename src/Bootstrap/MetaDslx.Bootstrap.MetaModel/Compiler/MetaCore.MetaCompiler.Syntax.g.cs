@@ -161,7 +161,7 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
 	public sealed class MainSyntax : MetaCoreSyntaxNode, ICompilationUnitSyntax
 	{
 		private QualifierSyntax _name;
-		private MetaDslx.CodeAnalysis.SyntaxNode _qualifierList;
+		private MetaDslx.CodeAnalysis.SyntaxNode _using;
 		private DeclarationsSyntax _declarations;
 	
 	    public MainSyntax(InternalSyntaxNode green, MetaCoreSyntaxTree syntaxTree, int position)
@@ -184,26 +184,32 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
 			}
 		}
 	    public QualifierSyntax Name => this.GetRed(ref this._name, 1);
-	    public MetaDslx.CodeAnalysis.SeparatedSyntaxList<QualifierSyntax> QualifierList 
+	    public SyntaxToken TSemicolon 
+		{ 
+			get 
+			{ 
+				var green = (global::MetaDslx.Bootstrap.MetaModel.Compiler.Syntax.InternalSyntax.MainGreen)this.Green;
+				var greenToken = green.TSemicolon;
+				return new SyntaxToken(this, greenToken, this.GetChildPosition(2), this.GetChildIndex(2));
+			}
+		}
+	    public MetaDslx.CodeAnalysis.SyntaxList<UsingSyntax> Using 
 		{ 
 			get
 			{
-				var red = this.GetRed(ref this._qualifierList, 2);
-				if (red != null)
-				{
-					return new MetaDslx.CodeAnalysis.SeparatedSyntaxList<QualifierSyntax>(red, this.GetChildIndex(2), reversed: true);
-				}
+				var red = this.GetRed(ref this._using, 3);
+				if (red != null) return new MetaDslx.CodeAnalysis.SyntaxList<UsingSyntax>(red);
 				return default;
 			} 
 		}
-	    public DeclarationsSyntax Declarations => this.GetRed(ref this._declarations, 3);
+	    public DeclarationsSyntax Declarations => this.GetRed(ref this._declarations, 4);
 	    public SyntaxToken EndOfFileToken 
 		{ 
 			get 
 			{ 
 				var green = (global::MetaDslx.Bootstrap.MetaModel.Compiler.Syntax.InternalSyntax.MainGreen)this.Green;
 				var greenToken = green.EndOfFileToken;
-				return new SyntaxToken(this, greenToken, this.GetChildPosition(4), this.GetChildIndex(4));
+				return new SyntaxToken(this, greenToken, this.GetChildPosition(5), this.GetChildIndex(5));
 			}
 		}
 	
@@ -212,8 +218,8 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
 	        switch (index)
 	        {
 				case 1: return this.GetRed(ref this._name, 1);
-				case 2: return this.GetRed(ref this._qualifierList, 2);
-				case 3: return this.GetRed(ref this._declarations, 3);
+				case 3: return this.GetRed(ref this._using, 3);
+				case 4: return this.GetRed(ref this._declarations, 4);
 				default: return null;
 	        }
 	    }
@@ -223,47 +229,52 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
 	        switch (index)
 	        {
 				case 1: return this._name;
-				case 2: return this._qualifierList;
-				case 3: return this._declarations;
+				case 3: return this._using;
+				case 4: return this._declarations;
 				default: return null;
 	        }
 	    }
 	
 	    public MainSyntax WithKNamespace(SyntaxToken kNamespace)
 		{
-			return this.Update(kNamespace, this.Name, this.QualifierList, this.Declarations, this.EndOfFileToken);
+			return this.Update(kNamespace, this.Name, this.TSemicolon, this.Using, this.Declarations, this.EndOfFileToken);
 		}
 	
 	    public MainSyntax WithName(QualifierSyntax name)
 		{
-			return this.Update(this.KNamespace, name, this.QualifierList, this.Declarations, this.EndOfFileToken);
+			return this.Update(this.KNamespace, name, this.TSemicolon, this.Using, this.Declarations, this.EndOfFileToken);
 		}
 	
-	    public MainSyntax WithQualifierList(MetaDslx.CodeAnalysis.SeparatedSyntaxList<QualifierSyntax> qualifierList)
+	    public MainSyntax WithTSemicolon(SyntaxToken tSemicolon)
 		{
-			return this.Update(this.KNamespace, this.Name, qualifierList, this.Declarations, this.EndOfFileToken);
+			return this.Update(this.KNamespace, this.Name, tSemicolon, this.Using, this.Declarations, this.EndOfFileToken);
 		}
 	
-	    public MainSyntax AddQualifierList(params QualifierSyntax[] qualifierList)
+	    public MainSyntax WithUsing(MetaDslx.CodeAnalysis.SyntaxList<UsingSyntax> @using)
 		{
-			return this.WithQualifierList(this.QualifierList.AddRange(qualifierList));
+			return this.Update(this.KNamespace, this.Name, this.TSemicolon, @using, this.Declarations, this.EndOfFileToken);
+		}
+	
+	    public MainSyntax AddUsing(params UsingSyntax[] @using)
+		{
+			return this.WithUsing(this.Using.AddRange(@using));
 		}
 	
 	    public MainSyntax WithDeclarations(DeclarationsSyntax declarations)
 		{
-			return this.Update(this.KNamespace, this.Name, this.QualifierList, declarations, this.EndOfFileToken);
+			return this.Update(this.KNamespace, this.Name, this.TSemicolon, this.Using, declarations, this.EndOfFileToken);
 		}
 	
 	    public MainSyntax WithEndOfFileToken(SyntaxToken eof)
 		{
-			return this.Update(this.KNamespace, this.Name, this.QualifierList, this.Declarations, eof);
+			return this.Update(this.KNamespace, this.Name, this.TSemicolon, this.Using, this.Declarations, eof);
 		}
 	
-	    public MainSyntax Update(SyntaxToken kNamespace, QualifierSyntax name, MetaDslx.CodeAnalysis.SeparatedSyntaxList<QualifierSyntax> qualifierList, DeclarationsSyntax declarations, SyntaxToken eof)
+	    public MainSyntax Update(SyntaxToken kNamespace, QualifierSyntax name, SyntaxToken tSemicolon, MetaDslx.CodeAnalysis.SyntaxList<UsingSyntax> @using, DeclarationsSyntax declarations, SyntaxToken eof)
 	    {
-	        if (this.KNamespace != kNamespace || this.Name != name || this.QualifierList != qualifierList || this.Declarations != declarations || this.EndOfFileToken != eof)
+	        if (this.KNamespace != kNamespace || this.Name != name || this.TSemicolon != tSemicolon || this.Using != @using || this.Declarations != declarations || this.EndOfFileToken != eof)
 	        {
-	            var newNode = MetaCoreLanguage.Instance.SyntaxFactory.Main(kNamespace, name, qualifierList, declarations, eof);
+	            var newNode = MetaCoreLanguage.Instance.SyntaxFactory.Main(kNamespace, name, tSemicolon, @using, declarations, eof);
 	            var annotations = this.GetAnnotations();
 	            if (annotations != null && annotations.Length > 0)
 	               newNode = newNode.WithAnnotations(annotations);
@@ -312,6 +323,15 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
 			}
 		}
 	    public QualifierSyntax Namespaces => this.GetRed(ref this._namespaces, 1);
+	    public SyntaxToken TSemicolon 
+		{ 
+			get 
+			{ 
+				var green = (global::MetaDslx.Bootstrap.MetaModel.Compiler.Syntax.InternalSyntax.UsingGreen)this.Green;
+				var greenToken = green.TSemicolon;
+				return new SyntaxToken(this, greenToken, this.GetChildPosition(2), this.GetChildIndex(2));
+			}
+		}
 	
 	    protected override SyntaxNode GetNodeSlot(int index)
 	    {
@@ -333,19 +353,24 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
 	
 	    public UsingSyntax WithKUsing(SyntaxToken kUsing)
 		{
-			return this.Update(kUsing, this.Namespaces);
+			return this.Update(kUsing, this.Namespaces, this.TSemicolon);
 		}
 	
 	    public UsingSyntax WithNamespaces(QualifierSyntax namespaces)
 		{
-			return this.Update(this.KUsing, namespaces);
+			return this.Update(this.KUsing, namespaces, this.TSemicolon);
 		}
 	
-	    public UsingSyntax Update(SyntaxToken kUsing, QualifierSyntax namespaces)
+	    public UsingSyntax WithTSemicolon(SyntaxToken tSemicolon)
+		{
+			return this.Update(this.KUsing, this.Namespaces, tSemicolon);
+		}
+	
+	    public UsingSyntax Update(SyntaxToken kUsing, QualifierSyntax namespaces, SyntaxToken tSemicolon)
 	    {
-	        if (this.KUsing != kUsing || this.Namespaces != namespaces)
+	        if (this.KUsing != kUsing || this.Namespaces != namespaces || this.TSemicolon != tSemicolon)
 	        {
-	            var newNode = MetaCoreLanguage.Instance.SyntaxFactory.Using(kUsing, namespaces);
+	            var newNode = MetaCoreLanguage.Instance.SyntaxFactory.Using(kUsing, namespaces, tSemicolon);
 	            var annotations = this.GetAnnotations();
 	            if (annotations != null && annotations.Length > 0)
 	               newNode = newNode.WithAnnotations(annotations);
@@ -372,7 +397,7 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
 	}
 	public sealed class DeclarationsSyntax : MetaCoreSyntaxNode
 	{
-		private MetaDeclarationSyntax _declarations;
+		private MetaDslx.CodeAnalysis.SyntaxNode _declarations;
 	
 	    public DeclarationsSyntax(InternalSyntaxNode green, MetaCoreSyntaxTree syntaxTree, int position)
 	        : base(green, syntaxTree, position)
@@ -384,7 +409,15 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
 	    {
 	    }
 	
-	    public MetaDeclarationSyntax Declarations => this.GetRed(ref this._declarations, 0);
+	    public MetaDslx.CodeAnalysis.SyntaxList<MetaDeclarationSyntax> Declarations 
+		{ 
+			get
+			{
+				var red = this.GetRed(ref this._declarations, 0);
+				if (red != null) return new MetaDslx.CodeAnalysis.SyntaxList<MetaDeclarationSyntax>(red);
+				return default;
+			} 
+		}
 	
 	    protected override SyntaxNode GetNodeSlot(int index)
 	    {
@@ -404,12 +437,17 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
 	        }
 	    }
 	
-	    public DeclarationsSyntax WithDeclarations(MetaDeclarationSyntax declarations)
+	    public DeclarationsSyntax WithDeclarations(MetaDslx.CodeAnalysis.SyntaxList<MetaDeclarationSyntax> declarations)
 		{
 			return this.Update(declarations);
 		}
 	
-	    public DeclarationsSyntax Update(MetaDeclarationSyntax declarations)
+	    public DeclarationsSyntax AddDeclarations(params MetaDeclarationSyntax[] declarations)
+		{
+			return this.WithDeclarations(this.Declarations.AddRange(declarations));
+		}
+	
+	    public DeclarationsSyntax Update(MetaDslx.CodeAnalysis.SyntaxList<MetaDeclarationSyntax> declarations)
 	    {
 	        if (this.Declarations != declarations)
 	        {
@@ -475,6 +513,15 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
 			}
 		}
 	    public NameSyntax Name => this.GetRed(ref this._name, 1);
+	    public SyntaxToken TSemicolon 
+		{ 
+			get 
+			{ 
+				var green = (global::MetaDslx.Bootstrap.MetaModel.Compiler.Syntax.InternalSyntax.MetaModelGreen)this.Green;
+				var greenToken = green.TSemicolon;
+				return new SyntaxToken(this, greenToken, this.GetChildPosition(2), this.GetChildIndex(2));
+			}
+		}
 	
 	    protected override SyntaxNode GetNodeSlot(int index)
 	    {
@@ -496,19 +543,24 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
 	
 	    public MetaModelSyntax WithKMetamodel(SyntaxToken kMetamodel)
 		{
-			return this.Update(kMetamodel, this.Name);
+			return this.Update(kMetamodel, this.Name, this.TSemicolon);
 		}
 	
 	    public MetaModelSyntax WithName(NameSyntax name)
 		{
-			return this.Update(this.KMetamodel, name);
+			return this.Update(this.KMetamodel, name, this.TSemicolon);
 		}
 	
-	    public MetaModelSyntax Update(SyntaxToken kMetamodel, NameSyntax name)
+	    public MetaModelSyntax WithTSemicolon(SyntaxToken tSemicolon)
+		{
+			return this.Update(this.KMetamodel, this.Name, tSemicolon);
+		}
+	
+	    public MetaModelSyntax Update(SyntaxToken kMetamodel, NameSyntax name, SyntaxToken tSemicolon)
 	    {
-	        if (this.KMetamodel != kMetamodel || this.Name != name)
+	        if (this.KMetamodel != kMetamodel || this.Name != name || this.TSemicolon != tSemicolon)
 	        {
-	            var newNode = MetaCoreLanguage.Instance.SyntaxFactory.MetaModel(kMetamodel, name);
+	            var newNode = MetaCoreLanguage.Instance.SyntaxFactory.MetaModel(kMetamodel, name, tSemicolon);
 	            var annotations = this.GetAnnotations();
 	            if (annotations != null && annotations.Length > 0)
 	               newNode = newNode.WithAnnotations(annotations);
@@ -1191,6 +1243,15 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
 	    public TypeReferenceSyntax Type => this.GetRed(ref this._type, 1);
 	    public NameSyntax Name => this.GetRed(ref this._name, 2);
 	    public PropertyOppositeSyntax PropertyOpposite => this.GetRed(ref this._propertyOpposite, 3);
+	    public SyntaxToken TSemicolon 
+		{ 
+			get 
+			{ 
+				var green = (global::MetaDslx.Bootstrap.MetaModel.Compiler.Syntax.InternalSyntax.MetaPropertyGreen)this.Green;
+				var greenToken = green.TSemicolon;
+				return new SyntaxToken(this, greenToken, this.GetChildPosition(4), this.GetChildIndex(4));
+			}
+		}
 	
 	    protected override SyntaxNode GetNodeSlot(int index)
 	    {
@@ -1216,29 +1277,34 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
 	
 	    public MetaPropertySyntax WithIsContainment(SyntaxToken isContainment)
 		{
-			return this.Update(isContainment, this.Type, this.Name, this.PropertyOpposite);
+			return this.Update(isContainment, this.Type, this.Name, this.PropertyOpposite, this.TSemicolon);
 		}
 	
 	    public MetaPropertySyntax WithType(TypeReferenceSyntax type)
 		{
-			return this.Update(this.IsContainment, type, this.Name, this.PropertyOpposite);
+			return this.Update(this.IsContainment, type, this.Name, this.PropertyOpposite, this.TSemicolon);
 		}
 	
 	    public MetaPropertySyntax WithName(NameSyntax name)
 		{
-			return this.Update(this.IsContainment, this.Type, name, this.PropertyOpposite);
+			return this.Update(this.IsContainment, this.Type, name, this.PropertyOpposite, this.TSemicolon);
 		}
 	
 	    public MetaPropertySyntax WithPropertyOpposite(PropertyOppositeSyntax propertyOpposite)
 		{
-			return this.Update(this.IsContainment, this.Type, this.Name, propertyOpposite);
+			return this.Update(this.IsContainment, this.Type, this.Name, propertyOpposite, this.TSemicolon);
 		}
 	
-	    public MetaPropertySyntax Update(SyntaxToken isContainment, TypeReferenceSyntax type, NameSyntax name, PropertyOppositeSyntax propertyOpposite)
+	    public MetaPropertySyntax WithTSemicolon(SyntaxToken tSemicolon)
+		{
+			return this.Update(this.IsContainment, this.Type, this.Name, this.PropertyOpposite, tSemicolon);
+		}
+	
+	    public MetaPropertySyntax Update(SyntaxToken isContainment, TypeReferenceSyntax type, NameSyntax name, PropertyOppositeSyntax propertyOpposite, SyntaxToken tSemicolon)
 	    {
-	        if (this.IsContainment != isContainment || this.Type != type || this.Name != name || this.PropertyOpposite != propertyOpposite)
+	        if (this.IsContainment != isContainment || this.Type != type || this.Name != name || this.PropertyOpposite != propertyOpposite || this.TSemicolon != tSemicolon)
 	        {
-	            var newNode = MetaCoreLanguage.Instance.SyntaxFactory.MetaProperty(isContainment, type, name, propertyOpposite);
+	            var newNode = MetaCoreLanguage.Instance.SyntaxFactory.MetaProperty(isContainment, type, name, propertyOpposite, tSemicolon);
 	            var annotations = this.GetAnnotations();
 	            if (annotations != null && annotations.Length > 0)
 	               newNode = newNode.WithAnnotations(annotations);

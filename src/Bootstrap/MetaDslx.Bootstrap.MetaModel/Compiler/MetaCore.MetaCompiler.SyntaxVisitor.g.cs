@@ -502,24 +502,26 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
         {
             var kNamespace = this.VisitToken(node.KNamespace);
             var name = (QualifierSyntax)this.Visit(node.Name);
-            var qualifierList = this.VisitList(node.QualifierList);
+            var tSemicolon = this.VisitToken(node.TSemicolon);
+            var @using = this.VisitList(node.Using);
             var declarations = (DeclarationsSyntax)this.Visit(node.Declarations);
             var eof = this.VisitToken(node.EndOfFileToken);
         	    
-        	return node.Update(kNamespace, name, qualifierList, declarations, eof);
+        	return node.Update(kNamespace, name, tSemicolon, @using, declarations, eof);
         }
 
         public virtual SyntaxNode VisitUsing(UsingSyntax node)
         {
             var kUsing = this.VisitToken(node.KUsing);
             var namespaces = (QualifierSyntax)this.Visit(node.Namespaces);
+            var tSemicolon = this.VisitToken(node.TSemicolon);
         	    
-        	return node.Update(kUsing, namespaces);
+        	return node.Update(kUsing, namespaces, tSemicolon);
         }
 
         public virtual SyntaxNode VisitDeclarations(DeclarationsSyntax node)
         {
-            var declarations = (MetaDeclarationSyntax)this.Visit(node.Declarations);
+            var declarations = this.VisitList(node.Declarations);
         	    
         	return node.Update(declarations);
         }
@@ -528,8 +530,9 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
         {
             var kMetamodel = this.VisitToken(node.KMetamodel);
             var name = (NameSyntax)this.Visit(node.Name);
+            var tSemicolon = this.VisitToken(node.TSemicolon);
         	    
-        	return node.Update(kMetamodel, name);
+        	return node.Update(kMetamodel, name, tSemicolon);
         }
 
         public virtual SyntaxNode VisitMetaEnumType(MetaEnumTypeSyntax node)
@@ -597,8 +600,9 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
             var type = (TypeReferenceSyntax)this.Visit(node.Type);
             var name = (NameSyntax)this.Visit(node.Name);
             var propertyOpposite = (PropertyOppositeSyntax)this.Visit(node.PropertyOpposite);
+            var tSemicolon = this.VisitToken(node.TSemicolon);
         	    
-        	return node.Update(isContainment, type, name, propertyOpposite);
+        	return node.Update(isContainment, type, name, propertyOpposite, tSemicolon);
         }
 
         public virtual SyntaxNode VisitPropertyOpposite(PropertyOppositeSyntax node)

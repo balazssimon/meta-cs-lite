@@ -28,6 +28,7 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
 				case MetaCoreSyntaxKind.Eof:
 				case MetaCoreSyntaxKind.TComma:
 				case MetaCoreSyntaxKind.KNamespace:
+				case MetaCoreSyntaxKind.TSemicolon:
 				case MetaCoreSyntaxKind.KUsing:
 				case MetaCoreSyntaxKind.KMetamodel:
 				case MetaCoreSyntaxKind.KEnum:
@@ -69,6 +70,7 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
 			{
 				case MetaCoreSyntaxKind.TComma:
 				case MetaCoreSyntaxKind.KNamespace:
+				case MetaCoreSyntaxKind.TSemicolon:
 				case MetaCoreSyntaxKind.KUsing:
 				case MetaCoreSyntaxKind.KMetamodel:
 				case MetaCoreSyntaxKind.KEnum:
@@ -104,6 +106,8 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
 					return MetaCoreSyntaxKind.TComma;
 				case "namespace": 
 					return MetaCoreSyntaxKind.KNamespace;
+				case ";": 
+					return MetaCoreSyntaxKind.TSemicolon;
 				case "using": 
 					return MetaCoreSyntaxKind.KUsing;
 				case "metamodel": 
@@ -179,6 +183,8 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
 					return "TComma";
 				case MetaCoreSyntaxKind.KNamespace: 
 					return "KNamespace";
+				case MetaCoreSyntaxKind.TSemicolon: 
+					return "TSemicolon";
 				case MetaCoreSyntaxKind.KUsing: 
 					return "KUsing";
 				case MetaCoreSyntaxKind.KMetamodel: 
@@ -293,6 +299,8 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
 					return ",";
 				case MetaCoreSyntaxKind.KNamespace: 
 					return "namespace";
+				case MetaCoreSyntaxKind.TSemicolon: 
+					return ";";
 				case MetaCoreSyntaxKind.KUsing: 
 					return "using";
 				case MetaCoreSyntaxKind.KMetamodel: 
