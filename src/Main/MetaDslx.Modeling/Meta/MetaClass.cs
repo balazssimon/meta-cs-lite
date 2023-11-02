@@ -5,27 +5,27 @@ using System.Text;
 
 namespace MetaDslx.Modeling.Meta
 {
-    public abstract class MetaClass<TType, TProperty>
+    public abstract class MetaClass<TType, TProperty, TSymbol>
     {
-        public MetaClass(TType? underlyingType)
+        public MetaClass(TType underlyingType)
         {
             UnderlyingType = underlyingType;
         }
 
-        internal protected TType? UnderlyingType { get; }
+        internal protected TType UnderlyingType { get; }
 
         public abstract string Name { get; }
-        public abstract TType? SymbolType { get; }
+        public abstract TSymbol? SymbolType { get; }
         internal protected abstract ImmutableArray<TType> OriginalBaseTypes { get; }
         internal protected abstract ImmutableArray<TProperty> OriginalDeclaredProperties { get; }
 
-        public ImmutableArray<MetaClass<TType, TProperty>> AllBaseTypes { get; internal set; }
-        public MetaProperty<TType, TProperty>? NameProperty { get; internal set; }
-        public MetaProperty<TType, TProperty>? TypeProperty { get; internal set; }
-        public ImmutableArray<MetaProperty<TType, TProperty>> DeclaredProperties { get; internal set; }
-        public ImmutableArray<MetaProperty<TType, TProperty>> AllDeclaredProperties { get; internal set; }
-        public ImmutableArray<MetaProperty<TType, TProperty>> PublicProperties { get; internal set; }
-        public ImmutableDictionary<string, MetaProperty<TType, TProperty>> PublicPropertiesByName { get; internal set; }
-        public ImmutableDictionary<MetaProperty<TType, TProperty>, MetaPropertyInfo<TType, TProperty>> ModelPropertyInfos { get; internal set; }
+        public ImmutableArray<MetaClass<TType, TProperty, TSymbol>> AllBaseTypes { get; internal set; }
+        public MetaProperty<TType, TProperty, TSymbol>? NameProperty { get; internal set; }
+        public MetaProperty<TType, TProperty, TSymbol>? TypeProperty { get; internal set; }
+        public ImmutableArray<MetaProperty<TType, TProperty, TSymbol>> DeclaredProperties { get; internal set; }
+        public ImmutableArray<MetaProperty<TType, TProperty, TSymbol>> AllDeclaredProperties { get; internal set; }
+        public ImmutableArray<MetaProperty<TType, TProperty, TSymbol>> PublicProperties { get; internal set; }
+        public ImmutableDictionary<string, MetaProperty<TType, TProperty, TSymbol>> PublicPropertiesByName { get; internal set; }
+        public ImmutableDictionary<MetaProperty<TType, TProperty, TSymbol>, MetaPropertyInfo<TType, TProperty, TSymbol>> ModelPropertyInfos { get; internal set; }
     }
 }

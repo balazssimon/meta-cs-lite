@@ -42,6 +42,7 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
 				case MetaCoreSyntaxKind.KBool:
 				case MetaCoreSyntaxKind.KInt:
 				case MetaCoreSyntaxKind.KString:
+				case MetaCoreSyntaxKind.KType:
 				case MetaCoreSyntaxKind.TLBracket:
 				case MetaCoreSyntaxKind.TRBracket:
 				case MetaCoreSyntaxKind.TDot:
@@ -84,6 +85,7 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
 				case MetaCoreSyntaxKind.KBool:
 				case MetaCoreSyntaxKind.KInt:
 				case MetaCoreSyntaxKind.KString:
+				case MetaCoreSyntaxKind.KType:
 				case MetaCoreSyntaxKind.TLBracket:
 				case MetaCoreSyntaxKind.TRBracket:
 				case MetaCoreSyntaxKind.TDot:
@@ -134,6 +136,8 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
 					return MetaCoreSyntaxKind.KInt;
 				case "string": 
 					return MetaCoreSyntaxKind.KString;
+				case "type": 
+					return MetaCoreSyntaxKind.KType;
 				case "[": 
 					return MetaCoreSyntaxKind.TLBracket;
 				case "]": 
@@ -211,6 +215,8 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
 					return "KInt";
 				case MetaCoreSyntaxKind.KString: 
 					return "KString";
+				case MetaCoreSyntaxKind.KType: 
+					return "KType";
 				case MetaCoreSyntaxKind.TLBracket: 
 					return "TLBracket";
 				case MetaCoreSyntaxKind.TRBracket: 
@@ -327,6 +333,8 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
 					return "int";
 				case MetaCoreSyntaxKind.KString: 
 					return "string";
+				case MetaCoreSyntaxKind.KType: 
+					return "type";
 				case MetaCoreSyntaxKind.TLBracket: 
 					return "[";
 				case MetaCoreSyntaxKind.TRBracket: 
@@ -377,6 +385,7 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
 				case MetaCoreSyntaxKind.KBool: 
 				case MetaCoreSyntaxKind.KInt: 
 				case MetaCoreSyntaxKind.KString: 
+				case MetaCoreSyntaxKind.KType: 
 					return true;
 				default:
 					return false;
@@ -401,6 +410,7 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
 			yield return MetaCoreSyntaxKind.KBool;
 			yield return MetaCoreSyntaxKind.KInt;
 			yield return MetaCoreSyntaxKind.KString;
+			yield return MetaCoreSyntaxKind.KType;
 			yield break;
         }
 
@@ -435,6 +445,8 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
 					return MetaCoreSyntaxKind.KInt;
 				case "string": 
 					return MetaCoreSyntaxKind.KString;
+				case "type": 
+					return MetaCoreSyntaxKind.KType;
 				default:
 					return MetaCoreSyntaxKind.None;
 			}

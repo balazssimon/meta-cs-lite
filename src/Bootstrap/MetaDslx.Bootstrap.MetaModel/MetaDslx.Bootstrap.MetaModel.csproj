@@ -23,7 +23,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\..\Main\MetaDslx.CodeAnalysis.Core\MetaDslx.CodeAnalysis.Core.csproj" OutputItemType="Analyzer"/>
+		<ProjectReference Include="..\..\Main\MetaDslx.CodeAnalysis.Core\MetaDslx.CodeAnalysis.Core.csproj" OutputItemType="Analyzer" />
 		<ProjectReference Include="..\..\Main\MetaDslx.CodeAnalysis.Common\MetaDslx.CodeAnalysis.Common.csproj" />
 		<ProjectReference Include="..\..\Main\MetaDslx.Modeling\MetaDslx.Modeling.csproj" />
 		<ProjectReference Include="..\..\Main\MetaDslx.Languages.MetaGenerator\MetaDslx.Languages.MetaGenerator.csproj" OutputItemType="Analyzer" />

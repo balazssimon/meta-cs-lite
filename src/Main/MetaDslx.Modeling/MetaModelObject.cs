@@ -9,7 +9,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Xml.Linq;
 
-namespace MetaDslx.Modeling.Meta
+namespace MetaDslx.Modeling
 {
     public abstract class MetaModelObject : ModelObject
     {

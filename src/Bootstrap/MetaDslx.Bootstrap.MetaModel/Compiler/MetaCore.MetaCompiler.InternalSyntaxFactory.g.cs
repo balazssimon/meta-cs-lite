@@ -500,7 +500,7 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax.InternalSyntax
 		{
 #if DEBUG
 			if (tokens is null) throw new ArgumentNullException(nameof(tokens));
-			if (tokens.RawKind != (int)MetaCoreSyntaxKind.KBool && tokens.RawKind != (int)MetaCoreSyntaxKind.KInt && tokens.RawKind != (int)MetaCoreSyntaxKind.KString) throw new ArgumentException(nameof(tokens));
+			if (tokens.RawKind != (int)MetaCoreSyntaxKind.KBool && tokens.RawKind != (int)MetaCoreSyntaxKind.KInt && tokens.RawKind != (int)MetaCoreSyntaxKind.KString && tokens.RawKind != (int)MetaCoreSyntaxKind.KType) throw new ArgumentException(nameof(tokens));
 #endif
 			int hash;
 			var cached = SyntaxNodeCache.TryGetNode((int)(MetaCoreSyntaxKind)MetaCoreSyntaxKind.TypeReferenceTokens, tokens, out hash);

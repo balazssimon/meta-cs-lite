@@ -7,7 +7,6 @@ using MetaDslx.CodeAnalysis.Symbols.Errors;
 using MetaDslx.CodeAnalysis.Symbols.Model;
 using MetaDslx.CodeAnalysis.Symbols.Source;
 using MetaDslx.Modeling;
-using MetaDslx.Modeling.Meta;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;

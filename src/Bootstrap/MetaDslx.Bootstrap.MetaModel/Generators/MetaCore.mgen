@@ -5,25 +5,27 @@ using MetaDslx.Bootstrap.MetaModel.Core;
 
 generator MetaModelGenerator;
 
-template Generate(MetaModel mm)
-namespace [mm.NamespaceName]
+template Generate()
+namespace [Namespace]
 {
 	using __MetaModel = global::MetaDslx.Modeling.MetaModel;
 	using __ModelVersion = global::MetaDslx.Modeling.ModelVersion;
 	using __ModelObjectInfo = global::MetaDslx.Modeling.ModelObjectInfo;
 	using __ModelProperty = global::MetaDslx.Modeling.ModelProperty;
+    using __ModelPropertyFlags = global::MetaDslx.Modeling.ModelPropertyFlags;
 	using __ImmutableArray = global::System.Collections.Immutable.ImmutableArray;
+	using __ImmutableDictionary = global::System.Collections.Immutable.ImmutableDictionary;
 	using __Type = global::System.Type;
 
-	[GenerateMetaModel(mm)]
+	[GenerateMetaModel(MetaModel)]
 
-	[foreach (var cls in mm.Parent.Declarations.OfType<MetaClass>())]
-	[GenerateInterface(mm, cls)]
+	[foreach (var cls in Classes)]
+	[GenerateInterface(MetaModel, cls)]
 
 	[end foreach]
 }
 
-namespace [mm.NamespaceName].__Impl
+namespace [Namespace].__Impl
 {
 	using __Model = global::MetaDslx.Modeling.Model;
 	using __MetaModel = global::MetaDslx.Modeling.MetaModel;
@@ -31,12 +33,15 @@ namespace [mm.NamespaceName].__Impl
 	using __MetaModelObject = global::MetaDslx.Modeling.MetaModelObject;
 	using __ModelObjectInfo = global::MetaDslx.Modeling.ModelObjectInfo;
 	using __ModelProperty = global::MetaDslx.Modeling.ModelProperty;
+	using __ModelPropertyFlags = global::MetaDslx.Modeling.ModelPropertyFlags;
 	using __ModelPropertyInfo = global::MetaDslx.Modeling.ModelPropertyInfo;
+	using __ModelPropertySlot = global::MetaDslx.Modeling.ModelPropertySlot;
 	using __ImmutableArray = global::System.Collections.Immutable.ImmutableArray;
+	using __ImmutableDictionary = global::System.Collections.Immutable.ImmutableDictionary;
 	using __Type = global::System.Type;
 
-	[foreach (var cls in mm.Parent.Declarations.OfType<MetaClass>())]
-	[GenerateClass(mm, cls)]
+	[foreach (var cls in Classes)]
+	[GenerateClass(MetaModel, cls)]
 
 	[end foreach]
 }
@@ -56,37 +61,34 @@ public class [mm.Name] : __MetaModel
 
 	static [mm.Name]()
 	{
-		[foreach (var cls in mm.Parent.Declarations.OfType<MetaClass>())]
-		[foreach (var prop in cls.Properties)]
-		_[cls.Name]_[prop.Name] = new __ModelProperty(typeof([cls.Name]), "[prop.Name]");
-		[end foreach]
+		[foreach (var cls in Classes)]
+			[var metaCls = Graph.GetMetaClass(cls)]
+			[foreach (var prop in metaCls.DeclaredProperties)]
+		_[cls.Name]_[prop.Name] = new __ModelProperty(typeof([cls.Name]), "[prop.Name]", typeof([ToCSharp(prop.Type)]), null, [ToCSharp(prop.Flags)], [prop.SymbolProperty ?? "null"]);
+			[end foreach]
 		[end foreach]
 		_instance = new [mm.Name]();
 	}
 
 	private readonly global::System.Collections.Immutable.ImmutableArray<__Type> _modelObjectTypes;
 	private readonly global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> _modelObjectInfos;
-	private readonly global::System.Collections.Generic.Dictionary<__Type, __ModelObjectInfo> _modelObjectInfosByType;
-	private readonly global::System.Collections.Generic.Dictionary<string, __ModelObjectInfo> _modelObjectInfosByName;
+	private readonly global::System.Collections.Immutable.ImmutableDictionary<__Type, __ModelObjectInfo> _modelObjectInfosByType;
+	private readonly global::System.Collections.Immutable.ImmutableDictionary<string, __ModelObjectInfo> _modelObjectInfosByName;
 
 	private [mm.Name]()
 	{
 		_modelObjectTypes = __ImmutableArray.Create<__Type>([foreach (var cls in mm.Parent.Declarations.OfType<MetaClass>()) separator ", "]typeof([cls.Name])[end foreach]);
 		_modelObjectInfos = __ImmutableArray.Create<__ModelObjectInfo>([foreach (var cls in mm.Parent.Declarations.OfType<MetaClass>()) separator ", "][cls.Name]Info[end foreach]);
-		_modelObjectInfosByType = 
-			new global::System.Collections.Generic.Dictionary<__Type, __ModelObjectInfo>()
-			{
-				[foreach (var cls in mm.Parent.Declarations.OfType<MetaClass>())]
-				{typeof([cls.Name]), [cls.Name]Info},
-				[end foreach]
-			};
-		_modelObjectInfosByName = 
-			new global::System.Collections.Generic.Dictionary<string, __ModelObjectInfo>()
-			{
-				[foreach (var cls in mm.Parent.Declarations.OfType<MetaClass>())]
-				{"[cls.Name]", [cls.Name]Info},
-				[end foreach]
-			};
+		var modelObjectInfosByType = __ImmutableDictionary.CreateBuilder<__Type, __ModelObjectInfo>();
+		[foreach (var cls in Classes)]
+		modelObjectInfosByType.Add(typeof([cls.Name]), [cls.Name]Info);
+		[end foreach]
+		_modelObjectInfosByType = modelObjectInfosByType.ToImmutable();
+		var modelObjectInfosByName = __ImmutableDictionary.CreateBuilder<string, __ModelObjectInfo>();
+		[foreach (var cls in Classes)]
+		modelObjectInfosByName.Add("[cls.Name]", [cls.Name]Info);
+		[end foreach]
+		_modelObjectInfosByName = modelObjectInfosByName.ToImmutable();
 	}
 
     public override string Name => nameof([mm.Name]);
@@ -121,6 +123,7 @@ public interface [cls.Name][if (cls.BaseTypes.Any())] : [foreach (var bt in cls.
 end template
 
 template GenerateClass(MetaModel mm, MetaClass cls)
+[var metaCls = Graph.GetMetaClass(cls)]
 internal class [cls.Name]_Impl : __MetaModelObject, [cls.Name]
 {
 	private [cls.Name]_Impl(string? id)
@@ -137,30 +140,40 @@ internal class [cls.Name]_Impl : __MetaModelObject, [cls.Name]
 		private readonly global::System.Collections.Immutable.ImmutableArray<__ModelProperty> _declaredProperties;
 		private readonly global::System.Collections.Immutable.ImmutableArray<__ModelProperty> _allDeclaredProperties;
 		private readonly global::System.Collections.Immutable.ImmutableArray<__ModelProperty> _publicProperties;
-        private readonly global::System.Collections.Generic.Dictionary<string, __ModelProperty> _publicPropertiesByName;
-        private readonly global::System.Collections.Generic.Dictionary<__ModelProperty, __ModelPropertyInfo> _modelPropertyInfos;
+        private readonly global::System.Collections.Immutable.ImmutableDictionary<string, __ModelProperty> _publicPropertiesByName;
+        private readonly global::System.Collections.Immutable.ImmutableDictionary<__ModelProperty, __ModelPropertyInfo> _modelPropertyInfos;
 
 		private __Info() 
 		{
-			_declaredProperties = __ImmutableArray.Create<__ModelProperty>([foreach (var prop in cls.Properties) separator ", "][mm.Name].[cls.Name]_[prop.Name][end foreach]);
-			_allDeclaredProperties = __ImmutableArray.Create<__ModelProperty>(); // TODO
-			_publicProperties = __ImmutableArray.Create<__ModelProperty>(); // TODO
-			_publicPropertiesByName = new global::System.Collections.Generic.Dictionary<string, __ModelProperty>(); // TODO
-			_modelPropertyInfos = new global::System.Collections.Generic.Dictionary<__ModelProperty, __ModelPropertyInfo>(); // TODO
+			_declaredProperties = __ImmutableArray.Create<__ModelProperty>([foreach (var prop in metaCls.DeclaredProperties) separator ", "][ToCSharp(prop)][end foreach]);
+			_allDeclaredProperties = __ImmutableArray.Create<__ModelProperty>([foreach (var prop in metaCls.AllDeclaredProperties) separator ", "][ToCSharp(prop)][end foreach]);
+			_publicProperties = __ImmutableArray.Create<__ModelProperty>([foreach (var prop in metaCls.PublicProperties) separator ", "][ToCSharp(prop)][end foreach]);
+			var publicPropertiesByName = __ImmutableDictionary.CreateBuilder<string, __ModelProperty>();
+			[foreach (var prop in metaCls.PublicProperties)]
+			publicPropertiesByName.Add("[prop.Name]", [ToCSharp(prop)]);
+			[end foreach]
+			_publicPropertiesByName = publicPropertiesByName.ToImmutable();
+			var modelPropertyInfos = __ImmutableDictionary.CreateBuilder<__ModelProperty, __ModelPropertyInfo>();
+			[foreach (var prop in metaCls.AllDeclaredProperties)]
+			[var info = metaCls.ModelPropertyInfos[prop]]
+			[var slot = info.Slot]
+			modelPropertyInfos.Add([ToCSharp(prop)], new __ModelPropertyInfo(new __ModelPropertySlot([ToCSharp(slot.SlotProperty)], [ToCSharp(slot.SlotProperties)], null, [ToCSharp(slot.Flags)]), [ToCSharp(info.OppositeProperties)], [ToCSharp(info.SubsettedProperties)], [ToCSharp(info.SubsettingProperties)], [ToCSharp(info.RedefinedProperties)], [ToCSharp(info.RedefiningProperties)]));
+			[end foreach]
+			_modelPropertyInfos = modelPropertyInfos.ToImmutable();
 		}
 
         public override __MetaModel MetaModel => [mm.Name].Instance;
         public override global::System.Type MetaType => typeof([cls.Name]);
 
         public override __Type? SymbolType => null; // TODO
-        public override __ModelProperty? NameProperty => null; // TODO
+        public override __ModelProperty? NameProperty => [if (metaCls.NameProperty is null)]null[else][end if];
         public override __ModelProperty? TypeProperty => null; // TODO
         public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> DeclaredProperties => _declaredProperties;
         public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> AllDeclaredProperties => _allDeclaredProperties;
         public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> PublicProperties => _publicProperties;
 
-        protected override global::System.Collections.Generic.Dictionary<string, __ModelProperty> PublicPropertiesByName => _publicPropertiesByName;
-        protected override global::System.Collections.Generic.Dictionary<__ModelProperty, __ModelPropertyInfo> ModelPropertyInfos => _modelPropertyInfos;
+        protected override global::System.Collections.Immutable.ImmutableDictionary<string, __ModelProperty> PublicPropertiesByName => _publicPropertiesByName;
+        protected override global::System.Collections.Immutable.ImmutableDictionary<__ModelProperty, __ModelPropertyInfo> ModelPropertyInfos => _modelPropertyInfos;
 
 		public override __IModelObject? Create(__Model? model = null, string? id = null)
 		{

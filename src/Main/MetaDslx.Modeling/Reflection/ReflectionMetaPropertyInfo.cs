@@ -7,9 +7,9 @@ using System.Text;
 
 namespace MetaDslx.Modeling.Reflection
 {
-    internal class ReflectionMetaPropertyInfo : MetaPropertyInfo<Type, PropertyInfo>
+    internal class ReflectionMetaPropertyInfo : MetaPropertyInfo<Type, PropertyInfo, Type>
     {
-        public ReflectionMetaPropertyInfo(MetaPropertySlot<Type, PropertyInfo> slot, ImmutableArray<MetaProperty<Type, PropertyInfo>> oppositeProperties = default, ImmutableArray<MetaProperty<Type, PropertyInfo>> subsettedProperties = default, ImmutableArray<MetaProperty<Type, PropertyInfo>> subsettingProperties = default, ImmutableArray<MetaProperty<Type, PropertyInfo>> redefinedProperties = default, ImmutableArray<MetaProperty<Type, PropertyInfo>> redefiningProperties = default) 
+        public ReflectionMetaPropertyInfo(MetaPropertySlot<Type, PropertyInfo, Type> slot, ImmutableArray<MetaProperty<Type, PropertyInfo, Type>> oppositeProperties = default, ImmutableArray<MetaProperty<Type, PropertyInfo, Type>> subsettedProperties = default, ImmutableArray<MetaProperty<Type, PropertyInfo, Type>> subsettingProperties = default, ImmutableArray<MetaProperty<Type, PropertyInfo, Type>> redefinedProperties = default, ImmutableArray<MetaProperty<Type, PropertyInfo, Type>> redefiningProperties = default) 
             : base(slot, oppositeProperties, subsettedProperties, subsettingProperties, redefinedProperties, redefiningProperties)
         {
         }

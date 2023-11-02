@@ -51,10 +51,11 @@ namespace MetaDslx.Bootstrap.MetaModel.Core
 
     public class MetaModel : MetaDeclaration
     {
-        public static Modeling.Meta.MetaModel Instance = ReflectionMetaModel.CreateFromNamespace(typeof(MetaModel).Assembly, "MetaDslx.Bootstrap.MetaModel.Core");
+        public static Modeling.MetaModel Instance = ReflectionMetaModel.CreateFromNamespace(typeof(MetaModel).Assembly, "MetaDslx.Bootstrap.MetaModel.Core");
         public static MetaPrimitiveType Bool => new MetaPrimitiveType() { Name = "bool" };
         public static MetaPrimitiveType Int => new MetaPrimitiveType() { Name = "int" };
         public static MetaPrimitiveType String => new MetaPrimitiveType() { Name = "string" };
+        public static MetaPrimitiveType Type => new MetaPrimitiveType() { Name = "type" };
 
         [Derived]
         public string? NamespaceName => this.Parent?.FullName;
@@ -111,6 +112,7 @@ namespace MetaDslx.Bootstrap.MetaModel.Core
     {
         [SymbolProperty("Type")]
         public MetaType Type { get; set; }
+        public string? SymbolProperty { get; set; }
         public bool IsContainment { get; set; }
         public MetaProperty? Opposite { get; set; }
     }

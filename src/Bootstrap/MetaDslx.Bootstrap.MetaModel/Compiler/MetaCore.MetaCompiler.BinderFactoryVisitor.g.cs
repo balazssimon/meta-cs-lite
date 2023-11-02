@@ -519,6 +519,18 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Binding
         	        this.End(__annot2);
         	    }
         	    break;
+        	case MetaCoreSyntaxKind.KType:
+        	    var __annot3 = new ConstantBinder(value: global::MetaDslx.Bootstrap.MetaModel.Core.MetaModel.Type);
+        	    this.Begin(__annot3, node.Tokens);
+        	    try
+        	    {
+        	        // this.VisitToken(node.Tokens);
+        	    }
+        	    finally
+        	    {
+        	        this.End(__annot3);
+        	    }
+        	    break;
         	default:
         	    // this.VisitToken(node.Tokens);
         	    break;

@@ -1,4 +1,4 @@
-﻿using MetaDslx.Modeling.Meta;
+﻿using MetaDslx.Modeling;
 using System;
 using System.Collections.Generic;
 using System.Text;

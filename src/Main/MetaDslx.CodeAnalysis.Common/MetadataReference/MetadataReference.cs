@@ -9,7 +9,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Reflection;
 using System.Reflection.PortableExecutable;
-using MetaDslx.Modeling.Meta;
+using MetaDslx.Modeling;
 using Roslyn.Utilities;
 
 namespace MetaDslx.CodeAnalysis

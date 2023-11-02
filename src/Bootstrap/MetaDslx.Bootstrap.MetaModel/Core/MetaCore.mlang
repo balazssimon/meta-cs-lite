@@ -43,6 +43,7 @@ MetaPrimitiveType
 	: 'bool' => MetaModel.Bool
 	| 'int' => MetaModel.Int
 	| 'string' => MetaModel.String
+	| 'type' => MetaModel.Type
 	;
 MetaArrayType: itemType=TypeReference '[' ']';
 

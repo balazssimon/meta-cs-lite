@@ -296,6 +296,7 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
                 if (context.kBool is not null) tokens = this.VisitTerminal(context.kBool);
                 if (context.kInt is not null) tokens = this.VisitTerminal(context.kInt);
                 if (context.kString is not null) tokens = this.VisitTerminal(context.kString);
+                if (context.kType is not null) tokens = this.VisitTerminal(context.kType);
             	return _factory.TypeReferenceTokens(tokens);
             }
             public override NameGreen? VisitPr_Name(MetaCoreParser.Pr_NameContext? context)

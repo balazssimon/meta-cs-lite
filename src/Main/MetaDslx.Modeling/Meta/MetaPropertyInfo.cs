@@ -5,14 +5,14 @@ using System.Text;
 
 namespace MetaDslx.Modeling.Meta
 {
-    public abstract class MetaPropertyInfo<TType, TProperty>
+    public abstract class MetaPropertyInfo<TType, TProperty, TSymbol>
     {
-        public MetaPropertyInfo(MetaPropertySlot<TType, TProperty> slot,
-            ImmutableArray<MetaProperty<TType, TProperty>> oppositeProperties = default,
-            ImmutableArray<MetaProperty<TType, TProperty>> subsettedProperties = default,
-            ImmutableArray<MetaProperty<TType, TProperty>> subsettingProperties = default,
-            ImmutableArray<MetaProperty<TType, TProperty>> redefinedProperties = default,
-            ImmutableArray<MetaProperty<TType, TProperty>> redefiningProperties = default)
+        public MetaPropertyInfo(MetaPropertySlot<TType, TProperty, TSymbol> slot,
+            ImmutableArray<MetaProperty<TType, TProperty, TSymbol>> oppositeProperties = default,
+            ImmutableArray<MetaProperty<TType, TProperty, TSymbol>> subsettedProperties = default,
+            ImmutableArray<MetaProperty<TType, TProperty, TSymbol>> subsettingProperties = default,
+            ImmutableArray<MetaProperty<TType, TProperty, TSymbol>> redefinedProperties = default,
+            ImmutableArray<MetaProperty<TType, TProperty, TSymbol>> redefiningProperties = default)
         {
             Slot = slot;
             OppositeProperties = oppositeProperties;
@@ -22,11 +22,11 @@ namespace MetaDslx.Modeling.Meta
             RedefiningProperties = redefiningProperties;
         }
 
-        public MetaPropertySlot<TType, TProperty> Slot { get; }
-        public ImmutableArray<MetaProperty<TType, TProperty>> OppositeProperties { get; }
-        public ImmutableArray<MetaProperty<TType, TProperty>> SubsettedProperties { get; }
-        public ImmutableArray<MetaProperty<TType, TProperty>> SubsettingProperties { get; }
-        public ImmutableArray<MetaProperty<TType, TProperty>> RedefinedProperties { get; }
-        public ImmutableArray<MetaProperty<TType, TProperty>> RedefiningProperties { get; }
+        public MetaPropertySlot<TType, TProperty, TSymbol> Slot { get; }
+        public ImmutableArray<MetaProperty<TType, TProperty, TSymbol>> OppositeProperties { get; }
+        public ImmutableArray<MetaProperty<TType, TProperty, TSymbol>> SubsettedProperties { get; }
+        public ImmutableArray<MetaProperty<TType, TProperty, TSymbol>> SubsettingProperties { get; }
+        public ImmutableArray<MetaProperty<TType, TProperty, TSymbol>> RedefinedProperties { get; }
+        public ImmutableArray<MetaProperty<TType, TProperty, TSymbol>> RedefiningProperties { get; }
     }
 }

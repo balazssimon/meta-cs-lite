@@ -7,12 +7,15 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
+using MetaDslx.CodeAnalysis.PooledObjects;
 using MetaDslx.Modeling.Meta;
 
 namespace MetaDslx.Modeling.Reflection
 {
     public sealed class ReflectionMetaModel : MetaModel
     {
+        private readonly object _lockObject = new object();
+
         private readonly string _name;
         private readonly string _fullName;
         private readonly ModelVersion _version;
@@ -20,8 +23,8 @@ namespace MetaDslx.Modeling.Reflection
         private readonly string _prefix;
         private readonly ImmutableArray<Type> _types;
         private ImmutableArray<ModelObjectInfo> _modelObjectInfos;
-        private Dictionary<Type, ModelObjectInfo> _modelObjectInfosByType;
-        private Dictionary<string, ModelObjectInfo> _modelObjectInfosByName;
+        private ImmutableDictionary<Type, ModelObjectInfo> _modelObjectInfosByType;
+        private ImmutableDictionary<string, ModelObjectInfo> _modelObjectInfosByName;
 
         private ReflectionMetaModel(string name, string fullName, ModelVersion version, string uri, string prefix, ImmutableArray<Type> types)
         {
@@ -82,7 +85,7 @@ namespace MetaDslx.Modeling.Reflection
             }
         }
 
-        private Dictionary<Type, ModelObjectInfo> ModelObjectInfosByType
+        private ImmutableDictionary<Type, ModelObjectInfo> ModelObjectInfosByType
         {
             get
             {
@@ -91,7 +94,7 @@ namespace MetaDslx.Modeling.Reflection
             }
         }
 
-        private Dictionary<string, ModelObjectInfo> ModelObjectInfosByName
+        private ImmutableDictionary<string, ModelObjectInfo> ModelObjectInfosByName
         {
             get
             {
@@ -123,9 +126,95 @@ namespace MetaDslx.Modeling.Reflection
         private void ComputeMetaGraph()
         {
             if (!_modelObjectInfos.IsDefault) return;
+            var modelObjectInfos = ArrayBuilder<ModelObjectInfo>.GetInstance();
+            var modelObjectInfosByName = ImmutableDictionary.CreateBuilder<string, ModelObjectInfo>();
+            var modelObjectInfosByType = ImmutableDictionary.CreateBuilder<Type, ModelObjectInfo>();
+            var rmap = new ReflectionToModelMap();
             var graph = new ReflectionMetaGraph(_types);
             var metaClasses = graph.Compute();
+            foreach (var cls in metaClasses)
+            {
+                var info = new ReflectionModelObjectInfo(this, cls.UnderlyingType, cls.SymbolType, rmap.Map(cls.NameProperty), rmap.Map(cls.TypeProperty),
+                    rmap.Map(cls.DeclaredProperties), rmap.Map(cls.AllDeclaredProperties), rmap.Map(cls.PublicProperties), 
+                    rmap.Map(cls.PublicPropertiesByName), rmap.Map(cls.ModelPropertyInfos));
+                modelObjectInfos.Add(info);
+                modelObjectInfosByName.Add(cls.Name, info);
+                modelObjectInfosByType.Add(cls.UnderlyingType, info);
+            }
+            if (_modelObjectInfos.IsDefault)
+            {
+                lock (_lockObject)
+                {
+                    if (_modelObjectInfos.IsDefault)
+                    {
+                        _modelObjectInfosByName = modelObjectInfosByName.ToImmutable();
+                        _modelObjectInfosByType = modelObjectInfosByType.ToImmutable();
+                        ImmutableInterlocked.InterlockedInitialize(ref _modelObjectInfos, modelObjectInfos.ToImmutable());
+                    }    
+                }
+            }
+            modelObjectInfos.Free();
+        }
 
+        private class ReflectionToModelMap
+        {
+            private Dictionary<ReflectionMetaProperty, ModelProperty> _propertyMap = new Dictionary<ReflectionMetaProperty, ModelProperty>();
+            private Dictionary<ReflectionMetaPropertyInfo, ModelPropertyInfo> _propertyInfoMap = new Dictionary<ReflectionMetaPropertyInfo, ModelPropertyInfo>();
+            private Dictionary<ReflectionMetaPropertySlot, ModelPropertySlot> _propertySlotMap = new Dictionary<ReflectionMetaPropertySlot, ModelPropertySlot>();
+
+            public ModelProperty? Map(MetaProperty<Type, PropertyInfo, Type>? mprop)
+            {
+                if (mprop is null) return null;
+                var rprop = (ReflectionMetaProperty)mprop;
+                if (_propertyMap.TryGetValue(rprop, out var prop)) return prop;
+                prop = new ModelProperty(rprop.DeclaringType.UnderlyingType, rprop.Name, rprop.Type, rprop.DefaultValue, rprop.Flags, rprop.SymbolProperty);
+                _propertyMap.Add(rprop, prop);
+                return prop;
+            }
+
+            public ImmutableArray<ModelProperty> Map(ImmutableArray<MetaProperty<Type, PropertyInfo, Type>> mprops)
+            {
+                return mprops.Select(mp => Map(mp)).ToImmutableArray();
+            }
+
+            public ImmutableDictionary<string, ModelProperty> Map(ImmutableDictionary<string, MetaProperty<Type, PropertyInfo, Type>> mprops)
+            {
+                var props = ImmutableDictionary.CreateBuilder<string, ModelProperty>();
+                foreach (var name in mprops.Keys)
+                {
+                    props.Add(name, Map(mprops[name]));
+                }
+                return props.ToImmutable();
+            }
+
+            public ImmutableDictionary<ModelProperty, ModelPropertyInfo> Map(ImmutableDictionary<MetaProperty<Type, PropertyInfo, Type>, MetaPropertyInfo<Type, PropertyInfo, Type>> mprops)
+            {
+                var props = ImmutableDictionary.CreateBuilder<ModelProperty, ModelPropertyInfo>();
+                foreach (var mprop in mprops.Keys)
+                {
+                    props.Add(Map(mprop), Map(mprops[mprop]));
+                }
+                return props.ToImmutable();
+            }
+
+            public ModelPropertyInfo Map(MetaPropertyInfo<Type, PropertyInfo, Type> mprop)
+            {
+                var rprop = (ReflectionMetaPropertyInfo)mprop;
+                if (_propertyInfoMap.TryGetValue(rprop, out var prop)) return prop;
+                prop = new ModelPropertyInfo(Map(rprop.Slot), Map(rprop.OppositeProperties), Map(rprop.SubsettedProperties), Map(rprop.SubsettingProperties),
+                    Map(rprop.RedefinedProperties), Map(rprop.RedefiningProperties));
+                _propertyInfoMap.Add(rprop, prop);
+                return prop;
+            }
+
+            public ModelPropertySlot Map(MetaPropertySlot<Type, PropertyInfo, Type> mprop)
+            {
+                var rprop = (ReflectionMetaPropertySlot)mprop;
+                if (_propertySlotMap.TryGetValue(rprop, out var prop)) return prop;
+                prop = new ModelPropertySlot(Map(rprop.SlotProperty), Map(rprop.SlotProperties), rprop.DefaultValue, rprop.Flags);
+                _propertySlotMap.Add(rprop, prop);
+                return prop;
+            }
         }
     }
 }

@@ -41,6 +41,7 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
 		KBool,
 		KInt,
 		KString,
+		KType,
 		TLBracket,
 		TRBracket,
 		TDot,

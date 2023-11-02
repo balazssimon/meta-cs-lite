@@ -6,13 +6,13 @@ using MetaDslx.Modeling.Meta;
 
 namespace MetaDslx.Modeling.Reflection
 {
-    internal class ReflectionMetaProperty : MetaProperty<Type, PropertyInfo>
+    internal class ReflectionMetaProperty : MetaProperty<Type, PropertyInfo, Type>
     {
         private readonly ModelPropertyFlags _originalFlags;
         private readonly object? _defaultValue;
         private readonly string? _symbolProperty;
 
-        public ReflectionMetaProperty(MetaClass<Type, PropertyInfo> declaringType, PropertyInfo underlyingProperty)
+        public ReflectionMetaProperty(MetaClass<Type, PropertyInfo, Type> declaringType, PropertyInfo underlyingProperty)
             : base(declaringType, underlyingProperty)
         {
             bool hasDefaultValue = false;
@@ -87,7 +87,7 @@ namespace MetaDslx.Modeling.Reflection
 
         protected internal override ModelPropertyFlags OriginalFlags => _originalFlags;
 
-        protected internal override IEnumerable<(Type DeclaringType, string PropertyName)> GetOppositeProperties()
+        protected internal override IEnumerable<(Type DeclaringType, string PropertyName)> GetRedefinedProperties()
         {
             foreach (var attr in UnderlyingProperty.GetCustomAttributes<RedefinesAttribute>())
             {
@@ -98,7 +98,7 @@ namespace MetaDslx.Modeling.Reflection
             }
         }
 
-        protected internal override IEnumerable<(Type DeclaringType, string PropertyName)> GetRedefinedProperties()
+        protected internal override IEnumerable<(Type DeclaringType, string PropertyName)> GetSubsettedProperties()
         {
             foreach (var attr in UnderlyingProperty.GetCustomAttributes<SubsetsAttribute>())
             {
@@ -109,7 +109,7 @@ namespace MetaDslx.Modeling.Reflection
             }
         }
 
-        protected internal override IEnumerable<(Type DeclaringType, string PropertyName)> GetSubsettedProperties()
+        protected internal override IEnumerable<(Type DeclaringType, string PropertyName)> GetOppositeProperties()
         {
             foreach (var attr in UnderlyingProperty.GetCustomAttributes<OppositeAttribute>())
             {

@@ -380,5 +380,22 @@ namespace MetaDslx.CodeAnalysis.Binding
         {
             return this.GetType().Name;
         }
+
+        public string PrintBinderTree()
+        {
+            var builder = PooledStringBuilder.GetInstance();
+            var sb = builder.Builder;
+            PrintBinders(sb, string.Empty, this);
+            return builder.ToStringAndFree();
+        }
+
+        private static void PrintBinders(StringBuilder sb, string indent, Binder binder)
+        {
+            sb.AppendLine($"{indent}{binder}");
+            foreach (var child in binder.GetChildBinders(resolveLazy: true))
+            {
+                PrintBinders(sb, indent + "  ", child);
+            }
+        }
     }
 }

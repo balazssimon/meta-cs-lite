@@ -378,7 +378,7 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
 
         public TypeReferenceTokensSyntax TypeReferenceTokens(SyntaxToken tokens)
         {
-        	if (tokens.RawKind != (int)MetaCoreSyntaxKind.KBool && tokens.RawKind != (int)MetaCoreSyntaxKind.KInt && tokens.RawKind != (int)MetaCoreSyntaxKind.KString) throw new ArgumentException(nameof(tokens));
+        	if (tokens.RawKind != (int)MetaCoreSyntaxKind.KBool && tokens.RawKind != (int)MetaCoreSyntaxKind.KInt && tokens.RawKind != (int)MetaCoreSyntaxKind.KString && tokens.RawKind != (int)MetaCoreSyntaxKind.KType) throw new ArgumentException(nameof(tokens));
             return (TypeReferenceTokensSyntax)MetaCoreLanguage.Instance.InternalSyntaxFactory.TypeReferenceTokens((InternalSyntaxToken)tokens.Node).CreateRed();
         }
 

@@ -7,7 +7,7 @@ using MetaDslx.Modeling.Meta;
 
 namespace MetaDslx.Modeling.Reflection
 {
-    internal class ReflectionMetaClass : MetaClass<Type, PropertyInfo>
+    internal class ReflectionMetaClass : MetaClass<Type, PropertyInfo, Type>
     {
         public ReflectionMetaClass(Type underlyingType)
             : base(underlyingType)

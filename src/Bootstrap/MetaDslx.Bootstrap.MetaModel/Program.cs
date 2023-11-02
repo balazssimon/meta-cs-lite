@@ -3,10 +3,12 @@ using MetaDslx.Bootstrap.MetaModel;
 using MetaDslx.Bootstrap.MetaModel.Compiler;
 using MetaDslx.Bootstrap.MetaModel.Core;
 using MetaDslx.Bootstrap.MetaModel.Generators;
+using MetaDslx.Bootstrap.MetaModel.Meta;
 using MetaDslx.CodeAnalysis;
 using MetaDslx.CodeAnalysis.Symbols;
 using MetaDslx.CodeAnalysis.Text;
 using MetaDslx.Modeling.Reflection;
+using System.Collections.Immutable;
 
 Console.WriteLine("Hello, World!");
 
@@ -32,6 +34,9 @@ var cmp = Compilation.Create("MetaCore",
     options: CompilationOptions.Default.WithConcurrentBuild(false));
 cmp.Compile();
 
+var rootBinder = cmp.GetRootBinder(syntaxTree);
+Console.WriteLine(rootBinder.PrintBinderTree());
+
 Console.WriteLine("----");
 foreach (var diag in cmp.GetDiagnostics())
 {
@@ -39,12 +44,13 @@ foreach (var diag in cmp.GetDiagnostics())
 }
 Console.WriteLine("----");
 
-var generator = new MetaModelGenerator();
-foreach (var mm in cmp.SourceModule.Model.Objects.OfType<MetaModel>())
-{
-    var output = generator.Generate(mm);
-    File.WriteAllText($@"..\..\..\{mm.Name}X.cs", output);
-}
+var model = cmp.SourceModule.Model;
+var mm = model.Objects.OfType<MetaModel>().First();
+var graph = new MetaMetaGraph(model.Objects.OfType<MetaClass>());
+graph.Compute();
+var generator = new MetaModelGenerator(mm, graph);
+var output = generator.Generate();
+File.WriteAllText($@"..\..\..\{mm.Name}X.cs", output);
 
 //*/
 //MetaDslx.Bootstrap.MetaModel.CoreX.MetaCore.MetaArrayTypeInfo.
