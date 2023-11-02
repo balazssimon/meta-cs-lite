@@ -4,7 +4,7 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
 
-namespace MetaDslx.Modeling
+namespace MetaDslx.Modeling.Reflection
 {
     public sealed class ReflectionModelObject : ModelObject
     {

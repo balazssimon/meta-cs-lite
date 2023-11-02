@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Text;
 
-namespace MetaDslx.Modeling
+namespace MetaDslx.Modeling.Meta
 {
     public abstract class MetaModel
     {

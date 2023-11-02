@@ -9,7 +9,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Reflection;
 using System.Reflection.PortableExecutable;
-using MetaDslx.Modeling;
+using MetaDslx.Modeling.Meta;
 using Roslyn.Utilities;
 
 namespace MetaDslx.CodeAnalysis
@@ -99,7 +99,7 @@ namespace MetaDslx.CodeAnalysis
         /// <param name="metaModel">The meta-model instance.</param>
         /// <exception cref="ArgumentNullException"><paramref name="metaModel"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="metaModel"/> is invalid.</exception>
-        public static MetadataReference CreateFromMetaModel(MetaDslx.Modeling.MetaModel metaModel)
+        public static MetadataReference CreateFromMetaModel(MetaModel metaModel)
         {
             if (metaModel is null) throw new ArgumentNullException(nameof(metaModel));
             return new MetaModelReference(metaModel, default);

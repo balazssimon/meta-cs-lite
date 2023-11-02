@@ -1,5 +1,6 @@
 ﻿using MetaDslx.CodeAnalysis.Symbols;
 using MetaDslx.Modeling;
+using MetaDslx.Modeling.Reflection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -50,7 +51,7 @@ namespace MetaDslx.Bootstrap.MetaModel.Core
 
     public class MetaModel : MetaDeclaration
     {
-        public static MetaDslx.Modeling.MetaModel Instance = ReflectionMetaModel.CreateFromNamespace(typeof(MetaModel).Assembly, "MetaDslx.Bootstrap.MetaModel.Core");
+        public static Modeling.Meta.MetaModel Instance = ReflectionMetaModel.CreateFromNamespace(typeof(MetaModel).Assembly, "MetaDslx.Bootstrap.MetaModel.Core");
         public static MetaPrimitiveType Bool => new MetaPrimitiveType() { Name = "bool" };
         public static MetaPrimitiveType Int => new MetaPrimitiveType() { Name = "int" };
         public static MetaPrimitiveType String => new MetaPrimitiveType() { Name = "string" };

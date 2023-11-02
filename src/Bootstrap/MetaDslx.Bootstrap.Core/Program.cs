@@ -5,6 +5,7 @@ using System.Collections.Generic;
 namespace MetaDslx.Bootstrap.Core
 {
     using MetaDslx.Bootstrap.Core.TestModel;
+    using MetaDslx.Modeling.Reflection;
 
     class Program
     {

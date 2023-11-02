@@ -8,7 +8,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 
-namespace MetaDslx.Modeling
+namespace MetaDslx.Modeling.Reflection
 {
     internal sealed class ReflectionModelObjectList : IModelCollection, IModelCollectionCore
     {

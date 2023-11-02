@@ -1,4 +1,4 @@
-﻿using MetaDslx.Modeling;
+﻿using MetaDslx.Modeling.Meta;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -9,8 +9,8 @@ namespace MetaDslx.Modeling
 {
     public abstract class ModelObjectInfo
     {
-        protected abstract Dictionary<string, ModelProperty> PublicPropertiesByName { get; }
-        protected abstract Dictionary<ModelProperty, ModelPropertyInfo> ModelPropertyInfos { get; }
+        protected abstract ImmutableDictionary<string, ModelProperty> PublicPropertiesByName { get; }
+        protected abstract ImmutableDictionary<ModelProperty, ModelPropertyInfo> ModelPropertyInfos { get; }
 
         public abstract MetaModel MetaModel { get; }
         public abstract Type MetaType { get; }

@@ -6,6 +6,7 @@ using MetaDslx.Bootstrap.MetaModel.Generators;
 using MetaDslx.CodeAnalysis;
 using MetaDslx.CodeAnalysis.Symbols;
 using MetaDslx.CodeAnalysis.Text;
+using MetaDslx.Modeling.Reflection;
 
 Console.WriteLine("Hello, World!");
 
@@ -24,7 +25,7 @@ var cmp = Compilation.Create("MetaCore",
     syntaxTrees: new[] { syntaxTree }, 
     references: new[] 
     { 
-        MetadataReference.CreateFromMetaModel(MetaDslx.Modeling.ReflectionMetaModel.CreateFromNamespace(typeof(MetaModel).Assembly, "MetaDslx.Bootstrap.MetaModel.Core")),
+        MetadataReference.CreateFromMetaModel(ReflectionMetaModel.CreateFromNamespace(typeof(MetaModel).Assembly, "MetaDslx.Bootstrap.MetaModel.Core")),
         MetadataReference.CreateFromFile(typeof(string).Assembly.Location),
         MetadataReference.CreateFromFile(typeof(Symbol).Assembly.Location),
     },

@@ -9,7 +9,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Xml.Linq;
 
-namespace MetaDslx.Modeling
+namespace MetaDslx.Modeling.Meta
 {
     public abstract class MetaModelObject : ModelObject
     {
@@ -24,7 +24,7 @@ namespace MetaDslx.Modeling
 
         protected override object? MUnderlyingObject => this;
         protected override IEnumerable<ModelProperty> StoredPropertiesCore => _properties.Keys;
-        
+
         protected override void SetSlotValueCore(ModelPropertySlot slot, object? value)
         {
             if (value is null && !MInfo.AllDeclaredProperties.Contains(slot.SlotProperty))
@@ -36,7 +36,7 @@ namespace MetaDslx.Modeling
                 _properties[slot.SlotProperty] = value;
             }
         }
-        
+
         protected override bool TryGetSlotValueCore(ModelPropertySlot slot, out object? value)
         {
             return _properties.TryGetValue(slot.SlotProperty, out value);

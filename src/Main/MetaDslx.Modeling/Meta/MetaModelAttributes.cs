@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace MetaDslx.Modeling
+namespace MetaDslx.Modeling.Meta
 {
     [AttributeUsage(AttributeTargets.Interface, AllowMultiple = false, Inherited = false)]
     public class MetaModelAttribute : Attribute

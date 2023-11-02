@@ -7,8 +7,9 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
+using MetaDslx.Modeling.Meta;
 
-namespace MetaDslx.Modeling
+namespace MetaDslx.Modeling.Reflection
 {
     public sealed class ReflectionMetaModel : MetaModel
     {
@@ -76,11 +77,7 @@ namespace MetaDslx.Modeling
         {
             get
             {
-                if (_modelObjectInfos.IsDefault)
-                {
-                    var modelObjectInfos = _types.Select(t => (ModelObjectInfo)new ReflectionModelObjectInfo(this, t)).ToImmutableArray();
-                    ImmutableInterlocked.InterlockedInitialize(ref _modelObjectInfos, modelObjectInfos);
-                }
+                ComputeMetaGraph();
                 return _modelObjectInfos;
             }
         }
@@ -89,15 +86,7 @@ namespace MetaDslx.Modeling
         {
             get
             {
-                if (_modelObjectInfosByType is null)
-                {
-                    var modelObjectInfosByType = new Dictionary<Type, ModelObjectInfo>();
-                    foreach (var info in ModelObjectInfos)
-                    {
-                        modelObjectInfosByType.Add(info.MetaType, info);
-                    }
-                    Interlocked.CompareExchange(ref _modelObjectInfosByType, modelObjectInfosByType, null);
-                }
+                ComputeMetaGraph();
                 return _modelObjectInfosByType;
             }
         }
@@ -106,15 +95,7 @@ namespace MetaDslx.Modeling
         {
             get
             {
-                if (_modelObjectInfosByName is null)
-                {
-                    var modelObjectInfosByName = new Dictionary<string, ModelObjectInfo>();
-                    foreach (var info in ModelObjectInfos)
-                    {
-                        modelObjectInfosByName.Add(info.MetaType.Name, info);
-                    }
-                    Interlocked.CompareExchange(ref _modelObjectInfosByName, modelObjectInfosByName, null);
-                }
+                ComputeMetaGraph();
                 return _modelObjectInfosByName;
             }
         }
@@ -139,5 +120,12 @@ namespace MetaDslx.Modeling
             return ModelObjectInfosByName.TryGetValue(modelObjectTypeName, out info);
         }
 
+        private void ComputeMetaGraph()
+        {
+            if (!_modelObjectInfos.IsDefault) return;
+            var graph = new ReflectionMetaGraph(_types);
+            var metaClasses = graph.Compute();
+
+        }
     }
 }

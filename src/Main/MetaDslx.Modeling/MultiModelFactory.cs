@@ -1,4 +1,4 @@
-﻿using MetaDslx.Modeling;
+﻿using MetaDslx.Modeling.Meta;
 using Roslyn.Utilities;
 using System;
 using System.Collections.Generic;
