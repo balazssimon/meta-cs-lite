@@ -21,7 +21,11 @@ namespace MetaDslx.Bootstrap.MetaModel.Meta
 
         public override string Name => UnderlyingType.Name;
 
-        public override TypeSymbol? SymbolType => UnderlyingClass.SymbolType;
+        public override TypeSymbol? SymbolType
+        {
+            get => UnderlyingClass.SymbolType;
+            set => UnderlyingClass.SymbolType = value;
+        }
 
         protected override ImmutableArray<MetaType> OriginalBaseTypes => UnderlyingClass.BaseTypes.Cast<MetaType>().ToImmutableArray();
 

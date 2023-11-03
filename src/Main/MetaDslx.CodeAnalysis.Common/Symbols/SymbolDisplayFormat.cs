@@ -50,9 +50,11 @@ namespace MetaDslx.CodeAnalysis.Symbols
                     var container = declaredSymbol;
                     while (container is not null)
                     {
+                        var parent = container.ContainingSymbol as DeclaredSymbol;
+                        if (parent is null && string.IsNullOrWhiteSpace(IncludeArity ? container.MetadataName : container.Name)) break;
                         if (sb.Length > 0) sb.Insert(0, ".");
                         sb.Insert(0, IncludeArity ? container.MetadataName : container.Name);
-                        container = container.ContainingSymbol as DeclaredSymbol;
+                        container = parent;
                     }
                     if (IncludeGlobalScope)
                     {

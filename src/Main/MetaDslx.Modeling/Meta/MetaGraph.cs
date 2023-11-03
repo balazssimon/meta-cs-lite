@@ -102,6 +102,17 @@ namespace MetaDslx.Modeling.Meta
             foreach (var cls in classes)
             {
                 cls.AllBaseTypes = cls.AllBaseTypes.Sort(CompareByInheritanceReverse);
+                if (cls.SymbolType is null)
+                {
+                    foreach (var baseType in cls.AllBaseTypes)
+                    {
+                        if (baseType.SymbolType is not null)
+                        {
+                            cls.SymbolType = baseType.SymbolType;
+                            break;
+                        }
+                    }
+                }
             }
             return classes.ToImmutableSortedSet(CompareByInheritance);
         }

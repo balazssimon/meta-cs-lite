@@ -15,7 +15,7 @@ namespace MetaDslx.Modeling.Meta
         internal protected TType UnderlyingType { get; }
 
         public abstract string Name { get; }
-        public abstract TSymbol? SymbolType { get; }
+        public abstract TSymbol? SymbolType { get; set; }
         internal protected abstract ImmutableArray<TType> OriginalBaseTypes { get; }
         internal protected abstract ImmutableArray<TProperty> OriginalDeclaredProperties { get; }
 

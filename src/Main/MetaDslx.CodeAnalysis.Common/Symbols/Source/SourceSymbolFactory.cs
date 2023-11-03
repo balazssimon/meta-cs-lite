@@ -261,12 +261,20 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
                                     builder.Add(tvalue);
                                     try
                                     {
-                                        if (value is Symbol symbolValue)
+                                        if (typeof(Symbol).IsAssignableFrom(prop.Type) && prop.Type.IsAssignableFrom(value.GetType()))
+                                        {
+                                            modelObject.Add(prop, value);
+                                        }
+                                        else if (value is Symbol symbolValue)
                                         {
                                             var modelObjectValue = (symbolValue as IModelSymbol)?.ModelObject;
-                                            if (modelObjectValue is not null)
+                                            if (modelObjectValue is not null && prop.Type.IsAssignableFrom(modelObjectValue.Info.MetaType))
                                             {
                                                 modelObject.Add(prop, modelObjectValue);
+                                            }
+                                            else
+                                            {
+                                                modelObject.Add(prop, value);
                                             }
                                         }
                                         else
@@ -328,12 +336,20 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
                             {
                                 try
                                 {
-                                    if (value is Symbol symbolValue)
+                                    if (typeof(Symbol).IsAssignableFrom(prop.Type) && prop.Type.IsAssignableFrom(value.GetType()))
+                                    {
+                                        modelObject.Add(prop, value);
+                                    }
+                                    else if (value is Symbol symbolValue)
                                     {
                                         var modelObjectValue = (symbolValue as IModelSymbol)?.ModelObject;
-                                        if (modelObjectValue is not null)
+                                        if (modelObjectValue is not null && prop.Type.IsAssignableFrom(modelObjectValue.Info.MetaType))
                                         {
                                             modelObject.Add(prop, modelObjectValue);
+                                        }
+                                        else
+                                        {
+                                            modelObject.Add(prop, value);
                                         }
                                     }
                                     else

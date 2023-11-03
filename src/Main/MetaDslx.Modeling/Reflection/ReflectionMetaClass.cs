@@ -9,21 +9,21 @@ namespace MetaDslx.Modeling.Reflection
 {
     internal class ReflectionMetaClass : MetaClass<Type, PropertyInfo, Type>
     {
+        private Type? _symbolType;
+
         public ReflectionMetaClass(Type underlyingType)
             : base(underlyingType)
         {
-
+            var symbolAttr = UnderlyingType.GetCustomAttribute<SymbolAttribute>(true);
+            _symbolType = symbolAttr?.SymbolType;
         }
 
         public override string Name => UnderlyingType.Name;
 
         public override Type? SymbolType
         {
-            get
-            {
-                var symbolAttr = UnderlyingType.GetCustomAttribute<SymbolAttribute>(true);
-                return symbolAttr?.SymbolType;
-            }
+            get => _symbolType;
+            set => _symbolType = value;
         }
 
         protected internal override ImmutableArray<Type> OriginalBaseTypes
