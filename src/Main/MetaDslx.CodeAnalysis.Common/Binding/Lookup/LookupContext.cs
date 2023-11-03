@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Xml.Linq;
@@ -33,8 +34,12 @@ namespace MetaDslx.CodeAnalysis.Binding
         private Binder _originalBinder;
         private SourceLocation _location;
         private HashSet<ILookupValidator> _validators;
-        private HashSet<string> _viableNames;
-        private HashSet<string> _viableMetadataNames;
+        private string? _name;
+        private string? _metadataName;
+        private HashSet<string> _namePrefixes;
+        private HashSet<string> _nameSuffixes;
+        private ImmutableHashSet<string> _viableNames;
+        private ImmutableHashSet<string> _viableMetadataNames;
         private SyntaxNodeOrToken _alias;
         private DeclaredSymbol? _qualifier;
         private LookupContext? _qualifierContext;
@@ -54,8 +59,10 @@ namespace MetaDslx.CodeAnalysis.Binding
             _defaultLookupValidator = _compilation[_language].DefaultLookupValidator;
             _errorSymbolFactory = _compilation[_language].ErrorSymbolFactory;
             _validators = new HashSet<ILookupValidator>();
-            _viableNames = new HashSet<string>();
-            _viableMetadataNames = new HashSet<string>();
+            _namePrefixes = new HashSet<string>();
+            _nameSuffixes = new HashSet<string>();
+            _viableNames = ImmutableHashSet<string>.Empty;
+            _viableMetadataNames = ImmutableHashSet<string>.Empty;
             _baseTypesBeingResolved = new HashSet<TypeSymbol>();
             _result = new LookupResult();
             _diagnostics = new DiagnosticBag();
@@ -93,8 +100,8 @@ namespace MetaDslx.CodeAnalysis.Binding
             get => _qualifierContext;
             set => _qualifierContext = value;
         }
-        public HashSet<string> ViableNames => _viableNames;
-        public HashSet<string> ViableMetadataNames => _viableMetadataNames;
+        public ImmutableHashSet<string> ViableNames => _viableNames;
+        public ImmutableHashSet<string> ViableMetadataNames => _viableMetadataNames;
         public HashSet<ILookupValidator> Validators => _validators;
         public HashSet<TypeSymbol> BaseTypesBeingResolved => _baseTypesBeingResolved;
         public TypeSymbol? AccessThroughType
@@ -152,6 +159,10 @@ namespace MetaDslx.CodeAnalysis.Binding
             _originalBinder = null;
             _location = null;
             _validators.Clear();
+            _name = null;
+            _metadataName = null;
+            _namePrefixes.Clear();
+            _nameSuffixes.Clear();
             _viableNames.Clear();
             _viableMetadataNames.Clear();
             _alias = null;
@@ -178,8 +189,9 @@ namespace MetaDslx.CodeAnalysis.Binding
             context.OriginalBinder = _originalBinder;
             context.Location = _location;
             context.Validators.UnionWith(_validators);
-            context.ViableNames.UnionWith(_viableNames);
-            context.ViableMetadataNames.UnionWith(_viableMetadataNames);
+            context.SetName(_name, _metadataName);
+            context.SetNamePrefixes(_namePrefixes);
+            context.SetNameSuffixes(_nameSuffixes);
             context.Alias = _alias;
             context.Qualifier = _qualifier;
             context.QualifierContext = _qualifierContext;
@@ -191,10 +203,57 @@ namespace MetaDslx.CodeAnalysis.Binding
 
         public void SetName(string name, string? metadataName = null)
         {
+            _name = name;
+            _metadataName = metadataName;
+            ComputeViableNames();
+        }
+
+        public void SetNamePrefixes(IEnumerable<string> prefixes)
+        {
+            if (_namePrefixes.Count == 0 && !prefixes.Any()) return;
+            _namePrefixes.Clear();
+            _namePrefixes.UnionWith(prefixes.Where(p => !string.IsNullOrWhiteSpace(p)));
+            ComputeViableNames();
+        }
+
+        public void SetNameSuffixes(IEnumerable<string> suffixes)
+        {
+            if (_nameSuffixes.Count == 0 && !suffixes.Any()) return;
+            _nameSuffixes.Clear();
+            _nameSuffixes.UnionWith(suffixes.Where(s => !string.IsNullOrWhiteSpace(s)));
+            ComputeViableNames();
+        }
+
+        private void ComputeViableNames()
+        {
             _viableNames.Clear();
-            if (!string.IsNullOrEmpty(name)) _viableNames.Add(name);
+            if (!string.IsNullOrEmpty(_name))
+            {
+                _viableNames.Add(_name);
+                if (_namePrefixes.Count > 0 && _nameSuffixes.Count > 0)
+                {
+                    foreach (var prefix in _namePrefixes)
+                    {
+                        foreach (var suffix in _nameSuffixes)
+                        {
+                            _viableNames.Add($"{prefix}{_name}{suffix}");
+                        }
+                    }
+                }
+                else
+                {
+                    foreach (var prefix in _namePrefixes)
+                    {
+                        _viableNames.Add($"{prefix}{_name}");
+                    }
+                    foreach (var suffix in _nameSuffixes)
+                    {
+                        _viableNames.Add($"{_name}{suffix}");
+                    }
+                }
+            }
             _viableMetadataNames.Clear();
-            if (!string.IsNullOrEmpty(metadataName)) _viableMetadataNames.Add(metadataName);
+            if (!string.IsNullOrEmpty(_metadataName)) _viableMetadataNames.Add(_metadataName);
         }
 
         public void SetQualifier(DeclaredSymbol? qualifier, LookupContext? qualifierContext = null)

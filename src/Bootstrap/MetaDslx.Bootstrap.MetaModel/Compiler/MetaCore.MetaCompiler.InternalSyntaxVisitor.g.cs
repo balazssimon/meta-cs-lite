@@ -18,9 +18,13 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax.InternalSyntax
 		public virtual void VisitEnumBodyGreen(EnumBodyGreen node) => this.DefaultVisit(node);
 		public virtual void VisitEnumLiteralsGreen(EnumLiteralsGreen node) => this.DefaultVisit(node);
 		public virtual void VisitMetaEnumLiteralGreen(MetaEnumLiteralGreen node) => this.DefaultVisit(node);
+		public virtual void VisitClassNameAlt1Green(ClassNameAlt1Green node) => this.DefaultVisit(node);
+		public virtual void VisitClassNameAlt2Green(ClassNameAlt2Green node) => this.DefaultVisit(node);
 		public virtual void VisitBaseClassesGreen(BaseClassesGreen node) => this.DefaultVisit(node);
 		public virtual void VisitClassBodyGreen(ClassBodyGreen node) => this.DefaultVisit(node);
 		public virtual void VisitMetaPropertyGreen(MetaPropertyGreen node) => this.DefaultVisit(node);
+		public virtual void VisitPropertyNameAlt1Green(PropertyNameAlt1Green node) => this.DefaultVisit(node);
+		public virtual void VisitPropertyNameAlt2Green(PropertyNameAlt2Green node) => this.DefaultVisit(node);
 		public virtual void VisitPropertyOppositeGreen(PropertyOppositeGreen node) => this.DefaultVisit(node);
 		public virtual void VisitMetaArrayTypeGreen(MetaArrayTypeGreen node) => this.DefaultVisit(node);
 		public virtual void VisitTypeReferenceAlt3Green(TypeReferenceAlt3Green node) => this.DefaultVisit(node);
@@ -47,9 +51,13 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax.InternalSyntax
 		public virtual TResult VisitEnumBodyGreen(EnumBodyGreen node) => this.DefaultVisit(node);
 		public virtual TResult VisitEnumLiteralsGreen(EnumLiteralsGreen node) => this.DefaultVisit(node);
 		public virtual TResult VisitMetaEnumLiteralGreen(MetaEnumLiteralGreen node) => this.DefaultVisit(node);
+		public virtual TResult VisitClassNameAlt1Green(ClassNameAlt1Green node) => this.DefaultVisit(node);
+		public virtual TResult VisitClassNameAlt2Green(ClassNameAlt2Green node) => this.DefaultVisit(node);
 		public virtual TResult VisitBaseClassesGreen(BaseClassesGreen node) => this.DefaultVisit(node);
 		public virtual TResult VisitClassBodyGreen(ClassBodyGreen node) => this.DefaultVisit(node);
 		public virtual TResult VisitMetaPropertyGreen(MetaPropertyGreen node) => this.DefaultVisit(node);
+		public virtual TResult VisitPropertyNameAlt1Green(PropertyNameAlt1Green node) => this.DefaultVisit(node);
+		public virtual TResult VisitPropertyNameAlt2Green(PropertyNameAlt2Green node) => this.DefaultVisit(node);
 		public virtual TResult VisitPropertyOppositeGreen(PropertyOppositeGreen node) => this.DefaultVisit(node);
 		public virtual TResult VisitMetaArrayTypeGreen(MetaArrayTypeGreen node) => this.DefaultVisit(node);
 		public virtual TResult VisitTypeReferenceAlt3Green(TypeReferenceAlt3Green node) => this.DefaultVisit(node);

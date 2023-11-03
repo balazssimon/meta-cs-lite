@@ -26,9 +26,13 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
 		void VisitEnumBody(EnumBodySyntax node);
 		void VisitEnumLiterals(EnumLiteralsSyntax node);
 		void VisitMetaEnumLiteral(MetaEnumLiteralSyntax node);
+		void VisitClassNameAlt1(ClassNameAlt1Syntax node);
+		void VisitClassNameAlt2(ClassNameAlt2Syntax node);
 		void VisitBaseClasses(BaseClassesSyntax node);
 		void VisitClassBody(ClassBodySyntax node);
 		void VisitMetaProperty(MetaPropertySyntax node);
+		void VisitPropertyNameAlt1(PropertyNameAlt1Syntax node);
+		void VisitPropertyNameAlt2(PropertyNameAlt2Syntax node);
 		void VisitPropertyOpposite(PropertyOppositeSyntax node);
 		void VisitMetaArrayType(MetaArrayTypeSyntax node);
 		void VisitTypeReferenceAlt3(TypeReferenceAlt3Syntax node);
@@ -95,6 +99,16 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
 		    this.DefaultVisit(node);
 		}
 
+		public virtual void VisitClassNameAlt1(ClassNameAlt1Syntax node)
+		{
+		    this.DefaultVisit(node);
+		}
+
+		public virtual void VisitClassNameAlt2(ClassNameAlt2Syntax node)
+		{
+		    this.DefaultVisit(node);
+		}
+
 		public virtual void VisitBaseClasses(BaseClassesSyntax node)
 		{
 		    this.DefaultVisit(node);
@@ -106,6 +120,16 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
 		}
 
 		public virtual void VisitMetaProperty(MetaPropertySyntax node)
+		{
+		    this.DefaultVisit(node);
+		}
+
+		public virtual void VisitPropertyNameAlt1(PropertyNameAlt1Syntax node)
+		{
+		    this.DefaultVisit(node);
+		}
+
+		public virtual void VisitPropertyNameAlt2(PropertyNameAlt2Syntax node)
 		{
 		    this.DefaultVisit(node);
 		}
@@ -183,9 +207,13 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
 		TResult VisitEnumBody(EnumBodySyntax node);
 		TResult VisitEnumLiterals(EnumLiteralsSyntax node);
 		TResult VisitMetaEnumLiteral(MetaEnumLiteralSyntax node);
+		TResult VisitClassNameAlt1(ClassNameAlt1Syntax node);
+		TResult VisitClassNameAlt2(ClassNameAlt2Syntax node);
 		TResult VisitBaseClasses(BaseClassesSyntax node);
 		TResult VisitClassBody(ClassBodySyntax node);
 		TResult VisitMetaProperty(MetaPropertySyntax node);
+		TResult VisitPropertyNameAlt1(PropertyNameAlt1Syntax node);
+		TResult VisitPropertyNameAlt2(PropertyNameAlt2Syntax node);
 		TResult VisitPropertyOpposite(PropertyOppositeSyntax node);
 		TResult VisitMetaArrayType(MetaArrayTypeSyntax node);
 		TResult VisitTypeReferenceAlt3(TypeReferenceAlt3Syntax node);
@@ -252,6 +280,16 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
 		    return this.DefaultVisit(node);
 		}
 
+		public virtual TResult VisitClassNameAlt1(ClassNameAlt1Syntax node)
+		{
+		    return this.DefaultVisit(node);
+		}
+
+		public virtual TResult VisitClassNameAlt2(ClassNameAlt2Syntax node)
+		{
+		    return this.DefaultVisit(node);
+		}
+
 		public virtual TResult VisitBaseClasses(BaseClassesSyntax node)
 		{
 		    return this.DefaultVisit(node);
@@ -263,6 +301,16 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
 		}
 
 		public virtual TResult VisitMetaProperty(MetaPropertySyntax node)
+		{
+		    return this.DefaultVisit(node);
+		}
+
+		public virtual TResult VisitPropertyNameAlt1(PropertyNameAlt1Syntax node)
+		{
+		    return this.DefaultVisit(node);
+		}
+
+		public virtual TResult VisitPropertyNameAlt2(PropertyNameAlt2Syntax node)
 		{
 		    return this.DefaultVisit(node);
 		}
@@ -340,9 +388,13 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
 		TResult VisitEnumBody(EnumBodySyntax node, TArg argument);
 		TResult VisitEnumLiterals(EnumLiteralsSyntax node, TArg argument);
 		TResult VisitMetaEnumLiteral(MetaEnumLiteralSyntax node, TArg argument);
+		TResult VisitClassNameAlt1(ClassNameAlt1Syntax node, TArg argument);
+		TResult VisitClassNameAlt2(ClassNameAlt2Syntax node, TArg argument);
 		TResult VisitBaseClasses(BaseClassesSyntax node, TArg argument);
 		TResult VisitClassBody(ClassBodySyntax node, TArg argument);
 		TResult VisitMetaProperty(MetaPropertySyntax node, TArg argument);
+		TResult VisitPropertyNameAlt1(PropertyNameAlt1Syntax node, TArg argument);
+		TResult VisitPropertyNameAlt2(PropertyNameAlt2Syntax node, TArg argument);
 		TResult VisitPropertyOpposite(PropertyOppositeSyntax node, TArg argument);
 		TResult VisitMetaArrayType(MetaArrayTypeSyntax node, TArg argument);
 		TResult VisitTypeReferenceAlt3(TypeReferenceAlt3Syntax node, TArg argument);
@@ -409,6 +461,16 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
 		    return this.DefaultVisit(node, argument);
 		}
 
+		public virtual TResult VisitClassNameAlt1(ClassNameAlt1Syntax node, TArg argument)
+		{
+		    return this.DefaultVisit(node, argument);
+		}
+
+		public virtual TResult VisitClassNameAlt2(ClassNameAlt2Syntax node, TArg argument)
+		{
+		    return this.DefaultVisit(node, argument);
+		}
+
 		public virtual TResult VisitBaseClasses(BaseClassesSyntax node, TArg argument)
 		{
 		    return this.DefaultVisit(node, argument);
@@ -420,6 +482,16 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
 		}
 
 		public virtual TResult VisitMetaProperty(MetaPropertySyntax node, TArg argument)
+		{
+		    return this.DefaultVisit(node, argument);
+		}
+
+		public virtual TResult VisitPropertyNameAlt1(PropertyNameAlt1Syntax node, TArg argument)
+		{
+		    return this.DefaultVisit(node, argument);
+		}
+
+		public virtual TResult VisitPropertyNameAlt2(PropertyNameAlt2Syntax node, TArg argument)
 		{
 		    return this.DefaultVisit(node, argument);
 		}
@@ -548,7 +620,7 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
         {
             var isAbstract = this.VisitToken(node.IsAbstract);
             var kClass = this.VisitToken(node.KClass);
-            var name = (NameSyntax)this.Visit(node.Name);
+            var name = (ClassNameSyntax)this.Visit(node.Name);
             var baseClasses = (BaseClassesSyntax)this.Visit(node.BaseClasses);
             var classBody = (ClassBodySyntax)this.Visit(node.ClassBody);
         	    
@@ -578,6 +650,22 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
         	return node.Update(name);
         }
 
+        public virtual SyntaxNode VisitClassNameAlt1(ClassNameAlt1Syntax node)
+        {
+            var tIdentifier = this.VisitToken(node.TIdentifier);
+            var tHash = this.VisitToken(node.THash);
+            var identifier = (IdentifierSyntax)this.Visit(node.Identifier);
+        	    
+        	return node.Update(tIdentifier, tHash, identifier);
+        }
+
+        public virtual SyntaxNode VisitClassNameAlt2(ClassNameAlt2Syntax node)
+        {
+            var tIdentifier = this.VisitToken(node.TIdentifier);
+        	    
+        	return node.Update(tIdentifier);
+        }
+
         public virtual SyntaxNode VisitBaseClasses(BaseClassesSyntax node)
         {
             var baseClassesBlock1 = (BaseClassesBlock1Syntax)this.Visit(node.BaseClassesBlock1);
@@ -596,13 +684,29 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
 
         public virtual SyntaxNode VisitMetaProperty(MetaPropertySyntax node)
         {
-            var isContainment = this.VisitToken(node.IsContainment);
+            var element = this.VisitToken(node.Element);
             var type = (TypeReferenceSyntax)this.Visit(node.Type);
-            var name = (NameSyntax)this.Visit(node.Name);
+            var name = (PropertyNameSyntax)this.Visit(node.Name);
             var propertyOpposite = (PropertyOppositeSyntax)this.Visit(node.PropertyOpposite);
             var tSemicolon = this.VisitToken(node.TSemicolon);
         	    
-        	return node.Update(isContainment, type, name, propertyOpposite, tSemicolon);
+        	return node.Update(element, type, name, propertyOpposite, tSemicolon);
+        }
+
+        public virtual SyntaxNode VisitPropertyNameAlt1(PropertyNameAlt1Syntax node)
+        {
+            var tIdentifier = this.VisitToken(node.TIdentifier);
+            var tHash = this.VisitToken(node.THash);
+            var tIdentifier1 = this.VisitToken(node.TIdentifier1);
+        	    
+        	return node.Update(tIdentifier, tHash, tIdentifier1);
+        }
+
+        public virtual SyntaxNode VisitPropertyNameAlt2(PropertyNameAlt2Syntax node)
+        {
+            var tIdentifier = this.VisitToken(node.TIdentifier);
+        	    
+        	return node.Update(tIdentifier);
         }
 
         public virtual SyntaxNode VisitPropertyOpposite(PropertyOppositeSyntax node)

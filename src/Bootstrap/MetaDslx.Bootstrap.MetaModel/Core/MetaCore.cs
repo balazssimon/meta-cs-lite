@@ -113,6 +113,7 @@ namespace MetaDslx.Bootstrap.MetaModel.Core
         public MetaType Type { get; set; }
         public string? SymbolProperty { get; set; }
         public bool IsContainment { get; set; }
+        public bool IsDerived { get; set; }
         [Opposite(typeof(MetaProperty), "Opposite")]
         public MetaProperty? Opposite { get; set; }
     }

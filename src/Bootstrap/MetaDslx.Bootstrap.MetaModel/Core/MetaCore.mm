@@ -5,21 +5,24 @@ using MetaDslx.CodeAnalysis.Symbols;
 
 metamodel MetaCore;
 
-class MetaDeclaration
+class MetaDeclaration#Declared
 {
-	string Name;
+	string #Name;
+	MetaDeclaration Parent opposite Declarations;
+	contains MetaDeclaration[] Declarations opposite Parent;
+	derived string FullName;
 }
 
-class MetaNamespace : MetaDeclaration
+class MetaNamespace#Namespace : MetaDeclaration
 {
-	MetaDeclaration[] Declarations;
 }
 
 class MetaModel : MetaDeclaration
 {
+	derived string NamespaceName;
 }
 
-class MetaType : MetaDeclaration
+class MetaType#Type : MetaDeclaration
 {
 }
 
@@ -29,12 +32,11 @@ class MetaPrimitiveType : MetaType
 
 class MetaEnumType : MetaType
 {
-	MetaEnumLiteral[] Literals;
+	contains MetaEnumLiteral[] Literals;
 }
 
-class MetaEnumLiteral
+class MetaEnumLiteral : MetaDeclaration
 {
-	string Name;
 }
 
 class MetaArrayType : MetaType
@@ -44,15 +46,16 @@ class MetaArrayType : MetaType
 
 class MetaClass : MetaType
 {
+	Type SymbolType;
 	bool IsAbstract;
 	MetaClass[] BaseTypes;
-	MetaProperty[] Properties;
+	contains MetaProperty[] Properties;
 }
 
-class MetaProperty
+class MetaProperty : MetaDeclaration
 {
-	string Name;
 	MetaType Type;
+	string SymbolProperty;
 	bool IsContainment;
-	MetaProperty Opposite;
+	MetaProperty Opposite opposite Opposite;
 }

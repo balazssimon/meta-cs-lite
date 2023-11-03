@@ -316,7 +316,7 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax.InternalSyntax
 			return result;
 		}
 
-		internal MetaClassGreen MetaClass(InternalSyntaxToken isAbstract, InternalSyntaxToken kClass, NameGreen name, BaseClassesGreen baseClasses, ClassBodyGreen classBody)
+		internal MetaClassGreen MetaClass(InternalSyntaxToken isAbstract, InternalSyntaxToken kClass, ClassNameGreen name, BaseClassesGreen baseClasses, ClassBodyGreen classBody)
 		{
 #if DEBUG
 			if (isAbstract is not null && isAbstract.RawKind != (int)MetaCoreSyntaxKind.KAbstract) throw new ArgumentException(nameof(isAbstract));
@@ -385,6 +385,46 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax.InternalSyntax
 			return result;
 		}
 
+		internal ClassNameAlt1Green ClassNameAlt1(InternalSyntaxToken tIdentifier, InternalSyntaxToken tHash, IdentifierGreen identifier)
+		{
+#if DEBUG
+			if (tIdentifier is not null && tIdentifier.RawKind != (int)MetaCoreSyntaxKind.TIdentifier) throw new ArgumentException(nameof(tIdentifier));
+			if (tHash is null) throw new ArgumentNullException(nameof(tHash));
+			if (tHash.RawKind != (int)MetaCoreSyntaxKind.THash) throw new ArgumentException(nameof(tHash));
+			if (identifier is null) throw new ArgumentNullException(nameof(identifier));
+#endif
+			int hash;
+			var cached = SyntaxNodeCache.TryGetNode((int)(MetaCoreSyntaxKind)MetaCoreSyntaxKind.ClassNameAlt1, tIdentifier, tHash, identifier, out hash);
+			if (cached != null) return (ClassNameAlt1Green)cached;
+		
+			var result = new ClassNameAlt1Green(MetaCoreSyntaxKind.ClassNameAlt1, tIdentifier, tHash, identifier);
+			if (hash >= 0)
+			{
+				SyntaxNodeCache.AddNode(result, hash);
+			}
+		
+			return result;
+		}
+
+		internal ClassNameAlt2Green ClassNameAlt2(InternalSyntaxToken tIdentifier)
+		{
+#if DEBUG
+			if (tIdentifier is null) throw new ArgumentNullException(nameof(tIdentifier));
+			if (tIdentifier.RawKind != (int)MetaCoreSyntaxKind.TIdentifier) throw new ArgumentException(nameof(tIdentifier));
+#endif
+			int hash;
+			var cached = SyntaxNodeCache.TryGetNode((int)(MetaCoreSyntaxKind)MetaCoreSyntaxKind.ClassNameAlt2, tIdentifier, out hash);
+			if (cached != null) return (ClassNameAlt2Green)cached;
+		
+			var result = new ClassNameAlt2Green(MetaCoreSyntaxKind.ClassNameAlt2, tIdentifier);
+			if (hash >= 0)
+			{
+				SyntaxNodeCache.AddNode(result, hash);
+			}
+		
+			return result;
+		}
+
 		internal BaseClassesGreen BaseClasses(BaseClassesBlock1Green baseClassesBlock1)
 		{
 #if DEBUG
@@ -424,16 +464,57 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax.InternalSyntax
 			return result;
 		}
 
-		internal MetaPropertyGreen MetaProperty(InternalSyntaxToken isContainment, TypeReferenceGreen type, NameGreen name, PropertyOppositeGreen propertyOpposite, InternalSyntaxToken tSemicolon)
+		internal MetaPropertyGreen MetaProperty(InternalSyntaxToken element, TypeReferenceGreen type, PropertyNameGreen name, PropertyOppositeGreen propertyOpposite, InternalSyntaxToken tSemicolon)
 		{
 #if DEBUG
-			if (isContainment is not null && isContainment.RawKind != (int)MetaCoreSyntaxKind.KContains) throw new ArgumentException(nameof(isContainment));
+			if (element is not null && element.RawKind != (int)MetaCoreSyntaxKind.KContains && element.RawKind != (int)MetaCoreSyntaxKind.KDerived) throw new ArgumentException(nameof(element));
 			if (type is null) throw new ArgumentNullException(nameof(type));
 			if (name is null) throw new ArgumentNullException(nameof(name));
 			if (tSemicolon is null) throw new ArgumentNullException(nameof(tSemicolon));
 			if (tSemicolon.RawKind != (int)MetaCoreSyntaxKind.TSemicolon) throw new ArgumentException(nameof(tSemicolon));
 #endif
-			return new MetaPropertyGreen(MetaCoreSyntaxKind.MetaProperty, isContainment, type, name, propertyOpposite, tSemicolon);
+			return new MetaPropertyGreen(MetaCoreSyntaxKind.MetaProperty, element, type, name, propertyOpposite, tSemicolon);
+		}
+
+		internal PropertyNameAlt1Green PropertyNameAlt1(InternalSyntaxToken tIdentifier, InternalSyntaxToken tHash, InternalSyntaxToken tIdentifier1)
+		{
+#if DEBUG
+			if (tIdentifier is not null && tIdentifier.RawKind != (int)MetaCoreSyntaxKind.TIdentifier) throw new ArgumentException(nameof(tIdentifier));
+			if (tHash is null) throw new ArgumentNullException(nameof(tHash));
+			if (tHash.RawKind != (int)MetaCoreSyntaxKind.THash) throw new ArgumentException(nameof(tHash));
+			if (tIdentifier1 is null) throw new ArgumentNullException(nameof(tIdentifier1));
+			if (tIdentifier1.RawKind != (int)MetaCoreSyntaxKind.TIdentifier) throw new ArgumentException(nameof(tIdentifier1));
+#endif
+			int hash;
+			var cached = SyntaxNodeCache.TryGetNode((int)(MetaCoreSyntaxKind)MetaCoreSyntaxKind.PropertyNameAlt1, tIdentifier, tHash, tIdentifier1, out hash);
+			if (cached != null) return (PropertyNameAlt1Green)cached;
+		
+			var result = new PropertyNameAlt1Green(MetaCoreSyntaxKind.PropertyNameAlt1, tIdentifier, tHash, tIdentifier1);
+			if (hash >= 0)
+			{
+				SyntaxNodeCache.AddNode(result, hash);
+			}
+		
+			return result;
+		}
+
+		internal PropertyNameAlt2Green PropertyNameAlt2(InternalSyntaxToken tIdentifier)
+		{
+#if DEBUG
+			if (tIdentifier is null) throw new ArgumentNullException(nameof(tIdentifier));
+			if (tIdentifier.RawKind != (int)MetaCoreSyntaxKind.TIdentifier) throw new ArgumentException(nameof(tIdentifier));
+#endif
+			int hash;
+			var cached = SyntaxNodeCache.TryGetNode((int)(MetaCoreSyntaxKind)MetaCoreSyntaxKind.PropertyNameAlt2, tIdentifier, out hash);
+			if (cached != null) return (PropertyNameAlt2Green)cached;
+		
+			var result = new PropertyNameAlt2Green(MetaCoreSyntaxKind.PropertyNameAlt2, tIdentifier);
+			if (hash >= 0)
+			{
+				SyntaxNodeCache.AddNode(result, hash);
+			}
+		
+			return result;
 		}
 
 		internal PropertyOppositeGreen PropertyOpposite(InternalSyntaxToken kOpposite, QualifierGreen opposite)

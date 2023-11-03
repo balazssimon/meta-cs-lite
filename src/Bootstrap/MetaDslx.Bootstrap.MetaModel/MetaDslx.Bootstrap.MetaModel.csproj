@@ -36,12 +36,6 @@
 	</ItemGroup>
 	<ItemGroup>
 		<AdditionalFiles Include="Generators\*.mgen" />
-	</ItemGroup>
-	<ItemGroup>
-	  <Compile Remove="MetaCoreX.cs" />
-	</ItemGroup>
-	<ItemGroup>
-	  <None Include="MetaCoreX.cs" />
 	</ItemGroup>	
 
 </Project>

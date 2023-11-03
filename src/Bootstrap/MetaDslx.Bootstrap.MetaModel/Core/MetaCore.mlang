@@ -30,12 +30,18 @@ part EnumBody: '{' EnumLiterals? '}';
 part EnumLiterals : literals+=MetaEnumLiteral (',' literals+=MetaEnumLiteral)* ;
 MetaEnumLiteral: name=Name;
 
-MetaClass: isAbstract?='abstract'? 'class' name=Name BaseClasses? ClassBody;
+MetaClass: isAbstract?='abstract'? 'class' name=ClassName BaseClasses? ClassBody;
+[Name]
+[Identifier]
+part ClassName: TIdentifier? '#' [Use(types: Type, suffixes: Symbol)] Identifier | TIdentifier;
 part BaseClasses: (':' baseTypes+=#{MetaClass|QualifierList});
 [Scope]
 part ClassBody: '{' properties+=MetaProperty* '}';
 
-MetaProperty: isContainment?='contains'? type=TypeReference name=Name PropertyOpposite?  ';';
+MetaProperty: (isContainment?='contains' | isDerived?='derived')? type=TypeReference name=PropertyName PropertyOpposite?  ';';
+[Name]
+[Identifier]
+part PropertyName: TIdentifier? '#' TIdentifier | TIdentifier;
 part PropertyOpposite: 'opposite' Opposite=#MetaProperty;
 
 TypeReference returns MetaType: MetaPrimitiveType | MetaArrayType | #MetaType;

@@ -678,7 +678,7 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
 	}
 	public sealed class MetaClassSyntax : MetaDeclarationSyntax
 	{
-		private NameSyntax _name;
+		private ClassNameSyntax _name;
 		private BaseClassesSyntax _baseClasses;
 		private ClassBodySyntax _classBody;
 	
@@ -710,7 +710,7 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
 				return new SyntaxToken(this, greenToken, this.GetChildPosition(1), this.GetChildIndex(1));
 			}
 		}
-	    public NameSyntax Name => this.GetRed(ref this._name, 2);
+	    public ClassNameSyntax Name => this.GetRed(ref this._name, 2);
 	    public BaseClassesSyntax BaseClasses => this.GetRed(ref this._baseClasses, 3);
 	    public ClassBodySyntax ClassBody => this.GetRed(ref this._classBody, 4);
 	
@@ -746,7 +746,7 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
 			return this.Update(this.IsAbstract, kClass, this.Name, this.BaseClasses, this.ClassBody);
 		}
 	
-	    public MetaClassSyntax WithName(NameSyntax name)
+	    public MetaClassSyntax WithName(ClassNameSyntax name)
 		{
 			return this.Update(this.IsAbstract, this.KClass, name, this.BaseClasses, this.ClassBody);
 		}
@@ -761,7 +761,7 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
 			return this.Update(this.IsAbstract, this.KClass, this.Name, this.BaseClasses, classBody);
 		}
 	
-	    public MetaClassSyntax Update(SyntaxToken isAbstract, SyntaxToken kClass, NameSyntax name, BaseClassesSyntax baseClasses, ClassBodySyntax classBody)
+	    public MetaClassSyntax Update(SyntaxToken isAbstract, SyntaxToken kClass, ClassNameSyntax name, BaseClassesSyntax baseClasses, ClassBodySyntax classBody)
 	    {
 	        if (this.IsAbstract != isAbstract || this.KClass != kClass || this.Name != name || this.BaseClasses != baseClasses || this.ClassBody != classBody)
 	        {
@@ -1038,6 +1038,188 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
 	    }
 	
 	}
+	public abstract class ClassNameSyntax : MetaCoreSyntaxNode
+	{
+	    protected ClassNameSyntax(InternalSyntaxNode green, MetaCoreSyntaxTree syntaxTree, int position)
+	        : base(green, syntaxTree, position)
+	    {
+	    }
+	
+	    protected ClassNameSyntax(InternalSyntaxNode green, MetaCoreSyntaxNode parent, int position)
+	        : base(green, parent, position)
+	    {
+	    }
+	}
+	
+	public sealed class ClassNameAlt1Syntax : ClassNameSyntax
+	{
+		private IdentifierSyntax _identifier;
+	
+	    public ClassNameAlt1Syntax(InternalSyntaxNode green, MetaCoreSyntaxTree syntaxTree, int position)
+	        : base(green, syntaxTree, position)
+	    {
+	    }
+	
+	    public ClassNameAlt1Syntax(InternalSyntaxNode green, MetaCoreSyntaxNode parent, int position)
+	        : base(green, parent, position)
+	    {
+	    }
+	
+	    public SyntaxToken TIdentifier 
+		{ 
+			get 
+			{ 
+				var green = (global::MetaDslx.Bootstrap.MetaModel.Compiler.Syntax.InternalSyntax.ClassNameAlt1Green)this.Green;
+				var greenToken = green.TIdentifier;
+				return new SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
+			}
+		}
+	    public SyntaxToken THash 
+		{ 
+			get 
+			{ 
+				var green = (global::MetaDslx.Bootstrap.MetaModel.Compiler.Syntax.InternalSyntax.ClassNameAlt1Green)this.Green;
+				var greenToken = green.THash;
+				return new SyntaxToken(this, greenToken, this.GetChildPosition(1), this.GetChildIndex(1));
+			}
+		}
+	    public IdentifierSyntax Identifier => this.GetRed(ref this._identifier, 2);
+	
+	    protected override SyntaxNode GetNodeSlot(int index)
+	    {
+	        switch (index)
+	        {
+				case 2: return this.GetRed(ref this._identifier, 2);
+				default: return null;
+	        }
+	    }
+	
+	    protected override SyntaxNode GetCachedSlot(int index)
+	    {
+	        switch (index)
+	        {
+				case 2: return this._identifier;
+				default: return null;
+	        }
+	    }
+	
+	    public ClassNameAlt1Syntax WithTIdentifier(SyntaxToken tIdentifier)
+		{
+			return this.Update(tIdentifier, this.THash, this.Identifier);
+		}
+	
+	    public ClassNameAlt1Syntax WithTHash(SyntaxToken tHash)
+		{
+			return this.Update(this.TIdentifier, tHash, this.Identifier);
+		}
+	
+	    public ClassNameAlt1Syntax WithIdentifier(IdentifierSyntax identifier)
+		{
+			return this.Update(this.TIdentifier, this.THash, identifier);
+		}
+	
+	    public ClassNameAlt1Syntax Update(SyntaxToken tIdentifier, SyntaxToken tHash, IdentifierSyntax identifier)
+	    {
+	        if (this.TIdentifier != tIdentifier || this.THash != tHash || this.Identifier != identifier)
+	        {
+	            var newNode = MetaCoreLanguage.Instance.SyntaxFactory.ClassNameAlt1(tIdentifier, tHash, identifier);
+	            var annotations = this.GetAnnotations();
+	            if (annotations != null && annotations.Length > 0)
+	               newNode = newNode.WithAnnotations(annotations);
+				return (ClassNameAlt1Syntax)newNode;
+	        }
+	        return this;
+	    }
+	
+	    public override TResult Accept<TArg, TResult>(IMetaCoreSyntaxVisitor<TArg, TResult> visitor, TArg argument)
+	    {
+	        return visitor.VisitClassNameAlt1(this, argument);
+	    }
+	
+	    public override TResult Accept<TResult>(IMetaCoreSyntaxVisitor<TResult> visitor)
+	    {
+	        return visitor.VisitClassNameAlt1(this);
+	    }
+	
+	    public override void Accept(IMetaCoreSyntaxVisitor visitor)
+	    {
+	        visitor.VisitClassNameAlt1(this);
+	    }
+	
+	}
+	public sealed class ClassNameAlt2Syntax : ClassNameSyntax
+	{
+	
+	    public ClassNameAlt2Syntax(InternalSyntaxNode green, MetaCoreSyntaxTree syntaxTree, int position)
+	        : base(green, syntaxTree, position)
+	    {
+	    }
+	
+	    public ClassNameAlt2Syntax(InternalSyntaxNode green, MetaCoreSyntaxNode parent, int position)
+	        : base(green, parent, position)
+	    {
+	    }
+	
+	    public SyntaxToken TIdentifier 
+		{ 
+			get 
+			{ 
+				var green = (global::MetaDslx.Bootstrap.MetaModel.Compiler.Syntax.InternalSyntax.ClassNameAlt2Green)this.Green;
+				var greenToken = green.TIdentifier;
+				return new SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
+			}
+		}
+	
+	    protected override SyntaxNode GetNodeSlot(int index)
+	    {
+	        switch (index)
+	        {
+				default: return null;
+	        }
+	    }
+	
+	    protected override SyntaxNode GetCachedSlot(int index)
+	    {
+	        switch (index)
+	        {
+				default: return null;
+	        }
+	    }
+	
+	    public ClassNameAlt2Syntax WithTIdentifier(SyntaxToken tIdentifier)
+		{
+			return this.Update(tIdentifier);
+		}
+	
+	    public ClassNameAlt2Syntax Update(SyntaxToken tIdentifier)
+	    {
+	        if (this.TIdentifier != tIdentifier)
+	        {
+	            var newNode = MetaCoreLanguage.Instance.SyntaxFactory.ClassNameAlt2(tIdentifier);
+	            var annotations = this.GetAnnotations();
+	            if (annotations != null && annotations.Length > 0)
+	               newNode = newNode.WithAnnotations(annotations);
+				return (ClassNameAlt2Syntax)newNode;
+	        }
+	        return this;
+	    }
+	
+	    public override TResult Accept<TArg, TResult>(IMetaCoreSyntaxVisitor<TArg, TResult> visitor, TArg argument)
+	    {
+	        return visitor.VisitClassNameAlt2(this, argument);
+	    }
+	
+	    public override TResult Accept<TResult>(IMetaCoreSyntaxVisitor<TResult> visitor)
+	    {
+	        return visitor.VisitClassNameAlt2(this);
+	    }
+	
+	    public override void Accept(IMetaCoreSyntaxVisitor visitor)
+	    {
+	        visitor.VisitClassNameAlt2(this);
+	    }
+	
+	}
 	public sealed class BaseClassesSyntax : MetaCoreSyntaxNode
 	{
 		private BaseClassesBlock1Syntax _baseClassesBlock1;
@@ -1218,7 +1400,7 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
 	public sealed class MetaPropertySyntax : MetaCoreSyntaxNode
 	{
 		private TypeReferenceSyntax _type;
-		private NameSyntax _name;
+		private PropertyNameSyntax _name;
 		private PropertyOppositeSyntax _propertyOpposite;
 	
 	    public MetaPropertySyntax(InternalSyntaxNode green, MetaCoreSyntaxTree syntaxTree, int position)
@@ -1231,17 +1413,17 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
 	    {
 	    }
 	
-	    public SyntaxToken IsContainment 
+	    public SyntaxToken Element 
 		{ 
 			get 
 			{ 
 				var green = (global::MetaDslx.Bootstrap.MetaModel.Compiler.Syntax.InternalSyntax.MetaPropertyGreen)this.Green;
-				var greenToken = green.IsContainment;
+				var greenToken = green.Element;
 				return new SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
 			}
 		}
 	    public TypeReferenceSyntax Type => this.GetRed(ref this._type, 1);
-	    public NameSyntax Name => this.GetRed(ref this._name, 2);
+	    public PropertyNameSyntax Name => this.GetRed(ref this._name, 2);
 	    public PropertyOppositeSyntax PropertyOpposite => this.GetRed(ref this._propertyOpposite, 3);
 	    public SyntaxToken TSemicolon 
 		{ 
@@ -1275,36 +1457,36 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
 	        }
 	    }
 	
-	    public MetaPropertySyntax WithIsContainment(SyntaxToken isContainment)
+	    public MetaPropertySyntax WithElement(SyntaxToken element)
 		{
-			return this.Update(isContainment, this.Type, this.Name, this.PropertyOpposite, this.TSemicolon);
+			return this.Update(element, this.Type, this.Name, this.PropertyOpposite, this.TSemicolon);
 		}
 	
 	    public MetaPropertySyntax WithType(TypeReferenceSyntax type)
 		{
-			return this.Update(this.IsContainment, type, this.Name, this.PropertyOpposite, this.TSemicolon);
+			return this.Update(this.Element, type, this.Name, this.PropertyOpposite, this.TSemicolon);
 		}
 	
-	    public MetaPropertySyntax WithName(NameSyntax name)
+	    public MetaPropertySyntax WithName(PropertyNameSyntax name)
 		{
-			return this.Update(this.IsContainment, this.Type, name, this.PropertyOpposite, this.TSemicolon);
+			return this.Update(this.Element, this.Type, name, this.PropertyOpposite, this.TSemicolon);
 		}
 	
 	    public MetaPropertySyntax WithPropertyOpposite(PropertyOppositeSyntax propertyOpposite)
 		{
-			return this.Update(this.IsContainment, this.Type, this.Name, propertyOpposite, this.TSemicolon);
+			return this.Update(this.Element, this.Type, this.Name, propertyOpposite, this.TSemicolon);
 		}
 	
 	    public MetaPropertySyntax WithTSemicolon(SyntaxToken tSemicolon)
 		{
-			return this.Update(this.IsContainment, this.Type, this.Name, this.PropertyOpposite, tSemicolon);
+			return this.Update(this.Element, this.Type, this.Name, this.PropertyOpposite, tSemicolon);
 		}
 	
-	    public MetaPropertySyntax Update(SyntaxToken isContainment, TypeReferenceSyntax type, NameSyntax name, PropertyOppositeSyntax propertyOpposite, SyntaxToken tSemicolon)
+	    public MetaPropertySyntax Update(SyntaxToken element, TypeReferenceSyntax type, PropertyNameSyntax name, PropertyOppositeSyntax propertyOpposite, SyntaxToken tSemicolon)
 	    {
-	        if (this.IsContainment != isContainment || this.Type != type || this.Name != name || this.PropertyOpposite != propertyOpposite || this.TSemicolon != tSemicolon)
+	        if (this.Element != element || this.Type != type || this.Name != name || this.PropertyOpposite != propertyOpposite || this.TSemicolon != tSemicolon)
 	        {
-	            var newNode = MetaCoreLanguage.Instance.SyntaxFactory.MetaProperty(isContainment, type, name, propertyOpposite, tSemicolon);
+	            var newNode = MetaCoreLanguage.Instance.SyntaxFactory.MetaProperty(element, type, name, propertyOpposite, tSemicolon);
 	            var annotations = this.GetAnnotations();
 	            if (annotations != null && annotations.Length > 0)
 	               newNode = newNode.WithAnnotations(annotations);
@@ -1326,6 +1508,193 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
 	    public override void Accept(IMetaCoreSyntaxVisitor visitor)
 	    {
 	        visitor.VisitMetaProperty(this);
+	    }
+	
+	}
+	public abstract class PropertyNameSyntax : MetaCoreSyntaxNode
+	{
+	    protected PropertyNameSyntax(InternalSyntaxNode green, MetaCoreSyntaxTree syntaxTree, int position)
+	        : base(green, syntaxTree, position)
+	    {
+	    }
+	
+	    protected PropertyNameSyntax(InternalSyntaxNode green, MetaCoreSyntaxNode parent, int position)
+	        : base(green, parent, position)
+	    {
+	    }
+	}
+	
+	public sealed class PropertyNameAlt1Syntax : PropertyNameSyntax
+	{
+	
+	    public PropertyNameAlt1Syntax(InternalSyntaxNode green, MetaCoreSyntaxTree syntaxTree, int position)
+	        : base(green, syntaxTree, position)
+	    {
+	    }
+	
+	    public PropertyNameAlt1Syntax(InternalSyntaxNode green, MetaCoreSyntaxNode parent, int position)
+	        : base(green, parent, position)
+	    {
+	    }
+	
+	    public SyntaxToken TIdentifier 
+		{ 
+			get 
+			{ 
+				var green = (global::MetaDslx.Bootstrap.MetaModel.Compiler.Syntax.InternalSyntax.PropertyNameAlt1Green)this.Green;
+				var greenToken = green.TIdentifier;
+				return new SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
+			}
+		}
+	    public SyntaxToken THash 
+		{ 
+			get 
+			{ 
+				var green = (global::MetaDslx.Bootstrap.MetaModel.Compiler.Syntax.InternalSyntax.PropertyNameAlt1Green)this.Green;
+				var greenToken = green.THash;
+				return new SyntaxToken(this, greenToken, this.GetChildPosition(1), this.GetChildIndex(1));
+			}
+		}
+	    public SyntaxToken TIdentifier1 
+		{ 
+			get 
+			{ 
+				var green = (global::MetaDslx.Bootstrap.MetaModel.Compiler.Syntax.InternalSyntax.PropertyNameAlt1Green)this.Green;
+				var greenToken = green.TIdentifier1;
+				return new SyntaxToken(this, greenToken, this.GetChildPosition(2), this.GetChildIndex(2));
+			}
+		}
+	
+	    protected override SyntaxNode GetNodeSlot(int index)
+	    {
+	        switch (index)
+	        {
+				default: return null;
+	        }
+	    }
+	
+	    protected override SyntaxNode GetCachedSlot(int index)
+	    {
+	        switch (index)
+	        {
+				default: return null;
+	        }
+	    }
+	
+	    public PropertyNameAlt1Syntax WithTIdentifier(SyntaxToken tIdentifier)
+		{
+			return this.Update(tIdentifier, this.THash, this.TIdentifier1);
+		}
+	
+	    public PropertyNameAlt1Syntax WithTHash(SyntaxToken tHash)
+		{
+			return this.Update(this.TIdentifier, tHash, this.TIdentifier1);
+		}
+	
+	    public PropertyNameAlt1Syntax WithTIdentifier1(SyntaxToken tIdentifier1)
+		{
+			return this.Update(this.TIdentifier, this.THash, tIdentifier1);
+		}
+	
+	    public PropertyNameAlt1Syntax Update(SyntaxToken tIdentifier, SyntaxToken tHash, SyntaxToken tIdentifier1)
+	    {
+	        if (this.TIdentifier != tIdentifier || this.THash != tHash || this.TIdentifier1 != tIdentifier1)
+	        {
+	            var newNode = MetaCoreLanguage.Instance.SyntaxFactory.PropertyNameAlt1(tIdentifier, tHash, tIdentifier1);
+	            var annotations = this.GetAnnotations();
+	            if (annotations != null && annotations.Length > 0)
+	               newNode = newNode.WithAnnotations(annotations);
+				return (PropertyNameAlt1Syntax)newNode;
+	        }
+	        return this;
+	    }
+	
+	    public override TResult Accept<TArg, TResult>(IMetaCoreSyntaxVisitor<TArg, TResult> visitor, TArg argument)
+	    {
+	        return visitor.VisitPropertyNameAlt1(this, argument);
+	    }
+	
+	    public override TResult Accept<TResult>(IMetaCoreSyntaxVisitor<TResult> visitor)
+	    {
+	        return visitor.VisitPropertyNameAlt1(this);
+	    }
+	
+	    public override void Accept(IMetaCoreSyntaxVisitor visitor)
+	    {
+	        visitor.VisitPropertyNameAlt1(this);
+	    }
+	
+	}
+	public sealed class PropertyNameAlt2Syntax : PropertyNameSyntax
+	{
+	
+	    public PropertyNameAlt2Syntax(InternalSyntaxNode green, MetaCoreSyntaxTree syntaxTree, int position)
+	        : base(green, syntaxTree, position)
+	    {
+	    }
+	
+	    public PropertyNameAlt2Syntax(InternalSyntaxNode green, MetaCoreSyntaxNode parent, int position)
+	        : base(green, parent, position)
+	    {
+	    }
+	
+	    public SyntaxToken TIdentifier 
+		{ 
+			get 
+			{ 
+				var green = (global::MetaDslx.Bootstrap.MetaModel.Compiler.Syntax.InternalSyntax.PropertyNameAlt2Green)this.Green;
+				var greenToken = green.TIdentifier;
+				return new SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
+			}
+		}
+	
+	    protected override SyntaxNode GetNodeSlot(int index)
+	    {
+	        switch (index)
+	        {
+				default: return null;
+	        }
+	    }
+	
+	    protected override SyntaxNode GetCachedSlot(int index)
+	    {
+	        switch (index)
+	        {
+				default: return null;
+	        }
+	    }
+	
+	    public PropertyNameAlt2Syntax WithTIdentifier(SyntaxToken tIdentifier)
+		{
+			return this.Update(tIdentifier);
+		}
+	
+	    public PropertyNameAlt2Syntax Update(SyntaxToken tIdentifier)
+	    {
+	        if (this.TIdentifier != tIdentifier)
+	        {
+	            var newNode = MetaCoreLanguage.Instance.SyntaxFactory.PropertyNameAlt2(tIdentifier);
+	            var annotations = this.GetAnnotations();
+	            if (annotations != null && annotations.Length > 0)
+	               newNode = newNode.WithAnnotations(annotations);
+				return (PropertyNameAlt2Syntax)newNode;
+	        }
+	        return this;
+	    }
+	
+	    public override TResult Accept<TArg, TResult>(IMetaCoreSyntaxVisitor<TArg, TResult> visitor, TArg argument)
+	    {
+	        return visitor.VisitPropertyNameAlt2(this, argument);
+	    }
+	
+	    public override TResult Accept<TResult>(IMetaCoreSyntaxVisitor<TResult> visitor)
+	    {
+	        return visitor.VisitPropertyNameAlt2(this);
+	    }
+	
+	    public override void Accept(IMetaCoreSyntaxVisitor visitor)
+	    {
+	        visitor.VisitPropertyNameAlt2(this);
 	    }
 	
 	}

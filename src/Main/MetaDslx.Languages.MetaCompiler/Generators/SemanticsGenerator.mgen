@@ -227,7 +227,7 @@ template GenerateBinderFactoryVisitFixedAltsElement(Language language, ParserRul
 switch (node.[fixedAltsElem.PropertyName].Get[language.Name]Kind())
 {
                 [foreach (var fixedAlt in fixedAltsElem.Alternatives)]
-case [language.Name]SyntaxKind.[fixedAlt.CSharpName]:
+case [language.Name]SyntaxKind.[fixedAlt.LexerRule.CSharpName]:
     [var altBody = GenerateBinderFactoryVisitAnnotations(fixedAlt.AllAnnotations, elemName, elemBody, false, ref annotIndex)]
     [GenerateBinderFactoryVisitAnnotations(fixedAltsElem.AllAnnotations, elemName, altBody, false, ref annotIndex)]
     break;

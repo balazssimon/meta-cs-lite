@@ -276,16 +276,16 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
         	return this.MetaEnumType(this.Token(MetaCoreSyntaxKind.KEnum), name, enumBody);
         }
 
-        public MetaClassSyntax MetaClass(SyntaxToken isAbstract, SyntaxToken kClass, NameSyntax name, BaseClassesSyntax baseClasses, ClassBodySyntax classBody)
+        public MetaClassSyntax MetaClass(SyntaxToken isAbstract, SyntaxToken kClass, ClassNameSyntax name, BaseClassesSyntax baseClasses, ClassBodySyntax classBody)
         {
         	if (isAbstract.RawKind != (int)MetaCoreSyntaxKind.KAbstract) throw new ArgumentException(nameof(isAbstract));
         	if (kClass.RawKind != (int)MetaCoreSyntaxKind.KClass) throw new ArgumentException(nameof(kClass));
         	if (name is null) throw new ArgumentNullException(nameof(name));
         	if (classBody is null) throw new ArgumentNullException(nameof(classBody));
-            return (MetaClassSyntax)MetaCoreLanguage.Instance.InternalSyntaxFactory.MetaClass((InternalSyntaxToken)isAbstract.Node, (InternalSyntaxToken)kClass.Node, (NameGreen)name.Green, (BaseClassesGreen?)baseClasses?.Green, (ClassBodyGreen)classBody.Green).CreateRed();
+            return (MetaClassSyntax)MetaCoreLanguage.Instance.InternalSyntaxFactory.MetaClass((InternalSyntaxToken)isAbstract.Node, (InternalSyntaxToken)kClass.Node, (ClassNameGreen)name.Green, (BaseClassesGreen?)baseClasses?.Green, (ClassBodyGreen)classBody.Green).CreateRed();
         }
         
-        public MetaClassSyntax MetaClass(NameSyntax name, ClassBodySyntax classBody)
+        public MetaClassSyntax MetaClass(ClassNameSyntax name, ClassBodySyntax classBody)
         {
         	return this.MetaClass(default, this.Token(MetaCoreSyntaxKind.KClass), name, default, classBody);
         }
@@ -313,6 +313,25 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
             return (MetaEnumLiteralSyntax)MetaCoreLanguage.Instance.InternalSyntaxFactory.MetaEnumLiteral((NameGreen)name.Green).CreateRed();
         }
 
+        public ClassNameAlt1Syntax ClassNameAlt1(SyntaxToken tIdentifier, SyntaxToken tHash, IdentifierSyntax identifier)
+        {
+        	if (tIdentifier.RawKind != (int)MetaCoreSyntaxKind.TIdentifier) throw new ArgumentException(nameof(tIdentifier));
+        	if (tHash.RawKind != (int)MetaCoreSyntaxKind.THash) throw new ArgumentException(nameof(tHash));
+        	if (identifier is null) throw new ArgumentNullException(nameof(identifier));
+            return (ClassNameAlt1Syntax)MetaCoreLanguage.Instance.InternalSyntaxFactory.ClassNameAlt1((InternalSyntaxToken)tIdentifier.Node, (InternalSyntaxToken)tHash.Node, (IdentifierGreen)identifier.Green).CreateRed();
+        }
+        
+        public ClassNameAlt1Syntax ClassNameAlt1(IdentifierSyntax identifier)
+        {
+        	return this.ClassNameAlt1(default, this.Token(MetaCoreSyntaxKind.THash), identifier);
+        }
+
+        public ClassNameAlt2Syntax ClassNameAlt2(SyntaxToken tIdentifier)
+        {
+        	if (tIdentifier.RawKind != (int)MetaCoreSyntaxKind.TIdentifier) throw new ArgumentException(nameof(tIdentifier));
+            return (ClassNameAlt2Syntax)MetaCoreLanguage.Instance.InternalSyntaxFactory.ClassNameAlt2((InternalSyntaxToken)tIdentifier.Node).CreateRed();
+        }
+
         public BaseClassesSyntax BaseClasses(BaseClassesBlock1Syntax baseClassesBlock1)
         {
         	if (baseClassesBlock1 is null) throw new ArgumentNullException(nameof(baseClassesBlock1));
@@ -331,18 +350,37 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
         	return this.ClassBody(this.Token(MetaCoreSyntaxKind.TLBrace), properties, this.Token(MetaCoreSyntaxKind.TRBrace));
         }
 
-        public MetaPropertySyntax MetaProperty(SyntaxToken isContainment, TypeReferenceSyntax type, NameSyntax name, PropertyOppositeSyntax propertyOpposite, SyntaxToken tSemicolon)
+        public MetaPropertySyntax MetaProperty(SyntaxToken element, TypeReferenceSyntax type, PropertyNameSyntax name, PropertyOppositeSyntax propertyOpposite, SyntaxToken tSemicolon)
         {
-        	if (isContainment.RawKind != (int)MetaCoreSyntaxKind.KContains) throw new ArgumentException(nameof(isContainment));
+        	if (element.RawKind != (int)MetaCoreSyntaxKind.KContains && element.RawKind != (int)MetaCoreSyntaxKind.KDerived) throw new ArgumentException(nameof(element));
         	if (type is null) throw new ArgumentNullException(nameof(type));
         	if (name is null) throw new ArgumentNullException(nameof(name));
         	if (tSemicolon.RawKind != (int)MetaCoreSyntaxKind.TSemicolon) throw new ArgumentException(nameof(tSemicolon));
-            return (MetaPropertySyntax)MetaCoreLanguage.Instance.InternalSyntaxFactory.MetaProperty((InternalSyntaxToken)isContainment.Node, (TypeReferenceGreen)type.Green, (NameGreen)name.Green, (PropertyOppositeGreen?)propertyOpposite?.Green, (InternalSyntaxToken)tSemicolon.Node).CreateRed();
+            return (MetaPropertySyntax)MetaCoreLanguage.Instance.InternalSyntaxFactory.MetaProperty((InternalSyntaxToken)element.Node, (TypeReferenceGreen)type.Green, (PropertyNameGreen)name.Green, (PropertyOppositeGreen?)propertyOpposite?.Green, (InternalSyntaxToken)tSemicolon.Node).CreateRed();
         }
         
-        public MetaPropertySyntax MetaProperty(TypeReferenceSyntax type, NameSyntax name)
+        public MetaPropertySyntax MetaProperty(TypeReferenceSyntax type, PropertyNameSyntax name)
         {
         	return this.MetaProperty(default, type, name, default, this.Token(MetaCoreSyntaxKind.TSemicolon));
+        }
+
+        public PropertyNameAlt1Syntax PropertyNameAlt1(SyntaxToken tIdentifier, SyntaxToken tHash, SyntaxToken tIdentifier1)
+        {
+        	if (tIdentifier.RawKind != (int)MetaCoreSyntaxKind.TIdentifier) throw new ArgumentException(nameof(tIdentifier));
+        	if (tHash.RawKind != (int)MetaCoreSyntaxKind.THash) throw new ArgumentException(nameof(tHash));
+        	if (tIdentifier1.RawKind != (int)MetaCoreSyntaxKind.TIdentifier) throw new ArgumentException(nameof(tIdentifier1));
+            return (PropertyNameAlt1Syntax)MetaCoreLanguage.Instance.InternalSyntaxFactory.PropertyNameAlt1((InternalSyntaxToken)tIdentifier.Node, (InternalSyntaxToken)tHash.Node, (InternalSyntaxToken)tIdentifier1.Node).CreateRed();
+        }
+        
+        public PropertyNameAlt1Syntax PropertyNameAlt1(SyntaxToken tIdentifier1)
+        {
+        	return this.PropertyNameAlt1(default, this.Token(MetaCoreSyntaxKind.THash), tIdentifier1);
+        }
+
+        public PropertyNameAlt2Syntax PropertyNameAlt2(SyntaxToken tIdentifier)
+        {
+        	if (tIdentifier.RawKind != (int)MetaCoreSyntaxKind.TIdentifier) throw new ArgumentException(nameof(tIdentifier));
+            return (PropertyNameAlt2Syntax)MetaCoreLanguage.Instance.InternalSyntaxFactory.PropertyNameAlt2((InternalSyntaxToken)tIdentifier.Node).CreateRed();
         }
 
         public PropertyOppositeSyntax PropertyOpposite(SyntaxToken kOpposite, QualifierSyntax opposite)
@@ -465,9 +503,13 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
 		        typeof(EnumBodySyntax),
 		        typeof(EnumLiteralsSyntax),
 		        typeof(MetaEnumLiteralSyntax),
+		        typeof(ClassNameAlt1Syntax),
+		        typeof(ClassNameAlt2Syntax),
 		        typeof(BaseClassesSyntax),
 		        typeof(ClassBodySyntax),
 		        typeof(MetaPropertySyntax),
+		        typeof(PropertyNameAlt1Syntax),
+		        typeof(PropertyNameAlt2Syntax),
 		        typeof(PropertyOppositeSyntax),
 		        typeof(MetaArrayTypeSyntax),
 		        typeof(TypeReferenceAlt3Syntax),

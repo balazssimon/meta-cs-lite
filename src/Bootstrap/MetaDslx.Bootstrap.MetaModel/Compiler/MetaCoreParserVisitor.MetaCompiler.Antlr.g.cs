@@ -90,6 +90,20 @@ public interface IMetaCoreParserVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitPr_MetaEnumLiteral([NotNull] MetaCoreParser.Pr_MetaEnumLiteralContext context);
 	/// <summary>
+	/// Visit a parse tree produced by the <c>pr_ClassNameAlt1</c>
+	/// labeled alternative in <see cref="MetaCoreParser.pr_ClassName"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitPr_ClassNameAlt1([NotNull] MetaCoreParser.Pr_ClassNameAlt1Context context);
+	/// <summary>
+	/// Visit a parse tree produced by the <c>pr_ClassNameAlt2</c>
+	/// labeled alternative in <see cref="MetaCoreParser.pr_ClassName"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitPr_ClassNameAlt2([NotNull] MetaCoreParser.Pr_ClassNameAlt2Context context);
+	/// <summary>
 	/// Visit a parse tree produced by <see cref="MetaCoreParser.pr_BaseClasses"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
@@ -107,6 +121,20 @@ public interface IMetaCoreParserVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
 	Result VisitPr_MetaProperty([NotNull] MetaCoreParser.Pr_MetaPropertyContext context);
+	/// <summary>
+	/// Visit a parse tree produced by the <c>pr_PropertyNameAlt1</c>
+	/// labeled alternative in <see cref="MetaCoreParser.pr_PropertyName"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitPr_PropertyNameAlt1([NotNull] MetaCoreParser.Pr_PropertyNameAlt1Context context);
+	/// <summary>
+	/// Visit a parse tree produced by the <c>pr_PropertyNameAlt2</c>
+	/// labeled alternative in <see cref="MetaCoreParser.pr_PropertyName"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitPr_PropertyNameAlt2([NotNull] MetaCoreParser.Pr_PropertyNameAlt2Context context);
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="MetaCoreParser.pr_PropertyOpposite"/>.
 	/// </summary>

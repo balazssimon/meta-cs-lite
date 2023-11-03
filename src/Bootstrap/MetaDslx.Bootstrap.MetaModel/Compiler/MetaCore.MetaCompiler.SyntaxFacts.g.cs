@@ -36,8 +36,10 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
 				case MetaCoreSyntaxKind.TRBrace:
 				case MetaCoreSyntaxKind.KAbstract:
 				case MetaCoreSyntaxKind.KClass:
+				case MetaCoreSyntaxKind.THash:
 				case MetaCoreSyntaxKind.TColon:
 				case MetaCoreSyntaxKind.KContains:
+				case MetaCoreSyntaxKind.KDerived:
 				case MetaCoreSyntaxKind.KOpposite:
 				case MetaCoreSyntaxKind.KBool:
 				case MetaCoreSyntaxKind.KInt:
@@ -79,8 +81,10 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
 				case MetaCoreSyntaxKind.TRBrace:
 				case MetaCoreSyntaxKind.KAbstract:
 				case MetaCoreSyntaxKind.KClass:
+				case MetaCoreSyntaxKind.THash:
 				case MetaCoreSyntaxKind.TColon:
 				case MetaCoreSyntaxKind.KContains:
+				case MetaCoreSyntaxKind.KDerived:
 				case MetaCoreSyntaxKind.KOpposite:
 				case MetaCoreSyntaxKind.KBool:
 				case MetaCoreSyntaxKind.KInt:
@@ -124,10 +128,14 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
 					return MetaCoreSyntaxKind.KAbstract;
 				case "class": 
 					return MetaCoreSyntaxKind.KClass;
+				case "#": 
+					return MetaCoreSyntaxKind.THash;
 				case ":": 
 					return MetaCoreSyntaxKind.TColon;
 				case "contains": 
 					return MetaCoreSyntaxKind.KContains;
+				case "derived": 
+					return MetaCoreSyntaxKind.KDerived;
 				case "opposite": 
 					return MetaCoreSyntaxKind.KOpposite;
 				case "bool": 
@@ -203,10 +211,14 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
 					return "KAbstract";
 				case MetaCoreSyntaxKind.KClass: 
 					return "KClass";
+				case MetaCoreSyntaxKind.THash: 
+					return "THash";
 				case MetaCoreSyntaxKind.TColon: 
 					return "TColon";
 				case MetaCoreSyntaxKind.KContains: 
 					return "KContains";
+				case MetaCoreSyntaxKind.KDerived: 
+					return "KDerived";
 				case MetaCoreSyntaxKind.KOpposite: 
 					return "KOpposite";
 				case MetaCoreSyntaxKind.KBool: 
@@ -257,12 +269,20 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
 					return "EnumLiterals";
 				case MetaCoreSyntaxKind.MetaEnumLiteral: 
 					return "MetaEnumLiteral";
+				case MetaCoreSyntaxKind.ClassNameAlt1: 
+					return "ClassNameAlt1";
+				case MetaCoreSyntaxKind.ClassNameAlt2: 
+					return "ClassNameAlt2";
 				case MetaCoreSyntaxKind.BaseClasses: 
 					return "BaseClasses";
 				case MetaCoreSyntaxKind.ClassBody: 
 					return "ClassBody";
 				case MetaCoreSyntaxKind.MetaProperty: 
 					return "MetaProperty";
+				case MetaCoreSyntaxKind.PropertyNameAlt1: 
+					return "PropertyNameAlt1";
+				case MetaCoreSyntaxKind.PropertyNameAlt2: 
+					return "PropertyNameAlt2";
 				case MetaCoreSyntaxKind.PropertyOpposite: 
 					return "PropertyOpposite";
 				case MetaCoreSyntaxKind.MetaArrayType: 
@@ -321,10 +341,14 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
 					return "abstract";
 				case MetaCoreSyntaxKind.KClass: 
 					return "class";
+				case MetaCoreSyntaxKind.THash: 
+					return "#";
 				case MetaCoreSyntaxKind.TColon: 
 					return ":";
 				case MetaCoreSyntaxKind.KContains: 
 					return "contains";
+				case MetaCoreSyntaxKind.KDerived: 
+					return "derived";
 				case MetaCoreSyntaxKind.KOpposite: 
 					return "opposite";
 				case MetaCoreSyntaxKind.KBool: 
@@ -381,6 +405,7 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
 				case MetaCoreSyntaxKind.KAbstract: 
 				case MetaCoreSyntaxKind.KClass: 
 				case MetaCoreSyntaxKind.KContains: 
+				case MetaCoreSyntaxKind.KDerived: 
 				case MetaCoreSyntaxKind.KOpposite: 
 				case MetaCoreSyntaxKind.KBool: 
 				case MetaCoreSyntaxKind.KInt: 
@@ -406,6 +431,7 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
 			yield return MetaCoreSyntaxKind.KAbstract;
 			yield return MetaCoreSyntaxKind.KClass;
 			yield return MetaCoreSyntaxKind.KContains;
+			yield return MetaCoreSyntaxKind.KDerived;
 			yield return MetaCoreSyntaxKind.KOpposite;
 			yield return MetaCoreSyntaxKind.KBool;
 			yield return MetaCoreSyntaxKind.KInt;
@@ -437,6 +463,8 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
 					return MetaCoreSyntaxKind.KClass;
 				case "contains": 
 					return MetaCoreSyntaxKind.KContains;
+				case "derived": 
+					return MetaCoreSyntaxKind.KDerived;
 				case "opposite": 
 					return MetaCoreSyntaxKind.KOpposite;
 				case "bool": 

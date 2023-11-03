@@ -69,12 +69,12 @@ namespace MetaDslx.CodeAnalysis.Binding
 
         protected virtual string? ComputeName(BindingContext context)
         {
-            return this.Syntax.ToString();
+            return this.Language.SyntaxFacts.ExtractName(this.Syntax);
         }
 
         protected virtual string? ComputeMetadataName(BindingContext context)
         {
-            return ComputeName(context);
+            return this.Language.SyntaxFacts.ExtractMetadataName(this.Syntax);
         }
 
         protected override void CollectIdentifierBinders(ArrayBuilder<IIdentifierBinder> identifierBinders, CancellationToken cancellationToken)

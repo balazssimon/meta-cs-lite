@@ -172,9 +172,9 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
                	if (context == null) return MetaClassGreen.__Missing;
                 var isAbstract = this.VisitTerminal(context.isAbstract);
                 var kClass = this.VisitTerminal(context.kClass, MetaCoreSyntaxKind.KClass);
-                NameGreen? name = null;
-                if (context.nameAntlr1 is not null) name = (NameGreen?)this.Visit(context.nameAntlr1) ?? NameGreen.__Missing;
-                else name = NameGreen.__Missing;
+                ClassNameGreen? name = null;
+                if (context.nameAntlr1 is not null) name = (ClassNameGreen?)this.Visit(context.nameAntlr1) ?? ClassNameGreen.__Missing;
+                else name = ClassNameGreen.__Missing;
                 BaseClassesGreen? baseClasses = null;
                 if (context.baseClassesAntlr1 is not null) baseClasses = (BaseClassesGreen?)this.Visit(context.baseClassesAntlr1);
                 ClassBodyGreen? classBody = null;
@@ -223,6 +223,22 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
                 else name = NameGreen.__Missing;
             	return _factory.MetaEnumLiteral(name);
             }
+            public override ClassNameAlt1Green? VisitPr_ClassNameAlt1(MetaCoreParser.Pr_ClassNameAlt1Context? context)
+            {
+               	if (context == null) return ClassNameAlt1Green.__Missing;
+                var tIdentifier = this.VisitTerminal(context.tIdentifierAntlr1);
+                var tHash = this.VisitTerminal(context.tHash, MetaCoreSyntaxKind.THash);
+                IdentifierGreen? identifier = null;
+                if (context.identifierAntlr1 is not null) identifier = (IdentifierGreen?)this.Visit(context.identifierAntlr1) ?? IdentifierGreen.__Missing;
+                else identifier = IdentifierGreen.__Missing;
+            	return _factory.ClassNameAlt1(tIdentifier, tHash, identifier);
+            }
+            public override ClassNameAlt2Green? VisitPr_ClassNameAlt2(MetaCoreParser.Pr_ClassNameAlt2Context? context)
+            {
+               	if (context == null) return ClassNameAlt2Green.__Missing;
+                var tIdentifier = this.VisitTerminal(context.tIdentifierAntlr1, MetaCoreSyntaxKind.TIdentifier);
+            	return _factory.ClassNameAlt2(tIdentifier);
+            }
             public override BaseClassesGreen? VisitPr_BaseClasses(MetaCoreParser.Pr_BaseClassesContext? context)
             {
                	if (context == null) return BaseClassesGreen.__Missing;
@@ -250,17 +266,33 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
             public override MetaPropertyGreen? VisitPr_MetaProperty(MetaCoreParser.Pr_MetaPropertyContext? context)
             {
                	if (context == null) return MetaPropertyGreen.__Missing;
-                var isContainment = this.VisitTerminal(context.isContainment);
+                InternalSyntaxToken? element = null;
+                if (context.isContainment is not null) element = this.VisitTerminal(context.isContainment);
+                if (context.isDerived is not null) element = this.VisitTerminal(context.isDerived);
                 TypeReferenceGreen? type = null;
                 if (context.typeAntlr1 is not null) type = (TypeReferenceGreen?)this.Visit(context.typeAntlr1) ?? TypeReferenceGreen.__Missing;
                 else type = TypeReferenceGreen.__Missing;
-                NameGreen? name = null;
-                if (context.nameAntlr1 is not null) name = (NameGreen?)this.Visit(context.nameAntlr1) ?? NameGreen.__Missing;
-                else name = NameGreen.__Missing;
+                PropertyNameGreen? name = null;
+                if (context.nameAntlr1 is not null) name = (PropertyNameGreen?)this.Visit(context.nameAntlr1) ?? PropertyNameGreen.__Missing;
+                else name = PropertyNameGreen.__Missing;
                 PropertyOppositeGreen? propertyOpposite = null;
                 if (context.propertyOppositeAntlr1 is not null) propertyOpposite = (PropertyOppositeGreen?)this.Visit(context.propertyOppositeAntlr1);
                 var tSemicolon = this.VisitTerminal(context.tSemicolon, MetaCoreSyntaxKind.TSemicolon);
-            	return _factory.MetaProperty(isContainment, type, name, propertyOpposite, tSemicolon);
+            	return _factory.MetaProperty(element, type, name, propertyOpposite, tSemicolon);
+            }
+            public override PropertyNameAlt1Green? VisitPr_PropertyNameAlt1(MetaCoreParser.Pr_PropertyNameAlt1Context? context)
+            {
+               	if (context == null) return PropertyNameAlt1Green.__Missing;
+                var tIdentifier = this.VisitTerminal(context.tIdentifierAntlr1);
+                var tHash = this.VisitTerminal(context.tHash, MetaCoreSyntaxKind.THash);
+                var tIdentifier1 = this.VisitTerminal(context.tIdentifier1Antlr1, MetaCoreSyntaxKind.TIdentifier);
+            	return _factory.PropertyNameAlt1(tIdentifier, tHash, tIdentifier1);
+            }
+            public override PropertyNameAlt2Green? VisitPr_PropertyNameAlt2(MetaCoreParser.Pr_PropertyNameAlt2Context? context)
+            {
+               	if (context == null) return PropertyNameAlt2Green.__Missing;
+                var tIdentifier = this.VisitTerminal(context.tIdentifierAntlr1, MetaCoreSyntaxKind.TIdentifier);
+            	return _factory.PropertyNameAlt2(tIdentifier);
             }
             public override PropertyOppositeGreen? VisitPr_PropertyOpposite(MetaCoreParser.Pr_PropertyOppositeContext? context)
             {

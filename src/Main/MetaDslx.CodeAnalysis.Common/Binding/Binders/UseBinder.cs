@@ -13,13 +13,19 @@ namespace MetaDslx.CodeAnalysis.Binding
     public class UseBinder : Binder, IUseBinder
     {
         private readonly ImmutableArray<Type> _types;
+        private readonly ImmutableArray<string> _prefixes;
+        private readonly ImmutableArray<string> _suffixes;
 
-        public UseBinder(ImmutableArray<Type> types)
+        public UseBinder(ImmutableArray<Type> types = default, ImmutableArray<string> prefixes = default, ImmutableArray<string> suffixes = default)
         {
             _types = types;
+            _prefixes = prefixes;
+            _suffixes = suffixes;
         }
 
         public ImmutableArray<Type> Types => _types;
+        public ImmutableArray<string> Prefixes => _prefixes;
+        public ImmutableArray<string> Suffixes => _suffixes;
         public List<Type> TypesList { get; }
 
         protected override ImmutableArray<SingleDeclaration> BuildDeclarationTree(SingleDeclarationBuilder builder)
@@ -33,6 +39,8 @@ namespace MetaDslx.CodeAnalysis.Binding
 
         protected override void AdjustLookupContext(LookupContext context)
         {
+            if (!_prefixes.IsDefaultOrEmpty) context.SetNamePrefixes(_prefixes);
+            if (!_suffixes.IsDefaultOrEmpty) context.SetNameSuffixes(_suffixes);
             context.Validators.Add(this);
         }
 
@@ -68,6 +76,30 @@ namespace MetaDslx.CodeAnalysis.Binding
                 sb.Append(type.Name);
             }
             sb.Append("]");
+            if (!_prefixes.IsDefaultOrEmpty)
+            {
+                sb.Append("[");
+                comma = false;
+                foreach (var prefix in _prefixes)
+                {
+                    if (comma) sb.Append("*, ");
+                    else comma = true;
+                    sb.Append(prefix);
+                }
+                sb.Append("*]");
+            }
+            if (!_suffixes.IsDefaultOrEmpty)
+            {
+                sb.Append("[*");
+                comma = false;
+                foreach (var suffix in _suffixes)
+                {
+                    if (comma) sb.Append(", *");
+                    else comma = true;
+                    sb.Append(suffix);
+                }
+                sb.Append("]");
+            }
             return builder.ToStringAndFree();
         }
     }
