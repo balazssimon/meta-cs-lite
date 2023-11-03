@@ -625,7 +625,7 @@ public partial class MetaCoreParser : global::MetaDslx.Languages.MetaCompiler.An
 	public partial class Pr_ClassNameAlt1Context : Pr_ClassNameContext {
 		public IToken tIdentifierAntlr1;
 		public IToken tHash;
-		public Pr_IdentifierContext identifierAntlr1;
+		public Pr_IdentifierContext symbolTypeAntlr1;
 		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_THash() { return GetToken(MetaCoreParser.LR_THash, 0); }
 		[System.Diagnostics.DebuggerNonUserCode] public Pr_IdentifierContext pr_Identifier() {
 			return GetRuleContext<Pr_IdentifierContext>(0);
@@ -677,7 +677,7 @@ public partial class MetaCoreParser : global::MetaDslx.Languages.MetaCompiler.An
 				State = 104;
 				((Pr_ClassNameAlt1Context)_localctx).tHash = Match(LR_THash);
 				State = 105;
-				((Pr_ClassNameAlt1Context)_localctx).identifierAntlr1 = pr_Identifier();
+				((Pr_ClassNameAlt1Context)_localctx).symbolTypeAntlr1 = pr_Identifier();
 				}
 				break;
 			case 2:
@@ -926,7 +926,7 @@ public partial class MetaCoreParser : global::MetaDslx.Languages.MetaCompiler.An
 	public partial class Pr_PropertyNameAlt1Context : Pr_PropertyNameContext {
 		public IToken tIdentifierAntlr1;
 		public IToken tHash;
-		public IToken tIdentifier1Antlr1;
+		public IToken symbolPropertyAntlr1;
 		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_THash() { return GetToken(MetaCoreParser.LR_THash, 0); }
 		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode[] LR_TIdentifier() { return GetTokens(MetaCoreParser.LR_TIdentifier); }
 		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TIdentifier(int i) {
@@ -967,7 +967,7 @@ public partial class MetaCoreParser : global::MetaDslx.Languages.MetaCompiler.An
 				State = 134;
 				((Pr_PropertyNameAlt1Context)_localctx).tHash = Match(LR_THash);
 				State = 135;
-				((Pr_PropertyNameAlt1Context)_localctx).tIdentifier1Antlr1 = Match(LR_TIdentifier);
+				((Pr_PropertyNameAlt1Context)_localctx).symbolPropertyAntlr1 = Match(LR_TIdentifier);
 				}
 				break;
 			case 2:

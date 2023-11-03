@@ -1,6 +1,7 @@
 ﻿using MetaDslx.Bootstrap.MetaModel.Core;
 using MetaDslx.Bootstrap.MetaModel.Meta;
 using MetaDslx.CodeAnalysis.PooledObjects;
+using MetaDslx.CodeAnalysis.Symbols;
 using MetaDslx.Modeling;
 using MetaDslx.Modeling.Meta;
 using System;
@@ -41,12 +42,12 @@ namespace MetaDslx.Bootstrap.MetaModel.Generators
             return type.FullName;
         }
 
-        public string ToCSharp(MetaProperty<MetaType, MetaProperty, Type> property)
+        public string ToCSharp(MetaProperty<MetaType, MetaProperty, TypeSymbol> property)
         {
             return $"{MetaModel.Name}.{property.DeclaringType.Name}_{property.Name}";
         }
 
-        public string ToCSharp(ImmutableArray<MetaProperty<MetaType, MetaProperty, Type>> properties)
+        public string ToCSharp(ImmutableArray<MetaProperty<MetaType, MetaProperty, TypeSymbol>> properties)
         {
             var builder = PooledStringBuilder.GetInstance();
             var sb = builder.Builder;

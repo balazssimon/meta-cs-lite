@@ -46,12 +46,12 @@ foreach (var diag in cmp.GetDiagnostics())
 }
 Console.WriteLine("----");
 //*/
-/*/
+//*/
 var model = cmp.SourceModule.Model;
 var mm = model.Objects.OfType<MetaModel>().First();
 Console.WriteLine(mm);
 //*/
-/*/
+//*/
 var graph = new MetaMetaGraph(model.Objects.OfType<MetaClass>());
 graph.Compute();
 var generator = new MetaModelGenerator(mm, graph);

@@ -38,8 +38,8 @@ namespace MetaDslx.CodeAnalysis.Binding
         private string? _metadataName;
         private HashSet<string> _namePrefixes;
         private HashSet<string> _nameSuffixes;
-        private ImmutableHashSet<string> _viableNames;
-        private ImmutableHashSet<string> _viableMetadataNames;
+        private HashSet<string> _viableNames;
+        private HashSet<string> _viableMetadataNames;
         private SyntaxNodeOrToken _alias;
         private DeclaredSymbol? _qualifier;
         private LookupContext? _qualifierContext;
@@ -61,8 +61,8 @@ namespace MetaDslx.CodeAnalysis.Binding
             _validators = new HashSet<ILookupValidator>();
             _namePrefixes = new HashSet<string>();
             _nameSuffixes = new HashSet<string>();
-            _viableNames = ImmutableHashSet<string>.Empty;
-            _viableMetadataNames = ImmutableHashSet<string>.Empty;
+            _viableNames = new HashSet<string>();
+            _viableMetadataNames = new HashSet<string>();
             _baseTypesBeingResolved = new HashSet<TypeSymbol>();
             _result = new LookupResult();
             _diagnostics = new DiagnosticBag();
@@ -100,8 +100,8 @@ namespace MetaDslx.CodeAnalysis.Binding
             get => _qualifierContext;
             set => _qualifierContext = value;
         }
-        public ImmutableHashSet<string> ViableNames => _viableNames;
-        public ImmutableHashSet<string> ViableMetadataNames => _viableMetadataNames;
+        public HashSet<string> ViableNames => _viableNames;
+        public HashSet<string> ViableMetadataNames => _viableMetadataNames;
         public HashSet<ILookupValidator> Validators => _validators;
         public HashSet<TypeSymbol> BaseTypesBeingResolved => _baseTypesBeingResolved;
         public TypeSymbol? AccessThroughType
@@ -253,7 +253,31 @@ namespace MetaDslx.CodeAnalysis.Binding
                 }
             }
             _viableMetadataNames.Clear();
-            if (!string.IsNullOrEmpty(_metadataName)) _viableMetadataNames.Add(_metadataName);
+            if (!string.IsNullOrEmpty(_metadataName))
+            {
+                _viableMetadataNames.Add(_metadataName);
+                if (_namePrefixes.Count > 0 && _nameSuffixes.Count > 0)
+                {
+                    foreach (var prefix in _namePrefixes)
+                    {
+                        foreach (var suffix in _nameSuffixes)
+                        {
+                            _viableMetadataNames.Add($"{prefix}{_metadataName}{suffix}");
+                        }
+                    }
+                }
+                else
+                {
+                    foreach (var prefix in _namePrefixes)
+                    {
+                        _viableMetadataNames.Add($"{prefix}{_metadataName}");
+                    }
+                    foreach (var suffix in _nameSuffixes)
+                    {
+                        _viableMetadataNames.Add($"{_metadataName}{suffix}");
+                    }
+                }
+            }
         }
 
         public void SetQualifier(DeclaredSymbol? qualifier, LookupContext? qualifierContext = null)

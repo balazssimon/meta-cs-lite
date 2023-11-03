@@ -22,7 +22,7 @@ class MetaModel : MetaDeclaration
 	derived string NamespaceName;
 }
 
-class MetaType#Type : MetaDeclaration
+class MetaType#TypeSymbol : MetaDeclaration
 {
 }
 
@@ -46,7 +46,7 @@ class MetaArrayType : MetaType
 
 class MetaClass : MetaType
 {
-	Type SymbolType;
+	type SymbolType;
 	bool IsAbstract;
 	MetaClass[] BaseTypes;
 	contains MetaProperty[] Properties;

@@ -1,4 +1,5 @@
 ﻿using MetaDslx.Bootstrap.MetaModel.Core;
+using MetaDslx.CodeAnalysis.Symbols;
 using MetaDslx.Modeling.Meta;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace MetaDslx.Bootstrap.MetaModel.Meta
 {
-    public class MetaMetaClass : MetaClass<MetaType, MetaProperty, Type>
+    public class MetaMetaClass : MetaClass<MetaType, MetaProperty, TypeSymbol>
     {
         public MetaMetaClass(MetaClass underlyingType) 
             : base(underlyingType)
@@ -20,7 +21,7 @@ namespace MetaDslx.Bootstrap.MetaModel.Meta
 
         public override string Name => UnderlyingType.Name;
 
-        public override Type? SymbolType => UnderlyingClass.SymbolType;
+        public override TypeSymbol? SymbolType => UnderlyingClass.SymbolType;
 
         protected override ImmutableArray<MetaType> OriginalBaseTypes => UnderlyingClass.BaseTypes.Cast<MetaType>().ToImmutableArray();
 

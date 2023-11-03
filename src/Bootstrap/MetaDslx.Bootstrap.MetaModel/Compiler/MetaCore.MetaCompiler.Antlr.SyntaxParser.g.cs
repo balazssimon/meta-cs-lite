@@ -228,10 +228,10 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
                	if (context == null) return ClassNameAlt1Green.__Missing;
                 var tIdentifier = this.VisitTerminal(context.tIdentifierAntlr1);
                 var tHash = this.VisitTerminal(context.tHash, MetaCoreSyntaxKind.THash);
-                IdentifierGreen? identifier = null;
-                if (context.identifierAntlr1 is not null) identifier = (IdentifierGreen?)this.Visit(context.identifierAntlr1) ?? IdentifierGreen.__Missing;
-                else identifier = IdentifierGreen.__Missing;
-            	return _factory.ClassNameAlt1(tIdentifier, tHash, identifier);
+                IdentifierGreen? symbolType = null;
+                if (context.symbolTypeAntlr1 is not null) symbolType = (IdentifierGreen?)this.Visit(context.symbolTypeAntlr1) ?? IdentifierGreen.__Missing;
+                else symbolType = IdentifierGreen.__Missing;
+            	return _factory.ClassNameAlt1(tIdentifier, tHash, symbolType);
             }
             public override ClassNameAlt2Green? VisitPr_ClassNameAlt2(MetaCoreParser.Pr_ClassNameAlt2Context? context)
             {
@@ -285,8 +285,8 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
                	if (context == null) return PropertyNameAlt1Green.__Missing;
                 var tIdentifier = this.VisitTerminal(context.tIdentifierAntlr1);
                 var tHash = this.VisitTerminal(context.tHash, MetaCoreSyntaxKind.THash);
-                var tIdentifier1 = this.VisitTerminal(context.tIdentifier1Antlr1, MetaCoreSyntaxKind.TIdentifier);
-            	return _factory.PropertyNameAlt1(tIdentifier, tHash, tIdentifier1);
+                var symbolProperty = this.VisitTerminal(context.symbolPropertyAntlr1, MetaCoreSyntaxKind.TIdentifier);
+            	return _factory.PropertyNameAlt1(tIdentifier, tHash, symbolProperty);
             }
             public override PropertyNameAlt2Green? VisitPr_PropertyNameAlt2(MetaCoreParser.Pr_PropertyNameAlt2Context? context)
             {

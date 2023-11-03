@@ -20,14 +20,14 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler
                     case MetaCoreSyntaxKind.ClassNameAlt1:
                         var ca1 = (ClassNameAlt1Syntax)node;
                         if (ca1.TIdentifier.GetMetaCoreKind() != MetaCoreSyntaxKind.None) return ca1.TIdentifier.ToString();
-                        else return ca1.Identifier.ToString();
+                        else return ca1.SymbolType.ToString();
                     case MetaCoreSyntaxKind.ClassNameAlt2:
                         var ca2 = (ClassNameAlt2Syntax)node;
                         return ca2.TIdentifier.ToString();
                     case MetaCoreSyntaxKind.PropertyNameAlt1:
                         var pa1 = (PropertyNameAlt1Syntax)node;
                         if (pa1.TIdentifier.GetMetaCoreKind() != MetaCoreSyntaxKind.None) return pa1.TIdentifier.ToString();
-                        else return pa1.TIdentifier1.ToString();
+                        else return pa1.SymbolProperty.ToString();
                     case MetaCoreSyntaxKind.PropertyNameAlt2:
                         var pa2 = (PropertyNameAlt2Syntax)node;
                         return pa2.TIdentifier.ToString();

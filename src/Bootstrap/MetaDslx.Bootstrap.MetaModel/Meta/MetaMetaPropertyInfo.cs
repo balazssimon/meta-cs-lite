@@ -1,4 +1,5 @@
 ﻿using MetaDslx.Bootstrap.MetaModel.Core;
+using MetaDslx.CodeAnalysis.Symbols;
 using MetaDslx.Modeling.Meta;
 using System;
 using System.Collections.Generic;
@@ -9,9 +10,9 @@ using System.Threading.Tasks;
 
 namespace MetaDslx.Bootstrap.MetaModel.Meta
 {
-    public class MetaMetaPropertyInfo : MetaPropertyInfo<MetaType, MetaProperty, Type>
+    public class MetaMetaPropertyInfo : MetaPropertyInfo<MetaType, MetaProperty, TypeSymbol>
     {
-        public MetaMetaPropertyInfo(MetaPropertySlot<MetaType, MetaProperty, Type> slot, ImmutableArray<MetaProperty<MetaType, MetaProperty, Type>> oppositeProperties = default, ImmutableArray<MetaProperty<MetaType, MetaProperty, Type>> subsettedProperties = default, ImmutableArray<MetaProperty<MetaType, MetaProperty, Type>> subsettingProperties = default, ImmutableArray<MetaProperty<MetaType, MetaProperty, Type>> redefinedProperties = default, ImmutableArray<MetaProperty<MetaType, MetaProperty, Type>> redefiningProperties = default) 
+        public MetaMetaPropertyInfo(MetaPropertySlot<MetaType, MetaProperty, TypeSymbol> slot, ImmutableArray<MetaProperty<MetaType, MetaProperty, TypeSymbol>> oppositeProperties = default, ImmutableArray<MetaProperty<MetaType, MetaProperty, TypeSymbol>> subsettedProperties = default, ImmutableArray<MetaProperty<MetaType, MetaProperty, TypeSymbol>> subsettingProperties = default, ImmutableArray<MetaProperty<MetaType, MetaProperty, TypeSymbol>> redefinedProperties = default, ImmutableArray<MetaProperty<MetaType, MetaProperty, TypeSymbol>> redefiningProperties = default) 
             : base(slot, oppositeProperties, subsettedProperties, subsettingProperties, redefinedProperties, redefiningProperties)
         {
         }

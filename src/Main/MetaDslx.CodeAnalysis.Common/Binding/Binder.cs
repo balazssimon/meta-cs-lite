@@ -316,7 +316,11 @@ namespace MetaDslx.CodeAnalysis.Binding
                 {
                     lastName = nameBinder;
                 }
-                else if (currentBinder is IDefineBinder || currentBinder is IUseBinder || currentBinder is IScopeBinder)
+                else if (currentBinder is IQualifierBinder || currentBinder is IIdentifierBinder)
+                {
+                    // we can step through "qualfier" and "identifier" binders
+                }
+                else
                 {
                     break;
                 }
@@ -335,8 +339,13 @@ namespace MetaDslx.CodeAnalysis.Binding
                 {
                     lastQualifier = qualifierBinder;
                 }
-                else if (currentBinder is IDefineBinder || currentBinder is IScopeBinder)
+                else if (currentBinder is IUseBinder)
                 {
+                    // we can step through "use" binders
+                }
+                else
+                {
+                    // we stop at other binders
                     break;
                 }
                 currentBinder = currentBinder.ParentBinder;

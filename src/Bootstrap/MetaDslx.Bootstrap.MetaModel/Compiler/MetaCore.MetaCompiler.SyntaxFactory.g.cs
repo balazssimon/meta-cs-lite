@@ -313,17 +313,17 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
             return (MetaEnumLiteralSyntax)MetaCoreLanguage.Instance.InternalSyntaxFactory.MetaEnumLiteral((NameGreen)name.Green).CreateRed();
         }
 
-        public ClassNameAlt1Syntax ClassNameAlt1(SyntaxToken tIdentifier, SyntaxToken tHash, IdentifierSyntax identifier)
+        public ClassNameAlt1Syntax ClassNameAlt1(SyntaxToken tIdentifier, SyntaxToken tHash, IdentifierSyntax symbolType)
         {
         	if (tIdentifier.RawKind != (int)MetaCoreSyntaxKind.TIdentifier) throw new ArgumentException(nameof(tIdentifier));
         	if (tHash.RawKind != (int)MetaCoreSyntaxKind.THash) throw new ArgumentException(nameof(tHash));
-        	if (identifier is null) throw new ArgumentNullException(nameof(identifier));
-            return (ClassNameAlt1Syntax)MetaCoreLanguage.Instance.InternalSyntaxFactory.ClassNameAlt1((InternalSyntaxToken)tIdentifier.Node, (InternalSyntaxToken)tHash.Node, (IdentifierGreen)identifier.Green).CreateRed();
+        	if (symbolType is null) throw new ArgumentNullException(nameof(symbolType));
+            return (ClassNameAlt1Syntax)MetaCoreLanguage.Instance.InternalSyntaxFactory.ClassNameAlt1((InternalSyntaxToken)tIdentifier.Node, (InternalSyntaxToken)tHash.Node, (IdentifierGreen)symbolType.Green).CreateRed();
         }
         
-        public ClassNameAlt1Syntax ClassNameAlt1(IdentifierSyntax identifier)
+        public ClassNameAlt1Syntax ClassNameAlt1(IdentifierSyntax symbolType)
         {
-        	return this.ClassNameAlt1(default, this.Token(MetaCoreSyntaxKind.THash), identifier);
+        	return this.ClassNameAlt1(default, this.Token(MetaCoreSyntaxKind.THash), symbolType);
         }
 
         public ClassNameAlt2Syntax ClassNameAlt2(SyntaxToken tIdentifier)
@@ -364,17 +364,17 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
         	return this.MetaProperty(default, type, name, default, this.Token(MetaCoreSyntaxKind.TSemicolon));
         }
 
-        public PropertyNameAlt1Syntax PropertyNameAlt1(SyntaxToken tIdentifier, SyntaxToken tHash, SyntaxToken tIdentifier1)
+        public PropertyNameAlt1Syntax PropertyNameAlt1(SyntaxToken tIdentifier, SyntaxToken tHash, SyntaxToken symbolProperty)
         {
         	if (tIdentifier.RawKind != (int)MetaCoreSyntaxKind.TIdentifier) throw new ArgumentException(nameof(tIdentifier));
         	if (tHash.RawKind != (int)MetaCoreSyntaxKind.THash) throw new ArgumentException(nameof(tHash));
-        	if (tIdentifier1.RawKind != (int)MetaCoreSyntaxKind.TIdentifier) throw new ArgumentException(nameof(tIdentifier1));
-            return (PropertyNameAlt1Syntax)MetaCoreLanguage.Instance.InternalSyntaxFactory.PropertyNameAlt1((InternalSyntaxToken)tIdentifier.Node, (InternalSyntaxToken)tHash.Node, (InternalSyntaxToken)tIdentifier1.Node).CreateRed();
+        	if (symbolProperty.RawKind != (int)MetaCoreSyntaxKind.TIdentifier) throw new ArgumentException(nameof(symbolProperty));
+            return (PropertyNameAlt1Syntax)MetaCoreLanguage.Instance.InternalSyntaxFactory.PropertyNameAlt1((InternalSyntaxToken)tIdentifier.Node, (InternalSyntaxToken)tHash.Node, (InternalSyntaxToken)symbolProperty.Node).CreateRed();
         }
         
-        public PropertyNameAlt1Syntax PropertyNameAlt1(SyntaxToken tIdentifier1)
+        public PropertyNameAlt1Syntax PropertyNameAlt1(SyntaxToken symbolProperty)
         {
-        	return this.PropertyNameAlt1(default, this.Token(MetaCoreSyntaxKind.THash), tIdentifier1);
+        	return this.PropertyNameAlt1(default, this.Token(MetaCoreSyntaxKind.THash), symbolProperty);
         }
 
         public PropertyNameAlt2Syntax PropertyNameAlt2(SyntaxToken tIdentifier)

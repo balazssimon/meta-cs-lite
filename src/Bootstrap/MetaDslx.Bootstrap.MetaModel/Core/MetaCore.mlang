@@ -33,7 +33,7 @@ MetaEnumLiteral: name=Name;
 MetaClass: isAbstract?='abstract'? 'class' name=ClassName BaseClasses? ClassBody;
 [Name]
 [Identifier]
-part ClassName: TIdentifier? '#' [Use(types: Type, suffixes: Symbol)] Identifier | TIdentifier;
+part ClassName: TIdentifier? '#' symbolType=[Use(types: Symbol, suffixes: Symbol)]Identifier | TIdentifier;
 part BaseClasses: (':' baseTypes+=#{MetaClass|QualifierList});
 [Scope]
 part ClassBody: '{' properties+=MetaProperty* '}';
@@ -41,7 +41,7 @@ part ClassBody: '{' properties+=MetaProperty* '}';
 MetaProperty: (isContainment?='contains' | isDerived?='derived')? type=TypeReference name=PropertyName PropertyOpposite?  ';';
 [Name]
 [Identifier]
-part PropertyName: TIdentifier? '#' TIdentifier | TIdentifier;
+part PropertyName: TIdentifier? '#' symbolProperty=TIdentifier | TIdentifier;
 part PropertyOpposite: 'opposite' Opposite=#MetaProperty;
 
 TypeReference returns MetaType: MetaPrimitiveType | MetaArrayType | #MetaType;

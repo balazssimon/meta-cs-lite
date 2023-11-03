@@ -1,4 +1,5 @@
 ﻿using MetaDslx.Bootstrap.MetaModel.Core;
+using MetaDslx.CodeAnalysis.Symbols;
 using MetaDslx.Modeling;
 using MetaDslx.Modeling.Meta;
 using System;
@@ -9,11 +10,11 @@ using System.Threading.Tasks;
 
 namespace MetaDslx.Bootstrap.MetaModel.Meta
 {
-    public class MetaMetaProperty : MetaProperty<MetaType, MetaProperty, Type>
+    public class MetaMetaProperty : MetaProperty<MetaType, MetaProperty, TypeSymbol>
     {
         private readonly ModelPropertyFlags _originalFlags;
 
-        public MetaMetaProperty(MetaClass<MetaType, MetaProperty, Type> declaringType, MetaProperty underlyingProperty) 
+        public MetaMetaProperty(MetaClass<MetaType, MetaProperty, TypeSymbol> declaringType, MetaProperty underlyingProperty) 
             : base(declaringType, underlyingProperty)
         {
             var flags = ModelPropertyFlags.None;

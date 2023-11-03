@@ -1,4 +1,5 @@
 ﻿using MetaDslx.Bootstrap.MetaModel.Core;
+using MetaDslx.CodeAnalysis.Symbols;
 using MetaDslx.Modeling;
 using MetaDslx.Modeling.Meta;
 using System;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace MetaDslx.Bootstrap.MetaModel.Meta
 {
-    public class MetaMetaGraph : MetaGraph<MetaType, MetaProperty, Type>
+    public class MetaMetaGraph : MetaGraph<MetaType, MetaProperty, TypeSymbol>
     {
         public MetaMetaGraph(IEnumerable<MetaType> classTypes) 
             : base(classTypes)
@@ -54,22 +55,22 @@ namespace MetaDslx.Bootstrap.MetaModel.Meta
             return type is MetaPrimitiveType || type is MetaEnumType;
         }
 
-        protected override MetaClass<MetaType, MetaProperty, Type> MakeClass(MetaType classType)
+        protected override MetaClass<MetaType, MetaProperty, TypeSymbol> MakeClass(MetaType classType)
         {
             return new MetaMetaClass((MetaClass)classType);
         }
 
-        protected override MetaProperty<MetaType, MetaProperty, Type> MakeProperty(MetaClass<MetaType, MetaProperty, Type> declaringType, MetaProperty property)
+        protected override MetaProperty<MetaType, MetaProperty, TypeSymbol> MakeProperty(MetaClass<MetaType, MetaProperty, TypeSymbol> declaringType, MetaProperty property)
         {
             return new MetaMetaProperty(declaringType, property);
         }
 
-        protected override MetaPropertyInfo<MetaType, MetaProperty, Type> MakePropertyInfo(MetaPropertySlot<MetaType, MetaProperty, Type> slot, ImmutableArray<MetaProperty<MetaType, MetaProperty, Type>> oppositeProperties = default, ImmutableArray<MetaProperty<MetaType, MetaProperty, Type>> subsettedProperties = default, ImmutableArray<MetaProperty<MetaType, MetaProperty, Type>> subsettingProperties = default, ImmutableArray<MetaProperty<MetaType, MetaProperty, Type>> redefinedProperties = default, ImmutableArray<MetaProperty<MetaType, MetaProperty, Type>> redefiningProperties = default)
+        protected override MetaPropertyInfo<MetaType, MetaProperty, TypeSymbol> MakePropertyInfo(MetaPropertySlot<MetaType, MetaProperty, TypeSymbol> slot, ImmutableArray<MetaProperty<MetaType, MetaProperty, TypeSymbol>> oppositeProperties = default, ImmutableArray<MetaProperty<MetaType, MetaProperty, TypeSymbol>> subsettedProperties = default, ImmutableArray<MetaProperty<MetaType, MetaProperty, TypeSymbol>> subsettingProperties = default, ImmutableArray<MetaProperty<MetaType, MetaProperty, TypeSymbol>> redefinedProperties = default, ImmutableArray<MetaProperty<MetaType, MetaProperty, TypeSymbol>> redefiningProperties = default)
         {
             return new MetaMetaPropertyInfo(slot, oppositeProperties, subsettedProperties, subsettingProperties, redefinedProperties, redefiningProperties);
         }
 
-        protected override MetaPropertySlot<MetaType, MetaProperty, Type> MakePropertySlot(MetaProperty<MetaType, MetaProperty, Type> slotProperty, ImmutableArray<MetaProperty<MetaType, MetaProperty, Type>> slotProperties, object? defaultValue, ModelPropertyFlags flags)
+        protected override MetaPropertySlot<MetaType, MetaProperty, TypeSymbol> MakePropertySlot(MetaProperty<MetaType, MetaProperty, TypeSymbol> slotProperty, ImmutableArray<MetaProperty<MetaType, MetaProperty, TypeSymbol>> slotProperties, object? defaultValue, ModelPropertyFlags flags)
         {
             return new MetaMetaPropertySlot(slotProperty, slotProperties, defaultValue, flags);
         }

@@ -332,34 +332,43 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Binding
 
         public virtual void VisitClassNameAlt1(ClassNameAlt1Syntax node)
         {
-        	var __annot2 = new NameBinder();
-        	this.Begin(__annot2, node);
+        	var __annot3 = new NameBinder();
+        	this.Begin(__annot3, node);
         	try
         	{
-        	    var __annot1 = new IdentifierBinder();
-        	    this.Begin(__annot1, node);
+        	    var __annot2 = new IdentifierBinder();
+        	    this.Begin(__annot2, node);
         	    try
         	    {
-        	        var __annot0 = new UseBinder(types: new global::System.Type[] {typeof(global::System.Type)}.ToImmutableArray(), suffixes: new string[] {"Symbol"}.ToImmutableArray());
-        	        this.Begin(__annot0, node.Identifier);
+        	        var __annot1 = new UseBinder(types: new global::System.Type[] {typeof(global::MetaDslx.CodeAnalysis.Symbols.Symbol)}.ToImmutableArray(), suffixes: new string[] {"Symbol"}.ToImmutableArray());
+        	        this.Begin(__annot1, node.SymbolType);
         	        try
         	        {
-        	            this.Visit(node.Identifier);
+        	            var __annot0 = new PropertyBinder(name: "SymbolType");
+        	            this.Begin(__annot0, node.SymbolType);
+        	            try
+        	            {
+        	                this.Visit(node.SymbolType);
+        	            }
+        	            finally
+        	            {
+        	                this.End(__annot0);
+        	            }
         	        }
         	        finally
         	        {
-        	            this.End(__annot0);
+        	            this.End(__annot1);
         	        }
         	            
         	    }
         	    finally
         	    {
-        	        this.End(__annot1);
+        	        this.End(__annot2);
         	    }
         	}
         	finally
         	{
-        	    this.End(__annot2);
+        	    this.End(__annot3);
         	}
         }
 
@@ -487,24 +496,41 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Binding
 
         public virtual void VisitPropertyNameAlt1(PropertyNameAlt1Syntax node)
         {
-        	var __annot1 = new NameBinder();
-        	this.Begin(__annot1, node);
+        	var __annot2 = new NameBinder();
+        	this.Begin(__annot2, node);
         	try
         	{
-        	    var __annot0 = new IdentifierBinder();
-        	    this.Begin(__annot0, node);
+        	    var __annot1 = new IdentifierBinder();
+        	    this.Begin(__annot1, node);
         	    try
         	    {
+        	        if (node.SymbolProperty.GetMetaCoreKind() != MetaCoreSyntaxKind.None)
+        	        {
+        	            var __annot0 = new PropertyBinder(name: "SymbolProperty");
+        	            this.Begin(__annot0, node.SymbolProperty);
+        	            try
+        	            {
+        	                // this.VisitToken(node.SymbolProperty);
+        	            }
+        	            finally
+        	            {
+        	                this.End(__annot0);
+        	            }
+        	        }
+        	        else
+        	        {
+        	            // this.VisitToken(node.SymbolProperty);
+        	        }
         	            
         	    }
         	    finally
         	    {
-        	        this.End(__annot0);
+        	        this.End(__annot1);
         	    }
         	}
         	finally
         	{
-        	    this.End(__annot1);
+        	    this.End(__annot2);
         	}
         }
 

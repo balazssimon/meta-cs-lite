@@ -1,4 +1,5 @@
 ﻿using MetaDslx.Bootstrap.MetaModel.Core;
+using MetaDslx.CodeAnalysis.Symbols;
 using MetaDslx.Modeling;
 using MetaDslx.Modeling.Meta;
 using System;
@@ -10,9 +11,9 @@ using System.Threading.Tasks;
 
 namespace MetaDslx.Bootstrap.MetaModel.Meta
 {
-    public class MetaMetaPropertySlot : MetaPropertySlot<MetaType, MetaProperty, Type>
+    public class MetaMetaPropertySlot : MetaPropertySlot<MetaType, MetaProperty, TypeSymbol>
     {
-        public MetaMetaPropertySlot(MetaProperty<MetaType, MetaProperty, Type> slotProperty, ImmutableArray<MetaProperty<MetaType, MetaProperty, Type>> slotProperties, object? defaultValue, ModelPropertyFlags flags) 
+        public MetaMetaPropertySlot(MetaProperty<MetaType, MetaProperty, TypeSymbol> slotProperty, ImmutableArray<MetaProperty<MetaType, MetaProperty, TypeSymbol>> slotProperties, object? defaultValue, ModelPropertyFlags flags) 
             : base(slotProperty, slotProperties, defaultValue, flags)
         {
         }
