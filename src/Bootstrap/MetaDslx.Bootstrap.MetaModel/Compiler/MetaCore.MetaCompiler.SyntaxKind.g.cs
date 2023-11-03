@@ -35,7 +35,7 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
 		TRBrace,
 		KAbstract,
 		KClass,
-		THash,
+		TDollar,
 		TColon,
 		KContains,
 		KDerived,

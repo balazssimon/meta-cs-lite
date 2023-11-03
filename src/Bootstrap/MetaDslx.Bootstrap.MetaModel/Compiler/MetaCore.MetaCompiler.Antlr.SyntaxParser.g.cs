@@ -227,11 +227,11 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
             {
                	if (context == null) return ClassNameAlt1Green.__Missing;
                 var tIdentifier = this.VisitTerminal(context.tIdentifierAntlr1);
-                var tHash = this.VisitTerminal(context.tHash, MetaCoreSyntaxKind.THash);
+                var tDollar = this.VisitTerminal(context.tDollar, MetaCoreSyntaxKind.TDollar);
                 IdentifierGreen? symbolType = null;
                 if (context.symbolTypeAntlr1 is not null) symbolType = (IdentifierGreen?)this.Visit(context.symbolTypeAntlr1) ?? IdentifierGreen.__Missing;
                 else symbolType = IdentifierGreen.__Missing;
-            	return _factory.ClassNameAlt1(tIdentifier, tHash, symbolType);
+            	return _factory.ClassNameAlt1(tIdentifier, tDollar, symbolType);
             }
             public override ClassNameAlt2Green? VisitPr_ClassNameAlt2(MetaCoreParser.Pr_ClassNameAlt2Context? context)
             {
@@ -284,9 +284,9 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
             {
                	if (context == null) return PropertyNameAlt1Green.__Missing;
                 var tIdentifier = this.VisitTerminal(context.tIdentifierAntlr1);
-                var tHash = this.VisitTerminal(context.tHash, MetaCoreSyntaxKind.THash);
+                var tDollar = this.VisitTerminal(context.tDollar, MetaCoreSyntaxKind.TDollar);
                 var symbolProperty = this.VisitTerminal(context.symbolPropertyAntlr1, MetaCoreSyntaxKind.TIdentifier);
-            	return _factory.PropertyNameAlt1(tIdentifier, tHash, symbolProperty);
+            	return _factory.PropertyNameAlt1(tIdentifier, tDollar, symbolProperty);
             }
             public override PropertyNameAlt2Green? VisitPr_PropertyNameAlt2(MetaCoreParser.Pr_PropertyNameAlt2Context? context)
             {

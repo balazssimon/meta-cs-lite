@@ -1,19 +1,18 @@
 namespace MetaDslx.Bootstrap.MetaModel.CoreX;
 
-using System;
 using MetaDslx.CodeAnalysis.Symbols;
 
 metamodel MetaCore;
 
-class MetaDeclaration#Declared
+class MetaDeclaration $Declared
 {
-	string #Name;
+	string $Name;
 	MetaDeclaration Parent opposite Declarations;
 	contains MetaDeclaration[] Declarations opposite Parent;
 	derived string FullName;
 }
 
-class MetaNamespace#Namespace : MetaDeclaration
+class MetaNamespace $Namespace : MetaDeclaration
 {
 }
 
@@ -22,7 +21,7 @@ class MetaModel : MetaDeclaration
 	derived string NamespaceName;
 }
 
-class MetaType#TypeSymbol : MetaDeclaration
+class MetaType $Type : MetaDeclaration
 {
 }
 
@@ -54,7 +53,6 @@ class MetaClass : MetaType
 
 class MetaProperty : MetaDeclaration
 {
-	string Name;
 	MetaType Type;
 	string SymbolProperty;
 	bool IsContainment;

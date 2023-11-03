@@ -39,7 +39,7 @@ public partial class MetaCoreParser : global::MetaDslx.Languages.MetaCompiler.An
 	public const int
 		LR_TComma=1, LR_KNamespace=2, LR_TSemicolon=3, LR_KUsing=4, LR_KMetamodel=5, 
 		LR_KEnum=6, LR_TLBrace=7, LR_TRBrace=8, LR_KAbstract=9, LR_KClass=10, 
-		LR_THash=11, LR_TColon=12, LR_KContains=13, LR_KDerived=14, LR_KOpposite=15, 
+		LR_TDollar=11, LR_TColon=12, LR_KContains=13, LR_KDerived=14, LR_KOpposite=15, 
 		LR_KBool=16, LR_KInt=17, LR_KString=18, LR_KType=19, LR_TLBracket=20, 
 		LR_TRBracket=21, LR_TDot=22, LR_TInteger=23, LR_TDecimal=24, LR_TIdentifier=25, 
 		LR_TString=26, LR_TWhitespace=27, LR_TLineEnd=28, LR_TSingleLineComment=29, 
@@ -63,12 +63,12 @@ public partial class MetaCoreParser : global::MetaDslx.Languages.MetaCompiler.An
 
 	private static readonly string[] _LiteralNames = {
 		null, "','", "'namespace'", "';'", "'using'", "'metamodel'", "'enum'", 
-		"'{'", "'}'", "'abstract'", "'class'", "'#'", "':'", "'contains'", "'derived'", 
+		"'{'", "'}'", "'abstract'", "'class'", "'$'", "':'", "'contains'", "'derived'", 
 		"'opposite'", "'bool'", "'int'", "'string'", "'type'", "'['", "']'", "'.'"
 	};
 	private static readonly string[] _SymbolicNames = {
 		null, "LR_TComma", "LR_KNamespace", "LR_TSemicolon", "LR_KUsing", "LR_KMetamodel", 
-		"LR_KEnum", "LR_TLBrace", "LR_TRBrace", "LR_KAbstract", "LR_KClass", "LR_THash", 
+		"LR_KEnum", "LR_TLBrace", "LR_TRBrace", "LR_KAbstract", "LR_KClass", "LR_TDollar", 
 		"LR_TColon", "LR_KContains", "LR_KDerived", "LR_KOpposite", "LR_KBool", 
 		"LR_KInt", "LR_KString", "LR_KType", "LR_TLBracket", "LR_TRBracket", "LR_TDot", 
 		"LR_TInteger", "LR_TDecimal", "LR_TIdentifier", "LR_TString", "LR_TWhitespace", 
@@ -624,9 +624,9 @@ public partial class MetaCoreParser : global::MetaDslx.Languages.MetaCompiler.An
 	}
 	public partial class Pr_ClassNameAlt1Context : Pr_ClassNameContext {
 		public IToken tIdentifierAntlr1;
-		public IToken tHash;
+		public IToken tDollar;
 		public Pr_IdentifierContext symbolTypeAntlr1;
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_THash() { return GetToken(MetaCoreParser.LR_THash, 0); }
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TDollar() { return GetToken(MetaCoreParser.LR_TDollar, 0); }
 		[System.Diagnostics.DebuggerNonUserCode] public Pr_IdentifierContext pr_Identifier() {
 			return GetRuleContext<Pr_IdentifierContext>(0);
 		}
@@ -675,7 +675,7 @@ public partial class MetaCoreParser : global::MetaDslx.Languages.MetaCompiler.An
 				}
 
 				State = 104;
-				((Pr_ClassNameAlt1Context)_localctx).tHash = Match(LR_THash);
+				((Pr_ClassNameAlt1Context)_localctx).tDollar = Match(LR_TDollar);
 				State = 105;
 				((Pr_ClassNameAlt1Context)_localctx).symbolTypeAntlr1 = pr_Identifier();
 				}
@@ -925,9 +925,9 @@ public partial class MetaCoreParser : global::MetaDslx.Languages.MetaCompiler.An
 	}
 	public partial class Pr_PropertyNameAlt1Context : Pr_PropertyNameContext {
 		public IToken tIdentifierAntlr1;
-		public IToken tHash;
+		public IToken tDollar;
 		public IToken symbolPropertyAntlr1;
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_THash() { return GetToken(MetaCoreParser.LR_THash, 0); }
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TDollar() { return GetToken(MetaCoreParser.LR_TDollar, 0); }
 		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode[] LR_TIdentifier() { return GetTokens(MetaCoreParser.LR_TIdentifier); }
 		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TIdentifier(int i) {
 			return GetToken(MetaCoreParser.LR_TIdentifier, i);
@@ -965,7 +965,7 @@ public partial class MetaCoreParser : global::MetaDslx.Languages.MetaCompiler.An
 				}
 
 				State = 134;
-				((Pr_PropertyNameAlt1Context)_localctx).tHash = Match(LR_THash);
+				((Pr_PropertyNameAlt1Context)_localctx).tDollar = Match(LR_TDollar);
 				State = 135;
 				((Pr_PropertyNameAlt1Context)_localctx).symbolPropertyAntlr1 = Match(LR_TIdentifier);
 				}

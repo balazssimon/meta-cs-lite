@@ -36,7 +36,7 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
 				case MetaCoreSyntaxKind.TRBrace:
 				case MetaCoreSyntaxKind.KAbstract:
 				case MetaCoreSyntaxKind.KClass:
-				case MetaCoreSyntaxKind.THash:
+				case MetaCoreSyntaxKind.TDollar:
 				case MetaCoreSyntaxKind.TColon:
 				case MetaCoreSyntaxKind.KContains:
 				case MetaCoreSyntaxKind.KDerived:
@@ -81,7 +81,7 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
 				case MetaCoreSyntaxKind.TRBrace:
 				case MetaCoreSyntaxKind.KAbstract:
 				case MetaCoreSyntaxKind.KClass:
-				case MetaCoreSyntaxKind.THash:
+				case MetaCoreSyntaxKind.TDollar:
 				case MetaCoreSyntaxKind.TColon:
 				case MetaCoreSyntaxKind.KContains:
 				case MetaCoreSyntaxKind.KDerived:
@@ -128,8 +128,8 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
 					return MetaCoreSyntaxKind.KAbstract;
 				case "class": 
 					return MetaCoreSyntaxKind.KClass;
-				case "#": 
-					return MetaCoreSyntaxKind.THash;
+				case "$": 
+					return MetaCoreSyntaxKind.TDollar;
 				case ":": 
 					return MetaCoreSyntaxKind.TColon;
 				case "contains": 
@@ -211,8 +211,8 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
 					return "KAbstract";
 				case MetaCoreSyntaxKind.KClass: 
 					return "KClass";
-				case MetaCoreSyntaxKind.THash: 
-					return "THash";
+				case MetaCoreSyntaxKind.TDollar: 
+					return "TDollar";
 				case MetaCoreSyntaxKind.TColon: 
 					return "TColon";
 				case MetaCoreSyntaxKind.KContains: 
@@ -341,8 +341,8 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
 					return "abstract";
 				case MetaCoreSyntaxKind.KClass: 
 					return "class";
-				case MetaCoreSyntaxKind.THash: 
-					return "#";
+				case MetaCoreSyntaxKind.TDollar: 
+					return "$";
 				case MetaCoreSyntaxKind.TColon: 
 					return ":";
 				case MetaCoreSyntaxKind.KContains: 

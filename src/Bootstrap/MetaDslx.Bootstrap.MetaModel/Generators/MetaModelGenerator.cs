@@ -39,7 +39,7 @@ namespace MetaDslx.Bootstrap.MetaModel.Generators
                 if (mpt.Name == "type") return "__Type";
                 else return mpt.Name;
             }
-            return type.FullName;
+            return $"global::{type.FullName}";
         }
 
         public string ToCSharp(TypeSymbol? type)

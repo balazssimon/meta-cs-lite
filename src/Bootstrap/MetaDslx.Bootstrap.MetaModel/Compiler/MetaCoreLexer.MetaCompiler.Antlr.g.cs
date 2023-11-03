@@ -36,7 +36,7 @@ public partial class MetaCoreLexer : global::MetaDslx.Languages.MetaCompiler.Ant
 	public const int
 		LR_TComma=1, LR_KNamespace=2, LR_TSemicolon=3, LR_KUsing=4, LR_KMetamodel=5, 
 		LR_KEnum=6, LR_TLBrace=7, LR_TRBrace=8, LR_KAbstract=9, LR_KClass=10, 
-		LR_THash=11, LR_TColon=12, LR_KContains=13, LR_KDerived=14, LR_KOpposite=15, 
+		LR_TDollar=11, LR_TColon=12, LR_KContains=13, LR_KDerived=14, LR_KOpposite=15, 
 		LR_KBool=16, LR_KInt=17, LR_KString=18, LR_KType=19, LR_TLBracket=20, 
 		LR_TRBracket=21, LR_TDot=22, LR_TInteger=23, LR_TDecimal=24, LR_TIdentifier=25, 
 		LR_TString=26, LR_TWhitespace=27, LR_TLineEnd=28, LR_TSingleLineComment=29, 
@@ -51,7 +51,7 @@ public partial class MetaCoreLexer : global::MetaDslx.Languages.MetaCompiler.Ant
 
 	public static readonly string[] ruleNames = {
 		"LR_TComma", "LR_KNamespace", "LR_TSemicolon", "LR_KUsing", "LR_KMetamodel", 
-		"LR_KEnum", "LR_TLBrace", "LR_TRBrace", "LR_KAbstract", "LR_KClass", "LR_THash", 
+		"LR_KEnum", "LR_TLBrace", "LR_TRBrace", "LR_KAbstract", "LR_KClass", "LR_TDollar", 
 		"LR_TColon", "LR_KContains", "LR_KDerived", "LR_KOpposite", "LR_KBool", 
 		"LR_KInt", "LR_KString", "LR_KType", "LR_TLBracket", "LR_TRBracket", "LR_TDot", 
 		"LR_TInteger", "LR_TDecimal", "LR_TIdentifier", "LR_TString", "LR_TWhitespace", 
@@ -70,12 +70,12 @@ public partial class MetaCoreLexer : global::MetaDslx.Languages.MetaCompiler.Ant
 
 	private static readonly string[] _LiteralNames = {
 		null, "','", "'namespace'", "';'", "'using'", "'metamodel'", "'enum'", 
-		"'{'", "'}'", "'abstract'", "'class'", "'#'", "':'", "'contains'", "'derived'", 
+		"'{'", "'}'", "'abstract'", "'class'", "'$'", "':'", "'contains'", "'derived'", 
 		"'opposite'", "'bool'", "'int'", "'string'", "'type'", "'['", "']'", "'.'"
 	};
 	private static readonly string[] _SymbolicNames = {
 		null, "LR_TComma", "LR_KNamespace", "LR_TSemicolon", "LR_KUsing", "LR_KMetamodel", 
-		"LR_KEnum", "LR_TLBrace", "LR_TRBrace", "LR_KAbstract", "LR_KClass", "LR_THash", 
+		"LR_KEnum", "LR_TLBrace", "LR_TRBrace", "LR_KAbstract", "LR_KClass", "LR_TDollar", 
 		"LR_TColon", "LR_KContains", "LR_KDerived", "LR_KOpposite", "LR_KBool", 
 		"LR_KInt", "LR_KString", "LR_KType", "LR_TLBracket", "LR_TRBracket", "LR_TDot", 
 		"LR_TInteger", "LR_TDecimal", "LR_TIdentifier", "LR_TString", "LR_TWhitespace", 
@@ -155,7 +155,7 @@ public partial class MetaCoreLexer : global::MetaDslx.Languages.MetaCompiler.Ant
 		102,5,98,0,0,102,103,5,115,0,0,103,104,5,116,0,0,104,105,5,114,0,0,105,
 		106,5,97,0,0,106,107,5,99,0,0,107,108,5,116,0,0,108,18,1,0,0,0,109,110,
 		5,99,0,0,110,111,5,108,0,0,111,112,5,97,0,0,112,113,5,115,0,0,113,114,
-		5,115,0,0,114,20,1,0,0,0,115,116,5,35,0,0,116,22,1,0,0,0,117,118,5,58,
+		5,115,0,0,114,20,1,0,0,0,115,116,5,36,0,0,116,22,1,0,0,0,117,118,5,58,
 		0,0,118,24,1,0,0,0,119,120,5,99,0,0,120,121,5,111,0,0,121,122,5,110,0,
 		0,122,123,5,116,0,0,123,124,5,97,0,0,124,125,5,105,0,0,125,126,5,110,0,
 		0,126,127,5,115,0,0,127,26,1,0,0,0,128,129,5,100,0,0,129,130,5,101,0,0,

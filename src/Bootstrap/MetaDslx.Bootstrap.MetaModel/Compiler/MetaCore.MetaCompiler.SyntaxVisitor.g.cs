@@ -653,10 +653,10 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
         public virtual SyntaxNode VisitClassNameAlt1(ClassNameAlt1Syntax node)
         {
             var tIdentifier = this.VisitToken(node.TIdentifier);
-            var tHash = this.VisitToken(node.THash);
+            var tDollar = this.VisitToken(node.TDollar);
             var symbolType = (IdentifierSyntax)this.Visit(node.SymbolType);
         	    
-        	return node.Update(tIdentifier, tHash, symbolType);
+        	return node.Update(tIdentifier, tDollar, symbolType);
         }
 
         public virtual SyntaxNode VisitClassNameAlt2(ClassNameAlt2Syntax node)
@@ -696,10 +696,10 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
         public virtual SyntaxNode VisitPropertyNameAlt1(PropertyNameAlt1Syntax node)
         {
             var tIdentifier = this.VisitToken(node.TIdentifier);
-            var tHash = this.VisitToken(node.THash);
+            var tDollar = this.VisitToken(node.TDollar);
             var symbolProperty = this.VisitToken(node.SymbolProperty);
         	    
-        	return node.Update(tIdentifier, tHash, symbolProperty);
+        	return node.Update(tIdentifier, tDollar, symbolProperty);
         }
 
         public virtual SyntaxNode VisitPropertyNameAlt2(PropertyNameAlt2Syntax node)

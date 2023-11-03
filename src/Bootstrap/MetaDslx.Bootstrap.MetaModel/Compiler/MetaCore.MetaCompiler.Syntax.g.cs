@@ -1074,12 +1074,12 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
 				return new SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
 			}
 		}
-	    public SyntaxToken THash 
+	    public SyntaxToken TDollar 
 		{ 
 			get 
 			{ 
 				var green = (global::MetaDslx.Bootstrap.MetaModel.Compiler.Syntax.InternalSyntax.ClassNameAlt1Green)this.Green;
-				var greenToken = green.THash;
+				var greenToken = green.TDollar;
 				return new SyntaxToken(this, greenToken, this.GetChildPosition(1), this.GetChildIndex(1));
 			}
 		}
@@ -1105,24 +1105,24 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
 	
 	    public ClassNameAlt1Syntax WithTIdentifier(SyntaxToken tIdentifier)
 		{
-			return this.Update(tIdentifier, this.THash, this.SymbolType);
+			return this.Update(tIdentifier, this.TDollar, this.SymbolType);
 		}
 	
-	    public ClassNameAlt1Syntax WithTHash(SyntaxToken tHash)
+	    public ClassNameAlt1Syntax WithTDollar(SyntaxToken tDollar)
 		{
-			return this.Update(this.TIdentifier, tHash, this.SymbolType);
+			return this.Update(this.TIdentifier, tDollar, this.SymbolType);
 		}
 	
 	    public ClassNameAlt1Syntax WithSymbolType(IdentifierSyntax symbolType)
 		{
-			return this.Update(this.TIdentifier, this.THash, symbolType);
+			return this.Update(this.TIdentifier, this.TDollar, symbolType);
 		}
 	
-	    public ClassNameAlt1Syntax Update(SyntaxToken tIdentifier, SyntaxToken tHash, IdentifierSyntax symbolType)
+	    public ClassNameAlt1Syntax Update(SyntaxToken tIdentifier, SyntaxToken tDollar, IdentifierSyntax symbolType)
 	    {
-	        if (this.TIdentifier != tIdentifier || this.THash != tHash || this.SymbolType != symbolType)
+	        if (this.TIdentifier != tIdentifier || this.TDollar != tDollar || this.SymbolType != symbolType)
 	        {
-	            var newNode = MetaCoreLanguage.Instance.SyntaxFactory.ClassNameAlt1(tIdentifier, tHash, symbolType);
+	            var newNode = MetaCoreLanguage.Instance.SyntaxFactory.ClassNameAlt1(tIdentifier, tDollar, symbolType);
 	            var annotations = this.GetAnnotations();
 	            if (annotations != null && annotations.Length > 0)
 	               newNode = newNode.WithAnnotations(annotations);
@@ -1546,12 +1546,12 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
 				return new SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
 			}
 		}
-	    public SyntaxToken THash 
+	    public SyntaxToken TDollar 
 		{ 
 			get 
 			{ 
 				var green = (global::MetaDslx.Bootstrap.MetaModel.Compiler.Syntax.InternalSyntax.PropertyNameAlt1Green)this.Green;
-				var greenToken = green.THash;
+				var greenToken = green.TDollar;
 				return new SyntaxToken(this, greenToken, this.GetChildPosition(1), this.GetChildIndex(1));
 			}
 		}
@@ -1583,24 +1583,24 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
 	
 	    public PropertyNameAlt1Syntax WithTIdentifier(SyntaxToken tIdentifier)
 		{
-			return this.Update(tIdentifier, this.THash, this.SymbolProperty);
+			return this.Update(tIdentifier, this.TDollar, this.SymbolProperty);
 		}
 	
-	    public PropertyNameAlt1Syntax WithTHash(SyntaxToken tHash)
+	    public PropertyNameAlt1Syntax WithTDollar(SyntaxToken tDollar)
 		{
-			return this.Update(this.TIdentifier, tHash, this.SymbolProperty);
+			return this.Update(this.TIdentifier, tDollar, this.SymbolProperty);
 		}
 	
 	    public PropertyNameAlt1Syntax WithSymbolProperty(SyntaxToken symbolProperty)
 		{
-			return this.Update(this.TIdentifier, this.THash, symbolProperty);
+			return this.Update(this.TIdentifier, this.TDollar, symbolProperty);
 		}
 	
-	    public PropertyNameAlt1Syntax Update(SyntaxToken tIdentifier, SyntaxToken tHash, SyntaxToken symbolProperty)
+	    public PropertyNameAlt1Syntax Update(SyntaxToken tIdentifier, SyntaxToken tDollar, SyntaxToken symbolProperty)
 	    {
-	        if (this.TIdentifier != tIdentifier || this.THash != tHash || this.SymbolProperty != symbolProperty)
+	        if (this.TIdentifier != tIdentifier || this.TDollar != tDollar || this.SymbolProperty != symbolProperty)
 	        {
-	            var newNode = MetaCoreLanguage.Instance.SyntaxFactory.PropertyNameAlt1(tIdentifier, tHash, symbolProperty);
+	            var newNode = MetaCoreLanguage.Instance.SyntaxFactory.PropertyNameAlt1(tIdentifier, tDollar, symbolProperty);
 	            var annotations = this.GetAnnotations();
 	            if (annotations != null && annotations.Length > 0)
 	               newNode = newNode.WithAnnotations(annotations);
