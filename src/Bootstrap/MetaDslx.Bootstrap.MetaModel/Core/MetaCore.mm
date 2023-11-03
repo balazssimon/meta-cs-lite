@@ -54,6 +54,7 @@ class MetaClass : MetaType
 
 class MetaProperty : MetaDeclaration
 {
+	string Name;
 	MetaType Type;
 	string SymbolProperty;
 	bool IsContainment;

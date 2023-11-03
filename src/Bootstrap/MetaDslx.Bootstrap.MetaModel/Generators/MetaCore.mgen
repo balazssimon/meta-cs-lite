@@ -157,7 +157,7 @@ internal class [cls.Name]_Impl : __MetaModelObject, [cls.Name]
 			[foreach (var prop in metaCls.AllDeclaredProperties)]
 			[var info = metaCls.ModelPropertyInfos[prop]]
 			[var slot = info.Slot]
-			modelPropertyInfos.Add([ToCSharp(prop)], new __ModelPropertyInfo(new __ModelPropertySlot([ToCSharp(slot.SlotProperty)], [ToCSharp(slot.SlotProperties)], null, [ToCSharp(slot.Flags)]), [ToCSharp(info.OppositeProperties)], [ToCSharp(info.SubsettedProperties)], [ToCSharp(info.SubsettingProperties)], [ToCSharp(info.RedefinedProperties)], [ToCSharp(info.RedefiningProperties)]));
+			modelPropertyInfos.Add([ToCSharp(prop)], new __ModelPropertyInfo(new __ModelPropertySlot([ToCSharp(slot.SlotProperty)], [ToCSharp(slot.SlotProperties)], null, [ToCSharp(slot.Flags)]), [ToCSharp(info.OppositeProperties)], [ToCSharp(info.SubsettedProperties)], [ToCSharp(info.SubsettingProperties)], [ToCSharp(info.RedefinedProperties)], [ToCSharp(info.RedefiningProperties)], [ToCSharp(info.HiddenProperties)], [ToCSharp(info.HidingProperties)]));
 			[end foreach]
 			_modelPropertyInfos = modelPropertyInfos.ToImmutable();
 		}

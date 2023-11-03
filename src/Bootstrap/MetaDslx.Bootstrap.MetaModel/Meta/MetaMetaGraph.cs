@@ -65,9 +65,9 @@ namespace MetaDslx.Bootstrap.MetaModel.Meta
             return new MetaMetaProperty(declaringType, property);
         }
 
-        protected override MetaPropertyInfo<MetaType, MetaProperty, TypeSymbol> MakePropertyInfo(MetaPropertySlot<MetaType, MetaProperty, TypeSymbol> slot, ImmutableArray<MetaProperty<MetaType, MetaProperty, TypeSymbol>> oppositeProperties = default, ImmutableArray<MetaProperty<MetaType, MetaProperty, TypeSymbol>> subsettedProperties = default, ImmutableArray<MetaProperty<MetaType, MetaProperty, TypeSymbol>> subsettingProperties = default, ImmutableArray<MetaProperty<MetaType, MetaProperty, TypeSymbol>> redefinedProperties = default, ImmutableArray<MetaProperty<MetaType, MetaProperty, TypeSymbol>> redefiningProperties = default)
+        protected override MetaPropertyInfo<MetaType, MetaProperty, TypeSymbol> MakePropertyInfo(MetaPropertySlot<MetaType, MetaProperty, TypeSymbol> slot, ImmutableArray<MetaProperty<MetaType, MetaProperty, TypeSymbol>> oppositeProperties, ImmutableArray<MetaProperty<MetaType, MetaProperty, TypeSymbol>> subsettedProperties, ImmutableArray<MetaProperty<MetaType, MetaProperty, TypeSymbol>> subsettingProperties, ImmutableArray<MetaProperty<MetaType, MetaProperty, TypeSymbol>> redefinedProperties, ImmutableArray<MetaProperty<MetaType, MetaProperty, TypeSymbol>> redefiningProperties, ImmutableArray<MetaProperty<MetaType, MetaProperty, TypeSymbol>> hiddenProperties, ImmutableArray<MetaProperty<MetaType, MetaProperty, TypeSymbol>> hidingProperties)
         {
-            return new MetaMetaPropertyInfo(slot, oppositeProperties, subsettedProperties, subsettingProperties, redefinedProperties, redefiningProperties);
+            return new MetaMetaPropertyInfo(slot, oppositeProperties, subsettedProperties, subsettingProperties, redefinedProperties, redefiningProperties, hiddenProperties, hidingProperties);
         }
 
         protected override MetaPropertySlot<MetaType, MetaProperty, TypeSymbol> MakePropertySlot(MetaProperty<MetaType, MetaProperty, TypeSymbol> slotProperty, ImmutableArray<MetaProperty<MetaType, MetaProperty, TypeSymbol>> slotProperties, object? defaultValue, ModelPropertyFlags flags)

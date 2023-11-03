@@ -13,6 +13,8 @@ namespace MetaDslx.Modeling
         private readonly ImmutableArray<ModelProperty> _subsettingProperties;
         private readonly ImmutableArray<ModelProperty> _redefinedProperties;
         private readonly ImmutableArray<ModelProperty> _redefiningProperties;
+        private readonly ImmutableArray<ModelProperty> _hiddenProperties;
+        private readonly ImmutableArray<ModelProperty> _hidingProperties;
 
         public ModelPropertyInfo(
             ModelPropertySlot slot,
@@ -20,7 +22,9 @@ namespace MetaDslx.Modeling
             ImmutableArray<ModelProperty> subsettedProperties = default, 
             ImmutableArray<ModelProperty> subsettingProperties = default, 
             ImmutableArray<ModelProperty> redefinedProperties = default, 
-            ImmutableArray<ModelProperty> redefiningProperties = default)
+            ImmutableArray<ModelProperty> redefiningProperties = default,
+            ImmutableArray<ModelProperty> hiddenProperties = default,
+            ImmutableArray<ModelProperty> hidingProperties = default)
         {
             _slot = slot;
             _oppositeProperties = oppositeProperties.IsDefault ? ImmutableArray<ModelProperty>.Empty : oppositeProperties;
@@ -28,6 +32,8 @@ namespace MetaDslx.Modeling
             _subsettingProperties = subsettingProperties.IsDefault ? ImmutableArray<ModelProperty>.Empty : subsettingProperties;
             _redefinedProperties = redefinedProperties.IsDefault ? ImmutableArray<ModelProperty>.Empty : redefinedProperties;
             _redefiningProperties = redefiningProperties.IsDefault ? ImmutableArray<ModelProperty>.Empty : redefiningProperties;
+            _hiddenProperties = hiddenProperties.IsDefault ? ImmutableArray<ModelProperty>.Empty : hiddenProperties;
+            _hidingProperties = hidingProperties.IsDefault ? ImmutableArray<ModelProperty>.Empty : hidingProperties;
         }
 
         public ModelPropertySlot Slot => _slot;
@@ -36,5 +42,7 @@ namespace MetaDslx.Modeling
         public ImmutableArray<ModelProperty> SubsettingProperties => _subsettingProperties;
         public ImmutableArray<ModelProperty> RedefinedProperties => _redefinedProperties;
         public ImmutableArray<ModelProperty> RedefiningProperties => _redefiningProperties;
+        public ImmutableArray<ModelProperty> HiddenProperties => _hiddenProperties;
+        public ImmutableArray<ModelProperty> HidingProperties => _hidingProperties;
     }
 }

@@ -353,14 +353,29 @@ namespace MetaDslx.Modeling.Meta
             }
             builder.Free();
             var modelPropertyInfos = ImmutableDictionary.CreateBuilder<MetaProperty<TType, TProperty, TSymbol>, MetaPropertyInfo<TType, TProperty, TSymbol>>();
-            foreach (var prop in allDeclaredProperties)
+            for (int i = 0; i < allDeclaredProperties.Length; ++i)
             {
+                var prop = allDeclaredProperties[i];
                 var oppositeProps = oppositeProperties.TryGetValue(prop, out var propOpposite) ? propOpposite.ToImmutableArray() : ImmutableArray<MetaProperty<TType, TProperty, TSymbol>>.Empty;
                 var redefinedProps = redefinedProperties.TryGetValue(prop, out var propRedefined) ? propRedefined.ToImmutableArray() : ImmutableArray<MetaProperty<TType, TProperty, TSymbol>>.Empty;
                 var redefiningProps = redefiningProperties.TryGetValue(prop, out var propRedefining) ? propRedefining.ToImmutableArray() : ImmutableArray<MetaProperty<TType, TProperty, TSymbol>>.Empty;
                 var subsettedProps = subsettedProperties.TryGetValue(prop, out var propSubsetted) ? propSubsetted.ToImmutableArray() : ImmutableArray<MetaProperty<TType, TProperty, TSymbol>>.Empty;
                 var subsettingProps = subsettingProperties.TryGetValue(prop, out var propSubsetting) ? propSubsetting.ToImmutableArray() : ImmutableArray<MetaProperty<TType, TProperty, TSymbol>>.Empty;
-                var propInfo = MakePropertyInfo(slotPropToSlot[propToSlotProp[prop]], oppositeProps, subsettedProps, subsettingProps, redefinedProps, redefiningProps);
+                var hiddenProps = ArrayBuilder<MetaProperty<TType, TProperty, TSymbol>>.GetInstance();
+                var hidingProps = ArrayBuilder<MetaProperty<TType, TProperty, TSymbol>>.GetInstance();
+                for (int j = 0; j < allDeclaredProperties.Length; ++j)
+                {
+                    var hprop = allDeclaredProperties[j];
+                    if (j > i)
+                    {
+                        if (hprop.Name == prop.Name) hiddenProps.Add(hprop);
+                    }
+                    else if (j < i)
+                    {
+                        if (hprop.Name == prop.Name) hidingProps.Add(hprop);
+                    }
+                }
+                var propInfo = MakePropertyInfo(slotPropToSlot[propToSlotProp[prop]], oppositeProps, subsettedProps, subsettingProps, redefinedProps, redefiningProps, hiddenProps.ToImmutableAndFree(), hidingProps.ToImmutableAndFree());
                 modelPropertyInfos.Add(prop, propInfo);
             }
             return modelPropertyInfos.ToImmutable();
@@ -423,11 +438,13 @@ namespace MetaDslx.Modeling.Meta
         protected abstract bool IsPrimitiveType(TType type);
         protected abstract MetaPropertySlot<TType, TProperty, TSymbol> MakePropertySlot(MetaProperty<TType, TProperty, TSymbol> slotProperty, ImmutableArray<MetaProperty<TType, TProperty, TSymbol>> slotProperties, object? defaultValue, ModelPropertyFlags flags);
         protected abstract MetaPropertyInfo<TType, TProperty, TSymbol> MakePropertyInfo(MetaPropertySlot<TType, TProperty, TSymbol> slot,
-            ImmutableArray<MetaProperty<TType, TProperty, TSymbol>> oppositeProperties = default,
-            ImmutableArray<MetaProperty<TType, TProperty, TSymbol>> subsettedProperties = default,
-            ImmutableArray<MetaProperty<TType, TProperty, TSymbol>> subsettingProperties = default,
-            ImmutableArray<MetaProperty<TType, TProperty, TSymbol>> redefinedProperties = default,
-            ImmutableArray<MetaProperty<TType, TProperty, TSymbol>> redefiningProperties = default);
+            ImmutableArray<MetaProperty<TType, TProperty, TSymbol>> oppositeProperties,
+            ImmutableArray<MetaProperty<TType, TProperty, TSymbol>> subsettedProperties,
+            ImmutableArray<MetaProperty<TType, TProperty, TSymbol>> subsettingProperties,
+            ImmutableArray<MetaProperty<TType, TProperty, TSymbol>> redefinedProperties,
+            ImmutableArray<MetaProperty<TType, TProperty, TSymbol>> redefiningProperties,
+            ImmutableArray<MetaProperty<TType, TProperty, TSymbol>> hiddenProperties,
+            ImmutableArray<MetaProperty<TType, TProperty, TSymbol>> hidingProperties);
 
         private class MetaClassComparer : IComparer<MetaClass<TType, TProperty, TSymbol>>
         {
