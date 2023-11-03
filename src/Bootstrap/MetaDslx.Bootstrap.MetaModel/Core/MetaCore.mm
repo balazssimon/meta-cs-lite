@@ -2,11 +2,8 @@ namespace MetaDslx.Bootstrap.MetaModel.CoreX;
 
 using System;
 using MetaDslx.CodeAnalysis.Symbols;
-using MetaDslx.Bootstrap.MetaModel.Core;
 
 metamodel MetaCore;
-
-class Name {}
 
 class MetaDeclaration
 {

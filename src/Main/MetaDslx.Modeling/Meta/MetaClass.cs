@@ -27,5 +27,10 @@ namespace MetaDslx.Modeling.Meta
         public ImmutableArray<MetaProperty<TType, TProperty, TSymbol>> PublicProperties { get; internal set; }
         public ImmutableDictionary<string, MetaProperty<TType, TProperty, TSymbol>> PublicPropertiesByName { get; internal set; }
         public ImmutableDictionary<MetaProperty<TType, TProperty, TSymbol>, MetaPropertyInfo<TType, TProperty, TSymbol>> ModelPropertyInfos { get; internal set; }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

@@ -76,5 +76,10 @@ namespace MetaDslx.Modeling.Reflection
                 return null;
             }
         }
+
+        public override string ToString()
+        {
+            return _metaType.Name;
+        }
     }
 }

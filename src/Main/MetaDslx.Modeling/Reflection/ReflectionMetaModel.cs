@@ -7,8 +7,10 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
+using System.Xml.Linq;
 using MetaDslx.CodeAnalysis.PooledObjects;
 using MetaDslx.Modeling.Meta;
+using Microsoft.CodeAnalysis;
 
 namespace MetaDslx.Modeling.Reflection
 {

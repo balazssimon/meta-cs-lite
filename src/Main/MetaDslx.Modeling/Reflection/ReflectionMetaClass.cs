@@ -41,5 +41,10 @@ namespace MetaDslx.Modeling.Reflection
                 return UnderlyingType.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly).ToImmutableArray();
             }
         }
+
+        public override string ToString()
+        {
+            return UnderlyingType.Name;
+        }
     }
 }

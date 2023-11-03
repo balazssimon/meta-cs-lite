@@ -27,5 +27,10 @@ namespace MetaDslx.Modeling.Meta
 
         public ModelPropertyFlags Flags { get; internal set; }
         public TType Type { get; internal set; }
+
+        public override string ToString()
+        {
+            return $"{Name}.{UnderlyingProperty}";
+        }
     }
 }

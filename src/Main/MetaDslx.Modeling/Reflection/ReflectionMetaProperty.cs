@@ -116,5 +116,10 @@ namespace MetaDslx.Modeling.Reflection
                 yield return (attr.Type, attr.Property);
             }
         }
+
+        public override string ToString()
+        {
+            return $"{DeclaringType.Name}.{UnderlyingProperty.Name}";
+        }
     }
 }

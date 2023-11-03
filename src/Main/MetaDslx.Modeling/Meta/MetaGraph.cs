@@ -205,7 +205,7 @@ namespace MetaDslx.Modeling.Meta
                         propRedefined.Add(redefinedProp);
                     }
                 }
-                foreach (var sprop in prop.GetRedefinedProperties())
+                foreach (var sprop in prop.GetSubsettedProperties())
                 {
                     var subsettedProp = cls.AllDeclaredProperties.Where(p => ReferenceEquals(p.DeclaringType.UnderlyingType, sprop.DeclaringType) && p.Name == sprop.PropertyName).FirstOrDefault();
                     if (subsettedProp is not null)
