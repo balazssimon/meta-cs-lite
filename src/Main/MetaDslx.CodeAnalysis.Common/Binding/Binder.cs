@@ -366,7 +366,7 @@ namespace MetaDslx.CodeAnalysis.Binding
                 childBinder.CompleteBind(context, resolveLazy);
             }
         }
-
+        
         public ImmutableArray<object?> Bind(BindingContext context)
         {
             if (_boundValues.IsDefault)

@@ -220,7 +220,7 @@ namespace MetaDslx.Modeling.Meta
                 }
                 foreach (var oprop in prop.GetOppositeProperties())
                 {
-                    if (_classTypes.TryGetValue(oprop.DeclaringType, out var oppositeClass))
+                    if (oprop.DeclaringType is not null && _classTypes.TryGetValue(oprop.DeclaringType, out var oppositeClass))
                     {
                         var oppositeProp = oppositeClass.AllDeclaredProperties.Where(p => ReferenceEquals(p.DeclaringType.UnderlyingType, oprop.DeclaringType) && p.Name == oprop.PropertyName).FirstOrDefault();
                         if (oppositeProp is not null)

@@ -1044,7 +1044,7 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                     annot.IsNegated = true;
                     annot.ConstructorArguments.Add(valueProp);
                 }
-                elem.Annotations.Add(annot);
+                elem.NameAnnotations.Add(annot);
             }
             if (elem is ParserRuleReferenceElement refElem)
             {

@@ -64,7 +64,7 @@ public class [mm.Name] : __MetaModel
 		[foreach (var cls in Classes)]
 			[var metaCls = Graph.GetMetaClass(cls)]
 			[foreach (var prop in metaCls.DeclaredProperties)]
-		_[cls.Name]_[prop.Name] = new __ModelProperty(typeof([cls.Name]), "[prop.Name]", typeof([ToCSharp(prop.Type)]), null, [ToCSharp(prop.Flags)], [prop.SymbolProperty ?? "null"]);
+		_[cls.Name]_[prop.Name] = new __ModelProperty(typeof([cls.Name]), "[prop.Name]", typeof([ToCSharp(prop.Type)]), null, [ToCSharp(prop.Flags)], [if(prop.SymbolProperty is null)]null[else]"[prop.SymbolProperty]"[end if]);
 			[end foreach]
 		[end foreach]
 		_instance = new [mm.Name]();
@@ -165,9 +165,9 @@ internal class [cls.Name]_Impl : __MetaModelObject, [cls.Name]
         public override __MetaModel MetaModel => [mm.Name].Instance;
         public override global::System.Type MetaType => typeof([cls.Name]);
 
-        public override __Type? SymbolType => null; // TODO
-        public override __ModelProperty? NameProperty => [if (metaCls.NameProperty is null)]null[else][end if];
-        public override __ModelProperty? TypeProperty => null; // TODO
+        public override __Type? SymbolType => [if (metaCls.SymbolType is null)]null[else]typeof(global::[ToCSharp(metaCls.SymbolType)])[end if];
+        public override __ModelProperty? NameProperty => [if (metaCls.NameProperty is null)]null[else][ToCSharp(metaCls.NameProperty)][end if];
+        public override __ModelProperty? TypeProperty => [if (metaCls.TypeProperty is null)]null[else][ToCSharp(metaCls.TypeProperty)][end if];
         public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> DeclaredProperties => _declaredProperties;
         public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> AllDeclaredProperties => _allDeclaredProperties;
         public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> PublicProperties => _publicProperties;

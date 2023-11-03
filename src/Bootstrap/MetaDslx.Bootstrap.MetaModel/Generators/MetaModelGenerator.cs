@@ -36,10 +36,16 @@ namespace MetaDslx.Bootstrap.MetaModel.Generators
             if (type is null) return string.Empty;
             if (type is MetaPrimitiveType mpt)
             {
-                if (mpt.Name == "Type") return "__Type";
+                if (mpt.Name == "type") return "__Type";
                 else return mpt.Name;
             }
             return type.FullName;
+        }
+
+        public string ToCSharp(TypeSymbol? type)
+        {
+            if (type is null) return string.Empty;
+            return SymbolDisplayFormat.FullyQualifiedFormat.ToString(type);
         }
 
         public string ToCSharp(MetaProperty<MetaType, MetaProperty, TypeSymbol> property)

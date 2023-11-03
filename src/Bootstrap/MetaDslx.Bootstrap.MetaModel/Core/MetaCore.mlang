@@ -41,7 +41,7 @@ part ClassBody: '{' properties+=MetaProperty* '}';
 MetaProperty: (isContainment?='contains' | isDerived?='derived')? type=TypeReference name=PropertyName PropertyOpposite?  ';';
 [Name]
 [Identifier]
-part PropertyName: TIdentifier? '#' symbolProperty=TIdentifier | TIdentifier;
+part PropertyName: TIdentifier? '#' symbolProperty=[Value(string)]TIdentifier | TIdentifier;
 part PropertyOpposite: 'opposite' Opposite=#MetaProperty;
 
 TypeReference returns MetaType: MetaPrimitiveType | MetaArrayType | #MetaType;

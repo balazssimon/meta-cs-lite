@@ -34,11 +34,11 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Binding
                     this.Begin(__annot2, node);
                     try
                     {
-                        var __annot1 = new NameBinder(qualifierProperty: "Declarations");
+                        var __annot1 = new PropertyBinder(name: "Name");
                         this.Begin(__annot1, node.Name);
                         try
                         {
-                            var __annot0 = new PropertyBinder(name: "Name");
+                            var __annot0 = new NameBinder(qualifierProperty: "Declarations");
                             this.Begin(__annot0, node.Name);
                             try
                             {
@@ -77,11 +77,11 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Binding
             	this.Begin(__annot2, node);
             	try
             	{
-            	    var __annot1 = new NameBinder(qualifierProperty: "Declarations");
+            	    var __annot1 = new PropertyBinder(name: "Name");
             	    this.Begin(__annot1, node.Name);
             	    try
             	    {
-            	        var __annot0 = new PropertyBinder(name: "Name");
+            	        var __annot0 = new NameBinder(qualifierProperty: "Declarations");
             	        this.Begin(__annot0, node.Name);
             	        try
             	        {
@@ -223,36 +223,19 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Binding
 
         public virtual void VisitMetaClass(MetaClassSyntax node)
         {
-        	var __annot2 = new DefineBinder(type: typeof(global::MetaDslx.Bootstrap.MetaModel.Core.MetaClass));
-        	this.Begin(__annot2, node);
+        	var __annot1 = new DefineBinder(type: typeof(global::MetaDslx.Bootstrap.MetaModel.Core.MetaClass));
+        	this.Begin(__annot1, node);
         	try
         	{
-        	    if (node.IsAbstract.GetMetaCoreKind() != MetaCoreSyntaxKind.None)
-        	    {
-        	        var __annot0 = new PropertyBinder(name: "IsAbstract", value: true);
-        	        this.Begin(__annot0, node.IsAbstract);
-        	        try
-        	        {
-        	            // this.VisitToken(node.IsAbstract);
-        	        }
-        	        finally
-        	        {
-        	            this.End(__annot0);
-        	        }
-        	    }
-        	    else
-        	    {
-        	        // this.VisitToken(node.IsAbstract);
-        	    }
-        	    var __annot1 = new PropertyBinder(name: "Name");
-        	    this.Begin(__annot1, node.Name);
+        	    var __annot0 = new PropertyBinder(name: "Name");
+        	    this.Begin(__annot0, node.Name);
         	    try
         	    {
         	        this.Visit(node.Name);
         	    }
         	    finally
         	    {
-        	        this.End(__annot1);
+        	        this.End(__annot0);
         	    }
         	    this.Visit(node.BaseClasses);
         	    this.Visit(node.ClassBody);
@@ -260,7 +243,7 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Binding
         	}
         	finally
         	{
-        	    this.End(__annot2);
+        	    this.End(__annot1);
         	}
         }
 
@@ -340,11 +323,11 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Binding
         	    this.Begin(__annot2, node);
         	    try
         	    {
-        	        var __annot1 = new UseBinder(types: new global::System.Type[] {typeof(global::MetaDslx.CodeAnalysis.Symbols.Symbol)}.ToImmutableArray(), suffixes: new string[] {"Symbol"}.ToImmutableArray());
+        	        var __annot1 = new PropertyBinder(name: "SymbolType");
         	        this.Begin(__annot1, node.SymbolType);
         	        try
         	        {
-        	            var __annot0 = new PropertyBinder(name: "SymbolType");
+        	            var __annot0 = new UseBinder(types: new global::System.Type[] {typeof(global::MetaDslx.CodeAnalysis.Symbols.Symbol)}.ToImmutableArray(), suffixes: new string[] {"Symbol"}.ToImmutableArray());
         	            this.Begin(__annot0, node.SymbolType);
         	            try
         	            {
@@ -431,90 +414,69 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Binding
 
         public virtual void VisitMetaProperty(MetaPropertySyntax node)
         {
-        	var __annot4 = new DefineBinder(type: typeof(global::MetaDslx.Bootstrap.MetaModel.Core.MetaProperty));
-        	this.Begin(__annot4, node);
+        	var __annot2 = new DefineBinder(type: typeof(global::MetaDslx.Bootstrap.MetaModel.Core.MetaProperty));
+        	this.Begin(__annot2, node);
         	try
         	{
-        	    switch (node.Element.GetMetaCoreKind())
-        	    {
-        	    case MetaCoreSyntaxKind.KContains:
-        	        var __annot0 = new PropertyBinder(name: "IsContainment", value: true);
-        	        this.Begin(__annot0, node.Element);
-        	        try
-        	        {
-        	            // this.VisitToken(node.Element);
-        	        }
-        	        finally
-        	        {
-        	            this.End(__annot0);
-        	        }
-        	        break;
-        	    case MetaCoreSyntaxKind.KDerived:
-        	        var __annot1 = new PropertyBinder(name: "IsDerived", value: true);
-        	        this.Begin(__annot1, node.Element);
-        	        try
-        	        {
-        	            // this.VisitToken(node.Element);
-        	        }
-        	        finally
-        	        {
-        	            this.End(__annot1);
-        	        }
-        	        break;
-        	    default:
-        	        // this.VisitToken(node.Element);
-        	        break;
-        	    }
-        	    var __annot2 = new PropertyBinder(name: "Type");
-        	    this.Begin(__annot2, node.Type);
+        	    var __annot0 = new PropertyBinder(name: "Type");
+        	    this.Begin(__annot0, node.Type);
         	    try
         	    {
         	        this.Visit(node.Type);
         	    }
         	    finally
         	    {
-        	        this.End(__annot2);
+        	        this.End(__annot0);
         	    }
-        	    var __annot3 = new PropertyBinder(name: "Name");
-        	    this.Begin(__annot3, node.Name);
+        	    var __annot1 = new PropertyBinder(name: "Name");
+        	    this.Begin(__annot1, node.Name);
         	    try
         	    {
         	        this.Visit(node.Name);
         	    }
         	    finally
         	    {
-        	        this.End(__annot3);
+        	        this.End(__annot1);
         	    }
         	    this.Visit(node.PropertyOpposite);
         	        
         	}
         	finally
         	{
-        	    this.End(__annot4);
+        	    this.End(__annot2);
         	}
         }
 
         public virtual void VisitPropertyNameAlt1(PropertyNameAlt1Syntax node)
         {
-        	var __annot2 = new NameBinder();
-        	this.Begin(__annot2, node);
+        	var __annot3 = new NameBinder();
+        	this.Begin(__annot3, node);
         	try
         	{
-        	    var __annot1 = new IdentifierBinder();
-        	    this.Begin(__annot1, node);
+        	    var __annot2 = new IdentifierBinder();
+        	    this.Begin(__annot2, node);
         	    try
         	    {
         	        if (node.SymbolProperty.GetMetaCoreKind() != MetaCoreSyntaxKind.None)
         	        {
-        	            var __annot0 = new PropertyBinder(name: "SymbolProperty");
-        	            this.Begin(__annot0, node.SymbolProperty);
+        	            var __annot1 = new PropertyBinder(name: "SymbolProperty");
+        	            this.Begin(__annot1, node.SymbolProperty);
         	            try
         	            {
-        	                // this.VisitToken(node.SymbolProperty);
+        	                var __annot0 = new ValueBinder(type: typeof(string));
+        	                this.Begin(__annot0, node.SymbolProperty);
+        	                try
+        	                {
+        	                    // this.VisitToken(node.SymbolProperty);
+        	                }
+        	                finally
+        	                {
+        	                    this.End(__annot0);
+        	                }
         	            }
         	            finally
         	            {
-        	                this.End(__annot0);
+        	                this.End(__annot1);
         	            }
         	        }
         	        else
@@ -525,12 +487,12 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Binding
         	    }
         	    finally
         	    {
-        	        this.End(__annot1);
+        	        this.End(__annot2);
         	    }
         	}
         	finally
         	{
-        	    this.End(__annot2);
+        	    this.End(__annot3);
         	}
         }
 

@@ -78,7 +78,7 @@ namespace MetaDslx.Bootstrap.MetaModel.Core
         }
 
         [Containment]
-        [Redefines(typeof(MetaDeclaration), "Declarations")]
+        [Subsets(typeof(MetaDeclaration), "Declarations")]
         public List<MetaEnumLiteral> Literals { get; }
     }
 
@@ -104,6 +104,7 @@ namespace MetaDslx.Bootstrap.MetaModel.Core
         public bool IsAbstract { get; set; }
         public List<MetaClass> BaseTypes { get; set; }
         [Containment]
+        [Subsets(typeof(MetaDeclaration), "Declarations")]
         public List<MetaProperty> Properties { get; set; }
     }
 
