@@ -24,24 +24,8 @@ namespace MetaDslx.Modeling
             _children = new ChildList(this);
         }
 
-        protected abstract ModelObjectInfo MInfo { get; }
-        protected abstract object? MUnderlyingObject { get; }
-
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        string IModelObject.Id
-        {
-            get => _id;
-            set => _id = value;
-        }
-
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        MetaModel IModelObject.MetaModel => MInfo.MetaModel;
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        Type IModelObject.MetaType => MInfo.MetaType;
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ModelObjectInfo IModelObject.Info => MInfo;
-
-        Model? IModelObject.Model
+        public abstract ModelObjectInfo MInfo { get; }
+        public Model? MModel
         {
             get => _model;
             set
@@ -73,7 +57,7 @@ namespace MetaDslx.Modeling
             }
         }
 
-        IModelObject? IModelObject.Parent
+        public IModelObject? MParent
         {
             get => _parent;
             set
@@ -104,10 +88,44 @@ namespace MetaDslx.Modeling
             }
         }
 
-        IList<IModelObject> IModelObject.Children => _children;
+        public IList<IModelObject> MChildren => _children;
 
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        protected abstract object? MUnderlyingObject { get; }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        string IModelObject.Id
+        {
+            get => _id;
+            set => _id = value;
+        }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        MetaModel IModelObject.MetaModel => MInfo.MetaModel;
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        Type IModelObject.MetaType => MInfo.MetaType;
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        ModelObjectInfo IModelObject.Info => MInfo;
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        Model? IModelObject.Model
+        {
+            get => MModel;
+            set => MModel = value;
+        }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        IModelObject? IModelObject.Parent
+        {
+            get => MParent;
+            set => MParent = value;
+        }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        IList<IModelObject> IModelObject.Children => MChildren;
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         object? IModelObject.UnderlyingObject => MUnderlyingObject;
-
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         ImmutableArray<ModelProperty> IModelObject.DeclaredProperties => MInfo.DeclaredProperties;
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]

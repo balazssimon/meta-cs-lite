@@ -21,7 +21,7 @@ class MetaModel : MetaDeclaration
 	derived string NamespaceName;
 }
 
-class MetaType $Type : MetaDeclaration
+abstract class MetaType $Type : MetaDeclaration
 {
 }
 

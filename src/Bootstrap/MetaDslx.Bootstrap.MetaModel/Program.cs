@@ -1,12 +1,13 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using MetaDslx.Bootstrap.MetaModel;
 using MetaDslx.Bootstrap.MetaModel.Compiler;
-using MetaDslx.Bootstrap.MetaModel.Core;
+//using MetaDslx.Bootstrap.MetaModel.CoreX;
 using MetaDslx.Bootstrap.MetaModel.Generators;
 using MetaDslx.Bootstrap.MetaModel.Meta;
 using MetaDslx.CodeAnalysis;
 using MetaDslx.CodeAnalysis.Symbols;
 using MetaDslx.CodeAnalysis.Text;
+using MetaDslx.Modeling;
 using MetaDslx.Modeling.Reflection;
 using System.Collections.Immutable;
 
@@ -27,7 +28,7 @@ var cmp = Compilation.Create("MetaCore",
     syntaxTrees: new[] { syntaxTree }, 
     references: new[] 
     { 
-        MetadataReference.CreateFromMetaModel(ReflectionMetaModel.CreateFromNamespace(typeof(MetaModel).Assembly, "MetaDslx.Bootstrap.MetaModel.Core")),
+        MetadataReference.CreateFromMetaModel(ReflectionMetaModel.CreateFromNamespace(typeof(MetaDslx.Bootstrap.MetaModel.Core.MetaModel).Assembly, "MetaDslx.Bootstrap.MetaModel.Core")),
         MetadataReference.CreateFromFile(typeof(string).Assembly.Location),
         MetadataReference.CreateFromFile(typeof(Symbol).Assembly.Location),
     },
@@ -48,11 +49,11 @@ Console.WriteLine("----");
 //*/
 //*/
 var model = cmp.SourceModule.Model;
-var mm = model.Objects.OfType<MetaModel>().First();
+var mm = model.Objects.OfType<MetaDslx.Bootstrap.MetaModel.Core.MetaModel>().First();
 Console.WriteLine(mm);
 //*/
-//*/
-var graph = new MetaMetaGraph(model.Objects.OfType<MetaClass>());
+/*/
+var graph = new MetaMetaGraph(model.Objects.OfType<MetaDslx.Bootstrap.MetaModel.Core.MetaClass>());
 graph.Compute();
 var generator = new MetaModelGenerator(mm, graph);
 var output = generator.Generate();
@@ -60,5 +61,13 @@ File.WriteAllText($@"..\..\..\{mm.Name}X.cs", output);
 //*/
 
 //*/
-//MetaDslx.Bootstrap.MetaModel.CoreX.MetaCore.MetaArrayTypeInfo.
+var mx = new Model();
+var fx = new MetaDslx.Bootstrap.MetaModel.CoreX.MetaCoreModelFactory(mx);
+var c1 = fx.MetaClass();
+c1.Name = "Foo";
+var p1 = fx.MetaProperty();
+p1.Name = "Bar";
+p1.Type = c1;
+c1.Declarations.Add(p1);
+Console.WriteLine(c1.Declarations.Count);
 //*/

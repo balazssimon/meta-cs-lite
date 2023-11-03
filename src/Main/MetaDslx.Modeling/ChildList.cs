@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MetaDslx.CodeAnalysis.PooledObjects;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
@@ -102,6 +103,22 @@ namespace MetaDslx.Modeling
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
+        }
+
+        public override string ToString()
+        {
+            var psb = PooledStringBuilder.GetInstance();
+            var sb = psb.Builder;
+            var first = true;
+            sb.Append('[');
+            foreach (var item in _children)
+            {
+                if (first) first = false;
+                else sb.Append(", ");
+                sb.Append(item.ToString());
+            }
+            sb.Append(']');
+            return psb.ToStringAndFree();
         }
     }
 }

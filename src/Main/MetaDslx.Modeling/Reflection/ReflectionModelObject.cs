@@ -25,7 +25,7 @@ namespace MetaDslx.Modeling.Reflection
         public object UnderlyingObject => _underlyingObject;
         protected override object MUnderlyingObject => UnderlyingObject;
 
-        protected override ModelObjectInfo MInfo => _info;
+        public override ModelObjectInfo MInfo => _info;
 
         protected override IEnumerable<ModelProperty> StoredPropertiesCore
         {

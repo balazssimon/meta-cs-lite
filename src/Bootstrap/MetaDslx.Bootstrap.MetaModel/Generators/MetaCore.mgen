@@ -8,7 +8,10 @@ generator MetaModelGenerator;
 template Generate()
 namespace [Namespace]
 {
+	using __Model = global::MetaDslx.Modeling.Model;
 	using __MetaModel = global::MetaDslx.Modeling.MetaModel;
+	using __ModelFactory = global::MetaDslx.Modeling.ModelFactory;
+	using __MultiModelFactory = global::MetaDslx.Modeling.MultiModelFactory;
 	using __ModelVersion = global::MetaDslx.Modeling.ModelVersion;
 	using __ModelObjectInfo = global::MetaDslx.Modeling.ModelObjectInfo;
 	using __ModelProperty = global::MetaDslx.Modeling.ModelProperty;
@@ -18,6 +21,8 @@ namespace [Namespace]
 	using __Type = global::System.Type;
 
 	[GenerateMetaModel(MetaModel)]
+	
+	[GenerateFactory(MetaModel)]
 
 	[foreach (var cls in Classes)]
 	[GenerateInterface(MetaModel, cls)]
@@ -106,7 +111,7 @@ public class [mm.Name] : __MetaModel
     public override bool TryGetInfo(__Type modelObjectType, out __ModelObjectInfo info) => _modelObjectInfosByType.TryGetValue(modelObjectType, out info);
     public override bool TryGetInfo(string modelObjectTypeName, out __ModelObjectInfo info) => _modelObjectInfosByName.TryGetValue(modelObjectTypeName, out info);
 
-	[foreach (var cls in mm.Parent.Declarations.OfType<MetaClass>())]
+	[foreach (var cls in Classes)]
 	public static __ModelObjectInfo [cls.Name]Info => __Impl.[cls.Name]_Impl.__Info.Instance;
 	[foreach (var prop in cls.Properties)]
 	public static __ModelProperty [cls.Name]_[prop.Name] => _[cls.Name]_[prop.Name];
@@ -115,10 +120,49 @@ public class [mm.Name] : __MetaModel
 }
 end template
 
+template GenerateFactory(MetaModel mm)
+public class [mm.Name]ModelFactory : __ModelFactory
+{
+	public [mm.Name]ModelFactory(__Model model)
+		: base(model, [mm.Name].Instance)
+	{
+	}
+
+	[foreach (var cls in Classes.Where(c => !c.IsAbstract))]
+	public [ToCSharp(cls)] [cls.Name](string? id = null)
+	{
+		return ([ToCSharp(cls)])[mm.Name].[cls.Name]Info.Create(Model, id)!;
+	}
+
+	[end foreach]
+}
+
+public class [mm.Name]ModelMultiFactory : __MultiModelFactory
+{
+	public [mm.Name]ModelMultiFactory()
+		: base(new __MetaModel["[]"] { [mm.Name].Instance })
+	{
+	}
+
+	[foreach (var cls in Classes.Where(c => !c.IsAbstract))]
+	public [ToCSharp(cls)] [cls.Name](__Model model, string? id = null)
+	{
+		return ([ToCSharp(cls)])[mm.Name].[cls.Name]Info.Create(model, id)!;
+	}
+
+	[end foreach]
+}
+
+end template
+
 template GenerateInterface(MetaModel mm, MetaClass cls)
+[var metaCls = Graph.GetMetaClass(cls)]
 public interface [cls.Name][if (cls.BaseTypes.Any())] : [foreach (var bt in cls.BaseTypes) separator ", "]global::[bt.FullName][end foreach][end if]
 {
-
+	[foreach (var prop in metaCls.DeclaredProperties)]
+	[var info = metaCls.ModelPropertyInfos[prop]]
+	[if (info.HidingProperties.Length > 0)]new [end if][ToCSharp(prop.UnderlyingProperty.Type)] [prop.Name] { get; [if (HasSetter(prop))]set; [end if]}
+	[end foreach]
 }
 end template
 
@@ -129,9 +173,33 @@ internal class [cls.Name]_Impl : __MetaModelObject, [cls.Name]
 	private [cls.Name]_Impl(string? id)
 		: base(id)
 	{
+		[foreach (var slot in metaCls.Slots)]
+			[if (IsCollection(slot))]
+		((__IModelObject)this).Init([ToCSharp(slot.SlotProperty)], new global::MetaDslx.Modeling.ModelObjectList<[ToCSharp(slot.SlotProperty.Type)]>(this, __Info.Instance.GetSlot([ToCSharp(slot.SlotProperty)])!));
+			[else if (slot.DefaultValue is not null)]
+		((__IModelObject)this).Init([ToCSharp(slot.SlotProperty)], ([ToCSharp(slot.SlotProperty.Type)])[ToCSharpValue(slot.SlotProperty.Type, slot.DefaultValue)]);
+			[end if]
+		[end foreach]
 	}
 
-	protected override __ModelObjectInfo MInfo => __Info.Instance;
+	public override __ModelObjectInfo MInfo => __Info.Instance;
+
+	[foreach (var prop in metaCls.AllDeclaredProperties)]
+		[var info = metaCls.ModelPropertyInfos[prop]]
+		[if (metaCls.PublicProperties.Contains(prop))]
+	public [ToCSharp(prop.UnderlyingProperty.Type)] [prop.Name]
+		[else]
+	["["]global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)["]"]
+	[ToCSharp(prop.UnderlyingProperty.Type)] [ToCSharp(prop.DeclaringType.UnderlyingType)].[prop.Name]
+		[end if]
+	{
+		get => MGet<[ToCSharp(prop.UnderlyingProperty.Type)]>([ToCSharp(prop)]);
+		[if (HasSetter(prop))]
+		set => MAdd<[ToCSharp(prop.UnderlyingProperty.Type)]>([ToCSharp(prop)], value);
+		[end if]
+	}
+
+	[end foreach]
 
 	internal class __Info : __ModelObjectInfo
 	{
@@ -182,6 +250,10 @@ internal class [cls.Name]_Impl : __MetaModelObject, [cls.Name]
 			return result;
 		}
 
+		public override string ToString()
+		{
+			return "[mm.Name].[cls.Name]Info";
+		}
 	}
 }
 end template

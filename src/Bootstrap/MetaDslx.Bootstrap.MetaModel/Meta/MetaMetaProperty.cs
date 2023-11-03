@@ -30,9 +30,9 @@ namespace MetaDslx.Bootstrap.MetaModel.Meta
 
         public override string? SymbolProperty => UnderlyingProperty.SymbolProperty;
 
-        protected override MetaType OriginalType => UnderlyingProperty.Type;
+        public override MetaType OriginalType => UnderlyingProperty.Type;
 
-        protected override ModelPropertyFlags OriginalFlags => _originalFlags;
+        public override ModelPropertyFlags OriginalFlags => _originalFlags;
 
         protected override IEnumerable<(MetaType DeclaringType, string PropertyName)> GetOppositeProperties()
         {

@@ -246,16 +246,16 @@ namespace MetaDslx.Modeling.Meta
                     }
                 }
             }
-            var modelPropertyInfos = Compute(cls.AllDeclaredProperties, subsettedProperties, redefinedProperties, oppositeProperties);
-            cls.ModelPropertyInfos = modelPropertyInfos;
+            ComputeSlots(cls, subsettedProperties, redefinedProperties, oppositeProperties);
         }
 
-        public ImmutableDictionary<MetaProperty<TType, TProperty, TSymbol>, MetaPropertyInfo<TType, TProperty, TSymbol>> Compute(
-            ImmutableArray<MetaProperty<TType, TProperty, TSymbol>> allDeclaredProperties,
+        private void ComputeSlots(
+            MetaClass<TType, TProperty, TSymbol> cls,
             Dictionary<MetaProperty<TType, TProperty, TSymbol>, HashSet<MetaProperty<TType, TProperty, TSymbol>>> subsettedProperties,
             Dictionary<MetaProperty<TType, TProperty, TSymbol>, HashSet<MetaProperty<TType, TProperty, TSymbol>>> redefinedProperties,
             Dictionary<MetaProperty<TType, TProperty, TSymbol>, HashSet<MetaProperty<TType, TProperty, TSymbol>>> oppositeProperties)
         {
+            var allDeclaredProperties = cls.AllDeclaredProperties;
             var subsettingProperties = new Dictionary<MetaProperty<TType, TProperty, TSymbol>, ArrayBuilder<MetaProperty<TType, TProperty, TSymbol>>>();
             foreach (var prop in subsettedProperties.Keys)
             {
@@ -352,6 +352,7 @@ namespace MetaDslx.Modeling.Meta
                 slotPropToSlot.Add(propIds[slotIndex], slot);
             }
             builder.Free();
+            cls.Slots = slots.ToImmutableAndFree();
             var modelPropertyInfos = ImmutableDictionary.CreateBuilder<MetaProperty<TType, TProperty, TSymbol>, MetaPropertyInfo<TType, TProperty, TSymbol>>();
             for (int i = 0; i < allDeclaredProperties.Length; ++i)
             {
@@ -378,7 +379,7 @@ namespace MetaDslx.Modeling.Meta
                 var propInfo = MakePropertyInfo(slotPropToSlot[propToSlotProp[prop]], oppositeProps, subsettedProps, subsettingProps, redefinedProps, redefiningProps, hiddenProps.ToImmutableAndFree(), hidingProps.ToImmutableAndFree());
                 modelPropertyInfos.Add(prop, propInfo);
             }
-            return modelPropertyInfos.ToImmutable();
+            cls.ModelPropertyInfos = modelPropertyInfos.ToImmutable();
         }
 
         private ModelPropertyFlags ComputeSlotFlags(ImmutableArray<MetaProperty<TType, TProperty, TSymbol>> properties)

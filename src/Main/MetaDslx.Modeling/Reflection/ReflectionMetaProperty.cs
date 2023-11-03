@@ -83,9 +83,9 @@ namespace MetaDslx.Modeling.Reflection
 
         public override string? SymbolProperty => _symbolProperty;
 
-        protected internal override Type OriginalType => UnderlyingProperty.PropertyType;
+        public override Type OriginalType => UnderlyingProperty.PropertyType;
 
-        protected internal override ModelPropertyFlags OriginalFlags => _originalFlags;
+        public override ModelPropertyFlags OriginalFlags => _originalFlags;
 
         protected internal override IEnumerable<(Type DeclaringType, string PropertyName)> GetRedefinedProperties()
         {

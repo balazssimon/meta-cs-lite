@@ -12,12 +12,12 @@ namespace MetaDslx.Modeling.Meta
             UnderlyingType = underlyingType;
         }
 
-        internal protected TType UnderlyingType { get; }
+        public TType UnderlyingType { get; }
 
         public abstract string Name { get; }
         public abstract TSymbol? SymbolType { get; set; }
-        internal protected abstract ImmutableArray<TType> OriginalBaseTypes { get; }
-        internal protected abstract ImmutableArray<TProperty> OriginalDeclaredProperties { get; }
+        public abstract ImmutableArray<TType> OriginalBaseTypes { get; }
+        public abstract ImmutableArray<TProperty> OriginalDeclaredProperties { get; }
 
         public ImmutableArray<MetaClass<TType, TProperty, TSymbol>> AllBaseTypes { get; internal set; }
         public MetaProperty<TType, TProperty, TSymbol>? NameProperty { get; internal set; }
@@ -25,6 +25,7 @@ namespace MetaDslx.Modeling.Meta
         public ImmutableArray<MetaProperty<TType, TProperty, TSymbol>> DeclaredProperties { get; internal set; }
         public ImmutableArray<MetaProperty<TType, TProperty, TSymbol>> AllDeclaredProperties { get; internal set; }
         public ImmutableArray<MetaProperty<TType, TProperty, TSymbol>> PublicProperties { get; internal set; }
+        public ImmutableArray<MetaPropertySlot<TType, TProperty, TSymbol>> Slots { get; internal set; }
         public ImmutableDictionary<string, MetaProperty<TType, TProperty, TSymbol>> PublicPropertiesByName { get; internal set; }
         public ImmutableDictionary<MetaProperty<TType, TProperty, TSymbol>, MetaPropertyInfo<TType, TProperty, TSymbol>> ModelPropertyInfos { get; internal set; }
 

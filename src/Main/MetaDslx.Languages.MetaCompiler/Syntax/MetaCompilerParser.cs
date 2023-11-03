@@ -1036,15 +1036,20 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                     var valueProp = new AnnotationProperty(annot) { Name = "value" };
                     valueProp.ValueTexts = ImmutableArray.Create("true");
                     annot.ConstructorArguments.Add(valueProp);
+                    elem.Annotations.Add(annot);
                 }
-                if (elem.AssignmentOperator == AssignmentOperator.NegatedAssign)
+                else if (elem.AssignmentOperator == AssignmentOperator.NegatedAssign)
                 {
                     var valueProp = new AnnotationProperty(annot) { Name = "value" };
                     valueProp.ValueTexts = ImmutableArray.Create("true");
                     annot.IsNegated = true;
                     annot.ConstructorArguments.Add(valueProp);
+                    elem.Annotations.Add(annot);
                 }
-                elem.NameAnnotations.Add(annot);
+                else
+                {
+                    elem.NameAnnotations.Add(annot);
+                }
             }
             if (elem is ParserRuleReferenceElement refElem)
             {

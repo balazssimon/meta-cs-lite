@@ -13,11 +13,11 @@ namespace MetaDslx.Modeling.Meta
         }
 
         public MetaClass<TType, TProperty, TSymbol> DeclaringType { get; }
-        internal protected TProperty UnderlyingProperty { get; }
+        public TProperty UnderlyingProperty { get; }
 
         public abstract string Name { get; }
-        internal protected abstract TType OriginalType { get; }
-        internal protected abstract ModelPropertyFlags OriginalFlags { get; }
+        public abstract TType OriginalType { get; }
+        public abstract ModelPropertyFlags OriginalFlags { get; }
         public abstract bool HasSetter { get; }
         public abstract object? DefaultValue { get; }
         public abstract string? SymbolProperty { get; }

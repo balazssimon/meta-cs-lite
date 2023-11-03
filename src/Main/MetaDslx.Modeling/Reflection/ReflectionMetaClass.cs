@@ -26,7 +26,7 @@ namespace MetaDslx.Modeling.Reflection
             set => _symbolType = value;
         }
 
-        protected internal override ImmutableArray<Type> OriginalBaseTypes
+        public override ImmutableArray<Type> OriginalBaseTypes
         {
             get
             {
@@ -34,7 +34,7 @@ namespace MetaDslx.Modeling.Reflection
             }
         }
 
-        protected internal override ImmutableArray<PropertyInfo> OriginalDeclaredProperties
+        public override ImmutableArray<PropertyInfo> OriginalDeclaredProperties
         {
             get
             {
