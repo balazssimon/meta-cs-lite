@@ -10,6 +10,7 @@ namespace MetaDslx.Modeling
     {
         private string? _name;
         private bool _readOnly;
+        private bool _sealed;
         private ModelValidationOptions? _validationOptions;
         private List<Model> _references;
         private List<Model> _models;
@@ -24,7 +25,11 @@ namespace MetaDslx.Modeling
         public string? Name
         {
             get => _name;
-            set => _name = value;
+            set
+            {
+                CheckReadOnly();
+                _name = value;
+            }
         }
 
         public bool IsReadOnly
@@ -32,11 +37,27 @@ namespace MetaDslx.Modeling
             get => _readOnly;
             set
             {
+                if (_sealed) throw new ModelException("The model group is sealed.");
                 IsReadOnly = value;
                 foreach (var model in _models)
                 {
                     model.IsReadOnly = value;
                 }
+            }
+        }
+        
+        public bool IsSealed
+        {
+            get => _sealed;
+            set
+            {
+                if (_sealed && !value) throw new ModelException("The model group is sealed.");
+                foreach (var model in _models)
+                {
+                    model.IsSealed = value;
+                }
+                _sealed = value;
+                if (_sealed) _readOnly = true;
             }
         }
 
@@ -141,7 +162,8 @@ namespace MetaDslx.Modeling
 
         private void CheckReadOnly()
         {
-            if (_readOnly) throw new ModelException($"The model group '{Name}' is read only");
+            if (_sealed) throw new ModelException("The model group '{Name}' is sealed.");
+            if (_readOnly) throw new ModelException($"The model group '{Name}' is read only.");
         }
 
         public override string ToString()

@@ -56,5 +56,6 @@ class MetaProperty : MetaDeclaration
 	MetaType Type;
 	string SymbolProperty;
 	bool IsContainment;
+	bool IsDerived;
 	MetaProperty Opposite opposite Opposite;
 }

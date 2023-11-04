@@ -12,6 +12,7 @@ namespace MetaDslx.Modeling
         private string _id;
         private string? _name;
         private bool _readOnly;
+        private bool _sealed;
         private ModelGroup? _modelGroup;
         private List<IModelObject> _modelObjects;
         private ModelValidationOptions _validationOptions;
@@ -27,19 +28,42 @@ namespace MetaDslx.Modeling
         public string Id
         {
             get => _id;
-            set => _id = value;
+            set
+            {
+                CheckReadOnly();
+                _id = value;
+            }
         }
 
         public string? Name
         {
             get => _name;
-            set => _name = value;
+            set
+            {
+                CheckReadOnly();
+                _name = value;
+            }
         }
 
         public bool IsReadOnly
         {
             get => _readOnly;
-            set => _readOnly = value;
+            set
+            {
+                if (_sealed) throw new ModelException("The model is sealed.");
+                _readOnly = value;
+            }
+        }
+
+        public bool IsSealed
+        {
+            get => _sealed;
+            set
+            {
+                if (_sealed && !value) throw new ModelException("The model is sealed.");
+                _sealed = value;
+                if (_sealed) _readOnly = true;
+            }
         }
 
         public ModelValidationOptions ValidationOptions => _validationOptions;
@@ -49,6 +73,7 @@ namespace MetaDslx.Modeling
             get => _modelGroup;
             set
             {
+                CheckReadOnly();
                 if (_modelGroup != null && value != null) throw new ModelException($"Error changing the model group '{_modelGroup}' of '{this}' to {value}: to change the model group of a model, remove the model from the old group first.'");
                 if (_modelGroup != null && _modelGroup.IsReadOnly) throw new ModelException($"Error changing the model group '{_modelGroup}' of '{this}' to {value}: the model group containing the model is read only.");
                 if (!object.ReferenceEquals(_modelGroup, value))
@@ -119,9 +144,10 @@ namespace MetaDslx.Modeling
             }
         }
 
-        private void CheckReadOnly()
+        internal void CheckReadOnly(string? message = null)
         {
-            if (ValidationOptions.ValidateReadOnly && _readOnly) throw new ModelException("The model is read only");
+            if (_sealed) throw new ModelException(message is null ? $"The model '{_name}' is sealed." : $"{message}: the model '{_name}' is sealed.");
+            if (ValidationOptions.ValidateReadOnly && _readOnly) throw new ModelException(message is null ? $"The model '{_name}' is read only." : $"{message}: the model '{_name}' is read only.");
         }
 
         public override string ToString()

@@ -12,6 +12,7 @@ namespace MetaDslx.Modeling
         public abstract ModelVersion Version { get; }
         public abstract string Uri { get; }
         public abstract string Prefix { get; }
+        public abstract Model Model { get; }
 
         public MultiModelFactory CreateFactory() => new MultiModelFactory(new MetaModel[] { this });
         public ModelFactory CreateFactory(Model model) => new ModelFactory(model, this);

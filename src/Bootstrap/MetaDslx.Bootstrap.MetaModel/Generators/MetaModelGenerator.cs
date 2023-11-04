@@ -16,21 +16,31 @@ namespace MetaDslx.Bootstrap.MetaModel.Generators
 {
     public partial class MetaModelGenerator
     {
+        private Model _model;
         private Core.MetaModel _metaModel;
         private MetaMetaGraph _graph;
         private ImmutableArray<MetaClass> _classes;
+        private ImmutableArray<IModelObject> _modelObjects;
+        private ImmutableArray<object> _objects;
+        private Dictionary<object, string> _objectNames;
 
-        public MetaModelGenerator(Core.MetaModel metaModel, MetaMetaGraph graph)
+        public MetaModelGenerator(Model model, Core.MetaModel metaModel, MetaMetaGraph graph)
         {
+            _model = model;
             _metaModel = metaModel;
             _graph = graph;
             _classes = _metaModel.Parent.Declarations.OfType<MetaClass>().ToImmutableArray();
+            _modelObjects = model.ModelObjects.ToImmutableArray();
+            _objects = model.Objects.ToImmutableArray();
         }
 
+        public Model Model => _model;
         public Core.MetaModel MetaModel => _metaModel;
         public MetaMetaGraph Graph => _graph;
         public string Namespace => _metaModel.Parent.FullName;
         public ImmutableArray<MetaClass> Classes => _classes;
+        public ImmutableArray<IModelObject> ModelObjects => _modelObjects;
+        public ImmutableArray<object> Objects => _objects;
 
         public string ToCSharp(MetaType type)
         {
@@ -130,5 +140,36 @@ namespace MetaDslx.Bootstrap.MetaModel.Generators
             return value.ToString();
         }
 
+        public string ToCSharpValue(Type propertyType, object? value)
+        {
+            if (value is null) return $"default(global::{propertyType.FullName})";
+            if (propertyType == typeof(Type)) return $"typeof({((Type)value)?.FullName})";
+            if (propertyType == typeof(TypeSymbol)) return $"typeof({SymbolDisplayFormat.FullyQualifiedFormat.ToString((TypeSymbol)value)})";
+            if (propertyType == typeof(bool)) return ((bool)value) ? "true" : "false";
+            if (propertyType == typeof(string)) return StringUtilities.EncodeString(value.ToString());
+            if (value is MetaPrimitiveType mpt) return $"{mpt.Name}Type";
+            var type = value.GetType();
+            if (type.IsPrimitive) return value.ToString();
+            return GetName(value);
+        }
+
+        public string GetName(object? obj)
+        {
+            if (obj is null) return string.Empty;
+            if (_objectNames is null)
+            {
+                var index = 0;
+                var objectNames = new Dictionary<object, string>();
+                foreach (var mobj in Objects)
+                {
+                    var mname = $"obj{++index}";
+                    objectNames.Add(mobj, mname);
+                }
+                Interlocked.CompareExchange(ref _objectNames, objectNames, null);
+            }
+            if (_objectNames.TryGetValue(obj, out var name)) return name;
+            else if (obj is IModelObject mobj && mobj.UnderlyingObject is not null && _objectNames.TryGetValue(mobj.UnderlyingObject, out var mname)) return mname;
+            else return string.Empty;
+        }
     }
 }

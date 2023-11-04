@@ -55,7 +55,7 @@ Console.WriteLine(mm);
 /*/
 var graph = new MetaMetaGraph(model.Objects.OfType<MetaDslx.Bootstrap.MetaModel.Core.MetaClass>());
 graph.Compute();
-var generator = new MetaModelGenerator(mm, graph);
+var generator = new MetaModelGenerator(model, mm, graph);
 var output = generator.Generate();
 File.WriteAllText($@"..\..\..\{mm.Name}X.cs", output);
 //*/
@@ -70,4 +70,11 @@ p1.Name = "Bar";
 p1.Type = c1;
 c1.Declarations.Add(p1);
 Console.WriteLine(c1.Declarations.Count);
+//*/
+
+/*/
+foreach (var mobj in MetaDslx.Bootstrap.MetaModel.CoreX.MetaCore.Instance.Model.Objects)
+{
+    Console.WriteLine(mobj);
+}
 //*/

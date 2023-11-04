@@ -31,7 +31,7 @@ namespace MetaDslx.Modeling
             set
             {
                 if (_model != null && value != null && !object.ReferenceEquals(_model, value)) throw new ModelException($"Error changing the model '{_model}' of '{this}' to {value}: to change the model of an object, remove the object from the old model first.'");
-                if (_model != null && _model.IsReadOnly) throw new ModelException($"Error changing the model '{_model}' of '{this}' to {value}: the model containing the object is read only.");
+                _model?.CheckReadOnly($"Error changing the model '{_model}' of '{this}' to {value}");
                 if (!object.ReferenceEquals(_model, value))
                 {
                     var originalModel = _model;
@@ -63,6 +63,7 @@ namespace MetaDslx.Modeling
             set
             {
                 if (_parent != null && value != null && !object.ReferenceEquals(_parent, value)) throw new ModelException($"Error changing the parent '{_parent}' of '{this}' to {value}: to change the parent of an object, remove the object from the old parent first.'");
+                _model?.CheckReadOnly($"Error changing the parent '{_parent}' of '{this}' to {value}");
                 if (!object.ReferenceEquals(_parent, value))
                 {
                     var originalParent = _parent;
@@ -97,7 +98,11 @@ namespace MetaDslx.Modeling
         string IModelObject.Id
         {
             get => _id;
-            set => _id = value;
+            set
+            {
+                _model?.CheckReadOnly($"Error changing the id '{_id}' of '{this}' to {value}");
+                _id = value;
+            }
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -188,7 +193,7 @@ namespace MetaDslx.Modeling
 
         void IModelObject.Init(ModelProperty property, object? value)
         {
-            if (_model != null && _model.IsReadOnly) throw new ModelException($"Error initializing '{property.QualifiedName}' in '{this}' with '{value}': the model '{_model}' is read only.");
+            _model?.CheckReadOnly($"Error initializing '{property.QualifiedName}' in '{this}' with '{value}'");
             var slot = GetSlot(property);
             SetSlotValueCore(slot, value);
         }
@@ -290,7 +295,7 @@ namespace MetaDslx.Modeling
 
         void IModelObject.Add(ModelProperty property, object? item)
         {
-            if (_model != null && _model.IsReadOnly) throw new ModelException($"{GetAddMessage(property, item)}: the model '{_model}' is read only.");
+            _model?.CheckReadOnly(GetAddMessage(property, item));
             var slot = GetSlot(property);
             if (_model.ValidationOptions.ValidateReadOnly && slot.Flags.HasFlag(ModelPropertyFlags.ReadOnly))
             {
@@ -372,7 +377,7 @@ namespace MetaDslx.Modeling
 
         void IModelObject.Remove(ModelProperty property, object? item)
         {
-            if (_model != null && _model.IsReadOnly) throw new ModelException($"{GetRemoveMessage(property, item)}: the model '{_model}' is read only.");
+            _model?.CheckReadOnly(GetRemoveMessage(property, item));
             var slot = GetSlot(property);
             if (_model.ValidationOptions.ValidateReadOnly && slot.Flags.HasFlag(ModelPropertyFlags.ReadOnly))
             {
@@ -552,6 +557,16 @@ namespace MetaDslx.Modeling
         ImmutableArray<ModelProperty> IModelObject.GetRedefiningProperties(ModelProperty property)
         {
             return MInfo.GetRedefiningProperties(property);
+        }
+
+        ImmutableArray<ModelProperty> IModelObject.GetHiddenProperties(ModelProperty property)
+        {
+            return MInfo.GetHiddenProperties(property);
+        }
+
+        ImmutableArray<ModelProperty> IModelObject.GetHidingProperties(ModelProperty property)
+        {
+            return MInfo.GetHidingProperties(property);
         }
 
         private string GetAddMessage(ModelProperty property, object? item)

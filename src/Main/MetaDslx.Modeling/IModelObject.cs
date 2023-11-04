@@ -37,5 +37,7 @@ namespace MetaDslx.Modeling
         ImmutableArray<ModelProperty> GetSubsettingProperties(ModelProperty property);
         ImmutableArray<ModelProperty> GetRedefinedProperties(ModelProperty property);
         ImmutableArray<ModelProperty> GetRedefiningProperties(ModelProperty property);
+        ImmutableArray<ModelProperty> GetHiddenProperties(ModelProperty property);
+        ImmutableArray<ModelProperty> GetHidingProperties(ModelProperty property);
     }
 }

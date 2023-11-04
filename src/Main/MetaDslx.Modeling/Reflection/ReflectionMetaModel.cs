@@ -76,6 +76,8 @@ namespace MetaDslx.Modeling.Reflection
 
         public override string Prefix => _prefix;
 
+        public override Model Model => throw new NotImplementedException();
+
         public override ImmutableArray<Type> ModelObjectTypes => _types;
 
         public override ImmutableArray<ModelObjectInfo> ModelObjectInfos

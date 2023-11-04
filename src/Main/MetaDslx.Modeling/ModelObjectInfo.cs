@@ -70,5 +70,16 @@ namespace MetaDslx.Modeling
             else return ImmutableArray<ModelProperty>.Empty;
         }
 
+        public ImmutableArray<ModelProperty> GetHiddenProperties(ModelProperty property)
+        {
+            if (ModelPropertyInfos.TryGetValue(property, out var info)) return info.HiddenProperties;
+            else return ImmutableArray<ModelProperty>.Empty;
+        }
+
+        public ImmutableArray<ModelProperty> GetHidingProperties(ModelProperty property)
+        {
+            if (ModelPropertyInfos.TryGetValue(property, out var info)) return info.HidingProperties;
+            else return ImmutableArray<ModelProperty>.Empty;
+        }
     }
 }
