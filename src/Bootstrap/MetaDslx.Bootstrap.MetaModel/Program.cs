@@ -13,8 +13,8 @@ using System.Collections.Immutable;
 
 Console.WriteLine("Hello, World!");
 //*/
-var code = File.ReadAllText(@"..\..\..\Core\MetaCore.mm");
-var syntaxTree = MetaCoreSyntaxTree.ParseText(SourceText.From(code), path: "MetaCore.mm");
+var code = File.ReadAllText(@"..\..\..\..\..\Main\MetaDslx.Languages.MetaModel\Model\Meta.mm");
+var syntaxTree = MetaCoreSyntaxTree.ParseText(SourceText.From(code), path: "Meta.mm");
 
 Console.WriteLine("----");
 var syntaxTreeDiagnostics = syntaxTree.GetDiagnostics().ToList();
@@ -52,15 +52,15 @@ var model = cmp.SourceModule.Model;
 var mm = model.Objects.OfType<MetaDslx.Bootstrap.MetaModel.Core.MetaModel>().First();
 Console.WriteLine(mm);
 //*/
-/*/
+//*/
 var graph = new MetaMetaGraph(model.Objects.OfType<MetaDslx.Bootstrap.MetaModel.Core.MetaClass>());
 graph.Compute();
 var generator = new MetaModelGenerator(model, mm, graph);
 var output = generator.Generate();
-File.WriteAllText($@"..\..\..\{mm.Name}X.cs", output);
+File.WriteAllText($@"..\..\..\..\..\Main\MetaDslx.Languages.MetaModel\Model\{mm.Name}.cs", output);
 //*/
 
-//*/
+/*/
 var mx = new Model();
 var fx = new MetaDslx.Bootstrap.MetaModel.CoreX.MetaCoreModelFactory(mx);
 var c1 = fx.MetaClass();

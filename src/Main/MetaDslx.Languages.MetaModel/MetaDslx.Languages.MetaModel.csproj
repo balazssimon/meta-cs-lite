@@ -15,7 +15,13 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\MetaDslx.CodeAnalysis.Core\MetaDslx.CodeAnalysis.Core.csproj" OutputItemType="Analyzer" />
+		<ProjectReference Include="..\MetaDslx.CodeAnalysis.Common\MetaDslx.CodeAnalysis.Common.csproj" OutputItemType="Analyzer" />
 		<ProjectReference Include="..\MetaDslx.Modeling\MetaDslx.Modeling.csproj" OutputItemType="Analyzer" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Analyzers\" />
+	  <Folder Include="Generators\" />
 	</ItemGroup>
 
 </Project>

@@ -97,7 +97,7 @@ public class [mm.Name] : __MetaModel
 		[end foreach]
 		_modelObjectInfosByName = modelObjectInfosByName.ToImmutable();
 		_model = new __Model();
-		var f = new MetaCoreModelFactory(_model);
+		var f = new [mm.Name]ModelFactory(_model);
 		var boolType = f.MetaPrimitiveType();
 		boolType.Name = "bool";
 		var intType = f.MetaPrimitiveType();
@@ -136,8 +136,8 @@ public class [mm.Name] : __MetaModel
 	public override global::System.Collections.Immutable.ImmutableArray<__Type> ModelObjectTypes => _modelObjectTypes;
 	public override global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> ModelObjectInfos => _modelObjectInfos;
 
-    public override bool Contains(__Type modelObjectType) => _modelObjectInfosByType.Keys.Contains(modelObjectType);
-    public override bool Contains(string modelObjectTypeName) => _modelObjectInfosByName.Keys.Contains(modelObjectTypeName);
+    public override bool Contains(__Type modelObjectType) => _modelObjectInfosByType.ContainsKey(modelObjectType);
+    public override bool Contains(string modelObjectTypeName) => _modelObjectInfosByName.ContainsKey(modelObjectTypeName);
 
     public override bool TryGetInfo(__Type modelObjectType, out __ModelObjectInfo info) => _modelObjectInfosByType.TryGetValue(modelObjectType, out info);
     public override bool TryGetInfo(string modelObjectTypeName, out __ModelObjectInfo info) => _modelObjectInfosByName.TryGetValue(modelObjectTypeName, out info);
