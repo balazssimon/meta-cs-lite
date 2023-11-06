@@ -19,6 +19,7 @@ namespace MetaDslx.Bootstrap.MetaModel.Meta
         {
             var flags = ModelPropertyFlags.None;
             if (underlyingProperty.IsContainment) flags |= ModelPropertyFlags.Containment;
+            if (underlyingProperty.IsDerived) flags |= ModelPropertyFlags.Derived;
             _originalFlags = flags;
         }
 

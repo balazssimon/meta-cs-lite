@@ -292,7 +292,7 @@ namespace MetaDslx.Modeling
         {
             ((IModelObject)this).Remove(property, value);
         }
-
+        
         void IModelObject.Add(ModelProperty property, object? item)
         {
             _model?.CheckReadOnly(GetAddMessage(property, item));

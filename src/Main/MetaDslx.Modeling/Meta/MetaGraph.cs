@@ -70,6 +70,8 @@ namespace MetaDslx.Modeling.Meta
                     declaredProperties.Add(prop);
                     ComputePropertyType(prop, out var type, out var flags);
                     var symbolProperty = prop.SymbolProperty;
+                    if (flags.HasFlag(ModelPropertyFlags.Derived)) flags |= ModelPropertyFlags.ReadOnly;
+                    if (flags.HasFlag(ModelPropertyFlags.DerivedUnion)) flags |= ModelPropertyFlags.ReadOnly;
                     if (symbolProperty == "Name") flags |= ModelPropertyFlags.Name;
                     if (symbolProperty == "Type") flags |= ModelPropertyFlags.Type;
                     prop.Type = type;
@@ -157,7 +159,7 @@ namespace MetaDslx.Modeling.Meta
         private void ComputePropertyType(MetaProperty<TType, TProperty, TSymbol> property, out TType type, out ModelPropertyFlags flags)
         {
             type = property.OriginalType;
-            flags = UpdateFlagsWithType(ModelPropertyFlags.None, ref type);
+            flags = property.OriginalFlags | UpdateFlagsWithType(ModelPropertyFlags.None, ref type);
             if (flags.HasFlag(ModelPropertyFlags.BuiltInType) || flags.HasFlag(ModelPropertyFlags.EnumType) || flags.HasFlag(ModelPropertyFlags.ModelObjectType))
             {
                 flags |= ModelPropertyFlags.SingleItem;

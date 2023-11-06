@@ -63,7 +63,7 @@ namespace MetaDslx.Modeling.Reflection
                 }
                 else if (attr is DerivedUnionAttribute)
                 {
-                    flags |= ModelPropertyFlags.DerivedUnion | ModelPropertyFlags.Derived | ModelPropertyFlags.ReadOnly;
+                    flags |= ModelPropertyFlags.DerivedUnion;
                 }
                 else if (attr is SymbolPropertyAttribute symbolPropAttr)
                 {

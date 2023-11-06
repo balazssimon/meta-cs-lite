@@ -1,6 +1,7 @@
 namespace MetaDslx.Bootstrap.MetaModel.Generators;
 
 using System;
+using System.Linq;
 using MetaDslx.Bootstrap.MetaModel.Core;
 
 generator MetaModelGenerator;
@@ -29,6 +30,10 @@ namespace [Namespace]
 	[GenerateInterface(MetaModel, cls)]
 
 	[end foreach]
+
+	[GenerateCustomInterface(MetaModel)]
+	
+	[GenerateCustomImplementation(MetaModel)]
 }
 
 namespace [Namespace].__Impl
@@ -56,6 +61,11 @@ end template
 template GenerateMetaModel(MetaModel mm)
 public class [mm.Name] : __MetaModel
 {
+	// If there is an error at the following line, create a new class called 'Custom[mm.Name]Implementation'
+	// inheriting from the class 'Custom[mm.Name]ImplementationBase' and provide the custom implementation
+	// for the derived properties and operations defined in the metamodel
+	internal static readonly Custom[mm.Name]ImplementationBase __CustomImpl = new Custom[mm.Name]Implementation();
+
 	private static readonly [mm.Name] _instance;
 	public static [mm.Name] Instance => _instance;
 
@@ -143,7 +153,7 @@ public class [mm.Name] : __MetaModel
     public override bool TryGetInfo(string modelObjectTypeName, out __ModelObjectInfo info) => _modelObjectInfosByName.TryGetValue(modelObjectTypeName, out info);
 
 	[foreach (var cls in Classes)]
-	public static __ModelObjectInfo [cls.Name]Info => __Impl.[cls.Name]_Impl.__Info.Instance;
+	public static __ModelObjectInfo [cls.Name]Info => global::[Namespace].__Impl.[cls.Name]_Impl.__Info.Instance;
 	[foreach (var prop in cls.Properties)]
 	public static __ModelProperty [cls.Name]_[prop.Name] => _[cls.Name]_[prop.Name];
 	[end foreach]
@@ -211,6 +221,10 @@ internal class [cls.Name]_Impl : __MetaModelObject, [cls.Name]
 		((__IModelObject)this).Init([ToCSharp(slot.SlotProperty)], ([ToCSharp(slot.SlotProperty.Type)])[ToCSharpValue(slot.SlotProperty.Type, slot.DefaultValue)]);
 			[end if]
 		[end foreach]
+		[foreach (var baseType in metaCls.AllBaseTypes.Reverse())]
+		[mm.Name].__CustomImpl.[baseType.Name](this);
+		[end foreach]
+		[mm.Name].__CustomImpl.[cls.Name](this);
 	}
 
 	public override __ModelObjectInfo MInfo => __Info.Instance;
@@ -224,9 +238,13 @@ internal class [cls.Name]_Impl : __MetaModelObject, [cls.Name]
 	[ToCSharp(prop.UnderlyingProperty.Type)] [ToCSharp(prop.DeclaringType.UnderlyingType)].[prop.Name]
 		[end if]
 	{
+		[if (prop.UnderlyingProperty.IsDerived)]
+		get => [mm.Name].__CustomImpl.[prop.DeclaringType.Name]_[prop.Name](this);
+		[else]
 		get => MGet<[ToCSharp(prop.UnderlyingProperty.Type)]>([ToCSharp(prop)]);
-		[if (HasSetter(prop))]
+			[if (HasSetter(prop))]
 		set => MAdd<[ToCSharp(prop.UnderlyingProperty.Type)]>([ToCSharp(prop)], value);
+			[end if]
 		[end if]
 	}
 
@@ -286,5 +304,53 @@ internal class [cls.Name]_Impl : __MetaModelObject, [cls.Name]
 			return "[mm.Name].[cls.Name]Info";
 		}
 	}
+}
+end template
+
+template GenerateCustomInterface(MetaModel mm)
+internal interface ICustom[mm.Name]Implementation
+{
+	[foreach (var cls in Classes)]
+	/// <summary>
+	/// Constructor for the class [cls.Name]
+	/// </summary>
+	void [cls.Name]([cls.Name] _this);
+
+	[end foreach]
+
+	[foreach (var cls in Classes)]
+		[foreach (var prop in cls.Properties.Where(p => p.IsDerived))]
+	/// <summary>
+	/// Computation of the derived property [cls.Name].[prop.Name]
+	/// </summary>
+	[ToCSharp(prop.Type)] [cls.Name]_[prop.Name]([cls.Name] _this);
+
+		[end foreach]
+	[end foreach]
+}
+end template
+
+template GenerateCustomImplementation(MetaModel mm)
+internal abstract class Custom[mm.Name]ImplementationBase : ICustom[mm.Name]Implementation
+{
+	[foreach (var cls in Classes)]
+	/// <summary>
+	/// Constructor for the class [cls.Name]
+	/// </summary>
+	public virtual void [cls.Name]([cls.Name] _this)
+	{
+	}
+
+	[end foreach]
+
+	[foreach (var cls in Classes)]
+		[foreach (var prop in cls.Properties.Where(p => p.IsDerived))]
+	/// <summary>
+	/// Computation of the derived property [cls.Name].[prop.Name]
+	/// </summary>
+	public abstract [ToCSharp(prop.Type)] [cls.Name]_[prop.Name]([cls.Name] _this);
+
+		[end foreach]
+	[end foreach]
 }
 end template
