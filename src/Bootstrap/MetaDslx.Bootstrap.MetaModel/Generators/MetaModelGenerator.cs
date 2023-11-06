@@ -16,6 +16,7 @@ namespace MetaDslx.Bootstrap.MetaModel.Generators
 {
     public partial class MetaModelGenerator
     {
+        private bool _isMetaMetaModel;
         private Model _model;
         private Core.MetaModel _metaModel;
         private MetaMetaGraph _graph;
@@ -24,8 +25,9 @@ namespace MetaDslx.Bootstrap.MetaModel.Generators
         private ImmutableArray<object> _objects;
         private Dictionary<object, string> _objectNames;
 
-        public MetaModelGenerator(Model model, Core.MetaModel metaModel, MetaMetaGraph graph)
+        public MetaModelGenerator(bool isMetaMetaModel, Model model, Core.MetaModel metaModel, MetaMetaGraph graph)
         {
+            _isMetaMetaModel = isMetaMetaModel;
             _model = model;
             _metaModel = metaModel;
             _graph = graph;
@@ -34,6 +36,7 @@ namespace MetaDslx.Bootstrap.MetaModel.Generators
             _objects = model.Objects.ToImmutableArray();
         }
 
+        public bool IsMetaMetaModel => _isMetaMetaModel;
         public Model Model => _model;
         public Core.MetaModel MetaModel => _metaModel;
         public MetaMetaGraph Graph => _graph;
@@ -47,7 +50,7 @@ namespace MetaDslx.Bootstrap.MetaModel.Generators
             if (type is null) return string.Empty;
             if (type is MetaPrimitiveType mpt)
             {
-                if (mpt.Name == "type") return "__Type";
+                if (mpt.Name == "type") return IsMetaMetaModel ? "__Type" : "string";
                 else return mpt.Name;
             }
             if (type is MetaArrayType at)
@@ -66,7 +69,7 @@ namespace MetaDslx.Bootstrap.MetaModel.Generators
             if (type is null) return string.Empty;
             if (type is MetaPrimitiveType mpt)
             {
-                if (mpt.Name == "type") return "__Type";
+                if (mpt.Name == "type") return IsMetaMetaModel ? "__Type" : "string";
                 else return mpt.Name;
             }
             if (type is MetaArrayType at)
@@ -140,13 +143,26 @@ namespace MetaDslx.Bootstrap.MetaModel.Generators
             return value.ToString();
         }
 
-        public string ToCSharpValue(Type propertyType, object? value)
+        public string ToCSharpValue(ModelProperty property, object? value)
         {
+            var propertyType = property.Type;
             if (value is null) return $"default(global::{propertyType.FullName})";
-            if (propertyType == typeof(Type)) return $"typeof({((Type)value)?.FullName})";
-            if (propertyType == typeof(TypeSymbol)) return $"typeof({SymbolDisplayFormat.FullyQualifiedFormat.ToString((TypeSymbol)value)})";
+            if (propertyType == typeof(Type))
+            {
+                var typeName = ((Type)value)?.FullName;
+                return $"typeof({typeName})";
+            }
+            if (propertyType == typeof(TypeSymbol))
+            {
+                var typeName = SymbolDisplayFormat.FullyQualifiedFormat.ToString((TypeSymbol)value);
+                return $"typeof({typeName})";
+            }
             if (propertyType == typeof(bool)) return ((bool)value) ? "true" : "false";
-            if (propertyType == typeof(string)) return StringUtilities.EncodeString(value.ToString());
+            if (propertyType == typeof(string))
+            {
+                if (IsMetaMetaModel && property.Flags.HasFlag(ModelPropertyFlags.TypeSymbolType)) return $"typeof(global::{value})";
+                else return StringUtilities.EncodeString(value.ToString());
+            }
             if (value is MetaPrimitiveType mpt) return $"{mpt.Name}Type";
             var type = value.GetType();
             if (type.IsPrimitive) return value.ToString();

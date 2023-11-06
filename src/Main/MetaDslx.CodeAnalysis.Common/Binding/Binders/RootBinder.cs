@@ -15,14 +15,17 @@ namespace MetaDslx.CodeAnalysis.Binding
 {
     public sealed class RootBinder : Binder
     {
+        private readonly SyntaxTree? _syntaxTree;
         private readonly Type? _type;
         private ImmutableArray<Symbol> _definedSymbols;
 
-        public RootBinder(Type? type = null)
+        public RootBinder(SyntaxTree syntaxTree, Type? type = null)
         {
+            _syntaxTree = syntaxTree;
             _type = type;
         }
 
+        public override SyntaxTree SyntaxTree => _syntaxTree;
         public Type? Type => _type;
 
         public RootSingleDeclaration BuildDeclarationTree(string? scriptClassName, bool isSubmission)

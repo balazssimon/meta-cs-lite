@@ -67,7 +67,7 @@ namespace MetaDslx.CodeAnalysis
 
         public virtual ModelSymbolFactory CreateModelSymbolFactory(Compilation compilation)
         {
-            return new ModelSymbolFactory();
+            return new ModelSymbolFactory(compilation);
         }
 
         public virtual SourceSymbolFactory CreateSourceSymbolFactory(Compilation compilation, SourceModuleSymbol sourceModule)

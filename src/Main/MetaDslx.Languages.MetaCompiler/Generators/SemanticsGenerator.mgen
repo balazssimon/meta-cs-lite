@@ -76,9 +76,9 @@ public virtual void Visit[alt.CSharpName]([alt.RedName] node)
     if (this.IsRoot)
     {
         [if (language.Grammar.RootType is not null)]
-        var __rootAnnot = new global::MetaDslx.CodeAnalysis.Binding.RootBinder(type: typeof([language.Grammar.RootType.ToDisplayString(Microsoft.CodeAnalysis.SymbolDisplayFormat.FullyQualifiedFormat)]));
+        var __rootAnnot = new global::MetaDslx.CodeAnalysis.Binding.RootBinder(node.SyntaxTree, type: typeof([language.Grammar.RootType.ToDisplayString(Microsoft.CodeAnalysis.SymbolDisplayFormat.FullyQualifiedFormat)]));
         [else]
-        var __rootAnnot = new global::MetaDslx.CodeAnalysis.Binding.RootBinder(type: null);
+        var __rootAnnot = new global::MetaDslx.CodeAnalysis.Binding.RootBinder(node.SyntaxTree, type: null);
         [end if]
         this.Begin(__rootAnnot, node);
         try

@@ -17,8 +17,9 @@ namespace MetaDslx.CodeAnalysis.Symbols.Model
     {
         private readonly Dictionary<Type, Func<Symbol, IModelObject, Symbol>> _constructors = new();
         private readonly ConcurrentDictionary<object, Symbol> _symbols = new();
+        private readonly Compilation _compilation;
 
-        public ModelSymbolFactory()
+        public ModelSymbolFactory(Compilation compilation)
         {
             Register<AttributeSymbol>((s, mo) => new ModelAttributeSymbol(s, mo));
             Register<NamespaceSymbol>((s, mo) => new ModelNamespaceSymbol(s, mo));
@@ -104,17 +105,24 @@ namespace MetaDslx.CodeAnalysis.Symbols.Model
             {
                 if (typeof(Symbol).IsAssignableFrom(typeof(TValue)))
                 {
-                    foreach (var item in modelObject.GetValues(prop).OfType<IModelObject>())
+                    foreach (var item in modelObject.GetValues(prop))
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        var symbol = GetSymbol(modelObject);
-                        if (symbol is TValue typedSymbol)
+                        if (item is null) continue;
+                        Symbol? symbolItem = null;
+                        if (item is IModelObject mobj) symbolItem = GetSymbol(mobj);
+                        else if (prop.Flags.HasFlag(ModelPropertyFlags.TypeSymbolType))
+                        {
+                            if (item is TypeSymbol ts) symbolItem = ts;
+                            else if (prop.Type == typeof(string) || prop.Type == typeof(object)) symbolItem = _compilation.ResolveType(item.ToString());
+                        }
+                        if (symbolItem is TValue typedSymbol)
                         {
                             builder.Add(typedSymbol);
                         }
                         else
                         {
-                            diagnostics.Add(Diagnostic.Create(CommonErrorCode.ERR_InvalidSymbolPropertyValue, null, symbol, symbol?.GetType(), symbolProperty, typeof(TValue)));
+                            diagnostics.Add(Diagnostic.Create(CommonErrorCode.ERR_InvalidSymbolPropertyValue, null, symbolItem, symbolItem?.GetType(), symbolProperty, typeof(TValue)));
                         }
                     }
                 }

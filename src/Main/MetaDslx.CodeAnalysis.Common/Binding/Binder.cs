@@ -130,21 +130,19 @@ namespace MetaDslx.CodeAnalysis.Binding
 
         public ImmutableArray<Binder> GetChildBinders(bool resolveLazy = false, CancellationToken cancellationToken = default)
         {
-            if (this is BuckStopsHereBinder buckStopsHereBinder)
+            if (this is BuckStopsHereBinder)
             {
                 if (_childBinders.IsDefault)
                 {
-                    var syntaxTree = buckStopsHereBinder.SyntaxTree;
-                    var factory = Compilation.GetBinderFactory(syntaxTree);
-                    if (syntaxTree.TryGetRoot(out var root) && root is not null)
+                    var builder = ArrayBuilder<Binder>.GetInstance();
+                    foreach (var syntaxTree in Compilation.SyntaxTrees)
                     {
-                        return factory.BuildBinderTree(root);
+                        var rootBinder = Compilation.GetRootBinder(syntaxTree);
+                        if (rootBinder is not null) builder.Add(rootBinder);
                     }
-                    else
-                    {
-                        return ImmutableArray<Binder>.Empty;
-                    }
+                    ImmutableInterlocked.InterlockedInitialize(ref _childBinders, builder.ToImmutableAndFree());
                 }
+                return _childBinders;
             }
             else if (this is LazyBinder lazyBinder)
             {

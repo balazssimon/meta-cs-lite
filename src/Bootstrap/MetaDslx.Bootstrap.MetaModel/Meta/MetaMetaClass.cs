@@ -17,7 +17,7 @@ namespace MetaDslx.Bootstrap.MetaModel.Meta
         public MetaMetaClass(MetaClass underlyingType) 
             : base(underlyingType)
         {
-            _symbolType = underlyingType.SymbolType is null ? null : SymbolDisplayFormat.QualifiedNameOnlyFormat.ToString(underlyingType.SymbolType);
+            _symbolType = underlyingType.SymbolType is null ? null : underlyingType.SymbolType;
         }
 
         public MetaClass UnderlyingClass => (MetaClass)UnderlyingType;

@@ -2,7 +2,6 @@
 using MetaDslx.CodeAnalysis.Symbols;
 using MetaDslx.CodeAnalysis.Symbols.Model;
 using MetaDslx.Modeling;
-using Microsoft.CodeAnalysis;
 using Roslyn.Utilities;
 using System;
 using System.Collections.Generic;
@@ -81,7 +80,7 @@ namespace MetaDslx.CodeAnalysis.Binding
             }
             else
             {
-                var propertyType = GetValueType(context, out var isName);
+                var propertyType = GetValueType(context, out var isName, out var isTypeSymbolType);
                 var isSymbol = IsSymbolProperty;
                 var result = ArrayBuilder<object?>.GetInstance();
                 var valueBinders = GetValueBinders(this, context.CancellationToken);
@@ -115,6 +114,11 @@ namespace MetaDslx.CodeAnalysis.Binding
                             else if (isName && propertyType == typeof(string))
                             {
                                 result.Add(symbol.Name);
+                            }
+                            else if (!isSymbol && isTypeSymbolType && symbol is TypeSymbol && (propertyType == typeof(string) || propertyType == typeof(object)))
+                            {
+                                if (propertyType == typeof(string)) result.Add(SymbolDisplayFormat.QualifiedNameOnlyFormat.ToString(symbol));
+                                else if (propertyType == typeof(object)) result.Add(symbol);
                             }
                             else if (typeof(Symbol).IsAssignableFrom(propertyType) && propertyType.IsAssignableFrom(symbol.GetType()))
                             {
@@ -171,12 +175,13 @@ namespace MetaDslx.CodeAnalysis.Binding
 
         public Type? GetValueType(BindingContext context)
         {
-            return GetValueType(context, out var _);
+            return GetValueType(context, out var _, out var _);
         }
 
-        private Type? GetValueType(BindingContext context, out bool isName)
+        private Type? GetValueType(BindingContext context, out bool isName, out bool isTypeSymbolType)
         {
             isName = false;
+            isTypeSymbolType = false;
             if (_modelObjectTypes.IsDefault)
             {
                 Type? valueType = null;
@@ -213,6 +218,7 @@ namespace MetaDslx.CodeAnalysis.Binding
                             if (modelProperty is not null)
                             {
                                 if (modelProperty.IsName) isName = true;
+                                if (modelProperty.Flags.HasFlag(ModelPropertyFlags.TypeSymbolType)) isTypeSymbolType = true;
                                 var modelPropertyType = modelProperty.Type;
                                 if (modelPropertyType is not null)
                                 {

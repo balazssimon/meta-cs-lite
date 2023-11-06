@@ -26,7 +26,7 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Binding
         {
             if (this.IsRoot)
             {
-                var __rootAnnot = new global::MetaDslx.CodeAnalysis.Binding.RootBinder(type: typeof(global::MetaDslx.Bootstrap.MetaModel.Core.MetaNamespace));
+                var __rootAnnot = new global::MetaDslx.CodeAnalysis.Binding.RootBinder(node.SyntaxTree, type: typeof(global::MetaDslx.Bootstrap.MetaModel.Core.MetaNamespace));
                 this.Begin(__rootAnnot, node);
                 try
                 {

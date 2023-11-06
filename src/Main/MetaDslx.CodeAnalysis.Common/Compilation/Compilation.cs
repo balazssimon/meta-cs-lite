@@ -17,6 +17,7 @@ using MetaDslx.CodeAnalysis.Symbols.CSharp;
 using MetaDslx.CodeAnalysis.Symbols.Source;
 using Autofac;
 using MetaDslx.CodeAnalysis.Symbols.Errors;
+using MetaDslx.CodeAnalysis.Binding.Lookup;
 
 namespace MetaDslx.CodeAnalysis
 {
@@ -49,6 +50,8 @@ namespace MetaDslx.CodeAnalysis
         internal SourceAssemblySymbol? _lazyAssemblySymbol;
 
         private AccessCheck? _lazyAccessCheck;
+
+        private BuckStopsHereBinder? _buckStopsHereBinder;
 
         private ImmutableArray<Diagnostic> _diagnostics;
         private ImmutableArray<Diagnostic> _parseDiagnostics;
@@ -692,6 +695,18 @@ namespace MetaDslx.CodeAnalysis
 
         #region Binding
 
+        internal protected BuckStopsHereBinder BuckStopsHereBinder
+        {
+            get
+            {
+                if (_buckStopsHereBinder is null)
+                {
+                    Interlocked.CompareExchange(ref _buckStopsHereBinder, new BuckStopsHereBinder(this), null);
+                }
+                return _buckStopsHereBinder;
+            }
+        }
+
         internal BinderFactory GetBinderFactoryForDeclarationTable(SyntaxTree syntaxTree, int treeNum)
         {
             return GetBinderFactory(syntaxTree, true, treeNum, ref _ignoreAccessibilityBinderFactories);
@@ -990,5 +1005,14 @@ namespace MetaDslx.CodeAnalysis
         }
 
         #endregion
+
+        public TypeSymbol? ResolveType(string fullName)
+        {
+            var qualifiedName = fullName.Split('.').ToImmutableArray();
+            var context = BuckStopsHereBinder.AllocateLookupContext(validators: new[] { LookupValidators.TypeOnly });
+            var results = BuckStopsHereBinder.BindQualifiedName(context, qualifiedName);
+            if (results.Length == 1) return results[0] as TypeSymbol;
+            else return null;
+        }
     }
 }

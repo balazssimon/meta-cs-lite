@@ -20,6 +20,7 @@ namespace MetaDslx.Languages.MetaModel.Meta
             var flags = ModelPropertyFlags.None;
             if (underlyingProperty.IsContainment) flags |= ModelPropertyFlags.Containment;
             if (underlyingProperty.IsDerived) flags |= ModelPropertyFlags.Derived;
+            if (underlyingProperty.Type is MetaPrimitiveType mpt && mpt.Name == "type") flags |= ModelPropertyFlags.TypeSymbolType;
             _originalFlags = flags;
         }
 

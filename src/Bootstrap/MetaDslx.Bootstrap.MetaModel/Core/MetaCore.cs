@@ -99,8 +99,9 @@ namespace MetaDslx.Bootstrap.MetaModel.Core
             BaseTypes = new List<MetaClass>();
             Properties = new List<MetaProperty>();
         }
-
-        public TypeSymbol? SymbolType { get; set; }
+        
+        [TypeSymbolType]
+        public string? SymbolType { get; set; }
         public bool IsAbstract { get; set; }
         public List<MetaClass> BaseTypes { get; set; }
         [Containment]
