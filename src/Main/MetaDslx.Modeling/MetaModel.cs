@@ -24,7 +24,7 @@ namespace MetaDslx.Modeling
         public abstract bool Contains(Type modelObjectType);
         public abstract bool Contains(string modelObjectTypeName);
 
-        public abstract bool TryGetInfo(Type modelObjectType, out ModelObjectInfo info);
-        public abstract bool TryGetInfo(string modelObjectTypeName, out ModelObjectInfo info);
+        public abstract bool TryGetInfo(Type modelObjectType, out ModelObjectInfo? info);
+        public abstract bool TryGetInfo(string modelObjectTypeName, out ModelObjectInfo? info);
     }
 }

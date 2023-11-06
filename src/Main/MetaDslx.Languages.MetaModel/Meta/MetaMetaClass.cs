@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace MetaDslx.Languages.MetaModel.Meta
 {
-    internal class MetaMetaClass : MetaClass<MetaType, MetaProperty>
+    public sealed class MetaMetaClass : MetaClass<MetaType, MetaProperty>
     {
         private string? _symbolType;
 

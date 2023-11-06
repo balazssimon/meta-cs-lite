@@ -1,9 +1,17 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 	<Import Project="..\..\Versions.props" />
 
 	<PropertyGroup>
 		<TargetFrameworks>netstandard2.0</TargetFrameworks>
 	</PropertyGroup>
+
+	<ItemGroup>
+	  <None Remove="Generators\MetaModelGenerator.mgen" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <AdditionalFiles Include="Generators\MetaModelGenerator.mgen" />
+	</ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="$(MicrosoftCodeAnalysisCSharpVersion)" PrivateAssets="all" />
@@ -16,12 +24,14 @@
 	<ItemGroup>
 		<ProjectReference Include="..\MetaDslx.CodeAnalysis.Core\MetaDslx.CodeAnalysis.Core.csproj" OutputItemType="Analyzer" />
 		<ProjectReference Include="..\MetaDslx.CodeAnalysis.Common\MetaDslx.CodeAnalysis.Common.csproj" OutputItemType="Analyzer" />
+		<ProjectReference Include="..\MetaDslx.Languages.MetaGenerator\MetaDslx.Languages.MetaGenerator.csproj" OutputItemType="Analyzer" />
+		<ProjectReference Include="..\MetaDslx.Languages.MetaCompiler\MetaDslx.Languages.MetaCompiler.csproj" />
+		<ProjectReference Include="..\MetaDslx.Languages.MetaCompiler.Antlr\MetaDslx.Languages.MetaCompiler.Antlr.csproj" />
 		<ProjectReference Include="..\MetaDslx.Modeling\MetaDslx.Modeling.csproj" OutputItemType="Analyzer" />
 	</ItemGroup>
 
 	<ItemGroup>
 	  <Folder Include="Analyzers\" />
-	  <Folder Include="Generators\" />
 	</ItemGroup>
 
 </Project>

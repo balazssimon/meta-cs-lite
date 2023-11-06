@@ -77,7 +77,7 @@ namespace [language.QualifiedNamespace].Syntax.InternalSyntax
         public abstract TResult Accept<TResult>([language.Name]InternalSyntaxVisitor<TResult> visitor);
         public abstract void Accept([language.Name]InternalSyntaxVisitor visitor);
 
-        public override [language.Name]Language Language => [language.Name]Language.Instance;
+        public override Language Language => [language.Name]Language.Instance;
         public [language.Name]SyntaxKind Kind => ([language.Name]SyntaxKind)this.RawKind;
 		public override string KindText => [language.Name]Language.Instance.SyntaxFacts.GetKindText(Kind);
 
@@ -138,7 +138,7 @@ namespace [language.QualifiedNamespace].Syntax.InternalSyntax
         {
         }
 
-		public override [language.Name]Language Language => [language.Name]Language.Instance;
+		public override Language Language => [language.Name]Language.Instance;
 		public [language.Name]SyntaxKind Kind => ([language.Name]SyntaxKind)this.RawKind;
 		public override string KindText => [language.Name]Language.Instance.SyntaxFacts.GetKindText(Kind);
 
@@ -284,7 +284,7 @@ namespace [language.QualifiedNamespace].Syntax.InternalSyntax
 	    {
 	    }
 
-	    public override [language.Name]Language Language => [language.Name]Language.Instance;
+	    public override Language Language => [language.Name]Language.Instance;
 	    public [language.Name]SyntaxKind Kind => ([language.Name]SyntaxKind)this.RawKind;
 		public override string KindText => [language.Name]Language.Instance.SyntaxFacts.GetKindText(Kind);
 
@@ -508,7 +508,7 @@ namespace [language.QualifiedNamespace].Syntax.InternalSyntax
 	        {
 	            get
 	            {
-	                if (Language.SyntaxFacts.IsIdentifier(this.Kind)) return string.Empty;
+	                if ([language.Name]Language.Instance.SyntaxFacts.IsIdentifier(this.Kind)) return string.Empty;
 	                else return null;
 	            }
 	        }
@@ -1115,6 +1115,7 @@ end template
 
 template GenerateInternalSyntaxFactory(Language language)
 using System;
+using System.Threading;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics;
@@ -1136,12 +1137,12 @@ namespace [language.QualifiedNamespace].Syntax.InternalSyntax
 		{
 		}
 	
-		public override [language.Name]SyntaxLexer CreateLexer(SourceText text, ParseOptions? options)
+		public override SyntaxLexer CreateLexer(SourceText text, ParseOptions? options)
 		{
 			return new [language.Name]SyntaxLexer(text, ([language.Name]ParseOptions)(options ?? [language.Name]ParseOptions.Default));
 		}
 
-		public override [language.Name]SyntaxParser CreateParser(SyntaxLexer lexer, IncrementalParseData? oldParseData, IEnumerable<TextChangeRange>? changes, CancellationToken cancellationToken = default)
+		public override SyntaxParser CreateParser(SyntaxLexer lexer, IncrementalParseData? oldParseData, IEnumerable<TextChangeRange>? changes, CancellationToken cancellationToken = default)
         {
 			return new [language.Name]SyntaxParser(([language.Name]SyntaxLexer)lexer, oldParseData, changes, cancellationToken);
 		}

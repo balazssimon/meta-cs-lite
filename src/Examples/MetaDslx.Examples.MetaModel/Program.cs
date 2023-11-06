@@ -1,104 +1,59 @@
-﻿
+﻿// See https://aka.ms/new-console-template for more information
+using MetaDslx.Languages.MetaModel;
+using MetaDslx.Languages.MetaModel.Compiler;
+//using MetaDslx.Bootstrap.MetaModel.CoreX;
+using MetaDslx.Languages.MetaModel.Generators;
+using MetaDslx.Languages.MetaModel.Meta;
 using MetaDslx.CodeAnalysis;
-using MetaDslx.CodeAnalysis.Binding;
 using MetaDslx.CodeAnalysis.Symbols;
-using MetaDslx.Examples.MetaModel;
-using MetaDslx.Examples.MetaModel.Model;
+using MetaDslx.CodeAnalysis.Text;
+using MetaDslx.Modeling;
+using MetaDslx.Modeling.Reflection;
+using System.Collections.Immutable;
 
-var mmCode = File.ReadAllText(@"..\..\..\ImmutableMetaModel.txt");
-var importedCode = File.ReadAllText(@"..\..\..\imported.txt");
+var code = File.ReadAllText(@"..\..\..\..\..\Main\MetaDslx.Languages.MetaModel\Model\Meta.mm");
+var syntaxTree = MetaCoreSyntaxTree.ParseText(SourceText.From(code), path: "Meta.mm");
 
-var mmTree = MetaModelSyntaxTree.ParseText(mmCode, path: "ImmutableMetaModel.txt");
-var importedTree = MetaModelSyntaxTree.ParseText(importedCode, path: "imported.txt");
-
-foreach (var diag in mmTree.GetDiagnostics())
+Console.WriteLine("----");
+var syntaxTreeDiagnostics = syntaxTree.GetDiagnostics().ToList();
+foreach (var diag in syntaxTreeDiagnostics)
 {
     Console.WriteLine(diag);
 }
+if (syntaxTreeDiagnostics.Count > 0) return;
 
-var mmComp = Compilation.Create(
-    "ImmutableMetaModel", 
-    //MetaModelLanguage.Instance,
-    syntaxTrees: new[] 
+var cmp = Compilation.Create("MetaCore",
+    syntaxTrees: new[] { syntaxTree },
+    references: new[]
     {
-        mmTree,
-        importedTree
-    }, 
-    references: new[] 
-    {
-        MetadataReference.CreateFromMetaModel(Meta.Instance),
-        MetadataReference.CreateFromModel(Meta.Model),
+        MetadataReference.CreateFromMetaModel(ReflectionMetaModel.CreateFromNamespace(typeof(MetaDslx.Bootstrap.MetaModel.Core.MetaModel).Assembly, "MetaDslx.Bootstrap.MetaModel.Core")),
         MetadataReference.CreateFromFile(typeof(string).Assembly.Location),
-        MetadataReference.CreateFromFile(typeof(Compilation).Assembly.Location),
+        MetadataReference.CreateFromFile(typeof(Symbol).Assembly.Location),
     },
-    options: CompilationOptions.Default.WithConcurrentBuild(false).WithMergeGlobalNamespace(true));
+    options: CompilationOptions.Default.WithConcurrentBuild(false));
 
-//*/
-var rootDecl = mmComp.RootDeclaration;
-Console.WriteLine(rootDecl.Name);
-Console.WriteLine(rootDecl.Children.Length);
-//*/
+var rootBinder = cmp.GetRootBinder(syntaxTree);
+rootBinder.CompleteBind(default, true);
+Console.WriteLine(rootBinder.PrintBinderTree());
 
-Console.WriteLine(mmComp.HasCodeToEmit());
-Console.WriteLine(mmComp.Name);
-Console.WriteLine(mmComp.SourceModule.GlobalNamespace.Name);
-
-/*/
-foreach (var module in mmComp.SourceAssembly.Modules)
-{
-    PrintSymbols(string.Empty, module);
-}
-//*/
-
-var root = mmTree.GetRoot();
+cmp.Compile();
 
 Console.WriteLine("----");
-mmComp.Compile();
-
-foreach (var diag in mmComp.GetDiagnostics())
+foreach (var diag in cmp.GetDiagnostics())
 {
     Console.WriteLine(diag);
 }
-
-//*/
 Console.WriteLine("----");
-var rootBinder = mmComp.GetBinder(root);
-var bctx = BindingContext.GetInstance();
-rootBinder.CompleteBind(bctx, true);
-PrintBinders(string.Empty, rootBinder);
-Console.WriteLine("----");
-foreach (var diag in bctx.Diagnostics.ToReadOnly())
-{
-    Console.WriteLine(diag);
-}
 //*/
-
-Console.WriteLine("----");
-
-static void PrintSymbols(string indent, Symbol symbol)
-{
-    Console.WriteLine($"{indent}{symbol}");
-    foreach (var child in symbol.ContainedSymbols)
-    {
-        PrintSymbols(indent+"  ", child);
-    }
-}
-
-static void PrintBinders(string indent, Binder binder)
-{
-    Console.WriteLine($"{indent}{binder}");
-    foreach (var child in binder.GetChildBinders(resolveLazy: true))
-    {
-        PrintBinders(indent + "  ", child);
-    }
-}
-/*/
-var bf = mmComp.GetBinderFactory(mmTree);
-if (mmTree.TryGetRoot(out var root) && root is not null)
-{
-    bf.BuildBinderTree(root);
-    Console.WriteLine(bf.BuckStopsHereBinder);
-}
 //*/
-
-
+var model = cmp.SourceModule.Model;
+var mm = model.Objects.OfType<MetaDslx.Languages.MetaModel.Model.MetaModel>().First();
+Console.WriteLine(mm);
+//*/
+//*/
+var graph = new MetaMetaGraph(model.Objects.OfType<MetaDslx.Languages.MetaModel.Model.MetaClass>());
+graph.Compute();
+var generator = new MetaModelGenerator(model, mm, graph);
+var output = generator.Generate();
+File.WriteAllText($@"..\..\..\..\..\Main\MetaDslx.Languages.MetaModel\Model\{mm.Name}.cs", output);
+//*/

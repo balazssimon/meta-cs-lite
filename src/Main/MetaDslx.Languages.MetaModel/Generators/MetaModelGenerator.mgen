@@ -1,8 +1,8 @@
-namespace MetaDslx.Bootstrap.MetaModel.Generators;
+namespace MetaDslx.Languages.MetaModel.Generators;
 
 using System;
 using System.Linq;
-using MetaDslx.Bootstrap.MetaModel.Core;
+using MetaDslx.Languages.MetaModel.Model;
 
 generator MetaModelGenerator;
 
@@ -92,12 +92,6 @@ public partial class [mm.Name] : __MetaModel
 	private readonly global::System.Collections.Immutable.ImmutableDictionary<__Type, __ModelObjectInfo> _modelObjectInfosByType;
 	private readonly global::System.Collections.Immutable.ImmutableDictionary<string, __ModelObjectInfo> _modelObjectInfosByName;
 
-	private readonly MetaPrimitiveType _voidType;
-	private readonly MetaPrimitiveType _boolType;
-	private readonly MetaPrimitiveType _intType;
-	private readonly MetaPrimitiveType _stringType;
-	private readonly MetaPrimitiveType _typeType;
-
 	private [mm.Name]()
 	{
 		_modelObjectTypes = __ImmutableArray.Create<__Type>([foreach (var cls in mm.Parent.Declarations.OfType<MetaClass>()) separator ", "]typeof([cls.Name])[end foreach]);
@@ -114,16 +108,14 @@ public partial class [mm.Name] : __MetaModel
 		_modelObjectInfosByName = modelObjectInfosByName.ToImmutable();
 		_model = new __Model();
 		var f = new [mm.Name]ModelFactory(_model);
-		_voidType = f.MetaPrimitiveType();
-		_voidType.Name = "void";
-		_boolType = f.MetaPrimitiveType();
-		_boolType.Name = "bool";
-		_intType = f.MetaPrimitiveType();
-		_intType.Name = "int";
-		_stringType = f.MetaPrimitiveType();
-		_stringType.Name = "string";
-		_typeType = f.MetaPrimitiveType();
-		_typeType.Name = "type";
+		var boolType = f.MetaPrimitiveType();
+		boolType.Name = "bool";
+		var intType = f.MetaPrimitiveType();
+		intType.Name = "int";
+		var stringType = f.MetaPrimitiveType();
+		stringType.Name = "string";
+		var typeType = f.MetaPrimitiveType();
+		typeType.Name = "type";
 		[foreach (var obj in ModelObjects)]
 		var [GetName(obj)] = f.[obj.MetaType.Name]();
 		[end foreach]
@@ -159,12 +151,6 @@ public partial class [mm.Name] : __MetaModel
 
     public override bool TryGetInfo(__Type modelObjectType, out __ModelObjectInfo? info) => _modelObjectInfosByType.TryGetValue(modelObjectType, out info);
     public override bool TryGetInfo(string modelObjectTypeName, out __ModelObjectInfo? info) => _modelObjectInfosByName.TryGetValue(modelObjectTypeName, out info);
-
-	public static MetaPrimitiveType VoidType => Instance._voidType;
-	public static MetaPrimitiveType BoolType => Instance._boolType;
-	public static MetaPrimitiveType IntType => Instance._intType;
-	public static MetaPrimitiveType StringType => Instance._stringType;
-	public static MetaPrimitiveType TypeType => Instance._typeType;
 
 	[foreach (var cls in Classes)]
 	public static __ModelObjectInfo [cls.Name]Info => global::[Namespace].__Impl.[cls.Name]_Impl.__Info.Instance;

@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace MetaDslx.Languages.MetaModel.Meta
 {
-    internal class MetaMetaGraph : MetaGraph<MetaType, MetaProperty>
+    public sealed class MetaMetaGraph : MetaGraph<MetaType, MetaProperty>
     {
         public MetaMetaGraph(IEnumerable<MetaType> classTypes) 
             : base(classTypes)

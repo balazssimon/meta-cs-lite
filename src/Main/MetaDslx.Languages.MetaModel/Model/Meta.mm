@@ -25,6 +25,11 @@ class MetaModel : MetaDeclaration
 	derived string NamespaceName;
 }
 
+class MetaConstant : MetaDeclaration
+{
+	MetaType Type;
+}
+
 abstract class MetaType $Type : MetaDeclaration
 {
 }

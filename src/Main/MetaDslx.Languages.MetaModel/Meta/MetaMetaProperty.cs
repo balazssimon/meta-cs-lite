@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace MetaDslx.Languages.MetaModel.Meta
 {
-    internal class MetaMetaProperty : MetaProperty<MetaType, MetaProperty>
+    public sealed class MetaMetaProperty : MetaProperty<MetaType, MetaProperty>
     {
         private readonly ModelPropertyFlags _originalFlags;
 

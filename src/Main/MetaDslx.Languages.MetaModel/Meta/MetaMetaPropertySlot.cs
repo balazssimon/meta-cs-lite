@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace MetaDslx.Languages.MetaModel.Meta
 {
-    internal class MetaMetaPropertySlot : MetaPropertySlot<MetaType, MetaProperty>
+    public sealed class MetaMetaPropertySlot : MetaPropertySlot<MetaType, MetaProperty>
     {
         public MetaMetaPropertySlot(MetaProperty<MetaType, MetaProperty> slotProperty, ImmutableArray<MetaProperty<MetaType, MetaProperty>> slotProperties, object? defaultValue, ModelPropertyFlags flags) 
             : base(slotProperty, slotProperties, defaultValue, flags)

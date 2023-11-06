@@ -77,7 +77,7 @@ namespace MetaDslx.Languages.MetaCompiler.Model
         public string GreenConstructorParameters => string.Concat(Elements.Select(e => $", {e.GreenFieldType} {e.ParameterName}"));
         public string GreenConstructorArguments => string.Concat(Elements.Select(e => $", {e.FieldName}"));
         public string GreenUpdateParameters => string.Join(", ", Elements.Select(e => $"{e.GreenPropertyType} {e.ParameterName}"));
-        public string GreenUpdateArguments => string.Join(", ", Elements.Select(e => e.ParameterName));
+        public string GreenUpdateArguments => string.Join(", ", Elements.Select(e => e.IsToken && !e.IsList ? $"(InternalSyntaxToken){e.ParameterName}" : e.ParameterName));
         public string RedUpdateParameters => string.Join(", ", Elements.Select(e => $"{e.RedPropertyType} {e.ParameterName}"));
         public string RedUpdateArguments => string.Join(", ", Elements.Select(e => e.ParameterName));
         public string RedOptionalUpdateParameters => string.Join(", ", Elements.Where(e => !e.IsOptional && (!e.IsToken || !e.IsFixedToken || e.IsFixedTokenAlt || e.IsList)).Select(e => $"{e.RedPropertyType} {e.ParameterName}"));

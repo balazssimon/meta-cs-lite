@@ -13,7 +13,7 @@ namespace MetaDslx.Languages.MetaModel.Model
 	using __ImmutableDictionary = global::System.Collections.Immutable.ImmutableDictionary;
 	using __Type = global::System.Type;
 
-	public class Meta : __MetaModel
+	public partial class Meta : __MetaModel
 	{
 		// If there is an error at the following line, create a new class called 'CustomMetaImplementation'
 		// inheriting from the class 'CustomMetaImplementationBase' and provide the custom implementation
@@ -28,6 +28,7 @@ namespace MetaDslx.Languages.MetaModel.Model
 		private static readonly __ModelProperty _MetaDeclaration_Declarations;
 		private static readonly __ModelProperty _MetaDeclaration_FullName;
 		private static readonly __ModelProperty _MetaModel_NamespaceName;
+		private static readonly __ModelProperty _MetaConstant_Type;
 		private static readonly __ModelProperty _MetaEnumType_Literals;
 		private static readonly __ModelProperty _MetaArrayType_ItemType;
 		private static readonly __ModelProperty _MetaClass_SymbolType;
@@ -51,6 +52,7 @@ namespace MetaDslx.Languages.MetaModel.Model
 			_MetaDeclaration_Declarations = new __ModelProperty(typeof(MetaDeclaration), "Declarations", typeof(MetaDeclaration), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection, null);
 			_MetaDeclaration_FullName = new __ModelProperty(typeof(MetaDeclaration), "FullName", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.SingleItem | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
 			_MetaModel_NamespaceName = new __ModelProperty(typeof(MetaModel), "NamespaceName", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.SingleItem | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
+			_MetaConstant_Type = new __ModelProperty(typeof(MetaConstant), "Type", typeof(MetaType), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.SingleItem, null);
 			_MetaEnumType_Literals = new __ModelProperty(typeof(MetaEnumType), "Literals", typeof(MetaEnumLiteral), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection, null);
 			_MetaArrayType_ItemType = new __ModelProperty(typeof(MetaArrayType), "ItemType", typeof(MetaType), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.SingleItem, null);
 			_MetaClass_SymbolType = new __ModelProperty(typeof(MetaClass), "SymbolType", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.TypeSymbolType, null);
@@ -75,15 +77,22 @@ namespace MetaDslx.Languages.MetaModel.Model
 		private readonly global::System.Collections.Immutable.ImmutableDictionary<__Type, __ModelObjectInfo> _modelObjectInfosByType;
 		private readonly global::System.Collections.Immutable.ImmutableDictionary<string, __ModelObjectInfo> _modelObjectInfosByName;
 	
+		private readonly MetaPrimitiveType _voidType;
+		private readonly MetaPrimitiveType _boolType;
+		private readonly MetaPrimitiveType _intType;
+		private readonly MetaPrimitiveType _stringType;
+		private readonly MetaPrimitiveType _typeType;
+	
 		private Meta()
 		{
-			_modelObjectTypes = __ImmutableArray.Create<__Type>(typeof(MetaNamedElement), typeof(MetaDeclaration), typeof(MetaNamespace), typeof(MetaModel), typeof(MetaType), typeof(MetaPrimitiveType), typeof(MetaEnumType), typeof(MetaEnumLiteral), typeof(MetaArrayType), typeof(MetaClass), typeof(MetaProperty), typeof(MetaOperation), typeof(MetaParameter));
-			_modelObjectInfos = __ImmutableArray.Create<__ModelObjectInfo>(MetaNamedElementInfo, MetaDeclarationInfo, MetaNamespaceInfo, MetaModelInfo, MetaTypeInfo, MetaPrimitiveTypeInfo, MetaEnumTypeInfo, MetaEnumLiteralInfo, MetaArrayTypeInfo, MetaClassInfo, MetaPropertyInfo, MetaOperationInfo, MetaParameterInfo);
+			_modelObjectTypes = __ImmutableArray.Create<__Type>(typeof(MetaNamedElement), typeof(MetaDeclaration), typeof(MetaNamespace), typeof(MetaModel), typeof(MetaConstant), typeof(MetaType), typeof(MetaPrimitiveType), typeof(MetaEnumType), typeof(MetaEnumLiteral), typeof(MetaArrayType), typeof(MetaClass), typeof(MetaProperty), typeof(MetaOperation), typeof(MetaParameter));
+			_modelObjectInfos = __ImmutableArray.Create<__ModelObjectInfo>(MetaNamedElementInfo, MetaDeclarationInfo, MetaNamespaceInfo, MetaModelInfo, MetaConstantInfo, MetaTypeInfo, MetaPrimitiveTypeInfo, MetaEnumTypeInfo, MetaEnumLiteralInfo, MetaArrayTypeInfo, MetaClassInfo, MetaPropertyInfo, MetaOperationInfo, MetaParameterInfo);
 			var modelObjectInfosByType = __ImmutableDictionary.CreateBuilder<__Type, __ModelObjectInfo>();
 			modelObjectInfosByType.Add(typeof(MetaNamedElement), MetaNamedElementInfo);
 			modelObjectInfosByType.Add(typeof(MetaDeclaration), MetaDeclarationInfo);
 			modelObjectInfosByType.Add(typeof(MetaNamespace), MetaNamespaceInfo);
 			modelObjectInfosByType.Add(typeof(MetaModel), MetaModelInfo);
+			modelObjectInfosByType.Add(typeof(MetaConstant), MetaConstantInfo);
 			modelObjectInfosByType.Add(typeof(MetaType), MetaTypeInfo);
 			modelObjectInfosByType.Add(typeof(MetaPrimitiveType), MetaPrimitiveTypeInfo);
 			modelObjectInfosByType.Add(typeof(MetaEnumType), MetaEnumTypeInfo);
@@ -99,6 +108,7 @@ namespace MetaDslx.Languages.MetaModel.Model
 			modelObjectInfosByName.Add("MetaDeclaration", MetaDeclarationInfo);
 			modelObjectInfosByName.Add("MetaNamespace", MetaNamespaceInfo);
 			modelObjectInfosByName.Add("MetaModel", MetaModelInfo);
+			modelObjectInfosByName.Add("MetaConstant", MetaConstantInfo);
 			modelObjectInfosByName.Add("MetaType", MetaTypeInfo);
 			modelObjectInfosByName.Add("MetaPrimitiveType", MetaPrimitiveTypeInfo);
 			modelObjectInfosByName.Add("MetaEnumType", MetaEnumTypeInfo);
@@ -111,14 +121,16 @@ namespace MetaDslx.Languages.MetaModel.Model
 			_modelObjectInfosByName = modelObjectInfosByName.ToImmutable();
 			_model = new __Model();
 			var f = new MetaModelFactory(_model);
-			var boolType = f.MetaPrimitiveType();
-			boolType.Name = "bool";
-			var intType = f.MetaPrimitiveType();
-			intType.Name = "int";
-			var stringType = f.MetaPrimitiveType();
-			stringType.Name = "string";
-			var typeType = f.MetaPrimitiveType();
-			typeType.Name = "type";
+			_voidType = f.MetaPrimitiveType();
+			_voidType.Name = "void";
+			_boolType = f.MetaPrimitiveType();
+			_boolType.Name = "bool";
+			_intType = f.MetaPrimitiveType();
+			_intType.Name = "int";
+			_stringType = f.MetaPrimitiveType();
+			_stringType.Name = "string";
+			_typeType = f.MetaPrimitiveType();
+			_typeType.Name = "type";
 			var obj1 = f.MetaNamespace();
 			var obj2 = f.MetaNamespace();
 			var obj3 = f.MetaNamespace();
@@ -138,32 +150,34 @@ namespace MetaDslx.Languages.MetaModel.Model
 			var obj17 = f.MetaClass();
 			var obj18 = f.MetaClass();
 			var obj19 = f.MetaClass();
-			var obj20 = f.MetaProperty();
+			var obj20 = f.MetaClass();
 			var obj21 = f.MetaProperty();
 			var obj22 = f.MetaProperty();
 			var obj23 = f.MetaProperty();
-			var obj24 = f.MetaArrayType();
-			var obj25 = f.MetaProperty();
+			var obj24 = f.MetaProperty();
+			var obj25 = f.MetaArrayType();
 			var obj26 = f.MetaProperty();
-			var obj27 = f.MetaArrayType();
+			var obj27 = f.MetaProperty();
 			var obj28 = f.MetaProperty();
-			var obj29 = f.MetaProperty();
+			var obj29 = f.MetaArrayType();
 			var obj30 = f.MetaProperty();
 			var obj31 = f.MetaProperty();
 			var obj32 = f.MetaProperty();
 			var obj33 = f.MetaProperty();
-			var obj34 = f.MetaArrayType();
-			var obj35 = f.MetaArrayType();
+			var obj34 = f.MetaProperty();
+			var obj35 = f.MetaProperty();
 			var obj36 = f.MetaArrayType();
-			var obj37 = f.MetaProperty();
-			var obj38 = f.MetaProperty();
+			var obj37 = f.MetaArrayType();
+			var obj38 = f.MetaArrayType();
 			var obj39 = f.MetaProperty();
 			var obj40 = f.MetaProperty();
 			var obj41 = f.MetaProperty();
 			var obj42 = f.MetaProperty();
 			var obj43 = f.MetaProperty();
-			var obj44 = f.MetaArrayType();
+			var obj44 = f.MetaProperty();
 			var obj45 = f.MetaProperty();
+			var obj46 = f.MetaArrayType();
+			var obj47 = f.MetaProperty();
 			((__IModelObject)obj1).Children.Add((__IModelObject)obj2);
 			((__IModelObject)obj2).Children.Add((__IModelObject)obj3);
 			obj2.Name = "MetaDslx";
@@ -190,6 +204,7 @@ namespace MetaDslx.Languages.MetaModel.Model
 			((__IModelObject)obj5).Children.Add((__IModelObject)obj17);
 			((__IModelObject)obj5).Children.Add((__IModelObject)obj18);
 			((__IModelObject)obj5).Children.Add((__IModelObject)obj19);
+			((__IModelObject)obj5).Children.Add((__IModelObject)obj20);
 			obj5.Name = "Model";
 			obj5.Parent = obj4;
 			obj5.Declarations.Add(obj6);
@@ -206,239 +221,252 @@ namespace MetaDslx.Languages.MetaModel.Model
 			obj5.Declarations.Add(obj17);
 			obj5.Declarations.Add(obj18);
 			obj5.Declarations.Add(obj19);
+			obj5.Declarations.Add(obj20);
 			obj6.Name = "Meta";
 			obj6.Parent = obj5;
-			((__IModelObject)obj7).Children.Add((__IModelObject)obj20);
+			((__IModelObject)obj7).Children.Add((__IModelObject)obj21);
 			obj7.SymbolType = "MetaDslx.CodeAnalysis.Symbols.Symbol";
 			obj7.IsAbstract = false;
-			obj7.Properties.Add(obj20);
+			obj7.Properties.Add(obj21);
 			obj7.Name = "MetaNamedElement";
 			obj7.Parent = obj5;
-			obj7.Declarations.Add(obj20);
-			((__IModelObject)obj8).Children.Add((__IModelObject)obj21);
+			obj7.Declarations.Add(obj21);
 			((__IModelObject)obj8).Children.Add((__IModelObject)obj22);
 			((__IModelObject)obj8).Children.Add((__IModelObject)obj23);
+			((__IModelObject)obj8).Children.Add((__IModelObject)obj24);
 			obj8.SymbolType = "MetaDslx.CodeAnalysis.Symbols.DeclaredSymbol";
 			obj8.IsAbstract = false;
 			obj8.BaseTypes.Add(obj7);
-			obj8.Properties.Add(obj21);
 			obj8.Properties.Add(obj22);
 			obj8.Properties.Add(obj23);
+			obj8.Properties.Add(obj24);
 			obj8.Name = "MetaDeclaration";
 			obj8.Parent = obj5;
-			obj8.Declarations.Add(obj21);
 			obj8.Declarations.Add(obj22);
 			obj8.Declarations.Add(obj23);
+			obj8.Declarations.Add(obj24);
 			obj9.SymbolType = "MetaDslx.CodeAnalysis.Symbols.NamespaceSymbol";
 			obj9.IsAbstract = false;
 			obj9.BaseTypes.Add(obj8);
 			obj9.Name = "MetaNamespace";
 			obj9.Parent = obj5;
-			((__IModelObject)obj10).Children.Add((__IModelObject)obj25);
+			((__IModelObject)obj10).Children.Add((__IModelObject)obj26);
 			obj10.IsAbstract = false;
 			obj10.BaseTypes.Add(obj8);
-			obj10.Properties.Add(obj25);
+			obj10.Properties.Add(obj26);
 			obj10.Name = "MetaModel";
 			obj10.Parent = obj5;
-			obj10.Declarations.Add(obj25);
-			obj11.SymbolType = "MetaDslx.CodeAnalysis.Symbols.TypeSymbol";
-			obj11.IsAbstract = true;
+			obj10.Declarations.Add(obj26);
+			((__IModelObject)obj11).Children.Add((__IModelObject)obj27);
+			obj11.IsAbstract = false;
 			obj11.BaseTypes.Add(obj8);
-			obj11.Name = "MetaType";
+			obj11.Properties.Add(obj27);
+			obj11.Name = "MetaConstant";
 			obj11.Parent = obj5;
-			obj12.IsAbstract = false;
-			obj12.BaseTypes.Add(obj11);
-			obj12.Name = "MetaPrimitiveType";
+			obj11.Declarations.Add(obj27);
+			obj12.SymbolType = "MetaDslx.CodeAnalysis.Symbols.TypeSymbol";
+			obj12.IsAbstract = true;
+			obj12.BaseTypes.Add(obj8);
+			obj12.Name = "MetaType";
 			obj12.Parent = obj5;
-			((__IModelObject)obj13).Children.Add((__IModelObject)obj26);
 			obj13.IsAbstract = false;
-			obj13.BaseTypes.Add(obj11);
-			obj13.Properties.Add(obj26);
-			obj13.Name = "MetaEnumType";
+			obj13.BaseTypes.Add(obj12);
+			obj13.Name = "MetaPrimitiveType";
 			obj13.Parent = obj5;
-			obj13.Declarations.Add(obj26);
+			((__IModelObject)obj14).Children.Add((__IModelObject)obj28);
 			obj14.IsAbstract = false;
-			obj14.BaseTypes.Add(obj8);
-			obj14.Name = "MetaEnumLiteral";
+			obj14.BaseTypes.Add(obj12);
+			obj14.Properties.Add(obj28);
+			obj14.Name = "MetaEnumType";
 			obj14.Parent = obj5;
-			((__IModelObject)obj15).Children.Add((__IModelObject)obj28);
+			obj14.Declarations.Add(obj28);
 			obj15.IsAbstract = false;
-			obj15.BaseTypes.Add(obj11);
-			obj15.Properties.Add(obj28);
-			obj15.Name = "MetaArrayType";
+			obj15.BaseTypes.Add(obj8);
+			obj15.Name = "MetaEnumLiteral";
 			obj15.Parent = obj5;
-			obj15.Declarations.Add(obj28);
-			((__IModelObject)obj16).Children.Add((__IModelObject)obj29);
 			((__IModelObject)obj16).Children.Add((__IModelObject)obj30);
-			((__IModelObject)obj16).Children.Add((__IModelObject)obj31);
-			((__IModelObject)obj16).Children.Add((__IModelObject)obj32);
-			((__IModelObject)obj16).Children.Add((__IModelObject)obj33);
 			obj16.IsAbstract = false;
-			obj16.BaseTypes.Add(obj11);
-			obj16.Properties.Add(obj29);
+			obj16.BaseTypes.Add(obj12);
 			obj16.Properties.Add(obj30);
-			obj16.Properties.Add(obj31);
-			obj16.Properties.Add(obj32);
-			obj16.Properties.Add(obj33);
-			obj16.Name = "MetaClass";
+			obj16.Name = "MetaArrayType";
 			obj16.Parent = obj5;
-			obj16.Declarations.Add(obj29);
 			obj16.Declarations.Add(obj30);
-			obj16.Declarations.Add(obj31);
-			obj16.Declarations.Add(obj32);
-			obj16.Declarations.Add(obj33);
-			((__IModelObject)obj17).Children.Add((__IModelObject)obj37);
-			((__IModelObject)obj17).Children.Add((__IModelObject)obj38);
-			((__IModelObject)obj17).Children.Add((__IModelObject)obj39);
-			((__IModelObject)obj17).Children.Add((__IModelObject)obj40);
-			((__IModelObject)obj17).Children.Add((__IModelObject)obj41);
+			((__IModelObject)obj17).Children.Add((__IModelObject)obj31);
+			((__IModelObject)obj17).Children.Add((__IModelObject)obj32);
+			((__IModelObject)obj17).Children.Add((__IModelObject)obj33);
+			((__IModelObject)obj17).Children.Add((__IModelObject)obj34);
+			((__IModelObject)obj17).Children.Add((__IModelObject)obj35);
 			obj17.IsAbstract = false;
-			obj17.BaseTypes.Add(obj8);
-			obj17.Properties.Add(obj37);
-			obj17.Properties.Add(obj38);
-			obj17.Properties.Add(obj39);
-			obj17.Properties.Add(obj40);
-			obj17.Properties.Add(obj41);
-			obj17.Name = "MetaProperty";
+			obj17.BaseTypes.Add(obj12);
+			obj17.Properties.Add(obj31);
+			obj17.Properties.Add(obj32);
+			obj17.Properties.Add(obj33);
+			obj17.Properties.Add(obj34);
+			obj17.Properties.Add(obj35);
+			obj17.Name = "MetaClass";
 			obj17.Parent = obj5;
-			obj17.Declarations.Add(obj37);
-			obj17.Declarations.Add(obj38);
-			obj17.Declarations.Add(obj39);
-			obj17.Declarations.Add(obj40);
-			obj17.Declarations.Add(obj41);
+			obj17.Declarations.Add(obj31);
+			obj17.Declarations.Add(obj32);
+			obj17.Declarations.Add(obj33);
+			obj17.Declarations.Add(obj34);
+			obj17.Declarations.Add(obj35);
+			((__IModelObject)obj18).Children.Add((__IModelObject)obj39);
+			((__IModelObject)obj18).Children.Add((__IModelObject)obj40);
+			((__IModelObject)obj18).Children.Add((__IModelObject)obj41);
 			((__IModelObject)obj18).Children.Add((__IModelObject)obj42);
 			((__IModelObject)obj18).Children.Add((__IModelObject)obj43);
 			obj18.IsAbstract = false;
 			obj18.BaseTypes.Add(obj8);
+			obj18.Properties.Add(obj39);
+			obj18.Properties.Add(obj40);
+			obj18.Properties.Add(obj41);
 			obj18.Properties.Add(obj42);
 			obj18.Properties.Add(obj43);
-			obj18.Name = "MetaOperation";
+			obj18.Name = "MetaProperty";
 			obj18.Parent = obj5;
+			obj18.Declarations.Add(obj39);
+			obj18.Declarations.Add(obj40);
+			obj18.Declarations.Add(obj41);
 			obj18.Declarations.Add(obj42);
 			obj18.Declarations.Add(obj43);
+			((__IModelObject)obj19).Children.Add((__IModelObject)obj44);
 			((__IModelObject)obj19).Children.Add((__IModelObject)obj45);
 			obj19.IsAbstract = false;
 			obj19.BaseTypes.Add(obj8);
+			obj19.Properties.Add(obj44);
 			obj19.Properties.Add(obj45);
-			obj19.Name = "MetaParameter";
+			obj19.Name = "MetaOperation";
 			obj19.Parent = obj5;
+			obj19.Declarations.Add(obj44);
 			obj19.Declarations.Add(obj45);
-			obj20.Type = stringType;
-			obj20.SymbolProperty = "Name";
-			obj20.IsContainment = false;
-			obj20.IsDerived = false;
-			obj20.Name = "Name";
-			obj20.Parent = obj7;
-			obj21.Type = obj8;
+			((__IModelObject)obj20).Children.Add((__IModelObject)obj47);
+			obj20.IsAbstract = false;
+			obj20.BaseTypes.Add(obj8);
+			obj20.Properties.Add(obj47);
+			obj20.Name = "MetaParameter";
+			obj20.Parent = obj5;
+			obj20.Declarations.Add(obj47);
+			obj21.Type = _stringType;
+			obj21.SymbolProperty = "Name";
 			obj21.IsContainment = false;
 			obj21.IsDerived = false;
-			obj21.Opposite = obj22;
-			obj21.Name = "Parent";
-			obj21.Parent = obj8;
-			((__IModelObject)obj22).Children.Add((__IModelObject)obj24);
-			obj22.Type = obj24;
-			obj22.IsContainment = true;
+			obj21.Name = "Name";
+			obj21.Parent = obj7;
+			obj22.Type = obj8;
+			obj22.IsContainment = false;
 			obj22.IsDerived = false;
-			obj22.Opposite = obj21;
-			obj22.Name = "Declarations";
+			obj22.Opposite = obj23;
+			obj22.Name = "Parent";
 			obj22.Parent = obj8;
-			obj23.Type = stringType;
-			obj23.IsContainment = false;
-			obj23.IsDerived = true;
-			obj23.Name = "FullName";
+			((__IModelObject)obj23).Children.Add((__IModelObject)obj25);
+			obj23.Type = obj25;
+			obj23.IsContainment = true;
+			obj23.IsDerived = false;
+			obj23.Opposite = obj22;
+			obj23.Name = "Declarations";
 			obj23.Parent = obj8;
-			obj24.ItemType = obj8;
-			obj25.Type = stringType;
-			obj25.IsContainment = false;
-			obj25.IsDerived = true;
-			obj25.Name = "NamespaceName";
-			obj25.Parent = obj10;
-			((__IModelObject)obj26).Children.Add((__IModelObject)obj27);
-			obj26.Type = obj27;
-			obj26.IsContainment = true;
-			obj26.IsDerived = false;
-			obj26.Name = "Literals";
-			obj26.Parent = obj13;
-			obj27.ItemType = obj14;
-			obj28.Type = obj11;
-			obj28.IsContainment = false;
+			obj24.Type = _stringType;
+			obj24.IsContainment = false;
+			obj24.IsDerived = true;
+			obj24.Name = "FullName";
+			obj24.Parent = obj8;
+			obj25.ItemType = obj8;
+			obj26.Type = _stringType;
+			obj26.IsContainment = false;
+			obj26.IsDerived = true;
+			obj26.Name = "NamespaceName";
+			obj26.Parent = obj10;
+			obj27.Type = obj12;
+			obj27.IsContainment = false;
+			obj27.IsDerived = false;
+			obj27.Name = "Type";
+			obj27.Parent = obj11;
+			((__IModelObject)obj28).Children.Add((__IModelObject)obj29);
+			obj28.Type = obj29;
+			obj28.IsContainment = true;
 			obj28.IsDerived = false;
-			obj28.Name = "ItemType";
-			obj28.Parent = obj15;
-			obj29.Type = typeType;
-			obj29.IsContainment = false;
-			obj29.IsDerived = false;
-			obj29.Name = "SymbolType";
-			obj29.Parent = obj16;
-			obj30.Type = boolType;
+			obj28.Name = "Literals";
+			obj28.Parent = obj14;
+			obj29.ItemType = obj15;
+			obj30.Type = obj12;
 			obj30.IsContainment = false;
 			obj30.IsDerived = false;
-			obj30.Name = "IsAbstract";
+			obj30.Name = "ItemType";
 			obj30.Parent = obj16;
-			((__IModelObject)obj31).Children.Add((__IModelObject)obj34);
-			obj31.Type = obj34;
+			obj31.Type = _typeType;
 			obj31.IsContainment = false;
 			obj31.IsDerived = false;
-			obj31.Name = "BaseTypes";
-			obj31.Parent = obj16;
-			((__IModelObject)obj32).Children.Add((__IModelObject)obj35);
-			obj32.Type = obj35;
-			obj32.IsContainment = true;
+			obj31.Name = "SymbolType";
+			obj31.Parent = obj17;
+			obj32.Type = _boolType;
+			obj32.IsContainment = false;
 			obj32.IsDerived = false;
-			obj32.Name = "Properties";
-			obj32.Parent = obj16;
+			obj32.Name = "IsAbstract";
+			obj32.Parent = obj17;
 			((__IModelObject)obj33).Children.Add((__IModelObject)obj36);
 			obj33.Type = obj36;
-			obj33.IsContainment = true;
+			obj33.IsContainment = false;
 			obj33.IsDerived = false;
-			obj33.Name = "Operations";
-			obj33.Parent = obj16;
-			obj34.ItemType = obj16;
-			obj35.ItemType = obj17;
-			obj36.ItemType = obj18;
-			obj37.Type = obj11;
-			obj37.IsContainment = false;
-			obj37.IsDerived = false;
-			obj37.Name = "Type";
-			obj37.Parent = obj17;
-			obj38.Type = stringType;
-			obj38.IsContainment = false;
-			obj38.IsDerived = false;
-			obj38.Name = "SymbolProperty";
-			obj38.Parent = obj17;
-			obj39.Type = boolType;
+			obj33.Name = "BaseTypes";
+			obj33.Parent = obj17;
+			((__IModelObject)obj34).Children.Add((__IModelObject)obj37);
+			obj34.Type = obj37;
+			obj34.IsContainment = true;
+			obj34.IsDerived = false;
+			obj34.Name = "Properties";
+			obj34.Parent = obj17;
+			((__IModelObject)obj35).Children.Add((__IModelObject)obj38);
+			obj35.Type = obj38;
+			obj35.IsContainment = true;
+			obj35.IsDerived = false;
+			obj35.Name = "Operations";
+			obj35.Parent = obj17;
+			obj36.ItemType = obj17;
+			obj37.ItemType = obj18;
+			obj38.ItemType = obj19;
+			obj39.Type = obj12;
 			obj39.IsContainment = false;
 			obj39.IsDerived = false;
-			obj39.Name = "IsContainment";
-			obj39.Parent = obj17;
-			obj40.Type = boolType;
+			obj39.Name = "Type";
+			obj39.Parent = obj18;
+			obj40.Type = _stringType;
 			obj40.IsContainment = false;
 			obj40.IsDerived = false;
-			obj40.Name = "IsDerived";
-			obj40.Parent = obj17;
-			obj41.Type = obj17;
+			obj40.Name = "SymbolProperty";
+			obj40.Parent = obj18;
+			obj41.Type = _boolType;
 			obj41.IsContainment = false;
 			obj41.IsDerived = false;
-			obj41.Opposite = obj41;
-			obj41.Name = "Opposite";
-			obj41.Parent = obj17;
-			obj42.Type = obj11;
+			obj41.Name = "IsContainment";
+			obj41.Parent = obj18;
+			obj42.Type = _boolType;
 			obj42.IsContainment = false;
 			obj42.IsDerived = false;
-			obj42.Name = "ReturnType";
+			obj42.Name = "IsDerived";
 			obj42.Parent = obj18;
-			((__IModelObject)obj43).Children.Add((__IModelObject)obj44);
-			obj43.Type = obj44;
-			obj43.IsContainment = true;
+			obj43.Type = obj18;
+			obj43.IsContainment = false;
 			obj43.IsDerived = false;
-			obj43.Name = "Parameters";
+			obj43.Opposite = obj43;
+			obj43.Name = "Opposite";
 			obj43.Parent = obj18;
-			obj44.ItemType = obj19;
-			obj45.Type = obj11;
-			obj45.IsContainment = false;
+			obj44.Type = obj12;
+			obj44.IsContainment = false;
+			obj44.IsDerived = false;
+			obj44.Name = "ReturnType";
+			obj44.Parent = obj19;
+			((__IModelObject)obj45).Children.Add((__IModelObject)obj46);
+			obj45.Type = obj46;
+			obj45.IsContainment = true;
 			obj45.IsDerived = false;
-			obj45.Name = "Type";
+			obj45.Name = "Parameters";
 			obj45.Parent = obj19;
+			obj46.ItemType = obj20;
+			obj47.Type = obj12;
+			obj47.IsContainment = false;
+			obj47.IsDerived = false;
+			obj47.Name = "Type";
+			obj47.Parent = obj20;
 			_model.IsSealed = true;
 		}
 	
@@ -455,8 +483,14 @@ namespace MetaDslx.Languages.MetaModel.Model
 	    public override bool Contains(__Type modelObjectType) => _modelObjectInfosByType.ContainsKey(modelObjectType);
 	    public override bool Contains(string modelObjectTypeName) => _modelObjectInfosByName.ContainsKey(modelObjectTypeName);
 	
-	    public override bool TryGetInfo(__Type modelObjectType, out __ModelObjectInfo info) => _modelObjectInfosByType.TryGetValue(modelObjectType, out info);
-	    public override bool TryGetInfo(string modelObjectTypeName, out __ModelObjectInfo info) => _modelObjectInfosByName.TryGetValue(modelObjectTypeName, out info);
+	    public override bool TryGetInfo(__Type modelObjectType, out __ModelObjectInfo? info) => _modelObjectInfosByType.TryGetValue(modelObjectType, out info);
+	    public override bool TryGetInfo(string modelObjectTypeName, out __ModelObjectInfo? info) => _modelObjectInfosByName.TryGetValue(modelObjectTypeName, out info);
+	
+		public static MetaPrimitiveType VoidType => Instance._voidType;
+		public static MetaPrimitiveType BoolType => Instance._boolType;
+		public static MetaPrimitiveType IntType => Instance._intType;
+		public static MetaPrimitiveType StringType => Instance._stringType;
+		public static MetaPrimitiveType TypeType => Instance._typeType;
 	
 		public static __ModelObjectInfo MetaNamedElementInfo => global::MetaDslx.Languages.MetaModel.Model.__Impl.MetaNamedElement_Impl.__Info.Instance;
 		public static __ModelProperty MetaNamedElement_Name => _MetaNamedElement_Name;
@@ -467,6 +501,8 @@ namespace MetaDslx.Languages.MetaModel.Model
 		public static __ModelObjectInfo MetaNamespaceInfo => global::MetaDslx.Languages.MetaModel.Model.__Impl.MetaNamespace_Impl.__Info.Instance;
 		public static __ModelObjectInfo MetaModelInfo => global::MetaDslx.Languages.MetaModel.Model.__Impl.MetaModel_Impl.__Info.Instance;
 		public static __ModelProperty MetaModel_NamespaceName => _MetaModel_NamespaceName;
+		public static __ModelObjectInfo MetaConstantInfo => global::MetaDslx.Languages.MetaModel.Model.__Impl.MetaConstant_Impl.__Info.Instance;
+		public static __ModelProperty MetaConstant_Type => _MetaConstant_Type;
 		public static __ModelObjectInfo MetaTypeInfo => global::MetaDslx.Languages.MetaModel.Model.__Impl.MetaType_Impl.__Info.Instance;
 		public static __ModelObjectInfo MetaPrimitiveTypeInfo => global::MetaDslx.Languages.MetaModel.Model.__Impl.MetaPrimitiveType_Impl.__Info.Instance;
 		public static __ModelObjectInfo MetaEnumTypeInfo => global::MetaDslx.Languages.MetaModel.Model.__Impl.MetaEnumType_Impl.__Info.Instance;
@@ -518,6 +554,11 @@ namespace MetaDslx.Languages.MetaModel.Model
 		public MetaModel MetaModel(string? id = null)
 		{
 			return (MetaModel)Meta.MetaModelInfo.Create(Model, id)!;
+		}
+	
+		public MetaConstant MetaConstant(string? id = null)
+		{
+			return (MetaConstant)Meta.MetaConstantInfo.Create(Model, id)!;
 		}
 	
 		public MetaPrimitiveType MetaPrimitiveType(string? id = null)
@@ -589,6 +630,11 @@ namespace MetaDslx.Languages.MetaModel.Model
 			return (MetaModel)Meta.MetaModelInfo.Create(model, id)!;
 		}
 	
+		public MetaConstant MetaConstant(__Model model, string? id = null)
+		{
+			return (MetaConstant)Meta.MetaConstantInfo.Create(model, id)!;
+		}
+	
 		public MetaPrimitiveType MetaPrimitiveType(__Model model, string? id = null)
 		{
 			return (MetaPrimitiveType)Meta.MetaPrimitiveTypeInfo.Create(model, id)!;
@@ -651,6 +697,11 @@ namespace MetaDslx.Languages.MetaModel.Model
 	public interface MetaModel : global::MetaDslx.Languages.MetaModel.Model.MetaDeclaration
 	{
 		string NamespaceName { get; }
+	}
+
+	public interface MetaConstant : global::MetaDslx.Languages.MetaModel.Model.MetaDeclaration
+	{
+		MetaType Type { get; set; }
 	}
 
 	public interface MetaType : global::MetaDslx.Languages.MetaModel.Model.MetaDeclaration
@@ -726,6 +777,11 @@ namespace MetaDslx.Languages.MetaModel.Model
 		/// Constructor for the class MetaModel
 		/// </summary>
 		void MetaModel(MetaModel _this);
+	
+		/// <summary>
+		/// Constructor for the class MetaConstant
+		/// </summary>
+		void MetaConstant(MetaConstant _this);
 	
 		/// <summary>
 		/// Constructor for the class MetaType
@@ -812,6 +868,13 @@ namespace MetaDslx.Languages.MetaModel.Model
 		/// Constructor for the class MetaModel
 		/// </summary>
 		public virtual void MetaModel(MetaModel _this)
+		{
+		}
+	
+		/// <summary>
+		/// Constructor for the class MetaConstant
+		/// </summary>
+		public virtual void MetaConstant(MetaConstant _this)
 		{
 		}
 	
@@ -1252,6 +1315,106 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 			public override string ToString()
 			{
 				return "Meta.MetaModelInfo";
+			}
+		}
+	}
+
+	internal class MetaConstant_Impl : __MetaModelObject, MetaConstant
+	{
+		private MetaConstant_Impl(string? id)
+			: base(id)
+		{
+			((__IModelObject)this).Init(Meta.MetaDeclaration_Declarations, new global::MetaDslx.Modeling.ModelObjectList<MetaDeclaration>(this, __Info.Instance.GetSlot(Meta.MetaDeclaration_Declarations)!));
+			Meta.__CustomImpl.MetaNamedElement(this);
+			Meta.__CustomImpl.MetaDeclaration(this);
+			Meta.__CustomImpl.MetaConstant(this);
+		}
+	
+		public override __ModelObjectInfo MInfo => __Info.Instance;
+	
+		public MetaType Type
+		{
+			get => MGet<MetaType>(Meta.MetaConstant_Type);
+			set => MAdd<MetaType>(Meta.MetaConstant_Type, value);
+		}
+	
+		public MetaDeclaration Parent
+		{
+			get => MGet<MetaDeclaration>(Meta.MetaDeclaration_Parent);
+			set => MAdd<MetaDeclaration>(Meta.MetaDeclaration_Parent, value);
+		}
+	
+		public global::System.Collections.Generic.IList<MetaDeclaration> Declarations
+		{
+			get => MGet<global::System.Collections.Generic.IList<MetaDeclaration>>(Meta.MetaDeclaration_Declarations);
+		}
+	
+		public string FullName
+		{
+			get => Meta.__CustomImpl.MetaDeclaration_FullName(this);
+		}
+	
+		public string Name
+		{
+			get => MGet<string>(Meta.MetaNamedElement_Name);
+			set => MAdd<string>(Meta.MetaNamedElement_Name, value);
+		}
+	
+	
+		internal class __Info : __ModelObjectInfo
+		{
+			public static readonly __Info Instance = new __Info();
+	
+			private readonly global::System.Collections.Immutable.ImmutableArray<__ModelProperty> _declaredProperties;
+			private readonly global::System.Collections.Immutable.ImmutableArray<__ModelProperty> _allDeclaredProperties;
+			private readonly global::System.Collections.Immutable.ImmutableArray<__ModelProperty> _publicProperties;
+	        private readonly global::System.Collections.Immutable.ImmutableDictionary<string, __ModelProperty> _publicPropertiesByName;
+	        private readonly global::System.Collections.Immutable.ImmutableDictionary<__ModelProperty, __ModelPropertyInfo> _modelPropertyInfos;
+	
+			private __Info() 
+			{
+				_declaredProperties = __ImmutableArray.Create<__ModelProperty>(Meta.MetaConstant_Type);
+				_allDeclaredProperties = __ImmutableArray.Create<__ModelProperty>(Meta.MetaConstant_Type, Meta.MetaDeclaration_Parent, Meta.MetaDeclaration_Declarations, Meta.MetaDeclaration_FullName, Meta.MetaNamedElement_Name);
+				_publicProperties = __ImmutableArray.Create<__ModelProperty>(Meta.MetaConstant_Type, Meta.MetaDeclaration_Parent, Meta.MetaDeclaration_Declarations, Meta.MetaDeclaration_FullName, Meta.MetaNamedElement_Name);
+				var publicPropertiesByName = __ImmutableDictionary.CreateBuilder<string, __ModelProperty>();
+				publicPropertiesByName.Add("Type", Meta.MetaConstant_Type);
+				publicPropertiesByName.Add("Parent", Meta.MetaDeclaration_Parent);
+				publicPropertiesByName.Add("Declarations", Meta.MetaDeclaration_Declarations);
+				publicPropertiesByName.Add("FullName", Meta.MetaDeclaration_FullName);
+				publicPropertiesByName.Add("Name", Meta.MetaNamedElement_Name);
+				_publicPropertiesByName = publicPropertiesByName.ToImmutable();
+				var modelPropertyInfos = __ImmutableDictionary.CreateBuilder<__ModelProperty, __ModelPropertyInfo>();
+				modelPropertyInfos.Add(Meta.MetaConstant_Type, new __ModelPropertyInfo(new __ModelPropertySlot(Meta.MetaConstant_Type, __ImmutableArray.Create<__ModelProperty>(Meta.MetaConstant_Type), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.SingleItem), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
+				modelPropertyInfos.Add(Meta.MetaDeclaration_Parent, new __ModelPropertyInfo(new __ModelPropertySlot(Meta.MetaDeclaration_Parent, __ImmutableArray.Create<__ModelProperty>(Meta.MetaDeclaration_Parent), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.SingleItem), __ImmutableArray.Create<__ModelProperty>(Meta.MetaDeclaration_Declarations), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
+				modelPropertyInfos.Add(Meta.MetaDeclaration_Declarations, new __ModelPropertyInfo(new __ModelPropertySlot(Meta.MetaDeclaration_Declarations, __ImmutableArray.Create<__ModelProperty>(Meta.MetaDeclaration_Declarations), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection), __ImmutableArray.Create<__ModelProperty>(Meta.MetaDeclaration_Parent), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
+				modelPropertyInfos.Add(Meta.MetaDeclaration_FullName, new __ModelPropertyInfo(new __ModelPropertySlot(Meta.MetaDeclaration_FullName, __ImmutableArray.Create<__ModelProperty>(Meta.MetaDeclaration_FullName), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.SingleItem | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
+				modelPropertyInfos.Add(Meta.MetaNamedElement_Name, new __ModelPropertyInfo(new __ModelPropertySlot(Meta.MetaNamedElement_Name, __ImmutableArray.Create<__ModelProperty>(Meta.MetaNamedElement_Name), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.SingleItem), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
+				_modelPropertyInfos = modelPropertyInfos.ToImmutable();
+			}
+	
+	        public override __MetaModel MetaModel => Meta.Instance;
+	        public override global::System.Type MetaType => typeof(MetaConstant);
+	
+	        public override __Type? SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.DeclaredSymbol);
+	        public override __ModelProperty? NameProperty => Meta.MetaNamedElement_Name;
+	        public override __ModelProperty? TypeProperty => null;
+	        public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> DeclaredProperties => _declaredProperties;
+	        public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> AllDeclaredProperties => _allDeclaredProperties;
+	        public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> PublicProperties => _publicProperties;
+	
+	        protected override global::System.Collections.Immutable.ImmutableDictionary<string, __ModelProperty> PublicPropertiesByName => _publicPropertiesByName;
+	        protected override global::System.Collections.Immutable.ImmutableDictionary<__ModelProperty, __ModelPropertyInfo> ModelPropertyInfos => _modelPropertyInfos;
+	
+			public override __IModelObject? Create(__Model? model = null, string? id = null)
+			{
+				var result = new MetaConstant_Impl(id);
+				if (model is not null) model.AddObject(result);
+				return result;
+			}
+	
+			public override string ToString()
+			{
+				return "Meta.MetaConstantInfo";
 			}
 		}
 	}

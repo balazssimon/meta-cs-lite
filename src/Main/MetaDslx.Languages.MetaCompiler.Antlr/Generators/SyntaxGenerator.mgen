@@ -76,7 +76,7 @@ namespace [language.QualifiedNamespace].Syntax
 			return red;
 		}
 
-        private [language.Grammar.MainRule?.GreenName]? Parse[language.Grammar.MainRule?.CSharpName](ref ParserState? state)
+        private GreenNode? Parse[language.Grammar.MainRule?.CSharpName](ref ParserState? state)
         {
             return _visitor.Visit[language.Grammar.MainRule?.AntlrName?.ToPascalCase()](AntlrParser.[language.Grammar.MainRule?.AntlrName]());
         }
@@ -99,7 +99,7 @@ namespace [language.QualifiedNamespace].Syntax
 				_factory = ([language.Name]InternalSyntaxFactory)_parser.Language.InternalSyntaxFactory;
             }
 
-            private InternalSyntaxToken? VisitTerminal(IToken? token, [language.Name]SyntaxKind kind)
+            private GreenNode? VisitTerminal(IToken? token, [language.Name]SyntaxKind kind)
             {
 				if (token == null)
 				{
@@ -111,12 +111,12 @@ namespace [language.QualifiedNamespace].Syntax
 				return green;
             }
 
-            public InternalSyntaxToken? VisitTerminal(IToken? token)
+            public GreenNode? VisitTerminal(IToken? token)
             {
 				return VisitTerminal(token, [language.Name]SyntaxKind.None);
             }
 
-            private InternalSyntaxToken? VisitTerminal(ITerminalNode? node, [language.Name]SyntaxKind kind)
+            private GreenNode? VisitTerminal(ITerminalNode? node, [language.Name]SyntaxKind kind)
             {
                 if (node?.Symbol == null)
 				{
@@ -128,14 +128,14 @@ namespace [language.QualifiedNamespace].Syntax
 				return green;
 			}
 
-            public override InternalSyntaxToken? VisitTerminal(ITerminalNode? node)
+            public override GreenNode? VisitTerminal(ITerminalNode? node)
             {
                 return VisitTerminal(node, [language.Name]SyntaxKind.None);
             }
 
             [foreach (var rule in language.Grammar.ParserRules)]
                 [foreach (var alt in rule.Alternatives)]
-            public override [alt.GreenName]? Visit[alt.AntlrName.ToPascalCase()]([language.Name]Parser.[alt.AntlrName.ToPascalCase()]Context? context)
+            public override GreenNode? Visit[alt.AntlrName.ToPascalCase()]([language.Name]Parser.[alt.AntlrName.ToPascalCase()]Context? context)
             {
                	if (context == null) return [alt.GreenName].__Missing;
                 [foreach (var elem in alt.Elements)]
@@ -204,7 +204,7 @@ namespace [language.QualifiedNamespace].Syntax
                         [if(elem is ParserRuleFixedStringAlternativesElement fixedAlts)]
                 InternalSyntaxToken? [elem.ParameterName] = null;
                             [foreach (var fixedAlt in fixedAlts.Alternatives)]
-                if (context.[fixedAlt.AntlrName] is not null) [elem.ParameterName] = this.VisitTerminal(context.[fixedAlt.AntlrName]);
+                if (context.[fixedAlt.AntlrName] is not null) [elem.ParameterName] = (InternalSyntaxToken)this.VisitTerminal(context.[fixedAlt.AntlrName]);
                             [end foreach]
                         [else if(elem is ParserRuleFixedStringElement fixedElem)]
                 var [elem.ParameterName] = this.VisitTerminal(context.[elem.AntlrName][if (!elem.IsOptional)], [language.Name]SyntaxKind.[fixedElem.LexerRule.CSharpName][end if]);

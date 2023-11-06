@@ -446,7 +446,7 @@ namespace [language.QualifiedNamespace].Syntax
         {
         }
 
-        public override [language.Name]Language Language => [language.Name]Language.Instance;
+        public override Language Language => [language.Name]Language.Instance;
         public [language.Name]SyntaxKind Kind => ([language.Name]SyntaxKind)this.RawKind;
 		internal new GreenNode Green => base.Green;
 
@@ -769,12 +769,12 @@ namespace [language.QualifiedNamespace]
         /// <summary>
         /// The language of the source code represented by the syntax tree.
         /// </summary>
-        public override [language.Name]Language Language => [language.Name]Language.Instance;
+        public override Language Language => [language.Name]Language.Instance;
 
         /// <summary>
         /// The options used by the parser to produce the syntax tree.
         /// </summary>
-        public override abstract [language.Name]ParseOptions Options { get; }
+        public override abstract ParseOptions Options { get; }
 
         /// <summary>
         /// Gets the root node of the syntax tree.
@@ -950,7 +950,7 @@ namespace [language.QualifiedNamespace]
             {
                 var parseData = parser.Parse();
                 var compilationUnit = ([language.Grammar.MainRule?.RedName])parseData.RootNode;
-                var tree = new ParsedSyntaxTree(newText, newText.Encoding, newText.ChecksumAlgorithm, this.FilePath, this.Options, compilationUnit, parseData);
+                var tree = new ParsedSyntaxTree(newText, newText.Encoding, newText.ChecksumAlgorithm, this.FilePath, ([language.Name]ParseOptions)this.Options, compilationUnit, parseData);
                 tree.VerifySource(changes);
                 return tree;
             }
@@ -1013,7 +1013,7 @@ namespace [language.QualifiedNamespace]
             {
                 get { return 0; }
             }
-            public override [language.Name]ParseOptions Options
+            public override ParseOptions Options
             {
                 get { return [language.Name]ParseOptions.Default; }
             }
@@ -1114,7 +1114,7 @@ namespace [language.QualifiedNamespace]
                     return _hasCompilationUnitRoot;
                 }
             }
-            public override [language.Name]ParseOptions Options
+            public override ParseOptions Options
             {
                 get
                 {
@@ -1323,6 +1323,7 @@ using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using MetaDslx.CodeAnalysis;
 using MetaDslx.CodeAnalysis.Syntax;
@@ -1342,9 +1343,9 @@ namespace [language.QualifiedNamespace].Syntax
 		{
 		}
 	    
-        public override [language.Name]Language Language => [language.Name]Language.Instance;
+        public override Language Language => [language.Name]Language.Instance;
 
-	    public override [language.Name]ParseOptions DefaultParseOptions => [language.Name]ParseOptions.Default;
+	    public override ParseOptions DefaultParseOptions => [language.Name]ParseOptions.Default;
 
 		/// <summary>
 		/// Create a new syntax tree from a syntax node.
@@ -1388,7 +1389,7 @@ namespace [language.QualifiedNamespace].Syntax
 			return [language.Name]SyntaxTree.ParseText(text, ([language.Name]ParseOptions?)options, path, cancellationToken);
 		}
 	
-		public override [language.Name]SyntaxTree MakeSyntaxTree(SyntaxNode root, ParseOptions? options = null, string path = "", Encoding? encoding = null)
+		public override SyntaxTree MakeSyntaxTree(SyntaxNode root, ParseOptions? options = null, string path = "", Encoding? encoding = null)
 		{
 			return [language.Name]SyntaxTree.Create(([language.Name]SyntaxNode)root, IncrementalParseData.Empty, ([language.Name]ParseOptions)options, path, null, encoding);
 		}
@@ -1592,7 +1593,7 @@ namespace [language.QualifiedNamespace].Syntax
         {
         }
 
-        public override [language.Name]Language Language => [language.Name]Language.Instance;
+        public override Language Language => [language.Name]Language.Instance;
 
         public new [language.Name]ParseOptions WithKind(SourceCodeKind kind)
         {
@@ -1663,14 +1664,14 @@ namespace [language.QualifiedNamespace].Syntax
         protected override bool IsFeatureEnabled(string feature)
         {
             [language.Name]LanguageVersion availableVersion = LanguageVersion;
-            [language.Name]LanguageVersion requiredVersion = Language.SyntaxFacts.GetRequiredLanguageVersion(feature);
+            [language.Name]LanguageVersion requiredVersion = [language.Name]Language.Instance.SyntaxFacts.GetRequiredLanguageVersion(feature);
             return availableVersion >= requiredVersion;
         }
 
         public override Diagnostic? GetDiagnosticForFeature(string feature)
         {
             [language.Name]LanguageVersion availableVersion = LanguageVersion;
-            [language.Name]LanguageVersion requiredVersion = Language.SyntaxFacts.GetRequiredLanguageVersion(feature);
+            [language.Name]LanguageVersion requiredVersion = [language.Name]Language.Instance.SyntaxFacts.GetRequiredLanguageVersion(feature);
             if (availableVersion < requiredVersion)
             {
                 return Diagnostic.Create(CommonErrorCode.ERR_FeatureNotAvailableInVersion, Location.None, feature, Language.Name, availableVersion.ToDisplayString(), requiredVersion.ToDisplayString());

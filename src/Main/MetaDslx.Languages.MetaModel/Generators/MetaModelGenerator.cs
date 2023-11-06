@@ -1,5 +1,5 @@
-﻿using MetaDslx.Bootstrap.MetaModel.Core;
-using MetaDslx.Bootstrap.MetaModel.Meta;
+﻿using MetaDslx.Languages.MetaModel.Model;
+using MetaDslx.Languages.MetaModel.Meta;
 using MetaDslx.CodeAnalysis.PooledObjects;
 using MetaDslx.CodeAnalysis.Symbols;
 using MetaDslx.Modeling;
@@ -11,20 +11,21 @@ using System.Collections.Immutable;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 
-namespace MetaDslx.Bootstrap.MetaModel.Generators
+namespace MetaDslx.Languages.MetaModel.Generators
 {
     public partial class MetaModelGenerator
     {
-        private Model _model;
-        private Core.MetaModel _metaModel;
+        private Modeling.Model _model;
+        private Model.MetaModel _metaModel;
         private MetaMetaGraph _graph;
         private ImmutableArray<MetaClass> _classes;
         private ImmutableArray<IModelObject> _modelObjects;
         private ImmutableArray<object> _objects;
-        private Dictionary<object, string> _objectNames;
+        private Dictionary<object, string>? _objectNames;
 
-        public MetaModelGenerator(Model model, Core.MetaModel metaModel, MetaMetaGraph graph)
+        public MetaModelGenerator(Modeling.Model model, Model.MetaModel metaModel, MetaMetaGraph graph)
         {
             _model = model;
             _metaModel = metaModel;
@@ -34,13 +35,13 @@ namespace MetaDslx.Bootstrap.MetaModel.Generators
             _objects = model.Objects.ToImmutableArray();
         }
 
-        public Model Model => _model;
-        public Core.MetaModel MetaModel => _metaModel;
-        public MetaMetaGraph Graph => _graph;
+        public Modeling.Model Model => _model;
+        public Model.MetaModel MetaModel => _metaModel;
         public string Namespace => _metaModel.Parent.FullName;
         public ImmutableArray<MetaClass> Classes => _classes;
         public ImmutableArray<IModelObject> ModelObjects => _modelObjects;
         public ImmutableArray<object> Objects => _objects;
+        public MetaMetaGraph Graph => _graph;
 
         public string ToCSharp(MetaType type)
         {
@@ -118,7 +119,7 @@ namespace MetaDslx.Bootstrap.MetaModel.Generators
             var builder = PooledStringBuilder.GetInstance();
             var sb = builder.Builder;
             var bar = string.Empty;
-            foreach (var flag in Enum.GetValues<ModelPropertyFlags>())
+            foreach (ModelPropertyFlags flag in Enum.GetValues(typeof(ModelPropertyFlags)))
             {
                 if (flags.HasFlag(flag))
                 {
@@ -159,7 +160,7 @@ namespace MetaDslx.Bootstrap.MetaModel.Generators
             {
                 return StringUtilities.EncodeString(value.ToString());
             }
-            if (value is MetaPrimitiveType mpt) return $"_{mpt.Name}Type";
+            if (value is MetaPrimitiveType mpt) return $"{mpt.Name}Type";
             var type = value.GetType();
             if (type.IsPrimitive) return value.ToString();
             return GetName(value);
