@@ -17,7 +17,7 @@ namespace MetaDslx.Modeling.Reflection
 
         private readonly ReflectionMetaModel _metaModel;
         private readonly Type _metaType;
-        private Type? _symbolType;
+        private string? _symbolType;
         private ModelProperty? _nameProperty;
         private ModelProperty? _typeProperty;
         private ImmutableArray<ModelProperty> _declaredProperties;
@@ -29,7 +29,7 @@ namespace MetaDslx.Modeling.Reflection
         public ReflectionModelObjectInfo(
             ReflectionMetaModel metaModel,
             Type metaType,
-            Type? symbolType,
+            string? symbolType,
             ModelProperty? nameProperty,
             ModelProperty? typeProperty,
             ImmutableArray<ModelProperty> declaredProperties,
@@ -52,7 +52,7 @@ namespace MetaDslx.Modeling.Reflection
 
         public override MetaModel MetaModel => _metaModel;
         public override Type MetaType => _metaType;
-        public override Type? SymbolType => _symbolType;
+        public override Type? SymbolType => _symbolType is not null ? Type.GetType($"{_symbolType}, MetaDslx.CodeAnalysis.Common") : null;
         public override ModelProperty? NameProperty => _nameProperty;
         public override ModelProperty? TypeProperty => _typeProperty;
         public override ImmutableArray<ModelProperty> DeclaredProperties => _declaredProperties;

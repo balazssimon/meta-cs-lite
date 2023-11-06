@@ -8,7 +8,7 @@ using System.Text;
 
 namespace MetaDslx.Modeling.Reflection
 {
-    internal class ReflectionMetaGraph : MetaGraph<Type, PropertyInfo, Type>
+    internal class ReflectionMetaGraph : MetaGraph<Type, PropertyInfo>
     {
         public ReflectionMetaGraph(IEnumerable<Type> classTypes) 
             : base(classTypes)
@@ -89,22 +89,22 @@ namespace MetaDslx.Modeling.Reflection
             return type.IsValueType;
         }
 
-        protected override MetaClass<Type, PropertyInfo, Type> MakeClass(Type classType)
+        protected override MetaClass<Type, PropertyInfo> MakeClass(Type classType)
         {
             return new ReflectionMetaClass(classType);
         }
 
-        protected override MetaProperty<Type, PropertyInfo, Type> MakeProperty(MetaClass<Type, PropertyInfo, Type> declaringType, PropertyInfo property)
+        protected override MetaProperty<Type, PropertyInfo> MakeProperty(MetaClass<Type, PropertyInfo> declaringType, PropertyInfo property)
         {
             return new ReflectionMetaProperty(declaringType, property);
         }
 
-        protected override MetaPropertyInfo<Type, PropertyInfo, Type> MakePropertyInfo(MetaPropertySlot<Type, PropertyInfo, Type> slot, ImmutableArray<MetaProperty<Type, PropertyInfo, Type>> oppositeProperties, ImmutableArray<MetaProperty<Type, PropertyInfo, Type>> subsettedProperties, ImmutableArray<MetaProperty<Type, PropertyInfo, Type>> subsettingProperties, ImmutableArray<MetaProperty<Type, PropertyInfo, Type>> redefinedProperties, ImmutableArray<MetaProperty<Type, PropertyInfo, Type>> redefiningProperties, ImmutableArray<MetaProperty<Type, PropertyInfo, Type>> hiddenProperties, ImmutableArray<MetaProperty<Type, PropertyInfo, Type>> hidingProperties)
+        protected override MetaPropertyInfo<Type, PropertyInfo> MakePropertyInfo(MetaPropertySlot<Type, PropertyInfo> slot, ImmutableArray<MetaProperty<Type, PropertyInfo>> oppositeProperties, ImmutableArray<MetaProperty<Type, PropertyInfo>> subsettedProperties, ImmutableArray<MetaProperty<Type, PropertyInfo>> subsettingProperties, ImmutableArray<MetaProperty<Type, PropertyInfo>> redefinedProperties, ImmutableArray<MetaProperty<Type, PropertyInfo>> redefiningProperties, ImmutableArray<MetaProperty<Type, PropertyInfo>> hiddenProperties, ImmutableArray<MetaProperty<Type, PropertyInfo>> hidingProperties)
         {
             return new ReflectionMetaPropertyInfo(slot, oppositeProperties, subsettedProperties, subsettingProperties, redefinedProperties, redefiningProperties, hiddenProperties, hidingProperties);
         }
 
-        protected override MetaPropertySlot<Type, PropertyInfo, Type> MakePropertySlot(MetaProperty<Type, PropertyInfo, Type> slotProperty, ImmutableArray<MetaProperty<Type, PropertyInfo, Type>> slotProperties, object? defaultValue, ModelPropertyFlags flags)
+        protected override MetaPropertySlot<Type, PropertyInfo> MakePropertySlot(MetaProperty<Type, PropertyInfo> slotProperty, ImmutableArray<MetaProperty<Type, PropertyInfo>> slotProperties, object? defaultValue, ModelPropertyFlags flags)
         {
             return new ReflectionMetaPropertySlot(slotProperty, slotProperties, defaultValue, flags);
         }

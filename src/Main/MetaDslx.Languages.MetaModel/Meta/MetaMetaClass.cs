@@ -1,5 +1,5 @@
-﻿using MetaDslx.Bootstrap.MetaModel.Core;
-using MetaDslx.CodeAnalysis.Symbols;
+﻿using MetaDslx.CodeAnalysis.Symbols;
+using MetaDslx.Languages.MetaModel.Model;
 using MetaDslx.Modeling.Meta;
 using System;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MetaDslx.Bootstrap.MetaModel.Meta
+namespace MetaDslx.Languages.MetaModel.Meta
 {
     public class MetaMetaClass : MetaClass<MetaType, MetaProperty>
     {
@@ -17,7 +17,7 @@ namespace MetaDslx.Bootstrap.MetaModel.Meta
         public MetaMetaClass(MetaClass underlyingType) 
             : base(underlyingType)
         {
-            _symbolType = underlyingType.SymbolType is null ? null : SymbolDisplayFormat.QualifiedNameOnlyFormat.ToString(underlyingType.SymbolType);
+            _symbolType = underlyingType.SymbolType?.FullName;
         }
 
         public MetaClass UnderlyingClass => (MetaClass)UnderlyingType;

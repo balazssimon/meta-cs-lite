@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace MetaDslx.Languages.MetaModel
+namespace MetaDslx.Languages.MetaModel.Model
 {
     internal class CustomMetaImplementation : CustomMetaImplementationBase
     {

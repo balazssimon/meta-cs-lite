@@ -1,5 +1,5 @@
-﻿using MetaDslx.Bootstrap.MetaModel.Core;
-using MetaDslx.CodeAnalysis.Symbols;
+﻿using MetaDslx.CodeAnalysis.Symbols;
+using MetaDslx.Languages.MetaModel.Model;
 using MetaDslx.Modeling;
 using MetaDslx.Modeling.Meta;
 using System;
@@ -8,9 +8,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MetaDslx.Bootstrap.MetaModel.Meta
+namespace MetaDslx.Languages.MetaModel.Meta
 {
-    public class MetaMetaProperty : MetaProperty<MetaType, MetaProperty>
+    internal class MetaMetaProperty : MetaProperty<MetaType, MetaProperty>
     {
         private readonly ModelPropertyFlags _originalFlags;
 

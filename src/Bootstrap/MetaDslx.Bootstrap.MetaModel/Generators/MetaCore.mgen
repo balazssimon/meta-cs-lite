@@ -282,7 +282,7 @@ internal class [cls.Name]_Impl : __MetaModelObject, [cls.Name]
         public override __MetaModel MetaModel => [mm.Name].Instance;
         public override global::System.Type MetaType => typeof([cls.Name]);
 
-        public override __Type? SymbolType => [if (metaCls.SymbolType is null)]null[else]typeof([ToCSharp(metaCls.SymbolType)])[end if];
+        public override __Type? SymbolType => [if (metaCls.SymbolType is null)]null[else]typeof(global::[metaCls.SymbolType])[end if];
         public override __ModelProperty? NameProperty => [if (metaCls.NameProperty is null)]null[else][ToCSharp(metaCls.NameProperty)][end if];
         public override __ModelProperty? TypeProperty => [if (metaCls.TypeProperty is null)]null[else][ToCSharp(metaCls.TypeProperty)][end if];
         public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> DeclaredProperties => _declaredProperties;

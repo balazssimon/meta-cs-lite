@@ -82,22 +82,22 @@ namespace MetaDslx.Bootstrap.MetaModel.Generators
             return SymbolDisplayFormat.FullyQualifiedFormat.ToString(type);
         }
 
-        public bool HasSetter(MetaProperty<MetaType, MetaProperty, TypeSymbol> property)
+        public bool HasSetter(MetaProperty<MetaType, MetaProperty> property)
         {
             return property.HasSetter && !property.Flags.HasFlag(ModelPropertyFlags.ReadOnly) && !property.Flags.HasFlag(ModelPropertyFlags.Collection);
         }
 
-        public bool IsCollection(MetaPropertySlot<MetaType, MetaProperty, TypeSymbol> slot)
+        public bool IsCollection(MetaPropertySlot<MetaType, MetaProperty> slot)
         {
             return slot.Flags.HasFlag(ModelPropertyFlags.Collection);
         }
 
-        public string ToCSharp(MetaProperty<MetaType, MetaProperty, TypeSymbol> property)
+        public string ToCSharp(MetaProperty<MetaType, MetaProperty> property)
         {
             return $"{MetaModel.Name}.{property.DeclaringType.Name}_{property.Name}";
         }
 
-        public string ToCSharp(ImmutableArray<MetaProperty<MetaType, MetaProperty, TypeSymbol>> properties)
+        public string ToCSharp(ImmutableArray<MetaProperty<MetaType, MetaProperty>> properties)
         {
             var builder = PooledStringBuilder.GetInstance();
             var sb = builder.Builder;

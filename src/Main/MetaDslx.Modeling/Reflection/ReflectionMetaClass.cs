@@ -7,20 +7,20 @@ using MetaDslx.Modeling.Meta;
 
 namespace MetaDslx.Modeling.Reflection
 {
-    internal class ReflectionMetaClass : MetaClass<Type, PropertyInfo, Type>
+    internal class ReflectionMetaClass : MetaClass<Type, PropertyInfo>
     {
-        private Type? _symbolType;
+        private string? _symbolType;
 
         public ReflectionMetaClass(Type underlyingType)
             : base(underlyingType)
         {
             var symbolAttr = UnderlyingType.GetCustomAttribute<SymbolAttribute>(true);
-            _symbolType = symbolAttr?.SymbolType;
+            _symbolType = symbolAttr?.SymbolType?.FullName;
         }
 
         public override string Name => UnderlyingType.Name;
 
-        public override Type? SymbolType
+        public override string? SymbolType
         {
             get => _symbolType;
             set => _symbolType = value;
