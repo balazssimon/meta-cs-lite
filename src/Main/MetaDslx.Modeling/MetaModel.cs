@@ -8,7 +8,8 @@ namespace MetaDslx.Modeling
     public abstract class MetaModel
     {
         public abstract string Name { get; }
-        public abstract string FullName { get; }
+        public abstract string Namespace { get; }
+        public string FullName => $"{Namespace}.{Name}";
         public abstract ModelVersion Version { get; }
         public abstract string Uri { get; }
         public abstract string Prefix { get; }

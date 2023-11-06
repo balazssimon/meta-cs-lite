@@ -19,7 +19,7 @@ namespace MetaDslx.Modeling.Reflection
         private readonly object _lockObject = new object();
 
         private readonly string _name;
-        private readonly string _fullName;
+        private readonly string _namespace;
         private readonly ModelVersion _version;
         private readonly string _uri;
         private readonly string _prefix;
@@ -28,10 +28,10 @@ namespace MetaDslx.Modeling.Reflection
         private ImmutableDictionary<Type, ModelObjectInfo> _modelObjectInfosByType;
         private ImmutableDictionary<string, ModelObjectInfo> _modelObjectInfosByName;
 
-        private ReflectionMetaModel(string name, string fullName, ModelVersion version, string uri, string prefix, ImmutableArray<Type> types)
+        private ReflectionMetaModel(string name, string namespaceName, ModelVersion version, string uri, string prefix, ImmutableArray<Type> types)
         {
             _name = name;
-            _fullName = fullName;
+            _namespace = namespaceName;
             _version = version;
             _uri = uri;
             _prefix = prefix;
@@ -55,20 +55,19 @@ namespace MetaDslx.Modeling.Reflection
             if (fullName is null) fullName = namespaceName;
             if (uri is null) uri = namespaceName;
             if (prefix is null) prefix = string.Concat(name.Where(c => char.IsUpper(c)).Select(c => char.ToLower(c)));
-            return CreateFromTypes(assembly.GetExportedTypes().Where(t => t.Namespace == namespaceName), name, fullName, version, uri, prefix);
+            return CreateFromTypes(assembly.GetExportedTypes().Where(t => t.Namespace == namespaceName), name, namespaceName, version, uri, prefix);
         }
 
-        public static MetaModel CreateFromTypes(IEnumerable<Type> types, string? name = null, string? fullName = null, ModelVersion version = default, string? uri = null, string? prefix = null)
+        public static MetaModel CreateFromTypes(IEnumerable<Type> types, string? name = null, string? namespaceName = null, ModelVersion version = default, string? uri = null, string? prefix = null)
         {
-            if (fullName is null) fullName = name;
             if (uri is null) uri = name ?? "http://tempuri.org";
             if (prefix is null) prefix = !string.IsNullOrWhiteSpace(name) ? string.Concat(name.Where(c => char.IsUpper(c)).Select(c => char.ToLower(c))) : "tmp";
-            return new ReflectionMetaModel(name, fullName, version, uri, prefix, types.ToImmutableArray());
+            return new ReflectionMetaModel(name, namespaceName, version, uri, prefix, types.ToImmutableArray());
         }
 
         public override string Name => _name;
 
-        public override string FullName => _fullName;
+        public override string Namespace => _namespace;
 
         public override ModelVersion Version => _version;
 

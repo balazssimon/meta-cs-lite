@@ -53,7 +53,7 @@ namespace MetaDslx.Languages.MetaModel.Model
 			_MetaModel_NamespaceName = new __ModelProperty(typeof(MetaModel), "NamespaceName", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.SingleItem | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
 			_MetaEnumType_Literals = new __ModelProperty(typeof(MetaEnumType), "Literals", typeof(MetaEnumLiteral), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection, null);
 			_MetaArrayType_ItemType = new __ModelProperty(typeof(MetaArrayType), "ItemType", typeof(MetaType), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.SingleItem, null);
-			_MetaClass_SymbolType = new __ModelProperty(typeof(MetaClass), "SymbolType", typeof(__Type), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.TypeSymbolType, null);
+			_MetaClass_SymbolType = new __ModelProperty(typeof(MetaClass), "SymbolType", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.TypeSymbolType, null);
 			_MetaClass_IsAbstract = new __ModelProperty(typeof(MetaClass), "IsAbstract", typeof(bool), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.SingleItem, null);
 			_MetaClass_BaseTypes = new __ModelProperty(typeof(MetaClass), "BaseTypes", typeof(MetaClass), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Collection, null);
 			_MetaClass_Properties = new __ModelProperty(typeof(MetaClass), "Properties", typeof(MetaProperty), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection, null);
@@ -209,7 +209,7 @@ namespace MetaDslx.Languages.MetaModel.Model
 			obj6.Name = "Meta";
 			obj6.Parent = obj5;
 			((__IModelObject)obj7).Children.Add((__IModelObject)obj20);
-			obj7.SymbolType = typeof(global::MetaDslx.CodeAnalysis.Symbols.Symbol);
+			obj7.SymbolType = "MetaDslx.CodeAnalysis.Symbols.Symbol";
 			obj7.IsAbstract = false;
 			obj7.Properties.Add(obj20);
 			obj7.Name = "MetaNamedElement";
@@ -218,7 +218,7 @@ namespace MetaDslx.Languages.MetaModel.Model
 			((__IModelObject)obj8).Children.Add((__IModelObject)obj21);
 			((__IModelObject)obj8).Children.Add((__IModelObject)obj22);
 			((__IModelObject)obj8).Children.Add((__IModelObject)obj23);
-			obj8.SymbolType = typeof(global::MetaDslx.CodeAnalysis.Symbols.DeclaredSymbol);
+			obj8.SymbolType = "MetaDslx.CodeAnalysis.Symbols.DeclaredSymbol";
 			obj8.IsAbstract = false;
 			obj8.BaseTypes.Add(obj7);
 			obj8.Properties.Add(obj21);
@@ -229,7 +229,7 @@ namespace MetaDslx.Languages.MetaModel.Model
 			obj8.Declarations.Add(obj21);
 			obj8.Declarations.Add(obj22);
 			obj8.Declarations.Add(obj23);
-			obj9.SymbolType = typeof(global::MetaDslx.CodeAnalysis.Symbols.NamespaceSymbol);
+			obj9.SymbolType = "MetaDslx.CodeAnalysis.Symbols.NamespaceSymbol";
 			obj9.IsAbstract = false;
 			obj9.BaseTypes.Add(obj8);
 			obj9.Name = "MetaNamespace";
@@ -241,7 +241,7 @@ namespace MetaDslx.Languages.MetaModel.Model
 			obj10.Name = "MetaModel";
 			obj10.Parent = obj5;
 			obj10.Declarations.Add(obj25);
-			obj11.SymbolType = typeof(global::MetaDslx.CodeAnalysis.Symbols.TypeSymbol);
+			obj11.SymbolType = "MetaDslx.CodeAnalysis.Symbols.TypeSymbol";
 			obj11.IsAbstract = true;
 			obj11.BaseTypes.Add(obj8);
 			obj11.Name = "MetaType";
@@ -443,7 +443,7 @@ namespace MetaDslx.Languages.MetaModel.Model
 		}
 	
 	    public override string Name => nameof(Meta);
-	    public override string FullName => "MetaDslx.Languages.MetaModel.Model.Meta";
+	    public override string Namespace => "MetaDslx.Languages.MetaModel.Model";
 	    public override __ModelVersion Version => default;
 	    public override string Uri => "MetaDslx.Languages.MetaModel.Model.Meta";
 	    public override string Prefix => "m";
@@ -677,7 +677,7 @@ namespace MetaDslx.Languages.MetaModel.Model
 
 	public interface MetaClass : global::MetaDslx.Languages.MetaModel.Model.MetaType
 	{
-		__Type SymbolType { get; set; }
+		string SymbolType { get; set; }
 		bool IsAbstract { get; set; }
 		global::System.Collections.Generic.IList<MetaClass> BaseTypes { get; }
 		global::System.Collections.Generic.IList<MetaProperty> Properties { get; }
@@ -1752,10 +1752,10 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 	
 		public override __ModelObjectInfo MInfo => __Info.Instance;
 	
-		public __Type SymbolType
+		public string SymbolType
 		{
-			get => MGet<__Type>(Meta.MetaClass_SymbolType);
-			set => MAdd<__Type>(Meta.MetaClass_SymbolType, value);
+			get => MGet<string>(Meta.MetaClass_SymbolType);
+			set => MAdd<string>(Meta.MetaClass_SymbolType, value);
 		}
 	
 		public bool IsAbstract

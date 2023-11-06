@@ -47,12 +47,12 @@ namespace MetaDslx.Languages.MetaModel.Meta
 
         protected override bool IsPrimitiveType(MetaType type)
         {
-            return type is MetaPrimitiveType && type.Name != "type";
+            return type is MetaPrimitiveType;
         }
 
         protected override bool IsValueType(MetaType type)
         {
-            return type is MetaPrimitiveType && type.Name != "type" || type is MetaEnumType;
+            return type is MetaPrimitiveType || type is MetaEnumType;
         }
 
         protected override MetaClass<MetaType, MetaProperty> MakeClass(MetaType classType)

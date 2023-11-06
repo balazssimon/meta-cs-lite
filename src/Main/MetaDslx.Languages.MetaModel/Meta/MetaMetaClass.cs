@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 
 namespace MetaDslx.Languages.MetaModel.Meta
 {
-    public class MetaMetaClass : MetaClass<MetaType, MetaProperty>
+    internal class MetaMetaClass : MetaClass<MetaType, MetaProperty>
     {
         private string? _symbolType;
 
         public MetaMetaClass(MetaClass underlyingType) 
             : base(underlyingType)
         {
-            _symbolType = underlyingType.SymbolType?.FullName;
+            _symbolType = underlyingType.SymbolType;
         }
 
         public MetaClass UnderlyingClass => (MetaClass)UnderlyingType;

@@ -55,7 +55,7 @@ Console.WriteLine(mm);
 //*/
 var graph = new MetaMetaGraph(model.Objects.OfType<MetaDslx.Bootstrap.MetaModel.Core.MetaClass>());
 graph.Compute();
-var generator = new MetaModelGenerator(true, model, mm, graph);
+var generator = new MetaModelGenerator(model, mm, graph);
 var output = generator.Generate();
 File.WriteAllText($@"..\..\..\..\..\Main\MetaDslx.Languages.MetaModel\Model\{mm.Name}.cs", output);
 //*/

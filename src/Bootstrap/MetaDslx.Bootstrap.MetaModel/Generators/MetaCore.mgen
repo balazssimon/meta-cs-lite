@@ -137,7 +137,7 @@ public class [mm.Name] : __MetaModel
 	}
 
     public override string Name => nameof([mm.Name]);
-    public override string FullName => "[mm.FullName]";
+    public override string Namespace => "[Namespace]";
     public override __ModelVersion Version => default;
     public override string Uri => "[mm.FullName]";
     public override string Prefix => "[string.Concat(mm.Name.Where(c => char.IsUpper(c)).Select(c => char.ToLower(c)))]";
