@@ -11,8 +11,8 @@ using MetaDslx.Modeling;
 using MetaDslx.Modeling.Reflection;
 using System.Collections.Immutable;
 
-var code = File.ReadAllText(@"..\..\..\..\..\Main\MetaDslx.Languages.MetaModel\Model\Meta.mm");
-var syntaxTree = MetaSyntaxTree.ParseText(SourceText.From(code), path: "Meta.mm");
+var code = File.ReadAllText(@"..\..\..\Hello.mm");
+var syntaxTree = MetaSyntaxTree.ParseText(SourceText.From(code), path: "Hello.mm");
 
 Console.WriteLine("----");
 var syntaxTreeDiagnostics = syntaxTree.GetDiagnostics().ToList();
@@ -22,7 +22,7 @@ foreach (var diag in syntaxTreeDiagnostics)
 }
 if (syntaxTreeDiagnostics.Count > 0) return;
 
-var cmp = Compilation.Create("Meta",
+var cmp = Compilation.Create("Hello",
     syntaxTrees: new[] { syntaxTree },
     references: new[]
     {

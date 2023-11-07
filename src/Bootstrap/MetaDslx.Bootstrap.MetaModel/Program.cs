@@ -1,80 +1,67 @@
-﻿// See https://aka.ms/new-console-template for more information
-using MetaDslx.Bootstrap.MetaModel;
-using MetaDslx.Bootstrap.MetaModel.Compiler;
-//using MetaDslx.Bootstrap.MetaModel.CoreX;
-using MetaDslx.Bootstrap.MetaModel.Generators;
-using MetaDslx.Bootstrap.MetaModel.Meta;
-using MetaDslx.CodeAnalysis;
-using MetaDslx.CodeAnalysis.Symbols;
+﻿
 using MetaDslx.CodeAnalysis.Text;
-using MetaDslx.Modeling;
-using MetaDslx.Modeling.Reflection;
+using MetaDslx.Languages.MetaCompiler.Antlr.Analyzers;
+using MetaDslx.Languages.MetaCompiler.Syntax;
+using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis;
+using System.Reflection.Emit;
 using System.Collections.Immutable;
+using MetaDslx.CodeGeneration;
+using System.Reflection;
+using MetaDslx.Languages.MetaCompiler.Analyzers;
+using System.Diagnostics.CodeAnalysis;
+//using MetaDslx.Bootstrap.MetaModel.Core;
+using MetaDslx.Languages.MetaModel.Model;
 
-Console.WriteLine("Hello, World!");
-//*/
-var code = File.ReadAllText(@"..\..\..\..\..\Main\MetaDslx.Languages.MetaModel\Model\Meta.mm");
-var syntaxTree = MetaCoreSyntaxTree.ParseText(SourceText.From(code), path: "Meta.mm");
+Compilation inputCompilation = CreateCompilation(@"
+namespace MyCode
+{
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+        }
+    }
+}
+");
+var formatter = new DiagnosticFormatter();
+foreach (var diag in inputCompilation.GetDiagnostics())
+{
+    Console.WriteLine(formatter.Format(diag));
+}
+var generator = new MetaModelSourceGenerator();
+GeneratorDriver driver = CSharpGeneratorDriver.Create(generator);
 
-Console.WriteLine("----");
-var syntaxTreeDiagnostics = syntaxTree.GetDiagnostics().ToList();
-foreach (var diag in syntaxTreeDiagnostics)
+var mmCode = File.ReadAllText(@"..\..\..\Hello.mm");
+var mmLang = new AdditionalTextFile("Hello.mm", mmCode);
+
+driver = driver.AddAdditionalTexts(ImmutableArray.Create<AdditionalText>(mmLang));
+driver = driver.RunGeneratorsAndUpdateCompilation(inputCompilation, out var outputCompilation, out var diagnostics);
+GeneratorDriverRunResult runResult = driver.GetRunResult();
+Console.WriteLine(runResult.GeneratedTrees.Length);
+foreach (var diag in runResult.Diagnostics)
 {
     Console.WriteLine(diag);
 }
-if (syntaxTreeDiagnostics.Count > 0) return;
-
-var cmp = Compilation.Create("MetaCore", 
-    syntaxTrees: new[] { syntaxTree }, 
-    references: new[] 
-    { 
-        MetadataReference.CreateFromMetaModel(ReflectionMetaModel.CreateFromNamespace(typeof(MetaDslx.Bootstrap.MetaModel.Core.MetaModel).Assembly, "MetaDslx.Bootstrap.MetaModel.Core")),
-        MetadataReference.CreateFromFile(typeof(string).Assembly.Location),
-        MetadataReference.CreateFromFile(typeof(Symbol).Assembly.Location),
-    },
-    options: CompilationOptions.Default.WithConcurrentBuild(false));
-
-var rootBinder = cmp.GetRootBinder(syntaxTree);
-rootBinder.CompleteBind(default, true);
-Console.WriteLine(rootBinder.PrintBinderTree());
-
-cmp.Compile();
-
-Console.WriteLine("----");
-foreach (var diag in cmp.GetDiagnostics())
+//var outputDir = @"..\..\..\..\MetaDslx.Bootstrap.MetaModel\Compiler";
+//var outputDir = @"..\..\..\..\..\Main\MetaDslx.Languages.MetaModel\Compiler";
+var outputDir = @"..\..\..";
+foreach (var tree in runResult.GeneratedTrees)
 {
-    Console.WriteLine(diag);
+    File.WriteAllText(Path.Combine(outputDir, Path.GetFileName(tree.FilePath)), tree.GetText().ToString());
 }
-Console.WriteLine("----");
-//*/
-//*/
-var model = cmp.SourceModule.Model;
-var mm = model.Objects.OfType<MetaDslx.Bootstrap.MetaModel.Core.MetaModel>().First();
-Console.WriteLine(mm);
-//*/
-//*/
-var graph = new MetaMetaGraph(model.Objects.OfType<MetaDslx.Bootstrap.MetaModel.Core.MetaClass>());
-graph.Compute();
-var generator = new MetaModelGenerator(model, mm, graph);
-var output = generator.Generate();
-File.WriteAllText($@"..\..\..\..\..\Main\MetaDslx.Languages.MetaModel\Model\{mm.Name}.cs", output);
-//*/
 
-/*/
-var mx = new Model();
-var fx = new MetaDslx.Bootstrap.MetaModel.CoreX.MetaCoreModelFactory(mx);
-var c1 = fx.MetaClass();
-c1.Name = "Foo";
-var p1 = fx.MetaProperty();
-p1.Name = "Bar";
-p1.Type = c1;
-c1.Declarations.Add(p1);
-Console.WriteLine(c1.Declarations.Count);
-//*/
-
-/*/
-foreach (var mobj in MetaDslx.Bootstrap.MetaModel.CoreX.MetaCore.Instance.Model.Objects)
-{
-    Console.WriteLine(mobj);
-}
-//*/
+static Compilation CreateCompilation(string source)
+    => CSharpCompilation.Create("Hello",
+        new[] { CSharpSyntaxTree.ParseText(source) },
+        new[]
+        {
+            MetadataReference.CreateFromFile(typeof(object).GetTypeInfo().Assembly.Location),
+            MetadataReference.CreateFromFile(typeof(List<>).GetTypeInfo().Assembly.Location),
+            MetadataReference.CreateFromFile(typeof(Attribute).GetTypeInfo().Assembly.Location),
+            MetadataReference.CreateFromFile(typeof(Binder).GetTypeInfo().Assembly.Location),
+            MetadataReference.CreateFromFile(typeof(CodeBuilder).GetTypeInfo().Assembly.Location),
+            MetadataReference.CreateFromFile(typeof(MetaDslx.CodeAnalysis.SyntaxTree).GetTypeInfo().Assembly.Location),
+            MetadataReference.CreateFromFile(typeof(MetaModel).GetTypeInfo().Assembly.Location),
+        },
+        new CSharpCompilationOptions(OutputKind.ConsoleApplication));
