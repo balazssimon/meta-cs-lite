@@ -25,9 +25,8 @@
 	<ItemGroup>
 		<ProjectReference Include="..\MetaDslx.CodeAnalysis.Core\MetaDslx.CodeAnalysis.Core.csproj" OutputItemType="Analyzer" />
 		<ProjectReference Include="..\MetaDslx.CodeAnalysis.Common\MetaDslx.CodeAnalysis.Common.csproj" OutputItemType="Analyzer" />
+		<ProjectReference Include="..\MetaDslx.CodeAnalysis.Providers.Antlr\MetaDslx.CodeAnalysis.Providers.Antlr.csproj" OutputItemType="Analyzer" />
 		<ProjectReference Include="..\MetaDslx.Languages.MetaGenerator\MetaDslx.Languages.MetaGenerator.csproj" OutputItemType="Analyzer" />
-		<ProjectReference Include="..\MetaDslx.Languages.MetaCompiler\MetaDslx.Languages.MetaCompiler.csproj" OutputItemType="Analyzer" />
-		<ProjectReference Include="..\MetaDslx.Languages.MetaCompiler.Antlr\MetaDslx.Languages.MetaCompiler.Antlr.csproj" OutputItemType="Analyzer" />
 		<ProjectReference Include="..\MetaDslx.Modeling\MetaDslx.Modeling.csproj" OutputItemType="Analyzer" />
 	</ItemGroup>
 

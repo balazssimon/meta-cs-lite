@@ -1,63 +1,24 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 	<Import Project="..\..\Versions.props" />
 
 	<PropertyGroup>
-		<TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
-
-		<!-- NuGet -->
-		<IsPackable>true</IsPackable>
-		<Authors>Balazs Simon</Authors>
-		<PackageId>MetaDslx.CodeAnalysis.Providers.Antlr</PackageId>
-		<PackageDescription>
-			Antlr4 provider for the MetaDslx DSL framework for .NET
-		</PackageDescription>
-		<PackageLicenseFile>license.txt</PackageLicenseFile>
-		<PackageOutputPath>..\..\..\..\..\nuget\</PackageOutputPath>
-		<RepositoryUrl>https://github.com/balazssimon/meta-cs-lite.git</RepositoryUrl>
-		<IncludeSymbols>true</IncludeSymbols>
-		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
-		<!-- Optional: Declare that the Repository URL can be published to NuSpec -->
-		<PublishRepositoryUrl>true</PublishRepositoryUrl>
-		<!-- Optional: Embed source files that are not tracked by the source control manager to the PDB -->
-		<!-- This is useful if you generate files during the build -->
-		<EmbedUntrackedSources>true</EmbedUntrackedSources>
+		<TargetFramework>netstandard2.0</TargetFramework>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Autofac" Version="$(AutofacVersion)" />
-		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="$(MicrosoftSourceLinkGitHubVersion)" PrivateAssets="All" />
+		<PackageReference Include="Antlr4.Runtime.Standard" Version="$(Antlr4RuntimeStandardVersion)" />
 	</ItemGroup>
-	<ItemGroup>
-		<PackageReference Include="System.Collections.Immutable" Version="$(SystemCollectionsImmutableVersion)" />
-		<PackageReference Include="System.Reflection.Metadata" Version="$(SystemReflectionMetadataVersion)" />
-		<PackageReference Include="System.Text.Encoding.CodePages" Version="$(SystemTextEncodingCodePagesVersion)" />
-		<PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="$(SystemRuntimeCompilerServicesUnsafeVersion)" />
+
+	<ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
+		<PackageReference Include="System.Memory" Version="$(SystemMemoryVersion)" OutputItemType="Analyzer" />
+		<PackageReference Include="System.Threading.Tasks.Extensions" Version="$(SystemThreadingTasksExtensionsVersion)" OutputItemType="Analyzer" />
 	</ItemGroup>
 	<ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
-		<PackageReference Include="System.Memory" Version="$(SystemMemoryVersion)" />
-		<PackageReference Include="System.Threading.Tasks.Extensions" Version="$(SystemThreadingTasksExtensionsVersion)" />
-	</ItemGroup>
-	<ItemGroup>
-		<PackageReference Include="MetaDslx.CodeAnalysis" Version="$(VersionPrefix)" />
-	</ItemGroup>
-	
-	<ItemGroup>
-		<ProjectReference Include="..\MetaDslx.Languages.MetaCompiler.Antlr\MetaDslx.Languages.MetaCompiler.Antlr.csproj" PrivateAssets="all" />
+		<ProjectReference Include="..\MetaDslx.NetStandard20Extensions\MetaDslx.NetStandard20Extensions.csproj" OutputItemType="Analyzer" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<None Include="$(OutputPath)\netstandard2.0\MetaDslx.Languages.MetaCompiler.Antlr.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<None Include="$(OutputPath)\netstandard2.0\MetaDslx.Languages.MetaCompiler.Antlr.dll" Pack="true" PackagePath="lib\netstandard2.0" Visible="true" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<None Include="$(OutputPath)\netstandard2.1\MetaDslx.Languages.MetaCompiler.Antlr.dll" Pack="true" PackagePath="lib\netstandard2.1" Visible="true" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<None Include="license.txt" Pack="true" PackagePath="" />
-	</ItemGroup>
+		<ProjectReference Include="..\MetaDslx.CodeAnalysis.Core\MetaDslx.CodeAnalysis.Core.csproj" OutputItemType="Analyzer" />
+		<ProjectReference Include="..\MetaDslx.CodeAnalysis.Common\MetaDslx.CodeAnalysis.Common.csproj" OutputItemType="Analyzer" />
+	</ItemGroup>	
 </Project>

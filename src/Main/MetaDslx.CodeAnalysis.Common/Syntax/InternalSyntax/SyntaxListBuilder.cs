@@ -169,7 +169,7 @@ namespace MetaDslx.CodeAnalysis.Syntax.InternalSyntax
             return array;
         }
 
-        internal GreenNode? ToListNode()
+        public GreenNode? ToListNode()
         {
             switch (this.Count)
             {

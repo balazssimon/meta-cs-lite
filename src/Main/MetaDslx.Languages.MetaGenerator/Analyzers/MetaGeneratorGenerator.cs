@@ -45,6 +45,9 @@ namespace MetaDslx.Languages.MetaGenerator.Analyzers
                 }
                 catch (Exception ex)
                 {
+                    var exLocation = MetaDslx.CodeAnalysis.ExternalFileLocation.Create(pathAndContent.path, TextSpan.FromBounds(0, 0), new LinePositionSpan(LinePosition.Zero, LinePosition.Zero));
+                    var exDiag = MetaDslx.CodeAnalysis.Diagnostic.Create(MetaDslx.CodeAnalysis.ErrorCode.ERR_CodeGenerationError, exLocation, ex.ToString().Replace('\r', ' ').Replace('\n', ' '));
+                    spc.ReportDiagnostic(exDiag.ToMicrosoft());
                     Debug.WriteLine(ex);
                 }
             });

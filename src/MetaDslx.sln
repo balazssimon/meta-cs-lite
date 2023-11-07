@@ -42,11 +42,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetaDslx.Bootstrap.MetaComp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetaDslx.Languages.MetaModel", "Main\MetaDslx.Languages.MetaModel\MetaDslx.Languages.MetaModel.csproj", "{441E9F61-FCD4-44DA-A9F4-7124E1214C55}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetaDslx.CodeAnalysis.Providers.Antlr", "Main\MetaDslx.CodeAnalysis.Providers.Antlr\MetaDslx.CodeAnalysis.Providers.Antlr.csproj", "{05CC7340-0ACF-410A-BCD6-36820686E028}"
-	ProjectSection(ProjectDependencies) = postProject
-		{D89EFDC3-9EF5-4F8D-9612-133CE1F6F8A7} = {D89EFDC3-9EF5-4F8D-9612-133CE1F6F8A7}
-	EndProjectSection
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetaDslx.Examples.Sandy", "Examples\MetaDslx.Examples.Sandy\MetaDslx.Examples.Sandy.csproj", "{4E33E782-F37F-40C8-8D0D-D281A5A0EBA2}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetaDslx.Examples.MetaModel", "Examples\MetaDslx.Examples.MetaModel\MetaDslx.Examples.MetaModel.csproj", "{D9AA545D-FE15-4AE3-AF1D-53573A0877A6}"
@@ -56,6 +51,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetaDslx.CodeAnalysis.Core", "Main\MetaDslx.CodeAnalysis.Core\MetaDslx.CodeAnalysis.Core.csproj", "{B913C6F2-9AE8-47F3-87A0-F26D2323E0A5}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetaDslx.Modeling", "Main\MetaDslx.Modeling\MetaDslx.Modeling.csproj", "{81DBD0F8-2FBA-4FC4-AEE5-837C36E67530}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetaDslx.CodeAnalysis.Providers.Antlr", "Main\MetaDslx.CodeAnalysis.Providers.Antlr\MetaDslx.CodeAnalysis.Providers.Antlr.csproj", "{1635A5DB-6336-4AD5-AA87-AA568E352DA8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -209,14 +206,6 @@ Global
 		{441E9F61-FCD4-44DA-A9F4-7124E1214C55}.Release|Any CPU.Build.0 = Release|Any CPU
 		{441E9F61-FCD4-44DA-A9F4-7124E1214C55}.Release|x86.ActiveCfg = Release|Any CPU
 		{441E9F61-FCD4-44DA-A9F4-7124E1214C55}.Release|x86.Build.0 = Release|Any CPU
-		{05CC7340-0ACF-410A-BCD6-36820686E028}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{05CC7340-0ACF-410A-BCD6-36820686E028}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{05CC7340-0ACF-410A-BCD6-36820686E028}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{05CC7340-0ACF-410A-BCD6-36820686E028}.Debug|x86.Build.0 = Debug|Any CPU
-		{05CC7340-0ACF-410A-BCD6-36820686E028}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{05CC7340-0ACF-410A-BCD6-36820686E028}.Release|Any CPU.Build.0 = Release|Any CPU
-		{05CC7340-0ACF-410A-BCD6-36820686E028}.Release|x86.ActiveCfg = Release|Any CPU
-		{05CC7340-0ACF-410A-BCD6-36820686E028}.Release|x86.Build.0 = Release|Any CPU
 		{4E33E782-F37F-40C8-8D0D-D281A5A0EBA2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4E33E782-F37F-40C8-8D0D-D281A5A0EBA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4E33E782-F37F-40C8-8D0D-D281A5A0EBA2}.Debug|x86.ActiveCfg = Debug|Any CPU
@@ -257,6 +246,14 @@ Global
 		{81DBD0F8-2FBA-4FC4-AEE5-837C36E67530}.Release|Any CPU.Build.0 = Release|Any CPU
 		{81DBD0F8-2FBA-4FC4-AEE5-837C36E67530}.Release|x86.ActiveCfg = Release|Any CPU
 		{81DBD0F8-2FBA-4FC4-AEE5-837C36E67530}.Release|x86.Build.0 = Release|Any CPU
+		{1635A5DB-6336-4AD5-AA87-AA568E352DA8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1635A5DB-6336-4AD5-AA87-AA568E352DA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1635A5DB-6336-4AD5-AA87-AA568E352DA8}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{1635A5DB-6336-4AD5-AA87-AA568E352DA8}.Debug|x86.Build.0 = Debug|Any CPU
+		{1635A5DB-6336-4AD5-AA87-AA568E352DA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1635A5DB-6336-4AD5-AA87-AA568E352DA8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1635A5DB-6336-4AD5-AA87-AA568E352DA8}.Release|x86.ActiveCfg = Release|Any CPU
+		{1635A5DB-6336-4AD5-AA87-AA568E352DA8}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

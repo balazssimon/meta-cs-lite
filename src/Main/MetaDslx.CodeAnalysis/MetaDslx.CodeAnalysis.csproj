@@ -66,6 +66,7 @@
 		<None Include="$(OutputPath)\netstandard2.0\MetaDslx.NetStandard20Extensions.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
 		<None Include="$(OutputPath)\netstandard2.0\MetaDslx.CodeAnalysis.Core.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
 		<None Include="$(OutputPath)\netstandard2.0\MetaDslx.CodeAnalysis.Common.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+		<None Include="$(OutputPath)\netstandard2.0\MetaDslx.CodeAnalysis.Providers.Antlr.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
 		<None Include="$(OutputPath)\netstandard2.0\MetaDslx.Modeling.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
 		<None Include="$(OutputPath)\netstandard2.0\MetaDslx.Languages.MetaGenerator.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
 		<None Include="$(OutputPath)\netstandard2.0\MetaDslx.Languages.MetaModel.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
@@ -77,6 +78,7 @@
 		<None Include="$(OutputPath)\netstandard2.0\MetaDslx.NetStandard20Extensions.dll" Pack="true" PackagePath="lib\netstandard2.0" Visible="false" />
 		<None Include="$(OutputPath)\netstandard2.0\MetaDslx.CodeAnalysis.Core.dll" Pack="true" PackagePath="lib\netstandard2.0" Visible="true" />
 		<None Include="$(OutputPath)\netstandard2.0\MetaDslx.CodeAnalysis.Common.dll" Pack="true" PackagePath="lib\netstandard2.0" Visible="true" />
+		<None Include="$(OutputPath)\netstandard2.0\MetaDslx.CodeAnalysis.Providers.Antlr.dll" Pack="true" PackagePath="lib\netstandard2.0" Visible="true" />
 		<None Include="$(OutputPath)\netstandard2.0\MetaDslx.Modeling.dll" Pack="true" PackagePath="lib\netstandard2.0" Visible="true" />
 		<None Include="$(OutputPath)\netstandard2.0\MetaDslx.Languages.MetaGenerator.dll" Pack="true" PackagePath="lib\netstandard2.0" Visible="true" />
 		<None Include="$(OutputPath)\netstandard2.0\MetaDslx.Languages.MetaModel.dll" Pack="true" PackagePath="lib\netstandard2.0" Visible="true" />
@@ -87,6 +89,7 @@
 	<ItemGroup>
 		<None Include="$(OutputPath)\netstandard2.1\MetaDslx.CodeAnalysis.Core.dll" Pack="true" PackagePath="lib\netstandard2.1" Visible="true" />
 		<None Include="$(OutputPath)\netstandard2.1\MetaDslx.CodeAnalysis.Common.dll" Pack="true" PackagePath="lib\netstandard2.1" Visible="true" />
+		<None Include="$(OutputPath)\netstandard2.1\MetaDslx.CodeAnalysis.Providers.Antlr.dll" Pack="true" PackagePath="lib\netstandard2.1" Visible="true" />
 		<None Include="$(OutputPath)\netstandard2.1\MetaDslx.Modeling.dll" Pack="true" PackagePath="lib\netstandard2.1" Visible="true" />
 		<None Include="$(OutputPath)\netstandard2.1\MetaDslx.Languages.MetaGenerator.dll" Pack="true" PackagePath="lib\netstandard2.1" Visible="true" />
 		<None Include="$(OutputPath)\netstandard2.1\MetaDslx.Languages.MetaModel.dll" Pack="true" PackagePath="lib\netstandard2.1" Visible="true" />

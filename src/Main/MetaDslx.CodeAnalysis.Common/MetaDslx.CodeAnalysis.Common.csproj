@@ -11,8 +11,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<InternalsVisibleTo Include="MetaDslx.Languages.MetaCompiler.Antlr" />
-		<InternalsVisibleTo Include="MetaDslx.CodeAnalysis.Analyzers" />
+		<InternalsVisibleTo Include="MetaDslx.CodeAnalysis.Providers.Antlr" />
 	</ItemGroup>
 
 	<ItemGroup>

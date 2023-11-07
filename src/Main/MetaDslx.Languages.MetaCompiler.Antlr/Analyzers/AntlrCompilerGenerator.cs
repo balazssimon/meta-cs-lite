@@ -149,7 +149,7 @@ namespace MetaDslx.Languages.MetaCompiler.Antlr.Analyzers
             catch (Exception ex)
             {
                 var exLocation = MetaDslx.CodeAnalysis.ExternalFileLocation.Create(path, TextSpan.FromBounds(0, 0), new LinePositionSpan(LinePosition.Zero, LinePosition.Zero));
-                var exDiag = MetaDslx.CodeAnalysis.Diagnostic.Create(MetaDslx.CodeAnalysis.ErrorCode.ERR_CodeGenerationError, exLocation, ex.ToString());
+                var exDiag = MetaDslx.CodeAnalysis.Diagnostic.Create(MetaDslx.CodeAnalysis.ErrorCode.ERR_CodeGenerationError, exLocation, ex.ToString().Replace('\r', ' ').Replace('\n', ' '));
                 context.ReportDiagnostic(exDiag.ToMicrosoft());
                 Debug.WriteLine(ex);
             }
