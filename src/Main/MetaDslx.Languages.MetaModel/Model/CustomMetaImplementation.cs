@@ -15,31 +15,11 @@ namespace MetaDslx.Languages.MetaModel.Model
             _this.TypeType.Name = "type";
         }
 
-        public override string MetaConstant_SayHello(MetaConstant _this, string name)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void MetaConstant_SayNothing(MetaConstant _this)
-        {
-            throw new NotImplementedException();
-        }
-
         public override string MetaDeclaration_FullName(MetaDeclaration _this)
         {
             var parent = _this.Parent;
             if (parent is null) return _this.Name;
             else return $"{parent.FullName}.{_this.Name}";
-        }
-
-        public override string MetaDeclaration_SayHello(MetaDeclaration _this, string name)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void MetaDeclaration_SayNothing(MetaDeclaration _this)
-        {
-            throw new NotImplementedException();
         }
 
         public override string MetaModel_NamespaceName(MetaModel _this)

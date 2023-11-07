@@ -38,12 +38,8 @@ namespace MetaDslx.Languages.MetaModel.Model
 		private static readonly __ModelProperty _MetaDeclaration_Parent;
 		private static readonly __ModelProperty _MetaDeclaration_Declarations;
 		private static readonly __ModelProperty _MetaDeclaration_FullName;
-		private static readonly __ModelOperation _MetaDeclaration_SayHello;
-		private static readonly __ModelOperation _MetaDeclaration_SayNothing;
 		private static readonly __ModelProperty _MetaModel_NamespaceName;
 		private static readonly __ModelProperty _MetaConstant_Type;
-		private static readonly __ModelOperation _MetaConstant_SayHello;
-		private static readonly __ModelOperation _MetaConstant_SayNothing;
 		private static readonly __ModelProperty _MetaNullableType_InnerType;
 		private static readonly __ModelProperty _MetaArrayType_ItemType;
 		private static readonly __ModelProperty _MetaEnumType_Literals;
@@ -70,12 +66,8 @@ namespace MetaDslx.Languages.MetaModel.Model
 			_MetaDeclaration_FullName = new __ModelProperty(typeof(MetaDeclaration), "FullName", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.SingleItem | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
 			_MetaDeclaration_Name = new __ModelProperty(typeof(MetaDeclaration), "Name", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.SingleItem | __ModelPropertyFlags.Name, "Name");
 			_MetaDeclaration_Parent = new __ModelProperty(typeof(MetaDeclaration), "Parent", typeof(MetaDeclaration), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.SingleItem, null);
-			_MetaDeclaration_SayHello = new __ModelOperation(typeof(MetaDeclaration), "SayHello", "SayHello(1)");
-			_MetaDeclaration_SayNothing = new __ModelOperation(typeof(MetaDeclaration), "SayNothing", "SayNothing(0)");
 			_MetaModel_NamespaceName = new __ModelProperty(typeof(MetaModel), "NamespaceName", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.SingleItem | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
 			_MetaConstant_Type = new __ModelProperty(typeof(MetaConstant), "Type", typeof(MetaType), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.SingleItem, null);
-			_MetaConstant_SayHello = new __ModelOperation(typeof(MetaConstant), "SayHello", "SayHello(1)");
-			_MetaConstant_SayNothing = new __ModelOperation(typeof(MetaConstant), "SayNothing", "SayNothing(0)");
 			_MetaNullableType_InnerType = new __ModelProperty(typeof(MetaNullableType), "InnerType", typeof(MetaType), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.SingleItem, null);
 			_MetaArrayType_ItemType = new __ModelProperty(typeof(MetaArrayType), "ItemType", typeof(MetaType), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.SingleItem, null);
 			_MetaEnumType_Literals = new __ModelProperty(typeof(MetaEnumType), "Literals", typeof(MetaEnumLiteral), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection, null);
@@ -181,41 +173,35 @@ namespace MetaDslx.Languages.MetaModel.Model
 			var obj27 = f.MetaProperty();
 			var obj28 = f.MetaProperty();
 			var obj29 = f.MetaProperty();
-			var obj30 = f.MetaOperation();
-			var obj31 = f.MetaOperation();
-			var obj32 = f.MetaArrayType();
-			var obj33 = f.MetaParameter();
+			var obj30 = f.MetaArrayType();
+			var obj31 = f.MetaProperty();
+			var obj32 = f.MetaProperty();
+			var obj33 = f.MetaProperty();
 			var obj34 = f.MetaProperty();
 			var obj35 = f.MetaProperty();
-			var obj36 = f.MetaOperation();
-			var obj37 = f.MetaOperation();
-			var obj38 = f.MetaParameter();
+			var obj36 = f.MetaArrayType();
+			var obj37 = f.MetaProperty();
+			var obj38 = f.MetaProperty();
 			var obj39 = f.MetaProperty();
 			var obj40 = f.MetaProperty();
 			var obj41 = f.MetaProperty();
 			var obj42 = f.MetaArrayType();
-			var obj43 = f.MetaProperty();
-			var obj44 = f.MetaProperty();
+			var obj43 = f.MetaArrayType();
+			var obj44 = f.MetaArrayType();
 			var obj45 = f.MetaProperty();
 			var obj46 = f.MetaProperty();
 			var obj47 = f.MetaProperty();
-			var obj48 = f.MetaArrayType();
-			var obj49 = f.MetaArrayType();
-			var obj50 = f.MetaArrayType();
+			var obj48 = f.MetaProperty();
+			var obj49 = f.MetaProperty();
+			var obj50 = f.MetaProperty();
 			var obj51 = f.MetaProperty();
-			var obj52 = f.MetaProperty();
-			var obj53 = f.MetaProperty();
-			var obj54 = f.MetaProperty();
+			var obj52 = f.MetaArrayType();
+			var obj53 = f.MetaArrayType();
+			var obj54 = f.MetaArrayType();
 			var obj55 = f.MetaProperty();
 			var obj56 = f.MetaProperty();
-			var obj57 = f.MetaProperty();
-			var obj58 = f.MetaArrayType();
-			var obj59 = f.MetaArrayType();
-			var obj60 = f.MetaArrayType();
-			var obj61 = f.MetaProperty();
-			var obj62 = f.MetaProperty();
-			var obj63 = f.MetaArrayType();
-			var obj64 = f.MetaProperty();
+			var obj57 = f.MetaArrayType();
+			var obj58 = f.MetaProperty();
 			__CustomImpl.Meta(this);
 			((__IModelObject)obj1).Children.Add((__IModelObject)obj2);
 			((__IModelObject)obj2).Children.Add((__IModelObject)obj3);
@@ -292,10 +278,6 @@ namespace MetaDslx.Languages.MetaModel.Model
 			((__IModelObject)obj12).Children.Add((__IModelObject)obj27);
 			((__IModelObject)obj12).Children.Add((__IModelObject)obj28);
 			((__IModelObject)obj12).Children.Add((__IModelObject)obj29);
-			((__IModelObject)obj12).Children.Add((__IModelObject)obj30);
-			((__IModelObject)obj12).Children.Add((__IModelObject)obj31);
-			obj12.Operations.Add(obj30);
-			obj12.Operations.Add(obj31);
 			obj12.Properties.Add(obj26);
 			obj12.Properties.Add(obj27);
 			obj12.Properties.Add(obj28);
@@ -305,30 +287,22 @@ namespace MetaDslx.Languages.MetaModel.Model
 			obj12.Declarations.Add(obj27);
 			obj12.Declarations.Add(obj28);
 			obj12.Declarations.Add(obj29);
-			obj12.Declarations.Add(obj30);
-			obj12.Declarations.Add(obj31);
 			obj12.Name = "MetaDeclaration";
 			obj12.Parent = obj5;
 			obj13.BaseTypes.Add(obj12);
 			obj13.SymbolType = "MetaDslx.CodeAnalysis.Symbols.NamespaceSymbol";
 			obj13.Name = "MetaNamespace";
 			obj13.Parent = obj5;
-			((__IModelObject)obj14).Children.Add((__IModelObject)obj34);
+			((__IModelObject)obj14).Children.Add((__IModelObject)obj31);
 			obj14.BaseTypes.Add(obj12);
-			obj14.Properties.Add(obj34);
-			obj14.Declarations.Add(obj34);
+			obj14.Properties.Add(obj31);
+			obj14.Declarations.Add(obj31);
 			obj14.Name = "MetaModel";
 			obj14.Parent = obj5;
-			((__IModelObject)obj15).Children.Add((__IModelObject)obj35);
-			((__IModelObject)obj15).Children.Add((__IModelObject)obj36);
-			((__IModelObject)obj15).Children.Add((__IModelObject)obj37);
+			((__IModelObject)obj15).Children.Add((__IModelObject)obj32);
 			obj15.BaseTypes.Add(obj12);
-			obj15.Operations.Add(obj36);
-			obj15.Operations.Add(obj37);
-			obj15.Properties.Add(obj35);
-			obj15.Declarations.Add(obj35);
-			obj15.Declarations.Add(obj36);
-			obj15.Declarations.Add(obj37);
+			obj15.Properties.Add(obj32);
+			obj15.Declarations.Add(obj32);
 			obj15.Name = "MetaConstant";
 			obj15.Parent = obj5;
 			obj16.BaseTypes.Add(obj12);
@@ -339,82 +313,82 @@ namespace MetaDslx.Languages.MetaModel.Model
 			obj17.BaseTypes.Add(obj16);
 			obj17.Name = "MetaPrimitiveType";
 			obj17.Parent = obj5;
-			((__IModelObject)obj18).Children.Add((__IModelObject)obj39);
+			((__IModelObject)obj18).Children.Add((__IModelObject)obj33);
 			obj18.BaseTypes.Add(obj16);
-			obj18.Properties.Add(obj39);
-			obj18.Declarations.Add(obj39);
+			obj18.Properties.Add(obj33);
+			obj18.Declarations.Add(obj33);
 			obj18.Name = "MetaNullableType";
 			obj18.Parent = obj5;
-			((__IModelObject)obj19).Children.Add((__IModelObject)obj40);
+			((__IModelObject)obj19).Children.Add((__IModelObject)obj34);
 			obj19.BaseTypes.Add(obj16);
-			obj19.Properties.Add(obj40);
-			obj19.Declarations.Add(obj40);
+			obj19.Properties.Add(obj34);
+			obj19.Declarations.Add(obj34);
 			obj19.Name = "MetaArrayType";
 			obj19.Parent = obj5;
-			((__IModelObject)obj20).Children.Add((__IModelObject)obj41);
+			((__IModelObject)obj20).Children.Add((__IModelObject)obj35);
 			obj20.BaseTypes.Add(obj16);
-			obj20.Properties.Add(obj41);
-			obj20.Declarations.Add(obj41);
+			obj20.Properties.Add(obj35);
+			obj20.Declarations.Add(obj35);
 			obj20.Name = "MetaEnumType";
 			obj20.Parent = obj5;
 			obj21.BaseTypes.Add(obj12);
 			obj21.Name = "MetaEnumLiteral";
 			obj21.Parent = obj5;
-			((__IModelObject)obj22).Children.Add((__IModelObject)obj43);
-			((__IModelObject)obj22).Children.Add((__IModelObject)obj44);
-			((__IModelObject)obj22).Children.Add((__IModelObject)obj45);
-			((__IModelObject)obj22).Children.Add((__IModelObject)obj46);
-			((__IModelObject)obj22).Children.Add((__IModelObject)obj47);
+			((__IModelObject)obj22).Children.Add((__IModelObject)obj37);
+			((__IModelObject)obj22).Children.Add((__IModelObject)obj38);
+			((__IModelObject)obj22).Children.Add((__IModelObject)obj39);
+			((__IModelObject)obj22).Children.Add((__IModelObject)obj40);
+			((__IModelObject)obj22).Children.Add((__IModelObject)obj41);
 			obj22.BaseTypes.Add(obj16);
-			obj22.Properties.Add(obj43);
-			obj22.Properties.Add(obj44);
-			obj22.Properties.Add(obj45);
-			obj22.Properties.Add(obj46);
-			obj22.Properties.Add(obj47);
-			obj22.Declarations.Add(obj43);
-			obj22.Declarations.Add(obj44);
-			obj22.Declarations.Add(obj45);
-			obj22.Declarations.Add(obj46);
-			obj22.Declarations.Add(obj47);
+			obj22.Properties.Add(obj37);
+			obj22.Properties.Add(obj38);
+			obj22.Properties.Add(obj39);
+			obj22.Properties.Add(obj40);
+			obj22.Properties.Add(obj41);
+			obj22.Declarations.Add(obj37);
+			obj22.Declarations.Add(obj38);
+			obj22.Declarations.Add(obj39);
+			obj22.Declarations.Add(obj40);
+			obj22.Declarations.Add(obj41);
 			obj22.Name = "MetaClass";
 			obj22.Parent = obj5;
+			((__IModelObject)obj23).Children.Add((__IModelObject)obj45);
+			((__IModelObject)obj23).Children.Add((__IModelObject)obj46);
+			((__IModelObject)obj23).Children.Add((__IModelObject)obj47);
+			((__IModelObject)obj23).Children.Add((__IModelObject)obj48);
+			((__IModelObject)obj23).Children.Add((__IModelObject)obj49);
+			((__IModelObject)obj23).Children.Add((__IModelObject)obj50);
 			((__IModelObject)obj23).Children.Add((__IModelObject)obj51);
-			((__IModelObject)obj23).Children.Add((__IModelObject)obj52);
-			((__IModelObject)obj23).Children.Add((__IModelObject)obj53);
-			((__IModelObject)obj23).Children.Add((__IModelObject)obj54);
-			((__IModelObject)obj23).Children.Add((__IModelObject)obj55);
-			((__IModelObject)obj23).Children.Add((__IModelObject)obj56);
-			((__IModelObject)obj23).Children.Add((__IModelObject)obj57);
 			obj23.BaseTypes.Add(obj12);
+			obj23.Properties.Add(obj45);
+			obj23.Properties.Add(obj46);
+			obj23.Properties.Add(obj47);
+			obj23.Properties.Add(obj48);
+			obj23.Properties.Add(obj49);
+			obj23.Properties.Add(obj50);
 			obj23.Properties.Add(obj51);
-			obj23.Properties.Add(obj52);
-			obj23.Properties.Add(obj53);
-			obj23.Properties.Add(obj54);
-			obj23.Properties.Add(obj55);
-			obj23.Properties.Add(obj56);
-			obj23.Properties.Add(obj57);
+			obj23.Declarations.Add(obj45);
+			obj23.Declarations.Add(obj46);
+			obj23.Declarations.Add(obj47);
+			obj23.Declarations.Add(obj48);
+			obj23.Declarations.Add(obj49);
+			obj23.Declarations.Add(obj50);
 			obj23.Declarations.Add(obj51);
-			obj23.Declarations.Add(obj52);
-			obj23.Declarations.Add(obj53);
-			obj23.Declarations.Add(obj54);
-			obj23.Declarations.Add(obj55);
-			obj23.Declarations.Add(obj56);
-			obj23.Declarations.Add(obj57);
 			obj23.Name = "MetaProperty";
 			obj23.Parent = obj5;
-			((__IModelObject)obj24).Children.Add((__IModelObject)obj61);
-			((__IModelObject)obj24).Children.Add((__IModelObject)obj62);
+			((__IModelObject)obj24).Children.Add((__IModelObject)obj55);
+			((__IModelObject)obj24).Children.Add((__IModelObject)obj56);
 			obj24.BaseTypes.Add(obj12);
-			obj24.Properties.Add(obj61);
-			obj24.Properties.Add(obj62);
-			obj24.Declarations.Add(obj61);
-			obj24.Declarations.Add(obj62);
+			obj24.Properties.Add(obj55);
+			obj24.Properties.Add(obj56);
+			obj24.Declarations.Add(obj55);
+			obj24.Declarations.Add(obj56);
 			obj24.Name = "MetaOperation";
 			obj24.Parent = obj5;
-			((__IModelObject)obj25).Children.Add((__IModelObject)obj64);
+			((__IModelObject)obj25).Children.Add((__IModelObject)obj58);
 			obj25.BaseTypes.Add(obj12);
-			obj25.Properties.Add(obj64);
-			obj25.Declarations.Add(obj64);
+			obj25.Properties.Add(obj58);
+			obj25.Declarations.Add(obj58);
 			obj25.Name = "MetaParameter";
 			obj25.Parent = obj5;
 			obj26.SymbolProperty = "Name";
@@ -425,127 +399,103 @@ namespace MetaDslx.Languages.MetaModel.Model
 			obj27.Type = obj12;
 			obj27.Name = "Parent";
 			obj27.Parent = obj12;
-			((__IModelObject)obj28).Children.Add((__IModelObject)obj32);
+			((__IModelObject)obj28).Children.Add((__IModelObject)obj30);
 			obj28.IsContainment = true;
 			obj28.OppositeProperties.Add(obj27);
-			obj28.Type = obj32;
+			obj28.Type = obj30;
 			obj28.Name = "Declarations";
 			obj28.Parent = obj12;
 			obj29.IsDerived = true;
 			obj29.Type = _stringType;
 			obj29.Name = "FullName";
 			obj29.Parent = obj12;
-			((__IModelObject)obj30).Children.Add((__IModelObject)obj33);
-			obj30.Parameters.Add(obj33);
-			obj30.ReturnType = _stringType;
-			obj30.Declarations.Add(obj33);
-			obj30.Name = "SayHello";
-			obj30.Parent = obj12;
-			obj31.ReturnType = _voidType;
-			obj31.Name = "SayNothing";
-			obj31.Parent = obj12;
-			obj32.ItemType = obj12;
-			obj33.Type = _stringType;
-			obj33.Name = "name";
-			obj33.Parent = obj30;
-			obj34.IsDerived = true;
-			obj34.Type = _stringType;
-			obj34.Name = "NamespaceName";
-			obj34.Parent = obj14;
-			obj35.Type = obj16;
-			obj35.Name = "Type";
-			obj35.Parent = obj15;
-			((__IModelObject)obj36).Children.Add((__IModelObject)obj38);
-			obj36.Parameters.Add(obj38);
-			obj36.ReturnType = _stringType;
-			obj36.Declarations.Add(obj38);
-			obj36.Name = "SayHello";
-			obj36.Parent = obj15;
-			obj37.ReturnType = _voidType;
-			obj37.Name = "SayNothing";
-			obj37.Parent = obj15;
-			obj38.Type = _stringType;
-			obj38.Name = "name";
-			obj38.Parent = obj36;
-			obj39.Type = obj16;
-			obj39.Name = "InnerType";
-			obj39.Parent = obj18;
-			obj40.Type = obj16;
-			obj40.Name = "ItemType";
-			obj40.Parent = obj19;
-			((__IModelObject)obj41).Children.Add((__IModelObject)obj42);
+			obj30.ItemType = obj12;
+			obj31.IsDerived = true;
+			obj31.Type = _stringType;
+			obj31.Name = "NamespaceName";
+			obj31.Parent = obj14;
+			obj32.Type = obj16;
+			obj32.Name = "Type";
+			obj32.Parent = obj15;
+			obj33.Type = obj16;
+			obj33.Name = "InnerType";
+			obj33.Parent = obj18;
+			obj34.Type = obj16;
+			obj34.Name = "ItemType";
+			obj34.Parent = obj19;
+			((__IModelObject)obj35).Children.Add((__IModelObject)obj36);
+			obj35.IsContainment = true;
+			obj35.SubsettedProperties.Add(obj28);
+			obj35.Type = obj36;
+			obj35.Name = "Literals";
+			obj35.Parent = obj20;
+			obj36.ItemType = obj21;
+			obj37.Type = _typeType;
+			obj37.Name = "SymbolType";
+			obj37.Parent = obj22;
+			obj38.Type = _boolType;
+			obj38.Name = "IsAbstract";
+			obj38.Parent = obj22;
+			((__IModelObject)obj39).Children.Add((__IModelObject)obj42);
+			obj39.Type = obj42;
+			obj39.Name = "BaseTypes";
+			obj39.Parent = obj22;
+			((__IModelObject)obj40).Children.Add((__IModelObject)obj43);
+			obj40.IsContainment = true;
+			obj40.SubsettedProperties.Add(obj28);
+			obj40.Type = obj43;
+			obj40.Name = "Properties";
+			obj40.Parent = obj22;
+			((__IModelObject)obj41).Children.Add((__IModelObject)obj44);
 			obj41.IsContainment = true;
 			obj41.SubsettedProperties.Add(obj28);
-			obj41.Type = obj42;
-			obj41.Name = "Literals";
-			obj41.Parent = obj20;
-			obj42.ItemType = obj21;
-			obj43.Type = _typeType;
-			obj43.Name = "SymbolType";
-			obj43.Parent = obj22;
-			obj44.Type = _boolType;
-			obj44.Name = "IsAbstract";
-			obj44.Parent = obj22;
-			((__IModelObject)obj45).Children.Add((__IModelObject)obj48);
-			obj45.Type = obj48;
-			obj45.Name = "BaseTypes";
-			obj45.Parent = obj22;
-			((__IModelObject)obj46).Children.Add((__IModelObject)obj49);
-			obj46.IsContainment = true;
-			obj46.SubsettedProperties.Add(obj28);
-			obj46.Type = obj49;
-			obj46.Name = "Properties";
-			obj46.Parent = obj22;
-			((__IModelObject)obj47).Children.Add((__IModelObject)obj50);
-			obj47.IsContainment = true;
-			obj47.SubsettedProperties.Add(obj28);
-			obj47.Type = obj50;
-			obj47.Name = "Operations";
-			obj47.Parent = obj22;
-			obj48.ItemType = obj22;
-			obj49.ItemType = obj23;
-			obj50.ItemType = obj24;
-			obj51.Type = obj16;
-			obj51.Name = "Type";
+			obj41.Type = obj44;
+			obj41.Name = "Operations";
+			obj41.Parent = obj22;
+			obj42.ItemType = obj22;
+			obj43.ItemType = obj23;
+			obj44.ItemType = obj24;
+			obj45.Type = obj16;
+			obj45.Name = "Type";
+			obj45.Parent = obj23;
+			obj46.Type = _stringType;
+			obj46.Name = "SymbolProperty";
+			obj46.Parent = obj23;
+			obj47.Type = _boolType;
+			obj47.Name = "IsContainment";
+			obj47.Parent = obj23;
+			obj48.Type = _boolType;
+			obj48.Name = "IsDerived";
+			obj48.Parent = obj23;
+			((__IModelObject)obj49).Children.Add((__IModelObject)obj52);
+			obj49.OppositeProperties.Add(obj49);
+			obj49.Type = obj52;
+			obj49.Name = "OppositeProperties";
+			obj49.Parent = obj23;
+			((__IModelObject)obj50).Children.Add((__IModelObject)obj53);
+			obj50.Type = obj53;
+			obj50.Name = "SubsettedProperties";
+			obj50.Parent = obj23;
+			((__IModelObject)obj51).Children.Add((__IModelObject)obj54);
+			obj51.Type = obj54;
+			obj51.Name = "RedefinedProperties";
 			obj51.Parent = obj23;
-			obj52.Type = _stringType;
-			obj52.Name = "SymbolProperty";
-			obj52.Parent = obj23;
-			obj53.Type = _boolType;
-			obj53.Name = "IsContainment";
-			obj53.Parent = obj23;
-			obj54.Type = _boolType;
-			obj54.Name = "IsDerived";
-			obj54.Parent = obj23;
-			((__IModelObject)obj55).Children.Add((__IModelObject)obj58);
-			obj55.OppositeProperties.Add(obj55);
-			obj55.Type = obj58;
-			obj55.Name = "OppositeProperties";
-			obj55.Parent = obj23;
-			((__IModelObject)obj56).Children.Add((__IModelObject)obj59);
-			obj56.Type = obj59;
-			obj56.Name = "SubsettedProperties";
-			obj56.Parent = obj23;
-			((__IModelObject)obj57).Children.Add((__IModelObject)obj60);
-			obj57.Type = obj60;
-			obj57.Name = "RedefinedProperties";
-			obj57.Parent = obj23;
-			obj58.ItemType = obj23;
-			obj59.ItemType = obj23;
-			obj60.ItemType = obj23;
-			obj61.Type = obj16;
-			obj61.Name = "ReturnType";
-			obj61.Parent = obj24;
-			((__IModelObject)obj62).Children.Add((__IModelObject)obj63);
-			obj62.IsContainment = true;
-			obj62.SubsettedProperties.Add(obj28);
-			obj62.Type = obj63;
-			obj62.Name = "Parameters";
-			obj62.Parent = obj24;
-			obj63.ItemType = obj25;
-			obj64.Type = obj16;
-			obj64.Name = "Type";
-			obj64.Parent = obj25;
+			obj52.ItemType = obj23;
+			obj53.ItemType = obj23;
+			obj54.ItemType = obj23;
+			obj55.Type = obj16;
+			obj55.Name = "ReturnType";
+			obj55.Parent = obj24;
+			((__IModelObject)obj56).Children.Add((__IModelObject)obj57);
+			obj56.IsContainment = true;
+			obj56.SubsettedProperties.Add(obj28);
+			obj56.Type = obj57;
+			obj56.Name = "Parameters";
+			obj56.Parent = obj24;
+			obj57.ItemType = obj25;
+			obj58.Type = obj16;
+			obj58.Name = "Type";
+			obj58.Parent = obj25;
 			_model.IsSealed = true;
 		}
 	
@@ -582,15 +532,11 @@ namespace MetaDslx.Languages.MetaModel.Model
 		public static __ModelProperty MetaDeclaration_Parent => _MetaDeclaration_Parent;
 		public static __ModelProperty MetaDeclaration_Declarations => _MetaDeclaration_Declarations;
 		public static __ModelProperty MetaDeclaration_FullName => _MetaDeclaration_FullName;
-		public static __ModelOperation MetaDeclaration_SayHello => _MetaDeclaration_SayHello;
-		public static __ModelOperation MetaDeclaration_SayNothing => _MetaDeclaration_SayNothing;
 		public static __ModelObjectInfo MetaNamespaceInfo => global::MetaDslx.Languages.MetaModel.Model.__Impl.MetaNamespace_Impl.__Info.Instance;
 		public static __ModelObjectInfo MetaModelInfo => global::MetaDslx.Languages.MetaModel.Model.__Impl.MetaModel_Impl.__Info.Instance;
 		public static __ModelProperty MetaModel_NamespaceName => _MetaModel_NamespaceName;
 		public static __ModelObjectInfo MetaConstantInfo => global::MetaDslx.Languages.MetaModel.Model.__Impl.MetaConstant_Impl.__Info.Instance;
 		public static __ModelProperty MetaConstant_Type => _MetaConstant_Type;
-		public static __ModelOperation MetaConstant_SayHello => _MetaConstant_SayHello;
-		public static __ModelOperation MetaConstant_SayNothing => _MetaConstant_SayNothing;
 		public static __ModelObjectInfo MetaTypeInfo => global::MetaDslx.Languages.MetaModel.Model.__Impl.MetaType_Impl.__Info.Instance;
 		public static __ModelObjectInfo MetaPrimitiveTypeInfo => global::MetaDslx.Languages.MetaModel.Model.__Impl.MetaPrimitiveType_Impl.__Info.Instance;
 		public static __ModelObjectInfo MetaNullableTypeInfo => global::MetaDslx.Languages.MetaModel.Model.__Impl.MetaNullableType_Impl.__Info.Instance;
@@ -777,8 +723,6 @@ namespace MetaDslx.Languages.MetaModel.Model
 		string Name { get; set; }
 		MetaDeclaration Parent { get; set; }
 	
-		string SayHello(string name);
-		void SayNothing();
 	}
 
 	public interface MetaNamespace : global::MetaDslx.Languages.MetaModel.Model.MetaDeclaration
@@ -796,8 +740,6 @@ namespace MetaDslx.Languages.MetaModel.Model
 	{
 		MetaType Type { get; set; }
 	
-		string SayHello(string name);
-		void SayNothing();
 	}
 
 	public interface MetaType : global::MetaDslx.Languages.MetaModel.Model.MetaDeclaration
@@ -958,26 +900,6 @@ namespace MetaDslx.Languages.MetaModel.Model
 		string MetaModel_NamespaceName(MetaModel _this);
 	
 	
-		/// <summary>
-		/// Implementation of the operation MetaDeclaration.SayHello
-		/// </summary>
-		string MetaDeclaration_SayHello(MetaDeclaration _this, string name);
-	
-		/// <summary>
-		/// Implementation of the operation MetaDeclaration.SayNothing
-		/// </summary>
-		void MetaDeclaration_SayNothing(MetaDeclaration _this);
-	
-		/// <summary>
-		/// Implementation of the operation MetaConstant.SayHello
-		/// </summary>
-		string MetaConstant_SayHello(MetaConstant _this, string name);
-	
-		/// <summary>
-		/// Implementation of the operation MetaConstant.SayNothing
-		/// </summary>
-		void MetaConstant_SayNothing(MetaConstant _this);
-	
 	}
 	
 	internal abstract class CustomMetaImplementationBase : ICustomMetaImplementation
@@ -1099,26 +1021,6 @@ namespace MetaDslx.Languages.MetaModel.Model
 		public abstract string MetaModel_NamespaceName(MetaModel _this);
 	
 	
-		/// <summary>
-		/// Implementation of the operation MetaDeclaration.SayHello
-		/// </summary>
-		public abstract string MetaDeclaration_SayHello(MetaDeclaration _this, string name);
-	
-		/// <summary>
-		/// Implementation of the operation MetaDeclaration.SayNothing
-		/// </summary>
-		public abstract void MetaDeclaration_SayNothing(MetaDeclaration _this);
-	
-		/// <summary>
-		/// Implementation of the operation MetaConstant.SayHello
-		/// </summary>
-		public abstract string MetaConstant_SayHello(MetaConstant _this, string name);
-	
-		/// <summary>
-		/// Implementation of the operation MetaConstant.SayNothing
-		/// </summary>
-		public abstract void MetaConstant_SayNothing(MetaConstant _this);
-	
 	}
 }
 
@@ -1173,8 +1075,6 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 		}
 	
 	
-		string MetaDeclaration.SayHello(string name) => Meta.__CustomImpl.MetaDeclaration_SayHello(this, name);
-		void MetaDeclaration.SayNothing() => Meta.__CustomImpl.MetaDeclaration_SayNothing(this);
 	
 		internal class __Info : __ModelObjectInfo
 		{
@@ -1208,12 +1108,10 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 				modelPropertyInfos.Add(Meta.MetaDeclaration_Parent, new __ModelPropertyInfo(new __ModelPropertySlot(Meta.MetaDeclaration_Parent, __ImmutableArray.Create<__ModelProperty>(Meta.MetaDeclaration_Parent), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.SingleItem), __ImmutableArray.Create<__ModelProperty>(Meta.MetaDeclaration_Declarations), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
 				_modelPropertyInfos = modelPropertyInfos.ToImmutable();
 	
-				_declaredOperations = __ImmutableArray.Create<__ModelOperation>(Meta.MetaDeclaration_SayHello, Meta.MetaDeclaration_SayNothing);
-				_allDeclaredOperations = __ImmutableArray.Create<__ModelOperation>(Meta.MetaDeclaration_SayHello, Meta.MetaDeclaration_SayNothing);
-				_publicOperations = __ImmutableArray.Create<__ModelOperation>(Meta.MetaDeclaration_SayHello, Meta.MetaDeclaration_SayNothing);
+				_declaredOperations = __ImmutableArray.Create<__ModelOperation>();
+				_allDeclaredOperations = __ImmutableArray.Create<__ModelOperation>();
+				_publicOperations = __ImmutableArray.Create<__ModelOperation>();
 				var modelOperationInfos = __ImmutableDictionary.CreateBuilder<__ModelOperation, __ModelOperationInfo>();
-				modelOperationInfos.Add(Meta.MetaDeclaration_SayHello, new __ModelOperationInfo(__ImmutableArray.Create<__ModelOperation>(), __ImmutableArray.Create<__ModelOperation>()));
-				modelOperationInfos.Add(Meta.MetaDeclaration_SayNothing, new __ModelOperationInfo(__ImmutableArray.Create<__ModelOperation>(), __ImmutableArray.Create<__ModelOperation>()));
 				_modelOperationInfos = modelOperationInfos.ToImmutable();
 			}
 	
@@ -1283,8 +1181,6 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 		}
 	
 	
-		string MetaDeclaration.SayHello(string name) => Meta.__CustomImpl.MetaDeclaration_SayHello(this, name);
-		void MetaDeclaration.SayNothing() => Meta.__CustomImpl.MetaDeclaration_SayNothing(this);
 	
 		internal class __Info : __ModelObjectInfo
 		{
@@ -1319,11 +1215,9 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 				_modelPropertyInfos = modelPropertyInfos.ToImmutable();
 	
 				_declaredOperations = __ImmutableArray.Create<__ModelOperation>();
-				_allDeclaredOperations = __ImmutableArray.Create<__ModelOperation>(Meta.MetaDeclaration_SayHello, Meta.MetaDeclaration_SayNothing);
-				_publicOperations = __ImmutableArray.Create<__ModelOperation>(Meta.MetaDeclaration_SayHello, Meta.MetaDeclaration_SayNothing);
+				_allDeclaredOperations = __ImmutableArray.Create<__ModelOperation>();
+				_publicOperations = __ImmutableArray.Create<__ModelOperation>();
 				var modelOperationInfos = __ImmutableDictionary.CreateBuilder<__ModelOperation, __ModelOperationInfo>();
-				modelOperationInfos.Add(Meta.MetaDeclaration_SayHello, new __ModelOperationInfo(__ImmutableArray.Create<__ModelOperation>(), __ImmutableArray.Create<__ModelOperation>()));
-				modelOperationInfos.Add(Meta.MetaDeclaration_SayNothing, new __ModelOperationInfo(__ImmutableArray.Create<__ModelOperation>(), __ImmutableArray.Create<__ModelOperation>()));
 				_modelOperationInfos = modelOperationInfos.ToImmutable();
 			}
 	
@@ -1398,8 +1292,6 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 		}
 	
 	
-		string MetaDeclaration.SayHello(string name) => Meta.__CustomImpl.MetaDeclaration_SayHello(this, name);
-		void MetaDeclaration.SayNothing() => Meta.__CustomImpl.MetaDeclaration_SayNothing(this);
 	
 		internal class __Info : __ModelObjectInfo
 		{
@@ -1436,11 +1328,9 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 				_modelPropertyInfos = modelPropertyInfos.ToImmutable();
 	
 				_declaredOperations = __ImmutableArray.Create<__ModelOperation>();
-				_allDeclaredOperations = __ImmutableArray.Create<__ModelOperation>(Meta.MetaDeclaration_SayHello, Meta.MetaDeclaration_SayNothing);
-				_publicOperations = __ImmutableArray.Create<__ModelOperation>(Meta.MetaDeclaration_SayHello, Meta.MetaDeclaration_SayNothing);
+				_allDeclaredOperations = __ImmutableArray.Create<__ModelOperation>();
+				_publicOperations = __ImmutableArray.Create<__ModelOperation>();
 				var modelOperationInfos = __ImmutableDictionary.CreateBuilder<__ModelOperation, __ModelOperationInfo>();
-				modelOperationInfos.Add(Meta.MetaDeclaration_SayHello, new __ModelOperationInfo(__ImmutableArray.Create<__ModelOperation>(), __ImmutableArray.Create<__ModelOperation>()));
-				modelOperationInfos.Add(Meta.MetaDeclaration_SayNothing, new __ModelOperationInfo(__ImmutableArray.Create<__ModelOperation>(), __ImmutableArray.Create<__ModelOperation>()));
 				_modelOperationInfos = modelOperationInfos.ToImmutable();
 			}
 	
@@ -1516,10 +1406,6 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 		}
 	
 	
-		string MetaConstant.SayHello(string name) => Meta.__CustomImpl.MetaConstant_SayHello(this, name);
-		void MetaConstant.SayNothing() => Meta.__CustomImpl.MetaConstant_SayNothing(this);
-		string MetaDeclaration.SayHello(string name) => Meta.__CustomImpl.MetaConstant_SayHello(this, name);
-		void MetaDeclaration.SayNothing() => Meta.__CustomImpl.MetaConstant_SayNothing(this);
 	
 		internal class __Info : __ModelObjectInfo
 		{
@@ -1555,14 +1441,10 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 				modelPropertyInfos.Add(Meta.MetaDeclaration_Parent, new __ModelPropertyInfo(new __ModelPropertySlot(Meta.MetaDeclaration_Parent, __ImmutableArray.Create<__ModelProperty>(Meta.MetaDeclaration_Parent), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.SingleItem), __ImmutableArray.Create<__ModelProperty>(Meta.MetaDeclaration_Declarations), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
 				_modelPropertyInfos = modelPropertyInfos.ToImmutable();
 	
-				_declaredOperations = __ImmutableArray.Create<__ModelOperation>(Meta.MetaConstant_SayHello, Meta.MetaConstant_SayNothing);
-				_allDeclaredOperations = __ImmutableArray.Create<__ModelOperation>(Meta.MetaConstant_SayHello, Meta.MetaConstant_SayNothing, Meta.MetaDeclaration_SayHello, Meta.MetaDeclaration_SayNothing);
-				_publicOperations = __ImmutableArray.Create<__ModelOperation>(Meta.MetaConstant_SayHello, Meta.MetaConstant_SayNothing);
+				_declaredOperations = __ImmutableArray.Create<__ModelOperation>();
+				_allDeclaredOperations = __ImmutableArray.Create<__ModelOperation>();
+				_publicOperations = __ImmutableArray.Create<__ModelOperation>();
 				var modelOperationInfos = __ImmutableDictionary.CreateBuilder<__ModelOperation, __ModelOperationInfo>();
-				modelOperationInfos.Add(Meta.MetaConstant_SayHello, new __ModelOperationInfo(__ImmutableArray.Create<__ModelOperation>(Meta.MetaDeclaration_SayHello), __ImmutableArray.Create<__ModelOperation>()));
-				modelOperationInfos.Add(Meta.MetaConstant_SayNothing, new __ModelOperationInfo(__ImmutableArray.Create<__ModelOperation>(Meta.MetaDeclaration_SayNothing), __ImmutableArray.Create<__ModelOperation>()));
-				modelOperationInfos.Add(Meta.MetaDeclaration_SayHello, new __ModelOperationInfo(__ImmutableArray.Create<__ModelOperation>(), __ImmutableArray.Create<__ModelOperation>(Meta.MetaConstant_SayHello)));
-				modelOperationInfos.Add(Meta.MetaDeclaration_SayNothing, new __ModelOperationInfo(__ImmutableArray.Create<__ModelOperation>(), __ImmutableArray.Create<__ModelOperation>(Meta.MetaConstant_SayNothing)));
 				_modelOperationInfos = modelOperationInfos.ToImmutable();
 			}
 	
@@ -1632,8 +1514,6 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 		}
 	
 	
-		string MetaDeclaration.SayHello(string name) => Meta.__CustomImpl.MetaDeclaration_SayHello(this, name);
-		void MetaDeclaration.SayNothing() => Meta.__CustomImpl.MetaDeclaration_SayNothing(this);
 	
 		internal class __Info : __ModelObjectInfo
 		{
@@ -1668,11 +1548,9 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 				_modelPropertyInfos = modelPropertyInfos.ToImmutable();
 	
 				_declaredOperations = __ImmutableArray.Create<__ModelOperation>();
-				_allDeclaredOperations = __ImmutableArray.Create<__ModelOperation>(Meta.MetaDeclaration_SayHello, Meta.MetaDeclaration_SayNothing);
-				_publicOperations = __ImmutableArray.Create<__ModelOperation>(Meta.MetaDeclaration_SayHello, Meta.MetaDeclaration_SayNothing);
+				_allDeclaredOperations = __ImmutableArray.Create<__ModelOperation>();
+				_publicOperations = __ImmutableArray.Create<__ModelOperation>();
 				var modelOperationInfos = __ImmutableDictionary.CreateBuilder<__ModelOperation, __ModelOperationInfo>();
-				modelOperationInfos.Add(Meta.MetaDeclaration_SayHello, new __ModelOperationInfo(__ImmutableArray.Create<__ModelOperation>(), __ImmutableArray.Create<__ModelOperation>()));
-				modelOperationInfos.Add(Meta.MetaDeclaration_SayNothing, new __ModelOperationInfo(__ImmutableArray.Create<__ModelOperation>(), __ImmutableArray.Create<__ModelOperation>()));
 				_modelOperationInfos = modelOperationInfos.ToImmutable();
 			}
 	
@@ -1743,8 +1621,6 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 		}
 	
 	
-		string MetaDeclaration.SayHello(string name) => Meta.__CustomImpl.MetaDeclaration_SayHello(this, name);
-		void MetaDeclaration.SayNothing() => Meta.__CustomImpl.MetaDeclaration_SayNothing(this);
 	
 		internal class __Info : __ModelObjectInfo
 		{
@@ -1779,11 +1655,9 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 				_modelPropertyInfos = modelPropertyInfos.ToImmutable();
 	
 				_declaredOperations = __ImmutableArray.Create<__ModelOperation>();
-				_allDeclaredOperations = __ImmutableArray.Create<__ModelOperation>(Meta.MetaDeclaration_SayHello, Meta.MetaDeclaration_SayNothing);
-				_publicOperations = __ImmutableArray.Create<__ModelOperation>(Meta.MetaDeclaration_SayHello, Meta.MetaDeclaration_SayNothing);
+				_allDeclaredOperations = __ImmutableArray.Create<__ModelOperation>();
+				_publicOperations = __ImmutableArray.Create<__ModelOperation>();
 				var modelOperationInfos = __ImmutableDictionary.CreateBuilder<__ModelOperation, __ModelOperationInfo>();
-				modelOperationInfos.Add(Meta.MetaDeclaration_SayHello, new __ModelOperationInfo(__ImmutableArray.Create<__ModelOperation>(), __ImmutableArray.Create<__ModelOperation>()));
-				modelOperationInfos.Add(Meta.MetaDeclaration_SayNothing, new __ModelOperationInfo(__ImmutableArray.Create<__ModelOperation>(), __ImmutableArray.Create<__ModelOperation>()));
 				_modelOperationInfos = modelOperationInfos.ToImmutable();
 			}
 	
@@ -1860,8 +1734,6 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 		}
 	
 	
-		string MetaDeclaration.SayHello(string name) => Meta.__CustomImpl.MetaDeclaration_SayHello(this, name);
-		void MetaDeclaration.SayNothing() => Meta.__CustomImpl.MetaDeclaration_SayNothing(this);
 	
 		internal class __Info : __ModelObjectInfo
 		{
@@ -1898,11 +1770,9 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 				_modelPropertyInfos = modelPropertyInfos.ToImmutable();
 	
 				_declaredOperations = __ImmutableArray.Create<__ModelOperation>();
-				_allDeclaredOperations = __ImmutableArray.Create<__ModelOperation>(Meta.MetaDeclaration_SayHello, Meta.MetaDeclaration_SayNothing);
-				_publicOperations = __ImmutableArray.Create<__ModelOperation>(Meta.MetaDeclaration_SayHello, Meta.MetaDeclaration_SayNothing);
+				_allDeclaredOperations = __ImmutableArray.Create<__ModelOperation>();
+				_publicOperations = __ImmutableArray.Create<__ModelOperation>();
 				var modelOperationInfos = __ImmutableDictionary.CreateBuilder<__ModelOperation, __ModelOperationInfo>();
-				modelOperationInfos.Add(Meta.MetaDeclaration_SayHello, new __ModelOperationInfo(__ImmutableArray.Create<__ModelOperation>(), __ImmutableArray.Create<__ModelOperation>()));
-				modelOperationInfos.Add(Meta.MetaDeclaration_SayNothing, new __ModelOperationInfo(__ImmutableArray.Create<__ModelOperation>(), __ImmutableArray.Create<__ModelOperation>()));
 				_modelOperationInfos = modelOperationInfos.ToImmutable();
 			}
 	
@@ -1979,8 +1849,6 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 		}
 	
 	
-		string MetaDeclaration.SayHello(string name) => Meta.__CustomImpl.MetaDeclaration_SayHello(this, name);
-		void MetaDeclaration.SayNothing() => Meta.__CustomImpl.MetaDeclaration_SayNothing(this);
 	
 		internal class __Info : __ModelObjectInfo
 		{
@@ -2017,11 +1885,9 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 				_modelPropertyInfos = modelPropertyInfos.ToImmutable();
 	
 				_declaredOperations = __ImmutableArray.Create<__ModelOperation>();
-				_allDeclaredOperations = __ImmutableArray.Create<__ModelOperation>(Meta.MetaDeclaration_SayHello, Meta.MetaDeclaration_SayNothing);
-				_publicOperations = __ImmutableArray.Create<__ModelOperation>(Meta.MetaDeclaration_SayHello, Meta.MetaDeclaration_SayNothing);
+				_allDeclaredOperations = __ImmutableArray.Create<__ModelOperation>();
+				_publicOperations = __ImmutableArray.Create<__ModelOperation>();
 				var modelOperationInfos = __ImmutableDictionary.CreateBuilder<__ModelOperation, __ModelOperationInfo>();
-				modelOperationInfos.Add(Meta.MetaDeclaration_SayHello, new __ModelOperationInfo(__ImmutableArray.Create<__ModelOperation>(), __ImmutableArray.Create<__ModelOperation>()));
-				modelOperationInfos.Add(Meta.MetaDeclaration_SayNothing, new __ModelOperationInfo(__ImmutableArray.Create<__ModelOperation>(), __ImmutableArray.Create<__ModelOperation>()));
 				_modelOperationInfos = modelOperationInfos.ToImmutable();
 			}
 	
@@ -2098,8 +1964,6 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 		}
 	
 	
-		string MetaDeclaration.SayHello(string name) => Meta.__CustomImpl.MetaDeclaration_SayHello(this, name);
-		void MetaDeclaration.SayNothing() => Meta.__CustomImpl.MetaDeclaration_SayNothing(this);
 	
 		internal class __Info : __ModelObjectInfo
 		{
@@ -2136,11 +2000,9 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 				_modelPropertyInfos = modelPropertyInfos.ToImmutable();
 	
 				_declaredOperations = __ImmutableArray.Create<__ModelOperation>();
-				_allDeclaredOperations = __ImmutableArray.Create<__ModelOperation>(Meta.MetaDeclaration_SayHello, Meta.MetaDeclaration_SayNothing);
-				_publicOperations = __ImmutableArray.Create<__ModelOperation>(Meta.MetaDeclaration_SayHello, Meta.MetaDeclaration_SayNothing);
+				_allDeclaredOperations = __ImmutableArray.Create<__ModelOperation>();
+				_publicOperations = __ImmutableArray.Create<__ModelOperation>();
 				var modelOperationInfos = __ImmutableDictionary.CreateBuilder<__ModelOperation, __ModelOperationInfo>();
-				modelOperationInfos.Add(Meta.MetaDeclaration_SayHello, new __ModelOperationInfo(__ImmutableArray.Create<__ModelOperation>(), __ImmutableArray.Create<__ModelOperation>()));
-				modelOperationInfos.Add(Meta.MetaDeclaration_SayNothing, new __ModelOperationInfo(__ImmutableArray.Create<__ModelOperation>(), __ImmutableArray.Create<__ModelOperation>()));
 				_modelOperationInfos = modelOperationInfos.ToImmutable();
 			}
 	
@@ -2210,8 +2072,6 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 		}
 	
 	
-		string MetaDeclaration.SayHello(string name) => Meta.__CustomImpl.MetaDeclaration_SayHello(this, name);
-		void MetaDeclaration.SayNothing() => Meta.__CustomImpl.MetaDeclaration_SayNothing(this);
 	
 		internal class __Info : __ModelObjectInfo
 		{
@@ -2246,11 +2106,9 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 				_modelPropertyInfos = modelPropertyInfos.ToImmutable();
 	
 				_declaredOperations = __ImmutableArray.Create<__ModelOperation>();
-				_allDeclaredOperations = __ImmutableArray.Create<__ModelOperation>(Meta.MetaDeclaration_SayHello, Meta.MetaDeclaration_SayNothing);
-				_publicOperations = __ImmutableArray.Create<__ModelOperation>(Meta.MetaDeclaration_SayHello, Meta.MetaDeclaration_SayNothing);
+				_allDeclaredOperations = __ImmutableArray.Create<__ModelOperation>();
+				_publicOperations = __ImmutableArray.Create<__ModelOperation>();
 				var modelOperationInfos = __ImmutableDictionary.CreateBuilder<__ModelOperation, __ModelOperationInfo>();
-				modelOperationInfos.Add(Meta.MetaDeclaration_SayHello, new __ModelOperationInfo(__ImmutableArray.Create<__ModelOperation>(), __ImmutableArray.Create<__ModelOperation>()));
-				modelOperationInfos.Add(Meta.MetaDeclaration_SayNothing, new __ModelOperationInfo(__ImmutableArray.Create<__ModelOperation>(), __ImmutableArray.Create<__ModelOperation>()));
 				_modelOperationInfos = modelOperationInfos.ToImmutable();
 			}
 	
@@ -2351,8 +2209,6 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 		}
 	
 	
-		string MetaDeclaration.SayHello(string name) => Meta.__CustomImpl.MetaDeclaration_SayHello(this, name);
-		void MetaDeclaration.SayNothing() => Meta.__CustomImpl.MetaDeclaration_SayNothing(this);
 	
 		internal class __Info : __ModelObjectInfo
 		{
@@ -2397,11 +2253,9 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 				_modelPropertyInfos = modelPropertyInfos.ToImmutable();
 	
 				_declaredOperations = __ImmutableArray.Create<__ModelOperation>();
-				_allDeclaredOperations = __ImmutableArray.Create<__ModelOperation>(Meta.MetaDeclaration_SayHello, Meta.MetaDeclaration_SayNothing);
-				_publicOperations = __ImmutableArray.Create<__ModelOperation>(Meta.MetaDeclaration_SayHello, Meta.MetaDeclaration_SayNothing);
+				_allDeclaredOperations = __ImmutableArray.Create<__ModelOperation>();
+				_publicOperations = __ImmutableArray.Create<__ModelOperation>();
 				var modelOperationInfos = __ImmutableDictionary.CreateBuilder<__ModelOperation, __ModelOperationInfo>();
-				modelOperationInfos.Add(Meta.MetaDeclaration_SayHello, new __ModelOperationInfo(__ImmutableArray.Create<__ModelOperation>(), __ImmutableArray.Create<__ModelOperation>()));
-				modelOperationInfos.Add(Meta.MetaDeclaration_SayNothing, new __ModelOperationInfo(__ImmutableArray.Create<__ModelOperation>(), __ImmutableArray.Create<__ModelOperation>()));
 				_modelOperationInfos = modelOperationInfos.ToImmutable();
 			}
 	
@@ -2513,8 +2367,6 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 		}
 	
 	
-		string MetaDeclaration.SayHello(string name) => Meta.__CustomImpl.MetaDeclaration_SayHello(this, name);
-		void MetaDeclaration.SayNothing() => Meta.__CustomImpl.MetaDeclaration_SayNothing(this);
 	
 		internal class __Info : __ModelObjectInfo
 		{
@@ -2563,11 +2415,9 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 				_modelPropertyInfos = modelPropertyInfos.ToImmutable();
 	
 				_declaredOperations = __ImmutableArray.Create<__ModelOperation>();
-				_allDeclaredOperations = __ImmutableArray.Create<__ModelOperation>(Meta.MetaDeclaration_SayHello, Meta.MetaDeclaration_SayNothing);
-				_publicOperations = __ImmutableArray.Create<__ModelOperation>(Meta.MetaDeclaration_SayHello, Meta.MetaDeclaration_SayNothing);
+				_allDeclaredOperations = __ImmutableArray.Create<__ModelOperation>();
+				_publicOperations = __ImmutableArray.Create<__ModelOperation>();
 				var modelOperationInfos = __ImmutableDictionary.CreateBuilder<__ModelOperation, __ModelOperationInfo>();
-				modelOperationInfos.Add(Meta.MetaDeclaration_SayHello, new __ModelOperationInfo(__ImmutableArray.Create<__ModelOperation>(), __ImmutableArray.Create<__ModelOperation>()));
-				modelOperationInfos.Add(Meta.MetaDeclaration_SayNothing, new __ModelOperationInfo(__ImmutableArray.Create<__ModelOperation>(), __ImmutableArray.Create<__ModelOperation>()));
 				_modelOperationInfos = modelOperationInfos.ToImmutable();
 			}
 	
@@ -2649,8 +2499,6 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 		}
 	
 	
-		string MetaDeclaration.SayHello(string name) => Meta.__CustomImpl.MetaDeclaration_SayHello(this, name);
-		void MetaDeclaration.SayNothing() => Meta.__CustomImpl.MetaDeclaration_SayNothing(this);
 	
 		internal class __Info : __ModelObjectInfo
 		{
@@ -2689,11 +2537,9 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 				_modelPropertyInfos = modelPropertyInfos.ToImmutable();
 	
 				_declaredOperations = __ImmutableArray.Create<__ModelOperation>();
-				_allDeclaredOperations = __ImmutableArray.Create<__ModelOperation>(Meta.MetaDeclaration_SayHello, Meta.MetaDeclaration_SayNothing);
-				_publicOperations = __ImmutableArray.Create<__ModelOperation>(Meta.MetaDeclaration_SayHello, Meta.MetaDeclaration_SayNothing);
+				_allDeclaredOperations = __ImmutableArray.Create<__ModelOperation>();
+				_publicOperations = __ImmutableArray.Create<__ModelOperation>();
 				var modelOperationInfos = __ImmutableDictionary.CreateBuilder<__ModelOperation, __ModelOperationInfo>();
-				modelOperationInfos.Add(Meta.MetaDeclaration_SayHello, new __ModelOperationInfo(__ImmutableArray.Create<__ModelOperation>(), __ImmutableArray.Create<__ModelOperation>()));
-				modelOperationInfos.Add(Meta.MetaDeclaration_SayNothing, new __ModelOperationInfo(__ImmutableArray.Create<__ModelOperation>(), __ImmutableArray.Create<__ModelOperation>()));
 				_modelOperationInfos = modelOperationInfos.ToImmutable();
 			}
 	
@@ -2769,8 +2615,6 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 		}
 	
 	
-		string MetaDeclaration.SayHello(string name) => Meta.__CustomImpl.MetaDeclaration_SayHello(this, name);
-		void MetaDeclaration.SayNothing() => Meta.__CustomImpl.MetaDeclaration_SayNothing(this);
 	
 		internal class __Info : __ModelObjectInfo
 		{
@@ -2807,11 +2651,9 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 				_modelPropertyInfos = modelPropertyInfos.ToImmutable();
 	
 				_declaredOperations = __ImmutableArray.Create<__ModelOperation>();
-				_allDeclaredOperations = __ImmutableArray.Create<__ModelOperation>(Meta.MetaDeclaration_SayHello, Meta.MetaDeclaration_SayNothing);
-				_publicOperations = __ImmutableArray.Create<__ModelOperation>(Meta.MetaDeclaration_SayHello, Meta.MetaDeclaration_SayNothing);
+				_allDeclaredOperations = __ImmutableArray.Create<__ModelOperation>();
+				_publicOperations = __ImmutableArray.Create<__ModelOperation>();
 				var modelOperationInfos = __ImmutableDictionary.CreateBuilder<__ModelOperation, __ModelOperationInfo>();
-				modelOperationInfos.Add(Meta.MetaDeclaration_SayHello, new __ModelOperationInfo(__ImmutableArray.Create<__ModelOperation>(), __ImmutableArray.Create<__ModelOperation>()));
-				modelOperationInfos.Add(Meta.MetaDeclaration_SayNothing, new __ModelOperationInfo(__ImmutableArray.Create<__ModelOperation>(), __ImmutableArray.Create<__ModelOperation>()));
 				_modelOperationInfos = modelOperationInfos.ToImmutable();
 			}
 	

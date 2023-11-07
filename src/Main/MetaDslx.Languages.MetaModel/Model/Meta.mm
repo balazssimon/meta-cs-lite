@@ -16,9 +16,6 @@ class MetaDeclaration $Declared : MetaNamedElement
 	MetaDeclaration Parent opposite Declarations;
 	contains MetaDeclaration[] Declarations opposite Parent;
 	derived string FullName;
-
-	string SayHello(string name);
-	void SayNothing();
 }
 
 class MetaNamespace $Namespace : MetaDeclaration
@@ -33,9 +30,6 @@ class MetaModel : MetaDeclaration
 class MetaConstant : MetaDeclaration
 {
 	MetaType Type;
-
-	string SayHello(string name);
-	void SayNothing();
 }
 
 abstract class MetaType $Type : MetaDeclaration
