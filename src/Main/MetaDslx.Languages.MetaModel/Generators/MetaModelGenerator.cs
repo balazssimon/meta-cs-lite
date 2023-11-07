@@ -160,7 +160,7 @@ namespace MetaDslx.Languages.MetaModel.Generators
             {
                 return StringUtilities.EncodeString(value.ToString());
             }
-            if (value is MetaPrimitiveType mpt) return $"{mpt.Name}Type";
+            if (value is MetaPrimitiveType mpt) return $"_{mpt.Name}Type";
             var type = value.GetType();
             if (type.IsPrimitive) return value.ToString();
             return GetName(value);

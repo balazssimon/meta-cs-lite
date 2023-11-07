@@ -478,7 +478,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
 			return result;
 		}
 
-		internal MetaPropertyGreen MetaProperty(InternalSyntaxToken element, TypeReferenceGreen type, PropertyNameGreen name, PropertyOppositeGreen propertyOpposite, InternalSyntaxToken tSemicolon)
+		internal MetaPropertyGreen MetaProperty(InternalSyntaxToken element, TypeReferenceGreen type, PropertyNameGreen name, MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<MetaPropertyBlock2Green> metaPropertyBlock2, InternalSyntaxToken tSemicolon)
 		{
 #if DEBUG
 			if (element is not null && element.RawKind != (int)MetaSyntaxKind.KContains && element.RawKind != (int)MetaSyntaxKind.KDerived) throw new ArgumentException(nameof(element));
@@ -487,7 +487,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
 			if (tSemicolon is null) throw new ArgumentNullException(nameof(tSemicolon));
 			if (tSemicolon.RawKind != (int)MetaSyntaxKind.TSemicolon) throw new ArgumentException(nameof(tSemicolon));
 #endif
-			return new MetaPropertyGreen(MetaSyntaxKind.MetaProperty, element, type, name, propertyOpposite, tSemicolon);
+			return new MetaPropertyGreen(MetaSyntaxKind.MetaProperty, element, type, name, metaPropertyBlock2.Node, tSemicolon);
 		}
 
 		internal PropertyNameAlt1Green PropertyNameAlt1(InternalSyntaxToken tIdentifier, InternalSyntaxToken tDollar, InternalSyntaxToken symbolProperty)
@@ -531,18 +531,58 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
 			return result;
 		}
 
-		internal PropertyOppositeGreen PropertyOpposite(InternalSyntaxToken kOpposite, QualifierGreen opposite)
+		internal PropertyOppositeGreen PropertyOpposite(InternalSyntaxToken kOpposite, MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<QualifierGreen> qualifierList)
 		{
 #if DEBUG
 			if (kOpposite is null) throw new ArgumentNullException(nameof(kOpposite));
 			if (kOpposite.RawKind != (int)MetaSyntaxKind.KOpposite) throw new ArgumentException(nameof(kOpposite));
-			if (opposite is null) throw new ArgumentNullException(nameof(opposite));
+			if (qualifierList.IsReversed) throw new ArgumentException(nameof(qualifierList));
 #endif
 			int hash;
-			var cached = SyntaxNodeCache.TryGetNode((int)(MetaSyntaxKind)MetaSyntaxKind.PropertyOpposite, kOpposite, opposite, out hash);
+			var cached = SyntaxNodeCache.TryGetNode((int)(MetaSyntaxKind)MetaSyntaxKind.PropertyOpposite, kOpposite, qualifierList.Node, out hash);
 			if (cached != null) return (PropertyOppositeGreen)cached;
 		
-			var result = new PropertyOppositeGreen(MetaSyntaxKind.PropertyOpposite, kOpposite, opposite);
+			var result = new PropertyOppositeGreen(MetaSyntaxKind.PropertyOpposite, kOpposite, qualifierList.Node);
+			if (hash >= 0)
+			{
+				SyntaxNodeCache.AddNode(result, hash);
+			}
+		
+			return result;
+		}
+
+		internal PropertySubsetsGreen PropertySubsets(InternalSyntaxToken kSubsets, MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<QualifierGreen> qualifierList)
+		{
+#if DEBUG
+			if (kSubsets is null) throw new ArgumentNullException(nameof(kSubsets));
+			if (kSubsets.RawKind != (int)MetaSyntaxKind.KSubsets) throw new ArgumentException(nameof(kSubsets));
+			if (qualifierList.IsReversed) throw new ArgumentException(nameof(qualifierList));
+#endif
+			int hash;
+			var cached = SyntaxNodeCache.TryGetNode((int)(MetaSyntaxKind)MetaSyntaxKind.PropertySubsets, kSubsets, qualifierList.Node, out hash);
+			if (cached != null) return (PropertySubsetsGreen)cached;
+		
+			var result = new PropertySubsetsGreen(MetaSyntaxKind.PropertySubsets, kSubsets, qualifierList.Node);
+			if (hash >= 0)
+			{
+				SyntaxNodeCache.AddNode(result, hash);
+			}
+		
+			return result;
+		}
+
+		internal PropertyRedefinesGreen PropertyRedefines(InternalSyntaxToken kRedefines, MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<QualifierGreen> qualifierList)
+		{
+#if DEBUG
+			if (kRedefines is null) throw new ArgumentNullException(nameof(kRedefines));
+			if (kRedefines.RawKind != (int)MetaSyntaxKind.KRedefines) throw new ArgumentException(nameof(kRedefines));
+			if (qualifierList.IsReversed) throw new ArgumentException(nameof(qualifierList));
+#endif
+			int hash;
+			var cached = SyntaxNodeCache.TryGetNode((int)(MetaSyntaxKind)MetaSyntaxKind.PropertyRedefines, kRedefines, qualifierList.Node, out hash);
+			if (cached != null) return (PropertyRedefinesGreen)cached;
+		
+			var result = new PropertyRedefinesGreen(MetaSyntaxKind.PropertyRedefines, kRedefines, qualifierList.Node);
 			if (hash >= 0)
 			{
 				SyntaxNodeCache.AddNode(result, hash);
@@ -765,6 +805,120 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
 			if (cached != null) return (BaseClassesBlock1Green)cached;
 		
 			var result = new BaseClassesBlock1Green(MetaSyntaxKind.BaseClassesBlock1, tColon, baseTypes);
+			if (hash >= 0)
+			{
+				SyntaxNodeCache.AddNode(result, hash);
+			}
+		
+			return result;
+		}
+
+		internal MetaPropertyBlock2Alt1Green MetaPropertyBlock2Alt1(PropertyOppositeGreen propertyOpposite)
+		{
+#if DEBUG
+			if (propertyOpposite is null) throw new ArgumentNullException(nameof(propertyOpposite));
+#endif
+			int hash;
+			var cached = SyntaxNodeCache.TryGetNode((int)(MetaSyntaxKind)MetaSyntaxKind.MetaPropertyBlock2Alt1, propertyOpposite, out hash);
+			if (cached != null) return (MetaPropertyBlock2Alt1Green)cached;
+		
+			var result = new MetaPropertyBlock2Alt1Green(MetaSyntaxKind.MetaPropertyBlock2Alt1, propertyOpposite);
+			if (hash >= 0)
+			{
+				SyntaxNodeCache.AddNode(result, hash);
+			}
+		
+			return result;
+		}
+
+		internal MetaPropertyBlock2Alt2Green MetaPropertyBlock2Alt2(PropertySubsetsGreen propertySubsets)
+		{
+#if DEBUG
+			if (propertySubsets is null) throw new ArgumentNullException(nameof(propertySubsets));
+#endif
+			int hash;
+			var cached = SyntaxNodeCache.TryGetNode((int)(MetaSyntaxKind)MetaSyntaxKind.MetaPropertyBlock2Alt2, propertySubsets, out hash);
+			if (cached != null) return (MetaPropertyBlock2Alt2Green)cached;
+		
+			var result = new MetaPropertyBlock2Alt2Green(MetaSyntaxKind.MetaPropertyBlock2Alt2, propertySubsets);
+			if (hash >= 0)
+			{
+				SyntaxNodeCache.AddNode(result, hash);
+			}
+		
+			return result;
+		}
+
+		internal MetaPropertyBlock2Alt3Green MetaPropertyBlock2Alt3(PropertyRedefinesGreen propertyRedefines)
+		{
+#if DEBUG
+			if (propertyRedefines is null) throw new ArgumentNullException(nameof(propertyRedefines));
+#endif
+			int hash;
+			var cached = SyntaxNodeCache.TryGetNode((int)(MetaSyntaxKind)MetaSyntaxKind.MetaPropertyBlock2Alt3, propertyRedefines, out hash);
+			if (cached != null) return (MetaPropertyBlock2Alt3Green)cached;
+		
+			var result = new MetaPropertyBlock2Alt3Green(MetaSyntaxKind.MetaPropertyBlock2Alt3, propertyRedefines);
+			if (hash >= 0)
+			{
+				SyntaxNodeCache.AddNode(result, hash);
+			}
+		
+			return result;
+		}
+
+		internal PropertyOppositeBlock1Green PropertyOppositeBlock1(InternalSyntaxToken tComma, QualifierGreen oppositeProperties)
+		{
+#if DEBUG
+			if (tComma is null) throw new ArgumentNullException(nameof(tComma));
+			if (tComma.RawKind != (int)MetaSyntaxKind.TComma) throw new ArgumentException(nameof(tComma));
+			if (oppositeProperties is null) throw new ArgumentNullException(nameof(oppositeProperties));
+#endif
+			int hash;
+			var cached = SyntaxNodeCache.TryGetNode((int)(MetaSyntaxKind)MetaSyntaxKind.PropertyOppositeBlock1, tComma, oppositeProperties, out hash);
+			if (cached != null) return (PropertyOppositeBlock1Green)cached;
+		
+			var result = new PropertyOppositeBlock1Green(MetaSyntaxKind.PropertyOppositeBlock1, tComma, oppositeProperties);
+			if (hash >= 0)
+			{
+				SyntaxNodeCache.AddNode(result, hash);
+			}
+		
+			return result;
+		}
+
+		internal PropertySubsetsBlock1Green PropertySubsetsBlock1(InternalSyntaxToken tComma, QualifierGreen subsettedProperties)
+		{
+#if DEBUG
+			if (tComma is null) throw new ArgumentNullException(nameof(tComma));
+			if (tComma.RawKind != (int)MetaSyntaxKind.TComma) throw new ArgumentException(nameof(tComma));
+			if (subsettedProperties is null) throw new ArgumentNullException(nameof(subsettedProperties));
+#endif
+			int hash;
+			var cached = SyntaxNodeCache.TryGetNode((int)(MetaSyntaxKind)MetaSyntaxKind.PropertySubsetsBlock1, tComma, subsettedProperties, out hash);
+			if (cached != null) return (PropertySubsetsBlock1Green)cached;
+		
+			var result = new PropertySubsetsBlock1Green(MetaSyntaxKind.PropertySubsetsBlock1, tComma, subsettedProperties);
+			if (hash >= 0)
+			{
+				SyntaxNodeCache.AddNode(result, hash);
+			}
+		
+			return result;
+		}
+
+		internal PropertyRedefinesBlock1Green PropertyRedefinesBlock1(InternalSyntaxToken tComma, QualifierGreen redefinedProperties)
+		{
+#if DEBUG
+			if (tComma is null) throw new ArgumentNullException(nameof(tComma));
+			if (tComma.RawKind != (int)MetaSyntaxKind.TComma) throw new ArgumentException(nameof(tComma));
+			if (redefinedProperties is null) throw new ArgumentNullException(nameof(redefinedProperties));
+#endif
+			int hash;
+			var cached = SyntaxNodeCache.TryGetNode((int)(MetaSyntaxKind)MetaSyntaxKind.PropertyRedefinesBlock1, tComma, redefinedProperties, out hash);
+			if (cached != null) return (PropertyRedefinesBlock1Green)cached;
+		
+			var result = new PropertyRedefinesBlock1Green(MetaSyntaxKind.PropertyRedefinesBlock1, tComma, redefinedProperties);
 			if (hash >= 0)
 			{
 				SyntaxNodeCache.AddNode(result, hash);

@@ -42,6 +42,8 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
 				case MetaSyntaxKind.KContains:
 				case MetaSyntaxKind.KDerived:
 				case MetaSyntaxKind.KOpposite:
+				case MetaSyntaxKind.KSubsets:
+				case MetaSyntaxKind.KRedefines:
 				case MetaSyntaxKind.TLParen:
 				case MetaSyntaxKind.TRParen:
 				case MetaSyntaxKind.KBool:
@@ -91,6 +93,8 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
 				case MetaSyntaxKind.KContains:
 				case MetaSyntaxKind.KDerived:
 				case MetaSyntaxKind.KOpposite:
+				case MetaSyntaxKind.KSubsets:
+				case MetaSyntaxKind.KRedefines:
 				case MetaSyntaxKind.TLParen:
 				case MetaSyntaxKind.TRParen:
 				case MetaSyntaxKind.KBool:
@@ -148,6 +152,10 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
 					return MetaSyntaxKind.KDerived;
 				case "opposite": 
 					return MetaSyntaxKind.KOpposite;
+				case "subsets": 
+					return MetaSyntaxKind.KSubsets;
+				case "redefines": 
+					return MetaSyntaxKind.KRedefines;
 				case "(": 
 					return MetaSyntaxKind.TLParen;
 				case ")": 
@@ -239,6 +247,10 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
 					return "KDerived";
 				case MetaSyntaxKind.KOpposite: 
 					return "KOpposite";
+				case MetaSyntaxKind.KSubsets: 
+					return "KSubsets";
+				case MetaSyntaxKind.KRedefines: 
+					return "KRedefines";
 				case MetaSyntaxKind.TLParen: 
 					return "TLParen";
 				case MetaSyntaxKind.TRParen: 
@@ -311,6 +323,10 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
 					return "PropertyNameAlt2";
 				case MetaSyntaxKind.PropertyOpposite: 
 					return "PropertyOpposite";
+				case MetaSyntaxKind.PropertySubsets: 
+					return "PropertySubsets";
+				case MetaSyntaxKind.PropertyRedefines: 
+					return "PropertyRedefines";
 				case MetaSyntaxKind.MetaOperation: 
 					return "MetaOperation";
 				case MetaSyntaxKind.ParameterList: 
@@ -335,6 +351,18 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
 					return "EnumLiteralsBlock1";
 				case MetaSyntaxKind.BaseClassesBlock1: 
 					return "BaseClassesBlock1";
+				case MetaSyntaxKind.MetaPropertyBlock2Alt1: 
+					return "MetaPropertyBlock2Alt1";
+				case MetaSyntaxKind.MetaPropertyBlock2Alt2: 
+					return "MetaPropertyBlock2Alt2";
+				case MetaSyntaxKind.MetaPropertyBlock2Alt3: 
+					return "MetaPropertyBlock2Alt3";
+				case MetaSyntaxKind.PropertyOppositeBlock1: 
+					return "PropertyOppositeBlock1";
+				case MetaSyntaxKind.PropertySubsetsBlock1: 
+					return "PropertySubsetsBlock1";
+				case MetaSyntaxKind.PropertyRedefinesBlock1: 
+					return "PropertyRedefinesBlock1";
 				case MetaSyntaxKind.ParameterListBlock1: 
 					return "ParameterListBlock1";
 				case MetaSyntaxKind.QualifierBlock1: 
@@ -387,6 +415,10 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
 					return "derived";
 				case MetaSyntaxKind.KOpposite: 
 					return "opposite";
+				case MetaSyntaxKind.KSubsets: 
+					return "subsets";
+				case MetaSyntaxKind.KRedefines: 
+					return "redefines";
 				case MetaSyntaxKind.TLParen: 
 					return "(";
 				case MetaSyntaxKind.TRParen: 
@@ -450,6 +482,8 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
 				case MetaSyntaxKind.KContains: 
 				case MetaSyntaxKind.KDerived: 
 				case MetaSyntaxKind.KOpposite: 
+				case MetaSyntaxKind.KSubsets: 
+				case MetaSyntaxKind.KRedefines: 
 				case MetaSyntaxKind.KBool: 
 				case MetaSyntaxKind.KInt: 
 				case MetaSyntaxKind.KString: 
@@ -478,6 +512,8 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
 			yield return MetaSyntaxKind.KContains;
 			yield return MetaSyntaxKind.KDerived;
 			yield return MetaSyntaxKind.KOpposite;
+			yield return MetaSyntaxKind.KSubsets;
+			yield return MetaSyntaxKind.KRedefines;
 			yield return MetaSyntaxKind.KBool;
 			yield return MetaSyntaxKind.KInt;
 			yield return MetaSyntaxKind.KString;
@@ -515,6 +551,10 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
 					return MetaSyntaxKind.KDerived;
 				case "opposite": 
 					return MetaSyntaxKind.KOpposite;
+				case "subsets": 
+					return MetaSyntaxKind.KSubsets;
+				case "redefines": 
+					return MetaSyntaxKind.KRedefines;
 				case "bool": 
 					return MetaSyntaxKind.KBool;
 				case "int": 

@@ -112,11 +112,20 @@ namespace MetaDslx.Bootstrap.MetaModel.Core
     [Symbol(typeof(DeclaredSymbol))]
     public class MetaProperty : MetaDeclaration
     {
+        public MetaProperty()
+        {
+            OppositeProperties = new List<MetaProperty>();
+            SubsettedProperties = new List<MetaProperty>();
+            RedefinedProperties = new List<MetaProperty>();
+        }
+
         public MetaType Type { get; set; }
         public string? SymbolProperty { get; set; }
         public bool IsContainment { get; set; }
         public bool IsDerived { get; set; }
         [Opposite(typeof(MetaProperty), "Opposite")]
-        public MetaProperty? Opposite { get; set; }
+        public List<MetaProperty> OppositeProperties { get; set; }
+        public List<MetaProperty> SubsettedProperties { get; set; }
+        public List<MetaProperty> RedefinedProperties { get; set; }
     }
 }

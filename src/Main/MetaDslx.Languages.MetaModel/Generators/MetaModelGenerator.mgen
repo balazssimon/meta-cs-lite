@@ -2,6 +2,7 @@ namespace MetaDslx.Languages.MetaModel.Generators;
 
 using System;
 using System.Linq;
+using Roslyn.Utilities;
 using MetaDslx.Languages.MetaModel.Model;
 
 generator MetaModelGenerator;
@@ -64,7 +65,7 @@ public partial class [mm.Name] : __MetaModel
 	// If there is an error at the following line, create a new class called 'Custom[mm.Name]Implementation'
 	// inheriting from the class 'Custom[mm.Name]ImplementationBase' and provide the custom implementation
 	// for the derived properties and operations defined in the metamodel
-	internal static readonly Custom[mm.Name]ImplementationBase __CustomImpl = new Custom[mm.Name]Implementation();
+	internal static readonly Custom[mm.Name]ImplementationBase __CustomImpl;
 
 	private static readonly [mm.Name] _instance;
 	public static [mm.Name] Instance => _instance;
@@ -77,6 +78,7 @@ public partial class [mm.Name] : __MetaModel
 
 	static [mm.Name]()
 	{
+		__CustomImpl = new Custom[mm.Name]Implementation();
 		[foreach (var cls in Classes)]
 			[var metaCls = Graph.GetMetaClass(cls)]
 			[foreach (var prop in metaCls.DeclaredProperties)]
@@ -91,6 +93,10 @@ public partial class [mm.Name] : __MetaModel
 	private readonly global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> _modelObjectInfos;
 	private readonly global::System.Collections.Immutable.ImmutableDictionary<__Type, __ModelObjectInfo> _modelObjectInfosByType;
 	private readonly global::System.Collections.Immutable.ImmutableDictionary<string, __ModelObjectInfo> _modelObjectInfosByName;
+
+	[foreach (var c in mm.Parent.Declarations.OfType<MetaConstant>())]
+	internal readonly [ToCSharp(c.Type)] _[c.Name.ToCamelCase()];
+	[end foreach]
 
 	private [mm.Name]()
 	{
@@ -108,17 +114,13 @@ public partial class [mm.Name] : __MetaModel
 		_modelObjectInfosByName = modelObjectInfosByName.ToImmutable();
 		_model = new __Model();
 		var f = new [mm.Name]ModelFactory(_model);
-		var boolType = f.MetaPrimitiveType();
-		boolType.Name = "bool";
-		var intType = f.MetaPrimitiveType();
-		intType.Name = "int";
-		var stringType = f.MetaPrimitiveType();
-		stringType.Name = "string";
-		var typeType = f.MetaPrimitiveType();
-		typeType.Name = "type";
+		[foreach (var c in mm.Parent.Declarations.OfType<MetaConstant>())]
+		_[c.Name.ToCamelCase()] = f.[c.Type]();
+		[end foreach]
 		[foreach (var obj in ModelObjects)]
 		var [GetName(obj)] = f.[obj.MetaType.Name]();
 		[end foreach]
+		__CustomImpl.[mm.Name](this);
 		[foreach (var obj in ModelObjects)]
 			[foreach (var child in obj.Children)]
 		((__IModelObject)[GetName(obj)]).Children.Add((__IModelObject)[GetName(child)]);
@@ -151,6 +153,10 @@ public partial class [mm.Name] : __MetaModel
 
     public override bool TryGetInfo(__Type modelObjectType, out __ModelObjectInfo? info) => _modelObjectInfosByType.TryGetValue(modelObjectType, out info);
     public override bool TryGetInfo(string modelObjectTypeName, out __ModelObjectInfo? info) => _modelObjectInfosByName.TryGetValue(modelObjectTypeName, out info);
+
+	[foreach (var c in mm.Parent.Declarations.OfType<MetaConstant>())]
+	public static [ToCSharp(c.Type)] [c.Name] => Instance._[c.Name.ToCamelCase()];
+	[end foreach]
 
 	[foreach (var cls in Classes)]
 	public static __ModelObjectInfo [cls.Name]Info => global::[Namespace].__Impl.[cls.Name]_Impl.__Info.Instance;
@@ -310,6 +316,8 @@ end template
 template GenerateCustomInterface(MetaModel mm)
 internal interface ICustom[mm.Name]Implementation
 {
+	void [mm.Name]([mm.Name] _this);
+
 	[foreach (var cls in Classes)]
 	/// <summary>
 	/// Constructor for the class [cls.Name]
@@ -333,6 +341,13 @@ end template
 template GenerateCustomImplementation(MetaModel mm)
 internal abstract class Custom[mm.Name]ImplementationBase : ICustom[mm.Name]Implementation
 {
+	/// <summary>
+	/// Constructor for the meta model [mm.Name]
+	/// </summary>
+	public virtual void [mm.Name]([mm.Name] _this)
+	{
+	}
+
 	[foreach (var cls in Classes)]
 	/// <summary>
 	/// Constructor for the class [cls.Name]

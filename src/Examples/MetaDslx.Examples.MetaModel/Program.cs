@@ -12,7 +12,7 @@ using MetaDslx.Modeling.Reflection;
 using System.Collections.Immutable;
 
 var code = File.ReadAllText(@"..\..\..\..\..\Main\MetaDslx.Languages.MetaModel\Model\Meta.mm");
-var syntaxTree = MetaCoreSyntaxTree.ParseText(SourceText.From(code), path: "Meta.mm");
+var syntaxTree = MetaSyntaxTree.ParseText(SourceText.From(code), path: "Meta.mm");
 
 Console.WriteLine("----");
 var syntaxTreeDiagnostics = syntaxTree.GetDiagnostics().ToList();
@@ -22,11 +22,12 @@ foreach (var diag in syntaxTreeDiagnostics)
 }
 if (syntaxTreeDiagnostics.Count > 0) return;
 
-var cmp = Compilation.Create("MetaCore",
+var cmp = Compilation.Create("Meta",
     syntaxTrees: new[] { syntaxTree },
     references: new[]
     {
-        MetadataReference.CreateFromMetaModel(ReflectionMetaModel.CreateFromNamespace(typeof(MetaDslx.Bootstrap.MetaModel.Core.MetaModel).Assembly, "MetaDslx.Bootstrap.MetaModel.Core")),
+        //MetadataReference.CreateFromMetaModel(ReflectionMetaModel.CreateFromNamespace(typeof(MetaDslx.Languages.MetaModel.Model.Meta).Assembly, "MetaDslx.Languages.MetaModel.Model")),
+        MetadataReference.CreateFromMetaModel(MetaDslx.Languages.MetaModel.Model.Meta.Instance),
         MetadataReference.CreateFromFile(typeof(string).Assembly.Location),
         MetadataReference.CreateFromFile(typeof(Symbol).Assembly.Location),
     },
@@ -55,5 +56,5 @@ var graph = new MetaMetaGraph(model.Objects.OfType<MetaDslx.Languages.MetaModel.
 graph.Compute();
 var generator = new MetaModelGenerator(model, mm, graph);
 var output = generator.Generate();
-File.WriteAllText($@"..\..\..\..\..\Main\MetaDslx.Languages.MetaModel\Model\{mm.Name}.cs", output);
+File.WriteAllText($@"..\..\..\..\..\Main\MetaDslx.Languages.MetaModel\Model\{mm.Name}.cs2", output);
 //*/

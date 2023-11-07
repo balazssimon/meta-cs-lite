@@ -320,10 +320,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Binding
         	{
         	    if (metaEnumLiteralListIndex == 0)
         	    {
-        	        this.Visit(node.MetaEnumLiteralList[metaEnumLiteralListIndex]);
-        	    }
-        	    else
-        	    {
         	        var __annot0 = new PropertyBinder(name: "Literals");
         	        this.Begin(__annot0, node.MetaEnumLiteralList[metaEnumLiteralListIndex]);
         	        try
@@ -333,6 +329,19 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Binding
         	        finally
         	        {
         	            this.End(__annot0);
+        	        }
+        	    }
+        	    else
+        	    {
+        	        var __annot1 = new PropertyBinder(name: "Literals");
+        	        this.Begin(__annot1, node.MetaEnumLiteralList[metaEnumLiteralListIndex]);
+        	        try
+        	        {
+        	            this.Visit(node.MetaEnumLiteralList[metaEnumLiteralListIndex]);
+        	        }
+        	        finally
+        	        {
+        	            this.End(__annot1);
         	        }
         	        // this.VisitToken(node.MetaEnumLiteralList.GetSeparator(metaEnumLiteralListIndex));
         	    }
@@ -519,7 +528,11 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Binding
         	    {
         	        this.End(__annot3);
         	    }
-        	    this.Visit(node.PropertyOpposite);
+        	    var metaPropertyBlock2List = node.MetaPropertyBlock2;
+        	    for (var metaPropertyBlock2Index = 0; metaPropertyBlock2Index < metaPropertyBlock2List.Count; ++metaPropertyBlock2Index)
+        	    {
+        	        this.Visit(node.MetaPropertyBlock2[metaPropertyBlock2Index]);
+        	    }
         	        
         	}
         	finally
@@ -602,24 +615,162 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Binding
 
         public virtual void VisitPropertyOpposite(PropertyOppositeSyntax node)
         {
-        	var __annot1 = new PropertyBinder(name: "Opposite");
-        	this.Begin(__annot1, node.Opposite);
-        	try
+        	var qualifierListList = node.QualifierList;
+        	for (var qualifierListIndex = 0; qualifierListIndex < qualifierListList.Count; ++qualifierListIndex)
         	{
-        	    var __annot0 = new UseBinder(types: new global::System.Type[] {typeof(global::MetaDslx.Languages.MetaModel.Model.MetaProperty)}.ToImmutableArray());
-        	    this.Begin(__annot0, node.Opposite);
-        	    try
+        	    if (qualifierListIndex == 0)
         	    {
-        	        this.Visit(node.Opposite);
+        	        var __annot1 = new PropertyBinder(name: "OppositeProperties");
+        	        this.Begin(__annot1, node.QualifierList[qualifierListIndex]);
+        	        try
+        	        {
+        	            var __annot0 = new UseBinder(types: new global::System.Type[] {typeof(global::MetaDslx.Languages.MetaModel.Model.MetaProperty)}.ToImmutableArray());
+        	            this.Begin(__annot0, node.QualifierList[qualifierListIndex]);
+        	            try
+        	            {
+        	                this.Visit(node.QualifierList[qualifierListIndex]);
+        	            }
+        	            finally
+        	            {
+        	                this.End(__annot0);
+        	            }
+        	        }
+        	        finally
+        	        {
+        	            this.End(__annot1);
+        	        }
         	    }
-        	    finally
+        	    else
         	    {
-        	        this.End(__annot0);
+        	        var __annot3 = new PropertyBinder(name: "OppositeProperties");
+        	        this.Begin(__annot3, node.QualifierList[qualifierListIndex]);
+        	        try
+        	        {
+        	            var __annot2 = new UseBinder(types: new global::System.Type[] {typeof(global::MetaDslx.Languages.MetaModel.Model.MetaProperty)}.ToImmutableArray());
+        	            this.Begin(__annot2, node.QualifierList[qualifierListIndex]);
+        	            try
+        	            {
+        	                this.Visit(node.QualifierList[qualifierListIndex]);
+        	            }
+        	            finally
+        	            {
+        	                this.End(__annot2);
+        	            }
+        	        }
+        	        finally
+        	        {
+        	            this.End(__annot3);
+        	        }
+        	        // this.VisitToken(node.QualifierList.GetSeparator(qualifierListIndex));
         	    }
         	}
-        	finally
+        	    
+        }
+
+        public virtual void VisitPropertySubsets(PropertySubsetsSyntax node)
+        {
+        	var qualifierListList = node.QualifierList;
+        	for (var qualifierListIndex = 0; qualifierListIndex < qualifierListList.Count; ++qualifierListIndex)
         	{
-        	    this.End(__annot1);
+        	    if (qualifierListIndex == 0)
+        	    {
+        	        var __annot1 = new PropertyBinder(name: "SubsettedProperties");
+        	        this.Begin(__annot1, node.QualifierList[qualifierListIndex]);
+        	        try
+        	        {
+        	            var __annot0 = new UseBinder(types: new global::System.Type[] {typeof(global::MetaDslx.Languages.MetaModel.Model.MetaProperty)}.ToImmutableArray());
+        	            this.Begin(__annot0, node.QualifierList[qualifierListIndex]);
+        	            try
+        	            {
+        	                this.Visit(node.QualifierList[qualifierListIndex]);
+        	            }
+        	            finally
+        	            {
+        	                this.End(__annot0);
+        	            }
+        	        }
+        	        finally
+        	        {
+        	            this.End(__annot1);
+        	        }
+        	    }
+        	    else
+        	    {
+        	        var __annot3 = new PropertyBinder(name: "SubsettedProperties");
+        	        this.Begin(__annot3, node.QualifierList[qualifierListIndex]);
+        	        try
+        	        {
+        	            var __annot2 = new UseBinder(types: new global::System.Type[] {typeof(global::MetaDslx.Languages.MetaModel.Model.MetaProperty)}.ToImmutableArray());
+        	            this.Begin(__annot2, node.QualifierList[qualifierListIndex]);
+        	            try
+        	            {
+        	                this.Visit(node.QualifierList[qualifierListIndex]);
+        	            }
+        	            finally
+        	            {
+        	                this.End(__annot2);
+        	            }
+        	        }
+        	        finally
+        	        {
+        	            this.End(__annot3);
+        	        }
+        	        // this.VisitToken(node.QualifierList.GetSeparator(qualifierListIndex));
+        	    }
+        	}
+        	    
+        }
+
+        public virtual void VisitPropertyRedefines(PropertyRedefinesSyntax node)
+        {
+        	var qualifierListList = node.QualifierList;
+        	for (var qualifierListIndex = 0; qualifierListIndex < qualifierListList.Count; ++qualifierListIndex)
+        	{
+        	    if (qualifierListIndex == 0)
+        	    {
+        	        var __annot1 = new PropertyBinder(name: "RedefinedProperties");
+        	        this.Begin(__annot1, node.QualifierList[qualifierListIndex]);
+        	        try
+        	        {
+        	            var __annot0 = new UseBinder(types: new global::System.Type[] {typeof(global::MetaDslx.Languages.MetaModel.Model.MetaProperty)}.ToImmutableArray());
+        	            this.Begin(__annot0, node.QualifierList[qualifierListIndex]);
+        	            try
+        	            {
+        	                this.Visit(node.QualifierList[qualifierListIndex]);
+        	            }
+        	            finally
+        	            {
+        	                this.End(__annot0);
+        	            }
+        	        }
+        	        finally
+        	        {
+        	            this.End(__annot1);
+        	        }
+        	    }
+        	    else
+        	    {
+        	        var __annot3 = new PropertyBinder(name: "RedefinedProperties");
+        	        this.Begin(__annot3, node.QualifierList[qualifierListIndex]);
+        	        try
+        	        {
+        	            var __annot2 = new UseBinder(types: new global::System.Type[] {typeof(global::MetaDslx.Languages.MetaModel.Model.MetaProperty)}.ToImmutableArray());
+        	            this.Begin(__annot2, node.QualifierList[qualifierListIndex]);
+        	            try
+        	            {
+        	                this.Visit(node.QualifierList[qualifierListIndex]);
+        	            }
+        	            finally
+        	            {
+        	                this.End(__annot2);
+        	            }
+        	        }
+        	        finally
+        	        {
+        	            this.End(__annot3);
+        	        }
+        	        // this.VisitToken(node.QualifierList.GetSeparator(qualifierListIndex));
+        	    }
         	}
         	    
         }
@@ -666,10 +817,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Binding
         	{
         	    if (metaParameterListIndex == 0)
         	    {
-        	        this.Visit(node.MetaParameterList[metaParameterListIndex]);
-        	    }
-        	    else
-        	    {
         	        var __annot0 = new PropertyBinder(name: "Parameters");
         	        this.Begin(__annot0, node.MetaParameterList[metaParameterListIndex]);
         	        try
@@ -679,6 +826,19 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Binding
         	        finally
         	        {
         	            this.End(__annot0);
+        	        }
+        	    }
+        	    else
+        	    {
+        	        var __annot1 = new PropertyBinder(name: "Parameters");
+        	        this.Begin(__annot1, node.MetaParameterList[metaParameterListIndex]);
+        	        try
+        	        {
+        	            this.Visit(node.MetaParameterList[metaParameterListIndex]);
+        	        }
+        	        finally
+        	        {
+        	            this.End(__annot1);
         	        }
         	        // this.VisitToken(node.MetaParameterList.GetSeparator(metaParameterListIndex));
         	    }
@@ -938,6 +1098,120 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Binding
         	    try
         	    {
         	        this.Visit(node.BaseTypes);
+        	    }
+        	    finally
+        	    {
+        	        this.End(__annot0);
+        	    }
+        	}
+        	finally
+        	{
+        	    this.End(__annot1);
+        	}
+        	    
+        }
+
+        public virtual void VisitMetaPropertyBlock2Alt1(MetaPropertyBlock2Alt1Syntax node)
+        {
+        	this.Visit(node.PropertyOpposite);
+        	    
+        }
+
+        public virtual void VisitMetaPropertyBlock2Alt2(MetaPropertyBlock2Alt2Syntax node)
+        {
+        	this.Visit(node.PropertySubsets);
+        	    
+        }
+
+        public virtual void VisitMetaPropertyBlock2Alt3(MetaPropertyBlock2Alt3Syntax node)
+        {
+        	this.Visit(node.PropertyRedefines);
+        	    
+        }
+
+        public virtual void VisitPropertyOppositeBlock1(PropertyOppositeBlock1Syntax node)
+        {
+        	if (node.TComma.GetMetaKind() != MetaSyntaxKind.None)
+        	{
+        	    // this.VisitToken(node.TComma);
+        	}
+        	else
+        	{
+        	    // this.VisitToken(node.TComma);
+        	}
+        	var __annot1 = new PropertyBinder(name: "OppositeProperties");
+        	this.Begin(__annot1, node.OppositeProperties);
+        	try
+        	{
+        	    var __annot0 = new UseBinder(types: new global::System.Type[] {typeof(global::MetaDslx.Languages.MetaModel.Model.MetaProperty)}.ToImmutableArray());
+        	    this.Begin(__annot0, node.OppositeProperties);
+        	    try
+        	    {
+        	        this.Visit(node.OppositeProperties);
+        	    }
+        	    finally
+        	    {
+        	        this.End(__annot0);
+        	    }
+        	}
+        	finally
+        	{
+        	    this.End(__annot1);
+        	}
+        	    
+        }
+
+        public virtual void VisitPropertySubsetsBlock1(PropertySubsetsBlock1Syntax node)
+        {
+        	if (node.TComma.GetMetaKind() != MetaSyntaxKind.None)
+        	{
+        	    // this.VisitToken(node.TComma);
+        	}
+        	else
+        	{
+        	    // this.VisitToken(node.TComma);
+        	}
+        	var __annot1 = new PropertyBinder(name: "SubsettedProperties");
+        	this.Begin(__annot1, node.SubsettedProperties);
+        	try
+        	{
+        	    var __annot0 = new UseBinder(types: new global::System.Type[] {typeof(global::MetaDslx.Languages.MetaModel.Model.MetaProperty)}.ToImmutableArray());
+        	    this.Begin(__annot0, node.SubsettedProperties);
+        	    try
+        	    {
+        	        this.Visit(node.SubsettedProperties);
+        	    }
+        	    finally
+        	    {
+        	        this.End(__annot0);
+        	    }
+        	}
+        	finally
+        	{
+        	    this.End(__annot1);
+        	}
+        	    
+        }
+
+        public virtual void VisitPropertyRedefinesBlock1(PropertyRedefinesBlock1Syntax node)
+        {
+        	if (node.TComma.GetMetaKind() != MetaSyntaxKind.None)
+        	{
+        	    // this.VisitToken(node.TComma);
+        	}
+        	else
+        	{
+        	    // this.VisitToken(node.TComma);
+        	}
+        	var __annot1 = new PropertyBinder(name: "RedefinedProperties");
+        	this.Begin(__annot1, node.RedefinedProperties);
+        	try
+        	{
+        	    var __annot0 = new UseBinder(types: new global::System.Type[] {typeof(global::MetaDslx.Languages.MetaModel.Model.MetaProperty)}.ToImmutableArray());
+        	    this.Begin(__annot0, node.RedefinedProperties);
+        	    try
+        	    {
+        	        this.Visit(node.RedefinedProperties);
         	    }
         	    finally
         	    {

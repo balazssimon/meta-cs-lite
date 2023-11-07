@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 using MetaDslx.Modeling.Meta;
@@ -38,7 +39,7 @@ namespace MetaDslx.Modeling.Reflection
         {
             get
             {
-                return UnderlyingType.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly).ToImmutableArray();
+                return UnderlyingType.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly).OrderBy(p => p.Name).ToImmutableArray();
             }
         }
 

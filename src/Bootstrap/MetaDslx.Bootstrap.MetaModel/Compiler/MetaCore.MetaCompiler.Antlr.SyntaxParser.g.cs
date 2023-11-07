@@ -41,7 +41,7 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
 			return red;
 		}
 
-        private MainGreen? ParseMain(ref ParserState? state)
+        private GreenNode? ParseMain(ref ParserState? state)
         {
             return _visitor.VisitPr_Main(AntlrParser.pr_Main());
         }
@@ -64,7 +64,7 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
 				_factory = (MetaCoreInternalSyntaxFactory)_parser.Language.InternalSyntaxFactory;
             }
 
-            private InternalSyntaxToken? VisitTerminal(IToken? token, MetaCoreSyntaxKind kind)
+            private GreenNode? VisitTerminal(IToken? token, MetaCoreSyntaxKind kind)
             {
 				if (token == null)
 				{
@@ -76,12 +76,12 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
 				return green;
             }
 
-            public InternalSyntaxToken? VisitTerminal(IToken? token)
+            public GreenNode? VisitTerminal(IToken? token)
             {
 				return VisitTerminal(token, MetaCoreSyntaxKind.None);
             }
 
-            private InternalSyntaxToken? VisitTerminal(ITerminalNode? node, MetaCoreSyntaxKind kind)
+            private GreenNode? VisitTerminal(ITerminalNode? node, MetaCoreSyntaxKind kind)
             {
                 if (node?.Symbol == null)
 				{
@@ -93,12 +93,12 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
 				return green;
 			}
 
-            public override InternalSyntaxToken? VisitTerminal(ITerminalNode? node)
+            public override GreenNode? VisitTerminal(ITerminalNode? node)
             {
                 return VisitTerminal(node, MetaCoreSyntaxKind.None);
             }
 
-            public override MainGreen? VisitPr_Main(MetaCoreParser.Pr_MainContext? context)
+            public override GreenNode? VisitPr_Main(MetaCoreParser.Pr_MainContext? context)
             {
                	if (context == null) return MainGreen.__Missing;
                 var kNamespace = this.VisitTerminal(context.kNamespace, MetaCoreSyntaxKind.KNamespace);
@@ -119,9 +119,9 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
                 if (context.declarationsAntlr1 is not null) declarations = (DeclarationsGreen?)this.Visit(context.declarationsAntlr1) ?? DeclarationsGreen.__Missing;
                 else declarations = DeclarationsGreen.__Missing;
                 var eof = this.VisitTerminal(context.eof, MetaCoreSyntaxKind.Eof);
-            	return _factory.Main(kNamespace, name, tSemicolon, @using, declarations, eof);
+            	return _factory.Main((InternalSyntaxToken)kNamespace, name, (InternalSyntaxToken)tSemicolon, @using, declarations, (InternalSyntaxToken)eof);
             }
-            public override UsingGreen? VisitPr_Using(MetaCoreParser.Pr_UsingContext? context)
+            public override GreenNode? VisitPr_Using(MetaCoreParser.Pr_UsingContext? context)
             {
                	if (context == null) return UsingGreen.__Missing;
                 var kUsing = this.VisitTerminal(context.kUsing, MetaCoreSyntaxKind.KUsing);
@@ -129,9 +129,9 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
                 if (context.namespacesAntlr1 is not null) namespaces = (QualifierGreen?)this.Visit(context.namespacesAntlr1) ?? QualifierGreen.__Missing;
                 else namespaces = QualifierGreen.__Missing;
                 var tSemicolon = this.VisitTerminal(context.tSemicolon, MetaCoreSyntaxKind.TSemicolon);
-            	return _factory.Using(kUsing, namespaces, tSemicolon);
+            	return _factory.Using((InternalSyntaxToken)kUsing, namespaces, (InternalSyntaxToken)tSemicolon);
             }
-            public override DeclarationsGreen? VisitPr_Declarations(MetaCoreParser.Pr_DeclarationsContext? context)
+            public override GreenNode? VisitPr_Declarations(MetaCoreParser.Pr_DeclarationsContext? context)
             {
                	if (context == null) return DeclarationsGreen.__Missing;
                 var declarationsContext = context._declarationsAntlr1;
@@ -145,7 +145,7 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
                 _pool.Free(declarationsBuilder);
             	return _factory.Declarations(declarations);
             }
-            public override MetaModelGreen? VisitPr_MetaModel(MetaCoreParser.Pr_MetaModelContext? context)
+            public override GreenNode? VisitPr_MetaModel(MetaCoreParser.Pr_MetaModelContext? context)
             {
                	if (context == null) return MetaModelGreen.__Missing;
                 var kMetamodel = this.VisitTerminal(context.kMetamodel, MetaCoreSyntaxKind.KMetamodel);
@@ -153,9 +153,9 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
                 if (context.nameAntlr1 is not null) name = (NameGreen?)this.Visit(context.nameAntlr1) ?? NameGreen.__Missing;
                 else name = NameGreen.__Missing;
                 var tSemicolon = this.VisitTerminal(context.tSemicolon, MetaCoreSyntaxKind.TSemicolon);
-            	return _factory.MetaModel(kMetamodel, name, tSemicolon);
+            	return _factory.MetaModel((InternalSyntaxToken)kMetamodel, name, (InternalSyntaxToken)tSemicolon);
             }
-            public override MetaEnumTypeGreen? VisitPr_MetaEnumType(MetaCoreParser.Pr_MetaEnumTypeContext? context)
+            public override GreenNode? VisitPr_MetaEnumType(MetaCoreParser.Pr_MetaEnumTypeContext? context)
             {
                	if (context == null) return MetaEnumTypeGreen.__Missing;
                 var kEnum = this.VisitTerminal(context.kEnum, MetaCoreSyntaxKind.KEnum);
@@ -165,9 +165,9 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
                 EnumBodyGreen? enumBody = null;
                 if (context.enumBodyAntlr1 is not null) enumBody = (EnumBodyGreen?)this.Visit(context.enumBodyAntlr1) ?? EnumBodyGreen.__Missing;
                 else enumBody = EnumBodyGreen.__Missing;
-            	return _factory.MetaEnumType(kEnum, name, enumBody);
+            	return _factory.MetaEnumType((InternalSyntaxToken)kEnum, name, enumBody);
             }
-            public override MetaClassGreen? VisitPr_MetaClass(MetaCoreParser.Pr_MetaClassContext? context)
+            public override GreenNode? VisitPr_MetaClass(MetaCoreParser.Pr_MetaClassContext? context)
             {
                	if (context == null) return MetaClassGreen.__Missing;
                 var isAbstract = this.VisitTerminal(context.isAbstract);
@@ -180,18 +180,18 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
                 ClassBodyGreen? classBody = null;
                 if (context.classBodyAntlr1 is not null) classBody = (ClassBodyGreen?)this.Visit(context.classBodyAntlr1) ?? ClassBodyGreen.__Missing;
                 else classBody = ClassBodyGreen.__Missing;
-            	return _factory.MetaClass(isAbstract, kClass, name, baseClasses, classBody);
+            	return _factory.MetaClass((InternalSyntaxToken)isAbstract, (InternalSyntaxToken)kClass, name, baseClasses, classBody);
             }
-            public override EnumBodyGreen? VisitPr_EnumBody(MetaCoreParser.Pr_EnumBodyContext? context)
+            public override GreenNode? VisitPr_EnumBody(MetaCoreParser.Pr_EnumBodyContext? context)
             {
                	if (context == null) return EnumBodyGreen.__Missing;
                 var tLBrace = this.VisitTerminal(context.tLBrace, MetaCoreSyntaxKind.TLBrace);
                 EnumLiteralsGreen? enumLiterals = null;
                 if (context.enumLiteralsAntlr1 is not null) enumLiterals = (EnumLiteralsGreen?)this.Visit(context.enumLiteralsAntlr1);
                 var tRBrace = this.VisitTerminal(context.tRBrace, MetaCoreSyntaxKind.TRBrace);
-            	return _factory.EnumBody(tLBrace, enumLiterals, tRBrace);
+            	return _factory.EnumBody((InternalSyntaxToken)tLBrace, enumLiterals, (InternalSyntaxToken)tRBrace);
             }
-            public override EnumLiteralsGreen? VisitPr_EnumLiterals(MetaCoreParser.Pr_EnumLiteralsContext? context)
+            public override GreenNode? VisitPr_EnumLiterals(MetaCoreParser.Pr_EnumLiteralsContext? context)
             {
                	if (context == null) return EnumLiteralsGreen.__Missing;
                 var metaEnumLiteralListBuilder = _pool.AllocateSeparated<MetaEnumLiteralGreen>(reversed: false);
@@ -215,7 +215,7 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
                 _pool.Free(metaEnumLiteralListBuilder);
             	return _factory.EnumLiterals(metaEnumLiteralList);
             }
-            public override MetaEnumLiteralGreen? VisitPr_MetaEnumLiteral(MetaCoreParser.Pr_MetaEnumLiteralContext? context)
+            public override GreenNode? VisitPr_MetaEnumLiteral(MetaCoreParser.Pr_MetaEnumLiteralContext? context)
             {
                	if (context == null) return MetaEnumLiteralGreen.__Missing;
                 NameGreen? name = null;
@@ -223,7 +223,7 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
                 else name = NameGreen.__Missing;
             	return _factory.MetaEnumLiteral(name);
             }
-            public override ClassNameAlt1Green? VisitPr_ClassNameAlt1(MetaCoreParser.Pr_ClassNameAlt1Context? context)
+            public override GreenNode? VisitPr_ClassNameAlt1(MetaCoreParser.Pr_ClassNameAlt1Context? context)
             {
                	if (context == null) return ClassNameAlt1Green.__Missing;
                 var tIdentifier = this.VisitTerminal(context.tIdentifierAntlr1);
@@ -231,15 +231,15 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
                 IdentifierGreen? symbolType = null;
                 if (context.symbolTypeAntlr1 is not null) symbolType = (IdentifierGreen?)this.Visit(context.symbolTypeAntlr1) ?? IdentifierGreen.__Missing;
                 else symbolType = IdentifierGreen.__Missing;
-            	return _factory.ClassNameAlt1(tIdentifier, tDollar, symbolType);
+            	return _factory.ClassNameAlt1((InternalSyntaxToken)tIdentifier, (InternalSyntaxToken)tDollar, symbolType);
             }
-            public override ClassNameAlt2Green? VisitPr_ClassNameAlt2(MetaCoreParser.Pr_ClassNameAlt2Context? context)
+            public override GreenNode? VisitPr_ClassNameAlt2(MetaCoreParser.Pr_ClassNameAlt2Context? context)
             {
                	if (context == null) return ClassNameAlt2Green.__Missing;
                 var tIdentifier = this.VisitTerminal(context.tIdentifierAntlr1, MetaCoreSyntaxKind.TIdentifier);
-            	return _factory.ClassNameAlt2(tIdentifier);
+            	return _factory.ClassNameAlt2((InternalSyntaxToken)tIdentifier);
             }
-            public override BaseClassesGreen? VisitPr_BaseClasses(MetaCoreParser.Pr_BaseClassesContext? context)
+            public override GreenNode? VisitPr_BaseClasses(MetaCoreParser.Pr_BaseClassesContext? context)
             {
                	if (context == null) return BaseClassesGreen.__Missing;
                 BaseClassesBlock1Green? baseClassesBlock1 = null;
@@ -247,7 +247,7 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
                 else baseClassesBlock1 = BaseClassesBlock1Green.__Missing;
             	return _factory.BaseClasses(baseClassesBlock1);
             }
-            public override ClassBodyGreen? VisitPr_ClassBody(MetaCoreParser.Pr_ClassBodyContext? context)
+            public override GreenNode? VisitPr_ClassBody(MetaCoreParser.Pr_ClassBodyContext? context)
             {
                	if (context == null) return ClassBodyGreen.__Missing;
                 var tLBrace = this.VisitTerminal(context.tLBrace, MetaCoreSyntaxKind.TLBrace);
@@ -261,49 +261,122 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
                 var properties = propertiesBuilder.ToList();
                 _pool.Free(propertiesBuilder);
                 var tRBrace = this.VisitTerminal(context.tRBrace, MetaCoreSyntaxKind.TRBrace);
-            	return _factory.ClassBody(tLBrace, properties, tRBrace);
+            	return _factory.ClassBody((InternalSyntaxToken)tLBrace, properties, (InternalSyntaxToken)tRBrace);
             }
-            public override MetaPropertyGreen? VisitPr_MetaProperty(MetaCoreParser.Pr_MetaPropertyContext? context)
+            public override GreenNode? VisitPr_MetaProperty(MetaCoreParser.Pr_MetaPropertyContext? context)
             {
                	if (context == null) return MetaPropertyGreen.__Missing;
                 InternalSyntaxToken? element = null;
-                if (context.isContainment is not null) element = this.VisitTerminal(context.isContainment);
-                if (context.isDerived is not null) element = this.VisitTerminal(context.isDerived);
+                if (context.isContainment is not null) element = (InternalSyntaxToken)this.VisitTerminal(context.isContainment);
+                if (context.isDerived is not null) element = (InternalSyntaxToken)this.VisitTerminal(context.isDerived);
                 TypeReferenceGreen? type = null;
                 if (context.typeAntlr1 is not null) type = (TypeReferenceGreen?)this.Visit(context.typeAntlr1) ?? TypeReferenceGreen.__Missing;
                 else type = TypeReferenceGreen.__Missing;
                 PropertyNameGreen? name = null;
                 if (context.nameAntlr1 is not null) name = (PropertyNameGreen?)this.Visit(context.nameAntlr1) ?? PropertyNameGreen.__Missing;
                 else name = PropertyNameGreen.__Missing;
-                PropertyOppositeGreen? propertyOpposite = null;
-                if (context.propertyOppositeAntlr1 is not null) propertyOpposite = (PropertyOppositeGreen?)this.Visit(context.propertyOppositeAntlr1);
+                var metaPropertyBlock2Context = context._metaPropertyBlock2Antlr1;
+                var metaPropertyBlock2Builder = _pool.Allocate<MetaPropertyBlock2Green>();
+                for (int i = 0; i < metaPropertyBlock2Context.Count; ++i)
+                {
+                    if (metaPropertyBlock2Context[i] is not null) metaPropertyBlock2Builder.Add((MetaPropertyBlock2Green?)this.Visit(metaPropertyBlock2Context[i]) ?? MetaPropertyBlock2Green.__Missing);
+                    else metaPropertyBlock2Builder.Add(MetaPropertyBlock2Green.__Missing);
+                }
+                var metaPropertyBlock2 = metaPropertyBlock2Builder.ToList();
+                _pool.Free(metaPropertyBlock2Builder);
                 var tSemicolon = this.VisitTerminal(context.tSemicolon, MetaCoreSyntaxKind.TSemicolon);
-            	return _factory.MetaProperty(element, type, name, propertyOpposite, tSemicolon);
+            	return _factory.MetaProperty((InternalSyntaxToken)element, type, name, metaPropertyBlock2, (InternalSyntaxToken)tSemicolon);
             }
-            public override PropertyNameAlt1Green? VisitPr_PropertyNameAlt1(MetaCoreParser.Pr_PropertyNameAlt1Context? context)
+            public override GreenNode? VisitPr_PropertyNameAlt1(MetaCoreParser.Pr_PropertyNameAlt1Context? context)
             {
                	if (context == null) return PropertyNameAlt1Green.__Missing;
                 var tIdentifier = this.VisitTerminal(context.tIdentifierAntlr1);
                 var tDollar = this.VisitTerminal(context.tDollar, MetaCoreSyntaxKind.TDollar);
                 var symbolProperty = this.VisitTerminal(context.symbolPropertyAntlr1, MetaCoreSyntaxKind.TIdentifier);
-            	return _factory.PropertyNameAlt1(tIdentifier, tDollar, symbolProperty);
+            	return _factory.PropertyNameAlt1((InternalSyntaxToken)tIdentifier, (InternalSyntaxToken)tDollar, (InternalSyntaxToken)symbolProperty);
             }
-            public override PropertyNameAlt2Green? VisitPr_PropertyNameAlt2(MetaCoreParser.Pr_PropertyNameAlt2Context? context)
+            public override GreenNode? VisitPr_PropertyNameAlt2(MetaCoreParser.Pr_PropertyNameAlt2Context? context)
             {
                	if (context == null) return PropertyNameAlt2Green.__Missing;
                 var tIdentifier = this.VisitTerminal(context.tIdentifierAntlr1, MetaCoreSyntaxKind.TIdentifier);
-            	return _factory.PropertyNameAlt2(tIdentifier);
+            	return _factory.PropertyNameAlt2((InternalSyntaxToken)tIdentifier);
             }
-            public override PropertyOppositeGreen? VisitPr_PropertyOpposite(MetaCoreParser.Pr_PropertyOppositeContext? context)
+            public override GreenNode? VisitPr_PropertyOpposite(MetaCoreParser.Pr_PropertyOppositeContext? context)
             {
                	if (context == null) return PropertyOppositeGreen.__Missing;
                 var kOpposite = this.VisitTerminal(context.kOpposite, MetaCoreSyntaxKind.KOpposite);
-                QualifierGreen? opposite = null;
-                if (context.OppositeAntlr1 is not null) opposite = (QualifierGreen?)this.Visit(context.OppositeAntlr1) ?? QualifierGreen.__Missing;
-                else opposite = QualifierGreen.__Missing;
-            	return _factory.PropertyOpposite(kOpposite, opposite);
+                var qualifierListBuilder = _pool.AllocateSeparated<QualifierGreen>(reversed: false);
+                var oppositePropertiesContext = context.oppositePropertiesAntlr1;
+                if (oppositePropertiesContext is not null) qualifierListBuilder.Add((QualifierGreen?)this.Visit(oppositePropertiesContext) ?? QualifierGreen.__Missing);
+                else qualifierListBuilder.Add(QualifierGreen.__Missing);
+                var qualifierListContext = context._propertyOppositeBlock1Antlr1;
+                for (int i = 0; i < qualifierListContext.Count; ++i)
+                {
+                    var itemContext = qualifierListContext[i];
+                    if (itemContext is not null)
+                    {
+                        var item = itemContext.oppositePropertiesAntlr1;
+                        var separator = itemContext.tComma;
+                        qualifierListBuilder.AddSeparator(this.VisitTerminal(separator, MetaCoreSyntaxKind.TComma));
+                        if (item is not null) qualifierListBuilder.Add((QualifierGreen?)this.Visit(item) ?? QualifierGreen.__Missing);
+                        else qualifierListBuilder.Add(QualifierGreen.__Missing);
+                    }
+                }
+                var qualifierList = qualifierListBuilder.ToList();
+                _pool.Free(qualifierListBuilder);
+            	return _factory.PropertyOpposite((InternalSyntaxToken)kOpposite, qualifierList);
             }
-            public override MetaArrayTypeGreen? VisitPr_MetaArrayType(MetaCoreParser.Pr_MetaArrayTypeContext? context)
+            public override GreenNode? VisitPr_PropertySubsets(MetaCoreParser.Pr_PropertySubsetsContext? context)
+            {
+               	if (context == null) return PropertySubsetsGreen.__Missing;
+                var kSubsets = this.VisitTerminal(context.kSubsets, MetaCoreSyntaxKind.KSubsets);
+                var qualifierListBuilder = _pool.AllocateSeparated<QualifierGreen>(reversed: false);
+                var subsettedPropertiesContext = context.subsettedPropertiesAntlr1;
+                if (subsettedPropertiesContext is not null) qualifierListBuilder.Add((QualifierGreen?)this.Visit(subsettedPropertiesContext) ?? QualifierGreen.__Missing);
+                else qualifierListBuilder.Add(QualifierGreen.__Missing);
+                var qualifierListContext = context._propertySubsetsBlock1Antlr1;
+                for (int i = 0; i < qualifierListContext.Count; ++i)
+                {
+                    var itemContext = qualifierListContext[i];
+                    if (itemContext is not null)
+                    {
+                        var item = itemContext.subsettedPropertiesAntlr1;
+                        var separator = itemContext.tComma;
+                        qualifierListBuilder.AddSeparator(this.VisitTerminal(separator, MetaCoreSyntaxKind.TComma));
+                        if (item is not null) qualifierListBuilder.Add((QualifierGreen?)this.Visit(item) ?? QualifierGreen.__Missing);
+                        else qualifierListBuilder.Add(QualifierGreen.__Missing);
+                    }
+                }
+                var qualifierList = qualifierListBuilder.ToList();
+                _pool.Free(qualifierListBuilder);
+            	return _factory.PropertySubsets((InternalSyntaxToken)kSubsets, qualifierList);
+            }
+            public override GreenNode? VisitPr_PropertyRedefines(MetaCoreParser.Pr_PropertyRedefinesContext? context)
+            {
+               	if (context == null) return PropertyRedefinesGreen.__Missing;
+                var kRedefines = this.VisitTerminal(context.kRedefines, MetaCoreSyntaxKind.KRedefines);
+                var qualifierListBuilder = _pool.AllocateSeparated<QualifierGreen>(reversed: false);
+                var redefinedPropertiesContext = context.redefinedPropertiesAntlr1;
+                if (redefinedPropertiesContext is not null) qualifierListBuilder.Add((QualifierGreen?)this.Visit(redefinedPropertiesContext) ?? QualifierGreen.__Missing);
+                else qualifierListBuilder.Add(QualifierGreen.__Missing);
+                var qualifierListContext = context._propertyRedefinesBlock1Antlr1;
+                for (int i = 0; i < qualifierListContext.Count; ++i)
+                {
+                    var itemContext = qualifierListContext[i];
+                    if (itemContext is not null)
+                    {
+                        var item = itemContext.redefinedPropertiesAntlr1;
+                        var separator = itemContext.tComma;
+                        qualifierListBuilder.AddSeparator(this.VisitTerminal(separator, MetaCoreSyntaxKind.TComma));
+                        if (item is not null) qualifierListBuilder.Add((QualifierGreen?)this.Visit(item) ?? QualifierGreen.__Missing);
+                        else qualifierListBuilder.Add(QualifierGreen.__Missing);
+                    }
+                }
+                var qualifierList = qualifierListBuilder.ToList();
+                _pool.Free(qualifierListBuilder);
+            	return _factory.PropertyRedefines((InternalSyntaxToken)kRedefines, qualifierList);
+            }
+            public override GreenNode? VisitPr_MetaArrayType(MetaCoreParser.Pr_MetaArrayTypeContext? context)
             {
                	if (context == null) return MetaArrayTypeGreen.__Missing;
                 TypeReferenceGreen? itemType = null;
@@ -311,9 +384,9 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
                 else itemType = TypeReferenceGreen.__Missing;
                 var tLBracket = this.VisitTerminal(context.tLBracket, MetaCoreSyntaxKind.TLBracket);
                 var tRBracket = this.VisitTerminal(context.tRBracket, MetaCoreSyntaxKind.TRBracket);
-            	return _factory.MetaArrayType(itemType, tLBracket, tRBracket);
+            	return _factory.MetaArrayType(itemType, (InternalSyntaxToken)tLBracket, (InternalSyntaxToken)tRBracket);
             }
-            public override TypeReferenceAlt3Green? VisitPr_TypeReferenceAlt3(MetaCoreParser.Pr_TypeReferenceAlt3Context? context)
+            public override GreenNode? VisitPr_TypeReferenceAlt3(MetaCoreParser.Pr_TypeReferenceAlt3Context? context)
             {
                	if (context == null) return TypeReferenceAlt3Green.__Missing;
                 QualifierGreen? qualifier = null;
@@ -321,17 +394,17 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
                 else qualifier = QualifierGreen.__Missing;
             	return _factory.TypeReferenceAlt3(qualifier);
             }
-            public override TypeReferenceTokensGreen? VisitPr_TypeReferenceTokens(MetaCoreParser.Pr_TypeReferenceTokensContext? context)
+            public override GreenNode? VisitPr_TypeReferenceTokens(MetaCoreParser.Pr_TypeReferenceTokensContext? context)
             {
                	if (context == null) return TypeReferenceTokensGreen.__Missing;
                 InternalSyntaxToken? tokens = null;
-                if (context.kBool is not null) tokens = this.VisitTerminal(context.kBool);
-                if (context.kInt is not null) tokens = this.VisitTerminal(context.kInt);
-                if (context.kString is not null) tokens = this.VisitTerminal(context.kString);
-                if (context.kType is not null) tokens = this.VisitTerminal(context.kType);
-            	return _factory.TypeReferenceTokens(tokens);
+                if (context.kBool is not null) tokens = (InternalSyntaxToken)this.VisitTerminal(context.kBool);
+                if (context.kInt is not null) tokens = (InternalSyntaxToken)this.VisitTerminal(context.kInt);
+                if (context.kString is not null) tokens = (InternalSyntaxToken)this.VisitTerminal(context.kString);
+                if (context.kType is not null) tokens = (InternalSyntaxToken)this.VisitTerminal(context.kType);
+            	return _factory.TypeReferenceTokens((InternalSyntaxToken)tokens);
             }
-            public override NameGreen? VisitPr_Name(MetaCoreParser.Pr_NameContext? context)
+            public override GreenNode? VisitPr_Name(MetaCoreParser.Pr_NameContext? context)
             {
                	if (context == null) return NameGreen.__Missing;
                 IdentifierGreen? identifier = null;
@@ -339,7 +412,7 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
                 else identifier = IdentifierGreen.__Missing;
             	return _factory.Name(identifier);
             }
-            public override QualifierGreen? VisitPr_Qualifier(MetaCoreParser.Pr_QualifierContext? context)
+            public override GreenNode? VisitPr_Qualifier(MetaCoreParser.Pr_QualifierContext? context)
             {
                	if (context == null) return QualifierGreen.__Missing;
                 var identifierListBuilder = _pool.AllocateSeparated<IdentifierGreen>(reversed: false);
@@ -363,7 +436,7 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
                 _pool.Free(identifierListBuilder);
             	return _factory.Qualifier(identifierList);
             }
-            public override QualifierListGreen? VisitPr_QualifierList(MetaCoreParser.Pr_QualifierListContext? context)
+            public override GreenNode? VisitPr_QualifierList(MetaCoreParser.Pr_QualifierListContext? context)
             {
                	if (context == null) return QualifierListGreen.__Missing;
                 var qualifierListBuilder = _pool.AllocateSeparated<QualifierGreen>(reversed: false);
@@ -387,47 +460,98 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
                 _pool.Free(qualifierListBuilder);
             	return _factory.QualifierList(qualifierList);
             }
-            public override IdentifierGreen? VisitPr_Identifier(MetaCoreParser.Pr_IdentifierContext? context)
+            public override GreenNode? VisitPr_Identifier(MetaCoreParser.Pr_IdentifierContext? context)
             {
                	if (context == null) return IdentifierGreen.__Missing;
                 var tIdentifier = this.VisitTerminal(context.tIdentifierAntlr1, MetaCoreSyntaxKind.TIdentifier);
-            	return _factory.Identifier(tIdentifier);
+            	return _factory.Identifier((InternalSyntaxToken)tIdentifier);
             }
-            public override EnumLiteralsBlock1Green? VisitPr_EnumLiteralsBlock1(MetaCoreParser.Pr_EnumLiteralsBlock1Context? context)
+            public override GreenNode? VisitPr_EnumLiteralsBlock1(MetaCoreParser.Pr_EnumLiteralsBlock1Context? context)
             {
                	if (context == null) return EnumLiteralsBlock1Green.__Missing;
                 var tComma = this.VisitTerminal(context.tComma, MetaCoreSyntaxKind.TComma);
                 MetaEnumLiteralGreen? literals = null;
                 if (context.literalsAntlr1 is not null) literals = (MetaEnumLiteralGreen?)this.Visit(context.literalsAntlr1) ?? MetaEnumLiteralGreen.__Missing;
                 else literals = MetaEnumLiteralGreen.__Missing;
-            	return _factory.EnumLiteralsBlock1(tComma, literals);
+            	return _factory.EnumLiteralsBlock1((InternalSyntaxToken)tComma, literals);
             }
-            public override BaseClassesBlock1Green? VisitPr_BaseClassesBlock1(MetaCoreParser.Pr_BaseClassesBlock1Context? context)
+            public override GreenNode? VisitPr_BaseClassesBlock1(MetaCoreParser.Pr_BaseClassesBlock1Context? context)
             {
                	if (context == null) return BaseClassesBlock1Green.__Missing;
                 var tColon = this.VisitTerminal(context.tColon, MetaCoreSyntaxKind.TColon);
                 QualifierListGreen? baseTypes = null;
                 if (context.baseTypesAntlr1 is not null) baseTypes = (QualifierListGreen?)this.Visit(context.baseTypesAntlr1) ?? QualifierListGreen.__Missing;
                 else baseTypes = QualifierListGreen.__Missing;
-            	return _factory.BaseClassesBlock1(tColon, baseTypes);
+            	return _factory.BaseClassesBlock1((InternalSyntaxToken)tColon, baseTypes);
             }
-            public override QualifierBlock1Green? VisitPr_QualifierBlock1(MetaCoreParser.Pr_QualifierBlock1Context? context)
+            public override GreenNode? VisitPr_MetaPropertyBlock2Alt1(MetaCoreParser.Pr_MetaPropertyBlock2Alt1Context? context)
+            {
+               	if (context == null) return MetaPropertyBlock2Alt1Green.__Missing;
+                PropertyOppositeGreen? propertyOpposite = null;
+                if (context.propertyOppositeAntlr1 is not null) propertyOpposite = (PropertyOppositeGreen?)this.Visit(context.propertyOppositeAntlr1) ?? PropertyOppositeGreen.__Missing;
+                else propertyOpposite = PropertyOppositeGreen.__Missing;
+            	return _factory.MetaPropertyBlock2Alt1(propertyOpposite);
+            }
+            public override GreenNode? VisitPr_MetaPropertyBlock2Alt2(MetaCoreParser.Pr_MetaPropertyBlock2Alt2Context? context)
+            {
+               	if (context == null) return MetaPropertyBlock2Alt2Green.__Missing;
+                PropertySubsetsGreen? propertySubsets = null;
+                if (context.propertySubsetsAntlr1 is not null) propertySubsets = (PropertySubsetsGreen?)this.Visit(context.propertySubsetsAntlr1) ?? PropertySubsetsGreen.__Missing;
+                else propertySubsets = PropertySubsetsGreen.__Missing;
+            	return _factory.MetaPropertyBlock2Alt2(propertySubsets);
+            }
+            public override GreenNode? VisitPr_MetaPropertyBlock2Alt3(MetaCoreParser.Pr_MetaPropertyBlock2Alt3Context? context)
+            {
+               	if (context == null) return MetaPropertyBlock2Alt3Green.__Missing;
+                PropertyRedefinesGreen? propertyRedefines = null;
+                if (context.propertyRedefinesAntlr1 is not null) propertyRedefines = (PropertyRedefinesGreen?)this.Visit(context.propertyRedefinesAntlr1) ?? PropertyRedefinesGreen.__Missing;
+                else propertyRedefines = PropertyRedefinesGreen.__Missing;
+            	return _factory.MetaPropertyBlock2Alt3(propertyRedefines);
+            }
+            public override GreenNode? VisitPr_PropertyOppositeBlock1(MetaCoreParser.Pr_PropertyOppositeBlock1Context? context)
+            {
+               	if (context == null) return PropertyOppositeBlock1Green.__Missing;
+                var tComma = this.VisitTerminal(context.tComma, MetaCoreSyntaxKind.TComma);
+                QualifierGreen? oppositeProperties = null;
+                if (context.oppositePropertiesAntlr1 is not null) oppositeProperties = (QualifierGreen?)this.Visit(context.oppositePropertiesAntlr1) ?? QualifierGreen.__Missing;
+                else oppositeProperties = QualifierGreen.__Missing;
+            	return _factory.PropertyOppositeBlock1((InternalSyntaxToken)tComma, oppositeProperties);
+            }
+            public override GreenNode? VisitPr_PropertySubsetsBlock1(MetaCoreParser.Pr_PropertySubsetsBlock1Context? context)
+            {
+               	if (context == null) return PropertySubsetsBlock1Green.__Missing;
+                var tComma = this.VisitTerminal(context.tComma, MetaCoreSyntaxKind.TComma);
+                QualifierGreen? subsettedProperties = null;
+                if (context.subsettedPropertiesAntlr1 is not null) subsettedProperties = (QualifierGreen?)this.Visit(context.subsettedPropertiesAntlr1) ?? QualifierGreen.__Missing;
+                else subsettedProperties = QualifierGreen.__Missing;
+            	return _factory.PropertySubsetsBlock1((InternalSyntaxToken)tComma, subsettedProperties);
+            }
+            public override GreenNode? VisitPr_PropertyRedefinesBlock1(MetaCoreParser.Pr_PropertyRedefinesBlock1Context? context)
+            {
+               	if (context == null) return PropertyRedefinesBlock1Green.__Missing;
+                var tComma = this.VisitTerminal(context.tComma, MetaCoreSyntaxKind.TComma);
+                QualifierGreen? redefinedProperties = null;
+                if (context.redefinedPropertiesAntlr1 is not null) redefinedProperties = (QualifierGreen?)this.Visit(context.redefinedPropertiesAntlr1) ?? QualifierGreen.__Missing;
+                else redefinedProperties = QualifierGreen.__Missing;
+            	return _factory.PropertyRedefinesBlock1((InternalSyntaxToken)tComma, redefinedProperties);
+            }
+            public override GreenNode? VisitPr_QualifierBlock1(MetaCoreParser.Pr_QualifierBlock1Context? context)
             {
                	if (context == null) return QualifierBlock1Green.__Missing;
                 var tDot = this.VisitTerminal(context.tDot, MetaCoreSyntaxKind.TDot);
                 IdentifierGreen? identifier = null;
                 if (context.identifierAntlr1 is not null) identifier = (IdentifierGreen?)this.Visit(context.identifierAntlr1) ?? IdentifierGreen.__Missing;
                 else identifier = IdentifierGreen.__Missing;
-            	return _factory.QualifierBlock1(tDot, identifier);
+            	return _factory.QualifierBlock1((InternalSyntaxToken)tDot, identifier);
             }
-            public override QualifierListBlock1Green? VisitPr_QualifierListBlock1(MetaCoreParser.Pr_QualifierListBlock1Context? context)
+            public override GreenNode? VisitPr_QualifierListBlock1(MetaCoreParser.Pr_QualifierListBlock1Context? context)
             {
                	if (context == null) return QualifierListBlock1Green.__Missing;
                 var tComma = this.VisitTerminal(context.tComma, MetaCoreSyntaxKind.TComma);
                 QualifierGreen? qualifier = null;
                 if (context.qualifierAntlr1 is not null) qualifier = (QualifierGreen?)this.Visit(context.qualifierAntlr1) ?? QualifierGreen.__Missing;
                 else qualifier = QualifierGreen.__Missing;
-            	return _factory.QualifierListBlock1(tComma, qualifier);
+            	return _factory.QualifierListBlock1((InternalSyntaxToken)tComma, qualifier);
             }
         }
     }

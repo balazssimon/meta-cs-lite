@@ -35,6 +35,8 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
 		void VisitPropertyNameAlt1(PropertyNameAlt1Syntax node);
 		void VisitPropertyNameAlt2(PropertyNameAlt2Syntax node);
 		void VisitPropertyOpposite(PropertyOppositeSyntax node);
+		void VisitPropertySubsets(PropertySubsetsSyntax node);
+		void VisitPropertyRedefines(PropertyRedefinesSyntax node);
 		void VisitMetaOperation(MetaOperationSyntax node);
 		void VisitParameterList(ParameterListSyntax node);
 		void VisitMetaParameter(MetaParameterSyntax node);
@@ -47,6 +49,12 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
 		void VisitIdentifier(IdentifierSyntax node);
 		void VisitEnumLiteralsBlock1(EnumLiteralsBlock1Syntax node);
 		void VisitBaseClassesBlock1(BaseClassesBlock1Syntax node);
+		void VisitMetaPropertyBlock2Alt1(MetaPropertyBlock2Alt1Syntax node);
+		void VisitMetaPropertyBlock2Alt2(MetaPropertyBlock2Alt2Syntax node);
+		void VisitMetaPropertyBlock2Alt3(MetaPropertyBlock2Alt3Syntax node);
+		void VisitPropertyOppositeBlock1(PropertyOppositeBlock1Syntax node);
+		void VisitPropertySubsetsBlock1(PropertySubsetsBlock1Syntax node);
+		void VisitPropertyRedefinesBlock1(PropertyRedefinesBlock1Syntax node);
 		void VisitParameterListBlock1(ParameterListBlock1Syntax node);
 		void VisitQualifierBlock1(QualifierBlock1Syntax node);
 		void VisitQualifierListBlock1(QualifierListBlock1Syntax node);
@@ -149,6 +157,16 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
 		    this.DefaultVisit(node);
 		}
 
+		public virtual void VisitPropertySubsets(PropertySubsetsSyntax node)
+		{
+		    this.DefaultVisit(node);
+		}
+
+		public virtual void VisitPropertyRedefines(PropertyRedefinesSyntax node)
+		{
+		    this.DefaultVisit(node);
+		}
+
 		public virtual void VisitMetaOperation(MetaOperationSyntax node)
 		{
 		    this.DefaultVisit(node);
@@ -209,6 +227,36 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
 		    this.DefaultVisit(node);
 		}
 
+		public virtual void VisitMetaPropertyBlock2Alt1(MetaPropertyBlock2Alt1Syntax node)
+		{
+		    this.DefaultVisit(node);
+		}
+
+		public virtual void VisitMetaPropertyBlock2Alt2(MetaPropertyBlock2Alt2Syntax node)
+		{
+		    this.DefaultVisit(node);
+		}
+
+		public virtual void VisitMetaPropertyBlock2Alt3(MetaPropertyBlock2Alt3Syntax node)
+		{
+		    this.DefaultVisit(node);
+		}
+
+		public virtual void VisitPropertyOppositeBlock1(PropertyOppositeBlock1Syntax node)
+		{
+		    this.DefaultVisit(node);
+		}
+
+		public virtual void VisitPropertySubsetsBlock1(PropertySubsetsBlock1Syntax node)
+		{
+		    this.DefaultVisit(node);
+		}
+
+		public virtual void VisitPropertyRedefinesBlock1(PropertyRedefinesBlock1Syntax node)
+		{
+		    this.DefaultVisit(node);
+		}
+
 		public virtual void VisitParameterListBlock1(ParameterListBlock1Syntax node)
 		{
 		    this.DefaultVisit(node);
@@ -246,6 +294,8 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
 		TResult VisitPropertyNameAlt1(PropertyNameAlt1Syntax node);
 		TResult VisitPropertyNameAlt2(PropertyNameAlt2Syntax node);
 		TResult VisitPropertyOpposite(PropertyOppositeSyntax node);
+		TResult VisitPropertySubsets(PropertySubsetsSyntax node);
+		TResult VisitPropertyRedefines(PropertyRedefinesSyntax node);
 		TResult VisitMetaOperation(MetaOperationSyntax node);
 		TResult VisitParameterList(ParameterListSyntax node);
 		TResult VisitMetaParameter(MetaParameterSyntax node);
@@ -258,6 +308,12 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
 		TResult VisitIdentifier(IdentifierSyntax node);
 		TResult VisitEnumLiteralsBlock1(EnumLiteralsBlock1Syntax node);
 		TResult VisitBaseClassesBlock1(BaseClassesBlock1Syntax node);
+		TResult VisitMetaPropertyBlock2Alt1(MetaPropertyBlock2Alt1Syntax node);
+		TResult VisitMetaPropertyBlock2Alt2(MetaPropertyBlock2Alt2Syntax node);
+		TResult VisitMetaPropertyBlock2Alt3(MetaPropertyBlock2Alt3Syntax node);
+		TResult VisitPropertyOppositeBlock1(PropertyOppositeBlock1Syntax node);
+		TResult VisitPropertySubsetsBlock1(PropertySubsetsBlock1Syntax node);
+		TResult VisitPropertyRedefinesBlock1(PropertyRedefinesBlock1Syntax node);
 		TResult VisitParameterListBlock1(ParameterListBlock1Syntax node);
 		TResult VisitQualifierBlock1(QualifierBlock1Syntax node);
 		TResult VisitQualifierListBlock1(QualifierListBlock1Syntax node);
@@ -360,6 +416,16 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
 		    return this.DefaultVisit(node);
 		}
 
+		public virtual TResult VisitPropertySubsets(PropertySubsetsSyntax node)
+		{
+		    return this.DefaultVisit(node);
+		}
+
+		public virtual TResult VisitPropertyRedefines(PropertyRedefinesSyntax node)
+		{
+		    return this.DefaultVisit(node);
+		}
+
 		public virtual TResult VisitMetaOperation(MetaOperationSyntax node)
 		{
 		    return this.DefaultVisit(node);
@@ -420,6 +486,36 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
 		    return this.DefaultVisit(node);
 		}
 
+		public virtual TResult VisitMetaPropertyBlock2Alt1(MetaPropertyBlock2Alt1Syntax node)
+		{
+		    return this.DefaultVisit(node);
+		}
+
+		public virtual TResult VisitMetaPropertyBlock2Alt2(MetaPropertyBlock2Alt2Syntax node)
+		{
+		    return this.DefaultVisit(node);
+		}
+
+		public virtual TResult VisitMetaPropertyBlock2Alt3(MetaPropertyBlock2Alt3Syntax node)
+		{
+		    return this.DefaultVisit(node);
+		}
+
+		public virtual TResult VisitPropertyOppositeBlock1(PropertyOppositeBlock1Syntax node)
+		{
+		    return this.DefaultVisit(node);
+		}
+
+		public virtual TResult VisitPropertySubsetsBlock1(PropertySubsetsBlock1Syntax node)
+		{
+		    return this.DefaultVisit(node);
+		}
+
+		public virtual TResult VisitPropertyRedefinesBlock1(PropertyRedefinesBlock1Syntax node)
+		{
+		    return this.DefaultVisit(node);
+		}
+
 		public virtual TResult VisitParameterListBlock1(ParameterListBlock1Syntax node)
 		{
 		    return this.DefaultVisit(node);
@@ -457,6 +553,8 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
 		TResult VisitPropertyNameAlt1(PropertyNameAlt1Syntax node, TArg argument);
 		TResult VisitPropertyNameAlt2(PropertyNameAlt2Syntax node, TArg argument);
 		TResult VisitPropertyOpposite(PropertyOppositeSyntax node, TArg argument);
+		TResult VisitPropertySubsets(PropertySubsetsSyntax node, TArg argument);
+		TResult VisitPropertyRedefines(PropertyRedefinesSyntax node, TArg argument);
 		TResult VisitMetaOperation(MetaOperationSyntax node, TArg argument);
 		TResult VisitParameterList(ParameterListSyntax node, TArg argument);
 		TResult VisitMetaParameter(MetaParameterSyntax node, TArg argument);
@@ -469,6 +567,12 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
 		TResult VisitIdentifier(IdentifierSyntax node, TArg argument);
 		TResult VisitEnumLiteralsBlock1(EnumLiteralsBlock1Syntax node, TArg argument);
 		TResult VisitBaseClassesBlock1(BaseClassesBlock1Syntax node, TArg argument);
+		TResult VisitMetaPropertyBlock2Alt1(MetaPropertyBlock2Alt1Syntax node, TArg argument);
+		TResult VisitMetaPropertyBlock2Alt2(MetaPropertyBlock2Alt2Syntax node, TArg argument);
+		TResult VisitMetaPropertyBlock2Alt3(MetaPropertyBlock2Alt3Syntax node, TArg argument);
+		TResult VisitPropertyOppositeBlock1(PropertyOppositeBlock1Syntax node, TArg argument);
+		TResult VisitPropertySubsetsBlock1(PropertySubsetsBlock1Syntax node, TArg argument);
+		TResult VisitPropertyRedefinesBlock1(PropertyRedefinesBlock1Syntax node, TArg argument);
 		TResult VisitParameterListBlock1(ParameterListBlock1Syntax node, TArg argument);
 		TResult VisitQualifierBlock1(QualifierBlock1Syntax node, TArg argument);
 		TResult VisitQualifierListBlock1(QualifierListBlock1Syntax node, TArg argument);
@@ -571,6 +675,16 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
 		    return this.DefaultVisit(node, argument);
 		}
 
+		public virtual TResult VisitPropertySubsets(PropertySubsetsSyntax node, TArg argument)
+		{
+		    return this.DefaultVisit(node, argument);
+		}
+
+		public virtual TResult VisitPropertyRedefines(PropertyRedefinesSyntax node, TArg argument)
+		{
+		    return this.DefaultVisit(node, argument);
+		}
+
 		public virtual TResult VisitMetaOperation(MetaOperationSyntax node, TArg argument)
 		{
 		    return this.DefaultVisit(node, argument);
@@ -627,6 +741,36 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
 		}
 
 		public virtual TResult VisitBaseClassesBlock1(BaseClassesBlock1Syntax node, TArg argument)
+		{
+		    return this.DefaultVisit(node, argument);
+		}
+
+		public virtual TResult VisitMetaPropertyBlock2Alt1(MetaPropertyBlock2Alt1Syntax node, TArg argument)
+		{
+		    return this.DefaultVisit(node, argument);
+		}
+
+		public virtual TResult VisitMetaPropertyBlock2Alt2(MetaPropertyBlock2Alt2Syntax node, TArg argument)
+		{
+		    return this.DefaultVisit(node, argument);
+		}
+
+		public virtual TResult VisitMetaPropertyBlock2Alt3(MetaPropertyBlock2Alt3Syntax node, TArg argument)
+		{
+		    return this.DefaultVisit(node, argument);
+		}
+
+		public virtual TResult VisitPropertyOppositeBlock1(PropertyOppositeBlock1Syntax node, TArg argument)
+		{
+		    return this.DefaultVisit(node, argument);
+		}
+
+		public virtual TResult VisitPropertySubsetsBlock1(PropertySubsetsBlock1Syntax node, TArg argument)
+		{
+		    return this.DefaultVisit(node, argument);
+		}
+
+		public virtual TResult VisitPropertyRedefinesBlock1(PropertyRedefinesBlock1Syntax node, TArg argument)
 		{
 		    return this.DefaultVisit(node, argument);
 		}
@@ -787,10 +931,10 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
             var element = this.VisitToken(node.Element);
             var type = (TypeReferenceSyntax)this.Visit(node.Type);
             var name = (PropertyNameSyntax)this.Visit(node.Name);
-            var propertyOpposite = (PropertyOppositeSyntax)this.Visit(node.PropertyOpposite);
+            var metaPropertyBlock2 = this.VisitList(node.MetaPropertyBlock2);
             var tSemicolon = this.VisitToken(node.TSemicolon);
         	    
-        	return node.Update(element, type, name, propertyOpposite, tSemicolon);
+        	return node.Update(element, type, name, metaPropertyBlock2, tSemicolon);
         }
 
         public virtual SyntaxNode VisitPropertyNameAlt1(PropertyNameAlt1Syntax node)
@@ -812,9 +956,25 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         public virtual SyntaxNode VisitPropertyOpposite(PropertyOppositeSyntax node)
         {
             var kOpposite = this.VisitToken(node.KOpposite);
-            var opposite = (QualifierSyntax)this.Visit(node.Opposite);
+            var qualifierList = this.VisitList(node.QualifierList);
         	    
-        	return node.Update(kOpposite, opposite);
+        	return node.Update(kOpposite, qualifierList);
+        }
+
+        public virtual SyntaxNode VisitPropertySubsets(PropertySubsetsSyntax node)
+        {
+            var kSubsets = this.VisitToken(node.KSubsets);
+            var qualifierList = this.VisitList(node.QualifierList);
+        	    
+        	return node.Update(kSubsets, qualifierList);
+        }
+
+        public virtual SyntaxNode VisitPropertyRedefines(PropertyRedefinesSyntax node)
+        {
+            var kRedefines = this.VisitToken(node.KRedefines);
+            var qualifierList = this.VisitList(node.QualifierList);
+        	    
+        	return node.Update(kRedefines, qualifierList);
         }
 
         public virtual SyntaxNode VisitMetaOperation(MetaOperationSyntax node)
@@ -908,6 +1068,51 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
             var baseTypes = (QualifierListSyntax)this.Visit(node.BaseTypes);
         	    
         	return node.Update(tColon, baseTypes);
+        }
+
+        public virtual SyntaxNode VisitMetaPropertyBlock2Alt1(MetaPropertyBlock2Alt1Syntax node)
+        {
+            var propertyOpposite = (PropertyOppositeSyntax)this.Visit(node.PropertyOpposite);
+        	    
+        	return node.Update(propertyOpposite);
+        }
+
+        public virtual SyntaxNode VisitMetaPropertyBlock2Alt2(MetaPropertyBlock2Alt2Syntax node)
+        {
+            var propertySubsets = (PropertySubsetsSyntax)this.Visit(node.PropertySubsets);
+        	    
+        	return node.Update(propertySubsets);
+        }
+
+        public virtual SyntaxNode VisitMetaPropertyBlock2Alt3(MetaPropertyBlock2Alt3Syntax node)
+        {
+            var propertyRedefines = (PropertyRedefinesSyntax)this.Visit(node.PropertyRedefines);
+        	    
+        	return node.Update(propertyRedefines);
+        }
+
+        public virtual SyntaxNode VisitPropertyOppositeBlock1(PropertyOppositeBlock1Syntax node)
+        {
+            var tComma = this.VisitToken(node.TComma);
+            var oppositeProperties = (QualifierSyntax)this.Visit(node.OppositeProperties);
+        	    
+        	return node.Update(tComma, oppositeProperties);
+        }
+
+        public virtual SyntaxNode VisitPropertySubsetsBlock1(PropertySubsetsBlock1Syntax node)
+        {
+            var tComma = this.VisitToken(node.TComma);
+            var subsettedProperties = (QualifierSyntax)this.Visit(node.SubsettedProperties);
+        	    
+        	return node.Update(tComma, subsettedProperties);
+        }
+
+        public virtual SyntaxNode VisitPropertyRedefinesBlock1(PropertyRedefinesBlock1Syntax node)
+        {
+            var tComma = this.VisitToken(node.TComma);
+            var redefinedProperties = (QualifierSyntax)this.Visit(node.RedefinedProperties);
+        	    
+        	return node.Update(tComma, redefinedProperties);
         }
 
         public virtual SyntaxNode VisitParameterListBlock1(ParameterListBlock1Syntax node)

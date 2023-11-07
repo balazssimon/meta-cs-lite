@@ -838,6 +838,11 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
         {
             if (elem is ParserRuleReferenceElement refElem)
             {
+                if (refElem.CSharpModelProperty is null)
+                {
+                    var prop = ResolveProperty(modelObjectType, refElem.ModelPropertyName, refElem.NameLocation, ruleStack);
+                    refElem.CSharpModelProperty = prop?.PropertyType?.Type is null ? property : prop;
+                }
                 if (refElem.Rule is ParserRule parserRule)
                 {
                     if (parserRule.IsPart)

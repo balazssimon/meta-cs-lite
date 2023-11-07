@@ -34,7 +34,7 @@ var antlrGenerator = new AntlrCompilerGenerator();
 GeneratorDriver driver = CSharpGeneratorDriver.Create(compilerGenerator, antlrGenerator);
 
 //var mmCode = File.ReadAllText(@"..\..\..\..\MetaDslx.Bootstrap.MetaModel\Core\MetaCore.mlang");
-var mmCode = File.ReadAllText(@"..\..\..\..\..\Main\MetaDslx.Languages.MetaModel\Compiler\Meta.mlang");
+var mmCode = File.ReadAllText(@"..\..\..\..\..\Main\MetaDslx.Languages.MetaModel\Language\Meta.mlang");
 var mmLang = new AdditionalTextFile("Meta.mlang", mmCode);
 
 driver = driver.AddAdditionalTexts(ImmutableArray.Create<AdditionalText>(mmLang));
@@ -63,6 +63,6 @@ static Compilation CreateCompilation(string source)
             MetadataReference.CreateFromFile(typeof(Binder).GetTypeInfo().Assembly.Location),
             MetadataReference.CreateFromFile(typeof(CodeBuilder).GetTypeInfo().Assembly.Location),
             MetadataReference.CreateFromFile(typeof(MetaDslx.CodeAnalysis.SyntaxTree).GetTypeInfo().Assembly.Location),
-            MetadataReference.CreateFromFile(typeof(Meta).GetTypeInfo().Assembly.Location),
+            MetadataReference.CreateFromFile(typeof(MetaModel).GetTypeInfo().Assembly.Location),
         },
         new CSharpCompilationOptions(OutputKind.ConsoleApplication));

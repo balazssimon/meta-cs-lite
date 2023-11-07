@@ -4,6 +4,7 @@ using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using MetaDslx.CodeAnalysis;
 using MetaDslx.CodeAnalysis.Syntax;
@@ -23,9 +24,9 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
 		{
 		}
 	    
-        public override MetaCoreLanguage Language => MetaCoreLanguage.Instance;
+        public override Language Language => MetaCoreLanguage.Instance;
 
-	    public override MetaCoreParseOptions DefaultParseOptions => MetaCoreParseOptions.Default;
+	    public override ParseOptions DefaultParseOptions => MetaCoreParseOptions.Default;
 
 		/// <summary>
 		/// Create a new syntax tree from a syntax node.
@@ -69,7 +70,7 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
 			return MetaCoreSyntaxTree.ParseText(text, (MetaCoreParseOptions?)options, path, cancellationToken);
 		}
 	
-		public override MetaCoreSyntaxTree MakeSyntaxTree(SyntaxNode root, ParseOptions? options = null, string path = "", Encoding? encoding = null)
+		public override SyntaxTree MakeSyntaxTree(SyntaxNode root, ParseOptions? options = null, string path = "", Encoding? encoding = null)
 		{
 			return MetaCoreSyntaxTree.Create((MetaCoreSyntaxNode)root, IncrementalParseData.Empty, (MetaCoreParseOptions)options, path, null, encoding);
 		}
@@ -350,18 +351,18 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
         	return this.ClassBody(this.Token(MetaCoreSyntaxKind.TLBrace), properties, this.Token(MetaCoreSyntaxKind.TRBrace));
         }
 
-        public MetaPropertySyntax MetaProperty(SyntaxToken element, TypeReferenceSyntax type, PropertyNameSyntax name, PropertyOppositeSyntax propertyOpposite, SyntaxToken tSemicolon)
+        public MetaPropertySyntax MetaProperty(SyntaxToken element, TypeReferenceSyntax type, PropertyNameSyntax name, MetaDslx.CodeAnalysis.SyntaxList<MetaPropertyBlock2Syntax> metaPropertyBlock2, SyntaxToken tSemicolon)
         {
         	if (element.RawKind != (int)MetaCoreSyntaxKind.KContains && element.RawKind != (int)MetaCoreSyntaxKind.KDerived) throw new ArgumentException(nameof(element));
         	if (type is null) throw new ArgumentNullException(nameof(type));
         	if (name is null) throw new ArgumentNullException(nameof(name));
         	if (tSemicolon.RawKind != (int)MetaCoreSyntaxKind.TSemicolon) throw new ArgumentException(nameof(tSemicolon));
-            return (MetaPropertySyntax)MetaCoreLanguage.Instance.InternalSyntaxFactory.MetaProperty((InternalSyntaxToken)element.Node, (TypeReferenceGreen)type.Green, (PropertyNameGreen)name.Green, (PropertyOppositeGreen?)propertyOpposite?.Green, (InternalSyntaxToken)tSemicolon.Node).CreateRed();
+            return (MetaPropertySyntax)MetaCoreLanguage.Instance.InternalSyntaxFactory.MetaProperty((InternalSyntaxToken)element.Node, (TypeReferenceGreen)type.Green, (PropertyNameGreen)name.Green, metaPropertyBlock2.Node.ToGreenList<MetaPropertyBlock2Green>(), (InternalSyntaxToken)tSemicolon.Node).CreateRed();
         }
         
-        public MetaPropertySyntax MetaProperty(TypeReferenceSyntax type, PropertyNameSyntax name)
+        public MetaPropertySyntax MetaProperty(TypeReferenceSyntax type, PropertyNameSyntax name, MetaDslx.CodeAnalysis.SyntaxList<MetaPropertyBlock2Syntax> metaPropertyBlock2)
         {
-        	return this.MetaProperty(default, type, name, default, this.Token(MetaCoreSyntaxKind.TSemicolon));
+        	return this.MetaProperty(default, type, name, metaPropertyBlock2, this.Token(MetaCoreSyntaxKind.TSemicolon));
         }
 
         public PropertyNameAlt1Syntax PropertyNameAlt1(SyntaxToken tIdentifier, SyntaxToken tDollar, SyntaxToken symbolProperty)
@@ -383,16 +384,37 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
             return (PropertyNameAlt2Syntax)MetaCoreLanguage.Instance.InternalSyntaxFactory.PropertyNameAlt2((InternalSyntaxToken)tIdentifier.Node).CreateRed();
         }
 
-        public PropertyOppositeSyntax PropertyOpposite(SyntaxToken kOpposite, QualifierSyntax opposite)
+        public PropertyOppositeSyntax PropertyOpposite(SyntaxToken kOpposite, MetaDslx.CodeAnalysis.SeparatedSyntaxList<QualifierSyntax> qualifierList)
         {
         	if (kOpposite.RawKind != (int)MetaCoreSyntaxKind.KOpposite) throw new ArgumentException(nameof(kOpposite));
-        	if (opposite is null) throw new ArgumentNullException(nameof(opposite));
-            return (PropertyOppositeSyntax)MetaCoreLanguage.Instance.InternalSyntaxFactory.PropertyOpposite((InternalSyntaxToken)kOpposite.Node, (QualifierGreen)opposite.Green).CreateRed();
+            return (PropertyOppositeSyntax)MetaCoreLanguage.Instance.InternalSyntaxFactory.PropertyOpposite((InternalSyntaxToken)kOpposite.Node, qualifierList.Node.ToGreenSeparatedList<QualifierGreen>(reversed: false)).CreateRed();
         }
         
-        public PropertyOppositeSyntax PropertyOpposite(QualifierSyntax opposite)
+        public PropertyOppositeSyntax PropertyOpposite(MetaDslx.CodeAnalysis.SeparatedSyntaxList<QualifierSyntax> qualifierList)
         {
-        	return this.PropertyOpposite(this.Token(MetaCoreSyntaxKind.KOpposite), opposite);
+        	return this.PropertyOpposite(this.Token(MetaCoreSyntaxKind.KOpposite), qualifierList);
+        }
+
+        public PropertySubsetsSyntax PropertySubsets(SyntaxToken kSubsets, MetaDslx.CodeAnalysis.SeparatedSyntaxList<QualifierSyntax> qualifierList)
+        {
+        	if (kSubsets.RawKind != (int)MetaCoreSyntaxKind.KSubsets) throw new ArgumentException(nameof(kSubsets));
+            return (PropertySubsetsSyntax)MetaCoreLanguage.Instance.InternalSyntaxFactory.PropertySubsets((InternalSyntaxToken)kSubsets.Node, qualifierList.Node.ToGreenSeparatedList<QualifierGreen>(reversed: false)).CreateRed();
+        }
+        
+        public PropertySubsetsSyntax PropertySubsets(MetaDslx.CodeAnalysis.SeparatedSyntaxList<QualifierSyntax> qualifierList)
+        {
+        	return this.PropertySubsets(this.Token(MetaCoreSyntaxKind.KSubsets), qualifierList);
+        }
+
+        public PropertyRedefinesSyntax PropertyRedefines(SyntaxToken kRedefines, MetaDslx.CodeAnalysis.SeparatedSyntaxList<QualifierSyntax> qualifierList)
+        {
+        	if (kRedefines.RawKind != (int)MetaCoreSyntaxKind.KRedefines) throw new ArgumentException(nameof(kRedefines));
+            return (PropertyRedefinesSyntax)MetaCoreLanguage.Instance.InternalSyntaxFactory.PropertyRedefines((InternalSyntaxToken)kRedefines.Node, qualifierList.Node.ToGreenSeparatedList<QualifierGreen>(reversed: false)).CreateRed();
+        }
+        
+        public PropertyRedefinesSyntax PropertyRedefines(MetaDslx.CodeAnalysis.SeparatedSyntaxList<QualifierSyntax> qualifierList)
+        {
+        	return this.PropertyRedefines(this.Token(MetaCoreSyntaxKind.KRedefines), qualifierList);
         }
 
         public MetaArrayTypeSyntax MetaArrayType(TypeReferenceSyntax itemType, SyntaxToken tLBracket, SyntaxToken tRBracket)
@@ -466,6 +488,60 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
         	return this.BaseClassesBlock1(this.Token(MetaCoreSyntaxKind.TColon), baseTypes);
         }
 
+        public MetaPropertyBlock2Alt1Syntax MetaPropertyBlock2Alt1(PropertyOppositeSyntax propertyOpposite)
+        {
+        	if (propertyOpposite is null) throw new ArgumentNullException(nameof(propertyOpposite));
+            return (MetaPropertyBlock2Alt1Syntax)MetaCoreLanguage.Instance.InternalSyntaxFactory.MetaPropertyBlock2Alt1((PropertyOppositeGreen)propertyOpposite.Green).CreateRed();
+        }
+
+        public MetaPropertyBlock2Alt2Syntax MetaPropertyBlock2Alt2(PropertySubsetsSyntax propertySubsets)
+        {
+        	if (propertySubsets is null) throw new ArgumentNullException(nameof(propertySubsets));
+            return (MetaPropertyBlock2Alt2Syntax)MetaCoreLanguage.Instance.InternalSyntaxFactory.MetaPropertyBlock2Alt2((PropertySubsetsGreen)propertySubsets.Green).CreateRed();
+        }
+
+        public MetaPropertyBlock2Alt3Syntax MetaPropertyBlock2Alt3(PropertyRedefinesSyntax propertyRedefines)
+        {
+        	if (propertyRedefines is null) throw new ArgumentNullException(nameof(propertyRedefines));
+            return (MetaPropertyBlock2Alt3Syntax)MetaCoreLanguage.Instance.InternalSyntaxFactory.MetaPropertyBlock2Alt3((PropertyRedefinesGreen)propertyRedefines.Green).CreateRed();
+        }
+
+        public PropertyOppositeBlock1Syntax PropertyOppositeBlock1(SyntaxToken tComma, QualifierSyntax oppositeProperties)
+        {
+        	if (tComma.RawKind != (int)MetaCoreSyntaxKind.TComma) throw new ArgumentException(nameof(tComma));
+        	if (oppositeProperties is null) throw new ArgumentNullException(nameof(oppositeProperties));
+            return (PropertyOppositeBlock1Syntax)MetaCoreLanguage.Instance.InternalSyntaxFactory.PropertyOppositeBlock1((InternalSyntaxToken)tComma.Node, (QualifierGreen)oppositeProperties.Green).CreateRed();
+        }
+        
+        public PropertyOppositeBlock1Syntax PropertyOppositeBlock1(QualifierSyntax oppositeProperties)
+        {
+        	return this.PropertyOppositeBlock1(this.Token(MetaCoreSyntaxKind.TComma), oppositeProperties);
+        }
+
+        public PropertySubsetsBlock1Syntax PropertySubsetsBlock1(SyntaxToken tComma, QualifierSyntax subsettedProperties)
+        {
+        	if (tComma.RawKind != (int)MetaCoreSyntaxKind.TComma) throw new ArgumentException(nameof(tComma));
+        	if (subsettedProperties is null) throw new ArgumentNullException(nameof(subsettedProperties));
+            return (PropertySubsetsBlock1Syntax)MetaCoreLanguage.Instance.InternalSyntaxFactory.PropertySubsetsBlock1((InternalSyntaxToken)tComma.Node, (QualifierGreen)subsettedProperties.Green).CreateRed();
+        }
+        
+        public PropertySubsetsBlock1Syntax PropertySubsetsBlock1(QualifierSyntax subsettedProperties)
+        {
+        	return this.PropertySubsetsBlock1(this.Token(MetaCoreSyntaxKind.TComma), subsettedProperties);
+        }
+
+        public PropertyRedefinesBlock1Syntax PropertyRedefinesBlock1(SyntaxToken tComma, QualifierSyntax redefinedProperties)
+        {
+        	if (tComma.RawKind != (int)MetaCoreSyntaxKind.TComma) throw new ArgumentException(nameof(tComma));
+        	if (redefinedProperties is null) throw new ArgumentNullException(nameof(redefinedProperties));
+            return (PropertyRedefinesBlock1Syntax)MetaCoreLanguage.Instance.InternalSyntaxFactory.PropertyRedefinesBlock1((InternalSyntaxToken)tComma.Node, (QualifierGreen)redefinedProperties.Green).CreateRed();
+        }
+        
+        public PropertyRedefinesBlock1Syntax PropertyRedefinesBlock1(QualifierSyntax redefinedProperties)
+        {
+        	return this.PropertyRedefinesBlock1(this.Token(MetaCoreSyntaxKind.TComma), redefinedProperties);
+        }
+
         public QualifierBlock1Syntax QualifierBlock1(SyntaxToken tDot, IdentifierSyntax identifier)
         {
         	if (tDot.RawKind != (int)MetaCoreSyntaxKind.TDot) throw new ArgumentException(nameof(tDot));
@@ -511,6 +587,8 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
 		        typeof(PropertyNameAlt1Syntax),
 		        typeof(PropertyNameAlt2Syntax),
 		        typeof(PropertyOppositeSyntax),
+		        typeof(PropertySubsetsSyntax),
+		        typeof(PropertyRedefinesSyntax),
 		        typeof(MetaArrayTypeSyntax),
 		        typeof(TypeReferenceAlt3Syntax),
 		        typeof(TypeReferenceTokensSyntax),
@@ -520,6 +598,12 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
 		        typeof(IdentifierSyntax),
 		        typeof(EnumLiteralsBlock1Syntax),
 		        typeof(BaseClassesBlock1Syntax),
+		        typeof(MetaPropertyBlock2Alt1Syntax),
+		        typeof(MetaPropertyBlock2Alt2Syntax),
+		        typeof(MetaPropertyBlock2Alt3Syntax),
+		        typeof(PropertyOppositeBlock1Syntax),
+		        typeof(PropertySubsetsBlock1Syntax),
+		        typeof(PropertyRedefinesBlock1Syntax),
 		        typeof(QualifierBlock1Syntax),
 		        typeof(QualifierListBlock1Syntax),
 		    };

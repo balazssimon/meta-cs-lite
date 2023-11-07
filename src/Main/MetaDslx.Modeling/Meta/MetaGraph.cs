@@ -10,6 +10,7 @@ namespace MetaDslx.Modeling.Meta
 {
     public abstract class MetaGraph<TType, TProperty>
     {
+        private static readonly MetaPropertyComparer ComparePropertiesByName = new MetaPropertyComparer();
         private static readonly MetaClassComparer CompareByInheritance = new MetaClassComparer(false);
         private static readonly MetaClassComparer CompareByInheritanceReverse = new MetaClassComparer(true);
 
@@ -77,6 +78,7 @@ namespace MetaDslx.Modeling.Meta
                     prop.Type = type;
                     prop.Flags = prop.OriginalFlags | flags;
                 }
+                declaredProperties.Sort(ComparePropertiesByName);
                 cls.DeclaredProperties = declaredProperties.ToImmutable();
             }
             declaredProperties.Free();
@@ -408,6 +410,7 @@ namespace MetaDslx.Modeling.Meta
                         flag == ModelPropertyFlags.ReferenceType ||
                         flag == ModelPropertyFlags.BuiltInType ||
                         flag == ModelPropertyFlags.ModelObjectType ||
+                        flag == ModelPropertyFlags.TypeSymbolType ||
                         flag == ModelPropertyFlags.Containment ||
                         flag == ModelPropertyFlags.SingleItem ||
                         flag == ModelPropertyFlags.Collection ||
@@ -463,6 +466,14 @@ namespace MetaDslx.Modeling.Meta
                 if (ReferenceEquals(x, y)) return 0;
                 if (x.AllBaseTypes.Contains(y)) return _reverse ? -1 : 1;
                 if (y.AllBaseTypes.Contains(x)) return _reverse ? 1 : -1;
+                return string.Compare(x.Name, y.Name);
+            }
+        }
+
+        private class MetaPropertyComparer : IComparer<MetaProperty<TType, TProperty>>
+        {
+            public int Compare(MetaProperty<TType, TProperty> x, MetaProperty<TType, TProperty> y)
+            {
                 return string.Compare(x.Name, y.Name);
             }
         }

@@ -38,24 +38,26 @@ namespace MetaDslx.Languages.MetaModel.Meta
 
         protected override IEnumerable<(MetaType DeclaringType, string PropertyName)> GetOppositeProperties()
         {
-            if (UnderlyingProperty.Opposite is not null)
+            foreach (var prop in UnderlyingProperty.OppositeProperties)
             {
-                yield return ((MetaType)UnderlyingProperty.Opposite.Parent, UnderlyingProperty.Opposite.Name);
-            }
-            else
-            {
-                yield break;
+                yield return ((MetaType)prop.Parent, prop.Name);
             }
         }
 
         protected override IEnumerable<(MetaType DeclaringType, string PropertyName)> GetRedefinedProperties()
         {
-            yield break;
+            foreach (var prop in UnderlyingProperty.RedefinedProperties)
+            {
+                yield return ((MetaType)prop.Parent, prop.Name);
+            }
         }
 
         protected override IEnumerable<(MetaType DeclaringType, string PropertyName)> GetSubsettedProperties()
         {
-            yield break;
+            foreach (var prop in UnderlyingProperty.SubsettedProperties)
+            {
+                yield return ((MetaType)prop.Parent, prop.Name);
+            }
         }
     }
 }

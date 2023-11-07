@@ -38,11 +38,13 @@ part BaseClasses: (':' baseTypes+=#{MetaClass|QualifierList});
 [Scope]
 part ClassBody: '{' properties+=MetaProperty* '}';
 
-MetaProperty: (isContainment?='contains' | isDerived?='derived')? type=TypeReference name=PropertyName PropertyOpposite?  ';';
+MetaProperty: (isContainment?='contains' | isDerived?='derived')? type=TypeReference name=PropertyName (PropertyOpposite | PropertySubsets | PropertyRedefines)* ';';
 [Name]
 [Identifier]
 part PropertyName: TIdentifier? '$' symbolProperty=[Value(string)]TIdentifier | TIdentifier;
-part PropertyOpposite: 'opposite' Opposite=#MetaProperty;
+part PropertyOpposite: 'opposite' oppositeProperties+=#MetaProperty (',' oppositeProperties+=#MetaProperty)*;
+part PropertySubsets: 'subsets' subsettedProperties+=#MetaProperty (',' subsettedProperties+=#MetaProperty)*;
+part PropertyRedefines: 'redefines' redefinedProperties+=#MetaProperty (',' redefinedProperties+=#MetaProperty)*;
 
 TypeReference returns MetaType: MetaPrimitiveType | MetaArrayType | #MetaType;
 MetaPrimitiveType

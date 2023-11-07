@@ -27,6 +27,8 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
 		public virtual void VisitPropertyNameAlt1Green(PropertyNameAlt1Green node) => this.DefaultVisit(node);
 		public virtual void VisitPropertyNameAlt2Green(PropertyNameAlt2Green node) => this.DefaultVisit(node);
 		public virtual void VisitPropertyOppositeGreen(PropertyOppositeGreen node) => this.DefaultVisit(node);
+		public virtual void VisitPropertySubsetsGreen(PropertySubsetsGreen node) => this.DefaultVisit(node);
+		public virtual void VisitPropertyRedefinesGreen(PropertyRedefinesGreen node) => this.DefaultVisit(node);
 		public virtual void VisitMetaOperationGreen(MetaOperationGreen node) => this.DefaultVisit(node);
 		public virtual void VisitParameterListGreen(ParameterListGreen node) => this.DefaultVisit(node);
 		public virtual void VisitMetaParameterGreen(MetaParameterGreen node) => this.DefaultVisit(node);
@@ -39,6 +41,12 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
 		public virtual void VisitIdentifierGreen(IdentifierGreen node) => this.DefaultVisit(node);
 		public virtual void VisitEnumLiteralsBlock1Green(EnumLiteralsBlock1Green node) => this.DefaultVisit(node);
 		public virtual void VisitBaseClassesBlock1Green(BaseClassesBlock1Green node) => this.DefaultVisit(node);
+		public virtual void VisitMetaPropertyBlock2Alt1Green(MetaPropertyBlock2Alt1Green node) => this.DefaultVisit(node);
+		public virtual void VisitMetaPropertyBlock2Alt2Green(MetaPropertyBlock2Alt2Green node) => this.DefaultVisit(node);
+		public virtual void VisitMetaPropertyBlock2Alt3Green(MetaPropertyBlock2Alt3Green node) => this.DefaultVisit(node);
+		public virtual void VisitPropertyOppositeBlock1Green(PropertyOppositeBlock1Green node) => this.DefaultVisit(node);
+		public virtual void VisitPropertySubsetsBlock1Green(PropertySubsetsBlock1Green node) => this.DefaultVisit(node);
+		public virtual void VisitPropertyRedefinesBlock1Green(PropertyRedefinesBlock1Green node) => this.DefaultVisit(node);
 		public virtual void VisitParameterListBlock1Green(ParameterListBlock1Green node) => this.DefaultVisit(node);
 		public virtual void VisitQualifierBlock1Green(QualifierBlock1Green node) => this.DefaultVisit(node);
 		public virtual void VisitQualifierListBlock1Green(QualifierListBlock1Green node) => this.DefaultVisit(node);
@@ -65,6 +73,8 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
 		public virtual TResult VisitPropertyNameAlt1Green(PropertyNameAlt1Green node) => this.DefaultVisit(node);
 		public virtual TResult VisitPropertyNameAlt2Green(PropertyNameAlt2Green node) => this.DefaultVisit(node);
 		public virtual TResult VisitPropertyOppositeGreen(PropertyOppositeGreen node) => this.DefaultVisit(node);
+		public virtual TResult VisitPropertySubsetsGreen(PropertySubsetsGreen node) => this.DefaultVisit(node);
+		public virtual TResult VisitPropertyRedefinesGreen(PropertyRedefinesGreen node) => this.DefaultVisit(node);
 		public virtual TResult VisitMetaOperationGreen(MetaOperationGreen node) => this.DefaultVisit(node);
 		public virtual TResult VisitParameterListGreen(ParameterListGreen node) => this.DefaultVisit(node);
 		public virtual TResult VisitMetaParameterGreen(MetaParameterGreen node) => this.DefaultVisit(node);
@@ -77,6 +87,12 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
 		public virtual TResult VisitIdentifierGreen(IdentifierGreen node) => this.DefaultVisit(node);
 		public virtual TResult VisitEnumLiteralsBlock1Green(EnumLiteralsBlock1Green node) => this.DefaultVisit(node);
 		public virtual TResult VisitBaseClassesBlock1Green(BaseClassesBlock1Green node) => this.DefaultVisit(node);
+		public virtual TResult VisitMetaPropertyBlock2Alt1Green(MetaPropertyBlock2Alt1Green node) => this.DefaultVisit(node);
+		public virtual TResult VisitMetaPropertyBlock2Alt2Green(MetaPropertyBlock2Alt2Green node) => this.DefaultVisit(node);
+		public virtual TResult VisitMetaPropertyBlock2Alt3Green(MetaPropertyBlock2Alt3Green node) => this.DefaultVisit(node);
+		public virtual TResult VisitPropertyOppositeBlock1Green(PropertyOppositeBlock1Green node) => this.DefaultVisit(node);
+		public virtual TResult VisitPropertySubsetsBlock1Green(PropertySubsetsBlock1Green node) => this.DefaultVisit(node);
+		public virtual TResult VisitPropertyRedefinesBlock1Green(PropertyRedefinesBlock1Green node) => this.DefaultVisit(node);
 		public virtual TResult VisitParameterListBlock1Green(ParameterListBlock1Green node) => this.DefaultVisit(node);
 		public virtual TResult VisitQualifierBlock1Green(QualifierBlock1Green node) => this.DefaultVisit(node);
 		public virtual TResult VisitQualifierListBlock1Green(QualifierListBlock1Green node) => this.DefaultVisit(node);

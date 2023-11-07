@@ -4,13 +4,15 @@ using MetaDslx.CodeAnalysis.Symbols;
 
 metamodel Meta;
 
-class MetaNamedElement $Symbol
-{
-	string $Name;
-}
+const MetaPrimitiveType VoidType;
+const MetaPrimitiveType BoolType;
+const MetaPrimitiveType IntType;
+const MetaPrimitiveType StringType;
+const MetaPrimitiveType TypeType;
 
 class MetaDeclaration $Declared : MetaNamedElement
 {
+	string $Name;
 	MetaDeclaration Parent opposite Declarations;
 	contains MetaDeclaration[] Declarations opposite Parent;
 	derived string FullName;
@@ -38,13 +40,9 @@ class MetaPrimitiveType : MetaType
 {
 }
 
-class MetaEnumType : MetaType
+class MetaNullableType : MetaType
 {
-	contains MetaEnumLiteral[] Literals;
-}
-
-class MetaEnumLiteral : MetaDeclaration
-{
+	MetaType InnerType;
 }
 
 class MetaArrayType : MetaType
@@ -52,13 +50,22 @@ class MetaArrayType : MetaType
 	MetaType ItemType;
 }
 
+class MetaEnumType : MetaType
+{
+	contains MetaEnumLiteral[] Literals subsets MetaDeclaration.Declarations;
+}
+
+class MetaEnumLiteral : MetaDeclaration
+{
+}
+
 class MetaClass : MetaType
 {
 	type SymbolType;
 	bool IsAbstract;
 	MetaClass[] BaseTypes;
-	contains MetaProperty[] Properties;
-	contains MetaOperation[] Operations;
+	contains MetaProperty[] Properties subsets MetaDeclaration.Declarations;
+	contains MetaOperation[] Operations subsets MetaDeclaration.Declarations;
 }
 
 class MetaProperty : MetaDeclaration
@@ -67,13 +74,15 @@ class MetaProperty : MetaDeclaration
 	string SymbolProperty;
 	bool IsContainment;
 	bool IsDerived;
-	MetaProperty Opposite opposite Opposite;
+	MetaProperty[] OppositeProperties opposite OppositeProperties;
+	MetaProperty[] SubsettedProperties;
+	MetaProperty[] RedefinedProperties;
 }
 
 class MetaOperation: MetaDeclaration
 {
 	MetaType ReturnType;
-	contains MetaParameter[] Parameters;
+	contains MetaParameter[] Parameters redefines MetaDeclaration.Declarations;
 }
 
 class MetaParameter : MetaDeclaration

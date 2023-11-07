@@ -2476,10 +2476,10 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
 		private InternalSyntaxToken _element;
 		private TypeReferenceGreen _type;
 		private PropertyNameGreen _name;
-		private PropertyOppositeGreen _propertyOpposite;
+		private GreenNode _metaPropertyBlock2;
 		private InternalSyntaxToken _tSemicolon;
 	
-		public MetaPropertyGreen(MetaSyntaxKind kind, InternalSyntaxToken element, TypeReferenceGreen type, PropertyNameGreen name, PropertyOppositeGreen propertyOpposite, InternalSyntaxToken tSemicolon)
+		public MetaPropertyGreen(MetaSyntaxKind kind, InternalSyntaxToken element, TypeReferenceGreen type, PropertyNameGreen name, GreenNode metaPropertyBlock2, InternalSyntaxToken tSemicolon)
 			: base(kind, null, null)
 		{
 			SlotCount = 5;
@@ -2498,10 +2498,10 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
 				AdjustFlagsAndWidth(name);
 				_name = name;
 			}
-			if (propertyOpposite != null)
+			if (metaPropertyBlock2 != null)
 			{
-				AdjustFlagsAndWidth(propertyOpposite);
-				_propertyOpposite = propertyOpposite;
+				AdjustFlagsAndWidth(metaPropertyBlock2);
+				_metaPropertyBlock2 = metaPropertyBlock2;
 			}
 			if (tSemicolon != null)
 			{
@@ -2510,7 +2510,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
 			}
 		}
 	
-		public MetaPropertyGreen(MetaSyntaxKind kind, InternalSyntaxToken element, TypeReferenceGreen type, PropertyNameGreen name, PropertyOppositeGreen propertyOpposite, InternalSyntaxToken tSemicolon, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
+		public MetaPropertyGreen(MetaSyntaxKind kind, InternalSyntaxToken element, TypeReferenceGreen type, PropertyNameGreen name, GreenNode metaPropertyBlock2, InternalSyntaxToken tSemicolon, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
 			: base(kind, diagnostics, annotations)
 		{
 			SlotCount = 5;
@@ -2529,10 +2529,10 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
 				AdjustFlagsAndWidth(name);
 				_name = name;
 			}
-			if (propertyOpposite != null)
+			if (metaPropertyBlock2 != null)
 			{
-				AdjustFlagsAndWidth(propertyOpposite);
-				_propertyOpposite = propertyOpposite;
+				AdjustFlagsAndWidth(metaPropertyBlock2);
+				_metaPropertyBlock2 = metaPropertyBlock2;
 			}
 			if (tSemicolon != null)
 			{
@@ -2550,7 +2550,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
 		public InternalSyntaxToken Element { get { return _element; } }
 		public TypeReferenceGreen Type { get { return _type; } }
 		public PropertyNameGreen Name { get { return _name; } }
-		public PropertyOppositeGreen PropertyOpposite { get { return _propertyOpposite; } }
+		public MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<MetaPropertyBlock2Green> MetaPropertyBlock2 { get { return new MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<MetaPropertyBlock2Green>(_metaPropertyBlock2); } }
 		public InternalSyntaxToken TSemicolon { get { return _tSemicolon; } }
 	
 		protected override SyntaxNode CreateRed(SyntaxNode parent, int position)
@@ -2565,7 +2565,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
 				case 0: return _element;
 				case 1: return _type;
 				case 2: return _name;
-				case 3: return _propertyOpposite;
+				case 3: return _metaPropertyBlock2;
 				case 4: return _tSemicolon;
 				default: return null;
 			}
@@ -2577,25 +2577,25 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
 	
 		public override InternalSyntaxNode WithDiagnostics(DiagnosticInfo[] diagnostics)
 		{
-			return new MetaPropertyGreen(this.Kind, _element, _type, _name, _propertyOpposite, _tSemicolon, diagnostics, this.GetAnnotations());
+			return new MetaPropertyGreen(this.Kind, _element, _type, _name, _metaPropertyBlock2, _tSemicolon, diagnostics, this.GetAnnotations());
 		}
 	
 		public override InternalSyntaxNode WithAnnotations(SyntaxAnnotation[] annotations)
 		{
-			return new MetaPropertyGreen(this.Kind, _element, _type, _name, _propertyOpposite, _tSemicolon, this.GetDiagnostics(), annotations);
+			return new MetaPropertyGreen(this.Kind, _element, _type, _name, _metaPropertyBlock2, _tSemicolon, this.GetDiagnostics(), annotations);
 		}
 	
 		public override GreenNode Clone()
 		{
-			return new MetaPropertyGreen(this.Kind, _element, _type, _name, _propertyOpposite, _tSemicolon, this.GetDiagnostics(), this.GetAnnotations());
+			return new MetaPropertyGreen(this.Kind, _element, _type, _name, _metaPropertyBlock2, _tSemicolon, this.GetDiagnostics(), this.GetAnnotations());
 		}
 	
 	
-		public MetaPropertyGreen Update(InternalSyntaxToken element, TypeReferenceGreen type, PropertyNameGreen name, PropertyOppositeGreen propertyOpposite, InternalSyntaxToken tSemicolon)
+		public MetaPropertyGreen Update(InternalSyntaxToken element, TypeReferenceGreen type, PropertyNameGreen name, MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<MetaPropertyBlock2Green> metaPropertyBlock2, InternalSyntaxToken tSemicolon)
 		{
-			if (_element != element || _type != type || _name != name || _propertyOpposite != propertyOpposite || _tSemicolon != tSemicolon)
+			if (_element != element || _type != type || _name != name || _metaPropertyBlock2 != metaPropertyBlock2.Node || _tSemicolon != tSemicolon)
 			{
-				InternalSyntaxNode newNode = MetaLanguage.Instance.InternalSyntaxFactory.MetaProperty((InternalSyntaxToken)element, type, name, propertyOpposite, (InternalSyntaxToken)tSemicolon);
+				InternalSyntaxNode newNode = MetaLanguage.Instance.InternalSyntaxFactory.MetaProperty((InternalSyntaxToken)element, type, name, metaPropertyBlock2, (InternalSyntaxToken)tSemicolon);
 				var diags = this.GetDiagnostics();
 				if (diags != null && diags.Length > 0)
 					newNode = newNode.WithDiagnostics(diags);
@@ -2820,9 +2820,9 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
 	{
 		internal static new readonly PropertyOppositeGreen __Missing = new PropertyOppositeGreen();
 		private InternalSyntaxToken _kOpposite;
-		private QualifierGreen _opposite;
+		private GreenNode _qualifierList;
 	
-		public PropertyOppositeGreen(MetaSyntaxKind kind, InternalSyntaxToken kOpposite, QualifierGreen opposite)
+		public PropertyOppositeGreen(MetaSyntaxKind kind, InternalSyntaxToken kOpposite, GreenNode qualifierList)
 			: base(kind, null, null)
 		{
 			SlotCount = 2;
@@ -2831,14 +2831,14 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
 				AdjustFlagsAndWidth(kOpposite);
 				_kOpposite = kOpposite;
 			}
-			if (opposite != null)
+			if (qualifierList != null)
 			{
-				AdjustFlagsAndWidth(opposite);
-				_opposite = opposite;
+				AdjustFlagsAndWidth(qualifierList);
+				_qualifierList = qualifierList;
 			}
 		}
 	
-		public PropertyOppositeGreen(MetaSyntaxKind kind, InternalSyntaxToken kOpposite, QualifierGreen opposite, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
+		public PropertyOppositeGreen(MetaSyntaxKind kind, InternalSyntaxToken kOpposite, GreenNode qualifierList, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
 			: base(kind, diagnostics, annotations)
 		{
 			SlotCount = 2;
@@ -2847,10 +2847,10 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
 				AdjustFlagsAndWidth(kOpposite);
 				_kOpposite = kOpposite;
 			}
-			if (opposite != null)
+			if (qualifierList != null)
 			{
-				AdjustFlagsAndWidth(opposite);
-				_opposite = opposite;
+				AdjustFlagsAndWidth(qualifierList);
+				_qualifierList = qualifierList;
 			}
 		}
 	
@@ -2861,7 +2861,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
 		}
 	
 		public InternalSyntaxToken KOpposite { get { return _kOpposite; } }
-		public QualifierGreen Opposite { get { return _opposite; } }
+		public MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<QualifierGreen> QualifierList { get { return new MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<QualifierGreen>(_qualifierList, reversed: false); } }
 	
 		protected override SyntaxNode CreateRed(SyntaxNode parent, int position)
 		{
@@ -2873,7 +2873,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
 			switch (index)
 			{
 				case 0: return _kOpposite;
-				case 1: return _opposite;
+				case 1: return _qualifierList;
 				default: return null;
 			}
 		}
@@ -2884,25 +2884,25 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
 	
 		public override InternalSyntaxNode WithDiagnostics(DiagnosticInfo[] diagnostics)
 		{
-			return new PropertyOppositeGreen(this.Kind, _kOpposite, _opposite, diagnostics, this.GetAnnotations());
+			return new PropertyOppositeGreen(this.Kind, _kOpposite, _qualifierList, diagnostics, this.GetAnnotations());
 		}
 	
 		public override InternalSyntaxNode WithAnnotations(SyntaxAnnotation[] annotations)
 		{
-			return new PropertyOppositeGreen(this.Kind, _kOpposite, _opposite, this.GetDiagnostics(), annotations);
+			return new PropertyOppositeGreen(this.Kind, _kOpposite, _qualifierList, this.GetDiagnostics(), annotations);
 		}
 	
 		public override GreenNode Clone()
 		{
-			return new PropertyOppositeGreen(this.Kind, _kOpposite, _opposite, this.GetDiagnostics(), this.GetAnnotations());
+			return new PropertyOppositeGreen(this.Kind, _kOpposite, _qualifierList, this.GetDiagnostics(), this.GetAnnotations());
 		}
 	
 	
-		public PropertyOppositeGreen Update(InternalSyntaxToken kOpposite, QualifierGreen opposite)
+		public PropertyOppositeGreen Update(InternalSyntaxToken kOpposite, MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<QualifierGreen> qualifierList)
 		{
-			if (_kOpposite != kOpposite || _opposite != opposite)
+			if (_kOpposite != kOpposite || _qualifierList != qualifierList.Node)
 			{
-				InternalSyntaxNode newNode = MetaLanguage.Instance.InternalSyntaxFactory.PropertyOpposite((InternalSyntaxToken)kOpposite, opposite);
+				InternalSyntaxNode newNode = MetaLanguage.Instance.InternalSyntaxFactory.PropertyOpposite((InternalSyntaxToken)kOpposite, qualifierList);
 				var diags = this.GetDiagnostics();
 				if (diags != null && diags.Length > 0)
 					newNode = newNode.WithDiagnostics(diags);
@@ -2910,6 +2910,204 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
 				if (annotations != null && annotations.Length > 0)
 					newNode = newNode.WithAnnotations(annotations);
 				return (PropertyOppositeGreen)newNode;
+			}
+			return this;
+		}
+	}
+	
+	internal class PropertySubsetsGreen : GreenSyntaxNode
+	{
+		internal static new readonly PropertySubsetsGreen __Missing = new PropertySubsetsGreen();
+		private InternalSyntaxToken _kSubsets;
+		private GreenNode _qualifierList;
+	
+		public PropertySubsetsGreen(MetaSyntaxKind kind, InternalSyntaxToken kSubsets, GreenNode qualifierList)
+			: base(kind, null, null)
+		{
+			SlotCount = 2;
+			if (kSubsets != null)
+			{
+				AdjustFlagsAndWidth(kSubsets);
+				_kSubsets = kSubsets;
+			}
+			if (qualifierList != null)
+			{
+				AdjustFlagsAndWidth(qualifierList);
+				_qualifierList = qualifierList;
+			}
+		}
+	
+		public PropertySubsetsGreen(MetaSyntaxKind kind, InternalSyntaxToken kSubsets, GreenNode qualifierList, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
+			: base(kind, diagnostics, annotations)
+		{
+			SlotCount = 2;
+			if (kSubsets != null)
+			{
+				AdjustFlagsAndWidth(kSubsets);
+				_kSubsets = kSubsets;
+			}
+			if (qualifierList != null)
+			{
+				AdjustFlagsAndWidth(qualifierList);
+				_qualifierList = qualifierList;
+			}
+		}
+	
+		private PropertySubsetsGreen()
+			: base((MetaSyntaxKind)MetaSyntaxKind.PropertySubsets, null, null)
+		{
+			this.flags &= ~NodeFlags.IsNotMissing;
+		}
+	
+		public InternalSyntaxToken KSubsets { get { return _kSubsets; } }
+		public MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<QualifierGreen> QualifierList { get { return new MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<QualifierGreen>(_qualifierList, reversed: false); } }
+	
+		protected override SyntaxNode CreateRed(SyntaxNode parent, int position)
+		{
+			return new global::MetaDslx.Languages.MetaModel.Compiler.Syntax.PropertySubsetsSyntax(this, (MetaSyntaxNode)parent, position);
+		}
+	
+		protected override GreenNode GetSlot(int index)
+		{
+			switch (index)
+			{
+				case 0: return _kSubsets;
+				case 1: return _qualifierList;
+				default: return null;
+			}
+		}
+	
+		public override TResult Accept<TResult>(MetaInternalSyntaxVisitor<TResult> visitor) => visitor.VisitPropertySubsetsGreen(this);
+	
+		public override void Accept(MetaInternalSyntaxVisitor visitor) => visitor.VisitPropertySubsetsGreen(this);
+	
+		public override InternalSyntaxNode WithDiagnostics(DiagnosticInfo[] diagnostics)
+		{
+			return new PropertySubsetsGreen(this.Kind, _kSubsets, _qualifierList, diagnostics, this.GetAnnotations());
+		}
+	
+		public override InternalSyntaxNode WithAnnotations(SyntaxAnnotation[] annotations)
+		{
+			return new PropertySubsetsGreen(this.Kind, _kSubsets, _qualifierList, this.GetDiagnostics(), annotations);
+		}
+	
+		public override GreenNode Clone()
+		{
+			return new PropertySubsetsGreen(this.Kind, _kSubsets, _qualifierList, this.GetDiagnostics(), this.GetAnnotations());
+		}
+	
+	
+		public PropertySubsetsGreen Update(InternalSyntaxToken kSubsets, MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<QualifierGreen> qualifierList)
+		{
+			if (_kSubsets != kSubsets || _qualifierList != qualifierList.Node)
+			{
+				InternalSyntaxNode newNode = MetaLanguage.Instance.InternalSyntaxFactory.PropertySubsets((InternalSyntaxToken)kSubsets, qualifierList);
+				var diags = this.GetDiagnostics();
+				if (diags != null && diags.Length > 0)
+					newNode = newNode.WithDiagnostics(diags);
+				var annotations = this.GetAnnotations();
+				if (annotations != null && annotations.Length > 0)
+					newNode = newNode.WithAnnotations(annotations);
+				return (PropertySubsetsGreen)newNode;
+			}
+			return this;
+		}
+	}
+	
+	internal class PropertyRedefinesGreen : GreenSyntaxNode
+	{
+		internal static new readonly PropertyRedefinesGreen __Missing = new PropertyRedefinesGreen();
+		private InternalSyntaxToken _kRedefines;
+		private GreenNode _qualifierList;
+	
+		public PropertyRedefinesGreen(MetaSyntaxKind kind, InternalSyntaxToken kRedefines, GreenNode qualifierList)
+			: base(kind, null, null)
+		{
+			SlotCount = 2;
+			if (kRedefines != null)
+			{
+				AdjustFlagsAndWidth(kRedefines);
+				_kRedefines = kRedefines;
+			}
+			if (qualifierList != null)
+			{
+				AdjustFlagsAndWidth(qualifierList);
+				_qualifierList = qualifierList;
+			}
+		}
+	
+		public PropertyRedefinesGreen(MetaSyntaxKind kind, InternalSyntaxToken kRedefines, GreenNode qualifierList, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
+			: base(kind, diagnostics, annotations)
+		{
+			SlotCount = 2;
+			if (kRedefines != null)
+			{
+				AdjustFlagsAndWidth(kRedefines);
+				_kRedefines = kRedefines;
+			}
+			if (qualifierList != null)
+			{
+				AdjustFlagsAndWidth(qualifierList);
+				_qualifierList = qualifierList;
+			}
+		}
+	
+		private PropertyRedefinesGreen()
+			: base((MetaSyntaxKind)MetaSyntaxKind.PropertyRedefines, null, null)
+		{
+			this.flags &= ~NodeFlags.IsNotMissing;
+		}
+	
+		public InternalSyntaxToken KRedefines { get { return _kRedefines; } }
+		public MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<QualifierGreen> QualifierList { get { return new MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<QualifierGreen>(_qualifierList, reversed: false); } }
+	
+		protected override SyntaxNode CreateRed(SyntaxNode parent, int position)
+		{
+			return new global::MetaDslx.Languages.MetaModel.Compiler.Syntax.PropertyRedefinesSyntax(this, (MetaSyntaxNode)parent, position);
+		}
+	
+		protected override GreenNode GetSlot(int index)
+		{
+			switch (index)
+			{
+				case 0: return _kRedefines;
+				case 1: return _qualifierList;
+				default: return null;
+			}
+		}
+	
+		public override TResult Accept<TResult>(MetaInternalSyntaxVisitor<TResult> visitor) => visitor.VisitPropertyRedefinesGreen(this);
+	
+		public override void Accept(MetaInternalSyntaxVisitor visitor) => visitor.VisitPropertyRedefinesGreen(this);
+	
+		public override InternalSyntaxNode WithDiagnostics(DiagnosticInfo[] diagnostics)
+		{
+			return new PropertyRedefinesGreen(this.Kind, _kRedefines, _qualifierList, diagnostics, this.GetAnnotations());
+		}
+	
+		public override InternalSyntaxNode WithAnnotations(SyntaxAnnotation[] annotations)
+		{
+			return new PropertyRedefinesGreen(this.Kind, _kRedefines, _qualifierList, this.GetDiagnostics(), annotations);
+		}
+	
+		public override GreenNode Clone()
+		{
+			return new PropertyRedefinesGreen(this.Kind, _kRedefines, _qualifierList, this.GetDiagnostics(), this.GetAnnotations());
+		}
+	
+	
+		public PropertyRedefinesGreen Update(InternalSyntaxToken kRedefines, MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<QualifierGreen> qualifierList)
+		{
+			if (_kRedefines != kRedefines || _qualifierList != qualifierList.Node)
+			{
+				InternalSyntaxNode newNode = MetaLanguage.Instance.InternalSyntaxFactory.PropertyRedefines((InternalSyntaxToken)kRedefines, qualifierList);
+				var diags = this.GetDiagnostics();
+				if (diags != null && diags.Length > 0)
+					newNode = newNode.WithDiagnostics(diags);
+				var annotations = this.GetAnnotations();
+				if (annotations != null && annotations.Length > 0)
+					newNode = newNode.WithAnnotations(annotations);
+				return (PropertyRedefinesGreen)newNode;
 			}
 			return this;
 		}
@@ -4069,6 +4267,571 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
 				if (annotations != null && annotations.Length > 0)
 					newNode = newNode.WithAnnotations(annotations);
 				return (BaseClassesBlock1Green)newNode;
+			}
+			return this;
+		}
+	}
+	
+	internal abstract class MetaPropertyBlock2Green : GreenSyntaxNode
+	{
+		internal static readonly MetaPropertyBlock2Green __Missing = MetaPropertyBlock2Alt1Green.__Missing;
+	
+	    protected MetaPropertyBlock2Green(MetaSyntaxKind kind, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
+	        : base(kind, diagnostics, annotations)
+	    {
+	    }
+	}
+	
+	internal class MetaPropertyBlock2Alt1Green : MetaPropertyBlock2Green
+	{
+		internal static new readonly MetaPropertyBlock2Alt1Green __Missing = new MetaPropertyBlock2Alt1Green();
+		private PropertyOppositeGreen _propertyOpposite;
+	
+		public MetaPropertyBlock2Alt1Green(MetaSyntaxKind kind, PropertyOppositeGreen propertyOpposite)
+			: base(kind, null, null)
+		{
+			SlotCount = 1;
+			if (propertyOpposite != null)
+			{
+				AdjustFlagsAndWidth(propertyOpposite);
+				_propertyOpposite = propertyOpposite;
+			}
+		}
+	
+		public MetaPropertyBlock2Alt1Green(MetaSyntaxKind kind, PropertyOppositeGreen propertyOpposite, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
+			: base(kind, diagnostics, annotations)
+		{
+			SlotCount = 1;
+			if (propertyOpposite != null)
+			{
+				AdjustFlagsAndWidth(propertyOpposite);
+				_propertyOpposite = propertyOpposite;
+			}
+		}
+	
+		private MetaPropertyBlock2Alt1Green()
+			: base((MetaSyntaxKind)MetaSyntaxKind.MetaPropertyBlock2Alt1, null, null)
+		{
+			this.flags &= ~NodeFlags.IsNotMissing;
+		}
+	
+		public PropertyOppositeGreen PropertyOpposite { get { return _propertyOpposite; } }
+	
+		protected override SyntaxNode CreateRed(SyntaxNode parent, int position)
+		{
+			return new global::MetaDslx.Languages.MetaModel.Compiler.Syntax.MetaPropertyBlock2Alt1Syntax(this, (MetaSyntaxNode)parent, position);
+		}
+	
+		protected override GreenNode GetSlot(int index)
+		{
+			switch (index)
+			{
+				case 0: return _propertyOpposite;
+				default: return null;
+			}
+		}
+	
+		public override TResult Accept<TResult>(MetaInternalSyntaxVisitor<TResult> visitor) => visitor.VisitMetaPropertyBlock2Alt1Green(this);
+	
+		public override void Accept(MetaInternalSyntaxVisitor visitor) => visitor.VisitMetaPropertyBlock2Alt1Green(this);
+	
+		public override InternalSyntaxNode WithDiagnostics(DiagnosticInfo[] diagnostics)
+		{
+			return new MetaPropertyBlock2Alt1Green(this.Kind, _propertyOpposite, diagnostics, this.GetAnnotations());
+		}
+	
+		public override InternalSyntaxNode WithAnnotations(SyntaxAnnotation[] annotations)
+		{
+			return new MetaPropertyBlock2Alt1Green(this.Kind, _propertyOpposite, this.GetDiagnostics(), annotations);
+		}
+	
+		public override GreenNode Clone()
+		{
+			return new MetaPropertyBlock2Alt1Green(this.Kind, _propertyOpposite, this.GetDiagnostics(), this.GetAnnotations());
+		}
+	
+	
+		public MetaPropertyBlock2Alt1Green Update(PropertyOppositeGreen propertyOpposite)
+		{
+			if (_propertyOpposite != propertyOpposite)
+			{
+				InternalSyntaxNode newNode = MetaLanguage.Instance.InternalSyntaxFactory.MetaPropertyBlock2Alt1(propertyOpposite);
+				var diags = this.GetDiagnostics();
+				if (diags != null && diags.Length > 0)
+					newNode = newNode.WithDiagnostics(diags);
+				var annotations = this.GetAnnotations();
+				if (annotations != null && annotations.Length > 0)
+					newNode = newNode.WithAnnotations(annotations);
+				return (MetaPropertyBlock2Alt1Green)newNode;
+			}
+			return this;
+		}
+	}
+	
+	internal class MetaPropertyBlock2Alt2Green : MetaPropertyBlock2Green
+	{
+		internal static new readonly MetaPropertyBlock2Alt2Green __Missing = new MetaPropertyBlock2Alt2Green();
+		private PropertySubsetsGreen _propertySubsets;
+	
+		public MetaPropertyBlock2Alt2Green(MetaSyntaxKind kind, PropertySubsetsGreen propertySubsets)
+			: base(kind, null, null)
+		{
+			SlotCount = 1;
+			if (propertySubsets != null)
+			{
+				AdjustFlagsAndWidth(propertySubsets);
+				_propertySubsets = propertySubsets;
+			}
+		}
+	
+		public MetaPropertyBlock2Alt2Green(MetaSyntaxKind kind, PropertySubsetsGreen propertySubsets, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
+			: base(kind, diagnostics, annotations)
+		{
+			SlotCount = 1;
+			if (propertySubsets != null)
+			{
+				AdjustFlagsAndWidth(propertySubsets);
+				_propertySubsets = propertySubsets;
+			}
+		}
+	
+		private MetaPropertyBlock2Alt2Green()
+			: base((MetaSyntaxKind)MetaSyntaxKind.MetaPropertyBlock2Alt2, null, null)
+		{
+			this.flags &= ~NodeFlags.IsNotMissing;
+		}
+	
+		public PropertySubsetsGreen PropertySubsets { get { return _propertySubsets; } }
+	
+		protected override SyntaxNode CreateRed(SyntaxNode parent, int position)
+		{
+			return new global::MetaDslx.Languages.MetaModel.Compiler.Syntax.MetaPropertyBlock2Alt2Syntax(this, (MetaSyntaxNode)parent, position);
+		}
+	
+		protected override GreenNode GetSlot(int index)
+		{
+			switch (index)
+			{
+				case 0: return _propertySubsets;
+				default: return null;
+			}
+		}
+	
+		public override TResult Accept<TResult>(MetaInternalSyntaxVisitor<TResult> visitor) => visitor.VisitMetaPropertyBlock2Alt2Green(this);
+	
+		public override void Accept(MetaInternalSyntaxVisitor visitor) => visitor.VisitMetaPropertyBlock2Alt2Green(this);
+	
+		public override InternalSyntaxNode WithDiagnostics(DiagnosticInfo[] diagnostics)
+		{
+			return new MetaPropertyBlock2Alt2Green(this.Kind, _propertySubsets, diagnostics, this.GetAnnotations());
+		}
+	
+		public override InternalSyntaxNode WithAnnotations(SyntaxAnnotation[] annotations)
+		{
+			return new MetaPropertyBlock2Alt2Green(this.Kind, _propertySubsets, this.GetDiagnostics(), annotations);
+		}
+	
+		public override GreenNode Clone()
+		{
+			return new MetaPropertyBlock2Alt2Green(this.Kind, _propertySubsets, this.GetDiagnostics(), this.GetAnnotations());
+		}
+	
+	
+		public MetaPropertyBlock2Alt2Green Update(PropertySubsetsGreen propertySubsets)
+		{
+			if (_propertySubsets != propertySubsets)
+			{
+				InternalSyntaxNode newNode = MetaLanguage.Instance.InternalSyntaxFactory.MetaPropertyBlock2Alt2(propertySubsets);
+				var diags = this.GetDiagnostics();
+				if (diags != null && diags.Length > 0)
+					newNode = newNode.WithDiagnostics(diags);
+				var annotations = this.GetAnnotations();
+				if (annotations != null && annotations.Length > 0)
+					newNode = newNode.WithAnnotations(annotations);
+				return (MetaPropertyBlock2Alt2Green)newNode;
+			}
+			return this;
+		}
+	}
+	
+	internal class MetaPropertyBlock2Alt3Green : MetaPropertyBlock2Green
+	{
+		internal static new readonly MetaPropertyBlock2Alt3Green __Missing = new MetaPropertyBlock2Alt3Green();
+		private PropertyRedefinesGreen _propertyRedefines;
+	
+		public MetaPropertyBlock2Alt3Green(MetaSyntaxKind kind, PropertyRedefinesGreen propertyRedefines)
+			: base(kind, null, null)
+		{
+			SlotCount = 1;
+			if (propertyRedefines != null)
+			{
+				AdjustFlagsAndWidth(propertyRedefines);
+				_propertyRedefines = propertyRedefines;
+			}
+		}
+	
+		public MetaPropertyBlock2Alt3Green(MetaSyntaxKind kind, PropertyRedefinesGreen propertyRedefines, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
+			: base(kind, diagnostics, annotations)
+		{
+			SlotCount = 1;
+			if (propertyRedefines != null)
+			{
+				AdjustFlagsAndWidth(propertyRedefines);
+				_propertyRedefines = propertyRedefines;
+			}
+		}
+	
+		private MetaPropertyBlock2Alt3Green()
+			: base((MetaSyntaxKind)MetaSyntaxKind.MetaPropertyBlock2Alt3, null, null)
+		{
+			this.flags &= ~NodeFlags.IsNotMissing;
+		}
+	
+		public PropertyRedefinesGreen PropertyRedefines { get { return _propertyRedefines; } }
+	
+		protected override SyntaxNode CreateRed(SyntaxNode parent, int position)
+		{
+			return new global::MetaDslx.Languages.MetaModel.Compiler.Syntax.MetaPropertyBlock2Alt3Syntax(this, (MetaSyntaxNode)parent, position);
+		}
+	
+		protected override GreenNode GetSlot(int index)
+		{
+			switch (index)
+			{
+				case 0: return _propertyRedefines;
+				default: return null;
+			}
+		}
+	
+		public override TResult Accept<TResult>(MetaInternalSyntaxVisitor<TResult> visitor) => visitor.VisitMetaPropertyBlock2Alt3Green(this);
+	
+		public override void Accept(MetaInternalSyntaxVisitor visitor) => visitor.VisitMetaPropertyBlock2Alt3Green(this);
+	
+		public override InternalSyntaxNode WithDiagnostics(DiagnosticInfo[] diagnostics)
+		{
+			return new MetaPropertyBlock2Alt3Green(this.Kind, _propertyRedefines, diagnostics, this.GetAnnotations());
+		}
+	
+		public override InternalSyntaxNode WithAnnotations(SyntaxAnnotation[] annotations)
+		{
+			return new MetaPropertyBlock2Alt3Green(this.Kind, _propertyRedefines, this.GetDiagnostics(), annotations);
+		}
+	
+		public override GreenNode Clone()
+		{
+			return new MetaPropertyBlock2Alt3Green(this.Kind, _propertyRedefines, this.GetDiagnostics(), this.GetAnnotations());
+		}
+	
+	
+		public MetaPropertyBlock2Alt3Green Update(PropertyRedefinesGreen propertyRedefines)
+		{
+			if (_propertyRedefines != propertyRedefines)
+			{
+				InternalSyntaxNode newNode = MetaLanguage.Instance.InternalSyntaxFactory.MetaPropertyBlock2Alt3(propertyRedefines);
+				var diags = this.GetDiagnostics();
+				if (diags != null && diags.Length > 0)
+					newNode = newNode.WithDiagnostics(diags);
+				var annotations = this.GetAnnotations();
+				if (annotations != null && annotations.Length > 0)
+					newNode = newNode.WithAnnotations(annotations);
+				return (MetaPropertyBlock2Alt3Green)newNode;
+			}
+			return this;
+		}
+	}
+	
+	internal class PropertyOppositeBlock1Green : GreenSyntaxNode
+	{
+		internal static new readonly PropertyOppositeBlock1Green __Missing = new PropertyOppositeBlock1Green();
+		private InternalSyntaxToken _tComma;
+		private QualifierGreen _oppositeProperties;
+	
+		public PropertyOppositeBlock1Green(MetaSyntaxKind kind, InternalSyntaxToken tComma, QualifierGreen oppositeProperties)
+			: base(kind, null, null)
+		{
+			SlotCount = 2;
+			if (tComma != null)
+			{
+				AdjustFlagsAndWidth(tComma);
+				_tComma = tComma;
+			}
+			if (oppositeProperties != null)
+			{
+				AdjustFlagsAndWidth(oppositeProperties);
+				_oppositeProperties = oppositeProperties;
+			}
+		}
+	
+		public PropertyOppositeBlock1Green(MetaSyntaxKind kind, InternalSyntaxToken tComma, QualifierGreen oppositeProperties, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
+			: base(kind, diagnostics, annotations)
+		{
+			SlotCount = 2;
+			if (tComma != null)
+			{
+				AdjustFlagsAndWidth(tComma);
+				_tComma = tComma;
+			}
+			if (oppositeProperties != null)
+			{
+				AdjustFlagsAndWidth(oppositeProperties);
+				_oppositeProperties = oppositeProperties;
+			}
+		}
+	
+		private PropertyOppositeBlock1Green()
+			: base((MetaSyntaxKind)MetaSyntaxKind.PropertyOppositeBlock1, null, null)
+		{
+			this.flags &= ~NodeFlags.IsNotMissing;
+		}
+	
+		public InternalSyntaxToken TComma { get { return _tComma; } }
+		public QualifierGreen OppositeProperties { get { return _oppositeProperties; } }
+	
+		protected override SyntaxNode CreateRed(SyntaxNode parent, int position)
+		{
+			return new global::MetaDslx.Languages.MetaModel.Compiler.Syntax.PropertyOppositeBlock1Syntax(this, (MetaSyntaxNode)parent, position);
+		}
+	
+		protected override GreenNode GetSlot(int index)
+		{
+			switch (index)
+			{
+				case 0: return _tComma;
+				case 1: return _oppositeProperties;
+				default: return null;
+			}
+		}
+	
+		public override TResult Accept<TResult>(MetaInternalSyntaxVisitor<TResult> visitor) => visitor.VisitPropertyOppositeBlock1Green(this);
+	
+		public override void Accept(MetaInternalSyntaxVisitor visitor) => visitor.VisitPropertyOppositeBlock1Green(this);
+	
+		public override InternalSyntaxNode WithDiagnostics(DiagnosticInfo[] diagnostics)
+		{
+			return new PropertyOppositeBlock1Green(this.Kind, _tComma, _oppositeProperties, diagnostics, this.GetAnnotations());
+		}
+	
+		public override InternalSyntaxNode WithAnnotations(SyntaxAnnotation[] annotations)
+		{
+			return new PropertyOppositeBlock1Green(this.Kind, _tComma, _oppositeProperties, this.GetDiagnostics(), annotations);
+		}
+	
+		public override GreenNode Clone()
+		{
+			return new PropertyOppositeBlock1Green(this.Kind, _tComma, _oppositeProperties, this.GetDiagnostics(), this.GetAnnotations());
+		}
+	
+	
+		public PropertyOppositeBlock1Green Update(InternalSyntaxToken tComma, QualifierGreen oppositeProperties)
+		{
+			if (_tComma != tComma || _oppositeProperties != oppositeProperties)
+			{
+				InternalSyntaxNode newNode = MetaLanguage.Instance.InternalSyntaxFactory.PropertyOppositeBlock1((InternalSyntaxToken)tComma, oppositeProperties);
+				var diags = this.GetDiagnostics();
+				if (diags != null && diags.Length > 0)
+					newNode = newNode.WithDiagnostics(diags);
+				var annotations = this.GetAnnotations();
+				if (annotations != null && annotations.Length > 0)
+					newNode = newNode.WithAnnotations(annotations);
+				return (PropertyOppositeBlock1Green)newNode;
+			}
+			return this;
+		}
+	}
+	
+	internal class PropertySubsetsBlock1Green : GreenSyntaxNode
+	{
+		internal static new readonly PropertySubsetsBlock1Green __Missing = new PropertySubsetsBlock1Green();
+		private InternalSyntaxToken _tComma;
+		private QualifierGreen _subsettedProperties;
+	
+		public PropertySubsetsBlock1Green(MetaSyntaxKind kind, InternalSyntaxToken tComma, QualifierGreen subsettedProperties)
+			: base(kind, null, null)
+		{
+			SlotCount = 2;
+			if (tComma != null)
+			{
+				AdjustFlagsAndWidth(tComma);
+				_tComma = tComma;
+			}
+			if (subsettedProperties != null)
+			{
+				AdjustFlagsAndWidth(subsettedProperties);
+				_subsettedProperties = subsettedProperties;
+			}
+		}
+	
+		public PropertySubsetsBlock1Green(MetaSyntaxKind kind, InternalSyntaxToken tComma, QualifierGreen subsettedProperties, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
+			: base(kind, diagnostics, annotations)
+		{
+			SlotCount = 2;
+			if (tComma != null)
+			{
+				AdjustFlagsAndWidth(tComma);
+				_tComma = tComma;
+			}
+			if (subsettedProperties != null)
+			{
+				AdjustFlagsAndWidth(subsettedProperties);
+				_subsettedProperties = subsettedProperties;
+			}
+		}
+	
+		private PropertySubsetsBlock1Green()
+			: base((MetaSyntaxKind)MetaSyntaxKind.PropertySubsetsBlock1, null, null)
+		{
+			this.flags &= ~NodeFlags.IsNotMissing;
+		}
+	
+		public InternalSyntaxToken TComma { get { return _tComma; } }
+		public QualifierGreen SubsettedProperties { get { return _subsettedProperties; } }
+	
+		protected override SyntaxNode CreateRed(SyntaxNode parent, int position)
+		{
+			return new global::MetaDslx.Languages.MetaModel.Compiler.Syntax.PropertySubsetsBlock1Syntax(this, (MetaSyntaxNode)parent, position);
+		}
+	
+		protected override GreenNode GetSlot(int index)
+		{
+			switch (index)
+			{
+				case 0: return _tComma;
+				case 1: return _subsettedProperties;
+				default: return null;
+			}
+		}
+	
+		public override TResult Accept<TResult>(MetaInternalSyntaxVisitor<TResult> visitor) => visitor.VisitPropertySubsetsBlock1Green(this);
+	
+		public override void Accept(MetaInternalSyntaxVisitor visitor) => visitor.VisitPropertySubsetsBlock1Green(this);
+	
+		public override InternalSyntaxNode WithDiagnostics(DiagnosticInfo[] diagnostics)
+		{
+			return new PropertySubsetsBlock1Green(this.Kind, _tComma, _subsettedProperties, diagnostics, this.GetAnnotations());
+		}
+	
+		public override InternalSyntaxNode WithAnnotations(SyntaxAnnotation[] annotations)
+		{
+			return new PropertySubsetsBlock1Green(this.Kind, _tComma, _subsettedProperties, this.GetDiagnostics(), annotations);
+		}
+	
+		public override GreenNode Clone()
+		{
+			return new PropertySubsetsBlock1Green(this.Kind, _tComma, _subsettedProperties, this.GetDiagnostics(), this.GetAnnotations());
+		}
+	
+	
+		public PropertySubsetsBlock1Green Update(InternalSyntaxToken tComma, QualifierGreen subsettedProperties)
+		{
+			if (_tComma != tComma || _subsettedProperties != subsettedProperties)
+			{
+				InternalSyntaxNode newNode = MetaLanguage.Instance.InternalSyntaxFactory.PropertySubsetsBlock1((InternalSyntaxToken)tComma, subsettedProperties);
+				var diags = this.GetDiagnostics();
+				if (diags != null && diags.Length > 0)
+					newNode = newNode.WithDiagnostics(diags);
+				var annotations = this.GetAnnotations();
+				if (annotations != null && annotations.Length > 0)
+					newNode = newNode.WithAnnotations(annotations);
+				return (PropertySubsetsBlock1Green)newNode;
+			}
+			return this;
+		}
+	}
+	
+	internal class PropertyRedefinesBlock1Green : GreenSyntaxNode
+	{
+		internal static new readonly PropertyRedefinesBlock1Green __Missing = new PropertyRedefinesBlock1Green();
+		private InternalSyntaxToken _tComma;
+		private QualifierGreen _redefinedProperties;
+	
+		public PropertyRedefinesBlock1Green(MetaSyntaxKind kind, InternalSyntaxToken tComma, QualifierGreen redefinedProperties)
+			: base(kind, null, null)
+		{
+			SlotCount = 2;
+			if (tComma != null)
+			{
+				AdjustFlagsAndWidth(tComma);
+				_tComma = tComma;
+			}
+			if (redefinedProperties != null)
+			{
+				AdjustFlagsAndWidth(redefinedProperties);
+				_redefinedProperties = redefinedProperties;
+			}
+		}
+	
+		public PropertyRedefinesBlock1Green(MetaSyntaxKind kind, InternalSyntaxToken tComma, QualifierGreen redefinedProperties, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
+			: base(kind, diagnostics, annotations)
+		{
+			SlotCount = 2;
+			if (tComma != null)
+			{
+				AdjustFlagsAndWidth(tComma);
+				_tComma = tComma;
+			}
+			if (redefinedProperties != null)
+			{
+				AdjustFlagsAndWidth(redefinedProperties);
+				_redefinedProperties = redefinedProperties;
+			}
+		}
+	
+		private PropertyRedefinesBlock1Green()
+			: base((MetaSyntaxKind)MetaSyntaxKind.PropertyRedefinesBlock1, null, null)
+		{
+			this.flags &= ~NodeFlags.IsNotMissing;
+		}
+	
+		public InternalSyntaxToken TComma { get { return _tComma; } }
+		public QualifierGreen RedefinedProperties { get { return _redefinedProperties; } }
+	
+		protected override SyntaxNode CreateRed(SyntaxNode parent, int position)
+		{
+			return new global::MetaDslx.Languages.MetaModel.Compiler.Syntax.PropertyRedefinesBlock1Syntax(this, (MetaSyntaxNode)parent, position);
+		}
+	
+		protected override GreenNode GetSlot(int index)
+		{
+			switch (index)
+			{
+				case 0: return _tComma;
+				case 1: return _redefinedProperties;
+				default: return null;
+			}
+		}
+	
+		public override TResult Accept<TResult>(MetaInternalSyntaxVisitor<TResult> visitor) => visitor.VisitPropertyRedefinesBlock1Green(this);
+	
+		public override void Accept(MetaInternalSyntaxVisitor visitor) => visitor.VisitPropertyRedefinesBlock1Green(this);
+	
+		public override InternalSyntaxNode WithDiagnostics(DiagnosticInfo[] diagnostics)
+		{
+			return new PropertyRedefinesBlock1Green(this.Kind, _tComma, _redefinedProperties, diagnostics, this.GetAnnotations());
+		}
+	
+		public override InternalSyntaxNode WithAnnotations(SyntaxAnnotation[] annotations)
+		{
+			return new PropertyRedefinesBlock1Green(this.Kind, _tComma, _redefinedProperties, this.GetDiagnostics(), annotations);
+		}
+	
+		public override GreenNode Clone()
+		{
+			return new PropertyRedefinesBlock1Green(this.Kind, _tComma, _redefinedProperties, this.GetDiagnostics(), this.GetAnnotations());
+		}
+	
+	
+		public PropertyRedefinesBlock1Green Update(InternalSyntaxToken tComma, QualifierGreen redefinedProperties)
+		{
+			if (_tComma != tComma || _redefinedProperties != redefinedProperties)
+			{
+				InternalSyntaxNode newNode = MetaLanguage.Instance.InternalSyntaxFactory.PropertyRedefinesBlock1((InternalSyntaxToken)tComma, redefinedProperties);
+				var diags = this.GetDiagnostics();
+				if (diags != null && diags.Length > 0)
+					newNode = newNode.WithDiagnostics(diags);
+				var annotations = this.GetAnnotations();
+				if (annotations != null && annotations.Length > 0)
+					newNode = newNode.WithAnnotations(annotations);
+				return (PropertyRedefinesBlock1Green)newNode;
 			}
 			return this;
 		}

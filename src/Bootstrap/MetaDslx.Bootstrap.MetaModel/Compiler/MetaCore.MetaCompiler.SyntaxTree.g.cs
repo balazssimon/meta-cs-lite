@@ -28,12 +28,12 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler
         /// <summary>
         /// The language of the source code represented by the syntax tree.
         /// </summary>
-        public override MetaCoreLanguage Language => MetaCoreLanguage.Instance;
+        public override Language Language => MetaCoreLanguage.Instance;
 
         /// <summary>
         /// The options used by the parser to produce the syntax tree.
         /// </summary>
-        public override abstract MetaCoreParseOptions Options { get; }
+        public override abstract ParseOptions Options { get; }
 
         /// <summary>
         /// Gets the root node of the syntax tree.
@@ -209,7 +209,7 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler
             {
                 var parseData = parser.Parse();
                 var compilationUnit = (MainSyntax)parseData.RootNode;
-                var tree = new ParsedSyntaxTree(newText, newText.Encoding, newText.ChecksumAlgorithm, this.FilePath, this.Options, compilationUnit, parseData);
+                var tree = new ParsedSyntaxTree(newText, newText.Encoding, newText.ChecksumAlgorithm, this.FilePath, (MetaCoreParseOptions)this.Options, compilationUnit, parseData);
                 tree.VerifySource(changes);
                 return tree;
             }
@@ -272,7 +272,7 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler
             {
                 get { return 0; }
             }
-            public override MetaCoreParseOptions Options
+            public override ParseOptions Options
             {
                 get { return MetaCoreParseOptions.Default; }
             }
@@ -373,7 +373,7 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler
                     return _hasCompilationUnitRoot;
                 }
             }
-            public override MetaCoreParseOptions Options
+            public override ParseOptions Options
             {
                 get
                 {

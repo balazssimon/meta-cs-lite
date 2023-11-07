@@ -41,6 +41,8 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
 				case MetaCoreSyntaxKind.KContains:
 				case MetaCoreSyntaxKind.KDerived:
 				case MetaCoreSyntaxKind.KOpposite:
+				case MetaCoreSyntaxKind.KSubsets:
+				case MetaCoreSyntaxKind.KRedefines:
 				case MetaCoreSyntaxKind.KBool:
 				case MetaCoreSyntaxKind.KInt:
 				case MetaCoreSyntaxKind.KString:
@@ -86,6 +88,8 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
 				case MetaCoreSyntaxKind.KContains:
 				case MetaCoreSyntaxKind.KDerived:
 				case MetaCoreSyntaxKind.KOpposite:
+				case MetaCoreSyntaxKind.KSubsets:
+				case MetaCoreSyntaxKind.KRedefines:
 				case MetaCoreSyntaxKind.KBool:
 				case MetaCoreSyntaxKind.KInt:
 				case MetaCoreSyntaxKind.KString:
@@ -138,6 +142,10 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
 					return MetaCoreSyntaxKind.KDerived;
 				case "opposite": 
 					return MetaCoreSyntaxKind.KOpposite;
+				case "subsets": 
+					return MetaCoreSyntaxKind.KSubsets;
+				case "redefines": 
+					return MetaCoreSyntaxKind.KRedefines;
 				case "bool": 
 					return MetaCoreSyntaxKind.KBool;
 				case "int": 
@@ -221,6 +229,10 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
 					return "KDerived";
 				case MetaCoreSyntaxKind.KOpposite: 
 					return "KOpposite";
+				case MetaCoreSyntaxKind.KSubsets: 
+					return "KSubsets";
+				case MetaCoreSyntaxKind.KRedefines: 
+					return "KRedefines";
 				case MetaCoreSyntaxKind.KBool: 
 					return "KBool";
 				case MetaCoreSyntaxKind.KInt: 
@@ -285,6 +297,10 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
 					return "PropertyNameAlt2";
 				case MetaCoreSyntaxKind.PropertyOpposite: 
 					return "PropertyOpposite";
+				case MetaCoreSyntaxKind.PropertySubsets: 
+					return "PropertySubsets";
+				case MetaCoreSyntaxKind.PropertyRedefines: 
+					return "PropertyRedefines";
 				case MetaCoreSyntaxKind.MetaArrayType: 
 					return "MetaArrayType";
 				case MetaCoreSyntaxKind.TypeReferenceAlt3: 
@@ -303,6 +319,18 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
 					return "EnumLiteralsBlock1";
 				case MetaCoreSyntaxKind.BaseClassesBlock1: 
 					return "BaseClassesBlock1";
+				case MetaCoreSyntaxKind.MetaPropertyBlock2Alt1: 
+					return "MetaPropertyBlock2Alt1";
+				case MetaCoreSyntaxKind.MetaPropertyBlock2Alt2: 
+					return "MetaPropertyBlock2Alt2";
+				case MetaCoreSyntaxKind.MetaPropertyBlock2Alt3: 
+					return "MetaPropertyBlock2Alt3";
+				case MetaCoreSyntaxKind.PropertyOppositeBlock1: 
+					return "PropertyOppositeBlock1";
+				case MetaCoreSyntaxKind.PropertySubsetsBlock1: 
+					return "PropertySubsetsBlock1";
+				case MetaCoreSyntaxKind.PropertyRedefinesBlock1: 
+					return "PropertyRedefinesBlock1";
 				case MetaCoreSyntaxKind.QualifierBlock1: 
 					return "QualifierBlock1";
 				case MetaCoreSyntaxKind.QualifierListBlock1: 
@@ -351,6 +379,10 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
 					return "derived";
 				case MetaCoreSyntaxKind.KOpposite: 
 					return "opposite";
+				case MetaCoreSyntaxKind.KSubsets: 
+					return "subsets";
+				case MetaCoreSyntaxKind.KRedefines: 
+					return "redefines";
 				case MetaCoreSyntaxKind.KBool: 
 					return "bool";
 				case MetaCoreSyntaxKind.KInt: 
@@ -407,6 +439,8 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
 				case MetaCoreSyntaxKind.KContains: 
 				case MetaCoreSyntaxKind.KDerived: 
 				case MetaCoreSyntaxKind.KOpposite: 
+				case MetaCoreSyntaxKind.KSubsets: 
+				case MetaCoreSyntaxKind.KRedefines: 
 				case MetaCoreSyntaxKind.KBool: 
 				case MetaCoreSyntaxKind.KInt: 
 				case MetaCoreSyntaxKind.KString: 
@@ -433,6 +467,8 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
 			yield return MetaCoreSyntaxKind.KContains;
 			yield return MetaCoreSyntaxKind.KDerived;
 			yield return MetaCoreSyntaxKind.KOpposite;
+			yield return MetaCoreSyntaxKind.KSubsets;
+			yield return MetaCoreSyntaxKind.KRedefines;
 			yield return MetaCoreSyntaxKind.KBool;
 			yield return MetaCoreSyntaxKind.KInt;
 			yield return MetaCoreSyntaxKind.KString;
@@ -467,6 +503,10 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
 					return MetaCoreSyntaxKind.KDerived;
 				case "opposite": 
 					return MetaCoreSyntaxKind.KOpposite;
+				case "subsets": 
+					return MetaCoreSyntaxKind.KSubsets;
+				case "redefines": 
+					return MetaCoreSyntaxKind.KRedefines;
 				case "bool": 
 					return MetaCoreSyntaxKind.KBool;
 				case "int": 

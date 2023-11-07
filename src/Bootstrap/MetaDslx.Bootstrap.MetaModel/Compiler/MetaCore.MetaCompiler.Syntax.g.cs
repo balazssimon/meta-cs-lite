@@ -27,7 +27,7 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
         {
         }
 
-        public override MetaCoreLanguage Language => MetaCoreLanguage.Instance;
+        public override Language Language => MetaCoreLanguage.Instance;
         public MetaCoreSyntaxKind Kind => (MetaCoreSyntaxKind)this.RawKind;
 		internal new GreenNode Green => base.Green;
 
@@ -1401,7 +1401,7 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
 	{
 		private TypeReferenceSyntax _type;
 		private PropertyNameSyntax _name;
-		private PropertyOppositeSyntax _propertyOpposite;
+		private MetaDslx.CodeAnalysis.SyntaxNode _metaPropertyBlock2;
 	
 	    public MetaPropertySyntax(InternalSyntaxNode green, MetaCoreSyntaxTree syntaxTree, int position)
 	        : base(green, syntaxTree, position)
@@ -1424,7 +1424,15 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
 		}
 	    public TypeReferenceSyntax Type => this.GetRed(ref this._type, 1);
 	    public PropertyNameSyntax Name => this.GetRed(ref this._name, 2);
-	    public PropertyOppositeSyntax PropertyOpposite => this.GetRed(ref this._propertyOpposite, 3);
+	    public MetaDslx.CodeAnalysis.SyntaxList<MetaPropertyBlock2Syntax> MetaPropertyBlock2 
+		{ 
+			get
+			{
+				var red = this.GetRed(ref this._metaPropertyBlock2, 3);
+				if (red != null) return new MetaDslx.CodeAnalysis.SyntaxList<MetaPropertyBlock2Syntax>(red);
+				return default;
+			} 
+		}
 	    public SyntaxToken TSemicolon 
 		{ 
 			get 
@@ -1441,7 +1449,7 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
 	        {
 				case 1: return this.GetRed(ref this._type, 1);
 				case 2: return this.GetRed(ref this._name, 2);
-				case 3: return this.GetRed(ref this._propertyOpposite, 3);
+				case 3: return this.GetRed(ref this._metaPropertyBlock2, 3);
 				default: return null;
 	        }
 	    }
@@ -1452,41 +1460,46 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
 	        {
 				case 1: return this._type;
 				case 2: return this._name;
-				case 3: return this._propertyOpposite;
+				case 3: return this._metaPropertyBlock2;
 				default: return null;
 	        }
 	    }
 	
 	    public MetaPropertySyntax WithElement(SyntaxToken element)
 		{
-			return this.Update(element, this.Type, this.Name, this.PropertyOpposite, this.TSemicolon);
+			return this.Update(element, this.Type, this.Name, this.MetaPropertyBlock2, this.TSemicolon);
 		}
 	
 	    public MetaPropertySyntax WithType(TypeReferenceSyntax type)
 		{
-			return this.Update(this.Element, type, this.Name, this.PropertyOpposite, this.TSemicolon);
+			return this.Update(this.Element, type, this.Name, this.MetaPropertyBlock2, this.TSemicolon);
 		}
 	
 	    public MetaPropertySyntax WithName(PropertyNameSyntax name)
 		{
-			return this.Update(this.Element, this.Type, name, this.PropertyOpposite, this.TSemicolon);
+			return this.Update(this.Element, this.Type, name, this.MetaPropertyBlock2, this.TSemicolon);
 		}
 	
-	    public MetaPropertySyntax WithPropertyOpposite(PropertyOppositeSyntax propertyOpposite)
+	    public MetaPropertySyntax WithMetaPropertyBlock2(MetaDslx.CodeAnalysis.SyntaxList<MetaPropertyBlock2Syntax> metaPropertyBlock2)
 		{
-			return this.Update(this.Element, this.Type, this.Name, propertyOpposite, this.TSemicolon);
+			return this.Update(this.Element, this.Type, this.Name, metaPropertyBlock2, this.TSemicolon);
+		}
+	
+	    public MetaPropertySyntax AddMetaPropertyBlock2(params MetaPropertyBlock2Syntax[] metaPropertyBlock2)
+		{
+			return this.WithMetaPropertyBlock2(this.MetaPropertyBlock2.AddRange(metaPropertyBlock2));
 		}
 	
 	    public MetaPropertySyntax WithTSemicolon(SyntaxToken tSemicolon)
 		{
-			return this.Update(this.Element, this.Type, this.Name, this.PropertyOpposite, tSemicolon);
+			return this.Update(this.Element, this.Type, this.Name, this.MetaPropertyBlock2, tSemicolon);
 		}
 	
-	    public MetaPropertySyntax Update(SyntaxToken element, TypeReferenceSyntax type, PropertyNameSyntax name, PropertyOppositeSyntax propertyOpposite, SyntaxToken tSemicolon)
+	    public MetaPropertySyntax Update(SyntaxToken element, TypeReferenceSyntax type, PropertyNameSyntax name, MetaDslx.CodeAnalysis.SyntaxList<MetaPropertyBlock2Syntax> metaPropertyBlock2, SyntaxToken tSemicolon)
 	    {
-	        if (this.Element != element || this.Type != type || this.Name != name || this.PropertyOpposite != propertyOpposite || this.TSemicolon != tSemicolon)
+	        if (this.Element != element || this.Type != type || this.Name != name || this.MetaPropertyBlock2 != metaPropertyBlock2 || this.TSemicolon != tSemicolon)
 	        {
-	            var newNode = MetaCoreLanguage.Instance.SyntaxFactory.MetaProperty(element, type, name, propertyOpposite, tSemicolon);
+	            var newNode = MetaCoreLanguage.Instance.SyntaxFactory.MetaProperty(element, type, name, metaPropertyBlock2, tSemicolon);
 	            var annotations = this.GetAnnotations();
 	            if (annotations != null && annotations.Length > 0)
 	               newNode = newNode.WithAnnotations(annotations);
@@ -1700,7 +1713,7 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
 	}
 	public sealed class PropertyOppositeSyntax : MetaCoreSyntaxNode
 	{
-		private QualifierSyntax _opposite;
+		private MetaDslx.CodeAnalysis.SyntaxNode _qualifierList;
 	
 	    public PropertyOppositeSyntax(InternalSyntaxNode green, MetaCoreSyntaxTree syntaxTree, int position)
 	        : base(green, syntaxTree, position)
@@ -1721,13 +1734,24 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
 				return new SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
 			}
 		}
-	    public QualifierSyntax Opposite => this.GetRed(ref this._opposite, 1);
+	    public MetaDslx.CodeAnalysis.SeparatedSyntaxList<QualifierSyntax> QualifierList 
+		{ 
+			get
+			{
+				var red = this.GetRed(ref this._qualifierList, 1);
+				if (red != null)
+				{
+					return new MetaDslx.CodeAnalysis.SeparatedSyntaxList<QualifierSyntax>(red, this.GetChildIndex(1), reversed: false);
+				}
+				return default;
+			} 
+		}
 	
 	    protected override SyntaxNode GetNodeSlot(int index)
 	    {
 	        switch (index)
 	        {
-				case 1: return this.GetRed(ref this._opposite, 1);
+				case 1: return this.GetRed(ref this._qualifierList, 1);
 				default: return null;
 	        }
 	    }
@@ -1736,26 +1760,31 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
 	    {
 	        switch (index)
 	        {
-				case 1: return this._opposite;
+				case 1: return this._qualifierList;
 				default: return null;
 	        }
 	    }
 	
 	    public PropertyOppositeSyntax WithKOpposite(SyntaxToken kOpposite)
 		{
-			return this.Update(kOpposite, this.Opposite);
+			return this.Update(kOpposite, this.QualifierList);
 		}
 	
-	    public PropertyOppositeSyntax WithOpposite(QualifierSyntax opposite)
+	    public PropertyOppositeSyntax WithQualifierList(MetaDslx.CodeAnalysis.SeparatedSyntaxList<QualifierSyntax> qualifierList)
 		{
-			return this.Update(this.KOpposite, opposite);
+			return this.Update(this.KOpposite, qualifierList);
 		}
 	
-	    public PropertyOppositeSyntax Update(SyntaxToken kOpposite, QualifierSyntax opposite)
+	    public PropertyOppositeSyntax AddQualifierList(params QualifierSyntax[] qualifierList)
+		{
+			return this.WithQualifierList(this.QualifierList.AddRange(qualifierList));
+		}
+	
+	    public PropertyOppositeSyntax Update(SyntaxToken kOpposite, MetaDslx.CodeAnalysis.SeparatedSyntaxList<QualifierSyntax> qualifierList)
 	    {
-	        if (this.KOpposite != kOpposite || this.Opposite != opposite)
+	        if (this.KOpposite != kOpposite || this.QualifierList != qualifierList)
 	        {
-	            var newNode = MetaCoreLanguage.Instance.SyntaxFactory.PropertyOpposite(kOpposite, opposite);
+	            var newNode = MetaCoreLanguage.Instance.SyntaxFactory.PropertyOpposite(kOpposite, qualifierList);
 	            var annotations = this.GetAnnotations();
 	            if (annotations != null && annotations.Length > 0)
 	               newNode = newNode.WithAnnotations(annotations);
@@ -1777,6 +1806,202 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
 	    public override void Accept(IMetaCoreSyntaxVisitor visitor)
 	    {
 	        visitor.VisitPropertyOpposite(this);
+	    }
+	
+	}
+	public sealed class PropertySubsetsSyntax : MetaCoreSyntaxNode
+	{
+		private MetaDslx.CodeAnalysis.SyntaxNode _qualifierList;
+	
+	    public PropertySubsetsSyntax(InternalSyntaxNode green, MetaCoreSyntaxTree syntaxTree, int position)
+	        : base(green, syntaxTree, position)
+	    {
+	    }
+	
+	    public PropertySubsetsSyntax(InternalSyntaxNode green, MetaCoreSyntaxNode parent, int position)
+	        : base(green, parent, position)
+	    {
+	    }
+	
+	    public SyntaxToken KSubsets 
+		{ 
+			get 
+			{ 
+				var green = (global::MetaDslx.Bootstrap.MetaModel.Compiler.Syntax.InternalSyntax.PropertySubsetsGreen)this.Green;
+				var greenToken = green.KSubsets;
+				return new SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
+			}
+		}
+	    public MetaDslx.CodeAnalysis.SeparatedSyntaxList<QualifierSyntax> QualifierList 
+		{ 
+			get
+			{
+				var red = this.GetRed(ref this._qualifierList, 1);
+				if (red != null)
+				{
+					return new MetaDslx.CodeAnalysis.SeparatedSyntaxList<QualifierSyntax>(red, this.GetChildIndex(1), reversed: false);
+				}
+				return default;
+			} 
+		}
+	
+	    protected override SyntaxNode GetNodeSlot(int index)
+	    {
+	        switch (index)
+	        {
+				case 1: return this.GetRed(ref this._qualifierList, 1);
+				default: return null;
+	        }
+	    }
+	
+	    protected override SyntaxNode GetCachedSlot(int index)
+	    {
+	        switch (index)
+	        {
+				case 1: return this._qualifierList;
+				default: return null;
+	        }
+	    }
+	
+	    public PropertySubsetsSyntax WithKSubsets(SyntaxToken kSubsets)
+		{
+			return this.Update(kSubsets, this.QualifierList);
+		}
+	
+	    public PropertySubsetsSyntax WithQualifierList(MetaDslx.CodeAnalysis.SeparatedSyntaxList<QualifierSyntax> qualifierList)
+		{
+			return this.Update(this.KSubsets, qualifierList);
+		}
+	
+	    public PropertySubsetsSyntax AddQualifierList(params QualifierSyntax[] qualifierList)
+		{
+			return this.WithQualifierList(this.QualifierList.AddRange(qualifierList));
+		}
+	
+	    public PropertySubsetsSyntax Update(SyntaxToken kSubsets, MetaDslx.CodeAnalysis.SeparatedSyntaxList<QualifierSyntax> qualifierList)
+	    {
+	        if (this.KSubsets != kSubsets || this.QualifierList != qualifierList)
+	        {
+	            var newNode = MetaCoreLanguage.Instance.SyntaxFactory.PropertySubsets(kSubsets, qualifierList);
+	            var annotations = this.GetAnnotations();
+	            if (annotations != null && annotations.Length > 0)
+	               newNode = newNode.WithAnnotations(annotations);
+				return (PropertySubsetsSyntax)newNode;
+	        }
+	        return this;
+	    }
+	
+	    public override TResult Accept<TArg, TResult>(IMetaCoreSyntaxVisitor<TArg, TResult> visitor, TArg argument)
+	    {
+	        return visitor.VisitPropertySubsets(this, argument);
+	    }
+	
+	    public override TResult Accept<TResult>(IMetaCoreSyntaxVisitor<TResult> visitor)
+	    {
+	        return visitor.VisitPropertySubsets(this);
+	    }
+	
+	    public override void Accept(IMetaCoreSyntaxVisitor visitor)
+	    {
+	        visitor.VisitPropertySubsets(this);
+	    }
+	
+	}
+	public sealed class PropertyRedefinesSyntax : MetaCoreSyntaxNode
+	{
+		private MetaDslx.CodeAnalysis.SyntaxNode _qualifierList;
+	
+	    public PropertyRedefinesSyntax(InternalSyntaxNode green, MetaCoreSyntaxTree syntaxTree, int position)
+	        : base(green, syntaxTree, position)
+	    {
+	    }
+	
+	    public PropertyRedefinesSyntax(InternalSyntaxNode green, MetaCoreSyntaxNode parent, int position)
+	        : base(green, parent, position)
+	    {
+	    }
+	
+	    public SyntaxToken KRedefines 
+		{ 
+			get 
+			{ 
+				var green = (global::MetaDslx.Bootstrap.MetaModel.Compiler.Syntax.InternalSyntax.PropertyRedefinesGreen)this.Green;
+				var greenToken = green.KRedefines;
+				return new SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
+			}
+		}
+	    public MetaDslx.CodeAnalysis.SeparatedSyntaxList<QualifierSyntax> QualifierList 
+		{ 
+			get
+			{
+				var red = this.GetRed(ref this._qualifierList, 1);
+				if (red != null)
+				{
+					return new MetaDslx.CodeAnalysis.SeparatedSyntaxList<QualifierSyntax>(red, this.GetChildIndex(1), reversed: false);
+				}
+				return default;
+			} 
+		}
+	
+	    protected override SyntaxNode GetNodeSlot(int index)
+	    {
+	        switch (index)
+	        {
+				case 1: return this.GetRed(ref this._qualifierList, 1);
+				default: return null;
+	        }
+	    }
+	
+	    protected override SyntaxNode GetCachedSlot(int index)
+	    {
+	        switch (index)
+	        {
+				case 1: return this._qualifierList;
+				default: return null;
+	        }
+	    }
+	
+	    public PropertyRedefinesSyntax WithKRedefines(SyntaxToken kRedefines)
+		{
+			return this.Update(kRedefines, this.QualifierList);
+		}
+	
+	    public PropertyRedefinesSyntax WithQualifierList(MetaDslx.CodeAnalysis.SeparatedSyntaxList<QualifierSyntax> qualifierList)
+		{
+			return this.Update(this.KRedefines, qualifierList);
+		}
+	
+	    public PropertyRedefinesSyntax AddQualifierList(params QualifierSyntax[] qualifierList)
+		{
+			return this.WithQualifierList(this.QualifierList.AddRange(qualifierList));
+		}
+	
+	    public PropertyRedefinesSyntax Update(SyntaxToken kRedefines, MetaDslx.CodeAnalysis.SeparatedSyntaxList<QualifierSyntax> qualifierList)
+	    {
+	        if (this.KRedefines != kRedefines || this.QualifierList != qualifierList)
+	        {
+	            var newNode = MetaCoreLanguage.Instance.SyntaxFactory.PropertyRedefines(kRedefines, qualifierList);
+	            var annotations = this.GetAnnotations();
+	            if (annotations != null && annotations.Length > 0)
+	               newNode = newNode.WithAnnotations(annotations);
+				return (PropertyRedefinesSyntax)newNode;
+	        }
+	        return this;
+	    }
+	
+	    public override TResult Accept<TArg, TResult>(IMetaCoreSyntaxVisitor<TArg, TResult> visitor, TArg argument)
+	    {
+	        return visitor.VisitPropertyRedefines(this, argument);
+	    }
+	
+	    public override TResult Accept<TResult>(IMetaCoreSyntaxVisitor<TResult> visitor)
+	    {
+	        return visitor.VisitPropertyRedefines(this);
+	    }
+	
+	    public override void Accept(IMetaCoreSyntaxVisitor visitor)
+	    {
+	        visitor.VisitPropertyRedefines(this);
 	    }
 	
 	}
@@ -2500,6 +2725,469 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
 	    public override void Accept(IMetaCoreSyntaxVisitor visitor)
 	    {
 	        visitor.VisitBaseClassesBlock1(this);
+	    }
+	
+	}
+	public abstract class MetaPropertyBlock2Syntax : MetaCoreSyntaxNode
+	{
+	    protected MetaPropertyBlock2Syntax(InternalSyntaxNode green, MetaCoreSyntaxTree syntaxTree, int position)
+	        : base(green, syntaxTree, position)
+	    {
+	    }
+	
+	    protected MetaPropertyBlock2Syntax(InternalSyntaxNode green, MetaCoreSyntaxNode parent, int position)
+	        : base(green, parent, position)
+	    {
+	    }
+	}
+	
+	public sealed class MetaPropertyBlock2Alt1Syntax : MetaPropertyBlock2Syntax
+	{
+		private PropertyOppositeSyntax _propertyOpposite;
+	
+	    public MetaPropertyBlock2Alt1Syntax(InternalSyntaxNode green, MetaCoreSyntaxTree syntaxTree, int position)
+	        : base(green, syntaxTree, position)
+	    {
+	    }
+	
+	    public MetaPropertyBlock2Alt1Syntax(InternalSyntaxNode green, MetaCoreSyntaxNode parent, int position)
+	        : base(green, parent, position)
+	    {
+	    }
+	
+	    public PropertyOppositeSyntax PropertyOpposite => this.GetRed(ref this._propertyOpposite, 0);
+	
+	    protected override SyntaxNode GetNodeSlot(int index)
+	    {
+	        switch (index)
+	        {
+				case 0: return this.GetRed(ref this._propertyOpposite, 0);
+				default: return null;
+	        }
+	    }
+	
+	    protected override SyntaxNode GetCachedSlot(int index)
+	    {
+	        switch (index)
+	        {
+				case 0: return this._propertyOpposite;
+				default: return null;
+	        }
+	    }
+	
+	    public MetaPropertyBlock2Alt1Syntax WithPropertyOpposite(PropertyOppositeSyntax propertyOpposite)
+		{
+			return this.Update(propertyOpposite);
+		}
+	
+	    public MetaPropertyBlock2Alt1Syntax Update(PropertyOppositeSyntax propertyOpposite)
+	    {
+	        if (this.PropertyOpposite != propertyOpposite)
+	        {
+	            var newNode = MetaCoreLanguage.Instance.SyntaxFactory.MetaPropertyBlock2Alt1(propertyOpposite);
+	            var annotations = this.GetAnnotations();
+	            if (annotations != null && annotations.Length > 0)
+	               newNode = newNode.WithAnnotations(annotations);
+				return (MetaPropertyBlock2Alt1Syntax)newNode;
+	        }
+	        return this;
+	    }
+	
+	    public override TResult Accept<TArg, TResult>(IMetaCoreSyntaxVisitor<TArg, TResult> visitor, TArg argument)
+	    {
+	        return visitor.VisitMetaPropertyBlock2Alt1(this, argument);
+	    }
+	
+	    public override TResult Accept<TResult>(IMetaCoreSyntaxVisitor<TResult> visitor)
+	    {
+	        return visitor.VisitMetaPropertyBlock2Alt1(this);
+	    }
+	
+	    public override void Accept(IMetaCoreSyntaxVisitor visitor)
+	    {
+	        visitor.VisitMetaPropertyBlock2Alt1(this);
+	    }
+	
+	}
+	public sealed class MetaPropertyBlock2Alt2Syntax : MetaPropertyBlock2Syntax
+	{
+		private PropertySubsetsSyntax _propertySubsets;
+	
+	    public MetaPropertyBlock2Alt2Syntax(InternalSyntaxNode green, MetaCoreSyntaxTree syntaxTree, int position)
+	        : base(green, syntaxTree, position)
+	    {
+	    }
+	
+	    public MetaPropertyBlock2Alt2Syntax(InternalSyntaxNode green, MetaCoreSyntaxNode parent, int position)
+	        : base(green, parent, position)
+	    {
+	    }
+	
+	    public PropertySubsetsSyntax PropertySubsets => this.GetRed(ref this._propertySubsets, 0);
+	
+	    protected override SyntaxNode GetNodeSlot(int index)
+	    {
+	        switch (index)
+	        {
+				case 0: return this.GetRed(ref this._propertySubsets, 0);
+				default: return null;
+	        }
+	    }
+	
+	    protected override SyntaxNode GetCachedSlot(int index)
+	    {
+	        switch (index)
+	        {
+				case 0: return this._propertySubsets;
+				default: return null;
+	        }
+	    }
+	
+	    public MetaPropertyBlock2Alt2Syntax WithPropertySubsets(PropertySubsetsSyntax propertySubsets)
+		{
+			return this.Update(propertySubsets);
+		}
+	
+	    public MetaPropertyBlock2Alt2Syntax Update(PropertySubsetsSyntax propertySubsets)
+	    {
+	        if (this.PropertySubsets != propertySubsets)
+	        {
+	            var newNode = MetaCoreLanguage.Instance.SyntaxFactory.MetaPropertyBlock2Alt2(propertySubsets);
+	            var annotations = this.GetAnnotations();
+	            if (annotations != null && annotations.Length > 0)
+	               newNode = newNode.WithAnnotations(annotations);
+				return (MetaPropertyBlock2Alt2Syntax)newNode;
+	        }
+	        return this;
+	    }
+	
+	    public override TResult Accept<TArg, TResult>(IMetaCoreSyntaxVisitor<TArg, TResult> visitor, TArg argument)
+	    {
+	        return visitor.VisitMetaPropertyBlock2Alt2(this, argument);
+	    }
+	
+	    public override TResult Accept<TResult>(IMetaCoreSyntaxVisitor<TResult> visitor)
+	    {
+	        return visitor.VisitMetaPropertyBlock2Alt2(this);
+	    }
+	
+	    public override void Accept(IMetaCoreSyntaxVisitor visitor)
+	    {
+	        visitor.VisitMetaPropertyBlock2Alt2(this);
+	    }
+	
+	}
+	public sealed class MetaPropertyBlock2Alt3Syntax : MetaPropertyBlock2Syntax
+	{
+		private PropertyRedefinesSyntax _propertyRedefines;
+	
+	    public MetaPropertyBlock2Alt3Syntax(InternalSyntaxNode green, MetaCoreSyntaxTree syntaxTree, int position)
+	        : base(green, syntaxTree, position)
+	    {
+	    }
+	
+	    public MetaPropertyBlock2Alt3Syntax(InternalSyntaxNode green, MetaCoreSyntaxNode parent, int position)
+	        : base(green, parent, position)
+	    {
+	    }
+	
+	    public PropertyRedefinesSyntax PropertyRedefines => this.GetRed(ref this._propertyRedefines, 0);
+	
+	    protected override SyntaxNode GetNodeSlot(int index)
+	    {
+	        switch (index)
+	        {
+				case 0: return this.GetRed(ref this._propertyRedefines, 0);
+				default: return null;
+	        }
+	    }
+	
+	    protected override SyntaxNode GetCachedSlot(int index)
+	    {
+	        switch (index)
+	        {
+				case 0: return this._propertyRedefines;
+				default: return null;
+	        }
+	    }
+	
+	    public MetaPropertyBlock2Alt3Syntax WithPropertyRedefines(PropertyRedefinesSyntax propertyRedefines)
+		{
+			return this.Update(propertyRedefines);
+		}
+	
+	    public MetaPropertyBlock2Alt3Syntax Update(PropertyRedefinesSyntax propertyRedefines)
+	    {
+	        if (this.PropertyRedefines != propertyRedefines)
+	        {
+	            var newNode = MetaCoreLanguage.Instance.SyntaxFactory.MetaPropertyBlock2Alt3(propertyRedefines);
+	            var annotations = this.GetAnnotations();
+	            if (annotations != null && annotations.Length > 0)
+	               newNode = newNode.WithAnnotations(annotations);
+				return (MetaPropertyBlock2Alt3Syntax)newNode;
+	        }
+	        return this;
+	    }
+	
+	    public override TResult Accept<TArg, TResult>(IMetaCoreSyntaxVisitor<TArg, TResult> visitor, TArg argument)
+	    {
+	        return visitor.VisitMetaPropertyBlock2Alt3(this, argument);
+	    }
+	
+	    public override TResult Accept<TResult>(IMetaCoreSyntaxVisitor<TResult> visitor)
+	    {
+	        return visitor.VisitMetaPropertyBlock2Alt3(this);
+	    }
+	
+	    public override void Accept(IMetaCoreSyntaxVisitor visitor)
+	    {
+	        visitor.VisitMetaPropertyBlock2Alt3(this);
+	    }
+	
+	}
+	public sealed class PropertyOppositeBlock1Syntax : MetaCoreSyntaxNode
+	{
+		private QualifierSyntax _oppositeProperties;
+	
+	    public PropertyOppositeBlock1Syntax(InternalSyntaxNode green, MetaCoreSyntaxTree syntaxTree, int position)
+	        : base(green, syntaxTree, position)
+	    {
+	    }
+	
+	    public PropertyOppositeBlock1Syntax(InternalSyntaxNode green, MetaCoreSyntaxNode parent, int position)
+	        : base(green, parent, position)
+	    {
+	    }
+	
+	    public SyntaxToken TComma 
+		{ 
+			get 
+			{ 
+				var green = (global::MetaDslx.Bootstrap.MetaModel.Compiler.Syntax.InternalSyntax.PropertyOppositeBlock1Green)this.Green;
+				var greenToken = green.TComma;
+				return new SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
+			}
+		}
+	    public QualifierSyntax OppositeProperties => this.GetRed(ref this._oppositeProperties, 1);
+	
+	    protected override SyntaxNode GetNodeSlot(int index)
+	    {
+	        switch (index)
+	        {
+				case 1: return this.GetRed(ref this._oppositeProperties, 1);
+				default: return null;
+	        }
+	    }
+	
+	    protected override SyntaxNode GetCachedSlot(int index)
+	    {
+	        switch (index)
+	        {
+				case 1: return this._oppositeProperties;
+				default: return null;
+	        }
+	    }
+	
+	    public PropertyOppositeBlock1Syntax WithTComma(SyntaxToken tComma)
+		{
+			return this.Update(tComma, this.OppositeProperties);
+		}
+	
+	    public PropertyOppositeBlock1Syntax WithOppositeProperties(QualifierSyntax oppositeProperties)
+		{
+			return this.Update(this.TComma, oppositeProperties);
+		}
+	
+	    public PropertyOppositeBlock1Syntax Update(SyntaxToken tComma, QualifierSyntax oppositeProperties)
+	    {
+	        if (this.TComma != tComma || this.OppositeProperties != oppositeProperties)
+	        {
+	            var newNode = MetaCoreLanguage.Instance.SyntaxFactory.PropertyOppositeBlock1(tComma, oppositeProperties);
+	            var annotations = this.GetAnnotations();
+	            if (annotations != null && annotations.Length > 0)
+	               newNode = newNode.WithAnnotations(annotations);
+				return (PropertyOppositeBlock1Syntax)newNode;
+	        }
+	        return this;
+	    }
+	
+	    public override TResult Accept<TArg, TResult>(IMetaCoreSyntaxVisitor<TArg, TResult> visitor, TArg argument)
+	    {
+	        return visitor.VisitPropertyOppositeBlock1(this, argument);
+	    }
+	
+	    public override TResult Accept<TResult>(IMetaCoreSyntaxVisitor<TResult> visitor)
+	    {
+	        return visitor.VisitPropertyOppositeBlock1(this);
+	    }
+	
+	    public override void Accept(IMetaCoreSyntaxVisitor visitor)
+	    {
+	        visitor.VisitPropertyOppositeBlock1(this);
+	    }
+	
+	}
+	public sealed class PropertySubsetsBlock1Syntax : MetaCoreSyntaxNode
+	{
+		private QualifierSyntax _subsettedProperties;
+	
+	    public PropertySubsetsBlock1Syntax(InternalSyntaxNode green, MetaCoreSyntaxTree syntaxTree, int position)
+	        : base(green, syntaxTree, position)
+	    {
+	    }
+	
+	    public PropertySubsetsBlock1Syntax(InternalSyntaxNode green, MetaCoreSyntaxNode parent, int position)
+	        : base(green, parent, position)
+	    {
+	    }
+	
+	    public SyntaxToken TComma 
+		{ 
+			get 
+			{ 
+				var green = (global::MetaDslx.Bootstrap.MetaModel.Compiler.Syntax.InternalSyntax.PropertySubsetsBlock1Green)this.Green;
+				var greenToken = green.TComma;
+				return new SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
+			}
+		}
+	    public QualifierSyntax SubsettedProperties => this.GetRed(ref this._subsettedProperties, 1);
+	
+	    protected override SyntaxNode GetNodeSlot(int index)
+	    {
+	        switch (index)
+	        {
+				case 1: return this.GetRed(ref this._subsettedProperties, 1);
+				default: return null;
+	        }
+	    }
+	
+	    protected override SyntaxNode GetCachedSlot(int index)
+	    {
+	        switch (index)
+	        {
+				case 1: return this._subsettedProperties;
+				default: return null;
+	        }
+	    }
+	
+	    public PropertySubsetsBlock1Syntax WithTComma(SyntaxToken tComma)
+		{
+			return this.Update(tComma, this.SubsettedProperties);
+		}
+	
+	    public PropertySubsetsBlock1Syntax WithSubsettedProperties(QualifierSyntax subsettedProperties)
+		{
+			return this.Update(this.TComma, subsettedProperties);
+		}
+	
+	    public PropertySubsetsBlock1Syntax Update(SyntaxToken tComma, QualifierSyntax subsettedProperties)
+	    {
+	        if (this.TComma != tComma || this.SubsettedProperties != subsettedProperties)
+	        {
+	            var newNode = MetaCoreLanguage.Instance.SyntaxFactory.PropertySubsetsBlock1(tComma, subsettedProperties);
+	            var annotations = this.GetAnnotations();
+	            if (annotations != null && annotations.Length > 0)
+	               newNode = newNode.WithAnnotations(annotations);
+				return (PropertySubsetsBlock1Syntax)newNode;
+	        }
+	        return this;
+	    }
+	
+	    public override TResult Accept<TArg, TResult>(IMetaCoreSyntaxVisitor<TArg, TResult> visitor, TArg argument)
+	    {
+	        return visitor.VisitPropertySubsetsBlock1(this, argument);
+	    }
+	
+	    public override TResult Accept<TResult>(IMetaCoreSyntaxVisitor<TResult> visitor)
+	    {
+	        return visitor.VisitPropertySubsetsBlock1(this);
+	    }
+	
+	    public override void Accept(IMetaCoreSyntaxVisitor visitor)
+	    {
+	        visitor.VisitPropertySubsetsBlock1(this);
+	    }
+	
+	}
+	public sealed class PropertyRedefinesBlock1Syntax : MetaCoreSyntaxNode
+	{
+		private QualifierSyntax _redefinedProperties;
+	
+	    public PropertyRedefinesBlock1Syntax(InternalSyntaxNode green, MetaCoreSyntaxTree syntaxTree, int position)
+	        : base(green, syntaxTree, position)
+	    {
+	    }
+	
+	    public PropertyRedefinesBlock1Syntax(InternalSyntaxNode green, MetaCoreSyntaxNode parent, int position)
+	        : base(green, parent, position)
+	    {
+	    }
+	
+	    public SyntaxToken TComma 
+		{ 
+			get 
+			{ 
+				var green = (global::MetaDslx.Bootstrap.MetaModel.Compiler.Syntax.InternalSyntax.PropertyRedefinesBlock1Green)this.Green;
+				var greenToken = green.TComma;
+				return new SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
+			}
+		}
+	    public QualifierSyntax RedefinedProperties => this.GetRed(ref this._redefinedProperties, 1);
+	
+	    protected override SyntaxNode GetNodeSlot(int index)
+	    {
+	        switch (index)
+	        {
+				case 1: return this.GetRed(ref this._redefinedProperties, 1);
+				default: return null;
+	        }
+	    }
+	
+	    protected override SyntaxNode GetCachedSlot(int index)
+	    {
+	        switch (index)
+	        {
+				case 1: return this._redefinedProperties;
+				default: return null;
+	        }
+	    }
+	
+	    public PropertyRedefinesBlock1Syntax WithTComma(SyntaxToken tComma)
+		{
+			return this.Update(tComma, this.RedefinedProperties);
+		}
+	
+	    public PropertyRedefinesBlock1Syntax WithRedefinedProperties(QualifierSyntax redefinedProperties)
+		{
+			return this.Update(this.TComma, redefinedProperties);
+		}
+	
+	    public PropertyRedefinesBlock1Syntax Update(SyntaxToken tComma, QualifierSyntax redefinedProperties)
+	    {
+	        if (this.TComma != tComma || this.RedefinedProperties != redefinedProperties)
+	        {
+	            var newNode = MetaCoreLanguage.Instance.SyntaxFactory.PropertyRedefinesBlock1(tComma, redefinedProperties);
+	            var annotations = this.GetAnnotations();
+	            if (annotations != null && annotations.Length > 0)
+	               newNode = newNode.WithAnnotations(annotations);
+				return (PropertyRedefinesBlock1Syntax)newNode;
+	        }
+	        return this;
+	    }
+	
+	    public override TResult Accept<TArg, TResult>(IMetaCoreSyntaxVisitor<TArg, TResult> visitor, TArg argument)
+	    {
+	        return visitor.VisitPropertyRedefinesBlock1(this, argument);
+	    }
+	
+	    public override TResult Accept<TResult>(IMetaCoreSyntaxVisitor<TResult> visitor)
+	    {
+	        return visitor.VisitPropertyRedefinesBlock1(this);
+	    }
+	
+	    public override void Accept(IMetaCoreSyntaxVisitor visitor)
+	    {
+	        visitor.VisitPropertyRedefinesBlock1(this);
 	    }
 	
 	}

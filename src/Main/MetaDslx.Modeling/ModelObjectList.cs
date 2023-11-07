@@ -1,4 +1,5 @@
-﻿using MetaDslx.CodeAnalysis.PooledObjects;
+﻿using Autofac.Features.Indexed;
+using MetaDslx.CodeAnalysis.PooledObjects;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -35,7 +36,7 @@ namespace MetaDslx.Modeling
             get => _items[index]; 
             set
             {
-                if (Owner.Model.IsReadOnly) throw new ModelException($"Error assigning '{value}' to '{_slot.SlotProperty.QualifiedName}[{index}]' in '{Owner}': the model '{Owner.Model}' is read only.");
+                Owner.Model.CheckReadOnly($"Error assigning '{value}' to '{_slot.SlotProperty.QualifiedName}[{index}]' in '{Owner}'");
                 if (Owner.Model.ValidationOptions.ValidateReadOnly && _slot.Flags.HasFlag(ModelPropertyFlags.ReadOnly))
                 {
                     _slot.ThrowModelException(mp => mp.IsReadOnly, mp => $"Error assigning '{value}' to '{mp.QualifiedName}[{index}]' in '{Owner}': the property is read only.");
@@ -76,7 +77,7 @@ namespace MetaDslx.Modeling
 
         public void Add(T item)
         {
-            if (Owner.Model.IsReadOnly) throw new ModelException($"Error adding '{item}' to '{_slot.SlotProperty.QualifiedName}' in '{Owner}': the model '{Owner.Model}' is read only.");
+            Owner.Model.CheckReadOnly($"Error adding '{item}' to '{_slot.SlotProperty.QualifiedName}' in '{Owner}'");
             if (Owner.Model.ValidationOptions.ValidateReadOnly && _slot.Flags.HasFlag(ModelPropertyFlags.ReadOnly))
             {
                 _slot.ThrowModelException(mp => mp.IsReadOnly, mp => $"Error adding '{item}' to '{mp.QualifiedName}' in '{Owner}': the property is read only.");
@@ -86,7 +87,7 @@ namespace MetaDslx.Modeling
 
         public void Clear()
         {
-            if (Owner.Model.IsReadOnly) throw new ModelException($"Error clearing '{_slot.SlotProperty.QualifiedName}' in '{Owner}': the model '{Owner.Model}' is read only.");
+            Owner.Model.CheckReadOnly($"Error clearing '{_slot.SlotProperty.QualifiedName}' in '{Owner}'");
             if (Owner.Model.ValidationOptions.ValidateReadOnly && _slot.Flags.HasFlag(ModelPropertyFlags.ReadOnly))
             {
                 _slot.ThrowModelException(mp => mp.IsReadOnly, mp => $"Error clearing '{mp.QualifiedName}' in '{Owner}': the property is read only.");
@@ -116,7 +117,7 @@ namespace MetaDslx.Modeling
 
         public void Insert(int index, T item)
         {
-            if (Owner.Model.IsReadOnly) throw new ModelException($"Error inserting '{item}' at '{_slot.SlotProperty.QualifiedName}[{index}]' in '{Owner}': the model '{Owner.Model}' is read only.");
+            Owner.Model.CheckReadOnly($"Error inserting '{item}' at '{_slot.SlotProperty.QualifiedName}[{index}]' in '{Owner}'");
             if (Owner.Model.ValidationOptions.ValidateReadOnly && _slot.Flags.HasFlag(ModelPropertyFlags.ReadOnly))
             {
                 _slot.ThrowModelException(mp => mp.IsReadOnly, mp => $"Error inserting '{item}' at '{mp.QualifiedName}[{index}]' in '{Owner}': the property is read only.");
@@ -133,7 +134,7 @@ namespace MetaDslx.Modeling
 
         public void RemoveAt(int index)
         {
-            if (Owner.Model.IsReadOnly) throw new ModelException($"Error removing item at '{_slot.SlotProperty.QualifiedName}[{index}]' in '{Owner}': the model '{Owner.Model}' is read only.");
+            Owner.Model.CheckReadOnly($"Error removing item at '{_slot.SlotProperty.QualifiedName}[{index}]' in '{Owner}'");
             if (Owner.Model.ValidationOptions.ValidateReadOnly && _slot.Flags.HasFlag(ModelPropertyFlags.ReadOnly))
             {
                 _slot.ThrowModelException(mp => mp.IsReadOnly, mp => $"Error removing item at '{mp.QualifiedName}[{index}]' in '{Owner}': the property is read only.");

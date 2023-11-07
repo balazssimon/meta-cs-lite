@@ -74,7 +74,7 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
         {
         }
 
-        public override MetaCoreLanguage Language => MetaCoreLanguage.Instance;
+        public override Language Language => MetaCoreLanguage.Instance;
 
         public new MetaCoreParseOptions WithKind(SourceCodeKind kind)
         {
@@ -145,14 +145,14 @@ namespace MetaDslx.Bootstrap.MetaModel.Compiler.Syntax
         protected override bool IsFeatureEnabled(string feature)
         {
             MetaCoreLanguageVersion availableVersion = LanguageVersion;
-            MetaCoreLanguageVersion requiredVersion = Language.SyntaxFacts.GetRequiredLanguageVersion(feature);
+            MetaCoreLanguageVersion requiredVersion = MetaCoreLanguage.Instance.SyntaxFacts.GetRequiredLanguageVersion(feature);
             return availableVersion >= requiredVersion;
         }
 
         public override Diagnostic? GetDiagnosticForFeature(string feature)
         {
             MetaCoreLanguageVersion availableVersion = LanguageVersion;
-            MetaCoreLanguageVersion requiredVersion = Language.SyntaxFacts.GetRequiredLanguageVersion(feature);
+            MetaCoreLanguageVersion requiredVersion = MetaCoreLanguage.Instance.SyntaxFacts.GetRequiredLanguageVersion(feature);
             if (availableVersion < requiredVersion)
             {
                 return Diagnostic.Create(CommonErrorCode.ERR_FeatureNotAvailableInVersion, Location.None, feature, Language.Name, availableVersion.ToDisplayString(), requiredVersion.ToDisplayString());
