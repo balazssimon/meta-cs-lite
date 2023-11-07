@@ -2,36 +2,18 @@
 	<Import Project="..\..\Versions.props" />
 
 	<PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <TargetFramework>net6.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
-	<ItemGroup>
-		<PackageReference Include="Microsoft.CodeAnalysis.Common" Version="$(MicrosoftCodeAnalysisCSharpVersion)" PrivateAssets="all" />
-		<PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="$(MicrosoftCodeAnalysisCSharpVersion)" PrivateAssets="all" />
-		<PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="$(MicrosoftCodeAnalysisAnalyzersVersion)" PrivateAssets="all" />
-		<PackageReference Include="Antlr4.Runtime.Standard" Version="$(Antlr4RuntimeStandardVersion)" />
-	</ItemGroup>
+		<OutputType>Exe</OutputType>
+		<TargetFramework>net6.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
+	</PropertyGroup>
 
-	<ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
-		<PackageReference Include="System.Memory" Version="$(SystemMemoryVersion)" OutputItemType="Analyzer" />
-		<PackageReference Include="System.Threading.Tasks.Extensions" Version="$(SystemThreadingTasksExtensionsVersion)" OutputItemType="Analyzer" />
-	</ItemGroup>
-	<ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
-		<ProjectReference Include="..\MetaDslx.NetStandard20Extensions\MetaDslx.NetStandard20Extensions.csproj" OutputItemType="Analyzer" />
+	<ItemGroup>
+	  <AdditionalFiles Include="Hello.mm" />
 	</ItemGroup>
 	<ItemGroup>
-		<ProjectReference Include="..\..\Main\MetaDslx.CodeAnalysis.Core\MetaDslx.CodeAnalysis.Core.csproj" OutputItemType="Analyzer" />
-		<ProjectReference Include="..\..\Main\MetaDslx.CodeAnalysis.Common\MetaDslx.CodeAnalysis.Common.csproj" OutputItemType="Analyzer" />
-		<ProjectReference Include="..\..\Main\MetaDslx.Languages.MetaCompiler.Antlr\MetaDslx.Languages.MetaCompiler.Antlr.csproj" OutputItemType="Analyzer" />
-		<ProjectReference Include="..\..\Main\MetaDslx.Languages.MetaCompiler\MetaDslx.Languages.MetaCompiler.csproj" OutputItemType="Analyzer" />
-		<ProjectReference Include="..\..\Main\MetaDslx.Languages.MetaGenerator\MetaDslx.Languages.MetaGenerator.csproj" OutputItemType="Analyzer" />
-		<ProjectReference Include="..\..\Main\MetaDslx.Languages.MetaModel\MetaDslx.Languages.MetaModel.csproj" OutputItemType="Analyzer" />
+		<PackageReference Include="MetaDslx.CodeAnalysis" Version="0.200.0" />
 	</ItemGroup>
-	<ItemGroup>
-		<!--AdditionalFiles Include="Hello.mm" /-->
-	</ItemGroup>
-
 
 </Project>

@@ -17,6 +17,7 @@ namespace MetaDslx.Languages.MetaModel.Generators
 {
     public partial class MetaModelGenerator
     {
+        private bool _isMetaMetaModel;
         private Modeling.Model _model;
         private Model.MetaModel _metaModel;
         private MetaMetaGraph _graph;
@@ -25,8 +26,9 @@ namespace MetaDslx.Languages.MetaModel.Generators
         private ImmutableArray<object> _objects;
         private Dictionary<object, string>? _objectNames;
 
-        public MetaModelGenerator(Modeling.Model model, Model.MetaModel metaModel, MetaMetaGraph graph)
+        public MetaModelGenerator(bool isMetaMetaModel, Modeling.Model model, Model.MetaModel metaModel, MetaMetaGraph graph)
         {
+            _isMetaMetaModel = isMetaMetaModel;
             _model = model;
             _metaModel = metaModel;
             _graph = graph;
@@ -35,6 +37,7 @@ namespace MetaDslx.Languages.MetaModel.Generators
             _objects = model.Objects.ToImmutableArray();
         }
 
+        public bool IsMetaMetaModel => _isMetaMetaModel;
         public Modeling.Model Model => _model;
         public Model.MetaModel MetaModel => _metaModel;
         public string Namespace => _metaModel.Parent.FullName;
@@ -181,7 +184,7 @@ namespace MetaDslx.Languages.MetaModel.Generators
             {
                 return StringUtilities.EncodeString(value.ToString());
             }
-            if (value is MetaPrimitiveType mpt) return $"_{mpt.Name}Type";
+            if (value is MetaPrimitiveType mpt) return IsMetaMetaModel ? $"_{mpt.Name}Type" : $"__MetaMetaModel.{mpt.Name.ToPascalCase()}Type";
             var type = value.GetType();
             if (type.IsPrimitive) return value.ToString();
             return GetName(value);

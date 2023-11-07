@@ -15,21 +15,18 @@ namespace MetaDslx.Modeling.Meta
         private static readonly MetaClassComparer CompareByInheritance = new MetaClassComparer(false);
         private static readonly MetaClassComparer CompareByInheritanceReverse = new MetaClassComparer(true);
 
-        private Dictionary<TType, MetaClass<TType, TProperty, TOperation>?> _classTypes;
+        private HashSet<TType> _classTypes;
+        private Dictionary<TType, MetaClass<TType, TProperty, TOperation>> _classMap;
         private ImmutableSortedSet<MetaClass<TType, TProperty, TOperation>> _classes;
 
         public MetaGraph(IEnumerable<TType> classTypes)
         {
-            _classTypes = new Dictionary<TType, MetaClass<TType, TProperty, TOperation>?>();
-            foreach (var classType in classTypes)
-            {
-                _classTypes.Add(classType, null);
-            }
+            _classTypes = new HashSet<TType>(classTypes);
         }
 
         public MetaClass<TType, TProperty, TOperation> GetMetaClass(TType classType)
         {
-            return _classTypes[classType];
+            return _classMap[classType];
         }
 
         public ImmutableSortedSet<MetaClass<TType, TProperty, TOperation>> Compute()
@@ -52,14 +49,16 @@ namespace MetaDslx.Modeling.Meta
 
         private void CreateClasses()
         {
+            var classMap = new Dictionary<TType, MetaClass<TType, TProperty, TOperation>>();
             var classes = ArrayBuilder<MetaClass<TType, TProperty, TOperation>>.GetInstance();
-            foreach (var classType in _classTypes.Keys)
+            foreach (var classType in _classTypes)
             {
                 var cls = MakeClass(classType);
-                _classTypes[classType] = cls;
+                classMap[classType] = cls;
                 classes.Add(cls);
             }
             _classes = SortClassesByInheritance(classes.ToImmutableAndFree());
+            _classMap = classMap;
         }
 
         private void CreateProperties()
@@ -114,7 +113,7 @@ namespace MetaDslx.Modeling.Meta
                     var current = allBaseTypes[i];
                     foreach (var baseType in current.OriginalBaseTypes)
                     {
-                        if (_classTypes.TryGetValue(baseType, out var baseClass))
+                        if (_classMap.TryGetValue(baseType, out var baseClass))
                         {
                             if (!allBaseTypes.Contains(baseClass)) allBaseTypes.Add(baseClass);
                         }
@@ -237,7 +236,7 @@ namespace MetaDslx.Modeling.Meta
             else flags |= ModelPropertyFlags.ReferenceType;
             if (IsEnumType(type)) flags |= ModelPropertyFlags.EnumType;
             if (IsPrimitiveType(type)) flags |= ModelPropertyFlags.BuiltInType;
-            if (_classTypes.Keys.Contains(type)) flags |= ModelPropertyFlags.ModelObjectType;
+            if (_classTypes.Contains(type)) flags |= ModelPropertyFlags.ModelObjectType;
             return flags;
         }
         
@@ -276,7 +275,7 @@ namespace MetaDslx.Modeling.Meta
                 }
                 foreach (var oprop in prop.GetOppositeProperties())
                 {
-                    if (oprop.DeclaringType is not null && _classTypes.TryGetValue(oprop.DeclaringType, out var oppositeClass))
+                    if (oprop.DeclaringType is not null && _classMap.TryGetValue(oprop.DeclaringType, out var oppositeClass))
                     {
                         var oppositeProp = oppositeClass.AllDeclaredProperties.Where(p => ReferenceEquals(p.DeclaringType.UnderlyingType, oprop.DeclaringType) && p.Name == oprop.PropertyName).FirstOrDefault();
                         if (oppositeProp is not null)

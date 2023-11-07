@@ -32,44 +32,64 @@
 		<PackageReference Include="System.Reflection.Metadata" Version="$(SystemReflectionMetadataVersion)" />
 		<PackageReference Include="System.Text.Encoding.CodePages" Version="$(SystemTextEncodingCodePagesVersion)" />
 		<PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="$(SystemRuntimeCompilerServicesUnsafeVersion)" />
+		<PackageReference Include="System.Diagnostics.DiagnosticSource" Version="$(SystemDiagnosticsDiagnosticSourceVersion)" />
 	</ItemGroup>
 	<ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
+		<PackageReference Include="System.Buffers" Version="$(SystemBuffersVersion)" />
+		<PackageReference Include="System.Numerics.Vectors" Version="$(SystemNumericsVectorsVersion)" />
 		<PackageReference Include="System.Memory" Version="$(SystemMemoryVersion)" />
 		<PackageReference Include="System.Threading.Tasks.Extensions" Version="$(SystemThreadingTasksExtensionsVersion)" />
+		<PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="$(MicrosoftBclAsyncInterfacesVersion)" />
 	</ItemGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\MetaDslx.CodeAnalysis.Core\MetaDslx.CodeAnalysis.Core.csproj" PrivateAssets="all" />
 		<ProjectReference Include="..\MetaDslx.CodeAnalysis.Common\MetaDslx.CodeAnalysis.Common.csproj" PrivateAssets="all" />
-		<ProjectReference Include="..\MetaDslx.Languages.MetaModel\MetaDslx.Languages.MetaModel.csproj" PrivateAssets="all" />
 		<ProjectReference Include="..\MetaDslx.Languages.MetaGenerator\MetaDslx.Languages.MetaGenerator.csproj" PrivateAssets="all" />
+		<ProjectReference Include="..\MetaDslx.Modeling\MetaDslx.Modeling.csproj" PrivateAssets="all" />
+		<ProjectReference Include="..\MetaDslx.Languages.MetaModel\MetaDslx.Languages.MetaModel.csproj" PrivateAssets="all" />
 		<ProjectReference Include="..\MetaDslx.Languages.MetaCompiler\MetaDslx.Languages.MetaCompiler.csproj" PrivateAssets="all" />
 		<ProjectReference Include="..\MetaDslx.Languages.MetaCompiler.Antlr\MetaDslx.Languages.MetaCompiler.Antlr.csproj" PrivateAssets="all" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<None Include="$(OutputPath)\netstandard2.0\tools\antlr-4.13.0-complete.jar" Pack="true" PackagePath="analyzers/dotnet/cs/tools" Visible="false" />
-		<None Include="$(OutputPath)\netstandard2.0\Autofac.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+		<None Include="$(USERPROFILE)\.nuget\packages\microsoft.bcl.asyncinterfaces\$(MicrosoftBclAsyncInterfacesVersion)\lib\netstandard2.0\Microsoft.Bcl.AsyncInterfaces.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+		<None Include="$(USERPROFILE)\.nuget\packages\autofac\$(AutofacVersion)\lib\netstandard2.0\Autofac.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+		<None Include="$(USERPROFILE)\.nuget\packages\antlr4.runtime.standard\$(Antlr4RuntimeStandardVersion)\lib\netstandard2.0\Antlr4.Runtime.Standard.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+		<None Include="$(USERPROFILE)\.nuget\packages\system.buffers\$(SystemBuffersVersion)\lib\netstandard2.0\System.Buffers.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+		<None Include="$(USERPROFILE)\.nuget\packages\system.numerics.vectors\$(SystemNumericsVectorsVersion)\lib\netstandard2.0\System.Numerics.Vectors.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+		<None Include="$(USERPROFILE)\.nuget\packages\system.memory\$(SystemMemoryVersion)\lib\netstandard2.0\System.Memory.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+		<None Include="$(USERPROFILE)\.nuget\packages\system.threading.tasks.extensions\$(SystemThreadingTasksExtensionsVersion)\lib\netstandard2.0\System.Threading.Tasks.Extensions.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+		<None Include="$(USERPROFILE)\.nuget\packages\system.runtime.compilerservices.unsafe\$(SystemRuntimeCompilerServicesUnsafeVersion)\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+		<None Include="$(USERPROFILE)\.nuget\packages\system.diagnostics.diagnosticsource\$(SystemDiagnosticsDiagnosticSourceVersion)\lib\netstandard2.0\System.Diagnostics.DiagnosticSource.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
 		<None Include="$(OutputPath)\netstandard2.0\MetaDslx.NetStandard20Extensions.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+		<None Include="$(OutputPath)\netstandard2.0\MetaDslx.CodeAnalysis.Core.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
 		<None Include="$(OutputPath)\netstandard2.0\MetaDslx.CodeAnalysis.Common.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
-		<None Include="$(OutputPath)\netstandard2.0\MetaDslx.Languages.MetaModel.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+		<None Include="$(OutputPath)\netstandard2.0\MetaDslx.Modeling.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
 		<None Include="$(OutputPath)\netstandard2.0\MetaDslx.Languages.MetaGenerator.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+		<None Include="$(OutputPath)\netstandard2.0\MetaDslx.Languages.MetaModel.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
 		<None Include="$(OutputPath)\netstandard2.0\MetaDslx.Languages.MetaCompiler.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
 		<None Include="$(OutputPath)\netstandard2.0\MetaDslx.Languages.MetaCompiler.Antlr.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<None Include="$(OutputPath)\netstandard2.0\MetaDslx.NetStandard20Extensions.dll" Pack="true" PackagePath="lib\netstandard2.0" Visible="false" />
+		<None Include="$(OutputPath)\netstandard2.0\MetaDslx.CodeAnalysis.Core.dll" Pack="true" PackagePath="lib\netstandard2.0" Visible="true" />
 		<None Include="$(OutputPath)\netstandard2.0\MetaDslx.CodeAnalysis.Common.dll" Pack="true" PackagePath="lib\netstandard2.0" Visible="true" />
-		<None Include="$(OutputPath)\netstandard2.0\MetaDslx.Languages.MetaModel.dll" Pack="true" PackagePath="lib\netstandard2.0" Visible="true" />
+		<None Include="$(OutputPath)\netstandard2.0\MetaDslx.Modeling.dll" Pack="true" PackagePath="lib\netstandard2.0" Visible="true" />
 		<None Include="$(OutputPath)\netstandard2.0\MetaDslx.Languages.MetaGenerator.dll" Pack="true" PackagePath="lib\netstandard2.0" Visible="true" />
+		<None Include="$(OutputPath)\netstandard2.0\MetaDslx.Languages.MetaModel.dll" Pack="true" PackagePath="lib\netstandard2.0" Visible="true" />
 		<None Include="$(OutputPath)\netstandard2.0\MetaDslx.Languages.MetaCompiler.dll" Pack="true" PackagePath="lib\netstandard2.0" Visible="true" />
 		<None Include="$(OutputPath)\netstandard2.0\MetaDslx.Languages.MetaCompiler.Antlr.dll" Pack="true" PackagePath="lib\netstandard2.0" Visible="true" />
 	</ItemGroup>
 
 	<ItemGroup>
+		<None Include="$(OutputPath)\netstandard2.1\MetaDslx.CodeAnalysis.Core.dll" Pack="true" PackagePath="lib\netstandard2.1" Visible="true" />
 		<None Include="$(OutputPath)\netstandard2.1\MetaDslx.CodeAnalysis.Common.dll" Pack="true" PackagePath="lib\netstandard2.1" Visible="true" />
-		<None Include="$(OutputPath)\netstandard2.1\MetaDslx.Languages.MetaModel.dll" Pack="true" PackagePath="lib\netstandard2.1" Visible="true" />
+		<None Include="$(OutputPath)\netstandard2.1\MetaDslx.Modeling.dll" Pack="true" PackagePath="lib\netstandard2.1" Visible="true" />
 		<None Include="$(OutputPath)\netstandard2.1\MetaDslx.Languages.MetaGenerator.dll" Pack="true" PackagePath="lib\netstandard2.1" Visible="true" />
+		<None Include="$(OutputPath)\netstandard2.1\MetaDslx.Languages.MetaModel.dll" Pack="true" PackagePath="lib\netstandard2.1" Visible="true" />
 		<None Include="$(OutputPath)\netstandard2.1\MetaDslx.Languages.MetaCompiler.dll" Pack="true" PackagePath="lib\netstandard2.1" Visible="true" />
 		<None Include="$(OutputPath)\netstandard2.1\MetaDslx.Languages.MetaCompiler.Antlr.dll" Pack="true" PackagePath="lib\netstandard2.1" Visible="true" />
 	</ItemGroup>

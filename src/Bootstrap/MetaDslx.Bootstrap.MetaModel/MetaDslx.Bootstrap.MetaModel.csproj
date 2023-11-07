@@ -25,8 +25,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<!--ProjectReference Include="..\..\Examples\MetaDslx.Examples.MetaModel.Model\MetaDslx.Examples.MetaModel.Model.csproj" /-->
-		<!--ProjectReference Include="..\MetaDslx.Bootstrap.MetaModel\MetaDslx.Bootstrap.MetaModel.csproj" /-->
 		<ProjectReference Include="..\..\Main\MetaDslx.CodeAnalysis.Core\MetaDslx.CodeAnalysis.Core.csproj" OutputItemType="Analyzer" />
 		<ProjectReference Include="..\..\Main\MetaDslx.CodeAnalysis.Common\MetaDslx.CodeAnalysis.Common.csproj" OutputItemType="Analyzer" />
 		<ProjectReference Include="..\..\Main\MetaDslx.Languages.MetaGenerator\MetaDslx.Languages.MetaGenerator.csproj" OutputItemType="Analyzer" />

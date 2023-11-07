@@ -10,6 +10,8 @@ generator MetaModelGenerator;
 template Generate()
 namespace [Namespace]
 {
+	using __MetaMetaModel = global::MetaDslx.Languages.MetaModel.Model.Meta;
+	using __MetaModelFactory = global::MetaDslx.Languages.MetaModel.Model.MetaModelFactory;
 	using __Model = global::MetaDslx.Modeling.Model;
 	using __MetaModel = global::MetaDslx.Modeling.MetaModel;
 	using __IModelObject = global::MetaDslx.Modeling.IModelObject;
@@ -76,7 +78,7 @@ public sealed class [mm.Name] : __MetaModel, I[mm.Name]
 	// If there is an error at the following line, create a new class called 'Custom[mm.Name]Implementation'
 	// inheriting from the class 'Custom[mm.Name]ImplementationBase' and provide the custom implementation
 	// for the derived properties and operations defined in the metamodel
-	internal static readonly Custom[mm.Name]ImplementationBase __CustomImpl;
+	internal static readonly Custom[mm.Name]ImplementationBase __CustomImpl = new Custom[mm.Name]Implementation();
 
 	private static readonly [mm.Name] _instance;
 	public static [mm.Name] Instance => _instance;
@@ -92,7 +94,6 @@ public sealed class [mm.Name] : __MetaModel, I[mm.Name]
 
 	static [mm.Name]()
 	{
-		__CustomImpl = new Custom[mm.Name]Implementation();
 		[foreach (var cls in Classes)]
 			[var metaCls = Graph.GetMetaClass(cls)]
 			[foreach (var prop in metaCls.DeclaredProperties)]
@@ -130,7 +131,7 @@ public sealed class [mm.Name] : __MetaModel, I[mm.Name]
 		[end foreach]
 		_modelObjectInfosByName = modelObjectInfosByName.ToImmutable();
 		_model = new __Model();
-		var f = new [mm.Name]ModelFactory(_model);
+		var f = new __MetaModelFactory(_model);
 		[foreach (var c in mm.Parent.Declarations.OfType<MetaConstant>())]
 		_[c.Name.ToCamelCase()] = f.[c.Type]();
 		[end foreach]
