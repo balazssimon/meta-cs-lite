@@ -39,5 +39,11 @@ namespace MetaDslx.Modeling
         ImmutableArray<ModelProperty> GetRedefiningProperties(ModelProperty property);
         ImmutableArray<ModelProperty> GetHiddenProperties(ModelProperty property);
         ImmutableArray<ModelProperty> GetHidingProperties(ModelProperty property);
+
+        ImmutableArray<ModelOperation> DeclaredOperations { get; }
+        ImmutableArray<ModelOperation> AllDeclaredOperations { get; }
+        ImmutableArray<ModelOperation> PublicOperations { get; }
+        ImmutableArray<ModelOperation> GetOverridenOperations(ModelOperation property);
+        ImmutableArray<ModelOperation> GetOverridingOperations(ModelOperation property);
     }
 }

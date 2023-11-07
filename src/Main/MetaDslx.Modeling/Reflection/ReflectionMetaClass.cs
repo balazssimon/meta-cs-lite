@@ -8,7 +8,7 @@ using MetaDslx.Modeling.Meta;
 
 namespace MetaDslx.Modeling.Reflection
 {
-    internal class ReflectionMetaClass : MetaClass<Type, PropertyInfo>
+    internal class ReflectionMetaClass : MetaClass<Type, PropertyInfo, MethodInfo>
     {
         private string? _symbolType;
 
@@ -42,6 +42,8 @@ namespace MetaDslx.Modeling.Reflection
                 return UnderlyingType.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly).OrderBy(p => p.Name).ToImmutableArray();
             }
         }
+
+        public override ImmutableArray<MethodInfo> OriginalDeclaredOperations => ImmutableArray<MethodInfo>.Empty;
 
         public override string ToString()
         {

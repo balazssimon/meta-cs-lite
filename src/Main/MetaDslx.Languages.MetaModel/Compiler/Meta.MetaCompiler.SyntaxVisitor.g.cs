@@ -31,6 +31,8 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
 		void VisitClassNameAlt2(ClassNameAlt2Syntax node);
 		void VisitBaseClasses(BaseClassesSyntax node);
 		void VisitClassBody(ClassBodySyntax node);
+		void VisitClassMemberAlt1(ClassMemberAlt1Syntax node);
+		void VisitClassMemberAlt2(ClassMemberAlt2Syntax node);
 		void VisitMetaProperty(MetaPropertySyntax node);
 		void VisitPropertyNameAlt1(PropertyNameAlt1Syntax node);
 		void VisitPropertyNameAlt2(PropertyNameAlt2Syntax node);
@@ -133,6 +135,16 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
 		}
 
 		public virtual void VisitClassBody(ClassBodySyntax node)
+		{
+		    this.DefaultVisit(node);
+		}
+
+		public virtual void VisitClassMemberAlt1(ClassMemberAlt1Syntax node)
+		{
+		    this.DefaultVisit(node);
+		}
+
+		public virtual void VisitClassMemberAlt2(ClassMemberAlt2Syntax node)
 		{
 		    this.DefaultVisit(node);
 		}
@@ -290,6 +302,8 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
 		TResult VisitClassNameAlt2(ClassNameAlt2Syntax node);
 		TResult VisitBaseClasses(BaseClassesSyntax node);
 		TResult VisitClassBody(ClassBodySyntax node);
+		TResult VisitClassMemberAlt1(ClassMemberAlt1Syntax node);
+		TResult VisitClassMemberAlt2(ClassMemberAlt2Syntax node);
 		TResult VisitMetaProperty(MetaPropertySyntax node);
 		TResult VisitPropertyNameAlt1(PropertyNameAlt1Syntax node);
 		TResult VisitPropertyNameAlt2(PropertyNameAlt2Syntax node);
@@ -392,6 +406,16 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
 		}
 
 		public virtual TResult VisitClassBody(ClassBodySyntax node)
+		{
+		    return this.DefaultVisit(node);
+		}
+
+		public virtual TResult VisitClassMemberAlt1(ClassMemberAlt1Syntax node)
+		{
+		    return this.DefaultVisit(node);
+		}
+
+		public virtual TResult VisitClassMemberAlt2(ClassMemberAlt2Syntax node)
 		{
 		    return this.DefaultVisit(node);
 		}
@@ -549,6 +573,8 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
 		TResult VisitClassNameAlt2(ClassNameAlt2Syntax node, TArg argument);
 		TResult VisitBaseClasses(BaseClassesSyntax node, TArg argument);
 		TResult VisitClassBody(ClassBodySyntax node, TArg argument);
+		TResult VisitClassMemberAlt1(ClassMemberAlt1Syntax node, TArg argument);
+		TResult VisitClassMemberAlt2(ClassMemberAlt2Syntax node, TArg argument);
 		TResult VisitMetaProperty(MetaPropertySyntax node, TArg argument);
 		TResult VisitPropertyNameAlt1(PropertyNameAlt1Syntax node, TArg argument);
 		TResult VisitPropertyNameAlt2(PropertyNameAlt2Syntax node, TArg argument);
@@ -651,6 +677,16 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
 		}
 
 		public virtual TResult VisitClassBody(ClassBodySyntax node, TArg argument)
+		{
+		    return this.DefaultVisit(node, argument);
+		}
+
+		public virtual TResult VisitClassMemberAlt1(ClassMemberAlt1Syntax node, TArg argument)
+		{
+		    return this.DefaultVisit(node, argument);
+		}
+
+		public virtual TResult VisitClassMemberAlt2(ClassMemberAlt2Syntax node, TArg argument)
 		{
 		    return this.DefaultVisit(node, argument);
 		}
@@ -920,10 +956,24 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         public virtual SyntaxNode VisitClassBody(ClassBodySyntax node)
         {
             var tLBrace = this.VisitToken(node.TLBrace);
-            var properties = this.VisitList(node.Properties);
+            var classMember = this.VisitList(node.ClassMember);
             var tRBrace = this.VisitToken(node.TRBrace);
         	    
-        	return node.Update(tLBrace, properties, tRBrace);
+        	return node.Update(tLBrace, classMember, tRBrace);
+        }
+
+        public virtual SyntaxNode VisitClassMemberAlt1(ClassMemberAlt1Syntax node)
+        {
+            var properties = (MetaPropertySyntax)this.Visit(node.Properties);
+        	    
+        	return node.Update(properties);
+        }
+
+        public virtual SyntaxNode VisitClassMemberAlt2(ClassMemberAlt2Syntax node)
+        {
+            var operations = (MetaOperationSyntax)this.Visit(node.Operations);
+        	    
+        	return node.Update(operations);
         }
 
         public virtual SyntaxNode VisitMetaProperty(MetaPropertySyntax node)
@@ -984,8 +1034,9 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
             var tLParen = this.VisitToken(node.TLParen);
             var parameterList = (ParameterListSyntax)this.Visit(node.ParameterList);
             var tRParen = this.VisitToken(node.TRParen);
+            var tSemicolon = this.VisitToken(node.TSemicolon);
         	    
-        	return node.Update(returnType, name, tLParen, parameterList, tRParen);
+        	return node.Update(returnType, name, tLParen, parameterList, tRParen, tSemicolon);
         }
 
         public virtual SyntaxNode VisitParameterList(ParameterListSyntax node)

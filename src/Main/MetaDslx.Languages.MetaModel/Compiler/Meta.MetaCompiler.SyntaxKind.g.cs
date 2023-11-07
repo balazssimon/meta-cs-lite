@@ -77,6 +77,8 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
 		ClassNameAlt2,
 		BaseClasses,
 		ClassBody,
+		ClassMemberAlt1,
+		ClassMemberAlt2,
 		MetaProperty,
 		PropertyNameAlt1,
 		PropertyNameAlt2,

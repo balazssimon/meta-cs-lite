@@ -5,9 +5,9 @@ using System.Text;
 
 namespace MetaDslx.Modeling.Meta
 {
-    public abstract class MetaPropertySlot<TType, TProperty>
+    public abstract class MetaPropertySlot<TType, TProperty, TOperation>
     {
-        public MetaPropertySlot(MetaProperty<TType, TProperty> slotProperty, ImmutableArray<MetaProperty<TType, TProperty>> slotProperties, object? defaultValue, ModelPropertyFlags flags)
+        public MetaPropertySlot(MetaProperty<TType, TProperty, TOperation> slotProperty, ImmutableArray<MetaProperty<TType, TProperty, TOperation>> slotProperties, object? defaultValue, ModelPropertyFlags flags)
         {
             SlotProperty = slotProperty;
             SlotProperties = slotProperties;
@@ -15,8 +15,8 @@ namespace MetaDslx.Modeling.Meta
             Flags = flags;
         }
 
-        public MetaProperty<TType, TProperty> SlotProperty { get; }
-        public ImmutableArray<MetaProperty<TType, TProperty>> SlotProperties { get; }
+        public MetaProperty<TType, TProperty, TOperation> SlotProperty { get; }
+        public ImmutableArray<MetaProperty<TType, TProperty, TOperation>> SlotProperties { get; }
         public object? DefaultValue { get; }
         public ModelPropertyFlags Flags { get; }
     }

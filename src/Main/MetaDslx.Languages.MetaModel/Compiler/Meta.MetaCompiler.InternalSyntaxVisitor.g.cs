@@ -23,6 +23,8 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
 		public virtual void VisitClassNameAlt2Green(ClassNameAlt2Green node) => this.DefaultVisit(node);
 		public virtual void VisitBaseClassesGreen(BaseClassesGreen node) => this.DefaultVisit(node);
 		public virtual void VisitClassBodyGreen(ClassBodyGreen node) => this.DefaultVisit(node);
+		public virtual void VisitClassMemberAlt1Green(ClassMemberAlt1Green node) => this.DefaultVisit(node);
+		public virtual void VisitClassMemberAlt2Green(ClassMemberAlt2Green node) => this.DefaultVisit(node);
 		public virtual void VisitMetaPropertyGreen(MetaPropertyGreen node) => this.DefaultVisit(node);
 		public virtual void VisitPropertyNameAlt1Green(PropertyNameAlt1Green node) => this.DefaultVisit(node);
 		public virtual void VisitPropertyNameAlt2Green(PropertyNameAlt2Green node) => this.DefaultVisit(node);
@@ -69,6 +71,8 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
 		public virtual TResult VisitClassNameAlt2Green(ClassNameAlt2Green node) => this.DefaultVisit(node);
 		public virtual TResult VisitBaseClassesGreen(BaseClassesGreen node) => this.DefaultVisit(node);
 		public virtual TResult VisitClassBodyGreen(ClassBodyGreen node) => this.DefaultVisit(node);
+		public virtual TResult VisitClassMemberAlt1Green(ClassMemberAlt1Green node) => this.DefaultVisit(node);
+		public virtual TResult VisitClassMemberAlt2Green(ClassMemberAlt2Green node) => this.DefaultVisit(node);
 		public virtual TResult VisitMetaPropertyGreen(MetaPropertyGreen node) => this.DefaultVisit(node);
 		public virtual TResult VisitPropertyNameAlt1Green(PropertyNameAlt1Green node) => this.DefaultVisit(node);
 		public virtual TResult VisitPropertyNameAlt2Green(PropertyNameAlt2Green node) => this.DefaultVisit(node);

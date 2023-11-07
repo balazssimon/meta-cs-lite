@@ -10,6 +10,7 @@ namespace MetaDslx.Modeling
     {
         protected abstract ImmutableDictionary<string, ModelProperty> PublicPropertiesByName { get; }
         protected abstract ImmutableDictionary<ModelProperty, ModelPropertyInfo> ModelPropertyInfos { get; }
+        protected abstract ImmutableDictionary<ModelOperation, ModelOperationInfo> ModelOperationInfos { get; }
 
         public abstract MetaModel MetaModel { get; }
         public abstract Type MetaType { get; }
@@ -19,6 +20,9 @@ namespace MetaDslx.Modeling
         public abstract ImmutableArray<ModelProperty> DeclaredProperties { get; }
         public abstract ImmutableArray<ModelProperty> AllDeclaredProperties { get; }
         public abstract ImmutableArray<ModelProperty> PublicProperties { get; }
+        public abstract ImmutableArray<ModelOperation> DeclaredOperations { get; }
+        public abstract ImmutableArray<ModelOperation> AllDeclaredOperations { get; }
+        public abstract ImmutableArray<ModelOperation> PublicOperations { get; }
 
         public abstract IModelObject? Create(Model? model = null, string? id = null);
 
@@ -80,6 +84,18 @@ namespace MetaDslx.Modeling
         {
             if (ModelPropertyInfos.TryGetValue(property, out var info)) return info.HidingProperties;
             else return ImmutableArray<ModelProperty>.Empty;
+        }
+
+        public ImmutableArray<ModelOperation> GetOverridenOperations(ModelOperation operation)
+        {
+            if (ModelOperationInfos.TryGetValue(operation, out var info)) return info.OverridenOperations;
+            else return ImmutableArray<ModelOperation>.Empty;
+        }
+
+        public ImmutableArray<ModelOperation> GetOverridingOperations(ModelOperation operation)
+        {
+            if (ModelOperationInfos.TryGetValue(operation, out var info)) return info.OverridingOperations;
+            else return ImmutableArray<ModelOperation>.Empty;
         }
     }
 }

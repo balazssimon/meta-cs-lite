@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace MetaDslx.Languages.MetaModel.Meta
 {
-    public sealed class MetaMetaGraph : MetaGraph<MetaType, MetaProperty>
+    public sealed class MetaMetaGraph : MetaGraph<MetaType, MetaProperty, MetaOperation>
     {
         public MetaMetaGraph(IEnumerable<MetaType> classTypes) 
             : base(classTypes)
@@ -55,22 +55,32 @@ namespace MetaDslx.Languages.MetaModel.Meta
             return type is MetaPrimitiveType || type is MetaEnumType;
         }
 
-        protected override MetaClass<MetaType, MetaProperty> MakeClass(MetaType classType)
+        protected override MetaClass<MetaType, MetaProperty, MetaOperation> MakeClass(MetaType classType)
         {
             return new MetaMetaClass((MetaClass)classType);
         }
 
-        protected override MetaProperty<MetaType, MetaProperty> MakeProperty(MetaClass<MetaType, MetaProperty> declaringType, MetaProperty property)
+        protected override MetaOperation<MetaType, MetaProperty, MetaOperation> MakeOperation(MetaClass<MetaType, MetaProperty, MetaOperation> declaringType, MetaOperation operation)
+        {
+            return new MetaMetaOperation(declaringType, operation);
+        }
+
+        protected override MetaOperationInfo<MetaType, MetaProperty, MetaOperation> MakeOperationInfo(ImmutableArray<MetaOperation<MetaType, MetaProperty, MetaOperation>> overridenOperations, ImmutableArray<MetaOperation<MetaType, MetaProperty, MetaOperation>> overridingOperations)
+        {
+            return new MetaMetaOperationInfo(overridenOperations, overridingOperations);
+        }
+
+        protected override MetaProperty<MetaType, MetaProperty, MetaOperation> MakeProperty(MetaClass<MetaType, MetaProperty, MetaOperation> declaringType, MetaProperty property)
         {
             return new MetaMetaProperty(declaringType, property);
         }
 
-        protected override MetaPropertyInfo<MetaType, MetaProperty> MakePropertyInfo(MetaPropertySlot<MetaType, MetaProperty> slot, ImmutableArray<MetaProperty<MetaType, MetaProperty>> oppositeProperties, ImmutableArray<MetaProperty<MetaType, MetaProperty>> subsettedProperties, ImmutableArray<MetaProperty<MetaType, MetaProperty>> subsettingProperties, ImmutableArray<MetaProperty<MetaType, MetaProperty>> redefinedProperties, ImmutableArray<MetaProperty<MetaType, MetaProperty>> redefiningProperties, ImmutableArray<MetaProperty<MetaType, MetaProperty>> hiddenProperties, ImmutableArray<MetaProperty<MetaType, MetaProperty>> hidingProperties)
+        protected override MetaPropertyInfo<MetaType, MetaProperty, MetaOperation> MakePropertyInfo(MetaPropertySlot<MetaType, MetaProperty, MetaOperation> slot, ImmutableArray<MetaProperty<MetaType, MetaProperty, MetaOperation>> oppositeProperties, ImmutableArray<MetaProperty<MetaType, MetaProperty, MetaOperation>> subsettedProperties, ImmutableArray<MetaProperty<MetaType, MetaProperty, MetaOperation>> subsettingProperties, ImmutableArray<MetaProperty<MetaType, MetaProperty, MetaOperation>> redefinedProperties, ImmutableArray<MetaProperty<MetaType, MetaProperty, MetaOperation>> redefiningProperties, ImmutableArray<MetaProperty<MetaType, MetaProperty, MetaOperation>> hiddenProperties, ImmutableArray<MetaProperty<MetaType, MetaProperty, MetaOperation>> hidingProperties)
         {
             return new MetaMetaPropertyInfo(slot, oppositeProperties, subsettedProperties, subsettingProperties, redefinedProperties, redefiningProperties, hiddenProperties, hidingProperties);
         }
 
-        protected override MetaPropertySlot<MetaType, MetaProperty> MakePropertySlot(MetaProperty<MetaType, MetaProperty> slotProperty, ImmutableArray<MetaProperty<MetaType, MetaProperty>> slotProperties, object? defaultValue, ModelPropertyFlags flags)
+        protected override MetaPropertySlot<MetaType, MetaProperty, MetaOperation> MakePropertySlot(MetaProperty<MetaType, MetaProperty, MetaOperation> slotProperty, ImmutableArray<MetaProperty<MetaType, MetaProperty, MetaOperation>> slotProperties, object? defaultValue, ModelPropertyFlags flags)
         {
             return new MetaMetaPropertySlot(slotProperty, slotProperties, defaultValue, flags);
         }

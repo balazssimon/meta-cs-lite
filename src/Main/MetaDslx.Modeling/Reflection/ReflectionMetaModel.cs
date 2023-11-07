@@ -165,7 +165,7 @@ namespace MetaDslx.Modeling.Reflection
             private Dictionary<ReflectionMetaPropertyInfo, ModelPropertyInfo> _propertyInfoMap = new Dictionary<ReflectionMetaPropertyInfo, ModelPropertyInfo>();
             private Dictionary<ReflectionMetaPropertySlot, ModelPropertySlot> _propertySlotMap = new Dictionary<ReflectionMetaPropertySlot, ModelPropertySlot>();
 
-            public ModelProperty? Map(MetaProperty<Type, PropertyInfo>? mprop)
+            public ModelProperty? Map(MetaProperty<Type, PropertyInfo, MethodInfo>? mprop)
             {
                 if (mprop is null) return null;
                 var rprop = (ReflectionMetaProperty)mprop;
@@ -175,12 +175,12 @@ namespace MetaDslx.Modeling.Reflection
                 return prop;
             }
 
-            public ImmutableArray<ModelProperty> Map(ImmutableArray<MetaProperty<Type, PropertyInfo>> mprops)
+            public ImmutableArray<ModelProperty> Map(ImmutableArray<MetaProperty<Type, PropertyInfo, MethodInfo>> mprops)
             {
                 return mprops.Select(mp => Map(mp)).ToImmutableArray();
             }
 
-            public ImmutableDictionary<string, ModelProperty> Map(ImmutableDictionary<string, MetaProperty<Type, PropertyInfo>> mprops)
+            public ImmutableDictionary<string, ModelProperty> Map(ImmutableDictionary<string, MetaProperty<Type, PropertyInfo, MethodInfo>> mprops)
             {
                 var props = ImmutableDictionary.CreateBuilder<string, ModelProperty>();
                 foreach (var name in mprops.Keys)
@@ -190,7 +190,7 @@ namespace MetaDslx.Modeling.Reflection
                 return props.ToImmutable();
             }
 
-            public ImmutableDictionary<ModelProperty, ModelPropertyInfo> Map(ImmutableDictionary<MetaProperty<Type, PropertyInfo>, MetaPropertyInfo<Type, PropertyInfo>> mprops)
+            public ImmutableDictionary<ModelProperty, ModelPropertyInfo> Map(ImmutableDictionary<MetaProperty<Type, PropertyInfo, MethodInfo>, MetaPropertyInfo<Type, PropertyInfo, MethodInfo>> mprops)
             {
                 var props = ImmutableDictionary.CreateBuilder<ModelProperty, ModelPropertyInfo>();
                 foreach (var mprop in mprops.Keys)
@@ -200,7 +200,7 @@ namespace MetaDslx.Modeling.Reflection
                 return props.ToImmutable();
             }
 
-            public ModelPropertyInfo Map(MetaPropertyInfo<Type, PropertyInfo> mprop)
+            public ModelPropertyInfo Map(MetaPropertyInfo<Type, PropertyInfo, MethodInfo> mprop)
             {
                 var rprop = (ReflectionMetaPropertyInfo)mprop;
                 if (_propertyInfoMap.TryGetValue(rprop, out var prop)) return prop;
@@ -210,7 +210,7 @@ namespace MetaDslx.Modeling.Reflection
                 return prop;
             }
 
-            public ModelPropertySlot Map(MetaPropertySlot<Type, PropertyInfo> mprop)
+            public ModelPropertySlot Map(MetaPropertySlot<Type, PropertyInfo, MethodInfo> mprop)
             {
                 var rprop = (ReflectionMetaPropertySlot)mprop;
                 if (_propertySlotMap.TryGetValue(rprop, out var prop)) return prop;

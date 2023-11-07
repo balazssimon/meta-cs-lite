@@ -123,6 +123,20 @@ public interface IMetaParserVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitPr_ClassBody([NotNull] MetaParser.Pr_ClassBodyContext context);
 	/// <summary>
+	/// Visit a parse tree produced by the <c>pr_ClassMemberAlt1</c>
+	/// labeled alternative in <see cref="MetaParser.pr_ClassMember"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitPr_ClassMemberAlt1([NotNull] MetaParser.Pr_ClassMemberAlt1Context context);
+	/// <summary>
+	/// Visit a parse tree produced by the <c>pr_ClassMemberAlt2</c>
+	/// labeled alternative in <see cref="MetaParser.pr_ClassMember"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitPr_ClassMemberAlt2([NotNull] MetaParser.Pr_ClassMemberAlt2Context context);
+	/// <summary>
 	/// Visit a parse tree produced by <see cref="MetaParser.pr_MetaProperty"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>

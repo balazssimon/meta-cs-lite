@@ -446,30 +446,51 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Binding
 
         public virtual void VisitClassBody(ClassBodySyntax node)
         {
-        	var __annot1 = new ScopeBinder();
-        	this.Begin(__annot1, node);
+        	var __annot0 = new ScopeBinder();
+        	this.Begin(__annot0, node);
         	try
         	{
-        	    var propertiesList = node.Properties;
-        	    for (var propertiesIndex = 0; propertiesIndex < propertiesList.Count; ++propertiesIndex)
+        	    var classMemberList = node.ClassMember;
+        	    for (var classMemberIndex = 0; classMemberIndex < classMemberList.Count; ++classMemberIndex)
         	    {
-        	        var __annot0 = new PropertyBinder(name: "Properties");
-        	        this.Begin(__annot0, node.Properties[propertiesIndex]);
-        	        try
-        	        {
-        	            this.Visit(node.Properties[propertiesIndex]);
-        	        }
-        	        finally
-        	        {
-        	            this.End(__annot0);
-        	        }
+        	        this.Visit(node.ClassMember[classMemberIndex]);
         	    }
         	        
         	}
         	finally
         	{
-        	    this.End(__annot1);
+        	    this.End(__annot0);
         	}
+        }
+
+        public virtual void VisitClassMemberAlt1(ClassMemberAlt1Syntax node)
+        {
+        	var __annot0 = new PropertyBinder(name: "Properties");
+        	this.Begin(__annot0, node.Properties);
+        	try
+        	{
+        	    this.Visit(node.Properties);
+        	}
+        	finally
+        	{
+        	    this.End(__annot0);
+        	}
+        	    
+        }
+
+        public virtual void VisitClassMemberAlt2(ClassMemberAlt2Syntax node)
+        {
+        	var __annot0 = new PropertyBinder(name: "Operations");
+        	this.Begin(__annot0, node.Operations);
+        	try
+        	{
+        	    this.Visit(node.Operations);
+        	}
+        	finally
+        	{
+        	    this.End(__annot0);
+        	}
+        	    
         }
 
         public virtual void VisitMetaProperty(MetaPropertySyntax node)

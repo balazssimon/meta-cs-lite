@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace MetaDslx.Languages.MetaModel.Meta
 {
-    public sealed class MetaMetaClass : MetaClass<MetaType, MetaProperty>
+    public sealed class MetaMetaClass : MetaClass<MetaType, MetaProperty, MetaOperation>
     {
         private string? _symbolType;
 
@@ -33,5 +33,7 @@ namespace MetaDslx.Languages.MetaModel.Meta
         public override ImmutableArray<MetaType> OriginalBaseTypes => UnderlyingClass.BaseTypes.Cast<MetaType>().ToImmutableArray();
 
         public override ImmutableArray<MetaProperty> OriginalDeclaredProperties => UnderlyingClass.Properties.ToImmutableArray();
+
+        public override ImmutableArray<MetaOperation> OriginalDeclaredOperations => UnderlyingClass.Operations.ToImmutableArray();
     }
 }

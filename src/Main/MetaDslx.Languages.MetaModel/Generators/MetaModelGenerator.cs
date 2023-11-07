@@ -53,7 +53,7 @@ namespace MetaDslx.Languages.MetaModel.Generators
             }
             if (type is MetaArrayType at)
             {
-                return $"global::System.Collections.Generic.IList<{ToCSharp(at.ItemType)}>";
+                return $"global::MetaDslx.Modeling.ModelObjectList<{ToCSharp(at.ItemType)}>";
             }
             if (type is MetaClass mc && _classes.Contains(mc))
             {
@@ -83,22 +83,27 @@ namespace MetaDslx.Languages.MetaModel.Generators
             return SymbolDisplayFormat.FullyQualifiedFormat.ToString(type);
         }
 
-        public bool HasSetter(MetaProperty<MetaType, MetaProperty> property)
+        public bool HasSetter(MetaProperty<MetaType, MetaProperty, MetaOperation> property)
         {
             return property.HasSetter && !property.Flags.HasFlag(ModelPropertyFlags.ReadOnly) && !property.Flags.HasFlag(ModelPropertyFlags.Collection);
         }
 
-        public bool IsCollection(MetaPropertySlot<MetaType, MetaProperty> slot)
+        public bool IsCollection(MetaPropertySlot<MetaType, MetaProperty, MetaOperation> slot)
         {
             return slot.Flags.HasFlag(ModelPropertyFlags.Collection);
         }
 
-        public string ToCSharp(MetaProperty<MetaType, MetaProperty> property)
+        public string ToCSharp(MetaProperty<MetaType, MetaProperty, MetaOperation> property)
         {
             return $"{MetaModel.Name}.{property.DeclaringType.Name}_{property.Name}";
         }
 
-        public string ToCSharp(ImmutableArray<MetaProperty<MetaType, MetaProperty>> properties)
+        public string ToCSharp(MetaOperation<MetaType, MetaProperty, MetaOperation> op)
+        {
+            return $"{MetaModel.Name}.{op.DeclaringType.Name}_{op.Name}";
+        }
+
+        public string ToCSharp(ImmutableArray<MetaProperty<MetaType, MetaProperty, MetaOperation>> properties)
         {
             var builder = PooledStringBuilder.GetInstance();
             var sb = builder.Builder;
@@ -109,6 +114,22 @@ namespace MetaDslx.Languages.MetaModel.Generators
                 if (string.IsNullOrEmpty(comma)) comma = ", ";
                 else sb.Append(comma);
                 sb.Append(ToCSharp(property));
+            }
+            sb.Append(")");
+            return builder.ToStringAndFree();
+        }
+
+        public string ToCSharp(ImmutableArray<MetaOperation<MetaType, MetaProperty, MetaOperation>> operations)
+        {
+            var builder = PooledStringBuilder.GetInstance();
+            var sb = builder.Builder;
+            sb.Append("__ImmutableArray.Create<__ModelOperation>(");
+            var comma = string.Empty;
+            foreach (var operation in operations)
+            {
+                if (string.IsNullOrEmpty(comma)) comma = ", ";
+                else sb.Append(comma);
+                sb.Append(ToCSharp(operation));
             }
             sb.Append(")");
             return builder.ToStringAndFree();

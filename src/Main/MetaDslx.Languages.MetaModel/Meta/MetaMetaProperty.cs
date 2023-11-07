@@ -10,11 +10,11 @@ using System.Threading.Tasks;
 
 namespace MetaDslx.Languages.MetaModel.Meta
 {
-    public sealed class MetaMetaProperty : MetaProperty<MetaType, MetaProperty>
+    public sealed class MetaMetaProperty : MetaProperty<MetaType, MetaProperty, MetaOperation>
     {
         private readonly ModelPropertyFlags _originalFlags;
 
-        public MetaMetaProperty(MetaClass<MetaType, MetaProperty> declaringType, MetaProperty underlyingProperty) 
+        public MetaMetaProperty(MetaClass<MetaType, MetaProperty, MetaOperation> declaringType, MetaProperty underlyingProperty) 
             : base(declaringType, underlyingProperty)
         {
             var flags = ModelPropertyFlags.None;

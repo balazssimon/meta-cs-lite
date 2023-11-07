@@ -5,16 +5,16 @@ using System.Text;
 
 namespace MetaDslx.Modeling.Meta
 {
-    public abstract class MetaPropertyInfo<TType, TProperty>
+    public abstract class MetaPropertyInfo<TType, TProperty, TOperation>
     {
-        public MetaPropertyInfo(MetaPropertySlot<TType, TProperty> slot,
-            ImmutableArray<MetaProperty<TType, TProperty>> oppositeProperties = default,
-            ImmutableArray<MetaProperty<TType, TProperty>> subsettedProperties = default,
-            ImmutableArray<MetaProperty<TType, TProperty>> subsettingProperties = default,
-            ImmutableArray<MetaProperty<TType, TProperty>> redefinedProperties = default,
-            ImmutableArray<MetaProperty<TType, TProperty>> redefiningProperties = default,
-            ImmutableArray<MetaProperty<TType, TProperty>> hiddenProperties = default,
-            ImmutableArray<MetaProperty<TType, TProperty>> hidingProperties = default)
+        public MetaPropertyInfo(MetaPropertySlot<TType, TProperty, TOperation> slot,
+            ImmutableArray<MetaProperty<TType, TProperty, TOperation>> oppositeProperties = default,
+            ImmutableArray<MetaProperty<TType, TProperty, TOperation>> subsettedProperties = default,
+            ImmutableArray<MetaProperty<TType, TProperty, TOperation>> subsettingProperties = default,
+            ImmutableArray<MetaProperty<TType, TProperty, TOperation>> redefinedProperties = default,
+            ImmutableArray<MetaProperty<TType, TProperty, TOperation>> redefiningProperties = default,
+            ImmutableArray<MetaProperty<TType, TProperty, TOperation>> hiddenProperties = default,
+            ImmutableArray<MetaProperty<TType, TProperty, TOperation>> hidingProperties = default)
         {
             Slot = slot;
             OppositeProperties = oppositeProperties;
@@ -26,13 +26,13 @@ namespace MetaDslx.Modeling.Meta
             HidingProperties = hidingProperties;
         }
 
-        public MetaPropertySlot<TType, TProperty> Slot { get; }
-        public ImmutableArray<MetaProperty<TType, TProperty>> OppositeProperties { get; }
-        public ImmutableArray<MetaProperty<TType, TProperty>> SubsettedProperties { get; }
-        public ImmutableArray<MetaProperty<TType, TProperty>> SubsettingProperties { get; }
-        public ImmutableArray<MetaProperty<TType, TProperty>> RedefinedProperties { get; }
-        public ImmutableArray<MetaProperty<TType, TProperty>> RedefiningProperties { get; }
-        public ImmutableArray<MetaProperty<TType, TProperty>> HiddenProperties { get; }
-        public ImmutableArray<MetaProperty<TType, TProperty>> HidingProperties { get; }
+        public MetaPropertySlot<TType, TProperty, TOperation> Slot { get; }
+        public ImmutableArray<MetaProperty<TType, TProperty, TOperation>> OppositeProperties { get; }
+        public ImmutableArray<MetaProperty<TType, TProperty, TOperation>> SubsettedProperties { get; }
+        public ImmutableArray<MetaProperty<TType, TProperty, TOperation>> SubsettingProperties { get; }
+        public ImmutableArray<MetaProperty<TType, TProperty, TOperation>> RedefinedProperties { get; }
+        public ImmutableArray<MetaProperty<TType, TProperty, TOperation>> RedefiningProperties { get; }
+        public ImmutableArray<MetaProperty<TType, TProperty, TOperation>> HiddenProperties { get; }
+        public ImmutableArray<MetaProperty<TType, TProperty, TOperation>> HidingProperties { get; }
     }
 }

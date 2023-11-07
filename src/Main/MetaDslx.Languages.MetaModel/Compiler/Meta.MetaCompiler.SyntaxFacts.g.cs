@@ -315,6 +315,10 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
 					return "BaseClasses";
 				case MetaSyntaxKind.ClassBody: 
 					return "ClassBody";
+				case MetaSyntaxKind.ClassMemberAlt1: 
+					return "ClassMemberAlt1";
+				case MetaSyntaxKind.ClassMemberAlt2: 
+					return "ClassMemberAlt2";
 				case MetaSyntaxKind.MetaProperty: 
 					return "MetaProperty";
 				case MetaSyntaxKind.PropertyNameAlt1: 

@@ -1395,7 +1395,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
 	}
 	public sealed class ClassBodySyntax : MetaSyntaxNode
 	{
-		private MetaDslx.CodeAnalysis.SyntaxNode _properties;
+		private MetaDslx.CodeAnalysis.SyntaxNode _classMember;
 	
 	    public ClassBodySyntax(InternalSyntaxNode green, MetaSyntaxTree syntaxTree, int position)
 	        : base(green, syntaxTree, position)
@@ -1416,12 +1416,12 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
 				return new SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
 			}
 		}
-	    public MetaDslx.CodeAnalysis.SyntaxList<MetaPropertySyntax> Properties 
+	    public MetaDslx.CodeAnalysis.SyntaxList<ClassMemberSyntax> ClassMember 
 		{ 
 			get
 			{
-				var red = this.GetRed(ref this._properties, 1);
-				if (red != null) return new MetaDslx.CodeAnalysis.SyntaxList<MetaPropertySyntax>(red);
+				var red = this.GetRed(ref this._classMember, 1);
+				if (red != null) return new MetaDslx.CodeAnalysis.SyntaxList<ClassMemberSyntax>(red);
 				return default;
 			} 
 		}
@@ -1439,7 +1439,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
 	    {
 	        switch (index)
 	        {
-				case 1: return this.GetRed(ref this._properties, 1);
+				case 1: return this.GetRed(ref this._classMember, 1);
 				default: return null;
 	        }
 	    }
@@ -1448,36 +1448,36 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
 	    {
 	        switch (index)
 	        {
-				case 1: return this._properties;
+				case 1: return this._classMember;
 				default: return null;
 	        }
 	    }
 	
 	    public ClassBodySyntax WithTLBrace(SyntaxToken tLBrace)
 		{
-			return this.Update(tLBrace, this.Properties, this.TRBrace);
+			return this.Update(tLBrace, this.ClassMember, this.TRBrace);
 		}
 	
-	    public ClassBodySyntax WithProperties(MetaDslx.CodeAnalysis.SyntaxList<MetaPropertySyntax> properties)
+	    public ClassBodySyntax WithClassMember(MetaDslx.CodeAnalysis.SyntaxList<ClassMemberSyntax> classMember)
 		{
-			return this.Update(this.TLBrace, properties, this.TRBrace);
+			return this.Update(this.TLBrace, classMember, this.TRBrace);
 		}
 	
-	    public ClassBodySyntax AddProperties(params MetaPropertySyntax[] properties)
+	    public ClassBodySyntax AddClassMember(params ClassMemberSyntax[] classMember)
 		{
-			return this.WithProperties(this.Properties.AddRange(properties));
+			return this.WithClassMember(this.ClassMember.AddRange(classMember));
 		}
 	
 	    public ClassBodySyntax WithTRBrace(SyntaxToken tRBrace)
 		{
-			return this.Update(this.TLBrace, this.Properties, tRBrace);
+			return this.Update(this.TLBrace, this.ClassMember, tRBrace);
 		}
 	
-	    public ClassBodySyntax Update(SyntaxToken tLBrace, MetaDslx.CodeAnalysis.SyntaxList<MetaPropertySyntax> properties, SyntaxToken tRBrace)
+	    public ClassBodySyntax Update(SyntaxToken tLBrace, MetaDslx.CodeAnalysis.SyntaxList<ClassMemberSyntax> classMember, SyntaxToken tRBrace)
 	    {
-	        if (this.TLBrace != tLBrace || this.Properties != properties || this.TRBrace != tRBrace)
+	        if (this.TLBrace != tLBrace || this.ClassMember != classMember || this.TRBrace != tRBrace)
 	        {
-	            var newNode = MetaLanguage.Instance.SyntaxFactory.ClassBody(tLBrace, properties, tRBrace);
+	            var newNode = MetaLanguage.Instance.SyntaxFactory.ClassBody(tLBrace, classMember, tRBrace);
 	            var annotations = this.GetAnnotations();
 	            if (annotations != null && annotations.Length > 0)
 	               newNode = newNode.WithAnnotations(annotations);
@@ -1499,6 +1499,155 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
 	    public override void Accept(IMetaSyntaxVisitor visitor)
 	    {
 	        visitor.VisitClassBody(this);
+	    }
+	
+	}
+	public abstract class ClassMemberSyntax : MetaSyntaxNode
+	{
+	    protected ClassMemberSyntax(InternalSyntaxNode green, MetaSyntaxTree syntaxTree, int position)
+	        : base(green, syntaxTree, position)
+	    {
+	    }
+	
+	    protected ClassMemberSyntax(InternalSyntaxNode green, MetaSyntaxNode parent, int position)
+	        : base(green, parent, position)
+	    {
+	    }
+	}
+	
+	public sealed class ClassMemberAlt1Syntax : ClassMemberSyntax
+	{
+		private MetaPropertySyntax _properties;
+	
+	    public ClassMemberAlt1Syntax(InternalSyntaxNode green, MetaSyntaxTree syntaxTree, int position)
+	        : base(green, syntaxTree, position)
+	    {
+	    }
+	
+	    public ClassMemberAlt1Syntax(InternalSyntaxNode green, MetaSyntaxNode parent, int position)
+	        : base(green, parent, position)
+	    {
+	    }
+	
+	    public MetaPropertySyntax Properties => this.GetRed(ref this._properties, 0);
+	
+	    protected override SyntaxNode GetNodeSlot(int index)
+	    {
+	        switch (index)
+	        {
+				case 0: return this.GetRed(ref this._properties, 0);
+				default: return null;
+	        }
+	    }
+	
+	    protected override SyntaxNode GetCachedSlot(int index)
+	    {
+	        switch (index)
+	        {
+				case 0: return this._properties;
+				default: return null;
+	        }
+	    }
+	
+	    public ClassMemberAlt1Syntax WithProperties(MetaPropertySyntax properties)
+		{
+			return this.Update(properties);
+		}
+	
+	    public ClassMemberAlt1Syntax Update(MetaPropertySyntax properties)
+	    {
+	        if (this.Properties != properties)
+	        {
+	            var newNode = MetaLanguage.Instance.SyntaxFactory.ClassMemberAlt1(properties);
+	            var annotations = this.GetAnnotations();
+	            if (annotations != null && annotations.Length > 0)
+	               newNode = newNode.WithAnnotations(annotations);
+				return (ClassMemberAlt1Syntax)newNode;
+	        }
+	        return this;
+	    }
+	
+	    public override TResult Accept<TArg, TResult>(IMetaSyntaxVisitor<TArg, TResult> visitor, TArg argument)
+	    {
+	        return visitor.VisitClassMemberAlt1(this, argument);
+	    }
+	
+	    public override TResult Accept<TResult>(IMetaSyntaxVisitor<TResult> visitor)
+	    {
+	        return visitor.VisitClassMemberAlt1(this);
+	    }
+	
+	    public override void Accept(IMetaSyntaxVisitor visitor)
+	    {
+	        visitor.VisitClassMemberAlt1(this);
+	    }
+	
+	}
+	public sealed class ClassMemberAlt2Syntax : ClassMemberSyntax
+	{
+		private MetaOperationSyntax _operations;
+	
+	    public ClassMemberAlt2Syntax(InternalSyntaxNode green, MetaSyntaxTree syntaxTree, int position)
+	        : base(green, syntaxTree, position)
+	    {
+	    }
+	
+	    public ClassMemberAlt2Syntax(InternalSyntaxNode green, MetaSyntaxNode parent, int position)
+	        : base(green, parent, position)
+	    {
+	    }
+	
+	    public MetaOperationSyntax Operations => this.GetRed(ref this._operations, 0);
+	
+	    protected override SyntaxNode GetNodeSlot(int index)
+	    {
+	        switch (index)
+	        {
+				case 0: return this.GetRed(ref this._operations, 0);
+				default: return null;
+	        }
+	    }
+	
+	    protected override SyntaxNode GetCachedSlot(int index)
+	    {
+	        switch (index)
+	        {
+				case 0: return this._operations;
+				default: return null;
+	        }
+	    }
+	
+	    public ClassMemberAlt2Syntax WithOperations(MetaOperationSyntax operations)
+		{
+			return this.Update(operations);
+		}
+	
+	    public ClassMemberAlt2Syntax Update(MetaOperationSyntax operations)
+	    {
+	        if (this.Operations != operations)
+	        {
+	            var newNode = MetaLanguage.Instance.SyntaxFactory.ClassMemberAlt2(operations);
+	            var annotations = this.GetAnnotations();
+	            if (annotations != null && annotations.Length > 0)
+	               newNode = newNode.WithAnnotations(annotations);
+				return (ClassMemberAlt2Syntax)newNode;
+	        }
+	        return this;
+	    }
+	
+	    public override TResult Accept<TArg, TResult>(IMetaSyntaxVisitor<TArg, TResult> visitor, TArg argument)
+	    {
+	        return visitor.VisitClassMemberAlt2(this, argument);
+	    }
+	
+	    public override TResult Accept<TResult>(IMetaSyntaxVisitor<TResult> visitor)
+	    {
+	        return visitor.VisitClassMemberAlt2(this);
+	    }
+	
+	    public override void Accept(IMetaSyntaxVisitor visitor)
+	    {
+	        visitor.VisitClassMemberAlt2(this);
 	    }
 	
 	}
@@ -2147,6 +2296,15 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
 				return new SyntaxToken(this, greenToken, this.GetChildPosition(4), this.GetChildIndex(4));
 			}
 		}
+	    public SyntaxToken TSemicolon 
+		{ 
+			get 
+			{ 
+				var green = (global::MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax.MetaOperationGreen)this.Green;
+				var greenToken = green.TSemicolon;
+				return new SyntaxToken(this, greenToken, this.GetChildPosition(5), this.GetChildIndex(5));
+			}
+		}
 	
 	    protected override SyntaxNode GetNodeSlot(int index)
 	    {
@@ -2172,34 +2330,39 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
 	
 	    public MetaOperationSyntax WithReturnType(TypeReferenceSyntax returnType)
 		{
-			return this.Update(returnType, this.Name, this.TLParen, this.ParameterList, this.TRParen);
+			return this.Update(returnType, this.Name, this.TLParen, this.ParameterList, this.TRParen, this.TSemicolon);
 		}
 	
 	    public MetaOperationSyntax WithName(NameSyntax name)
 		{
-			return this.Update(this.ReturnType, name, this.TLParen, this.ParameterList, this.TRParen);
+			return this.Update(this.ReturnType, name, this.TLParen, this.ParameterList, this.TRParen, this.TSemicolon);
 		}
 	
 	    public MetaOperationSyntax WithTLParen(SyntaxToken tLParen)
 		{
-			return this.Update(this.ReturnType, this.Name, tLParen, this.ParameterList, this.TRParen);
+			return this.Update(this.ReturnType, this.Name, tLParen, this.ParameterList, this.TRParen, this.TSemicolon);
 		}
 	
 	    public MetaOperationSyntax WithParameterList(ParameterListSyntax parameterList)
 		{
-			return this.Update(this.ReturnType, this.Name, this.TLParen, parameterList, this.TRParen);
+			return this.Update(this.ReturnType, this.Name, this.TLParen, parameterList, this.TRParen, this.TSemicolon);
 		}
 	
 	    public MetaOperationSyntax WithTRParen(SyntaxToken tRParen)
 		{
-			return this.Update(this.ReturnType, this.Name, this.TLParen, this.ParameterList, tRParen);
+			return this.Update(this.ReturnType, this.Name, this.TLParen, this.ParameterList, tRParen, this.TSemicolon);
 		}
 	
-	    public MetaOperationSyntax Update(TypeReferenceSyntax returnType, NameSyntax name, SyntaxToken tLParen, ParameterListSyntax parameterList, SyntaxToken tRParen)
+	    public MetaOperationSyntax WithTSemicolon(SyntaxToken tSemicolon)
+		{
+			return this.Update(this.ReturnType, this.Name, this.TLParen, this.ParameterList, this.TRParen, tSemicolon);
+		}
+	
+	    public MetaOperationSyntax Update(TypeReferenceSyntax returnType, NameSyntax name, SyntaxToken tLParen, ParameterListSyntax parameterList, SyntaxToken tRParen, SyntaxToken tSemicolon)
 	    {
-	        if (this.ReturnType != returnType || this.Name != name || this.TLParen != tLParen || this.ParameterList != parameterList || this.TRParen != tRParen)
+	        if (this.ReturnType != returnType || this.Name != name || this.TLParen != tLParen || this.ParameterList != parameterList || this.TRParen != tRParen || this.TSemicolon != tSemicolon)
 	        {
-	            var newNode = MetaLanguage.Instance.SyntaxFactory.MetaOperation(returnType, name, tLParen, parameterList, tRParen);
+	            var newNode = MetaLanguage.Instance.SyntaxFactory.MetaOperation(returnType, name, tLParen, parameterList, tRParen, tSemicolon);
 	            var annotations = this.GetAnnotations();
 	            if (annotations != null && annotations.Length > 0)
 	               newNode = newNode.WithAnnotations(annotations);

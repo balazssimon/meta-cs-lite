@@ -6,13 +6,13 @@ using MetaDslx.Modeling.Meta;
 
 namespace MetaDslx.Modeling.Reflection
 {
-    internal class ReflectionMetaProperty : MetaProperty<Type, PropertyInfo>
+    internal class ReflectionMetaProperty : MetaProperty<Type, PropertyInfo, MethodInfo>
     {
         private readonly ModelPropertyFlags _originalFlags;
         private readonly object? _defaultValue;
         private readonly string? _symbolProperty;
 
-        public ReflectionMetaProperty(MetaClass<Type, PropertyInfo> declaringType, PropertyInfo underlyingProperty)
+        public ReflectionMetaProperty(MetaClass<Type, PropertyInfo, MethodInfo> declaringType, PropertyInfo underlyingProperty)
             : base(declaringType, underlyingProperty)
         {
             bool hasDefaultValue = false;

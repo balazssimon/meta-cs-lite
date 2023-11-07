@@ -8,34 +8,36 @@ using System.Threading;
 
 namespace MetaDslx.Modeling.Meta
 {
-    public abstract class MetaGraph<TType, TProperty>
+    public abstract class MetaGraph<TType, TProperty, TOperation>
     {
         private static readonly MetaPropertyComparer ComparePropertiesByName = new MetaPropertyComparer();
+        private static readonly MetaOperationComparer CompareOperationsByName = new MetaOperationComparer();
         private static readonly MetaClassComparer CompareByInheritance = new MetaClassComparer(false);
         private static readonly MetaClassComparer CompareByInheritanceReverse = new MetaClassComparer(true);
 
-        private Dictionary<TType, MetaClass<TType, TProperty>?> _classTypes;
-        private ImmutableSortedSet<MetaClass<TType, TProperty>> _classes;
+        private Dictionary<TType, MetaClass<TType, TProperty, TOperation>?> _classTypes;
+        private ImmutableSortedSet<MetaClass<TType, TProperty, TOperation>> _classes;
 
         public MetaGraph(IEnumerable<TType> classTypes)
         {
-            _classTypes = new Dictionary<TType, MetaClass<TType, TProperty>?>();
+            _classTypes = new Dictionary<TType, MetaClass<TType, TProperty, TOperation>?>();
             foreach (var classType in classTypes)
             {
                 _classTypes.Add(classType, null);
             }
         }
 
-        public MetaClass<TType, TProperty> GetMetaClass(TType classType)
+        public MetaClass<TType, TProperty, TOperation> GetMetaClass(TType classType)
         {
             return _classTypes[classType];
         }
 
-        public ImmutableSortedSet<MetaClass<TType, TProperty>> Compute()
+        public ImmutableSortedSet<MetaClass<TType, TProperty, TOperation>> Compute()
         {
             if (_classes is not null) return _classes;
             CreateClasses();
             CreateProperties();
+            CreateOperations();
             foreach (var cls in _classes)
             {
                 ComputeClass(cls);
@@ -43,13 +45,14 @@ namespace MetaDslx.Modeling.Meta
             foreach (var cls in _classes)
             {
                 ComputeSlots(cls);
+                ComputeOperations(cls);
             }
             return _classes;
         }
 
         private void CreateClasses()
         {
-            var classes = ArrayBuilder<MetaClass<TType, TProperty>>.GetInstance();
+            var classes = ArrayBuilder<MetaClass<TType, TProperty, TOperation>>.GetInstance();
             foreach (var classType in _classTypes.Keys)
             {
                 var cls = MakeClass(classType);
@@ -61,7 +64,7 @@ namespace MetaDslx.Modeling.Meta
 
         private void CreateProperties()
         {
-            var declaredProperties = ArrayBuilder<MetaProperty<TType, TProperty>>.GetInstance();
+            var declaredProperties = ArrayBuilder<MetaProperty<TType, TProperty, TOperation>>.GetInstance();
             foreach (var cls in _classes)
             {
                 declaredProperties.Clear();
@@ -84,11 +87,28 @@ namespace MetaDslx.Modeling.Meta
             declaredProperties.Free();
         }
 
-        private ImmutableSortedSet<MetaClass<TType, TProperty>> SortClassesByInheritance(IEnumerable<MetaClass<TType, TProperty>> classes)
+        private void CreateOperations()
+        {
+            var declaredOperations = ArrayBuilder<MetaOperation<TType, TProperty, TOperation>>.GetInstance();
+            foreach (var cls in _classes)
+            {
+                declaredOperations.Clear();
+                foreach (var origOp in cls.OriginalDeclaredOperations)
+                {
+                    var op = MakeOperation(cls, origOp);
+                    declaredOperations.Add(op);
+                }
+                declaredOperations.Sort(CompareOperationsByName);
+                cls.DeclaredOperations = declaredOperations.ToImmutable();
+            }
+            declaredOperations.Free();
+        }
+
+        private ImmutableSortedSet<MetaClass<TType, TProperty, TOperation>> SortClassesByInheritance(IEnumerable<MetaClass<TType, TProperty, TOperation>> classes)
         {
             foreach (var cls in classes)
             {
-                var allBaseTypes = new List<MetaClass<TType, TProperty>>() { cls };
+                var allBaseTypes = new List<MetaClass<TType, TProperty, TOperation>>() { cls };
                 for (int i = 0; i < allBaseTypes.Count; ++i)
                 {
                     var current = allBaseTypes[i];
@@ -121,13 +141,13 @@ namespace MetaDslx.Modeling.Meta
             return classes.ToImmutableSortedSet(CompareByInheritance);
         }
 
-        private void ComputeClass(MetaClass<TType, TProperty> cls)
+        private void ComputeClass(MetaClass<TType, TProperty, TOperation> cls)
         {
-            var publicPropertiesByName = ImmutableDictionary.CreateBuilder<string, MetaProperty<TType, TProperty>>();
-            MetaProperty<TType, TProperty>? nameProperty = null;
-            MetaProperty<TType, TProperty>? typeProperty = null;
-            var publicProperties = ArrayBuilder<MetaProperty<TType, TProperty>>.GetInstance();
-            var allDeclaredProperties = ArrayBuilder<MetaProperty<TType, TProperty>>.GetInstance();
+            var publicPropertiesByName = ImmutableDictionary.CreateBuilder<string, MetaProperty<TType, TProperty, TOperation>>();
+            MetaProperty<TType, TProperty, TOperation>? nameProperty = null;
+            MetaProperty<TType, TProperty, TOperation>? typeProperty = null;
+            var publicProperties = ArrayBuilder<MetaProperty<TType, TProperty, TOperation>>.GetInstance();
+            var allDeclaredProperties = ArrayBuilder<MetaProperty<TType, TProperty, TOperation>>.GetInstance();
             foreach (var prop in cls.DeclaredProperties)
             {
                 publicPropertiesByName.Add(prop.Name, prop);
@@ -156,9 +176,30 @@ namespace MetaDslx.Modeling.Meta
             cls.PublicProperties = publicProperties.ToImmutableAndFree();
             cls.AllDeclaredProperties = allDeclaredProperties.ToImmutableAndFree();
             cls.PublicPropertiesByName = publicPropertiesByName.ToImmutable();
+
+            var publicOperations = ArrayBuilder<MetaOperation<TType, TProperty, TOperation>>.GetInstance();
+            var allDeclaredOperations = ArrayBuilder<MetaOperation<TType, TProperty, TOperation>>.GetInstance();
+            foreach (var op in cls.DeclaredOperations)
+            {
+                publicOperations.Add(op);
+                allDeclaredOperations.Add(op);
+            }
+            foreach (var baseType in cls.AllBaseTypes)
+            {
+                foreach (var baseOp in baseType.DeclaredOperations)
+                {
+                    allDeclaredOperations.Add(baseOp);
+                    if (!publicOperations.Any(op => op.Name == baseOp.Name))
+                    {
+                        publicOperations.Add(baseOp);
+                    }
+                }
+            }
+            cls.PublicOperations = publicOperations.ToImmutableAndFree();
+            cls.AllDeclaredOperations = allDeclaredOperations.ToImmutableAndFree();
         }
 
-        private void ComputePropertyType(MetaProperty<TType, TProperty> property, out TType type, out ModelPropertyFlags flags)
+        private void ComputePropertyType(MetaProperty<TType, TProperty, TOperation> property, out TType type, out ModelPropertyFlags flags)
         {
             type = property.OriginalType;
             flags = property.OriginalFlags | UpdateFlagsWithType(ModelPropertyFlags.None, ref type);
@@ -200,11 +241,11 @@ namespace MetaDslx.Modeling.Meta
             return flags;
         }
         
-        private void ComputeSlots(MetaClass<TType, TProperty> cls)
+        private void ComputeSlots(MetaClass<TType, TProperty, TOperation> cls)
         {
-            var redefinedProperties = new Dictionary<MetaProperty<TType, TProperty>, HashSet<MetaProperty<TType, TProperty>>>();
-            var subsettedProperties = new Dictionary<MetaProperty<TType, TProperty>, HashSet<MetaProperty<TType, TProperty>>>();
-            var oppositeProperties = new Dictionary<MetaProperty<TType, TProperty>, HashSet<MetaProperty<TType, TProperty>>>();
+            var redefinedProperties = new Dictionary<MetaProperty<TType, TProperty, TOperation>, HashSet<MetaProperty<TType, TProperty, TOperation>>>();
+            var subsettedProperties = new Dictionary<MetaProperty<TType, TProperty, TOperation>, HashSet<MetaProperty<TType, TProperty, TOperation>>>();
+            var oppositeProperties = new Dictionary<MetaProperty<TType, TProperty, TOperation>, HashSet<MetaProperty<TType, TProperty, TOperation>>>();
             foreach (var prop in cls.AllDeclaredProperties)
             {
                 foreach (var rprop in prop.GetRedefinedProperties())
@@ -214,7 +255,7 @@ namespace MetaDslx.Modeling.Meta
                     {
                         if (!redefinedProperties.TryGetValue(prop, out var propRedefined))
                         {
-                            propRedefined = new HashSet<MetaProperty<TType, TProperty>>();
+                            propRedefined = new HashSet<MetaProperty<TType, TProperty, TOperation>>();
                             redefinedProperties.Add(prop, propRedefined);
                         }
                         propRedefined.Add(redefinedProp);
@@ -227,7 +268,7 @@ namespace MetaDslx.Modeling.Meta
                     {
                         if (!subsettedProperties.TryGetValue(prop, out var propSubsetted))
                         {
-                            propSubsetted = new HashSet<MetaProperty<TType, TProperty>>();
+                            propSubsetted = new HashSet<MetaProperty<TType, TProperty, TOperation>>();
                             subsettedProperties.Add(prop, propSubsetted);
                         }
                         propSubsetted.Add(subsettedProp);
@@ -242,7 +283,7 @@ namespace MetaDslx.Modeling.Meta
                         {
                             if (!oppositeProperties.TryGetValue(prop, out var propOpposite))
                             {
-                                propOpposite = new HashSet<MetaProperty<TType, TProperty>>();
+                                propOpposite = new HashSet<MetaProperty<TType, TProperty, TOperation>>();
                                 oppositeProperties.Add(prop, propOpposite);
                             }
                             propOpposite.Add(oppositeProp);
@@ -254,39 +295,39 @@ namespace MetaDslx.Modeling.Meta
         }
 
         private void ComputeSlots(
-            MetaClass<TType, TProperty> cls,
-            Dictionary<MetaProperty<TType, TProperty>, HashSet<MetaProperty<TType, TProperty>>> subsettedProperties,
-            Dictionary<MetaProperty<TType, TProperty>, HashSet<MetaProperty<TType, TProperty>>> redefinedProperties,
-            Dictionary<MetaProperty<TType, TProperty>, HashSet<MetaProperty<TType, TProperty>>> oppositeProperties)
+            MetaClass<TType, TProperty, TOperation> cls,
+            Dictionary<MetaProperty<TType, TProperty, TOperation>, HashSet<MetaProperty<TType, TProperty, TOperation>>> subsettedProperties,
+            Dictionary<MetaProperty<TType, TProperty, TOperation>, HashSet<MetaProperty<TType, TProperty, TOperation>>> redefinedProperties,
+            Dictionary<MetaProperty<TType, TProperty, TOperation>, HashSet<MetaProperty<TType, TProperty, TOperation>>> oppositeProperties)
         {
             var allDeclaredProperties = cls.AllDeclaredProperties;
-            var subsettingProperties = new Dictionary<MetaProperty<TType, TProperty>, ArrayBuilder<MetaProperty<TType, TProperty>>>();
+            var subsettingProperties = new Dictionary<MetaProperty<TType, TProperty, TOperation>, ArrayBuilder<MetaProperty<TType, TProperty, TOperation>>>();
             foreach (var prop in subsettedProperties.Keys)
             {
                 foreach (var subsettedProp in subsettedProperties[prop])
                 {
                     if (!subsettingProperties.TryGetValue(subsettedProp, out var propSubsetting))
                     {
-                        propSubsetting = new ArrayBuilder<MetaProperty<TType, TProperty>>();
+                        propSubsetting = new ArrayBuilder<MetaProperty<TType, TProperty, TOperation>>();
                         subsettingProperties.Add(subsettedProp, propSubsetting);
                     }
                     propSubsetting.Add(prop);
                 }
             }
-            var redefiningProperties = new Dictionary<MetaProperty<TType, TProperty>, ArrayBuilder<MetaProperty<TType, TProperty>>>();
+            var redefiningProperties = new Dictionary<MetaProperty<TType, TProperty, TOperation>, ArrayBuilder<MetaProperty<TType, TProperty, TOperation>>>();
             foreach (var prop in redefinedProperties.Keys)
             {
                 foreach (var redefinedProp in redefinedProperties[prop])
                 {
                     if (!redefiningProperties.TryGetValue(redefinedProp, out var propRedefining))
                     {
-                        propRedefining = new ArrayBuilder<MetaProperty<TType, TProperty>>();
+                        propRedefining = new ArrayBuilder<MetaProperty<TType, TProperty, TOperation>>();
                         redefiningProperties.Add(redefinedProp, propRedefining);
                     }
                     propRedefining.Add(prop);
                 }
             }
-            var components = new Dictionary<MetaProperty<TType, TProperty>, int>();
+            var components = new Dictionary<MetaProperty<TType, TProperty, TOperation>, int>();
             var index = 0;
             foreach (var prop in allDeclaredProperties)
             {
@@ -321,7 +362,7 @@ namespace MetaDslx.Modeling.Meta
                     }
                 }
             }
-            var propIds = new Dictionary<int, MetaProperty<TType, TProperty>>();
+            var propIds = new Dictionary<int, MetaProperty<TType, TProperty, TOperation>>();
             foreach (var prop in allDeclaredProperties)
             {
                 var propIndex = components[prop];
@@ -330,15 +371,15 @@ namespace MetaDslx.Modeling.Meta
                     propIds.Add(propIndex, prop);
                 }
             }
-            var propToSlotProp = new Dictionary<MetaProperty<TType, TProperty>, MetaProperty<TType, TProperty>>();
+            var propToSlotProp = new Dictionary<MetaProperty<TType, TProperty, TOperation>, MetaProperty<TType, TProperty, TOperation>>();
             foreach (var prop in allDeclaredProperties)
             {
                 var propIndex = components[prop];
                 propToSlotProp.Add(prop, propIds[propIndex]);
             }
-            var slotPropToSlot = new Dictionary<MetaProperty<TType, TProperty>, MetaPropertySlot<TType, TProperty>>();
-            var builder = ArrayBuilder<MetaProperty<TType, TProperty>>.GetInstance();
-            var slots = ArrayBuilder<MetaPropertySlot<TType, TProperty>>.GetInstance();
+            var slotPropToSlot = new Dictionary<MetaProperty<TType, TProperty, TOperation>, MetaPropertySlot<TType, TProperty, TOperation>>();
+            var builder = ArrayBuilder<MetaProperty<TType, TProperty, TOperation>>.GetInstance();
+            var slots = ArrayBuilder<MetaPropertySlot<TType, TProperty, TOperation>>.GetInstance();
             foreach (var slotIndex in propIds.Keys)
             {
                 foreach (var prop in allDeclaredProperties)
@@ -357,17 +398,17 @@ namespace MetaDslx.Modeling.Meta
             }
             builder.Free();
             cls.Slots = slots.ToImmutableAndFree();
-            var modelPropertyInfos = ImmutableDictionary.CreateBuilder<MetaProperty<TType, TProperty>, MetaPropertyInfo<TType, TProperty>>();
+            var modelPropertyInfos = ImmutableDictionary.CreateBuilder<MetaProperty<TType, TProperty, TOperation>, MetaPropertyInfo<TType, TProperty, TOperation>>();
             for (int i = 0; i < allDeclaredProperties.Length; ++i)
             {
                 var prop = allDeclaredProperties[i];
-                var oppositeProps = oppositeProperties.TryGetValue(prop, out var propOpposite) ? propOpposite.ToImmutableArray() : ImmutableArray<MetaProperty<TType, TProperty>>.Empty;
-                var redefinedProps = redefinedProperties.TryGetValue(prop, out var propRedefined) ? propRedefined.ToImmutableArray() : ImmutableArray<MetaProperty<TType, TProperty>>.Empty;
-                var redefiningProps = redefiningProperties.TryGetValue(prop, out var propRedefining) ? propRedefining.ToImmutableArray() : ImmutableArray<MetaProperty<TType, TProperty>>.Empty;
-                var subsettedProps = subsettedProperties.TryGetValue(prop, out var propSubsetted) ? propSubsetted.ToImmutableArray() : ImmutableArray<MetaProperty<TType, TProperty>>.Empty;
-                var subsettingProps = subsettingProperties.TryGetValue(prop, out var propSubsetting) ? propSubsetting.ToImmutableArray() : ImmutableArray<MetaProperty<TType, TProperty>>.Empty;
-                var hiddenProps = ArrayBuilder<MetaProperty<TType, TProperty>>.GetInstance();
-                var hidingProps = ArrayBuilder<MetaProperty<TType, TProperty>>.GetInstance();
+                var oppositeProps = oppositeProperties.TryGetValue(prop, out var propOpposite) ? propOpposite.ToImmutableArray() : ImmutableArray<MetaProperty<TType, TProperty, TOperation>>.Empty;
+                var redefinedProps = redefinedProperties.TryGetValue(prop, out var propRedefined) ? propRedefined.ToImmutableArray() : ImmutableArray<MetaProperty<TType, TProperty, TOperation>>.Empty;
+                var redefiningProps = redefiningProperties.TryGetValue(prop, out var propRedefining) ? propRedefining.ToImmutableArray() : ImmutableArray<MetaProperty<TType, TProperty, TOperation>>.Empty;
+                var subsettedProps = subsettedProperties.TryGetValue(prop, out var propSubsetted) ? propSubsetted.ToImmutableArray() : ImmutableArray<MetaProperty<TType, TProperty, TOperation>>.Empty;
+                var subsettingProps = subsettingProperties.TryGetValue(prop, out var propSubsetting) ? propSubsetting.ToImmutableArray() : ImmutableArray<MetaProperty<TType, TProperty, TOperation>>.Empty;
+                var hiddenProps = ArrayBuilder<MetaProperty<TType, TProperty, TOperation>>.GetInstance();
+                var hidingProps = ArrayBuilder<MetaProperty<TType, TProperty, TOperation>>.GetInstance();
                 for (int j = 0; j < allDeclaredProperties.Length; ++j)
                 {
                     var hprop = allDeclaredProperties[j];
@@ -386,7 +427,7 @@ namespace MetaDslx.Modeling.Meta
             cls.ModelPropertyInfos = modelPropertyInfos.ToImmutable();
         }
 
-        private ModelPropertyFlags ComputeSlotFlags(ImmutableArray<MetaProperty<TType, TProperty>> properties)
+        private ModelPropertyFlags ComputeSlotFlags(ImmutableArray<MetaProperty<TType, TProperty, TOperation>> properties)
         {
             var flags = ModelPropertyFlags.None;
             foreach (ModelPropertyFlags flag in Enum.GetValues(typeof(ModelPropertyFlags)))
@@ -435,24 +476,56 @@ namespace MetaDslx.Modeling.Meta
             return flags;
         }
 
-        protected abstract MetaClass<TType, TProperty> MakeClass(TType classType);
-        protected abstract MetaProperty<TType, TProperty> MakeProperty(MetaClass<TType, TProperty> declaringType, TProperty property);
+        private void ComputeOperations(MetaClass<TType, TProperty, TOperation> cls)
+        {
+            var allDeclaredOperations = cls.AllDeclaredOperations;
+            var modelOperationInfos = ImmutableDictionary.CreateBuilder<MetaOperation<TType, TProperty, TOperation>, MetaOperationInfo<TType, TProperty, TOperation>>();
+            for (int i = 0; i < allDeclaredOperations.Length; ++i)
+            {
+                var op = allDeclaredOperations[i];
+                var overridenOps = ArrayBuilder<MetaOperation<TType, TProperty, TOperation>>.GetInstance();
+                var overridingOps = ArrayBuilder<MetaOperation<TType, TProperty, TOperation>>.GetInstance();
+                for (int j = 0; j < allDeclaredOperations.Length; ++j)
+                {
+                    var hop = allDeclaredOperations[j];
+                    if (j > i)
+                    {
+                        if (hop.Name == op.Name && hop.Signature == op.Signature) overridenOps.Add(hop);
+                    }
+                    else if (j < i)
+                    {
+                        if (hop.Name == op.Name && hop.Signature == op.Signature) overridingOps.Add(hop);
+                    }
+                }
+                var opInfo = MakeOperationInfo(overridenOps.ToImmutableAndFree(), overridingOps.ToImmutableAndFree());
+                modelOperationInfos.Add(op, opInfo);
+            }
+            cls.ModelOperationInfos = modelOperationInfos.ToImmutable();
+        }
+
+        protected abstract MetaClass<TType, TProperty, TOperation> MakeClass(TType classType);
+        protected abstract MetaProperty<TType, TProperty, TOperation> MakeProperty(MetaClass<TType, TProperty, TOperation> declaringType, TProperty property);
+        protected abstract MetaOperation<TType, TProperty, TOperation> MakeOperation(MetaClass<TType, TProperty, TOperation> declaringType, TOperation operation);
         protected abstract bool IsCollectionType(TType type, out TType? itemType, out ModelPropertyFlags collectionFlags);
         protected abstract bool IsNullableType(TType type, out TType innerType);
         protected abstract bool IsEnumType(TType type);
         protected abstract bool IsValueType(TType type);
         protected abstract bool IsPrimitiveType(TType type);
-        protected abstract MetaPropertySlot<TType, TProperty> MakePropertySlot(MetaProperty<TType, TProperty> slotProperty, ImmutableArray<MetaProperty<TType, TProperty>> slotProperties, object? defaultValue, ModelPropertyFlags flags);
-        protected abstract MetaPropertyInfo<TType, TProperty> MakePropertyInfo(MetaPropertySlot<TType, TProperty> slot,
-            ImmutableArray<MetaProperty<TType, TProperty>> oppositeProperties,
-            ImmutableArray<MetaProperty<TType, TProperty>> subsettedProperties,
-            ImmutableArray<MetaProperty<TType, TProperty>> subsettingProperties,
-            ImmutableArray<MetaProperty<TType, TProperty>> redefinedProperties,
-            ImmutableArray<MetaProperty<TType, TProperty>> redefiningProperties,
-            ImmutableArray<MetaProperty<TType, TProperty>> hiddenProperties,
-            ImmutableArray<MetaProperty<TType, TProperty>> hidingProperties);
+        protected abstract MetaPropertySlot<TType, TProperty, TOperation> MakePropertySlot(MetaProperty<TType, TProperty, TOperation> slotProperty, ImmutableArray<MetaProperty<TType, TProperty, TOperation>> slotProperties, object? defaultValue, ModelPropertyFlags flags);
+        protected abstract MetaPropertyInfo<TType, TProperty, TOperation> MakePropertyInfo(
+            MetaPropertySlot<TType, TProperty, TOperation> slot,
+            ImmutableArray<MetaProperty<TType, TProperty, TOperation>> oppositeProperties,
+            ImmutableArray<MetaProperty<TType, TProperty, TOperation>> subsettedProperties,
+            ImmutableArray<MetaProperty<TType, TProperty, TOperation>> subsettingProperties,
+            ImmutableArray<MetaProperty<TType, TProperty, TOperation>> redefinedProperties,
+            ImmutableArray<MetaProperty<TType, TProperty, TOperation>> redefiningProperties,
+            ImmutableArray<MetaProperty<TType, TProperty, TOperation>> hiddenProperties,
+            ImmutableArray<MetaProperty<TType, TProperty, TOperation>> hidingProperties);
+        protected abstract MetaOperationInfo<TType, TProperty, TOperation> MakeOperationInfo(
+            ImmutableArray<MetaOperation<TType, TProperty, TOperation>> overridenOperations,
+            ImmutableArray<MetaOperation<TType, TProperty, TOperation>> overridingOperations);
 
-        private class MetaClassComparer : IComparer<MetaClass<TType, TProperty>>
+        private class MetaClassComparer : IComparer<MetaClass<TType, TProperty, TOperation>>
         {
             private bool _reverse;
 
@@ -461,7 +534,7 @@ namespace MetaDslx.Modeling.Meta
                 _reverse = reverse;
             }
 
-            public int Compare(MetaClass<TType, TProperty> x, MetaClass<TType, TProperty> y)
+            public int Compare(MetaClass<TType, TProperty, TOperation> x, MetaClass<TType, TProperty, TOperation> y)
             {
                 if (ReferenceEquals(x, y)) return 0;
                 if (x.AllBaseTypes.Contains(y)) return _reverse ? -1 : 1;
@@ -470,11 +543,21 @@ namespace MetaDslx.Modeling.Meta
             }
         }
 
-        private class MetaPropertyComparer : IComparer<MetaProperty<TType, TProperty>>
+        private class MetaPropertyComparer : IComparer<MetaProperty<TType, TProperty, TOperation>>
         {
-            public int Compare(MetaProperty<TType, TProperty> x, MetaProperty<TType, TProperty> y)
+            public int Compare(MetaProperty<TType, TProperty, TOperation> x, MetaProperty<TType, TProperty, TOperation> y)
             {
                 return string.Compare(x.Name, y.Name);
+            }
+        }
+
+        private class MetaOperationComparer : IComparer<MetaOperation<TType, TProperty, TOperation>>
+        {
+            public int Compare(MetaOperation<TType, TProperty, TOperation> x, MetaOperation<TType, TProperty, TOperation> y)
+            {
+                var result = string.Compare(x.Name, y.Name);
+                if (result != 0) return result;
+                return string.Compare(x.Signature, y.Signature);
             }
         }
     }

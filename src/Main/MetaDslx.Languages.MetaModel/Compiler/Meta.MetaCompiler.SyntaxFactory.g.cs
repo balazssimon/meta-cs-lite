@@ -353,16 +353,28 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
             return (BaseClassesSyntax)MetaLanguage.Instance.InternalSyntaxFactory.BaseClasses((BaseClassesBlock1Green)baseClassesBlock1.Green).CreateRed();
         }
 
-        public ClassBodySyntax ClassBody(SyntaxToken tLBrace, MetaDslx.CodeAnalysis.SyntaxList<MetaPropertySyntax> properties, SyntaxToken tRBrace)
+        public ClassBodySyntax ClassBody(SyntaxToken tLBrace, MetaDslx.CodeAnalysis.SyntaxList<ClassMemberSyntax> classMember, SyntaxToken tRBrace)
         {
         	if (tLBrace.RawKind != (int)MetaSyntaxKind.TLBrace) throw new ArgumentException(nameof(tLBrace));
         	if (tRBrace.RawKind != (int)MetaSyntaxKind.TRBrace) throw new ArgumentException(nameof(tRBrace));
-            return (ClassBodySyntax)MetaLanguage.Instance.InternalSyntaxFactory.ClassBody((InternalSyntaxToken)tLBrace.Node, properties.Node.ToGreenList<MetaPropertyGreen>(), (InternalSyntaxToken)tRBrace.Node).CreateRed();
+            return (ClassBodySyntax)MetaLanguage.Instance.InternalSyntaxFactory.ClassBody((InternalSyntaxToken)tLBrace.Node, classMember.Node.ToGreenList<ClassMemberGreen>(), (InternalSyntaxToken)tRBrace.Node).CreateRed();
         }
         
-        public ClassBodySyntax ClassBody(MetaDslx.CodeAnalysis.SyntaxList<MetaPropertySyntax> properties)
+        public ClassBodySyntax ClassBody(MetaDslx.CodeAnalysis.SyntaxList<ClassMemberSyntax> classMember)
         {
-        	return this.ClassBody(this.Token(MetaSyntaxKind.TLBrace), properties, this.Token(MetaSyntaxKind.TRBrace));
+        	return this.ClassBody(this.Token(MetaSyntaxKind.TLBrace), classMember, this.Token(MetaSyntaxKind.TRBrace));
+        }
+
+        public ClassMemberAlt1Syntax ClassMemberAlt1(MetaPropertySyntax properties)
+        {
+        	if (properties is null) throw new ArgumentNullException(nameof(properties));
+            return (ClassMemberAlt1Syntax)MetaLanguage.Instance.InternalSyntaxFactory.ClassMemberAlt1((MetaPropertyGreen)properties.Green).CreateRed();
+        }
+
+        public ClassMemberAlt2Syntax ClassMemberAlt2(MetaOperationSyntax operations)
+        {
+        	if (operations is null) throw new ArgumentNullException(nameof(operations));
+            return (ClassMemberAlt2Syntax)MetaLanguage.Instance.InternalSyntaxFactory.ClassMemberAlt2((MetaOperationGreen)operations.Green).CreateRed();
         }
 
         public MetaPropertySyntax MetaProperty(SyntaxToken element, TypeReferenceSyntax type, PropertyNameSyntax name, MetaDslx.CodeAnalysis.SyntaxList<MetaPropertyBlock2Syntax> metaPropertyBlock2, SyntaxToken tSemicolon)
@@ -431,18 +443,19 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         	return this.PropertyRedefines(this.Token(MetaSyntaxKind.KRedefines), qualifierList);
         }
 
-        public MetaOperationSyntax MetaOperation(TypeReferenceSyntax returnType, NameSyntax name, SyntaxToken tLParen, ParameterListSyntax parameterList, SyntaxToken tRParen)
+        public MetaOperationSyntax MetaOperation(TypeReferenceSyntax returnType, NameSyntax name, SyntaxToken tLParen, ParameterListSyntax parameterList, SyntaxToken tRParen, SyntaxToken tSemicolon)
         {
         	if (returnType is null) throw new ArgumentNullException(nameof(returnType));
         	if (name is null) throw new ArgumentNullException(nameof(name));
         	if (tLParen.RawKind != (int)MetaSyntaxKind.TLParen) throw new ArgumentException(nameof(tLParen));
         	if (tRParen.RawKind != (int)MetaSyntaxKind.TRParen) throw new ArgumentException(nameof(tRParen));
-            return (MetaOperationSyntax)MetaLanguage.Instance.InternalSyntaxFactory.MetaOperation((TypeReferenceGreen)returnType.Green, (NameGreen)name.Green, (InternalSyntaxToken)tLParen.Node, (ParameterListGreen?)parameterList?.Green, (InternalSyntaxToken)tRParen.Node).CreateRed();
+        	if (tSemicolon.RawKind != (int)MetaSyntaxKind.TSemicolon) throw new ArgumentException(nameof(tSemicolon));
+            return (MetaOperationSyntax)MetaLanguage.Instance.InternalSyntaxFactory.MetaOperation((TypeReferenceGreen)returnType.Green, (NameGreen)name.Green, (InternalSyntaxToken)tLParen.Node, (ParameterListGreen?)parameterList?.Green, (InternalSyntaxToken)tRParen.Node, (InternalSyntaxToken)tSemicolon.Node).CreateRed();
         }
         
         public MetaOperationSyntax MetaOperation(TypeReferenceSyntax returnType, NameSyntax name)
         {
-        	return this.MetaOperation(returnType, name, this.Token(MetaSyntaxKind.TLParen), default, this.Token(MetaSyntaxKind.TRParen));
+        	return this.MetaOperation(returnType, name, this.Token(MetaSyntaxKind.TLParen), default, this.Token(MetaSyntaxKind.TRParen), this.Token(MetaSyntaxKind.TSemicolon));
         }
 
         public ParameterListSyntax ParameterList(MetaDslx.CodeAnalysis.SeparatedSyntaxList<MetaParameterSyntax> metaParameterList)
@@ -636,6 +649,8 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
 		        typeof(ClassNameAlt2Syntax),
 		        typeof(BaseClassesSyntax),
 		        typeof(ClassBodySyntax),
+		        typeof(ClassMemberAlt1Syntax),
+		        typeof(ClassMemberAlt2Syntax),
 		        typeof(MetaPropertySyntax),
 		        typeof(PropertyNameAlt1Syntax),
 		        typeof(PropertyNameAlt2Syntax),

@@ -4,15 +4,15 @@ using System.Text;
 
 namespace MetaDslx.Modeling.Meta
 {
-    public abstract class MetaProperty<TType, TProperty>
+    public abstract class MetaProperty<TType, TProperty, TOperation>
     {
-        public MetaProperty(MetaClass<TType, TProperty> declaringType, TProperty underlyingProperty)
+        public MetaProperty(MetaClass<TType, TProperty, TOperation> declaringType, TProperty underlyingProperty)
         {
             DeclaringType = declaringType;
             UnderlyingProperty = underlyingProperty;
         }
 
-        public MetaClass<TType, TProperty> DeclaringType { get; }
+        public MetaClass<TType, TProperty, TOperation> DeclaringType { get; }
         public TProperty UnderlyingProperty { get; }
 
         public abstract string Name { get; }

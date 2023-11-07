@@ -457,7 +457,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
 			return result;
 		}
 
-		internal ClassBodyGreen ClassBody(InternalSyntaxToken tLBrace, MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<MetaPropertyGreen> properties, InternalSyntaxToken tRBrace)
+		internal ClassBodyGreen ClassBody(InternalSyntaxToken tLBrace, MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<ClassMemberGreen> classMember, InternalSyntaxToken tRBrace)
 		{
 #if DEBUG
 			if (tLBrace is null) throw new ArgumentNullException(nameof(tLBrace));
@@ -466,10 +466,46 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
 			if (tRBrace.RawKind != (int)MetaSyntaxKind.TRBrace) throw new ArgumentException(nameof(tRBrace));
 #endif
 			int hash;
-			var cached = SyntaxNodeCache.TryGetNode((int)(MetaSyntaxKind)MetaSyntaxKind.ClassBody, tLBrace, properties.Node, tRBrace, out hash);
+			var cached = SyntaxNodeCache.TryGetNode((int)(MetaSyntaxKind)MetaSyntaxKind.ClassBody, tLBrace, classMember.Node, tRBrace, out hash);
 			if (cached != null) return (ClassBodyGreen)cached;
 		
-			var result = new ClassBodyGreen(MetaSyntaxKind.ClassBody, tLBrace, properties.Node, tRBrace);
+			var result = new ClassBodyGreen(MetaSyntaxKind.ClassBody, tLBrace, classMember.Node, tRBrace);
+			if (hash >= 0)
+			{
+				SyntaxNodeCache.AddNode(result, hash);
+			}
+		
+			return result;
+		}
+
+		internal ClassMemberAlt1Green ClassMemberAlt1(MetaPropertyGreen properties)
+		{
+#if DEBUG
+			if (properties is null) throw new ArgumentNullException(nameof(properties));
+#endif
+			int hash;
+			var cached = SyntaxNodeCache.TryGetNode((int)(MetaSyntaxKind)MetaSyntaxKind.ClassMemberAlt1, properties, out hash);
+			if (cached != null) return (ClassMemberAlt1Green)cached;
+		
+			var result = new ClassMemberAlt1Green(MetaSyntaxKind.ClassMemberAlt1, properties);
+			if (hash >= 0)
+			{
+				SyntaxNodeCache.AddNode(result, hash);
+			}
+		
+			return result;
+		}
+
+		internal ClassMemberAlt2Green ClassMemberAlt2(MetaOperationGreen operations)
+		{
+#if DEBUG
+			if (operations is null) throw new ArgumentNullException(nameof(operations));
+#endif
+			int hash;
+			var cached = SyntaxNodeCache.TryGetNode((int)(MetaSyntaxKind)MetaSyntaxKind.ClassMemberAlt2, operations, out hash);
+			if (cached != null) return (ClassMemberAlt2Green)cached;
+		
+			var result = new ClassMemberAlt2Green(MetaSyntaxKind.ClassMemberAlt2, operations);
 			if (hash >= 0)
 			{
 				SyntaxNodeCache.AddNode(result, hash);
@@ -591,7 +627,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
 			return result;
 		}
 
-		internal MetaOperationGreen MetaOperation(TypeReferenceGreen returnType, NameGreen name, InternalSyntaxToken tLParen, ParameterListGreen parameterList, InternalSyntaxToken tRParen)
+		internal MetaOperationGreen MetaOperation(TypeReferenceGreen returnType, NameGreen name, InternalSyntaxToken tLParen, ParameterListGreen parameterList, InternalSyntaxToken tRParen, InternalSyntaxToken tSemicolon)
 		{
 #if DEBUG
 			if (returnType is null) throw new ArgumentNullException(nameof(returnType));
@@ -600,8 +636,10 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
 			if (tLParen.RawKind != (int)MetaSyntaxKind.TLParen) throw new ArgumentException(nameof(tLParen));
 			if (tRParen is null) throw new ArgumentNullException(nameof(tRParen));
 			if (tRParen.RawKind != (int)MetaSyntaxKind.TRParen) throw new ArgumentException(nameof(tRParen));
+			if (tSemicolon is null) throw new ArgumentNullException(nameof(tSemicolon));
+			if (tSemicolon.RawKind != (int)MetaSyntaxKind.TSemicolon) throw new ArgumentException(nameof(tSemicolon));
 #endif
-			return new MetaOperationGreen(MetaSyntaxKind.MetaOperation, returnType, name, tLParen, parameterList, tRParen);
+			return new MetaOperationGreen(MetaSyntaxKind.MetaOperation, returnType, name, tLParen, parameterList, tRParen, tSemicolon);
 		}
 
 		internal ParameterListGreen ParameterList(MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<MetaParameterGreen> metaParameterList)

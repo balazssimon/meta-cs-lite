@@ -264,17 +264,33 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
             {
                	if (context == null) return ClassBodyGreen.__Missing;
                 var tLBrace = this.VisitTerminal(context.tLBrace, MetaSyntaxKind.TLBrace);
-                var propertiesContext = context._propertiesAntlr1;
-                var propertiesBuilder = _pool.Allocate<MetaPropertyGreen>();
-                for (int i = 0; i < propertiesContext.Count; ++i)
+                var classMemberContext = context._classMemberAntlr1;
+                var classMemberBuilder = _pool.Allocate<ClassMemberGreen>();
+                for (int i = 0; i < classMemberContext.Count; ++i)
                 {
-                    if (propertiesContext[i] is not null) propertiesBuilder.Add((MetaPropertyGreen?)this.Visit(propertiesContext[i]) ?? MetaPropertyGreen.__Missing);
-                    else propertiesBuilder.Add(MetaPropertyGreen.__Missing);
+                    if (classMemberContext[i] is not null) classMemberBuilder.Add((ClassMemberGreen?)this.Visit(classMemberContext[i]) ?? ClassMemberGreen.__Missing);
+                    else classMemberBuilder.Add(ClassMemberGreen.__Missing);
                 }
-                var properties = propertiesBuilder.ToList();
-                _pool.Free(propertiesBuilder);
+                var classMember = classMemberBuilder.ToList();
+                _pool.Free(classMemberBuilder);
                 var tRBrace = this.VisitTerminal(context.tRBrace, MetaSyntaxKind.TRBrace);
-            	return _factory.ClassBody((InternalSyntaxToken)tLBrace, properties, (InternalSyntaxToken)tRBrace);
+            	return _factory.ClassBody((InternalSyntaxToken)tLBrace, classMember, (InternalSyntaxToken)tRBrace);
+            }
+            public override GreenNode? VisitPr_ClassMemberAlt1(MetaParser.Pr_ClassMemberAlt1Context? context)
+            {
+               	if (context == null) return ClassMemberAlt1Green.__Missing;
+                MetaPropertyGreen? properties = null;
+                if (context.propertiesAntlr1 is not null) properties = (MetaPropertyGreen?)this.Visit(context.propertiesAntlr1) ?? MetaPropertyGreen.__Missing;
+                else properties = MetaPropertyGreen.__Missing;
+            	return _factory.ClassMemberAlt1(properties);
+            }
+            public override GreenNode? VisitPr_ClassMemberAlt2(MetaParser.Pr_ClassMemberAlt2Context? context)
+            {
+               	if (context == null) return ClassMemberAlt2Green.__Missing;
+                MetaOperationGreen? operations = null;
+                if (context.operationsAntlr1 is not null) operations = (MetaOperationGreen?)this.Visit(context.operationsAntlr1) ?? MetaOperationGreen.__Missing;
+                else operations = MetaOperationGreen.__Missing;
+            	return _factory.ClassMemberAlt2(operations);
             }
             public override GreenNode? VisitPr_MetaProperty(MetaParser.Pr_MetaPropertyContext? context)
             {
@@ -402,7 +418,8 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                 ParameterListGreen? parameterList = null;
                 if (context.parameterListAntlr1 is not null) parameterList = (ParameterListGreen?)this.Visit(context.parameterListAntlr1);
                 var tRParen = this.VisitTerminal(context.tRParen, MetaSyntaxKind.TRParen);
-            	return _factory.MetaOperation(returnType, name, (InternalSyntaxToken)tLParen, parameterList, (InternalSyntaxToken)tRParen);
+                var tSemicolon = this.VisitTerminal(context.tSemicolon, MetaSyntaxKind.TSemicolon);
+            	return _factory.MetaOperation(returnType, name, (InternalSyntaxToken)tLParen, parameterList, (InternalSyntaxToken)tRParen, (InternalSyntaxToken)tSemicolon);
             }
             public override GreenNode? VisitPr_ParameterList(MetaParser.Pr_ParameterListContext? context)
             {

@@ -7,9 +7,9 @@ using System.Text;
 
 namespace MetaDslx.Modeling.Reflection
 {
-    internal class ReflectionMetaPropertyInfo : MetaPropertyInfo<Type, PropertyInfo>
+    internal class ReflectionMetaPropertyInfo : MetaPropertyInfo<Type, PropertyInfo, MethodInfo>
     {
-        public ReflectionMetaPropertyInfo(MetaPropertySlot<Type, PropertyInfo> slot, ImmutableArray<MetaProperty<Type, PropertyInfo>> oppositeProperties = default, ImmutableArray<MetaProperty<Type, PropertyInfo>> subsettedProperties = default, ImmutableArray<MetaProperty<Type, PropertyInfo>> subsettingProperties = default, ImmutableArray<MetaProperty<Type, PropertyInfo>> redefinedProperties = default, ImmutableArray<MetaProperty<Type, PropertyInfo>> redefiningProperties = default, ImmutableArray<MetaProperty<Type, PropertyInfo>> hiddenProperties = default, ImmutableArray<MetaProperty<Type, PropertyInfo>> hidingProperties = default) 
+        public ReflectionMetaPropertyInfo(MetaPropertySlot<Type, PropertyInfo, MethodInfo> slot, ImmutableArray<MetaProperty<Type, PropertyInfo, MethodInfo>> oppositeProperties = default, ImmutableArray<MetaProperty<Type, PropertyInfo, MethodInfo>> subsettedProperties = default, ImmutableArray<MetaProperty<Type, PropertyInfo, MethodInfo>> subsettingProperties = default, ImmutableArray<MetaProperty<Type, PropertyInfo, MethodInfo>> redefinedProperties = default, ImmutableArray<MetaProperty<Type, PropertyInfo, MethodInfo>> redefiningProperties = default, ImmutableArray<MetaProperty<Type, PropertyInfo, MethodInfo>> hiddenProperties = default, ImmutableArray<MetaProperty<Type, PropertyInfo, MethodInfo>> hidingProperties = default) 
             : base(slot, oppositeProperties, subsettedProperties, subsettingProperties, redefinedProperties, redefiningProperties, hiddenProperties, hidingProperties)
         {
         }

@@ -38,7 +38,9 @@ MetaClass: isAbstract?='abstract'? 'class' name=ClassName BaseClasses? ClassBody
 part ClassName: TIdentifier? '$' symbolType=[Use(types: Symbol, suffixes: Symbol)]Identifier | TIdentifier;
 part BaseClasses: (':' baseTypes+=#{MetaClass|QualifierList});
 [Scope]
-part ClassBody: '{' properties+=MetaProperty* '}';
+part ClassBody: '{' ClassMember* '}';
+
+part ClassMember: properties+=MetaProperty | operations+=MetaOperation;
 
 MetaProperty: (isContainment?='contains' | isDerived?='derived')? type=TypeReference name=PropertyName (PropertyOpposite | PropertySubsets | PropertyRedefines)* ';';
 [Name]
@@ -48,7 +50,7 @@ part PropertyOpposite: 'opposite' oppositeProperties+=#MetaProperty (',' opposit
 part PropertySubsets: 'subsets' subsettedProperties+=#MetaProperty (',' subsettedProperties+=#MetaProperty)*;
 part PropertyRedefines: 'redefines' redefinedProperties+=#MetaProperty (',' redefinedProperties+=#MetaProperty)*;
 
-MetaOperation: returnType=TypeReference name=Name '(' ParameterList? ')';
+MetaOperation: returnType=TypeReference name=Name '(' ParameterList? ')' ';';
 part ParameterList: parameters+=MetaParameter (',' parameters+=MetaParameter)*;
 MetaParameter: type=TypeReference name=Name;
 

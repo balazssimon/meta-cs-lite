@@ -62,6 +62,12 @@ namespace MetaDslx.Modeling.Reflection
         protected override ImmutableDictionary<string, ModelProperty> PublicPropertiesByName => _publicPropertiesByName;
         protected override ImmutableDictionary<ModelProperty, ModelPropertyInfo> ModelPropertyInfos => _modelPropertyInfos;
 
+        public override ImmutableArray<ModelOperation> DeclaredOperations => ImmutableArray<ModelOperation>.Empty;
+        public override ImmutableArray<ModelOperation> AllDeclaredOperations => ImmutableArray<ModelOperation>.Empty;
+        public override ImmutableArray<ModelOperation> PublicOperations => ImmutableArray<ModelOperation>.Empty;
+
+        protected override ImmutableDictionary<ModelOperation, ModelOperationInfo> ModelOperationInfos => ImmutableDictionary<ModelOperation, ModelOperationInfo>.Empty;
+
         public override IModelObject? Create(Model? model = null, string? id = null)
         {
             var ctr = _metaType.GetConstructor(EmptyTypes);

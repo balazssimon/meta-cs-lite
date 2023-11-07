@@ -583,8 +583,25 @@ namespace MetaDslx.Modeling
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         protected abstract IEnumerable<ModelProperty> StoredPropertiesCore { get; }
+
         protected abstract void SetSlotValueCore(ModelPropertySlot slot, object? value);
         protected abstract bool TryGetSlotValueCore(ModelPropertySlot slot, out object? value);
 
+
+        ImmutableArray<ModelOperation> IModelObject.DeclaredOperations => MInfo.DeclaredOperations;
+
+        ImmutableArray<ModelOperation> IModelObject.AllDeclaredOperations => MInfo.AllDeclaredOperations;
+
+        ImmutableArray<ModelOperation> IModelObject.PublicOperations => MInfo.PublicOperations;
+
+        ImmutableArray<ModelOperation> IModelObject.GetOverridenOperations(ModelOperation operation)
+        {
+            return MInfo.GetOverridenOperations(operation);
+        }
+
+        ImmutableArray<ModelOperation> IModelObject.GetOverridingOperations(ModelOperation operation)
+        {
+            return MInfo.GetOverridingOperations(operation);
+        }
     }
 }
