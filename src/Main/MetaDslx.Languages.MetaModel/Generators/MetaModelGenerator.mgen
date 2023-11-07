@@ -274,6 +274,8 @@ internal class [cls.Name]_Impl : __MetaModelObject, [cls.Name]
 	{
 		[if (prop.UnderlyingProperty.IsDerived)]
 		get => [mm.Name].__CustomImpl.[prop.DeclaringType.Name]_[prop.Name](this);
+		[else if (prop.IsCollection)]
+		get => MGetCollection<[ToCSharp(prop.Type)]>([ToCSharp(prop)]);
 		[else]
 		get => MGet<[ToCSharp(prop.UnderlyingProperty.Type)]>([ToCSharp(prop)]);
 			[if (HasSetter(prop))]

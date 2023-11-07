@@ -213,6 +213,14 @@ namespace MetaDslx.Modeling
             //Convert.ChangeType(value, typeof(T), CultureInfo.InvariantCulture);
         }
 
+        public IList<T> MGetCollection<T>(ModelProperty property)
+        {
+            var value = ((IModelObject)this).Get(property);
+            if (value is null) return default;
+            else return (value as IModelCollection)?.CastTo<T>();
+            //Convert.ChangeType(value, typeof(T), CultureInfo.InvariantCulture);
+        }
+
         object? IModelObject.Get(ModelProperty property)
         {
             var slot = GetSlot(property);

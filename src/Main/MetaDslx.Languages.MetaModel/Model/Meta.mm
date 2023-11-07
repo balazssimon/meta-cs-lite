@@ -82,7 +82,7 @@ class MetaProperty : MetaDeclaration
 class MetaOperation: MetaDeclaration
 {
 	MetaType ReturnType;
-	contains MetaParameter[] Parameters subsets MetaDeclaration.Declarations;
+	contains MetaParameter[] Parameters redefines MetaDeclaration.Declarations;
 }
 
 class MetaParameter : MetaDeclaration

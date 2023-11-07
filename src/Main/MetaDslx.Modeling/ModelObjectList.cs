@@ -46,7 +46,7 @@ namespace MetaDslx.Modeling
         }
 
         public int Count => _items.Count;
-        public bool IsReadOnly => _slot.Flags.HasFlag(ModelPropertyFlags.ReadOnly);
+        public bool IsReadOnly => _slot.Flags.HasFlag(ModelPropertyFlags.ReadOnly) || _owner.MModel.IsReadOnly;
         public bool IsNonUnique => _slot.Flags.HasFlag(ModelPropertyFlags.NonUnique);
         public bool IsNullable => _slot.Flags.HasFlag(ModelPropertyFlags.NullableType);
         public bool IsSingleItem => _slot.Flags.HasFlag(ModelPropertyFlags.SingleItem);
@@ -293,5 +293,12 @@ namespace MetaDslx.Modeling
         {
             return item is IModelObject mobj ? mobj.MetaType : item.GetType();
         }
+
+        public IList<TTo> CastTo<TTo>()
+        {
+            if (typeof(TTo) == typeof(T)) return (IList<TTo>)this;
+            else return new ModelObjectListRedefinition<TTo, T>(this);
+        }
+
     }
 }

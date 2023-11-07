@@ -238,5 +238,10 @@ namespace MetaDslx.Modeling.Reflection
         {
             return _owner.ToModelObject(value);
         }
+
+        public IList<TTo> CastTo<TTo>()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

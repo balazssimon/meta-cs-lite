@@ -27,6 +27,7 @@ namespace MetaDslx.Modeling.Meta
 
         public ModelPropertyFlags Flags { get; internal set; }
         public TType Type { get; internal set; }
+        public bool IsCollection => Flags.HasFlag(ModelPropertyFlags.Collection);
 
         public override string ToString()
         {

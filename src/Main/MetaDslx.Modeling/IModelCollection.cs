@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Text;
 
 namespace MetaDslx.Modeling
@@ -16,5 +17,6 @@ namespace MetaDslx.Modeling
         bool IsNullable { get; }
         bool IsSingleItem { get; }
         object? SingleItem { get; set; }
+        IList<TTo> CastTo<TTo>();
     }
 }
