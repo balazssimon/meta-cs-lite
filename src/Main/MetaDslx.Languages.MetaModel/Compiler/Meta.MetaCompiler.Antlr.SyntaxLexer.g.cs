@@ -1,8 +1,8 @@
 using MetaDslx.CodeAnalysis;
 using MetaDslx.CodeAnalysis.Syntax;
 using MetaDslx.CodeAnalysis.Syntax.InternalSyntax;
+using MetaDslx.CodeAnalysis.Parsers.Antlr;
 using MetaDslx.CodeAnalysis.Text;
-using MetaDslx.Languages.MetaCompiler.Antlr;
 
 #nullable enable
 

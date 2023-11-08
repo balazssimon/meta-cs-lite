@@ -13,7 +13,7 @@ using MetaDslx.CodeAnalysis;
 using MetaDslx.CodeAnalysis.Syntax;
 using MetaDslx.CodeAnalysis.Syntax.InternalSyntax;
 using MetaDslx.CodeAnalysis.Text;
-using MetaDslx.Languages.MetaCompiler.Antlr;
+using MetaDslx.CodeAnalysis.Parsers.Antlr;
 
 #nullable enable
 
@@ -45,7 +45,7 @@ using MetaDslx.CodeAnalysis;
 using MetaDslx.CodeAnalysis.Syntax;
 using MetaDslx.CodeAnalysis.Syntax.InternalSyntax;
 using MetaDslx.CodeAnalysis.Text;
-using MetaDslx.Languages.MetaCompiler.Antlr;
+using MetaDslx.CodeAnalysis.Parsers.Antlr;
 using [language.QualifiedNamespace].Syntax.InternalSyntax;
 
 #nullable enable
@@ -236,7 +236,7 @@ template GenerateInternalSyntaxFactory(Language language)
 using MetaDslx.CodeAnalysis;
 using MetaDslx.CodeAnalysis.Syntax;
 using MetaDslx.CodeAnalysis.Syntax.InternalSyntax;
-using MetaDslx.Languages.MetaCompiler.Antlr;
+using MetaDslx.CodeAnalysis.Parsers.Antlr;
 using Antlr4.Runtime;
 
 #nullable enable

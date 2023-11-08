@@ -52,7 +52,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetaDslx.CodeAnalysis.Core"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetaDslx.Modeling", "Main\MetaDslx.Modeling\MetaDslx.Modeling.csproj", "{81DBD0F8-2FBA-4FC4-AEE5-837C36E67530}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetaDslx.CodeAnalysis.Providers.Antlr", "Main\MetaDslx.CodeAnalysis.Providers.Antlr\MetaDslx.CodeAnalysis.Providers.Antlr.csproj", "{1635A5DB-6336-4AD5-AA87-AA568E352DA8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetaDslx.CodeAnalysis.Parsers.Antlr", "Main\MetaDslx.CodeAnalysis.Parsers.Antlr\MetaDslx.CodeAnalysis.Parsers.Antlr.csproj", "{1635A5DB-6336-4AD5-AA87-AA568E352DA8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

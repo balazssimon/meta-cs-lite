@@ -33,7 +33,7 @@ using DFA = Antlr4.Runtime.Dfa.DFA;
 
 [System.CodeDom.Compiler.GeneratedCode("ANTLR", "4.13.0")]
 [System.CLSCompliant(false)]
-public partial class MetaParser : global::MetaDslx.Languages.MetaCompiler.Antlr.AntlrParser {
+public partial class MetaParser : global::MetaDslx.CodeAnalysis.Parsers.Antlr.AntlrParser {
 	protected static DFA[] decisionToDFA;
 	protected static PredictionContextCache sharedContextCache = new PredictionContextCache();
 	public const int

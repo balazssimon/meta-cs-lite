@@ -8,3 +8,4 @@ var f = new HelloModelFactory(model);
 var h = f.HelloType();
 h.Message = "Hello";
 Console.WriteLine(h.SayHello("Alice"));
+

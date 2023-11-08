@@ -178,7 +178,7 @@ namespace MetaDslx.Languages.MetaCompiler.Antlr.Analyzers
                     {
                         if (line.Contains("public partial class") && line.Contains(": Lexer {"))
                         {
-                            line = line.Replace(": Lexer {", ": global::MetaDslx.Languages.MetaCompiler.Antlr.AntlrLexer {");
+                            line = line.Replace(": Lexer {", ": global::MetaDslx.CodeAnalysis.Parsers.Antlr.AntlrLexer {");
                         }
                         builder.Builder.AppendLine(line);
                     }
@@ -199,7 +199,7 @@ namespace MetaDslx.Languages.MetaCompiler.Antlr.Analyzers
                     {
                         if (line.Contains("public partial class") && line.Contains(": Parser {"))
                         {
-                            line = line.Replace(": Parser {", ": global::MetaDslx.Languages.MetaCompiler.Antlr.AntlrParser {");
+                            line = line.Replace(": Parser {", ": global::MetaDslx.CodeAnalysis.Parsers.Antlr.AntlrParser {");
                         }
                         builder.Builder.AppendLine(line);
                     }

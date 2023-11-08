@@ -10,7 +10,7 @@ using MetaDslx.CodeAnalysis;
 using MetaDslx.CodeAnalysis.Syntax;
 using MetaDslx.CodeAnalysis.Syntax.InternalSyntax;
 using MetaDslx.CodeAnalysis.Text;
-using MetaDslx.Languages.MetaCompiler.Antlr;
+using MetaDslx.CodeAnalysis.Parsers.Antlr;
 using MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax;
 
 #nullable enable
