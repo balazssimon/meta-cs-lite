@@ -93,6 +93,11 @@ namespace MetaDslx.Languages.MetaModel.Generators
             return property.HasSetter && !property.Flags.HasFlag(ModelPropertyFlags.ReadOnly) && !property.Flags.HasFlag(ModelPropertyFlags.Collection);
         }
 
+        public string ToCSharp(MetaClass<object, MetaProperty, MetaOperation> metaClass)
+        {
+            return $"{MetaModel.Name}.{metaClass.Name}Info";
+        }
+
         public bool IsCollection(MetaPropertySlot<object, MetaProperty, MetaOperation> slot)
         {
             return slot.Flags.HasFlag(ModelPropertyFlags.Collection);

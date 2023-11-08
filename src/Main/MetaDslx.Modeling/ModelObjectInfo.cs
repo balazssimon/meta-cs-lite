@@ -17,6 +17,8 @@ namespace MetaDslx.Modeling
         public abstract Type? SymbolType { get; }
         public abstract ModelProperty? NameProperty { get; }
         public abstract ModelProperty? TypeProperty { get; }
+        public abstract ImmutableArray<ModelObjectInfo> BaseTypes { get; }
+        public abstract ImmutableArray<ModelObjectInfo> AllBaseTypes { get; }
         public abstract ImmutableArray<ModelProperty> DeclaredProperties { get; }
         public abstract ImmutableArray<ModelProperty> AllDeclaredProperties { get; }
         public abstract ImmutableArray<ModelProperty> PublicProperties { get; }

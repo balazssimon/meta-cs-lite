@@ -35,5 +35,6 @@ namespace MetaDslx.Languages.MetaModel.Meta
         public override ImmutableArray<MetaProperty> OriginalDeclaredProperties => UnderlyingClass.Properties.ToImmutableArray();
 
         public override ImmutableArray<MetaOperation> OriginalDeclaredOperations => UnderlyingClass.Operations.ToImmutableArray();
+
     }
 }

@@ -68,6 +68,10 @@ namespace MetaDslx.Modeling.Reflection
 
         protected override ImmutableDictionary<ModelOperation, ModelOperationInfo> ModelOperationInfos => ImmutableDictionary<ModelOperation, ModelOperationInfo>.Empty;
 
+        public override ImmutableArray<ModelObjectInfo> BaseTypes => throw new NotImplementedException();
+
+        public override ImmutableArray<ModelObjectInfo> AllBaseTypes => throw new NotImplementedException();
+
         public override IModelObject? Create(Model? model = null, string? id = null)
         {
             var ctr = _metaType.GetConstructor(EmptyTypes);

@@ -20,6 +20,7 @@ namespace MetaDslx.Modeling.Meta
         public abstract ImmutableArray<TProperty> OriginalDeclaredProperties { get; }
         public abstract ImmutableArray<TOperation> OriginalDeclaredOperations { get; }
 
+        public ImmutableArray<MetaClass<TType, TProperty, TOperation>> BaseTypes { get; internal set; }
         public ImmutableArray<MetaClass<TType, TProperty, TOperation>> AllBaseTypes { get; internal set; }
         public MetaProperty<TType, TProperty, TOperation>? NameProperty { get; internal set; }
         public MetaProperty<TType, TProperty, TOperation>? TypeProperty { get; internal set; }

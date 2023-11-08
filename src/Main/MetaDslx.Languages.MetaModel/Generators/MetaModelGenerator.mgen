@@ -312,6 +312,8 @@ internal class [cls.Name]_Impl : __MetaModelObject, [cls.Name]
 	{
 		public static readonly __Info Instance = new __Info();
 
+		private readonly global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> _baseTypes;
+		private readonly global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> _allBaseTypes;
 		private readonly global::System.Collections.Immutable.ImmutableArray<__ModelProperty> _declaredProperties;
 		private readonly global::System.Collections.Immutable.ImmutableArray<__ModelProperty> _allDeclaredProperties;
 		private readonly global::System.Collections.Immutable.ImmutableArray<__ModelProperty> _publicProperties;
@@ -324,6 +326,8 @@ internal class [cls.Name]_Impl : __MetaModelObject, [cls.Name]
 
 		private __Info() 
 		{
+			_baseTypes = __ImmutableArray.Create<__ModelObjectInfo>([foreach (var bt in metaCls.BaseTypes) separator ", "][ToCSharp(bt)][end foreach]);
+			_allBaseTypes = __ImmutableArray.Create<__ModelObjectInfo>([foreach (var bt in metaCls.AllBaseTypes) separator ", "][ToCSharp(bt)][end foreach]);
 			_declaredProperties = __ImmutableArray.Create<__ModelProperty>([foreach (var prop in metaCls.DeclaredProperties) separator ", "][ToCSharp(prop)][end foreach]);
 			_allDeclaredProperties = __ImmutableArray.Create<__ModelProperty>([foreach (var prop in metaCls.AllDeclaredProperties) separator ", "][ToCSharp(prop)][end foreach]);
 			_publicProperties = __ImmutableArray.Create<__ModelProperty>([foreach (var prop in metaCls.PublicProperties) separator ", "][ToCSharp(prop)][end foreach]);
@@ -357,6 +361,8 @@ internal class [cls.Name]_Impl : __MetaModelObject, [cls.Name]
         public override __Type? SymbolType => [if (metaCls.SymbolType is null)]null[else]typeof([ToCSharp(metaCls.SymbolType)])[end if];
         public override __ModelProperty? NameProperty => [if (metaCls.NameProperty is null)]null[else][ToCSharp(metaCls.NameProperty)][end if];
         public override __ModelProperty? TypeProperty => [if (metaCls.TypeProperty is null)]null[else][ToCSharp(metaCls.TypeProperty)][end if];
+        public override global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> BaseTypes => _baseTypes;
+        public override global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> AllBaseTypes => _allBaseTypes;
         public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> DeclaredProperties => _declaredProperties;
         public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> AllDeclaredProperties => _allDeclaredProperties;
         public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> PublicProperties => _publicProperties;

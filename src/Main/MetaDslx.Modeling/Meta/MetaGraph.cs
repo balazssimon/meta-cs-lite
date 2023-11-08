@@ -134,6 +134,12 @@ namespace MetaDslx.Modeling.Meta
             foreach (var cls in classes)
             {
                 cls.AllBaseTypes = cls.AllBaseTypes.Sort(CompareByInheritanceReverse);
+                var baseTypes = ArrayBuilder<MetaClass<TType, TProperty, TOperation>>.GetInstance();
+                foreach (var baseType in cls.AllBaseTypes)
+                {
+                    if (cls.OriginalBaseTypes.Contains(baseType.UnderlyingType)) baseTypes.Add(baseType);
+                }
+                cls.BaseTypes = baseTypes.ToImmutableAndFree();
                 if (cls.SymbolType is null)
                 {
                     foreach (var baseType in cls.AllBaseTypes)

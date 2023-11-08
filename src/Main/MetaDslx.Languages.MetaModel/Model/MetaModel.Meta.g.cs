@@ -1082,6 +1082,8 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 		{
 			public static readonly __Info Instance = new __Info();
 	
+			private readonly global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> _baseTypes;
+			private readonly global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> _allBaseTypes;
 			private readonly global::System.Collections.Immutable.ImmutableArray<__ModelProperty> _declaredProperties;
 			private readonly global::System.Collections.Immutable.ImmutableArray<__ModelProperty> _allDeclaredProperties;
 			private readonly global::System.Collections.Immutable.ImmutableArray<__ModelProperty> _publicProperties;
@@ -1094,6 +1096,8 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 	
 			private __Info() 
 			{
+				_baseTypes = __ImmutableArray.Create<__ModelObjectInfo>();
+				_allBaseTypes = __ImmutableArray.Create<__ModelObjectInfo>();
 				_declaredProperties = __ImmutableArray.Create<__ModelProperty>(Meta.MetaDeclaration_Declarations, Meta.MetaDeclaration_FullName, Meta.MetaDeclaration_Name, Meta.MetaDeclaration_Parent);
 				_allDeclaredProperties = __ImmutableArray.Create<__ModelProperty>(Meta.MetaDeclaration_Declarations, Meta.MetaDeclaration_FullName, Meta.MetaDeclaration_Name, Meta.MetaDeclaration_Parent);
 				_publicProperties = __ImmutableArray.Create<__ModelProperty>(Meta.MetaDeclaration_Declarations, Meta.MetaDeclaration_FullName, Meta.MetaDeclaration_Name, Meta.MetaDeclaration_Parent);
@@ -1123,6 +1127,8 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 	        public override __Type? SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.DeclaredSymbol);
 	        public override __ModelProperty? NameProperty => Meta.MetaDeclaration_Name;
 	        public override __ModelProperty? TypeProperty => null;
+	        public override global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> BaseTypes => _baseTypes;
+	        public override global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> AllBaseTypes => _allBaseTypes;
 	        public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> DeclaredProperties => _declaredProperties;
 	        public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> AllDeclaredProperties => _allDeclaredProperties;
 	        public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> PublicProperties => _publicProperties;
@@ -1188,6 +1194,8 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 		{
 			public static readonly __Info Instance = new __Info();
 	
+			private readonly global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> _baseTypes;
+			private readonly global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> _allBaseTypes;
 			private readonly global::System.Collections.Immutable.ImmutableArray<__ModelProperty> _declaredProperties;
 			private readonly global::System.Collections.Immutable.ImmutableArray<__ModelProperty> _allDeclaredProperties;
 			private readonly global::System.Collections.Immutable.ImmutableArray<__ModelProperty> _publicProperties;
@@ -1200,6 +1208,8 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 	
 			private __Info() 
 			{
+				_baseTypes = __ImmutableArray.Create<__ModelObjectInfo>(Meta.MetaDeclarationInfo);
+				_allBaseTypes = __ImmutableArray.Create<__ModelObjectInfo>(Meta.MetaDeclarationInfo);
 				_declaredProperties = __ImmutableArray.Create<__ModelProperty>();
 				_allDeclaredProperties = __ImmutableArray.Create<__ModelProperty>(Meta.MetaDeclaration_Declarations, Meta.MetaDeclaration_FullName, Meta.MetaDeclaration_Name, Meta.MetaDeclaration_Parent);
 				_publicProperties = __ImmutableArray.Create<__ModelProperty>(Meta.MetaDeclaration_Declarations, Meta.MetaDeclaration_FullName, Meta.MetaDeclaration_Name, Meta.MetaDeclaration_Parent);
@@ -1229,6 +1239,8 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 	        public override __Type? SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.NamespaceSymbol);
 	        public override __ModelProperty? NameProperty => Meta.MetaDeclaration_Name;
 	        public override __ModelProperty? TypeProperty => null;
+	        public override global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> BaseTypes => _baseTypes;
+	        public override global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> AllBaseTypes => _allBaseTypes;
 	        public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> DeclaredProperties => _declaredProperties;
 	        public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> AllDeclaredProperties => _allDeclaredProperties;
 	        public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> PublicProperties => _publicProperties;
@@ -1299,6 +1311,8 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 		{
 			public static readonly __Info Instance = new __Info();
 	
+			private readonly global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> _baseTypes;
+			private readonly global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> _allBaseTypes;
 			private readonly global::System.Collections.Immutable.ImmutableArray<__ModelProperty> _declaredProperties;
 			private readonly global::System.Collections.Immutable.ImmutableArray<__ModelProperty> _allDeclaredProperties;
 			private readonly global::System.Collections.Immutable.ImmutableArray<__ModelProperty> _publicProperties;
@@ -1311,6 +1325,8 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 	
 			private __Info() 
 			{
+				_baseTypes = __ImmutableArray.Create<__ModelObjectInfo>(Meta.MetaDeclarationInfo);
+				_allBaseTypes = __ImmutableArray.Create<__ModelObjectInfo>(Meta.MetaDeclarationInfo);
 				_declaredProperties = __ImmutableArray.Create<__ModelProperty>(Meta.MetaModel_NamespaceName);
 				_allDeclaredProperties = __ImmutableArray.Create<__ModelProperty>(Meta.MetaModel_NamespaceName, Meta.MetaDeclaration_Declarations, Meta.MetaDeclaration_FullName, Meta.MetaDeclaration_Name, Meta.MetaDeclaration_Parent);
 				_publicProperties = __ImmutableArray.Create<__ModelProperty>(Meta.MetaModel_NamespaceName, Meta.MetaDeclaration_Declarations, Meta.MetaDeclaration_FullName, Meta.MetaDeclaration_Name, Meta.MetaDeclaration_Parent);
@@ -1342,6 +1358,8 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 	        public override __Type? SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.DeclaredSymbol);
 	        public override __ModelProperty? NameProperty => Meta.MetaDeclaration_Name;
 	        public override __ModelProperty? TypeProperty => null;
+	        public override global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> BaseTypes => _baseTypes;
+	        public override global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> AllBaseTypes => _allBaseTypes;
 	        public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> DeclaredProperties => _declaredProperties;
 	        public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> AllDeclaredProperties => _allDeclaredProperties;
 	        public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> PublicProperties => _publicProperties;
@@ -1413,6 +1431,8 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 		{
 			public static readonly __Info Instance = new __Info();
 	
+			private readonly global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> _baseTypes;
+			private readonly global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> _allBaseTypes;
 			private readonly global::System.Collections.Immutable.ImmutableArray<__ModelProperty> _declaredProperties;
 			private readonly global::System.Collections.Immutable.ImmutableArray<__ModelProperty> _allDeclaredProperties;
 			private readonly global::System.Collections.Immutable.ImmutableArray<__ModelProperty> _publicProperties;
@@ -1425,6 +1445,8 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 	
 			private __Info() 
 			{
+				_baseTypes = __ImmutableArray.Create<__ModelObjectInfo>(Meta.MetaDeclarationInfo);
+				_allBaseTypes = __ImmutableArray.Create<__ModelObjectInfo>(Meta.MetaDeclarationInfo);
 				_declaredProperties = __ImmutableArray.Create<__ModelProperty>(Meta.MetaConstant_Type);
 				_allDeclaredProperties = __ImmutableArray.Create<__ModelProperty>(Meta.MetaConstant_Type, Meta.MetaDeclaration_Declarations, Meta.MetaDeclaration_FullName, Meta.MetaDeclaration_Name, Meta.MetaDeclaration_Parent);
 				_publicProperties = __ImmutableArray.Create<__ModelProperty>(Meta.MetaConstant_Type, Meta.MetaDeclaration_Declarations, Meta.MetaDeclaration_FullName, Meta.MetaDeclaration_Name, Meta.MetaDeclaration_Parent);
@@ -1456,6 +1478,8 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 	        public override __Type? SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.DeclaredSymbol);
 	        public override __ModelProperty? NameProperty => Meta.MetaDeclaration_Name;
 	        public override __ModelProperty? TypeProperty => null;
+	        public override global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> BaseTypes => _baseTypes;
+	        public override global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> AllBaseTypes => _allBaseTypes;
 	        public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> DeclaredProperties => _declaredProperties;
 	        public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> AllDeclaredProperties => _allDeclaredProperties;
 	        public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> PublicProperties => _publicProperties;
@@ -1521,6 +1545,8 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 		{
 			public static readonly __Info Instance = new __Info();
 	
+			private readonly global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> _baseTypes;
+			private readonly global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> _allBaseTypes;
 			private readonly global::System.Collections.Immutable.ImmutableArray<__ModelProperty> _declaredProperties;
 			private readonly global::System.Collections.Immutable.ImmutableArray<__ModelProperty> _allDeclaredProperties;
 			private readonly global::System.Collections.Immutable.ImmutableArray<__ModelProperty> _publicProperties;
@@ -1533,6 +1559,8 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 	
 			private __Info() 
 			{
+				_baseTypes = __ImmutableArray.Create<__ModelObjectInfo>(Meta.MetaDeclarationInfo);
+				_allBaseTypes = __ImmutableArray.Create<__ModelObjectInfo>(Meta.MetaDeclarationInfo);
 				_declaredProperties = __ImmutableArray.Create<__ModelProperty>();
 				_allDeclaredProperties = __ImmutableArray.Create<__ModelProperty>(Meta.MetaDeclaration_Declarations, Meta.MetaDeclaration_FullName, Meta.MetaDeclaration_Name, Meta.MetaDeclaration_Parent);
 				_publicProperties = __ImmutableArray.Create<__ModelProperty>(Meta.MetaDeclaration_Declarations, Meta.MetaDeclaration_FullName, Meta.MetaDeclaration_Name, Meta.MetaDeclaration_Parent);
@@ -1562,6 +1590,8 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 	        public override __Type? SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.TypeSymbol);
 	        public override __ModelProperty? NameProperty => Meta.MetaDeclaration_Name;
 	        public override __ModelProperty? TypeProperty => null;
+	        public override global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> BaseTypes => _baseTypes;
+	        public override global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> AllBaseTypes => _allBaseTypes;
 	        public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> DeclaredProperties => _declaredProperties;
 	        public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> AllDeclaredProperties => _allDeclaredProperties;
 	        public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> PublicProperties => _publicProperties;
@@ -1628,6 +1658,8 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 		{
 			public static readonly __Info Instance = new __Info();
 	
+			private readonly global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> _baseTypes;
+			private readonly global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> _allBaseTypes;
 			private readonly global::System.Collections.Immutable.ImmutableArray<__ModelProperty> _declaredProperties;
 			private readonly global::System.Collections.Immutable.ImmutableArray<__ModelProperty> _allDeclaredProperties;
 			private readonly global::System.Collections.Immutable.ImmutableArray<__ModelProperty> _publicProperties;
@@ -1640,6 +1672,8 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 	
 			private __Info() 
 			{
+				_baseTypes = __ImmutableArray.Create<__ModelObjectInfo>(Meta.MetaTypeInfo);
+				_allBaseTypes = __ImmutableArray.Create<__ModelObjectInfo>(Meta.MetaTypeInfo, Meta.MetaDeclarationInfo);
 				_declaredProperties = __ImmutableArray.Create<__ModelProperty>();
 				_allDeclaredProperties = __ImmutableArray.Create<__ModelProperty>(Meta.MetaDeclaration_Declarations, Meta.MetaDeclaration_FullName, Meta.MetaDeclaration_Name, Meta.MetaDeclaration_Parent);
 				_publicProperties = __ImmutableArray.Create<__ModelProperty>(Meta.MetaDeclaration_Declarations, Meta.MetaDeclaration_FullName, Meta.MetaDeclaration_Name, Meta.MetaDeclaration_Parent);
@@ -1669,6 +1703,8 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 	        public override __Type? SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.TypeSymbol);
 	        public override __ModelProperty? NameProperty => Meta.MetaDeclaration_Name;
 	        public override __ModelProperty? TypeProperty => null;
+	        public override global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> BaseTypes => _baseTypes;
+	        public override global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> AllBaseTypes => _allBaseTypes;
 	        public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> DeclaredProperties => _declaredProperties;
 	        public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> AllDeclaredProperties => _allDeclaredProperties;
 	        public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> PublicProperties => _publicProperties;
@@ -1741,6 +1777,8 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 		{
 			public static readonly __Info Instance = new __Info();
 	
+			private readonly global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> _baseTypes;
+			private readonly global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> _allBaseTypes;
 			private readonly global::System.Collections.Immutable.ImmutableArray<__ModelProperty> _declaredProperties;
 			private readonly global::System.Collections.Immutable.ImmutableArray<__ModelProperty> _allDeclaredProperties;
 			private readonly global::System.Collections.Immutable.ImmutableArray<__ModelProperty> _publicProperties;
@@ -1753,6 +1791,8 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 	
 			private __Info() 
 			{
+				_baseTypes = __ImmutableArray.Create<__ModelObjectInfo>(Meta.MetaTypeInfo);
+				_allBaseTypes = __ImmutableArray.Create<__ModelObjectInfo>(Meta.MetaTypeInfo, Meta.MetaDeclarationInfo);
 				_declaredProperties = __ImmutableArray.Create<__ModelProperty>(Meta.MetaNullableType_InnerType);
 				_allDeclaredProperties = __ImmutableArray.Create<__ModelProperty>(Meta.MetaNullableType_InnerType, Meta.MetaDeclaration_Declarations, Meta.MetaDeclaration_FullName, Meta.MetaDeclaration_Name, Meta.MetaDeclaration_Parent);
 				_publicProperties = __ImmutableArray.Create<__ModelProperty>(Meta.MetaNullableType_InnerType, Meta.MetaDeclaration_Declarations, Meta.MetaDeclaration_FullName, Meta.MetaDeclaration_Name, Meta.MetaDeclaration_Parent);
@@ -1784,6 +1824,8 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 	        public override __Type? SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.TypeSymbol);
 	        public override __ModelProperty? NameProperty => Meta.MetaDeclaration_Name;
 	        public override __ModelProperty? TypeProperty => null;
+	        public override global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> BaseTypes => _baseTypes;
+	        public override global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> AllBaseTypes => _allBaseTypes;
 	        public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> DeclaredProperties => _declaredProperties;
 	        public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> AllDeclaredProperties => _allDeclaredProperties;
 	        public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> PublicProperties => _publicProperties;
@@ -1856,6 +1898,8 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 		{
 			public static readonly __Info Instance = new __Info();
 	
+			private readonly global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> _baseTypes;
+			private readonly global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> _allBaseTypes;
 			private readonly global::System.Collections.Immutable.ImmutableArray<__ModelProperty> _declaredProperties;
 			private readonly global::System.Collections.Immutable.ImmutableArray<__ModelProperty> _allDeclaredProperties;
 			private readonly global::System.Collections.Immutable.ImmutableArray<__ModelProperty> _publicProperties;
@@ -1868,6 +1912,8 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 	
 			private __Info() 
 			{
+				_baseTypes = __ImmutableArray.Create<__ModelObjectInfo>(Meta.MetaTypeInfo);
+				_allBaseTypes = __ImmutableArray.Create<__ModelObjectInfo>(Meta.MetaTypeInfo, Meta.MetaDeclarationInfo);
 				_declaredProperties = __ImmutableArray.Create<__ModelProperty>(Meta.MetaArrayType_ItemType);
 				_allDeclaredProperties = __ImmutableArray.Create<__ModelProperty>(Meta.MetaArrayType_ItemType, Meta.MetaDeclaration_Declarations, Meta.MetaDeclaration_FullName, Meta.MetaDeclaration_Name, Meta.MetaDeclaration_Parent);
 				_publicProperties = __ImmutableArray.Create<__ModelProperty>(Meta.MetaArrayType_ItemType, Meta.MetaDeclaration_Declarations, Meta.MetaDeclaration_FullName, Meta.MetaDeclaration_Name, Meta.MetaDeclaration_Parent);
@@ -1899,6 +1945,8 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 	        public override __Type? SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.TypeSymbol);
 	        public override __ModelProperty? NameProperty => Meta.MetaDeclaration_Name;
 	        public override __ModelProperty? TypeProperty => null;
+	        public override global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> BaseTypes => _baseTypes;
+	        public override global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> AllBaseTypes => _allBaseTypes;
 	        public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> DeclaredProperties => _declaredProperties;
 	        public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> AllDeclaredProperties => _allDeclaredProperties;
 	        public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> PublicProperties => _publicProperties;
@@ -1971,6 +2019,8 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 		{
 			public static readonly __Info Instance = new __Info();
 	
+			private readonly global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> _baseTypes;
+			private readonly global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> _allBaseTypes;
 			private readonly global::System.Collections.Immutable.ImmutableArray<__ModelProperty> _declaredProperties;
 			private readonly global::System.Collections.Immutable.ImmutableArray<__ModelProperty> _allDeclaredProperties;
 			private readonly global::System.Collections.Immutable.ImmutableArray<__ModelProperty> _publicProperties;
@@ -1983,6 +2033,8 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 	
 			private __Info() 
 			{
+				_baseTypes = __ImmutableArray.Create<__ModelObjectInfo>(Meta.MetaTypeInfo);
+				_allBaseTypes = __ImmutableArray.Create<__ModelObjectInfo>(Meta.MetaTypeInfo, Meta.MetaDeclarationInfo);
 				_declaredProperties = __ImmutableArray.Create<__ModelProperty>(Meta.MetaEnumType_Literals);
 				_allDeclaredProperties = __ImmutableArray.Create<__ModelProperty>(Meta.MetaEnumType_Literals, Meta.MetaDeclaration_Declarations, Meta.MetaDeclaration_FullName, Meta.MetaDeclaration_Name, Meta.MetaDeclaration_Parent);
 				_publicProperties = __ImmutableArray.Create<__ModelProperty>(Meta.MetaEnumType_Literals, Meta.MetaDeclaration_Declarations, Meta.MetaDeclaration_FullName, Meta.MetaDeclaration_Name, Meta.MetaDeclaration_Parent);
@@ -2014,6 +2066,8 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 	        public override __Type? SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.TypeSymbol);
 	        public override __ModelProperty? NameProperty => Meta.MetaDeclaration_Name;
 	        public override __ModelProperty? TypeProperty => null;
+	        public override global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> BaseTypes => _baseTypes;
+	        public override global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> AllBaseTypes => _allBaseTypes;
 	        public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> DeclaredProperties => _declaredProperties;
 	        public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> AllDeclaredProperties => _allDeclaredProperties;
 	        public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> PublicProperties => _publicProperties;
@@ -2079,6 +2133,8 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 		{
 			public static readonly __Info Instance = new __Info();
 	
+			private readonly global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> _baseTypes;
+			private readonly global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> _allBaseTypes;
 			private readonly global::System.Collections.Immutable.ImmutableArray<__ModelProperty> _declaredProperties;
 			private readonly global::System.Collections.Immutable.ImmutableArray<__ModelProperty> _allDeclaredProperties;
 			private readonly global::System.Collections.Immutable.ImmutableArray<__ModelProperty> _publicProperties;
@@ -2091,6 +2147,8 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 	
 			private __Info() 
 			{
+				_baseTypes = __ImmutableArray.Create<__ModelObjectInfo>(Meta.MetaDeclarationInfo);
+				_allBaseTypes = __ImmutableArray.Create<__ModelObjectInfo>(Meta.MetaDeclarationInfo);
 				_declaredProperties = __ImmutableArray.Create<__ModelProperty>();
 				_allDeclaredProperties = __ImmutableArray.Create<__ModelProperty>(Meta.MetaDeclaration_Declarations, Meta.MetaDeclaration_FullName, Meta.MetaDeclaration_Name, Meta.MetaDeclaration_Parent);
 				_publicProperties = __ImmutableArray.Create<__ModelProperty>(Meta.MetaDeclaration_Declarations, Meta.MetaDeclaration_FullName, Meta.MetaDeclaration_Name, Meta.MetaDeclaration_Parent);
@@ -2120,6 +2178,8 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 	        public override __Type? SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.DeclaredSymbol);
 	        public override __ModelProperty? NameProperty => Meta.MetaDeclaration_Name;
 	        public override __ModelProperty? TypeProperty => null;
+	        public override global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> BaseTypes => _baseTypes;
+	        public override global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> AllBaseTypes => _allBaseTypes;
 	        public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> DeclaredProperties => _declaredProperties;
 	        public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> AllDeclaredProperties => _allDeclaredProperties;
 	        public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> PublicProperties => _publicProperties;
@@ -2216,6 +2276,8 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 		{
 			public static readonly __Info Instance = new __Info();
 	
+			private readonly global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> _baseTypes;
+			private readonly global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> _allBaseTypes;
 			private readonly global::System.Collections.Immutable.ImmutableArray<__ModelProperty> _declaredProperties;
 			private readonly global::System.Collections.Immutable.ImmutableArray<__ModelProperty> _allDeclaredProperties;
 			private readonly global::System.Collections.Immutable.ImmutableArray<__ModelProperty> _publicProperties;
@@ -2228,6 +2290,8 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 	
 			private __Info() 
 			{
+				_baseTypes = __ImmutableArray.Create<__ModelObjectInfo>(Meta.MetaTypeInfo);
+				_allBaseTypes = __ImmutableArray.Create<__ModelObjectInfo>(Meta.MetaTypeInfo, Meta.MetaDeclarationInfo);
 				_declaredProperties = __ImmutableArray.Create<__ModelProperty>(Meta.MetaClass_BaseTypes, Meta.MetaClass_IsAbstract, Meta.MetaClass_Operations, Meta.MetaClass_Properties, Meta.MetaClass_SymbolType);
 				_allDeclaredProperties = __ImmutableArray.Create<__ModelProperty>(Meta.MetaClass_BaseTypes, Meta.MetaClass_IsAbstract, Meta.MetaClass_Operations, Meta.MetaClass_Properties, Meta.MetaClass_SymbolType, Meta.MetaDeclaration_Declarations, Meta.MetaDeclaration_FullName, Meta.MetaDeclaration_Name, Meta.MetaDeclaration_Parent);
 				_publicProperties = __ImmutableArray.Create<__ModelProperty>(Meta.MetaClass_BaseTypes, Meta.MetaClass_IsAbstract, Meta.MetaClass_Operations, Meta.MetaClass_Properties, Meta.MetaClass_SymbolType, Meta.MetaDeclaration_Declarations, Meta.MetaDeclaration_FullName, Meta.MetaDeclaration_Name, Meta.MetaDeclaration_Parent);
@@ -2267,6 +2331,8 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 	        public override __Type? SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.TypeSymbol);
 	        public override __ModelProperty? NameProperty => Meta.MetaDeclaration_Name;
 	        public override __ModelProperty? TypeProperty => null;
+	        public override global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> BaseTypes => _baseTypes;
+	        public override global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> AllBaseTypes => _allBaseTypes;
 	        public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> DeclaredProperties => _declaredProperties;
 	        public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> AllDeclaredProperties => _allDeclaredProperties;
 	        public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> PublicProperties => _publicProperties;
@@ -2374,6 +2440,8 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 		{
 			public static readonly __Info Instance = new __Info();
 	
+			private readonly global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> _baseTypes;
+			private readonly global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> _allBaseTypes;
 			private readonly global::System.Collections.Immutable.ImmutableArray<__ModelProperty> _declaredProperties;
 			private readonly global::System.Collections.Immutable.ImmutableArray<__ModelProperty> _allDeclaredProperties;
 			private readonly global::System.Collections.Immutable.ImmutableArray<__ModelProperty> _publicProperties;
@@ -2386,6 +2454,8 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 	
 			private __Info() 
 			{
+				_baseTypes = __ImmutableArray.Create<__ModelObjectInfo>(Meta.MetaDeclarationInfo);
+				_allBaseTypes = __ImmutableArray.Create<__ModelObjectInfo>(Meta.MetaDeclarationInfo);
 				_declaredProperties = __ImmutableArray.Create<__ModelProperty>(Meta.MetaProperty_IsContainment, Meta.MetaProperty_IsDerived, Meta.MetaProperty_OppositeProperties, Meta.MetaProperty_RedefinedProperties, Meta.MetaProperty_SubsettedProperties, Meta.MetaProperty_SymbolProperty, Meta.MetaProperty_Type);
 				_allDeclaredProperties = __ImmutableArray.Create<__ModelProperty>(Meta.MetaProperty_IsContainment, Meta.MetaProperty_IsDerived, Meta.MetaProperty_OppositeProperties, Meta.MetaProperty_RedefinedProperties, Meta.MetaProperty_SubsettedProperties, Meta.MetaProperty_SymbolProperty, Meta.MetaProperty_Type, Meta.MetaDeclaration_Declarations, Meta.MetaDeclaration_FullName, Meta.MetaDeclaration_Name, Meta.MetaDeclaration_Parent);
 				_publicProperties = __ImmutableArray.Create<__ModelProperty>(Meta.MetaProperty_IsContainment, Meta.MetaProperty_IsDerived, Meta.MetaProperty_OppositeProperties, Meta.MetaProperty_RedefinedProperties, Meta.MetaProperty_SubsettedProperties, Meta.MetaProperty_SymbolProperty, Meta.MetaProperty_Type, Meta.MetaDeclaration_Declarations, Meta.MetaDeclaration_FullName, Meta.MetaDeclaration_Name, Meta.MetaDeclaration_Parent);
@@ -2429,6 +2499,8 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 	        public override __Type? SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.DeclaredSymbol);
 	        public override __ModelProperty? NameProperty => Meta.MetaDeclaration_Name;
 	        public override __ModelProperty? TypeProperty => null;
+	        public override global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> BaseTypes => _baseTypes;
+	        public override global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> AllBaseTypes => _allBaseTypes;
 	        public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> DeclaredProperties => _declaredProperties;
 	        public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> AllDeclaredProperties => _allDeclaredProperties;
 	        public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> PublicProperties => _publicProperties;
@@ -2505,6 +2577,8 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 		{
 			public static readonly __Info Instance = new __Info();
 	
+			private readonly global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> _baseTypes;
+			private readonly global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> _allBaseTypes;
 			private readonly global::System.Collections.Immutable.ImmutableArray<__ModelProperty> _declaredProperties;
 			private readonly global::System.Collections.Immutable.ImmutableArray<__ModelProperty> _allDeclaredProperties;
 			private readonly global::System.Collections.Immutable.ImmutableArray<__ModelProperty> _publicProperties;
@@ -2517,6 +2591,8 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 	
 			private __Info() 
 			{
+				_baseTypes = __ImmutableArray.Create<__ModelObjectInfo>(Meta.MetaDeclarationInfo);
+				_allBaseTypes = __ImmutableArray.Create<__ModelObjectInfo>(Meta.MetaDeclarationInfo);
 				_declaredProperties = __ImmutableArray.Create<__ModelProperty>(Meta.MetaOperation_Parameters, Meta.MetaOperation_ReturnType);
 				_allDeclaredProperties = __ImmutableArray.Create<__ModelProperty>(Meta.MetaOperation_Parameters, Meta.MetaOperation_ReturnType, Meta.MetaDeclaration_Declarations, Meta.MetaDeclaration_FullName, Meta.MetaDeclaration_Name, Meta.MetaDeclaration_Parent);
 				_publicProperties = __ImmutableArray.Create<__ModelProperty>(Meta.MetaOperation_Parameters, Meta.MetaOperation_ReturnType, Meta.MetaDeclaration_Declarations, Meta.MetaDeclaration_FullName, Meta.MetaDeclaration_Name, Meta.MetaDeclaration_Parent);
@@ -2550,6 +2626,8 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 	        public override __Type? SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.DeclaredSymbol);
 	        public override __ModelProperty? NameProperty => Meta.MetaDeclaration_Name;
 	        public override __ModelProperty? TypeProperty => null;
+	        public override global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> BaseTypes => _baseTypes;
+	        public override global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> AllBaseTypes => _allBaseTypes;
 	        public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> DeclaredProperties => _declaredProperties;
 	        public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> AllDeclaredProperties => _allDeclaredProperties;
 	        public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> PublicProperties => _publicProperties;
@@ -2621,6 +2699,8 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 		{
 			public static readonly __Info Instance = new __Info();
 	
+			private readonly global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> _baseTypes;
+			private readonly global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> _allBaseTypes;
 			private readonly global::System.Collections.Immutable.ImmutableArray<__ModelProperty> _declaredProperties;
 			private readonly global::System.Collections.Immutable.ImmutableArray<__ModelProperty> _allDeclaredProperties;
 			private readonly global::System.Collections.Immutable.ImmutableArray<__ModelProperty> _publicProperties;
@@ -2633,6 +2713,8 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 	
 			private __Info() 
 			{
+				_baseTypes = __ImmutableArray.Create<__ModelObjectInfo>(Meta.MetaDeclarationInfo);
+				_allBaseTypes = __ImmutableArray.Create<__ModelObjectInfo>(Meta.MetaDeclarationInfo);
 				_declaredProperties = __ImmutableArray.Create<__ModelProperty>(Meta.MetaParameter_Type);
 				_allDeclaredProperties = __ImmutableArray.Create<__ModelProperty>(Meta.MetaParameter_Type, Meta.MetaDeclaration_Declarations, Meta.MetaDeclaration_FullName, Meta.MetaDeclaration_Name, Meta.MetaDeclaration_Parent);
 				_publicProperties = __ImmutableArray.Create<__ModelProperty>(Meta.MetaParameter_Type, Meta.MetaDeclaration_Declarations, Meta.MetaDeclaration_FullName, Meta.MetaDeclaration_Name, Meta.MetaDeclaration_Parent);
@@ -2664,6 +2746,8 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 	        public override __Type? SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.DeclaredSymbol);
 	        public override __ModelProperty? NameProperty => Meta.MetaDeclaration_Name;
 	        public override __ModelProperty? TypeProperty => null;
+	        public override global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> BaseTypes => _baseTypes;
+	        public override global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> AllBaseTypes => _allBaseTypes;
 	        public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> DeclaredProperties => _declaredProperties;
 	        public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> AllDeclaredProperties => _allDeclaredProperties;
 	        public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> PublicProperties => _publicProperties;
