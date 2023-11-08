@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics;
+using System.Linq;
 using System.Text;
 using System.Threading;
 
@@ -108,7 +109,7 @@ namespace MetaDslx.CodeAnalysis
             }
         }
 
-        internal void CreateSourceAssemblyForCompilation(Compilation compilation)
+        internal void CreateSourceAssemblyForCompilation(Compilation compilation, CSharpCompilation? csharpCompilation)
         {
             // We are reading the Reference Manager state outside of a lock by accessing 
             // IsBound and HasCircularReference properties.
@@ -124,7 +125,7 @@ namespace MetaDslx.CodeAnalysis
 
             // The given compilation is the first compilation that shares this manager and its symbols are requested.
             // Perform full reference resolution and binding.
-            if (!IsBound && CreateAndSetSourceAssemblyFullBind(compilation))
+            if (!IsBound && CreateAndSetSourceAssemblyFullBind(compilation, csharpCompilation))
             {
                 // we have successfully bound the references for the compilation
             }
@@ -144,7 +145,7 @@ namespace MetaDslx.CodeAnalysis
 
                 var newManager = new ReferenceManager();
                 newManager._simpleAssemblyName = _simpleAssemblyName;
-                var successful = newManager.CreateAndSetSourceAssemblyFullBind(compilation);
+                var successful = newManager.CreateAndSetSourceAssemblyFullBind(compilation, csharpCompilation);
 
                 // The new manager isn't shared with any other compilation so there is no other 
                 // thread but the current one could have initialized it.
@@ -227,15 +228,17 @@ namespace MetaDslx.CodeAnalysis
         }
 
         // Returns false if another compilation sharing this manager finished binding earlier and we should reuse its results.
-        private bool CreateAndSetSourceAssemblyFullBind(Compilation compilation)
+        private bool CreateAndSetSourceAssemblyFullBind(Compilation compilation, CSharpCompilation? csharpCompilation)
         {
             var compilationFactory = compilation.MainLanguage.CompilationFactory;
-            var csharpReferences = ArrayBuilder<Microsoft.CodeAnalysis.MetadataReference>.GetInstance();
+            var csharpReferencesBuilder = ArrayBuilder<Microsoft.CodeAnalysis.MetadataReference>.GetInstance();
             foreach (var reference in compilation.ExternalReferences.OfType<CSharpMetadataReference>())
             {
-                csharpReferences.Add(reference.CSharpReference);
+                csharpReferencesBuilder.Add(reference.CSharpReference);
             }
-            var csharpCompilation = CSharpCompilation.Create(_simpleAssemblyName, references: csharpReferences.ToImmutableAndFree());
+            var csharpReferences = csharpReferencesBuilder.ToImmutableAndFree();
+            if (csharpCompilation is null) csharpCompilation = CSharpCompilation.Create(_simpleAssemblyName, references: csharpReferences);
+            else if (csharpReferences.Length > 0) csharpCompilation = csharpCompilation.AddReferences(csharpReferences);
             var csharpSymbolFactory = compilationFactory.CreateCSharpSymbolFactory(compilation);
             var referencedModulesBuilder = ArrayBuilder<ModuleSymbol>.GetInstance();
             foreach (var csharpAssembly in csharpCompilation.SourceModule.ReferencedAssemblySymbols)

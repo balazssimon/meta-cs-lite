@@ -1,6 +1,7 @@
 ﻿using MetaDslx.CodeAnalysis.Binding;
 using MetaDslx.CodeAnalysis.Declarations;
 using MetaDslx.CodeAnalysis.PooledObjects;
+using MetaDslx.CodeAnalysis.Symbols.Errors;
 using MetaDslx.CodeAnalysis.Symbols.Model;
 using MetaDslx.Modeling;
 using Microsoft.CodeAnalysis;
@@ -91,10 +92,19 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
             {
                 if (declaration.ModelObjectType is null) return null;
                 var info = GetModelObjectInfo(declaration.ModelObjectType);
-                if (info?.SymbolType is null)
+                if (info is null)
                 {
-                    diagnostics.Add(Diagnostic.Create(CommonErrorCode.ERR_DeclarationError, declaration.NameLocations.FirstOrDefault(), $"Could not determine symbol type for '{declaration.Name}'"));
-                    return null;
+                    var objectName = container is null || container is ModuleSymbol ? "the root namespace" : $"the declaration '{declaration.Name}'";
+                    var diagnostic = Diagnostic.Create(CommonErrorCode.ERR_DeclarationError, declaration.NameLocations.FirstOrDefault(), $"Could not determine the model object information for {objectName} of type '{declaration.ModelObjectType.FullName}'. Are you missing a meta model reference?");
+                    diagnostics.Add(diagnostic);
+                    return Compilation[declaration.Language].ErrorSymbolFactory.CreateSymbol(symbolType, (Symbol)container, new ErrorSymbolInfo(declaration.Name, declaration.MetadataName, ImmutableArray<Symbol>.Empty, diagnostic));
+                }
+                if (info.SymbolType is null)
+                {
+                    var objectName = container is null || container is ModuleSymbol ? "the root namespace" : $"the declaration '{declaration.Name}'";
+                    var diagnostic = Diagnostic.Create(CommonErrorCode.ERR_DeclarationError, declaration.NameLocations.FirstOrDefault(), $"There is no symbol type defined for for {objectName} of type '{declaration.ModelObjectType.FullName}'. Are you missing a meta model reference?'");
+                    diagnostics.Add(diagnostic);
+                    return Compilation[declaration.Language].ErrorSymbolFactory.CreateSymbol(symbolType, (Symbol)container, new ErrorSymbolInfo(declaration.Name, declaration.MetadataName, ImmutableArray<Symbol>.Empty, diagnostic));
                 }
                 if (!symbolType.IsAssignableFrom(info.SymbolType)) return null;
                 var modelFactory = _module.ModelFactory;

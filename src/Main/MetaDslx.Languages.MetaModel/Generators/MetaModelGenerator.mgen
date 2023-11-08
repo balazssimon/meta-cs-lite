@@ -31,6 +31,11 @@ namespace [Namespace]
 	
 	[GenerateFactory(MetaModel)]
 
+	[foreach (var enm in Enums)]
+	[GenerateEnum(MetaModel, enm)]
+
+	[end foreach]
+
 	[foreach (var cls in Classes)]
 	[GenerateInterface(MetaModel, cls)]
 
@@ -227,6 +232,15 @@ public class [mm.Name]ModelMultiFactory : __MultiModelFactory
 
 end template
 
+template GenerateEnum(MetaModel mm, MetaEnumType enm)
+public enum [enm.Name]
+{
+	[foreach (var lit in enm.Literals)]
+	[lit.Name],
+	[end foreach]
+}
+end template
+
 template GenerateInterface(MetaModel mm, MetaClass cls)
 [var metaCls = Graph.GetMetaClass(cls)]
 public interface [cls.Name][if (cls.BaseTypes.Any())] : [foreach (var bt in cls.BaseTypes) separator ", "]global::[bt.FullName][end foreach][end if]
@@ -253,7 +267,7 @@ internal class [cls.Name]_Impl : __MetaModelObject, [cls.Name]
 			[if (IsCollection(slot))]
 		((__IModelObject)this).Init([ToCSharp(slot.SlotProperty)], new global::MetaDslx.Modeling.ModelObjectList<[ToCSharp(slot.SlotProperty.Type)]>(this, __Info.Instance.GetSlot([ToCSharp(slot.SlotProperty)])!));
 			[else if (slot.DefaultValue is not null)]
-		((__IModelObject)this).Init([ToCSharp(slot.SlotProperty)], ([ToCSharp(slot.SlotProperty.Type)])[ToCSharpValue(slot.SlotProperty.Type, slot.DefaultValue)]);
+		((__IModelObject)this).Init([ToCSharp(slot.SlotProperty)], ([ToCSharp(slot.SlotProperty.Type)])[ToCSharpValue(slot.SlotProperty, slot.SlotProperty.Flags.HasFlag(MetaDslx.Modeling.ModelPropertyFlags.TypeSymbolType), slot.DefaultValue)]);
 			[end if]
 		[end foreach]
 		[foreach (var baseType in metaCls.AllBaseTypes.Reverse())]
@@ -274,7 +288,8 @@ internal class [cls.Name]_Impl : __MetaModelObject, [cls.Name]
 		[end if]
 	{
 		[if (prop.UnderlyingProperty.IsDerived)]
-		get => [mm.Name].__CustomImpl.[prop.DeclaringType.Name]_[prop.Name](this);
+			[var actualProp = info.HidingProperties.FirstOrDefault() ?? prop]
+		get => [mm.Name].__CustomImpl.[actualProp.DeclaringType.Name]_[actualProp.Name](this);
 		[else if (prop.IsCollection)]
 		get => MGetCollection<[ToCSharp(prop.Type)]>([ToCSharp(prop)]);
 		[else]
@@ -339,7 +354,7 @@ internal class [cls.Name]_Impl : __MetaModelObject, [cls.Name]
         public override __MetaModel MetaModel => [mm.Name].Instance;
         public override global::System.Type MetaType => typeof([cls.Name]);
 
-        public override __Type? SymbolType => [if (metaCls.SymbolType is null)]null[else]typeof(global::[metaCls.SymbolType])[end if];
+        public override __Type? SymbolType => [if (metaCls.SymbolType is null)]null[else]typeof([ToCSharp(metaCls.SymbolType)])[end if];
         public override __ModelProperty? NameProperty => [if (metaCls.NameProperty is null)]null[else][ToCSharp(metaCls.NameProperty)][end if];
         public override __ModelProperty? TypeProperty => [if (metaCls.TypeProperty is null)]null[else][ToCSharp(metaCls.TypeProperty)][end if];
         public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> DeclaredProperties => _declaredProperties;

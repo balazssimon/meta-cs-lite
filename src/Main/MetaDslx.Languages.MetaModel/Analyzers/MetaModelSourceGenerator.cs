@@ -43,11 +43,10 @@ namespace MetaDslx.Languages.MetaCompiler.Analyzers
                             var syntaxTree = MetaSyntaxTree.ParseText(mmCode, path: pathAndContent.path, cancellationToken: spc.CancellationToken);
                             var mmCompiler = MetaDslx.CodeAnalysis.Compilation.Create("Meta",
                                 syntaxTrees: new[] { syntaxTree },
+                                initialCompilation: compilationAndContent.Compilation as CSharpCompilation,
                                 references: new[]
                                 {
-                                    MetaDslx.CodeAnalysis.MetadataReference.CreateFromMetaModel(MetaDslx.Languages.MetaModel.Model.Meta.Instance),
-                                    MetaDslx.CodeAnalysis.MetadataReference.CreateFromFile(typeof(string).Assembly.Location),
-                                    MetaDslx.CodeAnalysis.MetadataReference.CreateFromFile(typeof(Symbol).Assembly.Location),
+                                    MetaDslx.CodeAnalysis.MetadataReference.CreateFromMetaModel(MetaDslx.Languages.MetaModel.Model.Meta.Instance)
                                 },
                                 options: MetaDslx.CodeAnalysis.CompilationOptions.Default.WithConcurrentBuild(false));
                             mmCompiler.Compile(spc.CancellationToken);
@@ -65,7 +64,7 @@ namespace MetaDslx.Languages.MetaCompiler.Analyzers
                             {
                                 var graph = new MetaDslx.Languages.MetaModel.Meta.MetaMetaGraph(model.Objects.OfType<MetaDslx.Languages.MetaModel.Model.MetaClass>());
                                 graph.Compute();
-                                var generator = new MetaDslx.Languages.MetaModel.Generators.MetaModelGenerator(false, model, mm, graph);
+                                var generator = new MetaDslx.Languages.MetaModel.Generators.MetaModelGenerator(true, model, mm, graph);
                                 var output = generator.Generate();
                                 var csharpFilePath = $"MetaModel.{fileName}.g.cs";
                                 spc.AddSource(csharpFilePath, output);

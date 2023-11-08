@@ -59,7 +59,7 @@ namespace MetaDslx.CodeAnalysis.Binding
                 if (_definedSymbols.IsDefault)
                 {
                     var rootNamespace = Compilation.GetRootNamespace(this.SyntaxTree);
-                    ImmutableInterlocked.InterlockedInitialize(ref _definedSymbols, ImmutableArray.Create<Symbol>(rootNamespace));
+                    ImmutableInterlocked.InterlockedInitialize(ref _definedSymbols, rootNamespace is null ? ImmutableArray<Symbol>.Empty : ImmutableArray.Create<Symbol>(rootNamespace));
                 }
                 return _definedSymbols;
             }

@@ -24,6 +24,8 @@ namespace MetaDslx.CodeAnalysis.Declarations
 
         public override Type ModelObjectType => _declarations[0].ModelObjectType;
 
+        public Language Language => _declarations[0].SyntaxReference.Language;
+
         public string QualifierProperty => _declarations[0].QualifierProperty;
 
         public ImmutableArray<SingleDeclaration> Declarations => _declarations;

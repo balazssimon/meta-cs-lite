@@ -114,7 +114,11 @@ namespace MetaDslx.CodeAnalysis.Symbols.Model
                         else if (prop.Flags.HasFlag(ModelPropertyFlags.TypeSymbolType))
                         {
                             if (item is TypeSymbol ts) symbolItem = ts;
-                            else if (prop.Type == typeof(string) || prop.Type == typeof(object)) symbolItem = _compilation.ResolveType(item.ToString());
+                            else if (prop.Type == typeof(string) || prop.Type == typeof(Type) || prop.Type == typeof(object))
+                            {
+                                if (item is Type type) symbolItem = _compilation.ResolveType(type.FullName);
+                                else symbolItem = _compilation.ResolveType(item.ToString());
+                            }
                         }
                         if (symbolItem is TValue typedSymbol)
                         {

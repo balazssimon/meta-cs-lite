@@ -17,7 +17,7 @@ namespace MetaDslx.Modeling.Reflection
 
         private readonly ReflectionMetaModel _metaModel;
         private readonly Type _metaType;
-        private string? _symbolType;
+        private object? _symbolType;
         private ModelProperty? _nameProperty;
         private ModelProperty? _typeProperty;
         private ImmutableArray<ModelProperty> _declaredProperties;
@@ -29,7 +29,7 @@ namespace MetaDslx.Modeling.Reflection
         public ReflectionModelObjectInfo(
             ReflectionMetaModel metaModel,
             Type metaType,
-            string? symbolType,
+            object? symbolType,
             ModelProperty? nameProperty,
             ModelProperty? typeProperty,
             ImmutableArray<ModelProperty> declaredProperties,

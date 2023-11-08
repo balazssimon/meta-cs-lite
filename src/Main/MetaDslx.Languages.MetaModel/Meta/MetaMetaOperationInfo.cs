@@ -7,9 +7,9 @@ using System.Text;
 
 namespace MetaDslx.Languages.MetaModel.Meta
 {
-    public sealed class MetaMetaOperationInfo : MetaOperationInfo<MetaType, MetaProperty, MetaOperation>
+    public sealed class MetaMetaOperationInfo : MetaOperationInfo<object, MetaProperty, MetaOperation>
     {
-        public MetaMetaOperationInfo(ImmutableArray<MetaOperation<MetaType, MetaProperty, MetaOperation>> overridenOperations = default, ImmutableArray<MetaOperation<MetaType, MetaProperty, MetaOperation>> overridingOperations = default)
+        public MetaMetaOperationInfo(ImmutableArray<MetaOperation<object, MetaProperty, MetaOperation>> overridenOperations = default, ImmutableArray<MetaOperation<object, MetaProperty, MetaOperation>> overridingOperations = default)
             : base(overridenOperations, overridingOperations)
         {
         }

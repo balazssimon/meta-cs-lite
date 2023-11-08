@@ -14,7 +14,7 @@ namespace MetaDslx.Modeling.Meta
         private static readonly MetaOperationComparer CompareOperationsByName = new MetaOperationComparer();
         private static readonly MetaClassComparer CompareByInheritance = new MetaClassComparer(false);
         private static readonly MetaClassComparer CompareByInheritanceReverse = new MetaClassComparer(true);
-
+        
         private HashSet<TType> _classTypes;
         private Dictionary<TType, MetaClass<TType, TProperty, TOperation>> _classMap;
         private ImmutableSortedSet<MetaClass<TType, TProperty, TOperation>> _classes;
@@ -54,11 +54,14 @@ namespace MetaDslx.Modeling.Meta
             foreach (var classType in _classTypes)
             {
                 var cls = MakeClass(classType);
-                classMap[classType] = cls;
-                classes.Add(cls);
+                if (cls is not null)
+                {
+                    classMap.Add(classType, cls);
+                    classes.Add(cls);
+                }
             }
-            _classes = SortClassesByInheritance(classes.ToImmutableAndFree());
             _classMap = classMap;
+            _classes = SortClassesByInheritance(classes.ToImmutableAndFree());
         }
 
         private void CreateProperties()
@@ -70,15 +73,18 @@ namespace MetaDslx.Modeling.Meta
                 foreach (var origProp in cls.OriginalDeclaredProperties)
                 {
                     var prop = MakeProperty(cls, origProp);
-                    declaredProperties.Add(prop);
-                    ComputePropertyType(prop, out var type, out var flags);
-                    var symbolProperty = prop.SymbolProperty;
-                    if (flags.HasFlag(ModelPropertyFlags.Derived)) flags |= ModelPropertyFlags.ReadOnly;
-                    if (flags.HasFlag(ModelPropertyFlags.DerivedUnion)) flags |= ModelPropertyFlags.ReadOnly;
-                    if (symbolProperty == "Name") flags |= ModelPropertyFlags.Name;
-                    if (symbolProperty == "Type") flags |= ModelPropertyFlags.Type;
-                    prop.Type = type;
-                    prop.Flags = prop.OriginalFlags | flags;
+                    if (prop is not null)
+                    {
+                        declaredProperties.Add(prop);
+                        ComputePropertyType(prop, out var type, out var flags);
+                        var symbolProperty = prop.SymbolProperty;
+                        if (flags.HasFlag(ModelPropertyFlags.Derived)) flags |= ModelPropertyFlags.ReadOnly;
+                        if (flags.HasFlag(ModelPropertyFlags.DerivedUnion)) flags |= ModelPropertyFlags.ReadOnly;
+                        if (symbolProperty == "Name") flags |= ModelPropertyFlags.Name;
+                        if (symbolProperty == "Type") flags |= ModelPropertyFlags.Type;
+                        prop.Type = type;
+                        prop.Flags = prop.OriginalFlags | flags;
+                    }
                 }
                 declaredProperties.Sort(ComparePropertiesByName);
                 cls.DeclaredProperties = declaredProperties.ToImmutable();
@@ -95,7 +101,10 @@ namespace MetaDslx.Modeling.Meta
                 foreach (var origOp in cls.OriginalDeclaredOperations)
                 {
                     var op = MakeOperation(cls, origOp);
-                    declaredOperations.Add(op);
+                    if (op is not null)
+                    {
+                        declaredOperations.Add(op);
+                    }
                 }
                 declaredOperations.Sort(CompareOperationsByName);
                 cls.DeclaredOperations = declaredOperations.ToImmutable();

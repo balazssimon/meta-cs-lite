@@ -79,7 +79,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
 
         protected override ImmutableArray<Symbol> CompletePart_CreateContainedSymbols(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            var moduleGlobalNamespaces = _modules.Select(m => m.GlobalNamespace).ToImmutableArray();
+            var moduleGlobalNamespaces = _modules.Select(m => m.GlobalNamespace).Where(ns => ns is not null).ToImmutableArray();
             var mergedGlobalNamespace = MergedNamespaceSymbol.Create(new NamespaceExtent(this), null, moduleGlobalNamespaces);
             Interlocked.CompareExchange(ref _globalNamespace, mergedGlobalNamespace, null);
             return _modules.Cast<ModuleSymbol, Symbol>();

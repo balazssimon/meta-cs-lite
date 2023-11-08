@@ -10,28 +10,10 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.CodeAnalysis.Common" Version="$(MicrosoftCodeAnalysisCSharpVersion)" PrivateAssets="all" />
-		<PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="$(MicrosoftCodeAnalysisCSharpVersion)" PrivateAssets="all" />
-		<PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="$(MicrosoftCodeAnalysisAnalyzersVersion)" PrivateAssets="all" />
-		<PackageReference Include="Antlr4.Runtime.Standard" Version="$(Antlr4RuntimeStandardVersion)" />
+		<PackageReference Include="MetaDslx.CodeAnalysis" Version="0.200.0" />
 	</ItemGroup>
-
-	<ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
-		<PackageReference Include="System.Memory" Version="$(SystemMemoryVersion)" OutputItemType="Analyzer" />
-		<PackageReference Include="System.Threading.Tasks.Extensions" Version="$(SystemThreadingTasksExtensionsVersion)" OutputItemType="Analyzer" />
-	</ItemGroup>
-	<ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
-		<ProjectReference Include="..\..\Main\MetaDslx.NetStandard20Extensions\MetaDslx.NetStandard20Extensions.csproj" OutputItemType="Analyzer" />
-	</ItemGroup>
-
+	
 	<ItemGroup>
-		<!--ProjectReference Include="..\..\Examples\MetaDslx.Examples.MetaModel.Model\MetaDslx.Examples.MetaModel.Model.csproj" /-->
-		<!--ProjectReference Include="..\MetaDslx.Bootstrap.MetaModel\MetaDslx.Bootstrap.MetaModel.csproj" /-->
-		<ProjectReference Include="..\..\Main\MetaDslx.CodeAnalysis.Common\MetaDslx.CodeAnalysis.Common.csproj" OutputItemType="Analyzer" />
-		<ProjectReference Include="..\..\Main\MetaDslx.Languages.MetaGenerator\MetaDslx.Languages.MetaGenerator.csproj" OutputItemType="Analyzer" />
-		<ProjectReference Include="..\..\Main\MetaDslx.Languages.MetaCompiler\MetaDslx.Languages.MetaCompiler.csproj" OutputItemType="Analyzer" />
-		<ProjectReference Include="..\..\Main\MetaDslx.Languages.MetaCompiler.Antlr\MetaDslx.Languages.MetaCompiler.Antlr.csproj" OutputItemType="Analyzer" />
-		<ProjectReference Include="..\..\Main\MetaDslx.Languages.MetaModel\MetaDslx.Languages.MetaModel.csproj" OutputItemType="Analyzer" />
+		<AdditionalFiles Include="Model\*.mm" />
 	</ItemGroup>
-
 </Project>

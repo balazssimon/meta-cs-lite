@@ -12,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
+using System.Security;
 
 namespace MetaDslx.Languages.MetaModel.Generators
 {
@@ -22,6 +23,7 @@ namespace MetaDslx.Languages.MetaModel.Generators
         private Model.MetaModel _metaModel;
         private MetaMetaGraph _graph;
         private ImmutableArray<MetaClass> _classes;
+        private ImmutableArray<MetaEnumType> _enums;
         private ImmutableArray<IModelObject> _modelObjects;
         private ImmutableArray<object> _objects;
         private Dictionary<object, string>? _objectNames;
@@ -33,6 +35,7 @@ namespace MetaDslx.Languages.MetaModel.Generators
             _metaModel = metaModel;
             _graph = graph;
             _classes = _metaModel.Parent.Declarations.OfType<MetaClass>().ToImmutableArray();
+            _enums = _metaModel.Parent.Declarations.OfType<MetaEnumType>().ToImmutableArray();
             _modelObjects = model.ModelObjects.ToImmutableArray();
             _objects = model.Objects.ToImmutableArray();
         }
@@ -42,17 +45,24 @@ namespace MetaDslx.Languages.MetaModel.Generators
         public Model.MetaModel MetaModel => _metaModel;
         public string Namespace => _metaModel.Parent.FullName;
         public ImmutableArray<MetaClass> Classes => _classes;
+        public ImmutableArray<MetaEnumType> Enums => _enums;
         public ImmutableArray<IModelObject> ModelObjects => _modelObjects;
         public ImmutableArray<object> Objects => _objects;
         public MetaMetaGraph Graph => _graph;
 
-        public string ToCSharp(MetaType type)
+        public string ToCSharp(object type)
         {
             if (type is null) return string.Empty;
+            if (type is string) return (string)type;
+            if (type is Type t) return $"global::{t.FullName}";
             if (type is MetaPrimitiveType mpt)
             {
-                if (mpt.Name == "type") return "string";
+                if (mpt.Name == "type") return "object";
                 else return mpt.Name;
+            }
+            if (type is MetaNullableType nt)
+            {
+                return $"{ToCSharp(nt.InnerType)}?";
             }
             if (type is MetaArrayType at)
             {
@@ -62,51 +72,43 @@ namespace MetaDslx.Languages.MetaModel.Generators
             {
                 return mc.Name;
             }
-            return $"global::{type.FullName}";
-        }
-
-        public string ToCSharpImpl(MetaType type)
-        {
-            if (type is null) return string.Empty;
-            if (type is MetaPrimitiveType mpt)
+            if (type is MetaType mt)
             {
-                if (mpt.Name == "type") return "string";
-                else return mpt.Name;
+                return $"global::{mt.FullName}";
             }
-            if (type is MetaArrayType at)
+            if (type is TypeSymbol ts)
             {
-                return $"global::System.Collections.Generic.IList<{ToCSharp(at.ItemType)}>";
+                return SymbolDisplayFormat.FullyQualifiedFormat.ToString(ts);
             }
-            return $"global::{type.FullName}";
+            return type.ToString();
         }
 
-        public string ToCSharp(TypeSymbol? type)
+        public string ToCSharpImpl(object type)
         {
-            if (type is null) return string.Empty;
-            return SymbolDisplayFormat.FullyQualifiedFormat.ToString(type);
+            return ToCSharp(type);
         }
 
-        public bool HasSetter(MetaProperty<MetaType, MetaProperty, MetaOperation> property)
+        public bool HasSetter(MetaProperty<object, MetaProperty, MetaOperation> property)
         {
             return property.HasSetter && !property.Flags.HasFlag(ModelPropertyFlags.ReadOnly) && !property.Flags.HasFlag(ModelPropertyFlags.Collection);
         }
 
-        public bool IsCollection(MetaPropertySlot<MetaType, MetaProperty, MetaOperation> slot)
+        public bool IsCollection(MetaPropertySlot<object, MetaProperty, MetaOperation> slot)
         {
             return slot.Flags.HasFlag(ModelPropertyFlags.Collection);
         }
 
-        public string ToCSharp(MetaProperty<MetaType, MetaProperty, MetaOperation> property)
+        public string ToCSharp(MetaProperty<object, MetaProperty, MetaOperation> property)
         {
             return $"{MetaModel.Name}.{property.DeclaringType.Name}_{property.Name}";
         }
 
-        public string ToCSharp(MetaOperation<MetaType, MetaProperty, MetaOperation> op)
+        public string ToCSharp(MetaOperation<object, MetaProperty, MetaOperation> op)
         {
             return $"{MetaModel.Name}.{op.DeclaringType.Name}_{op.Name}";
         }
 
-        public string ToCSharp(ImmutableArray<MetaProperty<MetaType, MetaProperty, MetaOperation>> properties)
+        public string ToCSharp(ImmutableArray<MetaProperty<object, MetaProperty, MetaOperation>> properties)
         {
             var builder = PooledStringBuilder.GetInstance();
             var sb = builder.Builder;
@@ -122,7 +124,7 @@ namespace MetaDslx.Languages.MetaModel.Generators
             return builder.ToStringAndFree();
         }
 
-        public string ToCSharp(ImmutableArray<MetaOperation<MetaType, MetaProperty, MetaOperation>> operations)
+        public string ToCSharp(ImmutableArray<MetaOperation<object, MetaProperty, MetaOperation>> operations)
         {
             var builder = PooledStringBuilder.GetInstance();
             var sb = builder.Builder;
@@ -155,39 +157,38 @@ namespace MetaDslx.Languages.MetaModel.Generators
             return builder.ToStringAndFree();
         }
 
-        public string ToCSharpValue(MetaType propertyType, object? value)
+        public string ToCSharpValue(object propertyType, bool isTypeType, object? value)
         {
-            if (value is null) return $"default({ToCSharp(propertyType)})";
+            if (isTypeType || propertyType == typeof(Type) || propertyType == typeof(TypeSymbol))
+            {
+                if (value is null) return "default";
+                else if (value is string) return $"typeof({(string)value})";
+                else if (value is Type t) return $"typeof(global::{t.FullName})";
+                else if (value is TypeSymbol ts) return $"typeof({SymbolDisplayFormat.FullyQualifiedFormat.ToString(ts)})";
+                else if (value is MetaPrimitiveType pt)
+                {
+                    if (pt.Name == "type") return IsMetaMetaModel ? $"_typeType" : $"__MetaMetaModel.TypeType";
+                    else return IsMetaMetaModel ? $"typeof({ToCSharp(pt)})" : $"__MetaMetaModel.{pt.Name.ToPascalCase()}Type";
+                }
+                //else if (value is MetaClass mt) return $"typeof(global::{mt.FullName})";
+            }
+            if (propertyType == typeof(bool))
+            {
+                return ((bool)value) ? "true" : "false";
+            }
+            if (propertyType == typeof(string))
+            {
+                return StringUtilities.EncodeString(value.ToString());
+            }
             var type = value.GetType();
-            if (type == typeof(bool)) return ((bool)value) ? "true" : "false";
-            if (type == typeof(string)) return StringUtilities.EncodeString(value.ToString());
             if (type.IsPrimitive) return value.ToString();
-            return value.ToString();
+            return GetName(value);
         }
 
         public string ToCSharpValue(ModelProperty property, object? value)
         {
             var propertyType = property.Type;
-            if (value is null) return $"default(global::{propertyType.FullName})";
-            if (propertyType == typeof(Type))
-            {
-                var typeName = ((Type)value)?.FullName;
-                return $"typeof({typeName})";
-            }
-            if (propertyType == typeof(TypeSymbol))
-            {
-                var typeName = SymbolDisplayFormat.FullyQualifiedFormat.ToString((TypeSymbol)value);
-                return $"typeof({typeName})";
-            }
-            if (propertyType == typeof(bool)) return ((bool)value) ? "true" : "false";
-            if (propertyType == typeof(string))
-            {
-                return StringUtilities.EncodeString(value.ToString());
-            }
-            if (value is MetaPrimitiveType mpt) return IsMetaMetaModel ? $"_{mpt.Name}Type" : $"__MetaMetaModel.{mpt.Name.ToPascalCase()}Type";
-            var type = value.GetType();
-            if (type.IsPrimitive) return value.ToString();
-            return GetName(value);
+            return ToCSharpValue(propertyType, property.Flags.HasFlag(ModelPropertyFlags.TypeSymbolType), value);
         }
 
         public string GetName(object? obj)

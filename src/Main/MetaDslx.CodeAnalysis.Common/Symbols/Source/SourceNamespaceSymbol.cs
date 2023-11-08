@@ -49,6 +49,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
 
         protected override ImmutableArray<Symbol> CompletePart_CreateContainedSymbols(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
+            if (this is IErrorSymbol) return ImmutableArray<Symbol>.Empty;
             return SymbolFactory.CreateContainedSymbols(this, diagnostics);
         }
 

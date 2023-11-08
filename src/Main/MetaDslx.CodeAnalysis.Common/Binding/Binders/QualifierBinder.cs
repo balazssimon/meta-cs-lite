@@ -1,10 +1,12 @@
 ﻿using MetaDslx.CodeAnalysis.Declarations;
 using MetaDslx.CodeAnalysis.PooledObjects;
 using MetaDslx.CodeAnalysis.Symbols;
+using MetaDslx.CodeAnalysis.Symbols.Errors;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics;
+using System.Linq;
 using System.Text;
 using System.Threading;
 
@@ -88,7 +90,18 @@ namespace MetaDslx.CodeAnalysis.Binding
             {
                 var parent = result[i]?.ContainingSymbol;
                 result[--i] = parent;
-                Debug.Assert(parent is not null && parent.Locations.Contains(((Binder)_identifiers[i]).Location));
+            }
+            if (result.Length > 0 && result[0] is null)
+            {
+                var container = this.ContainingDefinedSymbols.FirstOrDefault();
+                i = 0;
+                while (i < result.Length && result[i] is null)
+                {
+                    var name = _identifiers[i].GetName(context);
+                    var metadataName = _identifiers[i].GetMetadataName(context);
+                    var location = ((Binder)_identifiers[i]).Location;
+                    result[i] = Compilation[Language].ErrorSymbolFactory.CreateSymbol<DeclaredSymbol>(container, new ErrorSymbolInfo(name, metadataName, ImmutableArray<Symbol>.Empty, Diagnostic.Create(CommonErrorCode.ERR_DeclarationError, location, $"Could not create declaration '{name}.'")));
+                }
             }
             return result.ToImmutableArray();
         }

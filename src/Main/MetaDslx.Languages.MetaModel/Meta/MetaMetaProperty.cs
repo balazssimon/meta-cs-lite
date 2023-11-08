@@ -10,11 +10,11 @@ using System.Threading.Tasks;
 
 namespace MetaDslx.Languages.MetaModel.Meta
 {
-    public sealed class MetaMetaProperty : MetaProperty<MetaType, MetaProperty, MetaOperation>
+    public sealed class MetaMetaProperty : MetaProperty<object, MetaProperty, MetaOperation>
     {
         private readonly ModelPropertyFlags _originalFlags;
 
-        public MetaMetaProperty(MetaClass<MetaType, MetaProperty, MetaOperation> declaringType, MetaProperty underlyingProperty) 
+        public MetaMetaProperty(MetaClass<object, MetaProperty, MetaOperation> declaringType, MetaProperty underlyingProperty) 
             : base(declaringType, underlyingProperty)
         {
             var flags = ModelPropertyFlags.None;
@@ -32,11 +32,11 @@ namespace MetaDslx.Languages.MetaModel.Meta
 
         public override string? SymbolProperty => UnderlyingProperty.SymbolProperty;
 
-        public override MetaType OriginalType => UnderlyingProperty.Type;
+        public override object OriginalType => UnderlyingProperty.Type;
 
         public override ModelPropertyFlags OriginalFlags => _originalFlags;
 
-        protected override IEnumerable<(MetaType DeclaringType, string PropertyName)> GetOppositeProperties()
+        protected override IEnumerable<(object DeclaringType, string PropertyName)> GetOppositeProperties()
         {
             foreach (var prop in UnderlyingProperty.OppositeProperties)
             {
@@ -44,7 +44,7 @@ namespace MetaDslx.Languages.MetaModel.Meta
             }
         }
 
-        protected override IEnumerable<(MetaType DeclaringType, string PropertyName)> GetRedefinedProperties()
+        protected override IEnumerable<(object DeclaringType, string PropertyName)> GetRedefinedProperties()
         {
             foreach (var prop in UnderlyingProperty.RedefinedProperties)
             {
@@ -52,7 +52,7 @@ namespace MetaDslx.Languages.MetaModel.Meta
             }
         }
 
-        protected override IEnumerable<(MetaType DeclaringType, string PropertyName)> GetSubsettedProperties()
+        protected override IEnumerable<(object DeclaringType, string PropertyName)> GetSubsettedProperties()
         {
             foreach (var prop in UnderlyingProperty.SubsettedProperties)
             {

@@ -10,18 +10,18 @@ namespace MetaDslx.Modeling.Reflection
 {
     internal class ReflectionMetaClass : MetaClass<Type, PropertyInfo, MethodInfo>
     {
-        private string? _symbolType;
+        private object? _symbolType;
 
         public ReflectionMetaClass(Type underlyingType)
             : base(underlyingType)
         {
             var symbolAttr = UnderlyingType.GetCustomAttribute<SymbolAttribute>(true);
-            _symbolType = symbolAttr?.SymbolType?.FullName;
+            _symbolType = symbolAttr?.SymbolType;
         }
 
         public override string Name => UnderlyingType.Name;
 
-        public override string? SymbolType
+        public override object? SymbolType
         {
             get => _symbolType;
             set => _symbolType = value;

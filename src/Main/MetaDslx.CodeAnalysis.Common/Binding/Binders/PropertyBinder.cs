@@ -115,9 +115,10 @@ namespace MetaDslx.CodeAnalysis.Binding
                             {
                                 result.Add(symbol.Name);
                             }
-                            else if (!isSymbol && isTypeSymbolType && symbol is TypeSymbol && (propertyType == typeof(string) || propertyType == typeof(object)))
+                            else if (!isSymbol && isTypeSymbolType && symbol is TypeSymbol && (propertyType == typeof(string) || propertyType == typeof(Type) || propertyType == typeof(object)))
                             {
                                 if (propertyType == typeof(string)) result.Add(SymbolDisplayFormat.QualifiedNameOnlyFormat.ToString(symbol));
+                                else if (propertyType == typeof(Type)) result.Add(symbol);
                                 else if (propertyType == typeof(object)) result.Add(symbol);
                             }
                             else if (typeof(Symbol).IsAssignableFrom(propertyType) && propertyType.IsAssignableFrom(symbol.GetType()))

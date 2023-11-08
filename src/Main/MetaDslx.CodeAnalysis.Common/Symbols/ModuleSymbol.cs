@@ -28,7 +28,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
         {
             var globalNamespace = CompleteProperty_GlobalNamespace(diagnostics, cancellationToken);
             Interlocked.CompareExchange(ref _globalNamespace, globalNamespace, null);
-            return ImmutableArray.Create<Symbol>(_globalNamespace);
+            return _globalNamespace is null ? ImmutableArray<Symbol>.Empty : ImmutableArray.Create<Symbol>(_globalNamespace);
         }
 
         protected abstract NamespaceSymbol CompleteProperty_GlobalNamespace(DiagnosticBag diagnostics, CancellationToken cancellationToken);

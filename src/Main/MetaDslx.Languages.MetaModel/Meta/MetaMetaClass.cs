@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 
 namespace MetaDslx.Languages.MetaModel.Meta
 {
-    public sealed class MetaMetaClass : MetaClass<MetaType, MetaProperty, MetaOperation>
+    public sealed class MetaMetaClass : MetaClass<object, MetaProperty, MetaOperation>
     {
-        private string? _symbolType;
+        private object? _symbolType;
 
         public MetaMetaClass(MetaClass underlyingType) 
             : base(underlyingType)
@@ -22,15 +22,15 @@ namespace MetaDslx.Languages.MetaModel.Meta
 
         public MetaClass UnderlyingClass => (MetaClass)UnderlyingType;
 
-        public override string Name => UnderlyingType.Name;
+        public override string Name => UnderlyingClass.Name;
 
-        public override string? SymbolType
+        public override object? SymbolType
         {
             get => _symbolType;
             set => _symbolType = value;
         }
 
-        public override ImmutableArray<MetaType> OriginalBaseTypes => UnderlyingClass.BaseTypes.Cast<MetaType>().ToImmutableArray();
+        public override ImmutableArray<object> OriginalBaseTypes => UnderlyingClass.BaseTypes.Cast<object>().ToImmutableArray();
 
         public override ImmutableArray<MetaProperty> OriginalDeclaredProperties => UnderlyingClass.Properties.ToImmutableArray();
 

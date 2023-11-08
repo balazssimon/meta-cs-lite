@@ -21,7 +21,7 @@ namespace MetaDslx.Languages.MetaCompiler.Antlr.Analyzers
     using Compilation = Microsoft.CodeAnalysis.Compilation;
 
     [Generator]
-    public class AntlrCompilerGenerator : IIncrementalGenerator
+    public class AntlrCompilerSourceGenerator : IIncrementalGenerator
     {
         public void Initialize(IncrementalGeneratorInitializationContext initContext)
         {

@@ -7,6 +7,7 @@ using MetaDslx.CodeAnalysis.Symbols.Errors;
 using MetaDslx.CodeAnalysis.Symbols.Model;
 using MetaDslx.CodeAnalysis.Symbols.Source;
 using MetaDslx.Modeling;
+using Microsoft.CodeAnalysis.CSharp;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -25,13 +26,14 @@ namespace MetaDslx.CodeAnalysis
             string? assemblyName,
             Language? mainLanguage,
             CompilationOptions options,
+            CSharpCompilation? initialCompilation,
             ImmutableArray<MetadataReference> references,
             ScriptCompilationInfo? scriptCompilationInfo,
             ReferenceManager? referenceManager,
             bool reuseReferenceManager,
             SyntaxAndDeclarationManager syntaxAndDeclarations)
         {
-            return new Compilation(assemblyName, mainLanguage, options, references, scriptCompilationInfo,
+            return new Compilation(assemblyName, mainLanguage, options, initialCompilation, references, scriptCompilationInfo,
                     referenceManager, reuseReferenceManager, syntaxAndDeclarations);
         }
 

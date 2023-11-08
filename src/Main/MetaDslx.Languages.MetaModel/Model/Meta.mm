@@ -10,7 +10,7 @@ const MetaPrimitiveType IntType;
 const MetaPrimitiveType StringType;
 const MetaPrimitiveType TypeType;
 
-class MetaDeclaration $Declared : MetaNamedElement
+class MetaDeclaration $Declared
 {
 	string $Name;
 	MetaDeclaration Parent opposite Declarations;
@@ -29,7 +29,7 @@ class MetaModel : MetaDeclaration
 
 class MetaConstant : MetaDeclaration
 {
-	MetaType Type;
+	type Type;
 }
 
 abstract class MetaType $Type : MetaDeclaration
@@ -42,12 +42,12 @@ class MetaPrimitiveType : MetaType
 
 class MetaNullableType : MetaType
 {
-	MetaType InnerType;
+	type InnerType;
 }
 
 class MetaArrayType : MetaType
 {
-	MetaType ItemType;
+	type ItemType;
 }
 
 class MetaEnumType : MetaType
@@ -70,7 +70,7 @@ class MetaClass : MetaType
 
 class MetaProperty : MetaDeclaration
 {
-	MetaType Type;
+	type Type;
 	string SymbolProperty;
 	bool IsContainment;
 	bool IsDerived;
@@ -81,11 +81,11 @@ class MetaProperty : MetaDeclaration
 
 class MetaOperation: MetaDeclaration
 {
-	MetaType ReturnType;
+	type ReturnType;
 	contains MetaParameter[] Parameters redefines MetaDeclaration.Declarations;
 }
 
 class MetaParameter : MetaDeclaration
 {
-	MetaType Type;
+	type Type;
 }

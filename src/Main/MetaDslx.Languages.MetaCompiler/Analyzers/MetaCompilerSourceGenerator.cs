@@ -17,7 +17,7 @@ using Microsoft.CodeAnalysis.CSharp;
 namespace MetaDslx.Languages.MetaCompiler.Analyzers
 {
     [Generator]
-    public class MetaCompilerGenerator : IIncrementalGenerator
+    public class MetaCompilerSourceGenerator : IIncrementalGenerator
     {
         public void Initialize(IncrementalGeneratorInitializationContext initContext)
         {

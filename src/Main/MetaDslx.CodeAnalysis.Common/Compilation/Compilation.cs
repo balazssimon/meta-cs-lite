@@ -46,6 +46,7 @@ namespace MetaDslx.CodeAnalysis
 
         private Dictionary<Language, LanguageScope> _languageScopes;
 
+        private CSharpCompilation _initialCompilation;
         internal ReferenceManager _referenceManager;
         internal SourceAssemblySymbol? _lazyAssemblySymbol;
 
@@ -63,6 +64,7 @@ namespace MetaDslx.CodeAnalysis
             string? assemblyName,
             Language? mainLanguage,
             CompilationOptions options,
+            CSharpCompilation? initialCompilation,
             ImmutableArray<MetadataReference> references,
             ScriptCompilationInfo? scriptCompilationInfo,
             ReferenceManager? referenceManager, 
@@ -95,6 +97,7 @@ namespace MetaDslx.CodeAnalysis
             }
             
             _options = options;
+            _initialCompilation = initialCompilation;
             _externalReferences = references;
             _scriptCompilationInfo = scriptCompilationInfo;
             _lazySubmissionSlotIndex = scriptCompilationInfo is not null ? SubmissionSlotIndexToBeAllocated : SubmissionSlotIndexNotApplicable;
@@ -171,6 +174,7 @@ namespace MetaDslx.CodeAnalysis
             string? assemblyName,
             Language? mainLanguage,
             CompilationOptions options,
+            CSharpCompilation? initialCompilation,
             ImmutableArray<MetadataReference> externalReferences,
             ScriptCompilationInfo? scriptCompilationInfo,
             ReferenceManager? referenceManager,
@@ -178,14 +182,15 @@ namespace MetaDslx.CodeAnalysis
             SyntaxAndDeclarationManager syntaxAndDeclarations)
         {
             var defaultLanguage = mainLanguage ?? Language.NoLanguage;
-            return defaultLanguage.CompilationFactory.CreateCompilation(assemblyName, mainLanguage, options, externalReferences, scriptCompilationInfo,
+            return defaultLanguage.CompilationFactory.CreateCompilation(assemblyName, mainLanguage, options, initialCompilation, externalReferences, scriptCompilationInfo,
                     referenceManager, reuseReferenceManager, syntaxAndDeclarations);
         }
 
         public static Compilation Create(
             string? assemblyName = null,
             Language? mainLanguage = null,
-            IEnumerable<SyntaxTree>? syntaxTrees = null, 
+            IEnumerable<SyntaxTree>? syntaxTrees = null,
+            CSharpCompilation? initialCompilation = null,
             IEnumerable<MetadataReference>? references = null, 
             CompilationOptions? options = null)
         {
@@ -193,13 +198,14 @@ namespace MetaDslx.CodeAnalysis
             var externalReferences = references is null ? ImmutableArray<MetadataReference>.Empty : references.ToImmutableArray();
             var externalSyntaxTrees = syntaxTrees is null ? ImmutableArray<SyntaxTree>.Empty : syntaxTrees.ToImmutableArray();
             var declarationManager = new SyntaxAndDeclarationManager(externalSyntaxTrees, null, null, false, null);
-            return defaultLanguage.CompilationFactory.CreateCompilation(assemblyName, mainLanguage, options ?? CompilationOptions.Default, externalReferences, null, null, false, declarationManager);
+            return defaultLanguage.CompilationFactory.CreateCompilation(assemblyName, mainLanguage, options ?? CompilationOptions.Default, initialCompilation, externalReferences, null, null, false, declarationManager);
         }
 
         public static Compilation CreateScriptCompilation(
             string assemblyName,
             Language? mainLanguage = null,
             SyntaxTree? syntaxTree = null,
+            CSharpCompilation? initialCompilation = null,
             IEnumerable<MetadataReference>? references = null,
             CompilationOptions? options = null,
             Compilation? previousScriptCompilation = null,
@@ -211,12 +217,12 @@ namespace MetaDslx.CodeAnalysis
             var externalSyntaxTrees = syntaxTree is null ? ImmutableArray<SyntaxTree>.Empty : ImmutableArray.Create(syntaxTree);
             var declarationManager = new SyntaxAndDeclarationManager(externalSyntaxTrees, null, null, false, null);
             var scriptCompilationInfo = new ScriptCompilationInfo(previousScriptCompilation, returnType, globalsType);
-            return defaultLanguage.CompilationFactory.CreateCompilation(assemblyName, mainLanguage, options ?? CompilationOptions.Default, externalReferences, scriptCompilationInfo, null, false, declarationManager);
+            return defaultLanguage.CompilationFactory.CreateCompilation(assemblyName, mainLanguage, options ?? CompilationOptions.Default, initialCompilation, externalReferences, scriptCompilationInfo, null, false, declarationManager);
         }
 
         public Compilation WithMainLanguage(Language language)
         {
-            if (_mainLanguage != language) return Update(_assemblyName, language, _options, _externalReferences, _scriptCompilationInfo, _referenceManager, false, _syntaxAndDeclarations);
+            if (_mainLanguage != language) return Update(_assemblyName, language, _options, _initialCompilation, _externalReferences, _scriptCompilationInfo, _referenceManager, true, _syntaxAndDeclarations);
             else return this;
         }
 
@@ -340,7 +346,7 @@ namespace MetaDslx.CodeAnalysis
 
         public Compilation WithScriptCompilationInfo(ScriptCompilationInfo? info)
         {
-            return this.Update(_assemblyName, _mainLanguage, _options, _externalReferences, info, _referenceManager, true, _syntaxAndDeclarations);
+            return this.Update(_assemblyName, _mainLanguage, _options, _initialCompilation, _externalReferences, info, _referenceManager, true, _syntaxAndDeclarations);
         }
 
         #endregion
@@ -431,7 +437,7 @@ namespace MetaDslx.CodeAnalysis
 
             syntaxAndDeclarations = syntaxAndDeclarations.AddSyntaxTrees(trees);
 
-            return Update(_assemblyName, _mainLanguage, _options, _externalReferences, _scriptCompilationInfo, _referenceManager, reuseReferenceManager, syntaxAndDeclarations);
+            return Update(_assemblyName, _mainLanguage, _options, _initialCompilation, _externalReferences, _scriptCompilationInfo, _referenceManager, reuseReferenceManager, syntaxAndDeclarations);
         }
 
         /// <summary>
@@ -493,7 +499,7 @@ namespace MetaDslx.CodeAnalysis
             syntaxAndDeclarations = syntaxAndDeclarations.RemoveSyntaxTrees(removeSet);
             removeSet.Free();
 
-            return Update(_assemblyName, _mainLanguage, _options, _externalReferences, _scriptCompilationInfo, _referenceManager,
+            return Update(_assemblyName, _mainLanguage, _options, _initialCompilation, _externalReferences, _scriptCompilationInfo, _referenceManager,
                 reuseReferenceManager, syntaxAndDeclarations);
         }
 
@@ -504,7 +510,7 @@ namespace MetaDslx.CodeAnalysis
         public Compilation RemoveAllSyntaxTrees()
         {
             var syntaxAndDeclarations = _syntaxAndDeclarations;
-            return Update(_assemblyName, _mainLanguage, _options, _externalReferences, _scriptCompilationInfo, _referenceManager,
+            return Update(_assemblyName, _mainLanguage, _options, _initialCompilation, _externalReferences, _scriptCompilationInfo, _referenceManager,
                 reuseReferenceManager: !syntaxAndDeclarations.MayHaveReferenceDirectives(),
                 syntaxAndDeclarations: syntaxAndDeclarations.WithExternalSyntaxTrees(ImmutableArray<SyntaxTree>.Empty));
         }
@@ -559,7 +565,7 @@ namespace MetaDslx.CodeAnalysis
             var reuseReferenceManager = !oldTree.HasReferenceOrLoadDirectives && !newTree.HasReferenceOrLoadDirectives;
             syntaxAndDeclarations = syntaxAndDeclarations.ReplaceSyntaxTree(oldTree, newTree);
 
-            return Update(_assemblyName, _mainLanguage, _options, _externalReferences, _scriptCompilationInfo, _referenceManager,
+            return Update(_assemblyName, _mainLanguage, _options, _initialCompilation, _externalReferences, _scriptCompilationInfo, _referenceManager,
                 reuseReferenceManager, syntaxAndDeclarations);
         }
 
@@ -599,7 +605,7 @@ namespace MetaDslx.CodeAnalysis
         {
             if (_lazyAssemblySymbol is null)
             {
-                _referenceManager.CreateSourceAssemblyForCompilation(this);
+                _referenceManager.CreateSourceAssemblyForCompilation(this, _initialCompilation);
                 Debug.Assert(_lazyAssemblySymbol is object);
             }
 
@@ -608,13 +614,20 @@ namespace MetaDslx.CodeAnalysis
             return _referenceManager;
         }
 
+        public Compilation WithInitialCompilation(CSharpCompilation? initialCompilation)
+        {
+            if (initialCompilation == _initialCompilation) return this;
+            return this.Update(_assemblyName, _mainLanguage, _options, initialCompilation, _externalReferences, _scriptCompilationInfo,
+                _referenceManager, false, _syntaxAndDeclarations);
+        }
+
         /// <summary>
         /// Creates a new compilation with additional metadata references.
         /// </summary>
         public Compilation AddReferences(params MetadataReference[] references)
         {
             if (references.Length == 0) return this;
-            return this.Update(_assemblyName, _mainLanguage, _options, _externalReferences.AddRange(references), _scriptCompilationInfo,
+            return this.Update(_assemblyName, _mainLanguage, _options, _initialCompilation, _externalReferences.AddRange(references), _scriptCompilationInfo,
                 _referenceManager, false, _syntaxAndDeclarations);
         }
 
@@ -624,7 +637,7 @@ namespace MetaDslx.CodeAnalysis
         public Compilation AddReferences(IEnumerable<MetadataReference> references)
         {
             if (!references.Any()) return this;
-            return this.Update(_assemblyName, _mainLanguage, _options, _externalReferences.AddRange(references), _scriptCompilationInfo,
+            return this.Update(_assemblyName, _mainLanguage, _options, _initialCompilation, _externalReferences.AddRange(references), _scriptCompilationInfo,
                 _referenceManager, false, _syntaxAndDeclarations);
         }
 
@@ -634,7 +647,7 @@ namespace MetaDslx.CodeAnalysis
         public Compilation RemoveReferences(params MetadataReference[] references)
         {
             if (references.Length == 0) return this;
-            return this.Update(_assemblyName, _mainLanguage, _options, _externalReferences.RemoveRange(references), _scriptCompilationInfo,
+            return this.Update(_assemblyName, _mainLanguage, _options, _initialCompilation, _externalReferences.RemoveRange(references), _scriptCompilationInfo,
                 _referenceManager, false, _syntaxAndDeclarations);
         }
 
@@ -644,7 +657,7 @@ namespace MetaDslx.CodeAnalysis
         public Compilation RemoveReferences(IEnumerable<MetadataReference> references)
         {
             if (!references.Any()) return this;
-            return this.Update(_assemblyName, _mainLanguage, _options, _externalReferences.RemoveRange(references), _scriptCompilationInfo,
+            return this.Update(_assemblyName, _mainLanguage, _options, _initialCompilation, _externalReferences.RemoveRange(references), _scriptCompilationInfo,
                 _referenceManager, false, _syntaxAndDeclarations);
         }
 
@@ -654,7 +667,7 @@ namespace MetaDslx.CodeAnalysis
         public Compilation RemoveAllReferences()
         {
             if (_externalReferences.Length == 0) return this;
-            return this.Update(_assemblyName, _mainLanguage, _options, ImmutableArray<MetadataReference>.Empty, _scriptCompilationInfo,
+            return this.Update(_assemblyName, _mainLanguage, _options, _initialCompilation, ImmutableArray<MetadataReference>.Empty, _scriptCompilationInfo,
                 _referenceManager, false, _syntaxAndDeclarations);
         }
 
@@ -677,7 +690,7 @@ namespace MetaDslx.CodeAnalysis
                     builder.Add(oldRef);
                 }
             }
-            return this.Update(_assemblyName, _mainLanguage, _options, builder.ToImmutableAndFree(), _scriptCompilationInfo,
+            return this.Update(_assemblyName, _mainLanguage, _options, _initialCompilation, builder.ToImmutableAndFree(), _scriptCompilationInfo,
                 _referenceManager, !replaced, _syntaxAndDeclarations);
         }
 
