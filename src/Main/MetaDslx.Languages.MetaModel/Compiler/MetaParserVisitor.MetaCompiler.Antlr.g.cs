@@ -193,6 +193,13 @@ public interface IMetaParserVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitPr_MetaParameter([NotNull] MetaParser.Pr_MetaParameterContext context);
 	/// <summary>
+	/// Visit a parse tree produced by the <c>pr_MetaNullableType</c>
+	/// labeled alternative in <see cref="MetaParser.pr_TypeReference"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitPr_MetaNullableType([NotNull] MetaParser.Pr_MetaNullableTypeContext context);
+	/// <summary>
 	/// Visit a parse tree produced by the <c>pr_TypeReferenceTokens</c>
 	/// labeled alternative in <see cref="MetaParser.pr_TypeReference"/>.
 	/// </summary>
@@ -207,12 +214,12 @@ public interface IMetaParserVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitPr_MetaArrayType([NotNull] MetaParser.Pr_MetaArrayTypeContext context);
 	/// <summary>
-	/// Visit a parse tree produced by the <c>pr_TypeReferenceAlt3</c>
+	/// Visit a parse tree produced by the <c>pr_TypeReferenceAlt4</c>
 	/// labeled alternative in <see cref="MetaParser.pr_TypeReference"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	Result VisitPr_TypeReferenceAlt3([NotNull] MetaParser.Pr_TypeReferenceAlt3Context context);
+	Result VisitPr_TypeReferenceAlt4([NotNull] MetaParser.Pr_TypeReferenceAlt4Context context);
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="MetaParser.pr_Name"/>.
 	/// </summary>

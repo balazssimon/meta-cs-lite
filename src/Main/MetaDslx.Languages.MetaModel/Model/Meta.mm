@@ -6,10 +6,10 @@ metamodel Meta;
 
 class MetaDeclaration $Declared
 {
-	string $Name;
-	MetaDeclaration Parent opposite Declarations;
+	string? $Name;
+	MetaDeclaration? Parent opposite Declarations;
 	contains MetaDeclaration[] Declarations opposite Parent;
-	derived string FullName;
+	derived string? FullName;
 }
 
 class MetaNamespace $Namespace : MetaDeclaration
@@ -55,7 +55,7 @@ class MetaEnumLiteral : MetaDeclaration
 
 class MetaClass : MetaType
 {
-	type SymbolType;
+	type? SymbolType;
 	bool IsAbstract;
 	MetaClass[] BaseTypes;
 	contains MetaProperty[] Properties subsets MetaDeclaration.Declarations;
@@ -65,7 +65,7 @@ class MetaClass : MetaType
 class MetaProperty : MetaDeclaration
 {
 	type Type;
-	string SymbolProperty;
+	string? SymbolProperty;
 	bool IsContainment;
 	bool IsDerived;
 	MetaProperty[] OppositeProperties opposite OppositeProperties;

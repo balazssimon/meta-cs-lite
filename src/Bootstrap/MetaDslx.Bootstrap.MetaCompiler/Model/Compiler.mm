@@ -30,14 +30,14 @@ class Grammar : Declaration
 
 class Annotation
 {
-	TypeSymbol Type;
+	type Type;
 	contains AnnotationArgument[] Arguments;
 }
 
 class AnnotationArgument
 {
-	DeclaredSymbol Parameter;
-	TypeSymbol Type;
+	symbol Parameter;
+	type Type;
 	contains Expression Value;
 }
 
@@ -60,7 +60,7 @@ abstract class Rule : Declaration
 
 class LexerRule : Rule
 {
-	TypeSymbol ReturnType;
+	type ReturnType;
 	bool IsHidden;
 	bool IsFragment;
 
@@ -159,7 +159,7 @@ class LexerRuleBlockElement : LexerRuleElement
 
 abstract class ParserRule : Rule
 {
-	TypeSymbol ReturnType;
+	type ReturnType;
 	bool IsBlock;
 
 	contains ParserRuleAlternative[] Alternatives;
@@ -167,7 +167,7 @@ abstract class ParserRule : Rule
 
 class ParserRuleAlternative : Declaration
 {
-	TypeSymbol ReturnType;
+	type ReturnType;
 	contains Expression ReturnValue;
 
 	contains ParserRuleElement[] Elements;
@@ -185,7 +185,7 @@ abstract class ParserRuleElement
 {
 	contains Annotation[] NameAnnotations;
 	contains Annotation[] ValueAnnotations;
-	DeclaredSymbol Property;
+	symbol Property;
 	AssignmentOperator AssignmentOperator;
 	Multiplicity Multiplicity;
 }
@@ -193,7 +193,7 @@ abstract class ParserRuleElement
 class ParserRuleReferenceElement : ParserRuleElement
 {
 	Rule Rule;
-	TypeSymbol[] ReferencedTypes;
+	type[] ReferencedTypes;
 }
 
 class ParserRuleEofElement : ParserRuleElement
@@ -241,5 +241,5 @@ class StringExpression
 class ReferenceExpression
 {
 	derived object Value;
-	DeclaredSymbol SymbolValue;
+	symbol SymbolValue;
 }

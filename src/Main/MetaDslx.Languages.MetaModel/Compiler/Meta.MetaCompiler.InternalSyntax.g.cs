@@ -3753,12 +3753,111 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
 		}
 	}
 	
-	internal class TypeReferenceAlt3Green : TypeReferenceGreen
+	internal class MetaNullableTypeGreen : TypeReferenceGreen
 	{
-		internal static new readonly TypeReferenceAlt3Green __Missing = new TypeReferenceAlt3Green();
+		internal static new readonly MetaNullableTypeGreen __Missing = new MetaNullableTypeGreen();
+		private TypeReferenceGreen _innerType;
+		private InternalSyntaxToken _tQuestion;
+	
+		public MetaNullableTypeGreen(MetaSyntaxKind kind, TypeReferenceGreen innerType, InternalSyntaxToken tQuestion)
+			: base(kind, null, null)
+		{
+			SlotCount = 2;
+			if (innerType != null)
+			{
+				AdjustFlagsAndWidth(innerType);
+				_innerType = innerType;
+			}
+			if (tQuestion != null)
+			{
+				AdjustFlagsAndWidth(tQuestion);
+				_tQuestion = tQuestion;
+			}
+		}
+	
+		public MetaNullableTypeGreen(MetaSyntaxKind kind, TypeReferenceGreen innerType, InternalSyntaxToken tQuestion, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
+			: base(kind, diagnostics, annotations)
+		{
+			SlotCount = 2;
+			if (innerType != null)
+			{
+				AdjustFlagsAndWidth(innerType);
+				_innerType = innerType;
+			}
+			if (tQuestion != null)
+			{
+				AdjustFlagsAndWidth(tQuestion);
+				_tQuestion = tQuestion;
+			}
+		}
+	
+		private MetaNullableTypeGreen()
+			: base((MetaSyntaxKind)MetaSyntaxKind.MetaNullableType, null, null)
+		{
+			this.flags &= ~NodeFlags.IsNotMissing;
+		}
+	
+		public TypeReferenceGreen InnerType { get { return _innerType; } }
+		public InternalSyntaxToken TQuestion { get { return _tQuestion; } }
+	
+		protected override SyntaxNode CreateRed(SyntaxNode parent, int position)
+		{
+			return new global::MetaDslx.Languages.MetaModel.Compiler.Syntax.MetaNullableTypeSyntax(this, (MetaSyntaxNode)parent, position);
+		}
+	
+		protected override GreenNode GetSlot(int index)
+		{
+			switch (index)
+			{
+				case 0: return _innerType;
+				case 1: return _tQuestion;
+				default: return null;
+			}
+		}
+	
+		public override TResult Accept<TResult>(MetaInternalSyntaxVisitor<TResult> visitor) => visitor.VisitMetaNullableTypeGreen(this);
+	
+		public override void Accept(MetaInternalSyntaxVisitor visitor) => visitor.VisitMetaNullableTypeGreen(this);
+	
+		public override InternalSyntaxNode WithDiagnostics(DiagnosticInfo[] diagnostics)
+		{
+			return new MetaNullableTypeGreen(this.Kind, _innerType, _tQuestion, diagnostics, this.GetAnnotations());
+		}
+	
+		public override InternalSyntaxNode WithAnnotations(SyntaxAnnotation[] annotations)
+		{
+			return new MetaNullableTypeGreen(this.Kind, _innerType, _tQuestion, this.GetDiagnostics(), annotations);
+		}
+	
+		public override GreenNode Clone()
+		{
+			return new MetaNullableTypeGreen(this.Kind, _innerType, _tQuestion, this.GetDiagnostics(), this.GetAnnotations());
+		}
+	
+	
+		public MetaNullableTypeGreen Update(TypeReferenceGreen innerType, InternalSyntaxToken tQuestion)
+		{
+			if (_innerType != innerType || _tQuestion != tQuestion)
+			{
+				InternalSyntaxNode newNode = MetaLanguage.Instance.InternalSyntaxFactory.MetaNullableType(innerType, (InternalSyntaxToken)tQuestion);
+				var diags = this.GetDiagnostics();
+				if (diags != null && diags.Length > 0)
+					newNode = newNode.WithDiagnostics(diags);
+				var annotations = this.GetAnnotations();
+				if (annotations != null && annotations.Length > 0)
+					newNode = newNode.WithAnnotations(annotations);
+				return (MetaNullableTypeGreen)newNode;
+			}
+			return this;
+		}
+	}
+	
+	internal class TypeReferenceAlt4Green : TypeReferenceGreen
+	{
+		internal static new readonly TypeReferenceAlt4Green __Missing = new TypeReferenceAlt4Green();
 		private QualifierGreen _qualifier;
 	
-		public TypeReferenceAlt3Green(MetaSyntaxKind kind, QualifierGreen qualifier)
+		public TypeReferenceAlt4Green(MetaSyntaxKind kind, QualifierGreen qualifier)
 			: base(kind, null, null)
 		{
 			SlotCount = 1;
@@ -3769,7 +3868,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
 			}
 		}
 	
-		public TypeReferenceAlt3Green(MetaSyntaxKind kind, QualifierGreen qualifier, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
+		public TypeReferenceAlt4Green(MetaSyntaxKind kind, QualifierGreen qualifier, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
 			: base(kind, diagnostics, annotations)
 		{
 			SlotCount = 1;
@@ -3780,8 +3879,8 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
 			}
 		}
 	
-		private TypeReferenceAlt3Green()
-			: base((MetaSyntaxKind)MetaSyntaxKind.TypeReferenceAlt3, null, null)
+		private TypeReferenceAlt4Green()
+			: base((MetaSyntaxKind)MetaSyntaxKind.TypeReferenceAlt4, null, null)
 		{
 			this.flags &= ~NodeFlags.IsNotMissing;
 		}
@@ -3790,7 +3889,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
 	
 		protected override SyntaxNode CreateRed(SyntaxNode parent, int position)
 		{
-			return new global::MetaDslx.Languages.MetaModel.Compiler.Syntax.TypeReferenceAlt3Syntax(this, (MetaSyntaxNode)parent, position);
+			return new global::MetaDslx.Languages.MetaModel.Compiler.Syntax.TypeReferenceAlt4Syntax(this, (MetaSyntaxNode)parent, position);
 		}
 	
 		protected override GreenNode GetSlot(int index)
@@ -3802,38 +3901,38 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
 			}
 		}
 	
-		public override TResult Accept<TResult>(MetaInternalSyntaxVisitor<TResult> visitor) => visitor.VisitTypeReferenceAlt3Green(this);
+		public override TResult Accept<TResult>(MetaInternalSyntaxVisitor<TResult> visitor) => visitor.VisitTypeReferenceAlt4Green(this);
 	
-		public override void Accept(MetaInternalSyntaxVisitor visitor) => visitor.VisitTypeReferenceAlt3Green(this);
+		public override void Accept(MetaInternalSyntaxVisitor visitor) => visitor.VisitTypeReferenceAlt4Green(this);
 	
 		public override InternalSyntaxNode WithDiagnostics(DiagnosticInfo[] diagnostics)
 		{
-			return new TypeReferenceAlt3Green(this.Kind, _qualifier, diagnostics, this.GetAnnotations());
+			return new TypeReferenceAlt4Green(this.Kind, _qualifier, diagnostics, this.GetAnnotations());
 		}
 	
 		public override InternalSyntaxNode WithAnnotations(SyntaxAnnotation[] annotations)
 		{
-			return new TypeReferenceAlt3Green(this.Kind, _qualifier, this.GetDiagnostics(), annotations);
+			return new TypeReferenceAlt4Green(this.Kind, _qualifier, this.GetDiagnostics(), annotations);
 		}
 	
 		public override GreenNode Clone()
 		{
-			return new TypeReferenceAlt3Green(this.Kind, _qualifier, this.GetDiagnostics(), this.GetAnnotations());
+			return new TypeReferenceAlt4Green(this.Kind, _qualifier, this.GetDiagnostics(), this.GetAnnotations());
 		}
 	
 	
-		public TypeReferenceAlt3Green Update(QualifierGreen qualifier)
+		public TypeReferenceAlt4Green Update(QualifierGreen qualifier)
 		{
 			if (_qualifier != qualifier)
 			{
-				InternalSyntaxNode newNode = MetaLanguage.Instance.InternalSyntaxFactory.TypeReferenceAlt3(qualifier);
+				InternalSyntaxNode newNode = MetaLanguage.Instance.InternalSyntaxFactory.TypeReferenceAlt4(qualifier);
 				var diags = this.GetDiagnostics();
 				if (diags != null && diags.Length > 0)
 					newNode = newNode.WithDiagnostics(diags);
 				var annotations = this.GetAnnotations();
 				if (annotations != null && annotations.Length > 0)
 					newNode = newNode.WithAnnotations(annotations);
-				return (TypeReferenceAlt3Green)newNode;
+				return (TypeReferenceAlt4Green)newNode;
 			}
 			return this;
 		}

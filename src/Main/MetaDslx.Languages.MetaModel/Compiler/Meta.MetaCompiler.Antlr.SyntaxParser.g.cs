@@ -466,13 +466,22 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                 var tRBracket = this.VisitTerminal(context.tRBracket, MetaSyntaxKind.TRBracket);
             	return _factory.MetaArrayType(itemType, (InternalSyntaxToken)tLBracket, (InternalSyntaxToken)tRBracket);
             }
-            public override GreenNode? VisitPr_TypeReferenceAlt3(MetaParser.Pr_TypeReferenceAlt3Context? context)
+            public override GreenNode? VisitPr_MetaNullableType(MetaParser.Pr_MetaNullableTypeContext? context)
             {
-               	if (context == null) return TypeReferenceAlt3Green.__Missing;
+               	if (context == null) return MetaNullableTypeGreen.__Missing;
+                TypeReferenceGreen? innerType = null;
+                if (context.innerTypeAntlr1 is not null) innerType = (TypeReferenceGreen?)this.Visit(context.innerTypeAntlr1) ?? TypeReferenceGreen.__Missing;
+                else innerType = TypeReferenceGreen.__Missing;
+                var tQuestion = this.VisitTerminal(context.tQuestion, MetaSyntaxKind.TQuestion);
+            	return _factory.MetaNullableType(innerType, (InternalSyntaxToken)tQuestion);
+            }
+            public override GreenNode? VisitPr_TypeReferenceAlt4(MetaParser.Pr_TypeReferenceAlt4Context? context)
+            {
+               	if (context == null) return TypeReferenceAlt4Green.__Missing;
                 QualifierGreen? qualifier = null;
                 if (context.qualifierAntlr1 is not null) qualifier = (QualifierGreen?)this.Visit(context.qualifierAntlr1) ?? QualifierGreen.__Missing;
                 else qualifier = QualifierGreen.__Missing;
-            	return _factory.TypeReferenceAlt3(qualifier);
+            	return _factory.TypeReferenceAlt4(qualifier);
             }
             public override GreenNode? VisitPr_TypeReferenceTokens(MetaParser.Pr_TypeReferenceTokensContext? context)
             {
@@ -483,6 +492,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                 if (context.kString is not null) tokens = (InternalSyntaxToken)this.VisitTerminal(context.kString);
                 if (context.kType is not null) tokens = (InternalSyntaxToken)this.VisitTerminal(context.kType);
                 if (context.kSymbol is not null) tokens = (InternalSyntaxToken)this.VisitTerminal(context.kSymbol);
+                if (context.kObject is not null) tokens = (InternalSyntaxToken)this.VisitTerminal(context.kObject);
                 if (context.kVoid is not null) tokens = (InternalSyntaxToken)this.VisitTerminal(context.kVoid);
             	return _factory.TypeReferenceTokens((InternalSyntaxToken)tokens);
             }

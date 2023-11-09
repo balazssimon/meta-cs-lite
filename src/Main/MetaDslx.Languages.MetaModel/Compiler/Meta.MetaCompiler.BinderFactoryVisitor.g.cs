@@ -925,7 +925,31 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Binding
         	}
         }
 
-        public virtual void VisitTypeReferenceAlt3(TypeReferenceAlt3Syntax node)
+        public virtual void VisitMetaNullableType(MetaNullableTypeSyntax node)
+        {
+        	var __annot1 = new DefineBinder(type: typeof(global::MetaDslx.Languages.MetaModel.Model.MetaNullableType));
+        	this.Begin(__annot1, node);
+        	try
+        	{
+        	    var __annot0 = new PropertyBinder(name: "InnerType");
+        	    this.Begin(__annot0, node.InnerType);
+        	    try
+        	    {
+        	        this.Visit(node.InnerType);
+        	    }
+        	    finally
+        	    {
+        	        this.End(__annot0);
+        	    }
+        	        
+        	}
+        	finally
+        	{
+        	    this.End(__annot1);
+        	}
+        }
+
+        public virtual void VisitTypeReferenceAlt4(TypeReferenceAlt4Syntax node)
         {
         	var __annot0 = new UseBinder(types: new global::System.Type[] {typeof(global::MetaDslx.Languages.MetaModel.Model.MetaType)}.ToImmutableArray());
         	this.Begin(__annot0, node.Qualifier);
@@ -1004,7 +1028,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Binding
         	        this.End(__annot4);
         	    }
         	    break;
-        	case MetaSyntaxKind.KVoid:
+        	case MetaSyntaxKind.KObject:
         	    var __annot5 = new ValueBinder(type: typeof(string));
         	    this.Begin(__annot5, node.Tokens);
         	    try
@@ -1014,6 +1038,18 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Binding
         	    finally
         	    {
         	        this.End(__annot5);
+        	    }
+        	    break;
+        	case MetaSyntaxKind.KVoid:
+        	    var __annot6 = new ValueBinder(type: typeof(string));
+        	    this.Begin(__annot6, node.Tokens);
+        	    try
+        	    {
+        	        // this.VisitToken(node.Tokens);
+        	    }
+        	    finally
+        	    {
+        	        this.End(__annot6);
         	    }
         	    break;
         	default:

@@ -296,6 +296,17 @@ public partial class MetaParserBaseVisitor<Result> : AbstractParseTreeVisitor<Re
 	/// <return>The visitor result.</return>
 	public virtual Result VisitPr_MetaParameter([NotNull] MetaParser.Pr_MetaParameterContext context) { return VisitChildren(context); }
 	/// <summary>
+	/// Visit a parse tree produced by the <c>pr_MetaNullableType</c>
+	/// labeled alternative in <see cref="MetaParser.pr_TypeReference"/>.
+	/// <para>
+	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
+	/// on <paramref name="context"/>.
+	/// </para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	public virtual Result VisitPr_MetaNullableType([NotNull] MetaParser.Pr_MetaNullableTypeContext context) { return VisitChildren(context); }
+	/// <summary>
 	/// Visit a parse tree produced by the <c>pr_TypeReferenceTokens</c>
 	/// labeled alternative in <see cref="MetaParser.pr_TypeReference"/>.
 	/// <para>
@@ -318,7 +329,7 @@ public partial class MetaParserBaseVisitor<Result> : AbstractParseTreeVisitor<Re
 	/// <return>The visitor result.</return>
 	public virtual Result VisitPr_MetaArrayType([NotNull] MetaParser.Pr_MetaArrayTypeContext context) { return VisitChildren(context); }
 	/// <summary>
-	/// Visit a parse tree produced by the <c>pr_TypeReferenceAlt3</c>
+	/// Visit a parse tree produced by the <c>pr_TypeReferenceAlt4</c>
 	/// labeled alternative in <see cref="MetaParser.pr_TypeReference"/>.
 	/// <para>
 	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
@@ -327,7 +338,7 @@ public partial class MetaParserBaseVisitor<Result> : AbstractParseTreeVisitor<Re
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	public virtual Result VisitPr_TypeReferenceAlt3([NotNull] MetaParser.Pr_TypeReferenceAlt3Context context) { return VisitChildren(context); }
+	public virtual Result VisitPr_TypeReferenceAlt4([NotNull] MetaParser.Pr_TypeReferenceAlt4Context context) { return VisitChildren(context); }
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="MetaParser.pr_Name"/>.
 	/// <para>

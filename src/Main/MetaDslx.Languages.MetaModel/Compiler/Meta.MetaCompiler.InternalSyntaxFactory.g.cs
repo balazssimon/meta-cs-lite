@@ -701,16 +701,36 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
 			return result;
 		}
 
-		internal TypeReferenceAlt3Green TypeReferenceAlt3(QualifierGreen qualifier)
+		internal MetaNullableTypeGreen MetaNullableType(TypeReferenceGreen innerType, InternalSyntaxToken tQuestion)
+		{
+#if DEBUG
+			if (innerType is null) throw new ArgumentNullException(nameof(innerType));
+			if (tQuestion is null) throw new ArgumentNullException(nameof(tQuestion));
+			if (tQuestion.RawKind != (int)MetaSyntaxKind.TQuestion) throw new ArgumentException(nameof(tQuestion));
+#endif
+			int hash;
+			var cached = SyntaxNodeCache.TryGetNode((int)(MetaSyntaxKind)MetaSyntaxKind.MetaNullableType, innerType, tQuestion, out hash);
+			if (cached != null) return (MetaNullableTypeGreen)cached;
+		
+			var result = new MetaNullableTypeGreen(MetaSyntaxKind.MetaNullableType, innerType, tQuestion);
+			if (hash >= 0)
+			{
+				SyntaxNodeCache.AddNode(result, hash);
+			}
+		
+			return result;
+		}
+
+		internal TypeReferenceAlt4Green TypeReferenceAlt4(QualifierGreen qualifier)
 		{
 #if DEBUG
 			if (qualifier is null) throw new ArgumentNullException(nameof(qualifier));
 #endif
 			int hash;
-			var cached = SyntaxNodeCache.TryGetNode((int)(MetaSyntaxKind)MetaSyntaxKind.TypeReferenceAlt3, qualifier, out hash);
-			if (cached != null) return (TypeReferenceAlt3Green)cached;
+			var cached = SyntaxNodeCache.TryGetNode((int)(MetaSyntaxKind)MetaSyntaxKind.TypeReferenceAlt4, qualifier, out hash);
+			if (cached != null) return (TypeReferenceAlt4Green)cached;
 		
-			var result = new TypeReferenceAlt3Green(MetaSyntaxKind.TypeReferenceAlt3, qualifier);
+			var result = new TypeReferenceAlt4Green(MetaSyntaxKind.TypeReferenceAlt4, qualifier);
 			if (hash >= 0)
 			{
 				SyntaxNodeCache.AddNode(result, hash);
@@ -723,7 +743,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
 		{
 #if DEBUG
 			if (tokens is null) throw new ArgumentNullException(nameof(tokens));
-			if (tokens.RawKind != (int)MetaSyntaxKind.KBool && tokens.RawKind != (int)MetaSyntaxKind.KInt && tokens.RawKind != (int)MetaSyntaxKind.KString && tokens.RawKind != (int)MetaSyntaxKind.KType && tokens.RawKind != (int)MetaSyntaxKind.KSymbol && tokens.RawKind != (int)MetaSyntaxKind.KVoid) throw new ArgumentException(nameof(tokens));
+			if (tokens.RawKind != (int)MetaSyntaxKind.KBool && tokens.RawKind != (int)MetaSyntaxKind.KInt && tokens.RawKind != (int)MetaSyntaxKind.KString && tokens.RawKind != (int)MetaSyntaxKind.KType && tokens.RawKind != (int)MetaSyntaxKind.KSymbol && tokens.RawKind != (int)MetaSyntaxKind.KObject && tokens.RawKind != (int)MetaSyntaxKind.KVoid) throw new ArgumentException(nameof(tokens));
 #endif
 			int hash;
 			var cached = SyntaxNodeCache.TryGetNode((int)(MetaSyntaxKind)MetaSyntaxKind.TypeReferenceTokens, tokens, out hash);

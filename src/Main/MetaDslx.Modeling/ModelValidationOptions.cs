@@ -12,7 +12,8 @@ namespace MetaDslx.Modeling
 
         public ModelValidationOptions()
         {
-            _flags = ModelValidationFlags.ReadOnly | ModelValidationFlags.FullPropertyStack;//ModelValidationFlags.All;
+            //_flags = ModelValidationFlags.ReadOnly | ModelValidationFlags.FullPropertyStack;
+            _flags = ModelValidationFlags.All;
         }
 
         private ModelValidationOptions(bool isDefault)

@@ -483,15 +483,27 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         	return this.MetaArrayType(itemType, this.Token(MetaSyntaxKind.TLBracket), this.Token(MetaSyntaxKind.TRBracket));
         }
 
-        public TypeReferenceAlt3Syntax TypeReferenceAlt3(QualifierSyntax qualifier)
+        public MetaNullableTypeSyntax MetaNullableType(TypeReferenceSyntax innerType, SyntaxToken tQuestion)
+        {
+        	if (innerType is null) throw new ArgumentNullException(nameof(innerType));
+        	if (tQuestion.RawKind != (int)MetaSyntaxKind.TQuestion) throw new ArgumentException(nameof(tQuestion));
+            return (MetaNullableTypeSyntax)MetaLanguage.Instance.InternalSyntaxFactory.MetaNullableType((TypeReferenceGreen)innerType.Green, (InternalSyntaxToken)tQuestion.Node).CreateRed();
+        }
+        
+        public MetaNullableTypeSyntax MetaNullableType(TypeReferenceSyntax innerType)
+        {
+        	return this.MetaNullableType(innerType, this.Token(MetaSyntaxKind.TQuestion));
+        }
+
+        public TypeReferenceAlt4Syntax TypeReferenceAlt4(QualifierSyntax qualifier)
         {
         	if (qualifier is null) throw new ArgumentNullException(nameof(qualifier));
-            return (TypeReferenceAlt3Syntax)MetaLanguage.Instance.InternalSyntaxFactory.TypeReferenceAlt3((QualifierGreen)qualifier.Green).CreateRed();
+            return (TypeReferenceAlt4Syntax)MetaLanguage.Instance.InternalSyntaxFactory.TypeReferenceAlt4((QualifierGreen)qualifier.Green).CreateRed();
         }
 
         public TypeReferenceTokensSyntax TypeReferenceTokens(SyntaxToken tokens)
         {
-        	if (tokens.RawKind != (int)MetaSyntaxKind.KBool && tokens.RawKind != (int)MetaSyntaxKind.KInt && tokens.RawKind != (int)MetaSyntaxKind.KString && tokens.RawKind != (int)MetaSyntaxKind.KType && tokens.RawKind != (int)MetaSyntaxKind.KSymbol && tokens.RawKind != (int)MetaSyntaxKind.KVoid) throw new ArgumentException(nameof(tokens));
+        	if (tokens.RawKind != (int)MetaSyntaxKind.KBool && tokens.RawKind != (int)MetaSyntaxKind.KInt && tokens.RawKind != (int)MetaSyntaxKind.KString && tokens.RawKind != (int)MetaSyntaxKind.KType && tokens.RawKind != (int)MetaSyntaxKind.KSymbol && tokens.RawKind != (int)MetaSyntaxKind.KObject && tokens.RawKind != (int)MetaSyntaxKind.KVoid) throw new ArgumentException(nameof(tokens));
             return (TypeReferenceTokensSyntax)MetaLanguage.Instance.InternalSyntaxFactory.TypeReferenceTokens((InternalSyntaxToken)tokens.Node).CreateRed();
         }
 
@@ -661,7 +673,8 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
 		        typeof(ParameterListSyntax),
 		        typeof(MetaParameterSyntax),
 		        typeof(MetaArrayTypeSyntax),
-		        typeof(TypeReferenceAlt3Syntax),
+		        typeof(MetaNullableTypeSyntax),
+		        typeof(TypeReferenceAlt4Syntax),
 		        typeof(TypeReferenceTokensSyntax),
 		        typeof(NameSyntax),
 		        typeof(QualifierSyntax),

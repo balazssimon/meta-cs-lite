@@ -35,7 +35,8 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
 		public virtual void VisitParameterListGreen(ParameterListGreen node) => this.DefaultVisit(node);
 		public virtual void VisitMetaParameterGreen(MetaParameterGreen node) => this.DefaultVisit(node);
 		public virtual void VisitMetaArrayTypeGreen(MetaArrayTypeGreen node) => this.DefaultVisit(node);
-		public virtual void VisitTypeReferenceAlt3Green(TypeReferenceAlt3Green node) => this.DefaultVisit(node);
+		public virtual void VisitMetaNullableTypeGreen(MetaNullableTypeGreen node) => this.DefaultVisit(node);
+		public virtual void VisitTypeReferenceAlt4Green(TypeReferenceAlt4Green node) => this.DefaultVisit(node);
 		public virtual void VisitTypeReferenceTokensGreen(TypeReferenceTokensGreen node) => this.DefaultVisit(node);
 		public virtual void VisitNameGreen(NameGreen node) => this.DefaultVisit(node);
 		public virtual void VisitQualifierGreen(QualifierGreen node) => this.DefaultVisit(node);
@@ -83,7 +84,8 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
 		public virtual TResult VisitParameterListGreen(ParameterListGreen node) => this.DefaultVisit(node);
 		public virtual TResult VisitMetaParameterGreen(MetaParameterGreen node) => this.DefaultVisit(node);
 		public virtual TResult VisitMetaArrayTypeGreen(MetaArrayTypeGreen node) => this.DefaultVisit(node);
-		public virtual TResult VisitTypeReferenceAlt3Green(TypeReferenceAlt3Green node) => this.DefaultVisit(node);
+		public virtual TResult VisitMetaNullableTypeGreen(MetaNullableTypeGreen node) => this.DefaultVisit(node);
+		public virtual TResult VisitTypeReferenceAlt4Green(TypeReferenceAlt4Green node) => this.DefaultVisit(node);
 		public virtual TResult VisitTypeReferenceTokensGreen(TypeReferenceTokensGreen node) => this.DefaultVisit(node);
 		public virtual TResult VisitNameGreen(NameGreen node) => this.DefaultVisit(node);
 		public virtual TResult VisitQualifierGreen(QualifierGreen node) => this.DefaultVisit(node);

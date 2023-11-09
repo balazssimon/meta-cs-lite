@@ -2657,16 +2657,98 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
 	    }
 	
 	}
-	public sealed class TypeReferenceAlt3Syntax : TypeReferenceSyntax
+	public sealed class MetaNullableTypeSyntax : TypeReferenceSyntax
 	{
-		private QualifierSyntax _qualifier;
+		private TypeReferenceSyntax _innerType;
 	
-	    public TypeReferenceAlt3Syntax(InternalSyntaxNode green, MetaSyntaxTree syntaxTree, int position)
+	    public MetaNullableTypeSyntax(InternalSyntaxNode green, MetaSyntaxTree syntaxTree, int position)
 	        : base(green, syntaxTree, position)
 	    {
 	    }
 	
-	    public TypeReferenceAlt3Syntax(InternalSyntaxNode green, MetaSyntaxNode parent, int position)
+	    public MetaNullableTypeSyntax(InternalSyntaxNode green, MetaSyntaxNode parent, int position)
+	        : base(green, parent, position)
+	    {
+	    }
+	
+	    public TypeReferenceSyntax InnerType => this.GetRed(ref this._innerType, 0);
+	    public SyntaxToken TQuestion 
+		{ 
+			get 
+			{ 
+				var green = (global::MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax.MetaNullableTypeGreen)this.Green;
+				var greenToken = green.TQuestion;
+				return new SyntaxToken(this, greenToken, this.GetChildPosition(1), this.GetChildIndex(1));
+			}
+		}
+	
+	    protected override SyntaxNode GetNodeSlot(int index)
+	    {
+	        switch (index)
+	        {
+				case 0: return this.GetRed(ref this._innerType, 0);
+				default: return null;
+	        }
+	    }
+	
+	    protected override SyntaxNode GetCachedSlot(int index)
+	    {
+	        switch (index)
+	        {
+				case 0: return this._innerType;
+				default: return null;
+	        }
+	    }
+	
+	    public MetaNullableTypeSyntax WithInnerType(TypeReferenceSyntax innerType)
+		{
+			return this.Update(innerType, this.TQuestion);
+		}
+	
+	    public MetaNullableTypeSyntax WithTQuestion(SyntaxToken tQuestion)
+		{
+			return this.Update(this.InnerType, tQuestion);
+		}
+	
+	    public MetaNullableTypeSyntax Update(TypeReferenceSyntax innerType, SyntaxToken tQuestion)
+	    {
+	        if (this.InnerType != innerType || this.TQuestion != tQuestion)
+	        {
+	            var newNode = MetaLanguage.Instance.SyntaxFactory.MetaNullableType(innerType, tQuestion);
+	            var annotations = this.GetAnnotations();
+	            if (annotations != null && annotations.Length > 0)
+	               newNode = newNode.WithAnnotations(annotations);
+				return (MetaNullableTypeSyntax)newNode;
+	        }
+	        return this;
+	    }
+	
+	    public override TResult Accept<TArg, TResult>(IMetaSyntaxVisitor<TArg, TResult> visitor, TArg argument)
+	    {
+	        return visitor.VisitMetaNullableType(this, argument);
+	    }
+	
+	    public override TResult Accept<TResult>(IMetaSyntaxVisitor<TResult> visitor)
+	    {
+	        return visitor.VisitMetaNullableType(this);
+	    }
+	
+	    public override void Accept(IMetaSyntaxVisitor visitor)
+	    {
+	        visitor.VisitMetaNullableType(this);
+	    }
+	
+	}
+	public sealed class TypeReferenceAlt4Syntax : TypeReferenceSyntax
+	{
+		private QualifierSyntax _qualifier;
+	
+	    public TypeReferenceAlt4Syntax(InternalSyntaxNode green, MetaSyntaxTree syntaxTree, int position)
+	        : base(green, syntaxTree, position)
+	    {
+	    }
+	
+	    public TypeReferenceAlt4Syntax(InternalSyntaxNode green, MetaSyntaxNode parent, int position)
 	        : base(green, parent, position)
 	    {
 	    }
@@ -2691,37 +2773,37 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
 	        }
 	    }
 	
-	    public TypeReferenceAlt3Syntax WithQualifier(QualifierSyntax qualifier)
+	    public TypeReferenceAlt4Syntax WithQualifier(QualifierSyntax qualifier)
 		{
 			return this.Update(qualifier);
 		}
 	
-	    public TypeReferenceAlt3Syntax Update(QualifierSyntax qualifier)
+	    public TypeReferenceAlt4Syntax Update(QualifierSyntax qualifier)
 	    {
 	        if (this.Qualifier != qualifier)
 	        {
-	            var newNode = MetaLanguage.Instance.SyntaxFactory.TypeReferenceAlt3(qualifier);
+	            var newNode = MetaLanguage.Instance.SyntaxFactory.TypeReferenceAlt4(qualifier);
 	            var annotations = this.GetAnnotations();
 	            if (annotations != null && annotations.Length > 0)
 	               newNode = newNode.WithAnnotations(annotations);
-				return (TypeReferenceAlt3Syntax)newNode;
+				return (TypeReferenceAlt4Syntax)newNode;
 	        }
 	        return this;
 	    }
 	
 	    public override TResult Accept<TArg, TResult>(IMetaSyntaxVisitor<TArg, TResult> visitor, TArg argument)
 	    {
-	        return visitor.VisitTypeReferenceAlt3(this, argument);
+	        return visitor.VisitTypeReferenceAlt4(this, argument);
 	    }
 	
 	    public override TResult Accept<TResult>(IMetaSyntaxVisitor<TResult> visitor)
 	    {
-	        return visitor.VisitTypeReferenceAlt3(this);
+	        return visitor.VisitTypeReferenceAlt4(this);
 	    }
 	
 	    public override void Accept(IMetaSyntaxVisitor visitor)
 	    {
-	        visitor.VisitTypeReferenceAlt3(this);
+	        visitor.VisitTypeReferenceAlt4(this);
 	    }
 	
 	}

@@ -51,9 +51,11 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
 				case MetaSyntaxKind.KString:
 				case MetaSyntaxKind.KType:
 				case MetaSyntaxKind.KSymbol:
+				case MetaSyntaxKind.KObject:
 				case MetaSyntaxKind.KVoid:
 				case MetaSyntaxKind.TLBracket:
 				case MetaSyntaxKind.TRBracket:
+				case MetaSyntaxKind.TQuestion:
 				case MetaSyntaxKind.TDot:
 				case MetaSyntaxKind.TInteger:
 				case MetaSyntaxKind.TDecimal:
@@ -103,9 +105,11 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
 				case MetaSyntaxKind.KString:
 				case MetaSyntaxKind.KType:
 				case MetaSyntaxKind.KSymbol:
+				case MetaSyntaxKind.KObject:
 				case MetaSyntaxKind.KVoid:
 				case MetaSyntaxKind.TLBracket:
 				case MetaSyntaxKind.TRBracket:
+				case MetaSyntaxKind.TQuestion:
 				case MetaSyntaxKind.TDot:
 					return true;
 				default:
@@ -172,12 +176,16 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
 					return MetaSyntaxKind.KType;
 				case "symbol": 
 					return MetaSyntaxKind.KSymbol;
+				case "object": 
+					return MetaSyntaxKind.KObject;
 				case "void": 
 					return MetaSyntaxKind.KVoid;
 				case "[": 
 					return MetaSyntaxKind.TLBracket;
 				case "]": 
 					return MetaSyntaxKind.TRBracket;
+				case "?": 
+					return MetaSyntaxKind.TQuestion;
 				case ".": 
 					return MetaSyntaxKind.TDot;
 				default:
@@ -269,12 +277,16 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
 					return "KType";
 				case MetaSyntaxKind.KSymbol: 
 					return "KSymbol";
+				case MetaSyntaxKind.KObject: 
+					return "KObject";
 				case MetaSyntaxKind.KVoid: 
 					return "KVoid";
 				case MetaSyntaxKind.TLBracket: 
 					return "TLBracket";
 				case MetaSyntaxKind.TRBracket: 
 					return "TRBracket";
+				case MetaSyntaxKind.TQuestion: 
+					return "TQuestion";
 				case MetaSyntaxKind.TDot: 
 					return "TDot";
 				case MetaSyntaxKind.TInteger: 
@@ -345,8 +357,10 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
 					return "MetaParameter";
 				case MetaSyntaxKind.MetaArrayType: 
 					return "MetaArrayType";
-				case MetaSyntaxKind.TypeReferenceAlt3: 
-					return "TypeReferenceAlt3";
+				case MetaSyntaxKind.MetaNullableType: 
+					return "MetaNullableType";
+				case MetaSyntaxKind.TypeReferenceAlt4: 
+					return "TypeReferenceAlt4";
 				case MetaSyntaxKind.TypeReferenceTokens: 
 					return "TypeReferenceTokens";
 				case MetaSyntaxKind.Name: 
@@ -443,12 +457,16 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
 					return "type";
 				case MetaSyntaxKind.KSymbol: 
 					return "symbol";
+				case MetaSyntaxKind.KObject: 
+					return "object";
 				case MetaSyntaxKind.KVoid: 
 					return "void";
 				case MetaSyntaxKind.TLBracket: 
 					return "[";
 				case MetaSyntaxKind.TRBracket: 
 					return "]";
+				case MetaSyntaxKind.TQuestion: 
+					return "?";
 				case MetaSyntaxKind.TDot: 
 					return ".";
 				default:
@@ -501,6 +519,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
 				case MetaSyntaxKind.KString: 
 				case MetaSyntaxKind.KType: 
 				case MetaSyntaxKind.KSymbol: 
+				case MetaSyntaxKind.KObject: 
 				case MetaSyntaxKind.KVoid: 
 					return true;
 				default:
@@ -532,6 +551,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
 			yield return MetaSyntaxKind.KString;
 			yield return MetaSyntaxKind.KType;
 			yield return MetaSyntaxKind.KSymbol;
+			yield return MetaSyntaxKind.KObject;
 			yield return MetaSyntaxKind.KVoid;
 			yield break;
         }
@@ -579,6 +599,8 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
 					return MetaSyntaxKind.KType;
 				case "symbol": 
 					return MetaSyntaxKind.KSymbol;
+				case "object": 
+					return MetaSyntaxKind.KObject;
 				case "void": 
 					return MetaSyntaxKind.KVoid;
 				default:
