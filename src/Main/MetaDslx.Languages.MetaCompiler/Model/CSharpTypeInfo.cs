@@ -229,7 +229,7 @@ namespace MetaDslx.Languages.MetaCompiler.Model
                     type = type.BaseType;
                 }
             }
-            _isModelObject = _coreType.AllInterfaces.Any(intf => intf.Name == "IModelObject");
+            _isModelObject = _coreType.AllInterfaces.Any(intf => intf.Name == "IModelObjectCore");
         }
 
         private bool ResolveItemType()

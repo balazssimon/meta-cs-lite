@@ -1,3 +1,5 @@
+#nullable enable
+
 namespace MetaDslx.Languages.MetaModel.Model
 {
 	using __MetaMetaModel = global::MetaDslx.Languages.MetaModel.Model.Meta;
@@ -5,6 +7,7 @@ namespace MetaDslx.Languages.MetaModel.Model
 	using __Model = global::MetaDslx.Modeling.Model;
 	using __MetaModel = global::MetaDslx.Modeling.MetaModel;
 	using __IModelObject = global::MetaDslx.Modeling.IModelObject;
+	using __IModelObjectCore = global::MetaDslx.Modeling.IModelObjectCore;
 	using __ModelFactory = global::MetaDslx.Modeling.ModelFactory;
 	using __MultiModelFactory = global::MetaDslx.Modeling.MultiModelFactory;
 	using __ModelVersion = global::MetaDslx.Modeling.ModelVersion;
@@ -680,7 +683,7 @@ namespace MetaDslx.Languages.MetaModel.Model
 	
 
 
-	public interface MetaDeclaration : __IModelObject
+	public interface MetaDeclaration : __IModelObjectCore
 	{
 		global::System.Collections.Generic.IList<MetaDeclaration> Declarations { get; }
 		string? FullName { get; }
@@ -993,6 +996,7 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 	using __Model = global::MetaDslx.Modeling.Model;
 	using __MetaModel = global::MetaDslx.Modeling.MetaModel;
 	using __IModelObject = global::MetaDslx.Modeling.IModelObject;
+	using __IModelObjectCore = global::MetaDslx.Modeling.IModelObjectCore;
 	using __MetaModelObject = global::MetaDslx.Modeling.MetaModelObject;
 	using __ModelObjectInfo = global::MetaDslx.Modeling.ModelObjectInfo;
 	using __ModelProperty = global::MetaDslx.Modeling.ModelProperty;

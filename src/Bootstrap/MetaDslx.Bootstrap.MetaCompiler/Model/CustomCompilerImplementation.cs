@@ -8,13 +8,28 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
 {
     internal class CustomCompilerImplementation : CustomCompilerImplementationBase
     {
+        public override object? BoolExpression_Value(BoolExpression _this)
+        {
+            return _this.BoolValue;
+        }
+
         public override string Declaration_FullName(Declaration _this)
         {
             if (_this.Parent is null) return _this.Name;
             else return $"{_this.Parent.FullName}.{_this.Name}";
         }
 
-        public override string LexerRuleAlternative_FixedText(LexerRuleAlternative _this)
+        public override object? Expression_Value(Expression _this)
+        {
+            return null;
+        }
+
+        public override object? IntExpression_Value(IntExpression _this)
+        {
+            return _this.IntValue;
+        }
+
+        public override string? LexerRuleAlternative_FixedText(LexerRuleAlternative _this)
         {
             return _this.IsFixed ? string.Concat(_this.Elements.Select(e => e.FixedText)) : null;
         }
@@ -24,7 +39,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             return _this.Elements.All(e => e.IsFixed);
         }
 
-        public override string LexerRuleBlockElement_FixedText(LexerRuleBlockElement _this)
+        public override string? LexerRuleBlockElement_FixedText(LexerRuleBlockElement _this)
         {
             return _this.IsFixed ? _this.Alternatives[0].FixedText : null;
         }
@@ -34,7 +49,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             return _this.Alternatives.Count == 1 && _this.Alternatives[0].IsFixed;
         }
 
-        public override string LexerRuleElement_FixedText(LexerRuleElement _this)
+        public override string? LexerRuleElement_FixedText(LexerRuleElement _this)
         {
             return null;
         }
@@ -44,7 +59,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             return false;
         }
 
-        public override string LexerRuleFixedStringElement_FixedText(LexerRuleFixedStringElement _this)
+        public override string? LexerRuleFixedStringElement_FixedText(LexerRuleFixedStringElement _this)
         {
             return _this.Text;
         }
@@ -54,7 +69,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             return true;
         }
 
-        public override string LexerRuleRangeElement_FixedText(LexerRuleRangeElement _this)
+        public override string? LexerRuleRangeElement_FixedText(LexerRuleRangeElement _this)
         {
             return _this.IsFixed ? _this.StartChar : null;
         }
@@ -64,7 +79,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             return _this.StartChar == _this.EndChar;
         }
 
-        public override string LexerRuleReferenceElement_FixedText(LexerRuleReferenceElement _this)
+        public override string? LexerRuleReferenceElement_FixedText(LexerRuleReferenceElement _this)
         {
             return _this.Rule?.FixedText;
         }
@@ -74,7 +89,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             return _this.Rule?.IsFixed ?? false;
         }
 
-        public override string LexerRuleSetElement_FixedText(LexerRuleSetElement _this)
+        public override string? LexerRuleSetElement_FixedText(LexerRuleSetElement _this)
         {
             return _this.IsFixed ? _this.Items[0].FixedText : null;
         }
@@ -94,7 +109,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             return true;
         }
 
-        public override string LexerRuleSetItem_FixedText(LexerRuleSetItem _this)
+        public override string? LexerRuleSetItem_FixedText(LexerRuleSetItem _this)
         {
             return null;
         }
@@ -104,7 +119,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             return false;
         }
 
-        public override string LexerRuleSetRange_FixedText(LexerRuleSetRange _this)
+        public override string? LexerRuleSetRange_FixedText(LexerRuleSetRange _this)
         {
             return _this.IsFixed ? _this.StartChar : null;
         }
@@ -114,7 +129,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             return _this.StartChar == _this.EndChar;
         }
 
-        public override string LexerRuleWildCardElement_FixedText(LexerRuleWildCardElement _this)
+        public override string? LexerRuleWildCardElement_FixedText(LexerRuleWildCardElement _this)
         {
             return null;
         }
@@ -124,7 +139,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             return false;
         }
 
-        public override string LexerRule_FixedText(LexerRule _this)
+        public override string? LexerRule_FixedText(LexerRule _this)
         {
             return _this.IsFixed ? _this.Alternatives[0].FixedText : null;
         }
@@ -134,9 +149,24 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             return _this.Alternatives.Count == 1 && _this.Alternatives[0].IsFixed;
         }
 
+        public override object? NullExpression_Value(NullExpression _this)
+        {
+            return null;
+        }
+
+        public override object? ReferenceExpression_Value(ReferenceExpression _this)
+        {
+            return _this.SymbolValue;
+        }
+
         public override Language Rule_Language(Rule _this)
         {
             return _this.Grammar.Language;
+        }
+
+        public override object? StringExpression_Value(StringExpression _this)
+        {
+            return _this.StringValue;
         }
     }
 }

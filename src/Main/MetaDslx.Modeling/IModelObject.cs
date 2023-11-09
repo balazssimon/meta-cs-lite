@@ -5,7 +5,7 @@ using System.Text;
 
 namespace MetaDslx.Modeling
 {
-    public interface IModelObject
+    public interface IModelObject : IModelObjectCore
     {
         string Id { get; set; }
         MetaModel MetaModel { get; }

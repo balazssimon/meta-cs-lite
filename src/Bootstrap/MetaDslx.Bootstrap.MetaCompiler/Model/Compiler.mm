@@ -65,7 +65,7 @@ class LexerRule : Rule
 	bool IsFragment;
 
 	derived bool IsFixed;
-	derived string FixedText;
+	derived string? FixedText;
 
 	contains LexerRuleAlternative[] Alternatives;
 }
@@ -73,7 +73,7 @@ class LexerRule : Rule
 class LexerRuleAlternative
 {
 	derived bool IsFixed;
-	derived string FixedText;
+	derived string? FixedText;
 
 	contains LexerRuleElement[] Elements;
 }
@@ -81,7 +81,7 @@ class LexerRuleAlternative
 abstract class LexerRuleElement
 {
 	derived bool IsFixed;
-	derived string FixedText;
+	derived string? FixedText;
 
 	bool IsNegated;
 	Multiplicity Multiplicity;
@@ -90,7 +90,7 @@ abstract class LexerRuleElement
 class LexerRuleReferenceElement : LexerRuleElement
 {
 	derived bool IsFixed;
-	derived string FixedText;
+	derived string? FixedText;
 
 	LexerRule Rule;
 }
@@ -98,7 +98,7 @@ class LexerRuleReferenceElement : LexerRuleElement
 class LexerRuleFixedStringElement : LexerRuleElement
 {
 	derived bool IsFixed;
-	derived string FixedText;
+	derived string? FixedText;
 
 	string Text;
 }
@@ -106,13 +106,13 @@ class LexerRuleFixedStringElement : LexerRuleElement
 class LexerRuleWildCardElement : LexerRuleElement
 {
 	derived bool IsFixed;
-	derived string FixedText;
+	derived string? FixedText;
 }
 
 class LexerRuleRangeElement : LexerRuleElement
 {
 	derived bool IsFixed;
-	derived string FixedText;
+	derived string? FixedText;
 
 	string StartChar;
 	string EndChar;
@@ -121,7 +121,7 @@ class LexerRuleRangeElement : LexerRuleElement
 class LexerRuleSetElement : LexerRuleElement
 {
 	derived bool IsFixed;
-	derived string FixedText;
+	derived string? FixedText;
 
 	contains LexerRuleSetItem[] Items;
 }
@@ -129,13 +129,13 @@ class LexerRuleSetElement : LexerRuleElement
 abstract class LexerRuleSetItem
 {
 	derived bool IsFixed;
-	derived string FixedText;
+	derived string? FixedText;
 }
 
 class LexerRuleSetFixedChar : LexerRuleSetItem
 {
 	derived bool IsFixed;
-	derived string FixedText;
+	derived string? FixedText;
 
 	string Char;
 }
@@ -143,7 +143,7 @@ class LexerRuleSetFixedChar : LexerRuleSetItem
 class LexerRuleSetRange : LexerRuleSetItem
 {
 	derived bool IsFixed;
-	derived string FixedText;
+	derived string? FixedText;
 
 	string StartChar;
 	string EndChar;
@@ -152,14 +152,14 @@ class LexerRuleSetRange : LexerRuleSetItem
 class LexerRuleBlockElement : LexerRuleElement
 {
 	derived bool IsFixed;
-	derived string FixedText;
+	derived string? FixedText;
 
 	contains LexerRuleAlternative[] Alternatives;
 }
 
 abstract class ParserRule : Rule
 {
-	type ReturnType;
+	type? ReturnType;
 	bool IsBlock;
 
 	contains ParserRuleAlternative[] Alternatives;
@@ -167,7 +167,7 @@ abstract class ParserRule : Rule
 
 class ParserRuleAlternative : Declaration
 {
-	type ReturnType;
+	type? ReturnType;
 	contains Expression ReturnValue;
 
 	contains ParserRuleElement[] Elements;
@@ -185,7 +185,7 @@ abstract class ParserRuleElement
 {
 	contains Annotation[] NameAnnotations;
 	contains Annotation[] ValueAnnotations;
-	symbol Property;
+	symbol? Property;
 	AssignmentOperator AssignmentOperator;
 	Multiplicity Multiplicity;
 }
@@ -210,36 +210,36 @@ class ParserRuleBlockElement : ParserRuleElement
 	contains ParserRuleAlternative[] Alternatives;
 }
 
-class Expression
+abstract class Expression
 {
-	derived object Value;
+	derived object? Value;
 }
 
 class NullExpression
 {
-	derived object Value;
+	derived object? Value;
 }
 
 class BoolExpression
 {
-	derived object Value;
+	derived object? Value;
 	bool BoolValue;
 }
 
 class IntExpression
 {
-	derived object Value;
+	derived object? Value;
 	int IntValue;
 }
 
 class StringExpression
 {
-	derived object Value;
+	derived object? Value;
 	string StringValue;
 }
 
 class ReferenceExpression
 {
-	derived object Value;
+	derived object? Value;
 	symbol SymbolValue;
 }
