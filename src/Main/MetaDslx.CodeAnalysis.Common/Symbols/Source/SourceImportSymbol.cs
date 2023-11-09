@@ -1,5 +1,6 @@
 ﻿using MetaDslx.CodeAnalysis.Declarations;
 using MetaDslx.CodeAnalysis.PooledObjects;
+using MetaDslx.Modeling;
 using Microsoft.CodeAnalysis;
 using System;
 using System.Collections.Generic;
@@ -55,12 +56,19 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
             return SymbolFactory.CreateContainedSymbols(this, diagnostics);
         }
         
-        protected override (ImmutableArray<AliasSymbol> aliases, ImmutableArray<NamespaceSymbol> namespaces, ImmutableArray<DeclaredSymbol> symbols) ComputeImports(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        protected override (ImmutableArray<AliasSymbol> aliases, ImmutableArray<NamespaceSymbol> namespaces, ImmutableArray<DeclaredSymbol> symbols, ImmutableArray<MetaModel> metaModels) ComputeImports(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             var files = SymbolFactory.GetSymbolPropertyValues<string>(this, nameof(Files), diagnostics, cancellationToken);
             var aliases = SymbolFactory.GetSymbolPropertyValues<AliasSymbol>(this, nameof(Aliases), diagnostics, cancellationToken);
             var namespaces = SymbolFactory.GetSymbolPropertyValues<NamespaceSymbol>(this, nameof(Namespaces), diagnostics, cancellationToken);
             var symbols = SymbolFactory.GetSymbolPropertyValues<DeclaredSymbol>(this, nameof(Symbols), diagnostics, cancellationToken);
+            var metaModelSymbols = SymbolFactory.GetSymbolPropertyValues<DeclaredSymbol>(this, nameof(MetaModels), diagnostics, cancellationToken);
+            var metaModels = ArrayBuilder<MetaModel>.GetInstance();
+            foreach (var metaModelSymbol in metaModelSymbols)
+            {
+                // TODO
+            }
+
             if (files.Length > 0)
             {
                 var compilation = this.DeclaringCompilation;
@@ -114,7 +122,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
                     }
                 }
             }
-            return (aliases, namespaces, symbols);
+            return (aliases, namespaces, symbols, metaModels.ToImmutableAndFree());
         }
     }
 }

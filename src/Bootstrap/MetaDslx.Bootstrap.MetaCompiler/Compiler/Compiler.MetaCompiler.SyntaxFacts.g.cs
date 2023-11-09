@@ -30,6 +30,17 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 				case CompilerSyntaxKind.KNamespace:
 				case CompilerSyntaxKind.TSemicolon:
 				case CompilerSyntaxKind.KUsing:
+				case CompilerSyntaxKind.KLanguage:
+				case CompilerSyntaxKind.KReturns:
+				case CompilerSyntaxKind.TColon:
+				case CompilerSyntaxKind.TBar:
+				case CompilerSyntaxKind.KBlock:
+				case CompilerSyntaxKind.TLBrace:
+				case CompilerSyntaxKind.TRBrace:
+				case CompilerSyntaxKind.TEqGt:
+				case CompilerSyntaxKind.KNull:
+				case CompilerSyntaxKind.KTrue:
+				case CompilerSyntaxKind.KFalse:
 				case CompilerSyntaxKind.TDot:
 				case CompilerSyntaxKind.TInteger:
 				case CompilerSyntaxKind.TDecimal:
@@ -58,6 +69,17 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 				case CompilerSyntaxKind.KNamespace:
 				case CompilerSyntaxKind.TSemicolon:
 				case CompilerSyntaxKind.KUsing:
+				case CompilerSyntaxKind.KLanguage:
+				case CompilerSyntaxKind.KReturns:
+				case CompilerSyntaxKind.TColon:
+				case CompilerSyntaxKind.TBar:
+				case CompilerSyntaxKind.KBlock:
+				case CompilerSyntaxKind.TLBrace:
+				case CompilerSyntaxKind.TRBrace:
+				case CompilerSyntaxKind.TEqGt:
+				case CompilerSyntaxKind.KNull:
+				case CompilerSyntaxKind.KTrue:
+				case CompilerSyntaxKind.KFalse:
 				case CompilerSyntaxKind.TDot:
 					return true;
 				default:
@@ -82,6 +104,28 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 					return CompilerSyntaxKind.TSemicolon;
 				case "using": 
 					return CompilerSyntaxKind.KUsing;
+				case "language": 
+					return CompilerSyntaxKind.KLanguage;
+				case "returns": 
+					return CompilerSyntaxKind.KReturns;
+				case ":": 
+					return CompilerSyntaxKind.TColon;
+				case "|": 
+					return CompilerSyntaxKind.TBar;
+				case "block": 
+					return CompilerSyntaxKind.KBlock;
+				case "{": 
+					return CompilerSyntaxKind.TLBrace;
+				case "}": 
+					return CompilerSyntaxKind.TRBrace;
+				case "=>": 
+					return CompilerSyntaxKind.TEqGt;
+				case "null": 
+					return CompilerSyntaxKind.KNull;
+				case "true": 
+					return CompilerSyntaxKind.KTrue;
+				case "false": 
+					return CompilerSyntaxKind.KFalse;
 				case ".": 
 					return CompilerSyntaxKind.TDot;
 				default:
@@ -131,6 +175,28 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 					return "TSemicolon";
 				case CompilerSyntaxKind.KUsing: 
 					return "KUsing";
+				case CompilerSyntaxKind.KLanguage: 
+					return "KLanguage";
+				case CompilerSyntaxKind.KReturns: 
+					return "KReturns";
+				case CompilerSyntaxKind.TColon: 
+					return "TColon";
+				case CompilerSyntaxKind.TBar: 
+					return "TBar";
+				case CompilerSyntaxKind.KBlock: 
+					return "KBlock";
+				case CompilerSyntaxKind.TLBrace: 
+					return "TLBrace";
+				case CompilerSyntaxKind.TRBrace: 
+					return "TRBrace";
+				case CompilerSyntaxKind.TEqGt: 
+					return "TEqGt";
+				case CompilerSyntaxKind.KNull: 
+					return "KNull";
+				case CompilerSyntaxKind.KTrue: 
+					return "KTrue";
+				case CompilerSyntaxKind.KFalse: 
+					return "KFalse";
 				case CompilerSyntaxKind.TDot: 
 					return "TDot";
 				case CompilerSyntaxKind.TInteger: 
@@ -153,6 +219,26 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 					return "Main";
 				case CompilerSyntaxKind.Using: 
 					return "Using";
+				case CompilerSyntaxKind.Declarations: 
+					return "Declarations";
+				case CompilerSyntaxKind.LanguageDeclaration: 
+					return "LanguageDeclaration";
+				case CompilerSyntaxKind.ParserRule: 
+					return "ParserRule";
+				case CompilerSyntaxKind.BlockRule: 
+					return "BlockRule";
+				case CompilerSyntaxKind.ParserRuleAlternative: 
+					return "ParserRuleAlternative";
+				case CompilerSyntaxKind.ParserRuleElement: 
+					return "ParserRuleElement";
+				case CompilerSyntaxKind.IntExpression: 
+					return "IntExpression";
+				case CompilerSyntaxKind.StringExpression: 
+					return "StringExpression";
+				case CompilerSyntaxKind.ReferenceExpression: 
+					return "ReferenceExpression";
+				case CompilerSyntaxKind.ExpressionTokens: 
+					return "ExpressionTokens";
 				case CompilerSyntaxKind.Name: 
 					return "Name";
 				case CompilerSyntaxKind.Qualifier: 
@@ -161,6 +247,16 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 					return "QualifierList";
 				case CompilerSyntaxKind.Identifier: 
 					return "Identifier";
+				case CompilerSyntaxKind.ParserRuleBlock1: 
+					return "ParserRuleBlock1";
+				case CompilerSyntaxKind.ParserRuleBlock2: 
+					return "ParserRuleBlock2";
+				case CompilerSyntaxKind.BlockRuleBlock1: 
+					return "BlockRuleBlock1";
+				case CompilerSyntaxKind.ParserRuleAlternativeBlock1: 
+					return "ParserRuleAlternativeBlock1";
+				case CompilerSyntaxKind.ParserRuleAlternativeBlock2: 
+					return "ParserRuleAlternativeBlock2";
 				case CompilerSyntaxKind.QualifierBlock1: 
 					return "QualifierBlock1";
 				case CompilerSyntaxKind.QualifierListBlock1: 
@@ -187,6 +283,28 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 					return ";";
 				case CompilerSyntaxKind.KUsing: 
 					return "using";
+				case CompilerSyntaxKind.KLanguage: 
+					return "language";
+				case CompilerSyntaxKind.KReturns: 
+					return "returns";
+				case CompilerSyntaxKind.TColon: 
+					return ":";
+				case CompilerSyntaxKind.TBar: 
+					return "|";
+				case CompilerSyntaxKind.KBlock: 
+					return "block";
+				case CompilerSyntaxKind.TLBrace: 
+					return "{";
+				case CompilerSyntaxKind.TRBrace: 
+					return "}";
+				case CompilerSyntaxKind.TEqGt: 
+					return "=>";
+				case CompilerSyntaxKind.KNull: 
+					return "null";
+				case CompilerSyntaxKind.KTrue: 
+					return "true";
+				case CompilerSyntaxKind.KFalse: 
+					return "false";
 				case CompilerSyntaxKind.TDot: 
 					return ".";
 				default:
@@ -224,6 +342,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 			{
 				case CompilerSyntaxKind.KNamespace: 
 				case CompilerSyntaxKind.KUsing: 
+				case CompilerSyntaxKind.KLanguage: 
+				case CompilerSyntaxKind.KReturns: 
+				case CompilerSyntaxKind.KBlock: 
+				case CompilerSyntaxKind.KNull: 
+				case CompilerSyntaxKind.KTrue: 
+				case CompilerSyntaxKind.KFalse: 
 					return true;
 				default:
 					return false;
@@ -239,6 +363,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
         {
 			yield return CompilerSyntaxKind.KNamespace;
 			yield return CompilerSyntaxKind.KUsing;
+			yield return CompilerSyntaxKind.KLanguage;
+			yield return CompilerSyntaxKind.KReturns;
+			yield return CompilerSyntaxKind.KBlock;
+			yield return CompilerSyntaxKind.KNull;
+			yield return CompilerSyntaxKind.KTrue;
+			yield return CompilerSyntaxKind.KFalse;
 			yield break;
         }
 
@@ -255,6 +385,18 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 					return CompilerSyntaxKind.KNamespace;
 				case "using": 
 					return CompilerSyntaxKind.KUsing;
+				case "language": 
+					return CompilerSyntaxKind.KLanguage;
+				case "returns": 
+					return CompilerSyntaxKind.KReturns;
+				case "block": 
+					return CompilerSyntaxKind.KBlock;
+				case "null": 
+					return CompilerSyntaxKind.KNull;
+				case "true": 
+					return CompilerSyntaxKind.KTrue;
+				case "false": 
+					return CompilerSyntaxKind.KFalse;
 				default:
 					return CompilerSyntaxKind.None;
 			}

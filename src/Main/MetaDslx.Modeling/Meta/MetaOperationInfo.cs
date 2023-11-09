@@ -8,8 +8,8 @@ namespace MetaDslx.Modeling.Meta
     public abstract class MetaOperationInfo<TType, TProperty, TOperation>
     {
         public MetaOperationInfo(
-            ImmutableArray<MetaOperation<TType, TProperty, TOperation>> overridenOperations = default,
-            ImmutableArray<MetaOperation<TType, TProperty, TOperation>> overridingOperations = default)
+            ImmutableArray<MetaOperation<TType, TProperty, TOperation>> overridenOperations,
+            ImmutableArray<MetaOperation<TType, TProperty, TOperation>> overridingOperations)
         {
             OverridenOperations = overridenOperations;
             OverridingOperations = overridingOperations;

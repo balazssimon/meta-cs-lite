@@ -4,18 +4,37 @@ using System;
 using MetaDslx.CodeAnalysis.Annotations;
 using MetaDslx.CodeAnalysis.Binding;
 using MetaDslx.CodeAnalysis.Syntax;
+using MetaDslx.CodeAnalysis;
 using MetaDslx.CodeAnalysis.Symbols;
 using MetaDslx.Bootstrap.MetaCompiler.Model;
 
 language Compiler;
 
 Main returns Namespace:
-	'namespace' name=[Name(qualifierProperty:Declarations)]Qualifier ';'
+	'namespace' [Name(qualifierProperty:Declarations)]Qualifier ';'
 	Using*
-	//Declarations
+	Declarations
 	eof;
 
 Using returns ImportSymbol: 'using' namespaces+=#NamespaceSymbol ';';
+
+part Declarations: declarations+=LanguageDeclaration declarations+=Rule*;
+
+LanguageDeclaration returns MetaDslx.Bootstrap.MetaCompiler.Model.Language: 'language' Name;
+
+Rule: ParserRule | BlockRule;// | TokenRule | FragmentRule;
+
+ParserRule: Name ('returns' returnType=#MetaType)? ':' alternatives+=ParserRuleAlternative ('|' alternatives+=ParserRuleAlternative)* ';';
+BlockRule returns ParserRule: isBlock?='block' Name ':' alternatives+=ParserRuleAlternative ('|' alternatives+=ParserRuleAlternative)* ';';
+ParserRuleAlternative: ('{' returnType=#MetaType '}')? elements+=ParserRuleElement* ('=>' returnValue=Expression);
+ParserRuleElement: Name;
+
+Expression: NullExpression | BoolExpression | IntExpression | StringExpression | ReferenceExpression;
+NullExpression: 'null';
+BoolExpression: boolValue?='true' | 'false';
+IntExpression: intValue=TInteger;
+StringExpression: stringValue=TString;
+ReferenceExpression: #MetaSymbol;
 
 [Name]
 part Name: Identifier;

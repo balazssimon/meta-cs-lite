@@ -4,7 +4,7 @@ using System.Text;
 
 namespace MetaDslx.Modeling
 {
-    [AttributeUsage(AttributeTargets.Interface, AllowMultiple = false, Inherited = false)]
+    [AttributeUsage(AttributeTargets.Interface | AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
     public class MetaModelAttribute : Attribute
     {
         public string Uri { get; set; }
@@ -16,15 +16,6 @@ namespace MetaDslx.Modeling
     [AttributeUsage(AttributeTargets.Interface, AllowMultiple = false, Inherited = false)]
     public class MetaClassAttribute : Attribute
     {
-        private readonly Type? _type;
-
-        public MetaClassAttribute(Type? type = null)
-        {
-            _type = type;
-        }
-
-        public Type? Type => _type;
-        public bool IsAbstract { get; set; }
     }
 
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
@@ -38,11 +29,6 @@ namespace MetaDslx.Modeling
         }
 
         public object? Value => _value;
-    }
-
-    [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
-    public class TypeSymbolTypeAttribute : Attribute
-    {
     }
 
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = true)]

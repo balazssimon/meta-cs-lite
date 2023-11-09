@@ -218,18 +218,19 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
             return new SyntaxToken(CompilerLanguage.Instance.InternalSyntaxFactory.TMultiLineComment(text, value));
         }
 
-        public MainSyntax Main(SyntaxToken kNamespace, QualifierSyntax name, SyntaxToken tSemicolon, MetaDslx.CodeAnalysis.SyntaxList<UsingSyntax> @using, SyntaxToken eof)
+        public MainSyntax Main(SyntaxToken kNamespace, QualifierSyntax qualifier, SyntaxToken tSemicolon, MetaDslx.CodeAnalysis.SyntaxList<UsingSyntax> @using, DeclarationsSyntax declarations, SyntaxToken eof)
         {
         	if (kNamespace.RawKind != (int)CompilerSyntaxKind.KNamespace) throw new ArgumentException(nameof(kNamespace));
-        	if (name is null) throw new ArgumentNullException(nameof(name));
+        	if (qualifier is null) throw new ArgumentNullException(nameof(qualifier));
         	if (tSemicolon.RawKind != (int)CompilerSyntaxKind.TSemicolon) throw new ArgumentException(nameof(tSemicolon));
+        	if (declarations is null) throw new ArgumentNullException(nameof(declarations));
         	if (eof.RawKind != (int)CompilerSyntaxKind.Eof) throw new ArgumentException(nameof(eof));
-            return (MainSyntax)CompilerLanguage.Instance.InternalSyntaxFactory.Main((InternalSyntaxToken)kNamespace.Node, (QualifierGreen)name.Green, (InternalSyntaxToken)tSemicolon.Node, @using.Node.ToGreenList<UsingGreen>(), (InternalSyntaxToken)eof.Node).CreateRed();
+            return (MainSyntax)CompilerLanguage.Instance.InternalSyntaxFactory.Main((InternalSyntaxToken)kNamespace.Node, (QualifierGreen)qualifier.Green, (InternalSyntaxToken)tSemicolon.Node, @using.Node.ToGreenList<UsingGreen>(), (DeclarationsGreen)declarations.Green, (InternalSyntaxToken)eof.Node).CreateRed();
         }
         
-        public MainSyntax Main(QualifierSyntax name, MetaDslx.CodeAnalysis.SyntaxList<UsingSyntax> @using)
+        public MainSyntax Main(QualifierSyntax qualifier, MetaDslx.CodeAnalysis.SyntaxList<UsingSyntax> @using, DeclarationsSyntax declarations)
         {
-        	return this.Main(this.Token(CompilerSyntaxKind.KNamespace), name, this.Token(CompilerSyntaxKind.TSemicolon), @using, this.Token(CompilerSyntaxKind.Eof));
+        	return this.Main(this.Token(CompilerSyntaxKind.KNamespace), qualifier, this.Token(CompilerSyntaxKind.TSemicolon), @using, declarations, this.Token(CompilerSyntaxKind.Eof));
         }
 
         public UsingSyntax Using(SyntaxToken kUsing, QualifierSyntax namespaces, SyntaxToken tSemicolon)
@@ -243,6 +244,92 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
         public UsingSyntax Using(QualifierSyntax namespaces)
         {
         	return this.Using(this.Token(CompilerSyntaxKind.KUsing), namespaces, this.Token(CompilerSyntaxKind.TSemicolon));
+        }
+
+        public DeclarationsSyntax Declarations(LanguageDeclarationSyntax declarations, MetaDslx.CodeAnalysis.SyntaxList<RuleSyntax> declarations1)
+        {
+        	if (declarations is null) throw new ArgumentNullException(nameof(declarations));
+            return (DeclarationsSyntax)CompilerLanguage.Instance.InternalSyntaxFactory.Declarations((LanguageDeclarationGreen)declarations.Green, declarations1.Node.ToGreenList<RuleGreen>()).CreateRed();
+        }
+
+        public LanguageDeclarationSyntax LanguageDeclaration(SyntaxToken kLanguage, NameSyntax name)
+        {
+        	if (kLanguage.RawKind != (int)CompilerSyntaxKind.KLanguage) throw new ArgumentException(nameof(kLanguage));
+        	if (name is null) throw new ArgumentNullException(nameof(name));
+            return (LanguageDeclarationSyntax)CompilerLanguage.Instance.InternalSyntaxFactory.LanguageDeclaration((InternalSyntaxToken)kLanguage.Node, (NameGreen)name.Green).CreateRed();
+        }
+        
+        public LanguageDeclarationSyntax LanguageDeclaration(NameSyntax name)
+        {
+        	return this.LanguageDeclaration(this.Token(CompilerSyntaxKind.KLanguage), name);
+        }
+
+        public ParserRuleSyntax ParserRule(NameSyntax name, ParserRuleBlock1Syntax parserRuleBlock1, SyntaxToken tColon, MetaDslx.CodeAnalysis.SeparatedSyntaxList<ParserRuleAlternativeSyntax> parserRuleAlternativeList, SyntaxToken tSemicolon)
+        {
+        	if (name is null) throw new ArgumentNullException(nameof(name));
+        	if (tColon.RawKind != (int)CompilerSyntaxKind.TColon) throw new ArgumentException(nameof(tColon));
+        	if (tSemicolon.RawKind != (int)CompilerSyntaxKind.TSemicolon) throw new ArgumentException(nameof(tSemicolon));
+            return (ParserRuleSyntax)CompilerLanguage.Instance.InternalSyntaxFactory.ParserRule((NameGreen)name.Green, (ParserRuleBlock1Green?)parserRuleBlock1?.Green, (InternalSyntaxToken)tColon.Node, parserRuleAlternativeList.Node.ToGreenSeparatedList<ParserRuleAlternativeGreen>(reversed: false), (InternalSyntaxToken)tSemicolon.Node).CreateRed();
+        }
+        
+        public ParserRuleSyntax ParserRule(NameSyntax name, MetaDslx.CodeAnalysis.SeparatedSyntaxList<ParserRuleAlternativeSyntax> parserRuleAlternativeList)
+        {
+        	return this.ParserRule(name, default, this.Token(CompilerSyntaxKind.TColon), parserRuleAlternativeList, this.Token(CompilerSyntaxKind.TSemicolon));
+        }
+
+        public BlockRuleSyntax BlockRule(SyntaxToken isBlock, NameSyntax name, SyntaxToken tColon, MetaDslx.CodeAnalysis.SeparatedSyntaxList<ParserRuleAlternativeSyntax> parserRuleAlternativeList, SyntaxToken tSemicolon)
+        {
+        	if (isBlock.RawKind != (int)CompilerSyntaxKind.KBlock) throw new ArgumentException(nameof(isBlock));
+        	if (name is null) throw new ArgumentNullException(nameof(name));
+        	if (tColon.RawKind != (int)CompilerSyntaxKind.TColon) throw new ArgumentException(nameof(tColon));
+        	if (tSemicolon.RawKind != (int)CompilerSyntaxKind.TSemicolon) throw new ArgumentException(nameof(tSemicolon));
+            return (BlockRuleSyntax)CompilerLanguage.Instance.InternalSyntaxFactory.BlockRule((InternalSyntaxToken)isBlock.Node, (NameGreen)name.Green, (InternalSyntaxToken)tColon.Node, parserRuleAlternativeList.Node.ToGreenSeparatedList<ParserRuleAlternativeGreen>(reversed: false), (InternalSyntaxToken)tSemicolon.Node).CreateRed();
+        }
+        
+        public BlockRuleSyntax BlockRule(NameSyntax name, MetaDslx.CodeAnalysis.SeparatedSyntaxList<ParserRuleAlternativeSyntax> parserRuleAlternativeList)
+        {
+        	return this.BlockRule(this.Token(CompilerSyntaxKind.KBlock), name, this.Token(CompilerSyntaxKind.TColon), parserRuleAlternativeList, this.Token(CompilerSyntaxKind.TSemicolon));
+        }
+
+        public ParserRuleAlternativeSyntax ParserRuleAlternative(ParserRuleAlternativeBlock1Syntax parserRuleAlternativeBlock1, MetaDslx.CodeAnalysis.SyntaxList<ParserRuleElementSyntax> elements, ParserRuleAlternativeBlock2Syntax parserRuleAlternativeBlock2)
+        {
+        	if (parserRuleAlternativeBlock2 is null) throw new ArgumentNullException(nameof(parserRuleAlternativeBlock2));
+            return (ParserRuleAlternativeSyntax)CompilerLanguage.Instance.InternalSyntaxFactory.ParserRuleAlternative((ParserRuleAlternativeBlock1Green?)parserRuleAlternativeBlock1?.Green, elements.Node.ToGreenList<ParserRuleElementGreen>(), (ParserRuleAlternativeBlock2Green)parserRuleAlternativeBlock2.Green).CreateRed();
+        }
+        
+        public ParserRuleAlternativeSyntax ParserRuleAlternative(MetaDslx.CodeAnalysis.SyntaxList<ParserRuleElementSyntax> elements, ParserRuleAlternativeBlock2Syntax parserRuleAlternativeBlock2)
+        {
+        	return this.ParserRuleAlternative(default, elements, parserRuleAlternativeBlock2);
+        }
+
+        public ParserRuleElementSyntax ParserRuleElement(NameSyntax name)
+        {
+        	if (name is null) throw new ArgumentNullException(nameof(name));
+            return (ParserRuleElementSyntax)CompilerLanguage.Instance.InternalSyntaxFactory.ParserRuleElement((NameGreen)name.Green).CreateRed();
+        }
+
+        public IntExpressionSyntax IntExpression(SyntaxToken intValue)
+        {
+        	if (intValue.RawKind != (int)CompilerSyntaxKind.TInteger) throw new ArgumentException(nameof(intValue));
+            return (IntExpressionSyntax)CompilerLanguage.Instance.InternalSyntaxFactory.IntExpression((InternalSyntaxToken)intValue.Node).CreateRed();
+        }
+
+        public StringExpressionSyntax StringExpression(SyntaxToken stringValue)
+        {
+        	if (stringValue.RawKind != (int)CompilerSyntaxKind.TString) throw new ArgumentException(nameof(stringValue));
+            return (StringExpressionSyntax)CompilerLanguage.Instance.InternalSyntaxFactory.StringExpression((InternalSyntaxToken)stringValue.Node).CreateRed();
+        }
+
+        public ReferenceExpressionSyntax ReferenceExpression(QualifierSyntax qualifier)
+        {
+        	if (qualifier is null) throw new ArgumentNullException(nameof(qualifier));
+            return (ReferenceExpressionSyntax)CompilerLanguage.Instance.InternalSyntaxFactory.ReferenceExpression((QualifierGreen)qualifier.Green).CreateRed();
+        }
+
+        public ExpressionTokensSyntax ExpressionTokens(SyntaxToken tokens)
+        {
+        	if (tokens.RawKind != (int)CompilerSyntaxKind.KNull && tokens.RawKind != (int)CompilerSyntaxKind.KTrue && tokens.RawKind != (int)CompilerSyntaxKind.KFalse) throw new ArgumentException(nameof(tokens));
+            return (ExpressionTokensSyntax)CompilerLanguage.Instance.InternalSyntaxFactory.ExpressionTokens((InternalSyntaxToken)tokens.Node).CreateRed();
         }
 
         public NameSyntax Name(IdentifierSyntax identifier)
@@ -265,6 +352,67 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
         {
         	if (tIdentifier.RawKind != (int)CompilerSyntaxKind.TIdentifier) throw new ArgumentException(nameof(tIdentifier));
             return (IdentifierSyntax)CompilerLanguage.Instance.InternalSyntaxFactory.Identifier((InternalSyntaxToken)tIdentifier.Node).CreateRed();
+        }
+
+        public ParserRuleBlock1Syntax ParserRuleBlock1(SyntaxToken kReturns, QualifierSyntax returnType)
+        {
+        	if (kReturns.RawKind != (int)CompilerSyntaxKind.KReturns) throw new ArgumentException(nameof(kReturns));
+        	if (returnType is null) throw new ArgumentNullException(nameof(returnType));
+            return (ParserRuleBlock1Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.ParserRuleBlock1((InternalSyntaxToken)kReturns.Node, (QualifierGreen)returnType.Green).CreateRed();
+        }
+        
+        public ParserRuleBlock1Syntax ParserRuleBlock1(QualifierSyntax returnType)
+        {
+        	return this.ParserRuleBlock1(this.Token(CompilerSyntaxKind.KReturns), returnType);
+        }
+
+        public ParserRuleBlock2Syntax ParserRuleBlock2(SyntaxToken tBar, ParserRuleAlternativeSyntax alternatives)
+        {
+        	if (tBar.RawKind != (int)CompilerSyntaxKind.TBar) throw new ArgumentException(nameof(tBar));
+        	if (alternatives is null) throw new ArgumentNullException(nameof(alternatives));
+            return (ParserRuleBlock2Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.ParserRuleBlock2((InternalSyntaxToken)tBar.Node, (ParserRuleAlternativeGreen)alternatives.Green).CreateRed();
+        }
+        
+        public ParserRuleBlock2Syntax ParserRuleBlock2(ParserRuleAlternativeSyntax alternatives)
+        {
+        	return this.ParserRuleBlock2(this.Token(CompilerSyntaxKind.TBar), alternatives);
+        }
+
+        public BlockRuleBlock1Syntax BlockRuleBlock1(SyntaxToken tBar, ParserRuleAlternativeSyntax alternatives)
+        {
+        	if (tBar.RawKind != (int)CompilerSyntaxKind.TBar) throw new ArgumentException(nameof(tBar));
+        	if (alternatives is null) throw new ArgumentNullException(nameof(alternatives));
+            return (BlockRuleBlock1Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.BlockRuleBlock1((InternalSyntaxToken)tBar.Node, (ParserRuleAlternativeGreen)alternatives.Green).CreateRed();
+        }
+        
+        public BlockRuleBlock1Syntax BlockRuleBlock1(ParserRuleAlternativeSyntax alternatives)
+        {
+        	return this.BlockRuleBlock1(this.Token(CompilerSyntaxKind.TBar), alternatives);
+        }
+
+        public ParserRuleAlternativeBlock1Syntax ParserRuleAlternativeBlock1(SyntaxToken tLBrace, QualifierSyntax returnType, SyntaxToken tRBrace)
+        {
+        	if (tLBrace.RawKind != (int)CompilerSyntaxKind.TLBrace) throw new ArgumentException(nameof(tLBrace));
+        	if (returnType is null) throw new ArgumentNullException(nameof(returnType));
+        	if (tRBrace.RawKind != (int)CompilerSyntaxKind.TRBrace) throw new ArgumentException(nameof(tRBrace));
+            return (ParserRuleAlternativeBlock1Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.ParserRuleAlternativeBlock1((InternalSyntaxToken)tLBrace.Node, (QualifierGreen)returnType.Green, (InternalSyntaxToken)tRBrace.Node).CreateRed();
+        }
+        
+        public ParserRuleAlternativeBlock1Syntax ParserRuleAlternativeBlock1(QualifierSyntax returnType)
+        {
+        	return this.ParserRuleAlternativeBlock1(this.Token(CompilerSyntaxKind.TLBrace), returnType, this.Token(CompilerSyntaxKind.TRBrace));
+        }
+
+        public ParserRuleAlternativeBlock2Syntax ParserRuleAlternativeBlock2(SyntaxToken tEqGt, ExpressionSyntax returnValue)
+        {
+        	if (tEqGt.RawKind != (int)CompilerSyntaxKind.TEqGt) throw new ArgumentException(nameof(tEqGt));
+        	if (returnValue is null) throw new ArgumentNullException(nameof(returnValue));
+            return (ParserRuleAlternativeBlock2Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.ParserRuleAlternativeBlock2((InternalSyntaxToken)tEqGt.Node, (ExpressionGreen)returnValue.Green).CreateRed();
+        }
+        
+        public ParserRuleAlternativeBlock2Syntax ParserRuleAlternativeBlock2(ExpressionSyntax returnValue)
+        {
+        	return this.ParserRuleAlternativeBlock2(this.Token(CompilerSyntaxKind.TEqGt), returnValue);
         }
 
         public QualifierBlock1Syntax QualifierBlock1(SyntaxToken tDot, IdentifierSyntax identifier)
@@ -297,10 +445,25 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
             return new Type[] {
 		        typeof(MainSyntax),
 		        typeof(UsingSyntax),
+		        typeof(DeclarationsSyntax),
+		        typeof(LanguageDeclarationSyntax),
+		        typeof(ParserRuleSyntax),
+		        typeof(BlockRuleSyntax),
+		        typeof(ParserRuleAlternativeSyntax),
+		        typeof(ParserRuleElementSyntax),
+		        typeof(IntExpressionSyntax),
+		        typeof(StringExpressionSyntax),
+		        typeof(ReferenceExpressionSyntax),
+		        typeof(ExpressionTokensSyntax),
 		        typeof(NameSyntax),
 		        typeof(QualifierSyntax),
 		        typeof(QualifierListSyntax),
 		        typeof(IdentifierSyntax),
+		        typeof(ParserRuleBlock1Syntax),
+		        typeof(ParserRuleBlock2Syntax),
+		        typeof(BlockRuleBlock1Syntax),
+		        typeof(ParserRuleAlternativeBlock1Syntax),
+		        typeof(ParserRuleAlternativeBlock2Syntax),
 		        typeof(QualifierBlock1Syntax),
 		        typeof(QualifierListBlock1Syntax),
 		    };

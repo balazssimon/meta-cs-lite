@@ -160,8 +160,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 
 	public sealed class MainSyntax : CompilerSyntaxNode, ICompilationUnitSyntax
 	{
-		private QualifierSyntax _name;
+		private QualifierSyntax _qualifier;
 		private MetaDslx.CodeAnalysis.SyntaxNode _using;
+		private DeclarationsSyntax _declarations;
 	
 	    public MainSyntax(InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
 	        : base(green, syntaxTree, position)
@@ -182,7 +183,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 				return new SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
 			}
 		}
-	    public QualifierSyntax Name => this.GetRed(ref this._name, 1);
+	    public QualifierSyntax Qualifier => this.GetRed(ref this._qualifier, 1);
 	    public SyntaxToken TSemicolon 
 		{ 
 			get 
@@ -201,13 +202,14 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 				return default;
 			} 
 		}
+	    public DeclarationsSyntax Declarations => this.GetRed(ref this._declarations, 4);
 	    public SyntaxToken EndOfFileToken 
 		{ 
 			get 
 			{ 
 				var green = (global::MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax.MainGreen)this.Green;
 				var greenToken = green.EndOfFileToken;
-				return new SyntaxToken(this, greenToken, this.GetChildPosition(4), this.GetChildIndex(4));
+				return new SyntaxToken(this, greenToken, this.GetChildPosition(5), this.GetChildIndex(5));
 			}
 		}
 	
@@ -215,8 +217,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	    {
 	        switch (index)
 	        {
-				case 1: return this.GetRed(ref this._name, 1);
+				case 1: return this.GetRed(ref this._qualifier, 1);
 				case 3: return this.GetRed(ref this._using, 3);
+				case 4: return this.GetRed(ref this._declarations, 4);
 				default: return null;
 	        }
 	    }
@@ -225,30 +228,31 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	    {
 	        switch (index)
 	        {
-				case 1: return this._name;
+				case 1: return this._qualifier;
 				case 3: return this._using;
+				case 4: return this._declarations;
 				default: return null;
 	        }
 	    }
 	
 	    public MainSyntax WithKNamespace(SyntaxToken kNamespace)
 		{
-			return this.Update(kNamespace, this.Name, this.TSemicolon, this.Using, this.EndOfFileToken);
+			return this.Update(kNamespace, this.Qualifier, this.TSemicolon, this.Using, this.Declarations, this.EndOfFileToken);
 		}
 	
-	    public MainSyntax WithName(QualifierSyntax name)
+	    public MainSyntax WithQualifier(QualifierSyntax qualifier)
 		{
-			return this.Update(this.KNamespace, name, this.TSemicolon, this.Using, this.EndOfFileToken);
+			return this.Update(this.KNamespace, qualifier, this.TSemicolon, this.Using, this.Declarations, this.EndOfFileToken);
 		}
 	
 	    public MainSyntax WithTSemicolon(SyntaxToken tSemicolon)
 		{
-			return this.Update(this.KNamespace, this.Name, tSemicolon, this.Using, this.EndOfFileToken);
+			return this.Update(this.KNamespace, this.Qualifier, tSemicolon, this.Using, this.Declarations, this.EndOfFileToken);
 		}
 	
 	    public MainSyntax WithUsing(MetaDslx.CodeAnalysis.SyntaxList<UsingSyntax> @using)
 		{
-			return this.Update(this.KNamespace, this.Name, this.TSemicolon, @using, this.EndOfFileToken);
+			return this.Update(this.KNamespace, this.Qualifier, this.TSemicolon, @using, this.Declarations, this.EndOfFileToken);
 		}
 	
 	    public MainSyntax AddUsing(params UsingSyntax[] @using)
@@ -256,16 +260,21 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 			return this.WithUsing(this.Using.AddRange(@using));
 		}
 	
-	    public MainSyntax WithEndOfFileToken(SyntaxToken eof)
+	    public MainSyntax WithDeclarations(DeclarationsSyntax declarations)
 		{
-			return this.Update(this.KNamespace, this.Name, this.TSemicolon, this.Using, eof);
+			return this.Update(this.KNamespace, this.Qualifier, this.TSemicolon, this.Using, declarations, this.EndOfFileToken);
 		}
 	
-	    public MainSyntax Update(SyntaxToken kNamespace, QualifierSyntax name, SyntaxToken tSemicolon, MetaDslx.CodeAnalysis.SyntaxList<UsingSyntax> @using, SyntaxToken eof)
+	    public MainSyntax WithEndOfFileToken(SyntaxToken eof)
+		{
+			return this.Update(this.KNamespace, this.Qualifier, this.TSemicolon, this.Using, this.Declarations, eof);
+		}
+	
+	    public MainSyntax Update(SyntaxToken kNamespace, QualifierSyntax qualifier, SyntaxToken tSemicolon, MetaDslx.CodeAnalysis.SyntaxList<UsingSyntax> @using, DeclarationsSyntax declarations, SyntaxToken eof)
 	    {
-	        if (this.KNamespace != kNamespace || this.Name != name || this.TSemicolon != tSemicolon || this.Using != @using || this.EndOfFileToken != eof)
+	        if (this.KNamespace != kNamespace || this.Qualifier != qualifier || this.TSemicolon != tSemicolon || this.Using != @using || this.Declarations != declarations || this.EndOfFileToken != eof)
 	        {
-	            var newNode = CompilerLanguage.Instance.SyntaxFactory.Main(kNamespace, name, tSemicolon, @using, eof);
+	            var newNode = CompilerLanguage.Instance.SyntaxFactory.Main(kNamespace, qualifier, tSemicolon, @using, declarations, eof);
 	            var annotations = this.GetAnnotations();
 	            if (annotations != null && annotations.Length > 0)
 	               newNode = newNode.WithAnnotations(annotations);
@@ -383,6 +392,923 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	    public override void Accept(ICompilerSyntaxVisitor visitor)
 	    {
 	        visitor.VisitUsing(this);
+	    }
+	
+	}
+	public sealed class DeclarationsSyntax : CompilerSyntaxNode
+	{
+		private LanguageDeclarationSyntax _declarations;
+		private MetaDslx.CodeAnalysis.SyntaxNode _declarations1;
+	
+	    public DeclarationsSyntax(InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
+	        : base(green, syntaxTree, position)
+	    {
+	    }
+	
+	    public DeclarationsSyntax(InternalSyntaxNode green, CompilerSyntaxNode parent, int position)
+	        : base(green, parent, position)
+	    {
+	    }
+	
+	    public LanguageDeclarationSyntax Declarations => this.GetRed(ref this._declarations, 0);
+	    public MetaDslx.CodeAnalysis.SyntaxList<RuleSyntax> Declarations1 
+		{ 
+			get
+			{
+				var red = this.GetRed(ref this._declarations1, 1);
+				if (red != null) return new MetaDslx.CodeAnalysis.SyntaxList<RuleSyntax>(red);
+				return default;
+			} 
+		}
+	
+	    protected override SyntaxNode GetNodeSlot(int index)
+	    {
+	        switch (index)
+	        {
+				case 0: return this.GetRed(ref this._declarations, 0);
+				case 1: return this.GetRed(ref this._declarations1, 1);
+				default: return null;
+	        }
+	    }
+	
+	    protected override SyntaxNode GetCachedSlot(int index)
+	    {
+	        switch (index)
+	        {
+				case 0: return this._declarations;
+				case 1: return this._declarations1;
+				default: return null;
+	        }
+	    }
+	
+	    public DeclarationsSyntax WithDeclarations(LanguageDeclarationSyntax declarations)
+		{
+			return this.Update(declarations, this.Declarations1);
+		}
+	
+	    public DeclarationsSyntax WithDeclarations1(MetaDslx.CodeAnalysis.SyntaxList<RuleSyntax> declarations1)
+		{
+			return this.Update(this.Declarations, declarations1);
+		}
+	
+	    public DeclarationsSyntax AddDeclarations1(params RuleSyntax[] declarations1)
+		{
+			return this.WithDeclarations1(this.Declarations1.AddRange(declarations1));
+		}
+	
+	    public DeclarationsSyntax Update(LanguageDeclarationSyntax declarations, MetaDslx.CodeAnalysis.SyntaxList<RuleSyntax> declarations1)
+	    {
+	        if (this.Declarations != declarations || this.Declarations1 != declarations1)
+	        {
+	            var newNode = CompilerLanguage.Instance.SyntaxFactory.Declarations(declarations, declarations1);
+	            var annotations = this.GetAnnotations();
+	            if (annotations != null && annotations.Length > 0)
+	               newNode = newNode.WithAnnotations(annotations);
+				return (DeclarationsSyntax)newNode;
+	        }
+	        return this;
+	    }
+	
+	    public override TResult Accept<TArg, TResult>(ICompilerSyntaxVisitor<TArg, TResult> visitor, TArg argument)
+	    {
+	        return visitor.VisitDeclarations(this, argument);
+	    }
+	
+	    public override TResult Accept<TResult>(ICompilerSyntaxVisitor<TResult> visitor)
+	    {
+	        return visitor.VisitDeclarations(this);
+	    }
+	
+	    public override void Accept(ICompilerSyntaxVisitor visitor)
+	    {
+	        visitor.VisitDeclarations(this);
+	    }
+	
+	}
+	public sealed class LanguageDeclarationSyntax : CompilerSyntaxNode
+	{
+		private NameSyntax _name;
+	
+	    public LanguageDeclarationSyntax(InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
+	        : base(green, syntaxTree, position)
+	    {
+	    }
+	
+	    public LanguageDeclarationSyntax(InternalSyntaxNode green, CompilerSyntaxNode parent, int position)
+	        : base(green, parent, position)
+	    {
+	    }
+	
+	    public SyntaxToken KLanguage 
+		{ 
+			get 
+			{ 
+				var green = (global::MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax.LanguageDeclarationGreen)this.Green;
+				var greenToken = green.KLanguage;
+				return new SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
+			}
+		}
+	    public NameSyntax Name => this.GetRed(ref this._name, 1);
+	
+	    protected override SyntaxNode GetNodeSlot(int index)
+	    {
+	        switch (index)
+	        {
+				case 1: return this.GetRed(ref this._name, 1);
+				default: return null;
+	        }
+	    }
+	
+	    protected override SyntaxNode GetCachedSlot(int index)
+	    {
+	        switch (index)
+	        {
+				case 1: return this._name;
+				default: return null;
+	        }
+	    }
+	
+	    public LanguageDeclarationSyntax WithKLanguage(SyntaxToken kLanguage)
+		{
+			return this.Update(kLanguage, this.Name);
+		}
+	
+	    public LanguageDeclarationSyntax WithName(NameSyntax name)
+		{
+			return this.Update(this.KLanguage, name);
+		}
+	
+	    public LanguageDeclarationSyntax Update(SyntaxToken kLanguage, NameSyntax name)
+	    {
+	        if (this.KLanguage != kLanguage || this.Name != name)
+	        {
+	            var newNode = CompilerLanguage.Instance.SyntaxFactory.LanguageDeclaration(kLanguage, name);
+	            var annotations = this.GetAnnotations();
+	            if (annotations != null && annotations.Length > 0)
+	               newNode = newNode.WithAnnotations(annotations);
+				return (LanguageDeclarationSyntax)newNode;
+	        }
+	        return this;
+	    }
+	
+	    public override TResult Accept<TArg, TResult>(ICompilerSyntaxVisitor<TArg, TResult> visitor, TArg argument)
+	    {
+	        return visitor.VisitLanguageDeclaration(this, argument);
+	    }
+	
+	    public override TResult Accept<TResult>(ICompilerSyntaxVisitor<TResult> visitor)
+	    {
+	        return visitor.VisitLanguageDeclaration(this);
+	    }
+	
+	    public override void Accept(ICompilerSyntaxVisitor visitor)
+	    {
+	        visitor.VisitLanguageDeclaration(this);
+	    }
+	
+	}
+	public abstract class RuleSyntax : CompilerSyntaxNode
+	{
+	    protected RuleSyntax(InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
+	        : base(green, syntaxTree, position)
+	    {
+	    }
+	
+	    protected RuleSyntax(InternalSyntaxNode green, CompilerSyntaxNode parent, int position)
+	        : base(green, parent, position)
+	    {
+	    }
+	}
+	
+	public sealed class ParserRuleSyntax : RuleSyntax
+	{
+		private NameSyntax _name;
+		private ParserRuleBlock1Syntax _parserRuleBlock1;
+		private MetaDslx.CodeAnalysis.SyntaxNode _parserRuleAlternativeList;
+	
+	    public ParserRuleSyntax(InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
+	        : base(green, syntaxTree, position)
+	    {
+	    }
+	
+	    public ParserRuleSyntax(InternalSyntaxNode green, CompilerSyntaxNode parent, int position)
+	        : base(green, parent, position)
+	    {
+	    }
+	
+	    public NameSyntax Name => this.GetRed(ref this._name, 0);
+	    public ParserRuleBlock1Syntax ParserRuleBlock1 => this.GetRed(ref this._parserRuleBlock1, 1);
+	    public SyntaxToken TColon 
+		{ 
+			get 
+			{ 
+				var green = (global::MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax.ParserRuleGreen)this.Green;
+				var greenToken = green.TColon;
+				return new SyntaxToken(this, greenToken, this.GetChildPosition(2), this.GetChildIndex(2));
+			}
+		}
+	    public MetaDslx.CodeAnalysis.SeparatedSyntaxList<ParserRuleAlternativeSyntax> ParserRuleAlternativeList 
+		{ 
+			get
+			{
+				var red = this.GetRed(ref this._parserRuleAlternativeList, 3);
+				if (red != null)
+				{
+					return new MetaDslx.CodeAnalysis.SeparatedSyntaxList<ParserRuleAlternativeSyntax>(red, this.GetChildIndex(3), reversed: false);
+				}
+				return default;
+			} 
+		}
+	    public SyntaxToken TSemicolon 
+		{ 
+			get 
+			{ 
+				var green = (global::MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax.ParserRuleGreen)this.Green;
+				var greenToken = green.TSemicolon;
+				return new SyntaxToken(this, greenToken, this.GetChildPosition(4), this.GetChildIndex(4));
+			}
+		}
+	
+	    protected override SyntaxNode GetNodeSlot(int index)
+	    {
+	        switch (index)
+	        {
+				case 0: return this.GetRed(ref this._name, 0);
+				case 1: return this.GetRed(ref this._parserRuleBlock1, 1);
+				case 3: return this.GetRed(ref this._parserRuleAlternativeList, 3);
+				default: return null;
+	        }
+	    }
+	
+	    protected override SyntaxNode GetCachedSlot(int index)
+	    {
+	        switch (index)
+	        {
+				case 0: return this._name;
+				case 1: return this._parserRuleBlock1;
+				case 3: return this._parserRuleAlternativeList;
+				default: return null;
+	        }
+	    }
+	
+	    public ParserRuleSyntax WithName(NameSyntax name)
+		{
+			return this.Update(name, this.ParserRuleBlock1, this.TColon, this.ParserRuleAlternativeList, this.TSemicolon);
+		}
+	
+	    public ParserRuleSyntax WithParserRuleBlock1(ParserRuleBlock1Syntax parserRuleBlock1)
+		{
+			return this.Update(this.Name, parserRuleBlock1, this.TColon, this.ParserRuleAlternativeList, this.TSemicolon);
+		}
+	
+	    public ParserRuleSyntax WithTColon(SyntaxToken tColon)
+		{
+			return this.Update(this.Name, this.ParserRuleBlock1, tColon, this.ParserRuleAlternativeList, this.TSemicolon);
+		}
+	
+	    public ParserRuleSyntax WithParserRuleAlternativeList(MetaDslx.CodeAnalysis.SeparatedSyntaxList<ParserRuleAlternativeSyntax> parserRuleAlternativeList)
+		{
+			return this.Update(this.Name, this.ParserRuleBlock1, this.TColon, parserRuleAlternativeList, this.TSemicolon);
+		}
+	
+	    public ParserRuleSyntax AddParserRuleAlternativeList(params ParserRuleAlternativeSyntax[] parserRuleAlternativeList)
+		{
+			return this.WithParserRuleAlternativeList(this.ParserRuleAlternativeList.AddRange(parserRuleAlternativeList));
+		}
+	
+	    public ParserRuleSyntax WithTSemicolon(SyntaxToken tSemicolon)
+		{
+			return this.Update(this.Name, this.ParserRuleBlock1, this.TColon, this.ParserRuleAlternativeList, tSemicolon);
+		}
+	
+	    public ParserRuleSyntax Update(NameSyntax name, ParserRuleBlock1Syntax parserRuleBlock1, SyntaxToken tColon, MetaDslx.CodeAnalysis.SeparatedSyntaxList<ParserRuleAlternativeSyntax> parserRuleAlternativeList, SyntaxToken tSemicolon)
+	    {
+	        if (this.Name != name || this.ParserRuleBlock1 != parserRuleBlock1 || this.TColon != tColon || this.ParserRuleAlternativeList != parserRuleAlternativeList || this.TSemicolon != tSemicolon)
+	        {
+	            var newNode = CompilerLanguage.Instance.SyntaxFactory.ParserRule(name, parserRuleBlock1, tColon, parserRuleAlternativeList, tSemicolon);
+	            var annotations = this.GetAnnotations();
+	            if (annotations != null && annotations.Length > 0)
+	               newNode = newNode.WithAnnotations(annotations);
+				return (ParserRuleSyntax)newNode;
+	        }
+	        return this;
+	    }
+	
+	    public override TResult Accept<TArg, TResult>(ICompilerSyntaxVisitor<TArg, TResult> visitor, TArg argument)
+	    {
+	        return visitor.VisitParserRule(this, argument);
+	    }
+	
+	    public override TResult Accept<TResult>(ICompilerSyntaxVisitor<TResult> visitor)
+	    {
+	        return visitor.VisitParserRule(this);
+	    }
+	
+	    public override void Accept(ICompilerSyntaxVisitor visitor)
+	    {
+	        visitor.VisitParserRule(this);
+	    }
+	
+	}
+	public sealed class BlockRuleSyntax : RuleSyntax
+	{
+		private NameSyntax _name;
+		private MetaDslx.CodeAnalysis.SyntaxNode _parserRuleAlternativeList;
+	
+	    public BlockRuleSyntax(InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
+	        : base(green, syntaxTree, position)
+	    {
+	    }
+	
+	    public BlockRuleSyntax(InternalSyntaxNode green, CompilerSyntaxNode parent, int position)
+	        : base(green, parent, position)
+	    {
+	    }
+	
+	    public SyntaxToken IsBlock 
+		{ 
+			get 
+			{ 
+				var green = (global::MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax.BlockRuleGreen)this.Green;
+				var greenToken = green.IsBlock;
+				return new SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
+			}
+		}
+	    public NameSyntax Name => this.GetRed(ref this._name, 1);
+	    public SyntaxToken TColon 
+		{ 
+			get 
+			{ 
+				var green = (global::MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax.BlockRuleGreen)this.Green;
+				var greenToken = green.TColon;
+				return new SyntaxToken(this, greenToken, this.GetChildPosition(2), this.GetChildIndex(2));
+			}
+		}
+	    public MetaDslx.CodeAnalysis.SeparatedSyntaxList<ParserRuleAlternativeSyntax> ParserRuleAlternativeList 
+		{ 
+			get
+			{
+				var red = this.GetRed(ref this._parserRuleAlternativeList, 3);
+				if (red != null)
+				{
+					return new MetaDslx.CodeAnalysis.SeparatedSyntaxList<ParserRuleAlternativeSyntax>(red, this.GetChildIndex(3), reversed: false);
+				}
+				return default;
+			} 
+		}
+	    public SyntaxToken TSemicolon 
+		{ 
+			get 
+			{ 
+				var green = (global::MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax.BlockRuleGreen)this.Green;
+				var greenToken = green.TSemicolon;
+				return new SyntaxToken(this, greenToken, this.GetChildPosition(4), this.GetChildIndex(4));
+			}
+		}
+	
+	    protected override SyntaxNode GetNodeSlot(int index)
+	    {
+	        switch (index)
+	        {
+				case 1: return this.GetRed(ref this._name, 1);
+				case 3: return this.GetRed(ref this._parserRuleAlternativeList, 3);
+				default: return null;
+	        }
+	    }
+	
+	    protected override SyntaxNode GetCachedSlot(int index)
+	    {
+	        switch (index)
+	        {
+				case 1: return this._name;
+				case 3: return this._parserRuleAlternativeList;
+				default: return null;
+	        }
+	    }
+	
+	    public BlockRuleSyntax WithIsBlock(SyntaxToken isBlock)
+		{
+			return this.Update(isBlock, this.Name, this.TColon, this.ParserRuleAlternativeList, this.TSemicolon);
+		}
+	
+	    public BlockRuleSyntax WithName(NameSyntax name)
+		{
+			return this.Update(this.IsBlock, name, this.TColon, this.ParserRuleAlternativeList, this.TSemicolon);
+		}
+	
+	    public BlockRuleSyntax WithTColon(SyntaxToken tColon)
+		{
+			return this.Update(this.IsBlock, this.Name, tColon, this.ParserRuleAlternativeList, this.TSemicolon);
+		}
+	
+	    public BlockRuleSyntax WithParserRuleAlternativeList(MetaDslx.CodeAnalysis.SeparatedSyntaxList<ParserRuleAlternativeSyntax> parserRuleAlternativeList)
+		{
+			return this.Update(this.IsBlock, this.Name, this.TColon, parserRuleAlternativeList, this.TSemicolon);
+		}
+	
+	    public BlockRuleSyntax AddParserRuleAlternativeList(params ParserRuleAlternativeSyntax[] parserRuleAlternativeList)
+		{
+			return this.WithParserRuleAlternativeList(this.ParserRuleAlternativeList.AddRange(parserRuleAlternativeList));
+		}
+	
+	    public BlockRuleSyntax WithTSemicolon(SyntaxToken tSemicolon)
+		{
+			return this.Update(this.IsBlock, this.Name, this.TColon, this.ParserRuleAlternativeList, tSemicolon);
+		}
+	
+	    public BlockRuleSyntax Update(SyntaxToken isBlock, NameSyntax name, SyntaxToken tColon, MetaDslx.CodeAnalysis.SeparatedSyntaxList<ParserRuleAlternativeSyntax> parserRuleAlternativeList, SyntaxToken tSemicolon)
+	    {
+	        if (this.IsBlock != isBlock || this.Name != name || this.TColon != tColon || this.ParserRuleAlternativeList != parserRuleAlternativeList || this.TSemicolon != tSemicolon)
+	        {
+	            var newNode = CompilerLanguage.Instance.SyntaxFactory.BlockRule(isBlock, name, tColon, parserRuleAlternativeList, tSemicolon);
+	            var annotations = this.GetAnnotations();
+	            if (annotations != null && annotations.Length > 0)
+	               newNode = newNode.WithAnnotations(annotations);
+				return (BlockRuleSyntax)newNode;
+	        }
+	        return this;
+	    }
+	
+	    public override TResult Accept<TArg, TResult>(ICompilerSyntaxVisitor<TArg, TResult> visitor, TArg argument)
+	    {
+	        return visitor.VisitBlockRule(this, argument);
+	    }
+	
+	    public override TResult Accept<TResult>(ICompilerSyntaxVisitor<TResult> visitor)
+	    {
+	        return visitor.VisitBlockRule(this);
+	    }
+	
+	    public override void Accept(ICompilerSyntaxVisitor visitor)
+	    {
+	        visitor.VisitBlockRule(this);
+	    }
+	
+	}
+	public sealed class ParserRuleAlternativeSyntax : CompilerSyntaxNode
+	{
+		private ParserRuleAlternativeBlock1Syntax _parserRuleAlternativeBlock1;
+		private MetaDslx.CodeAnalysis.SyntaxNode _elements;
+		private ParserRuleAlternativeBlock2Syntax _parserRuleAlternativeBlock2;
+	
+	    public ParserRuleAlternativeSyntax(InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
+	        : base(green, syntaxTree, position)
+	    {
+	    }
+	
+	    public ParserRuleAlternativeSyntax(InternalSyntaxNode green, CompilerSyntaxNode parent, int position)
+	        : base(green, parent, position)
+	    {
+	    }
+	
+	    public ParserRuleAlternativeBlock1Syntax ParserRuleAlternativeBlock1 => this.GetRed(ref this._parserRuleAlternativeBlock1, 0);
+	    public MetaDslx.CodeAnalysis.SyntaxList<ParserRuleElementSyntax> Elements 
+		{ 
+			get
+			{
+				var red = this.GetRed(ref this._elements, 1);
+				if (red != null) return new MetaDslx.CodeAnalysis.SyntaxList<ParserRuleElementSyntax>(red);
+				return default;
+			} 
+		}
+	    public ParserRuleAlternativeBlock2Syntax ParserRuleAlternativeBlock2 => this.GetRed(ref this._parserRuleAlternativeBlock2, 2);
+	
+	    protected override SyntaxNode GetNodeSlot(int index)
+	    {
+	        switch (index)
+	        {
+				case 0: return this.GetRed(ref this._parserRuleAlternativeBlock1, 0);
+				case 1: return this.GetRed(ref this._elements, 1);
+				case 2: return this.GetRed(ref this._parserRuleAlternativeBlock2, 2);
+				default: return null;
+	        }
+	    }
+	
+	    protected override SyntaxNode GetCachedSlot(int index)
+	    {
+	        switch (index)
+	        {
+				case 0: return this._parserRuleAlternativeBlock1;
+				case 1: return this._elements;
+				case 2: return this._parserRuleAlternativeBlock2;
+				default: return null;
+	        }
+	    }
+	
+	    public ParserRuleAlternativeSyntax WithParserRuleAlternativeBlock1(ParserRuleAlternativeBlock1Syntax parserRuleAlternativeBlock1)
+		{
+			return this.Update(parserRuleAlternativeBlock1, this.Elements, this.ParserRuleAlternativeBlock2);
+		}
+	
+	    public ParserRuleAlternativeSyntax WithElements(MetaDslx.CodeAnalysis.SyntaxList<ParserRuleElementSyntax> elements)
+		{
+			return this.Update(this.ParserRuleAlternativeBlock1, elements, this.ParserRuleAlternativeBlock2);
+		}
+	
+	    public ParserRuleAlternativeSyntax AddElements(params ParserRuleElementSyntax[] elements)
+		{
+			return this.WithElements(this.Elements.AddRange(elements));
+		}
+	
+	    public ParserRuleAlternativeSyntax WithParserRuleAlternativeBlock2(ParserRuleAlternativeBlock2Syntax parserRuleAlternativeBlock2)
+		{
+			return this.Update(this.ParserRuleAlternativeBlock1, this.Elements, parserRuleAlternativeBlock2);
+		}
+	
+	    public ParserRuleAlternativeSyntax Update(ParserRuleAlternativeBlock1Syntax parserRuleAlternativeBlock1, MetaDslx.CodeAnalysis.SyntaxList<ParserRuleElementSyntax> elements, ParserRuleAlternativeBlock2Syntax parserRuleAlternativeBlock2)
+	    {
+	        if (this.ParserRuleAlternativeBlock1 != parserRuleAlternativeBlock1 || this.Elements != elements || this.ParserRuleAlternativeBlock2 != parserRuleAlternativeBlock2)
+	        {
+	            var newNode = CompilerLanguage.Instance.SyntaxFactory.ParserRuleAlternative(parserRuleAlternativeBlock1, elements, parserRuleAlternativeBlock2);
+	            var annotations = this.GetAnnotations();
+	            if (annotations != null && annotations.Length > 0)
+	               newNode = newNode.WithAnnotations(annotations);
+				return (ParserRuleAlternativeSyntax)newNode;
+	        }
+	        return this;
+	    }
+	
+	    public override TResult Accept<TArg, TResult>(ICompilerSyntaxVisitor<TArg, TResult> visitor, TArg argument)
+	    {
+	        return visitor.VisitParserRuleAlternative(this, argument);
+	    }
+	
+	    public override TResult Accept<TResult>(ICompilerSyntaxVisitor<TResult> visitor)
+	    {
+	        return visitor.VisitParserRuleAlternative(this);
+	    }
+	
+	    public override void Accept(ICompilerSyntaxVisitor visitor)
+	    {
+	        visitor.VisitParserRuleAlternative(this);
+	    }
+	
+	}
+	public sealed class ParserRuleElementSyntax : CompilerSyntaxNode
+	{
+		private NameSyntax _name;
+	
+	    public ParserRuleElementSyntax(InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
+	        : base(green, syntaxTree, position)
+	    {
+	    }
+	
+	    public ParserRuleElementSyntax(InternalSyntaxNode green, CompilerSyntaxNode parent, int position)
+	        : base(green, parent, position)
+	    {
+	    }
+	
+	    public NameSyntax Name => this.GetRed(ref this._name, 0);
+	
+	    protected override SyntaxNode GetNodeSlot(int index)
+	    {
+	        switch (index)
+	        {
+				case 0: return this.GetRed(ref this._name, 0);
+				default: return null;
+	        }
+	    }
+	
+	    protected override SyntaxNode GetCachedSlot(int index)
+	    {
+	        switch (index)
+	        {
+				case 0: return this._name;
+				default: return null;
+	        }
+	    }
+	
+	    public ParserRuleElementSyntax WithName(NameSyntax name)
+		{
+			return this.Update(name);
+		}
+	
+	    public ParserRuleElementSyntax Update(NameSyntax name)
+	    {
+	        if (this.Name != name)
+	        {
+	            var newNode = CompilerLanguage.Instance.SyntaxFactory.ParserRuleElement(name);
+	            var annotations = this.GetAnnotations();
+	            if (annotations != null && annotations.Length > 0)
+	               newNode = newNode.WithAnnotations(annotations);
+				return (ParserRuleElementSyntax)newNode;
+	        }
+	        return this;
+	    }
+	
+	    public override TResult Accept<TArg, TResult>(ICompilerSyntaxVisitor<TArg, TResult> visitor, TArg argument)
+	    {
+	        return visitor.VisitParserRuleElement(this, argument);
+	    }
+	
+	    public override TResult Accept<TResult>(ICompilerSyntaxVisitor<TResult> visitor)
+	    {
+	        return visitor.VisitParserRuleElement(this);
+	    }
+	
+	    public override void Accept(ICompilerSyntaxVisitor visitor)
+	    {
+	        visitor.VisitParserRuleElement(this);
+	    }
+	
+	}
+	public abstract class ExpressionSyntax : CompilerSyntaxNode
+	{
+	    protected ExpressionSyntax(InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
+	        : base(green, syntaxTree, position)
+	    {
+	    }
+	
+	    protected ExpressionSyntax(InternalSyntaxNode green, CompilerSyntaxNode parent, int position)
+	        : base(green, parent, position)
+	    {
+	    }
+	}
+	
+	public sealed class IntExpressionSyntax : ExpressionSyntax
+	{
+	
+	    public IntExpressionSyntax(InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
+	        : base(green, syntaxTree, position)
+	    {
+	    }
+	
+	    public IntExpressionSyntax(InternalSyntaxNode green, CompilerSyntaxNode parent, int position)
+	        : base(green, parent, position)
+	    {
+	    }
+	
+	    public SyntaxToken IntValue 
+		{ 
+			get 
+			{ 
+				var green = (global::MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax.IntExpressionGreen)this.Green;
+				var greenToken = green.IntValue;
+				return new SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
+			}
+		}
+	
+	    protected override SyntaxNode GetNodeSlot(int index)
+	    {
+	        switch (index)
+	        {
+				default: return null;
+	        }
+	    }
+	
+	    protected override SyntaxNode GetCachedSlot(int index)
+	    {
+	        switch (index)
+	        {
+				default: return null;
+	        }
+	    }
+	
+	    public IntExpressionSyntax WithIntValue(SyntaxToken intValue)
+		{
+			return this.Update(intValue);
+		}
+	
+	    public IntExpressionSyntax Update(SyntaxToken intValue)
+	    {
+	        if (this.IntValue != intValue)
+	        {
+	            var newNode = CompilerLanguage.Instance.SyntaxFactory.IntExpression(intValue);
+	            var annotations = this.GetAnnotations();
+	            if (annotations != null && annotations.Length > 0)
+	               newNode = newNode.WithAnnotations(annotations);
+				return (IntExpressionSyntax)newNode;
+	        }
+	        return this;
+	    }
+	
+	    public override TResult Accept<TArg, TResult>(ICompilerSyntaxVisitor<TArg, TResult> visitor, TArg argument)
+	    {
+	        return visitor.VisitIntExpression(this, argument);
+	    }
+	
+	    public override TResult Accept<TResult>(ICompilerSyntaxVisitor<TResult> visitor)
+	    {
+	        return visitor.VisitIntExpression(this);
+	    }
+	
+	    public override void Accept(ICompilerSyntaxVisitor visitor)
+	    {
+	        visitor.VisitIntExpression(this);
+	    }
+	
+	}
+	public sealed class StringExpressionSyntax : ExpressionSyntax
+	{
+	
+	    public StringExpressionSyntax(InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
+	        : base(green, syntaxTree, position)
+	    {
+	    }
+	
+	    public StringExpressionSyntax(InternalSyntaxNode green, CompilerSyntaxNode parent, int position)
+	        : base(green, parent, position)
+	    {
+	    }
+	
+	    public SyntaxToken StringValue 
+		{ 
+			get 
+			{ 
+				var green = (global::MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax.StringExpressionGreen)this.Green;
+				var greenToken = green.StringValue;
+				return new SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
+			}
+		}
+	
+	    protected override SyntaxNode GetNodeSlot(int index)
+	    {
+	        switch (index)
+	        {
+				default: return null;
+	        }
+	    }
+	
+	    protected override SyntaxNode GetCachedSlot(int index)
+	    {
+	        switch (index)
+	        {
+				default: return null;
+	        }
+	    }
+	
+	    public StringExpressionSyntax WithStringValue(SyntaxToken stringValue)
+		{
+			return this.Update(stringValue);
+		}
+	
+	    public StringExpressionSyntax Update(SyntaxToken stringValue)
+	    {
+	        if (this.StringValue != stringValue)
+	        {
+	            var newNode = CompilerLanguage.Instance.SyntaxFactory.StringExpression(stringValue);
+	            var annotations = this.GetAnnotations();
+	            if (annotations != null && annotations.Length > 0)
+	               newNode = newNode.WithAnnotations(annotations);
+				return (StringExpressionSyntax)newNode;
+	        }
+	        return this;
+	    }
+	
+	    public override TResult Accept<TArg, TResult>(ICompilerSyntaxVisitor<TArg, TResult> visitor, TArg argument)
+	    {
+	        return visitor.VisitStringExpression(this, argument);
+	    }
+	
+	    public override TResult Accept<TResult>(ICompilerSyntaxVisitor<TResult> visitor)
+	    {
+	        return visitor.VisitStringExpression(this);
+	    }
+	
+	    public override void Accept(ICompilerSyntaxVisitor visitor)
+	    {
+	        visitor.VisitStringExpression(this);
+	    }
+	
+	}
+	public sealed class ReferenceExpressionSyntax : ExpressionSyntax
+	{
+		private QualifierSyntax _qualifier;
+	
+	    public ReferenceExpressionSyntax(InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
+	        : base(green, syntaxTree, position)
+	    {
+	    }
+	
+	    public ReferenceExpressionSyntax(InternalSyntaxNode green, CompilerSyntaxNode parent, int position)
+	        : base(green, parent, position)
+	    {
+	    }
+	
+	    public QualifierSyntax Qualifier => this.GetRed(ref this._qualifier, 0);
+	
+	    protected override SyntaxNode GetNodeSlot(int index)
+	    {
+	        switch (index)
+	        {
+				case 0: return this.GetRed(ref this._qualifier, 0);
+				default: return null;
+	        }
+	    }
+	
+	    protected override SyntaxNode GetCachedSlot(int index)
+	    {
+	        switch (index)
+	        {
+				case 0: return this._qualifier;
+				default: return null;
+	        }
+	    }
+	
+	    public ReferenceExpressionSyntax WithQualifier(QualifierSyntax qualifier)
+		{
+			return this.Update(qualifier);
+		}
+	
+	    public ReferenceExpressionSyntax Update(QualifierSyntax qualifier)
+	    {
+	        if (this.Qualifier != qualifier)
+	        {
+	            var newNode = CompilerLanguage.Instance.SyntaxFactory.ReferenceExpression(qualifier);
+	            var annotations = this.GetAnnotations();
+	            if (annotations != null && annotations.Length > 0)
+	               newNode = newNode.WithAnnotations(annotations);
+				return (ReferenceExpressionSyntax)newNode;
+	        }
+	        return this;
+	    }
+	
+	    public override TResult Accept<TArg, TResult>(ICompilerSyntaxVisitor<TArg, TResult> visitor, TArg argument)
+	    {
+	        return visitor.VisitReferenceExpression(this, argument);
+	    }
+	
+	    public override TResult Accept<TResult>(ICompilerSyntaxVisitor<TResult> visitor)
+	    {
+	        return visitor.VisitReferenceExpression(this);
+	    }
+	
+	    public override void Accept(ICompilerSyntaxVisitor visitor)
+	    {
+	        visitor.VisitReferenceExpression(this);
+	    }
+	
+	}
+	public sealed class ExpressionTokensSyntax : ExpressionSyntax
+	{
+	
+	    public ExpressionTokensSyntax(InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
+	        : base(green, syntaxTree, position)
+	    {
+	    }
+	
+	    public ExpressionTokensSyntax(InternalSyntaxNode green, CompilerSyntaxNode parent, int position)
+	        : base(green, parent, position)
+	    {
+	    }
+	
+	    public SyntaxToken Tokens 
+		{ 
+			get 
+			{ 
+				var green = (global::MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax.ExpressionTokensGreen)this.Green;
+				var greenToken = green.Tokens;
+				return new SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
+			}
+		}
+	
+	    protected override SyntaxNode GetNodeSlot(int index)
+	    {
+	        switch (index)
+	        {
+				default: return null;
+	        }
+	    }
+	
+	    protected override SyntaxNode GetCachedSlot(int index)
+	    {
+	        switch (index)
+	        {
+				default: return null;
+	        }
+	    }
+	
+	    public ExpressionTokensSyntax WithTokens(SyntaxToken tokens)
+		{
+			return this.Update(tokens);
+		}
+	
+	    public ExpressionTokensSyntax Update(SyntaxToken tokens)
+	    {
+	        if (this.Tokens != tokens)
+	        {
+	            var newNode = CompilerLanguage.Instance.SyntaxFactory.ExpressionTokens(tokens);
+	            var annotations = this.GetAnnotations();
+	            if (annotations != null && annotations.Length > 0)
+	               newNode = newNode.WithAnnotations(annotations);
+				return (ExpressionTokensSyntax)newNode;
+	        }
+	        return this;
+	    }
+	
+	    public override TResult Accept<TArg, TResult>(ICompilerSyntaxVisitor<TArg, TResult> visitor, TArg argument)
+	    {
+	        return visitor.VisitExpressionTokens(this, argument);
+	    }
+	
+	    public override TResult Accept<TResult>(ICompilerSyntaxVisitor<TResult> visitor)
+	    {
+	        return visitor.VisitExpressionTokens(this);
+	    }
+	
+	    public override void Accept(ICompilerSyntaxVisitor visitor)
+	    {
+	        visitor.VisitExpressionTokens(this);
 	    }
 	
 	}
@@ -692,6 +1618,430 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	    public override void Accept(ICompilerSyntaxVisitor visitor)
 	    {
 	        visitor.VisitIdentifier(this);
+	    }
+	
+	}
+	public sealed class ParserRuleBlock1Syntax : CompilerSyntaxNode
+	{
+		private QualifierSyntax _returnType;
+	
+	    public ParserRuleBlock1Syntax(InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
+	        : base(green, syntaxTree, position)
+	    {
+	    }
+	
+	    public ParserRuleBlock1Syntax(InternalSyntaxNode green, CompilerSyntaxNode parent, int position)
+	        : base(green, parent, position)
+	    {
+	    }
+	
+	    public SyntaxToken KReturns 
+		{ 
+			get 
+			{ 
+				var green = (global::MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax.ParserRuleBlock1Green)this.Green;
+				var greenToken = green.KReturns;
+				return new SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
+			}
+		}
+	    public QualifierSyntax ReturnType => this.GetRed(ref this._returnType, 1);
+	
+	    protected override SyntaxNode GetNodeSlot(int index)
+	    {
+	        switch (index)
+	        {
+				case 1: return this.GetRed(ref this._returnType, 1);
+				default: return null;
+	        }
+	    }
+	
+	    protected override SyntaxNode GetCachedSlot(int index)
+	    {
+	        switch (index)
+	        {
+				case 1: return this._returnType;
+				default: return null;
+	        }
+	    }
+	
+	    public ParserRuleBlock1Syntax WithKReturns(SyntaxToken kReturns)
+		{
+			return this.Update(kReturns, this.ReturnType);
+		}
+	
+	    public ParserRuleBlock1Syntax WithReturnType(QualifierSyntax returnType)
+		{
+			return this.Update(this.KReturns, returnType);
+		}
+	
+	    public ParserRuleBlock1Syntax Update(SyntaxToken kReturns, QualifierSyntax returnType)
+	    {
+	        if (this.KReturns != kReturns || this.ReturnType != returnType)
+	        {
+	            var newNode = CompilerLanguage.Instance.SyntaxFactory.ParserRuleBlock1(kReturns, returnType);
+	            var annotations = this.GetAnnotations();
+	            if (annotations != null && annotations.Length > 0)
+	               newNode = newNode.WithAnnotations(annotations);
+				return (ParserRuleBlock1Syntax)newNode;
+	        }
+	        return this;
+	    }
+	
+	    public override TResult Accept<TArg, TResult>(ICompilerSyntaxVisitor<TArg, TResult> visitor, TArg argument)
+	    {
+	        return visitor.VisitParserRuleBlock1(this, argument);
+	    }
+	
+	    public override TResult Accept<TResult>(ICompilerSyntaxVisitor<TResult> visitor)
+	    {
+	        return visitor.VisitParserRuleBlock1(this);
+	    }
+	
+	    public override void Accept(ICompilerSyntaxVisitor visitor)
+	    {
+	        visitor.VisitParserRuleBlock1(this);
+	    }
+	
+	}
+	public sealed class ParserRuleBlock2Syntax : CompilerSyntaxNode
+	{
+		private ParserRuleAlternativeSyntax _alternatives;
+	
+	    public ParserRuleBlock2Syntax(InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
+	        : base(green, syntaxTree, position)
+	    {
+	    }
+	
+	    public ParserRuleBlock2Syntax(InternalSyntaxNode green, CompilerSyntaxNode parent, int position)
+	        : base(green, parent, position)
+	    {
+	    }
+	
+	    public SyntaxToken TBar 
+		{ 
+			get 
+			{ 
+				var green = (global::MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax.ParserRuleBlock2Green)this.Green;
+				var greenToken = green.TBar;
+				return new SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
+			}
+		}
+	    public ParserRuleAlternativeSyntax Alternatives => this.GetRed(ref this._alternatives, 1);
+	
+	    protected override SyntaxNode GetNodeSlot(int index)
+	    {
+	        switch (index)
+	        {
+				case 1: return this.GetRed(ref this._alternatives, 1);
+				default: return null;
+	        }
+	    }
+	
+	    protected override SyntaxNode GetCachedSlot(int index)
+	    {
+	        switch (index)
+	        {
+				case 1: return this._alternatives;
+				default: return null;
+	        }
+	    }
+	
+	    public ParserRuleBlock2Syntax WithTBar(SyntaxToken tBar)
+		{
+			return this.Update(tBar, this.Alternatives);
+		}
+	
+	    public ParserRuleBlock2Syntax WithAlternatives(ParserRuleAlternativeSyntax alternatives)
+		{
+			return this.Update(this.TBar, alternatives);
+		}
+	
+	    public ParserRuleBlock2Syntax Update(SyntaxToken tBar, ParserRuleAlternativeSyntax alternatives)
+	    {
+	        if (this.TBar != tBar || this.Alternatives != alternatives)
+	        {
+	            var newNode = CompilerLanguage.Instance.SyntaxFactory.ParserRuleBlock2(tBar, alternatives);
+	            var annotations = this.GetAnnotations();
+	            if (annotations != null && annotations.Length > 0)
+	               newNode = newNode.WithAnnotations(annotations);
+				return (ParserRuleBlock2Syntax)newNode;
+	        }
+	        return this;
+	    }
+	
+	    public override TResult Accept<TArg, TResult>(ICompilerSyntaxVisitor<TArg, TResult> visitor, TArg argument)
+	    {
+	        return visitor.VisitParserRuleBlock2(this, argument);
+	    }
+	
+	    public override TResult Accept<TResult>(ICompilerSyntaxVisitor<TResult> visitor)
+	    {
+	        return visitor.VisitParserRuleBlock2(this);
+	    }
+	
+	    public override void Accept(ICompilerSyntaxVisitor visitor)
+	    {
+	        visitor.VisitParserRuleBlock2(this);
+	    }
+	
+	}
+	public sealed class BlockRuleBlock1Syntax : CompilerSyntaxNode
+	{
+		private ParserRuleAlternativeSyntax _alternatives;
+	
+	    public BlockRuleBlock1Syntax(InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
+	        : base(green, syntaxTree, position)
+	    {
+	    }
+	
+	    public BlockRuleBlock1Syntax(InternalSyntaxNode green, CompilerSyntaxNode parent, int position)
+	        : base(green, parent, position)
+	    {
+	    }
+	
+	    public SyntaxToken TBar 
+		{ 
+			get 
+			{ 
+				var green = (global::MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax.BlockRuleBlock1Green)this.Green;
+				var greenToken = green.TBar;
+				return new SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
+			}
+		}
+	    public ParserRuleAlternativeSyntax Alternatives => this.GetRed(ref this._alternatives, 1);
+	
+	    protected override SyntaxNode GetNodeSlot(int index)
+	    {
+	        switch (index)
+	        {
+				case 1: return this.GetRed(ref this._alternatives, 1);
+				default: return null;
+	        }
+	    }
+	
+	    protected override SyntaxNode GetCachedSlot(int index)
+	    {
+	        switch (index)
+	        {
+				case 1: return this._alternatives;
+				default: return null;
+	        }
+	    }
+	
+	    public BlockRuleBlock1Syntax WithTBar(SyntaxToken tBar)
+		{
+			return this.Update(tBar, this.Alternatives);
+		}
+	
+	    public BlockRuleBlock1Syntax WithAlternatives(ParserRuleAlternativeSyntax alternatives)
+		{
+			return this.Update(this.TBar, alternatives);
+		}
+	
+	    public BlockRuleBlock1Syntax Update(SyntaxToken tBar, ParserRuleAlternativeSyntax alternatives)
+	    {
+	        if (this.TBar != tBar || this.Alternatives != alternatives)
+	        {
+	            var newNode = CompilerLanguage.Instance.SyntaxFactory.BlockRuleBlock1(tBar, alternatives);
+	            var annotations = this.GetAnnotations();
+	            if (annotations != null && annotations.Length > 0)
+	               newNode = newNode.WithAnnotations(annotations);
+				return (BlockRuleBlock1Syntax)newNode;
+	        }
+	        return this;
+	    }
+	
+	    public override TResult Accept<TArg, TResult>(ICompilerSyntaxVisitor<TArg, TResult> visitor, TArg argument)
+	    {
+	        return visitor.VisitBlockRuleBlock1(this, argument);
+	    }
+	
+	    public override TResult Accept<TResult>(ICompilerSyntaxVisitor<TResult> visitor)
+	    {
+	        return visitor.VisitBlockRuleBlock1(this);
+	    }
+	
+	    public override void Accept(ICompilerSyntaxVisitor visitor)
+	    {
+	        visitor.VisitBlockRuleBlock1(this);
+	    }
+	
+	}
+	public sealed class ParserRuleAlternativeBlock1Syntax : CompilerSyntaxNode
+	{
+		private QualifierSyntax _returnType;
+	
+	    public ParserRuleAlternativeBlock1Syntax(InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
+	        : base(green, syntaxTree, position)
+	    {
+	    }
+	
+	    public ParserRuleAlternativeBlock1Syntax(InternalSyntaxNode green, CompilerSyntaxNode parent, int position)
+	        : base(green, parent, position)
+	    {
+	    }
+	
+	    public SyntaxToken TLBrace 
+		{ 
+			get 
+			{ 
+				var green = (global::MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax.ParserRuleAlternativeBlock1Green)this.Green;
+				var greenToken = green.TLBrace;
+				return new SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
+			}
+		}
+	    public QualifierSyntax ReturnType => this.GetRed(ref this._returnType, 1);
+	    public SyntaxToken TRBrace 
+		{ 
+			get 
+			{ 
+				var green = (global::MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax.ParserRuleAlternativeBlock1Green)this.Green;
+				var greenToken = green.TRBrace;
+				return new SyntaxToken(this, greenToken, this.GetChildPosition(2), this.GetChildIndex(2));
+			}
+		}
+	
+	    protected override SyntaxNode GetNodeSlot(int index)
+	    {
+	        switch (index)
+	        {
+				case 1: return this.GetRed(ref this._returnType, 1);
+				default: return null;
+	        }
+	    }
+	
+	    protected override SyntaxNode GetCachedSlot(int index)
+	    {
+	        switch (index)
+	        {
+				case 1: return this._returnType;
+				default: return null;
+	        }
+	    }
+	
+	    public ParserRuleAlternativeBlock1Syntax WithTLBrace(SyntaxToken tLBrace)
+		{
+			return this.Update(tLBrace, this.ReturnType, this.TRBrace);
+		}
+	
+	    public ParserRuleAlternativeBlock1Syntax WithReturnType(QualifierSyntax returnType)
+		{
+			return this.Update(this.TLBrace, returnType, this.TRBrace);
+		}
+	
+	    public ParserRuleAlternativeBlock1Syntax WithTRBrace(SyntaxToken tRBrace)
+		{
+			return this.Update(this.TLBrace, this.ReturnType, tRBrace);
+		}
+	
+	    public ParserRuleAlternativeBlock1Syntax Update(SyntaxToken tLBrace, QualifierSyntax returnType, SyntaxToken tRBrace)
+	    {
+	        if (this.TLBrace != tLBrace || this.ReturnType != returnType || this.TRBrace != tRBrace)
+	        {
+	            var newNode = CompilerLanguage.Instance.SyntaxFactory.ParserRuleAlternativeBlock1(tLBrace, returnType, tRBrace);
+	            var annotations = this.GetAnnotations();
+	            if (annotations != null && annotations.Length > 0)
+	               newNode = newNode.WithAnnotations(annotations);
+				return (ParserRuleAlternativeBlock1Syntax)newNode;
+	        }
+	        return this;
+	    }
+	
+	    public override TResult Accept<TArg, TResult>(ICompilerSyntaxVisitor<TArg, TResult> visitor, TArg argument)
+	    {
+	        return visitor.VisitParserRuleAlternativeBlock1(this, argument);
+	    }
+	
+	    public override TResult Accept<TResult>(ICompilerSyntaxVisitor<TResult> visitor)
+	    {
+	        return visitor.VisitParserRuleAlternativeBlock1(this);
+	    }
+	
+	    public override void Accept(ICompilerSyntaxVisitor visitor)
+	    {
+	        visitor.VisitParserRuleAlternativeBlock1(this);
+	    }
+	
+	}
+	public sealed class ParserRuleAlternativeBlock2Syntax : CompilerSyntaxNode
+	{
+		private ExpressionSyntax _returnValue;
+	
+	    public ParserRuleAlternativeBlock2Syntax(InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
+	        : base(green, syntaxTree, position)
+	    {
+	    }
+	
+	    public ParserRuleAlternativeBlock2Syntax(InternalSyntaxNode green, CompilerSyntaxNode parent, int position)
+	        : base(green, parent, position)
+	    {
+	    }
+	
+	    public SyntaxToken TEqGt 
+		{ 
+			get 
+			{ 
+				var green = (global::MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax.ParserRuleAlternativeBlock2Green)this.Green;
+				var greenToken = green.TEqGt;
+				return new SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
+			}
+		}
+	    public ExpressionSyntax ReturnValue => this.GetRed(ref this._returnValue, 1);
+	
+	    protected override SyntaxNode GetNodeSlot(int index)
+	    {
+	        switch (index)
+	        {
+				case 1: return this.GetRed(ref this._returnValue, 1);
+				default: return null;
+	        }
+	    }
+	
+	    protected override SyntaxNode GetCachedSlot(int index)
+	    {
+	        switch (index)
+	        {
+				case 1: return this._returnValue;
+				default: return null;
+	        }
+	    }
+	
+	    public ParserRuleAlternativeBlock2Syntax WithTEqGt(SyntaxToken tEqGt)
+		{
+			return this.Update(tEqGt, this.ReturnValue);
+		}
+	
+	    public ParserRuleAlternativeBlock2Syntax WithReturnValue(ExpressionSyntax returnValue)
+		{
+			return this.Update(this.TEqGt, returnValue);
+		}
+	
+	    public ParserRuleAlternativeBlock2Syntax Update(SyntaxToken tEqGt, ExpressionSyntax returnValue)
+	    {
+	        if (this.TEqGt != tEqGt || this.ReturnValue != returnValue)
+	        {
+	            var newNode = CompilerLanguage.Instance.SyntaxFactory.ParserRuleAlternativeBlock2(tEqGt, returnValue);
+	            var annotations = this.GetAnnotations();
+	            if (annotations != null && annotations.Length > 0)
+	               newNode = newNode.WithAnnotations(annotations);
+				return (ParserRuleAlternativeBlock2Syntax)newNode;
+	        }
+	        return this;
+	    }
+	
+	    public override TResult Accept<TArg, TResult>(ICompilerSyntaxVisitor<TArg, TResult> visitor, TArg argument)
+	    {
+	        return visitor.VisitParserRuleAlternativeBlock2(this, argument);
+	    }
+	
+	    public override TResult Accept<TResult>(ICompilerSyntaxVisitor<TResult> visitor)
+	    {
+	        return visitor.VisitParserRuleAlternativeBlock2(this);
+	    }
+	
+	    public override void Accept(ICompilerSyntaxVisitor visitor)
+	    {
+	        visitor.VisitParserRuleAlternativeBlock2(this);
 	    }
 	
 	}

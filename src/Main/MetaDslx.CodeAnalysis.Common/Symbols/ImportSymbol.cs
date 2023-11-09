@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MetaDslx.Modeling;
+using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Text;
@@ -28,6 +29,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
         private ImmutableArray<AliasSymbol> _aliases;
         private ImmutableArray<NamespaceSymbol> _namespaces;
         private ImmutableArray<DeclaredSymbol> _symbols;
+        private ImmutableArray<MetaModel> _metaModels;
 
         protected ImportSymbol(Symbol container) 
             : base(container)
@@ -69,6 +71,16 @@ namespace MetaDslx.CodeAnalysis.Symbols
             }
         }
 
+        [ModelProperty]
+        public ImmutableArray<MetaModel> MetaModels
+        {
+            get
+            {
+                ForceComplete(CompletionParts.FinishComputingImports, null, default);
+                return _metaModels;
+            }
+        }
+
         protected override bool ForceCompletePart(ref CompletionPart incompletePart, SourceLocation? locationOpt, CancellationToken cancellationToken)
         {
             if (incompletePart == CompletionParts.StartComputingImports || incompletePart == CompletionParts.FinishComputingImports)
@@ -93,7 +105,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
             return false;
         }
 
-        protected virtual (ImmutableArray<AliasSymbol> aliases, ImmutableArray<NamespaceSymbol> namespaces, ImmutableArray<DeclaredSymbol> symbols) ComputeImports(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        protected virtual (ImmutableArray<AliasSymbol> aliases, ImmutableArray<NamespaceSymbol> namespaces, ImmutableArray<DeclaredSymbol> symbols, ImmutableArray<MetaModel> metaModels) ComputeImports(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
         }
