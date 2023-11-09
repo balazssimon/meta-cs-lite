@@ -80,7 +80,7 @@ namespace MetaDslx.CodeAnalysis.Binding
             }
             else
             {
-                var propertyType = GetValueType(context, out var isName, out var isTypeSymbolType);
+                var propertyType = GetValueType(context, out var isName);
                 var isSymbol = IsSymbolProperty;
                 var result = ArrayBuilder<object?>.GetInstance();
                 var valueBinders = GetValueBinders(this, context.CancellationToken);
@@ -115,11 +115,13 @@ namespace MetaDslx.CodeAnalysis.Binding
                             {
                                 result.Add(symbol.Name);
                             }
-                            else if (!isSymbol && isTypeSymbolType && symbol is TypeSymbol && (propertyType == typeof(string) || propertyType == typeof(Type) || propertyType == typeof(object)))
+                            else if (!isSymbol && propertyType == typeof(MetaType) && symbol is TypeSymbol typeSymbol)
                             {
-                                if (propertyType == typeof(string)) result.Add(SymbolDisplayFormat.QualifiedNameOnlyFormat.ToString(symbol));
-                                else if (propertyType == typeof(Type)) result.Add(symbol);
-                                else if (propertyType == typeof(object)) result.Add(symbol);
+                                result.Add(MetaType.FromTypeSymbol(typeSymbol));
+                            }
+                            else if (!isSymbol && propertyType == typeof(MetaSymbol))
+                            {
+                                result.Add(MetaSymbol.FromSymbol(symbol));
                             }
                             else if (typeof(Symbol).IsAssignableFrom(propertyType) && propertyType.IsAssignableFrom(symbol.GetType()))
                             {
@@ -140,6 +142,16 @@ namespace MetaDslx.CodeAnalysis.Binding
                             if (propertyType is null || propertyType.IsAssignableFrom(value.GetType()))
                             {
                                 result.Add(value);
+                            }
+                            else if (!isSymbol && propertyType == typeof(MetaType) && (value is string || value is Type || value is IModelObject))
+                            {
+                                if (value is string stringValue) result.Add(MetaType.FromName(stringValue));
+                                else if (value is Type typeValue) result.Add(MetaType.FromType(typeValue));
+                                else if (value is IModelObject mobjValue) result.Add(MetaType.FromModelObject(mobjValue));
+                            }
+                            else if (!isSymbol && propertyType == typeof(MetaSymbol) && value is IModelObject modelObject)
+                            {
+                                result.Add(MetaSymbol.FromModelObject(modelObject));
                             }
                             else
                             {
@@ -176,13 +188,12 @@ namespace MetaDslx.CodeAnalysis.Binding
 
         public Type? GetValueType(BindingContext context)
         {
-            return GetValueType(context, out var _, out var _);
+            return GetValueType(context, out var _);
         }
 
-        private Type? GetValueType(BindingContext context, out bool isName, out bool isTypeSymbolType)
+        private Type? GetValueType(BindingContext context, out bool isName)
         {
             isName = false;
-            isTypeSymbolType = false;
             if (_modelObjectTypes.IsDefault)
             {
                 Type? valueType = null;
@@ -219,7 +230,6 @@ namespace MetaDslx.CodeAnalysis.Binding
                             if (modelProperty is not null)
                             {
                                 if (modelProperty.IsName) isName = true;
-                                if (modelProperty.Flags.HasFlag(ModelPropertyFlags.TypeSymbolType)) isTypeSymbolType = true;
                                 var modelPropertyType = modelProperty.Type;
                                 if (modelPropertyType is not null)
                                 {

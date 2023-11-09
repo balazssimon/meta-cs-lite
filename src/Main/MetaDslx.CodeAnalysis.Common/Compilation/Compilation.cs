@@ -18,6 +18,7 @@ using MetaDslx.CodeAnalysis.Symbols.Source;
 using Autofac;
 using MetaDslx.CodeAnalysis.Symbols.Errors;
 using MetaDslx.CodeAnalysis.Binding.Lookup;
+using MetaDslx.Modeling;
 
 namespace MetaDslx.CodeAnalysis
 {
@@ -1026,6 +1027,11 @@ namespace MetaDslx.CodeAnalysis
             var results = BuckStopsHereBinder.BindQualifiedName(context, qualifiedName);
             if (results.Length == 1) return results[0] as TypeSymbol;
             else return null;
+        }
+
+        public Symbol? ResolveModelObject(IModelObject modelObject)
+        {
+            throw new NotImplementedException();
         }
     }
 }

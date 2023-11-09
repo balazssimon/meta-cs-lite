@@ -25,6 +25,8 @@ namespace [Namespace]
 	using __ModelOperationInfo = global::MetaDslx.Modeling.ModelOperationInfo;
 	using __ImmutableArray = global::System.Collections.Immutable.ImmutableArray;
 	using __ImmutableDictionary = global::System.Collections.Immutable.ImmutableDictionary;
+	using __MetaType = global::MetaDslx.CodeAnalysis.MetaType;
+	using __MetaSymbol = global::MetaDslx.CodeAnalysis.MetaSymbol;
 	using __Type = global::System.Type;
 
 	[GenerateMetaModel(MetaModel)]
@@ -61,6 +63,8 @@ namespace [Namespace].__Impl
 	using __ModelOperationInfo = global::MetaDslx.Modeling.ModelOperationInfo;
 	using __ImmutableArray = global::System.Collections.Immutable.ImmutableArray;
 	using __ImmutableDictionary = global::System.Collections.Immutable.ImmutableDictionary;
+	using __MetaType = global::MetaDslx.CodeAnalysis.MetaType;
+	using __MetaSymbol = global::MetaDslx.CodeAnalysis.MetaSymbol;
 	using __Type = global::System.Type;
 
 	[foreach (var cls in Classes)]
@@ -100,7 +104,7 @@ public sealed class [mm.Name] : __MetaModel, I[mm.Name]
 	static [mm.Name]()
 	{
 		[foreach (var cls in Classes)]
-			[var metaCls = Graph.GetMetaClass(cls)]
+			[var metaCls = Graph.GetMetaClass(MetaDslx.CodeAnalysis.MetaType.FromModelObject((MetaDslx.Modeling.IModelObject)cls))]
 			[foreach (var prop in metaCls.DeclaredProperties)]
 		_[cls.Name]_[prop.Name] = new __ModelProperty(typeof([cls.Name]), "[prop.Name]", typeof([ToCSharp(prop.Type)]), null, [ToCSharp(prop.Flags)], [if(prop.SymbolProperty is null)]null[else]"[prop.SymbolProperty]"[end if]);
 			[end foreach]
@@ -138,7 +142,7 @@ public sealed class [mm.Name] : __MetaModel, I[mm.Name]
 		_model = new __Model();
 		var f = new __MetaModelFactory(_model);
 		[foreach (var c in mm.Parent.Declarations.OfType<MetaConstant>())]
-		_[c.Name.ToCamelCase()] = f.[c.Type]();
+		_[c.Name.ToCamelCase()] = f.[c.Type.Name]();
 		[end foreach]
 		[foreach (var obj in ModelObjects)]
 		var [GetName(obj)] = f.[obj.MetaType.Name]();
@@ -242,7 +246,7 @@ public enum [enm.Name]
 end template
 
 template GenerateInterface(MetaModel mm, MetaClass cls)
-[var metaCls = Graph.GetMetaClass(cls)]
+[var metaCls = Graph.GetMetaClass(MetaDslx.CodeAnalysis.MetaType.FromModelObject((MetaDslx.Modeling.IModelObject)cls))]
 public interface [cls.Name][if (cls.BaseTypes.Any())] : [foreach (var bt in cls.BaseTypes) separator ", "]global::[bt.FullName][end foreach][end if]
 {
 	[foreach (var prop in metaCls.DeclaredProperties)]
@@ -257,7 +261,7 @@ public interface [cls.Name][if (cls.BaseTypes.Any())] : [foreach (var bt in cls.
 end template
 
 template GenerateClass(MetaModel mm, MetaClass cls)
-[var metaCls = Graph.GetMetaClass(cls)]
+[var metaCls = Graph.GetMetaClass(MetaDslx.CodeAnalysis.MetaType.FromModelObject((MetaDslx.Modeling.IModelObject)cls))]
 internal class [cls.Name]_Impl : __MetaModelObject, [cls.Name]
 {
 	private [cls.Name]_Impl(string? id)
@@ -267,7 +271,7 @@ internal class [cls.Name]_Impl : __MetaModelObject, [cls.Name]
 			[if (IsCollection(slot))]
 		((__IModelObject)this).Init([ToCSharp(slot.SlotProperty)], new global::MetaDslx.Modeling.ModelObjectList<[ToCSharp(slot.SlotProperty.Type)]>(this, __Info.Instance.GetSlot([ToCSharp(slot.SlotProperty)])!));
 			[else if (slot.DefaultValue is not null)]
-		((__IModelObject)this).Init([ToCSharp(slot.SlotProperty)], ([ToCSharp(slot.SlotProperty.Type)])[ToCSharpValue(slot.SlotProperty, slot.SlotProperty.Flags.HasFlag(MetaDslx.Modeling.ModelPropertyFlags.TypeSymbolType), slot.DefaultValue)]);
+		((__IModelObject)this).Init([ToCSharp(slot.SlotProperty)], ([ToCSharp(slot.SlotProperty.Type)])[ToCSharpValue(slot.SlotProperty, false, slot.DefaultValue)]);
 			[end if]
 		[end foreach]
 		[foreach (var baseType in metaCls.AllBaseTypes.Reverse())]

@@ -11,9 +11,9 @@ using System.Threading.Tasks;
 
 namespace MetaDslx.Languages.MetaModel.Meta
 {
-    public sealed class MetaMetaPropertySlot : MetaPropertySlot<object, MetaProperty, MetaOperation>
+    public sealed class MetaMetaPropertySlot : MetaPropertySlot<MetaDslx.CodeAnalysis.MetaType, MetaProperty, MetaOperation>
     {
-        public MetaMetaPropertySlot(MetaProperty<object, MetaProperty, MetaOperation> slotProperty, ImmutableArray<MetaProperty<object, MetaProperty, MetaOperation>> slotProperties, object? defaultValue, ModelPropertyFlags flags) 
+        public MetaMetaPropertySlot(MetaProperty<MetaDslx.CodeAnalysis.MetaType, MetaProperty, MetaOperation> slotProperty, ImmutableArray<MetaProperty<MetaDslx.CodeAnalysis.MetaType, MetaProperty, MetaOperation>> slotProperties, object? defaultValue, ModelPropertyFlags flags) 
             : base(slotProperty, slotProperties, defaultValue, flags)
         {
         }

@@ -29,10 +29,6 @@ namespace MetaDslx.Modeling.Reflection
                         defaultValue = defaultAttr.Value;
                     }
                 }
-                else if (attr is TypeSymbolTypeAttribute)
-                {
-                    flags |= ModelPropertyFlags.TypeSymbolType;
-                }
                 else if (attr is NameAttribute)
                 {
                     flags |= ModelPropertyFlags.Name;

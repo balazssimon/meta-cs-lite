@@ -15,6 +15,8 @@ namespace MetaDslx.Languages.MetaModel.Model
 	using __ModelOperationInfo = global::MetaDslx.Modeling.ModelOperationInfo;
 	using __ImmutableArray = global::System.Collections.Immutable.ImmutableArray;
 	using __ImmutableDictionary = global::System.Collections.Immutable.ImmutableDictionary;
+	using __MetaType = global::MetaDslx.CodeAnalysis.MetaType;
+	using __MetaSymbol = global::MetaDslx.CodeAnalysis.MetaSymbol;
 	using __Type = global::System.Type;
 
 	internal interface IMeta
@@ -68,25 +70,25 @@ namespace MetaDslx.Languages.MetaModel.Model
 			_MetaDeclaration_Name = new __ModelProperty(typeof(MetaDeclaration), "Name", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.SingleItem | __ModelPropertyFlags.Name, "Name");
 			_MetaDeclaration_Parent = new __ModelProperty(typeof(MetaDeclaration), "Parent", typeof(MetaDeclaration), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.SingleItem, null);
 			_MetaModel_NamespaceName = new __ModelProperty(typeof(MetaModel), "NamespaceName", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.SingleItem | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
-			_MetaConstant_Type = new __ModelProperty(typeof(MetaConstant), "Type", typeof(object), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.TypeSymbolType | __ModelPropertyFlags.SingleItem, null);
-			_MetaNullableType_InnerType = new __ModelProperty(typeof(MetaNullableType), "InnerType", typeof(object), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.TypeSymbolType | __ModelPropertyFlags.SingleItem, null);
-			_MetaArrayType_ItemType = new __ModelProperty(typeof(MetaArrayType), "ItemType", typeof(object), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.TypeSymbolType | __ModelPropertyFlags.SingleItem, null);
+			_MetaConstant_Type = new __ModelProperty(typeof(MetaConstant), "Type", typeof(__MetaType), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.TypeSymbolType | __ModelPropertyFlags.SingleItem, null);
+			_MetaNullableType_InnerType = new __ModelProperty(typeof(MetaNullableType), "InnerType", typeof(__MetaType), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.TypeSymbolType | __ModelPropertyFlags.SingleItem, null);
+			_MetaArrayType_ItemType = new __ModelProperty(typeof(MetaArrayType), "ItemType", typeof(__MetaType), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.TypeSymbolType | __ModelPropertyFlags.SingleItem, null);
 			_MetaEnumType_Literals = new __ModelProperty(typeof(MetaEnumType), "Literals", typeof(MetaEnumLiteral), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection, null);
 			_MetaClass_BaseTypes = new __ModelProperty(typeof(MetaClass), "BaseTypes", typeof(MetaClass), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Collection, null);
 			_MetaClass_IsAbstract = new __ModelProperty(typeof(MetaClass), "IsAbstract", typeof(bool), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.SingleItem, null);
 			_MetaClass_Operations = new __ModelProperty(typeof(MetaClass), "Operations", typeof(MetaOperation), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection, null);
 			_MetaClass_Properties = new __ModelProperty(typeof(MetaClass), "Properties", typeof(MetaProperty), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection, null);
-			_MetaClass_SymbolType = new __ModelProperty(typeof(MetaClass), "SymbolType", typeof(object), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.TypeSymbolType | __ModelPropertyFlags.SingleItem, null);
+			_MetaClass_SymbolType = new __ModelProperty(typeof(MetaClass), "SymbolType", typeof(__MetaType), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.TypeSymbolType | __ModelPropertyFlags.SingleItem, null);
 			_MetaProperty_IsContainment = new __ModelProperty(typeof(MetaProperty), "IsContainment", typeof(bool), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.SingleItem, null);
 			_MetaProperty_IsDerived = new __ModelProperty(typeof(MetaProperty), "IsDerived", typeof(bool), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.SingleItem, null);
 			_MetaProperty_OppositeProperties = new __ModelProperty(typeof(MetaProperty), "OppositeProperties", typeof(MetaProperty), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Collection, null);
 			_MetaProperty_RedefinedProperties = new __ModelProperty(typeof(MetaProperty), "RedefinedProperties", typeof(MetaProperty), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Collection, null);
 			_MetaProperty_SubsettedProperties = new __ModelProperty(typeof(MetaProperty), "SubsettedProperties", typeof(MetaProperty), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Collection, null);
 			_MetaProperty_SymbolProperty = new __ModelProperty(typeof(MetaProperty), "SymbolProperty", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.SingleItem, null);
-			_MetaProperty_Type = new __ModelProperty(typeof(MetaProperty), "Type", typeof(object), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.TypeSymbolType | __ModelPropertyFlags.SingleItem, null);
+			_MetaProperty_Type = new __ModelProperty(typeof(MetaProperty), "Type", typeof(__MetaType), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.TypeSymbolType | __ModelPropertyFlags.SingleItem, null);
 			_MetaOperation_Parameters = new __ModelProperty(typeof(MetaOperation), "Parameters", typeof(MetaParameter), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection, null);
-			_MetaOperation_ReturnType = new __ModelProperty(typeof(MetaOperation), "ReturnType", typeof(object), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.TypeSymbolType | __ModelPropertyFlags.SingleItem, null);
-			_MetaParameter_Type = new __ModelProperty(typeof(MetaParameter), "Type", typeof(object), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.TypeSymbolType | __ModelPropertyFlags.SingleItem, null);
+			_MetaOperation_ReturnType = new __ModelProperty(typeof(MetaOperation), "ReturnType", typeof(__MetaType), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.TypeSymbolType | __ModelPropertyFlags.SingleItem, null);
+			_MetaParameter_Type = new __ModelProperty(typeof(MetaParameter), "Type", typeof(__MetaType), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.TypeSymbolType | __ModelPropertyFlags.SingleItem, null);
 			_instance = new Meta();
 		}
 	
@@ -260,19 +262,19 @@ namespace MetaDslx.Languages.MetaModel.Model
 			obj5.Parent = obj4;
 			obj6.Name = "Meta";
 			obj6.Parent = obj5;
-			obj7.Type = obj17;
+			obj7.Type = __MetaType.FromModelObject((__IModelObject)obj17);
 			obj7.Name = "VoidType";
 			obj7.Parent = obj5;
-			obj8.Type = obj17;
+			obj8.Type = __MetaType.FromModelObject((__IModelObject)obj17);
 			obj8.Name = "BoolType";
 			obj8.Parent = obj5;
-			obj9.Type = obj17;
+			obj9.Type = __MetaType.FromModelObject((__IModelObject)obj17);
 			obj9.Name = "IntType";
 			obj9.Parent = obj5;
-			obj10.Type = obj17;
+			obj10.Type = __MetaType.FromModelObject((__IModelObject)obj17);
 			obj10.Name = "StringType";
 			obj10.Parent = obj5;
-			obj11.Type = obj17;
+			obj11.Type = __MetaType.FromModelObject((__IModelObject)obj17);
 			obj11.Name = "TypeType";
 			obj11.Parent = obj5;
 			((__IModelObject)obj12).Children.Add((__IModelObject)obj26);
@@ -397,66 +399,66 @@ namespace MetaDslx.Languages.MetaModel.Model
 			obj26.Name = "Name";
 			obj26.Parent = obj12;
 			obj27.OppositeProperties.Add(obj28);
-			obj27.Type = obj12;
+			obj27.Type = __MetaType.FromModelObject((__IModelObject)obj12);
 			obj27.Name = "Parent";
 			obj27.Parent = obj12;
 			((__IModelObject)obj28).Children.Add((__IModelObject)obj30);
 			obj28.IsContainment = true;
 			obj28.OppositeProperties.Add(obj27);
-			obj28.Type = obj30;
+			obj28.Type = __MetaType.FromModelObject((__IModelObject)obj30);
 			obj28.Name = "Declarations";
 			obj28.Parent = obj12;
 			obj29.IsDerived = true;
 			obj29.Type = typeof(string);
 			obj29.Name = "FullName";
 			obj29.Parent = obj12;
-			obj30.ItemType = obj12;
+			obj30.ItemType = __MetaType.FromModelObject((__IModelObject)obj12);
 			obj31.IsDerived = true;
 			obj31.Type = typeof(string);
 			obj31.Name = "NamespaceName";
 			obj31.Parent = obj14;
-			obj32.Type = _typeType;
+			obj32.Type = typeof(__MetaType);
 			obj32.Name = "Type";
 			obj32.Parent = obj15;
-			obj33.Type = _typeType;
+			obj33.Type = typeof(__MetaType);
 			obj33.Name = "InnerType";
 			obj33.Parent = obj18;
-			obj34.Type = _typeType;
+			obj34.Type = typeof(__MetaType);
 			obj34.Name = "ItemType";
 			obj34.Parent = obj19;
 			((__IModelObject)obj35).Children.Add((__IModelObject)obj36);
 			obj35.IsContainment = true;
 			obj35.SubsettedProperties.Add(obj28);
-			obj35.Type = obj36;
+			obj35.Type = __MetaType.FromModelObject((__IModelObject)obj36);
 			obj35.Name = "Literals";
 			obj35.Parent = obj20;
-			obj36.ItemType = obj21;
-			obj37.Type = _typeType;
+			obj36.ItemType = __MetaType.FromModelObject((__IModelObject)obj21);
+			obj37.Type = typeof(__MetaType);
 			obj37.Name = "SymbolType";
 			obj37.Parent = obj22;
 			obj38.Type = typeof(bool);
 			obj38.Name = "IsAbstract";
 			obj38.Parent = obj22;
 			((__IModelObject)obj39).Children.Add((__IModelObject)obj42);
-			obj39.Type = obj42;
+			obj39.Type = __MetaType.FromModelObject((__IModelObject)obj42);
 			obj39.Name = "BaseTypes";
 			obj39.Parent = obj22;
 			((__IModelObject)obj40).Children.Add((__IModelObject)obj43);
 			obj40.IsContainment = true;
 			obj40.SubsettedProperties.Add(obj28);
-			obj40.Type = obj43;
+			obj40.Type = __MetaType.FromModelObject((__IModelObject)obj43);
 			obj40.Name = "Properties";
 			obj40.Parent = obj22;
 			((__IModelObject)obj41).Children.Add((__IModelObject)obj44);
 			obj41.IsContainment = true;
 			obj41.SubsettedProperties.Add(obj28);
-			obj41.Type = obj44;
+			obj41.Type = __MetaType.FromModelObject((__IModelObject)obj44);
 			obj41.Name = "Operations";
 			obj41.Parent = obj22;
-			obj42.ItemType = obj22;
-			obj43.ItemType = obj23;
-			obj44.ItemType = obj24;
-			obj45.Type = _typeType;
+			obj42.ItemType = __MetaType.FromModelObject((__IModelObject)obj22);
+			obj43.ItemType = __MetaType.FromModelObject((__IModelObject)obj23);
+			obj44.ItemType = __MetaType.FromModelObject((__IModelObject)obj24);
+			obj45.Type = typeof(__MetaType);
 			obj45.Name = "Type";
 			obj45.Parent = obj23;
 			obj46.Type = typeof(string);
@@ -470,31 +472,31 @@ namespace MetaDslx.Languages.MetaModel.Model
 			obj48.Parent = obj23;
 			((__IModelObject)obj49).Children.Add((__IModelObject)obj52);
 			obj49.OppositeProperties.Add(obj49);
-			obj49.Type = obj52;
+			obj49.Type = __MetaType.FromModelObject((__IModelObject)obj52);
 			obj49.Name = "OppositeProperties";
 			obj49.Parent = obj23;
 			((__IModelObject)obj50).Children.Add((__IModelObject)obj53);
-			obj50.Type = obj53;
+			obj50.Type = __MetaType.FromModelObject((__IModelObject)obj53);
 			obj50.Name = "SubsettedProperties";
 			obj50.Parent = obj23;
 			((__IModelObject)obj51).Children.Add((__IModelObject)obj54);
-			obj51.Type = obj54;
+			obj51.Type = __MetaType.FromModelObject((__IModelObject)obj54);
 			obj51.Name = "RedefinedProperties";
 			obj51.Parent = obj23;
-			obj52.ItemType = obj23;
-			obj53.ItemType = obj23;
-			obj54.ItemType = obj23;
-			obj55.Type = _typeType;
+			obj52.ItemType = __MetaType.FromModelObject((__IModelObject)obj23);
+			obj53.ItemType = __MetaType.FromModelObject((__IModelObject)obj23);
+			obj54.ItemType = __MetaType.FromModelObject((__IModelObject)obj23);
+			obj55.Type = typeof(__MetaType);
 			obj55.Name = "ReturnType";
 			obj55.Parent = obj24;
 			((__IModelObject)obj56).Children.Add((__IModelObject)obj57);
 			obj56.IsContainment = true;
 			obj56.RedefinedProperties.Add(obj28);
-			obj56.Type = obj57;
+			obj56.Type = __MetaType.FromModelObject((__IModelObject)obj57);
 			obj56.Name = "Parameters";
 			obj56.Parent = obj24;
-			obj57.ItemType = obj25;
-			obj58.Type = _typeType;
+			obj57.ItemType = __MetaType.FromModelObject((__IModelObject)obj25);
+			obj58.Type = typeof(__MetaType);
 			obj58.Name = "Type";
 			obj58.Parent = obj25;
 			_model.IsSealed = true;
@@ -740,7 +742,7 @@ namespace MetaDslx.Languages.MetaModel.Model
 
 	public interface MetaConstant : global::MetaDslx.Languages.MetaModel.Model.MetaDeclaration
 	{
-		object Type { get; set; }
+		__MetaType Type { get; set; }
 	
 	}
 
@@ -756,13 +758,13 @@ namespace MetaDslx.Languages.MetaModel.Model
 
 	public interface MetaNullableType : global::MetaDslx.Languages.MetaModel.Model.MetaType
 	{
-		object InnerType { get; set; }
+		__MetaType InnerType { get; set; }
 	
 	}
 
 	public interface MetaArrayType : global::MetaDslx.Languages.MetaModel.Model.MetaType
 	{
-		object ItemType { get; set; }
+		__MetaType ItemType { get; set; }
 	
 	}
 
@@ -783,7 +785,7 @@ namespace MetaDslx.Languages.MetaModel.Model
 		bool IsAbstract { get; set; }
 		global::System.Collections.Generic.IList<MetaOperation> Operations { get; }
 		global::System.Collections.Generic.IList<MetaProperty> Properties { get; }
-		object SymbolType { get; set; }
+		__MetaType SymbolType { get; set; }
 	
 	}
 
@@ -795,20 +797,20 @@ namespace MetaDslx.Languages.MetaModel.Model
 		global::System.Collections.Generic.IList<MetaProperty> RedefinedProperties { get; }
 		global::System.Collections.Generic.IList<MetaProperty> SubsettedProperties { get; }
 		string SymbolProperty { get; set; }
-		object Type { get; set; }
+		__MetaType Type { get; set; }
 	
 	}
 
 	public interface MetaOperation : global::MetaDslx.Languages.MetaModel.Model.MetaDeclaration
 	{
 		global::System.Collections.Generic.IList<MetaParameter> Parameters { get; }
-		object ReturnType { get; set; }
+		__MetaType ReturnType { get; set; }
 	
 	}
 
 	public interface MetaParameter : global::MetaDslx.Languages.MetaModel.Model.MetaDeclaration
 	{
-		object Type { get; set; }
+		__MetaType Type { get; set; }
 	
 	}
 
@@ -1041,6 +1043,8 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 	using __ModelOperationInfo = global::MetaDslx.Modeling.ModelOperationInfo;
 	using __ImmutableArray = global::System.Collections.Immutable.ImmutableArray;
 	using __ImmutableDictionary = global::System.Collections.Immutable.ImmutableDictionary;
+	using __MetaType = global::MetaDslx.CodeAnalysis.MetaType;
+	using __MetaSymbol = global::MetaDslx.CodeAnalysis.MetaSymbol;
 	using __Type = global::System.Type;
 
 	internal class MetaDeclaration_Impl : __MetaModelObject, MetaDeclaration
@@ -1397,10 +1401,10 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 	
 		public override __ModelObjectInfo MInfo => __Info.Instance;
 	
-		public object Type
+		public __MetaType Type
 		{
-			get => MGet<object>(Meta.MetaConstant_Type);
-			set => MAdd<object>(Meta.MetaConstant_Type, value);
+			get => MGet<__MetaType>(Meta.MetaConstant_Type);
+			set => MAdd<__MetaType>(Meta.MetaConstant_Type, value);
 		}
 	
 		public global::System.Collections.Generic.IList<MetaDeclaration> Declarations
@@ -1743,10 +1747,10 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 	
 		public override __ModelObjectInfo MInfo => __Info.Instance;
 	
-		public object InnerType
+		public __MetaType InnerType
 		{
-			get => MGet<object>(Meta.MetaNullableType_InnerType);
-			set => MAdd<object>(Meta.MetaNullableType_InnerType, value);
+			get => MGet<__MetaType>(Meta.MetaNullableType_InnerType);
+			set => MAdd<__MetaType>(Meta.MetaNullableType_InnerType, value);
 		}
 	
 		public global::System.Collections.Generic.IList<MetaDeclaration> Declarations
@@ -1864,10 +1868,10 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 	
 		public override __ModelObjectInfo MInfo => __Info.Instance;
 	
-		public object ItemType
+		public __MetaType ItemType
 		{
-			get => MGet<object>(Meta.MetaArrayType_ItemType);
-			set => MAdd<object>(Meta.MetaArrayType_ItemType, value);
+			get => MGet<__MetaType>(Meta.MetaArrayType_ItemType);
+			set => MAdd<__MetaType>(Meta.MetaArrayType_ItemType, value);
 		}
 	
 		public global::System.Collections.Generic.IList<MetaDeclaration> Declarations
@@ -2242,10 +2246,10 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 			get => MGetCollection<MetaProperty>(Meta.MetaClass_Properties);
 		}
 	
-		public object SymbolType
+		public __MetaType SymbolType
 		{
-			get => MGet<object>(Meta.MetaClass_SymbolType);
-			set => MAdd<object>(Meta.MetaClass_SymbolType, value);
+			get => MGet<__MetaType>(Meta.MetaClass_SymbolType);
+			set => MAdd<__MetaType>(Meta.MetaClass_SymbolType, value);
 		}
 	
 		public global::System.Collections.Generic.IList<MetaDeclaration> Declarations
@@ -2406,10 +2410,10 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 			set => MAdd<string>(Meta.MetaProperty_SymbolProperty, value);
 		}
 	
-		public object Type
+		public __MetaType Type
 		{
-			get => MGet<object>(Meta.MetaProperty_Type);
-			set => MAdd<object>(Meta.MetaProperty_Type, value);
+			get => MGet<__MetaType>(Meta.MetaProperty_Type);
+			set => MAdd<__MetaType>(Meta.MetaProperty_Type, value);
 		}
 	
 		public global::System.Collections.Generic.IList<MetaDeclaration> Declarations
@@ -2543,10 +2547,10 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 			get => MGetCollection<MetaParameter>(Meta.MetaOperation_Parameters);
 		}
 	
-		public object ReturnType
+		public __MetaType ReturnType
 		{
-			get => MGet<object>(Meta.MetaOperation_ReturnType);
-			set => MAdd<object>(Meta.MetaOperation_ReturnType, value);
+			get => MGet<__MetaType>(Meta.MetaOperation_ReturnType);
+			set => MAdd<__MetaType>(Meta.MetaOperation_ReturnType, value);
 		}
 	
 		public global::System.Collections.Generic.IList<MetaDeclaration> Declarations
@@ -2665,10 +2669,10 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 	
 		public override __ModelObjectInfo MInfo => __Info.Instance;
 	
-		public object Type
+		public __MetaType Type
 		{
-			get => MGet<object>(Meta.MetaParameter_Type);
-			set => MAdd<object>(Meta.MetaParameter_Type, value);
+			get => MGet<__MetaType>(Meta.MetaParameter_Type);
+			set => MAdd<__MetaType>(Meta.MetaParameter_Type, value);
 		}
 	
 		public global::System.Collections.Generic.IList<MetaDeclaration> Declarations

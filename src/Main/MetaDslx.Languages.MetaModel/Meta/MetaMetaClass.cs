@@ -1,5 +1,6 @@
 ﻿using MetaDslx.CodeAnalysis.Symbols;
 using MetaDslx.Languages.MetaModel.Model;
+using MetaDslx.Modeling;
 using MetaDslx.Modeling.Meta;
 using System;
 using System.Collections.Generic;
@@ -10,17 +11,17 @@ using System.Threading.Tasks;
 
 namespace MetaDslx.Languages.MetaModel.Meta
 {
-    public sealed class MetaMetaClass : MetaClass<object, MetaProperty, MetaOperation>
+    public sealed class MetaMetaClass : MetaClass<MetaDslx.CodeAnalysis.MetaType, MetaProperty, MetaOperation>
     {
         private object? _symbolType;
 
-        public MetaMetaClass(MetaClass underlyingType) 
+        public MetaMetaClass(MetaDslx.CodeAnalysis.MetaType underlyingType) 
             : base(underlyingType)
         {
-            _symbolType = underlyingType.SymbolType;
+            _symbolType = underlyingType.OriginalModelObject.SymbolType;
         }
 
-        public MetaClass UnderlyingClass => (MetaClass)UnderlyingType;
+        public MetaClass UnderlyingClass => (MetaClass)UnderlyingType.OriginalModelObject;
 
         public override string Name => UnderlyingClass.Name;
 
@@ -30,7 +31,7 @@ namespace MetaDslx.Languages.MetaModel.Meta
             set => _symbolType = value;
         }
 
-        public override ImmutableArray<object> OriginalBaseTypes => UnderlyingClass.BaseTypes.Cast<object>().ToImmutableArray();
+        public override ImmutableArray<MetaDslx.CodeAnalysis.MetaType> OriginalBaseTypes => UnderlyingClass.BaseTypes.Select(bt => MetaDslx.CodeAnalysis.MetaType.FromModelObject((IModelObject)bt)).ToImmutableArray();
 
         public override ImmutableArray<MetaProperty> OriginalDeclaredProperties => UnderlyingClass.Properties.ToImmutableArray();
 

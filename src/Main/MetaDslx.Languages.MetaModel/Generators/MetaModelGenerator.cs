@@ -55,9 +55,18 @@ namespace MetaDslx.Languages.MetaModel.Generators
             if (type is null) return string.Empty;
             if (type is string) return (string)type;
             if (type is Type t) return $"global::{t.FullName}";
+            if (type is MetaDslx.CodeAnalysis.MetaType camt)
+            {
+                if (camt.Name == "type") return "__MetaType";
+                else if (camt.Name == "symbol") return "__MetaSymbol";
+                else if (camt.Name == "object" || camt.Name == "bool" || camt.Name == "string" || camt.Name == "int") return camt.Name;
+                else if (camt.IsModelObject) return ToCSharp(camt.OriginalModelObject);
+                else return camt.FullName;
+            }
             if (type is MetaPrimitiveType mpt)
             {
-                if (mpt.Name == "type") return "object";
+                if (mpt.Name == "type") return "__MetaType";
+                else if (mpt.Name == "symbol") return "__MetaSymbol";
                 else return mpt.Name;
             }
             if (type is MetaNullableType nt)
@@ -88,32 +97,32 @@ namespace MetaDslx.Languages.MetaModel.Generators
             return ToCSharp(type);
         }
 
-        public bool HasSetter(MetaProperty<object, MetaProperty, MetaOperation> property)
+        public bool HasSetter(MetaProperty<MetaDslx.CodeAnalysis.MetaType, MetaProperty, MetaOperation> property)
         {
             return property.HasSetter && !property.Flags.HasFlag(ModelPropertyFlags.ReadOnly) && !property.Flags.HasFlag(ModelPropertyFlags.Collection);
         }
 
-        public string ToCSharp(MetaClass<object, MetaProperty, MetaOperation> metaClass)
+        public string ToCSharp(MetaClass<MetaDslx.CodeAnalysis.MetaType, MetaProperty, MetaOperation> metaClass)
         {
             return $"{MetaModel.Name}.{metaClass.Name}Info";
         }
 
-        public bool IsCollection(MetaPropertySlot<object, MetaProperty, MetaOperation> slot)
+        public bool IsCollection(MetaPropertySlot<MetaDslx.CodeAnalysis.MetaType, MetaProperty, MetaOperation> slot)
         {
             return slot.Flags.HasFlag(ModelPropertyFlags.Collection);
         }
 
-        public string ToCSharp(MetaProperty<object, MetaProperty, MetaOperation> property)
+        public string ToCSharp(MetaProperty<MetaDslx.CodeAnalysis.MetaType, MetaProperty, MetaOperation> property)
         {
             return $"{MetaModel.Name}.{property.DeclaringType.Name}_{property.Name}";
         }
 
-        public string ToCSharp(MetaOperation<object, MetaProperty, MetaOperation> op)
+        public string ToCSharp(MetaOperation<MetaDslx.CodeAnalysis.MetaType, MetaProperty, MetaOperation> op)
         {
             return $"{MetaModel.Name}.{op.DeclaringType.Name}_{op.Name}";
         }
 
-        public string ToCSharp(ImmutableArray<MetaProperty<object, MetaProperty, MetaOperation>> properties)
+        public string ToCSharp(ImmutableArray<MetaProperty<MetaDslx.CodeAnalysis.MetaType, MetaProperty, MetaOperation>> properties)
         {
             var builder = PooledStringBuilder.GetInstance();
             var sb = builder.Builder;
@@ -129,7 +138,7 @@ namespace MetaDslx.Languages.MetaModel.Generators
             return builder.ToStringAndFree();
         }
 
-        public string ToCSharp(ImmutableArray<MetaOperation<object, MetaProperty, MetaOperation>> operations)
+        public string ToCSharp(ImmutableArray<MetaOperation<MetaDslx.CodeAnalysis.MetaType, MetaProperty, MetaOperation>> operations)
         {
             var builder = PooledStringBuilder.GetInstance();
             var sb = builder.Builder;
@@ -164,18 +173,20 @@ namespace MetaDslx.Languages.MetaModel.Generators
 
         public string ToCSharpValue(object propertyType, bool isTypeType, object? value)
         {
-            if (isTypeType || propertyType == typeof(Type) || propertyType == typeof(TypeSymbol))
+            if (isTypeType || propertyType == typeof(MetaDslx.CodeAnalysis.MetaType) || propertyType == typeof(Type))
             {
                 if (value is null) return "default";
+                else if (value is MetaDslx.CodeAnalysis.MetaType mt) return $"typeof(global::{mt.FullName})";
                 else if (value is string) return $"typeof({(string)value})";
                 else if (value is Type t) return $"typeof(global::{t.FullName})";
                 else if (value is TypeSymbol ts) return $"typeof({SymbolDisplayFormat.FullyQualifiedFormat.ToString(ts)})";
                 else if (value is MetaPrimitiveType pt)
                 {
-                    if (pt.Name == "type") return IsMetaMetaModel ? $"_typeType" : $"__MetaMetaModel.TypeType";
-                    else return IsMetaMetaModel ? $"typeof({ToCSharp(pt)})" : $"__MetaMetaModel.{pt.Name.ToPascalCase()}Type";
+                    if (pt.Name == "type") return $"typeof(__MetaType)";
+                    else if (pt.Name == "symbol") return $"typeof(__MetaSymbol)";
+                    else return $"typeof({pt.Name})";
                 }
-                //else if (value is MetaClass mt) return $"typeof(global::{mt.FullName})";
+                return $"__MetaType.FromModelObject((__IModelObject){GetName(value)})";
             }
             if (propertyType == typeof(bool))
             {

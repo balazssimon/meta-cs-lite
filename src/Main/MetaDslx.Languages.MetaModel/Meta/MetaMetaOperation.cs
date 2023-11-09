@@ -6,9 +6,9 @@ using System.Text;
 
 namespace MetaDslx.Languages.MetaModel.Meta
 {
-    public sealed class MetaMetaOperation : MetaOperation<object, MetaProperty, MetaOperation>
+    public sealed class MetaMetaOperation : MetaOperation<MetaDslx.CodeAnalysis.MetaType, MetaProperty, MetaOperation>
     {
-        public MetaMetaOperation(MetaClass<object, MetaProperty, MetaOperation> declaringType, MetaOperation underlyingOperation)
+        public MetaMetaOperation(MetaClass<MetaDslx.CodeAnalysis.MetaType, MetaProperty, MetaOperation> declaringType, MetaOperation underlyingOperation)
             : base(declaringType, underlyingOperation)
         {
         }

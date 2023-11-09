@@ -11,16 +11,16 @@ using System.Threading.Tasks;
 
 namespace MetaDslx.Languages.MetaModel.Meta
 {
-    public sealed class MetaMetaGraph : MetaGraph<object, MetaProperty, MetaOperation>
+    public sealed class MetaMetaGraph : MetaGraph<MetaDslx.CodeAnalysis.MetaType, MetaProperty, MetaOperation>
     {
-        public MetaMetaGraph(IEnumerable<MetaType> classTypes) 
-            : base(classTypes)
+        public MetaMetaGraph(IEnumerable<MetaClass> classTypes) 
+            : base(classTypes.Select(ct => MetaDslx.CodeAnalysis.MetaType.FromModelObject((IModelObject)ct)))
         {
         }
 
-        protected override bool IsCollectionType(object type, out object? itemType, out ModelPropertyFlags collectionFlags)
+        protected override bool IsCollectionType(MetaDslx.CodeAnalysis.MetaType type, out MetaDslx.CodeAnalysis.MetaType itemType, out ModelPropertyFlags collectionFlags)
         {
-            if (type is MetaArrayType arrayType)
+            if (type.OriginalModelObject is MetaArrayType arrayType)
             {
                 itemType = arrayType.ItemType;
                 collectionFlags = ModelPropertyFlags.None;
@@ -28,72 +28,72 @@ namespace MetaDslx.Languages.MetaModel.Meta
             }
             else
             {
-                itemType = null;
+                itemType = default;
                 collectionFlags = ModelPropertyFlags.None;
                 return false;
             }
         }
 
-        protected override bool IsEnumType(object type)
+        protected override bool IsEnumType(MetaDslx.CodeAnalysis.MetaType type)
         {
-            return type is MetaEnumType;
+            return type.OriginalModelObject is MetaEnumType;
         }
 
-        protected override bool IsNullableType(object type, out object innerType)
+        protected override bool IsNullableType(MetaDslx.CodeAnalysis.MetaType type, out MetaDslx.CodeAnalysis.MetaType innerType)
         {
-            if (type is MetaNullableType nullableType)
+            if (type.OriginalModelObject is MetaNullableType nullableType)
             {
                 innerType = nullableType.InnerType;
                 return true;
             }
-            else if (type is MetaClass)
+            else if (type.OriginalModelObject is MetaClass)
             {
                 innerType = type;
                 return true;
             }
             else
             {
-                innerType = null;
+                innerType = default;
                 return false;
             }
         }
 
-        protected override bool IsPrimitiveType(object type)
+        protected override bool IsPrimitiveType(MetaDslx.CodeAnalysis.MetaType type)
         {
-            return type is MetaPrimitiveType;
+            return type.OriginalModelObject is MetaPrimitiveType;
         }
 
-        protected override bool IsValueType(object type)
+        protected override bool IsValueType(MetaDslx.CodeAnalysis.MetaType type)
         {
-            return type is MetaPrimitiveType || type is MetaEnumType;
+            return type.OriginalModelObject is MetaPrimitiveType || type.OriginalModelObject is MetaEnumType;
         }
 
-        protected override MetaClass<object, MetaProperty, MetaOperation> MakeClass(object classType)
+        protected override MetaClass<MetaDslx.CodeAnalysis.MetaType, MetaProperty, MetaOperation> MakeClass(MetaDslx.CodeAnalysis.MetaType classType)
         {
-            return new MetaMetaClass((MetaClass)classType);
+            return new MetaMetaClass(classType);
         }
 
-        protected override MetaOperation<object, MetaProperty, MetaOperation> MakeOperation(MetaClass<object, MetaProperty, MetaOperation> declaringType, MetaOperation operation)
+        protected override MetaOperation<MetaDslx.CodeAnalysis.MetaType, MetaProperty, MetaOperation> MakeOperation(MetaClass<MetaDslx.CodeAnalysis.MetaType, MetaProperty, MetaOperation> declaringType, MetaOperation operation)
         {
             return new MetaMetaOperation(declaringType, operation);
         }
 
-        protected override MetaOperationInfo<object, MetaProperty, MetaOperation> MakeOperationInfo(ImmutableArray<MetaOperation<object, MetaProperty, MetaOperation>> overridenOperations, ImmutableArray<MetaOperation<object, MetaProperty, MetaOperation>> overridingOperations)
+        protected override MetaOperationInfo<MetaDslx.CodeAnalysis.MetaType, MetaProperty, MetaOperation> MakeOperationInfo(ImmutableArray<MetaOperation<MetaDslx.CodeAnalysis.MetaType, MetaProperty, MetaOperation>> overridenOperations, ImmutableArray<MetaOperation<MetaDslx.CodeAnalysis.MetaType, MetaProperty, MetaOperation>> overridingOperations)
         {
             return new MetaMetaOperationInfo(overridenOperations, overridingOperations);
         }
 
-        protected override MetaProperty<object, MetaProperty, MetaOperation> MakeProperty(MetaClass<object, MetaProperty, MetaOperation> declaringType, MetaProperty property)
+        protected override MetaProperty<MetaDslx.CodeAnalysis.MetaType, MetaProperty, MetaOperation> MakeProperty(MetaClass<MetaDslx.CodeAnalysis.MetaType, MetaProperty, MetaOperation> declaringType, MetaProperty property)
         {
             return new MetaMetaProperty(declaringType, property);
         }
 
-        protected override MetaPropertyInfo<object, MetaProperty, MetaOperation> MakePropertyInfo(MetaPropertySlot<object, MetaProperty, MetaOperation> slot, ImmutableArray<MetaProperty<object, MetaProperty, MetaOperation>> oppositeProperties, ImmutableArray<MetaProperty<object, MetaProperty, MetaOperation>> subsettedProperties, ImmutableArray<MetaProperty<object, MetaProperty, MetaOperation>> subsettingProperties, ImmutableArray<MetaProperty<object, MetaProperty, MetaOperation>> redefinedProperties, ImmutableArray<MetaProperty<object, MetaProperty, MetaOperation>> redefiningProperties, ImmutableArray<MetaProperty<object, MetaProperty, MetaOperation>> hiddenProperties, ImmutableArray<MetaProperty<object, MetaProperty, MetaOperation>> hidingProperties)
+        protected override MetaPropertyInfo<MetaDslx.CodeAnalysis.MetaType, MetaProperty, MetaOperation> MakePropertyInfo(MetaPropertySlot<MetaDslx.CodeAnalysis.MetaType, MetaProperty, MetaOperation> slot, ImmutableArray<MetaProperty<MetaDslx.CodeAnalysis.MetaType, MetaProperty, MetaOperation>> oppositeProperties, ImmutableArray<MetaProperty<MetaDslx.CodeAnalysis.MetaType, MetaProperty, MetaOperation>> subsettedProperties, ImmutableArray<MetaProperty<MetaDslx.CodeAnalysis.MetaType, MetaProperty, MetaOperation>> subsettingProperties, ImmutableArray<MetaProperty<MetaDslx.CodeAnalysis.MetaType, MetaProperty, MetaOperation>> redefinedProperties, ImmutableArray<MetaProperty<MetaDslx.CodeAnalysis.MetaType, MetaProperty, MetaOperation>> redefiningProperties, ImmutableArray<MetaProperty<MetaDslx.CodeAnalysis.MetaType, MetaProperty, MetaOperation>> hiddenProperties, ImmutableArray<MetaProperty<MetaDslx.CodeAnalysis.MetaType, MetaProperty, MetaOperation>> hidingProperties)
         {
             return new MetaMetaPropertyInfo(slot, oppositeProperties, subsettedProperties, subsettingProperties, redefinedProperties, redefiningProperties, hiddenProperties, hidingProperties);
         }
 
-        protected override MetaPropertySlot<object, MetaProperty, MetaOperation> MakePropertySlot(MetaProperty<object, MetaProperty, MetaOperation> slotProperty, ImmutableArray<MetaProperty<object, MetaProperty, MetaOperation>> slotProperties, object? defaultValue, ModelPropertyFlags flags)
+        protected override MetaPropertySlot<MetaDslx.CodeAnalysis.MetaType, MetaProperty, MetaOperation> MakePropertySlot(MetaProperty<MetaDslx.CodeAnalysis.MetaType, MetaProperty, MetaOperation> slotProperty, ImmutableArray<MetaProperty<MetaDslx.CodeAnalysis.MetaType, MetaProperty, MetaOperation>> slotProperties, object? defaultValue, ModelPropertyFlags flags)
         {
             return new MetaMetaPropertySlot(slotProperty, slotProperties, defaultValue, flags);
         }

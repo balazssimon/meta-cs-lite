@@ -10,17 +10,16 @@ using System.Threading.Tasks;
 
 namespace MetaDslx.Languages.MetaModel.Meta
 {
-    public sealed class MetaMetaProperty : MetaProperty<object, MetaProperty, MetaOperation>
+    public sealed class MetaMetaProperty : MetaProperty<MetaDslx.CodeAnalysis.MetaType, MetaProperty, MetaOperation>
     {
         private readonly ModelPropertyFlags _originalFlags;
 
-        public MetaMetaProperty(MetaClass<object, MetaProperty, MetaOperation> declaringType, MetaProperty underlyingProperty) 
+        public MetaMetaProperty(MetaClass<MetaDslx.CodeAnalysis.MetaType, MetaProperty, MetaOperation> declaringType, MetaProperty underlyingProperty) 
             : base(declaringType, underlyingProperty)
         {
             var flags = ModelPropertyFlags.None;
             if (underlyingProperty.IsContainment) flags |= ModelPropertyFlags.Containment;
             if (underlyingProperty.IsDerived) flags |= ModelPropertyFlags.Derived;
-            if (underlyingProperty.Type is MetaPrimitiveType mpt && mpt.Name == "type") flags |= ModelPropertyFlags.TypeSymbolType;
             _originalFlags = flags;
         }
 
@@ -32,31 +31,31 @@ namespace MetaDslx.Languages.MetaModel.Meta
 
         public override string? SymbolProperty => UnderlyingProperty.SymbolProperty;
 
-        public override object OriginalType => UnderlyingProperty.Type;
+        public override MetaDslx.CodeAnalysis.MetaType OriginalType => UnderlyingProperty.Type;
 
         public override ModelPropertyFlags OriginalFlags => _originalFlags;
 
-        protected override IEnumerable<(object DeclaringType, string PropertyName)> GetOppositeProperties()
+        protected override IEnumerable<(MetaDslx.CodeAnalysis.MetaType DeclaringType, string PropertyName)> GetOppositeProperties()
         {
             foreach (var prop in UnderlyingProperty.OppositeProperties)
             {
-                yield return ((MetaType)prop.Parent, prop.Name);
+                yield return (MetaDslx.CodeAnalysis.MetaType.FromModelObject((IModelObject)prop.Parent), prop.Name);
             }
         }
 
-        protected override IEnumerable<(object DeclaringType, string PropertyName)> GetRedefinedProperties()
+        protected override IEnumerable<(MetaDslx.CodeAnalysis.MetaType DeclaringType, string PropertyName)> GetRedefinedProperties()
         {
             foreach (var prop in UnderlyingProperty.RedefinedProperties)
             {
-                yield return ((MetaType)prop.Parent, prop.Name);
+                yield return (MetaDslx.CodeAnalysis.MetaType.FromModelObject((IModelObject)prop.Parent), prop.Name);
             }
         }
 
-        protected override IEnumerable<(object DeclaringType, string PropertyName)> GetSubsettedProperties()
+        protected override IEnumerable<(MetaDslx.CodeAnalysis.MetaType DeclaringType, string PropertyName)> GetSubsettedProperties()
         {
             foreach (var prop in UnderlyingProperty.SubsettedProperties)
             {
-                yield return ((MetaType)prop.Parent, prop.Name);
+                yield return (MetaDslx.CodeAnalysis.MetaType.FromModelObject((IModelObject)prop.Parent), prop.Name);
             }
         }
     }
