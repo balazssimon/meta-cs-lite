@@ -52,7 +52,7 @@ namespace MetaDslx.CodeAnalysis
             }
         }
 
-        public Symbol? GetSymbol(Compilation compilation)
+        public Symbol? AsSymbol(Compilation compilation)
         {
             if (compilation is null) return OriginalSymbol;
             if (_original is DeclaredSymbol declared)
@@ -67,17 +67,17 @@ namespace MetaDslx.CodeAnalysis
             return OriginalSymbol;
         }
 
-        public IModelObject? GetModelObject(Compilation compilation)
+        public IModelObject? AsModelObject(Compilation compilation)
         {
             throw new NotImplementedException();
         }
 
-        public IModelObject? GetModelObject(Model model)
+        public IModelObject? AsModelObject(Model model)
         {
             throw new NotImplementedException();
         }
 
-        public IModelObject? GetModelObject(ModelGroup modelGroup)
+        public IModelObject? AsModelObject(ModelGroup modelGroup)
         {
             throw new NotImplementedException();
         }
