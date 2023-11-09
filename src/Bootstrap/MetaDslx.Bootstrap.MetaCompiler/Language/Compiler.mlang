@@ -1,0 +1,48 @@
+namespace MetaDslx.Bootstrap.MetaCompiler.Compiler;
+
+using System;
+using MetaDslx.CodeAnalysis.Annotations;
+using MetaDslx.CodeAnalysis.Binding;
+using MetaDslx.CodeAnalysis.Syntax;
+using MetaDslx.CodeAnalysis.Symbols;
+using MetaDslx.Bootstrap.MetaCompiler.Model;
+
+language Compiler;
+
+Main returns Namespace:
+	'namespace' name=[Name(qualifierProperty:Declarations)]Qualifier ';'
+	Using*
+	//Declarations
+	eof;
+
+Using returns ImportSymbol: 'using' namespaces+=#NamespaceSymbol ';';
+
+[Name]
+part Name: Identifier;
+
+[DefaultReference]
+[Qualifier]
+part Qualifier: Identifier ('.' Identifier)*;
+
+part QualifierList: Qualifier (',' Qualifier)*;
+
+[Identifier]
+part Identifier: TIdentifier;
+
+token TInteger[Number] returns int: '0'| '1'..'9' ('0'..'9')* ;
+
+token TDecimal[Number] returns double: ('0'|'1'..'9' ('0'..'9')*) '.' ('0'..'9')+ ;
+
+token TIdentifier[DefaultIdentifier]: ('_'|'a'..'z'|'A'..'Z')+('_'|'a'..'z'|'A'..'Z'|'0'..'9')*;
+
+token TComma[DefaultSeparator]: ',' ;
+
+token TString[String] returns string: '"' .*? '"';
+
+token TWhitespace[DefaultWhitespace]: ('\t'|' ') +;
+
+token TLineEnd[DefaultEndOfLine]: ('\r\n' | '\r' | '\n');
+
+token TSingleLineComment[SingleLineComment]: '//' ~('\r' | '\n')*;
+
+token TMultiLineComment[MultiLineComment]: '/*' .*? '*/';

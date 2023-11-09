@@ -12,10 +12,12 @@ using MetaDslx.Languages.MetaCompiler.Analyzers;
 using System.Diagnostics.CodeAnalysis;
 using MetaDslx.Languages.MetaModel.Model;
 using MetaDslx.CodeAnalysis.Symbols;
+using MetaDslx.Bootstrap.MetaCompiler.Model;
 
-CompileMetaModel("Meta", @"..\..\..\..\..\Main\MetaDslx.Languages.MetaModel\Model", @"..\..\..\..\..\Main\MetaDslx.Languages.MetaModel\Model");
+//CompileMetaModel("Meta", @"..\..\..\..\..\Main\MetaDslx.Languages.MetaModel\Model", @"..\..\..\..\..\Main\MetaDslx.Languages.MetaModel\Model");
 //CompileMetaCompiler("Meta", @"..\..\..\..\..\Main\MetaDslx.Languages.MetaModel\Language", @"..\..\..\..\..\Main\MetaDslx.Languages.MetaModel\Compiler");
 //CompileMetaModel("Compiler", @"..\..\..\..\MetaDslx.Bootstrap.MetaCompiler\Model", @"..\..\..\..\MetaDslx.Bootstrap.MetaCompiler\Model");
+CompileMetaCompiler("Compiler", @"..\..\..\..\MetaDslx.Bootstrap.MetaCompiler\Language", @"..\..\..\..\MetaDslx.Bootstrap.MetaCompiler\Compiler");
 
 static void CompileMetaModel(string name, string inputDir, string outputDir)
 {
@@ -107,6 +109,7 @@ static Compilation CreateCompilation(string name, string source)
             MetadataReference.CreateFromFile(typeof(CodeBuilder).GetTypeInfo().Assembly.Location),
             MetadataReference.CreateFromFile(typeof(MetaDslx.CodeAnalysis.SyntaxTree).GetTypeInfo().Assembly.Location),
             MetadataReference.CreateFromFile(typeof(MetaModel).GetTypeInfo().Assembly.Location),
+            MetadataReference.CreateFromFile(typeof(Compiler).GetTypeInfo().Assembly.Location),
         },
         new CSharpCompilationOptions(OutputKind.ConsoleApplication));
 }

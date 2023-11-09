@@ -34,4 +34,8 @@
 		<ProjectReference Include="..\..\Main\MetaDslx.Modeling\MetaDslx.Modeling.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="Compiler\" />
+	</ItemGroup>
+
 </Project>
