@@ -264,7 +264,7 @@ namespace MetaDslx.Modeling.Meta
             {
                 foreach (var rprop in prop.GetRedefinedProperties())
                 {
-                    var redefinedProp = cls.AllDeclaredProperties.Where(p => ReferenceEquals(p.DeclaringType.UnderlyingType, rprop.DeclaringType) && p.Name == rprop.PropertyName).FirstOrDefault();
+                    var redefinedProp = cls.AllDeclaredProperties.Where(p => rprop.DeclaringType.Equals(p.DeclaringType.UnderlyingType) && p.Name == rprop.PropertyName).FirstOrDefault();
                     if (redefinedProp is not null)
                     {
                         if (!redefinedProperties.TryGetValue(prop, out var propRedefined))
@@ -277,7 +277,7 @@ namespace MetaDslx.Modeling.Meta
                 }
                 foreach (var sprop in prop.GetSubsettedProperties())
                 {
-                    var subsettedProp = cls.AllDeclaredProperties.Where(p => ReferenceEquals(p.DeclaringType.UnderlyingType, sprop.DeclaringType) && p.Name == sprop.PropertyName).FirstOrDefault();
+                    var subsettedProp = cls.AllDeclaredProperties.Where(p => sprop.DeclaringType.Equals(p.DeclaringType.UnderlyingType) && p.Name == sprop.PropertyName).FirstOrDefault();
                     if (subsettedProp is not null)
                     {
                         if (!subsettedProperties.TryGetValue(prop, out var propSubsetted))
@@ -292,7 +292,7 @@ namespace MetaDslx.Modeling.Meta
                 {
                     if (oprop.DeclaringType is not null && _classMap.TryGetValue(oprop.DeclaringType, out var oppositeClass))
                     {
-                        var oppositeProp = oppositeClass.AllDeclaredProperties.Where(p => ReferenceEquals(p.DeclaringType.UnderlyingType, oprop.DeclaringType) && p.Name == oprop.PropertyName).FirstOrDefault();
+                        var oppositeProp = oppositeClass.AllDeclaredProperties.Where(p => oprop.DeclaringType.Equals(p.DeclaringType.UnderlyingType) && p.Name == oprop.PropertyName).FirstOrDefault();
                         if (oppositeProp is not null)
                         {
                             if (!oppositeProperties.TryGetValue(prop, out var propOpposite))
@@ -465,7 +465,6 @@ namespace MetaDslx.Modeling.Meta
                         flag == ModelPropertyFlags.ReferenceType ||
                         flag == ModelPropertyFlags.BuiltInType ||
                         flag == ModelPropertyFlags.ModelObjectType ||
-                        flag == ModelPropertyFlags.TypeSymbolType ||
                         flag == ModelPropertyFlags.Containment ||
                         flag == ModelPropertyFlags.SingleItem ||
                         flag == ModelPropertyFlags.Collection ||

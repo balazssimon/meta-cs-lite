@@ -50,19 +50,12 @@ namespace MetaDslx.Languages.MetaModel.Generators
         public ImmutableArray<object> Objects => _objects;
         public MetaMetaGraph Graph => _graph;
 
-        public string ToCSharp(object type)
+        public string ToCSharp(object? type)
         {
+            if (type is MetaDslx.CodeAnalysis.MetaType camt) type = camt.OriginalModelObject ?? camt.Original;
             if (type is null) return string.Empty;
             if (type is string) return (string)type;
             if (type is Type t) return $"global::{t.FullName}";
-            if (type is MetaDslx.CodeAnalysis.MetaType camt)
-            {
-                if (camt.Name == "type") return "__MetaType";
-                else if (camt.Name == "symbol") return "__MetaSymbol";
-                else if (camt.Name == "object" || camt.Name == "bool" || camt.Name == "string" || camt.Name == "int") return camt.Name;
-                else if (camt.IsModelObject) return ToCSharp(camt.OriginalModelObject);
-                else return camt.FullName;
-            }
             if (type is MetaPrimitiveType mpt)
             {
                 if (mpt.Name == "type") return "__MetaType";
@@ -171,12 +164,12 @@ namespace MetaDslx.Languages.MetaModel.Generators
             return builder.ToStringAndFree();
         }
 
-        public string ToCSharpValue(object propertyType, bool isTypeType, object? value)
+        public string ToCSharpValue(object propertyType, object? value)
         {
-            if (isTypeType || propertyType == typeof(MetaDslx.CodeAnalysis.MetaType) || propertyType == typeof(Type))
+            if (value is MetaDslx.CodeAnalysis.MetaType camt) value = camt.OriginalModelObject ?? camt.Original;
+            if (propertyType == typeof(MetaDslx.CodeAnalysis.MetaType) || propertyType == typeof(Type) || propertyType == typeof(TypeSymbol))
             {
                 if (value is null) return "default";
-                else if (value is MetaDslx.CodeAnalysis.MetaType mt) return $"typeof(global::{mt.FullName})";
                 else if (value is string) return $"typeof({(string)value})";
                 else if (value is Type t) return $"typeof(global::{t.FullName})";
                 else if (value is TypeSymbol ts) return $"typeof({SymbolDisplayFormat.FullyQualifiedFormat.ToString(ts)})";
@@ -204,7 +197,7 @@ namespace MetaDslx.Languages.MetaModel.Generators
         public string ToCSharpValue(ModelProperty property, object? value)
         {
             var propertyType = property.Type;
-            return ToCSharpValue(propertyType, property.Flags.HasFlag(ModelPropertyFlags.TypeSymbolType), value);
+            return ToCSharpValue(propertyType, value);
         }
 
         public string GetName(object? obj)
@@ -225,5 +218,6 @@ namespace MetaDslx.Languages.MetaModel.Generators
             else if (obj is IModelObject mobj && mobj.UnderlyingObject is not null && _objectNames.TryGetValue(mobj.UnderlyingObject, out var mname)) return mname;
             else return string.Empty;
         }
+
     }
 }

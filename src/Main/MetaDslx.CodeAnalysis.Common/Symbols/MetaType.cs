@@ -42,9 +42,10 @@ namespace MetaDslx.CodeAnalysis
         public bool IsNull => _original is null;
         public bool IsName => _original is string;
         public bool IsType => _original is Type;
-        public bool IsSymbol => _original is TypeSymbol;
+        public bool IsTypeSymbol => _original is TypeSymbol;
         public bool IsModelObject => _original is IModelObject || _original is IModelSymbol ms && ms.ModelObject is not null;
 
+        public object? Original => _original;
         public Type? OriginalType => _original as Type;
         public TypeSymbol? OriginalTypeSymbol => _original as TypeSymbol;
         public IModelObject? OriginalModelObject
@@ -63,7 +64,7 @@ namespace MetaDslx.CodeAnalysis
             {
                 if (IsNull) return null;
                 if (IsType) return OriginalType.Name;
-                if (IsSymbol) return OriginalTypeSymbol.Name;
+                if (IsTypeSymbol) return OriginalTypeSymbol.Name;
                 if (IsModelObject) return OriginalModelObject.Name;
                 if (FullName is null) return null;
                 var index = FullName.LastIndexOf('.');
@@ -79,7 +80,7 @@ namespace MetaDslx.CodeAnalysis
                 if (IsNull) return null;
                 if (IsName) return (string)_original;
                 if (IsType) return OriginalType.FullName;
-                if (IsSymbol) return SymbolDisplayFormat.QualifiedNameOnlyFormat.ToString(OriginalTypeSymbol);
+                if (IsTypeSymbol) return SymbolDisplayFormat.QualifiedNameOnlyFormat.ToString(OriginalTypeSymbol);
                 if (IsModelObject) return MetaSymbol.GetModelObjectFullName(OriginalModelObject);
                 return null;
             }
@@ -214,47 +215,53 @@ namespace MetaDslx.CodeAnalysis
             }
         }
 
-        public Type? Type
+        public object? Extract(bool tryResolveType = true)
         {
-            get
-            {
-                if (IsType) return OriginalType;
-                var fullName = this.FullName;
-                return AppDomain.CurrentDomain.GetAssemblies().Reverse()
-                    .Select(assembly => assembly.GetType(fullName))
-                    .FirstOrDefault(t => t != null);
-            }
+            var type = tryResolveType ? AsType() : OriginalType;
+            if (type is not null) return type;
+            if (IsTypeSymbol) return OriginalTypeSymbol;
+            if (IsModelObject) return OriginalModelObject;
+            return FullName;
         }
 
-        public Type? GetType(string assemblyName)
+        public Type? AsType()
+        {
+            if (IsType) return OriginalType;
+            var fullName = this.FullName;
+            return AppDomain.CurrentDomain.GetAssemblies().Reverse()
+                .Select(assembly => assembly.GetType(fullName))
+                .FirstOrDefault(t => t != null);
+        }
+
+        public Type? AsType(string assemblyName)
         {
             if (assemblyName is null) return OriginalType;
             return Type.GetType($"{FullName}, {assemblyName}");
         }
 
-        public Type? GetType(Assembly assembly)
+        public Type? AsType(Assembly assembly)
         {
             if (assembly is null) return OriginalType;
             return assembly.GetType(FullName);
         }
 
-        public TypeSymbol? GetTypeSymbol(Compilation compilation)
+        public TypeSymbol? AsTypeSymbol(Compilation compilation)
         {
             if (compilation is null) return OriginalTypeSymbol;
             return compilation.ResolveType(FullName);
         }
 
-        public IModelObject? GetModelObject(Compilation compilation)
+        public IModelObject? AsModelObject(Compilation compilation)
         {
             throw new NotImplementedException();
         }
 
-        public IModelObject? GetModelObject(Model model)
+        public IModelObject? AsModelObject(Model model)
         {
             throw new NotImplementedException();
         }
 
-        public IModelObject? GetModelObject(ModelGroup modelGroup)
+        public IModelObject? AsModelObject(ModelGroup modelGroup)
         {
             throw new NotImplementedException();
         }
@@ -276,7 +283,10 @@ namespace MetaDslx.CodeAnalysis
 
         public override int GetHashCode()
         {
-            return _original?.GetHashCode() ?? base.GetHashCode();
+            var specialType = this.SpecialType;
+            if (specialType != SpecialType.None) return specialType.GetHashCode();
+            if (this.IsModelObject) return this.OriginalModelObject.GetHashCode();
+            return FullName?.GetHashCode() ?? base.GetHashCode();
         }
 
         public override string ToString()

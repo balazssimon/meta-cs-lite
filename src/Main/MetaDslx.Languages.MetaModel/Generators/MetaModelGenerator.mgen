@@ -271,7 +271,7 @@ internal class [cls.Name]_Impl : __MetaModelObject, [cls.Name]
 			[if (IsCollection(slot))]
 		((__IModelObject)this).Init([ToCSharp(slot.SlotProperty)], new global::MetaDslx.Modeling.ModelObjectList<[ToCSharp(slot.SlotProperty.Type)]>(this, __Info.Instance.GetSlot([ToCSharp(slot.SlotProperty)])!));
 			[else if (slot.DefaultValue is not null)]
-		((__IModelObject)this).Init([ToCSharp(slot.SlotProperty)], ([ToCSharp(slot.SlotProperty.Type)])[ToCSharpValue(slot.SlotProperty, false, slot.DefaultValue)]);
+		((__IModelObject)this).Init([ToCSharp(slot.SlotProperty)], ([ToCSharp(slot.SlotProperty.Type)])[ToCSharpValue(slot.SlotProperty, slot.DefaultValue)]);
 			[end if]
 		[end foreach]
 		[foreach (var baseType in metaCls.AllBaseTypes.Reverse())]

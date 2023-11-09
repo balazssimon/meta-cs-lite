@@ -111,15 +111,8 @@ namespace MetaDslx.CodeAnalysis.Symbols.Model
                         if (item is null) continue;
                         Symbol? symbolItem = null;
                         if (item is IModelObject mobj) symbolItem = GetSymbol(mobj);
-                        else if (prop.Flags.HasFlag(ModelPropertyFlags.TypeSymbolType))
-                        {
-                            if (item is TypeSymbol ts) symbolItem = ts;
-                            else if (prop.Type == typeof(string) || prop.Type == typeof(Type) || prop.Type == typeof(object))
-                            {
-                                if (item is Type type) symbolItem = _compilation.ResolveType(type.FullName);
-                                else symbolItem = _compilation.ResolveType(item.ToString());
-                            }
-                        }
+                        else if (item is MetaType mtype) symbolItem = mtype.AsTypeSymbol(_compilation);
+                        else if (item is Type type) symbolItem = symbolItem = _compilation.ResolveType(type.FullName);
                         if (symbolItem is TValue typedSymbol)
                         {
                             builder.Add(typedSymbol);
@@ -132,16 +125,23 @@ namespace MetaDslx.CodeAnalysis.Symbols.Model
                 }
                 else
                 {
-                    foreach (var value in modelObject.GetValues(prop))
+                    foreach (var item in modelObject.GetValues(prop))
                     {
                         cancellationToken.ThrowIfCancellationRequested();
+                        var value = item;
+                        if (item is MetaType mtype)
+                        {
+                            if (typeof(TValue) == typeof(Type)) value = mtype.AsType();
+                            if (typeof(TValue) == typeof(string)) value = mtype.FullName;
+                            if (typeof(IModelObject).IsAssignableFrom(typeof(TValue))) value = mtype.OriginalModelObject;
+                        }
                         if (value is TValue typedValue)
                         {
                             builder.Add(typedValue);
                         }
                         else
                         {
-                            diagnostics.Add(Diagnostic.Create(CommonErrorCode.ERR_InvalidSymbolPropertyValue, null, value, value?.GetType(), symbolProperty, typeof(TValue)));
+                            diagnostics.Add(Diagnostic.Create(CommonErrorCode.ERR_InvalidSymbolPropertyValue, null, item, item?.GetType(), symbolProperty, typeof(TValue)));
                         }
                     }
                 }
