@@ -10,6 +10,8 @@ namespace MetaDslx.Languages.MetaCompiler.Model
         internal const string MetaDslxBindersNamespace = "MetaDslx.CodeAnalysis.Binding";
         internal const string MetaDslxSymbolsNamespace = "MetaDslx.CodeAnalysis.Symbols";
         internal const string MetaDslxSymbolType = "MetaDslx.CodeAnalysis.Symbols.Symbol";
+        internal const string MetaDslxTypeSymbolType = "MetaDslx.CodeAnalysis.Symbols.TypeSymbol";
+        internal const string MetaDslxIModelObjectType = "MetaDslx.Modeling.IModelObject";
         internal const string MetaDslxHiddenTokenKind = "MetaDslx.CodeAnalysis.Syntax.HiddenTokenKind";
     }
 }

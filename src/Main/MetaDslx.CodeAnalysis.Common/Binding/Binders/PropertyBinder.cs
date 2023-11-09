@@ -115,11 +115,11 @@ namespace MetaDslx.CodeAnalysis.Binding
                             {
                                 result.Add(symbol.Name);
                             }
-                            else if (!isSymbol && propertyType == typeof(MetaType) && symbol is TypeSymbol typeSymbol)
+                            else if (propertyType == typeof(MetaType) && symbol is TypeSymbol typeSymbol)
                             {
                                 result.Add(MetaType.FromTypeSymbol(typeSymbol));
                             }
-                            else if (!isSymbol && propertyType == typeof(MetaSymbol))
+                            else if (propertyType == typeof(MetaSymbol))
                             {
                                 result.Add(MetaSymbol.FromSymbol(symbol));
                             }
@@ -143,13 +143,13 @@ namespace MetaDslx.CodeAnalysis.Binding
                             {
                                 result.Add(value);
                             }
-                            else if (!isSymbol && propertyType == typeof(MetaType) && (value is string || value is Type || value is IModelObject))
+                            else if (propertyType == typeof(MetaType) && (value is string || value is Type || value is IModelObject))
                             {
                                 if (value is string stringValue) result.Add(MetaType.FromName(stringValue));
                                 else if (value is Type typeValue) result.Add(MetaType.FromType(typeValue));
                                 else if (value is IModelObject mobjValue) result.Add(MetaType.FromModelObject(mobjValue));
                             }
-                            else if (!isSymbol && propertyType == typeof(MetaSymbol) && value is IModelObject modelObject)
+                            else if (propertyType == typeof(MetaSymbol) && value is IModelObject modelObject)
                             {
                                 result.Add(MetaSymbol.FromModelObject(modelObject));
                             }

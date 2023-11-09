@@ -68,6 +68,8 @@ namespace MetaDslx.Languages.MetaCompiler.Model
         private ITypeSymbol? _itemType;
         private ITypeSymbol? _coreType;
         private bool _isSymbol;
+        private bool _isTypeSymbol;
+        private bool _isModelObject;
 
         public CSharpTypeInfo(Language language, ITypeSymbol? type)
         {
@@ -122,6 +124,24 @@ namespace MetaDslx.Languages.MetaCompiler.Model
             {
                 Resolve();
                 return _isSymbol;
+            }
+        }
+
+        public bool IsTypeSymbol
+        {
+            get
+            {
+                Resolve();
+                return _isTypeSymbol;
+            }
+        }
+
+        public bool IsModelObject
+        {
+            get
+            {
+                Resolve();
+                return _isModelObject;
             }
         }
 
@@ -192,7 +212,14 @@ namespace MetaDslx.Languages.MetaCompiler.Model
             var type = _coreType;
             while (type is not null)
             {
-                if (type.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat) == MetaDslxTypes.MetaDslxSymbolType)
+                var typeName = type.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat);
+                if (typeName == MetaDslxTypes.MetaDslxTypeSymbolType)
+                {
+                    _isSymbol = true;
+                    _isTypeSymbol = true;
+                    break;
+                }
+                else if (typeName == MetaDslxTypes.MetaDslxSymbolType)
                 {
                     _isSymbol = true;
                     break;
@@ -202,6 +229,7 @@ namespace MetaDslx.Languages.MetaCompiler.Model
                     type = type.BaseType;
                 }
             }
+            _isModelObject = _coreType.AllInterfaces.Any(intf => intf.Name == "IModelObject");
         }
 
         private bool ResolveItemType()

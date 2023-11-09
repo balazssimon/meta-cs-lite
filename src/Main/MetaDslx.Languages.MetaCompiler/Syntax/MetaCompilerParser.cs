@@ -2202,10 +2202,23 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
         {
             if (property?.PropertyType?.Type is not null && valueType?.Type is not null)
             {
+                var propertyTypeName = property.PropertyType.Type.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat);
+                var valueTypeName = valueType.CoreType.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat);
+                if (propertyTypeName == "MetaDslx.CodeAnalysis.MetaType")
+                {
+                    if (valueType.IsTypeSymbol || valueType.IsModelObject ||
+                        valueTypeName == "System.Type" || valueTypeName == "MetaDslx.CodeAnalysis.MetaType" || 
+                        valueTypeName == "string" || valueTypeName == "System.String") return;
+                }
+                if (propertyTypeName == "MetaDslx.CodeAnalysis.MetaSymbol")
+                {
+                    if (valueType.IsSymbol || valueType.IsModelObject ||
+                        valueTypeName == "MetaDslx.CodeAnalysis.MetaSymbol") return;
+                }
                 var conversion = _compilation.ClassifyConversion(valueType.CoreType, property.PropertyType.CoreType);
                 if (!conversion.IsImplicit)
                 {
-                    Error(location, $"Value of type '{valueType.CoreType.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat)}' cannot be assigned to property '{property.ModelObjectType?.CoreType?.Name}.{property.PropertyName}' of type '{property.PropertyType.CoreType.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat)}'.");
+                    Error(location, $"Value of type '{valueTypeName}' cannot be assigned to property '{property.ModelObjectType?.CoreType?.Name}.{property.PropertyName}' of type '{propertyTypeName}'.");
                 }
             }
         }

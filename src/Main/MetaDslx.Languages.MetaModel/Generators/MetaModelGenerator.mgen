@@ -247,7 +247,7 @@ end template
 
 template GenerateInterface(MetaModel mm, MetaClass cls)
 [var metaCls = Graph.GetMetaClass(MetaDslx.CodeAnalysis.MetaType.FromModelObject((MetaDslx.Modeling.IModelObject)cls))]
-public interface [cls.Name][if (cls.BaseTypes.Any())] : [foreach (var bt in cls.BaseTypes) separator ", "]global::[bt.FullName][end foreach][end if]
+public interface [cls.Name][if (cls.BaseTypes.Any())] : [foreach (var bt in cls.BaseTypes) separator ", "]global::[bt.FullName][end foreach][else] : __IModelObject[end if]
 {
 	[foreach (var prop in metaCls.DeclaredProperties)]
 	[var info = metaCls.ModelPropertyInfos[prop]]

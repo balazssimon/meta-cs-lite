@@ -720,7 +720,7 @@ namespace MetaDslx.Languages.MetaModel.Model
 	
 
 
-	public interface MetaDeclaration
+	public interface MetaDeclaration : __IModelObject
 	{
 		global::System.Collections.Generic.IList<MetaDeclaration> Declarations { get; }
 		string FullName { get; }
