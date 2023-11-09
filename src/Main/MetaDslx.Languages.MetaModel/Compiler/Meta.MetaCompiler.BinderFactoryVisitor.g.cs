@@ -951,7 +951,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Binding
 
         public virtual void VisitTypeReferenceAlt4(TypeReferenceAlt4Syntax node)
         {
-        	var __annot0 = new UseBinder(types: new global::System.Type[] {typeof(global::MetaDslx.Languages.MetaModel.Model.MetaType)}.ToImmutableArray());
+        	var __annot0 = new UseBinder(types: new global::System.Type[] {typeof(global::MetaDslx.Languages.MetaModel.Model.MetaType), typeof(global::MetaDslx.CodeAnalysis.MetaType)}.ToImmutableArray());
         	this.Begin(__annot0, node.Qualifier);
         	try
         	{

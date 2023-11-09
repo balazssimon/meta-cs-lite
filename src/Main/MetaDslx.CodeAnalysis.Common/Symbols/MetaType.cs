@@ -86,6 +86,132 @@ namespace MetaDslx.CodeAnalysis
             }
         }
 
+        public string? MetaKeyword
+        {
+            get
+            {
+                switch (FullName)
+                {
+                    case "void":
+                    case "System.Void":
+                        return "void";
+                    case "object":
+                    case "System.Object":
+                        return "object";
+                    case "bool":
+                    case "System.Boolean":
+                        return "bool";
+                    case "char":
+                    case "System.Char":
+                        return "char";
+                    case "string":
+                    case "System.String":
+                        return "string";
+                    case "byte":
+                    case "System.Byte":
+                        return "byte";
+                    case "sbyte":
+                    case "System.SByte":
+                        return "sbyte";
+                    case "short":
+                    case "System.Int16":
+                        return "short";
+                    case "ushort":
+                    case "System.UInt16":
+                        return "ushort";
+                    case "int":
+                    case "System.Int32":
+                        return "int";
+                    case "uint":
+                    case "System.UInt32":
+                        return "uint";
+                    case "long":
+                    case "System.Int64":
+                        return "long";
+                    case "ulong":
+                    case "System.UInt64":
+                        return "ulong";
+                    case "float":
+                    case "System.Single":
+                        return "float";
+                    case "double":
+                    case "System.Double":
+                        return "double";
+                    case "decimal":
+                    case "System.Decimal":
+                        return "decimal";
+                    case "type":
+                    case "MetaDslx.CodeAnalysis.MetaType":
+                        return "type";
+                    case "symbol":
+                    case "MetaDslx.CodeAnalysis.MetaSymbol":
+                        return "symbol";
+                    default:
+                        return null;
+                }
+            }
+        }
+
+        public string? CSharpKeyword
+        {
+            get
+            {
+                switch (FullName)
+                {
+                    case "void":
+                    case "System.Void":
+                        return "void";
+                    case "object":
+                    case "System.Object":
+                        return "object";
+                    case "bool":
+                    case "System.Boolean":
+                        return "bool";
+                    case "char":
+                    case "System.Char":
+                        return "char";
+                    case "string":
+                    case "System.String":
+                        return "string";
+                    case "byte":
+                    case "System.Byte":
+                        return "byte";
+                    case "sbyte":
+                    case "System.SByte":
+                        return "sbyte";
+                    case "short":
+                    case "System.Int16":
+                        return "short";
+                    case "ushort":
+                    case "System.UInt16":
+                        return "ushort";
+                    case "int":
+                    case "System.Int32":
+                        return "int";
+                    case "uint":
+                    case "System.UInt32":
+                        return "uint";
+                    case "long":
+                    case "System.Int64":
+                        return "long";
+                    case "ulong":
+                    case "System.UInt64":
+                        return "ulong";
+                    case "float":
+                    case "System.Single":
+                        return "float";
+                    case "double":
+                    case "System.Double":
+                        return "double";
+                    case "decimal":
+                    case "System.Decimal":
+                        return "decimal";
+                    default:
+                        return null;
+                }
+            }
+        }
+
         public SpecialType SpecialType
         {
             get

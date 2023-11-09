@@ -54,7 +54,7 @@ MetaOperation: returnType=TypeReference name=Name '(' ParameterList? ')' ';';
 part ParameterList: parameters+=MetaParameter (',' parameters+=MetaParameter)*;
 MetaParameter: type=TypeReference name=Name;
 
-TypeReference returns MetaType: MetaPrimitiveType | MetaArrayType | MetaNullableType | #MetaType;
+TypeReference returns MetaDslx.CodeAnalysis.MetaType: MetaPrimitiveType | MetaArrayType | MetaNullableType | #{MetaDslx.Languages.MetaModel.Model.MetaType,MetaDslx.CodeAnalysis.MetaType};
 MetaPrimitiveType returns string
 	: 'bool'
 	| 'int'

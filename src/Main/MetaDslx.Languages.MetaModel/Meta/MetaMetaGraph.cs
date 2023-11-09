@@ -61,28 +61,7 @@ namespace MetaDslx.Languages.MetaModel.Meta
         protected override bool IsPrimitiveType(MetaDslx.CodeAnalysis.MetaType type)
         {
             if (type.OriginalModelObject is MetaPrimitiveType) return true;
-            switch (type.SpecialType)
-            {
-                case CodeAnalysis.SpecialType.System_Object:
-                case CodeAnalysis.SpecialType.System_Void:
-                case CodeAnalysis.SpecialType.System_Boolean:
-                case CodeAnalysis.SpecialType.System_Char:
-                case CodeAnalysis.SpecialType.System_String:
-                case CodeAnalysis.SpecialType.System_Byte:
-                case CodeAnalysis.SpecialType.System_SByte:
-                case CodeAnalysis.SpecialType.System_Int16:
-                case CodeAnalysis.SpecialType.System_UInt16:
-                case CodeAnalysis.SpecialType.System_Int32:
-                case CodeAnalysis.SpecialType.System_UInt32:
-                case CodeAnalysis.SpecialType.System_Int64:
-                case CodeAnalysis.SpecialType.System_UInt64:
-                case CodeAnalysis.SpecialType.System_Single:
-                case CodeAnalysis.SpecialType.System_Double:
-                case CodeAnalysis.SpecialType.System_Decimal:
-                case CodeAnalysis.SpecialType.MetaDslx_CodeAnalysis_MetaType:
-                case CodeAnalysis.SpecialType.MetaDslx_CodeAnalysis_MetaSymbol:
-                    return true;
-            }
+            if (type.MetaKeyword is not null) return true;
             return false;
         }
 
