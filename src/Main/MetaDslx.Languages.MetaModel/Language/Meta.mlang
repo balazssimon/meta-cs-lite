@@ -55,12 +55,13 @@ part ParameterList: parameters+=MetaParameter (',' parameters+=MetaParameter)*;
 MetaParameter: type=TypeReference name=Name;
 
 TypeReference returns MetaType: MetaPrimitiveType | MetaArrayType | #MetaType;
-MetaPrimitiveType
-	: 'bool' => Meta.BoolType
-	| 'int' => Meta.IntType
-	| 'string' => Meta.StringType
-	| 'type' => Meta.TypeType
-	| 'void' => Meta.VoidType
+MetaPrimitiveType returns string
+	: 'bool'
+	| 'int'
+	| 'string'
+	| 'type'
+	| 'symbol'
+	| 'void'
 	;
 MetaArrayType: itemType=TypeReference '[' ']';
 

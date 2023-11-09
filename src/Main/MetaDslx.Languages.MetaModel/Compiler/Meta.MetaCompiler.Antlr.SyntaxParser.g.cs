@@ -482,6 +482,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                 if (context.kInt is not null) tokens = (InternalSyntaxToken)this.VisitTerminal(context.kInt);
                 if (context.kString is not null) tokens = (InternalSyntaxToken)this.VisitTerminal(context.kString);
                 if (context.kType is not null) tokens = (InternalSyntaxToken)this.VisitTerminal(context.kType);
+                if (context.kSymbol is not null) tokens = (InternalSyntaxToken)this.VisitTerminal(context.kSymbol);
                 if (context.kVoid is not null) tokens = (InternalSyntaxToken)this.VisitTerminal(context.kVoid);
             	return _factory.TypeReferenceTokens((InternalSyntaxToken)tokens);
             }

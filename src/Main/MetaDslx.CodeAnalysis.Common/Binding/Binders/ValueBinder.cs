@@ -87,6 +87,7 @@ namespace MetaDslx.CodeAnalysis.Binding
                 context.AddDiagnostic(Diagnostic.Create(CommonErrorCode.ERR_BindingError, Location, $"Value '{RawValue}' is not enclosed in an IPropertyBinder."));
             }
             var expectedType = propertyBinder?.GetValueType(context);
+            if (expectedType == typeof(MetaType)) return MetaType.FromName(RawValue);
             if (Language.SyntaxFacts.TryExtractValue(expectedType, RawValue, out var value))
             {
                 return value;

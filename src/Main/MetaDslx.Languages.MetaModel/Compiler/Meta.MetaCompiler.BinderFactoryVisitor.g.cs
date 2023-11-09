@@ -945,7 +945,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Binding
         	switch (node.Tokens.GetMetaKind())
         	{
         	case MetaSyntaxKind.KBool:
-        	    var __annot0 = new ConstantBinder(value: global::MetaDslx.Languages.MetaModel.Model.Meta.BoolType);
+        	    var __annot0 = new ValueBinder(type: typeof(string));
         	    this.Begin(__annot0, node.Tokens);
         	    try
         	    {
@@ -957,7 +957,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Binding
         	    }
         	    break;
         	case MetaSyntaxKind.KInt:
-        	    var __annot1 = new ConstantBinder(value: global::MetaDslx.Languages.MetaModel.Model.Meta.IntType);
+        	    var __annot1 = new ValueBinder(type: typeof(string));
         	    this.Begin(__annot1, node.Tokens);
         	    try
         	    {
@@ -969,7 +969,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Binding
         	    }
         	    break;
         	case MetaSyntaxKind.KString:
-        	    var __annot2 = new ConstantBinder(value: global::MetaDslx.Languages.MetaModel.Model.Meta.StringType);
+        	    var __annot2 = new ValueBinder(type: typeof(string));
         	    this.Begin(__annot2, node.Tokens);
         	    try
         	    {
@@ -981,7 +981,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Binding
         	    }
         	    break;
         	case MetaSyntaxKind.KType:
-        	    var __annot3 = new ConstantBinder(value: global::MetaDslx.Languages.MetaModel.Model.Meta.TypeType);
+        	    var __annot3 = new ValueBinder(type: typeof(string));
         	    this.Begin(__annot3, node.Tokens);
         	    try
         	    {
@@ -992,8 +992,8 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Binding
         	        this.End(__annot3);
         	    }
         	    break;
-        	case MetaSyntaxKind.KVoid:
-        	    var __annot4 = new ConstantBinder(value: global::MetaDslx.Languages.MetaModel.Model.Meta.VoidType);
+        	case MetaSyntaxKind.KSymbol:
+        	    var __annot4 = new ValueBinder(type: typeof(string));
         	    this.Begin(__annot4, node.Tokens);
         	    try
         	    {
@@ -1002,6 +1002,18 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Binding
         	    finally
         	    {
         	        this.End(__annot4);
+        	    }
+        	    break;
+        	case MetaSyntaxKind.KVoid:
+        	    var __annot5 = new ValueBinder(type: typeof(string));
+        	    this.Begin(__annot5, node.Tokens);
+        	    try
+        	    {
+        	        // this.VisitToken(node.Tokens);
+        	    }
+        	    finally
+        	    {
+        	        this.End(__annot5);
         	    }
         	    break;
         	default:

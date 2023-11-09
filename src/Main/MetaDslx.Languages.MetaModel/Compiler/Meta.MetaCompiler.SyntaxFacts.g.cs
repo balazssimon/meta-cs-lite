@@ -50,6 +50,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
 				case MetaSyntaxKind.KInt:
 				case MetaSyntaxKind.KString:
 				case MetaSyntaxKind.KType:
+				case MetaSyntaxKind.KSymbol:
 				case MetaSyntaxKind.KVoid:
 				case MetaSyntaxKind.TLBracket:
 				case MetaSyntaxKind.TRBracket:
@@ -101,6 +102,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
 				case MetaSyntaxKind.KInt:
 				case MetaSyntaxKind.KString:
 				case MetaSyntaxKind.KType:
+				case MetaSyntaxKind.KSymbol:
 				case MetaSyntaxKind.KVoid:
 				case MetaSyntaxKind.TLBracket:
 				case MetaSyntaxKind.TRBracket:
@@ -168,6 +170,8 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
 					return MetaSyntaxKind.KString;
 				case "type": 
 					return MetaSyntaxKind.KType;
+				case "symbol": 
+					return MetaSyntaxKind.KSymbol;
 				case "void": 
 					return MetaSyntaxKind.KVoid;
 				case "[": 
@@ -263,6 +267,8 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
 					return "KString";
 				case MetaSyntaxKind.KType: 
 					return "KType";
+				case MetaSyntaxKind.KSymbol: 
+					return "KSymbol";
 				case MetaSyntaxKind.KVoid: 
 					return "KVoid";
 				case MetaSyntaxKind.TLBracket: 
@@ -435,6 +441,8 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
 					return "string";
 				case MetaSyntaxKind.KType: 
 					return "type";
+				case MetaSyntaxKind.KSymbol: 
+					return "symbol";
 				case MetaSyntaxKind.KVoid: 
 					return "void";
 				case MetaSyntaxKind.TLBracket: 
@@ -492,6 +500,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
 				case MetaSyntaxKind.KInt: 
 				case MetaSyntaxKind.KString: 
 				case MetaSyntaxKind.KType: 
+				case MetaSyntaxKind.KSymbol: 
 				case MetaSyntaxKind.KVoid: 
 					return true;
 				default:
@@ -522,6 +531,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
 			yield return MetaSyntaxKind.KInt;
 			yield return MetaSyntaxKind.KString;
 			yield return MetaSyntaxKind.KType;
+			yield return MetaSyntaxKind.KSymbol;
 			yield return MetaSyntaxKind.KVoid;
 			yield break;
         }
@@ -567,6 +577,8 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
 					return MetaSyntaxKind.KString;
 				case "type": 
 					return MetaSyntaxKind.KType;
+				case "symbol": 
+					return MetaSyntaxKind.KSymbol;
 				case "void": 
 					return MetaSyntaxKind.KVoid;
 				default:

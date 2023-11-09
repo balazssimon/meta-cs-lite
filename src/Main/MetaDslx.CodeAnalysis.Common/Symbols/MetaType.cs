@@ -185,15 +185,15 @@ namespace MetaDslx.CodeAnalysis
                     case "symbol":
                     case "MetaDslx.CodeAnalysis.MetaSymbol":
                         return SpecialType.MetaDslx_CodeAnalysis_MetaSymbol;
-                    case "MetaDslx.CodeAnalysis.Symbol":
+                    case "MetaDslx.CodeAnalysis.Symbols.Symbol":
                         return SpecialType.MetaDslx_CodeAnalysis_Symbol;
-                    case "MetaDslx.CodeAnalysis.AssemblySymbol":
+                    case "MetaDslx.CodeAnalysis.Symbols.AssemblySymbol":
                         return SpecialType.MetaDslx_CodeAnalysis_AssemblySymbol;
-                    case "MetaDslx.CodeAnalysis.ModuleSymbol":
+                    case "MetaDslx.CodeAnalysis.Symbols.ModuleSymbol":
                         return SpecialType.MetaDslx_CodeAnalysis_ModuleSymbol;
-                    case "MetaDslx.CodeAnalysis.TypeSymbol":
+                    case "MetaDslx.CodeAnalysis.Symbols.TypeSymbol":
                         return SpecialType.MetaDslx_CodeAnalysis_TypeSymbol;
-                    case "MetaDslx.CodeAnalysis.NamespaceSymbol":
+                    case "MetaDslx.CodeAnalysis.Symbols.NamespaceSymbol":
                         return SpecialType.MetaDslx_CodeAnalysis_NamespaceSymbol;
                     case "MetaDslx.Modeling.Model":
                         return SpecialType.MetaDslx_Modeling_Model;
@@ -227,10 +227,138 @@ namespace MetaDslx.CodeAnalysis
         public Type? AsType()
         {
             if (IsType) return OriginalType;
+            var result = AsSpecialType();
+            if (result is not null) return result;
             var fullName = this.FullName;
             return AppDomain.CurrentDomain.GetAssemblies().Reverse()
                 .Select(assembly => assembly.GetType(fullName))
                 .FirstOrDefault(t => t != null);
+        }
+
+        public Type? AsSpecialType()
+        {
+            switch (FullName)
+            {
+                case "void":
+                case "System.Void":
+                    return typeof(void);
+                case "object":
+                case "System.Object":
+                    return typeof(object);
+                case "enum":
+                case "System.Enum":
+                    return typeof(System.Enum);
+                case "System.ValueType":
+                    return typeof(System.ValueType);
+                case "System.Delegate":
+                    return typeof(System.Delegate);
+                case "System.MulticastDelegate":
+                    return typeof(System.MulticastDelegate);
+                case "bool":
+                case "System.Boolean":
+                    return typeof(bool);
+                case "char":
+                case "System.Char":
+                    return typeof(char);
+                case "string":
+                case "System.String":
+                    return typeof(string);
+                case "byte":
+                case "System.Byte":
+                    return typeof(byte);
+                case "sbyte":
+                case "System.SByte":
+                    return typeof(sbyte);
+                case "short":
+                case "System.Int16":
+                    return typeof(short);
+                case "ushort":
+                case "System.UInt16":
+                    return typeof(ushort);
+                case "int":
+                case "System.Int32":
+                    return typeof(int);
+                case "uint":
+                case "System.UInt32":
+                    return typeof(uint);
+                case "long":
+                case "System.Int64":
+                    return typeof(long);
+                case "ulong":
+                case "System.UInt64":
+                    return typeof(ulong);
+                case "float":
+                case "System.Single":
+                    return typeof(float);
+                case "double":
+                case "System.Double":
+                    return typeof(double);
+                case "decimal":
+                case "System.Decimal":
+                    return typeof(decimal);
+                case "System.IntPtr":
+                    return typeof(System.IntPtr);
+                case "System.UIntPtr":
+                    return typeof(System.UIntPtr);
+                case "System.Array":
+                    return typeof(System.Array);
+                case "System.Collections.IEnumerable":
+                    return typeof(System.Collections.IEnumerable);
+                case "System.Collections.Generic.IEnumerable`1":
+                    return typeof(System.Collections.Generic.IEnumerable<>);
+                case "System.Collections.Generic.IList`1":
+                    return typeof(System.Collections.Generic.IList<>);
+                case "System.Collections.Generic.ICollection`1":
+                    return typeof(System.Collections.Generic.ICollection<>);
+                case "System.Collections.IEnumerator":
+                    return typeof(System.Collections.IEnumerator);
+                case "System.Collections.Generic.IEnumerator`1":
+                    return typeof(System.Collections.Generic.IEnumerator<>);
+                case "System.Collections.Generic.IReadOnlyList`1":
+                    return typeof(System.Collections.Generic.IReadOnlyList<>);
+                case "System.Collections.Generic.IReadOnlyCollection`1":
+                    return typeof(System.Collections.Generic.IReadOnlyCollection<>);
+                case "System.Nullable`1":
+                    return typeof(System.Nullable<>);
+                case "System.DateTime":
+                    return typeof(System.DateTime);
+                case "System.IDisposable":
+                    return typeof(System.IDisposable);
+                case "System.Type":
+                    return typeof(System.Type);
+                case "type":
+                case "MetaDslx.CodeAnalysis.MetaType":
+                    return typeof(MetaDslx.CodeAnalysis.MetaType);
+                case "symbol":
+                case "MetaDslx.CodeAnalysis.MetaSymbol":
+                    return typeof(MetaDslx.CodeAnalysis.MetaSymbol);
+                case "MetaDslx.CodeAnalysis.Symbols.Symbol":
+                    return typeof(MetaDslx.CodeAnalysis.Symbols.Symbol);
+                case "MetaDslx.CodeAnalysis.Symbols.AssemblySymbol":
+                    return typeof(MetaDslx.CodeAnalysis.Symbols.AssemblySymbol);
+                case "MetaDslx.CodeAnalysis.Symbols.ModuleSymbol":
+                    return typeof(MetaDslx.CodeAnalysis.Symbols.ModuleSymbol);
+                case "MetaDslx.CodeAnalysis.Symbols.TypeSymbol":
+                    return typeof(MetaDslx.CodeAnalysis.Symbols.TypeSymbol);
+                case "MetaDslx.CodeAnalysis.Symbols.NamespaceSymbol":
+                    return typeof(MetaDslx.CodeAnalysis.Symbols.NamespaceSymbol);
+                case "MetaDslx.Modeling.Model":
+                    return typeof(MetaDslx.Modeling.Model);
+                case "MetaDslx.Modeling.ModelGroup":
+                    return typeof(MetaDslx.Modeling.ModelGroup);
+                case "MetaDslx.Modeling.MetaModel":
+                    return typeof(MetaDslx.Modeling.MetaModel);
+                case "MetaDslx.Modeling.IModelObject":
+                    return typeof(MetaDslx.Modeling.IModelObject);
+                case "MetaDslx.Modeling.ModelObject":
+                    return typeof(MetaDslx.Modeling.ModelObject);
+                case "MetaDslx.Modeling.ModelProperty":
+                    return typeof(MetaDslx.Modeling.ModelProperty);
+                case "MetaDslx.Modeling.IModelCollection":
+                    return typeof(MetaDslx.Modeling.IModelCollection);
+                default:
+                    return null;
+            }
         }
 
         public Type? AsType(string assemblyName)

@@ -49,6 +49,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
 		KInt,
 		KString,
 		KType,
+		KSymbol,
 		KVoid,
 		TLBracket,
 		TRBracket,

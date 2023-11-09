@@ -4,12 +4,6 @@ using MetaDslx.CodeAnalysis.Symbols;
 
 metamodel Meta;
 
-const MetaPrimitiveType VoidType;
-const MetaPrimitiveType BoolType;
-const MetaPrimitiveType IntType;
-const MetaPrimitiveType StringType;
-const MetaPrimitiveType TypeType;
-
 class MetaDeclaration $Declared
 {
 	string $Name;

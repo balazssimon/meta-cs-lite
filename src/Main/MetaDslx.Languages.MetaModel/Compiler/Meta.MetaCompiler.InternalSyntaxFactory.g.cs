@@ -723,7 +723,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
 		{
 #if DEBUG
 			if (tokens is null) throw new ArgumentNullException(nameof(tokens));
-			if (tokens.RawKind != (int)MetaSyntaxKind.KBool && tokens.RawKind != (int)MetaSyntaxKind.KInt && tokens.RawKind != (int)MetaSyntaxKind.KString && tokens.RawKind != (int)MetaSyntaxKind.KType && tokens.RawKind != (int)MetaSyntaxKind.KVoid) throw new ArgumentException(nameof(tokens));
+			if (tokens.RawKind != (int)MetaSyntaxKind.KBool && tokens.RawKind != (int)MetaSyntaxKind.KInt && tokens.RawKind != (int)MetaSyntaxKind.KString && tokens.RawKind != (int)MetaSyntaxKind.KType && tokens.RawKind != (int)MetaSyntaxKind.KSymbol && tokens.RawKind != (int)MetaSyntaxKind.KVoid) throw new ArgumentException(nameof(tokens));
 #endif
 			int hash;
 			var cached = SyntaxNodeCache.TryGetNode((int)(MetaSyntaxKind)MetaSyntaxKind.TypeReferenceTokens, tokens, out hash);

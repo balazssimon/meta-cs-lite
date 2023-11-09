@@ -491,7 +491,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
 
         public TypeReferenceTokensSyntax TypeReferenceTokens(SyntaxToken tokens)
         {
-        	if (tokens.RawKind != (int)MetaSyntaxKind.KBool && tokens.RawKind != (int)MetaSyntaxKind.KInt && tokens.RawKind != (int)MetaSyntaxKind.KString && tokens.RawKind != (int)MetaSyntaxKind.KType && tokens.RawKind != (int)MetaSyntaxKind.KVoid) throw new ArgumentException(nameof(tokens));
+        	if (tokens.RawKind != (int)MetaSyntaxKind.KBool && tokens.RawKind != (int)MetaSyntaxKind.KInt && tokens.RawKind != (int)MetaSyntaxKind.KString && tokens.RawKind != (int)MetaSyntaxKind.KType && tokens.RawKind != (int)MetaSyntaxKind.KSymbol && tokens.RawKind != (int)MetaSyntaxKind.KVoid) throw new ArgumentException(nameof(tokens));
             return (TypeReferenceTokensSyntax)MetaLanguage.Instance.InternalSyntaxFactory.TypeReferenceTokens((InternalSyntaxToken)tokens.Node).CreateRed();
         }
 
