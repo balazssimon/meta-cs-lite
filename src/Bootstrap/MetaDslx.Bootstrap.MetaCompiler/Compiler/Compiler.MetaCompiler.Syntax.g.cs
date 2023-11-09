@@ -301,7 +301,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	}
 	public sealed class UsingSyntax : CompilerSyntaxNode
 	{
-		private QualifierSyntax _namespaces;
+		private UsingBlock1Syntax _usingBlock1;
 	
 	    public UsingSyntax(InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
 	        : base(green, syntaxTree, position)
@@ -322,7 +322,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 				return new SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
 			}
 		}
-	    public QualifierSyntax Namespaces => this.GetRed(ref this._namespaces, 1);
+	    public UsingBlock1Syntax UsingBlock1 => this.GetRed(ref this._usingBlock1, 1);
 	    public SyntaxToken TSemicolon 
 		{ 
 			get 
@@ -337,7 +337,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	    {
 	        switch (index)
 	        {
-				case 1: return this.GetRed(ref this._namespaces, 1);
+				case 1: return this.GetRed(ref this._usingBlock1, 1);
 				default: return null;
 	        }
 	    }
@@ -346,31 +346,31 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	    {
 	        switch (index)
 	        {
-				case 1: return this._namespaces;
+				case 1: return this._usingBlock1;
 				default: return null;
 	        }
 	    }
 	
 	    public UsingSyntax WithKUsing(SyntaxToken kUsing)
 		{
-			return this.Update(kUsing, this.Namespaces, this.TSemicolon);
+			return this.Update(kUsing, this.UsingBlock1, this.TSemicolon);
 		}
 	
-	    public UsingSyntax WithNamespaces(QualifierSyntax namespaces)
+	    public UsingSyntax WithUsingBlock1(UsingBlock1Syntax usingBlock1)
 		{
-			return this.Update(this.KUsing, namespaces, this.TSemicolon);
+			return this.Update(this.KUsing, usingBlock1, this.TSemicolon);
 		}
 	
 	    public UsingSyntax WithTSemicolon(SyntaxToken tSemicolon)
 		{
-			return this.Update(this.KUsing, this.Namespaces, tSemicolon);
+			return this.Update(this.KUsing, this.UsingBlock1, tSemicolon);
 		}
 	
-	    public UsingSyntax Update(SyntaxToken kUsing, QualifierSyntax namespaces, SyntaxToken tSemicolon)
+	    public UsingSyntax Update(SyntaxToken kUsing, UsingBlock1Syntax usingBlock1, SyntaxToken tSemicolon)
 	    {
-	        if (this.KUsing != kUsing || this.Namespaces != namespaces || this.TSemicolon != tSemicolon)
+	        if (this.KUsing != kUsing || this.UsingBlock1 != usingBlock1 || this.TSemicolon != tSemicolon)
 	        {
-	            var newNode = CompilerLanguage.Instance.SyntaxFactory.Using(kUsing, namespaces, tSemicolon);
+	            var newNode = CompilerLanguage.Instance.SyntaxFactory.Using(kUsing, usingBlock1, tSemicolon);
 	            var annotations = this.GetAnnotations();
 	            if (annotations != null && annotations.Length > 0)
 	               newNode = newNode.WithAnnotations(annotations);
@@ -509,6 +509,15 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 			}
 		}
 	    public NameSyntax Name => this.GetRed(ref this._name, 1);
+	    public SyntaxToken TSemicolon 
+		{ 
+			get 
+			{ 
+				var green = (global::MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax.LanguageDeclarationGreen)this.Green;
+				var greenToken = green.TSemicolon;
+				return new SyntaxToken(this, greenToken, this.GetChildPosition(2), this.GetChildIndex(2));
+			}
+		}
 	
 	    protected override SyntaxNode GetNodeSlot(int index)
 	    {
@@ -530,19 +539,24 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	
 	    public LanguageDeclarationSyntax WithKLanguage(SyntaxToken kLanguage)
 		{
-			return this.Update(kLanguage, this.Name);
+			return this.Update(kLanguage, this.Name, this.TSemicolon);
 		}
 	
 	    public LanguageDeclarationSyntax WithName(NameSyntax name)
 		{
-			return this.Update(this.KLanguage, name);
+			return this.Update(this.KLanguage, name, this.TSemicolon);
 		}
 	
-	    public LanguageDeclarationSyntax Update(SyntaxToken kLanguage, NameSyntax name)
+	    public LanguageDeclarationSyntax WithTSemicolon(SyntaxToken tSemicolon)
+		{
+			return this.Update(this.KLanguage, this.Name, tSemicolon);
+		}
+	
+	    public LanguageDeclarationSyntax Update(SyntaxToken kLanguage, NameSyntax name, SyntaxToken tSemicolon)
 	    {
-	        if (this.KLanguage != kLanguage || this.Name != name)
+	        if (this.KLanguage != kLanguage || this.Name != name || this.TSemicolon != tSemicolon)
 	        {
-	            var newNode = CompilerLanguage.Instance.SyntaxFactory.LanguageDeclaration(kLanguage, name);
+	            var newNode = CompilerLanguage.Instance.SyntaxFactory.LanguageDeclaration(kLanguage, name, tSemicolon);
 	            var annotations = this.GetAnnotations();
 	            if (annotations != null && annotations.Length > 0)
 	               newNode = newNode.WithAnnotations(annotations);
@@ -1618,6 +1632,169 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	    public override void Accept(ICompilerSyntaxVisitor visitor)
 	    {
 	        visitor.VisitIdentifier(this);
+	    }
+	
+	}
+	public abstract class UsingBlock1Syntax : CompilerSyntaxNode
+	{
+	    protected UsingBlock1Syntax(InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
+	        : base(green, syntaxTree, position)
+	    {
+	    }
+	
+	    protected UsingBlock1Syntax(InternalSyntaxNode green, CompilerSyntaxNode parent, int position)
+	        : base(green, parent, position)
+	    {
+	    }
+	}
+	
+	public sealed class UsingBlock1Alt1Syntax : UsingBlock1Syntax
+	{
+		private QualifierSyntax _namespaces;
+	
+	    public UsingBlock1Alt1Syntax(InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
+	        : base(green, syntaxTree, position)
+	    {
+	    }
+	
+	    public UsingBlock1Alt1Syntax(InternalSyntaxNode green, CompilerSyntaxNode parent, int position)
+	        : base(green, parent, position)
+	    {
+	    }
+	
+	    public QualifierSyntax Namespaces => this.GetRed(ref this._namespaces, 0);
+	
+	    protected override SyntaxNode GetNodeSlot(int index)
+	    {
+	        switch (index)
+	        {
+				case 0: return this.GetRed(ref this._namespaces, 0);
+				default: return null;
+	        }
+	    }
+	
+	    protected override SyntaxNode GetCachedSlot(int index)
+	    {
+	        switch (index)
+	        {
+				case 0: return this._namespaces;
+				default: return null;
+	        }
+	    }
+	
+	    public UsingBlock1Alt1Syntax WithNamespaces(QualifierSyntax namespaces)
+		{
+			return this.Update(namespaces);
+		}
+	
+	    public UsingBlock1Alt1Syntax Update(QualifierSyntax namespaces)
+	    {
+	        if (this.Namespaces != namespaces)
+	        {
+	            var newNode = CompilerLanguage.Instance.SyntaxFactory.UsingBlock1Alt1(namespaces);
+	            var annotations = this.GetAnnotations();
+	            if (annotations != null && annotations.Length > 0)
+	               newNode = newNode.WithAnnotations(annotations);
+				return (UsingBlock1Alt1Syntax)newNode;
+	        }
+	        return this;
+	    }
+	
+	    public override TResult Accept<TArg, TResult>(ICompilerSyntaxVisitor<TArg, TResult> visitor, TArg argument)
+	    {
+	        return visitor.VisitUsingBlock1Alt1(this, argument);
+	    }
+	
+	    public override TResult Accept<TResult>(ICompilerSyntaxVisitor<TResult> visitor)
+	    {
+	        return visitor.VisitUsingBlock1Alt1(this);
+	    }
+	
+	    public override void Accept(ICompilerSyntaxVisitor visitor)
+	    {
+	        visitor.VisitUsingBlock1Alt1(this);
+	    }
+	
+	}
+	public sealed class UsingBlock1Alt2Syntax : UsingBlock1Syntax
+	{
+		private QualifierSyntax _metaModels;
+	
+	    public UsingBlock1Alt2Syntax(InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
+	        : base(green, syntaxTree, position)
+	    {
+	    }
+	
+	    public UsingBlock1Alt2Syntax(InternalSyntaxNode green, CompilerSyntaxNode parent, int position)
+	        : base(green, parent, position)
+	    {
+	    }
+	
+	    public SyntaxToken KMetamodel 
+		{ 
+			get 
+			{ 
+				var green = (global::MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax.UsingBlock1Alt2Green)this.Green;
+				var greenToken = green.KMetamodel;
+				return new SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
+			}
+		}
+	    public QualifierSyntax MetaModels => this.GetRed(ref this._metaModels, 1);
+	
+	    protected override SyntaxNode GetNodeSlot(int index)
+	    {
+	        switch (index)
+	        {
+				case 1: return this.GetRed(ref this._metaModels, 1);
+				default: return null;
+	        }
+	    }
+	
+	    protected override SyntaxNode GetCachedSlot(int index)
+	    {
+	        switch (index)
+	        {
+				case 1: return this._metaModels;
+				default: return null;
+	        }
+	    }
+	
+	    public UsingBlock1Alt2Syntax WithKMetamodel(SyntaxToken kMetamodel)
+		{
+			return this.Update(kMetamodel, this.MetaModels);
+		}
+	
+	    public UsingBlock1Alt2Syntax WithMetaModels(QualifierSyntax metaModels)
+		{
+			return this.Update(this.KMetamodel, metaModels);
+		}
+	
+	    public UsingBlock1Alt2Syntax Update(SyntaxToken kMetamodel, QualifierSyntax metaModels)
+	    {
+	        if (this.KMetamodel != kMetamodel || this.MetaModels != metaModels)
+	        {
+	            var newNode = CompilerLanguage.Instance.SyntaxFactory.UsingBlock1Alt2(kMetamodel, metaModels);
+	            var annotations = this.GetAnnotations();
+	            if (annotations != null && annotations.Length > 0)
+	               newNode = newNode.WithAnnotations(annotations);
+				return (UsingBlock1Alt2Syntax)newNode;
+	        }
+	        return this;
+	    }
+	
+	    public override TResult Accept<TArg, TResult>(ICompilerSyntaxVisitor<TArg, TResult> visitor, TArg argument)
+	    {
+	        return visitor.VisitUsingBlock1Alt2(this, argument);
+	    }
+	
+	    public override TResult Accept<TResult>(ICompilerSyntaxVisitor<TResult> visitor)
+	    {
+	        return visitor.VisitUsingBlock1Alt2(this);
+	    }
+	
+	    public override void Accept(ICompilerSyntaxVisitor visitor)
+	    {
+	        visitor.VisitUsingBlock1Alt2(this);
 	    }
 	
 	}

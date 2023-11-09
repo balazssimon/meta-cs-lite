@@ -7,10 +7,10 @@ metamodel Compiler;
 abstract class Declaration $Declared
 {
 	contains Annotation[] Annotations;
-	string $Name;
-	Declaration Parent opposite Declarations;
+	string? $Name;
+	Declaration? Parent opposite Declarations;
 	contains Declaration[] Declarations opposite Parent;
-	derived string FullName;
+	derived string? FullName;
 }
 
 class Namespace $NamespaceSymbol : Declaration

@@ -62,13 +62,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
             var aliases = SymbolFactory.GetSymbolPropertyValues<AliasSymbol>(this, nameof(Aliases), diagnostics, cancellationToken);
             var namespaces = SymbolFactory.GetSymbolPropertyValues<NamespaceSymbol>(this, nameof(Namespaces), diagnostics, cancellationToken);
             var symbols = SymbolFactory.GetSymbolPropertyValues<DeclaredSymbol>(this, nameof(Symbols), diagnostics, cancellationToken);
-            var metaModelSymbols = SymbolFactory.GetSymbolPropertyValues<DeclaredSymbol>(this, nameof(MetaModels), diagnostics, cancellationToken);
-            var metaModels = ArrayBuilder<MetaModel>.GetInstance();
-            foreach (var metaModelSymbol in metaModelSymbols)
-            {
-                // TODO
-            }
-
+            var metaModels = SymbolFactory.GetSymbolPropertyValues<MetaModel>(this, nameof(MetaModels), diagnostics, cancellationToken);
             if (files.Length > 0)
             {
                 var compilation = this.DeclaringCompilation;
@@ -122,7 +116,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
                     }
                 }
             }
-            return (aliases, namespaces, symbols, metaModels.ToImmutableAndFree());
+            return (aliases, namespaces, symbols, metaModels);
         }
     }
 }

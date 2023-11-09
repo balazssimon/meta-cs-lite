@@ -125,11 +125,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
             {
                	if (context == null) return UsingGreen.__Missing;
                 var kUsing = this.VisitTerminal(context.kUsing, CompilerSyntaxKind.KUsing);
-                QualifierGreen? namespaces = null;
-                if (context.namespacesAntlr1 is not null) namespaces = (QualifierGreen?)this.Visit(context.namespacesAntlr1) ?? QualifierGreen.__Missing;
-                else namespaces = QualifierGreen.__Missing;
+                UsingBlock1Green? usingBlock1 = null;
+                if (context.usingBlock1Antlr1 is not null) usingBlock1 = (UsingBlock1Green?)this.Visit(context.usingBlock1Antlr1) ?? UsingBlock1Green.__Missing;
+                else usingBlock1 = UsingBlock1Green.__Missing;
                 var tSemicolon = this.VisitTerminal(context.tSemicolon, CompilerSyntaxKind.TSemicolon);
-            	return _factory.Using((InternalSyntaxToken)kUsing, namespaces, (InternalSyntaxToken)tSemicolon);
+            	return _factory.Using((InternalSyntaxToken)kUsing, usingBlock1, (InternalSyntaxToken)tSemicolon);
             }
             public override GreenNode? VisitPr_Declarations(CompilerParser.Pr_DeclarationsContext? context)
             {
@@ -155,7 +155,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
                 NameGreen? name = null;
                 if (context.nameAntlr1 is not null) name = (NameGreen?)this.Visit(context.nameAntlr1) ?? NameGreen.__Missing;
                 else name = NameGreen.__Missing;
-            	return _factory.LanguageDeclaration((InternalSyntaxToken)kLanguage, name);
+                var tSemicolon = this.VisitTerminal(context.tSemicolon, CompilerSyntaxKind.TSemicolon);
+            	return _factory.LanguageDeclaration((InternalSyntaxToken)kLanguage, name, (InternalSyntaxToken)tSemicolon);
             }
             public override GreenNode? VisitPr_ParserRule(CompilerParser.Pr_ParserRuleContext? context)
             {
@@ -335,6 +336,23 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
                	if (context == null) return IdentifierGreen.__Missing;
                 var tIdentifier = this.VisitTerminal(context.tIdentifierAntlr1, CompilerSyntaxKind.TIdentifier);
             	return _factory.Identifier((InternalSyntaxToken)tIdentifier);
+            }
+            public override GreenNode? VisitPr_UsingBlock1Alt1(CompilerParser.Pr_UsingBlock1Alt1Context? context)
+            {
+               	if (context == null) return UsingBlock1Alt1Green.__Missing;
+                QualifierGreen? namespaces = null;
+                if (context.namespacesAntlr1 is not null) namespaces = (QualifierGreen?)this.Visit(context.namespacesAntlr1) ?? QualifierGreen.__Missing;
+                else namespaces = QualifierGreen.__Missing;
+            	return _factory.UsingBlock1Alt1(namespaces);
+            }
+            public override GreenNode? VisitPr_UsingBlock1Alt2(CompilerParser.Pr_UsingBlock1Alt2Context? context)
+            {
+               	if (context == null) return UsingBlock1Alt2Green.__Missing;
+                var kMetamodel = this.VisitTerminal(context.kMetamodel, CompilerSyntaxKind.KMetamodel);
+                QualifierGreen? metaModels = null;
+                if (context.metaModelsAntlr1 is not null) metaModels = (QualifierGreen?)this.Visit(context.metaModelsAntlr1) ?? QualifierGreen.__Missing;
+                else metaModels = QualifierGreen.__Missing;
+            	return _factory.UsingBlock1Alt2((InternalSyntaxToken)kMetamodel, metaModels);
             }
             public override GreenNode? VisitPr_ParserRuleBlock1(CompilerParser.Pr_ParserRuleBlock1Context? context)
             {

@@ -6,7 +6,9 @@ using MetaDslx.CodeAnalysis.Binding;
 using MetaDslx.CodeAnalysis.Syntax;
 using MetaDslx.CodeAnalysis;
 using MetaDslx.CodeAnalysis.Symbols;
+using MetaDslx.Modeling;
 using MetaDslx.Bootstrap.MetaCompiler.Model;
+//using metamodel MetaDslx.Bootstrap.MetaCompiler.Model.Compiler;
 
 language Compiler;
 
@@ -16,11 +18,11 @@ Main returns Namespace:
 	Declarations
 	eof;
 
-Using returns ImportSymbol: 'using' namespaces+=#NamespaceSymbol ';';
+Using returns ImportSymbol: 'using' (namespaces+=#NamespaceSymbol | 'metamodel' metaModels+=#MetaModel) ';';
 
 part Declarations: declarations+=LanguageDeclaration declarations+=Rule*;
 
-LanguageDeclaration returns MetaDslx.Bootstrap.MetaCompiler.Model.Language: 'language' Name;
+LanguageDeclaration returns MetaDslx.Bootstrap.MetaCompiler.Model.Language: 'language' Name ';';
 
 Rule: ParserRule | BlockRule;// | TokenRule | FragmentRule;
 
@@ -65,3 +67,4 @@ token TLineEnd[DefaultEndOfLine]: ('\r\n' | '\r' | '\n');
 token TSingleLineComment[SingleLineComment]: '//' ~('\r' | '\n')*;
 
 token TMultiLineComment[MultiLineComment]: '/*' .*? '*/';
+

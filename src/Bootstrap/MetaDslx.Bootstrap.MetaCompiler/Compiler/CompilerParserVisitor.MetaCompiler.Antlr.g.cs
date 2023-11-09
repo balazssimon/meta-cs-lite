@@ -135,6 +135,20 @@ public interface ICompilerParserVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitPr_Identifier([NotNull] CompilerParser.Pr_IdentifierContext context);
 	/// <summary>
+	/// Visit a parse tree produced by the <c>pr_UsingBlock1Alt1</c>
+	/// labeled alternative in <see cref="CompilerParser.pr_UsingBlock1"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitPr_UsingBlock1Alt1([NotNull] CompilerParser.Pr_UsingBlock1Alt1Context context);
+	/// <summary>
+	/// Visit a parse tree produced by the <c>pr_UsingBlock1Alt2</c>
+	/// labeled alternative in <see cref="CompilerParser.pr_UsingBlock1"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitPr_UsingBlock1Alt2([NotNull] CompilerParser.Pr_UsingBlock1Alt2Context context);
+	/// <summary>
 	/// Visit a parse tree produced by <see cref="CompilerParser.pr_ParserRuleBlock1"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>

@@ -56,21 +56,16 @@ namespace MetaDslx.CodeAnalysis.Parsers.Antlr
 
         public void SyntaxError(TextWriter output, IRecognizer recognizer, int offendingSymbol, int line, int charPositionInLine, string msg, RecognitionException e)
         {
-            if (e != null)
+            IToken? token;
+            if (e != null) token = e.OffendingToken;
+            else token = _tokenStream.Get(offendingSymbol);
+            if (token != null)
             {
-                _diagnostics.Add(new SyntaxDiagnosticInfo(e.OffendingToken.StartIndex, e.OffendingToken.Text.Length, ErrorCode.ERR_SyntaxError, msg));
+                _diagnostics.Add(new SyntaxDiagnosticInfo(token.StartIndex, token.Text.Length, ErrorCode.ERR_SyntaxError, msg));
             }
             else
             {
-                var token = _tokenStream.Get(offendingSymbol);
-                if (token != null)
-                {
-                    _diagnostics.Add(new SyntaxDiagnosticInfo(token.StartIndex, token.Text.Length, ErrorCode.ERR_SyntaxError, msg));
-                }
-                else
-                {
-                    _diagnostics.Add(new SyntaxDiagnosticInfo(0, 0, ErrorCode.ERR_SyntaxError, msg));
-                }
+                _diagnostics.Add(new SyntaxDiagnosticInfo(0, 0, ErrorCode.ERR_SyntaxError, msg));
             }
         }
 

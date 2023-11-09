@@ -7,6 +7,7 @@ using MetaDslx.CodeAnalysis.Binding;
 using MetaDslx.CodeAnalysis.Syntax;
 using MetaDslx.CodeAnalysis;
 using MetaDslx.CodeAnalysis.Symbols;
+using MetaDslx.Modeling;
 using MetaDslx.Bootstrap.MetaCompiler.Model;
 
 #nullable enable
@@ -96,34 +97,16 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
 
         public virtual void VisitUsing(UsingSyntax node)
         {
-        	var __annot2 = new DefineBinder(type: typeof(global::MetaDslx.CodeAnalysis.Symbols.ImportSymbol));
-        	this.Begin(__annot2, node);
+        	var __annot0 = new DefineBinder(type: typeof(global::MetaDslx.CodeAnalysis.Symbols.ImportSymbol));
+        	this.Begin(__annot0, node);
         	try
         	{
-        	    var __annot1 = new PropertyBinder(name: "Namespaces");
-        	    this.Begin(__annot1, node.Namespaces);
-        	    try
-        	    {
-        	        var __annot0 = new UseBinder(types: new global::System.Type[] {typeof(global::MetaDslx.CodeAnalysis.Symbols.NamespaceSymbol)}.ToImmutableArray());
-        	        this.Begin(__annot0, node.Namespaces);
-        	        try
-        	        {
-        	            this.Visit(node.Namespaces);
-        	        }
-        	        finally
-        	        {
-        	            this.End(__annot0);
-        	        }
-        	    }
-        	    finally
-        	    {
-        	        this.End(__annot1);
-        	    }
+        	    this.Visit(node.UsingBlock1);
         	        
         	}
         	finally
         	{
-        	    this.End(__annot2);
+        	    this.End(__annot0);
         	}
         }
 
@@ -549,6 +532,54 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
         	{
         	    this.End(__annot0);
         	}
+        }
+
+        public virtual void VisitUsingBlock1Alt1(UsingBlock1Alt1Syntax node)
+        {
+        	var __annot1 = new PropertyBinder(name: "Namespaces");
+        	this.Begin(__annot1, node.Namespaces);
+        	try
+        	{
+        	    var __annot0 = new UseBinder(types: new global::System.Type[] {typeof(global::MetaDslx.CodeAnalysis.Symbols.NamespaceSymbol)}.ToImmutableArray());
+        	    this.Begin(__annot0, node.Namespaces);
+        	    try
+        	    {
+        	        this.Visit(node.Namespaces);
+        	    }
+        	    finally
+        	    {
+        	        this.End(__annot0);
+        	    }
+        	}
+        	finally
+        	{
+        	    this.End(__annot1);
+        	}
+        	    
+        }
+
+        public virtual void VisitUsingBlock1Alt2(UsingBlock1Alt2Syntax node)
+        {
+        	var __annot1 = new PropertyBinder(name: "MetaModels");
+        	this.Begin(__annot1, node.MetaModels);
+        	try
+        	{
+        	    var __annot0 = new UseBinder(types: new global::System.Type[] {typeof(global::MetaDslx.Modeling.MetaModel)}.ToImmutableArray());
+        	    this.Begin(__annot0, node.MetaModels);
+        	    try
+        	    {
+        	        this.Visit(node.MetaModels);
+        	    }
+        	    finally
+        	    {
+        	        this.End(__annot0);
+        	    }
+        	}
+        	finally
+        	{
+        	    this.End(__annot1);
+        	}
+        	    
         }
 
         public virtual void VisitParserRuleBlock1(ParserRuleBlock1Syntax node)
