@@ -220,6 +220,16 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			return Token(null, CompilerSyntaxKind.TMultiLineComment, text, value, null);
 		}
 
+		public InternalSyntaxToken TInvalidToken(string text)
+		{
+			return Token(null, CompilerSyntaxKind.TInvalidToken, text, null);
+		}
+
+		public InternalSyntaxToken TInvalidToken(string text, object value)
+		{
+			return Token(null, CompilerSyntaxKind.TInvalidToken, text, value, null);
+		}
+
 		internal MainGreen Main(InternalSyntaxToken kNamespace, QualifierGreen qualifier, InternalSyntaxToken tSemicolon, MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<UsingGreen> @using, DeclarationsGreen declarations, InternalSyntaxToken eof)
 		{
 #if DEBUG

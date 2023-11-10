@@ -218,6 +218,16 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
             return new SyntaxToken(CompilerLanguage.Instance.InternalSyntaxFactory.TMultiLineComment(text, value));
         }
 
+        public SyntaxToken TInvalidToken(string text)
+        {
+            return new SyntaxToken(CompilerLanguage.Instance.InternalSyntaxFactory.TInvalidToken(text));
+        }
+
+        public SyntaxToken TInvalidToken(string text, object value)
+        {
+            return new SyntaxToken(CompilerLanguage.Instance.InternalSyntaxFactory.TInvalidToken(text, value));
+        }
+
         public MainSyntax Main(SyntaxToken kNamespace, QualifierSyntax qualifier, SyntaxToken tSemicolon, MetaDslx.CodeAnalysis.SyntaxList<UsingSyntax> @using, DeclarationsSyntax declarations, SyntaxToken eof)
         {
         	if (kNamespace.RawKind != (int)CompilerSyntaxKind.KNamespace) throw new ArgumentException(nameof(kNamespace));

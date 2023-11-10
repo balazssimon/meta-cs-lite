@@ -184,6 +184,8 @@ namespace MetaDslx.CodeAnalysis.Parsers.Antlr
         public InternalSyntaxToken ConsumeGreenToken(IToken token, AntlrSyntaxParser parser)
         {
             var factory = parser.Language.InternalSyntaxFactory;
+            var isMissing = token.TokenIndex < 0;
+            if (isMissing) ((AntlrSyntaxToken)token).TokenIndex = _greenIndex;
             var currentIndex = token.TokenIndex;
             SyntaxListBuilder? builder = null;
             GreenNode? leadingTrivia = null;
@@ -201,7 +203,7 @@ namespace MetaDslx.CodeAnalysis.Parsers.Antlr
                 leadingTrivia = builder.ToListNode();
                 builder.Clear();
             }
-            ++_greenIndex;
+            if (!isMissing) ++_greenIndex;
             GreenNode? trailingTrivia = null;
             if (_greenIndex < _allTokens.Count && _allTokens[_greenIndex].Channel != 0) 
             {
@@ -218,7 +220,7 @@ namespace MetaDslx.CodeAnalysis.Parsers.Antlr
                 builder.Clear();
             }
             InternalSyntaxToken green;
-            if (currentIndex < 0)
+            if (isMissing)
             {
                 green = factory.MissingToken(leadingTrivia, AntlrSyntaxKind.FromAntlr(token.Type), trailingTrivia);
             }
@@ -246,7 +248,9 @@ namespace MetaDslx.CodeAnalysis.Parsers.Antlr
             for (int i = _parserErrorPosition; i < parser.Diagnostics.Count; ++i)
             {
                 var diag = parser.Diagnostics[i];
-                if (diag.Offset >= startPosition && diag.Offset < _greenPosition || green.RawKind == (int)InternalSyntaxKind.Eof)
+                if (diag.Offset >= startPosition && diag.Offset < _greenPosition ||
+                    green.IsMissing && diag.Offset == startPosition + 1 ||
+                    green.RawKind == (int)InternalSyntaxKind.Eof)
                 {
                     _parserErrorPosition = i + 1;
                     errors.Add(diag.WithOffset(diag.Offset - startPosition));

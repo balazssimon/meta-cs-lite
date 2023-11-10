@@ -8,7 +8,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	public enum CompilerSyntaxKind
 	{
 		__FirstToken = TComma,
-		__LastToken = TMultiLineComment,
+		__LastToken = TInvalidToken,
 		__FirstFixedToken = TComma,
 		__LastFixedToken = TDot,
 		__FirstRule = Main,
@@ -50,6 +50,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		TLineEnd,
 		TSingleLineComment,
 		TMultiLineComment,
+		TInvalidToken,
 
 		// Rules:
 		Main,

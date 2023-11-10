@@ -51,6 +51,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 				case CompilerSyntaxKind.TLineEnd:
 				case CompilerSyntaxKind.TSingleLineComment:
 				case CompilerSyntaxKind.TMultiLineComment:
+				case CompilerSyntaxKind.TInvalidToken:
 					return true;
 				default:
 					return false;
@@ -221,6 +222,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 					return "TSingleLineComment";
 				case CompilerSyntaxKind.TMultiLineComment: 
 					return "TMultiLineComment";
+				case CompilerSyntaxKind.TInvalidToken: 
+					return "TInvalidToken";
 				case CompilerSyntaxKind.Main: 
 					return "Main";
 				case CompilerSyntaxKind.Using: 

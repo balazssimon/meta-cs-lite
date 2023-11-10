@@ -68,3 +68,4 @@ token TSingleLineComment[SingleLineComment]: '//' ~('\r' | '\n')*;
 
 token TMultiLineComment[MultiLineComment]: '/*' .*? '*/';
 
+token TInvalidToken: .;

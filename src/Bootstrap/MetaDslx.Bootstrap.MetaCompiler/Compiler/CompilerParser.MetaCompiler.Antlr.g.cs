@@ -41,7 +41,7 @@ public partial class CompilerParser : global::MetaDslx.CodeAnalysis.Parsers.Antl
 		LR_KLanguage=6, LR_KReturns=7, LR_TColon=8, LR_TBar=9, LR_KBlock=10, LR_TLBrace=11, 
 		LR_TRBrace=12, LR_TEqGt=13, LR_KNull=14, LR_KTrue=15, LR_KFalse=16, LR_TDot=17, 
 		LR_TInteger=18, LR_TDecimal=19, LR_TIdentifier=20, LR_TString=21, LR_TWhitespace=22, 
-		LR_TLineEnd=23, LR_TSingleLineComment=24, LR_TMultiLineComment=25;
+		LR_TLineEnd=23, LR_TSingleLineComment=24, LR_TMultiLineComment=25, LR_TInvalidToken=26;
 	public const int
 		RULE_pr_Main = 0, RULE_pr_Using = 1, RULE_pr_Declarations = 2, RULE_pr_LanguageDeclaration = 3, 
 		RULE_pr_Rule = 4, RULE_pr_ParserRuleAlternative = 5, RULE_pr_ParserRuleElement = 6, 
@@ -68,7 +68,7 @@ public partial class CompilerParser : global::MetaDslx.CodeAnalysis.Parsers.Antl
 		"LR_KLanguage", "LR_KReturns", "LR_TColon", "LR_TBar", "LR_KBlock", "LR_TLBrace", 
 		"LR_TRBrace", "LR_TEqGt", "LR_KNull", "LR_KTrue", "LR_KFalse", "LR_TDot", 
 		"LR_TInteger", "LR_TDecimal", "LR_TIdentifier", "LR_TString", "LR_TWhitespace", 
-		"LR_TLineEnd", "LR_TSingleLineComment", "LR_TMultiLineComment"
+		"LR_TLineEnd", "LR_TSingleLineComment", "LR_TMultiLineComment", "LR_TInvalidToken"
 	};
 	public static readonly IVocabulary DefaultVocabulary = new Vocabulary(_LiteralNames, _SymbolicNames);
 
@@ -1376,7 +1376,7 @@ public partial class CompilerParser : global::MetaDslx.CodeAnalysis.Parsers.Antl
 	}
 
 	private static int[] _serializedATN = {
-		4,1,25,164,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,6,2,7,
+		4,1,26,164,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,6,2,7,
 		7,7,2,8,7,8,2,9,7,9,2,10,7,10,2,11,7,11,2,12,7,12,2,13,7,13,2,14,7,14,
 		2,15,7,15,2,16,7,16,2,17,7,17,2,18,7,18,2,19,7,19,1,0,1,0,1,0,1,0,5,0,
 		45,8,0,10,0,12,0,48,9,0,1,0,1,0,1,0,1,1,1,1,1,1,1,1,1,2,1,2,5,2,59,8,2,
