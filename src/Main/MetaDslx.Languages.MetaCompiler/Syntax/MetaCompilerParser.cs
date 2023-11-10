@@ -1000,7 +1000,7 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                         {
                             addAnnotation = false;
                         }
-                        else if (refElem.Rule is ParserRule refRule && !refRule.IsPart)
+                        else if (refElem.Rule is ParserRule refRule && !refRule.IsPart && refElem.Name is null)
                         {
                             CheckType(returnType, refRule.CSharpReturnType, refElem.RuleName, refElem.Location);
                             addAnnotation = false;

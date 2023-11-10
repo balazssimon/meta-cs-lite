@@ -20,7 +20,7 @@ Main returns Namespace:
 
 Using returns ImportSymbol: 'using' (namespaces+=#NamespaceSymbol | 'metamodel' metaModels+=#MetaModel) ';';
 
-part Declarations: declarations+=LanguageDeclaration declarations+=Rule*;
+block Declarations: declarations+=LanguageDeclaration declarations+=Rule*;
 
 LanguageDeclaration returns MetaDslx.Bootstrap.MetaCompiler.Model.Language: 'language' Name ';';
 
@@ -57,8 +57,8 @@ IntExpression: intValue=TInteger;
 StringExpression: stringValue=TString;
 ReferenceExpression: #MetaSymbol;
 
-Annotation returns MetaDslx.Bootstrap.MetaCompiler.Model: '[' type=Qualifier AnnotationArguments? ']';
-part AnnotationArguments: '(' arguments+=AnnotationArgument (',' arguments+=AnnotationArgument)* ')';
+Annotation returns MetaDslx.Bootstrap.MetaCompiler.Model.Annotation: '[' type=Qualifier AnnotationArguments? ']';
+block AnnotationArguments: '(' arguments+=AnnotationArgument (',' arguments+=AnnotationArgument)* ')';
 AnnotationArgument: (name=Identifier ':')? value=Expression;
 
 Assignment
@@ -79,26 +79,31 @@ Multiplicity
 
 
 [Name]
-part Name: Identifier;
+block Name: Identifier;
 
 [DefaultReference]
 [Qualifier]
-part Qualifier: Identifier ('.' Identifier)*;
+block Qualifier: Identifier ('.' Identifier)*;
 
-part QualifierList: Qualifier (',' Qualifier)*;
+block QualifierList: Qualifier (',' Qualifier)*;
 
 [Identifier]
-part Identifier: TIdentifier;
+block Identifier: TIdentifier;
 
-token TInteger[Number] returns int: '0'| '1'..'9' ('0'..'9')* ;
+[Number]
+token TInteger returns int: '0'| '1'..'9' ('0'..'9')* ;
 
-token TDecimal[Number] returns double: ('0'|'1'..'9' ('0'..'9')*) '.' ('0'..'9')+ ;
+[Number]
+token TDecimal returns double: ('0'|'1'..'9' ('0'..'9')*) '.' ('0'..'9')+ ;
 
-token TIdentifier[DefaultIdentifier]: ('_'|'a'..'z'|'A'..'Z')+('_'|'a'..'z'|'A'..'Z'|'0'..'9')*;
+[DefaultIdentifier]
+token TIdentifier: ('_'|'a'..'z'|'A'..'Z')+('_'|'a'..'z'|'A'..'Z'|'0'..'9')*;
 
-token TComma[DefaultSeparator]: ',' ;
+[DefaultSeparator]
+token TComma: ',' ;
 
-token TString[String] returns string
+[String]
+token TString returns string
     : '"' DoubleQuoteTextCharacter* '"'
     | '\'' SingleQuoteTextCharacter* '\'';
 
@@ -113,14 +118,19 @@ fragment CharacterEscapeUnicode
     | '\\U' HexDigit HexDigit HexDigit HexDigit HexDigit HexDigit HexDigit HexDigit;
 fragment HexDigit : ('0'..'9' | 'a'..'f' | 'A'..'F');
 
-token Utf8Bom[Whitespace]: '\u00EF' '\u00BB' '\u00BF';
+[Whitespace]
+token Utf8Bom: '\u00EF' '\u00BB' '\u00BF';
 
-token TWhitespace[DefaultWhitespace]: ('\t'|' ') +;
+[DefaultWhitespace]
+token TWhitespace: ('\t'|' ') +;
 
-token TLineEnd[DefaultEndOfLine]: ('\r\n' | '\r' | '\n');
+[DefaultEndOfLine]
+token TLineEnd: ('\r\n' | '\r' | '\n');
 
-token TSingleLineComment[SingleLineComment]: '//' ~('\r' | '\n')*;
+[SingleLineComment]
+token TSingleLineComment: '//' ~('\r' | '\n')*;
 
-token TMultiLineComment[MultiLineComment]: '/*' .*? '*/';
+[MultiLineComment]
+token TMultiLineComment: '/*' .*? '*/';
 
 token TInvalidToken: .;

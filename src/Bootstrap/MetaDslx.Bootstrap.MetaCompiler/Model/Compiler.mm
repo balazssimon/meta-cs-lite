@@ -28,13 +28,13 @@ class Grammar : Declaration
 	contains Rule[] Rules;
 }
 
-class Annotation
+class Annotation $Symbol
 {
 	type Type;
 	contains AnnotationArgument[] Arguments;
 }
 
-class AnnotationArgument
+class AnnotationArgument $Symbol
 {
 	string Name;
 	contains Expression Value;
@@ -66,27 +66,34 @@ class LexerRule : Rule
 	derived bool IsFixed;
 	derived string? FixedText;
 
-	contains LexerRuleAlternative[] Alternatives;
+	contains LAlternative[] Alternatives;
 }
 
-class LexerRuleAlternative
+class LAlternative $Symbol
 {
 	derived bool IsFixed;
 	derived string? FixedText;
 
-	contains LexerRuleElement[] Elements;
+	contains LElement[] Elements;
 }
 
-abstract class LexerRuleElement
+class LElement $Symbol
 {
 	derived bool IsFixed;
 	derived string? FixedText;
 
 	bool IsNegated;
+	LElementValue Value;
 	Multiplicity Multiplicity;
 }
 
-class LexerRuleReferenceElement : LexerRuleElement
+abstract class LElementValue $Symbol
+{
+	derived bool IsFixed;
+	derived string? FixedText;
+}
+
+class LReference : LElementValue
 {
 	derived bool IsFixed;
 	derived string? FixedText;
@@ -94,7 +101,7 @@ class LexerRuleReferenceElement : LexerRuleElement
 	LexerRule Rule;
 }
 
-class LexerRuleFixedStringElement : LexerRuleElement
+class LFixed : LElementValue
 {
 	derived bool IsFixed;
 	derived string? FixedText;
@@ -102,13 +109,13 @@ class LexerRuleFixedStringElement : LexerRuleElement
 	string Text;
 }
 
-class LexerRuleWildCardElement : LexerRuleElement
+class LWildCard : LElementValue
 {
 	derived bool IsFixed;
 	derived string? FixedText;
 }
 
-class LexerRuleRangeElement : LexerRuleElement
+class LRange : LElementValue
 {
 	derived bool IsFixed;
 	derived string? FixedText;
@@ -117,21 +124,21 @@ class LexerRuleRangeElement : LexerRuleElement
 	string EndChar;
 }
 
-class LexerRuleSetElement : LexerRuleElement
+class LSet : LElementValue
 {
 	derived bool IsFixed;
 	derived string? FixedText;
 
-	contains LexerRuleSetItem[] Items;
+	contains LSetItem[] Items;
 }
 
-abstract class LexerRuleSetItem
+abstract class LSetItem
 {
 	derived bool IsFixed;
 	derived string? FixedText;
 }
 
-class LexerRuleSetFixedChar : LexerRuleSetItem
+class LSetChar : LSetItem
 {
 	derived bool IsFixed;
 	derived string? FixedText;
@@ -139,7 +146,7 @@ class LexerRuleSetFixedChar : LexerRuleSetItem
 	string Char;
 }
 
-class LexerRuleSetRange : LexerRuleSetItem
+class LSetRange : LSetItem
 {
 	derived bool IsFixed;
 	derived string? FixedText;
@@ -148,12 +155,12 @@ class LexerRuleSetRange : LexerRuleSetItem
 	string EndChar;
 }
 
-class LexerRuleBlockElement : LexerRuleElement
+class LBlock : LElementValue
 {
 	derived bool IsFixed;
 	derived string? FixedText;
 
-	contains LexerRuleAlternative[] Alternatives;
+	contains LAlternative[] Alternatives;
 }
 
 abstract class ParserRule : Rule
@@ -161,18 +168,18 @@ abstract class ParserRule : Rule
 	type? ReturnType;
 	bool IsBlock;
 
-	contains ParserRuleAlternative[] Alternatives;
+	contains PAlternative[] Alternatives;
 }
 
-class ParserRuleAlternative : Declaration
+class PAlternative : Declaration
 {
 	type? ReturnType;
 	contains Expression ReturnValue;
 
-	contains ParserRuleElement[] Elements;
+	contains PElement[] Elements;
 }
 
-enum AssignmentOperator
+enum Assignment
 {
     Assign,
     QuestionAssign,
@@ -180,33 +187,38 @@ enum AssignmentOperator
     PlusAssign
 }
 
-abstract class ParserRuleElement
+class PElement $Symbol
 {
 	contains Annotation[] NameAnnotations;
+	string? $Name;
+	Assignment Assignment;
 	contains Annotation[] ValueAnnotations;
-	symbol? Property;
-	AssignmentOperator AssignmentOperator;
+	PElementValue Value;
 	Multiplicity Multiplicity;
 }
 
-class ParserRuleReferenceElement : ParserRuleElement
+abstract class PElementValue
+{
+}
+
+class PReference : PElementValue
 {
 	Rule Rule;
 	type[] ReferencedTypes;
 }
 
-class ParserRuleEofElement : ParserRuleElement
+class PEof : PElementValue
 {
 }
 
-class ParserRuleFixedStringElement : ParserRuleElement
+class PKeyword : PElementValue
 {
 	string Text;
 }
 
-class ParserRuleBlockElement : ParserRuleElement
+class PBlock : PElementValue
 {
-	contains ParserRuleAlternative[] Alternatives;
+	contains PAlternative[] Alternatives;
 }
 
 abstract class Expression

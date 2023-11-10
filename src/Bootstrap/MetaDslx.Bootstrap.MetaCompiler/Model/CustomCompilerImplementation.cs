@@ -29,112 +29,122 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             return _this.IntValue;
         }
 
-        public override string? LexerRuleAlternative_FixedText(LexerRuleAlternative _this)
+        public override string? LAlternative_FixedText(LAlternative _this)
         {
             return _this.IsFixed ? string.Concat(_this.Elements.Select(e => e.FixedText)) : null;
         }
 
-        public override bool LexerRuleAlternative_IsFixed(LexerRuleAlternative _this)
+        public override bool LAlternative_IsFixed(LAlternative _this)
         {
             return _this.Elements.All(e => e.IsFixed);
         }
 
-        public override string? LexerRuleBlockElement_FixedText(LexerRuleBlockElement _this)
+        public override string? LBlock_FixedText(LBlock _this)
         {
             return _this.IsFixed ? _this.Alternatives[0].FixedText : null;
         }
 
-        public override bool LexerRuleBlockElement_IsFixed(LexerRuleBlockElement _this)
+        public override bool LBlock_IsFixed(LBlock _this)
         {
             return _this.Alternatives.Count == 1 && _this.Alternatives[0].IsFixed;
         }
 
-        public override string? LexerRuleElement_FixedText(LexerRuleElement _this)
+        public override string? LElement_FixedText(LElement _this)
+        {
+            return _this?.Value.FixedText;
+        }
+
+        public override bool LElement_IsFixed(LElement _this)
+        {
+            return _this?.Value.IsFixed ?? false;
+        }
+
+        public override string? LElementValue_FixedText(LElementValue _this)
         {
             return null;
         }
 
-        public override bool LexerRuleElement_IsFixed(LexerRuleElement _this)
+        public override bool LElementValue_IsFixed(LElementValue _this)
         {
             return false;
         }
 
-        public override string? LexerRuleFixedStringElement_FixedText(LexerRuleFixedStringElement _this)
+        public override string? LFixed_FixedText(LFixed _this)
         {
             return _this.Text;
         }
 
-        public override bool LexerRuleFixedStringElement_IsFixed(LexerRuleFixedStringElement _this)
+        public override bool LFixed_IsFixed(LFixed _this)
         {
             return true;
         }
 
-        public override string? LexerRuleRangeElement_FixedText(LexerRuleRangeElement _this)
+        public override string? LRange_FixedText(LRange _this)
         {
             return _this.IsFixed ? _this.StartChar : null;
         }
 
-        public override bool LexerRuleRangeElement_IsFixed(LexerRuleRangeElement _this)
+        public override bool LRange_IsFixed(LRange _this)
         {
             return _this.StartChar == _this.EndChar;
         }
 
-        public override string? LexerRuleReferenceElement_FixedText(LexerRuleReferenceElement _this)
+        public override string? LReference_FixedText(LReference _this)
         {
             return _this.Rule?.FixedText;
         }
 
-        public override bool LexerRuleReferenceElement_IsFixed(LexerRuleReferenceElement _this)
+        public override bool LReference_IsFixed(LReference _this)
         {
             return _this.Rule?.IsFixed ?? false;
         }
 
-        public override string? LexerRuleSetElement_FixedText(LexerRuleSetElement _this)
+        public override string? LSet_FixedText(LSet _this)
         {
             return _this.IsFixed ? _this.Items[0].FixedText : null;
         }
 
-        public override bool LexerRuleSetElement_IsFixed(LexerRuleSetElement _this)
+        public override bool LSet_IsFixed(LSet _this)
         {
             return _this.Items.Count == 1 && _this.Items[0].IsFixed;
         }
 
-        public override string LexerRuleSetFixedChar_FixedText(LexerRuleSetFixedChar _this)
+        public override string LSetChar_FixedText(LSetChar _this)
         {
             return _this.Char;
         }
 
-        public override bool LexerRuleSetFixedChar_IsFixed(LexerRuleSetFixedChar _this)
+        public override bool LSetChar_IsFixed(LSetChar _this)
         {
             return true;
         }
 
-        public override string? LexerRuleSetItem_FixedText(LexerRuleSetItem _this)
+        public override string? LSetItem_FixedText(LSetItem _this)
         {
             return null;
         }
 
-        public override bool LexerRuleSetItem_IsFixed(LexerRuleSetItem _this)
+        public override bool LSetItem_IsFixed(LSetItem _this)
         {
             return false;
         }
 
-        public override string? LexerRuleSetRange_FixedText(LexerRuleSetRange _this)
+        public override string? LSetRange_FixedText(LSetRange _this)
         {
             return _this.IsFixed ? _this.StartChar : null;
         }
 
-        public override bool LexerRuleSetRange_IsFixed(LexerRuleSetRange _this)
+        public override bool LSetRange_IsFixed(LSetRange _this)
         {
             return _this.StartChar == _this.EndChar;
         }
 
-        public override string? LexerRuleWildCardElement_FixedText(LexerRuleWildCardElement _this)
+        public override string? LWildCard_FixedText(LWildCard _this)
         {
             return null;
         }
 
-        public override bool LexerRuleWildCardElement_IsFixed(LexerRuleWildCardElement _this)
+        public override bool LWildCard_IsFixed(LWildCard _this)
         {
             return false;
         }
