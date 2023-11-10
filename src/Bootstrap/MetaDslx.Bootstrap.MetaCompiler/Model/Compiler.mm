@@ -36,8 +36,7 @@ class Annotation
 
 class AnnotationArgument
 {
-	symbol Parameter;
-	type Type;
+	string Name;
 	contains Expression Value;
 }
 

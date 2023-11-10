@@ -217,18 +217,14 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                 var unicode = ch == 'u' || ch == 'U';
                 while (!_text.IsReallyAtEnd() && ch != '\'' && ch != '\r' && ch != '\n')
                 {
-                    _text.NextChar();
-                    ch = _text.PeekChar();
+                    ch = _text.NextChar();
                     if (unicode)
                     {
                         if (count >= 4 || !(ch >= '0' && ch <= '9' || ch >= 'a' && ch <= 'f' || ch >= 'A' && ch <= 'F')) unicode = false;
                     }
-                    if (ch == '\\')
-                    {
-                        _text.NextChar();
-                        ch = _text.PeekChar();
-                    }
+                    if (ch == '\\') _text.NextChar();
                     ++count;
+                    ch = _text.PeekChar();
                 }
                 if (ch == '\'') _text.NextChar();
                 return new MetaCompilerToken(count == 1 || unicode ? MetaCompilerTokenKind.Character : MetaCompilerTokenKind.String, _text.GetText(false), _text.LexemeStartPosition);
@@ -239,13 +235,9 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                 ch = _text.PeekChar();
                 while (!_text.IsReallyAtEnd() && ch != '"' && ch != '\r' && ch != '\n')
                 {
-                    _text.NextChar();
+                    ch = _text.NextChar();
+                    if (ch == '\\') _text.NextChar();
                     ch = _text.PeekChar();
-                    if (ch == '\\')
-                    {
-                        _text.NextChar();
-                        ch = _text.PeekChar();
-                    }
                 }
                 if (ch == '"') _text.NextChar();
                 return new MetaCompilerToken(MetaCompilerTokenKind.String, _text.GetText(false), _text.LexemeStartPosition);

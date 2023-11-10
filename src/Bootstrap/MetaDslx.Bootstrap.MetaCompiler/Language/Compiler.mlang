@@ -26,10 +26,10 @@ LanguageDeclaration returns MetaDslx.Bootstrap.MetaCompiler.Model.Language: 'lan
 
 Rule: ParserRule | BlockRule;// | TokenRule | FragmentRule;
 
-ParserRule: Name ('returns' returnType=#MetaType)? ':' alternatives+=ParserRuleAlternative ('|' alternatives+=ParserRuleAlternative)* ';';
-BlockRule returns ParserRule: isBlock?='block' Name ':' alternatives+=ParserRuleAlternative ('|' alternatives+=ParserRuleAlternative)* ';';
+ParserRule: annotations+=Annotation* Name ('returns' returnType=#MetaType)? ':' alternatives+=ParserRuleAlternative ('|' alternatives+=ParserRuleAlternative)* ';';
+BlockRule returns ParserRule: annotations+=Annotation* isBlock?='block' Name ':' alternatives+=ParserRuleAlternative ('|' alternatives+=ParserRuleAlternative)* ';';
 ParserRuleAlternative: ('{' returnType=#MetaType '}')? elements+=ParserRuleElement* ('=>' returnValue=Expression);
-ParserRuleElement: Name;
+ParserRuleElement: (nameAnnotations+=Annotation* Name '=')? valueAnnotations+=Annotation* TODO;
 
 Expression: NullExpression | BoolExpression | IntExpression | StringExpression | ReferenceExpression;
 NullExpression: 'null';
@@ -37,6 +37,10 @@ BoolExpression: boolValue?='true' | 'false';
 IntExpression: intValue=TInteger;
 StringExpression: stringValue=TString;
 ReferenceExpression: #MetaSymbol;
+
+Annotation: '[' type=Qualifier AnnotationArguments? ']'
+part AnnotationArguments: '(' arguments+=AnnotationArgument (',' arguments+=AnnotationArgument)* ')';
+AnnotationArgument: name=Identifier ':' value=Expression;
 
 [Name]
 part Name: Identifier;
@@ -58,7 +62,7 @@ token TIdentifier[DefaultIdentifier]: ('_'|'a'..'z'|'A'..'Z')+('_'|'a'..'z'|'A'.
 
 token TComma[DefaultSeparator]: ',' ;
 
-token TString[String] returns string: '"' .*? '"';
+token TString[String] returns string: '"' .*? '"' | '\'' .*? '\'';
 
 token TWhitespace[DefaultWhitespace]: ('\t'|' ') +;
 
