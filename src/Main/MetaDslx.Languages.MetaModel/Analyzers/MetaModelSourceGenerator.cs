@@ -46,7 +46,7 @@ namespace MetaDslx.Languages.MetaCompiler.Analyzers
                                 initialCompilation: compilationAndContent.Compilation as CSharpCompilation,
                                 references: new[]
                                 {
-                                    MetaDslx.CodeAnalysis.MetadataReference.CreateFromMetaModel(MetaDslx.Languages.MetaModel.Model.Meta.Instance)
+                                    MetaDslx.CodeAnalysis.MetadataReference.CreateFromMetaModel(MetaDslx.Languages.MetaModel.Model.Meta.MInstance)
                                 },
                                 options: MetaDslx.CodeAnalysis.CompilationOptions.Default.WithConcurrentBuild(false));
                             mmCompiler.Compile(spc.CancellationToken);

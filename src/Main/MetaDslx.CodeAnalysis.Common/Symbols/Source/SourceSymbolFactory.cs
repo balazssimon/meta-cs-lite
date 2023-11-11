@@ -99,17 +99,18 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
                     diagnostics.Add(diagnostic);
                     return Compilation[declaration.Language].ErrorSymbolFactory.CreateSymbol(symbolType, (Symbol)container, new ErrorSymbolInfo(declaration.Name, declaration.MetadataName, ImmutableArray<Symbol>.Empty, diagnostic));
                 }
-                if (info.SymbolType is null)
+                var infoSymbolType = info.SymbolType.AsType();
+                if (infoSymbolType is null)
                 {
                     var objectName = container is null || container is ModuleSymbol ? "the root namespace" : $"the declaration '{declaration.Name}'";
                     var diagnostic = Diagnostic.Create(CommonErrorCode.ERR_DeclarationError, declaration.NameLocations.FirstOrDefault(), $"There is no symbol type defined for for {objectName} of type '{declaration.ModelObjectType.FullName}'. Are you missing a meta model reference?'");
                     diagnostics.Add(diagnostic);
                     return Compilation[declaration.Language].ErrorSymbolFactory.CreateSymbol(symbolType, (Symbol)container, new ErrorSymbolInfo(declaration.Name, declaration.MetadataName, ImmutableArray<Symbol>.Empty, diagnostic));
                 }
-                if (!symbolType.IsAssignableFrom(info.SymbolType)) return null;
+                if (!symbolType.IsAssignableFrom(infoSymbolType)) return null;
                 var modelFactory = _module.ModelFactory;
                 if (modelFactory is null) return null;
-                if (_constructors.TryGetValue(info.SymbolType, out var constructor))
+                if (_constructors.TryGetValue(infoSymbolType, out var constructor))
                 {
                     var modelObject = modelFactory.Create(containerModelSymbol.Model, declaration.ModelObjectType);
                     if (modelObject is not null)

@@ -54,7 +54,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
         public ModelGroup ModelGroup => _modelGroup;
         public MetaDslx.Modeling.Model Model => _model;
         public IModelObject ModelObject => null;
-        public Type ModelObjectType => null;
+        public Type ModelObjectType => default;
 
         public ImmutableArray<NamespaceSymbol> FileNamespaces
         {

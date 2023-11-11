@@ -31,7 +31,6 @@
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\MetaDslx.CodeAnalysis.Core\MetaDslx.CodeAnalysis.Core.csproj" OutputItemType="Analyzer" />
-		<ProjectReference Include="..\MetaDslx.Modeling\MetaDslx.Modeling.csproj" OutputItemType="Analyzer" />
 		<ProjectReference Include="..\MetaDslx.Languages.MetaGenerator\MetaDslx.Languages.MetaGenerator.csproj" OutputItemType="Analyzer" />
 		<ProjectReference Include="..\MetaDslx.Languages.MetaSymbols\MetaDslx.Languages.MetaSymbols.csproj" OutputItemType="Analyzer" />
 	</ItemGroup>

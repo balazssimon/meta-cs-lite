@@ -8,23 +8,23 @@ namespace MetaDslx.CodeAnalysis.Symbols.Meta
 {
     internal class SymbolMetaModel : MetaModel
     {
-        public override string Name => throw new NotImplementedException();
+        public override string MName => throw new NotImplementedException();
 
-        public override string Namespace => throw new NotImplementedException();
+        public override string MNamespace => throw new NotImplementedException();
 
-        public override ModelVersion Version => throw new NotImplementedException();
+        public override ModelVersion MVersion => throw new NotImplementedException();
 
-        public override string Uri => throw new NotImplementedException();
+        public override string MUri => throw new NotImplementedException();
 
-        public override string Prefix => throw new NotImplementedException();
+        public override string MPrefix => throw new NotImplementedException();
 
-        public override Modeling.Model Model => throw new NotImplementedException();
+        public override Modeling.Model MModel => throw new NotImplementedException();
 
-        public override ImmutableArray<Type> ModelObjectTypes => throw new NotImplementedException();
+        public override ImmutableArray<MetaType> MModelObjectTypes => throw new NotImplementedException();
 
-        public override ImmutableArray<ModelObjectInfo> ModelObjectInfos => throw new NotImplementedException();
+        public override ImmutableArray<ModelObjectInfo> MModelObjectInfos => throw new NotImplementedException();
 
-        public override bool Contains(Type modelObjectType)
+        public override bool Contains(MetaType modelObjectType)
         {
             throw new NotImplementedException();
         }
@@ -34,7 +34,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Meta
             throw new NotImplementedException();
         }
 
-        public override bool TryGetInfo(Type modelObjectType, out ModelObjectInfo? info)
+        public override bool TryGetInfo(MetaType modelObjectType, out ModelObjectInfo? info)
         {
             throw new NotImplementedException();
         }

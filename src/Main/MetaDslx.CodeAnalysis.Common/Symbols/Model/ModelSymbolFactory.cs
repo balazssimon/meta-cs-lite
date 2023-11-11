@@ -52,7 +52,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Model
             }
             else
             {
-                var symbolType = modelObject.SymbolType;
+                var symbolType = modelObject.SymbolType.AsType();
                 if (symbolType is null) return null;
                 Symbol? container = null;
                 if (modelObject.Parent is not null)

@@ -341,20 +341,21 @@ namespace MetaDslx.CodeAnalysis
             }
         }
 
-        public object? Extract(bool tryResolveType = true)
+        public object? Extract(bool tryResolveType = false)
         {
-            var type = tryResolveType ? AsType() : OriginalType;
+            var type = AsType(tryResolveType);
             if (type is not null) return type;
             if (IsTypeSymbol) return OriginalTypeSymbol;
             if (IsModelObject) return OriginalModelObject;
             return FullName;
         }
 
-        public Type? AsType()
+        public Type? AsType(bool tryResolveType = false)
         {
-            if (IsType) return OriginalType;
             var result = AsSpecialType();
             if (result is not null) return result;
+            if (IsType) return OriginalType;
+            if (!tryResolveType) return null;
             var fullName = this.FullName;
             return AppDomain.CurrentDomain.GetAssemblies().Reverse()
                 .Select(assembly => assembly.GetType(fullName))
@@ -520,6 +521,29 @@ namespace MetaDslx.CodeAnalysis
             throw new NotImplementedException();
         }
 
+        public bool IsAssignableFrom(Type? type)
+        {
+            if (type is null) return false;
+            var currentType = AsType();
+            return currentType is not null && currentType.IsAssignableFrom(type);
+        }
+
+        public bool IsAssignableTo(Type? type)
+        {
+            if (type is null) return false;
+            var currentType = AsType();
+            return currentType is not null && type.IsAssignableFrom(currentType);
+        }
+
+        public bool IsAssignableFrom(MetaType type)
+        {
+            return IsAssignableFrom(type.AsType());
+        }
+
+        public bool IsAssignableTo(MetaType type)
+        {
+            return IsAssignableTo(type.AsType());
+        }
         public bool Equals(MetaType other)
         {
             var lhsSpecialType = this.SpecialType;
@@ -575,7 +599,8 @@ namespace MetaDslx.CodeAnalysis
 
         internal static string GetModelObjectFullName(IModelObject modelObject)
         {
-            if (typeof(TypeSymbol).IsAssignableFrom(modelObject?.Info?.SymbolType))
+            var symbolType = modelObject?.Info?.SymbolType.AsType();
+            if (typeof(TypeSymbol).IsAssignableFrom(symbolType))
             {
                 var builder = PooledStringBuilder.GetInstance();
                 var sb = builder.Builder;

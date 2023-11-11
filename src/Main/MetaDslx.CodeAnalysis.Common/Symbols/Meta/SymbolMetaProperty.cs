@@ -84,17 +84,17 @@ namespace MetaDslx.CodeAnalysis.Symbols.Meta
 
         public override string? SymbolProperty => _symbolProperty;
 
-        protected override IEnumerable<(MetaType DeclaringType, string PropertyName)> GetOppositeProperties()
+        internal protected override IEnumerable<(MetaType DeclaringType, string PropertyName)> GetOppositeProperties()
         {
             yield break;
         }
 
-        protected override IEnumerable<(MetaType DeclaringType, string PropertyName)> GetRedefinedProperties()
+        internal protected override IEnumerable<(MetaType DeclaringType, string PropertyName)> GetRedefinedProperties()
         {
             yield break;
         }
 
-        protected override IEnumerable<(MetaType DeclaringType, string PropertyName)> GetSubsettedProperties()
+        internal protected override IEnumerable<(MetaType DeclaringType, string PropertyName)> GetSubsettedProperties()
         {
             yield break;
         }

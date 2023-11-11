@@ -7,19 +7,19 @@ namespace MetaDslx.Modeling
 {
     public abstract class MetaModel
     {
-        public abstract string Name { get; }
-        public abstract string Namespace { get; }
-        public string FullName => $"{Namespace}.{Name}";
-        public abstract ModelVersion Version { get; }
-        public abstract string Uri { get; }
-        public abstract string Prefix { get; }
-        public abstract Model Model { get; }
+        public abstract string MName { get; }
+        public abstract string MNamespace { get; }
+        public string MFullName => $"{MNamespace}.{MName}";
+        public abstract ModelVersion MVersion { get; }
+        public abstract string MUri { get; }
+        public abstract string MPrefix { get; }
+        public abstract Model MModel { get; }
 
         public MultiModelFactory CreateFactory() => new MultiModelFactory(new MetaModel[] { this });
         public ModelFactory CreateFactory(Model model) => new ModelFactory(model, this);
 
-        public abstract ImmutableArray<Type> ModelObjectTypes { get; }
-        public abstract ImmutableArray<ModelObjectInfo> ModelObjectInfos { get; }
+        public abstract ImmutableArray<MetaType> MModelObjectTypes { get; }
+        public abstract ImmutableArray<ModelObjectInfo> MModelObjectInfos { get; }
 
         public abstract bool Contains(Type modelObjectType);
         public abstract bool Contains(string modelObjectTypeName);

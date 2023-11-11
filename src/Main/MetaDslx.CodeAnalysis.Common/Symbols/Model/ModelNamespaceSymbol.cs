@@ -29,7 +29,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Model
         public IModelObject ModelObject => _modelObject;
         public MetaDslx.Modeling.Model Model => _modelObject.Model;
         public override ImmutableArray<Location> Locations => ImmutableArray<Location>.Empty;
-        public Type ModelObjectType => _modelObject.MetaType;
+        public Type ModelObjectType => _modelObject.MetaType.AsType(tryResolveType: false);
 
         protected override string? CompleteProperty_Name(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
