@@ -34,7 +34,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
 		internal static readonly CustomCompilerImplementationBase __CustomImpl = new CustomCompilerImplementation();
 	
 		private static readonly Compiler _instance;
-		public static Compiler Instance => _instance;
+		public static Compiler MInstance => _instance;
 	
 		private static readonly __ModelProperty _Declaration_Annotations;
 		private static readonly __ModelProperty _Declaration_Name;
@@ -209,17 +209,17 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
 		}
 	
 		private readonly __Model _model;
-		private readonly global::System.Collections.Immutable.ImmutableArray<__Type> _modelObjectTypes;
+		private readonly global::System.Collections.Immutable.ImmutableArray<__MetaType> _modelObjectTypes;
 		private readonly global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> _modelObjectInfos;
-		private readonly global::System.Collections.Immutable.ImmutableDictionary<__Type, __ModelObjectInfo> _modelObjectInfosByType;
+		private readonly global::System.Collections.Immutable.ImmutableDictionary<__MetaType, __ModelObjectInfo> _modelObjectInfosByType;
 		private readonly global::System.Collections.Immutable.ImmutableDictionary<string, __ModelObjectInfo> _modelObjectInfosByName;
 	
 	
 		private Compiler()
 		{
-			_modelObjectTypes = __ImmutableArray.Create<__Type>(typeof(Declaration), typeof(Namespace), typeof(Language), typeof(Grammar), typeof(Annotation), typeof(AnnotationArgument), typeof(Rule), typeof(LexerRule), typeof(LAlternative), typeof(LElement), typeof(LElementValue), typeof(LReference), typeof(LFixed), typeof(LWildCard), typeof(LRange), typeof(LSet), typeof(LSetItem), typeof(LSetChar), typeof(LSetRange), typeof(LBlock), typeof(ParserRule), typeof(PAlternative), typeof(PElement), typeof(PElementValue), typeof(PReference), typeof(PEof), typeof(PKeyword), typeof(PBlock), typeof(Expression), typeof(NullExpression), typeof(BoolExpression), typeof(IntExpression), typeof(StringExpression), typeof(ReferenceExpression));
+			_modelObjectTypes = __ImmutableArray.Create<__MetaType>(typeof(Declaration), typeof(Namespace), typeof(Language), typeof(Grammar), typeof(Annotation), typeof(AnnotationArgument), typeof(Rule), typeof(LexerRule), typeof(LAlternative), typeof(LElement), typeof(LElementValue), typeof(LReference), typeof(LFixed), typeof(LWildCard), typeof(LRange), typeof(LSet), typeof(LSetItem), typeof(LSetChar), typeof(LSetRange), typeof(LBlock), typeof(ParserRule), typeof(PAlternative), typeof(PElement), typeof(PElementValue), typeof(PReference), typeof(PEof), typeof(PKeyword), typeof(PBlock), typeof(Expression), typeof(NullExpression), typeof(BoolExpression), typeof(IntExpression), typeof(StringExpression), typeof(ReferenceExpression));
 			_modelObjectInfos = __ImmutableArray.Create<__ModelObjectInfo>(DeclarationInfo, NamespaceInfo, LanguageInfo, GrammarInfo, AnnotationInfo, AnnotationArgumentInfo, RuleInfo, LexerRuleInfo, LAlternativeInfo, LElementInfo, LElementValueInfo, LReferenceInfo, LFixedInfo, LWildCardInfo, LRangeInfo, LSetInfo, LSetItemInfo, LSetCharInfo, LSetRangeInfo, LBlockInfo, ParserRuleInfo, PAlternativeInfo, PElementInfo, PElementValueInfo, PReferenceInfo, PEofInfo, PKeywordInfo, PBlockInfo, ExpressionInfo, NullExpressionInfo, BoolExpressionInfo, IntExpressionInfo, StringExpressionInfo, ReferenceExpressionInfo);
-			var modelObjectInfosByType = __ImmutableDictionary.CreateBuilder<__Type, __ModelObjectInfo>();
+			var modelObjectInfosByType = __ImmutableDictionary.CreateBuilder<__MetaType, __ModelObjectInfo>();
 			modelObjectInfosByType.Add(typeof(Declaration), DeclarationInfo);
 			modelObjectInfosByType.Add(typeof(Namespace), NamespaceInfo);
 			modelObjectInfosByType.Add(typeof(Language), LanguageInfo);
@@ -1356,20 +1356,20 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
 			_model.IsSealed = true;
 		}
 	
-	    public override string Name => nameof(Compiler);
-	    public override string Namespace => "MetaDslx.Bootstrap.MetaCompiler.Model";
-	    public override __ModelVersion Version => default;
-	    public override string Uri => "MetaDslx.Bootstrap.MetaCompiler.Model.Compiler";
-	    public override string Prefix => "c";
-		public override __Model Model => _model;
+	    public override string MName => nameof(Compiler);
+	    public override string MNamespace => "MetaDslx.Bootstrap.MetaCompiler.Model";
+	    public override __ModelVersion MVersion => default;
+	    public override string MUri => "MetaDslx.Bootstrap.MetaCompiler.Model.Compiler";
+	    public override string MPrefix => "c";
+		public override __Model MModel => _model;
 	
-		public override global::System.Collections.Immutable.ImmutableArray<__Type> ModelObjectTypes => _modelObjectTypes;
-		public override global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> ModelObjectInfos => _modelObjectInfos;
+		public override global::System.Collections.Immutable.ImmutableArray<__MetaType> MModelObjectTypes => _modelObjectTypes;
+		public override global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> MModelObjectInfos => _modelObjectInfos;
 	
-	    public override bool Contains(__Type modelObjectType) => _modelObjectInfosByType.ContainsKey(modelObjectType);
+	    public override bool Contains(__MetaType modelObjectType) => _modelObjectInfosByType.ContainsKey(modelObjectType);
 	    public override bool Contains(string modelObjectTypeName) => _modelObjectInfosByName.ContainsKey(modelObjectTypeName);
 	
-	    public override bool TryGetInfo(__Type modelObjectType, out __ModelObjectInfo? info) => _modelObjectInfosByType.TryGetValue(modelObjectType, out info);
+	    public override bool TryGetInfo(__MetaType modelObjectType, out __ModelObjectInfo? info) => _modelObjectInfosByType.TryGetValue(modelObjectType, out info);
 	    public override bool TryGetInfo(string modelObjectTypeName, out __ModelObjectInfo? info) => _modelObjectInfosByName.TryGetValue(modelObjectTypeName, out info);
 	
 	
@@ -1496,7 +1496,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
 	public class CompilerModelFactory : __ModelFactory
 	{
 		public CompilerModelFactory(__Model model)
-			: base(model, Compiler.Instance)
+			: base(model, Compiler.MInstance)
 		{
 		}
 	
@@ -1640,7 +1640,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
 	public class CompilerModelMultiFactory : __MultiModelFactory
 	{
 		public CompilerModelMultiFactory()
-			: base(new __MetaModel[] { Compiler.Instance })
+			: base(new __MetaModel[] { Compiler.MInstance })
 		{
 		}
 	
@@ -2935,10 +2935,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 				_modelOperationInfos = modelOperationInfos.ToImmutable();
 			}
 	
-	        public override __MetaModel MetaModel => Compiler.Instance;
-	        public override global::System.Type MetaType => typeof(Declaration);
+	        public override __MetaModel MetaModel => Compiler.MInstance;
+	        public override __Type MetaType => typeof(Declaration);
 	
-	        public override __Type? SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.DeclaredSymbol);
+	        public override __MetaType SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.DeclaredSymbol);
 	        public override __ModelProperty? NameProperty => Compiler.Declaration_Name;
 	        public override __ModelProperty? TypeProperty => null;
 	        public override global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> BaseTypes => _baseTypes;
@@ -3055,10 +3055,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 				_modelOperationInfos = modelOperationInfos.ToImmutable();
 			}
 	
-	        public override __MetaModel MetaModel => Compiler.Instance;
-	        public override global::System.Type MetaType => typeof(Namespace);
+	        public override __MetaModel MetaModel => Compiler.MInstance;
+	        public override __Type MetaType => typeof(Namespace);
 	
-	        public override __Type? SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.NamespaceSymbol);
+	        public override __MetaType SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.NamespaceSymbol);
 	        public override __ModelProperty? NameProperty => Compiler.Declaration_Name;
 	        public override __ModelProperty? TypeProperty => null;
 	        public override global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> BaseTypes => _baseTypes;
@@ -3183,10 +3183,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 				_modelOperationInfos = modelOperationInfos.ToImmutable();
 			}
 	
-	        public override __MetaModel MetaModel => Compiler.Instance;
-	        public override global::System.Type MetaType => typeof(Language);
+	        public override __MetaModel MetaModel => Compiler.MInstance;
+	        public override __Type MetaType => typeof(Language);
 	
-	        public override __Type? SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.DeclaredSymbol);
+	        public override __MetaType SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.DeclaredSymbol);
 	        public override __ModelProperty? NameProperty => Compiler.Declaration_Name;
 	        public override __ModelProperty? TypeProperty => null;
 	        public override global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> BaseTypes => _baseTypes;
@@ -3319,10 +3319,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 				_modelOperationInfos = modelOperationInfos.ToImmutable();
 			}
 	
-	        public override __MetaModel MetaModel => Compiler.Instance;
-	        public override global::System.Type MetaType => typeof(Grammar);
+	        public override __MetaModel MetaModel => Compiler.MInstance;
+	        public override __Type MetaType => typeof(Grammar);
 	
-	        public override __Type? SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.DeclaredSymbol);
+	        public override __MetaType SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.DeclaredSymbol);
 	        public override __ModelProperty? NameProperty => Compiler.Declaration_Name;
 	        public override __ModelProperty? TypeProperty => null;
 	        public override global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> BaseTypes => _baseTypes;
@@ -3415,10 +3415,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 				_modelOperationInfos = modelOperationInfos.ToImmutable();
 			}
 	
-	        public override __MetaModel MetaModel => Compiler.Instance;
-	        public override global::System.Type MetaType => typeof(Annotation);
+	        public override __MetaModel MetaModel => Compiler.MInstance;
+	        public override __Type MetaType => typeof(Annotation);
 	
-	        public override __Type? SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.Symbol);
+	        public override __MetaType SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.Symbol);
 	        public override __ModelProperty? NameProperty => null;
 	        public override __ModelProperty? TypeProperty => null;
 	        public override global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> BaseTypes => _baseTypes;
@@ -3511,10 +3511,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 				_modelOperationInfos = modelOperationInfos.ToImmutable();
 			}
 	
-	        public override __MetaModel MetaModel => Compiler.Instance;
-	        public override global::System.Type MetaType => typeof(AnnotationArgument);
+	        public override __MetaModel MetaModel => Compiler.MInstance;
+	        public override __Type MetaType => typeof(AnnotationArgument);
 	
-	        public override __Type? SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.Symbol);
+	        public override __MetaType SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.Symbol);
 	        public override __ModelProperty? NameProperty => null;
 	        public override __ModelProperty? TypeProperty => null;
 	        public override global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> BaseTypes => _baseTypes;
@@ -3646,10 +3646,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 				_modelOperationInfos = modelOperationInfos.ToImmutable();
 			}
 	
-	        public override __MetaModel MetaModel => Compiler.Instance;
-	        public override global::System.Type MetaType => typeof(Rule);
+	        public override __MetaModel MetaModel => Compiler.MInstance;
+	        public override __Type MetaType => typeof(Rule);
 	
-	        public override __Type? SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.DeclaredSymbol);
+	        public override __MetaType SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.DeclaredSymbol);
 	        public override __ModelProperty? NameProperty => Compiler.Declaration_Name;
 	        public override __ModelProperty? TypeProperty => null;
 	        public override global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> BaseTypes => _baseTypes;
@@ -3828,10 +3828,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 				_modelOperationInfos = modelOperationInfos.ToImmutable();
 			}
 	
-	        public override __MetaModel MetaModel => Compiler.Instance;
-	        public override global::System.Type MetaType => typeof(LexerRule);
+	        public override __MetaModel MetaModel => Compiler.MInstance;
+	        public override __Type MetaType => typeof(LexerRule);
 	
-	        public override __Type? SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.DeclaredSymbol);
+	        public override __MetaType SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.DeclaredSymbol);
 	        public override __ModelProperty? NameProperty => Compiler.Declaration_Name;
 	        public override __ModelProperty? TypeProperty => null;
 	        public override global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> BaseTypes => _baseTypes;
@@ -3930,10 +3930,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 				_modelOperationInfos = modelOperationInfos.ToImmutable();
 			}
 	
-	        public override __MetaModel MetaModel => Compiler.Instance;
-	        public override global::System.Type MetaType => typeof(LAlternative);
+	        public override __MetaModel MetaModel => Compiler.MInstance;
+	        public override __Type MetaType => typeof(LAlternative);
 	
-	        public override __Type? SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.Symbol);
+	        public override __MetaType SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.Symbol);
 	        public override __ModelProperty? NameProperty => null;
 	        public override __ModelProperty? TypeProperty => null;
 	        public override global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> BaseTypes => _baseTypes;
@@ -4048,10 +4048,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 				_modelOperationInfos = modelOperationInfos.ToImmutable();
 			}
 	
-	        public override __MetaModel MetaModel => Compiler.Instance;
-	        public override global::System.Type MetaType => typeof(LElement);
+	        public override __MetaModel MetaModel => Compiler.MInstance;
+	        public override __Type MetaType => typeof(LElement);
 	
-	        public override __Type? SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.Symbol);
+	        public override __MetaType SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.Symbol);
 	        public override __ModelProperty? NameProperty => null;
 	        public override __ModelProperty? TypeProperty => null;
 	        public override global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> BaseTypes => _baseTypes;
@@ -4142,10 +4142,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 				_modelOperationInfos = modelOperationInfos.ToImmutable();
 			}
 	
-	        public override __MetaModel MetaModel => Compiler.Instance;
-	        public override global::System.Type MetaType => typeof(LElementValue);
+	        public override __MetaModel MetaModel => Compiler.MInstance;
+	        public override __Type MetaType => typeof(LElementValue);
 	
-	        public override __Type? SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.Symbol);
+	        public override __MetaType SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.Symbol);
 	        public override __ModelProperty? NameProperty => null;
 	        public override __ModelProperty? TypeProperty => null;
 	        public override global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> BaseTypes => _baseTypes;
@@ -4259,10 +4259,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 				_modelOperationInfos = modelOperationInfos.ToImmutable();
 			}
 	
-	        public override __MetaModel MetaModel => Compiler.Instance;
-	        public override global::System.Type MetaType => typeof(LReference);
+	        public override __MetaModel MetaModel => Compiler.MInstance;
+	        public override __Type MetaType => typeof(LReference);
 	
-	        public override __Type? SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.Symbol);
+	        public override __MetaType SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.Symbol);
 	        public override __ModelProperty? NameProperty => null;
 	        public override __ModelProperty? TypeProperty => null;
 	        public override global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> BaseTypes => _baseTypes;
@@ -4376,10 +4376,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 				_modelOperationInfos = modelOperationInfos.ToImmutable();
 			}
 	
-	        public override __MetaModel MetaModel => Compiler.Instance;
-	        public override global::System.Type MetaType => typeof(LFixed);
+	        public override __MetaModel MetaModel => Compiler.MInstance;
+	        public override __Type MetaType => typeof(LFixed);
 	
-	        public override __Type? SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.Symbol);
+	        public override __MetaType SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.Symbol);
 	        public override __ModelProperty? NameProperty => null;
 	        public override __ModelProperty? TypeProperty => null;
 	        public override global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> BaseTypes => _baseTypes;
@@ -4485,10 +4485,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 				_modelOperationInfos = modelOperationInfos.ToImmutable();
 			}
 	
-	        public override __MetaModel MetaModel => Compiler.Instance;
-	        public override global::System.Type MetaType => typeof(LWildCard);
+	        public override __MetaModel MetaModel => Compiler.MInstance;
+	        public override __Type MetaType => typeof(LWildCard);
 	
-	        public override __Type? SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.Symbol);
+	        public override __MetaType SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.Symbol);
 	        public override __ModelProperty? NameProperty => null;
 	        public override __ModelProperty? TypeProperty => null;
 	        public override global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> BaseTypes => _baseTypes;
@@ -4610,10 +4610,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 				_modelOperationInfos = modelOperationInfos.ToImmutable();
 			}
 	
-	        public override __MetaModel MetaModel => Compiler.Instance;
-	        public override global::System.Type MetaType => typeof(LRange);
+	        public override __MetaModel MetaModel => Compiler.MInstance;
+	        public override __Type MetaType => typeof(LRange);
 	
-	        public override __Type? SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.Symbol);
+	        public override __MetaType SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.Symbol);
 	        public override __ModelProperty? NameProperty => null;
 	        public override __ModelProperty? TypeProperty => null;
 	        public override global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> BaseTypes => _baseTypes;
@@ -4727,10 +4727,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 				_modelOperationInfos = modelOperationInfos.ToImmutable();
 			}
 	
-	        public override __MetaModel MetaModel => Compiler.Instance;
-	        public override global::System.Type MetaType => typeof(LSet);
+	        public override __MetaModel MetaModel => Compiler.MInstance;
+	        public override __Type MetaType => typeof(LSet);
 	
-	        public override __Type? SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.Symbol);
+	        public override __MetaType SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.Symbol);
 	        public override __ModelProperty? NameProperty => null;
 	        public override __ModelProperty? TypeProperty => null;
 	        public override global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> BaseTypes => _baseTypes;
@@ -4821,10 +4821,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 				_modelOperationInfos = modelOperationInfos.ToImmutable();
 			}
 	
-	        public override __MetaModel MetaModel => Compiler.Instance;
-	        public override global::System.Type MetaType => typeof(LSetItem);
+	        public override __MetaModel MetaModel => Compiler.MInstance;
+	        public override __Type MetaType => typeof(LSetItem);
 	
-	        public override __Type? SymbolType => null;
+	        public override __MetaType SymbolType => default;
 	        public override __ModelProperty? NameProperty => null;
 	        public override __ModelProperty? TypeProperty => null;
 	        public override global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> BaseTypes => _baseTypes;
@@ -4938,10 +4938,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 				_modelOperationInfos = modelOperationInfos.ToImmutable();
 			}
 	
-	        public override __MetaModel MetaModel => Compiler.Instance;
-	        public override global::System.Type MetaType => typeof(LSetChar);
+	        public override __MetaModel MetaModel => Compiler.MInstance;
+	        public override __Type MetaType => typeof(LSetChar);
 	
-	        public override __Type? SymbolType => null;
+	        public override __MetaType SymbolType => default;
 	        public override __ModelProperty? NameProperty => null;
 	        public override __ModelProperty? TypeProperty => null;
 	        public override global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> BaseTypes => _baseTypes;
@@ -5063,10 +5063,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 				_modelOperationInfos = modelOperationInfos.ToImmutable();
 			}
 	
-	        public override __MetaModel MetaModel => Compiler.Instance;
-	        public override global::System.Type MetaType => typeof(LSetRange);
+	        public override __MetaModel MetaModel => Compiler.MInstance;
+	        public override __Type MetaType => typeof(LSetRange);
 	
-	        public override __Type? SymbolType => null;
+	        public override __MetaType SymbolType => default;
 	        public override __ModelProperty? NameProperty => null;
 	        public override __ModelProperty? TypeProperty => null;
 	        public override global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> BaseTypes => _baseTypes;
@@ -5180,10 +5180,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 				_modelOperationInfos = modelOperationInfos.ToImmutable();
 			}
 	
-	        public override __MetaModel MetaModel => Compiler.Instance;
-	        public override global::System.Type MetaType => typeof(LBlock);
+	        public override __MetaModel MetaModel => Compiler.MInstance;
+	        public override __Type MetaType => typeof(LBlock);
 	
-	        public override __Type? SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.Symbol);
+	        public override __MetaType SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.Symbol);
 	        public override __ModelProperty? NameProperty => null;
 	        public override __ModelProperty? TypeProperty => null;
 	        public override global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> BaseTypes => _baseTypes;
@@ -5340,10 +5340,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 				_modelOperationInfos = modelOperationInfos.ToImmutable();
 			}
 	
-	        public override __MetaModel MetaModel => Compiler.Instance;
-	        public override global::System.Type MetaType => typeof(ParserRule);
+	        public override __MetaModel MetaModel => Compiler.MInstance;
+	        public override __Type MetaType => typeof(ParserRule);
 	
-	        public override __Type? SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.DeclaredSymbol);
+	        public override __MetaType SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.DeclaredSymbol);
 	        public override __ModelProperty? NameProperty => Compiler.Declaration_Name;
 	        public override __ModelProperty? TypeProperty => null;
 	        public override global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> BaseTypes => _baseTypes;
@@ -5484,10 +5484,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 				_modelOperationInfos = modelOperationInfos.ToImmutable();
 			}
 	
-	        public override __MetaModel MetaModel => Compiler.Instance;
-	        public override global::System.Type MetaType => typeof(PAlternative);
+	        public override __MetaModel MetaModel => Compiler.MInstance;
+	        public override __Type MetaType => typeof(PAlternative);
 	
-	        public override __Type? SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.DeclaredSymbol);
+	        public override __MetaType SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.DeclaredSymbol);
 	        public override __ModelProperty? NameProperty => Compiler.Declaration_Name;
 	        public override __ModelProperty? TypeProperty => null;
 	        public override global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> BaseTypes => _baseTypes;
@@ -5612,10 +5612,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 				_modelOperationInfos = modelOperationInfos.ToImmutable();
 			}
 	
-	        public override __MetaModel MetaModel => Compiler.Instance;
-	        public override global::System.Type MetaType => typeof(PElement);
+	        public override __MetaModel MetaModel => Compiler.MInstance;
+	        public override __Type MetaType => typeof(PElement);
 	
-	        public override __Type? SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.Symbol);
+	        public override __MetaType SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.Symbol);
 	        public override __ModelProperty? NameProperty => Compiler.PElement_Name;
 	        public override __ModelProperty? TypeProperty => null;
 	        public override global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> BaseTypes => _baseTypes;
@@ -5692,10 +5692,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 				_modelOperationInfos = modelOperationInfos.ToImmutable();
 			}
 	
-	        public override __MetaModel MetaModel => Compiler.Instance;
-	        public override global::System.Type MetaType => typeof(PElementValue);
+	        public override __MetaModel MetaModel => Compiler.MInstance;
+	        public override __Type MetaType => typeof(PElementValue);
 	
-	        public override __Type? SymbolType => null;
+	        public override __MetaType SymbolType => default;
 	        public override __ModelProperty? NameProperty => null;
 	        public override __ModelProperty? TypeProperty => null;
 	        public override global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> BaseTypes => _baseTypes;
@@ -5789,10 +5789,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 				_modelOperationInfos = modelOperationInfos.ToImmutable();
 			}
 	
-	        public override __MetaModel MetaModel => Compiler.Instance;
-	        public override global::System.Type MetaType => typeof(PReference);
+	        public override __MetaModel MetaModel => Compiler.MInstance;
+	        public override __Type MetaType => typeof(PReference);
 	
-	        public override __Type? SymbolType => null;
+	        public override __MetaType SymbolType => default;
 	        public override __ModelProperty? NameProperty => null;
 	        public override __ModelProperty? TypeProperty => null;
 	        public override global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> BaseTypes => _baseTypes;
@@ -5870,10 +5870,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 				_modelOperationInfos = modelOperationInfos.ToImmutable();
 			}
 	
-	        public override __MetaModel MetaModel => Compiler.Instance;
-	        public override global::System.Type MetaType => typeof(PEof);
+	        public override __MetaModel MetaModel => Compiler.MInstance;
+	        public override __Type MetaType => typeof(PEof);
 	
-	        public override __Type? SymbolType => null;
+	        public override __MetaType SymbolType => default;
 	        public override __ModelProperty? NameProperty => null;
 	        public override __ModelProperty? TypeProperty => null;
 	        public override global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> BaseTypes => _baseTypes;
@@ -5959,10 +5959,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 				_modelOperationInfos = modelOperationInfos.ToImmutable();
 			}
 	
-	        public override __MetaModel MetaModel => Compiler.Instance;
-	        public override global::System.Type MetaType => typeof(PKeyword);
+	        public override __MetaModel MetaModel => Compiler.MInstance;
+	        public override __Type MetaType => typeof(PKeyword);
 	
-	        public override __Type? SymbolType => null;
+	        public override __MetaType SymbolType => default;
 	        public override __ModelProperty? NameProperty => null;
 	        public override __ModelProperty? TypeProperty => null;
 	        public override global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> BaseTypes => _baseTypes;
@@ -6048,10 +6048,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 				_modelOperationInfos = modelOperationInfos.ToImmutable();
 			}
 	
-	        public override __MetaModel MetaModel => Compiler.Instance;
-	        public override global::System.Type MetaType => typeof(PBlock);
+	        public override __MetaModel MetaModel => Compiler.MInstance;
+	        public override __Type MetaType => typeof(PBlock);
 	
-	        public override __Type? SymbolType => null;
+	        public override __MetaType SymbolType => default;
 	        public override __ModelProperty? NameProperty => null;
 	        public override __ModelProperty? TypeProperty => null;
 	        public override global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> BaseTypes => _baseTypes;
@@ -6135,10 +6135,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 				_modelOperationInfos = modelOperationInfos.ToImmutable();
 			}
 	
-	        public override __MetaModel MetaModel => Compiler.Instance;
-	        public override global::System.Type MetaType => typeof(Expression);
+	        public override __MetaModel MetaModel => Compiler.MInstance;
+	        public override __Type MetaType => typeof(Expression);
 	
-	        public override __Type? SymbolType => null;
+	        public override __MetaType SymbolType => default;
 	        public override __ModelProperty? NameProperty => null;
 	        public override __ModelProperty? TypeProperty => null;
 	        public override global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> BaseTypes => _baseTypes;
@@ -6222,10 +6222,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 				_modelOperationInfos = modelOperationInfos.ToImmutable();
 			}
 	
-	        public override __MetaModel MetaModel => Compiler.Instance;
-	        public override global::System.Type MetaType => typeof(NullExpression);
+	        public override __MetaModel MetaModel => Compiler.MInstance;
+	        public override __Type MetaType => typeof(NullExpression);
 	
-	        public override __Type? SymbolType => null;
+	        public override __MetaType SymbolType => default;
 	        public override __ModelProperty? NameProperty => null;
 	        public override __ModelProperty? TypeProperty => null;
 	        public override global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> BaseTypes => _baseTypes;
@@ -6317,10 +6317,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 				_modelOperationInfos = modelOperationInfos.ToImmutable();
 			}
 	
-	        public override __MetaModel MetaModel => Compiler.Instance;
-	        public override global::System.Type MetaType => typeof(BoolExpression);
+	        public override __MetaModel MetaModel => Compiler.MInstance;
+	        public override __Type MetaType => typeof(BoolExpression);
 	
-	        public override __Type? SymbolType => null;
+	        public override __MetaType SymbolType => default;
 	        public override __ModelProperty? NameProperty => null;
 	        public override __ModelProperty? TypeProperty => null;
 	        public override global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> BaseTypes => _baseTypes;
@@ -6412,10 +6412,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 				_modelOperationInfos = modelOperationInfos.ToImmutable();
 			}
 	
-	        public override __MetaModel MetaModel => Compiler.Instance;
-	        public override global::System.Type MetaType => typeof(IntExpression);
+	        public override __MetaModel MetaModel => Compiler.MInstance;
+	        public override __Type MetaType => typeof(IntExpression);
 	
-	        public override __Type? SymbolType => null;
+	        public override __MetaType SymbolType => default;
 	        public override __ModelProperty? NameProperty => null;
 	        public override __ModelProperty? TypeProperty => null;
 	        public override global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> BaseTypes => _baseTypes;
@@ -6507,10 +6507,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 				_modelOperationInfos = modelOperationInfos.ToImmutable();
 			}
 	
-	        public override __MetaModel MetaModel => Compiler.Instance;
-	        public override global::System.Type MetaType => typeof(StringExpression);
+	        public override __MetaModel MetaModel => Compiler.MInstance;
+	        public override __Type MetaType => typeof(StringExpression);
 	
-	        public override __Type? SymbolType => null;
+	        public override __MetaType SymbolType => default;
 	        public override __ModelProperty? NameProperty => null;
 	        public override __ModelProperty? TypeProperty => null;
 	        public override global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> BaseTypes => _baseTypes;
@@ -6602,10 +6602,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 				_modelOperationInfos = modelOperationInfos.ToImmutable();
 			}
 	
-	        public override __MetaModel MetaModel => Compiler.Instance;
-	        public override global::System.Type MetaType => typeof(ReferenceExpression);
+	        public override __MetaModel MetaModel => Compiler.MInstance;
+	        public override __Type MetaType => typeof(ReferenceExpression);
 	
-	        public override __Type? SymbolType => null;
+	        public override __MetaType SymbolType => default;
 	        public override __ModelProperty? NameProperty => null;
 	        public override __ModelProperty? TypeProperty => null;
 	        public override global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> BaseTypes => _baseTypes;

@@ -29,6 +29,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
         private ImmutableArray<AliasSymbol> _aliases;
         private ImmutableArray<NamespaceSymbol> _namespaces;
         private ImmutableArray<DeclaredSymbol> _symbols;
+        private ImmutableArray<DeclaredSymbol> _metaModelSymbols;
         private ImmutableArray<MetaModel> _metaModels;
 
         protected ImportSymbol(Symbol container) 
@@ -72,6 +73,15 @@ namespace MetaDslx.CodeAnalysis.Symbols
         }
 
         [ModelProperty]
+        public ImmutableArray<DeclaredSymbol> MetaModelSymbols
+        {
+            get
+            {
+                ForceComplete(CompletionParts.FinishComputingImports, null, default);
+                return _metaModelSymbols;
+            }
+        }
+
         public ImmutableArray<MetaModel> MetaModels
         {
             get
@@ -92,6 +102,8 @@ namespace MetaDslx.CodeAnalysis.Symbols
                     _aliases = value.aliases;
                     _namespaces = value.namespaces;
                     _symbols = value.symbols;
+                    _metaModelSymbols = value.metaModelSymbols;
+                    _metaModels = value.metaModels;
                     AddSymbolDiagnostics(diagnostics);
                     diagnostics.Free();
                     NotePartComplete(CompletionParts.FinishComputingImports);
@@ -105,7 +117,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
             return false;
         }
 
-        protected virtual (ImmutableArray<AliasSymbol> aliases, ImmutableArray<NamespaceSymbol> namespaces, ImmutableArray<DeclaredSymbol> symbols, ImmutableArray<MetaModel> metaModels) ComputeImports(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        protected virtual (ImmutableArray<AliasSymbol> aliases, ImmutableArray<NamespaceSymbol> namespaces, ImmutableArray<DeclaredSymbol> symbols, ImmutableArray<DeclaredSymbol> metaModelSymbols, ImmutableArray<MetaModel> metaModels) ComputeImports(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
         }

@@ -113,9 +113,7 @@ namespace MetaDslx.CodeAnalysis.Binding
                             }
                             else if (propertyType == typeof(MetaModel))
                             {
-                                var fullName = SymbolDisplayFormat.QualifiedNameOnlyFormat.ToString(symbol);
-                                var metaModels = Compilation.ExternalReferences.OfType<MetaModelReference>().Where(r => r.MetaModel.MFullName == fullName);
-                                result.AddRange(metaModels);
+                                result.Add(symbol);
                             }
                             else if (isName && propertyType == typeof(string))
                             {

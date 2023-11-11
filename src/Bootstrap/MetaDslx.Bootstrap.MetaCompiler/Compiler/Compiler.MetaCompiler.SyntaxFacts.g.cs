@@ -394,6 +394,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 					return "Declarations";
 				case CompilerSyntaxKind.LanguageDeclaration: 
 					return "LanguageDeclaration";
+				case CompilerSyntaxKind.Grammar: 
+					return "Grammar";
 				case CompilerSyntaxKind.ParserRule: 
 					return "ParserRule";
 				case CompilerSyntaxKind.LexerRule: 

@@ -13,6 +13,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 		public virtual void VisitUsingGreen(UsingGreen node) => this.DefaultVisit(node);
 		public virtual void VisitDeclarationsGreen(DeclarationsGreen node) => this.DefaultVisit(node);
 		public virtual void VisitLanguageDeclarationGreen(LanguageDeclarationGreen node) => this.DefaultVisit(node);
+		public virtual void VisitGrammarGreen(GrammarGreen node) => this.DefaultVisit(node);
 		public virtual void VisitParserRuleGreen(ParserRuleGreen node) => this.DefaultVisit(node);
 		public virtual void VisitLexerRuleGreen(LexerRuleGreen node) => this.DefaultVisit(node);
 		public virtual void VisitPAlternativeGreen(PAlternativeGreen node) => this.DefaultVisit(node);
@@ -71,6 +72,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 		public virtual TResult VisitUsingGreen(UsingGreen node) => this.DefaultVisit(node);
 		public virtual TResult VisitDeclarationsGreen(DeclarationsGreen node) => this.DefaultVisit(node);
 		public virtual TResult VisitLanguageDeclarationGreen(LanguageDeclarationGreen node) => this.DefaultVisit(node);
+		public virtual TResult VisitGrammarGreen(GrammarGreen node) => this.DefaultVisit(node);
 		public virtual TResult VisitParserRuleGreen(ParserRuleGreen node) => this.DefaultVisit(node);
 		public virtual TResult VisitLexerRuleGreen(LexerRuleGreen node) => this.DefaultVisit(node);
 		public virtual TResult VisitPAlternativeGreen(PAlternativeGreen node) => this.DefaultVisit(node);

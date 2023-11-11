@@ -21,6 +21,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		void VisitUsing(UsingSyntax node);
 		void VisitDeclarations(DeclarationsSyntax node);
 		void VisitLanguageDeclaration(LanguageDeclarationSyntax node);
+		void VisitGrammar(GrammarSyntax node);
 		void VisitParserRule(ParserRuleSyntax node);
 		void VisitLexerRule(LexerRuleSyntax node);
 		void VisitPAlternative(PAlternativeSyntax node);
@@ -95,6 +96,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		}
 
 		public virtual void VisitLanguageDeclaration(LanguageDeclarationSyntax node)
+		{
+		    this.DefaultVisit(node);
+		}
+
+		public virtual void VisitGrammar(GrammarSyntax node)
 		{
 		    this.DefaultVisit(node);
 		}
@@ -352,6 +358,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		TResult VisitUsing(UsingSyntax node);
 		TResult VisitDeclarations(DeclarationsSyntax node);
 		TResult VisitLanguageDeclaration(LanguageDeclarationSyntax node);
+		TResult VisitGrammar(GrammarSyntax node);
 		TResult VisitParserRule(ParserRuleSyntax node);
 		TResult VisitLexerRule(LexerRuleSyntax node);
 		TResult VisitPAlternative(PAlternativeSyntax node);
@@ -426,6 +433,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		}
 
 		public virtual TResult VisitLanguageDeclaration(LanguageDeclarationSyntax node)
+		{
+		    return this.DefaultVisit(node);
+		}
+
+		public virtual TResult VisitGrammar(GrammarSyntax node)
 		{
 		    return this.DefaultVisit(node);
 		}
@@ -683,6 +695,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		TResult VisitUsing(UsingSyntax node, TArg argument);
 		TResult VisitDeclarations(DeclarationsSyntax node, TArg argument);
 		TResult VisitLanguageDeclaration(LanguageDeclarationSyntax node, TArg argument);
+		TResult VisitGrammar(GrammarSyntax node, TArg argument);
 		TResult VisitParserRule(ParserRuleSyntax node, TArg argument);
 		TResult VisitLexerRule(LexerRuleSyntax node, TArg argument);
 		TResult VisitPAlternative(PAlternativeSyntax node, TArg argument);
@@ -757,6 +770,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		}
 
 		public virtual TResult VisitLanguageDeclaration(LanguageDeclarationSyntax node, TArg argument)
+		{
+		    return this.DefaultVisit(node, argument);
+		}
+
+		public virtual TResult VisitGrammar(GrammarSyntax node, TArg argument)
 		{
 		    return this.DefaultVisit(node, argument);
 		}
@@ -1023,13 +1041,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
         public virtual SyntaxNode VisitMain(MainSyntax node)
         {
             var kNamespace = this.VisitToken(node.KNamespace);
-            var qualifier = (QualifierSyntax)this.Visit(node.Qualifier);
+            var name = (QualifierSyntax)this.Visit(node.Name);
             var tSemicolon = this.VisitToken(node.TSemicolon);
             var @using = this.VisitList(node.Using);
             var declarations = (DeclarationsSyntax)this.Visit(node.Declarations);
             var eof = this.VisitToken(node.EndOfFileToken);
         	    
-        	return node.Update(kNamespace, qualifier, tSemicolon, @using, declarations, eof);
+        	return node.Update(kNamespace, name, tSemicolon, @using, declarations, eof);
         }
 
         public virtual SyntaxNode VisitUsing(UsingSyntax node)
@@ -1054,8 +1072,16 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
             var kLanguage = this.VisitToken(node.KLanguage);
             var name = (NameSyntax)this.Visit(node.Name);
             var tSemicolon = this.VisitToken(node.TSemicolon);
+            var grammar = (GrammarSyntax)this.Visit(node.Grammar);
         	    
-        	return node.Update(kLanguage, name, tSemicolon);
+        	return node.Update(kLanguage, name, tSemicolon, grammar);
+        }
+
+        public virtual SyntaxNode VisitGrammar(GrammarSyntax node)
+        {
+            var rules = this.VisitList(node.Rules);
+        	    
+        	return node.Update(rules);
         }
 
         public virtual SyntaxNode VisitParserRule(ParserRuleSyntax node)
@@ -1294,9 +1320,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
         public virtual SyntaxNode VisitUsingBlock1Alt2(UsingBlock1Alt2Syntax node)
         {
             var kMetamodel = this.VisitToken(node.KMetamodel);
-            var metaModels = (QualifierSyntax)this.Visit(node.MetaModels);
+            var metaModelSymbols = (QualifierSyntax)this.Visit(node.MetaModelSymbols);
         	    
-        	return node.Update(kMetamodel, metaModels);
+        	return node.Update(kMetamodel, metaModelSymbols);
         }
 
         public virtual SyntaxNode VisitParserRuleBlock1Alt1(ParserRuleBlock1Alt1Syntax node)

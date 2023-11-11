@@ -308,19 +308,19 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
             return new SyntaxToken(CompilerLanguage.Instance.InternalSyntaxFactory.TInvalidToken(text, value));
         }
 
-        public MainSyntax Main(SyntaxToken kNamespace, QualifierSyntax qualifier, SyntaxToken tSemicolon, MetaDslx.CodeAnalysis.SyntaxList<UsingSyntax> @using, DeclarationsSyntax declarations, SyntaxToken eof)
+        public MainSyntax Main(SyntaxToken kNamespace, QualifierSyntax name, SyntaxToken tSemicolon, MetaDslx.CodeAnalysis.SyntaxList<UsingSyntax> @using, DeclarationsSyntax declarations, SyntaxToken eof)
         {
         	if (kNamespace.RawKind != (int)CompilerSyntaxKind.KNamespace) throw new ArgumentException(nameof(kNamespace));
-        	if (qualifier is null) throw new ArgumentNullException(nameof(qualifier));
+        	if (name is null) throw new ArgumentNullException(nameof(name));
         	if (tSemicolon.RawKind != (int)CompilerSyntaxKind.TSemicolon) throw new ArgumentException(nameof(tSemicolon));
         	if (declarations is null) throw new ArgumentNullException(nameof(declarations));
         	if (eof.RawKind != (int)CompilerSyntaxKind.Eof) throw new ArgumentException(nameof(eof));
-            return (MainSyntax)CompilerLanguage.Instance.InternalSyntaxFactory.Main((InternalSyntaxToken)kNamespace.Node, (QualifierGreen)qualifier.Green, (InternalSyntaxToken)tSemicolon.Node, @using.Node.ToGreenList<UsingGreen>(), (DeclarationsGreen)declarations.Green, (InternalSyntaxToken)eof.Node).CreateRed();
+            return (MainSyntax)CompilerLanguage.Instance.InternalSyntaxFactory.Main((InternalSyntaxToken)kNamespace.Node, (QualifierGreen)name.Green, (InternalSyntaxToken)tSemicolon.Node, @using.Node.ToGreenList<UsingGreen>(), (DeclarationsGreen)declarations.Green, (InternalSyntaxToken)eof.Node).CreateRed();
         }
         
-        public MainSyntax Main(QualifierSyntax qualifier, MetaDslx.CodeAnalysis.SyntaxList<UsingSyntax> @using, DeclarationsSyntax declarations)
+        public MainSyntax Main(QualifierSyntax name, MetaDslx.CodeAnalysis.SyntaxList<UsingSyntax> @using, DeclarationsSyntax declarations)
         {
-        	return this.Main(this.Token(CompilerSyntaxKind.KNamespace), qualifier, this.Token(CompilerSyntaxKind.TSemicolon), @using, declarations, this.Token(CompilerSyntaxKind.Eof));
+        	return this.Main(this.Token(CompilerSyntaxKind.KNamespace), name, this.Token(CompilerSyntaxKind.TSemicolon), @using, declarations, this.Token(CompilerSyntaxKind.Eof));
         }
 
         public UsingSyntax Using(SyntaxToken kUsing, UsingBlock1Syntax usingBlock1, SyntaxToken tSemicolon)
@@ -342,17 +342,23 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
             return (DeclarationsSyntax)CompilerLanguage.Instance.InternalSyntaxFactory.Declarations((LanguageDeclarationGreen)declarations.Green, declarations1.Node.ToGreenList<RuleGreen>()).CreateRed();
         }
 
-        public LanguageDeclarationSyntax LanguageDeclaration(SyntaxToken kLanguage, NameSyntax name, SyntaxToken tSemicolon)
+        public LanguageDeclarationSyntax LanguageDeclaration(SyntaxToken kLanguage, NameSyntax name, SyntaxToken tSemicolon, GrammarSyntax grammar)
         {
         	if (kLanguage.RawKind != (int)CompilerSyntaxKind.KLanguage) throw new ArgumentException(nameof(kLanguage));
         	if (name is null) throw new ArgumentNullException(nameof(name));
         	if (tSemicolon.RawKind != (int)CompilerSyntaxKind.TSemicolon) throw new ArgumentException(nameof(tSemicolon));
-            return (LanguageDeclarationSyntax)CompilerLanguage.Instance.InternalSyntaxFactory.LanguageDeclaration((InternalSyntaxToken)kLanguage.Node, (NameGreen)name.Green, (InternalSyntaxToken)tSemicolon.Node).CreateRed();
+        	if (grammar is null) throw new ArgumentNullException(nameof(grammar));
+            return (LanguageDeclarationSyntax)CompilerLanguage.Instance.InternalSyntaxFactory.LanguageDeclaration((InternalSyntaxToken)kLanguage.Node, (NameGreen)name.Green, (InternalSyntaxToken)tSemicolon.Node, (GrammarGreen)grammar.Green).CreateRed();
         }
         
-        public LanguageDeclarationSyntax LanguageDeclaration(NameSyntax name)
+        public LanguageDeclarationSyntax LanguageDeclaration(NameSyntax name, GrammarSyntax grammar)
         {
-        	return this.LanguageDeclaration(this.Token(CompilerSyntaxKind.KLanguage), name, this.Token(CompilerSyntaxKind.TSemicolon));
+        	return this.LanguageDeclaration(this.Token(CompilerSyntaxKind.KLanguage), name, this.Token(CompilerSyntaxKind.TSemicolon), grammar);
+        }
+
+        public GrammarSyntax Grammar(MetaDslx.CodeAnalysis.SyntaxList<RuleSyntax> rules)
+        {
+            return (GrammarSyntax)CompilerLanguage.Instance.InternalSyntaxFactory.Grammar(rules.Node.ToGreenList<RuleGreen>()).CreateRed();
         }
 
         public ParserRuleSyntax ParserRule(MetaDslx.CodeAnalysis.SyntaxList<AnnotationSyntax> annotations1, ParserRuleBlock1Syntax parserRuleBlock1, SyntaxToken tColon, MetaDslx.CodeAnalysis.SeparatedSyntaxList<PAlternativeSyntax> pAlternativeList, SyntaxToken tSemicolon)
@@ -616,16 +622,16 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
             return (UsingBlock1Alt1Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.UsingBlock1Alt1((QualifierGreen)namespaces.Green).CreateRed();
         }
 
-        public UsingBlock1Alt2Syntax UsingBlock1Alt2(SyntaxToken kMetamodel, QualifierSyntax metaModels)
+        public UsingBlock1Alt2Syntax UsingBlock1Alt2(SyntaxToken kMetamodel, QualifierSyntax metaModelSymbols)
         {
         	if (kMetamodel.RawKind != (int)CompilerSyntaxKind.KMetamodel) throw new ArgumentException(nameof(kMetamodel));
-        	if (metaModels is null) throw new ArgumentNullException(nameof(metaModels));
-            return (UsingBlock1Alt2Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.UsingBlock1Alt2((InternalSyntaxToken)kMetamodel.Node, (QualifierGreen)metaModels.Green).CreateRed();
+        	if (metaModelSymbols is null) throw new ArgumentNullException(nameof(metaModelSymbols));
+            return (UsingBlock1Alt2Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.UsingBlock1Alt2((InternalSyntaxToken)kMetamodel.Node, (QualifierGreen)metaModelSymbols.Green).CreateRed();
         }
         
-        public UsingBlock1Alt2Syntax UsingBlock1Alt2(QualifierSyntax metaModels)
+        public UsingBlock1Alt2Syntax UsingBlock1Alt2(QualifierSyntax metaModelSymbols)
         {
-        	return this.UsingBlock1Alt2(this.Token(CompilerSyntaxKind.KMetamodel), metaModels);
+        	return this.UsingBlock1Alt2(this.Token(CompilerSyntaxKind.KMetamodel), metaModelSymbols);
         }
 
         public ParserRuleBlock1Alt1Syntax ParserRuleBlock1Alt1(SyntaxToken isBlock, NameSyntax name)
@@ -859,6 +865,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		        typeof(UsingSyntax),
 		        typeof(DeclarationsSyntax),
 		        typeof(LanguageDeclarationSyntax),
+		        typeof(GrammarSyntax),
 		        typeof(ParserRuleSyntax),
 		        typeof(LexerRuleSyntax),
 		        typeof(PAlternativeSyntax),

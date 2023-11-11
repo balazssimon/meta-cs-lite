@@ -88,6 +88,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		Using,
 		Declarations,
 		LanguageDeclaration,
+		Grammar,
 		ParserRule,
 		LexerRule,
 		PAlternative,

@@ -57,6 +57,12 @@ public interface ICompilerParserVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitPr_LanguageDeclaration([NotNull] CompilerParser.Pr_LanguageDeclarationContext context);
 	/// <summary>
+	/// Visit a parse tree produced by <see cref="CompilerParser.pr_Grammar"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitPr_Grammar([NotNull] CompilerParser.Pr_GrammarContext context);
+	/// <summary>
 	/// Visit a parse tree produced by the <c>pr_ParserRule</c>
 	/// labeled alternative in <see cref="CompilerParser.pr_Rule"/>.
 	/// </summary>

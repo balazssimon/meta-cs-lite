@@ -12,15 +12,13 @@ using System.Diagnostics.CodeAnalysis;
 using System.Xml.Linq;
 using MetaDslx.Languages.MetaModel.Model;
 using MetaDslx.CodeAnalysis.Symbols;
-//using MetaDslx.Bootstrap.MetaCompiler.Model;
-//using MetaDslx.Bootstrap.MetaCompiler.Compiler;
 
-CompileMetaModel("Meta", @"..\..\..\..\..\Main\MetaDslx.Languages.MetaModel\Model", @"..\..\..\..\..\Main\MetaDslx.Languages.MetaModel\Model");
+//CompileMetaModel("Meta", @"..\..\..\..\..\Main\MetaDslx.Languages.MetaModel\Model", @"..\..\..\..\..\Main\MetaDslx.Languages.MetaModel\Model");
 //CompileMetaCompiler("Meta", @"..\..\..\..\..\Main\MetaDslx.Languages.MetaModel\Language", @"..\..\..\..\..\Main\MetaDslx.Languages.MetaModel\Compiler");
 //CompileMetaModel("Compiler", @"..\..\..\..\MetaDslx.Bootstrap.MetaCompiler\Model", @"..\..\..\..\MetaDslx.Bootstrap.MetaCompiler\Model");
 //CompileMetaCompiler("Compiler", @"..\..\..\..\MetaDslx.Bootstrap.MetaCompiler\Language", @"..\..\..\..\MetaDslx.Bootstrap.MetaCompiler\Compiler");
-//CompileWithMetaCompiler("Meta", @"..\..\..\..\..\Main\MetaDslx.Languages.MetaModel\Language", @"..\..\..\..\..\Main\MetaDslx.Languages.MetaModel\Compiler", Meta.Instance);
-//CompileWithMetaCompiler("Compiler2", @"..\..\..\..\MetaDslx.Bootstrap.MetaCompiler\Language", @"..\..\..\..\MetaDslx.Bootstrap.MetaCompiler\Compiler", Compiler.Instance);
+//CompileWithMetaCompiler("Meta", @"..\..\..\..\..\Main\MetaDslx.Languages.MetaModel\Language", @"..\..\..\..\..\Main\MetaDslx.Languages.MetaModel\Compiler", Meta.MInstance);
+CompileWithMetaCompiler("Compiler2", @"..\..\..\..\MetaDslx.Bootstrap.MetaCompiler\Language", @"..\..\..\..\MetaDslx.Bootstrap.MetaCompiler\Compiler", MetaDslx.Bootstrap.MetaCompiler.Model.Compiler.MInstance);
 
 static void CompileMetaModel(string name, string inputDir, string outputDir)
 {
@@ -98,7 +96,7 @@ namespace MyCode
         File.WriteAllText(Path.Combine(outputDir, Path.GetFileName(tree.FilePath)), tree.GetText().ToString());
     }
 }
-/*
+
 static void CompileWithMetaCompiler(string name, string inputDir, string outputDir, MetaDslx.Modeling.MetaModel metaModel)
 {
     Compilation inputCompilation = CreateCompilation(name, @"
@@ -118,7 +116,7 @@ namespace MyCode
         Console.WriteLine(formatter.Format(diag));
     }
     var mlangCode = File.ReadAllText(Path.Combine(inputDir, $"{name}.mlang"));
-    var mlangTree = CompilerSyntaxTree.ParseText(mlangCode, path: $"{name}.mlang");
+    var mlangTree = MetaDslx.Bootstrap.MetaCompiler.Compiler.CompilerSyntaxTree.ParseText(mlangCode, path: $"{name}.mlang");
     var mlangCompilation = MetaDslx.CodeAnalysis.Compilation.Create(name, syntaxTrees: new[] { mlangTree }, initialCompilation: (CSharpCompilation)inputCompilation,
         references: new[] { MetaDslx.CodeAnalysis.MetadataReference.CreateFromMetaModel(metaModel) }, options: MetaDslx.CodeAnalysis.CompilationOptions.Default.WithConcurrentBuild(false));
     mlangCompilation.Compile();
@@ -127,7 +125,7 @@ namespace MyCode
         Console.WriteLine(diag);
     }
 }
-*/
+
 static void CompileAll(string mmName, string mmInputDir, string mmOutputDir, string mlangName, string mlangInputDir, string mlangOutputDir)
 {
     Compilation mmInputCompilation = CreateCompilation(mmName, @"
@@ -199,7 +197,7 @@ static Compilation CreateCompilation(string name, string source)
             MetadataReference.CreateFromFile(typeof(MetaDslx.Modeling.MetaModel).GetTypeInfo().Assembly.Location),
             MetadataReference.CreateFromFile(typeof(MetaDslx.CodeAnalysis.Compilation).GetTypeInfo().Assembly.Location),
             MetadataReference.CreateFromFile(typeof(MetaDslx.Languages.MetaModel.Model.MetaDeclaration).GetTypeInfo().Assembly.Location),
-            //MetadataReference.CreateFromFile(typeof(MetaDslx.Bootstrap.MetaCompiler.Model.Compiler).GetTypeInfo().Assembly.Location),
+            MetadataReference.CreateFromFile(typeof(MetaDslx.Bootstrap.MetaCompiler.Model.Compiler).GetTypeInfo().Assembly.Location),
         },
         new CSharpCompilationOptions(OutputKind.ConsoleApplication));
 }

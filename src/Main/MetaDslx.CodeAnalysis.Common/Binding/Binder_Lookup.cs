@@ -231,6 +231,11 @@ namespace MetaDslx.CodeAnalysis.Binding
                     {
                         result.AddRange(ns.GetMembersUnordered().Where(m => context.IsViable(m)));
                     }
+                    foreach (var mms in import.MetaModelSymbols)
+                    {
+                        // TODO
+                        result.AddRange(mms.GetMembersUnordered().Where(m => context.IsViable(m)));
+                    }
                     result.AddRange(import.Symbols.Where(m => context.IsViable(m)));
                 }
             }

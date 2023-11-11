@@ -1,5 +1,7 @@
 ﻿using MetaDslx.CodeAnalysis.Declarations;
 using MetaDslx.CodeAnalysis.PooledObjects;
+using MetaDslx.CodeAnalysis.Symbols.CSharp;
+using MetaDslx.CodeAnalysis.Symbols.Meta;
 using MetaDslx.Modeling;
 using Microsoft.CodeAnalysis;
 using System;
@@ -56,13 +58,40 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
             return SymbolFactory.CreateContainedSymbols(this, diagnostics);
         }
         
-        protected override (ImmutableArray<AliasSymbol> aliases, ImmutableArray<NamespaceSymbol> namespaces, ImmutableArray<DeclaredSymbol> symbols, ImmutableArray<MetaModel> metaModels) ComputeImports(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        protected override (ImmutableArray<AliasSymbol> aliases, ImmutableArray<NamespaceSymbol> namespaces, ImmutableArray<DeclaredSymbol> symbols, ImmutableArray<DeclaredSymbol> metaModelSymbols, ImmutableArray<MetaModel> metaModels) ComputeImports(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             var files = SymbolFactory.GetSymbolPropertyValues<string>(this, nameof(Files), diagnostics, cancellationToken);
             var aliases = SymbolFactory.GetSymbolPropertyValues<AliasSymbol>(this, nameof(Aliases), diagnostics, cancellationToken);
             var namespaces = SymbolFactory.GetSymbolPropertyValues<NamespaceSymbol>(this, nameof(Namespaces), diagnostics, cancellationToken);
             var symbols = SymbolFactory.GetSymbolPropertyValues<DeclaredSymbol>(this, nameof(Symbols), diagnostics, cancellationToken);
-            var metaModels = SymbolFactory.GetSymbolPropertyValues<MetaModel>(this, nameof(MetaModels), diagnostics, cancellationToken);
+            var metaModelSymbols = SymbolFactory.GetSymbolPropertyValues<DeclaredSymbol>(this, nameof(MetaModelSymbols), diagnostics, cancellationToken);
+            var metaModelsBuilder = ArrayBuilder<MetaModel>.GetInstance();
+            foreach (var metaModelSymbol in metaModelSymbols)
+            {
+                var fullName = SymbolDisplayFormat.QualifiedNameOnlyFormat.ToString(metaModelSymbol);
+                MetaModel? metaModel = null;
+                foreach (var mmRef in DeclaringCompilation.ExternalReferences.OfType<MetaModelReference>())
+                {
+                    if (mmRef.MetaModel.MFullName == fullName)
+                    {
+                        metaModel = mmRef.MetaModel;
+                        break;
+                    }
+                }
+                if (metaModel is null && metaModelSymbol is CSharpTypeSymbol csharpTypeSymbol)
+                {
+                    metaModel = new SymbolMetaModel(csharpTypeSymbol);
+                }
+                if (metaModel is not null)
+                {
+                    metaModelsBuilder.Add(metaModel);
+                }
+                else
+                {
+                    diagnostics.Add(Diagnostic.Create(CommonErrorCode.ERR_DeclarationError, this.Locations.FirstOrDefault(), $"The imported type '{fullName}' is not a metamodel."));
+                }
+            }
+            var metaModels = metaModelsBuilder.ToImmutableAndFree();
             if (files.Length > 0)
             {
                 var compilation = this.DeclaringCompilation;
@@ -116,7 +145,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
                     }
                 }
             }
-            return (aliases, namespaces, symbols, metaModels);
+            return (aliases, namespaces, symbols, metaModelSymbols, metaModels);
         }
     }
 }

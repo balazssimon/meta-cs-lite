@@ -160,7 +160,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 
 	public sealed class MainSyntax : CompilerSyntaxNode, ICompilationUnitSyntax
 	{
-		private QualifierSyntax _qualifier;
+		private QualifierSyntax _name;
 		private MetaDslx.CodeAnalysis.SyntaxNode _using;
 		private DeclarationsSyntax _declarations;
 	
@@ -183,7 +183,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 				return new SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
 			}
 		}
-	    public QualifierSyntax Qualifier => this.GetRed(ref this._qualifier, 1);
+	    public QualifierSyntax Name => this.GetRed(ref this._name, 1);
 	    public SyntaxToken TSemicolon 
 		{ 
 			get 
@@ -217,7 +217,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	    {
 	        switch (index)
 	        {
-				case 1: return this.GetRed(ref this._qualifier, 1);
+				case 1: return this.GetRed(ref this._name, 1);
 				case 3: return this.GetRed(ref this._using, 3);
 				case 4: return this.GetRed(ref this._declarations, 4);
 				default: return null;
@@ -228,7 +228,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	    {
 	        switch (index)
 	        {
-				case 1: return this._qualifier;
+				case 1: return this._name;
 				case 3: return this._using;
 				case 4: return this._declarations;
 				default: return null;
@@ -237,22 +237,22 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	
 	    public MainSyntax WithKNamespace(SyntaxToken kNamespace)
 		{
-			return this.Update(kNamespace, this.Qualifier, this.TSemicolon, this.Using, this.Declarations, this.EndOfFileToken);
+			return this.Update(kNamespace, this.Name, this.TSemicolon, this.Using, this.Declarations, this.EndOfFileToken);
 		}
 	
-	    public MainSyntax WithQualifier(QualifierSyntax qualifier)
+	    public MainSyntax WithName(QualifierSyntax name)
 		{
-			return this.Update(this.KNamespace, qualifier, this.TSemicolon, this.Using, this.Declarations, this.EndOfFileToken);
+			return this.Update(this.KNamespace, name, this.TSemicolon, this.Using, this.Declarations, this.EndOfFileToken);
 		}
 	
 	    public MainSyntax WithTSemicolon(SyntaxToken tSemicolon)
 		{
-			return this.Update(this.KNamespace, this.Qualifier, tSemicolon, this.Using, this.Declarations, this.EndOfFileToken);
+			return this.Update(this.KNamespace, this.Name, tSemicolon, this.Using, this.Declarations, this.EndOfFileToken);
 		}
 	
 	    public MainSyntax WithUsing(MetaDslx.CodeAnalysis.SyntaxList<UsingSyntax> @using)
 		{
-			return this.Update(this.KNamespace, this.Qualifier, this.TSemicolon, @using, this.Declarations, this.EndOfFileToken);
+			return this.Update(this.KNamespace, this.Name, this.TSemicolon, @using, this.Declarations, this.EndOfFileToken);
 		}
 	
 	    public MainSyntax AddUsing(params UsingSyntax[] @using)
@@ -262,19 +262,19 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	
 	    public MainSyntax WithDeclarations(DeclarationsSyntax declarations)
 		{
-			return this.Update(this.KNamespace, this.Qualifier, this.TSemicolon, this.Using, declarations, this.EndOfFileToken);
+			return this.Update(this.KNamespace, this.Name, this.TSemicolon, this.Using, declarations, this.EndOfFileToken);
 		}
 	
 	    public MainSyntax WithEndOfFileToken(SyntaxToken eof)
 		{
-			return this.Update(this.KNamespace, this.Qualifier, this.TSemicolon, this.Using, this.Declarations, eof);
+			return this.Update(this.KNamespace, this.Name, this.TSemicolon, this.Using, this.Declarations, eof);
 		}
 	
-	    public MainSyntax Update(SyntaxToken kNamespace, QualifierSyntax qualifier, SyntaxToken tSemicolon, MetaDslx.CodeAnalysis.SyntaxList<UsingSyntax> @using, DeclarationsSyntax declarations, SyntaxToken eof)
+	    public MainSyntax Update(SyntaxToken kNamespace, QualifierSyntax name, SyntaxToken tSemicolon, MetaDslx.CodeAnalysis.SyntaxList<UsingSyntax> @using, DeclarationsSyntax declarations, SyntaxToken eof)
 	    {
-	        if (this.KNamespace != kNamespace || this.Qualifier != qualifier || this.TSemicolon != tSemicolon || this.Using != @using || this.Declarations != declarations || this.EndOfFileToken != eof)
+	        if (this.KNamespace != kNamespace || this.Name != name || this.TSemicolon != tSemicolon || this.Using != @using || this.Declarations != declarations || this.EndOfFileToken != eof)
 	        {
-	            var newNode = CompilerLanguage.Instance.SyntaxFactory.Main(kNamespace, qualifier, tSemicolon, @using, declarations, eof);
+	            var newNode = CompilerLanguage.Instance.SyntaxFactory.Main(kNamespace, name, tSemicolon, @using, declarations, eof);
 	            var annotations = this.GetAnnotations();
 	            if (annotations != null && annotations.Length > 0)
 	               newNode = newNode.WithAnnotations(annotations);
@@ -488,6 +488,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	public sealed class LanguageDeclarationSyntax : CompilerSyntaxNode
 	{
 		private NameSyntax _name;
+		private GrammarSyntax _grammar;
 	
 	    public LanguageDeclarationSyntax(InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
 	        : base(green, syntaxTree, position)
@@ -518,12 +519,14 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 				return new SyntaxToken(this, greenToken, this.GetChildPosition(2), this.GetChildIndex(2));
 			}
 		}
+	    public GrammarSyntax Grammar => this.GetRed(ref this._grammar, 3);
 	
 	    protected override SyntaxNode GetNodeSlot(int index)
 	    {
 	        switch (index)
 	        {
 				case 1: return this.GetRed(ref this._name, 1);
+				case 3: return this.GetRed(ref this._grammar, 3);
 				default: return null;
 	        }
 	    }
@@ -533,30 +536,36 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	        switch (index)
 	        {
 				case 1: return this._name;
+				case 3: return this._grammar;
 				default: return null;
 	        }
 	    }
 	
 	    public LanguageDeclarationSyntax WithKLanguage(SyntaxToken kLanguage)
 		{
-			return this.Update(kLanguage, this.Name, this.TSemicolon);
+			return this.Update(kLanguage, this.Name, this.TSemicolon, this.Grammar);
 		}
 	
 	    public LanguageDeclarationSyntax WithName(NameSyntax name)
 		{
-			return this.Update(this.KLanguage, name, this.TSemicolon);
+			return this.Update(this.KLanguage, name, this.TSemicolon, this.Grammar);
 		}
 	
 	    public LanguageDeclarationSyntax WithTSemicolon(SyntaxToken tSemicolon)
 		{
-			return this.Update(this.KLanguage, this.Name, tSemicolon);
+			return this.Update(this.KLanguage, this.Name, tSemicolon, this.Grammar);
 		}
 	
-	    public LanguageDeclarationSyntax Update(SyntaxToken kLanguage, NameSyntax name, SyntaxToken tSemicolon)
+	    public LanguageDeclarationSyntax WithGrammar(GrammarSyntax grammar)
+		{
+			return this.Update(this.KLanguage, this.Name, this.TSemicolon, grammar);
+		}
+	
+	    public LanguageDeclarationSyntax Update(SyntaxToken kLanguage, NameSyntax name, SyntaxToken tSemicolon, GrammarSyntax grammar)
 	    {
-	        if (this.KLanguage != kLanguage || this.Name != name || this.TSemicolon != tSemicolon)
+	        if (this.KLanguage != kLanguage || this.Name != name || this.TSemicolon != tSemicolon || this.Grammar != grammar)
 	        {
-	            var newNode = CompilerLanguage.Instance.SyntaxFactory.LanguageDeclaration(kLanguage, name, tSemicolon);
+	            var newNode = CompilerLanguage.Instance.SyntaxFactory.LanguageDeclaration(kLanguage, name, tSemicolon, grammar);
 	            var annotations = this.GetAnnotations();
 	            if (annotations != null && annotations.Length > 0)
 	               newNode = newNode.WithAnnotations(annotations);
@@ -578,6 +587,87 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	    public override void Accept(ICompilerSyntaxVisitor visitor)
 	    {
 	        visitor.VisitLanguageDeclaration(this);
+	    }
+	
+	}
+	public sealed class GrammarSyntax : CompilerSyntaxNode
+	{
+		private MetaDslx.CodeAnalysis.SyntaxNode _rules;
+	
+	    public GrammarSyntax(InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
+	        : base(green, syntaxTree, position)
+	    {
+	    }
+	
+	    public GrammarSyntax(InternalSyntaxNode green, CompilerSyntaxNode parent, int position)
+	        : base(green, parent, position)
+	    {
+	    }
+	
+	    public MetaDslx.CodeAnalysis.SyntaxList<RuleSyntax> Rules 
+		{ 
+			get
+			{
+				var red = this.GetRed(ref this._rules, 0);
+				if (red != null) return new MetaDslx.CodeAnalysis.SyntaxList<RuleSyntax>(red);
+				return default;
+			} 
+		}
+	
+	    protected override SyntaxNode GetNodeSlot(int index)
+	    {
+	        switch (index)
+	        {
+				case 0: return this.GetRed(ref this._rules, 0);
+				default: return null;
+	        }
+	    }
+	
+	    protected override SyntaxNode GetCachedSlot(int index)
+	    {
+	        switch (index)
+	        {
+				case 0: return this._rules;
+				default: return null;
+	        }
+	    }
+	
+	    public GrammarSyntax WithRules(MetaDslx.CodeAnalysis.SyntaxList<RuleSyntax> rules)
+		{
+			return this.Update(rules);
+		}
+	
+	    public GrammarSyntax AddRules(params RuleSyntax[] rules)
+		{
+			return this.WithRules(this.Rules.AddRange(rules));
+		}
+	
+	    public GrammarSyntax Update(MetaDslx.CodeAnalysis.SyntaxList<RuleSyntax> rules)
+	    {
+	        if (this.Rules != rules)
+	        {
+	            var newNode = CompilerLanguage.Instance.SyntaxFactory.Grammar(rules);
+	            var annotations = this.GetAnnotations();
+	            if (annotations != null && annotations.Length > 0)
+	               newNode = newNode.WithAnnotations(annotations);
+				return (GrammarSyntax)newNode;
+	        }
+	        return this;
+	    }
+	
+	    public override TResult Accept<TArg, TResult>(ICompilerSyntaxVisitor<TArg, TResult> visitor, TArg argument)
+	    {
+	        return visitor.VisitGrammar(this, argument);
+	    }
+	
+	    public override TResult Accept<TResult>(ICompilerSyntaxVisitor<TResult> visitor)
+	    {
+	        return visitor.VisitGrammar(this);
+	    }
+	
+	    public override void Accept(ICompilerSyntaxVisitor visitor)
+	    {
+	        visitor.VisitGrammar(this);
 	    }
 	
 	}
@@ -3228,7 +3318,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	}
 	public sealed class UsingBlock1Alt2Syntax : UsingBlock1Syntax
 	{
-		private QualifierSyntax _metaModels;
+		private QualifierSyntax _metaModelSymbols;
 	
 	    public UsingBlock1Alt2Syntax(InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
 	        : base(green, syntaxTree, position)
@@ -3249,13 +3339,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 				return new SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
 			}
 		}
-	    public QualifierSyntax MetaModels => this.GetRed(ref this._metaModels, 1);
+	    public QualifierSyntax MetaModelSymbols => this.GetRed(ref this._metaModelSymbols, 1);
 	
 	    protected override SyntaxNode GetNodeSlot(int index)
 	    {
 	        switch (index)
 	        {
-				case 1: return this.GetRed(ref this._metaModels, 1);
+				case 1: return this.GetRed(ref this._metaModelSymbols, 1);
 				default: return null;
 	        }
 	    }
@@ -3264,26 +3354,26 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	    {
 	        switch (index)
 	        {
-				case 1: return this._metaModels;
+				case 1: return this._metaModelSymbols;
 				default: return null;
 	        }
 	    }
 	
 	    public UsingBlock1Alt2Syntax WithKMetamodel(SyntaxToken kMetamodel)
 		{
-			return this.Update(kMetamodel, this.MetaModels);
+			return this.Update(kMetamodel, this.MetaModelSymbols);
 		}
 	
-	    public UsingBlock1Alt2Syntax WithMetaModels(QualifierSyntax metaModels)
+	    public UsingBlock1Alt2Syntax WithMetaModelSymbols(QualifierSyntax metaModelSymbols)
 		{
-			return this.Update(this.KMetamodel, metaModels);
+			return this.Update(this.KMetamodel, metaModelSymbols);
 		}
 	
-	    public UsingBlock1Alt2Syntax Update(SyntaxToken kMetamodel, QualifierSyntax metaModels)
+	    public UsingBlock1Alt2Syntax Update(SyntaxToken kMetamodel, QualifierSyntax metaModelSymbols)
 	    {
-	        if (this.KMetamodel != kMetamodel || this.MetaModels != metaModels)
+	        if (this.KMetamodel != kMetamodel || this.MetaModelSymbols != metaModelSymbols)
 	        {
-	            var newNode = CompilerLanguage.Instance.SyntaxFactory.UsingBlock1Alt2(kMetamodel, metaModels);
+	            var newNode = CompilerLanguage.Instance.SyntaxFactory.UsingBlock1Alt2(kMetamodel, metaModelSymbols);
 	            var annotations = this.GetAnnotations();
 	            if (annotations != null && annotations.Length > 0)
 	               newNode = newNode.WithAnnotations(annotations);

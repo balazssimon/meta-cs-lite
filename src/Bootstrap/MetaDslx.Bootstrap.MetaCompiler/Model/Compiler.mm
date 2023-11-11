@@ -83,7 +83,7 @@ class LElement $Symbol
 	derived string? FixedText;
 
 	bool IsNegated;
-	LElementValue Value;
+	contains LElementValue Value;
 	Multiplicity Multiplicity;
 }
 
@@ -193,7 +193,7 @@ class PElement $Symbol
 	string? $Name;
 	Assignment Assignment;
 	contains Annotation[] ValueAnnotations;
-	PElementValue Value;
+	contains PElementValue Value;
 	Multiplicity Multiplicity;
 }
 

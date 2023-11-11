@@ -310,19 +310,19 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			return Token(null, CompilerSyntaxKind.TInvalidToken, text, value, null);
 		}
 
-		internal MainGreen Main(InternalSyntaxToken kNamespace, QualifierGreen qualifier, InternalSyntaxToken tSemicolon, MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<UsingGreen> @using, DeclarationsGreen declarations, InternalSyntaxToken eof)
+		internal MainGreen Main(InternalSyntaxToken kNamespace, QualifierGreen name, InternalSyntaxToken tSemicolon, MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<UsingGreen> @using, DeclarationsGreen declarations, InternalSyntaxToken eof)
 		{
 #if DEBUG
 			if (kNamespace is null) throw new ArgumentNullException(nameof(kNamespace));
 			if (kNamespace.RawKind != (int)CompilerSyntaxKind.KNamespace) throw new ArgumentException(nameof(kNamespace));
-			if (qualifier is null) throw new ArgumentNullException(nameof(qualifier));
+			if (name is null) throw new ArgumentNullException(nameof(name));
 			if (tSemicolon is null) throw new ArgumentNullException(nameof(tSemicolon));
 			if (tSemicolon.RawKind != (int)CompilerSyntaxKind.TSemicolon) throw new ArgumentException(nameof(tSemicolon));
 			if (declarations is null) throw new ArgumentNullException(nameof(declarations));
 			if (eof is null) throw new ArgumentNullException(nameof(eof));
 			if (eof.RawKind != (int)CompilerSyntaxKind.Eof) throw new ArgumentException(nameof(eof));
 #endif
-			return new MainGreen(CompilerSyntaxKind.Main, kNamespace, qualifier, tSemicolon, @using.Node, declarations, eof);
+			return new MainGreen(CompilerSyntaxKind.Main, kNamespace, name, tSemicolon, @using.Node, declarations, eof);
 		}
 
 		internal UsingGreen Using(InternalSyntaxToken kUsing, UsingBlock1Green usingBlock1, InternalSyntaxToken tSemicolon)
@@ -365,7 +365,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			return result;
 		}
 
-		internal LanguageDeclarationGreen LanguageDeclaration(InternalSyntaxToken kLanguage, NameGreen name, InternalSyntaxToken tSemicolon)
+		internal LanguageDeclarationGreen LanguageDeclaration(InternalSyntaxToken kLanguage, NameGreen name, InternalSyntaxToken tSemicolon, GrammarGreen grammar)
 		{
 #if DEBUG
 			if (kLanguage is null) throw new ArgumentNullException(nameof(kLanguage));
@@ -373,12 +373,20 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			if (name is null) throw new ArgumentNullException(nameof(name));
 			if (tSemicolon is null) throw new ArgumentNullException(nameof(tSemicolon));
 			if (tSemicolon.RawKind != (int)CompilerSyntaxKind.TSemicolon) throw new ArgumentException(nameof(tSemicolon));
+			if (grammar is null) throw new ArgumentNullException(nameof(grammar));
+#endif
+			return new LanguageDeclarationGreen(CompilerSyntaxKind.LanguageDeclaration, kLanguage, name, tSemicolon, grammar);
+		}
+
+		internal GrammarGreen Grammar(MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<RuleGreen> rules)
+		{
+#if DEBUG
 #endif
 			int hash;
-			var cached = SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.LanguageDeclaration, kLanguage, name, tSemicolon, out hash);
-			if (cached != null) return (LanguageDeclarationGreen)cached;
+			var cached = SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.Grammar, rules.Node, out hash);
+			if (cached != null) return (GrammarGreen)cached;
 		
-			var result = new LanguageDeclarationGreen(CompilerSyntaxKind.LanguageDeclaration, kLanguage, name, tSemicolon);
+			var result = new GrammarGreen(CompilerSyntaxKind.Grammar, rules.Node);
 			if (hash >= 0)
 			{
 				SyntaxNodeCache.AddNode(result, hash);
@@ -915,18 +923,18 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			return result;
 		}
 
-		internal UsingBlock1Alt2Green UsingBlock1Alt2(InternalSyntaxToken kMetamodel, QualifierGreen metaModels)
+		internal UsingBlock1Alt2Green UsingBlock1Alt2(InternalSyntaxToken kMetamodel, QualifierGreen metaModelSymbols)
 		{
 #if DEBUG
 			if (kMetamodel is null) throw new ArgumentNullException(nameof(kMetamodel));
 			if (kMetamodel.RawKind != (int)CompilerSyntaxKind.KMetamodel) throw new ArgumentException(nameof(kMetamodel));
-			if (metaModels is null) throw new ArgumentNullException(nameof(metaModels));
+			if (metaModelSymbols is null) throw new ArgumentNullException(nameof(metaModelSymbols));
 #endif
 			int hash;
-			var cached = SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.UsingBlock1Alt2, kMetamodel, metaModels, out hash);
+			var cached = SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.UsingBlock1Alt2, kMetamodel, metaModelSymbols, out hash);
 			if (cached != null) return (UsingBlock1Alt2Green)cached;
 		
-			var result = new UsingBlock1Alt2Green(CompilerSyntaxKind.UsingBlock1Alt2, kMetamodel, metaModels);
+			var result = new UsingBlock1Alt2Green(CompilerSyntaxKind.UsingBlock1Alt2, kMetamodel, metaModelSymbols);
 			if (hash >= 0)
 			{
 				SyntaxNodeCache.AddNode(result, hash);

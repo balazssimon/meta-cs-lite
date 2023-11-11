@@ -1,4 +1,5 @@
-﻿using MetaDslx.Modeling;
+﻿using MetaDslx.CodeAnalysis.Symbols.CSharp;
+using MetaDslx.Modeling;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -8,6 +9,11 @@ namespace MetaDslx.CodeAnalysis.Symbols.Meta
 {
     internal class SymbolMetaModel : MetaModel
     {
+        public SymbolMetaModel(CSharpTypeSymbol metaModelSymbol)
+        {
+            
+        }
+
         public override string MName => throw new NotImplementedException();
 
         public override string MNamespace => throw new NotImplementedException();
