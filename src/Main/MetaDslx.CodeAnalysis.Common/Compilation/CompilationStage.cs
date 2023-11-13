@@ -11,8 +11,9 @@ namespace MetaDslx.CodeAnalysis
     public enum CompilationStage
     {
         Parse,
-        Declare,
-        Compile,
-        Emit
+        Declaration,
+        Validation,
+        Emit,
+        Build
     }
 }

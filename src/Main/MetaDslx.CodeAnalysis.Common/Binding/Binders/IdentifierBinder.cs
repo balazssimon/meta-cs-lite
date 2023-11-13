@@ -14,7 +14,6 @@ namespace MetaDslx.CodeAnalysis.Binding
     {
         private string? _name;
         private string? _metadataName;
-        private ImmutableArray<Diagnostic> _nameDiagnostics;
         private Symbol? _symbol;
 
         protected override ImmutableArray<SingleDeclaration> BuildDeclarationTree(SingleDeclarationBuilder builder)
@@ -41,38 +40,32 @@ namespace MetaDslx.CodeAnalysis.Binding
             }
         }
 
-        public string GetName(BindingContext context)
+        public string GetName(CancellationToken cancellationToken = default)
         {
-            CacheNameAndMetadataName(context);
+            CacheNameAndMetadataName(cancellationToken);
             return this.Name;
         }
 
-        public string GetMetadataName(BindingContext context)
+        public string GetMetadataName(CancellationToken cancellationToken = default)
         {
-            CacheNameAndMetadataName(context);
+            CacheNameAndMetadataName(cancellationToken);
             return this.MetadataName;
         }
 
-        private void CacheNameAndMetadataName(BindingContext context)
+        private void CacheNameAndMetadataName(CancellationToken cancellationToken = default)
         {
-            if (_nameDiagnostics.IsDefault)
-            {
-                var computeContext = BindingContext.GetInstance(context.CancellationToken);
-                var name = ComputeName(context) ?? string.Empty;
-                var metadataName = ComputeMetadataName(context) ?? string.Empty;
-                Interlocked.CompareExchange(ref _name, name, null);
-                Interlocked.CompareExchange(ref _metadataName, metadataName, null);
-                ImmutableInterlocked.InterlockedInitialize(ref _nameDiagnostics, computeContext.ToDiagnosticsAndFree());
-            }
-            context.AddDiagnostics(_nameDiagnostics);
+            var name = ComputeName(cancellationToken) ?? string.Empty;
+            var metadataName = ComputeMetadataName(cancellationToken) ?? string.Empty;
+            Interlocked.CompareExchange(ref _name, name, null);
+            Interlocked.CompareExchange(ref _metadataName, metadataName, null);
         }
 
-        protected virtual string? ComputeName(BindingContext context)
+        protected virtual string? ComputeName(CancellationToken cancellationToken = default)
         {
             return this.Language.SyntaxFacts.ExtractName(this.Syntax);
         }
 
-        protected virtual string? ComputeMetadataName(BindingContext context)
+        protected virtual string? ComputeMetadataName(CancellationToken cancellationToken = default)
         {
             return this.Language.SyntaxFacts.ExtractMetadataName(this.Syntax);
         }
@@ -82,23 +75,22 @@ namespace MetaDslx.CodeAnalysis.Binding
             identifierBinders.Add(this);
         }
 
-        protected override ImmutableArray<object?> BindValues(BindingContext context)
+        protected override ImmutableArray<object?> BindValues(CancellationToken cancellationToken = default)
         {
-            CacheNameAndMetadataName(context);
-            context.AddDiagnostics(_nameDiagnostics);
-            CacheSymbol(context);
+            CacheNameAndMetadataName(cancellationToken);
+            CacheSymbol(cancellationToken);
             if (_symbol is not null) return ImmutableArray.Create<object?>(_symbol);
             else return ImmutableArray<object?>.Empty;
         }
 
-        private void CacheSymbol(BindingContext context)
+        private void CacheSymbol(CancellationToken cancellationToken = default)
         {
             if (_symbol is null)
             {
                 var qualifier = GetEnclosingQualifierBinder();
                 if (qualifier is not null)
                 {
-                    var symbol = qualifier.GetIdentifierSymbol(context, this);
+                    var symbol = qualifier.GetIdentifierSymbol(this, cancellationToken);
                     Interlocked.CompareExchange(ref _symbol, symbol, null);
                 }
             }

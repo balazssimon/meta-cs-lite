@@ -43,26 +43,24 @@ namespace MetaDslx.CodeAnalysis.Binding
         {
             get
             {
-                if (!_definedSymbols.IsDefault) return _definedSymbols;
-                var parent = ParentBinder;
-                var parentSymbols = parent?.DefinedSymbols ?? ImmutableArray<Symbol>.Empty;
-                while (parent is not null && parentSymbols.IsDefaultOrEmpty)
-                {
-                    parent = parent.ParentBinder;
-                    parentSymbols = parent?.DefinedSymbols ?? ImmutableArray<Symbol>.Empty;
-                }
-                if (parentSymbols.IsDefaultOrEmpty) return ImmutableArray<Symbol>.Empty;
-                var definedSymbols = GetDefinedSymbols(parentSymbols);
-                ImmutableInterlocked.InterlockedInitialize(ref _definedSymbols, definedSymbols);
-                return _definedSymbols;
+                return ComputeDefinedSymbols();
             }
         }
 
-        private ImmutableArray<Symbol> GetDefinedSymbols(ImmutableArray<Symbol> containingSymbols)
+        private ImmutableArray<Symbol> ComputeDefinedSymbols(CancellationToken cancellationToken = default)
         {
+            if (!_definedSymbols.IsDefault) return _definedSymbols;
+            var parent = ParentBinder;
+            var parentSymbols = parent?.DefinedSymbols ?? ImmutableArray<Symbol>.Empty;
+            while (parent is not null && parentSymbols.IsDefaultOrEmpty)
+            {
+                parent = parent.ParentBinder;
+                parentSymbols = parent?.DefinedSymbols ?? ImmutableArray<Symbol>.Empty;
+            }
+            if (parentSymbols.IsDefaultOrEmpty) return ImmutableArray<Symbol>.Empty;
             var definedSymbols = ArrayBuilder<Symbol>.GetInstance();
             var nestingSymbols = ArrayBuilder<Symbol>.GetInstance();
-            nestingSymbols.AddRange(containingSymbols);
+            nestingSymbols.AddRange(parentSymbols);
             int i = 0;
             while (i < nestingSymbols.Count)
             {
@@ -76,7 +74,8 @@ namespace MetaDslx.CodeAnalysis.Binding
                 ++i;
             }
             nestingSymbols.Free();
-            return definedSymbols.ToImmutableAndFree();
+            ImmutableInterlocked.InterlockedInitialize(ref _definedSymbols, definedSymbols.ToImmutableAndFree());
+            return _definedSymbols;
         }
 
         private CandidateSymbolKind GetCandidateSymbolKind(Symbol symbol)
@@ -114,9 +113,9 @@ namespace MetaDslx.CodeAnalysis.Binding
             valueBinders.Add(this);
         }
 
-        protected override ImmutableArray<object?> BindValues(BindingContext context)
+        protected override ImmutableArray<object?> BindValues(CancellationToken cancellationToken = default)
         {
-            return DefinedSymbols.Cast<Symbol, object?>();
+            return ComputeDefinedSymbols(cancellationToken).Cast<Symbol, object?>();
         }
 
         public override string ToString()

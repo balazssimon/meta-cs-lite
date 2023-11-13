@@ -44,9 +44,9 @@ namespace MetaDslx.CodeAnalysis.Binding
             if (IsTopMostQualifier) valueBinders.Add(this);
         }
 
-        protected override ImmutableArray<object?> BindValues(BindingContext context)
+        protected override ImmutableArray<object?> BindValues(CancellationToken cancellationToken = default)
         {
-            CacheIdentifiers(context);
+            CacheIdentifiers(cancellationToken);
             if (_symbols.Length > 0) return ImmutableArray.Create<object?>(_symbols[_symbols.Length - 1]);
             else return ImmutableArray<object?>.Empty;
         }
@@ -55,27 +55,27 @@ namespace MetaDslx.CodeAnalysis.Binding
 
         public bool IsName => GetEnclosingNameBinder() is not null;
 
-        private void CacheIdentifiers(BindingContext context)
+        private void CacheIdentifiers(CancellationToken cancellationToken = default)
         {
             if (_identifiers.IsDefault)
             {
-                var identifiers = IsTopMostQualifier ? (this is IdentifierBinder identifier ? ImmutableArray.Create<IIdentifierBinder>(identifier) : GetIdentifierBinders(context.CancellationToken)) : ImmutableArray<IIdentifierBinder>.Empty;
+                var identifiers = IsTopMostQualifier ? (this is IdentifierBinder identifier ? ImmutableArray.Create<IIdentifierBinder>(identifier) : GetIdentifierBinders(cancellationToken)) : ImmutableArray<IIdentifierBinder>.Empty;
                 ImmutableInterlocked.InterlockedInitialize(ref _identifiers, identifiers);
             }
             if (_symbols.IsDefault)
             {
-                var symbols = _identifiers.Length > 0 ? (IsName ? ResolveDefinition(context) : ResolveUse(context)) : ImmutableArray<Symbol?>.Empty;
+                var symbols = _identifiers.Length > 0 ? (IsName ? ResolveDefinition(cancellationToken) : ResolveUse(cancellationToken)) : ImmutableArray<Symbol?>.Empty;
                 ImmutableInterlocked.InterlockedInitialize(ref _symbols, symbols);
             }
         }
 
-        private ImmutableArray<Symbol?> ResolveDefinition(BindingContext context)
+        private ImmutableArray<Symbol?> ResolveDefinition(CancellationToken cancellationToken = default)
         {
             var result = new Symbol?[_identifiers.Length];
             var lastIdentifier = (Binder)_identifiers[_identifiers.Length - 1];
             foreach (var symbol in ContainingDefinedSymbols)
             {
-                foreach (var decl in symbol.GetSingleDeclarations(context.CancellationToken))
+                foreach (var decl in symbol.GetSingleDeclarations(cancellationToken))
                 {
                     if (decl.NameLocation == lastIdentifier.Location)
                     {
@@ -97,8 +97,8 @@ namespace MetaDslx.CodeAnalysis.Binding
                 i = 0;
                 while (i < result.Length && result[i] is null)
                 {
-                    var name = _identifiers[i].GetName(context);
-                    var metadataName = _identifiers[i].GetMetadataName(context);
+                    var name = _identifiers[i].GetName(cancellationToken);
+                    var metadataName = _identifiers[i].GetMetadataName(cancellationToken);
                     var location = ((Binder)_identifiers[i]).Location;
                     result[i] = Compilation[Language].ErrorSymbolFactory.CreateSymbol<DeclaredSymbol>(container, new ErrorSymbolInfo(name, metadataName, ImmutableArray<Symbol>.Empty, Diagnostic.Create(CommonErrorCode.ERR_DeclarationError, location, $"Could not create declaration '{name}.'")));
                 }
@@ -106,18 +106,18 @@ namespace MetaDslx.CodeAnalysis.Binding
             return result.ToImmutableArray();
         }
 
-        private ImmutableArray<Symbol?> ResolveUse(BindingContext context)
+        private ImmutableArray<Symbol?> ResolveUse(CancellationToken cancellationToken = default)
         {
             var lookupContext = this.AllocateLookupContext(diagnose: true);
             var identifiers = _identifiers.SelectAsArray(b => ((Binder)b).Syntax);
             var symbols = this.BindQualifiedName(lookupContext, identifiers);
-            context.AddDiagnostics(lookupContext.Diagnostics);
+            AddDiagnostics(lookupContext.Diagnostics);
             return symbols.Cast<DeclaredSymbol,Symbol>();
         }
 
-        public Symbol? GetIdentifierSymbol(BindingContext context, IIdentifierBinder identifier)
+        public Symbol? GetIdentifierSymbol(IIdentifierBinder identifier, CancellationToken cancellationToken = default)
         {
-            CacheIdentifiers(context);
+            CacheIdentifiers(cancellationToken);
             var index = _identifiers.IndexOf(identifier);
             if (index >= 0 && _symbols.Length > index) return _symbols[index];
             else return null;

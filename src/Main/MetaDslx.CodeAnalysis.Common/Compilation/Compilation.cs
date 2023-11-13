@@ -54,12 +54,14 @@ namespace MetaDslx.CodeAnalysis
         private AccessCheck? _lazyAccessCheck;
 
         private BuckStopsHereBinder? _buckStopsHereBinder;
+        private DiagnosticBag? _binderDiagnostics;
 
         private ImmutableArray<Diagnostic> _diagnostics;
         private ImmutableArray<Diagnostic> _parseDiagnostics;
-        private ImmutableArray<Diagnostic> _declareDiagnostics;
-        private ImmutableArray<Diagnostic> _compileDiagnostics;
+        private ImmutableArray<Diagnostic> _declarationDiagnostics;
+        private ImmutableArray<Diagnostic> _validationDiagnostics;
         private ImmutableArray<Diagnostic> _emitDiagnostics;
+        private ImmutableArray<Diagnostic> _buildDiagnostics;
 
         internal protected Compilation(
             string? assemblyName,
@@ -841,6 +843,25 @@ namespace MetaDslx.CodeAnalysis
 
         #region Semantic Analysis
 
+        internal void AddBinderDiagnostic(Diagnostic diagnostic)
+        {
+            if (_binderDiagnostics is null) Interlocked.CompareExchange(ref _binderDiagnostics, new DiagnosticBag(), null);
+            _binderDiagnostics.Add(diagnostic);
+        }
+
+        internal void AddBinderDiagnostics(DiagnosticBag diagnostics)
+        {
+            if (_binderDiagnostics is null) Interlocked.CompareExchange(ref _binderDiagnostics, new DiagnosticBag(), null);
+            _binderDiagnostics.AddRange(diagnostics);
+        }
+
+        internal void AddBinderDiagnostics(IEnumerable<Diagnostic> diagnostics)
+        {
+            if (_binderDiagnostics is null) Interlocked.CompareExchange(ref _binderDiagnostics, new DiagnosticBag(), null);
+            _binderDiagnostics.AddRange(diagnostics);
+        }
+
+
         public void Compile(CancellationToken cancellationToken = default)
         {
             this.GetDiagnostics(cancellationToken);
@@ -851,7 +872,7 @@ namespace MetaDslx.CodeAnalysis
             if (_diagnostics.IsDefault)
             {
                 DiagnosticBag? builder = DiagnosticBag.GetInstance();
-                this.ForceComplete(CompilationStage.Emit, builder, cancellationToken);
+                this.ForceComplete(CompilationStage.Build, builder, cancellationToken);
                 ImmutableInterlocked.InterlockedInitialize(ref _diagnostics, builder.ToReadOnlyAndFree());
             }
             return _diagnostics;
@@ -906,9 +927,9 @@ namespace MetaDslx.CodeAnalysis
                 }
                 diagnostics.AddRange(_parseDiagnostics);
             }
-            if (stage >= CompilationStage.Declare)
+            if (stage >= CompilationStage.Declaration)
             {
-                if (_declareDiagnostics.IsDefault)
+                if (_declarationDiagnostics.IsDefault)
                 {
                     DiagnosticBag? builder = DiagnosticBag.GetInstance();
                     builder.AddRange(Options.Errors);
@@ -921,13 +942,13 @@ namespace MetaDslx.CodeAnalysis
 
                     cancellationToken.ThrowIfCancellationRequested();
 
-                    ImmutableInterlocked.InterlockedInitialize(ref _declareDiagnostics, builder.ToReadOnlyAndFree());
+                    ImmutableInterlocked.InterlockedInitialize(ref _declarationDiagnostics, builder.ToReadOnlyAndFree());
                 }
-                diagnostics.AddRange(_declareDiagnostics);
+                diagnostics.AddRange(_declarationDiagnostics);
             }
-            if (stage >= CompilationStage.Compile)
+            if (stage >= CompilationStage.Validation)
             {
-                if (_compileDiagnostics.IsDefault)
+                if (_validationDiagnostics.IsDefault)
                 {
                     DiagnosticBag? builder = DiagnosticBag.GetInstance();
                     if (this.Options.ConcurrentBuild)
@@ -939,8 +960,7 @@ namespace MetaDslx.CodeAnalysis
                             {
                                 var syntaxTree = syntaxTrees[i];
                                 var rootBinder = GetRootBinder(syntaxTree);
-                                var context = new BindingContext(builder, cancellationToken);
-                                rootBinder.CompleteBind(context, resolveLazy: true);
+                                rootBinder.CompleteBind(resolveLazy: true, cancellationToken);
                             }),
                             cancellationToken);
                     }
@@ -950,15 +970,14 @@ namespace MetaDslx.CodeAnalysis
                         {
                             cancellationToken.ThrowIfCancellationRequested();
                             var rootBinder = GetRootBinder(syntaxTree);
-                            var context = new BindingContext(builder, cancellationToken);
-                            rootBinder.CompleteBind(context, resolveLazy: true);
+                            rootBinder.CompleteBind(resolveLazy: true, cancellationToken);
                         }
                     }
                     this.GlobalNamespace.ForceComplete(null, null, cancellationToken);
                     AppendDiagnosticsForAllSymbols(builder, cancellationToken);
-                    ImmutableInterlocked.InterlockedInitialize(ref _compileDiagnostics, builder.ToReadOnlyAndFree());
+                    ImmutableInterlocked.InterlockedInitialize(ref _validationDiagnostics, builder.ToReadOnlyAndFree());
                 }
-                diagnostics.AddRange(_compileDiagnostics);
+                diagnostics.AddRange(_validationDiagnostics);
             }
             if (stage >= CompilationStage.Emit)
             {
@@ -968,6 +987,15 @@ namespace MetaDslx.CodeAnalysis
                     ImmutableInterlocked.InterlockedInitialize(ref _emitDiagnostics, builder.ToReadOnlyAndFree());
                 }
                 diagnostics.AddRange(_emitDiagnostics);
+            }
+            if (stage >= CompilationStage.Build)
+            {
+                if (_buildDiagnostics.IsDefault)
+                {
+                    DiagnosticBag? builder = DiagnosticBag.GetInstance();
+                    ImmutableInterlocked.InterlockedInitialize(ref _buildDiagnostics, builder.ToReadOnlyAndFree());
+                }
+                diagnostics.AddRange(_buildDiagnostics);
             }
         }
 
@@ -992,6 +1020,7 @@ namespace MetaDslx.CodeAnalysis
         private void AppendDiagnosticsForAllSymbols(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             diagnostics.AddRange(SourceAssembly.Diagnostics);
+            if (_binderDiagnostics is not null) diagnostics.AddRange(_binderDiagnostics);
             var rootSymbol = SourceModule;
             var queue = new List<Symbol>();
             queue.Add(rootSymbol);

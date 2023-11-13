@@ -72,7 +72,7 @@ namespace MetaDslx.CodeAnalysis.Binding
             else return base.GetEnclosingPropertyBinder();
         }
 
-        protected override ImmutableArray<object?> BindValues(BindingContext context)
+        protected override ImmutableArray<object?> BindValues(CancellationToken cancellationToken = default)
         {
             if (_valueOpt.HasValue)
             {
@@ -80,14 +80,14 @@ namespace MetaDslx.CodeAnalysis.Binding
             }
             else
             {
-                var propertyType = GetValueType(context, out var isName);
+                var propertyType = GetValueType(out var isName, cancellationToken);
                 var isSymbol = IsSymbolProperty;
                 var result = ArrayBuilder<object?>.GetInstance();
-                var valueBinders = GetValueBinders(this, context.CancellationToken);
+                var valueBinders = GetValueBinders(this, cancellationToken);
                 foreach (var valueBinder in valueBinders)
                 {
                     var binder = (Binder)valueBinder;
-                    var values = binder.Bind(context);
+                    var values = binder.Bind(cancellationToken);
                     foreach (var value in values)
                     {
                         if (value is IErrorSymbol) continue;
@@ -99,8 +99,8 @@ namespace MetaDslx.CodeAnalysis.Binding
                             }
                             else
                             {
-                                if (isSymbol) context.AddDiagnostic(Diagnostic.Create(CommonErrorCode.ERR_InvalidSymbolPrimitivePropertyValue, binder.Location, "'null'", propertyType.Name, FullName, propertyType.Name));
-                                else context.AddDiagnostic(Diagnostic.Create(CommonErrorCode.ERR_InvalidModelObjectPrimitivePropertyValue, binder.Location, "'null'", propertyType.Name, FullName, propertyType.Name));
+                                if (isSymbol) AddDiagnostic(Diagnostic.Create(CommonErrorCode.ERR_InvalidSymbolPrimitivePropertyValue, binder.Location, "'null'", propertyType.Name, FullName, propertyType.Name));
+                                else AddDiagnostic(Diagnostic.Create(CommonErrorCode.ERR_InvalidModelObjectPrimitivePropertyValue, binder.Location, "'null'", propertyType.Name, FullName, propertyType.Name));
                             }
                         }
                         else if (value is Symbol symbol)
@@ -137,8 +137,8 @@ namespace MetaDslx.CodeAnalysis.Binding
                             }
                             else
                             {
-                                if (isSymbol) context.AddDiagnostic(Diagnostic.Create(CommonErrorCode.ERR_InvalidSymbolPropertyValue, binder.Location, value.ToString().ToPascalCase(), valueType.Name, FullName, propertyType.Name));
-                                else context.AddDiagnostic(Diagnostic.Create(CommonErrorCode.ERR_InvalidModelObjectPropertyValue, binder.Location, (modelSymbol?.ModelObject ?? value).ToString().ToPascalCase(), valueType.Name, FullName, propertyType.Name));
+                                if (isSymbol) AddDiagnostic(Diagnostic.Create(CommonErrorCode.ERR_InvalidSymbolPropertyValue, binder.Location, value.ToString().ToPascalCase(), valueType.Name, FullName, propertyType.Name));
+                                else AddDiagnostic(Diagnostic.Create(CommonErrorCode.ERR_InvalidModelObjectPropertyValue, binder.Location, (modelSymbol?.ModelObject ?? value).ToString().ToPascalCase(), valueType.Name, FullName, propertyType.Name));
                             }
                         }
                         else
@@ -159,8 +159,8 @@ namespace MetaDslx.CodeAnalysis.Binding
                             }
                             else
                             {
-                                if (isSymbol) context.AddDiagnostic(Diagnostic.Create(CommonErrorCode.ERR_InvalidSymbolPrimitivePropertyValue, binder.Location, value, value.GetType(), FullName, propertyType.Name));
-                                else context.AddDiagnostic(Diagnostic.Create(CommonErrorCode.ERR_InvalidModelObjectPrimitivePropertyValue, binder.Location, value, value.GetType(), FullName, propertyType.Name));
+                                if (isSymbol) AddDiagnostic(Diagnostic.Create(CommonErrorCode.ERR_InvalidSymbolPrimitivePropertyValue, binder.Location, value, value.GetType(), FullName, propertyType.Name));
+                                else AddDiagnostic(Diagnostic.Create(CommonErrorCode.ERR_InvalidModelObjectPrimitivePropertyValue, binder.Location, value, value.GetType(), FullName, propertyType.Name));
                             }
                         }
                     }
@@ -190,12 +190,12 @@ namespace MetaDslx.CodeAnalysis.Binding
             }
         }
 
-        public Type? GetValueType(BindingContext context)
+        public Type? GetValueType(CancellationToken cancellationToken = default)
         {
-            return GetValueType(context, out var _);
+            return GetValueType(out var _, cancellationToken);
         }
 
-        private Type? GetValueType(BindingContext context, out bool isName)
+        private Type? GetValueType(out bool isName, CancellationToken cancellationToken = default)
         {
             isName = false;
             if (_modelObjectTypes.IsDefault)
@@ -204,7 +204,7 @@ namespace MetaDslx.CodeAnalysis.Binding
                 var modelObjectTypes = PooledHashSet<Type>.GetInstance();
                 foreach (var symbol in ContainingDefinedSymbols)
                 {
-                    foreach (var decl in symbol.GetSingleDeclarations(context.CancellationToken))
+                    foreach (var decl in symbol.GetSingleDeclarations(cancellationToken))
                     {
                         var modelObjectType = decl.ModelObjectType;
                         if (modelObjectType is not null) modelObjectTypes.Add(modelObjectType);
@@ -241,12 +241,12 @@ namespace MetaDslx.CodeAnalysis.Binding
                                 }
                                 else
                                 {
-                                    context.AddDiagnostic(Diagnostic.Create(CommonErrorCode.ERR_BindingError, Location, $"Property '{Name}' of model object '{modelObjectType}' has no type."));
+                                    AddDiagnostic(Diagnostic.Create(CommonErrorCode.ERR_BindingError, Location, $"Property '{Name}' of model object '{modelObjectType}' has no type."));
                                 }
                             }
                             else
                             {
-                                context.AddDiagnostic(Diagnostic.Create(CommonErrorCode.ERR_BindingError, Location, $"Property '{Name}' of model object '{modelObjectType}' does not exist."));
+                                AddDiagnostic(Diagnostic.Create(CommonErrorCode.ERR_BindingError, Location, $"Property '{Name}' of model object '{modelObjectType}' does not exist."));
                             }
                         }
                     }
@@ -258,13 +258,13 @@ namespace MetaDslx.CodeAnalysis.Binding
                 else if (valueTypes.Count == 0)
                 {
                     var modelObjectTypeNames = string.Join(",", modelObjectTypes.Select(t => t.FullName));
-                    context.AddDiagnostic(Diagnostic.Create(CommonErrorCode.ERR_BindingError, Location, $"Property '{Name}' (of {modelObjectTypeNames}) has no type"));
+                    AddDiagnostic(Diagnostic.Create(CommonErrorCode.ERR_BindingError, Location, $"Property '{Name}' (of {modelObjectTypeNames}) has no type"));
                 }
                 else
                 {
                     var modelObjectTypeNames = string.Join(",", modelObjectTypes.Select(t => t.FullName));
                     var typeNames = string.Join(",", valueTypes.Select(t => t.FullName));
-                    context.AddDiagnostic(Diagnostic.Create(CommonErrorCode.ERR_BindingError, Location, $"Property '{Name}' (of {modelObjectTypeNames}) has multiple possible types: {typeNames}"));
+                    AddDiagnostic(Diagnostic.Create(CommonErrorCode.ERR_BindingError, Location, $"Property '{Name}' (of {modelObjectTypeNames}) has multiple possible types: {typeNames}"));
                 }
                 Interlocked.CompareExchange(ref _valueType, valueType, null);
                 ImmutableInterlocked.InterlockedInitialize(ref _modelObjectTypes, modelObjectTypes.ToImmutableArray());

@@ -12,6 +12,6 @@ namespace MetaDslx.CodeAnalysis.Binding
         bool IsName { get; }
         bool IsTopMostQualifier { get; }
         ImmutableArray<IIdentifierBinder> GetIdentifierBinders(CancellationToken cancellationToken = default);
-        Symbol? GetIdentifierSymbol(BindingContext context, IIdentifierBinder identifier);
+        Symbol? GetIdentifierSymbol(IIdentifierBinder identifier, CancellationToken cancellationToken = default);
     }
 }

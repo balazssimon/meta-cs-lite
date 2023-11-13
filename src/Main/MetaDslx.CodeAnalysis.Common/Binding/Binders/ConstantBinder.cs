@@ -39,7 +39,7 @@ namespace MetaDslx.CodeAnalysis.Binding
             valueBinders.Add(this);
         }
 
-        protected override ImmutableArray<object?> BindValues(BindingContext context)
+        protected override ImmutableArray<object?> BindValues(CancellationToken cancellationToken = default)
         {
             return ImmutableArray.Create(Value);
         }

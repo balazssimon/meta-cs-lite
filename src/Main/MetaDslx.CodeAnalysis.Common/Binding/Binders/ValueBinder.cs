@@ -34,19 +34,13 @@ namespace MetaDslx.CodeAnalysis.Binding
             }
         }
 
-        private void CacheRawValue(BindingContext context)
+        private void CacheRawValue(CancellationToken cancellationToken = default)
         {
-            if (_rawValueDiagnostics.IsDefault)
-            {
-                var computeContext = BindingContext.GetInstance(context.CancellationToken);
-                var rawValue = ComputeRawValue(context) ?? string.Empty;
-                Interlocked.CompareExchange(ref _rawValue, rawValue, null);
-                ImmutableInterlocked.InterlockedInitialize(ref _rawValueDiagnostics, computeContext.ToDiagnosticsAndFree());
-            }
-            context.AddDiagnostics(_rawValueDiagnostics);
+            var rawValue = ComputeRawValue(cancellationToken) ?? string.Empty;
+            Interlocked.CompareExchange(ref _rawValue, rawValue, null);
         }
 
-        protected virtual string? ComputeRawValue(BindingContext context)
+        protected virtual string? ComputeRawValue(CancellationToken cancellationToken = default)
         {
             return this.Syntax.ToString();
         }
@@ -73,20 +67,20 @@ namespace MetaDslx.CodeAnalysis.Binding
             valueBinders.Add(this);
         }
 
-        protected override ImmutableArray<object?> BindValues(BindingContext context)
+        protected override ImmutableArray<object?> BindValues(CancellationToken cancellationToken = default)
         {
-            return ImmutableArray.Create(ComputeValue(context));
+            return ImmutableArray.Create(ComputeValue(cancellationToken));
         }
 
-        protected virtual object? ComputeValue(BindingContext context)
+        protected virtual object? ComputeValue(CancellationToken cancellationToken = default)
         {
-            CacheRawValue(context);
+            CacheRawValue(cancellationToken);
             var propertyBinder = GetEnclosingPropertyBinder();
             if (propertyBinder is null)
             {
-                context.AddDiagnostic(Diagnostic.Create(CommonErrorCode.ERR_BindingError, Location, $"Value '{RawValue}' is not enclosed in an IPropertyBinder."));
+                AddDiagnostic(Diagnostic.Create(CommonErrorCode.ERR_BindingError, Location, $"Value '{RawValue}' is not enclosed in an IPropertyBinder."));
             }
-            var expectedType = propertyBinder?.GetValueType(context);
+            var expectedType = propertyBinder?.GetValueType(cancellationToken);
             if (expectedType == typeof(MetaType)) return MetaType.FromName(RawValue);
             if (Language.SyntaxFacts.TryExtractValue(expectedType, RawValue, out var value))
             {
@@ -94,7 +88,7 @@ namespace MetaDslx.CodeAnalysis.Binding
             }
             else
             {
-                context.AddDiagnostic(Diagnostic.Create(CommonErrorCode.ERR_BindingError, Location, $"Value '{RawValue}' cannot be converted to type '{expectedType.FullName}'. Are you missing a TypeConverter?"));
+                AddDiagnostic(Diagnostic.Create(CommonErrorCode.ERR_BindingError, Location, $"Value '{RawValue}' cannot be converted to type '{expectedType.FullName}'. Are you missing a TypeConverter?"));
             }
             return null;
         }

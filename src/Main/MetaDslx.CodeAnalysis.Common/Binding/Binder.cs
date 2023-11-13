@@ -20,7 +20,6 @@ namespace MetaDslx.CodeAnalysis.Binding
         private Binder? _parentBinder;
         private ImmutableArray<Binder> _childBinders;
         private SyntaxNodeOrToken _syntax;
-        private ImmutableArray<Diagnostic> _diagnostics;
         private ImmutableArray<object?> _boundValues;
 
         public virtual Language Language => _syntax == null ? Language.NoLanguage : _syntax.Language;
@@ -356,31 +355,43 @@ namespace MetaDslx.CodeAnalysis.Binding
             return ParentBinder?.GetEnclosingPropertyBinder();
         }
 
-        public void CompleteBind(BindingContext context, bool resolveLazy = false)
+        public void CompleteBind(bool resolveLazy = false, CancellationToken cancellationToken = default)
         {
-            Bind(context);
-            foreach (var childBinder in GetChildBinders(resolveLazy, context.CancellationToken))
+            Bind(cancellationToken);
+            foreach (var childBinder in GetChildBinders(resolveLazy, cancellationToken))
             {
-                childBinder.CompleteBind(context, resolveLazy);
+                childBinder.CompleteBind(resolveLazy, cancellationToken);
             }
         }
         
-        public ImmutableArray<object?> Bind(BindingContext context)
+        public ImmutableArray<object?> Bind(CancellationToken cancellationToken = default)
         {
             if (_boundValues.IsDefault)
             {
-                var diagnosticBag = DiagnosticBag.GetInstance();
-                var boundValues = BindValues(context);
+                var boundValues = BindValues(cancellationToken);
                 ImmutableInterlocked.InterlockedInitialize(ref _boundValues, boundValues);
-                ImmutableInterlocked.InterlockedInitialize(ref _diagnostics, diagnosticBag.ToReadOnlyAndFree());
             }
-            context.AddDiagnostics(_diagnostics);
             return _boundValues;
         }
 
-        protected virtual ImmutableArray<object?> BindValues(BindingContext context)
+        protected virtual ImmutableArray<object?> BindValues(CancellationToken cancellationToken = default)
         {
             return ImmutableArray<object?>.Empty;
+        }
+
+        protected void AddDiagnostic(Diagnostic diagnostic)
+        {
+            Compilation.AddBinderDiagnostic(diagnostic);
+        }
+
+        protected void AddDiagnostics(DiagnosticBag diagnostics)
+        {
+            Compilation.AddBinderDiagnostics(diagnostics);
+        }
+
+        protected void AddDiagnostics(IEnumerable<Diagnostic> diagnostics)
+        {
+            Compilation.AddBinderDiagnostics(diagnostics);
         }
 
         public override string ToString()

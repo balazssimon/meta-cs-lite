@@ -215,8 +215,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
                     var propBinders = declBinder.GetPropertyBinders(symbolProperty, cancellationToken);
                     foreach (var propBinder in propBinders)
                     {
-                        var bindingContext = new BindingContext(diagnostics, cancellationToken);
-                        var values = ((Binder)propBinder).Bind(bindingContext);
+                        var values = ((Binder)propBinder).Bind(cancellationToken);
                         foreach (var value in values)
                         {
                             if (value is TValue tvalue)
@@ -263,8 +262,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
                         var propBinders = declBinder.GetPropertyBinders(prop.Name, cancellationToken);
                         foreach (var propBinder in propBinders)
                         {
-                            var bindingContext = new BindingContext(diagnostics, cancellationToken);
-                            var values = ((Binder)propBinder).Bind(bindingContext);
+                            var values = ((Binder)propBinder).Bind(cancellationToken);
                             foreach (var value in values)
                             {
                                 if (value is TValue tvalue)
@@ -341,8 +339,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
                         var prop = modelObject.GetProperty(propBinder.Name);
                         if (prop is not null && prop.SymbolProperty is null)
                         {
-                            var bindingContext = new BindingContext(diagnostics, cancellationToken);
-                            var values = ((Binder)propBinder).Bind(bindingContext);
+                            var values = ((Binder)propBinder).Bind(cancellationToken);
                             foreach (var value in values)
                             {
                                 try

@@ -7,7 +7,7 @@ namespace MetaDslx.CodeAnalysis.Binding
 {
     public interface IIdentifierBinder
     {
-        string GetName(BindingContext context);
-        string GetMetadataName(BindingContext context);
+        string GetName(CancellationToken cancellationToken = default);
+        string GetMetadataName(CancellationToken cancellationToken = default);
     }
 }
