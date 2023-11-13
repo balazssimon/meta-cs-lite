@@ -9,9 +9,9 @@ namespace MetaDslx.CodeAnalysis
         public const string CompilerCategory = "Compiler";
 
         /// <summary>
-        /// Internal error (should not happen in user code): {0}
+        /// Internal error: {0}
         /// </summary>
-        public static readonly DiagnosticDescriptor ERR_InternalError = DiagnosticDescriptor.Error(nameof(ERR_InternalError), "Internal error", "Internal error (should not happen in user code): {0}");
+        public static readonly DiagnosticDescriptor ERR_InternalError = DiagnosticDescriptor.Error(nameof(ERR_InternalError), "Internal error", "Internal error: {0}");
 
         /// <summary>
         /// Syntax error: {0}

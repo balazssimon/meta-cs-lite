@@ -197,7 +197,7 @@ class PElement $Symbol
 	Multiplicity Multiplicity;
 }
 
-abstract class PElementValue
+abstract class PElementValue $Symbol
 {
 }
 
@@ -221,35 +221,35 @@ class PBlock : PElementValue
 	contains PAlternative[] Alternatives;
 }
 
-abstract class Expression
+abstract class Expression $Symbol
 {
 	derived object? Value;
 }
 
-class NullExpression
+class NullExpression : Expression
 {
 	derived object? Value;
 }
 
-class BoolExpression
+class BoolExpression : Expression
 {
 	derived object? Value;
 	bool BoolValue;
 }
 
-class IntExpression
+class IntExpression : Expression
 {
 	derived object? Value;
 	int IntValue;
 }
 
-class StringExpression
+class StringExpression : Expression
 {
 	derived object? Value;
 	string StringValue;
 }
 
-class ReferenceExpression
+class ReferenceExpression : Expression
 {
 	derived object? Value;
 	symbol SymbolValue;

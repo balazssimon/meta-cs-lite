@@ -30,6 +30,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
             _module = module;
             Register<AliasSymbol>((s, d) => new SourceAliasSymbol(s, d));
             Register<ImportSymbol>((s, d) => new SourceImportSymbol(s, d));
+            Register<Symbol>((s, d, mo) => new SourceSymbol(s, d, mo));
             Register<NamespaceSymbol>((s, d, mo) => new SourceNamespaceSymbol(s, d, mo));
             Register<TypeSymbol>((s, d, mo) => new SourceTypeSymbol(s, d, mo));
             Register<DeclaredSymbol>((s, d, mo) => new SourceDeclaredSymbol(s, d, mo));
@@ -83,6 +84,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
 
         protected Symbol? CreateSymbol(Type symbolType, ISourceSymbol container, MergedDeclaration declaration, DiagnosticBag diagnostics)
         {
+            var location = declaration.NameLocations.FirstOrDefault() ?? declaration.SyntaxReferences.FirstOrDefault().GetLocation();
             if (declaration?.ModelObjectType is null) return null;
             if (_non_mo_constructors.TryGetValue(declaration.ModelObjectType, out var non_mo_constructor))
             {
@@ -95,7 +97,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
                 if (info is null)
                 {
                     var objectName = container is null || container is ModuleSymbol ? "the root namespace" : $"the declaration '{declaration.Name}'";
-                    var diagnostic = Diagnostic.Create(CommonErrorCode.ERR_DeclarationError, declaration.NameLocations.FirstOrDefault(), $"Could not determine the model object information for {objectName} of type '{declaration.ModelObjectType.FullName}'. Are you missing a meta model reference?");
+                    var diagnostic = Diagnostic.Create(CommonErrorCode.ERR_DeclarationError, location, $"Could not determine the model object information for {objectName} of type '{declaration.ModelObjectType.FullName}'. Are you missing a meta model reference?");
                     diagnostics.Add(diagnostic);
                     return Compilation[declaration.Language].ErrorSymbolFactory.CreateSymbol(symbolType, (Symbol)container, new ErrorSymbolInfo(declaration.Name, declaration.MetadataName, ImmutableArray<Symbol>.Empty, diagnostic));
                 }
@@ -103,7 +105,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
                 if (infoSymbolType is null)
                 {
                     var objectName = container is null || container is ModuleSymbol ? "the root namespace" : $"the declaration '{declaration.Name}'";
-                    var diagnostic = Diagnostic.Create(CommonErrorCode.ERR_DeclarationError, declaration.NameLocations.FirstOrDefault(), $"There is no symbol type defined for for {objectName} of type '{declaration.ModelObjectType.FullName}'. Are you missing a meta model reference?'");
+                    var diagnostic = Diagnostic.Create(CommonErrorCode.ERR_DeclarationError, location, $"There is no symbol type defined for for {objectName} of type '{declaration.ModelObjectType.FullName}'. Are you missing a meta model reference?'");
                     diagnostics.Add(diagnostic);
                     return Compilation[declaration.Language].ErrorSymbolFactory.CreateSymbol(symbolType, (Symbol)container, new ErrorSymbolInfo(declaration.Name, declaration.MetadataName, ImmutableArray<Symbol>.Empty, diagnostic));
                 }
@@ -130,6 +132,12 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
                         }
                     }
                     return constructor((Symbol)container, declaration, modelObject);
+                }
+                else
+                {
+                    var objectName = container is null || container is ModuleSymbol ? "the root namespace" : $"the declaration '{declaration.Name}'";
+                    var diagnostic = Diagnostic.Create(CommonErrorCode.ERR_DeclarationError, location, $"Could not create symbol for {objectName}. There is no source symbol type registered for '{infoSymbolType.FullName}' in the SourceSymbolFactory.");
+                    diagnostics.Add(diagnostic);
                 }
             }
             return null;

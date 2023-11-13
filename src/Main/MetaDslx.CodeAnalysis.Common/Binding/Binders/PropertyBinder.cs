@@ -147,6 +147,10 @@ namespace MetaDslx.CodeAnalysis.Binding
                             {
                                 result.Add(value);
                             }
+                            else if (propertyType == typeof(string) && value is char)
+                            {
+                                result.Add(value.ToString());
+                            }
                             else if (propertyType == typeof(MetaType) && (value is string || value is Type || value is IModelObject))
                             {
                                 if (value is string stringValue) result.Add(MetaType.FromName(stringValue));
@@ -209,6 +213,12 @@ namespace MetaDslx.CodeAnalysis.Binding
                         var modelObjectType = decl.ModelObjectType;
                         if (modelObjectType is not null) modelObjectTypes.Add(modelObjectType);
                     }
+                }
+                if (modelObjectTypes.Count == 0)
+                {
+                    AddDiagnostic(Diagnostic.Create(ErrorCode.ERR_InternalError, this.Location, $"Could not resolve the containing model object of the property '{_name}'."));
+                    ImmutableInterlocked.InterlockedInitialize(ref _modelObjectTypes, modelObjectTypes.ToImmutableArray());
+                    return null;
                 }
                 var module = Compilation.SourceModule;
                 var symbolFactory = module.SymbolFactory;

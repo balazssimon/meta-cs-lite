@@ -57,7 +57,11 @@ namespace MetaDslx.CodeAnalysis.Binding
                 parent = parent.ParentBinder;
                 parentSymbols = parent?.DefinedSymbols ?? ImmutableArray<Symbol>.Empty;
             }
-            if (parentSymbols.IsDefaultOrEmpty) return ImmutableArray<Symbol>.Empty;
+            if (parentSymbols.IsDefaultOrEmpty)
+            {
+                AddDiagnostic(Diagnostic.Create(ErrorCode.ERR_InternalError, this.Location, "Could not resolve defined symbol."));
+                return ImmutableArray<Symbol>.Empty;
+            }
             var definedSymbols = ArrayBuilder<Symbol>.GetInstance();
             var nestingSymbols = ArrayBuilder<Symbol>.GetInstance();
             nestingSymbols.AddRange(parentSymbols);
