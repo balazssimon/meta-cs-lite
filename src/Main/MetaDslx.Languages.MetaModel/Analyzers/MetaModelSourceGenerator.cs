@@ -53,14 +53,11 @@ namespace MetaDslx.Languages.MetaCompiler.Analyzers
                             var model = mmCompiler.SourceModule.Model;
                             var mm = model.Objects.OfType<MetaDslx.Languages.MetaModel.Model.MetaModel>().FirstOrDefault();
                             var diagnostics = mmCompiler.GetDiagnostics();
-                            if (diagnostics.Length > 0)
+                            foreach (var diag in diagnostics)
                             {
-                                foreach (var diag in diagnostics)
-                                {
-                                    spc.ReportDiagnostic(diag.ToMicrosoft());
-                                }
+                                spc.ReportDiagnostic(diag.ToMicrosoft());
                             }
-                            else if (mm is not null)
+                            if (!diagnostics.Where(d => d.Severity == CodeAnalysis.DiagnosticSeverity.Error).Any() && mm is not null)
                             {
                                 var graph = new MetaDslx.Languages.MetaModel.Meta.MetaMetaGraph(model.Objects.OfType<MetaDslx.Languages.MetaModel.Model.MetaClass>());
                                 graph.Compute();

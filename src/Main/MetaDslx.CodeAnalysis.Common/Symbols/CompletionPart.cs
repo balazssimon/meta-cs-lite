@@ -49,10 +49,13 @@ namespace MetaDslx.CodeAnalysis.Symbols
         public static readonly CompletionPart FinishInitializing = new CompletionPart(nameof(FinishInitializing));
         public static readonly CompletionPart StartCreatingContainedSymbols = new CompletionPart(nameof(StartCreatingContainedSymbols));
         public static readonly CompletionPart FinishCreatingContainedSymbols = new CompletionPart(nameof(FinishCreatingContainedSymbols));
-        public static readonly CompletionPart ContainedSymbolsCompleted = new CompletionPart(nameof(ContainedSymbolsCompleted));
         public static readonly CompletionPart StartComputingNonSymbolProperties = new CompletionPart(nameof(StartComputingNonSymbolProperties));
         public static readonly CompletionPart FinishComputingNonSymbolProperties = new CompletionPart(nameof(FinishComputingNonSymbolProperties));
-        public static readonly CompletionPart StartValidatingSymbol = new CompletionPart(nameof(StartValidatingSymbol));
-        public static readonly CompletionPart FinishValidatingSymbol = new CompletionPart(nameof(FinishValidatingSymbol));
+        public static readonly CompletionPart ContainedSymbolsFinalized = new CompletionPart(nameof(ContainedSymbolsFinalized));
+        public static readonly CompletionPart StartFinalizing = new CompletionPart(nameof(StartFinalizing));
+        public static readonly CompletionPart FinishFinalizing = new CompletionPart(nameof(FinishFinalizing));
+        public static readonly CompletionPart ContainedSymbolsCompleted = new CompletionPart(nameof(ContainedSymbolsCompleted));
+        public static readonly CompletionPart StartValidating = new CompletionPart(nameof(StartValidating));
+        public static readonly CompletionPart FinishValidating = new CompletionPart(nameof(FinishValidating));
     }
 }

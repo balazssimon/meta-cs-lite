@@ -29,9 +29,11 @@ namespace MetaDslx.CodeAnalysis.Symbols
                     StartComputingProperty_TypeArguments, FinishComputingProperty_TypeArguments,
                     StartComputingProperty_Imports, FinishComputingProperty_Imports,
                     StartComputingProperty_Attributes, FinishComputingProperty_Attributes, 
-                    CompletionGraph.StartComputingNonSymbolProperties, CompletionGraph.FinishComputingNonSymbolProperties, 
-                    CompletionGraph.ContainedSymbolsCompleted, 
-                    CompletionGraph.StartValidatingSymbol, CompletionGraph.FinishValidatingSymbol);
+                    CompletionGraph.StartComputingNonSymbolProperties, CompletionGraph.FinishComputingNonSymbolProperties,
+                    CompletionGraph.ContainedSymbolsFinalized,
+                    CompletionGraph.StartFinalizing, CompletionGraph.FinishFinalizing,
+                    CompletionGraph.ContainedSymbolsCompleted,
+                    CompletionGraph.StartValidating, CompletionGraph.FinishValidating);
         }
 
         private static MemberLookupCache EmptyMemberCache = new MemberLookupCache(ImmutableArray<DeclaredSymbol>.Empty);

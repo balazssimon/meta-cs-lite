@@ -164,16 +164,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
             public override GreenNode? VisitPr_Grammar(CompilerParser.Pr_GrammarContext? context)
             {
                	if (context == null) return GrammarGreen.__Missing;
-                var rulesContext = context._rulesAntlr1;
-                var rulesBuilder = _pool.Allocate<RuleGreen>();
-                for (int i = 0; i < rulesContext.Count; ++i)
-                {
-                    if (rulesContext[i] is not null) rulesBuilder.Add((RuleGreen?)this.Visit(rulesContext[i]) ?? RuleGreen.__Missing);
-                    else rulesBuilder.Add(RuleGreen.__Missing);
-                }
-                var rules = rulesBuilder.ToList();
-                _pool.Free(rulesBuilder);
-            	return _factory.Grammar(rules);
+                GrammarBlock1Green? grammarBlock1 = null;
+                if (context.grammarBlock1Antlr1 is not null) grammarBlock1 = (GrammarBlock1Green?)this.Visit(context.grammarBlock1Antlr1) ?? GrammarBlock1Green.__Missing;
+                else grammarBlock1 = GrammarBlock1Green.__Missing;
+            	return _factory.Grammar(grammarBlock1);
             }
             public override GreenNode? VisitPr_ParserRule(CompilerParser.Pr_ParserRuleContext? context)
             {
@@ -616,6 +610,20 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
                 else metaModelSymbols = QualifierGreen.__Missing;
             	return _factory.UsingBlock1Alt2((InternalSyntaxToken)kMetamodel, metaModelSymbols);
             }
+            public override GreenNode? VisitPr_GrammarBlock1(CompilerParser.Pr_GrammarBlock1Context? context)
+            {
+               	if (context == null) return GrammarBlock1Green.__Missing;
+                var rulesContext = context._rulesAntlr1;
+                var rulesBuilder = _pool.Allocate<RuleGreen>();
+                for (int i = 0; i < rulesContext.Count; ++i)
+                {
+                    if (rulesContext[i] is not null) rulesBuilder.Add((RuleGreen?)this.Visit(rulesContext[i]) ?? RuleGreen.__Missing);
+                    else rulesBuilder.Add(RuleGreen.__Missing);
+                }
+                var rules = rulesBuilder.ToList();
+                _pool.Free(rulesBuilder);
+            	return _factory.GrammarBlock1(rules);
+            }
             public override GreenNode? VisitPr_ParserRuleBlock1Alt1(CompilerParser.Pr_ParserRuleBlock1Alt1Context? context)
             {
                	if (context == null) return ParserRuleBlock1Alt1Green.__Missing;
@@ -628,12 +636,22 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
             public override GreenNode? VisitPr_ParserRuleBlock1Alt2(CompilerParser.Pr_ParserRuleBlock1Alt2Context? context)
             {
                	if (context == null) return ParserRuleBlock1Alt2Green.__Missing;
+                IdentifierGreen? returnType = null;
+                if (context.returnTypeAntlr1 is not null) returnType = (IdentifierGreen?)this.Visit(context.returnTypeAntlr1) ?? IdentifierGreen.__Missing;
+                else returnType = IdentifierGreen.__Missing;
+            	return _factory.ParserRuleBlock1Alt2(returnType);
+            }
+            public override GreenNode? VisitPr_ParserRuleBlock1Alt3(CompilerParser.Pr_ParserRuleBlock1Alt3Context? context)
+            {
+               	if (context == null) return ParserRuleBlock1Alt3Green.__Missing;
                 NameGreen? name = null;
                 if (context.nameAntlr1 is not null) name = (NameGreen?)this.Visit(context.nameAntlr1) ?? NameGreen.__Missing;
                 else name = NameGreen.__Missing;
-                ParserRuleBlock1Alt2Block1Green? parserRuleBlock1Alt2Block1 = null;
-                if (context.parserRuleBlock1Alt2Block1Antlr1 is not null) parserRuleBlock1Alt2Block1 = (ParserRuleBlock1Alt2Block1Green?)this.Visit(context.parserRuleBlock1Alt2Block1Antlr1);
-            	return _factory.ParserRuleBlock1Alt2(name, parserRuleBlock1Alt2Block1);
+                var kReturns = this.VisitTerminal(context.kReturns, CompilerSyntaxKind.KReturns);
+                QualifierGreen? returnType = null;
+                if (context.returnTypeAntlr1 is not null) returnType = (QualifierGreen?)this.Visit(context.returnTypeAntlr1) ?? QualifierGreen.__Missing;
+                else returnType = QualifierGreen.__Missing;
+            	return _factory.ParserRuleBlock1Alt3(name, (InternalSyntaxToken)kReturns, returnType);
             }
             public override GreenNode? VisitPr_ParserRuleBlock2(CompilerParser.Pr_ParserRuleBlock2Context? context)
             {
@@ -785,15 +803,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
                 if (context.qualifierAntlr1 is not null) qualifier = (QualifierGreen?)this.Visit(context.qualifierAntlr1) ?? QualifierGreen.__Missing;
                 else qualifier = QualifierGreen.__Missing;
             	return _factory.QualifierListBlock1((InternalSyntaxToken)tComma, qualifier);
-            }
-            public override GreenNode? VisitPr_ParserRuleBlock1Alt2Block1(CompilerParser.Pr_ParserRuleBlock1Alt2Block1Context? context)
-            {
-               	if (context == null) return ParserRuleBlock1Alt2Block1Green.__Missing;
-                var kReturns = this.VisitTerminal(context.kReturns, CompilerSyntaxKind.KReturns);
-                QualifierGreen? returnType = null;
-                if (context.returnTypeAntlr1 is not null) returnType = (QualifierGreen?)this.Visit(context.returnTypeAntlr1) ?? QualifierGreen.__Missing;
-                else returnType = QualifierGreen.__Missing;
-            	return _factory.ParserRuleBlock1Alt2Block1((InternalSyntaxToken)kReturns, returnType);
             }
             public override GreenNode? VisitPr_LexerRuleBlock1Alt1Block1(CompilerParser.Pr_LexerRuleBlock1Alt1Block1Context? context)
             {

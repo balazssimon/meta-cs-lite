@@ -144,6 +144,16 @@ namespace MetaDslx.CodeAnalysis
             return new DiagnosticDescriptor(id, title, messageFormat, CompilerCategory, DiagnosticSeverity.Warning, true);
         }
 
+        public static DiagnosticDescriptor Info(string id, string title, string messageFormat)
+        {
+            return new DiagnosticDescriptor(id, title, messageFormat, CompilerCategory, DiagnosticSeverity.Info, true);
+        }
+
+        public static DiagnosticDescriptor Hidden(string id, string title, string messageFormat)
+        {
+            return new DiagnosticDescriptor(id, title, messageFormat, CompilerCategory, DiagnosticSeverity.Hidden, true);
+        }
+
         public bool Equals(DiagnosticDescriptor? other)
         {
             if (ReferenceEquals(this, other))

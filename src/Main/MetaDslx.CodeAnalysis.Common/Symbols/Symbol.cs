@@ -32,8 +32,10 @@ namespace MetaDslx.CodeAnalysis.Symbols
                     CompletionGraph.StartCreatingContainedSymbols, CompletionGraph.FinishCreatingContainedSymbols, 
                     StartComputingProperty_Attributes, FinishComputingProperty_Attributes, 
                     CompletionGraph.StartComputingNonSymbolProperties, CompletionGraph.FinishComputingNonSymbolProperties, 
-                    CompletionGraph.ContainedSymbolsCompleted, 
-                    CompletionGraph.StartValidatingSymbol, CompletionGraph.FinishValidatingSymbol);
+                    CompletionGraph.ContainedSymbolsFinalized,
+                    CompletionGraph.StartFinalizing, CompletionGraph.FinishFinalizing,
+                    CompletionGraph.ContainedSymbolsCompleted,
+                    CompletionGraph.StartValidating, CompletionGraph.FinishValidating);
         }
 
         private static ConditionalWeakTable<Symbol, DiagnosticBag> s_diagnostics = new ConditionalWeakTable<Symbol, DiagnosticBag>();
@@ -566,7 +568,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
                     if (NotePartComplete(CompletionGraph.StartInitializing))
                     {
                         var diagnostics = DiagnosticBag.GetInstance();
-                        CompletePart_InitializeSymbol(diagnostics, cancellationToken);
+                        CompletePart_Initialize(diagnostics, cancellationToken);
                         var name = CompleteProperty_Name(diagnostics, cancellationToken);
                         var metadataName = CompleteProperty_MetadataName(diagnostics, cancellationToken);
                         if (!string.IsNullOrEmpty(name))
@@ -593,13 +595,48 @@ namespace MetaDslx.CodeAnalysis.Symbols
                         NotePartComplete(CompletionGraph.FinishCreatingContainedSymbols);
                     }
                 }
+                else if (incompletePart == CompletionGraph.ContainedSymbolsFinalized)
+                {
+                    bool allCompleted = true;
+                    if (locationOpt == null)
+                    {
+                        foreach (var child in _containedSymbols)
+                        {
+                            cancellationToken.ThrowIfCancellationRequested();
+                            child.ForceComplete(CompletionGraph.FinishFinalizing, locationOpt, cancellationToken);
+                        }
+                    }
+                    else
+                    {
+                        foreach (var child in _containedSymbols)
+                        {
+                            ForceCompleteChildByLocation(CompletionGraph.FinishFinalizing, locationOpt, child, cancellationToken);
+                            allCompleted = allCompleted && child.HasComplete(CompletionGraph.FinishFinalizing);
+                        }
+                    }
+                    if (!allCompleted)
+                    {
+                        // We did not complete all members, so just kick out now.
+                        var allParts = CompletionGraph.AllPartsBeforeContainedSymbolsFinalized;
+                        SpinWaitComplete(allParts, cancellationToken);
+                        return;
+                    }
+                    // We've completed all members, proceed to the next iteration.
+                    NotePartComplete(CompletionGraph.ContainedSymbolsFinalized);
+                }
+                else if (incompletePart == CompletionGraph.StartFinalizing || incompletePart == CompletionGraph.FinishFinalizing)
+                {
+                    if (NotePartComplete(CompletionGraph.StartFinalizing))
+                    {
+                        var diagnostics = DiagnosticBag.GetInstance();
+                        CompletePart_Finalize(diagnostics, cancellationToken);
+                        AddSymbolDiagnostics(diagnostics);
+                        diagnostics.Free();
+                        NotePartComplete(CompletionGraph.FinishFinalizing);
+                    }
+                }
                 else if (incompletePart == CompletionGraph.ContainedSymbolsCompleted)
                 {
-                    // TODO:MetaDslx:
-                    //var diagnostics = DiagnosticBag.GetInstance();
-                    //CompleteImports(locationOpt, diagnostics, cancellationToken);
-                    //AddSymbolDiagnostics(diagnostics);
-                    //diagnostics.Free();
                     bool allCompleted = true;
                     if (locationOpt == null)
                     {
@@ -613,29 +650,30 @@ namespace MetaDslx.CodeAnalysis.Symbols
                     {
                         foreach (var child in _containedSymbols)
                         {
-                            ForceCompleteChildByLocation(locationOpt, child, cancellationToken);
+                            ForceCompleteChildByLocation(null, locationOpt, child, cancellationToken);
                             allCompleted = allCompleted && child.HasComplete(CompletionGraph.All);
                         }
                     }
                     if (!allCompleted)
                     {
                         // We did not complete all members, so just kick out now.
-                        var allParts = CompletionGraph.AllPartsWithLocation;
+                        var allParts = CompletionGraph.AllPartsBeforeContainedSymbolsCompleted;
                         SpinWaitComplete(allParts, cancellationToken);
                         return;
                     }
                     // We've completed all members, proceed to the next iteration.
                     NotePartComplete(CompletionGraph.ContainedSymbolsCompleted);
                 }
-                else if (incompletePart == CompletionGraph.StartValidatingSymbol || incompletePart == CompletionGraph.FinishValidatingSymbol)
+                else if (incompletePart == CompletionGraph.StartValidating || incompletePart == CompletionGraph.FinishValidating)
                 {
-                    if (NotePartComplete(CompletionGraph.StartValidatingSymbol))
+                    _container?.ForceComplete(CompletionGraph.ContainedSymbolsFinalized, locationOpt, cancellationToken);
+                    if (NotePartComplete(CompletionGraph.StartValidating))
                     {
                         var diagnostics = DiagnosticBag.GetInstance();
-                        CompletePart_ValidateSymbol(diagnostics, cancellationToken);
+                        CompletePart_Validate(diagnostics, cancellationToken);
                         AddSymbolDiagnostics(diagnostics);
                         diagnostics.Free();
-                        NotePartComplete(CompletionGraph.FinishValidatingSymbol);
+                        NotePartComplete(CompletionGraph.FinishValidating);
                     }
                 }
                 else if (incompletePart == CompletionGraph.StartComputingNonSymbolProperties || incompletePart == CompletionGraph.FinishComputingNonSymbolProperties)
@@ -798,16 +836,16 @@ namespace MetaDslx.CodeAnalysis.Symbols
             return false;
         }
 
-        public static void ForceCompleteChildByLocation(SourceLocation locationOpt, Symbol member, CancellationToken cancellationToken)
+        public static void ForceCompleteChildByLocation(CompletionPart part, SourceLocation locationOpt, Symbol member, CancellationToken cancellationToken)
         {
             if (locationOpt == null || member.IsDefinedInSourceTree(locationOpt.SourceTree, locationOpt.SourceSpan, cancellationToken))
             {
                 cancellationToken.ThrowIfCancellationRequested();
-                member.ForceComplete(null, locationOpt, cancellationToken);
+                member.ForceComplete(part, locationOpt, cancellationToken);
             }
         }
 
-        protected virtual void CompletePart_InitializeSymbol(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        protected virtual void CompletePart_Initialize(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
         }
 
@@ -835,7 +873,11 @@ namespace MetaDslx.CodeAnalysis.Symbols
         {
         }
 
-        protected virtual void CompletePart_ValidateSymbol(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        protected virtual void CompletePart_Finalize(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        {
+        }
+
+        protected virtual void CompletePart_Validate(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
         }
 

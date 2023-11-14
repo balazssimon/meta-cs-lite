@@ -8,6 +8,20 @@ namespace MetaDslx.CodeAnalysis
     {
         public const string CompilerCategory = "Compiler";
 
+        /// <summary>
+        /// Unused symbols: {0}
+        /// </summary>
+        public static readonly DiagnosticDescriptor HDN_UnusedSymbols = DiagnosticDescriptor.Hidden(nameof(HDN_UnusedSymbols), "Unused symbols", "Unused symbols: {0}");
+
+        /// <summary>
+        /// Unused namespaces: {0}
+        /// </summary>
+        public static readonly DiagnosticDescriptor HDN_UnusedNamespaces = DiagnosticDescriptor.Hidden(nameof(HDN_UnusedNamespaces), "Unused namespaces", "Unused namespaces: {0}");
+
+        /// <summary>
+        /// The following meta types are not used from the imported meta model '{0}': {1}
+        /// </summary>
+        public static readonly DiagnosticDescriptor WRN_UnusedMetaTypes = DiagnosticDescriptor.Warning(nameof(WRN_UnusedMetaTypes), "Unsed meta types", "The following meta types are not used from the imported meta model '{0}': {1}");
 
         /// <summary>
         /// Provided source code kind is unsupported or invalid: '{0}'

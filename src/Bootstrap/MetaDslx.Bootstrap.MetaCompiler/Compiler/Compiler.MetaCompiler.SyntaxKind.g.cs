@@ -119,8 +119,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		Identifier,
 		UsingBlock1Alt1,
 		UsingBlock1Alt2,
+		GrammarBlock1,
 		ParserRuleBlock1Alt1,
 		ParserRuleBlock1Alt2,
+		ParserRuleBlock1Alt3,
 		ParserRuleBlock2,
 		PAlternativeBlock1,
 		PAlternativeBlock2,
@@ -136,7 +138,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		AnnotationArgumentBlock1,
 		QualifierBlock1,
 		QualifierListBlock1,
-		ParserRuleBlock1Alt2Block1,
 		LexerRuleBlock1Alt1Block1,
 	}
 

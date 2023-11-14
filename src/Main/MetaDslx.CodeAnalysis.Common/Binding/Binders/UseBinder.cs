@@ -48,6 +48,10 @@ namespace MetaDslx.CodeAnalysis.Binding
         {
             if (symbol is null) return false;
             if (_types.IsDefaultOrEmpty) return true;
+            if (_types.Contains(typeof(MetaType)) || _types.Contains(typeof(Type)))
+            {
+                return symbol is TypeSymbol;
+            }
             if (symbol is IModelSymbol modelSymbol)
             {
                 foreach (var type in _types)

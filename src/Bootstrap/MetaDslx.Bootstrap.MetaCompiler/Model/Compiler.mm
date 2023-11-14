@@ -1,6 +1,7 @@
 namespace MetaDslx.Bootstrap.MetaCompiler.Model;
 
 using MetaDslx.CodeAnalysis.Symbols;
+using MetaDslx.Bootstrap.MetaCompiler.Symbols;
 
 metamodel Compiler;
 
@@ -163,10 +164,10 @@ class LBlock : LElementValue
 	contains LAlternative[] Alternatives;
 }
 
-abstract class ParserRule : Rule
+abstract class ParserRule $ParserRuleSymbol : Rule
 {
-	type? ReturnType;
-	bool IsBlock;
+	type? $ReturnType;
+	bool $IsBlock;
 
 	contains PAlternative[] Alternatives;
 }

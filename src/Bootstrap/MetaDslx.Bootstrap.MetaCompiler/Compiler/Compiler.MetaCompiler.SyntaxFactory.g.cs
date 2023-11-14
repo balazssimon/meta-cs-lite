@@ -356,9 +356,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
         	return this.LanguageDeclaration(this.Token(CompilerSyntaxKind.KLanguage), name, this.Token(CompilerSyntaxKind.TSemicolon), grammar);
         }
 
-        public GrammarSyntax Grammar(MetaDslx.CodeAnalysis.SyntaxList<RuleSyntax> rules)
+        public GrammarSyntax Grammar(GrammarBlock1Syntax grammarBlock1)
         {
-            return (GrammarSyntax)CompilerLanguage.Instance.InternalSyntaxFactory.Grammar(rules.Node.ToGreenList<RuleGreen>()).CreateRed();
+        	if (grammarBlock1 is null) throw new ArgumentNullException(nameof(grammarBlock1));
+            return (GrammarSyntax)CompilerLanguage.Instance.InternalSyntaxFactory.Grammar((GrammarBlock1Green)grammarBlock1.Green).CreateRed();
         }
 
         public ParserRuleSyntax ParserRule(MetaDslx.CodeAnalysis.SyntaxList<AnnotationSyntax> annotations1, ParserRuleBlock1Syntax parserRuleBlock1, SyntaxToken tColon, MetaDslx.CodeAnalysis.SeparatedSyntaxList<PAlternativeSyntax> pAlternativeList, SyntaxToken tSemicolon)
@@ -634,6 +635,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
         	return this.UsingBlock1Alt2(this.Token(CompilerSyntaxKind.KMetamodel), metaModelSymbols);
         }
 
+        public GrammarBlock1Syntax GrammarBlock1(MetaDslx.CodeAnalysis.SyntaxList<RuleSyntax> rules)
+        {
+            return (GrammarBlock1Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.GrammarBlock1(rules.Node.ToGreenList<RuleGreen>()).CreateRed();
+        }
+
         public ParserRuleBlock1Alt1Syntax ParserRuleBlock1Alt1(SyntaxToken isBlock, NameSyntax name)
         {
         	if (isBlock.RawKind != (int)CompilerSyntaxKind.KBlock) throw new ArgumentException(nameof(isBlock));
@@ -646,15 +652,23 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
         	return this.ParserRuleBlock1Alt1(this.Token(CompilerSyntaxKind.KBlock), name);
         }
 
-        public ParserRuleBlock1Alt2Syntax ParserRuleBlock1Alt2(NameSyntax name, ParserRuleBlock1Alt2Block1Syntax parserRuleBlock1Alt2Block1)
+        public ParserRuleBlock1Alt2Syntax ParserRuleBlock1Alt2(IdentifierSyntax returnType)
+        {
+        	if (returnType is null) throw new ArgumentNullException(nameof(returnType));
+            return (ParserRuleBlock1Alt2Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.ParserRuleBlock1Alt2((IdentifierGreen)returnType.Green).CreateRed();
+        }
+
+        public ParserRuleBlock1Alt3Syntax ParserRuleBlock1Alt3(NameSyntax name, SyntaxToken kReturns, QualifierSyntax returnType)
         {
         	if (name is null) throw new ArgumentNullException(nameof(name));
-            return (ParserRuleBlock1Alt2Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.ParserRuleBlock1Alt2((NameGreen)name.Green, (ParserRuleBlock1Alt2Block1Green?)parserRuleBlock1Alt2Block1?.Green).CreateRed();
+        	if (kReturns.RawKind != (int)CompilerSyntaxKind.KReturns) throw new ArgumentException(nameof(kReturns));
+        	if (returnType is null) throw new ArgumentNullException(nameof(returnType));
+            return (ParserRuleBlock1Alt3Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.ParserRuleBlock1Alt3((NameGreen)name.Green, (InternalSyntaxToken)kReturns.Node, (QualifierGreen)returnType.Green).CreateRed();
         }
         
-        public ParserRuleBlock1Alt2Syntax ParserRuleBlock1Alt2(NameSyntax name)
+        public ParserRuleBlock1Alt3Syntax ParserRuleBlock1Alt3(NameSyntax name, QualifierSyntax returnType)
         {
-        	return this.ParserRuleBlock1Alt2(name, default);
+        	return this.ParserRuleBlock1Alt3(name, this.Token(CompilerSyntaxKind.KReturns), returnType);
         }
 
         public ParserRuleBlock2Syntax ParserRuleBlock2(SyntaxToken tBar, PAlternativeSyntax alternatives)
@@ -833,18 +847,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
         	return this.QualifierListBlock1(this.Token(CompilerSyntaxKind.TComma), qualifier);
         }
 
-        public ParserRuleBlock1Alt2Block1Syntax ParserRuleBlock1Alt2Block1(SyntaxToken kReturns, QualifierSyntax returnType)
-        {
-        	if (kReturns.RawKind != (int)CompilerSyntaxKind.KReturns) throw new ArgumentException(nameof(kReturns));
-        	if (returnType is null) throw new ArgumentNullException(nameof(returnType));
-            return (ParserRuleBlock1Alt2Block1Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.ParserRuleBlock1Alt2Block1((InternalSyntaxToken)kReturns.Node, (QualifierGreen)returnType.Green).CreateRed();
-        }
-        
-        public ParserRuleBlock1Alt2Block1Syntax ParserRuleBlock1Alt2Block1(QualifierSyntax returnType)
-        {
-        	return this.ParserRuleBlock1Alt2Block1(this.Token(CompilerSyntaxKind.KReturns), returnType);
-        }
-
         public LexerRuleBlock1Alt1Block1Syntax LexerRuleBlock1Alt1Block1(SyntaxToken kReturns, QualifierSyntax returnType)
         {
         	if (kReturns.RawKind != (int)CompilerSyntaxKind.KReturns) throw new ArgumentException(nameof(kReturns));
@@ -896,8 +898,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		        typeof(IdentifierSyntax),
 		        typeof(UsingBlock1Alt1Syntax),
 		        typeof(UsingBlock1Alt2Syntax),
+		        typeof(GrammarBlock1Syntax),
 		        typeof(ParserRuleBlock1Alt1Syntax),
 		        typeof(ParserRuleBlock1Alt2Syntax),
+		        typeof(ParserRuleBlock1Alt3Syntax),
 		        typeof(ParserRuleBlock2Syntax),
 		        typeof(PAlternativeBlock1Syntax),
 		        typeof(PAlternativeBlock2Syntax),
@@ -913,7 +917,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		        typeof(AnnotationArgumentBlock1Syntax),
 		        typeof(QualifierBlock1Syntax),
 		        typeof(QualifierListBlock1Syntax),
-		        typeof(ParserRuleBlock1Alt2Block1Syntax),
 		        typeof(LexerRuleBlock1Alt1Block1Syntax),
 		    };
         }

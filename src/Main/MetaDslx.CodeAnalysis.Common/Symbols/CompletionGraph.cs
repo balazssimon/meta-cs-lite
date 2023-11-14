@@ -12,13 +12,15 @@ namespace MetaDslx.CodeAnalysis.Symbols
     {
         private ImmutableArray<CompletionPart> _parts;
         private ImmutableHashSet<CompletionPart> _allParts;
-        private ImmutableHashSet<CompletionPart> _allPartsWithLocation;
+        private ImmutableHashSet<CompletionPart> _allPartsBeforeContainedSymbolsFinalized;
+        private ImmutableHashSet<CompletionPart> _allPartsBeforeContainedSymbolsCompleted;
 
         private CompletionGraph(IEnumerable<CompletionPart> parts)
         {
             _parts = parts.ToImmutableArrayOrEmpty();
             _allParts = ImmutableHashSet.CreateRange(parts);
-            _allPartsWithLocation = ImmutableHashSet.CreateRange(_allParts.Where(p => p != ContainedSymbolsCompleted && p != StartValidatingSymbol && p != FinishValidatingSymbol));
+            _allPartsBeforeContainedSymbolsFinalized = ImmutableHashSet.CreateRange(_allParts.Where(p => p != ContainedSymbolsFinalized && p != StartFinalizing && p != FinishFinalizing && p != ContainedSymbolsCompleted && p != StartValidating && p != FinishValidating));
+            _allPartsBeforeContainedSymbolsCompleted = ImmutableHashSet.CreateRange(_allParts.Where(p => p != ContainedSymbolsCompleted && p != StartValidating && p != FinishValidating));
         }
 
         public static CompletionGraph CreateFromParts(params CompletionPart[] parts)
@@ -28,7 +30,8 @@ namespace MetaDslx.CodeAnalysis.Symbols
 
         public ImmutableArray<CompletionPart> Parts => _parts;
         public ImmutableHashSet<CompletionPart> AllParts => _allParts;
-        public ImmutableHashSet<CompletionPart> AllPartsWithLocation => _allPartsWithLocation;
+        public ImmutableHashSet<CompletionPart> AllPartsBeforeContainedSymbolsFinalized => _allPartsBeforeContainedSymbolsFinalized;
+        public ImmutableHashSet<CompletionPart> AllPartsBeforeContainedSymbolsCompleted => _allPartsBeforeContainedSymbolsCompleted;
 
         public bool Contains(CompletionPart part)
         {

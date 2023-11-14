@@ -2000,6 +2000,11 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                 _tokens.IgnoreWhitespaceAndComments = false;
                 var token = _tokens.CurrentToken;
                 var isArray = token.Text == "{";
+                if (isArray)
+                {
+                    token = _tokens.NextToken();
+                    ++bracesCounter;
+                }
                 while (!_tokens.EndOfFile && (parenthesisCounter > 0 || bracketsCounter > 0 || bracesCounter > 0 || !untilOther.Contains(token.Text)))
                 {
                     if (token.Text == "(") ++parenthesisCounter;
@@ -2026,6 +2031,7 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                         {
                             items.Add(sb.ToString().Trim());
                             sb.Clear();
+                            _tokens.NextToken();
                             break;
                         }
                         else 

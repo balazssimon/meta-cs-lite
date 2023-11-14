@@ -262,6 +262,12 @@ public interface ICompilerParserVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitPr_UsingBlock1Alt2([NotNull] CompilerParser.Pr_UsingBlock1Alt2Context context);
 	/// <summary>
+	/// Visit a parse tree produced by <see cref="CompilerParser.pr_GrammarBlock1"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitPr_GrammarBlock1([NotNull] CompilerParser.Pr_GrammarBlock1Context context);
+	/// <summary>
 	/// Visit a parse tree produced by the <c>pr_ParserRuleBlock1Alt1</c>
 	/// labeled alternative in <see cref="CompilerParser.pr_ParserRuleBlock1"/>.
 	/// </summary>
@@ -275,6 +281,13 @@ public interface ICompilerParserVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
 	Result VisitPr_ParserRuleBlock1Alt2([NotNull] CompilerParser.Pr_ParserRuleBlock1Alt2Context context);
+	/// <summary>
+	/// Visit a parse tree produced by the <c>pr_ParserRuleBlock1Alt3</c>
+	/// labeled alternative in <see cref="CompilerParser.pr_ParserRuleBlock1"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitPr_ParserRuleBlock1Alt3([NotNull] CompilerParser.Pr_ParserRuleBlock1Alt3Context context);
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="CompilerParser.pr_ParserRuleBlock2"/>.
 	/// </summary>
@@ -368,12 +381,6 @@ public interface ICompilerParserVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
 	Result VisitPr_QualifierListBlock1([NotNull] CompilerParser.Pr_QualifierListBlock1Context context);
-	/// <summary>
-	/// Visit a parse tree produced by <see cref="CompilerParser.pr_ParserRuleBlock1Alt2Block1"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	/// <return>The visitor result.</return>
-	Result VisitPr_ParserRuleBlock1Alt2Block1([NotNull] CompilerParser.Pr_ParserRuleBlock1Alt2Block1Context context);
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="CompilerParser.pr_LexerRuleBlock1Alt1Block1"/>.
 	/// </summary>

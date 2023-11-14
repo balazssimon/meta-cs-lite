@@ -122,6 +122,19 @@ namespace MetaDslx.CodeAnalysis.Binding
             return ComputeDefinedSymbols(cancellationToken).Cast<Symbol, object?>();
         }
 
+        protected override void MarkSymbolAsUsed(DeclaredSymbol symbol)
+        {
+            foreach (var definedSymbol in DefinedSymbols)
+            {
+                if (definedSymbol is DeclaredSymbol declaredSymbol && declaredSymbol.Members.Contains(symbol)) return;
+                foreach (var import in definedSymbol.ContainedSymbols.OfType<ImportSymbol>())
+                {
+                    if (import.MarkImportedSymbolAsUsed(symbol)) return;
+                }
+            }
+            base.MarkSymbolAsUsed(symbol);
+        }
+
         public override string ToString()
         {
             var builder = PooledStringBuilder.GetInstance();

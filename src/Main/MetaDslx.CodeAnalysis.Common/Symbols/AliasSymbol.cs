@@ -64,8 +64,10 @@ namespace MetaDslx.CodeAnalysis.Symbols
                     StartComputingProperty_Imports, FinishComputingProperty_Imports,
                     StartComputingProperty_Attributes, FinishComputingProperty_Attributes,
                     CompletionGraph.StartComputingNonSymbolProperties, CompletionGraph.FinishComputingNonSymbolProperties,
+                    CompletionGraph.ContainedSymbolsFinalized,
+                    CompletionGraph.StartFinalizing, CompletionGraph.FinishFinalizing,
                     CompletionGraph.ContainedSymbolsCompleted,
-                    CompletionGraph.StartValidatingSymbol, CompletionGraph.FinishValidatingSymbol);
+                    CompletionGraph.StartValidating, CompletionGraph.FinishValidating);
         }
 
         private Symbol _target;

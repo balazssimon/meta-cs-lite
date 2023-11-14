@@ -36,9 +36,11 @@ namespace MetaDslx.CodeAnalysis.Symbols
                     StartComputingProperty_TypeParameters, FinishComputingProperty_TypeParameters, 
                     StartComputingProperty_BaseTypes, FinishComputingProperty_BaseTypes, 
                     StartComputingProperty_Attributes, FinishComputingProperty_Attributes, 
-                    CompletionGraph.StartComputingNonSymbolProperties, CompletionGraph.FinishComputingNonSymbolProperties, 
-                    CompletionGraph.ContainedSymbolsCompleted, 
-                    CompletionGraph.StartValidatingSymbol, CompletionGraph.FinishValidatingSymbol);
+                    CompletionGraph.StartComputingNonSymbolProperties, CompletionGraph.FinishComputingNonSymbolProperties,
+                    CompletionGraph.ContainedSymbolsFinalized,
+                    CompletionGraph.StartFinalizing, CompletionGraph.FinishFinalizing,
+                    CompletionGraph.ContainedSymbolsCompleted,
+                    CompletionGraph.StartValidating, CompletionGraph.FinishValidating);
         }
 
         private static ConditionalWeakTable<TypeSymbol, object> s_typeParameters = new ConditionalWeakTable<TypeSymbol, object>();

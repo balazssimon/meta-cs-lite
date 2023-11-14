@@ -1,7 +1,17 @@
-﻿using MetaDslx.Modeling;
+﻿using MetaDslx.CodeAnalysis.PooledObjects;
+using MetaDslx.CodeAnalysis.Symbols.CSharp;
+using MetaDslx.CodeAnalysis.Symbols.Meta;
+using MetaDslx.CodeAnalysis.Symbols.Model;
+using MetaDslx.CodeAnalysis.Symbols.Source;
+using MetaDslx.Modeling;
+using Microsoft.CodeAnalysis;
+using Roslyn.Utilities;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading;
 
@@ -22,15 +32,21 @@ namespace MetaDslx.CodeAnalysis.Symbols
                     StartComputingImports, FinishComputingImports,
                     StartComputingProperty_Attributes, FinishComputingProperty_Attributes,
                     CompletionGraph.StartComputingNonSymbolProperties, CompletionGraph.FinishComputingNonSymbolProperties,
+                    CompletionGraph.ContainedSymbolsFinalized,
+                    CompletionGraph.StartFinalizing, CompletionGraph.FinishFinalizing,
                     CompletionGraph.ContainedSymbolsCompleted,
-                    CompletionGraph.StartValidatingSymbol, CompletionGraph.FinishValidatingSymbol);
+                    CompletionGraph.StartValidating, CompletionGraph.FinishValidating);
         }
 
+        private ImmutableArray<string> _files;
         private ImmutableArray<AliasSymbol> _aliases;
         private ImmutableArray<NamespaceSymbol> _namespaces;
         private ImmutableArray<DeclaredSymbol> _symbols;
         private ImmutableArray<DeclaredSymbol> _metaModelSymbols;
         private ImmutableArray<MetaModel> _metaModels;
+        private ImmutableHashSet<DeclaredSymbol> _allSymbols;
+        private ConcurrentDictionary<DeclaredSymbol, byte> _unusedSymbols;
+        private ConcurrentDictionary<NamespaceSymbol, byte> _unusedNamespaces;
 
         protected ImportSymbol(Symbol container) 
             : base(container)
@@ -40,7 +56,14 @@ namespace MetaDslx.CodeAnalysis.Symbols
         protected override CompletionGraph CompletionGraph => CompletionParts.CompletionGraph;
 
         [ModelProperty]
-        public ImmutableArray<string> Files => ImmutableArray<string>.Empty;
+        public ImmutableArray<string> Files
+        {
+            get
+            {
+                ForceComplete(CompletionParts.FinishComputingImports, null, default);
+                return _files;
+            }
+        }
 
         [ModelProperty]
         public ImmutableArray<AliasSymbol> Aliases
@@ -99,11 +122,12 @@ namespace MetaDslx.CodeAnalysis.Symbols
                 {
                     var diagnostics = DiagnosticBag.GetInstance();
                     var value = ComputeImports(diagnostics, cancellationToken);
+                    _files = value.files;
                     _aliases = value.aliases;
                     _namespaces = value.namespaces;
                     _symbols = value.symbols;
                     _metaModelSymbols = value.metaModelSymbols;
-                    _metaModels = value.metaModels;
+                    ComputeSymbols(diagnostics);
                     AddSymbolDiagnostics(diagnostics);
                     diagnostics.Free();
                     NotePartComplete(CompletionParts.FinishComputingImports);
@@ -117,9 +141,173 @@ namespace MetaDslx.CodeAnalysis.Symbols
             return false;
         }
 
-        protected virtual (ImmutableArray<AliasSymbol> aliases, ImmutableArray<NamespaceSymbol> namespaces, ImmutableArray<DeclaredSymbol> symbols, ImmutableArray<DeclaredSymbol> metaModelSymbols, ImmutableArray<MetaModel> metaModels) ComputeImports(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        private void ComputeSymbols(DiagnosticBag diagnostics)
+        {
+            var symbolsBuilder = ArrayBuilder<DeclaredSymbol>.GetInstance();
+            symbolsBuilder.AddRange(_aliases);
+            var metaModelsBuilder = ArrayBuilder<MetaModel>.GetInstance();
+            var compilation = DeclaringCompilation;
+            foreach (var metaModelSymbol in _metaModelSymbols)
+            {
+                var fullName = SymbolDisplayFormat.QualifiedNameOnlyFormat.ToString(metaModelSymbol);
+                MetaModel? metaModel = null;
+                if (compilation is not null)
+                {
+                    foreach (var mmRef in compilation.ExternalReferences.OfType<MetaModelReference>())
+                    {
+                        if (mmRef.MetaModel.MFullName == fullName)
+                        {
+                            metaModel = mmRef.MetaModel;
+                            break;
+                        }
+                    }
+                }
+                if (metaModel is null && metaModelSymbol is CSharpTypeSymbol csharpTypeSymbol)
+                {
+                    metaModel = new SymbolMetaModel(csharpTypeSymbol);
+                }
+                if (metaModel is not null)
+                {
+                    metaModelsBuilder.Add(metaModel);
+                    foreach (var type in metaModel.MModelObjectTypes)
+                    {
+                        symbolsBuilder.Add(new ImportedMetaTypeSymbol(metaModelSymbol, metaModel, type));
+                    }
+                }
+                else
+                {
+                    diagnostics.Add(Diagnostic.Create(CommonErrorCode.ERR_DeclarationError, this.Locations.FirstOrDefault(), $"The imported type '{fullName}' is not a metamodel."));
+                }
+            }
+            _metaModels = metaModelsBuilder.ToImmutableAndFree();
+            if (_files.Length > 0 && this is ISourceSymbol sourceSymbol && compilation is not null)
+            {
+                if (compilation.Options.MergeGlobalNamespace)
+                {
+                    diagnostics.Add(Diagnostic.Create(CommonErrorCode.ERR_FileImportsDisabled, this.Locations.FirstOrDefault()));
+                }
+                else
+                {
+                    var currentFilePaths = PooledHashSet<string>.GetInstance();
+                    foreach (var syntaxReference in sourceSymbol.DeclaringSyntaxReferences)
+                    {
+                        currentFilePaths.Add(syntaxReference.SyntaxTree.FilePath);
+                    }
+                    foreach (var currentFilePath in currentFilePaths)
+                    {
+                        var currentDirectory = Path.GetDirectoryName(currentFilePath) ?? string.Empty;
+                        foreach (var fileName in _files)
+                        {
+                            var importedFilePath = fileName;
+                            var found = false;
+                            if (!string.IsNullOrWhiteSpace(fileName))
+                            {
+                                importedFilePath = Path.GetFullPath(Path.IsPathRooted(fileName) ? fileName : Path.Combine(currentDirectory, fileName));
+                                foreach (var syntaxTree in compilation.SyntaxTrees)
+                                {
+                                    if (!string.IsNullOrWhiteSpace(syntaxTree.FilePath))
+                                    {
+                                        var treeFilePath = Path.GetFullPath(syntaxTree.FilePath);
+                                        if (importedFilePath == treeFilePath)
+                                        {
+                                            found = true;
+                                            var fileNamespace = compilation.GetRootNamespace(syntaxTree);
+                                            symbolsBuilder.AddRange(fileNamespace.Members);
+                                        }
+                                    }
+                                }
+                            }
+                            if (!found)
+                            {
+                                diagnostics.Add(Diagnostic.Create(CommonErrorCode.ERR_ImportedFileNotFound, this.Locations.FirstOrDefault(), fileName, importedFilePath));
+                            }
+                        }
+                    }
+                    currentFilePaths.Free();
+                }
+            }
+            if (symbolsBuilder.Count > 0)
+            {
+                symbolsBuilder.AddRange(_symbols);
+                _symbols = symbolsBuilder.ToImmutableAndFree();
+            }
+            else
+            {
+                symbolsBuilder.Free();
+            }
+            _unusedSymbols = new ConcurrentDictionary<DeclaredSymbol, byte>();
+            foreach (var symbol in _symbols)
+            {
+                _unusedSymbols.TryAdd(symbol, 0);
+            }
+            _unusedNamespaces = new ConcurrentDictionary<NamespaceSymbol, byte>();
+            foreach (var ns in _namespaces)
+            {
+                _unusedNamespaces.TryAdd(ns, 0);
+            }
+            var allSymbols = ImmutableHashSet.CreateBuilder<DeclaredSymbol>();
+            allSymbols.AddAll(_symbols);
+            allSymbols.AddAll(_namespaces);
+            _allSymbols = allSymbols.ToImmutable();
+        }
+
+        public virtual bool MarkImportedSymbolAsUsed(DeclaredSymbol symbol)
+        {
+            if (_allSymbols is null) return false;
+            if (!_allSymbols.Contains(symbol)) return false;
+            if (_symbols.Contains(symbol) || 
+                symbol is AliasSymbol aliasSymbol && _aliases.Contains(aliasSymbol))
+            {
+                _unusedSymbols.TryRemove(symbol, out var _);
+            }
+            var importedNamespace = _namespaces.FirstOrDefault(ns => ns.Members.Contains(symbol));
+            if (importedNamespace is not null)
+            {
+                _unusedNamespaces.TryRemove(importedNamespace, out var _);
+            }
+            return true;
+        }
+
+        protected virtual (ImmutableArray<string> files, ImmutableArray<AliasSymbol> aliases, ImmutableArray<NamespaceSymbol> namespaces, ImmutableArray<DeclaredSymbol> symbols, ImmutableArray<DeclaredSymbol> metaModelSymbols) ComputeImports(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
+        }
+
+        protected override void CompletePart_Validate(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        {
+            if (!_unusedNamespaces.IsEmpty)
+            {
+                var builder = PooledStringBuilder.GetInstance();
+                var sb = builder.Builder;
+                foreach (var ns in _unusedNamespaces.Keys)
+                {
+                    if (sb.Length > 0) sb.Append(", ");
+                    sb.Append(SymbolDisplayFormat.QualifiedNameOnlyFormat.ToString(ns));
+                }
+                diagnostics.Add(Diagnostic.Create(CommonErrorCode.HDN_UnusedNamespaces, this.Locations.FirstOrDefault(), builder.ToStringAndFree()));
+            }
+            if (!_unusedSymbols.IsEmpty)
+            {
+                var builder = PooledStringBuilder.GetInstance();
+                var sb = builder.Builder;
+                foreach (var symbol in _unusedSymbols.Keys.Where(us => !(us is ImportedMetaTypeSymbol)))
+                {
+                    if (sb.Length > 0) sb.Append(", ");
+                    sb.Append(SymbolDisplayFormat.QualifiedNameOnlyFormat.ToString(symbol));
+                }
+                if (sb.Length > 0) diagnostics.Add(Diagnostic.Create(CommonErrorCode.HDN_UnusedSymbols, this.Locations.FirstOrDefault(), builder.ToString()));
+                foreach (var metaModel in _metaModels)
+                {
+                    sb.Clear();
+                    foreach (var symbol in _unusedSymbols.Keys.OfType<ImportedMetaTypeSymbol>().Where(us => us.MetaModel == metaModel).OrderBy(us => us.Name))
+                    {
+                        if (sb.Length > 0) sb.Append(", ");
+                        sb.Append(symbol.Name);
+                    }
+                    if (sb.Length > 0) diagnostics.Add(Diagnostic.Create(CommonErrorCode.WRN_UnusedMetaTypes, this.Locations.FirstOrDefault(), metaModel.MName, builder.ToString()));
+                }
+                builder.Free();
+            }
         }
     }
 }

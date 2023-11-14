@@ -23,10 +23,11 @@ block Declarations: declarations+=LanguageDeclaration declarations+=Rule*;
 
 LanguageDeclaration returns MetaDslx.Bootstrap.MetaCompiler.Model.Language: 'language' name=Name ';' grammar=Grammar;
 
-Grammar: rules+=Rule*;
+Grammar: [Scope](rules+=Rule*);
+
 Rule: ParserRule | LexerRule;
 
-ParserRule: annotations+=Annotation* (isBlock?='block' name=Name | name=Name ('returns' returnType=#MetaType)?) ':' alternatives+=PAlternative ('|' alternatives+=PAlternative)* ';';
+ParserRule: annotations+=Annotation* (isBlock?='block' name=Name | returnType=[Use(MetaType)]Identifier | name=Name 'returns' returnType=#MetaType) ':' alternatives+=PAlternative ('|' alternatives+=PAlternative)* ';';
 PAlternative: ('{' returnType=#MetaType '}')? elements+=PElement* ('=>' returnValue=Expression)?;
 PElement: (nameAnnotations+=Annotation* name=Name assignment=Assignment)? valueAnnotations+=Annotation* value=PElementValue multiplicity=Multiplicity?;
 PElementValue: PReference | PEof | PKeyword | PBlock;
@@ -57,7 +58,7 @@ IntExpression: intValue=TInteger;
 StringExpression: stringValue=TString;
 ReferenceExpression: #MetaSymbol;
 
-Annotation returns MetaDslx.Bootstrap.MetaCompiler.Model.Annotation: '[' type=Qualifier AnnotationArguments? ']';
+Annotation returns MetaDslx.Bootstrap.MetaCompiler.Model.Annotation: '[' type=[Use(types:Binder,suffixes:Binder)]Qualifier AnnotationArguments? ']';
 block AnnotationArguments: '(' arguments+=AnnotationArgument (',' arguments+=AnnotationArgument)* ')';
 AnnotationArgument: (name=Identifier ':')? value=Expression;
 

@@ -193,29 +193,16 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
 
         public virtual void VisitGrammar(GrammarSyntax node)
         {
-        	var __annot1 = new DefineBinder(type: typeof(global::MetaDslx.Bootstrap.MetaCompiler.Model.Grammar));
-        	this.Begin(__annot1, node);
+        	var __annot0 = new DefineBinder(type: typeof(global::MetaDslx.Bootstrap.MetaCompiler.Model.Grammar));
+        	this.Begin(__annot0, node);
         	try
         	{
-        	    var rulesList = node.Rules;
-        	    for (var rulesIndex = 0; rulesIndex < rulesList.Count; ++rulesIndex)
-        	    {
-        	        var __annot0 = new PropertyBinder(name: "Rules");
-        	        this.Begin(__annot0, node.Rules[rulesIndex]);
-        	        try
-        	        {
-        	            this.Visit(node.Rules[rulesIndex]);
-        	        }
-        	        finally
-        	        {
-        	            this.End(__annot0);
-        	        }
-        	    }
+        	    this.Visit(node.GrammarBlock1);
         	        
         	}
         	finally
         	{
-        	    this.End(__annot1);
+        	    this.End(__annot0);
         	}
         }
 
@@ -1320,7 +1307,16 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
 
         public virtual void VisitAnnotation(AnnotationSyntax node)
         {
-        	this.Visit(node.Type);
+        	var __annot0 = new UseBinder(types: new global::System.Type[] {typeof(global::MetaDslx.CodeAnalysis.Binding.Binder), typeof(global::MetaDslx.CodeAnalysis.Syntax.TokenKind)}.ToImmutableArray(), suffixes: new string[] {"Binder", "TokenKind"}.ToImmutableArray());
+        	this.Begin(__annot0, node.Type);
+        	try
+        	{
+        	    this.Visit(node.Type);
+        	}
+        	finally
+        	{
+        	    this.End(__annot0);
+        	}
         	this.Visit(node.AnnotationArguments);
         	    
         }
@@ -1490,6 +1486,34 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
         	    
         }
 
+        public virtual void VisitGrammarBlock1(GrammarBlock1Syntax node)
+        {
+        	var __annot1 = new ScopeBinder();
+        	this.Begin(__annot1, node);
+        	try
+        	{
+        	    var rulesList = node.Rules;
+        	    for (var rulesIndex = 0; rulesIndex < rulesList.Count; ++rulesIndex)
+        	    {
+        	        var __annot0 = new PropertyBinder(name: "Rules");
+        	        this.Begin(__annot0, node.Rules[rulesIndex]);
+        	        try
+        	        {
+        	            this.Visit(node.Rules[rulesIndex]);
+        	        }
+        	        finally
+        	        {
+        	            this.End(__annot0);
+        	        }
+        	    }
+        	        
+        	}
+        	finally
+        	{
+        	    this.End(__annot1);
+        	}
+        }
+
         public virtual void VisitParserRuleBlock1Alt1(ParserRuleBlock1Alt1Syntax node)
         {
         	if (node.IsBlock.GetCompilerKind() != CompilerSyntaxKind.None)
@@ -1524,6 +1548,30 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
 
         public virtual void VisitParserRuleBlock1Alt2(ParserRuleBlock1Alt2Syntax node)
         {
+        	var __annot1 = new PropertyBinder(name: "ReturnType");
+        	this.Begin(__annot1, node.ReturnType);
+        	try
+        	{
+        	    var __annot0 = new UseBinder(types: new global::System.Type[] {typeof(global::MetaDslx.CodeAnalysis.MetaType)}.ToImmutableArray());
+        	    this.Begin(__annot0, node.ReturnType);
+        	    try
+        	    {
+        	        this.Visit(node.ReturnType);
+        	    }
+        	    finally
+        	    {
+        	        this.End(__annot0);
+        	    }
+        	}
+        	finally
+        	{
+        	    this.End(__annot1);
+        	}
+        	    
+        }
+
+        public virtual void VisitParserRuleBlock1Alt3(ParserRuleBlock1Alt3Syntax node)
+        {
         	var __annot0 = new PropertyBinder(name: "Name");
         	this.Begin(__annot0, node.Name);
         	try
@@ -1534,7 +1582,25 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
         	{
         	    this.End(__annot0);
         	}
-        	this.Visit(node.ParserRuleBlock1Alt2Block1);
+        	var __annot2 = new PropertyBinder(name: "ReturnType");
+        	this.Begin(__annot2, node.ReturnType);
+        	try
+        	{
+        	    var __annot1 = new UseBinder(types: new global::System.Type[] {typeof(global::MetaDslx.CodeAnalysis.MetaType)}.ToImmutableArray());
+        	    this.Begin(__annot1, node.ReturnType);
+        	    try
+        	    {
+        	        this.Visit(node.ReturnType);
+        	    }
+        	    finally
+        	    {
+        	        this.End(__annot1);
+        	    }
+        	}
+        	finally
+        	{
+        	    this.End(__annot2);
+        	}
         	    
         }
 
@@ -1954,30 +2020,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
         	    // this.VisitToken(node.TComma);
         	}
         	this.Visit(node.Qualifier);
-        	    
-        }
-
-        public virtual void VisitParserRuleBlock1Alt2Block1(ParserRuleBlock1Alt2Block1Syntax node)
-        {
-        	var __annot1 = new PropertyBinder(name: "ReturnType");
-        	this.Begin(__annot1, node.ReturnType);
-        	try
-        	{
-        	    var __annot0 = new UseBinder(types: new global::System.Type[] {typeof(global::MetaDslx.CodeAnalysis.MetaType)}.ToImmutableArray());
-        	    this.Begin(__annot0, node.ReturnType);
-        	    try
-        	    {
-        	        this.Visit(node.ReturnType);
-        	    }
-        	    finally
-        	    {
-        	        this.End(__annot0);
-        	    }
-        	}
-        	finally
-        	{
-        	    this.End(__annot1);
-        	}
         	    
         }
 

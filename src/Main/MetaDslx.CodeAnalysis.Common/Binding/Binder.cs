@@ -379,6 +379,11 @@ namespace MetaDslx.CodeAnalysis.Binding
             return ImmutableArray<object?>.Empty;
         }
 
+        protected virtual void MarkSymbolAsUsed(DeclaredSymbol symbol)
+        {
+            ParentBinder?.MarkSymbolAsUsed(symbol);
+        }
+
         protected void AddDiagnostic(Diagnostic diagnostic)
         {
             Compilation.AddBinderDiagnostic(diagnostic);
