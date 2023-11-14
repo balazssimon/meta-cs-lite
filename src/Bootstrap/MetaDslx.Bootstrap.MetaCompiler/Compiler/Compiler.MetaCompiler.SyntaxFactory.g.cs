@@ -362,28 +362,30 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
             return (GrammarSyntax)CompilerLanguage.Instance.InternalSyntaxFactory.Grammar((GrammarBlock1Green)grammarBlock1.Green).CreateRed();
         }
 
-        public ParserRuleSyntax ParserRule(MetaDslx.CodeAnalysis.SyntaxList<AnnotationSyntax> annotations1, ParserRuleBlock1Syntax parserRuleBlock1, SyntaxToken tColon, MetaDslx.CodeAnalysis.SeparatedSyntaxList<PAlternativeSyntax> pAlternativeList, SyntaxToken tSemicolon)
+        public ParserRuleSyntax ParserRule(ParserAnnotationListSyntax annotations1, ParserRuleBlock1Syntax parserRuleBlock1, SyntaxToken tColon, MetaDslx.CodeAnalysis.SeparatedSyntaxList<PAlternativeSyntax> pAlternativeList, SyntaxToken tSemicolon)
         {
+        	if (annotations1 is null) throw new ArgumentNullException(nameof(annotations1));
         	if (parserRuleBlock1 is null) throw new ArgumentNullException(nameof(parserRuleBlock1));
         	if (tColon.RawKind != (int)CompilerSyntaxKind.TColon) throw new ArgumentException(nameof(tColon));
         	if (tSemicolon.RawKind != (int)CompilerSyntaxKind.TSemicolon) throw new ArgumentException(nameof(tSemicolon));
-            return (ParserRuleSyntax)CompilerLanguage.Instance.InternalSyntaxFactory.ParserRule(annotations1.Node.ToGreenList<AnnotationGreen>(), (ParserRuleBlock1Green)parserRuleBlock1.Green, (InternalSyntaxToken)tColon.Node, pAlternativeList.Node.ToGreenSeparatedList<PAlternativeGreen>(reversed: false), (InternalSyntaxToken)tSemicolon.Node).CreateRed();
+            return (ParserRuleSyntax)CompilerLanguage.Instance.InternalSyntaxFactory.ParserRule((ParserAnnotationListGreen)annotations1.Green, (ParserRuleBlock1Green)parserRuleBlock1.Green, (InternalSyntaxToken)tColon.Node, pAlternativeList.Node.ToGreenSeparatedList<PAlternativeGreen>(reversed: false), (InternalSyntaxToken)tSemicolon.Node).CreateRed();
         }
         
-        public ParserRuleSyntax ParserRule(MetaDslx.CodeAnalysis.SyntaxList<AnnotationSyntax> annotations1, ParserRuleBlock1Syntax parserRuleBlock1, MetaDslx.CodeAnalysis.SeparatedSyntaxList<PAlternativeSyntax> pAlternativeList)
+        public ParserRuleSyntax ParserRule(ParserAnnotationListSyntax annotations1, ParserRuleBlock1Syntax parserRuleBlock1, MetaDslx.CodeAnalysis.SeparatedSyntaxList<PAlternativeSyntax> pAlternativeList)
         {
         	return this.ParserRule(annotations1, parserRuleBlock1, this.Token(CompilerSyntaxKind.TColon), pAlternativeList, this.Token(CompilerSyntaxKind.TSemicolon));
         }
 
-        public LexerRuleSyntax LexerRule(MetaDslx.CodeAnalysis.SyntaxList<AnnotationSyntax> annotations1, LexerRuleBlock1Syntax lexerRuleBlock1, SyntaxToken tColon, MetaDslx.CodeAnalysis.SeparatedSyntaxList<LAlternativeSyntax> lAlternativeList, SyntaxToken tSemicolon)
+        public LexerRuleSyntax LexerRule(LexerAnnotationListSyntax annotations1, LexerRuleBlock1Syntax lexerRuleBlock1, SyntaxToken tColon, MetaDslx.CodeAnalysis.SeparatedSyntaxList<LAlternativeSyntax> lAlternativeList, SyntaxToken tSemicolon)
         {
+        	if (annotations1 is null) throw new ArgumentNullException(nameof(annotations1));
         	if (lexerRuleBlock1 is null) throw new ArgumentNullException(nameof(lexerRuleBlock1));
         	if (tColon.RawKind != (int)CompilerSyntaxKind.TColon) throw new ArgumentException(nameof(tColon));
         	if (tSemicolon.RawKind != (int)CompilerSyntaxKind.TSemicolon) throw new ArgumentException(nameof(tSemicolon));
-            return (LexerRuleSyntax)CompilerLanguage.Instance.InternalSyntaxFactory.LexerRule(annotations1.Node.ToGreenList<AnnotationGreen>(), (LexerRuleBlock1Green)lexerRuleBlock1.Green, (InternalSyntaxToken)tColon.Node, lAlternativeList.Node.ToGreenSeparatedList<LAlternativeGreen>(reversed: false), (InternalSyntaxToken)tSemicolon.Node).CreateRed();
+            return (LexerRuleSyntax)CompilerLanguage.Instance.InternalSyntaxFactory.LexerRule((LexerAnnotationListGreen)annotations1.Green, (LexerRuleBlock1Green)lexerRuleBlock1.Green, (InternalSyntaxToken)tColon.Node, lAlternativeList.Node.ToGreenSeparatedList<LAlternativeGreen>(reversed: false), (InternalSyntaxToken)tSemicolon.Node).CreateRed();
         }
         
-        public LexerRuleSyntax LexerRule(MetaDslx.CodeAnalysis.SyntaxList<AnnotationSyntax> annotations1, LexerRuleBlock1Syntax lexerRuleBlock1, MetaDslx.CodeAnalysis.SeparatedSyntaxList<LAlternativeSyntax> lAlternativeList)
+        public LexerRuleSyntax LexerRule(LexerAnnotationListSyntax annotations1, LexerRuleBlock1Syntax lexerRuleBlock1, MetaDslx.CodeAnalysis.SeparatedSyntaxList<LAlternativeSyntax> lAlternativeList)
         {
         	return this.LexerRule(annotations1, lexerRuleBlock1, this.Token(CompilerSyntaxKind.TColon), lAlternativeList, this.Token(CompilerSyntaxKind.TSemicolon));
         }
@@ -398,14 +400,15 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
         	return this.PAlternative(default, elements, default);
         }
 
-        public PElementSyntax PElement(PElementBlock1Syntax pElementBlock1, MetaDslx.CodeAnalysis.SyntaxList<AnnotationSyntax> valueAnnotations, PElementValueSyntax value, SyntaxToken multiplicity)
+        public PElementSyntax PElement(PElementBlock1Syntax pElementBlock1, ParserAnnotationListSyntax valueAnnotations, PElementValueSyntax value, SyntaxToken multiplicity)
         {
+        	if (valueAnnotations is null) throw new ArgumentNullException(nameof(valueAnnotations));
         	if (value is null) throw new ArgumentNullException(nameof(value));
         	if (multiplicity.RawKind != (int)CompilerSyntaxKind.TQuestion && multiplicity.RawKind != (int)CompilerSyntaxKind.TAsterisk && multiplicity.RawKind != (int)CompilerSyntaxKind.TPlus && multiplicity.RawKind != (int)CompilerSyntaxKind.TQuestionQuestion && multiplicity.RawKind != (int)CompilerSyntaxKind.TAsteriskQuestion && multiplicity.RawKind != (int)CompilerSyntaxKind.TPlusQuestion) throw new ArgumentException(nameof(multiplicity));
-            return (PElementSyntax)CompilerLanguage.Instance.InternalSyntaxFactory.PElement((PElementBlock1Green?)pElementBlock1?.Green, valueAnnotations.Node.ToGreenList<AnnotationGreen>(), (PElementValueGreen)value.Green, (InternalSyntaxToken)multiplicity.Node).CreateRed();
+            return (PElementSyntax)CompilerLanguage.Instance.InternalSyntaxFactory.PElement((PElementBlock1Green?)pElementBlock1?.Green, (ParserAnnotationListGreen)valueAnnotations.Green, (PElementValueGreen)value.Green, (InternalSyntaxToken)multiplicity.Node).CreateRed();
         }
         
-        public PElementSyntax PElement(MetaDslx.CodeAnalysis.SyntaxList<AnnotationSyntax> valueAnnotations, PElementValueSyntax value)
+        public PElementSyntax PElement(ParserAnnotationListSyntax valueAnnotations, PElementValueSyntax value)
         {
         	return this.PElement(default, valueAnnotations, value, default);
         }
@@ -547,10 +550,22 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
             return (StringExpressionSyntax)CompilerLanguage.Instance.InternalSyntaxFactory.StringExpression((InternalSyntaxToken)stringValue.Node).CreateRed();
         }
 
-        public ReferenceExpressionSyntax ReferenceExpression(QualifierSyntax qualifier)
+        public ReferenceExpressionSyntax ReferenceExpression(QualifierSyntax symbolValue)
         {
-        	if (qualifier is null) throw new ArgumentNullException(nameof(qualifier));
-            return (ReferenceExpressionSyntax)CompilerLanguage.Instance.InternalSyntaxFactory.ReferenceExpression((QualifierGreen)qualifier.Green).CreateRed();
+        	if (symbolValue is null) throw new ArgumentNullException(nameof(symbolValue));
+            return (ReferenceExpressionSyntax)CompilerLanguage.Instance.InternalSyntaxFactory.ReferenceExpression((QualifierGreen)symbolValue.Green).CreateRed();
+        }
+
+        public ArrayExpressionSyntax ArrayExpression(SyntaxToken tLBrace, ArrayExpressionBlock1Syntax arrayExpressionBlock1, SyntaxToken tRBrace)
+        {
+        	if (tLBrace.RawKind != (int)CompilerSyntaxKind.TLBrace) throw new ArgumentException(nameof(tLBrace));
+        	if (tRBrace.RawKind != (int)CompilerSyntaxKind.TRBrace) throw new ArgumentException(nameof(tRBrace));
+            return (ArrayExpressionSyntax)CompilerLanguage.Instance.InternalSyntaxFactory.ArrayExpression((InternalSyntaxToken)tLBrace.Node, (ArrayExpressionBlock1Green?)arrayExpressionBlock1?.Green, (InternalSyntaxToken)tRBrace.Node).CreateRed();
+        }
+        
+        public ArrayExpressionSyntax ArrayExpression()
+        {
+        	return this.ArrayExpression(this.Token(CompilerSyntaxKind.TLBrace), default, this.Token(CompilerSyntaxKind.TRBrace));
         }
 
         public ExpressionTokensSyntax ExpressionTokens(SyntaxToken tokens)
@@ -559,17 +574,40 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
             return (ExpressionTokensSyntax)CompilerLanguage.Instance.InternalSyntaxFactory.ExpressionTokens((InternalSyntaxToken)tokens.Node).CreateRed();
         }
 
-        public AnnotationSyntax Annotation(SyntaxToken tLBracket, QualifierSyntax type, AnnotationArgumentsSyntax annotationArguments, SyntaxToken tRBracket)
+        public ParserAnnotationListSyntax ParserAnnotationList(MetaDslx.CodeAnalysis.SyntaxList<ParserAnnotationSyntax> parserAnnotation)
+        {
+            return (ParserAnnotationListSyntax)CompilerLanguage.Instance.InternalSyntaxFactory.ParserAnnotationList(parserAnnotation.Node.ToGreenList<ParserAnnotationGreen>()).CreateRed();
+        }
+
+        public ParserAnnotationSyntax ParserAnnotation(SyntaxToken tLBracket, QualifierSyntax type, AnnotationArgumentsSyntax annotationArguments, SyntaxToken tRBracket)
         {
         	if (tLBracket.RawKind != (int)CompilerSyntaxKind.TLBracket) throw new ArgumentException(nameof(tLBracket));
         	if (type is null) throw new ArgumentNullException(nameof(type));
         	if (tRBracket.RawKind != (int)CompilerSyntaxKind.TRBracket) throw new ArgumentException(nameof(tRBracket));
-            return (AnnotationSyntax)CompilerLanguage.Instance.InternalSyntaxFactory.Annotation((InternalSyntaxToken)tLBracket.Node, (QualifierGreen)type.Green, (AnnotationArgumentsGreen?)annotationArguments?.Green, (InternalSyntaxToken)tRBracket.Node).CreateRed();
+            return (ParserAnnotationSyntax)CompilerLanguage.Instance.InternalSyntaxFactory.ParserAnnotation((InternalSyntaxToken)tLBracket.Node, (QualifierGreen)type.Green, (AnnotationArgumentsGreen?)annotationArguments?.Green, (InternalSyntaxToken)tRBracket.Node).CreateRed();
         }
         
-        public AnnotationSyntax Annotation(QualifierSyntax type)
+        public ParserAnnotationSyntax ParserAnnotation(QualifierSyntax type)
         {
-        	return this.Annotation(this.Token(CompilerSyntaxKind.TLBracket), type, default, this.Token(CompilerSyntaxKind.TRBracket));
+        	return this.ParserAnnotation(this.Token(CompilerSyntaxKind.TLBracket), type, default, this.Token(CompilerSyntaxKind.TRBracket));
+        }
+
+        public LexerAnnotationListSyntax LexerAnnotationList(MetaDslx.CodeAnalysis.SyntaxList<LexerAnnotationSyntax> lexerAnnotation)
+        {
+            return (LexerAnnotationListSyntax)CompilerLanguage.Instance.InternalSyntaxFactory.LexerAnnotationList(lexerAnnotation.Node.ToGreenList<LexerAnnotationGreen>()).CreateRed();
+        }
+
+        public LexerAnnotationSyntax LexerAnnotation(SyntaxToken tLBracket, QualifierSyntax type, AnnotationArgumentsSyntax annotationArguments, SyntaxToken tRBracket)
+        {
+        	if (tLBracket.RawKind != (int)CompilerSyntaxKind.TLBracket) throw new ArgumentException(nameof(tLBracket));
+        	if (type is null) throw new ArgumentNullException(nameof(type));
+        	if (tRBracket.RawKind != (int)CompilerSyntaxKind.TRBracket) throw new ArgumentException(nameof(tRBracket));
+            return (LexerAnnotationSyntax)CompilerLanguage.Instance.InternalSyntaxFactory.LexerAnnotation((InternalSyntaxToken)tLBracket.Node, (QualifierGreen)type.Green, (AnnotationArgumentsGreen?)annotationArguments?.Green, (InternalSyntaxToken)tRBracket.Node).CreateRed();
+        }
+        
+        public LexerAnnotationSyntax LexerAnnotation(QualifierSyntax type)
+        {
+        	return this.LexerAnnotation(this.Token(CompilerSyntaxKind.TLBracket), type, default, this.Token(CompilerSyntaxKind.TRBracket));
         }
 
         public AnnotationArgumentsSyntax AnnotationArguments(SyntaxToken tLParen, MetaDslx.CodeAnalysis.SeparatedSyntaxList<AnnotationArgumentSyntax> annotationArgumentList, SyntaxToken tRParen)
@@ -708,11 +746,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
         	return this.PAlternativeBlock2(this.Token(CompilerSyntaxKind.TEqGt), returnValue);
         }
 
-        public PElementBlock1Syntax PElementBlock1(MetaDslx.CodeAnalysis.SyntaxList<AnnotationSyntax> nameAnnotations, NameSyntax name, SyntaxToken assignment)
+        public PElementBlock1Syntax PElementBlock1(ParserAnnotationListSyntax nameAnnotations, NameSyntax name, SyntaxToken assignment)
         {
+        	if (nameAnnotations is null) throw new ArgumentNullException(nameof(nameAnnotations));
         	if (name is null) throw new ArgumentNullException(nameof(name));
         	if (assignment.RawKind != (int)CompilerSyntaxKind.TEq && assignment.RawKind != (int)CompilerSyntaxKind.TQuestionEq && assignment.RawKind != (int)CompilerSyntaxKind.TExclEq && assignment.RawKind != (int)CompilerSyntaxKind.TPlusEq) throw new ArgumentException(nameof(assignment));
-            return (PElementBlock1Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.PElementBlock1(nameAnnotations.Node.ToGreenList<AnnotationGreen>(), (NameGreen)name.Green, (InternalSyntaxToken)assignment.Node).CreateRed();
+            return (PElementBlock1Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.PElementBlock1((ParserAnnotationListGreen)nameAnnotations.Green, (NameGreen)name.Green, (InternalSyntaxToken)assignment.Node).CreateRed();
         }
 
         public PReferenceAlt3Block1Syntax PReferenceAlt3Block1(SyntaxToken tComma, QualifierSyntax referencedTypes)
@@ -799,6 +838,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
         	return this.LBlockBlock1(this.Token(CompilerSyntaxKind.TBar), alternatives);
         }
 
+        public ArrayExpressionBlock1Syntax ArrayExpressionBlock1(MetaDslx.CodeAnalysis.SeparatedSyntaxList<ExpressionSyntax> expressionList)
+        {
+            return (ArrayExpressionBlock1Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.ArrayExpressionBlock1(expressionList.Node.ToGreenSeparatedList<ExpressionGreen>(reversed: false)).CreateRed();
+        }
+
         public AnnotationArgumentsBlock1Syntax AnnotationArgumentsBlock1(SyntaxToken tComma, AnnotationArgumentSyntax arguments)
         {
         	if (tComma.RawKind != (int)CompilerSyntaxKind.TComma) throw new ArgumentException(nameof(tComma));
@@ -858,6 +902,18 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
         {
         	return this.LexerRuleBlock1Alt1Block1(this.Token(CompilerSyntaxKind.KReturns), returnType);
         }
+
+        public ArrayExpressionBlock1Block1Syntax ArrayExpressionBlock1Block1(SyntaxToken tComma, ExpressionSyntax items)
+        {
+        	if (tComma.RawKind != (int)CompilerSyntaxKind.TComma) throw new ArgumentException(nameof(tComma));
+        	if (items is null) throw new ArgumentNullException(nameof(items));
+            return (ArrayExpressionBlock1Block1Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.ArrayExpressionBlock1Block1((InternalSyntaxToken)tComma.Node, (ExpressionGreen)items.Green).CreateRed();
+        }
+        
+        public ArrayExpressionBlock1Block1Syntax ArrayExpressionBlock1Block1(ExpressionSyntax items)
+        {
+        	return this.ArrayExpressionBlock1Block1(this.Token(CompilerSyntaxKind.TComma), items);
+        }
 				
 
         internal static IEnumerable<Type> GetNodeTypes()
@@ -888,8 +944,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		        typeof(IntExpressionSyntax),
 		        typeof(StringExpressionSyntax),
 		        typeof(ReferenceExpressionSyntax),
+		        typeof(ArrayExpressionSyntax),
 		        typeof(ExpressionTokensSyntax),
-		        typeof(AnnotationSyntax),
+		        typeof(ParserAnnotationListSyntax),
+		        typeof(ParserAnnotationSyntax),
+		        typeof(LexerAnnotationListSyntax),
+		        typeof(LexerAnnotationSyntax),
 		        typeof(AnnotationArgumentsSyntax),
 		        typeof(AnnotationArgumentSyntax),
 		        typeof(NameSyntax),
@@ -913,11 +973,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		        typeof(LexerRuleBlock1Alt3Syntax),
 		        typeof(LexerRuleBlock2Syntax),
 		        typeof(LBlockBlock1Syntax),
+		        typeof(ArrayExpressionBlock1Syntax),
 		        typeof(AnnotationArgumentsBlock1Syntax),
 		        typeof(AnnotationArgumentBlock1Syntax),
 		        typeof(QualifierBlock1Syntax),
 		        typeof(QualifierListBlock1Syntax),
 		        typeof(LexerRuleBlock1Alt1Block1Syntax),
+		        typeof(ArrayExpressionBlock1Block1Syntax),
 		    };
         }
 

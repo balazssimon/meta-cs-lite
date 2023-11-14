@@ -221,17 +221,29 @@ namespace MetaDslx.CodeAnalysis.Binding
 
         protected virtual void AddLookupCandidateSymbolsFromImports(LookupContext context, LookupCandidates result)
         {
+            if (context.InImport) return;
             var qualifier = context.Qualifier;
             if (qualifier is not null)
             {
-                foreach (var import in qualifier.Imports)
+                context.InImport = true;
+                try
                 {
-                    result.AddRange(import.Aliases.Where(a => context.IsViable(a)));
-                    foreach (var ns in import.Namespaces)
+                    foreach (var import in qualifier.Imports)
                     {
-                        result.AddRange(ns.GetMembersUnordered().Where(m => context.IsViable(m)));
+                        if (!import.IsComputingImports)
+                        {
+                            result.AddRange(import.Aliases.Where(a => context.IsViable(a)));
+                            foreach (var ns in import.Namespaces)
+                            {
+                                result.AddRange(ns.GetMembersUnordered().Where(m => context.IsViable(m)));
+                            }
+                            result.AddRange(import.Symbols.Where(m => context.IsViable(m)));
+                        }
                     }
-                    result.AddRange(import.Symbols.Where(m => context.IsViable(m)));
+                }
+                finally
+                {
+                    context.InImport = false;
                 }
             }
         }

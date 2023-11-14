@@ -255,3 +255,9 @@ class ReferenceExpression : Expression
 	derived object? Value;
 	symbol SymbolValue;
 }
+
+class ArrayExpression : Expression
+{
+	derived object? Value;
+	Expression[] Items;
+}

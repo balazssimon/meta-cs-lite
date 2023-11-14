@@ -12,7 +12,7 @@ using MetaDslx.Bootstrap.MetaCompiler.Model;
 
 language Compiler;
 
-Main returns MetaDslx.Bootstrap.MetaCompiler.Model.Namespace:
+Main returns Namespace:
 	'namespace' name=[Name(qualifierProperty:Declarations)]Qualifier ';'
 	Using*
 	Declarations
@@ -20,6 +20,7 @@ Main returns MetaDslx.Bootstrap.MetaCompiler.Model.Namespace:
 
 Using returns ImportSymbol: 'using' (namespaces+=#NamespaceSymbol | 'metamodel' metaModelSymbols+=#DeclaredSymbol) ';';
 
+[Scope]
 part Declarations: declarations+=LanguageDeclaration declarations+=Rule*;
 
 LanguageDeclaration returns MetaDslx.Bootstrap.MetaCompiler.Model.Language: 'language' name=Name ';' grammar=Grammar;
@@ -28,16 +29,16 @@ Grammar: [Scope](rules+=Rule*);
 
 Rule: ParserRule | LexerRule;
 
-ParserRule: annotations+=Annotation* (isBlock?='block' name=Name | returnType=[Use(MetaType)]Identifier | name=Name 'returns' returnType=#MetaType) ':' alternatives+=PAlternative ('|' alternatives+=PAlternative)* ';';
+ParserRule: annotations+=ParserAnnotationList (isBlock?='block' name=Name | returnType=[Use(MetaType)]Identifier | name=Name 'returns' returnType=#MetaType) ':' alternatives+=PAlternative ('|' alternatives+=PAlternative)* ';';
 PAlternative: ('{' returnType=#MetaType '}')? elements+=PElement* ('=>' returnValue=Expression)?;
-PElement: (nameAnnotations+=Annotation* name=Name assignment=Assignment)? valueAnnotations+=Annotation* value=PElementValue multiplicity=Multiplicity?;
+PElement: (nameAnnotations+=ParserAnnotationList name=Name assignment=Assignment)? valueAnnotations+=ParserAnnotationList value=PElementValue multiplicity=Multiplicity?;
 PElementValue: PReference | PEof | PKeyword | PBlock;
 PReference: rule=[Use(Rule)]Identifier | '#' referencedTypes+=#MetaType | '#{' referencedTypes+=#MetaType (',' referencedTypes+=#MetaType)* '}' ;
 PEof: 'eof';
 PKeyword: text=TString;
 PBlock: '(' alternatives+=PAlternative ('|' alternatives+=PAlternative)* ')';
 
-LexerRule: annotations+=Annotation* ('token' name=Name ('returns' returnType=#MetaType)? | isHidden?='hidden' name=Name | isFragment?='fragment' name=Name) ':' alternatives+=LAlternative ('|' alternatives+=LAlternative)* ';';
+LexerRule: annotations+=LexerAnnotationList ('token' name=Name ('returns' returnType=#MetaType)? | isHidden?='hidden' name=Name | isFragment?='fragment' name=Name) ':' alternatives+=LAlternative ('|' alternatives+=LAlternative)* ';';
 LAlternative: elements+=LElement*;
 LElement: isNegated?='~'? value=LElementValue multiplicity=Multiplicity?;
 LElementValue: LReference | LFixed | LWildCard | LRange /*| LSet*/ | LBlock;
@@ -52,14 +53,20 @@ LRange: StartChar=TString '..' EndChar=TString;
 //LSetRange:
 LBlock: '(' alternatives+=LAlternative ('|' alternatives+=LAlternative)* ')';
 
-Expression: NullExpression | BoolExpression | IntExpression | StringExpression | ReferenceExpression;
+Expression: NullExpression | BoolExpression | IntExpression | StringExpression | ReferenceExpression | ArrayExpression;
 NullExpression: 'null';
 BoolExpression: boolValue?='true' | 'false';
 IntExpression: intValue=TInteger;
 StringExpression: stringValue=TString;
-ReferenceExpression: #MetaSymbol;
+ReferenceExpression: symbolValue=#MetaSymbol;
+ArrayExpression: '{' (items+=Expression (',' items+=Expression)*)? '}';
 
-Annotation returns MetaDslx.Bootstrap.MetaCompiler.Model: '[' type=[Use(types:{Binder,TokenKind},suffixes:{Binder,TokenKind})]Qualifier AnnotationArguments? ']';
+part ParserAnnotationList: ParserAnnotation*;
+ParserAnnotation returns MetaDslx.Bootstrap.MetaCompiler.Model.Annotation: '[' type=[Use(types:{Binder,MetaDslx.CodeAnalysis.Annotations.Annotation},suffixes:{Binder,Annotation})]Qualifier AnnotationArguments? ']';
+
+part LexerAnnotationList: LexerAnnotation*;
+LexerAnnotation returns MetaDslx.Bootstrap.MetaCompiler.Model.Annotation: '[' type=[Use(types:{TokenKind,MetaDslx.CodeAnalysis.Annotations.Annotation},suffixes:{TokenKind,Annotation})]Qualifier AnnotationArguments? ']';
+
 part AnnotationArguments: '(' arguments+=AnnotationArgument (',' arguments+=AnnotationArgument)* ')';
 AnnotationArgument: (name=Identifier ':')? value=Expression;
 

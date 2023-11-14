@@ -22,11 +22,13 @@ namespace MetaDslx.CodeAnalysis.Binding
         }
 
         private readonly Type? _type;
+        private readonly bool _isScope;
         private ImmutableArray<Symbol> _definedSymbols;
 
-        public DefineBinder(Type? type = null)
+        public DefineBinder(Type? type = null, bool isScope = true)
         {
             _type = type;
+            _isScope = isScope;
         }
 
         public Type? Type => _type;
@@ -122,11 +124,32 @@ namespace MetaDslx.CodeAnalysis.Binding
             return ComputeDefinedSymbols(cancellationToken).Cast<Symbol, object?>();
         }
 
+        /*protected override void AddLookupCandidateSymbolsInSingleBinder(LookupContext context, LookupCandidates result)
+        {
+            if (_isScope && context.Qualifier is null)
+            {
+                foreach (var definedSymbol in DefinedSymbols)
+                {
+                    var declaredSymbol = definedSymbol as DeclaredSymbol;
+                    if (declaredSymbol is not null)
+                    {
+                        context.Qualifier = declaredSymbol;
+                        base.AddLookupCandidateSymbolsInSingleBinder(context, result);
+                        context.Qualifier = null;
+                    }
+                }
+            }
+            else
+            {
+                base.AddLookupCandidateSymbolsInSingleBinder(context, result);
+            }
+        }*/
+
         protected override void MarkSymbolAsUsed(DeclaredSymbol symbol)
         {
             foreach (var definedSymbol in DefinedSymbols)
             {
-                if (definedSymbol is DeclaredSymbol declaredSymbol && declaredSymbol.Members.Contains(symbol)) return;
+                //if (definedSymbol is DeclaredSymbol declaredSymbol && declaredSymbol.Members.Contains(symbol)) return;
                 foreach (var import in definedSymbol.ContainedSymbols.OfType<ImportSymbol>())
                 {
                     if (import.MarkImportedSymbolAsUsed(symbol)) return;

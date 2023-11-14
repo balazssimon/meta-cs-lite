@@ -436,10 +436,18 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 					return "StringExpression";
 				case CompilerSyntaxKind.ReferenceExpression: 
 					return "ReferenceExpression";
+				case CompilerSyntaxKind.ArrayExpression: 
+					return "ArrayExpression";
 				case CompilerSyntaxKind.ExpressionTokens: 
 					return "ExpressionTokens";
-				case CompilerSyntaxKind.Annotation: 
-					return "Annotation";
+				case CompilerSyntaxKind.ParserAnnotationList: 
+					return "ParserAnnotationList";
+				case CompilerSyntaxKind.ParserAnnotation: 
+					return "ParserAnnotation";
+				case CompilerSyntaxKind.LexerAnnotationList: 
+					return "LexerAnnotationList";
+				case CompilerSyntaxKind.LexerAnnotation: 
+					return "LexerAnnotation";
 				case CompilerSyntaxKind.AnnotationArguments: 
 					return "AnnotationArguments";
 				case CompilerSyntaxKind.AnnotationArgument: 
@@ -486,6 +494,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 					return "LexerRuleBlock2";
 				case CompilerSyntaxKind.LBlockBlock1: 
 					return "LBlockBlock1";
+				case CompilerSyntaxKind.ArrayExpressionBlock1: 
+					return "ArrayExpressionBlock1";
 				case CompilerSyntaxKind.AnnotationArgumentsBlock1: 
 					return "AnnotationArgumentsBlock1";
 				case CompilerSyntaxKind.AnnotationArgumentBlock1: 
@@ -496,6 +506,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 					return "QualifierListBlock1";
 				case CompilerSyntaxKind.LexerRuleBlock1Alt1Block1: 
 					return "LexerRuleBlock1Alt1Block1";
+				case CompilerSyntaxKind.ArrayExpressionBlock1Block1: 
+					return "ArrayExpressionBlock1Block1";
 				default:
 					return string.Empty;
 			}

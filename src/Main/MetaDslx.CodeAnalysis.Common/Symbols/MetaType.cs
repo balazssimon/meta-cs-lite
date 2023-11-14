@@ -537,13 +537,26 @@ namespace MetaDslx.CodeAnalysis
 
         public bool IsAssignableFrom(MetaType type)
         {
-            return IsAssignableFrom(type.AsType());
+            if (type.IsNull) return false;
+            if (this.Equals(type)) return true;
+            if (type.IsTypeSymbol)
+            {
+                var fullName = this.FullName;
+                var typeSymbol = type.OriginalTypeSymbol;
+                return typeSymbol.AllBaseTypes.Any(bt => SymbolDisplayFormat.QualifiedNameOnlyFormat.ToString(bt) == fullName);
+            }
+            else
+            {
+                return IsAssignableFrom(type.AsType());
+            }
         }
 
         public bool IsAssignableTo(MetaType type)
         {
-            return IsAssignableTo(type.AsType());
+            if (type.IsNull) return false;
+            return type.IsAssignableFrom(this);
         }
+
         public bool Equals(MetaType other)
         {
             var lhsSpecialType = this.SpecialType;

@@ -12,7 +12,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		__FirstFixedToken = TComma,
 		__LastFixedToken = TPlusQuestion,
 		__FirstRule = Main,
-		__LastRule = LexerRuleBlock1Alt1Block1,
+		__LastRule = ArrayExpressionBlock1Block1,
 
 		// Built-in:
 		None = InternalSyntaxKind.None,
@@ -109,8 +109,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		IntExpression,
 		StringExpression,
 		ReferenceExpression,
+		ArrayExpression,
 		ExpressionTokens,
-		Annotation,
+		ParserAnnotationList,
+		ParserAnnotation,
+		LexerAnnotationList,
+		LexerAnnotation,
 		AnnotationArguments,
 		AnnotationArgument,
 		Name,
@@ -134,11 +138,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		LexerRuleBlock1Alt3,
 		LexerRuleBlock2,
 		LBlockBlock1,
+		ArrayExpressionBlock1,
 		AnnotationArgumentsBlock1,
 		AnnotationArgumentBlock1,
 		QualifierBlock1,
 		QualifierListBlock1,
 		LexerRuleBlock1Alt1Block1,
+		ArrayExpressionBlock1Block1,
 	}
 
     public static class CompilerSyntaxKindExtensions

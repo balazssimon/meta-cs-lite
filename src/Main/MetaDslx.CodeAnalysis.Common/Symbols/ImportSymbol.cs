@@ -38,6 +38,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
                     CompletionGraph.StartValidating, CompletionGraph.FinishValidating);
         }
 
+        private bool _isComputingImports;
         private ImmutableArray<string> _files;
         private ImmutableArray<AliasSymbol> _aliases;
         private ImmutableArray<NamespaceSymbol> _namespaces;
@@ -54,6 +55,8 @@ namespace MetaDslx.CodeAnalysis.Symbols
         }
 
         protected override CompletionGraph CompletionGraph => CompletionParts.CompletionGraph;
+
+        public bool IsComputingImports => _isComputingImports;
 
         [ModelProperty]
         public ImmutableArray<string> Files
@@ -120,6 +123,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
             {
                 if (NotePartComplete(CompletionParts.StartComputingImports))
                 {
+                    _isComputingImports = true;
                     var diagnostics = DiagnosticBag.GetInstance();
                     var value = ComputeImports(diagnostics, cancellationToken);
                     _files = value.files;
@@ -131,6 +135,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
                     AddSymbolDiagnostics(diagnostics);
                     diagnostics.Free();
                     NotePartComplete(CompletionParts.FinishComputingImports);
+                    _isComputingImports = false;
                 }
                 return true;
             }

@@ -178,5 +178,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
         {
             return _this.StringValue;
         }
+
+        public override object? ArrayExpression_Value(ArrayExpression _this)
+        {
+            return null;
+        }
     }
 }

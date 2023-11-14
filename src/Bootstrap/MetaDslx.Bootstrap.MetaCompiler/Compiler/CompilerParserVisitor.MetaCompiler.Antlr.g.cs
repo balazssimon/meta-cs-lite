@@ -199,6 +199,13 @@ public interface ICompilerParserVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitPr_ReferenceExpression([NotNull] CompilerParser.Pr_ReferenceExpressionContext context);
 	/// <summary>
+	/// Visit a parse tree produced by the <c>pr_ArrayExpression</c>
+	/// labeled alternative in <see cref="CompilerParser.pr_Expression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitPr_ArrayExpression([NotNull] CompilerParser.Pr_ArrayExpressionContext context);
+	/// <summary>
 	/// Visit a parse tree produced by the <c>pr_ExpressionTokens</c>
 	/// labeled alternative in <see cref="CompilerParser.pr_Expression"/>.
 	/// </summary>
@@ -206,11 +213,29 @@ public interface ICompilerParserVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitPr_ExpressionTokens([NotNull] CompilerParser.Pr_ExpressionTokensContext context);
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="CompilerParser.pr_Annotation"/>.
+	/// Visit a parse tree produced by <see cref="CompilerParser.pr_ParserAnnotationList"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	Result VisitPr_Annotation([NotNull] CompilerParser.Pr_AnnotationContext context);
+	Result VisitPr_ParserAnnotationList([NotNull] CompilerParser.Pr_ParserAnnotationListContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="CompilerParser.pr_ParserAnnotation"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitPr_ParserAnnotation([NotNull] CompilerParser.Pr_ParserAnnotationContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="CompilerParser.pr_LexerAnnotationList"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitPr_LexerAnnotationList([NotNull] CompilerParser.Pr_LexerAnnotationListContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="CompilerParser.pr_LexerAnnotation"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitPr_LexerAnnotation([NotNull] CompilerParser.Pr_LexerAnnotationContext context);
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="CompilerParser.pr_AnnotationArguments"/>.
 	/// </summary>
@@ -358,6 +383,12 @@ public interface ICompilerParserVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitPr_LBlockBlock1([NotNull] CompilerParser.Pr_LBlockBlock1Context context);
 	/// <summary>
+	/// Visit a parse tree produced by <see cref="CompilerParser.pr_ArrayExpressionBlock1"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitPr_ArrayExpressionBlock1([NotNull] CompilerParser.Pr_ArrayExpressionBlock1Context context);
+	/// <summary>
 	/// Visit a parse tree produced by <see cref="CompilerParser.pr_AnnotationArgumentsBlock1"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
@@ -387,5 +418,11 @@ public interface ICompilerParserVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
 	Result VisitPr_LexerRuleBlock1Alt1Block1([NotNull] CompilerParser.Pr_LexerRuleBlock1Alt1Block1Context context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="CompilerParser.pr_ArrayExpressionBlock1Block1"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitPr_ArrayExpressionBlock1Block1([NotNull] CompilerParser.Pr_ArrayExpressionBlock1Block1Context context);
 }
 } // namespace MetaDslx.Bootstrap.MetaCompiler.Compiler

@@ -12,18 +12,22 @@ namespace MetaDslx.CodeAnalysis.Binding
 {
     public class UseBinder : Binder, IUseBinder
     {
-        private readonly ImmutableArray<Type> _types;
+        private readonly bool _isType;
+        private readonly bool _isSymbol;
+        private readonly ImmutableArray<MetaType> _types;
         private readonly ImmutableArray<string> _prefixes;
         private readonly ImmutableArray<string> _suffixes;
 
         public UseBinder(ImmutableArray<Type> types = default, ImmutableArray<string> prefixes = default, ImmutableArray<string> suffixes = default)
         {
-            _types = types;
+            _isType = types.Contains(typeof(MetaType)) || types.Contains(typeof(Type));
+            _isSymbol = types.Contains(typeof(MetaSymbol)) || types.Contains(typeof(object));
+            _types = types.SelectAsArray(t => MetaType.FromType(t));
             _prefixes = prefixes;
             _suffixes = suffixes;
         }
 
-        public ImmutableArray<Type> Types => _types;
+        public ImmutableArray<MetaType> Types => _types;
         public ImmutableArray<string> Prefixes => _prefixes;
         public ImmutableArray<string> Suffixes => _suffixes;
         public List<Type> TypesList { get; }
@@ -48,10 +52,8 @@ namespace MetaDslx.CodeAnalysis.Binding
         {
             if (symbol is null) return false;
             if (_types.IsDefaultOrEmpty) return true;
-            if (_types.Contains(typeof(MetaType)) || _types.Contains(typeof(Type)))
-            {
-                return symbol is TypeSymbol;
-            }
+            if (_isType) return symbol is TypeSymbol;
+            if (_isSymbol) return true;
             if (symbol is IModelSymbol modelSymbol)
             {
                 foreach (var type in _types)
@@ -61,6 +63,7 @@ namespace MetaDslx.CodeAnalysis.Binding
             }
             foreach (var type in _types)
             {
+                if (symbol is TypeSymbol typeSymbol && type.IsAssignableFrom(typeSymbol)) return true;
                 if (type.IsAssignableFrom(symbol.GetType())) return true;
             }
             return false;
