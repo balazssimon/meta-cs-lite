@@ -11,7 +11,7 @@ using System.Threading;
 
 namespace MetaDslx.Modeling.Reflection
 {
-    internal sealed class ReflectionModelObjectInfo : ModelObjectInfo
+    internal sealed class ReflectionModelClassInfo : ModelClassInfo
     {
         private static readonly Type[] EmptyTypes = new Type[0];
         private static readonly object[] EmptyObjects = new object[0];
@@ -27,7 +27,7 @@ namespace MetaDslx.Modeling.Reflection
         private ImmutableDictionary<string, ModelProperty>? _publicPropertiesByName;
         private ImmutableDictionary<ModelProperty, ModelPropertyInfo>? _modelPropertyInfos;
 
-        public ReflectionModelObjectInfo(
+        public ReflectionModelClassInfo(
             ReflectionMetaModel metaModel,
             Type metaType,
             object? symbolType,
@@ -69,9 +69,9 @@ namespace MetaDslx.Modeling.Reflection
 
         protected override ImmutableDictionary<ModelOperation, ModelOperationInfo> ModelOperationInfos => ImmutableDictionary<ModelOperation, ModelOperationInfo>.Empty;
 
-        public override ImmutableArray<ModelObjectInfo> BaseTypes => throw new NotImplementedException();
+        public override ImmutableArray<ModelClassInfo> BaseTypes => throw new NotImplementedException();
 
-        public override ImmutableArray<ModelObjectInfo> AllBaseTypes => throw new NotImplementedException();
+        public override ImmutableArray<ModelClassInfo> AllBaseTypes => throw new NotImplementedException();
 
         public override IModelObject? Create(Model? model = null, string? id = null)
         {

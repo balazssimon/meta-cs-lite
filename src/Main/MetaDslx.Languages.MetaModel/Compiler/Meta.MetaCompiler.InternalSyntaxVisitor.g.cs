@@ -14,7 +14,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
 		public virtual void VisitDeclarationsGreen(DeclarationsGreen node) => this.DefaultVisit(node);
 		public virtual void VisitMetaModelGreen(MetaModelGreen node) => this.DefaultVisit(node);
 		public virtual void VisitMetaConstantGreen(MetaConstantGreen node) => this.DefaultVisit(node);
-		public virtual void VisitMetaEnumTypeGreen(MetaEnumTypeGreen node) => this.DefaultVisit(node);
+		public virtual void VisitMetaEnumGreen(MetaEnumGreen node) => this.DefaultVisit(node);
 		public virtual void VisitMetaClassGreen(MetaClassGreen node) => this.DefaultVisit(node);
 		public virtual void VisitEnumBodyGreen(EnumBodyGreen node) => this.DefaultVisit(node);
 		public virtual void VisitEnumLiteralsGreen(EnumLiteralsGreen node) => this.DefaultVisit(node);
@@ -63,7 +63,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
 		public virtual TResult VisitDeclarationsGreen(DeclarationsGreen node) => this.DefaultVisit(node);
 		public virtual TResult VisitMetaModelGreen(MetaModelGreen node) => this.DefaultVisit(node);
 		public virtual TResult VisitMetaConstantGreen(MetaConstantGreen node) => this.DefaultVisit(node);
-		public virtual TResult VisitMetaEnumTypeGreen(MetaEnumTypeGreen node) => this.DefaultVisit(node);
+		public virtual TResult VisitMetaEnumGreen(MetaEnumGreen node) => this.DefaultVisit(node);
 		public virtual TResult VisitMetaClassGreen(MetaClassGreen node) => this.DefaultVisit(node);
 		public virtual TResult VisitEnumBodyGreen(EnumBodyGreen node) => this.DefaultVisit(node);
 		public virtual TResult VisitEnumLiteralsGreen(EnumLiteralsGreen node) => this.DefaultVisit(node);

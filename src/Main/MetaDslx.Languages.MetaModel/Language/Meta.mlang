@@ -22,11 +22,11 @@ part Declarations: declarations+=MetaDeclaration*;
 
 MetaModel: 'metamodel' name=Name ';';
 
-MetaDeclaration: MetaModel | MetaConstant | MetaEnumType | MetaClass;
+MetaDeclaration: MetaModel | MetaConstant | MetaEnum | MetaClass;
 
 MetaConstant: 'const' type=TypeReference name=Name ';';
 
-MetaEnumType: 'enum' name=Name EnumBody;
+MetaEnum: 'enum' name=Name EnumBody;
 [Scope]
 part EnumBody: '{' EnumLiterals? '}';
 part EnumLiterals : literals+=MetaEnumLiteral (',' literals+=MetaEnumLiteral)* ;

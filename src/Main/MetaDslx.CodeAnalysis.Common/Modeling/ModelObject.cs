@@ -25,7 +25,7 @@ namespace MetaDslx.Modeling
             _children = new ChildList(this);
         }
 
-        public abstract ModelObjectInfo MInfo { get; }
+        public abstract ModelClassInfo MInfo { get; }
         public Model? MModel
         {
             get => _model;
@@ -111,7 +111,7 @@ namespace MetaDslx.Modeling
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         MetaType IModelObject.MetaType => MInfo.MetaType;
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ModelObjectInfo IModelObject.Info => MInfo;
+        ModelClassInfo IModelObject.Info => MInfo;
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         Model? IModelObject.Model

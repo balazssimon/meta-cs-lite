@@ -7,7 +7,7 @@ using System.Text;
 
 namespace MetaDslx.Modeling
 {
-    public abstract class ModelObjectInfo
+    public abstract class ModelClassInfo
     {
         protected abstract ImmutableDictionary<string, ModelProperty> PublicPropertiesByName { get; }
         protected abstract ImmutableDictionary<ModelProperty, ModelPropertyInfo> ModelPropertyInfos { get; }
@@ -18,8 +18,8 @@ namespace MetaDslx.Modeling
         public abstract MetaType SymbolType { get; }
         public abstract ModelProperty? NameProperty { get; }
         public abstract ModelProperty? TypeProperty { get; }
-        public abstract ImmutableArray<ModelObjectInfo> BaseTypes { get; }
-        public abstract ImmutableArray<ModelObjectInfo> AllBaseTypes { get; }
+        public abstract ImmutableArray<ModelClassInfo> BaseTypes { get; }
+        public abstract ImmutableArray<ModelClassInfo> AllBaseTypes { get; }
         public abstract ImmutableArray<ModelProperty> DeclaredProperties { get; }
         public abstract ImmutableArray<ModelProperty> AllDeclaredProperties { get; }
         public abstract ImmutableArray<ModelProperty> PublicProperties { get; }

@@ -22,7 +22,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
 		void VisitDeclarations(DeclarationsSyntax node);
 		void VisitMetaModel(MetaModelSyntax node);
 		void VisitMetaConstant(MetaConstantSyntax node);
-		void VisitMetaEnumType(MetaEnumTypeSyntax node);
+		void VisitMetaEnum(MetaEnumSyntax node);
 		void VisitMetaClass(MetaClassSyntax node);
 		void VisitEnumBody(EnumBodySyntax node);
 		void VisitEnumLiterals(EnumLiteralsSyntax node);
@@ -95,7 +95,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
 		    this.DefaultVisit(node);
 		}
 
-		public virtual void VisitMetaEnumType(MetaEnumTypeSyntax node)
+		public virtual void VisitMetaEnum(MetaEnumSyntax node)
 		{
 		    this.DefaultVisit(node);
 		}
@@ -299,7 +299,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
 		TResult VisitDeclarations(DeclarationsSyntax node);
 		TResult VisitMetaModel(MetaModelSyntax node);
 		TResult VisitMetaConstant(MetaConstantSyntax node);
-		TResult VisitMetaEnumType(MetaEnumTypeSyntax node);
+		TResult VisitMetaEnum(MetaEnumSyntax node);
 		TResult VisitMetaClass(MetaClassSyntax node);
 		TResult VisitEnumBody(EnumBodySyntax node);
 		TResult VisitEnumLiterals(EnumLiteralsSyntax node);
@@ -372,7 +372,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
 		    return this.DefaultVisit(node);
 		}
 
-		public virtual TResult VisitMetaEnumType(MetaEnumTypeSyntax node)
+		public virtual TResult VisitMetaEnum(MetaEnumSyntax node)
 		{
 		    return this.DefaultVisit(node);
 		}
@@ -576,7 +576,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
 		TResult VisitDeclarations(DeclarationsSyntax node, TArg argument);
 		TResult VisitMetaModel(MetaModelSyntax node, TArg argument);
 		TResult VisitMetaConstant(MetaConstantSyntax node, TArg argument);
-		TResult VisitMetaEnumType(MetaEnumTypeSyntax node, TArg argument);
+		TResult VisitMetaEnum(MetaEnumSyntax node, TArg argument);
 		TResult VisitMetaClass(MetaClassSyntax node, TArg argument);
 		TResult VisitEnumBody(EnumBodySyntax node, TArg argument);
 		TResult VisitEnumLiterals(EnumLiteralsSyntax node, TArg argument);
@@ -649,7 +649,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
 		    return this.DefaultVisit(node, argument);
 		}
 
-		public virtual TResult VisitMetaEnumType(MetaEnumTypeSyntax node, TArg argument)
+		public virtual TResult VisitMetaEnum(MetaEnumSyntax node, TArg argument)
 		{
 		    return this.DefaultVisit(node, argument);
 		}
@@ -905,7 +905,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         	return node.Update(kConst, type, name, tSemicolon);
         }
 
-        public virtual SyntaxNode VisitMetaEnumType(MetaEnumTypeSyntax node)
+        public virtual SyntaxNode VisitMetaEnum(MetaEnumSyntax node)
         {
             var kEnum = this.VisitToken(node.KEnum);
             var name = (NameSyntax)this.Visit(node.Name);

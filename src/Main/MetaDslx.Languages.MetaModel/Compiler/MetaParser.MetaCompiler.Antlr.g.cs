@@ -318,25 +318,6 @@ public partial class MetaParser : global::MetaDslx.CodeAnalysis.Parsers.Antlr.An
 			base.CopyFrom(context);
 		}
 	}
-	public partial class Pr_MetaEnumTypeContext : Pr_MetaDeclarationContext {
-		public IToken kEnum;
-		public Pr_NameContext nameAntlr1;
-		public Pr_EnumBodyContext enumBodyAntlr1;
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_KEnum() { return GetToken(MetaParser.LR_KEnum, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_NameContext pr_Name() {
-			return GetRuleContext<Pr_NameContext>(0);
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_EnumBodyContext pr_EnumBody() {
-			return GetRuleContext<Pr_EnumBodyContext>(0);
-		}
-		public Pr_MetaEnumTypeContext(Pr_MetaDeclarationContext context) { CopyFrom(context); }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			IMetaParserVisitor<TResult> typedVisitor = visitor as IMetaParserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitPr_MetaEnumType(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
 	public partial class Pr_MetaModelContext : Pr_MetaDeclarationContext {
 		public IToken kMetamodel;
 		public Pr_NameContext nameAntlr1;
@@ -351,6 +332,25 @@ public partial class MetaParser : global::MetaDslx.CodeAnalysis.Parsers.Antlr.An
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			IMetaParserVisitor<TResult> typedVisitor = visitor as IMetaParserVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitPr_MetaModel(this);
+			else return visitor.VisitChildren(this);
+		}
+	}
+	public partial class Pr_MetaEnumContext : Pr_MetaDeclarationContext {
+		public IToken kEnum;
+		public Pr_NameContext nameAntlr1;
+		public Pr_EnumBodyContext enumBodyAntlr1;
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_KEnum() { return GetToken(MetaParser.LR_KEnum, 0); }
+		[System.Diagnostics.DebuggerNonUserCode] public Pr_NameContext pr_Name() {
+			return GetRuleContext<Pr_NameContext>(0);
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public Pr_EnumBodyContext pr_EnumBody() {
+			return GetRuleContext<Pr_EnumBodyContext>(0);
+		}
+		public Pr_MetaEnumContext(Pr_MetaDeclarationContext context) { CopyFrom(context); }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IMetaParserVisitor<TResult> typedVisitor = visitor as IMetaParserVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitPr_MetaEnum(this);
 			else return visitor.VisitChildren(this);
 		}
 	}
@@ -437,15 +437,15 @@ public partial class MetaParser : global::MetaDslx.CodeAnalysis.Parsers.Antlr.An
 				}
 				break;
 			case LR_KEnum:
-				_localctx = new Pr_MetaEnumTypeContext(_localctx);
+				_localctx = new Pr_MetaEnumContext(_localctx);
 				EnterOuterAlt(_localctx, 3);
 				{
 				State = 97;
-				((Pr_MetaEnumTypeContext)_localctx).kEnum = Match(LR_KEnum);
+				((Pr_MetaEnumContext)_localctx).kEnum = Match(LR_KEnum);
 				State = 98;
-				((Pr_MetaEnumTypeContext)_localctx).nameAntlr1 = pr_Name();
+				((Pr_MetaEnumContext)_localctx).nameAntlr1 = pr_Name();
 				State = 99;
-				((Pr_MetaEnumTypeContext)_localctx).enumBodyAntlr1 = pr_EnumBody();
+				((Pr_MetaEnumContext)_localctx).enumBodyAntlr1 = pr_EnumBody();
 				}
 				break;
 			case LR_KAbstract:

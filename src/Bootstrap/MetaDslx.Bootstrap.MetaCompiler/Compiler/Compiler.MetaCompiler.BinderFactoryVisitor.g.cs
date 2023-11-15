@@ -1233,34 +1233,26 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
 
         public virtual void VisitReferenceExpression(ReferenceExpressionSyntax node)
         {
-            var __annot2 = new DefineBinder(type: typeof(global::MetaDslx.Bootstrap.MetaCompiler.Model.ReferenceExpression));
-            this.Begin(__annot2, node);
-            try
-            {
-                var __annot1 = new PropertyBinder(name: "SymbolValue");
-                this.Begin(__annot1, node.SymbolValue);
-                try
-                {
-                    var __annot0 = new UseBinder(types: new global::System.Type[] { typeof(global::MetaDslx.CodeAnalysis.MetaSymbol) }.ToImmutableArray());
-                    this.Begin(__annot0, node.SymbolValue);
-                    try
-                    {
-                        this.Visit(node.SymbolValue);
-                    }
-                    finally
-                    {
-                        this.End(__annot0);
-                    }
-                }
-                finally
-                {
-                    this.End(__annot1);
-                }
-            }
-            finally
-            {
-                this.End(__annot2);
-            }
+        	var __annot1 = new PropertyBinder(name: "SymbolValue");
+        	this.Begin(__annot1, node.SymbolValue);
+        	try
+        	{
+        	    var __annot0 = new UseBinder(types: new global::System.Type[] {typeof(global::MetaDslx.CodeAnalysis.MetaSymbol)}.ToImmutableArray());
+        	    this.Begin(__annot0, node.SymbolValue);
+        	    try
+        	    {
+        	        this.Visit(node.SymbolValue);
+        	    }
+        	    finally
+        	    {
+        	        this.End(__annot0);
+        	    }
+        	}
+        	finally
+        	{
+        	    this.End(__annot1);
+        	}
+        	    
         }
 
         public virtual void VisitArrayExpression(ArrayExpressionSyntax node)

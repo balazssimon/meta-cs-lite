@@ -29,6 +29,8 @@ namespace MetaDslx.Modeling.Meta
             return _classMap[classType];
         }
 
+        public ImmutableSortedSet<MetaClass<TType, TProperty, TOperation>> ClassesInTopologicalOrder => Compute();
+
         public ImmutableSortedSet<MetaClass<TType, TProperty, TOperation>> Compute()
         {
             if (_classes is not null) return _classes;

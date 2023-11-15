@@ -59,9 +59,7 @@ namespace MetaDslx.Languages.MetaCompiler.Analyzers
                             }
                             if (!diagnostics.Where(d => d.Severity == CodeAnalysis.DiagnosticSeverity.Error).Any() && mm is not null)
                             {
-                                var graph = new MetaDslx.Languages.MetaModel.Meta.MetaMetaGraph(model.Objects.OfType<MetaDslx.Languages.MetaModel.Model.MetaClass>());
-                                graph.Compute();
-                                var generator = new MetaDslx.Languages.MetaModel.Generators.MetaModelGenerator(true, model, mm, graph);
+                                var generator = new MetaDslx.Languages.MetaModel.Generators.MetaModelGenerator(true, model, mm);
                                 var output = generator.Generate();
                                 var csharpFilePath = $"MetaModel.{fileName}.g.cs";
                                 spc.AddSource(csharpFilePath, output);

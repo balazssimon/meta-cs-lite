@@ -174,7 +174,11 @@ namespace MetaDslx.CodeAnalysis.Symbols
                 if (metaModel is not null)
                 {
                     metaModelsBuilder.Add(metaModel);
-                    foreach (var type in metaModel.MModelObjectTypes)
+                    foreach (var type in metaModel.MEnumTypes)
+                    {
+                        symbolsBuilder.Add(new ImportedMetaTypeSymbol(metaModelSymbol, metaModel, type));
+                    }
+                    foreach (var type in metaModel.MClassTypes)
                     {
                         symbolsBuilder.Add(new ImportedMetaTypeSymbol(metaModelSymbol, metaModel, type));
                     }

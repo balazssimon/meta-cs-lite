@@ -309,7 +309,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
 			return new MetaConstantGreen(MetaSyntaxKind.MetaConstant, kConst, type, name, tSemicolon);
 		}
 
-		internal MetaEnumTypeGreen MetaEnumType(InternalSyntaxToken kEnum, NameGreen name, EnumBodyGreen enumBody)
+		internal MetaEnumGreen MetaEnum(InternalSyntaxToken kEnum, NameGreen name, EnumBodyGreen enumBody)
 		{
 #if DEBUG
 			if (kEnum is null) throw new ArgumentNullException(nameof(kEnum));
@@ -318,10 +318,10 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
 			if (enumBody is null) throw new ArgumentNullException(nameof(enumBody));
 #endif
 			int hash;
-			var cached = SyntaxNodeCache.TryGetNode((int)(MetaSyntaxKind)MetaSyntaxKind.MetaEnumType, kEnum, name, enumBody, out hash);
-			if (cached != null) return (MetaEnumTypeGreen)cached;
+			var cached = SyntaxNodeCache.TryGetNode((int)(MetaSyntaxKind)MetaSyntaxKind.MetaEnum, kEnum, name, enumBody, out hash);
+			if (cached != null) return (MetaEnumGreen)cached;
 		
-			var result = new MetaEnumTypeGreen(MetaSyntaxKind.MetaEnumType, kEnum, name, enumBody);
+			var result = new MetaEnumGreen(MetaSyntaxKind.MetaEnum, kEnum, name, enumBody);
 			if (hash >= 0)
 			{
 				SyntaxNodeCache.AddNode(result, hash);

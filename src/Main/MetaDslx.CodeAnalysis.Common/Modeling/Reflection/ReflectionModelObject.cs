@@ -10,10 +10,10 @@ namespace MetaDslx.Modeling.Reflection
     {
         private static readonly ConditionalWeakTable<ReflectionModelObject, Dictionary<ModelProperty, object?>> _attachedProperties = new ConditionalWeakTable<ReflectionModelObject, Dictionary<ModelProperty, object?>>();
         private readonly object _underlyingObject;
-        private readonly ReflectionModelObjectInfo _info;
+        private readonly ReflectionModelClassInfo _info;
         private Dictionary<ModelPropertySlot, ReflectionModelObjectList>? _collections;
 
-        internal ReflectionModelObject(object underlyingObject, ReflectionModelObjectInfo info, string? id = null)
+        internal ReflectionModelObject(object underlyingObject, ReflectionModelClassInfo info, string? id = null)
             : base(id)
         {
             if (underlyingObject is null) throw new ArgumentNullException(nameof(underlyingObject));
@@ -25,7 +25,7 @@ namespace MetaDslx.Modeling.Reflection
         public object UnderlyingObject => _underlyingObject;
         protected override object MUnderlyingObject => UnderlyingObject;
 
-        public override ModelObjectInfo MInfo => _info;
+        public override ModelClassInfo MInfo => _info;
 
         protected override IEnumerable<ModelProperty> StoredPropertiesCore
         {

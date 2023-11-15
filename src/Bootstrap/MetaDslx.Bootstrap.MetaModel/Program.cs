@@ -96,7 +96,7 @@ namespace MyCode
         File.WriteAllText(Path.Combine(outputDir, Path.GetFileName(tree.FilePath)), tree.GetText().ToString());
     }
 }
-
+//*/
 static void CompileWithMetaCompiler(string name, string inputDir, string outputDir, MetaDslx.Modeling.MetaModel metaModel)
 {
     Compilation inputCompilation = CreateCompilation(name, @"
@@ -125,7 +125,7 @@ namespace MyCode
         Console.WriteLine(diag);
     }
 }
-
+//*/
 static void CompileAll(string mmName, string mmInputDir, string mmOutputDir, string mlangName, string mlangInputDir, string mlangOutputDir)
 {
     Compilation mmInputCompilation = CreateCompilation(mmName, @"

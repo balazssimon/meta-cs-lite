@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MetaDslx.CodeAnalysis;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -19,9 +20,9 @@ namespace MetaDslx.Modeling
 
         public MetaModel MetaModel => _metaModel;
 
-        public IModelObject? Create(Type modelObjectType, string? id = null)
+        public IModelObject? Create(MetaType modelObjectType, string? id = null)
         {
-            if (_metaModel.TryGetInfo(modelObjectType, out var info))
+            if (_metaModel.MClassInfosByType.TryGetValue(modelObjectType, out var info))
             {
                 return info.Create(_model, id);
             }
@@ -30,7 +31,7 @@ namespace MetaDslx.Modeling
 
         public IModelObject? Create(string modelObjectTypeName, string? id = null)
         {
-            if (_metaModel.TryGetInfo(modelObjectTypeName, out var info))
+            if (_metaModel.MClassInfosByName.TryGetValue(modelObjectTypeName, out var info))
             {
                 return info.Create(_model, id);
             }

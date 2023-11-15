@@ -23,19 +23,20 @@ namespace MetaDslx.Languages.MetaModel.Generators
         private Model.MetaModel _metaModel;
         private MetaMetaGraph _graph;
         private ImmutableArray<MetaClass> _classes;
-        private ImmutableArray<MetaEnumType> _enums;
+        private ImmutableArray<MetaEnum> _enums;
         private ImmutableArray<IModelObject> _modelObjects;
         private ImmutableArray<object> _objects;
         private Dictionary<object, string>? _objectNames;
 
-        public MetaModelGenerator(bool isMetaMetaModel, Modeling.Model model, Model.MetaModel metaModel, MetaMetaGraph graph)
+        public MetaModelGenerator(bool isMetaMetaModel, Modeling.Model model, Model.MetaModel metaModel)
         {
             _isMetaMetaModel = isMetaMetaModel;
             _model = model;
             _metaModel = metaModel;
-            _graph = graph;
-            _classes = _metaModel.Parent.Declarations.OfType<MetaClass>().ToImmutableArray();
-            _enums = _metaModel.Parent.Declarations.OfType<MetaEnumType>().ToImmutableArray();
+            var metaClasses = metaModel.Parent?.Declarations.OfType<MetaClass>().ToArray() ?? new MetaClass[0];
+            _graph = new MetaMetaGraph(metaClasses);
+            _classes = _graph.Compute().Select(c => ((MetaMetaClass)c).UnderlyingClass).ToImmutableArray();
+            _enums = _metaModel.Parent.Declarations.OfType<MetaEnum>().OrderBy(e => e.Name).ToImmutableArray();
             _modelObjects = model.ModelObjects.ToImmutableArray();
             _objects = model.Objects.ToImmutableArray();
         }
@@ -45,7 +46,7 @@ namespace MetaDslx.Languages.MetaModel.Generators
         public Model.MetaModel MetaModel => _metaModel;
         public string Namespace => _metaModel.Parent.FullName;
         public ImmutableArray<MetaClass> Classes => _classes;
-        public ImmutableArray<MetaEnumType> Enums => _enums;
+        public ImmutableArray<MetaEnum> Enums => _enums;
         public ImmutableArray<IModelObject> ModelObjects => _modelObjects;
         public ImmutableArray<object> Objects => _objects;
         public MetaMetaGraph Graph => _graph;

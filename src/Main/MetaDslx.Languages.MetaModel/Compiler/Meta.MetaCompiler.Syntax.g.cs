@@ -690,17 +690,17 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
 	    }
 	
 	}
-	public sealed class MetaEnumTypeSyntax : MetaDeclarationSyntax
+	public sealed class MetaEnumSyntax : MetaDeclarationSyntax
 	{
 		private NameSyntax _name;
 		private EnumBodySyntax _enumBody;
 	
-	    public MetaEnumTypeSyntax(InternalSyntaxNode green, MetaSyntaxTree syntaxTree, int position)
+	    public MetaEnumSyntax(InternalSyntaxNode green, MetaSyntaxTree syntaxTree, int position)
 	        : base(green, syntaxTree, position)
 	    {
 	    }
 	
-	    public MetaEnumTypeSyntax(InternalSyntaxNode green, MetaSyntaxNode parent, int position)
+	    public MetaEnumSyntax(InternalSyntaxNode green, MetaSyntaxNode parent, int position)
 	        : base(green, parent, position)
 	    {
 	    }
@@ -709,7 +709,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
 		{ 
 			get 
 			{ 
-				var green = (global::MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax.MetaEnumTypeGreen)this.Green;
+				var green = (global::MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax.MetaEnumGreen)this.Green;
 				var greenToken = green.KEnum;
 				return new SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
 			}
@@ -737,47 +737,47 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
 	        }
 	    }
 	
-	    public MetaEnumTypeSyntax WithKEnum(SyntaxToken kEnum)
+	    public MetaEnumSyntax WithKEnum(SyntaxToken kEnum)
 		{
 			return this.Update(kEnum, this.Name, this.EnumBody);
 		}
 	
-	    public MetaEnumTypeSyntax WithName(NameSyntax name)
+	    public MetaEnumSyntax WithName(NameSyntax name)
 		{
 			return this.Update(this.KEnum, name, this.EnumBody);
 		}
 	
-	    public MetaEnumTypeSyntax WithEnumBody(EnumBodySyntax enumBody)
+	    public MetaEnumSyntax WithEnumBody(EnumBodySyntax enumBody)
 		{
 			return this.Update(this.KEnum, this.Name, enumBody);
 		}
 	
-	    public MetaEnumTypeSyntax Update(SyntaxToken kEnum, NameSyntax name, EnumBodySyntax enumBody)
+	    public MetaEnumSyntax Update(SyntaxToken kEnum, NameSyntax name, EnumBodySyntax enumBody)
 	    {
 	        if (this.KEnum != kEnum || this.Name != name || this.EnumBody != enumBody)
 	        {
-	            var newNode = MetaLanguage.Instance.SyntaxFactory.MetaEnumType(kEnum, name, enumBody);
+	            var newNode = MetaLanguage.Instance.SyntaxFactory.MetaEnum(kEnum, name, enumBody);
 	            var annotations = this.GetAnnotations();
 	            if (annotations != null && annotations.Length > 0)
 	               newNode = newNode.WithAnnotations(annotations);
-				return (MetaEnumTypeSyntax)newNode;
+				return (MetaEnumSyntax)newNode;
 	        }
 	        return this;
 	    }
 	
 	    public override TResult Accept<TArg, TResult>(IMetaSyntaxVisitor<TArg, TResult> visitor, TArg argument)
 	    {
-	        return visitor.VisitMetaEnumType(this, argument);
+	        return visitor.VisitMetaEnum(this, argument);
 	    }
 	
 	    public override TResult Accept<TResult>(IMetaSyntaxVisitor<TResult> visitor)
 	    {
-	        return visitor.VisitMetaEnumType(this);
+	        return visitor.VisitMetaEnum(this);
 	    }
 	
 	    public override void Accept(IMetaSyntaxVisitor visitor)
 	    {
-	        visitor.VisitMetaEnumType(this);
+	        visitor.VisitMetaEnum(this);
 	    }
 	
 	}

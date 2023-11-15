@@ -21,7 +21,8 @@ namespace [Namespace]
 	using __ModelFactory = global::MetaDslx.Modeling.ModelFactory;
 	using __MultiModelFactory = global::MetaDslx.Modeling.MultiModelFactory;
 	using __ModelVersion = global::MetaDslx.Modeling.ModelVersion;
-	using __ModelObjectInfo = global::MetaDslx.Modeling.ModelObjectInfo;
+	using __ModelEnumInfo = global::MetaDslx.Modeling.ModelEnumInfo;
+	using __ModelClassInfo = global::MetaDslx.Modeling.ModelClassInfo;
 	using __ModelProperty = global::MetaDslx.Modeling.ModelProperty;
     using __ModelPropertyFlags = global::MetaDslx.Modeling.ModelPropertyFlags;
 	using __ModelOperation = global::MetaDslx.Modeling.ModelOperation;
@@ -31,6 +32,7 @@ namespace [Namespace]
 	using __MetaType = global::MetaDslx.CodeAnalysis.MetaType;
 	using __MetaSymbol = global::MetaDslx.CodeAnalysis.MetaSymbol;
 	using __Type = global::System.Type;
+	using __Enum = global::System.Enum;
 
 	[GenerateMetaModel(MetaModel)]
 	
@@ -58,7 +60,8 @@ namespace [Namespace].__Impl
 	using __IModelObject = global::MetaDslx.Modeling.IModelObject;
 	using __IModelObjectCore = global::MetaDslx.Modeling.IModelObjectCore;
 	using __MetaModelObject = global::MetaDslx.Modeling.MetaModelObject;
-	using __ModelObjectInfo = global::MetaDslx.Modeling.ModelObjectInfo;
+	using __ModelEnumInfo = global::MetaDslx.Modeling.ModelEnumInfo;
+	using __ModelClassInfo = global::MetaDslx.Modeling.ModelClassInfo;
 	using __ModelProperty = global::MetaDslx.Modeling.ModelProperty;
 	using __ModelPropertyFlags = global::MetaDslx.Modeling.ModelPropertyFlags;
 	using __ModelPropertyInfo = global::MetaDslx.Modeling.ModelPropertyInfo;
@@ -70,6 +73,12 @@ namespace [Namespace].__Impl
 	using __MetaType = global::MetaDslx.CodeAnalysis.MetaType;
 	using __MetaSymbol = global::MetaDslx.CodeAnalysis.MetaSymbol;
 	using __Type = global::System.Type;
+	using __Enum = global::System.Enum;
+
+	[foreach (var enm in Enums)]
+	[GenerateEnumInfo(MetaModel, enm)]
+
+	[end foreach]
 
 	[foreach (var cls in Classes)]
 	[GenerateClass(MetaModel, cls)]
@@ -120,10 +129,16 @@ public sealed class [mm.Name] : __MetaModel, I[mm.Name]
 	}
 
 	private readonly __Model _model;
-	private readonly global::System.Collections.Immutable.ImmutableArray<__MetaType> _modelObjectTypes;
-	private readonly global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> _modelObjectInfos;
-	private readonly global::System.Collections.Immutable.ImmutableDictionary<__MetaType, __ModelObjectInfo> _modelObjectInfosByType;
-	private readonly global::System.Collections.Immutable.ImmutableDictionary<string, __ModelObjectInfo> _modelObjectInfosByName;
+
+	private readonly global::System.Collections.Immutable.ImmutableArray<__MetaType> _enumTypes;
+	private readonly global::System.Collections.Immutable.ImmutableArray<__ModelEnumInfo> _enumInfos;
+	private readonly global::System.Collections.Immutable.ImmutableDictionary<__MetaType, __ModelEnumInfo> _enumInfosByType;
+	private readonly global::System.Collections.Immutable.ImmutableDictionary<string, __ModelEnumInfo> _enumInfosByName;
+
+	private readonly global::System.Collections.Immutable.ImmutableArray<__MetaType> _classTypes;
+	private readonly global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo> _classInfos;
+	private readonly global::System.Collections.Immutable.ImmutableDictionary<__MetaType, __ModelClassInfo> _classInfosByType;
+	private readonly global::System.Collections.Immutable.ImmutableDictionary<string, __ModelClassInfo> _classInfosByName;
 
 	[foreach (var c in mm.Parent.Declarations.OfType<MetaConstant>())]
 	private readonly [ToCSharp(c.Type)] _[c.Name.ToCamelCase()];
@@ -131,18 +146,31 @@ public sealed class [mm.Name] : __MetaModel, I[mm.Name]
 
 	private [mm.Name]()
 	{
-		_modelObjectTypes = __ImmutableArray.Create<__MetaType>([foreach (var cls in mm.Parent.Declarations.OfType<MetaClass>()) separator ", "]typeof([cls.Name])[end foreach]);
-		_modelObjectInfos = __ImmutableArray.Create<__ModelObjectInfo>([foreach (var cls in mm.Parent.Declarations.OfType<MetaClass>()) separator ", "][cls.Name]Info[end foreach]);
-		var modelObjectInfosByType = __ImmutableDictionary.CreateBuilder<__MetaType, __ModelObjectInfo>();
-		[foreach (var cls in Classes)]
-		modelObjectInfosByType.Add(typeof([cls.Name]), [cls.Name]Info);
+		_enumTypes = __ImmutableArray.Create<__MetaType>([foreach (var enm in Enums) separator ", "]typeof([enm.Name])[end foreach]);
+		_enumInfos = __ImmutableArray.Create<__ModelEnumInfo>([foreach (var enm in Enums) separator ", "][enm.Name]Info[end foreach]);
+		var enumInfosByType = __ImmutableDictionary.CreateBuilder<__MetaType, __ModelEnumInfo>();
+		[foreach (var enm in Enums)]
+		enumInfosByType.Add(typeof([enm.Name]), [enm.Name]Info);
 		[end foreach]
-		_modelObjectInfosByType = modelObjectInfosByType.ToImmutable();
-		var modelObjectInfosByName = __ImmutableDictionary.CreateBuilder<string, __ModelObjectInfo>();
-		[foreach (var cls in Classes)]
-		modelObjectInfosByName.Add("[cls.Name]", [cls.Name]Info);
+		_enumInfosByType = enumInfosByType.ToImmutable();
+		var enumInfosByName = __ImmutableDictionary.CreateBuilder<string, __ModelEnumInfo>();
+		[foreach (var enm in Enums)]
+		enumInfosByName.Add("[enm.Name]", [enm.Name]Info);
 		[end foreach]
-		_modelObjectInfosByName = modelObjectInfosByName.ToImmutable();
+		_enumInfosByName = enumInfosByName.ToImmutable();
+
+		_classTypes = __ImmutableArray.Create<__MetaType>([foreach (var cls in Classes) separator ", "]typeof([cls.Name])[end foreach]);
+		_classInfos = __ImmutableArray.Create<__ModelClassInfo>([foreach (var cls in Classes) separator ", "][cls.Name]Info[end foreach]);
+		var classInfosByType = __ImmutableDictionary.CreateBuilder<__MetaType, __ModelClassInfo>();
+		[foreach (var cls in Classes)]
+		classInfosByType.Add(typeof([cls.Name]), [cls.Name]Info);
+		[end foreach]
+		_classInfosByType = classInfosByType.ToImmutable();
+		var classInfosByName = __ImmutableDictionary.CreateBuilder<string, __ModelClassInfo>();
+		[foreach (var cls in Classes)]
+		classInfosByName.Add("[cls.Name]", [cls.Name]Info);
+		[end foreach]
+		_classInfosByName = classInfosByName.ToImmutable();
 		_model = new __Model();
 		var f = new __MetaModelFactory(_model);
 		[foreach (var c in mm.Parent.Declarations.OfType<MetaConstant>())]
@@ -176,14 +204,15 @@ public sealed class [mm.Name] : __MetaModel, I[mm.Name]
     public override string MPrefix => "[string.Concat(mm.Name.Where(c => char.IsUpper(c)).Select(c => char.ToLower(c)))]";
 	public override __Model MModel => _model;
 
-	public override global::System.Collections.Immutable.ImmutableArray<__MetaType> MModelObjectTypes => _modelObjectTypes;
-	public override global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> MModelObjectInfos => _modelObjectInfos;
+	public override global::System.Collections.Immutable.ImmutableDictionary<__MetaType, __ModelEnumInfo> MEnumInfosByType => _enumInfosByType;
+	public override global::System.Collections.Immutable.ImmutableDictionary<string, __ModelEnumInfo> MEnumInfosByName => _enumInfosByName;
+	public override global::System.Collections.Immutable.ImmutableDictionary<__MetaType, __ModelClassInfo> MClassInfosByType => _classInfosByType;
+	public override global::System.Collections.Immutable.ImmutableDictionary<string, __ModelClassInfo> MClassInfosByName => _classInfosByName;
 
-    public override bool Contains(__MetaType modelObjectType) => _modelObjectInfosByType.ContainsKey(modelObjectType);
-    public override bool Contains(string modelObjectTypeName) => _modelObjectInfosByName.ContainsKey(modelObjectTypeName);
-
-    public override bool TryGetInfo(__MetaType modelObjectType, out __ModelObjectInfo? info) => _modelObjectInfosByType.TryGetValue(modelObjectType, out info);
-    public override bool TryGetInfo(string modelObjectTypeName, out __ModelObjectInfo? info) => _modelObjectInfosByName.TryGetValue(modelObjectTypeName, out info);
+    public override global::System.Collections.Immutable.ImmutableArray<__MetaType> MEnumTypes => _enumTypes;
+    public override global::System.Collections.Immutable.ImmutableArray<__ModelEnumInfo> MEnumInfos => _enumInfos;
+    public override global::System.Collections.Immutable.ImmutableArray<__MetaType> MClassTypes => _classTypes;
+    public override global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo> MClassInfos => _classInfos;
 
 	[foreach (var c in mm.Parent.Declarations.OfType<MetaConstant>())]
 	[ToCSharp(c.Type)] I[mm.Name].[c.Name] => _[c.Name.ToCamelCase()];
@@ -193,8 +222,11 @@ public sealed class [mm.Name] : __MetaModel, I[mm.Name]
 	public static [ToCSharp(c.Type)] [c.Name] => ((I[mm.Name])Instance).[c.Name];
 	[end foreach]
 
+	[foreach (var enm in Enums)]
+	public static __ModelEnumInfo [enm.Name]Info => __Impl.__[enm.Name]_Info.Instance;
+	[end foreach]
 	[foreach (var cls in Classes)]
-	public static __ModelObjectInfo [cls.Name]Info => global::[Namespace].__Impl.[cls.Name]_Impl.__Info.Instance;
+	public static __ModelClassInfo [cls.Name]Info => __Impl.[cls.Name]_Impl.__Info.Instance;
 	[foreach (var prop in cls.Properties)]
 	public static __ModelProperty [cls.Name]_[prop.Name] => _[cls.Name]_[prop.Name];
 	[end foreach]
@@ -240,12 +272,37 @@ public class [mm.Name]ModelMultiFactory : __MultiModelFactory
 
 end template
 
-template GenerateEnum(MetaModel mm, MetaEnumType enm)
+template GenerateEnum(MetaModel mm, MetaEnum enm)
 public enum [enm.Name]
 {
 	[foreach (var lit in enm.Literals)]
 	[lit.Name],
 	[end foreach]
+}
+end template
+
+template GenerateEnumInfo(MetaModel mm, MetaEnum enm)
+internal class __[enm.Name]_Info : __ModelEnumInfo
+{
+	public static readonly __[enm.Name]_Info Instance = new __[enm.Name]_Info();
+
+	private readonly global::System.Collections.Immutable.ImmutableArray<string> _literals;
+	private readonly global::System.Collections.Immutable.ImmutableDictionary<string, __Enum> _literalsByName;
+
+	private __[enm.Name]_Info()
+	{
+		_literals = __ImmutableArray.Create<string>([foreach (var lit in enm.Literals) separator ", "][StringUtilities.EncodeString(lit.Name)][end foreach]);
+		var literalsByName = __ImmutableDictionary.CreateBuilder<string, __Enum>();
+		[foreach (var lit in enm.Literals)]
+		literalsByName.Add("[lit.Name]", [enm.Name].[lit.Name]);
+		[end foreach]
+		_literalsByName = literalsByName.ToImmutable();
+	}
+
+    public override __MetaModel MetaModel => [mm.Name].MInstance;
+    public override __Type MetaType => typeof([enm.Name]);
+	public override global::System.Collections.Immutable.ImmutableArray<string> Literals => _literals;
+	protected override global::System.Collections.Immutable.ImmutableDictionary<string, Enum> LiteralsByName => _literalsByName;
 }
 end template
 
@@ -284,7 +341,7 @@ internal class [cls.Name]_Impl : __MetaModelObject, [cls.Name]
 		[mm.Name].__CustomImpl.[cls.Name](this);
 	}
 
-	public override __ModelObjectInfo MInfo => __Info.Instance;
+	public override __ModelClassInfo MInfo => __Info.Instance;
 
 	[foreach (var prop in metaCls.AllDeclaredProperties)]
 		[var info = metaCls.ModelPropertyInfos[prop]]
@@ -316,12 +373,12 @@ internal class [cls.Name]_Impl : __MetaModelObject, [cls.Name]
 	[ToCSharp(op.UnderlyingOperation.ReturnType)] [ToCSharp(op.DeclaringType.UnderlyingType)].[op.Name]([foreach (var param in op.UnderlyingOperation.Parameters) separator ", "][ToCSharp(param.Type)] [param.Name][end foreach]) => [mm.Name].__CustomImpl.[actualOp.DeclaringType.Name]_[actualOp.Name](this[foreach (var param in actualOp.UnderlyingOperation.Parameters)], [param.Name][end foreach]);
 	[end foreach]
 
-	internal class __Info : __ModelObjectInfo
+	internal class __Info : __ModelClassInfo
 	{
 		public static readonly __Info Instance = new __Info();
 
-		private readonly global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> _baseTypes;
-		private readonly global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> _allBaseTypes;
+		private readonly global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo> _baseTypes;
+		private readonly global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo> _allBaseTypes;
 		private readonly global::System.Collections.Immutable.ImmutableArray<__ModelProperty> _declaredProperties;
 		private readonly global::System.Collections.Immutable.ImmutableArray<__ModelProperty> _allDeclaredProperties;
 		private readonly global::System.Collections.Immutable.ImmutableArray<__ModelProperty> _publicProperties;
@@ -334,8 +391,8 @@ internal class [cls.Name]_Impl : __MetaModelObject, [cls.Name]
 
 		private __Info() 
 		{
-			_baseTypes = __ImmutableArray.Create<__ModelObjectInfo>([foreach (var bt in metaCls.BaseTypes) separator ", "][ToCSharp(bt)][end foreach]);
-			_allBaseTypes = __ImmutableArray.Create<__ModelObjectInfo>([foreach (var bt in metaCls.AllBaseTypes) separator ", "][ToCSharp(bt)][end foreach]);
+			_baseTypes = __ImmutableArray.Create<__ModelClassInfo>([foreach (var bt in metaCls.BaseTypes) separator ", "][ToCSharp(bt)][end foreach]);
+			_allBaseTypes = __ImmutableArray.Create<__ModelClassInfo>([foreach (var bt in metaCls.AllBaseTypes) separator ", "][ToCSharp(bt)][end foreach]);
 			_declaredProperties = __ImmutableArray.Create<__ModelProperty>([foreach (var prop in metaCls.DeclaredProperties) separator ", "][ToCSharp(prop)][end foreach]);
 			_allDeclaredProperties = __ImmutableArray.Create<__ModelProperty>([foreach (var prop in metaCls.AllDeclaredProperties) separator ", "][ToCSharp(prop)][end foreach]);
 			_publicProperties = __ImmutableArray.Create<__ModelProperty>([foreach (var prop in metaCls.PublicProperties) separator ", "][ToCSharp(prop)][end foreach]);
@@ -369,8 +426,8 @@ internal class [cls.Name]_Impl : __MetaModelObject, [cls.Name]
         public override __MetaType SymbolType => [if (metaCls.SymbolType is null)]default[else]typeof([ToCSharp(metaCls.SymbolType)])[end if];
         public override __ModelProperty? NameProperty => [if (metaCls.NameProperty is null)]null[else][ToCSharp(metaCls.NameProperty)][end if];
         public override __ModelProperty? TypeProperty => [if (metaCls.TypeProperty is null)]null[else][ToCSharp(metaCls.TypeProperty)][end if];
-        public override global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> BaseTypes => _baseTypes;
-        public override global::System.Collections.Immutable.ImmutableArray<__ModelObjectInfo> AllBaseTypes => _allBaseTypes;
+        public override global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo> BaseTypes => _baseTypes;
+        public override global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo> AllBaseTypes => _allBaseTypes;
         public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> DeclaredProperties => _declaredProperties;
         public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> AllDeclaredProperties => _allDeclaredProperties;
         public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> PublicProperties => _publicProperties;

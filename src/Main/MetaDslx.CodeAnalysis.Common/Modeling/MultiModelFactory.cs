@@ -1,4 +1,5 @@
-﻿using Roslyn.Utilities;
+﻿using MetaDslx.CodeAnalysis;
+using Roslyn.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -9,8 +10,8 @@ namespace MetaDslx.Modeling
 {
     public class MultiModelFactory
     {
-        private static readonly ConditionalWeakTable<Type, ModelObjectInfo> infosByType = new ConditionalWeakTable<Type, ModelObjectInfo>();
-        private static readonly ConditionalWeakTable<string, ModelObjectInfo> infosByName = new ConditionalWeakTable<string, ModelObjectInfo>();
+        private static readonly ConditionalWeakTable<Type, ModelClassInfo> infosByType = new ConditionalWeakTable<Type, ModelClassInfo>();
+        private static readonly ConditionalWeakTable<string, ModelClassInfo> infosByName = new ConditionalWeakTable<string, ModelClassInfo>();
 
         private readonly ImmutableArray<MetaModel> _metaModels;
 
@@ -35,11 +36,11 @@ namespace MetaDslx.Modeling
             return info?.Create(model, id);
         }
 
-        private ModelObjectInfo? CreateInfo(Type modelObjectType)
+        private ModelClassInfo? CreateInfo(Type modelObjectType)
         {
             foreach (var metaModel in _metaModels)
             {
-                if (metaModel.TryGetInfo(modelObjectType, out var info))
+                if (metaModel.MClassInfosByType.TryGetValue(modelObjectType, out var info))
                 {
                     return info;
                 }
@@ -47,11 +48,11 @@ namespace MetaDslx.Modeling
             return null;
         }
 
-        private ModelObjectInfo? CreateInfo(string modelObjectTypeName)
+        private ModelClassInfo? CreateInfo(string modelObjectTypeName)
         {
             foreach (var metaModel in _metaModels)
             {
-                if (metaModel.TryGetInfo(modelObjectTypeName, out var info))
+                if (metaModel.MClassInfosByName.TryGetValue(modelObjectTypeName, out var info))
                 {
                     return info;
                 }

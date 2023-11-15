@@ -24,30 +24,23 @@ namespace MetaDslx.CodeAnalysis.Symbols.Meta
 
         public override string MPrefix => throw new NotImplementedException();
 
-        public override Modeling.Model MModel => throw new NotImplementedException();
+        public override MetaDslx.Modeling.Model MModel => throw new NotImplementedException();
 
-        public override ImmutableArray<MetaType> MModelObjectTypes => throw new NotImplementedException();
+        public override ImmutableDictionary<MetaType, ModelEnumInfo> MEnumInfosByType => throw new NotImplementedException();
 
-        public override ImmutableArray<ModelObjectInfo> MModelObjectInfos => throw new NotImplementedException();
+        public override ImmutableDictionary<string, ModelEnumInfo> MEnumInfosByName => throw new NotImplementedException();
 
-        public override bool Contains(MetaType modelObjectType)
-        {
-            throw new NotImplementedException();
-        }
+        public override ImmutableDictionary<MetaType, ModelClassInfo> MClassInfosByType => throw new NotImplementedException();
 
-        public override bool Contains(string modelObjectTypeName)
-        {
-            throw new NotImplementedException();
-        }
+        public override ImmutableDictionary<string, ModelClassInfo> MClassInfosByName => throw new NotImplementedException();
 
-        public override bool TryGetInfo(MetaType modelObjectType, out ModelObjectInfo? info)
-        {
-            throw new NotImplementedException();
-        }
+        public override ImmutableArray<MetaType> MEnumTypes => throw new NotImplementedException();
 
-        public override bool TryGetInfo(string modelObjectTypeName, out ModelObjectInfo? info)
-        {
-            throw new NotImplementedException();
-        }
+        public override ImmutableArray<ModelEnumInfo> MEnumInfos => throw new NotImplementedException();
+
+        public override ImmutableArray<MetaType> MClassTypes => throw new NotImplementedException();
+
+        public override ImmutableArray<ModelClassInfo> MClassInfos => throw new NotImplementedException();
+
     }
 }

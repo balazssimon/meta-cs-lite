@@ -11,7 +11,7 @@ namespace MetaDslx.Modeling
         string Id { get; set; }
         MetaModel MetaModel { get; }
         MetaType MetaType { get; }
-        ModelObjectInfo Info { get; }
+        ModelClassInfo Info { get; }
         Model? Model { get; set; }
         string? Name { get; set; }
         IModelObject? Parent { get; set; }

@@ -36,7 +36,7 @@ namespace MetaDslx.Languages.MetaModel.Meta
 
         protected override bool IsEnumType(MetaDslx.CodeAnalysis.MetaType type)
         {
-            return type.OriginalModelObject is MetaEnumType;
+            return type.OriginalModelObject is MetaEnum;
         }
 
         protected override bool IsNullableType(MetaDslx.CodeAnalysis.MetaType type, out MetaDslx.CodeAnalysis.MetaType innerType)
@@ -67,7 +67,7 @@ namespace MetaDslx.Languages.MetaModel.Meta
 
         protected override bool IsValueType(MetaDslx.CodeAnalysis.MetaType type)
         {
-            return type.OriginalModelObject is MetaEnumType || IsPrimitiveType(type);
+            return type.OriginalModelObject is MetaEnum || IsPrimitiveType(type);
         }
 
         protected override MetaClass<MetaDslx.CodeAnalysis.MetaType, MetaProperty, MetaOperation> MakeClass(MetaDslx.CodeAnalysis.MetaType classType)

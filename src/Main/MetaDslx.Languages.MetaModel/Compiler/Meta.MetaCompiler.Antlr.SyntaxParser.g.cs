@@ -168,9 +168,9 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                 var tSemicolon = this.VisitTerminal(context.tSemicolon, MetaSyntaxKind.TSemicolon);
             	return _factory.MetaConstant((InternalSyntaxToken)kConst, type, name, (InternalSyntaxToken)tSemicolon);
             }
-            public override GreenNode? VisitPr_MetaEnumType(MetaParser.Pr_MetaEnumTypeContext? context)
+            public override GreenNode? VisitPr_MetaEnum(MetaParser.Pr_MetaEnumContext? context)
             {
-               	if (context == null) return MetaEnumTypeGreen.__Missing;
+               	if (context == null) return MetaEnumGreen.__Missing;
                 var kEnum = this.VisitTerminal(context.kEnum, MetaSyntaxKind.KEnum);
                 NameGreen? name = null;
                 if (context.nameAntlr1 is not null) name = (NameGreen?)this.Visit(context.nameAntlr1) ?? NameGreen.__Missing;
@@ -178,7 +178,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                 EnumBodyGreen? enumBody = null;
                 if (context.enumBodyAntlr1 is not null) enumBody = (EnumBodyGreen?)this.Visit(context.enumBodyAntlr1) ?? EnumBodyGreen.__Missing;
                 else enumBody = EnumBodyGreen.__Missing;
-            	return _factory.MetaEnumType((InternalSyntaxToken)kEnum, name, enumBody);
+            	return _factory.MetaEnum((InternalSyntaxToken)kEnum, name, enumBody);
             }
             public override GreenNode? VisitPr_MetaClass(MetaParser.Pr_MetaClassContext? context)
             {

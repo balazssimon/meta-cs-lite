@@ -65,12 +65,12 @@ public interface IMetaParserVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitPr_MetaConstant([NotNull] MetaParser.Pr_MetaConstantContext context);
 	/// <summary>
-	/// Visit a parse tree produced by the <c>pr_MetaEnumType</c>
+	/// Visit a parse tree produced by the <c>pr_MetaEnum</c>
 	/// labeled alternative in <see cref="MetaParser.pr_MetaDeclaration"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	Result VisitPr_MetaEnumType([NotNull] MetaParser.Pr_MetaEnumTypeContext context);
+	Result VisitPr_MetaEnum([NotNull] MetaParser.Pr_MetaEnumContext context);
 	/// <summary>
 	/// Visit a parse tree produced by the <c>pr_MetaClass</c>
 	/// labeled alternative in <see cref="MetaParser.pr_MetaDeclaration"/>.

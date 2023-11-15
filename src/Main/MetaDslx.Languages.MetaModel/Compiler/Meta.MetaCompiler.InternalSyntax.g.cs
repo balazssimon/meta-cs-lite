@@ -1530,14 +1530,14 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
 		}
 	}
 	
-	internal class MetaEnumTypeGreen : MetaDeclarationGreen
+	internal class MetaEnumGreen : MetaDeclarationGreen
 	{
-		internal static new readonly MetaEnumTypeGreen __Missing = new MetaEnumTypeGreen();
+		internal static new readonly MetaEnumGreen __Missing = new MetaEnumGreen();
 		private InternalSyntaxToken _kEnum;
 		private NameGreen _name;
 		private EnumBodyGreen _enumBody;
 	
-		public MetaEnumTypeGreen(MetaSyntaxKind kind, InternalSyntaxToken kEnum, NameGreen name, EnumBodyGreen enumBody)
+		public MetaEnumGreen(MetaSyntaxKind kind, InternalSyntaxToken kEnum, NameGreen name, EnumBodyGreen enumBody)
 			: base(kind, null, null)
 		{
 			SlotCount = 3;
@@ -1558,7 +1558,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
 			}
 		}
 	
-		public MetaEnumTypeGreen(MetaSyntaxKind kind, InternalSyntaxToken kEnum, NameGreen name, EnumBodyGreen enumBody, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
+		public MetaEnumGreen(MetaSyntaxKind kind, InternalSyntaxToken kEnum, NameGreen name, EnumBodyGreen enumBody, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
 			: base(kind, diagnostics, annotations)
 		{
 			SlotCount = 3;
@@ -1579,8 +1579,8 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
 			}
 		}
 	
-		private MetaEnumTypeGreen()
-			: base((MetaSyntaxKind)MetaSyntaxKind.MetaEnumType, null, null)
+		private MetaEnumGreen()
+			: base((MetaSyntaxKind)MetaSyntaxKind.MetaEnum, null, null)
 		{
 			this.flags &= ~NodeFlags.IsNotMissing;
 		}
@@ -1591,7 +1591,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
 	
 		protected override SyntaxNode CreateRed(SyntaxNode parent, int position)
 		{
-			return new global::MetaDslx.Languages.MetaModel.Compiler.Syntax.MetaEnumTypeSyntax(this, (MetaSyntaxNode)parent, position);
+			return new global::MetaDslx.Languages.MetaModel.Compiler.Syntax.MetaEnumSyntax(this, (MetaSyntaxNode)parent, position);
 		}
 	
 		protected override GreenNode GetSlot(int index)
@@ -1605,38 +1605,38 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
 			}
 		}
 	
-		public override TResult Accept<TResult>(MetaInternalSyntaxVisitor<TResult> visitor) => visitor.VisitMetaEnumTypeGreen(this);
+		public override TResult Accept<TResult>(MetaInternalSyntaxVisitor<TResult> visitor) => visitor.VisitMetaEnumGreen(this);
 	
-		public override void Accept(MetaInternalSyntaxVisitor visitor) => visitor.VisitMetaEnumTypeGreen(this);
+		public override void Accept(MetaInternalSyntaxVisitor visitor) => visitor.VisitMetaEnumGreen(this);
 	
 		public override InternalSyntaxNode WithDiagnostics(DiagnosticInfo[] diagnostics)
 		{
-			return new MetaEnumTypeGreen(this.Kind, _kEnum, _name, _enumBody, diagnostics, this.GetAnnotations());
+			return new MetaEnumGreen(this.Kind, _kEnum, _name, _enumBody, diagnostics, this.GetAnnotations());
 		}
 	
 		public override InternalSyntaxNode WithAnnotations(SyntaxAnnotation[] annotations)
 		{
-			return new MetaEnumTypeGreen(this.Kind, _kEnum, _name, _enumBody, this.GetDiagnostics(), annotations);
+			return new MetaEnumGreen(this.Kind, _kEnum, _name, _enumBody, this.GetDiagnostics(), annotations);
 		}
 	
 		public override GreenNode Clone()
 		{
-			return new MetaEnumTypeGreen(this.Kind, _kEnum, _name, _enumBody, this.GetDiagnostics(), this.GetAnnotations());
+			return new MetaEnumGreen(this.Kind, _kEnum, _name, _enumBody, this.GetDiagnostics(), this.GetAnnotations());
 		}
 	
 	
-		public MetaEnumTypeGreen Update(InternalSyntaxToken kEnum, NameGreen name, EnumBodyGreen enumBody)
+		public MetaEnumGreen Update(InternalSyntaxToken kEnum, NameGreen name, EnumBodyGreen enumBody)
 		{
 			if (_kEnum != kEnum || _name != name || _enumBody != enumBody)
 			{
-				InternalSyntaxNode newNode = MetaLanguage.Instance.InternalSyntaxFactory.MetaEnumType((InternalSyntaxToken)kEnum, name, enumBody);
+				InternalSyntaxNode newNode = MetaLanguage.Instance.InternalSyntaxFactory.MetaEnum((InternalSyntaxToken)kEnum, name, enumBody);
 				var diags = this.GetDiagnostics();
 				if (diags != null && diags.Length > 0)
 					newNode = newNode.WithDiagnostics(diags);
 				var annotations = this.GetAnnotations();
 				if (annotations != null && annotations.Length > 0)
 					newNode = newNode.WithAnnotations(annotations);
-				return (MetaEnumTypeGreen)newNode;
+				return (MetaEnumGreen)newNode;
 			}
 			return this;
 		}

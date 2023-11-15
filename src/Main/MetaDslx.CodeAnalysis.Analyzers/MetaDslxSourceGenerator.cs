@@ -72,10 +72,7 @@ namespace MetaDslx.CodeAnalysis.Analyzers
                         {
                             foreach (var metaModel in mmMetaModels)
                             {
-                                var metaClasses = metaModel.Parent?.Declarations.OfType<MetaClass>().ToArray() ?? new MetaClass[0];
-                                var graph = new MetaDslx.Languages.MetaModel.Meta.MetaMetaGraph(metaClasses);
-                                graph.Compute();
-                                var generator = new MetaDslx.Languages.MetaModel.Generators.MetaModelGenerator(true, model, metaModel, graph);
+                                var generator = new MetaDslx.Languages.MetaModel.Generators.MetaModelGenerator(true, model, metaModel);
                                 var output = generator.Generate();
                                 var csharpFilePath = $"MetaModel.{metaModel.Name}.g.cs";
                                 spc.AddSource(csharpFilePath, output);

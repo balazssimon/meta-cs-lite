@@ -315,8 +315,8 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
 					return "MetaModel";
 				case MetaSyntaxKind.MetaConstant: 
 					return "MetaConstant";
-				case MetaSyntaxKind.MetaEnumType: 
-					return "MetaEnumType";
+				case MetaSyntaxKind.MetaEnum: 
+					return "MetaEnum";
 				case MetaSyntaxKind.MetaClass: 
 					return "MetaClass";
 				case MetaSyntaxKind.EnumBody: 

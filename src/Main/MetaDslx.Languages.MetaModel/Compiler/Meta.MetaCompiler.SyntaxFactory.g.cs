@@ -278,17 +278,17 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         	return this.MetaConstant(this.Token(MetaSyntaxKind.KConst), type, name, this.Token(MetaSyntaxKind.TSemicolon));
         }
 
-        public MetaEnumTypeSyntax MetaEnumType(SyntaxToken kEnum, NameSyntax name, EnumBodySyntax enumBody)
+        public MetaEnumSyntax MetaEnum(SyntaxToken kEnum, NameSyntax name, EnumBodySyntax enumBody)
         {
         	if (kEnum.RawKind != (int)MetaSyntaxKind.KEnum) throw new ArgumentException(nameof(kEnum));
         	if (name is null) throw new ArgumentNullException(nameof(name));
         	if (enumBody is null) throw new ArgumentNullException(nameof(enumBody));
-            return (MetaEnumTypeSyntax)MetaLanguage.Instance.InternalSyntaxFactory.MetaEnumType((InternalSyntaxToken)kEnum.Node, (NameGreen)name.Green, (EnumBodyGreen)enumBody.Green).CreateRed();
+            return (MetaEnumSyntax)MetaLanguage.Instance.InternalSyntaxFactory.MetaEnum((InternalSyntaxToken)kEnum.Node, (NameGreen)name.Green, (EnumBodyGreen)enumBody.Green).CreateRed();
         }
         
-        public MetaEnumTypeSyntax MetaEnumType(NameSyntax name, EnumBodySyntax enumBody)
+        public MetaEnumSyntax MetaEnum(NameSyntax name, EnumBodySyntax enumBody)
         {
-        	return this.MetaEnumType(this.Token(MetaSyntaxKind.KEnum), name, enumBody);
+        	return this.MetaEnum(this.Token(MetaSyntaxKind.KEnum), name, enumBody);
         }
 
         public MetaClassSyntax MetaClass(SyntaxToken isAbstract, SyntaxToken kClass, ClassNameSyntax name, BaseClassesSyntax baseClasses, ClassBodySyntax classBody)
@@ -652,7 +652,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
 		        typeof(DeclarationsSyntax),
 		        typeof(MetaModelSyntax),
 		        typeof(MetaConstantSyntax),
-		        typeof(MetaEnumTypeSyntax),
+		        typeof(MetaEnumSyntax),
 		        typeof(MetaClassSyntax),
 		        typeof(EnumBodySyntax),
 		        typeof(EnumLiteralsSyntax),

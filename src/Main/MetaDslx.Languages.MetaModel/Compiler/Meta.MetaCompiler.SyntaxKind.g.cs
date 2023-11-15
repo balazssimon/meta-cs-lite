@@ -71,7 +71,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
 		Declarations,
 		MetaModel,
 		MetaConstant,
-		MetaEnumType,
+		MetaEnum,
 		MetaClass,
 		EnumBody,
 		EnumLiterals,

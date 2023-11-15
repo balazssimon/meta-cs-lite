@@ -18,14 +18,18 @@ namespace MetaDslx.Modeling
 
         public MultiModelFactory CreateFactory() => new MultiModelFactory(new MetaModel[] { this });
         public ModelFactory CreateFactory(Model model) => new ModelFactory(model, this);
+        
+        public abstract ImmutableDictionary<MetaType, ModelEnumInfo> MEnumInfosByType { get; }
+        public abstract ImmutableDictionary<string, ModelEnumInfo> MEnumInfosByName { get; }
+        public abstract ImmutableDictionary<MetaType, ModelClassInfo> MClassInfosByType { get; }
+        public abstract ImmutableDictionary<string, ModelClassInfo> MClassInfosByName { get; }
+        
+        public abstract ImmutableArray<MetaType> MEnumTypes { get; }
+        public abstract ImmutableArray<ModelEnumInfo> MEnumInfos { get; }
+        public abstract ImmutableArray<MetaType> MClassTypes { get; }
+        public abstract ImmutableArray<ModelClassInfo> MClassInfos { get; }
 
-        public abstract ImmutableArray<MetaType> MModelObjectTypes { get; }
-        public abstract ImmutableArray<ModelObjectInfo> MModelObjectInfos { get; }
-
-        public abstract bool Contains(MetaType modelObjectType);
-        public abstract bool Contains(string modelObjectTypeName);
-
-        public abstract bool TryGetInfo(MetaType modelObjectType, out ModelObjectInfo? info);
-        public abstract bool TryGetInfo(string modelObjectTypeName, out ModelObjectInfo? info);
+        public bool MContains(MetaType type) => MClassInfosByType.ContainsKey(type) || MEnumInfosByType.ContainsKey(type);
+        public bool MContains(string typeName) => MClassInfosByType.ContainsKey(typeName) || MEnumInfosByType.ContainsKey(typeName);
     }
 }

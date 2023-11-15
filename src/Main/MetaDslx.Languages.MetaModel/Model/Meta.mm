@@ -44,7 +44,7 @@ class MetaArrayType : MetaType
 	type ItemType;
 }
 
-class MetaEnumType : MetaType
+class MetaEnum : MetaType
 {
 	contains MetaEnumLiteral[] Literals subsets MetaDeclaration.Declarations;
 }

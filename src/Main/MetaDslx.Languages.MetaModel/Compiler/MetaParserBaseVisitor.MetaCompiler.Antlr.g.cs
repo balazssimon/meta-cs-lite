@@ -88,7 +88,7 @@ public partial class MetaParserBaseVisitor<Result> : AbstractParseTreeVisitor<Re
 	/// <return>The visitor result.</return>
 	public virtual Result VisitPr_MetaConstant([NotNull] MetaParser.Pr_MetaConstantContext context) { return VisitChildren(context); }
 	/// <summary>
-	/// Visit a parse tree produced by the <c>pr_MetaEnumType</c>
+	/// Visit a parse tree produced by the <c>pr_MetaEnum</c>
 	/// labeled alternative in <see cref="MetaParser.pr_MetaDeclaration"/>.
 	/// <para>
 	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
@@ -97,7 +97,7 @@ public partial class MetaParserBaseVisitor<Result> : AbstractParseTreeVisitor<Re
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	public virtual Result VisitPr_MetaEnumType([NotNull] MetaParser.Pr_MetaEnumTypeContext context) { return VisitChildren(context); }
+	public virtual Result VisitPr_MetaEnum([NotNull] MetaParser.Pr_MetaEnumContext context) { return VisitChildren(context); }
 	/// <summary>
 	/// Visit a parse tree produced by the <c>pr_MetaClass</c>
 	/// labeled alternative in <see cref="MetaParser.pr_MetaDeclaration"/>.

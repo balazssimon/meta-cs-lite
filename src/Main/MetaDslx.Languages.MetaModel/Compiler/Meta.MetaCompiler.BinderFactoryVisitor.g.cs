@@ -230,9 +230,9 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Binding
         	}
         }
 
-        public virtual void VisitMetaEnumType(MetaEnumTypeSyntax node)
+        public virtual void VisitMetaEnum(MetaEnumSyntax node)
         {
-        	var __annot1 = new DefineBinder(type: typeof(global::MetaDslx.Languages.MetaModel.Model.MetaEnumType));
+        	var __annot1 = new DefineBinder(type: typeof(global::MetaDslx.Languages.MetaModel.Model.MetaEnum));
         	this.Begin(__annot1, node);
         	try
         	{

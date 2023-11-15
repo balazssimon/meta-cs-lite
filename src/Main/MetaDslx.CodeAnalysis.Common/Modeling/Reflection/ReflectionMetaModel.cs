@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading;
 using System.Xml.Linq;
 using MetaDslx.CodeAnalysis;
+using MetaDslx.CodeAnalysis.Modeling.Reflection;
 using MetaDslx.CodeAnalysis.PooledObjects;
 using MetaDslx.Modeling.Meta;
 using Microsoft.CodeAnalysis;
@@ -25,10 +26,14 @@ namespace MetaDslx.Modeling.Reflection
         private readonly string _uri;
         private readonly string _prefix;
         private readonly ImmutableArray<Type> _types;
-        private readonly ImmutableArray<MetaType> _metaTypes;
-        private ImmutableArray<ModelObjectInfo> _modelObjectInfos;
-        private ImmutableDictionary<MetaType, ModelObjectInfo> _modelObjectInfosByType;
-        private ImmutableDictionary<string, ModelObjectInfo> _modelObjectInfosByName;
+        private readonly ImmutableArray<MetaType> _modelEnumTypes;
+        private ImmutableArray<ModelEnumInfo> _modelEnumInfos;
+        private ImmutableDictionary<MetaType, ModelEnumInfo> _modelEnumInfosByType;
+        private ImmutableDictionary<string, ModelEnumInfo> _modelEnumInfosByName;
+        private readonly ImmutableArray<MetaType> _modelClassTypes;
+        private ImmutableArray<ModelClassInfo> _modelClassInfos;
+        private ImmutableDictionary<MetaType, ModelClassInfo> _modelClassInfosByType;
+        private ImmutableDictionary<string, ModelClassInfo> _modelClassInfosByName;
 
         private ReflectionMetaModel(string name, string namespaceName, ModelVersion version, string uri, string prefix, ImmutableArray<Type> types)
         {
@@ -38,7 +43,8 @@ namespace MetaDslx.Modeling.Reflection
             _uri = uri;
             _prefix = prefix;
             _types = types;
-            _metaTypes = types.Select(t => MetaType.FromType(t)).ToImmutableArray();
+            _modelClassTypes = types.Where(t => t.IsClass).Select(t => MetaType.FromType(t)).ToImmutableArray();
+            _modelEnumTypes = types.Where(t => t.IsEnum).Select(t => MetaType.FromType(t)).ToImmutableArray();
             var typeNames = new HashSet<string>();
             foreach (var type in _types)
             {
@@ -80,86 +86,131 @@ namespace MetaDslx.Modeling.Reflection
 
         public override Model MModel => throw new NotImplementedException();
 
-        public override ImmutableArray<MetaType> MModelObjectTypes => _metaTypes;
+        public override ImmutableArray<MetaType> MEnumTypes => _modelEnumTypes;
 
-        public override ImmutableArray<ModelObjectInfo> MModelObjectInfos
+        public override ImmutableArray<ModelEnumInfo> MEnumInfos
+        {
+            get
+            {
+                ComputeEnums();
+                return _modelEnumInfos;
+            }
+        }
+
+        public override ImmutableDictionary<MetaType, ModelEnumInfo> MEnumInfosByType
+        {
+            get
+            {
+                ComputeEnums();
+                return _modelEnumInfosByType;
+            }
+        }
+
+        public override ImmutableDictionary<string, ModelEnumInfo> MEnumInfosByName
+        {
+            get
+            {
+                ComputeEnums();
+                return _modelEnumInfosByName;
+            }
+        }
+
+        public override ImmutableArray<MetaType> MClassTypes => _modelClassTypes;
+
+        public override ImmutableArray<ModelClassInfo> MClassInfos
         {
             get
             {
                 ComputeMetaGraph();
-                return _modelObjectInfos;
+                return _modelClassInfos;
             }
         }
 
-        private ImmutableDictionary<MetaType, ModelObjectInfo> ModelObjectInfosByType
+        public override ImmutableDictionary<MetaType, ModelClassInfo> MClassInfosByType
         {
             get
             {
                 ComputeMetaGraph();
-                return _modelObjectInfosByType;
+                return _modelClassInfosByType;
             }
         }
 
-        private ImmutableDictionary<string, ModelObjectInfo> ModelObjectInfosByName
+        public override ImmutableDictionary<string, ModelClassInfo> MClassInfosByName
         {
             get
             {
                 ComputeMetaGraph();
-                return _modelObjectInfosByName;
+                return _modelClassInfosByName;
             }
         }
 
-        public override bool Contains(MetaType modelObjectType)
+        private void ComputeEnums()
         {
-            return ModelObjectInfosByType.ContainsKey(modelObjectType);
-        }
-
-        public override bool Contains(string modelObjectTypeName)
-        {
-            return ModelObjectInfosByName.ContainsKey(modelObjectTypeName);
-        }
-
-        public override bool TryGetInfo(MetaType modelObjectType, out ModelObjectInfo info)
-        {
-            return ModelObjectInfosByType.TryGetValue(modelObjectType, out info);
-        }
-
-        public override bool TryGetInfo(string modelObjectTypeName, out ModelObjectInfo info)
-        {
-            return ModelObjectInfosByName.TryGetValue(modelObjectTypeName, out info);
+            if (!_modelEnumInfos.IsDefault) return;
+            var modelEnumInfos = ArrayBuilder<ModelEnumInfo>.GetInstance();
+            var modelEnumInfosByName = ImmutableDictionary.CreateBuilder<string, ModelEnumInfo>();
+            var modelEnumInfosByType = ImmutableDictionary.CreateBuilder<MetaType, ModelEnumInfo>();
+            foreach (var type in _modelEnumTypes)
+            {
+                var literals = ArrayBuilder<string>.GetInstance();
+                var literalsByName = ImmutableDictionary.CreateBuilder<string, Enum>();
+                foreach (var lit in Enum.GetValues(type.OriginalType))
+                {
+                    var name = lit.ToString();
+                    literals.Add(name);
+                    literalsByName.Add(name, (Enum)lit);
+                }
+                var info = new ReflectionMetaEnumInfo(this, type.OriginalType, literals.ToImmutableAndFree(), literalsByName.ToImmutable());
+                modelEnumInfos.Add(info);
+                modelEnumInfosByName.Add(type.Name, info);
+                modelEnumInfosByType.Add(type.OriginalType, info);
+            }
+            if (_modelEnumInfos.IsDefault)
+            {
+                lock (_lockObject)
+                {
+                    if (_modelEnumInfos.IsDefault)
+                    {
+                        _modelEnumInfosByName = modelEnumInfosByName.ToImmutable();
+                        _modelEnumInfosByType = modelEnumInfosByType.ToImmutable();
+                        ImmutableInterlocked.InterlockedInitialize(ref _modelEnumInfos, modelEnumInfos.ToImmutable());
+                    }
+                }
+            }
+            modelEnumInfos.Free();
         }
 
         private void ComputeMetaGraph()
         {
-            if (!_modelObjectInfos.IsDefault) return;
-            var modelObjectInfos = ArrayBuilder<ModelObjectInfo>.GetInstance();
-            var modelObjectInfosByName = ImmutableDictionary.CreateBuilder<string, ModelObjectInfo>();
-            var modelObjectInfosByType = ImmutableDictionary.CreateBuilder<MetaType, ModelObjectInfo>();
+            if (!_modelClassInfos.IsDefault) return;
+            var modelClassInfos = ArrayBuilder<ModelClassInfo>.GetInstance();
+            var modelClassInfosByName = ImmutableDictionary.CreateBuilder<string, ModelClassInfo>();
+            var modelClassInfosByType = ImmutableDictionary.CreateBuilder<MetaType, ModelClassInfo>();
             var rmap = new ReflectionToModelMap();
             var graph = new ReflectionMetaGraph(_types);
             var metaClasses = graph.Compute();
             foreach (var cls in metaClasses)
             {
-                var info = new ReflectionModelObjectInfo(this, cls.UnderlyingType, cls.SymbolType, rmap.Map(cls.NameProperty), rmap.Map(cls.TypeProperty),
+                var info = new ReflectionModelClassInfo(this, cls.UnderlyingType, cls.SymbolType, rmap.Map(cls.NameProperty), rmap.Map(cls.TypeProperty),
                     rmap.Map(cls.DeclaredProperties), rmap.Map(cls.AllDeclaredProperties), rmap.Map(cls.PublicProperties), 
                     rmap.Map(cls.PublicPropertiesByName), rmap.Map(cls.ModelPropertyInfos));
-                modelObjectInfos.Add(info);
-                modelObjectInfosByName.Add(cls.Name, info);
-                modelObjectInfosByType.Add(cls.UnderlyingType, info);
+                modelClassInfos.Add(info);
+                modelClassInfosByName.Add(cls.Name, info);
+                modelClassInfosByType.Add(cls.UnderlyingType, info);
             }
-            if (_modelObjectInfos.IsDefault)
+            if (_modelClassInfos.IsDefault)
             {
                 lock (_lockObject)
                 {
-                    if (_modelObjectInfos.IsDefault)
+                    if (_modelClassInfos.IsDefault)
                     {
-                        _modelObjectInfosByName = modelObjectInfosByName.ToImmutable();
-                        _modelObjectInfosByType = modelObjectInfosByType.ToImmutable();
-                        ImmutableInterlocked.InterlockedInitialize(ref _modelObjectInfos, modelObjectInfos.ToImmutable());
+                        _modelClassInfosByName = modelClassInfosByName.ToImmutable();
+                        _modelClassInfosByType = modelClassInfosByType.ToImmutable();
+                        ImmutableInterlocked.InterlockedInitialize(ref _modelClassInfos, modelClassInfos.ToImmutable());
                     }    
                 }
             }
-            modelObjectInfos.Free();
+            modelClassInfos.Free();
         }
 
         private class ReflectionToModelMap
