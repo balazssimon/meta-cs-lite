@@ -5,14 +5,14 @@ using System.Collections.Immutable;
 using System.Text;
 using System.Threading;
 
-namespace MetaDslx.CodeAnalysis.Symbols
+namespace MetaDslx.CodeAnalysis.Symbols.Meta
 {
-    internal class ImportedMetaTypeSymbol : TypeSymbol
+    internal class MetaTypeSymbol : TypeSymbol, IMetaTypeSymbol
     {
         private readonly MetaModel _metaModel;
         private readonly MetaType _metaType;
 
-        public ImportedMetaTypeSymbol(DeclaredSymbol container, MetaModel metaModel, MetaType metaType) 
+        public MetaTypeSymbol(DeclaredSymbol container, MetaModel metaModel, MetaType metaType)
             : base(container)
         {
             _metaModel = metaModel;

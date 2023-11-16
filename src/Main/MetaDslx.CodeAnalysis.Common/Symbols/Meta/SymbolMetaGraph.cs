@@ -11,11 +11,13 @@ namespace MetaDslx.CodeAnalysis.Symbols.Meta
 {
     internal class SymbolMetaGraph : MetaGraph<MetaType, CSharpDeclaredSymbol, CSharpDeclaredSymbol>
     {
+        private readonly SymbolMetaModel _metaModel;
         private CSharpSymbolFactory _factory;
 
-        public SymbolMetaGraph(IEnumerable<MetaType> classTypes, CSharpSymbolFactory factory) 
+        public SymbolMetaGraph(SymbolMetaModel metaModel, IEnumerable<MetaType> classTypes, CSharpSymbolFactory factory) 
             : base(classTypes)
         {
+            _metaModel = metaModel;
             _factory = factory;
         }
 
@@ -86,7 +88,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Meta
 
         protected override MetaClass<MetaType, CSharpDeclaredSymbol, CSharpDeclaredSymbol> MakeClass(MetaType classType)
         {
-            return new SymbolMetaClass(classType);
+            return new SymbolMetaClass(_metaModel, classType);
         }
 
         protected override MetaOperation<MetaType, CSharpDeclaredSymbol, CSharpDeclaredSymbol> MakeOperation(MetaClass<MetaType, CSharpDeclaredSymbol, CSharpDeclaredSymbol> declaringType, CSharpDeclaredSymbol operation)

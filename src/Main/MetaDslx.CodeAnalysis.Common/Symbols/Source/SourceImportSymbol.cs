@@ -15,12 +15,12 @@ using System.Xml.Linq;
 
 namespace MetaDslx.CodeAnalysis.Symbols.Source
 {
-    public sealed class SourceImportSymbol : ImportSymbol, ISourceSymbol
+    public class SourceImportSymbol : ImportSymbol, ISourceSymbol
     {
         private readonly MergedDeclaration _declaration;
         private ImmutableArray<SourceLocation> _locations;
 
-        internal SourceImportSymbol(Symbol container, MergedDeclaration declaration)
+        public SourceImportSymbol(Symbol container, MergedDeclaration declaration)
             : base(container)
         {
             _declaration = declaration;
@@ -43,6 +43,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
                 return _locations;
             }
         }
+
         protected override string? CompleteProperty_Name(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             return _declaration.Name;
@@ -58,14 +59,13 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
             return SymbolFactory.CreateContainedSymbols(this, diagnostics);
         }
         
-        protected override (ImmutableArray<string> files, ImmutableArray<AliasSymbol> aliases, ImmutableArray<NamespaceSymbol> namespaces, ImmutableArray<DeclaredSymbol> symbols, ImmutableArray<DeclaredSymbol> metaModelSymbols) ComputeImports(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        protected override (ImmutableArray<string> files, ImmutableArray<AliasSymbol> aliases, ImmutableArray<NamespaceSymbol> namespaces, ImmutableArray<DeclaredSymbol> symbols) ComputeImports(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             var files = SymbolFactory.GetSymbolPropertyValues<string>(this, nameof(Files), diagnostics, cancellationToken);
             var aliases = SymbolFactory.GetSymbolPropertyValues<AliasSymbol>(this, nameof(Aliases), diagnostics, cancellationToken);
             var namespaces = SymbolFactory.GetSymbolPropertyValues<NamespaceSymbol>(this, nameof(Namespaces), diagnostics, cancellationToken);
             var symbols = SymbolFactory.GetSymbolPropertyValues<DeclaredSymbol>(this, nameof(Symbols), diagnostics, cancellationToken);
-            var metaModelSymbols = SymbolFactory.GetSymbolPropertyValues<DeclaredSymbol>(this, nameof(MetaModelSymbols), diagnostics, cancellationToken);
-            return (files, aliases, namespaces, symbols, metaModelSymbols);
+            return (files, aliases, namespaces, symbols);
         }
     }
 }

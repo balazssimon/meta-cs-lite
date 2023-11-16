@@ -13,20 +13,35 @@ namespace MetaDslx.CodeAnalysis.Symbols.Meta
 {
     internal class SymbolMetaClass : MetaClass<MetaType, CSharpDeclaredSymbol, CSharpDeclaredSymbol>
     {
+        private readonly SymbolMetaModel _metaModel;
         private object? _symbolType;
         private ImmutableArray<MetaType> _baseTypes;
         private ImmutableArray<CSharpDeclaredSymbol> _declaredProperties;
 
-        public SymbolMetaClass(MetaType underlyingType) 
+        public SymbolMetaClass(SymbolMetaModel metaModel, MetaType underlyingType) 
             : base(underlyingType)
         {
+            _metaModel = metaModel;
             _baseTypes = CSharpClass.BaseTypes.Select(bt => MetaDslx.CodeAnalysis.MetaType.FromTypeSymbol(bt)).ToImmutableArray();
             var declaredProperties = ArrayBuilder<CSharpDeclaredSymbol>.GetInstance();
             foreach (var member in CSharpClass.Members)
             {
                 if (member is CSharpDeclaredSymbol csmember && csmember.CSharpSymbol is IPropertySymbol prop)
                 {
-                    declaredProperties.Add(csmember);
+                    if (metaModel.IsSymbolModel)
+                    {
+                        foreach (var attr in prop.GetAttributes())
+                        {
+                            if (attr.AttributeClass?.ToDisplayString() == "MetaDslx.CodeAnalysis.Symbols.ModelPropertyAttribute")
+                            {
+                                declaredProperties.Add(csmember);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        declaredProperties.Add(csmember);
+                    }
                 }
             }
             _declaredProperties = declaredProperties.ToImmutableAndFree();

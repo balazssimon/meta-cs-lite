@@ -18,7 +18,10 @@ Main returns Namespace:
 	Declarations
 	eof;
 
-Using returns ImportSymbol: 'using' (namespaces+=#NamespaceSymbol | 'metamodel' metaModelSymbols+=#DeclaredSymbol) ';';
+Using returns ImportSymbol
+	: 'using' namespaces+=#NamespaceSymbol 
+	| {ImportMetaModelSymbol} 'metamodel' symbols+=#DeclaredSymbol ';'
+	| {ImportSymbolModelSymbol} 'symbols' namespaces+=#NamespaceSymbol ';';
 
 [Scope]
 part Declarations: declarations+=LanguageDeclaration declarations+=Rule*;

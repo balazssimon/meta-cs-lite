@@ -3,26 +3,41 @@ using MetaDslx.Modeling;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Linq;
 using System.Text;
 
 namespace MetaDslx.CodeAnalysis.Symbols.Meta
 {
     internal class SymbolMetaModel : MetaModel
     {
-        public SymbolMetaModel(CSharpTypeSymbol metaModelSymbol)
+        private readonly NamespaceSymbol _container;
+        private readonly string _name;
+        private readonly string _namespace;
+        private readonly string _prefix;
+        private readonly bool _isSymbolModel;
+
+        public SymbolMetaModel(NamespaceSymbol container, string name, bool isSymbolModel)
         {
-            
+            if (container is null) throw new ArgumentNullException(nameof(container));
+            if (name is null) throw new ArgumentNullException(nameof(name));
+            _container = container;
+            _name = name;
+            _namespace = SymbolDisplayFormat.QualifiedNameOnlyFormat.ToString(container);
+            _prefix = string.Concat(name.Where(c => char.IsUpper(c)).Select(c => char.ToLower(c)));
+            _isSymbolModel = isSymbolModel;
         }
 
-        public override string MName => throw new NotImplementedException();
+        public override string MName => _name;
 
-        public override string MNamespace => throw new NotImplementedException();
+        public override string MNamespace => _namespace;
 
-        public override ModelVersion MVersion => throw new NotImplementedException();
+        public override ModelVersion MVersion => default;
 
-        public override string MUri => throw new NotImplementedException();
+        public override string MUri => _namespace;
 
-        public override string MPrefix => throw new NotImplementedException();
+        public override string MPrefix => _prefix;
+
+        public bool IsSymbolModel => _isSymbolModel;
 
         public override MetaDslx.Modeling.Model MModel => throw new NotImplementedException();
 
@@ -42,5 +57,9 @@ namespace MetaDslx.CodeAnalysis.Symbols.Meta
 
         public override ImmutableArray<ModelClassInfo> MClassInfos => throw new NotImplementedException();
 
+        private void Compute()
+        {
+
+        }
     }
 }

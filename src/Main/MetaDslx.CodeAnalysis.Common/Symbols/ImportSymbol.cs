@@ -43,11 +43,9 @@ namespace MetaDslx.CodeAnalysis.Symbols
         private ImmutableArray<AliasSymbol> _aliases;
         private ImmutableArray<NamespaceSymbol> _namespaces;
         private ImmutableArray<DeclaredSymbol> _symbols;
-        private ImmutableArray<DeclaredSymbol> _metaModelSymbols;
-        private ImmutableArray<MetaModel> _metaModels;
         private ImmutableHashSet<DeclaredSymbol> _allSymbols;
-        private ConcurrentDictionary<DeclaredSymbol, byte> _unusedSymbols;
-        private ConcurrentDictionary<NamespaceSymbol, byte> _unusedNamespaces;
+        private object? _unusedSymbols;
+        private object? _unusedNamespaces;
 
         protected ImportSymbol(Symbol container) 
             : base(container)
@@ -98,22 +96,29 @@ namespace MetaDslx.CodeAnalysis.Symbols
             }
         }
 
-        [ModelProperty]
-        public ImmutableArray<DeclaredSymbol> MetaModelSymbols
+        public ImmutableArray<NamespaceSymbol> UnusedNamespaces
         {
             get
             {
-                ForceComplete(CompletionParts.FinishComputingImports, null, default);
-                return _metaModelSymbols;
+                ForceComplete(CompletionGraph.FinishFinalizing, null, default);
+                if (_unusedNamespaces is ConcurrentDictionary<NamespaceSymbol, byte> uncd)
+                {
+                    Interlocked.Exchange(ref _unusedNamespaces, uncd.Keys.ToImmutableArray());
+                }
+                return (ImmutableArray<NamespaceSymbol>)_unusedNamespaces;
             }
         }
 
-        public ImmutableArray<MetaModel> MetaModels
+        public ImmutableArray<DeclaredSymbol> UnusedSymbols
         {
             get
             {
-                ForceComplete(CompletionParts.FinishComputingImports, null, default);
-                return _metaModels;
+                ForceComplete(CompletionGraph.FinishFinalizing, null, default);
+                if (_unusedSymbols is ConcurrentDictionary<NamespaceSymbol, byte> uscd)
+                {
+                    Interlocked.Exchange(ref _unusedSymbols, uscd.Keys.ToImmutableArray());
+                }
+                return (ImmutableArray<DeclaredSymbol>)_unusedSymbols;
             }
         }
 
@@ -130,7 +135,6 @@ namespace MetaDslx.CodeAnalysis.Symbols
                     _aliases = value.aliases;
                     _namespaces = value.namespaces;
                     _symbols = value.symbols;
-                    _metaModelSymbols = value.metaModelSymbols;
                     ComputeSymbols(diagnostics);
                     AddSymbolDiagnostics(diagnostics);
                     diagnostics.Free();
@@ -146,49 +150,16 @@ namespace MetaDslx.CodeAnalysis.Symbols
             return false;
         }
 
+        protected virtual ImmutableArray<NamespaceSymbol> ComputeNamespaces(DiagnosticBag diagnostics)
+        {
+            return ImmutableArray<NamespaceSymbol>.Empty;
+        }
+
         private void ComputeSymbols(DiagnosticBag diagnostics)
         {
             var symbolsBuilder = ArrayBuilder<DeclaredSymbol>.GetInstance();
             symbolsBuilder.AddRange(_aliases);
-            var metaModelsBuilder = ArrayBuilder<MetaModel>.GetInstance();
             var compilation = DeclaringCompilation;
-            foreach (var metaModelSymbol in _metaModelSymbols)
-            {
-                var fullName = SymbolDisplayFormat.QualifiedNameOnlyFormat.ToString(metaModelSymbol);
-                MetaModel? metaModel = null;
-                if (compilation is not null)
-                {
-                    foreach (var mmRef in compilation.ExternalReferences.OfType<MetaModelReference>())
-                    {
-                        if (mmRef.MetaModel.MFullName == fullName)
-                        {
-                            metaModel = mmRef.MetaModel;
-                            break;
-                        }
-                    }
-                }
-                if (metaModel is null && metaModelSymbol is CSharpTypeSymbol csharpTypeSymbol)
-                {
-                    metaModel = new SymbolMetaModel(csharpTypeSymbol);
-                }
-                if (metaModel is not null)
-                {
-                    metaModelsBuilder.Add(metaModel);
-                    foreach (var type in metaModel.MEnumTypes)
-                    {
-                        symbolsBuilder.Add(new ImportedMetaTypeSymbol(metaModelSymbol, metaModel, type));
-                    }
-                    foreach (var type in metaModel.MClassTypes)
-                    {
-                        symbolsBuilder.Add(new ImportedMetaTypeSymbol(metaModelSymbol, metaModel, type));
-                    }
-                }
-                else
-                {
-                    diagnostics.Add(Diagnostic.Create(CommonErrorCode.ERR_DeclarationError, this.Locations.FirstOrDefault(), $"The imported type '{fullName}' is not a metamodel."));
-                }
-            }
-            _metaModels = metaModelsBuilder.ToImmutableAndFree();
             if (_files.Length > 0 && this is ISourceSymbol sourceSymbol && compilation is not null)
             {
                 if (compilation.Options.MergeGlobalNamespace)
@@ -244,16 +215,18 @@ namespace MetaDslx.CodeAnalysis.Symbols
             {
                 symbolsBuilder.Free();
             }
-            _unusedSymbols = new ConcurrentDictionary<DeclaredSymbol, byte>();
+            var unusedSymbols = new ConcurrentDictionary<DeclaredSymbol, byte>();
             foreach (var symbol in _symbols)
             {
-                _unusedSymbols.TryAdd(symbol, 0);
+                unusedSymbols.TryAdd(symbol, 0);
             }
-            _unusedNamespaces = new ConcurrentDictionary<NamespaceSymbol, byte>();
+            _unusedSymbols = unusedSymbols;
+            var unusedNamespaces = new ConcurrentDictionary<NamespaceSymbol, byte>();
             foreach (var ns in _namespaces)
             {
-                _unusedNamespaces.TryAdd(ns, 0);
+                unusedNamespaces.TryAdd(ns, 0);
             }
+            _unusedNamespaces = unusedNamespaces;
             var allSymbols = ImmutableHashSet.CreateBuilder<DeclaredSymbol>();
             allSymbols.AddAll(_symbols);
             allSymbols.AddAll(_namespaces);
@@ -264,57 +237,50 @@ namespace MetaDslx.CodeAnalysis.Symbols
         {
             if (_allSymbols is null) return false;
             if (!_allSymbols.Contains(symbol)) return false;
-            if (_symbols.Contains(symbol) || 
-                symbol is AliasSymbol aliasSymbol && _aliases.Contains(aliasSymbol))
+            if (_unusedSymbols is ConcurrentDictionary<DeclaredSymbol, byte> uscd &&
+                (_symbols.Contains(symbol) || symbol is AliasSymbol aliasSymbol && _aliases.Contains(aliasSymbol)))
             {
-                _unusedSymbols.TryRemove(symbol, out var _);
+                uscd.TryRemove(symbol, out var _);
             }
             var importedNamespace = _namespaces.FirstOrDefault(ns => ns.Members.Contains(symbol));
-            if (importedNamespace is not null)
+            if (_unusedNamespaces is ConcurrentDictionary<NamespaceSymbol, byte> uncd &&
+                importedNamespace is not null)
             {
-                _unusedNamespaces.TryRemove(importedNamespace, out var _);
+                uncd.TryRemove(importedNamespace, out var _);
             }
             return true;
         }
 
-        protected virtual (ImmutableArray<string> files, ImmutableArray<AliasSymbol> aliases, ImmutableArray<NamespaceSymbol> namespaces, ImmutableArray<DeclaredSymbol> symbols, ImmutableArray<DeclaredSymbol> metaModelSymbols) ComputeImports(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        protected virtual (ImmutableArray<string> files, ImmutableArray<AliasSymbol> aliases, ImmutableArray<NamespaceSymbol> namespaces, ImmutableArray<DeclaredSymbol> symbols) ComputeImports(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
         }
 
         protected override void CompletePart_Validate(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            if (!_unusedNamespaces.IsEmpty)
+            var unusedNamespaces = UnusedNamespaces;
+            if (!unusedNamespaces.IsEmpty)
             {
                 var builder = PooledStringBuilder.GetInstance();
                 var sb = builder.Builder;
-                foreach (var ns in _unusedNamespaces.Keys)
+                foreach (var ns in unusedNamespaces)
                 {
                     if (sb.Length > 0) sb.Append(", ");
                     sb.Append(SymbolDisplayFormat.QualifiedNameOnlyFormat.ToString(ns));
                 }
                 diagnostics.Add(Diagnostic.Create(CommonErrorCode.HDN_UnusedNamespaces, this.Locations.FirstOrDefault(), builder.ToStringAndFree()));
             }
-            if (!_unusedSymbols.IsEmpty)
+            var unusedSymbols = UnusedSymbols;
+            if (!unusedSymbols.IsEmpty)
             {
                 var builder = PooledStringBuilder.GetInstance();
                 var sb = builder.Builder;
-                foreach (var symbol in _unusedSymbols.Keys.Where(us => !(us is ImportedMetaTypeSymbol)))
+                foreach (var symbol in unusedSymbols.Where(us => !(us is MetaTypeSymbol)))
                 {
                     if (sb.Length > 0) sb.Append(", ");
                     sb.Append(SymbolDisplayFormat.QualifiedNameOnlyFormat.ToString(symbol));
                 }
                 if (sb.Length > 0) diagnostics.Add(Diagnostic.Create(CommonErrorCode.HDN_UnusedSymbols, this.Locations.FirstOrDefault(), builder.ToString()));
-                foreach (var metaModel in _metaModels)
-                {
-                    sb.Clear();
-                    foreach (var symbol in _unusedSymbols.Keys.OfType<ImportedMetaTypeSymbol>().Where(us => us.MetaModel == metaModel).OrderBy(us => us.Name))
-                    {
-                        if (sb.Length > 0) sb.Append(", ");
-                        sb.Append(symbol.Name);
-                    }
-                    if (sb.Length > 0) diagnostics.Add(Diagnostic.Create(CommonErrorCode.WRN_UnusedMetaTypes, this.Locations.FirstOrDefault(), metaModel.MName, builder.ToString()));
-                }
                 builder.Free();
             }
         }

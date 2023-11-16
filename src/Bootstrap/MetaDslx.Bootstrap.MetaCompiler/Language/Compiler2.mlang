@@ -16,7 +16,10 @@ Main returns MetaDslx.Bootstrap.MetaCompiler.Model.Namespace:
 	Declarations
 	eof;
 
-Using returns ImportSymbol: 'using' (namespaces+=#NamespaceSymbol | 'metamodel' metaModels+=#MetaModel) ';';
+Using returns ImportSymbol
+	: 'using' namespaces+=#NamespaceSymbol 
+	| {ImportMetaModelSymbol} 'metamodel' symbols+=#DeclaredSymbol ';'
+	| {ImportSymbolModelSymbol} 'symbols' namespaces+=#NamespaceSymbol ';';
 
 block Declarations: declarations+=LanguageDeclaration declarations+=Rule*;
 
