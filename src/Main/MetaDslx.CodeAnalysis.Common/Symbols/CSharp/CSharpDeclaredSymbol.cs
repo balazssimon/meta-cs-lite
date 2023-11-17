@@ -8,7 +8,7 @@ using System.Threading;
 
 namespace MetaDslx.CodeAnalysis.Symbols.CSharp
 {
-    internal class CSharpDeclaredSymbol : DeclaredSymbol
+    internal class CSharpDeclaredSymbol : DeclaredSymbol, ICSharpSymbol
     {
         private readonly ISymbol _csharpSymbol;
 

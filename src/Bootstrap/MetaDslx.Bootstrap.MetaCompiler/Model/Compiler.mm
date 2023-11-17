@@ -164,7 +164,7 @@ class LBlock : LElementValue
 	contains LAlternative[] Alternatives;
 }
 
-abstract class ParserRule $ParserRuleSymbol : Rule
+abstract class $ParserRule : Rule
 {
 	type? $ReturnType;
 	bool $IsBlock;
@@ -172,7 +172,7 @@ abstract class ParserRule $ParserRuleSymbol : Rule
 	contains PAlternative[] Alternatives;
 }
 
-class PAlternative : Declaration
+class $PAlternative : Declaration
 {
 	type? ReturnType;
 	contains Expression ReturnValue;
@@ -188,7 +188,7 @@ enum Assignment
     PlusAssign
 }
 
-class PElement $PElementSymbol
+class $PElement
 {
 	contains Annotation[] NameAnnotations;
 	symbol $SymbolProperty;
@@ -217,12 +217,12 @@ class PKeyword : PElementValue
 	string Text;
 }
 
-class PBlock : PElementValue
+class $PBlock : PElementValue
 {
 	contains PAlternative[] Alternatives;
 }
 
-abstract class Expression $Symbol
+abstract class $Expression
 {
 	derived object? Value;
 }

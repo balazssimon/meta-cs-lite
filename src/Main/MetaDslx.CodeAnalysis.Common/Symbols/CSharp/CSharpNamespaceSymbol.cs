@@ -8,7 +8,7 @@ using System.Threading;
 
 namespace MetaDslx.CodeAnalysis.Symbols.CSharp
 {
-    internal class CSharpNamespaceSymbol : NamespaceSymbol
+    internal class CSharpNamespaceSymbol : NamespaceSymbol, ICSharpSymbol
     {
         private readonly INamespaceSymbol _csharpSymbol;
         private readonly ModuleSymbol _module;
@@ -26,6 +26,8 @@ namespace MetaDslx.CodeAnalysis.Symbols.CSharp
 
         public override NamespaceExtent Extent => new NamespaceExtent(_module);
         public override ModuleSymbol ContainingModule => _module;
+
+        ISymbol ICSharpSymbol.CSharpSymbol => this.CSharpSymbol;
 
         protected override string? CompleteProperty_Name(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {

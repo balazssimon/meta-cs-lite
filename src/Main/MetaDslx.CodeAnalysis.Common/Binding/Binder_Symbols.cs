@@ -15,9 +15,10 @@ namespace MetaDslx.CodeAnalysis.Binding
         public ImmutableArray<DeclaredSymbol> BindQualifiedName(LookupContext context, ImmutableArray<SyntaxNodeOrToken> qualifier)
         {
             if (qualifier.Length == 0) return ImmutableArray<DeclaredSymbol>.Empty;
-            this.AdjustLookupContext(context);
+            this.AdjustInitialLookupContext(context);
             if (qualifier.Length == 1)
             {
+                this.AdjustFinalLookupContext(context);
                 return ImmutableArray.Create(BindDeclaredOrAliasSymbolInternal(context, qualifier[0]));
             }
             else
@@ -28,16 +29,19 @@ namespace MetaDslx.CodeAnalysis.Binding
                 qualifierContext.Validators.Clear();
                 result.Add(BindDeclaredOrAliasSymbolInternal(qualifierContext, qualifier[0]));
                 context.Diagnostics.AddRange(qualifierContext.Diagnostics);
-                var last = result[0];
+                var previous = result[0];
                 for (int i = 1; i < qualifier.Length; i++)
                 {
-                    if (last is null || last.IsError) break;
-                    var identifierContext = i + 1 < qualifier.Length ? qualifierContext : context;
-                    identifierContext.Qualifier = last;
-                    qualifierContext.ClearResult(); // intentionally qualifierContext, we don't want to clear the original context
+                    if (previous is null || previous.IsError) break;
+                    var isFinal = i == qualifier.Length - 1;
+                    var identifierContext = qualifierContext;
+                    if (isFinal) identifierContext = context;
+                    else identifierContext.ClearResult();
+                    identifierContext.Qualifier = previous;
+                    if (isFinal) this.AdjustFinalLookupContext(identifierContext);
                     result.Add(this.BindDeclaredOrAliasSymbolInternal(identifierContext, qualifier[i]));
                     context.Diagnostics.AddRange(qualifierContext.Diagnostics); // intentionally qualifierContext, diagnostics for the last identifier are collected in the original context
-                    last = result[i];
+                    previous = result[i];
                 }
                 qualifierContext.Free();
                 return result.ToImmutableAndFree();
@@ -47,10 +51,11 @@ namespace MetaDslx.CodeAnalysis.Binding
         public ImmutableArray<DeclaredSymbol> BindQualifiedName(LookupContext context, ImmutableArray<string> qualifier)
         {
             if (qualifier.Length == 0) return ImmutableArray<DeclaredSymbol>.Empty;
-            this.AdjustLookupContext(context);
+            this.AdjustInitialLookupContext(context);
             if (qualifier.Length == 1)
             {
                 context.SetName(qualifier[0]);
+                this.AdjustFinalLookupContext(context);
                 return ImmutableArray.Create(BindDeclaredOrAliasSymbolInternal(context));
             }
             else
@@ -62,17 +67,20 @@ namespace MetaDslx.CodeAnalysis.Binding
                 qualifierContext.SetName(qualifier[0]);
                 result.Add(BindDeclaredOrAliasSymbolInternal(qualifierContext));
                 context.Diagnostics.AddRange(qualifierContext.Diagnostics);
-                var last = result[0];
+                var previous = result[0];
                 for (int i = 0; i < qualifier.Length; i++)
                 {
-                    if (last is null) break;
-                    var identifierContext = i + 1 < qualifier.Length ? qualifierContext : context;
-                    identifierContext.Qualifier = last;
+                    if (previous is null || previous.IsError) break;
+                    var isFinal = i == qualifier.Length - 1;
+                    var identifierContext = qualifierContext;
+                    if (isFinal) identifierContext = context;
+                    else identifierContext.ClearResult();
+                    identifierContext.Qualifier = previous;
                     identifierContext.SetName(qualifier[i]);
-                    qualifierContext.ClearResult(); // intentionally qualifierContext, we don't want to clear the original context
+                    if (isFinal) this.AdjustFinalLookupContext(identifierContext);
                     result.Add(this.BindDeclaredOrAliasSymbolInternal(identifierContext));
                     context.Diagnostics.AddRange(qualifierContext.Diagnostics); // intentionally qualifierContext, diagnostics for the last identifier are collected in the original context
-                    last = result[i];
+                    previous = result[i];
                 }
                 qualifierContext.Free();
                 return result.ToImmutableAndFree();
@@ -85,7 +93,8 @@ namespace MetaDslx.CodeAnalysis.Binding
         [MethodImpl(MethodImplOptions.NoInlining)]
         public DeclaredSymbol BindDeclaredSymbol(LookupContext context, SyntaxNodeOrToken identifierSyntax)
         {
-            this.AdjustLookupContext(context);
+            this.AdjustInitialLookupContext(context);
+            this.AdjustFinalLookupContext(context);
             var result = BindDeclaredOrAliasSymbolInternal(context, identifierSyntax);
             return AliasSymbol.UnwrapAlias(context, result) as DeclaredSymbol;
         }
@@ -96,7 +105,8 @@ namespace MetaDslx.CodeAnalysis.Binding
         [MethodImpl(MethodImplOptions.NoInlining)]
         public DeclaredSymbol BindDeclaredOrAliasSymbol(LookupContext context, SyntaxNodeOrToken identifierSyntax)
         {
-            this.AdjustLookupContext(context);
+            this.AdjustInitialLookupContext(context);
+            this.AdjustFinalLookupContext(context);
             var result = BindDeclaredOrAliasSymbolInternal(context, identifierSyntax);
             return result;
         }

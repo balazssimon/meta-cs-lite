@@ -41,9 +41,14 @@ namespace MetaDslx.CodeAnalysis.Binding
             return context;
         }
 
-        protected virtual void AdjustLookupContext(LookupContext context)
+        protected virtual void AdjustInitialLookupContext(LookupContext context)
         {
-            if (_parentBinder is not null) _parentBinder.AdjustLookupContext(context);
+            if (_parentBinder is not null) _parentBinder.AdjustInitialLookupContext(context);
+        }
+
+        protected virtual void AdjustFinalLookupContext(LookupContext context)
+        {
+            if (_parentBinder is not null) _parentBinder.AdjustFinalLookupContext(context);
         }
 
         protected virtual bool IsViable(LookupContext context, DeclaredSymbol symbol)
@@ -138,7 +143,8 @@ namespace MetaDslx.CodeAnalysis.Binding
         protected void AddLookupCandidateSymbols(LookupContext context, LookupCandidates result)
         {
             var adjustedContext = context.AllocateCopy();
-            this.AdjustLookupContext(adjustedContext);
+            this.AdjustInitialLookupContext(adjustedContext);
+            this.AdjustFinalLookupContext(adjustedContext);
             try
             {
                 for (var scope = this; scope != null; scope = scope.ParentBinder)

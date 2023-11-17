@@ -11,7 +11,7 @@ using System.Threading;
 
 namespace MetaDslx.CodeAnalysis.Symbols.CSharp
 {
-    internal class CSharpSymbolFactory
+    public sealed class CSharpSymbolFactory
     {
         private readonly Dictionary<Type, Func<Symbol, ISymbol, Symbol>> _constructors = new();
         private readonly List<(Type, Type)> _types = new();

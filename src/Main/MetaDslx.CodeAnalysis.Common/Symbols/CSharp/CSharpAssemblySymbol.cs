@@ -9,7 +9,7 @@ using System.Threading;
 
 namespace MetaDslx.CodeAnalysis.Symbols.CSharp
 {
-    internal class CSharpAssemblySymbol : AssemblySymbol
+    internal class CSharpAssemblySymbol : AssemblySymbol, ICSharpSymbol
     {
         private readonly CSharpSymbolFactory _symbolFactory;
         private readonly IAssemblySymbol _csharpSymbol;
@@ -37,6 +37,8 @@ namespace MetaDslx.CodeAnalysis.Symbols.CSharp
                     systemObject.TypeKind == TypeKind.Class;
             }
         }
+
+        ISymbol ICSharpSymbol.CSharpSymbol => this.CSharpSymbol;
 
         internal void DangerousSetModules(ImmutableArray<CSharpModuleSymbol> modules)
         {

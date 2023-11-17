@@ -8,7 +8,7 @@ using System.Threading;
 
 namespace MetaDslx.CodeAnalysis.Symbols.CSharp
 {
-    internal class CSharpAttributeSymbol : AttributeSymbol
+    internal class CSharpAttributeSymbol : AttributeSymbol, ICSharpSymbol
     {
         private readonly Microsoft.CodeAnalysis.AttributeData _csharpSymbol;
 

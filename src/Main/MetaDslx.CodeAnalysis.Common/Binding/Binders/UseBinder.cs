@@ -41,7 +41,7 @@ namespace MetaDslx.CodeAnalysis.Binding
         {
         }
 
-        protected override void AdjustLookupContext(LookupContext context)
+        protected override void AdjustFinalLookupContext(LookupContext context)
         {
             if (!_prefixes.IsDefaultOrEmpty) context.SetNamePrefixes(_prefixes);
             if (!_suffixes.IsDefaultOrEmpty) context.SetNameSuffixes(_suffixes);

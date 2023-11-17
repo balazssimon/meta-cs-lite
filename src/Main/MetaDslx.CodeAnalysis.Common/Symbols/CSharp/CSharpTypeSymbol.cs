@@ -9,7 +9,7 @@ using System.Threading;
 
 namespace MetaDslx.CodeAnalysis.Symbols.CSharp
 {
-    internal class CSharpTypeSymbol : TypeSymbol
+    internal class CSharpTypeSymbol : TypeSymbol, ICSharpSymbol
     {
         private readonly INamedTypeSymbol _csharpSymbol;
 
@@ -29,6 +29,8 @@ namespace MetaDslx.CodeAnalysis.Symbols.CSharp
         public override bool IsError => _csharpSymbol.TypeKind == TypeKind.Error;
         public override bool IsReferenceType => _csharpSymbol.IsReferenceType;
         public override bool IsValueType => _csharpSymbol.IsValueType;
+
+        ISymbol ICSharpSymbol.CSharpSymbol => this.CSharpSymbol;
 
         protected override string? CompleteProperty_Name(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
