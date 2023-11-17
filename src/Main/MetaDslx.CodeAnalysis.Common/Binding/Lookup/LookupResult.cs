@@ -168,6 +168,7 @@ namespace MetaDslx.CodeAnalysis.Binding
 
         public static SingleLookupResult Good(DeclaredSymbol symbol)
         {
+            if (symbol is null) throw new ArgumentNullException(nameof(symbol));
             return new SingleLookupResult(LookupResultKind.Viable, symbol, null);
         }
 

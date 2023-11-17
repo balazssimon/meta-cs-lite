@@ -8,6 +8,7 @@ using MetaDslx.CodeAnalysis;
 using MetaDslx.CodeAnalysis.Symbols;
 using MetaDslx.Modeling;
 using MetaDslx.Bootstrap.MetaCompiler.Model;
+using MetaDslx.Bootstrap.MetaCompiler.Symbols;
 //using metamodel MetaDslx.Bootstrap.MetaCompiler.Model.Compiler;
 
 language Compiler;
@@ -19,9 +20,9 @@ Main returns Namespace:
 	eof;
 
 Using returns ImportSymbol
-	: 'using' namespaces+=#NamespaceSymbol 
-	| {ImportMetaModelSymbol} 'metamodel' symbols+=#DeclaredSymbol ';'
-	| {ImportSymbolModelSymbol} 'symbols' namespaces+=#NamespaceSymbol ';';
+	: 'using' namespaces+=#NamespaceSymbol ';'
+	/*| {ImportMetaModelSymbol} 'using' 'metamodel' symbols+=#DeclaredSymbol ';'
+	| {ImportSymbolModelSymbol} 'using' 'symbols' namespaces+=#NamespaceSymbol ';'*/;
 
 [Scope]
 part Declarations: declarations+=LanguageDeclaration declarations+=Rule*;
@@ -32,19 +33,19 @@ Grammar: [Scope](rules+=Rule*);
 
 Rule: ParserRule | LexerRule;
 
-ParserRule: annotations+=ParserAnnotationList (isBlock?='block' name=Name | returnType=[Use(MetaType)]Identifier | name=Name 'returns' returnType=#MetaType) ':' alternatives+=PAlternative ('|' alternatives+=PAlternative)* ';';
-PAlternative: ('{' returnType=#MetaType '}')? elements+=PElement* ('=>' returnValue=Expression)?;
-PElement: (nameAnnotations+=ParserAnnotationList name=Name assignment=Assignment)? valueAnnotations+=ParserAnnotationList value=PElementValue multiplicity=Multiplicity?;
-PElementValue: PReference | PEof | PKeyword | PBlock;
+ParserRule: annotations+=ParserAnnotation* (isBlock?='block' name=Name | returnType=[Use(MetaType)]Identifier | name=Name 'returns' returnType=#MetaType) ':' alternatives+=PAlternative ('|' alternatives+=PAlternative)* ';';
+PAlternative: ('!{' returnType=#MetaType '}')? elements+=PElement* ('=>' returnValue=Expression)?;
+PElement: (nameAnnotations+=ParserAnnotation* symbolProperty=[SymbolProperty]Identifier assignment=Assignment)? valueAnnotations+=ParserAnnotation* value=PElementValue multiplicity=Multiplicity?;
+PElementValue: PBlock | PEof | PKeyword | PReference;
 PReference: rule=[Use(Rule)]Identifier | '#' referencedTypes+=#MetaType | '#{' referencedTypes+=#MetaType (',' referencedTypes+=#MetaType)* '}' ;
 PEof: 'eof';
 PKeyword: text=TString;
 PBlock: '(' alternatives+=PAlternative ('|' alternatives+=PAlternative)* ')';
 
-LexerRule: annotations+=LexerAnnotationList ('token' name=Name ('returns' returnType=#MetaType)? | isHidden?='hidden' name=Name | isFragment?='fragment' name=Name) ':' alternatives+=LAlternative ('|' alternatives+=LAlternative)* ';';
+LexerRule: annotations+=LexerAnnotation* ('token' name=Name ('returns' returnType=#MetaType)? | isHidden?='hidden' name=Name | isFragment?='fragment' name=Name) ':' alternatives+=LAlternative ('|' alternatives+=LAlternative)* ';';
 LAlternative: elements+=LElement*;
 LElement: isNegated?='~'? value=LElementValue multiplicity=Multiplicity?;
-LElementValue: LReference | LFixed | LWildCard | LRange /*| LSet*/ | LBlock;
+LElementValue: LBlock | LFixed | LWildCard | LRange | LReference /*| LSet*/;
 LReference: rule=[Use(LexerRule)]Identifier;
 LFixed: text=TString;
 LWildCard: '.';
@@ -64,12 +65,8 @@ StringExpression: stringValue=TString;
 ReferenceExpression: symbolValue=#MetaSymbol;
 ArrayExpression: '{' (items+=Expression (',' items+=Expression)*)? '}';
 
-part ParserAnnotationList: ParserAnnotation*;
 ParserAnnotation returns MetaDslx.Bootstrap.MetaCompiler.Model.Annotation: '[' type=[Use(types:{Binder,MetaDslx.CodeAnalysis.Annotations.Annotation},suffixes:{Binder,Annotation})]Qualifier AnnotationArguments? ']';
-
-part LexerAnnotationList: LexerAnnotation*;
 LexerAnnotation returns MetaDslx.Bootstrap.MetaCompiler.Model.Annotation: '[' type=[Use(types:{TokenKind,MetaDslx.CodeAnalysis.Annotations.Annotation},suffixes:{TokenKind,Annotation})]Qualifier AnnotationArguments? ']';
-
 part AnnotationArguments: '(' arguments+=AnnotationArgument (',' arguments+=AnnotationArgument)* ')';
 AnnotationArgument: (name=Identifier ':')? value=Expression;
 

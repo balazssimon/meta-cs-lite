@@ -92,7 +92,7 @@ namespace MetaDslx.CodeAnalysis.Binding
                 {
                     var symbol = qualifier.GetIdentifierSymbol(this, cancellationToken);
                     Interlocked.CompareExchange(ref _symbol, symbol, null);
-                    if (!symbol.IsError && symbol is DeclaredSymbol declaredSymbol) MarkSymbolAsUsed(declaredSymbol);
+                    if (symbol is not null && !symbol.IsError && symbol is DeclaredSymbol declaredSymbol) MarkSymbolAsUsed(declaredSymbol);
                 }
             }
         }

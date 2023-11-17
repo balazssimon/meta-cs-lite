@@ -103,7 +103,8 @@ namespace Roslyn.Utilities
 
         public static MetaDslx.CodeAnalysis.Location ToMetaDslx(this Microsoft.CodeAnalysis.Location location)
         {
-            return MetaDslx.CodeAnalysis.Location.Create(location.GetLineSpan().Path, location.SourceSpan.ToMetaDslx(), location.GetLineSpan().Span.ToMetaDslx());
+            var path = location.GetLineSpan().Path ?? string.Empty;
+            return MetaDslx.CodeAnalysis.Location.Create(path, location.SourceSpan.ToMetaDslx(), location.GetLineSpan().Span.ToMetaDslx());
         }
 
         public static MetaDslx.CodeAnalysis.Text.TextSpan ToMetaDslx(this Microsoft.CodeAnalysis.Text.TextSpan textSpan)

@@ -13,6 +13,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
             : base(module)
         {
             Register<ParserRuleSymbol>((s, d, mo) => new ParserRuleSymbol(s, d, mo));
+            Register<PElementSymbol>((s, d, mo) => new PElementSymbol(s, d, mo));
         }
     }
 }

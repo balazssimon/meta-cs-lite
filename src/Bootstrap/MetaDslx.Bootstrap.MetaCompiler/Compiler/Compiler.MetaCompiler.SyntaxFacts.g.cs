@@ -31,14 +31,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 				case CompilerSyntaxKind.KNamespace:
 				case CompilerSyntaxKind.TSemicolon:
 				case CompilerSyntaxKind.KUsing:
-				case CompilerSyntaxKind.KMetamodel:
-				case CompilerSyntaxKind.KSymbols:
 				case CompilerSyntaxKind.KLanguage:
 				case CompilerSyntaxKind.KBlock:
 				case CompilerSyntaxKind.KReturns:
 				case CompilerSyntaxKind.TColon:
 				case CompilerSyntaxKind.TBar:
-				case CompilerSyntaxKind.TLBrace:
+				case CompilerSyntaxKind.TExclLBrace:
 				case CompilerSyntaxKind.TRBrace:
 				case CompilerSyntaxKind.TEqGt:
 				case CompilerSyntaxKind.THash:
@@ -55,6 +53,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 				case CompilerSyntaxKind.KNull:
 				case CompilerSyntaxKind.KTrue:
 				case CompilerSyntaxKind.KFalse:
+				case CompilerSyntaxKind.TLBrace:
 				case CompilerSyntaxKind.TLBracket:
 				case CompilerSyntaxKind.TRBracket:
 				case CompilerSyntaxKind.TEq:
@@ -104,14 +103,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 				case CompilerSyntaxKind.KNamespace:
 				case CompilerSyntaxKind.TSemicolon:
 				case CompilerSyntaxKind.KUsing:
-				case CompilerSyntaxKind.KMetamodel:
-				case CompilerSyntaxKind.KSymbols:
 				case CompilerSyntaxKind.KLanguage:
 				case CompilerSyntaxKind.KBlock:
 				case CompilerSyntaxKind.KReturns:
 				case CompilerSyntaxKind.TColon:
 				case CompilerSyntaxKind.TBar:
-				case CompilerSyntaxKind.TLBrace:
+				case CompilerSyntaxKind.TExclLBrace:
 				case CompilerSyntaxKind.TRBrace:
 				case CompilerSyntaxKind.TEqGt:
 				case CompilerSyntaxKind.THash:
@@ -128,6 +125,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 				case CompilerSyntaxKind.KNull:
 				case CompilerSyntaxKind.KTrue:
 				case CompilerSyntaxKind.KFalse:
+				case CompilerSyntaxKind.TLBrace:
 				case CompilerSyntaxKind.TLBracket:
 				case CompilerSyntaxKind.TRBracket:
 				case CompilerSyntaxKind.TEq:
@@ -165,10 +163,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 					return CompilerSyntaxKind.TSemicolon;
 				case "using": 
 					return CompilerSyntaxKind.KUsing;
-				case "metamodel": 
-					return CompilerSyntaxKind.KMetamodel;
-				case "symbols": 
-					return CompilerSyntaxKind.KSymbols;
 				case "language": 
 					return CompilerSyntaxKind.KLanguage;
 				case "block": 
@@ -179,8 +173,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 					return CompilerSyntaxKind.TColon;
 				case "|": 
 					return CompilerSyntaxKind.TBar;
-				case "{": 
-					return CompilerSyntaxKind.TLBrace;
+				case "!{": 
+					return CompilerSyntaxKind.TExclLBrace;
 				case "}": 
 					return CompilerSyntaxKind.TRBrace;
 				case "=>": 
@@ -213,6 +207,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 					return CompilerSyntaxKind.KTrue;
 				case "false": 
 					return CompilerSyntaxKind.KFalse;
+				case "{": 
+					return CompilerSyntaxKind.TLBrace;
 				case "[": 
 					return CompilerSyntaxKind.TLBracket;
 				case "]": 
@@ -286,10 +282,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 					return "TSemicolon";
 				case CompilerSyntaxKind.KUsing: 
 					return "KUsing";
-				case CompilerSyntaxKind.KMetamodel: 
-					return "KMetamodel";
-				case CompilerSyntaxKind.KSymbols: 
-					return "KSymbols";
 				case CompilerSyntaxKind.KLanguage: 
 					return "KLanguage";
 				case CompilerSyntaxKind.KBlock: 
@@ -300,8 +292,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 					return "TColon";
 				case CompilerSyntaxKind.TBar: 
 					return "TBar";
-				case CompilerSyntaxKind.TLBrace: 
-					return "TLBrace";
+				case CompilerSyntaxKind.TExclLBrace: 
+					return "TExclLBrace";
 				case CompilerSyntaxKind.TRBrace: 
 					return "TRBrace";
 				case CompilerSyntaxKind.TEqGt: 
@@ -334,6 +326,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 					return "KTrue";
 				case CompilerSyntaxKind.KFalse: 
 					return "KFalse";
+				case CompilerSyntaxKind.TLBrace: 
+					return "TLBrace";
 				case CompilerSyntaxKind.TLBracket: 
 					return "TLBracket";
 				case CompilerSyntaxKind.TRBracket: 
@@ -394,12 +388,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 					return "TInvalidToken";
 				case CompilerSyntaxKind.Main: 
 					return "Main";
-				case CompilerSyntaxKind.UsingAlt1: 
-					return "UsingAlt1";
-				case CompilerSyntaxKind.UsingAlt2: 
-					return "UsingAlt2";
-				case CompilerSyntaxKind.UsingAlt3: 
-					return "UsingAlt3";
+				case CompilerSyntaxKind.Using: 
+					return "Using";
 				case CompilerSyntaxKind.Declarations: 
 					return "Declarations";
 				case CompilerSyntaxKind.LanguageDeclaration: 
@@ -414,32 +404,32 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 					return "PAlternative";
 				case CompilerSyntaxKind.PElement: 
 					return "PElement";
+				case CompilerSyntaxKind.PBlock: 
+					return "PBlock";
+				case CompilerSyntaxKind.PEof: 
+					return "PEof";
+				case CompilerSyntaxKind.PKeyword: 
+					return "PKeyword";
 				case CompilerSyntaxKind.PReferenceAlt1: 
 					return "PReferenceAlt1";
 				case CompilerSyntaxKind.PReferenceAlt2: 
 					return "PReferenceAlt2";
 				case CompilerSyntaxKind.PReferenceAlt3: 
 					return "PReferenceAlt3";
-				case CompilerSyntaxKind.PEof: 
-					return "PEof";
-				case CompilerSyntaxKind.PKeyword: 
-					return "PKeyword";
-				case CompilerSyntaxKind.PBlock: 
-					return "PBlock";
 				case CompilerSyntaxKind.LAlternative: 
 					return "LAlternative";
 				case CompilerSyntaxKind.LElement: 
 					return "LElement";
-				case CompilerSyntaxKind.LReference: 
-					return "LReference";
+				case CompilerSyntaxKind.LBlock: 
+					return "LBlock";
 				case CompilerSyntaxKind.LFixed: 
 					return "LFixed";
 				case CompilerSyntaxKind.LWildCard: 
 					return "LWildCard";
 				case CompilerSyntaxKind.LRange: 
 					return "LRange";
-				case CompilerSyntaxKind.LBlock: 
-					return "LBlock";
+				case CompilerSyntaxKind.LReference: 
+					return "LReference";
 				case CompilerSyntaxKind.IntExpression: 
 					return "IntExpression";
 				case CompilerSyntaxKind.StringExpression: 
@@ -450,12 +440,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 					return "ArrayExpression";
 				case CompilerSyntaxKind.ExpressionTokens: 
 					return "ExpressionTokens";
-				case CompilerSyntaxKind.ParserAnnotationList: 
-					return "ParserAnnotationList";
 				case CompilerSyntaxKind.ParserAnnotation: 
 					return "ParserAnnotation";
-				case CompilerSyntaxKind.LexerAnnotationList: 
-					return "LexerAnnotationList";
 				case CompilerSyntaxKind.LexerAnnotation: 
 					return "LexerAnnotation";
 				case CompilerSyntaxKind.AnnotationArguments: 
@@ -538,10 +524,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 					return ";";
 				case CompilerSyntaxKind.KUsing: 
 					return "using";
-				case CompilerSyntaxKind.KMetamodel: 
-					return "metamodel";
-				case CompilerSyntaxKind.KSymbols: 
-					return "symbols";
 				case CompilerSyntaxKind.KLanguage: 
 					return "language";
 				case CompilerSyntaxKind.KBlock: 
@@ -552,8 +534,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 					return ":";
 				case CompilerSyntaxKind.TBar: 
 					return "|";
-				case CompilerSyntaxKind.TLBrace: 
-					return "{";
+				case CompilerSyntaxKind.TExclLBrace: 
+					return "!{";
 				case CompilerSyntaxKind.TRBrace: 
 					return "}";
 				case CompilerSyntaxKind.TEqGt: 
@@ -586,6 +568,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 					return "true";
 				case CompilerSyntaxKind.KFalse: 
 					return "false";
+				case CompilerSyntaxKind.TLBrace: 
+					return "{";
 				case CompilerSyntaxKind.TLBracket: 
 					return "[";
 				case CompilerSyntaxKind.TRBracket: 
@@ -646,8 +630,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 			{
 				case CompilerSyntaxKind.KNamespace: 
 				case CompilerSyntaxKind.KUsing: 
-				case CompilerSyntaxKind.KMetamodel: 
-				case CompilerSyntaxKind.KSymbols: 
 				case CompilerSyntaxKind.KLanguage: 
 				case CompilerSyntaxKind.KBlock: 
 				case CompilerSyntaxKind.KReturns: 
@@ -673,8 +655,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
         {
 			yield return CompilerSyntaxKind.KNamespace;
 			yield return CompilerSyntaxKind.KUsing;
-			yield return CompilerSyntaxKind.KMetamodel;
-			yield return CompilerSyntaxKind.KSymbols;
 			yield return CompilerSyntaxKind.KLanguage;
 			yield return CompilerSyntaxKind.KBlock;
 			yield return CompilerSyntaxKind.KReturns;
@@ -701,10 +681,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 					return CompilerSyntaxKind.KNamespace;
 				case "using": 
 					return CompilerSyntaxKind.KUsing;
-				case "metamodel": 
-					return CompilerSyntaxKind.KMetamodel;
-				case "symbols": 
-					return CompilerSyntaxKind.KSymbols;
 				case "language": 
 					return CompilerSyntaxKind.KLanguage;
 				case "block": 

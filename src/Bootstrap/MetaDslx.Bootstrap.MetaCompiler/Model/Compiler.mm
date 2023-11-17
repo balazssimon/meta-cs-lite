@@ -188,10 +188,10 @@ enum Assignment
     PlusAssign
 }
 
-class PElement $Symbol
+class PElement $PElementSymbol
 {
 	contains Annotation[] NameAnnotations;
-	string? $Name;
+	symbol $SymbolProperty;
 	Assignment Assignment;
 	contains Annotation[] ValueAnnotations;
 	contains PElementValue Value;

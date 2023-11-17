@@ -23,7 +23,8 @@ namespace MetaDslx.CodeAnalysis.Binding
             None = 0,
             Diagnose = 0x01,
             InImport = 0x02,
-            IsLookup = 0x04
+            IsLookup = 0x04,
+            IsCaseSensitive = 0x10,
         }
 
         private readonly ObjectPool<LookupContext> _pool;
@@ -134,6 +135,15 @@ namespace MetaDslx.CodeAnalysis.Binding
             {
                 if (value) _flags |= LookupFlags.IsLookup;
                 else _flags &= ~LookupFlags.IsLookup;
+            }
+        }
+        public bool IsCaseSensitive
+        {
+            get => _flags.HasFlag(LookupFlags.IsCaseSensitive);
+            set
+            {
+                if (value) _flags |= LookupFlags.IsCaseSensitive;
+                else _flags &= ~LookupFlags.IsCaseSensitive;
             }
         }
         public LookupResult Result => _result;
@@ -294,8 +304,8 @@ namespace MetaDslx.CodeAnalysis.Binding
         public bool IsViable(DeclaredSymbol symbol)
         {
             if (symbol is null) return false;
-            if (_viableNames.Count > 0 && !_viableNames.Contains(symbol.Name)) return false;
-            if (_viableMetadataNames.Count > 0 && !_viableMetadataNames.Contains(symbol.MetadataName)) return false;
+            if (_viableNames.Count > 0 && !(IsCaseSensitive ? _viableNames.Contains(symbol.Name) : _viableNames.Contains(symbol.Name, StringComparer.OrdinalIgnoreCase))) return false;
+            if (_viableMetadataNames.Count > 0 && !(IsCaseSensitive ? _viableMetadataNames.Contains(symbol.MetadataName) : _viableMetadataNames.Contains(symbol.MetadataName, StringComparer.OrdinalIgnoreCase))) return false;
             var unwrapped = AliasSymbol.UnwrapAlias(this, symbol) as DeclaredSymbol;
             if (unwrapped is null) return false;
             if (!DefaultLookupValidator.IsViable(this, unwrapped)) return false;
