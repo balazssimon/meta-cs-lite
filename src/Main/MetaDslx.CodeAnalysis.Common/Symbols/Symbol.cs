@@ -27,15 +27,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
             public static readonly CompletionPart StartComputingProperty_Attributes = new CompletionPart(nameof(StartComputingProperty_Attributes));
             public static readonly CompletionPart FinishComputingProperty_Attributes = new CompletionPart(nameof(FinishComputingProperty_Attributes));
             public static readonly CompletionGraph CompletionGraph = 
-                CompletionGraph.CreateFromParts(
-                    CompletionGraph.StartInitializing, CompletionGraph.FinishInitializing, 
-                    CompletionGraph.StartCreatingContainedSymbols, CompletionGraph.FinishCreatingContainedSymbols, 
-                    StartComputingProperty_Attributes, FinishComputingProperty_Attributes, 
-                    CompletionGraph.StartComputingNonSymbolProperties, CompletionGraph.FinishComputingNonSymbolProperties, 
-                    CompletionGraph.ContainedSymbolsFinalized,
-                    CompletionGraph.StartFinalizing, CompletionGraph.FinishFinalizing,
-                    CompletionGraph.ContainedSymbolsCompleted,
-                    CompletionGraph.StartValidating, CompletionGraph.FinishValidating);
+                CompletionGraph.CreateFromParts(StartComputingProperty_Attributes, FinishComputingProperty_Attributes);
         }
 
         private static ConditionalWeakTable<Symbol, DiagnosticBag> s_diagnostics = new ConditionalWeakTable<Symbol, DiagnosticBag>();

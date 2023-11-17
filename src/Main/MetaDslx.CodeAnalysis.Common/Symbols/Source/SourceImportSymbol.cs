@@ -1,7 +1,6 @@
 ﻿using MetaDslx.CodeAnalysis.Declarations;
 using MetaDslx.CodeAnalysis.PooledObjects;
 using MetaDslx.CodeAnalysis.Symbols.CSharp;
-using MetaDslx.CodeAnalysis.Symbols.Meta;
 using MetaDslx.Modeling;
 using Microsoft.CodeAnalysis;
 using System;

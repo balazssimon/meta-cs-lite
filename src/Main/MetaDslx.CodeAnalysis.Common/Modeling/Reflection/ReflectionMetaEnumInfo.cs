@@ -12,13 +12,13 @@ namespace MetaDslx.CodeAnalysis.Modeling.Reflection
         private readonly ReflectionMetaModel _metaModel;
         private readonly Type _metaType;
         private readonly ImmutableArray<string> _literals;
-        private readonly ImmutableDictionary<string, Enum> _literalsByName;
+        private readonly ImmutableDictionary<string, MetaSymbol> _literalsByName;
 
         public ReflectionMetaEnumInfo(
             ReflectionMetaModel metaModel,
             Type metaType,
             ImmutableArray<string> literals,
-            ImmutableDictionary<string, Enum> literalsByName)
+            ImmutableDictionary<string, MetaSymbol> literalsByName)
         {
             _metaModel = metaModel;
             _metaType = metaType;
@@ -28,10 +28,10 @@ namespace MetaDslx.CodeAnalysis.Modeling.Reflection
 
         public override MetaModel MetaModel => _metaModel;
 
-        public override Type MetaType => _metaType;
+        public override MetaType MetaType => _metaType;
 
         public override ImmutableArray<string> Literals => _literals;
 
-        protected override ImmutableDictionary<string, Enum> LiteralsByName => _literalsByName;
+        protected override ImmutableDictionary<string, MetaSymbol> LiteralsByName => _literalsByName;
     }
 }

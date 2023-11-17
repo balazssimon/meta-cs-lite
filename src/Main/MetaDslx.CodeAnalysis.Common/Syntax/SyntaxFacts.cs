@@ -92,13 +92,13 @@ namespace MetaDslx.CodeAnalysis.Syntax
         public virtual object? ExtractValue(SyntaxNodeOrToken nodeOrToken)
         {
             if (nodeOrToken.IsToken) return nodeOrToken.AsToken().Value;
-            TryExtractValue(null, nodeOrToken.AsNode()?.ToString(), out var value);
+            TryExtractValue(default, nodeOrToken.AsNode()?.ToString(), out var value);
             return value;
         }
 
-        public virtual bool TryExtractValue(Type? expectedType, string? valueText, out object? value)
+        public virtual bool TryExtractValue(MetaType expectedType, string? valueText, out object? value)
         {
-            if (expectedType is null)
+            if (expectedType.IsNull)
             {
                 if (valueText == null)
                 {
@@ -198,18 +198,24 @@ namespace MetaDslx.CodeAnalysis.Syntax
                 value = valueText;
                 return true;
             }
-            else
+            else 
             {
-                try
+                var type = expectedType.AsType();
+                if (type is not null)
                 {
-                    value = TypeDescriptor.GetConverter(expectedType).ConvertFromInvariantString(valueText);
-                    return true;
+                    try
+                    {
+                        value = TypeDescriptor.GetConverter(expectedType).ConvertFromInvariantString(valueText);
+                        return true;
+                    }
+                    catch (NotSupportedException)
+                    {
+                        value = null;
+                        return false;
+                    }
                 }
-                catch (NotSupportedException)
-                {
-                    value = null;
-                    return false;
-                }
+                value = null;
+                return false;
             }
         }
 

@@ -1,3 +1,4 @@
+using MetaDslx.CodeAnalysis.PooledObjects;
 using Roslyn.Utilities;
 using System;
 using System.Collections.Generic;
@@ -25,7 +26,26 @@ namespace MetaDslx.CodeAnalysis.Symbols
 
         public static CompletionGraph CreateFromParts(params CompletionPart[] parts)
         {
-            return new CompletionGraph(parts);
+            var allParts = ArrayBuilder<CompletionPart>.GetInstance();
+            allParts.Add(StartInitializing);
+            allParts.Add(FinishInitializing);
+            allParts.Add(StartCreatingContainedSymbols);
+            allParts.Add(FinishCreatingContainedSymbols);
+            allParts.AddRange(parts);
+            allParts.Add(StartComputingNonSymbolProperties);
+            allParts.Add(FinishComputingNonSymbolProperties);
+            allParts.Add(ContainedSymbolsFinalized);
+            allParts.Add(StartFinalizing);
+            allParts.Add(FinishFinalizing);
+            allParts.Add(ContainedSymbolsCompleted);
+            allParts.Add(StartValidating);
+            allParts.Add(FinishValidating);
+            return new CompletionGraph(allParts);
+        }
+
+        public static CompletionGraph CreateFromPartsCustom(params CompletionPart[] allParts)
+        {
+            return new CompletionGraph(allParts);
         }
 
         public ImmutableArray<CompletionPart> Parts => _parts;

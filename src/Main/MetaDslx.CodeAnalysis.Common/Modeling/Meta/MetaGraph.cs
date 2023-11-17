@@ -1,4 +1,5 @@
-﻿using MetaDslx.CodeAnalysis.PooledObjects;
+﻿using MetaDslx.CodeAnalysis;
+using MetaDslx.CodeAnalysis.PooledObjects;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -526,7 +527,7 @@ namespace MetaDslx.Modeling.Meta
         protected abstract bool IsEnumType(TType type);
         protected abstract bool IsValueType(TType type);
         protected abstract bool IsPrimitiveType(TType type);
-        protected abstract MetaPropertySlot<TType, TProperty, TOperation> MakePropertySlot(MetaProperty<TType, TProperty, TOperation> slotProperty, ImmutableArray<MetaProperty<TType, TProperty, TOperation>> slotProperties, object? defaultValue, ModelPropertyFlags flags);
+        protected abstract MetaPropertySlot<TType, TProperty, TOperation> MakePropertySlot(MetaProperty<TType, TProperty, TOperation> slotProperty, ImmutableArray<MetaProperty<TType, TProperty, TOperation>> slotProperties, MetaSymbol defaultValue, ModelPropertyFlags flags);
         protected abstract MetaPropertyInfo<TType, TProperty, TOperation> MakePropertyInfo(
             MetaPropertySlot<TType, TProperty, TOperation> slot,
             ImmutableArray<MetaProperty<TType, TProperty, TOperation>> oppositeProperties,

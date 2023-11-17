@@ -1,5 +1,6 @@
 ﻿using MetaDslx.CodeAnalysis.PooledObjects;
 using MetaDslx.CodeAnalysis.Symbols;
+using MetaDslx.CodeAnalysis.Symbols.CSharp;
 using MetaDslx.CodeAnalysis.Symbols.Model;
 using MetaDslx.Modeling;
 using System;
@@ -7,12 +8,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 
 namespace MetaDslx.CodeAnalysis
 {
     public struct MetaType : IEquatable<MetaType>
     {
-        private readonly object? _original;
+        private object? _original;
 
         private MetaType(string name)
         {
@@ -38,6 +40,11 @@ namespace MetaDslx.CodeAnalysis
         public static MetaType FromType(Type type) => new MetaType(type);
         public static MetaType FromTypeSymbol(TypeSymbol typeSymbol) => new MetaType(typeSymbol);
         public static MetaType FromModelObject(IModelObject modelObject) => new MetaType(modelObject);
+
+        public bool InterlockedInitialize(MetaType value)
+        {
+            return Interlocked.CompareExchange(ref _original, value._original, null) == null;
+        }
 
         public bool IsNull => _original is null;
         public bool IsName => _original is string;
@@ -338,6 +345,30 @@ namespace MetaDslx.CodeAnalysis
                     default:
                         return SpecialType.None;
                 }
+            }
+        }
+
+        public bool IsEnum
+        {
+            get
+            {
+                var type = AsType();
+                if (type is not null) return type.IsEnum;
+                var csts = OriginalTypeSymbol as CSharpTypeSymbol;
+                if (csts is not null) return csts.CSharpSymbol.TypeKind == Microsoft.CodeAnalysis.TypeKind.Enum;
+                return false;
+            }
+        }
+
+        public bool IsValueType
+        {
+            get
+            {
+                var type = AsType();
+                if (type is not null) return type.IsValueType;
+                var csts = OriginalTypeSymbol as CSharpTypeSymbol;
+                if (csts is not null) return csts.CSharpSymbol.IsValueType;
+                return false;
             }
         }
 

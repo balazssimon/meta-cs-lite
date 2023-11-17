@@ -325,20 +325,62 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			return new MainGreen(CompilerSyntaxKind.Main, kNamespace, name, tSemicolon, @using.Node, declarations, eof);
 		}
 
-		internal UsingGreen Using(InternalSyntaxToken kUsing, UsingBlock1Green usingBlock1, InternalSyntaxToken tSemicolon)
+		internal UsingAlt1Green UsingAlt1(InternalSyntaxToken kUsing, QualifierGreen namespaces)
 		{
 #if DEBUG
 			if (kUsing is null) throw new ArgumentNullException(nameof(kUsing));
 			if (kUsing.RawKind != (int)CompilerSyntaxKind.KUsing) throw new ArgumentException(nameof(kUsing));
-			if (usingBlock1 is null) throw new ArgumentNullException(nameof(usingBlock1));
+			if (namespaces is null) throw new ArgumentNullException(nameof(namespaces));
+#endif
+			int hash;
+			var cached = SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.UsingAlt1, kUsing, namespaces, out hash);
+			if (cached != null) return (UsingAlt1Green)cached;
+		
+			var result = new UsingAlt1Green(CompilerSyntaxKind.UsingAlt1, kUsing, namespaces);
+			if (hash >= 0)
+			{
+				SyntaxNodeCache.AddNode(result, hash);
+			}
+		
+			return result;
+		}
+
+		internal UsingAlt2Green UsingAlt2(InternalSyntaxToken kMetamodel, QualifierGreen symbols, InternalSyntaxToken tSemicolon)
+		{
+#if DEBUG
+			if (kMetamodel is null) throw new ArgumentNullException(nameof(kMetamodel));
+			if (kMetamodel.RawKind != (int)CompilerSyntaxKind.KMetamodel) throw new ArgumentException(nameof(kMetamodel));
+			if (symbols is null) throw new ArgumentNullException(nameof(symbols));
 			if (tSemicolon is null) throw new ArgumentNullException(nameof(tSemicolon));
 			if (tSemicolon.RawKind != (int)CompilerSyntaxKind.TSemicolon) throw new ArgumentException(nameof(tSemicolon));
 #endif
 			int hash;
-			var cached = SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.Using, kUsing, usingBlock1, tSemicolon, out hash);
-			if (cached != null) return (UsingGreen)cached;
+			var cached = SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.UsingAlt2, kMetamodel, symbols, tSemicolon, out hash);
+			if (cached != null) return (UsingAlt2Green)cached;
 		
-			var result = new UsingGreen(CompilerSyntaxKind.Using, kUsing, usingBlock1, tSemicolon);
+			var result = new UsingAlt2Green(CompilerSyntaxKind.UsingAlt2, kMetamodel, symbols, tSemicolon);
+			if (hash >= 0)
+			{
+				SyntaxNodeCache.AddNode(result, hash);
+			}
+		
+			return result;
+		}
+
+		internal UsingAlt3Green UsingAlt3(InternalSyntaxToken kSymbols, QualifierGreen namespaces, InternalSyntaxToken tSemicolon)
+		{
+#if DEBUG
+			if (kSymbols is null) throw new ArgumentNullException(nameof(kSymbols));
+			if (kSymbols.RawKind != (int)CompilerSyntaxKind.KSymbols) throw new ArgumentException(nameof(kSymbols));
+			if (namespaces is null) throw new ArgumentNullException(nameof(namespaces));
+			if (tSemicolon is null) throw new ArgumentNullException(nameof(tSemicolon));
+			if (tSemicolon.RawKind != (int)CompilerSyntaxKind.TSemicolon) throw new ArgumentException(nameof(tSemicolon));
+#endif
+			int hash;
+			var cached = SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.UsingAlt3, kSymbols, namespaces, tSemicolon, out hash);
+			if (cached != null) return (UsingAlt3Green)cached;
+		
+			var result = new UsingAlt3Green(CompilerSyntaxKind.UsingAlt3, kSymbols, namespaces, tSemicolon);
 			if (hash >= 0)
 			{
 				SyntaxNodeCache.AddNode(result, hash);
@@ -968,44 +1010,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			if (cached != null) return (IdentifierGreen)cached;
 		
 			var result = new IdentifierGreen(CompilerSyntaxKind.Identifier, tIdentifier);
-			if (hash >= 0)
-			{
-				SyntaxNodeCache.AddNode(result, hash);
-			}
-		
-			return result;
-		}
-
-		internal UsingBlock1Alt1Green UsingBlock1Alt1(QualifierGreen namespaces)
-		{
-#if DEBUG
-			if (namespaces is null) throw new ArgumentNullException(nameof(namespaces));
-#endif
-			int hash;
-			var cached = SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.UsingBlock1Alt1, namespaces, out hash);
-			if (cached != null) return (UsingBlock1Alt1Green)cached;
-		
-			var result = new UsingBlock1Alt1Green(CompilerSyntaxKind.UsingBlock1Alt1, namespaces);
-			if (hash >= 0)
-			{
-				SyntaxNodeCache.AddNode(result, hash);
-			}
-		
-			return result;
-		}
-
-		internal UsingBlock1Alt2Green UsingBlock1Alt2(InternalSyntaxToken kMetamodel, QualifierGreen metaModelSymbols)
-		{
-#if DEBUG
-			if (kMetamodel is null) throw new ArgumentNullException(nameof(kMetamodel));
-			if (kMetamodel.RawKind != (int)CompilerSyntaxKind.KMetamodel) throw new ArgumentException(nameof(kMetamodel));
-			if (metaModelSymbols is null) throw new ArgumentNullException(nameof(metaModelSymbols));
-#endif
-			int hash;
-			var cached = SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.UsingBlock1Alt2, kMetamodel, metaModelSymbols, out hash);
-			if (cached != null) return (UsingBlock1Alt2Green)cached;
-		
-			var result = new UsingBlock1Alt2Green(CompilerSyntaxKind.UsingBlock1Alt2, kMetamodel, metaModelSymbols);
 			if (hash >= 0)
 			{
 				SyntaxNodeCache.AddNode(result, hash);

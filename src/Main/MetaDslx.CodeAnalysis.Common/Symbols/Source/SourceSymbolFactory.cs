@@ -278,7 +278,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
                                     builder.Add(tvalue);
                                     try
                                     {
-                                        if (typeof(Symbol).IsAssignableFrom(prop.Type) && prop.Type.IsAssignableFrom(value.GetType()))
+                                        if (prop.Type.IsAssignableTo(typeof(Symbol)) && prop.Type.IsAssignableFrom(value.GetType()))
                                         {
                                             modelObject.Add(prop, value);
                                         }
@@ -352,7 +352,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
                             {
                                 try
                                 {
-                                    if (typeof(Symbol).IsAssignableFrom(prop.Type) && prop.Type.IsAssignableFrom(value.GetType()))
+                                    if (prop.Type.IsAssignableTo(typeof(Symbol)) && prop.Type.IsAssignableFrom(value.GetType()))
                                     {
                                         modelObject.Add(prop, value);
                                     }

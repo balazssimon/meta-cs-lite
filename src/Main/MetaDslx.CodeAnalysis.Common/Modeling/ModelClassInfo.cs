@@ -14,7 +14,7 @@ namespace MetaDslx.Modeling
         protected abstract ImmutableDictionary<ModelOperation, ModelOperationInfo> ModelOperationInfos { get; }
 
         public abstract MetaModel MetaModel { get; }
-        public abstract Type MetaType { get; }
+        public abstract MetaType MetaType { get; }
         public abstract MetaType SymbolType { get; }
         public abstract ModelProperty? NameProperty { get; }
         public abstract ModelProperty? TypeProperty { get; }

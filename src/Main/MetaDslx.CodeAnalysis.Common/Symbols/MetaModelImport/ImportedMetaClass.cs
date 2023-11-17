@@ -9,16 +9,16 @@ using System.Collections.Immutable;
 using System.Linq;
 using System.Text;
 
-namespace MetaDslx.CodeAnalysis.Symbols.Meta
+namespace MetaDslx.CodeAnalysis.Symbols.MetaModelImport
 {
-    internal class SymbolMetaClass : MetaClass<MetaType, CSharpDeclaredSymbol, CSharpDeclaredSymbol>
+    internal class ImportedMetaClass : MetaClass<MetaType, CSharpDeclaredSymbol, CSharpDeclaredSymbol>
     {
-        private readonly SymbolMetaModel _metaModel;
+        private readonly ImportedMetaModel _metaModel;
         private object? _symbolType;
         private ImmutableArray<MetaType> _baseTypes;
         private ImmutableArray<CSharpDeclaredSymbol> _declaredProperties;
 
-        public SymbolMetaClass(SymbolMetaModel metaModel, MetaType underlyingType) 
+        public ImportedMetaClass(ImportedMetaModel metaModel, MetaType underlyingType) 
             : base(underlyingType)
         {
             _metaModel = metaModel;

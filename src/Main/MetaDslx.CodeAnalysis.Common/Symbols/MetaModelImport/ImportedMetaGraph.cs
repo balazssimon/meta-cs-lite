@@ -7,14 +7,14 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Text;
 
-namespace MetaDslx.CodeAnalysis.Symbols.Meta
+namespace MetaDslx.CodeAnalysis.Symbols.MetaModelImport
 {
-    internal class SymbolMetaGraph : MetaGraph<MetaType, CSharpDeclaredSymbol, CSharpDeclaredSymbol>
+    internal class ImportedMetaGraph : MetaGraph<MetaType, CSharpDeclaredSymbol, CSharpDeclaredSymbol>
     {
-        private readonly SymbolMetaModel _metaModel;
+        private readonly ImportedMetaModel _metaModel;
         private CSharpSymbolFactory _factory;
 
-        public SymbolMetaGraph(SymbolMetaModel metaModel, IEnumerable<MetaType> classTypes, CSharpSymbolFactory factory) 
+        public ImportedMetaGraph(ImportedMetaModel metaModel, IEnumerable<MetaType> classTypes, CSharpSymbolFactory factory) 
             : base(classTypes)
         {
             _metaModel = metaModel;
@@ -88,32 +88,32 @@ namespace MetaDslx.CodeAnalysis.Symbols.Meta
 
         protected override MetaClass<MetaType, CSharpDeclaredSymbol, CSharpDeclaredSymbol> MakeClass(MetaType classType)
         {
-            return new SymbolMetaClass(_metaModel, classType);
+            return new ImportedMetaClass(_metaModel, classType);
         }
 
         protected override MetaOperation<MetaType, CSharpDeclaredSymbol, CSharpDeclaredSymbol> MakeOperation(MetaClass<MetaType, CSharpDeclaredSymbol, CSharpDeclaredSymbol> declaringType, CSharpDeclaredSymbol operation)
         {
-            return new SymbolMetaOperation(declaringType, operation);
+            return new ImportedMetaOperation(declaringType, operation);
         }
 
         protected override MetaOperationInfo<MetaType, CSharpDeclaredSymbol, CSharpDeclaredSymbol> MakeOperationInfo(ImmutableArray<MetaOperation<MetaType, CSharpDeclaredSymbol, CSharpDeclaredSymbol>> overridenOperations, ImmutableArray<MetaOperation<MetaType, CSharpDeclaredSymbol, CSharpDeclaredSymbol>> overridingOperations)
         {
-            return new SymbolMetaOperationInfo(overridenOperations, overridingOperations);
+            return new ImportedMetaOperationInfo(overridenOperations, overridingOperations);
         }
 
         protected override MetaProperty<MetaType, CSharpDeclaredSymbol, CSharpDeclaredSymbol> MakeProperty(MetaClass<MetaType, CSharpDeclaredSymbol, CSharpDeclaredSymbol> declaringType, CSharpDeclaredSymbol property)
         {
-            return new SymbolMetaProperty(declaringType, property);
+            return new ImportedMetaProperty(declaringType, property);
         }
 
         protected override MetaPropertyInfo<MetaType, CSharpDeclaredSymbol, CSharpDeclaredSymbol> MakePropertyInfo(MetaPropertySlot<MetaType, CSharpDeclaredSymbol, CSharpDeclaredSymbol> slot, ImmutableArray<MetaProperty<MetaType, CSharpDeclaredSymbol, CSharpDeclaredSymbol>> oppositeProperties, ImmutableArray<MetaProperty<MetaType, CSharpDeclaredSymbol, CSharpDeclaredSymbol>> subsettedProperties, ImmutableArray<MetaProperty<MetaType, CSharpDeclaredSymbol, CSharpDeclaredSymbol>> subsettingProperties, ImmutableArray<MetaProperty<MetaType, CSharpDeclaredSymbol, CSharpDeclaredSymbol>> redefinedProperties, ImmutableArray<MetaProperty<MetaType, CSharpDeclaredSymbol, CSharpDeclaredSymbol>> redefiningProperties, ImmutableArray<MetaProperty<MetaType, CSharpDeclaredSymbol, CSharpDeclaredSymbol>> hiddenProperties, ImmutableArray<MetaProperty<MetaType, CSharpDeclaredSymbol, CSharpDeclaredSymbol>> hidingProperties)
         {
-            return new SymbolMetaPropertyInfo(slot, oppositeProperties, subsettedProperties, subsettingProperties, redefinedProperties, redefiningProperties, hiddenProperties, hidingProperties);
+            return new ImportedMetaPropertyInfo(slot, oppositeProperties, subsettedProperties, subsettingProperties, redefinedProperties, redefiningProperties, hiddenProperties, hidingProperties);
         }
 
-        protected override MetaPropertySlot<MetaType, CSharpDeclaredSymbol, CSharpDeclaredSymbol> MakePropertySlot(MetaProperty<MetaType, CSharpDeclaredSymbol, CSharpDeclaredSymbol> slotProperty, ImmutableArray<MetaProperty<MetaType, CSharpDeclaredSymbol, CSharpDeclaredSymbol>> slotProperties, object? defaultValue, ModelPropertyFlags flags)
+        protected override MetaPropertySlot<MetaType, CSharpDeclaredSymbol, CSharpDeclaredSymbol> MakePropertySlot(MetaProperty<MetaType, CSharpDeclaredSymbol, CSharpDeclaredSymbol> slotProperty, ImmutableArray<MetaProperty<MetaType, CSharpDeclaredSymbol, CSharpDeclaredSymbol>> slotProperties, MetaSymbol defaultValue, ModelPropertyFlags flags)
         {
-            return new SymbolMetaPropertySlot(slotProperty, slotProperties, defaultValue, flags);
+            return new ImportedMetaPropertySlot(slotProperty, slotProperties, defaultValue, flags);
         }
     }
 }

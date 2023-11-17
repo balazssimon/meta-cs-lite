@@ -1,4 +1,5 @@
-﻿using MetaDslx.Modeling.Meta;
+﻿using MetaDslx.CodeAnalysis;
+using MetaDslx.Modeling.Meta;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -114,7 +115,7 @@ namespace MetaDslx.Modeling.Reflection
             return new ReflectionMetaPropertyInfo(slot, oppositeProperties, subsettedProperties, subsettingProperties, redefinedProperties, redefiningProperties, hiddenProperties, hidingProperties);
         }
 
-        protected override MetaPropertySlot<Type, PropertyInfo, MethodInfo> MakePropertySlot(MetaProperty<Type, PropertyInfo, MethodInfo> slotProperty, ImmutableArray<MetaProperty<Type, PropertyInfo, MethodInfo>> slotProperties, object? defaultValue, ModelPropertyFlags flags)
+        protected override MetaPropertySlot<Type, PropertyInfo, MethodInfo> MakePropertySlot(MetaProperty<Type, PropertyInfo, MethodInfo> slotProperty, ImmutableArray<MetaProperty<Type, PropertyInfo, MethodInfo>> slotProperties, MetaSymbol defaultValue, ModelPropertyFlags flags)
         {
             return new ReflectionMetaPropertySlot(slotProperty, slotProperties, defaultValue, flags);
         }

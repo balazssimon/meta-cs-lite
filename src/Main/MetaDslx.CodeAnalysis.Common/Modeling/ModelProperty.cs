@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MetaDslx.CodeAnalysis;
+using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Text;
@@ -7,14 +8,14 @@ namespace MetaDslx.Modeling
 {
     public sealed class ModelProperty
     {
-        private Type _declaringType;
+        private MetaType _declaringType;
         private string _name;
-        private Type _type;
-        private object? _defaultValue;
+        private MetaType _type;
+        private MetaSymbol? _defaultValue;
         private ModelPropertyFlags _flags;
         private string? _symbolProperty;
 
-        public ModelProperty(Type declaringType, string name, Type type, object? defaultValue, ModelPropertyFlags flags, string? symbolProperty = null)
+        public ModelProperty(MetaType declaringType, string name, MetaType type, MetaSymbol? defaultValue, ModelPropertyFlags flags, string? symbolProperty = null)
         {
             _declaringType = declaringType;
             _name = name;
@@ -26,12 +27,12 @@ namespace MetaDslx.Modeling
             if (symbolProperty == "Type") _flags |= ModelPropertyFlags.Type;
         }
 
-        public Type DeclaringType => _declaringType;
+        public MetaType DeclaringType => _declaringType;
         public string Name => _name;
         public string QualifiedName => $"{_declaringType.Name}.{_name}";
         public ModelPropertyFlags Flags => _flags;
-        public Type Type => _type;
-        public object? DefaultValue => _defaultValue;
+        public MetaType Type => _type;
+        public MetaSymbol? DefaultValue => _defaultValue;
         public string? SymbolProperty => _symbolProperty;
         public bool IsDerived => _flags.HasFlag(ModelPropertyFlags.Derived);
         public bool IsDerivedUnion => _flags.HasFlag(ModelPropertyFlags.DerivedUnion);

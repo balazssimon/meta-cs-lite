@@ -153,12 +153,12 @@ namespace MetaDslx.Modeling.Reflection
             foreach (var type in _modelEnumTypes)
             {
                 var literals = ArrayBuilder<string>.GetInstance();
-                var literalsByName = ImmutableDictionary.CreateBuilder<string, Enum>();
-                foreach (var lit in Enum.GetValues(type.OriginalType))
+                var literalsByName = ImmutableDictionary.CreateBuilder<string, MetaSymbol>();
+                foreach (Enum lit in Enum.GetValues(type.OriginalType))
                 {
                     var name = lit.ToString();
                     literals.Add(name);
-                    literalsByName.Add(name, (Enum)lit);
+                    literalsByName.Add(name, MetaSymbol.FromValue(lit));
                 }
                 var info = new ReflectionMetaEnumInfo(this, type.OriginalType, literals.ToImmutableAndFree(), literalsByName.ToImmutable());
                 modelEnumInfos.Add(info);
@@ -191,7 +191,7 @@ namespace MetaDslx.Modeling.Reflection
             var metaClasses = graph.Compute();
             foreach (var cls in metaClasses)
             {
-                var info = new ReflectionModelClassInfo(this, cls.UnderlyingType, cls.SymbolType, rmap.Map(cls.NameProperty), rmap.Map(cls.TypeProperty),
+                var info = new ReflectionMetaClassInfo(this, cls.UnderlyingType, cls.SymbolType, rmap.Map(cls.NameProperty), rmap.Map(cls.TypeProperty),
                     rmap.Map(cls.DeclaredProperties), rmap.Map(cls.AllDeclaredProperties), rmap.Map(cls.PublicProperties), 
                     rmap.Map(cls.PublicPropertiesByName), rmap.Map(cls.ModelPropertyInfos));
                 modelClassInfos.Add(info);

@@ -121,15 +121,34 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
                 var eof = this.VisitTerminal(context.eof, CompilerSyntaxKind.Eof);
             	return _factory.Main((InternalSyntaxToken)kNamespace, name, (InternalSyntaxToken)tSemicolon, @using, declarations, (InternalSyntaxToken)eof);
             }
-            public override GreenNode? VisitPr_Using(CompilerParser.Pr_UsingContext? context)
+            public override GreenNode? VisitPr_UsingAlt1(CompilerParser.Pr_UsingAlt1Context? context)
             {
-               	if (context == null) return UsingGreen.__Missing;
+               	if (context == null) return UsingAlt1Green.__Missing;
                 var kUsing = this.VisitTerminal(context.kUsing, CompilerSyntaxKind.KUsing);
-                UsingBlock1Green? usingBlock1 = null;
-                if (context.usingBlock1Antlr1 is not null) usingBlock1 = (UsingBlock1Green?)this.Visit(context.usingBlock1Antlr1) ?? UsingBlock1Green.__Missing;
-                else usingBlock1 = UsingBlock1Green.__Missing;
+                QualifierGreen? namespaces = null;
+                if (context.namespacesAntlr1 is not null) namespaces = (QualifierGreen?)this.Visit(context.namespacesAntlr1) ?? QualifierGreen.__Missing;
+                else namespaces = QualifierGreen.__Missing;
+            	return _factory.UsingAlt1((InternalSyntaxToken)kUsing, namespaces);
+            }
+            public override GreenNode? VisitPr_UsingAlt2(CompilerParser.Pr_UsingAlt2Context? context)
+            {
+               	if (context == null) return UsingAlt2Green.__Missing;
+                var kMetamodel = this.VisitTerminal(context.kMetamodel, CompilerSyntaxKind.KMetamodel);
+                QualifierGreen? symbols = null;
+                if (context.symbolsAntlr1 is not null) symbols = (QualifierGreen?)this.Visit(context.symbolsAntlr1) ?? QualifierGreen.__Missing;
+                else symbols = QualifierGreen.__Missing;
                 var tSemicolon = this.VisitTerminal(context.tSemicolon, CompilerSyntaxKind.TSemicolon);
-            	return _factory.Using((InternalSyntaxToken)kUsing, usingBlock1, (InternalSyntaxToken)tSemicolon);
+            	return _factory.UsingAlt2((InternalSyntaxToken)kMetamodel, symbols, (InternalSyntaxToken)tSemicolon);
+            }
+            public override GreenNode? VisitPr_UsingAlt3(CompilerParser.Pr_UsingAlt3Context? context)
+            {
+               	if (context == null) return UsingAlt3Green.__Missing;
+                var kSymbols = this.VisitTerminal(context.kSymbols, CompilerSyntaxKind.KSymbols);
+                QualifierGreen? namespaces = null;
+                if (context.namespacesAntlr1 is not null) namespaces = (QualifierGreen?)this.Visit(context.namespacesAntlr1) ?? QualifierGreen.__Missing;
+                else namespaces = QualifierGreen.__Missing;
+                var tSemicolon = this.VisitTerminal(context.tSemicolon, CompilerSyntaxKind.TSemicolon);
+            	return _factory.UsingAlt3((InternalSyntaxToken)kSymbols, namespaces, (InternalSyntaxToken)tSemicolon);
             }
             public override GreenNode? VisitPr_Declarations(CompilerParser.Pr_DeclarationsContext? context)
             {
@@ -623,23 +642,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
                	if (context == null) return IdentifierGreen.__Missing;
                 var tIdentifier = this.VisitTerminal(context.tIdentifierAntlr1, CompilerSyntaxKind.TIdentifier);
             	return _factory.Identifier((InternalSyntaxToken)tIdentifier);
-            }
-            public override GreenNode? VisitPr_UsingBlock1Alt1(CompilerParser.Pr_UsingBlock1Alt1Context? context)
-            {
-               	if (context == null) return UsingBlock1Alt1Green.__Missing;
-                QualifierGreen? namespaces = null;
-                if (context.namespacesAntlr1 is not null) namespaces = (QualifierGreen?)this.Visit(context.namespacesAntlr1) ?? QualifierGreen.__Missing;
-                else namespaces = QualifierGreen.__Missing;
-            	return _factory.UsingBlock1Alt1(namespaces);
-            }
-            public override GreenNode? VisitPr_UsingBlock1Alt2(CompilerParser.Pr_UsingBlock1Alt2Context? context)
-            {
-               	if (context == null) return UsingBlock1Alt2Green.__Missing;
-                var kMetamodel = this.VisitTerminal(context.kMetamodel, CompilerSyntaxKind.KMetamodel);
-                QualifierGreen? metaModelSymbols = null;
-                if (context.metaModelSymbolsAntlr1 is not null) metaModelSymbols = (QualifierGreen?)this.Visit(context.metaModelSymbolsAntlr1) ?? QualifierGreen.__Missing;
-                else metaModelSymbols = QualifierGreen.__Missing;
-            	return _factory.UsingBlock1Alt2((InternalSyntaxToken)kMetamodel, metaModelSymbols);
             }
             public override GreenNode? VisitPr_GrammarBlock1(CompilerParser.Pr_GrammarBlock1Context? context)
             {

@@ -6,16 +6,16 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace MetaDslx.CodeAnalysis.Symbols.Meta
+namespace MetaDslx.CodeAnalysis.Symbols.MetaModelImport
 {
-    internal class SymbolMetaProperty : MetaProperty<MetaType, CSharpDeclaredSymbol, CSharpDeclaredSymbol>
+    internal class ImportedMetaProperty : MetaProperty<MetaType, CSharpDeclaredSymbol, CSharpDeclaredSymbol>
     {
         private MetaType _type;
         private ModelPropertyFlags _flags;
-        private object? _defaultValue;
+        private MetaSymbol _defaultValue;
         private string? _symbolProperty;
 
-        public SymbolMetaProperty(MetaClass<MetaType, CSharpDeclaredSymbol, CSharpDeclaredSymbol> declaringType, CSharpDeclaredSymbol underlyingProperty)
+        public ImportedMetaProperty(MetaClass<MetaType, CSharpDeclaredSymbol, CSharpDeclaredSymbol> declaringType, CSharpDeclaredSymbol underlyingProperty)
             : base(declaringType, underlyingProperty)
         {
             var diagnostics = DiagnosticBag.GetInstance();
@@ -25,7 +25,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Meta
                 if (attr.AttributeClass?.ToDisplayString() == "MetaDslx.Modeling.DefaultValueAttribute")
                 {
                     var arg = attr.ConstructorArguments[0];
-                    _defaultValue = arg.Value;
+                    _defaultValue = MetaSymbol.FromValue(arg.Value);
                 }
                 if (attr.AttributeClass?.ToDisplayString() == "MetaDslx.Modeling.NameAttribute")
                 {
@@ -80,7 +80,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Meta
 
         public override bool HasSetter => CSharpProperty.SetMethod is not null;
 
-        public override object? DefaultValue => _defaultValue;
+        public override MetaSymbol DefaultValue => _defaultValue;
 
         public override string? SymbolProperty => _symbolProperty;
 

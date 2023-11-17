@@ -80,15 +80,18 @@ namespace MetaDslx.CodeAnalysis.Binding
             {
                 AddDiagnostic(Diagnostic.Create(CommonErrorCode.ERR_BindingError, Location, $"Value '{RawValue}' is not enclosed in an IPropertyBinder."));
             }
-            var expectedType = propertyBinder?.GetValueType(cancellationToken);
-            if (expectedType == typeof(MetaType)) return MetaType.FromName(RawValue);
-            if (Language.SyntaxFacts.TryExtractValue(expectedType, RawValue, out var value))
-            {
-                return value;
-            }
             else
             {
-                AddDiagnostic(Diagnostic.Create(CommonErrorCode.ERR_BindingError, Location, $"Value '{RawValue}' cannot be converted to type '{expectedType.FullName}'. Are you missing a TypeConverter?"));
+                var expectedType = propertyBinder.GetValueType(cancellationToken);
+                if (expectedType == typeof(MetaType)) return MetaType.FromName(RawValue);
+                if (Language.SyntaxFacts.TryExtractValue(expectedType, RawValue, out var value))
+                {
+                    return value;
+                }
+                else
+                {
+                    AddDiagnostic(Diagnostic.Create(CommonErrorCode.ERR_BindingError, Location, $"Value '{RawValue}' cannot be converted to type '{expectedType.FullName}'. Are you missing a TypeConverter?"));
+                }
             }
             return null;
         }

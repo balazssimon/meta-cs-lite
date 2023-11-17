@@ -1,6 +1,5 @@
 ﻿using MetaDslx.CodeAnalysis.PooledObjects;
 using MetaDslx.CodeAnalysis.Symbols.CSharp;
-using MetaDslx.CodeAnalysis.Symbols.Meta;
 using MetaDslx.CodeAnalysis.Symbols.Model;
 using MetaDslx.CodeAnalysis.Symbols.Source;
 using MetaDslx.Modeling;
@@ -27,15 +26,8 @@ namespace MetaDslx.CodeAnalysis.Symbols
             public static readonly CompletionPart FinishComputingProperty_Attributes = Symbol.CompletionParts.FinishComputingProperty_Attributes;
             public static readonly CompletionGraph CompletionGraph =
                 CompletionGraph.CreateFromParts(
-                    CompletionGraph.StartInitializing, CompletionGraph.FinishInitializing,
-                    CompletionGraph.StartCreatingContainedSymbols, CompletionGraph.FinishCreatingContainedSymbols,
                     StartComputingImports, FinishComputingImports,
-                    StartComputingProperty_Attributes, FinishComputingProperty_Attributes,
-                    CompletionGraph.StartComputingNonSymbolProperties, CompletionGraph.FinishComputingNonSymbolProperties,
-                    CompletionGraph.ContainedSymbolsFinalized,
-                    CompletionGraph.StartFinalizing, CompletionGraph.FinishFinalizing,
-                    CompletionGraph.ContainedSymbolsCompleted,
-                    CompletionGraph.StartValidating, CompletionGraph.FinishValidating);
+                    StartComputingProperty_Attributes, FinishComputingProperty_Attributes);
         }
 
         private bool _isComputingImports;
@@ -114,7 +106,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
             get
             {
                 ForceComplete(CompletionGraph.FinishFinalizing, null, default);
-                if (_unusedSymbols is ConcurrentDictionary<NamespaceSymbol, byte> uscd)
+                if (_unusedSymbols is ConcurrentDictionary<DeclaredSymbol, byte> uscd)
                 {
                     Interlocked.Exchange(ref _unusedSymbols, uscd.Keys.ToImmutableArray());
                 }
@@ -275,7 +267,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
             {
                 var builder = PooledStringBuilder.GetInstance();
                 var sb = builder.Builder;
-                foreach (var symbol in unusedSymbols.Where(us => !(us is MetaTypeSymbol)))
+                foreach (var symbol in unusedSymbols)
                 {
                     if (sb.Length > 0) sb.Append(", ");
                     sb.Append(SymbolDisplayFormat.QualifiedNameOnlyFormat.ToString(symbol));

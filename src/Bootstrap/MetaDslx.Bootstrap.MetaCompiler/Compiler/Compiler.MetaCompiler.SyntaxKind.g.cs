@@ -31,6 +31,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		TSemicolon,
 		KUsing,
 		KMetamodel,
+		KSymbols,
 		KLanguage,
 		KBlock,
 		KReturns,
@@ -85,7 +86,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 
 		// Rules:
 		Main,
-		Using,
+		UsingAlt1,
+		UsingAlt2,
+		UsingAlt3,
 		Declarations,
 		LanguageDeclaration,
 		Grammar,
@@ -121,8 +124,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		Qualifier,
 		QualifierList,
 		Identifier,
-		UsingBlock1Alt1,
-		UsingBlock1Alt2,
 		GrammarBlock1,
 		ParserRuleBlock1Alt1,
 		ParserRuleBlock1Alt2,

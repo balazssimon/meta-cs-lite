@@ -1,4 +1,5 @@
-﻿using MetaDslx.CodeAnalysis.Symbols;
+﻿using MetaDslx.CodeAnalysis;
+using MetaDslx.CodeAnalysis.Symbols;
 using MetaDslx.Languages.MetaModel.Model;
 using MetaDslx.Modeling;
 using MetaDslx.Modeling.Meta;
@@ -27,7 +28,7 @@ namespace MetaDslx.Languages.MetaModel.Meta
 
         public override bool HasSetter => true;
 
-        public override object? DefaultValue => null;
+        public override MetaSymbol DefaultValue => default;
 
         public override string? SymbolProperty => UnderlyingProperty.SymbolProperty;
 

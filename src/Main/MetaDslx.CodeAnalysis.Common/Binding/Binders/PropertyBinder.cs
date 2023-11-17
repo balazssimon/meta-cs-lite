@@ -17,7 +17,7 @@ namespace MetaDslx.CodeAnalysis.Binding
     {
         private readonly string _name;
         private readonly Optional<object?> _valueOpt;
-        private Type? _valueType;
+        private MetaType _valueType;
         private ImmutableArray<Type> _modelObjectTypes;
 
         public PropertyBinder(string name)
@@ -93,7 +93,7 @@ namespace MetaDslx.CodeAnalysis.Binding
                         if (value is IErrorSymbol) continue;
                         if (value is null)
                         {
-                            if (propertyType is null || !propertyType.IsValueType)
+                            if (propertyType.IsNull || !propertyType.IsValueType)
                             {
                                 result.Add(value);
                             }
@@ -107,7 +107,7 @@ namespace MetaDslx.CodeAnalysis.Binding
                         {
                             var modelSymbol = value as IModelSymbol;
                             var valueType = modelSymbol?.ModelObject is not null ? modelSymbol.ModelObjectType : value.GetType();
-                            if (propertyType is null)
+                            if (propertyType.IsNull)
                             {
                                 result.Add(symbol);
                             }
@@ -127,7 +127,7 @@ namespace MetaDslx.CodeAnalysis.Binding
                             {
                                 result.Add(MetaSymbol.FromSymbol(symbol));
                             }
-                            else if (typeof(Symbol).IsAssignableFrom(propertyType) && propertyType.IsAssignableFrom(symbol.GetType()))
+                            else if (propertyType.IsAssignableTo(typeof(Symbol)) && propertyType.IsAssignableFrom(symbol.GetType()))
                             {
                                 result.Add(symbol);
                             }
@@ -143,7 +143,7 @@ namespace MetaDslx.CodeAnalysis.Binding
                         }
                         else
                         {
-                            if (propertyType is null || propertyType.IsAssignableFrom(value.GetType()))
+                            if (propertyType.IsNull || propertyType.IsAssignableFrom(value.GetType()))
                             {
                                 result.Add(value);
                             }
@@ -194,17 +194,17 @@ namespace MetaDslx.CodeAnalysis.Binding
             }
         }
 
-        public Type? GetValueType(CancellationToken cancellationToken = default)
+        public MetaType GetValueType(CancellationToken cancellationToken = default)
         {
             return GetValueType(out var _, cancellationToken);
         }
 
-        private Type? GetValueType(out bool isName, CancellationToken cancellationToken = default)
+        private MetaType GetValueType(out bool isName, CancellationToken cancellationToken = default)
         {
             isName = false;
             if (_modelObjectTypes.IsDefault)
             {
-                Type? valueType = null;
+                MetaType valueType = default;
                 var modelObjectTypes = PooledHashSet<Type>.GetInstance();
                 foreach (var symbol in ContainingDefinedSymbols)
                 {
@@ -218,11 +218,11 @@ namespace MetaDslx.CodeAnalysis.Binding
                 {
                     AddDiagnostic(Diagnostic.Create(ErrorCode.ERR_InternalError, this.Location, $"Could not resolve the containing model object of the property '{_name}'."));
                     ImmutableInterlocked.InterlockedInitialize(ref _modelObjectTypes, modelObjectTypes.ToImmutableArray());
-                    return null;
+                    return default;
                 }
                 var module = Compilation.SourceModule;
                 var symbolFactory = module.SymbolFactory;
-                var valueTypes = PooledHashSet<Type>.GetInstance();
+                var valueTypes = PooledHashSet<MetaType>.GetInstance();
                 foreach (var modelObjectType in modelObjectTypes)
                 {
                     if (typeof(Symbol).IsAssignableFrom(modelObjectType))
@@ -245,7 +245,7 @@ namespace MetaDslx.CodeAnalysis.Binding
                             {
                                 if (modelProperty.IsName) isName = true;
                                 var modelPropertyType = modelProperty.Type;
-                                if (modelPropertyType is not null)
+                                if (!modelPropertyType.IsNull)
                                 {
                                     valueTypes.Add(modelPropertyType);
                                 }
@@ -276,7 +276,7 @@ namespace MetaDslx.CodeAnalysis.Binding
                     var typeNames = string.Join(",", valueTypes.Select(t => t.FullName));
                     AddDiagnostic(Diagnostic.Create(CommonErrorCode.ERR_BindingError, Location, $"Property '{Name}' (of {modelObjectTypeNames}) has multiple possible types: {typeNames}"));
                 }
-                Interlocked.CompareExchange(ref _valueType, valueType, null);
+                _valueType.InterlockedInitialize(valueType);
                 ImmutableInterlocked.InterlockedInitialize(ref _modelObjectTypes, modelObjectTypes.ToImmutableArray());
                 valueTypes.Free();
                 modelObjectTypes.Free();

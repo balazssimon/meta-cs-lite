@@ -1,4 +1,5 @@
-﻿using MetaDslx.Modeling.Meta;
+﻿using MetaDslx.CodeAnalysis;
+using MetaDslx.Modeling.Meta;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -9,7 +10,7 @@ namespace MetaDslx.Modeling.Reflection
 {
     internal class ReflectionMetaPropertySlot : MetaPropertySlot<Type, PropertyInfo, MethodInfo>
     {
-        public ReflectionMetaPropertySlot(MetaProperty<Type, PropertyInfo, MethodInfo> slotProperty, ImmutableArray<MetaProperty<Type, PropertyInfo, MethodInfo>> slotProperties, object? defaultValue, ModelPropertyFlags flags)
+        public ReflectionMetaPropertySlot(MetaProperty<Type, PropertyInfo, MethodInfo> slotProperty, ImmutableArray<MetaProperty<Type, PropertyInfo, MethodInfo>> slotProperties, MetaSymbol defaultValue, ModelPropertyFlags flags)
             : base(slotProperty, slotProperties, defaultValue, flags)
         {
         }

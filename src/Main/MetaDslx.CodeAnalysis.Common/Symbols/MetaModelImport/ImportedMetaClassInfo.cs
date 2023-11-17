@@ -1,23 +1,15 @@
-﻿using MetaDslx.CodeAnalysis;
-using MetaDslx.CodeAnalysis.PooledObjects;
+﻿using MetaDslx.Modeling;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Reflection;
 using System.Text;
-using System.Threading;
 
-namespace MetaDslx.Modeling.Reflection
+namespace MetaDslx.CodeAnalysis.Symbols.MetaModelImport
 {
-    internal sealed class ReflectionModelClassInfo : ModelClassInfo
+    internal class ImportedMetaClassInfo : ModelClassInfo
     {
-        private static readonly Type[] EmptyTypes = new Type[0];
-        private static readonly object[] EmptyObjects = new object[0];
-
-        private readonly ReflectionMetaModel _metaModel;
-        private readonly Type _metaType;
+        private readonly ImportedMetaModel _metaModel;
+        private readonly MetaType _metaType;
         private object? _symbolType;
         private ModelProperty? _nameProperty;
         private ModelProperty? _typeProperty;
@@ -27,9 +19,9 @@ namespace MetaDslx.Modeling.Reflection
         private ImmutableDictionary<string, ModelProperty>? _publicPropertiesByName;
         private ImmutableDictionary<ModelProperty, ModelPropertyInfo>? _modelPropertyInfos;
 
-        public ReflectionModelClassInfo(
-            ReflectionMetaModel metaModel,
-            Type metaType,
+        public ImportedMetaClassInfo(
+            ImportedMetaModel metaModel,
+            MetaType metaType,
             object? symbolType,
             ModelProperty? nameProperty,
             ModelProperty? typeProperty,
@@ -52,7 +44,7 @@ namespace MetaDslx.Modeling.Reflection
         }
 
         public override MetaModel MetaModel => _metaModel;
-        public override Type MetaType => _metaType;
+        public override MetaType MetaType => _metaType;
         public override MetaType SymbolType => _symbolType is not null ? Type.GetType($"{_symbolType}, MetaDslx.CodeAnalysis.Common") : null;
         public override ModelProperty? NameProperty => _nameProperty;
         public override ModelProperty? TypeProperty => _typeProperty;
@@ -73,19 +65,9 @@ namespace MetaDslx.Modeling.Reflection
 
         public override ImmutableArray<ModelClassInfo> AllBaseTypes => throw new NotImplementedException();
 
-        public override IModelObject? Create(Model? model = null, string? id = null)
+        public override IModelObject? Create(MetaDslx.Modeling.Model? model = null, string? id = null)
         {
-            var ctr = _metaType.GetConstructor(EmptyTypes);
-            if (ctr is not null)
-            {
-                var mobj = new ReflectionModelObject(ctr.Invoke(EmptyObjects), this, id);
-                if (model is not null) model.AddObject(mobj);
-                return mobj;
-            }
-            else
-            {
-                return null;
-            }
+            return null;
         }
 
         public override string ToString()

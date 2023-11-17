@@ -1,7 +1,8 @@
 ﻿using MetaDslx.CodeAnalysis.Declarations;
 using MetaDslx.CodeAnalysis.PooledObjects;
 using MetaDslx.CodeAnalysis.Symbols.CSharp;
-using MetaDslx.CodeAnalysis.Symbols.Meta;
+using MetaDslx.CodeAnalysis.Symbols.MetaModelImport;
+using MetaDslx.CodeAnalysis.Symbols.Source;
 using MetaDslx.Modeling;
 using System;
 using System.Collections.Generic;
@@ -10,13 +11,13 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 
-namespace MetaDslx.CodeAnalysis.Symbols.Source
+namespace MetaDslx.CodeAnalysis.Symbols
 {
     public class ImportSymbolModelSymbol : SourceImportSymbol
     {
         private ImmutableArray<MetaModel> _metaModels;
 
-        public ImportSymbolModelSymbol(Symbol container, MergedDeclaration declaration) 
+        public ImportSymbolModelSymbol(Symbol container, MergedDeclaration declaration)
             : base(container, declaration)
         {
         }
@@ -38,40 +39,12 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
             var metaModelsBuilder = ArrayBuilder<MetaModel>.GetInstance();
             foreach (var symbolNamespace in namespaces.Where(ns => !ns.IsError))
             {
-                var metaModel = new SymbolMetaModel(symbolNamespace, symbolNamespace.Name, true);
+                var metaModel = new ImportedMetaModel(symbolNamespace, symbolNamespace.Name, true);
                 metaModelsBuilder.Add(metaModel);
-                foreach (var type in metaModel.MEnumTypes)
-                {
-                    symbolsBuilder.Add(new MetaEnumSymbol(symbolNamespace, metaModel, type));
-                }
-                foreach (var type in metaModel.MClassTypes)
-                {
-                    symbolsBuilder.Add(new MetaClassSymbol(symbolNamespace, metaModel, type));
-                }
+                symbolsBuilder.AddRange(ImportedMetaUtils.CollectTypes(symbolNamespace, collectSymbols: true));
             }
             _metaModels = metaModelsBuilder.ToImmutableAndFree();
             return (ImmutableArray<string>.Empty, ImmutableArray<AliasSymbol>.Empty, ImmutableArray<NamespaceSymbol>.Empty, symbolsBuilder.ToImmutableAndFree());
-        }
-
-        protected override void CompletePart_Validate(DiagnosticBag diagnostics, CancellationToken cancellationToken)
-        {
-            var unusedSymbols = UnusedSymbols;
-            if (!unusedSymbols.IsEmpty)
-            {
-                var builder = PooledStringBuilder.GetInstance();
-                var sb = builder.Builder;
-                foreach (var metaModel in _metaModels)
-                {
-                    sb.Clear();
-                    foreach (var symbol in unusedSymbols.OfType<MetaTypeSymbol>().Where(us => us.MetaModel == metaModel).OrderBy(us => us.Name))
-                    {
-                        if (sb.Length > 0) sb.Append(", ");
-                        sb.Append(symbol.Name);
-                    }
-                    if (sb.Length > 0) diagnostics.Add(Diagnostic.Create(CommonErrorCode.WRN_UnusedMetaTypes, this.Locations.FirstOrDefault(), metaModel.MName, builder.ToString()));
-                }
-                builder.Free();
-            }
         }
 
     }

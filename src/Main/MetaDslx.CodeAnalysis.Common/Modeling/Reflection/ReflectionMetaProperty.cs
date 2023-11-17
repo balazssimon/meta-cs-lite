@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
+using MetaDslx.CodeAnalysis;
 using MetaDslx.Modeling.Meta;
 
 namespace MetaDslx.Modeling.Reflection
@@ -9,14 +10,14 @@ namespace MetaDslx.Modeling.Reflection
     internal class ReflectionMetaProperty : MetaProperty<Type, PropertyInfo, MethodInfo>
     {
         private readonly ModelPropertyFlags _originalFlags;
-        private readonly object? _defaultValue;
+        private readonly MetaSymbol _defaultValue;
         private readonly string? _symbolProperty;
 
         public ReflectionMetaProperty(MetaClass<Type, PropertyInfo, MethodInfo> declaringType, PropertyInfo underlyingProperty)
             : base(declaringType, underlyingProperty)
         {
             bool hasDefaultValue = false;
-            object? defaultValue = null;
+            MetaSymbol defaultValue = default;
             string? symbolProperty = null;
             var flags = ModelPropertyFlags.None;
             foreach (var attr in underlyingProperty.GetCustomAttributes(true))
@@ -26,7 +27,7 @@ namespace MetaDslx.Modeling.Reflection
                     if (!hasDefaultValue && defaultAttr.Value is not null && declaringType.UnderlyingType.IsAssignableFrom(defaultAttr.Value.GetType()))
                     {
                         hasDefaultValue = true;
-                        defaultValue = defaultAttr.Value;
+                        defaultValue = MetaSymbol.FromValue(defaultAttr.Value);
                     }
                 }
                 else if (attr is NameAttribute)
@@ -79,7 +80,7 @@ namespace MetaDslx.Modeling.Reflection
 
         public override bool HasSetter => UnderlyingProperty.CanWrite;
 
-        public override object? DefaultValue => _defaultValue;
+        public override MetaSymbol DefaultValue => _defaultValue;
 
         public override string? SymbolProperty => _symbolProperty;
 

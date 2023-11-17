@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MetaDslx.CodeAnalysis;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -19,7 +20,7 @@ namespace MetaDslx.Modeling.Meta
         public abstract TType OriginalType { get; }
         public abstract ModelPropertyFlags OriginalFlags { get; }
         public abstract bool HasSetter { get; }
-        public abstract object? DefaultValue { get; }
+        public abstract MetaSymbol DefaultValue { get; }
         public abstract string? SymbolProperty { get; }
         internal protected abstract IEnumerable<(TType DeclaringType, string PropertyName)> GetRedefinedProperties();
         internal protected abstract IEnumerable<(TType DeclaringType, string PropertyName)> GetSubsettedProperties();

@@ -187,10 +187,10 @@ public sealed class [mm.Name] : __MetaModel, I[mm.Name]
 			[foreach (var prop in obj.PublicProperties.Where(p => !obj.IsDefault(p)))]
 				[if (prop.IsCollection)]
 					[foreach (var value in obj.GetValues(prop))]
-		[GetName(obj)].[prop.Name].Add([ToCSharpValue(prop, value)]);
+		[GetName(obj)].[prop.Name].Add([ToCSharpValue(prop.Type, value)]);
 					[end foreach]
 				[else if (!prop.IsReadOnly)]
-		[GetName(obj)].[prop.Name] = [ToCSharpValue(prop, obj.Get(prop))];
+		[GetName(obj)].[prop.Name] = [ToCSharpValue(prop.Type, obj.Get(prop))];
 				[end if]
 			[end foreach]
 		[end foreach]
@@ -287,22 +287,22 @@ internal class __[enm.Name]_Info : __ModelEnumInfo
 	public static readonly __[enm.Name]_Info Instance = new __[enm.Name]_Info();
 
 	private readonly global::System.Collections.Immutable.ImmutableArray<string> _literals;
-	private readonly global::System.Collections.Immutable.ImmutableDictionary<string, __Enum> _literalsByName;
+	private readonly global::System.Collections.Immutable.ImmutableDictionary<string, __MetaSymbol> _literalsByName;
 
 	private __[enm.Name]_Info()
 	{
 		_literals = __ImmutableArray.Create<string>([foreach (var lit in enm.Literals) separator ", "][StringUtilities.EncodeString(lit.Name)][end foreach]);
-		var literalsByName = __ImmutableDictionary.CreateBuilder<string, __Enum>();
+		var literalsByName = __ImmutableDictionary.CreateBuilder<string, __MetaSymbol>();
 		[foreach (var lit in enm.Literals)]
-		literalsByName.Add("[lit.Name]", [enm.Name].[lit.Name]);
+		literalsByName.Add("[lit.Name]", __MetaSymbol.FromValue([enm.Name].[lit.Name]));
 		[end foreach]
 		_literalsByName = literalsByName.ToImmutable();
 	}
 
     public override __MetaModel MetaModel => [mm.Name].MInstance;
-    public override __Type MetaType => typeof([enm.Name]);
+    public override __MetaType MetaType => typeof([enm.Name]);
 	public override global::System.Collections.Immutable.ImmutableArray<string> Literals => _literals;
-	protected override global::System.Collections.Immutable.ImmutableDictionary<string, Enum> LiteralsByName => _literalsByName;
+	protected override global::System.Collections.Immutable.ImmutableDictionary<string, __MetaSymbol> LiteralsByName => _literalsByName;
 }
 end template
 
@@ -331,8 +331,8 @@ internal class [cls.Name]_Impl : __MetaModelObject, [cls.Name]
 		[foreach (var slot in metaCls.Slots)]
 			[if (IsCollection(slot))]
 		((__IModelObject)this).Init([ToCSharp(slot.SlotProperty)], new global::MetaDslx.Modeling.ModelObjectList<[ToCSharp(slot.SlotProperty.Type)]>(this, __Info.Instance.GetSlot([ToCSharp(slot.SlotProperty)])!));
-			[else if (slot.DefaultValue is not null)]
-		((__IModelObject)this).Init([ToCSharp(slot.SlotProperty)], ([ToCSharp(slot.SlotProperty.Type)])[ToCSharpValue(slot.SlotProperty, slot.DefaultValue)]);
+			[else if (!slot.DefaultValue.IsNull)]
+		((__IModelObject)this).Init([ToCSharp(slot.SlotProperty)], ([ToCSharp(slot.SlotProperty.Type)])[ToCSharpValue(slot.SlotProperty.Type, slot.DefaultValue)]);
 			[end if]
 		[end foreach]
 		[foreach (var baseType in metaCls.AllBaseTypes.Reverse())]
@@ -421,7 +421,7 @@ internal class [cls.Name]_Impl : __MetaModelObject, [cls.Name]
 		}
 
         public override __MetaModel MetaModel => [mm.Name].MInstance;
-        public override __Type MetaType => typeof([cls.Name]);
+        public override __MetaType MetaType => typeof([cls.Name]);
 
         public override __MetaType SymbolType => [if (metaCls.SymbolType is null)]default[else]typeof([ToCSharp(metaCls.SymbolType)])[end if];
         public override __ModelProperty? NameProperty => [if (metaCls.NameProperty is null)]null[else][ToCSharp(metaCls.NameProperty)][end if];

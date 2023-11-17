@@ -4,13 +4,14 @@ using MetaDslx.Modeling;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 using System.Xml.Linq;
 
 namespace MetaDslx.CodeAnalysis
 {
     public struct MetaSymbol : IEquatable<MetaSymbol>
     {
-        private readonly object? _original;
+        private object? _original;
 
         private MetaSymbol(Symbol symbol)
         {
@@ -22,15 +23,28 @@ namespace MetaDslx.CodeAnalysis
             _original = modelObject;
         }
 
+        private MetaSymbol(object value)
+        {
+            _original = value;
+        }
+
         public static MetaSymbol FromSymbol(Symbol symbol) => new MetaSymbol(symbol);
         public static MetaSymbol FromModelObject(IModelObject modelObject) => new MetaSymbol(modelObject);
+        public static MetaSymbol FromValue(object value) => new MetaSymbol(value);
+
+        public bool InterlockedInitialize(MetaSymbol value)
+        {
+            return Interlocked.CompareExchange(ref _original, value._original, null) == null;
+        }
 
         public bool IsNull => _original is null;
         public bool IsSymbol => _original is Symbol;
         public bool IsModelObject => _original is IModelObject;
+        public bool IsValue => !IsSymbol && !IsModelObject;
 
         public IModelObject? OriginalModelObject => _original as IModelObject;
         public Symbol? OriginalSymbol => _original as Symbol;
+        public object? OriginalValue => _original;
 
         public string Name
         {
@@ -111,6 +125,16 @@ namespace MetaDslx.CodeAnalysis
         public static bool operator !=(MetaSymbol lhs, MetaSymbol rhs)
         {
             return !lhs.Equals(rhs);
+        }
+
+        public static implicit operator MetaSymbol(Symbol symbol)
+        {
+            return MetaSymbol.FromSymbol(symbol);
+        }
+
+        public static implicit operator MetaSymbol(ModelObject modelObject)
+        {
+            return MetaSymbol.FromModelObject(modelObject);
         }
 
         internal static string GetModelObjectFullName(IModelObject modelObject)

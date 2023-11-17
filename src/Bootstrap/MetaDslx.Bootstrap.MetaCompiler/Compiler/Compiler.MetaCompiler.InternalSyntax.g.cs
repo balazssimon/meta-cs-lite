@@ -1085,68 +1085,66 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 		}
 	}
 	
-	internal class UsingGreen : GreenSyntaxNode
+	internal abstract class UsingGreen : GreenSyntaxNode
 	{
-		internal static new readonly UsingGreen __Missing = new UsingGreen();
-		private InternalSyntaxToken _kUsing;
-		private UsingBlock1Green _usingBlock1;
-		private InternalSyntaxToken _tSemicolon;
+		internal static readonly UsingGreen __Missing = UsingAlt1Green.__Missing;
 	
-		public UsingGreen(CompilerSyntaxKind kind, InternalSyntaxToken kUsing, UsingBlock1Green usingBlock1, InternalSyntaxToken tSemicolon)
+	    protected UsingGreen(CompilerSyntaxKind kind, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
+	        : base(kind, diagnostics, annotations)
+	    {
+	    }
+	}
+	
+	internal class UsingAlt1Green : UsingGreen
+	{
+		internal static new readonly UsingAlt1Green __Missing = new UsingAlt1Green();
+		private InternalSyntaxToken _kUsing;
+		private QualifierGreen _namespaces;
+	
+		public UsingAlt1Green(CompilerSyntaxKind kind, InternalSyntaxToken kUsing, QualifierGreen namespaces)
 			: base(kind, null, null)
 		{
-			SlotCount = 3;
+			SlotCount = 2;
 			if (kUsing != null)
 			{
 				AdjustFlagsAndWidth(kUsing);
 				_kUsing = kUsing;
 			}
-			if (usingBlock1 != null)
+			if (namespaces != null)
 			{
-				AdjustFlagsAndWidth(usingBlock1);
-				_usingBlock1 = usingBlock1;
-			}
-			if (tSemicolon != null)
-			{
-				AdjustFlagsAndWidth(tSemicolon);
-				_tSemicolon = tSemicolon;
+				AdjustFlagsAndWidth(namespaces);
+				_namespaces = namespaces;
 			}
 		}
 	
-		public UsingGreen(CompilerSyntaxKind kind, InternalSyntaxToken kUsing, UsingBlock1Green usingBlock1, InternalSyntaxToken tSemicolon, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
+		public UsingAlt1Green(CompilerSyntaxKind kind, InternalSyntaxToken kUsing, QualifierGreen namespaces, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
 			: base(kind, diagnostics, annotations)
 		{
-			SlotCount = 3;
+			SlotCount = 2;
 			if (kUsing != null)
 			{
 				AdjustFlagsAndWidth(kUsing);
 				_kUsing = kUsing;
 			}
-			if (usingBlock1 != null)
+			if (namespaces != null)
 			{
-				AdjustFlagsAndWidth(usingBlock1);
-				_usingBlock1 = usingBlock1;
-			}
-			if (tSemicolon != null)
-			{
-				AdjustFlagsAndWidth(tSemicolon);
-				_tSemicolon = tSemicolon;
+				AdjustFlagsAndWidth(namespaces);
+				_namespaces = namespaces;
 			}
 		}
 	
-		private UsingGreen()
-			: base((CompilerSyntaxKind)CompilerSyntaxKind.Using, null, null)
+		private UsingAlt1Green()
+			: base((CompilerSyntaxKind)CompilerSyntaxKind.UsingAlt1, null, null)
 		{
 			this.flags &= ~NodeFlags.IsNotMissing;
 		}
 	
 		public InternalSyntaxToken KUsing { get { return _kUsing; } }
-		public UsingBlock1Green UsingBlock1 { get { return _usingBlock1; } }
-		public InternalSyntaxToken TSemicolon { get { return _tSemicolon; } }
+		public QualifierGreen Namespaces { get { return _namespaces; } }
 	
 		protected override SyntaxNode CreateRed(SyntaxNode parent, int position)
 		{
-			return new global::MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.UsingSyntax(this, (CompilerSyntaxNode)parent, position);
+			return new global::MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.UsingAlt1Syntax(this, (CompilerSyntaxNode)parent, position);
 		}
 	
 		protected override GreenNode GetSlot(int index)
@@ -1154,44 +1152,267 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			switch (index)
 			{
 				case 0: return _kUsing;
-				case 1: return _usingBlock1;
-				case 2: return _tSemicolon;
+				case 1: return _namespaces;
 				default: return null;
 			}
 		}
 	
-		public override TResult Accept<TResult>(CompilerInternalSyntaxVisitor<TResult> visitor) => visitor.VisitUsingGreen(this);
+		public override TResult Accept<TResult>(CompilerInternalSyntaxVisitor<TResult> visitor) => visitor.VisitUsingAlt1Green(this);
 	
-		public override void Accept(CompilerInternalSyntaxVisitor visitor) => visitor.VisitUsingGreen(this);
+		public override void Accept(CompilerInternalSyntaxVisitor visitor) => visitor.VisitUsingAlt1Green(this);
 	
 		public override InternalSyntaxNode WithDiagnostics(DiagnosticInfo[] diagnostics)
 		{
-			return new UsingGreen(this.Kind, _kUsing, _usingBlock1, _tSemicolon, diagnostics, this.GetAnnotations());
+			return new UsingAlt1Green(this.Kind, _kUsing, _namespaces, diagnostics, this.GetAnnotations());
 		}
 	
 		public override InternalSyntaxNode WithAnnotations(SyntaxAnnotation[] annotations)
 		{
-			return new UsingGreen(this.Kind, _kUsing, _usingBlock1, _tSemicolon, this.GetDiagnostics(), annotations);
+			return new UsingAlt1Green(this.Kind, _kUsing, _namespaces, this.GetDiagnostics(), annotations);
 		}
 	
 		public override GreenNode Clone()
 		{
-			return new UsingGreen(this.Kind, _kUsing, _usingBlock1, _tSemicolon, this.GetDiagnostics(), this.GetAnnotations());
+			return new UsingAlt1Green(this.Kind, _kUsing, _namespaces, this.GetDiagnostics(), this.GetAnnotations());
 		}
 	
 	
-		public UsingGreen Update(InternalSyntaxToken kUsing, UsingBlock1Green usingBlock1, InternalSyntaxToken tSemicolon)
+		public UsingAlt1Green Update(InternalSyntaxToken kUsing, QualifierGreen namespaces)
 		{
-			if (_kUsing != kUsing || _usingBlock1 != usingBlock1 || _tSemicolon != tSemicolon)
+			if (_kUsing != kUsing || _namespaces != namespaces)
 			{
-				InternalSyntaxNode newNode = CompilerLanguage.Instance.InternalSyntaxFactory.Using((InternalSyntaxToken)kUsing, usingBlock1, (InternalSyntaxToken)tSemicolon);
+				InternalSyntaxNode newNode = CompilerLanguage.Instance.InternalSyntaxFactory.UsingAlt1((InternalSyntaxToken)kUsing, namespaces);
 				var diags = this.GetDiagnostics();
 				if (diags != null && diags.Length > 0)
 					newNode = newNode.WithDiagnostics(diags);
 				var annotations = this.GetAnnotations();
 				if (annotations != null && annotations.Length > 0)
 					newNode = newNode.WithAnnotations(annotations);
-				return (UsingGreen)newNode;
+				return (UsingAlt1Green)newNode;
+			}
+			return this;
+		}
+	}
+	
+	internal class UsingAlt2Green : UsingGreen
+	{
+		internal static new readonly UsingAlt2Green __Missing = new UsingAlt2Green();
+		private InternalSyntaxToken _kMetamodel;
+		private QualifierGreen _symbols;
+		private InternalSyntaxToken _tSemicolon;
+	
+		public UsingAlt2Green(CompilerSyntaxKind kind, InternalSyntaxToken kMetamodel, QualifierGreen symbols, InternalSyntaxToken tSemicolon)
+			: base(kind, null, null)
+		{
+			SlotCount = 3;
+			if (kMetamodel != null)
+			{
+				AdjustFlagsAndWidth(kMetamodel);
+				_kMetamodel = kMetamodel;
+			}
+			if (symbols != null)
+			{
+				AdjustFlagsAndWidth(symbols);
+				_symbols = symbols;
+			}
+			if (tSemicolon != null)
+			{
+				AdjustFlagsAndWidth(tSemicolon);
+				_tSemicolon = tSemicolon;
+			}
+		}
+	
+		public UsingAlt2Green(CompilerSyntaxKind kind, InternalSyntaxToken kMetamodel, QualifierGreen symbols, InternalSyntaxToken tSemicolon, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
+			: base(kind, diagnostics, annotations)
+		{
+			SlotCount = 3;
+			if (kMetamodel != null)
+			{
+				AdjustFlagsAndWidth(kMetamodel);
+				_kMetamodel = kMetamodel;
+			}
+			if (symbols != null)
+			{
+				AdjustFlagsAndWidth(symbols);
+				_symbols = symbols;
+			}
+			if (tSemicolon != null)
+			{
+				AdjustFlagsAndWidth(tSemicolon);
+				_tSemicolon = tSemicolon;
+			}
+		}
+	
+		private UsingAlt2Green()
+			: base((CompilerSyntaxKind)CompilerSyntaxKind.UsingAlt2, null, null)
+		{
+			this.flags &= ~NodeFlags.IsNotMissing;
+		}
+	
+		public InternalSyntaxToken KMetamodel { get { return _kMetamodel; } }
+		public QualifierGreen Symbols { get { return _symbols; } }
+		public InternalSyntaxToken TSemicolon { get { return _tSemicolon; } }
+	
+		protected override SyntaxNode CreateRed(SyntaxNode parent, int position)
+		{
+			return new global::MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.UsingAlt2Syntax(this, (CompilerSyntaxNode)parent, position);
+		}
+	
+		protected override GreenNode GetSlot(int index)
+		{
+			switch (index)
+			{
+				case 0: return _kMetamodel;
+				case 1: return _symbols;
+				case 2: return _tSemicolon;
+				default: return null;
+			}
+		}
+	
+		public override TResult Accept<TResult>(CompilerInternalSyntaxVisitor<TResult> visitor) => visitor.VisitUsingAlt2Green(this);
+	
+		public override void Accept(CompilerInternalSyntaxVisitor visitor) => visitor.VisitUsingAlt2Green(this);
+	
+		public override InternalSyntaxNode WithDiagnostics(DiagnosticInfo[] diagnostics)
+		{
+			return new UsingAlt2Green(this.Kind, _kMetamodel, _symbols, _tSemicolon, diagnostics, this.GetAnnotations());
+		}
+	
+		public override InternalSyntaxNode WithAnnotations(SyntaxAnnotation[] annotations)
+		{
+			return new UsingAlt2Green(this.Kind, _kMetamodel, _symbols, _tSemicolon, this.GetDiagnostics(), annotations);
+		}
+	
+		public override GreenNode Clone()
+		{
+			return new UsingAlt2Green(this.Kind, _kMetamodel, _symbols, _tSemicolon, this.GetDiagnostics(), this.GetAnnotations());
+		}
+	
+	
+		public UsingAlt2Green Update(InternalSyntaxToken kMetamodel, QualifierGreen symbols, InternalSyntaxToken tSemicolon)
+		{
+			if (_kMetamodel != kMetamodel || _symbols != symbols || _tSemicolon != tSemicolon)
+			{
+				InternalSyntaxNode newNode = CompilerLanguage.Instance.InternalSyntaxFactory.UsingAlt2((InternalSyntaxToken)kMetamodel, symbols, (InternalSyntaxToken)tSemicolon);
+				var diags = this.GetDiagnostics();
+				if (diags != null && diags.Length > 0)
+					newNode = newNode.WithDiagnostics(diags);
+				var annotations = this.GetAnnotations();
+				if (annotations != null && annotations.Length > 0)
+					newNode = newNode.WithAnnotations(annotations);
+				return (UsingAlt2Green)newNode;
+			}
+			return this;
+		}
+	}
+	
+	internal class UsingAlt3Green : UsingGreen
+	{
+		internal static new readonly UsingAlt3Green __Missing = new UsingAlt3Green();
+		private InternalSyntaxToken _kSymbols;
+		private QualifierGreen _namespaces;
+		private InternalSyntaxToken _tSemicolon;
+	
+		public UsingAlt3Green(CompilerSyntaxKind kind, InternalSyntaxToken kSymbols, QualifierGreen namespaces, InternalSyntaxToken tSemicolon)
+			: base(kind, null, null)
+		{
+			SlotCount = 3;
+			if (kSymbols != null)
+			{
+				AdjustFlagsAndWidth(kSymbols);
+				_kSymbols = kSymbols;
+			}
+			if (namespaces != null)
+			{
+				AdjustFlagsAndWidth(namespaces);
+				_namespaces = namespaces;
+			}
+			if (tSemicolon != null)
+			{
+				AdjustFlagsAndWidth(tSemicolon);
+				_tSemicolon = tSemicolon;
+			}
+		}
+	
+		public UsingAlt3Green(CompilerSyntaxKind kind, InternalSyntaxToken kSymbols, QualifierGreen namespaces, InternalSyntaxToken tSemicolon, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
+			: base(kind, diagnostics, annotations)
+		{
+			SlotCount = 3;
+			if (kSymbols != null)
+			{
+				AdjustFlagsAndWidth(kSymbols);
+				_kSymbols = kSymbols;
+			}
+			if (namespaces != null)
+			{
+				AdjustFlagsAndWidth(namespaces);
+				_namespaces = namespaces;
+			}
+			if (tSemicolon != null)
+			{
+				AdjustFlagsAndWidth(tSemicolon);
+				_tSemicolon = tSemicolon;
+			}
+		}
+	
+		private UsingAlt3Green()
+			: base((CompilerSyntaxKind)CompilerSyntaxKind.UsingAlt3, null, null)
+		{
+			this.flags &= ~NodeFlags.IsNotMissing;
+		}
+	
+		public InternalSyntaxToken KSymbols { get { return _kSymbols; } }
+		public QualifierGreen Namespaces { get { return _namespaces; } }
+		public InternalSyntaxToken TSemicolon { get { return _tSemicolon; } }
+	
+		protected override SyntaxNode CreateRed(SyntaxNode parent, int position)
+		{
+			return new global::MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.UsingAlt3Syntax(this, (CompilerSyntaxNode)parent, position);
+		}
+	
+		protected override GreenNode GetSlot(int index)
+		{
+			switch (index)
+			{
+				case 0: return _kSymbols;
+				case 1: return _namespaces;
+				case 2: return _tSemicolon;
+				default: return null;
+			}
+		}
+	
+		public override TResult Accept<TResult>(CompilerInternalSyntaxVisitor<TResult> visitor) => visitor.VisitUsingAlt3Green(this);
+	
+		public override void Accept(CompilerInternalSyntaxVisitor visitor) => visitor.VisitUsingAlt3Green(this);
+	
+		public override InternalSyntaxNode WithDiagnostics(DiagnosticInfo[] diagnostics)
+		{
+			return new UsingAlt3Green(this.Kind, _kSymbols, _namespaces, _tSemicolon, diagnostics, this.GetAnnotations());
+		}
+	
+		public override InternalSyntaxNode WithAnnotations(SyntaxAnnotation[] annotations)
+		{
+			return new UsingAlt3Green(this.Kind, _kSymbols, _namespaces, _tSemicolon, this.GetDiagnostics(), annotations);
+		}
+	
+		public override GreenNode Clone()
+		{
+			return new UsingAlt3Green(this.Kind, _kSymbols, _namespaces, _tSemicolon, this.GetDiagnostics(), this.GetAnnotations());
+		}
+	
+	
+		public UsingAlt3Green Update(InternalSyntaxToken kSymbols, QualifierGreen namespaces, InternalSyntaxToken tSemicolon)
+		{
+			if (_kSymbols != kSymbols || _namespaces != namespaces || _tSemicolon != tSemicolon)
+			{
+				InternalSyntaxNode newNode = CompilerLanguage.Instance.InternalSyntaxFactory.UsingAlt3((InternalSyntaxToken)kSymbols, namespaces, (InternalSyntaxToken)tSemicolon);
+				var diags = this.GetDiagnostics();
+				if (diags != null && diags.Length > 0)
+					newNode = newNode.WithDiagnostics(diags);
+				var annotations = this.GetAnnotations();
+				if (annotations != null && annotations.Length > 0)
+					newNode = newNode.WithAnnotations(annotations);
+				return (UsingAlt3Green)newNode;
 			}
 			return this;
 		}
@@ -4749,201 +4970,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 				if (annotations != null && annotations.Length > 0)
 					newNode = newNode.WithAnnotations(annotations);
 				return (IdentifierGreen)newNode;
-			}
-			return this;
-		}
-	}
-	
-	internal abstract class UsingBlock1Green : GreenSyntaxNode
-	{
-		internal static readonly UsingBlock1Green __Missing = UsingBlock1Alt1Green.__Missing;
-	
-	    protected UsingBlock1Green(CompilerSyntaxKind kind, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
-	        : base(kind, diagnostics, annotations)
-	    {
-	    }
-	}
-	
-	internal class UsingBlock1Alt1Green : UsingBlock1Green
-	{
-		internal static new readonly UsingBlock1Alt1Green __Missing = new UsingBlock1Alt1Green();
-		private QualifierGreen _namespaces;
-	
-		public UsingBlock1Alt1Green(CompilerSyntaxKind kind, QualifierGreen namespaces)
-			: base(kind, null, null)
-		{
-			SlotCount = 1;
-			if (namespaces != null)
-			{
-				AdjustFlagsAndWidth(namespaces);
-				_namespaces = namespaces;
-			}
-		}
-	
-		public UsingBlock1Alt1Green(CompilerSyntaxKind kind, QualifierGreen namespaces, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
-			: base(kind, diagnostics, annotations)
-		{
-			SlotCount = 1;
-			if (namespaces != null)
-			{
-				AdjustFlagsAndWidth(namespaces);
-				_namespaces = namespaces;
-			}
-		}
-	
-		private UsingBlock1Alt1Green()
-			: base((CompilerSyntaxKind)CompilerSyntaxKind.UsingBlock1Alt1, null, null)
-		{
-			this.flags &= ~NodeFlags.IsNotMissing;
-		}
-	
-		public QualifierGreen Namespaces { get { return _namespaces; } }
-	
-		protected override SyntaxNode CreateRed(SyntaxNode parent, int position)
-		{
-			return new global::MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.UsingBlock1Alt1Syntax(this, (CompilerSyntaxNode)parent, position);
-		}
-	
-		protected override GreenNode GetSlot(int index)
-		{
-			switch (index)
-			{
-				case 0: return _namespaces;
-				default: return null;
-			}
-		}
-	
-		public override TResult Accept<TResult>(CompilerInternalSyntaxVisitor<TResult> visitor) => visitor.VisitUsingBlock1Alt1Green(this);
-	
-		public override void Accept(CompilerInternalSyntaxVisitor visitor) => visitor.VisitUsingBlock1Alt1Green(this);
-	
-		public override InternalSyntaxNode WithDiagnostics(DiagnosticInfo[] diagnostics)
-		{
-			return new UsingBlock1Alt1Green(this.Kind, _namespaces, diagnostics, this.GetAnnotations());
-		}
-	
-		public override InternalSyntaxNode WithAnnotations(SyntaxAnnotation[] annotations)
-		{
-			return new UsingBlock1Alt1Green(this.Kind, _namespaces, this.GetDiagnostics(), annotations);
-		}
-	
-		public override GreenNode Clone()
-		{
-			return new UsingBlock1Alt1Green(this.Kind, _namespaces, this.GetDiagnostics(), this.GetAnnotations());
-		}
-	
-	
-		public UsingBlock1Alt1Green Update(QualifierGreen namespaces)
-		{
-			if (_namespaces != namespaces)
-			{
-				InternalSyntaxNode newNode = CompilerLanguage.Instance.InternalSyntaxFactory.UsingBlock1Alt1(namespaces);
-				var diags = this.GetDiagnostics();
-				if (diags != null && diags.Length > 0)
-					newNode = newNode.WithDiagnostics(diags);
-				var annotations = this.GetAnnotations();
-				if (annotations != null && annotations.Length > 0)
-					newNode = newNode.WithAnnotations(annotations);
-				return (UsingBlock1Alt1Green)newNode;
-			}
-			return this;
-		}
-	}
-	
-	internal class UsingBlock1Alt2Green : UsingBlock1Green
-	{
-		internal static new readonly UsingBlock1Alt2Green __Missing = new UsingBlock1Alt2Green();
-		private InternalSyntaxToken _kMetamodel;
-		private QualifierGreen _metaModelSymbols;
-	
-		public UsingBlock1Alt2Green(CompilerSyntaxKind kind, InternalSyntaxToken kMetamodel, QualifierGreen metaModelSymbols)
-			: base(kind, null, null)
-		{
-			SlotCount = 2;
-			if (kMetamodel != null)
-			{
-				AdjustFlagsAndWidth(kMetamodel);
-				_kMetamodel = kMetamodel;
-			}
-			if (metaModelSymbols != null)
-			{
-				AdjustFlagsAndWidth(metaModelSymbols);
-				_metaModelSymbols = metaModelSymbols;
-			}
-		}
-	
-		public UsingBlock1Alt2Green(CompilerSyntaxKind kind, InternalSyntaxToken kMetamodel, QualifierGreen metaModelSymbols, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
-			: base(kind, diagnostics, annotations)
-		{
-			SlotCount = 2;
-			if (kMetamodel != null)
-			{
-				AdjustFlagsAndWidth(kMetamodel);
-				_kMetamodel = kMetamodel;
-			}
-			if (metaModelSymbols != null)
-			{
-				AdjustFlagsAndWidth(metaModelSymbols);
-				_metaModelSymbols = metaModelSymbols;
-			}
-		}
-	
-		private UsingBlock1Alt2Green()
-			: base((CompilerSyntaxKind)CompilerSyntaxKind.UsingBlock1Alt2, null, null)
-		{
-			this.flags &= ~NodeFlags.IsNotMissing;
-		}
-	
-		public InternalSyntaxToken KMetamodel { get { return _kMetamodel; } }
-		public QualifierGreen MetaModelSymbols { get { return _metaModelSymbols; } }
-	
-		protected override SyntaxNode CreateRed(SyntaxNode parent, int position)
-		{
-			return new global::MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.UsingBlock1Alt2Syntax(this, (CompilerSyntaxNode)parent, position);
-		}
-	
-		protected override GreenNode GetSlot(int index)
-		{
-			switch (index)
-			{
-				case 0: return _kMetamodel;
-				case 1: return _metaModelSymbols;
-				default: return null;
-			}
-		}
-	
-		public override TResult Accept<TResult>(CompilerInternalSyntaxVisitor<TResult> visitor) => visitor.VisitUsingBlock1Alt2Green(this);
-	
-		public override void Accept(CompilerInternalSyntaxVisitor visitor) => visitor.VisitUsingBlock1Alt2Green(this);
-	
-		public override InternalSyntaxNode WithDiagnostics(DiagnosticInfo[] diagnostics)
-		{
-			return new UsingBlock1Alt2Green(this.Kind, _kMetamodel, _metaModelSymbols, diagnostics, this.GetAnnotations());
-		}
-	
-		public override InternalSyntaxNode WithAnnotations(SyntaxAnnotation[] annotations)
-		{
-			return new UsingBlock1Alt2Green(this.Kind, _kMetamodel, _metaModelSymbols, this.GetDiagnostics(), annotations);
-		}
-	
-		public override GreenNode Clone()
-		{
-			return new UsingBlock1Alt2Green(this.Kind, _kMetamodel, _metaModelSymbols, this.GetDiagnostics(), this.GetAnnotations());
-		}
-	
-	
-		public UsingBlock1Alt2Green Update(InternalSyntaxToken kMetamodel, QualifierGreen metaModelSymbols)
-		{
-			if (_kMetamodel != kMetamodel || _metaModelSymbols != metaModelSymbols)
-			{
-				InternalSyntaxNode newNode = CompilerLanguage.Instance.InternalSyntaxFactory.UsingBlock1Alt2((InternalSyntaxToken)kMetamodel, metaModelSymbols);
-				var diags = this.GetDiagnostics();
-				if (diags != null && diags.Length > 0)
-					newNode = newNode.WithDiagnostics(diags);
-				var annotations = this.GetAnnotations();
-				if (annotations != null && annotations.Length > 0)
-					newNode = newNode.WithAnnotations(annotations);
-				return (UsingBlock1Alt2Green)newNode;
 			}
 			return this;
 		}

@@ -1,4 +1,5 @@
-﻿using MetaDslx.Modeling;
+﻿using MetaDslx.CodeAnalysis;
+using MetaDslx.Modeling;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -8,13 +9,13 @@ namespace MetaDslx.Modeling
 {
     public abstract class ModelEnumInfo
     {
-        protected abstract ImmutableDictionary<string, Enum> LiteralsByName { get; }
+        protected abstract ImmutableDictionary<string, MetaSymbol> LiteralsByName { get; }
 
         public abstract MetaModel MetaModel { get; }
-        public abstract Type MetaType { get; }
+        public abstract MetaType MetaType { get; }
         public abstract ImmutableArray<string> Literals { get; }
 
-        public bool TryGetValue(string literal, out Enum value)
+        public bool TryGetValue(string literal, out MetaSymbol value)
         {
             return LiteralsByName.TryGetValue(literal, out value);
         }

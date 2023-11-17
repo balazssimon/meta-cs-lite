@@ -1278,11 +1278,11 @@ namespace MetaDslx.Modeling
                     {
                         values = this.ResolveObjectsByReference(location, propertyValue, context);
                     }
-                    else if (property.Type.IsEnum)
+                    else if (property.Type.AsType().IsEnum)
                     {
                         try
                         {
-                            value = Enum.Parse(property.Type, propertyValue, true);
+                            value = Enum.Parse(property.Type.AsType(), propertyValue, true);
                         }
                         catch (Exception)
                         {

@@ -2965,23 +2965,23 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 		public static readonly __Assignment_Info Instance = new __Assignment_Info();
 	
 		private readonly global::System.Collections.Immutable.ImmutableArray<string> _literals;
-		private readonly global::System.Collections.Immutable.ImmutableDictionary<string, __Enum> _literalsByName;
+		private readonly global::System.Collections.Immutable.ImmutableDictionary<string, __MetaSymbol> _literalsByName;
 	
 		private __Assignment_Info()
 		{
 			_literals = __ImmutableArray.Create<string>("Assign", "QuestionAssign", "NegatedAssign", "PlusAssign");
-			var literalsByName = __ImmutableDictionary.CreateBuilder<string, __Enum>();
-			literalsByName.Add("Assign", Assignment.Assign);
-			literalsByName.Add("QuestionAssign", Assignment.QuestionAssign);
-			literalsByName.Add("NegatedAssign", Assignment.NegatedAssign);
-			literalsByName.Add("PlusAssign", Assignment.PlusAssign);
+			var literalsByName = __ImmutableDictionary.CreateBuilder<string, __MetaSymbol>();
+			literalsByName.Add("Assign", __MetaSymbol.FromValue(Assignment.Assign));
+			literalsByName.Add("QuestionAssign", __MetaSymbol.FromValue(Assignment.QuestionAssign));
+			literalsByName.Add("NegatedAssign", __MetaSymbol.FromValue(Assignment.NegatedAssign));
+			literalsByName.Add("PlusAssign", __MetaSymbol.FromValue(Assignment.PlusAssign));
 			_literalsByName = literalsByName.ToImmutable();
 		}
 	
 	    public override __MetaModel MetaModel => Compiler.MInstance;
-	    public override __Type MetaType => typeof(Assignment);
+	    public override __MetaType MetaType => typeof(Assignment);
 		public override global::System.Collections.Immutable.ImmutableArray<string> Literals => _literals;
-		protected override global::System.Collections.Immutable.ImmutableDictionary<string, Enum> LiteralsByName => _literalsByName;
+		protected override global::System.Collections.Immutable.ImmutableDictionary<string, __MetaSymbol> LiteralsByName => _literalsByName;
 	}
 
 	internal class __Multiplicity_Info : __ModelEnumInfo
@@ -2989,26 +2989,26 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 		public static readonly __Multiplicity_Info Instance = new __Multiplicity_Info();
 	
 		private readonly global::System.Collections.Immutable.ImmutableArray<string> _literals;
-		private readonly global::System.Collections.Immutable.ImmutableDictionary<string, __Enum> _literalsByName;
+		private readonly global::System.Collections.Immutable.ImmutableDictionary<string, __MetaSymbol> _literalsByName;
 	
 		private __Multiplicity_Info()
 		{
 			_literals = __ImmutableArray.Create<string>("ExactlyOne", "ZeroOrOne", "ZeroOrMore", "OneOrMore", "NonGreedyZeroOrOne", "NonGreedyZeroOrMore", "NonGreedyOneOrMore");
-			var literalsByName = __ImmutableDictionary.CreateBuilder<string, __Enum>();
-			literalsByName.Add("ExactlyOne", Multiplicity.ExactlyOne);
-			literalsByName.Add("ZeroOrOne", Multiplicity.ZeroOrOne);
-			literalsByName.Add("ZeroOrMore", Multiplicity.ZeroOrMore);
-			literalsByName.Add("OneOrMore", Multiplicity.OneOrMore);
-			literalsByName.Add("NonGreedyZeroOrOne", Multiplicity.NonGreedyZeroOrOne);
-			literalsByName.Add("NonGreedyZeroOrMore", Multiplicity.NonGreedyZeroOrMore);
-			literalsByName.Add("NonGreedyOneOrMore", Multiplicity.NonGreedyOneOrMore);
+			var literalsByName = __ImmutableDictionary.CreateBuilder<string, __MetaSymbol>();
+			literalsByName.Add("ExactlyOne", __MetaSymbol.FromValue(Multiplicity.ExactlyOne));
+			literalsByName.Add("ZeroOrOne", __MetaSymbol.FromValue(Multiplicity.ZeroOrOne));
+			literalsByName.Add("ZeroOrMore", __MetaSymbol.FromValue(Multiplicity.ZeroOrMore));
+			literalsByName.Add("OneOrMore", __MetaSymbol.FromValue(Multiplicity.OneOrMore));
+			literalsByName.Add("NonGreedyZeroOrOne", __MetaSymbol.FromValue(Multiplicity.NonGreedyZeroOrOne));
+			literalsByName.Add("NonGreedyZeroOrMore", __MetaSymbol.FromValue(Multiplicity.NonGreedyZeroOrMore));
+			literalsByName.Add("NonGreedyOneOrMore", __MetaSymbol.FromValue(Multiplicity.NonGreedyOneOrMore));
 			_literalsByName = literalsByName.ToImmutable();
 		}
 	
 	    public override __MetaModel MetaModel => Compiler.MInstance;
-	    public override __Type MetaType => typeof(Multiplicity);
+	    public override __MetaType MetaType => typeof(Multiplicity);
 		public override global::System.Collections.Immutable.ImmutableArray<string> Literals => _literals;
-		protected override global::System.Collections.Immutable.ImmutableDictionary<string, Enum> LiteralsByName => _literalsByName;
+		protected override global::System.Collections.Immutable.ImmutableDictionary<string, __MetaSymbol> LiteralsByName => _literalsByName;
 	}
 
 
@@ -3076,7 +3076,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 			}
 	
 	        public override __MetaModel MetaModel => Compiler.MInstance;
-	        public override __Type MetaType => typeof(Annotation);
+	        public override __MetaType MetaType => typeof(Annotation);
 	
 	        public override __MetaType SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.Symbol);
 	        public override __ModelProperty? NameProperty => null;
@@ -3172,7 +3172,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 			}
 	
 	        public override __MetaModel MetaModel => Compiler.MInstance;
-	        public override __Type MetaType => typeof(AnnotationArgument);
+	        public override __MetaType MetaType => typeof(AnnotationArgument);
 	
 	        public override __MetaType SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.Symbol);
 	        public override __ModelProperty? NameProperty => null;
@@ -3275,7 +3275,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 			}
 	
 	        public override __MetaModel MetaModel => Compiler.MInstance;
-	        public override __Type MetaType => typeof(ArrayExpression);
+	        public override __MetaType MetaType => typeof(ArrayExpression);
 	
 	        public override __MetaType SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.Symbol);
 	        public override __ModelProperty? NameProperty => null;
@@ -3378,7 +3378,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 			}
 	
 	        public override __MetaModel MetaModel => Compiler.MInstance;
-	        public override __Type MetaType => typeof(BoolExpression);
+	        public override __MetaType MetaType => typeof(BoolExpression);
 	
 	        public override __MetaType SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.Symbol);
 	        public override __ModelProperty? NameProperty => null;
@@ -3497,7 +3497,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 			}
 	
 	        public override __MetaModel MetaModel => Compiler.MInstance;
-	        public override __Type MetaType => typeof(Declaration);
+	        public override __MetaType MetaType => typeof(Declaration);
 	
 	        public override __MetaType SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.DeclaredSymbol);
 	        public override __ModelProperty? NameProperty => Compiler.Declaration_Name;
@@ -3584,7 +3584,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 			}
 	
 	        public override __MetaModel MetaModel => Compiler.MInstance;
-	        public override __Type MetaType => typeof(Expression);
+	        public override __MetaType MetaType => typeof(Expression);
 	
 	        public override __MetaType SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.Symbol);
 	        public override __ModelProperty? NameProperty => null;
@@ -3720,7 +3720,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 			}
 	
 	        public override __MetaModel MetaModel => Compiler.MInstance;
-	        public override __Type MetaType => typeof(Grammar);
+	        public override __MetaType MetaType => typeof(Grammar);
 	
 	        public override __MetaType SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.DeclaredSymbol);
 	        public override __ModelProperty? NameProperty => Compiler.Declaration_Name;
@@ -3823,7 +3823,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 			}
 	
 	        public override __MetaModel MetaModel => Compiler.MInstance;
-	        public override __Type MetaType => typeof(IntExpression);
+	        public override __MetaType MetaType => typeof(IntExpression);
 	
 	        public override __MetaType SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.Symbol);
 	        public override __ModelProperty? NameProperty => null;
@@ -3925,7 +3925,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 			}
 	
 	        public override __MetaModel MetaModel => Compiler.MInstance;
-	        public override __Type MetaType => typeof(LAlternative);
+	        public override __MetaType MetaType => typeof(LAlternative);
 	
 	        public override __MetaType SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.Symbol);
 	        public override __ModelProperty? NameProperty => null;
@@ -4053,7 +4053,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 			}
 	
 	        public override __MetaModel MetaModel => Compiler.MInstance;
-	        public override __Type MetaType => typeof(Language);
+	        public override __MetaType MetaType => typeof(Language);
 	
 	        public override __MetaType SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.DeclaredSymbol);
 	        public override __ModelProperty? NameProperty => Compiler.Declaration_Name;
@@ -4147,7 +4147,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 			}
 	
 	        public override __MetaModel MetaModel => Compiler.MInstance;
-	        public override __Type MetaType => typeof(LElementValue);
+	        public override __MetaType MetaType => typeof(LElementValue);
 	
 	        public override __MetaType SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.Symbol);
 	        public override __ModelProperty? NameProperty => null;
@@ -4264,7 +4264,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 			}
 	
 	        public override __MetaModel MetaModel => Compiler.MInstance;
-	        public override __Type MetaType => typeof(LBlock);
+	        public override __MetaType MetaType => typeof(LBlock);
 	
 	        public override __MetaType SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.Symbol);
 	        public override __ModelProperty? NameProperty => null;
@@ -4382,7 +4382,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 			}
 	
 	        public override __MetaModel MetaModel => Compiler.MInstance;
-	        public override __Type MetaType => typeof(LElement);
+	        public override __MetaType MetaType => typeof(LElement);
 	
 	        public override __MetaType SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.Symbol);
 	        public override __ModelProperty? NameProperty => null;
@@ -4564,7 +4564,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 			}
 	
 	        public override __MetaModel MetaModel => Compiler.MInstance;
-	        public override __Type MetaType => typeof(LexerRule);
+	        public override __MetaType MetaType => typeof(LexerRule);
 	
 	        public override __MetaType SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.DeclaredSymbol);
 	        public override __ModelProperty? NameProperty => Compiler.Declaration_Name;
@@ -4681,7 +4681,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 			}
 	
 	        public override __MetaModel MetaModel => Compiler.MInstance;
-	        public override __Type MetaType => typeof(LFixed);
+	        public override __MetaType MetaType => typeof(LFixed);
 	
 	        public override __MetaType SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.Symbol);
 	        public override __ModelProperty? NameProperty => null;
@@ -4806,7 +4806,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 			}
 	
 	        public override __MetaModel MetaModel => Compiler.MInstance;
-	        public override __Type MetaType => typeof(LRange);
+	        public override __MetaType MetaType => typeof(LRange);
 	
 	        public override __MetaType SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.Symbol);
 	        public override __ModelProperty? NameProperty => null;
@@ -4923,7 +4923,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 			}
 	
 	        public override __MetaModel MetaModel => Compiler.MInstance;
-	        public override __Type MetaType => typeof(LReference);
+	        public override __MetaType MetaType => typeof(LReference);
 	
 	        public override __MetaType SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.Symbol);
 	        public override __ModelProperty? NameProperty => null;
@@ -5040,7 +5040,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 			}
 	
 	        public override __MetaModel MetaModel => Compiler.MInstance;
-	        public override __Type MetaType => typeof(LSet);
+	        public override __MetaType MetaType => typeof(LSet);
 	
 	        public override __MetaType SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.Symbol);
 	        public override __ModelProperty? NameProperty => null;
@@ -5134,7 +5134,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 			}
 	
 	        public override __MetaModel MetaModel => Compiler.MInstance;
-	        public override __Type MetaType => typeof(LSetItem);
+	        public override __MetaType MetaType => typeof(LSetItem);
 	
 	        public override __MetaType SymbolType => default;
 	        public override __ModelProperty? NameProperty => null;
@@ -5251,7 +5251,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 			}
 	
 	        public override __MetaModel MetaModel => Compiler.MInstance;
-	        public override __Type MetaType => typeof(LSetChar);
+	        public override __MetaType MetaType => typeof(LSetChar);
 	
 	        public override __MetaType SymbolType => default;
 	        public override __ModelProperty? NameProperty => null;
@@ -5376,7 +5376,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 			}
 	
 	        public override __MetaModel MetaModel => Compiler.MInstance;
-	        public override __Type MetaType => typeof(LSetRange);
+	        public override __MetaType MetaType => typeof(LSetRange);
 	
 	        public override __MetaType SymbolType => default;
 	        public override __ModelProperty? NameProperty => null;
@@ -5485,7 +5485,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 			}
 	
 	        public override __MetaModel MetaModel => Compiler.MInstance;
-	        public override __Type MetaType => typeof(LWildCard);
+	        public override __MetaType MetaType => typeof(LWildCard);
 	
 	        public override __MetaType SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.Symbol);
 	        public override __ModelProperty? NameProperty => null;
@@ -5605,7 +5605,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 			}
 	
 	        public override __MetaModel MetaModel => Compiler.MInstance;
-	        public override __Type MetaType => typeof(Namespace);
+	        public override __MetaType MetaType => typeof(Namespace);
 	
 	        public override __MetaType SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.NamespaceSymbol);
 	        public override __ModelProperty? NameProperty => Compiler.Declaration_Name;
@@ -5700,7 +5700,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 			}
 	
 	        public override __MetaModel MetaModel => Compiler.MInstance;
-	        public override __Type MetaType => typeof(NullExpression);
+	        public override __MetaType MetaType => typeof(NullExpression);
 	
 	        public override __MetaType SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.Symbol);
 	        public override __ModelProperty? NameProperty => null;
@@ -5844,7 +5844,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 			}
 	
 	        public override __MetaModel MetaModel => Compiler.MInstance;
-	        public override __Type MetaType => typeof(PAlternative);
+	        public override __MetaType MetaType => typeof(PAlternative);
 	
 	        public override __MetaType SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.DeclaredSymbol);
 	        public override __ModelProperty? NameProperty => Compiler.Declaration_Name;
@@ -6004,7 +6004,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 			}
 	
 	        public override __MetaModel MetaModel => Compiler.MInstance;
-	        public override __Type MetaType => typeof(ParserRule);
+	        public override __MetaType MetaType => typeof(ParserRule);
 	
 	        public override __MetaType SymbolType => typeof(global::MetaDslx.Bootstrap.MetaCompiler.Symbols.ParserRuleSymbol);
 	        public override __ModelProperty? NameProperty => Compiler.Declaration_Name;
@@ -6093,7 +6093,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 			}
 	
 	        public override __MetaModel MetaModel => Compiler.MInstance;
-	        public override __Type MetaType => typeof(PBlock);
+	        public override __MetaType MetaType => typeof(PBlock);
 	
 	        public override __MetaType SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.Symbol);
 	        public override __ModelProperty? NameProperty => null;
@@ -6221,7 +6221,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 			}
 	
 	        public override __MetaModel MetaModel => Compiler.MInstance;
-	        public override __Type MetaType => typeof(PElement);
+	        public override __MetaType MetaType => typeof(PElement);
 	
 	        public override __MetaType SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.Symbol);
 	        public override __ModelProperty? NameProperty => Compiler.PElement_Name;
@@ -6301,7 +6301,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 			}
 	
 	        public override __MetaModel MetaModel => Compiler.MInstance;
-	        public override __Type MetaType => typeof(PElementValue);
+	        public override __MetaType MetaType => typeof(PElementValue);
 	
 	        public override __MetaType SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.Symbol);
 	        public override __ModelProperty? NameProperty => null;
@@ -6382,7 +6382,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 			}
 	
 	        public override __MetaModel MetaModel => Compiler.MInstance;
-	        public override __Type MetaType => typeof(PEof);
+	        public override __MetaType MetaType => typeof(PEof);
 	
 	        public override __MetaType SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.Symbol);
 	        public override __ModelProperty? NameProperty => null;
@@ -6471,7 +6471,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 			}
 	
 	        public override __MetaModel MetaModel => Compiler.MInstance;
-	        public override __Type MetaType => typeof(PKeyword);
+	        public override __MetaType MetaType => typeof(PKeyword);
 	
 	        public override __MetaType SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.Symbol);
 	        public override __ModelProperty? NameProperty => null;
@@ -6568,7 +6568,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 			}
 	
 	        public override __MetaModel MetaModel => Compiler.MInstance;
-	        public override __Type MetaType => typeof(PReference);
+	        public override __MetaType MetaType => typeof(PReference);
 	
 	        public override __MetaType SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.Symbol);
 	        public override __ModelProperty? NameProperty => null;
@@ -6671,7 +6671,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 			}
 	
 	        public override __MetaModel MetaModel => Compiler.MInstance;
-	        public override __Type MetaType => typeof(ReferenceExpression);
+	        public override __MetaType MetaType => typeof(ReferenceExpression);
 	
 	        public override __MetaType SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.Symbol);
 	        public override __ModelProperty? NameProperty => null;
@@ -6806,7 +6806,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 			}
 	
 	        public override __MetaModel MetaModel => Compiler.MInstance;
-	        public override __Type MetaType => typeof(Rule);
+	        public override __MetaType MetaType => typeof(Rule);
 	
 	        public override __MetaType SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.DeclaredSymbol);
 	        public override __ModelProperty? NameProperty => Compiler.Declaration_Name;
@@ -6909,7 +6909,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 			}
 	
 	        public override __MetaModel MetaModel => Compiler.MInstance;
-	        public override __Type MetaType => typeof(StringExpression);
+	        public override __MetaType MetaType => typeof(StringExpression);
 	
 	        public override __MetaType SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.Symbol);
 	        public override __ModelProperty? NameProperty => null;

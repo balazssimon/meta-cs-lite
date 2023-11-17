@@ -1109,7 +1109,7 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 			}
 	
 	        public override __MetaModel MetaModel => Meta.MInstance;
-	        public override __Type MetaType => typeof(MetaDeclaration);
+	        public override __MetaType MetaType => typeof(MetaDeclaration);
 	
 	        public override __MetaType SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.DeclaredSymbol);
 	        public override __ModelProperty? NameProperty => Meta.MetaDeclaration_Name;
@@ -1229,7 +1229,7 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 			}
 	
 	        public override __MetaModel MetaModel => Meta.MInstance;
-	        public override __Type MetaType => typeof(MetaConstant);
+	        public override __MetaType MetaType => typeof(MetaConstant);
 	
 	        public override __MetaType SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.DeclaredSymbol);
 	        public override __ModelProperty? NameProperty => Meta.MetaDeclaration_Name;
@@ -1348,7 +1348,7 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 			}
 	
 	        public override __MetaModel MetaModel => Meta.MInstance;
-	        public override __Type MetaType => typeof(MetaModel);
+	        public override __MetaType MetaType => typeof(MetaModel);
 	
 	        public override __MetaType SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.DeclaredSymbol);
 	        public override __ModelProperty? NameProperty => Meta.MetaDeclaration_Name;
@@ -1460,7 +1460,7 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 			}
 	
 	        public override __MetaModel MetaModel => Meta.MInstance;
-	        public override __Type MetaType => typeof(MetaNamespace);
+	        public override __MetaType MetaType => typeof(MetaNamespace);
 	
 	        public override __MetaType SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.NamespaceSymbol);
 	        public override __ModelProperty? NameProperty => Meta.MetaDeclaration_Name;
@@ -1572,7 +1572,7 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 			}
 	
 	        public override __MetaModel MetaModel => Meta.MInstance;
-	        public override __Type MetaType => typeof(MetaType);
+	        public override __MetaType MetaType => typeof(MetaType);
 	
 	        public override __MetaType SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.TypeSymbol);
 	        public override __ModelProperty? NameProperty => Meta.MetaDeclaration_Name;
@@ -1693,7 +1693,7 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 			}
 	
 	        public override __MetaModel MetaModel => Meta.MInstance;
-	        public override __Type MetaType => typeof(MetaArrayType);
+	        public override __MetaType MetaType => typeof(MetaArrayType);
 	
 	        public override __MetaType SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.TypeSymbol);
 	        public override __ModelProperty? NameProperty => Meta.MetaDeclaration_Name;
@@ -1846,7 +1846,7 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 			}
 	
 	        public override __MetaModel MetaModel => Meta.MInstance;
-	        public override __Type MetaType => typeof(MetaClass);
+	        public override __MetaType MetaType => typeof(MetaClass);
 	
 	        public override __MetaType SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.TypeSymbol);
 	        public override __ModelProperty? NameProperty => Meta.MetaDeclaration_Name;
@@ -1967,7 +1967,7 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 			}
 	
 	        public override __MetaModel MetaModel => Meta.MInstance;
-	        public override __Type MetaType => typeof(MetaEnum);
+	        public override __MetaType MetaType => typeof(MetaEnum);
 	
 	        public override __MetaType SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.TypeSymbol);
 	        public override __ModelProperty? NameProperty => Meta.MetaDeclaration_Name;
@@ -2079,7 +2079,7 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 			}
 	
 	        public override __MetaModel MetaModel => Meta.MInstance;
-	        public override __Type MetaType => typeof(MetaEnumLiteral);
+	        public override __MetaType MetaType => typeof(MetaEnumLiteral);
 	
 	        public override __MetaType SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.DeclaredSymbol);
 	        public override __ModelProperty? NameProperty => Meta.MetaDeclaration_Name;
@@ -2200,7 +2200,7 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 			}
 	
 	        public override __MetaModel MetaModel => Meta.MInstance;
-	        public override __Type MetaType => typeof(MetaNullableType);
+	        public override __MetaType MetaType => typeof(MetaNullableType);
 	
 	        public override __MetaType SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.TypeSymbol);
 	        public override __ModelProperty? NameProperty => Meta.MetaDeclaration_Name;
@@ -2327,7 +2327,7 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 			}
 	
 	        public override __MetaModel MetaModel => Meta.MInstance;
-	        public override __Type MetaType => typeof(MetaOperation);
+	        public override __MetaType MetaType => typeof(MetaOperation);
 	
 	        public override __MetaType SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.DeclaredSymbol);
 	        public override __ModelProperty? NameProperty => Meta.MetaDeclaration_Name;
@@ -2447,7 +2447,7 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 			}
 	
 	        public override __MetaModel MetaModel => Meta.MInstance;
-	        public override __Type MetaType => typeof(MetaParameter);
+	        public override __MetaType MetaType => typeof(MetaParameter);
 	
 	        public override __MetaType SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.DeclaredSymbol);
 	        public override __ModelProperty? NameProperty => Meta.MetaDeclaration_Name;
@@ -2560,7 +2560,7 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 			}
 	
 	        public override __MetaModel MetaModel => Meta.MInstance;
-	        public override __Type MetaType => typeof(MetaPrimitiveType);
+	        public override __MetaType MetaType => typeof(MetaPrimitiveType);
 	
 	        public override __MetaType SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.TypeSymbol);
 	        public override __ModelProperty? NameProperty => Meta.MetaDeclaration_Name;
@@ -2728,7 +2728,7 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 			}
 	
 	        public override __MetaModel MetaModel => Meta.MInstance;
-	        public override __Type MetaType => typeof(MetaProperty);
+	        public override __MetaType MetaType => typeof(MetaProperty);
 	
 	        public override __MetaType SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.DeclaredSymbol);
 	        public override __ModelProperty? NameProperty => Meta.MetaDeclaration_Name;

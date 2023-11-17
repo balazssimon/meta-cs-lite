@@ -56,18 +56,11 @@ namespace MetaDslx.CodeAnalysis.Symbols
             public static readonly CompletionPart FinishComputingProperty_Attributes = Symbol.CompletionParts.FinishComputingProperty_Attributes;
             public static readonly CompletionGraph CompletionGraph =
                 CompletionGraph.CreateFromParts(
-                    CompletionGraph.StartInitializing, CompletionGraph.FinishInitializing,
-                    CompletionGraph.StartCreatingContainedSymbols, CompletionGraph.FinishCreatingContainedSymbols,
                     StartComputingProperty_Target, FinishComputingProperty_Target,
                     StartComputingProperty_Members, FinishComputingProperty_Members,
                     StartComputingProperty_TypeArguments, FinishComputingProperty_TypeArguments,
                     StartComputingProperty_Imports, FinishComputingProperty_Imports,
-                    StartComputingProperty_Attributes, FinishComputingProperty_Attributes,
-                    CompletionGraph.StartComputingNonSymbolProperties, CompletionGraph.FinishComputingNonSymbolProperties,
-                    CompletionGraph.ContainedSymbolsFinalized,
-                    CompletionGraph.StartFinalizing, CompletionGraph.FinishFinalizing,
-                    CompletionGraph.ContainedSymbolsCompleted,
-                    CompletionGraph.StartValidating, CompletionGraph.FinishValidating);
+                    StartComputingProperty_Attributes, FinishComputingProperty_Attributes);
         }
 
         private Symbol _target;

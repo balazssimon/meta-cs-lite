@@ -160,9 +160,11 @@ namespace MetaDslx.Languages.MetaModel.Generators
             return builder.ToStringAndFree();
         }
 
-        public string ToCSharpValue(object propertyType, object? value)
+        public string ToCSharpValue(MetaDslx.CodeAnalysis.MetaType propertyType, object? value)
         {
+            if (value is MetaDslx.CodeAnalysis.MetaSymbol ms) value = ms.OriginalValue;
             value = ExtractMetaType(value);
+            if (value is null) return "default";
             if (propertyType == typeof(MetaDslx.CodeAnalysis.MetaType) || propertyType == typeof(Type) || propertyType == typeof(TypeSymbol))
             {
                 if (value is MetaPrimitiveType pt) value = pt.Name;
@@ -196,7 +198,7 @@ namespace MetaDslx.Languages.MetaModel.Generators
             else return $"global::{type}";
         }
 
-        public string ToCSharpValue(ModelProperty property, object? value)
+        public string ToCSharpValue(ModelProperty property, MetaDslx.CodeAnalysis.MetaSymbol value)
         {
             var propertyType = property.Type;
             return ToCSharpValue(propertyType, value);

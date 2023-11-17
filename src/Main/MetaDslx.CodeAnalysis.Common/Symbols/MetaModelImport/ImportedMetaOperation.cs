@@ -5,11 +5,11 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace MetaDslx.CodeAnalysis.Symbols.Meta
+namespace MetaDslx.CodeAnalysis.Symbols.MetaModelImport
 {
-    internal class SymbolMetaOperation : MetaOperation<MetaType, CSharpDeclaredSymbol, CSharpDeclaredSymbol>
+    internal class ImportedMetaOperation : MetaOperation<MetaType, CSharpDeclaredSymbol, CSharpDeclaredSymbol>
     {
-        public SymbolMetaOperation(MetaClass<MetaType, CSharpDeclaredSymbol, CSharpDeclaredSymbol> declaringType, CSharpDeclaredSymbol underlyingOperation) 
+        public ImportedMetaOperation(MetaClass<MetaType, CSharpDeclaredSymbol, CSharpDeclaredSymbol> declaringType, CSharpDeclaredSymbol underlyingOperation) 
             : base(declaringType, underlyingOperation)
         {
         }

@@ -1,7 +1,9 @@
-﻿using MetaDslx.CodeAnalysis.Declarations;
+﻿using MetaDslx.CodeAnalysis;
+using MetaDslx.CodeAnalysis.Declarations;
 using MetaDslx.CodeAnalysis.PooledObjects;
 using MetaDslx.CodeAnalysis.Symbols.CSharp;
-using MetaDslx.CodeAnalysis.Symbols.Meta;
+using MetaDslx.CodeAnalysis.Symbols.MetaModelImport;
+using MetaDslx.CodeAnalysis.Symbols.Source;
 using MetaDslx.Modeling;
 using System;
 using System.Collections.Generic;
@@ -10,7 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 
-namespace MetaDslx.CodeAnalysis.Symbols.Source
+namespace MetaDslx.CodeAnalysis.Symbols
 {
     public class ImportMetaModelSymbol : SourceImportSymbol
     {
@@ -51,29 +53,30 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
                         }
                     }
                 }
-                if (metaModel is null && !metaModelSymbol.IsError && metaModelSymbol is CSharpTypeSymbol csharpTypeSymbol)
-                {
-                    var csharpNamespaceSymbol = csharpTypeSymbol.ContainingNamespace as CSharpNamespaceSymbol;
-                    if (csharpNamespaceSymbol is not null)
-                    {
-                        metaModel = new SymbolMetaModel(csharpNamespaceSymbol, metaModelSymbol.Name, false);
-                    }
-                }
                 if (metaModel is not null)
                 {
                     metaModelsBuilder.Add(metaModel);
                     foreach (var type in metaModel.MEnumTypes)
                     {
-                        symbolsBuilder.Add(new MetaEnumSymbol(metaModelSymbol, metaModel, type));
+                        symbolsBuilder.Add(type.OriginalTypeSymbol);
                     }
                     foreach (var type in metaModel.MClassTypes)
                     {
-                        symbolsBuilder.Add(new MetaClassSymbol(metaModelSymbol, metaModel, type));
+                        symbolsBuilder.Add(type.OriginalTypeSymbol);
                     }
                 }
-                else
+                else if (metaModel is null && !metaModelSymbol.IsError && metaModelSymbol is CSharpTypeSymbol csharpTypeSymbol)
                 {
-                    diagnostics.Add(Diagnostic.Create(CommonErrorCode.ERR_DeclarationError, this.Locations.FirstOrDefault(), $"The imported type '{fullName}' is not a metamodel."));
+                    var csharpNamespaceSymbol = csharpTypeSymbol.ContainingNamespace as CSharpNamespaceSymbol;
+                    if (csharpNamespaceSymbol is not null)
+                    {
+                        metaModel = new ImportedMetaModel(csharpNamespaceSymbol, metaModelSymbol.Name, false);
+                        symbolsBuilder.AddRange(ImportedMetaUtils.CollectTypes(csharpNamespaceSymbol, collectSymbols: false));
+                    }
+                }
+                if (metaModel is null)
+                {
+                    diagnostics.Add(Diagnostic.Create(CommonErrorCode.ERR_DeclarationError, Locations.FirstOrDefault(), $"The imported type '{fullName}' is not a metamodel."));
                 }
             }
             _metaModels = metaModelsBuilder.ToImmutableAndFree();
@@ -87,15 +90,28 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
             {
                 var builder = PooledStringBuilder.GetInstance();
                 var sb = builder.Builder;
-                foreach (var metaModel in _metaModels)
+                if (_metaModels.Length == 1)
                 {
-                    sb.Clear();
-                    foreach (var symbol in unusedSymbols.OfType<MetaTypeSymbol>().Where(us => us.MetaModel == metaModel).OrderBy(us => us.Name))
+                    var metaModel = _metaModels[0];
+                    foreach (var symbol in unusedSymbols.OrderBy(us => us.Name))
                     {
                         if (sb.Length > 0) sb.Append(", ");
                         sb.Append(symbol.Name);
                     }
-                    if (sb.Length > 0) diagnostics.Add(Diagnostic.Create(CommonErrorCode.WRN_UnusedMetaTypes, this.Locations.FirstOrDefault(), metaModel.MName, builder.ToString()));
+                    if (sb.Length > 0) diagnostics.Add(Diagnostic.Create(CommonErrorCode.WRN_UnusedMetaTypes, Locations.FirstOrDefault(), metaModel.MName, builder.ToString()));
+                }
+                else
+                {
+                    foreach (var metaModel in _metaModels)
+                    {
+                        sb.Clear();
+                        foreach (var symbol in unusedSymbols.OfType<TypeSymbol>().Where(ts => metaModel.MContains(ts)).OrderBy(us => us.Name))
+                        {
+                            if (sb.Length > 0) sb.Append(", ");
+                            sb.Append(symbol.Name);
+                        }
+                        if (sb.Length > 0) diagnostics.Add(Diagnostic.Create(CommonErrorCode.WRN_UnusedMetaTypes, Locations.FirstOrDefault(), metaModel.MName, builder.ToString()));
+                    }
                 }
                 builder.Free();
             }

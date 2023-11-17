@@ -32,6 +32,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 				case CompilerSyntaxKind.TSemicolon:
 				case CompilerSyntaxKind.KUsing:
 				case CompilerSyntaxKind.KMetamodel:
+				case CompilerSyntaxKind.KSymbols:
 				case CompilerSyntaxKind.KLanguage:
 				case CompilerSyntaxKind.KBlock:
 				case CompilerSyntaxKind.KReturns:
@@ -104,6 +105,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 				case CompilerSyntaxKind.TSemicolon:
 				case CompilerSyntaxKind.KUsing:
 				case CompilerSyntaxKind.KMetamodel:
+				case CompilerSyntaxKind.KSymbols:
 				case CompilerSyntaxKind.KLanguage:
 				case CompilerSyntaxKind.KBlock:
 				case CompilerSyntaxKind.KReturns:
@@ -165,6 +167,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 					return CompilerSyntaxKind.KUsing;
 				case "metamodel": 
 					return CompilerSyntaxKind.KMetamodel;
+				case "symbols": 
+					return CompilerSyntaxKind.KSymbols;
 				case "language": 
 					return CompilerSyntaxKind.KLanguage;
 				case "block": 
@@ -284,6 +288,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 					return "KUsing";
 				case CompilerSyntaxKind.KMetamodel: 
 					return "KMetamodel";
+				case CompilerSyntaxKind.KSymbols: 
+					return "KSymbols";
 				case CompilerSyntaxKind.KLanguage: 
 					return "KLanguage";
 				case CompilerSyntaxKind.KBlock: 
@@ -388,8 +394,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 					return "TInvalidToken";
 				case CompilerSyntaxKind.Main: 
 					return "Main";
-				case CompilerSyntaxKind.Using: 
-					return "Using";
+				case CompilerSyntaxKind.UsingAlt1: 
+					return "UsingAlt1";
+				case CompilerSyntaxKind.UsingAlt2: 
+					return "UsingAlt2";
+				case CompilerSyntaxKind.UsingAlt3: 
+					return "UsingAlt3";
 				case CompilerSyntaxKind.Declarations: 
 					return "Declarations";
 				case CompilerSyntaxKind.LanguageDeclaration: 
@@ -460,10 +470,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 					return "QualifierList";
 				case CompilerSyntaxKind.Identifier: 
 					return "Identifier";
-				case CompilerSyntaxKind.UsingBlock1Alt1: 
-					return "UsingBlock1Alt1";
-				case CompilerSyntaxKind.UsingBlock1Alt2: 
-					return "UsingBlock1Alt2";
 				case CompilerSyntaxKind.GrammarBlock1: 
 					return "GrammarBlock1";
 				case CompilerSyntaxKind.ParserRuleBlock1Alt1: 
@@ -534,6 +540,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 					return "using";
 				case CompilerSyntaxKind.KMetamodel: 
 					return "metamodel";
+				case CompilerSyntaxKind.KSymbols: 
+					return "symbols";
 				case CompilerSyntaxKind.KLanguage: 
 					return "language";
 				case CompilerSyntaxKind.KBlock: 
@@ -639,6 +647,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 				case CompilerSyntaxKind.KNamespace: 
 				case CompilerSyntaxKind.KUsing: 
 				case CompilerSyntaxKind.KMetamodel: 
+				case CompilerSyntaxKind.KSymbols: 
 				case CompilerSyntaxKind.KLanguage: 
 				case CompilerSyntaxKind.KBlock: 
 				case CompilerSyntaxKind.KReturns: 
@@ -665,6 +674,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 			yield return CompilerSyntaxKind.KNamespace;
 			yield return CompilerSyntaxKind.KUsing;
 			yield return CompilerSyntaxKind.KMetamodel;
+			yield return CompilerSyntaxKind.KSymbols;
 			yield return CompilerSyntaxKind.KLanguage;
 			yield return CompilerSyntaxKind.KBlock;
 			yield return CompilerSyntaxKind.KReturns;
@@ -693,6 +703,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 					return CompilerSyntaxKind.KUsing;
 				case "metamodel": 
 					return CompilerSyntaxKind.KMetamodel;
+				case "symbols": 
+					return CompilerSyntaxKind.KSymbols;
 				case "language": 
 					return CompilerSyntaxKind.KLanguage;
 				case "block": 
