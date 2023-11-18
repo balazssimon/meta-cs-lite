@@ -12,8 +12,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
         public CustomCompilerSourceSymbolFactory(SourceModuleSymbol module) 
             : base(module)
         {
-            Register<ParserRuleSymbol>((s, d, mo) => new ParserRuleSymbol(s, d, mo));
-            Register<PElementSymbol>((s, d, mo) => new PElementSymbol(s, d, mo));
+            Register((s, d, mo) => new ParserRuleSymbol(s, d, mo));
+            Register((s, d, mo) => new PAlternativeSymbol(s, d, mo));
+            Register((s, d, mo) => new PElementSymbol(s, d, mo));
+            Register((s, d, mo) => new PBlockSymbol(s, d, mo));
+            Register((s, d, mo) => new ExpressionSymbol(s, d, mo));
         }
     }
 }

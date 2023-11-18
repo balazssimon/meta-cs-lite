@@ -25,7 +25,7 @@ Using returns ImportSymbol
 	| !{ImportSymbolModelSymbol} 'using' 'symbols' namespaces+=#NamespaceSymbol ';';
 
 [Scope]
-block Declarations: declarations+=LanguageDeclaration declarations+=Rule*;
+block Declarations: declarationsZZZ+=LanguageDeclaration declarations+=Rule*;
 
 LanguageDeclaration returns MetaDslx.Bootstrap.MetaCompiler.Model.Language: 'language' name=Name ';' grammar=Grammar;
 
@@ -62,7 +62,7 @@ NullExpression: 'null';
 BoolExpression: boolValue?='true' | 'false';
 IntExpression: intValue=TInteger;
 StringExpression: stringValue=TString;
-ReferenceExpression: symbolValue=#MetaSymbol;
+ReferenceExpression: symbolValue=[ConvertToExpectedType]Qualifier;
 ArrayExpression: '{' (items+=Expression (',' items+=Expression)*)? '}';
 
 ParserAnnotation returns MetaDslx.Bootstrap.MetaCompiler.Model.Annotation: '[' type=[Use(types:{Binder,MetaDslx.CodeAnalysis.Annotations.Annotation},suffixes:{"Binder","Annotation"})]Qualifier AnnotationArguments? ']';
@@ -97,16 +97,29 @@ block Qualifier: Identifier ('.' Identifier)*;
 block QualifierList: Qualifier (',' Qualifier)*;
 
 [Identifier]
-block Identifier: TIdentifier;
+block Identifier: TPrimitiveType | TIdentifier | TVerbatimIdentifier;
 
 [Number]
-token TInteger returns int: '0'| '1'..'9' ('0'..'9')* ;
+token TInteger returns int32: '0'| '1'..'9' ('0'..'9')* ;
 
 [Number]
 token TDecimal returns double: ('0'|'1'..'9' ('0'..'9')*) '.' ('0'..'9')+ ;
 
+[Keyword]
+token TPrimitiveType returns MetaType
+	: 'bool'
+	| 'int'
+	| 'string'
+	| 'type'
+	| 'symbol'
+	| 'object'
+	| 'void'
+	;
+
 [DefaultIdentifier]
 token TIdentifier: ('_'|'a'..'z'|'A'..'Z')+('_'|'a'..'z'|'A'..'Z'|'0'..'9')*;
+[Identifier]
+token TVerbatimIdentifier: '@'('_'|'a'..'z'|'A'..'Z')+('_'|'a'..'z'|'A'..'Z'|'0'..'9')*;
 
 [DefaultSeparator]
 token TComma: ',' ;

@@ -199,13 +199,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
 			_PElement_Assignment = new __ModelProperty(typeof(PElement), "Assignment", typeof(global::MetaDslx.Bootstrap.MetaCompiler.Model.Assignment), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.EnumType | __ModelPropertyFlags.SingleItem, null);
 			_PElement_Multiplicity = new __ModelProperty(typeof(PElement), "Multiplicity", typeof(global::MetaDslx.Bootstrap.MetaCompiler.Model.Multiplicity), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.EnumType | __ModelPropertyFlags.SingleItem, null);
 			_PElement_NameAnnotations = new __ModelProperty(typeof(PElement), "NameAnnotations", typeof(Annotation), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection, null);
-			_PElement_SymbolProperty = new __ModelProperty(typeof(PElement), "SymbolProperty", typeof(__MetaSymbol), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.SingleItem, "SymbolProperty");
+			_PElement_SymbolProperty = new __ModelProperty(typeof(PElement), "SymbolProperty", typeof(__MetaSymbol), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.SingleItem, "SymbolProperty");
 			_PElement_Value = new __ModelProperty(typeof(PElement), "Value", typeof(PElementValue), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.SingleItem, null);
 			_PElement_ValueAnnotations = new __ModelProperty(typeof(PElement), "ValueAnnotations", typeof(Annotation), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection, null);
 			_PKeyword_Text = new __ModelProperty(typeof(PKeyword), "Text", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.SingleItem, null);
 			_PReference_ReferencedTypes = new __ModelProperty(typeof(PReference), "ReferencedTypes", typeof(__MetaType), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Collection, null);
 			_PReference_Rule = new __ModelProperty(typeof(PReference), "Rule", typeof(Rule), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.SingleItem, null);
-			_ReferenceExpression_SymbolValue = new __ModelProperty(typeof(ReferenceExpression), "SymbolValue", typeof(__MetaSymbol), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.SingleItem, null);
+			_ReferenceExpression_SymbolValue = new __ModelProperty(typeof(ReferenceExpression), "SymbolValue", typeof(__MetaSymbol), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.SingleItem, null);
 			_ReferenceExpression_Value = new __ModelProperty(typeof(ReferenceExpression), "Value", typeof(object), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.SingleItem | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
 			_Rule_Grammar = new __ModelProperty(typeof(Rule), "Grammar", typeof(Grammar), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.SingleItem, null);
 			_Rule_Language = new __ModelProperty(typeof(Rule), "Language", typeof(Language), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.SingleItem | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
@@ -470,33 +470,35 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
 			var obj150 = f.MetaProperty();
 			var obj151 = f.MetaProperty();
 			var obj152 = f.MetaArrayType();
-			var obj153 = f.MetaArrayType();
-			var obj154 = f.MetaProperty();
+			var obj153 = f.MetaNullableType();
+			var obj154 = f.MetaArrayType();
 			var obj155 = f.MetaProperty();
-			var obj156 = f.MetaArrayType();
-			var obj157 = f.MetaProperty();
+			var obj156 = f.MetaProperty();
+			var obj157 = f.MetaArrayType();
 			var obj158 = f.MetaProperty();
-			var obj159 = f.MetaArrayType();
-			var obj160 = f.MetaProperty();
-			var obj161 = f.MetaNullableType();
-			var obj162 = f.MetaProperty();
-			var obj163 = f.MetaNullableType();
-			var obj164 = f.MetaProperty();
+			var obj159 = f.MetaProperty();
+			var obj160 = f.MetaArrayType();
+			var obj161 = f.MetaProperty();
+			var obj162 = f.MetaNullableType();
+			var obj163 = f.MetaProperty();
+			var obj164 = f.MetaNullableType();
 			var obj165 = f.MetaProperty();
-			var obj166 = f.MetaNullableType();
-			var obj167 = f.MetaProperty();
+			var obj166 = f.MetaProperty();
+			var obj167 = f.MetaNullableType();
 			var obj168 = f.MetaProperty();
-			var obj169 = f.MetaNullableType();
-			var obj170 = f.MetaProperty();
+			var obj169 = f.MetaProperty();
+			var obj170 = f.MetaNullableType();
 			var obj171 = f.MetaProperty();
-			var obj172 = f.MetaNullableType();
-			var obj173 = f.MetaProperty();
+			var obj172 = f.MetaProperty();
+			var obj173 = f.MetaNullableType();
 			var obj174 = f.MetaProperty();
-			var obj175 = f.MetaNullableType();
-			var obj176 = f.MetaProperty();
-			var obj177 = f.MetaProperty();
-			var obj178 = f.MetaNullableType();
-			var obj179 = f.MetaArrayType();
+			var obj175 = f.MetaProperty();
+			var obj176 = f.MetaNullableType();
+			var obj177 = f.MetaNullableType();
+			var obj178 = f.MetaProperty();
+			var obj179 = f.MetaProperty();
+			var obj180 = f.MetaNullableType();
+			var obj181 = f.MetaArrayType();
 			__CustomImpl.Compiler(this);
 			((__IModelObject)obj1).Children.Add((__IModelObject)obj2);
 			((__IModelObject)obj2).Children.Add((__IModelObject)obj3);
@@ -869,6 +871,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
 			obj29.Properties.Add(obj137);
 			obj29.Properties.Add(obj138);
 			obj29.Properties.Add(obj139);
+			obj29.SymbolType = typeof(global::MetaDslx.Bootstrap.MetaCompiler.Symbols.PAlternativeSymbol);
 			obj29.Declarations.Add(obj137);
 			obj29.Declarations.Add(obj138);
 			obj29.Declarations.Add(obj139);
@@ -913,86 +916,87 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
 			obj32.SymbolType = typeof(global::MetaDslx.CodeAnalysis.Symbols.Symbol);
 			obj32.Name = "PElementValue";
 			obj32.Parent = obj5;
-			((__IModelObject)obj33).Children.Add((__IModelObject)obj154);
 			((__IModelObject)obj33).Children.Add((__IModelObject)obj155);
+			((__IModelObject)obj33).Children.Add((__IModelObject)obj156);
 			obj33.BaseTypes.Add(obj32);
-			obj33.Properties.Add(obj154);
 			obj33.Properties.Add(obj155);
-			obj33.Declarations.Add(obj154);
+			obj33.Properties.Add(obj156);
 			obj33.Declarations.Add(obj155);
+			obj33.Declarations.Add(obj156);
 			obj33.Name = "PReference";
 			obj33.Parent = obj5;
 			obj34.BaseTypes.Add(obj32);
 			obj34.Name = "PEof";
 			obj34.Parent = obj5;
-			((__IModelObject)obj35).Children.Add((__IModelObject)obj157);
+			((__IModelObject)obj35).Children.Add((__IModelObject)obj158);
 			obj35.BaseTypes.Add(obj32);
-			obj35.Properties.Add(obj157);
-			obj35.Declarations.Add(obj157);
+			obj35.Properties.Add(obj158);
+			obj35.Declarations.Add(obj158);
 			obj35.Name = "PKeyword";
 			obj35.Parent = obj5;
-			((__IModelObject)obj36).Children.Add((__IModelObject)obj158);
+			((__IModelObject)obj36).Children.Add((__IModelObject)obj159);
 			obj36.BaseTypes.Add(obj32);
-			obj36.Properties.Add(obj158);
-			obj36.Declarations.Add(obj158);
+			obj36.Properties.Add(obj159);
+			obj36.SymbolType = typeof(global::MetaDslx.Bootstrap.MetaCompiler.Symbols.PBlockSymbol);
+			obj36.Declarations.Add(obj159);
 			obj36.Name = "PBlock";
 			obj36.Parent = obj5;
-			((__IModelObject)obj37).Children.Add((__IModelObject)obj160);
+			((__IModelObject)obj37).Children.Add((__IModelObject)obj161);
 			obj37.IsAbstract = true;
-			obj37.Properties.Add(obj160);
-			obj37.SymbolType = typeof(global::MetaDslx.CodeAnalysis.Symbols.Symbol);
-			obj37.Declarations.Add(obj160);
+			obj37.Properties.Add(obj161);
+			obj37.SymbolType = typeof(global::MetaDslx.Bootstrap.MetaCompiler.Symbols.ExpressionSymbol);
+			obj37.Declarations.Add(obj161);
 			obj37.Name = "Expression";
 			obj37.Parent = obj5;
-			((__IModelObject)obj38).Children.Add((__IModelObject)obj162);
+			((__IModelObject)obj38).Children.Add((__IModelObject)obj163);
 			obj38.BaseTypes.Add(obj37);
-			obj38.Properties.Add(obj162);
-			obj38.Declarations.Add(obj162);
+			obj38.Properties.Add(obj163);
+			obj38.Declarations.Add(obj163);
 			obj38.Name = "NullExpression";
 			obj38.Parent = obj5;
-			((__IModelObject)obj39).Children.Add((__IModelObject)obj164);
 			((__IModelObject)obj39).Children.Add((__IModelObject)obj165);
+			((__IModelObject)obj39).Children.Add((__IModelObject)obj166);
 			obj39.BaseTypes.Add(obj37);
-			obj39.Properties.Add(obj164);
 			obj39.Properties.Add(obj165);
-			obj39.Declarations.Add(obj164);
+			obj39.Properties.Add(obj166);
 			obj39.Declarations.Add(obj165);
+			obj39.Declarations.Add(obj166);
 			obj39.Name = "BoolExpression";
 			obj39.Parent = obj5;
-			((__IModelObject)obj40).Children.Add((__IModelObject)obj167);
 			((__IModelObject)obj40).Children.Add((__IModelObject)obj168);
+			((__IModelObject)obj40).Children.Add((__IModelObject)obj169);
 			obj40.BaseTypes.Add(obj37);
-			obj40.Properties.Add(obj167);
 			obj40.Properties.Add(obj168);
-			obj40.Declarations.Add(obj167);
+			obj40.Properties.Add(obj169);
 			obj40.Declarations.Add(obj168);
+			obj40.Declarations.Add(obj169);
 			obj40.Name = "IntExpression";
 			obj40.Parent = obj5;
-			((__IModelObject)obj41).Children.Add((__IModelObject)obj170);
 			((__IModelObject)obj41).Children.Add((__IModelObject)obj171);
+			((__IModelObject)obj41).Children.Add((__IModelObject)obj172);
 			obj41.BaseTypes.Add(obj37);
-			obj41.Properties.Add(obj170);
 			obj41.Properties.Add(obj171);
-			obj41.Declarations.Add(obj170);
+			obj41.Properties.Add(obj172);
 			obj41.Declarations.Add(obj171);
+			obj41.Declarations.Add(obj172);
 			obj41.Name = "StringExpression";
 			obj41.Parent = obj5;
-			((__IModelObject)obj42).Children.Add((__IModelObject)obj173);
 			((__IModelObject)obj42).Children.Add((__IModelObject)obj174);
+			((__IModelObject)obj42).Children.Add((__IModelObject)obj175);
 			obj42.BaseTypes.Add(obj37);
-			obj42.Properties.Add(obj173);
 			obj42.Properties.Add(obj174);
-			obj42.Declarations.Add(obj173);
+			obj42.Properties.Add(obj175);
 			obj42.Declarations.Add(obj174);
+			obj42.Declarations.Add(obj175);
 			obj42.Name = "ReferenceExpression";
 			obj42.Parent = obj5;
-			((__IModelObject)obj43).Children.Add((__IModelObject)obj176);
-			((__IModelObject)obj43).Children.Add((__IModelObject)obj177);
+			((__IModelObject)obj43).Children.Add((__IModelObject)obj178);
+			((__IModelObject)obj43).Children.Add((__IModelObject)obj179);
 			obj43.BaseTypes.Add(obj37);
-			obj43.Properties.Add(obj176);
-			obj43.Properties.Add(obj177);
-			obj43.Declarations.Add(obj176);
-			obj43.Declarations.Add(obj177);
+			obj43.Properties.Add(obj178);
+			obj43.Properties.Add(obj179);
+			obj43.Declarations.Add(obj178);
+			obj43.Declarations.Add(obj179);
 			obj43.Name = "ArrayExpression";
 			obj43.Parent = obj5;
 			((__IModelObject)obj44).Children.Add((__IModelObject)obj49);
@@ -1317,16 +1321,17 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
 			obj146.Type = __MetaType.FromModelObject((__IModelObject)obj152);
 			obj146.Name = "NameAnnotations";
 			obj146.Parent = obj31;
+			((__IModelObject)obj147).Children.Add((__IModelObject)obj153);
 			obj147.SymbolProperty = "SymbolProperty";
-			obj147.Type = typeof(__MetaSymbol);
+			obj147.Type = __MetaType.FromModelObject((__IModelObject)obj153);
 			obj147.Name = "SymbolProperty";
 			obj147.Parent = obj31;
 			obj148.Type = __MetaType.FromModelObject((__IModelObject)obj30);
 			obj148.Name = "Assignment";
 			obj148.Parent = obj31;
-			((__IModelObject)obj149).Children.Add((__IModelObject)obj153);
+			((__IModelObject)obj149).Children.Add((__IModelObject)obj154);
 			obj149.IsContainment = true;
-			obj149.Type = __MetaType.FromModelObject((__IModelObject)obj153);
+			obj149.Type = __MetaType.FromModelObject((__IModelObject)obj154);
 			obj149.Name = "ValueAnnotations";
 			obj149.Parent = obj31;
 			obj150.IsContainment = true;
@@ -1337,83 +1342,86 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
 			obj151.Name = "Multiplicity";
 			obj151.Parent = obj31;
 			obj152.ItemType = __MetaType.FromModelObject((__IModelObject)obj11);
-			obj153.ItemType = __MetaType.FromModelObject((__IModelObject)obj11);
-			obj154.Type = __MetaType.FromModelObject((__IModelObject)obj14);
-			obj154.Name = "Rule";
-			obj154.Parent = obj33;
-			((__IModelObject)obj155).Children.Add((__IModelObject)obj156);
-			obj155.Type = __MetaType.FromModelObject((__IModelObject)obj156);
-			obj155.Name = "ReferencedTypes";
+			obj153.InnerType = typeof(__MetaSymbol);
+			obj154.ItemType = __MetaType.FromModelObject((__IModelObject)obj11);
+			obj155.Type = __MetaType.FromModelObject((__IModelObject)obj14);
+			obj155.Name = "Rule";
 			obj155.Parent = obj33;
-			obj156.ItemType = typeof(__MetaType);
-			obj157.Type = typeof(string);
-			obj157.Name = "Text";
-			obj157.Parent = obj35;
-			((__IModelObject)obj158).Children.Add((__IModelObject)obj159);
-			obj158.IsContainment = true;
-			obj158.Type = __MetaType.FromModelObject((__IModelObject)obj159);
-			obj158.Name = "Alternatives";
-			obj158.Parent = obj36;
-			obj159.ItemType = __MetaType.FromModelObject((__IModelObject)obj29);
-			((__IModelObject)obj160).Children.Add((__IModelObject)obj161);
-			obj160.IsDerived = true;
-			obj160.Type = __MetaType.FromModelObject((__IModelObject)obj161);
-			obj160.Name = "Value";
-			obj160.Parent = obj37;
-			obj161.InnerType = typeof(object);
-			((__IModelObject)obj162).Children.Add((__IModelObject)obj163);
-			obj162.IsDerived = true;
-			obj162.Type = __MetaType.FromModelObject((__IModelObject)obj163);
-			obj162.Name = "Value";
-			obj162.Parent = obj38;
-			obj163.InnerType = typeof(object);
-			((__IModelObject)obj164).Children.Add((__IModelObject)obj166);
-			obj164.IsDerived = true;
-			obj164.Type = __MetaType.FromModelObject((__IModelObject)obj166);
-			obj164.Name = "Value";
-			obj164.Parent = obj39;
-			obj165.Type = typeof(bool);
-			obj165.Name = "BoolValue";
+			((__IModelObject)obj156).Children.Add((__IModelObject)obj157);
+			obj156.Type = __MetaType.FromModelObject((__IModelObject)obj157);
+			obj156.Name = "ReferencedTypes";
+			obj156.Parent = obj33;
+			obj157.ItemType = typeof(__MetaType);
+			obj158.Type = typeof(string);
+			obj158.Name = "Text";
+			obj158.Parent = obj35;
+			((__IModelObject)obj159).Children.Add((__IModelObject)obj160);
+			obj159.IsContainment = true;
+			obj159.Type = __MetaType.FromModelObject((__IModelObject)obj160);
+			obj159.Name = "Alternatives";
+			obj159.Parent = obj36;
+			obj160.ItemType = __MetaType.FromModelObject((__IModelObject)obj29);
+			((__IModelObject)obj161).Children.Add((__IModelObject)obj162);
+			obj161.IsDerived = true;
+			obj161.Type = __MetaType.FromModelObject((__IModelObject)obj162);
+			obj161.Name = "Value";
+			obj161.Parent = obj37;
+			obj162.InnerType = typeof(object);
+			((__IModelObject)obj163).Children.Add((__IModelObject)obj164);
+			obj163.IsDerived = true;
+			obj163.Type = __MetaType.FromModelObject((__IModelObject)obj164);
+			obj163.Name = "Value";
+			obj163.Parent = obj38;
+			obj164.InnerType = typeof(object);
+			((__IModelObject)obj165).Children.Add((__IModelObject)obj167);
+			obj165.IsDerived = true;
+			obj165.Type = __MetaType.FromModelObject((__IModelObject)obj167);
+			obj165.Name = "Value";
 			obj165.Parent = obj39;
-			obj166.InnerType = typeof(object);
-			((__IModelObject)obj167).Children.Add((__IModelObject)obj169);
-			obj167.IsDerived = true;
-			obj167.Type = __MetaType.FromModelObject((__IModelObject)obj169);
-			obj167.Name = "Value";
-			obj167.Parent = obj40;
-			obj168.Type = typeof(int);
-			obj168.Name = "IntValue";
+			obj166.Type = typeof(bool);
+			obj166.Name = "BoolValue";
+			obj166.Parent = obj39;
+			obj167.InnerType = typeof(object);
+			((__IModelObject)obj168).Children.Add((__IModelObject)obj170);
+			obj168.IsDerived = true;
+			obj168.Type = __MetaType.FromModelObject((__IModelObject)obj170);
+			obj168.Name = "Value";
 			obj168.Parent = obj40;
-			obj169.InnerType = typeof(object);
-			((__IModelObject)obj170).Children.Add((__IModelObject)obj172);
-			obj170.IsDerived = true;
-			obj170.Type = __MetaType.FromModelObject((__IModelObject)obj172);
-			obj170.Name = "Value";
-			obj170.Parent = obj41;
-			obj171.Type = typeof(string);
-			obj171.Name = "StringValue";
+			obj169.Type = typeof(int);
+			obj169.Name = "IntValue";
+			obj169.Parent = obj40;
+			obj170.InnerType = typeof(object);
+			((__IModelObject)obj171).Children.Add((__IModelObject)obj173);
+			obj171.IsDerived = true;
+			obj171.Type = __MetaType.FromModelObject((__IModelObject)obj173);
+			obj171.Name = "Value";
 			obj171.Parent = obj41;
-			obj172.InnerType = typeof(object);
-			((__IModelObject)obj173).Children.Add((__IModelObject)obj175);
-			obj173.IsDerived = true;
-			obj173.Type = __MetaType.FromModelObject((__IModelObject)obj175);
-			obj173.Name = "Value";
-			obj173.Parent = obj42;
-			obj174.Type = typeof(__MetaSymbol);
-			obj174.Name = "SymbolValue";
+			obj172.Type = typeof(string);
+			obj172.Name = "StringValue";
+			obj172.Parent = obj41;
+			obj173.InnerType = typeof(object);
+			((__IModelObject)obj174).Children.Add((__IModelObject)obj176);
+			obj174.IsDerived = true;
+			obj174.Type = __MetaType.FromModelObject((__IModelObject)obj176);
+			obj174.Name = "Value";
 			obj174.Parent = obj42;
-			obj175.InnerType = typeof(object);
-			((__IModelObject)obj176).Children.Add((__IModelObject)obj178);
-			obj176.IsDerived = true;
-			obj176.Type = __MetaType.FromModelObject((__IModelObject)obj178);
-			obj176.Name = "Value";
-			obj176.Parent = obj43;
-			((__IModelObject)obj177).Children.Add((__IModelObject)obj179);
-			obj177.Type = __MetaType.FromModelObject((__IModelObject)obj179);
-			obj177.Name = "Items";
-			obj177.Parent = obj43;
-			obj178.InnerType = typeof(object);
-			obj179.ItemType = __MetaType.FromModelObject((__IModelObject)obj37);
+			((__IModelObject)obj175).Children.Add((__IModelObject)obj177);
+			obj175.Type = __MetaType.FromModelObject((__IModelObject)obj177);
+			obj175.Name = "SymbolValue";
+			obj175.Parent = obj42;
+			obj176.InnerType = typeof(object);
+			obj177.InnerType = typeof(__MetaSymbol);
+			((__IModelObject)obj178).Children.Add((__IModelObject)obj180);
+			obj178.IsDerived = true;
+			obj178.Type = __MetaType.FromModelObject((__IModelObject)obj180);
+			obj178.Name = "Value";
+			obj178.Parent = obj43;
+			((__IModelObject)obj179).Children.Add((__IModelObject)obj181);
+			obj179.Type = __MetaType.FromModelObject((__IModelObject)obj181);
+			obj179.Name = "Items";
+			obj179.Parent = obj43;
+			obj180.InnerType = typeof(object);
+			obj181.ItemType = __MetaType.FromModelObject((__IModelObject)obj37);
 			_model.IsSealed = true;
 		}
 	
@@ -2089,7 +2097,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
 		global::MetaDslx.Bootstrap.MetaCompiler.Model.Assignment Assignment { get; set; }
 		global::MetaDslx.Bootstrap.MetaCompiler.Model.Multiplicity Multiplicity { get; set; }
 		global::System.Collections.Generic.IList<Annotation> NameAnnotations { get; }
-		__MetaSymbol SymbolProperty { get; set; }
+		__MetaSymbol? SymbolProperty { get; set; }
 		PElementValue Value { get; set; }
 		global::System.Collections.Generic.IList<Annotation> ValueAnnotations { get; }
 	
@@ -2120,7 +2128,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
 
 	public interface ReferenceExpression : global::MetaDslx.Bootstrap.MetaCompiler.Model.Expression
 	{
-		__MetaSymbol SymbolValue { get; set; }
+		__MetaSymbol? SymbolValue { get; set; }
 		new object? Value { get; }
 	
 	}
@@ -3274,7 +3282,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 	        public override __MetaModel MetaModel => Compiler.MInstance;
 	        public override __MetaType MetaType => typeof(ArrayExpression);
 	
-	        public override __MetaType SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.Symbol);
+	        public override __MetaType SymbolType => typeof(global::MetaDslx.Bootstrap.MetaCompiler.Symbols.ExpressionSymbol);
 	        public override __ModelProperty? NameProperty => null;
 	        public override __ModelProperty? TypeProperty => null;
 	        public override global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo> BaseTypes => _baseTypes;
@@ -3377,7 +3385,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 	        public override __MetaModel MetaModel => Compiler.MInstance;
 	        public override __MetaType MetaType => typeof(BoolExpression);
 	
-	        public override __MetaType SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.Symbol);
+	        public override __MetaType SymbolType => typeof(global::MetaDslx.Bootstrap.MetaCompiler.Symbols.ExpressionSymbol);
 	        public override __ModelProperty? NameProperty => null;
 	        public override __ModelProperty? TypeProperty => null;
 	        public override global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo> BaseTypes => _baseTypes;
@@ -3583,7 +3591,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 	        public override __MetaModel MetaModel => Compiler.MInstance;
 	        public override __MetaType MetaType => typeof(Expression);
 	
-	        public override __MetaType SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.Symbol);
+	        public override __MetaType SymbolType => typeof(global::MetaDslx.Bootstrap.MetaCompiler.Symbols.ExpressionSymbol);
 	        public override __ModelProperty? NameProperty => null;
 	        public override __ModelProperty? TypeProperty => null;
 	        public override global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo> BaseTypes => _baseTypes;
@@ -3822,7 +3830,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 	        public override __MetaModel MetaModel => Compiler.MInstance;
 	        public override __MetaType MetaType => typeof(IntExpression);
 	
-	        public override __MetaType SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.Symbol);
+	        public override __MetaType SymbolType => typeof(global::MetaDslx.Bootstrap.MetaCompiler.Symbols.ExpressionSymbol);
 	        public override __ModelProperty? NameProperty => null;
 	        public override __ModelProperty? TypeProperty => null;
 	        public override global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo> BaseTypes => _baseTypes;
@@ -5699,7 +5707,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 	        public override __MetaModel MetaModel => Compiler.MInstance;
 	        public override __MetaType MetaType => typeof(NullExpression);
 	
-	        public override __MetaType SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.Symbol);
+	        public override __MetaType SymbolType => typeof(global::MetaDslx.Bootstrap.MetaCompiler.Symbols.ExpressionSymbol);
 	        public override __ModelProperty? NameProperty => null;
 	        public override __ModelProperty? TypeProperty => null;
 	        public override global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo> BaseTypes => _baseTypes;
@@ -5843,7 +5851,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 	        public override __MetaModel MetaModel => Compiler.MInstance;
 	        public override __MetaType MetaType => typeof(PAlternative);
 	
-	        public override __MetaType SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.DeclaredSymbol);
+	        public override __MetaType SymbolType => typeof(global::MetaDslx.Bootstrap.MetaCompiler.Symbols.PAlternativeSymbol);
 	        public override __ModelProperty? NameProperty => Compiler.Declaration_Name;
 	        public override __ModelProperty? TypeProperty => null;
 	        public override global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo> BaseTypes => _baseTypes;
@@ -6092,7 +6100,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 	        public override __MetaModel MetaModel => Compiler.MInstance;
 	        public override __MetaType MetaType => typeof(PBlock);
 	
-	        public override __MetaType SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.Symbol);
+	        public override __MetaType SymbolType => typeof(global::MetaDslx.Bootstrap.MetaCompiler.Symbols.PBlockSymbol);
 	        public override __ModelProperty? NameProperty => null;
 	        public override __ModelProperty? TypeProperty => null;
 	        public override global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo> BaseTypes => _baseTypes;
@@ -6151,10 +6159,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 			get => MGetCollection<Annotation>(Compiler.PElement_NameAnnotations);
 		}
 	
-		public __MetaSymbol SymbolProperty
+		public __MetaSymbol? SymbolProperty
 		{
-			get => MGet<__MetaSymbol>(Compiler.PElement_SymbolProperty);
-			set => MAdd<__MetaSymbol>(Compiler.PElement_SymbolProperty, value);
+			get => MGet<__MetaSymbol?>(Compiler.PElement_SymbolProperty);
+			set => MAdd<__MetaSymbol?>(Compiler.PElement_SymbolProperty, value);
 		}
 	
 		public PElementValue Value
@@ -6205,7 +6213,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 				modelPropertyInfos.Add(Compiler.PElement_Assignment, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.PElement_Assignment, __ImmutableArray.Create<__ModelProperty>(Compiler.PElement_Assignment), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.SingleItem), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
 				modelPropertyInfos.Add(Compiler.PElement_Multiplicity, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.PElement_Multiplicity, __ImmutableArray.Create<__ModelProperty>(Compiler.PElement_Multiplicity), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.SingleItem), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
 				modelPropertyInfos.Add(Compiler.PElement_NameAnnotations, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.PElement_NameAnnotations, __ImmutableArray.Create<__ModelProperty>(Compiler.PElement_NameAnnotations), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
-				modelPropertyInfos.Add(Compiler.PElement_SymbolProperty, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.PElement_SymbolProperty, __ImmutableArray.Create<__ModelProperty>(Compiler.PElement_SymbolProperty), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.SingleItem), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
+				modelPropertyInfos.Add(Compiler.PElement_SymbolProperty, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.PElement_SymbolProperty, __ImmutableArray.Create<__ModelProperty>(Compiler.PElement_SymbolProperty), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.SingleItem), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
 				modelPropertyInfos.Add(Compiler.PElement_Value, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.PElement_Value, __ImmutableArray.Create<__ModelProperty>(Compiler.PElement_Value), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.SingleItem), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
 				modelPropertyInfos.Add(Compiler.PElement_ValueAnnotations, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.PElement_ValueAnnotations, __ImmutableArray.Create<__ModelProperty>(Compiler.PElement_ValueAnnotations), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
 				_modelPropertyInfos = modelPropertyInfos.ToImmutable();
@@ -6608,10 +6616,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 	
 		public override __ModelClassInfo MInfo => __Info.Instance;
 	
-		public __MetaSymbol SymbolValue
+		public __MetaSymbol? SymbolValue
 		{
-			get => MGet<__MetaSymbol>(Compiler.ReferenceExpression_SymbolValue);
-			set => MAdd<__MetaSymbol>(Compiler.ReferenceExpression_SymbolValue, value);
+			get => MGet<__MetaSymbol?>(Compiler.ReferenceExpression_SymbolValue);
+			set => MAdd<__MetaSymbol?>(Compiler.ReferenceExpression_SymbolValue, value);
 		}
 	
 		public object? Value
@@ -6655,7 +6663,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 				publicPropertiesByName.Add("Value", Compiler.ReferenceExpression_Value);
 				_publicPropertiesByName = publicPropertiesByName.ToImmutable();
 				var modelPropertyInfos = __ImmutableDictionary.CreateBuilder<__ModelProperty, __ModelPropertyInfo>();
-				modelPropertyInfos.Add(Compiler.ReferenceExpression_SymbolValue, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.ReferenceExpression_SymbolValue, __ImmutableArray.Create<__ModelProperty>(Compiler.ReferenceExpression_SymbolValue), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.SingleItem), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
+				modelPropertyInfos.Add(Compiler.ReferenceExpression_SymbolValue, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.ReferenceExpression_SymbolValue, __ImmutableArray.Create<__ModelProperty>(Compiler.ReferenceExpression_SymbolValue), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.SingleItem), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
 				modelPropertyInfos.Add(Compiler.ReferenceExpression_Value, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.ReferenceExpression_Value, __ImmutableArray.Create<__ModelProperty>(Compiler.ReferenceExpression_Value), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.SingleItem | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(Compiler.Expression_Value), __ImmutableArray.Create<__ModelProperty>()));
 				modelPropertyInfos.Add(Compiler.Expression_Value, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Expression_Value, __ImmutableArray.Create<__ModelProperty>(Compiler.Expression_Value), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.SingleItem | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(Compiler.ReferenceExpression_Value)));
 				_modelPropertyInfos = modelPropertyInfos.ToImmutable();
@@ -6670,7 +6678,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 	        public override __MetaModel MetaModel => Compiler.MInstance;
 	        public override __MetaType MetaType => typeof(ReferenceExpression);
 	
-	        public override __MetaType SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.Symbol);
+	        public override __MetaType SymbolType => typeof(global::MetaDslx.Bootstrap.MetaCompiler.Symbols.ExpressionSymbol);
 	        public override __ModelProperty? NameProperty => null;
 	        public override __ModelProperty? TypeProperty => null;
 	        public override global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo> BaseTypes => _baseTypes;
@@ -6908,7 +6916,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 	        public override __MetaModel MetaModel => Compiler.MInstance;
 	        public override __MetaType MetaType => typeof(StringExpression);
 	
-	        public override __MetaType SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.Symbol);
+	        public override __MetaType SymbolType => typeof(global::MetaDslx.Bootstrap.MetaCompiler.Symbols.ExpressionSymbol);
 	        public override __ModelProperty? NameProperty => null;
 	        public override __ModelProperty? TypeProperty => null;
 	        public override global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo> BaseTypes => _baseTypes;

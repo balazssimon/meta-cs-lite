@@ -4496,12 +4496,108 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 		}
 	}
 	
-	internal class IdentifierGreen : GreenSyntaxNode
+	internal abstract class IdentifierGreen : GreenSyntaxNode
 	{
-		internal static new readonly IdentifierGreen __Missing = new IdentifierGreen();
+		internal static readonly IdentifierGreen __Missing = IdentifierAlt1Green.__Missing;
+	
+	    protected IdentifierGreen(CompilerSyntaxKind kind, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
+	        : base(kind, diagnostics, annotations)
+	    {
+	    }
+	}
+	
+	internal class IdentifierAlt1Green : IdentifierGreen
+	{
+		internal static new readonly IdentifierAlt1Green __Missing = new IdentifierAlt1Green();
+		private InternalSyntaxToken _tPrimitiveType;
+	
+		public IdentifierAlt1Green(CompilerSyntaxKind kind, InternalSyntaxToken tPrimitiveType)
+			: base(kind, null, null)
+		{
+			SlotCount = 1;
+			if (tPrimitiveType != null)
+			{
+				AdjustFlagsAndWidth(tPrimitiveType);
+				_tPrimitiveType = tPrimitiveType;
+			}
+		}
+	
+		public IdentifierAlt1Green(CompilerSyntaxKind kind, InternalSyntaxToken tPrimitiveType, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
+			: base(kind, diagnostics, annotations)
+		{
+			SlotCount = 1;
+			if (tPrimitiveType != null)
+			{
+				AdjustFlagsAndWidth(tPrimitiveType);
+				_tPrimitiveType = tPrimitiveType;
+			}
+		}
+	
+		private IdentifierAlt1Green()
+			: base((CompilerSyntaxKind)CompilerSyntaxKind.IdentifierAlt1, null, null)
+		{
+			this.flags &= ~NodeFlags.IsNotMissing;
+		}
+	
+		public InternalSyntaxToken TPrimitiveType { get { return _tPrimitiveType; } }
+	
+		protected override SyntaxNode CreateRed(SyntaxNode parent, int position)
+		{
+			return new global::MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.IdentifierAlt1Syntax(this, (CompilerSyntaxNode)parent, position);
+		}
+	
+		protected override GreenNode GetSlot(int index)
+		{
+			switch (index)
+			{
+				case 0: return _tPrimitiveType;
+				default: return null;
+			}
+		}
+	
+		public override TResult Accept<TResult>(CompilerInternalSyntaxVisitor<TResult> visitor) => visitor.VisitIdentifierAlt1Green(this);
+	
+		public override void Accept(CompilerInternalSyntaxVisitor visitor) => visitor.VisitIdentifierAlt1Green(this);
+	
+		public override InternalSyntaxNode WithDiagnostics(DiagnosticInfo[] diagnostics)
+		{
+			return new IdentifierAlt1Green(this.Kind, _tPrimitiveType, diagnostics, this.GetAnnotations());
+		}
+	
+		public override InternalSyntaxNode WithAnnotations(SyntaxAnnotation[] annotations)
+		{
+			return new IdentifierAlt1Green(this.Kind, _tPrimitiveType, this.GetDiagnostics(), annotations);
+		}
+	
+		public override GreenNode Clone()
+		{
+			return new IdentifierAlt1Green(this.Kind, _tPrimitiveType, this.GetDiagnostics(), this.GetAnnotations());
+		}
+	
+	
+		public IdentifierAlt1Green Update(InternalSyntaxToken tPrimitiveType)
+		{
+			if (_tPrimitiveType != tPrimitiveType)
+			{
+				InternalSyntaxNode newNode = CompilerLanguage.Instance.InternalSyntaxFactory.IdentifierAlt1((InternalSyntaxToken)tPrimitiveType);
+				var diags = this.GetDiagnostics();
+				if (diags != null && diags.Length > 0)
+					newNode = newNode.WithDiagnostics(diags);
+				var annotations = this.GetAnnotations();
+				if (annotations != null && annotations.Length > 0)
+					newNode = newNode.WithAnnotations(annotations);
+				return (IdentifierAlt1Green)newNode;
+			}
+			return this;
+		}
+	}
+	
+	internal class IdentifierAlt2Green : IdentifierGreen
+	{
+		internal static new readonly IdentifierAlt2Green __Missing = new IdentifierAlt2Green();
 		private InternalSyntaxToken _tIdentifier;
 	
-		public IdentifierGreen(CompilerSyntaxKind kind, InternalSyntaxToken tIdentifier)
+		public IdentifierAlt2Green(CompilerSyntaxKind kind, InternalSyntaxToken tIdentifier)
 			: base(kind, null, null)
 		{
 			SlotCount = 1;
@@ -4512,7 +4608,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			}
 		}
 	
-		public IdentifierGreen(CompilerSyntaxKind kind, InternalSyntaxToken tIdentifier, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
+		public IdentifierAlt2Green(CompilerSyntaxKind kind, InternalSyntaxToken tIdentifier, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
 			: base(kind, diagnostics, annotations)
 		{
 			SlotCount = 1;
@@ -4523,8 +4619,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			}
 		}
 	
-		private IdentifierGreen()
-			: base((CompilerSyntaxKind)CompilerSyntaxKind.Identifier, null, null)
+		private IdentifierAlt2Green()
+			: base((CompilerSyntaxKind)CompilerSyntaxKind.IdentifierAlt2, null, null)
 		{
 			this.flags &= ~NodeFlags.IsNotMissing;
 		}
@@ -4533,7 +4629,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 	
 		protected override SyntaxNode CreateRed(SyntaxNode parent, int position)
 		{
-			return new global::MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.IdentifierSyntax(this, (CompilerSyntaxNode)parent, position);
+			return new global::MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.IdentifierAlt2Syntax(this, (CompilerSyntaxNode)parent, position);
 		}
 	
 		protected override GreenNode GetSlot(int index)
@@ -4545,38 +4641,124 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			}
 		}
 	
-		public override TResult Accept<TResult>(CompilerInternalSyntaxVisitor<TResult> visitor) => visitor.VisitIdentifierGreen(this);
+		public override TResult Accept<TResult>(CompilerInternalSyntaxVisitor<TResult> visitor) => visitor.VisitIdentifierAlt2Green(this);
 	
-		public override void Accept(CompilerInternalSyntaxVisitor visitor) => visitor.VisitIdentifierGreen(this);
+		public override void Accept(CompilerInternalSyntaxVisitor visitor) => visitor.VisitIdentifierAlt2Green(this);
 	
 		public override InternalSyntaxNode WithDiagnostics(DiagnosticInfo[] diagnostics)
 		{
-			return new IdentifierGreen(this.Kind, _tIdentifier, diagnostics, this.GetAnnotations());
+			return new IdentifierAlt2Green(this.Kind, _tIdentifier, diagnostics, this.GetAnnotations());
 		}
 	
 		public override InternalSyntaxNode WithAnnotations(SyntaxAnnotation[] annotations)
 		{
-			return new IdentifierGreen(this.Kind, _tIdentifier, this.GetDiagnostics(), annotations);
+			return new IdentifierAlt2Green(this.Kind, _tIdentifier, this.GetDiagnostics(), annotations);
 		}
 	
 		public override GreenNode Clone()
 		{
-			return new IdentifierGreen(this.Kind, _tIdentifier, this.GetDiagnostics(), this.GetAnnotations());
+			return new IdentifierAlt2Green(this.Kind, _tIdentifier, this.GetDiagnostics(), this.GetAnnotations());
 		}
 	
 	
-		public IdentifierGreen Update(InternalSyntaxToken tIdentifier)
+		public IdentifierAlt2Green Update(InternalSyntaxToken tIdentifier)
 		{
 			if (_tIdentifier != tIdentifier)
 			{
-				InternalSyntaxNode newNode = CompilerLanguage.Instance.InternalSyntaxFactory.Identifier((InternalSyntaxToken)tIdentifier);
+				InternalSyntaxNode newNode = CompilerLanguage.Instance.InternalSyntaxFactory.IdentifierAlt2((InternalSyntaxToken)tIdentifier);
 				var diags = this.GetDiagnostics();
 				if (diags != null && diags.Length > 0)
 					newNode = newNode.WithDiagnostics(diags);
 				var annotations = this.GetAnnotations();
 				if (annotations != null && annotations.Length > 0)
 					newNode = newNode.WithAnnotations(annotations);
-				return (IdentifierGreen)newNode;
+				return (IdentifierAlt2Green)newNode;
+			}
+			return this;
+		}
+	}
+	
+	internal class IdentifierAlt3Green : IdentifierGreen
+	{
+		internal static new readonly IdentifierAlt3Green __Missing = new IdentifierAlt3Green();
+		private InternalSyntaxToken _tVerbatimIdentifier;
+	
+		public IdentifierAlt3Green(CompilerSyntaxKind kind, InternalSyntaxToken tVerbatimIdentifier)
+			: base(kind, null, null)
+		{
+			SlotCount = 1;
+			if (tVerbatimIdentifier != null)
+			{
+				AdjustFlagsAndWidth(tVerbatimIdentifier);
+				_tVerbatimIdentifier = tVerbatimIdentifier;
+			}
+		}
+	
+		public IdentifierAlt3Green(CompilerSyntaxKind kind, InternalSyntaxToken tVerbatimIdentifier, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
+			: base(kind, diagnostics, annotations)
+		{
+			SlotCount = 1;
+			if (tVerbatimIdentifier != null)
+			{
+				AdjustFlagsAndWidth(tVerbatimIdentifier);
+				_tVerbatimIdentifier = tVerbatimIdentifier;
+			}
+		}
+	
+		private IdentifierAlt3Green()
+			: base((CompilerSyntaxKind)CompilerSyntaxKind.IdentifierAlt3, null, null)
+		{
+			this.flags &= ~NodeFlags.IsNotMissing;
+		}
+	
+		public InternalSyntaxToken TVerbatimIdentifier { get { return _tVerbatimIdentifier; } }
+	
+		protected override SyntaxNode CreateRed(SyntaxNode parent, int position)
+		{
+			return new global::MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.IdentifierAlt3Syntax(this, (CompilerSyntaxNode)parent, position);
+		}
+	
+		protected override GreenNode GetSlot(int index)
+		{
+			switch (index)
+			{
+				case 0: return _tVerbatimIdentifier;
+				default: return null;
+			}
+		}
+	
+		public override TResult Accept<TResult>(CompilerInternalSyntaxVisitor<TResult> visitor) => visitor.VisitIdentifierAlt3Green(this);
+	
+		public override void Accept(CompilerInternalSyntaxVisitor visitor) => visitor.VisitIdentifierAlt3Green(this);
+	
+		public override InternalSyntaxNode WithDiagnostics(DiagnosticInfo[] diagnostics)
+		{
+			return new IdentifierAlt3Green(this.Kind, _tVerbatimIdentifier, diagnostics, this.GetAnnotations());
+		}
+	
+		public override InternalSyntaxNode WithAnnotations(SyntaxAnnotation[] annotations)
+		{
+			return new IdentifierAlt3Green(this.Kind, _tVerbatimIdentifier, this.GetDiagnostics(), annotations);
+		}
+	
+		public override GreenNode Clone()
+		{
+			return new IdentifierAlt3Green(this.Kind, _tVerbatimIdentifier, this.GetDiagnostics(), this.GetAnnotations());
+		}
+	
+	
+		public IdentifierAlt3Green Update(InternalSyntaxToken tVerbatimIdentifier)
+		{
+			if (_tVerbatimIdentifier != tVerbatimIdentifier)
+			{
+				InternalSyntaxNode newNode = CompilerLanguage.Instance.InternalSyntaxFactory.IdentifierAlt3((InternalSyntaxToken)tVerbatimIdentifier);
+				var diags = this.GetDiagnostics();
+				if (diags != null && diags.Length > 0)
+					newNode = newNode.WithDiagnostics(diags);
+				var annotations = this.GetAnnotations();
+				if (annotations != null && annotations.Length > 0)
+					newNode = newNode.WithAnnotations(annotations);
+				return (IdentifierAlt3Green)newNode;
 			}
 			return this;
 		}

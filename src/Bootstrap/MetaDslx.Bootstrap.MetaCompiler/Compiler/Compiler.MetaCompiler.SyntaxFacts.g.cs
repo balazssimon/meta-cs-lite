@@ -68,7 +68,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 				case CompilerSyntaxKind.TPlusQuestion:
 				case CompilerSyntaxKind.TInteger:
 				case CompilerSyntaxKind.TDecimal:
+				case CompilerSyntaxKind.TPrimitiveType:
 				case CompilerSyntaxKind.TIdentifier:
+				case CompilerSyntaxKind.TVerbatimIdentifier:
 				case CompilerSyntaxKind.TString:
 				case CompilerSyntaxKind.DoubleQuoteTextCharacter:
 				case CompilerSyntaxKind.DoubleQuoteTextSimple:
@@ -356,8 +358,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 					return "TInteger";
 				case CompilerSyntaxKind.TDecimal: 
 					return "TDecimal";
+				case CompilerSyntaxKind.TPrimitiveType: 
+					return "TPrimitiveType";
 				case CompilerSyntaxKind.TIdentifier: 
 					return "TIdentifier";
+				case CompilerSyntaxKind.TVerbatimIdentifier: 
+					return "TVerbatimIdentifier";
 				case CompilerSyntaxKind.TString: 
 					return "TString";
 				case CompilerSyntaxKind.DoubleQuoteTextCharacter: 
@@ -454,8 +460,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 					return "Qualifier";
 				case CompilerSyntaxKind.QualifierList: 
 					return "QualifierList";
-				case CompilerSyntaxKind.Identifier: 
-					return "Identifier";
+				case CompilerSyntaxKind.IdentifierAlt1: 
+					return "IdentifierAlt1";
+				case CompilerSyntaxKind.IdentifierAlt2: 
+					return "IdentifierAlt2";
+				case CompilerSyntaxKind.IdentifierAlt3: 
+					return "IdentifierAlt3";
 				case CompilerSyntaxKind.GrammarBlock1: 
 					return "GrammarBlock1";
 				case CompilerSyntaxKind.ParserRuleBlock1Alt1: 

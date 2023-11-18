@@ -43,7 +43,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 		public virtual void VisitNameGreen(NameGreen node) => this.DefaultVisit(node);
 		public virtual void VisitQualifierGreen(QualifierGreen node) => this.DefaultVisit(node);
 		public virtual void VisitQualifierListGreen(QualifierListGreen node) => this.DefaultVisit(node);
-		public virtual void VisitIdentifierGreen(IdentifierGreen node) => this.DefaultVisit(node);
+		public virtual void VisitIdentifierAlt1Green(IdentifierAlt1Green node) => this.DefaultVisit(node);
+		public virtual void VisitIdentifierAlt2Green(IdentifierAlt2Green node) => this.DefaultVisit(node);
+		public virtual void VisitIdentifierAlt3Green(IdentifierAlt3Green node) => this.DefaultVisit(node);
 		public virtual void VisitGrammarBlock1Green(GrammarBlock1Green node) => this.DefaultVisit(node);
 		public virtual void VisitParserRuleBlock1Alt1Green(ParserRuleBlock1Alt1Green node) => this.DefaultVisit(node);
 		public virtual void VisitParserRuleBlock1Alt2Green(ParserRuleBlock1Alt2Green node) => this.DefaultVisit(node);
@@ -105,7 +107,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 		public virtual TResult VisitNameGreen(NameGreen node) => this.DefaultVisit(node);
 		public virtual TResult VisitQualifierGreen(QualifierGreen node) => this.DefaultVisit(node);
 		public virtual TResult VisitQualifierListGreen(QualifierListGreen node) => this.DefaultVisit(node);
-		public virtual TResult VisitIdentifierGreen(IdentifierGreen node) => this.DefaultVisit(node);
+		public virtual TResult VisitIdentifierAlt1Green(IdentifierAlt1Green node) => this.DefaultVisit(node);
+		public virtual TResult VisitIdentifierAlt2Green(IdentifierAlt2Green node) => this.DefaultVisit(node);
+		public virtual TResult VisitIdentifierAlt3Green(IdentifierAlt3Green node) => this.DefaultVisit(node);
 		public virtual TResult VisitGrammarBlock1Green(GrammarBlock1Green node) => this.DefaultVisit(node);
 		public virtual TResult VisitParserRuleBlock1Alt1Green(ParserRuleBlock1Alt1Green node) => this.DefaultVisit(node);
 		public virtual TResult VisitParserRuleBlock1Alt2Green(ParserRuleBlock1Alt2Green node) => this.DefaultVisit(node);

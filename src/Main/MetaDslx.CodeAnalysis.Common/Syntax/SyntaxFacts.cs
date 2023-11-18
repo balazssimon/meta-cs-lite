@@ -80,13 +80,20 @@ namespace MetaDslx.CodeAnalysis.Syntax
 
         public virtual string? ExtractName(SyntaxNodeOrToken nodeOrToken)
         {
-            if (nodeOrToken.IsToken) return nodeOrToken.AsToken().ValueText;
-            else return nodeOrToken.AsNode()?.ToString();
+            if (nodeOrToken.IsToken) return ExtractVerbatimIdentifier(nodeOrToken.AsToken().ValueText);
+            else return ExtractVerbatimIdentifier(nodeOrToken.AsNode()?.ToString());
         }
 
         public virtual string? ExtractMetadataName(SyntaxNodeOrToken nodeOrToken)
         {
             return this.ExtractName(nodeOrToken);
+        }
+
+        public virtual string? ExtractVerbatimIdentifier(string? identifier)
+        {
+            if (identifier is null) return null;
+            if (identifier.StartsWith("@")) return identifier.Substring(1);
+            else return identifier;
         }
 
         public virtual object? ExtractValue(SyntaxNodeOrToken nodeOrToken)
@@ -98,7 +105,7 @@ namespace MetaDslx.CodeAnalysis.Syntax
 
         public virtual bool TryExtractValue(MetaType expectedType, string? valueText, out object? value)
         {
-            if (expectedType.IsNull)
+            if (expectedType.IsNull || expectedType.SpecialType == SpecialType.MetaDslx_CodeAnalysis_MetaSymbol)
             {
                 if (valueText == null)
                 {

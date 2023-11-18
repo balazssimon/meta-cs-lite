@@ -14,6 +14,8 @@ namespace MetaDslx.CodeAnalysis
 {
     public struct MetaType : IEquatable<MetaType>
     {
+        private const string EnumFullName = "global::System.Enum";
+
         private object? _original;
 
         private MetaType(string name)
@@ -355,9 +357,38 @@ namespace MetaDslx.CodeAnalysis
                 var type = AsType();
                 if (type is not null) return type.IsEnum;
                 var csts = OriginalTypeSymbol as CSharpTypeSymbol;
-                if (csts is not null) return csts.CSharpSymbol.TypeKind == Microsoft.CodeAnalysis.TypeKind.Enum;
+                if (csts is not null) return csts.CSharpSymbol.TypeKind == Microsoft.CodeAnalysis.TypeKind.Enum || csts.CSharpSymbol.BaseType?.ToDisplayString(Microsoft.CodeAnalysis.SymbolDisplayFormat.FullyQualifiedFormat) == EnumFullName;
                 return false;
             }
+        }
+
+        public MetaSymbol GetEnumValue(string value)
+        {
+            var type = AsType();
+            if (type is not null && type.IsEnum)
+            {
+                try
+                {
+                    return MetaSymbol.FromValue(Enum.Parse(type, value));
+                }
+                catch
+                {
+                    return default;
+                }
+            }
+            var csts = OriginalTypeSymbol as CSharpTypeSymbol;
+            if (csts is not null && (csts.CSharpSymbol.TypeKind == Microsoft.CodeAnalysis.TypeKind.Enum || csts.CSharpSymbol.BaseType?.ToDisplayString(Microsoft.CodeAnalysis.SymbolDisplayFormat.FullyQualifiedFormat) == EnumFullName))
+            {
+                var literal = csts.CSharpSymbol.GetMembers(value).FirstOrDefault();
+                if (literal is not null)
+                {
+                    var diagnostics = DiagnosticBag.GetInstance();
+                    var symbol = csts.SymbolFactory.GetSymbol(literal, diagnostics, default);
+                    diagnostics.Free();
+                    return symbol;
+                }
+            }
+            return default;
         }
 
         public bool IsValueType

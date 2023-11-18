@@ -608,11 +608,23 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
                 _pool.Free(qualifierListBuilder);
             	return _factory.QualifierList(qualifierList);
             }
-            public override GreenNode? VisitPr_Identifier(CompilerParser.Pr_IdentifierContext? context)
+            public override GreenNode? VisitPr_IdentifierAlt1(CompilerParser.Pr_IdentifierAlt1Context? context)
             {
-               	if (context == null) return IdentifierGreen.__Missing;
+               	if (context == null) return IdentifierAlt1Green.__Missing;
+                var tPrimitiveType = this.VisitTerminal(context.tPrimitiveTypeAntlr1, CompilerSyntaxKind.TPrimitiveType);
+            	return _factory.IdentifierAlt1((InternalSyntaxToken)tPrimitiveType);
+            }
+            public override GreenNode? VisitPr_IdentifierAlt2(CompilerParser.Pr_IdentifierAlt2Context? context)
+            {
+               	if (context == null) return IdentifierAlt2Green.__Missing;
                 var tIdentifier = this.VisitTerminal(context.tIdentifierAntlr1, CompilerSyntaxKind.TIdentifier);
-            	return _factory.Identifier((InternalSyntaxToken)tIdentifier);
+            	return _factory.IdentifierAlt2((InternalSyntaxToken)tIdentifier);
+            }
+            public override GreenNode? VisitPr_IdentifierAlt3(CompilerParser.Pr_IdentifierAlt3Context? context)
+            {
+               	if (context == null) return IdentifierAlt3Green.__Missing;
+                var tVerbatimIdentifier = this.VisitTerminal(context.tVerbatimIdentifierAntlr1, CompilerSyntaxKind.TVerbatimIdentifier);
+            	return _factory.IdentifierAlt3((InternalSyntaxToken)tVerbatimIdentifier);
             }
             public override GreenNode? VisitPr_GrammarBlock1(CompilerParser.Pr_GrammarBlock1Context? context)
             {

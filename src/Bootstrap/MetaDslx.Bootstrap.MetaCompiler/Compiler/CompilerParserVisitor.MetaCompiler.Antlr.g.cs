@@ -255,11 +255,26 @@ public interface ICompilerParserVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitPr_QualifierList([NotNull] CompilerParser.Pr_QualifierListContext context);
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="CompilerParser.pr_Identifier"/>.
+	/// Visit a parse tree produced by the <c>pr_IdentifierAlt1</c>
+	/// labeled alternative in <see cref="CompilerParser.pr_Identifier"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	Result VisitPr_Identifier([NotNull] CompilerParser.Pr_IdentifierContext context);
+	Result VisitPr_IdentifierAlt1([NotNull] CompilerParser.Pr_IdentifierAlt1Context context);
+	/// <summary>
+	/// Visit a parse tree produced by the <c>pr_IdentifierAlt2</c>
+	/// labeled alternative in <see cref="CompilerParser.pr_Identifier"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitPr_IdentifierAlt2([NotNull] CompilerParser.Pr_IdentifierAlt2Context context);
+	/// <summary>
+	/// Visit a parse tree produced by the <c>pr_IdentifierAlt3</c>
+	/// labeled alternative in <see cref="CompilerParser.pr_Identifier"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitPr_IdentifierAlt3([NotNull] CompilerParser.Pr_IdentifierAlt3Context context);
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="CompilerParser.pr_GrammarBlock1"/>.
 	/// </summary>

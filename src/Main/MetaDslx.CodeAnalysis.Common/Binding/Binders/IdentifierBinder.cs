@@ -5,6 +5,7 @@ using Microsoft.CodeAnalysis;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Linq;
 using System.Text;
 using System.Threading;
 
@@ -14,7 +15,7 @@ namespace MetaDslx.CodeAnalysis.Binding
     {
         private string? _name;
         private string? _metadataName;
-        private Symbol? _symbol;
+        private object? _symbol;
 
         protected override ImmutableArray<SingleDeclaration> BuildDeclarationTree(SingleDeclarationBuilder builder)
         {
@@ -92,7 +93,7 @@ namespace MetaDslx.CodeAnalysis.Binding
                 {
                     var symbol = qualifier.GetIdentifierSymbol(this, cancellationToken);
                     Interlocked.CompareExchange(ref _symbol, symbol, null);
-                    if (symbol is not null && !symbol.IsError && symbol is DeclaredSymbol declaredSymbol) MarkSymbolAsUsed(declaredSymbol);
+                    if (symbol is not null && symbol is DeclaredSymbol declaredSymbol && !declaredSymbol.IsError) MarkSymbolAsUsed(declaredSymbol);
                 }
             }
         }

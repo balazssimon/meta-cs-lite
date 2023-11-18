@@ -72,7 +72,7 @@ namespace MetaDslx.CodeAnalysis.Binding
             return ImmutableArray.Create(ComputeValue(cancellationToken));
         }
 
-        protected virtual object? ComputeValue(CancellationToken cancellationToken = default)
+        private object? ComputeValue(CancellationToken cancellationToken)
         {
             CacheRawValue(cancellationToken);
             var propertyBinder = GetEnclosingPropertyBinder();
@@ -83,8 +83,7 @@ namespace MetaDslx.CodeAnalysis.Binding
             else
             {
                 var expectedType = propertyBinder.GetValueType(cancellationToken);
-                if (expectedType == typeof(MetaType)) return MetaType.FromName(RawValue);
-                if (Language.SyntaxFacts.TryExtractValue(expectedType, RawValue, out var value))
+                if (ComputeValue(expectedType, out var value, cancellationToken))
                 {
                     return value;
                 }
@@ -94,6 +93,19 @@ namespace MetaDslx.CodeAnalysis.Binding
                 }
             }
             return null;
+        }
+
+        protected virtual bool ComputeValue(MetaType expectedType, out object? value, CancellationToken cancellationToken)
+        {
+            if (expectedType == typeof(MetaType))
+            {
+                value = MetaType.FromName(RawValue);
+                return true;
+            }
+            else
+            {
+                return Language.SyntaxFacts.TryExtractValue(expectedType, RawValue, out value);
+            }
         }
 
         public override string ToString()

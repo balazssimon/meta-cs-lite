@@ -62,7 +62,7 @@ NullExpression: 'null';
 BoolExpression: boolValue?='true' | 'false';
 IntExpression: intValue=TInteger;
 StringExpression: stringValue=TString;
-ReferenceExpression: symbolValue=#MetaSymbol;
+ReferenceExpression: symbolValue=[ConvertToExpectedType]Qualifier;
 ArrayExpression: '{' (items+=Expression (',' items+=Expression)*)? '}';
 
 ParserAnnotation returns MetaDslx.Bootstrap.MetaCompiler.Model.Annotation: '[' type=[Use(types:{Binder,MetaDslx.CodeAnalysis.Annotations.Annotation},suffixes:{Binder,Annotation})]Qualifier AnnotationArguments? ']';
@@ -97,13 +97,24 @@ part Qualifier: Identifier ('.' Identifier)*;
 part QualifierList: Qualifier (',' Qualifier)*;
 
 [Identifier]
-part Identifier: TIdentifier;
+part Identifier: TPrimitiveType | TIdentifier | TVerbatimIdentifier;
 
 token TInteger[Number] returns int: '0'| '1'..'9' ('0'..'9')* ;
 
 token TDecimal[Number] returns double: ('0'|'1'..'9' ('0'..'9')*) '.' ('0'..'9')+ ;
 
+token TPrimitiveType returns MetaType
+	: 'bool'
+	| 'int'
+	| 'string'
+	| 'type'
+	| 'symbol'
+	| 'object'
+	| 'void'
+	;
+
 token TIdentifier[DefaultIdentifier]: ('_'|'a'..'z'|'A'..'Z')+('_'|'a'..'z'|'A'..'Z'|'0'..'9')*;
+token TVerbatimIdentifier[Identifier]: '@'('_'|'a'..'z'|'A'..'Z')+('_'|'a'..'z'|'A'..'Z'|'0'..'9')*;
 
 token TComma[DefaultSeparator]: ',' ;
 

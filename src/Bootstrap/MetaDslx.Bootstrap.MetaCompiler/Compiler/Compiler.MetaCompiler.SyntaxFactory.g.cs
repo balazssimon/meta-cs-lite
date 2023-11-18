@@ -158,6 +158,16 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
             return new SyntaxToken(CompilerLanguage.Instance.InternalSyntaxFactory.TDecimal(text, value));
         }
 
+        public SyntaxToken TPrimitiveType(string text)
+        {
+            return new SyntaxToken(CompilerLanguage.Instance.InternalSyntaxFactory.TPrimitiveType(text));
+        }
+
+        public SyntaxToken TPrimitiveType(string text, object value)
+        {
+            return new SyntaxToken(CompilerLanguage.Instance.InternalSyntaxFactory.TPrimitiveType(text, value));
+        }
+
         public SyntaxToken TIdentifier(string text)
         {
             return new SyntaxToken(CompilerLanguage.Instance.InternalSyntaxFactory.TIdentifier(text));
@@ -166,6 +176,16 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
         public SyntaxToken TIdentifier(string text, object value)
         {
             return new SyntaxToken(CompilerLanguage.Instance.InternalSyntaxFactory.TIdentifier(text, value));
+        }
+
+        public SyntaxToken TVerbatimIdentifier(string text)
+        {
+            return new SyntaxToken(CompilerLanguage.Instance.InternalSyntaxFactory.TVerbatimIdentifier(text));
+        }
+
+        public SyntaxToken TVerbatimIdentifier(string text, object value)
+        {
+            return new SyntaxToken(CompilerLanguage.Instance.InternalSyntaxFactory.TVerbatimIdentifier(text, value));
         }
 
         public SyntaxToken TString(string text)
@@ -636,10 +656,22 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
             return (QualifierListSyntax)CompilerLanguage.Instance.InternalSyntaxFactory.QualifierList(qualifierList.Node.ToGreenSeparatedList<QualifierGreen>(reversed: false)).CreateRed();
         }
 
-        public IdentifierSyntax Identifier(SyntaxToken tIdentifier)
+        public IdentifierAlt1Syntax IdentifierAlt1(SyntaxToken tPrimitiveType)
+        {
+        	if (tPrimitiveType.RawKind != (int)CompilerSyntaxKind.TPrimitiveType) throw new ArgumentException(nameof(tPrimitiveType));
+            return (IdentifierAlt1Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.IdentifierAlt1((InternalSyntaxToken)tPrimitiveType.Node).CreateRed();
+        }
+
+        public IdentifierAlt2Syntax IdentifierAlt2(SyntaxToken tIdentifier)
         {
         	if (tIdentifier.RawKind != (int)CompilerSyntaxKind.TIdentifier) throw new ArgumentException(nameof(tIdentifier));
-            return (IdentifierSyntax)CompilerLanguage.Instance.InternalSyntaxFactory.Identifier((InternalSyntaxToken)tIdentifier.Node).CreateRed();
+            return (IdentifierAlt2Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.IdentifierAlt2((InternalSyntaxToken)tIdentifier.Node).CreateRed();
+        }
+
+        public IdentifierAlt3Syntax IdentifierAlt3(SyntaxToken tVerbatimIdentifier)
+        {
+        	if (tVerbatimIdentifier.RawKind != (int)CompilerSyntaxKind.TVerbatimIdentifier) throw new ArgumentException(nameof(tVerbatimIdentifier));
+            return (IdentifierAlt3Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.IdentifierAlt3((InternalSyntaxToken)tVerbatimIdentifier.Node).CreateRed();
         }
 
         public GrammarBlock1Syntax GrammarBlock1(MetaDslx.CodeAnalysis.SyntaxList<RuleSyntax> rules)
@@ -921,7 +953,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		        typeof(NameSyntax),
 		        typeof(QualifierSyntax),
 		        typeof(QualifierListSyntax),
-		        typeof(IdentifierSyntax),
+		        typeof(IdentifierAlt1Syntax),
+		        typeof(IdentifierAlt2Syntax),
+		        typeof(IdentifierAlt3Syntax),
 		        typeof(GrammarBlock1Syntax),
 		        typeof(ParserRuleBlock1Alt1Syntax),
 		        typeof(ParserRuleBlock1Alt2Syntax),

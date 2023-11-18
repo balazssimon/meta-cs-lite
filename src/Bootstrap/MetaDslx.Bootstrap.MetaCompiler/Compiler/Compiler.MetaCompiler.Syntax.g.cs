@@ -3350,15 +3350,101 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	    }
 	
 	}
-	public sealed class IdentifierSyntax : CompilerSyntaxNode
+	public abstract class IdentifierSyntax : CompilerSyntaxNode
 	{
-	
-	    public IdentifierSyntax(InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
+	    protected IdentifierSyntax(InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
 	        : base(green, syntaxTree, position)
 	    {
 	    }
 	
-	    public IdentifierSyntax(InternalSyntaxNode green, CompilerSyntaxNode parent, int position)
+	    protected IdentifierSyntax(InternalSyntaxNode green, CompilerSyntaxNode parent, int position)
+	        : base(green, parent, position)
+	    {
+	    }
+	}
+	
+	public sealed class IdentifierAlt1Syntax : IdentifierSyntax
+	{
+	
+	    public IdentifierAlt1Syntax(InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
+	        : base(green, syntaxTree, position)
+	    {
+	    }
+	
+	    public IdentifierAlt1Syntax(InternalSyntaxNode green, CompilerSyntaxNode parent, int position)
+	        : base(green, parent, position)
+	    {
+	    }
+	
+	    public SyntaxToken TPrimitiveType 
+		{ 
+			get 
+			{ 
+				var green = (global::MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax.IdentifierAlt1Green)this.Green;
+				var greenToken = green.TPrimitiveType;
+				return new SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
+			}
+		}
+	
+	    protected override SyntaxNode GetNodeSlot(int index)
+	    {
+	        switch (index)
+	        {
+				default: return null;
+	        }
+	    }
+	
+	    protected override SyntaxNode GetCachedSlot(int index)
+	    {
+	        switch (index)
+	        {
+				default: return null;
+	        }
+	    }
+	
+	    public IdentifierAlt1Syntax WithTPrimitiveType(SyntaxToken tPrimitiveType)
+		{
+			return this.Update(tPrimitiveType);
+		}
+	
+	    public IdentifierAlt1Syntax Update(SyntaxToken tPrimitiveType)
+	    {
+	        if (this.TPrimitiveType != tPrimitiveType)
+	        {
+	            var newNode = CompilerLanguage.Instance.SyntaxFactory.IdentifierAlt1(tPrimitiveType);
+	            var annotations = this.GetAnnotations();
+	            if (annotations != null && annotations.Length > 0)
+	               newNode = newNode.WithAnnotations(annotations);
+				return (IdentifierAlt1Syntax)newNode;
+	        }
+	        return this;
+	    }
+	
+	    public override TResult Accept<TArg, TResult>(ICompilerSyntaxVisitor<TArg, TResult> visitor, TArg argument)
+	    {
+	        return visitor.VisitIdentifierAlt1(this, argument);
+	    }
+	
+	    public override TResult Accept<TResult>(ICompilerSyntaxVisitor<TResult> visitor)
+	    {
+	        return visitor.VisitIdentifierAlt1(this);
+	    }
+	
+	    public override void Accept(ICompilerSyntaxVisitor visitor)
+	    {
+	        visitor.VisitIdentifierAlt1(this);
+	    }
+	
+	}
+	public sealed class IdentifierAlt2Syntax : IdentifierSyntax
+	{
+	
+	    public IdentifierAlt2Syntax(InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
+	        : base(green, syntaxTree, position)
+	    {
+	    }
+	
+	    public IdentifierAlt2Syntax(InternalSyntaxNode green, CompilerSyntaxNode parent, int position)
 	        : base(green, parent, position)
 	    {
 	    }
@@ -3367,7 +3453,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		{ 
 			get 
 			{ 
-				var green = (global::MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax.IdentifierGreen)this.Green;
+				var green = (global::MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax.IdentifierAlt2Green)this.Green;
 				var greenToken = green.TIdentifier;
 				return new SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
 			}
@@ -3389,37 +3475,110 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	        }
 	    }
 	
-	    public IdentifierSyntax WithTIdentifier(SyntaxToken tIdentifier)
+	    public IdentifierAlt2Syntax WithTIdentifier(SyntaxToken tIdentifier)
 		{
 			return this.Update(tIdentifier);
 		}
 	
-	    public IdentifierSyntax Update(SyntaxToken tIdentifier)
+	    public IdentifierAlt2Syntax Update(SyntaxToken tIdentifier)
 	    {
 	        if (this.TIdentifier != tIdentifier)
 	        {
-	            var newNode = CompilerLanguage.Instance.SyntaxFactory.Identifier(tIdentifier);
+	            var newNode = CompilerLanguage.Instance.SyntaxFactory.IdentifierAlt2(tIdentifier);
 	            var annotations = this.GetAnnotations();
 	            if (annotations != null && annotations.Length > 0)
 	               newNode = newNode.WithAnnotations(annotations);
-				return (IdentifierSyntax)newNode;
+				return (IdentifierAlt2Syntax)newNode;
 	        }
 	        return this;
 	    }
 	
 	    public override TResult Accept<TArg, TResult>(ICompilerSyntaxVisitor<TArg, TResult> visitor, TArg argument)
 	    {
-	        return visitor.VisitIdentifier(this, argument);
+	        return visitor.VisitIdentifierAlt2(this, argument);
 	    }
 	
 	    public override TResult Accept<TResult>(ICompilerSyntaxVisitor<TResult> visitor)
 	    {
-	        return visitor.VisitIdentifier(this);
+	        return visitor.VisitIdentifierAlt2(this);
 	    }
 	
 	    public override void Accept(ICompilerSyntaxVisitor visitor)
 	    {
-	        visitor.VisitIdentifier(this);
+	        visitor.VisitIdentifierAlt2(this);
+	    }
+	
+	}
+	public sealed class IdentifierAlt3Syntax : IdentifierSyntax
+	{
+	
+	    public IdentifierAlt3Syntax(InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
+	        : base(green, syntaxTree, position)
+	    {
+	    }
+	
+	    public IdentifierAlt3Syntax(InternalSyntaxNode green, CompilerSyntaxNode parent, int position)
+	        : base(green, parent, position)
+	    {
+	    }
+	
+	    public SyntaxToken TVerbatimIdentifier 
+		{ 
+			get 
+			{ 
+				var green = (global::MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax.IdentifierAlt3Green)this.Green;
+				var greenToken = green.TVerbatimIdentifier;
+				return new SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
+			}
+		}
+	
+	    protected override SyntaxNode GetNodeSlot(int index)
+	    {
+	        switch (index)
+	        {
+				default: return null;
+	        }
+	    }
+	
+	    protected override SyntaxNode GetCachedSlot(int index)
+	    {
+	        switch (index)
+	        {
+				default: return null;
+	        }
+	    }
+	
+	    public IdentifierAlt3Syntax WithTVerbatimIdentifier(SyntaxToken tVerbatimIdentifier)
+		{
+			return this.Update(tVerbatimIdentifier);
+		}
+	
+	    public IdentifierAlt3Syntax Update(SyntaxToken tVerbatimIdentifier)
+	    {
+	        if (this.TVerbatimIdentifier != tVerbatimIdentifier)
+	        {
+	            var newNode = CompilerLanguage.Instance.SyntaxFactory.IdentifierAlt3(tVerbatimIdentifier);
+	            var annotations = this.GetAnnotations();
+	            if (annotations != null && annotations.Length > 0)
+	               newNode = newNode.WithAnnotations(annotations);
+				return (IdentifierAlt3Syntax)newNode;
+	        }
+	        return this;
+	    }
+	
+	    public override TResult Accept<TArg, TResult>(ICompilerSyntaxVisitor<TArg, TResult> visitor, TArg argument)
+	    {
+	        return visitor.VisitIdentifierAlt3(this, argument);
+	    }
+	
+	    public override TResult Accept<TResult>(ICompilerSyntaxVisitor<TResult> visitor)
+	    {
+	        return visitor.VisitIdentifierAlt3(this);
+	    }
+	
+	    public override void Accept(ICompilerSyntaxVisitor visitor)
+	    {
+	        visitor.VisitIdentifierAlt3(this);
 	    }
 	
 	}

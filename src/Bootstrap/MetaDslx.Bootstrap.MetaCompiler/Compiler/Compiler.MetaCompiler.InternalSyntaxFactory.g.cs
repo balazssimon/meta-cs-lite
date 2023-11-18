@@ -160,6 +160,16 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			return Token(null, CompilerSyntaxKind.TDecimal, text, value, null);
 		}
 
+		public InternalSyntaxToken TPrimitiveType(string text)
+		{
+			return Token(null, CompilerSyntaxKind.TPrimitiveType, text, null);
+		}
+
+		public InternalSyntaxToken TPrimitiveType(string text, object value)
+		{
+			return Token(null, CompilerSyntaxKind.TPrimitiveType, text, value, null);
+		}
+
 		public InternalSyntaxToken TIdentifier(string text)
 		{
 			return Token(null, CompilerSyntaxKind.TIdentifier, text, null);
@@ -168,6 +178,16 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 		public InternalSyntaxToken TIdentifier(string text, object value)
 		{
 			return Token(null, CompilerSyntaxKind.TIdentifier, text, value, null);
+		}
+
+		public InternalSyntaxToken TVerbatimIdentifier(string text)
+		{
+			return Token(null, CompilerSyntaxKind.TVerbatimIdentifier, text, null);
+		}
+
+		public InternalSyntaxToken TVerbatimIdentifier(string text, object value)
+		{
+			return Token(null, CompilerSyntaxKind.TVerbatimIdentifier, text, value, null);
 		}
 
 		public InternalSyntaxToken TString(string text)
@@ -920,17 +940,55 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			return result;
 		}
 
-		internal IdentifierGreen Identifier(InternalSyntaxToken tIdentifier)
+		internal IdentifierAlt1Green IdentifierAlt1(InternalSyntaxToken tPrimitiveType)
+		{
+#if DEBUG
+			if (tPrimitiveType is null) throw new ArgumentNullException(nameof(tPrimitiveType));
+			if (tPrimitiveType.RawKind != (int)CompilerSyntaxKind.TPrimitiveType) throw new ArgumentException(nameof(tPrimitiveType));
+#endif
+			int hash;
+			var cached = SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.IdentifierAlt1, tPrimitiveType, out hash);
+			if (cached != null) return (IdentifierAlt1Green)cached;
+		
+			var result = new IdentifierAlt1Green(CompilerSyntaxKind.IdentifierAlt1, tPrimitiveType);
+			if (hash >= 0)
+			{
+				SyntaxNodeCache.AddNode(result, hash);
+			}
+		
+			return result;
+		}
+
+		internal IdentifierAlt2Green IdentifierAlt2(InternalSyntaxToken tIdentifier)
 		{
 #if DEBUG
 			if (tIdentifier is null) throw new ArgumentNullException(nameof(tIdentifier));
 			if (tIdentifier.RawKind != (int)CompilerSyntaxKind.TIdentifier) throw new ArgumentException(nameof(tIdentifier));
 #endif
 			int hash;
-			var cached = SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.Identifier, tIdentifier, out hash);
-			if (cached != null) return (IdentifierGreen)cached;
+			var cached = SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.IdentifierAlt2, tIdentifier, out hash);
+			if (cached != null) return (IdentifierAlt2Green)cached;
 		
-			var result = new IdentifierGreen(CompilerSyntaxKind.Identifier, tIdentifier);
+			var result = new IdentifierAlt2Green(CompilerSyntaxKind.IdentifierAlt2, tIdentifier);
+			if (hash >= 0)
+			{
+				SyntaxNodeCache.AddNode(result, hash);
+			}
+		
+			return result;
+		}
+
+		internal IdentifierAlt3Green IdentifierAlt3(InternalSyntaxToken tVerbatimIdentifier)
+		{
+#if DEBUG
+			if (tVerbatimIdentifier is null) throw new ArgumentNullException(nameof(tVerbatimIdentifier));
+			if (tVerbatimIdentifier.RawKind != (int)CompilerSyntaxKind.TVerbatimIdentifier) throw new ArgumentException(nameof(tVerbatimIdentifier));
+#endif
+			int hash;
+			var cached = SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.IdentifierAlt3, tVerbatimIdentifier, out hash);
+			if (cached != null) return (IdentifierAlt3Green)cached;
+		
+			var result = new IdentifierAlt3Green(CompilerSyntaxKind.IdentifierAlt3, tVerbatimIdentifier);
 			if (hash >= 0)
 			{
 				SyntaxNodeCache.AddNode(result, hash);
