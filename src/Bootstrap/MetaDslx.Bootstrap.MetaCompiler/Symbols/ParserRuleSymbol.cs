@@ -1,10 +1,12 @@
-﻿using MetaDslx.CodeAnalysis;
+﻿using MetaDslx.Bootstrap.MetaCompiler.Model;
+using MetaDslx.CodeAnalysis;
 using MetaDslx.CodeAnalysis.Declarations;
 using MetaDslx.CodeAnalysis.Symbols;
 using MetaDslx.CodeAnalysis.Symbols.Source;
 using MetaDslx.Modeling;
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -39,6 +41,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
 
         private MetaType _returnType;
         private bool _isBlock;
+        private ImmutableDictionary<ParserRuleSymbol, ImmutableArray<PAlternativeSymbol>> _blocks;
+        private ImmutableDictionary<ParserRuleSymbol, ImmutableArray<PAlternativeSymbol>> _allBlocks;
 
         public ParserRuleSymbol(Symbol container, MergedDeclaration declaration, IModelObject modelObject) 
             : base(container, declaration, modelObject)
@@ -66,6 +70,23 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
                 return _returnType;
             }
         }
+
+        public ImmutableArray<PAlternativeSymbol> Alternatives => Members.CastArray<PAlternativeSymbol>();
+
+        public ImmutableDictionary<ParserRuleSymbol, ImmutableArray<PAlternativeSymbol>> Blocks
+        {
+            get
+            {
+                if (_blocks is not null) return _blocks;
+                var builder = ImmutableDictionary.CreateBuilder<ParserRuleSymbol, ImmutableArray<PAlternativeSymbol>>();
+                foreach (var alt in Alternatives)
+                {
+                    var blocks = alt.Members.OfType<PElementSymbol>().Where(e => e.Value.AsModelObject() is PReference pref && pref.Rule is ParserRule pr && pr.IsBlock);
+                    // TODO
+                }
+            }
+        }
+
 
         protected override bool ForceCompletePart(ref CompletionPart incompletePart, SourceLocation? locationOpt, CancellationToken cancellationToken)
         {

@@ -17,6 +17,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
         {
             public static readonly CompletionPart StartComputingProperty_SymbolProperty = new CompletionPart(nameof(StartComputingProperty_SymbolProperty));
             public static readonly CompletionPart FinishComputingProperty_SymbolProperty = new CompletionPart(nameof(FinishComputingProperty_SymbolProperty));
+            public static readonly CompletionPart StartComputingProperty_Value = new CompletionPart(nameof(StartComputingProperty_Value));
+            public static readonly CompletionPart FinishComputingProperty_Value = new CompletionPart(nameof(FinishComputingProperty_Value));
             public static readonly CompletionPart StartComputingProperty_Members = DeclaredSymbol.CompletionParts.StartComputingProperty_Members;
             public static readonly CompletionPart FinishComputingProperty_Members = DeclaredSymbol.CompletionParts.FinishComputingProperty_Members;
             public static readonly CompletionPart StartComputingProperty_TypeArguments = DeclaredSymbol.CompletionParts.StartComputingProperty_TypeArguments;
@@ -28,6 +30,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
             public static readonly CompletionGraph CompletionGraph =
                 CompletionGraph.CreateFromParts(
                     StartComputingProperty_SymbolProperty, FinishComputingProperty_SymbolProperty,
+                    StartComputingProperty_Value, FinishComputingProperty_Value,
                     StartComputingProperty_Members, FinishComputingProperty_Members,
                     StartComputingProperty_TypeArguments, FinishComputingProperty_TypeArguments,
                     StartComputingProperty_Imports, FinishComputingProperty_Imports,
@@ -35,6 +38,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
         }
 
         private MetaSymbol _symbolProperty;
+        private MetaSymbol _value;
 
         public PElementSymbol(Symbol container, MergedDeclaration declaration, IModelObject modelObject)
             : base(container, declaration, modelObject)
@@ -53,6 +57,16 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
             }
         }
 
+        [ModelProperty]
+        public MetaSymbol Value
+        {
+            get
+            {
+                ForceComplete(CompletionParts.FinishComputingProperty_Value, null, default);
+                return _value;
+            }
+        }
+
         protected override bool ForceCompletePart(ref CompletionPart incompletePart, SourceLocation? locationOpt, CancellationToken cancellationToken)
         {
             if (incompletePart == CompletionParts.StartComputingProperty_SymbolProperty || incompletePart == CompletionParts.FinishComputingProperty_SymbolProperty)
@@ -64,6 +78,18 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
                     AddSymbolDiagnostics(diagnostics);
                     diagnostics.Free();
                     NotePartComplete(CompletionParts.FinishComputingProperty_SymbolProperty);
+                }
+                return true;
+            }
+            else if (incompletePart == CompletionParts.StartComputingProperty_Value || incompletePart == CompletionParts.FinishComputingProperty_Value)
+            {
+                if (NotePartComplete(CompletionParts.StartComputingProperty_Value))
+                {
+                    var diagnostics = DiagnosticBag.GetInstance();
+                    _value = CompleteProperty_Value(diagnostics, cancellationToken);
+                    AddSymbolDiagnostics(diagnostics);
+                    diagnostics.Free();
+                    NotePartComplete(CompletionParts.FinishComputingProperty_Value);
                 }
                 return true;
             }
@@ -84,5 +110,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
             return SymbolFactory.GetSymbolPropertyValue<MetaSymbol>(this, nameof(SymbolProperty), diagnostics, cancellationToken);
         }
 
+        protected virtual MetaSymbol CompleteProperty_Value(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        {
+            return SymbolFactory.GetSymbolPropertyValue<MetaSymbol>(this, nameof(Value), diagnostics, cancellationToken);
+        }
     }
 }
