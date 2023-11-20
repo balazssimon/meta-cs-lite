@@ -1,5 +1,6 @@
 ﻿using MetaDslx.CodeAnalysis.PooledObjects;
 using MetaDslx.CodeAnalysis.Symbols;
+using MetaDslx.CodeAnalysis.Symbols.Model;
 using MetaDslx.Modeling;
 using System;
 using System.Collections.Generic;
@@ -40,7 +41,7 @@ namespace MetaDslx.CodeAnalysis
         public bool IsNull => _original is null;
         public bool IsSymbol => _original is Symbol;
         public bool IsModelObject => _original is IModelObject;
-        public bool IsValue => !IsSymbol && !IsModelObject;
+        public bool IsValueOnly => !IsSymbol && !IsModelObject;
 
         public IModelObject? OriginalModelObject => _original as IModelObject;
         public Symbol? OriginalSymbol => _original as Symbol;
@@ -79,6 +80,11 @@ namespace MetaDslx.CodeAnalysis
                 return compilation.ResolveModelObject(OriginalModelObject);
             }
             return OriginalSymbol;
+        }
+
+        public IModelObject? AsModelObject()
+        {
+            return _original is IModelObject mobj ? mobj : (_original as IModelSymbol)?.ModelObject;
         }
 
         public IModelObject? AsModelObject(Compilation compilation)

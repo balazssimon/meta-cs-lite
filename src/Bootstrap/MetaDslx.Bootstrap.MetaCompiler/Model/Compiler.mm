@@ -174,10 +174,10 @@ abstract class ParserRule $ParserRuleSymbol : Rule
 
 class PAlternative $PAlternativeSymbol : Declaration
 {
-	type? ReturnType;
+	type? $ReturnType;
 	contains Expression ReturnValue;
 
-	contains PElement[] Elements;
+	contains PElement[] $Elements;
 }
 
 enum Assignment
@@ -194,7 +194,7 @@ class PElement $PElementSymbol
 	symbol? $SymbolProperty;
 	Assignment Assignment;
 	contains Annotation[] ValueAnnotations;
-	contains PElementValue Value;
+	contains PElementValue $Value;
 	Multiplicity Multiplicity;
 }
 
@@ -202,9 +202,9 @@ abstract class PElementValue $Symbol
 {
 }
 
-class PReference : PElementValue
+class PReference $PReferenceSymbol : PElementValue
 {
-	Rule Rule;
+	Rule $Rule;
 	type[] ReferencedTypes;
 }
 

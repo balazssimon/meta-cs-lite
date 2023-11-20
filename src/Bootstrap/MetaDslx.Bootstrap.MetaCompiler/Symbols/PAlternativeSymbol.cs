@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Collections.Immutable;
 
 namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
 {
@@ -17,6 +18,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
         {
             public static readonly CompletionPart StartComputingProperty_ReturnType = new CompletionPart(nameof(StartComputingProperty_ReturnType));
             public static readonly CompletionPart FinishComputingProperty_ReturnType = new CompletionPart(nameof(FinishComputingProperty_ReturnType));
+            public static readonly CompletionPart StartComputingProperty_Elements = new CompletionPart(nameof(StartComputingProperty_Elements));
+            public static readonly CompletionPart FinishComputingProperty_Elements = new CompletionPart(nameof(FinishComputingProperty_Elements));
             public static readonly CompletionPart StartComputingProperty_Members = DeclaredSymbol.CompletionParts.StartComputingProperty_Members;
             public static readonly CompletionPart FinishComputingProperty_Members = DeclaredSymbol.CompletionParts.FinishComputingProperty_Members;
             public static readonly CompletionPart StartComputingProperty_TypeArguments = DeclaredSymbol.CompletionParts.StartComputingProperty_TypeArguments;
@@ -28,6 +31,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
             public static readonly CompletionGraph CompletionGraph =
                 CompletionGraph.CreateFromParts(
                     StartComputingProperty_ReturnType, FinishComputingProperty_ReturnType,
+                    StartComputingProperty_Elements, FinishComputingProperty_Elements,
                     StartComputingProperty_Members, FinishComputingProperty_Members,
                     StartComputingProperty_TypeArguments, FinishComputingProperty_TypeArguments,
                     StartComputingProperty_Imports, FinishComputingProperty_Imports,
@@ -35,6 +39,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
         }
 
         private MetaType _returnType;
+        private ImmutableArray<PElementSymbol> _elements;
 
         public PAlternativeSymbol(Symbol container, MergedDeclaration declaration, IModelObject modelObject)
             : base(container, declaration, modelObject)
@@ -53,6 +58,16 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
             }
         }
 
+        [ModelProperty]
+        public ImmutableArray<PElementSymbol> Elements
+        {
+            get
+            {
+                ForceComplete(CompletionParts.FinishComputingProperty_Elements, null, default);
+                return _elements;
+            }
+        }
+
         protected override bool ForceCompletePart(ref CompletionPart incompletePart, SourceLocation? locationOpt, CancellationToken cancellationToken)
         {
             if (incompletePart == CompletionParts.StartComputingProperty_ReturnType || incompletePart == CompletionParts.FinishComputingProperty_ReturnType)
@@ -64,6 +79,18 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
                     AddSymbolDiagnostics(diagnostics);
                     diagnostics.Free();
                     NotePartComplete(CompletionParts.FinishComputingProperty_ReturnType);
+                }
+                return true;
+            }
+            else if (incompletePart == CompletionParts.StartComputingProperty_Elements || incompletePart == CompletionParts.FinishComputingProperty_Elements)
+            {
+                if (NotePartComplete(CompletionParts.StartComputingProperty_Elements))
+                {
+                    var diagnostics = DiagnosticBag.GetInstance();
+                    _elements = CompleteProperty_Elements(diagnostics, cancellationToken);
+                    AddSymbolDiagnostics(diagnostics);
+                    diagnostics.Free();
+                    NotePartComplete(CompletionParts.FinishComputingProperty_Elements);
                 }
                 return true;
             }
@@ -88,6 +115,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
                 returnType = (this.ContainingSymbol as ParserRuleSymbol)?.ReturnType ?? default;
             }
             return returnType;
+        }
+
+        protected virtual ImmutableArray<PElementSymbol> CompleteProperty_Elements(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        {
+            return SymbolFactory.GetSymbolPropertyValues<PElementSymbol>(this, nameof(Elements), diagnostics, cancellationToken);
         }
     }
 }

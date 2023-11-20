@@ -81,9 +81,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
                 var builder = ImmutableDictionary.CreateBuilder<ParserRuleSymbol, ImmutableArray<PAlternativeSymbol>>();
                 foreach (var alt in Alternatives)
                 {
-                    var blocks = alt.Members.OfType<PElementSymbol>().Where(e => e.Value.AsModelObject() is PReference pref && pref.Rule is ParserRule pr && pr.IsBlock);
+                    var blocks = alt.Members.OfType<PElementSymbol>().Where(e => e.Value.AsModelObject() is PReferenceSymbol pref && pref.Rule.OriginalSymbol is ParserRuleSymbol pr && pr.IsBlock);
                     // TODO
                 }
+                return ImmutableDictionary<ParserRuleSymbol, ImmutableArray<PAlternativeSymbol>>.Empty;
             }
         }
 

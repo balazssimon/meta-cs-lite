@@ -273,9 +273,27 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
                             var values = ((Binder)propBinder).Bind(cancellationToken);
                             foreach (var value in values)
                             {
-                                if (value is TValue tvalue)
+                                if (value is null) continue;
+                                var error = false;
+                                if (typeof(TValue) == typeof(MetaType) && value is TypeSymbol typeSymbol)
+                                {
+                                    builder.Add((TValue)(object)MetaType.FromTypeSymbol(typeSymbol));
+                                }
+                                else if (typeof(TValue) == typeof(MetaSymbol) && value is Symbol valueSymbol)
+                                {
+                                    builder.Add((TValue)(object)MetaSymbol.FromSymbol(valueSymbol));
+                                }
+                                else if (value is TValue tvalue)
                                 {
                                     builder.Add(tvalue);
+                                }
+                                else
+                                {
+                                    error = true;
+                                    diagnostics.Add(Diagnostic.Create(CommonErrorCode.ERR_InvalidSymbolPropertyValue, decl.GetLocation(), value, value.GetType(), symbolProperty, typeof(TValue)));
+                                }
+                                if (!error)
+                                {
                                     try
                                     {
                                         if (prop.Type.IsAssignableTo(typeof(Symbol)) && prop.Type.IsAssignableFrom(value.GetType()))
@@ -303,10 +321,6 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
                                     {
                                         diagnostics.Add(Diagnostic.Create(CommonErrorCode.ERR_InvalidModelObjectPropertyValue, decl.GetLocation(), value, value.GetType(), prop.Name, prop.Type));
                                     }
-                                }
-                                else
-                                {
-                                    diagnostics.Add(Diagnostic.Create(CommonErrorCode.ERR_InvalidSymbolPropertyValue, decl.GetLocation(), value, value.GetType(), symbolProperty, typeof(TValue)));
                                 }
                             }
                         }

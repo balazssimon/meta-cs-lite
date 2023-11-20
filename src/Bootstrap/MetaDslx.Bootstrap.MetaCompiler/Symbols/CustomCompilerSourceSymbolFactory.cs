@@ -16,6 +16,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
             Register((s, d, mo) => new PAlternativeSymbol(s, d, mo));
             Register((s, d, mo) => new PElementSymbol(s, d, mo));
             Register((s, d, mo) => new PBlockSymbol(s, d, mo));
+            Register((s, d, mo) => new PReferenceSymbol(s, d, mo));
             Register((s, d, mo) => new ExpressionSymbol(s, d, mo));
         }
     }
