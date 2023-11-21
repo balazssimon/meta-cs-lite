@@ -20,7 +20,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
         private ExpressionSymbol? _containingExpression;
         private PAlternativeSymbol? _containingPAlternative;
         private AnnotationArgumentSymbol? _containingAnnotationArgument;
-        private ImmutableArray<MetaSymbol> _targetProperties;
+        private ImmutableArray<DeclaredSymbol> _targetProperties;
         private ImmutableArray<LookupKey> _expectedTypes;
 
         public ConvertToExpectedTypeBinder()
@@ -64,22 +64,41 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
             }
         }
 
-        public ImmutableArray<MetaSymbol> TargetProperties
+        public ImmutableArray<DeclaredSymbol> TargetProperties
         {
             get
             {
                 if (_targetProperties.IsDefault)
                 {
-                    var alt = ContainingPAlternativeSymbol;
-                    var block = alt?.ContainingSymbol as PBlockSymbol;
-                    var blockElem = block?.ContainingSymbol as PElementSymbol;
-                    if (blockElem is not null)
+                    var arg = ContainingAnnotationArgumentSymbol;
+                    if (arg is not null)
                     {
-                        ImmutableInterlocked.InterlockedInitialize(ref _targetProperties, blockElem.SymbolProperty);
+                        ImmutableInterlocked.InterlockedInitialize(ref _targetProperties, arg.Parameters);
                     }
                     else
                     {
-                        ImmutableInterlocked.InterlockedInitialize(ref _targetProperties, ImmutableArray<MetaSymbol>.Empty);
+                        var alt = ContainingPAlternativeSymbol;
+                        if (alt is not null)
+                        {
+                            var block = alt?.ContainingSymbol as PBlockSymbol;
+                            var blockElem = block?.ContainingSymbol as PElementSymbol;
+                            if (blockElem is not null)
+                            {
+                                var targetProperties = ArrayBuilder<DeclaredSymbol>.GetInstance();
+                                foreach (var prop in blockElem.SymbolProperty)
+                                {
+                                    if (prop.OriginalSymbol is DeclaredSymbol declaredSymbol)
+                                    {
+                                        targetProperties.Add(declaredSymbol);
+                                    }
+                                }
+                                ImmutableInterlocked.InterlockedInitialize(ref _targetProperties, targetProperties.ToImmutableAndFree());
+                            }
+                            else
+                            {
+                                ImmutableInterlocked.InterlockedInitialize(ref _targetProperties, ImmutableArray<DeclaredSymbol>.Empty);
+                            }
+                        }
                     }
                 }
                 return _targetProperties;
@@ -100,8 +119,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
                     var expectedTypes = ArrayBuilder<LookupKey>.GetInstance();
                     foreach (var targetProperty in TargetProperties)
                     {
-                        var property = targetProperty.OriginalSymbol as ICSharpSymbol;
-                        var csType = (property?.CSharpSymbol as IPropertySymbol)?.Type;
+                        var property = targetProperty as ICSharpSymbol;
+                        var csType = (property?.CSharpSymbol as IPropertySymbol)?.Type ?? (property?.CSharpSymbol as IParameterSymbol)?.Type;
                         if (csType is not null)
                         {
                             var type = property.SymbolFactory.GetSymbol<TypeSymbol>(csType, diagnostics, cancellationToken);
@@ -130,9 +149,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
         protected override void AdjustFinalLookupContext(LookupContext context)
         {
             base.AdjustFinalLookupContext(context);
-            if (context.Qualifier is null)
+            var type = (context.MultiLookupKey as LookupKey)?.Type ?? default;
+            if (context.Qualifier is null && type.IsEnum)
             {
-                context.Qualifier = ((LookupKey)context.MultiLookupKey).Type.OriginalTypeSymbol;
+                context.Qualifier = type.OriginalTypeSymbol;
             }
         }
 

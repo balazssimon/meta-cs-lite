@@ -68,7 +68,7 @@ ArrayExpression: '{' (items+=Expression (',' items+=Expression)*)? '}';
 ParserAnnotation returns MetaDslx.Bootstrap.MetaCompiler.Model.Annotation: '[' type=[Use(types:{Binder,MetaDslx.CodeAnalysis.Annotations.Annotation},suffixes:{"Binder","Annotation"})]Qualifier AnnotationArguments? ']';
 LexerAnnotation returns MetaDslx.Bootstrap.MetaCompiler.Model.Annotation: '[' type=[Use(types:{TokenKind,MetaDslx.CodeAnalysis.Annotations.Annotation},suffixes:{"TokenKind","Annotation"})]Qualifier AnnotationArguments? ']';
 block AnnotationArguments: '(' arguments+=AnnotationArgument (',' arguments+=AnnotationArgument)* ')';
-AnnotationArgument: (parameter=Identifier ':')? value=Expression;
+AnnotationArgument: (namedParameter=[AnnotationArgument]Identifier ':')? value=Expression;
 
 Assignment
 	: '=' => Assign

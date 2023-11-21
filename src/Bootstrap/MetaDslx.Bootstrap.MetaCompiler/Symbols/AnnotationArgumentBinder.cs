@@ -13,10 +13,9 @@ using System.Threading.Tasks;
 
 namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
 {
-    internal class AnnotationArgumentBinder : UseBinder
+    internal class AnnotationArgumentBinder : UseBinder, IMultiLookupBinder
     {
         private AnnotationArgumentSymbol? _annotationArgument;
-        private ImmutableArray<MetaSymbol> _annotationParameters;
 
         public AnnotationArgumentBinder()
             : base(ImmutableArray.Create(typeof(DeclaredSymbol)))
@@ -58,57 +57,25 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
             return null;
         }
 
-        private ImmutableArray<MetaSymbol> GetAnnotationParameters(CancellationToken cancellationToken)
+        public ImmutableArray<object> GetMultiLookupKeys(CancellationToken cancellationToken = default)
         {
-            if (_annotationParameters.IsDefault)
+            return AnnotationSymbol?.Constructors.CastArray<object>() ?? ImmutableArray<object>.Empty;
+        }
+
+        protected override void AddLookupCandidateSymbolsInSingleBinder(LookupContext context, LookupCandidates result)
+        {
+            var ctr = context.MultiLookupKey as DeclaredSymbol;
+            var index = AnnotationSymbol?.Constructors.IndexOf(ctr) ?? -1;
+            if (index < 0) return;
+            var parameters = AnnotationSymbol.Parameters[index];
+            foreach (var param in parameters)
             {
-                var annotation = this.AnnotationSymbol;
-                var parameters = ArrayBuilder<MetaSymbol>.GetInstance();
-                if (annotation is not null)
+                if (context.IsViable(param))
                 {
-                    var csType = annotation.Type.OriginalTypeSymbol as ICSharpSymbol;
-                    var msType = csType?.CSharpSymbol as INamedTypeSymbol;
-                    if (msType is not null)
-                    {
-                        var diagnostics = DiagnosticBag.GetInstance();
-                        foreach (var ctr in msType.InstanceConstructors)
-                        {
-                            foreach (var ctrParam in ctr.Parameters)
-                            {
-                                if (!parameters.Any(p => p.Name == ctrParam.Name))
-                                {
-                                    var ctrParamSymbol = csType.SymbolFactory.GetSymbol(ctrParam, diagnostics, cancellationToken);
-                                    if (ctrParamSymbol is not null)
-                                    {
-                                        parameters.Add(ctrParamSymbol);
-                                    }
-                                }
-                            }
-                        }
-                        this.AddDiagnostics(diagnostics);
-                        diagnostics.Free();
-                    }
+                    result.Add(param); 
                 }
-                ImmutableInterlocked.InterlockedInitialize(ref _annotationParameters, parameters.ToImmutableAndFree());
             }
-            return _annotationParameters;
         }
 
-        protected override bool IsViable(LookupContext context, DeclaredSymbol symbol)
-        {
-            var alt = context.MultiLookupKey as PAlternativeSymbol;
-            if (alt is null) return false;
-            var returnType = alt.ReturnType;
-            if (returnType.IsNull || !returnType.IsTypeSymbol) return false;
-            return base.IsViable(context, symbol);
-        }
-
-        protected override void AdjustFinalLookupContext(LookupContext context)
-        {
-            base.AdjustFinalLookupContext(context);
-            context.IsCaseSensitive = false;
-            var alt = context.MultiLookupKey as PAlternativeSymbol;
-            context.Qualifier = alt?.ReturnType.OriginalTypeSymbol;
-        }
     }
 }

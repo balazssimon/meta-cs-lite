@@ -9,6 +9,8 @@ using System.Collections.Immutable;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MetaDslx.Bootstrap.MetaCompiler.Model;
+using MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax;
 
 namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
 {
@@ -16,20 +18,24 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
     {
         public new static class CompletionParts
         {
-            public static readonly CompletionPart StartComputingProperty_Parameter = new CompletionPart(nameof(StartComputingProperty_Parameter));
-            public static readonly CompletionPart FinishComputingProperty_Parameter = new CompletionPart(nameof(FinishComputingProperty_Parameter));
+            public static readonly CompletionPart StartComputingProperty_NamedParameter = new CompletionPart(nameof(StartComputingProperty_NamedParameter));
+            public static readonly CompletionPart FinishComputingProperty_NamedParameter = new CompletionPart(nameof(FinishComputingProperty_NamedParameter));
+            public static readonly CompletionPart StartComputingProperty_Parameters = new CompletionPart(nameof(StartComputingProperty_Parameters));
+            public static readonly CompletionPart FinishComputingProperty_Parameters = new CompletionPart(nameof(FinishComputingProperty_Parameters));
             public static readonly CompletionPart StartComputingProperty_Value = new CompletionPart(nameof(StartComputingProperty_Value));
             public static readonly CompletionPart FinishComputingProperty_Value = new CompletionPart(nameof(FinishComputingProperty_Value));
             public static readonly CompletionPart StartComputingProperty_Attributes = Symbol.CompletionParts.StartComputingProperty_Attributes;
             public static readonly CompletionPart FinishComputingProperty_Attributes = Symbol.CompletionParts.FinishComputingProperty_Attributes;
             public static readonly CompletionGraph CompletionGraph =
                 CompletionGraph.CreateFromParts(
-                    StartComputingProperty_Parameter, FinishComputingProperty_Parameter,
+                    StartComputingProperty_NamedParameter, FinishComputingProperty_NamedParameter,
+                    StartComputingProperty_Parameters, FinishComputingProperty_Parameters,
                     StartComputingProperty_Value, FinishComputingProperty_Value,
                     StartComputingProperty_Attributes, FinishComputingProperty_Attributes);
         }
 
-        private MetaSymbol _parameter;
+        private ImmutableArray<MetaSymbol> _namedParameter;
+        private ImmutableArray<DeclaredSymbol> _parameters;
         private ExpressionSymbol _value;
 
         public AnnotationArgumentSymbol(Symbol container, MergedDeclaration declaration, IModelObject modelObject)
@@ -41,13 +47,36 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
 
         public AnnotationSymbol? AnnotationSymbol => (AnnotationSymbol)this.ContainingSymbol;
 
-        [ModelProperty]
-        public MetaSymbol Parameter
+        public bool IsNamedArgument
         {
             get
             {
-                ForceComplete(CompletionParts.FinishComputingProperty_Parameter, null, default);
-                return _parameter;
+                foreach (var syntaxReference in this.DeclaringSyntaxReferences)
+                {
+                    var argSyntax = syntaxReference.AsNode() as AnnotationArgumentSyntax;
+                    return argSyntax?.AnnotationArgumentBlock1 is not null;
+                }
+                return false;
+            }
+        }
+
+        [ModelProperty]
+        public ImmutableArray<MetaSymbol> NamedParameter
+        {
+            get
+            {
+                ForceComplete(CompletionParts.FinishComputingProperty_NamedParameter, null, default);
+                return _namedParameter;
+            }
+        }
+
+        [ModelProperty]
+        public ImmutableArray<DeclaredSymbol> Parameters
+        {
+            get
+            {
+                ForceComplete(CompletionParts.FinishComputingProperty_Parameters, null, default);
+                return _parameters;
             }
         }
 
@@ -63,15 +92,27 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
 
         protected override bool ForceCompletePart(ref CompletionPart incompletePart, SourceLocation? locationOpt, CancellationToken cancellationToken)
         {
-            if (incompletePart == CompletionParts.StartComputingProperty_Parameter || incompletePart == CompletionParts.FinishComputingProperty_Parameter)
+            if (incompletePart == CompletionParts.StartComputingProperty_NamedParameter || incompletePart == CompletionParts.FinishComputingProperty_NamedParameter)
             {
-                if (NotePartComplete(CompletionParts.StartComputingProperty_Parameter))
+                if (NotePartComplete(CompletionParts.StartComputingProperty_NamedParameter))
                 {
                     var diagnostics = DiagnosticBag.GetInstance();
-                    _parameter = CompleteProperty_Parameter(diagnostics, cancellationToken);
+                    _namedParameter = CompleteProperty_NamedParameter(diagnostics, cancellationToken);
                     AddSymbolDiagnostics(diagnostics);
                     diagnostics.Free();
-                    NotePartComplete(CompletionParts.FinishComputingProperty_Parameter);
+                    NotePartComplete(CompletionParts.FinishComputingProperty_NamedParameter);
+                }
+                return true;
+            }
+            else if (incompletePart == CompletionParts.StartComputingProperty_Parameters || incompletePart == CompletionParts.FinishComputingProperty_Parameters)
+            {
+                if (NotePartComplete(CompletionParts.StartComputingProperty_Parameters))
+                {
+                    var diagnostics = DiagnosticBag.GetInstance();
+                    _parameters = CompleteProperty_Parameters(diagnostics, cancellationToken);
+                    AddSymbolDiagnostics(diagnostics);
+                    diagnostics.Free();
+                    NotePartComplete(CompletionParts.FinishComputingProperty_Parameters);
                 }
                 return true;
             }
@@ -94,9 +135,16 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
             return false;
         }
 
-        protected virtual MetaSymbol CompleteProperty_Parameter(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        protected virtual ImmutableArray<MetaSymbol> CompleteProperty_NamedParameter(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            return SymbolFactory.GetSymbolPropertyValue<MetaSymbol>(this, nameof(Parameter), diagnostics, cancellationToken);
+            return SymbolFactory.GetSymbolPropertyValues<MetaSymbol>(this, nameof(NamedParameter), diagnostics, cancellationToken);
+        }
+
+        protected virtual ImmutableArray<DeclaredSymbol> CompleteProperty_Parameters(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        {
+            var index = AnnotationSymbol?.Arguments.IndexOf(this) ?? -1;
+            if (index < 0) return ImmutableArray<DeclaredSymbol>.Empty;
+            return AnnotationSymbol.ArgumentParameters[index];
         }
 
         protected virtual ExpressionSymbol CompleteProperty_Value(DiagnosticBag diagnostics, CancellationToken cancellationToken)

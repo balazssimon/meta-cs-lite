@@ -6483,17 +6483,17 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 	internal class AnnotationArgumentBlock1Green : GreenSyntaxNode
 	{
 		internal static new readonly AnnotationArgumentBlock1Green __Missing = new AnnotationArgumentBlock1Green();
-		private IdentifierGreen _parameter;
+		private IdentifierGreen _namedParameter;
 		private InternalSyntaxToken _tColon;
 	
-		public AnnotationArgumentBlock1Green(CompilerSyntaxKind kind, IdentifierGreen parameter, InternalSyntaxToken tColon)
+		public AnnotationArgumentBlock1Green(CompilerSyntaxKind kind, IdentifierGreen namedParameter, InternalSyntaxToken tColon)
 			: base(kind, null, null)
 		{
 			SlotCount = 2;
-			if (parameter != null)
+			if (namedParameter != null)
 			{
-				AdjustFlagsAndWidth(parameter);
-				_parameter = parameter;
+				AdjustFlagsAndWidth(namedParameter);
+				_namedParameter = namedParameter;
 			}
 			if (tColon != null)
 			{
@@ -6502,14 +6502,14 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			}
 		}
 	
-		public AnnotationArgumentBlock1Green(CompilerSyntaxKind kind, IdentifierGreen parameter, InternalSyntaxToken tColon, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
+		public AnnotationArgumentBlock1Green(CompilerSyntaxKind kind, IdentifierGreen namedParameter, InternalSyntaxToken tColon, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
 			: base(kind, diagnostics, annotations)
 		{
 			SlotCount = 2;
-			if (parameter != null)
+			if (namedParameter != null)
 			{
-				AdjustFlagsAndWidth(parameter);
-				_parameter = parameter;
+				AdjustFlagsAndWidth(namedParameter);
+				_namedParameter = namedParameter;
 			}
 			if (tColon != null)
 			{
@@ -6524,7 +6524,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			this.flags &= ~NodeFlags.IsNotMissing;
 		}
 	
-		public IdentifierGreen Parameter { get { return _parameter; } }
+		public IdentifierGreen NamedParameter { get { return _namedParameter; } }
 		public InternalSyntaxToken TColon { get { return _tColon; } }
 	
 		protected override SyntaxNode CreateRed(SyntaxNode parent, int position)
@@ -6536,7 +6536,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 		{
 			switch (index)
 			{
-				case 0: return _parameter;
+				case 0: return _namedParameter;
 				case 1: return _tColon;
 				default: return null;
 			}
@@ -6548,25 +6548,25 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 	
 		public override InternalSyntaxNode WithDiagnostics(DiagnosticInfo[] diagnostics)
 		{
-			return new AnnotationArgumentBlock1Green(this.Kind, _parameter, _tColon, diagnostics, this.GetAnnotations());
+			return new AnnotationArgumentBlock1Green(this.Kind, _namedParameter, _tColon, diagnostics, this.GetAnnotations());
 		}
 	
 		public override InternalSyntaxNode WithAnnotations(SyntaxAnnotation[] annotations)
 		{
-			return new AnnotationArgumentBlock1Green(this.Kind, _parameter, _tColon, this.GetDiagnostics(), annotations);
+			return new AnnotationArgumentBlock1Green(this.Kind, _namedParameter, _tColon, this.GetDiagnostics(), annotations);
 		}
 	
 		public override GreenNode Clone()
 		{
-			return new AnnotationArgumentBlock1Green(this.Kind, _parameter, _tColon, this.GetDiagnostics(), this.GetAnnotations());
+			return new AnnotationArgumentBlock1Green(this.Kind, _namedParameter, _tColon, this.GetDiagnostics(), this.GetAnnotations());
 		}
 	
 	
-		public AnnotationArgumentBlock1Green Update(IdentifierGreen parameter, InternalSyntaxToken tColon)
+		public AnnotationArgumentBlock1Green Update(IdentifierGreen namedParameter, InternalSyntaxToken tColon)
 		{
-			if (_parameter != parameter || _tColon != tColon)
+			if (_namedParameter != namedParameter || _tColon != tColon)
 			{
-				InternalSyntaxNode newNode = CompilerLanguage.Instance.InternalSyntaxFactory.AnnotationArgumentBlock1(parameter, (InternalSyntaxToken)tColon);
+				InternalSyntaxNode newNode = CompilerLanguage.Instance.InternalSyntaxFactory.AnnotationArgumentBlock1(namedParameter, (InternalSyntaxToken)tColon);
 				var diags = this.GetDiagnostics();
 				if (diags != null && diags.Length > 0)
 					newNode = newNode.WithDiagnostics(diags);

@@ -5045,7 +5045,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	}
 	public sealed class AnnotationArgumentBlock1Syntax : CompilerSyntaxNode
 	{
-		private IdentifierSyntax _parameter;
+		private IdentifierSyntax _namedParameter;
 	
 	    public AnnotationArgumentBlock1Syntax(InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
 	        : base(green, syntaxTree, position)
@@ -5057,7 +5057,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	    {
 	    }
 	
-	    public IdentifierSyntax Parameter => this.GetRed(ref this._parameter, 0);
+	    public IdentifierSyntax NamedParameter => this.GetRed(ref this._namedParameter, 0);
 	    public SyntaxToken TColon 
 		{ 
 			get 
@@ -5072,7 +5072,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	    {
 	        switch (index)
 	        {
-				case 0: return this.GetRed(ref this._parameter, 0);
+				case 0: return this.GetRed(ref this._namedParameter, 0);
 				default: return null;
 	        }
 	    }
@@ -5081,26 +5081,26 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	    {
 	        switch (index)
 	        {
-				case 0: return this._parameter;
+				case 0: return this._namedParameter;
 				default: return null;
 	        }
 	    }
 	
-	    public AnnotationArgumentBlock1Syntax WithParameter(IdentifierSyntax parameter)
+	    public AnnotationArgumentBlock1Syntax WithNamedParameter(IdentifierSyntax namedParameter)
 		{
-			return this.Update(parameter, this.TColon);
+			return this.Update(namedParameter, this.TColon);
 		}
 	
 	    public AnnotationArgumentBlock1Syntax WithTColon(SyntaxToken tColon)
 		{
-			return this.Update(this.Parameter, tColon);
+			return this.Update(this.NamedParameter, tColon);
 		}
 	
-	    public AnnotationArgumentBlock1Syntax Update(IdentifierSyntax parameter, SyntaxToken tColon)
+	    public AnnotationArgumentBlock1Syntax Update(IdentifierSyntax namedParameter, SyntaxToken tColon)
 	    {
-	        if (this.Parameter != parameter || this.TColon != tColon)
+	        if (this.NamedParameter != namedParameter || this.TColon != tColon)
 	        {
-	            var newNode = CompilerLanguage.Instance.SyntaxFactory.AnnotationArgumentBlock1(parameter, tColon);
+	            var newNode = CompilerLanguage.Instance.SyntaxFactory.AnnotationArgumentBlock1(namedParameter, tColon);
 	            var annotations = this.GetAnnotations();
 	            if (annotations != null && annotations.Length > 0)
 	               newNode = newNode.WithAnnotations(annotations);

@@ -2164,15 +2164,24 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
 
         public virtual void VisitAnnotationArgumentBlock1(AnnotationArgumentBlock1Syntax node)
         {
-        	var __annot0 = new PropertyBinder(name: "Parameter");
-        	this.Begin(__annot0, node.Parameter);
+        	var __annot1 = new PropertyBinder(name: "NamedParameter");
+        	this.Begin(__annot1, node.NamedParameter);
         	try
         	{
-        	    this.Visit(node.Parameter);
+        	    var __annot0 = new AnnotationArgumentBinder();
+        	    this.Begin(__annot0, node.NamedParameter);
+        	    try
+        	    {
+        	        this.Visit(node.NamedParameter);
+        	    }
+        	    finally
+        	    {
+        	        this.End(__annot0);
+        	    }
         	}
         	finally
         	{
-        	    this.End(__annot0);
+        	    this.End(__annot1);
         	}
         	    
         }

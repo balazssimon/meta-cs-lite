@@ -2938,7 +2938,7 @@ public partial class CompilerParser : global::MetaDslx.CodeAnalysis.Parsers.Antl
 	}
 
 	public partial class Pr_AnnotationArgumentBlock1Context : ParserRuleContext {
-		public Pr_IdentifierContext parameterAntlr1;
+		public Pr_IdentifierContext namedParameterAntlr1;
 		public IToken tColon;
 		[System.Diagnostics.DebuggerNonUserCode] public Pr_IdentifierContext pr_Identifier() {
 			return GetRuleContext<Pr_IdentifierContext>(0);
@@ -2965,7 +2965,7 @@ public partial class CompilerParser : global::MetaDslx.CodeAnalysis.Parsers.Antl
 			EnterOuterAlt(_localctx, 1);
 			{
 			State = 373;
-			_localctx.parameterAntlr1 = pr_Identifier();
+			_localctx.namedParameterAntlr1 = pr_Identifier();
 			State = 374;
 			_localctx.tColon = Match(LR_TColon);
 			}
