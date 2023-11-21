@@ -58,7 +58,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
             return null;
         }
 
-        private ImmutableArray<MetaSymbol> GetAnnotationParameters(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        private ImmutableArray<MetaSymbol> GetAnnotationParameters(CancellationToken cancellationToken)
         {
             if (_annotationParameters.IsDefault)
             {
@@ -70,6 +70,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
                     var msType = csType?.CSharpSymbol as INamedTypeSymbol;
                     if (msType is not null)
                     {
+                        var diagnostics = DiagnosticBag.GetInstance();
                         foreach (var ctr in msType.InstanceConstructors)
                         {
                             foreach (var ctrParam in ctr.Parameters)
@@ -83,7 +84,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
                                     }
                                 }
                             }
-                        } 
+                        }
+                        this.AddDiagnostics(diagnostics);
+                        diagnostics.Free();
                     }
                 }
                 ImmutableInterlocked.InterlockedInitialize(ref _annotationParameters, parameters.ToImmutableAndFree());
