@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Collections.Immutable;
+using MetaDslx.CodeAnalysis.PooledObjects;
 
 namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
 {
@@ -39,7 +40,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
         }
 
         private MetaType _returnType;
+        private ParserRuleSymbol _parserRule;
         private ImmutableArray<PElementSymbol> _elements;
+        private ImmutableArray<PElementSymbol> _allSimpleElements;
 
         public PAlternativeSymbol(Symbol container, MergedDeclaration declaration, IModelObject modelObject)
             : base(container, declaration, modelObject)
@@ -47,6 +50,29 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
         }
 
         protected override CompletionGraph CompletionGraph => CompletionParts.CompletionGraph;
+
+        public GrammarSymbol? ContainingGrammarSymbol => ContainingParserRuleSymbol?.ContainingGrammarSymbol;
+
+        public ParserRuleSymbol? ContainingParserRuleSymbol
+        {
+            get
+            {
+                if (_parserRule is null)
+                {
+                    var container = this.ContainingSymbol;
+                    while (container is not null)
+                    {
+                        if (container is ParserRuleSymbol prs)
+                        {
+                            Interlocked.CompareExchange(ref _parserRule, prs, null);
+                            break;
+                        }
+                        container = container.ContainingSymbol;
+                    }
+                }
+                return _parserRule;
+            }
+        }
 
         [ModelProperty]
         public MetaType ReturnType
@@ -65,6 +91,34 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
             {
                 ForceComplete(CompletionParts.FinishComputingProperty_Elements, null, default);
                 return _elements;
+            }
+        }
+
+        public ImmutableArray<PElementSymbol> AllSimpleElements
+        {
+            get
+            {
+                if (_allSimpleElements.IsDefault)
+                {
+                    var builder = ArrayBuilder<PElementSymbol>.GetInstance();
+                    foreach (var elem in Elements)
+                    {
+                        if (elem.Value.OriginalSymbol is PBlockSymbol pbs)
+                        {
+                            foreach (var balt in pbs.Alternatives)
+                            {
+                                builder.AddRange(balt.AllSimpleElements);
+                            }
+                        }
+                        else
+                        {
+                            builder.Add(elem);
+                        }
+                    }
+                    builder.AddRange(Elements);
+                    ImmutableInterlocked.InterlockedInitialize(ref _allSimpleElements, builder.ToImmutableAndFree());
+                }
+                return _allSimpleElements;
             }
         }
 
@@ -112,7 +166,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
             var returnType = SymbolFactory.GetSymbolPropertyValue<MetaType>(this, nameof(ReturnType), diagnostics, cancellationToken);
             if (returnType.IsNull)
             {
-                returnType = (this.ContainingSymbol as ParserRuleSymbol)?.ReturnType ?? default;
+                returnType = ContainingParserRuleSymbol?.ReturnType ?? default;
             }
             return returnType;
         }

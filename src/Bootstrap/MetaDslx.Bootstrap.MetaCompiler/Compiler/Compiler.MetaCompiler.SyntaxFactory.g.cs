@@ -855,16 +855,16 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
         	return this.AnnotationArgumentsBlock1(this.Token(CompilerSyntaxKind.TComma), arguments);
         }
 
-        public AnnotationArgumentBlock1Syntax AnnotationArgumentBlock1(IdentifierSyntax name, SyntaxToken tColon)
+        public AnnotationArgumentBlock1Syntax AnnotationArgumentBlock1(IdentifierSyntax parameter, SyntaxToken tColon)
         {
-        	if (name is null) throw new ArgumentNullException(nameof(name));
+        	if (parameter is null) throw new ArgumentNullException(nameof(parameter));
         	if (tColon.RawKind != (int)CompilerSyntaxKind.TColon) throw new ArgumentException(nameof(tColon));
-            return (AnnotationArgumentBlock1Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.AnnotationArgumentBlock1((IdentifierGreen)name.Green, (InternalSyntaxToken)tColon.Node).CreateRed();
+            return (AnnotationArgumentBlock1Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.AnnotationArgumentBlock1((IdentifierGreen)parameter.Green, (InternalSyntaxToken)tColon.Node).CreateRed();
         }
         
-        public AnnotationArgumentBlock1Syntax AnnotationArgumentBlock1(IdentifierSyntax name)
+        public AnnotationArgumentBlock1Syntax AnnotationArgumentBlock1(IdentifierSyntax parameter)
         {
-        	return this.AnnotationArgumentBlock1(name, this.Token(CompilerSyntaxKind.TColon));
+        	return this.AnnotationArgumentBlock1(parameter, this.Token(CompilerSyntaxKind.TColon));
         }
 
         public QualifierBlock1Syntax QualifierBlock1(SyntaxToken tDot, IdentifierSyntax identifier)

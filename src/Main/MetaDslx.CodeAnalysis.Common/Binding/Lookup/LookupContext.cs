@@ -32,6 +32,7 @@ namespace MetaDslx.CodeAnalysis.Binding
         private readonly Language _language;
         private readonly DefaultLookupValidator _defaultLookupValidator;
         private readonly ErrorSymbolFactory _errorSymbolFactory;
+        private object? _multiLookupKey;
         private Binder _originalBinder;
         private SourceLocation _location;
         private HashSet<ILookupValidator> _validators;
@@ -76,6 +77,11 @@ namespace MetaDslx.CodeAnalysis.Binding
         public DefaultLookupValidator DefaultLookupValidator => _defaultLookupValidator;
         public ErrorSymbolFactory ErrorSymbolFactory => _errorSymbolFactory;
 
+        public object? MultiLookupKey
+        {
+            get => _multiLookupKey;
+            set => _multiLookupKey = value;
+        }
         public Binder OriginalBinder
         {
             get => _originalBinder;
@@ -166,6 +172,7 @@ namespace MetaDslx.CodeAnalysis.Binding
 
         public virtual void Clear()
         {
+            _multiLookupKey = null;
             _originalBinder = null;
             _location = null;
             _validators.Clear();
@@ -196,6 +203,7 @@ namespace MetaDslx.CodeAnalysis.Binding
         public virtual LookupContext AllocateCopy()
         {
             var context = Compilation[Language].SemanticsFactory.LookupContextPool.Allocate();
+            context.MultiLookupKey = _multiLookupKey;
             context.OriginalBinder = _originalBinder;
             context.Location = _location;
             context.Validators.UnionWith(_validators);

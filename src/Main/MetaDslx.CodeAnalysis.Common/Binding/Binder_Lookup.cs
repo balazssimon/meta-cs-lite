@@ -24,9 +24,11 @@ namespace MetaDslx.CodeAnalysis.Binding
             bool diagnose = false,
             bool inImport = false,
             bool isLookup = false,
+            object? multiLookupKey = null,
             IEnumerable<ILookupValidator>? validators = null)
         {
             var context = Compilation[Language].SemanticsFactory.LookupContextPool.Allocate();
+            context.MultiLookupKey = multiLookupKey;
             context.OriginalBinder = this;
             context.Location = this.Location;
             if (validators is not null) context.Validators.UnionWith(validators);

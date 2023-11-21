@@ -26,6 +26,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
         }
 
         private MetaType _expectedType;
+        private PAlternativeSymbol? _containingAlternative;
+        private AnnotationArgumentSymbol? _containingAnnotationArgument;
 
         public ExpressionSymbol(Symbol container, MergedDeclaration declaration, IModelObject modelObject)
             : base(container, declaration, modelObject)
@@ -34,7 +36,44 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
 
         protected override CompletionGraph CompletionGraph => CompletionParts.CompletionGraph;
 
-        [ModelProperty]
+        public PAlternativeSymbol? ContainingPAlternativeSymbol
+        {
+            get
+            {
+                ComputeContainingSymbol();
+                return _containingAlternative;
+            }
+        }
+
+        public AnnotationArgumentSymbol? ContainingAnnotationArgumentSymbol
+        {
+            get
+            {
+                ComputeContainingSymbol();
+                return _containingAnnotationArgument;
+            }
+        }
+
+        private void ComputeContainingSymbol()
+        {
+            if (_containingAlternative is not null || _containingAnnotationArgument is not null) return;
+            var container = this.ContainingSymbol;
+            while (container is not null)
+            {
+                if (container is PAlternativeSymbol pas)
+                {
+                    Interlocked.CompareExchange(ref _containingAlternative, pas, null);
+                    break;
+                }
+                if (container is AnnotationArgumentSymbol aas)
+                {
+                    Interlocked.CompareExchange(ref _containingAnnotationArgument, aas, null);
+                    break;
+                }
+                container = container.ContainingSymbol;
+            }
+        }
+
         public MetaType ExpectedType
         {
             get

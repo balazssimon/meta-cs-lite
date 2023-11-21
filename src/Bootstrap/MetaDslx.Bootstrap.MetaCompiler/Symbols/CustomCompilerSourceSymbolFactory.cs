@@ -12,6 +12,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
         public CustomCompilerSourceSymbolFactory(SourceModuleSymbol module) 
             : base(module)
         {
+            Register((s, d, mo) => new AnnotationSymbol(s, d, mo));
+            Register((s, d, mo) => new AnnotationArgumentSymbol(s, d, mo));
+            Register((s, d, mo) => new GrammarSymbol(s, d, mo));
             Register((s, d, mo) => new ParserRuleSymbol(s, d, mo));
             Register((s, d, mo) => new PAlternativeSymbol(s, d, mo));
             Register((s, d, mo) => new PElementSymbol(s, d, mo));

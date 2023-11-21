@@ -11,28 +11,28 @@ using MetaDslx.CodeAnalysis;
 
 namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
 {
-    internal class SymbolPropertyBinder : UseBinder
+    internal class SymbolPropertyBinder : UseBinder, IMultiLookupBinder
     {
-        private PAlternativeSymbol? _alternativeSymbol;
+        private ImmutableArray<PAlternativeSymbol> _alternatives;
 
         public SymbolPropertyBinder()
             : base(ImmutableArray.Create(typeof(DeclaredSymbol)))
         {
         }
 
-        public PAlternativeSymbol? PAlternativeSymbol
+        public ImmutableArray<PAlternativeSymbol> Alternatives
         {
             get
             {
-                if (_alternativeSymbol is null)
+                if (_alternatives.IsDefault)
                 {
-                    Interlocked.CompareExchange(ref _alternativeSymbol, GetEnclosingAlternative(), null);
+                    ImmutableInterlocked.InterlockedInitialize(ref _alternatives, GetAlternatives());
                 }
-                return _alternativeSymbol;
+                return _alternatives;
             }
         }
 
-        protected PAlternativeSymbol? GetEnclosingAlternative()
+        private ImmutableArray<PAlternativeSymbol> GetAlternatives()
         {
             Binder? currentBinder = this;
             while (currentBinder != null)
@@ -41,20 +41,39 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
                 {
                     foreach (var symbol in defineBinder.DefinedSymbols)
                     {
-                        if (symbol is PAlternativeSymbol altSymbol && altSymbol.ContainingSymbol is ParserRuleSymbol)
+                        if (symbol is PAlternativeSymbol altSymbol && altSymbol.ContainingSymbol is ParserRuleSymbol ruleSymbol)
                         {
-                            return altSymbol;
+                            if (ruleSymbol.IsBlock)
+                            {
+                                var grammar = ruleSymbol.ContainingGrammarSymbol;
+                                if (grammar is not null && grammar.BlockFromAlterativeReferences.TryGetValue(ruleSymbol, out var blockRefs))
+                                {
+                                    return blockRefs;
+                                }
+                            }
+                            else
+                            {
+                                return ImmutableArray.Create(altSymbol);
+                            }
+                            return ImmutableArray<PAlternativeSymbol>.Empty;
                         }
                     }
                 }
                 currentBinder = currentBinder.ParentBinder;
             }
-            return null;
+            return ImmutableArray<PAlternativeSymbol>.Empty;
+        }
+
+        public ImmutableArray<object> GetMultiLookupKeys(CancellationToken cancellationToken = default)
+        {
+            return Alternatives.CastArray<object>();
         }
 
         protected override bool IsViable(LookupContext context, DeclaredSymbol symbol)
         {
-            var returnType = PAlternativeSymbol?.ReturnType ?? default;
+            var alt = context.MultiLookupKey as PAlternativeSymbol;
+            if (alt is null) return false;
+            var returnType = alt.ReturnType;
             if (returnType.IsNull || !returnType.IsTypeSymbol) return false;
             return base.IsViable(context, symbol);
         }
@@ -63,7 +82,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
         {
             base.AdjustFinalLookupContext(context);
             context.IsCaseSensitive = false;
-            context.Qualifier = PAlternativeSymbol?.ReturnType.OriginalTypeSymbol;
+            var alt = context.MultiLookupKey as PAlternativeSymbol;
+            context.Qualifier = alt?.ReturnType.OriginalTypeSymbol;
         }
     }
 }

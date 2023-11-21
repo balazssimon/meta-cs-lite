@@ -5045,7 +5045,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	}
 	public sealed class AnnotationArgumentBlock1Syntax : CompilerSyntaxNode
 	{
-		private IdentifierSyntax _name;
+		private IdentifierSyntax _parameter;
 	
 	    public AnnotationArgumentBlock1Syntax(InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
 	        : base(green, syntaxTree, position)
@@ -5057,7 +5057,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	    {
 	    }
 	
-	    public IdentifierSyntax Name => this.GetRed(ref this._name, 0);
+	    public IdentifierSyntax Parameter => this.GetRed(ref this._parameter, 0);
 	    public SyntaxToken TColon 
 		{ 
 			get 
@@ -5072,7 +5072,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	    {
 	        switch (index)
 	        {
-				case 0: return this.GetRed(ref this._name, 0);
+				case 0: return this.GetRed(ref this._parameter, 0);
 				default: return null;
 	        }
 	    }
@@ -5081,26 +5081,26 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	    {
 	        switch (index)
 	        {
-				case 0: return this._name;
+				case 0: return this._parameter;
 				default: return null;
 	        }
 	    }
 	
-	    public AnnotationArgumentBlock1Syntax WithName(IdentifierSyntax name)
+	    public AnnotationArgumentBlock1Syntax WithParameter(IdentifierSyntax parameter)
 		{
-			return this.Update(name, this.TColon);
+			return this.Update(parameter, this.TColon);
 		}
 	
 	    public AnnotationArgumentBlock1Syntax WithTColon(SyntaxToken tColon)
 		{
-			return this.Update(this.Name, tColon);
+			return this.Update(this.Parameter, tColon);
 		}
 	
-	    public AnnotationArgumentBlock1Syntax Update(IdentifierSyntax name, SyntaxToken tColon)
+	    public AnnotationArgumentBlock1Syntax Update(IdentifierSyntax parameter, SyntaxToken tColon)
 	    {
-	        if (this.Name != name || this.TColon != tColon)
+	        if (this.Parameter != parameter || this.TColon != tColon)
 	        {
-	            var newNode = CompilerLanguage.Instance.SyntaxFactory.AnnotationArgumentBlock1(name, tColon);
+	            var newNode = CompilerLanguage.Instance.SyntaxFactory.AnnotationArgumentBlock1(parameter, tColon);
 	            var annotations = this.GetAnnotations();
 	            if (annotations != null && annotations.Length > 0)
 	               newNode = newNode.WithAnnotations(annotations);

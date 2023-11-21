@@ -21,6 +21,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
             public static readonly CompletionPart FinishComputingProperty_IsBlock = new CompletionPart(nameof(FinishComputingProperty_IsBlock));
             public static readonly CompletionPart StartComputingProperty_ReturnType = new CompletionPart(nameof(StartComputingProperty_ReturnType));
             public static readonly CompletionPart FinishComputingProperty_ReturnType = new CompletionPart(nameof(FinishComputingProperty_ReturnType));
+            public static readonly CompletionPart StartComputingProperty_Alternatives = new CompletionPart(nameof(StartComputingProperty_Alternatives));
+            public static readonly CompletionPart FinishComputingProperty_Alternatives = new CompletionPart(nameof(FinishComputingProperty_Alternatives));
             public static readonly CompletionPart StartComputingProperty_Members = DeclaredSymbol.CompletionParts.StartComputingProperty_Members;
             public static readonly CompletionPart FinishComputingProperty_Members = DeclaredSymbol.CompletionParts.FinishComputingProperty_Members;
             public static readonly CompletionPart StartComputingProperty_TypeArguments = DeclaredSymbol.CompletionParts.StartComputingProperty_TypeArguments;
@@ -33,6 +35,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
                 CompletionGraph.CreateFromParts(
                     StartComputingProperty_IsBlock, FinishComputingProperty_IsBlock,
                     StartComputingProperty_ReturnType, FinishComputingProperty_ReturnType,
+                    StartComputingProperty_Alternatives, FinishComputingProperty_Alternatives,
                     StartComputingProperty_Members, FinishComputingProperty_Members,
                     StartComputingProperty_TypeArguments, FinishComputingProperty_TypeArguments,
                     StartComputingProperty_Imports, FinishComputingProperty_Imports,
@@ -41,8 +44,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
 
         private MetaType _returnType;
         private bool _isBlock;
-        private ImmutableDictionary<ParserRuleSymbol, ImmutableArray<PAlternativeSymbol>> _blocks;
-        private ImmutableDictionary<ParserRuleSymbol, ImmutableArray<PAlternativeSymbol>> _allBlocks;
+        private ImmutableArray<PAlternativeSymbol> _alternatives;
 
         public ParserRuleSymbol(Symbol container, MergedDeclaration declaration, IModelObject modelObject) 
             : base(container, declaration, modelObject)
@@ -50,6 +52,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
         }
 
         protected override CompletionGraph CompletionGraph => CompletionParts.CompletionGraph;
+
+        public GrammarSymbol? ContainingGrammarSymbol => (GrammarSymbol)this.ContainingSymbol;
 
         [ModelProperty]
         public bool IsBlock
@@ -71,23 +75,15 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
             }
         }
 
-        public ImmutableArray<PAlternativeSymbol> Alternatives => Members.CastArray<PAlternativeSymbol>();
-
-        public ImmutableDictionary<ParserRuleSymbol, ImmutableArray<PAlternativeSymbol>> Blocks
+        [ModelProperty]
+        public ImmutableArray<PAlternativeSymbol> Alternatives
         {
             get
             {
-                if (_blocks is not null) return _blocks;
-                var builder = ImmutableDictionary.CreateBuilder<ParserRuleSymbol, ImmutableArray<PAlternativeSymbol>>();
-                foreach (var alt in Alternatives)
-                {
-                    var blocks = alt.Members.OfType<PElementSymbol>().Where(e => e.Value.AsModelObject() is PReferenceSymbol pref && pref.Rule.OriginalSymbol is ParserRuleSymbol pr && pr.IsBlock);
-                    // TODO
-                }
-                return ImmutableDictionary<ParserRuleSymbol, ImmutableArray<PAlternativeSymbol>>.Empty;
+                ForceComplete(CompletionParts.FinishComputingProperty_Alternatives, null, default);
+                return _alternatives;
             }
         }
-
 
         protected override bool ForceCompletePart(ref CompletionPart incompletePart, SourceLocation? locationOpt, CancellationToken cancellationToken)
         {
@@ -115,6 +111,18 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
                 }
                 return true;
             }
+            else if (incompletePart == CompletionParts.StartComputingProperty_Alternatives || incompletePart == CompletionParts.FinishComputingProperty_Alternatives)
+            {
+                if (NotePartComplete(CompletionParts.StartComputingProperty_Alternatives))
+                {
+                    var diagnostics = DiagnosticBag.GetInstance();
+                    _alternatives = CompleteProperty_Alternatives(diagnostics, cancellationToken);
+                    AddSymbolDiagnostics(diagnostics);
+                    diagnostics.Free();
+                    NotePartComplete(CompletionParts.FinishComputingProperty_Alternatives);
+                }
+                return true;
+            }
             else if (base.ForceCompletePart(ref incompletePart, locationOpt, cancellationToken))
             {
                 return true;
@@ -136,6 +144,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
         protected virtual MetaType CompleteProperty_ReturnType(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             return SymbolFactory.GetSymbolPropertyValue<MetaType>(this, nameof(ReturnType), diagnostics, cancellationToken);
+        }
+
+        protected virtual ImmutableArray<PAlternativeSymbol> CompleteProperty_Alternatives(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        {
+            return SymbolFactory.GetSymbolPropertyValues<PAlternativeSymbol>(this, nameof(Alternatives), diagnostics, cancellationToken);
         }
 
     }

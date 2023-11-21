@@ -23,22 +23,22 @@ class Language : Declaration
 	contains Grammar Grammar subsets Declaration.Declarations;
 }
 
-class Grammar : Declaration
+class Grammar $GrammarSymbol : Declaration
 {
 	Language Language redefines Declaration.Parent;
 	contains Rule[] Rules;
 }
 
-class Annotation $Symbol
+class Annotation $AnnotationSymbol
 {
-	type Type;
-	contains AnnotationArgument[] Arguments;
+	type $Type;
+	contains AnnotationArgument[] $Arguments;
 }
 
-class AnnotationArgument $Symbol
+class AnnotationArgument $AnnotationArgumentSymbol
 {
-	string Name;
-	contains Expression Value;
+	symbol $Parameter;
+	contains Expression $Value;
 }
 
 enum Multiplicity
@@ -169,7 +169,7 @@ abstract class ParserRule $ParserRuleSymbol : Rule
 	type? $ReturnType;
 	bool $IsBlock;
 
-	contains PAlternative[] Alternatives;
+	contains PAlternative[] $Alternatives;
 }
 
 class PAlternative $PAlternativeSymbol : Declaration
@@ -191,7 +191,7 @@ enum Assignment
 class PElement $PElementSymbol
 {
 	contains Annotation[] NameAnnotations;
-	symbol? $SymbolProperty;
+	symbol[] SymbolProperty;
 	Assignment Assignment;
 	contains Annotation[] ValueAnnotations;
 	contains PElementValue $Value;
@@ -219,7 +219,7 @@ class PKeyword : PElementValue
 
 class PBlock $PBlockSymbol : PElementValue
 {
-	contains PAlternative[] Alternatives;
+	contains PAlternative[] $Alternatives;
 }
 
 abstract class Expression $ExpressionSymbol

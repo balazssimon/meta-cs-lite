@@ -54,27 +54,6 @@ namespace MetaDslx.CodeAnalysis.Binding
         {
         }
 
-        /*protected override void AddLookupCandidateSymbolsInScope(LookupContext context, LookupCandidates result)
-        {
-            if (context.Qualifier is null)
-            {
-                foreach (var containingSymbol in ContainingScopeSymbols)
-                {
-                    var declaredSymbol = containingSymbol as DeclaredSymbol;
-                    if (declaredSymbol is not null)
-                    {
-                        context.Qualifier = declaredSymbol;
-                        base.AddLookupCandidateSymbolsInScope(context, result);
-                        context.Qualifier = null;
-                    }
-                }
-            }
-            else
-            {
-                base.AddLookupCandidateSymbolsInScope(context, result);
-            }
-        }*/
-
         protected override void AddLookupCandidateSymbolsInSingleBinder(LookupContext context, LookupCandidates result)
         {
             if (context.Qualifier is null)

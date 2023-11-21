@@ -1572,10 +1572,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 
         public virtual SyntaxNode VisitAnnotationArgumentBlock1(AnnotationArgumentBlock1Syntax node)
         {
-            var name = (IdentifierSyntax)this.Visit(node.Name);
+            var parameter = (IdentifierSyntax)this.Visit(node.Parameter);
             var tColon = this.VisitToken(node.TColon);
         	    
-        	return node.Update(name, tColon);
+        	return node.Update(parameter, tColon);
         }
 
         public virtual SyntaxNode VisitQualifierBlock1(QualifierBlock1Syntax node)

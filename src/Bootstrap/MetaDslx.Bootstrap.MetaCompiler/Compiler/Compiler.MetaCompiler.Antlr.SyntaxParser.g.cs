@@ -820,11 +820,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
             public override GreenNode? VisitPr_AnnotationArgumentBlock1(CompilerParser.Pr_AnnotationArgumentBlock1Context? context)
             {
                	if (context == null) return AnnotationArgumentBlock1Green.__Missing;
-                IdentifierGreen? name = null;
-                if (context.nameAntlr1 is not null) name = (IdentifierGreen?)this.Visit(context.nameAntlr1) ?? IdentifierGreen.__Missing;
-                else name = IdentifierGreen.__Missing;
+                IdentifierGreen? parameter = null;
+                if (context.parameterAntlr1 is not null) parameter = (IdentifierGreen?)this.Visit(context.parameterAntlr1) ?? IdentifierGreen.__Missing;
+                else parameter = IdentifierGreen.__Missing;
                 var tColon = this.VisitTerminal(context.tColon, CompilerSyntaxKind.TColon);
-            	return _factory.AnnotationArgumentBlock1(name, (InternalSyntaxToken)tColon);
+            	return _factory.AnnotationArgumentBlock1(parameter, (InternalSyntaxToken)tColon);
             }
             public override GreenNode? VisitPr_QualifierBlock1(CompilerParser.Pr_QualifierBlock1Context? context)
             {

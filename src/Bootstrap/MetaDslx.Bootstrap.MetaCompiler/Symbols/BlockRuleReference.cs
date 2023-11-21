@@ -9,16 +9,15 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
     internal struct BlockRuleReference
     {
         private readonly ParserRuleSymbol _viaBlock;
-        private readonly PAlternativeSymbol _referencingPAlternative;
+        private readonly ParserRuleSymbol _referencedBlock;
 
-        public BlockRuleReference(ParserRuleSymbol viaBlock, PAlternativeSymbol referencingPAlternative)
+        public BlockRuleReference(ParserRuleSymbol viaBlock, ParserRuleSymbol referencedBlock)
         {
             _viaBlock = viaBlock;
-            _referencingPAlternative = referencingPAlternative;
+            _referencedBlock = referencedBlock;
         }
 
         public ParserRuleSymbol ViaBlock => _viaBlock;
-        public PAlternativeSymbol ReferencingPAlternative => _referencingPAlternative;
-        public ParserRuleSymbol ReferencingRule => _referencingPAlternative.ContainingSymbol as ParserRuleSymbol;
+        public ParserRuleSymbol ReferencedBlock => _referencedBlock;
     }
 }

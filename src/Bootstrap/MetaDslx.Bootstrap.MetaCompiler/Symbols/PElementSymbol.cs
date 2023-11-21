@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MetaDslx.CodeAnalysis.Symbols.Source;
+using System.Collections.Immutable;
 
 namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
 {
@@ -37,8 +38,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
                     StartComputingProperty_Attributes, FinishComputingProperty_Attributes);
         }
 
-        private MetaSymbol _symbolProperty;
+        private ImmutableArray<MetaSymbol> _symbolProperty;
         private MetaSymbol _value;
+        private PAlternativeSymbol _containingAlternative;
 
         public PElementSymbol(Symbol container, MergedDeclaration declaration, IModelObject modelObject)
             : base(container, declaration, modelObject)
@@ -47,8 +49,33 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
 
         protected override CompletionGraph CompletionGraph => CompletionParts.CompletionGraph;
 
+        public GrammarSymbol? ContainingGrammarSymbol => ContainingPAlternativeSymbol?.ContainingGrammarSymbol;
+
+        public ParserRuleSymbol? ContainingParserRuleSymbol => ContainingPAlternativeSymbol?.ContainingParserRuleSymbol;
+
+        public PAlternativeSymbol? ContainingPAlternativeSymbol
+        {
+            get
+            {
+                if (_containingAlternative is null)
+                {
+                    var container = this.ContainingSymbol;
+                    while (container is not null)
+                    {
+                        if (container is PAlternativeSymbol pas && pas.ContainingSymbol is ParserRuleSymbol)
+                        {
+                            Interlocked.CompareExchange(ref _containingAlternative, pas, null);
+                            break;
+                        }
+                        container = container.ContainingSymbol;
+                    }
+                }
+                return _containingAlternative;
+            }
+        }
+
         [ModelProperty]
-        public MetaSymbol SymbolProperty
+        public ImmutableArray<MetaSymbol> SymbolProperty
         {
             get
             {
@@ -105,14 +132,15 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
             return null;
         }
 
-        protected virtual MetaSymbol CompleteProperty_SymbolProperty(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        protected virtual ImmutableArray<MetaSymbol> CompleteProperty_SymbolProperty(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            return SymbolFactory.GetSymbolPropertyValue<MetaSymbol>(this, nameof(SymbolProperty), diagnostics, cancellationToken);
+            return SymbolFactory.GetSymbolPropertyValues<MetaSymbol>(this, nameof(SymbolProperty), diagnostics, cancellationToken);
         }
 
         protected virtual MetaSymbol CompleteProperty_Value(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             return SymbolFactory.GetSymbolPropertyValue<MetaSymbol>(this, nameof(Value), diagnostics, cancellationToken);
         }
+
     }
 }

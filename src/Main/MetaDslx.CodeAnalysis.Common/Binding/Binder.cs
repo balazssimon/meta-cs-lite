@@ -303,6 +303,18 @@ namespace MetaDslx.CodeAnalysis.Binding
             }
         }
 
+        protected IMultiLookupBinder? GetEnclosingMultiLookupBinder()
+        {
+            var currentBinder = this;
+            while (currentBinder != null)
+            {
+                if (currentBinder is IMultiLookupBinder multiLookupBinder) return multiLookupBinder;
+                currentBinder = currentBinder.ParentBinder;
+            }
+            return null;
+        }
+
+
         protected INameBinder? GetEnclosingNameBinder()
         {
             INameBinder? lastName = null;
@@ -352,7 +364,8 @@ namespace MetaDslx.CodeAnalysis.Binding
 
         protected virtual IPropertyBinder? GetEnclosingPropertyBinder()
         {
-            return ParentBinder?.GetEnclosingPropertyBinder();
+            if (ParentBinder is IDefineBinder) return null;
+            else return ParentBinder?.GetEnclosingPropertyBinder();
         }
 
         public void CompleteBind(bool resolveLazy = false, CancellationToken cancellationToken = default)

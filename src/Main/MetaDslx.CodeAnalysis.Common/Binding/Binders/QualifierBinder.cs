@@ -15,7 +15,7 @@ namespace MetaDslx.CodeAnalysis.Binding
     public class QualifierBinder : Binder, IQualifierBinder, IValueBinder
     {
         private ImmutableArray<IIdentifierBinder> _identifiers;
-        private ImmutableArray<Symbol?> _symbols;
+        private object? _symbols;
 
         protected override ImmutableArray<SingleDeclaration> BuildDeclarationTree(SingleDeclarationBuilder builder)
         {
@@ -47,8 +47,28 @@ namespace MetaDslx.CodeAnalysis.Binding
         protected override ImmutableArray<object?> BindValues(CancellationToken cancellationToken = default)
         {
             CacheIdentifiers(cancellationToken);
-            if (_symbols.Length > 0) return ImmutableArray.Create<object?>(_symbols[_symbols.Length - 1]);
-            else return ImmutableArray<object?>.Empty;
+            if (_symbols is ImmutableArray<Symbol> symbolArray)
+            {
+                if (symbolArray.Length > 0) return ImmutableArray.Create<object?>(symbolArray[symbolArray.Length - 1]);
+                else return ImmutableArray<object?>.Empty;
+            }
+            else if (_symbols is ImmutableDictionary<object, ImmutableArray<Symbol?>> symbolDictionary)
+            {
+                var result = ArrayBuilder<object?>.GetInstance();
+                var multiLookup = this.GetEnclosingMultiLookupBinder();
+                var keys = multiLookup?.GetMultiLookupKeys(cancellationToken) ?? ImmutableArray<object>.Empty;
+                if (!keys.IsDefaultOrEmpty)
+                {
+                    foreach (var key in keys)
+                    {
+                        var symbolDictionaryArray = symbolDictionary[key];
+                        if (symbolDictionaryArray.Length > 0) result.Add(symbolDictionaryArray[symbolDictionaryArray.Length - 1]);
+                        else result.Add(null);
+                    }
+                }
+                return result.ToImmutableAndFree();
+            }
+            return ImmutableArray<object?>.Empty;
         }
 
         public bool IsTopMostQualifier => GetEnclosingQualifierBinder() == this;
@@ -62,10 +82,10 @@ namespace MetaDslx.CodeAnalysis.Binding
                 var identifiers = IsTopMostQualifier ? (this is IdentifierBinder identifier ? ImmutableArray.Create<IIdentifierBinder>(identifier) : GetIdentifierBinders(cancellationToken)) : ImmutableArray<IIdentifierBinder>.Empty;
                 ImmutableInterlocked.InterlockedInitialize(ref _identifiers, identifiers);
             }
-            if (_symbols.IsDefault)
+            if (_symbols is null)
             {
                 var symbols = _identifiers.Length > 0 ? (IsName ? ResolveDefinition(cancellationToken) : ResolveUse(cancellationToken)) : ImmutableArray<Symbol?>.Empty;
-                ImmutableInterlocked.InterlockedInitialize(ref _symbols, symbols);
+                Interlocked.CompareExchange(ref _symbols, symbols, null);
             }
         }
 
@@ -106,21 +126,54 @@ namespace MetaDslx.CodeAnalysis.Binding
             return result.ToImmutableArray();
         }
 
-        private ImmutableArray<Symbol?> ResolveUse(CancellationToken cancellationToken = default)
+        private object ResolveUse(CancellationToken cancellationToken = default)
         {
-            var lookupContext = this.AllocateLookupContext(diagnose: true);
             var identifiers = _identifiers.SelectAsArray(b => ((Binder)b).Syntax);
-            var symbols = this.BindQualifiedName(lookupContext, identifiers);
-            AddDiagnostics(lookupContext.Diagnostics);
-            return symbols.Cast<DeclaredSymbol,Symbol>();
+            var multiLookup = this.GetEnclosingMultiLookupBinder();
+            var keys = multiLookup?.GetMultiLookupKeys(cancellationToken) ?? ImmutableArray<object>.Empty;
+            if (!keys.IsDefaultOrEmpty)
+            {
+                var result = ImmutableDictionary.CreateBuilder<object, ImmutableArray<Symbol?>>();
+                var lookupContext = this.AllocateLookupContext();
+                foreach (var key in keys)
+                {
+                    lookupContext.Clear();
+                    lookupContext.Diagnose = true;
+                    lookupContext.MultiLookupKey = key;
+                    var symbols = this.BindQualifiedName(lookupContext, identifiers);
+                    AddDiagnostics(lookupContext.Diagnostics);
+                    result.Add(key, symbols.Cast<DeclaredSymbol, Symbol>());
+                }
+                lookupContext.Free();
+                return result.ToImmutable();
+            }
+            else
+            {
+                var lookupContext = this.AllocateLookupContext(diagnose: true);
+                var symbols = this.BindQualifiedName(lookupContext, identifiers);
+                AddDiagnostics(lookupContext.Diagnostics);
+                lookupContext.Free();
+                return symbols.Cast<DeclaredSymbol, Symbol>();
+            }
         }
 
-        public Symbol? GetIdentifierSymbol(IIdentifierBinder identifier, CancellationToken cancellationToken = default)
+        public Symbol? GetIdentifierSymbol(IIdentifierBinder identifier, object? multiLookupKey, CancellationToken cancellationToken = default)
         {
             CacheIdentifiers(cancellationToken);
             var index = _identifiers.IndexOf(identifier);
-            if (index >= 0 && _symbols.Length > index) return _symbols[index];
-            else return null;
+            if (_symbols is ImmutableArray<Symbol> symbolArray)
+            {
+                if (multiLookupKey is not null) return null;
+                if (index >= 0 && symbolArray.Length > index) return symbolArray[index];
+            }
+            else if (_symbols is ImmutableDictionary<object, ImmutableArray<Symbol?>> symbolDictionary)
+            {
+                if (symbolDictionary.TryGetValue(multiLookupKey, out var symbolDictionaryArray))
+                {
+                    if (index >= 0 && symbolDictionaryArray.Length > index) return symbolDictionaryArray[index];
+                }
+            }
+            return null;
         }
 
         public override string ToString()
@@ -128,17 +181,38 @@ namespace MetaDslx.CodeAnalysis.Binding
             var builder = PooledStringBuilder.GetInstance();
             var sb = builder.Builder;
             sb.Append(this.GetType().Name);
-            if (!_symbols.IsDefault)
+            if (_symbols is ImmutableArray<Symbol> symbolArray)
             {
                 sb.Append(": [");
                 var delim = string.Empty;
-                foreach (var symbol in _symbols)
+                foreach (var symbol in symbolArray)
                 {
                     sb.Append(delim);
                     sb.Append(symbol);
                     delim = ".";
                 }
                 sb.Append("]");
+            }
+            else if (_symbols is ImmutableDictionary<object, ImmutableArray<Symbol?>> symbolDictionary)
+            {
+                sb.Append(": ");
+                foreach (var key in symbolDictionary.Keys)
+                {
+                    sb.Append("{");
+                    sb.Append(key);
+                    sb.Append(":");
+                    var symbolDictionaryArray = symbolDictionary[key];
+                    sb.Append("[");
+                    var delim = string.Empty;
+                    foreach (var symbol in symbolDictionaryArray)
+                    {
+                        sb.Append(delim);
+                        sb.Append(symbol);
+                        delim = ".";
+                    }
+                    sb.Append("]");
+                    sb.Append("}");
+                }
             }
             return builder.ToStringAndFree();
         }

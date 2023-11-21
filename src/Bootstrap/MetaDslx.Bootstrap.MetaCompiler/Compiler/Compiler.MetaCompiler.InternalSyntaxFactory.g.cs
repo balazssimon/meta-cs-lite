@@ -1333,18 +1333,18 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			return result;
 		}
 
-		internal AnnotationArgumentBlock1Green AnnotationArgumentBlock1(IdentifierGreen name, InternalSyntaxToken tColon)
+		internal AnnotationArgumentBlock1Green AnnotationArgumentBlock1(IdentifierGreen parameter, InternalSyntaxToken tColon)
 		{
 #if DEBUG
-			if (name is null) throw new ArgumentNullException(nameof(name));
+			if (parameter is null) throw new ArgumentNullException(nameof(parameter));
 			if (tColon is null) throw new ArgumentNullException(nameof(tColon));
 			if (tColon.RawKind != (int)CompilerSyntaxKind.TColon) throw new ArgumentException(nameof(tColon));
 #endif
 			int hash;
-			var cached = SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.AnnotationArgumentBlock1, name, tColon, out hash);
+			var cached = SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.AnnotationArgumentBlock1, parameter, tColon, out hash);
 			if (cached != null) return (AnnotationArgumentBlock1Green)cached;
 		
-			var result = new AnnotationArgumentBlock1Green(CompilerSyntaxKind.AnnotationArgumentBlock1, name, tColon);
+			var result = new AnnotationArgumentBlock1Green(CompilerSyntaxKind.AnnotationArgumentBlock1, parameter, tColon);
 			if (hash >= 0)
 			{
 				SyntaxNodeCache.AddNode(result, hash);

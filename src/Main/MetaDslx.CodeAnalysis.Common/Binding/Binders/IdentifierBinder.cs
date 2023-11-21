@@ -15,7 +15,7 @@ namespace MetaDslx.CodeAnalysis.Binding
     {
         private string? _name;
         private string? _metadataName;
-        private object? _symbol;
+        private ImmutableArray<object?> _symbols;
 
         protected override ImmutableArray<SingleDeclaration> BuildDeclarationTree(SingleDeclarationBuilder builder)
         {
@@ -80,20 +80,39 @@ namespace MetaDslx.CodeAnalysis.Binding
         {
             CacheNameAndMetadataName(cancellationToken);
             CacheSymbol(cancellationToken);
-            if (_symbol is not null) return ImmutableArray.Create<object?>(_symbol);
-            else return ImmutableArray<object?>.Empty;
+            return _symbols;
         }
 
         private void CacheSymbol(CancellationToken cancellationToken = default)
         {
-            if (_symbol is null)
+            if (_symbols.IsDefault)
             {
                 var qualifier = GetEnclosingQualifierBinder();
                 if (qualifier is not null)
                 {
-                    var symbol = qualifier.GetIdentifierSymbol(this, cancellationToken);
-                    Interlocked.CompareExchange(ref _symbol, symbol, null);
-                    if (symbol is not null && symbol is DeclaredSymbol declaredSymbol && !declaredSymbol.IsError) MarkSymbolAsUsed(declaredSymbol);
+                    var multiLookup = this.GetEnclosingMultiLookupBinder();
+                    var keys = multiLookup?.GetMultiLookupKeys(cancellationToken) ?? ImmutableArray<object>.Empty;
+                    if (!keys.IsDefaultOrEmpty)
+                    {
+                        var symbols = ArrayBuilder<object?>.GetInstance();
+                        foreach (var key in keys)
+                        {
+                            var symbol = qualifier.GetIdentifierSymbol(this, key, cancellationToken);
+                            symbols.Add(symbol);
+                            if (symbol is not null && symbol is DeclaredSymbol declaredSymbol && !declaredSymbol.IsError) MarkSymbolAsUsed(declaredSymbol);
+                        }
+                        ImmutableInterlocked.InterlockedInitialize(ref _symbols, symbols.ToImmutableAndFree());
+                    }
+                    else
+                    {
+                        var symbol = qualifier.GetIdentifierSymbol(this, null, cancellationToken);
+                        ImmutableInterlocked.InterlockedInitialize(ref _symbols, ImmutableArray.Create<object?>(symbol));
+                        if (symbol is not null && symbol is DeclaredSymbol declaredSymbol && !declaredSymbol.IsError) MarkSymbolAsUsed(declaredSymbol);
+                    }
+                }
+                else
+                {
+                    ImmutableInterlocked.InterlockedInitialize(ref _symbols, ImmutableArray<object?>.Empty);
                 }
             }
         }
@@ -103,10 +122,15 @@ namespace MetaDslx.CodeAnalysis.Binding
             var builder = PooledStringBuilder.GetInstance();
             var sb = builder.Builder;
             sb.Append(this.GetType().Name);
-            if (_symbol is not null)
+            if (!_symbols.IsDefaultOrEmpty)
             {
-                sb.Append(": ");
-                sb.Append(_symbol);
+                var delim = ": ";
+                foreach (var symbol in _symbols)
+                {
+                    sb.Append(delim);
+                    sb.Append(symbol);
+                    delim = ", ";
+                }
             }
             return builder.ToStringAndFree();
         }
