@@ -561,16 +561,16 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
         	this.Begin(__annot2, node);
         	try
         	{
-        	    var pAlternativeListList = node.PAlternativeList;
-        	    for (var pAlternativeListIndex = 0; pAlternativeListIndex < pAlternativeListList.Count; ++pAlternativeListIndex)
+        	    var pBlockAlternativeListList = node.PBlockAlternativeList;
+        	    for (var pBlockAlternativeListIndex = 0; pBlockAlternativeListIndex < pBlockAlternativeListList.Count; ++pBlockAlternativeListIndex)
         	    {
-        	        if (pAlternativeListIndex == 0)
+        	        if (pBlockAlternativeListIndex == 0)
         	        {
         	            var __annot0 = new PropertyBinder(name: "Alternatives");
-        	            this.Begin(__annot0, node.PAlternativeList[pAlternativeListIndex]);
+        	            this.Begin(__annot0, node.PBlockAlternativeList[pBlockAlternativeListIndex]);
         	            try
         	            {
-        	                this.Visit(node.PAlternativeList[pAlternativeListIndex]);
+        	                this.Visit(node.PBlockAlternativeList[pBlockAlternativeListIndex]);
         	            }
         	            finally
         	            {
@@ -580,16 +580,16 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
         	        else
         	        {
         	            var __annot1 = new PropertyBinder(name: "Alternatives");
-        	            this.Begin(__annot1, node.PAlternativeList[pAlternativeListIndex]);
+        	            this.Begin(__annot1, node.PBlockAlternativeList[pBlockAlternativeListIndex]);
         	            try
         	            {
-        	                this.Visit(node.PAlternativeList[pAlternativeListIndex]);
+        	                this.Visit(node.PBlockAlternativeList[pBlockAlternativeListIndex]);
         	            }
         	            finally
         	            {
         	                this.End(__annot1);
         	            }
-        	            // this.VisitToken(node.PAlternativeList.GetSeparator(pAlternativeListIndex));
+        	            // this.VisitToken(node.PBlockAlternativeList.GetSeparator(pBlockAlternativeListIndex));
         	        }
         	    }
         	        
@@ -780,6 +780,35 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
         	finally
         	{
         	    this.End(__annot4);
+        	}
+        }
+
+        public virtual void VisitPBlockAlternative(PBlockAlternativeSyntax node)
+        {
+        	var __annot1 = new DefineBinder(type: typeof(global::MetaDslx.Bootstrap.MetaCompiler.Model.PAlternative));
+        	this.Begin(__annot1, node);
+        	try
+        	{
+        	    var elementsList = node.Elements;
+        	    for (var elementsIndex = 0; elementsIndex < elementsList.Count; ++elementsIndex)
+        	    {
+        	        var __annot0 = new PropertyBinder(name: "Elements");
+        	        this.Begin(__annot0, node.Elements[elementsIndex]);
+        	        try
+        	        {
+        	            this.Visit(node.Elements[elementsIndex]);
+        	        }
+        	        finally
+        	        {
+        	            this.End(__annot0);
+        	        }
+        	    }
+        	    this.Visit(node.PBlockAlternativeBlock1);
+        	        
+        	}
+        	finally
+        	{
+        	    this.End(__annot1);
         	}
         }
 
@@ -1757,25 +1786,31 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
 
         public virtual void VisitPAlternativeBlock1(PAlternativeBlock1Syntax node)
         {
-        	var __annot1 = new PropertyBinder(name: "ReturnType");
-        	this.Begin(__annot1, node.ReturnType);
-        	try
+        	var annotations1List = node.Annotations1;
+        	for (var annotations1Index = 0; annotations1Index < annotations1List.Count; ++annotations1Index)
         	{
-        	    var __annot0 = new UseBinder(types: new global::System.Type[] {typeof(global::MetaDslx.CodeAnalysis.MetaType)}.ToImmutableArray());
-        	    this.Begin(__annot0, node.ReturnType);
+        	    var __annot0 = new PropertyBinder(name: "Annotations");
+        	    this.Begin(__annot0, node.Annotations1[annotations1Index]);
         	    try
         	    {
-        	        this.Visit(node.ReturnType);
+        	        this.Visit(node.Annotations1[annotations1Index]);
         	    }
         	    finally
         	    {
         	        this.End(__annot0);
         	    }
         	}
+        	var __annot1 = new PropertyBinder(name: "Name");
+        	this.Begin(__annot1, node.Name);
+        	try
+        	{
+        	    this.Visit(node.Name);
+        	}
         	finally
         	{
         	    this.End(__annot1);
         	}
+        	this.Visit(node.PAlternativeBlock1Block1);
         	    
         }
 
@@ -1969,6 +2004,21 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
         	try
         	{
         	    this.Visit(node.Alternatives);
+        	}
+        	finally
+        	{
+        	    this.End(__annot0);
+        	}
+        	    
+        }
+
+        public virtual void VisitPBlockAlternativeBlock1(PBlockAlternativeBlock1Syntax node)
+        {
+        	var __annot0 = new PropertyBinder(name: "ReturnValue");
+        	this.Begin(__annot0, node.ReturnValue);
+        	try
+        	{
+        	    this.Visit(node.ReturnValue);
         	}
         	finally
         	{
@@ -2211,6 +2261,30 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
         	    // this.VisitToken(node.TComma);
         	}
         	this.Visit(node.Qualifier);
+        	    
+        }
+
+        public virtual void VisitPAlternativeBlock1Block1(PAlternativeBlock1Block1Syntax node)
+        {
+        	var __annot1 = new PropertyBinder(name: "ReturnType");
+        	this.Begin(__annot1, node.ReturnType);
+        	try
+        	{
+        	    var __annot0 = new UseBinder(types: new global::System.Type[] {typeof(global::MetaDslx.CodeAnalysis.MetaType)}.ToImmutableArray());
+        	    this.Begin(__annot0, node.ReturnType);
+        	    try
+        	    {
+        	        this.Visit(node.ReturnType);
+        	    }
+        	    finally
+        	    {
+        	        this.End(__annot0);
+        	    }
+        	}
+        	finally
+        	{
+        	    this.End(__annot1);
+        	}
         	    
         }
 

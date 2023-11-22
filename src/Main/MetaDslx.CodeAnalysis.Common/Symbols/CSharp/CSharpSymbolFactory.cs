@@ -20,7 +20,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.CSharp
         public CSharpSymbolFactory()
         {
             Register<NamespaceSymbol, INamespaceSymbol>((s, cs) => new CSharpNamespaceSymbol(s, cs));
-            Register<TypeSymbol, INamedTypeSymbol>((s, cs) => new CSharpTypeSymbol(s, cs));
+            Register<TypeSymbol, ITypeSymbol>((s, cs) => new CSharpTypeSymbol(s, cs));
             Register<DeclaredSymbol, ISymbol>((s, cs) => new CSharpDeclaredSymbol(s, cs));
         }
 
@@ -57,9 +57,25 @@ namespace MetaDslx.CodeAnalysis.Symbols.CSharp
             {
                 var symbolType = GetSymbolType(csharpSymbol.GetType());
                 if (symbolType is null) return null;
-                var container = GetSymbol(csharpSymbol.ContainingSymbol, diagnostics, cancellationToken);
+                Symbol? container = null;
+                if (csharpSymbol.ContainingSymbol is IAssemblySymbol assemblySymbol)
+                {
+                    container = new CSharpAssemblySymbol(this, assemblySymbol);
+                    _symbols.TryAdd(assemblySymbol, container);
+                }
+                else
+                {
+                    container = GetSymbol(csharpSymbol.ContainingSymbol, diagnostics, cancellationToken);
+                }
                 if (container is null) return null;
-                return CreateSymbol(symbolType, container, csharpSymbol);
+                if (csharpSymbol is IModuleSymbol moduleSymbol)
+                {
+                    return new CSharpModuleSymbol((CSharpAssemblySymbol)container, moduleSymbol);
+                }
+                else
+                {
+                    return CreateSymbol(symbolType, container, csharpSymbol);
+                }
             }
         }
 

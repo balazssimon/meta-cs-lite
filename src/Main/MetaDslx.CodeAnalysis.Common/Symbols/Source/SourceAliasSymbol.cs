@@ -24,8 +24,10 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
         protected SourceSymbolFactory SymbolFactory => ContainingModule.SymbolFactory;
         public MergedDeclaration Declaration => _declaration;
         public ImmutableArray<SyntaxNodeOrToken> DeclaringSyntaxReferences => _declaration.SyntaxReferences;
-        public override ImmutableArray<Location> Locations => _declaration.NameLocations.Cast<SourceLocation, Location>();
-        ImmutableArray<SourceLocation> ISourceSymbol.Locations => _declaration.NameLocations;
+        public SyntaxNodeOrToken DeclaringSyntaxReference => DeclaringSyntaxReferences.FirstOrDefault();
+        public override ImmutableArray<Location> Locations => ((ISourceSymbol)this).Locations.Cast<SourceLocation, Location>();
+        ImmutableArray<SourceLocation> ISourceSymbol.Locations => _declaration.NameLocations.Length > 0 ? _declaration.NameLocations : DeclaringSyntaxReferences.Select(sr => sr.GetLocation() as SourceLocation).ToImmutableArray();
+        SourceLocation ISourceSymbol.Location => ((ISourceSymbol)this).Locations.FirstOrDefault();
 
         protected override string? CompleteProperty_Name(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {

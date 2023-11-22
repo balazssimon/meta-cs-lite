@@ -47,18 +47,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
 
         public AnnotationSymbol? AnnotationSymbol => (AnnotationSymbol)this.ContainingSymbol;
 
-        public bool IsNamedArgument
-        {
-            get
-            {
-                foreach (var syntaxReference in this.DeclaringSyntaxReferences)
-                {
-                    var argSyntax = syntaxReference.AsNode() as AnnotationArgumentSyntax;
-                    return argSyntax?.AnnotationArgumentBlock1 is not null;
-                }
-                return false;
-            }
-        }
+        public AnnotationArgumentSyntax? Syntax => this.DeclaringSyntaxReference.AsNode() as AnnotationArgumentSyntax;
+
+        public bool IsNamedArgument => Syntax?.AnnotationArgumentBlock1 is not null;
 
         [ModelProperty]
         public ImmutableArray<MetaSymbol> NamedParameter

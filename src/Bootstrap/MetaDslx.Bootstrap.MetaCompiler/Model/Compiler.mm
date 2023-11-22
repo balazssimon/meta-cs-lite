@@ -191,7 +191,7 @@ enum Assignment
 class PElement $PElementSymbol
 {
 	contains Annotation[] NameAnnotations;
-	symbol[] SymbolProperty;
+	symbol[] $SymbolProperty;
 	Assignment Assignment;
 	contains Annotation[] ValueAnnotations;
 	contains PElementValue $Value;

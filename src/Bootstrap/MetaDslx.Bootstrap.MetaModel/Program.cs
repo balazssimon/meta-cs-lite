@@ -120,6 +120,8 @@ namespace MyCode
     var mlangTree = MetaDslx.Bootstrap.MetaCompiler.Compiler.CompilerSyntaxTree.ParseText(mlangCode, path: $"{name}.mlang");
     var mlangCompilation = MetaDslx.CodeAnalysis.Compilation.Create(name, syntaxTrees: new[] { mlangTree }, initialCompilation: (CSharpCompilation)inputCompilation,
         references: new[] { MetaDslx.CodeAnalysis.MetadataReference.CreateFromMetaModel(metaModel) }, options: MetaDslx.CodeAnalysis.CompilationOptions.Default.WithConcurrentBuild(false));
+    //var rootBinder = mlangCompilation.GetRootBinder(mlangTree);
+    //File.WriteAllText("../../../root-binder.txt", rootBinder.PrintBinderTree());
     mlangCompilation.Compile();
     foreach (var diag in mlangCompilation.GetDiagnostics())
     {

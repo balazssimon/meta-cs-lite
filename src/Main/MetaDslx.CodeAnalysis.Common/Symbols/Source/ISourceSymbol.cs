@@ -37,11 +37,42 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
         ImmutableArray<SyntaxNodeOrToken> DeclaringSyntaxReferences { get; }
 
         /// <summary>
+        /// <para>
+        /// Get the first syntax node where this symbol was declared in source. Some symbols (for
+        /// example, partial classes) may be defined in more than one location. This property should
+        /// return a syntax node only if the symbol was declared in source code and also
+        /// was not implicitly declared (see the <see cref="IsImplicitlyDeclared"/> property). 
+        /// </para>
+        /// <para>
+        /// Note that for namespace symbol, the declaring syntax might be declaring a nested
+        /// namespace. For example, the declaring syntax node for N1 in "namespace N1.N2 {...}" is
+        /// the entire namespace declaration syntax for N1.N2. For the global namespace, the declaring
+        /// syntax will be the compilation unit.
+        /// </para>
+        /// </summary>
+        /// <returns>
+        /// The first syntax node that declared the symbol. If the symbol was declared in metadata or
+        /// was implicitly declared, returns an empty read-only array.
+        /// </returns>
+        /// <remarks>
+        /// To go the opposite direction (from syntax node to symbol), see <see
+        /// cref="SemanticModel.GetDeclaredSymbol(SyntaxNodeOrToken, CancellationToken)"/>.
+        /// </remarks>
+        SyntaxNodeOrToken DeclaringSyntaxReference { get; }
+
+        /// <summary>
         /// Gets the locations where this symbol was originally defined. 
         /// Some symbols (for example, partial classes) may be defined in more than one
         /// location.
         /// </summary>
         ImmutableArray<SourceLocation> Locations { get; }
+
+        /// <summary>
+        /// Gets the first location where this symbol was originally defined. 
+        /// Some symbols (for example, partial classes) may be defined in more than one
+        /// location.
+        /// </summary>
+        SourceLocation Location { get; }
 
     }
 }

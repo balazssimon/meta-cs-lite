@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Collections.Immutable;
 using MetaDslx.CodeAnalysis.PooledObjects;
+using MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax;
 
 namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
 {
@@ -50,6 +51,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
         }
 
         protected override CompletionGraph CompletionGraph => CompletionParts.CompletionGraph;
+
+        public PAlternativeSyntax? Syntax => this.DeclaringSyntaxReference.AsNode() as PAlternativeSyntax;
 
         public GrammarSymbol? ContainingGrammarSymbol => ContainingParserRuleSymbol?.ContainingGrammarSymbol;
 
@@ -157,8 +160,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
 
         protected override string? CompleteProperty_Name(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            var syntax = Declaration.SyntaxReferences.FirstOrDefault();
-            return Declaration.Language.SyntaxFacts.ExtractName(syntax);
+            var nameSyntax = this.Syntax?.PAlternativeBlock1?.Name;
+            return Declaration.Language.SyntaxFacts.ExtractName(nameSyntax);
         }
 
         protected virtual MetaType CompleteProperty_ReturnType(DiagnosticBag diagnostics, CancellationToken cancellationToken)
@@ -174,6 +177,19 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
         protected virtual ImmutableArray<PElementSymbol> CompleteProperty_Elements(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             return SymbolFactory.GetSymbolPropertyValues<PElementSymbol>(this, nameof(Elements), diagnostics, cancellationToken);
+        }
+
+        protected override void CompletePart_Validate(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        {
+            base.CompletePart_Validate(diagnostics, cancellationToken);
+            var rule = this.ContainingParserRuleSymbol;
+            if (rule is not null && !rule.IsBlock)
+            {
+                if (!rule.ReturnType.IsAssignableFrom(this.ReturnType))
+                {
+                    diagnostics.Add(Diagnostic.Create(CompilerErrorCode.ERR_IncompatibleAltReturnType, this.Location, this.ReturnType, this.Name, rule.ReturnType, rule.Name));
+                }
+            }
         }
     }
 }

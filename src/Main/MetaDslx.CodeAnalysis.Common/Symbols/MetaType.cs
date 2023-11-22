@@ -12,6 +12,11 @@ using System.Threading;
 
 namespace MetaDslx.CodeAnalysis
 {
+    using TypeKind = Microsoft.CodeAnalysis.TypeKind;
+    using ITypeSymbol = Microsoft.CodeAnalysis.ITypeSymbol;
+    using INamedTypeSymbol = Microsoft.CodeAnalysis.INamedTypeSymbol;
+    using NullableAnnotation = Microsoft.CodeAnalysis.NullableAnnotation;
+
     public struct MetaType : IEquatable<MetaType>
     {
         private const string EnumFullName = "global::System.Enum";
@@ -362,33 +367,37 @@ namespace MetaDslx.CodeAnalysis
             }
         }
 
-        public MetaSymbol GetEnumValue(string value)
+        public bool TryGetEnumValue(string name, out MetaSymbol value)
         {
             var type = AsType();
             if (type is not null && type.IsEnum)
             {
                 try
                 {
-                    return MetaSymbol.FromValue(Enum.Parse(type, value));
+                    value = MetaSymbol.FromValue(Enum.Parse(type, name));
+                    return true;
                 }
                 catch
                 {
-                    return default;
+                    value = default;
+                    return false;
                 }
             }
             var csts = OriginalTypeSymbol as CSharpTypeSymbol;
-            if (csts is not null && (csts.CSharpSymbol.TypeKind == Microsoft.CodeAnalysis.TypeKind.Enum || csts.CSharpSymbol.BaseType?.ToDisplayString(Microsoft.CodeAnalysis.SymbolDisplayFormat.FullyQualifiedFormat) == EnumFullName))
+            if (csts is not null && (csts.CSharpSymbol.TypeKind == TypeKind.Enum || csts.CSharpSymbol.BaseType?.ToDisplayString(Microsoft.CodeAnalysis.SymbolDisplayFormat.FullyQualifiedFormat) == EnumFullName))
             {
-                var literal = csts.CSharpSymbol.GetMembers(value).FirstOrDefault();
+                var literal = csts.CSharpSymbol.GetMembers(name).FirstOrDefault();
                 if (literal is not null)
                 {
                     var diagnostics = DiagnosticBag.GetInstance();
                     var symbol = csts.SymbolFactory.GetSymbol(literal, diagnostics, default);
                     diagnostics.Free();
-                    return symbol;
+                    value = symbol;
+                    return symbol is not null && !symbol.IsError;
                 }
             }
-            return default;
+            value = default;
+            return false;
         }
 
         public bool IsValueType
@@ -401,6 +410,173 @@ namespace MetaDslx.CodeAnalysis
                 if (csts is not null) return csts.CSharpSymbol.IsValueType;
                 return false;
             }
+        }
+
+        public bool IsNullable
+        {
+            get
+            {
+                var type = AsType();
+                if (type is not null)
+                {
+                    if (type.Namespace == "System" && type.Name == "Nullable`1" && type.GenericTypeArguments.Length == 1)
+                    {
+                        return true;
+                    }
+                    if (type.CustomAttributes.Any(x => x.AttributeType.Name == "NullableAttribute"))
+                    {
+                        return true;
+                    }
+                }
+                var csts = OriginalTypeSymbol as CSharpTypeSymbol;
+                var msts = csts?.CSharpSymbol as ITypeSymbol;
+                if (msts is not null && msts.NullableAnnotation == NullableAnnotation.Annotated)
+                {
+                    if (msts.TypeKind == TypeKind.Struct && msts is INamedTypeSymbol nts && nts.Name == "Nullable" && nts.TypeArguments.Length == 1)
+                    {
+                        return true;
+                    }
+                }
+                return false;
+            }
+        }
+
+        public bool TryExtractNullableType(out MetaType innerType)
+        {
+            var type = AsType();
+            if (type is not null)
+            {
+                if (type.Namespace == "System" && type.Name == "Nullable`1" && type.GenericTypeArguments.Length == 1)
+                {
+                    innerType = type.GenericTypeArguments[0];
+                    return true;
+                }
+                if (type.CustomAttributes.Any(x => x.AttributeType.Name == "NullableAttribute"))
+                {
+                    innerType = type;
+                    return true;
+                }
+            }
+            var csts = OriginalTypeSymbol as CSharpTypeSymbol;
+            var msts = csts?.CSharpSymbol as ITypeSymbol;
+            if (msts is not null && msts.NullableAnnotation == NullableAnnotation.Annotated)
+            {
+                if (msts.TypeKind == TypeKind.Struct && msts is INamedTypeSymbol nts && nts.Name == "Nullable" && nts.TypeArguments.Length == 1)
+                {
+                    var diagnostics = DiagnosticBag.GetInstance();
+                    var symbol = csts.SymbolFactory.GetSymbol<TypeSymbol>(nts.TypeArguments[0], diagnostics, default);
+                    diagnostics.Free();
+                    if (symbol is not null && !symbol.IsError)
+                    {
+                        innerType = symbol;
+                        return true;
+                    }
+                    else
+                    {
+                        innerType = default;
+                        return false;
+                    }
+                }
+            }
+            innerType = this;
+            return false;
+        }
+
+        public bool IsCollection
+        {
+            get
+            {
+                var type = AsType();
+                if (type is not null)
+                {
+                    if (type.GenericTypeArguments.Length == 1)
+                    {
+                        if (type.Namespace == "System.Collections.Generic")
+                        {
+                            return true;
+                        }
+                        else if (type.Namespace == "System.Collections.Immutable")
+                        {
+                            return true;
+                        }
+                        else if (type.GetInterfaces().Any(intf => intf == typeof(IList<>)))
+                        {
+                            return true;
+                        }
+                        else if (type.GetInterfaces().Any(intf => intf == typeof(ISet<>)))
+                        {
+                            return true;
+                        }
+                        else if (type.GetInterfaces().Any(intf => intf == typeof(ICollection<>)))
+                        {
+                            return true;
+                        }
+                    }
+                }
+                var csts = OriginalTypeSymbol as CSharpTypeSymbol;
+                var msts = csts?.CSharpSymbol as INamedTypeSymbol;
+                if (msts is not null && msts.IsGenericType && msts.TypeArguments.Length == 1)
+                {
+                    return true;
+                }
+                return false;
+            }
+        }
+
+        public bool TryExtractCollectionType(out MetaType itemType)
+        {
+            var type = AsType();
+            if (type is not null)
+            {
+                if (type.GenericTypeArguments.Length == 1)
+                {
+                    if (type.Namespace == "System.Collections.Generic")
+                    {
+                        itemType = type.GenericTypeArguments[0];
+                        return true;
+                    }
+                    else if (type.Namespace == "System.Collections.Immutable")
+                    {
+                        itemType = type.GenericTypeArguments[0];
+                        return true;
+                    }
+                    else if (type.GetInterfaces().Any(intf => intf == typeof(IList<>)))
+                    {
+                        itemType = type.GenericTypeArguments[0];
+                        return true;
+                    }
+                    else if (type.GetInterfaces().Any(intf => intf == typeof(ISet<>)))
+                    {
+                        itemType = type.GenericTypeArguments[0];
+                        return true;
+                    }
+                    else if (type.GetInterfaces().Any(intf => intf == typeof(ICollection<>)))
+                    {
+                        itemType = type.GenericTypeArguments[0];
+                        return true;
+                    }
+                }
+            }
+            var csts = OriginalTypeSymbol as CSharpTypeSymbol;
+            var msts = csts?.CSharpSymbol as INamedTypeSymbol;
+            if (msts is not null && msts.IsGenericType && msts.TypeArguments.Length == 1)
+            {
+                var diagnostics = DiagnosticBag.GetInstance();
+                var symbol = csts.SymbolFactory.GetSymbol<TypeSymbol>(msts.TypeArguments[0], diagnostics, default);
+                diagnostics.Free();
+                if (symbol is not null && !symbol.IsError)
+                {
+                    itemType = symbol;
+                    return true;
+                }
+                else
+                {
+                    itemType = default;
+                    return false;
+                }
+            }
+            itemType = this;
+            return false;
         }
 
         public object? Extract(bool tryResolveType = false)

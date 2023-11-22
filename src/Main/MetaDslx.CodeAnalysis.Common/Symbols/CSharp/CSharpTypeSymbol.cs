@@ -11,16 +11,16 @@ namespace MetaDslx.CodeAnalysis.Symbols.CSharp
 {
     internal class CSharpTypeSymbol : TypeSymbol, ICSharpSymbol
     {
-        private readonly INamedTypeSymbol _csharpSymbol;
+        private readonly ITypeSymbol _csharpSymbol;
 
-        public CSharpTypeSymbol(Symbol container, INamedTypeSymbol csharpSymbol)
+        public CSharpTypeSymbol(Symbol container, ITypeSymbol csharpSymbol)
             : base(container)
         {
             _csharpSymbol = csharpSymbol;
         }
 
         public CSharpSymbolFactory SymbolFactory => ((CSharpModuleSymbol)ContainingModule).SymbolFactory;
-        public INamedTypeSymbol CSharpSymbol => _csharpSymbol;
+        public ITypeSymbol CSharpSymbol => _csharpSymbol;
         public override ImmutableArray<Location> Locations => _csharpSymbol.Locations.SelectAsArray(l => l.ToMetaDslx());
 
         public override bool IsImplicitlyDeclared => _csharpSymbol.IsImplicitlyDeclared;

@@ -430,16 +430,16 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
         	return this.PElement(default, valueAnnotations, value, default);
         }
 
-        public PBlockSyntax PBlock(SyntaxToken tLParen, MetaDslx.CodeAnalysis.SeparatedSyntaxList<PAlternativeSyntax> pAlternativeList, SyntaxToken tRParen)
+        public PBlockSyntax PBlock(SyntaxToken tLParen, MetaDslx.CodeAnalysis.SeparatedSyntaxList<PBlockAlternativeSyntax> pBlockAlternativeList, SyntaxToken tRParen)
         {
         	if (tLParen.RawKind != (int)CompilerSyntaxKind.TLParen) throw new ArgumentException(nameof(tLParen));
         	if (tRParen.RawKind != (int)CompilerSyntaxKind.TRParen) throw new ArgumentException(nameof(tRParen));
-            return (PBlockSyntax)CompilerLanguage.Instance.InternalSyntaxFactory.PBlock((InternalSyntaxToken)tLParen.Node, pAlternativeList.Node.ToGreenSeparatedList<PAlternativeGreen>(reversed: false), (InternalSyntaxToken)tRParen.Node).CreateRed();
+            return (PBlockSyntax)CompilerLanguage.Instance.InternalSyntaxFactory.PBlock((InternalSyntaxToken)tLParen.Node, pBlockAlternativeList.Node.ToGreenSeparatedList<PBlockAlternativeGreen>(reversed: false), (InternalSyntaxToken)tRParen.Node).CreateRed();
         }
         
-        public PBlockSyntax PBlock(MetaDslx.CodeAnalysis.SeparatedSyntaxList<PAlternativeSyntax> pAlternativeList)
+        public PBlockSyntax PBlock(MetaDslx.CodeAnalysis.SeparatedSyntaxList<PBlockAlternativeSyntax> pBlockAlternativeList)
         {
-        	return this.PBlock(this.Token(CompilerSyntaxKind.TLParen), pAlternativeList, this.Token(CompilerSyntaxKind.TRParen));
+        	return this.PBlock(this.Token(CompilerSyntaxKind.TLParen), pBlockAlternativeList, this.Token(CompilerSyntaxKind.TRParen));
         }
 
         public PEofSyntax PEof(SyntaxToken kEof)
@@ -487,6 +487,16 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
         public PReferenceAlt3Syntax PReferenceAlt3(MetaDslx.CodeAnalysis.SeparatedSyntaxList<QualifierSyntax> qualifierList)
         {
         	return this.PReferenceAlt3(this.Token(CompilerSyntaxKind.THashLBrace), qualifierList, this.Token(CompilerSyntaxKind.TRBrace));
+        }
+
+        public PBlockAlternativeSyntax PBlockAlternative(MetaDslx.CodeAnalysis.SyntaxList<PElementSyntax> elements, PBlockAlternativeBlock1Syntax pBlockAlternativeBlock1)
+        {
+            return (PBlockAlternativeSyntax)CompilerLanguage.Instance.InternalSyntaxFactory.PBlockAlternative(elements.Node.ToGreenList<PElementGreen>(), (PBlockAlternativeBlock1Green?)pBlockAlternativeBlock1?.Green).CreateRed();
+        }
+        
+        public PBlockAlternativeSyntax PBlockAlternative(MetaDslx.CodeAnalysis.SyntaxList<PElementSyntax> elements)
+        {
+        	return this.PBlockAlternative(elements, default);
         }
 
         public LAlternativeSyntax LAlternative(MetaDslx.CodeAnalysis.SyntaxList<LElementSyntax> elements)
@@ -722,17 +732,17 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
         	return this.ParserRuleBlock2(this.Token(CompilerSyntaxKind.TBar), alternatives);
         }
 
-        public PAlternativeBlock1Syntax PAlternativeBlock1(SyntaxToken tExclLBrace, QualifierSyntax returnType, SyntaxToken tRBrace)
+        public PAlternativeBlock1Syntax PAlternativeBlock1(MetaDslx.CodeAnalysis.SyntaxList<ParserAnnotationSyntax> annotations1, SyntaxToken kAlt, NameSyntax name, PAlternativeBlock1Block1Syntax pAlternativeBlock1Block1, SyntaxToken tColon)
         {
-        	if (tExclLBrace.RawKind != (int)CompilerSyntaxKind.TExclLBrace) throw new ArgumentException(nameof(tExclLBrace));
-        	if (returnType is null) throw new ArgumentNullException(nameof(returnType));
-        	if (tRBrace.RawKind != (int)CompilerSyntaxKind.TRBrace) throw new ArgumentException(nameof(tRBrace));
-            return (PAlternativeBlock1Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.PAlternativeBlock1((InternalSyntaxToken)tExclLBrace.Node, (QualifierGreen)returnType.Green, (InternalSyntaxToken)tRBrace.Node).CreateRed();
+        	if (kAlt.RawKind != (int)CompilerSyntaxKind.KAlt) throw new ArgumentException(nameof(kAlt));
+        	if (name is null) throw new ArgumentNullException(nameof(name));
+        	if (tColon.RawKind != (int)CompilerSyntaxKind.TColon) throw new ArgumentException(nameof(tColon));
+            return (PAlternativeBlock1Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.PAlternativeBlock1(annotations1.Node.ToGreenList<ParserAnnotationGreen>(), (InternalSyntaxToken)kAlt.Node, (NameGreen)name.Green, (PAlternativeBlock1Block1Green?)pAlternativeBlock1Block1?.Green, (InternalSyntaxToken)tColon.Node).CreateRed();
         }
         
-        public PAlternativeBlock1Syntax PAlternativeBlock1(QualifierSyntax returnType)
+        public PAlternativeBlock1Syntax PAlternativeBlock1(MetaDslx.CodeAnalysis.SyntaxList<ParserAnnotationSyntax> annotations1, NameSyntax name)
         {
-        	return this.PAlternativeBlock1(this.Token(CompilerSyntaxKind.TExclLBrace), returnType, this.Token(CompilerSyntaxKind.TRBrace));
+        	return this.PAlternativeBlock1(annotations1, this.Token(CompilerSyntaxKind.KAlt), name, default, this.Token(CompilerSyntaxKind.TColon));
         }
 
         public PAlternativeBlock2Syntax PAlternativeBlock2(SyntaxToken tEqGt, ExpressionSyntax returnValue)
@@ -766,16 +776,28 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
         	return this.PReferenceAlt3Block1(this.Token(CompilerSyntaxKind.TComma), referencedTypes);
         }
 
-        public PBlockBlock1Syntax PBlockBlock1(SyntaxToken tBar, PAlternativeSyntax alternatives)
+        public PBlockBlock1Syntax PBlockBlock1(SyntaxToken tBar, PBlockAlternativeSyntax alternatives)
         {
         	if (tBar.RawKind != (int)CompilerSyntaxKind.TBar) throw new ArgumentException(nameof(tBar));
         	if (alternatives is null) throw new ArgumentNullException(nameof(alternatives));
-            return (PBlockBlock1Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.PBlockBlock1((InternalSyntaxToken)tBar.Node, (PAlternativeGreen)alternatives.Green).CreateRed();
+            return (PBlockBlock1Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.PBlockBlock1((InternalSyntaxToken)tBar.Node, (PBlockAlternativeGreen)alternatives.Green).CreateRed();
         }
         
-        public PBlockBlock1Syntax PBlockBlock1(PAlternativeSyntax alternatives)
+        public PBlockBlock1Syntax PBlockBlock1(PBlockAlternativeSyntax alternatives)
         {
         	return this.PBlockBlock1(this.Token(CompilerSyntaxKind.TBar), alternatives);
+        }
+
+        public PBlockAlternativeBlock1Syntax PBlockAlternativeBlock1(SyntaxToken tEqGt, ExpressionSyntax returnValue)
+        {
+        	if (tEqGt.RawKind != (int)CompilerSyntaxKind.TEqGt) throw new ArgumentException(nameof(tEqGt));
+        	if (returnValue is null) throw new ArgumentNullException(nameof(returnValue));
+            return (PBlockAlternativeBlock1Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.PBlockAlternativeBlock1((InternalSyntaxToken)tEqGt.Node, (ExpressionGreen)returnValue.Green).CreateRed();
+        }
+        
+        public PBlockAlternativeBlock1Syntax PBlockAlternativeBlock1(ExpressionSyntax returnValue)
+        {
+        	return this.PBlockAlternativeBlock1(this.Token(CompilerSyntaxKind.TEqGt), returnValue);
         }
 
         public LexerRuleBlock1Alt1Syntax LexerRuleBlock1Alt1(SyntaxToken kToken, NameSyntax name, LexerRuleBlock1Alt1Block1Syntax lexerRuleBlock1Alt1Block1)
@@ -891,6 +913,18 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
         	return this.QualifierListBlock1(this.Token(CompilerSyntaxKind.TComma), qualifier);
         }
 
+        public PAlternativeBlock1Block1Syntax PAlternativeBlock1Block1(SyntaxToken kReturns, QualifierSyntax returnType)
+        {
+        	if (kReturns.RawKind != (int)CompilerSyntaxKind.KReturns) throw new ArgumentException(nameof(kReturns));
+        	if (returnType is null) throw new ArgumentNullException(nameof(returnType));
+            return (PAlternativeBlock1Block1Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.PAlternativeBlock1Block1((InternalSyntaxToken)kReturns.Node, (QualifierGreen)returnType.Green).CreateRed();
+        }
+        
+        public PAlternativeBlock1Block1Syntax PAlternativeBlock1Block1(QualifierSyntax returnType)
+        {
+        	return this.PAlternativeBlock1Block1(this.Token(CompilerSyntaxKind.KReturns), returnType);
+        }
+
         public LexerRuleBlock1Alt1Block1Syntax LexerRuleBlock1Alt1Block1(SyntaxToken kReturns, QualifierSyntax returnType)
         {
         	if (kReturns.RawKind != (int)CompilerSyntaxKind.KReturns) throw new ArgumentException(nameof(kReturns));
@@ -934,6 +968,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		        typeof(PReferenceAlt1Syntax),
 		        typeof(PReferenceAlt2Syntax),
 		        typeof(PReferenceAlt3Syntax),
+		        typeof(PBlockAlternativeSyntax),
 		        typeof(LAlternativeSyntax),
 		        typeof(LElementSyntax),
 		        typeof(LBlockSyntax),
@@ -966,6 +1001,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		        typeof(PElementBlock1Syntax),
 		        typeof(PReferenceAlt3Block1Syntax),
 		        typeof(PBlockBlock1Syntax),
+		        typeof(PBlockAlternativeBlock1Syntax),
 		        typeof(LexerRuleBlock1Alt1Syntax),
 		        typeof(LexerRuleBlock1Alt2Syntax),
 		        typeof(LexerRuleBlock1Alt3Syntax),
@@ -976,6 +1012,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		        typeof(AnnotationArgumentBlock1Syntax),
 		        typeof(QualifierBlock1Syntax),
 		        typeof(QualifierListBlock1Syntax),
+		        typeof(PAlternativeBlock1Block1Syntax),
 		        typeof(LexerRuleBlock1Alt1Block1Syntax),
 		        typeof(ArrayExpressionBlock1Block1Syntax),
 		    };

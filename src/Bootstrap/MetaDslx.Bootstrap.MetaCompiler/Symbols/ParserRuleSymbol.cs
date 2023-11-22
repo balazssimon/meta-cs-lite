@@ -1,4 +1,6 @@
-﻿using MetaDslx.Bootstrap.MetaCompiler.Model;
+﻿using MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax;
+using MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax;
+using MetaDslx.Bootstrap.MetaCompiler.Model;
 using MetaDslx.CodeAnalysis;
 using MetaDslx.CodeAnalysis.Declarations;
 using MetaDslx.CodeAnalysis.Symbols;
@@ -53,7 +55,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
 
         protected override CompletionGraph CompletionGraph => CompletionParts.CompletionGraph;
 
-        public GrammarSymbol? ContainingGrammarSymbol => (GrammarSymbol)this.ContainingSymbol;
+        public ParserRuleSyntax? Syntax => this.DeclaringSyntaxReference.AsNode() as ParserRuleSyntax;
+
+        public GrammarSymbol? ContainingGrammarSymbol => this.ContainingSymbol as GrammarSymbol;
 
         [ModelProperty]
         public bool IsBlock
@@ -151,5 +155,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
             return SymbolFactory.GetSymbolPropertyValues<PAlternativeSymbol>(this, nameof(Alternatives), diagnostics, cancellationToken);
         }
 
+        protected override void CompletePart_Validate(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        {
+            base.CompletePart_Validate(diagnostics, cancellationToken);
+
+        }
     }
 }

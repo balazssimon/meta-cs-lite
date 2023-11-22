@@ -199,7 +199,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
 			_PElement_Assignment = new __ModelProperty(typeof(PElement), "Assignment", typeof(global::MetaDslx.Bootstrap.MetaCompiler.Model.Assignment), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.EnumType | __ModelPropertyFlags.SingleItem, null);
 			_PElement_Multiplicity = new __ModelProperty(typeof(PElement), "Multiplicity", typeof(global::MetaDslx.Bootstrap.MetaCompiler.Model.Multiplicity), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.EnumType | __ModelPropertyFlags.SingleItem, null);
 			_PElement_NameAnnotations = new __ModelProperty(typeof(PElement), "NameAnnotations", typeof(Annotation), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection, null);
-			_PElement_SymbolProperty = new __ModelProperty(typeof(PElement), "SymbolProperty", typeof(__MetaSymbol), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Collection, null);
+			_PElement_SymbolProperty = new __ModelProperty(typeof(PElement), "SymbolProperty", typeof(__MetaSymbol), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Collection, "SymbolProperty");
 			_PElement_Value = new __ModelProperty(typeof(PElement), "Value", typeof(PElementValue), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.SingleItem, "Value");
 			_PElement_ValueAnnotations = new __ModelProperty(typeof(PElement), "ValueAnnotations", typeof(Annotation), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection, null);
 			_PKeyword_Text = new __ModelProperty(typeof(PKeyword), "Text", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.SingleItem, null);
@@ -1334,6 +1334,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
 			obj147.Name = "NameAnnotations";
 			obj147.Parent = obj31;
 			((__IModelObject)obj148).Children.Add((__IModelObject)obj154);
+			obj148.SymbolProperty = "SymbolProperty";
 			obj148.Type = __MetaType.FromModelObject((__IModelObject)obj154);
 			obj148.Name = "SymbolProperty";
 			obj148.Parent = obj31;

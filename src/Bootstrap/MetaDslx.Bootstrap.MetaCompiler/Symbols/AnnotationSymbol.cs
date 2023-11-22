@@ -232,7 +232,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
                     else
                     {
                         valid[i] = false;
-                        diagnostics.Add(Diagnostic.Create(CommonErrorCode.ERR_BindingError, arg.DeclaringSyntaxReferences.FirstOrDefault().GetLocation(), "Unnamed arguments are not allowed after named arguments."));
+                        diagnostics.Add(Diagnostic.Create(CommonErrorCode.ERR_BindingError, arg.Location, "Unnamed arguments are not allowed after named arguments."));
                     }
                     if (!valid[i]) break;
                 }

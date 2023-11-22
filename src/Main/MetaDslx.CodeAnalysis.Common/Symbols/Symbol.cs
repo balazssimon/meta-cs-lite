@@ -360,6 +360,8 @@ namespace MetaDslx.CodeAnalysis.Symbols
         /// </summary>
         public abstract ImmutableArray<Location> Locations { get; }
 
+        public Location Location => Locations.FirstOrDefault();
+
         #region Diagnostics
 
         public virtual ImmutableArray<Diagnostic> Diagnostics

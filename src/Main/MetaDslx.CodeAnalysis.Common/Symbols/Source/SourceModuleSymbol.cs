@@ -47,9 +47,11 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
         public DeclarationTable DeclarationTable => _declarations;
         public MergedDeclaration Declaration => _declarations.GetMergedRoot(DeclaringCompilation);
         public ImmutableArray<SyntaxNodeOrToken> DeclaringSyntaxReferences => Declaration.SyntaxReferences;
-        public override ImmutableArray<Location> Locations => Declaration.NameLocations.Cast<SourceLocation, Location>();
-        ImmutableArray<SourceLocation> ISourceSymbol.Locations => Declaration.NameLocations;
-        
+        public SyntaxNodeOrToken DeclaringSyntaxReference => DeclaringSyntaxReferences.FirstOrDefault();
+        public override ImmutableArray<Location> Locations => ((ISourceSymbol)this).Locations.Cast<SourceLocation, Location>();
+        ImmutableArray<SourceLocation> ISourceSymbol.Locations => Declaration.NameLocations.Length > 0 ? Declaration.NameLocations : DeclaringSyntaxReferences.Select(sr => sr.GetLocation() as SourceLocation).ToImmutableArray();
+        SourceLocation ISourceSymbol.Location => ((ISourceSymbol)this).Locations.FirstOrDefault();
+
         public MultiModelFactory ModelFactory => _modelFactory;
         public ModelGroup ModelGroup => _modelGroup;
         public MetaDslx.Modeling.Model Model => _model;

@@ -17,7 +17,6 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
     public class SourceImportSymbol : ImportSymbol, ISourceSymbol
     {
         private readonly MergedDeclaration _declaration;
-        private ImmutableArray<SourceLocation> _locations;
 
         public SourceImportSymbol(Symbol container, MergedDeclaration declaration)
             : base(container)
@@ -29,19 +28,11 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
         protected SourceSymbolFactory SymbolFactory => ContainingModule.SymbolFactory;
         public MergedDeclaration Declaration => _declaration;
         public ImmutableArray<SyntaxNodeOrToken> DeclaringSyntaxReferences => _declaration.SyntaxReferences;
+        public SyntaxNodeOrToken DeclaringSyntaxReference => DeclaringSyntaxReferences.FirstOrDefault();
         public override ImmutableArray<Location> Locations => ((ISourceSymbol)this).Locations.Cast<SourceLocation, Location>();
-        ImmutableArray<SourceLocation> ISourceSymbol.Locations
-        {
-            get
-            {
-                if (_locations.IsDefault)
-                {
-                    var locations = _declaration.SyntaxReferences.Select(sr => sr.GetLocation() as SourceLocation).Where(l => l is not null).ToImmutableArray();
-                    ImmutableInterlocked.InterlockedInitialize(ref _locations, locations);
-                }
-                return _locations;
-            }
-        }
+        ImmutableArray<SourceLocation> ISourceSymbol.Locations => _declaration.NameLocations.Length > 0 ? _declaration.NameLocations : DeclaringSyntaxReferences.Select(sr => sr.GetLocation() as SourceLocation).ToImmutableArray();
+        SourceLocation ISourceSymbol.Location => ((ISourceSymbol)this).Locations.FirstOrDefault();
+
 
         protected override string? CompleteProperty_Name(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {

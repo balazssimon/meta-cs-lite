@@ -1184,7 +1184,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	
 	public sealed class PBlockSyntax : PElementValueSyntax
 	{
-		private MetaDslx.CodeAnalysis.SyntaxNode _pAlternativeList;
+		private MetaDslx.CodeAnalysis.SyntaxNode _pBlockAlternativeList;
 	
 	    public PBlockSyntax(InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
 	        : base(green, syntaxTree, position)
@@ -1205,14 +1205,14 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 				return new SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
 			}
 		}
-	    public MetaDslx.CodeAnalysis.SeparatedSyntaxList<PAlternativeSyntax> PAlternativeList 
+	    public MetaDslx.CodeAnalysis.SeparatedSyntaxList<PBlockAlternativeSyntax> PBlockAlternativeList 
 		{ 
 			get
 			{
-				var red = this.GetRed(ref this._pAlternativeList, 1);
+				var red = this.GetRed(ref this._pBlockAlternativeList, 1);
 				if (red != null)
 				{
-					return new MetaDslx.CodeAnalysis.SeparatedSyntaxList<PAlternativeSyntax>(red, this.GetChildIndex(1), reversed: false);
+					return new MetaDslx.CodeAnalysis.SeparatedSyntaxList<PBlockAlternativeSyntax>(red, this.GetChildIndex(1), reversed: false);
 				}
 				return default;
 			} 
@@ -1231,7 +1231,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	    {
 	        switch (index)
 	        {
-				case 1: return this.GetRed(ref this._pAlternativeList, 1);
+				case 1: return this.GetRed(ref this._pBlockAlternativeList, 1);
 				default: return null;
 	        }
 	    }
@@ -1240,36 +1240,36 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	    {
 	        switch (index)
 	        {
-				case 1: return this._pAlternativeList;
+				case 1: return this._pBlockAlternativeList;
 				default: return null;
 	        }
 	    }
 	
 	    public PBlockSyntax WithTLParen(SyntaxToken tLParen)
 		{
-			return this.Update(tLParen, this.PAlternativeList, this.TRParen);
+			return this.Update(tLParen, this.PBlockAlternativeList, this.TRParen);
 		}
 	
-	    public PBlockSyntax WithPAlternativeList(MetaDslx.CodeAnalysis.SeparatedSyntaxList<PAlternativeSyntax> pAlternativeList)
+	    public PBlockSyntax WithPBlockAlternativeList(MetaDslx.CodeAnalysis.SeparatedSyntaxList<PBlockAlternativeSyntax> pBlockAlternativeList)
 		{
-			return this.Update(this.TLParen, pAlternativeList, this.TRParen);
+			return this.Update(this.TLParen, pBlockAlternativeList, this.TRParen);
 		}
 	
-	    public PBlockSyntax AddPAlternativeList(params PAlternativeSyntax[] pAlternativeList)
+	    public PBlockSyntax AddPBlockAlternativeList(params PBlockAlternativeSyntax[] pBlockAlternativeList)
 		{
-			return this.WithPAlternativeList(this.PAlternativeList.AddRange(pAlternativeList));
+			return this.WithPBlockAlternativeList(this.PBlockAlternativeList.AddRange(pBlockAlternativeList));
 		}
 	
 	    public PBlockSyntax WithTRParen(SyntaxToken tRParen)
 		{
-			return this.Update(this.TLParen, this.PAlternativeList, tRParen);
+			return this.Update(this.TLParen, this.PBlockAlternativeList, tRParen);
 		}
 	
-	    public PBlockSyntax Update(SyntaxToken tLParen, MetaDslx.CodeAnalysis.SeparatedSyntaxList<PAlternativeSyntax> pAlternativeList, SyntaxToken tRParen)
+	    public PBlockSyntax Update(SyntaxToken tLParen, MetaDslx.CodeAnalysis.SeparatedSyntaxList<PBlockAlternativeSyntax> pBlockAlternativeList, SyntaxToken tRParen)
 	    {
-	        if (this.TLParen != tLParen || this.PAlternativeList != pAlternativeList || this.TRParen != tRParen)
+	        if (this.TLParen != tLParen || this.PBlockAlternativeList != pBlockAlternativeList || this.TRParen != tRParen)
 	        {
-	            var newNode = CompilerLanguage.Instance.SyntaxFactory.PBlock(tLParen, pAlternativeList, tRParen);
+	            var newNode = CompilerLanguage.Instance.SyntaxFactory.PBlock(tLParen, pBlockAlternativeList, tRParen);
 	            var annotations = this.GetAnnotations();
 	            if (annotations != null && annotations.Length > 0)
 	               newNode = newNode.WithAnnotations(annotations);
@@ -1699,6 +1699,96 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	    public override void Accept(ICompilerSyntaxVisitor visitor)
 	    {
 	        visitor.VisitPReferenceAlt3(this);
+	    }
+	
+	}
+	public sealed class PBlockAlternativeSyntax : CompilerSyntaxNode
+	{
+		private MetaDslx.CodeAnalysis.SyntaxNode _elements;
+		private PBlockAlternativeBlock1Syntax _pBlockAlternativeBlock1;
+	
+	    public PBlockAlternativeSyntax(InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
+	        : base(green, syntaxTree, position)
+	    {
+	    }
+	
+	    public PBlockAlternativeSyntax(InternalSyntaxNode green, CompilerSyntaxNode parent, int position)
+	        : base(green, parent, position)
+	    {
+	    }
+	
+	    public MetaDslx.CodeAnalysis.SyntaxList<PElementSyntax> Elements 
+		{ 
+			get
+			{
+				var red = this.GetRed(ref this._elements, 0);
+				if (red != null) return new MetaDslx.CodeAnalysis.SyntaxList<PElementSyntax>(red);
+				return default;
+			} 
+		}
+	    public PBlockAlternativeBlock1Syntax PBlockAlternativeBlock1 => this.GetRed(ref this._pBlockAlternativeBlock1, 1);
+	
+	    protected override SyntaxNode GetNodeSlot(int index)
+	    {
+	        switch (index)
+	        {
+				case 0: return this.GetRed(ref this._elements, 0);
+				case 1: return this.GetRed(ref this._pBlockAlternativeBlock1, 1);
+				default: return null;
+	        }
+	    }
+	
+	    protected override SyntaxNode GetCachedSlot(int index)
+	    {
+	        switch (index)
+	        {
+				case 0: return this._elements;
+				case 1: return this._pBlockAlternativeBlock1;
+				default: return null;
+	        }
+	    }
+	
+	    public PBlockAlternativeSyntax WithElements(MetaDslx.CodeAnalysis.SyntaxList<PElementSyntax> elements)
+		{
+			return this.Update(elements, this.PBlockAlternativeBlock1);
+		}
+	
+	    public PBlockAlternativeSyntax AddElements(params PElementSyntax[] elements)
+		{
+			return this.WithElements(this.Elements.AddRange(elements));
+		}
+	
+	    public PBlockAlternativeSyntax WithPBlockAlternativeBlock1(PBlockAlternativeBlock1Syntax pBlockAlternativeBlock1)
+		{
+			return this.Update(this.Elements, pBlockAlternativeBlock1);
+		}
+	
+	    public PBlockAlternativeSyntax Update(MetaDslx.CodeAnalysis.SyntaxList<PElementSyntax> elements, PBlockAlternativeBlock1Syntax pBlockAlternativeBlock1)
+	    {
+	        if (this.Elements != elements || this.PBlockAlternativeBlock1 != pBlockAlternativeBlock1)
+	        {
+	            var newNode = CompilerLanguage.Instance.SyntaxFactory.PBlockAlternative(elements, pBlockAlternativeBlock1);
+	            var annotations = this.GetAnnotations();
+	            if (annotations != null && annotations.Length > 0)
+	               newNode = newNode.WithAnnotations(annotations);
+				return (PBlockAlternativeSyntax)newNode;
+	        }
+	        return this;
+	    }
+	
+	    public override TResult Accept<TArg, TResult>(ICompilerSyntaxVisitor<TArg, TResult> visitor, TArg argument)
+	    {
+	        return visitor.VisitPBlockAlternative(this, argument);
+	    }
+	
+	    public override TResult Accept<TResult>(ICompilerSyntaxVisitor<TResult> visitor)
+	    {
+	        return visitor.VisitPBlockAlternative(this);
+	    }
+	
+	    public override void Accept(ICompilerSyntaxVisitor visitor)
+	    {
+	        visitor.VisitPBlockAlternative(this);
 	    }
 	
 	}
@@ -4001,7 +4091,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	}
 	public sealed class PAlternativeBlock1Syntax : CompilerSyntaxNode
 	{
-		private QualifierSyntax _returnType;
+		private MetaDslx.CodeAnalysis.SyntaxNode _annotations1;
+		private NameSyntax _name;
+		private PAlternativeBlock1Block1Syntax _pAlternativeBlock1Block1;
 	
 	    public PAlternativeBlock1Syntax(InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
 	        : base(green, syntaxTree, position)
@@ -4013,23 +4105,33 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	    {
 	    }
 	
-	    public SyntaxToken TExclLBrace 
+	    public MetaDslx.CodeAnalysis.SyntaxList<ParserAnnotationSyntax> Annotations1 
+		{ 
+			get
+			{
+				var red = this.GetRed(ref this._annotations1, 0);
+				if (red != null) return new MetaDslx.CodeAnalysis.SyntaxList<ParserAnnotationSyntax>(red);
+				return default;
+			} 
+		}
+	    public SyntaxToken KAlt 
 		{ 
 			get 
 			{ 
 				var green = (global::MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax.PAlternativeBlock1Green)this.Green;
-				var greenToken = green.TExclLBrace;
-				return new SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
+				var greenToken = green.KAlt;
+				return new SyntaxToken(this, greenToken, this.GetChildPosition(1), this.GetChildIndex(1));
 			}
 		}
-	    public QualifierSyntax ReturnType => this.GetRed(ref this._returnType, 1);
-	    public SyntaxToken TRBrace 
+	    public NameSyntax Name => this.GetRed(ref this._name, 2);
+	    public PAlternativeBlock1Block1Syntax PAlternativeBlock1Block1 => this.GetRed(ref this._pAlternativeBlock1Block1, 3);
+	    public SyntaxToken TColon 
 		{ 
 			get 
 			{ 
 				var green = (global::MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax.PAlternativeBlock1Green)this.Green;
-				var greenToken = green.TRBrace;
-				return new SyntaxToken(this, greenToken, this.GetChildPosition(2), this.GetChildIndex(2));
+				var greenToken = green.TColon;
+				return new SyntaxToken(this, greenToken, this.GetChildPosition(4), this.GetChildIndex(4));
 			}
 		}
 	
@@ -4037,7 +4139,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	    {
 	        switch (index)
 	        {
-				case 1: return this.GetRed(ref this._returnType, 1);
+				case 0: return this.GetRed(ref this._annotations1, 0);
+				case 2: return this.GetRed(ref this._name, 2);
+				case 3: return this.GetRed(ref this._pAlternativeBlock1Block1, 3);
 				default: return null;
 	        }
 	    }
@@ -4046,31 +4150,48 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	    {
 	        switch (index)
 	        {
-				case 1: return this._returnType;
+				case 0: return this._annotations1;
+				case 2: return this._name;
+				case 3: return this._pAlternativeBlock1Block1;
 				default: return null;
 	        }
 	    }
 	
-	    public PAlternativeBlock1Syntax WithTExclLBrace(SyntaxToken tExclLBrace)
+	    public PAlternativeBlock1Syntax WithAnnotations1(MetaDslx.CodeAnalysis.SyntaxList<ParserAnnotationSyntax> annotations1)
 		{
-			return this.Update(tExclLBrace, this.ReturnType, this.TRBrace);
+			return this.Update(annotations1, this.KAlt, this.Name, this.PAlternativeBlock1Block1, this.TColon);
 		}
 	
-	    public PAlternativeBlock1Syntax WithReturnType(QualifierSyntax returnType)
+	    public PAlternativeBlock1Syntax AddAnnotations1(params ParserAnnotationSyntax[] annotations1)
 		{
-			return this.Update(this.TExclLBrace, returnType, this.TRBrace);
+			return this.WithAnnotations1(this.Annotations1.AddRange(annotations1));
 		}
 	
-	    public PAlternativeBlock1Syntax WithTRBrace(SyntaxToken tRBrace)
+	    public PAlternativeBlock1Syntax WithKAlt(SyntaxToken kAlt)
 		{
-			return this.Update(this.TExclLBrace, this.ReturnType, tRBrace);
+			return this.Update(this.Annotations1, kAlt, this.Name, this.PAlternativeBlock1Block1, this.TColon);
 		}
 	
-	    public PAlternativeBlock1Syntax Update(SyntaxToken tExclLBrace, QualifierSyntax returnType, SyntaxToken tRBrace)
+	    public PAlternativeBlock1Syntax WithName(NameSyntax name)
+		{
+			return this.Update(this.Annotations1, this.KAlt, name, this.PAlternativeBlock1Block1, this.TColon);
+		}
+	
+	    public PAlternativeBlock1Syntax WithPAlternativeBlock1Block1(PAlternativeBlock1Block1Syntax pAlternativeBlock1Block1)
+		{
+			return this.Update(this.Annotations1, this.KAlt, this.Name, pAlternativeBlock1Block1, this.TColon);
+		}
+	
+	    public PAlternativeBlock1Syntax WithTColon(SyntaxToken tColon)
+		{
+			return this.Update(this.Annotations1, this.KAlt, this.Name, this.PAlternativeBlock1Block1, tColon);
+		}
+	
+	    public PAlternativeBlock1Syntax Update(MetaDslx.CodeAnalysis.SyntaxList<ParserAnnotationSyntax> annotations1, SyntaxToken kAlt, NameSyntax name, PAlternativeBlock1Block1Syntax pAlternativeBlock1Block1, SyntaxToken tColon)
 	    {
-	        if (this.TExclLBrace != tExclLBrace || this.ReturnType != returnType || this.TRBrace != tRBrace)
+	        if (this.Annotations1 != annotations1 || this.KAlt != kAlt || this.Name != name || this.PAlternativeBlock1Block1 != pAlternativeBlock1Block1 || this.TColon != tColon)
 	        {
-	            var newNode = CompilerLanguage.Instance.SyntaxFactory.PAlternativeBlock1(tExclLBrace, returnType, tRBrace);
+	            var newNode = CompilerLanguage.Instance.SyntaxFactory.PAlternativeBlock1(annotations1, kAlt, name, pAlternativeBlock1Block1, tColon);
 	            var annotations = this.GetAnnotations();
 	            if (annotations != null && annotations.Length > 0)
 	               newNode = newNode.WithAnnotations(annotations);
@@ -4365,7 +4486,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	}
 	public sealed class PBlockBlock1Syntax : CompilerSyntaxNode
 	{
-		private PAlternativeSyntax _alternatives;
+		private PBlockAlternativeSyntax _alternatives;
 	
 	    public PBlockBlock1Syntax(InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
 	        : base(green, syntaxTree, position)
@@ -4386,7 +4507,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 				return new SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
 			}
 		}
-	    public PAlternativeSyntax Alternatives => this.GetRed(ref this._alternatives, 1);
+	    public PBlockAlternativeSyntax Alternatives => this.GetRed(ref this._alternatives, 1);
 	
 	    protected override SyntaxNode GetNodeSlot(int index)
 	    {
@@ -4411,12 +4532,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 			return this.Update(tBar, this.Alternatives);
 		}
 	
-	    public PBlockBlock1Syntax WithAlternatives(PAlternativeSyntax alternatives)
+	    public PBlockBlock1Syntax WithAlternatives(PBlockAlternativeSyntax alternatives)
 		{
 			return this.Update(this.TBar, alternatives);
 		}
 	
-	    public PBlockBlock1Syntax Update(SyntaxToken tBar, PAlternativeSyntax alternatives)
+	    public PBlockBlock1Syntax Update(SyntaxToken tBar, PBlockAlternativeSyntax alternatives)
 	    {
 	        if (this.TBar != tBar || this.Alternatives != alternatives)
 	        {
@@ -4442,6 +4563,88 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	    public override void Accept(ICompilerSyntaxVisitor visitor)
 	    {
 	        visitor.VisitPBlockBlock1(this);
+	    }
+	
+	}
+	public sealed class PBlockAlternativeBlock1Syntax : CompilerSyntaxNode
+	{
+		private ExpressionSyntax _returnValue;
+	
+	    public PBlockAlternativeBlock1Syntax(InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
+	        : base(green, syntaxTree, position)
+	    {
+	    }
+	
+	    public PBlockAlternativeBlock1Syntax(InternalSyntaxNode green, CompilerSyntaxNode parent, int position)
+	        : base(green, parent, position)
+	    {
+	    }
+	
+	    public SyntaxToken TEqGt 
+		{ 
+			get 
+			{ 
+				var green = (global::MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax.PBlockAlternativeBlock1Green)this.Green;
+				var greenToken = green.TEqGt;
+				return new SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
+			}
+		}
+	    public ExpressionSyntax ReturnValue => this.GetRed(ref this._returnValue, 1);
+	
+	    protected override SyntaxNode GetNodeSlot(int index)
+	    {
+	        switch (index)
+	        {
+				case 1: return this.GetRed(ref this._returnValue, 1);
+				default: return null;
+	        }
+	    }
+	
+	    protected override SyntaxNode GetCachedSlot(int index)
+	    {
+	        switch (index)
+	        {
+				case 1: return this._returnValue;
+				default: return null;
+	        }
+	    }
+	
+	    public PBlockAlternativeBlock1Syntax WithTEqGt(SyntaxToken tEqGt)
+		{
+			return this.Update(tEqGt, this.ReturnValue);
+		}
+	
+	    public PBlockAlternativeBlock1Syntax WithReturnValue(ExpressionSyntax returnValue)
+		{
+			return this.Update(this.TEqGt, returnValue);
+		}
+	
+	    public PBlockAlternativeBlock1Syntax Update(SyntaxToken tEqGt, ExpressionSyntax returnValue)
+	    {
+	        if (this.TEqGt != tEqGt || this.ReturnValue != returnValue)
+	        {
+	            var newNode = CompilerLanguage.Instance.SyntaxFactory.PBlockAlternativeBlock1(tEqGt, returnValue);
+	            var annotations = this.GetAnnotations();
+	            if (annotations != null && annotations.Length > 0)
+	               newNode = newNode.WithAnnotations(annotations);
+				return (PBlockAlternativeBlock1Syntax)newNode;
+	        }
+	        return this;
+	    }
+	
+	    public override TResult Accept<TArg, TResult>(ICompilerSyntaxVisitor<TArg, TResult> visitor, TArg argument)
+	    {
+	        return visitor.VisitPBlockAlternativeBlock1(this, argument);
+	    }
+	
+	    public override TResult Accept<TResult>(ICompilerSyntaxVisitor<TResult> visitor)
+	    {
+	        return visitor.VisitPBlockAlternativeBlock1(this);
+	    }
+	
+	    public override void Accept(ICompilerSyntaxVisitor visitor)
+	    {
+	        visitor.VisitPBlockAlternativeBlock1(this);
 	    }
 	
 	}
@@ -5286,6 +5489,88 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	    public override void Accept(ICompilerSyntaxVisitor visitor)
 	    {
 	        visitor.VisitQualifierListBlock1(this);
+	    }
+	
+	}
+	public sealed class PAlternativeBlock1Block1Syntax : CompilerSyntaxNode
+	{
+		private QualifierSyntax _returnType;
+	
+	    public PAlternativeBlock1Block1Syntax(InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
+	        : base(green, syntaxTree, position)
+	    {
+	    }
+	
+	    public PAlternativeBlock1Block1Syntax(InternalSyntaxNode green, CompilerSyntaxNode parent, int position)
+	        : base(green, parent, position)
+	    {
+	    }
+	
+	    public SyntaxToken KReturns 
+		{ 
+			get 
+			{ 
+				var green = (global::MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax.PAlternativeBlock1Block1Green)this.Green;
+				var greenToken = green.KReturns;
+				return new SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
+			}
+		}
+	    public QualifierSyntax ReturnType => this.GetRed(ref this._returnType, 1);
+	
+	    protected override SyntaxNode GetNodeSlot(int index)
+	    {
+	        switch (index)
+	        {
+				case 1: return this.GetRed(ref this._returnType, 1);
+				default: return null;
+	        }
+	    }
+	
+	    protected override SyntaxNode GetCachedSlot(int index)
+	    {
+	        switch (index)
+	        {
+				case 1: return this._returnType;
+				default: return null;
+	        }
+	    }
+	
+	    public PAlternativeBlock1Block1Syntax WithKReturns(SyntaxToken kReturns)
+		{
+			return this.Update(kReturns, this.ReturnType);
+		}
+	
+	    public PAlternativeBlock1Block1Syntax WithReturnType(QualifierSyntax returnType)
+		{
+			return this.Update(this.KReturns, returnType);
+		}
+	
+	    public PAlternativeBlock1Block1Syntax Update(SyntaxToken kReturns, QualifierSyntax returnType)
+	    {
+	        if (this.KReturns != kReturns || this.ReturnType != returnType)
+	        {
+	            var newNode = CompilerLanguage.Instance.SyntaxFactory.PAlternativeBlock1Block1(kReturns, returnType);
+	            var annotations = this.GetAnnotations();
+	            if (annotations != null && annotations.Length > 0)
+	               newNode = newNode.WithAnnotations(annotations);
+				return (PAlternativeBlock1Block1Syntax)newNode;
+	        }
+	        return this;
+	    }
+	
+	    public override TResult Accept<TArg, TResult>(ICompilerSyntaxVisitor<TArg, TResult> visitor, TArg argument)
+	    {
+	        return visitor.VisitPAlternativeBlock1Block1(this, argument);
+	    }
+	
+	    public override TResult Accept<TResult>(ICompilerSyntaxVisitor<TResult> visitor)
+	    {
+	        return visitor.VisitPAlternativeBlock1Block1(this);
+	    }
+	
+	    public override void Accept(ICompilerSyntaxVisitor visitor)
+	    {
+	        visitor.VisitPAlternativeBlock1Block1(this);
 	    }
 	
 	}
