@@ -367,7 +367,7 @@ namespace MetaDslx.CodeAnalysis
             }
         }
 
-        public bool TryGetEnumValue(string name, out MetaSymbol value)
+        public bool TryGetEnumValue(string name, out MetaSymbol value, DiagnosticBag diagnostics = null, CancellationToken cancellationToken = default)
         {
             var type = AsType();
             if (type is not null && type.IsEnum)
@@ -389,9 +389,10 @@ namespace MetaDslx.CodeAnalysis
                 var literal = csts.CSharpSymbol.GetMembers(name).FirstOrDefault();
                 if (literal is not null)
                 {
-                    var diagnostics = DiagnosticBag.GetInstance();
-                    var symbol = csts.SymbolFactory.GetSymbol(literal, diagnostics, default);
-                    diagnostics.Free();
+                    bool freeDiagnostics = diagnostics is null;
+                    if (freeDiagnostics) diagnostics = DiagnosticBag.GetInstance();
+                    var symbol = csts.SymbolFactory.GetSymbol(literal, diagnostics, cancellationToken);
+                    if (freeDiagnostics) diagnostics.Free();
                     value = symbol;
                     return symbol is not null && !symbol.IsError;
                 }
@@ -441,7 +442,7 @@ namespace MetaDslx.CodeAnalysis
             }
         }
 
-        public bool TryExtractNullableType(out MetaType innerType)
+        public bool TryExtractNullableType(out MetaType innerType, DiagnosticBag diagnostics = null, CancellationToken cancellationToken = default)
         {
             var type = AsType();
             if (type is not null)
@@ -463,9 +464,10 @@ namespace MetaDslx.CodeAnalysis
             {
                 if (msts.TypeKind == TypeKind.Struct && msts is INamedTypeSymbol nts && nts.Name == "Nullable" && nts.TypeArguments.Length == 1)
                 {
-                    var diagnostics = DiagnosticBag.GetInstance();
-                    var symbol = csts.SymbolFactory.GetSymbol<TypeSymbol>(nts.TypeArguments[0], diagnostics, default);
-                    diagnostics.Free();
+                    bool freeDiagnostics = diagnostics is null;
+                    if (freeDiagnostics) diagnostics = DiagnosticBag.GetInstance();
+                    var symbol = csts.SymbolFactory.GetSymbol<TypeSymbol>(nts.TypeArguments[0], diagnostics, cancellationToken);
+                    if (freeDiagnostics) diagnostics.Free();
                     if (symbol is not null && !symbol.IsError)
                     {
                         innerType = symbol;
@@ -523,7 +525,7 @@ namespace MetaDslx.CodeAnalysis
             }
         }
 
-        public bool TryExtractCollectionType(out MetaType itemType)
+        public bool TryExtractCollectionType(out MetaType itemType, DiagnosticBag diagnostics = null, CancellationToken cancellationToken = default)
         {
             var type = AsType();
             if (type is not null)
@@ -561,9 +563,10 @@ namespace MetaDslx.CodeAnalysis
             var msts = csts?.CSharpSymbol as INamedTypeSymbol;
             if (msts is not null && msts.IsGenericType && msts.TypeArguments.Length == 1)
             {
-                var diagnostics = DiagnosticBag.GetInstance();
-                var symbol = csts.SymbolFactory.GetSymbol<TypeSymbol>(msts.TypeArguments[0], diagnostics, default);
-                diagnostics.Free();
+                bool freeDiagnostics = diagnostics is null;
+                if (freeDiagnostics) diagnostics = DiagnosticBag.GetInstance();
+                var symbol = csts.SymbolFactory.GetSymbol<TypeSymbol>(msts.TypeArguments[0], diagnostics, cancellationToken);
+                if (freeDiagnostics) diagnostics.Free();
                 if (symbol is not null && !symbol.IsError)
                 {
                     itemType = symbol;

@@ -12,6 +12,8 @@ using System.Collections.Immutable;
 using MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax;
 using MetaDslx.CodeAnalysis.Symbols.CSharp;
 using MetaDslx.CodeAnalysis.PooledObjects;
+using MetaDslx.Languages.MetaModel.Compiler.Syntax;
+using MetaDslx.Bootstrap.MetaCompiler.Model;
 
 namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
 {
@@ -193,11 +195,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
                 var msType = msProp?.Type;
                 var csType = msType is null ? null : csProp?.SymbolFactory.GetSymbol<TypeSymbol>(msType, diagnostics, cancellationToken);
                 var mtType = MetaType.FromTypeSymbol(csType);
-                if (mtType.IsNullable) mtType.TryExtractNullableType(out mtType);
+                if (mtType.IsNullable) mtType.TryExtractNullableType(out mtType, diagnostics, cancellationToken);
                 if (mtType.IsCollection)
                 {
                     kind = ExpectedTypeKind.Collection;
-                    mtType.TryExtractCollectionType(out mtType);
+                    mtType.TryExtractCollectionType(out mtType, diagnostics, cancellationToken);
                 }
                 if (mtType.SpecialType == SpecialType.System_Boolean)
                 {
@@ -223,6 +225,26 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
         protected override void CompletePart_Validate(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             base.CompletePart_Validate(diagnostics, cancellationToken);
+            var mobj = this.ModelObject as PElement;
+            if (mobj is not null)
+            {
+                if (ExpectedKind == ExpectedTypeKind.Collection && mobj.Assignment != Assignment.PlusAssign)
+                {
+                    diagnostics.Add(Diagnostic.Create(CompilerErrorCode.ERR_CollectionPropertyWrongAssignment, this.Location, this.Name));
+                }
+                else if (ExpectedKind != ExpectedTypeKind.Collection && mobj.Assignment == Assignment.PlusAssign)
+                {
+                    diagnostics.Add(Diagnostic.Create(CompilerErrorCode.ERR_NonCollectionPropertyWrongAssignment, this.Location, this.Name));
+                }
+                else if (mobj.Assignment == Assignment.QuestionAssign && ExpectedKind != ExpectedTypeKind.Bool)
+                {
+                    diagnostics.Add(Diagnostic.Create(CompilerErrorCode.ERR_NonBooleanPropertyWrongAssignment, this.Location, this.Name, "?="));
+                }
+                else if (mobj.Assignment == Assignment.NegatedAssign && ExpectedKind != ExpectedTypeKind.Bool)
+                {
+                    diagnostics.Add(Diagnostic.Create(CompilerErrorCode.ERR_NonBooleanPropertyWrongAssignment, this.Location, this.Name, "!="));
+                }
+            }
         }
     }
 }

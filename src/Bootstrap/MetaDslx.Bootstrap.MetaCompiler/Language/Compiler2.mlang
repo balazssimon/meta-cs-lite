@@ -33,8 +33,8 @@ Grammar: [Scope](rules+=Rule*);
 
 Rule: ParserRule | LexerRule;
 
-ParserRule: annotations+=ParserAnnotation* (isBlock?='block' name=Name | returnType=[Use(MetaType)]Identifier | name=Name 'returns' returnType=#MetaType) ':' alternatives+=PAlternative ('|' alternatives+=PAlternative)* ';';
-PAlternative: (annotations+=ParserAnnotation* 'alt' name=Name? ('returns' returnType=#MetaType)? ':')? elements+=PElement* ('=>' returnValue=Expression)?;
+ParserRule: annotations+=ParserAnnotation* (isBlock?='block' name=Name | returnType+=[Use(MetaType)]Identifier | name=Name 'returns' returnType+=#MetaType) ':' alternatives+=PAlternative ('|' alternatives+=PAlternative)* ';';
+PAlternative: (annotations+=ParserAnnotation* 'alt' name=Name? ('returns' returnType+=#MetaType)? ':')? elements+=PElement* ('=>' returnValue=Expression)?;
 PElement: (nameAnnotations+=ParserAnnotation* symbolProperty+=[SymbolProperty]Identifier assignment=Assignment)? valueAnnotations+=ParserAnnotation* value=PElementValue multiplicity=Multiplicity?;
 PElementValue: PBlock | PEof | PKeyword | PReference;
 PReference: rule=[Use(Rule)]Identifier | '#' referencedTypes+=#MetaType | '#{' referencedTypes+=#MetaType (',' referencedTypes+=#MetaType)* '}' ;
@@ -63,13 +63,13 @@ NullExpression: 'null';
 BoolExpression: boolValue?='true' | 'false';
 IntExpression: intValue=TInteger;
 StringExpression: stringValue=TString;
-ReferenceExpression: symbolValue=[ConvertToExpectedType]Qualifier;
+ReferenceExpression: symbolValue+=[ConvertToExpectedType]Qualifier;
 ArrayExpression: '{' (items+=Expression (',' items+=Expression)*)? '}';
 
 ParserAnnotation returns MetaDslx.Bootstrap.MetaCompiler.Model.Annotation: '[' type=[Use(types:{Binder,MetaDslx.CodeAnalysis.Annotations.Annotation},suffixes:{"Binder","Annotation"})]Qualifier AnnotationArguments? ']';
 LexerAnnotation returns MetaDslx.Bootstrap.MetaCompiler.Model.Annotation: '[' type=[Use(types:{TokenKind,MetaDslx.CodeAnalysis.Annotations.Annotation},suffixes:{"TokenKind","Annotation"})]Qualifier AnnotationArguments? ']';
 block AnnotationArguments: '(' arguments+=AnnotationArgument (',' arguments+=AnnotationArgument)* ')';
-AnnotationArgument: (namedParameter=[AnnotationArgument]Identifier ':')? value=Expression;
+AnnotationArgument: (namedParameter+=[AnnotationArgument]Identifier ':')? value=Expression;
 
 Assignment
 	: '=' => Assign
