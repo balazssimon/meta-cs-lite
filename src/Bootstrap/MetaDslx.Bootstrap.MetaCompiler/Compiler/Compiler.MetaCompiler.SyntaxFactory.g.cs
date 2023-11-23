@@ -395,6 +395,20 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
         	return this.ParserRule(annotations1, parserRuleBlock1, this.Token(CompilerSyntaxKind.TColon), pAlternativeList, this.Token(CompilerSyntaxKind.TSemicolon));
         }
 
+        public PBlockSyntax PBlock(MetaDslx.CodeAnalysis.SyntaxList<ParserAnnotationSyntax> annotations1, SyntaxToken kBlock, NameSyntax name, SyntaxToken tColon, MetaDslx.CodeAnalysis.SeparatedSyntaxList<PAlternativeSyntax> pAlternativeList, SyntaxToken tSemicolon)
+        {
+        	if (kBlock.RawKind != (int)CompilerSyntaxKind.KBlock) throw new ArgumentException(nameof(kBlock));
+        	if (name is null) throw new ArgumentNullException(nameof(name));
+        	if (tColon.RawKind != (int)CompilerSyntaxKind.TColon) throw new ArgumentException(nameof(tColon));
+        	if (tSemicolon.RawKind != (int)CompilerSyntaxKind.TSemicolon) throw new ArgumentException(nameof(tSemicolon));
+            return (PBlockSyntax)CompilerLanguage.Instance.InternalSyntaxFactory.PBlock(annotations1.Node.ToGreenList<ParserAnnotationGreen>(), (InternalSyntaxToken)kBlock.Node, (NameGreen)name.Green, (InternalSyntaxToken)tColon.Node, pAlternativeList.Node.ToGreenSeparatedList<PAlternativeGreen>(reversed: false), (InternalSyntaxToken)tSemicolon.Node).CreateRed();
+        }
+        
+        public PBlockSyntax PBlock(MetaDslx.CodeAnalysis.SyntaxList<ParserAnnotationSyntax> annotations1, NameSyntax name, MetaDslx.CodeAnalysis.SeparatedSyntaxList<PAlternativeSyntax> pAlternativeList)
+        {
+        	return this.PBlock(annotations1, this.Token(CompilerSyntaxKind.KBlock), name, this.Token(CompilerSyntaxKind.TColon), pAlternativeList, this.Token(CompilerSyntaxKind.TSemicolon));
+        }
+
         public LexerRuleSyntax LexerRule(MetaDslx.CodeAnalysis.SyntaxList<LexerAnnotationSyntax> annotations1, LexerRuleBlock1Syntax lexerRuleBlock1, SyntaxToken tColon, MetaDslx.CodeAnalysis.SeparatedSyntaxList<LAlternativeSyntax> lAlternativeList, SyntaxToken tSemicolon)
         {
         	if (lexerRuleBlock1 is null) throw new ArgumentNullException(nameof(lexerRuleBlock1));
@@ -430,16 +444,16 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
         	return this.PElement(default, valueAnnotations, value, default);
         }
 
-        public PBlockSyntax PBlock(SyntaxToken tLParen, MetaDslx.CodeAnalysis.SeparatedSyntaxList<PBlockAlternativeSyntax> pBlockAlternativeList, SyntaxToken tRParen)
+        public PBlockInlineSyntax PBlockInline(SyntaxToken tLParen, MetaDslx.CodeAnalysis.SeparatedSyntaxList<PAlternativeSyntax> pAlternativeList, SyntaxToken tRParen)
         {
         	if (tLParen.RawKind != (int)CompilerSyntaxKind.TLParen) throw new ArgumentException(nameof(tLParen));
         	if (tRParen.RawKind != (int)CompilerSyntaxKind.TRParen) throw new ArgumentException(nameof(tRParen));
-            return (PBlockSyntax)CompilerLanguage.Instance.InternalSyntaxFactory.PBlock((InternalSyntaxToken)tLParen.Node, pBlockAlternativeList.Node.ToGreenSeparatedList<PBlockAlternativeGreen>(reversed: false), (InternalSyntaxToken)tRParen.Node).CreateRed();
+            return (PBlockInlineSyntax)CompilerLanguage.Instance.InternalSyntaxFactory.PBlockInline((InternalSyntaxToken)tLParen.Node, pAlternativeList.Node.ToGreenSeparatedList<PAlternativeGreen>(reversed: false), (InternalSyntaxToken)tRParen.Node).CreateRed();
         }
         
-        public PBlockSyntax PBlock(MetaDslx.CodeAnalysis.SeparatedSyntaxList<PBlockAlternativeSyntax> pBlockAlternativeList)
+        public PBlockInlineSyntax PBlockInline(MetaDslx.CodeAnalysis.SeparatedSyntaxList<PAlternativeSyntax> pAlternativeList)
         {
-        	return this.PBlock(this.Token(CompilerSyntaxKind.TLParen), pBlockAlternativeList, this.Token(CompilerSyntaxKind.TRParen));
+        	return this.PBlockInline(this.Token(CompilerSyntaxKind.TLParen), pAlternativeList, this.Token(CompilerSyntaxKind.TRParen));
         }
 
         public PEofSyntax PEof(SyntaxToken kEof)
@@ -487,16 +501,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
         public PReferenceAlt3Syntax PReferenceAlt3(MetaDslx.CodeAnalysis.SeparatedSyntaxList<QualifierSyntax> qualifierList)
         {
         	return this.PReferenceAlt3(this.Token(CompilerSyntaxKind.THashLBrace), qualifierList, this.Token(CompilerSyntaxKind.TRBrace));
-        }
-
-        public PBlockAlternativeSyntax PBlockAlternative(MetaDslx.CodeAnalysis.SyntaxList<PElementSyntax> elements, PBlockAlternativeBlock1Syntax pBlockAlternativeBlock1)
-        {
-            return (PBlockAlternativeSyntax)CompilerLanguage.Instance.InternalSyntaxFactory.PBlockAlternative(elements.Node.ToGreenList<PElementGreen>(), (PBlockAlternativeBlock1Green?)pBlockAlternativeBlock1?.Green).CreateRed();
-        }
-        
-        public PBlockAlternativeSyntax PBlockAlternative(MetaDslx.CodeAnalysis.SyntaxList<PElementSyntax> elements)
-        {
-        	return this.PBlockAlternative(elements, default);
         }
 
         public LAlternativeSyntax LAlternative(MetaDslx.CodeAnalysis.SyntaxList<LElementSyntax> elements)
@@ -689,35 +693,23 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
             return (GrammarBlock1Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.GrammarBlock1(rules.Node.ToGreenList<RuleGreen>()).CreateRed();
         }
 
-        public ParserRuleBlock1Alt1Syntax ParserRuleBlock1Alt1(SyntaxToken isBlock, NameSyntax name)
-        {
-        	if (isBlock.RawKind != (int)CompilerSyntaxKind.KBlock) throw new ArgumentException(nameof(isBlock));
-        	if (name is null) throw new ArgumentNullException(nameof(name));
-            return (ParserRuleBlock1Alt1Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.ParserRuleBlock1Alt1((InternalSyntaxToken)isBlock.Node, (NameGreen)name.Green).CreateRed();
-        }
-        
-        public ParserRuleBlock1Alt1Syntax ParserRuleBlock1Alt1(NameSyntax name)
-        {
-        	return this.ParserRuleBlock1Alt1(this.Token(CompilerSyntaxKind.KBlock), name);
-        }
-
-        public ParserRuleBlock1Alt2Syntax ParserRuleBlock1Alt2(IdentifierSyntax returnType)
+        public ParserRuleBlock1Alt1Syntax ParserRuleBlock1Alt1(IdentifierSyntax returnType)
         {
         	if (returnType is null) throw new ArgumentNullException(nameof(returnType));
-            return (ParserRuleBlock1Alt2Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.ParserRuleBlock1Alt2((IdentifierGreen)returnType.Green).CreateRed();
+            return (ParserRuleBlock1Alt1Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.ParserRuleBlock1Alt1((IdentifierGreen)returnType.Green).CreateRed();
         }
 
-        public ParserRuleBlock1Alt3Syntax ParserRuleBlock1Alt3(NameSyntax name, SyntaxToken kReturns, QualifierSyntax returnType)
+        public ParserRuleBlock1Alt2Syntax ParserRuleBlock1Alt2(IdentifierSyntax identifier, SyntaxToken kReturns, QualifierSyntax returnType)
         {
-        	if (name is null) throw new ArgumentNullException(nameof(name));
+        	if (identifier is null) throw new ArgumentNullException(nameof(identifier));
         	if (kReturns.RawKind != (int)CompilerSyntaxKind.KReturns) throw new ArgumentException(nameof(kReturns));
         	if (returnType is null) throw new ArgumentNullException(nameof(returnType));
-            return (ParserRuleBlock1Alt3Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.ParserRuleBlock1Alt3((NameGreen)name.Green, (InternalSyntaxToken)kReturns.Node, (QualifierGreen)returnType.Green).CreateRed();
+            return (ParserRuleBlock1Alt2Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.ParserRuleBlock1Alt2((IdentifierGreen)identifier.Green, (InternalSyntaxToken)kReturns.Node, (QualifierGreen)returnType.Green).CreateRed();
         }
         
-        public ParserRuleBlock1Alt3Syntax ParserRuleBlock1Alt3(NameSyntax name, QualifierSyntax returnType)
+        public ParserRuleBlock1Alt2Syntax ParserRuleBlock1Alt2(IdentifierSyntax identifier, QualifierSyntax returnType)
         {
-        	return this.ParserRuleBlock1Alt3(name, this.Token(CompilerSyntaxKind.KReturns), returnType);
+        	return this.ParserRuleBlock1Alt2(identifier, this.Token(CompilerSyntaxKind.KReturns), returnType);
         }
 
         public ParserRuleBlock2Syntax ParserRuleBlock2(SyntaxToken tBar, PAlternativeSyntax alternatives)
@@ -730,6 +722,30 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
         public ParserRuleBlock2Syntax ParserRuleBlock2(PAlternativeSyntax alternatives)
         {
         	return this.ParserRuleBlock2(this.Token(CompilerSyntaxKind.TBar), alternatives);
+        }
+
+        public PBlockBlock1Syntax PBlockBlock1(SyntaxToken tBar, PAlternativeSyntax alternatives)
+        {
+        	if (tBar.RawKind != (int)CompilerSyntaxKind.TBar) throw new ArgumentException(nameof(tBar));
+        	if (alternatives is null) throw new ArgumentNullException(nameof(alternatives));
+            return (PBlockBlock1Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.PBlockBlock1((InternalSyntaxToken)tBar.Node, (PAlternativeGreen)alternatives.Green).CreateRed();
+        }
+        
+        public PBlockBlock1Syntax PBlockBlock1(PAlternativeSyntax alternatives)
+        {
+        	return this.PBlockBlock1(this.Token(CompilerSyntaxKind.TBar), alternatives);
+        }
+
+        public PBlockInlineBlock1Syntax PBlockInlineBlock1(SyntaxToken tBar, PAlternativeSyntax alternatives)
+        {
+        	if (tBar.RawKind != (int)CompilerSyntaxKind.TBar) throw new ArgumentException(nameof(tBar));
+        	if (alternatives is null) throw new ArgumentNullException(nameof(alternatives));
+            return (PBlockInlineBlock1Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.PBlockInlineBlock1((InternalSyntaxToken)tBar.Node, (PAlternativeGreen)alternatives.Green).CreateRed();
+        }
+        
+        public PBlockInlineBlock1Syntax PBlockInlineBlock1(PAlternativeSyntax alternatives)
+        {
+        	return this.PBlockInlineBlock1(this.Token(CompilerSyntaxKind.TBar), alternatives);
         }
 
         public PAlternativeBlock1Syntax PAlternativeBlock1(MetaDslx.CodeAnalysis.SyntaxList<ParserAnnotationSyntax> annotations1, SyntaxToken kAlt, NameSyntax name, PAlternativeBlock1Block1Syntax pAlternativeBlock1Block1, SyntaxToken tColon)
@@ -774,30 +790,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
         public PReferenceAlt3Block1Syntax PReferenceAlt3Block1(QualifierSyntax referencedTypes)
         {
         	return this.PReferenceAlt3Block1(this.Token(CompilerSyntaxKind.TComma), referencedTypes);
-        }
-
-        public PBlockBlock1Syntax PBlockBlock1(SyntaxToken tBar, PBlockAlternativeSyntax alternatives)
-        {
-        	if (tBar.RawKind != (int)CompilerSyntaxKind.TBar) throw new ArgumentException(nameof(tBar));
-        	if (alternatives is null) throw new ArgumentNullException(nameof(alternatives));
-            return (PBlockBlock1Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.PBlockBlock1((InternalSyntaxToken)tBar.Node, (PBlockAlternativeGreen)alternatives.Green).CreateRed();
-        }
-        
-        public PBlockBlock1Syntax PBlockBlock1(PBlockAlternativeSyntax alternatives)
-        {
-        	return this.PBlockBlock1(this.Token(CompilerSyntaxKind.TBar), alternatives);
-        }
-
-        public PBlockAlternativeBlock1Syntax PBlockAlternativeBlock1(SyntaxToken tEqGt, ExpressionSyntax returnValue)
-        {
-        	if (tEqGt.RawKind != (int)CompilerSyntaxKind.TEqGt) throw new ArgumentException(nameof(tEqGt));
-        	if (returnValue is null) throw new ArgumentNullException(nameof(returnValue));
-            return (PBlockAlternativeBlock1Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.PBlockAlternativeBlock1((InternalSyntaxToken)tEqGt.Node, (ExpressionGreen)returnValue.Green).CreateRed();
-        }
-        
-        public PBlockAlternativeBlock1Syntax PBlockAlternativeBlock1(ExpressionSyntax returnValue)
-        {
-        	return this.PBlockAlternativeBlock1(this.Token(CompilerSyntaxKind.TEqGt), returnValue);
         }
 
         public LexerRuleBlock1Alt1Syntax LexerRuleBlock1Alt1(SyntaxToken kToken, NameSyntax name, LexerRuleBlock1Alt1Block1Syntax lexerRuleBlock1Alt1Block1)
@@ -959,16 +951,16 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		        typeof(LanguageDeclarationSyntax),
 		        typeof(GrammarSyntax),
 		        typeof(ParserRuleSyntax),
+		        typeof(PBlockSyntax),
 		        typeof(LexerRuleSyntax),
 		        typeof(PAlternativeSyntax),
 		        typeof(PElementSyntax),
-		        typeof(PBlockSyntax),
+		        typeof(PBlockInlineSyntax),
 		        typeof(PEofSyntax),
 		        typeof(PKeywordSyntax),
 		        typeof(PReferenceAlt1Syntax),
 		        typeof(PReferenceAlt2Syntax),
 		        typeof(PReferenceAlt3Syntax),
-		        typeof(PBlockAlternativeSyntax),
 		        typeof(LAlternativeSyntax),
 		        typeof(LElementSyntax),
 		        typeof(LBlockSyntax),
@@ -994,14 +986,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		        typeof(GrammarBlock1Syntax),
 		        typeof(ParserRuleBlock1Alt1Syntax),
 		        typeof(ParserRuleBlock1Alt2Syntax),
-		        typeof(ParserRuleBlock1Alt3Syntax),
 		        typeof(ParserRuleBlock2Syntax),
+		        typeof(PBlockBlock1Syntax),
+		        typeof(PBlockInlineBlock1Syntax),
 		        typeof(PAlternativeBlock1Syntax),
 		        typeof(PAlternativeBlock2Syntax),
 		        typeof(PElementBlock1Syntax),
 		        typeof(PReferenceAlt3Block1Syntax),
-		        typeof(PBlockBlock1Syntax),
-		        typeof(PBlockAlternativeBlock1Syntax),
 		        typeof(LexerRuleBlock1Alt1Syntax),
 		        typeof(LexerRuleBlock1Alt2Syntax),
 		        typeof(LexerRuleBlock1Alt3Syntax),

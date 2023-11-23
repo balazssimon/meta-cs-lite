@@ -32,17 +32,18 @@ LanguageDeclaration returns MetaDslx.Bootstrap.MetaCompiler.Model.Language: 'lan
 
 Grammar: [Scope](rules+=Rule*);
 
-Rule: ParserRule | LexerRule;
+Rule: ParserRule | PBlock | LexerRule;
 
-ParserRule: annotations+=ParserAnnotation* (isBlock?='block' name=Name | returnType=[Use(MetaType)]Identifier | name=Name 'returns' returnType=#MetaType) ':' alternatives+=PAlternative ('|' alternatives+=PAlternative)* ';';
+ParserRule: annotations+=ParserAnnotation* [Name](returnType=[Use(MetaType)]Identifier | Identifier 'returns' returnType=#MetaType) ':' alternatives+=PAlternative ('|' alternatives+=PAlternative)* ';';
+PBlock: annotations+=ParserAnnotation* 'block' name=Name ':' alternatives+=PAlternative ('|' alternatives+=PAlternative)* ';';
+PBlockInline returns PBlock: '(' alternatives+=PAlternative ('|' alternatives+=PAlternative)* ')';
+
 PAlternative: (annotations+=ParserAnnotation* 'alt' name=Name ('returns' returnType=#MetaType)? ':')? elements+=PElement* ('=>' returnValue=Expression)?;
 PElement: (nameAnnotations+=ParserAnnotation* symbolProperty+=[SymbolProperty]Identifier assignment=Assignment)? valueAnnotations+=ParserAnnotation* value=PElementValue multiplicity=Multiplicity?;
-PElementValue: PBlock | PEof | PKeyword | PReference;
+PElementValue: PBlockInline | PEof | PKeyword | PReference;
 PReference: rule=[Use(Rule)]Identifier | '#' referencedTypes+=#MetaType | '#{' referencedTypes+=#MetaType (',' referencedTypes+=#MetaType)* '}' ;
 PEof: 'eof';
 PKeyword: text=TString;
-PBlock: '(' alternatives+=PBlockAlternative ('|' alternatives+=PBlockAlternative)* ')';
-PBlockAlternative returns PAlternative: elements+=PElement* ('=>' returnValue=Expression)?;
 
 LexerRule: annotations+=LexerAnnotation* ('token' name=Name ('returns' returnType=#MetaType)? | isHidden?='hidden' name=Name | isFragment?='fragment' name=Name) ':' alternatives+=LAlternative ('|' alternatives+=LAlternative)* ';';
 LAlternative: elements+=LElement*;

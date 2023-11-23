@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Collections.Immutable;
 using MetaDslx.CodeAnalysis.PooledObjects;
 using MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax;
+using MetaDslx.Bootstrap.MetaCompiler.Model;
 
 namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
 {
@@ -22,6 +23,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
             public static readonly CompletionPart FinishComputingProperty_ReturnType = new CompletionPart(nameof(FinishComputingProperty_ReturnType));
             public static readonly CompletionPart StartComputingProperty_Elements = new CompletionPart(nameof(StartComputingProperty_Elements));
             public static readonly CompletionPart FinishComputingProperty_Elements = new CompletionPart(nameof(FinishComputingProperty_Elements));
+            public static readonly CompletionPart StartComputingProperty_ExpectedTypes = new CompletionPart(nameof(StartComputingProperty_ExpectedTypes));
+            public static readonly CompletionPart FinishComputingProperty_ExpectedTypes = new CompletionPart(nameof(FinishComputingProperty_ExpectedTypes));
             public static readonly CompletionPart StartComputingProperty_Members = DeclaredSymbol.CompletionParts.StartComputingProperty_Members;
             public static readonly CompletionPart FinishComputingProperty_Members = DeclaredSymbol.CompletionParts.FinishComputingProperty_Members;
             public static readonly CompletionPart StartComputingProperty_TypeArguments = DeclaredSymbol.CompletionParts.StartComputingProperty_TypeArguments;
@@ -34,14 +37,15 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
                 CompletionGraph.CreateFromParts(
                     StartComputingProperty_ReturnType, FinishComputingProperty_ReturnType,
                     StartComputingProperty_Elements, FinishComputingProperty_Elements,
+                    StartComputingProperty_ExpectedTypes, FinishComputingProperty_ExpectedTypes,
                     StartComputingProperty_Members, FinishComputingProperty_Members,
                     StartComputingProperty_TypeArguments, FinishComputingProperty_TypeArguments,
                     StartComputingProperty_Imports, FinishComputingProperty_Imports,
                     StartComputingProperty_Attributes, FinishComputingProperty_Attributes);
         }
 
+        private ImmutableArray<MetaType> _expectedTypes;
         private MetaType _returnType;
-        private ParserRuleSymbol _parserRule;
         private ImmutableArray<PElementSymbol> _elements;
         private ImmutableArray<PElementSymbol> _allSimpleElements;
 
@@ -54,28 +58,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
 
         public PAlternativeSyntax? Syntax => this.DeclaringSyntaxReference.AsNode() as PAlternativeSyntax;
 
-        public GrammarSymbol? ContainingGrammarSymbol => ContainingParserRuleSymbol?.ContainingGrammarSymbol;
+        public GrammarSymbol? ContainingGrammarSymbol => this.GetOutermostContainingSymbol<GrammarSymbol>();
 
-        public ParserRuleSymbol? ContainingParserRuleSymbol
-        {
-            get
-            {
-                if (_parserRule is null)
-                {
-                    var container = this.ContainingSymbol;
-                    while (container is not null)
-                    {
-                        if (container is ParserRuleSymbol prs)
-                        {
-                            Interlocked.CompareExchange(ref _parserRule, prs, null);
-                            break;
-                        }
-                        container = container.ContainingSymbol;
-                    }
-                }
-                return _parserRule;
-            }
-        }
+        public ParserRuleSymbol? ContainingParserRuleSymbol => this.ContainingSymbol as ParserRuleSymbol;
+
+        public PBlockSymbol? ContainingPBlockSymbol => this.ContainingSymbol as PBlockSymbol;
 
         [ModelProperty]
         public MetaType ReturnType
@@ -94,6 +81,15 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
             {
                 ForceComplete(CompletionParts.FinishComputingProperty_Elements, null, default);
                 return _elements;
+            }
+        }
+
+        public ImmutableArray<MetaType> ExpectedTypes
+        {
+            get
+            {
+                ForceComplete(CompletionParts.FinishComputingProperty_ExpectedTypes, null, default);
+                return _expectedTypes;
             }
         }
 
@@ -151,6 +147,18 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
                 }
                 return true;
             }
+            else if (incompletePart == CompletionParts.StartComputingProperty_ExpectedTypes || incompletePart == CompletionParts.FinishComputingProperty_ExpectedTypes)
+            {
+                if (NotePartComplete(CompletionParts.StartComputingProperty_ExpectedTypes))
+                {
+                    var diagnostics = DiagnosticBag.GetInstance();
+                    _expectedTypes = CompleteProperty_ExpectedTypes(diagnostics, cancellationToken);
+                    AddSymbolDiagnostics(diagnostics);
+                    diagnostics.Free();
+                    NotePartComplete(CompletionParts.FinishComputingProperty_ExpectedTypes);
+                }
+                return true;
+            }
             else if (base.ForceCompletePart(ref incompletePart, locationOpt, cancellationToken))
             {
                 return true;
@@ -164,12 +172,31 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
             return Declaration.Language.SyntaxFacts.ExtractName(nameSyntax);
         }
 
+        protected virtual ImmutableArray<MetaType> CompleteProperty_ExpectedTypes(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        {
+            var block = this.ContainingPBlockSymbol;
+            if (block is not null)
+            {
+                return block.ExpectedTypes;
+            }
+            var rule = this.ContainingParserRuleSymbol;
+            if (rule is not null)
+            {
+                return rule.ExpectedTypes;
+            }
+            return ImmutableArray<MetaType>.Empty;
+        }
+
         protected virtual MetaType CompleteProperty_ReturnType(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             var returnType = SymbolFactory.GetSymbolPropertyValue<MetaType>(this, nameof(ReturnType), diagnostics, cancellationToken);
             if (returnType.IsNull)
             {
-                returnType = ContainingParserRuleSymbol?.ReturnType ?? default;
+                var rule = this.ContainingParserRuleSymbol;
+                if (rule is not null)
+                {
+                    returnType = rule.ReturnType;
+                }
             }
             return returnType;
         }
@@ -183,7 +210,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
         {
             base.CompletePart_Validate(diagnostics, cancellationToken);
             var rule = this.ContainingParserRuleSymbol;
-            if (rule is not null && !rule.IsBlock)
+            if (rule is not null)
             {
                 if (!rule.ReturnType.IsAssignableFrom(this.ReturnType))
                 {

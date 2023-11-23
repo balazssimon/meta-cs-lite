@@ -23,13 +23,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
                         return ExtractName(pr.ParserRuleBlock1);
                     case CompilerSyntaxKind.ParserRuleBlock1Alt1:
                         var alt1 = (ParserRuleBlock1Alt1Syntax)node;
-                        return ExtractName(alt1.Name);
+                        return ExtractName(alt1.ReturnType);
                     case CompilerSyntaxKind.ParserRuleBlock1Alt2:
                         var alt2 = (ParserRuleBlock1Alt2Syntax)node;
-                        return ExtractName(alt2.ReturnType);
-                    case CompilerSyntaxKind.ParserRuleBlock1Alt3:
-                        var alt3 = (ParserRuleBlock1Alt3Syntax)node;
-                        return ExtractName(alt3.Name);
+                        return ExtractName(alt2.Identifier);
                     default:
                         break;
                 }

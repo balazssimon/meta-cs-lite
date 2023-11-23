@@ -32,18 +32,18 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 				case CompilerSyntaxKind.TSemicolon:
 				case CompilerSyntaxKind.KUsing:
 				case CompilerSyntaxKind.KLanguage:
-				case CompilerSyntaxKind.KBlock:
 				case CompilerSyntaxKind.KReturns:
 				case CompilerSyntaxKind.TColon:
 				case CompilerSyntaxKind.TBar:
+				case CompilerSyntaxKind.KBlock:
+				case CompilerSyntaxKind.TLParen:
+				case CompilerSyntaxKind.TRParen:
 				case CompilerSyntaxKind.KAlt:
 				case CompilerSyntaxKind.TEqGt:
 				case CompilerSyntaxKind.THash:
 				case CompilerSyntaxKind.THashLBrace:
 				case CompilerSyntaxKind.TRBrace:
 				case CompilerSyntaxKind.KEof:
-				case CompilerSyntaxKind.TLParen:
-				case CompilerSyntaxKind.TRParen:
 				case CompilerSyntaxKind.KToken:
 				case CompilerSyntaxKind.KHidden:
 				case CompilerSyntaxKind.KFragment:
@@ -106,18 +106,18 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 				case CompilerSyntaxKind.TSemicolon:
 				case CompilerSyntaxKind.KUsing:
 				case CompilerSyntaxKind.KLanguage:
-				case CompilerSyntaxKind.KBlock:
 				case CompilerSyntaxKind.KReturns:
 				case CompilerSyntaxKind.TColon:
 				case CompilerSyntaxKind.TBar:
+				case CompilerSyntaxKind.KBlock:
+				case CompilerSyntaxKind.TLParen:
+				case CompilerSyntaxKind.TRParen:
 				case CompilerSyntaxKind.KAlt:
 				case CompilerSyntaxKind.TEqGt:
 				case CompilerSyntaxKind.THash:
 				case CompilerSyntaxKind.THashLBrace:
 				case CompilerSyntaxKind.TRBrace:
 				case CompilerSyntaxKind.KEof:
-				case CompilerSyntaxKind.TLParen:
-				case CompilerSyntaxKind.TRParen:
 				case CompilerSyntaxKind.KToken:
 				case CompilerSyntaxKind.KHidden:
 				case CompilerSyntaxKind.KFragment:
@@ -167,14 +167,18 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 					return CompilerSyntaxKind.KUsing;
 				case "language": 
 					return CompilerSyntaxKind.KLanguage;
-				case "block": 
-					return CompilerSyntaxKind.KBlock;
 				case "returns": 
 					return CompilerSyntaxKind.KReturns;
 				case ":": 
 					return CompilerSyntaxKind.TColon;
 				case "|": 
 					return CompilerSyntaxKind.TBar;
+				case "block": 
+					return CompilerSyntaxKind.KBlock;
+				case "(": 
+					return CompilerSyntaxKind.TLParen;
+				case ")": 
+					return CompilerSyntaxKind.TRParen;
 				case "alt": 
 					return CompilerSyntaxKind.KAlt;
 				case "=>": 
@@ -187,10 +191,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 					return CompilerSyntaxKind.TRBrace;
 				case "eof": 
 					return CompilerSyntaxKind.KEof;
-				case "(": 
-					return CompilerSyntaxKind.TLParen;
-				case ")": 
-					return CompilerSyntaxKind.TRParen;
 				case "token": 
 					return CompilerSyntaxKind.KToken;
 				case "hidden": 
@@ -286,14 +286,18 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 					return "KUsing";
 				case CompilerSyntaxKind.KLanguage: 
 					return "KLanguage";
-				case CompilerSyntaxKind.KBlock: 
-					return "KBlock";
 				case CompilerSyntaxKind.KReturns: 
 					return "KReturns";
 				case CompilerSyntaxKind.TColon: 
 					return "TColon";
 				case CompilerSyntaxKind.TBar: 
 					return "TBar";
+				case CompilerSyntaxKind.KBlock: 
+					return "KBlock";
+				case CompilerSyntaxKind.TLParen: 
+					return "TLParen";
+				case CompilerSyntaxKind.TRParen: 
+					return "TRParen";
 				case CompilerSyntaxKind.KAlt: 
 					return "KAlt";
 				case CompilerSyntaxKind.TEqGt: 
@@ -306,10 +310,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 					return "TRBrace";
 				case CompilerSyntaxKind.KEof: 
 					return "KEof";
-				case CompilerSyntaxKind.TLParen: 
-					return "TLParen";
-				case CompilerSyntaxKind.TRParen: 
-					return "TRParen";
 				case CompilerSyntaxKind.KToken: 
 					return "KToken";
 				case CompilerSyntaxKind.KHidden: 
@@ -404,14 +404,16 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 					return "Grammar";
 				case CompilerSyntaxKind.ParserRule: 
 					return "ParserRule";
+				case CompilerSyntaxKind.PBlock: 
+					return "PBlock";
 				case CompilerSyntaxKind.LexerRule: 
 					return "LexerRule";
 				case CompilerSyntaxKind.PAlternative: 
 					return "PAlternative";
 				case CompilerSyntaxKind.PElement: 
 					return "PElement";
-				case CompilerSyntaxKind.PBlock: 
-					return "PBlock";
+				case CompilerSyntaxKind.PBlockInline: 
+					return "PBlockInline";
 				case CompilerSyntaxKind.PEof: 
 					return "PEof";
 				case CompilerSyntaxKind.PKeyword: 
@@ -422,8 +424,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 					return "PReferenceAlt2";
 				case CompilerSyntaxKind.PReferenceAlt3: 
 					return "PReferenceAlt3";
-				case CompilerSyntaxKind.PBlockAlternative: 
-					return "PBlockAlternative";
 				case CompilerSyntaxKind.LAlternative: 
 					return "LAlternative";
 				case CompilerSyntaxKind.LElement: 
@@ -474,10 +474,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 					return "ParserRuleBlock1Alt1";
 				case CompilerSyntaxKind.ParserRuleBlock1Alt2: 
 					return "ParserRuleBlock1Alt2";
-				case CompilerSyntaxKind.ParserRuleBlock1Alt3: 
-					return "ParserRuleBlock1Alt3";
 				case CompilerSyntaxKind.ParserRuleBlock2: 
 					return "ParserRuleBlock2";
+				case CompilerSyntaxKind.PBlockBlock1: 
+					return "PBlockBlock1";
+				case CompilerSyntaxKind.PBlockInlineBlock1: 
+					return "PBlockInlineBlock1";
 				case CompilerSyntaxKind.PAlternativeBlock1: 
 					return "PAlternativeBlock1";
 				case CompilerSyntaxKind.PAlternativeBlock2: 
@@ -486,10 +488,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 					return "PElementBlock1";
 				case CompilerSyntaxKind.PReferenceAlt3Block1: 
 					return "PReferenceAlt3Block1";
-				case CompilerSyntaxKind.PBlockBlock1: 
-					return "PBlockBlock1";
-				case CompilerSyntaxKind.PBlockAlternativeBlock1: 
-					return "PBlockAlternativeBlock1";
 				case CompilerSyntaxKind.LexerRuleBlock1Alt1: 
 					return "LexerRuleBlock1Alt1";
 				case CompilerSyntaxKind.LexerRuleBlock1Alt2: 
@@ -542,14 +540,18 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 					return "using";
 				case CompilerSyntaxKind.KLanguage: 
 					return "language";
-				case CompilerSyntaxKind.KBlock: 
-					return "block";
 				case CompilerSyntaxKind.KReturns: 
 					return "returns";
 				case CompilerSyntaxKind.TColon: 
 					return ":";
 				case CompilerSyntaxKind.TBar: 
 					return "|";
+				case CompilerSyntaxKind.KBlock: 
+					return "block";
+				case CompilerSyntaxKind.TLParen: 
+					return "(";
+				case CompilerSyntaxKind.TRParen: 
+					return ")";
 				case CompilerSyntaxKind.KAlt: 
 					return "alt";
 				case CompilerSyntaxKind.TEqGt: 
@@ -562,10 +564,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 					return "}";
 				case CompilerSyntaxKind.KEof: 
 					return "eof";
-				case CompilerSyntaxKind.TLParen: 
-					return "(";
-				case CompilerSyntaxKind.TRParen: 
-					return ")";
 				case CompilerSyntaxKind.KToken: 
 					return "token";
 				case CompilerSyntaxKind.KHidden: 
@@ -647,8 +645,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 				case CompilerSyntaxKind.KNamespace: 
 				case CompilerSyntaxKind.KUsing: 
 				case CompilerSyntaxKind.KLanguage: 
-				case CompilerSyntaxKind.KBlock: 
 				case CompilerSyntaxKind.KReturns: 
+				case CompilerSyntaxKind.KBlock: 
 				case CompilerSyntaxKind.KAlt: 
 				case CompilerSyntaxKind.KEof: 
 				case CompilerSyntaxKind.KToken: 
@@ -673,8 +671,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 			yield return CompilerSyntaxKind.KNamespace;
 			yield return CompilerSyntaxKind.KUsing;
 			yield return CompilerSyntaxKind.KLanguage;
-			yield return CompilerSyntaxKind.KBlock;
 			yield return CompilerSyntaxKind.KReturns;
+			yield return CompilerSyntaxKind.KBlock;
 			yield return CompilerSyntaxKind.KAlt;
 			yield return CompilerSyntaxKind.KEof;
 			yield return CompilerSyntaxKind.KToken;
@@ -701,10 +699,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 					return CompilerSyntaxKind.KUsing;
 				case "language": 
 					return CompilerSyntaxKind.KLanguage;
-				case "block": 
-					return CompilerSyntaxKind.KBlock;
 				case "returns": 
 					return CompilerSyntaxKind.KReturns;
+				case "block": 
+					return CompilerSyntaxKind.KBlock;
 				case "alt": 
 					return CompilerSyntaxKind.KAlt;
 				case "eof": 

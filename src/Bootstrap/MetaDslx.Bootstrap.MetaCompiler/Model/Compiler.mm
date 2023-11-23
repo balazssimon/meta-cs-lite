@@ -166,15 +166,14 @@ class LBlock : LElementValue
 
 abstract class ParserRule $ParserRuleSymbol : Rule
 {
-	type? $ReturnType;
-	bool $IsBlock;
+	type $ReturnType;
 
 	contains PAlternative[] $Alternatives;
 }
 
 class PAlternative $PAlternativeSymbol : Declaration
 {
-	type? $ReturnType;
+	type $ReturnType;
 	contains Expression ReturnValue;
 
 	contains PElement[] $Elements;
@@ -205,7 +204,7 @@ abstract class PElementValue $Symbol
 class PReference $PReferenceSymbol : PElementValue
 {
 	Rule $Rule;
-	type[] ReferencedTypes;
+	type[] $ReferencedTypes;
 }
 
 class PEof : PElementValue
@@ -217,7 +216,7 @@ class PKeyword : PElementValue
 	string Text;
 }
 
-class PBlock $PBlockSymbol : PElementValue
+class PBlock $PBlockSymbol : Rule, PElementValue
 {
 	contains PAlternative[] $Alternatives;
 }

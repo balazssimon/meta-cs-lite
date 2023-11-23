@@ -35,9 +35,9 @@ public partial class CompilerLexer : global::MetaDslx.CodeAnalysis.Parsers.Antlr
 	protected static PredictionContextCache sharedContextCache = new PredictionContextCache();
 	public const int
 		LR_TComma=1, LR_Utf8Bom=2, LR_KNamespace=3, LR_TSemicolon=4, LR_KUsing=5, 
-		LR_KLanguage=6, LR_KBlock=7, LR_KReturns=8, LR_TColon=9, LR_TBar=10, LR_KAlt=11, 
-		LR_TEqGt=12, LR_THash=13, LR_THashLBrace=14, LR_TRBrace=15, LR_KEof=16, 
-		LR_TLParen=17, LR_TRParen=18, LR_KToken=19, LR_KHidden=20, LR_KFragment=21, 
+		LR_KLanguage=6, LR_KReturns=7, LR_TColon=8, LR_TBar=9, LR_KBlock=10, LR_TLParen=11, 
+		LR_TRParen=12, LR_KAlt=13, LR_TEqGt=14, LR_THash=15, LR_THashLBrace=16, 
+		LR_TRBrace=17, LR_KEof=18, LR_KToken=19, LR_KHidden=20, LR_KFragment=21, 
 		LR_TTilde=22, LR_TDot=23, LR_TDotDot=24, LR_KNull=25, LR_KTrue=26, LR_KFalse=27, 
 		LR_TLBrace=28, LR_TLBracket=29, LR_TRBracket=30, LR_TEq=31, LR_TQuestionEq=32, 
 		LR_TExclEq=33, LR_TPlusEq=34, LR_TQuestion=35, LR_TAsterisk=36, LR_TPlus=37, 
@@ -55,18 +55,18 @@ public partial class CompilerLexer : global::MetaDslx.CodeAnalysis.Parsers.Antlr
 
 	public static readonly string[] ruleNames = {
 		"LR_TComma", "LR_Utf8Bom", "LR_KNamespace", "LR_TSemicolon", "LR_KUsing", 
-		"LR_KLanguage", "LR_KBlock", "LR_KReturns", "LR_TColon", "LR_TBar", "LR_KAlt", 
-		"LR_TEqGt", "LR_THash", "LR_THashLBrace", "LR_TRBrace", "LR_KEof", "LR_TLParen", 
-		"LR_TRParen", "LR_KToken", "LR_KHidden", "LR_KFragment", "LR_TTilde", 
-		"LR_TDot", "LR_TDotDot", "LR_KNull", "LR_KTrue", "LR_KFalse", "LR_TLBrace", 
-		"LR_TLBracket", "LR_TRBracket", "LR_TEq", "LR_TQuestionEq", "LR_TExclEq", 
-		"LR_TPlusEq", "LR_TQuestion", "LR_TAsterisk", "LR_TPlus", "LR_TQuestionQuestion", 
-		"LR_TAsteriskQuestion", "LR_TPlusQuestion", "LR_TInteger", "LR_TDecimal", 
-		"LR_TPrimitiveType", "LR_TIdentifier", "LR_TVerbatimIdentifier", "LR_TString", 
-		"LR_DoubleQuoteTextCharacter", "LR_DoubleQuoteTextSimple", "LR_SingleQuoteTextCharacter", 
-		"LR_SingleQuoteTextSimple", "LR_CharacterEscapeSimple", "LR_CharacterEscapeSimpleCharacter", 
-		"LR_CharacterEscapeUnicode", "LR_HexDigit", "LR_TWhitespace", "LR_TLineEnd", 
-		"LR_TSingleLineComment", "LR_TMultiLineComment", "LR_TInvalidToken"
+		"LR_KLanguage", "LR_KReturns", "LR_TColon", "LR_TBar", "LR_KBlock", "LR_TLParen", 
+		"LR_TRParen", "LR_KAlt", "LR_TEqGt", "LR_THash", "LR_THashLBrace", "LR_TRBrace", 
+		"LR_KEof", "LR_KToken", "LR_KHidden", "LR_KFragment", "LR_TTilde", "LR_TDot", 
+		"LR_TDotDot", "LR_KNull", "LR_KTrue", "LR_KFalse", "LR_TLBrace", "LR_TLBracket", 
+		"LR_TRBracket", "LR_TEq", "LR_TQuestionEq", "LR_TExclEq", "LR_TPlusEq", 
+		"LR_TQuestion", "LR_TAsterisk", "LR_TPlus", "LR_TQuestionQuestion", "LR_TAsteriskQuestion", 
+		"LR_TPlusQuestion", "LR_TInteger", "LR_TDecimal", "LR_TPrimitiveType", 
+		"LR_TIdentifier", "LR_TVerbatimIdentifier", "LR_TString", "LR_DoubleQuoteTextCharacter", 
+		"LR_DoubleQuoteTextSimple", "LR_SingleQuoteTextCharacter", "LR_SingleQuoteTextSimple", 
+		"LR_CharacterEscapeSimple", "LR_CharacterEscapeSimpleCharacter", "LR_CharacterEscapeUnicode", 
+		"LR_HexDigit", "LR_TWhitespace", "LR_TLineEnd", "LR_TSingleLineComment", 
+		"LR_TMultiLineComment", "LR_TInvalidToken"
 	};
 
 
@@ -80,24 +80,23 @@ public partial class CompilerLexer : global::MetaDslx.CodeAnalysis.Parsers.Antlr
 	}
 
 	private static readonly string[] _LiteralNames = {
-		null, "','", null, "'namespace'", "';'", "'using'", "'language'", "'block'", 
-		"'returns'", "':'", "'|'", "'alt'", "'=>'", "'#'", "'#{'", "'}'", "'eof'", 
-		"'('", "')'", "'token'", "'hidden'", "'fragment'", "'~'", "'.'", "'..'", 
+		null, "','", null, "'namespace'", "';'", "'using'", "'language'", "'returns'", 
+		"':'", "'|'", "'block'", "'('", "')'", "'alt'", "'=>'", "'#'", "'#{'", 
+		"'}'", "'eof'", "'token'", "'hidden'", "'fragment'", "'~'", "'.'", "'..'", 
 		"'null'", "'true'", "'false'", "'{'", "'['", "']'", "'='", "'?='", "'!='", 
 		"'+='", "'?'", "'*'", "'+'", "'??'", "'*?'", "'+?'"
 	};
 	private static readonly string[] _SymbolicNames = {
 		null, "LR_TComma", "LR_Utf8Bom", "LR_KNamespace", "LR_TSemicolon", "LR_KUsing", 
-		"LR_KLanguage", "LR_KBlock", "LR_KReturns", "LR_TColon", "LR_TBar", "LR_KAlt", 
-		"LR_TEqGt", "LR_THash", "LR_THashLBrace", "LR_TRBrace", "LR_KEof", "LR_TLParen", 
-		"LR_TRParen", "LR_KToken", "LR_KHidden", "LR_KFragment", "LR_TTilde", 
-		"LR_TDot", "LR_TDotDot", "LR_KNull", "LR_KTrue", "LR_KFalse", "LR_TLBrace", 
-		"LR_TLBracket", "LR_TRBracket", "LR_TEq", "LR_TQuestionEq", "LR_TExclEq", 
-		"LR_TPlusEq", "LR_TQuestion", "LR_TAsterisk", "LR_TPlus", "LR_TQuestionQuestion", 
-		"LR_TAsteriskQuestion", "LR_TPlusQuestion", "LR_TInteger", "LR_TDecimal", 
-		"LR_TPrimitiveType", "LR_TIdentifier", "LR_TVerbatimIdentifier", "LR_TString", 
-		"LR_TWhitespace", "LR_TLineEnd", "LR_TSingleLineComment", "LR_TMultiLineComment", 
-		"LR_TInvalidToken"
+		"LR_KLanguage", "LR_KReturns", "LR_TColon", "LR_TBar", "LR_KBlock", "LR_TLParen", 
+		"LR_TRParen", "LR_KAlt", "LR_TEqGt", "LR_THash", "LR_THashLBrace", "LR_TRBrace", 
+		"LR_KEof", "LR_KToken", "LR_KHidden", "LR_KFragment", "LR_TTilde", "LR_TDot", 
+		"LR_TDotDot", "LR_KNull", "LR_KTrue", "LR_KFalse", "LR_TLBrace", "LR_TLBracket", 
+		"LR_TRBracket", "LR_TEq", "LR_TQuestionEq", "LR_TExclEq", "LR_TPlusEq", 
+		"LR_TQuestion", "LR_TAsterisk", "LR_TPlus", "LR_TQuestionQuestion", "LR_TAsteriskQuestion", 
+		"LR_TPlusQuestion", "LR_TInteger", "LR_TDecimal", "LR_TPrimitiveType", 
+		"LR_TIdentifier", "LR_TVerbatimIdentifier", "LR_TString", "LR_TWhitespace", 
+		"LR_TLineEnd", "LR_TSingleLineComment", "LR_TMultiLineComment", "LR_TInvalidToken"
 	};
 	public static readonly IVocabulary DefaultVocabulary = new Vocabulary(_LiteralNames, _SymbolicNames);
 
@@ -137,9 +136,9 @@ public partial class CompilerLexer : global::MetaDslx.CodeAnalysis.Parsers.Antlr
 		7,49,2,50,7,50,2,51,7,51,2,52,7,52,2,53,7,53,2,54,7,54,2,55,7,55,2,56,
 		7,56,2,57,7,57,2,58,7,58,1,0,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,2,1,2,1,2,1,
 		2,1,2,1,2,1,2,1,2,1,2,1,2,1,3,1,3,1,4,1,4,1,4,1,4,1,4,1,4,1,5,1,5,1,5,
-		1,5,1,5,1,5,1,5,1,5,1,5,1,6,1,6,1,6,1,6,1,6,1,6,1,7,1,7,1,7,1,7,1,7,1,
-		7,1,7,1,7,1,8,1,8,1,9,1,9,1,10,1,10,1,10,1,10,1,11,1,11,1,11,1,12,1,12,
-		1,13,1,13,1,13,1,14,1,14,1,15,1,15,1,15,1,15,1,16,1,16,1,17,1,17,1,18,
+		1,5,1,5,1,5,1,5,1,5,1,5,1,6,1,6,1,6,1,6,1,6,1,6,1,6,1,6,1,7,1,7,1,8,1,
+		8,1,9,1,9,1,9,1,9,1,9,1,9,1,10,1,10,1,11,1,11,1,12,1,12,1,12,1,12,1,13,
+		1,13,1,13,1,14,1,14,1,15,1,15,1,15,1,16,1,16,1,17,1,17,1,17,1,17,1,18,
 		1,18,1,18,1,18,1,18,1,18,1,19,1,19,1,19,1,19,1,19,1,19,1,19,1,20,1,20,
 		1,20,1,20,1,20,1,20,1,20,1,20,1,20,1,21,1,21,1,22,1,22,1,23,1,23,1,23,
 		1,24,1,24,1,24,1,24,1,24,1,25,1,25,1,25,1,25,1,25,1,26,1,26,1,26,1,26,
@@ -180,9 +179,9 @@ public partial class CompilerLexer : global::MetaDslx.CodeAnalysis.Parsers.Antlr
 		0,0,83,1,0,0,0,0,85,1,0,0,0,0,87,1,0,0,0,0,89,1,0,0,0,0,91,1,0,0,0,0,109,
 		1,0,0,0,0,111,1,0,0,0,0,113,1,0,0,0,0,115,1,0,0,0,0,117,1,0,0,0,1,119,
 		1,0,0,0,3,121,1,0,0,0,5,127,1,0,0,0,7,137,1,0,0,0,9,139,1,0,0,0,11,145,
-		1,0,0,0,13,154,1,0,0,0,15,160,1,0,0,0,17,168,1,0,0,0,19,170,1,0,0,0,21,
-		172,1,0,0,0,23,176,1,0,0,0,25,179,1,0,0,0,27,181,1,0,0,0,29,184,1,0,0,
-		0,31,186,1,0,0,0,33,190,1,0,0,0,35,192,1,0,0,0,37,194,1,0,0,0,39,200,1,
+		1,0,0,0,13,154,1,0,0,0,15,162,1,0,0,0,17,164,1,0,0,0,19,166,1,0,0,0,21,
+		172,1,0,0,0,23,174,1,0,0,0,25,176,1,0,0,0,27,180,1,0,0,0,29,183,1,0,0,
+		0,31,185,1,0,0,0,33,188,1,0,0,0,35,190,1,0,0,0,37,194,1,0,0,0,39,200,1,
 		0,0,0,41,207,1,0,0,0,43,216,1,0,0,0,45,218,1,0,0,0,47,220,1,0,0,0,49,223,
 		1,0,0,0,51,228,1,0,0,0,53,233,1,0,0,0,55,239,1,0,0,0,57,241,1,0,0,0,59,
 		243,1,0,0,0,61,245,1,0,0,0,63,247,1,0,0,0,65,250,1,0,0,0,67,253,1,0,0,
@@ -199,16 +198,16 @@ public partial class CompilerLexer : global::MetaDslx.CodeAnalysis.Parsers.Antlr
 		0,0,0,139,140,5,117,0,0,140,141,5,115,0,0,141,142,5,105,0,0,142,143,5,
 		110,0,0,143,144,5,103,0,0,144,10,1,0,0,0,145,146,5,108,0,0,146,147,5,97,
 		0,0,147,148,5,110,0,0,148,149,5,103,0,0,149,150,5,117,0,0,150,151,5,97,
-		0,0,151,152,5,103,0,0,152,153,5,101,0,0,153,12,1,0,0,0,154,155,5,98,0,
-		0,155,156,5,108,0,0,156,157,5,111,0,0,157,158,5,99,0,0,158,159,5,107,0,
-		0,159,14,1,0,0,0,160,161,5,114,0,0,161,162,5,101,0,0,162,163,5,116,0,0,
-		163,164,5,117,0,0,164,165,5,114,0,0,165,166,5,110,0,0,166,167,5,115,0,
-		0,167,16,1,0,0,0,168,169,5,58,0,0,169,18,1,0,0,0,170,171,5,124,0,0,171,
-		20,1,0,0,0,172,173,5,97,0,0,173,174,5,108,0,0,174,175,5,116,0,0,175,22,
-		1,0,0,0,176,177,5,61,0,0,177,178,5,62,0,0,178,24,1,0,0,0,179,180,5,35,
-		0,0,180,26,1,0,0,0,181,182,5,35,0,0,182,183,5,123,0,0,183,28,1,0,0,0,184,
-		185,5,125,0,0,185,30,1,0,0,0,186,187,5,101,0,0,187,188,5,111,0,0,188,189,
-		5,102,0,0,189,32,1,0,0,0,190,191,5,40,0,0,191,34,1,0,0,0,192,193,5,41,
+		0,0,151,152,5,103,0,0,152,153,5,101,0,0,153,12,1,0,0,0,154,155,5,114,0,
+		0,155,156,5,101,0,0,156,157,5,116,0,0,157,158,5,117,0,0,158,159,5,114,
+		0,0,159,160,5,110,0,0,160,161,5,115,0,0,161,14,1,0,0,0,162,163,5,58,0,
+		0,163,16,1,0,0,0,164,165,5,124,0,0,165,18,1,0,0,0,166,167,5,98,0,0,167,
+		168,5,108,0,0,168,169,5,111,0,0,169,170,5,99,0,0,170,171,5,107,0,0,171,
+		20,1,0,0,0,172,173,5,40,0,0,173,22,1,0,0,0,174,175,5,41,0,0,175,24,1,0,
+		0,0,176,177,5,97,0,0,177,178,5,108,0,0,178,179,5,116,0,0,179,26,1,0,0,
+		0,180,181,5,61,0,0,181,182,5,62,0,0,182,28,1,0,0,0,183,184,5,35,0,0,184,
+		30,1,0,0,0,185,186,5,35,0,0,186,187,5,123,0,0,187,32,1,0,0,0,188,189,5,
+		125,0,0,189,34,1,0,0,0,190,191,5,101,0,0,191,192,5,111,0,0,192,193,5,102,
 		0,0,193,36,1,0,0,0,194,195,5,116,0,0,195,196,5,111,0,0,196,197,5,107,0,
 		0,197,198,5,101,0,0,198,199,5,110,0,0,199,38,1,0,0,0,200,201,5,104,0,0,
 		201,202,5,105,0,0,202,203,5,100,0,0,203,204,5,100,0,0,204,205,5,101,0,

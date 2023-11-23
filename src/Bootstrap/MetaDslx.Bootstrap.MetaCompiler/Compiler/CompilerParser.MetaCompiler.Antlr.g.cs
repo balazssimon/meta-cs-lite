@@ -38,9 +38,9 @@ public partial class CompilerParser : global::MetaDslx.CodeAnalysis.Parsers.Antl
 	protected static PredictionContextCache sharedContextCache = new PredictionContextCache();
 	public const int
 		LR_TComma=1, LR_Utf8Bom=2, LR_KNamespace=3, LR_TSemicolon=4, LR_KUsing=5, 
-		LR_KLanguage=6, LR_KBlock=7, LR_KReturns=8, LR_TColon=9, LR_TBar=10, LR_KAlt=11, 
-		LR_TEqGt=12, LR_THash=13, LR_THashLBrace=14, LR_TRBrace=15, LR_KEof=16, 
-		LR_TLParen=17, LR_TRParen=18, LR_KToken=19, LR_KHidden=20, LR_KFragment=21, 
+		LR_KLanguage=6, LR_KReturns=7, LR_TColon=8, LR_TBar=9, LR_KBlock=10, LR_TLParen=11, 
+		LR_TRParen=12, LR_KAlt=13, LR_TEqGt=14, LR_THash=15, LR_THashLBrace=16, 
+		LR_TRBrace=17, LR_KEof=18, LR_KToken=19, LR_KHidden=20, LR_KFragment=21, 
 		LR_TTilde=22, LR_TDot=23, LR_TDotDot=24, LR_KNull=25, LR_KTrue=26, LR_KFalse=27, 
 		LR_TLBrace=28, LR_TLBracket=29, LR_TRBracket=30, LR_TEq=31, LR_TQuestionEq=32, 
 		LR_TExclEq=33, LR_TPlusEq=34, LR_TQuestion=35, LR_TAsterisk=36, LR_TPlus=37, 
@@ -51,52 +51,50 @@ public partial class CompilerParser : global::MetaDslx.CodeAnalysis.Parsers.Antl
 	public const int
 		RULE_pr_Main = 0, RULE_pr_Using = 1, RULE_pr_Declarations = 2, RULE_pr_LanguageDeclaration = 3, 
 		RULE_pr_Grammar = 4, RULE_pr_Rule = 5, RULE_pr_PAlternative = 6, RULE_pr_PElement = 7, 
-		RULE_pr_PElementValue = 8, RULE_pr_PBlockAlternative = 9, RULE_pr_LAlternative = 10, 
-		RULE_pr_LElement = 11, RULE_pr_LElementValue = 12, RULE_pr_Expression = 13, 
-		RULE_pr_ParserAnnotation = 14, RULE_pr_LexerAnnotation = 15, RULE_pr_AnnotationArguments = 16, 
-		RULE_pr_AnnotationArgument = 17, RULE_pr_Name = 18, RULE_pr_Qualifier = 19, 
-		RULE_pr_QualifierList = 20, RULE_pr_Identifier = 21, RULE_pr_GrammarBlock1 = 22, 
-		RULE_pr_ParserRuleBlock1 = 23, RULE_pr_ParserRuleBlock2 = 24, RULE_pr_PAlternativeBlock1 = 25, 
-		RULE_pr_PAlternativeBlock2 = 26, RULE_pr_PElementBlock1 = 27, RULE_pr_PReferenceAlt3Block1 = 28, 
-		RULE_pr_PBlockBlock1 = 29, RULE_pr_PBlockAlternativeBlock1 = 30, RULE_pr_LexerRuleBlock1 = 31, 
-		RULE_pr_LexerRuleBlock2 = 32, RULE_pr_LBlockBlock1 = 33, RULE_pr_ArrayExpressionBlock1 = 34, 
-		RULE_pr_AnnotationArgumentsBlock1 = 35, RULE_pr_AnnotationArgumentBlock1 = 36, 
-		RULE_pr_QualifierBlock1 = 37, RULE_pr_QualifierListBlock1 = 38, RULE_pr_PAlternativeBlock1Block1 = 39, 
-		RULE_pr_LexerRuleBlock1Alt1Block1 = 40, RULE_pr_ArrayExpressionBlock1Block1 = 41;
+		RULE_pr_PElementValue = 8, RULE_pr_LAlternative = 9, RULE_pr_LElement = 10, 
+		RULE_pr_LElementValue = 11, RULE_pr_Expression = 12, RULE_pr_ParserAnnotation = 13, 
+		RULE_pr_LexerAnnotation = 14, RULE_pr_AnnotationArguments = 15, RULE_pr_AnnotationArgument = 16, 
+		RULE_pr_Name = 17, RULE_pr_Qualifier = 18, RULE_pr_QualifierList = 19, 
+		RULE_pr_Identifier = 20, RULE_pr_GrammarBlock1 = 21, RULE_pr_ParserRuleBlock1 = 22, 
+		RULE_pr_ParserRuleBlock2 = 23, RULE_pr_PBlockBlock1 = 24, RULE_pr_PBlockInlineBlock1 = 25, 
+		RULE_pr_PAlternativeBlock1 = 26, RULE_pr_PAlternativeBlock2 = 27, RULE_pr_PElementBlock1 = 28, 
+		RULE_pr_PReferenceAlt3Block1 = 29, RULE_pr_LexerRuleBlock1 = 30, RULE_pr_LexerRuleBlock2 = 31, 
+		RULE_pr_LBlockBlock1 = 32, RULE_pr_ArrayExpressionBlock1 = 33, RULE_pr_AnnotationArgumentsBlock1 = 34, 
+		RULE_pr_AnnotationArgumentBlock1 = 35, RULE_pr_QualifierBlock1 = 36, RULE_pr_QualifierListBlock1 = 37, 
+		RULE_pr_PAlternativeBlock1Block1 = 38, RULE_pr_LexerRuleBlock1Alt1Block1 = 39, 
+		RULE_pr_ArrayExpressionBlock1Block1 = 40;
 	public static readonly string[] ruleNames = {
 		"pr_Main", "pr_Using", "pr_Declarations", "pr_LanguageDeclaration", "pr_Grammar", 
-		"pr_Rule", "pr_PAlternative", "pr_PElement", "pr_PElementValue", "pr_PBlockAlternative", 
-		"pr_LAlternative", "pr_LElement", "pr_LElementValue", "pr_Expression", 
-		"pr_ParserAnnotation", "pr_LexerAnnotation", "pr_AnnotationArguments", 
-		"pr_AnnotationArgument", "pr_Name", "pr_Qualifier", "pr_QualifierList", 
-		"pr_Identifier", "pr_GrammarBlock1", "pr_ParserRuleBlock1", "pr_ParserRuleBlock2", 
+		"pr_Rule", "pr_PAlternative", "pr_PElement", "pr_PElementValue", "pr_LAlternative", 
+		"pr_LElement", "pr_LElementValue", "pr_Expression", "pr_ParserAnnotation", 
+		"pr_LexerAnnotation", "pr_AnnotationArguments", "pr_AnnotationArgument", 
+		"pr_Name", "pr_Qualifier", "pr_QualifierList", "pr_Identifier", "pr_GrammarBlock1", 
+		"pr_ParserRuleBlock1", "pr_ParserRuleBlock2", "pr_PBlockBlock1", "pr_PBlockInlineBlock1", 
 		"pr_PAlternativeBlock1", "pr_PAlternativeBlock2", "pr_PElementBlock1", 
-		"pr_PReferenceAlt3Block1", "pr_PBlockBlock1", "pr_PBlockAlternativeBlock1", 
-		"pr_LexerRuleBlock1", "pr_LexerRuleBlock2", "pr_LBlockBlock1", "pr_ArrayExpressionBlock1", 
-		"pr_AnnotationArgumentsBlock1", "pr_AnnotationArgumentBlock1", "pr_QualifierBlock1", 
-		"pr_QualifierListBlock1", "pr_PAlternativeBlock1Block1", "pr_LexerRuleBlock1Alt1Block1", 
-		"pr_ArrayExpressionBlock1Block1"
+		"pr_PReferenceAlt3Block1", "pr_LexerRuleBlock1", "pr_LexerRuleBlock2", 
+		"pr_LBlockBlock1", "pr_ArrayExpressionBlock1", "pr_AnnotationArgumentsBlock1", 
+		"pr_AnnotationArgumentBlock1", "pr_QualifierBlock1", "pr_QualifierListBlock1", 
+		"pr_PAlternativeBlock1Block1", "pr_LexerRuleBlock1Alt1Block1", "pr_ArrayExpressionBlock1Block1"
 	};
 
 	private static readonly string[] _LiteralNames = {
-		null, "','", null, "'namespace'", "';'", "'using'", "'language'", "'block'", 
-		"'returns'", "':'", "'|'", "'alt'", "'=>'", "'#'", "'#{'", "'}'", "'eof'", 
-		"'('", "')'", "'token'", "'hidden'", "'fragment'", "'~'", "'.'", "'..'", 
+		null, "','", null, "'namespace'", "';'", "'using'", "'language'", "'returns'", 
+		"':'", "'|'", "'block'", "'('", "')'", "'alt'", "'=>'", "'#'", "'#{'", 
+		"'}'", "'eof'", "'token'", "'hidden'", "'fragment'", "'~'", "'.'", "'..'", 
 		"'null'", "'true'", "'false'", "'{'", "'['", "']'", "'='", "'?='", "'!='", 
 		"'+='", "'?'", "'*'", "'+'", "'??'", "'*?'", "'+?'"
 	};
 	private static readonly string[] _SymbolicNames = {
 		null, "LR_TComma", "LR_Utf8Bom", "LR_KNamespace", "LR_TSemicolon", "LR_KUsing", 
-		"LR_KLanguage", "LR_KBlock", "LR_KReturns", "LR_TColon", "LR_TBar", "LR_KAlt", 
-		"LR_TEqGt", "LR_THash", "LR_THashLBrace", "LR_TRBrace", "LR_KEof", "LR_TLParen", 
-		"LR_TRParen", "LR_KToken", "LR_KHidden", "LR_KFragment", "LR_TTilde", 
-		"LR_TDot", "LR_TDotDot", "LR_KNull", "LR_KTrue", "LR_KFalse", "LR_TLBrace", 
-		"LR_TLBracket", "LR_TRBracket", "LR_TEq", "LR_TQuestionEq", "LR_TExclEq", 
-		"LR_TPlusEq", "LR_TQuestion", "LR_TAsterisk", "LR_TPlus", "LR_TQuestionQuestion", 
-		"LR_TAsteriskQuestion", "LR_TPlusQuestion", "LR_TInteger", "LR_TDecimal", 
-		"LR_TPrimitiveType", "LR_TIdentifier", "LR_TVerbatimIdentifier", "LR_TString", 
-		"LR_TWhitespace", "LR_TLineEnd", "LR_TSingleLineComment", "LR_TMultiLineComment", 
-		"LR_TInvalidToken"
+		"LR_KLanguage", "LR_KReturns", "LR_TColon", "LR_TBar", "LR_KBlock", "LR_TLParen", 
+		"LR_TRParen", "LR_KAlt", "LR_TEqGt", "LR_THash", "LR_THashLBrace", "LR_TRBrace", 
+		"LR_KEof", "LR_KToken", "LR_KHidden", "LR_KFragment", "LR_TTilde", "LR_TDot", 
+		"LR_TDotDot", "LR_KNull", "LR_KTrue", "LR_KFalse", "LR_TLBrace", "LR_TLBracket", 
+		"LR_TRBracket", "LR_TEq", "LR_TQuestionEq", "LR_TExclEq", "LR_TPlusEq", 
+		"LR_TQuestion", "LR_TAsterisk", "LR_TPlus", "LR_TQuestionQuestion", "LR_TAsteriskQuestion", 
+		"LR_TPlusQuestion", "LR_TInteger", "LR_TDecimal", "LR_TPrimitiveType", 
+		"LR_TIdentifier", "LR_TVerbatimIdentifier", "LR_TString", "LR_TWhitespace", 
+		"LR_TLineEnd", "LR_TSingleLineComment", "LR_TMultiLineComment", "LR_TInvalidToken"
 	};
 	public static readonly IVocabulary DefaultVocabulary = new Vocabulary(_LiteralNames, _SymbolicNames);
 
@@ -174,30 +172,30 @@ public partial class CompilerParser : global::MetaDslx.CodeAnalysis.Parsers.Antl
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 84;
+			State = 82;
 			_localctx.kNamespace = Match(LR_KNamespace);
-			State = 85;
+			State = 83;
 			_localctx.nameAntlr1 = pr_Qualifier();
-			State = 86;
+			State = 84;
 			_localctx.tSemicolon = Match(LR_TSemicolon);
-			State = 90;
+			State = 88;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			while (_la==LR_KUsing) {
 				{
 				{
-				State = 87;
+				State = 85;
 				_localctx._pr_Using = pr_Using();
 				_localctx._usingAntlr1.Add(_localctx._pr_Using);
 				}
 				}
-				State = 92;
+				State = 90;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 			}
-			State = 93;
+			State = 91;
 			_localctx.declarationsAntlr1 = pr_Declarations();
-			State = 94;
+			State = 92;
 			_localctx.eof = Match(Eof);
 			}
 		}
@@ -241,11 +239,11 @@ public partial class CompilerParser : global::MetaDslx.CodeAnalysis.Parsers.Antl
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 96;
+			State = 94;
 			_localctx.kUsing = Match(LR_KUsing);
-			State = 97;
+			State = 95;
 			_localctx.namespacesAntlr1 = pr_Qualifier();
-			State = 98;
+			State = 96;
 			_localctx.tSemicolon = Match(LR_TSemicolon);
 			}
 		}
@@ -294,20 +292,20 @@ public partial class CompilerParser : global::MetaDslx.CodeAnalysis.Parsers.Antl
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 100;
+			State = 98;
 			_localctx.declarationsAntlr1 = pr_LanguageDeclaration();
-			State = 104;
+			State = 102;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
-			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & 61573191696512L) != 0)) {
+			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & 61573191697408L) != 0)) {
 				{
 				{
-				State = 101;
+				State = 99;
 				_localctx._pr_Rule = pr_Rule();
 				_localctx._declarations1Antlr1.Add(_localctx._pr_Rule);
 				}
 				}
-				State = 106;
+				State = 104;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 			}
@@ -357,13 +355,13 @@ public partial class CompilerParser : global::MetaDslx.CodeAnalysis.Parsers.Antl
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 107;
+			State = 105;
 			_localctx.kLanguage = Match(LR_KLanguage);
-			State = 108;
+			State = 106;
 			_localctx.nameAntlr1 = pr_Name();
-			State = 109;
+			State = 107;
 			_localctx.tSemicolon = Match(LR_TSemicolon);
-			State = 110;
+			State = 108;
 			_localctx.grammarAntlr1 = pr_Grammar();
 			}
 		}
@@ -403,7 +401,7 @@ public partial class CompilerParser : global::MetaDslx.CodeAnalysis.Parsers.Antl
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 112;
+			State = 110;
 			_localctx.grammarBlock1Antlr1 = pr_GrammarBlock1();
 			}
 		}
@@ -467,6 +465,45 @@ public partial class CompilerParser : global::MetaDslx.CodeAnalysis.Parsers.Antl
 			else return visitor.VisitChildren(this);
 		}
 	}
+	public partial class Pr_PBlockContext : Pr_RuleContext {
+		public Pr_ParserAnnotationContext _pr_ParserAnnotation;
+		public IList<Pr_ParserAnnotationContext> _annotations1Antlr1 = new List<Pr_ParserAnnotationContext>();
+		public IToken kBlock;
+		public Pr_NameContext nameAntlr1;
+		public IToken tColon;
+		public Pr_PAlternativeContext alternativesAntlr1;
+		public Pr_PBlockBlock1Context _pr_PBlockBlock1;
+		public IList<Pr_PBlockBlock1Context> _pBlockBlock1Antlr1 = new List<Pr_PBlockBlock1Context>();
+		public IToken tSemicolon;
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_KBlock() { return GetToken(CompilerParser.LR_KBlock, 0); }
+		[System.Diagnostics.DebuggerNonUserCode] public Pr_NameContext pr_Name() {
+			return GetRuleContext<Pr_NameContext>(0);
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TColon() { return GetToken(CompilerParser.LR_TColon, 0); }
+		[System.Diagnostics.DebuggerNonUserCode] public Pr_PAlternativeContext pr_PAlternative() {
+			return GetRuleContext<Pr_PAlternativeContext>(0);
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TSemicolon() { return GetToken(CompilerParser.LR_TSemicolon, 0); }
+		[System.Diagnostics.DebuggerNonUserCode] public Pr_ParserAnnotationContext[] pr_ParserAnnotation() {
+			return GetRuleContexts<Pr_ParserAnnotationContext>();
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public Pr_ParserAnnotationContext pr_ParserAnnotation(int i) {
+			return GetRuleContext<Pr_ParserAnnotationContext>(i);
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public Pr_PBlockBlock1Context[] pr_PBlockBlock1() {
+			return GetRuleContexts<Pr_PBlockBlock1Context>();
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public Pr_PBlockBlock1Context pr_PBlockBlock1(int i) {
+			return GetRuleContext<Pr_PBlockBlock1Context>(i);
+		}
+		public Pr_PBlockContext(Pr_RuleContext context) { CopyFrom(context); }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitPr_PBlock(this);
+			else return visitor.VisitChildren(this);
+		}
+	}
 	public partial class Pr_ParserRuleContext : Pr_RuleContext {
 		public Pr_ParserAnnotationContext _pr_ParserAnnotation;
 		public IList<Pr_ParserAnnotationContext> _annotations1Antlr1 = new List<Pr_ParserAnnotationContext>();
@@ -511,94 +548,140 @@ public partial class CompilerParser : global::MetaDslx.CodeAnalysis.Parsers.Antl
 		EnterRule(_localctx, 10, RULE_pr_Rule);
 		int _la;
 		try {
-			State = 148;
+			State = 164;
 			ErrorHandler.Sync(this);
-			switch ( Interpreter.AdaptivePredict(TokenStream,6,Context) ) {
+			switch ( Interpreter.AdaptivePredict(TokenStream,8,Context) ) {
 			case 1:
 				_localctx = new Pr_ParserRuleContext(_localctx);
 				EnterOuterAlt(_localctx, 1);
 				{
-				State = 117;
+				State = 115;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 				while (_la==LR_TLBracket) {
 					{
 					{
-					State = 114;
+					State = 112;
 					((Pr_ParserRuleContext)_localctx)._pr_ParserAnnotation = pr_ParserAnnotation();
 					((Pr_ParserRuleContext)_localctx)._annotations1Antlr1.Add(((Pr_ParserRuleContext)_localctx)._pr_ParserAnnotation);
 					}
 					}
-					State = 119;
+					State = 117;
 					ErrorHandler.Sync(this);
 					_la = TokenStream.LA(1);
 				}
-				State = 120;
+				State = 118;
 				((Pr_ParserRuleContext)_localctx).parserRuleBlock1Antlr1 = pr_ParserRuleBlock1();
-				State = 121;
+				State = 119;
 				((Pr_ParserRuleContext)_localctx).tColon = Match(LR_TColon);
-				State = 122;
+				State = 120;
 				((Pr_ParserRuleContext)_localctx).alternativesAntlr1 = pr_PAlternative();
-				State = 126;
+				State = 124;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 				while (_la==LR_TBar) {
 					{
 					{
-					State = 123;
+					State = 121;
 					((Pr_ParserRuleContext)_localctx)._pr_ParserRuleBlock2 = pr_ParserRuleBlock2();
 					((Pr_ParserRuleContext)_localctx)._parserRuleBlock2Antlr1.Add(((Pr_ParserRuleContext)_localctx)._pr_ParserRuleBlock2);
 					}
 					}
-					State = 128;
+					State = 126;
 					ErrorHandler.Sync(this);
 					_la = TokenStream.LA(1);
 				}
-				State = 129;
+				State = 127;
 				((Pr_ParserRuleContext)_localctx).tSemicolon = Match(LR_TSemicolon);
 				}
 				break;
 			case 2:
-				_localctx = new Pr_LexerRuleContext(_localctx);
+				_localctx = new Pr_PBlockContext(_localctx);
 				EnterOuterAlt(_localctx, 2);
 				{
-				State = 134;
+				State = 132;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 				while (_la==LR_TLBracket) {
 					{
 					{
-					State = 131;
-					((Pr_LexerRuleContext)_localctx)._pr_LexerAnnotation = pr_LexerAnnotation();
-					((Pr_LexerRuleContext)_localctx)._annotations1Antlr1.Add(((Pr_LexerRuleContext)_localctx)._pr_LexerAnnotation);
+					State = 129;
+					((Pr_PBlockContext)_localctx)._pr_ParserAnnotation = pr_ParserAnnotation();
+					((Pr_PBlockContext)_localctx)._annotations1Antlr1.Add(((Pr_PBlockContext)_localctx)._pr_ParserAnnotation);
 					}
 					}
-					State = 136;
+					State = 134;
 					ErrorHandler.Sync(this);
 					_la = TokenStream.LA(1);
 				}
+				State = 135;
+				((Pr_PBlockContext)_localctx).kBlock = Match(LR_KBlock);
+				State = 136;
+				((Pr_PBlockContext)_localctx).nameAntlr1 = pr_Name();
 				State = 137;
-				((Pr_LexerRuleContext)_localctx).lexerRuleBlock1Antlr1 = pr_LexerRuleBlock1();
+				((Pr_PBlockContext)_localctx).tColon = Match(LR_TColon);
 				State = 138;
-				((Pr_LexerRuleContext)_localctx).tColon = Match(LR_TColon);
-				State = 139;
-				((Pr_LexerRuleContext)_localctx).alternativesAntlr1 = pr_LAlternative();
-				State = 143;
+				((Pr_PBlockContext)_localctx).alternativesAntlr1 = pr_PAlternative();
+				State = 142;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 				while (_la==LR_TBar) {
 					{
 					{
-					State = 140;
+					State = 139;
+					((Pr_PBlockContext)_localctx)._pr_PBlockBlock1 = pr_PBlockBlock1();
+					((Pr_PBlockContext)_localctx)._pBlockBlock1Antlr1.Add(((Pr_PBlockContext)_localctx)._pr_PBlockBlock1);
+					}
+					}
+					State = 144;
+					ErrorHandler.Sync(this);
+					_la = TokenStream.LA(1);
+				}
+				State = 145;
+				((Pr_PBlockContext)_localctx).tSemicolon = Match(LR_TSemicolon);
+				}
+				break;
+			case 3:
+				_localctx = new Pr_LexerRuleContext(_localctx);
+				EnterOuterAlt(_localctx, 3);
+				{
+				State = 150;
+				ErrorHandler.Sync(this);
+				_la = TokenStream.LA(1);
+				while (_la==LR_TLBracket) {
+					{
+					{
+					State = 147;
+					((Pr_LexerRuleContext)_localctx)._pr_LexerAnnotation = pr_LexerAnnotation();
+					((Pr_LexerRuleContext)_localctx)._annotations1Antlr1.Add(((Pr_LexerRuleContext)_localctx)._pr_LexerAnnotation);
+					}
+					}
+					State = 152;
+					ErrorHandler.Sync(this);
+					_la = TokenStream.LA(1);
+				}
+				State = 153;
+				((Pr_LexerRuleContext)_localctx).lexerRuleBlock1Antlr1 = pr_LexerRuleBlock1();
+				State = 154;
+				((Pr_LexerRuleContext)_localctx).tColon = Match(LR_TColon);
+				State = 155;
+				((Pr_LexerRuleContext)_localctx).alternativesAntlr1 = pr_LAlternative();
+				State = 159;
+				ErrorHandler.Sync(this);
+				_la = TokenStream.LA(1);
+				while (_la==LR_TBar) {
+					{
+					{
+					State = 156;
 					((Pr_LexerRuleContext)_localctx)._pr_LexerRuleBlock2 = pr_LexerRuleBlock2();
 					((Pr_LexerRuleContext)_localctx)._lexerRuleBlock2Antlr1.Add(((Pr_LexerRuleContext)_localctx)._pr_LexerRuleBlock2);
 					}
 					}
-					State = 145;
+					State = 161;
 					ErrorHandler.Sync(this);
 					_la = TokenStream.LA(1);
 				}
-				State = 146;
+				State = 162;
 				((Pr_LexerRuleContext)_localctx).tSemicolon = Match(LR_TSemicolon);
 				}
 				break;
@@ -653,37 +736,37 @@ public partial class CompilerParser : global::MetaDslx.CodeAnalysis.Parsers.Antl
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 151;
+			State = 167;
 			ErrorHandler.Sync(this);
-			switch ( Interpreter.AdaptivePredict(TokenStream,7,Context) ) {
+			switch ( Interpreter.AdaptivePredict(TokenStream,9,Context) ) {
 			case 1:
 				{
-				State = 150;
+				State = 166;
 				_localctx.pAlternativeBlock1Antlr1 = pr_PAlternativeBlock1();
 				}
 				break;
 			}
-			State = 156;
+			State = 172;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
-			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & 131941932425216L) != 0)) {
+			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & 131941932566528L) != 0)) {
 				{
 				{
-				State = 153;
+				State = 169;
 				_localctx._pr_PElement = pr_PElement();
 				_localctx._elementsAntlr1.Add(_localctx._pr_PElement);
 				}
 				}
-				State = 158;
+				State = 174;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 			}
-			State = 160;
+			State = 176;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			if (_la==LR_TEqGt) {
 				{
-				State = 159;
+				State = 175;
 				_localctx.pAlternativeBlock2Antlr1 = pr_PAlternativeBlock2();
 				}
 			}
@@ -751,80 +834,80 @@ public partial class CompilerParser : global::MetaDslx.CodeAnalysis.Parsers.Antl
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 163;
+			State = 179;
 			ErrorHandler.Sync(this);
-			switch ( Interpreter.AdaptivePredict(TokenStream,10,Context) ) {
+			switch ( Interpreter.AdaptivePredict(TokenStream,12,Context) ) {
 			case 1:
 				{
-				State = 162;
+				State = 178;
 				_localctx.pElementBlock1Antlr1 = pr_PElementBlock1();
 				}
 				break;
 			}
-			State = 168;
+			State = 184;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			while (_la==LR_TLBracket) {
 				{
 				{
-				State = 165;
+				State = 181;
 				_localctx._pr_ParserAnnotation = pr_ParserAnnotation();
 				_localctx._valueAnnotationsAntlr1.Add(_localctx._pr_ParserAnnotation);
 				}
 				}
-				State = 170;
+				State = 186;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 			}
-			State = 171;
+			State = 187;
 			_localctx.valueAntlr1 = pr_PElementValue();
-			State = 178;
+			State = 194;
 			ErrorHandler.Sync(this);
 			switch (TokenStream.LA(1)) {
 			case LR_TQuestion:
 				{
-				State = 172;
+				State = 188;
 				_localctx.tQuestion = Match(LR_TQuestion);
 				}
 				break;
 			case LR_TAsterisk:
 				{
-				State = 173;
+				State = 189;
 				_localctx.tAsterisk = Match(LR_TAsterisk);
 				}
 				break;
 			case LR_TPlus:
 				{
-				State = 174;
+				State = 190;
 				_localctx.tPlus = Match(LR_TPlus);
 				}
 				break;
 			case LR_TQuestionQuestion:
 				{
-				State = 175;
+				State = 191;
 				_localctx.tQuestionQuestion = Match(LR_TQuestionQuestion);
 				}
 				break;
 			case LR_TAsteriskQuestion:
 				{
-				State = 176;
+				State = 192;
 				_localctx.tAsteriskQuestion = Match(LR_TAsteriskQuestion);
 				}
 				break;
 			case LR_TPlusQuestion:
 				{
-				State = 177;
+				State = 193;
 				_localctx.tPlusQuestion = Match(LR_TPlusQuestion);
 				}
 				break;
 			case LR_TSemicolon:
 			case LR_TBar:
+			case LR_TLParen:
+			case LR_TRParen:
 			case LR_TEqGt:
 			case LR_THash:
 			case LR_THashLBrace:
 			case LR_KEof:
-			case LR_TLParen:
-			case LR_TRParen:
 			case LR_TLBracket:
 			case LR_TPrimitiveType:
 			case LR_TIdentifier:
@@ -869,31 +952,6 @@ public partial class CompilerParser : global::MetaDslx.CodeAnalysis.Parsers.Antl
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitPr_PReferenceAlt1(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-	public partial class Pr_PBlockContext : Pr_PElementValueContext {
-		public IToken tLParen;
-		public Pr_PBlockAlternativeContext alternativesAntlr1;
-		public Pr_PBlockBlock1Context _pr_PBlockBlock1;
-		public IList<Pr_PBlockBlock1Context> _pBlockBlock1Antlr1 = new List<Pr_PBlockBlock1Context>();
-		public IToken tRParen;
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TLParen() { return GetToken(CompilerParser.LR_TLParen, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_PBlockAlternativeContext pr_PBlockAlternative() {
-			return GetRuleContext<Pr_PBlockAlternativeContext>(0);
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TRParen() { return GetToken(CompilerParser.LR_TRParen, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_PBlockBlock1Context[] pr_PBlockBlock1() {
-			return GetRuleContexts<Pr_PBlockBlock1Context>();
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_PBlockBlock1Context pr_PBlockBlock1(int i) {
-			return GetRuleContext<Pr_PBlockBlock1Context>(i);
-		}
-		public Pr_PBlockContext(Pr_PElementValueContext context) { CopyFrom(context); }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitPr_PBlock(this);
 			else return visitor.VisitChildren(this);
 		}
 	}
@@ -948,6 +1006,31 @@ public partial class CompilerParser : global::MetaDslx.CodeAnalysis.Parsers.Antl
 			else return visitor.VisitChildren(this);
 		}
 	}
+	public partial class Pr_PBlockInlineContext : Pr_PElementValueContext {
+		public IToken tLParen;
+		public Pr_PAlternativeContext alternativesAntlr1;
+		public Pr_PBlockInlineBlock1Context _pr_PBlockInlineBlock1;
+		public IList<Pr_PBlockInlineBlock1Context> _pBlockInlineBlock1Antlr1 = new List<Pr_PBlockInlineBlock1Context>();
+		public IToken tRParen;
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TLParen() { return GetToken(CompilerParser.LR_TLParen, 0); }
+		[System.Diagnostics.DebuggerNonUserCode] public Pr_PAlternativeContext pr_PAlternative() {
+			return GetRuleContext<Pr_PAlternativeContext>(0);
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TRParen() { return GetToken(CompilerParser.LR_TRParen, 0); }
+		[System.Diagnostics.DebuggerNonUserCode] public Pr_PBlockInlineBlock1Context[] pr_PBlockInlineBlock1() {
+			return GetRuleContexts<Pr_PBlockInlineBlock1Context>();
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public Pr_PBlockInlineBlock1Context pr_PBlockInlineBlock1(int i) {
+			return GetRuleContext<Pr_PBlockInlineBlock1Context>(i);
+		}
+		public Pr_PBlockInlineContext(Pr_PElementValueContext context) { CopyFrom(context); }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitPr_PBlockInline(this);
+			else return visitor.VisitChildren(this);
+		}
+	}
 	public partial class Pr_PEofContext : Pr_PElementValueContext {
 		public IToken kEof;
 		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_KEof() { return GetToken(CompilerParser.LR_KEof, 0); }
@@ -966,41 +1049,41 @@ public partial class CompilerParser : global::MetaDslx.CodeAnalysis.Parsers.Antl
 		EnterRule(_localctx, 16, RULE_pr_PElementValue);
 		int _la;
 		try {
-			State = 205;
+			State = 221;
 			ErrorHandler.Sync(this);
 			switch (TokenStream.LA(1)) {
 			case LR_TLParen:
-				_localctx = new Pr_PBlockContext(_localctx);
+				_localctx = new Pr_PBlockInlineContext(_localctx);
 				EnterOuterAlt(_localctx, 1);
 				{
-				State = 180;
-				((Pr_PBlockContext)_localctx).tLParen = Match(LR_TLParen);
-				State = 181;
-				((Pr_PBlockContext)_localctx).alternativesAntlr1 = pr_PBlockAlternative();
-				State = 185;
+				State = 196;
+				((Pr_PBlockInlineContext)_localctx).tLParen = Match(LR_TLParen);
+				State = 197;
+				((Pr_PBlockInlineContext)_localctx).alternativesAntlr1 = pr_PAlternative();
+				State = 201;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 				while (_la==LR_TBar) {
 					{
 					{
-					State = 182;
-					((Pr_PBlockContext)_localctx)._pr_PBlockBlock1 = pr_PBlockBlock1();
-					((Pr_PBlockContext)_localctx)._pBlockBlock1Antlr1.Add(((Pr_PBlockContext)_localctx)._pr_PBlockBlock1);
+					State = 198;
+					((Pr_PBlockInlineContext)_localctx)._pr_PBlockInlineBlock1 = pr_PBlockInlineBlock1();
+					((Pr_PBlockInlineContext)_localctx)._pBlockInlineBlock1Antlr1.Add(((Pr_PBlockInlineContext)_localctx)._pr_PBlockInlineBlock1);
 					}
 					}
-					State = 187;
+					State = 203;
 					ErrorHandler.Sync(this);
 					_la = TokenStream.LA(1);
 				}
-				State = 188;
-				((Pr_PBlockContext)_localctx).tRParen = Match(LR_TRParen);
+				State = 204;
+				((Pr_PBlockInlineContext)_localctx).tRParen = Match(LR_TRParen);
 				}
 				break;
 			case LR_KEof:
 				_localctx = new Pr_PEofContext(_localctx);
 				EnterOuterAlt(_localctx, 2);
 				{
-				State = 190;
+				State = 206;
 				((Pr_PEofContext)_localctx).kEof = Match(LR_KEof);
 				}
 				break;
@@ -1008,7 +1091,7 @@ public partial class CompilerParser : global::MetaDslx.CodeAnalysis.Parsers.Antl
 				_localctx = new Pr_PKeywordContext(_localctx);
 				EnterOuterAlt(_localctx, 3);
 				{
-				State = 191;
+				State = 207;
 				((Pr_PKeywordContext)_localctx).textAntlr1 = Match(LR_TString);
 				}
 				break;
@@ -1018,7 +1101,7 @@ public partial class CompilerParser : global::MetaDslx.CodeAnalysis.Parsers.Antl
 				_localctx = new Pr_PReferenceAlt1Context(_localctx);
 				EnterOuterAlt(_localctx, 4);
 				{
-				State = 192;
+				State = 208;
 				((Pr_PReferenceAlt1Context)_localctx).ruleAntlr1 = pr_Identifier();
 				}
 				break;
@@ -1026,9 +1109,9 @@ public partial class CompilerParser : global::MetaDslx.CodeAnalysis.Parsers.Antl
 				_localctx = new Pr_PReferenceAlt2Context(_localctx);
 				EnterOuterAlt(_localctx, 5);
 				{
-				State = 193;
+				State = 209;
 				((Pr_PReferenceAlt2Context)_localctx).tHash = Match(LR_THash);
-				State = 194;
+				State = 210;
 				((Pr_PReferenceAlt2Context)_localctx).referencedTypesAntlr1 = pr_Qualifier();
 				}
 				break;
@@ -1036,103 +1119,31 @@ public partial class CompilerParser : global::MetaDslx.CodeAnalysis.Parsers.Antl
 				_localctx = new Pr_PReferenceAlt3Context(_localctx);
 				EnterOuterAlt(_localctx, 6);
 				{
-				State = 195;
+				State = 211;
 				((Pr_PReferenceAlt3Context)_localctx).tHashLBrace = Match(LR_THashLBrace);
-				State = 196;
+				State = 212;
 				((Pr_PReferenceAlt3Context)_localctx).referencedTypesAntlr1 = pr_Qualifier();
-				State = 200;
+				State = 216;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 				while (_la==LR_TComma) {
 					{
 					{
-					State = 197;
+					State = 213;
 					((Pr_PReferenceAlt3Context)_localctx)._pr_PReferenceAlt3Block1 = pr_PReferenceAlt3Block1();
 					((Pr_PReferenceAlt3Context)_localctx)._pReferenceAlt3Block1Antlr1.Add(((Pr_PReferenceAlt3Context)_localctx)._pr_PReferenceAlt3Block1);
 					}
 					}
-					State = 202;
+					State = 218;
 					ErrorHandler.Sync(this);
 					_la = TokenStream.LA(1);
 				}
-				State = 203;
+				State = 219;
 				((Pr_PReferenceAlt3Context)_localctx).tRBrace = Match(LR_TRBrace);
 				}
 				break;
 			default:
 				throw new NoViableAltException(this);
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			ErrorHandler.ReportError(this, re);
-			ErrorHandler.Recover(this, re);
-		}
-		finally {
-			ExitRule();
-		}
-		return _localctx;
-	}
-
-	public partial class Pr_PBlockAlternativeContext : ParserRuleContext {
-		public Pr_PElementContext _pr_PElement;
-		public IList<Pr_PElementContext> _elementsAntlr1 = new List<Pr_PElementContext>();
-		public Pr_PBlockAlternativeBlock1Context pBlockAlternativeBlock1Antlr1;
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_PElementContext[] pr_PElement() {
-			return GetRuleContexts<Pr_PElementContext>();
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_PElementContext pr_PElement(int i) {
-			return GetRuleContext<Pr_PElementContext>(i);
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_PBlockAlternativeBlock1Context pr_PBlockAlternativeBlock1() {
-			return GetRuleContext<Pr_PBlockAlternativeBlock1Context>(0);
-		}
-		public Pr_PBlockAlternativeContext(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
-		{
-		}
-		public override int RuleIndex { get { return RULE_pr_PBlockAlternative; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitPr_PBlockAlternative(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-
-	[RuleVersion(0)]
-	public Pr_PBlockAlternativeContext pr_PBlockAlternative() {
-		Pr_PBlockAlternativeContext _localctx = new Pr_PBlockAlternativeContext(Context, State);
-		EnterRule(_localctx, 18, RULE_pr_PBlockAlternative);
-		int _la;
-		try {
-			EnterOuterAlt(_localctx, 1);
-			{
-			State = 210;
-			ErrorHandler.Sync(this);
-			_la = TokenStream.LA(1);
-			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & 131941932425216L) != 0)) {
-				{
-				{
-				State = 207;
-				_localctx._pr_PElement = pr_PElement();
-				_localctx._elementsAntlr1.Add(_localctx._pr_PElement);
-				}
-				}
-				State = 212;
-				ErrorHandler.Sync(this);
-				_la = TokenStream.LA(1);
-			}
-			State = 214;
-			ErrorHandler.Sync(this);
-			_la = TokenStream.LA(1);
-			if (_la==LR_TEqGt) {
-				{
-				State = 213;
-				_localctx.pBlockAlternativeBlock1Antlr1 = pr_PBlockAlternativeBlock1();
-				}
-			}
-
 			}
 		}
 		catch (RecognitionException re) {
@@ -1171,23 +1182,23 @@ public partial class CompilerParser : global::MetaDslx.CodeAnalysis.Parsers.Antl
 	[RuleVersion(0)]
 	public Pr_LAlternativeContext pr_LAlternative() {
 		Pr_LAlternativeContext _localctx = new Pr_LAlternativeContext(Context, State);
-		EnterRule(_localctx, 20, RULE_pr_LAlternative);
+		EnterRule(_localctx, 18, RULE_pr_LAlternative);
 		int _la;
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 219;
+			State = 226;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
-			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & 131941408047104L) != 0)) {
+			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & 131941407918080L) != 0)) {
 				{
 				{
-				State = 216;
+				State = 223;
 				_localctx._pr_LElement = pr_LElement();
 				_localctx._elementsAntlr1.Add(_localctx._pr_LElement);
 				}
 				}
-				State = 221;
+				State = 228;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 			}
@@ -1239,59 +1250,59 @@ public partial class CompilerParser : global::MetaDslx.CodeAnalysis.Parsers.Antl
 	[RuleVersion(0)]
 	public Pr_LElementContext pr_LElement() {
 		Pr_LElementContext _localctx = new Pr_LElementContext(Context, State);
-		EnterRule(_localctx, 22, RULE_pr_LElement);
+		EnterRule(_localctx, 20, RULE_pr_LElement);
 		int _la;
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 223;
+			State = 230;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			if (_la==LR_TTilde) {
 				{
-				State = 222;
+				State = 229;
 				_localctx.isNegated = Match(LR_TTilde);
 				}
 			}
 
-			State = 225;
-			_localctx.valueAntlr1 = pr_LElementValue();
 			State = 232;
+			_localctx.valueAntlr1 = pr_LElementValue();
+			State = 239;
 			ErrorHandler.Sync(this);
 			switch (TokenStream.LA(1)) {
 			case LR_TQuestion:
 				{
-				State = 226;
+				State = 233;
 				_localctx.tQuestion = Match(LR_TQuestion);
 				}
 				break;
 			case LR_TAsterisk:
 				{
-				State = 227;
+				State = 234;
 				_localctx.tAsterisk = Match(LR_TAsterisk);
 				}
 				break;
 			case LR_TPlus:
 				{
-				State = 228;
+				State = 235;
 				_localctx.tPlus = Match(LR_TPlus);
 				}
 				break;
 			case LR_TQuestionQuestion:
 				{
-				State = 229;
+				State = 236;
 				_localctx.tQuestionQuestion = Match(LR_TQuestionQuestion);
 				}
 				break;
 			case LR_TAsteriskQuestion:
 				{
-				State = 230;
+				State = 237;
 				_localctx.tAsteriskQuestion = Match(LR_TAsteriskQuestion);
 				}
 				break;
 			case LR_TPlusQuestion:
 				{
-				State = 231;
+				State = 238;
 				_localctx.tPlusQuestion = Match(LR_TPlusQuestion);
 				}
 				break;
@@ -1415,36 +1426,36 @@ public partial class CompilerParser : global::MetaDslx.CodeAnalysis.Parsers.Antl
 	[RuleVersion(0)]
 	public Pr_LElementValueContext pr_LElementValue() {
 		Pr_LElementValueContext _localctx = new Pr_LElementValueContext(Context, State);
-		EnterRule(_localctx, 24, RULE_pr_LElementValue);
+		EnterRule(_localctx, 22, RULE_pr_LElementValue);
 		int _la;
 		try {
-			State = 250;
+			State = 257;
 			ErrorHandler.Sync(this);
 			switch ( Interpreter.AdaptivePredict(TokenStream,22,Context) ) {
 			case 1:
 				_localctx = new Pr_LBlockContext(_localctx);
 				EnterOuterAlt(_localctx, 1);
 				{
-				State = 234;
+				State = 241;
 				((Pr_LBlockContext)_localctx).tLParen = Match(LR_TLParen);
-				State = 235;
+				State = 242;
 				((Pr_LBlockContext)_localctx).alternativesAntlr1 = pr_LAlternative();
-				State = 239;
+				State = 246;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 				while (_la==LR_TBar) {
 					{
 					{
-					State = 236;
+					State = 243;
 					((Pr_LBlockContext)_localctx)._pr_LBlockBlock1 = pr_LBlockBlock1();
 					((Pr_LBlockContext)_localctx)._lBlockBlock1Antlr1.Add(((Pr_LBlockContext)_localctx)._pr_LBlockBlock1);
 					}
 					}
-					State = 241;
+					State = 248;
 					ErrorHandler.Sync(this);
 					_la = TokenStream.LA(1);
 				}
-				State = 242;
+				State = 249;
 				((Pr_LBlockContext)_localctx).tRParen = Match(LR_TRParen);
 				}
 				break;
@@ -1452,7 +1463,7 @@ public partial class CompilerParser : global::MetaDslx.CodeAnalysis.Parsers.Antl
 				_localctx = new Pr_LFixedContext(_localctx);
 				EnterOuterAlt(_localctx, 2);
 				{
-				State = 244;
+				State = 251;
 				((Pr_LFixedContext)_localctx).textAntlr1 = Match(LR_TString);
 				}
 				break;
@@ -1460,7 +1471,7 @@ public partial class CompilerParser : global::MetaDslx.CodeAnalysis.Parsers.Antl
 				_localctx = new Pr_LWildCardContext(_localctx);
 				EnterOuterAlt(_localctx, 3);
 				{
-				State = 245;
+				State = 252;
 				((Pr_LWildCardContext)_localctx).tDot = Match(LR_TDot);
 				}
 				break;
@@ -1468,11 +1479,11 @@ public partial class CompilerParser : global::MetaDslx.CodeAnalysis.Parsers.Antl
 				_localctx = new Pr_LRangeContext(_localctx);
 				EnterOuterAlt(_localctx, 4);
 				{
-				State = 246;
+				State = 253;
 				((Pr_LRangeContext)_localctx).StartCharAntlr1 = Match(LR_TString);
-				State = 247;
+				State = 254;
 				((Pr_LRangeContext)_localctx).tDotDot = Match(LR_TDotDot);
-				State = 248;
+				State = 255;
 				((Pr_LRangeContext)_localctx).EndCharAntlr1 = Match(LR_TString);
 				}
 				break;
@@ -1480,7 +1491,7 @@ public partial class CompilerParser : global::MetaDslx.CodeAnalysis.Parsers.Antl
 				_localctx = new Pr_LReferenceContext(_localctx);
 				EnterOuterAlt(_localctx, 5);
 				{
-				State = 249;
+				State = 256;
 				((Pr_LReferenceContext)_localctx).ruleAntlr1 = pr_Identifier();
 				}
 				break;
@@ -1580,17 +1591,17 @@ public partial class CompilerParser : global::MetaDslx.CodeAnalysis.Parsers.Antl
 	[RuleVersion(0)]
 	public Pr_ExpressionContext pr_Expression() {
 		Pr_ExpressionContext _localctx = new Pr_ExpressionContext(Context, State);
-		EnterRule(_localctx, 26, RULE_pr_Expression);
+		EnterRule(_localctx, 24, RULE_pr_Expression);
 		int _la;
 		try {
-			State = 265;
+			State = 272;
 			ErrorHandler.Sync(this);
 			switch (TokenStream.LA(1)) {
 			case LR_TInteger:
 				_localctx = new Pr_IntExpressionContext(_localctx);
 				EnterOuterAlt(_localctx, 1);
 				{
-				State = 252;
+				State = 259;
 				((Pr_IntExpressionContext)_localctx).intValueAntlr1 = Match(LR_TInteger);
 				}
 				break;
@@ -1598,7 +1609,7 @@ public partial class CompilerParser : global::MetaDslx.CodeAnalysis.Parsers.Antl
 				_localctx = new Pr_StringExpressionContext(_localctx);
 				EnterOuterAlt(_localctx, 2);
 				{
-				State = 253;
+				State = 260;
 				((Pr_StringExpressionContext)_localctx).stringValueAntlr1 = Match(LR_TString);
 				}
 				break;
@@ -1608,7 +1619,7 @@ public partial class CompilerParser : global::MetaDslx.CodeAnalysis.Parsers.Antl
 				_localctx = new Pr_ReferenceExpressionContext(_localctx);
 				EnterOuterAlt(_localctx, 3);
 				{
-				State = 254;
+				State = 261;
 				((Pr_ReferenceExpressionContext)_localctx).symbolValueAntlr1 = pr_Qualifier();
 				}
 				break;
@@ -1616,19 +1627,19 @@ public partial class CompilerParser : global::MetaDslx.CodeAnalysis.Parsers.Antl
 				_localctx = new Pr_ArrayExpressionContext(_localctx);
 				EnterOuterAlt(_localctx, 4);
 				{
-				State = 255;
+				State = 262;
 				((Pr_ArrayExpressionContext)_localctx).tLBrace = Match(LR_TLBrace);
-				State = 257;
+				State = 264;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 				if ((((_la) & ~0x3f) == 0 && ((1L << _la) & 134140921905152L) != 0)) {
 					{
-					State = 256;
+					State = 263;
 					((Pr_ArrayExpressionContext)_localctx).arrayExpressionBlock1Antlr1 = pr_ArrayExpressionBlock1();
 					}
 				}
 
-				State = 259;
+				State = 266;
 				((Pr_ArrayExpressionContext)_localctx).tRBrace = Match(LR_TRBrace);
 				}
 				break;
@@ -1638,24 +1649,24 @@ public partial class CompilerParser : global::MetaDslx.CodeAnalysis.Parsers.Antl
 				_localctx = new Pr_ExpressionTokensContext(_localctx);
 				EnterOuterAlt(_localctx, 5);
 				{
-				State = 263;
+				State = 270;
 				ErrorHandler.Sync(this);
 				switch (TokenStream.LA(1)) {
 				case LR_KNull:
 					{
-					State = 260;
+					State = 267;
 					((Pr_ExpressionTokensContext)_localctx).kNull = Match(LR_KNull);
 					}
 					break;
 				case LR_KTrue:
 					{
-					State = 261;
+					State = 268;
 					((Pr_ExpressionTokensContext)_localctx).boolValue = Match(LR_KTrue);
 					}
 					break;
 				case LR_KFalse:
 					{
-					State = 262;
+					State = 269;
 					((Pr_ExpressionTokensContext)_localctx).kFalse = Match(LR_KFalse);
 					}
 					break;
@@ -1708,26 +1719,26 @@ public partial class CompilerParser : global::MetaDslx.CodeAnalysis.Parsers.Antl
 	[RuleVersion(0)]
 	public Pr_ParserAnnotationContext pr_ParserAnnotation() {
 		Pr_ParserAnnotationContext _localctx = new Pr_ParserAnnotationContext(Context, State);
-		EnterRule(_localctx, 28, RULE_pr_ParserAnnotation);
+		EnterRule(_localctx, 26, RULE_pr_ParserAnnotation);
 		int _la;
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 267;
+			State = 274;
 			_localctx.tLBracket = Match(LR_TLBracket);
-			State = 268;
+			State = 275;
 			_localctx.typeAntlr1 = pr_Qualifier();
-			State = 270;
+			State = 277;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			if (_la==LR_TLParen) {
 				{
-				State = 269;
+				State = 276;
 				_localctx.annotationArgumentsAntlr1 = pr_AnnotationArguments();
 				}
 			}
 
-			State = 272;
+			State = 279;
 			_localctx.tRBracket = Match(LR_TRBracket);
 			}
 		}
@@ -1771,26 +1782,26 @@ public partial class CompilerParser : global::MetaDslx.CodeAnalysis.Parsers.Antl
 	[RuleVersion(0)]
 	public Pr_LexerAnnotationContext pr_LexerAnnotation() {
 		Pr_LexerAnnotationContext _localctx = new Pr_LexerAnnotationContext(Context, State);
-		EnterRule(_localctx, 30, RULE_pr_LexerAnnotation);
+		EnterRule(_localctx, 28, RULE_pr_LexerAnnotation);
 		int _la;
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 274;
+			State = 281;
 			_localctx.tLBracket = Match(LR_TLBracket);
-			State = 275;
+			State = 282;
 			_localctx.typeAntlr1 = pr_Qualifier();
-			State = 277;
+			State = 284;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			if (_la==LR_TLParen) {
 				{
-				State = 276;
+				State = 283;
 				_localctx.annotationArgumentsAntlr1 = pr_AnnotationArguments();
 				}
 			}
 
-			State = 279;
+			State = 286;
 			_localctx.tRBracket = Match(LR_TRBracket);
 			}
 		}
@@ -1838,31 +1849,31 @@ public partial class CompilerParser : global::MetaDslx.CodeAnalysis.Parsers.Antl
 	[RuleVersion(0)]
 	public Pr_AnnotationArgumentsContext pr_AnnotationArguments() {
 		Pr_AnnotationArgumentsContext _localctx = new Pr_AnnotationArgumentsContext(Context, State);
-		EnterRule(_localctx, 32, RULE_pr_AnnotationArguments);
+		EnterRule(_localctx, 30, RULE_pr_AnnotationArguments);
 		int _la;
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 281;
+			State = 288;
 			_localctx.tLParen = Match(LR_TLParen);
-			State = 282;
+			State = 289;
 			_localctx.argumentsAntlr1 = pr_AnnotationArgument();
-			State = 286;
+			State = 293;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			while (_la==LR_TComma) {
 				{
 				{
-				State = 283;
+				State = 290;
 				_localctx._pr_AnnotationArgumentsBlock1 = pr_AnnotationArgumentsBlock1();
 				_localctx._annotationArgumentsBlock1Antlr1.Add(_localctx._pr_AnnotationArgumentsBlock1);
 				}
 				}
-				State = 288;
+				State = 295;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 			}
-			State = 289;
+			State = 296;
 			_localctx.tRParen = Match(LR_TRParen);
 			}
 		}
@@ -1902,21 +1913,21 @@ public partial class CompilerParser : global::MetaDslx.CodeAnalysis.Parsers.Antl
 	[RuleVersion(0)]
 	public Pr_AnnotationArgumentContext pr_AnnotationArgument() {
 		Pr_AnnotationArgumentContext _localctx = new Pr_AnnotationArgumentContext(Context, State);
-		EnterRule(_localctx, 34, RULE_pr_AnnotationArgument);
+		EnterRule(_localctx, 32, RULE_pr_AnnotationArgument);
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 292;
+			State = 299;
 			ErrorHandler.Sync(this);
 			switch ( Interpreter.AdaptivePredict(TokenStream,29,Context) ) {
 			case 1:
 				{
-				State = 291;
+				State = 298;
 				_localctx.annotationArgumentBlock1Antlr1 = pr_AnnotationArgumentBlock1();
 				}
 				break;
 			}
-			State = 294;
+			State = 301;
 			_localctx.valueAntlr1 = pr_Expression();
 			}
 		}
@@ -1952,11 +1963,11 @@ public partial class CompilerParser : global::MetaDslx.CodeAnalysis.Parsers.Antl
 	[RuleVersion(0)]
 	public Pr_NameContext pr_Name() {
 		Pr_NameContext _localctx = new Pr_NameContext(Context, State);
-		EnterRule(_localctx, 36, RULE_pr_Name);
+		EnterRule(_localctx, 34, RULE_pr_Name);
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 296;
+			State = 303;
 			_localctx.identifierAntlr1 = pr_Identifier();
 			}
 		}
@@ -2000,25 +2011,25 @@ public partial class CompilerParser : global::MetaDslx.CodeAnalysis.Parsers.Antl
 	[RuleVersion(0)]
 	public Pr_QualifierContext pr_Qualifier() {
 		Pr_QualifierContext _localctx = new Pr_QualifierContext(Context, State);
-		EnterRule(_localctx, 38, RULE_pr_Qualifier);
+		EnterRule(_localctx, 36, RULE_pr_Qualifier);
 		int _la;
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 298;
+			State = 305;
 			_localctx.identifierAntlr1 = pr_Identifier();
-			State = 302;
+			State = 309;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			while (_la==LR_TDot) {
 				{
 				{
-				State = 299;
+				State = 306;
 				_localctx._pr_QualifierBlock1 = pr_QualifierBlock1();
 				_localctx._qualifierBlock1Antlr1.Add(_localctx._pr_QualifierBlock1);
 				}
 				}
-				State = 304;
+				State = 311;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 			}
@@ -2064,25 +2075,25 @@ public partial class CompilerParser : global::MetaDslx.CodeAnalysis.Parsers.Antl
 	[RuleVersion(0)]
 	public Pr_QualifierListContext pr_QualifierList() {
 		Pr_QualifierListContext _localctx = new Pr_QualifierListContext(Context, State);
-		EnterRule(_localctx, 40, RULE_pr_QualifierList);
+		EnterRule(_localctx, 38, RULE_pr_QualifierList);
 		int _la;
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 305;
+			State = 312;
 			_localctx.qualifierAntlr1 = pr_Qualifier();
-			State = 309;
+			State = 316;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			while (_la==LR_TComma) {
 				{
 				{
-				State = 306;
+				State = 313;
 				_localctx._pr_QualifierListBlock1 = pr_QualifierListBlock1();
 				_localctx._qualifierListBlock1Antlr1.Add(_localctx._pr_QualifierListBlock1);
 				}
 				}
-				State = 311;
+				State = 318;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 			}
@@ -2148,16 +2159,16 @@ public partial class CompilerParser : global::MetaDslx.CodeAnalysis.Parsers.Antl
 	[RuleVersion(0)]
 	public Pr_IdentifierContext pr_Identifier() {
 		Pr_IdentifierContext _localctx = new Pr_IdentifierContext(Context, State);
-		EnterRule(_localctx, 42, RULE_pr_Identifier);
+		EnterRule(_localctx, 40, RULE_pr_Identifier);
 		try {
-			State = 315;
+			State = 322;
 			ErrorHandler.Sync(this);
 			switch (TokenStream.LA(1)) {
 			case LR_TPrimitiveType:
 				_localctx = new Pr_IdentifierAlt1Context(_localctx);
 				EnterOuterAlt(_localctx, 1);
 				{
-				State = 312;
+				State = 319;
 				((Pr_IdentifierAlt1Context)_localctx).tPrimitiveTypeAntlr1 = Match(LR_TPrimitiveType);
 				}
 				break;
@@ -2165,7 +2176,7 @@ public partial class CompilerParser : global::MetaDslx.CodeAnalysis.Parsers.Antl
 				_localctx = new Pr_IdentifierAlt2Context(_localctx);
 				EnterOuterAlt(_localctx, 2);
 				{
-				State = 313;
+				State = 320;
 				((Pr_IdentifierAlt2Context)_localctx).tIdentifierAntlr1 = Match(LR_TIdentifier);
 				}
 				break;
@@ -2173,7 +2184,7 @@ public partial class CompilerParser : global::MetaDslx.CodeAnalysis.Parsers.Antl
 				_localctx = new Pr_IdentifierAlt3Context(_localctx);
 				EnterOuterAlt(_localctx, 3);
 				{
-				State = 314;
+				State = 321;
 				((Pr_IdentifierAlt3Context)_localctx).tVerbatimIdentifierAntlr1 = Match(LR_TVerbatimIdentifier);
 				}
 				break;
@@ -2217,25 +2228,25 @@ public partial class CompilerParser : global::MetaDslx.CodeAnalysis.Parsers.Antl
 	[RuleVersion(0)]
 	public Pr_GrammarBlock1Context pr_GrammarBlock1() {
 		Pr_GrammarBlock1Context _localctx = new Pr_GrammarBlock1Context(Context, State);
-		EnterRule(_localctx, 44, RULE_pr_GrammarBlock1);
+		EnterRule(_localctx, 42, RULE_pr_GrammarBlock1);
 		try {
 			int _alt;
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 320;
+			State = 327;
 			ErrorHandler.Sync(this);
 			_alt = Interpreter.AdaptivePredict(TokenStream,33,Context);
 			while ( _alt!=2 && _alt!=global::Antlr4.Runtime.Atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					{
 					{
-					State = 317;
+					State = 324;
 					_localctx._pr_Rule = pr_Rule();
 					_localctx._rulesAntlr1.Add(_localctx._pr_Rule);
 					}
 					} 
 				}
-				State = 322;
+				State = 329;
 				ErrorHandler.Sync(this);
 				_alt = Interpreter.AdaptivePredict(TokenStream,33,Context);
 			}
@@ -2264,31 +2275,10 @@ public partial class CompilerParser : global::MetaDslx.CodeAnalysis.Parsers.Antl
 			base.CopyFrom(context);
 		}
 	}
-	public partial class Pr_ParserRuleBlock1Alt3Context : Pr_ParserRuleBlock1Context {
-		public Pr_NameContext nameAntlr1;
-		public IToken kReturns;
-		public Pr_QualifierContext returnTypeAntlr1;
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_NameContext pr_Name() {
-			return GetRuleContext<Pr_NameContext>(0);
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_KReturns() { return GetToken(CompilerParser.LR_KReturns, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_QualifierContext pr_Qualifier() {
-			return GetRuleContext<Pr_QualifierContext>(0);
-		}
-		public Pr_ParserRuleBlock1Alt3Context(Pr_ParserRuleBlock1Context context) { CopyFrom(context); }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitPr_ParserRuleBlock1Alt3(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
 	public partial class Pr_ParserRuleBlock1Alt1Context : Pr_ParserRuleBlock1Context {
-		public IToken isBlock;
-		public Pr_NameContext nameAntlr1;
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_KBlock() { return GetToken(CompilerParser.LR_KBlock, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_NameContext pr_Name() {
-			return GetRuleContext<Pr_NameContext>(0);
+		public Pr_IdentifierContext returnTypeAntlr1;
+		[System.Diagnostics.DebuggerNonUserCode] public Pr_IdentifierContext pr_Identifier() {
+			return GetRuleContext<Pr_IdentifierContext>(0);
 		}
 		public Pr_ParserRuleBlock1Alt1Context(Pr_ParserRuleBlock1Context context) { CopyFrom(context); }
 		[System.Diagnostics.DebuggerNonUserCode]
@@ -2299,9 +2289,15 @@ public partial class CompilerParser : global::MetaDslx.CodeAnalysis.Parsers.Antl
 		}
 	}
 	public partial class Pr_ParserRuleBlock1Alt2Context : Pr_ParserRuleBlock1Context {
-		public Pr_IdentifierContext returnTypeAntlr1;
+		public Pr_IdentifierContext identifierAntlr1;
+		public IToken kReturns;
+		public Pr_QualifierContext returnTypeAntlr1;
 		[System.Diagnostics.DebuggerNonUserCode] public Pr_IdentifierContext pr_Identifier() {
 			return GetRuleContext<Pr_IdentifierContext>(0);
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_KReturns() { return GetToken(CompilerParser.LR_KReturns, 0); }
+		[System.Diagnostics.DebuggerNonUserCode] public Pr_QualifierContext pr_Qualifier() {
+			return GetRuleContext<Pr_QualifierContext>(0);
 		}
 		public Pr_ParserRuleBlock1Alt2Context(Pr_ParserRuleBlock1Context context) { CopyFrom(context); }
 		[System.Diagnostics.DebuggerNonUserCode]
@@ -2315,39 +2311,29 @@ public partial class CompilerParser : global::MetaDslx.CodeAnalysis.Parsers.Antl
 	[RuleVersion(0)]
 	public Pr_ParserRuleBlock1Context pr_ParserRuleBlock1() {
 		Pr_ParserRuleBlock1Context _localctx = new Pr_ParserRuleBlock1Context(Context, State);
-		EnterRule(_localctx, 46, RULE_pr_ParserRuleBlock1);
+		EnterRule(_localctx, 44, RULE_pr_ParserRuleBlock1);
 		try {
-			State = 330;
+			State = 335;
 			ErrorHandler.Sync(this);
 			switch ( Interpreter.AdaptivePredict(TokenStream,34,Context) ) {
 			case 1:
 				_localctx = new Pr_ParserRuleBlock1Alt1Context(_localctx);
 				EnterOuterAlt(_localctx, 1);
 				{
-				State = 323;
-				((Pr_ParserRuleBlock1Alt1Context)_localctx).isBlock = Match(LR_KBlock);
-				State = 324;
-				((Pr_ParserRuleBlock1Alt1Context)_localctx).nameAntlr1 = pr_Name();
+				State = 330;
+				((Pr_ParserRuleBlock1Alt1Context)_localctx).returnTypeAntlr1 = pr_Identifier();
 				}
 				break;
 			case 2:
 				_localctx = new Pr_ParserRuleBlock1Alt2Context(_localctx);
 				EnterOuterAlt(_localctx, 2);
 				{
-				State = 325;
-				((Pr_ParserRuleBlock1Alt2Context)_localctx).returnTypeAntlr1 = pr_Identifier();
-				}
-				break;
-			case 3:
-				_localctx = new Pr_ParserRuleBlock1Alt3Context(_localctx);
-				EnterOuterAlt(_localctx, 3);
-				{
-				State = 326;
-				((Pr_ParserRuleBlock1Alt3Context)_localctx).nameAntlr1 = pr_Name();
-				State = 327;
-				((Pr_ParserRuleBlock1Alt3Context)_localctx).kReturns = Match(LR_KReturns);
-				State = 328;
-				((Pr_ParserRuleBlock1Alt3Context)_localctx).returnTypeAntlr1 = pr_Qualifier();
+				State = 331;
+				((Pr_ParserRuleBlock1Alt2Context)_localctx).identifierAntlr1 = pr_Identifier();
+				State = 332;
+				((Pr_ParserRuleBlock1Alt2Context)_localctx).kReturns = Match(LR_KReturns);
+				State = 333;
+				((Pr_ParserRuleBlock1Alt2Context)_localctx).returnTypeAntlr1 = pr_Qualifier();
 				}
 				break;
 			}
@@ -2386,13 +2372,101 @@ public partial class CompilerParser : global::MetaDslx.CodeAnalysis.Parsers.Antl
 	[RuleVersion(0)]
 	public Pr_ParserRuleBlock2Context pr_ParserRuleBlock2() {
 		Pr_ParserRuleBlock2Context _localctx = new Pr_ParserRuleBlock2Context(Context, State);
-		EnterRule(_localctx, 48, RULE_pr_ParserRuleBlock2);
+		EnterRule(_localctx, 46, RULE_pr_ParserRuleBlock2);
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 332;
+			State = 337;
 			_localctx.tBar = Match(LR_TBar);
-			State = 333;
+			State = 338;
+			_localctx.alternativesAntlr1 = pr_PAlternative();
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			ErrorHandler.ReportError(this, re);
+			ErrorHandler.Recover(this, re);
+		}
+		finally {
+			ExitRule();
+		}
+		return _localctx;
+	}
+
+	public partial class Pr_PBlockBlock1Context : ParserRuleContext {
+		public IToken tBar;
+		public Pr_PAlternativeContext alternativesAntlr1;
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TBar() { return GetToken(CompilerParser.LR_TBar, 0); }
+		[System.Diagnostics.DebuggerNonUserCode] public Pr_PAlternativeContext pr_PAlternative() {
+			return GetRuleContext<Pr_PAlternativeContext>(0);
+		}
+		public Pr_PBlockBlock1Context(ParserRuleContext parent, int invokingState)
+			: base(parent, invokingState)
+		{
+		}
+		public override int RuleIndex { get { return RULE_pr_PBlockBlock1; } }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitPr_PBlockBlock1(this);
+			else return visitor.VisitChildren(this);
+		}
+	}
+
+	[RuleVersion(0)]
+	public Pr_PBlockBlock1Context pr_PBlockBlock1() {
+		Pr_PBlockBlock1Context _localctx = new Pr_PBlockBlock1Context(Context, State);
+		EnterRule(_localctx, 48, RULE_pr_PBlockBlock1);
+		try {
+			EnterOuterAlt(_localctx, 1);
+			{
+			State = 340;
+			_localctx.tBar = Match(LR_TBar);
+			State = 341;
+			_localctx.alternativesAntlr1 = pr_PAlternative();
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			ErrorHandler.ReportError(this, re);
+			ErrorHandler.Recover(this, re);
+		}
+		finally {
+			ExitRule();
+		}
+		return _localctx;
+	}
+
+	public partial class Pr_PBlockInlineBlock1Context : ParserRuleContext {
+		public IToken tBar;
+		public Pr_PAlternativeContext alternativesAntlr1;
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TBar() { return GetToken(CompilerParser.LR_TBar, 0); }
+		[System.Diagnostics.DebuggerNonUserCode] public Pr_PAlternativeContext pr_PAlternative() {
+			return GetRuleContext<Pr_PAlternativeContext>(0);
+		}
+		public Pr_PBlockInlineBlock1Context(ParserRuleContext parent, int invokingState)
+			: base(parent, invokingState)
+		{
+		}
+		public override int RuleIndex { get { return RULE_pr_PBlockInlineBlock1; } }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitPr_PBlockInlineBlock1(this);
+			else return visitor.VisitChildren(this);
+		}
+	}
+
+	[RuleVersion(0)]
+	public Pr_PBlockInlineBlock1Context pr_PBlockInlineBlock1() {
+		Pr_PBlockInlineBlock1Context _localctx = new Pr_PBlockInlineBlock1Context(Context, State);
+		EnterRule(_localctx, 50, RULE_pr_PBlockInlineBlock1);
+		try {
+			EnterOuterAlt(_localctx, 1);
+			{
+			State = 343;
+			_localctx.tBar = Match(LR_TBar);
+			State = 344;
 			_localctx.alternativesAntlr1 = pr_PAlternative();
 			}
 		}
@@ -2444,41 +2518,41 @@ public partial class CompilerParser : global::MetaDslx.CodeAnalysis.Parsers.Antl
 	[RuleVersion(0)]
 	public Pr_PAlternativeBlock1Context pr_PAlternativeBlock1() {
 		Pr_PAlternativeBlock1Context _localctx = new Pr_PAlternativeBlock1Context(Context, State);
-		EnterRule(_localctx, 50, RULE_pr_PAlternativeBlock1);
+		EnterRule(_localctx, 52, RULE_pr_PAlternativeBlock1);
 		int _la;
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 338;
+			State = 349;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			while (_la==LR_TLBracket) {
 				{
 				{
-				State = 335;
+				State = 346;
 				_localctx._pr_ParserAnnotation = pr_ParserAnnotation();
 				_localctx._annotations1Antlr1.Add(_localctx._pr_ParserAnnotation);
 				}
 				}
-				State = 340;
+				State = 351;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 			}
-			State = 341;
+			State = 352;
 			_localctx.kAlt = Match(LR_KAlt);
-			State = 342;
+			State = 353;
 			_localctx.nameAntlr1 = pr_Name();
-			State = 344;
+			State = 355;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			if (_la==LR_KReturns) {
 				{
-				State = 343;
+				State = 354;
 				_localctx.pAlternativeBlock1Block1Antlr1 = pr_PAlternativeBlock1Block1();
 				}
 			}
 
-			State = 346;
+			State = 357;
 			_localctx.tColon = Match(LR_TColon);
 			}
 		}
@@ -2516,13 +2590,13 @@ public partial class CompilerParser : global::MetaDslx.CodeAnalysis.Parsers.Antl
 	[RuleVersion(0)]
 	public Pr_PAlternativeBlock2Context pr_PAlternativeBlock2() {
 		Pr_PAlternativeBlock2Context _localctx = new Pr_PAlternativeBlock2Context(Context, State);
-		EnterRule(_localctx, 52, RULE_pr_PAlternativeBlock2);
+		EnterRule(_localctx, 54, RULE_pr_PAlternativeBlock2);
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 348;
+			State = 359;
 			_localctx.tEqGt = Match(LR_TEqGt);
-			State = 349;
+			State = 360;
 			_localctx.returnValueAntlr1 = pr_Expression();
 			}
 		}
@@ -2574,52 +2648,52 @@ public partial class CompilerParser : global::MetaDslx.CodeAnalysis.Parsers.Antl
 	[RuleVersion(0)]
 	public Pr_PElementBlock1Context pr_PElementBlock1() {
 		Pr_PElementBlock1Context _localctx = new Pr_PElementBlock1Context(Context, State);
-		EnterRule(_localctx, 54, RULE_pr_PElementBlock1);
+		EnterRule(_localctx, 56, RULE_pr_PElementBlock1);
 		int _la;
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 354;
+			State = 365;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			while (_la==LR_TLBracket) {
 				{
 				{
-				State = 351;
+				State = 362;
 				_localctx._pr_ParserAnnotation = pr_ParserAnnotation();
 				_localctx._nameAnnotationsAntlr1.Add(_localctx._pr_ParserAnnotation);
 				}
 				}
-				State = 356;
+				State = 367;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 			}
-			State = 357;
+			State = 368;
 			_localctx.symbolPropertyAntlr1 = pr_Identifier();
-			State = 362;
+			State = 373;
 			ErrorHandler.Sync(this);
 			switch (TokenStream.LA(1)) {
 			case LR_TEq:
 				{
-				State = 358;
+				State = 369;
 				_localctx.tEq = Match(LR_TEq);
 				}
 				break;
 			case LR_TQuestionEq:
 				{
-				State = 359;
+				State = 370;
 				_localctx.tQuestionEq = Match(LR_TQuestionEq);
 				}
 				break;
 			case LR_TExclEq:
 				{
-				State = 360;
+				State = 371;
 				_localctx.tExclEq = Match(LR_TExclEq);
 				}
 				break;
 			case LR_TPlusEq:
 				{
-				State = 361;
+				State = 372;
 				_localctx.tPlusEq = Match(LR_TPlusEq);
 				}
 				break;
@@ -2662,102 +2736,14 @@ public partial class CompilerParser : global::MetaDslx.CodeAnalysis.Parsers.Antl
 	[RuleVersion(0)]
 	public Pr_PReferenceAlt3Block1Context pr_PReferenceAlt3Block1() {
 		Pr_PReferenceAlt3Block1Context _localctx = new Pr_PReferenceAlt3Block1Context(Context, State);
-		EnterRule(_localctx, 56, RULE_pr_PReferenceAlt3Block1);
+		EnterRule(_localctx, 58, RULE_pr_PReferenceAlt3Block1);
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 364;
+			State = 375;
 			_localctx.tComma = Match(LR_TComma);
-			State = 365;
+			State = 376;
 			_localctx.referencedTypesAntlr1 = pr_Qualifier();
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			ErrorHandler.ReportError(this, re);
-			ErrorHandler.Recover(this, re);
-		}
-		finally {
-			ExitRule();
-		}
-		return _localctx;
-	}
-
-	public partial class Pr_PBlockBlock1Context : ParserRuleContext {
-		public IToken tBar;
-		public Pr_PBlockAlternativeContext alternativesAntlr1;
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TBar() { return GetToken(CompilerParser.LR_TBar, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_PBlockAlternativeContext pr_PBlockAlternative() {
-			return GetRuleContext<Pr_PBlockAlternativeContext>(0);
-		}
-		public Pr_PBlockBlock1Context(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
-		{
-		}
-		public override int RuleIndex { get { return RULE_pr_PBlockBlock1; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitPr_PBlockBlock1(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-
-	[RuleVersion(0)]
-	public Pr_PBlockBlock1Context pr_PBlockBlock1() {
-		Pr_PBlockBlock1Context _localctx = new Pr_PBlockBlock1Context(Context, State);
-		EnterRule(_localctx, 58, RULE_pr_PBlockBlock1);
-		try {
-			EnterOuterAlt(_localctx, 1);
-			{
-			State = 367;
-			_localctx.tBar = Match(LR_TBar);
-			State = 368;
-			_localctx.alternativesAntlr1 = pr_PBlockAlternative();
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			ErrorHandler.ReportError(this, re);
-			ErrorHandler.Recover(this, re);
-		}
-		finally {
-			ExitRule();
-		}
-		return _localctx;
-	}
-
-	public partial class Pr_PBlockAlternativeBlock1Context : ParserRuleContext {
-		public IToken tEqGt;
-		public Pr_ExpressionContext returnValueAntlr1;
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TEqGt() { return GetToken(CompilerParser.LR_TEqGt, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_ExpressionContext pr_Expression() {
-			return GetRuleContext<Pr_ExpressionContext>(0);
-		}
-		public Pr_PBlockAlternativeBlock1Context(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
-		{
-		}
-		public override int RuleIndex { get { return RULE_pr_PBlockAlternativeBlock1; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitPr_PBlockAlternativeBlock1(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-
-	[RuleVersion(0)]
-	public Pr_PBlockAlternativeBlock1Context pr_PBlockAlternativeBlock1() {
-		Pr_PBlockAlternativeBlock1Context _localctx = new Pr_PBlockAlternativeBlock1Context(Context, State);
-		EnterRule(_localctx, 60, RULE_pr_PBlockAlternativeBlock1);
-		try {
-			EnterOuterAlt(_localctx, 1);
-			{
-			State = 370;
-			_localctx.tEqGt = Match(LR_TEqGt);
-			State = 371;
-			_localctx.returnValueAntlr1 = pr_Expression();
 			}
 		}
 		catch (RecognitionException re) {
@@ -2836,26 +2822,26 @@ public partial class CompilerParser : global::MetaDslx.CodeAnalysis.Parsers.Antl
 	[RuleVersion(0)]
 	public Pr_LexerRuleBlock1Context pr_LexerRuleBlock1() {
 		Pr_LexerRuleBlock1Context _localctx = new Pr_LexerRuleBlock1Context(Context, State);
-		EnterRule(_localctx, 62, RULE_pr_LexerRuleBlock1);
+		EnterRule(_localctx, 60, RULE_pr_LexerRuleBlock1);
 		int _la;
 		try {
-			State = 382;
+			State = 387;
 			ErrorHandler.Sync(this);
 			switch (TokenStream.LA(1)) {
 			case LR_KToken:
 				_localctx = new Pr_LexerRuleBlock1Alt1Context(_localctx);
 				EnterOuterAlt(_localctx, 1);
 				{
-				State = 373;
+				State = 378;
 				((Pr_LexerRuleBlock1Alt1Context)_localctx).kToken = Match(LR_KToken);
-				State = 374;
+				State = 379;
 				((Pr_LexerRuleBlock1Alt1Context)_localctx).nameAntlr1 = pr_Name();
-				State = 376;
+				State = 381;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 				if (_la==LR_KReturns) {
 					{
-					State = 375;
+					State = 380;
 					((Pr_LexerRuleBlock1Alt1Context)_localctx).lexerRuleBlock1Alt1Block1Antlr1 = pr_LexerRuleBlock1Alt1Block1();
 					}
 				}
@@ -2866,9 +2852,9 @@ public partial class CompilerParser : global::MetaDslx.CodeAnalysis.Parsers.Antl
 				_localctx = new Pr_LexerRuleBlock1Alt2Context(_localctx);
 				EnterOuterAlt(_localctx, 2);
 				{
-				State = 378;
+				State = 383;
 				((Pr_LexerRuleBlock1Alt2Context)_localctx).isHidden = Match(LR_KHidden);
-				State = 379;
+				State = 384;
 				((Pr_LexerRuleBlock1Alt2Context)_localctx).nameAntlr1 = pr_Name();
 				}
 				break;
@@ -2876,9 +2862,9 @@ public partial class CompilerParser : global::MetaDslx.CodeAnalysis.Parsers.Antl
 				_localctx = new Pr_LexerRuleBlock1Alt3Context(_localctx);
 				EnterOuterAlt(_localctx, 3);
 				{
-				State = 380;
+				State = 385;
 				((Pr_LexerRuleBlock1Alt3Context)_localctx).isFragment = Match(LR_KFragment);
-				State = 381;
+				State = 386;
 				((Pr_LexerRuleBlock1Alt3Context)_localctx).nameAntlr1 = pr_Name();
 				}
 				break;
@@ -2920,13 +2906,13 @@ public partial class CompilerParser : global::MetaDslx.CodeAnalysis.Parsers.Antl
 	[RuleVersion(0)]
 	public Pr_LexerRuleBlock2Context pr_LexerRuleBlock2() {
 		Pr_LexerRuleBlock2Context _localctx = new Pr_LexerRuleBlock2Context(Context, State);
-		EnterRule(_localctx, 64, RULE_pr_LexerRuleBlock2);
+		EnterRule(_localctx, 62, RULE_pr_LexerRuleBlock2);
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 384;
+			State = 389;
 			_localctx.tBar = Match(LR_TBar);
-			State = 385;
+			State = 390;
 			_localctx.alternativesAntlr1 = pr_LAlternative();
 			}
 		}
@@ -2964,13 +2950,13 @@ public partial class CompilerParser : global::MetaDslx.CodeAnalysis.Parsers.Antl
 	[RuleVersion(0)]
 	public Pr_LBlockBlock1Context pr_LBlockBlock1() {
 		Pr_LBlockBlock1Context _localctx = new Pr_LBlockBlock1Context(Context, State);
-		EnterRule(_localctx, 66, RULE_pr_LBlockBlock1);
+		EnterRule(_localctx, 64, RULE_pr_LBlockBlock1);
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 387;
+			State = 392;
 			_localctx.tBar = Match(LR_TBar);
-			State = 388;
+			State = 393;
 			_localctx.alternativesAntlr1 = pr_LAlternative();
 			}
 		}
@@ -3014,25 +3000,25 @@ public partial class CompilerParser : global::MetaDslx.CodeAnalysis.Parsers.Antl
 	[RuleVersion(0)]
 	public Pr_ArrayExpressionBlock1Context pr_ArrayExpressionBlock1() {
 		Pr_ArrayExpressionBlock1Context _localctx = new Pr_ArrayExpressionBlock1Context(Context, State);
-		EnterRule(_localctx, 68, RULE_pr_ArrayExpressionBlock1);
+		EnterRule(_localctx, 66, RULE_pr_ArrayExpressionBlock1);
 		int _la;
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 390;
+			State = 395;
 			_localctx.itemsAntlr1 = pr_Expression();
-			State = 394;
+			State = 399;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			while (_la==LR_TComma) {
 				{
 				{
-				State = 391;
+				State = 396;
 				_localctx._pr_ArrayExpressionBlock1Block1 = pr_ArrayExpressionBlock1Block1();
 				_localctx._arrayExpressionBlock1Block1Antlr1.Add(_localctx._pr_ArrayExpressionBlock1Block1);
 				}
 				}
-				State = 396;
+				State = 401;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 			}
@@ -3072,13 +3058,13 @@ public partial class CompilerParser : global::MetaDslx.CodeAnalysis.Parsers.Antl
 	[RuleVersion(0)]
 	public Pr_AnnotationArgumentsBlock1Context pr_AnnotationArgumentsBlock1() {
 		Pr_AnnotationArgumentsBlock1Context _localctx = new Pr_AnnotationArgumentsBlock1Context(Context, State);
-		EnterRule(_localctx, 70, RULE_pr_AnnotationArgumentsBlock1);
+		EnterRule(_localctx, 68, RULE_pr_AnnotationArgumentsBlock1);
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 397;
+			State = 402;
 			_localctx.tComma = Match(LR_TComma);
-			State = 398;
+			State = 403;
 			_localctx.argumentsAntlr1 = pr_AnnotationArgument();
 			}
 		}
@@ -3116,13 +3102,13 @@ public partial class CompilerParser : global::MetaDslx.CodeAnalysis.Parsers.Antl
 	[RuleVersion(0)]
 	public Pr_AnnotationArgumentBlock1Context pr_AnnotationArgumentBlock1() {
 		Pr_AnnotationArgumentBlock1Context _localctx = new Pr_AnnotationArgumentBlock1Context(Context, State);
-		EnterRule(_localctx, 72, RULE_pr_AnnotationArgumentBlock1);
+		EnterRule(_localctx, 70, RULE_pr_AnnotationArgumentBlock1);
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 400;
+			State = 405;
 			_localctx.namedParameterAntlr1 = pr_Identifier();
-			State = 401;
+			State = 406;
 			_localctx.tColon = Match(LR_TColon);
 			}
 		}
@@ -3160,13 +3146,13 @@ public partial class CompilerParser : global::MetaDslx.CodeAnalysis.Parsers.Antl
 	[RuleVersion(0)]
 	public Pr_QualifierBlock1Context pr_QualifierBlock1() {
 		Pr_QualifierBlock1Context _localctx = new Pr_QualifierBlock1Context(Context, State);
-		EnterRule(_localctx, 74, RULE_pr_QualifierBlock1);
+		EnterRule(_localctx, 72, RULE_pr_QualifierBlock1);
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 403;
+			State = 408;
 			_localctx.tDot = Match(LR_TDot);
-			State = 404;
+			State = 409;
 			_localctx.identifierAntlr1 = pr_Identifier();
 			}
 		}
@@ -3204,13 +3190,13 @@ public partial class CompilerParser : global::MetaDslx.CodeAnalysis.Parsers.Antl
 	[RuleVersion(0)]
 	public Pr_QualifierListBlock1Context pr_QualifierListBlock1() {
 		Pr_QualifierListBlock1Context _localctx = new Pr_QualifierListBlock1Context(Context, State);
-		EnterRule(_localctx, 76, RULE_pr_QualifierListBlock1);
+		EnterRule(_localctx, 74, RULE_pr_QualifierListBlock1);
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 406;
+			State = 411;
 			_localctx.tComma = Match(LR_TComma);
-			State = 407;
+			State = 412;
 			_localctx.qualifierAntlr1 = pr_Qualifier();
 			}
 		}
@@ -3248,13 +3234,13 @@ public partial class CompilerParser : global::MetaDslx.CodeAnalysis.Parsers.Antl
 	[RuleVersion(0)]
 	public Pr_PAlternativeBlock1Block1Context pr_PAlternativeBlock1Block1() {
 		Pr_PAlternativeBlock1Block1Context _localctx = new Pr_PAlternativeBlock1Block1Context(Context, State);
-		EnterRule(_localctx, 78, RULE_pr_PAlternativeBlock1Block1);
+		EnterRule(_localctx, 76, RULE_pr_PAlternativeBlock1Block1);
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 409;
+			State = 414;
 			_localctx.kReturns = Match(LR_KReturns);
-			State = 410;
+			State = 415;
 			_localctx.returnTypeAntlr1 = pr_Qualifier();
 			}
 		}
@@ -3292,13 +3278,13 @@ public partial class CompilerParser : global::MetaDslx.CodeAnalysis.Parsers.Antl
 	[RuleVersion(0)]
 	public Pr_LexerRuleBlock1Alt1Block1Context pr_LexerRuleBlock1Alt1Block1() {
 		Pr_LexerRuleBlock1Alt1Block1Context _localctx = new Pr_LexerRuleBlock1Alt1Block1Context(Context, State);
-		EnterRule(_localctx, 80, RULE_pr_LexerRuleBlock1Alt1Block1);
+		EnterRule(_localctx, 78, RULE_pr_LexerRuleBlock1Alt1Block1);
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 412;
+			State = 417;
 			_localctx.kReturns = Match(LR_KReturns);
-			State = 413;
+			State = 418;
 			_localctx.returnTypeAntlr1 = pr_Qualifier();
 			}
 		}
@@ -3336,13 +3322,13 @@ public partial class CompilerParser : global::MetaDslx.CodeAnalysis.Parsers.Antl
 	[RuleVersion(0)]
 	public Pr_ArrayExpressionBlock1Block1Context pr_ArrayExpressionBlock1Block1() {
 		Pr_ArrayExpressionBlock1Block1Context _localctx = new Pr_ArrayExpressionBlock1Block1Context(Context, State);
-		EnterRule(_localctx, 82, RULE_pr_ArrayExpressionBlock1Block1);
+		EnterRule(_localctx, 80, RULE_pr_ArrayExpressionBlock1Block1);
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 415;
+			State = 420;
 			_localctx.tComma = Match(LR_TComma);
-			State = 416;
+			State = 421;
 			_localctx.itemsAntlr1 = pr_Expression();
 			}
 		}
@@ -3358,143 +3344,145 @@ public partial class CompilerParser : global::MetaDslx.CodeAnalysis.Parsers.Antl
 	}
 
 	private static int[] _serializedATN = {
-		4,1,51,419,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,6,2,7,
+		4,1,51,424,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,6,2,7,
 		7,7,2,8,7,8,2,9,7,9,2,10,7,10,2,11,7,11,2,12,7,12,2,13,7,13,2,14,7,14,
 		2,15,7,15,2,16,7,16,2,17,7,17,2,18,7,18,2,19,7,19,2,20,7,20,2,21,7,21,
 		2,22,7,22,2,23,7,23,2,24,7,24,2,25,7,25,2,26,7,26,2,27,7,27,2,28,7,28,
 		2,29,7,29,2,30,7,30,2,31,7,31,2,32,7,32,2,33,7,33,2,34,7,34,2,35,7,35,
-		2,36,7,36,2,37,7,37,2,38,7,38,2,39,7,39,2,40,7,40,2,41,7,41,1,0,1,0,1,
-		0,1,0,5,0,89,8,0,10,0,12,0,92,9,0,1,0,1,0,1,0,1,1,1,1,1,1,1,1,1,2,1,2,
-		5,2,103,8,2,10,2,12,2,106,9,2,1,3,1,3,1,3,1,3,1,3,1,4,1,4,1,5,5,5,116,
-		8,5,10,5,12,5,119,9,5,1,5,1,5,1,5,1,5,5,5,125,8,5,10,5,12,5,128,9,5,1,
-		5,1,5,1,5,5,5,133,8,5,10,5,12,5,136,9,5,1,5,1,5,1,5,1,5,5,5,142,8,5,10,
-		5,12,5,145,9,5,1,5,1,5,3,5,149,8,5,1,6,3,6,152,8,6,1,6,5,6,155,8,6,10,
-		6,12,6,158,9,6,1,6,3,6,161,8,6,1,7,3,7,164,8,7,1,7,5,7,167,8,7,10,7,12,
-		7,170,9,7,1,7,1,7,1,7,1,7,1,7,1,7,1,7,3,7,179,8,7,1,8,1,8,1,8,5,8,184,
-		8,8,10,8,12,8,187,9,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,5,8,199,
-		8,8,10,8,12,8,202,9,8,1,8,1,8,3,8,206,8,8,1,9,5,9,209,8,9,10,9,12,9,212,
-		9,9,1,9,3,9,215,8,9,1,10,5,10,218,8,10,10,10,12,10,221,9,10,1,11,3,11,
-		224,8,11,1,11,1,11,1,11,1,11,1,11,1,11,1,11,3,11,233,8,11,1,12,1,12,1,
-		12,5,12,238,8,12,10,12,12,12,241,9,12,1,12,1,12,1,12,1,12,1,12,1,12,1,
-		12,1,12,3,12,251,8,12,1,13,1,13,1,13,1,13,1,13,3,13,258,8,13,1,13,1,13,
-		1,13,1,13,3,13,264,8,13,3,13,266,8,13,1,14,1,14,1,14,3,14,271,8,14,1,14,
-		1,14,1,15,1,15,1,15,3,15,278,8,15,1,15,1,15,1,16,1,16,1,16,5,16,285,8,
-		16,10,16,12,16,288,9,16,1,16,1,16,1,17,3,17,293,8,17,1,17,1,17,1,18,1,
-		18,1,19,1,19,5,19,301,8,19,10,19,12,19,304,9,19,1,20,1,20,5,20,308,8,20,
-		10,20,12,20,311,9,20,1,21,1,21,1,21,3,21,316,8,21,1,22,5,22,319,8,22,10,
-		22,12,22,322,9,22,1,23,1,23,1,23,1,23,1,23,1,23,1,23,3,23,331,8,23,1,24,
-		1,24,1,24,1,25,5,25,337,8,25,10,25,12,25,340,9,25,1,25,1,25,1,25,3,25,
-		345,8,25,1,25,1,25,1,26,1,26,1,26,1,27,5,27,353,8,27,10,27,12,27,356,9,
-		27,1,27,1,27,1,27,1,27,1,27,3,27,363,8,27,1,28,1,28,1,28,1,29,1,29,1,29,
-		1,30,1,30,1,30,1,31,1,31,1,31,3,31,377,8,31,1,31,1,31,1,31,1,31,3,31,383,
-		8,31,1,32,1,32,1,32,1,33,1,33,1,33,1,34,1,34,5,34,393,8,34,10,34,12,34,
-		396,9,34,1,35,1,35,1,35,1,36,1,36,1,36,1,37,1,37,1,37,1,38,1,38,1,38,1,
-		39,1,39,1,39,1,40,1,40,1,40,1,41,1,41,1,41,1,41,0,0,42,0,2,4,6,8,10,12,
-		14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,
-		62,64,66,68,70,72,74,76,78,80,82,0,0,444,0,84,1,0,0,0,2,96,1,0,0,0,4,100,
-		1,0,0,0,6,107,1,0,0,0,8,112,1,0,0,0,10,148,1,0,0,0,12,151,1,0,0,0,14,163,
-		1,0,0,0,16,205,1,0,0,0,18,210,1,0,0,0,20,219,1,0,0,0,22,223,1,0,0,0,24,
-		250,1,0,0,0,26,265,1,0,0,0,28,267,1,0,0,0,30,274,1,0,0,0,32,281,1,0,0,
-		0,34,292,1,0,0,0,36,296,1,0,0,0,38,298,1,0,0,0,40,305,1,0,0,0,42,315,1,
-		0,0,0,44,320,1,0,0,0,46,330,1,0,0,0,48,332,1,0,0,0,50,338,1,0,0,0,52,348,
-		1,0,0,0,54,354,1,0,0,0,56,364,1,0,0,0,58,367,1,0,0,0,60,370,1,0,0,0,62,
-		382,1,0,0,0,64,384,1,0,0,0,66,387,1,0,0,0,68,390,1,0,0,0,70,397,1,0,0,
-		0,72,400,1,0,0,0,74,403,1,0,0,0,76,406,1,0,0,0,78,409,1,0,0,0,80,412,1,
-		0,0,0,82,415,1,0,0,0,84,85,5,3,0,0,85,86,3,38,19,0,86,90,5,4,0,0,87,89,
-		3,2,1,0,88,87,1,0,0,0,89,92,1,0,0,0,90,88,1,0,0,0,90,91,1,0,0,0,91,93,
-		1,0,0,0,92,90,1,0,0,0,93,94,3,4,2,0,94,95,5,0,0,1,95,1,1,0,0,0,96,97,5,
-		5,0,0,97,98,3,38,19,0,98,99,5,4,0,0,99,3,1,0,0,0,100,104,3,6,3,0,101,103,
-		3,10,5,0,102,101,1,0,0,0,103,106,1,0,0,0,104,102,1,0,0,0,104,105,1,0,0,
-		0,105,5,1,0,0,0,106,104,1,0,0,0,107,108,5,6,0,0,108,109,3,36,18,0,109,
-		110,5,4,0,0,110,111,3,8,4,0,111,7,1,0,0,0,112,113,3,44,22,0,113,9,1,0,
-		0,0,114,116,3,28,14,0,115,114,1,0,0,0,116,119,1,0,0,0,117,115,1,0,0,0,
-		117,118,1,0,0,0,118,120,1,0,0,0,119,117,1,0,0,0,120,121,3,46,23,0,121,
-		122,5,9,0,0,122,126,3,12,6,0,123,125,3,48,24,0,124,123,1,0,0,0,125,128,
-		1,0,0,0,126,124,1,0,0,0,126,127,1,0,0,0,127,129,1,0,0,0,128,126,1,0,0,
-		0,129,130,5,4,0,0,130,149,1,0,0,0,131,133,3,30,15,0,132,131,1,0,0,0,133,
-		136,1,0,0,0,134,132,1,0,0,0,134,135,1,0,0,0,135,137,1,0,0,0,136,134,1,
-		0,0,0,137,138,3,62,31,0,138,139,5,9,0,0,139,143,3,20,10,0,140,142,3,64,
-		32,0,141,140,1,0,0,0,142,145,1,0,0,0,143,141,1,0,0,0,143,144,1,0,0,0,144,
-		146,1,0,0,0,145,143,1,0,0,0,146,147,5,4,0,0,147,149,1,0,0,0,148,117,1,
-		0,0,0,148,134,1,0,0,0,149,11,1,0,0,0,150,152,3,50,25,0,151,150,1,0,0,0,
-		151,152,1,0,0,0,152,156,1,0,0,0,153,155,3,14,7,0,154,153,1,0,0,0,155,158,
-		1,0,0,0,156,154,1,0,0,0,156,157,1,0,0,0,157,160,1,0,0,0,158,156,1,0,0,
-		0,159,161,3,52,26,0,160,159,1,0,0,0,160,161,1,0,0,0,161,13,1,0,0,0,162,
-		164,3,54,27,0,163,162,1,0,0,0,163,164,1,0,0,0,164,168,1,0,0,0,165,167,
-		3,28,14,0,166,165,1,0,0,0,167,170,1,0,0,0,168,166,1,0,0,0,168,169,1,0,
-		0,0,169,171,1,0,0,0,170,168,1,0,0,0,171,178,3,16,8,0,172,179,5,35,0,0,
-		173,179,5,36,0,0,174,179,5,37,0,0,175,179,5,38,0,0,176,179,5,39,0,0,177,
-		179,5,40,0,0,178,172,1,0,0,0,178,173,1,0,0,0,178,174,1,0,0,0,178,175,1,
-		0,0,0,178,176,1,0,0,0,178,177,1,0,0,0,178,179,1,0,0,0,179,15,1,0,0,0,180,
-		181,5,17,0,0,181,185,3,18,9,0,182,184,3,58,29,0,183,182,1,0,0,0,184,187,
-		1,0,0,0,185,183,1,0,0,0,185,186,1,0,0,0,186,188,1,0,0,0,187,185,1,0,0,
-		0,188,189,5,18,0,0,189,206,1,0,0,0,190,206,5,16,0,0,191,206,5,46,0,0,192,
-		206,3,42,21,0,193,194,5,13,0,0,194,206,3,38,19,0,195,196,5,14,0,0,196,
-		200,3,38,19,0,197,199,3,56,28,0,198,197,1,0,0,0,199,202,1,0,0,0,200,198,
-		1,0,0,0,200,201,1,0,0,0,201,203,1,0,0,0,202,200,1,0,0,0,203,204,5,15,0,
-		0,204,206,1,0,0,0,205,180,1,0,0,0,205,190,1,0,0,0,205,191,1,0,0,0,205,
-		192,1,0,0,0,205,193,1,0,0,0,205,195,1,0,0,0,206,17,1,0,0,0,207,209,3,14,
-		7,0,208,207,1,0,0,0,209,212,1,0,0,0,210,208,1,0,0,0,210,211,1,0,0,0,211,
-		214,1,0,0,0,212,210,1,0,0,0,213,215,3,60,30,0,214,213,1,0,0,0,214,215,
-		1,0,0,0,215,19,1,0,0,0,216,218,3,22,11,0,217,216,1,0,0,0,218,221,1,0,0,
-		0,219,217,1,0,0,0,219,220,1,0,0,0,220,21,1,0,0,0,221,219,1,0,0,0,222,224,
-		5,22,0,0,223,222,1,0,0,0,223,224,1,0,0,0,224,225,1,0,0,0,225,232,3,24,
-		12,0,226,233,5,35,0,0,227,233,5,36,0,0,228,233,5,37,0,0,229,233,5,38,0,
-		0,230,233,5,39,0,0,231,233,5,40,0,0,232,226,1,0,0,0,232,227,1,0,0,0,232,
-		228,1,0,0,0,232,229,1,0,0,0,232,230,1,0,0,0,232,231,1,0,0,0,232,233,1,
-		0,0,0,233,23,1,0,0,0,234,235,5,17,0,0,235,239,3,20,10,0,236,238,3,66,33,
-		0,237,236,1,0,0,0,238,241,1,0,0,0,239,237,1,0,0,0,239,240,1,0,0,0,240,
-		242,1,0,0,0,241,239,1,0,0,0,242,243,5,18,0,0,243,251,1,0,0,0,244,251,5,
-		46,0,0,245,251,5,23,0,0,246,247,5,46,0,0,247,248,5,24,0,0,248,251,5,46,
-		0,0,249,251,3,42,21,0,250,234,1,0,0,0,250,244,1,0,0,0,250,245,1,0,0,0,
-		250,246,1,0,0,0,250,249,1,0,0,0,251,25,1,0,0,0,252,266,5,41,0,0,253,266,
-		5,46,0,0,254,266,3,38,19,0,255,257,5,28,0,0,256,258,3,68,34,0,257,256,
-		1,0,0,0,257,258,1,0,0,0,258,259,1,0,0,0,259,266,5,15,0,0,260,264,5,25,
-		0,0,261,264,5,26,0,0,262,264,5,27,0,0,263,260,1,0,0,0,263,261,1,0,0,0,
-		263,262,1,0,0,0,264,266,1,0,0,0,265,252,1,0,0,0,265,253,1,0,0,0,265,254,
-		1,0,0,0,265,255,1,0,0,0,265,263,1,0,0,0,266,27,1,0,0,0,267,268,5,29,0,
-		0,268,270,3,38,19,0,269,271,3,32,16,0,270,269,1,0,0,0,270,271,1,0,0,0,
-		271,272,1,0,0,0,272,273,5,30,0,0,273,29,1,0,0,0,274,275,5,29,0,0,275,277,
-		3,38,19,0,276,278,3,32,16,0,277,276,1,0,0,0,277,278,1,0,0,0,278,279,1,
-		0,0,0,279,280,5,30,0,0,280,31,1,0,0,0,281,282,5,17,0,0,282,286,3,34,17,
-		0,283,285,3,70,35,0,284,283,1,0,0,0,285,288,1,0,0,0,286,284,1,0,0,0,286,
-		287,1,0,0,0,287,289,1,0,0,0,288,286,1,0,0,0,289,290,5,18,0,0,290,33,1,
-		0,0,0,291,293,3,72,36,0,292,291,1,0,0,0,292,293,1,0,0,0,293,294,1,0,0,
-		0,294,295,3,26,13,0,295,35,1,0,0,0,296,297,3,42,21,0,297,37,1,0,0,0,298,
-		302,3,42,21,0,299,301,3,74,37,0,300,299,1,0,0,0,301,304,1,0,0,0,302,300,
-		1,0,0,0,302,303,1,0,0,0,303,39,1,0,0,0,304,302,1,0,0,0,305,309,3,38,19,
-		0,306,308,3,76,38,0,307,306,1,0,0,0,308,311,1,0,0,0,309,307,1,0,0,0,309,
-		310,1,0,0,0,310,41,1,0,0,0,311,309,1,0,0,0,312,316,5,43,0,0,313,316,5,
-		44,0,0,314,316,5,45,0,0,315,312,1,0,0,0,315,313,1,0,0,0,315,314,1,0,0,
-		0,316,43,1,0,0,0,317,319,3,10,5,0,318,317,1,0,0,0,319,322,1,0,0,0,320,
-		318,1,0,0,0,320,321,1,0,0,0,321,45,1,0,0,0,322,320,1,0,0,0,323,324,5,7,
-		0,0,324,331,3,36,18,0,325,331,3,42,21,0,326,327,3,36,18,0,327,328,5,8,
-		0,0,328,329,3,38,19,0,329,331,1,0,0,0,330,323,1,0,0,0,330,325,1,0,0,0,
-		330,326,1,0,0,0,331,47,1,0,0,0,332,333,5,10,0,0,333,334,3,12,6,0,334,49,
-		1,0,0,0,335,337,3,28,14,0,336,335,1,0,0,0,337,340,1,0,0,0,338,336,1,0,
-		0,0,338,339,1,0,0,0,339,341,1,0,0,0,340,338,1,0,0,0,341,342,5,11,0,0,342,
-		344,3,36,18,0,343,345,3,78,39,0,344,343,1,0,0,0,344,345,1,0,0,0,345,346,
-		1,0,0,0,346,347,5,9,0,0,347,51,1,0,0,0,348,349,5,12,0,0,349,350,3,26,13,
-		0,350,53,1,0,0,0,351,353,3,28,14,0,352,351,1,0,0,0,353,356,1,0,0,0,354,
-		352,1,0,0,0,354,355,1,0,0,0,355,357,1,0,0,0,356,354,1,0,0,0,357,362,3,
-		42,21,0,358,363,5,31,0,0,359,363,5,32,0,0,360,363,5,33,0,0,361,363,5,34,
-		0,0,362,358,1,0,0,0,362,359,1,0,0,0,362,360,1,0,0,0,362,361,1,0,0,0,363,
-		55,1,0,0,0,364,365,5,1,0,0,365,366,3,38,19,0,366,57,1,0,0,0,367,368,5,
-		10,0,0,368,369,3,18,9,0,369,59,1,0,0,0,370,371,5,12,0,0,371,372,3,26,13,
-		0,372,61,1,0,0,0,373,374,5,19,0,0,374,376,3,36,18,0,375,377,3,80,40,0,
-		376,375,1,0,0,0,376,377,1,0,0,0,377,383,1,0,0,0,378,379,5,20,0,0,379,383,
-		3,36,18,0,380,381,5,21,0,0,381,383,3,36,18,0,382,373,1,0,0,0,382,378,1,
-		0,0,0,382,380,1,0,0,0,383,63,1,0,0,0,384,385,5,10,0,0,385,386,3,20,10,
-		0,386,65,1,0,0,0,387,388,5,10,0,0,388,389,3,20,10,0,389,67,1,0,0,0,390,
-		394,3,26,13,0,391,393,3,82,41,0,392,391,1,0,0,0,393,396,1,0,0,0,394,392,
-		1,0,0,0,394,395,1,0,0,0,395,69,1,0,0,0,396,394,1,0,0,0,397,398,5,1,0,0,
-		398,399,3,34,17,0,399,71,1,0,0,0,400,401,3,42,21,0,401,402,5,9,0,0,402,
-		73,1,0,0,0,403,404,5,23,0,0,404,405,3,42,21,0,405,75,1,0,0,0,406,407,5,
-		1,0,0,407,408,3,38,19,0,408,77,1,0,0,0,409,410,5,8,0,0,410,411,3,38,19,
-		0,411,79,1,0,0,0,412,413,5,8,0,0,413,414,3,38,19,0,414,81,1,0,0,0,415,
-		416,5,1,0,0,416,417,3,26,13,0,417,83,1,0,0,0,42,90,104,117,126,134,143,
-		148,151,156,160,163,168,178,185,200,205,210,214,219,223,232,239,250,257,
-		263,265,270,277,286,292,302,309,315,320,330,338,344,354,362,376,382,394
+		2,36,7,36,2,37,7,37,2,38,7,38,2,39,7,39,2,40,7,40,1,0,1,0,1,0,1,0,5,0,
+		87,8,0,10,0,12,0,90,9,0,1,0,1,0,1,0,1,1,1,1,1,1,1,1,1,2,1,2,5,2,101,8,
+		2,10,2,12,2,104,9,2,1,3,1,3,1,3,1,3,1,3,1,4,1,4,1,5,5,5,114,8,5,10,5,12,
+		5,117,9,5,1,5,1,5,1,5,1,5,5,5,123,8,5,10,5,12,5,126,9,5,1,5,1,5,1,5,5,
+		5,131,8,5,10,5,12,5,134,9,5,1,5,1,5,1,5,1,5,1,5,5,5,141,8,5,10,5,12,5,
+		144,9,5,1,5,1,5,1,5,5,5,149,8,5,10,5,12,5,152,9,5,1,5,1,5,1,5,1,5,5,5,
+		158,8,5,10,5,12,5,161,9,5,1,5,1,5,3,5,165,8,5,1,6,3,6,168,8,6,1,6,5,6,
+		171,8,6,10,6,12,6,174,9,6,1,6,3,6,177,8,6,1,7,3,7,180,8,7,1,7,5,7,183,
+		8,7,10,7,12,7,186,9,7,1,7,1,7,1,7,1,7,1,7,1,7,1,7,3,7,195,8,7,1,8,1,8,
+		1,8,5,8,200,8,8,10,8,12,8,203,9,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,
+		1,8,5,8,215,8,8,10,8,12,8,218,9,8,1,8,1,8,3,8,222,8,8,1,9,5,9,225,8,9,
+		10,9,12,9,228,9,9,1,10,3,10,231,8,10,1,10,1,10,1,10,1,10,1,10,1,10,1,10,
+		3,10,240,8,10,1,11,1,11,1,11,5,11,245,8,11,10,11,12,11,248,9,11,1,11,1,
+		11,1,11,1,11,1,11,1,11,1,11,1,11,3,11,258,8,11,1,12,1,12,1,12,1,12,1,12,
+		3,12,265,8,12,1,12,1,12,1,12,1,12,3,12,271,8,12,3,12,273,8,12,1,13,1,13,
+		1,13,3,13,278,8,13,1,13,1,13,1,14,1,14,1,14,3,14,285,8,14,1,14,1,14,1,
+		15,1,15,1,15,5,15,292,8,15,10,15,12,15,295,9,15,1,15,1,15,1,16,3,16,300,
+		8,16,1,16,1,16,1,17,1,17,1,18,1,18,5,18,308,8,18,10,18,12,18,311,9,18,
+		1,19,1,19,5,19,315,8,19,10,19,12,19,318,9,19,1,20,1,20,1,20,3,20,323,8,
+		20,1,21,5,21,326,8,21,10,21,12,21,329,9,21,1,22,1,22,1,22,1,22,1,22,3,
+		22,336,8,22,1,23,1,23,1,23,1,24,1,24,1,24,1,25,1,25,1,25,1,26,5,26,348,
+		8,26,10,26,12,26,351,9,26,1,26,1,26,1,26,3,26,356,8,26,1,26,1,26,1,27,
+		1,27,1,27,1,28,5,28,364,8,28,10,28,12,28,367,9,28,1,28,1,28,1,28,1,28,
+		1,28,3,28,374,8,28,1,29,1,29,1,29,1,30,1,30,1,30,3,30,382,8,30,1,30,1,
+		30,1,30,1,30,3,30,388,8,30,1,31,1,31,1,31,1,32,1,32,1,32,1,33,1,33,5,33,
+		398,8,33,10,33,12,33,401,9,33,1,34,1,34,1,34,1,35,1,35,1,35,1,36,1,36,
+		1,36,1,37,1,37,1,37,1,38,1,38,1,38,1,39,1,39,1,39,1,40,1,40,1,40,1,40,
+		0,0,41,0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,
+		46,48,50,52,54,56,58,60,62,64,66,68,70,72,74,76,78,80,0,0,450,0,82,1,0,
+		0,0,2,94,1,0,0,0,4,98,1,0,0,0,6,105,1,0,0,0,8,110,1,0,0,0,10,164,1,0,0,
+		0,12,167,1,0,0,0,14,179,1,0,0,0,16,221,1,0,0,0,18,226,1,0,0,0,20,230,1,
+		0,0,0,22,257,1,0,0,0,24,272,1,0,0,0,26,274,1,0,0,0,28,281,1,0,0,0,30,288,
+		1,0,0,0,32,299,1,0,0,0,34,303,1,0,0,0,36,305,1,0,0,0,38,312,1,0,0,0,40,
+		322,1,0,0,0,42,327,1,0,0,0,44,335,1,0,0,0,46,337,1,0,0,0,48,340,1,0,0,
+		0,50,343,1,0,0,0,52,349,1,0,0,0,54,359,1,0,0,0,56,365,1,0,0,0,58,375,1,
+		0,0,0,60,387,1,0,0,0,62,389,1,0,0,0,64,392,1,0,0,0,66,395,1,0,0,0,68,402,
+		1,0,0,0,70,405,1,0,0,0,72,408,1,0,0,0,74,411,1,0,0,0,76,414,1,0,0,0,78,
+		417,1,0,0,0,80,420,1,0,0,0,82,83,5,3,0,0,83,84,3,36,18,0,84,88,5,4,0,0,
+		85,87,3,2,1,0,86,85,1,0,0,0,87,90,1,0,0,0,88,86,1,0,0,0,88,89,1,0,0,0,
+		89,91,1,0,0,0,90,88,1,0,0,0,91,92,3,4,2,0,92,93,5,0,0,1,93,1,1,0,0,0,94,
+		95,5,5,0,0,95,96,3,36,18,0,96,97,5,4,0,0,97,3,1,0,0,0,98,102,3,6,3,0,99,
+		101,3,10,5,0,100,99,1,0,0,0,101,104,1,0,0,0,102,100,1,0,0,0,102,103,1,
+		0,0,0,103,5,1,0,0,0,104,102,1,0,0,0,105,106,5,6,0,0,106,107,3,34,17,0,
+		107,108,5,4,0,0,108,109,3,8,4,0,109,7,1,0,0,0,110,111,3,42,21,0,111,9,
+		1,0,0,0,112,114,3,26,13,0,113,112,1,0,0,0,114,117,1,0,0,0,115,113,1,0,
+		0,0,115,116,1,0,0,0,116,118,1,0,0,0,117,115,1,0,0,0,118,119,3,44,22,0,
+		119,120,5,8,0,0,120,124,3,12,6,0,121,123,3,46,23,0,122,121,1,0,0,0,123,
+		126,1,0,0,0,124,122,1,0,0,0,124,125,1,0,0,0,125,127,1,0,0,0,126,124,1,
+		0,0,0,127,128,5,4,0,0,128,165,1,0,0,0,129,131,3,26,13,0,130,129,1,0,0,
+		0,131,134,1,0,0,0,132,130,1,0,0,0,132,133,1,0,0,0,133,135,1,0,0,0,134,
+		132,1,0,0,0,135,136,5,10,0,0,136,137,3,34,17,0,137,138,5,8,0,0,138,142,
+		3,12,6,0,139,141,3,48,24,0,140,139,1,0,0,0,141,144,1,0,0,0,142,140,1,0,
+		0,0,142,143,1,0,0,0,143,145,1,0,0,0,144,142,1,0,0,0,145,146,5,4,0,0,146,
+		165,1,0,0,0,147,149,3,28,14,0,148,147,1,0,0,0,149,152,1,0,0,0,150,148,
+		1,0,0,0,150,151,1,0,0,0,151,153,1,0,0,0,152,150,1,0,0,0,153,154,3,60,30,
+		0,154,155,5,8,0,0,155,159,3,18,9,0,156,158,3,62,31,0,157,156,1,0,0,0,158,
+		161,1,0,0,0,159,157,1,0,0,0,159,160,1,0,0,0,160,162,1,0,0,0,161,159,1,
+		0,0,0,162,163,5,4,0,0,163,165,1,0,0,0,164,115,1,0,0,0,164,132,1,0,0,0,
+		164,150,1,0,0,0,165,11,1,0,0,0,166,168,3,52,26,0,167,166,1,0,0,0,167,168,
+		1,0,0,0,168,172,1,0,0,0,169,171,3,14,7,0,170,169,1,0,0,0,171,174,1,0,0,
+		0,172,170,1,0,0,0,172,173,1,0,0,0,173,176,1,0,0,0,174,172,1,0,0,0,175,
+		177,3,54,27,0,176,175,1,0,0,0,176,177,1,0,0,0,177,13,1,0,0,0,178,180,3,
+		56,28,0,179,178,1,0,0,0,179,180,1,0,0,0,180,184,1,0,0,0,181,183,3,26,13,
+		0,182,181,1,0,0,0,183,186,1,0,0,0,184,182,1,0,0,0,184,185,1,0,0,0,185,
+		187,1,0,0,0,186,184,1,0,0,0,187,194,3,16,8,0,188,195,5,35,0,0,189,195,
+		5,36,0,0,190,195,5,37,0,0,191,195,5,38,0,0,192,195,5,39,0,0,193,195,5,
+		40,0,0,194,188,1,0,0,0,194,189,1,0,0,0,194,190,1,0,0,0,194,191,1,0,0,0,
+		194,192,1,0,0,0,194,193,1,0,0,0,194,195,1,0,0,0,195,15,1,0,0,0,196,197,
+		5,11,0,0,197,201,3,12,6,0,198,200,3,50,25,0,199,198,1,0,0,0,200,203,1,
+		0,0,0,201,199,1,0,0,0,201,202,1,0,0,0,202,204,1,0,0,0,203,201,1,0,0,0,
+		204,205,5,12,0,0,205,222,1,0,0,0,206,222,5,18,0,0,207,222,5,46,0,0,208,
+		222,3,40,20,0,209,210,5,15,0,0,210,222,3,36,18,0,211,212,5,16,0,0,212,
+		216,3,36,18,0,213,215,3,58,29,0,214,213,1,0,0,0,215,218,1,0,0,0,216,214,
+		1,0,0,0,216,217,1,0,0,0,217,219,1,0,0,0,218,216,1,0,0,0,219,220,5,17,0,
+		0,220,222,1,0,0,0,221,196,1,0,0,0,221,206,1,0,0,0,221,207,1,0,0,0,221,
+		208,1,0,0,0,221,209,1,0,0,0,221,211,1,0,0,0,222,17,1,0,0,0,223,225,3,20,
+		10,0,224,223,1,0,0,0,225,228,1,0,0,0,226,224,1,0,0,0,226,227,1,0,0,0,227,
+		19,1,0,0,0,228,226,1,0,0,0,229,231,5,22,0,0,230,229,1,0,0,0,230,231,1,
+		0,0,0,231,232,1,0,0,0,232,239,3,22,11,0,233,240,5,35,0,0,234,240,5,36,
+		0,0,235,240,5,37,0,0,236,240,5,38,0,0,237,240,5,39,0,0,238,240,5,40,0,
+		0,239,233,1,0,0,0,239,234,1,0,0,0,239,235,1,0,0,0,239,236,1,0,0,0,239,
+		237,1,0,0,0,239,238,1,0,0,0,239,240,1,0,0,0,240,21,1,0,0,0,241,242,5,11,
+		0,0,242,246,3,18,9,0,243,245,3,64,32,0,244,243,1,0,0,0,245,248,1,0,0,0,
+		246,244,1,0,0,0,246,247,1,0,0,0,247,249,1,0,0,0,248,246,1,0,0,0,249,250,
+		5,12,0,0,250,258,1,0,0,0,251,258,5,46,0,0,252,258,5,23,0,0,253,254,5,46,
+		0,0,254,255,5,24,0,0,255,258,5,46,0,0,256,258,3,40,20,0,257,241,1,0,0,
+		0,257,251,1,0,0,0,257,252,1,0,0,0,257,253,1,0,0,0,257,256,1,0,0,0,258,
+		23,1,0,0,0,259,273,5,41,0,0,260,273,5,46,0,0,261,273,3,36,18,0,262,264,
+		5,28,0,0,263,265,3,66,33,0,264,263,1,0,0,0,264,265,1,0,0,0,265,266,1,0,
+		0,0,266,273,5,17,0,0,267,271,5,25,0,0,268,271,5,26,0,0,269,271,5,27,0,
+		0,270,267,1,0,0,0,270,268,1,0,0,0,270,269,1,0,0,0,271,273,1,0,0,0,272,
+		259,1,0,0,0,272,260,1,0,0,0,272,261,1,0,0,0,272,262,1,0,0,0,272,270,1,
+		0,0,0,273,25,1,0,0,0,274,275,5,29,0,0,275,277,3,36,18,0,276,278,3,30,15,
+		0,277,276,1,0,0,0,277,278,1,0,0,0,278,279,1,0,0,0,279,280,5,30,0,0,280,
+		27,1,0,0,0,281,282,5,29,0,0,282,284,3,36,18,0,283,285,3,30,15,0,284,283,
+		1,0,0,0,284,285,1,0,0,0,285,286,1,0,0,0,286,287,5,30,0,0,287,29,1,0,0,
+		0,288,289,5,11,0,0,289,293,3,32,16,0,290,292,3,68,34,0,291,290,1,0,0,0,
+		292,295,1,0,0,0,293,291,1,0,0,0,293,294,1,0,0,0,294,296,1,0,0,0,295,293,
+		1,0,0,0,296,297,5,12,0,0,297,31,1,0,0,0,298,300,3,70,35,0,299,298,1,0,
+		0,0,299,300,1,0,0,0,300,301,1,0,0,0,301,302,3,24,12,0,302,33,1,0,0,0,303,
+		304,3,40,20,0,304,35,1,0,0,0,305,309,3,40,20,0,306,308,3,72,36,0,307,306,
+		1,0,0,0,308,311,1,0,0,0,309,307,1,0,0,0,309,310,1,0,0,0,310,37,1,0,0,0,
+		311,309,1,0,0,0,312,316,3,36,18,0,313,315,3,74,37,0,314,313,1,0,0,0,315,
+		318,1,0,0,0,316,314,1,0,0,0,316,317,1,0,0,0,317,39,1,0,0,0,318,316,1,0,
+		0,0,319,323,5,43,0,0,320,323,5,44,0,0,321,323,5,45,0,0,322,319,1,0,0,0,
+		322,320,1,0,0,0,322,321,1,0,0,0,323,41,1,0,0,0,324,326,3,10,5,0,325,324,
+		1,0,0,0,326,329,1,0,0,0,327,325,1,0,0,0,327,328,1,0,0,0,328,43,1,0,0,0,
+		329,327,1,0,0,0,330,336,3,40,20,0,331,332,3,40,20,0,332,333,5,7,0,0,333,
+		334,3,36,18,0,334,336,1,0,0,0,335,330,1,0,0,0,335,331,1,0,0,0,336,45,1,
+		0,0,0,337,338,5,9,0,0,338,339,3,12,6,0,339,47,1,0,0,0,340,341,5,9,0,0,
+		341,342,3,12,6,0,342,49,1,0,0,0,343,344,5,9,0,0,344,345,3,12,6,0,345,51,
+		1,0,0,0,346,348,3,26,13,0,347,346,1,0,0,0,348,351,1,0,0,0,349,347,1,0,
+		0,0,349,350,1,0,0,0,350,352,1,0,0,0,351,349,1,0,0,0,352,353,5,13,0,0,353,
+		355,3,34,17,0,354,356,3,76,38,0,355,354,1,0,0,0,355,356,1,0,0,0,356,357,
+		1,0,0,0,357,358,5,8,0,0,358,53,1,0,0,0,359,360,5,14,0,0,360,361,3,24,12,
+		0,361,55,1,0,0,0,362,364,3,26,13,0,363,362,1,0,0,0,364,367,1,0,0,0,365,
+		363,1,0,0,0,365,366,1,0,0,0,366,368,1,0,0,0,367,365,1,0,0,0,368,373,3,
+		40,20,0,369,374,5,31,0,0,370,374,5,32,0,0,371,374,5,33,0,0,372,374,5,34,
+		0,0,373,369,1,0,0,0,373,370,1,0,0,0,373,371,1,0,0,0,373,372,1,0,0,0,374,
+		57,1,0,0,0,375,376,5,1,0,0,376,377,3,36,18,0,377,59,1,0,0,0,378,379,5,
+		19,0,0,379,381,3,34,17,0,380,382,3,78,39,0,381,380,1,0,0,0,381,382,1,0,
+		0,0,382,388,1,0,0,0,383,384,5,20,0,0,384,388,3,34,17,0,385,386,5,21,0,
+		0,386,388,3,34,17,0,387,378,1,0,0,0,387,383,1,0,0,0,387,385,1,0,0,0,388,
+		61,1,0,0,0,389,390,5,9,0,0,390,391,3,18,9,0,391,63,1,0,0,0,392,393,5,9,
+		0,0,393,394,3,18,9,0,394,65,1,0,0,0,395,399,3,24,12,0,396,398,3,80,40,
+		0,397,396,1,0,0,0,398,401,1,0,0,0,399,397,1,0,0,0,399,400,1,0,0,0,400,
+		67,1,0,0,0,401,399,1,0,0,0,402,403,5,1,0,0,403,404,3,32,16,0,404,69,1,
+		0,0,0,405,406,3,40,20,0,406,407,5,8,0,0,407,71,1,0,0,0,408,409,5,23,0,
+		0,409,410,3,40,20,0,410,73,1,0,0,0,411,412,5,1,0,0,412,413,3,36,18,0,413,
+		75,1,0,0,0,414,415,5,7,0,0,415,416,3,36,18,0,416,77,1,0,0,0,417,418,5,
+		7,0,0,418,419,3,36,18,0,419,79,1,0,0,0,420,421,5,1,0,0,421,422,3,24,12,
+		0,422,81,1,0,0,0,42,88,102,115,124,132,142,150,159,164,167,172,176,179,
+		184,194,201,216,221,226,230,239,246,257,264,270,272,277,284,293,299,309,
+		316,322,327,335,349,355,365,373,381,387,399
 	};
 
 	public static readonly ATN _ATN =

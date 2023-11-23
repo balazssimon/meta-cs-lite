@@ -582,6 +582,39 @@ namespace MetaDslx.CodeAnalysis
             return false;
         }
 
+        public bool TryGetCoreType(out MetaType coreType, DiagnosticBag diagnostics = null, CancellationToken cancellationToken = default)
+        {
+            if (this.IsCollection)
+            {
+                if (this.TryExtractCollectionType(out var itemType, diagnostics, cancellationToken))
+                {
+                    if (this.IsNullable)
+                    {
+                        return itemType.TryExtractNullableType(out coreType, diagnostics, cancellationToken);
+                    }
+                    else
+                    {
+                        coreType = itemType;
+                        return true;
+                    }
+                }
+                else
+                {
+                    coreType = this;
+                    return false;
+                }
+            }
+            else if (this.IsNullable)
+            {
+                return this.TryExtractNullableType(out coreType, diagnostics, cancellationToken);
+            }
+            else
+            {
+                coreType = this;
+                return true;
+            }
+        }
+
         public object? Extract(bool tryResolveType = false)
         {
             var type = AsType(tryResolveType);

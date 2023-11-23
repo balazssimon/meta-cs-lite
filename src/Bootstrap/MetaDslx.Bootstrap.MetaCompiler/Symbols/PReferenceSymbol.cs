@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Collections.Immutable;
 
 namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
 {
@@ -17,6 +18,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
         {
             public static readonly CompletionPart StartComputingProperty_Rule = new CompletionPart(nameof(StartComputingProperty_Rule));
             public static readonly CompletionPart FinishComputingProperty_Rule = new CompletionPart(nameof(FinishComputingProperty_Rule));
+            public static readonly CompletionPart StartComputingProperty_ReferencedTypes = new CompletionPart(nameof(StartComputingProperty_ReferencedTypes));
+            public static readonly CompletionPart FinishComputingProperty_ReferencedTypes = new CompletionPart(nameof(FinishComputingProperty_ReferencedTypes));
             public static readonly CompletionPart StartComputingProperty_Members = DeclaredSymbol.CompletionParts.StartComputingProperty_Members;
             public static readonly CompletionPart FinishComputingProperty_Members = DeclaredSymbol.CompletionParts.FinishComputingProperty_Members;
             public static readonly CompletionPart StartComputingProperty_TypeArguments = DeclaredSymbol.CompletionParts.StartComputingProperty_TypeArguments;
@@ -28,6 +31,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
             public static readonly CompletionGraph CompletionGraph =
                 CompletionGraph.CreateFromParts(
                     StartComputingProperty_Rule, FinishComputingProperty_Rule,
+                    StartComputingProperty_ReferencedTypes, FinishComputingProperty_ReferencedTypes,
                     StartComputingProperty_Members, FinishComputingProperty_Members,
                     StartComputingProperty_TypeArguments, FinishComputingProperty_TypeArguments,
                     StartComputingProperty_Imports, FinishComputingProperty_Imports,
@@ -35,6 +39,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
         }
 
         private MetaSymbol _rule;
+        private ImmutableArray<MetaType> _referencedTypes;
 
         public PReferenceSymbol(Symbol container, MergedDeclaration declaration, IModelObject modelObject)
             : base(container, declaration, modelObject)
@@ -53,6 +58,16 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
             }
         }
 
+        [ModelProperty]
+        public ImmutableArray<MetaType> ReferencedTypes
+        {
+            get
+            {
+                ForceComplete(CompletionParts.FinishComputingProperty_ReferencedTypes, null, default);
+                return _referencedTypes;
+            }
+        }
+
         protected override bool ForceCompletePart(ref CompletionPart incompletePart, SourceLocation? locationOpt, CancellationToken cancellationToken)
         {
             if (incompletePart == CompletionParts.StartComputingProperty_Rule || incompletePart == CompletionParts.FinishComputingProperty_Rule)
@@ -64,6 +79,18 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
                     AddSymbolDiagnostics(diagnostics);
                     diagnostics.Free();
                     NotePartComplete(CompletionParts.FinishComputingProperty_Rule);
+                }
+                return true;
+            }
+            else if (incompletePart == CompletionParts.StartComputingProperty_ReferencedTypes || incompletePart == CompletionParts.FinishComputingProperty_ReferencedTypes)
+            {
+                if (NotePartComplete(CompletionParts.StartComputingProperty_ReferencedTypes))
+                {
+                    var diagnostics = DiagnosticBag.GetInstance();
+                    _referencedTypes = CompleteProperty_ReferencedTypes(diagnostics, cancellationToken);
+                    AddSymbolDiagnostics(diagnostics);
+                    diagnostics.Free();
+                    NotePartComplete(CompletionParts.FinishComputingProperty_ReferencedTypes);
                 }
                 return true;
             }
@@ -84,5 +111,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
             return SymbolFactory.GetSymbolPropertyValue<MetaSymbol>(this, nameof(Rule), diagnostics, cancellationToken);
         }
 
+        protected virtual ImmutableArray<MetaType> CompleteProperty_ReferencedTypes(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        {
+            return SymbolFactory.GetSymbolPropertyValues<MetaType>(this, nameof(ReferencedTypes), diagnostics, cancellationToken);
+        }
     }
 }

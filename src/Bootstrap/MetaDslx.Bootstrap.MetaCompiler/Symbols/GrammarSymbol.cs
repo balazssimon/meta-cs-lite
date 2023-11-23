@@ -12,6 +12,7 @@ using System.Collections.Immutable;
 using MetaDslx.CodeAnalysis.PooledObjects;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System.Diagnostics.CodeAnalysis;
+using MetaDslx.Bootstrap.MetaCompiler.Model;
 
 namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
 {
@@ -37,8 +38,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
 
         private static readonly ParserRuleSymbolsByName CompareParserRuleSymbolsByName = new ParserRuleSymbolsByName();
 
-        private ImmutableDictionary<ParserRuleSymbol, ImmutableArray<BlockRuleReference>> _ruleToBlockReferences;
-        private ImmutableDictionary<ParserRuleSymbol, ImmutableArray<PAlternativeSymbol>> _blockFromAlterativeReferences;
+        private ImmutableDictionary<PBlockSymbol, ImmutableArray<PAlternativeSymbol>> _blockFromAlterativeReferences;
 
         public GrammarSymbol(Symbol container, MergedDeclaration declaration, IModelObject modelObject)
             : base(container, declaration, modelObject)
@@ -47,16 +47,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
 
         protected override CompletionGraph CompletionGraph => CompletionParts.CompletionGraph;
 
-        public ImmutableDictionary<ParserRuleSymbol, ImmutableArray<BlockRuleReference>> RuleToBlockReferences
-        {
-            get
-            {
-                ComputeAllBlocks();
-                return _ruleToBlockReferences;
-            }
-        }
-
-        public ImmutableDictionary<ParserRuleSymbol, ImmutableArray<PAlternativeSymbol>> BlockFromAlterativeReferences
+        public ImmutableDictionary<PBlockSymbol, ImmutableArray<PAlternativeSymbol>> BlockFromAlterativeReferences
         {
             get
             {
@@ -67,107 +58,64 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
 
         private void ComputeAllBlocks()
         {
-            if (_ruleToBlockReferences is not null) return;
-            var blockRefs = new SortedDictionary<ParserRuleSymbol, SortedSet<ParserRuleSymbol>>(CompareParserRuleSymbolsByName);
+            if (_blockFromAlterativeReferences is not null) return;
+            var blockRefs = new Dictionary<PAlternativeSymbol, HashSet<PBlockSymbol>>();
             var parserRules = this.Members.OfType<ParserRuleSymbol>().ToImmutableArray();
-            var blockRules = new HashSet<ParserRuleSymbol>(parserRules.Where(r => r.IsBlock));
-            foreach (var br in blockRules)
+            foreach (var rule in this.Members)
             {
-                var brRefs = new SortedSet<ParserRuleSymbol>(CompareParserRuleSymbolsByName);
-                blockRefs.Add(br, brRefs);
-                foreach (var alt in br.Alternatives)
+                if (rule is ParserRuleSymbol pr)
                 {
-                    foreach (var elem in alt.Elements)
-                    {
-                        if (elem.Value.OriginalSymbol is PReferenceSymbol rs && rs.Rule.OriginalSymbol is ParserRuleSymbol prs && blockRules.Contains(prs))
-                        {
-                            brRefs.Add(prs);
-                        }
-                    }
+                    CollectAltBlocks(blockRefs, pr.Alternatives);
+                }
+                else if (rule is PBlockSymbol pb)
+                {
+                    CollectAltBlocks(blockRefs, pb.Alternatives);
                 }
             }
-            var ruleToBlockReferences = ImmutableDictionary.CreateBuilder<ParserRuleSymbol, ImmutableArray<BlockRuleReference>>();
-            var blockTargetRefsBuilder = ArrayBuilder<BlockRuleReference>.GetInstance();
-            foreach (var blk in blockRefs.Keys)
-            {
-                var brRefs = blockRefs[blk];
-                blockTargetRefsBuilder.Clear();
-                blockTargetRefsBuilder.AddRange(brRefs.Select(br => new BlockRuleReference(br, br)));
-                var i = 0;
-                while (i < blockTargetRefsBuilder.Count)
-                {
-                    var brRef = blockTargetRefsBuilder[i];
-                    var brRefRefs = blockRefs[brRef.ReferencedBlock];
-                    foreach (var brRefRef in brRefRefs)
-                    {
-                        if (!blockTargetRefsBuilder.Any(br => br.ReferencedBlock == brRefRef))
-                        {
-                            blockTargetRefsBuilder.Add(new BlockRuleReference(brRef.ReferencedBlock, brRefRef));
-                        }
-                    }
-                    ++i;
-                }
-                ruleToBlockReferences.Add(blk, blockTargetRefsBuilder.ToImmutable());
-            }
-            foreach (var pr in parserRules.Where(r => !r.IsBlock))
-            {
-                blockTargetRefsBuilder.Clear();
-                foreach (var alt in pr.Alternatives)
-                {
-                    foreach (var elem in alt.AllSimpleElements)
-                    {
-                        if (elem.Value.OriginalSymbol is PReferenceSymbol rs && rs.Rule.OriginalSymbol is ParserRuleSymbol prs && blockRules.Contains(prs))
-                        {
-                            if (!blockTargetRefsBuilder.Any(br => br.ReferencedBlock == prs))
-                            {
-                                blockTargetRefsBuilder.Add(new BlockRuleReference(pr, prs));
-                            }
-                        }
-                    }
-                }
-                var i = 0;
-                while (i < blockTargetRefsBuilder.Count)
-                {
-                    var brRef = blockTargetRefsBuilder[i];
-                    var brRefRefs = blockRefs[brRef.ReferencedBlock];
-                    foreach (var brRefRef in brRefRefs)
-                    {
-                        if (!blockTargetRefsBuilder.Any(br => br.ReferencedBlock == brRefRef))
-                        {
-                            blockTargetRefsBuilder.Add(new BlockRuleReference(brRef.ReferencedBlock, brRefRef));
-                        }
-                    }
-                    ++i;
-                }
-                ruleToBlockReferences.Add(pr, blockTargetRefsBuilder.ToImmutable());
-            }
-            blockTargetRefsBuilder.Free();
-            var blockFromAlternativeReferences = ImmutableDictionary.CreateBuilder<ParserRuleSymbol, ImmutableArray<PAlternativeSymbol>>();
-            var blockSourceRefsBuilder = ArrayBuilder<PAlternativeSymbol>.GetInstance();
-            foreach (var blk in blockRefs.Keys)
-            {
-                blockSourceRefsBuilder.Clear();
-                foreach (var pr in parserRules.Where(r => !r.IsBlock))
-                {
-                    foreach (var alt in pr.Alternatives)
-                    {
-                        foreach (var elem in alt.AllSimpleElements)
-                        {
-                            if (elem.Value.OriginalSymbol is PReferenceSymbol rs && rs.Rule.OriginalSymbol == blk)
-                            {
-                                if (!blockSourceRefsBuilder.Any(br => br == alt))
-                                {
-                                    blockSourceRefsBuilder.Add(alt);
-                                }
-                            }
-                        }
-                    }
-                }
-                blockFromAlternativeReferences.Add(blk, blockSourceRefsBuilder.ToImmutable());
-            }
-            blockSourceRefsBuilder.Free();
-            Interlocked.CompareExchange(ref _ruleToBlockReferences, ruleToBlockReferences.ToImmutable(), null);
             Interlocked.CompareExchange(ref _blockFromAlterativeReferences, blockFromAlternativeReferences.ToImmutable(), null);
+        }
+
+        private void CollectAltBlocks(Dictionary<PAlternativeSymbol, HashSet<PBlockSymbol>> blockRefs, IEnumerable<PAlternativeSymbol> alts)
+        {
+            foreach (var alt in alts)
+            {
+                foreach (var elem in alt.Elements)
+                {
+                    if (elem.IsNamedElement)
+                    {
+                        if (elem.Value.OriginalSymbol is PBlockSymbol pblock)
+                        {
+                            CollectAltBlocks(blockRefs, pblock.Alternatives);
+                        }
+                    }
+                    else 
+                    {
+                        if (elem.Value.OriginalSymbol is PReferenceSymbol pref)
+                        {
+                            if (pref.Rule.OriginalSymbol is PBlockSymbol prefBlock)
+                            {
+                                AddAltBlockRef(blockRefs, alt, prefBlock);
+                                CollectAltBlocks(blockRefs, prefBlock.Alternatives);
+                            }
+                        }
+                        if (elem.Value.OriginalSymbol is PBlockSymbol pblock)
+                        {
+                            AddAltBlockRef(blockRefs, alt, pblock);
+                            CollectAltBlocks(blockRefs, pblock.Alternatives);
+                        }
+                    }
+                }
+            }
+        }
+
+        private void AddAltBlockRef(Dictionary<PAlternativeSymbol, HashSet<PBlockSymbol>> blockRefs, PAlternativeSymbol alt, PBlockSymbol block)
+        {
+            if (!blockRefs.TryGetValue(alt, out var blocks))
+            {
+                blocks = new HashSet<PBlockSymbol>();
+                blockRefs.Add(alt, blocks);
+            }
+            blocks.Add(block);
         }
 
         private class ParserRuleSymbolsByName : IComparer<ParserRuleSymbol>

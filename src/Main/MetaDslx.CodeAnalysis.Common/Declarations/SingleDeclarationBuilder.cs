@@ -30,6 +30,7 @@ namespace MetaDslx.CodeAnalysis.Declarations
         public bool CanMerge { get; set; }
         public bool IsName => _nameStack != null && _nameStack.Count > 0;
         public NameBuilder CurrentName => _nameStack != null && _nameStack.Count > 0 ? _nameStack[_nameStack.Count - 1] : default;
+        public bool HasName => _qualifiedNames is not null && _qualifiedNames.Count > 0;
 
         public void AddDiagnostic(Diagnostic diagnostic)
         {

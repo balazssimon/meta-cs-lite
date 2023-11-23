@@ -67,6 +67,15 @@ namespace MetaDslx.CodeAnalysis
             }
         }
 
+        public MetaType Type
+        {
+            get
+            {
+                if (IsModelObject) return OriginalModelObject.Info.MetaType;
+                else return _original?.GetType();
+            }
+        }
+
         public Symbol? AsSymbol(Compilation compilation)
         {
             if (compilation is null) return OriginalSymbol;

@@ -28,7 +28,17 @@ namespace MetaDslx.CodeAnalysis.Binding
             builder.BeginName(_qualifierType, _qualifierProperty);
             try
             {
-                return base.BuildDeclarationTree(builder);
+                var result = base.BuildDeclarationTree(builder);
+                if (!builder.HasName)
+                {
+                    var name = this.Language.SyntaxFacts.ExtractName(this.Syntax);
+                    if (!string.IsNullOrEmpty(name))
+                    {
+                        var metadataName = this.Language.SyntaxFacts.ExtractMetadataName(this.Syntax);
+                        builder.AddIdentifier(name, metadataName, this.Location);
+                    }
+                }
+                return result;
             }
             finally
             {
@@ -41,13 +51,13 @@ namespace MetaDslx.CodeAnalysis.Binding
             nameBinders.Add(this);
         }
 
-        protected override void CollectQualifierBinders(ArrayBuilder<IQualifierBinder> qualifierBinders, CancellationToken cancellationToken)
+        /*protected override void CollectQualifierBinders(ArrayBuilder<IQualifierBinder> qualifierBinders, CancellationToken cancellationToken)
         {
         }
 
         protected override void CollectIdentifierBinders(ArrayBuilder<IIdentifierBinder> identifierBinders, CancellationToken cancellationToken)
         {
-        }
+        }*/
 
         public override string ToString()
         {

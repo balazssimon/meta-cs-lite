@@ -13,26 +13,27 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
 {
     internal class SymbolPropertyBinder : UseBinder, IMultiLookupBinder
     {
-        private ImmutableArray<PAlternativeSymbol> _alternatives;
+        private ImmutableArray<MetaType> _expectedTypes;
+        private ImmutableArray<object?> _expectedTypeObjects;
 
         public SymbolPropertyBinder()
             : base(ImmutableArray.Create(typeof(DeclaredSymbol)))
         {
         }
 
-        public ImmutableArray<PAlternativeSymbol> Alternatives
+        public ImmutableArray<MetaType> ExpectedTypes
         {
             get
             {
-                if (_alternatives.IsDefault)
+                if (_expectedTypes.IsDefault)
                 {
-                    ImmutableInterlocked.InterlockedInitialize(ref _alternatives, GetAlternatives());
+                    ImmutableInterlocked.InterlockedInitialize(ref _expectedTypes, GetExpectedTypes());
                 }
-                return _alternatives;
+                return _expectedTypes;
             }
         }
 
-        private ImmutableArray<PAlternativeSymbol> GetAlternatives()
+        private ImmutableArray<MetaType> GetExpectedTypes()
         {
             Binder? currentBinder = this;
             while (currentBinder != null)
@@ -41,49 +42,51 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
                 {
                     foreach (var symbol in defineBinder.DefinedSymbols)
                     {
-                        if (symbol is PAlternativeSymbol altSymbol && altSymbol.ContainingSymbol is ParserRuleSymbol ruleSymbol)
+                        if (symbol is PAlternativeSymbol altSymbol)
                         {
-                            if (ruleSymbol.IsBlock)
+                            var block = altSymbol.ContainingPBlockSymbol;
+                            if (block is not null)
                             {
-                                var grammar = ruleSymbol.ContainingGrammarSymbol;
-                                if (grammar is not null && grammar.BlockFromAlterativeReferences.TryGetValue(ruleSymbol, out var blockRefs))
-                                {
-                                    return blockRefs;
-                                }
+                                return block.ExpectedTypes;
                             }
-                            else
+                            else if (altSymbol.ContainingParserRuleSymbol is not null && !altSymbol.ReturnType.IsNull)
                             {
-                                return ImmutableArray.Create(altSymbol);
+                                return ImmutableArray.Create(altSymbol.ReturnType);
                             }
-                            return ImmutableArray<PAlternativeSymbol>.Empty;
+                            return ImmutableArray<MetaType>.Empty;
                         }
                     }
                 }
                 currentBinder = currentBinder.ParentBinder;
             }
-            return ImmutableArray<PAlternativeSymbol>.Empty;
+            return ImmutableArray<MetaType>.Empty;
         }
 
         public ImmutableArray<object> GetMultiLookupKeys(CancellationToken cancellationToken = default)
         {
-            return Alternatives.CastArray<object>();
+            if (_expectedTypeObjects.IsDefault)
+            {
+                ImmutableInterlocked.InterlockedInitialize(ref _expectedTypeObjects, ExpectedTypes.Where(et => et.IsTypeSymbol).Select(et => (object)et).ToImmutableArray());
+            }
+            return _expectedTypeObjects;
         }
 
         protected override bool IsViable(LookupContext context, DeclaredSymbol symbol)
         {
-            var alt = context.MultiLookupKey as PAlternativeSymbol;
-            if (alt is null) return false;
-            var returnType = alt.ReturnType;
-            if (returnType.IsNull || !returnType.IsTypeSymbol) return false;
+            if (context.MultiLookupKey is null) return false;
+            var alt = (MetaType)context.MultiLookupKey;
+            if (alt.IsNull || !alt.IsTypeSymbol) return false;
             return base.IsViable(context, symbol);
         }
 
         protected override void AdjustFinalLookupContext(LookupContext context)
         {
             base.AdjustFinalLookupContext(context);
+            if (context.MultiLookupKey is null) return;
             context.IsCaseSensitive = false;
-            var alt = context.MultiLookupKey as PAlternativeSymbol;
-            context.Qualifier = alt?.ReturnType.OriginalTypeSymbol;
+            var alt = (MetaType)context.MultiLookupKey;
+            if (alt.IsNull || !alt.IsTypeSymbol) return;
+            context.Qualifier = alt.OriginalTypeSymbol;
         }
     }
 }

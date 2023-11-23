@@ -14,6 +14,7 @@ using MetaDslx.CodeAnalysis.Symbols.CSharp;
 using MetaDslx.CodeAnalysis.PooledObjects;
 using MetaDslx.Languages.MetaModel.Compiler.Syntax;
 using MetaDslx.Bootstrap.MetaCompiler.Model;
+using System.ComponentModel;
 
 namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
 {
@@ -56,10 +57,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
         }
 
         private ImmutableArray<MetaSymbol> _symbolProperty;
-        private ImmutableArray<TypeSymbol> _expectedTypes;
+        private ImmutableArray<MetaType> _expectedTypes;
         private ExpectedTypeKind _expectedTypeKind;
         private MetaSymbol _value;
-        private PAlternativeSymbol? _containingAlternative;
 
         public PElementSymbol(Symbol container, MergedDeclaration declaration, IModelObject modelObject)
             : base(container, declaration, modelObject)
@@ -72,21 +72,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
 
         public bool IsNamedElement => Syntax?.PElementBlock1 is not null;
 
-        public GrammarSymbol? ContainingGrammarSymbol => ContainingPAlternativeSymbol?.ContainingGrammarSymbol;
+        public GrammarSymbol? ContainingGrammarSymbol => this.GetOutermostContainingSymbol<GrammarSymbol>();
 
-        public ParserRuleSymbol? ContainingParserRuleSymbol => ContainingPAlternativeSymbol?.ContainingParserRuleSymbol;
-
-        public PAlternativeSymbol? ContainingPAlternativeSymbol
-        {
-            get
-            {
-                if (_containingAlternative is null)
-                {
-                    Interlocked.CompareExchange(ref _containingAlternative, this.GetOutermostContainingSymbol<PAlternativeSymbol>(), null);
-                }
-                return _containingAlternative;
-            }
-        }
+        public PAlternativeSymbol? ContainingPAlternativeSymbol => this.ContainingSymbol as PAlternativeSymbol;
 
         [ModelProperty]
         public MetaSymbol Value
@@ -108,7 +96,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
             }
         }
 
-        public ImmutableArray<TypeSymbol> ExpectedTypes
+        public ImmutableArray<MetaType> ExpectedTypes
         {
             get
             {
@@ -184,37 +172,42 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
             return SymbolFactory.GetSymbolPropertyValues<MetaSymbol>(this, nameof(SymbolProperty), diagnostics, cancellationToken);
         }
 
-        private (ImmutableArray<TypeSymbol> ExpectedTypes, ExpectedTypeKind ExpectedTypeKind) CompleteProperty_ExpectedTypes(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        private (ImmutableArray<MetaType> ExpectedTypes, ExpectedTypeKind ExpectedTypeKind) CompleteProperty_ExpectedTypes(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            var kind = ExpectedTypeKind.None;
-            var result = ArrayBuilder<TypeSymbol>.GetInstance();
-            foreach (var prop in SymbolProperty)
+            if (this.IsNamedElement)
             {
-                var csProp = prop.OriginalSymbol as ICSharpSymbol;
-                var msProp = csProp?.CSharpSymbol as IPropertySymbol;
-                var msType = msProp?.Type;
-                var csType = msType is null ? null : csProp?.SymbolFactory.GetSymbol<TypeSymbol>(msType, diagnostics, cancellationToken);
-                var mtType = MetaType.FromTypeSymbol(csType);
-                if (mtType.IsNullable) mtType.TryExtractNullableType(out mtType, diagnostics, cancellationToken);
-                if (mtType.IsCollection)
+                var kind = ExpectedTypeKind.None;
+                var result = ArrayBuilder<MetaType>.GetInstance();
+                foreach (var prop in SymbolProperty)
                 {
-                    kind = ExpectedTypeKind.Collection;
-                    mtType.TryExtractCollectionType(out mtType, diagnostics, cancellationToken);
+                    var csProp = prop.OriginalSymbol as ICSharpSymbol;
+                    var msProp = csProp?.CSharpSymbol as IPropertySymbol;
+                    var msType = msProp?.Type;
+                    var csType = msType is null ? null : csProp?.SymbolFactory.GetSymbol<TypeSymbol>(msType, diagnostics, cancellationToken);
+                    var mtType = MetaType.FromTypeSymbol(csType);
+                    if (mtType.IsNullable) mtType.TryExtractNullableType(out mtType, diagnostics, cancellationToken);
+                    if (mtType.IsCollection) kind = ExpectedTypeKind.Collection;
+                    else if (mtType.SpecialType == SpecialType.System_Boolean) kind = ExpectedTypeKind.Bool;
+                    if (mtType.TryGetCoreType(out var coreType, diagnostics, cancellationToken) && !coreType.IsNull)
+                    {
+                        result.Add(mtType);
+                    }
+                    else
+                    {
+                        diagnostics.Add(Diagnostic.Create(CommonErrorCode.ERR_BindingError, this.Location, $"Could not determine the type of the property '{prop.Name}'"));
+                    }
                 }
-                if (mtType.SpecialType == SpecialType.System_Boolean)
+                return (result.ToImmutableAndFree(), kind);
+            }
+            else
+            {
+                var alt = this.ContainingPAlternativeSymbol;
+                if (alt is not null && alt.Elements.Length == 1)
                 {
-                    if (kind == ExpectedTypeKind.None) kind = ExpectedTypeKind.Bool;
-                }
-                if (!mtType.IsNull)
-                {
-                    result.Add(mtType.OriginalTypeSymbol);
-                }
-                else
-                {
-                    diagnostics.Add(Diagnostic.Create(CommonErrorCode.ERR_BindingError, this.Location, $"Could not determine the type of the property '{prop.Name}'"));
+                    return (alt.ExpectedTypes, ExpectedTypeKind.None);
                 }
             }
-            return (result.ToImmutableAndFree(), kind);
+            return (ImmutableArray<MetaType>.Empty, ExpectedTypeKind.None);
         }
 
         protected virtual MetaSymbol CompleteProperty_Value(DiagnosticBag diagnostics, CancellationToken cancellationToken)
@@ -245,6 +238,119 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
                     diagnostics.Add(Diagnostic.Create(CompilerErrorCode.ERR_NonBooleanPropertyWrongAssignment, this.Location, this.Name, "!="));
                 }
             }
+            /*var value = this.Value.AsModelObject();
+            if (value is PReference pref)
+            {
+                var mustHaveExpectedTypes = this.IsNamedElement;
+                if (!mustHaveExpectedTypes)
+                {
+                    var alt = this.ContainingPAlternativeSymbol;
+                    if (alt is not null && alt.Elements.Length == 1)
+                    {
+                        mustHaveExpectedTypes = true;
+                    }
+                }
+                if (mustHaveExpectedTypes && this.ExpectedTypes.IsDefaultOrEmpty)
+                {
+                    diagnostics.Add(Diagnostic.Create(ErrorCode.ERR_InternalError, this.Location, $"There are no expected types for the element '{this.Name}'"));
+                }
+                foreach (var expType in this.ExpectedTypes)
+                {
+                    if (expType.TryGetCoreType(out var coreType, diagnostics, cancellationToken))
+                    {
+                        if (pref.ReferencedTypes.Count == 0)
+                        {
+                            var rule = pref.Rule;
+                            if (rule is ParserRule pr && !pr.IsBlock)
+                            {
+                                if (!pr.ReturnType.IsAssignableTo(coreType))
+                                {
+                                    var trace = string.Join(", ", ResolveExpectedTypeTrace(coreType));
+                                    diagnostics.Add(Diagnostic.Create(CompilerErrorCode.ERR_ValueTypeMismatch, this.Location, pr.ReturnType, coreType, trace));
+                                }
+                            }
+                            else if (rule is LexerRule lr)
+                            {
+                                if (!lr.ReturnType.IsAssignableTo(coreType))
+                                {
+                                    var trace = string.Join(", ", ResolveExpectedTypeTrace(coreType));
+                                    diagnostics.Add(Diagnostic.Create(CompilerErrorCode.ERR_ValueTypeMismatch, this.Location, lr.ReturnType, coreType, trace));
+                                }
+                            }
+                        }
+                        else
+                        {
+                            foreach (var prefType in pref.ReferencedTypes)
+                            {
+                                if (!prefType.IsAssignableTo(coreType))
+                                {
+                                    var trace = string.Join(", ", ResolveExpectedTypeTrace(coreType));
+                                    diagnostics.Add(Diagnostic.Create(CompilerErrorCode.ERR_ValueTypeMismatch, this.Location, prefType, coreType, trace));
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        diagnostics.Add(Diagnostic.Create(ErrorCode.ERR_InternalError, this.Location, $"Could not determine the core type of {expType} in element '{this.Name}'"));
+                    }
+                }
+            }*/
         }
+
+        private ImmutableArray<string> ResolveExpectedTypeTrace(MetaType expectedType)
+        {
+            var alt = this.ContainingPAlternativeSymbol;
+            var rule = alt.GetOutermostContainingSymbol<ParserRuleSymbol>();
+            var grammar = rule?.ContainingGrammarSymbol;
+            if (grammar is null || rule is null) return ImmutableArray<string>.Empty;
+            var result = ArrayBuilder<string>.GetInstance();
+            /*var builder = PooledStringBuilder.GetInstance();
+            var sb = builder.Builder;
+            var visited = PooledHashSet<ParserRuleSymbol>.GetInstance();
+            var stack = ArrayBuilder<ParserRuleSymbol>.GetInstance();
+            stack.Add(rule);
+            visited.Add(rule);
+            while (stack.Count > 0)
+            {
+                var currentRule = stack[stack.Count - 1];
+                if (currentRule.IsBlock)
+                {
+                    bool added = false;
+                    var refAlts = grammar.BlockFromAlterativeReferences[rule];
+                    foreach (var refAlt in refAlts)
+                    {
+                        var refRule = refAlt.GetOutermostContainingSymbol<ParserRuleSymbol>();
+                        if (refRule is not null && !visited.Contains(refRule))
+                        {
+                            visited.Add(refRule);
+                            if (refRule.IsBlock)
+                            {
+                                stack.Add(refRule);
+                                added = true;
+                                break;
+                            }
+                            else if (refAlt.ExpectedTypes.Contains(expectedType))
+                            {
+                                sb.Clear();
+                                sb.Append(refRule.Name);
+                                for (int i = stack.Count - 1; i >= 0; --i)
+                                {
+                                    sb.Append("/");
+                                    sb.Append(stack[i].Name);
+                                }
+                                result.Add(sb.ToString());
+                            }
+                        }
+                    }
+                    if (!added) stack.RemoveAt(stack.Count - 1);
+                }
+            }
+            stack.Free();
+            visited.Free();
+            builder.Free();*/
+            return result.ToImmutableAndFree();
+        }
+
     }
 }

@@ -23,16 +23,16 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		void VisitLanguageDeclaration(LanguageDeclarationSyntax node);
 		void VisitGrammar(GrammarSyntax node);
 		void VisitParserRule(ParserRuleSyntax node);
+		void VisitPBlock(PBlockSyntax node);
 		void VisitLexerRule(LexerRuleSyntax node);
 		void VisitPAlternative(PAlternativeSyntax node);
 		void VisitPElement(PElementSyntax node);
-		void VisitPBlock(PBlockSyntax node);
+		void VisitPBlockInline(PBlockInlineSyntax node);
 		void VisitPEof(PEofSyntax node);
 		void VisitPKeyword(PKeywordSyntax node);
 		void VisitPReferenceAlt1(PReferenceAlt1Syntax node);
 		void VisitPReferenceAlt2(PReferenceAlt2Syntax node);
 		void VisitPReferenceAlt3(PReferenceAlt3Syntax node);
-		void VisitPBlockAlternative(PBlockAlternativeSyntax node);
 		void VisitLAlternative(LAlternativeSyntax node);
 		void VisitLElement(LElementSyntax node);
 		void VisitLBlock(LBlockSyntax node);
@@ -58,14 +58,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		void VisitGrammarBlock1(GrammarBlock1Syntax node);
 		void VisitParserRuleBlock1Alt1(ParserRuleBlock1Alt1Syntax node);
 		void VisitParserRuleBlock1Alt2(ParserRuleBlock1Alt2Syntax node);
-		void VisitParserRuleBlock1Alt3(ParserRuleBlock1Alt3Syntax node);
 		void VisitParserRuleBlock2(ParserRuleBlock2Syntax node);
+		void VisitPBlockBlock1(PBlockBlock1Syntax node);
+		void VisitPBlockInlineBlock1(PBlockInlineBlock1Syntax node);
 		void VisitPAlternativeBlock1(PAlternativeBlock1Syntax node);
 		void VisitPAlternativeBlock2(PAlternativeBlock2Syntax node);
 		void VisitPElementBlock1(PElementBlock1Syntax node);
 		void VisitPReferenceAlt3Block1(PReferenceAlt3Block1Syntax node);
-		void VisitPBlockBlock1(PBlockBlock1Syntax node);
-		void VisitPBlockAlternativeBlock1(PBlockAlternativeBlock1Syntax node);
 		void VisitLexerRuleBlock1Alt1(LexerRuleBlock1Alt1Syntax node);
 		void VisitLexerRuleBlock1Alt2(LexerRuleBlock1Alt2Syntax node);
 		void VisitLexerRuleBlock1Alt3(LexerRuleBlock1Alt3Syntax node);
@@ -118,6 +117,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		    this.DefaultVisit(node);
 		}
 
+		public virtual void VisitPBlock(PBlockSyntax node)
+		{
+		    this.DefaultVisit(node);
+		}
+
 		public virtual void VisitLexerRule(LexerRuleSyntax node)
 		{
 		    this.DefaultVisit(node);
@@ -133,7 +137,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		    this.DefaultVisit(node);
 		}
 
-		public virtual void VisitPBlock(PBlockSyntax node)
+		public virtual void VisitPBlockInline(PBlockInlineSyntax node)
 		{
 		    this.DefaultVisit(node);
 		}
@@ -159,11 +163,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		}
 
 		public virtual void VisitPReferenceAlt3(PReferenceAlt3Syntax node)
-		{
-		    this.DefaultVisit(node);
-		}
-
-		public virtual void VisitPBlockAlternative(PBlockAlternativeSyntax node)
 		{
 		    this.DefaultVisit(node);
 		}
@@ -293,12 +292,17 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		    this.DefaultVisit(node);
 		}
 
-		public virtual void VisitParserRuleBlock1Alt3(ParserRuleBlock1Alt3Syntax node)
+		public virtual void VisitParserRuleBlock2(ParserRuleBlock2Syntax node)
 		{
 		    this.DefaultVisit(node);
 		}
 
-		public virtual void VisitParserRuleBlock2(ParserRuleBlock2Syntax node)
+		public virtual void VisitPBlockBlock1(PBlockBlock1Syntax node)
+		{
+		    this.DefaultVisit(node);
+		}
+
+		public virtual void VisitPBlockInlineBlock1(PBlockInlineBlock1Syntax node)
 		{
 		    this.DefaultVisit(node);
 		}
@@ -319,16 +323,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		}
 
 		public virtual void VisitPReferenceAlt3Block1(PReferenceAlt3Block1Syntax node)
-		{
-		    this.DefaultVisit(node);
-		}
-
-		public virtual void VisitPBlockBlock1(PBlockBlock1Syntax node)
-		{
-		    this.DefaultVisit(node);
-		}
-
-		public virtual void VisitPBlockAlternativeBlock1(PBlockAlternativeBlock1Syntax node)
 		{
 		    this.DefaultVisit(node);
 		}
@@ -408,16 +402,16 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		TResult VisitLanguageDeclaration(LanguageDeclarationSyntax node);
 		TResult VisitGrammar(GrammarSyntax node);
 		TResult VisitParserRule(ParserRuleSyntax node);
+		TResult VisitPBlock(PBlockSyntax node);
 		TResult VisitLexerRule(LexerRuleSyntax node);
 		TResult VisitPAlternative(PAlternativeSyntax node);
 		TResult VisitPElement(PElementSyntax node);
-		TResult VisitPBlock(PBlockSyntax node);
+		TResult VisitPBlockInline(PBlockInlineSyntax node);
 		TResult VisitPEof(PEofSyntax node);
 		TResult VisitPKeyword(PKeywordSyntax node);
 		TResult VisitPReferenceAlt1(PReferenceAlt1Syntax node);
 		TResult VisitPReferenceAlt2(PReferenceAlt2Syntax node);
 		TResult VisitPReferenceAlt3(PReferenceAlt3Syntax node);
-		TResult VisitPBlockAlternative(PBlockAlternativeSyntax node);
 		TResult VisitLAlternative(LAlternativeSyntax node);
 		TResult VisitLElement(LElementSyntax node);
 		TResult VisitLBlock(LBlockSyntax node);
@@ -443,14 +437,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		TResult VisitGrammarBlock1(GrammarBlock1Syntax node);
 		TResult VisitParserRuleBlock1Alt1(ParserRuleBlock1Alt1Syntax node);
 		TResult VisitParserRuleBlock1Alt2(ParserRuleBlock1Alt2Syntax node);
-		TResult VisitParserRuleBlock1Alt3(ParserRuleBlock1Alt3Syntax node);
 		TResult VisitParserRuleBlock2(ParserRuleBlock2Syntax node);
+		TResult VisitPBlockBlock1(PBlockBlock1Syntax node);
+		TResult VisitPBlockInlineBlock1(PBlockInlineBlock1Syntax node);
 		TResult VisitPAlternativeBlock1(PAlternativeBlock1Syntax node);
 		TResult VisitPAlternativeBlock2(PAlternativeBlock2Syntax node);
 		TResult VisitPElementBlock1(PElementBlock1Syntax node);
 		TResult VisitPReferenceAlt3Block1(PReferenceAlt3Block1Syntax node);
-		TResult VisitPBlockBlock1(PBlockBlock1Syntax node);
-		TResult VisitPBlockAlternativeBlock1(PBlockAlternativeBlock1Syntax node);
 		TResult VisitLexerRuleBlock1Alt1(LexerRuleBlock1Alt1Syntax node);
 		TResult VisitLexerRuleBlock1Alt2(LexerRuleBlock1Alt2Syntax node);
 		TResult VisitLexerRuleBlock1Alt3(LexerRuleBlock1Alt3Syntax node);
@@ -503,6 +496,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		    return this.DefaultVisit(node);
 		}
 
+		public virtual TResult VisitPBlock(PBlockSyntax node)
+		{
+		    return this.DefaultVisit(node);
+		}
+
 		public virtual TResult VisitLexerRule(LexerRuleSyntax node)
 		{
 		    return this.DefaultVisit(node);
@@ -518,7 +516,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		    return this.DefaultVisit(node);
 		}
 
-		public virtual TResult VisitPBlock(PBlockSyntax node)
+		public virtual TResult VisitPBlockInline(PBlockInlineSyntax node)
 		{
 		    return this.DefaultVisit(node);
 		}
@@ -544,11 +542,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		}
 
 		public virtual TResult VisitPReferenceAlt3(PReferenceAlt3Syntax node)
-		{
-		    return this.DefaultVisit(node);
-		}
-
-		public virtual TResult VisitPBlockAlternative(PBlockAlternativeSyntax node)
 		{
 		    return this.DefaultVisit(node);
 		}
@@ -678,12 +671,17 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		    return this.DefaultVisit(node);
 		}
 
-		public virtual TResult VisitParserRuleBlock1Alt3(ParserRuleBlock1Alt3Syntax node)
+		public virtual TResult VisitParserRuleBlock2(ParserRuleBlock2Syntax node)
 		{
 		    return this.DefaultVisit(node);
 		}
 
-		public virtual TResult VisitParserRuleBlock2(ParserRuleBlock2Syntax node)
+		public virtual TResult VisitPBlockBlock1(PBlockBlock1Syntax node)
+		{
+		    return this.DefaultVisit(node);
+		}
+
+		public virtual TResult VisitPBlockInlineBlock1(PBlockInlineBlock1Syntax node)
 		{
 		    return this.DefaultVisit(node);
 		}
@@ -704,16 +702,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		}
 
 		public virtual TResult VisitPReferenceAlt3Block1(PReferenceAlt3Block1Syntax node)
-		{
-		    return this.DefaultVisit(node);
-		}
-
-		public virtual TResult VisitPBlockBlock1(PBlockBlock1Syntax node)
-		{
-		    return this.DefaultVisit(node);
-		}
-
-		public virtual TResult VisitPBlockAlternativeBlock1(PBlockAlternativeBlock1Syntax node)
 		{
 		    return this.DefaultVisit(node);
 		}
@@ -793,16 +781,16 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		TResult VisitLanguageDeclaration(LanguageDeclarationSyntax node, TArg argument);
 		TResult VisitGrammar(GrammarSyntax node, TArg argument);
 		TResult VisitParserRule(ParserRuleSyntax node, TArg argument);
+		TResult VisitPBlock(PBlockSyntax node, TArg argument);
 		TResult VisitLexerRule(LexerRuleSyntax node, TArg argument);
 		TResult VisitPAlternative(PAlternativeSyntax node, TArg argument);
 		TResult VisitPElement(PElementSyntax node, TArg argument);
-		TResult VisitPBlock(PBlockSyntax node, TArg argument);
+		TResult VisitPBlockInline(PBlockInlineSyntax node, TArg argument);
 		TResult VisitPEof(PEofSyntax node, TArg argument);
 		TResult VisitPKeyword(PKeywordSyntax node, TArg argument);
 		TResult VisitPReferenceAlt1(PReferenceAlt1Syntax node, TArg argument);
 		TResult VisitPReferenceAlt2(PReferenceAlt2Syntax node, TArg argument);
 		TResult VisitPReferenceAlt3(PReferenceAlt3Syntax node, TArg argument);
-		TResult VisitPBlockAlternative(PBlockAlternativeSyntax node, TArg argument);
 		TResult VisitLAlternative(LAlternativeSyntax node, TArg argument);
 		TResult VisitLElement(LElementSyntax node, TArg argument);
 		TResult VisitLBlock(LBlockSyntax node, TArg argument);
@@ -828,14 +816,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		TResult VisitGrammarBlock1(GrammarBlock1Syntax node, TArg argument);
 		TResult VisitParserRuleBlock1Alt1(ParserRuleBlock1Alt1Syntax node, TArg argument);
 		TResult VisitParserRuleBlock1Alt2(ParserRuleBlock1Alt2Syntax node, TArg argument);
-		TResult VisitParserRuleBlock1Alt3(ParserRuleBlock1Alt3Syntax node, TArg argument);
 		TResult VisitParserRuleBlock2(ParserRuleBlock2Syntax node, TArg argument);
+		TResult VisitPBlockBlock1(PBlockBlock1Syntax node, TArg argument);
+		TResult VisitPBlockInlineBlock1(PBlockInlineBlock1Syntax node, TArg argument);
 		TResult VisitPAlternativeBlock1(PAlternativeBlock1Syntax node, TArg argument);
 		TResult VisitPAlternativeBlock2(PAlternativeBlock2Syntax node, TArg argument);
 		TResult VisitPElementBlock1(PElementBlock1Syntax node, TArg argument);
 		TResult VisitPReferenceAlt3Block1(PReferenceAlt3Block1Syntax node, TArg argument);
-		TResult VisitPBlockBlock1(PBlockBlock1Syntax node, TArg argument);
-		TResult VisitPBlockAlternativeBlock1(PBlockAlternativeBlock1Syntax node, TArg argument);
 		TResult VisitLexerRuleBlock1Alt1(LexerRuleBlock1Alt1Syntax node, TArg argument);
 		TResult VisitLexerRuleBlock1Alt2(LexerRuleBlock1Alt2Syntax node, TArg argument);
 		TResult VisitLexerRuleBlock1Alt3(LexerRuleBlock1Alt3Syntax node, TArg argument);
@@ -888,6 +875,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		    return this.DefaultVisit(node, argument);
 		}
 
+		public virtual TResult VisitPBlock(PBlockSyntax node, TArg argument)
+		{
+		    return this.DefaultVisit(node, argument);
+		}
+
 		public virtual TResult VisitLexerRule(LexerRuleSyntax node, TArg argument)
 		{
 		    return this.DefaultVisit(node, argument);
@@ -903,7 +895,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		    return this.DefaultVisit(node, argument);
 		}
 
-		public virtual TResult VisitPBlock(PBlockSyntax node, TArg argument)
+		public virtual TResult VisitPBlockInline(PBlockInlineSyntax node, TArg argument)
 		{
 		    return this.DefaultVisit(node, argument);
 		}
@@ -929,11 +921,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		}
 
 		public virtual TResult VisitPReferenceAlt3(PReferenceAlt3Syntax node, TArg argument)
-		{
-		    return this.DefaultVisit(node, argument);
-		}
-
-		public virtual TResult VisitPBlockAlternative(PBlockAlternativeSyntax node, TArg argument)
 		{
 		    return this.DefaultVisit(node, argument);
 		}
@@ -1063,12 +1050,17 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		    return this.DefaultVisit(node, argument);
 		}
 
-		public virtual TResult VisitParserRuleBlock1Alt3(ParserRuleBlock1Alt3Syntax node, TArg argument)
+		public virtual TResult VisitParserRuleBlock2(ParserRuleBlock2Syntax node, TArg argument)
 		{
 		    return this.DefaultVisit(node, argument);
 		}
 
-		public virtual TResult VisitParserRuleBlock2(ParserRuleBlock2Syntax node, TArg argument)
+		public virtual TResult VisitPBlockBlock1(PBlockBlock1Syntax node, TArg argument)
+		{
+		    return this.DefaultVisit(node, argument);
+		}
+
+		public virtual TResult VisitPBlockInlineBlock1(PBlockInlineBlock1Syntax node, TArg argument)
 		{
 		    return this.DefaultVisit(node, argument);
 		}
@@ -1089,16 +1081,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		}
 
 		public virtual TResult VisitPReferenceAlt3Block1(PReferenceAlt3Block1Syntax node, TArg argument)
-		{
-		    return this.DefaultVisit(node, argument);
-		}
-
-		public virtual TResult VisitPBlockBlock1(PBlockBlock1Syntax node, TArg argument)
-		{
-		    return this.DefaultVisit(node, argument);
-		}
-
-		public virtual TResult VisitPBlockAlternativeBlock1(PBlockAlternativeBlock1Syntax node, TArg argument)
 		{
 		    return this.DefaultVisit(node, argument);
 		}
@@ -1239,6 +1221,18 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
         	return node.Update(annotations1, parserRuleBlock1, tColon, pAlternativeList, tSemicolon);
         }
 
+        public virtual SyntaxNode VisitPBlock(PBlockSyntax node)
+        {
+            var annotations1 = this.VisitList(node.Annotations1);
+            var kBlock = this.VisitToken(node.KBlock);
+            var name = (NameSyntax)this.Visit(node.Name);
+            var tColon = this.VisitToken(node.TColon);
+            var pAlternativeList = this.VisitList(node.PAlternativeList);
+            var tSemicolon = this.VisitToken(node.TSemicolon);
+        	    
+        	return node.Update(annotations1, kBlock, name, tColon, pAlternativeList, tSemicolon);
+        }
+
         public virtual SyntaxNode VisitLexerRule(LexerRuleSyntax node)
         {
             var annotations1 = this.VisitList(node.Annotations1);
@@ -1269,13 +1263,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
         	return node.Update(pElementBlock1, valueAnnotations, value, multiplicity);
         }
 
-        public virtual SyntaxNode VisitPBlock(PBlockSyntax node)
+        public virtual SyntaxNode VisitPBlockInline(PBlockInlineSyntax node)
         {
             var tLParen = this.VisitToken(node.TLParen);
-            var pBlockAlternativeList = this.VisitList(node.PBlockAlternativeList);
+            var pAlternativeList = this.VisitList(node.PAlternativeList);
             var tRParen = this.VisitToken(node.TRParen);
         	    
-        	return node.Update(tLParen, pBlockAlternativeList, tRParen);
+        	return node.Update(tLParen, pAlternativeList, tRParen);
         }
 
         public virtual SyntaxNode VisitPEof(PEofSyntax node)
@@ -1314,14 +1308,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
             var tRBrace = this.VisitToken(node.TRBrace);
         	    
         	return node.Update(tHashLBrace, qualifierList, tRBrace);
-        }
-
-        public virtual SyntaxNode VisitPBlockAlternative(PBlockAlternativeSyntax node)
-        {
-            var elements = this.VisitList(node.Elements);
-            var pBlockAlternativeBlock1 = (PBlockAlternativeBlock1Syntax)this.Visit(node.PBlockAlternativeBlock1);
-        	    
-        	return node.Update(elements, pBlockAlternativeBlock1);
         }
 
         public virtual SyntaxNode VisitLAlternative(LAlternativeSyntax node)
@@ -1504,29 +1490,37 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 
         public virtual SyntaxNode VisitParserRuleBlock1Alt1(ParserRuleBlock1Alt1Syntax node)
         {
-            var isBlock = this.VisitToken(node.IsBlock);
-            var name = (NameSyntax)this.Visit(node.Name);
-        	    
-        	return node.Update(isBlock, name);
-        }
-
-        public virtual SyntaxNode VisitParserRuleBlock1Alt2(ParserRuleBlock1Alt2Syntax node)
-        {
             var returnType = (IdentifierSyntax)this.Visit(node.ReturnType);
         	    
         	return node.Update(returnType);
         }
 
-        public virtual SyntaxNode VisitParserRuleBlock1Alt3(ParserRuleBlock1Alt3Syntax node)
+        public virtual SyntaxNode VisitParserRuleBlock1Alt2(ParserRuleBlock1Alt2Syntax node)
         {
-            var name = (NameSyntax)this.Visit(node.Name);
+            var identifier = (IdentifierSyntax)this.Visit(node.Identifier);
             var kReturns = this.VisitToken(node.KReturns);
             var returnType = (QualifierSyntax)this.Visit(node.ReturnType);
         	    
-        	return node.Update(name, kReturns, returnType);
+        	return node.Update(identifier, kReturns, returnType);
         }
 
         public virtual SyntaxNode VisitParserRuleBlock2(ParserRuleBlock2Syntax node)
+        {
+            var tBar = this.VisitToken(node.TBar);
+            var alternatives = (PAlternativeSyntax)this.Visit(node.Alternatives);
+        	    
+        	return node.Update(tBar, alternatives);
+        }
+
+        public virtual SyntaxNode VisitPBlockBlock1(PBlockBlock1Syntax node)
+        {
+            var tBar = this.VisitToken(node.TBar);
+            var alternatives = (PAlternativeSyntax)this.Visit(node.Alternatives);
+        	    
+        	return node.Update(tBar, alternatives);
+        }
+
+        public virtual SyntaxNode VisitPBlockInlineBlock1(PBlockInlineBlock1Syntax node)
         {
             var tBar = this.VisitToken(node.TBar);
             var alternatives = (PAlternativeSyntax)this.Visit(node.Alternatives);
@@ -1568,22 +1562,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
             var referencedTypes = (QualifierSyntax)this.Visit(node.ReferencedTypes);
         	    
         	return node.Update(tComma, referencedTypes);
-        }
-
-        public virtual SyntaxNode VisitPBlockBlock1(PBlockBlock1Syntax node)
-        {
-            var tBar = this.VisitToken(node.TBar);
-            var alternatives = (PBlockAlternativeSyntax)this.Visit(node.Alternatives);
-        	    
-        	return node.Update(tBar, alternatives);
-        }
-
-        public virtual SyntaxNode VisitPBlockAlternativeBlock1(PBlockAlternativeBlock1Syntax node)
-        {
-            var tEqGt = this.VisitToken(node.TEqGt);
-            var returnValue = (ExpressionSyntax)this.Visit(node.ReturnValue);
-        	    
-        	return node.Update(tEqGt, returnValue);
         }
 
         public virtual SyntaxNode VisitLexerRuleBlock1Alt1(LexerRuleBlock1Alt1Syntax node)

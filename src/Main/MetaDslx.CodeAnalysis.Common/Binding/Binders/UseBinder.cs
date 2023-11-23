@@ -37,10 +37,6 @@ namespace MetaDslx.CodeAnalysis.Binding
             return ImmutableArray<SingleDeclaration>.Empty;
         }
 
-        protected override void CollectNameBinders(ArrayBuilder<INameBinder> nameBinders, CancellationToken cancellationToken)
-        {
-        }
-
         protected override void AdjustFinalLookupContext(LookupContext context)
         {
             if (!_prefixes.IsDefaultOrEmpty) context.SetNamePrefixes(_prefixes);

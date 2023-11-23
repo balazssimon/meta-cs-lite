@@ -5,6 +5,7 @@ using MetaDslx.CodeAnalysis.Symbols.Source;
 using MetaDslx.Modeling;
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,17 +16,17 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
     {
         public new static class CompletionParts
         {
-            public static readonly CompletionPart StartComputingProperty_ExpectedType = new CompletionPart(nameof(StartComputingProperty_ExpectedType));
-            public static readonly CompletionPart FinishComputingProperty_ExpectedType = new CompletionPart(nameof(FinishComputingProperty_ExpectedType));
+            public static readonly CompletionPart StartComputingProperty_ExpectedTypes = new CompletionPart(nameof(StartComputingProperty_ExpectedTypes));
+            public static readonly CompletionPart FinishComputingProperty_ExpectedTypes = new CompletionPart(nameof(FinishComputingProperty_ExpectedTypes));
             public static readonly CompletionPart StartComputingProperty_Attributes = Symbol.CompletionParts.StartComputingProperty_Attributes;
             public static readonly CompletionPart FinishComputingProperty_Attributes = Symbol.CompletionParts.FinishComputingProperty_Attributes;
             public static readonly CompletionGraph CompletionGraph =
                 CompletionGraph.CreateFromParts(
-                    StartComputingProperty_ExpectedType, FinishComputingProperty_ExpectedType,
+                    StartComputingProperty_ExpectedTypes, FinishComputingProperty_ExpectedTypes,
                     StartComputingProperty_Attributes, FinishComputingProperty_Attributes);
         }
 
-        private MetaType _expectedType;
+        private ImmutableArray<MetaType> _expectedTypes;
         private PAlternativeSymbol? _containingAlternative;
         private AnnotationArgumentSymbol? _containingAnnotationArgument;
 
@@ -74,26 +75,26 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
             }
         }
 
-        public MetaType ExpectedType
-        {
+        public ImmutableArray<MetaType> ExpectedTypes
+        { 
             get
             {
-                ForceComplete(CompletionParts.FinishComputingProperty_ExpectedType, null, default);
-                return _expectedType;
+                ForceComplete(CompletionParts.FinishComputingProperty_ExpectedTypes, null, default);
+                return _expectedTypes;
             }
         }
 
         protected override bool ForceCompletePart(ref CompletionPart incompletePart, SourceLocation? locationOpt, CancellationToken cancellationToken)
         {
-            if (incompletePart == CompletionParts.StartComputingProperty_ExpectedType || incompletePart == CompletionParts.FinishComputingProperty_ExpectedType)
+            if (incompletePart == CompletionParts.StartComputingProperty_ExpectedTypes || incompletePart == CompletionParts.FinishComputingProperty_ExpectedTypes)
             {
-                if (NotePartComplete(CompletionParts.StartComputingProperty_ExpectedType))
+                if (NotePartComplete(CompletionParts.StartComputingProperty_ExpectedTypes))
                 {
                     var diagnostics = DiagnosticBag.GetInstance();
-                    _expectedType = CompleteProperty_ExpectedType(diagnostics, cancellationToken);
+                    _expectedTypes = CompleteProperty_ExpectedTypes(diagnostics, cancellationToken);
                     AddSymbolDiagnostics(diagnostics);
                     diagnostics.Free();
-                    NotePartComplete(CompletionParts.FinishComputingProperty_ExpectedType);
+                    NotePartComplete(CompletionParts.FinishComputingProperty_ExpectedTypes);
                 }
                 return true;
             }
@@ -104,12 +105,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
             return false;
         }
 
-        protected virtual MetaType CompleteProperty_ExpectedType(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        protected virtual ImmutableArray<MetaType> CompleteProperty_ExpectedTypes(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             var alt = this.ContainingSymbol as PAlternativeSymbol;
             if (alt is not null)
             {
-                return alt.ReturnType;
+                return alt.ExpectedTypes;
             }
             return default;
         }

@@ -568,6 +568,10 @@ namespace MetaDslx.CodeAnalysis.Symbols
                         if (!string.IsNullOrEmpty(name))
                         {
                             s_names.Add(this, name);
+                            if (this is ISourceSymbol && this is IModelSymbol modelSymbol && modelSymbol.ModelObject is not null)
+                            {
+                                modelSymbol.ModelObject.Name = name;
+                            }
                         }
                         if (!string.IsNullOrEmpty(metadataName) && metadataName != name)
                         {
