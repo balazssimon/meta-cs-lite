@@ -107,10 +107,15 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
 
         protected virtual ImmutableArray<MetaType> CompleteProperty_ExpectedTypes(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            var alt = this.ContainingSymbol as PAlternativeSymbol;
+            var alt = this.ContainingPAlternativeSymbol;
             if (alt is not null)
             {
                 return alt.ExpectedTypes;
+            }
+            var arg = this.ContainingAnnotationArgumentSymbol;
+            if (arg is not null)
+            {
+                return arg.ExpectedTypes;
             }
             return default;
         }

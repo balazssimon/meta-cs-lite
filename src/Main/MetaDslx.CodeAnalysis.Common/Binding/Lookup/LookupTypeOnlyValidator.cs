@@ -12,6 +12,11 @@ namespace MetaDslx.CodeAnalysis.Binding.Lookup
             return symbol is TypeSymbol;
         }
 
+        public Diagnostic UpdateDiagnostic(LookupContext context, Diagnostic diagnostic)
+        {
+            return diagnostic;
+        }
+
         public SingleLookupResult ValidateResult(LookupContext context, DeclaredSymbol resultSymbol, DeclaredSymbol unwrappedSymbol)
         {
             return LookupResult.Good(resultSymbol);

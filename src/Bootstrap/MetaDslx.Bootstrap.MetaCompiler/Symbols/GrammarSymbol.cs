@@ -38,7 +38,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
 
         private static readonly ParserRuleSymbolsByName CompareParserRuleSymbolsByName = new ParserRuleSymbolsByName();
 
-        private ImmutableDictionary<PBlockSymbol, ImmutableArray<PAlternativeSymbol>> _blockFromAlterativeReferences;
+        private ImmutableDictionary<PBlockSymbol, ImmutableHashSet<PElementSymbol>> _blockReferences;
 
         public GrammarSymbol(Symbol container, MergedDeclaration declaration, IModelObject modelObject)
             : base(container, declaration, modelObject)
@@ -47,73 +47,76 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
 
         protected override CompletionGraph CompletionGraph => CompletionParts.CompletionGraph;
 
-        public ImmutableDictionary<PBlockSymbol, ImmutableArray<PAlternativeSymbol>> BlockFromAlterativeReferences
+        public ImmutableDictionary<PBlockSymbol, ImmutableHashSet<PElementSymbol>> BlockReferences
         {
             get
             {
                 ComputeAllBlocks();
-                return _blockFromAlterativeReferences;
+                return _blockReferences;
             }
         }
 
         private void ComputeAllBlocks()
         {
-            if (_blockFromAlterativeReferences is not null) return;
-            var blockRefs = new Dictionary<PAlternativeSymbol, HashSet<PBlockSymbol>>();
-            var parserRules = this.Members.OfType<ParserRuleSymbol>().ToImmutableArray();
+            if (_blockReferences is not null) return;
+            var blocks = new HashSet<PBlockSymbol>();
+            var blockRefs = new Dictionary<PElementSymbol, HashSet<PBlockSymbol>>();
             foreach (var rule in this.Members)
             {
                 if (rule is ParserRuleSymbol pr)
                 {
-                    CollectAltBlocks(blockRefs, pr.Alternatives);
+                    CollectAltBlocks(blocks, blockRefs, pr.Alternatives);
                 }
                 else if (rule is PBlockSymbol pb)
                 {
-                    CollectAltBlocks(blockRefs, pb.Alternatives);
+                    blocks.Add(pb);
+                    CollectAltBlocks(blocks, blockRefs, pb.Alternatives);
                 }
             }
-            Interlocked.CompareExchange(ref _blockFromAlterativeReferences, blockFromAlternativeReferences.ToImmutable(), null);
+            var blockReferences = ImmutableDictionary.CreateBuilder<PBlockSymbol, ImmutableHashSet<PElementSymbol>>();
+            var references = ImmutableHashSet.CreateBuilder<PElementSymbol>();
+            foreach (var block in blocks)
+            {
+                references.Clear();
+                foreach (var alt in blockRefs.Keys)
+                {
+                    var altRefs = blockRefs[alt];
+                    if (altRefs.Contains(block))
+                    {
+                        references.Add(alt);
+                    }
+                }
+                blockReferences.Add(block, references.ToImmutable());
+            }
+            Interlocked.CompareExchange(ref _blockReferences, blockReferences.ToImmutable(), null);
         }
 
-        private void CollectAltBlocks(Dictionary<PAlternativeSymbol, HashSet<PBlockSymbol>> blockRefs, IEnumerable<PAlternativeSymbol> alts)
+        private void CollectAltBlocks(HashSet<PBlockSymbol> blocks, Dictionary<PElementSymbol, HashSet<PBlockSymbol>> blockRefs, IEnumerable<PAlternativeSymbol> alts)
         {
             foreach (var alt in alts)
             {
                 foreach (var elem in alt.Elements)
                 {
-                    if (elem.IsNamedElement)
+                    if (elem.Value.OriginalSymbol is PBlockSymbol pblock)
                     {
-                        if (elem.Value.OriginalSymbol is PBlockSymbol pblock)
-                        {
-                            CollectAltBlocks(blockRefs, pblock.Alternatives);
-                        }
+                        blocks.Add(pblock);
+                        AddElemBlockRef(blockRefs, elem, pblock);
+                        CollectAltBlocks(blocks, blockRefs, pblock.Alternatives);
                     }
-                    else 
+                    if (elem.Value.OriginalSymbol is PReferenceSymbol pref && pref.Rule.OriginalSymbol is PBlockSymbol prefBlock)
                     {
-                        if (elem.Value.OriginalSymbol is PReferenceSymbol pref)
-                        {
-                            if (pref.Rule.OriginalSymbol is PBlockSymbol prefBlock)
-                            {
-                                AddAltBlockRef(blockRefs, alt, prefBlock);
-                                CollectAltBlocks(blockRefs, prefBlock.Alternatives);
-                            }
-                        }
-                        if (elem.Value.OriginalSymbol is PBlockSymbol pblock)
-                        {
-                            AddAltBlockRef(blockRefs, alt, pblock);
-                            CollectAltBlocks(blockRefs, pblock.Alternatives);
-                        }
+                        AddElemBlockRef(blockRefs, elem, prefBlock);
                     }
                 }
             }
         }
 
-        private void AddAltBlockRef(Dictionary<PAlternativeSymbol, HashSet<PBlockSymbol>> blockRefs, PAlternativeSymbol alt, PBlockSymbol block)
+        private void AddElemBlockRef(Dictionary<PElementSymbol, HashSet<PBlockSymbol>> blockRefs, PElementSymbol elem, PBlockSymbol block)
         {
-            if (!blockRefs.TryGetValue(alt, out var blocks))
+            if (!blockRefs.TryGetValue(elem, out var blocks))
             {
                 blocks = new HashSet<PBlockSymbol>();
-                blockRefs.Add(alt, blocks);
+                blockRefs.Add(elem, blocks);
             }
             blocks.Add(block);
         }

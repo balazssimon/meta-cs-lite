@@ -13,6 +13,8 @@ namespace MetaDslx.CodeAnalysis.Binding
 {
     public partial class Binder : ILookupValidator
     {
+        public DefaultLookupValidator DefaultLookupValidator => Compilation[Language].DefaultLookupValidator;
+
         public LookupContext AllocateLookupContext(
             string? name = null,
             string? metadataName = null,
@@ -55,12 +57,17 @@ namespace MetaDslx.CodeAnalysis.Binding
 
         protected virtual bool IsViable(LookupContext context, DeclaredSymbol symbol)
         {
-            return true;
+            return DefaultLookupValidator.IsViable(context, symbol);
         }
 
         protected virtual SingleLookupResult ValidateResult(LookupContext context, DeclaredSymbol resultSymbol, DeclaredSymbol unwrappedSymbol)
         {
-            return LookupResult.Good(resultSymbol);
+            return DefaultLookupValidator.ValidateResult(context, resultSymbol, unwrappedSymbol);
+        }
+
+        protected virtual Diagnostic UpdateDiagnostic(LookupContext context, Diagnostic diagnostic)
+        {
+            return DefaultLookupValidator.UpdateDiagnostic(context, diagnostic);
         }
 
         bool ILookupValidator.IsViable(LookupContext context, DeclaredSymbol symbol)
@@ -71,6 +78,11 @@ namespace MetaDslx.CodeAnalysis.Binding
         SingleLookupResult ILookupValidator.ValidateResult(LookupContext context, DeclaredSymbol resultSymbol, DeclaredSymbol unwrappedSymbol)
         {
             return this.ValidateResult(context, resultSymbol, unwrappedSymbol);
+        }
+
+        Diagnostic ILookupValidator.UpdateDiagnostic(LookupContext context, Diagnostic diagnostic)
+        {
+            return this.UpdateDiagnostic(context, diagnostic);
         }
 
         public Binder LookupSymbols(LookupContext context)

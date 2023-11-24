@@ -34,7 +34,7 @@ namespace MetaDslx.CodeAnalysis
             {
                 if (_semanticsFactory is null)
                 {
-                    Interlocked.CompareExchange(ref _semanticsFactory, _serviceScope.Resolve<SemanticsFactory>(), null);
+                     Interlocked.CompareExchange(ref _semanticsFactory, _serviceScope.Resolve<SemanticsFactory>(), null);
                 }
                 return _semanticsFactory;
             }

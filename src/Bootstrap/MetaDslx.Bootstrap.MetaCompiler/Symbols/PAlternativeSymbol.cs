@@ -44,6 +44,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
                     StartComputingProperty_Attributes, FinishComputingProperty_Attributes);
         }
 
+        private bool _isResolvingExpectedTypes;
         private ImmutableArray<MetaType> _expectedTypes;
         private MetaType _returnType;
         private ImmutableArray<PElementSymbol> _elements;
@@ -83,6 +84,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
                 return _elements;
             }
         }
+
+        public bool IsResolvingExpectedTypes => _isResolvingExpectedTypes || (this.ContainingPBlockSymbol?.IsResolvingExpectedTypes ?? false);
 
         public ImmutableArray<MetaType> ExpectedTypes
         {
@@ -139,11 +142,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
             {
                 if (NotePartComplete(CompletionParts.StartComputingProperty_Elements))
                 {
+                    _isResolvingExpectedTypes = true;
                     var diagnostics = DiagnosticBag.GetInstance();
                     _elements = CompleteProperty_Elements(diagnostics, cancellationToken);
                     AddSymbolDiagnostics(diagnostics);
                     diagnostics.Free();
                     NotePartComplete(CompletionParts.FinishComputingProperty_Elements);
+                    _isResolvingExpectedTypes = false;
                 }
                 return true;
             }
@@ -174,8 +179,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
 
         protected virtual ImmutableArray<MetaType> CompleteProperty_ExpectedTypes(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
+            if (!this.ReturnType.IsNull)
+            {
+                return ImmutableArray.Create(this.ReturnType);
+            }
             var block = this.ContainingPBlockSymbol;
-            if (block is not null)
+            if (block is not null && !block.IsResolvingExpectedTypes)
             {
                 return block.ExpectedTypes;
             }

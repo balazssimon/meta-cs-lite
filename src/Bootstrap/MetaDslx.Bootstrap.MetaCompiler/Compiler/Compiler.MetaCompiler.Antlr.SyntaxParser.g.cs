@@ -378,36 +378,36 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
             {
                	if (context == null) return PReferenceAlt2Green.__Missing;
                 var tHash = this.VisitTerminal(context.tHash, CompilerSyntaxKind.THash);
-                QualifierGreen? referencedTypes = null;
-                if (context.referencedTypesAntlr1 is not null) referencedTypes = (QualifierGreen?)this.Visit(context.referencedTypesAntlr1) ?? QualifierGreen.__Missing;
-                else referencedTypes = QualifierGreen.__Missing;
+                ReturnTypeQualifierGreen? referencedTypes = null;
+                if (context.referencedTypesAntlr1 is not null) referencedTypes = (ReturnTypeQualifierGreen?)this.Visit(context.referencedTypesAntlr1) ?? ReturnTypeQualifierGreen.__Missing;
+                else referencedTypes = ReturnTypeQualifierGreen.__Missing;
             	return _factory.PReferenceAlt2((InternalSyntaxToken)tHash, referencedTypes);
             }
             public override GreenNode? VisitPr_PReferenceAlt3(CompilerParser.Pr_PReferenceAlt3Context? context)
             {
                	if (context == null) return PReferenceAlt3Green.__Missing;
                 var tHashLBrace = this.VisitTerminal(context.tHashLBrace, CompilerSyntaxKind.THashLBrace);
-                var qualifierListBuilder = _pool.AllocateSeparated<QualifierGreen>(reversed: false);
+                var returnTypeQualifierListBuilder = _pool.AllocateSeparated<ReturnTypeQualifierGreen>(reversed: false);
                 var referencedTypesContext = context.referencedTypesAntlr1;
-                if (referencedTypesContext is not null) qualifierListBuilder.Add((QualifierGreen?)this.Visit(referencedTypesContext) ?? QualifierGreen.__Missing);
-                else qualifierListBuilder.Add(QualifierGreen.__Missing);
-                var qualifierListContext = context._pReferenceAlt3Block1Antlr1;
-                for (int i = 0; i < qualifierListContext.Count; ++i)
+                if (referencedTypesContext is not null) returnTypeQualifierListBuilder.Add((ReturnTypeQualifierGreen?)this.Visit(referencedTypesContext) ?? ReturnTypeQualifierGreen.__Missing);
+                else returnTypeQualifierListBuilder.Add(ReturnTypeQualifierGreen.__Missing);
+                var returnTypeQualifierListContext = context._pReferenceAlt3Block1Antlr1;
+                for (int i = 0; i < returnTypeQualifierListContext.Count; ++i)
                 {
-                    var itemContext = qualifierListContext[i];
+                    var itemContext = returnTypeQualifierListContext[i];
                     if (itemContext is not null)
                     {
                         var item = itemContext.referencedTypesAntlr1;
                         var separator = itemContext.tComma;
-                        qualifierListBuilder.AddSeparator(this.VisitTerminal(separator, CompilerSyntaxKind.TComma));
-                        if (item is not null) qualifierListBuilder.Add((QualifierGreen?)this.Visit(item) ?? QualifierGreen.__Missing);
-                        else qualifierListBuilder.Add(QualifierGreen.__Missing);
+                        returnTypeQualifierListBuilder.AddSeparator(this.VisitTerminal(separator, CompilerSyntaxKind.TComma));
+                        if (item is not null) returnTypeQualifierListBuilder.Add((ReturnTypeQualifierGreen?)this.Visit(item) ?? ReturnTypeQualifierGreen.__Missing);
+                        else returnTypeQualifierListBuilder.Add(ReturnTypeQualifierGreen.__Missing);
                     }
                 }
-                var qualifierList = qualifierListBuilder.ToList();
-                _pool.Free(qualifierListBuilder);
+                var returnTypeQualifierList = returnTypeQualifierListBuilder.ToList();
+                _pool.Free(returnTypeQualifierListBuilder);
                 var tRBrace = this.VisitTerminal(context.tRBrace, CompilerSyntaxKind.TRBrace);
-            	return _factory.PReferenceAlt3((InternalSyntaxToken)tHashLBrace, qualifierList, (InternalSyntaxToken)tRBrace);
+            	return _factory.PReferenceAlt3((InternalSyntaxToken)tHashLBrace, returnTypeQualifierList, (InternalSyntaxToken)tRBrace);
             }
             public override GreenNode? VisitPr_LAlternative(CompilerParser.Pr_LAlternativeContext? context)
             {
@@ -591,6 +591,34 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
                 else value = ExpressionGreen.__Missing;
             	return _factory.AnnotationArgument(annotationArgumentBlock1, value);
             }
+            public override GreenNode? VisitPr_ReturnTypeIdentifierAlt1(CompilerParser.Pr_ReturnTypeIdentifierAlt1Context? context)
+            {
+               	if (context == null) return ReturnTypeIdentifierAlt1Green.__Missing;
+                var tPrimitiveType = this.VisitTerminal(context.tPrimitiveTypeAntlr1, CompilerSyntaxKind.TPrimitiveType);
+            	return _factory.ReturnTypeIdentifierAlt1((InternalSyntaxToken)tPrimitiveType);
+            }
+            public override GreenNode? VisitPr_ReturnTypeIdentifierAlt2(CompilerParser.Pr_ReturnTypeIdentifierAlt2Context? context)
+            {
+               	if (context == null) return ReturnTypeIdentifierAlt2Green.__Missing;
+                IdentifierGreen? identifier = null;
+                if (context.identifierAntlr1 is not null) identifier = (IdentifierGreen?)this.Visit(context.identifierAntlr1) ?? IdentifierGreen.__Missing;
+                else identifier = IdentifierGreen.__Missing;
+            	return _factory.ReturnTypeIdentifierAlt2(identifier);
+            }
+            public override GreenNode? VisitPr_ReturnTypeQualifierAlt1(CompilerParser.Pr_ReturnTypeQualifierAlt1Context? context)
+            {
+               	if (context == null) return ReturnTypeQualifierAlt1Green.__Missing;
+                var tPrimitiveType = this.VisitTerminal(context.tPrimitiveTypeAntlr1, CompilerSyntaxKind.TPrimitiveType);
+            	return _factory.ReturnTypeQualifierAlt1((InternalSyntaxToken)tPrimitiveType);
+            }
+            public override GreenNode? VisitPr_ReturnTypeQualifierAlt2(CompilerParser.Pr_ReturnTypeQualifierAlt2Context? context)
+            {
+               	if (context == null) return ReturnTypeQualifierAlt2Green.__Missing;
+                QualifierGreen? qualifier = null;
+                if (context.qualifierAntlr1 is not null) qualifier = (QualifierGreen?)this.Visit(context.qualifierAntlr1) ?? QualifierGreen.__Missing;
+                else qualifier = QualifierGreen.__Missing;
+            	return _factory.ReturnTypeQualifierAlt2(qualifier);
+            }
             public override GreenNode? VisitPr_Name(CompilerParser.Pr_NameContext? context)
             {
                	if (context == null) return NameGreen.__Missing;
@@ -650,20 +678,14 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
             public override GreenNode? VisitPr_IdentifierAlt1(CompilerParser.Pr_IdentifierAlt1Context? context)
             {
                	if (context == null) return IdentifierAlt1Green.__Missing;
-                var tPrimitiveType = this.VisitTerminal(context.tPrimitiveTypeAntlr1, CompilerSyntaxKind.TPrimitiveType);
-            	return _factory.IdentifierAlt1((InternalSyntaxToken)tPrimitiveType);
+                var tIdentifier = this.VisitTerminal(context.tIdentifierAntlr1, CompilerSyntaxKind.TIdentifier);
+            	return _factory.IdentifierAlt1((InternalSyntaxToken)tIdentifier);
             }
             public override GreenNode? VisitPr_IdentifierAlt2(CompilerParser.Pr_IdentifierAlt2Context? context)
             {
                	if (context == null) return IdentifierAlt2Green.__Missing;
-                var tIdentifier = this.VisitTerminal(context.tIdentifierAntlr1, CompilerSyntaxKind.TIdentifier);
-            	return _factory.IdentifierAlt2((InternalSyntaxToken)tIdentifier);
-            }
-            public override GreenNode? VisitPr_IdentifierAlt3(CompilerParser.Pr_IdentifierAlt3Context? context)
-            {
-               	if (context == null) return IdentifierAlt3Green.__Missing;
                 var tVerbatimIdentifier = this.VisitTerminal(context.tVerbatimIdentifierAntlr1, CompilerSyntaxKind.TVerbatimIdentifier);
-            	return _factory.IdentifierAlt3((InternalSyntaxToken)tVerbatimIdentifier);
+            	return _factory.IdentifierAlt2((InternalSyntaxToken)tVerbatimIdentifier);
             }
             public override GreenNode? VisitPr_GrammarBlock1(CompilerParser.Pr_GrammarBlock1Context? context)
             {
@@ -682,9 +704,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
             public override GreenNode? VisitPr_ParserRuleBlock1Alt1(CompilerParser.Pr_ParserRuleBlock1Alt1Context? context)
             {
                	if (context == null) return ParserRuleBlock1Alt1Green.__Missing;
-                IdentifierGreen? returnType = null;
-                if (context.returnTypeAntlr1 is not null) returnType = (IdentifierGreen?)this.Visit(context.returnTypeAntlr1) ?? IdentifierGreen.__Missing;
-                else returnType = IdentifierGreen.__Missing;
+                ReturnTypeIdentifierGreen? returnType = null;
+                if (context.returnTypeAntlr1 is not null) returnType = (ReturnTypeIdentifierGreen?)this.Visit(context.returnTypeAntlr1) ?? ReturnTypeIdentifierGreen.__Missing;
+                else returnType = ReturnTypeIdentifierGreen.__Missing;
             	return _factory.ParserRuleBlock1Alt1(returnType);
             }
             public override GreenNode? VisitPr_ParserRuleBlock1Alt2(CompilerParser.Pr_ParserRuleBlock1Alt2Context? context)
@@ -694,9 +716,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
                 if (context.identifierAntlr1 is not null) identifier = (IdentifierGreen?)this.Visit(context.identifierAntlr1) ?? IdentifierGreen.__Missing;
                 else identifier = IdentifierGreen.__Missing;
                 var kReturns = this.VisitTerminal(context.kReturns, CompilerSyntaxKind.KReturns);
-                QualifierGreen? returnType = null;
-                if (context.returnTypeAntlr1 is not null) returnType = (QualifierGreen?)this.Visit(context.returnTypeAntlr1) ?? QualifierGreen.__Missing;
-                else returnType = QualifierGreen.__Missing;
+                ReturnTypeQualifierGreen? returnType = null;
+                if (context.returnTypeAntlr1 is not null) returnType = (ReturnTypeQualifierGreen?)this.Visit(context.returnTypeAntlr1) ?? ReturnTypeQualifierGreen.__Missing;
+                else returnType = ReturnTypeQualifierGreen.__Missing;
             	return _factory.ParserRuleBlock1Alt2(identifier, (InternalSyntaxToken)kReturns, returnType);
             }
             public override GreenNode? VisitPr_ParserRuleBlock2(CompilerParser.Pr_ParserRuleBlock2Context? context)
@@ -782,9 +804,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
             {
                	if (context == null) return PReferenceAlt3Block1Green.__Missing;
                 var tComma = this.VisitTerminal(context.tComma, CompilerSyntaxKind.TComma);
-                QualifierGreen? referencedTypes = null;
-                if (context.referencedTypesAntlr1 is not null) referencedTypes = (QualifierGreen?)this.Visit(context.referencedTypesAntlr1) ?? QualifierGreen.__Missing;
-                else referencedTypes = QualifierGreen.__Missing;
+                ReturnTypeQualifierGreen? referencedTypes = null;
+                if (context.referencedTypesAntlr1 is not null) referencedTypes = (ReturnTypeQualifierGreen?)this.Visit(context.referencedTypesAntlr1) ?? ReturnTypeQualifierGreen.__Missing;
+                else referencedTypes = ReturnTypeQualifierGreen.__Missing;
             	return _factory.PReferenceAlt3Block1((InternalSyntaxToken)tComma, referencedTypes);
             }
             public override GreenNode? VisitPr_LexerRuleBlock1Alt1(CompilerParser.Pr_LexerRuleBlock1Alt1Context? context)
@@ -898,18 +920,18 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
             {
                	if (context == null) return PAlternativeBlock1Block1Green.__Missing;
                 var kReturns = this.VisitTerminal(context.kReturns, CompilerSyntaxKind.KReturns);
-                QualifierGreen? returnType = null;
-                if (context.returnTypeAntlr1 is not null) returnType = (QualifierGreen?)this.Visit(context.returnTypeAntlr1) ?? QualifierGreen.__Missing;
-                else returnType = QualifierGreen.__Missing;
+                ReturnTypeQualifierGreen? returnType = null;
+                if (context.returnTypeAntlr1 is not null) returnType = (ReturnTypeQualifierGreen?)this.Visit(context.returnTypeAntlr1) ?? ReturnTypeQualifierGreen.__Missing;
+                else returnType = ReturnTypeQualifierGreen.__Missing;
             	return _factory.PAlternativeBlock1Block1((InternalSyntaxToken)kReturns, returnType);
             }
             public override GreenNode? VisitPr_LexerRuleBlock1Alt1Block1(CompilerParser.Pr_LexerRuleBlock1Alt1Block1Context? context)
             {
                	if (context == null) return LexerRuleBlock1Alt1Block1Green.__Missing;
                 var kReturns = this.VisitTerminal(context.kReturns, CompilerSyntaxKind.KReturns);
-                QualifierGreen? returnType = null;
-                if (context.returnTypeAntlr1 is not null) returnType = (QualifierGreen?)this.Visit(context.returnTypeAntlr1) ?? QualifierGreen.__Missing;
-                else returnType = QualifierGreen.__Missing;
+                ReturnTypeQualifierGreen? returnType = null;
+                if (context.returnTypeAntlr1 is not null) returnType = (ReturnTypeQualifierGreen?)this.Visit(context.returnTypeAntlr1) ?? ReturnTypeQualifierGreen.__Missing;
+                else returnType = ReturnTypeQualifierGreen.__Missing;
             	return _factory.LexerRuleBlock1Alt1Block1((InternalSyntaxToken)kReturns, returnType);
             }
             public override GreenNode? VisitPr_ArrayExpressionBlock1Block1(CompilerParser.Pr_ArrayExpressionBlock1Block1Context? context)

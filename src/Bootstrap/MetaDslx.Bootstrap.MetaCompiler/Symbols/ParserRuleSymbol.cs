@@ -146,32 +146,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
 
         protected virtual ImmutableArray<MetaType> CompleteProperty_ExpectedTypes(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            /*if (this.IsBlock)
-            {
-                var grammar = this.ContainingGrammarSymbol;
-                if (grammar is not null)
-                {
-                    var result = ArrayBuilder<MetaType>.GetInstance();
-                    var blockRefs = grammar.BlockFromAlterativeReferences[this];
-                    foreach (var blockRef in blockRefs)
-                    {
-                        foreach (var type in blockRef.ExpectedTypes)
-                        {
-                            if (!result.Contains(type)) result.Add(type);
-                        }
-                    }
-                    return result.ToImmutableAndFree();
-                }
-                else
-                {
-                    return ImmutableArray<MetaType>.Empty;
-                }
-            }
-            else
-            {
-                return ImmutableArray.Create(this.ReturnType);
-            }*/
-            return ImmutableArray.Create(this.ReturnType);
+            if (this.ReturnType.IsNull) return ImmutableArray<MetaType>.Empty;
+            else return ImmutableArray.Create(this.ReturnType);
         }
 
         protected override void CompletePart_Validate(DiagnosticBag diagnostics, CancellationToken cancellationToken)

@@ -1,0 +1,1 @@
+Name binder can only be used for a DeclaredSymbol

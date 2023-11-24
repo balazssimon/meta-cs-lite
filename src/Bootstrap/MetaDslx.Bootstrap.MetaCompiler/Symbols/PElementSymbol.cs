@@ -190,7 +190,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
                     else if (mtType.SpecialType == SpecialType.System_Boolean) kind = ExpectedTypeKind.Bool;
                     if (mtType.TryGetCoreType(out var coreType, diagnostics, cancellationToken) && !coreType.IsNull)
                     {
-                        result.Add(mtType);
+                        if (!result.Contains(mtType)) result.Add(mtType);
                     }
                     else
                     {
@@ -238,7 +238,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
                     diagnostics.Add(Diagnostic.Create(CompilerErrorCode.ERR_NonBooleanPropertyWrongAssignment, this.Location, this.Name, "!="));
                 }
             }
-            /*var value = this.Value.AsModelObject();
+            var value = this.Value.AsModelObject();
             if (value is PReference pref)
             {
                 var mustHaveExpectedTypes = this.IsNamedElement;
@@ -261,7 +261,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
                         if (pref.ReferencedTypes.Count == 0)
                         {
                             var rule = pref.Rule;
-                            if (rule is ParserRule pr && !pr.IsBlock)
+                            if (rule is ParserRule pr)
                             {
                                 if (!pr.ReturnType.IsAssignableTo(coreType))
                                 {
@@ -295,42 +295,36 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
                         diagnostics.Add(Diagnostic.Create(ErrorCode.ERR_InternalError, this.Location, $"Could not determine the core type of {expType} in element '{this.Name}'"));
                     }
                 }
-            }*/
+            }
         }
 
         private ImmutableArray<string> ResolveExpectedTypeTrace(MetaType expectedType)
         {
             var alt = this.ContainingPAlternativeSymbol;
-            var rule = alt.GetOutermostContainingSymbol<ParserRuleSymbol>();
-            var grammar = rule?.ContainingGrammarSymbol;
+            var rule = alt.GetOutermostContainingSymbol<PBlockSymbol>();
+            var grammar = alt.GetOutermostContainingSymbol<GrammarSymbol>();
             if (grammar is null || rule is null) return ImmutableArray<string>.Empty;
             var result = ArrayBuilder<string>.GetInstance();
-            /*var builder = PooledStringBuilder.GetInstance();
+            var builder = PooledStringBuilder.GetInstance();
             var sb = builder.Builder;
-            var visited = PooledHashSet<ParserRuleSymbol>.GetInstance();
-            var stack = ArrayBuilder<ParserRuleSymbol>.GetInstance();
+            var visited = PooledHashSet<DeclaredSymbol>.GetInstance();
+            var stack = ArrayBuilder<DeclaredSymbol>.GetInstance();
             stack.Add(rule);
             visited.Add(rule);
             while (stack.Count > 0)
             {
                 var currentRule = stack[stack.Count - 1];
-                if (currentRule.IsBlock)
+                if (currentRule is PBlockSymbol currentBlock)
                 {
                     bool added = false;
-                    var refAlts = grammar.BlockFromAlterativeReferences[rule];
-                    foreach (var refAlt in refAlts)
+                    var refElems = grammar.BlockReferences[currentBlock];
+                    foreach (var refElem in refElems)
                     {
-                        var refRule = refAlt.GetOutermostContainingSymbol<ParserRuleSymbol>();
-                        if (refRule is not null && !visited.Contains(refRule))
+                        var refAlt = refElem.ContainingPAlternativeSymbol;
+                        var refRule = refElem.GetOutermostContainingSymbol<ParserRuleSymbol>();
+                        if (refRule is not null)
                         {
-                            visited.Add(refRule);
-                            if (refRule.IsBlock)
-                            {
-                                stack.Add(refRule);
-                                added = true;
-                                break;
-                            }
-                            else if (refAlt.ExpectedTypes.Contains(expectedType))
+                            if (refAlt.ExpectedTypes.Contains(expectedType))
                             {
                                 sb.Clear();
                                 sb.Append(refRule.Name);
@@ -339,7 +333,19 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
                                     sb.Append("/");
                                     sb.Append(stack[i].Name);
                                 }
-                                result.Add(sb.ToString());
+                                var trace = sb.ToString();
+                                if (!result.Contains(trace)) result.Add(trace);
+                            }
+                        }
+                        else
+                        {
+                            var refBlock = refElem.GetOutermostContainingSymbol<PBlockSymbol>();
+                            if (refBlock is not null && !visited.Contains(refBlock))
+                            {
+                                visited.Add(refBlock);
+                                stack.Add(refBlock);
+                                added = true;
+                                break;
                             }
                         }
                     }
@@ -348,7 +354,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
             }
             stack.Free();
             visited.Free();
-            builder.Free();*/
+            builder.Free();
             return result.ToImmutableAndFree();
         }
 

@@ -33,18 +33,18 @@ Grammar: [Scope](rules+=Rule*);
 
 Rule: ParserRule | PBlock | LexerRule;
 
-ParserRule: annotations+=ParserAnnotation* [Name](returnType=[Use(MetaType)]Identifier | Identifier 'returns' returnType=#MetaType) ':' alternatives+=PAlternative ('|' alternatives+=PAlternative)* ';';
+ParserRule: annotations+=ParserAnnotation* [Name](returnType=ReturnTypeIdentifier | Identifier 'returns' returnType=ReturnTypeQualifier) ':' alternatives+=PAlternative ('|' alternatives+=PAlternative)* ';';
 PBlock: annotations+=ParserAnnotation* 'block' name=Name ':' alternatives+=PAlternative ('|' alternatives+=PAlternative)* ';';
 PBlockInline returns PBlock: '(' alternatives+=PAlternative ('|' alternatives+=PAlternative)* ')';
 
-PAlternative: (annotations+=ParserAnnotation* 'alt' name=Name ('returns' returnType=#MetaType)? ':')? elements+=PElement* ('=>' returnValue=Expression)?;
+PAlternative: (annotations+=ParserAnnotation* 'alt' name=Name ('returns' returnType=ReturnTypeQualifier)? ':')? elements+=PElement* ('=>' returnValue=Expression)?;
 PElement: (nameAnnotations+=ParserAnnotation* symbolProperty+=[SymbolProperty]Identifier assignment=Assignment)? valueAnnotations+=ParserAnnotation* value=PElementValue multiplicity=Multiplicity?;
 PElementValue: PBlockInline | PEof | PKeyword | PReference;
-PReference: rule=[Use(Rule)]Identifier | '#' referencedTypes+=#MetaType | '#{' referencedTypes+=#MetaType (',' referencedTypes+=#MetaType)* '}' ;
+PReference: rule=[Use(Rule)]Identifier | '#' referencedTypes+=ReturnTypeQualifier | '#{' referencedTypes+=ReturnTypeQualifier (',' referencedTypes+=ReturnTypeQualifier)* '}' ;
 PEof: 'eof';
 PKeyword: text=TString;
 
-LexerRule: annotations+=LexerAnnotation* ('token' name=Name ('returns' returnType=#MetaType)? | isHidden?='hidden' name=Name | isFragment?='fragment' name=Name) ':' alternatives+=LAlternative ('|' alternatives+=LAlternative)* ';';
+LexerRule: annotations+=LexerAnnotation* ('token' name=Name ('returns' returnType=ReturnTypeQualifier)? | isHidden?='hidden' name=Name | isFragment?='fragment' name=Name) ':' alternatives+=LAlternative ('|' alternatives+=LAlternative)* ';';
 LAlternative: elements+=LElement*;
 LElement: isNegated?='~'? value=LElementValue multiplicity=Multiplicity?;
 LElementValue: LBlock | LFixed | LWildCard | LRange | LReference /*| LSet*/;
@@ -67,8 +67,8 @@ StringExpression: stringValue=TString;
 ReferenceExpression: symbolValue+=[ConvertToExpectedType]Qualifier;
 ArrayExpression: '{' (items+=Expression (',' items+=Expression)*)? '}';
 
-ParserAnnotation returns MetaDslx.Bootstrap.MetaCompiler.Model.Annotation: '[' type=[Use(types:{Binder,MetaDslx.CodeAnalysis.Annotations.Annotation},suffixes:{"Binder","Annotation"})]Qualifier AnnotationArguments? ']';
-LexerAnnotation returns MetaDslx.Bootstrap.MetaCompiler.Model.Annotation: '[' type=[Use(types:{TokenKind,MetaDslx.CodeAnalysis.Annotations.Annotation},suffixes:{"TokenKind","Annotation"})]Qualifier AnnotationArguments? ']';
+ParserAnnotation returns MetaDslx.Bootstrap.MetaCompiler.Model.Annotation: '[' @type=[Use(types:{Binder,MetaDslx.CodeAnalysis.Annotations.Annotation},suffixes:{"Binder","Annotation"})]Qualifier AnnotationArguments? ']';
+LexerAnnotation returns MetaDslx.Bootstrap.MetaCompiler.Model.Annotation: '[' @type=[Use(types:{TokenKind,MetaDslx.CodeAnalysis.Annotations.Annotation},suffixes:{"TokenKind","Annotation"})]Qualifier AnnotationArguments? ']';
 block AnnotationArguments: '(' arguments+=AnnotationArgument (',' arguments+=AnnotationArgument)* ')';
 AnnotationArgument: (namedParameter+=[AnnotationArgument]Identifier ':')? value=Expression;
 
@@ -88,6 +88,11 @@ Multiplicity
 	| '+?' => NonGreedyOneOrMore
 	;
 
+[Use(MetaType)]
+block ReturnTypeIdentifier: TPrimitiveType | Identifier;
+
+[Use(MetaType)]
+block ReturnTypeQualifier: TPrimitiveType | Qualifier;
 
 [Name]
 block Name: Identifier;
@@ -99,7 +104,7 @@ block Qualifier: Identifier ('.' Identifier)*;
 block QualifierList: Qualifier (',' Qualifier)*;
 
 [Identifier]
-block Identifier: TPrimitiveType | TIdentifier | TVerbatimIdentifier;
+block Identifier: TIdentifier | TVerbatimIdentifier;
 
 [Number]
 token TInteger returns int32: '0'| '1'..'9' ('0'..'9')* ;
@@ -108,7 +113,7 @@ token TInteger returns int32: '0'| '1'..'9' ('0'..'9')* ;
 token TDecimal returns double: ('0'|'1'..'9' ('0'..'9')*) '.' ('0'..'9')+ ;
 
 [Keyword]
-token TPrimitiveType returns MetaType
+token TPrimitiveType returns type
 	: 'bool'
 	| 'int'
 	| 'string'

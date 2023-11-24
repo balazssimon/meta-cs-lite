@@ -561,7 +561,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			return result;
 		}
 
-		internal PReferenceAlt2Green PReferenceAlt2(InternalSyntaxToken tHash, QualifierGreen referencedTypes)
+		internal PReferenceAlt2Green PReferenceAlt2(InternalSyntaxToken tHash, ReturnTypeQualifierGreen referencedTypes)
 		{
 #if DEBUG
 			if (tHash is null) throw new ArgumentNullException(nameof(tHash));
@@ -581,20 +581,20 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			return result;
 		}
 
-		internal PReferenceAlt3Green PReferenceAlt3(InternalSyntaxToken tHashLBrace, MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<QualifierGreen> qualifierList, InternalSyntaxToken tRBrace)
+		internal PReferenceAlt3Green PReferenceAlt3(InternalSyntaxToken tHashLBrace, MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<ReturnTypeQualifierGreen> returnTypeQualifierList, InternalSyntaxToken tRBrace)
 		{
 #if DEBUG
 			if (tHashLBrace is null) throw new ArgumentNullException(nameof(tHashLBrace));
 			if (tHashLBrace.RawKind != (int)CompilerSyntaxKind.THashLBrace) throw new ArgumentException(nameof(tHashLBrace));
-			if (qualifierList.IsReversed) throw new ArgumentException(nameof(qualifierList));
+			if (returnTypeQualifierList.IsReversed) throw new ArgumentException(nameof(returnTypeQualifierList));
 			if (tRBrace is null) throw new ArgumentNullException(nameof(tRBrace));
 			if (tRBrace.RawKind != (int)CompilerSyntaxKind.TRBrace) throw new ArgumentException(nameof(tRBrace));
 #endif
 			int hash;
-			var cached = SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.PReferenceAlt3, tHashLBrace, qualifierList.Node, tRBrace, out hash);
+			var cached = SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.PReferenceAlt3, tHashLBrace, returnTypeQualifierList.Node, tRBrace, out hash);
 			if (cached != null) return (PReferenceAlt3Green)cached;
 		
-			var result = new PReferenceAlt3Green(CompilerSyntaxKind.PReferenceAlt3, tHashLBrace, qualifierList.Node, tRBrace);
+			var result = new PReferenceAlt3Green(CompilerSyntaxKind.PReferenceAlt3, tHashLBrace, returnTypeQualifierList.Node, tRBrace);
 			if (hash >= 0)
 			{
 				SyntaxNodeCache.AddNode(result, hash);
@@ -901,6 +901,80 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			return result;
 		}
 
+		internal ReturnTypeIdentifierAlt1Green ReturnTypeIdentifierAlt1(InternalSyntaxToken tPrimitiveType)
+		{
+#if DEBUG
+			if (tPrimitiveType is null) throw new ArgumentNullException(nameof(tPrimitiveType));
+			if (tPrimitiveType.RawKind != (int)CompilerSyntaxKind.TPrimitiveType) throw new ArgumentException(nameof(tPrimitiveType));
+#endif
+			int hash;
+			var cached = SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.ReturnTypeIdentifierAlt1, tPrimitiveType, out hash);
+			if (cached != null) return (ReturnTypeIdentifierAlt1Green)cached;
+		
+			var result = new ReturnTypeIdentifierAlt1Green(CompilerSyntaxKind.ReturnTypeIdentifierAlt1, tPrimitiveType);
+			if (hash >= 0)
+			{
+				SyntaxNodeCache.AddNode(result, hash);
+			}
+		
+			return result;
+		}
+
+		internal ReturnTypeIdentifierAlt2Green ReturnTypeIdentifierAlt2(IdentifierGreen identifier)
+		{
+#if DEBUG
+			if (identifier is null) throw new ArgumentNullException(nameof(identifier));
+#endif
+			int hash;
+			var cached = SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.ReturnTypeIdentifierAlt2, identifier, out hash);
+			if (cached != null) return (ReturnTypeIdentifierAlt2Green)cached;
+		
+			var result = new ReturnTypeIdentifierAlt2Green(CompilerSyntaxKind.ReturnTypeIdentifierAlt2, identifier);
+			if (hash >= 0)
+			{
+				SyntaxNodeCache.AddNode(result, hash);
+			}
+		
+			return result;
+		}
+
+		internal ReturnTypeQualifierAlt1Green ReturnTypeQualifierAlt1(InternalSyntaxToken tPrimitiveType)
+		{
+#if DEBUG
+			if (tPrimitiveType is null) throw new ArgumentNullException(nameof(tPrimitiveType));
+			if (tPrimitiveType.RawKind != (int)CompilerSyntaxKind.TPrimitiveType) throw new ArgumentException(nameof(tPrimitiveType));
+#endif
+			int hash;
+			var cached = SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.ReturnTypeQualifierAlt1, tPrimitiveType, out hash);
+			if (cached != null) return (ReturnTypeQualifierAlt1Green)cached;
+		
+			var result = new ReturnTypeQualifierAlt1Green(CompilerSyntaxKind.ReturnTypeQualifierAlt1, tPrimitiveType);
+			if (hash >= 0)
+			{
+				SyntaxNodeCache.AddNode(result, hash);
+			}
+		
+			return result;
+		}
+
+		internal ReturnTypeQualifierAlt2Green ReturnTypeQualifierAlt2(QualifierGreen qualifier)
+		{
+#if DEBUG
+			if (qualifier is null) throw new ArgumentNullException(nameof(qualifier));
+#endif
+			int hash;
+			var cached = SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.ReturnTypeQualifierAlt2, qualifier, out hash);
+			if (cached != null) return (ReturnTypeQualifierAlt2Green)cached;
+		
+			var result = new ReturnTypeQualifierAlt2Green(CompilerSyntaxKind.ReturnTypeQualifierAlt2, qualifier);
+			if (hash >= 0)
+			{
+				SyntaxNodeCache.AddNode(result, hash);
+			}
+		
+			return result;
+		}
+
 		internal NameGreen Name(IdentifierGreen identifier)
 		{
 #if DEBUG
@@ -955,36 +1029,17 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			return result;
 		}
 
-		internal IdentifierAlt1Green IdentifierAlt1(InternalSyntaxToken tPrimitiveType)
-		{
-#if DEBUG
-			if (tPrimitiveType is null) throw new ArgumentNullException(nameof(tPrimitiveType));
-			if (tPrimitiveType.RawKind != (int)CompilerSyntaxKind.TPrimitiveType) throw new ArgumentException(nameof(tPrimitiveType));
-#endif
-			int hash;
-			var cached = SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.IdentifierAlt1, tPrimitiveType, out hash);
-			if (cached != null) return (IdentifierAlt1Green)cached;
-		
-			var result = new IdentifierAlt1Green(CompilerSyntaxKind.IdentifierAlt1, tPrimitiveType);
-			if (hash >= 0)
-			{
-				SyntaxNodeCache.AddNode(result, hash);
-			}
-		
-			return result;
-		}
-
-		internal IdentifierAlt2Green IdentifierAlt2(InternalSyntaxToken tIdentifier)
+		internal IdentifierAlt1Green IdentifierAlt1(InternalSyntaxToken tIdentifier)
 		{
 #if DEBUG
 			if (tIdentifier is null) throw new ArgumentNullException(nameof(tIdentifier));
 			if (tIdentifier.RawKind != (int)CompilerSyntaxKind.TIdentifier) throw new ArgumentException(nameof(tIdentifier));
 #endif
 			int hash;
-			var cached = SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.IdentifierAlt2, tIdentifier, out hash);
-			if (cached != null) return (IdentifierAlt2Green)cached;
+			var cached = SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.IdentifierAlt1, tIdentifier, out hash);
+			if (cached != null) return (IdentifierAlt1Green)cached;
 		
-			var result = new IdentifierAlt2Green(CompilerSyntaxKind.IdentifierAlt2, tIdentifier);
+			var result = new IdentifierAlt1Green(CompilerSyntaxKind.IdentifierAlt1, tIdentifier);
 			if (hash >= 0)
 			{
 				SyntaxNodeCache.AddNode(result, hash);
@@ -993,17 +1048,17 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			return result;
 		}
 
-		internal IdentifierAlt3Green IdentifierAlt3(InternalSyntaxToken tVerbatimIdentifier)
+		internal IdentifierAlt2Green IdentifierAlt2(InternalSyntaxToken tVerbatimIdentifier)
 		{
 #if DEBUG
 			if (tVerbatimIdentifier is null) throw new ArgumentNullException(nameof(tVerbatimIdentifier));
 			if (tVerbatimIdentifier.RawKind != (int)CompilerSyntaxKind.TVerbatimIdentifier) throw new ArgumentException(nameof(tVerbatimIdentifier));
 #endif
 			int hash;
-			var cached = SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.IdentifierAlt3, tVerbatimIdentifier, out hash);
-			if (cached != null) return (IdentifierAlt3Green)cached;
+			var cached = SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.IdentifierAlt2, tVerbatimIdentifier, out hash);
+			if (cached != null) return (IdentifierAlt2Green)cached;
 		
-			var result = new IdentifierAlt3Green(CompilerSyntaxKind.IdentifierAlt3, tVerbatimIdentifier);
+			var result = new IdentifierAlt2Green(CompilerSyntaxKind.IdentifierAlt2, tVerbatimIdentifier);
 			if (hash >= 0)
 			{
 				SyntaxNodeCache.AddNode(result, hash);
@@ -1029,7 +1084,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			return result;
 		}
 
-		internal ParserRuleBlock1Alt1Green ParserRuleBlock1Alt1(IdentifierGreen returnType)
+		internal ParserRuleBlock1Alt1Green ParserRuleBlock1Alt1(ReturnTypeIdentifierGreen returnType)
 		{
 #if DEBUG
 			if (returnType is null) throw new ArgumentNullException(nameof(returnType));
@@ -1047,7 +1102,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			return result;
 		}
 
-		internal ParserRuleBlock1Alt2Green ParserRuleBlock1Alt2(IdentifierGreen identifier, InternalSyntaxToken kReturns, QualifierGreen returnType)
+		internal ParserRuleBlock1Alt2Green ParserRuleBlock1Alt2(IdentifierGreen identifier, InternalSyntaxToken kReturns, ReturnTypeQualifierGreen returnType)
 		{
 #if DEBUG
 			if (identifier is null) throw new ArgumentNullException(nameof(identifier));
@@ -1180,7 +1235,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			return result;
 		}
 
-		internal PReferenceAlt3Block1Green PReferenceAlt3Block1(InternalSyntaxToken tComma, QualifierGreen referencedTypes)
+		internal PReferenceAlt3Block1Green PReferenceAlt3Block1(InternalSyntaxToken tComma, ReturnTypeQualifierGreen referencedTypes)
 		{
 #if DEBUG
 			if (tComma is null) throw new ArgumentNullException(nameof(tComma));
@@ -1398,7 +1453,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			return result;
 		}
 
-		internal PAlternativeBlock1Block1Green PAlternativeBlock1Block1(InternalSyntaxToken kReturns, QualifierGreen returnType)
+		internal PAlternativeBlock1Block1Green PAlternativeBlock1Block1(InternalSyntaxToken kReturns, ReturnTypeQualifierGreen returnType)
 		{
 #if DEBUG
 			if (kReturns is null) throw new ArgumentNullException(nameof(kReturns));
@@ -1418,7 +1473,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			return result;
 		}
 
-		internal LexerRuleBlock1Alt1Block1Green LexerRuleBlock1Alt1Block1(InternalSyntaxToken kReturns, QualifierGreen returnType)
+		internal LexerRuleBlock1Alt1Block1Green LexerRuleBlock1Alt1Block1(InternalSyntaxToken kReturns, ReturnTypeQualifierGreen returnType)
 		{
 #if DEBUG
 			if (kReturns is null) throw new ArgumentNullException(nameof(kReturns));

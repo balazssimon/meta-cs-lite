@@ -10,6 +10,8 @@ using System.Text;
 using System.Threading.Tasks;
 using MetaDslx.CodeAnalysis.Symbols.CSharp;
 using System.Collections.Immutable;
+using MetaDslx.CodeAnalysis.PooledObjects;
+using MetaDslx.Bootstrap.MetaCompiler.Model;
 
 namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
 {
@@ -41,6 +43,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
                     StartComputingProperty_Attributes, FinishComputingProperty_Attributes);
         }
 
+        private bool _isResolvingExpectedTypes;
         private ImmutableArray<MetaType> _expectedTypes;
         private ImmutableArray<PAlternativeSymbol> _alternatives;
 
@@ -52,6 +55,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
         protected override CompletionGraph CompletionGraph => CompletionParts.CompletionGraph;
 
         public PElementSymbol? ContainingElementSymbol => this.ContainingSymbol as PElementSymbol;
+
+        public bool IsResolvingExpectedTypes => _isResolvingExpectedTypes;
 
         public ImmutableArray<MetaType> ExpectedTypes
         {
@@ -90,11 +95,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
             {
                 if (NotePartComplete(CompletionParts.StartComputingProperty_ExpectedTypes))
                 {
+                    _isResolvingExpectedTypes = true;
                     var diagnostics = DiagnosticBag.GetInstance();
                     _expectedTypes = CompleteProperty_ExpectedTypes(diagnostics, cancellationToken);
                     AddSymbolDiagnostics(diagnostics);
                     diagnostics.Free();
                     NotePartComplete(CompletionParts.FinishComputingProperty_ExpectedTypes);
+                    _isResolvingExpectedTypes = false;
                 }
                 return true;
             }
@@ -119,21 +126,54 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
                     var alt = elem.ContainingPAlternativeSymbol;
                     if (alt is not null)
                     {
-                        if (!alt.ReturnType.IsNull)
-                        {
-                            return ImmutableArray.Create(alt.ReturnType);
-                        }
-                        else
-                        {
-                            return alt.ExpectedTypes;
-                        }
+                        return alt.ExpectedTypes;
                     }
                 }
             }
-            else
+            else 
             {
-
+                var grammar = this.ContainingSymbol as GrammarSymbol;
+                if (grammar is not null)
+                {
+                    var expectedTypes = ArrayBuilder<MetaType>.GetInstance();
+                    var blockRefs = grammar.BlockReferences[this];
+                    foreach (var blockRef in blockRefs)
+                    {
+                        if (blockRef.IsNamedElement)
+                        {
+                            foreach (var type in blockRef.ExpectedTypes)
+                            {
+                                if (!expectedTypes.Contains(type)) expectedTypes.Add(type);
+                            }
+                        }
+                        else
+                        {
+                            var altRef = blockRef.ContainingPAlternativeSymbol;
+                            if (altRef is not null)
+                            {
+                                if (altRef.IsResolvingExpectedTypes)
+                                {
+                                    diagnostics.Add(Diagnostic.Create(CompilerErrorCode.ERR_CircularBlockReference, this.Location, this.Name));
+                                }
+                                else
+                                {
+                                    foreach (var type in altRef.ExpectedTypes)
+                                    {
+                                        if (!expectedTypes.Contains(type)) expectedTypes.Add(type);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    return expectedTypes.ToImmutableAndFree();
+                }
+                else
+                {
+                    diagnostics.Add(Diagnostic.Create(ErrorCode.ERR_InternalError, this.Location, $"Named block '{this.Name}' must be contained directly by the grammar"));
+                    return ImmutableArray<MetaType>.Empty;
+                }
             }
+            diagnostics.Add(Diagnostic.Create(ErrorCode.ERR_InternalError, this.Location, $"Could not determine the expected types for the block"));
             return ImmutableArray<MetaType>.Empty;
         }
 

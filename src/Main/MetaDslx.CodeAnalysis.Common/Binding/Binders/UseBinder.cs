@@ -65,6 +65,16 @@ namespace MetaDslx.CodeAnalysis.Binding
             return false;
         }
 
+        protected override SingleLookupResult ValidateResult(LookupContext context, DeclaredSymbol resultSymbol, DeclaredSymbol unwrappedSymbol)
+        {
+            return LookupResult.Good(resultSymbol);
+        }
+
+        protected override Diagnostic UpdateDiagnostic(LookupContext context, Diagnostic diagnostic)
+        {
+            return diagnostic;
+        }
+
         public override string ToString()
         {
             var builder = PooledStringBuilder.GetInstance();

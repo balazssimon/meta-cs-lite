@@ -456,6 +456,14 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 					return "AnnotationArguments";
 				case CompilerSyntaxKind.AnnotationArgument: 
 					return "AnnotationArgument";
+				case CompilerSyntaxKind.ReturnTypeIdentifierAlt1: 
+					return "ReturnTypeIdentifierAlt1";
+				case CompilerSyntaxKind.ReturnTypeIdentifierAlt2: 
+					return "ReturnTypeIdentifierAlt2";
+				case CompilerSyntaxKind.ReturnTypeQualifierAlt1: 
+					return "ReturnTypeQualifierAlt1";
+				case CompilerSyntaxKind.ReturnTypeQualifierAlt2: 
+					return "ReturnTypeQualifierAlt2";
 				case CompilerSyntaxKind.Name: 
 					return "Name";
 				case CompilerSyntaxKind.Qualifier: 
@@ -466,8 +474,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 					return "IdentifierAlt1";
 				case CompilerSyntaxKind.IdentifierAlt2: 
 					return "IdentifierAlt2";
-				case CompilerSyntaxKind.IdentifierAlt3: 
-					return "IdentifierAlt3";
 				case CompilerSyntaxKind.GrammarBlock1: 
 					return "GrammarBlock1";
 				case CompilerSyntaxKind.ParserRuleBlock1Alt1: 

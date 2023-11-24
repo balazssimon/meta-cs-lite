@@ -11,9 +11,13 @@ using System.Text;
 using System.Threading.Tasks;
 using MetaDslx.Bootstrap.MetaCompiler.Model;
 using MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax;
+using MetaDslx.CodeAnalysis.PooledObjects;
+using MetaDslx.CodeAnalysis.Symbols.CSharp;
 
 namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
 {
+    using IParameterSymbol = Microsoft.CodeAnalysis.IParameterSymbol;
+
     internal class AnnotationArgumentSymbol : SourceSymbol
     {
         public new static class CompletionParts
@@ -22,6 +26,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
             public static readonly CompletionPart FinishComputingProperty_NamedParameter = new CompletionPart(nameof(FinishComputingProperty_NamedParameter));
             public static readonly CompletionPart StartComputingProperty_Parameters = new CompletionPart(nameof(StartComputingProperty_Parameters));
             public static readonly CompletionPart FinishComputingProperty_Parameters = new CompletionPart(nameof(FinishComputingProperty_Parameters));
+            public static readonly CompletionPart StartComputingProperty_ExpectedTypes = new CompletionPart(nameof(StartComputingProperty_ExpectedTypes));
+            public static readonly CompletionPart FinishComputingProperty_ExpectedTypes = new CompletionPart(nameof(FinishComputingProperty_ExpectedTypes));
             public static readonly CompletionPart StartComputingProperty_Value = new CompletionPart(nameof(StartComputingProperty_Value));
             public static readonly CompletionPart FinishComputingProperty_Value = new CompletionPart(nameof(FinishComputingProperty_Value));
             public static readonly CompletionPart StartComputingProperty_Attributes = Symbol.CompletionParts.StartComputingProperty_Attributes;
@@ -30,12 +36,22 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
                 CompletionGraph.CreateFromParts(
                     StartComputingProperty_NamedParameter, FinishComputingProperty_NamedParameter,
                     StartComputingProperty_Parameters, FinishComputingProperty_Parameters,
+                    StartComputingProperty_ExpectedTypes, FinishComputingProperty_ExpectedTypes,
                     StartComputingProperty_Value, FinishComputingProperty_Value,
                     StartComputingProperty_Attributes, FinishComputingProperty_Attributes);
         }
 
+        private enum ExpectedTypeKind
+        {
+            None,
+            Bool,
+            Collection
+        }
+
         private ImmutableArray<MetaSymbol> _namedParameter;
         private ImmutableArray<DeclaredSymbol> _parameters;
+        private ImmutableArray<MetaType> _expectedTypes;
+        private ExpectedTypeKind _expectedTypeKind;
         private ExpressionSymbol _value;
 
         public AnnotationArgumentSymbol(Symbol container, MergedDeclaration declaration, IModelObject modelObject)
@@ -68,6 +84,24 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
             {
                 ForceComplete(CompletionParts.FinishComputingProperty_Parameters, null, default);
                 return _parameters;
+            }
+        }
+
+        public ImmutableArray<MetaType> ExpectedTypes
+        {
+            get
+            {
+                ForceComplete(CompletionParts.FinishComputingProperty_ExpectedTypes, null, default);
+                return _expectedTypes;
+            }
+        }
+
+        private ExpectedTypeKind ExpectedKind
+        {
+            get
+            {
+                ForceComplete(CompletionParts.FinishComputingProperty_ExpectedTypes, null, default);
+                return _expectedTypeKind;
             }
         }
 
@@ -107,6 +141,20 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
                 }
                 return true;
             }
+            else if (incompletePart == CompletionParts.StartComputingProperty_ExpectedTypes || incompletePart == CompletionParts.FinishComputingProperty_ExpectedTypes)
+            {
+                if (NotePartComplete(CompletionParts.StartComputingProperty_ExpectedTypes))
+                {
+                    var diagnostics = DiagnosticBag.GetInstance();
+                    var expectedTypes = CompleteProperty_ExpectedTypes(diagnostics, cancellationToken);
+                    _expectedTypes = expectedTypes.ExpectedTypes;
+                    _expectedTypeKind = expectedTypes.ExpectedTypeKind;
+                    AddSymbolDiagnostics(diagnostics);
+                    diagnostics.Free();
+                    NotePartComplete(CompletionParts.FinishComputingProperty_ExpectedTypes);
+                }
+                return true;
+            }
             else if (incompletePart == CompletionParts.StartComputingProperty_Value || incompletePart == CompletionParts.FinishComputingProperty_Value)
             {
                 if (NotePartComplete(CompletionParts.StartComputingProperty_Value))
@@ -136,6 +184,32 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
             var index = AnnotationSymbol?.Arguments.IndexOf(this) ?? -1;
             if (index < 0) return ImmutableArray<DeclaredSymbol>.Empty;
             return AnnotationSymbol.ArgumentParameters[index];
+        }
+
+        private (ImmutableArray<MetaType> ExpectedTypes, ExpectedTypeKind ExpectedTypeKind) CompleteProperty_ExpectedTypes(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        {
+            var kind = ExpectedTypeKind.None;
+            var result = ArrayBuilder<MetaType>.GetInstance();
+            foreach (var param in Parameters)
+            {
+                var csParam = param as ICSharpSymbol;
+                var msProp = csParam?.CSharpSymbol as IParameterSymbol;
+                var msType = msProp?.Type;
+                var csType = msType is null ? null : csParam?.SymbolFactory.GetSymbol<TypeSymbol>(msType, diagnostics, cancellationToken);
+                var mtType = MetaType.FromTypeSymbol(csType);
+                if (mtType.IsNullable) mtType.TryExtractNullableType(out mtType, diagnostics, cancellationToken);
+                if (mtType.IsCollection) kind = ExpectedTypeKind.Collection;
+                else if (mtType.SpecialType == SpecialType.System_Boolean) kind = ExpectedTypeKind.Bool;
+                if (mtType.TryGetCoreType(out var coreType, diagnostics, cancellationToken) && !coreType.IsNull)
+                {
+                    if (!result.Contains(mtType)) result.Add(mtType);
+                }
+                else
+                {
+                    diagnostics.Add(Diagnostic.Create(CommonErrorCode.ERR_BindingError, this.Location, $"Could not determine the type of the parameter '{param.Name}'"));
+                }
+            }
+            return (result.ToImmutableAndFree(), kind);
         }
 
         protected virtual ExpressionSymbol CompleteProperty_Value(DiagnosticBag diagnostics, CancellationToken cancellationToken)

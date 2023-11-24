@@ -9,20 +9,21 @@ namespace MetaDslx.CodeAnalysis.Symbols
 {
     public static class SymbolUtils
     {
-        public static TSymbol? GetInnermostContainingSymbol<TSymbol>(this Symbol? symbol, bool includeSelf = false)
+        public static TSymbol? GetInnermostContainingSymbol<TSymbol>(this Symbol? symbol, bool includeSelf = false, CancellationToken cancellationToken = default)
             where TSymbol : Symbol
         {
             if (symbol is null) return default;
             var container = includeSelf ? symbol : symbol.ContainingSymbol;
             while (container is not null)
             {
+                cancellationToken.ThrowIfCancellationRequested();
                 if (container is TSymbol ts) return ts;
                 container = container.ContainingSymbol;
             }
             return default;
         }
 
-        public static TSymbol? GetOutermostContainingSymbol<TSymbol>(this Symbol? symbol, bool includeSelf = false)
+        public static TSymbol? GetOutermostContainingSymbol<TSymbol>(this Symbol? symbol, bool includeSelf = false, CancellationToken cancellationToken = default)
             where TSymbol : Symbol
         {
             if (symbol is null) return default;
@@ -30,13 +31,14 @@ namespace MetaDslx.CodeAnalysis.Symbols
             var container = includeSelf ? symbol : symbol.ContainingSymbol;
             while (container is not null)
             {
+                cancellationToken.ThrowIfCancellationRequested();
                 if (container is TSymbol ts) result = ts;
                 container = container.ContainingSymbol;
             }
             return result;
         }
 
-        public static ImmutableArray<TSymbol> GetAllContainingSymbolsInwards<TSymbol>(this Symbol? symbol, bool includeSelf = false)
+        public static ImmutableArray<TSymbol> GetAllContainingSymbolsInwards<TSymbol>(this Symbol? symbol, bool includeSelf = false, CancellationToken cancellationToken = default)
             where TSymbol : Symbol
         {
             if (symbol is null) return ImmutableArray<TSymbol>.Empty;
@@ -44,6 +46,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
             var container = includeSelf ? symbol : symbol.ContainingSymbol;
             while (container is not null)
             {
+                cancellationToken.ThrowIfCancellationRequested();
                 if (container is TSymbol ts) result.Add(ts);
                 container = container.ContainingSymbol;
             }
@@ -51,7 +54,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
             return result.ToImmutableAndFree();
         }
 
-        public static ImmutableArray<TSymbol> GetAllContainingSymbolsOutwards<TSymbol>(this Symbol? symbol, bool includeSelf = false)
+        public static ImmutableArray<TSymbol> GetAllContainingSymbolsOutwards<TSymbol>(this Symbol? symbol, bool includeSelf = false, CancellationToken cancellationToken = default)
             where TSymbol : Symbol
         {
             if (symbol is null) return ImmutableArray<TSymbol>.Empty;
@@ -59,13 +62,14 @@ namespace MetaDslx.CodeAnalysis.Symbols
             var container = includeSelf ? symbol : symbol.ContainingSymbol;
             while (container is not null)
             {
+                cancellationToken.ThrowIfCancellationRequested();
                 if (container is TSymbol ts) result.Add(ts);
                 container = container.ContainingSymbol;
             }
             return result.ToImmutableAndFree();
         }
         
-        public static ImmutableArray<TSymbol> GetAllContainedSymbols<TSymbol>(this Symbol? symbol, bool includeSelf = false)
+        public static ImmutableArray<TSymbol> GetAllContainedSymbols<TSymbol>(this Symbol? symbol, bool includeSelf = false, CancellationToken cancellationToken = default)
             where TSymbol : Symbol
         {
             if (symbol is null) return ImmutableArray<TSymbol>.Empty;
@@ -75,6 +79,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
             int i = 0;
             while (i < queue.Count)
             {
+                cancellationToken.ThrowIfCancellationRequested();
                 var current = queue[i];
                 if (current is TSymbol ts)
                 {

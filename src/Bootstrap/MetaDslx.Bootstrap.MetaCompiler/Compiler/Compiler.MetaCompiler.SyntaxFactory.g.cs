@@ -479,28 +479,28 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
             return (PReferenceAlt1Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.PReferenceAlt1((IdentifierGreen)rule.Green).CreateRed();
         }
 
-        public PReferenceAlt2Syntax PReferenceAlt2(SyntaxToken tHash, QualifierSyntax referencedTypes)
+        public PReferenceAlt2Syntax PReferenceAlt2(SyntaxToken tHash, ReturnTypeQualifierSyntax referencedTypes)
         {
         	if (tHash.RawKind != (int)CompilerSyntaxKind.THash) throw new ArgumentException(nameof(tHash));
         	if (referencedTypes is null) throw new ArgumentNullException(nameof(referencedTypes));
-            return (PReferenceAlt2Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.PReferenceAlt2((InternalSyntaxToken)tHash.Node, (QualifierGreen)referencedTypes.Green).CreateRed();
+            return (PReferenceAlt2Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.PReferenceAlt2((InternalSyntaxToken)tHash.Node, (ReturnTypeQualifierGreen)referencedTypes.Green).CreateRed();
         }
         
-        public PReferenceAlt2Syntax PReferenceAlt2(QualifierSyntax referencedTypes)
+        public PReferenceAlt2Syntax PReferenceAlt2(ReturnTypeQualifierSyntax referencedTypes)
         {
         	return this.PReferenceAlt2(this.Token(CompilerSyntaxKind.THash), referencedTypes);
         }
 
-        public PReferenceAlt3Syntax PReferenceAlt3(SyntaxToken tHashLBrace, MetaDslx.CodeAnalysis.SeparatedSyntaxList<QualifierSyntax> qualifierList, SyntaxToken tRBrace)
+        public PReferenceAlt3Syntax PReferenceAlt3(SyntaxToken tHashLBrace, MetaDslx.CodeAnalysis.SeparatedSyntaxList<ReturnTypeQualifierSyntax> returnTypeQualifierList, SyntaxToken tRBrace)
         {
         	if (tHashLBrace.RawKind != (int)CompilerSyntaxKind.THashLBrace) throw new ArgumentException(nameof(tHashLBrace));
         	if (tRBrace.RawKind != (int)CompilerSyntaxKind.TRBrace) throw new ArgumentException(nameof(tRBrace));
-            return (PReferenceAlt3Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.PReferenceAlt3((InternalSyntaxToken)tHashLBrace.Node, qualifierList.Node.ToGreenSeparatedList<QualifierGreen>(reversed: false), (InternalSyntaxToken)tRBrace.Node).CreateRed();
+            return (PReferenceAlt3Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.PReferenceAlt3((InternalSyntaxToken)tHashLBrace.Node, returnTypeQualifierList.Node.ToGreenSeparatedList<ReturnTypeQualifierGreen>(reversed: false), (InternalSyntaxToken)tRBrace.Node).CreateRed();
         }
         
-        public PReferenceAlt3Syntax PReferenceAlt3(MetaDslx.CodeAnalysis.SeparatedSyntaxList<QualifierSyntax> qualifierList)
+        public PReferenceAlt3Syntax PReferenceAlt3(MetaDslx.CodeAnalysis.SeparatedSyntaxList<ReturnTypeQualifierSyntax> returnTypeQualifierList)
         {
-        	return this.PReferenceAlt3(this.Token(CompilerSyntaxKind.THashLBrace), qualifierList, this.Token(CompilerSyntaxKind.TRBrace));
+        	return this.PReferenceAlt3(this.Token(CompilerSyntaxKind.THashLBrace), returnTypeQualifierList, this.Token(CompilerSyntaxKind.TRBrace));
         }
 
         public LAlternativeSyntax LAlternative(MetaDslx.CodeAnalysis.SyntaxList<LElementSyntax> elements)
@@ -654,6 +654,30 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
         	return this.AnnotationArgument(default, value);
         }
 
+        public ReturnTypeIdentifierAlt1Syntax ReturnTypeIdentifierAlt1(SyntaxToken tPrimitiveType)
+        {
+        	if (tPrimitiveType.RawKind != (int)CompilerSyntaxKind.TPrimitiveType) throw new ArgumentException(nameof(tPrimitiveType));
+            return (ReturnTypeIdentifierAlt1Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.ReturnTypeIdentifierAlt1((InternalSyntaxToken)tPrimitiveType.Node).CreateRed();
+        }
+
+        public ReturnTypeIdentifierAlt2Syntax ReturnTypeIdentifierAlt2(IdentifierSyntax identifier)
+        {
+        	if (identifier is null) throw new ArgumentNullException(nameof(identifier));
+            return (ReturnTypeIdentifierAlt2Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.ReturnTypeIdentifierAlt2((IdentifierGreen)identifier.Green).CreateRed();
+        }
+
+        public ReturnTypeQualifierAlt1Syntax ReturnTypeQualifierAlt1(SyntaxToken tPrimitiveType)
+        {
+        	if (tPrimitiveType.RawKind != (int)CompilerSyntaxKind.TPrimitiveType) throw new ArgumentException(nameof(tPrimitiveType));
+            return (ReturnTypeQualifierAlt1Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.ReturnTypeQualifierAlt1((InternalSyntaxToken)tPrimitiveType.Node).CreateRed();
+        }
+
+        public ReturnTypeQualifierAlt2Syntax ReturnTypeQualifierAlt2(QualifierSyntax qualifier)
+        {
+        	if (qualifier is null) throw new ArgumentNullException(nameof(qualifier));
+            return (ReturnTypeQualifierAlt2Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.ReturnTypeQualifierAlt2((QualifierGreen)qualifier.Green).CreateRed();
+        }
+
         public NameSyntax Name(IdentifierSyntax identifier)
         {
         	if (identifier is null) throw new ArgumentNullException(nameof(identifier));
@@ -670,22 +694,16 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
             return (QualifierListSyntax)CompilerLanguage.Instance.InternalSyntaxFactory.QualifierList(qualifierList.Node.ToGreenSeparatedList<QualifierGreen>(reversed: false)).CreateRed();
         }
 
-        public IdentifierAlt1Syntax IdentifierAlt1(SyntaxToken tPrimitiveType)
-        {
-        	if (tPrimitiveType.RawKind != (int)CompilerSyntaxKind.TPrimitiveType) throw new ArgumentException(nameof(tPrimitiveType));
-            return (IdentifierAlt1Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.IdentifierAlt1((InternalSyntaxToken)tPrimitiveType.Node).CreateRed();
-        }
-
-        public IdentifierAlt2Syntax IdentifierAlt2(SyntaxToken tIdentifier)
+        public IdentifierAlt1Syntax IdentifierAlt1(SyntaxToken tIdentifier)
         {
         	if (tIdentifier.RawKind != (int)CompilerSyntaxKind.TIdentifier) throw new ArgumentException(nameof(tIdentifier));
-            return (IdentifierAlt2Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.IdentifierAlt2((InternalSyntaxToken)tIdentifier.Node).CreateRed();
+            return (IdentifierAlt1Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.IdentifierAlt1((InternalSyntaxToken)tIdentifier.Node).CreateRed();
         }
 
-        public IdentifierAlt3Syntax IdentifierAlt3(SyntaxToken tVerbatimIdentifier)
+        public IdentifierAlt2Syntax IdentifierAlt2(SyntaxToken tVerbatimIdentifier)
         {
         	if (tVerbatimIdentifier.RawKind != (int)CompilerSyntaxKind.TVerbatimIdentifier) throw new ArgumentException(nameof(tVerbatimIdentifier));
-            return (IdentifierAlt3Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.IdentifierAlt3((InternalSyntaxToken)tVerbatimIdentifier.Node).CreateRed();
+            return (IdentifierAlt2Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.IdentifierAlt2((InternalSyntaxToken)tVerbatimIdentifier.Node).CreateRed();
         }
 
         public GrammarBlock1Syntax GrammarBlock1(MetaDslx.CodeAnalysis.SyntaxList<RuleSyntax> rules)
@@ -693,21 +711,21 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
             return (GrammarBlock1Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.GrammarBlock1(rules.Node.ToGreenList<RuleGreen>()).CreateRed();
         }
 
-        public ParserRuleBlock1Alt1Syntax ParserRuleBlock1Alt1(IdentifierSyntax returnType)
+        public ParserRuleBlock1Alt1Syntax ParserRuleBlock1Alt1(ReturnTypeIdentifierSyntax returnType)
         {
         	if (returnType is null) throw new ArgumentNullException(nameof(returnType));
-            return (ParserRuleBlock1Alt1Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.ParserRuleBlock1Alt1((IdentifierGreen)returnType.Green).CreateRed();
+            return (ParserRuleBlock1Alt1Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.ParserRuleBlock1Alt1((ReturnTypeIdentifierGreen)returnType.Green).CreateRed();
         }
 
-        public ParserRuleBlock1Alt2Syntax ParserRuleBlock1Alt2(IdentifierSyntax identifier, SyntaxToken kReturns, QualifierSyntax returnType)
+        public ParserRuleBlock1Alt2Syntax ParserRuleBlock1Alt2(IdentifierSyntax identifier, SyntaxToken kReturns, ReturnTypeQualifierSyntax returnType)
         {
         	if (identifier is null) throw new ArgumentNullException(nameof(identifier));
         	if (kReturns.RawKind != (int)CompilerSyntaxKind.KReturns) throw new ArgumentException(nameof(kReturns));
         	if (returnType is null) throw new ArgumentNullException(nameof(returnType));
-            return (ParserRuleBlock1Alt2Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.ParserRuleBlock1Alt2((IdentifierGreen)identifier.Green, (InternalSyntaxToken)kReturns.Node, (QualifierGreen)returnType.Green).CreateRed();
+            return (ParserRuleBlock1Alt2Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.ParserRuleBlock1Alt2((IdentifierGreen)identifier.Green, (InternalSyntaxToken)kReturns.Node, (ReturnTypeQualifierGreen)returnType.Green).CreateRed();
         }
         
-        public ParserRuleBlock1Alt2Syntax ParserRuleBlock1Alt2(IdentifierSyntax identifier, QualifierSyntax returnType)
+        public ParserRuleBlock1Alt2Syntax ParserRuleBlock1Alt2(IdentifierSyntax identifier, ReturnTypeQualifierSyntax returnType)
         {
         	return this.ParserRuleBlock1Alt2(identifier, this.Token(CompilerSyntaxKind.KReturns), returnType);
         }
@@ -780,14 +798,14 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
             return (PElementBlock1Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.PElementBlock1(nameAnnotations.Node.ToGreenList<ParserAnnotationGreen>(), (IdentifierGreen)symbolProperty.Green, (InternalSyntaxToken)assignment.Node).CreateRed();
         }
 
-        public PReferenceAlt3Block1Syntax PReferenceAlt3Block1(SyntaxToken tComma, QualifierSyntax referencedTypes)
+        public PReferenceAlt3Block1Syntax PReferenceAlt3Block1(SyntaxToken tComma, ReturnTypeQualifierSyntax referencedTypes)
         {
         	if (tComma.RawKind != (int)CompilerSyntaxKind.TComma) throw new ArgumentException(nameof(tComma));
         	if (referencedTypes is null) throw new ArgumentNullException(nameof(referencedTypes));
-            return (PReferenceAlt3Block1Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.PReferenceAlt3Block1((InternalSyntaxToken)tComma.Node, (QualifierGreen)referencedTypes.Green).CreateRed();
+            return (PReferenceAlt3Block1Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.PReferenceAlt3Block1((InternalSyntaxToken)tComma.Node, (ReturnTypeQualifierGreen)referencedTypes.Green).CreateRed();
         }
         
-        public PReferenceAlt3Block1Syntax PReferenceAlt3Block1(QualifierSyntax referencedTypes)
+        public PReferenceAlt3Block1Syntax PReferenceAlt3Block1(ReturnTypeQualifierSyntax referencedTypes)
         {
         	return this.PReferenceAlt3Block1(this.Token(CompilerSyntaxKind.TComma), referencedTypes);
         }
@@ -905,26 +923,26 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
         	return this.QualifierListBlock1(this.Token(CompilerSyntaxKind.TComma), qualifier);
         }
 
-        public PAlternativeBlock1Block1Syntax PAlternativeBlock1Block1(SyntaxToken kReturns, QualifierSyntax returnType)
+        public PAlternativeBlock1Block1Syntax PAlternativeBlock1Block1(SyntaxToken kReturns, ReturnTypeQualifierSyntax returnType)
         {
         	if (kReturns.RawKind != (int)CompilerSyntaxKind.KReturns) throw new ArgumentException(nameof(kReturns));
         	if (returnType is null) throw new ArgumentNullException(nameof(returnType));
-            return (PAlternativeBlock1Block1Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.PAlternativeBlock1Block1((InternalSyntaxToken)kReturns.Node, (QualifierGreen)returnType.Green).CreateRed();
+            return (PAlternativeBlock1Block1Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.PAlternativeBlock1Block1((InternalSyntaxToken)kReturns.Node, (ReturnTypeQualifierGreen)returnType.Green).CreateRed();
         }
         
-        public PAlternativeBlock1Block1Syntax PAlternativeBlock1Block1(QualifierSyntax returnType)
+        public PAlternativeBlock1Block1Syntax PAlternativeBlock1Block1(ReturnTypeQualifierSyntax returnType)
         {
         	return this.PAlternativeBlock1Block1(this.Token(CompilerSyntaxKind.KReturns), returnType);
         }
 
-        public LexerRuleBlock1Alt1Block1Syntax LexerRuleBlock1Alt1Block1(SyntaxToken kReturns, QualifierSyntax returnType)
+        public LexerRuleBlock1Alt1Block1Syntax LexerRuleBlock1Alt1Block1(SyntaxToken kReturns, ReturnTypeQualifierSyntax returnType)
         {
         	if (kReturns.RawKind != (int)CompilerSyntaxKind.KReturns) throw new ArgumentException(nameof(kReturns));
         	if (returnType is null) throw new ArgumentNullException(nameof(returnType));
-            return (LexerRuleBlock1Alt1Block1Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.LexerRuleBlock1Alt1Block1((InternalSyntaxToken)kReturns.Node, (QualifierGreen)returnType.Green).CreateRed();
+            return (LexerRuleBlock1Alt1Block1Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.LexerRuleBlock1Alt1Block1((InternalSyntaxToken)kReturns.Node, (ReturnTypeQualifierGreen)returnType.Green).CreateRed();
         }
         
-        public LexerRuleBlock1Alt1Block1Syntax LexerRuleBlock1Alt1Block1(QualifierSyntax returnType)
+        public LexerRuleBlock1Alt1Block1Syntax LexerRuleBlock1Alt1Block1(ReturnTypeQualifierSyntax returnType)
         {
         	return this.LexerRuleBlock1Alt1Block1(this.Token(CompilerSyntaxKind.KReturns), returnType);
         }
@@ -977,12 +995,15 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		        typeof(LexerAnnotationSyntax),
 		        typeof(AnnotationArgumentsSyntax),
 		        typeof(AnnotationArgumentSyntax),
+		        typeof(ReturnTypeIdentifierAlt1Syntax),
+		        typeof(ReturnTypeIdentifierAlt2Syntax),
+		        typeof(ReturnTypeQualifierAlt1Syntax),
+		        typeof(ReturnTypeQualifierAlt2Syntax),
 		        typeof(NameSyntax),
 		        typeof(QualifierSyntax),
 		        typeof(QualifierListSyntax),
 		        typeof(IdentifierAlt1Syntax),
 		        typeof(IdentifierAlt2Syntax),
-		        typeof(IdentifierAlt3Syntax),
 		        typeof(GrammarBlock1Syntax),
 		        typeof(ParserRuleBlock1Alt1Syntax),
 		        typeof(ParserRuleBlock1Alt2Syntax),

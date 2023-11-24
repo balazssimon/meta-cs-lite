@@ -34,6 +34,7 @@ namespace MetaDslx.CodeAnalysis.Binding
         private readonly ErrorSymbolFactory _errorSymbolFactory;
         private object? _multiLookupKey;
         private Binder _originalBinder;
+        private Binder _currentBinder;
         private SourceLocation _location;
         private HashSet<ILookupValidator> _validators;
         private string? _name;
@@ -86,6 +87,11 @@ namespace MetaDslx.CodeAnalysis.Binding
         {
             get => _originalBinder;
             set => _originalBinder = value;
+        }
+        public Binder CurrentBinder
+        {
+            get => _currentBinder;
+            set => _currentBinder = value;
         }
         public SourceLocation? Location
         {
@@ -174,6 +180,7 @@ namespace MetaDslx.CodeAnalysis.Binding
         {
             _multiLookupKey = null;
             _originalBinder = null;
+            _currentBinder = null;
             _location = null;
             _validators.Clear();
             _name = null;
@@ -205,6 +212,7 @@ namespace MetaDslx.CodeAnalysis.Binding
             var context = Compilation[Language].SemanticsFactory.LookupContextPool.Allocate();
             context.MultiLookupKey = _multiLookupKey;
             context.OriginalBinder = _originalBinder;
+            context.CurrentBinder = _currentBinder;
             context.Location = _location;
             context.Validators.UnionWith(_validators);
             context.SetName(_name, _metadataName);
@@ -311,37 +319,21 @@ namespace MetaDslx.CodeAnalysis.Binding
 
         public bool IsViable(DeclaredSymbol symbol)
         {
-            if (symbol is null) return false;
-            if (_viableNames.Count > 0 && !(IsCaseSensitive ? _viableNames.Contains(symbol.Name) : _viableNames.Contains(symbol.Name, StringComparer.OrdinalIgnoreCase))) return false;
-            if (_viableMetadataNames.Count > 0 && !(IsCaseSensitive ? _viableMetadataNames.Contains(symbol.MetadataName) : _viableMetadataNames.Contains(symbol.MetadataName, StringComparer.OrdinalIgnoreCase))) return false;
-            var unwrapped = AliasSymbol.UnwrapAlias(this, symbol) as DeclaredSymbol;
-            if (unwrapped is null) return false;
-            if (!DefaultLookupValidator.IsViable(this, unwrapped)) return false;
-            foreach (var validator in this.Validators)
-            {
-                if (!validator.IsViable(this, unwrapped)) return false;
-            }
-            return true;
+            if (_originalBinder is not null) return ((ILookupValidator)_originalBinder).IsViable(this, symbol);
+            else return DefaultLookupValidator.IsViable(this, symbol);
         }
 
         public SingleLookupResult Validate(DeclaredSymbol symbol)
         {
             var unwrappedSymbol = AliasSymbol.UnwrapAlias(this, symbol) as DeclaredSymbol;
-            var result = LookupResult.Good(symbol);
-            var defaultResult = DefaultLookupValidator.ValidateResult(this, symbol, unwrappedSymbol);
-            if (defaultResult.Kind > LookupResultKind.Empty && defaultResult.Kind < result.Kind)
-            {
-                result = defaultResult;
-            }
-            foreach (var validator in this.Validators)
-            {
-                var tempResult = validator.ValidateResult(this, symbol, unwrappedSymbol);
-                if (tempResult.Kind > LookupResultKind.Empty && tempResult.Kind < result.Kind)
-                {
-                    result = tempResult;
-                }
-            }
-            return result;
+            if (_originalBinder is not null) return ((ILookupValidator)_originalBinder).ValidateResult(this, symbol, unwrappedSymbol);
+            else return DefaultLookupValidator.ValidateResult(this, symbol, unwrappedSymbol);
+        }
+
+        public Diagnostic UpdateDiagnostic(Diagnostic diagnostic)
+        {
+            if (_originalBinder is not null) return ((ILookupValidator)_originalBinder).UpdateDiagnostic(this, diagnostic);
+            else return DefaultLookupValidator.UpdateDiagnostic(this, diagnostic);
         }
 
         public bool AddResult(DeclaredSymbol symbol)

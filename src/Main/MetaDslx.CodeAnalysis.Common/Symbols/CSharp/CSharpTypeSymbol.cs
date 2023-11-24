@@ -26,7 +26,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.CSharp
         public override bool IsImplicitlyDeclared => _csharpSymbol.IsImplicitlyDeclared;
         public override bool IsStatic => _csharpSymbol.IsStatic;
         public override bool IsExtern => _csharpSymbol.IsExtern;
-        public override bool IsError => _csharpSymbol.TypeKind == TypeKind.Error;
+        //public override bool IsError => _csharpSymbol.TypeKind == TypeKind.Error;
         public override bool IsReferenceType => _csharpSymbol.IsReferenceType;
         public override bool IsValueType => _csharpSymbol.IsValueType;
 

@@ -118,6 +118,7 @@ namespace MetaDslx.CodeAnalysis.Binding
             var metadataName = syntaxFacts.ExtractMetadataName(identifierSyntax);
             var binder = identifierSyntax.IsNull ? this : this.GetBinder(identifierSyntax);
             context.OriginalBinder = this;
+            context.CurrentBinder = binder;
             context.IsLookup = true;
             context.SetName(name, metadataName);
             context.Location = identifierSyntax.GetLocation() as SourceLocation;
