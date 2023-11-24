@@ -13,6 +13,8 @@ using MetaDslx.CodeAnalysis.PooledObjects;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System.Diagnostics.CodeAnalysis;
 using MetaDslx.Bootstrap.MetaCompiler.Model;
+using Roslyn.Utilities;
+using static System.Reflection.Metadata.BlobBuilder;
 
 namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
 {
@@ -38,7 +40,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
 
         private static readonly ParserRuleSymbolsByName CompareParserRuleSymbolsByName = new ParserRuleSymbolsByName();
 
+        private ImmutableArray<PElementSymbol> _allElements;
         private ImmutableDictionary<PBlockSymbol, ImmutableHashSet<PElementSymbol>> _blockReferences;
+        private ImmutableDictionary<PElementSymbol, ElementTrace> _elementTraces;
 
         public GrammarSymbol(Symbol container, MergedDeclaration declaration, IModelObject modelObject)
             : base(container, declaration, modelObject)
@@ -56,21 +60,40 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
             }
         }
 
+        public ImmutableArray<PElementSymbol> AllElements
+        {
+            get
+            {
+                ComputeAllBlocks();
+                return _allElements;
+            }
+        }
+
+        public ImmutableDictionary<PElementSymbol, ElementTrace> ElementTraces
+        {
+            get
+            {
+                ComputeElementTraces();
+                return _elementTraces;
+            }
+        }
+
         private void ComputeAllBlocks()
         {
             if (_blockReferences is not null) return;
+            var elements = new HashSet<PElementSymbol>();
             var blocks = new HashSet<PBlockSymbol>();
             var blockRefs = new Dictionary<PElementSymbol, HashSet<PBlockSymbol>>();
             foreach (var rule in this.Members)
             {
                 if (rule is ParserRuleSymbol pr)
                 {
-                    CollectAltBlocks(blocks, blockRefs, pr.Alternatives);
+                    CollectAltBlocks(elements, blocks, blockRefs, pr.Alternatives);
                 }
                 else if (rule is PBlockSymbol pb)
                 {
                     blocks.Add(pb);
-                    CollectAltBlocks(blocks, blockRefs, pb.Alternatives);
+                    CollectAltBlocks(elements, blocks, blockRefs, pb.Alternatives);
                 }
             }
             var blockReferences = ImmutableDictionary.CreateBuilder<PBlockSymbol, ImmutableHashSet<PElementSymbol>>();
@@ -89,19 +112,65 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
                 blockReferences.Add(block, references.ToImmutable());
             }
             Interlocked.CompareExchange(ref _blockReferences, blockReferences.ToImmutable(), null);
+            var allElements = ArrayBuilder<PElementSymbol>.GetInstance();
+            var stack = ArrayBuilder<PElementSymbol>.GetInstance();
+            var visited = PooledHashSet<PElementSymbol>.GetInstance();
+            while (elements.Count > 0)
+            {
+                var first = elements.First();
+                stack.Add(first);
+                visited.Add(first);
+                elements.Remove(first);
+                while (stack.Count > 0)
+                {
+                    var current = stack[stack.Count - 1];
+                    var currentAlt = current.ContainingPAlternativeSymbol;
+                    var currentBlock = currentAlt?.ContainingPBlockSymbol;
+                    if (currentBlock is not null)
+                    {
+                        var added = false;
+                        var currentBlockRefs = _blockReferences[currentBlock];
+                        foreach (var refElem in currentBlockRefs)
+                        {
+                            if (!visited.Contains(refElem))
+                            {
+                                added = true;
+                                stack.Add(refElem);
+                                visited.Add(refElem);
+                                elements.Remove(refElem);
+                                break;
+                            }
+                        }
+                        if (!added)
+                        {
+                            stack.RemoveAt(stack.Count - 1);
+                            allElements.Add(current);
+                        }
+                    }
+                    else
+                    {
+                        stack.RemoveAt(stack.Count - 1);
+                        allElements.Add(current);
+                    }
+                }
+            }
+            stack.Free();
+            visited.Free();
+            ImmutableInterlocked.InterlockedInitialize(ref _allElements, allElements.ToImmutableAndFree());
         }
 
-        private void CollectAltBlocks(HashSet<PBlockSymbol> blocks, Dictionary<PElementSymbol, HashSet<PBlockSymbol>> blockRefs, IEnumerable<PAlternativeSymbol> alts)
+        private void CollectAltBlocks(HashSet<PElementSymbol> elements, HashSet<PBlockSymbol> blocks, Dictionary<PElementSymbol, HashSet<PBlockSymbol>> blockRefs, IEnumerable<PAlternativeSymbol> alts)
         {
             foreach (var alt in alts)
             {
                 foreach (var elem in alt.Elements)
                 {
+                    elements.Add(elem);
                     if (elem.Value.OriginalSymbol is PBlockSymbol pblock)
                     {
                         blocks.Add(pblock);
                         AddElemBlockRef(blockRefs, elem, pblock);
-                        CollectAltBlocks(blocks, blockRefs, pblock.Alternatives);
+                        CollectAltBlocks(elements, blocks, blockRefs, pblock.Alternatives);
                     }
                     if (elem.Value.OriginalSymbol is PReferenceSymbol pref && pref.Rule.OriginalSymbol is PBlockSymbol prefBlock)
                     {
@@ -121,6 +190,52 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
             blocks.Add(block);
         }
 
+        private void ComputeElementTraces()
+        {
+            if (_elementTraces is not null) return;
+            var elementTraces = ImmutableDictionary.CreateBuilder<PElementSymbol, ElementTrace>();
+            var visited = PooledHashSet<PElementSymbol>.GetInstance();
+            foreach (var elem in AllElements)
+            {
+                elementTraces.Add(elem, CollectElementTraces(elementTraces, visited, elem));
+            }
+            visited.Free();
+            Interlocked.CompareExchange(ref _elementTraces, elementTraces.ToImmutable(), null);
+        }
+
+        private ElementTrace CollectElementTraces(ImmutableDictionary<PElementSymbol, ElementTrace>.Builder elementTraces, HashSet<PElementSymbol> visited, PElementSymbol element)
+        {
+            var result = ArrayBuilder<ElementTrace>.GetInstance();
+            var alt = element.ContainingPAlternativeSymbol;
+            var block = alt?.ContainingPBlockSymbol;
+            if (block is not null)
+            {
+                var blockRefs = BlockReferences[block];
+                foreach (var blockRef in blockRefs)
+                {
+                    if (elementTraces.ContainsKey(blockRef))
+                    {
+                        result.Add(elementTraces[blockRef]);
+                    }
+                    else if (visited.Contains(blockRef))
+                    {
+                        //result.Add(new ElementTrace(blockRef, ImmutableArray<ElementTrace>.Empty));
+                    }
+                    else
+                    {
+                        visited.Add(blockRef);
+                        result.Add(CollectElementTraces(elementTraces, visited, blockRef));
+                    }
+                }
+            }
+            /*var rule = alt?.ContainingParserRuleSymbol;
+            if (rule is not null)
+            {
+
+            }*/
+            return new ElementTrace(element, result.ToImmutableAndFree());
+        }
+
         private class ParserRuleSymbolsByName : IComparer<ParserRuleSymbol>
         {
             public int Compare(ParserRuleSymbol? x, ParserRuleSymbol? y)
@@ -128,5 +243,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
                 return string.Compare(x?.Name, y?.Name);
             }
         }
+
+        
     }
 }

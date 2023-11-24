@@ -25,7 +25,7 @@ Using returns ImportSymbol
 	| alt UsingSymbols returns ImportSymbolModelSymbol: 'using' 'symbols' namespaces+=#NamespaceSymbol ';';
 
 [Scope]
-block Declarations: declarations+=LanguageDeclaration declarations+=Rule*;
+block Declarations: declarationsZ+=LanguageDeclaration declarations+=Rule*;
 
 LanguageDeclaration returns MetaDslx.Bootstrap.MetaCompiler.Model.Language: 'language' name=Name ';' grammar=Grammar;
 

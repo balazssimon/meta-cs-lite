@@ -104,59 +104,60 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
 
         private ImmutableArray<string> ResolveTrace()
         {
-            var alt = ContainingElement.ContainingPAlternativeSymbol;
-            var rule = alt.GetOutermostContainingSymbol<PBlockSymbol>();
-            var grammar = alt.GetOutermostContainingSymbol<GrammarSymbol>();
-            if (grammar is null || rule is null) return ImmutableArray<string>.Empty;
+            var alt = ContainingElement?.ContainingPAlternativeSymbol;
+            var grammar = alt?.GetOutermostContainingSymbol<GrammarSymbol>();
+            if (grammar is null) return ImmutableArray<string>.Empty;
             var result = ArrayBuilder<string>.GetInstance();
+            var stack = ArrayBuilder<ElementTrace>.GetInstance();
             var builder = PooledStringBuilder.GetInstance();
             var sb = builder.Builder;
-            var visited = PooledHashSet<DeclaredSymbol>.GetInstance();
-            var stack = ArrayBuilder<DeclaredSymbol>.GetInstance();
-            stack.Add(rule);
-            visited.Add(rule);
-            while (stack.Count > 0)
+            stack.Add(grammar.ElementTraces[ContainingElement]);
+            ResolveExpectedTypeTrace(result, sb, stack);
+            builder.Free();
+            stack.Free();
+            return result.ToImmutableAndFree();
+        }
+
+        private void ResolveExpectedTypeTrace(ArrayBuilder<string> result, StringBuilder sb, ArrayBuilder<ElementTrace> stack)
+        {
+            var trace = stack[stack.Count - 1];
+            var elem = trace.Element;
+            if (elem.IsNamedElement)
             {
-                var currentRule = stack[stack.Count - 1];
-                if (currentRule is PBlockSymbol currentBlock)
+                sb.Clear();
+                for (int i = stack.Count - 1; i >= 0; i--)
                 {
-                    bool added = false;
-                    var refElems = grammar.BlockReferences[currentBlock];
-                    foreach (var refElem in refElems)
+                    var et = stack[i];
+                    sb.Append(et);
+                    if (i > 0) sb.Append("/");
+                }
+                var traceStr = sb.ToString();
+                if (!result.Contains(traceStr)) result.Add(traceStr);
+            }
+            else
+            {
+                if (trace.Next.Length == 0)
+                {
+                    sb.Clear();
+                    for (int i = stack.Count - 1; i >= 0; i--)
                     {
-                        var refAlt = refElem.ContainingPAlternativeSymbol;
-                        var refRule = refElem.GetOutermostContainingSymbol<ParserRuleSymbol>();
-                        if (refRule is not null)
-                        {
-                            sb.Clear();
-                            sb.Append(refRule.Name);
-                            for (int i = stack.Count - 1; i >= 0; --i)
-                            {
-                                sb.Append("/");
-                                sb.Append(stack[i].Name);
-                            }
-                            var trace = sb.ToString();
-                            if (!result.Contains(trace)) result.Add(trace);
-                        }
-                        else
-                        {
-                            var refBlock = refElem.GetOutermostContainingSymbol<PBlockSymbol>();
-                            if (refBlock is not null && !visited.Contains(refBlock))
-                            {
-                                visited.Add(refBlock);
-                                stack.Add(refBlock);
-                                added = true;
-                                break;
-                            }
-                        }
+                        var et = stack[i];
+                        sb.Append(et);
+                        if (i > 0) sb.Append("/");
                     }
-                    if (!added) stack.RemoveAt(stack.Count - 1);
+                    var traceStr = sb.ToString();
+                    if (!result.Contains(traceStr)) result.Add(traceStr);
+                }
+                else
+                {
+                    foreach (var nextElem in trace.Next)
+                    {
+                        stack.Add(nextElem);
+                        ResolveExpectedTypeTrace(result, sb, stack);
+                        stack.RemoveAt(stack.Count - 1);
+                    }
                 }
             }
-            stack.Free();
-            visited.Free();
-            builder.Free();
-            return result.ToImmutableAndFree();
         }
 
     }

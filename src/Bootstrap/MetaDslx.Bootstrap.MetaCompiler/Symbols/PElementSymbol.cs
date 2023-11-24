@@ -190,7 +190,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
                     else if (mtType.SpecialType == SpecialType.System_Boolean) kind = ExpectedTypeKind.Bool;
                     if (mtType.TryGetCoreType(out var coreType, diagnostics, cancellationToken) && !coreType.IsNull)
                     {
-                        if (!result.Contains(mtType)) result.Add(mtType);
+                        if (!result.Contains(coreType)) result.Add(coreType);
                     }
                     else
                     {
@@ -301,62 +301,102 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
         private ImmutableArray<string> ResolveExpectedTypeTrace(MetaType expectedType)
         {
             var alt = this.ContainingPAlternativeSymbol;
-            var rule = alt.GetOutermostContainingSymbol<PBlockSymbol>();
             var grammar = alt.GetOutermostContainingSymbol<GrammarSymbol>();
-            if (grammar is null || rule is null) return ImmutableArray<string>.Empty;
+            if (grammar is null) return ImmutableArray<string>.Empty;
             var result = ArrayBuilder<string>.GetInstance();
+            var stack = ArrayBuilder<ElementTrace>.GetInstance();
             var builder = PooledStringBuilder.GetInstance();
             var sb = builder.Builder;
-            var visited = PooledHashSet<DeclaredSymbol>.GetInstance();
-            var stack = ArrayBuilder<DeclaredSymbol>.GetInstance();
-            stack.Add(rule);
-            visited.Add(rule);
-            while (stack.Count > 0)
-            {
-                var currentRule = stack[stack.Count - 1];
-                if (currentRule is PBlockSymbol currentBlock)
-                {
-                    bool added = false;
-                    var refElems = grammar.BlockReferences[currentBlock];
-                    foreach (var refElem in refElems)
-                    {
-                        var refAlt = refElem.ContainingPAlternativeSymbol;
-                        var refRule = refElem.GetOutermostContainingSymbol<ParserRuleSymbol>();
-                        if (refRule is not null)
-                        {
-                            if (refAlt.ExpectedTypes.Contains(expectedType))
-                            {
-                                sb.Clear();
-                                sb.Append(refRule.Name);
-                                for (int i = stack.Count - 1; i >= 0; --i)
-                                {
-                                    sb.Append("/");
-                                    sb.Append(stack[i].Name);
-                                }
-                                var trace = sb.ToString();
-                                if (!result.Contains(trace)) result.Add(trace);
-                            }
-                        }
-                        else
-                        {
-                            var refBlock = refElem.GetOutermostContainingSymbol<PBlockSymbol>();
-                            if (refBlock is not null && !visited.Contains(refBlock))
-                            {
-                                visited.Add(refBlock);
-                                stack.Add(refBlock);
-                                added = true;
-                                break;
-                            }
-                        }
-                    }
-                    if (!added) stack.RemoveAt(stack.Count - 1);
-                }
-            }
-            stack.Free();
-            visited.Free();
+            stack.Add(grammar.ElementTraces[this]);
+            ResolveExpectedTypeTrace(result, sb, stack, expectedType);
             builder.Free();
+            stack.Free();
             return result.ToImmutableAndFree();
         }
 
+        private void ResolveExpectedTypeTrace(ArrayBuilder<string> result, StringBuilder sb, ArrayBuilder<ElementTrace> stack, MetaType expectedType)
+        {
+            var trace = stack[stack.Count - 1];
+            var elem = trace.Element;
+            if (elem.IsNamedElement)
+            {
+                if (elem.ExpectedTypes.Contains(expectedType))
+                {
+                    sb.Clear();
+                    for (int i = stack.Count - 1; i >= 0; i--)
+                    {
+                        var et = stack[i];
+                        sb.Append(et);
+                        if (i > 0) sb.Append("/");
+                    }
+                    var traceStr = sb.ToString();
+                    if (!result.Contains(traceStr)) result.Add(traceStr);
+                }
+            }
+            else
+            {
+                if (trace.Next.Length == 0 && elem.ExpectedTypes.Contains(expectedType))
+                {
+                    sb.Clear();
+                    for (int i = stack.Count - 1; i >= 0; i--)
+                    {
+                        var et = stack[i];
+                        sb.Append(et);
+                        if (i > 0) sb.Append("/");
+                    }
+                    var traceStr = sb.ToString();
+                    if (!result.Contains(traceStr)) result.Add(traceStr);
+                }
+                else
+                {
+                    foreach (var nextElem in trace.Next)
+                    {
+                        stack.Add(nextElem);
+                        ResolveExpectedTypeTrace(result, sb, stack, expectedType);
+                        stack.RemoveAt(stack.Count - 1);
+                    }
+                }
+            }
+        }
+
+        public override string ToString()
+        {
+            var elemName = this.Name;
+            if (this.Value.OriginalSymbol is PReferenceSymbol pref)
+            {
+                //if (string.IsNullOrEmpty(elemName)) elemName = pref.Name;
+                //else elemName = $"{elemName}:{pref.Rule.Name}";
+                if (string.IsNullOrEmpty(elemName)) elemName = pref.Name;
+            }
+            var alt = this.ContainingPAlternativeSymbol;
+            var block = alt?.ContainingPBlockSymbol;
+            while (block is not null && string.IsNullOrEmpty(block.Name))
+            {
+                var blockElem = block?.ContainingElementSymbol;
+                if (!string.IsNullOrEmpty(blockElem?.Name)) break;
+                alt = blockElem?.ContainingPAlternativeSymbol;
+                var next = alt?.ContainingPBlockSymbol;
+                if (next is null)
+                {
+                    break;
+                }
+                else
+                {
+                    block = next;
+                }
+            }
+            if (block is not null && !string.IsNullOrEmpty(block.Name))
+            {
+                if (!string.IsNullOrEmpty(elemName)) return $"{block.Name}.{elemName}";
+                else return block.Name;
+            }
+            var rule = alt?.ContainingParserRuleSymbol;
+            if (rule is not null)
+            {
+                if (!string.IsNullOrEmpty(elemName)) return $"{rule.Name}.{elemName}";
+                else return rule.Name;
+            }
+            return elemName;
+        }
     }
 }

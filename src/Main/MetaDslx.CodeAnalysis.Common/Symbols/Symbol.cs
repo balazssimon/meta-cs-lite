@@ -514,12 +514,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
         /// Returns a string representation of this symbol, suitable for debugging purposes, or
         /// for placing in an error message.
         /// </summary>
-        /// <remarks>
-        /// This will provide a useful representation, but it would be clearer to call <see cref="ToDisplayString"/>
-        /// directly and provide an explicit format.
-        /// Sealed so that <see cref="ToString"/> and <see cref="ToDisplayString"/> can't get out of sync.
-        /// </remarks>
-        public sealed override string ToString()
+        public override string ToString()
         {
             return SymbolDisplayFormat.Default.ToString(this);
         }
