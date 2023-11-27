@@ -12,6 +12,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Xml.Linq;
 using MetaDslx.Languages.MetaModel.Model;
 using MetaDslx.CodeAnalysis.Symbols;
+using MetaDslx.Bootstrap.MetaCompiler.Model;
 
 //CompileMetaModel("Meta", @"..\..\..\..\..\Main\MetaDslx.Languages.MetaModel\Model", @"..\..\..\..\..\Main\MetaDslx.Languages.MetaModel\Model");
 //CompileMetaCompiler("Meta", @"..\..\..\..\..\Main\MetaDslx.Languages.MetaModel\Language", @"..\..\..\..\..\Main\MetaDslx.Languages.MetaModel\Compiler");
@@ -19,9 +20,9 @@ using MetaDslx.CodeAnalysis.Symbols;
 
 //CompileMetaModel("Compiler", @"..\..\..\..\MetaDslx.Bootstrap.MetaCompiler\Model", @"..\..\..\..\MetaDslx.Bootstrap.MetaCompiler\Model");
 //CompileMetaCompiler("Compiler", @"..\..\..\..\MetaDslx.Bootstrap.MetaCompiler\Language", @"..\..\..\..\MetaDslx.Bootstrap.MetaCompiler\Compiler");
-//CompileWithMetaCompiler("Compiler2", @"..\..\..\..\MetaDslx.Bootstrap.MetaCompiler\Language", @"..\..\..\..\MetaDslx.Bootstrap.MetaCompiler\Compiler", MetaDslx.Bootstrap.MetaCompiler.Model.Compiler.MInstance);
+CompileWithMetaCompiler("Compiler2", @"..\..\..\..\MetaDslx.Bootstrap.MetaCompiler\Language", @"..\..\..\..\MetaDslx.Bootstrap.MetaCompiler\Compiler", MetaDslx.Bootstrap.MetaCompiler.Model.Compiler.MInstance);
 
-CompileMetaModel("Roslyn", @"..\..\..\..\MetaDslx.Bootstrap.MetaCompiler\Model", @"..\..\..\..\MetaDslx.Bootstrap.MetaCompiler\Model");
+//CompileMetaModel("Roslyn", @"..\..\..\..\MetaDslx.Bootstrap.MetaCompiler\Model", @"..\..\..\..\MetaDslx.Bootstrap.MetaCompiler\Model");
 
 static void CompileMetaModel(string name, string inputDir, string outputDir)
 {
@@ -130,6 +131,9 @@ namespace MyCode
     {
         Console.WriteLine(diag);
     }
+    var mlangModel = mlangCompilation.SourceModule.Model;
+    var rlangModel = new CompilerToRoslyn().Convert(mlangModel);
+    Console.WriteLine(rlangModel);
 }
 //*/
 static void CompileAll(string mmName, string mmInputDir, string mmOutputDir, string mlangName, string mlangInputDir, string mlangOutputDir)
