@@ -19,27 +19,26 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
     using IMethodSymbol = Microsoft.CodeAnalysis.IMethodSymbol;
     using IParameterSymbol = Microsoft.CodeAnalysis.IParameterSymbol;
 
-    internal class AnnotationSymbol : SourceSymbol
+    internal class AnnotationSymbol : SourceAttributeSymbol
     {
         public new static class CompletionParts
         {
-            public static readonly CompletionPart StartComputingProperty_Type = new CompletionPart(nameof(StartComputingProperty_Type));
-            public static readonly CompletionPart FinishComputingProperty_Type = new CompletionPart(nameof(FinishComputingProperty_Type));
             public static readonly CompletionPart StartComputingProperty_Arguments = new CompletionPart(nameof(StartComputingProperty_Arguments));
             public static readonly CompletionPart FinishComputingProperty_Arguments = new CompletionPart(nameof(FinishComputingProperty_Arguments));
             public static readonly CompletionPart StartComputingProperty_ArgumentParameters = new CompletionPart(nameof(StartComputingProperty_ArgumentParameters));
             public static readonly CompletionPart FinishComputingProperty_ArgumentParameters = new CompletionPart(nameof(FinishComputingProperty_ArgumentParameters));
-            public static readonly CompletionPart StartComputingProperty_Attributes = Symbol.CompletionParts.StartComputingProperty_Attributes;
-            public static readonly CompletionPart FinishComputingProperty_Attributes = Symbol.CompletionParts.FinishComputingProperty_Attributes;
+            public static readonly CompletionPart StartComputingProperty_AttributeClass = AttributeSymbol.CompletionParts.StartComputingProperty_AttributeClass;
+            public static readonly CompletionPart FinishComputingProperty_AttributeClass = AttributeSymbol.CompletionParts.FinishComputingProperty_AttributeClass;
+            public static readonly CompletionPart StartComputingProperty_Attributes = AttributeSymbol.CompletionParts.StartComputingProperty_Attributes;
+            public static readonly CompletionPart FinishComputingProperty_Attributes = AttributeSymbol.CompletionParts.FinishComputingProperty_Attributes;
             public static readonly CompletionGraph CompletionGraph =
                 CompletionGraph.CreateFromParts(
-                    StartComputingProperty_Type, FinishComputingProperty_Type,
+                    StartComputingProperty_AttributeClass, FinishComputingProperty_AttributeClass,
                     StartComputingProperty_Arguments, FinishComputingProperty_Arguments,
                     StartComputingProperty_ArgumentParameters, FinishComputingProperty_ArgumentParameters,
                     StartComputingProperty_Attributes, FinishComputingProperty_Attributes);
         }
 
-        private MetaType _type;
         private ImmutableArray<AnnotationArgumentSymbol> _arguments;
         private ImmutableArray<DeclaredSymbol> _constructors;
         private ImmutableArray<ImmutableArray<DeclaredSymbol>> _parameters;
@@ -53,16 +52,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
         }
 
         protected override CompletionGraph CompletionGraph => CompletionParts.CompletionGraph;
-
-        [ModelProperty]
-        public MetaType Type
-        {
-            get
-            {
-                ForceComplete(CompletionParts.FinishComputingProperty_Type, null, default);
-                return _type;
-            }
-        }
 
         [ModelProperty]
         public ImmutableArray<AnnotationArgumentSymbol> Arguments
@@ -81,7 +70,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
                 if (_constructors.IsDefault)
                 {
                     var constructors = ArrayBuilder<DeclaredSymbol>.GetInstance();
-                    var csType = this.Type.OriginalTypeSymbol as ICSharpSymbol;
+                    var csType = this.AttributeClass as ICSharpSymbol;
                     var msType = csType?.CSharpSymbol as INamedTypeSymbol;
                     if (msType is not null)
                     {
@@ -147,19 +136,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
 
         protected override bool ForceCompletePart(ref CompletionPart incompletePart, SourceLocation? locationOpt, CancellationToken cancellationToken)
         {
-            if (incompletePart == CompletionParts.StartComputingProperty_Type || incompletePart == CompletionParts.FinishComputingProperty_Type)
-            {
-                if (NotePartComplete(CompletionParts.StartComputingProperty_Type))
-                {
-                    var diagnostics = DiagnosticBag.GetInstance();
-                    _type = CompleteProperty_Type(diagnostics, cancellationToken);
-                    AddSymbolDiagnostics(diagnostics);
-                    diagnostics.Free();
-                    NotePartComplete(CompletionParts.FinishComputingProperty_Type);
-                }
-                return true;
-            }
-            else if (incompletePart == CompletionParts.StartComputingProperty_Arguments || incompletePart == CompletionParts.FinishComputingProperty_Arguments)
+            if (incompletePart == CompletionParts.StartComputingProperty_Arguments || incompletePart == CompletionParts.FinishComputingProperty_Arguments)
             {
                 if (NotePartComplete(CompletionParts.StartComputingProperty_Arguments))
                 {

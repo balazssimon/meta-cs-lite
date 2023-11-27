@@ -23,6 +23,7 @@ namespace MetaDslx.CodeAnalysis.Binding
 
         private readonly Type? _type;
         private readonly bool _isScope;
+        private ImmutableArray<Symbol> _nestingSymbols;
         private ImmutableArray<Symbol> _definedSymbols;
 
         public DefineBinder(Type? type = null, bool isScope = true)
@@ -41,17 +42,27 @@ namespace MetaDslx.CodeAnalysis.Binding
             return declaration.ToImmutableAndFree();
         }
 
+        public ImmutableArray<Symbol> NestingSymbols
+        {
+            get
+            {
+                ComputeDefinedSymbols();
+                return _nestingSymbols;
+            }
+        }
+
         public override ImmutableArray<Symbol> DefinedSymbols
         {
             get
             {
-                return ComputeDefinedSymbols();
+                ComputeDefinedSymbols();
+                return _definedSymbols;
             }
         }
 
-        private ImmutableArray<Symbol> ComputeDefinedSymbols(CancellationToken cancellationToken = default)
+        private void ComputeDefinedSymbols(CancellationToken cancellationToken = default)
         {
-            if (!_definedSymbols.IsDefault) return _definedSymbols;
+            if (!_definedSymbols.IsDefault) return;
             var parent = ParentBinder;
             var parentSymbols = parent?.DefinedSymbols ?? ImmutableArray<Symbol>.Empty;
             while (parent is not null && parentSymbols.IsDefaultOrEmpty)
@@ -62,7 +73,9 @@ namespace MetaDslx.CodeAnalysis.Binding
             if (parentSymbols.IsDefaultOrEmpty)
             {
                 AddDiagnostic(Diagnostic.Create(ErrorCode.ERR_InternalError, this.Location, "Could not resolve defined symbol."));
-                return ImmutableArray<Symbol>.Empty;
+                ImmutableInterlocked.InterlockedInitialize(ref _nestingSymbols, ImmutableArray<Symbol>.Empty);
+                ImmutableInterlocked.InterlockedInitialize(ref _definedSymbols, ImmutableArray<Symbol>.Empty);
+                return;
             }
             var definedSymbols = ArrayBuilder<Symbol>.GetInstance();
             var nestingSymbols = ArrayBuilder<Symbol>.GetInstance();
@@ -79,9 +92,8 @@ namespace MetaDslx.CodeAnalysis.Binding
                 }
                 ++i;
             }
-            nestingSymbols.Free();
+            ImmutableInterlocked.InterlockedInitialize(ref _nestingSymbols, nestingSymbols.ToImmutableAndFree());
             ImmutableInterlocked.InterlockedInitialize(ref _definedSymbols, definedSymbols.ToImmutableAndFree());
-            return _definedSymbols;
         }
 
         private CandidateSymbolKind GetCandidateSymbolKind(Symbol symbol)
@@ -121,7 +133,8 @@ namespace MetaDslx.CodeAnalysis.Binding
 
         protected override ImmutableArray<object?> BindValues(CancellationToken cancellationToken = default)
         {
-            return ComputeDefinedSymbols(cancellationToken).Cast<Symbol, object?>();
+            ComputeDefinedSymbols(cancellationToken);
+            return _definedSymbols.Cast<Symbol, object?>();
         }
 
         /*protected override void AddLookupCandidateSymbolsInSingleBinder(LookupContext context, LookupCandidates result)

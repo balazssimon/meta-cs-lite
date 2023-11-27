@@ -104,60 +104,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
 
         private ImmutableArray<string> ResolveTrace()
         {
-            var alt = ContainingElement?.ContainingPAlternativeSymbol;
+            var elem = ContainingElement;
+            var alt = elem?.ContainingPAlternativeSymbol;
             var grammar = alt?.GetOutermostContainingSymbol<GrammarSymbol>();
             if (grammar is null) return ImmutableArray<string>.Empty;
-            var result = ArrayBuilder<string>.GetInstance();
-            var stack = ArrayBuilder<ElementTrace>.GetInstance();
-            var builder = PooledStringBuilder.GetInstance();
-            var sb = builder.Builder;
-            stack.Add(grammar.ElementTraces[ContainingElement]);
-            ResolveExpectedTypeTrace(result, sb, stack);
-            builder.Free();
-            stack.Free();
-            return result.ToImmutableAndFree();
-        }
-
-        private void ResolveExpectedTypeTrace(ArrayBuilder<string> result, StringBuilder sb, ArrayBuilder<ElementTrace> stack)
-        {
-            var trace = stack[stack.Count - 1];
-            var elem = trace.Element;
-            if (elem.IsNamedElement)
-            {
-                sb.Clear();
-                for (int i = stack.Count - 1; i >= 0; i--)
-                {
-                    var et = stack[i];
-                    sb.Append(et);
-                    if (i > 0) sb.Append("/");
-                }
-                var traceStr = sb.ToString();
-                if (!result.Contains(traceStr)) result.Add(traceStr);
-            }
-            else
-            {
-                if (trace.Next.Length == 0)
-                {
-                    sb.Clear();
-                    for (int i = stack.Count - 1; i >= 0; i--)
-                    {
-                        var et = stack[i];
-                        sb.Append(et);
-                        if (i > 0) sb.Append("/");
-                    }
-                    var traceStr = sb.ToString();
-                    if (!result.Contains(traceStr)) result.Add(traceStr);
-                }
-                else
-                {
-                    foreach (var nextElem in trace.Next)
-                    {
-                        stack.Add(nextElem);
-                        ResolveExpectedTypeTrace(result, sb, stack);
-                        stack.RemoveAt(stack.Count - 1);
-                    }
-                }
-            }
+            return grammar.ResolveTrace(elem, et => true);
         }
 
     }

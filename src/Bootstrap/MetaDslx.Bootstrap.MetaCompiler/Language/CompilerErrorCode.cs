@@ -38,5 +38,15 @@ namespace MetaDslx.Bootstrap.MetaCompiler
         /// Block '{0}' is in a circular reference
         /// </summary>
         public static readonly DiagnosticDescriptor ERR_CircularBlockReference = DiagnosticDescriptor.Error(nameof(ERR_CircularBlockReference), "Circular block reference", "Block '{0}' is in a circular reference");
+
+        /// <summary>
+        /// Rule '{0}' with return type '{1}' should be assigned to a property
+        /// </summary>
+        public static readonly DiagnosticDescriptor WRN_RuleWithTypeMissingAssignment = DiagnosticDescriptor.Warning(nameof(WRN_RuleWithTypeMissingAssignment), "Missing assigment for rule with type", "Rule '{0}' with return type '{1}' should be assigned to a property");
+
+        /// <summary>
+        /// Block '{0}' without a return type cannot be assigned to a property
+        /// </summary>
+        public static readonly DiagnosticDescriptor ERR_InvalidBlockAssignment = DiagnosticDescriptor.Error(nameof(ERR_InvalidBlockAssignment), "Invalid block assignment", "Block '{0}' without a return type cannot be assigned to a property");
     }
 }

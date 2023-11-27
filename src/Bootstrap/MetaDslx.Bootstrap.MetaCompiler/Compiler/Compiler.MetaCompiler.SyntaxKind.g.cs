@@ -132,6 +132,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		ParserRuleBlock1Alt2,
 		ParserRuleBlock2,
 		PBlockBlock1,
+		PBlockBlock2,
 		PBlockInlineBlock1,
 		PAlternativeBlock1,
 		PAlternativeBlock2,

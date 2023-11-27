@@ -12,6 +12,7 @@ using MetaDslx.CodeAnalysis.Symbols.CSharp;
 using System.Collections.Immutable;
 using MetaDslx.CodeAnalysis.PooledObjects;
 using MetaDslx.Bootstrap.MetaCompiler.Model;
+using MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax;
 
 namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
 {
@@ -21,6 +22,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
     {
         public new static class CompletionParts
         {
+            public static readonly CompletionPart StartComputingProperty_ReturnType = new CompletionPart(nameof(StartComputingProperty_ReturnType));
+            public static readonly CompletionPart FinishComputingProperty_ReturnType = new CompletionPart(nameof(FinishComputingProperty_ReturnType));
             public static readonly CompletionPart StartComputingProperty_Alternatives = new CompletionPart(nameof(StartComputingProperty_Alternatives));
             public static readonly CompletionPart FinishComputingProperty_Alternatives = new CompletionPart(nameof(FinishComputingProperty_Alternatives));
             public static readonly CompletionPart StartComputingProperty_ExpectedTypes = new CompletionPart(nameof(StartComputingProperty_ExpectedTypes));
@@ -35,6 +38,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
             public static readonly CompletionPart FinishComputingProperty_Attributes = Symbol.CompletionParts.FinishComputingProperty_Attributes;
             public static readonly CompletionGraph CompletionGraph =
                 CompletionGraph.CreateFromParts(
+                    StartComputingProperty_ReturnType, FinishComputingProperty_ReturnType,
                     StartComputingProperty_Alternatives, FinishComputingProperty_Alternatives,
                     StartComputingProperty_ExpectedTypes, FinishComputingProperty_ExpectedTypes,
                     StartComputingProperty_Members, FinishComputingProperty_Members,
@@ -44,6 +48,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
         }
 
         private bool _isResolvingExpectedTypes;
+        private MetaType _returnType;
         private ImmutableArray<MetaType> _expectedTypes;
         private ImmutableArray<PAlternativeSymbol> _alternatives;
 
@@ -56,7 +61,21 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
 
         public PElementSymbol? ContainingElementSymbol => this.ContainingSymbol as PElementSymbol;
 
+        public PBlockSyntax? Syntax => this.DeclaringSyntaxReference.AsNode() as PBlockSyntax;
+
+        public bool HasReturnType => this.Syntax?.PBlockBlock1 is not null;
+
         public bool IsResolvingExpectedTypes => _isResolvingExpectedTypes;
+
+        [ModelProperty]
+        public MetaType ReturnType
+        {
+            get
+            {
+                ForceComplete(CompletionParts.FinishComputingProperty_ReturnType, null, default);
+                return _returnType;
+            }
+        }
 
         public ImmutableArray<MetaType> ExpectedTypes
         {
@@ -79,7 +98,19 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
 
         protected override bool ForceCompletePart(ref CompletionPart incompletePart, SourceLocation? locationOpt, CancellationToken cancellationToken)
         {
-            if (incompletePart == CompletionParts.StartComputingProperty_Alternatives || incompletePart == CompletionParts.FinishComputingProperty_Alternatives)
+            if (incompletePart == CompletionParts.StartComputingProperty_ReturnType || incompletePart == CompletionParts.FinishComputingProperty_ReturnType)
+            {
+                if (NotePartComplete(CompletionParts.StartComputingProperty_ReturnType))
+                {
+                    var diagnostics = DiagnosticBag.GetInstance();
+                    _returnType = CompleteProperty_ReturnType(diagnostics, cancellationToken);
+                    AddSymbolDiagnostics(diagnostics);
+                    diagnostics.Free();
+                    NotePartComplete(CompletionParts.FinishComputingProperty_ReturnType);
+                }
+                return true;
+            }
+            else if (incompletePart == CompletionParts.StartComputingProperty_Alternatives || incompletePart == CompletionParts.FinishComputingProperty_Alternatives)
             {
                 if (NotePartComplete(CompletionParts.StartComputingProperty_Alternatives))
                 {
@@ -112,8 +143,18 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
             return false;
         }
 
+        protected virtual MetaType CompleteProperty_ReturnType(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        {
+            return SymbolFactory.GetSymbolPropertyValue<MetaType>(this, nameof(ReturnType), diagnostics, cancellationToken);
+        }
+
         protected virtual ImmutableArray<MetaType> CompleteProperty_ExpectedTypes(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
+            var returnType = this.ReturnType;
+            if (!returnType.IsNull)
+            {
+                return ImmutableArray.Create(returnType);
+            }
             var elem = this.ContainingElementSymbol;
             if (elem is not null)
             {
@@ -124,7 +165,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
                 else
                 {
                     var alt = elem.ContainingPAlternativeSymbol;
-                    if (alt is not null)
+                    if (alt is not null && this.ReturnType.IsNull)
                     {
                         return alt.ExpectedTypes;
                     }

@@ -24,12 +24,14 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
     {
         public new static class CompletionParts
         {
+            public static readonly CompletionPart StartComputingProperty_Value = new CompletionPart(nameof(StartComputingProperty_Value));
+            public static readonly CompletionPart FinishComputingProperty_Value = new CompletionPart(nameof(FinishComputingProperty_Value));
+            public static readonly CompletionPart StartComputingProperty_Assignment = new CompletionPart(nameof(StartComputingProperty_Assignment));
+            public static readonly CompletionPart FinishComputingProperty_Assignment = new CompletionPart(nameof(FinishComputingProperty_Assignment));
             public static readonly CompletionPart StartComputingProperty_SymbolProperty = new CompletionPart(nameof(StartComputingProperty_SymbolProperty));
             public static readonly CompletionPart FinishComputingProperty_SymbolProperty = new CompletionPart(nameof(FinishComputingProperty_SymbolProperty));
             public static readonly CompletionPart StartComputingProperty_ExpectedTypes = new CompletionPart(nameof(StartComputingProperty_ExpectedTypes));
             public static readonly CompletionPart FinishComputingProperty_ExpectedTypes = new CompletionPart(nameof(FinishComputingProperty_ExpectedTypes));
-            public static readonly CompletionPart StartComputingProperty_Value = new CompletionPart(nameof(StartComputingProperty_Value));
-            public static readonly CompletionPart FinishComputingProperty_Value = new CompletionPart(nameof(FinishComputingProperty_Value));
             public static readonly CompletionPart StartComputingProperty_Members = DeclaredSymbol.CompletionParts.StartComputingProperty_Members;
             public static readonly CompletionPart FinishComputingProperty_Members = DeclaredSymbol.CompletionParts.FinishComputingProperty_Members;
             public static readonly CompletionPart StartComputingProperty_TypeArguments = DeclaredSymbol.CompletionParts.StartComputingProperty_TypeArguments;
@@ -41,6 +43,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
             public static readonly CompletionGraph CompletionGraph =
                 CompletionGraph.CreateFromParts(
                     StartComputingProperty_Value, FinishComputingProperty_Value,
+                    StartComputingProperty_Assignment, FinishComputingProperty_Assignment,
                     StartComputingProperty_SymbolProperty, FinishComputingProperty_SymbolProperty,
                     StartComputingProperty_ExpectedTypes, FinishComputingProperty_ExpectedTypes,
                     StartComputingProperty_Members, FinishComputingProperty_Members,
@@ -56,10 +59,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
             Collection
         }
 
+        private MetaSymbol _value;
+        private Assignment _assignment;
         private ImmutableArray<MetaSymbol> _symbolProperty;
         private ImmutableArray<MetaType> _expectedTypes;
         private ExpectedTypeKind _expectedTypeKind;
-        private MetaSymbol _value;
 
         public PElementSymbol(Symbol container, MergedDeclaration declaration, IModelObject modelObject)
             : base(container, declaration, modelObject)
@@ -72,6 +76,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
 
         public bool IsNamedElement => Syntax?.PElementBlock1 is not null;
 
+        public bool IsBlock => (Value.OriginalSymbol is PBlockSymbol) || (Value.OriginalSymbol is PReferenceSymbol prs && prs.Rule.OriginalSymbol is PBlockSymbol);
+
         public GrammarSymbol? ContainingGrammarSymbol => this.GetOutermostContainingSymbol<GrammarSymbol>();
 
         public PAlternativeSymbol? ContainingPAlternativeSymbol => this.ContainingSymbol as PAlternativeSymbol;
@@ -83,6 +89,16 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
             {
                 ForceComplete(CompletionParts.FinishComputingProperty_Value, null, default);
                 return _value;
+            }
+        }
+
+        [ModelProperty]
+        public Assignment Assignment
+        {
+            get
+            {
+                ForceComplete(CompletionParts.FinishComputingProperty_Assignment, null, default);
+                return _assignment;
             }
         }
 
@@ -128,6 +144,18 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
                 }
                 return true;
             }
+            else if (incompletePart == CompletionParts.StartComputingProperty_Assignment || incompletePart == CompletionParts.FinishComputingProperty_Assignment)
+            {
+                if (NotePartComplete(CompletionParts.StartComputingProperty_Assignment))
+                {
+                    var diagnostics = DiagnosticBag.GetInstance();
+                    _assignment = CompleteProperty_Assignment(diagnostics, cancellationToken);
+                    AddSymbolDiagnostics(diagnostics);
+                    diagnostics.Free();
+                    NotePartComplete(CompletionParts.FinishComputingProperty_Assignment);
+                }
+                return true;
+            }
             else if (incompletePart == CompletionParts.StartComputingProperty_SymbolProperty || incompletePart == CompletionParts.FinishComputingProperty_SymbolProperty)
             {
                 if (NotePartComplete(CompletionParts.StartComputingProperty_SymbolProperty))
@@ -167,6 +195,16 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
             return Declaration.Language.SyntaxFacts.ExtractName(nameSyntax);
         }
 
+        protected virtual MetaSymbol CompleteProperty_Value(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        {
+            return SymbolFactory.GetSymbolPropertyValue<MetaSymbol>(this, nameof(Value), diagnostics, cancellationToken);
+        }
+
+        protected virtual Assignment CompleteProperty_Assignment(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        {
+            return SymbolFactory.GetSymbolPropertyValue<Assignment>(this, nameof(Assignment), diagnostics, cancellationToken);
+        }
+
         protected virtual ImmutableArray<MetaSymbol> CompleteProperty_SymbolProperty(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             return SymbolFactory.GetSymbolPropertyValues<MetaSymbol>(this, nameof(SymbolProperty), diagnostics, cancellationToken);
@@ -202,7 +240,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
             else
             {
                 var alt = this.ContainingPAlternativeSymbol;
-                if (alt is not null && alt.Elements.Length == 1)
+                if (alt is not null && !this.IsBlock)
                 {
                     return (alt.ExpectedTypes, ExpectedTypeKind.None);
                 }
@@ -210,153 +248,110 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
             return (ImmutableArray<MetaType>.Empty, ExpectedTypeKind.None);
         }
 
-        protected virtual MetaSymbol CompleteProperty_Value(DiagnosticBag diagnostics, CancellationToken cancellationToken)
-        {
-            return SymbolFactory.GetSymbolPropertyValue<MetaSymbol>(this, nameof(Value), diagnostics, cancellationToken);
-        }
-
         protected override void CompletePart_Validate(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             base.CompletePart_Validate(diagnostics, cancellationToken);
-            var mobj = this.ModelObject as PElement;
-            if (mobj is not null)
+            if (ExpectedKind == ExpectedTypeKind.Collection && this.Assignment != Assignment.PlusAssign)
             {
-                if (ExpectedKind == ExpectedTypeKind.Collection && mobj.Assignment != Assignment.PlusAssign)
-                {
-                    diagnostics.Add(Diagnostic.Create(CompilerErrorCode.ERR_CollectionPropertyWrongAssignment, this.Location, this.Name));
-                }
-                else if (ExpectedKind != ExpectedTypeKind.Collection && mobj.Assignment == Assignment.PlusAssign)
-                {
-                    diagnostics.Add(Diagnostic.Create(CompilerErrorCode.ERR_NonCollectionPropertyWrongAssignment, this.Location, this.Name));
-                }
-                else if (mobj.Assignment == Assignment.QuestionAssign && ExpectedKind != ExpectedTypeKind.Bool)
-                {
-                    diagnostics.Add(Diagnostic.Create(CompilerErrorCode.ERR_NonBooleanPropertyWrongAssignment, this.Location, this.Name, "?="));
-                }
-                else if (mobj.Assignment == Assignment.NegatedAssign && ExpectedKind != ExpectedTypeKind.Bool)
-                {
-                    diagnostics.Add(Diagnostic.Create(CompilerErrorCode.ERR_NonBooleanPropertyWrongAssignment, this.Location, this.Name, "!="));
-                }
+                diagnostics.Add(Diagnostic.Create(CompilerErrorCode.ERR_CollectionPropertyWrongAssignment, this.Location, this.Name));
             }
-            var value = this.Value.AsModelObject();
-            if (value is PReference pref)
+            else if (ExpectedKind != ExpectedTypeKind.Collection && this.Assignment == Assignment.PlusAssign)
             {
-                var mustHaveExpectedTypes = this.IsNamedElement;
-                if (!mustHaveExpectedTypes)
+                diagnostics.Add(Diagnostic.Create(CompilerErrorCode.ERR_NonCollectionPropertyWrongAssignment, this.Location, this.Name));
+            }
+            else if (this.Assignment == Assignment.QuestionAssign && ExpectedKind != ExpectedTypeKind.Bool)
+            {
+                diagnostics.Add(Diagnostic.Create(CompilerErrorCode.ERR_NonBooleanPropertyWrongAssignment, this.Location, this.Name, "?="));
+            }
+            else if (this.Assignment == Assignment.NegatedAssign && ExpectedKind != ExpectedTypeKind.Bool)
+            {
+                diagnostics.Add(Diagnostic.Create(CompilerErrorCode.ERR_NonBooleanPropertyWrongAssignment, this.Location, this.Name, "!="));
+            }
+            var alt = this.ContainingPAlternativeSymbol;
+            if (alt is null) return;
+            if (this.Value.OriginalSymbol is PReferenceSymbol pref)
+            {
+                var rule = pref.Rule;
+                if (this.IsNamedElement)
                 {
-                    var alt = this.ContainingPAlternativeSymbol;
-                    if (alt is not null && alt.Elements.Length == 1)
+                    if (rule.OriginalSymbol is PBlockSymbol pb && !string.IsNullOrEmpty(pb.Name) && !pb.HasReturnType)
                     {
-                        mustHaveExpectedTypes = true;
-                    }
-                }
-                if (mustHaveExpectedTypes && this.ExpectedTypes.IsDefaultOrEmpty)
-                {
-                    diagnostics.Add(Diagnostic.Create(ErrorCode.ERR_InternalError, this.Location, $"There are no expected types for the element '{this.Name}'"));
-                }
-                foreach (var expType in this.ExpectedTypes)
-                {
-                    if (expType.TryGetCoreType(out var coreType, diagnostics, cancellationToken))
-                    {
-                        if (pref.ReferencedTypes.Count == 0)
+                        var invalid = true;
+                        foreach (var annot in pb.Attributes)
                         {
-                            var rule = pref.Rule;
-                            if (rule is ParserRule pr)
+                            if (annot.AttributeClass.Name == "NameBinder") invalid = false;
+                            if (annot.AttributeClass.Name == "IdentifierBinder") invalid = false;
+                            if (annot.AttributeClass.Name == "QualifierBinder") invalid = false;
+                        }
+                        if (invalid)
+                        {
+                            diagnostics.Add(Diagnostic.Create(CompilerErrorCode.ERR_InvalidBlockAssignment, this.Location, pb.Name));
+                        }
+                    }
+                    if (!this.IsBlock && this.ExpectedTypes.IsDefaultOrEmpty)
+                    {
+                        diagnostics.Add(Diagnostic.Create(ErrorCode.ERR_InternalError, this.Location, $"There are no expected types for the element '{this.Name}'"));
+                    }
+                    foreach (var expType in this.ExpectedTypes)
+                    {
+                        if (expType.TryGetCoreType(out var coreType, diagnostics, cancellationToken))
+                        {
+                            if (pref.ReferencedTypes.Length == 0)
                             {
-                                if (!pr.ReturnType.IsAssignableTo(coreType))
+                                if (rule.OriginalSymbol is ParserRuleSymbol pr)
                                 {
-                                    var trace = string.Join(", ", ResolveExpectedTypeTrace(coreType));
-                                    diagnostics.Add(Diagnostic.Create(CompilerErrorCode.ERR_ValueTypeMismatch, this.Location, pr.ReturnType, coreType, trace));
+                                    if (!pr.ReturnType.IsAssignableTo(coreType))
+                                    {
+                                        diagnostics.Add(Diagnostic.Create(CompilerErrorCode.ERR_ValueTypeMismatch, this.Location, pr.ReturnType, coreType, ResolveExpectedTypeTrace(coreType)));
+                                    }
+                                }
+                                else if (rule.OriginalSymbol is PBlockSymbol pb2)
+                                {
+                                    if (!pb2.ReturnType.IsNull && !pb2.ReturnType.IsAssignableTo(coreType))
+                                    {
+                                        diagnostics.Add(Diagnostic.Create(CompilerErrorCode.ERR_ValueTypeMismatch, this.Location, pb2.ReturnType, coreType, ResolveExpectedTypeTrace(coreType)));
+                                    }
+                                }
+                                else if (rule.AsModelObject() is LexerRule lr)
+                                {
+                                    if (!lr.ReturnType.IsAssignableTo(coreType))
+                                    {
+                                        diagnostics.Add(Diagnostic.Create(CompilerErrorCode.ERR_ValueTypeMismatch, this.Location, lr.ReturnType, coreType, ResolveExpectedTypeTrace(coreType)));
+                                    }
                                 }
                             }
-                            else if (rule is LexerRule lr)
+                            else
                             {
-                                if (!lr.ReturnType.IsAssignableTo(coreType))
+                                foreach (var prefType in pref.ReferencedTypes)
                                 {
-                                    var trace = string.Join(", ", ResolveExpectedTypeTrace(coreType));
-                                    diagnostics.Add(Diagnostic.Create(CompilerErrorCode.ERR_ValueTypeMismatch, this.Location, lr.ReturnType, coreType, trace));
+                                    if (!prefType.IsAssignableTo(coreType))
+                                    {
+                                        diagnostics.Add(Diagnostic.Create(CompilerErrorCode.ERR_ValueTypeMismatch, this.Location, prefType, coreType, ResolveExpectedTypeTrace(coreType)));
+                                    }
                                 }
                             }
                         }
                         else
                         {
-                            foreach (var prefType in pref.ReferencedTypes)
-                            {
-                                if (!prefType.IsAssignableTo(coreType))
-                                {
-                                    var trace = string.Join(", ", ResolveExpectedTypeTrace(coreType));
-                                    diagnostics.Add(Diagnostic.Create(CompilerErrorCode.ERR_ValueTypeMismatch, this.Location, prefType, coreType, trace));
-                                }
-                            }
+                            diagnostics.Add(Diagnostic.Create(ErrorCode.ERR_InternalError, this.Location, $"Could not determine the core type of {expType} in element '{this.Name}'"));
                         }
                     }
-                    else
-                    {
-                        diagnostics.Add(Diagnostic.Create(ErrorCode.ERR_InternalError, this.Location, $"Could not determine the core type of {expType} in element '{this.Name}'"));
-                    }
-                }
-            }
-        }
-
-        private ImmutableArray<string> ResolveExpectedTypeTrace(MetaType expectedType)
-        {
-            var alt = this.ContainingPAlternativeSymbol;
-            var grammar = alt.GetOutermostContainingSymbol<GrammarSymbol>();
-            if (grammar is null) return ImmutableArray<string>.Empty;
-            var result = ArrayBuilder<string>.GetInstance();
-            var stack = ArrayBuilder<ElementTrace>.GetInstance();
-            var builder = PooledStringBuilder.GetInstance();
-            var sb = builder.Builder;
-            stack.Add(grammar.ElementTraces[this]);
-            ResolveExpectedTypeTrace(result, sb, stack, expectedType);
-            builder.Free();
-            stack.Free();
-            return result.ToImmutableAndFree();
-        }
-
-        private void ResolveExpectedTypeTrace(ArrayBuilder<string> result, StringBuilder sb, ArrayBuilder<ElementTrace> stack, MetaType expectedType)
-        {
-            var trace = stack[stack.Count - 1];
-            var elem = trace.Element;
-            if (elem.IsNamedElement)
-            {
-                if (elem.ExpectedTypes.Contains(expectedType))
-                {
-                    sb.Clear();
-                    for (int i = stack.Count - 1; i >= 0; i--)
-                    {
-                        var et = stack[i];
-                        sb.Append(et);
-                        if (i > 0) sb.Append("/");
-                    }
-                    var traceStr = sb.ToString();
-                    if (!result.Contains(traceStr)) result.Add(traceStr);
-                }
-            }
-            else
-            {
-                if (trace.Next.Length == 0 && elem.ExpectedTypes.Contains(expectedType))
-                {
-                    sb.Clear();
-                    for (int i = stack.Count - 1; i >= 0; i--)
-                    {
-                        var et = stack[i];
-                        sb.Append(et);
-                        if (i > 0) sb.Append("/");
-                    }
-                    var traceStr = sb.ToString();
-                    if (!result.Contains(traceStr)) result.Add(traceStr);
                 }
                 else
                 {
-                    foreach (var nextElem in trace.Next)
+                    if (rule.OriginalSymbol is ParserRuleSymbol pr && alt.Elements.Length != 1)
                     {
-                        stack.Add(nextElem);
-                        ResolveExpectedTypeTrace(result, sb, stack, expectedType);
-                        stack.RemoveAt(stack.Count - 1);
+                        diagnostics.Add(Diagnostic.Create(CompilerErrorCode.WRN_RuleWithTypeMissingAssignment, this.Location, pr.Name, pr.ReturnType));
                     }
                 }
             }
+        }
+
+        private string ResolveExpectedTypeTrace(MetaType expectedType)
+        {
+            var grammar = this.ContainingGrammarSymbol;
+            var trace = grammar is null ? "" : string.Join(", ", grammar.ResolveTrace(this, et => et.Element.ExpectedTypes.Contains(expectedType)));
+            return trace;
         }
 
         public override string ToString()
@@ -364,8 +359,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
             var elemName = this.Name;
             if (this.Value.OriginalSymbol is PReferenceSymbol pref)
             {
-                //if (string.IsNullOrEmpty(elemName)) elemName = pref.Name;
-                //else elemName = $"{elemName}:{pref.Rule.Name}";
                 if (string.IsNullOrEmpty(elemName)) elemName = pref.Name;
             }
             var alt = this.ContainingPAlternativeSymbol;

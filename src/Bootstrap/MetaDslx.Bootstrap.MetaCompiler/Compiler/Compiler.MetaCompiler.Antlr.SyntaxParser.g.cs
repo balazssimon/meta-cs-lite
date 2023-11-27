@@ -223,12 +223,14 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
                 NameGreen? name = null;
                 if (context.nameAntlr1 is not null) name = (NameGreen?)this.Visit(context.nameAntlr1) ?? NameGreen.__Missing;
                 else name = NameGreen.__Missing;
+                PBlockBlock1Green? pBlockBlock1 = null;
+                if (context.pBlockBlock1Antlr1 is not null) pBlockBlock1 = (PBlockBlock1Green?)this.Visit(context.pBlockBlock1Antlr1);
                 var tColon = this.VisitTerminal(context.tColon, CompilerSyntaxKind.TColon);
                 var pAlternativeListBuilder = _pool.AllocateSeparated<PAlternativeGreen>(reversed: false);
                 var alternativesContext = context.alternativesAntlr1;
                 if (alternativesContext is not null) pAlternativeListBuilder.Add((PAlternativeGreen?)this.Visit(alternativesContext) ?? PAlternativeGreen.__Missing);
                 else pAlternativeListBuilder.Add(PAlternativeGreen.__Missing);
-                var pAlternativeListContext = context._pBlockBlock1Antlr1;
+                var pAlternativeListContext = context._pBlockBlock2Antlr1;
                 for (int i = 0; i < pAlternativeListContext.Count; ++i)
                 {
                     var itemContext = pAlternativeListContext[i];
@@ -244,7 +246,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
                 var pAlternativeList = pAlternativeListBuilder.ToList();
                 _pool.Free(pAlternativeListBuilder);
                 var tSemicolon = this.VisitTerminal(context.tSemicolon, CompilerSyntaxKind.TSemicolon);
-            	return _factory.PBlock(annotations1, (InternalSyntaxToken)kBlock, name, (InternalSyntaxToken)tColon, pAlternativeList, (InternalSyntaxToken)tSemicolon);
+            	return _factory.PBlock(annotations1, (InternalSyntaxToken)kBlock, name, pBlockBlock1, (InternalSyntaxToken)tColon, pAlternativeList, (InternalSyntaxToken)tSemicolon);
             }
             public override GreenNode? VisitPr_LexerRule(CompilerParser.Pr_LexerRuleContext? context)
             {
@@ -535,25 +537,25 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
             {
                	if (context == null) return ParserAnnotationGreen.__Missing;
                 var tLBracket = this.VisitTerminal(context.tLBracket, CompilerSyntaxKind.TLBracket);
-                QualifierGreen? type = null;
-                if (context.typeAntlr1 is not null) type = (QualifierGreen?)this.Visit(context.typeAntlr1) ?? QualifierGreen.__Missing;
-                else type = QualifierGreen.__Missing;
+                QualifierGreen? attributeClass = null;
+                if (context.attributeClassAntlr1 is not null) attributeClass = (QualifierGreen?)this.Visit(context.attributeClassAntlr1) ?? QualifierGreen.__Missing;
+                else attributeClass = QualifierGreen.__Missing;
                 AnnotationArgumentsGreen? annotationArguments = null;
                 if (context.annotationArgumentsAntlr1 is not null) annotationArguments = (AnnotationArgumentsGreen?)this.Visit(context.annotationArgumentsAntlr1);
                 var tRBracket = this.VisitTerminal(context.tRBracket, CompilerSyntaxKind.TRBracket);
-            	return _factory.ParserAnnotation((InternalSyntaxToken)tLBracket, type, annotationArguments, (InternalSyntaxToken)tRBracket);
+            	return _factory.ParserAnnotation((InternalSyntaxToken)tLBracket, attributeClass, annotationArguments, (InternalSyntaxToken)tRBracket);
             }
             public override GreenNode? VisitPr_LexerAnnotation(CompilerParser.Pr_LexerAnnotationContext? context)
             {
                	if (context == null) return LexerAnnotationGreen.__Missing;
                 var tLBracket = this.VisitTerminal(context.tLBracket, CompilerSyntaxKind.TLBracket);
-                QualifierGreen? type = null;
-                if (context.typeAntlr1 is not null) type = (QualifierGreen?)this.Visit(context.typeAntlr1) ?? QualifierGreen.__Missing;
-                else type = QualifierGreen.__Missing;
+                QualifierGreen? attributeClass = null;
+                if (context.attributeClassAntlr1 is not null) attributeClass = (QualifierGreen?)this.Visit(context.attributeClassAntlr1) ?? QualifierGreen.__Missing;
+                else attributeClass = QualifierGreen.__Missing;
                 AnnotationArgumentsGreen? annotationArguments = null;
                 if (context.annotationArgumentsAntlr1 is not null) annotationArguments = (AnnotationArgumentsGreen?)this.Visit(context.annotationArgumentsAntlr1);
                 var tRBracket = this.VisitTerminal(context.tRBracket, CompilerSyntaxKind.TRBracket);
-            	return _factory.LexerAnnotation((InternalSyntaxToken)tLBracket, type, annotationArguments, (InternalSyntaxToken)tRBracket);
+            	return _factory.LexerAnnotation((InternalSyntaxToken)tLBracket, attributeClass, annotationArguments, (InternalSyntaxToken)tRBracket);
             }
             public override GreenNode? VisitPr_AnnotationArguments(CompilerParser.Pr_AnnotationArgumentsContext? context)
             {
@@ -733,11 +735,20 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
             public override GreenNode? VisitPr_PBlockBlock1(CompilerParser.Pr_PBlockBlock1Context? context)
             {
                	if (context == null) return PBlockBlock1Green.__Missing;
+                var kReturns = this.VisitTerminal(context.kReturns, CompilerSyntaxKind.KReturns);
+                ReturnTypeQualifierGreen? returnType = null;
+                if (context.returnTypeAntlr1 is not null) returnType = (ReturnTypeQualifierGreen?)this.Visit(context.returnTypeAntlr1) ?? ReturnTypeQualifierGreen.__Missing;
+                else returnType = ReturnTypeQualifierGreen.__Missing;
+            	return _factory.PBlockBlock1((InternalSyntaxToken)kReturns, returnType);
+            }
+            public override GreenNode? VisitPr_PBlockBlock2(CompilerParser.Pr_PBlockBlock2Context? context)
+            {
+               	if (context == null) return PBlockBlock2Green.__Missing;
                 var tBar = this.VisitTerminal(context.tBar, CompilerSyntaxKind.TBar);
                 PAlternativeGreen? alternatives = null;
                 if (context.alternativesAntlr1 is not null) alternatives = (PAlternativeGreen?)this.Visit(context.alternativesAntlr1) ?? PAlternativeGreen.__Missing;
                 else alternatives = PAlternativeGreen.__Missing;
-            	return _factory.PBlockBlock1((InternalSyntaxToken)tBar, alternatives);
+            	return _factory.PBlockBlock2((InternalSyntaxToken)tBar, alternatives);
             }
             public override GreenNode? VisitPr_PBlockInlineBlock1(CompilerParser.Pr_PBlockInlineBlock1Context? context)
             {

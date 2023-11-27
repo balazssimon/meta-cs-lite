@@ -7,7 +7,7 @@ metamodel Compiler;
 
 abstract class Declaration $Declared
 {
-	contains Annotation[] Annotations;
+	contains Annotation[] Annotations $Attributes;
 	string? $Name;
 	Declaration? Parent opposite Declarations;
 	contains Declaration[] Declarations opposite Parent;
@@ -31,7 +31,7 @@ class Grammar $GrammarSymbol : Declaration
 
 class Annotation $AnnotationSymbol
 {
-	type $Type;
+	TypeSymbol $AttributeClass;
 	contains AnnotationArgument[] $Arguments;
 }
 
@@ -191,7 +191,7 @@ class PElement $PElementSymbol
 {
 	contains Annotation[] NameAnnotations;
 	symbol[] $SymbolProperty;
-	Assignment Assignment;
+	Assignment $Assignment;
 	contains Annotation[] ValueAnnotations;
 	contains PElementValue $Value;
 	Multiplicity Multiplicity;
@@ -218,6 +218,7 @@ class PKeyword : PElementValue
 
 class PBlock $PBlockSymbol : Rule, PElementValue
 {
+	type $ReturnType;
 	contains PAlternative[] $Alternatives;
 }
 

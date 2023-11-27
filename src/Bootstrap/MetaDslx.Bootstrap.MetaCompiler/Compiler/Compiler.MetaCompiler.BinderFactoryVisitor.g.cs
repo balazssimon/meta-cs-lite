@@ -324,6 +324,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
         	    {
         	        this.End(__annot1);
         	    }
+        	    this.Visit(node.PBlockBlock1);
         	    var pAlternativeListList = node.PAlternativeList;
         	    for (var pAlternativeListIndex = 0; pAlternativeListIndex < pAlternativeListList.Count; ++pAlternativeListIndex)
         	    {
@@ -1414,15 +1415,15 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
         	this.Begin(__annot2, node);
         	try
         	{
-        	    var __annot1 = new PropertyBinder(name: "Type");
-        	    this.Begin(__annot1, node.Type);
+        	    var __annot1 = new PropertyBinder(name: "AttributeClass");
+        	    this.Begin(__annot1, node.AttributeClass);
         	    try
         	    {
         	        var __annot0 = new UseBinder(types: new global::System.Type[] {typeof(global::MetaDslx.CodeAnalysis.Binding.Binder), typeof(global::MetaDslx.CodeAnalysis.Annotations.Annotation)}.ToImmutableArray(), suffixes: new string[] {"Binder", "Annotation"}.ToImmutableArray());
-        	        this.Begin(__annot0, node.Type);
+        	        this.Begin(__annot0, node.AttributeClass);
         	        try
         	        {
-        	            this.Visit(node.Type);
+        	            this.Visit(node.AttributeClass);
         	        }
         	        finally
         	        {
@@ -1448,15 +1449,15 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
         	this.Begin(__annot2, node);
         	try
         	{
-        	    var __annot1 = new PropertyBinder(name: "Type");
-        	    this.Begin(__annot1, node.Type);
+        	    var __annot1 = new PropertyBinder(name: "AttributeClass");
+        	    this.Begin(__annot1, node.AttributeClass);
         	    try
         	    {
         	        var __annot0 = new UseBinder(types: new global::System.Type[] {typeof(global::MetaDslx.CodeAnalysis.Syntax.TokenKind), typeof(global::MetaDslx.CodeAnalysis.Annotations.Annotation)}.ToImmutableArray(), suffixes: new string[] {"TokenKind", "Annotation"}.ToImmutableArray());
-        	        this.Begin(__annot0, node.Type);
+        	        this.Begin(__annot0, node.AttributeClass);
         	        try
         	        {
-        	            this.Visit(node.Type);
+        	            this.Visit(node.AttributeClass);
         	        }
         	        finally
         	        {
@@ -1818,6 +1819,21 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
         }
 
         public virtual void VisitPBlockBlock1(PBlockBlock1Syntax node)
+        {
+        	var __annot0 = new PropertyBinder(name: "ReturnType");
+        	this.Begin(__annot0, node.ReturnType);
+        	try
+        	{
+        	    this.Visit(node.ReturnType);
+        	}
+        	finally
+        	{
+        	    this.End(__annot0);
+        	}
+        	    
+        }
+
+        public virtual void VisitPBlockBlock2(PBlockBlock2Syntax node)
         {
         	if (node.TBar.GetCompilerKind() != CompilerSyntaxKind.None)
         	{

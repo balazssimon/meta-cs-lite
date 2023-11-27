@@ -31,6 +31,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
             Register<AliasSymbol>((s, d) => new SourceAliasSymbol(s, d));
             Register<ImportSymbol>((s, d) => new SourceImportSymbol(s, d));
             Register<Symbol>((s, d, mo) => new SourceSymbol(s, d, mo));
+            Register<AttributeSymbol>((s, d, mo) => new SourceAttributeSymbol(s, d, mo));
             Register<NamespaceSymbol>((s, d, mo) => new SourceNamespaceSymbol(s, d, mo));
             Register<TypeSymbol>((s, d, mo) => new SourceTypeSymbol(s, d, mo));
             Register<DeclaredSymbol>((s, d, mo) => new SourceDeclaredSymbol(s, d, mo));
@@ -255,16 +256,24 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
                     if (decl.IsNull) continue;
                     Binder? declBinder = null;
                     var binder = Compilation.GetBinder(decl);
+                    var isNesting = false;
                     while (binder is not null)
                     {
-                        if (binder is IDefineBinder defineBinder && defineBinder.DefinedSymbols.Contains((Symbol)symbol))
+                        if (binder is IDefineBinder defineBinder)
                         {
-                            declBinder = binder;
+                            if (defineBinder.DefinedSymbols.Contains((Symbol)symbol))
+                            {
+                                declBinder = binder;
+                            }
+                            else if (defineBinder.NestingSymbols.Contains((Symbol)symbol))
+                            {
+                                declBinder = null;
+                                isNesting = true;
+                            }
                             break;
                         }
                         binder = binder.ParentBinder;
                     }
-                    Debug.Assert(declBinder is not null);
                     if (declBinder is not null)
                     {
                         var propBinders = declBinder.GetPropertyBinders(prop.Name, cancellationToken);
@@ -324,6 +333,10 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
                                 }
                             }
                         }
+                    }
+                    else if (!isNesting)
+                    {
+                        diagnostics.Add(Diagnostic.Create(ErrorCode.ERR_InternalError, decl.GetLocation(), $"Could not resolve declaration of '{symbol.Declaration.Name}' in SourceSymbolFactory."));
                     }
                 }
             }

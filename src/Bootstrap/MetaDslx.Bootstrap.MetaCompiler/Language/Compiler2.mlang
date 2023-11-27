@@ -19,13 +19,13 @@ Main returns Namespace:
 	Declarations
 	eof;
 
-Using returns ImportSymbol
+block Using returns ImportSymbol
 	: 'using' namespaces+=#NamespaceSymbol ';'
 	| alt UsingMetaModel returns ImportMetaModelSymbol: 'using' 'metamodel' symbols+=#DeclaredSymbol ';'
 	| alt UsingSymbols returns ImportSymbolModelSymbol: 'using' 'symbols' namespaces+=#NamespaceSymbol ';';
 
 [Scope]
-block Declarations: declarationsZ+=LanguageDeclaration declarations+=Rule*;
+block Declarations: declarations+=LanguageDeclaration declarations+=Rule*;
 
 LanguageDeclaration returns MetaDslx.Bootstrap.MetaCompiler.Model.Language: 'language' name=Name ';' grammar=Grammar;
 
@@ -34,7 +34,7 @@ Grammar: [Scope](rules+=Rule*);
 Rule: ParserRule | PBlock | LexerRule;
 
 ParserRule: annotations+=ParserAnnotation* [Name](returnType=ReturnTypeIdentifier | Identifier 'returns' returnType=ReturnTypeQualifier) ':' alternatives+=PAlternative ('|' alternatives+=PAlternative)* ';';
-PBlock: annotations+=ParserAnnotation* 'block' name=Name ':' alternatives+=PAlternative ('|' alternatives+=PAlternative)* ';';
+PBlock: annotations+=ParserAnnotation* 'block' name=Name ('returns' returnType=ReturnTypeQualifier)? ':' alternatives+=PAlternative ('|' alternatives+=PAlternative)* ';';
 PBlockInline returns PBlock: '(' alternatives+=PAlternative ('|' alternatives+=PAlternative)* ')';
 
 PAlternative: (annotations+=ParserAnnotation* 'alt' name=Name ('returns' returnType=ReturnTypeQualifier)? ':')? elements+=PElement* ('=>' returnValue=Expression)?;
@@ -67,8 +67,8 @@ StringExpression: stringValue=TString;
 ReferenceExpression: symbolValue+=[ConvertToExpectedType]Qualifier;
 ArrayExpression: '{' (items+=Expression (',' items+=Expression)*)? '}';
 
-ParserAnnotation returns MetaDslx.Bootstrap.MetaCompiler.Model.Annotation: '[' @type=[Use(types:{Binder,MetaDslx.CodeAnalysis.Annotations.Annotation},suffixes:{"Binder","Annotation"})]Qualifier AnnotationArguments? ']';
-LexerAnnotation returns MetaDslx.Bootstrap.MetaCompiler.Model.Annotation: '[' @type=[Use(types:{TokenKind,MetaDslx.CodeAnalysis.Annotations.Annotation},suffixes:{"TokenKind","Annotation"})]Qualifier AnnotationArguments? ']';
+ParserAnnotation returns MetaDslx.Bootstrap.MetaCompiler.Model.Annotation: '[' attributeClass=[Use(types:{Binder,MetaDslx.CodeAnalysis.Annotations.Annotation},suffixes:{"Binder","Annotation"})]Qualifier AnnotationArguments? ']';
+LexerAnnotation returns MetaDslx.Bootstrap.MetaCompiler.Model.Annotation: '[' attributeClass=[Use(types:{TokenKind,MetaDslx.CodeAnalysis.Annotations.Annotation},suffixes:{"TokenKind","Annotation"})]Qualifier AnnotationArguments? ']';
 block AnnotationArguments: '(' arguments+=AnnotationArgument (',' arguments+=AnnotationArgument)* ')';
 AnnotationArgument: (namedParameter+=[AnnotationArgument]Identifier ':')? value=Expression;
 
@@ -88,11 +88,8 @@ Multiplicity
 	| '+?' => NonGreedyOneOrMore
 	;
 
-[Use(MetaType)]
-block ReturnTypeIdentifier: TPrimitiveType | Identifier;
-
-[Use(MetaType)]
-block ReturnTypeQualifier: TPrimitiveType | Qualifier;
+block ReturnTypeIdentifier returns type: TPrimitiveType | [Use(MetaType)]Identifier;
+block ReturnTypeQualifier returns type: TPrimitiveType | [Use(MetaType)]Qualifier;
 
 [Name]
 block Name: Identifier;

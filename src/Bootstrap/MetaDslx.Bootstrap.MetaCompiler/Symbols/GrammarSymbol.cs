@@ -38,8 +38,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
                     StartComputingProperty_Attributes, FinishComputingProperty_Attributes);
         }
 
-        private static readonly ParserRuleSymbolsByName CompareParserRuleSymbolsByName = new ParserRuleSymbolsByName();
-
         private ImmutableArray<PElementSymbol> _allElements;
         private ImmutableDictionary<PBlockSymbol, ImmutableHashSet<PElementSymbol>> _blockReferences;
         private ImmutableDictionary<PElementSymbol, ElementTrace> _elementTraces;
@@ -228,22 +226,70 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
                     }
                 }
             }
-            /*var rule = alt?.ContainingParserRuleSymbol;
-            if (rule is not null)
-            {
-
-            }*/
             return new ElementTrace(element, result.ToImmutableAndFree());
         }
 
-        private class ParserRuleSymbolsByName : IComparer<ParserRuleSymbol>
+
+        public ImmutableArray<string> ResolveTrace(PElementSymbol elem, Func<ElementTrace, bool> stopWhen)
         {
-            public int Compare(ParserRuleSymbol? x, ParserRuleSymbol? y)
+            var alt = elem.ContainingPAlternativeSymbol;
+            var grammar = alt.GetOutermostContainingSymbol<GrammarSymbol>();
+            if (grammar is null) return ImmutableArray<string>.Empty;
+            var result = ArrayBuilder<string>.GetInstance();
+            var stack = ArrayBuilder<ElementTrace>.GetInstance();
+            var builder = PooledStringBuilder.GetInstance();
+            var sb = builder.Builder;
+            stack.Add(grammar.ElementTraces[elem]);
+            ResolveTrace(result, sb, stack, stopWhen);
+            builder.Free();
+            stack.Free();
+            return result.ToImmutableAndFree();
+        }
+
+        private void ResolveTrace(ArrayBuilder<string> result, StringBuilder sb, ArrayBuilder<ElementTrace> stack, Func<ElementTrace, bool> stopWhen)
+        {
+            var trace = stack[stack.Count - 1];
+            var elem = trace.Element;
+            if (elem.IsNamedElement)
             {
-                return string.Compare(x?.Name, y?.Name);
+                if (stopWhen(trace))
+                {
+                    sb.Clear();
+                    for (int i = stack.Count - 1; i >= 0; i--)
+                    {
+                        var et = stack[i];
+                        sb.Append(et);
+                        if (i > 0) sb.Append("/");
+                    }
+                    var traceStr = sb.ToString();
+                    if (!result.Contains(traceStr)) result.Add(traceStr);
+                }
+            }
+            else
+            {
+                if (trace.Next.Length == 0 && stopWhen(trace))
+                {
+                    sb.Clear();
+                    for (int i = stack.Count - 1; i >= 0; i--)
+                    {
+                        var et = stack[i];
+                        sb.Append(et);
+                        if (i > 0) sb.Append("/");
+                    }
+                    var traceStr = sb.ToString();
+                    if (!result.Contains(traceStr)) result.Add(traceStr);
+                }
+                else
+                {
+                    foreach (var nextElem in trace.Next)
+                    {
+                        stack.Add(nextElem);
+                        ResolveTrace(result, sb, stack, stopWhen);
+                        stack.RemoveAt(stack.Count - 1);
+                    }
+                }
             }
         }
 
-        
     }
 }

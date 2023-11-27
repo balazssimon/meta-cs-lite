@@ -484,6 +484,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 					return "ParserRuleBlock2";
 				case CompilerSyntaxKind.PBlockBlock1: 
 					return "PBlockBlock1";
+				case CompilerSyntaxKind.PBlockBlock2: 
+					return "PBlockBlock2";
 				case CompilerSyntaxKind.PBlockInlineBlock1: 
 					return "PBlockInlineBlock1";
 				case CompilerSyntaxKind.PAlternativeBlock1: 

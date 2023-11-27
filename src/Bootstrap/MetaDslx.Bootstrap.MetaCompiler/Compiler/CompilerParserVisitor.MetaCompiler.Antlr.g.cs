@@ -336,6 +336,12 @@ public interface ICompilerParserVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitPr_PBlockBlock1([NotNull] CompilerParser.Pr_PBlockBlock1Context context);
 	/// <summary>
+	/// Visit a parse tree produced by <see cref="CompilerParser.pr_PBlockBlock2"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitPr_PBlockBlock2([NotNull] CompilerParser.Pr_PBlockBlock2Context context);
+	/// <summary>
 	/// Visit a parse tree produced by <see cref="CompilerParser.pr_PBlockInlineBlock1"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
