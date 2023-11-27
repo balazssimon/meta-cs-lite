@@ -28,7 +28,6 @@ namespace [language.QualifiedNamespace].Syntax.InternalSyntax
     using MetaDslx.CodeAnalysis.Syntax;
     using MetaDslx.CodeAnalysis.Syntax.InternalSyntax;
     using MetaDslx.CodeAnalysis.Text;
-    using Roslyn.Utilities;
 
     internal abstract class GreenSyntaxNode : InternalSyntaxNode
     {
@@ -1127,7 +1126,6 @@ namespace [language.QualifiedNamespace].Syntax.InternalSyntax
     using MetaDslx.CodeAnalysis;
     using MetaDslx.CodeAnalysis.Syntax;
     using MetaDslx.CodeAnalysis.Syntax.InternalSyntax;
-    using Roslyn.Utilities;
     using MetaDslx.CodeAnalysis.Text;
 
 	public partial class [language.Name]InternalSyntaxFactory : InternalSyntaxFactory

@@ -17,7 +17,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
     using MetaDslx.CodeAnalysis.Syntax;
     using MetaDslx.CodeAnalysis.Syntax.InternalSyntax;
     using MetaDslx.CodeAnalysis.Text;
-    using Roslyn.Utilities;
 
     internal abstract class GreenSyntaxNode : InternalSyntaxNode
     {

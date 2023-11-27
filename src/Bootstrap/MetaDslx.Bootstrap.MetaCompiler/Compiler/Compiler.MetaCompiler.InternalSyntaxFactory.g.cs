@@ -11,7 +11,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
     using MetaDslx.CodeAnalysis;
     using MetaDslx.CodeAnalysis.Syntax;
     using MetaDslx.CodeAnalysis.Syntax.InternalSyntax;
-    using Roslyn.Utilities;
     using MetaDslx.CodeAnalysis.Text;
 
 	public partial class CompilerInternalSyntaxFactory : InternalSyntaxFactory
