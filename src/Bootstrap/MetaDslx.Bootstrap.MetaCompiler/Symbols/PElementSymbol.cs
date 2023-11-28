@@ -296,6 +296,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
                     {
                         if (expType.TryGetCoreType(out var coreType, diagnostics, cancellationToken))
                         {
+                            if (coreType.SpecialType == SpecialType.MetaDslx_CodeAnalysis_MetaSymbol) continue;
                             if (pref.ReferencedTypes.Length == 0)
                             {
                                 if (rule.OriginalSymbol is ParserRuleSymbol pr)

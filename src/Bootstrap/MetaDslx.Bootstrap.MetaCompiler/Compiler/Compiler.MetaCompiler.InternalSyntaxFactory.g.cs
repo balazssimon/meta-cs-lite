@@ -740,54 +740,16 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			return result;
 		}
 
-		internal IntExpressionGreen IntExpression(InternalSyntaxToken intValue)
+		internal ExpressionAlt1Green ExpressionAlt1(SingleExpressionGreen singleExpression)
 		{
 #if DEBUG
-			if (intValue is null) throw new ArgumentNullException(nameof(intValue));
-			if (intValue.RawKind != (int)CompilerSyntaxKind.TInteger) throw new ArgumentException(nameof(intValue));
+			if (singleExpression is null) throw new ArgumentNullException(nameof(singleExpression));
 #endif
 			int hash;
-			var cached = SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.IntExpression, intValue, out hash);
-			if (cached != null) return (IntExpressionGreen)cached;
+			var cached = SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.ExpressionAlt1, singleExpression, out hash);
+			if (cached != null) return (ExpressionAlt1Green)cached;
 		
-			var result = new IntExpressionGreen(CompilerSyntaxKind.IntExpression, intValue);
-			if (hash >= 0)
-			{
-				SyntaxNodeCache.AddNode(result, hash);
-			}
-		
-			return result;
-		}
-
-		internal StringExpressionGreen StringExpression(InternalSyntaxToken stringValue)
-		{
-#if DEBUG
-			if (stringValue is null) throw new ArgumentNullException(nameof(stringValue));
-			if (stringValue.RawKind != (int)CompilerSyntaxKind.TString) throw new ArgumentException(nameof(stringValue));
-#endif
-			int hash;
-			var cached = SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.StringExpression, stringValue, out hash);
-			if (cached != null) return (StringExpressionGreen)cached;
-		
-			var result = new StringExpressionGreen(CompilerSyntaxKind.StringExpression, stringValue);
-			if (hash >= 0)
-			{
-				SyntaxNodeCache.AddNode(result, hash);
-			}
-		
-			return result;
-		}
-
-		internal ReferenceExpressionGreen ReferenceExpression(QualifierGreen symbolValue)
-		{
-#if DEBUG
-			if (symbolValue is null) throw new ArgumentNullException(nameof(symbolValue));
-#endif
-			int hash;
-			var cached = SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.ReferenceExpression, symbolValue, out hash);
-			if (cached != null) return (ReferenceExpressionGreen)cached;
-		
-			var result = new ReferenceExpressionGreen(CompilerSyntaxKind.ReferenceExpression, symbolValue);
+			var result = new ExpressionAlt1Green(CompilerSyntaxKind.ExpressionAlt1, singleExpression);
 			if (hash >= 0)
 			{
 				SyntaxNodeCache.AddNode(result, hash);
@@ -817,17 +779,16 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			return result;
 		}
 
-		internal ExpressionTokensGreen ExpressionTokens(InternalSyntaxToken tokens)
+		internal SingleExpressionGreen SingleExpression(SingleExpressionBlock1Green value)
 		{
 #if DEBUG
-			if (tokens is null) throw new ArgumentNullException(nameof(tokens));
-			if (tokens.RawKind != (int)CompilerSyntaxKind.KNull && tokens.RawKind != (int)CompilerSyntaxKind.KTrue && tokens.RawKind != (int)CompilerSyntaxKind.KFalse) throw new ArgumentException(nameof(tokens));
+			if (value is null) throw new ArgumentNullException(nameof(value));
 #endif
 			int hash;
-			var cached = SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.ExpressionTokens, tokens, out hash);
-			if (cached != null) return (ExpressionTokensGreen)cached;
+			var cached = SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.SingleExpression, value, out hash);
+			if (cached != null) return (SingleExpressionGreen)cached;
 		
-			var result = new ExpressionTokensGreen(CompilerSyntaxKind.ExpressionTokens, tokens);
+			var result = new SingleExpressionGreen(CompilerSyntaxKind.SingleExpression, value);
 			if (hash >= 0)
 			{
 				SyntaxNodeCache.AddNode(result, hash);
@@ -1374,16 +1335,91 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			return result;
 		}
 
-		internal ArrayExpressionBlock1Green ArrayExpressionBlock1(MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<ExpressionGreen> expressionList)
+		internal SingleExpressionBlock1Alt4Green SingleExpressionBlock1Alt4(InternalSyntaxToken tInteger)
 		{
 #if DEBUG
-			if (expressionList.IsReversed) throw new ArgumentException(nameof(expressionList));
+			if (tInteger is null) throw new ArgumentNullException(nameof(tInteger));
+			if (tInteger.RawKind != (int)CompilerSyntaxKind.TInteger) throw new ArgumentException(nameof(tInteger));
 #endif
 			int hash;
-			var cached = SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.ArrayExpressionBlock1, expressionList.Node, out hash);
+			var cached = SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.SingleExpressionBlock1Alt4, tInteger, out hash);
+			if (cached != null) return (SingleExpressionBlock1Alt4Green)cached;
+		
+			var result = new SingleExpressionBlock1Alt4Green(CompilerSyntaxKind.SingleExpressionBlock1Alt4, tInteger);
+			if (hash >= 0)
+			{
+				SyntaxNodeCache.AddNode(result, hash);
+			}
+		
+			return result;
+		}
+
+		internal SingleExpressionBlock1Alt5Green SingleExpressionBlock1Alt5(InternalSyntaxToken tString)
+		{
+#if DEBUG
+			if (tString is null) throw new ArgumentNullException(nameof(tString));
+			if (tString.RawKind != (int)CompilerSyntaxKind.TString) throw new ArgumentException(nameof(tString));
+#endif
+			int hash;
+			var cached = SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.SingleExpressionBlock1Alt5, tString, out hash);
+			if (cached != null) return (SingleExpressionBlock1Alt5Green)cached;
+		
+			var result = new SingleExpressionBlock1Alt5Green(CompilerSyntaxKind.SingleExpressionBlock1Alt5, tString);
+			if (hash >= 0)
+			{
+				SyntaxNodeCache.AddNode(result, hash);
+			}
+		
+			return result;
+		}
+
+		internal SingleExpressionBlock1Alt6Green SingleExpressionBlock1Alt6(QualifierGreen qualifier)
+		{
+#if DEBUG
+			if (qualifier is null) throw new ArgumentNullException(nameof(qualifier));
+#endif
+			int hash;
+			var cached = SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.SingleExpressionBlock1Alt6, qualifier, out hash);
+			if (cached != null) return (SingleExpressionBlock1Alt6Green)cached;
+		
+			var result = new SingleExpressionBlock1Alt6Green(CompilerSyntaxKind.SingleExpressionBlock1Alt6, qualifier);
+			if (hash >= 0)
+			{
+				SyntaxNodeCache.AddNode(result, hash);
+			}
+		
+			return result;
+		}
+
+		internal SingleExpressionBlock1TokensGreen SingleExpressionBlock1Tokens(InternalSyntaxToken tokens)
+		{
+#if DEBUG
+			if (tokens is null) throw new ArgumentNullException(nameof(tokens));
+			if (tokens.RawKind != (int)CompilerSyntaxKind.KNull && tokens.RawKind != (int)CompilerSyntaxKind.KTrue && tokens.RawKind != (int)CompilerSyntaxKind.KFalse) throw new ArgumentException(nameof(tokens));
+#endif
+			int hash;
+			var cached = SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.SingleExpressionBlock1Tokens, tokens, out hash);
+			if (cached != null) return (SingleExpressionBlock1TokensGreen)cached;
+		
+			var result = new SingleExpressionBlock1TokensGreen(CompilerSyntaxKind.SingleExpressionBlock1Tokens, tokens);
+			if (hash >= 0)
+			{
+				SyntaxNodeCache.AddNode(result, hash);
+			}
+		
+			return result;
+		}
+
+		internal ArrayExpressionBlock1Green ArrayExpressionBlock1(MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<SingleExpressionGreen> singleExpressionList)
+		{
+#if DEBUG
+			if (singleExpressionList.IsReversed) throw new ArgumentException(nameof(singleExpressionList));
+#endif
+			int hash;
+			var cached = SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.ArrayExpressionBlock1, singleExpressionList.Node, out hash);
 			if (cached != null) return (ArrayExpressionBlock1Green)cached;
 		
-			var result = new ArrayExpressionBlock1Green(CompilerSyntaxKind.ArrayExpressionBlock1, expressionList.Node);
+			var result = new ArrayExpressionBlock1Green(CompilerSyntaxKind.ArrayExpressionBlock1, singleExpressionList.Node);
 			if (hash >= 0)
 			{
 				SyntaxNodeCache.AddNode(result, hash);
@@ -1412,18 +1448,18 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			return result;
 		}
 
-		internal AnnotationArgumentBlock1Green AnnotationArgumentBlock1(IdentifierGreen namedParameter, InternalSyntaxToken tColon)
+		internal AnnotationArgumentBlock1Green AnnotationArgumentBlock1(NameGreen name, InternalSyntaxToken tColon)
 		{
 #if DEBUG
-			if (namedParameter is null) throw new ArgumentNullException(nameof(namedParameter));
+			if (name is null) throw new ArgumentNullException(nameof(name));
 			if (tColon is null) throw new ArgumentNullException(nameof(tColon));
 			if (tColon.RawKind != (int)CompilerSyntaxKind.TColon) throw new ArgumentException(nameof(tColon));
 #endif
 			int hash;
-			var cached = SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.AnnotationArgumentBlock1, namedParameter, tColon, out hash);
+			var cached = SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.AnnotationArgumentBlock1, name, tColon, out hash);
 			if (cached != null) return (AnnotationArgumentBlock1Green)cached;
 		
-			var result = new AnnotationArgumentBlock1Green(CompilerSyntaxKind.AnnotationArgumentBlock1, namedParameter, tColon);
+			var result = new AnnotationArgumentBlock1Green(CompilerSyntaxKind.AnnotationArgumentBlock1, name, tColon);
 			if (hash >= 0)
 			{
 				SyntaxNodeCache.AddNode(result, hash);
@@ -1512,7 +1548,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			return result;
 		}
 
-		internal ArrayExpressionBlock1Block1Green ArrayExpressionBlock1Block1(InternalSyntaxToken tComma, ExpressionGreen items)
+		internal ArrayExpressionBlock1Block1Green ArrayExpressionBlock1Block1(InternalSyntaxToken tComma, SingleExpressionGreen items)
 		{
 #if DEBUG
 			if (tComma is null) throw new ArgumentNullException(nameof(tComma));

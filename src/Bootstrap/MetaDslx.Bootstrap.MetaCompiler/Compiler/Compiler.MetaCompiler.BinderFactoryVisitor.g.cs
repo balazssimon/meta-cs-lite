@@ -1225,116 +1225,18 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
         	}
         }
 
-        public virtual void VisitIntExpression(IntExpressionSyntax node)
+        public virtual void VisitExpressionAlt1(ExpressionAlt1Syntax node)
         {
-        	var __annot2 = new DefineBinder(type: typeof(global::MetaDslx.Bootstrap.MetaCompiler.Model.IntExpression));
-        	this.Begin(__annot2, node);
+        	//var __annot0 = new DefineBinder(type: typeof(global::MetaDslx.Bootstrap.MetaCompiler.Model.Expression));
+        	//this.Begin(__annot0, node);
         	try
         	{
-        	    if (node.IntValue.GetCompilerKind() != CompilerSyntaxKind.None)
-        	    {
-        	        var __annot1 = new PropertyBinder(name: "IntValue");
-        	        this.Begin(__annot1, node.IntValue);
-        	        try
-        	        {
-        	            var __annot0 = new ValueBinder(type: typeof(int));
-        	            this.Begin(__annot0, node.IntValue);
-        	            try
-        	            {
-        	                // this.VisitToken(node.IntValue);
-        	            }
-        	            finally
-        	            {
-        	                this.End(__annot0);
-        	            }
-        	        }
-        	        finally
-        	        {
-        	            this.End(__annot1);
-        	        }
-        	    }
-        	    else
-        	    {
-        	        // this.VisitToken(node.IntValue);
-        	    }
+        	    this.Visit(node.SingleExpression);
         	        
         	}
         	finally
         	{
-        	    this.End(__annot2);
-        	}
-        }
-
-        public virtual void VisitStringExpression(StringExpressionSyntax node)
-        {
-        	var __annot2 = new DefineBinder(type: typeof(global::MetaDslx.Bootstrap.MetaCompiler.Model.StringExpression));
-        	this.Begin(__annot2, node);
-        	try
-        	{
-        	    if (node.StringValue.GetCompilerKind() != CompilerSyntaxKind.None)
-        	    {
-        	        var __annot1 = new PropertyBinder(name: "StringValue");
-        	        this.Begin(__annot1, node.StringValue);
-        	        try
-        	        {
-        	            var __annot0 = new ValueBinder(type: typeof(string));
-        	            this.Begin(__annot0, node.StringValue);
-        	            try
-        	            {
-        	                // this.VisitToken(node.StringValue);
-        	            }
-        	            finally
-        	            {
-        	                this.End(__annot0);
-        	            }
-        	        }
-        	        finally
-        	        {
-        	            this.End(__annot1);
-        	        }
-        	    }
-        	    else
-        	    {
-        	        // this.VisitToken(node.StringValue);
-        	    }
-        	        
-        	}
-        	finally
-        	{
-        	    this.End(__annot2);
-        	}
-        }
-
-        public virtual void VisitReferenceExpression(ReferenceExpressionSyntax node)
-        {
-        	var __annot2 = new DefineBinder(type: typeof(global::MetaDslx.Bootstrap.MetaCompiler.Model.ReferenceExpression));
-        	this.Begin(__annot2, node);
-        	try
-        	{
-        	    var __annot1 = new PropertyBinder(name: "SymbolValue");
-        	    this.Begin(__annot1, node.SymbolValue);
-        	    try
-        	    {
-        	        var __annot0 = new ConvertToExpectedTypeBinder();
-        	        this.Begin(__annot0, node.SymbolValue);
-        	        try
-        	        {
-        	            this.Visit(node.SymbolValue);
-        	        }
-        	        finally
-        	        {
-        	            this.End(__annot0);
-        	        }
-        	    }
-        	    finally
-        	    {
-        	        this.End(__annot1);
-        	    }
-        	        
-        	}
-        	finally
-        	{
-        	    this.End(__annot2);
+        	    //this.End(__annot0);
         	}
         }
 
@@ -1353,60 +1255,28 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
         	}
         }
 
-        public virtual void VisitExpressionTokens(ExpressionTokensSyntax node)
+        public virtual void VisitSingleExpression(SingleExpressionSyntax node)
         {
-        	switch (node.Tokens.GetCompilerKind())
+        	var __annot1 = new DefineBinder(type: typeof(global::MetaDslx.Bootstrap.MetaCompiler.Model.Expression));
+        	this.Begin(__annot1, node);
+        	try
         	{
-        	case CompilerSyntaxKind.KNull:
-        	    var __annot0 = new ValueBinder(type: typeof(global::MetaDslx.Bootstrap.MetaCompiler.Model.NullExpression));
-        	    this.Begin(__annot0, node.Tokens);
+        	    var __annot0 = new PropertyBinder(name: "Value");
+        	    this.Begin(__annot0, node.Value);
         	    try
         	    {
-        	        // this.VisitToken(node.Tokens);
+        	        this.Visit(node.Value);
         	    }
         	    finally
         	    {
         	        this.End(__annot0);
         	    }
-        	    break;
-        	case CompilerSyntaxKind.KTrue:
-        	    var __annot2 = new PropertyBinder(name: "BoolValue", value: true);
-        	    this.Begin(__annot2, node.Tokens);
-        	    try
-        	    {
-        	        var __annot1 = new ValueBinder(type: typeof(global::MetaDslx.Bootstrap.MetaCompiler.Model.BoolExpression));
-        	        this.Begin(__annot1, node.Tokens);
-        	        try
-        	        {
-        	            // this.VisitToken(node.Tokens);
-        	        }
-        	        finally
-        	        {
-        	            this.End(__annot1);
-        	        }
-        	    }
-        	    finally
-        	    {
-        	        this.End(__annot2);
-        	    }
-        	    break;
-        	case CompilerSyntaxKind.KFalse:
-        	    var __annot3 = new ValueBinder(type: typeof(global::MetaDslx.Bootstrap.MetaCompiler.Model.BoolExpression));
-        	    this.Begin(__annot3, node.Tokens);
-        	    try
-        	    {
-        	        // this.VisitToken(node.Tokens);
-        	    }
-        	    finally
-        	    {
-        	        this.End(__annot3);
-        	    }
-        	    break;
-        	default:
-        	    // this.VisitToken(node.Tokens);
-        	    break;
+        	        
         	}
-        	    
+        	finally
+        	{
+        	    this.End(__annot1);
+        	}
         }
 
         public virtual void VisitParserAnnotation(ParserAnnotationSyntax node)
@@ -2201,18 +2071,109 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
         	    
         }
 
-        public virtual void VisitArrayExpressionBlock1(ArrayExpressionBlock1Syntax node)
+        public virtual void VisitSingleExpressionBlock1Alt4(SingleExpressionBlock1Alt4Syntax node)
         {
-        	var expressionListList = node.ExpressionList;
-        	for (var expressionListIndex = 0; expressionListIndex < expressionListList.Count; ++expressionListIndex)
+        	var __annot1 = new ExpressionValueBinder();
+        	this.Begin(__annot1, node);
+        	try
         	{
-        	    if (expressionListIndex == 0)
+        	    if (node.TInteger.GetCompilerKind() != CompilerSyntaxKind.None)
         	    {
-        	        var __annot0 = new PropertyBinder(name: "Items");
-        	        this.Begin(__annot0, node.ExpressionList[expressionListIndex]);
+        	        var __annot0 = new ValueBinder(type: typeof(int));
+        	        this.Begin(__annot0, node.TInteger);
         	        try
         	        {
-        	            this.Visit(node.ExpressionList[expressionListIndex]);
+        	            // this.VisitToken(node.TInteger);
+        	        }
+        	        finally
+        	        {
+        	            this.End(__annot0);
+        	        }
+        	    }
+        	    else
+        	    {
+        	        // this.VisitToken(node.TInteger);
+        	    }
+        	        
+        	}
+        	finally
+        	{
+        	    this.End(__annot1);
+        	}
+        }
+
+        public virtual void VisitSingleExpressionBlock1Alt5(SingleExpressionBlock1Alt5Syntax node)
+        {
+        	var __annot1 = new ExpressionValueBinder();
+        	this.Begin(__annot1, node);
+        	try
+        	{
+        	    if (node.TString.GetCompilerKind() != CompilerSyntaxKind.None)
+        	    {
+        	        var __annot0 = new ValueBinder(type: typeof(string));
+        	        this.Begin(__annot0, node.TString);
+        	        try
+        	        {
+        	            // this.VisitToken(node.TString);
+        	        }
+        	        finally
+        	        {
+        	            this.End(__annot0);
+        	        }
+        	    }
+        	    else
+        	    {
+        	        // this.VisitToken(node.TString);
+        	    }
+        	        
+        	}
+        	finally
+        	{
+        	    this.End(__annot1);
+        	}
+        }
+
+        public virtual void VisitSingleExpressionBlock1Alt6(SingleExpressionBlock1Alt6Syntax node)
+        {
+        	var __annot0 = new ExpressionValueBinder();
+        	this.Begin(__annot0, node);
+        	try
+        	{
+        	    this.Visit(node.Qualifier);
+        	        
+        	}
+        	finally
+        	{
+        	    this.End(__annot0);
+        	}
+        }
+
+        public virtual void VisitSingleExpressionBlock1Tokens(SingleExpressionBlock1TokensSyntax node)
+        {
+        	var __annot0 = new ExpressionValueBinder();
+        	this.Begin(__annot0, node);
+        	try
+        	{
+        	        
+        	}
+        	finally
+        	{
+        	    this.End(__annot0);
+        	}
+        }
+
+        public virtual void VisitArrayExpressionBlock1(ArrayExpressionBlock1Syntax node)
+        {
+        	var singleExpressionListList = node.SingleExpressionList;
+        	for (var singleExpressionListIndex = 0; singleExpressionListIndex < singleExpressionListList.Count; ++singleExpressionListIndex)
+        	{
+        	    if (singleExpressionListIndex == 0)
+        	    {
+        	        var __annot0 = new PropertyBinder(name: "Items");
+        	        this.Begin(__annot0, node.SingleExpressionList[singleExpressionListIndex]);
+        	        try
+        	        {
+        	            this.Visit(node.SingleExpressionList[singleExpressionListIndex]);
         	        }
         	        finally
         	        {
@@ -2222,16 +2183,16 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
         	    else
         	    {
         	        var __annot1 = new PropertyBinder(name: "Items");
-        	        this.Begin(__annot1, node.ExpressionList[expressionListIndex]);
+        	        this.Begin(__annot1, node.SingleExpressionList[singleExpressionListIndex]);
         	        try
         	        {
-        	            this.Visit(node.ExpressionList[expressionListIndex]);
+        	            this.Visit(node.SingleExpressionList[singleExpressionListIndex]);
         	        }
         	        finally
         	        {
         	            this.End(__annot1);
         	        }
-        	        // this.VisitToken(node.ExpressionList.GetSeparator(expressionListIndex));
+        	        // this.VisitToken(node.SingleExpressionList.GetSeparator(singleExpressionListIndex));
         	    }
         	}
         	    
@@ -2262,24 +2223,15 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
 
         public virtual void VisitAnnotationArgumentBlock1(AnnotationArgumentBlock1Syntax node)
         {
-        	var __annot1 = new PropertyBinder(name: "NamedParameter");
-        	this.Begin(__annot1, node.NamedParameter);
+        	var __annot0 = new PropertyBinder(name: "Name");
+        	this.Begin(__annot0, node.Name);
         	try
         	{
-        	    var __annot0 = new AnnotationArgumentBinder();
-        	    this.Begin(__annot0, node.NamedParameter);
-        	    try
-        	    {
-        	        this.Visit(node.NamedParameter);
-        	    }
-        	    finally
-        	    {
-        	        this.End(__annot0);
-        	    }
+        	    this.Visit(node.Name);
         	}
         	finally
         	{
-        	    this.End(__annot1);
+        	    this.End(__annot0);
         	}
         	    
         }

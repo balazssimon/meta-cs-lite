@@ -60,18 +60,14 @@ LRange: StartChar=TString '..' EndChar=TString;
 //LSetRange:
 LBlock: '(' alternatives+=LAlternative ('|' alternatives+=LAlternative)* ')';
 
-Expression: NullExpression | BoolExpression | IntExpression | StringExpression | ReferenceExpression | ArrayExpression;
-NullExpression: 'null';
-BoolExpression: boolValue?='true' | 'false';
-IntExpression: intValue=TInteger;
-StringExpression: stringValue=TString;
-ReferenceExpression: symbolValue=[ConvertToExpectedType]Qualifier;
-ArrayExpression: '{' (items+=Expression (',' items+=Expression)*)? '}';
+Expression: SingleExpression | ArrayExpression;
+SingleExpression returns Expression: value=[ExpressionValue]('null' | 'true' | 'false' | TInteger | TString | Qualifier);
+ArrayExpression: '{' (items+=SingleExpression (',' items+=SingleExpression)*)? '}';
 
 ParserAnnotation returns MetaDslx.Bootstrap.MetaCompiler.Model.Annotation: '[' attributeClass=[Use(types:{Binder,MetaDslx.CodeAnalysis.Annotations.Annotation},suffixes:{Binder,Annotation})]Qualifier AnnotationArguments? ']';
 LexerAnnotation returns MetaDslx.Bootstrap.MetaCompiler.Model.Annotation: '[' attributeClass=[Use(types:{TokenKind,MetaDslx.CodeAnalysis.Annotations.Annotation},suffixes:{TokenKind,Annotation})]Qualifier AnnotationArguments? ']';
 part AnnotationArguments: '(' arguments+=AnnotationArgument (',' arguments+=AnnotationArgument)* ')';
-AnnotationArgument: (namedParameter=[AnnotationArgument]Identifier ':')? value=Expression;
+AnnotationArgument: (name=Name ':')? value=Expression;
 
 Assignment
 	: '=' => Assign

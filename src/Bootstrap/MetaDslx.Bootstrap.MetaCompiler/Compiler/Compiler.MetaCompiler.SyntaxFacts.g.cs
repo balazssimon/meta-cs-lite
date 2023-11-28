@@ -438,16 +438,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 					return "LRange";
 				case CompilerSyntaxKind.LReference: 
 					return "LReference";
-				case CompilerSyntaxKind.IntExpression: 
-					return "IntExpression";
-				case CompilerSyntaxKind.StringExpression: 
-					return "StringExpression";
-				case CompilerSyntaxKind.ReferenceExpression: 
-					return "ReferenceExpression";
+				case CompilerSyntaxKind.ExpressionAlt1: 
+					return "ExpressionAlt1";
 				case CompilerSyntaxKind.ArrayExpression: 
 					return "ArrayExpression";
-				case CompilerSyntaxKind.ExpressionTokens: 
-					return "ExpressionTokens";
+				case CompilerSyntaxKind.SingleExpression: 
+					return "SingleExpression";
 				case CompilerSyntaxKind.ParserAnnotation: 
 					return "ParserAnnotation";
 				case CompilerSyntaxKind.LexerAnnotation: 
@@ -506,6 +502,14 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 					return "LexerRuleBlock2";
 				case CompilerSyntaxKind.LBlockBlock1: 
 					return "LBlockBlock1";
+				case CompilerSyntaxKind.SingleExpressionBlock1Alt4: 
+					return "SingleExpressionBlock1Alt4";
+				case CompilerSyntaxKind.SingleExpressionBlock1Alt5: 
+					return "SingleExpressionBlock1Alt5";
+				case CompilerSyntaxKind.SingleExpressionBlock1Alt6: 
+					return "SingleExpressionBlock1Alt6";
+				case CompilerSyntaxKind.SingleExpressionBlock1Tokens: 
+					return "SingleExpressionBlock1Tokens";
 				case CompilerSyntaxKind.ArrayExpressionBlock1: 
 					return "ArrayExpressionBlock1";
 				case CompilerSyntaxKind.AnnotationArgumentsBlock1: 

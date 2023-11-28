@@ -1,5 +1,6 @@
 ﻿using MetaDslx.CodeAnalysis.PooledObjects;
 using MetaDslx.CodeAnalysis.Symbols;
+using MetaDslx.CodeAnalysis.Symbols.CSharp;
 using MetaDslx.CodeAnalysis.Symbols.Model;
 using MetaDslx.Modeling;
 using System;
@@ -10,6 +11,9 @@ using System.Xml.Linq;
 
 namespace MetaDslx.CodeAnalysis
 {
+    using INamedTypeSymbol = Microsoft.CodeAnalysis.INamedTypeSymbol;
+
+
     public struct MetaSymbol : IEquatable<MetaSymbol>
     {
         private object? _original;
@@ -24,14 +28,14 @@ namespace MetaDslx.CodeAnalysis
             _original = modelObject;
         }
 
-        private MetaSymbol(object value)
+        private MetaSymbol(object? value)
         {
             _original = value;
         }
 
         public static MetaSymbol FromSymbol(Symbol symbol) => new MetaSymbol(symbol);
         public static MetaSymbol FromModelObject(IModelObject modelObject) => new MetaSymbol(modelObject);
-        public static MetaSymbol FromValue(object value) => new MetaSymbol(value);
+        public static MetaSymbol FromValue(object? value) => new MetaSymbol(value);
 
         public bool InterlockedInitialize(MetaSymbol value)
         {
@@ -71,8 +75,19 @@ namespace MetaDslx.CodeAnalysis
         {
             get
             {
-                if (IsModelObject) return OriginalModelObject.Info.MetaType;
-                else return _original?.GetType();
+                if (IsModelObject)
+                {
+                    return OriginalModelObject.Info.MetaType;
+                }
+                else if (IsSymbol)
+                {
+                    if (_original is ICSharpSymbol csharpSymbol)
+                    {
+                        var parent = MetaType.FromTypeSymbol(OriginalSymbol?.ContainingSymbol as TypeSymbol);
+                        if (parent.IsEnum) return parent;
+                    }
+                }
+                return _original?.GetType();
             }
         }
 

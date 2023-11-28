@@ -23,12 +23,14 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
     {
         public new static class CompletionParts
         {
+            public static readonly CompletionPart StartComputingProperty_AttributeClass = AttributeSymbol.CompletionParts.StartComputingProperty_AttributeClass;
+            public static readonly CompletionPart FinishComputingProperty_AttributeClass = AttributeSymbol.CompletionParts.FinishComputingProperty_AttributeClass;
             public static readonly CompletionPart StartComputingProperty_Arguments = new CompletionPart(nameof(StartComputingProperty_Arguments));
             public static readonly CompletionPart FinishComputingProperty_Arguments = new CompletionPart(nameof(FinishComputingProperty_Arguments));
             public static readonly CompletionPart StartComputingProperty_ArgumentParameters = new CompletionPart(nameof(StartComputingProperty_ArgumentParameters));
             public static readonly CompletionPart FinishComputingProperty_ArgumentParameters = new CompletionPart(nameof(FinishComputingProperty_ArgumentParameters));
-            public static readonly CompletionPart StartComputingProperty_AttributeClass = AttributeSymbol.CompletionParts.StartComputingProperty_AttributeClass;
-            public static readonly CompletionPart FinishComputingProperty_AttributeClass = AttributeSymbol.CompletionParts.FinishComputingProperty_AttributeClass;
+            public static readonly CompletionPart StartComputingProperty_SelectedParameters = new CompletionPart(nameof(StartComputingProperty_SelectedParameters));
+            public static readonly CompletionPart FinishComputingProperty_SelectedParameters = new CompletionPart(nameof(FinishComputingProperty_SelectedParameters));
             public static readonly CompletionPart StartComputingProperty_Attributes = AttributeSymbol.CompletionParts.StartComputingProperty_Attributes;
             public static readonly CompletionPart FinishComputingProperty_Attributes = AttributeSymbol.CompletionParts.FinishComputingProperty_Attributes;
             public static readonly CompletionGraph CompletionGraph =
@@ -36,6 +38,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
                     StartComputingProperty_AttributeClass, FinishComputingProperty_AttributeClass,
                     StartComputingProperty_Arguments, FinishComputingProperty_Arguments,
                     StartComputingProperty_ArgumentParameters, FinishComputingProperty_ArgumentParameters,
+                    StartComputingProperty_SelectedParameters, FinishComputingProperty_SelectedParameters,
                     StartComputingProperty_Attributes, FinishComputingProperty_Attributes);
         }
 
@@ -160,6 +163,20 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
                 }
                 return true;
             }
+            else if (incompletePart == CompletionParts.StartComputingProperty_SelectedParameters || incompletePart == CompletionParts.FinishComputingProperty_SelectedParameters)
+            {
+                if (NotePartComplete(CompletionParts.StartComputingProperty_SelectedParameters))
+                {
+                    var diagnostics = DiagnosticBag.GetInstance();
+                    var selected = CompleteProperty_SelectedParameters(diagnostics, cancellationToken);
+                    _selectedConstructor = selected.Constructor;
+                    _selectedParameters = selected.Parameters;
+                    AddSymbolDiagnostics(diagnostics);
+                    diagnostics.Free();
+                    NotePartComplete(CompletionParts.FinishComputingProperty_SelectedParameters);
+                }
+                return true;
+            }
             else if (base.ForceCompletePart(ref incompletePart, locationOpt, cancellationToken))
             {
                 return true;
@@ -242,6 +259,32 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
             }
             argParams.Free();
             return argumentParameters.ToImmutableAndFree();
+        }
+
+        private (DeclaredSymbol? Constructor, ImmutableArray<DeclaredSymbol> Parameters) CompleteProperty_SelectedParameters(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        {
+            var valid = new bool[Constructors.Length];
+            for (int i = 0; i < valid.Length; ++i)
+            {
+                valid[i] = true;
+                var ctr = Constructors[i];
+                var parameters = Parameters[i];
+                for (int j = 0; j < Arguments.Length; ++j)
+                {
+                    var arg = Arguments[j];
+                    var argParams = ArgumentParameters[j];
+                    var argParam = argParams.FirstOrDefault(p => parameters.Contains(p));
+                    if (argParam is not null)
+                    {
+
+                    }
+                    else
+                    {
+                        valid[i] = false;
+                    }
+                }
+            }
+            return default;
         }
     }
 }

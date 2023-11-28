@@ -157,9 +157,10 @@ namespace MetaDslx.CodeAnalysis.Binding
                                 else if (value is Type typeValue) result.Add(MetaType.FromType(typeValue));
                                 else if (value is IModelObject mobjValue) result.Add(MetaType.FromModelObject(mobjValue));
                             }
-                            else if (propertyType == typeof(MetaSymbol) && value is IModelObject modelObject)
+                            else if (propertyType == typeof(MetaSymbol))
                             {
-                                result.Add(MetaSymbol.FromModelObject(modelObject));
+                                if (value is IModelObject modelObject) result.Add(MetaSymbol.FromModelObject(modelObject));
+                                else result.Add(MetaSymbol.FromValue(value));
                             }
                             else
                             {

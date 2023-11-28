@@ -569,22 +569,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
             return (LReferenceSyntax)CompilerLanguage.Instance.InternalSyntaxFactory.LReference((IdentifierGreen)rule.Green).CreateRed();
         }
 
-        public IntExpressionSyntax IntExpression(SyntaxToken intValue)
+        public ExpressionAlt1Syntax ExpressionAlt1(SingleExpressionSyntax singleExpression)
         {
-        	if (intValue.RawKind != (int)CompilerSyntaxKind.TInteger) throw new ArgumentException(nameof(intValue));
-            return (IntExpressionSyntax)CompilerLanguage.Instance.InternalSyntaxFactory.IntExpression((InternalSyntaxToken)intValue.Node).CreateRed();
-        }
-
-        public StringExpressionSyntax StringExpression(SyntaxToken stringValue)
-        {
-        	if (stringValue.RawKind != (int)CompilerSyntaxKind.TString) throw new ArgumentException(nameof(stringValue));
-            return (StringExpressionSyntax)CompilerLanguage.Instance.InternalSyntaxFactory.StringExpression((InternalSyntaxToken)stringValue.Node).CreateRed();
-        }
-
-        public ReferenceExpressionSyntax ReferenceExpression(QualifierSyntax symbolValue)
-        {
-        	if (symbolValue is null) throw new ArgumentNullException(nameof(symbolValue));
-            return (ReferenceExpressionSyntax)CompilerLanguage.Instance.InternalSyntaxFactory.ReferenceExpression((QualifierGreen)symbolValue.Green).CreateRed();
+        	if (singleExpression is null) throw new ArgumentNullException(nameof(singleExpression));
+            return (ExpressionAlt1Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.ExpressionAlt1((SingleExpressionGreen)singleExpression.Green).CreateRed();
         }
 
         public ArrayExpressionSyntax ArrayExpression(SyntaxToken tLBrace, ArrayExpressionBlock1Syntax arrayExpressionBlock1, SyntaxToken tRBrace)
@@ -599,10 +587,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
         	return this.ArrayExpression(this.Token(CompilerSyntaxKind.TLBrace), default, this.Token(CompilerSyntaxKind.TRBrace));
         }
 
-        public ExpressionTokensSyntax ExpressionTokens(SyntaxToken tokens)
+        public SingleExpressionSyntax SingleExpression(SingleExpressionBlock1Syntax value)
         {
-        	if (tokens.RawKind != (int)CompilerSyntaxKind.KNull && tokens.RawKind != (int)CompilerSyntaxKind.KTrue && tokens.RawKind != (int)CompilerSyntaxKind.KFalse) throw new ArgumentException(nameof(tokens));
-            return (ExpressionTokensSyntax)CompilerLanguage.Instance.InternalSyntaxFactory.ExpressionTokens((InternalSyntaxToken)tokens.Node).CreateRed();
+        	if (value is null) throw new ArgumentNullException(nameof(value));
+            return (SingleExpressionSyntax)CompilerLanguage.Instance.InternalSyntaxFactory.SingleExpression((SingleExpressionBlock1Green)value.Green).CreateRed();
         }
 
         public ParserAnnotationSyntax ParserAnnotation(SyntaxToken tLBracket, QualifierSyntax attributeClass, AnnotationArgumentsSyntax annotationArguments, SyntaxToken tRBracket)
@@ -882,9 +870,33 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
         	return this.LBlockBlock1(this.Token(CompilerSyntaxKind.TBar), alternatives);
         }
 
-        public ArrayExpressionBlock1Syntax ArrayExpressionBlock1(MetaDslx.CodeAnalysis.SeparatedSyntaxList<ExpressionSyntax> expressionList)
+        public SingleExpressionBlock1Alt4Syntax SingleExpressionBlock1Alt4(SyntaxToken tInteger)
         {
-            return (ArrayExpressionBlock1Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.ArrayExpressionBlock1(expressionList.Node.ToGreenSeparatedList<ExpressionGreen>(reversed: false)).CreateRed();
+        	if (tInteger.RawKind != (int)CompilerSyntaxKind.TInteger) throw new ArgumentException(nameof(tInteger));
+            return (SingleExpressionBlock1Alt4Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.SingleExpressionBlock1Alt4((InternalSyntaxToken)tInteger.Node).CreateRed();
+        }
+
+        public SingleExpressionBlock1Alt5Syntax SingleExpressionBlock1Alt5(SyntaxToken tString)
+        {
+        	if (tString.RawKind != (int)CompilerSyntaxKind.TString) throw new ArgumentException(nameof(tString));
+            return (SingleExpressionBlock1Alt5Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.SingleExpressionBlock1Alt5((InternalSyntaxToken)tString.Node).CreateRed();
+        }
+
+        public SingleExpressionBlock1Alt6Syntax SingleExpressionBlock1Alt6(QualifierSyntax qualifier)
+        {
+        	if (qualifier is null) throw new ArgumentNullException(nameof(qualifier));
+            return (SingleExpressionBlock1Alt6Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.SingleExpressionBlock1Alt6((QualifierGreen)qualifier.Green).CreateRed();
+        }
+
+        public SingleExpressionBlock1TokensSyntax SingleExpressionBlock1Tokens(SyntaxToken tokens)
+        {
+        	if (tokens.RawKind != (int)CompilerSyntaxKind.KNull && tokens.RawKind != (int)CompilerSyntaxKind.KTrue && tokens.RawKind != (int)CompilerSyntaxKind.KFalse) throw new ArgumentException(nameof(tokens));
+            return (SingleExpressionBlock1TokensSyntax)CompilerLanguage.Instance.InternalSyntaxFactory.SingleExpressionBlock1Tokens((InternalSyntaxToken)tokens.Node).CreateRed();
+        }
+
+        public ArrayExpressionBlock1Syntax ArrayExpressionBlock1(MetaDslx.CodeAnalysis.SeparatedSyntaxList<SingleExpressionSyntax> singleExpressionList)
+        {
+            return (ArrayExpressionBlock1Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.ArrayExpressionBlock1(singleExpressionList.Node.ToGreenSeparatedList<SingleExpressionGreen>(reversed: false)).CreateRed();
         }
 
         public AnnotationArgumentsBlock1Syntax AnnotationArgumentsBlock1(SyntaxToken tComma, AnnotationArgumentSyntax arguments)
@@ -899,16 +911,16 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
         	return this.AnnotationArgumentsBlock1(this.Token(CompilerSyntaxKind.TComma), arguments);
         }
 
-        public AnnotationArgumentBlock1Syntax AnnotationArgumentBlock1(IdentifierSyntax namedParameter, SyntaxToken tColon)
+        public AnnotationArgumentBlock1Syntax AnnotationArgumentBlock1(NameSyntax name, SyntaxToken tColon)
         {
-        	if (namedParameter is null) throw new ArgumentNullException(nameof(namedParameter));
+        	if (name is null) throw new ArgumentNullException(nameof(name));
         	if (tColon.RawKind != (int)CompilerSyntaxKind.TColon) throw new ArgumentException(nameof(tColon));
-            return (AnnotationArgumentBlock1Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.AnnotationArgumentBlock1((IdentifierGreen)namedParameter.Green, (InternalSyntaxToken)tColon.Node).CreateRed();
+            return (AnnotationArgumentBlock1Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.AnnotationArgumentBlock1((NameGreen)name.Green, (InternalSyntaxToken)tColon.Node).CreateRed();
         }
         
-        public AnnotationArgumentBlock1Syntax AnnotationArgumentBlock1(IdentifierSyntax namedParameter)
+        public AnnotationArgumentBlock1Syntax AnnotationArgumentBlock1(NameSyntax name)
         {
-        	return this.AnnotationArgumentBlock1(namedParameter, this.Token(CompilerSyntaxKind.TColon));
+        	return this.AnnotationArgumentBlock1(name, this.Token(CompilerSyntaxKind.TColon));
         }
 
         public QualifierBlock1Syntax QualifierBlock1(SyntaxToken tDot, IdentifierSyntax identifier)
@@ -959,14 +971,14 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
         	return this.LexerRuleBlock1Alt1Block1(this.Token(CompilerSyntaxKind.KReturns), returnType);
         }
 
-        public ArrayExpressionBlock1Block1Syntax ArrayExpressionBlock1Block1(SyntaxToken tComma, ExpressionSyntax items)
+        public ArrayExpressionBlock1Block1Syntax ArrayExpressionBlock1Block1(SyntaxToken tComma, SingleExpressionSyntax items)
         {
         	if (tComma.RawKind != (int)CompilerSyntaxKind.TComma) throw new ArgumentException(nameof(tComma));
         	if (items is null) throw new ArgumentNullException(nameof(items));
-            return (ArrayExpressionBlock1Block1Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.ArrayExpressionBlock1Block1((InternalSyntaxToken)tComma.Node, (ExpressionGreen)items.Green).CreateRed();
+            return (ArrayExpressionBlock1Block1Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.ArrayExpressionBlock1Block1((InternalSyntaxToken)tComma.Node, (SingleExpressionGreen)items.Green).CreateRed();
         }
         
-        public ArrayExpressionBlock1Block1Syntax ArrayExpressionBlock1Block1(ExpressionSyntax items)
+        public ArrayExpressionBlock1Block1Syntax ArrayExpressionBlock1Block1(SingleExpressionSyntax items)
         {
         	return this.ArrayExpressionBlock1Block1(this.Token(CompilerSyntaxKind.TComma), items);
         }
@@ -998,11 +1010,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		        typeof(LWildCardSyntax),
 		        typeof(LRangeSyntax),
 		        typeof(LReferenceSyntax),
-		        typeof(IntExpressionSyntax),
-		        typeof(StringExpressionSyntax),
-		        typeof(ReferenceExpressionSyntax),
+		        typeof(ExpressionAlt1Syntax),
 		        typeof(ArrayExpressionSyntax),
-		        typeof(ExpressionTokensSyntax),
+		        typeof(SingleExpressionSyntax),
 		        typeof(ParserAnnotationSyntax),
 		        typeof(LexerAnnotationSyntax),
 		        typeof(AnnotationArgumentsSyntax),
@@ -1032,6 +1042,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		        typeof(LexerRuleBlock1Alt3Syntax),
 		        typeof(LexerRuleBlock2Syntax),
 		        typeof(LBlockBlock1Syntax),
+		        typeof(SingleExpressionBlock1Alt4Syntax),
+		        typeof(SingleExpressionBlock1Alt5Syntax),
+		        typeof(SingleExpressionBlock1Alt6Syntax),
+		        typeof(SingleExpressionBlock1TokensSyntax),
 		        typeof(ArrayExpressionBlock1Syntax),
 		        typeof(AnnotationArgumentsBlock1Syntax),
 		        typeof(AnnotationArgumentBlock1Syntax),

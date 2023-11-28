@@ -2218,8 +2218,7 @@ namespace MetaDslx.Languages.MetaCompiler.Syntax
                 }
                 if (propertyTypeName == "MetaDslx.CodeAnalysis.MetaSymbol")
                 {
-                    if (valueType.IsSymbol || valueType.IsModelObject ||
-                        valueTypeName == "MetaDslx.CodeAnalysis.MetaSymbol") return;
+                    return;
                 }
                 var conversion = _compilation.ClassifyConversion(valueType.CoreType, property.PropertyType.CoreType);
                 if (!conversion.IsImplicit)

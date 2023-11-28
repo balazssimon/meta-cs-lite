@@ -24,6 +24,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             foreach (var ctoken in ctokens)
             {
                 var rtoken = f.Token();
+                rlang.Tokens.Add(rtoken);
                 rtoken.Name = ctoken.Name;
                 rtoken.IsTrivia = ctoken.IsHidden;
                 rtoken.IsFixed = ctoken.IsFixed;
@@ -31,8 +32,25 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                 var rtokenKindSymbol = ctoken.Annotations.Where(a => a.AttributeClass?.Name?.EndsWith("TokenKind") ?? false).FirstOrDefault()?.AttributeClass;
                 if (rtokenKindSymbol is not null)
                 {
-                    rtoken.TokenKind = SymbolDisplayFormat.FullyQualifiedFormat.ToString(rtokenKindSymbol);
-                    rlang.TokenKinds.Add(rtoken.TokenKind);
+                    var kind = rlang.TokenKinds.FirstOrDefault(tk => tk.Name == rtokenKindSymbol.Name);
+                    if (kind is null)
+                    {
+                        kind = f.TokenKind();
+                        kind.Name = rtokenKindSymbol.Name;
+                        kind.TypeName = SymbolDisplayFormat.FullyQualifiedFormat.ToString(rtokenKindSymbol);
+                        rlang.TokenKinds.Add(kind);
+                    }
+                    rtoken.TokenKind = kind;
+                }
+                foreach (var cbinder in ctoken.Annotations.Where(a => a.AttributeClass?.Name?.EndsWith("Binder") ?? false))
+                {
+                    var rbinder = f.Binder();
+                    rbinder.FullName = SymbolDisplayFormat.FullyQualifiedFormat.ToString(cbinder.AttributeClass);
+                    foreach (var carg in cbinder.Arguments)
+                    {
+                        var rarg = f.BinderArgument();
+                        //rarg.Name = carg.
+                    }
                 }
             }
             return result;

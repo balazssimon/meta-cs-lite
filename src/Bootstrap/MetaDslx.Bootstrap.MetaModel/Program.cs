@@ -13,6 +13,7 @@ using System.Xml.Linq;
 using MetaDslx.Languages.MetaModel.Model;
 using MetaDslx.CodeAnalysis.Symbols;
 using MetaDslx.Bootstrap.MetaCompiler.Model;
+using MetaDslx.Modeling;
 
 //CompileMetaModel("Meta", @"..\..\..\..\..\Main\MetaDslx.Languages.MetaModel\Model", @"..\..\..\..\..\Main\MetaDslx.Languages.MetaModel\Model");
 //CompileMetaCompiler("Meta", @"..\..\..\..\..\Main\MetaDslx.Languages.MetaModel\Language", @"..\..\..\..\..\Main\MetaDslx.Languages.MetaModel\Compiler");
@@ -134,6 +135,8 @@ namespace MyCode
     var mlangModel = mlangCompilation.SourceModule.Model;
     var rlangModel = new CompilerToRoslyn().Convert(mlangModel);
     Console.WriteLine(rlangModel);
+    var xmi = new XmiSerializer();
+    xmi.WriteModelToFile(@"..\..\..\Compiler2.xmi", rlangModel);
 }
 //*/
 static void CompileAll(string mmName, string mmInputDir, string mmOutputDir, string mlangName, string mlangInputDir, string mlangOutputDir)

@@ -2,32 +2,37 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Roslyn;
 
 metamodel Roslyn;
 
-class Annotation
+class Binder
 {
-	string FullName;
-	contains AnnotationArgument[] Arguments;
+	string TypeName;
+	contains BinderArgument[] Arguments;
 }
 
-class AnnotationArgument
+class BinderArgument
 {
 	string Name;
 	string Value;
 }
 
+class TokenKind
+{
+	string Name;
+	string TypeName;
+}
+
 class Language
 {
-	contains Annotation[] Annotations;
 	string Name;
-	string[] TokenKinds;
+	contains TokenKind[] TokenKinds;
 	contains Token[] Tokens;
 	contains Rule[] Rules;
 }
 
 class Token
 {
-	contains Annotation[] Annotations;
+	contains Binder[] Binders;
 	string Name;
-	string TokenKind;
+	TokenKind TokenKind;
 	bool IsTrivia;
 	bool IsFixed;
 	string? FixedText;
@@ -35,7 +40,6 @@ class Token
 
 class Rule
 {
-	contains Annotation[] Annotations;
 	string Name;
 	contains Alternative[] Alternatives;
 }
@@ -43,13 +47,13 @@ class Rule
 class Alternative
 {
 	string Name;
-	contains Annotation[] Annotations;
+	contains Binder[] Binders;
 	contains Element[] Elements;
 }
 
 class Element
 {
-	contains Annotation[] Annotations;
+	contains Binder[] Binders;
 	string Name;
 	MetaDslx.Bootstrap.MetaCompiler.Model.Assignment Assignment;
 	contains ElementValue Value;
@@ -58,7 +62,7 @@ class Element
 
 abstract class ElementValue
 {
-	contains Annotation[] Annotations;
+	contains Binder[] Binders;
 }
 
 class RuleRef : ElementValue

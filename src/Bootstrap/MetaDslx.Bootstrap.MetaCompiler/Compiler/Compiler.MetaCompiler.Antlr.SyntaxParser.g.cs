@@ -495,25 +495,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
                 else rule = IdentifierGreen.__Missing;
             	return _factory.LReference(rule);
             }
-            public override GreenNode? VisitPr_IntExpression(CompilerParser.Pr_IntExpressionContext? context)
+            public override GreenNode? VisitPr_ExpressionAlt1(CompilerParser.Pr_ExpressionAlt1Context? context)
             {
-               	if (context == null) return IntExpressionGreen.__Missing;
-                var intValue = this.VisitTerminal(context.intValueAntlr1, CompilerSyntaxKind.TInteger);
-            	return _factory.IntExpression((InternalSyntaxToken)intValue);
-            }
-            public override GreenNode? VisitPr_StringExpression(CompilerParser.Pr_StringExpressionContext? context)
-            {
-               	if (context == null) return StringExpressionGreen.__Missing;
-                var stringValue = this.VisitTerminal(context.stringValueAntlr1, CompilerSyntaxKind.TString);
-            	return _factory.StringExpression((InternalSyntaxToken)stringValue);
-            }
-            public override GreenNode? VisitPr_ReferenceExpression(CompilerParser.Pr_ReferenceExpressionContext? context)
-            {
-               	if (context == null) return ReferenceExpressionGreen.__Missing;
-                QualifierGreen? symbolValue = null;
-                if (context.symbolValueAntlr1 is not null) symbolValue = (QualifierGreen?)this.Visit(context.symbolValueAntlr1) ?? QualifierGreen.__Missing;
-                else symbolValue = QualifierGreen.__Missing;
-            	return _factory.ReferenceExpression(symbolValue);
+               	if (context == null) return ExpressionAlt1Green.__Missing;
+                SingleExpressionGreen? singleExpression = null;
+                if (context.singleExpressionAntlr1 is not null) singleExpression = (SingleExpressionGreen?)this.Visit(context.singleExpressionAntlr1) ?? SingleExpressionGreen.__Missing;
+                else singleExpression = SingleExpressionGreen.__Missing;
+            	return _factory.ExpressionAlt1(singleExpression);
             }
             public override GreenNode? VisitPr_ArrayExpression(CompilerParser.Pr_ArrayExpressionContext? context)
             {
@@ -524,14 +512,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
                 var tRBrace = this.VisitTerminal(context.tRBrace, CompilerSyntaxKind.TRBrace);
             	return _factory.ArrayExpression((InternalSyntaxToken)tLBrace, arrayExpressionBlock1, (InternalSyntaxToken)tRBrace);
             }
-            public override GreenNode? VisitPr_ExpressionTokens(CompilerParser.Pr_ExpressionTokensContext? context)
+            public override GreenNode? VisitPr_SingleExpression(CompilerParser.Pr_SingleExpressionContext? context)
             {
-               	if (context == null) return ExpressionTokensGreen.__Missing;
-                InternalSyntaxToken? tokens = null;
-                if (context.kNull is not null) tokens = (InternalSyntaxToken)this.VisitTerminal(context.kNull);
-                if (context.boolValue is not null) tokens = (InternalSyntaxToken)this.VisitTerminal(context.boolValue);
-                if (context.kFalse is not null) tokens = (InternalSyntaxToken)this.VisitTerminal(context.kFalse);
-            	return _factory.ExpressionTokens((InternalSyntaxToken)tokens);
+               	if (context == null) return SingleExpressionGreen.__Missing;
+                SingleExpressionBlock1Green? value = null;
+                if (context.valueAntlr1 is not null) value = (SingleExpressionBlock1Green?)this.Visit(context.valueAntlr1) ?? SingleExpressionBlock1Green.__Missing;
+                else value = SingleExpressionBlock1Green.__Missing;
+            	return _factory.SingleExpression(value);
             }
             public override GreenNode? VisitPr_ParserAnnotation(CompilerParser.Pr_ParserAnnotationContext? context)
             {
@@ -867,29 +854,58 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
                 else alternatives = LAlternativeGreen.__Missing;
             	return _factory.LBlockBlock1((InternalSyntaxToken)tBar, alternatives);
             }
+            public override GreenNode? VisitPr_SingleExpressionBlock1Alt4(CompilerParser.Pr_SingleExpressionBlock1Alt4Context? context)
+            {
+               	if (context == null) return SingleExpressionBlock1Alt4Green.__Missing;
+                var tInteger = this.VisitTerminal(context.tIntegerAntlr1, CompilerSyntaxKind.TInteger);
+            	return _factory.SingleExpressionBlock1Alt4((InternalSyntaxToken)tInteger);
+            }
+            public override GreenNode? VisitPr_SingleExpressionBlock1Alt5(CompilerParser.Pr_SingleExpressionBlock1Alt5Context? context)
+            {
+               	if (context == null) return SingleExpressionBlock1Alt5Green.__Missing;
+                var tString = this.VisitTerminal(context.tStringAntlr1, CompilerSyntaxKind.TString);
+            	return _factory.SingleExpressionBlock1Alt5((InternalSyntaxToken)tString);
+            }
+            public override GreenNode? VisitPr_SingleExpressionBlock1Alt6(CompilerParser.Pr_SingleExpressionBlock1Alt6Context? context)
+            {
+               	if (context == null) return SingleExpressionBlock1Alt6Green.__Missing;
+                QualifierGreen? qualifier = null;
+                if (context.qualifierAntlr1 is not null) qualifier = (QualifierGreen?)this.Visit(context.qualifierAntlr1) ?? QualifierGreen.__Missing;
+                else qualifier = QualifierGreen.__Missing;
+            	return _factory.SingleExpressionBlock1Alt6(qualifier);
+            }
+            public override GreenNode? VisitPr_SingleExpressionBlock1Tokens(CompilerParser.Pr_SingleExpressionBlock1TokensContext? context)
+            {
+               	if (context == null) return SingleExpressionBlock1TokensGreen.__Missing;
+                InternalSyntaxToken? tokens = null;
+                if (context.kNull is not null) tokens = (InternalSyntaxToken)this.VisitTerminal(context.kNull);
+                if (context.kTrue is not null) tokens = (InternalSyntaxToken)this.VisitTerminal(context.kTrue);
+                if (context.kFalse is not null) tokens = (InternalSyntaxToken)this.VisitTerminal(context.kFalse);
+            	return _factory.SingleExpressionBlock1Tokens((InternalSyntaxToken)tokens);
+            }
             public override GreenNode? VisitPr_ArrayExpressionBlock1(CompilerParser.Pr_ArrayExpressionBlock1Context? context)
             {
                	if (context == null) return ArrayExpressionBlock1Green.__Missing;
-                var expressionListBuilder = _pool.AllocateSeparated<ExpressionGreen>(reversed: false);
+                var singleExpressionListBuilder = _pool.AllocateSeparated<SingleExpressionGreen>(reversed: false);
                 var itemsContext = context.itemsAntlr1;
-                if (itemsContext is not null) expressionListBuilder.Add((ExpressionGreen?)this.Visit(itemsContext) ?? ExpressionGreen.__Missing);
-                else expressionListBuilder.Add(ExpressionGreen.__Missing);
-                var expressionListContext = context._arrayExpressionBlock1Block1Antlr1;
-                for (int i = 0; i < expressionListContext.Count; ++i)
+                if (itemsContext is not null) singleExpressionListBuilder.Add((SingleExpressionGreen?)this.Visit(itemsContext) ?? SingleExpressionGreen.__Missing);
+                else singleExpressionListBuilder.Add(SingleExpressionGreen.__Missing);
+                var singleExpressionListContext = context._arrayExpressionBlock1Block1Antlr1;
+                for (int i = 0; i < singleExpressionListContext.Count; ++i)
                 {
-                    var itemContext = expressionListContext[i];
+                    var itemContext = singleExpressionListContext[i];
                     if (itemContext is not null)
                     {
                         var item = itemContext.itemsAntlr1;
                         var separator = itemContext.tComma;
-                        expressionListBuilder.AddSeparator(this.VisitTerminal(separator, CompilerSyntaxKind.TComma));
-                        if (item is not null) expressionListBuilder.Add((ExpressionGreen?)this.Visit(item) ?? ExpressionGreen.__Missing);
-                        else expressionListBuilder.Add(ExpressionGreen.__Missing);
+                        singleExpressionListBuilder.AddSeparator(this.VisitTerminal(separator, CompilerSyntaxKind.TComma));
+                        if (item is not null) singleExpressionListBuilder.Add((SingleExpressionGreen?)this.Visit(item) ?? SingleExpressionGreen.__Missing);
+                        else singleExpressionListBuilder.Add(SingleExpressionGreen.__Missing);
                     }
                 }
-                var expressionList = expressionListBuilder.ToList();
-                _pool.Free(expressionListBuilder);
-            	return _factory.ArrayExpressionBlock1(expressionList);
+                var singleExpressionList = singleExpressionListBuilder.ToList();
+                _pool.Free(singleExpressionListBuilder);
+            	return _factory.ArrayExpressionBlock1(singleExpressionList);
             }
             public override GreenNode? VisitPr_AnnotationArgumentsBlock1(CompilerParser.Pr_AnnotationArgumentsBlock1Context? context)
             {
@@ -903,11 +919,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
             public override GreenNode? VisitPr_AnnotationArgumentBlock1(CompilerParser.Pr_AnnotationArgumentBlock1Context? context)
             {
                	if (context == null) return AnnotationArgumentBlock1Green.__Missing;
-                IdentifierGreen? namedParameter = null;
-                if (context.namedParameterAntlr1 is not null) namedParameter = (IdentifierGreen?)this.Visit(context.namedParameterAntlr1) ?? IdentifierGreen.__Missing;
-                else namedParameter = IdentifierGreen.__Missing;
+                NameGreen? name = null;
+                if (context.nameAntlr1 is not null) name = (NameGreen?)this.Visit(context.nameAntlr1) ?? NameGreen.__Missing;
+                else name = NameGreen.__Missing;
                 var tColon = this.VisitTerminal(context.tColon, CompilerSyntaxKind.TColon);
-            	return _factory.AnnotationArgumentBlock1(namedParameter, (InternalSyntaxToken)tColon);
+            	return _factory.AnnotationArgumentBlock1(name, (InternalSyntaxToken)tColon);
             }
             public override GreenNode? VisitPr_QualifierBlock1(CompilerParser.Pr_QualifierBlock1Context? context)
             {
@@ -949,9 +965,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
             {
                	if (context == null) return ArrayExpressionBlock1Block1Green.__Missing;
                 var tComma = this.VisitTerminal(context.tComma, CompilerSyntaxKind.TComma);
-                ExpressionGreen? items = null;
-                if (context.itemsAntlr1 is not null) items = (ExpressionGreen?)this.Visit(context.itemsAntlr1) ?? ExpressionGreen.__Missing;
-                else items = ExpressionGreen.__Missing;
+                SingleExpressionGreen? items = null;
+                if (context.itemsAntlr1 is not null) items = (SingleExpressionGreen?)this.Visit(context.itemsAntlr1) ?? SingleExpressionGreen.__Missing;
+                else items = SingleExpressionGreen.__Missing;
             	return _factory.ArrayExpressionBlock1Block1((InternalSyntaxToken)tComma, items);
             }
         }

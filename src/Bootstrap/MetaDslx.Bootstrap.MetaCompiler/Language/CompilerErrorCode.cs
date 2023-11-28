@@ -15,6 +15,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler
         public static readonly DiagnosticDescriptor ERR_IncompatibleAltReturnType = DiagnosticDescriptor.Error(nameof(ERR_IncompatibleAltReturnType), "Incompatible alt return type", "The return type '{0}' of the alternative '{1}' is not assignable to the return type '{2}' of the rule '{3}'");
 
         /// <summary>
+        /// The return value '{0}' of type '{1}' in the alternative '{2}' is not assignable to the return type '{3}' of the alternative
+        /// </summary>
+        public static readonly DiagnosticDescriptor ERR_IncompatibleAltReturnValue = DiagnosticDescriptor.Error(nameof(ERR_IncompatibleAltReturnValue), "Incompatible alt return value", "The return value '{0}' of type '{1}' in the alternative '{2}' is not assignable to the return type '{3}' of the alternative");
+
+        /// <summary>
         /// Collection property '{0}' must be assigned using the '+=' operator
         /// </summary>
         public static readonly DiagnosticDescriptor ERR_CollectionPropertyWrongAssignment = DiagnosticDescriptor.Error(nameof(ERR_CollectionPropertyWrongAssignment), "Collection property wrong assignment", "Collection property '{0}' must be assigned using the '+=' operator");

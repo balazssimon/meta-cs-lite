@@ -40,11 +40,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		void VisitLWildCard(LWildCardSyntax node);
 		void VisitLRange(LRangeSyntax node);
 		void VisitLReference(LReferenceSyntax node);
-		void VisitIntExpression(IntExpressionSyntax node);
-		void VisitStringExpression(StringExpressionSyntax node);
-		void VisitReferenceExpression(ReferenceExpressionSyntax node);
+		void VisitExpressionAlt1(ExpressionAlt1Syntax node);
 		void VisitArrayExpression(ArrayExpressionSyntax node);
-		void VisitExpressionTokens(ExpressionTokensSyntax node);
+		void VisitSingleExpression(SingleExpressionSyntax node);
 		void VisitParserAnnotation(ParserAnnotationSyntax node);
 		void VisitLexerAnnotation(LexerAnnotationSyntax node);
 		void VisitAnnotationArguments(AnnotationArgumentsSyntax node);
@@ -74,6 +72,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		void VisitLexerRuleBlock1Alt3(LexerRuleBlock1Alt3Syntax node);
 		void VisitLexerRuleBlock2(LexerRuleBlock2Syntax node);
 		void VisitLBlockBlock1(LBlockBlock1Syntax node);
+		void VisitSingleExpressionBlock1Alt4(SingleExpressionBlock1Alt4Syntax node);
+		void VisitSingleExpressionBlock1Alt5(SingleExpressionBlock1Alt5Syntax node);
+		void VisitSingleExpressionBlock1Alt6(SingleExpressionBlock1Alt6Syntax node);
+		void VisitSingleExpressionBlock1Tokens(SingleExpressionBlock1TokensSyntax node);
 		void VisitArrayExpressionBlock1(ArrayExpressionBlock1Syntax node);
 		void VisitAnnotationArgumentsBlock1(AnnotationArgumentsBlock1Syntax node);
 		void VisitAnnotationArgumentBlock1(AnnotationArgumentBlock1Syntax node);
@@ -206,17 +208,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		    this.DefaultVisit(node);
 		}
 
-		public virtual void VisitIntExpression(IntExpressionSyntax node)
-		{
-		    this.DefaultVisit(node);
-		}
-
-		public virtual void VisitStringExpression(StringExpressionSyntax node)
-		{
-		    this.DefaultVisit(node);
-		}
-
-		public virtual void VisitReferenceExpression(ReferenceExpressionSyntax node)
+		public virtual void VisitExpressionAlt1(ExpressionAlt1Syntax node)
 		{
 		    this.DefaultVisit(node);
 		}
@@ -226,7 +218,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		    this.DefaultVisit(node);
 		}
 
-		public virtual void VisitExpressionTokens(ExpressionTokensSyntax node)
+		public virtual void VisitSingleExpression(SingleExpressionSyntax node)
 		{
 		    this.DefaultVisit(node);
 		}
@@ -376,6 +368,26 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		    this.DefaultVisit(node);
 		}
 
+		public virtual void VisitSingleExpressionBlock1Alt4(SingleExpressionBlock1Alt4Syntax node)
+		{
+		    this.DefaultVisit(node);
+		}
+
+		public virtual void VisitSingleExpressionBlock1Alt5(SingleExpressionBlock1Alt5Syntax node)
+		{
+		    this.DefaultVisit(node);
+		}
+
+		public virtual void VisitSingleExpressionBlock1Alt6(SingleExpressionBlock1Alt6Syntax node)
+		{
+		    this.DefaultVisit(node);
+		}
+
+		public virtual void VisitSingleExpressionBlock1Tokens(SingleExpressionBlock1TokensSyntax node)
+		{
+		    this.DefaultVisit(node);
+		}
+
 		public virtual void VisitArrayExpressionBlock1(ArrayExpressionBlock1Syntax node)
 		{
 		    this.DefaultVisit(node);
@@ -443,11 +455,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		TResult VisitLWildCard(LWildCardSyntax node);
 		TResult VisitLRange(LRangeSyntax node);
 		TResult VisitLReference(LReferenceSyntax node);
-		TResult VisitIntExpression(IntExpressionSyntax node);
-		TResult VisitStringExpression(StringExpressionSyntax node);
-		TResult VisitReferenceExpression(ReferenceExpressionSyntax node);
+		TResult VisitExpressionAlt1(ExpressionAlt1Syntax node);
 		TResult VisitArrayExpression(ArrayExpressionSyntax node);
-		TResult VisitExpressionTokens(ExpressionTokensSyntax node);
+		TResult VisitSingleExpression(SingleExpressionSyntax node);
 		TResult VisitParserAnnotation(ParserAnnotationSyntax node);
 		TResult VisitLexerAnnotation(LexerAnnotationSyntax node);
 		TResult VisitAnnotationArguments(AnnotationArgumentsSyntax node);
@@ -477,6 +487,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		TResult VisitLexerRuleBlock1Alt3(LexerRuleBlock1Alt3Syntax node);
 		TResult VisitLexerRuleBlock2(LexerRuleBlock2Syntax node);
 		TResult VisitLBlockBlock1(LBlockBlock1Syntax node);
+		TResult VisitSingleExpressionBlock1Alt4(SingleExpressionBlock1Alt4Syntax node);
+		TResult VisitSingleExpressionBlock1Alt5(SingleExpressionBlock1Alt5Syntax node);
+		TResult VisitSingleExpressionBlock1Alt6(SingleExpressionBlock1Alt6Syntax node);
+		TResult VisitSingleExpressionBlock1Tokens(SingleExpressionBlock1TokensSyntax node);
 		TResult VisitArrayExpressionBlock1(ArrayExpressionBlock1Syntax node);
 		TResult VisitAnnotationArgumentsBlock1(AnnotationArgumentsBlock1Syntax node);
 		TResult VisitAnnotationArgumentBlock1(AnnotationArgumentBlock1Syntax node);
@@ -609,17 +623,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		    return this.DefaultVisit(node);
 		}
 
-		public virtual TResult VisitIntExpression(IntExpressionSyntax node)
-		{
-		    return this.DefaultVisit(node);
-		}
-
-		public virtual TResult VisitStringExpression(StringExpressionSyntax node)
-		{
-		    return this.DefaultVisit(node);
-		}
-
-		public virtual TResult VisitReferenceExpression(ReferenceExpressionSyntax node)
+		public virtual TResult VisitExpressionAlt1(ExpressionAlt1Syntax node)
 		{
 		    return this.DefaultVisit(node);
 		}
@@ -629,7 +633,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		    return this.DefaultVisit(node);
 		}
 
-		public virtual TResult VisitExpressionTokens(ExpressionTokensSyntax node)
+		public virtual TResult VisitSingleExpression(SingleExpressionSyntax node)
 		{
 		    return this.DefaultVisit(node);
 		}
@@ -779,6 +783,26 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		    return this.DefaultVisit(node);
 		}
 
+		public virtual TResult VisitSingleExpressionBlock1Alt4(SingleExpressionBlock1Alt4Syntax node)
+		{
+		    return this.DefaultVisit(node);
+		}
+
+		public virtual TResult VisitSingleExpressionBlock1Alt5(SingleExpressionBlock1Alt5Syntax node)
+		{
+		    return this.DefaultVisit(node);
+		}
+
+		public virtual TResult VisitSingleExpressionBlock1Alt6(SingleExpressionBlock1Alt6Syntax node)
+		{
+		    return this.DefaultVisit(node);
+		}
+
+		public virtual TResult VisitSingleExpressionBlock1Tokens(SingleExpressionBlock1TokensSyntax node)
+		{
+		    return this.DefaultVisit(node);
+		}
+
 		public virtual TResult VisitArrayExpressionBlock1(ArrayExpressionBlock1Syntax node)
 		{
 		    return this.DefaultVisit(node);
@@ -846,11 +870,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		TResult VisitLWildCard(LWildCardSyntax node, TArg argument);
 		TResult VisitLRange(LRangeSyntax node, TArg argument);
 		TResult VisitLReference(LReferenceSyntax node, TArg argument);
-		TResult VisitIntExpression(IntExpressionSyntax node, TArg argument);
-		TResult VisitStringExpression(StringExpressionSyntax node, TArg argument);
-		TResult VisitReferenceExpression(ReferenceExpressionSyntax node, TArg argument);
+		TResult VisitExpressionAlt1(ExpressionAlt1Syntax node, TArg argument);
 		TResult VisitArrayExpression(ArrayExpressionSyntax node, TArg argument);
-		TResult VisitExpressionTokens(ExpressionTokensSyntax node, TArg argument);
+		TResult VisitSingleExpression(SingleExpressionSyntax node, TArg argument);
 		TResult VisitParserAnnotation(ParserAnnotationSyntax node, TArg argument);
 		TResult VisitLexerAnnotation(LexerAnnotationSyntax node, TArg argument);
 		TResult VisitAnnotationArguments(AnnotationArgumentsSyntax node, TArg argument);
@@ -880,6 +902,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		TResult VisitLexerRuleBlock1Alt3(LexerRuleBlock1Alt3Syntax node, TArg argument);
 		TResult VisitLexerRuleBlock2(LexerRuleBlock2Syntax node, TArg argument);
 		TResult VisitLBlockBlock1(LBlockBlock1Syntax node, TArg argument);
+		TResult VisitSingleExpressionBlock1Alt4(SingleExpressionBlock1Alt4Syntax node, TArg argument);
+		TResult VisitSingleExpressionBlock1Alt5(SingleExpressionBlock1Alt5Syntax node, TArg argument);
+		TResult VisitSingleExpressionBlock1Alt6(SingleExpressionBlock1Alt6Syntax node, TArg argument);
+		TResult VisitSingleExpressionBlock1Tokens(SingleExpressionBlock1TokensSyntax node, TArg argument);
 		TResult VisitArrayExpressionBlock1(ArrayExpressionBlock1Syntax node, TArg argument);
 		TResult VisitAnnotationArgumentsBlock1(AnnotationArgumentsBlock1Syntax node, TArg argument);
 		TResult VisitAnnotationArgumentBlock1(AnnotationArgumentBlock1Syntax node, TArg argument);
@@ -1012,17 +1038,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		    return this.DefaultVisit(node, argument);
 		}
 
-		public virtual TResult VisitIntExpression(IntExpressionSyntax node, TArg argument)
-		{
-		    return this.DefaultVisit(node, argument);
-		}
-
-		public virtual TResult VisitStringExpression(StringExpressionSyntax node, TArg argument)
-		{
-		    return this.DefaultVisit(node, argument);
-		}
-
-		public virtual TResult VisitReferenceExpression(ReferenceExpressionSyntax node, TArg argument)
+		public virtual TResult VisitExpressionAlt1(ExpressionAlt1Syntax node, TArg argument)
 		{
 		    return this.DefaultVisit(node, argument);
 		}
@@ -1032,7 +1048,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		    return this.DefaultVisit(node, argument);
 		}
 
-		public virtual TResult VisitExpressionTokens(ExpressionTokensSyntax node, TArg argument)
+		public virtual TResult VisitSingleExpression(SingleExpressionSyntax node, TArg argument)
 		{
 		    return this.DefaultVisit(node, argument);
 		}
@@ -1178,6 +1194,26 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		}
 
 		public virtual TResult VisitLBlockBlock1(LBlockBlock1Syntax node, TArg argument)
+		{
+		    return this.DefaultVisit(node, argument);
+		}
+
+		public virtual TResult VisitSingleExpressionBlock1Alt4(SingleExpressionBlock1Alt4Syntax node, TArg argument)
+		{
+		    return this.DefaultVisit(node, argument);
+		}
+
+		public virtual TResult VisitSingleExpressionBlock1Alt5(SingleExpressionBlock1Alt5Syntax node, TArg argument)
+		{
+		    return this.DefaultVisit(node, argument);
+		}
+
+		public virtual TResult VisitSingleExpressionBlock1Alt6(SingleExpressionBlock1Alt6Syntax node, TArg argument)
+		{
+		    return this.DefaultVisit(node, argument);
+		}
+
+		public virtual TResult VisitSingleExpressionBlock1Tokens(SingleExpressionBlock1TokensSyntax node, TArg argument)
 		{
 		    return this.DefaultVisit(node, argument);
 		}
@@ -1438,25 +1474,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
         	return node.Update(rule);
         }
 
-        public virtual SyntaxNode VisitIntExpression(IntExpressionSyntax node)
+        public virtual SyntaxNode VisitExpressionAlt1(ExpressionAlt1Syntax node)
         {
-            var intValue = this.VisitToken(node.IntValue);
+            var singleExpression = (SingleExpressionSyntax)this.Visit(node.SingleExpression);
         	    
-        	return node.Update(intValue);
-        }
-
-        public virtual SyntaxNode VisitStringExpression(StringExpressionSyntax node)
-        {
-            var stringValue = this.VisitToken(node.StringValue);
-        	    
-        	return node.Update(stringValue);
-        }
-
-        public virtual SyntaxNode VisitReferenceExpression(ReferenceExpressionSyntax node)
-        {
-            var symbolValue = (QualifierSyntax)this.Visit(node.SymbolValue);
-        	    
-        	return node.Update(symbolValue);
+        	return node.Update(singleExpression);
         }
 
         public virtual SyntaxNode VisitArrayExpression(ArrayExpressionSyntax node)
@@ -1468,11 +1490,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
         	return node.Update(tLBrace, arrayExpressionBlock1, tRBrace);
         }
 
-        public virtual SyntaxNode VisitExpressionTokens(ExpressionTokensSyntax node)
+        public virtual SyntaxNode VisitSingleExpression(SingleExpressionSyntax node)
         {
-            var tokens = this.VisitToken(node.Tokens);
+            var value = (SingleExpressionBlock1Syntax)this.Visit(node.Value);
         	    
-        	return node.Update(tokens);
+        	return node.Update(value);
         }
 
         public virtual SyntaxNode VisitParserAnnotation(ParserAnnotationSyntax node)
@@ -1707,11 +1729,39 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
         	return node.Update(tBar, alternatives);
         }
 
+        public virtual SyntaxNode VisitSingleExpressionBlock1Alt4(SingleExpressionBlock1Alt4Syntax node)
+        {
+            var tInteger = this.VisitToken(node.TInteger);
+        	    
+        	return node.Update(tInteger);
+        }
+
+        public virtual SyntaxNode VisitSingleExpressionBlock1Alt5(SingleExpressionBlock1Alt5Syntax node)
+        {
+            var tString = this.VisitToken(node.TString);
+        	    
+        	return node.Update(tString);
+        }
+
+        public virtual SyntaxNode VisitSingleExpressionBlock1Alt6(SingleExpressionBlock1Alt6Syntax node)
+        {
+            var qualifier = (QualifierSyntax)this.Visit(node.Qualifier);
+        	    
+        	return node.Update(qualifier);
+        }
+
+        public virtual SyntaxNode VisitSingleExpressionBlock1Tokens(SingleExpressionBlock1TokensSyntax node)
+        {
+            var tokens = this.VisitToken(node.Tokens);
+        	    
+        	return node.Update(tokens);
+        }
+
         public virtual SyntaxNode VisitArrayExpressionBlock1(ArrayExpressionBlock1Syntax node)
         {
-            var expressionList = this.VisitList(node.ExpressionList);
+            var singleExpressionList = this.VisitList(node.SingleExpressionList);
         	    
-        	return node.Update(expressionList);
+        	return node.Update(singleExpressionList);
         }
 
         public virtual SyntaxNode VisitAnnotationArgumentsBlock1(AnnotationArgumentsBlock1Syntax node)
@@ -1724,10 +1774,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 
         public virtual SyntaxNode VisitAnnotationArgumentBlock1(AnnotationArgumentBlock1Syntax node)
         {
-            var namedParameter = (IdentifierSyntax)this.Visit(node.NamedParameter);
+            var name = (NameSyntax)this.Visit(node.Name);
             var tColon = this.VisitToken(node.TColon);
         	    
-        	return node.Update(namedParameter, tColon);
+        	return node.Update(name, tColon);
         }
 
         public virtual SyntaxNode VisitQualifierBlock1(QualifierBlock1Syntax node)
@@ -1765,7 +1815,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
         public virtual SyntaxNode VisitArrayExpressionBlock1Block1(ArrayExpressionBlock1Block1Syntax node)
         {
             var tComma = this.VisitToken(node.TComma);
-            var items = (ExpressionSyntax)this.Visit(node.Items);
+            var items = (SingleExpressionSyntax)this.Visit(node.Items);
         	    
         	return node.Update(tComma, items);
         }

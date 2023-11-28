@@ -8,25 +8,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
 {
     internal class CustomCompilerImplementation : CustomCompilerImplementationBase
     {
-        public override object? BoolExpression_Value(BoolExpression _this)
-        {
-            return _this.BoolValue;
-        }
-
         public override string Declaration_FullName(Declaration _this)
         {
             if (_this.Parent is null) return _this.Name;
             else return $"{_this.Parent.FullName}.{_this.Name}";
-        }
-
-        public override object? Expression_Value(Expression _this)
-        {
-            return null;
-        }
-
-        public override object? IntExpression_Value(IntExpression _this)
-        {
-            return _this.IntValue;
         }
 
         public override string? LAlternative_FixedText(LAlternative _this)
@@ -159,29 +144,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             return _this.Alternatives.Count == 1 && _this.Alternatives[0].IsFixed;
         }
 
-        public override object? NullExpression_Value(NullExpression _this)
-        {
-            return null;
-        }
-
-        public override object? ReferenceExpression_Value(ReferenceExpression _this)
-        {
-            return _this.SymbolValue;
-        }
-
         public override Language Rule_Language(Rule _this)
         {
             return _this.Grammar.Language;
-        }
-
-        public override object? StringExpression_Value(StringExpression _this)
-        {
-            return _this.StringValue;
-        }
-
-        public override object? ArrayExpression_Value(ArrayExpression _this)
-        {
-            return null;
         }
     }
 }

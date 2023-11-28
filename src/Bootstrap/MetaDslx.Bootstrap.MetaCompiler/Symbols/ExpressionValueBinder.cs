@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
 {
-    internal class ConvertToExpectedTypeBinder : UseBinder, IMultiLookupBinder
+    internal class ExpressionValueBinder : UseBinder, IMultiLookupBinder
     {
         private ExpressionSymbol? _containingExpression;
         private PAlternativeSymbol? _containingPAlternative;
@@ -23,7 +23,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
         private ImmutableArray<DeclaredSymbol> _targetProperties;
         private ImmutableArray<LookupKey> _expectedTypes;
 
-        public ConvertToExpectedTypeBinder()
+        public ExpressionValueBinder()
             : base(ImmutableArray.Create(typeof(MetaSymbol)))
         {
         }

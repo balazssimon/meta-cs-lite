@@ -37,7 +37,8 @@ class Annotation $AnnotationSymbol
 
 class AnnotationArgument $AnnotationArgumentSymbol
 {
-	symbol[] $NamedParameter;
+	string? $Name;
+	DeclaredSymbol Parameter;
 	contains Expression $Value;
 }
 
@@ -174,7 +175,7 @@ abstract class ParserRule $ParserRuleSymbol : Rule
 class PAlternative $PAlternativeSymbol : Declaration
 {
 	type $ReturnType;
-	contains Expression ReturnValue;
+	contains Expression $ReturnValue;
 
 	contains PElement[] $Elements;
 }
@@ -222,42 +223,12 @@ class PBlock $PBlockSymbol : Rule, PElementValue
 	contains PAlternative[] $Alternatives;
 }
 
-abstract class Expression $ExpressionSymbol
+class Expression $ExpressionSymbol
 {
-	derived object? Value;
-}
-
-class NullExpression : Expression
-{
-	derived object? Value;
-}
-
-class BoolExpression : Expression
-{
-	derived object? Value;
-	bool BoolValue;
-}
-
-class IntExpression : Expression
-{
-	derived object? Value;
-	int IntValue;
-}
-
-class StringExpression : Expression
-{
-	derived object? Value;
-	string StringValue;
-}
-
-class ReferenceExpression : Expression
-{
-	derived object? Value;
-	symbol? SymbolValue;
+	symbol $Value;
 }
 
 class ArrayExpression : Expression
 {
-	derived object? Value;
 	Expression[] Items;
 }
