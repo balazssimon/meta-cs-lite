@@ -470,6 +470,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 					return "IdentifierAlt1";
 				case CompilerSyntaxKind.IdentifierAlt2: 
 					return "IdentifierAlt2";
+				case CompilerSyntaxKind.SimpleQualifier: 
+					return "SimpleQualifier";
+				case CompilerSyntaxKind.SimpleIdentifier: 
+					return "SimpleIdentifier";
 				case CompilerSyntaxKind.GrammarBlock1: 
 					return "GrammarBlock1";
 				case CompilerSyntaxKind.ParserRuleBlock1Alt1: 
@@ -520,6 +524,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 					return "QualifierBlock1";
 				case CompilerSyntaxKind.QualifierListBlock1: 
 					return "QualifierListBlock1";
+				case CompilerSyntaxKind.SimpleQualifierBlock1: 
+					return "SimpleQualifierBlock1";
 				case CompilerSyntaxKind.PAlternativeBlock1Block1: 
 					return "PAlternativeBlock1Block1";
 				case CompilerSyntaxKind.LexerRuleBlock1Alt1Block1: 

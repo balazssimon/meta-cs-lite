@@ -694,6 +694,17 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
             return (IdentifierAlt2Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.IdentifierAlt2((InternalSyntaxToken)tVerbatimIdentifier.Node).CreateRed();
         }
 
+        public SimpleQualifierSyntax SimpleQualifier(MetaDslx.CodeAnalysis.SeparatedSyntaxList<SimpleIdentifierSyntax> simpleIdentifierList)
+        {
+            return (SimpleQualifierSyntax)CompilerLanguage.Instance.InternalSyntaxFactory.SimpleQualifier(simpleIdentifierList.Node.ToGreenSeparatedList<SimpleIdentifierGreen>(reversed: false)).CreateRed();
+        }
+
+        public SimpleIdentifierSyntax SimpleIdentifier(SyntaxToken tIdentifier)
+        {
+        	if (tIdentifier.RawKind != (int)CompilerSyntaxKind.TIdentifier) throw new ArgumentException(nameof(tIdentifier));
+            return (SimpleIdentifierSyntax)CompilerLanguage.Instance.InternalSyntaxFactory.SimpleIdentifier((InternalSyntaxToken)tIdentifier.Node).CreateRed();
+        }
+
         public GrammarBlock1Syntax GrammarBlock1(MetaDslx.CodeAnalysis.SyntaxList<RuleSyntax> rules)
         {
             return (GrammarBlock1Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.GrammarBlock1(rules.Node.ToGreenList<RuleGreen>()).CreateRed();
@@ -882,10 +893,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
             return (SingleExpressionBlock1Alt5Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.SingleExpressionBlock1Alt5((InternalSyntaxToken)tString.Node).CreateRed();
         }
 
-        public SingleExpressionBlock1Alt6Syntax SingleExpressionBlock1Alt6(QualifierSyntax qualifier)
+        public SingleExpressionBlock1Alt6Syntax SingleExpressionBlock1Alt6(SimpleQualifierSyntax simpleQualifier)
         {
-        	if (qualifier is null) throw new ArgumentNullException(nameof(qualifier));
-            return (SingleExpressionBlock1Alt6Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.SingleExpressionBlock1Alt6((QualifierGreen)qualifier.Green).CreateRed();
+        	if (simpleQualifier is null) throw new ArgumentNullException(nameof(simpleQualifier));
+            return (SingleExpressionBlock1Alt6Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.SingleExpressionBlock1Alt6((SimpleQualifierGreen)simpleQualifier.Green).CreateRed();
         }
 
         public SingleExpressionBlock1TokensSyntax SingleExpressionBlock1Tokens(SyntaxToken tokens)
@@ -911,16 +922,16 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
         	return this.AnnotationArgumentsBlock1(this.Token(CompilerSyntaxKind.TComma), arguments);
         }
 
-        public AnnotationArgumentBlock1Syntax AnnotationArgumentBlock1(NameSyntax name, SyntaxToken tColon)
+        public AnnotationArgumentBlock1Syntax AnnotationArgumentBlock1(IdentifierSyntax namedParameter, SyntaxToken tColon)
         {
-        	if (name is null) throw new ArgumentNullException(nameof(name));
+        	if (namedParameter is null) throw new ArgumentNullException(nameof(namedParameter));
         	if (tColon.RawKind != (int)CompilerSyntaxKind.TColon) throw new ArgumentException(nameof(tColon));
-            return (AnnotationArgumentBlock1Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.AnnotationArgumentBlock1((NameGreen)name.Green, (InternalSyntaxToken)tColon.Node).CreateRed();
+            return (AnnotationArgumentBlock1Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.AnnotationArgumentBlock1((IdentifierGreen)namedParameter.Green, (InternalSyntaxToken)tColon.Node).CreateRed();
         }
         
-        public AnnotationArgumentBlock1Syntax AnnotationArgumentBlock1(NameSyntax name)
+        public AnnotationArgumentBlock1Syntax AnnotationArgumentBlock1(IdentifierSyntax namedParameter)
         {
-        	return this.AnnotationArgumentBlock1(name, this.Token(CompilerSyntaxKind.TColon));
+        	return this.AnnotationArgumentBlock1(namedParameter, this.Token(CompilerSyntaxKind.TColon));
         }
 
         public QualifierBlock1Syntax QualifierBlock1(SyntaxToken tDot, IdentifierSyntax identifier)
@@ -945,6 +956,18 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
         public QualifierListBlock1Syntax QualifierListBlock1(QualifierSyntax qualifier)
         {
         	return this.QualifierListBlock1(this.Token(CompilerSyntaxKind.TComma), qualifier);
+        }
+
+        public SimpleQualifierBlock1Syntax SimpleQualifierBlock1(SyntaxToken tDot, SimpleIdentifierSyntax simpleIdentifier)
+        {
+        	if (tDot.RawKind != (int)CompilerSyntaxKind.TDot) throw new ArgumentException(nameof(tDot));
+        	if (simpleIdentifier is null) throw new ArgumentNullException(nameof(simpleIdentifier));
+            return (SimpleQualifierBlock1Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.SimpleQualifierBlock1((InternalSyntaxToken)tDot.Node, (SimpleIdentifierGreen)simpleIdentifier.Green).CreateRed();
+        }
+        
+        public SimpleQualifierBlock1Syntax SimpleQualifierBlock1(SimpleIdentifierSyntax simpleIdentifier)
+        {
+        	return this.SimpleQualifierBlock1(this.Token(CompilerSyntaxKind.TDot), simpleIdentifier);
         }
 
         public PAlternativeBlock1Block1Syntax PAlternativeBlock1Block1(SyntaxToken kReturns, ReturnTypeQualifierSyntax returnType)
@@ -1026,6 +1049,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		        typeof(QualifierListSyntax),
 		        typeof(IdentifierAlt1Syntax),
 		        typeof(IdentifierAlt2Syntax),
+		        typeof(SimpleQualifierSyntax),
+		        typeof(SimpleIdentifierSyntax),
 		        typeof(GrammarBlock1Syntax),
 		        typeof(ParserRuleBlock1Alt1Syntax),
 		        typeof(ParserRuleBlock1Alt2Syntax),
@@ -1051,6 +1076,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		        typeof(AnnotationArgumentBlock1Syntax),
 		        typeof(QualifierBlock1Syntax),
 		        typeof(QualifierListBlock1Syntax),
+		        typeof(SimpleQualifierBlock1Syntax),
 		        typeof(PAlternativeBlock1Block1Syntax),
 		        typeof(LexerRuleBlock1Alt1Block1Syntax),
 		        typeof(ArrayExpressionBlock1Block1Syntax),

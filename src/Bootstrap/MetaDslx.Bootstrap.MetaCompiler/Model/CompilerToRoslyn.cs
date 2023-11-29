@@ -45,11 +45,54 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                 foreach (var cbinder in ctoken.Annotations.Where(a => a.AttributeClass?.Name?.EndsWith("Binder") ?? false))
                 {
                     var rbinder = f.Binder();
-                    rbinder.FullName = SymbolDisplayFormat.FullyQualifiedFormat.ToString(cbinder.AttributeClass);
+                    rbinder.TypeName = SymbolDisplayFormat.FullyQualifiedFormat.ToString(cbinder.AttributeClass);
+                    rtoken.Binders.Add(rbinder);
                     foreach (var carg in cbinder.Arguments)
                     {
                         var rarg = f.BinderArgument();
-                        //rarg.Name = carg.
+                        rarg.Name = carg.Parameter?.Name;
+                        rarg.Value = carg.Value?.Value.ToString();
+                        rbinder.Arguments.Add(rarg);
+                    }
+                }
+            }
+            var crules = compilerModel.Objects.OfType<ParserRule>();
+            foreach (var crule in crules)
+            {
+                var rrule = f.Rule();
+                rlang.Rules.Add(rrule);
+                rrule.Name = crule.Name;
+                foreach (var cbinder in crule.Annotations.Where(a => a.AttributeClass?.Name?.EndsWith("Binder") ?? false))
+                {
+                    var rbinder = f.Binder();
+                    rrule.Binders.Add(rbinder);
+                    rbinder.TypeName = SymbolDisplayFormat.FullyQualifiedFormat.ToString(cbinder.AttributeClass);
+                    foreach (var carg in cbinder.Arguments)
+                    {
+                        var rarg = f.BinderArgument();
+                        rarg.Name = carg.Parameter?.Name;
+                        rarg.Value = carg.Value?.Value.ToString();
+                        rbinder.Arguments.Add(rarg);
+                    }
+                }
+            }
+            var cblocks = compilerModel.Objects.OfType<PBlock>();
+            foreach (var cblock in cblocks)
+            {
+                var rrule = f.Rule();
+                rlang.Rules.Add(rrule);
+                rrule.Name = cblock.Name ?? string.Empty;
+                foreach (var cbinder in cblock.Annotations.Where(a => a.AttributeClass?.Name?.EndsWith("Binder") ?? false))
+                {
+                    var rbinder = f.Binder();
+                    rrule.Binders.Add(rbinder);
+                    rbinder.TypeName = SymbolDisplayFormat.FullyQualifiedFormat.ToString(cbinder.AttributeClass);
+                    foreach (var carg in cbinder.Arguments)
+                    {
+                        var rarg = f.BinderArgument();
+                        rarg.Name = carg.Parameter?.Name;
+                        rarg.Value = carg.Value?.Value.ToString();
+                        rbinder.Arguments.Add(rarg);
                     }
                 }
             }

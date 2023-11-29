@@ -676,6 +676,36 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
                 var tVerbatimIdentifier = this.VisitTerminal(context.tVerbatimIdentifierAntlr1, CompilerSyntaxKind.TVerbatimIdentifier);
             	return _factory.IdentifierAlt2((InternalSyntaxToken)tVerbatimIdentifier);
             }
+            public override GreenNode? VisitPr_SimpleQualifier(CompilerParser.Pr_SimpleQualifierContext? context)
+            {
+               	if (context == null) return SimpleQualifierGreen.__Missing;
+                var simpleIdentifierListBuilder = _pool.AllocateSeparated<SimpleIdentifierGreen>(reversed: false);
+                var simpleIdentifierContext = context.simpleIdentifierAntlr1;
+                if (simpleIdentifierContext is not null) simpleIdentifierListBuilder.Add((SimpleIdentifierGreen?)this.Visit(simpleIdentifierContext) ?? SimpleIdentifierGreen.__Missing);
+                else simpleIdentifierListBuilder.Add(SimpleIdentifierGreen.__Missing);
+                var simpleIdentifierListContext = context._simpleQualifierBlock1Antlr1;
+                for (int i = 0; i < simpleIdentifierListContext.Count; ++i)
+                {
+                    var itemContext = simpleIdentifierListContext[i];
+                    if (itemContext is not null)
+                    {
+                        var item = itemContext.simpleIdentifierAntlr1;
+                        var separator = itemContext.tDot;
+                        simpleIdentifierListBuilder.AddSeparator(this.VisitTerminal(separator, CompilerSyntaxKind.TDot));
+                        if (item is not null) simpleIdentifierListBuilder.Add((SimpleIdentifierGreen?)this.Visit(item) ?? SimpleIdentifierGreen.__Missing);
+                        else simpleIdentifierListBuilder.Add(SimpleIdentifierGreen.__Missing);
+                    }
+                }
+                var simpleIdentifierList = simpleIdentifierListBuilder.ToList();
+                _pool.Free(simpleIdentifierListBuilder);
+            	return _factory.SimpleQualifier(simpleIdentifierList);
+            }
+            public override GreenNode? VisitPr_SimpleIdentifier(CompilerParser.Pr_SimpleIdentifierContext? context)
+            {
+               	if (context == null) return SimpleIdentifierGreen.__Missing;
+                var tIdentifier = this.VisitTerminal(context.tIdentifierAntlr1, CompilerSyntaxKind.TIdentifier);
+            	return _factory.SimpleIdentifier((InternalSyntaxToken)tIdentifier);
+            }
             public override GreenNode? VisitPr_GrammarBlock1(CompilerParser.Pr_GrammarBlock1Context? context)
             {
                	if (context == null) return GrammarBlock1Green.__Missing;
@@ -869,10 +899,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
             public override GreenNode? VisitPr_SingleExpressionBlock1Alt6(CompilerParser.Pr_SingleExpressionBlock1Alt6Context? context)
             {
                	if (context == null) return SingleExpressionBlock1Alt6Green.__Missing;
-                QualifierGreen? qualifier = null;
-                if (context.qualifierAntlr1 is not null) qualifier = (QualifierGreen?)this.Visit(context.qualifierAntlr1) ?? QualifierGreen.__Missing;
-                else qualifier = QualifierGreen.__Missing;
-            	return _factory.SingleExpressionBlock1Alt6(qualifier);
+                SimpleQualifierGreen? simpleQualifier = null;
+                if (context.simpleQualifierAntlr1 is not null) simpleQualifier = (SimpleQualifierGreen?)this.Visit(context.simpleQualifierAntlr1) ?? SimpleQualifierGreen.__Missing;
+                else simpleQualifier = SimpleQualifierGreen.__Missing;
+            	return _factory.SingleExpressionBlock1Alt6(simpleQualifier);
             }
             public override GreenNode? VisitPr_SingleExpressionBlock1Tokens(CompilerParser.Pr_SingleExpressionBlock1TokensContext? context)
             {
@@ -919,11 +949,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
             public override GreenNode? VisitPr_AnnotationArgumentBlock1(CompilerParser.Pr_AnnotationArgumentBlock1Context? context)
             {
                	if (context == null) return AnnotationArgumentBlock1Green.__Missing;
-                NameGreen? name = null;
-                if (context.nameAntlr1 is not null) name = (NameGreen?)this.Visit(context.nameAntlr1) ?? NameGreen.__Missing;
-                else name = NameGreen.__Missing;
+                IdentifierGreen? namedParameter = null;
+                if (context.namedParameterAntlr1 is not null) namedParameter = (IdentifierGreen?)this.Visit(context.namedParameterAntlr1) ?? IdentifierGreen.__Missing;
+                else namedParameter = IdentifierGreen.__Missing;
                 var tColon = this.VisitTerminal(context.tColon, CompilerSyntaxKind.TColon);
-            	return _factory.AnnotationArgumentBlock1(name, (InternalSyntaxToken)tColon);
+            	return _factory.AnnotationArgumentBlock1(namedParameter, (InternalSyntaxToken)tColon);
             }
             public override GreenNode? VisitPr_QualifierBlock1(CompilerParser.Pr_QualifierBlock1Context? context)
             {
@@ -942,6 +972,15 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
                 if (context.qualifierAntlr1 is not null) qualifier = (QualifierGreen?)this.Visit(context.qualifierAntlr1) ?? QualifierGreen.__Missing;
                 else qualifier = QualifierGreen.__Missing;
             	return _factory.QualifierListBlock1((InternalSyntaxToken)tComma, qualifier);
+            }
+            public override GreenNode? VisitPr_SimpleQualifierBlock1(CompilerParser.Pr_SimpleQualifierBlock1Context? context)
+            {
+               	if (context == null) return SimpleQualifierBlock1Green.__Missing;
+                var tDot = this.VisitTerminal(context.tDot, CompilerSyntaxKind.TDot);
+                SimpleIdentifierGreen? simpleIdentifier = null;
+                if (context.simpleIdentifierAntlr1 is not null) simpleIdentifier = (SimpleIdentifierGreen?)this.Visit(context.simpleIdentifierAntlr1) ?? SimpleIdentifierGreen.__Missing;
+                else simpleIdentifier = SimpleIdentifierGreen.__Missing;
+            	return _factory.SimpleQualifierBlock1((InternalSyntaxToken)tDot, simpleIdentifier);
             }
             public override GreenNode? VisitPr_PAlternativeBlock1Block1(CompilerParser.Pr_PAlternativeBlock1Block1Context? context)
             {

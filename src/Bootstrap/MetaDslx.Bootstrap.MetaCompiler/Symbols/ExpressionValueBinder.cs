@@ -1,9 +1,10 @@
-﻿using MetaDslx.CodeAnalysis;
+﻿using MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax;
+using MetaDslx.CodeAnalysis;
 using MetaDslx.CodeAnalysis.Binding;
+using MetaDslx.CodeAnalysis.Binding.Lookup;
 using MetaDslx.CodeAnalysis.PooledObjects;
 using MetaDslx.CodeAnalysis.Symbols;
 using MetaDslx.CodeAnalysis.Symbols.CSharp;
-using Microsoft.CodeAnalysis;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -15,7 +16,10 @@ using System.Threading.Tasks;
 
 namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
 {
-    internal class ExpressionValueBinder : UseBinder, IMultiLookupBinder
+    using IPropertySymbol = Microsoft.CodeAnalysis.IPropertySymbol;
+    using IParameterSymbol = Microsoft.CodeAnalysis.IParameterSymbol;
+
+    internal class ExpressionValueBinder : ValueBinder
     {
         private ExpressionSymbol? _containingExpression;
         private PAlternativeSymbol? _containingPAlternative;
@@ -23,10 +27,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
         private ImmutableArray<DeclaredSymbol> _targetProperties;
         private ImmutableArray<LookupKey> _expectedTypes;
 
-        public ExpressionValueBinder()
-            : base(ImmutableArray.Create(typeof(MetaSymbol)))
-        {
-        }
+        public SingleExpressionBlock1Syntax? Syntax => base.Syntax.AsNode() as SingleExpressionBlock1Syntax;
+        public SimpleQualifierSyntax? QualifierSyntax => (this.Syntax as SingleExpressionBlock1Alt6Syntax)?.SimpleQualifier;
 
         public ExpressionSymbol? ContainingExpression 
         {
@@ -73,7 +75,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
                     var arg = ContainingAnnotationArgumentSymbol;
                     if (arg is not null)
                     {
-                        ImmutableInterlocked.InterlockedInitialize(ref _targetProperties, arg.Parameters);
+                        ImmutableInterlocked.InterlockedInitialize(ref _targetProperties, arg.Parameter is null ? ImmutableArray<DeclaredSymbol>.Empty : ImmutableArray.Create(arg.Parameter));
                     }
                     else
                     {
@@ -112,7 +114,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
                 var targetProperties = TargetProperties;
                 if (targetProperties.IsDefaultOrEmpty)
                 {
-                    ImmutableInterlocked.InterlockedInitialize(ref _expectedTypes, ImmutableArray.Create(new LookupKey(default, ContainingPAlternativeSymbol?.ReturnType ?? default)));
+                    var expectedType = ContainingPAlternativeSymbol?.ReturnType ?? default;
+                    expectedType.TryGetCoreType(out var coreType, diagnostics, cancellationToken);
+                    ImmutableInterlocked.InterlockedInitialize(ref _expectedTypes, ImmutableArray.Create(new LookupKey(default, coreType)));
                 }
                 else
                 {
@@ -123,8 +127,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
                         var csType = (property?.CSharpSymbol as IPropertySymbol)?.Type ?? (property?.CSharpSymbol as IParameterSymbol)?.Type;
                         if (csType is not null)
                         {
-                            var type = property.SymbolFactory.GetSymbol<TypeSymbol>(csType, diagnostics, cancellationToken);
-                            expectedTypes.Add(new LookupKey(targetProperty, type));
+                            var type = MetaType.FromTypeSymbol(property.SymbolFactory.GetSymbol<TypeSymbol>(csType, diagnostics, cancellationToken));
+                            type.TryGetCoreType(out var coreType, diagnostics, cancellationToken);
+                            expectedTypes.Add(new LookupKey(targetProperty, coreType));
                         }
                         else
                         {
@@ -137,23 +142,59 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
             return _expectedTypes;
         }
 
-        public ImmutableArray<object> GetMultiLookupKeys(CancellationToken cancellationToken = default)
+        protected override ImmutableArray<object?> BindValues(CancellationToken cancellationToken = default)
         {
             var diagnostics = DiagnosticBag.GetInstance();
-            var result = GetExpectedTypes(diagnostics, cancellationToken);
+            var expectedTypes = GetExpectedTypes(diagnostics, cancellationToken);
+            var result = ArrayBuilder<object?>.GetInstance();
+            foreach (var expectedType in expectedTypes)
+            {
+                if (ComputeValue(expectedType.Type, out var value, diagnostics, cancellationToken))
+                {
+                    result.Add(value);
+                }
+                else
+                {
+                    result.Add(null);
+                }
+            }
             this.AddDiagnostics(diagnostics);
             diagnostics.Free();
-            return result.CastArray<object>();
+            return result.ToImmutableAndFree();
         }
 
-        protected override void AdjustFinalLookupContext(LookupContext context)
+        protected override bool ComputeValue(MetaType expectedType, out object? value, DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            base.AdjustFinalLookupContext(context);
-            var type = (context.MultiLookupKey as LookupKey)?.Type ?? default;
-            if (context.Qualifier is null && type.IsEnum)
+            if (expectedType.IsEnum)
             {
-                context.Qualifier = type.OriginalTypeSymbol;
+                if (expectedType.TryGetEnumValue(this.RawValue, out var enumLiteral, diagnostics, cancellationToken))
+                {
+                    value = enumLiteral;
+                    return true;
+                }
             }
+            if (expectedType.SpecialType == CodeAnalysis.SpecialType.System_Type || expectedType.SpecialType == SpecialType.MetaDslx_CodeAnalysis_MetaType)
+            {
+                value = this.BindSymbol(expectedType, cancellationToken);
+                return true;
+            }
+            return base.ComputeValue(expectedType, out value, diagnostics, cancellationToken);
+        }
+
+        private object? BindSymbol(MetaType expectedType, CancellationToken cancellationToken)
+        {
+            var qualifier = this.QualifierSyntax;
+            if (qualifier is null) return null;
+            if (qualifier.SimpleIdentifierList.Count == 0) return null;
+            var context = this.AllocateLookupContext();
+            if (expectedType.SpecialType == SpecialType.System_Type || expectedType.SpecialType == SpecialType.MetaDslx_CodeAnalysis_MetaType) 
+            {
+                context.Validators.Add(LookupValidators.TypeOnly);
+            }
+            var identifiers = qualifier.SimpleIdentifierList.Select(id => (SyntaxNodeOrToken)id).ToImmutableArray();
+            var result = this.BindQualifiedName(context, identifiers);
+            context.Free();
+            return result[result.Length - 1];
         }
 
         private class LookupKey

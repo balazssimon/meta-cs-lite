@@ -13,6 +13,7 @@ using MetaDslx.Bootstrap.MetaCompiler.Model;
 using MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax;
 using MetaDslx.CodeAnalysis.PooledObjects;
 using MetaDslx.CodeAnalysis.Symbols.CSharp;
+using Antlr4.Runtime.Misc;
 
 namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
 {
@@ -24,8 +25,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
         {
             public static readonly CompletionPart StartComputingProperty_NamedParameter = new CompletionPart(nameof(StartComputingProperty_NamedParameter));
             public static readonly CompletionPart FinishComputingProperty_NamedParameter = new CompletionPart(nameof(FinishComputingProperty_NamedParameter));
-            public static readonly CompletionPart StartComputingProperty_Parameters = new CompletionPart(nameof(StartComputingProperty_Parameters));
-            public static readonly CompletionPart FinishComputingProperty_Parameters = new CompletionPart(nameof(FinishComputingProperty_Parameters));
+            public static readonly CompletionPart StartComputingProperty_Parameter = new CompletionPart(nameof(StartComputingProperty_Parameter));
+            public static readonly CompletionPart FinishComputingProperty_Parameter = new CompletionPart(nameof(FinishComputingProperty_Parameter));
             public static readonly CompletionPart StartComputingProperty_ExpectedTypes = new CompletionPart(nameof(StartComputingProperty_ExpectedTypes));
             public static readonly CompletionPart FinishComputingProperty_ExpectedTypes = new CompletionPart(nameof(FinishComputingProperty_ExpectedTypes));
             public static readonly CompletionPart StartComputingProperty_Value = new CompletionPart(nameof(StartComputingProperty_Value));
@@ -35,7 +36,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
             public static readonly CompletionGraph CompletionGraph =
                 CompletionGraph.CreateFromParts(
                     StartComputingProperty_NamedParameter, FinishComputingProperty_NamedParameter,
-                    StartComputingProperty_Parameters, FinishComputingProperty_Parameters,
+                    StartComputingProperty_Parameter, FinishComputingProperty_Parameter,
                     StartComputingProperty_ExpectedTypes, FinishComputingProperty_ExpectedTypes,
                     StartComputingProperty_Value, FinishComputingProperty_Value,
                     StartComputingProperty_Attributes, FinishComputingProperty_Attributes);
@@ -49,7 +50,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
         }
 
         private ImmutableArray<MetaSymbol> _namedParameter;
-        private ImmutableArray<DeclaredSymbol> _parameters;
+        private DeclaredSymbol _parameter;
         private ImmutableArray<MetaType> _expectedTypes;
         private ExpectedTypeKind _expectedTypeKind;
         private ExpressionSymbol _value;
@@ -78,12 +79,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
         }
 
         [ModelProperty]
-        public ImmutableArray<DeclaredSymbol> Parameters
+        public DeclaredSymbol Parameter
         {
             get
             {
-                ForceComplete(CompletionParts.FinishComputingProperty_Parameters, null, default);
-                return _parameters;
+                ForceComplete(CompletionParts.FinishComputingProperty_Parameter, null, default);
+                return _parameter;
             }
         }
 
@@ -129,15 +130,15 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
                 }
                 return true;
             }
-            else if (incompletePart == CompletionParts.StartComputingProperty_Parameters || incompletePart == CompletionParts.FinishComputingProperty_Parameters)
+            else if (incompletePart == CompletionParts.StartComputingProperty_Parameter || incompletePart == CompletionParts.FinishComputingProperty_Parameter)
             {
-                if (NotePartComplete(CompletionParts.StartComputingProperty_Parameters))
+                if (NotePartComplete(CompletionParts.StartComputingProperty_Parameter))
                 {
                     var diagnostics = DiagnosticBag.GetInstance();
-                    _parameters = CompleteProperty_Parameters(diagnostics, cancellationToken);
+                    _parameter = CompleteProperty_Parameter(diagnostics, cancellationToken);
                     AddSymbolDiagnostics(diagnostics);
                     diagnostics.Free();
-                    NotePartComplete(CompletionParts.FinishComputingProperty_Parameters);
+                    NotePartComplete(CompletionParts.FinishComputingProperty_Parameter);
                 }
                 return true;
             }
@@ -179,35 +180,41 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
             return SymbolFactory.GetSymbolPropertyValues<MetaSymbol>(this, nameof(NamedParameter), diagnostics, cancellationToken);
         }
 
-        protected virtual ImmutableArray<DeclaredSymbol> CompleteProperty_Parameters(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        protected virtual DeclaredSymbol? CompleteProperty_Parameter(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             var index = AnnotationSymbol?.Arguments.IndexOf(this) ?? -1;
-            if (index < 0) return ImmutableArray<DeclaredSymbol>.Empty;
-            return AnnotationSymbol.ArgumentParameters[index];
+            if (index < 0) return null;
+            var param = AnnotationSymbol?.SelectedParameters[index];
+            if (param is not null)
+            {
+                ModelObject.Add(MetaDslx.Bootstrap.MetaCompiler.Model.Compiler.AnnotationArgument_Parameter, param);
+            }
+            else
+            {
+                diagnostics.Add(Diagnostic.Create(CommonErrorCode.ERR_BindingError, this.Location, "Could not resolve the parameter corresponding to this argument"));
+            }
+            return param;
         }
 
         private (ImmutableArray<MetaType> ExpectedTypes, ExpectedTypeKind ExpectedTypeKind) CompleteProperty_ExpectedTypes(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             var kind = ExpectedTypeKind.None;
             var result = ArrayBuilder<MetaType>.GetInstance();
-            foreach (var param in Parameters)
+            var csParam = Parameter as ICSharpSymbol;
+            var msProp = csParam?.CSharpSymbol as IParameterSymbol;
+            var msType = msProp?.Type;
+            var csType = msType is null ? null : csParam?.SymbolFactory.GetSymbol<TypeSymbol>(msType, diagnostics, cancellationToken);
+            var mtType = MetaType.FromTypeSymbol(csType);
+            if (mtType.IsNullable) mtType.TryExtractNullableType(out mtType, diagnostics, cancellationToken);
+            if (mtType.IsCollection) kind = ExpectedTypeKind.Collection;
+            else if (mtType.SpecialType == SpecialType.System_Boolean) kind = ExpectedTypeKind.Bool;
+            if (mtType.TryGetCoreType(out var coreType, diagnostics, cancellationToken) && !coreType.IsNull)
             {
-                var csParam = param as ICSharpSymbol;
-                var msProp = csParam?.CSharpSymbol as IParameterSymbol;
-                var msType = msProp?.Type;
-                var csType = msType is null ? null : csParam?.SymbolFactory.GetSymbol<TypeSymbol>(msType, diagnostics, cancellationToken);
-                var mtType = MetaType.FromTypeSymbol(csType);
-                if (mtType.IsNullable) mtType.TryExtractNullableType(out mtType, diagnostics, cancellationToken);
-                if (mtType.IsCollection) kind = ExpectedTypeKind.Collection;
-                else if (mtType.SpecialType == SpecialType.System_Boolean) kind = ExpectedTypeKind.Bool;
-                if (mtType.TryGetCoreType(out var coreType, diagnostics, cancellationToken) && !coreType.IsNull)
-                {
-                    if (!result.Contains(mtType)) result.Add(mtType);
-                }
-                else
-                {
-                    diagnostics.Add(Diagnostic.Create(CommonErrorCode.ERR_BindingError, this.Location, $"Could not determine the type of the parameter '{param.Name}'"));
-                }
+                if (!result.Contains(mtType)) result.Add(mtType);
+            }
+            else
+            {
+                diagnostics.Add(Diagnostic.Create(CommonErrorCode.ERR_BindingError, this.Location, $"Could not determine the type of the parameter '{Syntax?.AnnotationArgumentBlock1?.NamedParameter}'"));
             }
             return (result.ToImmutableAndFree(), kind);
         }
@@ -216,5 +223,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
         {
             return SymbolFactory.GetSymbolPropertyValue<ExpressionSymbol>(this, nameof(Value), diagnostics, cancellationToken);
         }
+
     }
 }

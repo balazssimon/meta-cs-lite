@@ -1227,17 +1227,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
 
         public virtual void VisitExpressionAlt1(ExpressionAlt1Syntax node)
         {
-        	//var __annot0 = new DefineBinder(type: typeof(global::MetaDslx.Bootstrap.MetaCompiler.Model.Expression));
-        	//this.Begin(__annot0, node);
-        	try
-        	{
-        	    this.Visit(node.SingleExpression);
-        	        
-        	}
-        	finally
-        	{
-        	    //this.End(__annot0);
-        	}
+      	    this.Visit(node.SingleExpression);
         }
 
         public virtual void VisitArrayExpression(ArrayExpressionSyntax node)
@@ -1586,6 +1576,16 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
         	{
         	    this.End(__annot0);
         	}
+        }
+
+        public virtual void VisitSimpleQualifier(SimpleQualifierSyntax node)
+        {
+        	    
+        }
+
+        public virtual void VisitSimpleIdentifier(SimpleIdentifierSyntax node)
+        {
+        	    
         }
 
         public virtual void VisitGrammarBlock1(GrammarBlock1Syntax node)
@@ -2139,7 +2139,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
         	this.Begin(__annot0, node);
         	try
         	{
-        	    this.Visit(node.Qualifier);
         	        
         	}
         	finally
@@ -2223,15 +2222,24 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
 
         public virtual void VisitAnnotationArgumentBlock1(AnnotationArgumentBlock1Syntax node)
         {
-        	var __annot0 = new PropertyBinder(name: "Name");
-        	this.Begin(__annot0, node.Name);
+        	var __annot1 = new PropertyBinder(name: "NamedParameter");
+        	this.Begin(__annot1, node.NamedParameter);
         	try
         	{
-        	    this.Visit(node.Name);
+        	    var __annot0 = new AnnotationArgumentBinder();
+        	    this.Begin(__annot0, node.NamedParameter);
+        	    try
+        	    {
+        	        this.Visit(node.NamedParameter);
+        	    }
+        	    finally
+        	    {
+        	        this.End(__annot0);
+        	    }
         	}
         	finally
         	{
-        	    this.End(__annot0);
+        	    this.End(__annot1);
         	}
         	    
         }
@@ -2261,6 +2269,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
         	    // this.VisitToken(node.TComma);
         	}
         	this.Visit(node.Qualifier);
+        	    
+        }
+
+        public virtual void VisitSimpleQualifierBlock1(SimpleQualifierBlock1Syntax node)
+        {
         	    
         }
 

@@ -14,7 +14,7 @@ using MetaDslx.Bootstrap.MetaCompiler.Symbols;
 language Compiler;
 
 Main returns Namespace:
-	'namespace' name=[Name(qualifierProperty:Declarations,x:6)]Qualifier ';'
+	'namespace' name=[Name(qualifierProperty:Declarations)]Qualifier ';'
 	Using*
 	Declarations
 	eof;
@@ -60,20 +60,19 @@ LRange: startChar=TString '..' endChar=TString;
 LBlock: '(' alternatives+=LAlternative ('|' alternatives+=LAlternative)* ')';
 
 Expression: SingleExpression | ArrayExpression;
-SingleExpression returns Expression: value=[ExpressionValue]('null' | 'true' | 'false' | TInteger | TString | Qualifier);
+SingleExpression returns Expression: value=[ExpressionValue]('null' | 'true' | 'false' | TInteger | TString | SimpleQualifier);
 ArrayExpression: '{' (items+=SingleExpression (',' items+=SingleExpression)*)? '}';
 
 ParserAnnotation returns MetaDslx.Bootstrap.MetaCompiler.Model.Annotation: '[' attributeClass=[Use(types:{Binder,MetaDslx.CodeAnalysis.Annotations.Annotation},suffixes:{"Binder","Annotation"})]Qualifier AnnotationArguments? ']';
 LexerAnnotation returns MetaDslx.Bootstrap.MetaCompiler.Model.Annotation: '[' attributeClass=[Use(types:{TokenKind,MetaDslx.CodeAnalysis.Annotations.Annotation},suffixes:{"TokenKind","Annotation"})]Qualifier AnnotationArguments? ']';
 block AnnotationArguments: '(' arguments+=AnnotationArgument (',' arguments+=AnnotationArgument)* ')';
-AnnotationArgument: (name=Name ':')? value=Expression;
+AnnotationArgument: (namedParameter+=[AnnotationArgument]Identifier ':')? value=Expression;
 
 Assignment
 	: '=' => Assign
 	| '?=' => QuestionAssign
 	| '!=' => NegatedAssign
 	| '+=' => PlusAssign
-	| '*=' => 5
 	;
 
 Multiplicity
@@ -99,6 +98,9 @@ block QualifierList: Qualifier (',' Qualifier)*;
 
 [Identifier]
 block Identifier: TIdentifier | TVerbatimIdentifier;
+
+block SimpleQualifier: SimpleIdentifier ('.' SimpleIdentifier)*;
+block SimpleIdentifier: TIdentifier;
 
 [Number]
 token TInteger returns int32: '0'| '1'..'9' ('0'..'9')* ;

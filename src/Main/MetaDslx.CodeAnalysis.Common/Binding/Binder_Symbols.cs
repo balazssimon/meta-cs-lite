@@ -116,7 +116,7 @@ namespace MetaDslx.CodeAnalysis.Binding
             var syntaxFacts = identifierSyntax.Language.SyntaxFacts;
             var name = syntaxFacts.ExtractName(identifierSyntax);
             var metadataName = syntaxFacts.ExtractMetadataName(identifierSyntax);
-            var binder = identifierSyntax.IsNull ? this : this.GetBinder(identifierSyntax);
+            var binder = (identifierSyntax.IsNull ? this : this.GetBinder(identifierSyntax)) ?? this;
             context.OriginalBinder = this;
             context.CurrentBinder = binder;
             context.IsLookup = true;

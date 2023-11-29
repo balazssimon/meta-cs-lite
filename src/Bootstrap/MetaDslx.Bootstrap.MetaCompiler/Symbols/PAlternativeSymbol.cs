@@ -257,21 +257,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
                     diagnostics.Add(Diagnostic.Create(CompilerErrorCode.ERR_IncompatibleAltReturnType, this.Location, this.ReturnType, this.Name, rule.ReturnType, rule.Name));
                 }
             }
-            if (this.ReturnValue is not null)
-            {
-                var returnValueType = this.ReturnValue.Value.Type;
-                if (!returnValueType.IsNull)
-                {
-                    if (!returnValueType.IsAssignableTo(this.ReturnType))
-                    {
-                        diagnostics.Add(Diagnostic.Create(CompilerErrorCode.ERR_IncompatibleAltReturnValue, this.Location, this.ReturnValue?.Value, returnValueType, this.Name, this.ReturnType));
-                    }
-                }
-                else
-                {
-                    diagnostics.Add(Diagnostic.Create(ErrorCode.ERR_InternalError, this.Location, $"Could not determine the type of the return value '{this.ReturnValue.DeclaringSyntaxReference}'"));
-                }
-            }
         }
     }
 }

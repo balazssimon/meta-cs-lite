@@ -279,9 +279,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
                         var invalid = true;
                         foreach (var annot in pb.Attributes)
                         {
-                            if (annot.AttributeClass.Name == "NameBinder") invalid = false;
-                            if (annot.AttributeClass.Name == "IdentifierBinder") invalid = false;
-                            if (annot.AttributeClass.Name == "QualifierBinder") invalid = false;
+                            if (annot.AttributeClass is not null)
+                            {
+                                if (annot.AttributeClass.Name == "NameBinder") invalid = false;
+                                if (annot.AttributeClass.Name == "IdentifierBinder") invalid = false;
+                                if (annot.AttributeClass.Name == "QualifierBinder") invalid = false;
+                            }
+                            if (!invalid) break;
                         }
                         if (invalid)
                         {

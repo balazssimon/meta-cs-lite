@@ -27,8 +27,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
             public static readonly CompletionPart FinishComputingProperty_AttributeClass = AttributeSymbol.CompletionParts.FinishComputingProperty_AttributeClass;
             public static readonly CompletionPart StartComputingProperty_Arguments = new CompletionPart(nameof(StartComputingProperty_Arguments));
             public static readonly CompletionPart FinishComputingProperty_Arguments = new CompletionPart(nameof(FinishComputingProperty_Arguments));
-            public static readonly CompletionPart StartComputingProperty_ArgumentParameters = new CompletionPart(nameof(StartComputingProperty_ArgumentParameters));
-            public static readonly CompletionPart FinishComputingProperty_ArgumentParameters = new CompletionPart(nameof(FinishComputingProperty_ArgumentParameters));
             public static readonly CompletionPart StartComputingProperty_SelectedParameters = new CompletionPart(nameof(StartComputingProperty_SelectedParameters));
             public static readonly CompletionPart FinishComputingProperty_SelectedParameters = new CompletionPart(nameof(FinishComputingProperty_SelectedParameters));
             public static readonly CompletionPart StartComputingProperty_Attributes = AttributeSymbol.CompletionParts.StartComputingProperty_Attributes;
@@ -37,7 +35,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
                 CompletionGraph.CreateFromParts(
                     StartComputingProperty_AttributeClass, FinishComputingProperty_AttributeClass,
                     StartComputingProperty_Arguments, FinishComputingProperty_Arguments,
-                    StartComputingProperty_ArgumentParameters, FinishComputingProperty_ArgumentParameters,
                     StartComputingProperty_SelectedParameters, FinishComputingProperty_SelectedParameters,
                     StartComputingProperty_Attributes, FinishComputingProperty_Attributes);
         }
@@ -45,9 +42,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
         private ImmutableArray<AnnotationArgumentSymbol> _arguments;
         private ImmutableArray<DeclaredSymbol> _constructors;
         private ImmutableArray<ImmutableArray<DeclaredSymbol>> _parameters;
-        private ImmutableArray<ImmutableArray<DeclaredSymbol>> _argumentParameters;
         private DeclaredSymbol? _selectedConstructor;
-        private ImmutableArray<DeclaredSymbol> _selectedParameters;
+        private ImmutableArray<DeclaredSymbol?> _selectedParameters;
 
         public AnnotationSymbol(Symbol container, MergedDeclaration declaration, IModelObject modelObject)
             : base(container, declaration, modelObject)
@@ -128,12 +124,21 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
             }
         }
 
-        public ImmutableArray<ImmutableArray<DeclaredSymbol>> ArgumentParameters
+        public DeclaredSymbol? SelectedConstructor
         {
             get
             {
-                ForceComplete(CompletionParts.FinishComputingProperty_ArgumentParameters, null, default);
-                return _argumentParameters;
+                ForceComplete(CompletionParts.FinishComputingProperty_SelectedParameters, null, default);
+                return _selectedConstructor;
+            }
+        }
+
+        public ImmutableArray<DeclaredSymbol?> SelectedParameters
+        {
+            get
+            {
+                ForceComplete(CompletionParts.FinishComputingProperty_SelectedParameters, null, default);
+                return _selectedParameters;
             }
         }
 
@@ -148,18 +153,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
                     AddSymbolDiagnostics(diagnostics);
                     diagnostics.Free();
                     NotePartComplete(CompletionParts.FinishComputingProperty_Arguments);
-                }
-                return true;
-            }
-            else if (incompletePart == CompletionParts.StartComputingProperty_ArgumentParameters || incompletePart == CompletionParts.FinishComputingProperty_ArgumentParameters)
-            {
-                if (NotePartComplete(CompletionParts.StartComputingProperty_ArgumentParameters))
-                {
-                    var diagnostics = DiagnosticBag.GetInstance();
-                    _argumentParameters = CompleteProperty_ArgumentParameters(diagnostics, cancellationToken);
-                    AddSymbolDiagnostics(diagnostics);
-                    diagnostics.Free();
-                    NotePartComplete(CompletionParts.FinishComputingProperty_ArgumentParameters);
                 }
                 return true;
             }
@@ -194,12 +187,19 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
             return SymbolFactory.GetSymbolPropertyValues<AnnotationArgumentSymbol>(this, nameof(Arguments), diagnostics, cancellationToken);
         }
 
-        private ImmutableArray<ImmutableArray<DeclaredSymbol>> CompleteProperty_ArgumentParameters(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        private (DeclaredSymbol? Constructor, ImmutableArray<DeclaredSymbol?> Parameters) CompleteProperty_SelectedParameters(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            var valid = new bool[Constructors.Length];
-            for (int i = 0; i < valid.Length; ++i)
+            var argParams = ArrayBuilder<DeclaredSymbol?>.GetInstance();
+            if (Constructors.Length == 0)
             {
-                valid[i] = true;
+                for (int j = 0; j < Arguments.Length; ++j) argParams.Add(null);
+                return (null, argParams.ToImmutableAndFree());
+            }
+            DeclaredSymbol? selectedConstructor = null;
+            var selectedParameters = ImmutableArray<DeclaredSymbol>.Empty;
+            for (int i = 0; i < Constructors.Length; ++i)
+            {
+                var valid = true;
                 var ctr = Constructors[i];
                 var parameters = Parameters[i];
                 var indexing = true;
@@ -209,82 +209,61 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
                     if (arg.IsNamedArgument)
                     {
                         indexing = false;
-                        valid[i] = false;
+                        valid = false;
                         foreach (var argParam in arg.NamedParameter)
                         {
                             if (argParam.OriginalSymbol?.ContainingSymbol == ctr)
                             {
-                                valid[i] = true;
+                                valid = true;
                                 break;
                             }
                         }
                     }
                     else if (indexing)
                     {
-                        if (j >= parameters.Length) valid[i] = false;
+                        if (j >= parameters.Length) valid = false;
                     }
                     else
                     {
-                        valid[i] = false;
+                        valid = false;
                         diagnostics.Add(Diagnostic.Create(CommonErrorCode.ERR_BindingError, arg.Location, "Unnamed arguments are not allowed after named arguments."));
                     }
-                    if (!valid[i]) break;
+                    if (!valid) break;
+                }
+                for (int j = Arguments.Length; j < parameters.Length; ++j)
+                {
+                    if (!((parameters[j] as ICSharpSymbol).CSharpSymbol as IParameterSymbol).HasExplicitDefaultValue)
+                    {
+                        valid = false;
+                        break;
+                    }
+                }
+                if (valid)
+                {
+                    selectedConstructor = ctr;
+                    selectedParameters = parameters;
+                    break;
                 }
             }
-            var argumentParameters = ArrayBuilder<ImmutableArray<DeclaredSymbol>>.GetInstance();
-            var argParams = ArrayBuilder<DeclaredSymbol>.GetInstance();
+            if (selectedConstructor is null)
+            {
+                selectedConstructor = Constructors[0];
+                selectedParameters = Parameters[0];
+            }
             for (int j = 0; j < Arguments.Length; ++j)
             {
                 var arg = Arguments[j];
-                argParams.Clear();
-                for (int i = 0; i < valid.Length; ++i)
+                if (arg.IsNamedArgument)
                 {
-                    if (valid[i])
-                    {
-                        if (arg.IsNamedArgument)
-                        {
-                            var param = arg.NamedParameter.Where(p => p.OriginalSymbol?.ContainingSymbol == Constructors[i]).FirstOrDefault().OriginalSymbol as DeclaredSymbol;
-                            if (param is not null)
-                            {
-                                argParams.Add(param);
-                            }
-                        }
-                        else
-                        {
-                            argParams.Add(Parameters[i][j]);
-                        }
-                    }
+                    var param = arg.NamedParameter.Where(p => p.OriginalSymbol?.ContainingSymbol == selectedConstructor).FirstOrDefault().OriginalSymbol as DeclaredSymbol;
+                    argParams.Add(param);
                 }
-                argumentParameters.Add(argParams.ToImmutable());
-            }
-            argParams.Free();
-            return argumentParameters.ToImmutableAndFree();
-        }
-
-        private (DeclaredSymbol? Constructor, ImmutableArray<DeclaredSymbol> Parameters) CompleteProperty_SelectedParameters(DiagnosticBag diagnostics, CancellationToken cancellationToken)
-        {
-            var valid = new bool[Constructors.Length];
-            for (int i = 0; i < valid.Length; ++i)
-            {
-                valid[i] = true;
-                var ctr = Constructors[i];
-                var parameters = Parameters[i];
-                for (int j = 0; j < Arguments.Length; ++j)
+                else if (j < selectedParameters.Length)
                 {
-                    var arg = Arguments[j];
-                    var argParams = ArgumentParameters[j];
-                    var argParam = argParams.FirstOrDefault(p => parameters.Contains(p));
-                    if (argParam is not null)
-                    {
-
-                    }
-                    else
-                    {
-                        valid[i] = false;
-                    }
+                    argParams.Add(selectedParameters[j]);
                 }
             }
-            return default;
+            return (selectedConstructor, argParams.ToImmutableAndFree());
         }
     }
 }

@@ -168,5 +168,28 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
             var values = SymbolFactory.GetSymbolPropertyValues<MetaSymbol>(this, nameof(Value), diagnostics, cancellationToken);
             return (values.FirstOrDefault(), values);
         }
+
+        protected override void CompletePart_Validate(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        {
+            base.CompletePart_Validate(diagnostics, cancellationToken);
+            if (!this.Value.IsNull)
+            {
+                var valueType = this.Value.Type;
+                if (!valueType.IsNull)
+                {
+                    foreach (var expectedType in this.ExpectedTypes)
+                    {
+                        if (expectedType.TryGetCoreType(out var coreType, diagnostics, cancellationToken) && !valueType.IsAssignableTo(coreType))
+                        {
+                            diagnostics.Add(Diagnostic.Create(CompilerErrorCode.ERR_IncompatibleExpressionType, this.Location, this.DeclaringSyntaxReference, valueType, coreType));
+                        }
+                    }
+                }
+                else
+                {
+                    diagnostics.Add(Diagnostic.Create(ErrorCode.ERR_InternalError, this.Location, $"Could not determine the type of the value '{this.DeclaringSyntaxReference}'"));
+                }
+            }
+        }
     }
 }

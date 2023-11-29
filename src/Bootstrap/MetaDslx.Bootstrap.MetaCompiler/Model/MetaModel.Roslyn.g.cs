@@ -38,7 +38,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Roslyn
 		private static readonly Roslyn _instance;
 		public static Roslyn MInstance => _instance;
 	
-		private static readonly __ModelProperty _Binder_FullName;
+		private static readonly __ModelProperty _Binder_TypeName;
 		private static readonly __ModelProperty _Binder_Arguments;
 		private static readonly __ModelProperty _BinderArgument_Name;
 		private static readonly __ModelProperty _BinderArgument_Value;
@@ -54,6 +54,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Roslyn
 		private static readonly __ModelProperty _Token_IsTrivia;
 		private static readonly __ModelProperty _Token_IsFixed;
 		private static readonly __ModelProperty _Token_FixedText;
+		private static readonly __ModelProperty _Rule_Binders;
 		private static readonly __ModelProperty _Rule_Name;
 		private static readonly __ModelProperty _Rule_Alternatives;
 		private static readonly __ModelProperty _Alternative_Name;
@@ -83,7 +84,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Roslyn
 			_Alternative_Elements = new __ModelProperty(typeof(Alternative), "Elements", typeof(Element), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection, null);
 			_Alternative_Name = new __ModelProperty(typeof(Alternative), "Name", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.SingleItem, null);
 			_Binder_Arguments = new __ModelProperty(typeof(Binder), "Arguments", typeof(BinderArgument), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection, null);
-			_Binder_FullName = new __ModelProperty(typeof(Binder), "FullName", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.SingleItem, null);
+			_Binder_TypeName = new __ModelProperty(typeof(Binder), "TypeName", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.SingleItem, null);
 			_BinderArgument_Name = new __ModelProperty(typeof(BinderArgument), "Name", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.SingleItem, null);
 			_BinderArgument_Value = new __ModelProperty(typeof(BinderArgument), "Value", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.SingleItem, null);
 			_Element_Assignment = new __ModelProperty(typeof(Element), "Assignment", typeof(global::MetaDslx.Bootstrap.MetaCompiler.Model.Assignment), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType, null);
@@ -105,6 +106,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Roslyn
 			_List_RepeatedSeparator = new __ModelProperty(typeof(List), "RepeatedSeparator", typeof(Element), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.SingleItem, null);
 			_List_SeparatorFirst = new __ModelProperty(typeof(List), "SeparatorFirst", typeof(bool), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.SingleItem, null);
 			_Rule_Alternatives = new __ModelProperty(typeof(Rule), "Alternatives", typeof(Alternative), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection, null);
+			_Rule_Binders = new __ModelProperty(typeof(Rule), "Binders", typeof(Binder), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection, null);
 			_Rule_Name = new __ModelProperty(typeof(Rule), "Name", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.SingleItem, null);
 			_RuleRef_Rule = new __ModelProperty(typeof(RuleRef), "Rule", typeof(Rule), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.SingleItem, null);
 			_Token_Binders = new __ModelProperty(typeof(Token), "Binders", typeof(Binder), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection, null);
@@ -222,36 +224,38 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Roslyn
 			var obj42 = f.MetaNullableType();
 			var obj43 = f.MetaProperty();
 			var obj44 = f.MetaProperty();
-			var obj45 = f.MetaArrayType();
-			var obj46 = f.MetaProperty();
-			var obj47 = f.MetaProperty();
+			var obj45 = f.MetaProperty();
+			var obj46 = f.MetaArrayType();
+			var obj47 = f.MetaArrayType();
 			var obj48 = f.MetaProperty();
-			var obj49 = f.MetaArrayType();
-			var obj50 = f.MetaArrayType();
-			var obj51 = f.MetaProperty();
-			var obj52 = f.MetaProperty();
+			var obj49 = f.MetaProperty();
+			var obj50 = f.MetaProperty();
+			var obj51 = f.MetaArrayType();
+			var obj52 = f.MetaArrayType();
 			var obj53 = f.MetaProperty();
 			var obj54 = f.MetaProperty();
 			var obj55 = f.MetaProperty();
-			var obj56 = f.MetaArrayType();
+			var obj56 = f.MetaProperty();
 			var obj57 = f.MetaProperty();
 			var obj58 = f.MetaArrayType();
 			var obj59 = f.MetaProperty();
-			var obj60 = f.MetaProperty();
+			var obj60 = f.MetaArrayType();
 			var obj61 = f.MetaProperty();
-			var obj62 = f.MetaArrayType();
+			var obj62 = f.MetaProperty();
 			var obj63 = f.MetaProperty();
-			var obj64 = f.MetaProperty();
+			var obj64 = f.MetaArrayType();
 			var obj65 = f.MetaProperty();
 			var obj66 = f.MetaProperty();
 			var obj67 = f.MetaProperty();
 			var obj68 = f.MetaProperty();
 			var obj69 = f.MetaProperty();
 			var obj70 = f.MetaProperty();
-			var obj71 = f.MetaArrayType();
-			var obj72 = f.MetaArrayType();
+			var obj71 = f.MetaProperty();
+			var obj72 = f.MetaProperty();
 			var obj73 = f.MetaArrayType();
 			var obj74 = f.MetaArrayType();
+			var obj75 = f.MetaArrayType();
+			var obj76 = f.MetaArrayType();
 			__CustomImpl.Roslyn(this);
 			((__IModelObject)obj1).Children.Add((__IModelObject)obj2);
 			((__IModelObject)obj2).Children.Add((__IModelObject)obj3);
@@ -359,96 +363,99 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Roslyn
 			obj11.Parent = obj5;
 			((__IModelObject)obj12).Children.Add((__IModelObject)obj43);
 			((__IModelObject)obj12).Children.Add((__IModelObject)obj44);
+			((__IModelObject)obj12).Children.Add((__IModelObject)obj45);
 			obj12.Properties.Add(obj43);
 			obj12.Properties.Add(obj44);
+			obj12.Properties.Add(obj45);
 			obj12.Declarations.Add(obj43);
 			obj12.Declarations.Add(obj44);
+			obj12.Declarations.Add(obj45);
 			obj12.Name = "Rule";
 			obj12.Parent = obj5;
-			((__IModelObject)obj13).Children.Add((__IModelObject)obj46);
-			((__IModelObject)obj13).Children.Add((__IModelObject)obj47);
 			((__IModelObject)obj13).Children.Add((__IModelObject)obj48);
-			obj13.Properties.Add(obj46);
-			obj13.Properties.Add(obj47);
+			((__IModelObject)obj13).Children.Add((__IModelObject)obj49);
+			((__IModelObject)obj13).Children.Add((__IModelObject)obj50);
 			obj13.Properties.Add(obj48);
-			obj13.Declarations.Add(obj46);
-			obj13.Declarations.Add(obj47);
+			obj13.Properties.Add(obj49);
+			obj13.Properties.Add(obj50);
 			obj13.Declarations.Add(obj48);
+			obj13.Declarations.Add(obj49);
+			obj13.Declarations.Add(obj50);
 			obj13.Name = "Alternative";
 			obj13.Parent = obj5;
-			((__IModelObject)obj14).Children.Add((__IModelObject)obj51);
-			((__IModelObject)obj14).Children.Add((__IModelObject)obj52);
 			((__IModelObject)obj14).Children.Add((__IModelObject)obj53);
 			((__IModelObject)obj14).Children.Add((__IModelObject)obj54);
 			((__IModelObject)obj14).Children.Add((__IModelObject)obj55);
-			obj14.Properties.Add(obj51);
-			obj14.Properties.Add(obj52);
+			((__IModelObject)obj14).Children.Add((__IModelObject)obj56);
+			((__IModelObject)obj14).Children.Add((__IModelObject)obj57);
 			obj14.Properties.Add(obj53);
 			obj14.Properties.Add(obj54);
 			obj14.Properties.Add(obj55);
-			obj14.Declarations.Add(obj51);
-			obj14.Declarations.Add(obj52);
+			obj14.Properties.Add(obj56);
+			obj14.Properties.Add(obj57);
 			obj14.Declarations.Add(obj53);
 			obj14.Declarations.Add(obj54);
 			obj14.Declarations.Add(obj55);
+			obj14.Declarations.Add(obj56);
+			obj14.Declarations.Add(obj57);
 			obj14.Name = "Element";
 			obj14.Parent = obj5;
-			((__IModelObject)obj15).Children.Add((__IModelObject)obj57);
+			((__IModelObject)obj15).Children.Add((__IModelObject)obj59);
 			obj15.IsAbstract = true;
-			obj15.Properties.Add(obj57);
-			obj15.Declarations.Add(obj57);
+			obj15.Properties.Add(obj59);
+			obj15.Declarations.Add(obj59);
 			obj15.Name = "ElementValue";
 			obj15.Parent = obj5;
-			((__IModelObject)obj16).Children.Add((__IModelObject)obj59);
+			((__IModelObject)obj16).Children.Add((__IModelObject)obj61);
 			obj16.BaseTypes.Add(obj15);
-			obj16.Properties.Add(obj59);
-			obj16.Declarations.Add(obj59);
+			obj16.Properties.Add(obj61);
+			obj16.Declarations.Add(obj61);
 			obj16.Name = "RuleRef";
 			obj16.Parent = obj5;
-			((__IModelObject)obj17).Children.Add((__IModelObject)obj60);
+			((__IModelObject)obj17).Children.Add((__IModelObject)obj62);
 			obj17.BaseTypes.Add(obj15);
-			obj17.Properties.Add(obj60);
-			obj17.Declarations.Add(obj60);
+			obj17.Properties.Add(obj62);
+			obj17.Declarations.Add(obj62);
 			obj17.Name = "TokenRef";
 			obj17.Parent = obj5;
-			((__IModelObject)obj18).Children.Add((__IModelObject)obj61);
+			((__IModelObject)obj18).Children.Add((__IModelObject)obj63);
 			obj18.BaseTypes.Add(obj15);
-			obj18.Properties.Add(obj61);
-			obj18.Declarations.Add(obj61);
+			obj18.Properties.Add(obj63);
+			obj18.Declarations.Add(obj63);
 			obj18.Name = "TokenAlts";
 			obj18.Parent = obj5;
 			obj19.BaseTypes.Add(obj15);
 			obj19.Name = "Eof";
 			obj19.Parent = obj5;
-			((__IModelObject)obj20).Children.Add((__IModelObject)obj63);
-			((__IModelObject)obj20).Children.Add((__IModelObject)obj64);
 			((__IModelObject)obj20).Children.Add((__IModelObject)obj65);
 			((__IModelObject)obj20).Children.Add((__IModelObject)obj66);
 			((__IModelObject)obj20).Children.Add((__IModelObject)obj67);
 			((__IModelObject)obj20).Children.Add((__IModelObject)obj68);
 			((__IModelObject)obj20).Children.Add((__IModelObject)obj69);
 			((__IModelObject)obj20).Children.Add((__IModelObject)obj70);
+			((__IModelObject)obj20).Children.Add((__IModelObject)obj71);
+			((__IModelObject)obj20).Children.Add((__IModelObject)obj72);
 			obj20.BaseTypes.Add(obj15);
-			obj20.Properties.Add(obj63);
-			obj20.Properties.Add(obj64);
 			obj20.Properties.Add(obj65);
 			obj20.Properties.Add(obj66);
 			obj20.Properties.Add(obj67);
 			obj20.Properties.Add(obj68);
 			obj20.Properties.Add(obj69);
 			obj20.Properties.Add(obj70);
-			obj20.Declarations.Add(obj63);
-			obj20.Declarations.Add(obj64);
+			obj20.Properties.Add(obj71);
+			obj20.Properties.Add(obj72);
 			obj20.Declarations.Add(obj65);
 			obj20.Declarations.Add(obj66);
 			obj20.Declarations.Add(obj67);
 			obj20.Declarations.Add(obj68);
 			obj20.Declarations.Add(obj69);
 			obj20.Declarations.Add(obj70);
+			obj20.Declarations.Add(obj71);
+			obj20.Declarations.Add(obj72);
 			obj20.Name = "List";
 			obj20.Parent = obj5;
 			obj21.Type = typeof(string);
-			obj21.Name = "FullName";
+			obj21.Name = "TypeName";
 			obj21.Parent = obj7;
 			((__IModelObject)obj22).Children.Add((__IModelObject)obj23);
 			obj22.IsContainment = true;
@@ -512,98 +519,104 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Roslyn
 			obj40.Parent = obj11;
 			obj41.ItemType = __MetaType.FromModelObject((__IModelObject)obj7);
 			obj42.InnerType = typeof(string);
-			obj43.Type = typeof(string);
-			obj43.Name = "Name";
+			((__IModelObject)obj43).Children.Add((__IModelObject)obj46);
+			obj43.IsContainment = true;
+			obj43.Type = __MetaType.FromModelObject((__IModelObject)obj46);
+			obj43.Name = "Binders";
 			obj43.Parent = obj12;
-			((__IModelObject)obj44).Children.Add((__IModelObject)obj45);
-			obj44.IsContainment = true;
-			obj44.Type = __MetaType.FromModelObject((__IModelObject)obj45);
-			obj44.Name = "Alternatives";
+			obj44.Type = typeof(string);
+			obj44.Name = "Name";
 			obj44.Parent = obj12;
-			obj45.ItemType = __MetaType.FromModelObject((__IModelObject)obj13);
-			obj46.Type = typeof(string);
-			obj46.Name = "Name";
-			obj46.Parent = obj13;
-			((__IModelObject)obj47).Children.Add((__IModelObject)obj49);
-			obj47.IsContainment = true;
-			obj47.Type = __MetaType.FromModelObject((__IModelObject)obj49);
-			obj47.Name = "Binders";
-			obj47.Parent = obj13;
-			((__IModelObject)obj48).Children.Add((__IModelObject)obj50);
-			obj48.IsContainment = true;
-			obj48.Type = __MetaType.FromModelObject((__IModelObject)obj50);
-			obj48.Name = "Elements";
+			((__IModelObject)obj45).Children.Add((__IModelObject)obj47);
+			obj45.IsContainment = true;
+			obj45.Type = __MetaType.FromModelObject((__IModelObject)obj47);
+			obj45.Name = "Alternatives";
+			obj45.Parent = obj12;
+			obj46.ItemType = __MetaType.FromModelObject((__IModelObject)obj7);
+			obj47.ItemType = __MetaType.FromModelObject((__IModelObject)obj13);
+			obj48.Type = typeof(string);
+			obj48.Name = "Name";
 			obj48.Parent = obj13;
-			obj49.ItemType = __MetaType.FromModelObject((__IModelObject)obj7);
-			obj50.ItemType = __MetaType.FromModelObject((__IModelObject)obj14);
-			((__IModelObject)obj51).Children.Add((__IModelObject)obj56);
-			obj51.IsContainment = true;
-			obj51.Type = __MetaType.FromModelObject((__IModelObject)obj56);
-			obj51.Name = "Binders";
-			obj51.Parent = obj14;
-			obj52.Type = typeof(string);
-			obj52.Name = "Name";
-			obj52.Parent = obj14;
-			obj53.Type = typeof(global::MetaDslx.Bootstrap.MetaCompiler.Model.Assignment);
-			obj53.Name = "Assignment";
+			((__IModelObject)obj49).Children.Add((__IModelObject)obj51);
+			obj49.IsContainment = true;
+			obj49.Type = __MetaType.FromModelObject((__IModelObject)obj51);
+			obj49.Name = "Binders";
+			obj49.Parent = obj13;
+			((__IModelObject)obj50).Children.Add((__IModelObject)obj52);
+			obj50.IsContainment = true;
+			obj50.Type = __MetaType.FromModelObject((__IModelObject)obj52);
+			obj50.Name = "Elements";
+			obj50.Parent = obj13;
+			obj51.ItemType = __MetaType.FromModelObject((__IModelObject)obj7);
+			obj52.ItemType = __MetaType.FromModelObject((__IModelObject)obj14);
+			((__IModelObject)obj53).Children.Add((__IModelObject)obj58);
+			obj53.IsContainment = true;
+			obj53.Type = __MetaType.FromModelObject((__IModelObject)obj58);
+			obj53.Name = "Binders";
 			obj53.Parent = obj14;
-			obj54.IsContainment = true;
-			obj54.Type = __MetaType.FromModelObject((__IModelObject)obj15);
-			obj54.Name = "Value";
+			obj54.Type = typeof(string);
+			obj54.Name = "Name";
 			obj54.Parent = obj14;
-			obj55.Type = typeof(global::MetaDslx.Bootstrap.MetaCompiler.Model.Multiplicity);
-			obj55.Name = "Multiplicity";
+			obj55.Type = typeof(global::MetaDslx.Bootstrap.MetaCompiler.Model.Assignment);
+			obj55.Name = "Assignment";
 			obj55.Parent = obj14;
-			obj56.ItemType = __MetaType.FromModelObject((__IModelObject)obj7);
-			((__IModelObject)obj57).Children.Add((__IModelObject)obj58);
-			obj57.IsContainment = true;
-			obj57.Type = __MetaType.FromModelObject((__IModelObject)obj58);
-			obj57.Name = "Binders";
-			obj57.Parent = obj15;
+			obj56.IsContainment = true;
+			obj56.Type = __MetaType.FromModelObject((__IModelObject)obj15);
+			obj56.Name = "Value";
+			obj56.Parent = obj14;
+			obj57.Type = typeof(global::MetaDslx.Bootstrap.MetaCompiler.Model.Multiplicity);
+			obj57.Name = "Multiplicity";
+			obj57.Parent = obj14;
 			obj58.ItemType = __MetaType.FromModelObject((__IModelObject)obj7);
-			obj59.Type = __MetaType.FromModelObject((__IModelObject)obj12);
-			obj59.Name = "Rule";
-			obj59.Parent = obj16;
-			obj60.Type = __MetaType.FromModelObject((__IModelObject)obj11);
-			obj60.Name = "Token";
-			obj60.Parent = obj17;
-			((__IModelObject)obj61).Children.Add((__IModelObject)obj62);
-			obj61.Type = __MetaType.FromModelObject((__IModelObject)obj62);
-			obj61.Name = "Tokens";
-			obj61.Parent = obj18;
-			obj62.ItemType = __MetaType.FromModelObject((__IModelObject)obj17);
-			obj63.Type = typeof(bool);
-			obj63.Name = "SeparatorFirst";
-			obj63.Parent = obj20;
-			((__IModelObject)obj64).Children.Add((__IModelObject)obj71);
-			obj64.Type = __MetaType.FromModelObject((__IModelObject)obj71);
-			obj64.Name = "FirstItems";
-			obj64.Parent = obj20;
-			((__IModelObject)obj65).Children.Add((__IModelObject)obj72);
-			obj65.Type = __MetaType.FromModelObject((__IModelObject)obj72);
-			obj65.Name = "FirstSeparators";
+			((__IModelObject)obj59).Children.Add((__IModelObject)obj60);
+			obj59.IsContainment = true;
+			obj59.Type = __MetaType.FromModelObject((__IModelObject)obj60);
+			obj59.Name = "Binders";
+			obj59.Parent = obj15;
+			obj60.ItemType = __MetaType.FromModelObject((__IModelObject)obj7);
+			obj61.Type = __MetaType.FromModelObject((__IModelObject)obj12);
+			obj61.Name = "Rule";
+			obj61.Parent = obj16;
+			obj62.Type = __MetaType.FromModelObject((__IModelObject)obj11);
+			obj62.Name = "Token";
+			obj62.Parent = obj17;
+			((__IModelObject)obj63).Children.Add((__IModelObject)obj64);
+			obj63.Type = __MetaType.FromModelObject((__IModelObject)obj64);
+			obj63.Name = "Tokens";
+			obj63.Parent = obj18;
+			obj64.ItemType = __MetaType.FromModelObject((__IModelObject)obj17);
+			obj65.Type = typeof(bool);
+			obj65.Name = "SeparatorFirst";
 			obj65.Parent = obj20;
-			obj66.Type = __MetaType.FromModelObject((__IModelObject)obj14);
-			obj66.Name = "RepeatedBlock";
+			((__IModelObject)obj66).Children.Add((__IModelObject)obj73);
+			obj66.Type = __MetaType.FromModelObject((__IModelObject)obj73);
+			obj66.Name = "FirstItems";
 			obj66.Parent = obj20;
-			obj67.Type = __MetaType.FromModelObject((__IModelObject)obj14);
-			obj67.Name = "RepeatedItem";
+			((__IModelObject)obj67).Children.Add((__IModelObject)obj74);
+			obj67.Type = __MetaType.FromModelObject((__IModelObject)obj74);
+			obj67.Name = "FirstSeparators";
 			obj67.Parent = obj20;
 			obj68.Type = __MetaType.FromModelObject((__IModelObject)obj14);
-			obj68.Name = "RepeatedSeparator";
+			obj68.Name = "RepeatedBlock";
 			obj68.Parent = obj20;
-			((__IModelObject)obj69).Children.Add((__IModelObject)obj73);
-			obj69.Type = __MetaType.FromModelObject((__IModelObject)obj73);
-			obj69.Name = "LastItems";
+			obj69.Type = __MetaType.FromModelObject((__IModelObject)obj14);
+			obj69.Name = "RepeatedItem";
 			obj69.Parent = obj20;
-			((__IModelObject)obj70).Children.Add((__IModelObject)obj74);
-			obj70.Type = __MetaType.FromModelObject((__IModelObject)obj74);
-			obj70.Name = "LastSeparators";
+			obj70.Type = __MetaType.FromModelObject((__IModelObject)obj14);
+			obj70.Name = "RepeatedSeparator";
 			obj70.Parent = obj20;
-			obj71.ItemType = __MetaType.FromModelObject((__IModelObject)obj14);
-			obj72.ItemType = __MetaType.FromModelObject((__IModelObject)obj14);
+			((__IModelObject)obj71).Children.Add((__IModelObject)obj75);
+			obj71.Type = __MetaType.FromModelObject((__IModelObject)obj75);
+			obj71.Name = "LastItems";
+			obj71.Parent = obj20;
+			((__IModelObject)obj72).Children.Add((__IModelObject)obj76);
+			obj72.Type = __MetaType.FromModelObject((__IModelObject)obj76);
+			obj72.Name = "LastSeparators";
+			obj72.Parent = obj20;
 			obj73.ItemType = __MetaType.FromModelObject((__IModelObject)obj14);
 			obj74.ItemType = __MetaType.FromModelObject((__IModelObject)obj14);
+			obj75.ItemType = __MetaType.FromModelObject((__IModelObject)obj14);
+			obj76.ItemType = __MetaType.FromModelObject((__IModelObject)obj14);
 			_model.IsSealed = true;
 		}
 	
@@ -631,7 +644,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Roslyn
 		public static __ModelProperty Alternative_Binders => _Alternative_Binders;
 		public static __ModelProperty Alternative_Elements => _Alternative_Elements;
 		public static __ModelClassInfo BinderInfo => __Impl.Binder_Impl.__Info.Instance;
-		public static __ModelProperty Binder_FullName => _Binder_FullName;
+		public static __ModelProperty Binder_TypeName => _Binder_TypeName;
 		public static __ModelProperty Binder_Arguments => _Binder_Arguments;
 		public static __ModelClassInfo BinderArgumentInfo => __Impl.BinderArgument_Impl.__Info.Instance;
 		public static __ModelProperty BinderArgument_Name => _BinderArgument_Name;
@@ -660,6 +673,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Roslyn
 		public static __ModelProperty List_LastItems => _List_LastItems;
 		public static __ModelProperty List_LastSeparators => _List_LastSeparators;
 		public static __ModelClassInfo RuleInfo => __Impl.Rule_Impl.__Info.Instance;
+		public static __ModelProperty Rule_Binders => _Rule_Binders;
 		public static __ModelProperty Rule_Name => _Rule_Name;
 		public static __ModelProperty Rule_Alternatives => _Rule_Alternatives;
 		public static __ModelClassInfo RuleRefInfo => __Impl.RuleRef_Impl.__Info.Instance;
@@ -841,7 +855,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Roslyn
 	public interface Binder : __IModelObjectCore
 	{
 		global::System.Collections.Generic.IList<BinderArgument> Arguments { get; }
-		string FullName { get; set; }
+		string TypeName { get; set; }
 	
 	}
 
@@ -898,6 +912,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Roslyn
 	public interface Rule : __IModelObjectCore
 	{
 		global::System.Collections.Generic.IList<Alternative> Alternatives { get; }
+		global::System.Collections.Generic.IList<Binder> Binders { get; }
 		string Name { get; set; }
 	
 	}
@@ -1275,10 +1290,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Roslyn.__Impl
 			get => MGetCollection<BinderArgument>(Roslyn.Binder_Arguments);
 		}
 	
-		public string FullName
+		public string TypeName
 		{
-			get => MGet<string>(Roslyn.Binder_FullName);
-			set => MAdd<string>(Roslyn.Binder_FullName, value);
+			get => MGet<string>(Roslyn.Binder_TypeName);
+			set => MAdd<string>(Roslyn.Binder_TypeName, value);
 		}
 	
 	
@@ -1303,16 +1318,16 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Roslyn.__Impl
 			{
 				_baseTypes = __ImmutableArray.Create<__ModelClassInfo>();
 				_allBaseTypes = __ImmutableArray.Create<__ModelClassInfo>();
-				_declaredProperties = __ImmutableArray.Create<__ModelProperty>(Roslyn.Binder_Arguments, Roslyn.Binder_FullName);
-				_allDeclaredProperties = __ImmutableArray.Create<__ModelProperty>(Roslyn.Binder_Arguments, Roslyn.Binder_FullName);
-				_publicProperties = __ImmutableArray.Create<__ModelProperty>(Roslyn.Binder_Arguments, Roslyn.Binder_FullName);
+				_declaredProperties = __ImmutableArray.Create<__ModelProperty>(Roslyn.Binder_Arguments, Roslyn.Binder_TypeName);
+				_allDeclaredProperties = __ImmutableArray.Create<__ModelProperty>(Roslyn.Binder_Arguments, Roslyn.Binder_TypeName);
+				_publicProperties = __ImmutableArray.Create<__ModelProperty>(Roslyn.Binder_Arguments, Roslyn.Binder_TypeName);
 				var publicPropertiesByName = __ImmutableDictionary.CreateBuilder<string, __ModelProperty>();
 				publicPropertiesByName.Add("Arguments", Roslyn.Binder_Arguments);
-				publicPropertiesByName.Add("FullName", Roslyn.Binder_FullName);
+				publicPropertiesByName.Add("TypeName", Roslyn.Binder_TypeName);
 				_publicPropertiesByName = publicPropertiesByName.ToImmutable();
 				var modelPropertyInfos = __ImmutableDictionary.CreateBuilder<__ModelProperty, __ModelPropertyInfo>();
 				modelPropertyInfos.Add(Roslyn.Binder_Arguments, new __ModelPropertyInfo(new __ModelPropertySlot(Roslyn.Binder_Arguments, __ImmutableArray.Create<__ModelProperty>(Roslyn.Binder_Arguments), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
-				modelPropertyInfos.Add(Roslyn.Binder_FullName, new __ModelPropertyInfo(new __ModelPropertySlot(Roslyn.Binder_FullName, __ImmutableArray.Create<__ModelProperty>(Roslyn.Binder_FullName), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.SingleItem), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
+				modelPropertyInfos.Add(Roslyn.Binder_TypeName, new __ModelPropertyInfo(new __ModelPropertySlot(Roslyn.Binder_TypeName, __ImmutableArray.Create<__ModelProperty>(Roslyn.Binder_TypeName), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.SingleItem), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
 				_modelPropertyInfos = modelPropertyInfos.ToImmutable();
 	
 				_declaredOperations = __ImmutableArray.Create<__ModelOperation>();
@@ -2019,6 +2034,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Roslyn.__Impl
 			: base(id)
 		{
 			((__IModelObject)this).Init(Roslyn.Rule_Alternatives, new global::MetaDslx.Modeling.ModelObjectList<Alternative>(this, __Info.Instance.GetSlot(Roslyn.Rule_Alternatives)!));
+			((__IModelObject)this).Init(Roslyn.Rule_Binders, new global::MetaDslx.Modeling.ModelObjectList<Binder>(this, __Info.Instance.GetSlot(Roslyn.Rule_Binders)!));
 			Roslyn.__CustomImpl.Rule(this);
 		}
 	
@@ -2027,6 +2043,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Roslyn.__Impl
 		public global::System.Collections.Generic.IList<Alternative> Alternatives
 		{
 			get => MGetCollection<Alternative>(Roslyn.Rule_Alternatives);
+		}
+	
+		public global::System.Collections.Generic.IList<Binder> Binders
+		{
+			get => MGetCollection<Binder>(Roslyn.Rule_Binders);
 		}
 	
 		public string Name
@@ -2057,15 +2078,17 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Roslyn.__Impl
 			{
 				_baseTypes = __ImmutableArray.Create<__ModelClassInfo>();
 				_allBaseTypes = __ImmutableArray.Create<__ModelClassInfo>();
-				_declaredProperties = __ImmutableArray.Create<__ModelProperty>(Roslyn.Rule_Alternatives, Roslyn.Rule_Name);
-				_allDeclaredProperties = __ImmutableArray.Create<__ModelProperty>(Roslyn.Rule_Alternatives, Roslyn.Rule_Name);
-				_publicProperties = __ImmutableArray.Create<__ModelProperty>(Roslyn.Rule_Alternatives, Roslyn.Rule_Name);
+				_declaredProperties = __ImmutableArray.Create<__ModelProperty>(Roslyn.Rule_Alternatives, Roslyn.Rule_Binders, Roslyn.Rule_Name);
+				_allDeclaredProperties = __ImmutableArray.Create<__ModelProperty>(Roslyn.Rule_Alternatives, Roslyn.Rule_Binders, Roslyn.Rule_Name);
+				_publicProperties = __ImmutableArray.Create<__ModelProperty>(Roslyn.Rule_Alternatives, Roslyn.Rule_Binders, Roslyn.Rule_Name);
 				var publicPropertiesByName = __ImmutableDictionary.CreateBuilder<string, __ModelProperty>();
 				publicPropertiesByName.Add("Alternatives", Roslyn.Rule_Alternatives);
+				publicPropertiesByName.Add("Binders", Roslyn.Rule_Binders);
 				publicPropertiesByName.Add("Name", Roslyn.Rule_Name);
 				_publicPropertiesByName = publicPropertiesByName.ToImmutable();
 				var modelPropertyInfos = __ImmutableDictionary.CreateBuilder<__ModelProperty, __ModelPropertyInfo>();
 				modelPropertyInfos.Add(Roslyn.Rule_Alternatives, new __ModelPropertyInfo(new __ModelPropertySlot(Roslyn.Rule_Alternatives, __ImmutableArray.Create<__ModelProperty>(Roslyn.Rule_Alternatives), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
+				modelPropertyInfos.Add(Roslyn.Rule_Binders, new __ModelPropertyInfo(new __ModelPropertySlot(Roslyn.Rule_Binders, __ImmutableArray.Create<__ModelProperty>(Roslyn.Rule_Binders), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
 				modelPropertyInfos.Add(Roslyn.Rule_Name, new __ModelPropertyInfo(new __ModelPropertySlot(Roslyn.Rule_Name, __ImmutableArray.Create<__ModelProperty>(Roslyn.Rule_Name), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.SingleItem), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
 				_modelPropertyInfos = modelPropertyInfos.ToImmutable();
 	

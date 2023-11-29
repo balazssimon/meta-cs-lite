@@ -48,7 +48,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
 		private static readonly __ModelProperty _Grammar_Rules;
 		private static readonly __ModelProperty _Annotation_AttributeClass;
 		private static readonly __ModelProperty _Annotation_Arguments;
-		private static readonly __ModelProperty _AnnotationArgument_Name;
+		private static readonly __ModelProperty _AnnotationArgument_NamedParameter;
 		private static readonly __ModelProperty _AnnotationArgument_Parameter;
 		private static readonly __ModelProperty _AnnotationArgument_Value;
 		private static readonly __ModelProperty _Rule_Language;
@@ -119,7 +119,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
 		{
 			_Annotation_Arguments = new __ModelProperty(typeof(Annotation), "Arguments", typeof(AnnotationArgument), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection, "Arguments");
 			_Annotation_AttributeClass = new __ModelProperty(typeof(Annotation), "AttributeClass", typeof(global::MetaDslx.CodeAnalysis.Symbols.TypeSymbol), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType, "AttributeClass");
-			_AnnotationArgument_Name = new __ModelProperty(typeof(AnnotationArgument), "Name", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.SingleItem | __ModelPropertyFlags.Name, "Name");
+			_AnnotationArgument_NamedParameter = new __ModelProperty(typeof(AnnotationArgument), "NamedParameter", typeof(__MetaSymbol), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Collection, "NamedParameter");
 			_AnnotationArgument_Parameter = new __ModelProperty(typeof(AnnotationArgument), "Parameter", typeof(global::MetaDslx.CodeAnalysis.Symbols.DeclaredSymbol), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType, null);
 			_AnnotationArgument_Value = new __ModelProperty(typeof(AnnotationArgument), "Value", typeof(Expression), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.SingleItem, "Value");
 			_ArrayExpression_Items = new __ModelProperty(typeof(ArrayExpression), "Items", typeof(Expression), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Collection, null);
@@ -348,7 +348,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
 			var obj56 = f.MetaProperty();
 			var obj57 = f.MetaProperty();
 			var obj58 = f.MetaProperty();
-			var obj59 = f.MetaNullableType();
+			var obj59 = f.MetaArrayType();
 			var obj60 = f.MetaEnumLiteral();
 			var obj61 = f.MetaEnumLiteral();
 			var obj62 = f.MetaEnumLiteral();
@@ -957,9 +957,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
 			obj54.Parent = obj11;
 			obj55.ItemType = __MetaType.FromModelObject((__IModelObject)obj12);
 			((__IModelObject)obj56).Children.Add((__IModelObject)obj59);
-			obj56.SymbolProperty = "Name";
+			obj56.SymbolProperty = "NamedParameter";
 			obj56.Type = __MetaType.FromModelObject((__IModelObject)obj59);
-			obj56.Name = "Name";
+			obj56.Name = "NamedParameter";
 			obj56.Parent = obj12;
 			obj57.Type = typeof(global::MetaDslx.CodeAnalysis.Symbols.DeclaredSymbol);
 			obj57.Name = "Parameter";
@@ -969,7 +969,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
 			obj58.Type = __MetaType.FromModelObject((__IModelObject)obj37);
 			obj58.Name = "Value";
 			obj58.Parent = obj12;
-			obj59.InnerType = typeof(string);
+			obj59.ItemType = typeof(__MetaSymbol);
 			obj60.Name = "ExactlyOne";
 			obj60.Parent = obj13;
 			obj61.Name = "ZeroOrOne";
@@ -1312,7 +1312,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
 		public static __ModelProperty Annotation_AttributeClass => _Annotation_AttributeClass;
 		public static __ModelProperty Annotation_Arguments => _Annotation_Arguments;
 		public static __ModelClassInfo AnnotationArgumentInfo => __Impl.AnnotationArgument_Impl.__Info.Instance;
-		public static __ModelProperty AnnotationArgument_Name => _AnnotationArgument_Name;
+		public static __ModelProperty AnnotationArgument_NamedParameter => _AnnotationArgument_NamedParameter;
 		public static __ModelProperty AnnotationArgument_Parameter => _AnnotationArgument_Parameter;
 		public static __ModelProperty AnnotationArgument_Value => _AnnotationArgument_Value;
 		public static __ModelClassInfo ArrayExpressionInfo => __Impl.ArrayExpression_Impl.__Info.Instance;
@@ -1704,7 +1704,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
 
 	public interface AnnotationArgument : __IModelObjectCore
 	{
-		string? Name { get; set; }
+		global::System.Collections.Generic.IList<__MetaSymbol> NamedParameter { get; }
 		global::MetaDslx.CodeAnalysis.Symbols.DeclaredSymbol Parameter { get; set; }
 		Expression Value { get; set; }
 	
@@ -2762,15 +2762,15 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 		private AnnotationArgument_Impl(string? id)
 			: base(id)
 		{
+			((__IModelObject)this).Init(Compiler.AnnotationArgument_NamedParameter, new global::MetaDslx.Modeling.ModelObjectList<__MetaSymbol>(this, __Info.Instance.GetSlot(Compiler.AnnotationArgument_NamedParameter)!));
 			Compiler.__CustomImpl.AnnotationArgument(this);
 		}
 	
 		public override __ModelClassInfo MInfo => __Info.Instance;
 	
-		public string? Name
+		public global::System.Collections.Generic.IList<__MetaSymbol> NamedParameter
 		{
-			get => MGet<string?>(Compiler.AnnotationArgument_Name);
-			set => MAdd<string?>(Compiler.AnnotationArgument_Name, value);
+			get => MGetCollection<__MetaSymbol>(Compiler.AnnotationArgument_NamedParameter);
 		}
 	
 		public global::MetaDslx.CodeAnalysis.Symbols.DeclaredSymbol Parameter
@@ -2807,16 +2807,16 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 			{
 				_baseTypes = __ImmutableArray.Create<__ModelClassInfo>();
 				_allBaseTypes = __ImmutableArray.Create<__ModelClassInfo>();
-				_declaredProperties = __ImmutableArray.Create<__ModelProperty>(Compiler.AnnotationArgument_Name, Compiler.AnnotationArgument_Parameter, Compiler.AnnotationArgument_Value);
-				_allDeclaredProperties = __ImmutableArray.Create<__ModelProperty>(Compiler.AnnotationArgument_Name, Compiler.AnnotationArgument_Parameter, Compiler.AnnotationArgument_Value);
-				_publicProperties = __ImmutableArray.Create<__ModelProperty>(Compiler.AnnotationArgument_Name, Compiler.AnnotationArgument_Parameter, Compiler.AnnotationArgument_Value);
+				_declaredProperties = __ImmutableArray.Create<__ModelProperty>(Compiler.AnnotationArgument_NamedParameter, Compiler.AnnotationArgument_Parameter, Compiler.AnnotationArgument_Value);
+				_allDeclaredProperties = __ImmutableArray.Create<__ModelProperty>(Compiler.AnnotationArgument_NamedParameter, Compiler.AnnotationArgument_Parameter, Compiler.AnnotationArgument_Value);
+				_publicProperties = __ImmutableArray.Create<__ModelProperty>(Compiler.AnnotationArgument_NamedParameter, Compiler.AnnotationArgument_Parameter, Compiler.AnnotationArgument_Value);
 				var publicPropertiesByName = __ImmutableDictionary.CreateBuilder<string, __ModelProperty>();
-				publicPropertiesByName.Add("Name", Compiler.AnnotationArgument_Name);
+				publicPropertiesByName.Add("NamedParameter", Compiler.AnnotationArgument_NamedParameter);
 				publicPropertiesByName.Add("Parameter", Compiler.AnnotationArgument_Parameter);
 				publicPropertiesByName.Add("Value", Compiler.AnnotationArgument_Value);
 				_publicPropertiesByName = publicPropertiesByName.ToImmutable();
 				var modelPropertyInfos = __ImmutableDictionary.CreateBuilder<__ModelProperty, __ModelPropertyInfo>();
-				modelPropertyInfos.Add(Compiler.AnnotationArgument_Name, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.AnnotationArgument_Name, __ImmutableArray.Create<__ModelProperty>(Compiler.AnnotationArgument_Name), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.SingleItem), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
+				modelPropertyInfos.Add(Compiler.AnnotationArgument_NamedParameter, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.AnnotationArgument_NamedParameter, __ImmutableArray.Create<__ModelProperty>(Compiler.AnnotationArgument_NamedParameter), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Collection), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
 				modelPropertyInfos.Add(Compiler.AnnotationArgument_Parameter, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.AnnotationArgument_Parameter, __ImmutableArray.Create<__ModelProperty>(Compiler.AnnotationArgument_Parameter), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
 				modelPropertyInfos.Add(Compiler.AnnotationArgument_Value, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.AnnotationArgument_Value, __ImmutableArray.Create<__ModelProperty>(Compiler.AnnotationArgument_Value), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.SingleItem), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
 				_modelPropertyInfos = modelPropertyInfos.ToImmutable();
@@ -2832,7 +2832,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 	        public override __MetaType MetaType => typeof(AnnotationArgument);
 	
 	        public override __MetaType SymbolType => typeof(global::MetaDslx.Bootstrap.MetaCompiler.Symbols.AnnotationArgumentSymbol);
-	        public override __ModelProperty? NameProperty => Compiler.AnnotationArgument_Name;
+	        public override __ModelProperty? NameProperty => null;
 	        public override __ModelProperty? TypeProperty => null;
 	        public override global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo> BaseTypes => _baseTypes;
 	        public override global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo> AllBaseTypes => _allBaseTypes;

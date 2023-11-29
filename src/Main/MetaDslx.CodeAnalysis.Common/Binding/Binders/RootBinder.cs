@@ -96,21 +96,11 @@ namespace MetaDslx.CodeAnalysis.Binding
 
         protected override void AddLookupCandidateSymbolsInSingleBinder(LookupContext context, LookupCandidates result)
         {
-            if (Compilation.Options.MergeGlobalNamespace)
+            if (context.Qualifier is null)
             {
-                foreach (var symbol in Compilation.GlobalNamespace.ContainedSymbols)
+                if (Compilation.Options.MergeGlobalNamespace)
                 {
-                    if (symbol is DeclaredSymbol declaredSymbol && context.IsViable(declaredSymbol))
-                    {
-                        result.Add(declaredSymbol);
-                    }
-                }
-            }
-            else
-            {
-                foreach (var rootNamespace in DefinedSymbols)
-                {
-                    foreach (var symbol in rootNamespace.ContainedSymbols.Where(s => s is ISourceSymbol ss && ss.DeclaringSyntaxReferences.Any(d => d.SyntaxTree == this.SyntaxTree)))
+                    foreach (var symbol in Compilation.GlobalNamespace.ContainedSymbols)
                     {
                         if (symbol is DeclaredSymbol declaredSymbol && context.IsViable(declaredSymbol))
                         {
@@ -118,7 +108,25 @@ namespace MetaDslx.CodeAnalysis.Binding
                         }
                     }
                 }
+                else
+                {
+                    foreach (var rootNamespace in DefinedSymbols)
+                    {
+                        foreach (var symbol in rootNamespace.ContainedSymbols.Where(s => s is ISourceSymbol ss && ss.DeclaringSyntaxReferences.Any(d => d.SyntaxTree == this.SyntaxTree)))
+                        {
+                            if (symbol is DeclaredSymbol declaredSymbol && context.IsViable(declaredSymbol))
+                            {
+                                result.Add(declaredSymbol);
+                            }
+                        }
+                    }
+                }
+            }
+            else
+            {
+                base.AddLookupCandidateSymbolsInSingleBinder(context, result);
             }
         }
+
     }
 }

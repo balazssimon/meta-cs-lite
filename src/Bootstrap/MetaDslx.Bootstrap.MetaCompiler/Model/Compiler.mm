@@ -37,7 +37,7 @@ class Annotation $AnnotationSymbol
 
 class AnnotationArgument $AnnotationArgumentSymbol
 {
-	string? $Name;
+	symbol[] $NamedParameter;
 	DeclaredSymbol Parameter;
 	contains Expression $Value;
 }

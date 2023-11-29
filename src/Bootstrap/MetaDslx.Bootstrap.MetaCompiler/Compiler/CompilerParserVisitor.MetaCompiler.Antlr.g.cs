@@ -289,6 +289,18 @@ public interface ICompilerParserVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitPr_IdentifierAlt2([NotNull] CompilerParser.Pr_IdentifierAlt2Context context);
 	/// <summary>
+	/// Visit a parse tree produced by <see cref="CompilerParser.pr_SimpleQualifier"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitPr_SimpleQualifier([NotNull] CompilerParser.Pr_SimpleQualifierContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="CompilerParser.pr_SimpleIdentifier"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitPr_SimpleIdentifier([NotNull] CompilerParser.Pr_SimpleIdentifierContext context);
+	/// <summary>
 	/// Visit a parse tree produced by <see cref="CompilerParser.pr_GrammarBlock1"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
@@ -447,6 +459,12 @@ public interface ICompilerParserVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
 	Result VisitPr_QualifierListBlock1([NotNull] CompilerParser.Pr_QualifierListBlock1Context context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="CompilerParser.pr_SimpleQualifierBlock1"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitPr_SimpleQualifierBlock1([NotNull] CompilerParser.Pr_SimpleQualifierBlock1Context context);
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="CompilerParser.pr_PAlternativeBlock1Block1"/>.
 	/// </summary>

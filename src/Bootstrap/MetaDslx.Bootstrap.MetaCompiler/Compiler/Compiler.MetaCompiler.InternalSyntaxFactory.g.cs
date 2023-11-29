@@ -1027,6 +1027,43 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			return result;
 		}
 
+		internal SimpleQualifierGreen SimpleQualifier(MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<SimpleIdentifierGreen> simpleIdentifierList)
+		{
+#if DEBUG
+			if (simpleIdentifierList.IsReversed) throw new ArgumentException(nameof(simpleIdentifierList));
+#endif
+			int hash;
+			var cached = SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.SimpleQualifier, simpleIdentifierList.Node, out hash);
+			if (cached != null) return (SimpleQualifierGreen)cached;
+		
+			var result = new SimpleQualifierGreen(CompilerSyntaxKind.SimpleQualifier, simpleIdentifierList.Node);
+			if (hash >= 0)
+			{
+				SyntaxNodeCache.AddNode(result, hash);
+			}
+		
+			return result;
+		}
+
+		internal SimpleIdentifierGreen SimpleIdentifier(InternalSyntaxToken tIdentifier)
+		{
+#if DEBUG
+			if (tIdentifier is null) throw new ArgumentNullException(nameof(tIdentifier));
+			if (tIdentifier.RawKind != (int)CompilerSyntaxKind.TIdentifier) throw new ArgumentException(nameof(tIdentifier));
+#endif
+			int hash;
+			var cached = SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.SimpleIdentifier, tIdentifier, out hash);
+			if (cached != null) return (SimpleIdentifierGreen)cached;
+		
+			var result = new SimpleIdentifierGreen(CompilerSyntaxKind.SimpleIdentifier, tIdentifier);
+			if (hash >= 0)
+			{
+				SyntaxNodeCache.AddNode(result, hash);
+			}
+		
+			return result;
+		}
+
 		internal GrammarBlock1Green GrammarBlock1(MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<RuleGreen> rules)
 		{
 #if DEBUG
@@ -1373,16 +1410,16 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			return result;
 		}
 
-		internal SingleExpressionBlock1Alt6Green SingleExpressionBlock1Alt6(QualifierGreen qualifier)
+		internal SingleExpressionBlock1Alt6Green SingleExpressionBlock1Alt6(SimpleQualifierGreen simpleQualifier)
 		{
 #if DEBUG
-			if (qualifier is null) throw new ArgumentNullException(nameof(qualifier));
+			if (simpleQualifier is null) throw new ArgumentNullException(nameof(simpleQualifier));
 #endif
 			int hash;
-			var cached = SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.SingleExpressionBlock1Alt6, qualifier, out hash);
+			var cached = SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.SingleExpressionBlock1Alt6, simpleQualifier, out hash);
 			if (cached != null) return (SingleExpressionBlock1Alt6Green)cached;
 		
-			var result = new SingleExpressionBlock1Alt6Green(CompilerSyntaxKind.SingleExpressionBlock1Alt6, qualifier);
+			var result = new SingleExpressionBlock1Alt6Green(CompilerSyntaxKind.SingleExpressionBlock1Alt6, simpleQualifier);
 			if (hash >= 0)
 			{
 				SyntaxNodeCache.AddNode(result, hash);
@@ -1448,18 +1485,18 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			return result;
 		}
 
-		internal AnnotationArgumentBlock1Green AnnotationArgumentBlock1(NameGreen name, InternalSyntaxToken tColon)
+		internal AnnotationArgumentBlock1Green AnnotationArgumentBlock1(IdentifierGreen namedParameter, InternalSyntaxToken tColon)
 		{
 #if DEBUG
-			if (name is null) throw new ArgumentNullException(nameof(name));
+			if (namedParameter is null) throw new ArgumentNullException(nameof(namedParameter));
 			if (tColon is null) throw new ArgumentNullException(nameof(tColon));
 			if (tColon.RawKind != (int)CompilerSyntaxKind.TColon) throw new ArgumentException(nameof(tColon));
 #endif
 			int hash;
-			var cached = SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.AnnotationArgumentBlock1, name, tColon, out hash);
+			var cached = SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.AnnotationArgumentBlock1, namedParameter, tColon, out hash);
 			if (cached != null) return (AnnotationArgumentBlock1Green)cached;
 		
-			var result = new AnnotationArgumentBlock1Green(CompilerSyntaxKind.AnnotationArgumentBlock1, name, tColon);
+			var result = new AnnotationArgumentBlock1Green(CompilerSyntaxKind.AnnotationArgumentBlock1, namedParameter, tColon);
 			if (hash >= 0)
 			{
 				SyntaxNodeCache.AddNode(result, hash);
@@ -1500,6 +1537,26 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			if (cached != null) return (QualifierListBlock1Green)cached;
 		
 			var result = new QualifierListBlock1Green(CompilerSyntaxKind.QualifierListBlock1, tComma, qualifier);
+			if (hash >= 0)
+			{
+				SyntaxNodeCache.AddNode(result, hash);
+			}
+		
+			return result;
+		}
+
+		internal SimpleQualifierBlock1Green SimpleQualifierBlock1(InternalSyntaxToken tDot, SimpleIdentifierGreen simpleIdentifier)
+		{
+#if DEBUG
+			if (tDot is null) throw new ArgumentNullException(nameof(tDot));
+			if (tDot.RawKind != (int)CompilerSyntaxKind.TDot) throw new ArgumentException(nameof(tDot));
+			if (simpleIdentifier is null) throw new ArgumentNullException(nameof(simpleIdentifier));
+#endif
+			int hash;
+			var cached = SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.SimpleQualifierBlock1, tDot, simpleIdentifier, out hash);
+			if (cached != null) return (SimpleQualifierBlock1Green)cached;
+		
+			var result = new SimpleQualifierBlock1Green(CompilerSyntaxKind.SimpleQualifierBlock1, tDot, simpleIdentifier);
 			if (hash >= 0)
 			{
 				SyntaxNodeCache.AddNode(result, hash);

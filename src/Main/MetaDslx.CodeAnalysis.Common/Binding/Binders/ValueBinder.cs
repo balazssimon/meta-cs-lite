@@ -16,7 +16,6 @@ namespace MetaDslx.CodeAnalysis.Binding
     {
         private readonly Type? _type;
         private string? _rawValue;
-        private ImmutableArray<Diagnostic> _rawValueDiagnostics;
 
         public ValueBinder(Type? type = null)
         {
@@ -82,20 +81,24 @@ namespace MetaDslx.CodeAnalysis.Binding
             }
             else
             {
-                var expectedType = propertyBinder.GetValueType(cancellationToken);
-                if (ComputeValue(expectedType, out var value, cancellationToken))
+                var expectedType = _type ?? propertyBinder.GetValueType(cancellationToken);
+                var diagnostics = DiagnosticBag.GetInstance();
+                var success = ComputeValue(expectedType, out var value, diagnostics, cancellationToken);
+                AddDiagnostics(diagnostics);
+                diagnostics.Free();
+                if (success)
                 {
                     return value;
                 }
                 else
                 {
-                    AddDiagnostic(Diagnostic.Create(CommonErrorCode.ERR_BindingError, Location, $"Value '{RawValue}' cannot be converted to type '{expectedType.FullName}'. Are you missing a TypeConverter?"));
+                    AddDiagnostic(Diagnostic.Create(CommonErrorCode.ERR_BindingError, Location, $"Value '{RawValue}' cannot be converted to type '{expectedType.FullName}'. Are you missing a TypeConverter or a custom value binder?"));
                 }
             }
             return null;
         }
 
-        protected virtual bool ComputeValue(MetaType expectedType, out object? value, CancellationToken cancellationToken)
+        protected virtual bool ComputeValue(MetaType expectedType, out object? value, DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             if (expectedType == typeof(MetaType))
             {

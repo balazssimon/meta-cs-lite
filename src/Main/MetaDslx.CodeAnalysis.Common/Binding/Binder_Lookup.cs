@@ -154,7 +154,7 @@ namespace MetaDslx.CodeAnalysis.Binding
             this.AddLookupCandidateSymbols(context, result);
         }
 
-        protected void AddLookupCandidateSymbols(LookupContext context, LookupCandidates result)
+        private void AddLookupCandidateSymbols(LookupContext context, LookupCandidates result)
         {
             var adjustedContext = context.AllocateCopy();
             this.AdjustInitialLookupContext(adjustedContext);
@@ -163,7 +163,7 @@ namespace MetaDslx.CodeAnalysis.Binding
             {
                 for (var scope = this; scope != null; scope = scope.ParentBinder)
                 {
-                    scope.AddLookupCandidateSymbolsInSingleBinder(adjustedContext, result);
+                    scope.AddLookupCandidateSymbolsInSingleBinder(context, result);
                 }
             }
             finally
@@ -239,7 +239,7 @@ namespace MetaDslx.CodeAnalysis.Binding
             }
         }
 
-        protected virtual void AddLookupCandidateSymbolsFromImports(LookupContext context, LookupCandidates result)
+        private void AddLookupCandidateSymbolsFromImports(LookupContext context, LookupCandidates result)
         {
             if (context.InImport) return;
             var qualifier = context.Qualifier;
@@ -268,7 +268,7 @@ namespace MetaDslx.CodeAnalysis.Binding
             }
         }
 
-        protected virtual void AddLookupCandidateSymbolsInScope(LookupContext context, LookupCandidates result)
+        private void AddLookupCandidateSymbolsInScope(LookupContext context, LookupCandidates result)
         {
             var qualifier = context.Qualifier;
             if (qualifier is not null)

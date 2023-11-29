@@ -355,6 +355,34 @@ namespace MetaDslx.CodeAnalysis
             }
         }
 
+        public bool IsPrimitive
+        {
+            get
+            {
+                switch (SpecialType)
+                {
+                    case SpecialType.System_Void:
+                    case SpecialType.System_Boolean:
+                    case SpecialType.System_Char:
+                    case SpecialType.System_SByte:
+                    case SpecialType.System_Byte:
+                    case SpecialType.System_Int16:
+                    case SpecialType.System_UInt16:
+                    case SpecialType.System_Int32:
+                    case SpecialType.System_UInt32:
+                    case SpecialType.System_Int64:
+                    case SpecialType.System_UInt64:
+                    case SpecialType.System_Decimal:
+                    case SpecialType.System_Single:
+                    case SpecialType.System_Double:
+                    case SpecialType.System_String:
+                        return true;
+                    default:
+                        return false;
+                }
+            }
+        }
+
         public bool IsEnum
         {
             get
@@ -799,6 +827,7 @@ namespace MetaDslx.CodeAnalysis
         {
             if (type is null) return false;
             var currentType = AsType();
+            if ((currentType == typeof(Type) || currentType == typeof(MetaType)) && typeof(TypeSymbol).IsAssignableFrom(type)) return true;
             return currentType is not null && currentType.IsAssignableFrom(type);
         }
 
@@ -815,6 +844,7 @@ namespace MetaDslx.CodeAnalysis
             if (this.Equals(type)) return true;
             if (type.IsTypeSymbol)
             {
+                if (this.SpecialType == SpecialType.System_Type || this.SpecialType == SpecialType.MetaDslx_CodeAnalysis_MetaType) return true;
                 var fullName = this.FullName;
                 var typeSymbol = type.OriginalTypeSymbol;
                 return typeSymbol.AllBaseTypes.Any(bt => SymbolDisplayFormat.QualifiedNameOnlyFormat.ToString(bt) == fullName);
@@ -856,7 +886,9 @@ namespace MetaDslx.CodeAnalysis
 
         public override string ToString()
         {
-            return FullName;
+            var specialName = this.MetaKeyword;
+            if (specialName is not null) return specialName;
+            else return FullName;
         }
 
         public static bool operator==(MetaType lhs, MetaType rhs)

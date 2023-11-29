@@ -61,13 +61,13 @@ LRange: StartChar=TString '..' EndChar=TString;
 LBlock: '(' alternatives+=LAlternative ('|' alternatives+=LAlternative)* ')';
 
 Expression: SingleExpression | ArrayExpression;
-SingleExpression returns Expression: value=[ExpressionValue]('null' | 'true' | 'false' | TInteger | TString | Qualifier);
+SingleExpression returns Expression: value=[ExpressionValue]('null' | 'true' | 'false' | TInteger | TString | SimpleQualifier);
 ArrayExpression: '{' (items+=SingleExpression (',' items+=SingleExpression)*)? '}';
 
 ParserAnnotation returns MetaDslx.Bootstrap.MetaCompiler.Model.Annotation: '[' attributeClass=[Use(types:{Binder,MetaDslx.CodeAnalysis.Annotations.Annotation},suffixes:{Binder,Annotation})]Qualifier AnnotationArguments? ']';
 LexerAnnotation returns MetaDslx.Bootstrap.MetaCompiler.Model.Annotation: '[' attributeClass=[Use(types:{TokenKind,MetaDslx.CodeAnalysis.Annotations.Annotation},suffixes:{TokenKind,Annotation})]Qualifier AnnotationArguments? ']';
 part AnnotationArguments: '(' arguments+=AnnotationArgument (',' arguments+=AnnotationArgument)* ')';
-AnnotationArgument: (name=Name ':')? value=Expression;
+AnnotationArgument: (namedParameter=[AnnotationArgument]Identifier ':')? value=Expression;
 
 Assignment
 	: '=' => Assign
@@ -102,6 +102,9 @@ part QualifierList: Qualifier (',' Qualifier)*;
 
 [Identifier]
 part Identifier: TIdentifier | TVerbatimIdentifier;
+
+part SimpleQualifier: SimpleIdentifier ('.' SimpleIdentifier)*;
+part SimpleIdentifier: TIdentifier;
 
 token TInteger[Number] returns int: '0'| '1'..'9' ('0'..'9')* ;
 

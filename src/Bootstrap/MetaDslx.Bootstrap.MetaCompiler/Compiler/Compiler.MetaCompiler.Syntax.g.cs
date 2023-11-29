@@ -3832,6 +3832,163 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	    }
 	
 	}
+	public sealed class SimpleQualifierSyntax : CompilerSyntaxNode
+	{
+		private MetaDslx.CodeAnalysis.SyntaxNode _simpleIdentifierList;
+	
+	    public SimpleQualifierSyntax(InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
+	        : base(green, syntaxTree, position)
+	    {
+	    }
+	
+	    public SimpleQualifierSyntax(InternalSyntaxNode green, CompilerSyntaxNode parent, int position)
+	        : base(green, parent, position)
+	    {
+	    }
+	
+	    public MetaDslx.CodeAnalysis.SeparatedSyntaxList<SimpleIdentifierSyntax> SimpleIdentifierList 
+		{ 
+			get
+			{
+				var red = this.GetRed(ref this._simpleIdentifierList, 0);
+				if (red != null)
+				{
+					return new MetaDslx.CodeAnalysis.SeparatedSyntaxList<SimpleIdentifierSyntax>(red, this.GetChildIndex(0), reversed: false);
+				}
+				return default;
+			} 
+		}
+	
+	    protected override SyntaxNode GetNodeSlot(int index)
+	    {
+	        switch (index)
+	        {
+				case 0: return this.GetRed(ref this._simpleIdentifierList, 0);
+				default: return null;
+	        }
+	    }
+	
+	    protected override SyntaxNode GetCachedSlot(int index)
+	    {
+	        switch (index)
+	        {
+				case 0: return this._simpleIdentifierList;
+				default: return null;
+	        }
+	    }
+	
+	    public SimpleQualifierSyntax WithSimpleIdentifierList(MetaDslx.CodeAnalysis.SeparatedSyntaxList<SimpleIdentifierSyntax> simpleIdentifierList)
+		{
+			return this.Update(simpleIdentifierList);
+		}
+	
+	    public SimpleQualifierSyntax AddSimpleIdentifierList(params SimpleIdentifierSyntax[] simpleIdentifierList)
+		{
+			return this.WithSimpleIdentifierList(this.SimpleIdentifierList.AddRange(simpleIdentifierList));
+		}
+	
+	    public SimpleQualifierSyntax Update(MetaDslx.CodeAnalysis.SeparatedSyntaxList<SimpleIdentifierSyntax> simpleIdentifierList)
+	    {
+	        if (this.SimpleIdentifierList != simpleIdentifierList)
+	        {
+	            var newNode = CompilerLanguage.Instance.SyntaxFactory.SimpleQualifier(simpleIdentifierList);
+	            var annotations = this.GetAnnotations();
+	            if (annotations != null && annotations.Length > 0)
+	               newNode = newNode.WithAnnotations(annotations);
+				return (SimpleQualifierSyntax)newNode;
+	        }
+	        return this;
+	    }
+	
+	    public override TResult Accept<TArg, TResult>(ICompilerSyntaxVisitor<TArg, TResult> visitor, TArg argument)
+	    {
+	        return visitor.VisitSimpleQualifier(this, argument);
+	    }
+	
+	    public override TResult Accept<TResult>(ICompilerSyntaxVisitor<TResult> visitor)
+	    {
+	        return visitor.VisitSimpleQualifier(this);
+	    }
+	
+	    public override void Accept(ICompilerSyntaxVisitor visitor)
+	    {
+	        visitor.VisitSimpleQualifier(this);
+	    }
+	
+	}
+	public sealed class SimpleIdentifierSyntax : CompilerSyntaxNode
+	{
+	
+	    public SimpleIdentifierSyntax(InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
+	        : base(green, syntaxTree, position)
+	    {
+	    }
+	
+	    public SimpleIdentifierSyntax(InternalSyntaxNode green, CompilerSyntaxNode parent, int position)
+	        : base(green, parent, position)
+	    {
+	    }
+	
+	    public SyntaxToken TIdentifier 
+		{ 
+			get 
+			{ 
+				var green = (global::MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax.SimpleIdentifierGreen)this.Green;
+				var greenToken = green.TIdentifier;
+				return new SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
+			}
+		}
+	
+	    protected override SyntaxNode GetNodeSlot(int index)
+	    {
+	        switch (index)
+	        {
+				default: return null;
+	        }
+	    }
+	
+	    protected override SyntaxNode GetCachedSlot(int index)
+	    {
+	        switch (index)
+	        {
+				default: return null;
+	        }
+	    }
+	
+	    public SimpleIdentifierSyntax WithTIdentifier(SyntaxToken tIdentifier)
+		{
+			return this.Update(tIdentifier);
+		}
+	
+	    public SimpleIdentifierSyntax Update(SyntaxToken tIdentifier)
+	    {
+	        if (this.TIdentifier != tIdentifier)
+	        {
+	            var newNode = CompilerLanguage.Instance.SyntaxFactory.SimpleIdentifier(tIdentifier);
+	            var annotations = this.GetAnnotations();
+	            if (annotations != null && annotations.Length > 0)
+	               newNode = newNode.WithAnnotations(annotations);
+				return (SimpleIdentifierSyntax)newNode;
+	        }
+	        return this;
+	    }
+	
+	    public override TResult Accept<TArg, TResult>(ICompilerSyntaxVisitor<TArg, TResult> visitor, TArg argument)
+	    {
+	        return visitor.VisitSimpleIdentifier(this, argument);
+	    }
+	
+	    public override TResult Accept<TResult>(ICompilerSyntaxVisitor<TResult> visitor)
+	    {
+	        return visitor.VisitSimpleIdentifier(this);
+	    }
+	
+	    public override void Accept(ICompilerSyntaxVisitor visitor)
+	    {
+	        visitor.VisitSimpleIdentifier(this);
+	    }
+	
+	}
 	public sealed class GrammarBlock1Syntax : CompilerSyntaxNode
 	{
 		private MetaDslx.CodeAnalysis.SyntaxNode _rules;
@@ -5401,7 +5558,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	}
 	public sealed class SingleExpressionBlock1Alt6Syntax : SingleExpressionBlock1Syntax
 	{
-		private QualifierSyntax _qualifier;
+		private SimpleQualifierSyntax _simpleQualifier;
 	
 	    public SingleExpressionBlock1Alt6Syntax(InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
 	        : base(green, syntaxTree, position)
@@ -5413,13 +5570,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	    {
 	    }
 	
-	    public QualifierSyntax Qualifier => this.GetRed(ref this._qualifier, 0);
+	    public SimpleQualifierSyntax SimpleQualifier => this.GetRed(ref this._simpleQualifier, 0);
 	
 	    protected override SyntaxNode GetNodeSlot(int index)
 	    {
 	        switch (index)
 	        {
-				case 0: return this.GetRed(ref this._qualifier, 0);
+				case 0: return this.GetRed(ref this._simpleQualifier, 0);
 				default: return null;
 	        }
 	    }
@@ -5428,21 +5585,21 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	    {
 	        switch (index)
 	        {
-				case 0: return this._qualifier;
+				case 0: return this._simpleQualifier;
 				default: return null;
 	        }
 	    }
 	
-	    public SingleExpressionBlock1Alt6Syntax WithQualifier(QualifierSyntax qualifier)
+	    public SingleExpressionBlock1Alt6Syntax WithSimpleQualifier(SimpleQualifierSyntax simpleQualifier)
 		{
-			return this.Update(qualifier);
+			return this.Update(simpleQualifier);
 		}
 	
-	    public SingleExpressionBlock1Alt6Syntax Update(QualifierSyntax qualifier)
+	    public SingleExpressionBlock1Alt6Syntax Update(SimpleQualifierSyntax simpleQualifier)
 	    {
-	        if (this.Qualifier != qualifier)
+	        if (this.SimpleQualifier != simpleQualifier)
 	        {
-	            var newNode = CompilerLanguage.Instance.SyntaxFactory.SingleExpressionBlock1Alt6(qualifier);
+	            var newNode = CompilerLanguage.Instance.SyntaxFactory.SingleExpressionBlock1Alt6(simpleQualifier);
 	            var annotations = this.GetAnnotations();
 	            if (annotations != null && annotations.Length > 0)
 	               newNode = newNode.WithAnnotations(annotations);
@@ -5708,7 +5865,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	}
 	public sealed class AnnotationArgumentBlock1Syntax : CompilerSyntaxNode
 	{
-		private NameSyntax _name;
+		private IdentifierSyntax _namedParameter;
 	
 	    public AnnotationArgumentBlock1Syntax(InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
 	        : base(green, syntaxTree, position)
@@ -5720,7 +5877,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	    {
 	    }
 	
-	    public NameSyntax Name => this.GetRed(ref this._name, 0);
+	    public IdentifierSyntax NamedParameter => this.GetRed(ref this._namedParameter, 0);
 	    public SyntaxToken TColon 
 		{ 
 			get 
@@ -5735,7 +5892,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	    {
 	        switch (index)
 	        {
-				case 0: return this.GetRed(ref this._name, 0);
+				case 0: return this.GetRed(ref this._namedParameter, 0);
 				default: return null;
 	        }
 	    }
@@ -5744,26 +5901,26 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	    {
 	        switch (index)
 	        {
-				case 0: return this._name;
+				case 0: return this._namedParameter;
 				default: return null;
 	        }
 	    }
 	
-	    public AnnotationArgumentBlock1Syntax WithName(NameSyntax name)
+	    public AnnotationArgumentBlock1Syntax WithNamedParameter(IdentifierSyntax namedParameter)
 		{
-			return this.Update(name, this.TColon);
+			return this.Update(namedParameter, this.TColon);
 		}
 	
 	    public AnnotationArgumentBlock1Syntax WithTColon(SyntaxToken tColon)
 		{
-			return this.Update(this.Name, tColon);
+			return this.Update(this.NamedParameter, tColon);
 		}
 	
-	    public AnnotationArgumentBlock1Syntax Update(NameSyntax name, SyntaxToken tColon)
+	    public AnnotationArgumentBlock1Syntax Update(IdentifierSyntax namedParameter, SyntaxToken tColon)
 	    {
-	        if (this.Name != name || this.TColon != tColon)
+	        if (this.NamedParameter != namedParameter || this.TColon != tColon)
 	        {
-	            var newNode = CompilerLanguage.Instance.SyntaxFactory.AnnotationArgumentBlock1(name, tColon);
+	            var newNode = CompilerLanguage.Instance.SyntaxFactory.AnnotationArgumentBlock1(namedParameter, tColon);
 	            var annotations = this.GetAnnotations();
 	            if (annotations != null && annotations.Length > 0)
 	               newNode = newNode.WithAnnotations(annotations);
@@ -5949,6 +6106,88 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	    public override void Accept(ICompilerSyntaxVisitor visitor)
 	    {
 	        visitor.VisitQualifierListBlock1(this);
+	    }
+	
+	}
+	public sealed class SimpleQualifierBlock1Syntax : CompilerSyntaxNode
+	{
+		private SimpleIdentifierSyntax _simpleIdentifier;
+	
+	    public SimpleQualifierBlock1Syntax(InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
+	        : base(green, syntaxTree, position)
+	    {
+	    }
+	
+	    public SimpleQualifierBlock1Syntax(InternalSyntaxNode green, CompilerSyntaxNode parent, int position)
+	        : base(green, parent, position)
+	    {
+	    }
+	
+	    public SyntaxToken TDot 
+		{ 
+			get 
+			{ 
+				var green = (global::MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax.SimpleQualifierBlock1Green)this.Green;
+				var greenToken = green.TDot;
+				return new SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
+			}
+		}
+	    public SimpleIdentifierSyntax SimpleIdentifier => this.GetRed(ref this._simpleIdentifier, 1);
+	
+	    protected override SyntaxNode GetNodeSlot(int index)
+	    {
+	        switch (index)
+	        {
+				case 1: return this.GetRed(ref this._simpleIdentifier, 1);
+				default: return null;
+	        }
+	    }
+	
+	    protected override SyntaxNode GetCachedSlot(int index)
+	    {
+	        switch (index)
+	        {
+				case 1: return this._simpleIdentifier;
+				default: return null;
+	        }
+	    }
+	
+	    public SimpleQualifierBlock1Syntax WithTDot(SyntaxToken tDot)
+		{
+			return this.Update(tDot, this.SimpleIdentifier);
+		}
+	
+	    public SimpleQualifierBlock1Syntax WithSimpleIdentifier(SimpleIdentifierSyntax simpleIdentifier)
+		{
+			return this.Update(this.TDot, simpleIdentifier);
+		}
+	
+	    public SimpleQualifierBlock1Syntax Update(SyntaxToken tDot, SimpleIdentifierSyntax simpleIdentifier)
+	    {
+	        if (this.TDot != tDot || this.SimpleIdentifier != simpleIdentifier)
+	        {
+	            var newNode = CompilerLanguage.Instance.SyntaxFactory.SimpleQualifierBlock1(tDot, simpleIdentifier);
+	            var annotations = this.GetAnnotations();
+	            if (annotations != null && annotations.Length > 0)
+	               newNode = newNode.WithAnnotations(annotations);
+				return (SimpleQualifierBlock1Syntax)newNode;
+	        }
+	        return this;
+	    }
+	
+	    public override TResult Accept<TArg, TResult>(ICompilerSyntaxVisitor<TArg, TResult> visitor, TArg argument)
+	    {
+	        return visitor.VisitSimpleQualifierBlock1(this, argument);
+	    }
+	
+	    public override TResult Accept<TResult>(ICompilerSyntaxVisitor<TResult> visitor)
+	    {
+	        return visitor.VisitSimpleQualifierBlock1(this);
+	    }
+	
+	    public override void Accept(ICompilerSyntaxVisitor visitor)
+	    {
+	        visitor.VisitSimpleQualifierBlock1(this);
 	    }
 	
 	}

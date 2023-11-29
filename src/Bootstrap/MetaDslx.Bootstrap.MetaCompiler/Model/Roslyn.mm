@@ -40,6 +40,7 @@ class Token
 
 class Rule
 {
+	contains Binder[] Binders;
 	string Name;
 	contains Alternative[] Alternatives;
 }

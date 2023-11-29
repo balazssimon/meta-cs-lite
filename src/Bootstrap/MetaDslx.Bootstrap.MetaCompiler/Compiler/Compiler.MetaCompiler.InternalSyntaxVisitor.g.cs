@@ -48,6 +48,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 		public virtual void VisitQualifierListGreen(QualifierListGreen node) => this.DefaultVisit(node);
 		public virtual void VisitIdentifierAlt1Green(IdentifierAlt1Green node) => this.DefaultVisit(node);
 		public virtual void VisitIdentifierAlt2Green(IdentifierAlt2Green node) => this.DefaultVisit(node);
+		public virtual void VisitSimpleQualifierGreen(SimpleQualifierGreen node) => this.DefaultVisit(node);
+		public virtual void VisitSimpleIdentifierGreen(SimpleIdentifierGreen node) => this.DefaultVisit(node);
 		public virtual void VisitGrammarBlock1Green(GrammarBlock1Green node) => this.DefaultVisit(node);
 		public virtual void VisitParserRuleBlock1Alt1Green(ParserRuleBlock1Alt1Green node) => this.DefaultVisit(node);
 		public virtual void VisitParserRuleBlock1Alt2Green(ParserRuleBlock1Alt2Green node) => this.DefaultVisit(node);
@@ -73,6 +75,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 		public virtual void VisitAnnotationArgumentBlock1Green(AnnotationArgumentBlock1Green node) => this.DefaultVisit(node);
 		public virtual void VisitQualifierBlock1Green(QualifierBlock1Green node) => this.DefaultVisit(node);
 		public virtual void VisitQualifierListBlock1Green(QualifierListBlock1Green node) => this.DefaultVisit(node);
+		public virtual void VisitSimpleQualifierBlock1Green(SimpleQualifierBlock1Green node) => this.DefaultVisit(node);
 		public virtual void VisitPAlternativeBlock1Block1Green(PAlternativeBlock1Block1Green node) => this.DefaultVisit(node);
 		public virtual void VisitLexerRuleBlock1Alt1Block1Green(LexerRuleBlock1Alt1Block1Green node) => this.DefaultVisit(node);
 		public virtual void VisitArrayExpressionBlock1Block1Green(ArrayExpressionBlock1Block1Green node) => this.DefaultVisit(node);
@@ -120,6 +123,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 		public virtual TResult VisitQualifierListGreen(QualifierListGreen node) => this.DefaultVisit(node);
 		public virtual TResult VisitIdentifierAlt1Green(IdentifierAlt1Green node) => this.DefaultVisit(node);
 		public virtual TResult VisitIdentifierAlt2Green(IdentifierAlt2Green node) => this.DefaultVisit(node);
+		public virtual TResult VisitSimpleQualifierGreen(SimpleQualifierGreen node) => this.DefaultVisit(node);
+		public virtual TResult VisitSimpleIdentifierGreen(SimpleIdentifierGreen node) => this.DefaultVisit(node);
 		public virtual TResult VisitGrammarBlock1Green(GrammarBlock1Green node) => this.DefaultVisit(node);
 		public virtual TResult VisitParserRuleBlock1Alt1Green(ParserRuleBlock1Alt1Green node) => this.DefaultVisit(node);
 		public virtual TResult VisitParserRuleBlock1Alt2Green(ParserRuleBlock1Alt2Green node) => this.DefaultVisit(node);
@@ -145,6 +150,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 		public virtual TResult VisitAnnotationArgumentBlock1Green(AnnotationArgumentBlock1Green node) => this.DefaultVisit(node);
 		public virtual TResult VisitQualifierBlock1Green(QualifierBlock1Green node) => this.DefaultVisit(node);
 		public virtual TResult VisitQualifierListBlock1Green(QualifierListBlock1Green node) => this.DefaultVisit(node);
+		public virtual TResult VisitSimpleQualifierBlock1Green(SimpleQualifierBlock1Green node) => this.DefaultVisit(node);
 		public virtual TResult VisitPAlternativeBlock1Block1Green(PAlternativeBlock1Block1Green node) => this.DefaultVisit(node);
 		public virtual TResult VisitLexerRuleBlock1Alt1Block1Green(LexerRuleBlock1Alt1Block1Green node) => this.DefaultVisit(node);
 		public virtual TResult VisitArrayExpressionBlock1Block1Green(ArrayExpressionBlock1Block1Green node) => this.DefaultVisit(node);
