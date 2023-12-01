@@ -11,7 +11,7 @@ class Binder
 class BinderArgument
 {
 	string Name;
-	string Value;
+	string[] Values;
 }
 
 class TokenKind

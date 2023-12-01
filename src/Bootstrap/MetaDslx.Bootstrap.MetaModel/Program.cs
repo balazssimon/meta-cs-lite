@@ -133,7 +133,7 @@ namespace MyCode
         Console.WriteLine(diag);
     }
     var mlangModel = mlangCompilation.SourceModule.Model;
-    var rlangModel = new CompilerToRoslyn().Convert(mlangModel);
+    var rlangModel = new CompilerToRoslyn(mlangModel).Convert();
     Console.WriteLine(rlangModel);
     var xmi = new XmiSerializer();
     xmi.WriteModelToFile(@"..\..\..\Compiler2.xmi", rlangModel);

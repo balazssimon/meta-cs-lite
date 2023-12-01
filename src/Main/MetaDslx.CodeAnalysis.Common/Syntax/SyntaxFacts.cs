@@ -124,7 +124,7 @@ namespace MetaDslx.CodeAnalysis.Syntax
                 }
                 else if (valueText.Length >= 2 && valueText.StartsWith("\'") && valueText.EndsWith("\'"))
                 {
-                    value = StringUtilities.DecodeChar(valueText);
+                    value = StringUtilities.DecodeString(valueText);
                     return true;
                 }
                 else if (valueText.Length >= 3 && valueText.StartsWith("@\"") && valueText.EndsWith("\""))
@@ -189,7 +189,7 @@ namespace MetaDslx.CodeAnalysis.Syntax
                 }
                 else if (valueText.Length >= 2 && valueText.StartsWith("\'") && valueText.EndsWith("\'"))
                 {
-                    value = StringUtilities.DecodeChar(valueText);
+                    value = StringUtilities.DecodeString(valueText);
                     return true;
                 }
                 else if (valueText.Length >= 3 && valueText.StartsWith("@\"") && valueText.EndsWith("\""))

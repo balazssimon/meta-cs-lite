@@ -144,18 +144,18 @@ fragment CharacterEscapeUnicode
 fragment HexDigit : ('0'..'9' | 'a'..'f' | 'A'..'F');
 
 [Whitespace]
-token Utf8Bom: '\u00EF' '\u00BB' '\u00BF';
+hidden TUtf8Bom: '\u00EF' '\u00BB' '\u00BF';
 
 [DefaultWhitespace]
-token TWhitespace: ('\t'|' ') +;
+hidden TWhitespace: ('\t'|' ') +;
 
 [DefaultEndOfLine]
-token TLineEnd: ('\r\n' | '\r' | '\n');
+hidden TLineEnd: ('\r\n' | '\r' | '\n');
 
 [SingleLineComment]
-token TSingleLineComment: '//' ~('\r' | '\n')*;
+hidden TSingleLineComment: '//' ~('\r' | '\n')*;
 
 [MultiLineComment]
-token TMultiLineComment: '/*' .*? '*/';
+hidden TMultiLineComment: '/*' .*? '*/';
 
-token TInvalidToken: .;
+hidden TInvalidToken: .;
