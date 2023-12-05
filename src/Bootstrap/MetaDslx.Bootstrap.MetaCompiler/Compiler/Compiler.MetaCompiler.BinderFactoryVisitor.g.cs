@@ -1227,7 +1227,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
 
         public virtual void VisitExpressionAlt1(ExpressionAlt1Syntax node)
         {
-      	    this.Visit(node.SingleExpression);
+        	this.Visit(node.SingleExpression);
         }
 
         public virtual void VisitArrayExpression(ArrayExpressionSyntax node)

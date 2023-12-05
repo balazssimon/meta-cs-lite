@@ -612,7 +612,7 @@ namespace MetaDslx.Modeling
                         {
                             foreach (var value in values)
                             {
-                                _currentXmlWriter.WriteElementString(prop.Name.ToCamelCase(), value.ToString());
+                                _currentXmlWriter.WriteElementString(prop.Name.ToCamelCase(), value?.ToString());
                             }
                         }
                     }

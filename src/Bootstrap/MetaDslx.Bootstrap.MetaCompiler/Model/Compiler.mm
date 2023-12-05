@@ -9,9 +9,8 @@ abstract class Declaration $Declared
 {
 	contains Annotation[] Annotations $Attributes;
 	string? $Name;
-	Declaration? Parent opposite Declarations;
-	contains Declaration[] Declarations opposite Parent;
 	derived string? FullName;
+	contains Declaration[] Declarations;
 }
 
 class Namespace $NamespaceSymbol : Declaration
@@ -20,12 +19,12 @@ class Namespace $NamespaceSymbol : Declaration
 
 class Language : Declaration
 {
-	contains Grammar Grammar subsets Declaration.Declarations;
+	contains Grammar Grammar;
 }
 
 class Grammar $GrammarSymbol : Declaration
 {
-	Language Language redefines Declaration.Parent;
+	Language Language;
 	contains Rule[] Rules;
 }
 
@@ -56,7 +55,7 @@ enum Multiplicity
 abstract class Rule : Declaration
 {
 	derived Language Language;
-	Grammar Grammar redefines Declaration.Parent;
+	Grammar Grammar;
 }
 
 class LexerRule : Rule

@@ -30,7 +30,6 @@ class Language
 
 class Token
 {
-	contains Binder[] Binders;
 	string Name;
 	TokenKind TokenKind;
 	bool IsTrivia;

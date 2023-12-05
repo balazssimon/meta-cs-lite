@@ -51,7 +51,7 @@ namespace MetaDslx.CodeAnalysis
         public Symbol? OriginalSymbol => _original as Symbol;
         public object? OriginalValue => _original;
 
-        public string Name
+        public string? Name
         {
             get
             {
@@ -61,7 +61,7 @@ namespace MetaDslx.CodeAnalysis
             }
         }
 
-        public string FullName
+        public string? FullName
         {
             get
             {

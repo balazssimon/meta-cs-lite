@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MetaDslx.Modeling;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,8 +11,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
     {
         public override string Declaration_FullName(Declaration _this)
         {
-            if (_this.Parent is null) return _this.Name;
-            else return $"{_this.Parent.FullName}.{_this.Name}";
+            if ((_this as IModelObject)?.Parent is Declaration parent && !string.IsNullOrEmpty(parent.Name)) return $"{parent.Name}.{_this.Name}";
+            else return _this.Name;
         }
 
         public override string? LAlternative_FixedText(LAlternative _this)

@@ -146,6 +146,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
                 {
                     var diagnostics = DiagnosticBag.GetInstance();
                     _returnType = CompleteProperty_ReturnType(diagnostics, cancellationToken);
+                    if (ModelObject is PAlternative palt) palt.ReturnType = _returnType;
                     AddSymbolDiagnostics(diagnostics);
                     diagnostics.Free();
                     NotePartComplete(CompletionParts.FinishComputingProperty_ReturnType);
@@ -206,6 +207,14 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
         protected virtual MetaType CompleteProperty_ReturnType(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             var returnType = SymbolFactory.GetSymbolPropertyValue<MetaType>(this, nameof(ReturnType), diagnostics, cancellationToken);
+            if (returnType.IsNull)
+            {
+                var block = this.ContainingPBlockSymbol;
+                if (block is not null)
+                {
+                    returnType = block.ReturnType;
+                }
+            }
             if (returnType.IsNull)
             {
                 var rule = this.ContainingParserRuleSymbol;

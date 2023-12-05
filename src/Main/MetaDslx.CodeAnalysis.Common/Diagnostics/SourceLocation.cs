@@ -14,6 +14,8 @@ namespace MetaDslx.CodeAnalysis
     /// </summary>
     public sealed class SourceLocation : Location, IEquatable<SourceLocation?>
     {
+        public static readonly new SourceLocation None = new SourceLocation();
+
         private readonly SyntaxTree _syntaxTree;
         private readonly TextSpan _span;
 
@@ -51,6 +53,11 @@ namespace MetaDslx.CodeAnalysis
             // If we're using a syntaxref, we don't have a node in hand, so we couldn't get equality
             // on syntax node, so associatedNodeOpt shouldn't be set. We never use this constructor
             // when binding executable code anywhere, so it has no use.
+        }
+
+        private SourceLocation()
+        {
+
         }
 
         public override LocationKind Kind

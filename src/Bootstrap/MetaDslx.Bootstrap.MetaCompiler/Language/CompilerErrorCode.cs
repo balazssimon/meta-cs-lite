@@ -53,5 +53,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler
         /// Block '{0}' without a return type cannot be assigned to a property
         /// </summary>
         public static readonly DiagnosticDescriptor ERR_InvalidBlockAssignment = DiagnosticDescriptor.Error(nameof(ERR_InvalidBlockAssignment), "Invalid block assignment", "Block '{0}' without a return type cannot be assigned to a property");
+
+        /// <summary>
+        /// Default reference is ambiguous between '{0}' and '{1}'. Make sure to use the [DefaultReferenceAnnotation] exactly once.
+        /// </summary>
+        public static readonly DiagnosticDescriptor ERR_AmbiguousDefaultReference = DiagnosticDescriptor.Error(nameof(ERR_AmbiguousDefaultReference), "Ambiguous default reference", "Default reference is ambiguous between '{0}' and '{1}'. Make sure to use the [DefaultReferenceAnnotation] exactly once.");
     }
 }

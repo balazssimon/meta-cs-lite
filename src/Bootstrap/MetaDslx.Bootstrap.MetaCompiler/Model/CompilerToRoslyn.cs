@@ -10,6 +10,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using Roslyn.Utilities;
+using System.Data;
+using System.Diagnostics;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using MetaDslx.CodeAnalysis.Syntax;
+using MetaDslx.CodeAnalysis;
+using System.Collections.Immutable;
+using MetaDslx.Modeling;
 
 namespace MetaDslx.Bootstrap.MetaCompiler.Model
 {
@@ -17,14 +24,20 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
 
     public class CompilerToRoslyn
     {
+        private static readonly string DefaultReferenceFullName = typeof(DefaultReferenceAnnotation).FullName!;
+
         private readonly Model _cmodel;
         private readonly Model _rmodel;
         private readonly RoslynModelFactory f;
         private readonly Language? _clang;
         private Roslyn.Language _rlang;
+        private object? _defaultReferenceRule;
         private HashSet<string> _ruleNames;
-        private Dictionary<string, Token> _fixedTokens;
-
+        private Dictionary<string, Roslyn.Token> _fixedTokens;
+        private Dictionary<object, Roslyn.Token> _tokenMap;
+        private Dictionary<object, Roslyn.Rule> _ruleMap;
+        private DiagnosticBag _diagnostics;
+        
         public CompilerToRoslyn(Model compilerModel)
         {
             _cmodel = compilerModel;
@@ -38,7 +51,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             if (_clang is null) return _rmodel;
             if (_rlang is not null) return _rmodel;
             _ruleNames = new HashSet<string>();
-            _fixedTokens = new Dictionary<string, Token>();
+            _fixedTokens = new Dictionary<string, Roslyn.Token>();
+            _tokenMap = new Dictionary<object, Roslyn.Token>();
+            _ruleMap = new Dictionary<object, Roslyn.Rule>();
+            _diagnostics = new DiagnosticBag();
 
             var cfixedTokens = _cmodel.Objects.OfType<LexerRule>().Where(lr => !lr.IsFragment && lr.IsFixed);
             var cnonFixedTokens = _cmodel.Objects.OfType<LexerRule>().Where(lr => !lr.IsFragment && !lr.IsFixed);
@@ -60,20 +76,28 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
 
             AddRules(crules);
             AddBlocks(cblocks);
+            AddAlts(crules);
+            AddAlts(cblocks);
             return _rmodel;
+        }
+
+        public ImmutableArray<Diagnostic> GetDiagnostics()
+        {
+            return _diagnostics.ToReadOnly();
         }
 
         private void AddTokens(IEnumerable<LexerRule> ctokens, bool checkNames)
         {
             foreach (var ctoken in ctokens)
             {
-                AddToken(ctoken, checkNames);
+                var rtoken = AddToken(ctoken, checkNames);
+                _tokenMap.Add(ctoken, rtoken);
             }
         }
 
-        private void AddToken(string fixedText)
+        private Token AddToken(string fixedText)
         {
-            if (_fixedTokens.ContainsKey(fixedText)) return;
+            if (_fixedTokens.TryGetValue(fixedText, out var ftoken)) return ftoken;
             var rtoken = f.Token();
             _rlang.Tokens.Add(rtoken);
             rtoken.Name = MakeFixedTokenName(fixedText);
@@ -81,11 +105,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             rtoken.IsFixed = true;
             rtoken.FixedText = fixedText;
             _fixedTokens.Add(fixedText, rtoken);
+            return rtoken;
         }
 
-        private void AddToken(LexerRule ctoken, bool checkNames)
+        private Token AddToken(LexerRule ctoken, bool checkNames)
         {
-            if (ctoken.IsFixed && _fixedTokens.ContainsKey(ctoken.FixedText)) return;
+            if (ctoken.IsFixed && _fixedTokens.TryGetValue(ctoken.FixedText, out var ftoken)) return ftoken;
             var rtoken = f.Token();
             _rlang.Tokens.Add(rtoken);
             var name = ctoken.Name;
@@ -112,7 +137,24 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                 }
                 rtoken.TokenKind = kind;
             }
-            AddBinders(rtoken.Binders, ctoken.Annotations);
+            CheckDefaultReference(rtoken, ctoken.Annotations);
+            return rtoken;
+        }
+
+        private void CheckDefaultReference(object? cobj, IList<Annotation> annotations)
+        {
+            var isDefaultRef = annotations.Any(a => a.AttributeClass?.Name == nameof(DefaultReferenceAnnotation) && SymbolDisplayFormat.QualifiedNameOnlyFormat.ToString(a.AttributeClass) == DefaultReferenceFullName);
+            if (isDefaultRef)
+            {
+                if (_defaultReferenceRule is null)
+                {
+                    _defaultReferenceRule = cobj;
+                }
+                else
+                {
+                    _diagnostics.Add(Diagnostic.Create(CompilerErrorCode.ERR_AmbiguousDefaultReference, SourceLocation.None, ((IModelObject)_defaultReferenceRule).Name, ((IModelObject)cobj).Name));
+                }
+            }
         }
 
         private void AddBinders(IList<Binder> rbinders, IList<Annotation> cannotations)
@@ -124,11 +166,37 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                 rbinder.TypeName = SymbolDisplayFormat.QualifiedNameOnlyFormat.ToString(cbinder.AttributeClass);
                 foreach (var carg in cbinder.Arguments)
                 {
-                    var rarg = f.BinderArgument();
-                    rarg.Name = carg.Parameter?.Name;
-                    rarg.Values.Add(carg.Value?.Value.ToString());
-                    rbinder.Arguments.Add(rarg);
+                    var name = carg.Parameter?.Name;
+                    if (name is not null)
+                    {
+                        var rarg = f.BinderArgument();
+                        rarg.Name = name;
+                        if (carg.Value is ArrayExpression array)
+                        {
+                            foreach (var item in array.Items)
+                            {
+                                rarg.Values.Add(GetAnnotationArgumentValue(item?.Value ?? default));
+                            }
+                        }
+                        else
+                        {
+                            rarg.Values.Add(GetAnnotationArgumentValue(carg.Value?.Value ?? default));
+                        }
+                        rbinder.Arguments.Add(rarg);
+                    }
                 }
+            }
+        }
+
+        private string GetAnnotationArgumentValue(MetaSymbol value)
+        {
+            if (value.OriginalSymbol is not null)
+            {
+                return SymbolDisplayFormat.QualifiedNameOnlyFormat.ToString(value.OriginalSymbol);
+            }
+            else
+            {
+                return value.ToString();
             }
         }
 
@@ -179,22 +247,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             if (isKeyword) result = keyword.ToStringAndFree();
             else keyword.Free();
             if (result.Length == 1) return MakeTokenName();
-            if (_ruleNames.Contains(result))
-            {
-                var index = 0;
-                while (true)
-                {
-                    ++index;
-                    var name = $"{result}{index}";
-                    if (!_ruleNames.Contains(name))
-                    {
-                        _ruleNames.Add(name);
-                        return name;
-                    }
-                }
-            }
-            _ruleNames.Add(result);
-            return result;
+            return AddRuleName(result, tryWithoutIndex: true);
         }
 
         private static string? GetOtherCharacterName(char ch)
@@ -244,7 +297,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                 var rrule = f.Rule();
                 _rlang.Rules.Add(rrule);
                 rrule.Name = crule.Name;
+                _ruleMap.Add(crule, rrule);
                 AddBinders(rrule.Binders, crule.Annotations);
+                CheckDefaultReference(rrule, crule.Annotations);
             }
         }
 
@@ -255,7 +310,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                 var rrule = f.Rule();
                 _rlang.Rules.Add(rrule);
                 rrule.Name = cblock.Name ?? string.Empty;
+                _ruleMap.Add(cblock, rrule);
                 AddBinders(rrule.Binders, cblock.Annotations);
+                CheckDefaultReference(rrule, cblock.Annotations);
             }
         }
 
@@ -269,7 +326,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                     {
                         if (elem.Value is PKeyword ckeyword)
                         {
-                            AddToken(ckeyword.Text);
+                            var rtoken = AddToken(ckeyword.Text);
+                            _tokenMap.Add(ckeyword, rtoken);
                         }
                     }
                 }
@@ -286,7 +344,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                     {
                         if (elem.Value is PKeyword ckeyword)
                         {
-                            AddToken(ckeyword.Text);
+                            var rtoken = AddToken(ckeyword.Text);
+                            _tokenMap.Add(ckeyword, rtoken);
                         }
                     }
                 }
@@ -309,7 +368,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             }
         }
 
-        private void MakeBlockNames(string parentName, IEnumerable<PAlternative> calts)
+        private void MakeBlockNames(string? parentName, IEnumerable<PAlternative> calts)
         {
             foreach (var calt in calts)
             {
@@ -331,11 +390,181 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
         {
             var result = (parentName.ToPascalCase() ?? string.Empty) + (elementName.ToPascalCase() ?? "Block");
             if (string.IsNullOrEmpty(result)) result = "Block";
+            return AddRuleName(result, tryWithoutIndex: false);
+        }
+
+        private void AddAlts(IEnumerable<ParserRule> crules)
+        {
+            foreach (var crule in crules)
+            {
+                var rrule = _ruleMap[crule];
+                AddAlts(rrule, crule.Alternatives);
+            }
+        }
+
+        private void AddAlts(IEnumerable<PBlock> cblocks)
+        {
+            foreach (var cblock in cblocks)
+            {
+                var rrule = _ruleMap[cblock];
+                AddAlts(rrule, cblock.Alternatives);
+            }
+        }
+
+        private void AddAlts(Roslyn.Rule rrule, IList<PAlternative> calts)
+        {
+            foreach (var calt in calts)
+            {
+                var ralt = f.Alternative();
+                rrule.Alternatives.Add(ralt);
+                ralt.Name = MakeAltName(rrule.Name, calt.Name, calts.Count == 1);
+                AddBinders(ralt.Binders, calt.Annotations);
+                if (!calt.ReturnType.IsNull)
+                {
+                    var defBinder = f.Binder();
+                    defBinder.TypeName = typeof(MetaDslx.CodeAnalysis.Binding.DefineBinder).FullName!;
+                    var defType = f.BinderArgument();
+                    defType.Name = "type";
+                    defType.Values.Add(calt.ReturnType.FullName);
+                    defBinder.Arguments.Add(defType);
+                    ralt.Binders.Add(defBinder);
+                }
+                AddElements(ralt, calt.Elements);
+            }
+        }
+
+        private void AddElements(Alternative ralt, IList<PElement> celements)
+        {
+            foreach (var celem in celements)
+            {
+                var relem = f.Element();
+                ralt.Elements.Add(relem);
+                var name = celem.SymbolProperty.FirstOrDefault().Name;
+                AddBinders(relem.Binders, celem.NameAnnotations);
+                if (name is not null)
+                {
+                    relem.Name = name;
+                    var propBinder = f.Binder();
+                    propBinder.TypeName = typeof(MetaDslx.CodeAnalysis.Binding.PropertyBinder).FullName!;
+                    var propName = f.BinderArgument();
+                    propName.Name = "name";
+                    propName.Values.Add(name);
+                    propBinder.Arguments.Add(propName);
+                    relem.Binders.Add(propBinder);
+                }
+                relem.Assignment = celem.Assignment;
+                relem.Multiplicity = celem.Multiplicity;
+                var cvalue = celem.Value;
+                ElementValue? rvalue = null;
+                if (cvalue is PReference cpref)
+                {
+                    if (cpref.Rule is LexerRule clr)
+                    {
+                        var v = f.TokenRef();
+                        v.Token = _tokenMap[clr];
+                        rvalue = v;
+                    }
+                    else if (cpref.Rule is ParserRule cpr)
+                    {
+                        var v = f.RuleRef();
+                        v.Rule = _ruleMap[cpr];
+                        rvalue = v;
+                    }
+                    else if (cpref.Rule is PBlock cpb)
+                    {
+                        var v = f.RuleRef();
+                        v.Rule = _ruleMap[cpb];
+                        rvalue = v;
+                    }
+                    else if (cpref.ReferencedTypes.Count > 0)
+                    {
+                        if (_defaultReferenceRule is Token drt)
+                        {
+                            var v = f.TokenRef();
+                            v.Token = drt;
+                            rvalue = v;
+                        }
+                        else if (_defaultReferenceRule is Roslyn.Rule drr)
+                        {
+                            var v = f.RuleRef();
+                            v.Rule = drr;
+                            rvalue = v;
+                        }
+                    }
+                    if (rvalue is null)
+                    {
+                        _diagnostics.Add(Diagnostic.Create(ErrorCode.ERR_InternalError, SourceLocation.None, "Invalid PReference rule."));
+                    }
+                    else
+                    {
+                        relem.Value = rvalue;
+                        AddBinders(rvalue.Binders, celem.ValueAnnotations);
+                        if (cpref.ReferencedTypes.Count > 0)
+                        {
+                            var useBinder = f.Binder();
+                            useBinder.TypeName = typeof(MetaDslx.CodeAnalysis.Binding.UseBinder).FullName!;
+                            var useTypes = f.BinderArgument();
+                            useTypes.Name = "types";
+                            foreach (var type in cpref.ReferencedTypes)
+                            {
+                                useTypes.Values.Add(type.FullName);
+                            }
+                            useBinder.Arguments.Add(useTypes);
+                            rvalue.Binders.Add(useBinder);
+                        }
+                    }
+                }
+                else
+                {
+                    if (cvalue is PEof)
+                    {
+                        var v = f.Eof();
+                        rvalue = v;
+                    }
+                    else if (cvalue is PKeyword pk)
+                    {
+                        var v = f.TokenRef();
+                        v.Token = _tokenMap[pk];
+                        rvalue = v;
+                    }
+                    else if (cvalue is PBlock cpb)
+                    {
+                        var v = f.RuleRef();
+                        v.Rule = _ruleMap[cpb];
+                        rvalue = v;
+                    }
+                    else
+                    {
+                        _diagnostics.Add(Diagnostic.Create(ErrorCode.ERR_InternalError, SourceLocation.None, "Invalid PElementValue."));
+                    }
+                    if (rvalue is not null)
+                    {
+                        relem.Value = rvalue;
+                        AddBinders(rvalue.Binders, celem.ValueAnnotations);
+                    }
+                }
+            }
+        }
+
+        private string MakeAltName(string parentName, string? altName, bool singleAlt)
+        {
+            if (singleAlt) return altName.ToPascalCase() ?? parentName.ToPascalCase();
+            if (!string.IsNullOrEmpty(altName)) return AddRuleName(altName, tryWithoutIndex: true);
+            else return AddRuleName(parentName + "Alt", tryWithoutIndex: false);
+        }
+
+        private string AddRuleName(string ruleName, bool tryWithoutIndex)
+        {
+            if (tryWithoutIndex && !_ruleNames.Contains(ruleName))
+            {
+                _ruleNames.Add(ruleName);
+                return ruleName;
+            }
             var index = 0;
             while (true)
             {
                 ++index;
-                var name = $"{result}{index}";
+                var name = $"{ruleName}{index}";
                 if (!_ruleNames.Contains(name))
                 {
                     _ruleNames.Add(name);
