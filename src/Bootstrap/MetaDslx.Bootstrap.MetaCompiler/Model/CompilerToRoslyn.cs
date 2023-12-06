@@ -36,6 +36,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
         private Dictionary<string, Roslyn.Token> _fixedTokens;
         private Dictionary<object, Roslyn.Token> _tokenMap;
         private Dictionary<object, Roslyn.Rule> _ruleMap;
+        private Dictionary<Roslyn.Rule, List<Element>> _ruleRefs;
         private DiagnosticBag _diagnostics;
         
         public CompilerToRoslyn(Model compilerModel)
@@ -54,6 +55,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             _fixedTokens = new Dictionary<string, Roslyn.Token>();
             _tokenMap = new Dictionary<object, Roslyn.Token>();
             _ruleMap = new Dictionary<object, Roslyn.Rule>();
+            _ruleRefs = new Dictionary<Roslyn.Rule, List<Element>>();
             _diagnostics = new DiagnosticBag();
 
             var cfixedTokens = _cmodel.Objects.OfType<LexerRule>().Where(lr => !lr.IsFragment && lr.IsFixed);
@@ -78,6 +80,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             AddBlocks(cblocks);
             AddAlts(crules);
             AddAlts(cblocks);
+
+            MergeRules();
             return _rmodel;
         }
 
@@ -541,6 +545,15 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                     {
                         relem.Value = rvalue;
                         AddBinders(rvalue.Binders, celem.ValueAnnotations);
+                        if (rvalue is RuleRef rr)
+                        {
+                            if (!_ruleRefs.TryGetValue(rr.Rule, out var ruleRefs))
+                            {
+                                ruleRefs = new List<Element>();
+                                _ruleRefs.Add(rr.Rule, ruleRefs);
+                            }
+                            ruleRefs.Add(relem);
+                        }
                     }
                 }
             }
@@ -569,6 +582,47 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                 {
                     _ruleNames.Add(name);
                     return name;
+                }
+            }
+        }
+
+        private void MergeRules()
+        {
+
+        }
+
+        private void MergeSingleAlts()
+        {
+            var rules = _rmodel.Objects.OfType<Roslyn.Rule>().ToList();
+            foreach (var rule in rules)
+            {
+                for (int i = 0; i < rule.Alternatives.Count; ++i)
+                {
+                    var alt = rule.Alternatives[i];
+                    if (alt.Elements.Count == 1)
+                    {
+                        var singleElem = alt.Elements[0];
+                        if (singleElem.Name == null && singleElem.Multiplicity == Multiplicity.ExactlyOne && singleElem is RuleRef rr)
+                        {
+                            var rrRule = rr.Rule;
+                            if (_ruleRefs.TryGetValue(rrRule, out var ruleRefs) && ruleRefs.Count == 1)
+                            {
+                                rule.Alternatives.RemoveAt(i);
+                                if (rrRule.Alternatives.Count == 1)
+                                {
+                                    var rrAlt = rrRule.Alternatives[0];
+                                    
+                                }
+                                else
+                                {
+                                    foreach (var refAlt in rrRule.Alternatives)
+                                    {
+
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
