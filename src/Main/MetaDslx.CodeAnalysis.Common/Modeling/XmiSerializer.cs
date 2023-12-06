@@ -553,7 +553,7 @@ namespace MetaDslx.Modeling
                             {
                                 _currentXmlWriter.WriteAttributeString(prop.Name.ToCamelCase(), value.Id);
                             }
-                            else
+                            else if (value.Model is not null)
                             {
                                 _currentXmlWriter.WriteAttributeString(prop.Name.ToCamelCase(), ExternalIdRef(value));
                             }

@@ -73,13 +73,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             AddTokensFromRules(cblocks);
             AddTokens(cnonFixedTokens, false);
 
-            MakeBlockNames(crules);
-            MakeBlockNames(cnamedBlocks);
-
             AddRules(crules);
             AddBlocks(cblocks);
             AddAlts(crules);
             AddAlts(cblocks);
+
+            MakeBlockNames(crules);
+            MakeBlockNames(cnamedBlocks);
 
             MergeRules();
             return _rmodel;
@@ -423,15 +423,40 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                 rrule.Alternatives.Add(ralt);
                 ralt.Name = MakeAltName(rrule.Name, calt.Name, calts.Count == 1);
                 AddBinders(ralt.Binders, calt.Annotations);
-                if (!calt.ReturnType.IsNull)
+                if (calt.ReturnValue is not null)
                 {
-                    var defBinder = f.Binder();
-                    defBinder.TypeName = typeof(MetaDslx.CodeAnalysis.Binding.DefineBinder).FullName!;
-                    var defType = f.BinderArgument();
-                    defType.Name = "type";
-                    defType.Values.Add(calt.ReturnType.FullName);
-                    defBinder.Arguments.Add(defType);
-                    ralt.Binders.Add(defBinder);
+                    var constBinder = f.Binder();
+                    constBinder.TypeName = typeof(MetaDslx.CodeAnalysis.Binding.ConstantBinder).FullName!;
+                    var constValue = f.BinderArgument();
+                    constValue.Name = "value";
+                    var value = calt.ReturnValue.Value;
+                    if (value.IsModelObject || value.IsSymbol) constValue.Values.Add(value.FullName);
+                    else constValue.Values.Add(value.OriginalValue?.ToString());
+                    constBinder.Arguments.Add(constValue);
+                    ralt.Binders.Add(constBinder);
+                }
+                else if (!calt.ReturnType.IsNull)
+                {
+                    var skipDefineBinder = false;
+                    if (calt.Elements.Count == 1)
+                    {
+                        var celem = calt.Elements[0];
+                        if (celem.Multiplicity == Multiplicity.ExactlyOne && string.IsNullOrEmpty(celem.SymbolProperty.FirstOrDefault().Name))
+                        {
+                            if (celem.Value is PReference) skipDefineBinder = true;
+                            if (celem.Value is PBlock pb && !pb.ReturnType.IsNull) skipDefineBinder = true;
+                        }
+                    }
+                    if (!skipDefineBinder)
+                    {
+                        var defBinder = f.Binder();
+                        defBinder.TypeName = typeof(MetaDslx.CodeAnalysis.Binding.DefineBinder).FullName!;
+                        var defType = f.BinderArgument();
+                        defType.Name = "type";
+                        defType.Values.Add(calt.ReturnType.FullName);
+                        defBinder.Arguments.Add(defType);
+                        ralt.Binders.Add(defBinder);
+                    }
                 }
                 AddElements(ralt, calt.Elements);
             }
@@ -545,16 +570,16 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                     {
                         relem.Value = rvalue;
                         AddBinders(rvalue.Binders, celem.ValueAnnotations);
-                        if (rvalue is RuleRef rr)
-                        {
-                            if (!_ruleRefs.TryGetValue(rr.Rule, out var ruleRefs))
-                            {
-                                ruleRefs = new List<Element>();
-                                _ruleRefs.Add(rr.Rule, ruleRefs);
-                            }
-                            ruleRefs.Add(relem);
-                        }
                     }
+                }
+                if (rvalue is RuleRef rr)
+                {
+                    if (!_ruleRefs.TryGetValue(rr.Rule, out var ruleRefs))
+                    {
+                        ruleRefs = new List<Element>();
+                        _ruleRefs.Add(rr.Rule, ruleRefs);
+                    }
+                    ruleRefs.Add(relem);
                 }
             }
         }
@@ -588,36 +613,70 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
 
         private void MergeRules()
         {
-
+            MergeSingleAlts();
         }
 
         private void MergeSingleAlts()
         {
             var rules = _rmodel.Objects.OfType<Roslyn.Rule>().ToList();
-            foreach (var rule in rules)
+            var merged = true;
+            while (merged)
             {
-                for (int i = 0; i < rule.Alternatives.Count; ++i)
+                merged = false;
+                for (int i = 0; i < rules.Count; ++i)
                 {
-                    var alt = rule.Alternatives[i];
-                    if (alt.Elements.Count == 1)
+                    var rule = rules[i];
+                    for (int j = 0; j < rule.Alternatives.Count; ++j)
                     {
-                        var singleElem = alt.Elements[0];
-                        if (singleElem.Name == null && singleElem.Multiplicity == Multiplicity.ExactlyOne && singleElem is RuleRef rr)
+                        var alt = rule.Alternatives[j];
+                        if (alt.Elements.Count == 1)
                         {
-                            var rrRule = rr.Rule;
-                            if (_ruleRefs.TryGetValue(rrRule, out var ruleRefs) && ruleRefs.Count == 1)
+                            var singleElem = alt.Elements[0];
+                            if (singleElem.Multiplicity == Multiplicity.ExactlyOne && singleElem.Value is RuleRef rr)
                             {
-                                rule.Alternatives.RemoveAt(i);
-                                if (rrRule.Alternatives.Count == 1)
+                                var rrRule = rr.Rule;
+                                if (_ruleRefs.TryGetValue(rrRule, out var ruleRefs) && ruleRefs.Count == 1)
                                 {
-                                    var rrAlt = rrRule.Alternatives[0];
-                                    
-                                }
-                                else
-                                {
-                                    foreach (var refAlt in rrRule.Alternatives)
+                                    merged = true;
+                                    if (rrRule.Alternatives.Count == 1)
                                     {
-
+                                        var rrAlt = rrRule.Alternatives[0];
+                                        if (string.IsNullOrEmpty(rrAlt.Name))
+                                        {
+                                            if (!string.IsNullOrEmpty(alt.Name)) rrAlt.Name = alt.Name;
+                                            else if (!string.IsNullOrEmpty(singleElem.Name)) rrAlt.Name = singleElem.Name;
+                                            else if (!string.IsNullOrEmpty(rrRule.Name)) rrAlt.Name = rrRule.Name;
+                                        }
+                                        InsertBinders(rrAlt.Binders, rrRule.Binders);
+                                        InsertBinders(rrAlt.Binders, singleElem.Value.Binders);
+                                        InsertBinders(rrAlt.Binders, singleElem.Binders);
+                                        InsertBinders(rrAlt.Binders, alt.Binders);
+                                        rrRule.Alternatives.Clear();
+                                        rule.Alternatives[j] = rrAlt;
+                                        _rlang.Rules.Remove(rrRule);
+                                        _rmodel.RemoveObject((IModelObject)rrRule);
+                                        _rmodel.RemoveObject((IModelObject)singleElem.Value);
+                                        _rmodel.RemoveObject((IModelObject)singleElem);
+                                        _rmodel.RemoveObject((IModelObject)alt);
+                                        _ruleRefs.Remove(rrRule);
+                                    }
+                                    else
+                                    {
+                                        rule.Alternatives.RemoveAt(j);
+                                        foreach (var refAlt in rrRule.Alternatives)
+                                        {
+                                            InsertBinders(refAlt.Binders, rrRule.Binders);
+                                            InsertBinders(refAlt.Binders, singleElem.Value.Binders);
+                                            InsertBinders(refAlt.Binders, singleElem.Binders);
+                                            InsertBinders(refAlt.Binders, alt.Binders);
+                                        }
+                                        InsertAlternativesAt(rule.Alternatives, j, rrRule.Alternatives);
+                                        _rlang.Rules.Remove(rrRule);
+                                        _rmodel.RemoveObject((IModelObject)rrRule);
+                                        _rmodel.RemoveObject((IModelObject)singleElem.Value);
+                                        _rmodel.RemoveObject((IModelObject)singleElem);
+                                        _rmodel.RemoveObject((IModelObject)alt);
+                                        _ruleRefs.Remove(rrRule);
                                     }
                                 }
                             }
@@ -625,6 +684,24 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                     }
                 }
             }
+        }
+
+        private void InsertBinders(IList<Binder> target, IList<Binder> source)
+        {
+            foreach (var binder in source)
+            {
+                ((IModelObject)binder).Parent = null;
+            }
+            target.InsertRangeAt(0, source);
+        }
+
+        private void InsertAlternativesAt(IList<Alternative> target, int index, IList<Alternative> source)
+        {
+            foreach (var alt in source)
+            {
+                ((IModelObject)alt).Parent = null;
+            }
+            target.InsertRangeAt(index, source);
         }
     }
 }
