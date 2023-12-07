@@ -82,7 +82,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             MergeSeparatedLists();
             //MergeSingleAlts();
 
-            MakeBlockNames();
+            MakeNames();
             return _rmodel;
         }
 
@@ -357,40 +357,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             }
         }
 
-        private void MakeBlockNames()
-        {
-            foreach (var rule in _rmodel.Objects.OfType<Roslyn.Rule>())
-            {
-                MakeBlockNames(rule.Name, rule.Alternatives);
-            }
-        }
-
-        private void MakeBlockNames(string? parentName, IEnumerable<Alternative> alts)
-        {
-            foreach (var alt in alts)
-            {
-                foreach (var elem in alt.Elements)
-                {
-                    if (elem.Value is RuleRef ruleRef)
-                    {
-                        var rule = ruleRef.Rule;
-                        if (string.IsNullOrEmpty(ruleRef.Rule.Name))
-                        {
-                            rule.Name = MakeBlockName(parentName, elem.Name);
-                            MakeBlockNames(rule.Name, rule.Alternatives);
-                        }
-                    }
-                }
-            }
-        }
-
-        private string MakeBlockName(string? parentName, string? elementName)
-        {
-            var result = (parentName.ToPascalCase() ?? string.Empty) + (elementName.ToPascalCase() ?? "Block");
-            if (string.IsNullOrEmpty(result)) result = "Block";
-            return AddRuleName(result, tryWithoutIndex: false);
-        }
-
         private void AddAlts(IEnumerable<ParserRule> crules)
         {
             foreach (var crule in crules)
@@ -415,7 +381,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             {
                 var ralt = f.Alternative();
                 rrule.Alternatives.Add(ralt);
-                ralt.Name = MakeAltName(rrule.Name, calt.Name, calts.Count == 1);
                 AddBinders(ralt.Binders, calt.Annotations);
                 if (calt.ReturnValue is not null)
                 {
@@ -578,10 +543,78 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             }
         }
 
-        private string MakeAltName(string parentName, string? altName, bool singleAlt)
+        private void MakeNames()
         {
-            if (singleAlt) return altName.ToPascalCase() ?? parentName.ToPascalCase();
-            if (!string.IsNullOrEmpty(altName)) return AddRuleName(altName, tryWithoutIndex: true);
+            var rules = _rmodel.Objects.OfType<Roslyn.Rule>();
+            foreach (var rule in rules)
+            {
+                if (!string.IsNullOrEmpty(rule.Name)) _ruleNames.Add(rule.Name);
+                foreach (var alt in rule.Alternatives)
+                {
+                    if (!string.IsNullOrEmpty(alt.Name)) _ruleNames.Add(alt.Name);
+                }
+            }
+            foreach (var rule in rules)
+            {
+                if (!string.IsNullOrEmpty(rule.Name))
+                {
+                    MakeBlockNames(rule.Name, rule.Alternatives);
+                }
+            }
+            foreach (var rule in rules)
+            {
+                MakeAltNames(rule.Name, rule.Alternatives);
+            }
+        }
+
+        private void MakeBlockNames(string? parentName, IList<Alternative> alts)
+        {
+            foreach (var alt in alts)
+            {
+                alt.Name = MakeAltName(parentName, alt.Name, alts.Count == 1);
+                foreach (var elem in alt.Elements)
+                {
+                    if (elem.Value is RuleRef ruleRef)
+                    {
+                        var rule = ruleRef.Rule;
+                        if (string.IsNullOrEmpty(rule.Name))
+                        {
+                            rule.Name = MakeBlockName(parentName, elem.Name);
+                            MakeBlockNames(rule.Name, rule.Alternatives);
+                        }
+                    }
+                    else if (elem.Value is SeparatedList sepList)
+                    {
+                        var rule = ((RuleRef)sepList.RepeatedBlock.Value).Rule;
+                        if (string.IsNullOrEmpty(rule.Name))
+                        {
+                            rule.Name = MakeBlockName(parentName, elem.Name);
+                            MakeBlockNames(rule.Name, rule.Alternatives);
+                        }
+                    }
+                }
+            }
+        }
+
+        private string MakeBlockName(string? parentName, string? elementName)
+        {
+            var result = (parentName.ToPascalCase() ?? string.Empty) + (elementName.ToPascalCase() ?? "Block");
+            if (string.IsNullOrEmpty(result)) result = "Block";
+            return AddRuleName(result, tryWithoutIndex: !string.IsNullOrEmpty(elementName));
+        }
+
+        private void MakeAltNames(string? parentName, IList<Alternative> alts)
+        {
+            foreach (var alt in alts)
+            {
+                alt.Name = MakeAltName(parentName, alt.Name, alts.Count == 1);
+            }
+        }
+
+        private string MakeAltName(string? parentName, string? altName, bool singleAlt)
+        {
+            if (!string.IsNullOrEmpty(altName)) return altName;
+            if (singleAlt) return parentName.ToPascalCase();
             else return AddRuleName(parentName + "Alt", tryWithoutIndex: false);
         }
 
@@ -612,7 +645,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             {
                 var rule = rules[i];
                 var singleTokenAlts = rule.Alternatives.Where(IsSingleTokenAlt).ToImmutableArray();
-                if (singleTokenAlts.Length == 0) continue;
+                if (singleTokenAlts.Length < 2) continue;
                 var tokens = ArrayBuilder<TokenRef>.GetInstance();
                 var tokenAlts = f.TokenAlts();
                 foreach (var singleTokenAlt in singleTokenAlts)
