@@ -38,7 +38,7 @@ ParserRule: annotations+=ParserAnnotation* [Name](returnType=ReturnTypeIdentifie
 PBlock: annotations+=ParserAnnotation* 'block' name=Name ('returns' returnType=ReturnTypeQualifier)? ':' alternatives+=PAlternative ('|' alternatives+=PAlternative)* ';';
 PBlockInline returns PBlock: '(' alternatives+=PAlternative ('|' alternatives+=PAlternative)* ')';
 
-PAlternative: (annotations+=ParserAnnotation* 'alt' name=Name ('returns' returnType=ReturnTypeQualifier)? ':')? elements+=PElement* ('=>' returnValue=Expression)?;
+PAlternative: (annotations+=ParserAnnotation* 'alt' name=Name ('returns' returnType=ReturnTypeQualifier)? ':')? elements+=PElement+ ('=>' returnValue=Expression)?;
 PElement: (nameAnnotations+=ParserAnnotation* symbolProperty+=[SymbolProperty]Identifier assignment=Assignment)? valueAnnotations+=ParserAnnotation* value=PElementValue multiplicity=Multiplicity?;
 PElementValue: PBlockInline | PEof | PKeyword | PReference;
 PReference: rule=[Use(Rule)]Identifier | '#' referencedTypes+=ReturnTypeQualifier | '#{' referencedTypes+=ReturnTypeQualifier (',' referencedTypes+=ReturnTypeQualifier)* '}' ;

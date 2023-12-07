@@ -54,7 +54,7 @@ class Alternative
 class Element
 {
 	contains Binder[] Binders;
-	string Name;
+	string? Name;
 	MetaDslx.Bootstrap.MetaCompiler.Model.Assignment Assignment;
 	contains ElementValue Value;
 	MetaDslx.Bootstrap.MetaCompiler.Model.Multiplicity Multiplicity;
@@ -77,22 +77,22 @@ class TokenRef : ElementValue
 
 class TokenAlts : ElementValue
 {
-	TokenRef[] Tokens;
+	contains TokenRef[] Tokens;
 }
 
 class Eof : ElementValue
 {
 }
 
-class List : ElementValue
+class SeparatedList : ElementValue
 {
 	bool SeparatorFirst;
-	Element[] FirstItems;
-	Element[] FirstSeparators;
-	Element RepeatedBlock;
+	contains Element[] FirstItems;
+	contains Element[] FirstSeparators;
+	contains Element RepeatedBlock;
 	Element RepeatedItem;
 	Element RepeatedSeparator;
-	Element[] LastItems;
-	Element[] LastSeparators;
+	contains Element[] LastItems;
+	contains Element[] LastSeparators;
 }
 
