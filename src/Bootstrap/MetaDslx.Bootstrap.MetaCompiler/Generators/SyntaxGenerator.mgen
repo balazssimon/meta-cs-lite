@@ -633,48 +633,31 @@ public sealed class [alt.RedName] : [parent.Alternatives.Count > 1 ? parent.RedN
 
 	[foreach (var elem in alt.Elements)]
         [var elemIndex = alt.Elements.IndexOf(elem)]
-		[if (elem.IsList)]
+        [var isList = MetaDslx.Bootstrap.MetaCompiler.Model.MultiplicityExtensions.IsList(elem.Multiplicity)]
     public [elem.RedPropertyType] [elem.PropertyName] 
 	{ 
 		get
 		{
-			[if (elem.IsSeparated)]
-			var red = this.GetRed(ref this.[elem.FieldName], [elemIndex]);
-			if (red != null)
-			{
-				return new [elem.RedPropertyType](red, this.GetChildIndex([elemIndex]), reversed: [elem.IsReversed ? "true" : "false"]);
-			}
-			return default;
-			[else if (elem.IsToken)]
-			var green = (global::[language.Namespace].Syntax.InternalSyntax.[alt.GreenName])this.Green;
-			var greenTokens = green.[elem.PropertyName];
-			if (greenTokens.Node != null)
-			{
-				return new [elem.RedPropertyType](this, greenTokens.Node, this.GetChildPosition([elemIndex]), this.GetChildIndex([elemIndex]));
-			}
-			return default;
-			[else]
-			var red = this.GetRed(ref this.[elem.FieldName], [elemIndex]);
-			if (red != null) return new [elem.RedPropertyType](red);
-			return default;
-			[end if]
-		} 
-	}
-		[else]
-			[if (elem.IsToken)]
-    public [elem.RedPropertyType] [elem.PropertyName] 
-	{ 
-		get 
-		{ 
+        [if (elem.Value is TokenRef || elem.Value is TokenAlts)]
 			var green = (global::[language.Namespace].Syntax.InternalSyntax.[alt.GreenName])this.Green;
 			var greenToken = green.[elem.PropertyName];
+            [if (isList)]
+			return greenToken.Node == null ? default : new [elem.RedPropertyType](this, greenToken.Node, this.GetChildPosition([elemIndex]), this.GetChildIndex([elemIndex]));
+            [else]
 			return new SyntaxToken(this, greenToken, this.GetChildPosition([elemIndex]), this.GetChildIndex([elemIndex]));
-		}
-	}
+            [end if]
+        [else]
+			var red = this.GetRed(ref this.[elem.FieldName], [elemIndex]);
+            [if (elem.Value is SeparatedList sl)]
+			return red == null ? default : new [elem.RedPropertyType](red, this.GetChildIndex([elemIndex]), reversed: [sl.SeparatorFirst.ToString().ToLower()]);
+            [else if (isList)]
+			return red == null ? default : new [elem.RedPropertyType](red);
 			[else]
-    public [elem.RedPropertyType] [elem.PropertyName] => this.GetRed(ref this.[elem.FieldName], [elemIndex]);
+			return red;
 			[end if]
 		[end if]
+		} 
+	}
 	[end foreach]
 
     protected override SyntaxNode GetNodeSlot(int index)
@@ -699,12 +682,13 @@ public sealed class [alt.RedName] : [parent.Alternatives.Count > 1 ? parent.RedN
         }
     }
 	[foreach (var elem in alt.Elements)]
+        [var isList = MetaDslx.Bootstrap.MetaCompiler.Model.MultiplicityExtensions.IsList(elem.Multiplicity) || elem.Value is SeparatedList]
 
     public [alt.RedName] With[elem.PropertyName]([elem.RedPropertyType] [elem.ParameterName])
 	{
 		return this.Update([foreach (var field in alt.Elements) separator ", "][field == elem ? field.ParameterName : "this."+field.PropertyName][end foreach]);
 	}
-		[if (elem.IsList && !elem.IsToken)]
+		[if (isList)]
 
     public [alt.RedName] Add[elem.PropertyName](params [elem.Value.RedType]["[]"] [elem.ParameterName])
 	{
