@@ -171,6 +171,15 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
             if (IsKeyword("using"))
             {
                 StartInputSpan();
+                EatToken();
+                EndInputSpan();
+                SkipWs(skipSemicolon: true);
+                StartOutputSpan(_osb.Prefix.Length);
+                var inputText = _isb.ToString();
+                _osb.WriteLine(inputText);
+                EndOutputSpan();
+
+                StartInputSpan();
                 while (true)
                 {
                     if (TryMatchEndOfLine()) break;
@@ -178,8 +187,9 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
                 }
                 EndInputSpan();
                 SkipWs(skipSemicolon: true);
-                StartOutputSpan(_osb.Prefix.Length);
-                var inputText = _isb.ToString();
+                _osb.Write("global::");
+                StartOutputSpan(_osb.Prefix.Length + 8);
+                inputText = _isb.ToString();
                 _osb.Write(inputText);
                 _osb.WriteLine(";");
                 EndOutputSpan();

@@ -27,6 +27,12 @@ class Language
 	contains TokenKind[] TokenKinds;
 	contains Token[] Tokens;
 	contains Rule[] Rules;
+
+	Token? DefaultWhitespace;
+	Token? DefaultEndOfLine;
+	Token? DefaultSeparator;
+	Token? DefaultIdentifier;
+	Rule? MainRule;
 }
 
 class Token
@@ -45,6 +51,7 @@ class Rule
 	contains Alternative[] Alternatives;
 
 	derived string GreenName;
+	derived string RedName;
 }
 
 class Alternative
@@ -60,6 +67,12 @@ class Alternative
 	derived string GreenUpdateArguments;
 
 	derived string RedName;
+	derived string RedUpdateParameters;
+	derived string RedUpdateArguments;
+	derived string RedOptionalUpdateParameters;
+	derived string RedToGreenArgumentList;
+	derived string RedToGreenOptionalArgumentList;
+	derived bool HasRedToGreenOptionalArguments;
 }
 
 class Element
@@ -80,6 +93,18 @@ class Element
 	derived string GreenPropertyValue;
 	derived string? GreenSyntaxNullCondition;
 	derived string? GreenSyntaxCondition;
+
+	derived bool IsOptionalUpdateParameter;
+	derived string RedFieldType;
+	derived string RedParameterValue;
+	derived string RedPropertyType;
+	derived string RedPropertyValue;
+	derived string RedToGreenArgument;
+	derived string RedToGreenOptionalArgument;
+	derived string? RedSyntaxNullCondition;
+	derived string? RedSyntaxCondition;
+
+	derived string? VisitCall;
 }
 
 abstract class ElementValue
@@ -88,6 +113,8 @@ abstract class ElementValue
 
 	derived string GreenType;
 	derived string? GreenSyntaxCondition;
+
+	derived string RedType;
 }
 
 class RuleRef : ElementValue
@@ -96,6 +123,8 @@ class RuleRef : ElementValue
 
 	derived string GreenType;
 	derived string? GreenSyntaxCondition;
+
+	derived string RedType;
 }
 
 class TokenRef : ElementValue
@@ -104,6 +133,8 @@ class TokenRef : ElementValue
 
 	derived string GreenType;
 	derived string? GreenSyntaxCondition;
+
+	derived string RedType;
 }
 
 class TokenAlts : ElementValue
@@ -112,12 +143,16 @@ class TokenAlts : ElementValue
 
 	derived string GreenType;
 	derived string? GreenSyntaxCondition;
+
+	derived string RedType;
 }
 
 class Eof : ElementValue
 {
 	derived string GreenType;
 	derived string? GreenSyntaxCondition;
+
+	derived string RedType;
 }
 
 class SeparatedList : ElementValue
@@ -134,5 +169,7 @@ class SeparatedList : ElementValue
 
 	derived string GreenType;
 	derived string? GreenSyntaxCondition;
+
+	derived string RedType;
 }
 

@@ -84,6 +84,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             //MergeSingleAlts();
 
             MakeNames();
+
+            SetDefaults();
             return _rmodel;
         }
 
@@ -935,6 +937,30 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                 ((IModelObject)alt).Parent = null;
             }
             target.InsertRangeAt(index, source);
+        }
+
+        private void SetDefaults()
+        {
+            foreach (var token in _rlang.Tokens)
+            {
+                if (token.TokenKind.TypeName == typeof(DefaultWhitespaceTokenKind).FullName)
+                {
+                    _rlang.DefaultWhitespace = token;
+                }
+                if (token.TokenKind.TypeName == typeof(DefaultEndOfLineTokenKind).FullName)
+                {
+                    _rlang.DefaultEndOfLine = token;
+                }
+                if (token.TokenKind.TypeName == typeof(DefaultSeparatorTokenKind).FullName)
+                {
+                    _rlang.DefaultSeparator = token;
+                }
+                if (token.TokenKind.TypeName == typeof(DefaultIdentifierTokenKind).FullName)
+                {
+                    _rlang.DefaultIdentifier = token;
+                }
+            }
+            _rlang.MainRule = _rlang.Rules.FirstOrDefault();
         }
     }
 }

@@ -1,8 +1,8 @@
 ﻿namespace MetaDslx.Bootstrap.MetaCompiler.Generators
 
 using MetaDslx.Bootstrap.MetaCompiler.Roslyn
-using System.Collections.Generic;
-using System.Collections.Immutable;
+using System.Collections.Generic
+using System.Collections.Immutable
 using System.Linq
 
 generator RoslynApiGenerator
