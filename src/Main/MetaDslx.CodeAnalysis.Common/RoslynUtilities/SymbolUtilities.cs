@@ -1,13 +1,14 @@
 ﻿using MetaDslx.CodeAnalysis.PooledObjects;
+using MetaDslx.CodeAnalysis.Symbols;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Text;
 using System.Threading;
 
-namespace MetaDslx.CodeAnalysis.Symbols
+namespace Roslyn.Utilities
 {
-    public static class SymbolUtils
+    public static class SymbolUtilities
     {
         public static TSymbol? GetInnermostContainingSymbol<TSymbol>(this Symbol? symbol, bool includeSelf = false, CancellationToken cancellationToken = default)
             where TSymbol : Symbol
@@ -68,7 +69,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
             }
             return result.ToImmutableAndFree();
         }
-        
+
         public static ImmutableArray<TSymbol> GetAllContainedSymbols<TSymbol>(this Symbol? symbol, bool includeSelf = false, CancellationToken cancellationToken = default)
             where TSymbol : Symbol
         {

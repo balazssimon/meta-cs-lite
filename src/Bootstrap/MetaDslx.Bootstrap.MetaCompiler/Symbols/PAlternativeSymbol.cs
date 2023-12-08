@@ -12,6 +12,7 @@ using System.Collections.Immutable;
 using MetaDslx.CodeAnalysis.PooledObjects;
 using MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax;
 using MetaDslx.Bootstrap.MetaCompiler.Model;
+using Roslyn.Utilities;
 
 namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
 {

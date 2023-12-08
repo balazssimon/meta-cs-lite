@@ -66,6 +66,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
 
             _rlang = f.Language();
             _rlang.Name = _clang.Name;
+            _rlang.Namespace = _clang.FullName;
             _ruleNames = new HashSet<string>();
             _ruleNames.UnionWith(_cmodel.Objects.OfType<LexerRule>().Where(lr => !string.IsNullOrEmpty(lr.Name)).Select(lr => lr.Name!));
             AddTokens(cfixedTokens, false);
@@ -708,7 +709,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                                     if (repeatedElem1.Value is TokenRef repeatedToken1 && repeatedElem2.Value is RuleRef repeatedRule1)
                                     {
                                         list = f.SeparatedList();
-                                        list.SeparatorFirst = true;
+                                        list.RepeatedSeparatorFirst = true;
                                         list.RepeatedSeparator = repeatedElem1;
                                         list.RepeatedItem = repeatedElem2;
                                         separator = repeatedToken1.Token;
@@ -718,7 +719,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                                     else if (repeatedElem1.Value is RuleRef repeatedRule2 && repeatedElem2.Value is TokenRef repeatedToken2)
                                     {
                                         list = f.SeparatedList();
-                                        list.SeparatorFirst = false;
+                                        list.RepeatedSeparatorFirst = false;
                                         list.RepeatedSeparator = repeatedElem2;
                                         list.RepeatedItem = repeatedElem1;
                                         separator = repeatedToken2.Token;
@@ -729,6 +730,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                             }
                             if (list is not null)
                             {
+                                list.SeparatorFirst = list.RepeatedSeparatorFirst;
                                 var firstIndex = k;
                                 var lastIndex = k;
                                 var firstItems = ArrayBuilder<Element>.GetInstance();
@@ -739,12 +741,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                                 {
                                     var searchPrevElemens = false;
                                     var prevElem = alt.Elements[k - 1];
-                                    if (list.SeparatorFirst)
+                                    if (list.RepeatedSeparatorFirst)
                                     {
                                         if (prevElem.Name == name && prevElem.Multiplicity == Multiplicity.ExactlyOne && prevElem.Value is RuleRef prevRule && prevRule.Rule == item)
                                         {
                                             firstItems.Add(prevElem);
                                             firstIndex = k - 1;
+                                            list.SeparatorFirst = false;
                                             searchPrevElemens = true;
                                         }
                                     }
@@ -754,6 +757,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                                         {
                                             firstSeparators.Add(prevElem);
                                             firstIndex = k - 1;
+                                            list.SeparatorFirst = true;
                                             searchPrevElemens = true;
                                         }
                                     }
@@ -763,7 +767,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                                         searchPrevElemens = false;
                                         var prevElem1 = alt.Elements[k - l * 2];
                                         var prevElem2 = alt.Elements[k - l * 2 + 1];
-                                        if (list.SeparatorFirst)
+                                        if (list.RepeatedSeparatorFirst)
                                         {
                                             if (prevElem1.Name == name && prevElem1.Multiplicity == Multiplicity.ExactlyOne && prevElem1.Value is RuleRef prevRule1 && prevRule1.Rule == item &&
                                                 prevElem2.Multiplicity == Multiplicity.ExactlyOne && prevElem2.Value is TokenRef prevToken2 && prevToken2.Token == separator)
@@ -771,6 +775,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                                                 firstItems.Insert(0, prevElem1);
                                                 firstSeparators.Insert(0, prevElem2);
                                                 firstIndex = k - l * 2;
+                                                list.SeparatorFirst = false;
                                                 searchPrevElemens = true;
                                             }
                                         }
@@ -782,6 +787,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                                                 firstItems.Insert(0, prevElem2);
                                                 firstSeparators.Insert(0, prevElem1);
                                                 firstIndex = k - l * 2;
+                                                list.SeparatorFirst = true;
                                                 searchPrevElemens = true;
                                             }
                                         }
@@ -796,7 +802,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                                     {
                                         searchNextElemens = false;
                                         var nextElem = alt.Elements[k + l];
-                                        var mustBeSeparator = list.SeparatorFirst ? l % 2 == 1 : l % 2 == 0;
+                                        var mustBeSeparator = list.RepeatedSeparatorFirst ? l % 2 == 1 : l % 2 == 0;
                                         if (mustBeSeparator)
                                         {
                                             if (nextElem.Multiplicity.IsSingle() && nextElem.Value is TokenRef nextToken && nextToken.Token == separator)

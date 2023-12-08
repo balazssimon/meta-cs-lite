@@ -31,14 +31,14 @@ namespace Roslyn.Utilities
             else return name[0].ToString().ToLower() + name.Substring(1);
         }
 
-        public static string EscapeCSharpKeyword(string identifier)
+        public static string EscapeCSharpKeyword(this string identifier)
         {
             if (string.IsNullOrEmpty(identifier)) return identifier;
             else if (csharpKeywords.Contains(identifier)) return $"@{identifier}";
             else return identifier;
         }
 
-        public static string EncodeString(string text)
+        public static string EncodeString(this string text)
         {
             var sb = PooledStringBuilder.GetInstance();
             var builder = sb.Builder;
@@ -96,7 +96,7 @@ namespace Roslyn.Utilities
 
         }
 
-        public static string DecodeString(string text)
+        public static string DecodeString(this string text)
         {
             var sb = PooledStringBuilder.GetInstance();
             for (int i = 1; i < text.Length - 1; i++)
@@ -176,7 +176,7 @@ namespace Roslyn.Utilities
             return sb.ToStringAndFree();
         }
 
-        public static char DecodeChar(string text)
+        public static char DecodeChar(this string text)
         {
             if (text.Length >= 3)
             {
@@ -206,7 +206,7 @@ namespace Roslyn.Utilities
             return '\0';
         }
 
-        public static char SpecialChar(char escape)
+        public static char SpecialChar(this char escape)
         {
             switch (escape)
             {
@@ -223,12 +223,12 @@ namespace Roslyn.Utilities
             }
         }
 
-        public static char UnicodeChar(string hex)
+        public static char UnicodeChar(this string hex)
         {
             return Convert.ToChar(Convert.ToInt32(hex, 16));
         }
 
-        public static bool IsIdentifier(string? text)
+        public static bool IsIdentifier(this string? text)
         {
             if (string.IsNullOrEmpty(text) || text == "_") return false;
             var first = true;
