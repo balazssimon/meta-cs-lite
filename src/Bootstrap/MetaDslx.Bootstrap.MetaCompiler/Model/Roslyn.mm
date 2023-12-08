@@ -6,11 +6,16 @@ class Binder
 {
 	string TypeName;
 	contains BinderArgument[] Arguments;
+	bool IsNegated;
+
+	derived string ConstructorArguments;
 }
 
 class BinderArgument
 {
 	string Name;
+	string TypeName;
+	bool IsArray;
 	string[] Values;
 }
 
@@ -33,6 +38,7 @@ class Language
 	Token? DefaultSeparator;
 	Token? DefaultIdentifier;
 	Rule? MainRule;
+	string? RootTypeName;
 }
 
 class Token
@@ -47,6 +53,8 @@ class Token
 class Rule
 {
 	contains Binder[] Binders;
+	bool ContainsBinders;
+
 	string Name;
 	contains Alternative[] Alternatives;
 
@@ -56,8 +64,10 @@ class Rule
 
 class Alternative
 {
-	string Name;
 	contains Binder[] Binders;
+	bool ContainsBinders;
+
+	string Name;
 	contains Element[] Elements;
 
 	derived string GreenName;
@@ -78,6 +88,8 @@ class Alternative
 class Element
 {
 	contains Binder[] Binders;
+	bool ContainsBinders;
+
 	string? Name;
 	MetaDslx.Bootstrap.MetaCompiler.Model.Assignment Assignment;
 	contains ElementValue Value;
@@ -110,6 +122,7 @@ class Element
 abstract class ElementValue
 {
 	contains Binder[] Binders;
+	bool ContainsBinders;
 
 	derived string GreenType;
 	derived string? GreenSyntaxCondition;

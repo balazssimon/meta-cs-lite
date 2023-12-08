@@ -38,6 +38,7 @@ class AnnotationArgument $AnnotationArgumentSymbol
 {
 	symbol[] $NamedParameter;
 	DeclaredSymbol Parameter;
+	type ParameterType;
 	contains Expression $Value;
 }
 

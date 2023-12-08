@@ -50,7 +50,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
         }
 
         private ImmutableArray<MetaSymbol> _namedParameter;
-        private DeclaredSymbol _parameter;
+        private DeclaredSymbol? _parameter;
+        private MetaType _parameterType;
         private ImmutableArray<MetaType> _expectedTypes;
         private ExpectedTypeKind _expectedTypeKind;
         private ExpressionSymbol _value;
@@ -79,12 +80,21 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
         }
 
         [ModelProperty]
-        public DeclaredSymbol Parameter
+        public DeclaredSymbol? Parameter
         {
             get
             {
                 ForceComplete(CompletionParts.FinishComputingProperty_Parameter, null, default);
                 return _parameter;
+            }
+        }
+
+        public MetaType ParameterType
+        {
+            get
+            {
+                ForceComplete(CompletionParts.StartComputingProperty_ExpectedTypes, null, default);
+                return _parameterType;
             }
         }
 
@@ -150,6 +160,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
                     var expectedTypes = CompleteProperty_ExpectedTypes(diagnostics, cancellationToken);
                     _expectedTypes = expectedTypes.ExpectedTypes;
                     _expectedTypeKind = expectedTypes.ExpectedTypeKind;
+                    _parameterType = _expectedTypes.FirstOrDefault();
                     AddSymbolDiagnostics(diagnostics);
                     diagnostics.Free();
                     NotePartComplete(CompletionParts.FinishComputingProperty_ExpectedTypes);
@@ -211,6 +222,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
             if (mtType.TryGetCoreType(out var coreType, diagnostics, cancellationToken) && !coreType.IsNull)
             {
                 if (!result.Contains(mtType)) result.Add(mtType);
+                ModelObject.Add(MetaDslx.Bootstrap.MetaCompiler.Model.Compiler.AnnotationArgument_ParameterType, mtType);
             }
             else
             {

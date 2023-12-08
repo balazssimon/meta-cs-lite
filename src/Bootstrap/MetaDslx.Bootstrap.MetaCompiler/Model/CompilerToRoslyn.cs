@@ -85,6 +85,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
 
             MakeNames();
 
+            ComputeContainsBinders();
             SetDefaults();
             return _rmodel;
         }
@@ -179,6 +180,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                     {
                         var rarg = f.BinderArgument();
                         rarg.Name = name;
+                        rarg.IsArray = carg.ParameterType.IsCollection;
+                        carg.ParameterType.TryGetCoreType(out var coreType);
+                        rarg.TypeName = coreType.FullName;
                         if (carg.Value is ArrayExpression array)
                         {
                             foreach (var item in array.Items)
@@ -391,6 +395,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                     constBinder.TypeName = typeof(MetaDslx.CodeAnalysis.Binding.ConstantBinder).FullName!;
                     var constValue = f.BinderArgument();
                     constValue.Name = "value";
+                    constValue.TypeName = "object";
+                    constValue.IsArray = false;
                     var value = calt.ReturnValue.Value;
                     if (value.IsModelObject || value.IsSymbol) constValue.Values.Add(value.FullName);
                     else constValue.Values.Add(value.OriginalValue?.ToString());
@@ -415,6 +421,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                         defBinder.TypeName = typeof(MetaDslx.CodeAnalysis.Binding.DefineBinder).FullName!;
                         var defType = f.BinderArgument();
                         defType.Name = "type";
+                        defType.TypeName = typeof(Type).FullName!;
+                        defType.IsArray = false;
                         defType.Values.Add(calt.ReturnType.FullName);
                         defBinder.Arguments.Add(defType);
                         ralt.Binders.Add(defBinder);
@@ -437,8 +445,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                     relem.Name = name;
                     var propBinder = f.Binder();
                     propBinder.TypeName = typeof(MetaDslx.CodeAnalysis.Binding.PropertyBinder).FullName!;
+                    propBinder.IsNegated = celem.Assignment == Assignment.NegatedAssign;
                     var propName = f.BinderArgument();
                     propName.Name = "name";
+                    propName.TypeName = "string";
+                    propName.IsArray = false;
                     propName.Values.Add(name);
                     propBinder.Arguments.Add(propName);
                     relem.Binders.Add(propBinder);
@@ -496,6 +507,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                             useBinder.TypeName = typeof(MetaDslx.CodeAnalysis.Binding.UseBinder).FullName!;
                             var useTypes = f.BinderArgument();
                             useTypes.Name = "types";
+                            useTypes.TypeName = typeof(Type).FullName!;
+                            useTypes.IsArray = true;
                             foreach (var type in cpref.ReferencedTypes)
                             {
                                 useTypes.Values.Add(type.FullName);
@@ -937,6 +950,48 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                 ((IModelObject)alt).Parent = null;
             }
             target.InsertRangeAt(index, source);
+        }
+
+        private void ComputeContainsBinders()
+        {
+            var rules = _rmodel.Objects.OfType<Roslyn.Rule>().ToList();
+            var updated = true;
+            while (updated)
+            {
+                updated = false;
+                foreach (var rule in rules)
+                {
+                    if (!rule.ContainsBinders && rule.Binders.Count > 0)
+                    {
+                        rule.ContainsBinders = true;
+                        updated = true;
+                    }
+                    foreach (var alt in rule.Alternatives)
+                    {
+                        if (!alt.ContainsBinders && alt.Binders.Count > 0)
+                        {
+                            alt.ContainsBinders = true;
+                            rule.ContainsBinders = true;
+                            updated = true;
+                        }
+                        foreach (var elem in alt.Elements)
+                        {
+                            if (!elem.ContainsBinders)
+                            {
+                                if (elem.Binders.Count > 0) elem.ContainsBinders = true;
+                                if (elem.Value.Binders.Count > 0) elem.ContainsBinders = true;
+                                if (elem.Value is RuleRef rr && (rr.Rule?.ContainsBinders ?? false)) elem.ContainsBinders = true;
+                                if (elem.ContainsBinders)
+                                {
+                                    alt.ContainsBinders = true;
+                                    rule.ContainsBinders = true;
+                                    updated = true;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         private void SetDefaults()

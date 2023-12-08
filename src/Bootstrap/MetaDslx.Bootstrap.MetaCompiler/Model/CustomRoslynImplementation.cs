@@ -73,6 +73,37 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Roslyn
             return string.Join(", ", _this.Elements.Select(e => $"{e.RedPropertyType} {e.ParameterName}"));
         }
 
+        public override string Binder_ConstructorArguments(Binder _this)
+        {
+            var builder = PooledStringBuilder.GetInstance();
+            var sb = builder.Builder;
+            foreach (var arg in _this.Arguments)
+            {
+                if (sb.Length > 0) sb.Append(", ");
+                sb.Append(arg);
+                sb.Append(": ");
+                if (arg.IsArray)
+                {
+                    sb.Append("ImmutableArray.Create<");
+                    sb.Append(arg.TypeName);
+                    sb.Append(">");
+                    bool first = false;
+                    foreach (var value in arg.Values)
+                    {
+                        if (first) first = false;
+                        else sb.Append(", ");
+                        sb.Append(value);
+                    }
+                    sb.Append(")");
+                }
+                else if (arg.Values.Count > 0)
+                {
+                    sb.Append(arg.Values[0]);
+                }
+            }
+            return builder.ToStringAndFree();
+        }
+
         public override string? ElementValue_GreenSyntaxCondition(ElementValue _this)
         {
             throw new NotImplementedException();
