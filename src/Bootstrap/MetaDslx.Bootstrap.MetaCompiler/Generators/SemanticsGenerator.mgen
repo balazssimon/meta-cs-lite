@@ -120,7 +120,7 @@ end template
 
 template GenerateBinderFactoryVisitBinder(Binder binder, string nodeName, string body, ref int annotIndex)
 [var binderVarName = "__annot"+(annotIndex++)]
-var [binderVarName] = new [binder.TypeName]Binder([binder.ConstructorArguments]);
+var [binderVarName] = new [binder.TypeName]([binder.ConstructorArguments]);
 this.Begin([binderVarName], [nodeName]);
 try
 {

@@ -80,25 +80,30 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Roslyn
             foreach (var arg in _this.Arguments)
             {
                 if (sb.Length > 0) sb.Append(", ");
-                sb.Append(arg);
+                sb.Append(arg.Name);
                 sb.Append(": ");
                 if (arg.IsArray)
                 {
                     sb.Append("ImmutableArray.Create<");
                     sb.Append(arg.TypeName);
-                    sb.Append(">");
-                    bool first = false;
+                    sb.Append(">(");
+                    bool first = true;
                     foreach (var value in arg.Values)
                     {
                         if (first) first = false;
                         else sb.Append(", ");
-                        sb.Append(value);
+                        if (value != null && arg.TypeName == "System.String" && !value.StartsWith("\"")) sb.Append(value.EncodeString());
+                        else if (value != null && arg.TypeName == "System.Type") sb.Append($"typeof({value})");
+                        else sb.Append(value);
                     }
                     sb.Append(")");
                 }
                 else if (arg.Values.Count > 0)
                 {
-                    sb.Append(arg.Values[0]);
+                    var value = arg.Values[0];
+                    if (value != null && arg.TypeName == "System.String" && !value.StartsWith("\"")) sb.Append(value.EncodeString());
+                    else if (value != null && arg.TypeName == "System.Type") sb.Append($"typeof({value})");
+                    else sb.Append(value);
                 }
             }
             return builder.ToStringAndFree();

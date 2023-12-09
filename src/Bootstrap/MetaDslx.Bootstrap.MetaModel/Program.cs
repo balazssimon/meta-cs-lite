@@ -21,9 +21,9 @@ using MetaDslx.Modeling;
 
 //CompileMetaModel("Compiler", @"..\..\..\..\MetaDslx.Bootstrap.MetaCompiler\Model", @"..\..\..\..\MetaDslx.Bootstrap.MetaCompiler\Model");
 //CompileMetaCompiler("Compiler", @"..\..\..\..\MetaDslx.Bootstrap.MetaCompiler\Language", @"..\..\..\..\MetaDslx.Bootstrap.MetaCompiler\Compiler");
-//CompileWithMetaCompiler("Compiler2", @"..\..\..\..\MetaDslx.Bootstrap.MetaCompiler\Language", @"..\..\..\..\MetaDslx.Bootstrap.MetaCompiler\Compiler", MetaDslx.Bootstrap.MetaCompiler.Model.Compiler.MInstance);
+CompileWithMetaCompiler("Compiler2", @"..\..\..\..\MetaDslx.Bootstrap.MetaCompiler\Language", @"..\..\..\..\MetaDslx.Bootstrap.MetaCompiler\Compiler2", MetaDslx.Bootstrap.MetaCompiler.Model.Compiler.MInstance);
 
-CompileMetaModel("Roslyn", @"..\..\..\..\MetaDslx.Bootstrap.MetaCompiler\Model", @"..\..\..\..\MetaDslx.Bootstrap.MetaCompiler\Model");
+//CompileMetaModel("Roslyn", @"..\..\..\..\MetaDslx.Bootstrap.MetaCompiler\Model", @"..\..\..\..\MetaDslx.Bootstrap.MetaCompiler\Model");
 
 static void CompileMetaModel(string name, string inputDir, string outputDir)
 {
@@ -141,7 +141,39 @@ namespace MyCode
     }
     Console.WriteLine(rlangModel);
     var xmi = new XmiSerializer();
-    xmi.WriteModelToFile(@"..\..\..\Compiler2.xmi", rlangModel);
+    xmi.WriteModelToFile($@"..\..\..\{name}.xmi", rlangModel);
+    var language = rlangModel.ModelObjects.OfType<MetaDslx.Bootstrap.MetaCompiler.Roslyn.Language>().FirstOrDefault();
+    var generator = new MetaDslx.Bootstrap.MetaCompiler.Generators.RoslynApiGenerator();
+    var languageCode = generator.GenerateLanguage(language);
+    File.WriteAllText(Path.Combine(outputDir, $"{name}.MetaCompiler.Language.g.cs"), languageCode);
+    var languageVersionCode = generator.GenerateLanguageVersion(language);
+    File.WriteAllText(Path.Combine(outputDir, $"{name}.MetaCompiler.LanguageVersion.g.cs"), languageVersionCode);
+    var parseOptionsCode = generator.GenerateParseOptions(language);
+    File.WriteAllText(Path.Combine(outputDir, $"{name}.MetaCompiler.ParseOptions.g.cs"), parseOptionsCode);
+    var syntaxKindCode = generator.GenerateSyntaxKind(language);
+    File.WriteAllText(Path.Combine(outputDir, $"{name}.MetaCompiler.SyntaxKind.g.cs"), syntaxKindCode);
+    var syntaxFactsCode = generator.GenerateSyntaxFacts(language);
+    File.WriteAllText(Path.Combine(outputDir, $"{name}.MetaCompiler.SyntaxFacts.g.cs"), syntaxFactsCode);
+    var internalSyntaxCode = generator.GenerateInternalSyntax(language);
+    File.WriteAllText(Path.Combine(outputDir, $"{name}.MetaCompiler.InternalSyntax.g.cs"), internalSyntaxCode);
+    var internalSyntaxVisitorCode = generator.GenerateInternalSyntaxVisitor(language);
+    File.WriteAllText(Path.Combine(outputDir, $"{name}.MetaCompiler.InternalSyntaxVisitor.g.cs"), internalSyntaxVisitorCode);
+    var internalSyntaxFactoryCode = generator.GenerateInternalSyntaxFactory(language);
+    File.WriteAllText(Path.Combine(outputDir, $"{name}.MetaCompiler.InternalSyntaxFactory.g.cs"), internalSyntaxFactoryCode);
+    var syntaxCode = generator.GenerateSyntax(language);
+    File.WriteAllText(Path.Combine(outputDir, $"{name}.MetaCompiler.Syntax.g.cs"), syntaxCode);
+    var syntaxTreeCode = generator.GenerateSyntaxTree(language);
+    File.WriteAllText(Path.Combine(outputDir, $"{name}.MetaCompiler.SyntaxTree.g.cs"), syntaxTreeCode);
+    var syntaxVisitorCode = generator.GenerateSyntaxVisitor(language);
+    File.WriteAllText(Path.Combine(outputDir, $"{name}.MetaCompiler.SyntaxVisitor.g.cs"), syntaxVisitorCode);
+    var syntaxFactoryCode = generator.GenerateSyntaxFactory(language);
+    File.WriteAllText(Path.Combine(outputDir, $"{name}.MetaCompiler.SyntaxFactory.g.cs"), syntaxFactoryCode);
+    var binderFactoryVisitorCode = generator.GenerateBinderFactoryVisitor(language);
+    File.WriteAllText(Path.Combine(outputDir, $"{name}.MetaCompiler.BinderFactoryVisitor.g.cs"), binderFactoryVisitorCode);
+    var semanticsFactoryCode = generator.GenerateSemanticsFactory(language);
+    File.WriteAllText(Path.Combine(outputDir, $"{name}.MetaCompiler.SemanticsFactory.g.cs"), semanticsFactoryCode);
+    var compilationFactoryCode = generator.GenerateCompilationFactory(language);
+    File.WriteAllText(Path.Combine(outputDir, $"{name}.MetaCompiler.CompilationFactory.g.cs"), compilationFactoryCode);
 }
 //*/
 static void CompileAll(string mmName, string mmInputDir, string mmOutputDir, string mlangName, string mlangInputDir, string mlangOutputDir)

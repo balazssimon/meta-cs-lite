@@ -998,19 +998,19 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
         {
             foreach (var token in _rlang.Tokens)
             {
-                if (token.TokenKind.TypeName == typeof(DefaultWhitespaceTokenKind).FullName)
+                if (token.TokenKind?.TypeName == typeof(DefaultWhitespaceTokenKind).FullName)
                 {
                     _rlang.DefaultWhitespace = token;
                 }
-                if (token.TokenKind.TypeName == typeof(DefaultEndOfLineTokenKind).FullName)
+                if (token.TokenKind?.TypeName == typeof(DefaultEndOfLineTokenKind).FullName)
                 {
                     _rlang.DefaultEndOfLine = token;
                 }
-                if (token.TokenKind.TypeName == typeof(DefaultSeparatorTokenKind).FullName)
+                if (token.TokenKind?.TypeName == typeof(DefaultSeparatorTokenKind).FullName)
                 {
                     _rlang.DefaultSeparator = token;
                 }
-                if (token.TokenKind.TypeName == typeof(DefaultIdentifierTokenKind).FullName)
+                if (token.TokenKind?.TypeName == typeof(DefaultIdentifierTokenKind).FullName)
                 {
                     _rlang.DefaultIdentifier = token;
                 }
