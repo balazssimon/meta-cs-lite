@@ -38,8 +38,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Remove="Compiler2\**" />
-	  <None Remove="Compiler2\**" />
+	  <Compile Remove="Compiler\**" />
+	  <None Remove="Compiler\**" />
 	</ItemGroup>
 	<!--
 	 -->

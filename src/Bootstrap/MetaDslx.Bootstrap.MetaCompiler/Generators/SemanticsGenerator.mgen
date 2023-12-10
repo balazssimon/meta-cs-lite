@@ -43,7 +43,7 @@ using MetaDslx.CodeAnalysis;
 
 namespace [language.Namespace].Binding
 {
-    using [language.Namespace].Syntax;
+    using global::[language.Namespace].Syntax;
 
     public class [language.Name]BinderFactoryVisitor : MetaDslx.CodeAnalysis.Binding.BinderFactoryVisitor, I[language.Name]SyntaxVisitor
     {

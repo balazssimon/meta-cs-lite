@@ -22,11 +22,11 @@ using System.Threading.Tasks;
 
 namespace [language.Namespace].Syntax.InternalSyntax
 {
-    using System.Runtime.CompilerServices;
-    using MetaDslx.CodeAnalysis;
-    using MetaDslx.CodeAnalysis.Syntax;
-    using MetaDslx.CodeAnalysis.Syntax.InternalSyntax;
-    using MetaDslx.CodeAnalysis.Text;
+    using global::System.Runtime.CompilerServices;
+    using global::MetaDslx.CodeAnalysis;
+    using global::MetaDslx.CodeAnalysis.Syntax;
+    using global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax;
+    using global::MetaDslx.CodeAnalysis.Text;
 
     internal abstract class GreenSyntaxNode : InternalSyntaxNode
     {
@@ -1079,7 +1079,7 @@ using System;
 
 namespace [language.Namespace].Syntax.InternalSyntax
 {
-    using MetaDslx.CodeAnalysis.Syntax.InternalSyntax;
+    using global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax;
 
 	internal class [language.Name]InternalSyntaxVisitor : InternalSyntaxVisitor
 	{
@@ -1114,10 +1114,10 @@ using System.Diagnostics;
 
 namespace [language.Namespace].Syntax.InternalSyntax
 {
-    using MetaDslx.CodeAnalysis;
-    using MetaDslx.CodeAnalysis.Syntax;
-    using MetaDslx.CodeAnalysis.Syntax.InternalSyntax;
-    using MetaDslx.CodeAnalysis.Text;
+    using global::MetaDslx.CodeAnalysis;
+    using global::MetaDslx.CodeAnalysis.Syntax;
+    using global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax;
+    using global::MetaDslx.CodeAnalysis.Text;
 
 	public partial class [language.Name]InternalSyntaxFactory : InternalSyntaxFactory
 	{

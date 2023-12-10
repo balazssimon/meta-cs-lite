@@ -17,8 +17,8 @@ using MetaDslx.CodeAnalysis.Syntax.InternalSyntax;
 
 namespace [language.Namespace]
 {
-    using [language.Namespace].Syntax;
-    using [language.Namespace].Syntax.InternalSyntax;
+    using global::[language.Namespace].Syntax;
+    using global::[language.Namespace].Syntax.InternalSyntax;
 
     public sealed partial class [language.Name]Language : Language
     {

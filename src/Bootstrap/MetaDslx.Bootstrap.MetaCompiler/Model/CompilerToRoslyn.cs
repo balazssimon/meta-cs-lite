@@ -38,7 +38,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
         private Dictionary<object, Roslyn.Rule> _ruleMap;
         private Dictionary<Roslyn.Rule, List<Element>> _ruleRefs;
         private DiagnosticBag _diagnostics;
-        
+
         public CompilerToRoslyn(Model compilerModel)
         {
             _cmodel = compilerModel;
@@ -84,7 +84,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             //MergeSingleAlts();
 
             MakeNames();
-
             ComputeContainsBinders();
             SetDefaults();
             return _rmodel;
@@ -581,6 +580,22 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             {
                 MakeAltNames(rule.Name, rule.Alternatives);
             }
+            var usedElementNames = PooledHashSet<string>.GetInstance();
+            foreach (var rule in rules)
+            {
+                usedElementNames.Clear();
+                usedElementNames.Add("kind");
+                usedElementNames.Add("annotations");
+                usedElementNames.Add("diagnostics");
+                foreach (var alt in rule.Alternatives)
+                {
+                    foreach (var elem in alt.Elements)
+                    {
+                        MakeElementName(elem, usedElementNames);
+                    }
+                }
+            }
+            usedElementNames.Free();
         }
 
         private void MakeBlockNames(string? parentName, IList<Alternative> alts)
@@ -652,6 +667,21 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                     return name;
                 }
             }
+        }
+
+        private void MakeElementName(Element elem, HashSet<string> usedElementNames)
+        {
+            var defaultName = elem.Name;
+            if (string.IsNullOrEmpty(defaultName)) defaultName = "Element";
+            int i = 0;
+            var name = defaultName;
+            while (usedElementNames.Contains(name))
+            {
+                ++i;
+                name = $"{defaultName}{i}";
+            }
+            usedElementNames.Add(name);
+            elem.Name = name;
         }
 
         private void MergeSingleTokenAlts()

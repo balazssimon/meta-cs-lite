@@ -30,12 +30,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Roslyn
 
         public override string Alternative_GreenUpdateArguments(Alternative _this)
         {
-            return string.Join(", ", _this.Elements.Select(e => $", {e.ParameterName}"));
+            return string.Join(", ", _this.Elements.Select(e => $"{e.ParameterName}"));
         }
 
         public override string Alternative_GreenUpdateParameters(Alternative _this)
         {
-            return string.Join(", ", _this.Elements.Select(e => $", {e.GreenPropertyType} {e.ParameterName}"));
+            return string.Join(", ", _this.Elements.Select(e => $"{e.GreenPropertyType} {e.ParameterName}"));
         }
 
         public override bool Alternative_HasRedToGreenOptionalArguments(Alternative _this)
@@ -167,8 +167,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Roslyn
         public override string? Element_GreenSyntaxCondition(Element _this)
         {
             if (_this.Multiplicity.IsList()) return null;
-            if (_this.Multiplicity.IsOptional() || _this.Value is SeparatedList) return _this.Value.GreenSyntaxCondition;
-            else return $"{_this.ParameterName} is not null && ({_this.Value.GreenSyntaxCondition})";
+            var valueCondition = _this.Value.GreenSyntaxCondition;
+            if (valueCondition is null) return null;
+            if (_this.Multiplicity.IsOptional() || _this.Value is SeparatedList) return valueCondition;
+            else if (_this.Value is TokenAlts || _this.Value is TokenRef) return $"{_this.ParameterName}.RawKind != (int)MetaDslx.CodeAnalysis.InternalSyntax.SyntaxKind.None && ({valueCondition})";
+            else return $"{_this.ParameterName} is not null && ({valueCondition})";
         }
 
         public override string? Element_GreenSyntaxNullCondition(Element _this)
@@ -207,13 +210,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Roslyn
         {
             if (_this.Multiplicity.IsList()) return $"{_this.ParameterName}.Node";
             else if (_this.Value is SeparatedList) return $"{_this.ParameterName}.Node";
-            else if (_this.Value is TokenRef || _this.Value is TokenAlts) return $"{_this.ParameterName}.Green";
+            else if (_this.Value is TokenRef || _this.Value is TokenAlts) return $"{_this.ParameterName}";
             else return _this.ParameterName;
         }
 
         public override string Element_RedPropertyType(Element _this)
         {
-            if (_this.Multiplicity.IsList()) return $"global::MetaDslx.CodeAnalysis.Syntax.SyntaxList<{_this.Value.RedType}>";
+            if (_this.Multiplicity.IsList()) return $"global::MetaDslx.CodeAnalysis.SyntaxList<{_this.Value.RedType}>";
             else return _this.Value.RedType;
         }
 
@@ -221,11 +224,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Roslyn
         {
             if (_this.Multiplicity.IsList())
             {
-                return $"new global::MetaDslx.CodeAnalysis.Syntax.SyntaxList<{_this.Value.GreenType}>({_this.FieldName})";
+                return $"new global::MetaDslx.CodeAnalysis.SyntaxList<{_this.Value.GreenType}>({_this.FieldName})";
             }
             else if (_this.Value is SeparatedList sl)
             {
-                return $"new global::MetaDslx.CodeAnalysis.Syntax.SeparatedSyntaxList<{_this.Value.GreenType}>({_this.FieldName}, reversed: {sl.SeparatorFirst.ToString().ToLower()})";
+                return $"new global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<{_this.Value.GreenType}>({_this.FieldName}, reversed: {sl.SeparatorFirst.ToString().ToLower()})";
             }
             else
             {
@@ -236,8 +239,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Roslyn
         public override string? Element_RedSyntaxCondition(Element _this)
         {
             if (_this.Multiplicity.IsList()) return null;
-            if (_this.Multiplicity.IsOptional() || _this.Value is SeparatedList) return _this.Value.GreenSyntaxCondition;
-            else return $"{_this.ParameterName} is not null && ({_this.Value.GreenSyntaxCondition})";
+            var valueCondition = _this.Value.GreenSyntaxCondition;
+            if (valueCondition is null) return null;
+            if (_this.Multiplicity.IsOptional() || _this.Value is SeparatedList) return valueCondition;
+            else if (_this.Value is TokenAlts || _this.Value is TokenRef) return $"{_this.ParameterName}.RawKind != (int)MetaDslx.CodeAnalysis.InternalSyntax.SyntaxKind.None && ({valueCondition})";
+            else return $"{_this.ParameterName} is not null && ({valueCondition})";
         }
 
         public override string? Element_RedSyntaxNullCondition(Element _this)
@@ -291,7 +297,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Roslyn
 
         public override string Eof_RedType(Eof _this)
         {
-            return "global::MetaDslx.CodeAnalysis.Syntax.SyntaxToken";
+            return "global::MetaDslx.CodeAnalysis.SyntaxToken";
         }
 
         public override string? RuleRef_GreenSyntaxCondition(RuleRef _this)
@@ -335,7 +341,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Roslyn
         public override string SeparatedList_RedType(SeparatedList _this)
         {
             var itemType = ((RuleRef)_this.RepeatedItem.Value).Rule.RedName;
-            return $"global::MetaDslx.CodeAnalysis.Syntax.SeparatedSyntaxList<{itemType}>";
+            return $"global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<{itemType}>";
         }
 
         public override string? TokenAlts_GreenSyntaxCondition(TokenAlts _this)
@@ -363,7 +369,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Roslyn
 
         public override string TokenAlts_RedType(TokenAlts _this)
         {
-            return "global::MetaDslx.CodeAnalysis.Syntax.SyntaxToken";
+            return "global::MetaDslx.CodeAnalysis.SyntaxToken";
         }
 
         public override string? TokenRef_GreenSyntaxCondition(TokenRef _this)
@@ -387,7 +393,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Roslyn
 
         public override string TokenRef_RedType(TokenRef _this)
         {
-            return "global::MetaDslx.CodeAnalysis.Syntax.SyntaxToken";
+            return "global::MetaDslx.CodeAnalysis.SyntaxToken";
         }
     }
 }
