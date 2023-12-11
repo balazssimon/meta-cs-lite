@@ -11,7 +11,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
     {
         public override string Declaration_FullName(Declaration _this)
         {
-            if ((_this as IModelObject)?.Parent is Declaration parent && !string.IsNullOrEmpty(parent.Name)) return $"{parent.Name}.{_this.Name}";
+            if ((_this as IModelObject)?.Parent is Declaration parent && !string.IsNullOrEmpty(parent.Name)) return $"{parent.FullName}.{_this.Name}";
             else return _this.Name;
         }
 

@@ -8,17 +8,17 @@ using Roslyn.Utilities
 
 generator RoslynApiGenerator
 
-
 template GenerateSyntaxKind(Language language)
 [var fixedTokens = language.Tokens.Where(lr => lr.IsFixed).ToImmutableArray()]
 [var nonFixedTokens = language.Tokens.Where(lr => !lr.IsFixed).ToImmutableArray()]
-using MetaDslx.CodeAnalysis;
-using MetaDslx.CodeAnalysis.Syntax.InternalSyntax;
 
 #nullable enable
 
 namespace [language.Namespace].Syntax
 {
+    using __SyntaxToken = global::MetaDslx.CodeAnalysis.SyntaxToken;
+    using __InternalSyntaxKind = global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.InternalSyntaxKind;
+
 	public enum [language.Name]SyntaxKind
 	{
 		[if (language.Tokens.Count > 0)]
@@ -35,14 +35,14 @@ namespace [language.Namespace].Syntax
 		[end if]
 
 		// Built-in:
-		None = InternalSyntaxKind.None,
-		List = InternalSyntaxKind.List,
-		BadToken = InternalSyntaxKind.BadToken,
-		MissingToken = InternalSyntaxKind.MissingToken,
-		SkippedTokensTrivia = InternalSyntaxKind.SkippedTokensTrivia,
-		DisabledTextTrivia = InternalSyntaxKind.DisabledTextTrivia,
-		ConflictMarkerTrivia = InternalSyntaxKind.ConflictMarkerTrivia,
-		Eof = InternalSyntaxKind.Eof,
+		None = __InternalSyntaxKind.None,
+		List = __InternalSyntaxKind.List,
+		BadToken = __InternalSyntaxKind.BadToken,
+		MissingToken = __InternalSyntaxKind.MissingToken,
+		SkippedTokensTrivia = __InternalSyntaxKind.SkippedTokensTrivia,
+		DisabledTextTrivia = __InternalSyntaxKind.DisabledTextTrivia,
+		ConflictMarkerTrivia = __InternalSyntaxKind.ConflictMarkerTrivia,
+		Eof = __InternalSyntaxKind.Eof,
 
 		// Tokens:
 		[foreach (var token in fixedTokens)]
@@ -62,7 +62,7 @@ namespace [language.Namespace].Syntax
 
     public static class [language.Name]SyntaxKindExtensions
     {
-        public static [language.Name]SyntaxKind Get[language.Name]Kind(this SyntaxToken token)
+        public static [language.Name]SyntaxKind Get[language.Name]Kind(this __SyntaxToken token)
         {
             return ([language.Name]SyntaxKind)token.RawKind;
         }
@@ -74,16 +74,12 @@ template GenerateSyntaxFacts(Language language)
 [var triviaTokens = language.Tokens.Where(lr => lr.IsTrivia).ToImmutableArray()]
 [var fixedTokens = language.Tokens.Where(lr => lr.IsFixed).ToImmutableArray()]
 [var keywordTokens = fixedTokens.Where(lr => lr.Name.IsIdentifier()).ToImmutableArray()]
-using System.Collections.Generic;
-using System.Linq;
-using MetaDslx.CodeAnalysis;
-using MetaDslx.CodeAnalysis.Syntax;
 
 #nullable enable
 
 namespace [language.Namespace].Syntax
 {
-	public class [language.Name]SyntaxFacts : SyntaxFacts
+	public class [language.Name]SyntaxFacts : global::MetaDslx.CodeAnalysis.Syntax.SyntaxFacts
 	{
 		public [language.Name]SyntaxKind DefaultWhitespaceKind => [language.Name]SyntaxKind.[language.DefaultWhitespace?.Name ?? "None"];
 		public [language.Name]SyntaxKind DefaultEndOfLineKind => [language.Name]SyntaxKind.[language.DefaultEndOfLine?.Name ?? "None"];
@@ -423,45 +419,49 @@ namespace [language.Namespace].Syntax
 end template
 
 template GenerateSyntax(Language language)
-using System;
-using System.Collections.Generic;
-using System.Collections.Immutable;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MetaDslx.CodeAnalysis;
-using MetaDslx.CodeAnalysis.Syntax;
-using MetaDslx.CodeAnalysis.Syntax.InternalSyntax;
-using [language.Namespace].Syntax.InternalSyntax;
-
 #nullable enable
 
 namespace [language.Namespace].Syntax
 {
+	using __Debug = System.Diagnostics.Debug;
+	using __Language = global::MetaDslx.CodeAnalysis.Language;
+	using __DiagnosticInfo = global::MetaDslx.CodeAnalysis.DiagnosticInfo;
+	using __SyntaxAnnotation = global::MetaDslx.CodeAnalysis.SyntaxAnnotation;
+	using __GreenNode = global::MetaDslx.CodeAnalysis.GreenNode;
+	using __InternalSyntaxKind = global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.InternalSyntaxKind;
+	using __InternalSyntaxToken = global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.InternalSyntaxToken;
+	using __InternalSyntaxTrivia = global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.InternalSyntaxTrivia;
+	using __InternalSyntaxNode = global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.InternalSyntaxNode;
+	using __IncrementalParseData = global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.IncrementalParseData;
+	using __SyntaxTree = global::MetaDslx.CodeAnalysis.SyntaxTree;
+	using __SyntaxToken = global::MetaDslx.CodeAnalysis.SyntaxToken;
+	using __SyntaxTrivia = global::MetaDslx.CodeAnalysis.SyntaxTrivia;
+	using __SyntaxNode = global::MetaDslx.CodeAnalysis.SyntaxNode;
+    using __SyntaxTokenList = global::MetaDslx.CodeAnalysis.SyntaxTokenList;
+    using __SyntaxExtensions = global::MetaDslx.CodeAnalysis.SyntaxExtensions;
 
-    public abstract class [language.Name]SyntaxNode : SyntaxNode
+    public abstract class [language.Name]SyntaxNode : __SyntaxNode
     {
-        protected [language.Name]SyntaxNode(InternalSyntaxNode green, [language.Name]SyntaxTree syntaxTree, int position)
+        protected [language.Name]SyntaxNode(__InternalSyntaxNode green, [language.Name]SyntaxTree syntaxTree, int position)
             : base(green, syntaxTree, position)
         {
         }
 
-        protected [language.Name]SyntaxNode(InternalSyntaxNode green, [language.Name]SyntaxNode parent, int position)
+        protected [language.Name]SyntaxNode(__InternalSyntaxNode green, [language.Name]SyntaxNode parent, int position)
             : base(green, parent, position)
         {
         }
 
-        public override Language Language => [language.Name]Language.Instance;
+        public override __Language Language => [language.Name]Language.Instance;
         public [language.Name]SyntaxKind Kind => ([language.Name]SyntaxKind)this.RawKind;
-		internal new GreenNode Green => base.Green;
+		internal new __GreenNode Green => base.Green;
 
-        protected override SyntaxTree CreateSyntaxTreeForRoot()
+        protected override __SyntaxTree CreateSyntaxTreeForRoot()
         {
-            return [language.Name]SyntaxTree.CreateWithoutClone(this, IncrementalParseData.Empty);
+            return [language.Name]SyntaxTree.CreateWithoutClone(this, __IncrementalParseData.Empty);
         }
 
-        public override TResult Accept<TArg, TResult>(SyntaxVisitor<TArg, TResult> visitor, TArg argument)
+        public override TResult Accept<TArg, TResult>(global::MetaDslx.CodeAnalysis.SyntaxVisitor<TArg, TResult> visitor, TArg argument)
         {
             if (visitor is I[language.Name]SyntaxVisitor<TArg, TResult> typedVisitor) return this.Accept(typedVisitor, argument);
             else return visitor.DefaultVisit(this, argument);
@@ -469,7 +469,7 @@ namespace [language.Namespace].Syntax
 
         public abstract TResult Accept<TArg, TResult>(I[language.Name]SyntaxVisitor<TArg, TResult> visitor, TArg argument);
 
-        public override TResult Accept<TResult>(SyntaxVisitor<TResult> visitor)
+        public override TResult Accept<TResult>(global::MetaDslx.CodeAnalysis.SyntaxVisitor<TResult> visitor)
         {
             if (visitor is I[language.Name]SyntaxVisitor<TResult> typedVisitor) return this.Accept(typedVisitor);
             else return visitor.DefaultVisit(this);
@@ -477,7 +477,7 @@ namespace [language.Namespace].Syntax
 
         public abstract TResult Accept<TResult>(I[language.Name]SyntaxVisitor<TResult> visitor);
 
-        public override void Accept(SyntaxVisitor visitor)
+        public override void Accept(global::MetaDslx.CodeAnalysis.SyntaxVisitor visitor)
         {
             if (visitor is I[language.Name]SyntaxVisitor typedVisitor) this.Accept(typedVisitor);
             else visitor.DefaultVisit(this);
@@ -488,15 +488,15 @@ namespace [language.Namespace].Syntax
     /// <summary>
     /// It's a non terminal Trivia [language.Name]SyntaxNode that has a tree underneath it.
     /// </summary>
-    public abstract partial class [language.Name]StructuredTriviaSyntax : [language.Name]SyntaxNode, IStructuredTriviaSyntax
+    public abstract partial class [language.Name]StructuredTriviaSyntax : [language.Name]SyntaxNode, global::MetaDslx.CodeAnalysis.IStructuredTriviaSyntax
     {
-        private SyntaxTrivia _parent;
-        internal [language.Name]StructuredTriviaSyntax(InternalSyntaxNode green, [language.Name]SyntaxNode parent, int position)
+        private __SyntaxTrivia _parent;
+        internal [language.Name]StructuredTriviaSyntax(__InternalSyntaxNode green, [language.Name]SyntaxNode parent, int position)
             : base(green, parent == null ? null : ([language.Name]SyntaxTree)parent.SyntaxTree, position)
         {
             System.Diagnostics.Debug.Assert(parent == null || position >= 0);
         }
-		internal static [language.Name]StructuredTriviaSyntax Create(SyntaxTrivia trivia)
+		internal static [language.Name]StructuredTriviaSyntax Create(__SyntaxTrivia trivia)
 		{
 			var red = ([language.Name]StructuredTriviaSyntax)[language.Name]Language.Instance.SyntaxFactory.CreateStructure(trivia);
 			red._parent = trivia;
@@ -505,30 +505,30 @@ namespace [language.Namespace].Syntax
         /// <summary>
         /// Get parent trivia.
         /// </summary>
-        public override SyntaxTrivia ParentTrivia => _parent;
+        public override __SyntaxTrivia ParentTrivia => _parent;
     }
 
     public sealed partial class [language.Name]SkippedTokensTriviaSyntax : [language.Name]StructuredTriviaSyntax
     {
-        internal [language.Name]SkippedTokensTriviaSyntax(InternalSyntaxNode green, [language.Name]SyntaxNode parent, int position)
+        internal [language.Name]SkippedTokensTriviaSyntax(__InternalSyntaxNode green, [language.Name]SyntaxNode parent, int position)
             : base(green, parent, position)
         {
         }
 
-        public SyntaxTokenList Tokens 
+        public __SyntaxTokenList Tokens 
         {
             get
             {
 				var slot = ((global::[language.Namespace].Syntax.InternalSyntax.GreenSkippedTokensTriviaSyntax)this.Green).Tokens;
 				if (slot != null)
 				{
-					return new SyntaxTokenList(this, slot.Node, this.GetChildPosition(0), this.GetChildIndex(0));
+					return new __SyntaxTokenList(this, slot.Node, this.GetChildPosition(0), this.GetChildIndex(0));
 				}
                 return default;
             }
         }
 
-        protected override SyntaxNode GetNodeSlot(int index)
+        protected override __SyntaxNode GetNodeSlot(int index)
         {
             switch (index)
             {
@@ -536,7 +536,7 @@ namespace [language.Namespace].Syntax
             }
         }
 
-		protected override SyntaxNode GetCachedSlot(int index)
+		protected override __SyntaxNode GetCachedSlot(int index)
         {
             switch (index)
             {
@@ -559,25 +559,25 @@ namespace [language.Namespace].Syntax
             visitor.VisitSkippedTokensTrivia(this);
         }
 
-        public [language.Name]SkippedTokensTriviaSyntax Update(SyntaxTokenList tokens)
+        public [language.Name]SkippedTokensTriviaSyntax Update(__SyntaxTokenList tokens)
         {
             if (tokens != this.Tokens)
             {
                 var newNode = ([language.Name]SkippedTokensTriviaSyntax)Language.SyntaxFactory.SkippedTokensTrivia(tokens);
                 var annotations = this.GetAnnotations();
                 if (annotations != null && annotations.Length > 0)
-                    return newNode.WithAnnotations(annotations);
+                    return __SyntaxExtensions.WithAnnotations(newNode, annotations);
                 return newNode;
             }
             return this;
         }
 
-        public [language.Name]SkippedTokensTriviaSyntax WithTokens(SyntaxTokenList tokens)
+        public [language.Name]SkippedTokensTriviaSyntax WithTokens(__SyntaxTokenList tokens)
         {
             return this.Update(tokens);
         }
 
-        public [language.Name]SkippedTokensTriviaSyntax AddTokens(params SyntaxToken["[]"] items)
+        public [language.Name]SkippedTokensTriviaSyntax AddTokens(params __SyntaxToken["[]"] items)
         {
             return this.WithTokens(this.Tokens.AddRange(items));
         }
@@ -598,14 +598,14 @@ end template
 
 template GenerateSyntaxRuleBase(Language language, Rule parent)
 [if (parent.Alternatives.Count > 1)]
-public abstract class [parent.RedName] : [language.Name]SyntaxNode[parent == language.MainRule ? ", ICompilationUnitSyntax" : ""]
+public abstract class [parent.RedName] : [language.Name]SyntaxNode[parent == language.MainRule ? ", global::MetaDslx.CodeAnalysis.ICompilationUnitSyntax" : ""]
 {
-    protected [parent.RedName](InternalSyntaxNode green, [language.Name]SyntaxTree syntaxTree, int position)
+    protected [parent.RedName](__InternalSyntaxNode green, [language.Name]SyntaxTree syntaxTree, int position)
         : base(green, syntaxTree, position)
     {
     }
 
-    protected [parent.RedName](InternalSyntaxNode green, [language.Name]SyntaxNode parent, int position)
+    protected [parent.RedName](__InternalSyntaxNode green, [language.Name]SyntaxNode parent, int position)
         : base(green, parent, position)
     {
     }
@@ -615,18 +615,18 @@ public abstract class [parent.RedName] : [language.Name]SyntaxNode[parent == lan
 end template
 
 template GenerateSyntaxRuleAlt(Language language, Rule parent, Alternative alt)
-public sealed class [alt.RedName] : [parent.Alternatives.Count > 1 ? parent.RedName : language.Name+"SyntaxNode"][parent == language.MainRule && parent.Alternatives.Count == 1 ? ", ICompilationUnitSyntax" : ""]
+public sealed class [alt.RedName] : [parent.Alternatives.Count > 1 ? parent.RedName : language.Name+"SyntaxNode"][parent == language.MainRule && parent.Alternatives.Count == 1 ? ", global::MetaDslx.CodeAnalysis.ICompilationUnitSyntax" : ""]
 {
 	[foreach (var elem in alt.Elements.Where(e => e.RedFieldType is not null))]
 	private [elem.RedFieldType] [elem.FieldName];
 	[end foreach]
 
-    public [alt.RedName](InternalSyntaxNode green, [language.Name]SyntaxTree syntaxTree, int position)
+    public [alt.RedName](__InternalSyntaxNode green, [language.Name]SyntaxTree syntaxTree, int position)
         : base(green, syntaxTree, position)
     {
     }
 
-    public [alt.RedName](InternalSyntaxNode green, [language.Name]SyntaxNode parent, int position)
+    public [alt.RedName](__InternalSyntaxNode green, [language.Name]SyntaxNode parent, int position)
         : base(green, parent, position)
     {
     }
@@ -638,13 +638,13 @@ public sealed class [alt.RedName] : [parent.Alternatives.Count > 1 ? parent.RedN
 	{ 
 		get
 		{
-        [if (elem.Value is TokenRef || elem.Value is TokenAlts)]
+        [if (elem.Value is TokenRef || elem.Value is TokenAlts || elem.Value is Eof)]
 			var green = (global::[language.Namespace].Syntax.InternalSyntax.[alt.GreenName])this.Green;
 			var greenToken = green.[elem.PropertyName];
             [if (isList)]
 			return greenToken.Node == null ? default : new [elem.RedPropertyType](this, greenToken.Node, this.GetChildPosition([elemIndex]), this.GetChildIndex([elemIndex]));
             [else]
-			return new SyntaxToken(this, greenToken, this.GetChildPosition([elemIndex]), this.GetChildIndex([elemIndex]));
+			return new __SyntaxToken(this, greenToken, this.GetChildPosition([elemIndex]), this.GetChildIndex([elemIndex]));
             [end if]
         [else]
 			var red = this.GetRed(ref this.[elem.FieldName], [elemIndex]);
@@ -660,7 +660,7 @@ public sealed class [alt.RedName] : [parent.Alternatives.Count > 1 ? parent.RedN
 	}
 	[end foreach]
 
-    protected override SyntaxNode GetNodeSlot(int index)
+    protected override __SyntaxNode GetNodeSlot(int index)
     {
         switch (index)
         {
@@ -671,7 +671,7 @@ public sealed class [alt.RedName] : [parent.Alternatives.Count > 1 ? parent.RedN
         }
     }
 
-    protected override SyntaxNode GetCachedSlot(int index)
+    protected override __SyntaxNode GetCachedSlot(int index)
     {
         switch (index)
         {
@@ -704,7 +704,7 @@ public sealed class [alt.RedName] : [parent.Alternatives.Count > 1 ? parent.RedN
             var newNode = [language.Name]Language.Instance.SyntaxFactory.[alt.Name]([alt.RedUpdateArguments]);
             var annotations = this.GetAnnotations();
             if (annotations != null && annotations.Length > 0)
-               newNode = newNode.WithAnnotations(annotations);
+               newNode = __SyntaxExtensions.WithAnnotations(newNode, annotations);
 			return ([alt.RedName])newNode;
         }
         return this;
@@ -1300,42 +1300,50 @@ end template
 
 template GenerateSyntaxFactory(Language language)
 [var nonFixedTokens = language.Tokens.Where(lr => !lr.IsFixed).ToImmutableArray()]
-using System;
-using System.Collections.Generic;
-using System.Collections.Immutable;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using MetaDslx.CodeAnalysis;
-using MetaDslx.CodeAnalysis.Syntax;
-using MetaDslx.CodeAnalysis.Syntax.InternalSyntax;
-using MetaDslx.CodeAnalysis.Text;
-using [language.Namespace].Syntax.InternalSyntax;
-
 #nullable enable
 
 namespace [language.Namespace].Syntax
 {
+    using __Type = global::System.Type;
+	using __Debug = global::System.Diagnostics.Debug;
+    using __Encoding = global::System.Text.Encoding;
+	using __Language = global::MetaDslx.CodeAnalysis.Language;
+	using __ParseOptions = global::MetaDslx.CodeAnalysis.ParseOptions;
+	using __DiagnosticInfo = global::MetaDslx.CodeAnalysis.DiagnosticInfo;
+	using __SyntaxAnnotation = global::MetaDslx.CodeAnalysis.SyntaxAnnotation;
+	using __SyntaxNodeCache = MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxNodeCache;
+	using __IncrementalParseData = global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.IncrementalParseData;
+	using __InternalSyntaxKind = global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.InternalSyntaxKind;
+	using __InternalSyntaxToken = global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.InternalSyntaxToken;
+    using __GreenNodeExtensions = MetaDslx.CodeAnalysis.Syntax.InternalSyntax.GreenNodeExtensions;
+	using __SyntaxLexer = global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxLexer;
+	using __SyntaxParser = global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxParser;
+    using __SyntaxTree = global::MetaDslx.CodeAnalysis.SyntaxTree;
+	using __SyntaxFacts = global::MetaDslx.CodeAnalysis.Syntax.SyntaxFacts;
+	using __SyntaxToken = global::MetaDslx.CodeAnalysis.SyntaxToken;
+	using __SyntaxTrivia = global::MetaDslx.CodeAnalysis.SyntaxTrivia;
+    using __SyntaxTriviaList = global::MetaDslx.CodeAnalysis.SyntaxTriviaList;
+	using __SyntaxNode = global::MetaDslx.CodeAnalysis.SyntaxNode;
+	using __SourceText = global::MetaDslx.CodeAnalysis.Text.SourceText;
+	using __TextChangeRange = global::MetaDslx.CodeAnalysis.Text.TextChangeRange;
 
-	public class [language.Name]SyntaxFactory : SyntaxFactory
+	public class [language.Name]SyntaxFactory : global::MetaDslx.CodeAnalysis.Syntax.SyntaxFactory
 	{
-		public [language.Name]SyntaxFactory(InternalSyntaxFactory internalSyntaxFactory) 
+		public [language.Name]SyntaxFactory(global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.InternalSyntaxFactory internalSyntaxFactory) 
 			: base(internalSyntaxFactory)
 		{
 		}
 	    
-        public override Language Language => [language.Name]Language.Instance;
+        public override __Language Language => [language.Name]Language.Instance;
 
-	    public override ParseOptions DefaultParseOptions => [language.Name]ParseOptions.Default;
+	    public override __ParseOptions DefaultParseOptions => [language.Name]ParseOptions.Default;
 
 		/// <summary>
 		/// Create a new syntax tree from a syntax node.
 		/// </summary>
-		public [language.Name]SyntaxTree SyntaxTree(SyntaxNode root, [language.Name]ParseOptions? options = null, string? path = "", Encoding? encoding = null)
+		public [language.Name]SyntaxTree SyntaxTree(__SyntaxNode root, [language.Name]ParseOptions? options = null, string? path = "", __Encoding? encoding = null)
 		{
-			return [language.Name]SyntaxTree.Create(([language.Name]SyntaxNode)root, IncrementalParseData.Empty, options, path, null, encoding);
+			return [language.Name]SyntaxTree.Create(([language.Name]SyntaxNode)root, __IncrementalParseData.Empty, options, path, null, encoding);
 		}
 
 		/// <summary>
@@ -1345,17 +1353,17 @@ namespace [language.Namespace].Syntax
 			string text,
 			[language.Name]ParseOptions options = null,
 			string path = "",
-			Encoding encoding = null,
+			__Encoding encoding = null,
 			CancellationToken cancellationToken = default(CancellationToken))
 		{
-			return ([language.Name]SyntaxTree)this.ParseSyntaxTreeCore(SourceText.From(text, encoding), options, path, cancellationToken);
+			return ([language.Name]SyntaxTree)this.ParseSyntaxTreeCore(__SourceText.From(text, encoding), options, path, cancellationToken);
 		}
 
 		/// <summary>
 		/// Produces a syntax tree by parsing the source text.
 		/// </summary>
 		public [language.Name]SyntaxTree ParseSyntaxTree(
-			SourceText text,
+			__SourceText text,
 			[language.Name]ParseOptions? options = null,
 			string path = "",
 			CancellationToken cancellationToken = default(CancellationToken))
@@ -1363,18 +1371,18 @@ namespace [language.Namespace].Syntax
 			return ([language.Name]SyntaxTree)this.ParseSyntaxTreeCore(text, options, path, cancellationToken);
 		}
 
-		protected override SyntaxTree ParseSyntaxTreeCore(
-			SourceText text,
-			ParseOptions? options = null,
+		protected override __SyntaxTree ParseSyntaxTreeCore(
+			__SourceText text,
+			__ParseOptions? options = null,
 			string path = "",
 			CancellationToken cancellationToken = default(CancellationToken))
 		{
 			return [language.Name]SyntaxTree.ParseText(text, ([language.Name]ParseOptions?)options, path, cancellationToken);
 		}
 	
-		public override SyntaxTree MakeSyntaxTree(SyntaxNode root, ParseOptions? options = null, string path = "", Encoding? encoding = null)
+		public override __SyntaxTree MakeSyntaxTree(__SyntaxNode root, __ParseOptions? options = null, string path = "", __Encoding? encoding = null)
 		{
-			return [language.Name]SyntaxTree.Create(([language.Name]SyntaxNode)root, IncrementalParseData.Empty, ([language.Name]ParseOptions)options, path, null, encoding);
+			return [language.Name]SyntaxTree.Create(([language.Name]SyntaxNode)root, __IncrementalParseData.Empty, ([language.Name]ParseOptions)options, path, null, encoding);
 		}
 
         /// <summary>
@@ -1383,7 +1391,7 @@ namespace [language.Namespace].Syntax
         /// </summary>
         /// <param name="kind">A syntax kind value for a token. These have the suffix Token or Keyword.</param>
         /// <returns></returns>
-        public virtual SyntaxToken Token([language.Name]SyntaxKind kind)
+        public virtual __SyntaxToken Token([language.Name]SyntaxKind kind)
         {
             return this.Token((int)kind);
         }
@@ -1395,7 +1403,7 @@ namespace [language.Namespace].Syntax
         /// <param name="leading">A list of trivia immediately preceding the token.</param>
         /// <param name="kind">A syntax kind value for a token. These have the suffix Token or Keyword.</param>
         /// <param name="trailing">A list of trivia immediately following the token.</param>
-        public virtual SyntaxToken Token(SyntaxTriviaList leading, [language.Name]SyntaxKind kind, SyntaxTriviaList trailing)
+        public virtual __SyntaxToken Token(__SyntaxTriviaList leading, [language.Name]SyntaxKind kind, __SyntaxTriviaList trailing)
         {
             return this.Token(leading, (int)kind, trailing);
         }
@@ -1405,14 +1413,14 @@ namespace [language.Namespace].Syntax
         /// 
         /// For example, consider the text '&lt;see cref="operator &amp;#43;"/&gt;'.  To create a token for the value of
         /// the operator symbol (&amp;#43;), one would call 
-        /// Token(default(SyntaxTriviaList), int.PlusToken, "&amp;#43;", "+", default(SyntaxTriviaList)).
+        /// Token(default(__SyntaxTriviaList), int.PlusToken, "&amp;#43;", "+", default(__SyntaxTriviaList)).
         /// </summary>
         /// <param name="leading">A list of trivia immediately preceding the token.</param>
         /// <param name="kind">A syntax kind value for a token. These have the suffix Token or Keyword.</param>
         /// <param name="text">The text from which this token was created (e.g. lexed).</param>
         /// <param name="valueText">How C# should interpret the text of this token.</param>
         /// <param name="trailing">A list of trivia immediately following the token.</param>
-        public virtual SyntaxToken Token(SyntaxTriviaList leading, [language.Name]SyntaxKind kind, string text, string valueText, SyntaxTriviaList trailing)
+        public virtual __SyntaxToken Token(__SyntaxTriviaList leading, [language.Name]SyntaxKind kind, string text, string valueText, __SyntaxTriviaList trailing)
         {
             return this.Token(leading, (int)kind, text, valueText, trailing);
         }
@@ -1422,7 +1430,7 @@ namespace [language.Namespace].Syntax
         /// expected token is not found. A missing token has no text and normally has associated diagnostics.
         /// </summary>
         /// <param name="kind">A syntax kind value for a token. These have the suffix Token or Keyword.</param>
-        public virtual SyntaxToken MissingToken([language.Name]SyntaxKind kind)
+        public virtual __SyntaxToken MissingToken([language.Name]SyntaxKind kind)
         {
             return this.MissingToken((int)kind);
         }
@@ -1434,21 +1442,21 @@ namespace [language.Namespace].Syntax
         /// <param name="leading">A list of trivia immediately preceding the token.</param>
         /// <param name="kind">A syntax kind value for a token. These have the suffix Token or Keyword.</param>
         /// <param name="trailing">A list of trivia immediately following the token.</param>
-        public virtual SyntaxToken MissingToken(SyntaxTriviaList leading, [language.Name]SyntaxKind kind, SyntaxTriviaList trailing)
+        public virtual __SyntaxToken MissingToken(__SyntaxTriviaList leading, [language.Name]SyntaxKind kind, __SyntaxTriviaList trailing)
         {
             return this.MissingToken(leading, (int)kind, trailing);
         }
 
         [foreach (var token in nonFixedTokens)]
 
-        public SyntaxToken [token.Name](string text)
+        public __SyntaxToken [token.Name](string text)
         {
-            return new SyntaxToken([language.Name]Language.Instance.InternalSyntaxFactory.[token.Name](text));
+            return new __SyntaxToken([language.Name]Language.Instance.InternalSyntaxFactory.[token.Name](text));
         }
 
-        public SyntaxToken [token.Name](string text, object value)
+        public __SyntaxToken [token.Name](string text, object value)
         {
-            return new SyntaxToken([language.Name]Language.Instance.InternalSyntaxFactory.[token.Name](text, value));
+            return new __SyntaxToken([language.Name]Language.Instance.InternalSyntaxFactory.[token.Name](text, value));
         }
         [end foreach]
 		[foreach (var rule in language.Rules)]
@@ -1458,9 +1466,9 @@ namespace [language.Namespace].Syntax
 			[end foreach]
 		[end foreach]		
 
-        internal static IEnumerable<Type> GetNodeTypes()
+        internal static IEnumerable<__Type> GetNodeTypes()
         {
-            return new Type["[]"] {
+            return new __Type["[]"] {
             [foreach (var rule in language.Rules)]
 		        [foreach(var alt in rule.Alternatives)]
 		        typeof([alt.RedName]),

@@ -27,7 +27,7 @@ namespace [language.Namespace]
 
         public override BinderFactoryVisitor CreateBinderFactoryVisitor(BinderFactory binderFactory)
         {
-            return new [language.Namespace].Binding.[language.Name]BinderFactoryVisitor(binderFactory);
+            return new global::[language.Namespace].Binding.[language.Name]BinderFactoryVisitor(binderFactory);
         }
     }
 }
@@ -175,13 +175,13 @@ for (var [indexName] = 0; [indexName] < [elem.ParameterName]List.Count; ++[index
         [ifElse = "else"]
     [end for]
     [if (firstCount > 0)]
-    [ifElse]if ([indexName] == [firstCount])
+    [ifElse]if ([indexName] == [firstCount-1])
     {
         [if (list.SeparatorFirst)]
-        [GenerateBinderFactoryVisitElementValue(language, sepName, list.FirstSeparators[firstCount], list.FirstSeparators[firstCount].Value, ref annotIndex)]
+        [GenerateBinderFactoryVisitElementValue(language, sepName, list.FirstSeparators[firstCount-1], list.FirstSeparators[firstCount-1].Value, ref annotIndex)]
         __sepHandled = true;
         [else]
-        [GenerateBinderFactoryVisitElementValue(language, itemName, list.FirstItems[firstCount], list.FirstItems[firstCount].Value, ref annotIndex)]
+        [GenerateBinderFactoryVisitElementValue(language, itemName, list.FirstItems[firstCount-1], list.FirstItems[firstCount-1].Value, ref annotIndex)]
         __itemHandled = true;
         [end if]
     }

@@ -66,7 +66,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
 
             _rlang = f.Language();
             _rlang.Name = _clang.Name;
-            _rlang.Namespace = _clang.FullName;
+            _rlang.Namespace = ((Declaration)((IModelObject)_clang).Parent)?.FullName;
             _ruleNames = new HashSet<string>();
             _ruleNames.UnionWith(_cmodel.Objects.OfType<LexerRule>().Where(lr => !string.IsNullOrEmpty(lr.Name)).Select(lr => lr.Name!));
             AddTokens(cfixedTokens, false);
@@ -122,16 +122,16 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             var rtoken = f.Token();
             _rlang.Tokens.Add(rtoken);
             var name = ctoken.Name;
-            if (string.IsNullOrEmpty(name) || checkNames && _ruleNames.Contains(name))
+            if (string.IsNullOrEmpty(name) || checkNames && _ruleNames.Contains(name, StringComparer.InvariantCultureIgnoreCase))
             {
                 if (ctoken.IsFixed) name = MakeFixedTokenName(ctoken.FixedText);
                 else name = MakeTokenName();
             }
             rtoken.Name = name;
-            if (rtoken.IsFixed) _fixedTokens.Add(rtoken.FixedText, rtoken);
             rtoken.IsTrivia = ctoken.IsHidden;
             rtoken.IsFixed = ctoken.IsFixed;
             rtoken.FixedText = ctoken.FixedText;
+            if (rtoken.IsFixed) _fixedTokens.Add(rtoken.FixedText, rtoken);
             var rtokenKindSymbol = ctoken.Annotations.Where(a => a.AttributeClass?.Name?.EndsWith("TokenKind") ?? false).FirstOrDefault()?.AttributeClass;
             if (rtokenKindSymbol is not null)
             {
@@ -219,7 +219,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             {
                 ++index;
                 var name = $"{result}{index}";
-                if (!_ruleNames.Contains(name))
+                if (!_ruleNames.Contains(name, StringComparer.InvariantCultureIgnoreCase))
                 {
                     _ruleNames.Add(name);
                     return name;
@@ -394,7 +394,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                     constBinder.TypeName = typeof(MetaDslx.CodeAnalysis.Binding.ConstantBinder).FullName!;
                     var constValue = f.BinderArgument();
                     constValue.Name = "value";
-                    constValue.TypeName = "object";
+                    constValue.TypeName = typeof(object).FullName!;
                     constValue.IsArray = false;
                     var value = calt.ReturnValue.Value;
                     if (value.IsModelObject || value.IsSymbol) constValue.Values.Add(value.FullName);
@@ -447,7 +447,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                     propBinder.IsNegated = celem.Assignment == Assignment.NegatedAssign;
                     var propName = f.BinderArgument();
                     propName.Name = "name";
-                    propName.TypeName = "string";
+                    propName.TypeName = typeof(string).FullName!;
                     propName.IsArray = false;
                     propName.Values.Add(name);
                     propBinder.Arguments.Add(propName);
@@ -523,6 +523,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                     {
                         var v = f.Eof();
                         rvalue = v;
+                        relem.Name = "EndOfFileToken";
                     }
                     else if (cvalue is PKeyword pk)
                     {
@@ -651,7 +652,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
 
         private string AddRuleName(string ruleName, bool tryWithoutIndex)
         {
-            if (tryWithoutIndex && !_ruleNames.Contains(ruleName))
+            if (tryWithoutIndex && !_ruleNames.Contains(ruleName, StringComparer.InvariantCultureIgnoreCase))
             {
                 _ruleNames.Add(ruleName);
                 return ruleName;
@@ -661,7 +662,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             {
                 ++index;
                 var name = $"{ruleName}{index}";
-                if (!_ruleNames.Contains(name))
+                if (!_ruleNames.Contains(name, StringComparer.InvariantCultureIgnoreCase))
                 {
                     _ruleNames.Add(name);
                     return name;
@@ -675,7 +676,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             if (string.IsNullOrEmpty(defaultName)) defaultName = "Element";
             int i = 0;
             var name = defaultName;
-            while (usedElementNames.Contains(name))
+            while (usedElementNames.Contains(name, StringComparer.InvariantCultureIgnoreCase))
             {
                 ++i;
                 name = $"{defaultName}{i}";
@@ -1006,21 +1007,51 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                         }
                         foreach (var elem in alt.Elements)
                         {
-                            if (!elem.ContainsBinders)
+                            var oldContainsBinders = elem.ContainsBinders;
+                            ComputeContainsBinders(elem);
+                            if (!oldContainsBinders && elem.ContainsBinders)
                             {
-                                if (elem.Binders.Count > 0) elem.ContainsBinders = true;
-                                if (elem.Value.Binders.Count > 0) elem.ContainsBinders = true;
-                                if (elem.Value is RuleRef rr && (rr.Rule?.ContainsBinders ?? false)) elem.ContainsBinders = true;
-                                if (elem.ContainsBinders)
-                                {
-                                    alt.ContainsBinders = true;
-                                    rule.ContainsBinders = true;
-                                    updated = true;
-                                }
+                                alt.ContainsBinders = true;
+                                rule.ContainsBinders = true;
+                                updated = true;
                             }
                         }
                     }
                 }
+            }
+        }
+
+        private void ComputeContainsBinders(Element elem)
+        {
+            if (elem.Binders.Count > 0) elem.ContainsBinders = true;
+            if (elem.Value.Binders.Count > 0) elem.ContainsBinders = true;
+            if (elem.Value is RuleRef rr)
+            {
+                rr.ContainsBinders = rr.Rule?.ContainsBinders ?? false;
+                elem.ContainsBinders |= rr.ContainsBinders;
+            }
+            if (elem.Value is TokenAlts tas)
+            {
+                tas.ContainsBinders = tas.Tokens.Any(t => t.Binders.Count > 0);
+                elem.ContainsBinders |= tas.ContainsBinders;
+            }
+            if (elem.Value is SeparatedList sl)
+            {
+                foreach (var e in sl.FirstItems) ComputeContainsBinders(e);
+                if (sl.FirstItems.Any(e => e.ContainsBinders)) sl.ContainsBinders = true;
+                foreach (var e in sl.FirstSeparators) ComputeContainsBinders(e);
+                if (sl.FirstSeparators.Any(e => e.ContainsBinders)) sl.ContainsBinders = true;
+                foreach (var e in sl.LastItems) ComputeContainsBinders(e);
+                if (sl.LastItems.Any(e => e.ContainsBinders)) sl.ContainsBinders = true;
+                foreach (var e in sl.LastSeparators) ComputeContainsBinders(e);
+                if (sl.LastSeparators.Any(e => e.ContainsBinders)) sl.ContainsBinders = true;
+                ComputeContainsBinders(sl.RepeatedBlock);
+                if (sl.RepeatedBlock.ContainsBinders) sl.ContainsBinders = true;
+                ComputeContainsBinders(sl.RepeatedItem);
+                if (sl.RepeatedItem.ContainsBinders) sl.ContainsBinders = true;
+                ComputeContainsBinders(sl.RepeatedSeparator);
+                if (sl.RepeatedSeparator.ContainsBinders) sl.ContainsBinders = true;
+                elem.ContainsBinders |= sl.ContainsBinders;
             }
         }
 
