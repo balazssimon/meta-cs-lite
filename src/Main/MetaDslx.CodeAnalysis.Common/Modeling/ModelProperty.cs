@@ -39,6 +39,7 @@ namespace MetaDslx.Modeling
         public bool IsContainment => _flags.HasFlag(ModelPropertyFlags.Containment);
         public bool IsNonUnique => _flags.HasFlag(ModelPropertyFlags.NonUnique);
         public bool IsCollection => _flags.HasFlag(ModelPropertyFlags.Collection);
+        public bool IsMap => _flags.HasFlag(ModelPropertyFlags.Map);
         public bool IsSingleItem => _flags.HasFlag(ModelPropertyFlags.SingleItem);
         public bool IsReadOnly => _flags.HasFlag(ModelPropertyFlags.ReadOnly);
         public bool IsModelObject => _flags.HasFlag(ModelPropertyFlags.ModelObjectType);

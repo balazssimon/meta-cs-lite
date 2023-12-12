@@ -784,7 +784,7 @@ namespace MetaDslx.CodeAnalysis
                 case "MetaDslx.Modeling.ModelProperty":
                     return typeof(MetaDslx.Modeling.ModelProperty);
                 case "MetaDslx.Modeling.IModelCollection":
-                    return typeof(MetaDslx.Modeling.IModelCollection);
+                    return typeof(MetaDslx.Modeling.ICollectionSlot);
                 default:
                     return null;
             }

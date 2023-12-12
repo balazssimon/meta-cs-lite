@@ -12,6 +12,7 @@ namespace MetaDslx.Modeling
         private readonly ImmutableArray<ModelProperty> _slotProperties;
         private readonly object? _defaultValue;
         private readonly ModelPropertyFlags _flags;
+        private Func<IModelObject, object>? _mapKeySelector;
 
         public ModelPropertySlot(ModelProperty slotProperty, ImmutableArray<ModelProperty> slotProperties, object? defaultValue, ModelPropertyFlags flags)
         {
@@ -25,6 +26,10 @@ namespace MetaDslx.Modeling
         public ImmutableArray<ModelProperty> SlotProperties => _slotProperties;
         public object? DefaultValue => _defaultValue;
         public ModelPropertyFlags Flags => _flags;
+        public Func<IModelObject, object>? MapKeySelector => _mapKeySelector;
+        public bool IsSingleItem => _flags.HasFlag(ModelPropertyFlags.SingleItem);
+        public bool IsCollection => _flags.HasFlag(ModelPropertyFlags.Collection);
+        public bool IsMap => _flags.HasFlag(ModelPropertyFlags.Map);
 
         internal void ThrowModelException(Func<ModelProperty, bool> condition, Func<ModelProperty, string> message)
         {

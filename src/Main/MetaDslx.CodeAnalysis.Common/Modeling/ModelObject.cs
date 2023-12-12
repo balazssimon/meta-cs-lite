@@ -18,6 +18,8 @@ namespace MetaDslx.Modeling
         private IModelObject? _parent;
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private ChildList _children;
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private HashSet<Box>? _references;
 
         public ModelObject(string? id = null)
         {
@@ -25,8 +27,9 @@ namespace MetaDslx.Modeling
             _children = new ChildList(this);
         }
 
-        public abstract ModelClassInfo MInfo { get; }
-        public Model? MModel
+        protected abstract ModelClassInfo MInfo { get; }
+
+        Model? IModelObject.Model
         {
             get => _model;
             set
@@ -58,7 +61,7 @@ namespace MetaDslx.Modeling
             }
         }
 
-        public IModelObject? MParent
+        IModelObject? IModelObject.Parent
         {
             get => _parent;
             set
@@ -90,11 +93,6 @@ namespace MetaDslx.Modeling
             }
         }
 
-        public IList<IModelObject> MChildren => _children;
-
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected abstract object? MUnderlyingObject { get; }
-
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         string IModelObject.Id
         {
@@ -114,24 +112,8 @@ namespace MetaDslx.Modeling
         ModelClassInfo IModelObject.Info => MInfo;
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        Model? IModelObject.Model
-        {
-            get => MModel;
-            set => MModel = value;
-        }
+        IList<IModelObject> IModelObject.Children => _children;
 
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IModelObject? IModelObject.Parent
-        {
-            get => MParent;
-            set => MParent = value;
-        }
-
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IList<IModelObject> IModelObject.Children => MChildren;
-
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        object? IModelObject.UnderlyingObject => MUnderlyingObject;
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         ImmutableArray<ModelProperty> IModelObject.DeclaredProperties => MInfo.DeclaredProperties;
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -139,6 +121,7 @@ namespace MetaDslx.Modeling
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         ImmutableArray<ModelProperty> IModelObject.PublicProperties => MInfo.PublicProperties;
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+
         IEnumerable<ModelProperty> IModelObject.Properties
         {
             get
@@ -176,15 +159,16 @@ namespace MetaDslx.Modeling
             {
                 var nameProp = MInfo.NameProperty;
                 string? name = null;
-                if (nameProp != null) name = ((IModelObject)this).Get(nameProp)?.ToString();
+                if (nameProp != null) name = ((IModelObject)this).GetAsSingle<string>(nameProp);
                 return name;
             }
             set
             {
                 var nameProp = MInfo.NameProperty;
-                if (nameProp != null) ((IModelObject)this).Add(nameProp, value);
+                if (nameProp != null) ((IModelObject)this).SetAsSingle(nameProp, value);
             }
         }
+
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         ModelProperty? IModelObject.NameProperty => MInfo.NameProperty;
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -218,7 +202,7 @@ namespace MetaDslx.Modeling
         {
             var value = ((IModelObject)this).Get(property);
             if (value is null) return default;
-            else return (value as IModelCollection)?.CastTo<T>();
+            else return (value as ICollectionSlot)?.CastTo<T>();
             //Convert.ChangeType(value, typeof(T), CultureInfo.InvariantCulture);
         }
 
@@ -229,7 +213,7 @@ namespace MetaDslx.Modeling
             {
                 if (slot.Flags.HasFlag(ModelPropertyFlags.Collection) && property.Flags.HasFlag(ModelPropertyFlags.SingleItem))
                 {
-                    var collection = value as IModelCollection;
+                    var collection = value as ICollectionSlot;
                     if (collection != null)
                     {
                         return collection.SingleItem;
@@ -261,7 +245,7 @@ namespace MetaDslx.Modeling
             {
                 if (slot.Flags.HasFlag(ModelPropertyFlags.Collection))
                 {
-                    var collection = value as IModelCollection;
+                    var collection = value as ICollectionSlot;
                     if (collection != null)
                     {
                         foreach (var item in collection)
@@ -329,7 +313,7 @@ namespace MetaDslx.Modeling
             {
                 if (slot.Flags.HasFlag(ModelPropertyFlags.Collection))
                 {
-                    if (oldValue is IModelCollection collection)
+                    if (oldValue is ICollectionSlot collection)
                     {
                         if (property.Flags.HasFlag(ModelPropertyFlags.Collection))
                         {
@@ -482,7 +466,7 @@ namespace MetaDslx.Modeling
                         {
                             if (slotProperty.Flags.HasFlag(ModelPropertyFlags.Collection))
                             {
-                                var collection = mthis.Get(slotProperty) as IModelCollection;
+                                var collection = mthis.Get(slotProperty) as ICollectionSlot;
                                 if (collection != null)
                                 {
                                     stillContained |= collection.Contains(mobj);
@@ -593,9 +577,8 @@ namespace MetaDslx.Modeling
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         protected abstract IEnumerable<ModelProperty> StoredPropertiesCore { get; }
 
-        protected abstract void SetSlotValueCore(ModelPropertySlot slot, object? value);
-        protected abstract bool TryGetSlotValueCore(ModelPropertySlot slot, out object? value);
-
+        protected abstract void SetSlotValueCore(ModelPropertySlot slot, Slot? value);
+        protected abstract bool TryGetSlotValueCore(ModelPropertySlot slot, out Slot? value);
 
         ImmutableArray<ModelOperation> IModelObject.DeclaredOperations => MInfo.DeclaredOperations;
 

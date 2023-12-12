@@ -14,32 +14,31 @@ namespace MetaDslx.Modeling
     public abstract class MetaModelObject : ModelObject
     {
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private Dictionary<ModelProperty, object?> _properties;
+        private Dictionary<ModelProperty, Slot>? _properties;
 
         public MetaModelObject(string? id)
             : base(id)
         {
-            _properties = new Dictionary<ModelProperty, object?>();
         }
 
-        protected override object? MUnderlyingObject => this;
-        protected override IEnumerable<ModelProperty> StoredPropertiesCore => _properties.Keys;
+        protected override IEnumerable<ModelProperty> StoredPropertiesCore => (IEnumerable<ModelProperty>?)_properties?.Keys ?? ImmutableArray<ModelProperty>.Empty;
 
-        protected override void SetSlotValueCore(ModelPropertySlot slot, object? value)
+        protected override void SetSlotValueCore(ModelPropertySlot propertySlot, Slot? slot)
         {
-            if (value is null && !MInfo.AllDeclaredProperties.Contains(slot.SlotProperty))
+            if (slot is null && !MInfo.AllDeclaredProperties.Contains(propertySlot.SlotProperty))
             {
-                _properties.Remove(slot.SlotProperty);
+                _properties?.Remove(propertySlot.SlotProperty);
             }
-            else
+            else if (slot is not null || _properties is not null && _properties.ContainsKey(propertySlot.SlotProperty))
             {
-                _properties[slot.SlotProperty] = value;
+                if (_properties is null) _properties = new Dictionary<ModelProperty, Slot>();
+                _properties[propertySlot.SlotProperty] = slot;
             }
         }
 
-        protected override bool TryGetSlotValueCore(ModelPropertySlot slot, out object? value)
+        protected override bool TryGetSlotValueCore(ModelPropertySlot propertySlot, out Slot? slot)
         {
-            return _properties.TryGetValue(slot.SlotProperty, out value);
+            return _properties.TryGetValue(propertySlot.SlotProperty, out slot);
         }
     }
 }

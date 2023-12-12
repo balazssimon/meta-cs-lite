@@ -10,7 +10,7 @@ using System.Text;
 
 namespace MetaDslx.Modeling
 {
-    public class ModelObjectList<T> : IList<T>, IModelCollection, IModelCollectionCore
+    public class ModelObjectList<T> : IList<T>, ICollectionSlot, IModelCollectionCore
     {
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private MetaModelObject _owner;
@@ -52,7 +52,7 @@ namespace MetaDslx.Modeling
         public bool IsSingleItem => _slot.Flags.HasFlag(ModelPropertyFlags.SingleItem);
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        int IModelCollection.Count => Count;
+        int ICollectionSlot.Count => Count;
 
         public object? SingleItem
         {
@@ -147,7 +147,7 @@ namespace MetaDslx.Modeling
             return this.GetEnumerator();
         }
 
-        void IModelCollection.Add(object? item)
+        void ICollectionSlot.Add(object? item)
         {
             if (item is not null)
             {
@@ -160,7 +160,7 @@ namespace MetaDslx.Modeling
             }
         }
 
-        void IModelCollection.Remove(object? item)
+        void ICollectionSlot.Remove(object? item)
         {
             if (item is T typedItem)
             {
@@ -184,7 +184,7 @@ namespace MetaDslx.Modeling
             return psb.ToStringAndFree();
         }
 
-        bool IModelCollection.Contains(object? item)
+        bool ICollectionSlot.Contains(object? item)
         {
             if (item is T titem) return Contains(titem);
             else return false;

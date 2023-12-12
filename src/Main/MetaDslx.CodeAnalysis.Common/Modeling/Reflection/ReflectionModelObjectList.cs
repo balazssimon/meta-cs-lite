@@ -10,7 +10,7 @@ using System.Text;
 
 namespace MetaDslx.Modeling.Reflection
 {
-    internal sealed class ReflectionModelObjectList : IModelCollection, IModelCollectionCore
+    internal sealed class ReflectionModelObjectList : ICollectionSlot, IModelCollectionCore
     {
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private ReflectionModelObject _owner;
