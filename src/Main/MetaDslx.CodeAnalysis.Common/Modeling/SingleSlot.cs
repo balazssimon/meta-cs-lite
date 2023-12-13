@@ -165,7 +165,11 @@ namespace MetaDslx.Modeling
 
         T ISingleSlot<T>.Value
         {
-            get => (T)_wrappedSlot.Value;
+            get
+            {
+                if (_wrappedSlot.Value is null) return default;
+                else return (T)_wrappedSlot.Value;
+            }
             set => _wrappedSlot.Value = value;
         }
 

@@ -12,14 +12,14 @@ using System.Diagnostics.CodeAnalysis;
 using System.Xml.Linq;
 using MetaDslx.Languages.MetaModel.Model;
 using MetaDslx.CodeAnalysis.Symbols;
-using MetaDslx.Bootstrap.MetaCompiler.Model;
+//using MetaDslx.Bootstrap.MetaCompiler.Model;
 using MetaDslx.Modeling;
 
-CompileMetaModel("Meta", @"..\..\..\..\..\Main\MetaDslx.Languages.MetaModel\Model", @"..\..\..\..\..\Main\MetaDslx.Languages.MetaModel\Model");
+//CompileMetaModel("Meta", @"..\..\..\..\..\Main\MetaDslx.Languages.MetaModel\Model", @"..\..\..\..\..\Main\MetaDslx.Languages.MetaModel\Model");
 //CompileMetaCompiler("Meta", @"..\..\..\..\..\Main\MetaDslx.Languages.MetaModel\Language", @"..\..\..\..\..\Main\MetaDslx.Languages.MetaModel\Compiler");
 //CompileWithMetaCompiler("Meta", @"..\..\..\..\..\Main\MetaDslx.Languages.MetaModel\Language", @"..\..\..\..\..\Main\MetaDslx.Languages.MetaModel\Compiler", Meta.MInstance);
 
-//CompileMetaModel("Compiler", @"..\..\..\..\MetaDslx.Bootstrap.MetaCompiler\Model", @"..\..\..\..\MetaDslx.Bootstrap.MetaCompiler\Model");
+CompileMetaModel("Compiler", @"..\..\..\..\MetaDslx.Bootstrap.MetaCompiler\Model", @"..\..\..\..\MetaDslx.Bootstrap.MetaCompiler\Model");
 //CompileMetaCompiler("Compiler", @"..\..\..\..\MetaDslx.Bootstrap.MetaCompiler\Language", @"..\..\..\..\MetaDslx.Bootstrap.MetaCompiler\Compiler");
 //CompileWithMetaCompiler("Compiler2", @"..\..\..\..\MetaDslx.Bootstrap.MetaCompiler\Language", @"..\..\..\..\MetaDslx.Bootstrap.MetaCompiler\Compiler2", MetaDslx.Bootstrap.MetaCompiler.Model.Compiler.MInstance);
 
@@ -101,7 +101,7 @@ namespace MyCode
         File.WriteAllText(Path.Combine(outputDir, Path.GetFileName(tree.FilePath)), tree.GetText().ToString());
     }
 }
-//*/
+/*/
 static void CompileWithMetaCompiler(string name, string inputDir, string outputDir, MetaDslx.Modeling.MetaModel metaModel)
 {
     Compilation inputCompilation = CreateCompilation(name, @"
@@ -247,7 +247,7 @@ static Compilation CreateCompilation(string name, string source)
             MetadataReference.CreateFromFile(typeof(MetaDslx.Modeling.MetaModel).GetTypeInfo().Assembly.Location),
             MetadataReference.CreateFromFile(typeof(MetaDslx.CodeAnalysis.Compilation).GetTypeInfo().Assembly.Location),
             MetadataReference.CreateFromFile(typeof(MetaDslx.Languages.MetaModel.Model.MetaDeclaration).GetTypeInfo().Assembly.Location),
-            MetadataReference.CreateFromFile(typeof(MetaDslx.Bootstrap.MetaCompiler.Model.Compiler).GetTypeInfo().Assembly.Location),
+            //MetadataReference.CreateFromFile(typeof(MetaDslx.Bootstrap.MetaCompiler.Model.Compiler).GetTypeInfo().Assembly.Location),
         },
         new CSharpCompilationOptions(OutputKind.ConsoleApplication));
 }
