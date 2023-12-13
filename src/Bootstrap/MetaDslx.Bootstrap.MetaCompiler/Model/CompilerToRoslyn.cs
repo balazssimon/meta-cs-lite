@@ -1014,7 +1014,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
         private void ComputeContainsBinders(Element elem)
         {
             if (elem.Binders.Count > 0) elem.ContainsBinders = true;
-            if (elem.Value.Binders.Count > 0) elem.ContainsBinders = true;
+            if (elem.Value is not null && elem.Value.Binders.Count > 0) elem.ContainsBinders = true;
             if (elem.Value is RuleRef rr)
             {
                 rr.ContainsBinders = rr.Rule?.ContainsBinders ?? false;

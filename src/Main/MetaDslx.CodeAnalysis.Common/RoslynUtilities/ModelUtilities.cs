@@ -90,12 +90,13 @@ namespace Roslyn.Utilities
                 var current = queue[i];
                 if (current is T ts)
                 {
-                    if (includeSelf || i > 0) result.Add(ts);
+                    if ((includeSelf && i == 0) || i > 0) result.Add(ts);
                 }
                 if (current is IModelObject cmobj)
                 {
                     queue.AddRange(cmobj.Children);
                 }
+                ++i;
             }
             queue.Free();
             return result.ToImmutableAndFree();

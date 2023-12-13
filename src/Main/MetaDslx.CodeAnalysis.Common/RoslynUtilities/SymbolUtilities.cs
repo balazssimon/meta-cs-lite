@@ -84,9 +84,10 @@ namespace Roslyn.Utilities
                 var current = queue[i];
                 if (current is TSymbol ts)
                 {
-                    if (includeSelf || i > 0) result.Add(ts);
+                    if ((includeSelf && i == 0) || i > 0) result.Add(ts);
                 }
                 queue.AddRange(current.ContainedSymbols);
+                ++i;
             }
             queue.Free();
             return result.ToImmutableAndFree();
