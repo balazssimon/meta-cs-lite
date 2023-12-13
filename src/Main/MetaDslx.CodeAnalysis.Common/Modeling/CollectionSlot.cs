@@ -425,11 +425,6 @@ namespace MetaDslx.Modeling
             return _wrappedSlot.Add(item);
         }
 
-        Box? ICollectionSlot.Add(object? item)
-        {
-            return _wrappedSlot.Add(item);
-        }
-
         ImmutableArray<Box> ICollectionSlot<T>.AddRange(IEnumerable<T> items)
         {
             return _wrappedSlot.AddRange(items);
@@ -534,11 +529,6 @@ namespace MetaDslx.Modeling
         }
 
         Box? ICollectionSlot<T>.Remove(T item)
-        {
-            return _wrappedSlot.Remove(item);
-        }
-
-        Box? ICollectionSlot.Remove(object? item)
         {
             return _wrappedSlot.Remove(item);
         }

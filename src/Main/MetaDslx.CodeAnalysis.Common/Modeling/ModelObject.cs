@@ -1,4 +1,5 @@
 ﻿using MetaDslx.CodeAnalysis;
+using MetaDslx.CodeAnalysis.Symbols;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -186,23 +187,15 @@ namespace MetaDslx.Modeling
             else return default;
         }
 
-        public IList<T> MGetCollection<T>(ModelProperty property)
+        public void MSet<T>(ModelProperty property, T value)
         {
-            var slot = ((IModelObject)this).GetSlot(property)?.AsCollection<T>();
-            if (slot is not null) return slot as IList<T>;
-            else return default;
+            var slot = ((IModelObject)this).GetSlot(property)?.AsSingle<T>();
+            if (slot is not null) slot.Value = value;
         }
 
-        public void MAdd<T>(ModelProperty property, T value)
+        public ICollectionSlot<T> MGetCollection<T>(ModelProperty property)
         {
-            var slot = ((IModelObject)this).GetSlot(property);
-            slot?.Add(value);
-        }
-
-        public void MRemove<T>(ModelProperty property, T value)
-        {
-            var slot = ((IModelObject)this).GetSlot(property);
-            slot?.Remove(value);
+            return ((IModelObject)this).GetSlot(property)?.AsCollection<T>();
         }
 
         public override string ToString()
@@ -326,16 +319,83 @@ namespace MetaDslx.Modeling
             return null;
         }
 
-        public abstract IModelObject Clone();
+        public IModelObject Clone()
+        {
+            var copy = this.MInfo.Create(_model);
+            // TODO
+            return copy;
+        }
 
         IEnumerable<Box> IModelObject.References => (IEnumerable<Box>?)_references ?? ImmutableArray<Box>.Empty;
-
-        ValueInfo? IModelObject.ValueInfo
+        public Location? Location
         {
-            get
+            get => TryGetValueInfo()?.Location ?? Location.None;
+            set
             {
-                return s_valueInfos.GetValue(this, mobj => ((IModelObject)this).Model.CreateValueInfo(mobj));
+                var info = TryGetValueInfo();
+                if (info is not null) info.Location = value;
+                else if (value is not null && value != Location.None && value != SourceLocation.None) GetValueInfo().Location = value;
             }
+        }
+
+        public SourceLocation? SourceLocation
+        {
+            get => TryGetValueInfo()?.SourceLocation ?? SourceLocation.None;
+            set
+            {
+                var info = TryGetValueInfo();
+                if (info is not null) info.SourceLocation = value;
+                else if (value is not null && value != SourceLocation.None) GetValueInfo().SourceLocation = value;
+            }
+        }
+
+        public Symbol? Symbol
+        {
+            get => TryGetValueInfo()?.Symbol;
+            set
+            {
+                var info = TryGetValueInfo();
+                if (info is not null) info.Symbol = value;
+                else if (value is not null) GetValueInfo().Symbol = value;
+            }
+        }
+
+        public SyntaxNodeOrToken Syntax
+        {
+            get => TryGetValueInfo()?.Syntax ?? default;
+            set
+            {
+                var info = TryGetValueInfo();
+                if (info is not null) info.Syntax = value;
+                else if (!value.IsNull) GetValueInfo().Syntax = value;
+            }
+        }
+
+        public Microsoft.CodeAnalysis.ISymbol? CSharpSymbol
+        {
+            get => TryGetValueInfo()?.CSharpSymbol;
+        }
+
+        public object? Tag
+        {
+            get => TryGetValueInfo()?.Tag;
+            set
+            {
+                var info = TryGetValueInfo();
+                if (info is not null) info.Tag = value;
+                else if (value is not null) GetValueInfo().Tag = value;
+            }
+        }
+
+        protected virtual ValueInfo? TryGetValueInfo()
+        {
+            if (s_valueInfos.TryGetValue(this, out var valueInfo)) return valueInfo;
+            else return null;
+        }
+
+        protected virtual ValueInfo GetValueInfo()
+        {
+            return s_valueInfos.GetValue(this, mobj => ((IModelObject)this).Model.CreateValueInfo(mobj));
         }
 
         void IReferenceableModelObject.AddReference(Box box)

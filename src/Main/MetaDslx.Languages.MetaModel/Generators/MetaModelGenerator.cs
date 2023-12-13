@@ -61,7 +61,8 @@ namespace MetaDslx.Languages.MetaModel.Generators
             }
             if (type is MetaArrayType at)
             {
-                return $"global::System.Collections.Generic.IList<{ToCSharp(at.ItemType)}>";
+                return $"global::MetaDslx.Modeling.ICollectionSlot<{ToCSharp(at.ItemType)}>";
+                //return $"global::System.Collections.Generic.IList<{ToCSharp(at.ItemType)}>";
             }
             if (type is MetaClass mc && _classes.Contains(mc))
             {

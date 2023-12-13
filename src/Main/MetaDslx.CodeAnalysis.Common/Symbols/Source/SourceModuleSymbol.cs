@@ -31,7 +31,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
             var compilation = assemblySymbol.DeclaringCompilation;
             var compilationFactory = compilation.MainLanguage.CompilationFactory;
             _modelFactory = compilationFactory.CreateModelFactory(compilation);
-            _model = compilationFactory.CreateModel(compilation);
+            _model = compilationFactory.CreateSourceModel(compilation);
             _model.Name = moduleName;
         }
 

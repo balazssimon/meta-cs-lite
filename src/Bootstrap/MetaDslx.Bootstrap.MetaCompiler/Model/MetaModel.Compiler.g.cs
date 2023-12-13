@@ -1689,14 +1689,14 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
 
 	public interface Annotation : __IModelObjectCore
 	{
-		global::System.Collections.Generic.IList<AnnotationArgument> Arguments { get; }
+		global::MetaDslx.Modeling.ICollectionSlot<AnnotationArgument> Arguments { get; }
 		global::MetaDslx.CodeAnalysis.Symbols.TypeSymbol AttributeClass { get; set; }
 	
 	}
 
 	public interface AnnotationArgument : __IModelObjectCore
 	{
-		global::System.Collections.Generic.IList<__MetaSymbol> NamedParameter { get; }
+		global::MetaDslx.Modeling.ICollectionSlot<__MetaSymbol> NamedParameter { get; }
 		global::MetaDslx.CodeAnalysis.Symbols.DeclaredSymbol Parameter { get; set; }
 		__MetaType ParameterType { get; set; }
 		Expression Value { get; set; }
@@ -1705,14 +1705,14 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
 
 	public interface ArrayExpression : global::MetaDslx.Bootstrap.MetaCompiler.Model.Expression
 	{
-		global::System.Collections.Generic.IList<Expression> Items { get; }
+		global::MetaDslx.Modeling.ICollectionSlot<Expression> Items { get; }
 	
 	}
 
 	public interface Declaration : __IModelObjectCore
 	{
-		global::System.Collections.Generic.IList<Annotation> Annotations { get; }
-		global::System.Collections.Generic.IList<Declaration> Declarations { get; }
+		global::MetaDslx.Modeling.ICollectionSlot<Annotation> Annotations { get; }
+		global::MetaDslx.Modeling.ICollectionSlot<Declaration> Declarations { get; }
 		string? FullName { get; }
 		string? Name { get; set; }
 	
@@ -1727,13 +1727,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
 	public interface Grammar : global::MetaDslx.Bootstrap.MetaCompiler.Model.Declaration
 	{
 		Language Language { get; set; }
-		global::System.Collections.Generic.IList<Rule> Rules { get; }
+		global::MetaDslx.Modeling.ICollectionSlot<Rule> Rules { get; }
 	
 	}
 
 	public interface LAlternative : __IModelObjectCore
 	{
-		global::System.Collections.Generic.IList<LElement> Elements { get; }
+		global::MetaDslx.Modeling.ICollectionSlot<LElement> Elements { get; }
 		string? FixedText { get; }
 		bool IsFixed { get; }
 	
@@ -1747,7 +1747,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
 
 	public interface LBlock : global::MetaDslx.Bootstrap.MetaCompiler.Model.LElementValue
 	{
-		global::System.Collections.Generic.IList<LAlternative> Alternatives { get; }
+		global::MetaDslx.Modeling.ICollectionSlot<LAlternative> Alternatives { get; }
 		new string? FixedText { get; }
 		new bool IsFixed { get; }
 	
@@ -1772,7 +1772,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
 
 	public interface LexerRule : global::MetaDslx.Bootstrap.MetaCompiler.Model.Rule
 	{
-		global::System.Collections.Generic.IList<LAlternative> Alternatives { get; }
+		global::MetaDslx.Modeling.ICollectionSlot<LAlternative> Alternatives { get; }
 		string? FixedText { get; }
 		bool IsFixed { get; }
 		bool IsFragment { get; set; }
@@ -1810,7 +1810,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
 	{
 		new string? FixedText { get; }
 		new bool IsFixed { get; }
-		global::System.Collections.Generic.IList<LSetItem> Items { get; }
+		global::MetaDslx.Modeling.ICollectionSlot<LSetItem> Items { get; }
 	
 	}
 
@@ -1852,7 +1852,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
 
 	public interface PAlternative : global::MetaDslx.Bootstrap.MetaCompiler.Model.Declaration
 	{
-		global::System.Collections.Generic.IList<PElement> Elements { get; }
+		global::MetaDslx.Modeling.ICollectionSlot<PElement> Elements { get; }
 		__MetaType ReturnType { get; set; }
 		Expression ReturnValue { get; set; }
 	
@@ -1867,7 +1867,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
 
 	public interface ParserRule : global::MetaDslx.Bootstrap.MetaCompiler.Model.Rule
 	{
-		global::System.Collections.Generic.IList<PAlternative> Alternatives { get; }
+		global::MetaDslx.Modeling.ICollectionSlot<PAlternative> Alternatives { get; }
 		__MetaType ReturnType { get; set; }
 	
 	}
@@ -1876,10 +1876,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
 	{
 		global::MetaDslx.Bootstrap.MetaCompiler.Model.Assignment Assignment { get; set; }
 		global::MetaDslx.Bootstrap.MetaCompiler.Model.Multiplicity Multiplicity { get; set; }
-		global::System.Collections.Generic.IList<Annotation> NameAnnotations { get; }
-		global::System.Collections.Generic.IList<__MetaSymbol> SymbolProperty { get; }
+		global::MetaDslx.Modeling.ICollectionSlot<Annotation> NameAnnotations { get; }
+		global::MetaDslx.Modeling.ICollectionSlot<__MetaSymbol> SymbolProperty { get; }
 		PElementValue Value { get; set; }
-		global::System.Collections.Generic.IList<Annotation> ValueAnnotations { get; }
+		global::MetaDslx.Modeling.ICollectionSlot<Annotation> ValueAnnotations { get; }
 	
 	}
 
@@ -1890,7 +1890,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
 
 	public interface PBlock : global::MetaDslx.Bootstrap.MetaCompiler.Model.Rule, global::MetaDslx.Bootstrap.MetaCompiler.Model.PElementValue
 	{
-		global::System.Collections.Generic.IList<PAlternative> Alternatives { get; }
+		global::MetaDslx.Modeling.ICollectionSlot<PAlternative> Alternatives { get; }
 		__MetaType ReturnType { get; set; }
 	
 	}
@@ -1908,7 +1908,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
 
 	public interface PReference : global::MetaDslx.Bootstrap.MetaCompiler.Model.PElementValue
 	{
-		global::System.Collections.Generic.IList<__MetaType> ReferencedTypes { get; }
+		global::MetaDslx.Modeling.ICollectionSlot<__MetaType> ReferencedTypes { get; }
 		Rule Rule { get; set; }
 	
 	}
@@ -2663,7 +2663,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 	
 		public override __ModelClassInfo MInfo => __Info.Instance;
 	
-		public global::System.Collections.Generic.IList<AnnotationArgument> Arguments
+		public global::MetaDslx.Modeling.ICollectionSlot<AnnotationArgument> Arguments
 		{
 			get => MGetCollection<AnnotationArgument>(Compiler.Annotation_Arguments);
 		}
@@ -2671,7 +2671,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 		public global::MetaDslx.CodeAnalysis.Symbols.TypeSymbol AttributeClass
 		{
 			get => MGet<global::MetaDslx.CodeAnalysis.Symbols.TypeSymbol>(Compiler.Annotation_AttributeClass);
-			set => MAdd<global::MetaDslx.CodeAnalysis.Symbols.TypeSymbol>(Compiler.Annotation_AttributeClass, value);
+			set => MSet<global::MetaDslx.CodeAnalysis.Symbols.TypeSymbol>(Compiler.Annotation_AttributeClass, value);
 		}
 	
 	
@@ -2758,7 +2758,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 	
 		public override __ModelClassInfo MInfo => __Info.Instance;
 	
-		public global::System.Collections.Generic.IList<__MetaSymbol> NamedParameter
+		public global::MetaDslx.Modeling.ICollectionSlot<__MetaSymbol> NamedParameter
 		{
 			get => MGetCollection<__MetaSymbol>(Compiler.AnnotationArgument_NamedParameter);
 		}
@@ -2766,19 +2766,19 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 		public global::MetaDslx.CodeAnalysis.Symbols.DeclaredSymbol Parameter
 		{
 			get => MGet<global::MetaDslx.CodeAnalysis.Symbols.DeclaredSymbol>(Compiler.AnnotationArgument_Parameter);
-			set => MAdd<global::MetaDslx.CodeAnalysis.Symbols.DeclaredSymbol>(Compiler.AnnotationArgument_Parameter, value);
+			set => MSet<global::MetaDslx.CodeAnalysis.Symbols.DeclaredSymbol>(Compiler.AnnotationArgument_Parameter, value);
 		}
 	
 		public __MetaType ParameterType
 		{
 			get => MGet<__MetaType>(Compiler.AnnotationArgument_ParameterType);
-			set => MAdd<__MetaType>(Compiler.AnnotationArgument_ParameterType, value);
+			set => MSet<__MetaType>(Compiler.AnnotationArgument_ParameterType, value);
 		}
 	
 		public Expression Value
 		{
 			get => MGet<Expression>(Compiler.AnnotationArgument_Value);
-			set => MAdd<Expression>(Compiler.AnnotationArgument_Value, value);
+			set => MSet<Expression>(Compiler.AnnotationArgument_Value, value);
 		}
 	
 	
@@ -2870,7 +2870,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 	
 		public override __ModelClassInfo MInfo => __Info.Instance;
 	
-		public global::System.Collections.Generic.IList<Expression> Items
+		public global::MetaDslx.Modeling.ICollectionSlot<Expression> Items
 		{
 			get => MGetCollection<Expression>(Compiler.ArrayExpression_Items);
 		}
@@ -2878,7 +2878,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 		public __MetaSymbol Value
 		{
 			get => MGet<__MetaSymbol>(Compiler.Expression_Value);
-			set => MAdd<__MetaSymbol>(Compiler.Expression_Value, value);
+			set => MSet<__MetaSymbol>(Compiler.Expression_Value, value);
 		}
 	
 	
@@ -2965,12 +2965,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 	
 		public override __ModelClassInfo MInfo => __Info.Instance;
 	
-		public global::System.Collections.Generic.IList<Annotation> Annotations
+		public global::MetaDslx.Modeling.ICollectionSlot<Annotation> Annotations
 		{
 			get => MGetCollection<Annotation>(Compiler.Declaration_Annotations);
 		}
 	
-		public global::System.Collections.Generic.IList<Declaration> Declarations
+		public global::MetaDslx.Modeling.ICollectionSlot<Declaration> Declarations
 		{
 			get => MGetCollection<Declaration>(Compiler.Declaration_Declarations);
 		}
@@ -2983,7 +2983,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 		public string? Name
 		{
 			get => MGet<string?>(Compiler.Declaration_Name);
-			set => MAdd<string?>(Compiler.Declaration_Name, value);
+			set => MSet<string?>(Compiler.Declaration_Name, value);
 		}
 	
 	
@@ -3077,7 +3077,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 		public __MetaSymbol Value
 		{
 			get => MGet<__MetaSymbol>(Compiler.Expression_Value);
-			set => MAdd<__MetaSymbol>(Compiler.Expression_Value, value);
+			set => MSet<__MetaSymbol>(Compiler.Expression_Value, value);
 		}
 	
 	
@@ -3166,20 +3166,20 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 		public Language Language
 		{
 			get => MGet<Language>(Compiler.Grammar_Language);
-			set => MAdd<Language>(Compiler.Grammar_Language, value);
+			set => MSet<Language>(Compiler.Grammar_Language, value);
 		}
 	
-		public global::System.Collections.Generic.IList<Rule> Rules
+		public global::MetaDslx.Modeling.ICollectionSlot<Rule> Rules
 		{
 			get => MGetCollection<Rule>(Compiler.Grammar_Rules);
 		}
 	
-		public global::System.Collections.Generic.IList<Annotation> Annotations
+		public global::MetaDslx.Modeling.ICollectionSlot<Annotation> Annotations
 		{
 			get => MGetCollection<Annotation>(Compiler.Declaration_Annotations);
 		}
 	
-		public global::System.Collections.Generic.IList<Declaration> Declarations
+		public global::MetaDslx.Modeling.ICollectionSlot<Declaration> Declarations
 		{
 			get => MGetCollection<Declaration>(Compiler.Declaration_Declarations);
 		}
@@ -3192,7 +3192,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 		public string? Name
 		{
 			get => MGet<string?>(Compiler.Declaration_Name);
-			set => MAdd<string?>(Compiler.Declaration_Name, value);
+			set => MSet<string?>(Compiler.Declaration_Name, value);
 		}
 	
 	
@@ -3287,7 +3287,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 	
 		public override __ModelClassInfo MInfo => __Info.Instance;
 	
-		public global::System.Collections.Generic.IList<LElement> Elements
+		public global::MetaDslx.Modeling.ICollectionSlot<LElement> Elements
 		{
 			get => MGetCollection<LElement>(Compiler.LAlternative_Elements);
 		}
@@ -3392,15 +3392,15 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 		public Grammar Grammar
 		{
 			get => MGet<Grammar>(Compiler.Language_Grammar);
-			set => MAdd<Grammar>(Compiler.Language_Grammar, value);
+			set => MSet<Grammar>(Compiler.Language_Grammar, value);
 		}
 	
-		public global::System.Collections.Generic.IList<Annotation> Annotations
+		public global::MetaDslx.Modeling.ICollectionSlot<Annotation> Annotations
 		{
 			get => MGetCollection<Annotation>(Compiler.Declaration_Annotations);
 		}
 	
-		public global::System.Collections.Generic.IList<Declaration> Declarations
+		public global::MetaDslx.Modeling.ICollectionSlot<Declaration> Declarations
 		{
 			get => MGetCollection<Declaration>(Compiler.Declaration_Declarations);
 		}
@@ -3413,7 +3413,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 		public string? Name
 		{
 			get => MGet<string?>(Compiler.Declaration_Name);
-			set => MAdd<string?>(Compiler.Declaration_Name, value);
+			set => MSet<string?>(Compiler.Declaration_Name, value);
 		}
 	
 	
@@ -3507,7 +3507,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 	
 		public override __ModelClassInfo MInfo => __Info.Instance;
 	
-		public global::System.Collections.Generic.IList<LAlternative> Alternatives
+		public global::MetaDslx.Modeling.ICollectionSlot<LAlternative> Alternatives
 		{
 			get => MGetCollection<LAlternative>(Compiler.LBlock_Alternatives);
 		}
@@ -3635,19 +3635,19 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 		public bool IsNegated
 		{
 			get => MGet<bool>(Compiler.LElement_IsNegated);
-			set => MAdd<bool>(Compiler.LElement_IsNegated, value);
+			set => MSet<bool>(Compiler.LElement_IsNegated, value);
 		}
 	
 		public global::MetaDslx.Bootstrap.MetaCompiler.Model.Multiplicity Multiplicity
 		{
 			get => MGet<global::MetaDslx.Bootstrap.MetaCompiler.Model.Multiplicity>(Compiler.LElement_Multiplicity);
-			set => MAdd<global::MetaDslx.Bootstrap.MetaCompiler.Model.Multiplicity>(Compiler.LElement_Multiplicity, value);
+			set => MSet<global::MetaDslx.Bootstrap.MetaCompiler.Model.Multiplicity>(Compiler.LElement_Multiplicity, value);
 		}
 	
 		public LElementValue Value
 		{
 			get => MGet<LElementValue>(Compiler.LElement_Value);
-			set => MAdd<LElementValue>(Compiler.LElement_Value, value);
+			set => MSet<LElementValue>(Compiler.LElement_Value, value);
 		}
 	
 	
@@ -3836,7 +3836,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 	
 		public override __ModelClassInfo MInfo => __Info.Instance;
 	
-		public global::System.Collections.Generic.IList<LAlternative> Alternatives
+		public global::MetaDslx.Modeling.ICollectionSlot<LAlternative> Alternatives
 		{
 			get => MGetCollection<LAlternative>(Compiler.LexerRule_Alternatives);
 		}
@@ -3854,25 +3854,25 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 		public bool IsFragment
 		{
 			get => MGet<bool>(Compiler.LexerRule_IsFragment);
-			set => MAdd<bool>(Compiler.LexerRule_IsFragment, value);
+			set => MSet<bool>(Compiler.LexerRule_IsFragment, value);
 		}
 	
 		public bool IsHidden
 		{
 			get => MGet<bool>(Compiler.LexerRule_IsHidden);
-			set => MAdd<bool>(Compiler.LexerRule_IsHidden, value);
+			set => MSet<bool>(Compiler.LexerRule_IsHidden, value);
 		}
 	
 		public __MetaType ReturnType
 		{
 			get => MGet<__MetaType>(Compiler.LexerRule_ReturnType);
-			set => MAdd<__MetaType>(Compiler.LexerRule_ReturnType, value);
+			set => MSet<__MetaType>(Compiler.LexerRule_ReturnType, value);
 		}
 	
 		public Grammar Grammar
 		{
 			get => MGet<Grammar>(Compiler.Rule_Grammar);
-			set => MAdd<Grammar>(Compiler.Rule_Grammar, value);
+			set => MSet<Grammar>(Compiler.Rule_Grammar, value);
 		}
 	
 		public Language Language
@@ -3880,12 +3880,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 			get => Compiler.__CustomImpl.Rule_Language(this);
 		}
 	
-		public global::System.Collections.Generic.IList<Annotation> Annotations
+		public global::MetaDslx.Modeling.ICollectionSlot<Annotation> Annotations
 		{
 			get => MGetCollection<Annotation>(Compiler.Declaration_Annotations);
 		}
 	
-		public global::System.Collections.Generic.IList<Declaration> Declarations
+		public global::MetaDslx.Modeling.ICollectionSlot<Declaration> Declarations
 		{
 			get => MGetCollection<Declaration>(Compiler.Declaration_Declarations);
 		}
@@ -3898,7 +3898,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 		public string? Name
 		{
 			get => MGet<string?>(Compiler.Declaration_Name);
-			set => MAdd<string?>(Compiler.Declaration_Name, value);
+			set => MSet<string?>(Compiler.Declaration_Name, value);
 		}
 	
 	
@@ -4019,7 +4019,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 		public string Text
 		{
 			get => MGet<string>(Compiler.LFixed_Text);
-			set => MAdd<string>(Compiler.LFixed_Text, value);
+			set => MSet<string>(Compiler.LFixed_Text, value);
 		}
 	
 		[global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)]
@@ -4126,7 +4126,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 		public string EndChar
 		{
 			get => MGet<string>(Compiler.LRange_EndChar);
-			set => MAdd<string>(Compiler.LRange_EndChar, value);
+			set => MSet<string>(Compiler.LRange_EndChar, value);
 		}
 	
 		public string? FixedText
@@ -4142,7 +4142,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 		public string StartChar
 		{
 			get => MGet<string>(Compiler.LRange_StartChar);
-			set => MAdd<string>(Compiler.LRange_StartChar, value);
+			set => MSet<string>(Compiler.LRange_StartChar, value);
 		}
 	
 		[global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)]
@@ -4261,7 +4261,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 		public LexerRule Rule
 		{
 			get => MGet<LexerRule>(Compiler.LReference_Rule);
-			set => MAdd<LexerRule>(Compiler.LReference_Rule, value);
+			set => MSet<LexerRule>(Compiler.LReference_Rule, value);
 		}
 	
 		[global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)]
@@ -4375,7 +4375,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 			get => Compiler.__CustomImpl.LSet_IsFixed(this);
 		}
 	
-		public global::System.Collections.Generic.IList<LSetItem> Items
+		public global::MetaDslx.Modeling.ICollectionSlot<LSetItem> Items
 		{
 			get => MGetCollection<LSetItem>(Compiler.LSet_Items);
 		}
@@ -4578,7 +4578,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 		public string Char
 		{
 			get => MGet<string>(Compiler.LSetChar_Char);
-			set => MAdd<string>(Compiler.LSetChar_Char, value);
+			set => MSet<string>(Compiler.LSetChar_Char, value);
 		}
 	
 		public string? FixedText
@@ -4695,7 +4695,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 		public string EndChar
 		{
 			get => MGet<string>(Compiler.LSetRange_EndChar);
-			set => MAdd<string>(Compiler.LSetRange_EndChar, value);
+			set => MSet<string>(Compiler.LSetRange_EndChar, value);
 		}
 	
 		public string? FixedText
@@ -4711,7 +4711,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 		public string StartChar
 		{
 			get => MGet<string>(Compiler.LSetRange_StartChar);
-			set => MAdd<string>(Compiler.LSetRange_StartChar, value);
+			set => MSet<string>(Compiler.LSetRange_StartChar, value);
 		}
 	
 		[global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)]
@@ -4926,12 +4926,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 	
 		public override __ModelClassInfo MInfo => __Info.Instance;
 	
-		public global::System.Collections.Generic.IList<Annotation> Annotations
+		public global::MetaDslx.Modeling.ICollectionSlot<Annotation> Annotations
 		{
 			get => MGetCollection<Annotation>(Compiler.Declaration_Annotations);
 		}
 	
-		public global::System.Collections.Generic.IList<Declaration> Declarations
+		public global::MetaDslx.Modeling.ICollectionSlot<Declaration> Declarations
 		{
 			get => MGetCollection<Declaration>(Compiler.Declaration_Declarations);
 		}
@@ -4944,7 +4944,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 		public string? Name
 		{
 			get => MGet<string?>(Compiler.Declaration_Name);
-			set => MAdd<string?>(Compiler.Declaration_Name, value);
+			set => MSet<string?>(Compiler.Declaration_Name, value);
 		}
 	
 	
@@ -5036,7 +5036,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 	
 		public override __ModelClassInfo MInfo => __Info.Instance;
 	
-		public global::System.Collections.Generic.IList<PElement> Elements
+		public global::MetaDslx.Modeling.ICollectionSlot<PElement> Elements
 		{
 			get => MGetCollection<PElement>(Compiler.PAlternative_Elements);
 		}
@@ -5044,21 +5044,21 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 		public __MetaType ReturnType
 		{
 			get => MGet<__MetaType>(Compiler.PAlternative_ReturnType);
-			set => MAdd<__MetaType>(Compiler.PAlternative_ReturnType, value);
+			set => MSet<__MetaType>(Compiler.PAlternative_ReturnType, value);
 		}
 	
 		public Expression ReturnValue
 		{
 			get => MGet<Expression>(Compiler.PAlternative_ReturnValue);
-			set => MAdd<Expression>(Compiler.PAlternative_ReturnValue, value);
+			set => MSet<Expression>(Compiler.PAlternative_ReturnValue, value);
 		}
 	
-		public global::System.Collections.Generic.IList<Annotation> Annotations
+		public global::MetaDslx.Modeling.ICollectionSlot<Annotation> Annotations
 		{
 			get => MGetCollection<Annotation>(Compiler.Declaration_Annotations);
 		}
 	
-		public global::System.Collections.Generic.IList<Declaration> Declarations
+		public global::MetaDslx.Modeling.ICollectionSlot<Declaration> Declarations
 		{
 			get => MGetCollection<Declaration>(Compiler.Declaration_Declarations);
 		}
@@ -5071,7 +5071,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 		public string? Name
 		{
 			get => MGet<string?>(Compiler.Declaration_Name);
-			set => MAdd<string?>(Compiler.Declaration_Name, value);
+			set => MSet<string?>(Compiler.Declaration_Name, value);
 		}
 	
 	
@@ -5172,7 +5172,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 		public Grammar Grammar
 		{
 			get => MGet<Grammar>(Compiler.Rule_Grammar);
-			set => MAdd<Grammar>(Compiler.Rule_Grammar, value);
+			set => MSet<Grammar>(Compiler.Rule_Grammar, value);
 		}
 	
 		public Language Language
@@ -5180,12 +5180,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 			get => Compiler.__CustomImpl.Rule_Language(this);
 		}
 	
-		public global::System.Collections.Generic.IList<Annotation> Annotations
+		public global::MetaDslx.Modeling.ICollectionSlot<Annotation> Annotations
 		{
 			get => MGetCollection<Annotation>(Compiler.Declaration_Annotations);
 		}
 	
-		public global::System.Collections.Generic.IList<Declaration> Declarations
+		public global::MetaDslx.Modeling.ICollectionSlot<Declaration> Declarations
 		{
 			get => MGetCollection<Declaration>(Compiler.Declaration_Declarations);
 		}
@@ -5198,7 +5198,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 		public string? Name
 		{
 			get => MGet<string?>(Compiler.Declaration_Name);
-			set => MAdd<string?>(Compiler.Declaration_Name, value);
+			set => MSet<string?>(Compiler.Declaration_Name, value);
 		}
 	
 	
@@ -5295,7 +5295,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 	
 		public override __ModelClassInfo MInfo => __Info.Instance;
 	
-		public global::System.Collections.Generic.IList<PAlternative> Alternatives
+		public global::MetaDslx.Modeling.ICollectionSlot<PAlternative> Alternatives
 		{
 			get => MGetCollection<PAlternative>(Compiler.ParserRule_Alternatives);
 		}
@@ -5303,13 +5303,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 		public __MetaType ReturnType
 		{
 			get => MGet<__MetaType>(Compiler.ParserRule_ReturnType);
-			set => MAdd<__MetaType>(Compiler.ParserRule_ReturnType, value);
+			set => MSet<__MetaType>(Compiler.ParserRule_ReturnType, value);
 		}
 	
 		public Grammar Grammar
 		{
 			get => MGet<Grammar>(Compiler.Rule_Grammar);
-			set => MAdd<Grammar>(Compiler.Rule_Grammar, value);
+			set => MSet<Grammar>(Compiler.Rule_Grammar, value);
 		}
 	
 		public Language Language
@@ -5317,12 +5317,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 			get => Compiler.__CustomImpl.Rule_Language(this);
 		}
 	
-		public global::System.Collections.Generic.IList<Annotation> Annotations
+		public global::MetaDslx.Modeling.ICollectionSlot<Annotation> Annotations
 		{
 			get => MGetCollection<Annotation>(Compiler.Declaration_Annotations);
 		}
 	
-		public global::System.Collections.Generic.IList<Declaration> Declarations
+		public global::MetaDslx.Modeling.ICollectionSlot<Declaration> Declarations
 		{
 			get => MGetCollection<Declaration>(Compiler.Declaration_Declarations);
 		}
@@ -5335,7 +5335,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 		public string? Name
 		{
 			get => MGet<string?>(Compiler.Declaration_Name);
-			set => MAdd<string?>(Compiler.Declaration_Name, value);
+			set => MSet<string?>(Compiler.Declaration_Name, value);
 		}
 	
 	
@@ -5437,21 +5437,21 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 		public global::MetaDslx.Bootstrap.MetaCompiler.Model.Assignment Assignment
 		{
 			get => MGet<global::MetaDslx.Bootstrap.MetaCompiler.Model.Assignment>(Compiler.PElement_Assignment);
-			set => MAdd<global::MetaDslx.Bootstrap.MetaCompiler.Model.Assignment>(Compiler.PElement_Assignment, value);
+			set => MSet<global::MetaDslx.Bootstrap.MetaCompiler.Model.Assignment>(Compiler.PElement_Assignment, value);
 		}
 	
 		public global::MetaDslx.Bootstrap.MetaCompiler.Model.Multiplicity Multiplicity
 		{
 			get => MGet<global::MetaDslx.Bootstrap.MetaCompiler.Model.Multiplicity>(Compiler.PElement_Multiplicity);
-			set => MAdd<global::MetaDslx.Bootstrap.MetaCompiler.Model.Multiplicity>(Compiler.PElement_Multiplicity, value);
+			set => MSet<global::MetaDslx.Bootstrap.MetaCompiler.Model.Multiplicity>(Compiler.PElement_Multiplicity, value);
 		}
 	
-		public global::System.Collections.Generic.IList<Annotation> NameAnnotations
+		public global::MetaDslx.Modeling.ICollectionSlot<Annotation> NameAnnotations
 		{
 			get => MGetCollection<Annotation>(Compiler.PElement_NameAnnotations);
 		}
 	
-		public global::System.Collections.Generic.IList<__MetaSymbol> SymbolProperty
+		public global::MetaDslx.Modeling.ICollectionSlot<__MetaSymbol> SymbolProperty
 		{
 			get => MGetCollection<__MetaSymbol>(Compiler.PElement_SymbolProperty);
 		}
@@ -5459,10 +5459,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 		public PElementValue Value
 		{
 			get => MGet<PElementValue>(Compiler.PElement_Value);
-			set => MAdd<PElementValue>(Compiler.PElement_Value, value);
+			set => MSet<PElementValue>(Compiler.PElement_Value, value);
 		}
 	
-		public global::System.Collections.Generic.IList<Annotation> ValueAnnotations
+		public global::MetaDslx.Modeling.ICollectionSlot<Annotation> ValueAnnotations
 		{
 			get => MGetCollection<Annotation>(Compiler.PElement_ValueAnnotations);
 		}
@@ -5642,7 +5642,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 	
 		public override __ModelClassInfo MInfo => __Info.Instance;
 	
-		public global::System.Collections.Generic.IList<PAlternative> Alternatives
+		public global::MetaDslx.Modeling.ICollectionSlot<PAlternative> Alternatives
 		{
 			get => MGetCollection<PAlternative>(Compiler.PBlock_Alternatives);
 		}
@@ -5650,15 +5650,15 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 		public __MetaType ReturnType
 		{
 			get => MGet<__MetaType>(Compiler.PBlock_ReturnType);
-			set => MAdd<__MetaType>(Compiler.PBlock_ReturnType, value);
+			set => MSet<__MetaType>(Compiler.PBlock_ReturnType, value);
 		}
 	
-		public global::System.Collections.Generic.IList<Annotation> Annotations
+		public global::MetaDslx.Modeling.ICollectionSlot<Annotation> Annotations
 		{
 			get => MGetCollection<Annotation>(Compiler.Declaration_Annotations);
 		}
 	
-		public global::System.Collections.Generic.IList<Declaration> Declarations
+		public global::MetaDslx.Modeling.ICollectionSlot<Declaration> Declarations
 		{
 			get => MGetCollection<Declaration>(Compiler.Declaration_Declarations);
 		}
@@ -5671,13 +5671,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 		public string? Name
 		{
 			get => MGet<string?>(Compiler.Declaration_Name);
-			set => MAdd<string?>(Compiler.Declaration_Name, value);
+			set => MSet<string?>(Compiler.Declaration_Name, value);
 		}
 	
 		public Grammar Grammar
 		{
 			get => MGet<Grammar>(Compiler.Rule_Grammar);
-			set => MAdd<Grammar>(Compiler.Rule_Grammar, value);
+			set => MSet<Grammar>(Compiler.Rule_Grammar, value);
 		}
 	
 		public Language Language
@@ -5866,7 +5866,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 		public string Text
 		{
 			get => MGet<string>(Compiler.PKeyword_Text);
-			set => MAdd<string>(Compiler.PKeyword_Text, value);
+			set => MSet<string>(Compiler.PKeyword_Text, value);
 		}
 	
 	
@@ -5952,7 +5952,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 	
 		public override __ModelClassInfo MInfo => __Info.Instance;
 	
-		public global::System.Collections.Generic.IList<__MetaType> ReferencedTypes
+		public global::MetaDslx.Modeling.ICollectionSlot<__MetaType> ReferencedTypes
 		{
 			get => MGetCollection<__MetaType>(Compiler.PReference_ReferencedTypes);
 		}
@@ -5960,7 +5960,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 		public Rule Rule
 		{
 			get => MGet<Rule>(Compiler.PReference_Rule);
-			set => MAdd<Rule>(Compiler.PReference_Rule, value);
+			set => MSet<Rule>(Compiler.PReference_Rule, value);
 		}
 	
 	

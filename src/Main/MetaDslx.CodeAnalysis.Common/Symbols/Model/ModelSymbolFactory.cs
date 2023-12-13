@@ -192,7 +192,9 @@ namespace MetaDslx.CodeAnalysis.Symbols.Model
             else if (_constructors.TryGetValue(symbolType, out var constructor))
             {
                 var newSymbol = constructor(container, modelObject);
-                return _symbols.GetOrAdd(modelObject, newSymbol);
+                var result = _symbols.GetOrAdd(modelObject, newSymbol);
+                if (modelObject is not null) modelObject.Symbol = result;
+                return result;
             }
             else
             {

@@ -21,11 +21,9 @@ namespace MetaDslx.Modeling
         Box? BoxOf(object? item);
         ImmutableArray<Box> AllBoxesOf(object? item);
 
-        Box? Add(object? item);
         ImmutableArray<Box> AddRange(IEnumerable items);
         Box? Insert(int index, object? item);
         ImmutableArray<Box> InsertRange(int index, IEnumerable items);
-        Box? Remove(object? item);
         ImmutableArray<Box> RemoveAll(object? item);
         Box? RemoveAt(int index);
         ImmutableArray<Box> RemoveRange(int index, int count);

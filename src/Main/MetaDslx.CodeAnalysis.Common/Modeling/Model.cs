@@ -152,12 +152,12 @@ namespace MetaDslx.Modeling
 
         internal protected virtual Box CreateBox(ISlot slot)
         {
-            return new DefaultBox(slot);
+            return new Box(slot);
         }
 
         internal protected virtual ValueInfo CreateValueInfo(object? forValue)
         {
-            return new DefaultValueInfo(forValue);
+            return new ValueInfo(forValue);
         }
 
         public override string ToString()

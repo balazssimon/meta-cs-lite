@@ -361,7 +361,7 @@ internal class [cls.Name]_Impl : __MetaModelObject, [cls.Name]
 		[else]
 		get => MGet<[ToCSharp(prop.UnderlyingProperty.Type)]>([ToCSharp(prop)]);
 			[if (HasSetter(prop))]
-		set => MAdd<[ToCSharp(prop.UnderlyingProperty.Type)]>([ToCSharp(prop)], value);
+		set => MSet<[ToCSharp(prop.UnderlyingProperty.Type)]>([ToCSharp(prop)], value);
 			[end if]
 		[end if]
 	}

@@ -1617,9 +1617,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Roslyn
 
 	public interface Alternative : __IModelObjectCore
 	{
-		global::System.Collections.Generic.IList<Binder> Binders { get; }
+		global::MetaDslx.Modeling.ICollectionSlot<Binder> Binders { get; }
 		bool ContainsBinders { get; set; }
-		global::System.Collections.Generic.IList<Element> Elements { get; }
+		global::MetaDslx.Modeling.ICollectionSlot<Element> Elements { get; }
 		string GreenConstructorArguments { get; }
 		string GreenConstructorParameters { get; }
 		string GreenName { get; }
@@ -1638,7 +1638,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Roslyn
 
 	public interface Binder : __IModelObjectCore
 	{
-		global::System.Collections.Generic.IList<BinderArgument> Arguments { get; }
+		global::MetaDslx.Modeling.ICollectionSlot<BinderArgument> Arguments { get; }
 		string ConstructorArguments { get; }
 		bool IsNegated { get; set; }
 		string TypeName { get; set; }
@@ -1650,14 +1650,14 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Roslyn
 		bool IsArray { get; set; }
 		string Name { get; set; }
 		string TypeName { get; set; }
-		global::System.Collections.Generic.IList<string> Values { get; }
+		global::MetaDslx.Modeling.ICollectionSlot<string> Values { get; }
 	
 	}
 
 	public interface Element : __IModelObjectCore
 	{
 		global::MetaDslx.Bootstrap.MetaCompiler.Model.Assignment Assignment { get; set; }
-		global::System.Collections.Generic.IList<Binder> Binders { get; }
+		global::MetaDslx.Modeling.ICollectionSlot<Binder> Binders { get; }
 		bool ContainsBinders { get; set; }
 		string FieldName { get; }
 		string GreenFieldType { get; }
@@ -1686,7 +1686,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Roslyn
 
 	public interface ElementValue : __IModelObjectCore
 	{
-		global::System.Collections.Generic.IList<Binder> Binders { get; }
+		global::MetaDslx.Modeling.ICollectionSlot<Binder> Binders { get; }
 		bool ContainsBinders { get; set; }
 		string? GreenSyntaxCondition { get; }
 		string GreenType { get; }
@@ -1712,16 +1712,16 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Roslyn
 		string Name { get; set; }
 		string Namespace { get; set; }
 		string? RootTypeName { get; set; }
-		global::System.Collections.Generic.IList<Rule> Rules { get; }
-		global::System.Collections.Generic.IList<TokenKind> TokenKinds { get; }
-		global::System.Collections.Generic.IList<Token> Tokens { get; }
+		global::MetaDslx.Modeling.ICollectionSlot<Rule> Rules { get; }
+		global::MetaDslx.Modeling.ICollectionSlot<TokenKind> TokenKinds { get; }
+		global::MetaDslx.Modeling.ICollectionSlot<Token> Tokens { get; }
 	
 	}
 
 	public interface Rule : __IModelObjectCore
 	{
-		global::System.Collections.Generic.IList<Alternative> Alternatives { get; }
-		global::System.Collections.Generic.IList<Binder> Binders { get; }
+		global::MetaDslx.Modeling.ICollectionSlot<Alternative> Alternatives { get; }
+		global::MetaDslx.Modeling.ICollectionSlot<Binder> Binders { get; }
 		bool ContainsBinders { get; set; }
 		string GreenName { get; }
 		string Name { get; set; }
@@ -1740,12 +1740,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Roslyn
 
 	public interface SeparatedList : global::MetaDslx.Bootstrap.MetaCompiler.Roslyn.ElementValue
 	{
-		global::System.Collections.Generic.IList<Element> FirstItems { get; }
-		global::System.Collections.Generic.IList<Element> FirstSeparators { get; }
+		global::MetaDslx.Modeling.ICollectionSlot<Element> FirstItems { get; }
+		global::MetaDslx.Modeling.ICollectionSlot<Element> FirstSeparators { get; }
 		new string? GreenSyntaxCondition { get; }
 		new string GreenType { get; }
-		global::System.Collections.Generic.IList<Element> LastItems { get; }
-		global::System.Collections.Generic.IList<Element> LastSeparators { get; }
+		global::MetaDslx.Modeling.ICollectionSlot<Element> LastItems { get; }
+		global::MetaDslx.Modeling.ICollectionSlot<Element> LastSeparators { get; }
 		new string RedType { get; }
 		Element RepeatedBlock { get; set; }
 		Element RepeatedItem { get; set; }
@@ -1770,7 +1770,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Roslyn
 		new string? GreenSyntaxCondition { get; }
 		new string GreenType { get; }
 		new string RedType { get; }
-		global::System.Collections.Generic.IList<TokenRef> Tokens { get; }
+		global::MetaDslx.Modeling.ICollectionSlot<TokenRef> Tokens { get; }
 	
 	}
 
@@ -2537,7 +2537,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Roslyn.__Impl
 	
 		public override __ModelClassInfo MInfo => __Info.Instance;
 	
-		public global::System.Collections.Generic.IList<Binder> Binders
+		public global::MetaDslx.Modeling.ICollectionSlot<Binder> Binders
 		{
 			get => MGetCollection<Binder>(Roslyn.Alternative_Binders);
 		}
@@ -2545,10 +2545,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Roslyn.__Impl
 		public bool ContainsBinders
 		{
 			get => MGet<bool>(Roslyn.Alternative_ContainsBinders);
-			set => MAdd<bool>(Roslyn.Alternative_ContainsBinders, value);
+			set => MSet<bool>(Roslyn.Alternative_ContainsBinders, value);
 		}
 	
-		public global::System.Collections.Generic.IList<Element> Elements
+		public global::MetaDslx.Modeling.ICollectionSlot<Element> Elements
 		{
 			get => MGetCollection<Element>(Roslyn.Alternative_Elements);
 		}
@@ -2586,7 +2586,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Roslyn.__Impl
 		public string Name
 		{
 			get => MGet<string>(Roslyn.Alternative_Name);
-			set => MAdd<string>(Roslyn.Alternative_Name, value);
+			set => MSet<string>(Roslyn.Alternative_Name, value);
 		}
 	
 		public string RedName
@@ -2731,7 +2731,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Roslyn.__Impl
 	
 		public override __ModelClassInfo MInfo => __Info.Instance;
 	
-		public global::System.Collections.Generic.IList<BinderArgument> Arguments
+		public global::MetaDslx.Modeling.ICollectionSlot<BinderArgument> Arguments
 		{
 			get => MGetCollection<BinderArgument>(Roslyn.Binder_Arguments);
 		}
@@ -2744,13 +2744,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Roslyn.__Impl
 		public bool IsNegated
 		{
 			get => MGet<bool>(Roslyn.Binder_IsNegated);
-			set => MAdd<bool>(Roslyn.Binder_IsNegated, value);
+			set => MSet<bool>(Roslyn.Binder_IsNegated, value);
 		}
 	
 		public string TypeName
 		{
 			get => MGet<string>(Roslyn.Binder_TypeName);
-			set => MAdd<string>(Roslyn.Binder_TypeName, value);
+			set => MSet<string>(Roslyn.Binder_TypeName, value);
 		}
 	
 	
@@ -2844,22 +2844,22 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Roslyn.__Impl
 		public bool IsArray
 		{
 			get => MGet<bool>(Roslyn.BinderArgument_IsArray);
-			set => MAdd<bool>(Roslyn.BinderArgument_IsArray, value);
+			set => MSet<bool>(Roslyn.BinderArgument_IsArray, value);
 		}
 	
 		public string Name
 		{
 			get => MGet<string>(Roslyn.BinderArgument_Name);
-			set => MAdd<string>(Roslyn.BinderArgument_Name, value);
+			set => MSet<string>(Roslyn.BinderArgument_Name, value);
 		}
 	
 		public string TypeName
 		{
 			get => MGet<string>(Roslyn.BinderArgument_TypeName);
-			set => MAdd<string>(Roslyn.BinderArgument_TypeName, value);
+			set => MSet<string>(Roslyn.BinderArgument_TypeName, value);
 		}
 	
-		public global::System.Collections.Generic.IList<string> Values
+		public global::MetaDslx.Modeling.ICollectionSlot<string> Values
 		{
 			get => MGetCollection<string>(Roslyn.BinderArgument_Values);
 		}
@@ -2955,10 +2955,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Roslyn.__Impl
 		public global::MetaDslx.Bootstrap.MetaCompiler.Model.Assignment Assignment
 		{
 			get => MGet<global::MetaDslx.Bootstrap.MetaCompiler.Model.Assignment>(Roslyn.Element_Assignment);
-			set => MAdd<global::MetaDslx.Bootstrap.MetaCompiler.Model.Assignment>(Roslyn.Element_Assignment, value);
+			set => MSet<global::MetaDslx.Bootstrap.MetaCompiler.Model.Assignment>(Roslyn.Element_Assignment, value);
 		}
 	
-		public global::System.Collections.Generic.IList<Binder> Binders
+		public global::MetaDslx.Modeling.ICollectionSlot<Binder> Binders
 		{
 			get => MGetCollection<Binder>(Roslyn.Element_Binders);
 		}
@@ -2966,7 +2966,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Roslyn.__Impl
 		public bool ContainsBinders
 		{
 			get => MGet<bool>(Roslyn.Element_ContainsBinders);
-			set => MAdd<bool>(Roslyn.Element_ContainsBinders, value);
+			set => MSet<bool>(Roslyn.Element_ContainsBinders, value);
 		}
 	
 		public string FieldName
@@ -3012,13 +3012,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Roslyn.__Impl
 		public global::MetaDslx.Bootstrap.MetaCompiler.Model.Multiplicity Multiplicity
 		{
 			get => MGet<global::MetaDslx.Bootstrap.MetaCompiler.Model.Multiplicity>(Roslyn.Element_Multiplicity);
-			set => MAdd<global::MetaDslx.Bootstrap.MetaCompiler.Model.Multiplicity>(Roslyn.Element_Multiplicity, value);
+			set => MSet<global::MetaDslx.Bootstrap.MetaCompiler.Model.Multiplicity>(Roslyn.Element_Multiplicity, value);
 		}
 	
 		public string? Name
 		{
 			get => MGet<string?>(Roslyn.Element_Name);
-			set => MAdd<string?>(Roslyn.Element_Name, value);
+			set => MSet<string?>(Roslyn.Element_Name, value);
 		}
 	
 		public string ParameterName
@@ -3074,7 +3074,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Roslyn.__Impl
 		public ElementValue Value
 		{
 			get => MGet<ElementValue>(Roslyn.Element_Value);
-			set => MAdd<ElementValue>(Roslyn.Element_Value, value);
+			set => MSet<ElementValue>(Roslyn.Element_Value, value);
 		}
 	
 		public string? VisitCall
@@ -3212,7 +3212,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Roslyn.__Impl
 	
 		public override __ModelClassInfo MInfo => __Info.Instance;
 	
-		public global::System.Collections.Generic.IList<Binder> Binders
+		public global::MetaDslx.Modeling.ICollectionSlot<Binder> Binders
 		{
 			get => MGetCollection<Binder>(Roslyn.ElementValue_Binders);
 		}
@@ -3220,7 +3220,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Roslyn.__Impl
 		public bool ContainsBinders
 		{
 			get => MGet<bool>(Roslyn.ElementValue_ContainsBinders);
-			set => MAdd<bool>(Roslyn.ElementValue_ContainsBinders, value);
+			set => MSet<bool>(Roslyn.ElementValue_ContainsBinders, value);
 		}
 	
 		public string? GreenSyntaxCondition
@@ -3344,7 +3344,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Roslyn.__Impl
 			get => Roslyn.__CustomImpl.Eof_RedType(this);
 		}
 	
-		public global::System.Collections.Generic.IList<Binder> Binders
+		public global::MetaDslx.Modeling.ICollectionSlot<Binder> Binders
 		{
 			get => MGetCollection<Binder>(Roslyn.ElementValue_Binders);
 		}
@@ -3352,7 +3352,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Roslyn.__Impl
 		public bool ContainsBinders
 		{
 			get => MGet<bool>(Roslyn.ElementValue_ContainsBinders);
-			set => MAdd<bool>(Roslyn.ElementValue_ContainsBinders, value);
+			set => MSet<bool>(Roslyn.ElementValue_ContainsBinders, value);
 		}
 	
 		[global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)]
@@ -3469,62 +3469,62 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Roslyn.__Impl
 		public Token? DefaultEndOfLine
 		{
 			get => MGet<Token?>(Roslyn.Language_DefaultEndOfLine);
-			set => MAdd<Token?>(Roslyn.Language_DefaultEndOfLine, value);
+			set => MSet<Token?>(Roslyn.Language_DefaultEndOfLine, value);
 		}
 	
 		public Token? DefaultIdentifier
 		{
 			get => MGet<Token?>(Roslyn.Language_DefaultIdentifier);
-			set => MAdd<Token?>(Roslyn.Language_DefaultIdentifier, value);
+			set => MSet<Token?>(Roslyn.Language_DefaultIdentifier, value);
 		}
 	
 		public Token? DefaultSeparator
 		{
 			get => MGet<Token?>(Roslyn.Language_DefaultSeparator);
-			set => MAdd<Token?>(Roslyn.Language_DefaultSeparator, value);
+			set => MSet<Token?>(Roslyn.Language_DefaultSeparator, value);
 		}
 	
 		public Token? DefaultWhitespace
 		{
 			get => MGet<Token?>(Roslyn.Language_DefaultWhitespace);
-			set => MAdd<Token?>(Roslyn.Language_DefaultWhitespace, value);
+			set => MSet<Token?>(Roslyn.Language_DefaultWhitespace, value);
 		}
 	
 		public Rule? MainRule
 		{
 			get => MGet<Rule?>(Roslyn.Language_MainRule);
-			set => MAdd<Rule?>(Roslyn.Language_MainRule, value);
+			set => MSet<Rule?>(Roslyn.Language_MainRule, value);
 		}
 	
 		public string Name
 		{
 			get => MGet<string>(Roslyn.Language_Name);
-			set => MAdd<string>(Roslyn.Language_Name, value);
+			set => MSet<string>(Roslyn.Language_Name, value);
 		}
 	
 		public string Namespace
 		{
 			get => MGet<string>(Roslyn.Language_Namespace);
-			set => MAdd<string>(Roslyn.Language_Namespace, value);
+			set => MSet<string>(Roslyn.Language_Namespace, value);
 		}
 	
 		public string? RootTypeName
 		{
 			get => MGet<string?>(Roslyn.Language_RootTypeName);
-			set => MAdd<string?>(Roslyn.Language_RootTypeName, value);
+			set => MSet<string?>(Roslyn.Language_RootTypeName, value);
 		}
 	
-		public global::System.Collections.Generic.IList<Rule> Rules
+		public global::MetaDslx.Modeling.ICollectionSlot<Rule> Rules
 		{
 			get => MGetCollection<Rule>(Roslyn.Language_Rules);
 		}
 	
-		public global::System.Collections.Generic.IList<TokenKind> TokenKinds
+		public global::MetaDslx.Modeling.ICollectionSlot<TokenKind> TokenKinds
 		{
 			get => MGetCollection<TokenKind>(Roslyn.Language_TokenKinds);
 		}
 	
-		public global::System.Collections.Generic.IList<Token> Tokens
+		public global::MetaDslx.Modeling.ICollectionSlot<Token> Tokens
 		{
 			get => MGetCollection<Token>(Roslyn.Language_Tokens);
 		}
@@ -3631,12 +3631,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Roslyn.__Impl
 	
 		public override __ModelClassInfo MInfo => __Info.Instance;
 	
-		public global::System.Collections.Generic.IList<Alternative> Alternatives
+		public global::MetaDslx.Modeling.ICollectionSlot<Alternative> Alternatives
 		{
 			get => MGetCollection<Alternative>(Roslyn.Rule_Alternatives);
 		}
 	
-		public global::System.Collections.Generic.IList<Binder> Binders
+		public global::MetaDslx.Modeling.ICollectionSlot<Binder> Binders
 		{
 			get => MGetCollection<Binder>(Roslyn.Rule_Binders);
 		}
@@ -3644,7 +3644,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Roslyn.__Impl
 		public bool ContainsBinders
 		{
 			get => MGet<bool>(Roslyn.Rule_ContainsBinders);
-			set => MAdd<bool>(Roslyn.Rule_ContainsBinders, value);
+			set => MSet<bool>(Roslyn.Rule_ContainsBinders, value);
 		}
 	
 		public string GreenName
@@ -3655,7 +3655,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Roslyn.__Impl
 		public string Name
 		{
 			get => MGet<string>(Roslyn.Rule_Name);
-			set => MAdd<string>(Roslyn.Rule_Name, value);
+			set => MSet<string>(Roslyn.Rule_Name, value);
 		}
 	
 		public string RedName
@@ -3774,10 +3774,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Roslyn.__Impl
 		public Rule Rule
 		{
 			get => MGet<Rule>(Roslyn.RuleRef_Rule);
-			set => MAdd<Rule>(Roslyn.RuleRef_Rule, value);
+			set => MSet<Rule>(Roslyn.RuleRef_Rule, value);
 		}
 	
-		public global::System.Collections.Generic.IList<Binder> Binders
+		public global::MetaDslx.Modeling.ICollectionSlot<Binder> Binders
 		{
 			get => MGetCollection<Binder>(Roslyn.ElementValue_Binders);
 		}
@@ -3785,7 +3785,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Roslyn.__Impl
 		public bool ContainsBinders
 		{
 			get => MGet<bool>(Roslyn.ElementValue_ContainsBinders);
-			set => MAdd<bool>(Roslyn.ElementValue_ContainsBinders, value);
+			set => MSet<bool>(Roslyn.ElementValue_ContainsBinders, value);
 		}
 	
 		[global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)]
@@ -3902,12 +3902,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Roslyn.__Impl
 	
 		public override __ModelClassInfo MInfo => __Info.Instance;
 	
-		public global::System.Collections.Generic.IList<Element> FirstItems
+		public global::MetaDslx.Modeling.ICollectionSlot<Element> FirstItems
 		{
 			get => MGetCollection<Element>(Roslyn.SeparatedList_FirstItems);
 		}
 	
-		public global::System.Collections.Generic.IList<Element> FirstSeparators
+		public global::MetaDslx.Modeling.ICollectionSlot<Element> FirstSeparators
 		{
 			get => MGetCollection<Element>(Roslyn.SeparatedList_FirstSeparators);
 		}
@@ -3922,12 +3922,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Roslyn.__Impl
 			get => Roslyn.__CustomImpl.SeparatedList_GreenType(this);
 		}
 	
-		public global::System.Collections.Generic.IList<Element> LastItems
+		public global::MetaDslx.Modeling.ICollectionSlot<Element> LastItems
 		{
 			get => MGetCollection<Element>(Roslyn.SeparatedList_LastItems);
 		}
 	
-		public global::System.Collections.Generic.IList<Element> LastSeparators
+		public global::MetaDslx.Modeling.ICollectionSlot<Element> LastSeparators
 		{
 			get => MGetCollection<Element>(Roslyn.SeparatedList_LastSeparators);
 		}
@@ -3940,34 +3940,34 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Roslyn.__Impl
 		public Element RepeatedBlock
 		{
 			get => MGet<Element>(Roslyn.SeparatedList_RepeatedBlock);
-			set => MAdd<Element>(Roslyn.SeparatedList_RepeatedBlock, value);
+			set => MSet<Element>(Roslyn.SeparatedList_RepeatedBlock, value);
 		}
 	
 		public Element RepeatedItem
 		{
 			get => MGet<Element>(Roslyn.SeparatedList_RepeatedItem);
-			set => MAdd<Element>(Roslyn.SeparatedList_RepeatedItem, value);
+			set => MSet<Element>(Roslyn.SeparatedList_RepeatedItem, value);
 		}
 	
 		public Element RepeatedSeparator
 		{
 			get => MGet<Element>(Roslyn.SeparatedList_RepeatedSeparator);
-			set => MAdd<Element>(Roslyn.SeparatedList_RepeatedSeparator, value);
+			set => MSet<Element>(Roslyn.SeparatedList_RepeatedSeparator, value);
 		}
 	
 		public bool RepeatedSeparatorFirst
 		{
 			get => MGet<bool>(Roslyn.SeparatedList_RepeatedSeparatorFirst);
-			set => MAdd<bool>(Roslyn.SeparatedList_RepeatedSeparatorFirst, value);
+			set => MSet<bool>(Roslyn.SeparatedList_RepeatedSeparatorFirst, value);
 		}
 	
 		public bool SeparatorFirst
 		{
 			get => MGet<bool>(Roslyn.SeparatedList_SeparatorFirst);
-			set => MAdd<bool>(Roslyn.SeparatedList_SeparatorFirst, value);
+			set => MSet<bool>(Roslyn.SeparatedList_SeparatorFirst, value);
 		}
 	
-		public global::System.Collections.Generic.IList<Binder> Binders
+		public global::MetaDslx.Modeling.ICollectionSlot<Binder> Binders
 		{
 			get => MGetCollection<Binder>(Roslyn.ElementValue_Binders);
 		}
@@ -3975,7 +3975,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Roslyn.__Impl
 		public bool ContainsBinders
 		{
 			get => MGet<bool>(Roslyn.ElementValue_ContainsBinders);
-			set => MAdd<bool>(Roslyn.ElementValue_ContainsBinders, value);
+			set => MSet<bool>(Roslyn.ElementValue_ContainsBinders, value);
 		}
 	
 		[global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)]
@@ -4110,31 +4110,31 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Roslyn.__Impl
 		public string? FixedText
 		{
 			get => MGet<string?>(Roslyn.Token_FixedText);
-			set => MAdd<string?>(Roslyn.Token_FixedText, value);
+			set => MSet<string?>(Roslyn.Token_FixedText, value);
 		}
 	
 		public bool IsFixed
 		{
 			get => MGet<bool>(Roslyn.Token_IsFixed);
-			set => MAdd<bool>(Roslyn.Token_IsFixed, value);
+			set => MSet<bool>(Roslyn.Token_IsFixed, value);
 		}
 	
 		public bool IsTrivia
 		{
 			get => MGet<bool>(Roslyn.Token_IsTrivia);
-			set => MAdd<bool>(Roslyn.Token_IsTrivia, value);
+			set => MSet<bool>(Roslyn.Token_IsTrivia, value);
 		}
 	
 		public string Name
 		{
 			get => MGet<string>(Roslyn.Token_Name);
-			set => MAdd<string>(Roslyn.Token_Name, value);
+			set => MSet<string>(Roslyn.Token_Name, value);
 		}
 	
 		public TokenKind TokenKind
 		{
 			get => MGet<TokenKind>(Roslyn.Token_TokenKind);
-			set => MAdd<TokenKind>(Roslyn.Token_TokenKind, value);
+			set => MSet<TokenKind>(Roslyn.Token_TokenKind, value);
 		}
 	
 	
@@ -4243,12 +4243,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Roslyn.__Impl
 			get => Roslyn.__CustomImpl.TokenAlts_RedType(this);
 		}
 	
-		public global::System.Collections.Generic.IList<TokenRef> Tokens
+		public global::MetaDslx.Modeling.ICollectionSlot<TokenRef> Tokens
 		{
 			get => MGetCollection<TokenRef>(Roslyn.TokenAlts_Tokens);
 		}
 	
-		public global::System.Collections.Generic.IList<Binder> Binders
+		public global::MetaDslx.Modeling.ICollectionSlot<Binder> Binders
 		{
 			get => MGetCollection<Binder>(Roslyn.ElementValue_Binders);
 		}
@@ -4256,7 +4256,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Roslyn.__Impl
 		public bool ContainsBinders
 		{
 			get => MGet<bool>(Roslyn.ElementValue_ContainsBinders);
-			set => MAdd<bool>(Roslyn.ElementValue_ContainsBinders, value);
+			set => MSet<bool>(Roslyn.ElementValue_ContainsBinders, value);
 		}
 	
 		[global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)]
@@ -4375,13 +4375,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Roslyn.__Impl
 		public string Name
 		{
 			get => MGet<string>(Roslyn.TokenKind_Name);
-			set => MAdd<string>(Roslyn.TokenKind_Name, value);
+			set => MSet<string>(Roslyn.TokenKind_Name, value);
 		}
 	
 		public string TypeName
 		{
 			get => MGet<string>(Roslyn.TokenKind_TypeName);
-			set => MAdd<string>(Roslyn.TokenKind_TypeName, value);
+			set => MSet<string>(Roslyn.TokenKind_TypeName, value);
 		}
 	
 	
@@ -4487,10 +4487,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Roslyn.__Impl
 		public Token Token
 		{
 			get => MGet<Token>(Roslyn.TokenRef_Token);
-			set => MAdd<Token>(Roslyn.TokenRef_Token, value);
+			set => MSet<Token>(Roslyn.TokenRef_Token, value);
 		}
 	
-		public global::System.Collections.Generic.IList<Binder> Binders
+		public global::MetaDslx.Modeling.ICollectionSlot<Binder> Binders
 		{
 			get => MGetCollection<Binder>(Roslyn.ElementValue_Binders);
 		}
@@ -4498,7 +4498,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Roslyn.__Impl
 		public bool ContainsBinders
 		{
 			get => MGet<bool>(Roslyn.ElementValue_ContainsBinders);
-			set => MAdd<bool>(Roslyn.ElementValue_ContainsBinders, value);
+			set => MSet<bool>(Roslyn.ElementValue_ContainsBinders, value);
 		}
 	
 		[global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)]

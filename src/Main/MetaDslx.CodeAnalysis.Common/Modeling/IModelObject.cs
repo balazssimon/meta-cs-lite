@@ -1,4 +1,5 @@
 ﻿using MetaDslx.CodeAnalysis;
+using MetaDslx.CodeAnalysis.Symbols;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -13,7 +14,6 @@ namespace MetaDslx.Modeling
         MetaType MetaType { get; }
         ModelClassInfo Info { get; }
         Model? Model { get; set; }
-        ValueInfo? ValueInfo { get; }
 
         string? Name { get; set; }
         IModelObject? Parent { get; set; }
@@ -47,5 +47,12 @@ namespace MetaDslx.Modeling
         ImmutableArray<ModelOperation> PublicOperations { get; }
         ImmutableArray<ModelOperation> GetOverridenOperations(ModelOperation property);
         ImmutableArray<ModelOperation> GetOverridingOperations(ModelOperation property);
+
+        Location? Location { get; set; }
+        SourceLocation? SourceLocation { get; set; }
+        Symbol? Symbol { get; set; }
+        SyntaxNodeOrToken Syntax { get; set; }
+        Microsoft.CodeAnalysis.ISymbol? CSharpSymbol { get; }
+        object? Tag { get; set; }
     }
 }

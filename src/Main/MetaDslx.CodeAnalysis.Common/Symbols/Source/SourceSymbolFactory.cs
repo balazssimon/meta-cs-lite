@@ -125,11 +125,17 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
                             if (declaration.QualifierProperty is not null)
                             {
                                 var qslot = containerModelSymbol.ModelObject.GetSlot(declaration.QualifierProperty);
-                                qslot?.Add(modelObject);
+                                var box = qslot?.Add(modelObject);
+                                box.Syntax = declaration.SyntaxReferences.FirstOrDefault();
                             }
                         }
                     }
-                    return constructor((Symbol)container, declaration, modelObject);
+                    var symbol = constructor((Symbol)container, declaration, modelObject);
+                    if (modelObject is not null)
+                    {
+                        modelObject.Symbol = symbol;
+                    }
+                    return symbol;
                 }
                 else
                 {
@@ -304,26 +310,28 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
                                 {
                                     try
                                     {
+                                        Box? box;
                                         if (prop.Type.IsAssignableTo(typeof(Symbol)) && prop.Type.IsAssignableFrom(value.GetType()))
                                         {
-                                            slot.Add(value);
+                                            box = slot.Add(value);
                                         }
                                         else if (value is Symbol symbolValue)
                                         {
                                             var modelObjectValue = (symbolValue as IModelSymbol)?.ModelObject;
                                             if (modelObjectValue is not null && prop.Type.IsAssignableFrom(modelObjectValue.Info.MetaType))
                                             {
-                                                slot.Add(modelObjectValue);
+                                                box = slot.Add(modelObjectValue);
                                             }
                                             else
                                             {
-                                                slot.Add(value);
+                                                box = slot.Add(value);
                                             }
                                         }
                                         else
                                         {
-                                            slot.Add(value);
+                                            box = slot.Add(value);
                                         }
+                                        if (box is not null) box.Syntax = ((Binder)propBinder).Syntax;
                                     }
                                     catch (ModelException ex)
                                     {
@@ -380,26 +388,28 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
                             {
                                 try
                                 {
+                                    Box? box;
                                     if (prop.Type.IsAssignableTo(typeof(Symbol)) && prop.Type.IsAssignableFrom(value.GetType()))
                                     {
-                                        slot.Add(value);
+                                        box = slot.Add(value);
                                     }
                                     else if (value is Symbol symbolValue)
                                     {
                                         var modelObjectValue = (symbolValue as IModelSymbol)?.ModelObject;
                                         if (modelObjectValue is not null && prop.Type.IsAssignableFrom(modelObjectValue.Info.MetaType))
                                         {
-                                            slot.Add(modelObjectValue);
+                                            box = slot.Add(modelObjectValue);
                                         }
                                         else
                                         {
-                                            slot.Add(value);
+                                            box = slot.Add(value);
                                         }
                                     }
                                     else
                                     {
-                                        slot.Add(value);
+                                        box = slot.Add(value);
                                     }
+                                    if (box is not null) box.Syntax = ((Binder)propBinder).Syntax;
                                 }
                                 catch (ModelException ex)
                                 {

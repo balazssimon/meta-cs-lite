@@ -701,7 +701,7 @@ namespace MetaDslx.Languages.MetaModel.Model
 
 	public interface MetaDeclaration : __IModelObjectCore
 	{
-		global::System.Collections.Generic.IList<MetaDeclaration> Declarations { get; }
+		global::MetaDslx.Modeling.ICollectionSlot<MetaDeclaration> Declarations { get; }
 		string? FullName { get; }
 		string? Name { get; set; }
 		MetaDeclaration? Parent { get; set; }
@@ -738,17 +738,17 @@ namespace MetaDslx.Languages.MetaModel.Model
 
 	public interface MetaClass : global::MetaDslx.Languages.MetaModel.Model.MetaType
 	{
-		global::System.Collections.Generic.IList<MetaClass> BaseTypes { get; }
+		global::MetaDslx.Modeling.ICollectionSlot<MetaClass> BaseTypes { get; }
 		bool IsAbstract { get; set; }
-		global::System.Collections.Generic.IList<MetaOperation> Operations { get; }
-		global::System.Collections.Generic.IList<MetaProperty> Properties { get; }
+		global::MetaDslx.Modeling.ICollectionSlot<MetaOperation> Operations { get; }
+		global::MetaDslx.Modeling.ICollectionSlot<MetaProperty> Properties { get; }
 		__MetaType? SymbolType { get; set; }
 	
 	}
 
 	public interface MetaEnum : global::MetaDslx.Languages.MetaModel.Model.MetaType
 	{
-		global::System.Collections.Generic.IList<MetaEnumLiteral> Literals { get; }
+		global::MetaDslx.Modeling.ICollectionSlot<MetaEnumLiteral> Literals { get; }
 	
 	}
 
@@ -765,7 +765,7 @@ namespace MetaDslx.Languages.MetaModel.Model
 
 	public interface MetaOperation : global::MetaDslx.Languages.MetaModel.Model.MetaDeclaration
 	{
-		global::System.Collections.Generic.IList<MetaParameter> Parameters { get; }
+		global::MetaDslx.Modeling.ICollectionSlot<MetaParameter> Parameters { get; }
 		__MetaType ReturnType { get; set; }
 	
 	}
@@ -785,9 +785,9 @@ namespace MetaDslx.Languages.MetaModel.Model
 	{
 		bool IsContainment { get; set; }
 		bool IsDerived { get; set; }
-		global::System.Collections.Generic.IList<MetaProperty> OppositeProperties { get; }
-		global::System.Collections.Generic.IList<MetaProperty> RedefinedProperties { get; }
-		global::System.Collections.Generic.IList<MetaProperty> SubsettedProperties { get; }
+		global::MetaDslx.Modeling.ICollectionSlot<MetaProperty> OppositeProperties { get; }
+		global::MetaDslx.Modeling.ICollectionSlot<MetaProperty> RedefinedProperties { get; }
+		global::MetaDslx.Modeling.ICollectionSlot<MetaProperty> SubsettedProperties { get; }
 		string? SymbolProperty { get; set; }
 		__MetaType Type { get; set; }
 	
@@ -1040,7 +1040,7 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 	
 		public override __ModelClassInfo MInfo => __Info.Instance;
 	
-		public global::System.Collections.Generic.IList<MetaDeclaration> Declarations
+		public global::MetaDslx.Modeling.ICollectionSlot<MetaDeclaration> Declarations
 		{
 			get => MGetCollection<MetaDeclaration>(Meta.MetaDeclaration_Declarations);
 		}
@@ -1053,13 +1053,13 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 		public string? Name
 		{
 			get => MGet<string?>(Meta.MetaDeclaration_Name);
-			set => MAdd<string?>(Meta.MetaDeclaration_Name, value);
+			set => MSet<string?>(Meta.MetaDeclaration_Name, value);
 		}
 	
 		public MetaDeclaration? Parent
 		{
 			get => MGet<MetaDeclaration?>(Meta.MetaDeclaration_Parent);
-			set => MAdd<MetaDeclaration?>(Meta.MetaDeclaration_Parent, value);
+			set => MSet<MetaDeclaration?>(Meta.MetaDeclaration_Parent, value);
 		}
 	
 	
@@ -1154,10 +1154,10 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 		public __MetaType Type
 		{
 			get => MGet<__MetaType>(Meta.MetaConstant_Type);
-			set => MAdd<__MetaType>(Meta.MetaConstant_Type, value);
+			set => MSet<__MetaType>(Meta.MetaConstant_Type, value);
 		}
 	
-		public global::System.Collections.Generic.IList<MetaDeclaration> Declarations
+		public global::MetaDslx.Modeling.ICollectionSlot<MetaDeclaration> Declarations
 		{
 			get => MGetCollection<MetaDeclaration>(Meta.MetaDeclaration_Declarations);
 		}
@@ -1170,13 +1170,13 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 		public string? Name
 		{
 			get => MGet<string?>(Meta.MetaDeclaration_Name);
-			set => MAdd<string?>(Meta.MetaDeclaration_Name, value);
+			set => MSet<string?>(Meta.MetaDeclaration_Name, value);
 		}
 	
 		public MetaDeclaration? Parent
 		{
 			get => MGet<MetaDeclaration?>(Meta.MetaDeclaration_Parent);
-			set => MAdd<MetaDeclaration?>(Meta.MetaDeclaration_Parent, value);
+			set => MSet<MetaDeclaration?>(Meta.MetaDeclaration_Parent, value);
 		}
 	
 	
@@ -1275,7 +1275,7 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 			get => Meta.__CustomImpl.MetaModel_NamespaceName(this);
 		}
 	
-		public global::System.Collections.Generic.IList<MetaDeclaration> Declarations
+		public global::MetaDslx.Modeling.ICollectionSlot<MetaDeclaration> Declarations
 		{
 			get => MGetCollection<MetaDeclaration>(Meta.MetaDeclaration_Declarations);
 		}
@@ -1288,13 +1288,13 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 		public string? Name
 		{
 			get => MGet<string?>(Meta.MetaDeclaration_Name);
-			set => MAdd<string?>(Meta.MetaDeclaration_Name, value);
+			set => MSet<string?>(Meta.MetaDeclaration_Name, value);
 		}
 	
 		public MetaDeclaration? Parent
 		{
 			get => MGet<MetaDeclaration?>(Meta.MetaDeclaration_Parent);
-			set => MAdd<MetaDeclaration?>(Meta.MetaDeclaration_Parent, value);
+			set => MSet<MetaDeclaration?>(Meta.MetaDeclaration_Parent, value);
 		}
 	
 	
@@ -1388,7 +1388,7 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 	
 		public override __ModelClassInfo MInfo => __Info.Instance;
 	
-		public global::System.Collections.Generic.IList<MetaDeclaration> Declarations
+		public global::MetaDslx.Modeling.ICollectionSlot<MetaDeclaration> Declarations
 		{
 			get => MGetCollection<MetaDeclaration>(Meta.MetaDeclaration_Declarations);
 		}
@@ -1401,13 +1401,13 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 		public string? Name
 		{
 			get => MGet<string?>(Meta.MetaDeclaration_Name);
-			set => MAdd<string?>(Meta.MetaDeclaration_Name, value);
+			set => MSet<string?>(Meta.MetaDeclaration_Name, value);
 		}
 	
 		public MetaDeclaration? Parent
 		{
 			get => MGet<MetaDeclaration?>(Meta.MetaDeclaration_Parent);
-			set => MAdd<MetaDeclaration?>(Meta.MetaDeclaration_Parent, value);
+			set => MSet<MetaDeclaration?>(Meta.MetaDeclaration_Parent, value);
 		}
 	
 	
@@ -1499,7 +1499,7 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 	
 		public override __ModelClassInfo MInfo => __Info.Instance;
 	
-		public global::System.Collections.Generic.IList<MetaDeclaration> Declarations
+		public global::MetaDslx.Modeling.ICollectionSlot<MetaDeclaration> Declarations
 		{
 			get => MGetCollection<MetaDeclaration>(Meta.MetaDeclaration_Declarations);
 		}
@@ -1512,13 +1512,13 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 		public string? Name
 		{
 			get => MGet<string?>(Meta.MetaDeclaration_Name);
-			set => MAdd<string?>(Meta.MetaDeclaration_Name, value);
+			set => MSet<string?>(Meta.MetaDeclaration_Name, value);
 		}
 	
 		public MetaDeclaration? Parent
 		{
 			get => MGet<MetaDeclaration?>(Meta.MetaDeclaration_Parent);
-			set => MAdd<MetaDeclaration?>(Meta.MetaDeclaration_Parent, value);
+			set => MSet<MetaDeclaration?>(Meta.MetaDeclaration_Parent, value);
 		}
 	
 	
@@ -1614,10 +1614,10 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 		public __MetaType ItemType
 		{
 			get => MGet<__MetaType>(Meta.MetaArrayType_ItemType);
-			set => MAdd<__MetaType>(Meta.MetaArrayType_ItemType, value);
+			set => MSet<__MetaType>(Meta.MetaArrayType_ItemType, value);
 		}
 	
-		public global::System.Collections.Generic.IList<MetaDeclaration> Declarations
+		public global::MetaDslx.Modeling.ICollectionSlot<MetaDeclaration> Declarations
 		{
 			get => MGetCollection<MetaDeclaration>(Meta.MetaDeclaration_Declarations);
 		}
@@ -1630,13 +1630,13 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 		public string? Name
 		{
 			get => MGet<string?>(Meta.MetaDeclaration_Name);
-			set => MAdd<string?>(Meta.MetaDeclaration_Name, value);
+			set => MSet<string?>(Meta.MetaDeclaration_Name, value);
 		}
 	
 		public MetaDeclaration? Parent
 		{
 			get => MGet<MetaDeclaration?>(Meta.MetaDeclaration_Parent);
-			set => MAdd<MetaDeclaration?>(Meta.MetaDeclaration_Parent, value);
+			set => MSet<MetaDeclaration?>(Meta.MetaDeclaration_Parent, value);
 		}
 	
 	
@@ -1731,7 +1731,7 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 	
 		public override __ModelClassInfo MInfo => __Info.Instance;
 	
-		public global::System.Collections.Generic.IList<MetaClass> BaseTypes
+		public global::MetaDslx.Modeling.ICollectionSlot<MetaClass> BaseTypes
 		{
 			get => MGetCollection<MetaClass>(Meta.MetaClass_BaseTypes);
 		}
@@ -1739,15 +1739,15 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 		public bool IsAbstract
 		{
 			get => MGet<bool>(Meta.MetaClass_IsAbstract);
-			set => MAdd<bool>(Meta.MetaClass_IsAbstract, value);
+			set => MSet<bool>(Meta.MetaClass_IsAbstract, value);
 		}
 	
-		public global::System.Collections.Generic.IList<MetaOperation> Operations
+		public global::MetaDslx.Modeling.ICollectionSlot<MetaOperation> Operations
 		{
 			get => MGetCollection<MetaOperation>(Meta.MetaClass_Operations);
 		}
 	
-		public global::System.Collections.Generic.IList<MetaProperty> Properties
+		public global::MetaDslx.Modeling.ICollectionSlot<MetaProperty> Properties
 		{
 			get => MGetCollection<MetaProperty>(Meta.MetaClass_Properties);
 		}
@@ -1755,10 +1755,10 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 		public __MetaType? SymbolType
 		{
 			get => MGet<__MetaType?>(Meta.MetaClass_SymbolType);
-			set => MAdd<__MetaType?>(Meta.MetaClass_SymbolType, value);
+			set => MSet<__MetaType?>(Meta.MetaClass_SymbolType, value);
 		}
 	
-		public global::System.Collections.Generic.IList<MetaDeclaration> Declarations
+		public global::MetaDslx.Modeling.ICollectionSlot<MetaDeclaration> Declarations
 		{
 			get => MGetCollection<MetaDeclaration>(Meta.MetaDeclaration_Declarations);
 		}
@@ -1771,13 +1771,13 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 		public string? Name
 		{
 			get => MGet<string?>(Meta.MetaDeclaration_Name);
-			set => MAdd<string?>(Meta.MetaDeclaration_Name, value);
+			set => MSet<string?>(Meta.MetaDeclaration_Name, value);
 		}
 	
 		public MetaDeclaration? Parent
 		{
 			get => MGet<MetaDeclaration?>(Meta.MetaDeclaration_Parent);
-			set => MAdd<MetaDeclaration?>(Meta.MetaDeclaration_Parent, value);
+			set => MSet<MetaDeclaration?>(Meta.MetaDeclaration_Parent, value);
 		}
 	
 	
@@ -1880,12 +1880,12 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 	
 		public override __ModelClassInfo MInfo => __Info.Instance;
 	
-		public global::System.Collections.Generic.IList<MetaEnumLiteral> Literals
+		public global::MetaDslx.Modeling.ICollectionSlot<MetaEnumLiteral> Literals
 		{
 			get => MGetCollection<MetaEnumLiteral>(Meta.MetaEnum_Literals);
 		}
 	
-		public global::System.Collections.Generic.IList<MetaDeclaration> Declarations
+		public global::MetaDslx.Modeling.ICollectionSlot<MetaDeclaration> Declarations
 		{
 			get => MGetCollection<MetaDeclaration>(Meta.MetaDeclaration_Declarations);
 		}
@@ -1898,13 +1898,13 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 		public string? Name
 		{
 			get => MGet<string?>(Meta.MetaDeclaration_Name);
-			set => MAdd<string?>(Meta.MetaDeclaration_Name, value);
+			set => MSet<string?>(Meta.MetaDeclaration_Name, value);
 		}
 	
 		public MetaDeclaration? Parent
 		{
 			get => MGet<MetaDeclaration?>(Meta.MetaDeclaration_Parent);
-			set => MAdd<MetaDeclaration?>(Meta.MetaDeclaration_Parent, value);
+			set => MSet<MetaDeclaration?>(Meta.MetaDeclaration_Parent, value);
 		}
 	
 	
@@ -1998,7 +1998,7 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 	
 		public override __ModelClassInfo MInfo => __Info.Instance;
 	
-		public global::System.Collections.Generic.IList<MetaDeclaration> Declarations
+		public global::MetaDslx.Modeling.ICollectionSlot<MetaDeclaration> Declarations
 		{
 			get => MGetCollection<MetaDeclaration>(Meta.MetaDeclaration_Declarations);
 		}
@@ -2011,13 +2011,13 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 		public string? Name
 		{
 			get => MGet<string?>(Meta.MetaDeclaration_Name);
-			set => MAdd<string?>(Meta.MetaDeclaration_Name, value);
+			set => MSet<string?>(Meta.MetaDeclaration_Name, value);
 		}
 	
 		public MetaDeclaration? Parent
 		{
 			get => MGet<MetaDeclaration?>(Meta.MetaDeclaration_Parent);
-			set => MAdd<MetaDeclaration?>(Meta.MetaDeclaration_Parent, value);
+			set => MSet<MetaDeclaration?>(Meta.MetaDeclaration_Parent, value);
 		}
 	
 	
@@ -2113,10 +2113,10 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 		public __MetaType InnerType
 		{
 			get => MGet<__MetaType>(Meta.MetaNullableType_InnerType);
-			set => MAdd<__MetaType>(Meta.MetaNullableType_InnerType, value);
+			set => MSet<__MetaType>(Meta.MetaNullableType_InnerType, value);
 		}
 	
-		public global::System.Collections.Generic.IList<MetaDeclaration> Declarations
+		public global::MetaDslx.Modeling.ICollectionSlot<MetaDeclaration> Declarations
 		{
 			get => MGetCollection<MetaDeclaration>(Meta.MetaDeclaration_Declarations);
 		}
@@ -2129,13 +2129,13 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 		public string? Name
 		{
 			get => MGet<string?>(Meta.MetaDeclaration_Name);
-			set => MAdd<string?>(Meta.MetaDeclaration_Name, value);
+			set => MSet<string?>(Meta.MetaDeclaration_Name, value);
 		}
 	
 		public MetaDeclaration? Parent
 		{
 			get => MGet<MetaDeclaration?>(Meta.MetaDeclaration_Parent);
-			set => MAdd<MetaDeclaration?>(Meta.MetaDeclaration_Parent, value);
+			set => MSet<MetaDeclaration?>(Meta.MetaDeclaration_Parent, value);
 		}
 	
 	
@@ -2229,7 +2229,7 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 	
 		public override __ModelClassInfo MInfo => __Info.Instance;
 	
-		public global::System.Collections.Generic.IList<MetaParameter> Parameters
+		public global::MetaDslx.Modeling.ICollectionSlot<MetaParameter> Parameters
 		{
 			get => MGetCollection<MetaParameter>(Meta.MetaOperation_Parameters);
 		}
@@ -2237,10 +2237,10 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 		public __MetaType ReturnType
 		{
 			get => MGet<__MetaType>(Meta.MetaOperation_ReturnType);
-			set => MAdd<__MetaType>(Meta.MetaOperation_ReturnType, value);
+			set => MSet<__MetaType>(Meta.MetaOperation_ReturnType, value);
 		}
 	
-		public global::System.Collections.Generic.IList<MetaDeclaration> Declarations
+		public global::MetaDslx.Modeling.ICollectionSlot<MetaDeclaration> Declarations
 		{
 			get => MGetCollection<MetaDeclaration>(Meta.MetaDeclaration_Declarations);
 		}
@@ -2253,13 +2253,13 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 		public string? Name
 		{
 			get => MGet<string?>(Meta.MetaDeclaration_Name);
-			set => MAdd<string?>(Meta.MetaDeclaration_Name, value);
+			set => MSet<string?>(Meta.MetaDeclaration_Name, value);
 		}
 	
 		public MetaDeclaration? Parent
 		{
 			get => MGet<MetaDeclaration?>(Meta.MetaDeclaration_Parent);
-			set => MAdd<MetaDeclaration?>(Meta.MetaDeclaration_Parent, value);
+			set => MSet<MetaDeclaration?>(Meta.MetaDeclaration_Parent, value);
 		}
 	
 	
@@ -2358,10 +2358,10 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 		public __MetaType Type
 		{
 			get => MGet<__MetaType>(Meta.MetaParameter_Type);
-			set => MAdd<__MetaType>(Meta.MetaParameter_Type, value);
+			set => MSet<__MetaType>(Meta.MetaParameter_Type, value);
 		}
 	
-		public global::System.Collections.Generic.IList<MetaDeclaration> Declarations
+		public global::MetaDslx.Modeling.ICollectionSlot<MetaDeclaration> Declarations
 		{
 			get => MGetCollection<MetaDeclaration>(Meta.MetaDeclaration_Declarations);
 		}
@@ -2374,13 +2374,13 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 		public string? Name
 		{
 			get => MGet<string?>(Meta.MetaDeclaration_Name);
-			set => MAdd<string?>(Meta.MetaDeclaration_Name, value);
+			set => MSet<string?>(Meta.MetaDeclaration_Name, value);
 		}
 	
 		public MetaDeclaration? Parent
 		{
 			get => MGet<MetaDeclaration?>(Meta.MetaDeclaration_Parent);
-			set => MAdd<MetaDeclaration?>(Meta.MetaDeclaration_Parent, value);
+			set => MSet<MetaDeclaration?>(Meta.MetaDeclaration_Parent, value);
 		}
 	
 	
@@ -2475,7 +2475,7 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 	
 		public override __ModelClassInfo MInfo => __Info.Instance;
 	
-		public global::System.Collections.Generic.IList<MetaDeclaration> Declarations
+		public global::MetaDslx.Modeling.ICollectionSlot<MetaDeclaration> Declarations
 		{
 			get => MGetCollection<MetaDeclaration>(Meta.MetaDeclaration_Declarations);
 		}
@@ -2488,13 +2488,13 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 		public string? Name
 		{
 			get => MGet<string?>(Meta.MetaDeclaration_Name);
-			set => MAdd<string?>(Meta.MetaDeclaration_Name, value);
+			set => MSet<string?>(Meta.MetaDeclaration_Name, value);
 		}
 	
 		public MetaDeclaration? Parent
 		{
 			get => MGet<MetaDeclaration?>(Meta.MetaDeclaration_Parent);
-			set => MAdd<MetaDeclaration?>(Meta.MetaDeclaration_Parent, value);
+			set => MSet<MetaDeclaration?>(Meta.MetaDeclaration_Parent, value);
 		}
 	
 	
@@ -2589,26 +2589,26 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 		public bool IsContainment
 		{
 			get => MGet<bool>(Meta.MetaProperty_IsContainment);
-			set => MAdd<bool>(Meta.MetaProperty_IsContainment, value);
+			set => MSet<bool>(Meta.MetaProperty_IsContainment, value);
 		}
 	
 		public bool IsDerived
 		{
 			get => MGet<bool>(Meta.MetaProperty_IsDerived);
-			set => MAdd<bool>(Meta.MetaProperty_IsDerived, value);
+			set => MSet<bool>(Meta.MetaProperty_IsDerived, value);
 		}
 	
-		public global::System.Collections.Generic.IList<MetaProperty> OppositeProperties
+		public global::MetaDslx.Modeling.ICollectionSlot<MetaProperty> OppositeProperties
 		{
 			get => MGetCollection<MetaProperty>(Meta.MetaProperty_OppositeProperties);
 		}
 	
-		public global::System.Collections.Generic.IList<MetaProperty> RedefinedProperties
+		public global::MetaDslx.Modeling.ICollectionSlot<MetaProperty> RedefinedProperties
 		{
 			get => MGetCollection<MetaProperty>(Meta.MetaProperty_RedefinedProperties);
 		}
 	
-		public global::System.Collections.Generic.IList<MetaProperty> SubsettedProperties
+		public global::MetaDslx.Modeling.ICollectionSlot<MetaProperty> SubsettedProperties
 		{
 			get => MGetCollection<MetaProperty>(Meta.MetaProperty_SubsettedProperties);
 		}
@@ -2616,16 +2616,16 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 		public string? SymbolProperty
 		{
 			get => MGet<string?>(Meta.MetaProperty_SymbolProperty);
-			set => MAdd<string?>(Meta.MetaProperty_SymbolProperty, value);
+			set => MSet<string?>(Meta.MetaProperty_SymbolProperty, value);
 		}
 	
 		public __MetaType Type
 		{
 			get => MGet<__MetaType>(Meta.MetaProperty_Type);
-			set => MAdd<__MetaType>(Meta.MetaProperty_Type, value);
+			set => MSet<__MetaType>(Meta.MetaProperty_Type, value);
 		}
 	
-		public global::System.Collections.Generic.IList<MetaDeclaration> Declarations
+		public global::MetaDslx.Modeling.ICollectionSlot<MetaDeclaration> Declarations
 		{
 			get => MGetCollection<MetaDeclaration>(Meta.MetaDeclaration_Declarations);
 		}
@@ -2638,13 +2638,13 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 		public string? Name
 		{
 			get => MGet<string?>(Meta.MetaDeclaration_Name);
-			set => MAdd<string?>(Meta.MetaDeclaration_Name, value);
+			set => MSet<string?>(Meta.MetaDeclaration_Name, value);
 		}
 	
 		public MetaDeclaration? Parent
 		{
 			get => MGet<MetaDeclaration?>(Meta.MetaDeclaration_Parent);
-			set => MAdd<MetaDeclaration?>(Meta.MetaDeclaration_Parent, value);
+			set => MSet<MetaDeclaration?>(Meta.MetaDeclaration_Parent, value);
 		}
 	
 	

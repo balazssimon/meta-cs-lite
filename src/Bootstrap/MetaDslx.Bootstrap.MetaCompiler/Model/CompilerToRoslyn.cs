@@ -149,7 +149,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             return rtoken;
         }
 
-        private void CheckDefaultReference(object? cobj, IList<Annotation> annotations)
+        private void CheckDefaultReference(object? cobj, ICollectionSlot<Annotation> annotations)
         {
             var isDefaultRef = annotations.Any(a => a.AttributeClass?.Name == nameof(DefaultReferenceAnnotation) && SymbolDisplayFormat.QualifiedNameOnlyFormat.ToString(a.AttributeClass) == DefaultReferenceFullName);
             if (isDefaultRef)
@@ -165,7 +165,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             }
         }
 
-        private void AddBinders(IList<Binder> rbinders, IList<Annotation> cannotations)
+        private void AddBinders(ICollectionSlot<Binder> rbinders, ICollectionSlot<Annotation> cannotations)
         {
             foreach (var cbinder in cannotations.Where(a => a.AttributeClass?.Name?.EndsWith("Binder") ?? false))
             {
@@ -381,7 +381,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             }
         }
 
-        private void AddAlts(Roslyn.Rule rrule, IList<PAlternative> calts)
+        private void AddAlts(Roslyn.Rule rrule, ICollectionSlot<PAlternative> calts)
         {
             foreach (var calt in calts)
             {
@@ -431,7 +431,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             }
         }
 
-        private void AddElements(Alternative ralt, IList<PElement> celements)
+        private void AddElements(Alternative ralt, ICollectionSlot<PElement> celements)
         {
             foreach (var celem in celements)
             {
@@ -599,7 +599,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             usedElementNames.Free();
         }
 
-        private void MakeBlockNames(string? parentName, IList<Alternative> alts)
+        private void MakeBlockNames(string? parentName, ICollectionSlot<Alternative> alts)
         {
             foreach (var alt in alts)
             {
@@ -635,7 +635,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             return AddRuleName(result, tryWithoutIndex: !string.IsNullOrEmpty(elementName));
         }
 
-        private void MakeAltNames(string? parentName, IList<Alternative> alts)
+        private void MakeAltNames(string? parentName, ICollectionSlot<Alternative> alts)
         {
             foreach (var alt in alts)
             {
@@ -965,22 +965,22 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             }
         }
 
-        private void InsertBinders(IList<Binder> target, IList<Binder> source)
+        private void InsertBinders(ICollectionSlot<Binder> target, ICollectionSlot<Binder> source)
         {
             foreach (var binder in source)
             {
                 ((IModelObject)binder).Parent = null;
             }
-            target.InsertRangeAt(0, source);
+            target.InsertRange(0, source);
         }
 
-        private void InsertAlternativesAt(IList<Alternative> target, int index, IList<Alternative> source)
+        private void InsertAlternativesAt(ICollectionSlot<Alternative> target, int index, ICollectionSlot<Alternative> source)
         {
             foreach (var alt in source)
             {
                 ((IModelObject)alt).Parent = null;
             }
-            target.InsertRangeAt(index, source);
+            target.InsertRange(index, source);
         }
 
         private void ComputeContainsBinders()

@@ -23,17 +23,17 @@ using MetaDslx.Modeling;
 //CompileMetaCompiler("Compiler", @"..\..\..\..\MetaDslx.Bootstrap.MetaCompiler\Language", @"..\..\..\..\MetaDslx.Bootstrap.MetaCompiler\Compiler");
 //CompileWithMetaCompiler("Compiler2", @"..\..\..\..\MetaDslx.Bootstrap.MetaCompiler\Language", @"..\..\..\..\MetaDslx.Bootstrap.MetaCompiler\Compiler2", MetaDslx.Bootstrap.MetaCompiler.Model.Compiler.MInstance);
 
-CompileMetaModel("Roslyn", @"..\..\..\..\MetaDslx.Bootstrap.MetaCompiler\Model", @"..\..\..\..\MetaDslx.Bootstrap.MetaCompiler\Model");
+//CompileMetaModel("Roslyn", @"..\..\..\..\MetaDslx.Bootstrap.MetaCompiler\Model", @"..\..\..\..\MetaDslx.Bootstrap.MetaCompiler\Model");
 
-/*var model = Meta.MInstance.MModel;
+var model = Meta.MInstance.MModel;
 var mc = model.Objects.OfType<MetaClass>().FirstOrDefault();
 var mobj = mc as IModelObject;
-mobj.ValueInfo.Tag = "hello";
-Console.WriteLine(mobj.ValueInfo.Tag);
-var decls = mc.Declarations as ICollectionSlot;
+mobj.Tag = "hello";
+Console.WriteLine(mobj.Tag);
+var decls = mc.Declarations;
 var box = decls.BoxAt(0);
-box.Info.Tag = "box tag";
-Console.WriteLine(box.Info.Tag);*/
+box.Tag = "box tag";
+Console.WriteLine(box.Tag);
 
 static void CompileMetaModel(string name, string inputDir, string outputDir)
 {

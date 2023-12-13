@@ -40,10 +40,5 @@ namespace MetaDslx.Modeling
             if (MInfo.AllDeclaredProperties.Contains(propertySlot.SlotProperty)) return MAttachSlot(propertySlot);
             else return null;
         }
-
-        public override IModelObject Clone()
-        {
-            throw new NotImplementedException();
-        }
     }
 }
