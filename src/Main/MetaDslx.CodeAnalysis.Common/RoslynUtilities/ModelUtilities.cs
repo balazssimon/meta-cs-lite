@@ -59,7 +59,7 @@ namespace Roslyn.Utilities
             return result.ToImmutableAndFree();
         }
 
-        public static ImmutableArray<T> GetAllContainingSymbolsOutwards<T>(this IModelObjectCore? modelObject, bool includeSelf = false, CancellationToken cancellationToken = default)
+        public static ImmutableArray<T> GetAllContainingObjectsOutwards<T>(this IModelObjectCore? modelObject, bool includeSelf = false, CancellationToken cancellationToken = default)
             where T : IModelObjectCore
         {
             var mobj = modelObject as IModelObject;
@@ -75,7 +75,7 @@ namespace Roslyn.Utilities
             return result.ToImmutableAndFree();
         }
 
-        public static ImmutableArray<T> GetAllContainedSymbols<T>(this IModelObjectCore? modelObject, bool includeSelf = false, CancellationToken cancellationToken = default)
+        public static ImmutableArray<T> GetAllContainedObjects<T>(this IModelObjectCore? modelObject, bool includeSelf = false, CancellationToken cancellationToken = default)
             where T : IModelObjectCore
         {
             var mobj = modelObject as IModelObject;

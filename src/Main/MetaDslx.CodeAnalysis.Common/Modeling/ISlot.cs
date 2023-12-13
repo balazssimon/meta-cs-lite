@@ -20,6 +20,7 @@ namespace MetaDslx.Modeling
         bool Contains(object? item);
         Box? Add(object? item);
         Box? Remove(object? item);
+        Box? Replace(object? oldItem, object? newItem);
         IEnumerable<object?> Values { get; }
         IEnumerable<Box> Boxes { get; }
 

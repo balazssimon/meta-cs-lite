@@ -117,11 +117,11 @@ namespace MetaDslx.Modeling
         public Model CreateModel(string? id = null, string? name = null)
         {
             var model = new Model(id, name);
-            AddModel(model);
+            AttachModel(model);
             return model;
         }
 
-        public void AddModel(Model model)
+        public void AttachModel(Model model)
         {
             CheckReadOnly();
             if (!_models.Contains(model))
@@ -139,7 +139,7 @@ namespace MetaDslx.Modeling
             }
         }
 
-        public void RemoveModel(Model model)
+        public void DetachModel(Model model)
         {
             CheckReadOnly();
             var index = _models.IndexOf(model);
@@ -147,7 +147,7 @@ namespace MetaDslx.Modeling
             {
                 try
                 {
-                    _models.Remove(model);
+                    _models.RemoveAt(index);
                     model.ModelGroup = null;
                 }
                 catch

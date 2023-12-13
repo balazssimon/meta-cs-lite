@@ -443,7 +443,7 @@ internal class [cls.Name]_Impl : __MetaModelObject, [cls.Name]
 		public override __IModelObject? Create(__Model? model = null, string? id = null)
 		{
 			var result = new [cls.Name]_Impl(id);
-			if (model is not null) model.AddObject(result);
+			if (model is not null) model.AttachObject(result);
 			return result;
 		}
 

@@ -130,6 +130,24 @@ namespace MetaDslx.Modeling
             }
         }
 
+        protected override Box? ReplaceCore(object? oldItem, object? newItem)
+        {
+            if (oldItem == newItem) return null;
+            if (!IsNonUnique && Contains(newItem))
+            {
+                return RemoveCore(oldItem, null);
+            }
+            Box? result = null;
+            var index = IndexOf(oldItem);
+            while (index >= 0)
+            {
+                var box = ReplaceAtCore(index, newItem, null);
+                if (result is null) result = box;
+                index = IndexOf(oldItem);
+            }
+            return result;
+        }
+
         private Box? ReplaceAtCore(int index, object? item, Box? oppositeBox)
         {
             if (oppositeBox is null) CheckReadOnly(GetInsertMessage(Property.SlotProperty, item));
@@ -631,6 +649,11 @@ namespace MetaDslx.Modeling
         Box? ISlot.Remove(object? item)
         {
             return _wrappedSlot.Remove(item);
+        }
+
+        Box? ISlot.Replace(object? oldItem, object? newItem)
+        {
+            return _wrappedSlot.Replace(oldItem, newItem);
         }
 
         ISingleSlot? ISlot.AsSingle()

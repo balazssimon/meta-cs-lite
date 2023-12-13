@@ -108,6 +108,31 @@ namespace MetaDslx.Modeling
             return null;
         }
 
+        protected override Box? ReplaceCore(object? oldItem, object? newItem)
+        {
+            CheckReadOnly(GetAssignMessage(Property.SlotProperty, newItem));
+            CheckValueType(newItem, mp => GetAssignMessage(mp, newItem));
+            var oldValue = _box.Value;
+            if (_box.HasValue(oldItem) && !_box.HasValue(newItem))
+            {
+                try
+                {
+                    _box.Clear();
+                    ValueRemoved(_box, oldValue, null);
+                    _box.Value = newItem;
+                    ValueAdded(_box, null);
+                    return _box;
+                }
+                catch (Exception ex)
+                {
+                    _box.Value = oldValue;
+                    if (Model.ValidationOptions.FullPropertyModificationStackInExceptions) throw new ModelException($"{GetAssignMessage(Property.SlotProperty, newItem)}", ex);
+                    else throw;
+                }
+            }
+            return null;
+        }
+
         protected string GetAssignMessage(ModelProperty property, object? value)
         {
             return $"Error assigning '{value}' to '{property.QualifiedName}' in '{Owner}'";
@@ -117,6 +142,7 @@ namespace MetaDslx.Modeling
         {
             return $"Error removing '{value}' from '{property.QualifiedName}' in '{Owner}'";
         }
+
     }
 
     internal class SingleSlot<T> : ISingleSlot<T>, IOppositeSlotCore
@@ -195,6 +221,11 @@ namespace MetaDslx.Modeling
         Box? ISlot.Remove(object? item)
         {
             return _wrappedSlot.Remove(item);
+        }
+
+        Box? ISlot.Replace(object? oldItem, object? newItem)
+        {
+            return _wrappedSlot.Replace(oldItem, newItem);
         }
 
         ISingleSlot? ISlot.AsSingle()

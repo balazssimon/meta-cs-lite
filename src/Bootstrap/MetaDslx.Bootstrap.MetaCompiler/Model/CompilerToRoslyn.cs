@@ -703,8 +703,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                     tokens.Add(singleToken);
                     InsertBinders(singleToken.Binders, singleTokenAlt.Binders);
                     rule.Alternatives.Remove(singleTokenAlt);
-                    _rmodel.RemoveObject((IModelObject)singleTokenAlt);
-                    _rmodel.RemoveObject((IModelObject)singleElem);
+                    _rmodel.DeleteObject((IModelObject)singleTokenAlt);
                 }
                 tokenAlts.Tokens.AddRange(tokens);
                 tokens.Free();
@@ -870,10 +869,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                                         ++l;
                                     }
                                 }
-                                for (var m = firstIndex; m <= lastIndex; ++m)
-                                {
-                                    alt.Elements.RemoveAt(firstIndex);
-                                }
+                                alt.Elements.RemoveRange(firstIndex, lastIndex - firstIndex + 1);
                                 list.FirstItems.AddRange(firstItems);
                                 firstItems.Free();
                                 list.FirstSeparators.AddRange(firstSeparators);
@@ -905,7 +901,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                 for (int i = 0; i < rules.Count; ++i)
                 {
                     var rule = rules[i];
-                    for (int j = 0; j < rule.Alternatives.Count; ++j)
+                    for (int j = rule.Alternatives.Count - 1; j >= 0; --j)
                     {
                         var alt = rule.Alternatives[j];
                         if (alt.Elements.Count == 1)
@@ -933,10 +929,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                                         rrRule.Alternatives.Clear();
                                         rule.Alternatives[j] = rrAlt;
                                         _rlang.Rules.Remove(rrRule);
-                                        _rmodel.RemoveObject((IModelObject)rrRule);
-                                        _rmodel.RemoveObject((IModelObject)singleElem.Value);
-                                        _rmodel.RemoveObject((IModelObject)singleElem);
-                                        _rmodel.RemoveObject((IModelObject)alt);
+                                        _rmodel.DeleteObject((IModelObject)alt);
                                         _ruleRefs.Remove(rrRule);
                                     }
                                     else
@@ -951,10 +944,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                                         }
                                         InsertAlternativesAt(rule.Alternatives, j, rrRule.Alternatives);
                                         _rlang.Rules.Remove(rrRule);
-                                        _rmodel.RemoveObject((IModelObject)rrRule);
-                                        _rmodel.RemoveObject((IModelObject)singleElem.Value);
-                                        _rmodel.RemoveObject((IModelObject)singleElem);
-                                        _rmodel.RemoveObject((IModelObject)alt);
+                                        _rmodel.DeleteObject((IModelObject)alt);
                                         _ruleRefs.Remove(rrRule);
                                     }
                                 }

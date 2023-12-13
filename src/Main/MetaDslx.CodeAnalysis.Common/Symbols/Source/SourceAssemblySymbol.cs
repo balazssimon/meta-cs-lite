@@ -39,7 +39,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
 
             ArrayBuilder<ModuleSymbol> moduleBuilder = new ArrayBuilder<ModuleSymbol>(1 + referencedModules.Length);
             moduleBuilder.Add(_sourceModule);
-            _modelGroup.AddModel(_sourceModule.Model);
+            _modelGroup.AttachModel(_sourceModule.Model);
             foreach (var reference in referencedModules)
             {
                 moduleBuilder.Add(reference);

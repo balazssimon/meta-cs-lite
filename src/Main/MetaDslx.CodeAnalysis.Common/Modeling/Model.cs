@@ -1,9 +1,12 @@
 ﻿using MetaDslx.Modeling;
+using Roslyn.Utilities;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using System.Text;
+using System.Threading;
 
 namespace MetaDslx.Modeling
 {
@@ -84,12 +87,12 @@ namespace MetaDslx.Modeling
                         if (originalModelGroup != null)
                         {
                             _modelGroup = null;
-                            originalModelGroup.RemoveModel(this);
+                            originalModelGroup.DetachModel(this);
                         }
                         _modelGroup = value;
                         if (_modelGroup != null)
                         {
-                            _modelGroup.AddModel(this);
+                            _modelGroup.AttachModel(this);
                         }
                     }
                     catch (Exception ex)
@@ -105,7 +108,7 @@ namespace MetaDslx.Modeling
         public IEnumerable<IModelObject> Objects => _modelObjects;
         public IEnumerable<IModelObject> RootObjects => _modelObjects.Where(mobj => mobj.Parent is null);
 
-        public void AddObject(IModelObject modelObject)
+        public bool AttachObject(IModelObject modelObject)
         {
             CheckReadOnly();
             if (!_modelObjects.Contains(modelObject))
@@ -114,6 +117,7 @@ namespace MetaDslx.Modeling
                 {
                     _modelObjects.Add(modelObject);
                     modelObject.Model = this;
+                    return true;
                 }
                 catch (Exception ex)
                 {
@@ -122,9 +126,10 @@ namespace MetaDslx.Modeling
                     else throw;
                 }
             }
+            return false;
         }
 
-        public void RemoveObject(IModelObject modelObject)
+        public bool DetachObject(IModelObject modelObject)
         {
             CheckReadOnly();
             var index = _modelObjects.IndexOf(modelObject);
@@ -134,6 +139,7 @@ namespace MetaDslx.Modeling
                 {
                     _modelObjects.Remove(modelObject);
                     modelObject.Model = null;
+                    return true;
                 }
                 catch (Exception ex)
                 {
@@ -142,6 +148,33 @@ namespace MetaDslx.Modeling
                     else throw;
                 }
             }
+            return false;
+        }
+
+        public void DeleteObject(IModelObject modelObject, CancellationToken cancellationToken = default)
+        {
+            var objectsToDelete = modelObject.GetAllContainedObjects<IModelObject>(includeSelf: true, cancellationToken: cancellationToken);
+            foreach (var mobj in objectsToDelete)
+            {
+                if (DetachObject(mobj))
+                {
+                    var references = modelObject.References.ToImmutableArray();
+                    foreach (var reference in references)
+                    {
+                        reference.Slot.Remove(modelObject);
+                    }
+                }
+            }
+        }
+
+        public void ReplaceObject(IModelObject oldObject, IModelObject newObject, CancellationToken cancellationToken = default)
+        {
+            var references = oldObject.References.ToImmutableArray();
+            foreach (var reference in references)
+            {
+                reference.Slot.Replace(oldObject, newObject);
+            }
+            DeleteObject(oldObject);
         }
 
         internal void CheckReadOnly(string? message = null)

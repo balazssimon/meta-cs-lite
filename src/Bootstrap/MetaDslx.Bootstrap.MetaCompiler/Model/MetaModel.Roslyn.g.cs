@@ -2710,7 +2710,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Roslyn.__Impl
 			public override __IModelObject? Create(__Model? model = null, string? id = null)
 			{
 				var result = new Alternative_Impl(id);
-				if (model is not null) model.AddObject(result);
+				if (model is not null) model.AttachObject(result);
 				return result;
 			}
 	
@@ -2820,7 +2820,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Roslyn.__Impl
 			public override __IModelObject? Create(__Model? model = null, string? id = null)
 			{
 				var result = new Binder_Impl(id);
-				if (model is not null) model.AddObject(result);
+				if (model is not null) model.AttachObject(result);
 				return result;
 			}
 	
@@ -2931,7 +2931,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Roslyn.__Impl
 			public override __IModelObject? Create(__Model? model = null, string? id = null)
 			{
 				var result = new BinderArgument_Impl(id);
-				if (model is not null) model.AddObject(result);
+				if (model is not null) model.AttachObject(result);
 				return result;
 			}
 	
@@ -3191,7 +3191,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Roslyn.__Impl
 			public override __IModelObject? Create(__Model? model = null, string? id = null)
 			{
 				var result = new Element_Impl(id);
-				if (model is not null) model.AddObject(result);
+				if (model is not null) model.AttachObject(result);
 				return result;
 			}
 	
@@ -3307,7 +3307,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Roslyn.__Impl
 			public override __IModelObject? Create(__Model? model = null, string? id = null)
 			{
 				var result = new ElementValue_Impl(id);
-				if (model is not null) model.AddObject(result);
+				if (model is not null) model.AttachObject(result);
 				return result;
 			}
 	
@@ -3445,7 +3445,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Roslyn.__Impl
 			public override __IModelObject? Create(__Model? model = null, string? id = null)
 			{
 				var result = new Eof_Impl(id);
-				if (model is not null) model.AddObject(result);
+				if (model is not null) model.AttachObject(result);
 				return result;
 			}
 	
@@ -3610,7 +3610,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Roslyn.__Impl
 			public override __IModelObject? Create(__Model? model = null, string? id = null)
 			{
 				var result = new Language_Impl(id);
-				if (model is not null) model.AddObject(result);
+				if (model is not null) model.AttachObject(result);
 				return result;
 			}
 	
@@ -3734,7 +3734,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Roslyn.__Impl
 			public override __IModelObject? Create(__Model? model = null, string? id = null)
 			{
 				var result = new Rule_Impl(id);
-				if (model is not null) model.AddObject(result);
+				if (model is not null) model.AttachObject(result);
 				return result;
 			}
 	
@@ -3880,7 +3880,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Roslyn.__Impl
 			public override __IModelObject? Create(__Model? model = null, string? id = null)
 			{
 				var result = new RuleRef_Impl(id);
-				if (model is not null) model.AddObject(result);
+				if (model is not null) model.AttachObject(result);
 				return result;
 			}
 	
@@ -4086,7 +4086,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Roslyn.__Impl
 			public override __IModelObject? Create(__Model? model = null, string? id = null)
 			{
 				var result = new SeparatedList_Impl(id);
-				if (model is not null) model.AddObject(result);
+				if (model is not null) model.AttachObject(result);
 				return result;
 			}
 	
@@ -4206,7 +4206,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Roslyn.__Impl
 			public override __IModelObject? Create(__Model? model = null, string? id = null)
 			{
 				var result = new Token_Impl(id);
-				if (model is not null) model.AddObject(result);
+				if (model is not null) model.AttachObject(result);
 				return result;
 			}
 	
@@ -4351,7 +4351,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Roslyn.__Impl
 			public override __IModelObject? Create(__Model? model = null, string? id = null)
 			{
 				var result = new TokenAlts_Impl(id);
-				if (model is not null) model.AddObject(result);
+				if (model is not null) model.AttachObject(result);
 				return result;
 			}
 	
@@ -4447,7 +4447,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Roslyn.__Impl
 			public override __IModelObject? Create(__Model? model = null, string? id = null)
 			{
 				var result = new TokenKind_Impl(id);
-				if (model is not null) model.AddObject(result);
+				if (model is not null) model.AttachObject(result);
 				return result;
 			}
 	
@@ -4593,7 +4593,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Roslyn.__Impl
 			public override __IModelObject? Create(__Model? model = null, string? id = null)
 			{
 				var result = new TokenRef_Impl(id);
-				if (model is not null) model.AddObject(result);
+				if (model is not null) model.AttachObject(result);
 				return result;
 			}
 	

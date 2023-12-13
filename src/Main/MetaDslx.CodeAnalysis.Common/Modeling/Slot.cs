@@ -35,6 +35,7 @@ namespace MetaDslx.Modeling
         public abstract IEnumerable<Box> Boxes { get; }
         protected abstract Box? AddCore(object? item, Box? oppositeBox);
         protected abstract Box? RemoveCore(object? item, Box? oppositeBox);
+        protected abstract Box? ReplaceCore(object? oldItem, object? newItem);
 
         Box? ISlot.Add(object? item)
         {
@@ -44,6 +45,11 @@ namespace MetaDslx.Modeling
         Box? ISlot.Remove(object? item)
         {
             return RemoveCore(item, null);
+        }
+
+        Box? ISlot.Replace(object? oldItem, object? newItem)
+        {
+            return ReplaceCore(oldItem, newItem);
         }
 
         Box? IOppositeSlotCore.AddCore(object? item, Box? oppositeBox)

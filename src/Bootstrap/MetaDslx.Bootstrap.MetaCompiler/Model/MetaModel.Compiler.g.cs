@@ -2737,7 +2737,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 			public override __IModelObject? Create(__Model? model = null, string? id = null)
 			{
 				var result = new Annotation_Impl(id);
-				if (model is not null) model.AddObject(result);
+				if (model is not null) model.AttachObject(result);
 				return result;
 			}
 	
@@ -2848,7 +2848,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 			public override __IModelObject? Create(__Model? model = null, string? id = null)
 			{
 				var result = new AnnotationArgument_Impl(id);
-				if (model is not null) model.AddObject(result);
+				if (model is not null) model.AttachObject(result);
 				return result;
 			}
 	
@@ -2944,7 +2944,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 			public override __IModelObject? Create(__Model? model = null, string? id = null)
 			{
 				var result = new ArrayExpression_Impl(id);
-				if (model is not null) model.AddObject(result);
+				if (model is not null) model.AttachObject(result);
 				return result;
 			}
 	
@@ -3053,7 +3053,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 			public override __IModelObject? Create(__Model? model = null, string? id = null)
 			{
 				var result = new Declaration_Impl(id);
-				if (model is not null) model.AddObject(result);
+				if (model is not null) model.AttachObject(result);
 				return result;
 			}
 	
@@ -3141,7 +3141,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 			public override __IModelObject? Create(__Model? model = null, string? id = null)
 			{
 				var result = new Expression_Impl(id);
-				if (model is not null) model.AddObject(result);
+				if (model is not null) model.AttachObject(result);
 				return result;
 			}
 	
@@ -3266,7 +3266,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 			public override __IModelObject? Create(__Model? model = null, string? id = null)
 			{
 				var result = new Grammar_Impl(id);
-				if (model is not null) model.AddObject(result);
+				if (model is not null) model.AttachObject(result);
 				return result;
 			}
 	
@@ -3367,7 +3367,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 			public override __IModelObject? Create(__Model? model = null, string? id = null)
 			{
 				var result = new LAlternative_Impl(id);
-				if (model is not null) model.AddObject(result);
+				if (model is not null) model.AttachObject(result);
 				return result;
 			}
 	
@@ -3485,7 +3485,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 			public override __IModelObject? Create(__Model? model = null, string? id = null)
 			{
 				var result = new Language_Impl(id);
-				if (model is not null) model.AddObject(result);
+				if (model is not null) model.AttachObject(result);
 				return result;
 			}
 	
@@ -3601,7 +3601,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 			public override __IModelObject? Create(__Model? model = null, string? id = null)
 			{
 				var result = new LBlock_Impl(id);
-				if (model is not null) model.AddObject(result);
+				if (model is not null) model.AttachObject(result);
 				return result;
 			}
 	
@@ -3719,7 +3719,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 			public override __IModelObject? Create(__Model? model = null, string? id = null)
 			{
 				var result = new LElement_Impl(id);
-				if (model is not null) model.AddObject(result);
+				if (model is not null) model.AttachObject(result);
 				return result;
 			}
 	
@@ -3813,7 +3813,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 			public override __IModelObject? Create(__Model? model = null, string? id = null)
 			{
 				var result = new LElementValue_Impl(id);
-				if (model is not null) model.AddObject(result);
+				if (model is not null) model.AttachObject(result);
 				return result;
 			}
 	
@@ -3984,7 +3984,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 			public override __IModelObject? Create(__Model? model = null, string? id = null)
 			{
 				var result = new LexerRule_Impl(id);
-				if (model is not null) model.AddObject(result);
+				if (model is not null) model.AttachObject(result);
 				return result;
 			}
 	
@@ -4101,7 +4101,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 			public override __IModelObject? Create(__Model? model = null, string? id = null)
 			{
 				var result = new LFixed_Impl(id);
-				if (model is not null) model.AddObject(result);
+				if (model is not null) model.AttachObject(result);
 				return result;
 			}
 	
@@ -4226,7 +4226,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 			public override __IModelObject? Create(__Model? model = null, string? id = null)
 			{
 				var result = new LRange_Impl(id);
-				if (model is not null) model.AddObject(result);
+				if (model is not null) model.AttachObject(result);
 				return result;
 			}
 	
@@ -4343,7 +4343,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 			public override __IModelObject? Create(__Model? model = null, string? id = null)
 			{
 				var result = new LReference_Impl(id);
-				if (model is not null) model.AddObject(result);
+				if (model is not null) model.AttachObject(result);
 				return result;
 			}
 	
@@ -4459,7 +4459,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 			public override __IModelObject? Create(__Model? model = null, string? id = null)
 			{
 				var result = new LSet_Impl(id);
-				if (model is not null) model.AddObject(result);
+				if (model is not null) model.AttachObject(result);
 				return result;
 			}
 	
@@ -4553,7 +4553,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 			public override __IModelObject? Create(__Model? model = null, string? id = null)
 			{
 				var result = new LSetItem_Impl(id);
-				if (model is not null) model.AddObject(result);
+				if (model is not null) model.AttachObject(result);
 				return result;
 			}
 	
@@ -4670,7 +4670,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 			public override __IModelObject? Create(__Model? model = null, string? id = null)
 			{
 				var result = new LSetChar_Impl(id);
-				if (model is not null) model.AddObject(result);
+				if (model is not null) model.AttachObject(result);
 				return result;
 			}
 	
@@ -4795,7 +4795,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 			public override __IModelObject? Create(__Model? model = null, string? id = null)
 			{
 				var result = new LSetRange_Impl(id);
-				if (model is not null) model.AddObject(result);
+				if (model is not null) model.AttachObject(result);
 				return result;
 			}
 	
@@ -4904,7 +4904,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 			public override __IModelObject? Create(__Model? model = null, string? id = null)
 			{
 				var result = new LWildCard_Impl(id);
-				if (model is not null) model.AddObject(result);
+				if (model is not null) model.AttachObject(result);
 				return result;
 			}
 	
@@ -5014,7 +5014,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 			public override __IModelObject? Create(__Model? model = null, string? id = null)
 			{
 				var result = new Namespace_Impl(id);
-				if (model is not null) model.AddObject(result);
+				if (model is not null) model.AttachObject(result);
 				return result;
 			}
 	
@@ -5147,7 +5147,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 			public override __IModelObject? Create(__Model? model = null, string? id = null)
 			{
 				var result = new PAlternative_Impl(id);
-				if (model is not null) model.AddObject(result);
+				if (model is not null) model.AttachObject(result);
 				return result;
 			}
 	
@@ -5272,7 +5272,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 			public override __IModelObject? Create(__Model? model = null, string? id = null)
 			{
 				var result = new Rule_Impl(id);
-				if (model is not null) model.AddObject(result);
+				if (model is not null) model.AttachObject(result);
 				return result;
 			}
 	
@@ -5413,7 +5413,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 			public override __IModelObject? Create(__Model? model = null, string? id = null)
 			{
 				var result = new ParserRule_Impl(id);
-				if (model is not null) model.AddObject(result);
+				if (model is not null) model.AttachObject(result);
 				return result;
 			}
 	
@@ -5538,7 +5538,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 			public override __IModelObject? Create(__Model? model = null, string? id = null)
 			{
 				var result = new PElement_Impl(id);
-				if (model is not null) model.AddObject(result);
+				if (model is not null) model.AttachObject(result);
 				return result;
 			}
 	
@@ -5618,7 +5618,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 			public override __IModelObject? Create(__Model? model = null, string? id = null)
 			{
 				var result = new PElementValue_Impl(id);
-				if (model is not null) model.AddObject(result);
+				if (model is not null) model.AttachObject(result);
 				return result;
 			}
 	
@@ -5760,7 +5760,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 			public override __IModelObject? Create(__Model? model = null, string? id = null)
 			{
 				var result = new PBlock_Impl(id);
-				if (model is not null) model.AddObject(result);
+				if (model is not null) model.AttachObject(result);
 				return result;
 			}
 	
@@ -5841,7 +5841,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 			public override __IModelObject? Create(__Model? model = null, string? id = null)
 			{
 				var result = new PEof_Impl(id);
-				if (model is not null) model.AddObject(result);
+				if (model is not null) model.AttachObject(result);
 				return result;
 			}
 	
@@ -5930,7 +5930,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 			public override __IModelObject? Create(__Model? model = null, string? id = null)
 			{
 				var result = new PKeyword_Impl(id);
-				if (model is not null) model.AddObject(result);
+				if (model is not null) model.AttachObject(result);
 				return result;
 			}
 	
@@ -6026,7 +6026,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 			public override __IModelObject? Create(__Model? model = null, string? id = null)
 			{
 				var result = new PReference_Impl(id);
-				if (model is not null) model.AddObject(result);
+				if (model is not null) model.AttachObject(result);
 				return result;
 			}
 	

@@ -48,12 +48,12 @@ namespace MetaDslx.Modeling
                         if (originalModel != null)
                         {
                             _model = null;
-                            originalModel.RemoveObject(this);
+                            originalModel.DetachObject(this);
                         }
                         _model = value;
                         if (_model != null)
                         {
-                            _model.AddObject(this);
+                            _model.AttachObject(this);
                         }
                     }
                     catch (Exception ex)
@@ -319,11 +319,62 @@ namespace MetaDslx.Modeling
             return null;
         }
 
-        public IModelObject Clone()
+        public IModelObject? Clone()
         {
-            var copy = this.MInfo.Create(_model);
-            // TODO
+            var map = new Dictionary<IModelObject, IModelObject>();
+            var copy = MakeCopyMap(this, map);
+            if (copy is not null) CopyProperties(this, map);
             return copy;
+        }
+
+        private IModelObject? MakeCopyMap(IModelObject parent, Dictionary<IModelObject, IModelObject> copyMap)
+        {
+            var copy = parent?.Info?.Create(_model);
+            copyMap.Add(parent, copy);
+            foreach (var child in parent.Children)
+            {
+                MakeCopyMap(child, copyMap);
+            }
+            return copy;
+        }
+
+        private void CopyProperties(IModelObject parent, Dictionary<IModelObject, IModelObject> copyMap)
+        {
+            if (copyMap.TryGetValue(parent, out var copy))
+            {
+                foreach (var prop in parent.Info.AllDeclaredProperties)
+                {
+                    var opposites = parent.Info.GetOppositeProperties(prop);
+                    var hasOpposites = !prop.IsContainment && opposites.Length > 0;
+                    var oldSlot = parent.GetSlot(prop);
+                    var newSlot = copy.GetSlot(prop);
+                    foreach (var oldValue in oldSlot.Values)
+                    {
+                        if (oldValue is null)
+                        {
+                            newSlot.Add(null);
+                        }
+                        else
+                        {
+                            var newIsCopy = false;
+                            var newValue = oldValue;
+                            if (oldValue is IModelObject oldMObj && copyMap.TryGetValue(oldMObj, out var newMObj))
+                            {
+                                newValue = newMObj;
+                                newIsCopy = true;
+                            }
+                            if (newValue is not null && (!hasOpposites || newIsCopy))
+                            {
+                                newSlot.Add(newValue);
+                            }
+                        }
+                    }
+                }
+            }
+            foreach (var child in parent.Children)
+            {
+                CopyProperties(child, copyMap);
+            }
         }
 
         IEnumerable<Box> IModelObject.References => (IEnumerable<Box>?)_references ?? ImmutableArray<Box>.Empty;

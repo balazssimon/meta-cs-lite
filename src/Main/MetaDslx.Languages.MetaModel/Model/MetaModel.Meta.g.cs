@@ -1129,7 +1129,7 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 			public override __IModelObject? Create(__Model? model = null, string? id = null)
 			{
 				var result = new MetaDeclaration_Impl(id);
-				if (model is not null) model.AddObject(result);
+				if (model is not null) model.AttachObject(result);
 				return result;
 			}
 	
@@ -1248,7 +1248,7 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 			public override __IModelObject? Create(__Model? model = null, string? id = null)
 			{
 				var result = new MetaConstant_Impl(id);
-				if (model is not null) model.AddObject(result);
+				if (model is not null) model.AttachObject(result);
 				return result;
 			}
 	
@@ -1366,7 +1366,7 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 			public override __IModelObject? Create(__Model? model = null, string? id = null)
 			{
 				var result = new MetaModel_Impl(id);
-				if (model is not null) model.AddObject(result);
+				if (model is not null) model.AttachObject(result);
 				return result;
 			}
 	
@@ -1477,7 +1477,7 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 			public override __IModelObject? Create(__Model? model = null, string? id = null)
 			{
 				var result = new MetaNamespace_Impl(id);
-				if (model is not null) model.AddObject(result);
+				if (model is not null) model.AttachObject(result);
 				return result;
 			}
 	
@@ -1588,7 +1588,7 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 			public override __IModelObject? Create(__Model? model = null, string? id = null)
 			{
 				var result = new MetaType_Impl(id);
-				if (model is not null) model.AddObject(result);
+				if (model is not null) model.AttachObject(result);
 				return result;
 			}
 	
@@ -1708,7 +1708,7 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 			public override __IModelObject? Create(__Model? model = null, string? id = null)
 			{
 				var result = new MetaArrayType_Impl(id);
-				if (model is not null) model.AddObject(result);
+				if (model is not null) model.AttachObject(result);
 				return result;
 			}
 	
@@ -1857,7 +1857,7 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 			public override __IModelObject? Create(__Model? model = null, string? id = null)
 			{
 				var result = new MetaClass_Impl(id);
-				if (model is not null) model.AddObject(result);
+				if (model is not null) model.AttachObject(result);
 				return result;
 			}
 	
@@ -1976,7 +1976,7 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 			public override __IModelObject? Create(__Model? model = null, string? id = null)
 			{
 				var result = new MetaEnum_Impl(id);
-				if (model is not null) model.AddObject(result);
+				if (model is not null) model.AttachObject(result);
 				return result;
 			}
 	
@@ -2087,7 +2087,7 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 			public override __IModelObject? Create(__Model? model = null, string? id = null)
 			{
 				var result = new MetaEnumLiteral_Impl(id);
-				if (model is not null) model.AddObject(result);
+				if (model is not null) model.AttachObject(result);
 				return result;
 			}
 	
@@ -2207,7 +2207,7 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 			public override __IModelObject? Create(__Model? model = null, string? id = null)
 			{
 				var result = new MetaNullableType_Impl(id);
-				if (model is not null) model.AddObject(result);
+				if (model is not null) model.AttachObject(result);
 				return result;
 			}
 	
@@ -2333,7 +2333,7 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 			public override __IModelObject? Create(__Model? model = null, string? id = null)
 			{
 				var result = new MetaOperation_Impl(id);
-				if (model is not null) model.AddObject(result);
+				if (model is not null) model.AttachObject(result);
 				return result;
 			}
 	
@@ -2452,7 +2452,7 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 			public override __IModelObject? Create(__Model? model = null, string? id = null)
 			{
 				var result = new MetaParameter_Impl(id);
-				if (model is not null) model.AddObject(result);
+				if (model is not null) model.AttachObject(result);
 				return result;
 			}
 	
@@ -2564,7 +2564,7 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 			public override __IModelObject? Create(__Model? model = null, string? id = null)
 			{
 				var result = new MetaPrimitiveType_Impl(id);
-				if (model is not null) model.AddObject(result);
+				if (model is not null) model.AttachObject(result);
 				return result;
 			}
 	
@@ -2728,7 +2728,7 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
 			public override __IModelObject? Create(__Model? model = null, string? id = null)
 			{
 				var result = new MetaProperty_Impl(id);
-				if (model is not null) model.AddObject(result);
+				if (model is not null) model.AttachObject(result);
 				return result;
 			}
 	
