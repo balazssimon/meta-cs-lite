@@ -1,16 +1,18 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Text;
 
 namespace MetaDslx.Modeling
 {
-    public class CollectionSlot : Slot
+    internal class CollectionSlot : Slot, ICollectionSlot
     {
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Box> _items;
 
-        public CollectionSlot(ModelObject owner, ModelPropertySlot property)
+        public CollectionSlot(IModelObject owner, ModelPropertySlot property)
             : base(owner, property)
         {
             _items = new List<Box>();
@@ -18,14 +20,13 @@ namespace MetaDslx.Modeling
 
         public List<Box> Items => _items;
 
-        public void Add(Box? box)
-        {
-            throw new NotImplementedException();
-        }
+        public override bool IsDefault => _items.Count == 0;
 
-        public void Remove(Box? box)
-        {
-            throw new NotImplementedException();
-        }
+        public bool IsUnordered => Property.IsUnordered;
+
+        public bool IsNonUnique => Property.IsNonUnique;
+
+        public int Count => _items.Count;
+
     }
 }

@@ -24,12 +24,20 @@ namespace MetaDslx.Modeling
 
         public ModelProperty SlotProperty => _slotProperty;
         public ImmutableArray<ModelProperty> SlotProperties => _slotProperties;
+        public string QualifiedName => _slotProperty.QualifiedName;
         public object? DefaultValue => _defaultValue;
         public ModelPropertyFlags Flags => _flags;
         public Func<IModelObject, object>? MapKeySelector => _mapKeySelector;
+        public bool IsContainment => _flags.HasFlag(ModelPropertyFlags.Containment);
         public bool IsSingleItem => _flags.HasFlag(ModelPropertyFlags.SingleItem);
         public bool IsCollection => _flags.HasFlag(ModelPropertyFlags.Collection);
         public bool IsMap => _flags.HasFlag(ModelPropertyFlags.Map);
+        public bool IsNullable => _flags.HasFlag(ModelPropertyFlags.NullableType);
+        public bool IsReadOnly => _flags.HasFlag(ModelPropertyFlags.ReadOnly);
+        public bool IsUnordered => _flags.HasFlag(ModelPropertyFlags.Unordered);
+        public bool IsNonUnique => _flags.HasFlag(ModelPropertyFlags.NonUnique);
+        public bool IsUntracked => _flags.HasFlag(ModelPropertyFlags.Untracked);
+        public bool IsModelObjectType => _flags.HasFlag(ModelPropertyFlags.ModelObjectType);
 
         internal void ThrowModelException(Func<ModelProperty, bool> condition, Func<ModelProperty, string> message)
         {

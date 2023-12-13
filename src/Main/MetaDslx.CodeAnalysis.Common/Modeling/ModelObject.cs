@@ -8,7 +8,7 @@ using System.Text;
 
 namespace MetaDslx.Modeling
 {
-    public abstract class ModelObject : IModelObject
+    public abstract class ModelObject : IModelObject, IReferenceableModelObject
     {
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private string _id;
@@ -159,13 +159,13 @@ namespace MetaDslx.Modeling
             {
                 var nameProp = MInfo.NameProperty;
                 string? name = null;
-                if (nameProp != null) name = ((IModelObject)this).GetAsSingle<string>(nameProp);
+                if (nameProp != null) name = ((IModelObject)this).Get(nameProp)?.AsSingle()?.Get()?.ToString();
                 return name;
             }
             set
             {
                 var nameProp = MInfo.NameProperty;
-                if (nameProp != null) ((IModelObject)this).SetAsSingle(nameProp, value);
+                if (nameProp != null) ((IModelObject)this).Get(nameProp)?.AsSingle()?.Set(value);
             }
         }
 
@@ -176,338 +176,34 @@ namespace MetaDslx.Modeling
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         MetaType IModelObject.SymbolType => MInfo.SymbolType;
 
-        void IModelObject.Init(ModelProperty property, object? value)
-        {
-            _model?.CheckReadOnly($"Error initializing '{property.QualifiedName}' in '{this}' with '{value}'");
-            var slot = GetSlot(property);
-            SetSlotValueCore(slot, value);
-        }
-
-        bool IModelObject.IsDefault(ModelProperty property)
-        {
-            var value = ((IModelObject)this).Get(property);
-            if (value is null) return property.DefaultValue is null;
-            else return value.Equals(property.DefaultValue);
-        }
-
         public T MGet<T>(ModelProperty property)
         {
-            var value = ((IModelObject)this).Get(property);
-            if (value is null) return default(T);
-            else return (T)value;
-            //Convert.ChangeType(value, typeof(T), CultureInfo.InvariantCulture);
+            var slot = ((IModelObject)this).Get(property)?.AsSingle<T>();
+            if (slot is not null) return slot.Get();
+            else return default;
         }
 
         public IList<T> MGetCollection<T>(ModelProperty property)
         {
-            var value = ((IModelObject)this).Get(property);
-            if (value is null) return default;
-            else return (value as ICollectionSlot)?.CastTo<T>();
-            //Convert.ChangeType(value, typeof(T), CultureInfo.InvariantCulture);
-        }
-
-        object? IModelObject.Get(ModelProperty property)
-        {
-            var slot = GetSlot(property);
-            if (TryGetSlotValueCore(slot, out var value))
-            {
-                if (slot.Flags.HasFlag(ModelPropertyFlags.Collection) && property.Flags.HasFlag(ModelPropertyFlags.SingleItem))
-                {
-                    var collection = value as ICollectionSlot;
-                    if (collection != null)
-                    {
-                        return collection.SingleItem;
-                    }
-                    else
-                    {
-                        throw new ModelException($"Error getting value of '{property.QualifiedName}' in '{this}': the property must be initialized in the constructor with an IModelCollection implementation using Init().");
-                    }
-                }
-                return value;
-            }
-            else
-            {
-                if (slot.Flags.HasFlag(ModelPropertyFlags.Collection))
-                {
-                    throw new ModelException($"Error getting value of '{property.QualifiedName}' in '{this}': the property must be initialized in the constructor with an IModelCollection implementation using Init().");
-                }
-                else
-                {
-                    return null;
-                }
-            }
-        }
-
-        IEnumerable<object> IModelObject.GetValues(ModelProperty property)
-        {
-            var slot = GetSlot(property);
-            if (TryGetSlotValueCore(slot, out var value))
-            {
-                if (slot.Flags.HasFlag(ModelPropertyFlags.Collection))
-                {
-                    var collection = value as ICollectionSlot;
-                    if (collection != null)
-                    {
-                        foreach (var item in collection)
-                        {
-                            yield return item;
-                        }
-                    }
-                    else
-                    {
-                        throw new ModelException($"Error getting value of '{property.QualifiedName}' in '{this}': the property must be initialized in the constructor with an IModelCollection implementation using Init().");
-                    }
-                }
-                else
-                {
-                    yield return value;
-                }
-            }
-            else
-            {
-                if (slot.Flags.HasFlag(ModelPropertyFlags.Collection))
-                {
-                    throw new ModelException($"Error getting value of '{property.QualifiedName}' in '{this}': the property must be initialized in the constructor with an IModelCollection implementation using Init().");
-                }
-                else
-                {
-                    yield break;
-                }
-            }
+            var slot = ((IModelObject)this).Get(property)?.AsCollection<T>();
+            if (slot is not null) return slot as IList<T>;
+            else return default;
         }
 
         public void MAdd<T>(ModelProperty property, T value)
         {
-            ((IModelObject)this).Add(property, value);
+            ((IModelObject)this).Get(property)?.Add(value);
         }
 
         public void MRemove<T>(ModelProperty property, T value)
         {
-            ((IModelObject)this).Remove(property, value);
-        }
-        
-        void IModelObject.Add(ModelProperty property, object? item)
-        {
-            _model?.CheckReadOnly(GetAddMessage(property, item));
-            var slot = GetSlot(property);
-            if (_model.ValidationOptions.ValidateReadOnly && slot.Flags.HasFlag(ModelPropertyFlags.ReadOnly))
-            {
-                slot.ThrowModelException(mp => mp.IsReadOnly, mp => $"{GetAddMessage(property, item)}: the property is read only.");
-            }
-            AddCore(property, item, false);
-        }
-
-        internal void AddCore(ModelProperty property, object? item, bool fromOpposite)
-        {
-            var slot = GetSlot(property);
-            if (item is not null)
-            {
-                var itemType = item is IModelObject mobj ? mobj.MetaType.AsType() : item.GetType();
-                slot.ThrowModelException(mp => itemType is null || !mp.Type.IsAssignableFrom(itemType), mp => $"{GetAddMessage(mp, item)}: the item type '{itemType}' is not assignable to the property type '{mp.Type}'.");
-            }
-            else if (_model.ValidationOptions.ValidateNullable)
-            {
-                slot.ThrowModelException(mp => !mp.IsNullable, mp => $"{GetAddMessage(mp, item)}: value cannot be null.");
-            }
-            if (TryGetSlotValueCore(slot, out var oldValue))
-            {
-                if (slot.Flags.HasFlag(ModelPropertyFlags.Collection))
-                {
-                    if (oldValue is ICollectionSlot collection)
-                    {
-                        if (property.Flags.HasFlag(ModelPropertyFlags.Collection))
-                        {
-                            if (collection is IModelCollectionCore collectionCore)
-                            {
-                                collectionCore.AddCore(item, fromOpposite);
-                            }
-                        }
-                        else
-                        {
-                            collection.SingleItem = item;
-                        }
-                    }
-                    else
-                    {
-                        slot.ThrowModelException(mp => mp.IsCollection, mp => $"{GetAddMessage(mp, item)}: the property must be initialized in the constructor with an IModelCollection implementation using Init().");
-                    }
-                }
-                else
-                {
-                    if (oldValue == null && item == null) return;
-                    if ((oldValue != null && !oldValue.Equals(item)) || (oldValue == null && item != null))
-                    {
-                        try
-                        {
-                            SetSlotValueCore(slot, null);
-                            if (oldValue != null) ValueRemoved(slot, oldValue, fromOpposite);
-                            SetSlotValueCore(slot, item);
-                            if (item != null) ValueAdded(slot, item, fromOpposite);
-                        }
-                        catch (Exception ex)
-                        {
-                            SetSlotValueCore(slot, oldValue);
-                            if (_model.ValidationOptions.FullPropertyModificationStackInExceptions) throw new ModelException($"{GetAddMessage(slot.SlotProperty, item)}", ex);
-                            else throw;
-                        }
-                    }
-                }
-            }
-            else if (!slot.Flags.HasFlag(ModelPropertyFlags.Collection))
-            {
-                try
-                {
-                    SetSlotValueCore(slot, item);
-                    if (item != null) ValueAdded(slot, item, fromOpposite);
-                }
-                catch (Exception ex)
-                {
-                    if (_model.ValidationOptions.FullPropertyModificationStackInExceptions) throw new ModelException($"{GetAddMessage(slot.SlotProperty, item)}", ex);
-                    else throw;
-                }
-            }
-        }
-
-        void IModelObject.Remove(ModelProperty property, object? item)
-        {
-            _model?.CheckReadOnly(GetRemoveMessage(property, item));
-            var slot = GetSlot(property);
-            if (_model.ValidationOptions.ValidateReadOnly && slot.Flags.HasFlag(ModelPropertyFlags.ReadOnly))
-            {
-                slot.ThrowModelException(mp => mp.IsReadOnly, mp => $"{GetRemoveMessage(property, item)}: the property is read only.");
-            }
-            RemoveCore(property, item, false);
-        }
-
-        internal void RemoveCore(ModelProperty property, object? item, bool fromOpposite)
-        {
-            var slot = GetSlot(property);
-            if (TryGetSlotValueCore(slot, out var oldValue))
-            {
-                if (slot.Flags.HasFlag(ModelPropertyFlags.Collection))
-                {
-                    if (oldValue is IModelCollectionCore collection)
-                    {
-                        collection.RemoveCore(item, fromOpposite);
-                    }
-                    else
-                    {
-                        slot.ThrowModelException(mp => mp.IsCollection, mp => $"{GetAddMessage(mp, item)}: the property must be initialized in the constructor with an IModelCollection implementation using Init().");
-                    }
-                }
-                else
-                {
-                    if (oldValue != null && oldValue.Equals(item))
-                    {
-                        try
-                        {
-                            SetSlotValueCore(slot, null);
-                            if (oldValue != null) ValueRemoved(slot, oldValue, fromOpposite);
-                        }
-                        catch (Exception ex)
-                        {
-                            SetSlotValueCore(slot, oldValue);
-                            if (_model.ValidationOptions.FullPropertyModificationStackInExceptions) throw new ModelException($"{GetRemoveMessage(slot.SlotProperty, item)}", ex);
-                            else throw;
-                        }
-                    }
-                }
-            }
-        }
-
-        internal void ValueAdded(ModelPropertySlot slot, object value, bool fromOpposite)
-        {
-            if (slot.Flags.HasFlag(ModelPropertyFlags.Untracked)) return;
-            if (slot.Flags.HasFlag(ModelPropertyFlags.ModelObjectType) && value is IModelObject mobj)
-            {
-                var mthis = (IModelObject)this;
-                if (slot.Flags.HasFlag(ModelPropertyFlags.Containment))
-                {
-                    var mobjParent = mobj.Parent;
-                    if (mobjParent == null) ((ModelObject)mobj)._parent = mthis;
-                    else if (!object.ReferenceEquals(mobjParent, this))
-                    {
-                        throw new ModelException($"Cannot set the container of object '{mobj}' to '{this}': the object is already contained by the parent '{mobjParent}'. Remove the object from the parent first.");
-                    }
-                    if (!_children.Contains(mobj))
-                    {
-                        _children.Add(mobj);
-                    }
-                }
-                foreach (var slotProperty in slot.SlotProperties)
-                {
-                    if (!fromOpposite)
-                    {
-                        foreach (var oppositeProperty in ((IModelObject)this).GetOppositeProperties(slotProperty))
-                        {
-                            ((ModelObject)mobj).AddCore(oppositeProperty, this, true);
-                        }
-                    }
-                    foreach (var subsettedProperty in ((IModelObject)this).GetSubsettedProperties(slotProperty))
-                    {
-                        this.AddCore(subsettedProperty, mobj, fromOpposite);
-                    }
-                }
-            }
-        }
-
-        internal void ValueRemoved(ModelPropertySlot slot, object? value, bool fromOpposite)
-        {
-            if (slot.Flags.HasFlag(ModelPropertyFlags.Untracked)) return;
-            if (slot.Flags.HasFlag(ModelPropertyFlags.ModelObjectType) && value is IModelObject mobj)
-            {
-                var mthis = (IModelObject)this;
-                if (slot.Flags.HasFlag(ModelPropertyFlags.Containment))
-                {
-                    var stillContained = false;
-                    foreach (var slotProperty in slot.SlotProperties)
-                    {
-                        if (slotProperty.Flags.HasFlag(ModelPropertyFlags.Containment))
-                        {
-                            if (slotProperty.Flags.HasFlag(ModelPropertyFlags.Collection))
-                            {
-                                var collection = mthis.Get(slotProperty) as ICollectionSlot;
-                                if (collection != null)
-                                {
-                                    stillContained |= collection.Contains(mobj);
-                                }
-                            }
-                            else
-                            {
-                                stillContained |= object.ReferenceEquals(mthis.Get(slotProperty), mobj);
-                            }
-                        }
-                        if (stillContained) break;
-                    }
-                    if (!stillContained)
-                    {
-                        _children.Remove(mobj);
-                        ((ModelObject)mobj)._parent = null;
-                    }
-                }
-                foreach (var slotProperty in slot.SlotProperties)
-                {
-                    if (!fromOpposite)
-                    {
-                        foreach (var oppositeProperty in ((IModelObject)this).GetOppositeProperties(slotProperty))
-                        {
-                            ((ModelObject)mobj).RemoveCore(oppositeProperty, this, true);
-                        }
-                    }
-                    foreach (var subsettingProperty in ((IModelObject)this).GetSubsettingProperties(slotProperty))
-                    {
-                        this.RemoveCore(subsettingProperty, mobj, fromOpposite);
-                    }
-                }
-            }
+            ((IModelObject)this).Get(property)?.Remove(value);
         }
 
         public override string ToString()
         {
             var metaTypeName = MInfo.MetaType;
-            var nameProp = MInfo.NameProperty;
-            string? name = null;
-            if (nameProp != null) name = ((IModelObject)this).Get(nameProp)?.ToString();
+            var name = ((IModelObject)this).Name;
             var typeProp = MInfo.TypeProperty;
             string? type = null;
             if (typeProp != null) type = ((IModelObject)this).Get(typeProp)?.ToString();
@@ -562,23 +258,8 @@ namespace MetaDslx.Modeling
             return MInfo.GetHidingProperties(property);
         }
 
-        private string GetAddMessage(ModelProperty property, object? item)
-        {
-            if (property.IsSingleItem) return $"Error assigning '{item}' to {property.QualifiedName} in {this}";
-            else return $"Error adding '{item}' to {property.QualifiedName} in {this}";
-        }
-
-        private string GetRemoveMessage(ModelProperty property, object? item)
-        {
-            if (property.IsSingleItem) return $"Error assigning '{item}' to {property.QualifiedName} in {this}";
-            else return $"Error removing '{item}' from {property.QualifiedName} in {this}";
-        }
-
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         protected abstract IEnumerable<ModelProperty> StoredPropertiesCore { get; }
-
-        protected abstract void SetSlotValueCore(ModelPropertySlot slot, Slot? value);
-        protected abstract bool TryGetSlotValueCore(ModelPropertySlot slot, out Slot? value);
 
         ImmutableArray<ModelOperation> IModelObject.DeclaredOperations => MInfo.DeclaredOperations;
 
@@ -594,6 +275,56 @@ namespace MetaDslx.Modeling
         ImmutableArray<ModelOperation> IModelObject.GetOverridingOperations(ModelOperation operation)
         {
             return MInfo.GetOverridingOperations(operation);
+        }
+
+        ISlot? IModelObject.Get(ModelProperty property)
+        {
+            if (MInfo.AllDeclaredProperties.Contains(property)) return ((IModelObject)this).Attach(property); 
+            else return null;
+        }
+
+        ISlot IModelObject.Attach(ModelProperty property)
+        {
+            var propertySlot = GetSlot(property);
+            if (this.TryGetSlotValueCore(propertySlot, out var slot)) return slot;
+            if (propertySlot.IsMap)
+            {
+                slot = new MapSlot(this, propertySlot);
+                SetSlotValueCore(propertySlot, slot);
+                return slot;
+            }
+            if (propertySlot.IsCollection)
+            {
+                slot = new CollectionSlot(this, propertySlot);
+                SetSlotValueCore(propertySlot, slot);
+                return slot;
+            }
+            if (propertySlot.IsSingleItem)
+            {
+                slot = new SingleSlot(this, propertySlot);
+                SetSlotValueCore(propertySlot, slot);
+                return slot;
+            }
+            return null;
+        }
+
+        protected abstract void SetSlotValueCore(ModelPropertySlot propertySlot, ISlot? slot);
+        protected abstract bool TryGetSlotValueCore(ModelPropertySlot propertySlot, out ISlot? slot);
+
+        public abstract IModelObject Clone();
+
+        IEnumerable<Box> IModelObject.References => (IEnumerable<Box>?)_references ?? ImmutableArray<Box>.Empty;
+
+        void IReferenceableModelObject.AddReference(Box box)
+        {
+            if (box?.Value != this) throw new ArgumentException("Box must refer to this object.", nameof(box));
+            if (_references is null) _references = new HashSet<Box>();
+            _references.Add(box);
+        }
+
+        void IReferenceableModelObject.RemoveReference(Box box)
+        {
+            _references?.Remove(box);
         }
     }
 }

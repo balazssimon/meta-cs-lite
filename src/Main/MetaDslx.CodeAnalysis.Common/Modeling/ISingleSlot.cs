@@ -5,22 +5,18 @@ using System.Text;
 
 namespace MetaDslx.Modeling
 {
-    public interface ISingleSlot
+    public interface ISingleSlot : ISlot
     {
-        bool IsReadOnly { get; }
-        bool IsNullable { get; }
-
         void Clear();
-
         object? Get();
-        Box? GetBox();
-        Box? Init(object? value);
-        Box? Set(object? value);
+        Box GetBox();
+        Box Init(object? value);
+        Box Set(object? value);
     }
 
     public interface ISingleSlot<T> : ISingleSlot
     {
         new T Get();
-        Box? Set(T value);
+        Box Set(T value);
     }
 }

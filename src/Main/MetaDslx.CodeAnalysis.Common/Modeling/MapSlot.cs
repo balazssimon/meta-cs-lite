@@ -6,12 +6,12 @@ using System.Text;
 
 namespace MetaDslx.Modeling
 {
-    public class MapSlot : Slot
+    internal class MapSlot : Slot, IMapSlot
     {
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Dictionary<Box, Box> _items;
 
-        public MapSlot(ModelObject owner, ModelPropertySlot property)
+        public MapSlot(IModelObject owner, ModelPropertySlot property)
             : base(owner, property)
         {
             _items = new Dictionary<Box, Box>();

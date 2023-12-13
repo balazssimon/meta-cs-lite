@@ -17,8 +17,11 @@ namespace MetaDslx.Modeling
         string? Name { get; set; }
         IModelObject? Parent { get; set; }
         IList<IModelObject> Children { get; }
+        IEnumerable<Box> References { get; }
 
         ISlot? Get(ModelProperty property);
+        ISlot Attach(ModelProperty property);
+        IModelObject Clone();
 
         ModelProperty? NameProperty { get; }
         ModelProperty? TypeProperty { get; }
