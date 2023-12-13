@@ -40,6 +40,15 @@ namespace MetaDslx.Languages.MetaModel.Meta
             return type.OriginalModelObject is MetaEnum;
         }
 
+        protected override bool IsMapType(CodeAnalysis.MetaType type, out CodeAnalysis.MetaType keyType, out ModelPropertyFlags keyFlags, out CodeAnalysis.MetaType valueType, out ModelPropertyFlags valueFlags)
+        {
+            keyType = default;
+            keyFlags = ModelPropertyFlags.None;
+            valueType = default;
+            valueFlags = ModelPropertyFlags.None;
+            return false;
+        }
+
         protected override bool IsNullableType(MetaDslx.CodeAnalysis.MetaType type, out MetaDslx.CodeAnalysis.MetaType innerType)
         {
             if (type.OriginalModelObject is MetaNullableType nullableType)
@@ -96,9 +105,9 @@ namespace MetaDslx.Languages.MetaModel.Meta
             return new MetaMetaPropertyInfo(slot, oppositeProperties, subsettedProperties, subsettingProperties, redefinedProperties, redefiningProperties, hiddenProperties, hidingProperties);
         }
 
-        protected override MetaPropertySlot<MetaDslx.CodeAnalysis.MetaType, MetaProperty, MetaOperation> MakePropertySlot(MetaProperty<MetaDslx.CodeAnalysis.MetaType, MetaProperty, MetaOperation> slotProperty, ImmutableArray<MetaProperty<MetaDslx.CodeAnalysis.MetaType, MetaProperty, MetaOperation>> slotProperties, MetaSymbol defaultValue, ModelPropertyFlags flags)
+        protected override MetaPropertySlot<CodeAnalysis.MetaType, MetaProperty, MetaOperation> MakePropertySlot(MetaProperty<CodeAnalysis.MetaType, MetaProperty, MetaOperation> slotProperty, ImmutableArray<MetaProperty<CodeAnalysis.MetaType, MetaProperty, MetaOperation>> slotProperties, MetaSymbol defaultValue, ModelPropertyFlags flags, ModelPropertyFlags keyFlags)
         {
-            return new MetaMetaPropertySlot(slotProperty, slotProperties, defaultValue, flags);
+            return new MetaMetaPropertySlot(slotProperty, slotProperties, defaultValue, flags, keyFlags);
         }
     }
 }

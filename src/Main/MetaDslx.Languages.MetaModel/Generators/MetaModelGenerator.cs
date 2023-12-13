@@ -24,8 +24,7 @@ namespace MetaDslx.Languages.MetaModel.Generators
         private MetaMetaGraph _graph;
         private ImmutableArray<MetaClass> _classes;
         private ImmutableArray<MetaEnum> _enums;
-        private ImmutableArray<IModelObject> _modelObjects;
-        private ImmutableArray<object> _objects;
+        private ImmutableArray<IModelObject> _objects;
         private Dictionary<object, string>? _objectNames;
 
         public MetaModelGenerator(bool isMetaMetaModel, Modeling.Model model, Model.MetaModel metaModel)
@@ -37,7 +36,6 @@ namespace MetaDslx.Languages.MetaModel.Generators
             _graph = new MetaMetaGraph(metaClasses);
             _classes = _graph.Compute().Select(c => ((MetaMetaClass)c).UnderlyingClass).ToImmutableArray();
             _enums = _metaModel.Parent.Declarations.OfType<MetaEnum>().OrderBy(e => e.Name).ToImmutableArray();
-            _modelObjects = model.ModelObjects.ToImmutableArray();
             _objects = model.Objects.ToImmutableArray();
         }
 
@@ -47,8 +45,7 @@ namespace MetaDslx.Languages.MetaModel.Generators
         public string Namespace => _metaModel.Parent.FullName;
         public ImmutableArray<MetaClass> Classes => _classes;
         public ImmutableArray<MetaEnum> Enums => _enums;
-        public ImmutableArray<IModelObject> ModelObjects => _modelObjects;
-        public ImmutableArray<object> Objects => _objects;
+        public ImmutableArray<IModelObject> Objects => _objects;
         public MetaMetaGraph Graph => _graph;
 
         public string ToCSharp(object? type)
@@ -219,7 +216,7 @@ namespace MetaDslx.Languages.MetaModel.Generators
                 Interlocked.CompareExchange(ref _objectNames, objectNames, null);
             }
             if (_objectNames.TryGetValue(obj, out var name)) return name;
-            else if (obj is IModelObject mobj && mobj.UnderlyingObject is not null && _objectNames.TryGetValue(mobj.UnderlyingObject, out var mname)) return mname;
+            else if (obj is IModelObject mobj && _objectNames.TryGetValue(mobj, out var mname)) return mname;
             else return string.Empty;
         }
 

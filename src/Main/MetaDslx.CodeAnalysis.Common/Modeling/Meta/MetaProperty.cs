@@ -31,6 +31,11 @@ namespace MetaDslx.Modeling.Meta
         public ModelPropertyFlags KeyFlags { get; internal set; }
         public TType KeyType { get; internal set; }
 
+        public bool IsSingle => Flags.HasFlag(ModelPropertyFlags.Single);
+        public bool IsCollection => Flags.HasFlag(ModelPropertyFlags.Collection);
+        public bool IsMap => Flags.HasFlag(ModelPropertyFlags.Map);
+        public bool IsMultiMap => Flags.HasFlag(ModelPropertyFlags.MultiMap);
+
         public override string ToString()
         {
             return $"{Name}.{UnderlyingProperty}";

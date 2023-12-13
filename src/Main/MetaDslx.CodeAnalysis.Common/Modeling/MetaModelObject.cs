@@ -41,5 +41,9 @@ namespace MetaDslx.Modeling
             else return null;
         }
 
+        public override IModelObject Clone()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

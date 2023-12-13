@@ -27,7 +27,7 @@ namespace MetaDslx.Modeling
             _children = new ChildList(this);
         }
 
-        protected abstract ModelClassInfo MInfo { get; }
+        public abstract ModelClassInfo MInfo { get; }
 
         Model? IModelObject.Model
         {

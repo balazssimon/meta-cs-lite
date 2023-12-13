@@ -176,22 +176,17 @@ public sealed class [mm.Name] : __MetaModel, I[mm.Name]
 		[foreach (var c in mm.Parent.Declarations.OfType<MetaConstant>())]
 		_[c.Name.ToCamelCase()] = f.[c.Type.Name]();
 		[end foreach]
-		[foreach (var obj in ModelObjects)]
+		[foreach (var obj in Objects)]
 		var [GetName(obj)] = f.[obj.MetaType.Name]();
 		[end foreach]
 		__CustomImpl.[mm.Name](this);
-		[foreach (var obj in ModelObjects)]
+		[foreach (var obj in Objects)]
 			[foreach (var child in obj.Children)]
 		((__IModelObject)[GetName(obj)]).Children.Add((__IModelObject)[GetName(child)]);
 			[end foreach]
-			[foreach (var prop in obj.PublicProperties.Where(p => !obj.IsDefault(p)))]
-				[if (prop.IsCollection)]
-					[foreach (var value in obj.GetValues(prop))]
-		[GetName(obj)].[prop.Name].Add([ToCSharpValue(prop.Type, value)]);
-					[end foreach]
-				[else if (!prop.IsReadOnly)]
-		[GetName(obj)].[prop.Name] = [ToCSharpValue(prop.Type, obj.Get(prop))];
-				[end if]
+			[foreach (var prop in obj.PublicProperties.Where(p => p.IsSingle && !obj.GetSlot(p).IsDefault))]
+				[var slot = MetaDslx.Modeling.SlotExtensions.AsSingle(obj.GetSlot(prop))]
+		[GetName(obj)].[prop.Name] = [ToCSharpValue(prop.Type, slot?.Value)];
 			[end foreach]
 		[end foreach]
 		_model.IsSealed = true;
