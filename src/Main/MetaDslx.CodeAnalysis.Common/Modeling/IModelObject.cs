@@ -13,14 +13,15 @@ namespace MetaDslx.Modeling
         MetaType MetaType { get; }
         ModelClassInfo Info { get; }
         Model? Model { get; set; }
+        ValueInfo? ValueInfo { get; }
 
         string? Name { get; set; }
         IModelObject? Parent { get; set; }
         IList<IModelObject> Children { get; }
         IEnumerable<Box> References { get; }
 
+        ISlot? GetSlot(string propertyName);
         ISlot? GetSlot(ModelProperty? property);
-        ISlotCore? GetSlotCore(ModelProperty? property);
         ISlot AttachSlot(ModelProperty property);
         IModelObject Clone();
 

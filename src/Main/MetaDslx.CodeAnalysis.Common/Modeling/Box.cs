@@ -1,4 +1,6 @@
-﻿using Roslyn.Utilities;
+﻿using MetaDslx.CodeAnalysis;
+using MetaDslx.CodeAnalysis.Symbols;
+using Roslyn.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -6,7 +8,7 @@ using System.Text;
 
 namespace MetaDslx.Modeling
 {
-    public class Box
+    public abstract class Box
     {
         private static readonly object DefaultValue = new object();
 
@@ -21,6 +23,7 @@ namespace MetaDslx.Modeling
             _value = DefaultValue;
         }
 
+        public Model Model => _slot.Owner.Model;
         public ISlot Slot => _slot;
         public IModelObject Owner => _slot.Owner;
         public ModelPropertySlot Property => _slot.Property;
@@ -43,6 +46,8 @@ namespace MetaDslx.Modeling
         {
             _value = DefaultValue;
         }
+
+        public virtual ValueInfo? Info => null;
 
         public override int GetHashCode()
         {

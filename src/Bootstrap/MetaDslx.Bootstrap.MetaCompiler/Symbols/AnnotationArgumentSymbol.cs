@@ -198,8 +198,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
             var param = AnnotationSymbol?.SelectedParameters[index];
             if (param is not null)
             {
-                var slot = ModelObject.GetSlotCore(MetaDslx.Bootstrap.MetaCompiler.Model.Compiler.AnnotationArgument_Parameter);
-                slot?.AddCore(param, null);
+                var slot = ModelObject.GetSlot(MetaDslx.Bootstrap.MetaCompiler.Model.Compiler.AnnotationArgument_Parameter);
+                slot?.Add(param);
             }
             else
             {
@@ -223,8 +223,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
             if (mtType.TryGetCoreType(out var coreType, diagnostics, cancellationToken) && !coreType.IsNull)
             {
                 if (!result.Contains(mtType)) result.Add(mtType);
-                var slot = ModelObject.GetSlotCore(MetaDslx.Bootstrap.MetaCompiler.Model.Compiler.AnnotationArgument_ParameterType);
-                slot?.AddCore(mtType, null);
+                var slot = ModelObject.GetSlot(MetaDslx.Bootstrap.MetaCompiler.Model.Compiler.AnnotationArgument_ParameterType);
+                slot?.Add(mtType);
             }
             else
             {

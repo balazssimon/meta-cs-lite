@@ -8,7 +8,7 @@ using System.Xml.Linq;
 
 namespace MetaDslx.Modeling
 {
-    public abstract class Slot : ISlot
+    public abstract class Slot : ISlot, IOppositeSlotCore
     {
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly IModelObject _owner;
@@ -31,7 +31,30 @@ namespace MetaDslx.Modeling
         public abstract bool IsDefault { get; }
         public abstract bool Contains(object? item);
         public abstract void Clear();
+        public abstract IEnumerable<object?> Values { get; }
         public abstract IEnumerable<Box> Boxes { get; }
+        protected abstract Box? AddCore(object? item, Box? oppositeBox);
+        protected abstract Box? RemoveCore(object? item, Box? oppositeBox);
+
+        Box? ISlot.Add(object? item)
+        {
+            return AddCore(item, null);
+        }
+
+        Box? ISlot.Remove(object? item)
+        {
+            return RemoveCore(item, null);
+        }
+
+        Box? IOppositeSlotCore.AddCore(object? item, Box? oppositeBox)
+        {
+            return AddCore(item, oppositeBox);
+        }
+
+        Box? IOppositeSlotCore.RemoveCore(object? item, Box? oppositeBox)
+        {
+            return RemoveCore(item, oppositeBox);
+        }
 
         protected void CheckReadOnly(string message)
         {
@@ -68,13 +91,13 @@ namespace MetaDslx.Modeling
                     {
                         foreach (var oppositeProperty in Owner.GetOppositeProperties(slotProperty))
                         {
-                            var oppositeSlot = mobj.GetSlot(oppositeProperty) as ISlotCore;
+                            var oppositeSlot = mobj.GetSlot(oppositeProperty) as IOppositeSlotCore;
                             oppositeSlot?.AddCore(Owner, box);
                         }
                     }
                     foreach (var subsettedProperty in Owner.GetSubsettedProperties(slotProperty))
                     {
-                        var subsettedSlot = Owner.GetSlot(subsettedProperty) as ISlotCore;
+                        var subsettedSlot = Owner.GetSlot(subsettedProperty) as IOppositeSlotCore;
                         subsettedSlot?.AddCore(mobj, oppositeBox);
                     }
                 }
@@ -97,22 +120,49 @@ namespace MetaDslx.Modeling
                     {
                         foreach (var oppositeProperty in Owner.GetOppositeProperties(slotProperty))
                         {
-                            var oppositeSlot = mobj.GetSlot(oppositeProperty) as ISlotCore;
+                            var oppositeSlot = mobj.GetSlot(oppositeProperty) as IOppositeSlotCore;
                             oppositeSlot?.RemoveCore(Owner, box);
                         }
                     }
                     foreach (var subsettingProperty in Owner.GetSubsettingProperties(slotProperty))
                     {
-                        var subsettingSlot = Owner.GetSlot(subsettingProperty) as ISlotCore;
+                        var subsettingSlot = Owner.GetSlot(subsettingProperty) as IOppositeSlotCore;
                         subsettingSlot?.RemoveCore(mobj, oppositeBox);
                     }
                 }
             }
         }
 
+        protected Box? CreateBox()
+        {
+            return Model.CreateBox(this);
+        }
+
         public override string ToString()
         {
             return $"'{Property.QualifiedName}' in '{Owner}'";
+        }
+
+        public virtual ISingleSlot? AsSingle()
+        {
+            return this as ISingleSlot;
+        }
+
+        public virtual ISingleSlot<T>? AsSingle<T>()
+        {
+            var untypedSlot = this.AsSingle();
+            return untypedSlot is not null ? new SingleSlot<T>(untypedSlot) : null;
+        }
+
+        public virtual ICollectionSlot? AsCollection()
+        {
+            return this as ICollectionSlot;
+        }
+
+        public virtual ICollectionSlot<T>? AsCollection<T>()
+        {
+            var untypedSlot = this.AsCollection();
+            return untypedSlot is not null ? new CollectionSlot<T>(untypedSlot) : null;
         }
     }
 }

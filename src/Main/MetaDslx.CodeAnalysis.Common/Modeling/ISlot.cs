@@ -18,7 +18,15 @@ namespace MetaDslx.Modeling
         bool IsDefault { get; }
         void Clear();
         bool Contains(object? item);
+        Box? Add(object? item);
+        Box? Remove(object? item);
+        IEnumerable<object?> Values { get; }
         IEnumerable<Box> Boxes { get; }
+
+        ISingleSlot? AsSingle();
+        ISingleSlot<T>? AsSingle<T>();
+        ICollectionSlot? AsCollection();
+        ICollectionSlot<T>? AsCollection<T>();
     }
 
     public static class SlotExtensions

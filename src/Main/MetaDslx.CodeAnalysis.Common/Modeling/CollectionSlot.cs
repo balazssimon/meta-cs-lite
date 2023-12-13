@@ -10,7 +10,7 @@ using System.Text;
 
 namespace MetaDslx.Modeling
 {
-    internal class CollectionSlot : Slot, ICollectionSlot, ISlotCore, IEnumerable
+    internal class CollectionSlot : Slot, ICollectionSlot, IEnumerable
     {
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Box> _boxes;
@@ -22,6 +22,8 @@ namespace MetaDslx.Modeling
         }
 
         public override IEnumerable<Box> Boxes => _boxes;
+
+        public override IEnumerable<object?> Values => _boxes.Select(b => b.Value);
 
         public override SlotKind Kind => SlotKind.Collection;
 
@@ -52,19 +54,9 @@ namespace MetaDslx.Modeling
             return _boxes.Any(b => b.HasValue(item));
         }
 
-        void ISlotCore.AddCore(object? item, Box? oppositeBox)
+        protected override Box? AddCore(object? item, Box? oppositeBox)
         {
-            AddCore(item, oppositeBox);
-        }
-
-        void ISlotCore.RemoveCore(object? item, Box? oppositeBox)
-        {
-            RemoveCore(item, oppositeBox);
-        }
-
-        private void AddCore(object? item, Box? oppositeBox)
-        {
-            InsertAtCore(_boxes.Count, item, oppositeBox);
+            return InsertAtCore(_boxes.Count, item, oppositeBox);
         }
 
         private Box? InsertAtCore(int index, object? item, Box? oppositeBox)
@@ -80,7 +72,7 @@ namespace MetaDslx.Modeling
                     {
                         Property.ThrowModelException(mp => mp.IsSingle, mp => $"{GetInsertMessage(mp, item)}: this collection can only contain a single item.");
                     }
-                    var box = new Box(this);
+                    var box = CreateBox();
                     box.Value = item;
                     _boxes.Insert(index, box);
                     valueAdded = true;
@@ -97,14 +89,17 @@ namespace MetaDslx.Modeling
             }
         }
 
-        private void RemoveCore(object? item, Box? oppositeBox)
+        protected override Box? RemoveCore(object? item, Box? oppositeBox)
         {
+            Box? result = null;
             var index = IndexOf(item);
             while (index >= 0)
             {
-                RemoveAtCore(index, oppositeBox);
+                var box = RemoveAtCore(index, oppositeBox);
+                if (result is null) result = box;
                 index = IndexOf(item);
             }
+            return result;
         }
 
         private Box? RemoveAtCore(int index, Box? oppositeBox)
@@ -350,7 +345,7 @@ namespace MetaDslx.Modeling
         }
     }
 
-    internal class CollectionSlot<T> : IList<T>, ICollectionSlot<T>, ISlotCore
+    internal class CollectionSlot<T> : IList<T>, ICollectionSlot<T>, IOppositeSlotCore
     {
         private readonly ICollectionSlot _wrappedSlot;
 
@@ -371,14 +366,14 @@ namespace MetaDslx.Modeling
 
         public bool IsDefault => _wrappedSlot.IsDefault;
 
-        void ISlotCore.AddCore(object? item, Box? oppositeBox)
+        Box? IOppositeSlotCore.AddCore(object? item, Box? oppositeBox)
         {
-            (_wrappedSlot as ISlotCore)?.AddCore(item, oppositeBox);
+            return (_wrappedSlot as IOppositeSlotCore)?.AddCore(item, oppositeBox);
         }
 
-        void ISlotCore.RemoveCore(object? item, Box? oppositeBox)
+        Box? IOppositeSlotCore.RemoveCore(object? item, Box? oppositeBox)
         {
-            (_wrappedSlot as ISlotCore)?.RemoveCore(item, oppositeBox);
+            return (_wrappedSlot as IOppositeSlotCore)?.RemoveCore(item, oppositeBox);
         }
 
         bool ICollectionSlot.IsUnordered => _wrappedSlot.IsUnordered;
@@ -386,6 +381,8 @@ namespace MetaDslx.Modeling
         bool ICollectionSlot.IsNonUnique => _wrappedSlot.IsNonUnique;
 
         IEnumerable<Box> ISlot.Boxes => _wrappedSlot.Boxes;
+
+        IEnumerable<object?> ISlot.Values => _wrappedSlot.Values;
 
         int ICollectionSlot.Count => _wrappedSlot.Count;
 
@@ -635,6 +632,35 @@ namespace MetaDslx.Modeling
         bool ICollection<T>.Remove(T item)
         {
             return _wrappedSlot.Remove(item) is not null;
+        }
+        Box? ISlot.Add(object? item)
+        {
+            return _wrappedSlot.Add(item);
+        }
+
+        Box? ISlot.Remove(object? item)
+        {
+            return _wrappedSlot.Remove(item);
+        }
+
+        ISingleSlot? ISlot.AsSingle()
+        {
+            return _wrappedSlot.AsSingle();
+        }
+
+        ISingleSlot<TAs>? ISlot.AsSingle<TAs>()
+        {
+            return _wrappedSlot.AsSingle<TAs>();
+        }
+
+        ICollectionSlot? ISlot.AsCollection()
+        {
+            return _wrappedSlot.AsCollection();
+        }
+
+        ICollectionSlot<TAs>? ISlot.AsCollection<TAs>()
+        {
+            return _wrappedSlot.AsCollection<TAs>();
         }
     }
 }

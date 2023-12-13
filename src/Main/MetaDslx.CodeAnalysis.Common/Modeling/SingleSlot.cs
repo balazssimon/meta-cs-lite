@@ -3,10 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace MetaDslx.Modeling
 {
-    internal class SingleSlot : Slot, ISingleSlot, ISlotCore
+    internal class SingleSlot : Slot, ISingleSlot
     {
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Box _box;
@@ -14,7 +15,7 @@ namespace MetaDslx.Modeling
         public SingleSlot(ModelObject owner, ModelPropertySlot property)
             : base(owner, property)
         {
-            _box = new Box(this);
+            _box = CreateBox();
         }
 
         public override SlotKind Kind => SlotKind.Single;
@@ -26,6 +27,14 @@ namespace MetaDslx.Modeling
         {
             get => _box.Value;
             set => AddCore(value, null);
+        }
+
+        public override IEnumerable<object?> Values
+        {
+            get
+            {
+                yield return _box.Value;
+            }
         }
 
         public override IEnumerable<Box> Boxes
@@ -52,17 +61,7 @@ namespace MetaDslx.Modeling
             return AddCore(value, null);
         }
 
-        void ISlotCore.AddCore(object? item, Box? oppositeBox)
-        {
-            AddCore(item, oppositeBox);
-        }
-
-        void ISlotCore.RemoveCore(object? item, Box? oppositeBox)
-        {
-            RemoveCore(item, oppositeBox);
-        }
-
-        private Box? AddCore(object? item, Box? oppositeBox)
+        protected override Box? AddCore(object? item, Box? oppositeBox)
         {
             if (oppositeBox is null) CheckReadOnly(GetAssignMessage(Property.SlotProperty, item));
             CheckValueType(item, mp => GetAssignMessage(mp, item));
@@ -87,7 +86,7 @@ namespace MetaDslx.Modeling
             return null;
         }
 
-        private Box? RemoveCore(object? item, Box? oppositeBox)
+        protected override Box? RemoveCore(object? item, Box? oppositeBox)
         {
             var oldValue = _box.Value;
             if (_box.HasValue(item))
@@ -120,7 +119,7 @@ namespace MetaDslx.Modeling
         }
     }
 
-    internal class SingleSlot<T> : ISingleSlot<T>, ISlotCore
+    internal class SingleSlot<T> : ISingleSlot<T>, IOppositeSlotCore
     {
         private readonly ISingleSlot _wrappedSlot;
 
@@ -141,14 +140,14 @@ namespace MetaDslx.Modeling
 
         public bool IsDefault => _wrappedSlot.IsDefault;
 
-        void ISlotCore.AddCore(object? item, Box? oppositeBox)
+        Box? IOppositeSlotCore.AddCore(object? item, Box? oppositeBox)
         {
-            (_wrappedSlot as ISlotCore)?.AddCore(item, oppositeBox);
+            return (_wrappedSlot as IOppositeSlotCore)?.AddCore(item, oppositeBox);
         }
 
-        void ISlotCore.RemoveCore(object? item, Box? oppositeBox)
+        Box? IOppositeSlotCore.RemoveCore(object? item, Box? oppositeBox)
         {
-            (_wrappedSlot as ISlotCore)?.RemoveCore(item, oppositeBox);
+            return(_wrappedSlot as IOppositeSlotCore)?.RemoveCore(item, oppositeBox);
         }
 
         void ISlot.Clear()
@@ -162,6 +161,8 @@ namespace MetaDslx.Modeling
         }
 
         IEnumerable<Box> ISlot.Boxes => _wrappedSlot.Boxes;
+
+        IEnumerable<object?> ISlot.Values => _wrappedSlot.Values;
 
         T ISingleSlot<T>.Value
         {
@@ -186,5 +187,34 @@ namespace MetaDslx.Modeling
             return _wrappedSlot.Init(value);
         }
 
+        Box? ISlot.Add(object? item)
+        {
+            return _wrappedSlot.Add(item);
+        }
+
+        Box? ISlot.Remove(object? item)
+        {
+            return _wrappedSlot.Remove(item);
+        }
+
+        ISingleSlot? ISlot.AsSingle()
+        {
+            return _wrappedSlot.AsSingle();
+        }
+
+        ISingleSlot<TAs>? ISlot.AsSingle<TAs>()
+        {
+            return _wrappedSlot.AsSingle<TAs>();
+        }
+
+        ICollectionSlot? ISlot.AsCollection()
+        {
+            return _wrappedSlot.AsCollection();
+        }
+
+        ICollectionSlot<TAs>? ISlot.AsCollection<TAs>()
+        {
+            return _wrappedSlot.AsCollection<TAs>();
+        }
     }
 }

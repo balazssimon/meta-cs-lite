@@ -4,12 +4,15 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace MetaDslx.Modeling
 {
     public abstract class ModelObject : IModelObject, IReferenceableModelObject
     {
+        private static readonly ConditionalWeakTable<ModelObject, ValueInfo> s_valueInfos = new ConditionalWeakTable<ModelObject, ValueInfo>();
+
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private string _id;
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -192,14 +195,14 @@ namespace MetaDslx.Modeling
 
         public void MAdd<T>(ModelProperty property, T value)
         {
-            var slot = ((IModelObject)this).GetSlot(property) as ISlotCore;
-            if (slot is not null) slot.AddCore(value, null);
+            var slot = ((IModelObject)this).GetSlot(property);
+            slot?.Add(value);
         }
 
         public void MRemove<T>(ModelProperty property, T value)
         {
-            var slot = ((IModelObject)this).GetSlot(property) as ISlotCore;
-            if (slot is not null) slot.RemoveCore(value, null);
+            var slot = ((IModelObject)this).GetSlot(property);
+            slot?.Remove(value);
         }
 
         public override string ToString()
@@ -279,16 +282,19 @@ namespace MetaDslx.Modeling
             return MInfo.GetOverridingOperations(operation);
         }
 
-        ISlot? IModelObject.GetSlot(ModelProperty? property)
+        ISlot? IModelObject.GetSlot(string propertyName)
         {
+            var property = ((IModelObject)this).GetProperty(propertyName);
             if (property is null) return null;
             var propertySlot = GetSlot(property);
             return MGetSlot(propertySlot);
         }
 
-        ISlotCore? IModelObject.GetSlotCore(ModelProperty? property)
+        ISlot? IModelObject.GetSlot(ModelProperty? property)
         {
-            return ((IModelObject)this).GetSlot(property) as ISlotCore;
+            if (property is null) return null;
+            var propertySlot = GetSlot(property);
+            return MGetSlot(propertySlot);
         }
 
         ISlot IModelObject.AttachSlot(ModelProperty property)
@@ -323,6 +329,14 @@ namespace MetaDslx.Modeling
         public abstract IModelObject Clone();
 
         IEnumerable<Box> IModelObject.References => (IEnumerable<Box>?)_references ?? ImmutableArray<Box>.Empty;
+
+        ValueInfo? IModelObject.ValueInfo
+        {
+            get
+            {
+                return s_valueInfos.GetValue(this, mobj => ((IModelObject)this).Model.CreateValueInfo(mobj));
+            }
+        }
 
         void IReferenceableModelObject.AddReference(Box box)
         {

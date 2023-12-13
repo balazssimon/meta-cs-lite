@@ -7,7 +7,7 @@ using System.Text;
 
 namespace MetaDslx.Modeling
 {
-    public sealed class Model
+    public class Model
     {
         private string _id;
         private string? _name;
@@ -148,6 +148,16 @@ namespace MetaDslx.Modeling
         {
             if (_sealed) throw new ModelException(message is null ? $"The model '{_name}' is sealed." : $"{message}: the model '{_name}' is sealed.");
             if (ValidationOptions.ValidateReadOnly && _readOnly) throw new ModelException(message is null ? $"The model '{_name}' is read only." : $"{message}: the model '{_name}' is read only.");
+        }
+
+        internal protected virtual Box CreateBox(ISlot slot)
+        {
+            return new DefaultBox(slot);
+        }
+
+        internal protected virtual ValueInfo CreateValueInfo(object? forValue)
+        {
+            return new DefaultValueInfo(forValue);
         }
 
         public override string ToString()

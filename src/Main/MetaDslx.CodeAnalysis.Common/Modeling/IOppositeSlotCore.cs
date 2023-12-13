@@ -5,10 +5,10 @@ using System.Text;
 
 namespace MetaDslx.Modeling
 {
-    public interface ISlotCore
+    public interface IOppositeSlotCore
     {
-        void AddCore(object? item, Box? oppositeBox);
-        void RemoveCore(object? item, Box? oppositeBox);
+        Box? AddCore(object? item, Box? oppositeBox);
+        Box? RemoveCore(object? item, Box? oppositeBox);
         //ImmutableArray<Box> AddRange(IEnumerable<object?> items, ImmutableArray<Box> oppositeBoxes);
         //ImmutableArray<Box> RemoveRange(IEnumerable<object?> items, ImmutableArray<Box> oppositeBoxes);
     }

@@ -1077,13 +1077,12 @@ namespace MetaDslx.Modeling
                 if (obj != null)
                 {
                     string parentPropertyName = element.Name.LocalName.ToPascalCase();
-                    ModelProperty parentProperty = parent?.GetProperty(parentPropertyName);
-                    var parentSlot = parent?.GetSlotCore(parentProperty);
+                    var parentSlot = parent?.GetSlot(parentPropertyName);
                     if (parentSlot != null)
                     {
                         try
                         {
-                            parentSlot.AddCore(obj, null);
+                            parentSlot.Add(obj);
                         }
                         catch (ModelException mex)
                         {
@@ -1093,7 +1092,7 @@ namespace MetaDslx.Modeling
                     this.RegisterObjectByPosition(element, obj);
                     foreach (var nameProp in obj.AllDeclaredProperties.Where(p => p.IsName))
                     {
-                        var nameSlot = parent?.GetSlotCore(nameProp);
+                        var nameSlot = parent?.GetSlot(nameProp);
                         if (nameSlot is null) continue;
                         var nameAttr = element.Attribute(nameProp.Name.ToCamelCase());
                         if (nameAttr != null)
@@ -1101,7 +1100,7 @@ namespace MetaDslx.Modeling
                             string name = nameAttr.Value;
                             try
                             {
-                                nameSlot.AddCore(name, null);
+                                nameSlot.Add(name);
                             }
                             catch (ModelException mex)
                             {
@@ -1201,7 +1200,7 @@ namespace MetaDslx.Modeling
             IModelObject currentObj = ResolveObjectByPosition(element, false);
             string parentPropertyName = element.Name.LocalName.ToPascalCase();
             ModelProperty parentProperty = parent?.GetProperty(parentPropertyName);
-            var parentSlot = parent?.GetSlotCore(parentProperty);
+            var parentSlot = parent?.GetSlot(parentProperty);
             if (parentProperty != null)
             {
                 if (currentObj == null)
@@ -1216,7 +1215,7 @@ namespace MetaDslx.Modeling
                         {
                             try
                             {
-                                parentSlot.AddCore(ResolveMetaConstantValue(parentProperty, resolvedObj), null);
+                                parentSlot.Add(ResolveMetaConstantValue(parentProperty, resolvedObj));
                             }
                             catch (ModelException mex)
                             {
@@ -1269,7 +1268,7 @@ namespace MetaDslx.Modeling
         {
             if (propertyName == "Href") return;
             ModelProperty property = obj.GetProperty(propertyName);
-            var slot = obj.GetSlotCore(property);
+            var slot = obj.GetSlot(property);
             if (slot == null)
             {
                 this.AddError(location, $"Model object '{obj}' has no '{propertyName}' property.");
@@ -1336,12 +1335,12 @@ namespace MetaDslx.Modeling
                     {
                         foreach (var v in values)
                         {
-                            slot.AddCore(ResolveMetaConstantValue(property, v), null);
+                            slot.Add(ResolveMetaConstantValue(property, v));
                         }
                     }
                     else
                     {
-                        slot.AddCore(ResolveMetaConstantValue(property, value), null);
+                        slot.Add(ResolveMetaConstantValue(property, value));
                     }
                 }
                 catch (ModelException mex)
