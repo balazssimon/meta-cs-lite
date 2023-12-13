@@ -19,8 +19,9 @@ namespace MetaDslx.Modeling
         IList<IModelObject> Children { get; }
         IEnumerable<Box> References { get; }
 
-        ISlot? Get(ModelProperty property);
-        ISlot Attach(ModelProperty property);
+        ISlot? GetSlot(ModelProperty? property);
+        ISlotCore? GetSlotCore(ModelProperty? property);
+        ISlot AttachSlot(ModelProperty property);
         IModelObject Clone();
 
         ModelProperty? NameProperty { get; }

@@ -23,22 +23,23 @@ namespace MetaDslx.Modeling
 
         protected override IEnumerable<ModelProperty> StoredPropertiesCore => (IEnumerable<ModelProperty>?)_properties?.Keys ?? ImmutableArray<ModelProperty>.Empty;
 
-        protected override void SetSlotValueCore(ModelPropertySlot propertySlot, ISlot? slot)
+        protected override ISlot? MAttachSlot(ModelPropertySlot propertySlot)
         {
-            if (slot is null && !MInfo.AllDeclaredProperties.Contains(propertySlot.SlotProperty))
-            {
-                _properties?.Remove(propertySlot.SlotProperty);
-            }
-            else if (slot is not null || _properties is not null && _properties.ContainsKey(propertySlot.SlotProperty))
+            if (_properties is not null && _properties.TryGetValue(propertySlot.SlotProperty, out var slot)) return slot;
+            slot = MCreateSlot(propertySlot);
+            if (slot is not null)
             {
                 if (_properties is null) _properties = new Dictionary<ModelProperty, ISlot>();
-                _properties[propertySlot.SlotProperty] = slot;
+                _properties.Add(propertySlot.SlotProperty, slot);
             }
+            return slot;
         }
 
-        protected override bool TryGetSlotValueCore(ModelPropertySlot propertySlot, out ISlot? slot)
+        protected override ISlot? MGetSlot(ModelPropertySlot propertySlot)
         {
-            return _properties.TryGetValue(propertySlot.SlotProperty, out slot);
+            if (MInfo.AllDeclaredProperties.Contains(propertySlot.SlotProperty)) return MAttachSlot(propertySlot);
+            else return null;
         }
+
     }
 }

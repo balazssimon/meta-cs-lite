@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Roslyn.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
@@ -32,9 +33,20 @@ namespace MetaDslx.Modeling
             internal set => _value = value;
         }
 
+        public bool HasValue(object? value)
+        {
+            if (IsDefault) return value == _slot.Property.DefaultValue;
+            else return _value == value;
+        }
+
         internal void Clear()
         {
             _value = DefaultValue;
+        }
+
+        public override int GetHashCode()
+        {
+            return Hash.Combine(Hash.Combine(_slot?.Property?.GetHashCode() ?? 0, _slot?.Owner?.GetHashCode() ?? 0), _value?.GetHashCode() ?? 0);
         }
     }
 }

@@ -102,8 +102,8 @@ namespace MetaDslx.Modeling
             }
         }
 
-        public IEnumerable<object> Objects => ModelObjects.Select(mobj => mobj.UnderlyingObject);
-        public IEnumerable<IModelObject> ModelObjects => _modelObjects;
+        public IEnumerable<IModelObject> Objects => _modelObjects;
+        public IEnumerable<IModelObject> RootObjects => _modelObjects.Where(mobj => mobj.Parent is null);
 
         public void AddObject(IModelObject modelObject)
         {

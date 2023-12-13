@@ -7,16 +7,13 @@ namespace MetaDslx.Modeling
 {
     public interface ISingleSlot : ISlot
     {
-        void Clear();
-        object? Get();
-        Box GetBox();
-        Box Init(object? value);
-        Box Set(object? value);
+        Box Box { get; }
+        object? Value { get; set; }
+        Box? Init(object? value);
     }
 
     public interface ISingleSlot<T> : ISingleSlot
     {
-        new T Get();
-        Box Set(T value);
+        new T Value { get; set; }
     }
 }

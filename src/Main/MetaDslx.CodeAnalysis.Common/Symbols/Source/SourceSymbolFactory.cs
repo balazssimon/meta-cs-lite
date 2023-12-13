@@ -125,9 +125,10 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
                             if (declaration.QualifierProperty is not null)
                             {
                                 var qprop = containerModelSymbol.ModelObject.GetProperty(declaration.QualifierProperty);
-                                if (qprop is not null)
+                                var qslot = containerModelSymbol.ModelObject.GetSlotCore(qprop);
+                                if (qslot is not null)
                                 {
-                                    containerModelSymbol.ModelObject.Add(qprop, modelObject);
+                                    qslot.AddCore(modelObject, null);
                                 }
                             }
                         }
@@ -250,6 +251,8 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
             var builder = ArrayBuilder<TValue>.GetInstance();
             foreach (var prop in modelObject.PublicProperties.Where(prop => prop.SymbolProperty == symbolProperty))
             {
+                var slot = modelObject.GetSlotCore(prop);
+                if (slot is null) continue;
                 foreach (var decl in symbol.DeclaringSyntaxReferences)
                 {
                     cancellationToken.ThrowIfCancellationRequested();
@@ -307,23 +310,23 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
                                     {
                                         if (prop.Type.IsAssignableTo(typeof(Symbol)) && prop.Type.IsAssignableFrom(value.GetType()))
                                         {
-                                            modelObject.Add(prop, value);
+                                            slot.AddCore(value, null);
                                         }
                                         else if (value is Symbol symbolValue)
                                         {
                                             var modelObjectValue = (symbolValue as IModelSymbol)?.ModelObject;
                                             if (modelObjectValue is not null && prop.Type.IsAssignableFrom(modelObjectValue.Info.MetaType))
                                             {
-                                                modelObject.Add(prop, modelObjectValue);
+                                                slot.AddCore(modelObjectValue, null);
                                             }
                                             else
                                             {
-                                                modelObject.Add(prop, value);
+                                                slot.AddCore(value, null);
                                             }
                                         }
                                         else
                                         {
-                                            modelObject.Add(prop, value);
+                                            slot.AddCore(value, null);
                                         }
                                     }
                                     catch (ModelException ex)
@@ -374,6 +377,8 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
                         var prop = modelObject.GetProperty(propBinder.Name);
                         if (prop is not null && prop.SymbolProperty is null)
                         {
+                            var slot = modelObject.GetSlotCore(prop);
+                            if (slot is null) continue;
                             var values = ((Binder)propBinder).Bind(cancellationToken);
                             foreach (var value in values)
                             {
@@ -381,23 +386,23 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
                                 {
                                     if (prop.Type.IsAssignableTo(typeof(Symbol)) && prop.Type.IsAssignableFrom(value.GetType()))
                                     {
-                                        modelObject.Add(prop, value);
+                                        slot.AddCore(value, null);
                                     }
                                     else if (value is Symbol symbolValue)
                                     {
                                         var modelObjectValue = (symbolValue as IModelSymbol)?.ModelObject;
                                         if (modelObjectValue is not null && prop.Type.IsAssignableFrom(modelObjectValue.Info.MetaType))
                                         {
-                                            modelObject.Add(prop, modelObjectValue);
+                                            slot.AddCore(modelObjectValue, null);
                                         }
                                         else
                                         {
-                                            modelObject.Add(prop, value);
+                                            slot.AddCore(value, null);
                                         }
                                     }
                                     else
                                     {
-                                        modelObject.Add(prop, value);
+                                        slot.AddCore(value, null);
                                     }
                                 }
                                 catch (ModelException ex)

@@ -5,33 +5,32 @@ using System.Text;
 
 namespace MetaDslx.Modeling
 {
-    public interface IMapSlot : ISlot
+    public interface IMultiMapSlot : ISlot
     {
         bool IsUnordered { get; }
         bool IsNonUnique { get; }
 
         int Count { get; }
-        void Clear();
 
         bool ContainsKey(object? key);
         IEnumerable Keys { get; }
-        object? this[object? key] { get; }
-        void Add(object? key, object? value);
-        void Remove(object? key);
-        bool TryGetValue(object? key, out object? value);
+        ICollectionSlot this[object? key] { get; }
+        Box Add(object? key, object? value);
+        Box Remove(object? key);
+        Box Remove(object? key, object? value);
+        bool TryGetValues(object? key, out ICollectionSlot? values);
         bool TryGetKeyBox(object? key, out Box? keyBox);
-        bool TryGetValueBox(object? key, out Box? valueBox);
     }
 
-    public interface IMapSlot<TKey,TValue> : IMapSlot
+    public interface IMultiMapSlot<TKey, TValue> : IMapSlot
     {
         bool ContainsKey(TKey key);
         new IEnumerable<TKey> Keys { get; }
         TValue this[TKey key] { get; }
-        void Add(TKey key, TValue value);
-        void Remove(TKey key);
-        bool TryGetValue(TKey key, out TValue? value);
+        Box Add(TKey key, TValue value);
+        Box Remove(TKey key);
+        Box Remove(TKey key, TValue value);
+        bool TryGetValues(TKey key, out ICollectionSlot<TValue>? value);
         bool TryGetKeyBox(TKey key, out Box? keyBox);
-        bool TryGetValueBox(TKey key, out Box? valueBox);
     }
 }

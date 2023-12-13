@@ -35,4 +35,11 @@
 		<ProjectReference Include="..\MetaDslx.Languages.MetaSymbols\MetaDslx.Languages.MetaSymbols.csproj" OutputItemType="Analyzer" />
 	</ItemGroup>
 
+	<ItemGroup>
+		<Compile Remove="Modeling\Reflection\**" />
+		<None Remove="Modeling\Reflection\**" />
+
+		<Compile Remove="Symbols\MetaModelImport\**" />
+		<None Remove="Symbols\MetaModelImport\**" />
+	</ItemGroup>
 </Project>

@@ -1,7 +1,7 @@
 ﻿using MetaDslx.CodeAnalysis.Declarations;
 using MetaDslx.CodeAnalysis.PooledObjects;
 using MetaDslx.CodeAnalysis.Symbols.CSharp;
-using MetaDslx.CodeAnalysis.Symbols.MetaModelImport;
+//using MetaDslx.CodeAnalysis.Symbols.MetaModelImport;
 using MetaDslx.CodeAnalysis.Symbols.Source;
 using MetaDslx.Modeling;
 using System;
@@ -37,12 +37,12 @@ namespace MetaDslx.CodeAnalysis.Symbols
             var compilation = DeclaringCompilation;
             var symbolsBuilder = ArrayBuilder<DeclaredSymbol>.GetInstance();
             var metaModelsBuilder = ArrayBuilder<MetaModel>.GetInstance();
-            foreach (var symbolNamespace in namespaces.Where(ns => !ns.IsError))
+            /*foreach (var symbolNamespace in namespaces.Where(ns => !ns.IsError))
             {
                 var metaModel = new ImportedMetaModel(symbolNamespace, symbolNamespace.Name, true);
                 metaModelsBuilder.Add(metaModel);
                 symbolsBuilder.AddRange(ImportedMetaUtils.CollectTypes(symbolNamespace, collectSymbols: true));
-            }
+            }*/
             _metaModels = metaModelsBuilder.ToImmutableAndFree();
             return (ImmutableArray<string>.Empty, ImmutableArray<AliasSymbol>.Empty, ImmutableArray<NamespaceSymbol>.Empty, symbolsBuilder.ToImmutableAndFree());
         }

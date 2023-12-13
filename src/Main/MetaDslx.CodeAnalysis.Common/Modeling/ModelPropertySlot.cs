@@ -29,9 +29,10 @@ namespace MetaDslx.Modeling
         public ModelPropertyFlags Flags => _flags;
         public Func<IModelObject, object>? MapKeySelector => _mapKeySelector;
         public bool IsContainment => _flags.HasFlag(ModelPropertyFlags.Containment);
-        public bool IsSingleItem => _flags.HasFlag(ModelPropertyFlags.SingleItem);
+        public bool IsSingle => _flags.HasFlag(ModelPropertyFlags.Single);
         public bool IsCollection => _flags.HasFlag(ModelPropertyFlags.Collection);
         public bool IsMap => _flags.HasFlag(ModelPropertyFlags.Map);
+        public bool IsMultiMap => _flags.HasFlag(ModelPropertyFlags.MultiMap);
         public bool IsNullable => _flags.HasFlag(ModelPropertyFlags.NullableType);
         public bool IsReadOnly => _flags.HasFlag(ModelPropertyFlags.ReadOnly);
         public bool IsUnordered => _flags.HasFlag(ModelPropertyFlags.Unordered);

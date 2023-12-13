@@ -157,15 +157,15 @@ namespace MetaDslx.Modeling
         {
             get
             {
-                var nameProp = MInfo.NameProperty;
+                var nameSlot = ((IModelObject)this).GetSlot(MInfo.NameProperty)?.AsSingle();
                 string? name = null;
-                if (nameProp != null) name = ((IModelObject)this).Get(nameProp)?.AsSingle()?.Get()?.ToString();
+                if (nameSlot != null) name = nameSlot.Value?.ToString();
                 return name;
             }
             set
             {
-                var nameProp = MInfo.NameProperty;
-                if (nameProp != null) ((IModelObject)this).Get(nameProp)?.AsSingle()?.Set(value);
+                var nameSlot = ((IModelObject)this).GetSlot(MInfo.NameProperty)?.AsSingle();
+                if (nameSlot != null) nameSlot.Value = value;
             }
         }
 
@@ -178,26 +178,28 @@ namespace MetaDslx.Modeling
 
         public T MGet<T>(ModelProperty property)
         {
-            var slot = ((IModelObject)this).Get(property)?.AsSingle<T>();
-            if (slot is not null) return slot.Get();
+            var slot = ((IModelObject)this).GetSlot(property)?.AsSingle<T>();
+            if (slot is not null) return slot.Value;
             else return default;
         }
 
         public IList<T> MGetCollection<T>(ModelProperty property)
         {
-            var slot = ((IModelObject)this).Get(property)?.AsCollection<T>();
+            var slot = ((IModelObject)this).GetSlot(property)?.AsCollection<T>();
             if (slot is not null) return slot as IList<T>;
             else return default;
         }
 
         public void MAdd<T>(ModelProperty property, T value)
         {
-            ((IModelObject)this).Get(property)?.Add(value);
+            var slot = ((IModelObject)this).GetSlot(property) as ISlotCore;
+            if (slot is not null) slot.AddCore(value, null);
         }
 
         public void MRemove<T>(ModelProperty property, T value)
         {
-            ((IModelObject)this).Get(property)?.Remove(value);
+            var slot = ((IModelObject)this).GetSlot(property) as ISlotCore;
+            if (slot is not null) slot.RemoveCore(value, null);
         }
 
         public override string ToString()
@@ -206,7 +208,7 @@ namespace MetaDslx.Modeling
             var name = ((IModelObject)this).Name;
             var typeProp = MInfo.TypeProperty;
             string? type = null;
-            if (typeProp != null) type = ((IModelObject)this).Get(typeProp)?.ToString();
+            if (typeProp != null) type = ((IModelObject)this).GetSlot(typeProp)?.ToString();
             if (!string.IsNullOrWhiteSpace(name) && !string.IsNullOrWhiteSpace(type)) return $"{name}: {type}";
             else if (!string.IsNullOrWhiteSpace(name)) return $"{name}";
             else if (!string.IsNullOrWhiteSpace(type)) return $":{type}";
@@ -277,39 +279,46 @@ namespace MetaDslx.Modeling
             return MInfo.GetOverridingOperations(operation);
         }
 
-        ISlot? IModelObject.Get(ModelProperty property)
+        ISlot? IModelObject.GetSlot(ModelProperty? property)
         {
-            if (MInfo.AllDeclaredProperties.Contains(property)) return ((IModelObject)this).Attach(property); 
-            else return null;
+            if (property is null) return null;
+            var propertySlot = GetSlot(property);
+            return MGetSlot(propertySlot);
         }
 
-        ISlot IModelObject.Attach(ModelProperty property)
+        ISlotCore? IModelObject.GetSlotCore(ModelProperty? property)
         {
+            return ((IModelObject)this).GetSlot(property) as ISlotCore;
+        }
+
+        ISlot IModelObject.AttachSlot(ModelProperty property)
+        {
+            if (property is null) throw new ArgumentNullException(nameof(property));
             var propertySlot = GetSlot(property);
-            if (this.TryGetSlotValueCore(propertySlot, out var slot)) return slot;
-            if (propertySlot.IsMap)
+            return MAttachSlot(propertySlot);
+        }
+
+        protected abstract ISlot? MGetSlot(ModelPropertySlot propertySlot);
+        protected abstract ISlot? MAttachSlot(ModelPropertySlot propertySlot);
+
+        protected virtual ISlot? MCreateSlot(ModelPropertySlot propertySlot)
+        {
+            /*if (propertySlot.IsMap)
             {
                 slot = new MapSlot(this, propertySlot);
                 SetSlotValueCore(propertySlot, slot);
                 return slot;
-            }
+            }*/
             if (propertySlot.IsCollection)
             {
-                slot = new CollectionSlot(this, propertySlot);
-                SetSlotValueCore(propertySlot, slot);
-                return slot;
+                return new CollectionSlot(this, propertySlot);
             }
-            if (propertySlot.IsSingleItem)
+            if (propertySlot.IsSingle)
             {
-                slot = new SingleSlot(this, propertySlot);
-                SetSlotValueCore(propertySlot, slot);
-                return slot;
+                return new SingleSlot(this, propertySlot);
             }
             return null;
         }
-
-        protected abstract void SetSlotValueCore(ModelPropertySlot propertySlot, ISlot? slot);
-        protected abstract bool TryGetSlotValueCore(ModelPropertySlot propertySlot, out ISlot? slot);
 
         public abstract IModelObject Clone();
 

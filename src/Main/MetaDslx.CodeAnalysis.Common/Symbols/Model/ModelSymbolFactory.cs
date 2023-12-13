@@ -103,10 +103,13 @@ namespace MetaDslx.CodeAnalysis.Symbols.Model
             var builder = ArrayBuilder<TValue>.GetInstance();
             foreach (var prop in modelObject.PublicProperties.Where(prop => prop.SymbolProperty == symbolProperty))
             {
+                var slot = modelObject.GetSlot(prop);
+                if (slot is null) continue;
                 if (typeof(Symbol).IsAssignableFrom(typeof(TValue)))
                 {
-                    foreach (var item in modelObject.GetValues(prop))
+                    foreach (var box in slot.Boxes)
                     {
+                        var item = box.Value;
                         cancellationToken.ThrowIfCancellationRequested();
                         if (item is null) continue;
                         Symbol? symbolItem = null;
@@ -125,8 +128,9 @@ namespace MetaDslx.CodeAnalysis.Symbols.Model
                 }
                 else
                 {
-                    foreach (var item in modelObject.GetValues(prop))
+                    foreach (var box in slot.Boxes)
                     {
+                        var item = box.Value;
                         cancellationToken.ThrowIfCancellationRequested();
                         var value = item;
                         if (item is MetaType mtype)

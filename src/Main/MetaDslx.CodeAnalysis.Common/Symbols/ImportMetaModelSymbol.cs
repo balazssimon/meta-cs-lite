@@ -2,7 +2,7 @@
 using MetaDslx.CodeAnalysis.Declarations;
 using MetaDslx.CodeAnalysis.PooledObjects;
 using MetaDslx.CodeAnalysis.Symbols.CSharp;
-using MetaDslx.CodeAnalysis.Symbols.MetaModelImport;
+//using MetaDslx.CodeAnalysis.Symbols.MetaModelImport;
 using MetaDslx.CodeAnalysis.Symbols.Source;
 using MetaDslx.Modeling;
 using System;
@@ -65,7 +65,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
                         symbolsBuilder.Add(type.OriginalTypeSymbol);
                     }
                 }
-                else if (metaModel is null && !metaModelSymbol.IsError && metaModelSymbol is CSharpTypeSymbol csharpTypeSymbol)
+                /*else if (metaModel is null && !metaModelSymbol.IsError && metaModelSymbol is CSharpTypeSymbol csharpTypeSymbol)
                 {
                     var csharpNamespaceSymbol = csharpTypeSymbol.ContainingNamespace as CSharpNamespaceSymbol;
                     if (csharpNamespaceSymbol is not null)
@@ -73,7 +73,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
                         metaModel = new ImportedMetaModel(csharpNamespaceSymbol, metaModelSymbol.Name, false);
                         symbolsBuilder.AddRange(ImportedMetaUtils.CollectTypes(csharpNamespaceSymbol, collectSymbols: false));
                     }
-                }
+                }*/
                 if (metaModel is null)
                 {
                     diagnostics.Add(Diagnostic.Create(CommonErrorCode.ERR_DeclarationError, Locations.FirstOrDefault(), $"The imported type '{fullName}' is not a metamodel."));

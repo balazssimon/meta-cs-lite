@@ -79,7 +79,7 @@ namespace MetaDslx.Modeling.Meta
                     if (prop is not null)
                     {
                         declaredProperties.Add(prop);
-                        ComputePropertyType(prop, out var type, out var flags);
+                        ComputePropertyType(prop, out var type, out var flags, out var keyType, out var keyFlags);
                         var symbolProperty = prop.SymbolProperty;
                         if (flags.HasFlag(ModelPropertyFlags.Derived)) flags |= ModelPropertyFlags.ReadOnly;
                         if (flags.HasFlag(ModelPropertyFlags.DerivedUnion)) flags |= ModelPropertyFlags.ReadOnly;
@@ -87,6 +87,8 @@ namespace MetaDslx.Modeling.Meta
                         if (symbolProperty == "Type") flags |= ModelPropertyFlags.Type;
                         prop.Type = type;
                         prop.Flags = prop.OriginalFlags | flags;
+                        prop.KeyType = keyType;
+                        prop.KeyFlags = keyFlags;
                     }
                 }
                 declaredProperties.Sort(ComparePropertiesByName);
@@ -216,14 +218,28 @@ namespace MetaDslx.Modeling.Meta
             cls.AllDeclaredOperations = allDeclaredOperations.ToImmutableAndFree();
         }
 
-        private void ComputePropertyType(MetaProperty<TType, TProperty, TOperation> property, out TType type, out ModelPropertyFlags flags)
+        private void ComputePropertyType(MetaProperty<TType, TProperty, TOperation> property, out TType type, out ModelPropertyFlags flags, out TType keyType, out ModelPropertyFlags keyFlags)
         {
+            keyType = default;
+            keyFlags = ModelPropertyFlags.None;
             type = property.OriginalType;
             flags = property.OriginalFlags | UpdateFlagsWithType(ModelPropertyFlags.None, ref type);
             if (flags.HasFlag(ModelPropertyFlags.BuiltInType) || flags.HasFlag(ModelPropertyFlags.EnumType) || flags.HasFlag(ModelPropertyFlags.ModelObjectType))
             {
-                flags |= ModelPropertyFlags.SingleItem;
+                flags |= ModelPropertyFlags.Single;
                 if (!property.HasSetter) flags |= ModelPropertyFlags.ReadOnly;
+            }
+            else if (IsMapType(type, out keyType, out keyFlags, out var valueType, out var valueFlags))
+            {
+                keyFlags = UpdateFlagsWithType(keyFlags, ref keyType);
+                valueFlags = UpdateFlagsWithType(valueFlags, ref valueType);
+                if ((keyFlags.HasFlag(ModelPropertyFlags.BuiltInType) || keyFlags.HasFlag(ModelPropertyFlags.EnumType) || keyFlags.HasFlag(ModelPropertyFlags.ModelObjectType)) &&
+                    valueFlags.HasFlag(ModelPropertyFlags.BuiltInType) || valueFlags.HasFlag(ModelPropertyFlags.EnumType) || valueFlags.HasFlag(ModelPropertyFlags.ModelObjectType))
+                {
+                    type = valueType;
+                    flags = valueFlags;
+                    flags |= ModelPropertyFlags.Map;
+                }
             }
             else if (IsCollectionType(type, out var itemType, out var collectionFlags))
             {
@@ -408,8 +424,9 @@ namespace MetaDslx.Modeling.Meta
                     }
                 }
                 var slotProperties = builder.ToImmutableAndClear();
-                var slotFlags = ComputeSlotFlags(slotProperties);
-                var slot = MakePropertySlot(propIds[slotIndex], slotProperties, propIds[slotIndex].DefaultValue, slotFlags);
+                var slotFlags = ComputeSlotFlags(slotProperties.Select(sp => sp.Flags));
+                var slotKeyFlags = ComputeSlotFlags(slotProperties.Select(sp => sp.KeyFlags));
+                var slot = MakePropertySlot(propIds[slotIndex], slotProperties, propIds[slotIndex].DefaultValue, slotFlags, slotKeyFlags);
                 slots.Add(slot);
                 slotPropToSlot.Add(propIds[slotIndex], slot);
             }
@@ -444,16 +461,16 @@ namespace MetaDslx.Modeling.Meta
             cls.ModelPropertyInfos = modelPropertyInfos.ToImmutable();
         }
 
-        private ModelPropertyFlags ComputeSlotFlags(ImmutableArray<MetaProperty<TType, TProperty, TOperation>> properties)
+        private ModelPropertyFlags ComputeSlotFlags(IEnumerable<ModelPropertyFlags> propertyFlags)
         {
             var flags = ModelPropertyFlags.None;
             foreach (ModelPropertyFlags flag in Enum.GetValues(typeof(ModelPropertyFlags)))
             {
                 var allSet = true;
                 var atLeastOneSet = false;
-                foreach (var prop in properties)
+                foreach (var propertyFlag in propertyFlags)
                 {
-                    if (prop.Flags.HasFlag(flag))
+                    if (propertyFlag.HasFlag(flag))
                     {
                         atLeastOneSet = true;
                     }
@@ -469,8 +486,10 @@ namespace MetaDslx.Modeling.Meta
                         flag == ModelPropertyFlags.BuiltInType ||
                         flag == ModelPropertyFlags.ModelObjectType ||
                         flag == ModelPropertyFlags.Containment ||
-                        flag == ModelPropertyFlags.SingleItem ||
+                        flag == ModelPropertyFlags.Single ||
                         flag == ModelPropertyFlags.Collection ||
+                        flag == ModelPropertyFlags.Map ||
+                        flag == ModelPropertyFlags.MultiMap ||
                         flag == ModelPropertyFlags.ReadOnly ||
                         flag == ModelPropertyFlags.Derived ||
                         flag == ModelPropertyFlags.DerivedUnion)
@@ -522,12 +541,13 @@ namespace MetaDslx.Modeling.Meta
         protected abstract MetaClass<TType, TProperty, TOperation> MakeClass(TType classType);
         protected abstract MetaProperty<TType, TProperty, TOperation> MakeProperty(MetaClass<TType, TProperty, TOperation> declaringType, TProperty property);
         protected abstract MetaOperation<TType, TProperty, TOperation> MakeOperation(MetaClass<TType, TProperty, TOperation> declaringType, TOperation operation);
+        protected abstract bool IsMapType(TType type, out TType? keyType, out ModelPropertyFlags keyFlags, out TType? valueType, out ModelPropertyFlags valueFlags);
         protected abstract bool IsCollectionType(TType type, out TType? itemType, out ModelPropertyFlags collectionFlags);
         protected abstract bool IsNullableType(TType type, out TType innerType);
         protected abstract bool IsEnumType(TType type);
         protected abstract bool IsValueType(TType type);
         protected abstract bool IsPrimitiveType(TType type);
-        protected abstract MetaPropertySlot<TType, TProperty, TOperation> MakePropertySlot(MetaProperty<TType, TProperty, TOperation> slotProperty, ImmutableArray<MetaProperty<TType, TProperty, TOperation>> slotProperties, MetaSymbol defaultValue, ModelPropertyFlags flags);
+        protected abstract MetaPropertySlot<TType, TProperty, TOperation> MakePropertySlot(MetaProperty<TType, TProperty, TOperation> slotProperty, ImmutableArray<MetaProperty<TType, TProperty, TOperation>> slotProperties, MetaSymbol defaultValue, ModelPropertyFlags flags, ModelPropertyFlags keyFlags);
         protected abstract MetaPropertyInfo<TType, TProperty, TOperation> MakePropertyInfo(
             MetaPropertySlot<TType, TProperty, TOperation> slot,
             ImmutableArray<MetaProperty<TType, TProperty, TOperation>> oppositeProperties,

@@ -70,21 +70,19 @@ namespace MetaDslx.Modeling
 
         public IEnumerable<Model> Models => _models;
 
-        public IEnumerable<IModelObject> ModelObjects
+        public IEnumerable<IModelObject> Objects
         {
             get
             {
                 foreach (var model in _models)
                 {
-                    foreach (var mobj in model.ModelObjects)
+                    foreach (var mobj in model.Objects)
                     {
                         yield return mobj;
                     }
                 }
             }
         }
-
-        public IEnumerable<object> Objects => ModelObjects.Select(mobj => mobj.UnderlyingObject);
 
         public void AddReference(IEnumerable<Model> models)
         {

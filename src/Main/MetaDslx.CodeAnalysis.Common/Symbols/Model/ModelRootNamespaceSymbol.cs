@@ -30,12 +30,12 @@ namespace MetaDslx.CodeAnalysis.Symbols.Model
 
         protected override ImmutableArray<Symbol> CompletePart_CreateContainedSymbols(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            return ((ModelModuleSymbol)ContainingModule).SymbolFactory.GetSymbols<Symbol>(_model.ModelObjects.Where(mo => mo.Parent is null));
+            return ((ModelModuleSymbol)ContainingModule).SymbolFactory.GetSymbols<Symbol>(_model.RootObjects);
         }
 
         protected override ImmutableArray<DeclaredSymbol> CompleteProperty_Members(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            return ((ModelModuleSymbol)ContainingModule).SymbolFactory.GetSymbols<DeclaredSymbol>(_model.ModelObjects.Where(mo => mo.Parent is null));
+            return ((ModelModuleSymbol)ContainingModule).SymbolFactory.GetSymbols<DeclaredSymbol>(_model.RootObjects);
         }
     }
 }

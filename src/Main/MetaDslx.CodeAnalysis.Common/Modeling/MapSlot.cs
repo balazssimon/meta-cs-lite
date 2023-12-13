@@ -6,7 +6,7 @@ using System.Text;
 
 namespace MetaDslx.Modeling
 {
-    internal class MapSlot : Slot, IMapSlot
+    /*internal class MapSlot : Slot, IMapSlot
     {
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Dictionary<Box, Box> _items;
@@ -29,5 +29,5 @@ namespace MetaDslx.Modeling
         {
             throw new NotImplementedException();
         }
-    }
+    }*/
 }

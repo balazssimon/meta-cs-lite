@@ -482,7 +482,7 @@ namespace MetaDslx.Modeling
             {
                 _modelToAbsoluteFileMap.TryGetValue(model, out _currentFile);
                 _modelToRelativeFileMap.Clear();
-                _allObjects = _currentModel.ModelObjects.Where(obj => obj.Parent == null);
+                _allObjects = _currentModel.RootObjects;
                 List<IModelObject> rootObjects = _allObjects.Where(obj => obj.Parent == null).ToList();
                 IModelObject xmiRoot = null;
                 if (_options.RequireXmiRoot)
@@ -542,11 +542,12 @@ namespace MetaDslx.Modeling
                 if (prop.IsDerived) continue;
                 bool oppositeIsContainment = obj.GetOppositeProperties(prop).Any(p => p.IsContainment);
                 if (oppositeIsContainment) continue;
-                if (!prop.IsCollection && (!prop.IsContainment || !prop.IsModelObject))
+                var slot = obj.GetSlot(prop);
+                if (prop.IsSingle && (!prop.IsContainment || !prop.IsModelObject))
                 {
                     if (prop.IsModelObject)
                     {
-                        var value = obj.Get(prop) as IModelObject;
+                        var value = slot.AsSingle()?.Value as IModelObject;
                         if (value != null)
                         {
                             if (value.Model == _currentModel)
@@ -561,9 +562,9 @@ namespace MetaDslx.Modeling
                     }
                     else
                     {
-                        if (!obj.IsDefault(prop))
+                        if (!slot.IsDefault)
                         {
-                            var value = obj.Get(prop);
+                            var value = slot.AsSingle()?.Value;
                             if (value != null)
                             {
                                 var valueStr = value.ToString();
@@ -580,11 +581,12 @@ namespace MetaDslx.Modeling
                 if (prop.IsDerived) continue;
                 bool oppositeIsContainment = obj.GetOppositeProperties(prop).Any(p => p.IsContainment);
                 if (oppositeIsContainment) continue;
+                var slot = obj.GetSlot(prop);
                 if (prop.IsCollection && (!prop.IsContainment || !prop.IsModelObject))
                 {
                     if (prop.IsModelObject)
                     {
-                        var values = obj.Get(prop) as System.Collections.IEnumerable;
+                        var values = slot.AsCollection();
                         if (values != null)
                         {
                             foreach (IModelObject value in values)
@@ -607,7 +609,7 @@ namespace MetaDslx.Modeling
                     }
                     else
                     {
-                        var values = obj.Get(prop) as System.Collections.IEnumerable;
+                        var values = slot.AsCollection();
                         if (values != null)
                         {
                             foreach (var value in values)
@@ -623,9 +625,10 @@ namespace MetaDslx.Modeling
                 if (prop.IsDerived || prop.IsDerivedUnion) continue;
                 if (prop.IsContainment && prop.IsModelObject)
                 {
+                    var slot = obj.GetSlot(prop);
                     if (prop.IsCollection)
                     {
-                        var children = obj.Get(prop) as System.Collections.IEnumerable;
+                        var children = slot.AsCollection();
                         if (children != null)
                         {
                             foreach (IModelObject child in children)
@@ -639,7 +642,7 @@ namespace MetaDslx.Modeling
                     }
                     else
                     {
-                        var child = obj.Get(prop) as IModelObject;
+                        var child = slot.AsSingle()?.Value as IModelObject;
                         if (child != null && written.Add(child))
                         {
                             this.WriteObject(child, prop.Name);
@@ -734,7 +737,7 @@ namespace MetaDslx.Modeling
             { 
                 if (!string.IsNullOrWhiteSpace(obj.Name))
                 {
-                    var nameList = obj.Model.ModelObjects.Where(o => o.Name == obj.Name).ToList();
+                    var nameList = obj.Model.Objects.Where(o => o.Name == obj.Name).ToList();
                     if (nameList.Count == 1)
                     {
                         nameToObject.Add(obj.Name, obj);
@@ -1075,11 +1078,12 @@ namespace MetaDslx.Modeling
                 {
                     string parentPropertyName = element.Name.LocalName.ToPascalCase();
                     ModelProperty parentProperty = parent?.GetProperty(parentPropertyName);
-                    if (parentProperty != null)
+                    var parentSlot = parent?.GetSlotCore(parentProperty);
+                    if (parentSlot != null)
                     {
                         try
                         {
-                            parent.Add(parentProperty, obj);
+                            parentSlot.AddCore(obj, null);
                         }
                         catch (ModelException mex)
                         {
@@ -1089,13 +1093,15 @@ namespace MetaDslx.Modeling
                     this.RegisterObjectByPosition(element, obj);
                     foreach (var nameProp in obj.AllDeclaredProperties.Where(p => p.IsName))
                     {
+                        var nameSlot = parent?.GetSlotCore(nameProp);
+                        if (nameSlot is null) continue;
                         var nameAttr = element.Attribute(nameProp.Name.ToCamelCase());
                         if (nameAttr != null)
                         {
                             string name = nameAttr.Value;
                             try
                             {
-                                obj.Add(nameProp, name);
+                                nameSlot.AddCore(name, null);
                             }
                             catch (ModelException mex)
                             {
@@ -1195,6 +1201,7 @@ namespace MetaDslx.Modeling
             IModelObject currentObj = ResolveObjectByPosition(element, false);
             string parentPropertyName = element.Name.LocalName.ToPascalCase();
             ModelProperty parentProperty = parent?.GetProperty(parentPropertyName);
+            var parentSlot = parent?.GetSlotCore(parentProperty);
             if (parentProperty != null)
             {
                 if (currentObj == null)
@@ -1207,10 +1214,9 @@ namespace MetaDslx.Modeling
                         var reference = refAttribute.Value;
                         foreach (var resolvedObj in ResolveObjectsByReference(refAttribute, reference, element))
                         {
-                            var value = resolvedObj;
                             try
                             {
-                                parent.Add(parentProperty, ResolveMetaConstantValue(parentProperty, resolvedObj));
+                                parentSlot.AddCore(ResolveMetaConstantValue(parentProperty, resolvedObj), null);
                             }
                             catch (ModelException mex)
                             {
@@ -1263,7 +1269,8 @@ namespace MetaDslx.Modeling
         {
             if (propertyName == "Href") return;
             ModelProperty property = obj.GetProperty(propertyName);
-            if (property == null)
+            var slot = obj.GetSlotCore(property);
+            if (slot == null)
             {
                 this.AddError(location, $"Model object '{obj}' has no '{propertyName}' property.");
             }
@@ -1329,12 +1336,12 @@ namespace MetaDslx.Modeling
                     {
                         foreach (var v in values)
                         {
-                            obj.Add(property, ResolveMetaConstantValue(property, v));
+                            slot.AddCore(ResolveMetaConstantValue(property, v), null);
                         }
                     }
                     else
                     {
-                        obj.Add(property, ResolveMetaConstantValue(property, value));
+                        slot.AddCore(ResolveMetaConstantValue(property, value), null);
                     }
                 }
                 catch (ModelException mex)
@@ -1541,8 +1548,8 @@ namespace MetaDslx.Modeling
                 var nextElements = new List<object>();
                 if (currentElements == null)
                 {
-                    if (recursive) nextElements.AddRange(_model.ModelObjects.Where(mobj => mobj.Name == elementName));
-                    else nextElements.AddRange(_model.ModelObjects.Where(mobj => mobj.Parent == null && mobj.Name == elementName));
+                    if (recursive) nextElements.AddRange(_model.Objects.Where(mobj => mobj.Name == elementName));
+                    else nextElements.AddRange(_model.Objects.Where(mobj => mobj.Parent == null && mobj.Name == elementName));
                 }
                 else
                 {
