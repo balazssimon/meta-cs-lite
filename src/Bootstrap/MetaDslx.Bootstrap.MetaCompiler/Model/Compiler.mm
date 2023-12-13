@@ -30,7 +30,7 @@ class Grammar $GrammarSymbol : Declaration
 
 class Annotation $AnnotationSymbol
 {
-	TypeSymbol $AttributeClass;
+	type $AttributeClass;
 	contains AnnotationArgument[] $Arguments;
 }
 

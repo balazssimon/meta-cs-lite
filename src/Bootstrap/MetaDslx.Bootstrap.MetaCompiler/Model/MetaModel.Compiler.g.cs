@@ -118,7 +118,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
 		static Compiler()
 		{
 			_Annotation_Arguments = new __ModelProperty(typeof(Annotation), "Arguments", typeof(AnnotationArgument), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection, "Arguments");
-			_Annotation_AttributeClass = new __ModelProperty(typeof(Annotation), "AttributeClass", typeof(global::MetaDslx.CodeAnalysis.Symbols.TypeSymbol), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType, "AttributeClass");
+			_Annotation_AttributeClass = new __ModelProperty(typeof(Annotation), "AttributeClass", typeof(__MetaType), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single, "AttributeClass");
 			_AnnotationArgument_NamedParameter = new __ModelProperty(typeof(AnnotationArgument), "NamedParameter", typeof(__MetaSymbol), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Collection, "NamedParameter");
 			_AnnotationArgument_Parameter = new __ModelProperty(typeof(AnnotationArgument), "Parameter", typeof(global::MetaDslx.CodeAnalysis.Symbols.DeclaredSymbol), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType, null);
 			_AnnotationArgument_ParameterType = new __ModelProperty(typeof(AnnotationArgument), "ParameterType", typeof(__MetaType), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single, null);
@@ -936,7 +936,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
 			obj49.Parent = obj10;
 			obj50.ItemType = __MetaType.FromModelObject((__IModelObject)obj14);
 			obj51.SymbolProperty = "AttributeClass";
-			obj51.Type = typeof(global::MetaDslx.CodeAnalysis.Symbols.TypeSymbol);
+			obj51.Type = typeof(__MetaType);
 			obj51.Name = "AttributeClass";
 			obj51.Parent = obj11;
 			((__IModelObject)obj52).Children.Add((__IModelObject)obj53);
@@ -1690,7 +1690,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
 	public interface Annotation : __IModelObjectCore
 	{
 		global::MetaDslx.Modeling.ICollectionSlot<AnnotationArgument> Arguments { get; }
-		global::MetaDslx.CodeAnalysis.Symbols.TypeSymbol AttributeClass { get; set; }
+		__MetaType AttributeClass { get; set; }
 	
 	}
 
@@ -2668,10 +2668,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 			get => MGetCollection<AnnotationArgument>(Compiler.Annotation_Arguments);
 		}
 	
-		public global::MetaDslx.CodeAnalysis.Symbols.TypeSymbol AttributeClass
+		public __MetaType AttributeClass
 		{
-			get => MGet<global::MetaDslx.CodeAnalysis.Symbols.TypeSymbol>(Compiler.Annotation_AttributeClass);
-			set => MSet<global::MetaDslx.CodeAnalysis.Symbols.TypeSymbol>(Compiler.Annotation_AttributeClass, value);
+			get => MGet<__MetaType>(Compiler.Annotation_AttributeClass);
+			set => MSet<__MetaType>(Compiler.Annotation_AttributeClass, value);
 		}
 	
 	
@@ -2705,7 +2705,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 				_publicPropertiesByName = publicPropertiesByName.ToImmutable();
 				var modelPropertyInfos = __ImmutableDictionary.CreateBuilder<__ModelProperty, __ModelPropertyInfo>();
 				modelPropertyInfos.Add(Compiler.Annotation_Arguments, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Annotation_Arguments, __ImmutableArray.Create<__ModelProperty>(Compiler.Annotation_Arguments), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
-				modelPropertyInfos.Add(Compiler.Annotation_AttributeClass, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Annotation_AttributeClass, __ImmutableArray.Create<__ModelProperty>(Compiler.Annotation_AttributeClass), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
+				modelPropertyInfos.Add(Compiler.Annotation_AttributeClass, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Annotation_AttributeClass, __ImmutableArray.Create<__ModelProperty>(Compiler.Annotation_AttributeClass), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
 				_modelPropertyInfos = modelPropertyInfos.ToImmutable();
 	
 				_declaredOperations = __ImmutableArray.Create<__ModelOperation>();

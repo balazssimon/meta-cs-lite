@@ -132,15 +132,15 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             rtoken.IsFixed = ctoken.IsFixed;
             rtoken.FixedText = ctoken.FixedText;
             if (rtoken.IsFixed) _fixedTokens.Add(rtoken.FixedText, rtoken);
-            var rtokenKindSymbol = ctoken.Annotations.Where(a => a.AttributeClass?.Name?.EndsWith("TokenKind") ?? false).FirstOrDefault()?.AttributeClass;
-            if (rtokenKindSymbol is not null)
+            var rtokenKindSymbol = ctoken.Annotations.Where(a => a.AttributeClass.Name?.EndsWith("TokenKind") ?? false).FirstOrDefault()?.AttributeClass ?? default;
+            if (!rtokenKindSymbol.IsNull)
             {
                 var kind = _rlang.TokenKinds.FirstOrDefault(tk => tk.Name == rtokenKindSymbol.Name);
                 if (kind is null)
                 {
                     kind = f.TokenKind();
                     kind.Name = rtokenKindSymbol.Name;
-                    kind.TypeName = SymbolDisplayFormat.QualifiedNameOnlyFormat.ToString(rtokenKindSymbol);
+                    kind.TypeName = rtokenKindSymbol.FullName;
                     _rlang.TokenKinds.Add(kind);
                 }
                 rtoken.TokenKind = kind;
@@ -151,7 +151,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
 
         private void CheckDefaultReference(object? cobj, ICollectionSlot<Annotation> annotations)
         {
-            var isDefaultRef = annotations.Any(a => a.AttributeClass?.Name == nameof(DefaultReferenceAnnotation) && SymbolDisplayFormat.QualifiedNameOnlyFormat.ToString(a.AttributeClass) == DefaultReferenceFullName);
+            var isDefaultRef = annotations.Any(a => a.AttributeClass.Name == nameof(DefaultReferenceAnnotation) && a.AttributeClass.FullName == DefaultReferenceFullName);
             if (isDefaultRef)
             {
                 if (_defaultReferenceRule is null)
@@ -167,11 +167,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
 
         private void AddBinders(ICollectionSlot<Binder> rbinders, ICollectionSlot<Annotation> cannotations)
         {
-            foreach (var cbinder in cannotations.Where(a => a.AttributeClass?.Name?.EndsWith("Binder") ?? false))
+            foreach (var cbinder in cannotations.Where(a => a.AttributeClass.Name?.EndsWith("Binder") ?? false))
             {
                 var rbinder = f.Binder();
                 rbinders.Add(rbinder);
-                rbinder.TypeName = SymbolDisplayFormat.QualifiedNameOnlyFormat.ToString(cbinder.AttributeClass);
+                rbinder.TypeName = cbinder.AttributeClass.FullName;
                 foreach (var carg in cbinder.Arguments)
                 {
                     var name = carg.Parameter?.Name;

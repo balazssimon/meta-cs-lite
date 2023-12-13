@@ -293,6 +293,12 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
                                 {
                                     builder.Add((TValue)(object)MetaType.FromTypeSymbol(typeSymbol));
                                 }
+                                else if (typeof(TValue) == typeof(TypeSymbol) && value is MetaType metaType)
+                                {
+                                    //var ts = metaType.AsTypeSymbol(this.Compilation);
+                                    var ts = metaType.OriginalTypeSymbol;
+                                    builder.Add((TValue)(object)ts);
+                                }
                                 else if (typeof(TValue) == typeof(MetaSymbol) && value is Symbol valueSymbol)
                                 {
                                     builder.Add((TValue)(object)MetaSymbol.FromSymbol(valueSymbol));
