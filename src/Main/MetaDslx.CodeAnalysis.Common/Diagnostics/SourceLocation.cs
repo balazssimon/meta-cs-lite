@@ -134,7 +134,8 @@ namespace MetaDslx.CodeAnalysis
 
         protected override string GetDebuggerDisplay()
         {
-            return base.GetDebuggerDisplay() + "\"" + _syntaxTree.ToString().Substring(_span.Start, _span.Length) + "\"";
+            if (_syntaxTree is null) return "None";
+            else return base.GetDebuggerDisplay() + "\"" + _syntaxTree.ToString().Substring(_span.Start, _span.Length) + "\"";
         }
     }
 }

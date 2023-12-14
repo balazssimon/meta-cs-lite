@@ -94,6 +94,9 @@ abstract class GrammarRule : Declaration
 {
 	derived Language Language;
 	Grammar Grammar redefines Declaration.Parent;
+
+	string CSharpName;
+	string AntlrName;
 }
 
 abstract class LexerRule : GrammarRule
@@ -226,9 +229,10 @@ class Alternative $PAlternative : Declaration
 {
 	type $ReturnType;
 	contains Expression $ReturnValue;
-
 	contains Element[] $Elements;
 
+	string CSharpName;
+	string AntlrName;
 	contains Binder[] Binders;
 	bool ContainsBinders;
 
@@ -264,7 +268,8 @@ class Element $PElement
 	contains ElementValue $Value;
 	Multiplicity Multiplicity;
 
-	string Name;
+	string CSharpName;
+	string AntlrName;
 	contains Binder[] Binders;
 	bool ContainsBinders;
 

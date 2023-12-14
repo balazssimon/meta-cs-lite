@@ -22,16 +22,16 @@ namespace [Namespace].Syntax
 	public enum [Lang]SyntaxKind
 	{
 		[if (Tokens.Count > 0)]
-		__FirstToken = [Tokens.FirstOrDefault()?.Name],
-		__LastToken = [Tokens.LastOrDefault()?.Name],
+		__FirstToken = [Tokens.FirstOrDefault()?.CSharpName],
+		__LastToken = [Tokens.LastOrDefault()?.CSharpName],
 		[end if]
 		[if (fixedTokens.Length > 0)]
-		__FirstFixedToken = [fixedTokens.FirstOrDefault()?.Name],
-		__LastFixedToken = [fixedTokens.LastOrDefault()?.Name],
+		__FirstFixedToken = [fixedTokens.FirstOrDefault()?.CSharpName],
+		__LastFixedToken = [fixedTokens.LastOrDefault()?.CSharpName],
 		[end if]
 		[if (Rules.Count > 0)]
-		__FirstRule = [Rules.FirstOrDefault()?.Name],
-		__LastRule = [Rules.LastOrDefault()?.Alternatives?.LastOrDefault()?.Name],
+		__FirstRule = [Rules.FirstOrDefault()?.CSharpName],
+		__LastRule = [Rules.LastOrDefault()?.Alternatives?.LastOrDefault()?.CSharpName],
 		[end if]
 
 		// Built-in:
@@ -46,16 +46,16 @@ namespace [Namespace].Syntax
 
 		// Tokens:
 		[foreach (var token in fixedTokens)]
-		[token.Name],
+		[token.CSharpName],
 		[end foreach]
 		[foreach (var token in nonFixedTokens)]
-		[token.Name],
+		[token.CSharpName],
 		[end foreach]
 
 		// Rules:
 		[foreach (var rule in Rules)]
             [foreach (var alt in rule.Alternatives)]
-		[alt.Name],
+		[alt.CSharpName],
             [end foreach]
 		[end foreach]
 	}
@@ -73,7 +73,7 @@ end template
 template GenerateSyntaxFacts()
 [var triviaTokens = Tokens.Where(lr => lr.IsTrivia).ToImmutableArray()]
 [var fixedTokens = Tokens.Where(lr => lr.IsFixed).ToImmutableArray()]
-[var keywordTokens = fixedTokens.Where(lr => lr.Name.IsIdentifier()).ToImmutableArray()]
+[var keywordTokens = fixedTokens.Where(lr => lr.FixedText.IsIdentifier()).ToImmutableArray()]
 
 #nullable enable
 
@@ -81,11 +81,11 @@ namespace [Namespace].Syntax
 {
 	public class [Lang]SyntaxFacts : global::MetaDslx.CodeAnalysis.Syntax.SyntaxFacts
 	{
-		public [Lang]SyntaxKind DefaultWhitespaceKind => [Lang]SyntaxKind.[Grammar.DefaultWhitespace?.Name ?? "None"];
-		public [Lang]SyntaxKind DefaultEndOfLineKind => [Lang]SyntaxKind.[Grammar.DefaultEndOfLine?.Name ?? "None"];
-		public [Lang]SyntaxKind DefaultSeparatorKind => [Lang]SyntaxKind.[Grammar.DefaultSeparator?.Name ?? "None"];
-		public [Lang]SyntaxKind DefaultIdentifierKind => [Lang]SyntaxKind.[Grammar.DefaultIdentifier?.Name ?? "None"];
-		public [Lang]SyntaxKind CompilationUnitKind => [Lang]SyntaxKind.[MainRule?.Name ?? "None"];
+		public [Lang]SyntaxKind DefaultWhitespaceKind => [Lang]SyntaxKind.[Grammar.DefaultWhitespace?.CSharpName ?? "None"];
+		public [Lang]SyntaxKind DefaultEndOfLineKind => [Lang]SyntaxKind.[Grammar.DefaultEndOfLine?.CSharpName ?? "None"];
+		public [Lang]SyntaxKind DefaultSeparatorKind => [Lang]SyntaxKind.[Grammar.DefaultSeparator?.CSharpName ?? "None"];
+		public [Lang]SyntaxKind DefaultIdentifierKind => [Lang]SyntaxKind.[Grammar.DefaultIdentifier?.CSharpName ?? "None"];
+		public [Lang]SyntaxKind CompilationUnitKind => [Lang]SyntaxKind.[MainRule?.CSharpName ?? "None"];
 
 		protected override int DefaultWhitespaceRawKind => (int)DefaultWhitespaceKind;
 		protected override int DefaultEndOfLineRawKind => (int)DefaultEndOfLineKind;
@@ -99,7 +99,7 @@ namespace [Namespace].Syntax
 			{
 				case [Lang]SyntaxKind.Eof:
 				[foreach (var token in Tokens)]
-				case [Lang]SyntaxKind.[token.Name]:
+				case [Lang]SyntaxKind.[token.CSharpName]:
 				[end foreach]
 					return true;
 				default:
@@ -118,7 +118,7 @@ namespace [Namespace].Syntax
 			{
 				[if (fixedTokens.Length > 0)]
 					[foreach (var token in fixedTokens)]
-				case [Lang]SyntaxKind.[token.Name]:
+				case [Lang]SyntaxKind.[token.CSharpName]:
 					[end foreach]
 					return true;
 				[end if]
@@ -138,7 +138,7 @@ namespace [Namespace].Syntax
 			{
 				[foreach (var token in fixedTokens)]
 				case [StringUtilities.EncodeString(token.FixedText)]: 
-					return [Lang]SyntaxKind.[token.Name];
+					return [Lang]SyntaxKind.[token.CSharpName];
 				[end foreach]
 				default:
 					return [Lang]SyntaxKind.None;
@@ -180,13 +180,13 @@ namespace [Namespace].Syntax
 				case [Lang]SyntaxKind.Eof:
 					return "Eof";
 				[foreach (var token in Tokens)]
-				case [Lang]SyntaxKind.[token.Name]: 
-					return "[token.Name]";
+				case [Lang]SyntaxKind.[token.CSharpName]: 
+					return "[token.CSharpName]";
 				[end foreach]
 				[foreach (var rule in Rules)]
                     [foreach (var alt in rule.Alternatives)]
-				case [Lang]SyntaxKind.[alt.Name]: 
-					return "[alt.Name]";
+				case [Lang]SyntaxKind.[alt.CSharpName]: 
+					return "[alt.CSharpName]";
        				[end foreach]
 				[end foreach]
 				default:
@@ -204,7 +204,7 @@ namespace [Namespace].Syntax
 			switch (kind)
 			{
 				[foreach (var token in fixedTokens)]
-				case [Lang]SyntaxKind.[token.Name]: 
+				case [Lang]SyntaxKind.[token.CSharpName]: 
 					return [StringUtilities.EncodeString(token.FixedText)];
 				[end foreach]
 				default:
@@ -223,7 +223,7 @@ namespace [Namespace].Syntax
 			{
 				[if (triviaTokens.Length > 0)]
 				[foreach (var token in triviaTokens)]
-				case [Lang]SyntaxKind.[token.Name]: 
+				case [Lang]SyntaxKind.[token.CSharpName]: 
 				[end foreach]
 					return true;
 				[end if]
@@ -243,7 +243,7 @@ namespace [Namespace].Syntax
 			{
 				[if (keywordTokens.Length > 0)]
 				[foreach (var token in keywordTokens)]
-				case [Lang]SyntaxKind.[token.Name]: 
+				case [Lang]SyntaxKind.[token.CSharpName]: 
 				[end foreach]
 					return true;
 				[end if]
@@ -260,7 +260,7 @@ namespace [Namespace].Syntax
         public IEnumerable<[Lang]SyntaxKind> GetReservedKeywordKinds()
         {
 			[foreach (var token in keywordTokens)]
-			yield return [Lang]SyntaxKind.[token.Name];
+			yield return [Lang]SyntaxKind.[token.CSharpName];
 			[end foreach]
 			yield break;
         }
@@ -276,7 +276,7 @@ namespace [Namespace].Syntax
 			{
 				[foreach (var token in keywordTokens)]
 				case [StringUtilities.EncodeString(token.FixedText)]: 
-					return [Lang]SyntaxKind.[token.Name];
+					return [Lang]SyntaxKind.[token.CSharpName];
 				[end foreach]
 				default:
 					return [Lang]SyntaxKind.None;
@@ -701,7 +701,7 @@ public sealed class [alt.RedName] : [parent.Alternatives.Count > 1 ? parent.RedN
     {
         if ([foreach (var field in alt.Elements) separator " || "]this.[field.PropertyName] != [field.ParameterName][end foreach])
         {
-            var newNode = [Lang]Language.Instance.SyntaxFactory.[alt.Name]([alt.RedUpdateArguments]);
+            var newNode = [Lang]Language.Instance.SyntaxFactory.[alt.CSharpName]([alt.RedUpdateArguments]);
             var annotations = this.GetAnnotations();
             if (annotations != null && annotations.Length > 0)
                newNode = __SyntaxExtensions.WithAnnotations(newNode, annotations);
@@ -712,17 +712,17 @@ public sealed class [alt.RedName] : [parent.Alternatives.Count > 1 ? parent.RedN
 
     public override TResult Accept<TArg, TResult>(I[Lang]SyntaxVisitor<TArg, TResult> visitor, TArg argument)
     {
-        return visitor.Visit[alt.Name](this, argument);
+        return visitor.Visit[alt.CSharpName](this, argument);
     }
 
     public override TResult Accept<TResult>(I[Lang]SyntaxVisitor<TResult> visitor)
     {
-        return visitor.Visit[alt.Name](this);
+        return visitor.Visit[alt.CSharpName](this);
     }
 
     public override void Accept(I[Lang]SyntaxVisitor visitor)
     {
-        visitor.Visit[alt.Name](this);
+        visitor.Visit[alt.CSharpName](this);
     }
 
 }
@@ -811,7 +811,7 @@ namespace [Namespace]
             {
                 throw new ArgumentNullException(nameof(root));
             }
-            var directives = root.Kind == [Lang]SyntaxKind.[MainRule?.Name] && root is ICompilationUnitRootSyntax compilationUnitRoot ?
+            var directives = root.Kind == [Lang]SyntaxKind.[MainRule?.CSharpName] && root is ICompilationUnitRootSyntax compilationUnitRoot ?
                 ((ICompilationUnitRootSyntax)root).GetConditionalDirectivesStack() :
                 DirectiveStack.Empty;
             return new ParsedSyntaxTree(
@@ -1060,7 +1060,7 @@ namespace [Namespace]
                 _path = path ?? string.Empty;
                 _root = cloneRoot ? this.CloneNodeAsRoot(root) : root;
                 _parseData = parseData;
-                _hasCompilationUnitRoot = root.Kind == [Lang]SyntaxKind.[MainRule?.Name];
+                _hasCompilationUnitRoot = root.Kind == [Lang]SyntaxKind.[MainRule?.CSharpName];
             }
             protected override IncrementalParseData ParseData => _parseData;
             public override string FilePath
@@ -1190,7 +1190,7 @@ namespace [Namespace].Syntax
 	    void VisitSkippedTokensTrivia([Lang]SkippedTokensTriviaSyntax node);
 		[foreach (var rule in Rules)]
 			[foreach (var alt in rule.Alternatives)]
-		void Visit[alt.Name]([alt.RedName] node);
+		void Visit[alt.CSharpName]([alt.RedName] node);
 			[end foreach]
 		[end foreach]
     }
@@ -1204,7 +1204,7 @@ namespace [Namespace].Syntax
 		[foreach (var rule in Rules)]
 			[foreach (var alt in rule.Alternatives)]
 
-		public virtual void Visit[alt.Name]([alt.RedName] node)
+		public virtual void Visit[alt.CSharpName]([alt.RedName] node)
 		{
 		    this.DefaultVisit(node);
 		}
@@ -1217,7 +1217,7 @@ namespace [Namespace].Syntax
 	    TResult VisitSkippedTokensTrivia([Lang]SkippedTokensTriviaSyntax node);
 		[foreach (var rule in Rules)]
 			[foreach (var alt in rule.Alternatives)]
-		TResult Visit[alt.Name]([alt.RedName] node);
+		TResult Visit[alt.CSharpName]([alt.RedName] node);
 			[end foreach]
 		[end foreach]
     }
@@ -1231,7 +1231,7 @@ namespace [Namespace].Syntax
 		[foreach (var rule in Rules)]
 			[foreach (var alt in rule.Alternatives)]
 
-		public virtual TResult Visit[alt.Name]([alt.RedName] node)
+		public virtual TResult Visit[alt.CSharpName]([alt.RedName] node)
 		{
 		    return this.DefaultVisit(node);
 		}
@@ -1244,7 +1244,7 @@ namespace [Namespace].Syntax
 	    TResult VisitSkippedTokensTrivia([Lang]SkippedTokensTriviaSyntax node, TArg argument);
 		[foreach (var rule in Rules)]
 			[foreach (var alt in rule.Alternatives)]
-		TResult Visit[alt.Name]([alt.RedName] node, TArg argument);
+		TResult Visit[alt.CSharpName]([alt.RedName] node, TArg argument);
 			[end foreach]
 		[end foreach]
     }
@@ -1258,7 +1258,7 @@ namespace [Namespace].Syntax
 		[foreach (var rule in Rules)]
 			[foreach (var alt in rule.Alternatives)]
 
-		public virtual TResult Visit[alt.Name]([alt.RedName] node, TArg argument)
+		public virtual TResult Visit[alt.CSharpName]([alt.RedName] node, TArg argument)
 		{
 		    return this.DefaultVisit(node, argument);
 		}
@@ -1289,7 +1289,7 @@ namespace [Namespace].Syntax
 end template
 
 template GenerateSyntaxRewriterVisit(Alternative alt)
-public virtual SyntaxNode Visit[alt.Name]([alt.RedName] node)
+public virtual SyntaxNode Visit[alt.CSharpName]([alt.RedName] node)
 {
 	[foreach (var elem in alt.Elements)]
     var [elem.ParameterName] = [elem.VisitCall];
@@ -1449,14 +1449,14 @@ namespace [Namespace].Syntax
 
         [foreach (var token in nonFixedTokens)]
 
-        public __SyntaxToken [token.Name](string text)
+        public __SyntaxToken [token.CSharpName](string text)
         {
-            return new __SyntaxToken([Lang]Language.Instance.InternalSyntaxFactory.[token.Name](text));
+            return new __SyntaxToken([Lang]Language.Instance.InternalSyntaxFactory.[token.CSharpName](text));
         }
 
-        public __SyntaxToken [token.Name](string text, object value)
+        public __SyntaxToken [token.CSharpName](string text, object value)
         {
-            return new __SyntaxToken([Lang]Language.Instance.InternalSyntaxFactory.[token.Name](text, value));
+            return new __SyntaxToken([Lang]Language.Instance.InternalSyntaxFactory.[token.CSharpName](text, value));
         }
         [end foreach]
 		[foreach (var rule in Rules)]
@@ -1482,7 +1482,7 @@ namespace [Namespace].Syntax
 end template
 
 template GenerateSyntaxFactoryCreate(Alternative alt)
-public [alt.RedName] [alt.Name]([alt.RedUpdateParameters])
+public [alt.RedName] [alt.CSharpName]([alt.RedUpdateParameters])
 {
 	[foreach (var elem in alt.Elements)]
 		[var redSyntaxNullCondition = elem.RedSyntaxNullCondition]
@@ -1494,13 +1494,13 @@ public [alt.RedName] [alt.Name]([alt.RedUpdateParameters])
 	if ([redSyntaxCondition]) throw new ArgumentException(nameof([elem.ParameterName]));
 		[end if]
 	[end foreach]
-    return ([alt.RedName])[Lang]Language.Instance.InternalSyntaxFactory.[alt.Name]([alt.RedToGreenArgumentList]).CreateRed();
+    return ([alt.RedName])[Lang]Language.Instance.InternalSyntaxFactory.[alt.CSharpName]([alt.RedToGreenArgumentList]).CreateRed();
 }
 [if (alt.HasRedToGreenOptionalArguments)]
 
-public [alt.RedName] [alt.Name]([alt.RedOptionalUpdateParameters])
+public [alt.RedName] [alt.CSharpName]([alt.RedOptionalUpdateParameters])
 {
-	return this.[alt.Name]([alt.RedToGreenOptionalArgumentList]);
+	return this.[alt.CSharpName]([alt.RedToGreenOptionalArgumentList]);
 }
 [end if]
 end template

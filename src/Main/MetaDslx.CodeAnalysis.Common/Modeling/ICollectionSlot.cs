@@ -32,22 +32,30 @@ namespace MetaDslx.Modeling
         void Reverse();
     }
 
-    public interface ICollectionSlot<T> : ICollectionSlot, IList<T>
+    public interface ICollectionSlot<T> : ISlot<T>, IList<T>
     {
-        new T this[int index] { get; set; }
-        new int Count { get; }
+        new bool IsReadOnly { get; }
+        bool IsUnordered { get; }
+        bool IsNonUnique { get; }
+
+        new void Clear();
         new bool Contains(T item);
-        new int IndexOf(T item);
         int LastIndexOf(T item);
+
+        Box BoxAt(int index);
         Box? BoxOf(T item);
         ImmutableArray<Box> AllBoxesOf(T item);
+
         new Box? Add(T item);
         ImmutableArray<Box> AddRange(IEnumerable<T> items);
         new Box? Insert(int index, T item);
         ImmutableArray<Box> InsertRange(int index, IEnumerable<T> items);
         new Box? Remove(T item);
         ImmutableArray<Box> RemoveAll(T item);
+        new Box? RemoveAt(int index);
+        ImmutableArray<Box> RemoveRange(int index, int count);
         ImmutableArray<Box> RemoveRange(IEnumerable<T> items);
         ImmutableArray<Box> RetainRange(IEnumerable<T> items);
+        void Reverse();
     }
 }

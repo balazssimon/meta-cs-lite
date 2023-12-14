@@ -160,7 +160,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
 
         public override string Alternative_GreenName(Alternative _this)
         {
-            return $"{_this.Name}Green";
+            return $"{_this.CSharpName}Green";
         }
 
         public override string Alternative_GreenUpdateArguments(Alternative _this)
@@ -180,7 +180,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
 
         public override string Alternative_RedName(Alternative _this)
         {
-            return $"{_this.Name}Syntax";
+            return $"{_this.CSharpName}Syntax";
         }
 
         public override string Alternative_RedOptionalUpdateParameters(Alternative _this)
@@ -261,7 +261,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
 
         public override string Element_FieldName(Element _this)
         {
-            return $"_{_this.Name.ToCamelCase()}";
+            return $"_{_this.CSharpName.ToCamelCase()}";
         }
 
         public override string Element_GreenFieldType(Element _this)
@@ -327,12 +327,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
 
         public override string Element_ParameterName(Element _this)
         {
-            return _this.Name.ToCamelCase().EscapeCSharpKeyword();
+            return _this.CSharpName.ToCamelCase().EscapeCSharpKeyword();
         }
 
         public override string Element_PropertyName(Element _this)
         {
-            return _this.Name;
+            return _this.CSharpName;
         }
 
         public override string Element_RedFieldType(Element _this)
@@ -424,7 +424,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             var languageName = _this.GetInnermostContainingObject<Language>()?.Name;
             if (_this.Multiplicity.IsOptional()) return "default";
             else if (_this.Multiplicity.IsSingle() && _this.Value is Eof) return $"this.Token({languageName}SyntaxKind.Eof)";
-            else if (_this.Multiplicity.IsSingle() && _this.Value is RuleRef rr && rr.Token is not null) return $"this.Token({languageName}SyntaxKind.{rr.Token.Name})";
+            else if (_this.Multiplicity.IsSingle() && _this.Value is RuleRef rr && rr.Token is not null) return $"this.Token({languageName}SyntaxKind.{rr.Token.CSharpName})";
             else return _this.ParameterName;
         }
 
@@ -463,7 +463,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                 sb.Append(".RawKind != (int)");
                 sb.Append(languageName);
                 sb.Append("SyntaxKind.");
-                sb.Append(_this.Token.Name);
+                sb.Append(_this.Token.CSharpName);
                 return builder.ToStringAndFree();
             }
             return null;
@@ -485,12 +485,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
 
         public override string Rule_GreenName(Rule _this)
         {
-            return $"{_this.Name}Green";
+            return $"{_this.CSharpName}Green";
         }
 
         public override string Rule_RedName(Rule _this)
         {
-            return $"{_this.Name}Syntax";
+            return $"{_this.CSharpName}Syntax";
         }
 
         public override string? SeparatedList_GreenSyntaxCondition(SeparatedList _this)
@@ -523,7 +523,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                 sb.Append(".RawKind != (int)");
                 sb.Append(languageName);
                 sb.Append("SyntaxKind.");
-                sb.Append(tokenRef.Token.Name);
+                sb.Append(tokenRef.Token.CSharpName);
             }
             return builder.ToStringAndFree();
         }

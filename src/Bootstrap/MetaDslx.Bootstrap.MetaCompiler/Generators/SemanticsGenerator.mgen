@@ -67,7 +67,7 @@ namespace [Namespace].Binding
 end template
 
 template GenerateBinderFactoryVisit(Rule rule, Alternative alt)
-public virtual void Visit[alt.Name]([alt.RedName] node)
+public virtual void Visit[alt.CSharpName]([alt.RedName] node)
 {
     [if (rule == Grammar.MainRule)]
     if (this.IsRoot)
@@ -235,7 +235,7 @@ template GenerateBinderFactoryVisitElementValue(string elemName, Element elem, E
 switch ([elemName].Get[Lang]Kind())
 {
         [foreach (var alt in alts.Tokens)]
-    case [Lang]SyntaxKind.[alt.Token.Name]:
+    case [Lang]SyntaxKind.[alt.Token.CSharpName]:
         [var altBody = GenerateBinderFactoryVisitElementValue(elemName, elem, alt, ref annotIndex)]
         [altBody = GenerateBinderFactoryVisitBinders(elemValue.Binders, elemName, altBody, false, ref annotIndex)]
         [GenerateBinderFactoryVisitBinders(elem.Binders, elemName, altBody, false, ref annotIndex)]

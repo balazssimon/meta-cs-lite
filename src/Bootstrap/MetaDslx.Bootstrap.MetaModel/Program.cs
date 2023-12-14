@@ -145,16 +145,16 @@ namespace MyCode
     {
         Console.WriteLine(diag);
     }
-    if (diags1.Length > 0) return;
+    if (diags1.Where(d => d.Severity == MetaDslx.CodeAnalysis.DiagnosticSeverity.Error).Any()) return;
     var mlangModel = mlangCompilation.SourceModule.Model;
     var c2r = new CompilerModelPostProcessor(mlangModel);
-    c2r.Execute();
+    c2r.Execute(default);
     var diags2 = c2r.GetDiagnostics();
     foreach (var diag in diags2)
     {
         Console.WriteLine(diag);
     }
-    if (diags2.Length > 0) return;
+    if (diags2.Where(d => d.Severity == MetaDslx.CodeAnalysis.DiagnosticSeverity.Error).Any()) return;
     Console.WriteLine(mlangModel);
     var xmi = new XmiSerializer();
     xmi.WriteModelToFile($@"..\..\..\{name}.xmi", mlangModel);

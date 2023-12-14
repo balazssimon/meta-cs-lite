@@ -1004,7 +1004,7 @@ internal class [alt.GreenName] : [rule.Alternatives.Count == 1 ? "GreenSyntaxNod
 	}
 
 	private [alt.GreenName]()
-		: base(([Lang]SyntaxKind)[Lang]SyntaxKind.[alt.Name], null, null)
+		: base(([Lang]SyntaxKind)[Lang]SyntaxKind.[alt.CSharpName], null, null)
 	{
 		this.flags &= ~NodeFlags.IsNotMissing;
 	}
@@ -1054,7 +1054,7 @@ internal class [alt.GreenName] : [rule.Alternatives.Count == 1 ? "GreenSyntaxNod
 	{
 		if ([foreach (var elem in alt.Elements) separator " || "][elem.FieldName] != [elem.GreenParameterValue][end foreach])
 		{
-			__InternalSyntaxNode newNode = [Lang]Language.Instance.InternalSyntaxFactory.[alt.Name]([alt.GreenUpdateArguments]);
+			__InternalSyntaxNode newNode = [Lang]Language.Instance.InternalSyntaxFactory.[alt.CSharpName]([alt.GreenUpdateArguments]);
 			var diags = this.GetDiagnostics();
 			if (diags != null && diags.Length > 0)
 				newNode = newNode.WithDiagnostics(diags);
@@ -1249,14 +1249,14 @@ namespace [Namespace].Syntax.InternalSyntax
 	    }
 
 		[foreach (var rule in Tokens.Where(t => !t.IsFixed))]
-		public __InternalSyntaxToken [rule.Name](string text)
+		public __InternalSyntaxToken [rule.CSharpName](string text)
 		{
-			return Token(null, [Lang]SyntaxKind.[rule.Name], text, null);
+			return Token(null, [Lang]SyntaxKind.[rule.CSharpName], text, null);
 		}
 
-		public __InternalSyntaxToken [rule.Name](string text, object value)
+		public __InternalSyntaxToken [rule.CSharpName](string text, object value)
 		{
-			return Token(null, [Lang]SyntaxKind.[rule.Name], text, value, null);
+			return Token(null, [Lang]SyntaxKind.[rule.CSharpName], text, value, null);
 		}
 
 		[end foreach]
@@ -1270,7 +1270,7 @@ namespace [Namespace].Syntax.InternalSyntax
 end template
 
 template GenerateInternalSyntaxFactoryCreate(Alternative alt)
-		internal [alt.GreenName] [alt.Name]([alt.GreenUpdateParameters])
+		internal [alt.GreenName] [alt.CSharpName]([alt.GreenUpdateParameters])
 		{
 #if DEBUG
 			[foreach (var elem in alt.Elements)]
@@ -1286,10 +1286,10 @@ template GenerateInternalSyntaxFactoryCreate(Alternative alt)
 #endif
 			[if (alt.Elements.Count <= 3)]
 			int hash;
-			var cached = __SyntaxNodeCache.TryGetNode((int)([Lang]SyntaxKind)[Lang]SyntaxKind.[alt.Name][foreach (var elem in alt.Elements)], [elem.GreenParameterValue][end foreach], out hash);
+			var cached = __SyntaxNodeCache.TryGetNode((int)([Lang]SyntaxKind)[Lang]SyntaxKind.[alt.CSharpName][foreach (var elem in alt.Elements)], [elem.GreenParameterValue][end foreach], out hash);
 			if (cached != null) return ([alt.GreenName])cached;
 		
-			var result = new [alt.GreenName]([Lang]SyntaxKind.[alt.Name][foreach (var elem in alt.Elements)], [elem.GreenParameterValue][end foreach]);
+			var result = new [alt.GreenName]([Lang]SyntaxKind.[alt.CSharpName][foreach (var elem in alt.Elements)], [elem.GreenParameterValue][end foreach]);
 			if (hash >= 0)
 			{
 				__SyntaxNodeCache.AddNode(result, hash);
@@ -1297,7 +1297,7 @@ template GenerateInternalSyntaxFactoryCreate(Alternative alt)
 		
 			return result;
 			[else]
-			return new [alt.GreenName]([Lang]SyntaxKind.[alt.Name][foreach (var elem in alt.Elements)], [elem.GreenParameterValue][end foreach]);
+			return new [alt.GreenName]([Lang]SyntaxKind.[alt.CSharpName][foreach (var elem in alt.Elements)], [elem.GreenParameterValue][end foreach]);
 			[end if]
 		}
 

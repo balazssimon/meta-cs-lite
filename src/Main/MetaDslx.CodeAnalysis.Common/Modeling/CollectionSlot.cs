@@ -363,7 +363,7 @@ namespace MetaDslx.Modeling
         }
     }
 
-    internal class CollectionSlot<T> : ICollectionSlot<T>, IOppositeSlotCore
+    internal class CollectionSlot<T> : ICollectionSlot<T>
     {
         private readonly ICollectionSlot _wrappedSlot;
 
@@ -384,37 +384,27 @@ namespace MetaDslx.Modeling
 
         public bool IsDefault => _wrappedSlot.IsDefault;
 
-        Box? IOppositeSlotCore.AddCore(object? item, Box? oppositeBox)
-        {
-            return (_wrappedSlot as IOppositeSlotCore)?.AddCore(item, oppositeBox);
-        }
+        bool ICollectionSlot<T>.IsUnordered => _wrappedSlot.IsUnordered;
 
-        Box? IOppositeSlotCore.RemoveCore(object? item, Box? oppositeBox)
-        {
-            return (_wrappedSlot as IOppositeSlotCore)?.RemoveCore(item, oppositeBox);
-        }
+        bool ICollectionSlot<T>.IsNonUnique => _wrappedSlot.IsNonUnique;
 
-        bool ICollectionSlot.IsUnordered => _wrappedSlot.IsUnordered;
+        bool ICollectionSlot<T>.IsReadOnly => _wrappedSlot.IsReadOnly;
 
-        bool ICollectionSlot.IsNonUnique => _wrappedSlot.IsNonUnique;
+        IEnumerable<Box> ISlot<T>.Boxes => _wrappedSlot.Boxes;
+        
+        IEnumerable<T> ISlot<T>.Values => _wrappedSlot.Values.Cast<T>();
 
-        IEnumerable<Box> ISlot.Boxes => _wrappedSlot.Boxes;
+        IModelObject ISlot<T>.Owner => _wrappedSlot.Owner;
 
-        IEnumerable<object?> ISlot.Values => _wrappedSlot.Values;
+        ModelPropertySlot ISlot<T>.Property => _wrappedSlot.Property;
 
-        int ICollectionSlot.Count => _wrappedSlot.Count;
+        SlotKind ISlot<T>.Kind => SlotKind.Collection;
 
-        IModelObject ISlot.Owner => _wrappedSlot.Owner;
+        bool ISlot<T>.IsReadOnly => _wrappedSlot.IsReadOnly;
 
-        ModelPropertySlot ISlot.Property => _wrappedSlot.Property;
+        bool ISlot<T>.IsNullable => _wrappedSlot.IsNullable;
 
-        SlotKind ISlot.Kind => SlotKind.Collection;
-
-        bool ISlot.IsReadOnly => _wrappedSlot.IsReadOnly;
-
-        bool ISlot.IsNullable => _wrappedSlot.IsNullable;
-
-        bool ISlot.IsDefault => _wrappedSlot.IsDefault;
+        bool ISlot<T>.IsDefault => _wrappedSlot.IsDefault;
 
         int ICollection<T>.Count => _wrappedSlot.Count;
 
@@ -426,18 +416,9 @@ namespace MetaDslx.Modeling
             set => _wrappedSlot[index] = value;
         }
 
-        int ICollectionSlot<T>.Count => _wrappedSlot.Count;
-
-        T ICollectionSlot<T>.this[int index]
+        Box? ISlot<T>.Add(T item)
         {
-            get => (T)_wrappedSlot[index];
-            set => _wrappedSlot[index] = value;
-        }
-
-        object? ICollectionSlot.this[int index]
-        {
-            get => _wrappedSlot[index];
-            set => _wrappedSlot[index] = value;
+            return _wrappedSlot.Add(item);
         }
 
         Box? ICollectionSlot<T>.Add(T item)
@@ -450,22 +431,12 @@ namespace MetaDslx.Modeling
             return _wrappedSlot.AddRange(items);
         }
 
-        ImmutableArray<Box> ICollectionSlot.AddRange(IEnumerable items)
-        {
-            return _wrappedSlot.AddRange(items);
-        }
-
         ImmutableArray<Box> ICollectionSlot<T>.AllBoxesOf(T item)
         {
             return _wrappedSlot.AllBoxesOf(item);
         }
 
-        ImmutableArray<Box> ICollectionSlot.AllBoxesOf(object? item)
-        {
-            return _wrappedSlot.AllBoxesOf(item);
-        }
-
-        Box ICollectionSlot.BoxAt(int index)
+        Box ICollectionSlot<T>.BoxAt(int index)
         {
             return _wrappedSlot.BoxAt(index);
         }
@@ -475,22 +446,22 @@ namespace MetaDslx.Modeling
             return _wrappedSlot.BoxOf(item);
         }
 
-        Box? ICollectionSlot.BoxOf(object? item)
-        {
-            return _wrappedSlot.BoxOf(item);
-        }
-
-        void ISlot.Clear()
+        void ISlot<T>.Clear()
         {
             _wrappedSlot.Clear();
         }
 
-        bool ICollectionSlot<T>.Contains(T item)
+        void ICollectionSlot<T>.Clear()
+        {
+            _wrappedSlot.Clear();
+        }
+
+        bool ISlot<T>.Contains(T item)
         {
             return _wrappedSlot.Contains(item);
         }
 
-        bool ISlot.Contains(object? item)
+        bool ICollectionSlot<T>.Contains(T item)
         {
             return _wrappedSlot.Contains(item);
         }
@@ -508,22 +479,7 @@ namespace MetaDslx.Modeling
             return _wrappedSlot.GetEnumerator();
         }
 
-        int ICollectionSlot<T>.IndexOf(T item)
-        {
-            return _wrappedSlot.IndexOf(item);
-        }
-
-        int ICollectionSlot.IndexOf(object? item)
-        {
-            return _wrappedSlot.IndexOf(item);
-        }
-
         Box? ICollectionSlot<T>.Insert(int index, T item)
-        {
-            return _wrappedSlot.Insert(index, item);
-        }
-
-        Box? ICollectionSlot.Insert(int index, object? item)
         {
             return _wrappedSlot.Insert(index, item);
         }
@@ -533,19 +489,14 @@ namespace MetaDslx.Modeling
             return _wrappedSlot.InsertRange(index, items);
         }
 
-        ImmutableArray<Box> ICollectionSlot.InsertRange(int index, IEnumerable items)
-        {
-            return _wrappedSlot.InsertRange(index, items);
-        }
-
         int ICollectionSlot<T>.LastIndexOf(T item)
         {
             return _wrappedSlot.LastIndexOf(item);
         }
 
-        int ICollectionSlot.LastIndexOf(object? item)
+        Box? ISlot<T>.Remove(T item)
         {
-            return _wrappedSlot.LastIndexOf(item);
+            return _wrappedSlot.Remove(item);
         }
 
         Box? ICollectionSlot<T>.Remove(T item)
@@ -553,17 +504,12 @@ namespace MetaDslx.Modeling
             return _wrappedSlot.Remove(item);
         }
 
-        ImmutableArray<Box> ICollectionSlot.RemoveAll(object? item)
-        {
-            return _wrappedSlot.RemoveAll(item);
-        }
-
         ImmutableArray<Box> ICollectionSlot<T>.RemoveAll(T item)
         {
             return _wrappedSlot.RemoveAll(item);
         }
 
-        Box? ICollectionSlot.RemoveAt(int index)
+        Box? ICollectionSlot<T>.RemoveAt(int index)
         {
             return _wrappedSlot.RemoveAt(index);
         }
@@ -573,14 +519,9 @@ namespace MetaDslx.Modeling
             return _wrappedSlot.RemoveRange(items);
         }
 
-        ImmutableArray<Box> ICollectionSlot.RemoveRange(int index, int count)
+        ImmutableArray<Box> ICollectionSlot<T>.RemoveRange(int index, int count)
         {
             return _wrappedSlot.RemoveRange(index, count);
-        }
-
-        ImmutableArray<Box> ICollectionSlot.RemoveRange(IEnumerable items)
-        {
-            return _wrappedSlot.RemoveRange(items);
         }
 
         ImmutableArray<Box> ICollectionSlot<T>.RetainRange(IEnumerable<T> items)
@@ -588,12 +529,7 @@ namespace MetaDslx.Modeling
             return _wrappedSlot.RetainRange(items);
         }
 
-        ImmutableArray<Box> ICollectionSlot.RetainRange(IEnumerable items)
-        {
-            return _wrappedSlot.RetainRange(items);
-        }
-
-        void ICollectionSlot.Reverse()
+        void ICollectionSlot<T>.Reverse()
         {
             _wrappedSlot.Reverse();
         }
@@ -643,37 +579,28 @@ namespace MetaDslx.Modeling
         {
             return _wrappedSlot.Remove(item) is not null;
         }
-        Box? ISlot.Add(object? item)
-        {
-            return _wrappedSlot.Add(item);
-        }
 
-        Box? ISlot.Remove(object? item)
-        {
-            return _wrappedSlot.Remove(item);
-        }
-
-        Box? ISlot.Replace(object? oldItem, object? newItem)
+        Box? ISlot<T>.Replace(T oldItem, T newItem)
         {
             return _wrappedSlot.Replace(oldItem, newItem);
         }
 
-        ISingleSlot? ISlot.AsSingle()
+        ISingleSlot? ISlot<T>.AsSingle()
         {
             return _wrappedSlot.AsSingle();
         }
 
-        ISingleSlot<TAs>? ISlot.AsSingle<TAs>()
+        ISingleSlot<TAs>? ISlot<T>.AsSingle<TAs>()
         {
             return _wrappedSlot.AsSingle<TAs>();
         }
 
-        ICollectionSlot? ISlot.AsCollection()
+        ICollectionSlot? ISlot<T>.AsCollection()
         {
             return _wrappedSlot.AsCollection();
         }
 
-        ICollectionSlot<TAs>? ISlot.AsCollection<TAs>()
+        ICollectionSlot<TAs>? ISlot<T>.AsCollection<TAs>()
         {
             return _wrappedSlot.AsCollection<TAs>();
         }

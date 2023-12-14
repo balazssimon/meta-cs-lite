@@ -12,8 +12,10 @@ namespace MetaDslx.Modeling
         Box? Init(object? value);
     }
 
-    public interface ISingleSlot<T> : ISingleSlot
+    public interface ISingleSlot<T> : ISlot<T>
     {
-        new T Value { get; set; }
+        Box Box { get; }
+        T Value { get; set; }
+        Box? Init(T value);
     }
 }
