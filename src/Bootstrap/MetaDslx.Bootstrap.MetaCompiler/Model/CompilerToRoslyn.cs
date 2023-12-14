@@ -1,5 +1,5 @@
 ﻿using Antlr4.Runtime;
-using MetaDslx.Bootstrap.MetaCompiler.Roslyn;
+//using MetaDslx.Bootstrap.MetaCompiler.Roslyn;
 using MetaDslx.CodeAnalysis.PooledObjects;
 using MetaDslx.CodeAnalysis.Symbols;
 using MetaDslx.Languages.MetaCompiler.Model;

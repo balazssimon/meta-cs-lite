@@ -268,6 +268,9 @@ class Element $PElement
 	contains Binder[] Binders;
 	bool ContainsBinders;
 
+	derived bool IsToken;
+	derived bool IsList;
+
 	derived string FieldName;
 	derived string ParameterName;
 	derived string PropertyName;
