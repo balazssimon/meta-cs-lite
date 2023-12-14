@@ -10,7 +10,7 @@ using System.Text;
 
 namespace MetaDslx.Modeling
 {
-    internal class CollectionSlot : Slot, ICollectionSlot, IEnumerable
+    internal class CollectionSlot : Slot, ICollectionSlot
     {
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Box> _boxes;
@@ -363,7 +363,7 @@ namespace MetaDslx.Modeling
         }
     }
 
-    internal class CollectionSlot<T> : IList<T>, ICollectionSlot<T>, IOppositeSlotCore
+    internal class CollectionSlot<T> : ICollectionSlot<T>, IOppositeSlotCore
     {
         private readonly ICollectionSlot _wrappedSlot;
 
