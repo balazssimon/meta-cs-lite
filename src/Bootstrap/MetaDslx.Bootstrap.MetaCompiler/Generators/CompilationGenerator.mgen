@@ -1,6 +1,6 @@
 namespace MetaDslx.Bootstrap.MetaCompiler.Generators
 
-using MetaDslx.Bootstrap.MetaCompiler.Roslyn
+using MetaDslx.Bootstrap.MetaCompiler.Model
 using System.Collections.Generic
 using System.Collections.Immutable
 using System.Linq
@@ -8,7 +8,7 @@ using System.Linq
 generator RoslynApiGenerator
 
 
-template GenerateCompilationFactory(Language language)
+template GenerateCompilationFactory()
 using System;
 using MetaDslx.CodeAnalysis;
 using MetaDslx.CodeAnalysis.Declarations;
@@ -16,9 +16,9 @@ using MetaDslx.CodeAnalysis.Binding;
 
 #nullable enable
 
-namespace [language.Namespace]
+namespace [Namespace]
 {
-    public class [language.Name]CompilationFactory : CompilationFactory
+    public class [Lang]CompilationFactory : CompilationFactory
     {
 
     }
@@ -26,7 +26,7 @@ namespace [language.Namespace]
 end template
 
 
-template GenerateCompilation(Language language)
+template GenerateCompilation()
 using System;
 using MetaDslx.CodeAnalysis;
 using MetaDslx.CodeAnalysis.Declarations;
@@ -34,11 +34,11 @@ using MetaDslx.CodeAnalysis.Binding;
 
 #nullable enable
 
-namespace [language.Namespace]
+namespace [Namespace]
 {
-    public class [language.Name]Compilation : Compilation
+    public class [Lang]Compilation : Compilation
     {
-        protected [language.Name]Compilation(
+        protected [Lang]Compilation(
             string? assemblyName,
             CompilationOptions options,
             ImmutableArray<MetadataReference> references,
@@ -46,21 +46,21 @@ namespace [language.Namespace]
             ReferenceManager? referenceManager, 
             bool reuseReferenceManager,
             SyntaxAndDeclarationManager syntaxAndDeclarations)
-            : base(assemblyName, [language.Name]Language.Instance, options, references, scriptCompilationInfo, referenceManager, reuseReferenceManager, syntaxAndDeclarations)
+            : base(assemblyName, [Lang]Language.Instance, options, references, scriptCompilationInfo, referenceManager, reuseReferenceManager, syntaxAndDeclarations)
         {
 
         }
 
-        public static new [language.Name]Compilation Create(
+        public static new [Lang]Compilation Create(
             string? assemblyName = null, 
             IEnumerable<SyntaxTree>? syntaxTrees = null, 
             IEnumerable<MetadataReference>? references = null, 
             CompilationOptions? options = null)
         {
-            return ([language.Name]Compilation)Compilation.Create(assemblyName, [language.Name]Language.Instance, syntaxTrees, references, options);
+            return ([Lang]Compilation)Compilation.Create(assemblyName, [Lang]Language.Instance, syntaxTrees, references, options);
         }
 
-        public static new [language.Name]Compilation CreateScriptCompilation(
+        public static new [Lang]Compilation CreateScriptCompilation(
             string assemblyName,
             SyntaxTree? syntaxTree = null,
             IEnumerable<MetadataReference>? references = null,
@@ -69,7 +69,7 @@ namespace [language.Namespace]
             Type? returnType = null,
             Type? globalsType = null)
         {
-            return ([language.Name]Compilation)Compilation.CreateScriptCompilation(assemblyName, [language.Name]Language.Instance, syntaxTree, references, options, previousScriptCompilation, returnType, globalsType);
+            return ([Lang]Compilation)Compilation.CreateScriptCompilation(assemblyName, [Lang]Language.Instance, syntaxTree, references, options, previousScriptCompilation, returnType, globalsType);
         }
     }
 }

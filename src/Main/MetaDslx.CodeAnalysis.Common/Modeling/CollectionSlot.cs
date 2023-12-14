@@ -426,6 +426,8 @@ namespace MetaDslx.Modeling
             set => _wrappedSlot[index] = value;
         }
 
+        int ICollectionSlot<T>.Count => _wrappedSlot.Count;
+
         T ICollectionSlot<T>.this[int index]
         {
             get => (T)_wrappedSlot[index];

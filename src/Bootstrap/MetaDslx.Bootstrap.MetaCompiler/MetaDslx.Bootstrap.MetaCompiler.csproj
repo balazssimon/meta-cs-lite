@@ -34,14 +34,13 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Compile Remove="Compiler2\**" />
-		<None Remove="Compiler2\**" />
-		<Compile Remove="Generators\**" />
-		<None Remove="Generators\**" />
-	</ItemGroup>
-	<!--
-	<ItemGroup>
 		<AdditionalFiles Include="Generators\*.mgen" />
 	</ItemGroup>
+
+	<ItemGroup>
+		<Compile Remove="Compiler2\**" />
+		<None Remove="Compiler2\**" />
+	</ItemGroup>
+	<!--
 	 -->
 </Project>

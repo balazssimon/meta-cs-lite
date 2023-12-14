@@ -1,6 +1,6 @@
 ﻿namespace MetaDslx.Bootstrap.MetaCompiler.Generators
 
-using MetaDslx.Bootstrap.MetaCompiler.Roslyn
+using MetaDslx.Bootstrap.MetaCompiler.Model
 using System.Collections.Generic
 using System.Collections.Immutable
 using System.Linq
@@ -8,30 +8,30 @@ using Roslyn.Utilities
 
 generator RoslynApiGenerator
 
-template GenerateSyntaxKind(Language language)
-[var fixedTokens = language.Tokens.Where(lr => lr.IsFixed).ToImmutableArray()]
-[var nonFixedTokens = language.Tokens.Where(lr => !lr.IsFixed).ToImmutableArray()]
+template GenerateSyntaxKind()
+[var fixedTokens = Tokens.Where(lr => lr.IsFixed).ToImmutableArray()]
+[var nonFixedTokens = Tokens.Where(lr => !lr.IsFixed).ToImmutableArray()]
 
 #nullable enable
 
-namespace [language.Namespace].Syntax
+namespace [Namespace].Syntax
 {
     using __SyntaxToken = global::MetaDslx.CodeAnalysis.SyntaxToken;
     using __InternalSyntaxKind = global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.InternalSyntaxKind;
 
-	public enum [language.Name]SyntaxKind
+	public enum [Lang]SyntaxKind
 	{
-		[if (language.Tokens.Count > 0)]
-		__FirstToken = [language.Tokens.FirstOrDefault()?.Name],
-		__LastToken = [language.Tokens.LastOrDefault()?.Name],
+		[if (Tokens.Count > 0)]
+		__FirstToken = [Tokens.FirstOrDefault()?.Name],
+		__LastToken = [Tokens.LastOrDefault()?.Name],
 		[end if]
 		[if (fixedTokens.Length > 0)]
 		__FirstFixedToken = [fixedTokens.FirstOrDefault()?.Name],
 		__LastFixedToken = [fixedTokens.LastOrDefault()?.Name],
 		[end if]
-		[if (language.Rules.Count > 0)]
-		__FirstRule = [language.Rules.FirstOrDefault()?.Name],
-		__LastRule = [language.Rules.LastOrDefault()?.Alternatives?.LastOrDefault()?.Name],
+		[if (Rules.Count > 0)]
+		__FirstRule = [Rules.FirstOrDefault()?.Name],
+		__LastRule = [Rules.LastOrDefault()?.Alternatives?.LastOrDefault()?.Name],
 		[end if]
 
 		// Built-in:
@@ -53,39 +53,39 @@ namespace [language.Namespace].Syntax
 		[end foreach]
 
 		// Rules:
-		[foreach (var rule in language.Rules)]
+		[foreach (var rule in Rules)]
             [foreach (var alt in rule.Alternatives)]
 		[alt.Name],
             [end foreach]
 		[end foreach]
 	}
 
-    public static class [language.Name]SyntaxKindExtensions
+    public static class [Lang]SyntaxKindExtensions
     {
-        public static [language.Name]SyntaxKind Get[language.Name]Kind(this __SyntaxToken token)
+        public static [Lang]SyntaxKind Get[Lang]Kind(this __SyntaxToken token)
         {
-            return ([language.Name]SyntaxKind)token.RawKind;
+            return ([Lang]SyntaxKind)token.RawKind;
         }
     }
 }
 end template
 
-template GenerateSyntaxFacts(Language language)
-[var triviaTokens = language.Tokens.Where(lr => lr.IsTrivia).ToImmutableArray()]
-[var fixedTokens = language.Tokens.Where(lr => lr.IsFixed).ToImmutableArray()]
+template GenerateSyntaxFacts()
+[var triviaTokens = Tokens.Where(lr => lr.IsTrivia).ToImmutableArray()]
+[var fixedTokens = Tokens.Where(lr => lr.IsFixed).ToImmutableArray()]
 [var keywordTokens = fixedTokens.Where(lr => lr.Name.IsIdentifier()).ToImmutableArray()]
 
 #nullable enable
 
-namespace [language.Namespace].Syntax
+namespace [Namespace].Syntax
 {
-	public class [language.Name]SyntaxFacts : global::MetaDslx.CodeAnalysis.Syntax.SyntaxFacts
+	public class [Lang]SyntaxFacts : global::MetaDslx.CodeAnalysis.Syntax.SyntaxFacts
 	{
-		public [language.Name]SyntaxKind DefaultWhitespaceKind => [language.Name]SyntaxKind.[language.DefaultWhitespace?.Name ?? "None"];
-		public [language.Name]SyntaxKind DefaultEndOfLineKind => [language.Name]SyntaxKind.[language.DefaultEndOfLine?.Name ?? "None"];
-		public [language.Name]SyntaxKind DefaultSeparatorKind => [language.Name]SyntaxKind.[language.DefaultSeparator?.Name ?? "None"];
-		public [language.Name]SyntaxKind DefaultIdentifierKind => [language.Name]SyntaxKind.[language.DefaultIdentifier?.Name ?? "None"];
-		public [language.Name]SyntaxKind CompilationUnitKind => [language.Name]SyntaxKind.[language.MainRule?.Name ?? "None"];
+		public [Lang]SyntaxKind DefaultWhitespaceKind => [Lang]SyntaxKind.[Grammar.DefaultWhitespace?.Name ?? "None"];
+		public [Lang]SyntaxKind DefaultEndOfLineKind => [Lang]SyntaxKind.[Grammar.DefaultEndOfLine?.Name ?? "None"];
+		public [Lang]SyntaxKind DefaultSeparatorKind => [Lang]SyntaxKind.[Grammar.DefaultSeparator?.Name ?? "None"];
+		public [Lang]SyntaxKind DefaultIdentifierKind => [Lang]SyntaxKind.[Grammar.DefaultIdentifier?.Name ?? "None"];
+		public [Lang]SyntaxKind CompilationUnitKind => [Lang]SyntaxKind.[MainRule?.Name ?? "None"];
 
 		protected override int DefaultWhitespaceRawKind => (int)DefaultWhitespaceKind;
 		protected override int DefaultEndOfLineRawKind => (int)DefaultEndOfLineKind;
@@ -93,13 +93,13 @@ namespace [language.Namespace].Syntax
 		protected override int DefaultIdentifierRawKind => (int)DefaultIdentifierKind;
 		protected override int CompilationUnitRawKind => (int)CompilationUnitKind;
 
-		public bool IsToken([language.Name]SyntaxKind kind)
+		public bool IsToken([Lang]SyntaxKind kind)
         {
 			switch (kind)
 			{
-				case [language.Name]SyntaxKind.Eof:
-				[foreach (var token in language.Tokens)]
-				case [language.Name]SyntaxKind.[token.Name]:
+				case [Lang]SyntaxKind.Eof:
+				[foreach (var token in Tokens)]
+				case [Lang]SyntaxKind.[token.Name]:
 				[end foreach]
 					return true;
 				default:
@@ -109,16 +109,16 @@ namespace [language.Namespace].Syntax
 
 		protected override bool IsToken(int rawKind)
 		{
-			return IsToken(([language.Name]SyntaxKind)rawKind);
+			return IsToken(([Lang]SyntaxKind)rawKind);
 		}
 
-		public bool IsFixedToken([language.Name]SyntaxKind kind)
+		public bool IsFixedToken([Lang]SyntaxKind kind)
         {
 			switch (kind)
 			{
 				[if (fixedTokens.Length > 0)]
 					[foreach (var token in fixedTokens)]
-				case [language.Name]SyntaxKind.[token.Name]:
+				case [Lang]SyntaxKind.[token.Name]:
 					[end foreach]
 					return true;
 				[end if]
@@ -129,19 +129,19 @@ namespace [language.Namespace].Syntax
 
 		protected override bool IsFixedToken(int rawKind)
 		{
-			return IsFixedToken(([language.Name]SyntaxKind)rawKind);
+			return IsFixedToken(([Lang]SyntaxKind)rawKind);
 		}
 
-        public [language.Name]SyntaxKind GetFixedTokenKind(string text)
+        public [Lang]SyntaxKind GetFixedTokenKind(string text)
 		{
 			switch (text)
 			{
 				[foreach (var token in fixedTokens)]
 				case [StringUtilities.EncodeString(token.FixedText)]: 
-					return [language.Name]SyntaxKind.[token.Name];
+					return [Lang]SyntaxKind.[token.Name];
 				[end foreach]
 				default:
-					return [language.Name]SyntaxKind.None;
+					return [Lang]SyntaxKind.None;
 			}
 		}
 
@@ -151,41 +151,41 @@ namespace [language.Namespace].Syntax
         }
 
 
-        public object? GetValue([language.Name]SyntaxKind kind)
+        public object? GetValue([Lang]SyntaxKind kind)
         {
 			return null;
         }
 
         protected override object? GetValue(int rawKind)
 		{
-			return GetValue(([language.Name]SyntaxKind)rawKind);
+			return GetValue(([Lang]SyntaxKind)rawKind);
 		}
 
-		public string GetKindText([language.Name]SyntaxKind kind)
+		public string GetKindText([Lang]SyntaxKind kind)
 		{
 			switch (kind)
 			{
-				case [language.Name]SyntaxKind.List:
+				case [Lang]SyntaxKind.List:
 					return "List";
-				case [language.Name]SyntaxKind.BadToken:
+				case [Lang]SyntaxKind.BadToken:
 					return "BadToken";
-				case [language.Name]SyntaxKind.MissingToken:
+				case [Lang]SyntaxKind.MissingToken:
 					return "MissingToken";
-				case [language.Name]SyntaxKind.SkippedTokensTrivia:
+				case [Lang]SyntaxKind.SkippedTokensTrivia:
 					return "SkippedTokensTrivia";
-				case [language.Name]SyntaxKind.DisabledTextTrivia:
+				case [Lang]SyntaxKind.DisabledTextTrivia:
 					return "DisabledTextTrivia";
-				case [language.Name]SyntaxKind.ConflictMarkerTrivia:
+				case [Lang]SyntaxKind.ConflictMarkerTrivia:
 					return "ConflictMarkerTrivia";
-				case [language.Name]SyntaxKind.Eof:
+				case [Lang]SyntaxKind.Eof:
 					return "Eof";
-				[foreach (var token in language.Tokens)]
-				case [language.Name]SyntaxKind.[token.Name]: 
+				[foreach (var token in Tokens)]
+				case [Lang]SyntaxKind.[token.Name]: 
 					return "[token.Name]";
 				[end foreach]
-				[foreach (var rule in language.Rules)]
+				[foreach (var rule in Rules)]
                     [foreach (var alt in rule.Alternatives)]
-				case [language.Name]SyntaxKind.[alt.Name]: 
+				case [Lang]SyntaxKind.[alt.Name]: 
 					return "[alt.Name]";
        				[end foreach]
 				[end foreach]
@@ -196,15 +196,15 @@ namespace [language.Namespace].Syntax
 
 		protected override string GetKindText(int rawKind)
 		{
-			return GetKindText(([language.Name]SyntaxKind)rawKind);
+			return GetKindText(([Lang]SyntaxKind)rawKind);
 		}
 
-		public string GetText([language.Name]SyntaxKind kind)
+		public string GetText([Lang]SyntaxKind kind)
 		{
 			switch (kind)
 			{
 				[foreach (var token in fixedTokens)]
-				case [language.Name]SyntaxKind.[token.Name]: 
+				case [Lang]SyntaxKind.[token.Name]: 
 					return [StringUtilities.EncodeString(token.FixedText)];
 				[end foreach]
 				default:
@@ -214,16 +214,16 @@ namespace [language.Namespace].Syntax
 
 		protected override string GetText(int rawKind)
         {
-			return GetText(([language.Name]SyntaxKind)rawKind);
+			return GetText(([Lang]SyntaxKind)rawKind);
         }
 
-		public bool IsTrivia([language.Name]SyntaxKind kind)
+		public bool IsTrivia([Lang]SyntaxKind kind)
 		{
 			switch(kind)
 			{
 				[if (triviaTokens.Length > 0)]
 				[foreach (var token in triviaTokens)]
-				case [language.Name]SyntaxKind.[token.Name]: 
+				case [Lang]SyntaxKind.[token.Name]: 
 				[end foreach]
 					return true;
 				[end if]
@@ -234,16 +234,16 @@ namespace [language.Namespace].Syntax
 
         protected override bool IsTrivia(int rawKind)
         {
-			return IsTrivia(([language.Name]SyntaxKind)rawKind);
+			return IsTrivia(([Lang]SyntaxKind)rawKind);
         }
 
-        public bool IsReservedKeyword([language.Name]SyntaxKind kind)
+        public bool IsReservedKeyword([Lang]SyntaxKind kind)
 		{
 			switch(kind)
 			{
 				[if (keywordTokens.Length > 0)]
 				[foreach (var token in keywordTokens)]
-				case [language.Name]SyntaxKind.[token.Name]: 
+				case [Lang]SyntaxKind.[token.Name]: 
 				[end foreach]
 					return true;
 				[end if]
@@ -254,13 +254,13 @@ namespace [language.Namespace].Syntax
 
         protected override bool IsReservedKeyword(int rawKind)
         {
-			return IsReservedKeyword(([language.Name]SyntaxKind)rawKind);
+			return IsReservedKeyword(([Lang]SyntaxKind)rawKind);
         }
 
-        public IEnumerable<[language.Name]SyntaxKind> GetReservedKeywordKinds()
+        public IEnumerable<[Lang]SyntaxKind> GetReservedKeywordKinds()
         {
 			[foreach (var token in keywordTokens)]
-			yield return [language.Name]SyntaxKind.[token.Name];
+			yield return [Lang]SyntaxKind.[token.Name];
 			[end foreach]
 			yield break;
         }
@@ -270,16 +270,16 @@ namespace [language.Namespace].Syntax
 			return GetReservedKeywordKinds().Select(kind => (int)kind);
         }
 
-        public [language.Name]SyntaxKind GetReservedKeywordKind(string text)
+        public [Lang]SyntaxKind GetReservedKeywordKind(string text)
         {
 			switch(text)
 			{
 				[foreach (var token in keywordTokens)]
 				case [StringUtilities.EncodeString(token.FixedText)]: 
-					return [language.Name]SyntaxKind.[token.Name];
+					return [Lang]SyntaxKind.[token.Name];
 				[end foreach]
 				default:
-					return [language.Name]SyntaxKind.None;
+					return [Lang]SyntaxKind.None;
 			}
         }
 
@@ -288,7 +288,7 @@ namespace [language.Namespace].Syntax
 			return (int)GetReservedKeywordKind(text);
         }
 
-        public bool IsContextualKeyword([language.Name]SyntaxKind kind)
+        public bool IsContextualKeyword([Lang]SyntaxKind kind)
 		{
 			switch(kind)
 			{
@@ -299,10 +299,10 @@ namespace [language.Namespace].Syntax
 
         protected override bool IsContextualKeyword(int rawKind)
         {
-			return IsContextualKeyword(([language.Name]SyntaxKind)rawKind);
+			return IsContextualKeyword(([Lang]SyntaxKind)rawKind);
         }
 
-        public IEnumerable<[language.Name]SyntaxKind> GetContextualKeywordKinds()
+        public IEnumerable<[Lang]SyntaxKind> GetContextualKeywordKinds()
         {
 			yield break;
         }
@@ -312,12 +312,12 @@ namespace [language.Namespace].Syntax
 			return GetContextualKeywordKinds().Select(kind => (int)kind);
 		}
 
-		public [language.Name]SyntaxKind GetContextualKeywordKind(string text)
+		public [Lang]SyntaxKind GetContextualKeywordKind(string text)
         {
 			switch(text)
 			{
 				default:
-					return [language.Name]SyntaxKind.None;
+					return [Lang]SyntaxKind.None;
 			}
         }
 
@@ -326,7 +326,7 @@ namespace [language.Namespace].Syntax
 			return (int)GetContextualKeywordKind(text);
         }
 
-        public bool IsPreprocessorKeyword([language.Name]SyntaxKind kind)
+        public bool IsPreprocessorKeyword([Lang]SyntaxKind kind)
 		{
 			switch (kind)
 			{
@@ -337,10 +337,10 @@ namespace [language.Namespace].Syntax
 
         protected override bool IsPreprocessorKeyword(int rawKind)
         {
-			return IsPreprocessorKeyword(([language.Name]SyntaxKind)rawKind);
+			return IsPreprocessorKeyword(([Lang]SyntaxKind)rawKind);
         }
 
-        public bool IsPreprocessorContextualKeyword([language.Name]SyntaxKind kind)
+        public bool IsPreprocessorContextualKeyword([Lang]SyntaxKind kind)
 		{
 			switch (kind)
 			{
@@ -351,10 +351,10 @@ namespace [language.Namespace].Syntax
 
         protected override bool IsPreprocessorContextualKeyword(int rawKind)
         {
-			return IsPreprocessorContextualKeyword(([language.Name]SyntaxKind)rawKind);
+			return IsPreprocessorContextualKeyword(([Lang]SyntaxKind)rawKind);
         }
 
-        public bool IsPreprocessorDirective([language.Name]SyntaxKind kind)
+        public bool IsPreprocessorDirective([Lang]SyntaxKind kind)
 		{
 			switch (kind)
 			{
@@ -365,10 +365,10 @@ namespace [language.Namespace].Syntax
 
         protected override bool IsPreprocessorDirective(int rawKind)
         {
-			return IsPreprocessorDirective(([language.Name]SyntaxKind)rawKind);
+			return IsPreprocessorDirective(([Lang]SyntaxKind)rawKind);
         }
 
-        public bool IsIdentifier([language.Name]SyntaxKind kind)
+        public bool IsIdentifier([Lang]SyntaxKind kind)
 		{
 			switch (kind)
 			{
@@ -379,10 +379,10 @@ namespace [language.Namespace].Syntax
 
         protected override bool IsIdentifier(int rawKind)
         {
-            return IsIdentifier(([language.Name]SyntaxKind)rawKind);
+            return IsIdentifier(([Lang]SyntaxKind)rawKind);
         }
 
-        public bool IsGeneralCommentTrivia([language.Name]SyntaxKind kind)
+        public bool IsGeneralCommentTrivia([Lang]SyntaxKind kind)
 		{
 			switch (kind)
 			{
@@ -393,10 +393,10 @@ namespace [language.Namespace].Syntax
 
         protected override bool IsGeneralCommentTrivia(int rawKind)
         {
-            return IsGeneralCommentTrivia(([language.Name]SyntaxKind)rawKind);
+            return IsGeneralCommentTrivia(([Lang]SyntaxKind)rawKind);
         }
 
-        public bool IsDocumentationCommentTrivia([language.Name]SyntaxKind kind)
+        public bool IsDocumentationCommentTrivia([Lang]SyntaxKind kind)
 		{
 			switch (kind)
 			{
@@ -407,21 +407,21 @@ namespace [language.Namespace].Syntax
 
         protected override bool IsDocumentationCommentTrivia(int rawKind)
         {
-			return IsDocumentationCommentTrivia(([language.Name]SyntaxKind)rawKind);
+			return IsDocumentationCommentTrivia(([Lang]SyntaxKind)rawKind);
         }
 
-        public [language.Name]LanguageVersion GetRequiredLanguageVersion(string feature)
+        public [Lang]LanguageVersion GetRequiredLanguageVersion(string feature)
         {
-			return [language.Name]LanguageVersion.Version1;
+			return [Lang]LanguageVersion.Version1;
         }
 	}
 }
 end template
 
-template GenerateSyntax(Language language)
+template GenerateSyntax()
 #nullable enable
 
-namespace [language.Namespace].Syntax
+namespace [Namespace].Syntax
 {
 	using __Debug = System.Diagnostics.Debug;
 	using __Language = global::MetaDslx.CodeAnalysis.Language;
@@ -440,65 +440,65 @@ namespace [language.Namespace].Syntax
     using __SyntaxTokenList = global::MetaDslx.CodeAnalysis.SyntaxTokenList;
     using __SyntaxExtensions = global::MetaDslx.CodeAnalysis.SyntaxExtensions;
 
-    public abstract class [language.Name]SyntaxNode : __SyntaxNode
+    public abstract class [Lang]SyntaxNode : __SyntaxNode
     {
-        protected [language.Name]SyntaxNode(__InternalSyntaxNode green, [language.Name]SyntaxTree syntaxTree, int position)
+        protected [Lang]SyntaxNode(__InternalSyntaxNode green, [Lang]SyntaxTree syntaxTree, int position)
             : base(green, syntaxTree, position)
         {
         }
 
-        protected [language.Name]SyntaxNode(__InternalSyntaxNode green, [language.Name]SyntaxNode parent, int position)
+        protected [Lang]SyntaxNode(__InternalSyntaxNode green, [Lang]SyntaxNode parent, int position)
             : base(green, parent, position)
         {
         }
 
-        public override __Language Language => [language.Name]Language.Instance;
-        public [language.Name]SyntaxKind Kind => ([language.Name]SyntaxKind)this.RawKind;
+        public override __Language Language => [Lang]Language.Instance;
+        public [Lang]SyntaxKind Kind => ([Lang]SyntaxKind)this.RawKind;
 		internal new __GreenNode Green => base.Green;
 
         protected override __SyntaxTree CreateSyntaxTreeForRoot()
         {
-            return [language.Name]SyntaxTree.CreateWithoutClone(this, __IncrementalParseData.Empty);
+            return [Lang]SyntaxTree.CreateWithoutClone(this, __IncrementalParseData.Empty);
         }
 
         public override TResult Accept<TArg, TResult>(global::MetaDslx.CodeAnalysis.SyntaxVisitor<TArg, TResult> visitor, TArg argument)
         {
-            if (visitor is I[language.Name]SyntaxVisitor<TArg, TResult> typedVisitor) return this.Accept(typedVisitor, argument);
+            if (visitor is I[Lang]SyntaxVisitor<TArg, TResult> typedVisitor) return this.Accept(typedVisitor, argument);
             else return visitor.DefaultVisit(this, argument);
         }
 
-        public abstract TResult Accept<TArg, TResult>(I[language.Name]SyntaxVisitor<TArg, TResult> visitor, TArg argument);
+        public abstract TResult Accept<TArg, TResult>(I[Lang]SyntaxVisitor<TArg, TResult> visitor, TArg argument);
 
         public override TResult Accept<TResult>(global::MetaDslx.CodeAnalysis.SyntaxVisitor<TResult> visitor)
         {
-            if (visitor is I[language.Name]SyntaxVisitor<TResult> typedVisitor) return this.Accept(typedVisitor);
+            if (visitor is I[Lang]SyntaxVisitor<TResult> typedVisitor) return this.Accept(typedVisitor);
             else return visitor.DefaultVisit(this);
         }
 
-        public abstract TResult Accept<TResult>(I[language.Name]SyntaxVisitor<TResult> visitor);
+        public abstract TResult Accept<TResult>(I[Lang]SyntaxVisitor<TResult> visitor);
 
         public override void Accept(global::MetaDslx.CodeAnalysis.SyntaxVisitor visitor)
         {
-            if (visitor is I[language.Name]SyntaxVisitor typedVisitor) this.Accept(typedVisitor);
+            if (visitor is I[Lang]SyntaxVisitor typedVisitor) this.Accept(typedVisitor);
             else visitor.DefaultVisit(this);
         }
-        public abstract void Accept(I[language.Name]SyntaxVisitor visitor);
+        public abstract void Accept(I[Lang]SyntaxVisitor visitor);
     }
 
     /// <summary>
-    /// It's a non terminal Trivia [language.Name]SyntaxNode that has a tree underneath it.
+    /// It's a non terminal Trivia [Lang]SyntaxNode that has a tree underneath it.
     /// </summary>
-    public abstract partial class [language.Name]StructuredTriviaSyntax : [language.Name]SyntaxNode, global::MetaDslx.CodeAnalysis.IStructuredTriviaSyntax
+    public abstract partial class [Lang]StructuredTriviaSyntax : [Lang]SyntaxNode, global::MetaDslx.CodeAnalysis.IStructuredTriviaSyntax
     {
         private __SyntaxTrivia _parent;
-        internal [language.Name]StructuredTriviaSyntax(__InternalSyntaxNode green, [language.Name]SyntaxNode parent, int position)
-            : base(green, parent == null ? null : ([language.Name]SyntaxTree)parent.SyntaxTree, position)
+        internal [Lang]StructuredTriviaSyntax(__InternalSyntaxNode green, [Lang]SyntaxNode parent, int position)
+            : base(green, parent == null ? null : ([Lang]SyntaxTree)parent.SyntaxTree, position)
         {
             System.Diagnostics.Debug.Assert(parent == null || position >= 0);
         }
-		internal static [language.Name]StructuredTriviaSyntax Create(__SyntaxTrivia trivia)
+		internal static [Lang]StructuredTriviaSyntax Create(__SyntaxTrivia trivia)
 		{
-			var red = ([language.Name]StructuredTriviaSyntax)[language.Name]Language.Instance.SyntaxFactory.CreateStructure(trivia);
+			var red = ([Lang]StructuredTriviaSyntax)[Lang]Language.Instance.SyntaxFactory.CreateStructure(trivia);
 			red._parent = trivia;
 			return red;
 		}
@@ -508,9 +508,9 @@ namespace [language.Namespace].Syntax
         public override __SyntaxTrivia ParentTrivia => _parent;
     }
 
-    public sealed partial class [language.Name]SkippedTokensTriviaSyntax : [language.Name]StructuredTriviaSyntax
+    public sealed partial class [Lang]SkippedTokensTriviaSyntax : [Lang]StructuredTriviaSyntax
     {
-        internal [language.Name]SkippedTokensTriviaSyntax(__InternalSyntaxNode green, [language.Name]SyntaxNode parent, int position)
+        internal [Lang]SkippedTokensTriviaSyntax(__InternalSyntaxNode green, [Lang]SyntaxNode parent, int position)
             : base(green, parent, position)
         {
         }
@@ -519,7 +519,7 @@ namespace [language.Namespace].Syntax
         {
             get
             {
-				var slot = ((global::[language.Namespace].Syntax.InternalSyntax.GreenSkippedTokensTriviaSyntax)this.Green).Tokens;
+				var slot = ((global::[Namespace].Syntax.InternalSyntax.GreenSkippedTokensTriviaSyntax)this.Green).Tokens;
 				if (slot != null)
 				{
 					return new __SyntaxTokenList(this, slot.Node, this.GetChildPosition(0), this.GetChildIndex(0));
@@ -544,26 +544,26 @@ namespace [language.Namespace].Syntax
             }
         }
 
-		public override TResult Accept<TArg, TResult>(I[language.Name]SyntaxVisitor<TArg, TResult> visitor, TArg argument)
+		public override TResult Accept<TArg, TResult>(I[Lang]SyntaxVisitor<TArg, TResult> visitor, TArg argument)
 		{
 			return visitor.VisitSkippedTokensTrivia(this, argument);
 		}
 
-		public override TResult Accept<TResult>(I[language.Name]SyntaxVisitor<TResult> visitor)
+		public override TResult Accept<TResult>(I[Lang]SyntaxVisitor<TResult> visitor)
         {
             return visitor.VisitSkippedTokensTrivia(this);
         }
 
-        public override void Accept(I[language.Name]SyntaxVisitor visitor)
+        public override void Accept(I[Lang]SyntaxVisitor visitor)
         {
             visitor.VisitSkippedTokensTrivia(this);
         }
 
-        public [language.Name]SkippedTokensTriviaSyntax Update(__SyntaxTokenList tokens)
+        public [Lang]SkippedTokensTriviaSyntax Update(__SyntaxTokenList tokens)
         {
             if (tokens != this.Tokens)
             {
-                var newNode = ([language.Name]SkippedTokensTriviaSyntax)Language.SyntaxFactory.SkippedTokensTrivia(tokens);
+                var newNode = ([Lang]SkippedTokensTriviaSyntax)Language.SyntaxFactory.SkippedTokensTrivia(tokens);
                 var annotations = this.GetAnnotations();
                 if (annotations != null && annotations.Length > 0)
                     return __SyntaxExtensions.WithAnnotations(newNode, annotations);
@@ -572,40 +572,40 @@ namespace [language.Namespace].Syntax
             return this;
         }
 
-        public [language.Name]SkippedTokensTriviaSyntax WithTokens(__SyntaxTokenList tokens)
+        public [Lang]SkippedTokensTriviaSyntax WithTokens(__SyntaxTokenList tokens)
         {
             return this.Update(tokens);
         }
 
-        public [language.Name]SkippedTokensTriviaSyntax AddTokens(params __SyntaxToken["[]"] items)
+        public [Lang]SkippedTokensTriviaSyntax AddTokens(params __SyntaxToken["[]"] items)
         {
             return this.WithTokens(this.Tokens.AddRange(items));
         }
     }
 
-	[foreach (var rule in language.Rules)]
-	[GenerateSyntaxRule(language, rule)]
+	[foreach (var rule in Rules)]
+	[GenerateSyntaxRule(rule)]
 	[end foreach]
 }
 end template
 
-template GenerateSyntaxRule(Language language, Rule rule)
-[GenerateSyntaxRuleBase(language, rule)]
+template GenerateSyntaxRule(Rule rule)
+[GenerateSyntaxRuleBase(rule)]
 [foreach (var alt in rule.Alternatives)]
-[GenerateSyntaxRuleAlt(language, rule, alt)]
+[GenerateSyntaxRuleAlt(rule, alt)]
 [end foreach]
 end template
 
-template GenerateSyntaxRuleBase(Language language, Rule parent)
+template GenerateSyntaxRuleBase(Rule parent)
 [if (parent.Alternatives.Count > 1)]
-public abstract class [parent.RedName] : [language.Name]SyntaxNode[parent == language.MainRule ? ", global::MetaDslx.CodeAnalysis.ICompilationUnitSyntax" : ""]
+public abstract class [parent.RedName] : [Lang]SyntaxNode[parent == MainRule ? ", global::MetaDslx.CodeAnalysis.ICompilationUnitSyntax" : ""]
 {
-    protected [parent.RedName](__InternalSyntaxNode green, [language.Name]SyntaxTree syntaxTree, int position)
+    protected [parent.RedName](__InternalSyntaxNode green, [Lang]SyntaxTree syntaxTree, int position)
         : base(green, syntaxTree, position)
     {
     }
 
-    protected [parent.RedName](__InternalSyntaxNode green, [language.Name]SyntaxNode parent, int position)
+    protected [parent.RedName](__InternalSyntaxNode green, [Lang]SyntaxNode parent, int position)
         : base(green, parent, position)
     {
     }
@@ -614,19 +614,19 @@ public abstract class [parent.RedName] : [language.Name]SyntaxNode[parent == lan
 [end if]
 end template
 
-template GenerateSyntaxRuleAlt(Language language, Rule parent, Alternative alt)
-public sealed class [alt.RedName] : [parent.Alternatives.Count > 1 ? parent.RedName : language.Name+"SyntaxNode"][parent == language.MainRule && parent.Alternatives.Count == 1 ? ", global::MetaDslx.CodeAnalysis.ICompilationUnitSyntax" : ""]
+template GenerateSyntaxRuleAlt(Rule parent, Alternative alt)
+public sealed class [alt.RedName] : [parent.Alternatives.Count > 1 ? parent.RedName : Lang+"SyntaxNode"][parent == MainRule && parent.Alternatives.Count == 1 ? ", global::MetaDslx.CodeAnalysis.ICompilationUnitSyntax" : ""]
 {
 	[foreach (var elem in alt.Elements.Where(e => e.RedFieldType is not null))]
 	private [elem.RedFieldType] [elem.FieldName];
 	[end foreach]
 
-    public [alt.RedName](__InternalSyntaxNode green, [language.Name]SyntaxTree syntaxTree, int position)
+    public [alt.RedName](__InternalSyntaxNode green, [Lang]SyntaxTree syntaxTree, int position)
         : base(green, syntaxTree, position)
     {
     }
 
-    public [alt.RedName](__InternalSyntaxNode green, [language.Name]SyntaxNode parent, int position)
+    public [alt.RedName](__InternalSyntaxNode green, [Lang]SyntaxNode parent, int position)
         : base(green, parent, position)
     {
     }
@@ -638,8 +638,8 @@ public sealed class [alt.RedName] : [parent.Alternatives.Count > 1 ? parent.RedN
 	{ 
 		get
 		{
-        [if (elem.Value is TokenRef || elem.Value is TokenAlts || elem.Value is Eof)]
-			var green = (global::[language.Namespace].Syntax.InternalSyntax.[alt.GreenName])this.Green;
+        [if (elem.IsToken)]
+			var green = (global::[Namespace].Syntax.InternalSyntax.[alt.GreenName])this.Green;
 			var greenToken = green.[elem.PropertyName];
             [if (isList)]
 			return greenToken.Node == null ? default : new [elem.RedPropertyType](this, greenToken.Node, this.GetChildPosition([elemIndex]), this.GetChildIndex([elemIndex]));
@@ -701,7 +701,7 @@ public sealed class [alt.RedName] : [parent.Alternatives.Count > 1 ? parent.RedN
     {
         if ([foreach (var field in alt.Elements) separator " || "]this.[field.PropertyName] != [field.ParameterName][end foreach])
         {
-            var newNode = [language.Name]Language.Instance.SyntaxFactory.[alt.Name]([alt.RedUpdateArguments]);
+            var newNode = [Lang]Language.Instance.SyntaxFactory.[alt.Name]([alt.RedUpdateArguments]);
             var annotations = this.GetAnnotations();
             if (annotations != null && annotations.Length > 0)
                newNode = __SyntaxExtensions.WithAnnotations(newNode, annotations);
@@ -710,17 +710,17 @@ public sealed class [alt.RedName] : [parent.Alternatives.Count > 1 ? parent.RedN
         return this;
     }
 
-    public override TResult Accept<TArg, TResult>(I[language.Name]SyntaxVisitor<TArg, TResult> visitor, TArg argument)
+    public override TResult Accept<TArg, TResult>(I[Lang]SyntaxVisitor<TArg, TResult> visitor, TArg argument)
     {
         return visitor.Visit[alt.Name](this, argument);
     }
 
-    public override TResult Accept<TResult>(I[language.Name]SyntaxVisitor<TResult> visitor)
+    public override TResult Accept<TResult>(I[Lang]SyntaxVisitor<TResult> visitor)
     {
         return visitor.Visit[alt.Name](this);
     }
 
-    public override void Accept(I[language.Name]SyntaxVisitor visitor)
+    public override void Accept(I[Lang]SyntaxVisitor visitor)
     {
         visitor.Visit[alt.Name](this);
     }
@@ -728,7 +728,7 @@ public sealed class [alt.RedName] : [parent.Alternatives.Count > 1 ? parent.RedN
 }
 end template
 
-template GenerateSyntaxTree(Language language)
+template GenerateSyntaxTree()
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -741,25 +741,25 @@ using MetaDslx.CodeAnalysis;
 using MetaDslx.CodeAnalysis.Syntax;
 using MetaDslx.CodeAnalysis.Syntax.InternalSyntax;
 using MetaDslx.CodeAnalysis.Text;
-using [language.Namespace].Syntax;
-using [language.Namespace].Syntax.InternalSyntax;
+using [Namespace].Syntax;
+using [Namespace].Syntax.InternalSyntax;
 
 #nullable enable
 
-namespace [language.Namespace]
+namespace [Namespace]
 {
     
     /// <summary>
-    /// The parsed representation of a [language.Name] source document.
+    /// The parsed representation of a [Lang] source document.
     /// </summary>
-    public abstract partial class [language.Name]SyntaxTree : SyntaxTree
+    public abstract partial class [Lang]SyntaxTree : SyntaxTree
     {
-        internal static readonly [language.Name]SyntaxTree Dummy = new DummySyntaxTree();
+        internal static readonly [Lang]SyntaxTree Dummy = new DummySyntaxTree();
 
         /// <summary>
         /// The language of the source code represented by the syntax tree.
         /// </summary>
-        public override Language Language => [language.Name]Language.Instance;
+        public override Language Language => [Lang]Language.Instance;
 
         /// <summary>
         /// The options used by the parser to produce the syntax tree.
@@ -769,12 +769,12 @@ namespace [language.Namespace]
         /// <summary>
         /// Gets the root node of the syntax tree.
         /// </summary>
-        public new abstract [language.Name]SyntaxNode GetRoot(CancellationToken cancellationToken = default(CancellationToken));
+        public new abstract [Lang]SyntaxNode GetRoot(CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Gets the root node of the syntax tree if it is already available.
         /// </summary>
-        public abstract bool TryGetRoot(out [language.Name]SyntaxNode root);
+        public abstract bool TryGetRoot(out [Lang]SyntaxNode root);
 
         /// <summary>
         /// Gets the root node of the syntax tree asynchronously.
@@ -783,35 +783,35 @@ namespace [language.Namespace]
         /// By default, the work associated with this method will be executed immediately on the current thread.
         /// Implementations that wish to schedule this work differently should override <see cref="GetRootAsync(CancellationToken)"/>.
         /// </remarks>
-        public new virtual Task<[language.Name]SyntaxNode> GetRootAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public new virtual Task<[Lang]SyntaxNode> GetRootAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            [language.Name]SyntaxNode node;
+            [Lang]SyntaxNode node;
             return Task.FromResult(this.TryGetRoot(out node) ? node : this.GetRoot(cancellationToken));
         }
 
         /// <summary>
-        /// Gets the root of the syntax tree statically typed as <see cref="[language.MainRule?.RedName]"/>.
+        /// Gets the root of the syntax tree statically typed as <see cref="[MainRule?.RedName]"/>.
         /// </summary>
         /// <remarks>
         /// Ensure that <see cref="SyntaxTree.HasCompilationUnitRoot"/> is true for this tree prior to invoking this method.
         /// </remarks>
         /// <exception cref="InvalidCastException">Throws this exception if <see cref="SyntaxTree.HasCompilationUnitRoot"/> is false.</exception>
-        public [language.MainRule?.RedName] GetCompilationUnitRoot(CancellationToken cancellationToken = default(CancellationToken))
+        public [MainRule?.RedName] GetCompilationUnitRoot(CancellationToken cancellationToken = default(CancellationToken))
         {
-            return ([language.MainRule?.RedName])this.GetRoot(cancellationToken);
+            return ([MainRule?.RedName])this.GetRoot(cancellationToken);
         }
 
         #region Factories
         /// <summary>
         /// Creates a new syntax tree from a syntax node.
         /// </summary>
-        public static [language.Name]SyntaxTree Create([language.Name]SyntaxNode root, IncrementalParseData parseData, [language.Name]ParseOptions? options = null, string path = "", SourceText? text = null, Encoding? encoding = null, SourceHashAlgorithm checksumAlgorithm = SourceHashAlgorithm.Sha1)
+        public static [Lang]SyntaxTree Create([Lang]SyntaxNode root, IncrementalParseData parseData, [Lang]ParseOptions? options = null, string path = "", SourceText? text = null, Encoding? encoding = null, SourceHashAlgorithm checksumAlgorithm = SourceHashAlgorithm.Sha1)
         {
             if (root == null)
             {
                 throw new ArgumentNullException(nameof(root));
             }
-            var directives = root.Kind == [language.Name]SyntaxKind.[language.MainRule?.Name] && root is ICompilationUnitRootSyntax compilationUnitRoot ?
+            var directives = root.Kind == [Lang]SyntaxKind.[MainRule?.Name] && root is ICompilationUnitRootSyntax compilationUnitRoot ?
                 ((ICompilationUnitRootSyntax)root).GetConditionalDirectivesStack() :
                 DirectiveStack.Empty;
             return new ParsedSyntaxTree(
@@ -819,7 +819,7 @@ namespace [language.Namespace]
                 encodingOpt: encoding,
                 checksumAlgorithm: checksumAlgorithm,
                 path: path,
-                options: options ?? [language.Name]ParseOptions.Default,
+                options: options ?? [Lang]ParseOptions.Default,
                 root: root,
                 parseData: parseData.WithDirectives(directives));
         }
@@ -828,7 +828,7 @@ namespace [language.Namespace]
         /// Creates a new syntax tree from a syntax node with text that should correspond to the syntax node.
         /// </summary>
         /// <remarks>This is used by the ExpressionEvaluator.</remarks>
-        internal static [language.Name]SyntaxTree CreateForDebugger([language.Name]SyntaxNode root, IncrementalParseData parseData, SourceText text, [language.Name]ParseOptions options)
+        internal static [Lang]SyntaxTree CreateForDebugger([Lang]SyntaxNode root, IncrementalParseData parseData, SourceText text, [Lang]ParseOptions options)
         {
             Debug.Assert(root != null);
             return new DebuggerSyntaxTree(root, parseData, text, options);
@@ -836,13 +836,13 @@ namespace [language.Namespace]
 
         /// <summary>
         /// <para>
-        /// Internal helper for <see cref="[language.Name]SyntaxNode"/> class to create a new syntax tree rooted at the given root node.
+        /// Internal helper for <see cref="[Lang]SyntaxNode"/> class to create a new syntax tree rooted at the given root node.
         /// This method does not create a clone of the given root, but instead preserves it's reference identity.
         /// </para>
-        /// <para>NOTE: This method is only intended to be used from <see cref="[language.Name]SyntaxNode.SyntaxTree"/> property.</para>
-        /// <para>NOTE: Do not use this method elsewhere, instead use <see cref="Create([language.Name]SyntaxNode, CSharpParseOptions, string, Encoding)"/> method for creating a syntax tree.</para>
+        /// <para>NOTE: This method is only intended to be used from <see cref="[Lang]SyntaxNode.SyntaxTree"/> property.</para>
+        /// <para>NOTE: Do not use this method elsewhere, instead use <see cref="Create([Lang]SyntaxNode, CSharpParseOptions, string, Encoding)"/> method for creating a syntax tree.</para>
         /// </summary>
-        internal static [language.Name]SyntaxTree CreateWithoutClone([language.Name]SyntaxNode root, IncrementalParseData parseData)
+        internal static [Lang]SyntaxTree CreateWithoutClone([Lang]SyntaxNode root, IncrementalParseData parseData)
         {
             Debug.Assert(root != null);
             return new ParsedSyntaxTree(
@@ -850,7 +850,7 @@ namespace [language.Namespace]
                 encodingOpt: null,
                 checksumAlgorithm: SourceHashAlgorithm.Sha1,
                 path: "",
-                options: [language.Name]ParseOptions.Default,
+                options: [Lang]ParseOptions.Default,
                 root: root,
                 parseData: parseData.WithDirectives(DirectiveStack.Empty),
                 cloneRoot: false);
@@ -859,9 +859,9 @@ namespace [language.Namespace]
         /// <summary>
         /// Produces a syntax tree by parsing the source text.
         /// </summary>
-        public static [language.Name]SyntaxTree ParseText(
+        public static [Lang]SyntaxTree ParseText(
             string text,
-            [language.Name]ParseOptions? options = null,
+            [Lang]ParseOptions? options = null,
             string path = "",
             Encoding encoding = null,
             CancellationToken cancellationToken = default(CancellationToken))
@@ -872,9 +872,9 @@ namespace [language.Namespace]
         /// <summary>
         /// Produces a syntax tree by parsing the source text.
         /// </summary>
-        public static [language.Name]SyntaxTree ParseText(
+        public static [Lang]SyntaxTree ParseText(
             SourceText text,
-            [language.Name]ParseOptions? options = null,
+            [Lang]ParseOptions? options = null,
             string path = "",
             CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -882,12 +882,12 @@ namespace [language.Namespace]
             {
                 throw new ArgumentNullException(nameof(text));
             }
-            options = options ?? [language.Name]ParseOptions.Default;
-            var lexer = [language.Name]Language.Instance.InternalSyntaxFactory.CreateLexer(text, options);
-            using (var parser = [language.Name]Language.Instance.InternalSyntaxFactory.CreateParser(lexer, oldParseData: IncrementalParseData.Empty, changes: null, cancellationToken: cancellationToken))
+            options = options ?? [Lang]ParseOptions.Default;
+            var lexer = [Lang]Language.Instance.InternalSyntaxFactory.CreateLexer(text, options);
+            using (var parser = [Lang]Language.Instance.InternalSyntaxFactory.CreateParser(lexer, oldParseData: IncrementalParseData.Empty, changes: null, cancellationToken: cancellationToken))
             {
                 var parseData = parser.Parse();
-                var compilationUnit = ([language.MainRule?.RedName])parseData.RootNode;
+                var compilationUnit = ([MainRule?.RedName])parseData.RootNode;
                 var tree = new ParsedSyntaxTree(text, text.Encoding, text.ChecksumAlgorithm, path, options, compilationUnit, parseData);
                 tree.VerifySource();
                 return tree;
@@ -935,12 +935,12 @@ namespace [language.Namespace]
                 changes = null;
                 oldTree = null;
             }
-            var lexer = [language.Name]Language.Instance.InternalSyntaxFactory.CreateLexer(newText, Options);
-            using (var parser = [language.Name]Language.Instance.InternalSyntaxFactory.CreateParser(lexer, oldTree?.ParseData ?? IncrementalParseData.Empty, changes))
+            var lexer = [Lang]Language.Instance.InternalSyntaxFactory.CreateLexer(newText, Options);
+            using (var parser = [Lang]Language.Instance.InternalSyntaxFactory.CreateParser(lexer, oldTree?.ParseData ?? IncrementalParseData.Empty, changes))
             {
                 var parseData = parser.Parse();
-                var compilationUnit = ([language.MainRule?.RedName])parseData.RootNode;
-                var tree = new ParsedSyntaxTree(newText, newText.Encoding, newText.ChecksumAlgorithm, this.FilePath, ([language.Name]ParseOptions)this.Options, compilationUnit, parseData);
+                var compilationUnit = ([MainRule?.RedName])parseData.RootNode;
+                var tree = new ParsedSyntaxTree(newText, newText.Encoding, newText.ChecksumAlgorithm, this.FilePath, ([Lang]ParseOptions)this.Options, compilationUnit, parseData);
                 tree.VerifySource(changes);
                 return tree;
             }
@@ -960,7 +960,7 @@ namespace [language.Namespace]
 
         protected override bool TryGetRootCore(out SyntaxNode root)
         {
-            [language.Name]SyntaxNode node;
+            [Lang]SyntaxNode node;
             if (this.TryGetRoot(out node))
             {
                 root = node;
@@ -975,12 +975,12 @@ namespace [language.Namespace]
 
         #endregion
 
-        internal sealed class DummySyntaxTree : [language.Name]SyntaxTree
+        internal sealed class DummySyntaxTree : [Lang]SyntaxTree
         {
-            private readonly [language.Name]SyntaxNode _node;
+            private readonly [Lang]SyntaxNode _node;
             public DummySyntaxTree()
             {
-                _node = this.CloneNodeAsRoot(([language.MainRule?.RedName])[language.MainRule?.GreenName].__Missing.CreateRed());
+                _node = this.CloneNodeAsRoot(([MainRule?.RedName])[MainRule?.GreenName].__Missing.CreateRed());
             }
             public override string ToString()
             {
@@ -1005,7 +1005,7 @@ namespace [language.Namespace]
             }
             public override ParseOptions Options
             {
-                get { return [language.Name]ParseOptions.Default; }
+                get { return [Lang]ParseOptions.Default; }
             }
             public override string FilePath
             {
@@ -1015,11 +1015,11 @@ namespace [language.Namespace]
             {
                 return new SimpleSyntaxReference(node);
             }
-            public override [language.Name]SyntaxNode GetRoot(CancellationToken cancellationToken)
+            public override [Lang]SyntaxNode GetRoot(CancellationToken cancellationToken)
             {
                 return _node;
             }
-            public override bool TryGetRoot(out [language.Name]SyntaxNode root)
+            public override bool TryGetRoot(out [Lang]SyntaxNode root)
             {
                 root = _node;
                 return true;
@@ -1031,24 +1031,24 @@ namespace [language.Namespace]
             protected override IncrementalParseData ParseData => IncrementalParseData.Empty;
             public override SyntaxTree WithRootAndOptions(SyntaxNode root, ParseOptions options)
             {
-                return Language.SyntaxFactory.MakeSyntaxTree(([language.Name]SyntaxNode)root, options: ([language.Name]ParseOptions)options, path: FilePath, encoding: null);
+                return Language.SyntaxFactory.MakeSyntaxTree(([Lang]SyntaxNode)root, options: ([Lang]ParseOptions)options, path: FilePath, encoding: null);
             }
             public override SyntaxTree WithFilePath(string path)
             {
                 return Language.SyntaxFactory.MakeSyntaxTree(_node, options: this.Options, path: path, encoding: null);
             }
         }
-        private class ParsedSyntaxTree : [language.Name]SyntaxTree
+        private class ParsedSyntaxTree : [Lang]SyntaxTree
         {
-            private readonly [language.Name]ParseOptions _options;
+            private readonly [Lang]ParseOptions _options;
             private readonly string _path;
-            private readonly [language.Name]SyntaxNode _root;
+            private readonly [Lang]SyntaxNode _root;
             private readonly IncrementalParseData _parseData;
             private readonly bool _hasCompilationUnitRoot;
             private readonly Encoding? _encodingOpt;
             private readonly SourceHashAlgorithm _checksumAlgorithm;
             private SourceText _lazyText;
-            internal ParsedSyntaxTree(SourceText? textOpt, Encoding? encodingOpt, SourceHashAlgorithm checksumAlgorithm, string path, [language.Name]ParseOptions options, [language.Name]SyntaxNode root, IncrementalParseData parseData, bool cloneRoot = true)
+            internal ParsedSyntaxTree(SourceText? textOpt, Encoding? encodingOpt, SourceHashAlgorithm checksumAlgorithm, string path, [Lang]ParseOptions options, [Lang]SyntaxNode root, IncrementalParseData parseData, bool cloneRoot = true)
             {
                 Debug.Assert(root != null);
                 Debug.Assert(options != null);
@@ -1060,7 +1060,7 @@ namespace [language.Namespace]
                 _path = path ?? string.Empty;
                 _root = cloneRoot ? this.CloneNodeAsRoot(root) : root;
                 _parseData = parseData;
-                _hasCompilationUnitRoot = root.Kind == [language.Name]SyntaxKind.[language.MainRule?.Name];
+                _hasCompilationUnitRoot = root.Kind == [Lang]SyntaxKind.[MainRule?.Name];
             }
             protected override IncrementalParseData ParseData => _parseData;
             public override string FilePath
@@ -1088,11 +1088,11 @@ namespace [language.Namespace]
             {
                 get { return _root.FullSpan.Length; }
             }
-            public override [language.Name]SyntaxNode GetRoot(CancellationToken cancellationToken)
+            public override [Lang]SyntaxNode GetRoot(CancellationToken cancellationToken)
             {
                 return _root;
             }
-            public override bool TryGetRoot(out [language.Name]SyntaxNode root)
+            public override bool TryGetRoot(out [Lang]SyntaxNode root)
             {
                 root = _root;
                 return true;
@@ -1126,8 +1126,8 @@ namespace [language.Namespace]
                     _encodingOpt,
                     _checksumAlgorithm,
                     _path,
-                    ([language.Name]ParseOptions)options,
-                    ([language.Name]SyntaxNode)root,
+                    ([Lang]ParseOptions)options,
+                    ([Lang]SyntaxNode)root,
                     this.ParseData);
             }
             public override SyntaxTree WithFilePath(string path)
@@ -1148,7 +1148,7 @@ namespace [language.Namespace]
         }
         private class DebuggerSyntaxTree : ParsedSyntaxTree
         {
-            public DebuggerSyntaxTree([language.Name]SyntaxNode root, IncrementalParseData parseData, SourceText text, [language.Name]ParseOptions options)
+            public DebuggerSyntaxTree([Lang]SyntaxNode root, IncrementalParseData parseData, SourceText text, [Lang]ParseOptions options)
                 : base(
                     text,
                     text.Encoding,
@@ -1168,7 +1168,7 @@ namespace [language.Namespace]
 }
 end template
 
-template GenerateSyntaxVisitor(Language language)
+template GenerateSyntaxVisitor()
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -1182,26 +1182,26 @@ using MetaDslx.CodeAnalysis.Syntax.InternalSyntax;
 
 #nullable enable
 
-namespace [language.Namespace].Syntax
+namespace [Namespace].Syntax
 {
 
-	public interface I[language.Name]SyntaxVisitor
+	public interface I[Lang]SyntaxVisitor
 	{
-	    void VisitSkippedTokensTrivia([language.Name]SkippedTokensTriviaSyntax node);
-		[foreach (var rule in language.Rules)]
+	    void VisitSkippedTokensTrivia([Lang]SkippedTokensTriviaSyntax node);
+		[foreach (var rule in Rules)]
 			[foreach (var alt in rule.Alternatives)]
 		void Visit[alt.Name]([alt.RedName] node);
 			[end foreach]
 		[end foreach]
     }
 
-	public class [language.Name]SyntaxVisitor : SyntaxVisitor, I[language.Name]SyntaxVisitor
+	public class [Lang]SyntaxVisitor : SyntaxVisitor, I[Lang]SyntaxVisitor
 	{
-	    public virtual void VisitSkippedTokensTrivia([language.Name]SkippedTokensTriviaSyntax node)
+	    public virtual void VisitSkippedTokensTrivia([Lang]SkippedTokensTriviaSyntax node)
 	    {
 	        this.DefaultVisit(node);
 	    }
-		[foreach (var rule in language.Rules)]
+		[foreach (var rule in Rules)]
 			[foreach (var alt in rule.Alternatives)]
 
 		public virtual void Visit[alt.Name]([alt.RedName] node)
@@ -1212,23 +1212,23 @@ namespace [language.Namespace].Syntax
 		[end foreach]
     }
 
-	public interface I[language.Name]SyntaxVisitor<TResult> 
+	public interface I[Lang]SyntaxVisitor<TResult> 
 	{
-	    TResult VisitSkippedTokensTrivia([language.Name]SkippedTokensTriviaSyntax node);
-		[foreach (var rule in language.Rules)]
+	    TResult VisitSkippedTokensTrivia([Lang]SkippedTokensTriviaSyntax node);
+		[foreach (var rule in Rules)]
 			[foreach (var alt in rule.Alternatives)]
 		TResult Visit[alt.Name]([alt.RedName] node);
 			[end foreach]
 		[end foreach]
     }
 
-	public class [language.Name]SyntaxVisitor<TResult> : SyntaxVisitor<TResult>, I[language.Name]SyntaxVisitor<TResult>
+	public class [Lang]SyntaxVisitor<TResult> : SyntaxVisitor<TResult>, I[Lang]SyntaxVisitor<TResult>
 	{
-	    public virtual TResult VisitSkippedTokensTrivia([language.Name]SkippedTokensTriviaSyntax node)
+	    public virtual TResult VisitSkippedTokensTrivia([Lang]SkippedTokensTriviaSyntax node)
 	    {
 	        return this.DefaultVisit(node);
 	    }
-		[foreach (var rule in language.Rules)]
+		[foreach (var rule in Rules)]
 			[foreach (var alt in rule.Alternatives)]
 
 		public virtual TResult Visit[alt.Name]([alt.RedName] node)
@@ -1239,23 +1239,23 @@ namespace [language.Namespace].Syntax
 		[end foreach]
     }
 
-	public interface I[language.Name]SyntaxVisitor<TArg, TResult> 
+	public interface I[Lang]SyntaxVisitor<TArg, TResult> 
 	{
-	    TResult VisitSkippedTokensTrivia([language.Name]SkippedTokensTriviaSyntax node, TArg argument);
-		[foreach (var rule in language.Rules)]
+	    TResult VisitSkippedTokensTrivia([Lang]SkippedTokensTriviaSyntax node, TArg argument);
+		[foreach (var rule in Rules)]
 			[foreach (var alt in rule.Alternatives)]
 		TResult Visit[alt.Name]([alt.RedName] node, TArg argument);
 			[end foreach]
 		[end foreach]
     }
 
-	public class [language.Name]SyntaxVisitor<TArg, TResult> : SyntaxVisitor<TArg, TResult>, I[language.Name]SyntaxVisitor<TArg, TResult>
+	public class [Lang]SyntaxVisitor<TArg, TResult> : SyntaxVisitor<TArg, TResult>, I[Lang]SyntaxVisitor<TArg, TResult>
 	{
-	    public virtual TResult VisitSkippedTokensTrivia([language.Name]SkippedTokensTriviaSyntax node, TArg argument)
+	    public virtual TResult VisitSkippedTokensTrivia([Lang]SkippedTokensTriviaSyntax node, TArg argument)
 	    {
 	        return this.DefaultVisit(node, argument);
 	    }
-		[foreach (var rule in language.Rules)]
+		[foreach (var rule in Rules)]
 			[foreach (var alt in rule.Alternatives)]
 
 		public virtual TResult Visit[alt.Name]([alt.RedName] node, TArg argument)
@@ -1266,29 +1266,29 @@ namespace [language.Namespace].Syntax
 		[end foreach]
     }
 
-	public class [language.Name]SyntaxRewriter : SyntaxRewriter, I[language.Name]SyntaxVisitor<SyntaxNode?>
+	public class [Lang]SyntaxRewriter : SyntaxRewriter, I[Lang]SyntaxVisitor<SyntaxNode?>
 	{
-	    public [language.Name]SyntaxRewriter(bool visitIntoStructuredTrivia = false)
-			: base([language.Name]Language.Instance, visitIntoStructuredTrivia)
+	    public [Lang]SyntaxRewriter(bool visitIntoStructuredTrivia = false)
+			: base([Lang]Language.Instance, visitIntoStructuredTrivia)
 	    {
 	    }
 	
-	    public virtual SyntaxNode VisitSkippedTokensTrivia([language.Name]SkippedTokensTriviaSyntax node)
+	    public virtual SyntaxNode VisitSkippedTokensTrivia([Lang]SkippedTokensTriviaSyntax node)
 	    {
 	      var tokens = this.VisitList(node.Tokens);
 	      return node.Update(tokens);
 	    }
-		[foreach (var rule in language.Rules)]
+		[foreach (var rule in Rules)]
 			[foreach (var alt in rule.Alternatives)]
 
-        [GenerateSyntaxRewriterVisit(language, alt)]
+        [GenerateSyntaxRewriterVisit(alt)]
 			[end foreach]
 		[end foreach]		
     }
 }
 end template
 
-template GenerateSyntaxRewriterVisit(Language language, Alternative alt)
+template GenerateSyntaxRewriterVisit(Alternative alt)
 public virtual SyntaxNode Visit[alt.Name]([alt.RedName] node)
 {
 	[foreach (var elem in alt.Elements)]
@@ -1298,11 +1298,11 @@ public virtual SyntaxNode Visit[alt.Name]([alt.RedName] node)
 }
 end template
 
-template GenerateSyntaxFactory(Language language)
-[var nonFixedTokens = language.Tokens.Where(lr => !lr.IsFixed).ToImmutableArray()]
+template GenerateSyntaxFactory()
+[var nonFixedTokens = Tokens.Where(lr => !lr.IsFixed).ToImmutableArray()]
 #nullable enable
 
-namespace [language.Namespace].Syntax
+namespace [Namespace].Syntax
 {
     using __Type = global::System.Type;
 	using __Debug = global::System.Diagnostics.Debug;
@@ -1327,48 +1327,48 @@ namespace [language.Namespace].Syntax
 	using __SourceText = global::MetaDslx.CodeAnalysis.Text.SourceText;
 	using __TextChangeRange = global::MetaDslx.CodeAnalysis.Text.TextChangeRange;
 
-	public class [language.Name]SyntaxFactory : global::MetaDslx.CodeAnalysis.Syntax.SyntaxFactory
+	public class [Lang]SyntaxFactory : global::MetaDslx.CodeAnalysis.Syntax.SyntaxFactory
 	{
-		public [language.Name]SyntaxFactory(global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.InternalSyntaxFactory internalSyntaxFactory) 
+		public [Lang]SyntaxFactory(global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.InternalSyntaxFactory internalSyntaxFactory) 
 			: base(internalSyntaxFactory)
 		{
 		}
 	    
-        public override __Language Language => [language.Name]Language.Instance;
+        public override __Language Language => [Lang]Language.Instance;
 
-	    public override __ParseOptions DefaultParseOptions => [language.Name]ParseOptions.Default;
+	    public override __ParseOptions DefaultParseOptions => [Lang]ParseOptions.Default;
 
 		/// <summary>
 		/// Create a new syntax tree from a syntax node.
 		/// </summary>
-		public [language.Name]SyntaxTree SyntaxTree(__SyntaxNode root, [language.Name]ParseOptions? options = null, string? path = "", __Encoding? encoding = null)
+		public [Lang]SyntaxTree SyntaxTree(__SyntaxNode root, [Lang]ParseOptions? options = null, string? path = "", __Encoding? encoding = null)
 		{
-			return [language.Name]SyntaxTree.Create(([language.Name]SyntaxNode)root, __IncrementalParseData.Empty, options, path, null, encoding);
+			return [Lang]SyntaxTree.Create(([Lang]SyntaxNode)root, __IncrementalParseData.Empty, options, path, null, encoding);
 		}
 
 		/// <summary>
 		/// Produces a syntax tree by parsing the source text.
 		/// </summary>
-		public [language.Name]SyntaxTree ParseSyntaxTree(
+		public [Lang]SyntaxTree ParseSyntaxTree(
 			string text,
-			[language.Name]ParseOptions options = null,
+			[Lang]ParseOptions options = null,
 			string path = "",
 			__Encoding encoding = null,
 			CancellationToken cancellationToken = default(CancellationToken))
 		{
-			return ([language.Name]SyntaxTree)this.ParseSyntaxTreeCore(__SourceText.From(text, encoding), options, path, cancellationToken);
+			return ([Lang]SyntaxTree)this.ParseSyntaxTreeCore(__SourceText.From(text, encoding), options, path, cancellationToken);
 		}
 
 		/// <summary>
 		/// Produces a syntax tree by parsing the source text.
 		/// </summary>
-		public [language.Name]SyntaxTree ParseSyntaxTree(
+		public [Lang]SyntaxTree ParseSyntaxTree(
 			__SourceText text,
-			[language.Name]ParseOptions? options = null,
+			[Lang]ParseOptions? options = null,
 			string path = "",
 			CancellationToken cancellationToken = default(CancellationToken))
 		{
-			return ([language.Name]SyntaxTree)this.ParseSyntaxTreeCore(text, options, path, cancellationToken);
+			return ([Lang]SyntaxTree)this.ParseSyntaxTreeCore(text, options, path, cancellationToken);
 		}
 
 		protected override __SyntaxTree ParseSyntaxTreeCore(
@@ -1377,12 +1377,12 @@ namespace [language.Namespace].Syntax
 			string path = "",
 			CancellationToken cancellationToken = default(CancellationToken))
 		{
-			return [language.Name]SyntaxTree.ParseText(text, ([language.Name]ParseOptions?)options, path, cancellationToken);
+			return [Lang]SyntaxTree.ParseText(text, ([Lang]ParseOptions?)options, path, cancellationToken);
 		}
 	
 		public override __SyntaxTree MakeSyntaxTree(__SyntaxNode root, __ParseOptions? options = null, string path = "", __Encoding? encoding = null)
 		{
-			return [language.Name]SyntaxTree.Create(([language.Name]SyntaxNode)root, __IncrementalParseData.Empty, ([language.Name]ParseOptions)options, path, null, encoding);
+			return [Lang]SyntaxTree.Create(([Lang]SyntaxNode)root, __IncrementalParseData.Empty, ([Lang]ParseOptions)options, path, null, encoding);
 		}
 
         /// <summary>
@@ -1391,7 +1391,7 @@ namespace [language.Namespace].Syntax
         /// </summary>
         /// <param name="kind">A syntax kind value for a token. These have the suffix Token or Keyword.</param>
         /// <returns></returns>
-        public virtual __SyntaxToken Token([language.Name]SyntaxKind kind)
+        public virtual __SyntaxToken Token([Lang]SyntaxKind kind)
         {
             return this.Token((int)kind);
         }
@@ -1403,7 +1403,7 @@ namespace [language.Namespace].Syntax
         /// <param name="leading">A list of trivia immediately preceding the token.</param>
         /// <param name="kind">A syntax kind value for a token. These have the suffix Token or Keyword.</param>
         /// <param name="trailing">A list of trivia immediately following the token.</param>
-        public virtual __SyntaxToken Token(__SyntaxTriviaList leading, [language.Name]SyntaxKind kind, __SyntaxTriviaList trailing)
+        public virtual __SyntaxToken Token(__SyntaxTriviaList leading, [Lang]SyntaxKind kind, __SyntaxTriviaList trailing)
         {
             return this.Token(leading, (int)kind, trailing);
         }
@@ -1420,7 +1420,7 @@ namespace [language.Namespace].Syntax
         /// <param name="text">The text from which this token was created (e.g. lexed).</param>
         /// <param name="valueText">How C# should interpret the text of this token.</param>
         /// <param name="trailing">A list of trivia immediately following the token.</param>
-        public virtual __SyntaxToken Token(__SyntaxTriviaList leading, [language.Name]SyntaxKind kind, string text, string valueText, __SyntaxTriviaList trailing)
+        public virtual __SyntaxToken Token(__SyntaxTriviaList leading, [Lang]SyntaxKind kind, string text, string valueText, __SyntaxTriviaList trailing)
         {
             return this.Token(leading, (int)kind, text, valueText, trailing);
         }
@@ -1430,7 +1430,7 @@ namespace [language.Namespace].Syntax
         /// expected token is not found. A missing token has no text and normally has associated diagnostics.
         /// </summary>
         /// <param name="kind">A syntax kind value for a token. These have the suffix Token or Keyword.</param>
-        public virtual __SyntaxToken MissingToken([language.Name]SyntaxKind kind)
+        public virtual __SyntaxToken MissingToken([Lang]SyntaxKind kind)
         {
             return this.MissingToken((int)kind);
         }
@@ -1442,7 +1442,7 @@ namespace [language.Namespace].Syntax
         /// <param name="leading">A list of trivia immediately preceding the token.</param>
         /// <param name="kind">A syntax kind value for a token. These have the suffix Token or Keyword.</param>
         /// <param name="trailing">A list of trivia immediately following the token.</param>
-        public virtual __SyntaxToken MissingToken(__SyntaxTriviaList leading, [language.Name]SyntaxKind kind, __SyntaxTriviaList trailing)
+        public virtual __SyntaxToken MissingToken(__SyntaxTriviaList leading, [Lang]SyntaxKind kind, __SyntaxTriviaList trailing)
         {
             return this.MissingToken(leading, (int)kind, trailing);
         }
@@ -1451,25 +1451,25 @@ namespace [language.Namespace].Syntax
 
         public __SyntaxToken [token.Name](string text)
         {
-            return new __SyntaxToken([language.Name]Language.Instance.InternalSyntaxFactory.[token.Name](text));
+            return new __SyntaxToken([Lang]Language.Instance.InternalSyntaxFactory.[token.Name](text));
         }
 
         public __SyntaxToken [token.Name](string text, object value)
         {
-            return new __SyntaxToken([language.Name]Language.Instance.InternalSyntaxFactory.[token.Name](text, value));
+            return new __SyntaxToken([Lang]Language.Instance.InternalSyntaxFactory.[token.Name](text, value));
         }
         [end foreach]
-		[foreach (var rule in language.Rules)]
+		[foreach (var rule in Rules)]
 			[foreach (var alt in rule.Alternatives)]
 
-        [GenerateSyntaxFactoryCreate(language, alt)]
+        [GenerateSyntaxFactoryCreate(alt)]
 			[end foreach]
 		[end foreach]		
 
         internal static IEnumerable<__Type> GetNodeTypes()
         {
             return new __Type["[]"] {
-            [foreach (var rule in language.Rules)]
+            [foreach (var rule in Rules)]
 		        [foreach(var alt in rule.Alternatives)]
 		        typeof([alt.RedName]),
 		        [end foreach]
@@ -1481,7 +1481,7 @@ namespace [language.Namespace].Syntax
 }	
 end template
 
-template GenerateSyntaxFactoryCreate(Language language, Alternative alt)
+template GenerateSyntaxFactoryCreate(Alternative alt)
 public [alt.RedName] [alt.Name]([alt.RedUpdateParameters])
 {
 	[foreach (var elem in alt.Elements)]
@@ -1494,7 +1494,7 @@ public [alt.RedName] [alt.Name]([alt.RedUpdateParameters])
 	if ([redSyntaxCondition]) throw new ArgumentException(nameof([elem.ParameterName]));
 		[end if]
 	[end foreach]
-    return ([alt.RedName])[language.Name]Language.Instance.InternalSyntaxFactory.[alt.Name]([alt.RedToGreenArgumentList]).CreateRed();
+    return ([alt.RedName])[Lang]Language.Instance.InternalSyntaxFactory.[alt.Name]([alt.RedToGreenArgumentList]).CreateRed();
 }
 [if (alt.HasRedToGreenOptionalArguments)]
 
@@ -1505,7 +1505,7 @@ public [alt.RedName] [alt.Name]([alt.RedOptionalUpdateParameters])
 [end if]
 end template
 
-template GenerateParseOptions(Language language)
+template GenerateParseOptions()
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -1517,17 +1517,17 @@ using Roslyn.Utilities;
 
 #nullable enable
 
-namespace [language.Namespace].Syntax
+namespace [Namespace].Syntax
 {
     /// <summary>
     /// This class stores several source parsing related options and offers access to their values.
     /// </summary>
-    public sealed class [language.Name]ParseOptions : ParseOptions, IEquatable<[language.Name]ParseOptions>
+    public sealed class [Lang]ParseOptions : ParseOptions, IEquatable<[Lang]ParseOptions>
     {
         /// <summary>
         /// The default parse options.
         /// </summary>
-        public static [language.Name]ParseOptions Default { get; } = new [language.Name]ParseOptions();
+        public static [Lang]ParseOptions Default { get; } = new [Lang]ParseOptions();
 
         private ImmutableArray<string> _preprocessorSymbols;
         private ImmutableDictionary<string, string> _features;
@@ -1536,19 +1536,19 @@ namespace [language.Namespace].Syntax
         /// Gets the effective language version, which the compiler uses to select the
         /// language rules to apply to the program.
         /// </summary>
-        public [language.Name]LanguageVersion LanguageVersion { get; private set; }
+        public [Lang]LanguageVersion LanguageVersion { get; private set; }
 
         /// <summary>
         /// Gets the specified language version, which is the value that was specified in
         /// the call to the constructor, or modified using the <see cref="WithLanguageVersion"/> method,
         /// or provided on the command line.
         /// </summary>
-        public [language.Name]LanguageVersion SpecifiedLanguageVersion { get; private set; }
+        public [Lang]LanguageVersion SpecifiedLanguageVersion { get; private set; }
 
         public override ImmutableArray<string> PreprocessorSymbols => _preprocessorSymbols;
 
-        public [language.Name]ParseOptions(
-            [language.Name]LanguageVersion languageVersion = [language.Name]LanguageVersion.Default,
+        public [Lang]ParseOptions(
+            [Lang]LanguageVersion languageVersion = [Lang]LanguageVersion.Default,
             DocumentationMode documentationMode = DocumentationMode.Parse,
             SourceCodeKind kind = SourceCodeKind.Regular,
             IEnumerable<string>? preprocessorSymbols = null)
@@ -1560,8 +1560,8 @@ namespace [language.Namespace].Syntax
         {
         }
 
-        internal [language.Name]ParseOptions(
-            [language.Name]LanguageVersion languageVersion,
+        internal [Lang]ParseOptions(
+            [Lang]LanguageVersion languageVersion,
             DocumentationMode documentationMode,
             SourceCodeKind kind,
             ImmutableArray<string> preprocessorSymbols,
@@ -1574,7 +1574,7 @@ namespace [language.Namespace].Syntax
             _features = features?.ToImmutableDictionary() ?? ImmutableDictionary<string, string>.Empty;
         }
 
-        private [language.Name]ParseOptions([language.Name]ParseOptions other) : this(
+        private [Lang]ParseOptions([Lang]ParseOptions other) : this(
             languageVersion: other.SpecifiedLanguageVersion,
             documentationMode: other.DocumentationMode,
             kind: other.Kind,
@@ -1582,19 +1582,19 @@ namespace [language.Namespace].Syntax
         {
         }
 
-        public override Language Language => [language.Name]Language.Instance;
+        public override Language Language => [Lang]Language.Instance;
 
-        public new [language.Name]ParseOptions WithKind(SourceCodeKind kind)
+        public new [Lang]ParseOptions WithKind(SourceCodeKind kind)
         {
             if (kind == this.Kind)
             {
                 return this;
             }
 
-            return new [language.Name]ParseOptions(this) { Kind = kind };
+            return new [Lang]ParseOptions(this) { Kind = kind };
         }
 
-        public [language.Name]ParseOptions WithLanguageVersion([language.Name]LanguageVersion version)
+        public [Lang]ParseOptions WithLanguageVersion([Lang]LanguageVersion version)
         {
             if (version == this.SpecifiedLanguageVersion)
             {
@@ -1602,20 +1602,20 @@ namespace [language.Namespace].Syntax
             }
 
             var effectiveLanguageVersion = version.MapSpecifiedToEffectiveVersion();
-            return new [language.Name]ParseOptions(this) { SpecifiedLanguageVersion = version, LanguageVersion = effectiveLanguageVersion };
+            return new [Lang]ParseOptions(this) { SpecifiedLanguageVersion = version, LanguageVersion = effectiveLanguageVersion };
         }
 
-        public [language.Name]ParseOptions WithPreprocessorSymbols(IEnumerable<string>? preprocessorSymbols)
+        public [Lang]ParseOptions WithPreprocessorSymbols(IEnumerable<string>? preprocessorSymbols)
         {
             return WithPreprocessorSymbols(preprocessorSymbols.AsImmutableOrNull());
         }
 
-        public [language.Name]ParseOptions WithPreprocessorSymbols(params string["[]"]? preprocessorSymbols)
+        public [Lang]ParseOptions WithPreprocessorSymbols(params string["[]"]? preprocessorSymbols)
         {
             return WithPreprocessorSymbols(preprocessorSymbols.AsImmutableOrNull());
         }
 
-        public [language.Name]ParseOptions WithPreprocessorSymbols(ImmutableArray<string> symbols)
+        public [Lang]ParseOptions WithPreprocessorSymbols(ImmutableArray<string> symbols)
         {
             if (symbols.IsDefault)
             {
@@ -1627,17 +1627,17 @@ namespace [language.Namespace].Syntax
                 return this;
             }
 
-            return new [language.Name]ParseOptions(this) { _preprocessorSymbols = symbols };
+            return new [Lang]ParseOptions(this) { _preprocessorSymbols = symbols };
         }
 
-        public new [language.Name]ParseOptions WithDocumentationMode(DocumentationMode documentationMode)
+        public new [Lang]ParseOptions WithDocumentationMode(DocumentationMode documentationMode)
         {
             if (documentationMode == this.DocumentationMode)
             {
                 return this;
             }
 
-            return new [language.Name]ParseOptions(this) { DocumentationMode = documentationMode };
+            return new [Lang]ParseOptions(this) { DocumentationMode = documentationMode };
         }
 
         protected override ParseOptions CommonWithKind(SourceCodeKind kind)
@@ -1652,15 +1652,15 @@ namespace [language.Namespace].Syntax
 
         protected override bool IsFeatureEnabled(string feature)
         {
-            [language.Name]LanguageVersion availableVersion = LanguageVersion;
-            [language.Name]LanguageVersion requiredVersion = [language.Name]Language.Instance.SyntaxFacts.GetRequiredLanguageVersion(feature);
+            [Lang]LanguageVersion availableVersion = LanguageVersion;
+            [Lang]LanguageVersion requiredVersion = [Lang]Language.Instance.SyntaxFacts.GetRequiredLanguageVersion(feature);
             return availableVersion >= requiredVersion;
         }
 
         public override Diagnostic? GetDiagnosticForFeature(string feature)
         {
-            [language.Name]LanguageVersion availableVersion = LanguageVersion;
-            [language.Name]LanguageVersion requiredVersion = [language.Name]Language.Instance.SyntaxFacts.GetRequiredLanguageVersion(feature);
+            [Lang]LanguageVersion availableVersion = LanguageVersion;
+            [Lang]LanguageVersion requiredVersion = [Lang]Language.Instance.SyntaxFacts.GetRequiredLanguageVersion(feature);
             if (availableVersion < requiredVersion)
             {
                 return Diagnostic.Create(CommonErrorCode.ERR_FeatureNotAvailableInVersion, Location.None, feature, Language.Name, availableVersion.ToDisplayString(), requiredVersion.ToDisplayString());
@@ -1694,10 +1694,10 @@ namespace [language.Namespace].Syntax
 
         public override bool Equals(object? obj)
         {
-            return this.Equals(obj as [language.Name]ParseOptions);
+            return this.Equals(obj as [Lang]ParseOptions);
         }
 
-        public bool Equals([language.Name]ParseOptions? other)
+        public bool Equals([Lang]ParseOptions? other)
         {
             if (object.ReferenceEquals(this, other))
             {
