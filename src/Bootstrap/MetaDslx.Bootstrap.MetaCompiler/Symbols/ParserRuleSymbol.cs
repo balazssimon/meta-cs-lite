@@ -56,7 +56,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
 
         protected override CompletionGraph CompletionGraph => CompletionParts.CompletionGraph;
 
-        public ParserRuleSyntax? Syntax => this.DeclaringSyntaxReference.AsNode() as ParserRuleSyntax;
+        public RuleSyntax? Syntax => this.DeclaringSyntaxReference.AsNode() as RuleSyntax;
 
         public GrammarSymbol? ContainingGrammarSymbol => this.ContainingSymbol as GrammarSymbol;
 

@@ -239,8 +239,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
             var stack = ArrayBuilder<ElementTrace>.GetInstance();
             var builder = PooledStringBuilder.GetInstance();
             var sb = builder.Builder;
-            stack.Add(grammar.ElementTraces[elem]);
-            ResolveTrace(result, sb, stack, stopWhen);
+            if (grammar.ElementTraces.TryGetValue(elem, out var trace))
+            {
+                stack.Add(trace);
+                ResolveTrace(result, sb, stack, stopWhen);
+            }
             builder.Free();
             stack.Free();
             return result.ToImmutableAndFree();

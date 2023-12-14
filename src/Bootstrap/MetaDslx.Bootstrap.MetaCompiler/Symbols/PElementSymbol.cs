@@ -73,9 +73,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
 
         protected override CompletionGraph CompletionGraph => CompletionParts.CompletionGraph;
 
-        public PElementSyntax? Syntax => this.DeclaringSyntaxReference.AsNode() as PElementSyntax;
+        public ElementSyntax? Syntax => this.DeclaringSyntaxReference.AsNode() as ElementSyntax;
 
-        public bool IsNamedElement => Syntax?.PElementBlock1 is not null;
+        public bool IsNamedElement => Syntax?.ElementBlock1 is not null;
 
         public bool IsBlock => (Value.OriginalSymbol is PBlockSymbol) || (Value.OriginalSymbol is PReferenceSymbol prs && prs.Rule.OriginalSymbol is PBlockSymbol);
 
@@ -192,7 +192,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
 
         protected override string? CompleteProperty_Name(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            var nameSyntax = this.Syntax?.PElementBlock1?.SymbolProperty;
+            var nameSyntax = this.Syntax?.ElementBlock1?.SymbolProperty;
             return Declaration.Language.SyntaxFacts.ExtractName(nameSyntax);
         }
 

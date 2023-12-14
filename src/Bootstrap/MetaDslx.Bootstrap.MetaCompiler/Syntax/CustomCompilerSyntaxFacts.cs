@@ -18,14 +18,14 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
                 var node = (CompilerSyntaxNode)nodeOrToken.AsNode();
                 switch (node.Kind)
                 {
-                    case CompilerSyntaxKind.ParserRule:
-                        var pr = (ParserRuleSyntax)node;
-                        return ExtractName(pr.ParserRuleBlock1);
-                    case CompilerSyntaxKind.ParserRuleBlock1Alt1:
-                        var alt1 = (ParserRuleBlock1Alt1Syntax)node;
+                    case CompilerSyntaxKind.Rule:
+                        var pr = (RuleSyntax)node;
+                        return ExtractName(pr.RuleBlock1);
+                    case CompilerSyntaxKind.RuleBlock1Alt1:
+                        var alt1 = (RuleBlock1Alt1Syntax)node;
                         return ExtractName(alt1.ReturnType);
-                    case CompilerSyntaxKind.ParserRuleBlock1Alt2:
-                        var alt2 = (ParserRuleBlock1Alt2Syntax)node;
+                    case CompilerSyntaxKind.RuleBlock1Alt2:
+                        var alt2 = (RuleBlock1Alt2Syntax)node;
                         return ExtractName(alt2.Identifier);
                     default:
                         break;

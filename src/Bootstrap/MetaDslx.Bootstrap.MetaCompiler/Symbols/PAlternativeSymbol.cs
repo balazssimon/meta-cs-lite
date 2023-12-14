@@ -62,7 +62,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
 
         protected override CompletionGraph CompletionGraph => CompletionParts.CompletionGraph;
 
-        public PAlternativeSyntax? Syntax => this.DeclaringSyntaxReference.AsNode() as PAlternativeSyntax;
+        public AlternativeSyntax? Syntax => this.DeclaringSyntaxReference.AsNode() as AlternativeSyntax;
 
         public GrammarSymbol? ContainingGrammarSymbol => this.GetOutermostContainingSymbol<GrammarSymbol>();
 
@@ -201,7 +201,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
 
         protected override string? CompleteProperty_Name(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            var nameSyntax = this.Syntax?.PAlternativeBlock1?.Name;
+            var nameSyntax = this.Syntax?.AlternativeBlock1?.Name;
             return Declaration.Language.SyntaxFacts.ExtractName(nameSyntax);
         }
 

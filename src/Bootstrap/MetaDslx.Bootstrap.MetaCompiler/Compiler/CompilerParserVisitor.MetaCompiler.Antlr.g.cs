@@ -63,80 +63,93 @@ public interface ICompilerParserVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitPr_Grammar([NotNull] CompilerParser.Pr_GrammarContext context);
 	/// <summary>
-	/// Visit a parse tree produced by the <c>pr_ParserRule</c>
-	/// labeled alternative in <see cref="CompilerParser.pr_Rule"/>.
+	/// Visit a parse tree produced by the <c>pr_GrammarRuleAlt1</c>
+	/// labeled alternative in <see cref="CompilerParser.pr_GrammarRule"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	Result VisitPr_ParserRule([NotNull] CompilerParser.Pr_ParserRuleContext context);
+	Result VisitPr_GrammarRuleAlt1([NotNull] CompilerParser.Pr_GrammarRuleAlt1Context context);
 	/// <summary>
-	/// Visit a parse tree produced by the <c>pr_PBlock</c>
-	/// labeled alternative in <see cref="CompilerParser.pr_Rule"/>.
+	/// Visit a parse tree produced by the <c>pr_Block</c>
+	/// labeled alternative in <see cref="CompilerParser.pr_GrammarRule"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	Result VisitPr_PBlock([NotNull] CompilerParser.Pr_PBlockContext context);
+	Result VisitPr_Block([NotNull] CompilerParser.Pr_BlockContext context);
 	/// <summary>
-	/// Visit a parse tree produced by the <c>pr_LexerRule</c>
-	/// labeled alternative in <see cref="CompilerParser.pr_Rule"/>.
+	/// Visit a parse tree produced by the <c>pr_Token</c>
+	/// labeled alternative in <see cref="CompilerParser.pr_GrammarRule"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	Result VisitPr_LexerRule([NotNull] CompilerParser.Pr_LexerRuleContext context);
+	Result VisitPr_Token([NotNull] CompilerParser.Pr_TokenContext context);
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="CompilerParser.pr_PAlternative"/>.
+	/// Visit a parse tree produced by the <c>pr_Fragment</c>
+	/// labeled alternative in <see cref="CompilerParser.pr_GrammarRule"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	Result VisitPr_PAlternative([NotNull] CompilerParser.Pr_PAlternativeContext context);
+	Result VisitPr_Fragment([NotNull] CompilerParser.Pr_FragmentContext context);
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="CompilerParser.pr_PElement"/>.
+	/// Visit a parse tree produced by <see cref="CompilerParser.pr_Rule"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	Result VisitPr_PElement([NotNull] CompilerParser.Pr_PElementContext context);
+	Result VisitPr_Rule([NotNull] CompilerParser.Pr_RuleContext context);
 	/// <summary>
-	/// Visit a parse tree produced by the <c>pr_PBlockInline</c>
-	/// labeled alternative in <see cref="CompilerParser.pr_PElementValue"/>.
+	/// Visit a parse tree produced by <see cref="CompilerParser.pr_Alternative"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	Result VisitPr_PBlockInline([NotNull] CompilerParser.Pr_PBlockInlineContext context);
+	Result VisitPr_Alternative([NotNull] CompilerParser.Pr_AlternativeContext context);
 	/// <summary>
-	/// Visit a parse tree produced by the <c>pr_PEof</c>
-	/// labeled alternative in <see cref="CompilerParser.pr_PElementValue"/>.
+	/// Visit a parse tree produced by <see cref="CompilerParser.pr_Element"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	Result VisitPr_PEof([NotNull] CompilerParser.Pr_PEofContext context);
+	Result VisitPr_Element([NotNull] CompilerParser.Pr_ElementContext context);
 	/// <summary>
-	/// Visit a parse tree produced by the <c>pr_PKeyword</c>
-	/// labeled alternative in <see cref="CompilerParser.pr_PElementValue"/>.
+	/// Visit a parse tree produced by the <c>pr_BlockInline</c>
+	/// labeled alternative in <see cref="CompilerParser.pr_ElementValue"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	Result VisitPr_PKeyword([NotNull] CompilerParser.Pr_PKeywordContext context);
+	Result VisitPr_BlockInline([NotNull] CompilerParser.Pr_BlockInlineContext context);
 	/// <summary>
-	/// Visit a parse tree produced by the <c>pr_PReferenceAlt1</c>
-	/// labeled alternative in <see cref="CompilerParser.pr_PElementValue"/>.
+	/// Visit a parse tree produced by the <c>pr_Eof</c>
+	/// labeled alternative in <see cref="CompilerParser.pr_ElementValue"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	Result VisitPr_PReferenceAlt1([NotNull] CompilerParser.Pr_PReferenceAlt1Context context);
+	Result VisitPr_Eof([NotNull] CompilerParser.Pr_EofContext context);
 	/// <summary>
-	/// Visit a parse tree produced by the <c>pr_PReferenceAlt2</c>
-	/// labeled alternative in <see cref="CompilerParser.pr_PElementValue"/>.
+	/// Visit a parse tree produced by the <c>pr_Keyword</c>
+	/// labeled alternative in <see cref="CompilerParser.pr_ElementValue"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	Result VisitPr_PReferenceAlt2([NotNull] CompilerParser.Pr_PReferenceAlt2Context context);
+	Result VisitPr_Keyword([NotNull] CompilerParser.Pr_KeywordContext context);
 	/// <summary>
-	/// Visit a parse tree produced by the <c>pr_PReferenceAlt3</c>
-	/// labeled alternative in <see cref="CompilerParser.pr_PElementValue"/>.
+	/// Visit a parse tree produced by the <c>pr_RuleRefAlt1</c>
+	/// labeled alternative in <see cref="CompilerParser.pr_ElementValue"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	Result VisitPr_PReferenceAlt3([NotNull] CompilerParser.Pr_PReferenceAlt3Context context);
+	Result VisitPr_RuleRefAlt1([NotNull] CompilerParser.Pr_RuleRefAlt1Context context);
+	/// <summary>
+	/// Visit a parse tree produced by the <c>pr_RuleRefAlt2</c>
+	/// labeled alternative in <see cref="CompilerParser.pr_ElementValue"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitPr_RuleRefAlt2([NotNull] CompilerParser.Pr_RuleRefAlt2Context context);
+	/// <summary>
+	/// Visit a parse tree produced by the <c>pr_RuleRefAlt3</c>
+	/// labeled alternative in <see cref="CompilerParser.pr_ElementValue"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitPr_RuleRefAlt3([NotNull] CompilerParser.Pr_RuleRefAlt3Context context);
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="CompilerParser.pr_LAlternative"/>.
 	/// </summary>
@@ -307,94 +320,93 @@ public interface ICompilerParserVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitPr_GrammarBlock1([NotNull] CompilerParser.Pr_GrammarBlock1Context context);
 	/// <summary>
-	/// Visit a parse tree produced by the <c>pr_ParserRuleBlock1Alt1</c>
-	/// labeled alternative in <see cref="CompilerParser.pr_ParserRuleBlock1"/>.
+	/// Visit a parse tree produced by the <c>pr_RuleBlock1Alt1</c>
+	/// labeled alternative in <see cref="CompilerParser.pr_RuleBlock1"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	Result VisitPr_ParserRuleBlock1Alt1([NotNull] CompilerParser.Pr_ParserRuleBlock1Alt1Context context);
+	Result VisitPr_RuleBlock1Alt1([NotNull] CompilerParser.Pr_RuleBlock1Alt1Context context);
 	/// <summary>
-	/// Visit a parse tree produced by the <c>pr_ParserRuleBlock1Alt2</c>
-	/// labeled alternative in <see cref="CompilerParser.pr_ParserRuleBlock1"/>.
+	/// Visit a parse tree produced by the <c>pr_RuleBlock1Alt2</c>
+	/// labeled alternative in <see cref="CompilerParser.pr_RuleBlock1"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	Result VisitPr_ParserRuleBlock1Alt2([NotNull] CompilerParser.Pr_ParserRuleBlock1Alt2Context context);
+	Result VisitPr_RuleBlock1Alt2([NotNull] CompilerParser.Pr_RuleBlock1Alt2Context context);
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="CompilerParser.pr_ParserRuleBlock2"/>.
+	/// Visit a parse tree produced by <see cref="CompilerParser.pr_RuleBlock2"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	Result VisitPr_ParserRuleBlock2([NotNull] CompilerParser.Pr_ParserRuleBlock2Context context);
+	Result VisitPr_RuleBlock2([NotNull] CompilerParser.Pr_RuleBlock2Context context);
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="CompilerParser.pr_PBlockBlock1"/>.
+	/// Visit a parse tree produced by <see cref="CompilerParser.pr_BlockBlock1"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	Result VisitPr_PBlockBlock1([NotNull] CompilerParser.Pr_PBlockBlock1Context context);
+	Result VisitPr_BlockBlock1([NotNull] CompilerParser.Pr_BlockBlock1Context context);
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="CompilerParser.pr_PBlockBlock2"/>.
+	/// Visit a parse tree produced by <see cref="CompilerParser.pr_BlockBlock2"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	Result VisitPr_PBlockBlock2([NotNull] CompilerParser.Pr_PBlockBlock2Context context);
+	Result VisitPr_BlockBlock2([NotNull] CompilerParser.Pr_BlockBlock2Context context);
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="CompilerParser.pr_PBlockInlineBlock1"/>.
+	/// Visit a parse tree produced by <see cref="CompilerParser.pr_BlockInlineBlock1"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	Result VisitPr_PBlockInlineBlock1([NotNull] CompilerParser.Pr_PBlockInlineBlock1Context context);
+	Result VisitPr_BlockInlineBlock1([NotNull] CompilerParser.Pr_BlockInlineBlock1Context context);
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="CompilerParser.pr_PAlternativeBlock1"/>.
+	/// Visit a parse tree produced by <see cref="CompilerParser.pr_AlternativeBlock1"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	Result VisitPr_PAlternativeBlock1([NotNull] CompilerParser.Pr_PAlternativeBlock1Context context);
+	Result VisitPr_AlternativeBlock1([NotNull] CompilerParser.Pr_AlternativeBlock1Context context);
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="CompilerParser.pr_PAlternativeBlock2"/>.
+	/// Visit a parse tree produced by <see cref="CompilerParser.pr_AlternativeBlock2"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	Result VisitPr_PAlternativeBlock2([NotNull] CompilerParser.Pr_PAlternativeBlock2Context context);
+	Result VisitPr_AlternativeBlock2([NotNull] CompilerParser.Pr_AlternativeBlock2Context context);
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="CompilerParser.pr_PElementBlock1"/>.
+	/// Visit a parse tree produced by <see cref="CompilerParser.pr_ElementBlock1"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	Result VisitPr_PElementBlock1([NotNull] CompilerParser.Pr_PElementBlock1Context context);
+	Result VisitPr_ElementBlock1([NotNull] CompilerParser.Pr_ElementBlock1Context context);
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="CompilerParser.pr_PReferenceAlt3Block1"/>.
+	/// Visit a parse tree produced by <see cref="CompilerParser.pr_RuleRefAlt3Block1"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	Result VisitPr_PReferenceAlt3Block1([NotNull] CompilerParser.Pr_PReferenceAlt3Block1Context context);
+	Result VisitPr_RuleRefAlt3Block1([NotNull] CompilerParser.Pr_RuleRefAlt3Block1Context context);
 	/// <summary>
-	/// Visit a parse tree produced by the <c>pr_LexerRuleBlock1Alt1</c>
-	/// labeled alternative in <see cref="CompilerParser.pr_LexerRuleBlock1"/>.
+	/// Visit a parse tree produced by the <c>pr_TokenBlock1Alt1</c>
+	/// labeled alternative in <see cref="CompilerParser.pr_TokenBlock1"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	Result VisitPr_LexerRuleBlock1Alt1([NotNull] CompilerParser.Pr_LexerRuleBlock1Alt1Context context);
+	Result VisitPr_TokenBlock1Alt1([NotNull] CompilerParser.Pr_TokenBlock1Alt1Context context);
 	/// <summary>
-	/// Visit a parse tree produced by the <c>pr_LexerRuleBlock1Alt2</c>
-	/// labeled alternative in <see cref="CompilerParser.pr_LexerRuleBlock1"/>.
+	/// Visit a parse tree produced by the <c>pr_TokenBlock1Alt2</c>
+	/// labeled alternative in <see cref="CompilerParser.pr_TokenBlock1"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	Result VisitPr_LexerRuleBlock1Alt2([NotNull] CompilerParser.Pr_LexerRuleBlock1Alt2Context context);
+	Result VisitPr_TokenBlock1Alt2([NotNull] CompilerParser.Pr_TokenBlock1Alt2Context context);
 	/// <summary>
-	/// Visit a parse tree produced by the <c>pr_LexerRuleBlock1Alt3</c>
-	/// labeled alternative in <see cref="CompilerParser.pr_LexerRuleBlock1"/>.
+	/// Visit a parse tree produced by <see cref="CompilerParser.pr_TokenBlock2"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	Result VisitPr_LexerRuleBlock1Alt3([NotNull] CompilerParser.Pr_LexerRuleBlock1Alt3Context context);
+	Result VisitPr_TokenBlock2([NotNull] CompilerParser.Pr_TokenBlock2Context context);
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="CompilerParser.pr_LexerRuleBlock2"/>.
+	/// Visit a parse tree produced by <see cref="CompilerParser.pr_FragmentBlock1"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	Result VisitPr_LexerRuleBlock2([NotNull] CompilerParser.Pr_LexerRuleBlock2Context context);
+	Result VisitPr_FragmentBlock1([NotNull] CompilerParser.Pr_FragmentBlock1Context context);
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="CompilerParser.pr_LBlockBlock1"/>.
 	/// </summary>
@@ -466,17 +478,17 @@ public interface ICompilerParserVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitPr_SimpleQualifierBlock1([NotNull] CompilerParser.Pr_SimpleQualifierBlock1Context context);
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="CompilerParser.pr_PAlternativeBlock1Block1"/>.
+	/// Visit a parse tree produced by <see cref="CompilerParser.pr_AlternativeBlock1Block1"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	Result VisitPr_PAlternativeBlock1Block1([NotNull] CompilerParser.Pr_PAlternativeBlock1Block1Context context);
+	Result VisitPr_AlternativeBlock1Block1([NotNull] CompilerParser.Pr_AlternativeBlock1Block1Context context);
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="CompilerParser.pr_LexerRuleBlock1Alt1Block1"/>.
+	/// Visit a parse tree produced by <see cref="CompilerParser.pr_TokenBlock1Alt1Block1"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	Result VisitPr_LexerRuleBlock1Alt1Block1([NotNull] CompilerParser.Pr_LexerRuleBlock1Alt1Block1Context context);
+	Result VisitPr_TokenBlock1Alt1Block1([NotNull] CompilerParser.Pr_TokenBlock1Alt1Block1Context context);
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="CompilerParser.pr_ArrayExpressionBlock1Block1"/>.
 	/// </summary>

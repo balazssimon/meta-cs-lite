@@ -415,20 +415,25 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			return result;
 		}
 
-		internal ParserRuleGreen ParserRule(MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<ParserAnnotationGreen> annotations1, ParserRuleBlock1Green parserRuleBlock1, InternalSyntaxToken tColon, MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<PAlternativeGreen> pAlternativeList, InternalSyntaxToken tSemicolon)
+		internal GrammarRuleAlt1Green GrammarRuleAlt1(RuleGreen rule)
 		{
 #if DEBUG
-			if (parserRuleBlock1 is null) throw new ArgumentNullException(nameof(parserRuleBlock1));
-			if (tColon is null) throw new ArgumentNullException(nameof(tColon));
-			if (tColon.RawKind != (int)CompilerSyntaxKind.TColon) throw new ArgumentException(nameof(tColon));
-			if (pAlternativeList.IsReversed) throw new ArgumentException(nameof(pAlternativeList));
-			if (tSemicolon is null) throw new ArgumentNullException(nameof(tSemicolon));
-			if (tSemicolon.RawKind != (int)CompilerSyntaxKind.TSemicolon) throw new ArgumentException(nameof(tSemicolon));
+			if (rule is null) throw new ArgumentNullException(nameof(rule));
 #endif
-			return new ParserRuleGreen(CompilerSyntaxKind.ParserRule, annotations1.Node, parserRuleBlock1, tColon, pAlternativeList.Node, tSemicolon);
+			int hash;
+			var cached = SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.GrammarRuleAlt1, rule, out hash);
+			if (cached != null) return (GrammarRuleAlt1Green)cached;
+		
+			var result = new GrammarRuleAlt1Green(CompilerSyntaxKind.GrammarRuleAlt1, rule);
+			if (hash >= 0)
+			{
+				SyntaxNodeCache.AddNode(result, hash);
+			}
+		
+			return result;
 		}
 
-		internal PBlockGreen PBlock(MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<ParserAnnotationGreen> annotations1, InternalSyntaxToken kBlock, NameGreen name, PBlockBlock1Green pBlockBlock1, InternalSyntaxToken tColon, MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<PAlternativeGreen> pAlternativeList, InternalSyntaxToken tSemicolon)
+		internal BlockGreen Block(MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<ParserAnnotationGreen> annotations1, InternalSyntaxToken kBlock, NameGreen name, BlockBlock1Green blockBlock1, InternalSyntaxToken tColon, MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<AlternativeGreen> alternativeList, InternalSyntaxToken tSemicolon)
 		{
 #if DEBUG
 			if (kBlock is null) throw new ArgumentNullException(nameof(kBlock));
@@ -436,35 +441,61 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			if (name is null) throw new ArgumentNullException(nameof(name));
 			if (tColon is null) throw new ArgumentNullException(nameof(tColon));
 			if (tColon.RawKind != (int)CompilerSyntaxKind.TColon) throw new ArgumentException(nameof(tColon));
-			if (pAlternativeList.IsReversed) throw new ArgumentException(nameof(pAlternativeList));
+			if (alternativeList.IsReversed) throw new ArgumentException(nameof(alternativeList));
 			if (tSemicolon is null) throw new ArgumentNullException(nameof(tSemicolon));
 			if (tSemicolon.RawKind != (int)CompilerSyntaxKind.TSemicolon) throw new ArgumentException(nameof(tSemicolon));
 #endif
-			return new PBlockGreen(CompilerSyntaxKind.PBlock, annotations1.Node, kBlock, name, pBlockBlock1, tColon, pAlternativeList.Node, tSemicolon);
+			return new BlockGreen(CompilerSyntaxKind.Block, annotations1.Node, kBlock, name, blockBlock1, tColon, alternativeList.Node, tSemicolon);
 		}
 
-		internal LexerRuleGreen LexerRule(MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<LexerAnnotationGreen> annotations1, LexerRuleBlock1Green lexerRuleBlock1, InternalSyntaxToken tColon, MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<LAlternativeGreen> lAlternativeList, InternalSyntaxToken tSemicolon)
+		internal TokenGreen Token(MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<LexerAnnotationGreen> annotations1, TokenBlock1Green tokenBlock1, InternalSyntaxToken tColon, MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<LAlternativeGreen> lAlternativeList, InternalSyntaxToken tSemicolon)
 		{
 #if DEBUG
-			if (lexerRuleBlock1 is null) throw new ArgumentNullException(nameof(lexerRuleBlock1));
+			if (tokenBlock1 is null) throw new ArgumentNullException(nameof(tokenBlock1));
 			if (tColon is null) throw new ArgumentNullException(nameof(tColon));
 			if (tColon.RawKind != (int)CompilerSyntaxKind.TColon) throw new ArgumentException(nameof(tColon));
 			if (lAlternativeList.IsReversed) throw new ArgumentException(nameof(lAlternativeList));
 			if (tSemicolon is null) throw new ArgumentNullException(nameof(tSemicolon));
 			if (tSemicolon.RawKind != (int)CompilerSyntaxKind.TSemicolon) throw new ArgumentException(nameof(tSemicolon));
 #endif
-			return new LexerRuleGreen(CompilerSyntaxKind.LexerRule, annotations1.Node, lexerRuleBlock1, tColon, lAlternativeList.Node, tSemicolon);
+			return new TokenGreen(CompilerSyntaxKind.Token, annotations1.Node, tokenBlock1, tColon, lAlternativeList.Node, tSemicolon);
 		}
 
-		internal PAlternativeGreen PAlternative(PAlternativeBlock1Green pAlternativeBlock1, MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<PElementGreen> elements, PAlternativeBlock2Green pAlternativeBlock2)
+		internal FragmentGreen Fragment(NameGreen name, InternalSyntaxToken tColon, MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<LAlternativeGreen> lAlternativeList, InternalSyntaxToken tSemicolon)
+		{
+#if DEBUG
+			if (name is null) throw new ArgumentNullException(nameof(name));
+			if (tColon is null) throw new ArgumentNullException(nameof(tColon));
+			if (tColon.RawKind != (int)CompilerSyntaxKind.TColon) throw new ArgumentException(nameof(tColon));
+			if (lAlternativeList.IsReversed) throw new ArgumentException(nameof(lAlternativeList));
+			if (tSemicolon is null) throw new ArgumentNullException(nameof(tSemicolon));
+			if (tSemicolon.RawKind != (int)CompilerSyntaxKind.TSemicolon) throw new ArgumentException(nameof(tSemicolon));
+#endif
+			return new FragmentGreen(CompilerSyntaxKind.Fragment, name, tColon, lAlternativeList.Node, tSemicolon);
+		}
+
+		internal RuleGreen Rule(MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<ParserAnnotationGreen> annotations1, RuleBlock1Green ruleBlock1, InternalSyntaxToken tColon, MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<AlternativeGreen> alternativeList, InternalSyntaxToken tSemicolon)
+		{
+#if DEBUG
+			if (ruleBlock1 is null) throw new ArgumentNullException(nameof(ruleBlock1));
+			if (tColon is null) throw new ArgumentNullException(nameof(tColon));
+			if (tColon.RawKind != (int)CompilerSyntaxKind.TColon) throw new ArgumentException(nameof(tColon));
+			if (alternativeList.IsReversed) throw new ArgumentException(nameof(alternativeList));
+			if (tSemicolon is null) throw new ArgumentNullException(nameof(tSemicolon));
+			if (tSemicolon.RawKind != (int)CompilerSyntaxKind.TSemicolon) throw new ArgumentException(nameof(tSemicolon));
+#endif
+			return new RuleGreen(CompilerSyntaxKind.Rule, annotations1.Node, ruleBlock1, tColon, alternativeList.Node, tSemicolon);
+		}
+
+		internal AlternativeGreen Alternative(AlternativeBlock1Green alternativeBlock1, MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<ElementGreen> elements, AlternativeBlock2Green alternativeBlock2)
 		{
 #if DEBUG
 #endif
 			int hash;
-			var cached = SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.PAlternative, pAlternativeBlock1, elements.Node, pAlternativeBlock2, out hash);
-			if (cached != null) return (PAlternativeGreen)cached;
+			var cached = SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.Alternative, alternativeBlock1, elements.Node, alternativeBlock2, out hash);
+			if (cached != null) return (AlternativeGreen)cached;
 		
-			var result = new PAlternativeGreen(CompilerSyntaxKind.PAlternative, pAlternativeBlock1, elements.Node, pAlternativeBlock2);
+			var result = new AlternativeGreen(CompilerSyntaxKind.Alternative, alternativeBlock1, elements.Node, alternativeBlock2);
 			if (hash >= 0)
 			{
 				SyntaxNodeCache.AddNode(result, hash);
@@ -473,29 +504,29 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			return result;
 		}
 
-		internal PElementGreen PElement(PElementBlock1Green pElementBlock1, MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<ParserAnnotationGreen> valueAnnotations, PElementValueGreen value, InternalSyntaxToken multiplicity)
+		internal ElementGreen Element(ElementBlock1Green elementBlock1, MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<ParserAnnotationGreen> valueAnnotations, ElementValueGreen value, InternalSyntaxToken multiplicity)
 		{
 #if DEBUG
 			if (value is null) throw new ArgumentNullException(nameof(value));
 			if (multiplicity is not null && multiplicity.RawKind != (int)CompilerSyntaxKind.TQuestion && multiplicity.RawKind != (int)CompilerSyntaxKind.TAsterisk && multiplicity.RawKind != (int)CompilerSyntaxKind.TPlus && multiplicity.RawKind != (int)CompilerSyntaxKind.TQuestionQuestion && multiplicity.RawKind != (int)CompilerSyntaxKind.TAsteriskQuestion && multiplicity.RawKind != (int)CompilerSyntaxKind.TPlusQuestion) throw new ArgumentException(nameof(multiplicity));
 #endif
-			return new PElementGreen(CompilerSyntaxKind.PElement, pElementBlock1, valueAnnotations.Node, value, multiplicity);
+			return new ElementGreen(CompilerSyntaxKind.Element, elementBlock1, valueAnnotations.Node, value, multiplicity);
 		}
 
-		internal PBlockInlineGreen PBlockInline(InternalSyntaxToken tLParen, MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<PAlternativeGreen> pAlternativeList, InternalSyntaxToken tRParen)
+		internal BlockInlineGreen BlockInline(InternalSyntaxToken tLParen, MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<AlternativeGreen> alternativeList, InternalSyntaxToken tRParen)
 		{
 #if DEBUG
 			if (tLParen is null) throw new ArgumentNullException(nameof(tLParen));
 			if (tLParen.RawKind != (int)CompilerSyntaxKind.TLParen) throw new ArgumentException(nameof(tLParen));
-			if (pAlternativeList.IsReversed) throw new ArgumentException(nameof(pAlternativeList));
+			if (alternativeList.IsReversed) throw new ArgumentException(nameof(alternativeList));
 			if (tRParen is null) throw new ArgumentNullException(nameof(tRParen));
 			if (tRParen.RawKind != (int)CompilerSyntaxKind.TRParen) throw new ArgumentException(nameof(tRParen));
 #endif
 			int hash;
-			var cached = SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.PBlockInline, tLParen, pAlternativeList.Node, tRParen, out hash);
-			if (cached != null) return (PBlockInlineGreen)cached;
+			var cached = SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.BlockInline, tLParen, alternativeList.Node, tRParen, out hash);
+			if (cached != null) return (BlockInlineGreen)cached;
 		
-			var result = new PBlockInlineGreen(CompilerSyntaxKind.PBlockInline, tLParen, pAlternativeList.Node, tRParen);
+			var result = new BlockInlineGreen(CompilerSyntaxKind.BlockInline, tLParen, alternativeList.Node, tRParen);
 			if (hash >= 0)
 			{
 				SyntaxNodeCache.AddNode(result, hash);
@@ -504,17 +535,17 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			return result;
 		}
 
-		internal PEofGreen PEof(InternalSyntaxToken kEof)
+		internal EofGreen Eof(InternalSyntaxToken kEof)
 		{
 #if DEBUG
 			if (kEof is null) throw new ArgumentNullException(nameof(kEof));
 			if (kEof.RawKind != (int)CompilerSyntaxKind.KEof) throw new ArgumentException(nameof(kEof));
 #endif
 			int hash;
-			var cached = SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.PEof, kEof, out hash);
-			if (cached != null) return (PEofGreen)cached;
+			var cached = SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.Eof1, kEof, out hash);
+			if (cached != null) return (EofGreen)cached;
 		
-			var result = new PEofGreen(CompilerSyntaxKind.PEof, kEof);
+			var result = new EofGreen(CompilerSyntaxKind.Eof1, kEof);
 			if (hash >= 0)
 			{
 				SyntaxNodeCache.AddNode(result, hash);
@@ -523,17 +554,17 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			return result;
 		}
 
-		internal PKeywordGreen PKeyword(InternalSyntaxToken text)
+		internal KeywordGreen Keyword(InternalSyntaxToken text)
 		{
 #if DEBUG
 			if (text is null) throw new ArgumentNullException(nameof(text));
 			if (text.RawKind != (int)CompilerSyntaxKind.TString) throw new ArgumentException(nameof(text));
 #endif
 			int hash;
-			var cached = SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.PKeyword, text, out hash);
-			if (cached != null) return (PKeywordGreen)cached;
+			var cached = SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.Keyword, text, out hash);
+			if (cached != null) return (KeywordGreen)cached;
 		
-			var result = new PKeywordGreen(CompilerSyntaxKind.PKeyword, text);
+			var result = new KeywordGreen(CompilerSyntaxKind.Keyword, text);
 			if (hash >= 0)
 			{
 				SyntaxNodeCache.AddNode(result, hash);
@@ -542,16 +573,16 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			return result;
 		}
 
-		internal PReferenceAlt1Green PReferenceAlt1(IdentifierGreen rule)
+		internal RuleRefAlt1Green RuleRefAlt1(IdentifierGreen grammarRule)
 		{
 #if DEBUG
-			if (rule is null) throw new ArgumentNullException(nameof(rule));
+			if (grammarRule is null) throw new ArgumentNullException(nameof(grammarRule));
 #endif
 			int hash;
-			var cached = SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.PReferenceAlt1, rule, out hash);
-			if (cached != null) return (PReferenceAlt1Green)cached;
+			var cached = SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.RuleRefAlt1, grammarRule, out hash);
+			if (cached != null) return (RuleRefAlt1Green)cached;
 		
-			var result = new PReferenceAlt1Green(CompilerSyntaxKind.PReferenceAlt1, rule);
+			var result = new RuleRefAlt1Green(CompilerSyntaxKind.RuleRefAlt1, grammarRule);
 			if (hash >= 0)
 			{
 				SyntaxNodeCache.AddNode(result, hash);
@@ -560,7 +591,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			return result;
 		}
 
-		internal PReferenceAlt2Green PReferenceAlt2(InternalSyntaxToken tHash, ReturnTypeQualifierGreen referencedTypes)
+		internal RuleRefAlt2Green RuleRefAlt2(InternalSyntaxToken tHash, ReturnTypeQualifierGreen referencedTypes)
 		{
 #if DEBUG
 			if (tHash is null) throw new ArgumentNullException(nameof(tHash));
@@ -568,10 +599,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			if (referencedTypes is null) throw new ArgumentNullException(nameof(referencedTypes));
 #endif
 			int hash;
-			var cached = SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.PReferenceAlt2, tHash, referencedTypes, out hash);
-			if (cached != null) return (PReferenceAlt2Green)cached;
+			var cached = SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.RuleRefAlt2, tHash, referencedTypes, out hash);
+			if (cached != null) return (RuleRefAlt2Green)cached;
 		
-			var result = new PReferenceAlt2Green(CompilerSyntaxKind.PReferenceAlt2, tHash, referencedTypes);
+			var result = new RuleRefAlt2Green(CompilerSyntaxKind.RuleRefAlt2, tHash, referencedTypes);
 			if (hash >= 0)
 			{
 				SyntaxNodeCache.AddNode(result, hash);
@@ -580,7 +611,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			return result;
 		}
 
-		internal PReferenceAlt3Green PReferenceAlt3(InternalSyntaxToken tHashLBrace, MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<ReturnTypeQualifierGreen> returnTypeQualifierList, InternalSyntaxToken tRBrace)
+		internal RuleRefAlt3Green RuleRefAlt3(InternalSyntaxToken tHashLBrace, MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<ReturnTypeQualifierGreen> returnTypeQualifierList, InternalSyntaxToken tRBrace)
 		{
 #if DEBUG
 			if (tHashLBrace is null) throw new ArgumentNullException(nameof(tHashLBrace));
@@ -590,10 +621,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			if (tRBrace.RawKind != (int)CompilerSyntaxKind.TRBrace) throw new ArgumentException(nameof(tRBrace));
 #endif
 			int hash;
-			var cached = SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.PReferenceAlt3, tHashLBrace, returnTypeQualifierList.Node, tRBrace, out hash);
-			if (cached != null) return (PReferenceAlt3Green)cached;
+			var cached = SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.RuleRefAlt3, tHashLBrace, returnTypeQualifierList.Node, tRBrace, out hash);
+			if (cached != null) return (RuleRefAlt3Green)cached;
 		
-			var result = new PReferenceAlt3Green(CompilerSyntaxKind.PReferenceAlt3, tHashLBrace, returnTypeQualifierList.Node, tRBrace);
+			var result = new RuleRefAlt3Green(CompilerSyntaxKind.RuleRefAlt3, tHashLBrace, returnTypeQualifierList.Node, tRBrace);
 			if (hash >= 0)
 			{
 				SyntaxNodeCache.AddNode(result, hash);
@@ -1064,15 +1095,15 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			return result;
 		}
 
-		internal GrammarBlock1Green GrammarBlock1(MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<RuleGreen> rules)
+		internal GrammarBlock1Green GrammarBlock1(MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<GrammarRuleGreen> grammarRules)
 		{
 #if DEBUG
 #endif
 			int hash;
-			var cached = SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.GrammarBlock1, rules.Node, out hash);
+			var cached = SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.GrammarBlock1, grammarRules.Node, out hash);
 			if (cached != null) return (GrammarBlock1Green)cached;
 		
-			var result = new GrammarBlock1Green(CompilerSyntaxKind.GrammarBlock1, rules.Node);
+			var result = new GrammarBlock1Green(CompilerSyntaxKind.GrammarBlock1, grammarRules.Node);
 			if (hash >= 0)
 			{
 				SyntaxNodeCache.AddNode(result, hash);
@@ -1081,16 +1112,16 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			return result;
 		}
 
-		internal ParserRuleBlock1Alt1Green ParserRuleBlock1Alt1(ReturnTypeIdentifierGreen returnType)
+		internal RuleBlock1Alt1Green RuleBlock1Alt1(ReturnTypeIdentifierGreen returnType)
 		{
 #if DEBUG
 			if (returnType is null) throw new ArgumentNullException(nameof(returnType));
 #endif
 			int hash;
-			var cached = SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.ParserRuleBlock1Alt1, returnType, out hash);
-			if (cached != null) return (ParserRuleBlock1Alt1Green)cached;
+			var cached = SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.RuleBlock1Alt1, returnType, out hash);
+			if (cached != null) return (RuleBlock1Alt1Green)cached;
 		
-			var result = new ParserRuleBlock1Alt1Green(CompilerSyntaxKind.ParserRuleBlock1Alt1, returnType);
+			var result = new RuleBlock1Alt1Green(CompilerSyntaxKind.RuleBlock1Alt1, returnType);
 			if (hash >= 0)
 			{
 				SyntaxNodeCache.AddNode(result, hash);
@@ -1099,7 +1130,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			return result;
 		}
 
-		internal ParserRuleBlock1Alt2Green ParserRuleBlock1Alt2(IdentifierGreen identifier, InternalSyntaxToken kReturns, ReturnTypeQualifierGreen returnType)
+		internal RuleBlock1Alt2Green RuleBlock1Alt2(IdentifierGreen identifier, InternalSyntaxToken kReturns, ReturnTypeQualifierGreen returnType)
 		{
 #if DEBUG
 			if (identifier is null) throw new ArgumentNullException(nameof(identifier));
@@ -1108,10 +1139,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			if (returnType is null) throw new ArgumentNullException(nameof(returnType));
 #endif
 			int hash;
-			var cached = SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.ParserRuleBlock1Alt2, identifier, kReturns, returnType, out hash);
-			if (cached != null) return (ParserRuleBlock1Alt2Green)cached;
+			var cached = SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.RuleBlock1Alt2, identifier, kReturns, returnType, out hash);
+			if (cached != null) return (RuleBlock1Alt2Green)cached;
 		
-			var result = new ParserRuleBlock1Alt2Green(CompilerSyntaxKind.ParserRuleBlock1Alt2, identifier, kReturns, returnType);
+			var result = new RuleBlock1Alt2Green(CompilerSyntaxKind.RuleBlock1Alt2, identifier, kReturns, returnType);
 			if (hash >= 0)
 			{
 				SyntaxNodeCache.AddNode(result, hash);
@@ -1120,7 +1151,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			return result;
 		}
 
-		internal ParserRuleBlock2Green ParserRuleBlock2(InternalSyntaxToken tBar, PAlternativeGreen alternatives)
+		internal RuleBlock2Green RuleBlock2(InternalSyntaxToken tBar, AlternativeGreen alternatives)
 		{
 #if DEBUG
 			if (tBar is null) throw new ArgumentNullException(nameof(tBar));
@@ -1128,10 +1159,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			if (alternatives is null) throw new ArgumentNullException(nameof(alternatives));
 #endif
 			int hash;
-			var cached = SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.ParserRuleBlock2, tBar, alternatives, out hash);
-			if (cached != null) return (ParserRuleBlock2Green)cached;
+			var cached = SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.RuleBlock2, tBar, alternatives, out hash);
+			if (cached != null) return (RuleBlock2Green)cached;
 		
-			var result = new ParserRuleBlock2Green(CompilerSyntaxKind.ParserRuleBlock2, tBar, alternatives);
+			var result = new RuleBlock2Green(CompilerSyntaxKind.RuleBlock2, tBar, alternatives);
 			if (hash >= 0)
 			{
 				SyntaxNodeCache.AddNode(result, hash);
@@ -1140,7 +1171,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			return result;
 		}
 
-		internal PBlockBlock1Green PBlockBlock1(InternalSyntaxToken kReturns, ReturnTypeQualifierGreen returnType)
+		internal BlockBlock1Green BlockBlock1(InternalSyntaxToken kReturns, ReturnTypeQualifierGreen returnType)
 		{
 #if DEBUG
 			if (kReturns is null) throw new ArgumentNullException(nameof(kReturns));
@@ -1148,10 +1179,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			if (returnType is null) throw new ArgumentNullException(nameof(returnType));
 #endif
 			int hash;
-			var cached = SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.PBlockBlock1, kReturns, returnType, out hash);
-			if (cached != null) return (PBlockBlock1Green)cached;
+			var cached = SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.BlockBlock1, kReturns, returnType, out hash);
+			if (cached != null) return (BlockBlock1Green)cached;
 		
-			var result = new PBlockBlock1Green(CompilerSyntaxKind.PBlockBlock1, kReturns, returnType);
+			var result = new BlockBlock1Green(CompilerSyntaxKind.BlockBlock1, kReturns, returnType);
 			if (hash >= 0)
 			{
 				SyntaxNodeCache.AddNode(result, hash);
@@ -1160,7 +1191,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			return result;
 		}
 
-		internal PBlockBlock2Green PBlockBlock2(InternalSyntaxToken tBar, PAlternativeGreen alternatives)
+		internal BlockBlock2Green BlockBlock2(InternalSyntaxToken tBar, AlternativeGreen alternatives)
 		{
 #if DEBUG
 			if (tBar is null) throw new ArgumentNullException(nameof(tBar));
@@ -1168,10 +1199,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			if (alternatives is null) throw new ArgumentNullException(nameof(alternatives));
 #endif
 			int hash;
-			var cached = SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.PBlockBlock2, tBar, alternatives, out hash);
-			if (cached != null) return (PBlockBlock2Green)cached;
+			var cached = SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.BlockBlock2, tBar, alternatives, out hash);
+			if (cached != null) return (BlockBlock2Green)cached;
 		
-			var result = new PBlockBlock2Green(CompilerSyntaxKind.PBlockBlock2, tBar, alternatives);
+			var result = new BlockBlock2Green(CompilerSyntaxKind.BlockBlock2, tBar, alternatives);
 			if (hash >= 0)
 			{
 				SyntaxNodeCache.AddNode(result, hash);
@@ -1180,7 +1211,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			return result;
 		}
 
-		internal PBlockInlineBlock1Green PBlockInlineBlock1(InternalSyntaxToken tBar, PAlternativeGreen alternatives)
+		internal BlockInlineBlock1Green BlockInlineBlock1(InternalSyntaxToken tBar, AlternativeGreen alternatives)
 		{
 #if DEBUG
 			if (tBar is null) throw new ArgumentNullException(nameof(tBar));
@@ -1188,10 +1219,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			if (alternatives is null) throw new ArgumentNullException(nameof(alternatives));
 #endif
 			int hash;
-			var cached = SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.PBlockInlineBlock1, tBar, alternatives, out hash);
-			if (cached != null) return (PBlockInlineBlock1Green)cached;
+			var cached = SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.BlockInlineBlock1, tBar, alternatives, out hash);
+			if (cached != null) return (BlockInlineBlock1Green)cached;
 		
-			var result = new PBlockInlineBlock1Green(CompilerSyntaxKind.PBlockInlineBlock1, tBar, alternatives);
+			var result = new BlockInlineBlock1Green(CompilerSyntaxKind.BlockInlineBlock1, tBar, alternatives);
 			if (hash >= 0)
 			{
 				SyntaxNodeCache.AddNode(result, hash);
@@ -1200,7 +1231,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			return result;
 		}
 
-		internal PAlternativeBlock1Green PAlternativeBlock1(MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<ParserAnnotationGreen> annotations1, InternalSyntaxToken kAlt, NameGreen name, PAlternativeBlock1Block1Green pAlternativeBlock1Block1, InternalSyntaxToken tColon)
+		internal AlternativeBlock1Green AlternativeBlock1(MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<ParserAnnotationGreen> annotations1, InternalSyntaxToken kAlt, NameGreen name, AlternativeBlock1Block1Green alternativeBlock1Block1, InternalSyntaxToken tColon)
 		{
 #if DEBUG
 			if (kAlt is null) throw new ArgumentNullException(nameof(kAlt));
@@ -1209,10 +1240,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			if (tColon is null) throw new ArgumentNullException(nameof(tColon));
 			if (tColon.RawKind != (int)CompilerSyntaxKind.TColon) throw new ArgumentException(nameof(tColon));
 #endif
-			return new PAlternativeBlock1Green(CompilerSyntaxKind.PAlternativeBlock1, annotations1.Node, kAlt, name, pAlternativeBlock1Block1, tColon);
+			return new AlternativeBlock1Green(CompilerSyntaxKind.AlternativeBlock1, annotations1.Node, kAlt, name, alternativeBlock1Block1, tColon);
 		}
 
-		internal PAlternativeBlock2Green PAlternativeBlock2(InternalSyntaxToken tEqGt, ExpressionGreen returnValue)
+		internal AlternativeBlock2Green AlternativeBlock2(InternalSyntaxToken tEqGt, ExpressionGreen returnValue)
 		{
 #if DEBUG
 			if (tEqGt is null) throw new ArgumentNullException(nameof(tEqGt));
@@ -1220,10 +1251,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			if (returnValue is null) throw new ArgumentNullException(nameof(returnValue));
 #endif
 			int hash;
-			var cached = SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.PAlternativeBlock2, tEqGt, returnValue, out hash);
-			if (cached != null) return (PAlternativeBlock2Green)cached;
+			var cached = SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.AlternativeBlock2, tEqGt, returnValue, out hash);
+			if (cached != null) return (AlternativeBlock2Green)cached;
 		
-			var result = new PAlternativeBlock2Green(CompilerSyntaxKind.PAlternativeBlock2, tEqGt, returnValue);
+			var result = new AlternativeBlock2Green(CompilerSyntaxKind.AlternativeBlock2, tEqGt, returnValue);
 			if (hash >= 0)
 			{
 				SyntaxNodeCache.AddNode(result, hash);
@@ -1232,7 +1263,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			return result;
 		}
 
-		internal PElementBlock1Green PElementBlock1(MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<ParserAnnotationGreen> nameAnnotations, IdentifierGreen symbolProperty, InternalSyntaxToken assignment)
+		internal ElementBlock1Green ElementBlock1(MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<ParserAnnotationGreen> nameAnnotations, IdentifierGreen symbolProperty, InternalSyntaxToken assignment)
 		{
 #if DEBUG
 			if (symbolProperty is null) throw new ArgumentNullException(nameof(symbolProperty));
@@ -1240,10 +1271,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			if (assignment.RawKind != (int)CompilerSyntaxKind.TEq && assignment.RawKind != (int)CompilerSyntaxKind.TQuestionEq && assignment.RawKind != (int)CompilerSyntaxKind.TExclEq && assignment.RawKind != (int)CompilerSyntaxKind.TPlusEq) throw new ArgumentException(nameof(assignment));
 #endif
 			int hash;
-			var cached = SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.PElementBlock1, nameAnnotations.Node, symbolProperty, assignment, out hash);
-			if (cached != null) return (PElementBlock1Green)cached;
+			var cached = SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.ElementBlock1, nameAnnotations.Node, symbolProperty, assignment, out hash);
+			if (cached != null) return (ElementBlock1Green)cached;
 		
-			var result = new PElementBlock1Green(CompilerSyntaxKind.PElementBlock1, nameAnnotations.Node, symbolProperty, assignment);
+			var result = new ElementBlock1Green(CompilerSyntaxKind.ElementBlock1, nameAnnotations.Node, symbolProperty, assignment);
 			if (hash >= 0)
 			{
 				SyntaxNodeCache.AddNode(result, hash);
@@ -1252,7 +1283,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			return result;
 		}
 
-		internal PReferenceAlt3Block1Green PReferenceAlt3Block1(InternalSyntaxToken tComma, ReturnTypeQualifierGreen referencedTypes)
+		internal RuleRefAlt3Block1Green RuleRefAlt3Block1(InternalSyntaxToken tComma, ReturnTypeQualifierGreen referencedTypes)
 		{
 #if DEBUG
 			if (tComma is null) throw new ArgumentNullException(nameof(tComma));
@@ -1260,10 +1291,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			if (referencedTypes is null) throw new ArgumentNullException(nameof(referencedTypes));
 #endif
 			int hash;
-			var cached = SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.PReferenceAlt3Block1, tComma, referencedTypes, out hash);
-			if (cached != null) return (PReferenceAlt3Block1Green)cached;
+			var cached = SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.RuleRefAlt3Block1, tComma, referencedTypes, out hash);
+			if (cached != null) return (RuleRefAlt3Block1Green)cached;
 		
-			var result = new PReferenceAlt3Block1Green(CompilerSyntaxKind.PReferenceAlt3Block1, tComma, referencedTypes);
+			var result = new RuleRefAlt3Block1Green(CompilerSyntaxKind.RuleRefAlt3Block1, tComma, referencedTypes);
 			if (hash >= 0)
 			{
 				SyntaxNodeCache.AddNode(result, hash);
@@ -1272,7 +1303,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			return result;
 		}
 
-		internal LexerRuleBlock1Alt1Green LexerRuleBlock1Alt1(InternalSyntaxToken kToken, NameGreen name, LexerRuleBlock1Alt1Block1Green lexerRuleBlock1Alt1Block1)
+		internal TokenBlock1Alt1Green TokenBlock1Alt1(InternalSyntaxToken kToken, NameGreen name, TokenBlock1Alt1Block1Green tokenBlock1Alt1Block1)
 		{
 #if DEBUG
 			if (kToken is null) throw new ArgumentNullException(nameof(kToken));
@@ -1280,10 +1311,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			if (name is null) throw new ArgumentNullException(nameof(name));
 #endif
 			int hash;
-			var cached = SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.LexerRuleBlock1Alt1, kToken, name, lexerRuleBlock1Alt1Block1, out hash);
-			if (cached != null) return (LexerRuleBlock1Alt1Green)cached;
+			var cached = SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.TokenBlock1Alt1, kToken, name, tokenBlock1Alt1Block1, out hash);
+			if (cached != null) return (TokenBlock1Alt1Green)cached;
 		
-			var result = new LexerRuleBlock1Alt1Green(CompilerSyntaxKind.LexerRuleBlock1Alt1, kToken, name, lexerRuleBlock1Alt1Block1);
+			var result = new TokenBlock1Alt1Green(CompilerSyntaxKind.TokenBlock1Alt1, kToken, name, tokenBlock1Alt1Block1);
 			if (hash >= 0)
 			{
 				SyntaxNodeCache.AddNode(result, hash);
@@ -1292,18 +1323,18 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			return result;
 		}
 
-		internal LexerRuleBlock1Alt2Green LexerRuleBlock1Alt2(InternalSyntaxToken isHidden, NameGreen name)
+		internal TokenBlock1Alt2Green TokenBlock1Alt2(InternalSyntaxToken isTrivia1, NameGreen name)
 		{
 #if DEBUG
-			if (isHidden is null) throw new ArgumentNullException(nameof(isHidden));
-			if (isHidden.RawKind != (int)CompilerSyntaxKind.KHidden) throw new ArgumentException(nameof(isHidden));
+			if (isTrivia1 is null) throw new ArgumentNullException(nameof(isTrivia1));
+			if (isTrivia1.RawKind != (int)CompilerSyntaxKind.KHidden) throw new ArgumentException(nameof(isTrivia1));
 			if (name is null) throw new ArgumentNullException(nameof(name));
 #endif
 			int hash;
-			var cached = SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.LexerRuleBlock1Alt2, isHidden, name, out hash);
-			if (cached != null) return (LexerRuleBlock1Alt2Green)cached;
+			var cached = SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.TokenBlock1Alt2, isTrivia1, name, out hash);
+			if (cached != null) return (TokenBlock1Alt2Green)cached;
 		
-			var result = new LexerRuleBlock1Alt2Green(CompilerSyntaxKind.LexerRuleBlock1Alt2, isHidden, name);
+			var result = new TokenBlock1Alt2Green(CompilerSyntaxKind.TokenBlock1Alt2, isTrivia1, name);
 			if (hash >= 0)
 			{
 				SyntaxNodeCache.AddNode(result, hash);
@@ -1312,27 +1343,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			return result;
 		}
 
-		internal LexerRuleBlock1Alt3Green LexerRuleBlock1Alt3(InternalSyntaxToken isFragment, NameGreen name)
-		{
-#if DEBUG
-			if (isFragment is null) throw new ArgumentNullException(nameof(isFragment));
-			if (isFragment.RawKind != (int)CompilerSyntaxKind.KFragment) throw new ArgumentException(nameof(isFragment));
-			if (name is null) throw new ArgumentNullException(nameof(name));
-#endif
-			int hash;
-			var cached = SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.LexerRuleBlock1Alt3, isFragment, name, out hash);
-			if (cached != null) return (LexerRuleBlock1Alt3Green)cached;
-		
-			var result = new LexerRuleBlock1Alt3Green(CompilerSyntaxKind.LexerRuleBlock1Alt3, isFragment, name);
-			if (hash >= 0)
-			{
-				SyntaxNodeCache.AddNode(result, hash);
-			}
-		
-			return result;
-		}
-
-		internal LexerRuleBlock2Green LexerRuleBlock2(InternalSyntaxToken tBar, LAlternativeGreen alternatives)
+		internal TokenBlock2Green TokenBlock2(InternalSyntaxToken tBar, LAlternativeGreen alternatives)
 		{
 #if DEBUG
 			if (tBar is null) throw new ArgumentNullException(nameof(tBar));
@@ -1340,10 +1351,30 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			if (alternatives is null) throw new ArgumentNullException(nameof(alternatives));
 #endif
 			int hash;
-			var cached = SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.LexerRuleBlock2, tBar, alternatives, out hash);
-			if (cached != null) return (LexerRuleBlock2Green)cached;
+			var cached = SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.TokenBlock2, tBar, alternatives, out hash);
+			if (cached != null) return (TokenBlock2Green)cached;
 		
-			var result = new LexerRuleBlock2Green(CompilerSyntaxKind.LexerRuleBlock2, tBar, alternatives);
+			var result = new TokenBlock2Green(CompilerSyntaxKind.TokenBlock2, tBar, alternatives);
+			if (hash >= 0)
+			{
+				SyntaxNodeCache.AddNode(result, hash);
+			}
+		
+			return result;
+		}
+
+		internal FragmentBlock1Green FragmentBlock1(InternalSyntaxToken tBar, LAlternativeGreen alternatives)
+		{
+#if DEBUG
+			if (tBar is null) throw new ArgumentNullException(nameof(tBar));
+			if (tBar.RawKind != (int)CompilerSyntaxKind.TBar) throw new ArgumentException(nameof(tBar));
+			if (alternatives is null) throw new ArgumentNullException(nameof(alternatives));
+#endif
+			int hash;
+			var cached = SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.FragmentBlock1, tBar, alternatives, out hash);
+			if (cached != null) return (FragmentBlock1Green)cached;
+		
+			var result = new FragmentBlock1Green(CompilerSyntaxKind.FragmentBlock1, tBar, alternatives);
 			if (hash >= 0)
 			{
 				SyntaxNodeCache.AddNode(result, hash);
@@ -1565,7 +1596,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			return result;
 		}
 
-		internal PAlternativeBlock1Block1Green PAlternativeBlock1Block1(InternalSyntaxToken kReturns, ReturnTypeQualifierGreen returnType)
+		internal AlternativeBlock1Block1Green AlternativeBlock1Block1(InternalSyntaxToken kReturns, ReturnTypeQualifierGreen returnType)
 		{
 #if DEBUG
 			if (kReturns is null) throw new ArgumentNullException(nameof(kReturns));
@@ -1573,10 +1604,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			if (returnType is null) throw new ArgumentNullException(nameof(returnType));
 #endif
 			int hash;
-			var cached = SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.PAlternativeBlock1Block1, kReturns, returnType, out hash);
-			if (cached != null) return (PAlternativeBlock1Block1Green)cached;
+			var cached = SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.AlternativeBlock1Block1, kReturns, returnType, out hash);
+			if (cached != null) return (AlternativeBlock1Block1Green)cached;
 		
-			var result = new PAlternativeBlock1Block1Green(CompilerSyntaxKind.PAlternativeBlock1Block1, kReturns, returnType);
+			var result = new AlternativeBlock1Block1Green(CompilerSyntaxKind.AlternativeBlock1Block1, kReturns, returnType);
 			if (hash >= 0)
 			{
 				SyntaxNodeCache.AddNode(result, hash);
@@ -1585,7 +1616,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			return result;
 		}
 
-		internal LexerRuleBlock1Alt1Block1Green LexerRuleBlock1Alt1Block1(InternalSyntaxToken kReturns, ReturnTypeQualifierGreen returnType)
+		internal TokenBlock1Alt1Block1Green TokenBlock1Alt1Block1(InternalSyntaxToken kReturns, ReturnTypeQualifierGreen returnType)
 		{
 #if DEBUG
 			if (kReturns is null) throw new ArgumentNullException(nameof(kReturns));
@@ -1593,10 +1624,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			if (returnType is null) throw new ArgumentNullException(nameof(returnType));
 #endif
 			int hash;
-			var cached = SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.LexerRuleBlock1Alt1Block1, kReturns, returnType, out hash);
-			if (cached != null) return (LexerRuleBlock1Alt1Block1Green)cached;
+			var cached = SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.TokenBlock1Alt1Block1, kReturns, returnType, out hash);
+			if (cached != null) return (TokenBlock1Alt1Block1Green)cached;
 		
-			var result = new LexerRuleBlock1Alt1Block1Green(CompilerSyntaxKind.LexerRuleBlock1Alt1Block1, kReturns, returnType);
+			var result = new TokenBlock1Alt1Block1Green(CompilerSyntaxKind.TokenBlock1Alt1Block1, kReturns, returnType);
 			if (hash >= 0)
 			{
 				SyntaxNodeCache.AddNode(result, hash);

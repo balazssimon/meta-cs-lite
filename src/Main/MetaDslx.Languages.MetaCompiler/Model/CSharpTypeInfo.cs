@@ -458,12 +458,13 @@ namespace MetaDslx.Languages.MetaCompiler.Model
 
         private static readonly string[] WellKnownGenericCollectionTypes = new string[]
         {
-            "System.Collections.Generic.ICollection<>",
-            "System.Collections.Generic.IList<>",
-            "System.Collections.Generic.List<>",
-            "System.Collections.Generic.LinkedList<>",
-            "System.Collections.Generic.HashSet<>",
-            "System.Collections.Generic.SortedSet<>",
+            "System.Collections.Generic.ICollection<T>",
+            "System.Collections.Generic.IList<T>",
+            "System.Collections.Generic.List<T>",
+            "System.Collections.Generic.LinkedList<T>",
+            "System.Collections.Generic.HashSet<T>",
+            "System.Collections.Generic.SortedSet<T>",
+            "MetaDslx.Modeling.ICollectionSlot<T>",
         };
 
     }

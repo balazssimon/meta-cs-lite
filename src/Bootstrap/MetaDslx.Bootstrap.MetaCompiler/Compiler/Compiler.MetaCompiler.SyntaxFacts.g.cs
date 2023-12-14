@@ -46,7 +46,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 				case CompilerSyntaxKind.KEof:
 				case CompilerSyntaxKind.KToken:
 				case CompilerSyntaxKind.KHidden:
-				case CompilerSyntaxKind.KFragment:
 				case CompilerSyntaxKind.TTilde:
 				case CompilerSyntaxKind.TDot:
 				case CompilerSyntaxKind.TDotDot:
@@ -120,7 +119,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 				case CompilerSyntaxKind.KEof:
 				case CompilerSyntaxKind.KToken:
 				case CompilerSyntaxKind.KHidden:
-				case CompilerSyntaxKind.KFragment:
 				case CompilerSyntaxKind.TTilde:
 				case CompilerSyntaxKind.TDot:
 				case CompilerSyntaxKind.TDotDot:
@@ -195,8 +193,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 					return CompilerSyntaxKind.KToken;
 				case "hidden": 
 					return CompilerSyntaxKind.KHidden;
-				case "fragment": 
-					return CompilerSyntaxKind.KFragment;
 				case "~": 
 					return CompilerSyntaxKind.TTilde;
 				case ".": 
@@ -314,8 +310,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 					return "KToken";
 				case CompilerSyntaxKind.KHidden: 
 					return "KHidden";
-				case CompilerSyntaxKind.KFragment: 
-					return "KFragment";
 				case CompilerSyntaxKind.TTilde: 
 					return "TTilde";
 				case CompilerSyntaxKind.TDot: 
@@ -402,28 +396,32 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 					return "LanguageDeclaration";
 				case CompilerSyntaxKind.Grammar: 
 					return "Grammar";
-				case CompilerSyntaxKind.ParserRule: 
-					return "ParserRule";
-				case CompilerSyntaxKind.PBlock: 
-					return "PBlock";
-				case CompilerSyntaxKind.LexerRule: 
-					return "LexerRule";
-				case CompilerSyntaxKind.PAlternative: 
-					return "PAlternative";
-				case CompilerSyntaxKind.PElement: 
-					return "PElement";
-				case CompilerSyntaxKind.PBlockInline: 
-					return "PBlockInline";
-				case CompilerSyntaxKind.PEof: 
-					return "PEof";
-				case CompilerSyntaxKind.PKeyword: 
-					return "PKeyword";
-				case CompilerSyntaxKind.PReferenceAlt1: 
-					return "PReferenceAlt1";
-				case CompilerSyntaxKind.PReferenceAlt2: 
-					return "PReferenceAlt2";
-				case CompilerSyntaxKind.PReferenceAlt3: 
-					return "PReferenceAlt3";
+				case CompilerSyntaxKind.GrammarRuleAlt1: 
+					return "GrammarRuleAlt1";
+				case CompilerSyntaxKind.Block: 
+					return "Block";
+				case CompilerSyntaxKind.Token: 
+					return "Token";
+				case CompilerSyntaxKind.Fragment: 
+					return "Fragment";
+				case CompilerSyntaxKind.Rule: 
+					return "Rule";
+				case CompilerSyntaxKind.Alternative: 
+					return "Alternative";
+				case CompilerSyntaxKind.Element: 
+					return "Element";
+				case CompilerSyntaxKind.BlockInline: 
+					return "BlockInline";
+				case CompilerSyntaxKind.Eof1: 
+					return "Eof1";
+				case CompilerSyntaxKind.Keyword: 
+					return "Keyword";
+				case CompilerSyntaxKind.RuleRefAlt1: 
+					return "RuleRefAlt1";
+				case CompilerSyntaxKind.RuleRefAlt2: 
+					return "RuleRefAlt2";
+				case CompilerSyntaxKind.RuleRefAlt3: 
+					return "RuleRefAlt3";
 				case CompilerSyntaxKind.LAlternative: 
 					return "LAlternative";
 				case CompilerSyntaxKind.LElement: 
@@ -476,34 +474,34 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 					return "SimpleIdentifier";
 				case CompilerSyntaxKind.GrammarBlock1: 
 					return "GrammarBlock1";
-				case CompilerSyntaxKind.ParserRuleBlock1Alt1: 
-					return "ParserRuleBlock1Alt1";
-				case CompilerSyntaxKind.ParserRuleBlock1Alt2: 
-					return "ParserRuleBlock1Alt2";
-				case CompilerSyntaxKind.ParserRuleBlock2: 
-					return "ParserRuleBlock2";
-				case CompilerSyntaxKind.PBlockBlock1: 
-					return "PBlockBlock1";
-				case CompilerSyntaxKind.PBlockBlock2: 
-					return "PBlockBlock2";
-				case CompilerSyntaxKind.PBlockInlineBlock1: 
-					return "PBlockInlineBlock1";
-				case CompilerSyntaxKind.PAlternativeBlock1: 
-					return "PAlternativeBlock1";
-				case CompilerSyntaxKind.PAlternativeBlock2: 
-					return "PAlternativeBlock2";
-				case CompilerSyntaxKind.PElementBlock1: 
-					return "PElementBlock1";
-				case CompilerSyntaxKind.PReferenceAlt3Block1: 
-					return "PReferenceAlt3Block1";
-				case CompilerSyntaxKind.LexerRuleBlock1Alt1: 
-					return "LexerRuleBlock1Alt1";
-				case CompilerSyntaxKind.LexerRuleBlock1Alt2: 
-					return "LexerRuleBlock1Alt2";
-				case CompilerSyntaxKind.LexerRuleBlock1Alt3: 
-					return "LexerRuleBlock1Alt3";
-				case CompilerSyntaxKind.LexerRuleBlock2: 
-					return "LexerRuleBlock2";
+				case CompilerSyntaxKind.RuleBlock1Alt1: 
+					return "RuleBlock1Alt1";
+				case CompilerSyntaxKind.RuleBlock1Alt2: 
+					return "RuleBlock1Alt2";
+				case CompilerSyntaxKind.RuleBlock2: 
+					return "RuleBlock2";
+				case CompilerSyntaxKind.BlockBlock1: 
+					return "BlockBlock1";
+				case CompilerSyntaxKind.BlockBlock2: 
+					return "BlockBlock2";
+				case CompilerSyntaxKind.BlockInlineBlock1: 
+					return "BlockInlineBlock1";
+				case CompilerSyntaxKind.AlternativeBlock1: 
+					return "AlternativeBlock1";
+				case CompilerSyntaxKind.AlternativeBlock2: 
+					return "AlternativeBlock2";
+				case CompilerSyntaxKind.ElementBlock1: 
+					return "ElementBlock1";
+				case CompilerSyntaxKind.RuleRefAlt3Block1: 
+					return "RuleRefAlt3Block1";
+				case CompilerSyntaxKind.TokenBlock1Alt1: 
+					return "TokenBlock1Alt1";
+				case CompilerSyntaxKind.TokenBlock1Alt2: 
+					return "TokenBlock1Alt2";
+				case CompilerSyntaxKind.TokenBlock2: 
+					return "TokenBlock2";
+				case CompilerSyntaxKind.FragmentBlock1: 
+					return "FragmentBlock1";
 				case CompilerSyntaxKind.LBlockBlock1: 
 					return "LBlockBlock1";
 				case CompilerSyntaxKind.SingleExpressionBlock1Alt4: 
@@ -526,10 +524,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 					return "QualifierListBlock1";
 				case CompilerSyntaxKind.SimpleQualifierBlock1: 
 					return "SimpleQualifierBlock1";
-				case CompilerSyntaxKind.PAlternativeBlock1Block1: 
-					return "PAlternativeBlock1Block1";
-				case CompilerSyntaxKind.LexerRuleBlock1Alt1Block1: 
-					return "LexerRuleBlock1Alt1Block1";
+				case CompilerSyntaxKind.AlternativeBlock1Block1: 
+					return "AlternativeBlock1Block1";
+				case CompilerSyntaxKind.TokenBlock1Alt1Block1: 
+					return "TokenBlock1Alt1Block1";
 				case CompilerSyntaxKind.ArrayExpressionBlock1Block1: 
 					return "ArrayExpressionBlock1Block1";
 				default:
@@ -586,8 +584,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 					return "token";
 				case CompilerSyntaxKind.KHidden: 
 					return "hidden";
-				case CompilerSyntaxKind.KFragment: 
-					return "fragment";
 				case CompilerSyntaxKind.TTilde: 
 					return "~";
 				case CompilerSyntaxKind.TDot: 
@@ -669,7 +665,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 				case CompilerSyntaxKind.KEof: 
 				case CompilerSyntaxKind.KToken: 
 				case CompilerSyntaxKind.KHidden: 
-				case CompilerSyntaxKind.KFragment: 
 				case CompilerSyntaxKind.KNull: 
 				case CompilerSyntaxKind.KTrue: 
 				case CompilerSyntaxKind.KFalse: 
@@ -695,7 +690,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 			yield return CompilerSyntaxKind.KEof;
 			yield return CompilerSyntaxKind.KToken;
 			yield return CompilerSyntaxKind.KHidden;
-			yield return CompilerSyntaxKind.KFragment;
 			yield return CompilerSyntaxKind.KNull;
 			yield return CompilerSyntaxKind.KTrue;
 			yield return CompilerSyntaxKind.KFalse;
@@ -729,8 +723,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 					return CompilerSyntaxKind.KToken;
 				case "hidden": 
 					return CompilerSyntaxKind.KHidden;
-				case "fragment": 
-					return CompilerSyntaxKind.KFragment;
 				case "null": 
 					return CompilerSyntaxKind.KNull;
 				case "true": 

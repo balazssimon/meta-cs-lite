@@ -61,9 +61,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
 
         public PElementSymbol? ContainingElementSymbol => this.ContainingSymbol as PElementSymbol;
 
-        public PBlockSyntax? Syntax => this.DeclaringSyntaxReference.AsNode() as PBlockSyntax;
+        public BlockSyntax? Syntax => this.DeclaringSyntaxReference.AsNode() as BlockSyntax;
 
-        public bool HasReturnType => this.Syntax?.PBlockBlock1 is not null;
+        public bool HasReturnType => this.Syntax?.BlockBlock1 is not null;
 
         public bool IsResolvingExpectedTypes => _isResolvingExpectedTypes;
 

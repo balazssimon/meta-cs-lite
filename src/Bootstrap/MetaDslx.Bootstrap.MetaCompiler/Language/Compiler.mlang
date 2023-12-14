@@ -30,22 +30,24 @@ part Declarations: declarations+=LanguageDeclaration declarations+=Rule*;
 
 LanguageDeclaration returns MetaDslx.Bootstrap.MetaCompiler.Model.Language: 'language' name=Name ';' grammar=Grammar;
 
-Grammar: [Scope](rules+=Rule*);
+Grammar: [Scope](grammarRules+=GrammarRule*);
 
-Rule: ParserRule | PBlock | LexerRule;
+GrammarRule: Rule | Block | LexerRule;
 
-ParserRule: annotations+=ParserAnnotation* [Name](returnType=ReturnTypeIdentifier | Identifier 'returns' returnType=ReturnTypeQualifier) ':' alternatives+=PAlternative ('|' alternatives+=PAlternative)* ';';
-PBlock: annotations+=ParserAnnotation* 'block' name=Name ('returns' returnType=ReturnTypeQualifier)? ':' alternatives+=PAlternative ('|' alternatives+=PAlternative)* ';';
-PBlockInline returns PBlock: '(' alternatives+=PAlternative ('|' alternatives+=PAlternative)* ')';
+Rule: annotations+=ParserAnnotation* [Name](returnType=ReturnTypeIdentifier | Identifier 'returns' returnType=ReturnTypeQualifier) ':' alternatives+=Alternative ('|' alternatives+=Alternative)* ';';
+Block: annotations+=ParserAnnotation* 'block' name=Name ('returns' returnType=ReturnTypeQualifier)? ':' alternatives+=Alternative ('|' alternatives+=Alternative)* ';';
+BlockInline returns Block: '(' alternatives+=Alternative ('|' alternatives+=Alternative)* ')';
 
-PAlternative: (annotations+=ParserAnnotation* 'alt' name=Name ('returns' returnType=ReturnTypeQualifier)? ':')? elements+=PElement+ ('=>' returnValue=Expression)?;
-PElement: (nameAnnotations+=ParserAnnotation* symbolProperty+=[SymbolProperty]Identifier assignment=Assignment)? valueAnnotations+=ParserAnnotation* value=PElementValue multiplicity=Multiplicity?;
-PElementValue: PBlockInline | PEof | PKeyword | PReference;
-PReference: rule=[Use(Rule)]Identifier | '#' referencedTypes+=ReturnTypeQualifier | '#{' referencedTypes+=ReturnTypeQualifier (',' referencedTypes+=ReturnTypeQualifier)* '}' ;
-PEof: 'eof';
-PKeyword: text=TString;
+Alternative: (annotations+=ParserAnnotation* 'alt' name=Name ('returns' returnType=ReturnTypeQualifier)? ':')? elements+=Element+ ('=>' returnValue=Expression)?;
+Element: (nameAnnotations+=ParserAnnotation* symbolProperty+=[SymbolProperty]Identifier assignment=Assignment)? valueAnnotations+=ParserAnnotation* value=ElementValue multiplicity=Multiplicity?;
+ElementValue: BlockInline | Eof | Keyword | RuleRef;
+RuleRef: grammarRule=[Use(GrammarRule)]Identifier | '#' referencedTypes+=ReturnTypeQualifier | '#{' referencedTypes+=ReturnTypeQualifier (',' referencedTypes+=ReturnTypeQualifier)* '}' ;
+Eof: 'eof';
+Keyword: text=TString;
 
-LexerRule: annotations+=LexerAnnotation* ('token' name=Name ('returns' returnType=ReturnTypeQualifier)? | isHidden?='hidden' name=Name | isFragment?='fragment' name=Name) ':' alternatives+=LAlternative ('|' alternatives+=LAlternative)* ';';
+LexerRule: Token | Fragment;
+Token: annotations+=LexerAnnotation* ('token' name=Name ('returns' returnType=ReturnTypeQualifier)? | isTrivia?='hidden' name=Name) ':' alternatives+=LAlternative ('|' alternatives+=LAlternative)* ';';
+Fragment: 'fragment' name=Name ':' alternatives+=LAlternative ('|' alternatives+=LAlternative)* ';';
 LAlternative: elements+=LElement*;
 LElement: isNegated?='~'? value=LElementValue multiplicity=Multiplicity?;
 LElementValue: LBlock | LFixed | LWildCard | LRange | LReference /*| LSet*/;
@@ -64,8 +66,8 @@ Expression: SingleExpression | ArrayExpression;
 SingleExpression returns Expression: value=[ExpressionValue]('null' | 'true' | 'false' | TInteger | TString | SimpleQualifier);
 ArrayExpression: '{' (items+=SingleExpression (',' items+=SingleExpression)*)? '}';
 
-ParserAnnotation returns MetaDslx.Bootstrap.MetaCompiler.Model.Annotation: '[' attributeClass=[Use(types:{Binder,MetaDslx.CodeAnalysis.Annotations.Annotation},suffixes:{Binder,Annotation})]Qualifier AnnotationArguments? ']';
-LexerAnnotation returns MetaDslx.Bootstrap.MetaCompiler.Model.Annotation: '[' attributeClass=[Use(types:{TokenKind,MetaDslx.CodeAnalysis.Annotations.Annotation},suffixes:{TokenKind,Annotation})]Qualifier AnnotationArguments? ']';
+ParserAnnotation returns MetaDslx.Bootstrap.MetaCompiler.Model.Annotation: '[' attributeClass=[Use(types:{MetaDslx.CodeAnalysis.Binding.Binder,MetaDslx.CodeAnalysis.Annotations.Annotation},suffixes:{Binder,Annotation})]Qualifier AnnotationArguments? ']';
+LexerAnnotation returns MetaDslx.Bootstrap.MetaCompiler.Model.Annotation: '[' attributeClass=[Use(types:{MetaDslx.CodeAnalysis.Syntax.TokenKind,MetaDslx.CodeAnalysis.Annotations.Annotation},suffixes:{TokenKind,Annotation})]Qualifier AnnotationArguments? ']';
 part AnnotationArguments: '(' arguments+=AnnotationArgument (',' arguments+=AnnotationArgument)* ')';
 AnnotationArgument: (namedParameter=[AnnotationArgument]Identifier ':')? value=Expression;
 
