@@ -25,9 +25,21 @@ namespace MetaDslx.CodeAnalysis.Binding
 
         public virtual bool IsViable(LookupContext context, DeclaredSymbol? symbol)
         {
-            if (symbol is null) return false;
-            if (context.ViableNames.Count > 0 && !(context.IsCaseSensitive ? context.ViableNames.Contains(symbol.Name) : context.ViableNames.Contains(symbol.Name, StringComparer.OrdinalIgnoreCase))) return false;
-            if (context.ViableMetadataNames.Count > 0 && !(context.IsCaseSensitive ? context.ViableMetadataNames.Contains(symbol.MetadataName) : context.ViableMetadataNames.Contains(symbol.MetadataName, StringComparer.OrdinalIgnoreCase))) return false;
+            if (string.IsNullOrEmpty(symbol?.Name)) return false;
+            if (context.IsCaseSensitive)
+            {
+                if (context.ViableNames.Count > 0 && !context.ViableNames.Contains(symbol.Name)) return false;
+                if (context.ViableMetadataNames.Count > 0 && !context.ViableMetadataNames.Contains(symbol.MetadataName)) return false;
+                if (context.NamePrefixes.Count > 0 && !context.NamePrefixes.Any(p => symbol.Name.StartsWith(p))) return false;
+                if (context.NameSuffixes.Count > 0 && !context.NameSuffixes.Any(s => symbol.Name.EndsWith(s))) return false;
+            }
+            else
+            {
+                if (context.ViableNames.Count > 0 && !context.ViableNames.Contains(symbol.Name, StringComparer.OrdinalIgnoreCase)) return false;
+                if (context.ViableMetadataNames.Count > 0 && !context.ViableMetadataNames.Contains(symbol.MetadataName, StringComparer.OrdinalIgnoreCase)) return false;
+                if (context.NamePrefixes.Count > 0 && !context.NamePrefixes.Any(p => symbol.Name.StartsWith(p, StringComparison.OrdinalIgnoreCase))) return false;
+                if (context.NameSuffixes.Count > 0 && !context.NameSuffixes.Any(s => symbol.Name.EndsWith(s, StringComparison.OrdinalIgnoreCase))) return false;
+            }
             var unwrapped = AliasSymbol.UnwrapAlias(context, symbol) as DeclaredSymbol;
             if (unwrapped is null) return false;
             foreach (var validator in context.Validators)

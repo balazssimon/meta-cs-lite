@@ -113,6 +113,8 @@ namespace MetaDslx.CodeAnalysis.Binding
             get => _qualifierContext;
             set => _qualifierContext = value;
         }
+        public HashSet<string> NamePrefixes => _namePrefixes;
+        public HashSet<string> NameSuffixes => _nameSuffixes;
         public HashSet<string> ViableNames => _viableNames;
         public HashSet<string> ViableMetadataNames => _viableMetadataNames;
         public HashSet<ILookupValidator> Validators => _validators;
@@ -266,7 +268,7 @@ namespace MetaDslx.CodeAnalysis.Binding
                         }
                     }
                 }
-                else
+                else if (_namePrefixes.Count > 0 || _nameSuffixes.Count > 0)
                 {
                     foreach (var prefix in _namePrefixes)
                     {

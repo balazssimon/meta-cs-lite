@@ -13,7 +13,7 @@ abstract class Declaration $Declared
 	contains Declaration[] Declarations;
 }
 
-class Namespace $NamespaceSymbol : Declaration
+class $Namespace : Declaration
 {
 }
 
@@ -22,19 +22,19 @@ class Language : Declaration
 	contains Grammar Grammar;
 }
 
-class Grammar $GrammarSymbol : Declaration
+class $Grammar : Declaration
 {
 	Language Language;
 	contains Rule[] Rules;
 }
 
-class Annotation $AnnotationSymbol
+class $Annotation
 {
 	type $AttributeClass;
 	contains AnnotationArgument[] $Arguments;
 }
 
-class AnnotationArgument $AnnotationArgumentSymbol
+class $AnnotationArgument
 {
 	symbol[] $NamedParameter;
 	DeclaredSymbol Parameter;
@@ -165,14 +165,14 @@ class LBlock : LElementValue
 	contains LAlternative[] Alternatives;
 }
 
-abstract class ParserRule $ParserRuleSymbol : Rule
+abstract class $ParserRule : Rule
 {
 	type $ReturnType;
 
 	contains PAlternative[] $Alternatives;
 }
 
-class PAlternative $PAlternativeSymbol : Declaration
+class $PAlternative : Declaration
 {
 	type $ReturnType;
 	contains Expression $ReturnValue;
@@ -188,7 +188,7 @@ enum Assignment
     PlusAssign
 }
 
-class PElement $PElementSymbol
+class $PElement
 {
 	contains Annotation[] NameAnnotations;
 	symbol[] $SymbolProperty;
@@ -202,7 +202,7 @@ abstract class PElementValue $Symbol
 {
 }
 
-class PReference $PReferenceSymbol : PElementValue
+class $PReference : PElementValue
 {
 	Rule $Rule;
 	type[] $ReferencedTypes;
@@ -217,7 +217,7 @@ class PKeyword : PElementValue
 	string Text;
 }
 
-class PBlock $PBlockSymbol : Rule, PElementValue
+class $PBlock : Rule, PElementValue
 {
 	type $ReturnType;
 	contains PAlternative[] $Alternatives;
