@@ -5,7 +5,7 @@ using MetaDslx.Bootstrap.MetaCompiler.Symbols;
 
 metamodel Compiler;
 
-abstract class Declaration $Declared
+abstract class $Declaration
 {
 	contains Annotation[] Annotations $Attributes;
 	string? $Name;
@@ -37,7 +37,7 @@ class $Annotation
 class $AnnotationArgument
 {
 	symbol[] $NamedParameter;
-	DeclaredSymbol Parameter;
+	DeclarationSymbol Parameter;
 	type ParameterType;
 	contains Expression $Value;
 }
