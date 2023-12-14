@@ -19,7 +19,7 @@ namespace MetaDslx.CodeAnalysis.Binding
             string? name = null,
             string? metadataName = null,
             SyntaxNodeOrToken alias = default,
-            DeclaredSymbol? qualifier = null,
+            DeclarationSymbol? qualifier = null,
             LookupContext? qualifierContext = null,
             TypeSymbol? accessThroughType = null,
             IEnumerable<TypeSymbol>? baseTypesBeingResolved = null,
@@ -55,12 +55,12 @@ namespace MetaDslx.CodeAnalysis.Binding
             if (_parentBinder is not null) _parentBinder.AdjustFinalLookupContext(context);
         }
 
-        protected virtual bool IsViable(LookupContext context, DeclaredSymbol symbol)
+        protected virtual bool IsViable(LookupContext context, DeclarationSymbol symbol)
         {
             return DefaultLookupValidator.IsViable(context, symbol);
         }
 
-        protected virtual SingleLookupResult ValidateResult(LookupContext context, DeclaredSymbol resultSymbol, DeclaredSymbol unwrappedSymbol)
+        protected virtual SingleLookupResult ValidateResult(LookupContext context, DeclarationSymbol resultSymbol, DeclarationSymbol unwrappedSymbol)
         {
             return DefaultLookupValidator.ValidateResult(context, resultSymbol, unwrappedSymbol);
         }
@@ -70,12 +70,12 @@ namespace MetaDslx.CodeAnalysis.Binding
             return DefaultLookupValidator.UpdateDiagnostic(context, diagnostic);
         }
 
-        bool ILookupValidator.IsViable(LookupContext context, DeclaredSymbol symbol)
+        bool ILookupValidator.IsViable(LookupContext context, DeclarationSymbol symbol)
         {
             return this.IsViable(context, symbol);
         }
 
-        SingleLookupResult ILookupValidator.ValidateResult(LookupContext context, DeclaredSymbol resultSymbol, DeclaredSymbol unwrappedSymbol)
+        SingleLookupResult ILookupValidator.ValidateResult(LookupContext context, DeclarationSymbol resultSymbol, DeclarationSymbol unwrappedSymbol)
         {
             return this.ValidateResult(context, resultSymbol, unwrappedSymbol);
         }
@@ -187,7 +187,7 @@ namespace MetaDslx.CodeAnalysis.Binding
                 }
                 else
                 {
-                    context.Qualifier = AliasSymbol.UnwrapAlias(context, context.Qualifier) as DeclaredSymbol;
+                    context.Qualifier = AliasSymbol.UnwrapAlias(context, context.Qualifier) as DeclarationSymbol;
                     this.AddCandidateSymbolsInternal(context, result);
                 }
             }
@@ -225,7 +225,7 @@ namespace MetaDslx.CodeAnalysis.Binding
         {
             var qualifier = context.Qualifier;
             var candidateSymbols = ((IErrorSymbol)qualifier).CandidateSymbols;
-            if (!candidateSymbols.IsDefault && candidateSymbols.Length == 1 && candidateSymbols[0] is DeclaredSymbol declaredSymbol && declaredSymbol is not IErrorSymbol)
+            if (!candidateSymbols.IsDefault && candidateSymbols.Length == 1 && candidateSymbols[0] is DeclarationSymbol declaredSymbol && declaredSymbol is not IErrorSymbol)
             {
                 try
                 {

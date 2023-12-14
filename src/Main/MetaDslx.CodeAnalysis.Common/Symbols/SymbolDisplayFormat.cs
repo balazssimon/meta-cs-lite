@@ -43,14 +43,14 @@ namespace MetaDslx.CodeAnalysis.Symbols
                 sb.Append(symbol.DisplayKind);
                 sb.Append(" '");
             }
-            if (symbol is DeclaredSymbol declaredSymbol)
+            if (symbol is DeclarationSymbol declaredSymbol)
             {
                 if (IncludeQualifier)
                 {
                     var container = declaredSymbol;
                     while (container is not null)
                     {
-                        var parent = container.ContainingSymbol as DeclaredSymbol;
+                        var parent = container.ContainingSymbol as DeclarationSymbol;
                         if (parent is null && string.IsNullOrWhiteSpace(IncludeArity ? container.MetadataName : container.Name)) break;
                         if (sb.Length > 0) sb.Insert(0, ".");
                         sb.Insert(0, IncludeArity ? container.MetadataName : container.Name);

@@ -47,9 +47,9 @@ namespace MetaDslx.CodeAnalysis.Symbols.CSharp
             return SymbolFactory.GetSymbols<Symbol>(_csharpSymbol.GetMembers(), diagnostics, cancellationToken);
         }
 
-        protected override ImmutableArray<DeclaredSymbol> CompleteProperty_Members(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        protected override ImmutableArray<DeclarationSymbol> CompleteProperty_Members(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            return SymbolFactory.GetSymbols<DeclaredSymbol>(_csharpSymbol.GetMembers(), diagnostics, cancellationToken);
+            return SymbolFactory.GetSymbols<DeclarationSymbol>(_csharpSymbol.GetMembers(), diagnostics, cancellationToken);
         }
 
         protected override ImmutableArray<TypeSymbol> CompleteProperty_BaseTypes(DiagnosticBag diagnostics, CancellationToken cancellationToken)

@@ -120,7 +120,7 @@ namespace MetaDslx.CodeAnalysis.Binding
                     var name = _identifiers[i].GetName(cancellationToken);
                     var metadataName = _identifiers[i].GetMetadataName(cancellationToken);
                     var location = ((Binder)_identifiers[i]).Location;
-                    result[i] = Compilation[Language].ErrorSymbolFactory.CreateSymbol<DeclaredSymbol>(container, new ErrorSymbolInfo(name, metadataName, ImmutableArray<Symbol>.Empty, Diagnostic.Create(CommonErrorCode.ERR_DeclarationError, location, $"Could not create declaration '{name}.'")));
+                    result[i] = Compilation[Language].ErrorSymbolFactory.CreateSymbol<DeclarationSymbol>(container, new ErrorSymbolInfo(name, metadataName, ImmutableArray<Symbol>.Empty, Diagnostic.Create(CommonErrorCode.ERR_DeclarationError, location, $"Could not create declaration '{name}.'")));
                 }
             }
             return result.ToImmutableArray();
@@ -142,7 +142,7 @@ namespace MetaDslx.CodeAnalysis.Binding
                     lookupContext.MultiLookupKey = key;
                     var symbols = this.BindQualifiedName(lookupContext, identifiers);
                     AddDiagnostics(lookupContext.Diagnostics);
-                    result.Add(key, symbols.Cast<DeclaredSymbol, Symbol>());
+                    result.Add(key, symbols.Cast<DeclarationSymbol, Symbol>());
                 }
                 lookupContext.Free();
                 return result.ToImmutable();
@@ -153,7 +153,7 @@ namespace MetaDslx.CodeAnalysis.Binding
                 var symbols = this.BindQualifiedName(lookupContext, identifiers);
                 AddDiagnostics(lookupContext.Diagnostics);
                 lookupContext.Free();
-                return symbols.Cast<DeclaredSymbol, Symbol>();
+                return symbols.Cast<DeclarationSymbol, Symbol>();
             }
         }
 

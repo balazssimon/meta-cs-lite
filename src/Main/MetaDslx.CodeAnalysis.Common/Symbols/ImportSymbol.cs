@@ -34,8 +34,8 @@ namespace MetaDslx.CodeAnalysis.Symbols
         private ImmutableArray<string> _files;
         private ImmutableArray<AliasSymbol> _aliases;
         private ImmutableArray<NamespaceSymbol> _namespaces;
-        private ImmutableArray<DeclaredSymbol> _symbols;
-        private ImmutableHashSet<DeclaredSymbol> _allSymbols;
+        private ImmutableArray<DeclarationSymbol> _symbols;
+        private ImmutableHashSet<DeclarationSymbol> _allSymbols;
         private object? _unusedSymbols;
         private object? _unusedNamespaces;
 
@@ -79,7 +79,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
         }
 
         [ModelProperty]
-        public ImmutableArray<DeclaredSymbol> Symbols
+        public ImmutableArray<DeclarationSymbol> Symbols
         {
             get
             {
@@ -101,16 +101,16 @@ namespace MetaDslx.CodeAnalysis.Symbols
             }
         }
 
-        public ImmutableArray<DeclaredSymbol> UnusedSymbols
+        public ImmutableArray<DeclarationSymbol> UnusedSymbols
         {
             get
             {
                 ForceComplete(CompletionGraph.FinishFinalizing, null, default);
-                if (_unusedSymbols is ConcurrentDictionary<DeclaredSymbol, byte> uscd)
+                if (_unusedSymbols is ConcurrentDictionary<DeclarationSymbol, byte> uscd)
                 {
                     Interlocked.Exchange(ref _unusedSymbols, uscd.Keys.ToImmutableArray());
                 }
-                return (ImmutableArray<DeclaredSymbol>)_unusedSymbols;
+                return (ImmutableArray<DeclarationSymbol>)_unusedSymbols;
             }
         }
 
@@ -149,7 +149,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
 
         private void ComputeSymbols(DiagnosticBag diagnostics)
         {
-            var symbolsBuilder = ArrayBuilder<DeclaredSymbol>.GetInstance();
+            var symbolsBuilder = ArrayBuilder<DeclarationSymbol>.GetInstance();
             symbolsBuilder.AddRange(_aliases);
             var compilation = DeclaringCompilation;
             if (_files.Length > 0 && this is ISourceSymbol sourceSymbol && compilation is not null)
@@ -207,7 +207,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
             {
                 symbolsBuilder.Free();
             }
-            var unusedSymbols = new ConcurrentDictionary<DeclaredSymbol, byte>();
+            var unusedSymbols = new ConcurrentDictionary<DeclarationSymbol, byte>();
             foreach (var symbol in _symbols)
             {
                 unusedSymbols.TryAdd(symbol, 0);
@@ -219,17 +219,17 @@ namespace MetaDslx.CodeAnalysis.Symbols
                 unusedNamespaces.TryAdd(ns, 0);
             }
             _unusedNamespaces = unusedNamespaces;
-            var allSymbols = ImmutableHashSet.CreateBuilder<DeclaredSymbol>();
+            var allSymbols = ImmutableHashSet.CreateBuilder<DeclarationSymbol>();
             allSymbols.AddAll(_symbols);
             allSymbols.AddAll(_namespaces);
             _allSymbols = allSymbols.ToImmutable();
         }
 
-        public virtual bool MarkImportedSymbolAsUsed(DeclaredSymbol symbol)
+        public virtual bool MarkImportedSymbolAsUsed(DeclarationSymbol symbol)
         {
             if (_allSymbols is null) return false;
             if (!_allSymbols.Contains(symbol)) return false;
-            if (_unusedSymbols is ConcurrentDictionary<DeclaredSymbol, byte> uscd &&
+            if (_unusedSymbols is ConcurrentDictionary<DeclarationSymbol, byte> uscd &&
                 (_symbols.Contains(symbol) || symbol is AliasSymbol aliasSymbol && _aliases.Contains(aliasSymbol)))
             {
                 uscd.TryRemove(symbol, out var _);
@@ -243,7 +243,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
             return true;
         }
 
-        protected virtual (ImmutableArray<string> files, ImmutableArray<AliasSymbol> aliases, ImmutableArray<NamespaceSymbol> namespaces, ImmutableArray<DeclaredSymbol> symbols) ComputeImports(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        protected virtual (ImmutableArray<string> files, ImmutableArray<AliasSymbol> aliases, ImmutableArray<NamespaceSymbol> namespaces, ImmutableArray<DeclarationSymbol> symbols) ComputeImports(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
         }

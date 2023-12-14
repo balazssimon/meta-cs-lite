@@ -9,7 +9,7 @@ using System.Xml.Linq;
 
 namespace MetaDslx.CodeAnalysis.Symbols
 {
-    public abstract partial class DeclaredSymbol : Symbol
+    public abstract partial class DeclarationSymbol : Symbol
     {
         public new static class CompletionParts
         {
@@ -29,12 +29,12 @@ namespace MetaDslx.CodeAnalysis.Symbols
                     StartComputingProperty_Attributes, FinishComputingProperty_Attributes);
         }
 
-        private static MemberLookupCache EmptyMemberCache = new MemberLookupCache(ImmutableArray<DeclaredSymbol>.Empty);
-        private static ConditionalWeakTable<DeclaredSymbol, object> s_typeArguments = new ConditionalWeakTable<DeclaredSymbol, object>();
-        private static ConditionalWeakTable<DeclaredSymbol, object> s_imports = new ConditionalWeakTable<DeclaredSymbol, object>();
-        private static ConditionalWeakTable<DeclaredSymbol, MemberLookupCache> s_members = new ConditionalWeakTable<DeclaredSymbol, MemberLookupCache>();
+        private static MemberLookupCache EmptyMemberCache = new MemberLookupCache(ImmutableArray<DeclarationSymbol>.Empty);
+        private static ConditionalWeakTable<DeclarationSymbol, object> s_typeArguments = new ConditionalWeakTable<DeclarationSymbol, object>();
+        private static ConditionalWeakTable<DeclarationSymbol, object> s_imports = new ConditionalWeakTable<DeclarationSymbol, object>();
+        private static ConditionalWeakTable<DeclarationSymbol, MemberLookupCache> s_members = new ConditionalWeakTable<DeclarationSymbol, MemberLookupCache>();
 
-        protected DeclaredSymbol(Symbol container) 
+        protected DeclarationSymbol(Symbol container) 
             : base(container)
         {
         }
@@ -46,7 +46,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
         /// symbol by type substitution then OriginalDefinition gets the original symbol as it was defined in
         /// source or metadata.
         /// </summary>
-        public virtual DeclaredSymbol OriginalDefinition => this;
+        public virtual DeclarationSymbol OriginalDefinition => this;
 
         /// <summary>
         /// Returns true if this symbol can be referenced by its name in code. Examples of symbols
@@ -114,7 +114,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
         /// </summary>
         /// <returns>An ImmutableArray containing all the members of this symbol. If this symbol has no members,
         /// returns an empty ImmutableArray. Never returns null.</returns>
-        public ImmutableArray<DeclaredSymbol> Members
+        public ImmutableArray<DeclarationSymbol> Members
         {
             get
             {
@@ -130,7 +130,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
         /// </summary>
         /// <returns>An ImmutableArray containing all the members of this symbol. If this symbol has no members,
         /// returns an empty ImmutableArray. Never returns null.</returns>
-        internal ImmutableArray<DeclaredSymbol> GetMembersUnordered()
+        internal ImmutableArray<DeclarationSymbol> GetMembersUnordered()
         {
             // Default implementation is to use ordered version. When performance indicates, we specialize to have
             // separate implementation.
@@ -143,7 +143,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
         /// </summary>
         /// <returns>An ImmutableArray containing all the members of this symbol with the given name. If there are
         /// no members with this name, returns an empty ImmutableArray. Never returns null.</returns>
-        public ImmutableArray<DeclaredSymbol> GetMembers(string name)
+        public ImmutableArray<DeclarationSymbol> GetMembers(string name)
         {
             return GetMemberLookupCache().GetMembers(name);
         }
@@ -154,7 +154,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
         /// <returns>An IEnumerable containing all the types that are members of this symbol with the given name and metadata name.
         /// If this symbol has no type members with this name and metadata name,
         /// returns an empty IEnumerable. Never returns null.</returns>
-        public ImmutableArray<DeclaredSymbol> GetMembers(string name, string metadataName)
+        public ImmutableArray<DeclarationSymbol> GetMembers(string name, string metadataName)
         {
             return GetMemberLookupCache().GetMembers(name, metadataName);
         }
@@ -279,9 +279,9 @@ namespace MetaDslx.CodeAnalysis.Symbols
             return ImmutableArray<ImportSymbol>.Empty;
         }
 
-        protected virtual ImmutableArray<DeclaredSymbol> CompleteProperty_Members(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        protected virtual ImmutableArray<DeclarationSymbol> CompleteProperty_Members(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            return ImmutableArray<DeclaredSymbol>.Empty;
+            return ImmutableArray<DeclarationSymbol>.Empty;
         }
 
     }

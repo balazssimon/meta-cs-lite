@@ -65,7 +65,7 @@ namespace MetaDslx.CodeAnalysis.Binding
             }
         }
 
-        public override ImmutableArray<DeclaredSymbol> ContainingScopeSymbols => ImmutableArray<DeclaredSymbol>.Empty;
+        public override ImmutableArray<DeclarationSymbol> ContainingScopeSymbols => ImmutableArray<DeclarationSymbol>.Empty;
 
         public override ImmutableArray<Symbol> ContainingDefinedSymbols => ImmutableArray<Symbol>.Empty;
 
@@ -102,7 +102,7 @@ namespace MetaDslx.CodeAnalysis.Binding
                 {
                     foreach (var symbol in Compilation.GlobalNamespace.ContainedSymbols)
                     {
-                        if (symbol is DeclaredSymbol declaredSymbol && context.IsViable(declaredSymbol))
+                        if (symbol is DeclarationSymbol declaredSymbol && context.IsViable(declaredSymbol))
                         {
                             result.Add(declaredSymbol);
                         }
@@ -114,7 +114,7 @@ namespace MetaDslx.CodeAnalysis.Binding
                     {
                         foreach (var symbol in rootNamespace.ContainedSymbols.Where(s => s is ISourceSymbol ss && ss.DeclaringSyntaxReferences.Any(d => d.SyntaxTree == this.SyntaxTree)))
                         {
-                            if (symbol is DeclaredSymbol declaredSymbol && context.IsViable(declaredSymbol))
+                            if (symbol is DeclarationSymbol declaredSymbol && context.IsViable(declaredSymbol))
                             {
                                 result.Add(declaredSymbol);
                             }

@@ -209,7 +209,7 @@ namespace MetaDslx.CodeAnalysis.Binding
 
         public virtual ImmutableArray<Symbol> DefinedSymbols => ImmutableArray<Symbol>.Empty;
 
-        public virtual ImmutableArray<DeclaredSymbol> ContainingScopeSymbols => ParentBinder?.ContainingScopeSymbols ?? ImmutableArray<DeclaredSymbol>.Empty;
+        public virtual ImmutableArray<DeclarationSymbol> ContainingScopeSymbols => ParentBinder?.ContainingScopeSymbols ?? ImmutableArray<DeclarationSymbol>.Empty;
 
         public virtual ImmutableArray<Symbol> ContainingDefinedSymbols => ParentBinder?.ContainingDefinedSymbols ?? ImmutableArray<Symbol>.Empty;
 
@@ -392,7 +392,7 @@ namespace MetaDslx.CodeAnalysis.Binding
             return ImmutableArray<object?>.Empty;
         }
 
-        protected virtual void MarkSymbolAsUsed(DeclaredSymbol symbol)
+        protected virtual void MarkSymbolAsUsed(DeclarationSymbol symbol)
         {
             ParentBinder?.MarkSymbolAsUsed(symbol);
         }

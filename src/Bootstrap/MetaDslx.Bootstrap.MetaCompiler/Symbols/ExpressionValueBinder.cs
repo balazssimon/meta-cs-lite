@@ -24,7 +24,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
         private ExpressionSymbol? _containingExpression;
         private PAlternativeSymbol? _containingPAlternative;
         private AnnotationArgumentSymbol? _containingAnnotationArgument;
-        private ImmutableArray<DeclaredSymbol> _targetProperties;
+        private ImmutableArray<DeclarationSymbol> _targetProperties;
         private ImmutableArray<LookupKey> _expectedTypes;
 
         public SingleExpressionBlock1Syntax? Syntax => base.Syntax.AsNode() as SingleExpressionBlock1Syntax;
@@ -69,7 +69,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
             }
         }
 
-        public ImmutableArray<DeclaredSymbol> TargetProperties
+        public ImmutableArray<DeclarationSymbol> TargetProperties
         {
             get
             {
@@ -78,7 +78,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
                     var arg = ContainingAnnotationArgumentSymbol;
                     if (arg is not null)
                     {
-                        ImmutableInterlocked.InterlockedInitialize(ref _targetProperties, arg.Parameter is null ? ImmutableArray<DeclaredSymbol>.Empty : ImmutableArray.Create(arg.Parameter));
+                        ImmutableInterlocked.InterlockedInitialize(ref _targetProperties, arg.Parameter is null ? ImmutableArray<DeclarationSymbol>.Empty : ImmutableArray.Create(arg.Parameter));
                     }
                     else
                     {
@@ -89,10 +89,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
                             var blockElem = block?.ContainingSymbol as PElementSymbol;
                             if (blockElem is not null)
                             {
-                                var targetProperties = ArrayBuilder<DeclaredSymbol>.GetInstance();
+                                var targetProperties = ArrayBuilder<DeclarationSymbol>.GetInstance();
                                 foreach (var prop in blockElem.SymbolProperty)
                                 {
-                                    if (prop.OriginalSymbol is DeclaredSymbol declaredSymbol)
+                                    if (prop.OriginalSymbol is DeclarationSymbol declaredSymbol)
                                     {
                                         targetProperties.Add(declaredSymbol);
                                     }
@@ -101,7 +101,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
                             }
                             else
                             {
-                                ImmutableInterlocked.InterlockedInitialize(ref _targetProperties, ImmutableArray<DeclaredSymbol>.Empty);
+                                ImmutableInterlocked.InterlockedInitialize(ref _targetProperties, ImmutableArray<DeclarationSymbol>.Empty);
                             }
                         }
                     }

@@ -8,11 +8,11 @@ using System.Threading;
 
 namespace MetaDslx.CodeAnalysis.Symbols.CSharp
 {
-    internal class CSharpDeclaredSymbol : DeclaredSymbol, ICSharpSymbol
+    internal class CSharpDeclarationSymbol : DeclarationSymbol, ICSharpSymbol
     {
         private readonly ISymbol _csharpSymbol;
 
-        public CSharpDeclaredSymbol(Symbol container, ISymbol csharpSymbol) 
+        public CSharpDeclarationSymbol(Symbol container, ISymbol csharpSymbol) 
             : base(container)
         {
             _csharpSymbol = csharpSymbol;
@@ -42,10 +42,10 @@ namespace MetaDslx.CodeAnalysis.Symbols.CSharp
             else return ImmutableArray<Symbol>.Empty;
         }
 
-        protected override ImmutableArray<DeclaredSymbol> CompleteProperty_Members(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        protected override ImmutableArray<DeclarationSymbol> CompleteProperty_Members(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            if (_csharpSymbol is INamespaceOrTypeSymbol nsot) return SymbolFactory.GetSymbols<DeclaredSymbol>(nsot.GetMembers(), diagnostics, cancellationToken);
-            else return ImmutableArray<DeclaredSymbol>.Empty;
+            if (_csharpSymbol is INamespaceOrTypeSymbol nsot) return SymbolFactory.GetSymbols<DeclarationSymbol>(nsot.GetMembers(), diagnostics, cancellationToken);
+            else return ImmutableArray<DeclarationSymbol>.Empty;
         }
 
         protected override ImmutableArray<AttributeSymbol> CompleteProperty_Attributes(DiagnosticBag diagnostics, CancellationToken cancellationToken)

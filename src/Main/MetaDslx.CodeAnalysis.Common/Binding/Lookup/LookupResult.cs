@@ -65,7 +65,7 @@ namespace MetaDslx.CodeAnalysis.Binding
         private LookupResultKind _kind;
 
         // If there is more than one symbol, they are stored in this list.
-        private readonly ArrayBuilder<DeclaredSymbol> _symbolList;
+        private readonly ArrayBuilder<DeclarationSymbol> _symbolList;
 
         // the error of the result, if it is NonViable or Inaccessible
         private DiagnosticInfo _error;
@@ -76,14 +76,14 @@ namespace MetaDslx.CodeAnalysis.Binding
         {
             _pool = pool;
             _kind = LookupResultKind.Empty;
-            _symbolList = new ArrayBuilder<DeclaredSymbol>();
+            _symbolList = new ArrayBuilder<DeclarationSymbol>();
             _error = null;
         }
 
         internal LookupResult()
         {
             _kind = LookupResultKind.Empty;
-            _symbolList = new ArrayBuilder<DeclaredSymbol>();
+            _symbolList = new ArrayBuilder<DeclarationSymbol>();
             _error = null;
         }
 
@@ -115,7 +115,7 @@ namespace MetaDslx.CodeAnalysis.Binding
         /// <summary>
         /// Return the single symbol if there is exactly one, otherwise null.
         /// </summary>
-        public DeclaredSymbol SingleSymbolOrDefault
+        public DeclarationSymbol SingleSymbolOrDefault
         {
             get
             {
@@ -123,7 +123,7 @@ namespace MetaDslx.CodeAnalysis.Binding
             }
         }
 
-        public ArrayBuilder<DeclaredSymbol> Symbols
+        public ArrayBuilder<DeclarationSymbol> Symbols
         {
             get
             {
@@ -166,35 +166,35 @@ namespace MetaDslx.CodeAnalysis.Binding
             return new SingleLookupResult(LookupResultKind.Empty, null, null);
         }
 
-        public static SingleLookupResult Good(DeclaredSymbol symbol)
+        public static SingleLookupResult Good(DeclarationSymbol symbol)
         {
             if (symbol is null) throw new ArgumentNullException(nameof(symbol));
             return new SingleLookupResult(LookupResultKind.Viable, symbol, null);
         }
 
-        public static SingleLookupResult NotTypeOrNamespace(DeclaredSymbol unwrappedSymbol, DeclaredSymbol symbol, bool diagnose)
+        public static SingleLookupResult NotTypeOrNamespace(DeclarationSymbol unwrappedSymbol, DeclarationSymbol symbol, bool diagnose)
         {
             return WrongKind(unwrappedSymbol, symbol, "type or namespace", diagnose);
         }
 
-        public static SingleLookupResult WrongKind(DeclaredSymbol symbol, DiagnosticInfo error)
+        public static SingleLookupResult WrongKind(DeclarationSymbol symbol, DiagnosticInfo error)
         {
             return new SingleLookupResult(LookupResultKind.WrongKind, symbol, error);
         }
 
-        public static SingleLookupResult WrongKind(DeclaredSymbol unwrappedSymbol, DeclaredSymbol symbol, bool diagnose)
+        public static SingleLookupResult WrongKind(DeclarationSymbol unwrappedSymbol, DeclarationSymbol symbol, bool diagnose)
         {
             var diagInfo = diagnose ? new DiagnosticInfo(CommonErrorCode.ERR_BadSymbolKindUnknown, unwrappedSymbol.Name, unwrappedSymbol.Kind) : null;
             return new SingleLookupResult(LookupResultKind.WrongKind, symbol, diagInfo);
         }
 
-        public static SingleLookupResult WrongKind(DeclaredSymbol unwrappedSymbol, DeclaredSymbol symbol, string expectedKinds, bool diagnose)
+        public static SingleLookupResult WrongKind(DeclarationSymbol unwrappedSymbol, DeclarationSymbol symbol, string expectedKinds, bool diagnose)
         {
             var diagInfo = diagnose ? new DiagnosticInfo(CommonErrorCode.ERR_BadSymbolKindKnown, unwrappedSymbol.Name, unwrappedSymbol.Kind, expectedKinds) : null;
             return new SingleLookupResult(LookupResultKind.WrongKind, symbol, diagInfo);
         }
 
-        public static SingleLookupResult WrongKind(DeclaredSymbol unwrappedSymbol, DeclaredSymbol symbol, ImmutableArray<Type> expectedKinds, bool diagnose)
+        public static SingleLookupResult WrongKind(DeclarationSymbol unwrappedSymbol, DeclarationSymbol symbol, ImmutableArray<Type> expectedKinds, bool diagnose)
         {
             if (diagnose)
             {
@@ -218,24 +218,24 @@ namespace MetaDslx.CodeAnalysis.Binding
             }
         }
 
-        public static SingleLookupResult WrongModelObjectType(DeclaredSymbol symbol, DiagnosticInfo error)
+        public static SingleLookupResult WrongModelObjectType(DeclarationSymbol symbol, DiagnosticInfo error)
         {
             return new SingleLookupResult(LookupResultKind.WrongModelObjectType, symbol, error);
         }
 
-        public static SingleLookupResult WrongModelObjectType(DeclaredSymbol unwrappedSymbol, DeclaredSymbol symbol, bool diagnose)
+        public static SingleLookupResult WrongModelObjectType(DeclarationSymbol unwrappedSymbol, DeclarationSymbol symbol, bool diagnose)
         {
             var diagInfo = diagnose ? new DiagnosticInfo(CommonErrorCode.ERR_BadModelObjectTypeUnknown, unwrappedSymbol.Name, (unwrappedSymbol as IModelSymbol)?.ModelObjectType) : null;
             return new SingleLookupResult(LookupResultKind.WrongModelObjectType, symbol, diagInfo);
         }
 
-        public static SingleLookupResult WrongModelObjectType(DeclaredSymbol unwrappedSymbol, DeclaredSymbol symbol, string expectedTypes, bool diagnose)
+        public static SingleLookupResult WrongModelObjectType(DeclarationSymbol unwrappedSymbol, DeclarationSymbol symbol, string expectedTypes, bool diagnose)
         {
             var diagInfo = diagnose ? new DiagnosticInfo(CommonErrorCode.ERR_BadModelObjectTypeKnown, unwrappedSymbol.Name, (unwrappedSymbol as IModelSymbol)?.ModelObjectType, expectedTypes) : null;
             return new SingleLookupResult(LookupResultKind.WrongModelObjectType, symbol, diagInfo);
         }
 
-        public static SingleLookupResult WrongModelObjectType(DeclaredSymbol unwrappedSymbol, DeclaredSymbol symbol, ImmutableArray<Type> expectedTypes, bool diagnose)
+        public static SingleLookupResult WrongModelObjectType(DeclarationSymbol unwrappedSymbol, DeclarationSymbol symbol, ImmutableArray<Type> expectedTypes, bool diagnose)
         {
             if (diagnose)
             {
@@ -259,48 +259,48 @@ namespace MetaDslx.CodeAnalysis.Binding
             }
         }
 
-        public static SingleLookupResult WrongArity(DeclaredSymbol symbol, DiagnosticInfo error)
+        public static SingleLookupResult WrongArity(DeclarationSymbol symbol, DiagnosticInfo error)
         {
             return new SingleLookupResult(LookupResultKind.WrongArity, symbol, error);
         }
 
-        public static SingleLookupResult NotCreatable(DeclaredSymbol symbol, DiagnosticInfo error)
+        public static SingleLookupResult NotCreatable(DeclarationSymbol symbol, DiagnosticInfo error)
         {
             return new SingleLookupResult(LookupResultKind.NotCreatable, symbol, error);
         }
 
-        public static SingleLookupResult NotReferencable(DeclaredSymbol symbol, DiagnosticInfo error)
+        public static SingleLookupResult NotReferencable(DeclarationSymbol symbol, DiagnosticInfo error)
         {
             return new SingleLookupResult(LookupResultKind.NotReferencable, symbol, error);
         }
 
-        public static SingleLookupResult Inaccessible(DeclaredSymbol symbol, DiagnosticInfo error)
+        public static SingleLookupResult Inaccessible(DeclarationSymbol symbol, DiagnosticInfo error)
         {
             return new SingleLookupResult(LookupResultKind.Inaccessible, symbol, error);
         }
 
-        public static SingleLookupResult NotAValue(DeclaredSymbol symbol, DiagnosticInfo error)
+        public static SingleLookupResult NotAValue(DeclarationSymbol symbol, DiagnosticInfo error)
         {
             return new SingleLookupResult(LookupResultKind.NotAValue, symbol, error);
         }
 
-        public static SingleLookupResult NotAVariable(DeclaredSymbol symbol, DiagnosticInfo error)
+        public static SingleLookupResult NotAVariable(DeclarationSymbol symbol, DiagnosticInfo error)
         {
             return new SingleLookupResult(LookupResultKind.NotAVariable, symbol, error);
         }
 
-        public static SingleLookupResult NotInvocable(DeclaredSymbol symbol, DiagnosticInfo error)
+        public static SingleLookupResult NotInvocable(DeclarationSymbol symbol, DiagnosticInfo error)
         {
             return new SingleLookupResult(LookupResultKind.NotInvocable, symbol, error);
         }
 
-        public static SingleLookupResult NotInvocable(DeclaredSymbol unwrappedSymbol, DeclaredSymbol symbol, bool diagnose)
+        public static SingleLookupResult NotInvocable(DeclarationSymbol unwrappedSymbol, DeclarationSymbol symbol, bool diagnose)
         {
             var diagInfo = diagnose ? new DiagnosticInfo(CommonErrorCode.ERR_NonInvocableMemberCalled, unwrappedSymbol.Name) : null;
             return new SingleLookupResult(LookupResultKind.NotInvocable, symbol, diagInfo);
         }
 
-        public static SingleLookupResult StaticInstanceMismatch(DeclaredSymbol symbol, DiagnosticInfo error)
+        public static SingleLookupResult StaticInstanceMismatch(DeclarationSymbol symbol, DiagnosticInfo error)
         {
             return new SingleLookupResult(LookupResultKind.StaticInstanceMismatch, symbol, error);
         }

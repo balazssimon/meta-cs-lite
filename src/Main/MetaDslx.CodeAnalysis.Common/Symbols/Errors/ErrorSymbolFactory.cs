@@ -17,7 +17,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Errors
         {
             Register<NamespaceSymbol>((s, ei) => new ErrorNamespaceSymbol(s, ei));
             Register<TypeSymbol>((s, ei) => new ErrorTypeSymbol(s, ei));
-            Register<DeclaredSymbol>((s, ei) => new ErrorDeclaredSymbol(s, ei));
+            Register<DeclarationSymbol>((s, ei) => new ErrorDeclarationSymbol(s, ei));
         }
 
         protected void Register<TSymbol>(Func<Symbol, ErrorSymbolInfo, Symbol> constructor)

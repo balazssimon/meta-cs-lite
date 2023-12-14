@@ -4,7 +4,7 @@ using MetaDslx.CodeAnalysis.Symbols;
 
 metamodel Meta;
 
-class MetaDeclaration $Declared
+class MetaDeclaration $Declaration
 {
 	string? $Name;
 	MetaDeclaration? Parent opposite Declarations;

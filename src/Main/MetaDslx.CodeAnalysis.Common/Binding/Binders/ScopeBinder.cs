@@ -11,7 +11,7 @@ namespace MetaDslx.CodeAnalysis.Binding
     public class ScopeBinder : Binder, IScopeBinder
     {
         private readonly bool _local;
-        private ImmutableArray<DeclaredSymbol> _containingScopeSymbols;
+        private ImmutableArray<DeclarationSymbol> _containingScopeSymbols;
 
         public ScopeBinder(bool local = false)
         {
@@ -20,7 +20,7 @@ namespace MetaDslx.CodeAnalysis.Binding
 
         public bool IsLocal => _local;
 
-        public override ImmutableArray<DeclaredSymbol> ContainingScopeSymbols
+        public override ImmutableArray<DeclarationSymbol> ContainingScopeSymbols
         {
             get
             {
@@ -32,8 +32,8 @@ namespace MetaDslx.CodeAnalysis.Binding
                     parent = parent.ParentBinder;
                     parentSymbols = parent?.DefinedSymbols ?? ImmutableArray<Symbol>.Empty;
                 }
-                if (parentSymbols.IsDefaultOrEmpty) return ImmutableArray<DeclaredSymbol>.Empty;
-                ImmutableInterlocked.InterlockedInitialize(ref _containingScopeSymbols, parentSymbols.OfType<DeclaredSymbol>().ToImmutableArray());
+                if (parentSymbols.IsDefaultOrEmpty) return ImmutableArray<DeclarationSymbol>.Empty;
+                ImmutableInterlocked.InterlockedInitialize(ref _containingScopeSymbols, parentSymbols.OfType<DeclarationSymbol>().ToImmutableArray());
                 return _containingScopeSymbols;
             }
         }

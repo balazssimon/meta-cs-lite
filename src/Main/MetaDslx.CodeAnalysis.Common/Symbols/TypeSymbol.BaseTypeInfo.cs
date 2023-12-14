@@ -42,9 +42,9 @@ namespace MetaDslx.CodeAnalysis.Symbols
             // TODO:MetaDslx
             public ImmutableDictionary<TypeSymbol, TypeSymbol> BaseTypesAndTheirBaseTypes => ImmutableDictionary<TypeSymbol, TypeSymbol>.Empty;
             // TODO:MetaDslx
-            public ImmutableDictionary<DeclaredSymbol, DeclaredSymbol> ImplementationForBaseMemberMap => ImmutableDictionary<DeclaredSymbol, DeclaredSymbol>.Empty;
+            public ImmutableDictionary<DeclarationSymbol, DeclarationSymbol> ImplementationForBaseMemberMap => ImmutableDictionary<DeclarationSymbol, DeclarationSymbol>.Empty;
             // TODO:MetaDslx
-            public ImmutableDictionary<DeclaredSymbol, DeclaredSymbol> ExplicitBaseTypeImplementationMap => ImmutableDictionary<DeclaredSymbol, DeclaredSymbol>.Empty;
+            public ImmutableDictionary<DeclarationSymbol, DeclarationSymbol> ExplicitBaseTypeImplementationMap => ImmutableDictionary<DeclarationSymbol, DeclarationSymbol>.Empty;
 
             public bool IsDefault => _symbol == null && _allBaseTypes.IsDefault;
 

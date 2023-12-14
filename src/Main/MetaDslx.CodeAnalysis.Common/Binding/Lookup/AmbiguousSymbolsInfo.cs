@@ -7,12 +7,12 @@ namespace MetaDslx.CodeAnalysis.Binding
 {
     public struct AmbiguousSymbolsInfo
     {
-        private readonly DeclaredSymbol _best;
+        private readonly DeclarationSymbol _best;
         private readonly AmbiguousSymbolLocation _bestLocation;
-        private readonly DeclaredSymbol _second;
+        private readonly DeclarationSymbol _second;
         private readonly AmbiguousSymbolLocation _secondLocation;
 
-        public AmbiguousSymbolsInfo(DeclaredSymbol best, AmbiguousSymbolLocation bestLocation, DeclaredSymbol second, AmbiguousSymbolLocation secondLocation)
+        public AmbiguousSymbolsInfo(DeclarationSymbol best, AmbiguousSymbolLocation bestLocation, DeclarationSymbol second, AmbiguousSymbolLocation secondLocation)
         {
             _best = best;
             _bestLocation = bestLocation;
@@ -20,9 +20,9 @@ namespace MetaDslx.CodeAnalysis.Binding
             _secondLocation = secondLocation;
         }
 
-        public DeclaredSymbol Best => _best;
+        public DeclarationSymbol Best => _best;
         public AmbiguousSymbolLocation BestLocation => _bestLocation;
-        public DeclaredSymbol Second => _second;
+        public DeclarationSymbol Second => _second;
         public AmbiguousSymbolLocation SecondLocation => _secondLocation;
     }
 }

@@ -40,10 +40,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
         }
 
         private ImmutableArray<AnnotationArgumentSymbol> _arguments;
-        private ImmutableArray<DeclaredSymbol> _constructors;
-        private ImmutableArray<ImmutableArray<DeclaredSymbol>> _parameters;
-        private DeclaredSymbol? _selectedConstructor;
-        private ImmutableArray<DeclaredSymbol?> _selectedParameters;
+        private ImmutableArray<DeclarationSymbol> _constructors;
+        private ImmutableArray<ImmutableArray<DeclarationSymbol>> _parameters;
+        private DeclarationSymbol? _selectedConstructor;
+        private ImmutableArray<DeclarationSymbol?> _selectedParameters;
 
         public AnnotationSymbol(Symbol container, MergedDeclaration declaration, IModelObject modelObject)
             : base(container, declaration, modelObject)
@@ -62,13 +62,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
             }
         }
 
-        public ImmutableArray<DeclaredSymbol> Constructors
+        public ImmutableArray<DeclarationSymbol> Constructors
         {
             get
             {
                 if (_constructors.IsDefault)
                 {
-                    var constructors = ArrayBuilder<DeclaredSymbol>.GetInstance();
+                    var constructors = ArrayBuilder<DeclarationSymbol>.GetInstance();
                     var csType = this.AttributeClass as ICSharpSymbol;
                     var msType = csType?.CSharpSymbol as INamedTypeSymbol;
                     if (msType is not null)
@@ -76,7 +76,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
                         var diagnostics = DiagnosticBag.GetInstance();
                         foreach (var msCtr in msType.InstanceConstructors)
                         {
-                            var csCtr = csType.SymbolFactory.GetSymbol<DeclaredSymbol>(msCtr, diagnostics, default);
+                            var csCtr = csType.SymbolFactory.GetSymbol<DeclarationSymbol>(msCtr, diagnostics, default);
                             if (csCtr is not null) constructors.Add(csCtr);
                         }
                         this.AddSymbolDiagnostics(diagnostics);
@@ -88,14 +88,14 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
             }
         }
 
-        public ImmutableArray<ImmutableArray<DeclaredSymbol>> Parameters
+        public ImmutableArray<ImmutableArray<DeclarationSymbol>> Parameters
         {
             get
             {
                 if (_parameters.IsDefault)
                 {
-                    var parameters = ArrayBuilder<ImmutableArray<DeclaredSymbol>>.GetInstance();
-                    var ctrParams = ArrayBuilder<DeclaredSymbol>.GetInstance();
+                    var parameters = ArrayBuilder<ImmutableArray<DeclarationSymbol>>.GetInstance();
+                    var ctrParams = ArrayBuilder<DeclarationSymbol>.GetInstance();
                     var diagnostics = DiagnosticBag.GetInstance();
                     foreach (var ctr in this.Constructors)
                     {
@@ -106,7 +106,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
                         {
                             foreach (var msParam in msCtr.Parameters)
                             {
-                                var csParam = csCtr.SymbolFactory.GetSymbol<DeclaredSymbol>(msParam, diagnostics, default);
+                                var csParam = csCtr.SymbolFactory.GetSymbol<DeclarationSymbol>(msParam, diagnostics, default);
                                 if (csParam is not null)
                                 {
                                     ctrParams.Add(csParam);
@@ -124,7 +124,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
             }
         }
 
-        public DeclaredSymbol? SelectedConstructor
+        public DeclarationSymbol? SelectedConstructor
         {
             get
             {
@@ -133,7 +133,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
             }
         }
 
-        public ImmutableArray<DeclaredSymbol?> SelectedParameters
+        public ImmutableArray<DeclarationSymbol?> SelectedParameters
         {
             get
             {
@@ -187,16 +187,16 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
             return SymbolFactory.GetSymbolPropertyValues<AnnotationArgumentSymbol>(this, nameof(Arguments), diagnostics, cancellationToken);
         }
 
-        private (DeclaredSymbol? Constructor, ImmutableArray<DeclaredSymbol?> Parameters) CompleteProperty_SelectedParameters(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        private (DeclarationSymbol? Constructor, ImmutableArray<DeclarationSymbol?> Parameters) CompleteProperty_SelectedParameters(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            var argParams = ArrayBuilder<DeclaredSymbol?>.GetInstance();
+            var argParams = ArrayBuilder<DeclarationSymbol?>.GetInstance();
             if (Constructors.Length == 0)
             {
                 for (int j = 0; j < Arguments.Length; ++j) argParams.Add(null);
                 return (null, argParams.ToImmutableAndFree());
             }
-            DeclaredSymbol? selectedConstructor = null;
-            var selectedParameters = ImmutableArray<DeclaredSymbol>.Empty;
+            DeclarationSymbol? selectedConstructor = null;
+            var selectedParameters = ImmutableArray<DeclarationSymbol>.Empty;
             for (int i = 0; i < Constructors.Length; ++i)
             {
                 var valid = true;
@@ -255,7 +255,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
                 var arg = Arguments[j];
                 if (arg.IsNamedArgument)
                 {
-                    var param = arg.NamedParameter.Where(p => p.OriginalSymbol?.ContainingSymbol == selectedConstructor).FirstOrDefault().OriginalSymbol as DeclaredSymbol;
+                    var param = arg.NamedParameter.Where(p => p.OriginalSymbol?.ContainingSymbol == selectedConstructor).FirstOrDefault().OriginalSymbol as DeclarationSymbol;
                     argParams.Add(param);
                 }
                 else if (j < selectedParameters.Length)

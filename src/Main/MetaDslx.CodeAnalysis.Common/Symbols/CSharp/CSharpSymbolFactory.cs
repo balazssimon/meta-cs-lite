@@ -21,7 +21,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.CSharp
         {
             Register<NamespaceSymbol, INamespaceSymbol>((s, cs) => new CSharpNamespaceSymbol(s, cs));
             Register<TypeSymbol, ITypeSymbol>((s, cs) => new CSharpTypeSymbol(s, cs));
-            Register<DeclaredSymbol, ISymbol>((s, cs) => new CSharpDeclaredSymbol(s, cs));
+            Register<DeclarationSymbol, ISymbol>((s, cs) => new CSharpDeclarationSymbol(s, cs));
         }
 
         protected void Register<TSymbol, TISymbol>(Func<Symbol, TISymbol, TSymbol> constructor)

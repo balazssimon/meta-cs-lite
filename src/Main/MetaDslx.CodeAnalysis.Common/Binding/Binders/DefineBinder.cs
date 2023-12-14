@@ -137,32 +137,11 @@ namespace MetaDslx.CodeAnalysis.Binding
             return _definedSymbols.Cast<Symbol, object?>();
         }
 
-        /*protected override void AddLookupCandidateSymbolsInSingleBinder(LookupContext context, LookupCandidates result)
-        {
-            if (_isScope && context.Qualifier is null)
-            {
-                foreach (var definedSymbol in DefinedSymbols)
-                {
-                    var declaredSymbol = definedSymbol as DeclaredSymbol;
-                    if (declaredSymbol is not null)
-                    {
-                        context.Qualifier = declaredSymbol;
-                        base.AddLookupCandidateSymbolsInSingleBinder(context, result);
-                        context.Qualifier = null;
-                    }
-                }
-            }
-            else
-            {
-                base.AddLookupCandidateSymbolsInSingleBinder(context, result);
-            }
-        }*/
-
-        protected override void MarkSymbolAsUsed(DeclaredSymbol symbol)
+        protected override void MarkSymbolAsUsed(DeclarationSymbol symbol)
         {
             foreach (var definedSymbol in DefinedSymbols)
             {
-                //if (definedSymbol is DeclaredSymbol declaredSymbol && declaredSymbol.Members.Contains(symbol)) return;
+                //if (definedSymbol is DeclarationSymbol declarationSymbol && declarationSymbol.Members.Contains(symbol)) return;
                 foreach (var import in definedSymbol.ContainedSymbols.OfType<ImportSymbol>())
                 {
                     if (import.MarkImportedSymbolAsUsed(symbol)) return;

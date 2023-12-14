@@ -23,7 +23,7 @@ namespace MetaDslx.CodeAnalysis.Binding
 
         public Compilation Compilation => _compilation;
 
-        public virtual bool IsViable(LookupContext context, DeclaredSymbol? symbol)
+        public virtual bool IsViable(LookupContext context, DeclarationSymbol? symbol)
         {
             if (string.IsNullOrEmpty(symbol?.Name)) return false;
             if (context.IsCaseSensitive)
@@ -40,7 +40,7 @@ namespace MetaDslx.CodeAnalysis.Binding
                 if (context.NamePrefixes.Count > 0 && !context.NamePrefixes.Any(p => symbol.Name.StartsWith(p, StringComparison.OrdinalIgnoreCase))) return false;
                 if (context.NameSuffixes.Count > 0 && !context.NameSuffixes.Any(s => symbol.Name.EndsWith(s, StringComparison.OrdinalIgnoreCase))) return false;
             }
-            var unwrapped = AliasSymbol.UnwrapAlias(context, symbol) as DeclaredSymbol;
+            var unwrapped = AliasSymbol.UnwrapAlias(context, symbol) as DeclarationSymbol;
             if (unwrapped is null) return false;
             foreach (var validator in context.Validators)
             {
@@ -49,7 +49,7 @@ namespace MetaDslx.CodeAnalysis.Binding
             return true;
         }
 
-        public virtual SingleLookupResult ValidateResult(LookupContext context, DeclaredSymbol resultSymbol, DeclaredSymbol unwrappedSymbol)
+        public virtual SingleLookupResult ValidateResult(LookupContext context, DeclarationSymbol resultSymbol, DeclarationSymbol unwrappedSymbol)
         {
             var result = LookupResult.Good(resultSymbol);
             foreach (var validator in context.Validators)
@@ -78,7 +78,7 @@ namespace MetaDslx.CodeAnalysis.Binding
             return diagnostic;
         }
 
-        public virtual bool TryGetResultSymbol(LookupContext context, out DeclaredSymbol resultSymbol)
+        public virtual bool TryGetResultSymbol(LookupContext context, out DeclarationSymbol resultSymbol)
         {
             var result = context.Result;
             var symbols = result.Symbols;
@@ -87,7 +87,7 @@ namespace MetaDslx.CodeAnalysis.Binding
             if (result.IsEmpty)
             {
                 var errorInfo = NotFound(context);
-                resultSymbol = context.ErrorSymbolFactory.CreateSymbol<DeclaredSymbol>(context.Qualifier ?? _compilation.GlobalNamespace, errorInfo);
+                resultSymbol = context.ErrorSymbolFactory.CreateSymbol<DeclarationSymbol>(context.Qualifier ?? _compilation.GlobalNamespace, errorInfo);
                 return false;
             }
             if (result.IsMultiViable && symbols.Count > 1)
@@ -113,7 +113,7 @@ namespace MetaDslx.CodeAnalysis.Binding
         /// <remarks>
         /// This is only intended to be called when the name is ambiguous
         /// </remarks>
-        protected virtual ErrorSymbolInfo Ambiguous(LookupContext context, out DeclaredSymbol resultSymbol)
+        protected virtual ErrorSymbolInfo Ambiguous(LookupContext context, out DeclarationSymbol resultSymbol)
         {
             var location = context.Location;
             var info = GetBestAmbiguousSymbols(context.Result);
@@ -147,7 +147,7 @@ namespace MetaDslx.CodeAnalysis.Binding
                 {
                     context.AddDiagnostic(errorInfo.Diagnostic);
                 }
-                resultSymbol = context.ErrorSymbolFactory.CreateSymbol<DeclaredSymbol>(best.ContainingDeclaration ?? _compilation.GlobalNamespace, errorInfo);
+                resultSymbol = context.ErrorSymbolFactory.CreateSymbol<DeclarationSymbol>(best.ContainingDeclaration ?? _compilation.GlobalNamespace, errorInfo);
                 return errorInfo;
             }
         }
@@ -159,9 +159,9 @@ namespace MetaDslx.CodeAnalysis.Binding
         {
             var symbols = result.Symbols;
 
-            DeclaredSymbol firstSymbol = null;
+            DeclarationSymbol firstSymbol = null;
             var firstLocation = AmbiguousSymbolLocation.None;
-            DeclaredSymbol secondSymbol = null;
+            DeclarationSymbol secondSymbol = null;
             var secondLocation = AmbiguousSymbolLocation.None;
 
             for (int i = 0; i < symbols.Count; i++)

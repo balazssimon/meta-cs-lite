@@ -18,7 +18,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
         private AnnotationArgumentSymbol? _annotationArgument;
 
         public AnnotationArgumentBinder()
-            : base(ImmutableArray.Create(typeof(DeclaredSymbol)))
+            : base(ImmutableArray.Create(typeof(DeclarationSymbol)))
         {
         }
 
@@ -64,7 +64,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
 
         protected override void AddLookupCandidateSymbolsInSingleBinder(LookupContext context, LookupCandidates result)
         {
-            var ctr = context.MultiLookupKey as DeclaredSymbol;
+            var ctr = context.MultiLookupKey as DeclarationSymbol;
             var index = AnnotationSymbol?.Constructors.IndexOf(ctr) ?? -1;
             if (index < 0) return;
             var parameters = AnnotationSymbol.Parameters[index];

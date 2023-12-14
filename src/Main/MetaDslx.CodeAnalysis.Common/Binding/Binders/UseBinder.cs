@@ -44,7 +44,7 @@ namespace MetaDslx.CodeAnalysis.Binding
             context.Validators.Add(this);
         }
 
-        protected override bool IsViable(LookupContext context, DeclaredSymbol symbol)
+        protected override bool IsViable(LookupContext context, DeclarationSymbol symbol)
         {
             if (symbol is null) return false;
             if (_types.IsDefaultOrEmpty) return true;
@@ -65,7 +65,7 @@ namespace MetaDslx.CodeAnalysis.Binding
             return false;
         }
 
-        protected override SingleLookupResult ValidateResult(LookupContext context, DeclaredSymbol resultSymbol, DeclaredSymbol unwrappedSymbol)
+        protected override SingleLookupResult ValidateResult(LookupContext context, DeclarationSymbol resultSymbol, DeclarationSymbol unwrappedSymbol)
         {
             return LookupResult.Good(resultSymbol);
         }

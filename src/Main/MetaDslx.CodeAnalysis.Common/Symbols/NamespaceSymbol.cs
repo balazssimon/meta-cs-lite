@@ -8,7 +8,7 @@ using System.Text;
 
 namespace MetaDslx.CodeAnalysis.Symbols
 {
-    public abstract partial class NamespaceSymbol : DeclaredSymbol
+    public abstract partial class NamespaceSymbol : DeclarationSymbol
     {
         protected NamespaceSymbol(Symbol container) 
             : base(container)

@@ -7,7 +7,7 @@ namespace MetaDslx.CodeAnalysis.Binding.Lookup
 {
     public class LookupTypeOnlyValidator : ILookupValidator
     {
-        public bool IsViable(LookupContext context, DeclaredSymbol symbol)
+        public bool IsViable(LookupContext context, DeclarationSymbol symbol)
         {
             return symbol is TypeSymbol;
         }
@@ -17,7 +17,7 @@ namespace MetaDslx.CodeAnalysis.Binding.Lookup
             return diagnostic;
         }
 
-        public SingleLookupResult ValidateResult(LookupContext context, DeclaredSymbol resultSymbol, DeclaredSymbol unwrappedSymbol)
+        public SingleLookupResult ValidateResult(LookupContext context, DeclarationSymbol resultSymbol, DeclarationSymbol unwrappedSymbol)
         {
             return LookupResult.Good(resultSymbol);
         }

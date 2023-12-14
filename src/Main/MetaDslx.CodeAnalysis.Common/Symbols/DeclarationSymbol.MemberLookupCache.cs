@@ -1,5 +1,4 @@
 ﻿using MetaDslx.CodeAnalysis.Collections;
-using Microsoft.CodeAnalysis;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -9,24 +8,24 @@ using System.Threading;
 
 namespace MetaDslx.CodeAnalysis.Symbols
 {
-    public partial class DeclaredSymbol
+    public partial class DeclarationSymbol
     {
         private class MemberLookupCache
         {
             private HashSet<string> _memberNames;
-            private ImmutableArray<DeclaredSymbol> _members;
+            private ImmutableArray<DeclarationSymbol> _members;
             private ImmutableArray<TypeSymbol> _typeMembers;
-            private CachingDictionary<string, DeclaredSymbol> _membersByName;
+            private CachingDictionary<string, DeclarationSymbol> _membersByName;
             private CachingDictionary<string, TypeSymbol> _typeMembersByName;
-            private CachingDictionary<string, DeclaredSymbol> _membersByMetadataName;
+            private CachingDictionary<string, DeclarationSymbol> _membersByMetadataName;
             private CachingDictionary<string, TypeSymbol> _typeMembersByMetadataName;
 
-            public MemberLookupCache(ImmutableArray<DeclaredSymbol> members)
+            public MemberLookupCache(ImmutableArray<DeclarationSymbol> members)
             {
                 _members = members;
             }
 
-            public ImmutableArray<DeclaredSymbol> Members => _members;
+            public ImmutableArray<DeclarationSymbol> Members => _members;
 
             public HashSet<string> GetMemberNames()
             {
@@ -37,24 +36,24 @@ namespace MetaDslx.CodeAnalysis.Symbols
                 return _memberNames;
             }
 
-            public ImmutableArray<DeclaredSymbol> GetMembers(string name)
+            public ImmutableArray<DeclarationSymbol> GetMembers(string name)
             {
-                if (name == null || !GetMemberNames().Contains(name)) return ImmutableArray<DeclaredSymbol>.Empty;
-                if (_members.IsEmpty) return ImmutableArray<DeclaredSymbol>.Empty;
+                if (name == null || !GetMemberNames().Contains(name)) return ImmutableArray<DeclarationSymbol>.Empty;
+                if (_members.IsEmpty) return ImmutableArray<DeclarationSymbol>.Empty;
                 if (_membersByName is null)
                 {
-                    Interlocked.CompareExchange(ref _membersByName, new CachingDictionary<string, DeclaredSymbol>(cachedName => _members.WhereAsArray(m => m.Name == cachedName), SlowGetMemberNames, EqualityComparer<string>.Default), null);
+                    Interlocked.CompareExchange(ref _membersByName, new CachingDictionary<string, DeclarationSymbol>(cachedName => _members.WhereAsArray(m => m.Name == cachedName), SlowGetMemberNames, EqualityComparer<string>.Default), null);
                 }
                 return _membersByName[name];
             }
 
-            public ImmutableArray<DeclaredSymbol> GetMembers(string name, string metadataName)
+            public ImmutableArray<DeclarationSymbol> GetMembers(string name, string metadataName)
             {
-                if (name == null || !GetMemberNames().Contains(name)) return ImmutableArray<DeclaredSymbol>.Empty;
-                if (_members.IsEmpty) return ImmutableArray<DeclaredSymbol>.Empty;
+                if (name == null || !GetMemberNames().Contains(name)) return ImmutableArray<DeclarationSymbol>.Empty;
+                if (_members.IsEmpty) return ImmutableArray<DeclarationSymbol>.Empty;
                 if (_membersByMetadataName is null)
                 {
-                    Interlocked.CompareExchange(ref _membersByMetadataName, new CachingDictionary<string, DeclaredSymbol>(cachedName => _members.WhereAsArray(m => m.MetadataName == cachedName), SlowGetMemberMetadataNames, EqualityComparer<string>.Default), null);
+                    Interlocked.CompareExchange(ref _membersByMetadataName, new CachingDictionary<string, DeclarationSymbol>(cachedName => _members.WhereAsArray(m => m.MetadataName == cachedName), SlowGetMemberMetadataNames, EqualityComparer<string>.Default), null);
                 }
                 return _membersByMetadataName[metadataName];
             }

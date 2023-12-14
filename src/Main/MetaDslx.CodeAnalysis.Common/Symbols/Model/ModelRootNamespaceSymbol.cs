@@ -33,9 +33,9 @@ namespace MetaDslx.CodeAnalysis.Symbols.Model
             return ((ModelModuleSymbol)ContainingModule).SymbolFactory.GetSymbols<Symbol>(_model.RootObjects);
         }
 
-        protected override ImmutableArray<DeclaredSymbol> CompleteProperty_Members(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        protected override ImmutableArray<DeclarationSymbol> CompleteProperty_Members(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            return ((ModelModuleSymbol)ContainingModule).SymbolFactory.GetSymbols<DeclaredSymbol>(_model.RootObjects);
+            return ((ModelModuleSymbol)ContainingModule).SymbolFactory.GetSymbols<DeclarationSymbol>(_model.RootObjects);
         }
     }
 }

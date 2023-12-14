@@ -117,7 +117,6 @@ namespace MetaDslx.CodeAnalysis.Symbols
             get
             {
                 var kind = this.Kind;
-                if (kind == "Declared") kind = "Declaration";
                 var builder = PooledStringBuilder.GetInstance();
                 var sb = builder.Builder;
                 foreach (var ch in kind)
@@ -275,14 +274,14 @@ namespace MetaDslx.CodeAnalysis.Symbols
         /// <summary>
         /// Returns the nearest lexically enclosing named declaration, or null if there is none.
         /// </summary>
-        public virtual DeclaredSymbol? ContainingDeclaration
+        public virtual DeclarationSymbol? ContainingDeclaration
         {
             get
             {
                 Symbol container = this.ContainingSymbol;
                 while (container is not null)
                 {
-                    if (container is DeclaredSymbol result)
+                    if (container is DeclarationSymbol result)
                     {
                         return result;
                     }

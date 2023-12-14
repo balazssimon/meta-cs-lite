@@ -44,7 +44,7 @@ namespace MetaDslx.CodeAnalysis.Binding
         private HashSet<string> _viableNames;
         private HashSet<string> _viableMetadataNames;
         private SyntaxNodeOrToken _alias;
-        private DeclaredSymbol? _qualifier;
+        private DeclarationSymbol? _qualifier;
         private LookupContext? _qualifierContext;
         private HashSet<TypeSymbol> _baseTypesBeingResolved;
         private TypeSymbol? _accessThroughType;
@@ -103,7 +103,7 @@ namespace MetaDslx.CodeAnalysis.Binding
             get => _alias;
             set => _alias = value;
         }
-        public DeclaredSymbol? Qualifier
+        public DeclarationSymbol? Qualifier
         {
             get => _qualifier;
             set => _qualifier = value;
@@ -308,7 +308,7 @@ namespace MetaDslx.CodeAnalysis.Binding
             }
         }
 
-        public void SetQualifier(DeclaredSymbol? qualifier, LookupContext? qualifierContext = null)
+        public void SetQualifier(DeclarationSymbol? qualifier, LookupContext? qualifierContext = null)
         {
             _qualifier = qualifier;
             _qualifierContext = qualifierContext;
@@ -319,15 +319,15 @@ namespace MetaDslx.CodeAnalysis.Binding
             _validators.Add(validator);
         }
 
-        public bool IsViable(DeclaredSymbol symbol)
+        public bool IsViable(DeclarationSymbol symbol)
         {
             if (_originalBinder is not null) return ((ILookupValidator)_originalBinder).IsViable(this, symbol);
             else return DefaultLookupValidator.IsViable(this, symbol);
         }
 
-        public SingleLookupResult Validate(DeclaredSymbol symbol)
+        public SingleLookupResult Validate(DeclarationSymbol symbol)
         {
-            var unwrappedSymbol = AliasSymbol.UnwrapAlias(this, symbol) as DeclaredSymbol;
+            var unwrappedSymbol = AliasSymbol.UnwrapAlias(this, symbol) as DeclarationSymbol;
             if (_originalBinder is not null) return ((ILookupValidator)_originalBinder).ValidateResult(this, symbol, unwrappedSymbol);
             else return DefaultLookupValidator.ValidateResult(this, symbol, unwrappedSymbol);
         }
@@ -338,7 +338,7 @@ namespace MetaDslx.CodeAnalysis.Binding
             else return DefaultLookupValidator.UpdateDiagnostic(this, diagnostic);
         }
 
-        public bool AddResult(DeclaredSymbol symbol)
+        public bool AddResult(DeclarationSymbol symbol)
         {
             var viable = IsViable(symbol);
             if (viable) _result.MergeEqual(Validate(symbol));
@@ -350,7 +350,7 @@ namespace MetaDslx.CodeAnalysis.Binding
             _result.MergeEqual(result);
         }
 
-        public void AddResults(IEnumerable<DeclaredSymbol> symbols)
+        public void AddResults(IEnumerable<DeclarationSymbol> symbols)
         {
             foreach (var symbol in symbols)
             {
@@ -376,7 +376,7 @@ namespace MetaDslx.CodeAnalysis.Binding
         /// Retrieves the single best result of the lookup. Never gives a null result:
         /// if the symbol could not be resolved, an error symbol will be returned.
         /// </summary>
-        public DeclaredSymbol GetResultSymbol()
+        public DeclarationSymbol GetResultSymbol()
         {
             DefaultLookupValidator.TryGetResultSymbol(this, out var resultSymbol);
             return resultSymbol;

@@ -19,7 +19,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
         private PElementSymbol? _containingElement;
 
         public SymbolPropertyBinder()
-            : base(ImmutableArray.Create(typeof(DeclaredSymbol)))
+            : base(ImmutableArray.Create(typeof(DeclarationSymbol)))
         {
         }
 
@@ -78,7 +78,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
             return _expectedTypeObjects;
         }
 
-        protected override bool IsViable(LookupContext context, DeclaredSymbol symbol)
+        protected override bool IsViable(LookupContext context, DeclarationSymbol symbol)
         {
             if (context.MultiLookupKey is null) return false;
             var alt = (MetaType)context.MultiLookupKey;

@@ -49,12 +49,12 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
             return SymbolFactory.CreateContainedSymbols(this, diagnostics);
         }
         
-        protected override (ImmutableArray<string> files, ImmutableArray<AliasSymbol> aliases, ImmutableArray<NamespaceSymbol> namespaces, ImmutableArray<DeclaredSymbol> symbols) ComputeImports(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        protected override (ImmutableArray<string> files, ImmutableArray<AliasSymbol> aliases, ImmutableArray<NamespaceSymbol> namespaces, ImmutableArray<DeclarationSymbol> symbols) ComputeImports(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             var files = SymbolFactory.GetSymbolPropertyValues<string>(this, nameof(Files), diagnostics, cancellationToken);
             var aliases = SymbolFactory.GetSymbolPropertyValues<AliasSymbol>(this, nameof(Aliases), diagnostics, cancellationToken);
             var namespaces = SymbolFactory.GetSymbolPropertyValues<NamespaceSymbol>(this, nameof(Namespaces), diagnostics, cancellationToken);
-            var symbols = SymbolFactory.GetSymbolPropertyValues<DeclaredSymbol>(this, nameof(Symbols), diagnostics, cancellationToken);
+            var symbols = SymbolFactory.GetSymbolPropertyValues<DeclarationSymbol>(this, nameof(Symbols), diagnostics, cancellationToken);
             return (files, aliases, namespaces, symbols);
         }
     }

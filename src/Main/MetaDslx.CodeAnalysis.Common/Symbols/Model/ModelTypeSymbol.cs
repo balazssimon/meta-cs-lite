@@ -38,7 +38,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Model
             return SymbolFactory.CreateChildSymbols(_modelObject);
         }
 
-        protected override ImmutableArray<DeclaredSymbol> CompleteProperty_Members(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        protected override ImmutableArray<DeclarationSymbol> CompleteProperty_Members(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             return SymbolFactory.GetMemberSymbols(_modelObject);
         }

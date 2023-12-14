@@ -31,11 +31,11 @@ namespace MetaDslx.CodeAnalysis.Symbols
             }
         }
 
-        protected override (ImmutableArray<string> files, ImmutableArray<AliasSymbol> aliases, ImmutableArray<NamespaceSymbol> namespaces, ImmutableArray<DeclaredSymbol> symbols) ComputeImports(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        protected override (ImmutableArray<string> files, ImmutableArray<AliasSymbol> aliases, ImmutableArray<NamespaceSymbol> namespaces, ImmutableArray<DeclarationSymbol> symbols) ComputeImports(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             var namespaces = SymbolFactory.GetSymbolPropertyValues<NamespaceSymbol>(this, nameof(Namespaces), diagnostics, cancellationToken);
             var compilation = DeclaringCompilation;
-            var symbolsBuilder = ArrayBuilder<DeclaredSymbol>.GetInstance();
+            var symbolsBuilder = ArrayBuilder<DeclarationSymbol>.GetInstance();
             var metaModelsBuilder = ArrayBuilder<MetaModel>.GetInstance();
             /*foreach (var symbolNamespace in namespaces.Where(ns => !ns.IsError))
             {

@@ -24,7 +24,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Model
             Register<AttributeSymbol>((s, mo) => new ModelAttributeSymbol(s, mo));
             Register<NamespaceSymbol>((s, mo) => new ModelNamespaceSymbol(s, mo));
             Register<TypeSymbol>((s, mo) => new ModelTypeSymbol(s, mo));
-            Register<DeclaredSymbol>((s, mo) => new ModelDeclaredSymbol(s, mo));
+            Register<DeclarationSymbol>((s, mo) => new ModelDeclarationSymbol(s, mo));
         }
 
         protected void Register<TSymbol>(Func<Symbol, IModelObject, TSymbol> constructor)
@@ -91,10 +91,10 @@ namespace MetaDslx.CodeAnalysis.Symbols.Model
             return GetSymbols<Symbol>(modelObject.Children);
         }
 
-        public ImmutableArray<DeclaredSymbol> GetMemberSymbols(IModelObject? modelObject)
+        public ImmutableArray<DeclarationSymbol> GetMemberSymbols(IModelObject? modelObject)
         {
-            if (modelObject is null) return ImmutableArray<DeclaredSymbol>.Empty;
-            return GetSymbols<DeclaredSymbol>(modelObject.Children);
+            if (modelObject is null) return ImmutableArray<DeclarationSymbol>.Empty;
+            return GetSymbols<DeclarationSymbol>(modelObject.Children);
         }
 
         public ImmutableArray<TValue> GetSymbolPropertyValues<TValue>(IModelObject? modelObject, string symbolProperty, DiagnosticBag diagnostics, CancellationToken cancellationToken)

@@ -99,7 +99,7 @@ namespace MetaDslx.CodeAnalysis.Binding
                         {
                             var symbol = qualifier.GetIdentifierSymbol(this, key, cancellationToken);
                             symbols.Add(symbol);
-                            if (symbol is not null && symbol is DeclaredSymbol declaredSymbol && !declaredSymbol.IsError) MarkSymbolAsUsed(declaredSymbol);
+                            if (symbol is not null && symbol is DeclarationSymbol declaredSymbol && !declaredSymbol.IsError) MarkSymbolAsUsed(declaredSymbol);
                         }
                         ImmutableInterlocked.InterlockedInitialize(ref _symbols, symbols.ToImmutableAndFree());
                     }
@@ -107,7 +107,7 @@ namespace MetaDslx.CodeAnalysis.Binding
                     {
                         var symbol = qualifier.GetIdentifierSymbol(this, null, cancellationToken);
                         ImmutableInterlocked.InterlockedInitialize(ref _symbols, ImmutableArray.Create<object?>(symbol));
-                        if (symbol is not null && symbol is DeclaredSymbol declaredSymbol && !declaredSymbol.IsError) MarkSymbolAsUsed(declaredSymbol);
+                        if (symbol is not null && symbol is DeclarationSymbol declaredSymbol && !declaredSymbol.IsError) MarkSymbolAsUsed(declaredSymbol);
                     }
                 }
                 else

@@ -120,7 +120,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
 			_Annotation_Arguments = new __ModelProperty(typeof(Annotation), "Arguments", typeof(AnnotationArgument), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection, "Arguments");
 			_Annotation_AttributeClass = new __ModelProperty(typeof(Annotation), "AttributeClass", typeof(__MetaType), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single, "AttributeClass");
 			_AnnotationArgument_NamedParameter = new __ModelProperty(typeof(AnnotationArgument), "NamedParameter", typeof(__MetaSymbol), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Collection, "NamedParameter");
-			_AnnotationArgument_Parameter = new __ModelProperty(typeof(AnnotationArgument), "Parameter", typeof(global::MetaDslx.CodeAnalysis.Symbols.DeclaredSymbol), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType, null);
+			_AnnotationArgument_Parameter = new __ModelProperty(typeof(AnnotationArgument), "Parameter", typeof(global::MetaDslx.CodeAnalysis.Symbols.DeclarationSymbol), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType, null);
 			_AnnotationArgument_ParameterType = new __ModelProperty(typeof(AnnotationArgument), "ParameterType", typeof(__MetaType), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single, null);
 			_AnnotationArgument_Value = new __ModelProperty(typeof(AnnotationArgument), "Value", typeof(Expression), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Single, "Value");
 			_ArrayExpression_Items = new __ModelProperty(typeof(ArrayExpression), "Items", typeof(Expression), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Collection, null);
@@ -539,7 +539,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
 			obj7.Properties.Add(obj40);
 			obj7.Properties.Add(obj41);
 			obj7.Properties.Add(obj42);
-			obj7.SymbolType = typeof(global::MetaDslx.CodeAnalysis.Symbols.DeclaredSymbol);
+			obj7.SymbolType = typeof(global::MetaDslx.CodeAnalysis.Symbols.DeclarationSymbol);
 			obj7.Declarations.Add(obj39);
 			obj7.Declarations.Add(obj40);
 			obj7.Declarations.Add(obj41);
@@ -951,7 +951,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
 			obj54.Type = __MetaType.FromModelObject((__IModelObject)obj58);
 			obj54.Name = "NamedParameter";
 			obj54.Parent = obj12;
-			obj55.Type = typeof(global::MetaDslx.CodeAnalysis.Symbols.DeclaredSymbol);
+			obj55.Type = typeof(global::MetaDslx.CodeAnalysis.Symbols.DeclarationSymbol);
 			obj55.Name = "Parameter";
 			obj55.Parent = obj12;
 			obj56.Type = typeof(__MetaType);
@@ -1697,7 +1697,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
 	public interface AnnotationArgument : __IModelObjectCore
 	{
 		global::MetaDslx.Modeling.ICollectionSlot<__MetaSymbol> NamedParameter { get; }
-		global::MetaDslx.CodeAnalysis.Symbols.DeclaredSymbol Parameter { get; set; }
+		global::MetaDslx.CodeAnalysis.Symbols.DeclarationSymbol Parameter { get; set; }
 		__MetaType ParameterType { get; set; }
 		Expression Value { get; set; }
 	
@@ -2763,10 +2763,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 			get => MGetCollection<__MetaSymbol>(Compiler.AnnotationArgument_NamedParameter);
 		}
 	
-		public global::MetaDslx.CodeAnalysis.Symbols.DeclaredSymbol Parameter
+		public global::MetaDslx.CodeAnalysis.Symbols.DeclarationSymbol Parameter
 		{
-			get => MGet<global::MetaDslx.CodeAnalysis.Symbols.DeclaredSymbol>(Compiler.AnnotationArgument_Parameter);
-			set => MSet<global::MetaDslx.CodeAnalysis.Symbols.DeclaredSymbol>(Compiler.AnnotationArgument_Parameter, value);
+			get => MGet<global::MetaDslx.CodeAnalysis.Symbols.DeclarationSymbol>(Compiler.AnnotationArgument_Parameter);
+			set => MSet<global::MetaDslx.CodeAnalysis.Symbols.DeclarationSymbol>(Compiler.AnnotationArgument_Parameter, value);
 		}
 	
 		public __MetaType ParameterType
@@ -3034,7 +3034,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 	        public override __MetaModel MetaModel => Compiler.MInstance;
 	        public override __MetaType MetaType => typeof(Declaration);
 	
-	        public override __MetaType SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.DeclaredSymbol);
+	        public override __MetaType SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.DeclarationSymbol);
 	        public override __ModelProperty? NameProperty => Compiler.Declaration_Name;
 	        public override __ModelProperty? TypeProperty => null;
 	        public override global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo> BaseTypes => _baseTypes;
@@ -3466,7 +3466,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 	        public override __MetaModel MetaModel => Compiler.MInstance;
 	        public override __MetaType MetaType => typeof(Language);
 	
-	        public override __MetaType SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.DeclaredSymbol);
+	        public override __MetaType SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.DeclarationSymbol);
 	        public override __ModelProperty? NameProperty => Compiler.Declaration_Name;
 	        public override __ModelProperty? TypeProperty => null;
 	        public override global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo> BaseTypes => _baseTypes;
@@ -3965,7 +3965,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 	        public override __MetaModel MetaModel => Compiler.MInstance;
 	        public override __MetaType MetaType => typeof(LexerRule);
 	
-	        public override __MetaType SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.DeclaredSymbol);
+	        public override __MetaType SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.DeclarationSymbol);
 	        public override __ModelProperty? NameProperty => Compiler.Declaration_Name;
 	        public override __ModelProperty? TypeProperty => null;
 	        public override global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo> BaseTypes => _baseTypes;
@@ -5253,7 +5253,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
 	        public override __MetaModel MetaModel => Compiler.MInstance;
 	        public override __MetaType MetaType => typeof(Rule);
 	
-	        public override __MetaType SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.DeclaredSymbol);
+	        public override __MetaType SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.DeclarationSymbol);
 	        public override __ModelProperty? NameProperty => Compiler.Declaration_Name;
 	        public override __ModelProperty? TypeProperty => null;
 	        public override global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo> BaseTypes => _baseTypes;

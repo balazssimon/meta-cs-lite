@@ -10,13 +10,13 @@ namespace MetaDslx.CodeAnalysis.Binding
     public sealed class LookupCandidates
     {
         private readonly ObjectPool<LookupCandidates> _pool;
-        private readonly HashSet<DeclaredSymbol> _symbolList;
+        private readonly HashSet<DeclarationSymbol> _symbolList;
         private readonly HashSet<DiagnosticInfo> _useSiteDiagnostics;
 
         private LookupCandidates(ObjectPool<LookupCandidates> pool)
         {
             _pool = pool;
-            _symbolList = new HashSet<DeclaredSymbol>();
+            _symbolList = new HashSet<DeclarationSymbol>();
             _useSiteDiagnostics = new HashSet<DiagnosticInfo>();
         }
 
@@ -29,12 +29,12 @@ namespace MetaDslx.CodeAnalysis.Binding
             _useSiteDiagnostics.Clear();
         }
 
-        public void Add(DeclaredSymbol symbol)
+        public void Add(DeclarationSymbol symbol)
         {
             _symbolList.Add(symbol);
         }
 
-        public void AddRange(IEnumerable<DeclaredSymbol> symbols)
+        public void AddRange(IEnumerable<DeclarationSymbol> symbols)
         {
             _symbolList.UnionWith(symbols);
         }
@@ -45,7 +45,7 @@ namespace MetaDslx.CodeAnalysis.Binding
             _useSiteDiagnostics.UnionWith(candidates.UseSiteDiagnostics);
         }
 
-        public HashSet<DeclaredSymbol> Symbols => _symbolList;
+        public HashSet<DeclarationSymbol> Symbols => _symbolList;
         public HashSet<DiagnosticInfo> UseSiteDiagnostics => _useSiteDiagnostics;
 
         // global pool

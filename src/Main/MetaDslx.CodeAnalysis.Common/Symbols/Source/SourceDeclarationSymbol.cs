@@ -10,12 +10,12 @@ using System.Threading;
 
 namespace MetaDslx.CodeAnalysis.Symbols.Source
 {
-    public class SourceDeclaredSymbol : DeclaredSymbol, ISourceSymbol, IModelSymbol
+    public class SourceDeclarationSymbol : DeclarationSymbol, ISourceSymbol, IModelSymbol
     {
         private readonly MergedDeclaration _declaration;
         private readonly IModelObject _modelObject;
 
-        public SourceDeclaredSymbol(Symbol container, MergedDeclaration declaration, IModelObject modelObject)
+        public SourceDeclarationSymbol(Symbol container, MergedDeclaration declaration, IModelObject modelObject)
             : base(container)
         {
             _declaration = declaration;
@@ -50,7 +50,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
             return SymbolFactory.CreateContainedSymbols(this, diagnostics);
         }
 
-        protected override ImmutableArray<DeclaredSymbol> CompleteProperty_Members(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        protected override ImmutableArray<DeclarationSymbol> CompleteProperty_Members(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             return SymbolFactory.GetMemberSymbols(this, diagnostics);
         }

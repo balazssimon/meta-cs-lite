@@ -219,7 +219,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
             return containedSymbols.ToImmutableAndFree();
         }
 
-        protected override ImmutableArray<DeclaredSymbol> CompleteProperty_Members(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        protected override ImmutableArray<DeclarationSymbol> CompleteProperty_Members(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             var memberNames = new HashSet<string>();
             // Accumulate all the child namespace and type names.
@@ -228,7 +228,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
                 memberNames.UnionWith(namespaceSymbol.MemberNames);
             }
 
-            var memberSymbols = ArrayBuilder<DeclaredSymbol>.GetInstance();
+            var memberSymbols = ArrayBuilder<DeclarationSymbol>.GetInstance();
 
             foreach (var name in memberNames)
             {

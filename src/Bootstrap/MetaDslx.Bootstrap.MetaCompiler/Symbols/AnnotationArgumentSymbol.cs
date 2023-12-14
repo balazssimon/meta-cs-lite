@@ -50,7 +50,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
         }
 
         private ImmutableArray<MetaSymbol> _namedParameter;
-        private DeclaredSymbol? _parameter;
+        private DeclarationSymbol? _parameter;
         private MetaType _parameterType;
         private ImmutableArray<MetaType> _expectedTypes;
         private ExpectedTypeKind _expectedTypeKind;
@@ -80,7 +80,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
         }
 
         [ModelProperty]
-        public DeclaredSymbol? Parameter
+        public DeclarationSymbol? Parameter
         {
             get
             {
@@ -191,7 +191,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
             return SymbolFactory.GetSymbolPropertyValues<MetaSymbol>(this, nameof(NamedParameter), diagnostics, cancellationToken);
         }
 
-        protected virtual DeclaredSymbol? CompleteProperty_Parameter(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        protected virtual DeclarationSymbol? CompleteProperty_Parameter(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             var index = AnnotationSymbol?.Arguments.IndexOf(this) ?? -1;
             if (index < 0) return null;

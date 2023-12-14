@@ -34,7 +34,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
             Register<AttributeSymbol>((s, d, mo) => new SourceAttributeSymbol(s, d, mo));
             Register<NamespaceSymbol>((s, d, mo) => new SourceNamespaceSymbol(s, d, mo));
             Register<TypeSymbol>((s, d, mo) => new SourceTypeSymbol(s, d, mo));
-            Register<DeclaredSymbol>((s, d, mo) => new SourceDeclaredSymbol(s, d, mo));
+            Register<DeclarationSymbol>((s, d, mo) => new SourceDeclarationSymbol(s, d, mo));
         }
 
         protected Compilation Compilation => _module.DeclaringCompilation;
@@ -69,11 +69,11 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
             return symbols.ToImmutableAndFree();
         }
 
-        public ImmutableArray<DeclaredSymbol> GetMemberSymbols(ISourceSymbol container, DiagnosticBag diagnostics)
+        public ImmutableArray<DeclarationSymbol> GetMemberSymbols(ISourceSymbol container, DiagnosticBag diagnostics)
         {
             var symbol = (Symbol)container;
-            if (symbol.ContainedSymbols.Length == 0) return ImmutableArray<DeclaredSymbol>.Empty;
-            else return symbol.ContainedSymbols.OfType<DeclaredSymbol>().ToImmutableArray();
+            if (symbol.ContainedSymbols.Length == 0) return ImmutableArray<DeclarationSymbol>.Empty;
+            else return symbol.ContainedSymbols.OfType<DeclarationSymbol>().ToImmutableArray();
         }
 
         public ImmutableArray<ImportSymbol> GetImportSymbols(ISourceSymbol container)

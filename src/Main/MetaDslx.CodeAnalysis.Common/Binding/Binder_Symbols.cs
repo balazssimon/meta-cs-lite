@@ -12,22 +12,22 @@ namespace MetaDslx.CodeAnalysis.Binding
 {
     public partial class Binder
     {
-        public ImmutableArray<DeclaredSymbol> BindQualifiedName(LookupContext context, ImmutableArray<SyntaxNodeOrToken> qualifier)
+        public ImmutableArray<DeclarationSymbol> BindQualifiedName(LookupContext context, ImmutableArray<SyntaxNodeOrToken> qualifier)
         {
-            if (qualifier.Length == 0) return ImmutableArray<DeclaredSymbol>.Empty;
+            if (qualifier.Length == 0) return ImmutableArray<DeclarationSymbol>.Empty;
             this.AdjustInitialLookupContext(context);
             if (qualifier.Length == 1)
             {
                 this.AdjustFinalLookupContext(context);
-                return ImmutableArray.Create(BindDeclaredOrAliasSymbolInternal(context, qualifier[0]));
+                return ImmutableArray.Create(BindDeclarationOrAliasSymbolInternal(context, qualifier[0]));
             }
             else
             {
-                var result = ArrayBuilder<DeclaredSymbol>.GetInstance();
+                var result = ArrayBuilder<DeclarationSymbol>.GetInstance();
                 var qualifierContext = context.AllocateCopy();
                 qualifierContext.ClearResult();
                 qualifierContext.Validators.Clear();
-                result.Add(BindDeclaredOrAliasSymbolInternal(qualifierContext, qualifier[0]));
+                result.Add(BindDeclarationOrAliasSymbolInternal(qualifierContext, qualifier[0]));
                 context.Diagnostics.AddRange(qualifierContext.Diagnostics);
                 var previous = result[0];
                 for (int i = 1; i < qualifier.Length; i++)
@@ -39,7 +39,7 @@ namespace MetaDslx.CodeAnalysis.Binding
                     else identifierContext.ClearResult();
                     identifierContext.Qualifier = previous;
                     if (isFinal) this.AdjustFinalLookupContext(identifierContext);
-                    result.Add(this.BindDeclaredOrAliasSymbolInternal(identifierContext, qualifier[i]));
+                    result.Add(this.BindDeclarationOrAliasSymbolInternal(identifierContext, qualifier[i]));
                     context.Diagnostics.AddRange(qualifierContext.Diagnostics); // intentionally qualifierContext, diagnostics for the last identifier are collected in the original context
                     previous = result[i];
                 }
@@ -48,24 +48,24 @@ namespace MetaDslx.CodeAnalysis.Binding
             }
         }
 
-        public ImmutableArray<DeclaredSymbol> BindQualifiedName(LookupContext context, ImmutableArray<string> qualifier)
+        public ImmutableArray<DeclarationSymbol> BindQualifiedName(LookupContext context, ImmutableArray<string> qualifier)
         {
-            if (qualifier.Length == 0) return ImmutableArray<DeclaredSymbol>.Empty;
+            if (qualifier.Length == 0) return ImmutableArray<DeclarationSymbol>.Empty;
             this.AdjustInitialLookupContext(context);
             if (qualifier.Length == 1)
             {
                 context.SetName(qualifier[0]);
                 this.AdjustFinalLookupContext(context);
-                return ImmutableArray.Create(BindDeclaredOrAliasSymbolInternal(context));
+                return ImmutableArray.Create(BindDeclarationOrAliasSymbolInternal(context));
             }
             else
             {
-                var result = ArrayBuilder<DeclaredSymbol>.GetInstance();
+                var result = ArrayBuilder<DeclarationSymbol>.GetInstance();
                 var qualifierContext = context.AllocateCopy();
                 qualifierContext.ClearResult();
                 qualifierContext.Validators.Clear();
                 qualifierContext.SetName(qualifier[0]);
-                result.Add(BindDeclaredOrAliasSymbolInternal(qualifierContext));
+                result.Add(BindDeclarationOrAliasSymbolInternal(qualifierContext));
                 context.Diagnostics.AddRange(qualifierContext.Diagnostics);
                 var previous = result[0];
                 for (int i = 0; i < qualifier.Length; i++)
@@ -78,7 +78,7 @@ namespace MetaDslx.CodeAnalysis.Binding
                     identifierContext.Qualifier = previous;
                     identifierContext.SetName(qualifier[i]);
                     if (isFinal) this.AdjustFinalLookupContext(identifierContext);
-                    result.Add(this.BindDeclaredOrAliasSymbolInternal(identifierContext));
+                    result.Add(this.BindDeclarationOrAliasSymbolInternal(identifierContext));
                     context.Diagnostics.AddRange(qualifierContext.Diagnostics); // intentionally qualifierContext, diagnostics for the last identifier are collected in the original context
                     previous = result[i];
                 }
@@ -88,30 +88,30 @@ namespace MetaDslx.CodeAnalysis.Binding
         }
 
         /// <summary>
-        /// Bind the syntax into a declared symbol by also unwrapping alias symbols. 
+        /// Bind the syntax into a declaration symbol by also unwrapping alias symbols. 
         /// </summary>
         [MethodImpl(MethodImplOptions.NoInlining)]
-        public DeclaredSymbol BindDeclaredSymbol(LookupContext context, SyntaxNodeOrToken identifierSyntax)
+        public DeclarationSymbol BindDeclarationSymbol(LookupContext context, SyntaxNodeOrToken identifierSyntax)
         {
             this.AdjustInitialLookupContext(context);
             this.AdjustFinalLookupContext(context);
-            var result = BindDeclaredOrAliasSymbolInternal(context, identifierSyntax);
-            return AliasSymbol.UnwrapAlias(context, result) as DeclaredSymbol;
+            var result = BindDeclarationOrAliasSymbolInternal(context, identifierSyntax);
+            return AliasSymbol.UnwrapAlias(context, result) as DeclarationSymbol;
         }
 
         /// <summary>
-        /// Bind the syntax into a declared symbol or an alias. 
+        /// Bind the syntax into a declaration symbol or an alias. 
         /// </summary>
         [MethodImpl(MethodImplOptions.NoInlining)]
-        public DeclaredSymbol BindDeclaredOrAliasSymbol(LookupContext context, SyntaxNodeOrToken identifierSyntax)
+        public DeclarationSymbol BindDeclarationOrAliasSymbol(LookupContext context, SyntaxNodeOrToken identifierSyntax)
         {
             this.AdjustInitialLookupContext(context);
             this.AdjustFinalLookupContext(context);
-            var result = BindDeclaredOrAliasSymbolInternal(context, identifierSyntax);
+            var result = BindDeclarationOrAliasSymbolInternal(context, identifierSyntax);
             return result;
         }
 
-        private DeclaredSymbol BindDeclaredOrAliasSymbolInternal(LookupContext context, SyntaxNodeOrToken identifierSyntax)
+        private DeclarationSymbol BindDeclarationOrAliasSymbolInternal(LookupContext context, SyntaxNodeOrToken identifierSyntax)
         {
             var syntaxFacts = identifierSyntax.Language.SyntaxFacts;
             var name = syntaxFacts.ExtractName(identifierSyntax);
@@ -122,10 +122,10 @@ namespace MetaDslx.CodeAnalysis.Binding
             context.IsLookup = true;
             context.SetName(name, metadataName);
             context.Location = identifierSyntax.GetLocation() as SourceLocation;
-            return binder.BindDeclaredOrAliasSymbolInternal(context);
+            return binder.BindDeclarationOrAliasSymbolInternal(context);
         }
 
-        private DeclaredSymbol BindDeclaredOrAliasSymbolInternal(LookupContext context)
+        private DeclarationSymbol BindDeclarationOrAliasSymbolInternal(LookupContext context)
         {
             var name = context.ViableNames.FirstOrDefault();
             if (string.IsNullOrWhiteSpace(name))

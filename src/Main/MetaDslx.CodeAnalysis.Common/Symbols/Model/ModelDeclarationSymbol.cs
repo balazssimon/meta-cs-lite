@@ -7,11 +7,11 @@ using System.Threading;
 
 namespace MetaDslx.CodeAnalysis.Symbols.Model
 {
-    public class ModelDeclaredSymbol : DeclaredSymbol, IModelSymbol
+    public class ModelDeclarationSymbol : DeclarationSymbol, IModelSymbol
     {
         private IModelObject _modelObject;
 
-        public ModelDeclaredSymbol(Symbol container, IModelObject modelObject)
+        public ModelDeclarationSymbol(Symbol container, IModelObject modelObject)
             : base(container)
         {
             _modelObject = modelObject;
@@ -38,7 +38,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Model
             return SymbolFactory.CreateChildSymbols(_modelObject);
         }
 
-        protected override ImmutableArray<DeclaredSymbol> CompleteProperty_Members(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        protected override ImmutableArray<DeclarationSymbol> CompleteProperty_Members(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             return SymbolFactory.GetMemberSymbols(_modelObject);
         }
