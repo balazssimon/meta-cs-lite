@@ -318,7 +318,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
                                         diagnostics.Add(Diagnostic.Create(CompilerErrorCode.ERR_ValueTypeMismatch, this.Location, pb2.ReturnType, coreType, ResolveExpectedTypeTrace(coreType)));
                                     }
                                 }
-                                else if (rule.AsModelObject() is LexerRule lr)
+                                else if (rule.AsModelObject() is Token lr)
                                 {
                                     if (!lr.ReturnType.IsAssignableTo(coreType))
                                     {

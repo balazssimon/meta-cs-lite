@@ -21,7 +21,7 @@ using MetaDslx.Modeling;
 namespace MetaDslx.Bootstrap.MetaCompiler.Model
 {
     using Model = MetaDslx.Modeling.Model;
-
+    /*/
     public class CompilerToRoslyn
     {
         private static readonly string DefaultReferenceFullName = typeof(DefaultReferenceAnnotation).FullName!;
@@ -1069,4 +1069,5 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             _rlang.MainRule = _rlang.Rules.FirstOrDefault();
         }
     }
+    //*/
 }

@@ -236,7 +236,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
 
         public virtual void VisitParserRule(ParserRuleSyntax node)
         {
-        	var __annot3 = new DefineBinder(type: typeof(global::MetaDslx.Bootstrap.MetaCompiler.Model.ParserRule));
+        	var __annot3 = new DefineBinder(type: typeof(global::MetaDslx.Bootstrap.MetaCompiler.Model.Rule));
         	this.Begin(__annot3, node);
         	try
         	{
@@ -296,7 +296,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
 
         public virtual void VisitPBlock(PBlockSyntax node)
         {
-        	var __annot4 = new DefineBinder(type: typeof(global::MetaDslx.Bootstrap.MetaCompiler.Model.PBlock));
+        	var __annot4 = new DefineBinder(type: typeof(global::MetaDslx.Bootstrap.MetaCompiler.Model.Block));
         	this.Begin(__annot4, node);
         	try
         	{
@@ -426,7 +426,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
 
         public virtual void VisitPAlternative(PAlternativeSyntax node)
         {
-        	var __annot1 = new DefineBinder(type: typeof(global::MetaDslx.Bootstrap.MetaCompiler.Model.PAlternative));
+        	var __annot1 = new DefineBinder(type: typeof(global::MetaDslx.Bootstrap.MetaCompiler.Model.Alternative));
         	this.Begin(__annot1, node);
         	try
         	{
@@ -456,7 +456,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
 
         public virtual void VisitPElement(PElementSyntax node)
         {
-        	var __annot14 = new DefineBinder(type: typeof(global::MetaDslx.Bootstrap.MetaCompiler.Model.PElement));
+        	var __annot14 = new DefineBinder(type: typeof(global::MetaDslx.Bootstrap.MetaCompiler.Model.Element));
         	this.Begin(__annot14, node);
         	try
         	{
@@ -627,7 +627,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
 
         public virtual void VisitPBlockInline(PBlockInlineSyntax node)
         {
-        	var __annot2 = new DefineBinder(type: typeof(global::MetaDslx.Bootstrap.MetaCompiler.Model.PBlock));
+        	var __annot2 = new DefineBinder(type: typeof(global::MetaDslx.Bootstrap.MetaCompiler.Model.Block));
         	this.Begin(__annot2, node);
         	try
         	{
@@ -672,7 +672,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
 
         public virtual void VisitPEof(PEofSyntax node)
         {
-        	var __annot0 = new DefineBinder(type: typeof(global::MetaDslx.Bootstrap.MetaCompiler.Model.PEof));
+        	var __annot0 = new DefineBinder(type: typeof(global::MetaDslx.Bootstrap.MetaCompiler.Model.Eof));
         	this.Begin(__annot0, node);
         	try
         	{
@@ -686,7 +686,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
 
         public virtual void VisitPKeyword(PKeywordSyntax node)
         {
-        	var __annot2 = new DefineBinder(type: typeof(global::MetaDslx.Bootstrap.MetaCompiler.Model.PKeyword));
+        	var __annot2 = new DefineBinder(type: typeof(global::MetaDslx.Bootstrap.MetaCompiler.Model.Keyword));
         	this.Begin(__annot2, node);
         	try
         	{
@@ -726,7 +726,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
 
         public virtual void VisitPReferenceAlt1(PReferenceAlt1Syntax node)
         {
-        	var __annot2 = new DefineBinder(type: typeof(global::MetaDslx.Bootstrap.MetaCompiler.Model.PReference));
+        	var __annot2 = new DefineBinder(type: typeof(global::MetaDslx.Bootstrap.MetaCompiler.Model.RuleRef));
         	this.Begin(__annot2, node);
         	try
         	{
@@ -759,7 +759,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
 
         public virtual void VisitPReferenceAlt2(PReferenceAlt2Syntax node)
         {
-        	var __annot1 = new DefineBinder(type: typeof(global::MetaDslx.Bootstrap.MetaCompiler.Model.PReference));
+        	var __annot1 = new DefineBinder(type: typeof(global::MetaDslx.Bootstrap.MetaCompiler.Model.RuleRef));
         	this.Begin(__annot1, node);
         	try
         	{
@@ -783,7 +783,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
 
         public virtual void VisitPReferenceAlt3(PReferenceAlt3Syntax node)
         {
-        	var __annot2 = new DefineBinder(type: typeof(global::MetaDslx.Bootstrap.MetaCompiler.Model.PReference));
+        	var __annot2 = new DefineBinder(type: typeof(global::MetaDslx.Bootstrap.MetaCompiler.Model.RuleRef));
         	this.Begin(__annot2, node);
         	try
         	{

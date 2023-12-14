@@ -147,7 +147,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
                 {
                     var diagnostics = DiagnosticBag.GetInstance();
                     _returnType = CompleteProperty_ReturnType(diagnostics, cancellationToken);
-                    if (ModelObject is PAlternative palt) palt.ReturnType = _returnType;
+                    if (ModelObject is Alternative palt) palt.ReturnType = _returnType;
                     AddSymbolDiagnostics(diagnostics);
                     diagnostics.Free();
                     NotePartComplete(CompletionParts.FinishComputingProperty_ReturnType);

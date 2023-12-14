@@ -9,8 +9,9 @@ abstract class $Declaration
 {
 	contains Annotation[] Annotations $Attributes;
 	string? $Name;
+	Declaration? Parent opposite Declarations;
+	contains Declaration[] Declarations opposite Parent;
 	derived string? FullName;
-	contains Declaration[] Declarations;
 }
 
 class $Namespace : Declaration
@@ -19,13 +20,26 @@ class $Namespace : Declaration
 
 class Language : Declaration
 {
-	contains Grammar Grammar;
+	derived string Namespace;
+
+	contains Grammar Grammar subsets Declaration.Declarations;
 }
 
 class $Grammar : Declaration
 {
-	Language Language;
-	contains Rule[] Rules;
+	Language Language redefines Declaration.Parent;
+	contains GrammarRule[] GrammarRules redefines Declaration.Declarations;
+
+	contains TokenKind[] TokenKinds;
+	contains Token[] Tokens subsets GrammarRules;
+	contains Rule[] Rules subsets GrammarRules;
+
+	Token? DefaultWhitespace;
+	Token? DefaultEndOfLine;
+	Token? DefaultSeparator;
+	Token? DefaultIdentifier;
+	Rule? MainRule;
+	string? RootTypeName;
 }
 
 class $Annotation
@@ -42,6 +56,29 @@ class $AnnotationArgument
 	contains Expression $Value;
 }
 
+class Binder
+{
+	string TypeName;
+	contains BinderArgument[] Arguments;
+	bool IsNegated;
+
+	derived string ConstructorArguments;
+}
+
+class BinderArgument
+{
+	string Name;
+	string TypeName;
+	bool IsArray;
+	string[] Values;
+}
+
+class TokenKind
+{
+	string Name;
+	string TypeName;
+}
+
 enum Multiplicity
 {
 	ExactlyOne,
@@ -53,22 +90,30 @@ enum Multiplicity
 	NonGreedyOneOrMore
 }
 
-abstract class Rule : Declaration
+abstract class GrammarRule : Declaration
 {
 	derived Language Language;
-	Grammar Grammar;
+	Grammar Grammar redefines Declaration.Parent;
 }
 
-class LexerRule : Rule
+abstract class LexerRule : GrammarRule
 {
-	type ReturnType;
-	bool IsHidden;
-	bool IsFragment;
+	contains LAlternative[] Alternatives;
 
 	derived bool IsFixed;
 	derived string? FixedText;
+}
 
-	contains LAlternative[] Alternatives;
+class Token : LexerRule
+{
+	type ReturnType;
+	bool IsTrivia;
+
+	TokenKind? TokenKind;
+}
+
+class Fragment : LexerRule
+{
 }
 
 class LAlternative $Symbol
@@ -165,19 +210,41 @@ class LBlock : LElementValue
 	contains LAlternative[] Alternatives;
 }
 
-abstract class $ParserRule : Rule
+abstract class Rule $ParserRule : GrammarRule
 {
 	type $ReturnType;
+	contains Alternative[] $Alternatives;
 
-	contains PAlternative[] $Alternatives;
+	contains Binder[] Binders;
+	bool ContainsBinders;
+
+	derived string GreenName;
+	derived string RedName;
 }
 
-class $PAlternative : Declaration
+class Alternative $PAlternative : Declaration
 {
 	type $ReturnType;
 	contains Expression $ReturnValue;
 
-	contains PElement[] $Elements;
+	contains Element[] $Elements;
+
+	contains Binder[] Binders;
+	bool ContainsBinders;
+
+	derived string GreenName;
+	derived string GreenConstructorParameters;
+	derived string GreenConstructorArguments;
+	derived string GreenUpdateParameters;
+	derived string GreenUpdateArguments;
+
+	derived string RedName;
+	derived string RedUpdateParameters;
+	derived string RedUpdateArguments;
+	derived string RedOptionalUpdateParameters;
+	derived string RedToGreenArgumentList;
+	derived string RedToGreenOptionalArgumentList;
+	derived bool HasRedToGreenOptionalArguments;
 }
 
 enum Assignment
@@ -188,39 +255,111 @@ enum Assignment
     PlusAssign
 }
 
-class $PElement
+class Element $PElement
 {
 	contains Annotation[] NameAnnotations;
 	symbol[] $SymbolProperty;
 	Assignment $Assignment;
 	contains Annotation[] ValueAnnotations;
-	contains PElementValue $Value;
+	contains ElementValue $Value;
 	Multiplicity Multiplicity;
+
+	string Name;
+	contains Binder[] Binders;
+	bool ContainsBinders;
+
+	derived string FieldName;
+	derived string ParameterName;
+	derived string PropertyName;
+
+	derived string GreenFieldType;
+	derived string GreenParameterValue;
+	derived string GreenPropertyType;
+	derived string GreenPropertyValue;
+	derived string? GreenSyntaxNullCondition;
+	derived string? GreenSyntaxCondition;
+
+	derived bool IsOptionalUpdateParameter;
+	derived string RedFieldType;
+	derived string RedParameterValue;
+	derived string RedPropertyType;
+	derived string RedPropertyValue;
+	derived string RedToGreenArgument;
+	derived string RedToGreenOptionalArgument;
+	derived string? RedSyntaxNullCondition;
+	derived string? RedSyntaxCondition;
+
+	derived string? VisitCall;
 }
 
-abstract class PElementValue $Symbol
+abstract class ElementValue $Symbol
 {
+	contains Binder[] Binders;
+	bool ContainsBinders;
+
+	derived string GreenType;
+	derived string? GreenSyntaxCondition;
+
+	derived string RedType;
 }
 
-class $PReference : PElementValue
+class RuleRef $PReference : ElementValue
 {
-	Rule $Rule;
+	GrammarRule GrammarRule $Rule;
 	type[] $ReferencedTypes;
+
+	derived Token? Token;
+	derived Rule? Rule;
+
+	derived string GreenType;
+	derived string? GreenSyntaxCondition;
+
+	derived string RedType;
 }
 
-class PEof : PElementValue
+class Eof : ElementValue
 {
+	derived string GreenType;
+	derived string? GreenSyntaxCondition;
+
+	derived string RedType;
 }
 
-class PKeyword : PElementValue
+class Keyword : ElementValue
 {
 	string Text;
 }
 
-class $PBlock : Rule, PElementValue
+class TokenAlts : ElementValue
 {
-	type $ReturnType;
-	contains PAlternative[] $Alternatives;
+	contains RuleRef[] Tokens;
+
+	derived string GreenType;
+	derived string? GreenSyntaxCondition;
+
+	derived string RedType;
+}
+
+class Block $PBlock : Rule, ElementValue
+{
+}
+
+class SeparatedList : ElementValue
+{
+	bool SeparatorFirst;
+	bool RepeatedSeparatorFirst;
+	contains Element[] FirstItems;
+	contains Element[] FirstSeparators;
+	contains Element RepeatedBlock;
+	Element RepeatedItem;
+	Element RepeatedSeparator;
+	contains Element[] LastItems;
+	contains Element[] LastSeparators;
+
+	derived string GreenType;
+	derived string? GreenSyntaxCondition;
+
+	derived string RedType;
 }
 
 class Expression $ExpressionSymbol
