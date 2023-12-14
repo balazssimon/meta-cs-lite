@@ -25,6 +25,7 @@ namespace MetaDslx.CodeAnalysis.Binding
             InImport = 0x02,
             IsLookup = 0x04,
             IsCaseSensitive = 0x10,
+            IgnoreDiagnostics = 0x20,
         }
 
         private readonly ObjectPool<LookupContext> _pool;
@@ -126,7 +127,7 @@ namespace MetaDslx.CodeAnalysis.Binding
         }
         public bool Diagnose
         {
-            get => _flags.HasFlag(LookupFlags.Diagnose);
+            get => _flags.HasFlag(LookupFlags.Diagnose) && !_flags.HasFlag(LookupFlags.IgnoreDiagnostics);
             set
             {
                 if (value) _flags |= LookupFlags.Diagnose;
@@ -158,6 +159,15 @@ namespace MetaDslx.CodeAnalysis.Binding
             {
                 if (value) _flags |= LookupFlags.IsCaseSensitive;
                 else _flags &= ~LookupFlags.IsCaseSensitive;
+            }
+        }
+        public bool IgnoreDiagnostics
+        {
+            get => _flags.HasFlag(LookupFlags.IgnoreDiagnostics);
+            set
+            {
+                if (value) _flags |= LookupFlags.IgnoreDiagnostics;
+                else _flags &= ~LookupFlags.IgnoreDiagnostics;
             }
         }
         public LookupResult Result => _result;

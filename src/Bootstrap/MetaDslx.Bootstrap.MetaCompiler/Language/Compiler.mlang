@@ -40,9 +40,9 @@ BlockInline returns Block: '(' alternatives+=Alternative ('|' alternatives+=Alte
 
 Alternative: (annotations+=ParserAnnotation* 'alt' name=Name ('returns' returnType=ReturnTypeQualifier)? ':')? elements+=Element+ ('=>' returnValue=Expression)?;
 Element: (nameAnnotations+=ParserAnnotation* symbolProperty+=[SymbolProperty]Identifier assignment=Assignment)? valueAnnotations+=ParserAnnotation* value=ElementValue multiplicity=Multiplicity?;
-ElementValue: BlockInline | Eof | Keyword | RuleRef;
+ElementValue: BlockInline | Eof1 | Keyword | RuleRef;
 RuleRef: grammarRule=[Use(GrammarRule)]Identifier | '#' referencedTypes+=ReturnTypeQualifier | '#{' referencedTypes+=ReturnTypeQualifier (',' referencedTypes+=ReturnTypeQualifier)* '}' ;
-Eof: 'eof';
+Eof1 returns Eof: 'eof';
 Keyword: text=TString;
 
 LexerRule: Token | Fragment;

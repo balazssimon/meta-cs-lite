@@ -22,7 +22,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 		public virtual void VisitAlternativeGreen(AlternativeGreen node) => this.DefaultVisit(node);
 		public virtual void VisitElementGreen(ElementGreen node) => this.DefaultVisit(node);
 		public virtual void VisitBlockInlineGreen(BlockInlineGreen node) => this.DefaultVisit(node);
-		public virtual void VisitEofGreen(EofGreen node) => this.DefaultVisit(node);
+		public virtual void VisitEof1Green(Eof1Green node) => this.DefaultVisit(node);
 		public virtual void VisitKeywordGreen(KeywordGreen node) => this.DefaultVisit(node);
 		public virtual void VisitRuleRefAlt1Green(RuleRefAlt1Green node) => this.DefaultVisit(node);
 		public virtual void VisitRuleRefAlt2Green(RuleRefAlt2Green node) => this.DefaultVisit(node);
@@ -99,7 +99,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 		public virtual TResult VisitAlternativeGreen(AlternativeGreen node) => this.DefaultVisit(node);
 		public virtual TResult VisitElementGreen(ElementGreen node) => this.DefaultVisit(node);
 		public virtual TResult VisitBlockInlineGreen(BlockInlineGreen node) => this.DefaultVisit(node);
-		public virtual TResult VisitEofGreen(EofGreen node) => this.DefaultVisit(node);
+		public virtual TResult VisitEof1Green(Eof1Green node) => this.DefaultVisit(node);
 		public virtual TResult VisitKeywordGreen(KeywordGreen node) => this.DefaultVisit(node);
 		public virtual TResult VisitRuleRefAlt1Green(RuleRefAlt1Green node) => this.DefaultVisit(node);
 		public virtual TResult VisitRuleRefAlt2Green(RuleRefAlt2Green node) => this.DefaultVisit(node);

@@ -21,7 +21,7 @@ Main returns Namespace:
 
 block Using returns ImportSymbol
 	: 'using' namespaces+=#NamespaceSymbol ';'
-	| alt UsingMetaModel returns ImportMetaModelSymbol: 'using' 'metamodel' symbols+=#DeclaredSymbol ';'
+	| alt UsingMetaModel returns ImportMetaModelSymbol: 'using' 'metamodel' symbols+=#DeclarationSymbol ';'
 	| alt UsingSymbols returns ImportSymbolModelSymbol: 'using' 'symbols' namespaces+=#NamespaceSymbol ';';
 
 [Scope]
@@ -29,22 +29,24 @@ block Declarations: declarations+=LanguageDeclaration declarations+=Rule*;
 
 LanguageDeclaration returns MetaDslx.Bootstrap.MetaCompiler.Model.Language: 'language' name=Name ';' grammar=Grammar;
 
-Grammar: [Scope](rules+=Rule*);
+Grammar: [Scope](grammarRules+=GrammarRule*);
 
-Rule: ParserRule | PBlock | LexerRule;
+GrammarRule: Rule | Block | LexerRule;
 
-ParserRule: annotations+=ParserAnnotation* [Name](returnType=ReturnTypeIdentifier | Identifier 'returns' returnType=ReturnTypeQualifier) ':' alternatives+=PAlternative ('|' alternatives+=PAlternative)* ';';
-PBlock: annotations+=ParserAnnotation* 'block' name=Name ('returns' returnType=ReturnTypeQualifier)? ':' alternatives+=PAlternative ('|' alternatives+=PAlternative)* ';';
-PBlockInline returns PBlock: '(' alternatives+=PAlternative ('|' alternatives+=PAlternative)* ')';
+Rule: annotations+=ParserAnnotation* [Name](returnType=ReturnTypeIdentifier | Identifier 'returns' returnType=ReturnTypeQualifier) ':' alternatives+=Alternative ('|' alternatives+=Alternative)* ';';
+Block: annotations+=ParserAnnotation* 'block' name=Name ('returns' returnType=ReturnTypeQualifier)? ':' alternatives+=Alternative ('|' alternatives+=Alternative)* ';';
+BlockInline returns Block: '(' alternatives+=Alternative ('|' alternatives+=Alternative)* ')';
 
-PAlternative: (annotations+=ParserAnnotation* 'alt' name=Name ('returns' returnType=ReturnTypeQualifier)? ':')? elements+=PElement+ ('=>' returnValue=Expression)?;
-PElement: (nameAnnotations+=ParserAnnotation* symbolProperty+=[SymbolProperty]Identifier assignment=Assignment)? valueAnnotations+=ParserAnnotation* value=PElementValue multiplicity=Multiplicity?;
-PElementValue: PBlockInline | PEof | PKeyword | PReference;
-PReference: rule=[Use(Rule)]Identifier | '#' referencedTypes+=ReturnTypeQualifier | '#{' referencedTypes+=ReturnTypeQualifier (',' referencedTypes+=ReturnTypeQualifier)* '}' ;
-PEof: 'eof';
-PKeyword: text=TString;
+Alternative: (annotations+=ParserAnnotation* 'alt' name=Name ('returns' returnType=ReturnTypeQualifier)? ':')? elements+=Element+ ('=>' returnValue=Expression)?;
+Element: (nameAnnotations+=ParserAnnotation* symbolProperty+=[SymbolProperty]Identifier assignment=Assignment)? valueAnnotations+=ParserAnnotation* value=ElementValue multiplicity=Multiplicity?;
+ElementValue: BlockInline | Eof1 | Keyword | RuleRef;
+RuleRef: rule=[Use(GrammarRule)]Identifier | '#' referencedTypes+=ReturnTypeQualifier | '#{' referencedTypes+=ReturnTypeQualifier (',' referencedTypes+=ReturnTypeQualifier)* '}' ;
+Eof1 returns Eof: 'eof';
+Keyword: text=TString;
 
-LexerRule: annotations+=LexerAnnotation* ('token' name=Name ('returns' returnType=ReturnTypeQualifier)? | isHidden?='hidden' name=Name | isFragment?='fragment' name=Name) ':' alternatives+=LAlternative ('|' alternatives+=LAlternative)* ';';
+LexerRule: Token | Fragment;
+Token: annotations+=LexerAnnotation* ('token' name=Name ('returns' returnType=ReturnTypeQualifier)? | isTrivia?='hidden' name=Name) ':' alternatives+=LAlternative ('|' alternatives+=LAlternative)* ';';
+Fragment: 'fragment' name=Name ':' alternatives+=LAlternative ('|' alternatives+=LAlternative)* ';';
 LAlternative: elements+=LElement*;
 LElement: isNegated?='~'? value=LElementValue multiplicity=Multiplicity?;
 LElementValue: LBlock | LFixed | LWildCard | LRange | LReference /*| LSet*/;

@@ -259,6 +259,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
             public override GreenNode? VisitPr_Fragment(CompilerParser.Pr_FragmentContext? context)
             {
                	if (context == null) return FragmentGreen.__Missing;
+                var kFragment = this.VisitTerminal(context.kFragment, CompilerSyntaxKind.KFragment);
                 NameGreen? name = null;
                 if (context.nameAntlr1 is not null) name = (NameGreen?)this.Visit(context.nameAntlr1) ?? NameGreen.__Missing;
                 else name = NameGreen.__Missing;
@@ -283,7 +284,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
                 var lAlternativeList = lAlternativeListBuilder.ToList();
                 _pool.Free(lAlternativeListBuilder);
                 var tSemicolon = this.VisitTerminal(context.tSemicolon, CompilerSyntaxKind.TSemicolon);
-            	return _factory.Fragment(name, (InternalSyntaxToken)tColon, lAlternativeList, (InternalSyntaxToken)tSemicolon);
+            	return _factory.Fragment((InternalSyntaxToken)kFragment, name, (InternalSyntaxToken)tColon, lAlternativeList, (InternalSyntaxToken)tSemicolon);
             }
             public override GreenNode? VisitPr_Rule(CompilerParser.Pr_RuleContext? context)
             {
@@ -393,11 +394,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
                 var tRParen = this.VisitTerminal(context.tRParen, CompilerSyntaxKind.TRParen);
             	return _factory.BlockInline((InternalSyntaxToken)tLParen, alternativeList, (InternalSyntaxToken)tRParen);
             }
-            public override GreenNode? VisitPr_Eof(CompilerParser.Pr_EofContext? context)
+            public override GreenNode? VisitPr_Eof1(CompilerParser.Pr_Eof1Context? context)
             {
-               	if (context == null) return EofGreen.__Missing;
+               	if (context == null) return Eof1Green.__Missing;
                 var kEof = this.VisitTerminal(context.kEof, CompilerSyntaxKind.KEof);
-            	return _factory.Eof((InternalSyntaxToken)kEof);
+            	return _factory.Eof1((InternalSyntaxToken)kEof);
             }
             public override GreenNode? VisitPr_Keyword(CompilerParser.Pr_KeywordContext? context)
             {

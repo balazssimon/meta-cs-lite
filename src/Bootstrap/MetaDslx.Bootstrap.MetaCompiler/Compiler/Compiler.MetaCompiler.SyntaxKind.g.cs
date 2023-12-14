@@ -45,6 +45,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		KEof,
 		KToken,
 		KHidden,
+		KFragment,
 		TTilde,
 		TDot,
 		TDotDot,

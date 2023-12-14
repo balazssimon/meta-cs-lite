@@ -30,7 +30,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		void VisitAlternative(AlternativeSyntax node);
 		void VisitElement(ElementSyntax node);
 		void VisitBlockInline(BlockInlineSyntax node);
-		void VisitEof(EofSyntax node);
+		void VisitEof1(Eof1Syntax node);
 		void VisitKeyword(KeywordSyntax node);
 		void VisitRuleRefAlt1(RuleRefAlt1Syntax node);
 		void VisitRuleRefAlt2(RuleRefAlt2Syntax node);
@@ -163,7 +163,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		    this.DefaultVisit(node);
 		}
 
-		public virtual void VisitEof(EofSyntax node)
+		public virtual void VisitEof1(Eof1Syntax node)
 		{
 		    this.DefaultVisit(node);
 		}
@@ -475,7 +475,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		TResult VisitAlternative(AlternativeSyntax node);
 		TResult VisitElement(ElementSyntax node);
 		TResult VisitBlockInline(BlockInlineSyntax node);
-		TResult VisitEof(EofSyntax node);
+		TResult VisitEof1(Eof1Syntax node);
 		TResult VisitKeyword(KeywordSyntax node);
 		TResult VisitRuleRefAlt1(RuleRefAlt1Syntax node);
 		TResult VisitRuleRefAlt2(RuleRefAlt2Syntax node);
@@ -608,7 +608,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		    return this.DefaultVisit(node);
 		}
 
-		public virtual TResult VisitEof(EofSyntax node)
+		public virtual TResult VisitEof1(Eof1Syntax node)
 		{
 		    return this.DefaultVisit(node);
 		}
@@ -920,7 +920,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		TResult VisitAlternative(AlternativeSyntax node, TArg argument);
 		TResult VisitElement(ElementSyntax node, TArg argument);
 		TResult VisitBlockInline(BlockInlineSyntax node, TArg argument);
-		TResult VisitEof(EofSyntax node, TArg argument);
+		TResult VisitEof1(Eof1Syntax node, TArg argument);
 		TResult VisitKeyword(KeywordSyntax node, TArg argument);
 		TResult VisitRuleRefAlt1(RuleRefAlt1Syntax node, TArg argument);
 		TResult VisitRuleRefAlt2(RuleRefAlt2Syntax node, TArg argument);
@@ -1053,7 +1053,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		    return this.DefaultVisit(node, argument);
 		}
 
-		public virtual TResult VisitEof(EofSyntax node, TArg argument)
+		public virtual TResult VisitEof1(Eof1Syntax node, TArg argument)
 		{
 		    return this.DefaultVisit(node, argument);
 		}
@@ -1441,12 +1441,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 
         public virtual SyntaxNode VisitFragment(FragmentSyntax node)
         {
+            var kFragment = this.VisitToken(node.KFragment);
             var name = (NameSyntax)this.Visit(node.Name);
             var tColon = this.VisitToken(node.TColon);
             var lAlternativeList = this.VisitList(node.LAlternativeList);
             var tSemicolon = this.VisitToken(node.TSemicolon);
         	    
-        	return node.Update(name, tColon, lAlternativeList, tSemicolon);
+        	return node.Update(kFragment, name, tColon, lAlternativeList, tSemicolon);
         }
 
         public virtual SyntaxNode VisitRule(RuleSyntax node)
@@ -1488,7 +1489,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
         	return node.Update(tLParen, alternativeList, tRParen);
         }
 
-        public virtual SyntaxNode VisitEof(EofSyntax node)
+        public virtual SyntaxNode VisitEof1(Eof1Syntax node)
         {
             var kEof = this.VisitToken(node.KEof);
         	    

@@ -415,17 +415,18 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
         	return this.Token(annotations1, tokenBlock1, this.Token(CompilerSyntaxKind.TColon), lAlternativeList, this.Token(CompilerSyntaxKind.TSemicolon));
         }
 
-        public FragmentSyntax Fragment(NameSyntax name, SyntaxToken tColon, MetaDslx.CodeAnalysis.SeparatedSyntaxList<LAlternativeSyntax> lAlternativeList, SyntaxToken tSemicolon)
+        public FragmentSyntax Fragment(SyntaxToken kFragment, NameSyntax name, SyntaxToken tColon, MetaDslx.CodeAnalysis.SeparatedSyntaxList<LAlternativeSyntax> lAlternativeList, SyntaxToken tSemicolon)
         {
+        	if (kFragment.RawKind != (int)CompilerSyntaxKind.KFragment) throw new ArgumentException(nameof(kFragment));
         	if (name is null) throw new ArgumentNullException(nameof(name));
         	if (tColon.RawKind != (int)CompilerSyntaxKind.TColon) throw new ArgumentException(nameof(tColon));
         	if (tSemicolon.RawKind != (int)CompilerSyntaxKind.TSemicolon) throw new ArgumentException(nameof(tSemicolon));
-            return (FragmentSyntax)CompilerLanguage.Instance.InternalSyntaxFactory.Fragment((NameGreen)name.Green, (InternalSyntaxToken)tColon.Node, lAlternativeList.Node.ToGreenSeparatedList<LAlternativeGreen>(reversed: false), (InternalSyntaxToken)tSemicolon.Node).CreateRed();
+            return (FragmentSyntax)CompilerLanguage.Instance.InternalSyntaxFactory.Fragment((InternalSyntaxToken)kFragment.Node, (NameGreen)name.Green, (InternalSyntaxToken)tColon.Node, lAlternativeList.Node.ToGreenSeparatedList<LAlternativeGreen>(reversed: false), (InternalSyntaxToken)tSemicolon.Node).CreateRed();
         }
         
         public FragmentSyntax Fragment(NameSyntax name, MetaDslx.CodeAnalysis.SeparatedSyntaxList<LAlternativeSyntax> lAlternativeList)
         {
-        	return this.Fragment(name, this.Token(CompilerSyntaxKind.TColon), lAlternativeList, this.Token(CompilerSyntaxKind.TSemicolon));
+        	return this.Fragment(this.Token(CompilerSyntaxKind.KFragment), name, this.Token(CompilerSyntaxKind.TColon), lAlternativeList, this.Token(CompilerSyntaxKind.TSemicolon));
         }
 
         public RuleSyntax Rule(MetaDslx.CodeAnalysis.SyntaxList<ParserAnnotationSyntax> annotations1, RuleBlock1Syntax ruleBlock1, SyntaxToken tColon, MetaDslx.CodeAnalysis.SeparatedSyntaxList<AlternativeSyntax> alternativeList, SyntaxToken tSemicolon)
@@ -475,15 +476,15 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
         	return this.BlockInline(this.Token(CompilerSyntaxKind.TLParen), alternativeList, this.Token(CompilerSyntaxKind.TRParen));
         }
 
-        public EofSyntax Eof(SyntaxToken kEof)
+        public Eof1Syntax Eof1(SyntaxToken kEof)
         {
-        	if (kEof.RawKind != (int)CompilerSyntaxKind.Eof1) throw new ArgumentException(nameof(kEof));
-            return (EofSyntax)CompilerLanguage.Instance.InternalSyntaxFactory.Eof((InternalSyntaxToken)kEof.Node).CreateRed();
+        	if (kEof.RawKind != (int)CompilerSyntaxKind.KEof) throw new ArgumentException(nameof(kEof));
+            return (Eof1Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.Eof1((InternalSyntaxToken)kEof.Node).CreateRed();
         }
         
-        public EofSyntax Eof()
+        public Eof1Syntax Eof1()
         {
-        	return this.Eof(this.Token(CompilerSyntaxKind.Eof1));
+        	return this.Eof1(this.Token(CompilerSyntaxKind.KEof));
         }
 
         public KeywordSyntax Keyword(SyntaxToken text)
@@ -1042,7 +1043,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		        typeof(AlternativeSyntax),
 		        typeof(ElementSyntax),
 		        typeof(BlockInlineSyntax),
-		        typeof(EofSyntax),
+		        typeof(Eof1Syntax),
 		        typeof(KeywordSyntax),
 		        typeof(RuleRefAlt1Syntax),
 		        typeof(RuleRefAlt2Syntax),

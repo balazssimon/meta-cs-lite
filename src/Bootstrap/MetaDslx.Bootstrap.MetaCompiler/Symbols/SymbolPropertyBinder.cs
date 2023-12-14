@@ -89,11 +89,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
         protected override void AdjustFinalLookupContext(LookupContext context)
         {
             base.AdjustFinalLookupContext(context);
+            context.IgnoreDiagnostics = true;
             if (context.MultiLookupKey is null) return;
             context.IsCaseSensitive = false;
             var alt = (MetaType)context.MultiLookupKey;
             if (alt.IsNull || !alt.IsTypeSymbol) return;
             context.Qualifier = alt.OriginalTypeSymbol;
+            context.IgnoreDiagnostics = context.Qualifier?.IsError ?? true;
         }
 
         protected override Diagnostic UpdateDiagnostic(LookupContext context, Diagnostic diagnostic)

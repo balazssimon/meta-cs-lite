@@ -1907,15 +1907,21 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 	internal class FragmentGreen : GrammarRuleGreen
 	{
 		internal static new readonly FragmentGreen __Missing = new FragmentGreen();
+		private InternalSyntaxToken _kFragment;
 		private NameGreen _name;
 		private InternalSyntaxToken _tColon;
 		private GreenNode _lAlternativeList;
 		private InternalSyntaxToken _tSemicolon;
 	
-		public FragmentGreen(CompilerSyntaxKind kind, NameGreen name, InternalSyntaxToken tColon, GreenNode lAlternativeList, InternalSyntaxToken tSemicolon)
+		public FragmentGreen(CompilerSyntaxKind kind, InternalSyntaxToken kFragment, NameGreen name, InternalSyntaxToken tColon, GreenNode lAlternativeList, InternalSyntaxToken tSemicolon)
 			: base(kind, null, null)
 		{
-			SlotCount = 4;
+			SlotCount = 5;
+			if (kFragment != null)
+			{
+				AdjustFlagsAndWidth(kFragment);
+				_kFragment = kFragment;
+			}
 			if (name != null)
 			{
 				AdjustFlagsAndWidth(name);
@@ -1938,10 +1944,15 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			}
 		}
 	
-		public FragmentGreen(CompilerSyntaxKind kind, NameGreen name, InternalSyntaxToken tColon, GreenNode lAlternativeList, InternalSyntaxToken tSemicolon, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
+		public FragmentGreen(CompilerSyntaxKind kind, InternalSyntaxToken kFragment, NameGreen name, InternalSyntaxToken tColon, GreenNode lAlternativeList, InternalSyntaxToken tSemicolon, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
 			: base(kind, diagnostics, annotations)
 		{
-			SlotCount = 4;
+			SlotCount = 5;
+			if (kFragment != null)
+			{
+				AdjustFlagsAndWidth(kFragment);
+				_kFragment = kFragment;
+			}
 			if (name != null)
 			{
 				AdjustFlagsAndWidth(name);
@@ -1970,6 +1981,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			this.flags &= ~NodeFlags.IsNotMissing;
 		}
 	
+		public InternalSyntaxToken KFragment { get { return _kFragment; } }
 		public NameGreen Name { get { return _name; } }
 		public InternalSyntaxToken TColon { get { return _tColon; } }
 		public MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<LAlternativeGreen> LAlternativeList { get { return new MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<LAlternativeGreen>(_lAlternativeList, reversed: false); } }
@@ -1984,10 +1996,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 		{
 			switch (index)
 			{
-				case 0: return _name;
-				case 1: return _tColon;
-				case 2: return _lAlternativeList;
-				case 3: return _tSemicolon;
+				case 0: return _kFragment;
+				case 1: return _name;
+				case 2: return _tColon;
+				case 3: return _lAlternativeList;
+				case 4: return _tSemicolon;
 				default: return null;
 			}
 		}
@@ -1998,25 +2011,25 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 	
 		public override InternalSyntaxNode WithDiagnostics(DiagnosticInfo[] diagnostics)
 		{
-			return new FragmentGreen(this.Kind, _name, _tColon, _lAlternativeList, _tSemicolon, diagnostics, this.GetAnnotations());
+			return new FragmentGreen(this.Kind, _kFragment, _name, _tColon, _lAlternativeList, _tSemicolon, diagnostics, this.GetAnnotations());
 		}
 	
 		public override InternalSyntaxNode WithAnnotations(SyntaxAnnotation[] annotations)
 		{
-			return new FragmentGreen(this.Kind, _name, _tColon, _lAlternativeList, _tSemicolon, this.GetDiagnostics(), annotations);
+			return new FragmentGreen(this.Kind, _kFragment, _name, _tColon, _lAlternativeList, _tSemicolon, this.GetDiagnostics(), annotations);
 		}
 	
 		public override GreenNode Clone()
 		{
-			return new FragmentGreen(this.Kind, _name, _tColon, _lAlternativeList, _tSemicolon, this.GetDiagnostics(), this.GetAnnotations());
+			return new FragmentGreen(this.Kind, _kFragment, _name, _tColon, _lAlternativeList, _tSemicolon, this.GetDiagnostics(), this.GetAnnotations());
 		}
 	
 	
-		public FragmentGreen Update(NameGreen name, InternalSyntaxToken tColon, MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<LAlternativeGreen> lAlternativeList, InternalSyntaxToken tSemicolon)
+		public FragmentGreen Update(InternalSyntaxToken kFragment, NameGreen name, InternalSyntaxToken tColon, MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<LAlternativeGreen> lAlternativeList, InternalSyntaxToken tSemicolon)
 		{
-			if (_name != name || _tColon != tColon || _lAlternativeList != lAlternativeList.Node || _tSemicolon != tSemicolon)
+			if (_kFragment != kFragment || _name != name || _tColon != tColon || _lAlternativeList != lAlternativeList.Node || _tSemicolon != tSemicolon)
 			{
-				InternalSyntaxNode newNode = CompilerLanguage.Instance.InternalSyntaxFactory.Fragment(name, (InternalSyntaxToken)tColon, lAlternativeList, (InternalSyntaxToken)tSemicolon);
+				InternalSyntaxNode newNode = CompilerLanguage.Instance.InternalSyntaxFactory.Fragment((InternalSyntaxToken)kFragment, name, (InternalSyntaxToken)tColon, lAlternativeList, (InternalSyntaxToken)tSemicolon);
 				var diags = this.GetDiagnostics();
 				if (diags != null && diags.Length > 0)
 					newNode = newNode.WithDiagnostics(diags);
@@ -2526,12 +2539,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 		}
 	}
 	
-	internal class EofGreen : ElementValueGreen
+	internal class Eof1Green : ElementValueGreen
 	{
-		internal static new readonly EofGreen __Missing = new EofGreen();
+		internal static new readonly Eof1Green __Missing = new Eof1Green();
 		private InternalSyntaxToken _kEof;
 	
-		public EofGreen(CompilerSyntaxKind kind, InternalSyntaxToken kEof)
+		public Eof1Green(CompilerSyntaxKind kind, InternalSyntaxToken kEof)
 			: base(kind, null, null)
 		{
 			SlotCount = 1;
@@ -2542,7 +2555,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			}
 		}
 	
-		public EofGreen(CompilerSyntaxKind kind, InternalSyntaxToken kEof, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
+		public Eof1Green(CompilerSyntaxKind kind, InternalSyntaxToken kEof, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
 			: base(kind, diagnostics, annotations)
 		{
 			SlotCount = 1;
@@ -2553,7 +2566,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			}
 		}
 	
-		private EofGreen()
+		private Eof1Green()
 			: base((CompilerSyntaxKind)CompilerSyntaxKind.Eof1, null, null)
 		{
 			this.flags &= ~NodeFlags.IsNotMissing;
@@ -2563,7 +2576,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 	
 		protected override SyntaxNode CreateRed(SyntaxNode parent, int position)
 		{
-			return new global::MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.EofSyntax(this, (CompilerSyntaxNode)parent, position);
+			return new global::MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.Eof1Syntax(this, (CompilerSyntaxNode)parent, position);
 		}
 	
 		protected override GreenNode GetSlot(int index)
@@ -2575,38 +2588,38 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			}
 		}
 	
-		public override TResult Accept<TResult>(CompilerInternalSyntaxVisitor<TResult> visitor) => visitor.VisitEofGreen(this);
+		public override TResult Accept<TResult>(CompilerInternalSyntaxVisitor<TResult> visitor) => visitor.VisitEof1Green(this);
 	
-		public override void Accept(CompilerInternalSyntaxVisitor visitor) => visitor.VisitEofGreen(this);
+		public override void Accept(CompilerInternalSyntaxVisitor visitor) => visitor.VisitEof1Green(this);
 	
 		public override InternalSyntaxNode WithDiagnostics(DiagnosticInfo[] diagnostics)
 		{
-			return new EofGreen(this.Kind, _kEof, diagnostics, this.GetAnnotations());
+			return new Eof1Green(this.Kind, _kEof, diagnostics, this.GetAnnotations());
 		}
 	
 		public override InternalSyntaxNode WithAnnotations(SyntaxAnnotation[] annotations)
 		{
-			return new EofGreen(this.Kind, _kEof, this.GetDiagnostics(), annotations);
+			return new Eof1Green(this.Kind, _kEof, this.GetDiagnostics(), annotations);
 		}
 	
 		public override GreenNode Clone()
 		{
-			return new EofGreen(this.Kind, _kEof, this.GetDiagnostics(), this.GetAnnotations());
+			return new Eof1Green(this.Kind, _kEof, this.GetDiagnostics(), this.GetAnnotations());
 		}
 	
 	
-		public EofGreen Update(InternalSyntaxToken kEof)
+		public Eof1Green Update(InternalSyntaxToken kEof)
 		{
 			if (_kEof != kEof)
 			{
-				InternalSyntaxNode newNode = CompilerLanguage.Instance.InternalSyntaxFactory.Eof((InternalSyntaxToken)kEof);
+				InternalSyntaxNode newNode = CompilerLanguage.Instance.InternalSyntaxFactory.Eof1((InternalSyntaxToken)kEof);
 				var diags = this.GetDiagnostics();
 				if (diags != null && diags.Length > 0)
 					newNode = newNode.WithDiagnostics(diags);
 				var annotations = this.GetAnnotations();
 				if (annotations != null && annotations.Length > 0)
 					newNode = newNode.WithAnnotations(annotations);
-				return (EofGreen)newNode;
+				return (Eof1Green)newNode;
 			}
 			return this;
 		}

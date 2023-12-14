@@ -56,6 +56,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
         private enum ExpectedTypeKind
         {
             None,
+            Simple,
             Bool,
             Collection
         }
@@ -227,6 +228,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
                     if (mtType.IsNullable) mtType.TryExtractNullableType(out mtType, diagnostics, cancellationToken);
                     if (mtType.IsCollection) kind = ExpectedTypeKind.Collection;
                     else if (mtType.SpecialType == SpecialType.System_Boolean) kind = ExpectedTypeKind.Bool;
+                    else if (!mtType.IsNull) kind = ExpectedTypeKind.Simple;
                     if (mtType.TryGetCoreType(out var coreType, diagnostics, cancellationToken) && !coreType.IsNull)
                     {
                         if (!result.Contains(coreType)) result.Add(coreType);
@@ -243,7 +245,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
                 var alt = this.ContainingPAlternativeSymbol;
                 if (alt is not null && !this.IsBlock)
                 {
-                    return (alt.ExpectedTypes, ExpectedTypeKind.None);
+                    return (alt.ExpectedTypes, alt.ExpectedTypes.Length > 0 ? ExpectedTypeKind.Simple : ExpectedTypeKind.None);
                 }
             }
             return (ImmutableArray<MetaType>.Empty, ExpectedTypeKind.None);
@@ -252,19 +254,19 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
         protected override void CompletePart_Validate(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             base.CompletePart_Validate(diagnostics, cancellationToken);
-            if (ExpectedKind == ExpectedTypeKind.Collection && this.Assignment != Assignment.PlusAssign)
+            if (this.Assignment != Assignment.PlusAssign && ExpectedKind == ExpectedTypeKind.Collection)
             {
                 diagnostics.Add(Diagnostic.Create(CompilerErrorCode.ERR_CollectionPropertyWrongAssignment, this.Location, this.Name));
             }
-            else if (ExpectedKind != ExpectedTypeKind.Collection && this.Assignment == Assignment.PlusAssign)
+            else if (this.Assignment == Assignment.PlusAssign && ExpectedKind != ExpectedTypeKind.None && ExpectedKind != ExpectedTypeKind.Collection)
             {
                 diagnostics.Add(Diagnostic.Create(CompilerErrorCode.ERR_NonCollectionPropertyWrongAssignment, this.Location, this.Name));
             }
-            else if (this.Assignment == Assignment.QuestionAssign && ExpectedKind != ExpectedTypeKind.Bool)
+            else if (this.Assignment == Assignment.QuestionAssign && ExpectedKind != ExpectedTypeKind.None && ExpectedKind != ExpectedTypeKind.Bool)
             {
                 diagnostics.Add(Diagnostic.Create(CompilerErrorCode.ERR_NonBooleanPropertyWrongAssignment, this.Location, this.Name, "?="));
             }
-            else if (this.Assignment == Assignment.NegatedAssign && ExpectedKind != ExpectedTypeKind.Bool)
+            else if (this.Assignment == Assignment.NegatedAssign && ExpectedKind != ExpectedTypeKind.None && ExpectedKind != ExpectedTypeKind.Bool)
             {
                 diagnostics.Add(Diagnostic.Create(CompilerErrorCode.ERR_NonBooleanPropertyWrongAssignment, this.Location, this.Name, "!="));
             }

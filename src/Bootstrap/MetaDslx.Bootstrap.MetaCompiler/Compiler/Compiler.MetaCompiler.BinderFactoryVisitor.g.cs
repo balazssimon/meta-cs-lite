@@ -236,17 +236,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
 
         public virtual void VisitGrammarRuleAlt1(GrammarRuleAlt1Syntax node)
         {
-        	var __annot0 = new DefineBinder(type: typeof(global::MetaDslx.Bootstrap.MetaCompiler.Model.GrammarRule));
-        	this.Begin(__annot0, node);
-        	try
-        	{
-        	    this.Visit(node.Rule);
-        	        
-        	}
-        	finally
-        	{
-        	    this.End(__annot0);
-        	}
+       	    this.Visit(node.Rule);
         }
 
         public virtual void VisitBlock(BlockSyntax node)
@@ -740,7 +730,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
         	}
         }
 
-        public virtual void VisitEof(EofSyntax node)
+        public virtual void VisitEof1(Eof1Syntax node)
         {
         	var __annot0 = new DefineBinder(type: typeof(global::MetaDslx.Bootstrap.MetaCompiler.Model.Eof));
         	this.Begin(__annot0, node);
@@ -1297,7 +1287,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
 
         public virtual void VisitExpressionAlt1(ExpressionAlt1Syntax node)
         {
-       	    this.Visit(node.SingleExpression);
+        	this.Visit(node.SingleExpression);
         }
 
         public virtual void VisitArrayExpression(ArrayExpressionSyntax node)

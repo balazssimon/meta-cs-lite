@@ -116,12 +116,12 @@ public interface ICompilerParserVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitPr_BlockInline([NotNull] CompilerParser.Pr_BlockInlineContext context);
 	/// <summary>
-	/// Visit a parse tree produced by the <c>pr_Eof</c>
+	/// Visit a parse tree produced by the <c>pr_Eof1</c>
 	/// labeled alternative in <see cref="CompilerParser.pr_ElementValue"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	Result VisitPr_Eof([NotNull] CompilerParser.Pr_EofContext context);
+	Result VisitPr_Eof1([NotNull] CompilerParser.Pr_Eof1Context context);
 	/// <summary>
 	/// Visit a parse tree produced by the <c>pr_Keyword</c>
 	/// labeled alternative in <see cref="CompilerParser.pr_ElementValue"/>.

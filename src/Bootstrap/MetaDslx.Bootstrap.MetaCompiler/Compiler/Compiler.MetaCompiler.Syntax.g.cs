@@ -1063,24 +1063,33 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	    {
 	    }
 	
-	    public NameSyntax Name => this.GetRed(ref this._name, 0);
+	    public SyntaxToken KFragment 
+		{ 
+			get 
+			{ 
+				var green = (global::MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax.FragmentGreen)this.Green;
+				var greenToken = green.KFragment;
+				return new SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
+			}
+		}
+	    public NameSyntax Name => this.GetRed(ref this._name, 1);
 	    public SyntaxToken TColon 
 		{ 
 			get 
 			{ 
 				var green = (global::MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax.FragmentGreen)this.Green;
 				var greenToken = green.TColon;
-				return new SyntaxToken(this, greenToken, this.GetChildPosition(1), this.GetChildIndex(1));
+				return new SyntaxToken(this, greenToken, this.GetChildPosition(2), this.GetChildIndex(2));
 			}
 		}
 	    public MetaDslx.CodeAnalysis.SeparatedSyntaxList<LAlternativeSyntax> LAlternativeList 
 		{ 
 			get
 			{
-				var red = this.GetRed(ref this._lAlternativeList, 2);
+				var red = this.GetRed(ref this._lAlternativeList, 3);
 				if (red != null)
 				{
-					return new MetaDslx.CodeAnalysis.SeparatedSyntaxList<LAlternativeSyntax>(red, this.GetChildIndex(2), reversed: false);
+					return new MetaDslx.CodeAnalysis.SeparatedSyntaxList<LAlternativeSyntax>(red, this.GetChildIndex(3), reversed: false);
 				}
 				return default;
 			} 
@@ -1091,7 +1100,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 			{ 
 				var green = (global::MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax.FragmentGreen)this.Green;
 				var greenToken = green.TSemicolon;
-				return new SyntaxToken(this, greenToken, this.GetChildPosition(3), this.GetChildIndex(3));
+				return new SyntaxToken(this, greenToken, this.GetChildPosition(4), this.GetChildIndex(4));
 			}
 		}
 	
@@ -1099,8 +1108,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	    {
 	        switch (index)
 	        {
-				case 0: return this.GetRed(ref this._name, 0);
-				case 2: return this.GetRed(ref this._lAlternativeList, 2);
+				case 1: return this.GetRed(ref this._name, 1);
+				case 3: return this.GetRed(ref this._lAlternativeList, 3);
 				default: return null;
 	        }
 	    }
@@ -1109,25 +1118,30 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	    {
 	        switch (index)
 	        {
-				case 0: return this._name;
-				case 2: return this._lAlternativeList;
+				case 1: return this._name;
+				case 3: return this._lAlternativeList;
 				default: return null;
 	        }
 	    }
 	
+	    public FragmentSyntax WithKFragment(SyntaxToken kFragment)
+		{
+			return this.Update(kFragment, this.Name, this.TColon, this.LAlternativeList, this.TSemicolon);
+		}
+	
 	    public FragmentSyntax WithName(NameSyntax name)
 		{
-			return this.Update(name, this.TColon, this.LAlternativeList, this.TSemicolon);
+			return this.Update(this.KFragment, name, this.TColon, this.LAlternativeList, this.TSemicolon);
 		}
 	
 	    public FragmentSyntax WithTColon(SyntaxToken tColon)
 		{
-			return this.Update(this.Name, tColon, this.LAlternativeList, this.TSemicolon);
+			return this.Update(this.KFragment, this.Name, tColon, this.LAlternativeList, this.TSemicolon);
 		}
 	
 	    public FragmentSyntax WithLAlternativeList(MetaDslx.CodeAnalysis.SeparatedSyntaxList<LAlternativeSyntax> lAlternativeList)
 		{
-			return this.Update(this.Name, this.TColon, lAlternativeList, this.TSemicolon);
+			return this.Update(this.KFragment, this.Name, this.TColon, lAlternativeList, this.TSemicolon);
 		}
 	
 	    public FragmentSyntax AddLAlternativeList(params LAlternativeSyntax[] lAlternativeList)
@@ -1137,14 +1151,14 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	
 	    public FragmentSyntax WithTSemicolon(SyntaxToken tSemicolon)
 		{
-			return this.Update(this.Name, this.TColon, this.LAlternativeList, tSemicolon);
+			return this.Update(this.KFragment, this.Name, this.TColon, this.LAlternativeList, tSemicolon);
 		}
 	
-	    public FragmentSyntax Update(NameSyntax name, SyntaxToken tColon, MetaDslx.CodeAnalysis.SeparatedSyntaxList<LAlternativeSyntax> lAlternativeList, SyntaxToken tSemicolon)
+	    public FragmentSyntax Update(SyntaxToken kFragment, NameSyntax name, SyntaxToken tColon, MetaDslx.CodeAnalysis.SeparatedSyntaxList<LAlternativeSyntax> lAlternativeList, SyntaxToken tSemicolon)
 	    {
-	        if (this.Name != name || this.TColon != tColon || this.LAlternativeList != lAlternativeList || this.TSemicolon != tSemicolon)
+	        if (this.KFragment != kFragment || this.Name != name || this.TColon != tColon || this.LAlternativeList != lAlternativeList || this.TSemicolon != tSemicolon)
 	        {
-	            var newNode = CompilerLanguage.Instance.SyntaxFactory.Fragment(name, tColon, lAlternativeList, tSemicolon);
+	            var newNode = CompilerLanguage.Instance.SyntaxFactory.Fragment(kFragment, name, tColon, lAlternativeList, tSemicolon);
 	            var annotations = this.GetAnnotations();
 	            if (annotations != null && annotations.Length > 0)
 	               newNode = newNode.WithAnnotations(annotations);
@@ -1649,15 +1663,15 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	    }
 	
 	}
-	public sealed class EofSyntax : ElementValueSyntax
+	public sealed class Eof1Syntax : ElementValueSyntax
 	{
 	
-	    public EofSyntax(InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
+	    public Eof1Syntax(InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
 	        : base(green, syntaxTree, position)
 	    {
 	    }
 	
-	    public EofSyntax(InternalSyntaxNode green, CompilerSyntaxNode parent, int position)
+	    public Eof1Syntax(InternalSyntaxNode green, CompilerSyntaxNode parent, int position)
 	        : base(green, parent, position)
 	    {
 	    }
@@ -1666,7 +1680,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		{ 
 			get 
 			{ 
-				var green = (global::MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax.EofGreen)this.Green;
+				var green = (global::MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax.Eof1Green)this.Green;
 				var greenToken = green.KEof;
 				return new SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
 			}
@@ -1688,37 +1702,37 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	        }
 	    }
 	
-	    public EofSyntax WithKEof(SyntaxToken kEof)
+	    public Eof1Syntax WithKEof(SyntaxToken kEof)
 		{
 			return this.Update(kEof);
 		}
 	
-	    public EofSyntax Update(SyntaxToken kEof)
+	    public Eof1Syntax Update(SyntaxToken kEof)
 	    {
 	        if (this.KEof != kEof)
 	        {
-	            var newNode = CompilerLanguage.Instance.SyntaxFactory.Eof(kEof);
+	            var newNode = CompilerLanguage.Instance.SyntaxFactory.Eof1(kEof);
 	            var annotations = this.GetAnnotations();
 	            if (annotations != null && annotations.Length > 0)
 	               newNode = newNode.WithAnnotations(annotations);
-				return (EofSyntax)newNode;
+				return (Eof1Syntax)newNode;
 	        }
 	        return this;
 	    }
 	
 	    public override TResult Accept<TArg, TResult>(ICompilerSyntaxVisitor<TArg, TResult> visitor, TArg argument)
 	    {
-	        return visitor.VisitEof(this, argument);
+	        return visitor.VisitEof1(this, argument);
 	    }
 	
 	    public override TResult Accept<TResult>(ICompilerSyntaxVisitor<TResult> visitor)
 	    {
-	        return visitor.VisitEof(this);
+	        return visitor.VisitEof1(this);
 	    }
 	
 	    public override void Accept(ICompilerSyntaxVisitor visitor)
 	    {
-	        visitor.VisitEof(this);
+	        visitor.VisitEof1(this);
 	    }
 	
 	}

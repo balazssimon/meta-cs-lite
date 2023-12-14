@@ -46,6 +46,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 				case CompilerSyntaxKind.KEof:
 				case CompilerSyntaxKind.KToken:
 				case CompilerSyntaxKind.KHidden:
+				case CompilerSyntaxKind.KFragment:
 				case CompilerSyntaxKind.TTilde:
 				case CompilerSyntaxKind.TDot:
 				case CompilerSyntaxKind.TDotDot:
@@ -119,6 +120,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 				case CompilerSyntaxKind.KEof:
 				case CompilerSyntaxKind.KToken:
 				case CompilerSyntaxKind.KHidden:
+				case CompilerSyntaxKind.KFragment:
 				case CompilerSyntaxKind.TTilde:
 				case CompilerSyntaxKind.TDot:
 				case CompilerSyntaxKind.TDotDot:
@@ -193,6 +195,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 					return CompilerSyntaxKind.KToken;
 				case "hidden": 
 					return CompilerSyntaxKind.KHidden;
+				case "fragment": 
+					return CompilerSyntaxKind.KFragment;
 				case "~": 
 					return CompilerSyntaxKind.TTilde;
 				case ".": 
@@ -310,6 +314,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 					return "KToken";
 				case CompilerSyntaxKind.KHidden: 
 					return "KHidden";
+				case CompilerSyntaxKind.KFragment: 
+					return "KFragment";
 				case CompilerSyntaxKind.TTilde: 
 					return "TTilde";
 				case CompilerSyntaxKind.TDot: 
@@ -584,6 +590,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 					return "token";
 				case CompilerSyntaxKind.KHidden: 
 					return "hidden";
+				case CompilerSyntaxKind.KFragment: 
+					return "fragment";
 				case CompilerSyntaxKind.TTilde: 
 					return "~";
 				case CompilerSyntaxKind.TDot: 
@@ -665,6 +673,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 				case CompilerSyntaxKind.KEof: 
 				case CompilerSyntaxKind.KToken: 
 				case CompilerSyntaxKind.KHidden: 
+				case CompilerSyntaxKind.KFragment: 
 				case CompilerSyntaxKind.KNull: 
 				case CompilerSyntaxKind.KTrue: 
 				case CompilerSyntaxKind.KFalse: 
@@ -690,6 +699,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 			yield return CompilerSyntaxKind.KEof;
 			yield return CompilerSyntaxKind.KToken;
 			yield return CompilerSyntaxKind.KHidden;
+			yield return CompilerSyntaxKind.KFragment;
 			yield return CompilerSyntaxKind.KNull;
 			yield return CompilerSyntaxKind.KTrue;
 			yield return CompilerSyntaxKind.KFalse;
@@ -723,6 +733,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 					return CompilerSyntaxKind.KToken;
 				case "hidden": 
 					return CompilerSyntaxKind.KHidden;
+				case "fragment": 
+					return CompilerSyntaxKind.KFragment;
 				case "null": 
 					return CompilerSyntaxKind.KNull;
 				case "true": 

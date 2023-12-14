@@ -171,7 +171,7 @@ public partial class CompilerParserBaseVisitor<Result> : AbstractParseTreeVisito
 	/// <return>The visitor result.</return>
 	public virtual Result VisitPr_BlockInline([NotNull] CompilerParser.Pr_BlockInlineContext context) { return VisitChildren(context); }
 	/// <summary>
-	/// Visit a parse tree produced by the <c>pr_Eof</c>
+	/// Visit a parse tree produced by the <c>pr_Eof1</c>
 	/// labeled alternative in <see cref="CompilerParser.pr_ElementValue"/>.
 	/// <para>
 	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
@@ -180,7 +180,7 @@ public partial class CompilerParserBaseVisitor<Result> : AbstractParseTreeVisito
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	public virtual Result VisitPr_Eof([NotNull] CompilerParser.Pr_EofContext context) { return VisitChildren(context); }
+	public virtual Result VisitPr_Eof1([NotNull] CompilerParser.Pr_Eof1Context context) { return VisitChildren(context); }
 	/// <summary>
 	/// Visit a parse tree produced by the <c>pr_Keyword</c>
 	/// labeled alternative in <see cref="CompilerParser.pr_ElementValue"/>.

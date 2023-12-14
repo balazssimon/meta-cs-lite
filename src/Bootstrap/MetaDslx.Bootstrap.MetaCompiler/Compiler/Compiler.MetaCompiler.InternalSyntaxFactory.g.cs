@@ -461,9 +461,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			return new TokenGreen(CompilerSyntaxKind.Token, annotations1.Node, tokenBlock1, tColon, lAlternativeList.Node, tSemicolon);
 		}
 
-		internal FragmentGreen Fragment(NameGreen name, InternalSyntaxToken tColon, MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<LAlternativeGreen> lAlternativeList, InternalSyntaxToken tSemicolon)
+		internal FragmentGreen Fragment(InternalSyntaxToken kFragment, NameGreen name, InternalSyntaxToken tColon, MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<LAlternativeGreen> lAlternativeList, InternalSyntaxToken tSemicolon)
 		{
 #if DEBUG
+			if (kFragment is null) throw new ArgumentNullException(nameof(kFragment));
+			if (kFragment.RawKind != (int)CompilerSyntaxKind.KFragment) throw new ArgumentException(nameof(kFragment));
 			if (name is null) throw new ArgumentNullException(nameof(name));
 			if (tColon is null) throw new ArgumentNullException(nameof(tColon));
 			if (tColon.RawKind != (int)CompilerSyntaxKind.TColon) throw new ArgumentException(nameof(tColon));
@@ -471,7 +473,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			if (tSemicolon is null) throw new ArgumentNullException(nameof(tSemicolon));
 			if (tSemicolon.RawKind != (int)CompilerSyntaxKind.TSemicolon) throw new ArgumentException(nameof(tSemicolon));
 #endif
-			return new FragmentGreen(CompilerSyntaxKind.Fragment, name, tColon, lAlternativeList.Node, tSemicolon);
+			return new FragmentGreen(CompilerSyntaxKind.Fragment, kFragment, name, tColon, lAlternativeList.Node, tSemicolon);
 		}
 
 		internal RuleGreen Rule(MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<ParserAnnotationGreen> annotations1, RuleBlock1Green ruleBlock1, InternalSyntaxToken tColon, MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<AlternativeGreen> alternativeList, InternalSyntaxToken tSemicolon)
@@ -535,7 +537,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			return result;
 		}
 
-		internal EofGreen Eof(InternalSyntaxToken kEof)
+		internal Eof1Green Eof1(InternalSyntaxToken kEof)
 		{
 #if DEBUG
 			if (kEof is null) throw new ArgumentNullException(nameof(kEof));
@@ -543,9 +545,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 #endif
 			int hash;
 			var cached = SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.Eof1, kEof, out hash);
-			if (cached != null) return (EofGreen)cached;
+			if (cached != null) return (Eof1Green)cached;
 		
-			var result = new EofGreen(CompilerSyntaxKind.Eof1, kEof);
+			var result = new Eof1Green(CompilerSyntaxKind.Eof1, kEof);
 			if (hash >= 0)
 			{
 				SyntaxNodeCache.AddNode(result, hash);
