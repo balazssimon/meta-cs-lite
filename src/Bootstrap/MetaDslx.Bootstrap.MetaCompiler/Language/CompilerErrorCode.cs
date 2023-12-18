@@ -58,5 +58,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler
         /// Default reference is ambiguous between '{0}' and '{1}'. Make sure to use the [DefaultReferenceAnnotation] exactly once.
         /// </summary>
         public static readonly DiagnosticDescriptor ERR_AmbiguousDefaultReference = DiagnosticDescriptor.Error(nameof(ERR_AmbiguousDefaultReference), "Ambiguous default reference", "Default reference is ambiguous between '{0}' and '{1}'. Make sure to use the [DefaultReferenceAnnotation] exactly once.");
+
+        /// <summary>
+        /// Default reference is missing (are you missing a using directive?). Make sure to have exacly one token or rule with [DefaultReferenceAnnotation].
+        /// </summary>
+        public static readonly DiagnosticDescriptor ERR_MissingDefaultReference = DiagnosticDescriptor.Error(nameof(ERR_MissingDefaultReference), "Missing default reference", "Default reference is missing (are you missing a using directive?). Make sure to have exacly one token or rule with [DefaultReferenceAnnotation].");
     }
 }

@@ -31,8 +31,8 @@ class $Grammar : Declaration
 	contains GrammarRule[] GrammarRules redefines Declaration.Declarations;
 
 	contains TokenKind[] TokenKinds;
-	contains Token[] Tokens subsets GrammarRules;
-	contains Rule[] Rules subsets GrammarRules;
+	Token[] Tokens subsets GrammarRules;
+	Rule[] Rules subsets GrammarRules;
 
 	Token? DefaultWhitespace;
 	Token? DefaultEndOfLine;
@@ -268,6 +268,7 @@ class Element $PElement
 	contains ElementValue $Value;
 	Multiplicity Multiplicity;
 
+	string? Name;
 	string CSharpName;
 	string AntlrName;
 	contains Binder[] Binders;
