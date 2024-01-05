@@ -1,8 +1,10 @@
 ﻿using MetaDslx.Modeling;
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using System.Text;
+using System.Threading;
 
 namespace MetaDslx.Modeling
 {
@@ -155,6 +157,14 @@ namespace MetaDslx.Modeling
                     _models.Insert(index, model);
                     throw;
                 }
+            }
+        }
+
+        public void ReplaceObject(IModelObject oldObject, IModelObject newObject, CancellationToken cancellationToken = default)
+        {
+            foreach (var model in _models)
+            {
+                model.ReplaceObject(oldObject, newObject, cancellationToken);
             }
         }
 

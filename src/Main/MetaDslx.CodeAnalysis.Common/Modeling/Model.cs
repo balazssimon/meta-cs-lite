@@ -174,7 +174,6 @@ namespace MetaDslx.Modeling
             {
                 reference.Slot.Replace(oldObject, newObject);
             }
-            DeleteObject(oldObject);
         }
 
         internal void CheckReadOnly(string? message = null)

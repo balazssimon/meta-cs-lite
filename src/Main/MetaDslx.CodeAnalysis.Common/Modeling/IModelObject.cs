@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Text;
+using System.Threading;
 
 namespace MetaDslx.Modeling
 {
@@ -47,6 +48,8 @@ namespace MetaDslx.Modeling
         ImmutableArray<ModelOperation> PublicOperations { get; }
         ImmutableArray<ModelOperation> GetOverridenOperations(ModelOperation property);
         ImmutableArray<ModelOperation> GetOverridingOperations(ModelOperation property);
+
+        void ReplaceObject(IModelObject oldObject, IModelObject newObject, CancellationToken cancellationToken = default);
 
         Location? Location { get; set; }
         SourceLocation? SourceLocation { get; set; }

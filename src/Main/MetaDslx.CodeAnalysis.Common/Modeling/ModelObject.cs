@@ -1,5 +1,6 @@
 ﻿using MetaDslx.CodeAnalysis;
 using MetaDslx.CodeAnalysis.Symbols;
+using Roslyn.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -7,6 +8,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading;
 
 namespace MetaDslx.Modeling
 {
@@ -459,6 +461,19 @@ namespace MetaDslx.Modeling
         void IReferenceableModelObject.RemoveReference(Box box)
         {
             _references?.Remove(box);
+        }
+
+        void IModelObject.ReplaceObject(IModelObject oldObject, IModelObject newObject, CancellationToken cancellationToken)
+        {
+            var references = oldObject.References.ToImmutableArray();
+            var mobjs = this.GetAllContainedObjects<IModelObject>(includeSelf: true, cancellationToken: cancellationToken);
+            foreach (var reference in references)
+            {
+                if (mobjs.Contains(reference.Owner))
+                {
+                    reference.Slot.Replace(oldObject, newObject);
+                }
+            }
         }
     }
 }
