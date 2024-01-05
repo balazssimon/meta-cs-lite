@@ -349,12 +349,13 @@ namespace MetaDslx.Modeling
                     var opposites = parent.Info.GetOppositeProperties(prop);
                     var hasOpposites = !prop.IsContainment && opposites.Length > 0;
                     var oldSlot = parent.GetSlot(prop);
+                    if (oldSlot.IsReadOnly) continue;
                     var newSlot = copy.GetSlot(prop);
                     foreach (var oldValue in oldSlot.Values)
                     {
                         if (oldValue is null)
                         {
-                            newSlot.Add(null);
+                            if (!oldSlot.IsDefault) newSlot.Add(null);
                         }
                         else
                         {

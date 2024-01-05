@@ -266,15 +266,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
 
         public override string Element_GreenFieldType(Element _this)
         {
-            if (_this.Multiplicity.IsList()) return "__GreenNode";
-            else if (_this.Value is SeparatedList) return "__GreenNode";
+            if (_this.IsList) return "__GreenNode";
             else return _this.Value.GreenType;
         }
 
         public override string Element_GreenParameterValue(Element _this)
         {
-            if (_this.Multiplicity.IsList()) return $"{_this.ParameterName}.Node";
-            else if (_this.Value is SeparatedList) return $"{_this.ParameterName}.Node";
+            if (_this.IsList) return $"{_this.ParameterName}.Node";
             else return _this.ParameterName;
         }
 

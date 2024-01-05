@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Roslyn.Utilities;
+using System.Xml.Linq;
 
 namespace MetaDslx.Bootstrap.MetaCompiler.Model
 {
@@ -59,7 +60,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             _fixedTokens = new Dictionary<string, Token>();
             _keywordKind = AddTokenKind("Keyword", typeof(KeywordTokenKind).FullName!);
             AddTokens();
+            CheckDefaultReference();
+            SetDefaults();
             AddRules();
+            MergeSingleTokenAlts();
+            MergeSeparatedLists();
+            AddCSharpNames();
+            ComputeContainsBinders();
         }
 
         private void AddTokens()
@@ -319,16 +326,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
         private void AddRules()
         {
             var allRules = _model.Objects.OfType<Rule>().ToImmutableArray();
-            var usedElementNames = PooledHashSet<string>.GetInstance();
             foreach (var rule in allRules)
             {
-                rule.CSharpName = AddRuleName(rule.Name, tryWithoutIndex: true);
                 AddBinders(rule.Binders, rule.Annotations);
-                usedElementNames.Clear();
-                usedElementNames.Add("kind");
-                usedElementNames.Add("annotations");
-                usedElementNames.Add("diagnostics");
-                AddAlternatives(rule, usedElementNames);
+                AddAlternatives(rule);
             }
             foreach (var rule in allRules)
             {
@@ -340,22 +341,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                 }
                 _grammar.Rules.Add(rule);
             }
-            usedElementNames.Free();
         }
 
-        private void AddAlternatives(Rule rule, HashSet<string> usedElementNames)
+        private void AddAlternatives(Rule rule)
         {
             foreach (var alt in rule.Alternatives)
             {
-                if (string.IsNullOrEmpty(alt.Name))
-                {
-                    if (rule.Alternatives.Count == 1) alt.CSharpName = rule.CSharpName;
-                    else alt.CSharpName = AddRuleName(rule.CSharpName + "Alt", tryWithoutIndex: false);
-                }
-                else
-                {
-                    alt.CSharpName = AddRuleName(alt.Name, tryWithoutIndex: true);
-                }
                 AddBinders(alt.Binders, alt.Annotations);
                 if (alt.ReturnValue is not null)
                 {
@@ -396,17 +387,16 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                         alt.Binders.Add(defBinder);
                     }
                 }
-                AddElements(alt, usedElementNames);
+                AddElements(alt);
             }
         }
 
-        private void AddElements(Alternative alt, HashSet<string> usedElementNames)
+        private void AddElements(Alternative alt)
         {
             foreach (var elem in alt.Elements)
             {
                 var name = elem.SymbolProperty.FirstOrDefault().Name;
                 elem.Name = name;
-                elem.CSharpName = AddElementName(elem, name, usedElementNames);
                 AddBinders(elem.Binders, elem.NameAnnotations);
                 if (!string.IsNullOrEmpty(name))
                 {
@@ -454,52 +444,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             }
         }
 
-        private string AddRuleName(string? ruleName, bool tryWithoutIndex)
-        {
-            if (string.IsNullOrEmpty(ruleName)) ruleName = "Rule";
-            if (tryWithoutIndex && !_ruleNames.Contains(ruleName, StringComparer.OrdinalIgnoreCase))
-            {
-                _ruleNames.Add(ruleName);
-                return ruleName;
-            }
-            var index = 0;
-            while (true)
-            {
-                ++index;
-                var name = $"{ruleName}{index}";
-                if (!_ruleNames.Contains(name, StringComparer.OrdinalIgnoreCase))
-                {
-                    _ruleNames.Add(name);
-                    return name;
-                }
-            }
-        }
-
-        private string AddElementName(Element element, string? defaultName, HashSet<string> usedElementNames)
-        {
-            if (element.Value is Eof) defaultName = "EndOfFileToken";
-            if (string.IsNullOrEmpty(defaultName))
-            {
-                if (element.Value is RuleRef rr) defaultName = rr.GrammarRule.Name;
-                else if (element.Value is TokenAlts) defaultName = "Tokens";
-                else if (element.Value is Block) defaultName = "Block";
-                if (string.IsNullOrEmpty(defaultName)) defaultName = "Element";
-            }
-            int i = 0;
-            var name = defaultName;
-            while (usedElementNames.Contains(name, StringComparer.InvariantCultureIgnoreCase))
-            {
-                ++i;
-                name = $"{defaultName}{i}";
-            }
-            usedElementNames.Add(name);
-            if (element.Value is Block blk && string.IsNullOrEmpty(blk.Name))
-            {
-                blk.Name = name + "Block";
-            }
-            return name;
-        }
-
         private void MergeSingleTokenAlts()
         {
             var rules = _model.Objects.OfType<Rule>().ToList();
@@ -522,11 +466,28 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                 }
                 tokenAlts.Tokens.AddRange(tokens);
                 tokens.Free();
-                var tokensElem = f.Element();
-                tokensElem.Value = tokenAlts;
-                var tokensAlt = f.Alternative();
-                tokensAlt.Elements.Add(tokensElem);
-                rule.Alternatives.Insert(0, tokensAlt);
+                if (rule.Alternatives.Count == 0)
+                {
+                    InsertBinders(tokenAlts.Binders, rule.Binders);
+                    if (_ruleRefs.TryGetValue(rule, out var ruleRefs))
+                    {
+                        foreach (var ruleRef in ruleRefs)
+                        {
+                            ruleRef.Value = (TokenAlts)((IModelObject)tokenAlts).Clone();
+                        }
+                        _ruleRefs.Remove(rule);
+                    }
+                    _model.DeleteObject((IModelObject)tokenAlts);
+                    _model.DeleteObject((IModelObject)rule);
+                }
+                else
+                {
+                    var tokensElem = f.Element();
+                    tokensElem.Value = tokenAlts;
+                    var tokensAlt = f.Alternative();
+                    tokensAlt.Elements.Add(tokensElem);
+                    rule.Alternatives.Insert(0, tokensAlt);
+                }
             }
         }
 
@@ -559,7 +520,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                             Rule? item = null;
                             Token? separator = null;
                             string? name = null;
-                            string csharpName = string.Empty;
                             var repeatedAlt = ruleRef.Rule.Alternatives[0];
                             if (repeatedAlt.Elements.Count == 2)
                             {
@@ -577,7 +537,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                                         separator = rr1.Token;
                                         item = rr2.Rule;
                                         name = repeatedElem2.Name;
-                                        csharpName = repeatedElem2.CSharpName;
                                     }
                                     else if (rr1.Rule is not null && rr2.Token is not null)
                                     {
@@ -588,7 +547,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                                         separator = rr2.Token;
                                         item = rr1.Rule;
                                         name = repeatedElem1.Name;
-                                        csharpName = repeatedElem1.CSharpName;
                                     }
                                 }
                             }
@@ -698,11 +656,32 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                                 lastItems.Free();
                                 list.LastSeparators.AddRange(lastSeparators);
                                 lastSeparators.Free();
-                                var listElem = f.Element();
-                                listElem.Name = name;
-                                listElem.CSharpName = csharpName;
-                                listElem.Value = list;
-                                alt.Elements.Insert(firstIndex, listElem);
+                                if (string.IsNullOrEmpty(ruleRef.Rule.Name))
+                                {
+                                    _grammar.Rules.Remove(ruleRef.Rule);
+                                }
+                                if (alt.Elements.Count == 0 && rule.Alternatives.Count == 1)
+                                {
+                                    InsertBinders(list.Binders, alt.Binders);
+                                    InsertBinders(list.Binders, rule.Binders);
+                                    if (_ruleRefs.TryGetValue(rule, out var listRuleRefs))
+                                    {
+                                        foreach (var listRuleRef in listRuleRefs)
+                                        {
+                                            listRuleRef.Value = (SeparatedList)((IModelObject)list).Clone();
+                                        }
+                                        _ruleRefs.Remove(rule);
+                                    }
+                                    _model.DeleteObject((IModelObject)list);
+                                    _model.DeleteObject((IModelObject)rule);
+                                }
+                                else
+                                {
+                                    var listElem = f.Element();
+                                    listElem.Name = name;
+                                    listElem.Value = list;
+                                    alt.Elements.Insert(firstIndex, listElem);
+                                }
                             }
                         }
                     }
@@ -789,6 +768,134 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                 ((IModelObject)alt).Parent = null;
             }
             target.InsertRange(index, source);
+        }
+
+
+        private void AddCSharpNames()
+        {
+            var usedElementNames = PooledHashSet<string>.GetInstance();
+            foreach (var rule in _grammar.Rules.Where(r => !string.IsNullOrEmpty(r.Name)))
+            {
+                usedElementNames.Clear();
+                usedElementNames.Add("kind");
+                usedElementNames.Add("annotations");
+                usedElementNames.Add("diagnostics");
+                AddCSharpNames(rule, usedElementNames);
+            }
+            usedElementNames.Free();
+        }
+
+        private void AddCSharpNames(Rule rule, HashSet<string> usedElementNames)
+        {
+            rule.CSharpName = AddRuleName(rule.Name, tryWithoutIndex: true);
+            var altIndex = 0;
+            foreach (var alt in rule.Alternatives)
+            {
+                ++altIndex;
+                if (string.IsNullOrEmpty(alt.Name))
+                {
+                    if (rule.Alternatives.Count == 1) alt.CSharpName = rule.CSharpName;
+                    else alt.CSharpName = AddRuleName(rule.CSharpName + "Alt", tryWithoutIndex: false, indexHint: altIndex);
+                }
+                else
+                {
+                    alt.CSharpName = AddRuleName(alt.Name, tryWithoutIndex: true);
+                }
+                AddCSharpNames(alt.CSharpName, alt, usedElementNames);
+            }
+        }
+
+        private void AddCSharpNames(string? contextName, Alternative alt, HashSet<string> usedElementNames)
+        {
+            foreach (var elem in alt.Elements)
+            {
+                AddCSharpNames(contextName, elem, usedElementNames);
+            }
+        }
+
+        private void AddCSharpNames(string? contextName, Element elem, HashSet<string> usedElementNames)
+        {
+            if (elem.Value is Block blk && string.IsNullOrEmpty(blk.Name))
+            {
+                blk.Name = elem.Name ?? contextName + "Block";
+                AddCSharpNames(blk, usedElementNames);
+            }
+            if (elem.Value is RuleRef rr && rr.Rule is Block rrBlk && string.IsNullOrEmpty(rrBlk.Name))
+            {
+                rrBlk.Name = elem.Name ?? contextName + "Block";
+                AddCSharpNames(rrBlk, usedElementNames);
+            }
+            if (elem.Value is SeparatedList sl)
+            {
+                if (string.IsNullOrEmpty(elem.Name)) elem.Name = ((RuleRef)sl.RepeatedItem.Value).Rule?.Name + "List";
+                var repeatedBlock = (Block)((RuleRef)sl.RepeatedBlock.Value).Rule!;
+                if (string.IsNullOrEmpty(repeatedBlock.Name)) repeatedBlock.Name = elem.Name + "Block";
+                AddCSharpNames(repeatedBlock, usedElementNames);
+            }
+            elem.CSharpName = AddElementName(contextName, elem, usedElementNames);
+        }
+
+        private string AddRuleName(string? ruleName, bool tryWithoutIndex, int indexHint = -1)
+        {
+            if (string.IsNullOrEmpty(ruleName)) ruleName = "Rule";
+            if (tryWithoutIndex && !_ruleNames.Contains(ruleName, StringComparer.OrdinalIgnoreCase))
+            {
+                _ruleNames.Add(ruleName);
+                return ruleName;
+            }
+            if (indexHint >= 0)
+            {
+                var name = $"{ruleName}{indexHint}";
+                if (!_ruleNames.Contains(name, StringComparer.OrdinalIgnoreCase))
+                {
+                    _ruleNames.Add(name);
+                    return name;
+                }
+            }
+            var index = 0;
+            while (true)
+            {
+                ++index;
+                var name = $"{ruleName}{index}";
+                if (!_ruleNames.Contains(name, StringComparer.OrdinalIgnoreCase))
+                {
+                    _ruleNames.Add(name);
+                    return name;
+                }
+            }
+        }
+
+        private string AddElementName(string? contextName, Element element, HashSet<string> usedElementNames)
+        {
+            var defaultName = element.Name;
+            if (element.Value is Eof) defaultName = "EndOfFileToken";
+            if (string.IsNullOrEmpty(defaultName))
+            {
+                if (element.Value is RuleRef rr)
+                {
+                    if (element.Multiplicity.IsList()) defaultName = rr.GrammarRule?.Name + "List";
+                    else defaultName = rr.GrammarRule?.Name;
+                }
+                else if (element.Value is TokenAlts)
+                {
+                    defaultName = "Tokens";
+                }
+                else if (element.Value is SeparatedList)
+                {
+                    defaultName = "List";
+                }
+                else if (element.Value is Block) defaultName = "Block";
+                if (string.IsNullOrEmpty(defaultName)) defaultName = "Element";
+            }
+            int i = 0;
+            var name = defaultName;
+            while (usedElementNames.Contains(name, StringComparer.InvariantCultureIgnoreCase))
+            {
+                ++i;
+                name = $"{defaultName}{i}";
+            }
+            usedElementNames.Add(name);
+            return name;
         }
 
         private void ComputeContainsBinders()
