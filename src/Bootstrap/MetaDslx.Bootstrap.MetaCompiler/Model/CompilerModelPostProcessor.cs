@@ -25,7 +25,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
         private Grammar _grammar;
         private DiagnosticBag _diagnostics;
         private HashSet<string> _ruleNames;
-        private Dictionary<Rule, List<Element>> _ruleRefs;
         private Dictionary<string, TokenKind> _tokenKinds;
         private Dictionary<string, Token> _fixedTokens;
         private TokenKind _keywordKind;
@@ -55,12 +54,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             if (_grammar is null) return;
             f = new CompilerModelFactory(_model);
             _ruleNames = new HashSet<string>();
-            _ruleRefs = new Dictionary<Rule, List<Element>>();
             _tokenKinds = new Dictionary<string, TokenKind>();
             _fixedTokens = new Dictionary<string, Token>();
             _keywordKind = AddTokenKind("Keyword", typeof(KeywordTokenKind).FullName!);
             AddTokens();
-            CheckDefaultReference();
             SetDefaults();
             AddRules();
             MergeSingleTokenAlts();
@@ -254,29 +251,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             }
         }
 
-        private void CheckDefaultReference()
-        {
-            foreach (var rule in _grammar.GrammarRules)
-            {
-                var isDefaultRef = rule.Annotations.Any(a => a.AttributeClass.Name == nameof(DefaultReferenceAnnotation) && a.AttributeClass.FullName == DefaultReferenceFullName);
-                if (isDefaultRef)
-                {
-                    if (_defaultReferenceRule is null)
-                    {
-                        _defaultReferenceRule = rule;
-                    }
-                    else
-                    {
-                        _diagnostics.Add(Diagnostic.Create(CompilerErrorCode.ERR_AmbiguousDefaultReference, SourceLocation.None, ((IModelObject)_defaultReferenceRule).Name, ((IModelObject)rule).Name));
-                    }
-                }
-            }
-            if (_defaultReferenceRule is null)
-            {
-                _diagnostics.Add(Diagnostic.Create(CompilerErrorCode.ERR_MissingDefaultReference, SourceLocation.None));
-            }
-        }
-
         private void AddBinders(IList<Binder> binders, IList<Annotation> annotations)
         {
             foreach (var annot in annotations.Where(a => a.AttributeClass.Name?.EndsWith("Binder") ?? false))
@@ -325,7 +299,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
 
         private void AddRules()
         {
-            var allRules = _model.Objects.OfType<Rule>().ToImmutableArray();
+            var allRules = _model.Objects.OfType<Rule>().ToList();
             foreach (var rule in allRules)
             {
                 AddBinders(rule.Binders, rule.Annotations);
@@ -340,6 +314,29 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                     elem.Value = blockRef;
                 }
                 _grammar.Rules.Add(rule);
+            }
+            var unusedRules = true;
+            var first = true;
+            while (unusedRules)
+            {
+                unusedRules = false;
+                for (int i = allRules.Count - 1; i >= 0; --i)
+                {
+                    var rule = allRules[i];
+                    if (rule == _grammar.MainRule) continue;
+                    var ruleRefCount = GetRuleRefs(rule).Length;
+                    if (ruleRefCount == 0)
+                    {
+                        if (first)
+                        {
+                            _diagnostics.Add(Diagnostic.Create(ErrorCode.WRN_SyntaxWarning, ((IModelObject)rule).Location, $"Rule '{rule.Name}' is never used."));
+                        }
+                        _model.DeleteObject((IModelObject)rule);
+                        allRules.RemoveAt(i);
+                        unusedRules = true;
+                    }
+                }
+                first = false;
             }
         }
 
@@ -415,15 +412,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                 AddBinders(value.Binders, elem.ValueAnnotations);
                 if (value is RuleRef rr)
                 {
-                    if (rr.Rule is not null)
-                    {
-                        if (!_ruleRefs.TryGetValue(rr.Rule, out var ruleRefs))
-                        {
-                            ruleRefs = new List<Element>();
-                            _ruleRefs.Add(rr.Rule, ruleRefs);
-                        }
-                        ruleRefs.Add(elem);
-                    }
                     if (rr.ReferencedTypes.Count > 0)
                     {
                         if (rr.GrammarRule is null) rr.GrammarRule = _defaultReferenceRule;
@@ -444,6 +432,19 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             }
         }
 
+        private ImmutableArray<Element> GetRuleRefs(Rule rule)
+        {
+            var result = ArrayBuilder<Element>.GetInstance();
+            foreach (var ruleRef in ((IModelObject)rule).References)
+            {
+                if (ruleRef.Owner is RuleRef && ruleRef.Owner.Parent is Element elem)
+                {
+                    result.Add(elem);
+                }
+            }
+            return result.ToImmutableAndFree();
+        }
+
         private void MergeSingleTokenAlts()
         {
             var rules = _model.Objects.OfType<Rule>().ToList();
@@ -452,30 +453,23 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                 var rule = rules[i];
                 var singleTokenAlts = rule.Alternatives.Where(IsSingleTokenAlt).ToImmutableArray();
                 if (singleTokenAlts.Length < 2) continue;
-                var tokens = ArrayBuilder<RuleRef>.GetInstance();
                 var tokenAlts = f.TokenAlts();
                 foreach (var singleTokenAlt in singleTokenAlts)
                 {
                     var singleElem = singleTokenAlt.Elements[0];
                     var singleToken = (RuleRef)singleElem.Value;
                     ((IModelObject)singleToken).Parent = null;
-                    tokens.Add(singleToken);
+                    tokenAlts.Tokens.Add(singleToken);
                     InsertBinders(singleToken.Binders, singleTokenAlt.Binders);
-                    rule.Alternatives.Remove(singleTokenAlt);
                     _model.DeleteObject((IModelObject)singleTokenAlt);
                 }
-                tokenAlts.Tokens.AddRange(tokens);
-                tokens.Free();
                 if (rule.Alternatives.Count == 0)
                 {
                     InsertBinders(tokenAlts.Binders, rule.Binders);
-                    if (_ruleRefs.TryGetValue(rule, out var ruleRefs))
+                    foreach (var ruleRef in GetRuleRefs(rule))
                     {
-                        foreach (var ruleRef in ruleRefs)
-                        {
-                            ruleRef.Value = (TokenAlts)((IModelObject)tokenAlts).Clone();
-                        }
-                        _ruleRefs.Remove(rule);
+                        _model.DeleteObject((IModelObject)ruleRef.Value);
+                        ruleRef.Value = (TokenAlts)((IModelObject)tokenAlts).Clone();
                     }
                     _model.DeleteObject((IModelObject)tokenAlts);
                     _model.DeleteObject((IModelObject)rule);
@@ -656,21 +650,14 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                                 lastItems.Free();
                                 list.LastSeparators.AddRange(lastSeparators);
                                 lastSeparators.Free();
-                                if (string.IsNullOrEmpty(ruleRef.Rule.Name))
-                                {
-                                    _grammar.Rules.Remove(ruleRef.Rule);
-                                }
                                 if (alt.Elements.Count == 0 && rule.Alternatives.Count == 1)
                                 {
                                     InsertBinders(list.Binders, alt.Binders);
                                     InsertBinders(list.Binders, rule.Binders);
-                                    if (_ruleRefs.TryGetValue(rule, out var listRuleRefs))
+                                    foreach (var listRuleRef in GetRuleRefs(rule))
                                     {
-                                        foreach (var listRuleRef in listRuleRefs)
-                                        {
-                                            listRuleRef.Value = (SeparatedList)((IModelObject)list).Clone();
-                                        }
-                                        _ruleRefs.Remove(rule);
+                                        _model.DeleteObject((IModelObject)listRuleRef.Value);
+                                        listRuleRef.Value = (SeparatedList)((IModelObject)list).Clone();
                                     }
                                     _model.DeleteObject((IModelObject)list);
                                     _model.DeleteObject((IModelObject)rule);
@@ -706,10 +693,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                         if (alt.Elements.Count == 1)
                         {
                             var singleElem = alt.Elements[0];
-                            if (singleElem.Multiplicity == Multiplicity.ExactlyOne && singleElem.Value is RuleRef rr)
+                            if (singleElem.Multiplicity == Multiplicity.ExactlyOne && singleElem.Value is RuleRef rr && rr.Rule is not null)
                             {
                                 var rrRule = rr.Rule;
-                                if (_ruleRefs.TryGetValue(rrRule, out var ruleRefs) && ruleRefs.Count == 1)
+                                var ruleRefCount = GetRuleRefs(rrRule).Length;
+                                if (ruleRefCount == 1)
                                 {
                                     merged = true;
                                     if (rrRule.Alternatives.Count == 1)
@@ -728,7 +716,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                                         rrRule.Alternatives.Clear();
                                         rule.Alternatives[j] = rrAlt;
                                         _model.DeleteObject((IModelObject)alt);
-                                        _ruleRefs.Remove(rrRule);
                                     }
                                     else
                                     {
@@ -742,7 +729,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                                         }
                                         InsertAlternativesAt(rule.Alternatives, j, rrRule.Alternatives);
                                         _model.DeleteObject((IModelObject)alt);
-                                        _ruleRefs.Remove(rrRule);
                                     }
                                 }
                             }
@@ -754,20 +740,22 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
         
         private void InsertBinders(ICollectionSlot<Binder> target, ICollectionSlot<Binder> source)
         {
-            foreach (var binder in source)
+            var binders = source.ToArray();
+            foreach (var binder in binders)
             {
                 ((IModelObject)binder).Parent = null;
             }
-            target.InsertRange(0, source);
+            target.InsertRange(0, binders);
         }
 
         private void InsertAlternativesAt(ICollectionSlot<Alternative> target, int index, ICollectionSlot<Alternative> source)
         {
-            foreach (var alt in source)
+            var alts = source.ToArray();
+            foreach (var alt in alts)
             {
                 ((IModelObject)alt).Parent = null;
             }
-            target.InsertRange(index, source);
+            target.InsertRange(index, alts);
         }
 
 
@@ -972,26 +960,50 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
 
         private void SetDefaults()
         {
-            foreach (var token in _grammar.Tokens)
+            var mainRule = true;
+            foreach (var grammarRule in _grammar.GrammarRules)
             {
-                if (token.TokenKind?.TypeName == typeof(DefaultWhitespaceTokenKind).FullName)
+                var isDefaultRef = grammarRule.Annotations.Any(a => a.AttributeClass.Name == nameof(DefaultReferenceAnnotation) && a.AttributeClass.FullName == DefaultReferenceFullName);
+                if (isDefaultRef)
                 {
-                    _grammar.DefaultWhitespace = token;
+                    if (_defaultReferenceRule is null)
+                    {
+                        _defaultReferenceRule = grammarRule;
+                    }
+                    else
+                    {
+                        _diagnostics.Add(Diagnostic.Create(CompilerErrorCode.ERR_AmbiguousDefaultReference, SourceLocation.None, ((IModelObject)_defaultReferenceRule).Name, ((IModelObject)grammarRule).Name));
+                    }
                 }
-                if (token.TokenKind?.TypeName == typeof(DefaultEndOfLineTokenKind).FullName)
+                if (grammarRule is Token token)
                 {
-                    _grammar.DefaultEndOfLine = token;
+                    if (token.TokenKind?.TypeName == typeof(DefaultWhitespaceTokenKind).FullName)
+                    {
+                        _grammar.DefaultWhitespace = token;
+                    }
+                    if (token.TokenKind?.TypeName == typeof(DefaultEndOfLineTokenKind).FullName)
+                    {
+                        _grammar.DefaultEndOfLine = token;
+                    }
+                    if (token.TokenKind?.TypeName == typeof(DefaultSeparatorTokenKind).FullName)
+                    {
+                        _grammar.DefaultSeparator = token;
+                    }
+                    if (token.TokenKind?.TypeName == typeof(DefaultIdentifierTokenKind).FullName)
+                    {
+                        _grammar.DefaultIdentifier = token;
+                    }
                 }
-                if (token.TokenKind?.TypeName == typeof(DefaultSeparatorTokenKind).FullName)
+                else if (mainRule && grammarRule is Rule rule)
                 {
-                    _grammar.DefaultSeparator = token;
-                }
-                if (token.TokenKind?.TypeName == typeof(DefaultIdentifierTokenKind).FullName)
-                {
-                    _grammar.DefaultIdentifier = token;
+                    mainRule = false;
+                    _grammar.MainRule = rule;
                 }
             }
-            _grammar.MainRule = _grammar.Rules.FirstOrDefault();
+            if (_defaultReferenceRule is null)
+            {
+                _diagnostics.Add(Diagnostic.Create(CompilerErrorCode.ERR_MissingDefaultReference, SourceLocation.None));
+            }
         }
 
     }

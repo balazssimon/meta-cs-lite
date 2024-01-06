@@ -9,7 +9,7 @@ namespace MetaDslx.Languages.MetaModel.Model
         public override string MetaDeclaration_FullName(MetaDeclaration _this)
         {
             var parent = _this.Parent;
-            if (parent is null) return _this.Name;
+            if (parent is null || string.IsNullOrEmpty(parent.Name)) return _this.Name;
             else return $"{parent.FullName}.{_this.Name}";
         }
 

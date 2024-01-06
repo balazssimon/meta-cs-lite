@@ -31,8 +31,8 @@ class $Grammar : Declaration
 	contains GrammarRule[] GrammarRules redefines Declaration.Declarations;
 
 	contains TokenKind[] TokenKinds;
-	Token[] Tokens subsets GrammarRules;
-	Rule[] Rules subsets GrammarRules;
+	contains Token[] Tokens subsets GrammarRules;
+	contains Rule[] Rules subsets GrammarRules;
 
 	Token? DefaultWhitespace;
 	Token? DefaultEndOfLine;

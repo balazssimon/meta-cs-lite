@@ -29,12 +29,12 @@ namespace MetaDslx.CodeAnalysis.Declarations
                 if (i == _identifiers.Count - 1)
                 {
                     result = SingleDeclaration.Create(declaration.Syntax, declaration.Type, identifier.Name, identifier.MetadataName, identifier.NameLocation,
-                       declaration.CanMerge, isNesting: false, qualifierProperty: i > 0 ? identifier.QualifierProperty : null, declaration.GetChildren(), declaration.GetDiagnostics());
+                       declaration.CanMerge, isNesting: false, qualifierProperty: identifier.QualifierProperty, declaration.GetChildren(), declaration.GetDiagnostics());
                 }
                 else
                 {
                     result = SingleDeclaration.Create(declaration.Syntax, identifier.QualifierType ?? declaration.Type, identifier.Name, identifier.MetadataName, identifier.NameLocation, 
-                        canMerge: true, isNesting: true, qualifierProperty: i > 0 ? identifier.QualifierProperty : null, ImmutableArray.Create(result), ImmutableArray<Diagnostic>.Empty);
+                        canMerge: true, isNesting: true, qualifierProperty: identifier.QualifierProperty, ImmutableArray.Create(result), ImmutableArray<Diagnostic>.Empty);
                 }
             }
             return result;

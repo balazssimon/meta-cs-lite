@@ -83,6 +83,14 @@ namespace MetaDslx.Modeling
                         {
                             _parent = null;
                             originalParent.Children.Remove(this);
+                            foreach (var prop in originalParent.Properties)
+                            {
+                                if (prop.IsContainment)
+                                {
+                                    var slot = originalParent.GetSlot(prop);
+                                    slot.Remove(this);
+                                }
+                            }
                         }
                         _parent = value;
                         if (_parent != null)
@@ -117,7 +125,6 @@ namespace MetaDslx.Modeling
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         ModelClassInfo IModelObject.Info => MInfo;
 
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         IList<IModelObject> IModelObject.Children => _children;
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]

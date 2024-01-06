@@ -482,8 +482,8 @@ namespace MetaDslx.Modeling
             {
                 _modelToAbsoluteFileMap.TryGetValue(model, out _currentFile);
                 _modelToRelativeFileMap.Clear();
-                _allObjects = _currentModel.RootObjects;
-                List<IModelObject> rootObjects = _allObjects.Where(obj => obj.Parent == null).ToList();
+                _allObjects = _currentModel.Objects;
+                List<IModelObject> rootObjects = _currentModel.RootObjects.ToList();
                 IModelObject xmiRoot = null;
                 if (_options.RequireXmiRoot)
                 {
@@ -633,9 +633,23 @@ namespace MetaDslx.Modeling
                         {
                             foreach (IModelObject child in children)
                             {
-                                if (child != null && written.Add(child))
+                                if (child == null) continue;
+                                if (written.Add(child))
                                 {
                                     this.WriteObject(child, prop.Name);
+                                }
+                                else
+                                {
+                                    _currentXmlWriter.WriteStartElement(prop.Name.ToCamelCase());
+                                    if (child.Model == _currentModel)
+                                    {
+                                        _currentXmlWriter.WriteAttributeString(Xmi, "idref", _options.XmiNamespace, child.Id);
+                                    }
+                                    else
+                                    {
+                                        _currentXmlWriter.WriteAttributeString(Xmi, "idref", _options.XmiNamespace, ExternalIdRef(child));
+                                    }
+                                    _currentXmlWriter.WriteEndElement();
                                 }
                             }
                         }
@@ -643,9 +657,25 @@ namespace MetaDslx.Modeling
                     else
                     {
                         var child = slot.AsSingle()?.Value as IModelObject;
-                        if (child != null && written.Add(child))
+                        if (child != null)
                         {
-                            this.WriteObject(child, prop.Name);
+                            if (written.Add(child))
+                            {
+                                this.WriteObject(child, prop.Name);
+                            }
+                            else
+                            {
+                                _currentXmlWriter.WriteStartElement(prop.Name.ToCamelCase());
+                                if (child.Model == _currentModel)
+                                {
+                                    _currentXmlWriter.WriteAttributeString(Xmi, "idref", _options.XmiNamespace, child.Id);
+                                }
+                                else
+                                {
+                                    _currentXmlWriter.WriteAttributeString(Xmi, "idref", _options.XmiNamespace, ExternalIdRef(child));
+                                }
+                                _currentXmlWriter.WriteEndElement();
+                            }
                         }
                     }
                 }

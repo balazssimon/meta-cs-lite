@@ -64,7 +64,7 @@ namespace MetaDslx.Modeling
 
         protected void CheckReadOnly(string message)
         {
-            Model.CheckReadOnly(message);
+            Model?.CheckReadOnly(message);
             Property.ThrowModelException(mp => mp.IsReadOnly, mp => $"{message}: the property '{mp.QualifiedName}' in '{Owner}' is read only.");
         }
 

@@ -158,10 +158,10 @@ namespace MetaDslx.Modeling
             {
                 if (DetachObject(mobj))
                 {
-                    var references = modelObject.References.ToImmutableArray();
+                    var references = mobj.References.ToImmutableArray();
                     foreach (var reference in references)
                     {
-                        reference.Slot.Remove(modelObject);
+                        reference.Slot.Remove(mobj);
                     }
                 }
             }
