@@ -60,6 +60,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             AddTokens();
             SetDefaults();
             AddRules();
+            MergeSingleAlts();
             MergeSingleTokenAlts();
             MergeSeparatedLists();
             AddCSharpNames();
@@ -479,6 +480,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                     var tokensElem = f.Element();
                     tokensElem.Value = tokenAlts;
                     var tokensAlt = f.Alternative();
+                    tokensAlt.Name = rule.Name + "Token";
                     tokensAlt.Elements.Add(tokensElem);
                     rule.Alternatives.Insert(0, tokensAlt);
                 }
@@ -676,7 +678,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             }
         }
         
-        // TODO: optional
         private void MergeSingleAlts()
         {
             var rules = _model.Objects.OfType<Rule>().ToList();
@@ -703,33 +704,31 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                                     if (rrRule.Alternatives.Count == 1)
                                     {
                                         var rrAlt = rrRule.Alternatives[0];
-                                        if (string.IsNullOrEmpty(rrAlt.Name))
-                                        {
-                                            if (!string.IsNullOrEmpty(alt.Name)) rrAlt.Name = alt.Name;
-                                            else if (!string.IsNullOrEmpty(singleElem.Name)) rrAlt.Name = singleElem.Name;
-                                            else if (!string.IsNullOrEmpty(rrRule.Name)) rrAlt.Name = rrRule.Name;
-                                        }
+                                        if (string.IsNullOrEmpty(rrAlt.Name) && !string.IsNullOrEmpty(rrRule.Name)) rrAlt.Name = rrRule.Name;
                                         InsertBinders(rrAlt.Binders, rrRule.Binders);
                                         InsertBinders(rrAlt.Binders, singleElem.Value.Binders);
                                         InsertBinders(rrAlt.Binders, singleElem.Binders);
                                         InsertBinders(rrAlt.Binders, alt.Binders);
                                         rrRule.Alternatives.Clear();
                                         rule.Alternatives[j] = rrAlt;
-                                        _model.DeleteObject((IModelObject)alt);
                                     }
                                     else
                                     {
                                         rule.Alternatives.RemoveAt(j);
+                                        var altIndex = 0;
                                         foreach (var refAlt in rrRule.Alternatives)
                                         {
+                                            ++altIndex;
+                                            if (string.IsNullOrEmpty(refAlt.Name) && !string.IsNullOrEmpty(rrRule.Name)) refAlt.Name = rrRule.Name + "Alt" + altIndex;
                                             InsertBinders(refAlt.Binders, rrRule.Binders);
                                             InsertBinders(refAlt.Binders, singleElem.Value.Binders);
                                             InsertBinders(refAlt.Binders, singleElem.Binders);
                                             InsertBinders(refAlt.Binders, alt.Binders);
                                         }
                                         InsertAlternativesAt(rule.Alternatives, j, rrRule.Alternatives);
-                                        _model.DeleteObject((IModelObject)alt);
                                     }
+                                    _model.DeleteObject((IModelObject)alt);
+                                    _model.DeleteObject((IModelObject)rrRule);
                                 }
                             }
                         }
@@ -805,19 +804,19 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
         {
             if (elem.Value is Block blk && string.IsNullOrEmpty(blk.Name))
             {
-                blk.Name = elem.Name ?? contextName + "Block";
+                blk.Name = /*elem.Name ?? */contextName + "Block";
                 AddCSharpNames(blk, usedElementNames);
             }
             if (elem.Value is RuleRef rr && rr.Rule is Block rrBlk && string.IsNullOrEmpty(rrBlk.Name))
             {
-                rrBlk.Name = elem.Name ?? contextName + "Block";
+                rrBlk.Name = /*elem.Name ??*/ contextName + "Block";
                 AddCSharpNames(rrBlk, usedElementNames);
             }
             if (elem.Value is SeparatedList sl)
             {
                 if (string.IsNullOrEmpty(elem.Name)) elem.Name = ((RuleRef)sl.RepeatedItem.Value).Rule?.Name + "List";
                 var repeatedBlock = (Block)((RuleRef)sl.RepeatedBlock.Value).Rule!;
-                if (string.IsNullOrEmpty(repeatedBlock.Name)) repeatedBlock.Name = elem.Name + "Block";
+                if (string.IsNullOrEmpty(repeatedBlock.Name)) repeatedBlock.Name = contextName + elem.Name + "Block";
                 AddCSharpNames(repeatedBlock, usedElementNames);
             }
             elem.CSharpName = AddElementName(contextName, elem, usedElementNames);
@@ -872,8 +871,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                 {
                     defaultName = "List";
                 }
-                else if (element.Value is Block) defaultName = "Block";
-                if (string.IsNullOrEmpty(defaultName)) defaultName = "Element";
+                else if (element.Value is Block) defaultName =  "Block";
+                if (string.IsNullOrEmpty(defaultName)) defaultName =  "Element";
             }
             int i = 0;
             var name = defaultName;

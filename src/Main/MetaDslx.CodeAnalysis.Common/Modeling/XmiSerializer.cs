@@ -576,7 +576,7 @@ namespace MetaDslx.Modeling
                     }
                 }
             }
-            foreach (var prop in obj.Properties.Reverse())
+            foreach (var prop in obj.Properties)
             {
                 if (prop.IsDerived) continue;
                 bool oppositeIsContainment = obj.GetOppositeProperties(prop).Any(p => p.IsContainment);
@@ -620,7 +620,7 @@ namespace MetaDslx.Modeling
                     }
                 }
             }
-            foreach (var prop in obj.Properties.Reverse())
+            foreach (var prop in obj.Properties)
             {
                 if (prop.IsDerived || prop.IsDerivedUnion) continue;
                 if (prop.IsContainment && prop.IsModelObject)
