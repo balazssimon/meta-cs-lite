@@ -478,9 +478,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                 else
                 {
                     var tokensElem = f.Element();
+                    tokensElem.Name = "Tokens";
                     tokensElem.Value = tokenAlts;
                     var tokensAlt = f.Alternative();
-                    tokensAlt.Name = rule.Name + "Token";
+                    tokensAlt.Name = rule.Name + "Tokens";
                     tokensAlt.Elements.Add(tokensElem);
                     rule.Alternatives.Insert(0, tokensAlt);
                 }
@@ -532,7 +533,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                                         list.RepeatedItem = repeatedElem2;
                                         separator = rr1.Token;
                                         item = rr2.Rule;
-                                        name = repeatedElem2.Name;
+                                        name = repeatedElem2.Name ?? rr2.Rule.Name;
                                     }
                                     else if (rr1.Rule is not null && rr2.Token is not null)
                                     {
@@ -542,7 +543,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                                         list.RepeatedItem = repeatedElem1;
                                         separator = rr2.Token;
                                         item = rr1.Rule;
-                                        name = repeatedElem1.Name;
+                                        name = repeatedElem1.Name ?? rr1.Rule.Name;
                                     }
                                 }
                             }
@@ -659,6 +660,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                                     foreach (var listRuleRef in GetRuleRefs(rule))
                                     {
                                         _model.DeleteObject((IModelObject)listRuleRef.Value);
+                                        listRuleRef.Name = name;
                                         listRuleRef.Value = (SeparatedList)((IModelObject)list).Clone();
                                     }
                                     _model.DeleteObject((IModelObject)list);
@@ -694,7 +696,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                         if (alt.Elements.Count == 1)
                         {
                             var singleElem = alt.Elements[0];
-                            if (singleElem.Multiplicity == Multiplicity.ExactlyOne && singleElem.Value is RuleRef rr && rr.Rule is not null)
+                            if (singleElem.Name is null && singleElem.Multiplicity == Multiplicity.ExactlyOne && singleElem.Value is RuleRef rr && rr.Rule is not null)
                             {
                                 var rrRule = rr.Rule;
                                 var ruleRefCount = GetRuleRefs(rrRule).Length;
@@ -763,6 +765,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             var usedElementNames = PooledHashSet<string>.GetInstance();
             foreach (var rule in _grammar.Rules.Where(r => !string.IsNullOrEmpty(r.Name)))
             {
+                if (rule.CSharpName is null) rule.CSharpName = AddRuleName(rule.Name, tryWithoutIndex: true);
                 usedElementNames.Clear();
                 usedElementNames.Add("kind");
                 usedElementNames.Add("annotations");
@@ -774,19 +777,21 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
 
         private void AddCSharpNames(Rule rule, HashSet<string> usedElementNames)
         {
-            rule.CSharpName = AddRuleName(rule.Name, tryWithoutIndex: true);
             var altIndex = 0;
             foreach (var alt in rule.Alternatives)
             {
                 ++altIndex;
-                if (string.IsNullOrEmpty(alt.Name))
+                if (alt.CSharpName is null)
                 {
-                    if (rule.Alternatives.Count == 1) alt.CSharpName = rule.CSharpName;
-                    else alt.CSharpName = AddRuleName(rule.CSharpName + "Alt", tryWithoutIndex: false, indexHint: altIndex);
-                }
-                else
-                {
-                    alt.CSharpName = AddRuleName(alt.Name, tryWithoutIndex: true);
+                    if (string.IsNullOrEmpty(alt.Name))
+                    {
+                        if (rule.Alternatives.Count == 1) alt.CSharpName = rule.CSharpName;
+                        else alt.CSharpName = AddRuleName(rule.CSharpName + "Alt", tryWithoutIndex: false, indexHint: altIndex);
+                    }
+                    else
+                    {
+                        alt.CSharpName = AddRuleName(alt.Name, tryWithoutIndex: true);
+                    }
                 }
                 AddCSharpNames(alt.CSharpName, alt, usedElementNames);
             }
@@ -802,14 +807,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
 
         private void AddCSharpNames(string? contextName, Element elem, HashSet<string> usedElementNames)
         {
-            if (elem.Value is Block blk && string.IsNullOrEmpty(blk.Name))
-            {
-                blk.Name = /*elem.Name ?? */contextName + "Block";
-                AddCSharpNames(blk, usedElementNames);
-            }
             if (elem.Value is RuleRef rr && rr.Rule is Block rrBlk && string.IsNullOrEmpty(rrBlk.Name))
             {
-                rrBlk.Name = /*elem.Name ??*/ contextName + "Block";
+                rrBlk.CSharpName = AddRuleName(contextName + "Block", tryWithoutIndex: false);
+                rrBlk.Name = rrBlk.CSharpName;
                 AddCSharpNames(rrBlk, usedElementNames);
             }
             if (elem.Value is SeparatedList sl)
@@ -817,6 +818,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                 if (string.IsNullOrEmpty(elem.Name)) elem.Name = ((RuleRef)sl.RepeatedItem.Value).Rule?.Name + "List";
                 var repeatedBlock = (Block)((RuleRef)sl.RepeatedBlock.Value).Rule!;
                 if (string.IsNullOrEmpty(repeatedBlock.Name)) repeatedBlock.Name = contextName + elem.Name + "Block";
+                repeatedBlock.CSharpName = AddRuleName(repeatedBlock.Name, tryWithoutIndex: true);
                 AddCSharpNames(repeatedBlock, usedElementNames);
             }
             elem.CSharpName = AddElementName(contextName, elem, usedElementNames);
