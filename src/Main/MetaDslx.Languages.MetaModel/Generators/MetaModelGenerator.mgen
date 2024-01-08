@@ -313,7 +313,7 @@ public interface [cls.Name][if (cls.BaseTypes.Any())] : [foreach (var bt in cls.
 {
 	[foreach (var prop in metaCls.DeclaredProperties)]
 	[var info = metaCls.ModelPropertyInfos[prop]]
-	[if (info.HiddenProperties.Length > 0)]new [end if][ToCSharp(prop.UnderlyingProperty.Type)] [prop.Name] { get; [if (HasSetter(prop))]set; [end if]}
+	[if (info.HiddenProperties.Length > 0)]new [end if][prop.UnderlyingProperty.IsDerived ? ToCSharpOpType(prop.UnderlyingProperty.Type) : ToCSharp(prop.UnderlyingProperty.Type)] [prop.Name] { get; [if (HasSetter(prop))]set; [end if]}
 	[end foreach]
 
 	[foreach (var op in cls.Operations)]
@@ -345,10 +345,10 @@ internal class [cls.Name]_Impl : __MetaModelObject, [cls.Name]
 	[foreach (var prop in metaCls.AllDeclaredProperties)]
 		[var info = metaCls.ModelPropertyInfos[prop]]
 		[if (metaCls.PublicProperties.Contains(prop))]
-	public [ToCSharp(prop.UnderlyingProperty.Type)] [prop.Name]
+	public [prop.UnderlyingProperty.IsDerived ? ToCSharpOpType(prop.UnderlyingProperty.Type) : ToCSharp(prop.UnderlyingProperty.Type)] [prop.Name]
 		[else]
 	["["]global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)["]"]
-	[ToCSharp(prop.UnderlyingProperty.Type)] [ToCSharp(prop.DeclaringType.UnderlyingType)].[prop.Name]
+	[prop.UnderlyingProperty.IsDerived ? ToCSharpOpType(prop.UnderlyingProperty.Type) : ToCSharp(prop.UnderlyingProperty.Type)] [ToCSharp(prop.DeclaringType.UnderlyingType)].[prop.Name]
 		[end if]
 	{
 		[if (prop.UnderlyingProperty.IsDerived)]
@@ -369,7 +369,7 @@ internal class [cls.Name]_Impl : __MetaModelObject, [cls.Name]
 	[foreach (var op in metaCls.AllDeclaredOperations)]
 		[var info = metaCls.ModelOperationInfos[op]]
 		[var actualOp = info.OverridingOperations.FirstOrDefault() ?? op]
-	[ToCSharp(op.UnderlyingOperation.ReturnType)] [ToCSharp(op.DeclaringType.UnderlyingType)].[op.Name]([foreach (var param in op.UnderlyingOperation.Parameters) separator ", "][ToCSharp(param.Type)] [param.Name][end foreach]) => [mm.Name].__CustomImpl.[actualOp.DeclaringType.Name]_[actualOp.Name](this[foreach (var param in actualOp.UnderlyingOperation.Parameters)], [param.Name][end foreach]);
+	[ToCSharpOpType(op.UnderlyingOperation.ReturnType)] [ToCSharp(op.DeclaringType.UnderlyingType)].[op.Name]([foreach (var param in op.UnderlyingOperation.Parameters) separator ", "][ToCSharpOpType(param.Type)] [param.Name][end foreach]) => [mm.Name].__CustomImpl.[actualOp.DeclaringType.Name]_[actualOp.Name](this[foreach (var param in actualOp.UnderlyingOperation.Parameters)], [param.Name][end foreach]);
 	[end foreach]
 
 	internal class __Info : __ModelClassInfo
@@ -474,7 +474,7 @@ internal interface ICustom[mm.Name]Implementation
 	/// <summary>
 	/// Computation of the derived property [cls.Name].[prop.Name]
 	/// </summary>
-	[ToCSharp(prop.Type)] [cls.Name]_[prop.Name]([cls.Name] _this);
+	[ToCSharpOpType(prop.Type)] [cls.Name]_[prop.Name]([cls.Name] _this);
 
 		[end foreach]
 	[end foreach]
@@ -484,7 +484,7 @@ internal interface ICustom[mm.Name]Implementation
 	/// <summary>
 	/// Implementation of the operation [cls.Name].[op.Name]
 	/// </summary>
-	[ToCSharp(op.ReturnType)] [cls.Name]_[op.Name]([cls.Name] _this[foreach (var param in op.Parameters)], [ToCSharp(param.Type)] [param.Name][end foreach]);
+	[ToCSharpOpType(op.ReturnType)] [cls.Name]_[op.Name]([cls.Name] _this[foreach (var param in op.Parameters)], [ToCSharpOpType(param.Type)] [param.Name][end foreach]);
 
 		[end foreach]
 	[end foreach]
@@ -516,7 +516,7 @@ internal abstract class Custom[mm.Name]ImplementationBase : ICustom[mm.Name]Impl
 	/// <summary>
 	/// Computation of the derived property [cls.Name].[prop.Name]
 	/// </summary>
-	public abstract [ToCSharp(prop.Type)] [cls.Name]_[prop.Name]([cls.Name] _this);
+	public abstract [ToCSharpOpType(prop.Type)] [cls.Name]_[prop.Name]([cls.Name] _this);
 
 		[end foreach]
 	[end foreach]
@@ -526,7 +526,7 @@ internal abstract class Custom[mm.Name]ImplementationBase : ICustom[mm.Name]Impl
 	/// <summary>
 	/// Implementation of the operation [cls.Name].[op.Name]
 	/// </summary>
-	public abstract [ToCSharp(op.ReturnType)] [cls.Name]_[op.Name]([cls.Name] _this[foreach (var param in op.Parameters)], [ToCSharp(param.Type)] [param.Name][end foreach]);
+	public abstract [ToCSharpOpType(op.ReturnType)] [cls.Name]_[op.Name]([cls.Name] _this[foreach (var param in op.Parameters)], [ToCSharpOpType(param.Type)] [param.Name][end foreach]);
 
 		[end foreach]
 	[end foreach]

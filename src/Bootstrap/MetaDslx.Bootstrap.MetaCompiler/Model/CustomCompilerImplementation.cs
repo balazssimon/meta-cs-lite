@@ -565,6 +565,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
         {
             return _this.Multiplicity.IsList() || _this.Value is SeparatedList;
         }
+
     }
 
 }

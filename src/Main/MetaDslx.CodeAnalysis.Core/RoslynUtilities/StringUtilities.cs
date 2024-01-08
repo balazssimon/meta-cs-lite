@@ -38,14 +38,14 @@ namespace Roslyn.Utilities
             else return identifier;
         }
 
-        public static string EncodeString(this string text)
+        public static string EncodeString(this string text, char quot = '"')
         {
             var sb = PooledStringBuilder.GetInstance();
             var builder = sb.Builder;
-            builder.Append('"');
+            builder.Append(quot);
             foreach (var ch in text)
             {
-                if (ch == 34 || ch == 92)
+                if (ch == quot || ch == 92)
                 {
                     builder.Append("\\");
                     builder.Append(ch);
@@ -91,9 +91,8 @@ namespace Roslyn.Utilities
                     builder.Append(string.Format(@"\u{0:x4}", (int)ch));
                 }
             }
-            builder.Append('"');
+            builder.Append(quot);
             return sb.ToStringAndFree();
-
         }
 
         public static string DecodeString(this string text)

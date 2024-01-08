@@ -64,6 +64,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             MergeSingleTokenAlts();
             MergeSeparatedLists();
             AddCSharpNames();
+            AddAntlrNames();
             ComputeContainsBinders();
         }
 
@@ -762,20 +763,14 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
 
         private void AddCSharpNames()
         {
-            var usedElementNames = PooledHashSet<string>.GetInstance();
             foreach (var rule in _grammar.Rules.Where(r => !string.IsNullOrEmpty(r.Name)))
             {
                 if (rule.CSharpName is null) rule.CSharpName = AddRuleName(rule.Name, tryWithoutIndex: true);
-                usedElementNames.Clear();
-                usedElementNames.Add("kind");
-                usedElementNames.Add("annotations");
-                usedElementNames.Add("diagnostics");
-                AddCSharpNames(rule, usedElementNames);
+                AddCSharpNames(rule);
             }
-            usedElementNames.Free();
         }
 
-        private void AddCSharpNames(Rule rule, HashSet<string> usedElementNames)
+        private void AddCSharpNames(Rule rule)
         {
             var altIndex = 0;
             foreach (var alt in rule.Alternatives)
@@ -793,25 +788,44 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                         alt.CSharpName = AddRuleName(alt.Name, tryWithoutIndex: true);
                     }
                 }
+                var usedElementNames = PooledHashSet<string>.GetInstance();
+                usedElementNames.Add("kind");
+                usedElementNames.Add("annotations");
+                usedElementNames.Add("diagnostics");
                 AddCSharpNames(alt.CSharpName, alt, usedElementNames);
+                usedElementNames.Free();
             }
         }
 
         private void AddCSharpNames(string? contextName, Alternative alt, HashSet<string> usedElementNames)
         {
+            var altElementNames = PooledHashSet<string>.GetInstance();
+            var multiElementNames = PooledHashSet<string>.GetInstance();
             foreach (var elem in alt.Elements)
             {
-                AddCSharpNames(contextName, elem, usedElementNames);
+                AddCSharpNames(contextName, elem);
+                if (!string.IsNullOrEmpty(elem.Name))
+                {
+                    if (altElementNames.Contains(elem.Name)) multiElementNames.Add(elem.Name);
+                    altElementNames.Add(elem.Name);
+                }
             }
+            altElementNames.Free();
+            foreach (var elem in alt.Elements)
+            {
+                AddCSharpNames(elem, usedElementNames, multiElementNames);
+            }
+            multiElementNames.Free();
         }
 
-        private void AddCSharpNames(string? contextName, Element elem, HashSet<string> usedElementNames)
+        private void AddCSharpNames(string? contextName, Element elem)
         {
-            if (elem.Value is RuleRef rr && rr.Rule is Block rrBlk && string.IsNullOrEmpty(rrBlk.Name))
+            if (elem.Value is RuleRef br && br.Rule is Block blk && string.IsNullOrEmpty(blk.Name))
             {
-                rrBlk.CSharpName = AddRuleName(contextName + "Block", tryWithoutIndex: false);
-                rrBlk.Name = rrBlk.CSharpName;
-                AddCSharpNames(rrBlk, usedElementNames);
+                if (elem.Name is null) elem.Name = "Block";
+                blk.CSharpName = AddRuleName(contextName + "Block", tryWithoutIndex: false);
+                blk.Name = blk.CSharpName;
+                AddCSharpNames(blk);
             }
             if (elem.Value is SeparatedList sl)
             {
@@ -819,9 +833,30 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                 var repeatedBlock = (Block)((RuleRef)sl.RepeatedBlock.Value).Rule!;
                 if (string.IsNullOrEmpty(repeatedBlock.Name)) repeatedBlock.Name = contextName + elem.Name + "Block";
                 repeatedBlock.CSharpName = AddRuleName(repeatedBlock.Name, tryWithoutIndex: true);
-                AddCSharpNames(repeatedBlock, usedElementNames);
+                AddCSharpNames(repeatedBlock);
             }
-            elem.CSharpName = AddElementName(contextName, elem, usedElementNames);
+            if (elem.Value is Eof) elem.Name = "EndOfFileToken";
+            if (elem.Name is null)
+            {
+                if (elem.Value is RuleRef rr)
+                {
+                    if (elem.Multiplicity.IsList()) elem.Name = rr.GrammarRule?.Name + "List";
+                    else elem.Name = rr.GrammarRule?.Name;
+                }
+                else if (elem.Value is TokenAlts)
+                {
+                    elem.Name = "Tokens";
+                }
+                else if (elem.Value is SeparatedList)
+                {
+                    elem.Name = "List";
+                }
+            }
+        }
+
+        private void AddCSharpNames(Element elem, HashSet<string> usedElementNames, HashSet<string> multiElementNames)
+        {
+            elem.CSharpName = AddElementName(elem.Name, elem.Name is not null && !multiElementNames.Contains(elem.Name), usedElementNames);
         }
 
         private string AddRuleName(string? ruleName, bool tryWithoutIndex, int indexHint = -1)
@@ -854,37 +889,78 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             }
         }
 
-        private string AddElementName(string? contextName, Element element, HashSet<string> usedElementNames)
+        private string AddElementName(string? defaultName, bool tryWithoutIndex, HashSet<string> usedElementNames)
         {
-            var defaultName = element.Name;
-            if (element.Value is Eof) defaultName = "EndOfFileToken";
             if (string.IsNullOrEmpty(defaultName))
             {
-                if (element.Value is RuleRef rr)
-                {
-                    if (element.Multiplicity.IsList()) defaultName = rr.GrammarRule?.Name + "List";
-                    else defaultName = rr.GrammarRule?.Name;
-                }
-                else if (element.Value is TokenAlts)
-                {
-                    defaultName = "Tokens";
-                }
-                else if (element.Value is SeparatedList)
-                {
-                    defaultName = "List";
-                }
-                else if (element.Value is Block) defaultName =  "Block";
-                if (string.IsNullOrEmpty(defaultName)) defaultName =  "Element";
+                defaultName = "Element";
+                tryWithoutIndex = false;
             }
-            int i = 0;
-            var name = defaultName;
-            while (usedElementNames.Contains(name, StringComparer.InvariantCultureIgnoreCase))
+            if (tryWithoutIndex && !usedElementNames.Contains(defaultName, StringComparer.InvariantCultureIgnoreCase))
             {
-                ++i;
-                name = $"{defaultName}{i}";
+                usedElementNames.Add(defaultName);
+                return defaultName;
             }
-            usedElementNames.Add(name);
-            return name;
+            var index = 0;
+            while (true)
+            {
+                ++index;
+                var name = $"{defaultName}{index}";
+                if (!usedElementNames.Contains(name, StringComparer.OrdinalIgnoreCase))
+                {
+                    usedElementNames.Add(name);
+                    return name;
+                }
+            }
+        }
+
+        private void AddAntlrNames()
+        {
+            var usedElementNames = PooledHashSet<string>.GetInstance();
+            foreach (var token in _grammar.Tokens)
+            {
+                token.AntlrName = $"LR_{token.CSharpName}";
+            }
+            foreach (var rule in _grammar.Rules)
+            {
+                if (rule.AntlrName is null) rule.AntlrName = $"pr_{rule.CSharpName}";
+                usedElementNames.Clear();
+                AddAntlrNames(rule, usedElementNames);
+            }
+            usedElementNames.Free();
+        }
+
+        private void AddAntlrNames(Rule rule, HashSet<string> usedElementNames)
+        {
+            foreach (var alt in rule.Alternatives)
+            {
+                if (alt.AntlrName is null) alt.AntlrName = $"pra_{alt.CSharpName}";
+                AddAntlrNames(alt, usedElementNames);
+            }
+        }
+
+        private void AddAntlrNames(Alternative alt, HashSet<string> usedElementNames)
+        {
+            foreach (var elem in alt.Elements)
+            {
+                if (elem.AntlrName is null)
+                {
+                    if (elem.Value is SeparatedList sl)
+                    {
+                        elem.AntlrName = AddElementName($"e_sl_{elem.Name}", true, usedElementNames);
+                        foreach (var item in sl.FirstItems) item.AntlrName = AddElementName($"e_{item.Name}", false, usedElementNames);
+                        foreach (var item in sl.FirstSeparators) item.AntlrName = AddElementName($"e_{item.Name}", false, usedElementNames);
+                        sl.RepeatedItem.AntlrName = AddElementName($"e_{sl.RepeatedItem.Name}", false, usedElementNames);
+                        sl.RepeatedSeparator.AntlrName = AddElementName($"e_{sl.RepeatedSeparator.Name}", false, usedElementNames);
+                        foreach (var item in sl.LastItems) item.AntlrName = AddElementName($"e_{item.Name}", false, usedElementNames);
+                        foreach (var item in sl.LastSeparators) item.AntlrName = AddElementName($"e_{item.Name}", false, usedElementNames);
+                    }
+                    else
+                    {
+                        elem.AntlrName = AddElementName($"e_{elem.Name}", true, usedElementNames);
+                    }
+                }
+            }
         }
 
         private void ComputeContainsBinders()

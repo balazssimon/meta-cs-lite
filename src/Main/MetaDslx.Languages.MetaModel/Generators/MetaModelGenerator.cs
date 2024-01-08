@@ -79,6 +79,36 @@ namespace MetaDslx.Languages.MetaModel.Generators
             return type.ToString();
         }
 
+        public string ToCSharpOpType(object? type)
+        {
+            type = ExtractMetaType(type);
+            if (type is null) return string.Empty;
+            if (type is MetaPrimitiveType mpt) type = mpt.Name;
+            if (type is string stype) return PrimitiveTypeToString(stype);
+            if (type is Type t) return $"global::{t.FullName}";
+            if (type is MetaNullableType nt)
+            {
+                return $"{ToCSharp(nt.InnerType)}?";
+            }
+            if (type is MetaArrayType at)
+            {
+                return $"global::System.Collections.Generic.IList<{ToCSharpOpType(at.ItemType)}>";
+            }
+            if (type is MetaClass mc && _classes.Contains(mc))
+            {
+                return mc.Name;
+            }
+            if (type is MetaType mt)
+            {
+                return $"global::{mt.FullName}";
+            }
+            if (type is TypeSymbol ts)
+            {
+                return SymbolDisplayFormat.FullyQualifiedFormat.ToString(ts);
+            }
+            return type.ToString();
+        }
+
         public string ToCSharpImpl(object type)
         {
             return ToCSharp(type);
