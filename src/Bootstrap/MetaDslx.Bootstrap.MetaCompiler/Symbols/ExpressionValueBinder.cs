@@ -178,19 +178,20 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
             }
             if (expectedType.SpecialType == CodeAnalysis.SpecialType.System_Type || expectedType.SpecialType == SpecialType.MetaDslx_CodeAnalysis_MetaType)
             {
-                value = this.BindSymbol(expectedType, cancellationToken);
+                value = this.BindSymbol(expectedType, diagnostics, cancellationToken);
                 return true;
             }
             return base.ComputeValue(expectedType, out value, diagnostics, cancellationToken);
         }
 
-        private object? BindSymbol(MetaType expectedType, CancellationToken cancellationToken)
+        private object? BindSymbol(MetaType expectedType, DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             var qualifier = this.QualifierSyntax;
             if (qualifier is null) return null;
             if (qualifier.SimpleIdentifierList.Count == 0) return null;
             //if (qualifier.Element.Count == 0) return null;
             var context = this.AllocateLookupContext();
+            context.Diagnose = true;
             if (expectedType.SpecialType == SpecialType.System_Type || expectedType.SpecialType == SpecialType.MetaDslx_CodeAnalysis_MetaType) 
             {
                 context.Validators.Add(LookupValidators.TypeOnly);
@@ -198,6 +199,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
             var identifiers = qualifier.SimpleIdentifierList.Select(id => (SyntaxNodeOrToken)id).ToImmutableArray();
             //var identifiers = qualifier.Element.Select(id => (SyntaxNodeOrToken)id).ToImmutableArray();
             var result = this.BindQualifiedName(context, identifiers);
+            diagnostics.AddRange(context.Diagnostics);
             context.Free();
             return result[result.Length - 1];
         }

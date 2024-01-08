@@ -65,8 +65,8 @@ Expression: SingleExpression | ArrayExpression;
 SingleExpression returns Expression: value=[ExpressionValue]('null' | 'true' | 'false' | TInteger | TString | SimpleQualifier);
 ArrayExpression: '{' (items+=SingleExpression (',' items+=SingleExpression)*)? '}';
 
-ParserAnnotation returns MetaDslx.Bootstrap.MetaCompiler.Model.Annotation: '[' attributeClass=[Use(types:{Binder,MetaDslx.CodeAnalysis.Annotations.Annotation},suffixes:{"Binder","Annotation"})]Qualifier AnnotationArguments? ']';
-LexerAnnotation returns MetaDslx.Bootstrap.MetaCompiler.Model.Annotation: '[' attributeClass=[Use(types:{TokenKind,MetaDslx.CodeAnalysis.Annotations.Annotation},suffixes:{"TokenKind","Annotation"})]Qualifier AnnotationArguments? ']';
+ParserAnnotation returns MetaDslx.Bootstrap.MetaCompiler.Model.Annotation: '[' attributeClass=[Use(types:{MetaDslx.CodeAnalysis.Binding.Binder,MetaDslx.CodeAnalysis.Annotations.Annotation},suffixes:{"Binder","Annotation"})]Qualifier AnnotationArguments? ']';
+LexerAnnotation returns MetaDslx.Bootstrap.MetaCompiler.Model.Annotation: '[' attributeClass=[Use(types:{MetaDslx.CodeAnalysis.Syntax.TokenKind,MetaDslx.CodeAnalysis.Annotations.Annotation},suffixes:{"TokenKind","Annotation"})]Qualifier AnnotationArguments? ']';
 block AnnotationArguments: '(' arguments+=AnnotationArgument (',' arguments+=AnnotationArgument)* ')';
 AnnotationArgument: (namedParameter+=[AnnotationArgument]Identifier ':')? value=Expression;
 
