@@ -1,4 +1,5 @@
-﻿using MetaDslx.Modeling;
+﻿using MetaDslx.CodeAnalysis.PooledObjects;
+using MetaDslx.Modeling;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -45,6 +46,29 @@ namespace MetaDslx.Modeling
             foreach (var slotProperty in _slotProperties)
             {
                 if (condition(slotProperty)) throw new ModelException(string.Format(message(slotProperty), slotProperty.QualifiedName));
+            }
+        }
+
+        public override string ToString()
+        {
+            if (_slotProperties.Length == 1)
+            {
+                return $"[{_slotProperties[0]}]";
+            }
+            else
+            {
+                var psb = PooledStringBuilder.GetInstance();
+                var sb = psb.Builder;
+                var first = true;
+                sb.Append('[');
+                foreach (var slotProperty in _slotProperties)
+                {
+                    if (first) first = false;
+                    else sb.Append(", ");
+                    sb.Append(slotProperty.ToString());
+                }
+                sb.Append(']');
+                return psb.ToStringAndFree();
             }
         }
     }

@@ -29,8 +29,8 @@ namespace MetaDslx.CodeAnalysis.Symbols.Model
         protected override NamespaceSymbol CompleteProperty_GlobalNamespace(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             var rootObjects = _model.RootObjects.Take(2).ToArray();
-            if (rootObjects.Length == 1 && string.IsNullOrEmpty(rootObjects[0].Name) && 
-                rootObjects[0].SymbolType.IsAssignableTo(typeof(NamespaceSymbol)))
+            if (rootObjects.Length == 1 && string.IsNullOrEmpty(rootObjects[0].MName) && 
+                rootObjects[0].MInfo.SymbolType.IsAssignableTo(typeof(NamespaceSymbol)))
             {
                 return _symbolFactory.GetSymbol<NamespaceSymbol>(rootObjects[0]);
             }

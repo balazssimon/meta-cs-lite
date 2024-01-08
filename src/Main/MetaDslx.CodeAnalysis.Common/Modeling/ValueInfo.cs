@@ -34,7 +34,7 @@ namespace MetaDslx.Modeling
         {
             get
             {
-                if (_target is IModelObject mobj) return mobj.Model;
+                if (_target is IModelObject mobj) return mobj.MModel;
                 if (_target is Box box) return box.Model;
                 return null;
             }

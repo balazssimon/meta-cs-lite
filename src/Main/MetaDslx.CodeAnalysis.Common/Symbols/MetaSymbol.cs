@@ -56,7 +56,7 @@ namespace MetaDslx.CodeAnalysis
             get
             {
                 if (IsSymbol) return OriginalSymbol.Name;
-                if (IsModelObject) return OriginalModelObject.Name;
+                if (IsModelObject) return OriginalModelObject.MName;
                 return null;
             }
         }
@@ -77,7 +77,7 @@ namespace MetaDslx.CodeAnalysis
             {
                 if (IsModelObject)
                 {
-                    return OriginalModelObject.Info.MetaType;
+                    return OriginalModelObject.MInfo.MetaType;
                 }
                 else if (IsSymbol)
                 {
@@ -172,14 +172,14 @@ namespace MetaDslx.CodeAnalysis
             var builder = PooledStringBuilder.GetInstance();
             var sb = builder.Builder;
             var current = modelObject;
-            sb.Append(current.Name);
+            sb.Append(current.MName);
             while (current is not null)
             {
-                var parent = current.Parent;
-                if (!string.IsNullOrEmpty(parent?.Name))
+                var parent = current.MParent;
+                if (!string.IsNullOrEmpty(parent?.MName))
                 {
                     sb.Insert(0, ".");
-                    sb.Insert(0, parent.Name);
+                    sb.Insert(0, parent.MName);
                 }
                 current = parent;
             }

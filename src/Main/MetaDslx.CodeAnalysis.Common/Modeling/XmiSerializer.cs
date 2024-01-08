@@ -510,7 +510,7 @@ namespace MetaDslx.Modeling
 
         private void WriteXmlNamespaces()
         {
-            IEnumerable<MetaModel> metadatas = _allObjects.Select(obj => obj.MetaModel).Distinct();
+            IEnumerable<MetaModel> metadatas = _allObjects.Select(obj => obj.MInfo.MetaModel).Distinct();
             foreach (var metaModel in metadatas)
             {
                 var ns = this.RegisterNamespace(metaModel);
@@ -520,7 +520,7 @@ namespace MetaDslx.Modeling
 
         private void WriteObject(IModelObject obj, string parentProperty)
         {
-            var metaModel = obj.MetaModel;
+            var metaModel = obj.MInfo.MetaModel;
             var ns = this.RegisterNamespace(metaModel);
             if (parentProperty != null)
             {
@@ -528,21 +528,21 @@ namespace MetaDslx.Modeling
             }
             else
             {
-                _currentXmlWriter.WriteStartElement(ns.Item1, obj.MetaType.Name, ns.Item2);
+                _currentXmlWriter.WriteStartElement(ns.Item1, obj.MInfo.MetaType.Name, ns.Item2);
             }
-            if (!_options.RequireXmiRoot && obj.Parent == null)
+            if (!_options.RequireXmiRoot && obj.MParent == null)
             {
                 this.WriteXmlNamespaces();
             }
-            _currentXmlWriter.WriteAttributeString(Xmi, "type", _options.XmiNamespace, ns.Item1 + ":" + obj.MetaType.Name);
-            _currentXmlWriter.WriteAttributeString(Xmi, "id", _options.XmiNamespace, obj.Id);
+            _currentXmlWriter.WriteAttributeString(Xmi, "type", _options.XmiNamespace, ns.Item1 + ":" + obj.MInfo.MetaType.Name);
+            _currentXmlWriter.WriteAttributeString(Xmi, "id", _options.XmiNamespace, obj.MId);
             HashSet<IModelObject> written = new HashSet<IModelObject>();
-            foreach (var prop in obj.Properties)
+            foreach (var prop in obj.MProperties)
             {
                 if (prop.IsDerived) continue;
-                bool oppositeIsContainment = obj.GetOppositeProperties(prop).Any(p => p.IsContainment);
+                bool oppositeIsContainment = obj.MInfo.GetOppositeProperties(prop).Any(p => p.IsContainment);
                 if (oppositeIsContainment) continue;
-                var slot = obj.GetSlot(prop);
+                var slot = obj.MGetSlot(prop);
                 if (prop.IsSingle && (!prop.IsContainment || !prop.IsModelObject))
                 {
                     if (prop.IsModelObject)
@@ -550,11 +550,11 @@ namespace MetaDslx.Modeling
                         var value = slot.AsSingle()?.Value as IModelObject;
                         if (value != null)
                         {
-                            if (value.Model == _currentModel)
+                            if (value.MModel == _currentModel)
                             {
-                                _currentXmlWriter.WriteAttributeString(prop.Name.ToCamelCase(), value.Id);
+                                _currentXmlWriter.WriteAttributeString(prop.Name.ToCamelCase(), value.MId);
                             }
-                            else if (value.Model is not null)
+                            else if (value.MModel is not null)
                             {
                                 _currentXmlWriter.WriteAttributeString(prop.Name.ToCamelCase(), ExternalIdRef(value));
                             }
@@ -576,12 +576,12 @@ namespace MetaDslx.Modeling
                     }
                 }
             }
-            foreach (var prop in obj.Properties)
+            foreach (var prop in obj.MProperties)
             {
                 if (prop.IsDerived) continue;
-                bool oppositeIsContainment = obj.GetOppositeProperties(prop).Any(p => p.IsContainment);
+                bool oppositeIsContainment = obj.MInfo.GetOppositeProperties(prop).Any(p => p.IsContainment);
                 if (oppositeIsContainment) continue;
-                var slot = obj.GetSlot(prop);
+                var slot = obj.MGetSlot(prop);
                 if (prop.IsCollection && (!prop.IsContainment || !prop.IsModelObject))
                 {
                     if (prop.IsModelObject)
@@ -594,9 +594,9 @@ namespace MetaDslx.Modeling
                                 if (value != null)
                                 {
                                     _currentXmlWriter.WriteStartElement(prop.Name.ToCamelCase());
-                                    if (value.Model == _currentModel)
+                                    if (value.MModel == _currentModel)
                                     {
-                                        _currentXmlWriter.WriteAttributeString(Xmi, "idref", _options.XmiNamespace, value.Id);
+                                        _currentXmlWriter.WriteAttributeString(Xmi, "idref", _options.XmiNamespace, value.MId);
                                     }
                                     else
                                     {
@@ -620,12 +620,12 @@ namespace MetaDslx.Modeling
                     }
                 }
             }
-            foreach (var prop in obj.Properties)
+            foreach (var prop in obj.MProperties)
             {
                 if (prop.IsDerived || prop.IsDerivedUnion) continue;
                 if (prop.IsContainment && prop.IsModelObject)
                 {
-                    var slot = obj.GetSlot(prop);
+                    var slot = obj.MGetSlot(prop);
                     if (prop.IsCollection)
                     {
                         var children = slot.AsCollection();
@@ -641,9 +641,9 @@ namespace MetaDslx.Modeling
                                 else
                                 {
                                     _currentXmlWriter.WriteStartElement(prop.Name.ToCamelCase());
-                                    if (child.Model == _currentModel)
+                                    if (child.MModel == _currentModel)
                                     {
-                                        _currentXmlWriter.WriteAttributeString(Xmi, "idref", _options.XmiNamespace, child.Id);
+                                        _currentXmlWriter.WriteAttributeString(Xmi, "idref", _options.XmiNamespace, child.MId);
                                     }
                                     else
                                     {
@@ -666,9 +666,9 @@ namespace MetaDslx.Modeling
                             else
                             {
                                 _currentXmlWriter.WriteStartElement(prop.Name.ToCamelCase());
-                                if (child.Model == _currentModel)
+                                if (child.MModel == _currentModel)
                                 {
-                                    _currentXmlWriter.WriteAttributeString(Xmi, "idref", _options.XmiNamespace, child.Id);
+                                    _currentXmlWriter.WriteAttributeString(Xmi, "idref", _options.XmiNamespace, child.MId);
                                 }
                                 else
                                 {
@@ -686,25 +686,25 @@ namespace MetaDslx.Modeling
         private string ExternalIdRef(IModelObject obj)
         {
             obj = ModelObjectToConstant(obj);
-            var id = obj.Id;
+            var id = obj.MId;
             if (this.Options.PreferReferenceByName)
             {
                 var name = GetName(obj);
                 if (name != null) id = "//" + name;
             }
-            if (_modelToAbsoluteFileMap.TryGetValue(obj.Model, out var _))
+            if (_modelToAbsoluteFileMap.TryGetValue(obj.MModel, out var _))
             {
-                var relativeFilePath = GetRelativePath(obj.Model);
+                var relativeFilePath = GetRelativePath(obj.MModel);
                 return string.Format("{0}#{1}", relativeFilePath, id);
             }
-            else if (_modelToUriMap.TryGetValue(obj.Model, out var uri))
+            else if (_modelToUriMap.TryGetValue(obj.MModel, out var uri))
             {
-                if (obj.Model == _currentModel) uri = string.Empty;
+                if (obj.MModel == _currentModel) uri = string.Empty;
                 return string.Format("{0}#{1}", uri, id);
             }
             else
             {
-                this.Diagnostics.Add(Diagnostic.Create(ModelErrorCode.ERR_XmiError, Location.None, string.Format("There is no external file or URI defined for model '{0}'. Use the XmiWriteOptions.ModelToFileMap or XmiWriteOptions.ModelToUriMap property to specify the external file or URI, respectively.", obj.Model.ToString())));
+                this.Diagnostics.Add(Diagnostic.Create(ModelErrorCode.ERR_XmiError, Location.None, string.Format("There is no external file or URI defined for model '{0}'. Use the XmiWriteOptions.ModelToFileMap or XmiWriteOptions.ModelToUriMap property to specify the external file or URI, respectively.", obj.MModel.ToString())));
                 return "***ERROR***";
             }
         }
@@ -744,19 +744,19 @@ namespace MetaDslx.Modeling
 
         private string GetName(IModelObject obj)
         {
-            if (string.IsNullOrWhiteSpace(obj.Name)) return null;
-            var model = obj.Model;
+            if (string.IsNullOrWhiteSpace(obj.MName)) return null;
+            var model = obj.MModel;
             if (!_nameMap.TryGetValue(model, out var nameToObject))
             {
                 nameToObject = new Dictionary<string, IModelObject>();
                 _nameMap.Add(model, nameToObject);
             }
-            if (nameToObject.TryGetValue(obj.Name, out var existingObj))
+            if (nameToObject.TryGetValue(obj.MName, out var existingObj))
             {
                 if (existingObj != null)
                 {
                     Debug.Assert(existingObj == obj);
-                    return obj.Name;
+                    return obj.MName;
                 }
                 else
                 {
@@ -765,17 +765,17 @@ namespace MetaDslx.Modeling
             }
             else
             { 
-                if (!string.IsNullOrWhiteSpace(obj.Name))
+                if (!string.IsNullOrWhiteSpace(obj.MName))
                 {
-                    var nameList = obj.Model.Objects.Where(o => o.Name == obj.Name).ToList();
+                    var nameList = obj.MModel.Objects.Where(o => o.MName == obj.MName).ToList();
                     if (nameList.Count == 1)
                     {
-                        nameToObject.Add(obj.Name, obj);
-                        return obj.Name;
+                        nameToObject.Add(obj.MName, obj);
+                        return obj.MName;
                     }
                     else
                     {
-                        nameToObject.Add(obj.Name, null);
+                        nameToObject.Add(obj.MName, null);
                     }
                 }
             }
@@ -1076,7 +1076,7 @@ namespace MetaDslx.Modeling
                     else
                     {
                         string parentProperty = element.Name.LocalName.ToPascalCase();
-                        ModelProperty property = parent.GetProperty(parentProperty);
+                        ModelProperty property = parent.MInfo.GetProperty(parentProperty);
                         if (property != null)
                         {
                             if (property.IsModelObject)
@@ -1107,7 +1107,7 @@ namespace MetaDslx.Modeling
                 if (obj != null)
                 {
                     string parentPropertyName = element.Name.LocalName.ToPascalCase();
-                    var parentSlot = parent?.GetSlot(parentPropertyName);
+                    var parentSlot = parent?.MGetSlot(parentPropertyName);
                     if (parentSlot != null)
                     {
                         try
@@ -1120,9 +1120,9 @@ namespace MetaDslx.Modeling
                         }
                     }
                     this.RegisterObjectByPosition(element, obj);
-                    foreach (var nameProp in obj.AllDeclaredProperties.Where(p => p.IsName))
+                    foreach (var nameProp in obj.MInfo.AllDeclaredProperties.Where(p => p.IsName))
                     {
-                        var nameSlot = parent?.GetSlot(nameProp);
+                        var nameSlot = parent?.MGetSlot(nameProp);
                         if (nameSlot is null) continue;
                         var nameAttr = element.Attribute(nameProp.Name.ToCamelCase());
                         if (nameAttr != null)
@@ -1220,7 +1220,7 @@ namespace MetaDslx.Modeling
             else
             {
                 _objectsById.Add(id, mobj);
-                mobj.Id = id;
+                mobj.MId = id;
                 return true;
             }
         }
@@ -1229,8 +1229,8 @@ namespace MetaDslx.Modeling
         {
             IModelObject currentObj = ResolveObjectByPosition(element, false);
             string parentPropertyName = element.Name.LocalName.ToPascalCase();
-            ModelProperty parentProperty = parent?.GetProperty(parentPropertyName);
-            var parentSlot = parent?.GetSlot(parentProperty);
+            ModelProperty parentProperty = parent?.MInfo.GetProperty(parentPropertyName);
+            var parentSlot = parent?.MGetSlot(parentProperty);
             if (parentProperty != null)
             {
                 if (currentObj == null)
@@ -1297,8 +1297,8 @@ namespace MetaDslx.Modeling
         private void AssignProperty(IModelObject obj, XObject location, XElement context, string propertyName, string propertyValue)
         {
             if (propertyName == "Href") return;
-            ModelProperty property = obj.GetProperty(propertyName);
-            var slot = obj.GetSlot(property);
+            ModelProperty property = obj.MInfo.GetProperty(propertyName);
+            var slot = obj.MGetSlot(property);
             if (slot == null)
             {
                 this.AddError(location, $"Model object '{obj}' has no '{propertyName}' property.");
@@ -1577,8 +1577,8 @@ namespace MetaDslx.Modeling
                 var nextElements = new List<object>();
                 if (currentElements == null)
                 {
-                    if (recursive) nextElements.AddRange(_model.Objects.Where(mobj => mobj.Name == elementName));
-                    else nextElements.AddRange(_model.Objects.Where(mobj => mobj.Parent == null && mobj.Name == elementName));
+                    if (recursive) nextElements.AddRange(_model.Objects.Where(mobj => mobj.MName == elementName));
+                    else nextElements.AddRange(_model.Objects.Where(mobj => mobj.MParent == null && mobj.MName == elementName));
                 }
                 else
                 {
@@ -1588,10 +1588,10 @@ namespace MetaDslx.Modeling
                     foreach (var parentObject in parentObjects)
                     {
                         int i = 0;
-                        var descendants = recursive ? GetModelObjectsRecursive(parentObject, elementName) : parentObject.Children.Where(mobj => mobj.Name == elementName);
+                        var descendants = recursive ? GetModelObjectsRecursive(parentObject, elementName) : parentObject.MChildren.Where(mobj => mobj.MName == elementName);
                         foreach (var child in descendants)
                         {
-                            if (child.Name == elementName)
+                            if (child.MName == elementName)
                             {
                                 nextElements.Add(child);
                                 ++i;
@@ -1623,9 +1623,9 @@ namespace MetaDslx.Modeling
 
         private IEnumerable<IModelObject> GetModelObjectsRecursive(IModelObject parent, string name)
         {
-            foreach (var child in parent.Children)
+            foreach (var child in parent.MChildren)
             {
-                if (child.Name == name) yield return child;
+                if (child.MName == name) yield return child;
                 foreach (var descendant in GetModelObjectsRecursive(child, name))
                 {
                     yield return descendant;

@@ -8,54 +8,32 @@ using System.Threading;
 
 namespace MetaDslx.Modeling
 {
-    public interface IModelObject : IModelObjectCore
+    public interface IModelObject
     {
-        string Id { get; set; }
-        MetaModel MetaModel { get; }
-        MetaType MetaType { get; }
-        ModelClassInfo Info { get; }
-        Model? Model { get; set; }
+        ModelClassInfo MInfo { get; }
+        string? MId { get; set; }
+        Model? MModel { get; set; }
 
-        string? Name { get; set; }
-        IModelObject? Parent { get; set; }
-        IList<IModelObject> Children { get; }
-        IEnumerable<Box> References { get; }
+        string? MName { get; set; }
+        IModelObject? MParent { get; set; }
+        IList<IModelObject> MChildren { get; }
+        IEnumerable<Box> MReferences { get; }
 
-        ISlot? GetSlot(string propertyName);
-        ISlot? GetSlot(ModelProperty? property);
-        ISlot AttachSlot(ModelProperty property);
-        IModelObject Clone();
+        IModelObject MClone();
 
-        ModelProperty? NameProperty { get; }
-        ModelProperty? TypeProperty { get; }
-        MetaType SymbolType { get; }
-        ImmutableArray<ModelProperty> DeclaredProperties { get; }
-        ImmutableArray<ModelProperty> AllDeclaredProperties { get; }
-        ImmutableArray<ModelProperty> PublicProperties { get; }
-        IEnumerable<ModelProperty> Properties { get; }
-        IEnumerable<ModelProperty> AttachedProperties { get; }
-        ModelProperty? GetProperty(string name);
-        ImmutableArray<ModelProperty> GetOppositeProperties(ModelProperty property);
-        ImmutableArray<ModelProperty> GetSubsettedProperties(ModelProperty property);
-        ImmutableArray<ModelProperty> GetSubsettingProperties(ModelProperty property);
-        ImmutableArray<ModelProperty> GetRedefinedProperties(ModelProperty property);
-        ImmutableArray<ModelProperty> GetRedefiningProperties(ModelProperty property);
-        ImmutableArray<ModelProperty> GetHiddenProperties(ModelProperty property);
-        ImmutableArray<ModelProperty> GetHidingProperties(ModelProperty property);
+        IEnumerable<ModelProperty> MProperties { get; }
+        IEnumerable<ModelProperty> MAttachedProperties { get; }
+        ISlot? MGetSlot(string propertyName);
+        ISlot? MGetSlot(ModelProperty? property);
+        ISlot MAttachSlot(ModelProperty property);
 
-        ImmutableArray<ModelOperation> DeclaredOperations { get; }
-        ImmutableArray<ModelOperation> AllDeclaredOperations { get; }
-        ImmutableArray<ModelOperation> PublicOperations { get; }
-        ImmutableArray<ModelOperation> GetOverridenOperations(ModelOperation property);
-        ImmutableArray<ModelOperation> GetOverridingOperations(ModelOperation property);
+        void MReplaceObject(IModelObject oldObject, IModelObject? newObject, CancellationToken cancellationToken = default);
 
-        void ReplaceObject(IModelObject oldObject, IModelObject newObject, CancellationToken cancellationToken = default);
-
-        Location? Location { get; set; }
-        SourceLocation? SourceLocation { get; set; }
-        Symbol? Symbol { get; set; }
-        SyntaxNodeOrToken Syntax { get; set; }
-        Microsoft.CodeAnalysis.ISymbol? CSharpSymbol { get; }
-        object? Tag { get; set; }
+        Location? MLocation { get; set; }
+        SourceLocation? MSourceLocation { get; set; }
+        Symbol? MSymbol { get; set; }
+        SyntaxNodeOrToken MSyntax { get; set; }
+        Microsoft.CodeAnalysis.ISymbol? MCSharpSymbol { get; }
+        object? MTag { get; set; }
     }
 }

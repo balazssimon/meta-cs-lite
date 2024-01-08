@@ -11,77 +11,72 @@ namespace Roslyn.Utilities
 {
     public static class ModelUtilities
     {
-        public static T? GetInnermostContainingObject<T>(this IModelObjectCore? modelObject, bool includeSelf = false, CancellationToken cancellationToken = default)
-            where T : IModelObjectCore
+        public static T? GetInnermostContainingObject<T>(this IModelObject? mobj, bool includeSelf = false, CancellationToken cancellationToken = default)
+            where T : IModelObject
         {
-            var mobj = modelObject as IModelObject;
             if (mobj is null) return default;
-            var container = includeSelf ? mobj : mobj.Parent;
+            var container = includeSelf ? mobj : mobj.MParent;
             while (container is not null)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 if (container is T ts) return ts;
-                container = container.Parent;
+                container = container.MParent;
             }
             return default;
         }
 
-        public static T? GetOutermostContainingObject<T>(this IModelObjectCore? modelObject, bool includeSelf = false, CancellationToken cancellationToken = default)
-            where T : IModelObjectCore
+        public static T? GetOutermostContainingObject<T>(this IModelObject? mobj, bool includeSelf = false, CancellationToken cancellationToken = default)
+            where T : IModelObject
         {
-            var mobj = modelObject as IModelObject;
             if (mobj is null) return default;
             T? result = default;
-            var container = includeSelf ? mobj : mobj.Parent;
+            var container = includeSelf ? mobj : mobj.MParent;
             while (container is not null)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 if (container is T ts) result = ts;
-                container = container.Parent;
+                container = container.MParent;
             }
             return result;
         }
 
-        public static ImmutableArray<T> GetAllContainingObjectsInwards<T>(this IModelObjectCore? modelObject, bool includeSelf = false, CancellationToken cancellationToken = default)
-            where T : IModelObjectCore
+        public static ImmutableArray<T> GetAllContainingObjectsInwards<T>(this IModelObject? mobj, bool includeSelf = false, CancellationToken cancellationToken = default)
+            where T : IModelObject
         {
-            var mobj = modelObject as IModelObject;
             if (mobj is null) return ImmutableArray<T>.Empty;
             var result = ArrayBuilder<T>.GetInstance();
-            var container = includeSelf ? mobj : mobj.Parent;
+            var container = includeSelf ? mobj : mobj.MParent;
             while (container is not null)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 if (container is T ts) result.Add(ts);
-                container = container.Parent;
+                container = container.MParent;
             }
             result.ReverseContents();
             return result.ToImmutableAndFree();
         }
 
-        public static ImmutableArray<T> GetAllContainingObjectsOutwards<T>(this IModelObjectCore? modelObject, bool includeSelf = false, CancellationToken cancellationToken = default)
-            where T : IModelObjectCore
+        public static ImmutableArray<T> GetAllContainingObjectsOutwards<T>(this IModelObject? mobj, bool includeSelf = false, CancellationToken cancellationToken = default)
+            where T : IModelObject
         {
-            var mobj = modelObject as IModelObject;
             if (mobj is null) return ImmutableArray<T>.Empty;
             var result = ArrayBuilder<T>.GetInstance();
-            var container = includeSelf ? mobj : mobj.Parent;
+            var container = includeSelf ? mobj : mobj.MParent;
             while (container is not null)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 if (container is T ts) result.Add(ts);
-                container = container.Parent;
+                container = container.MParent;
             }
             return result.ToImmutableAndFree();
         }
 
-        public static ImmutableArray<T> GetAllContainedObjects<T>(this IModelObjectCore? modelObject, bool includeSelf = false, CancellationToken cancellationToken = default)
-            where T : IModelObjectCore
+        public static ImmutableArray<T> GetAllContainedObjects<T>(this IModelObject? mobj, bool includeSelf = false, CancellationToken cancellationToken = default)
+            where T : IModelObject
         {
-            var mobj = modelObject as IModelObject;
             if (mobj is null) return ImmutableArray<T>.Empty;
             var result = ArrayBuilder<T>.GetInstance();
-            var queue = ArrayBuilder<IModelObjectCore>.GetInstance();
+            var queue = ArrayBuilder<IModelObject>.GetInstance();
             queue.Add(mobj);
             int i = 0;
             while (i < queue.Count)
@@ -94,7 +89,7 @@ namespace Roslyn.Utilities
                 }
                 if (current is IModelObject cmobj)
                 {
-                    queue.AddRange(cmobj.Children);
+                    queue.AddRange(cmobj.MChildren);
                 }
                 ++i;
             }

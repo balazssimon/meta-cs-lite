@@ -22,7 +22,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
             _modelObject = modelObject;
         }
 
-        public MetaDslx.Modeling.Model Model => _modelObject.Model;
+        public MetaDslx.Modeling.Model Model => _modelObject.MModel;
         public IModelObject ModelObject => _modelObject;
 
         public new SourceModuleSymbol ContainingModule => (SourceModuleSymbol)base.ContainingModule;

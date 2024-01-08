@@ -144,6 +144,10 @@ namespace MetaDslx.Modeling
             return $"Error removing '{value}' from '{property.QualifiedName}' in '{Owner}'";
         }
 
+        public override string ToString()
+        {
+            return Value?.ToString();
+        }
     }
 
     internal class SingleSlot<T> : ISingleSlot<T>
@@ -163,7 +167,7 @@ namespace MetaDslx.Modeling
 
         public bool IsNullable => _wrappedSlot.IsNullable;
 
-        public SlotKind Kind => SlotKind.Single;
+        public SlotKind Kind => _wrappedSlot.Kind;
 
         public bool IsDefault => _wrappedSlot.IsDefault;
 
@@ -231,6 +235,11 @@ namespace MetaDslx.Modeling
         ICollectionSlot<TAs>? ISlot<T>.AsCollection<TAs>()
         {
             return _wrappedSlot.AsCollection<TAs>();
+        }
+
+        public override string ToString()
+        {
+            return _wrappedSlot.ToString();
         }
     }
 }

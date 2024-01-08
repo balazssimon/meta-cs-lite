@@ -79,7 +79,7 @@ namespace MetaDslx.CodeAnalysis
                 if (IsNull) return null;
                 if (IsType) return OriginalType.Name;
                 if (IsTypeSymbol) return OriginalTypeSymbol.Name;
-                if (IsModelObject) return OriginalModelObject.Name;
+                if (IsModelObject) return OriginalModelObject.MName;
                 if (FullName is null) return null;
                 var index = FullName.LastIndexOf('.');
                 if (index >= 0) return FullName.Substring(index);
@@ -918,21 +918,21 @@ namespace MetaDslx.CodeAnalysis
 
         internal static string GetModelObjectFullName(IModelObject modelObject)
         {
-            var symbolType = modelObject?.Info?.SymbolType.AsType();
+            var symbolType = modelObject?.MInfo?.SymbolType.AsType();
             if (typeof(TypeSymbol).IsAssignableFrom(symbolType))
             {
                 var builder = PooledStringBuilder.GetInstance();
                 var sb = builder.Builder;
                 var current = modelObject;
-                var valid = !string.IsNullOrEmpty(current.Name);
-                sb.Append(current.Name);
+                var valid = !string.IsNullOrEmpty(current.MName);
+                sb.Append(current.MName);
                 while (valid && current is not null)
                 {
-                    var parent = current.Parent;
-                    if (!string.IsNullOrEmpty(parent?.Name))
+                    var parent = current.MParent;
+                    if (!string.IsNullOrEmpty(parent?.MName))
                     {
                         sb.Insert(0, ".");
-                        sb.Insert(0, parent.Name);
+                        sb.Insert(0, parent.MName);
                     }
                     else
                     {

@@ -25,24 +25,24 @@ namespace MetaDslx.Modeling
                 if (value is null) throw new ModelException($"Cannot add 'null' as a child to an object.");
                 if (_children[index] == value) return;
                 if (_children.Contains(value)) return;
-                if (value.Parent != _parent) throw new ModelException($"Error changing the parent '{value.Parent}' of '{value}' to {_parent}: to change the parent of an object, remove the object from the old parent first.'");
+                if (value.MParent != _parent) throw new ModelException($"Error changing the parent '{value.MParent}' of '{value}' to {_parent}: to change the parent of an object, remove the object from the old parent first.'");
                 var oldChild = _children[index];
                 _children[index] = value;
-                oldChild.Parent = null;
-                value.Parent = _parent;
+                oldChild.MParent = null;
+                value.MParent = _parent;
             }
         }
 
         public int Count => _children.Count;
 
-        public bool IsReadOnly => _parent.Model.IsReadOnly;
+        public bool IsReadOnly => _parent.MModel.IsReadOnly;
 
         public void Add(IModelObject item)
         {
             if (item is null) throw new ModelException($"Cannot add 'null' as a child to an object.");
             if (_children.Contains(item)) return;
             _children.Add(item);
-            item.Parent = _parent;
+            item.MParent = _parent;
         }
 
         public void Clear()
@@ -51,7 +51,7 @@ namespace MetaDslx.Modeling
             _children.Clear();
             foreach (var item in items)
             {
-                item.Parent = null;
+                item.MParent = null;
             }
         }
 
@@ -80,14 +80,14 @@ namespace MetaDslx.Modeling
             if (item is null) throw new ModelException($"Cannot add 'null' as a child to an object.");
             if (_children.Contains(item)) return;
             _children.Insert(index, item);
-            item.Parent = _parent;
+            item.MParent = _parent;
         }
 
         public bool Remove(IModelObject item)
         {
             if (_children.Remove(item))
             {
-                item.Parent = null;
+                item.MParent = null;
                 return true;
             }
             return false;
@@ -97,7 +97,7 @@ namespace MetaDslx.Modeling
         {
             var item = _children[index];
             _children.RemoveAt(index);
-            item.Parent = null;
+            item.MParent = null;
         }
 
         IEnumerator IEnumerable.GetEnumerator()
@@ -107,18 +107,7 @@ namespace MetaDslx.Modeling
 
         public override string ToString()
         {
-            var psb = PooledStringBuilder.GetInstance();
-            var sb = psb.Builder;
-            var first = true;
-            sb.Append('[');
-            foreach (var item in _children)
-            {
-                if (first) first = false;
-                else sb.Append(", ");
-                sb.Append(item.ToString());
-            }
-            sb.Append(']');
-            return psb.ToStringAndFree();
+            return $"Count = {Count}";
         }
     }
 }

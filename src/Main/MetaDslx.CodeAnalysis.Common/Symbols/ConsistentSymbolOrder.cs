@@ -21,8 +21,8 @@ namespace MetaDslx.CodeAnalysis.Symbols
             var sndMo = (snd as IModelSymbol)?.ModelObject;
             if (fstMo is not null && sndMo is not null)
             {
-                if (sndMo.MetaType != fstMo.MetaType) return string.CompareOrdinal(fstMo.MetaType.FullName, sndMo.MetaType.FullName);
-                if (sndMo.Name != fstMo.Name) return string.CompareOrdinal(fstMo.Name, sndMo.Name);
+                if (sndMo.MInfo.MetaType != fstMo.MInfo.MetaType) return string.CompareOrdinal(fstMo.MInfo.MetaType.FullName, sndMo.MInfo.MetaType.FullName);
+                if (sndMo.MName != fstMo.MName) return string.CompareOrdinal(fstMo.MName, sndMo.MName);
             }
             else if (fstMo is not null) return 1;
             else if (sndMo is not null) return -1;

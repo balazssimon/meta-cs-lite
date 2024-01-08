@@ -118,13 +118,13 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
                     var modelObject = modelFactory.Create(containerModelSymbol.Model, declaration.ModelObjectType);
                     if (modelObject is not null)
                     {
-                        modelObject.Name = declaration.Name;
+                        modelObject.MName = declaration.Name;
                         if (containerModelSymbol.ModelObject is not null)
                         {
-                            containerModelSymbol.ModelObject.Children.Add(modelObject);
+                            containerModelSymbol.ModelObject.MChildren.Add(modelObject);
                             if (declaration.QualifierProperty is not null)
                             {
-                                var qslot = containerModelSymbol.ModelObject.GetSlot(declaration.QualifierProperty);
+                                var qslot = containerModelSymbol.ModelObject.MGetSlot(declaration.QualifierProperty);
                                 var box = qslot?.Add(modelObject);
                                 box.Syntax = declaration.SyntaxReferences.FirstOrDefault();
                             }
@@ -133,7 +133,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
                     var symbol = constructor((Symbol)container, declaration, modelObject);
                     if (modelObject is not null)
                     {
-                        modelObject.Symbol = symbol;
+                        modelObject.MSymbol = symbol;
                     }
                     return symbol;
                 }
@@ -251,9 +251,9 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
             var modelObject = modelSymbol.ModelObject;
             if (modelObject is null) return ImmutableArray<TValue>.Empty;
             var builder = ArrayBuilder<TValue>.GetInstance();
-            foreach (var prop in modelObject.PublicProperties.Where(prop => prop.SymbolProperty == symbolProperty))
+            foreach (var prop in modelObject.MInfo.PublicProperties.Where(prop => prop.SymbolProperty == symbolProperty))
             {
-                var slot = modelObject.GetSlot(prop);
+                var slot = modelObject.MGetSlot(prop);
                 if (slot is null) continue;
                 foreach (var decl in symbol.DeclaringSyntaxReferences)
                 {
@@ -324,7 +324,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
                                         else if (value is Symbol symbolValue)
                                         {
                                             var modelObjectValue = (symbolValue as IModelSymbol)?.ModelObject;
-                                            if (modelObjectValue is not null && prop.Type.IsAssignableFrom(modelObjectValue.Info.MetaType))
+                                            if (modelObjectValue is not null && prop.Type.IsAssignableFrom(modelObjectValue.MInfo.MetaType))
                                             {
                                                 box = slot.Add(modelObjectValue);
                                             }
@@ -384,10 +384,10 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
                     var propBinders = declBinder.GetPropertyBinders(propertyName: null, cancellationToken);
                     foreach (var propBinder in propBinders)
                     {
-                        var prop = modelObject.GetProperty(propBinder.Name);
+                        var prop = modelObject.MInfo.GetProperty(propBinder.Name);
                         if (prop is not null && prop.SymbolProperty is null)
                         {
-                            var slot = modelObject.GetSlot(prop);
+                            var slot = modelObject.MGetSlot(prop);
                             if (slot is null) continue;
                             var values = ((Binder)propBinder).Bind(cancellationToken);
                             foreach (var value in values)
@@ -402,7 +402,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
                                     else if (value is Symbol symbolValue)
                                     {
                                         var modelObjectValue = (symbolValue as IModelSymbol)?.ModelObject;
-                                        if (modelObjectValue is not null && prop.Type.IsAssignableFrom(modelObjectValue.Info.MetaType))
+                                        if (modelObjectValue is not null && prop.Type.IsAssignableFrom(modelObjectValue.MInfo.MetaType))
                                         {
                                             box = slot.Add(modelObjectValue);
                                         }

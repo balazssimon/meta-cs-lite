@@ -84,7 +84,7 @@ namespace MetaDslx.Modeling
             catch (Exception ex)
             {
                 if (valueAdded) _boxes.RemoveAt(index);
-                if (Owner.Model.ValidationOptions.FullPropertyModificationStackInExceptions) throw new ModelException(GetInsertMessage(Property.SlotProperty, item), ex);
+                if (Owner.MModel.ValidationOptions.FullPropertyModificationStackInExceptions) throw new ModelException(GetInsertMessage(Property.SlotProperty, item), ex);
                 else throw;
             }
         }
@@ -125,7 +125,7 @@ namespace MetaDslx.Modeling
                     box.Value = oldValue;
                     _boxes.Insert(index, box);
                 }
-                if (Owner.Model.ValidationOptions.FullPropertyModificationStackInExceptions) throw new ModelException(GetRemoveMessage(Property.SlotProperty, box.Value), ex);
+                if (Owner.MModel.ValidationOptions.FullPropertyModificationStackInExceptions) throw new ModelException(GetRemoveMessage(Property.SlotProperty, box.Value), ex);
                 else throw;
             }
         }
@@ -177,7 +177,7 @@ namespace MetaDslx.Modeling
             catch (Exception ex)
             {
                 if (valueReplaced) box.Value = oldValue;
-                if (Owner.Model.ValidationOptions.FullPropertyModificationStackInExceptions) throw new ModelException(GetAssignMessage(Property.SlotProperty, item), ex);
+                if (Owner.MModel.ValidationOptions.FullPropertyModificationStackInExceptions) throw new ModelException(GetAssignMessage(Property.SlotProperty, item), ex);
                 else throw;
             }
         }
@@ -361,6 +361,11 @@ namespace MetaDslx.Modeling
                 yield return box.Value;
             }
         }
+
+        public override string ToString()
+        {
+            return $"Count = {Count}";
+        }
     }
 
     internal class CollectionSlot<T> : ICollectionSlot<T>
@@ -380,35 +385,21 @@ namespace MetaDslx.Modeling
 
         public bool IsNullable => _wrappedSlot.IsNullable;
 
-        public SlotKind Kind => SlotKind.Single;
+        public SlotKind Kind => _wrappedSlot.Kind;
 
         public bool IsDefault => _wrappedSlot.IsDefault;
 
-        bool ICollectionSlot<T>.IsUnordered => _wrappedSlot.IsUnordered;
+        public bool IsUnordered => _wrappedSlot.IsUnordered;
 
-        bool ICollectionSlot<T>.IsNonUnique => _wrappedSlot.IsNonUnique;
+        public bool IsNonUnique => _wrappedSlot.IsNonUnique;
 
-        bool ICollectionSlot<T>.IsReadOnly => _wrappedSlot.IsReadOnly;
-
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         IEnumerable<Box> ISlot<T>.Boxes => _wrappedSlot.Boxes;
-        
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         IEnumerable<T> ISlot<T>.Values => _wrappedSlot.Values.Cast<T>();
 
-        IModelObject ISlot<T>.Owner => _wrappedSlot.Owner;
-
-        ModelPropertySlot ISlot<T>.Property => _wrappedSlot.Property;
-
-        SlotKind ISlot<T>.Kind => SlotKind.Collection;
-
-        bool ISlot<T>.IsReadOnly => _wrappedSlot.IsReadOnly;
-
-        bool ISlot<T>.IsNullable => _wrappedSlot.IsNullable;
-
-        bool ISlot<T>.IsDefault => _wrappedSlot.IsDefault;
-
-        int ICollection<T>.Count => _wrappedSlot.Count;
-
-        bool ICollection<T>.IsReadOnly => _wrappedSlot.IsReadOnly;
+        public int Count => _wrappedSlot.Count;
 
         T IList<T>.this[int index]
         {
@@ -603,6 +594,11 @@ namespace MetaDslx.Modeling
         ICollectionSlot<TAs>? ISlot<T>.AsCollection<TAs>()
         {
             return _wrappedSlot.AsCollection<TAs>();
+        }
+
+        public override string ToString()
+        {
+            return _wrappedSlot.ToString();
         }
     }
 }

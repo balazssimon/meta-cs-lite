@@ -21,7 +21,7 @@ namespace MetaDslx.Modeling
             _property = property;
         }
 
-        public Model Model => _owner.Model;
+        public Model Model => _owner.MModel;
         public IModelObject Owner => _owner;
         public ModelPropertySlot Property => _property;
         public bool IsReadOnly => _property.IsReadOnly;
@@ -72,7 +72,7 @@ namespace MetaDslx.Modeling
         {
             if (value is not null)
             {
-                var valueType = value is IModelObject mobj ? mobj.MetaType.AsType() : value.GetType();
+                var valueType = value is IModelObject mobj ? mobj.MInfo.MetaType.AsType() : value.GetType();
                 Property.ThrowModelException(mp => valueType is null || !mp.Type.IsAssignableFrom(valueType), mp => $"{message(mp)}: the value type '{valueType}' is not assignable to the property type '{mp.Type}'.");
             }
             else if (Model.ValidationOptions.ValidateNullable)
@@ -89,21 +89,21 @@ namespace MetaDslx.Modeling
                 (mobj as IReferenceableModelObject)?.AddReference(box);
                 if (Property.IsContainment)
                 {
-                    mobj.Parent = Owner;
+                    mobj.MParent = Owner;
                 }
                 foreach (var slotProperty in Property.SlotProperties)
                 {
                     if (oppositeBox is null)
                     {
-                        foreach (var oppositeProperty in Owner.GetOppositeProperties(slotProperty))
+                        foreach (var oppositeProperty in Owner.MInfo.GetOppositeProperties(slotProperty))
                         {
-                            var oppositeSlot = mobj.GetSlot(oppositeProperty) as IOppositeSlotCore;
+                            var oppositeSlot = mobj.MGetSlot(oppositeProperty) as IOppositeSlotCore;
                             oppositeSlot?.AddCore(Owner, box);
                         }
                     }
-                    foreach (var subsettedProperty in Owner.GetSubsettedProperties(slotProperty))
+                    foreach (var subsettedProperty in Owner.MInfo.GetSubsettedProperties(slotProperty))
                     {
-                        var subsettedSlot = Owner.GetSlot(subsettedProperty) as IOppositeSlotCore;
+                        var subsettedSlot = Owner.MGetSlot(subsettedProperty) as IOppositeSlotCore;
                         subsettedSlot?.AddCore(mobj, oppositeBox);
                     }
                 }
@@ -118,21 +118,21 @@ namespace MetaDslx.Modeling
                 (mobj as IReferenceableModelObject)?.RemoveReference(box);
                 if (Property.IsContainment && !this.Contains(mobj))
                 {
-                    mobj.Parent = null;
+                    mobj.MParent = null;
                 }
                 foreach (var slotProperty in Property.SlotProperties)
                 {
                     if (oppositeBox is null)
                     {
-                        foreach (var oppositeProperty in Owner.GetOppositeProperties(slotProperty))
+                        foreach (var oppositeProperty in Owner.MInfo.GetOppositeProperties(slotProperty))
                         {
-                            var oppositeSlot = mobj.GetSlot(oppositeProperty) as IOppositeSlotCore;
+                            var oppositeSlot = mobj.MGetSlot(oppositeProperty) as IOppositeSlotCore;
                             oppositeSlot?.RemoveCore(Owner, box);
                         }
                     }
-                    foreach (var subsettingProperty in Owner.GetSubsettingProperties(slotProperty))
+                    foreach (var subsettingProperty in Owner.MInfo.GetSubsettingProperties(slotProperty))
                     {
-                        var subsettingSlot = Owner.GetSlot(subsettingProperty) as IOppositeSlotCore;
+                        var subsettingSlot = Owner.MGetSlot(subsettingProperty) as IOppositeSlotCore;
                         subsettingSlot?.RemoveCore(mobj, oppositeBox);
                     }
                 }

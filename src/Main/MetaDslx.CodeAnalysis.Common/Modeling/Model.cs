@@ -106,17 +106,18 @@ namespace MetaDslx.Modeling
         }
 
         public IEnumerable<IModelObject> Objects => _modelObjects;
-        public IEnumerable<IModelObject> RootObjects => _modelObjects.Where(mobj => mobj.Parent is null);
+        public IEnumerable<IModelObject> RootObjects => _modelObjects.Where(mobj => mobj.MParent is null);
 
-        public bool AttachObject(IModelObject modelObject)
+        public bool AttachObject(IModelObject? modelObject)
         {
+            if (modelObject is null) return false;
             CheckReadOnly();
             if (!_modelObjects.Contains(modelObject))
             {
                 try
                 {
                     _modelObjects.Add(modelObject);
-                    modelObject.Model = this;
+                    modelObject.MModel = this;
                     return true;
                 }
                 catch (Exception ex)
@@ -129,8 +130,9 @@ namespace MetaDslx.Modeling
             return false;
         }
 
-        public bool DetachObject(IModelObject modelObject)
+        public bool DetachObject(IModelObject? modelObject)
         {
+            if (modelObject is null) return false;
             CheckReadOnly();
             var index = _modelObjects.IndexOf(modelObject);
             if (index >= 0)
@@ -138,7 +140,7 @@ namespace MetaDslx.Modeling
                 try
                 {
                     _modelObjects.Remove(modelObject);
-                    modelObject.Model = null;
+                    modelObject.MModel = null;
                     return true;
                 }
                 catch (Exception ex)
@@ -151,14 +153,15 @@ namespace MetaDslx.Modeling
             return false;
         }
 
-        public void DeleteObject(IModelObject modelObject, CancellationToken cancellationToken = default)
+        public void DeleteObject(IModelObject? modelObject, CancellationToken cancellationToken = default)
         {
+            if (modelObject is null) return;
             var objectsToDelete = modelObject.GetAllContainedObjects<IModelObject>(includeSelf: true, cancellationToken: cancellationToken);
             foreach (var mobj in objectsToDelete)
             {
                 if (DetachObject(mobj))
                 {
-                    var references = mobj.References.ToImmutableArray();
+                    var references = mobj.MReferences.ToImmutableArray();
                     foreach (var reference in references)
                     {
                         reference.Slot.Remove(mobj);
@@ -167,9 +170,9 @@ namespace MetaDslx.Modeling
             }
         }
 
-        public void ReplaceObject(IModelObject oldObject, IModelObject newObject, CancellationToken cancellationToken = default)
+        public void ReplaceObject(IModelObject oldObject, IModelObject? newObject, CancellationToken cancellationToken = default)
         {
-            var references = oldObject.References.ToImmutableArray();
+            var references = oldObject.MReferences.ToImmutableArray();
             foreach (var reference in references)
             {
                 reference.Slot.Replace(oldObject, newObject);

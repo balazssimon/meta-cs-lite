@@ -232,25 +232,27 @@ end template
 
 template GenerateBinderFactoryVisitElementValue(string elemName, Element elem, ElementValue elemValue, ref int annotIndex)
     [if (elemValue is TokenAlts alts)]
-switch ([elemName].Get[Lang]Kind())
-{
-        [foreach (var alt in alts.Tokens)]
-    case [Lang]SyntaxKind.[alt.Token.CSharpName]:
-        [var altBody = GenerateBinderFactoryVisitElementValue(elemName, elem, alt, ref annotIndex)]
-        [altBody = GenerateBinderFactoryVisitBinders(elemValue.Binders, elemName, altBody, false, ref annotIndex)]
-        [GenerateBinderFactoryVisitBinders(elem.Binders, elemName, altBody, false, ref annotIndex)]
-        break;
-        [end foreach]
-    default:
-        [var defaultBody = GenerateBinderFactoryVisitBinders(elemValue.Binders, elemName, "// default", true, ref annotIndex)]
-        [GenerateBinderFactoryVisitBinders(elem.Binders, elemName, defaultBody, true, ref annotIndex)]
-        break;
-}
+[var altsBody = GenerateBinderFactoryVisitTokenAlts(elemName, elem, alts, ref annotIndex)]
+[GenerateBinderFactoryVisitBinders(alts.Binders, elemName, altsBody, false, ref annotIndex)]
     [else]
         [var elemBody = GenerateBinderFactoryVisitElementBody(elemName, elemValue)]
 [elemBody = GenerateBinderFactoryVisitBinders(elemValue.Binders, elemName, elemBody, false, ref annotIndex)]
 [GenerateBinderFactoryVisitBinders(elem.Binders, elemName, elemBody, false, ref annotIndex)]
     [end if]
+end template
+
+template GenerateBinderFactoryVisitTokenAlts(string elemName, Element elem, TokenAlts alts, ref int annotIndex)
+switch ([elemName].Get[Lang]Kind())
+{
+        [foreach (var alt in alts.Tokens)]
+    case [Lang]SyntaxKind.[alt.Token.CSharpName]:
+        [GenerateBinderFactoryVisitElementValue(elemName, elem, alt, ref annotIndex)]
+        break;
+        [end foreach]
+    default:
+        [GenerateBinderFactoryVisitBinders(elem.Binders, elemName, "// default", true, ref annotIndex)]
+        break;
+}
 end template
 
 template GenerateBinderFactoryVisitElementBody(string elemName, ElementValue elemValue)

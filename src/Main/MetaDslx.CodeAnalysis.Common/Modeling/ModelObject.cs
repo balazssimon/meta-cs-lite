@@ -17,7 +17,7 @@ namespace MetaDslx.Modeling
         private static readonly ConditionalWeakTable<ModelObject, ValueInfo> s_valueInfos = new ConditionalWeakTable<ModelObject, ValueInfo>();
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private string _id;
+        private string? _id;
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Model? _model;
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -35,7 +35,7 @@ namespace MetaDslx.Modeling
 
         public abstract ModelClassInfo MInfo { get; }
 
-        Model? IModelObject.Model
+        public Model? MModel
         {
             get => _model;
             set
@@ -67,7 +67,7 @@ namespace MetaDslx.Modeling
             }
         }
 
-        IModelObject? IModelObject.Parent
+        public IModelObject? MParent
         {
             get => _parent;
             set
@@ -82,12 +82,12 @@ namespace MetaDslx.Modeling
                         if (originalParent != null)
                         {
                             _parent = null;
-                            originalParent.Children.Remove(this);
-                            foreach (var prop in originalParent.Properties)
+                            originalParent.MChildren.Remove(this);
+                            foreach (var prop in originalParent.MProperties)
                             {
                                 if (prop.IsContainment)
                                 {
-                                    var slot = originalParent.GetSlot(prop);
+                                    var slot = originalParent.MGetSlot(prop);
                                     slot.Remove(this);
                                 }
                             }
@@ -95,7 +95,7 @@ namespace MetaDslx.Modeling
                         _parent = value;
                         if (_parent != null)
                         {
-                            _parent.Children.Add(this);
+                            _parent.MChildren.Add(this);
                         }
                     }
                     catch (Exception ex)
@@ -107,8 +107,7 @@ namespace MetaDslx.Modeling
             }
         }
 
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        string IModelObject.Id
+        public string? MId
         {
             get => _id;
             set
@@ -118,24 +117,9 @@ namespace MetaDslx.Modeling
             }
         }
 
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        MetaModel IModelObject.MetaModel => MInfo.MetaModel;
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        MetaType IModelObject.MetaType => MInfo.MetaType;
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ModelClassInfo IModelObject.Info => MInfo;
+        public IList<IModelObject> MChildren => _children;
 
-        IList<IModelObject> IModelObject.Children => _children;
-
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ImmutableArray<ModelProperty> IModelObject.DeclaredProperties => MInfo.DeclaredProperties;
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ImmutableArray<ModelProperty> IModelObject.AllDeclaredProperties => MInfo.AllDeclaredProperties;
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ImmutableArray<ModelProperty> IModelObject.PublicProperties => MInfo.PublicProperties;
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-
-        IEnumerable<ModelProperty> IModelObject.Properties
+        public IEnumerable<ModelProperty> MProperties
         {
             get
             {
@@ -143,15 +127,14 @@ namespace MetaDslx.Modeling
                 {
                     yield return prop;
                 }
-                foreach (var prop in ((IModelObject)this).AttachedProperties)
+                foreach (var prop in MAttachedProperties)
                 {
                     yield return prop;
                 }
             }
         }
 
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IEnumerable<ModelProperty> IModelObject.AttachedProperties
+        public IEnumerable<ModelProperty> MAttachedProperties
         {
             get
             {
@@ -165,144 +148,75 @@ namespace MetaDslx.Modeling
             }
         }
 
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        string? IModelObject.Name
+        public string? MName
         {
             get
             {
-                var nameSlot = ((IModelObject)this).GetSlot(MInfo.NameProperty)?.AsSingle();
+                var nameSlot = ((IModelObject)this).MGetSlot(MInfo.NameProperty)?.AsSingle();
                 string? name = null;
                 if (nameSlot != null) name = nameSlot.Value?.ToString();
                 return name;
             }
             set
             {
-                var nameSlot = ((IModelObject)this).GetSlot(MInfo.NameProperty)?.AsSingle();
+                var nameSlot = ((IModelObject)this).MGetSlot(MInfo.NameProperty)?.AsSingle();
                 if (nameSlot != null) nameSlot.Value = value;
             }
         }
 
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ModelProperty? IModelObject.NameProperty => MInfo.NameProperty;
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ModelProperty? IModelObject.TypeProperty => MInfo.TypeProperty;
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        MetaType IModelObject.SymbolType => MInfo.SymbolType;
-
         public T MGet<T>(ModelProperty property)
         {
-            var slot = ((IModelObject)this).GetSlot(property)?.AsSingle<T>();
+            var slot = ((IModelObject)this).MGetSlot(property)?.AsSingle<T>();
             if (slot is not null) return slot.Value;
             else return default;
         }
 
         public void MSet<T>(ModelProperty property, T value)
         {
-            var slot = ((IModelObject)this).GetSlot(property)?.AsSingle<T>();
+            var slot = ((IModelObject)this).MGetSlot(property)?.AsSingle<T>();
             if (slot is not null) slot.Value = value;
         }
 
         public ICollectionSlot<T> MGetCollection<T>(ModelProperty property)
         {
-            return ((IModelObject)this).GetSlot(property)?.AsCollection<T>();
+            return ((IModelObject)this).MGetSlot(property)?.AsCollection<T>();
         }
 
         public override string ToString()
         {
             var metaTypeName = MInfo.MetaType;
-            var name = ((IModelObject)this).Name;
+            var name = this.MName;
             var typeProp = MInfo.TypeProperty;
             string? type = null;
-            if (typeProp != null) type = ((IModelObject)this).GetSlot(typeProp)?.ToString();
+            if (typeProp != null) type = ((IModelObject)this).MGetSlot(typeProp)?.ToString();
             if (!string.IsNullOrWhiteSpace(name) && !string.IsNullOrWhiteSpace(type)) return $"{name}: {type}";
             else if (!string.IsNullOrWhiteSpace(name)) return $"{name}";
             else if (!string.IsNullOrWhiteSpace(type)) return $":{type}";
             else return $"({metaTypeName})";
         }
 
-        private ModelPropertySlot? GetSlot(ModelProperty property)
-        {
-            return MInfo.GetSlot(property);
-        }
-
-        ModelProperty? IModelObject.GetProperty(string name)
-        {
-            return MInfo.PublicProperties.FirstOrDefault(p => p.Name == name);
-        }
-
-        ImmutableArray<ModelProperty> IModelObject.GetOppositeProperties(ModelProperty property)
-        {
-            return MInfo.GetOppositeProperties(property);
-        }
-
-        ImmutableArray<ModelProperty> IModelObject.GetSubsettedProperties(ModelProperty property)
-        {
-            return MInfo.GetSubsettedProperties(property);
-        }
-
-        ImmutableArray<ModelProperty> IModelObject.GetSubsettingProperties(ModelProperty property)
-        {
-            return MInfo.GetSubsettingProperties(property);
-        }
-
-        ImmutableArray<ModelProperty> IModelObject.GetRedefinedProperties(ModelProperty property)
-        {
-            return MInfo.GetRedefinedProperties(property);
-        }
-
-        ImmutableArray<ModelProperty> IModelObject.GetRedefiningProperties(ModelProperty property)
-        {
-            return MInfo.GetRedefiningProperties(property);
-        }
-
-        ImmutableArray<ModelProperty> IModelObject.GetHiddenProperties(ModelProperty property)
-        {
-            return MInfo.GetHiddenProperties(property);
-        }
-
-        ImmutableArray<ModelProperty> IModelObject.GetHidingProperties(ModelProperty property)
-        {
-            return MInfo.GetHidingProperties(property);
-        }
-
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         protected abstract IEnumerable<ModelProperty> StoredPropertiesCore { get; }
 
-        ImmutableArray<ModelOperation> IModelObject.DeclaredOperations => MInfo.DeclaredOperations;
-
-        ImmutableArray<ModelOperation> IModelObject.AllDeclaredOperations => MInfo.AllDeclaredOperations;
-
-        ImmutableArray<ModelOperation> IModelObject.PublicOperations => MInfo.PublicOperations;
-
-        ImmutableArray<ModelOperation> IModelObject.GetOverridenOperations(ModelOperation operation)
+        ISlot? IModelObject.MGetSlot(string propertyName)
         {
-            return MInfo.GetOverridenOperations(operation);
-        }
-
-        ImmutableArray<ModelOperation> IModelObject.GetOverridingOperations(ModelOperation operation)
-        {
-            return MInfo.GetOverridingOperations(operation);
-        }
-
-        ISlot? IModelObject.GetSlot(string propertyName)
-        {
-            var property = ((IModelObject)this).GetProperty(propertyName);
+            var property = MInfo.GetProperty(propertyName);
             if (property is null) return null;
-            var propertySlot = GetSlot(property);
+            var propertySlot = MInfo.GetSlot(property);
             return MGetSlot(propertySlot);
         }
 
-        ISlot? IModelObject.GetSlot(ModelProperty? property)
+        ISlot? IModelObject.MGetSlot(ModelProperty? property)
         {
             if (property is null) return null;
-            var propertySlot = GetSlot(property);
+            var propertySlot = MInfo.GetSlot(property);
             return MGetSlot(propertySlot);
         }
 
-        ISlot IModelObject.AttachSlot(ModelProperty property)
+        ISlot IModelObject.MAttachSlot(ModelProperty property)
         {
             if (property is null) throw new ArgumentNullException(nameof(property));
-            var propertySlot = GetSlot(property);
+            var propertySlot = MInfo.GetSlot(property);
             return MAttachSlot(propertySlot);
         }
 
@@ -328,7 +242,7 @@ namespace MetaDslx.Modeling
             return null;
         }
 
-        public IModelObject? Clone()
+        public IModelObject MClone()
         {
             var map = new Dictionary<IModelObject, IModelObject>();
             var copy = MakeCopyMap(this, map);
@@ -338,9 +252,9 @@ namespace MetaDslx.Modeling
 
         private IModelObject? MakeCopyMap(IModelObject parent, Dictionary<IModelObject, IModelObject> copyMap)
         {
-            var copy = parent?.Info?.Create(_model);
+            var copy = parent?.MInfo?.Create(_model);
             copyMap.Add(parent, copy);
-            foreach (var child in parent.Children)
+            foreach (var child in parent.MChildren)
             {
                 MakeCopyMap(child, copyMap);
             }
@@ -351,13 +265,13 @@ namespace MetaDslx.Modeling
         {
             if (copyMap.TryGetValue(parent, out var copy))
             {
-                foreach (var prop in parent.Info.AllDeclaredProperties)
+                foreach (var prop in parent.MInfo.AllDeclaredProperties)
                 {
-                    var opposites = parent.Info.GetOppositeProperties(prop);
+                    var opposites = parent.MInfo.GetOppositeProperties(prop);
                     var hasOpposites = !prop.IsContainment && opposites.Length > 0;
-                    var oldSlot = parent.GetSlot(prop);
+                    var oldSlot = parent.MGetSlot(prop);
                     if (oldSlot.IsReadOnly) continue;
-                    var newSlot = copy.GetSlot(prop);
+                    var newSlot = copy.MGetSlot(prop);
                     foreach (var oldValue in oldSlot.Values)
                     {
                         if (oldValue is null)
@@ -381,14 +295,15 @@ namespace MetaDslx.Modeling
                     }
                 }
             }
-            foreach (var child in parent.Children)
+            foreach (var child in parent.MChildren)
             {
                 CopyProperties(child, copyMap);
             }
         }
 
-        IEnumerable<Box> IModelObject.References => (IEnumerable<Box>?)_references ?? ImmutableArray<Box>.Empty;
-        public Location? Location
+        public IEnumerable<Box> MReferences => (IEnumerable<Box>?)_references ?? ImmutableArray<Box>.Empty;
+
+        public Location? MLocation
         {
             get => TryGetValueInfo()?.Location ?? Location.None;
             set
@@ -399,7 +314,7 @@ namespace MetaDslx.Modeling
             }
         }
 
-        public SourceLocation? SourceLocation
+        public SourceLocation? MSourceLocation
         {
             get => TryGetValueInfo()?.SourceLocation ?? SourceLocation.None;
             set
@@ -410,7 +325,7 @@ namespace MetaDslx.Modeling
             }
         }
 
-        public Symbol? Symbol
+        public Symbol? MSymbol
         {
             get => TryGetValueInfo()?.Symbol;
             set
@@ -421,7 +336,7 @@ namespace MetaDslx.Modeling
             }
         }
 
-        public SyntaxNodeOrToken Syntax
+        public SyntaxNodeOrToken MSyntax
         {
             get => TryGetValueInfo()?.Syntax ?? default;
             set
@@ -432,12 +347,12 @@ namespace MetaDslx.Modeling
             }
         }
 
-        public Microsoft.CodeAnalysis.ISymbol? CSharpSymbol
+        public Microsoft.CodeAnalysis.ISymbol? MCSharpSymbol
         {
             get => TryGetValueInfo()?.CSharpSymbol;
         }
 
-        public object? Tag
+        public object? MTag
         {
             get => TryGetValueInfo()?.Tag;
             set
@@ -456,7 +371,7 @@ namespace MetaDslx.Modeling
 
         protected virtual ValueInfo GetValueInfo()
         {
-            return s_valueInfos.GetValue(this, mobj => ((IModelObject)this).Model.CreateValueInfo(mobj));
+            return s_valueInfos.GetValue(this, mobj => MModel.CreateValueInfo(mobj));
         }
 
         void IReferenceableModelObject.AddReference(Box box)
@@ -471,9 +386,9 @@ namespace MetaDslx.Modeling
             _references?.Remove(box);
         }
 
-        void IModelObject.ReplaceObject(IModelObject oldObject, IModelObject newObject, CancellationToken cancellationToken)
+        public void MReplaceObject(IModelObject oldObject, IModelObject? newObject, CancellationToken cancellationToken)
         {
-            var references = oldObject.References.ToImmutableArray();
+            var references = oldObject.MReferences.ToImmutableArray();
             var mobjs = this.GetAllContainedObjects<IModelObject>(includeSelf: true, cancellationToken: cancellationToken);
             foreach (var reference in references)
             {

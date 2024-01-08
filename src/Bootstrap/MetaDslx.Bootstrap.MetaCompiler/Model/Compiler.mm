@@ -51,7 +51,7 @@ class $Annotation
 class $AnnotationArgument
 {
 	symbol[] $NamedParameter;
-	DeclarationSymbol Parameter;
+	DeclarationSymbol $Parameter;
 	type ParameterType;
 	contains Expression $Value;
 }
@@ -70,7 +70,15 @@ class BinderArgument
 	string Name;
 	string TypeName;
 	bool IsArray;
-	string[] Values;
+	string?[] Values;
+}
+
+class CSharpElement
+{
+	string CSharpName;
+	string AntlrName;
+	contains Binder[] Binders;
+	bool ContainsBinders;
 }
 
 class TokenKind
@@ -90,13 +98,10 @@ enum Multiplicity
 	NonGreedyOneOrMore
 }
 
-abstract class GrammarRule : Declaration
+abstract class GrammarRule : Declaration, CSharpElement
 {
 	derived Language Language;
 	Grammar Grammar redefines Declaration.Parent;
-
-	string CSharpName;
-	string AntlrName;
 }
 
 abstract class LexerRule : GrammarRule
@@ -218,23 +223,15 @@ abstract class Rule $ParserRule : GrammarRule
 	type $ReturnType;
 	contains Alternative[] $Alternatives;
 
-	contains Binder[] Binders;
-	bool ContainsBinders;
-
 	derived string GreenName;
 	derived string RedName;
 }
 
-class Alternative $PAlternative : Declaration
+class Alternative $PAlternative : Declaration, CSharpElement
 {
 	type $ReturnType;
 	contains Expression $ReturnValue;
 	contains Element[] $Elements;
-
-	string CSharpName;
-	string AntlrName;
-	contains Binder[] Binders;
-	bool ContainsBinders;
 
 	derived string GreenName;
 	derived string GreenConstructorParameters;
@@ -259,7 +256,7 @@ enum Assignment
     PlusAssign
 }
 
-class Element $PElement
+class Element $PElement : CSharpElement
 {
 	contains Annotation[] NameAnnotations;
 	symbol[] $SymbolProperty;
@@ -269,10 +266,6 @@ class Element $PElement
 	Multiplicity Multiplicity;
 
 	string? Name;
-	string CSharpName;
-	string AntlrName;
-	contains Binder[] Binders;
-	bool ContainsBinders;
 
 	derived bool IsToken;
 	derived bool IsList;
@@ -301,11 +294,8 @@ class Element $PElement
 	derived string? VisitCall;
 }
 
-abstract class ElementValue $Symbol
+abstract class ElementValue $Symbol : CSharpElement
 {
-	contains Binder[] Binders;
-	bool ContainsBinders;
-
 	derived string GreenType;
 	derived string? GreenSyntaxCondition;
 

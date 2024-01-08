@@ -17,7 +17,6 @@ namespace [Namespace]
 	using __Model = global::MetaDslx.Modeling.Model;
 	using __MetaModel = global::MetaDslx.Modeling.MetaModel;
 	using __IModelObject = global::MetaDslx.Modeling.IModelObject;
-	using __IModelObjectCore = global::MetaDslx.Modeling.IModelObjectCore;
 	using __ModelFactory = global::MetaDslx.Modeling.ModelFactory;
 	using __MultiModelFactory = global::MetaDslx.Modeling.MultiModelFactory;
 	using __ModelVersion = global::MetaDslx.Modeling.ModelVersion;
@@ -58,7 +57,6 @@ namespace [Namespace].__Impl
 	using __Model = global::MetaDslx.Modeling.Model;
 	using __MetaModel = global::MetaDslx.Modeling.MetaModel;
 	using __IModelObject = global::MetaDslx.Modeling.IModelObject;
-	using __IModelObjectCore = global::MetaDslx.Modeling.IModelObjectCore;
 	using __MetaModelObject = global::MetaDslx.Modeling.MetaModelObject;
 	using __ModelEnumInfo = global::MetaDslx.Modeling.ModelEnumInfo;
 	using __ModelClassInfo = global::MetaDslx.Modeling.ModelClassInfo;
@@ -177,15 +175,15 @@ public sealed class [mm.Name] : __MetaModel, I[mm.Name]
 		_[c.Name.ToCamelCase()] = f.[c.Type.Name]();
 		[end foreach]
 		[foreach (var obj in Objects)]
-		var [GetName(obj)] = f.[obj.MetaType.Name]();
+		var [GetName(obj)] = f.[obj.MInfo.MetaType.Name]();
 		[end foreach]
 		__CustomImpl.[mm.Name](this);
 		[foreach (var obj in Objects)]
-			[foreach (var child in obj.Children)]
-		((__IModelObject)[GetName(obj)]).Children.Add((__IModelObject)[GetName(child)]);
+			[foreach (var child in obj.MChildren)]
+		((__IModelObject)[GetName(obj)]).MChildren.Add((__IModelObject)[GetName(child)]);
 			[end foreach]
-			[foreach (var prop in obj.PublicProperties)]
-				[var slot = obj.GetSlot(prop)]
+			[foreach (var prop in obj.MInfo.PublicProperties)]
+				[var slot = obj.MGetSlot(prop)]
 				[if (slot != null && !slot.IsDefault)]
 					[if (prop.IsCollection)]
 						[foreach (var value in slot.Values)]
@@ -311,7 +309,7 @@ end template
 
 template GenerateInterface(MetaModel mm, MetaClass cls)
 [var metaCls = Graph.GetMetaClass(MetaDslx.CodeAnalysis.MetaType.FromModelObject((MetaDslx.Modeling.IModelObject)cls))]
-public interface [cls.Name][if (cls.BaseTypes.Any())] : [foreach (var bt in cls.BaseTypes) separator ", "]global::[bt.FullName][end foreach][else] : __IModelObjectCore[end if]
+public interface [cls.Name][if (cls.BaseTypes.Any())] : [foreach (var bt in cls.BaseTypes) separator ", "]global::[bt.FullName][end foreach][else] : __IModelObject[end if]
 {
 	[foreach (var prop in metaCls.DeclaredProperties)]
 	[var info = metaCls.ModelPropertyInfos[prop]]

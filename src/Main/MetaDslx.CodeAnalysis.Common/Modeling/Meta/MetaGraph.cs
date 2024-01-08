@@ -251,6 +251,10 @@ namespace MetaDslx.Modeling.Meta
                     flags |= ModelPropertyFlags.Collection | collectionFlags;
                 }
             }
+            if (!flags.HasFlag(ModelPropertyFlags.Collection) && !flags.HasFlag(ModelPropertyFlags.Map))
+            {
+                flags |= ModelPropertyFlags.Single;
+            }
             if (type == null)
             {
                 type = property.OriginalType;

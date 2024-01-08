@@ -25,7 +25,7 @@ namespace MetaDslx.Modeling
             _value = DefaultValue;
         }
 
-        public Model Model => _slot.Owner.Model;
+        public Model Model => _slot.Owner.MModel;
         public ISlot Slot => _slot;
         public IModelObject Owner => _slot.Owner;
         public ModelPropertySlot Property => _slot.Property;
@@ -128,6 +128,11 @@ namespace MetaDslx.Modeling
         public override int GetHashCode()
         {
             return Hash.Combine(Hash.Combine(_slot?.Property?.GetHashCode() ?? 0, _slot?.Owner?.GetHashCode() ?? 0), _value?.GetHashCode() ?? 0);
+        }
+
+        public override string ToString()
+        {
+            return $"{Owner}.{Property}={_value}";
         }
     }
 }

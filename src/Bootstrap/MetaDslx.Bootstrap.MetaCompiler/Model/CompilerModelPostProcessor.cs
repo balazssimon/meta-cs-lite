@@ -84,7 +84,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                 {
                     if (_fixedTokens.TryGetValue(fixedText, out var existingFixedToken))
                     {
-                        _diagnostics.Add(Diagnostic.Create(ErrorCode.ERR_SyntaxError, ((IModelObject)fixedToken).Location, $"There is already another token called '{existingFixedToken.Name}' with text '{fixedText}'."));
+                        _diagnostics.Add(Diagnostic.Create(ErrorCode.ERR_SyntaxError, fixedToken.MLocation, $"There is already another token called '{existingFixedToken.Name}' with text '{fixedText}'."));
                     }
                     else
                     {
@@ -95,7 +95,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                 }
                 else
                 {
-                    _diagnostics.Add(Diagnostic.Create(ErrorCode.ERR_SyntaxError, ((IModelObject)fixedToken).Location, $"Token '{fixedToken.Name}' is empty."));
+                    _diagnostics.Add(Diagnostic.Create(ErrorCode.ERR_SyntaxError, fixedToken.MLocation, $"Token '{fixedToken.Name}' is empty."));
                 }
             }
         }
@@ -129,8 +129,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                             var tokenRef = f.RuleRef();
                             tokenRef.GrammarRule = fixedToken;
                             elem.Value = tokenRef;
-                            ((IModelObject)tokenRef).SourceLocation = ((IModelObject)keyword).SourceLocation;
-                            _model.DeleteObject((IModelObject)keyword, _cancellationToken);
+                            tokenRef.MSourceLocation = keyword.MSourceLocation;
+                            _model.DeleteObject(keyword, _cancellationToken);
                         }
                     }
                 }
@@ -308,7 +308,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             }
             foreach (var rule in allRules)
             {
-                if (rule is Block blk && ((IModelObject)blk).Parent is Element elem)
+                if (rule is Block blk && blk.MParent is Element elem)
                 {
                     var blockRef = f.RuleRef();
                     blockRef.GrammarRule = blk;
@@ -330,9 +330,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                     {
                         if (first)
                         {
-                            _diagnostics.Add(Diagnostic.Create(ErrorCode.WRN_SyntaxWarning, ((IModelObject)rule).Location, $"Rule '{rule.Name}' is never used."));
+                            _diagnostics.Add(Diagnostic.Create(ErrorCode.WRN_SyntaxWarning, rule.MLocation, $"Rule '{rule.Name}' is never used."));
                         }
-                        _model.DeleteObject((IModelObject)rule);
+                        _model.DeleteObject(rule);
                         allRules.RemoveAt(i);
                         unusedRules = true;
                     }
@@ -436,9 +436,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
         private ImmutableArray<Element> GetRuleRefs(Rule rule)
         {
             var result = ArrayBuilder<Element>.GetInstance();
-            foreach (var ruleRef in ((IModelObject)rule).References)
+            foreach (var ruleRef in rule.MReferences)
             {
-                if (ruleRef.Owner is RuleRef && ruleRef.Owner.Parent is Element elem)
+                if (ruleRef.Owner is RuleRef && ruleRef.Owner.MParent is Element elem)
                 {
                     result.Add(elem);
                 }
@@ -459,21 +459,21 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                 {
                     var singleElem = singleTokenAlt.Elements[0];
                     var singleToken = (RuleRef)singleElem.Value;
-                    ((IModelObject)singleToken).Parent = null;
+                    singleToken.MParent = null;
                     tokenAlts.Tokens.Add(singleToken);
                     InsertBinders(singleToken.Binders, singleTokenAlt.Binders);
-                    _model.DeleteObject((IModelObject)singleTokenAlt);
+                    _model.DeleteObject(singleTokenAlt);
                 }
                 if (rule.Alternatives.Count == 0)
                 {
                     InsertBinders(tokenAlts.Binders, rule.Binders);
                     foreach (var ruleRef in GetRuleRefs(rule))
                     {
-                        _model.DeleteObject((IModelObject)ruleRef.Value);
-                        ruleRef.Value = (TokenAlts)((IModelObject)tokenAlts).Clone();
+                        _model.DeleteObject(ruleRef.Value);
+                        ruleRef.Value = (TokenAlts)tokenAlts.MClone();
                     }
-                    _model.DeleteObject((IModelObject)tokenAlts);
-                    _model.DeleteObject((IModelObject)rule);
+                    _model.DeleteObject(tokenAlts);
+                    _model.DeleteObject(rule);
                 }
                 else
                 {
@@ -659,12 +659,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                                     InsertBinders(list.Binders, rule.Binders);
                                     foreach (var listRuleRef in GetRuleRefs(rule))
                                     {
-                                        _model.DeleteObject((IModelObject)listRuleRef.Value);
+                                        _model.DeleteObject(listRuleRef.Value);
                                         listRuleRef.Name = name;
-                                        listRuleRef.Value = (SeparatedList)((IModelObject)list).Clone();
+                                        listRuleRef.Value = (SeparatedList)list.MClone();
                                     }
-                                    _model.DeleteObject((IModelObject)list);
-                                    _model.DeleteObject((IModelObject)rule);
+                                    _model.DeleteObject(list);
+                                    _model.DeleteObject(rule);
                                 }
                                 else
                                 {
@@ -729,8 +729,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                                         }
                                         InsertAlternativesAt(rule.Alternatives, j, rrRule.Alternatives);
                                     }
-                                    _model.DeleteObject((IModelObject)alt);
-                                    _model.DeleteObject((IModelObject)rrRule);
+                                    _model.DeleteObject(alt);
+                                    _model.DeleteObject(rrRule);
                                 }
                             }
                         }
@@ -744,7 +744,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             var binders = source.ToArray();
             foreach (var binder in binders)
             {
-                ((IModelObject)binder).Parent = null;
+                binder.MParent = null;
             }
             target.InsertRange(0, binders);
         }
@@ -754,7 +754,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             var alts = source.ToArray();
             foreach (var alt in alts)
             {
-                ((IModelObject)alt).Parent = null;
+                alt.MParent = null;
             }
             target.InsertRange(index, alts);
         }
@@ -973,7 +973,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                     }
                     else
                     {
-                        _diagnostics.Add(Diagnostic.Create(CompilerErrorCode.ERR_AmbiguousDefaultReference, SourceLocation.None, ((IModelObject)_defaultReferenceRule).Name, ((IModelObject)grammarRule).Name));
+                        _diagnostics.Add(Diagnostic.Create(CompilerErrorCode.ERR_AmbiguousDefaultReference, SourceLocation.None, _defaultReferenceRule.Name, grammarRule.Name));
                     }
                 }
                 if (grammarRule is Token token)

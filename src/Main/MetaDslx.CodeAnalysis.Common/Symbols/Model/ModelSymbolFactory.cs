@@ -52,16 +52,16 @@ namespace MetaDslx.CodeAnalysis.Symbols.Model
             }
             else
             {
-                var symbolType = modelObject.SymbolType.AsType();
+                var symbolType = modelObject.MInfo.SymbolType.AsType();
                 if (symbolType is null) return null;
                 Symbol? container = null;
-                if (modelObject.Parent is not null)
+                if (modelObject.MParent is not null)
                 {
-                    container = GetSymbol(modelObject.Parent);
+                    container = GetSymbol(modelObject.MParent);
                 }
                 else
                 {
-                    if (_symbols.TryGetValue(modelObject.Model, out var moduleSymbol)) container = moduleSymbol;
+                    if (_symbols.TryGetValue(modelObject.MModel, out var moduleSymbol)) container = moduleSymbol;
                 }
                 if (container is null) return null;
                 return CreateSymbol(symbolType, container, modelObject);
@@ -88,22 +88,22 @@ namespace MetaDslx.CodeAnalysis.Symbols.Model
 
         public ImmutableArray<Symbol> CreateChildSymbols(IModelObject? modelObject)
         {
-            return GetSymbols<Symbol>(modelObject.Children);
+            return GetSymbols<Symbol>(modelObject.MChildren);
         }
 
         public ImmutableArray<DeclarationSymbol> GetMemberSymbols(IModelObject? modelObject)
         {
             if (modelObject is null) return ImmutableArray<DeclarationSymbol>.Empty;
-            return GetSymbols<DeclarationSymbol>(modelObject.Children);
+            return GetSymbols<DeclarationSymbol>(modelObject.MChildren);
         }
 
         public ImmutableArray<TValue> GetSymbolPropertyValues<TValue>(IModelObject? modelObject, string symbolProperty, DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             if (modelObject is null) return ImmutableArray<TValue>.Empty;
             var builder = ArrayBuilder<TValue>.GetInstance();
-            foreach (var prop in modelObject.PublicProperties.Where(prop => prop.SymbolProperty == symbolProperty))
+            foreach (var prop in modelObject.MInfo.PublicProperties.Where(prop => prop.SymbolProperty == symbolProperty))
             {
-                var slot = modelObject.GetSlot(prop);
+                var slot = modelObject.MGetSlot(prop);
                 if (slot is null) continue;
                 if (typeof(Symbol).IsAssignableFrom(typeof(TValue)))
                 {
@@ -193,7 +193,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Model
             {
                 var newSymbol = constructor(container, modelObject);
                 var result = _symbols.GetOrAdd(modelObject, newSymbol);
-                if (modelObject is not null) modelObject.Symbol = result;
+                if (modelObject is not null) modelObject.MSymbol = result;
                 return result;
             }
             else

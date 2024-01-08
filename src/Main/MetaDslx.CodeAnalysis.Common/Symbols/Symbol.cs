@@ -564,7 +564,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
                             s_names.Add(this, name);
                             if (this is ISourceSymbol && this is IModelSymbol modelSymbol && modelSymbol.ModelObject is not null)
                             {
-                                modelSymbol.ModelObject.Name = name;
+                                modelSymbol.ModelObject.MName = name;
                             }
                         }
                         if (!string.IsNullOrEmpty(metadataName) && metadataName != name)
