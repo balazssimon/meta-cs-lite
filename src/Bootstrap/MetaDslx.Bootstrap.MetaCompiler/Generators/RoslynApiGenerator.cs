@@ -80,7 +80,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
                         }
                         if (code is not null)
                         {
-                            result.Add(($"{fileName}.MetaCompiler.Antlr.g.cs", code));
+                            result.Add(($"{Lang}.MetaCompiler.Antlr.{fileName}.g.cs", code));
                         }
                     }
                 }
@@ -119,7 +119,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
                         }
                         if (code is not null)
                         {
-                            result.Add(($"{fileName}.MetaCompiler.Antlr.g.cs", code));
+                            result.Add(($"{Lang}.MetaCompiler.Antlr.{fileName}.g.cs", code));
                         }
                     }
                     var syntaxLexerCode = GenerateAntlrSyntaxLexer();

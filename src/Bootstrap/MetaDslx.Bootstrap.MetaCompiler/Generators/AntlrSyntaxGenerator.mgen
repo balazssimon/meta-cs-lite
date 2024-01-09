@@ -100,7 +100,7 @@ namespace [Namespace].Syntax
 				_factory = ([Lang]InternalSyntaxFactory)_parser.Language.InternalSyntaxFactory;
             }
 
-            private GreenNode? VisitTerminal(IToken? token, [Lang]SyntaxKind kind)
+            private InternalSyntaxToken? VisitTerminal(IToken? token, [Lang]SyntaxKind kind)
             {
 				if (token == null)
 				{
@@ -112,12 +112,12 @@ namespace [Namespace].Syntax
 				return green;
             }
 
-            public GreenNode? VisitTerminal(IToken? token)
+            public InternalSyntaxToken? VisitTerminal(IToken? token)
             {
 				return VisitTerminal(token, [Lang]SyntaxKind.None);
             }
 
-            private GreenNode? VisitTerminal(ITerminalNode? node, [Lang]SyntaxKind kind)
+            private InternalSyntaxToken? VisitTerminal(ITerminalNode? node, [Lang]SyntaxKind kind)
             {
                 if (node?.Symbol == null)
 				{
@@ -129,7 +129,7 @@ namespace [Namespace].Syntax
 				return green;
 			}
 
-            public override GreenNode? VisitTerminal(ITerminalNode? node)
+            public override InternalSyntaxToken? VisitTerminal(ITerminalNode? node)
             {
                 return VisitTerminal(node, [Lang]SyntaxKind.None);
             }
@@ -174,7 +174,7 @@ end template
 template GenerateVisitTokenAlts(Element elem, TokenAlts tokenAlts)
 InternalSyntaxToken? [elem.ParameterName] = null;
 [foreach (var token in tokenAlts.Tokens)]
-if (context.[token.Token.AntlrName] is not null) [elem.ParameterName] = (InternalSyntaxToken)this.VisitTerminal(context.[token.Token.AntlrName]);
+if (context.[token.Token.AntlrName]() is not null) [elem.ParameterName] = this.VisitTerminal(context.[token.Token.AntlrName]());
 [end foreach]
 [if (!elem.Multiplicity.IsOptional())]
 if ([elem.ParameterName] is null) [elem.ParameterName] = _factory.None;
@@ -189,7 +189,7 @@ for (int i = 0; i < [elem.AntlrName]Context.Count; ++i)
             [if(elem.IsToken)]
     [elem.ParameterName]Builder.Add(this.VisitTerminal([elem.AntlrName]Context["[i]"]));
             [else]
-    if ([elem.AntlrName]Context["[i]"] is not null) [elem.ParameterName]Builder.Add(([elem.Value.GreenType]?)this.Visit([elem.ParameterName]Context["[i]"]) ?? [elem.Value.GreenType].__Missing);
+    if ([elem.AntlrName]Context["[i]"] is not null) [elem.ParameterName]Builder.Add(([elem.Value.GreenType]?)this.Visit([elem.AntlrName]Context["[i]"]) ?? [elem.Value.GreenType].__Missing);
     else [elem.ParameterName]Builder.Add([elem.Value.GreenType].__Missing);
             [end if]
 }
@@ -202,21 +202,21 @@ template GenerateVisitSeparatedList(Element elem, SeparatedList sl)
 var [builder] = _pool.AllocateSeparated<[sl.GreenType]>(reversed: [sl.SeparatorFirst ? "true" : "false"]);
     [for (int i = 0; i < sl.FirstItems.Count && i < sl.FirstSeparators.Count; ++i)]
         [if (sl.SeparatorFirst)]
-[GenerateVisitSeparatedListSeparator(sl.FirstSeparators[i], builder, null)]
-[GenerateVisitSeparatedListItem(sl.FirstItems[i], builder, null)]
+[GenerateVisitSeparatedListSeparator(sl.FirstSeparators[i], builder)]
+[GenerateVisitSeparatedListItem(sl.FirstItems[i], builder)]
         [else]
-[GenerateVisitSeparatedListItem(sl.FirstItems[i], builder, null)]
-[GenerateVisitSeparatedListSeparator(sl.FirstSeparators[i], builder, null)]
+[GenerateVisitSeparatedListItem(sl.FirstItems[i], builder)]
+[GenerateVisitSeparatedListSeparator(sl.FirstSeparators[i], builder)]
         [end if]
     [end for]
     [if (sl.FirstItems.Count > sl.FirstSeparators.Count)]
-[GenerateVisitSeparatedListItem(sl.FirstItems[sl.FirstItems.Count-1], builder, null)]
+[GenerateVisitSeparatedListItem(sl.FirstItems[sl.FirstItems.Count-1], builder)]
     [end if]
     [if (sl.FirstSeparators.Count > sl.FirstItems.Count)]
-[GenerateVisitSeparatedListSeparator(sl.FirstSeparators[sl.FirstSeparators.Count-1], builder, null)]
+[GenerateVisitSeparatedListSeparator(sl.FirstSeparators[sl.FirstSeparators.Count-1], builder)]
     [end if]
-var [sl.RepeatedItem.AntlrName]Context = context.[sl.RepeatedItem.AntlrName];
-var [sl.RepeatedSeparator.AntlrName]Context = context.[sl.RepeatedSeparator.AntlrName];
+var [sl.RepeatedItem.AntlrName]Context = context._[sl.RepeatedItem.AntlrName];
+var [sl.RepeatedSeparator.AntlrName]Context = context._[sl.RepeatedSeparator.AntlrName];
 for (int i = 0; i < [sl.RepeatedItem.AntlrName]Context.Count; ++i)
 {
     [if (sl.RepeatedSeparatorFirst)]
@@ -226,7 +226,7 @@ for (int i = 0; i < [sl.RepeatedItem.AntlrName]Context.Count; ++i)
     }
     else
     {
-        [builder].AddSeparator(this.VisitTerminal(null, [Lang]SyntaxKind.[sl.RepeatedSeparator.CSharpName]));
+        [builder].AddSeparator(this.VisitTerminal((IToken?)null, [Lang]SyntaxKind.[sl.RepeatedSeparator.CSharpName]));
     }
     [GenerateVisitSeparatedListItem(sl.RepeatedItem, builder, "i")]
     [else]
@@ -237,43 +237,60 @@ for (int i = 0; i < [sl.RepeatedItem.AntlrName]Context.Count; ++i)
     }
     else
     {
-        [builder].AddSeparator(this.VisitTerminal(null, [Lang]SyntaxKind.[sl.RepeatedSeparator.CSharpName]));
+        [builder].AddSeparator(this.VisitTerminal((IToken?)null, [Lang]SyntaxKind.[sl.RepeatedSeparator.CSharpName]));
     }
     [end if]
 }
     [for (int i = 0; i < sl.LastItems.Count && i < sl.LastSeparators.Count; ++i)]
         [if (sl.RepeatedSeparatorFirst)]
-[GenerateVisitSeparatedListSeparator(sl.LastSeparators[i], builder, null)]
+[GenerateVisitSeparatedListSeparator(sl.LastSeparators[i], builder)]
 [GenerateVisitSeparatedListItem(sl.LastItems[i], builder, null)]
         [else]
 [GenerateVisitSeparatedListItem(sl.LastItems[i], builder, null)]
-[GenerateVisitSeparatedListSeparator(sl.LastSeparators[i], builder, null)]
+[GenerateVisitSeparatedListSeparator(sl.LastSeparators[i], builder)]
         [end if]
     [end for]
     [if (sl.LastItems.Count > sl.LastSeparators.Count)]
-[GenerateVisitSeparatedListItem(sl.LastItems[sl.LastItems.Count-1], builder, null)]
+[GenerateVisitSeparatedListItem(sl.LastItems[sl.LastItems.Count-1], builder)]
     [end if]
     [if (sl.LastSeparators.Count > sl.LastItems.Count)]
-[GenerateVisitSeparatedListSeparator(sl.LastSeparators[sl.LastSeparators.Count-1], builder, null)]
+[GenerateVisitSeparatedListSeparator(sl.LastSeparators[sl.LastSeparators.Count-1], builder)]
     [end if]
 var [elem.ParameterName] = [builder].ToList();
 _pool.Free([builder]);
 end template
 
-template GenerateVisitSeparatedListItem(Element elem, string builder, string? index)
-var [elem.AntlrName]Context = context.[elem.AntlrName][index is not null ? "["+index+"]" : ""];
+template GenerateVisitSeparatedListItem(Element elem, string builder)
+var [elem.AntlrName]Context = context.[elem.AntlrName];
 if ([elem.AntlrName]Context is not null) [builder].Add(([elem.Value.GreenType]?)this.Visit([elem.AntlrName]Context) ?? [elem.Value.GreenType].__Missing);
     [if (!elem.Multiplicity.IsOptional())]
 else [builder].Add([elem.Value.GreenType].__Missing);
     [end if]
 end template
 
-template GenerateVisitSeparatedListSeparator(Element elem, string builder, string? index)
-var [elem.AntlrName]Context = context.[elem.AntlrName][index is not null ? "["+index+"]" : ""];
+template GenerateVisitSeparatedListSeparator(Element elem, string builder)
+var _separatorContext = context.[elem.AntlrName];
     [if (elem.Multiplicity.IsOptional())]
 if ([elem.AntlrName]Context is not null) [builder].AddSeparator(this.VisitTerminal([elem.AntlrName]Context));
     [else]
 [builder].AddSeparator(this.VisitTerminal([elem.AntlrName]Context, [Lang]SyntaxKind.[elem.CSharpName]));
+    [end if]
+end template
+
+template GenerateVisitSeparatedListItem(Element elem, string builder, string index)
+var _item = [elem.AntlrName]Context["["][index]["]"];
+if (_item is not null) [builder].Add(([elem.Value.GreenType]?)this.Visit(_item) ?? [elem.Value.GreenType].__Missing);
+    [if (!elem.Multiplicity.IsOptional())]
+else [builder].Add([elem.Value.GreenType].__Missing);
+    [end if]
+end template
+
+template GenerateVisitSeparatedListSeparator(Element elem, string builder, string index)
+var _separator = [elem.AntlrName]Context["["][index]["]"];
+    [if (elem.Multiplicity.IsOptional())]
+if ([elem.AntlrName]Context is not null) [builder].AddSeparator(this.VisitTerminal(_separator));
+    [else]
+[builder].AddSeparator(this.VisitTerminal(_separator, [Lang]SyntaxKind.[elem.CSharpName]));
     [end if]
 end template
 

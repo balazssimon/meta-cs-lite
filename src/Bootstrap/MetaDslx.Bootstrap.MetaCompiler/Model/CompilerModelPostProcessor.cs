@@ -934,7 +934,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
         {
             foreach (var alt in rule.Alternatives)
             {
-                if (alt.AntlrName is null) alt.AntlrName = $"pra_{alt.CSharpName}";
+                if (alt.AntlrName is null) alt.AntlrName = rule.Alternatives.Count == 1 ? rule.AntlrName : $"pr_{alt.CSharpName}";
                 AddAntlrNames(alt, usedElementNames);
             }
         }
