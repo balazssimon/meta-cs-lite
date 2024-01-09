@@ -190,10 +190,23 @@ namespace MyCode
     File.WriteAllText(Path.Combine(outputDir, $"{name}.MetaCompiler.SemanticsFactory.g.cs"), semanticsFactoryCode);
     var compilationFactoryCode = generator.GenerateCompilationFactory();
     File.WriteAllText(Path.Combine(outputDir, $"{name}.MetaCompiler.CompilationFactory.g.cs"), compilationFactoryCode);
-    var antlrLexerCode = generator.GenerateLexer();
-    File.WriteAllText(Path.Combine(outputDir, $"{name}.Antlr.Lexer.g4"), antlrLexerCode);
-    var antlrParserCode = generator.GenerateParser();
-    File.WriteAllText(Path.Combine(outputDir, $"{name}.Antlr.Parser.g4"), antlrParserCode);
+    var antlrDiagnostics = MetaDslx.CodeAnalysis.DiagnosticBag.GetInstance();
+    var antlrCodes = generator.GenerateAntlr(name, antlrDiagnostics, default);
+    if (antlrDiagnostics.HasAnyErrors())
+    {
+        foreach (var diag in antlrDiagnostics.ToReadOnly())
+        {
+            Console.WriteLine(diag);
+        }
+    }
+    else
+    {
+        foreach (var antlrCode in antlrCodes)
+        {
+            File.WriteAllText(Path.Combine(outputDir, antlrCode.FileName), antlrCode.Content);
+        }
+    }
+    antlrDiagnostics.Free();
 }
 //*/
 static void CompileAll(string mmName, string mmInputDir, string mmOutputDir, string mlangName, string mlangInputDir, string mlangOutputDir)

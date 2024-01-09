@@ -479,7 +479,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                 else
                 {
                     var tokensElem = f.Element();
-                    tokensElem.Name = "Tokens";
+                    tokensElem.Name = "Token";
                     tokensElem.Value = tokenAlts;
                     var tokensAlt = f.Alternative();
                     tokensAlt.Name = rule.Name + "Tokens";

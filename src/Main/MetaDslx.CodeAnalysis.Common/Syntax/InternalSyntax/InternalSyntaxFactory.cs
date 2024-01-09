@@ -13,6 +13,9 @@ namespace MetaDslx.CodeAnalysis.Syntax.InternalSyntax
 
         private const string CrLf = "\r\n";
         private SyntaxFacts _syntaxFacts;
+        private InternalSyntaxToken? _none;
+        private InternalSyntaxToken? _eof;
+        private InternalSyntaxToken? _defaultSeparator;
 
         public readonly InternalSyntaxTrivia CarriageReturnLineFeed;
         public readonly InternalSyntaxTrivia LineFeed;
@@ -59,14 +62,31 @@ namespace MetaDslx.CodeAnalysis.Syntax.InternalSyntax
             ElasticZeroSpace = Whitespace(string.Empty, elastic: true);
         }
 
-        public virtual InternalSyntaxToken DefaultSeparator
+        public InternalSyntaxToken None
         {
-            get { return this.Token(_syntaxFacts.DefaultSeparatorRawKind); }
+            get
+            {
+                if (_none is null) Interlocked.CompareExchange(ref _none, this.Token((int)InternalSyntaxKind.None), null);
+                return _none;
+            }
         }
 
-        public virtual InternalSyntaxToken EndOfFile
+        public InternalSyntaxToken DefaultSeparator
         {
-            get { return this.Token(null, (int)InternalSyntaxKind.Eof, string.Empty, null); }
+            get 
+            {
+                if (_defaultSeparator is null) Interlocked.CompareExchange(ref _defaultSeparator, this.Token(_syntaxFacts.DefaultSeparatorRawKind), null);
+                return _defaultSeparator;
+            }
+        }
+
+        public InternalSyntaxToken EndOfFile
+        {
+            get
+            {
+                if (_eof is null) Interlocked.CompareExchange(ref _eof, this.Token(null, (int)InternalSyntaxKind.Eof, string.Empty, null), null);
+                return _eof;
+            }
         }
 
         public InternalSyntaxTrivia EndOfLine(string text, bool elastic = false)
