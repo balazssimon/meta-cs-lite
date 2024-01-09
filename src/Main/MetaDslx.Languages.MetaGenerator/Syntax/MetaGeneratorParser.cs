@@ -330,7 +330,7 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
         {
             var token = _tokens.CurrentToken;
             var lineStart = _tokens.Character == 0;
-            if (token.Kind == MetaGeneratorTokenKind.TemplateOutput)
+            if (token.Kind == MetaGeneratorTokenKind.TemplateOutputText || token.Kind == MetaGeneratorTokenKind.TemplateOutputWhitespace)
             {
                 StartInputSpan();
                 EatToken();
@@ -339,7 +339,7 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
                 {
                     _currentTemplateInfo.Outputs.Add(templateOutputSpan);
                 }
-                if (lineStart && string.IsNullOrWhiteSpace(token.Text))
+                if (lineStart && token.Kind == MetaGeneratorTokenKind.TemplateOutputWhitespace)
                 {
                     state.IsEmptyLine = true;
                     _osb.Write("__cb.Push(\"");

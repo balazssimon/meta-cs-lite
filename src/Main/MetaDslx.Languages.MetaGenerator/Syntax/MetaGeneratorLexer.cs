@@ -88,6 +88,8 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
             if (token.Kind != MetaGeneratorTokenKind.None) return token;
             token = MatchTemplateOutput(ref state);
             if (token.Kind != MetaGeneratorTokenKind.None) return token;
+            token = MatchTemplateModifier(ref state);
+            if (token.Kind != MetaGeneratorTokenKind.None) return token;
             token = MatchTemplateControlEnd(ref state);
             if (token.Kind != MetaGeneratorTokenKind.None) return token;
             token = MatchWhitespace(ref state);
@@ -133,21 +135,30 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
         {
             if (state == MetaGeneratorLexerState.TemplateOutput)
             {
-                var hasOutput = false;
+                var kind = MetaGeneratorTokenKind.None;
                 var ch = _text.PeekChar();
                 var isControlBegin = IsControlBegin();
                 var isTemplateEnd = IsTemplateEnd();
                 while (!_text.IsReallyAtEnd() && !isControlBegin && !isTemplateEnd && ch != '\r' && ch != '\n')
                 {
-                    hasOutput = true;
+                    if (ch == ' ' || ch == '\t') kind = MetaGeneratorTokenKind.TemplateOutputWhitespace;
+                    else kind = MetaGeneratorTokenKind.TemplateOutputText;
                     _text.NextChar();
                     ch = _text.PeekChar();
                     isControlBegin = IsControlBegin();
                     isTemplateEnd = IsTemplateEnd();
+                    if (ch == ' ' && ch == '\t')
+                    {
+                        if (kind == MetaGeneratorTokenKind.TemplateOutputText) break;
+                    }
+                    else
+                    {
+                        if (kind == MetaGeneratorTokenKind.TemplateOutputWhitespace) break;
+                    }
                 }
-                if (hasOutput)
+                if (kind != MetaGeneratorTokenKind.None)
                 {
-                    return new MetaGeneratorToken(MetaGeneratorTokenKind.TemplateOutput, _text.GetText(false), _text.LexemeStartPosition, state);
+                    return new MetaGeneratorToken(kind, _text.GetText(false), _text.LexemeStartPosition, state);
                 }
                 if (isControlBegin)
                 {
@@ -217,12 +228,40 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
             return MetaGeneratorToken.None;
         }
 
+        private MetaGeneratorToken MatchTemplateModifier(ref MetaGeneratorLexerState state)
+        {
+            if (state != MetaGeneratorLexerState.TemplateControl) return MetaGeneratorToken.None;
+            var ch = _text.PeekChar();
+            if (ch == '$')
+            {
+                var kind = MetaGeneratorTokenKind.None;
+                var nextCh = _text.PeekChar(1);
+                switch (nextCh)
+                {
+                    case '=':
+                    case '-':
+                    case '\\':
+                    case '>':
+                    case '<':
+                        _text.NextChar();
+                        _text.NextChar();
+                        kind = MetaGeneratorTokenKind.GeneratorKeyword;
+                        break;
+                    default:
+                        break;
+                }
+                var lexeme = _text.GetText(true);
+                return new MetaGeneratorToken(kind, lexeme, _text.LexemeStartPosition, state);
+            }
+            return MetaGeneratorToken.None;
+        }
+
         private MetaGeneratorToken MatchIdentifier(ref MetaGeneratorLexerState state)
         {
             var ch = _text.PeekChar();
             var nextCh = _text.PeekChar(1);
             if (ch >= 'a' && ch <= 'z' || ch >= 'A' && ch <= 'Z' || ch == '_' ||
-                (ch == '@' || ch == '$') && (nextCh >= 'a' && nextCh <= 'z' || nextCh >= 'A' && nextCh <= 'Z' || nextCh == '_'))
+                ch == '@' && (nextCh >= 'a' && nextCh <= 'z' || nextCh >= 'A' && nextCh <= 'Z' || nextCh == '_'))
             {
                 var kind = MetaGeneratorTokenKind.Identifier;
                 if (ch == '@')
@@ -230,14 +269,9 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
                     kind = MetaGeneratorTokenKind.VerbatimIdentifier;
                     _text.NextChar();
                 }
-                else if (ch == '$')
-                {
-                    kind = MetaGeneratorTokenKind.GeneratorKeyword;
-                    _text.NextChar();
-                }
                 _text.NextChar();
                 ch = _text.PeekChar();
-                while (ch >= 'a' && ch <= 'z' || ch >= 'A' && ch <= 'Z' || ch == '_' || ch >= '0' && ch <= '9' || kind == MetaGeneratorTokenKind.GeneratorKeyword && ch == '-')
+                while (ch >= 'a' && ch <= 'z' || ch >= 'A' && ch <= 'Z' || ch == '_' || ch >= '0' && ch <= '9')
                 {
                     _text.NextChar();
                     ch = _text.PeekChar();
@@ -245,7 +279,7 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
                 var lexeme = _text.GetText(false);
                 if (Keywords.Contains(lexeme) || ContextualKeywords.Contains(lexeme)) kind = MetaGeneratorTokenKind.Keyword;
                 if (state == MetaGeneratorLexerState.None && TemplateKeywords.Contains(lexeme)) kind = MetaGeneratorTokenKind.Keyword;
-                if (state == MetaGeneratorLexerState.TemplateControl && kind != MetaGeneratorTokenKind.GeneratorKeyword && (TemplateControlKeywords.Contains(lexeme) || TemplateModifierKeywords.Contains(lexeme))) kind = MetaGeneratorTokenKind.Keyword;
+                if (state == MetaGeneratorLexerState.TemplateControl && TemplateControlKeywords.Contains(lexeme)) kind = MetaGeneratorTokenKind.Keyword;
                 if (state == MetaGeneratorLexerState.ControlBeginWs && ControlShortcutKeywords.Contains(lexeme))
                 {
                     kind = MetaGeneratorTokenKind.Keyword;
@@ -548,13 +582,15 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
             "end", "template", SeparatorKeyword
         };
 
-        public const string MultiLineKeyword = "$multi-line";
-        public const string SingleLineKeyword = "$single-line";
-        public const string SkipLineEndKeyword = "$skip-line-end";
+        public const string MultiLineKeyword = "$=";
+        public const string SingleLineKeyword = "$-";
+        public const string SkipLineEndKeyword = "$\\";
+        public const string RelativeIndentKeyword = "$>";
+        public const string AbsoluteIndentKeyword = "$<";
 
         public static readonly HashSet<string> TemplateModifierKeywords = new HashSet<string>()
         {
-            MultiLineKeyword, SingleLineKeyword, SkipLineEndKeyword
+            MultiLineKeyword, SingleLineKeyword, SkipLineEndKeyword, RelativeIndentKeyword, AbsoluteIndentKeyword
         };
 
         public const string QuotsKeyword = "quots";

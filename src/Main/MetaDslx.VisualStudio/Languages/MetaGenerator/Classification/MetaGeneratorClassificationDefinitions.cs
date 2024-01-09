@@ -42,7 +42,8 @@ namespace MetaDslx.VisualStudio.Languages.MetaGenerator.Classification
         {
             internal MetaGeneratorTemplateOutputClassificationFormat()
             {
-                ForegroundColor = Colors.Gray;
+                BackgroundColor = Colors.LightGray;
+                ForegroundColor = Colors.DarkRed;
                 this.DisplayName = "MetaGenerator TemplateOutput";
             }
         }

@@ -20,7 +20,8 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
         String,
         VerbatimString,
         Number,
-        TemplateOutput,
+        TemplateOutputText,
+        TemplateOutputWhitespace,
         TemplateControlBegin,
         TemplateControlEnd,
         Other

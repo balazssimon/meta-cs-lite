@@ -36,21 +36,21 @@ template GenerateToken(Token token)
 end template
 
 template GenerateLexerRuleAlts(IList<LAlternative> alternatives)
-[$single-line]
+[$-]
 [foreach (var alt in alternatives) separator " | "]
 [GenerateLexerRuleElements(alt)]
 [end foreach]
 end template
 
 template GenerateLexerRuleElements(LAlternative alt)
-[$single-line]
+[$-]
 [foreach (var elem in alt.Elements) separator " "]
 [elem.IsNegated ? "~" : ""][GenerateLexerRuleElement(elem.Value)][GenerateMultiplicity(elem.Multiplicity)]
 [end foreach]
 end template
 
 template GenerateLexerRuleElement(LElementValue elem)
-[$single-line]
+[$-]
 [if (elem is LReference ruleRefElem)]
 [ruleRefElem.Rule.AntlrName]
 [else if (elem is LFixed fixedElem)]
@@ -67,7 +67,7 @@ template GenerateLexerRuleElement(LElementValue elem)
 end template
 
 template GenerateMultiplicity(Multiplicity multiplicity)
-[$single-line]
+[$-]
 [if (multiplicity == Multiplicity.ZeroOrOne)]?
 [else if (multiplicity == Multiplicity.ZeroOrMore)]*
 [else if (multiplicity == Multiplicity.OneOrMore)]+
@@ -78,7 +78,7 @@ template GenerateMultiplicity(Multiplicity multiplicity)
 end template
 
 template GenerateAssignment(Multiplicity multiplicity)
-[$single-line]
+[$-]
 [if (multiplicity.IsList())]+=[else]=[end if]
 end template
 
@@ -111,14 +111,14 @@ template GenerateParserRuleAlts(IList<Alternative> alternatives)
 end template
 
 template GenerateParserRuleElements(Alternative alt)
-[$single-line]
+[$-]
 [foreach (var elem in alt.Elements) separator " "]
 [GenerateParserRuleElement(elem)]
 [end foreach]
 end template
 
 template GenerateParserRuleElement(Element elem)
-[$single-line]
+[$-]
 [var value = elem.Value]
 [if (value is RuleRef ruleRefElem)]
  [elem.AntlrName][GenerateAssignment(elem.Multiplicity)][ruleRefElem.GrammarRule.AntlrName][GenerateMultiplicity(elem.Multiplicity)]
