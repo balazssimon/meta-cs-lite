@@ -36,6 +36,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
         public IList<Rule> Rules => Grammar.Rules;
         public IList<Token> FixedTokens => Grammar.Tokens.Where(t => t.IsFixed).ToList();
         public IList<Token> NonFixedTokens => Grammar.Tokens.Where(t => !t.IsFixed).ToList();
+        public IList<Fragment> Fragments => Grammar.GrammarRules.OfType<Fragment>().ToList();
 
         public List<(string FileName, string Content)> GenerateAntlr(string path, DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {

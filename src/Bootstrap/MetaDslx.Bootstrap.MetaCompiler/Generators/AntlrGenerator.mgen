@@ -11,20 +11,15 @@ generator RoslynApiGenerator
 template GenerateLexer()
 lexer grammar [Lang]Lexer;
 
-[foreach (var rule in FixedTokens)]
-[GenerateLexerRule(rule)]
+[foreach (var token in FixedTokens)]
+[GenerateToken(token)]
 [end foreach]
-[foreach (var rule in NonFixedTokens)]
-[GenerateLexerRule(rule)]
+[foreach (var token in NonFixedTokens)]
+[GenerateToken(token)]
 [end foreach]
-end template
-
-template GenerateLexerRule(LexerRule rule)
-[if (rule is Fragment fragment)]
+[foreach (var fragment in Fragments)]
 [GenerateFragment(fragment)]
-[else]
-[GenerateToken((Token)rule)]
-[end if]
+[end foreach]
 end template
 
 template GenerateFragment(Fragment fragment)

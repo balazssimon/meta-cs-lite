@@ -305,7 +305,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             var valueCondition = _this.Value.GreenSyntaxCondition;
             if (valueCondition is null) return null;
             if (!_this.Multiplicity.IsOptional()) return valueCondition;
-            else if (_this.IsToken) return $"{_this.ParameterName}.RawKind != (int)__InternalSyntaxKind.None && ({valueCondition})";
+            else if (_this.IsToken) return $"{_this.ParameterName} is not null && ({valueCondition})";
             else return $"{_this.ParameterName} is not null && ({valueCondition})";
         }
 

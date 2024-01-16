@@ -933,6 +933,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             {
                 token.AntlrName = $"LR_{token.CSharpName}";
             }
+            foreach (var fragment in _grammar.GrammarRules.OfType<Fragment>())
+            {
+                fragment.AntlrName = $"FR_{fragment.Name}";
+            }
             foreach (var rule in _grammar.Rules)
             {
                 if (rule.AntlrName is null) rule.AntlrName = $"pr_{rule.CSharpName}";

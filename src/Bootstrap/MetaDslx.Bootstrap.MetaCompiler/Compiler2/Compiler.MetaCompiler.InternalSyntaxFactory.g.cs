@@ -867,7 +867,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 				
 				
 				
-			if (multiplicity.RawKind != (int)__InternalSyntaxKind.None && (multiplicity.RawKind != (int)CompilerSyntaxKind.TQuestion && multiplicity.RawKind != (int)CompilerSyntaxKind.TAsterisk && multiplicity.RawKind != (int)CompilerSyntaxKind.TPlus && multiplicity.RawKind != (int)CompilerSyntaxKind.TQuestionQuestion && multiplicity.RawKind != (int)CompilerSyntaxKind.TAsteriskQuestion && multiplicity.RawKind != (int)CompilerSyntaxKind.TPlusQuestion)) throw new ArgumentException(nameof(multiplicity));
+			if (multiplicity is not null && (multiplicity.RawKind != (int)CompilerSyntaxKind.TQuestion && multiplicity.RawKind != (int)CompilerSyntaxKind.TAsterisk && multiplicity.RawKind != (int)CompilerSyntaxKind.TPlus && multiplicity.RawKind != (int)CompilerSyntaxKind.TQuestionQuestion && multiplicity.RawKind != (int)CompilerSyntaxKind.TAsteriskQuestion && multiplicity.RawKind != (int)CompilerSyntaxKind.TPlusQuestion)) throw new ArgumentException(nameof(multiplicity));
 				
 			
 #endif
@@ -1100,7 +1100,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 				
 				
 				
-			if (isNegated.RawKind != (int)__InternalSyntaxKind.None && (isNegated.RawKind != (int)CompilerSyntaxKind.TTilde)) throw new ArgumentException(nameof(isNegated));
+			if (isNegated is not null && (isNegated.RawKind != (int)CompilerSyntaxKind.TTilde)) throw new ArgumentException(nameof(isNegated));
 				
 			
 				
@@ -1114,7 +1114,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 				
 				
 				
-			if (multiplicity.RawKind != (int)__InternalSyntaxKind.None && (multiplicity.RawKind != (int)CompilerSyntaxKind.TQuestion && multiplicity.RawKind != (int)CompilerSyntaxKind.TAsterisk && multiplicity.RawKind != (int)CompilerSyntaxKind.TPlus && multiplicity.RawKind != (int)CompilerSyntaxKind.TQuestionQuestion && multiplicity.RawKind != (int)CompilerSyntaxKind.TAsteriskQuestion && multiplicity.RawKind != (int)CompilerSyntaxKind.TPlusQuestion)) throw new ArgumentException(nameof(multiplicity));
+			if (multiplicity is not null && (multiplicity.RawKind != (int)CompilerSyntaxKind.TQuestion && multiplicity.RawKind != (int)CompilerSyntaxKind.TAsterisk && multiplicity.RawKind != (int)CompilerSyntaxKind.TPlus && multiplicity.RawKind != (int)CompilerSyntaxKind.TQuestionQuestion && multiplicity.RawKind != (int)CompilerSyntaxKind.TAsteriskQuestion && multiplicity.RawKind != (int)CompilerSyntaxKind.TPlusQuestion)) throw new ArgumentException(nameof(multiplicity));
 				
 			
 #endif
