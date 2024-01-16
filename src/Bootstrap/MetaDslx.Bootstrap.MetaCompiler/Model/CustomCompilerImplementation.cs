@@ -335,7 +335,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
 
         public override string Element_RedFieldType(Element _this)
         {
-            if (_this.Multiplicity.IsList()) return "__SyntaxNode";
+            if (_this.IsList) return "__SyntaxNode";
             else if (_this.IsToken) return null;
             else return _this.Value.RedType;
         }

@@ -26,7 +26,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
                         return ExtractName(alt1.ReturnType);
                     case CompilerSyntaxKind.RuleBlock1Alt2:
                         var alt2 = (RuleBlock1Alt2Syntax)node;
-                        return ExtractName(alt2.Tokens);
+                        return ExtractName(alt2.Identifier);
                     default:
                         break;
                 }

@@ -164,7 +164,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 
 	public sealed class MainSyntax : CompilerSyntaxNode, global::MetaDslx.CodeAnalysis.ICompilationUnitSyntax
 	{
-		private QualifierSyntax _name;
+		private __SyntaxNode _qualifier;
 		private __SyntaxNode _usingList;
 		private DeclarationsSyntax _declarations;
 	
@@ -195,15 +195,15 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		}
 	        
 	        
-	    public QualifierSyntax Name 
+	    public global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<IdentifierSyntax> Qualifier 
 		{ 
 			get
 			{
 	        
-				var red = this.GetRed(ref this._name, 1);
+				var red = this.GetRed(ref this._qualifier, 1);
 	            
-				return red;
-				
+				return red == null ? default : new global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<IdentifierSyntax>(red, this.GetChildIndex(1), reversed: false);
+	            
 			
 			} 
 		}
@@ -271,7 +271,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	        switch (index)
 	        {
 				
-				case 1: return this.GetRed(ref this._name, 1);
+				case 1: return this.GetRed(ref this._qualifier, 1);
 				
 				case 3: return this.GetRed(ref this._usingList, 3);
 				
@@ -286,7 +286,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	        switch (index)
 	        {
 				
-				case 1: return this._name;
+				case 1: return this._qualifier;
 				
 				case 3: return this._usingList;
 				
@@ -299,28 +299,34 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	
 	    public MainSyntax WithKNamespace(__SyntaxToken kNamespace)
 		{
-			return this.Update(kNamespace, this.Name, this.TSemicolon, this.UsingList, this.Declarations, this.EndOfFileToken);
+			return this.Update(kNamespace, this.Qualifier, this.TSemicolon, this.UsingList, this.Declarations, this.EndOfFileToken);
 		}
 			
 	        
 	
-	    public MainSyntax WithName(QualifierSyntax name)
+	    public MainSyntax WithQualifier(global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<IdentifierSyntax> qualifier)
 		{
-			return this.Update(this.KNamespace, name, this.TSemicolon, this.UsingList, this.Declarations, this.EndOfFileToken);
+			return this.Update(this.KNamespace, qualifier, this.TSemicolon, this.UsingList, this.Declarations, this.EndOfFileToken);
+		}
+			
+	
+	    public MainSyntax AddQualifier(params IdentifierSyntax[] qualifier)
+		{
+			return this.WithQualifier(this.Qualifier.AddRange(qualifier));
 		}
 			
 	        
 	
 	    public MainSyntax WithTSemicolon(__SyntaxToken tSemicolon)
 		{
-			return this.Update(this.KNamespace, this.Name, tSemicolon, this.UsingList, this.Declarations, this.EndOfFileToken);
+			return this.Update(this.KNamespace, this.Qualifier, tSemicolon, this.UsingList, this.Declarations, this.EndOfFileToken);
 		}
 			
 	        
 	
 	    public MainSyntax WithUsingList(global::MetaDslx.CodeAnalysis.SyntaxList<UsingSyntax> usingList)
 		{
-			return this.Update(this.KNamespace, this.Name, this.TSemicolon, usingList, this.Declarations, this.EndOfFileToken);
+			return this.Update(this.KNamespace, this.Qualifier, this.TSemicolon, usingList, this.Declarations, this.EndOfFileToken);
 		}
 			
 	
@@ -333,22 +339,22 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	
 	    public MainSyntax WithDeclarations(DeclarationsSyntax declarations)
 		{
-			return this.Update(this.KNamespace, this.Name, this.TSemicolon, this.UsingList, declarations, this.EndOfFileToken);
+			return this.Update(this.KNamespace, this.Qualifier, this.TSemicolon, this.UsingList, declarations, this.EndOfFileToken);
 		}
 			
 	        
 	
 	    public MainSyntax WithEndOfFileToken(__SyntaxToken endOfFileToken)
 		{
-			return this.Update(this.KNamespace, this.Name, this.TSemicolon, this.UsingList, this.Declarations, endOfFileToken);
+			return this.Update(this.KNamespace, this.Qualifier, this.TSemicolon, this.UsingList, this.Declarations, endOfFileToken);
 		}
 			
 	
-	    public MainSyntax Update(__SyntaxToken kNamespace, QualifierSyntax name, __SyntaxToken tSemicolon, global::MetaDslx.CodeAnalysis.SyntaxList<UsingSyntax> usingList, DeclarationsSyntax declarations, __SyntaxToken endOfFileToken)
+	    public MainSyntax Update(__SyntaxToken kNamespace, global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<IdentifierSyntax> qualifier, __SyntaxToken tSemicolon, global::MetaDslx.CodeAnalysis.SyntaxList<UsingSyntax> usingList, DeclarationsSyntax declarations, __SyntaxToken endOfFileToken)
 	    {
-	        if (this.KNamespace != kNamespace || this.Name != name || this.TSemicolon != tSemicolon || this.UsingList != usingList || this.Declarations != declarations || this.EndOfFileToken != endOfFileToken)
+	        if (this.KNamespace != kNamespace || this.Qualifier != qualifier || this.TSemicolon != tSemicolon || this.UsingList != usingList || this.Declarations != declarations || this.EndOfFileToken != endOfFileToken)
 	        {
-	            var newNode = CompilerLanguage.Instance.SyntaxFactory.Main(kNamespace, name, tSemicolon, usingList, declarations, endOfFileToken);
+	            var newNode = CompilerLanguage.Instance.SyntaxFactory.Main(kNamespace, qualifier, tSemicolon, usingList, declarations, endOfFileToken);
 	            var annotations = this.GetAnnotations();
 	            if (annotations != null && annotations.Length > 0)
 	               newNode = __SyntaxExtensions.WithAnnotations(newNode, annotations);
@@ -388,7 +394,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	
 	public sealed class UsingAlt1Syntax : UsingSyntax
 	{
-		private QualifierSyntax _namespaces;
+		private __SyntaxNode _qualifier;
 	
 	    public UsingAlt1Syntax(__InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
 	        : base(green, syntaxTree, position)
@@ -417,15 +423,15 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		}
 	        
 	        
-	    public QualifierSyntax Namespaces 
+	    public global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<IdentifierSyntax> Qualifier 
 		{ 
 			get
 			{
 	        
-				var red = this.GetRed(ref this._namespaces, 1);
+				var red = this.GetRed(ref this._qualifier, 1);
 	            
-				return red;
-				
+				return red == null ? default : new global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<IdentifierSyntax>(red, this.GetChildIndex(1), reversed: false);
+	            
 			
 			} 
 		}
@@ -450,7 +456,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	        switch (index)
 	        {
 				
-				case 1: return this.GetRed(ref this._namespaces, 1);
+				case 1: return this.GetRed(ref this._qualifier, 1);
 				
 				default: return null;
 	        }
@@ -461,7 +467,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	        switch (index)
 	        {
 				
-				case 1: return this._namespaces;
+				case 1: return this._qualifier;
 				
 				default: return null;
 	        }
@@ -470,29 +476,35 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	
 	    public UsingAlt1Syntax WithKUsing(__SyntaxToken kUsing)
 		{
-			return this.Update(kUsing, this.Namespaces, this.TSemicolon);
+			return this.Update(kUsing, this.Qualifier, this.TSemicolon);
 		}
 			
 	        
 	
-	    public UsingAlt1Syntax WithNamespaces(QualifierSyntax namespaces)
+	    public UsingAlt1Syntax WithQualifier(global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<IdentifierSyntax> qualifier)
 		{
-			return this.Update(this.KUsing, namespaces, this.TSemicolon);
+			return this.Update(this.KUsing, qualifier, this.TSemicolon);
+		}
+			
+	
+	    public UsingAlt1Syntax AddQualifier(params IdentifierSyntax[] qualifier)
+		{
+			return this.WithQualifier(this.Qualifier.AddRange(qualifier));
 		}
 			
 	        
 	
 	    public UsingAlt1Syntax WithTSemicolon(__SyntaxToken tSemicolon)
 		{
-			return this.Update(this.KUsing, this.Namespaces, tSemicolon);
+			return this.Update(this.KUsing, this.Qualifier, tSemicolon);
 		}
 			
 	
-	    public UsingAlt1Syntax Update(__SyntaxToken kUsing, QualifierSyntax namespaces, __SyntaxToken tSemicolon)
+	    public UsingAlt1Syntax Update(__SyntaxToken kUsing, global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<IdentifierSyntax> qualifier, __SyntaxToken tSemicolon)
 	    {
-	        if (this.KUsing != kUsing || this.Namespaces != namespaces || this.TSemicolon != tSemicolon)
+	        if (this.KUsing != kUsing || this.Qualifier != qualifier || this.TSemicolon != tSemicolon)
 	        {
-	            var newNode = CompilerLanguage.Instance.SyntaxFactory.UsingAlt1(kUsing, namespaces, tSemicolon);
+	            var newNode = CompilerLanguage.Instance.SyntaxFactory.UsingAlt1(kUsing, qualifier, tSemicolon);
 	            var annotations = this.GetAnnotations();
 	            if (annotations != null && annotations.Length > 0)
 	               newNode = __SyntaxExtensions.WithAnnotations(newNode, annotations);
@@ -519,7 +531,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	}
 	public sealed class UsingMetaModelSyntax : UsingSyntax
 	{
-		private QualifierSyntax _symbols;
+		private __SyntaxNode _qualifier;
 	
 	    public UsingMetaModelSyntax(__InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
 	        : base(green, syntaxTree, position)
@@ -563,15 +575,15 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		}
 	        
 	        
-	    public QualifierSyntax Symbols 
+	    public global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<IdentifierSyntax> Qualifier 
 		{ 
 			get
 			{
 	        
-				var red = this.GetRed(ref this._symbols, 2);
+				var red = this.GetRed(ref this._qualifier, 2);
 	            
-				return red;
-				
+				return red == null ? default : new global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<IdentifierSyntax>(red, this.GetChildIndex(2), reversed: false);
+	            
 			
 			} 
 		}
@@ -596,7 +608,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	        switch (index)
 	        {
 				
-				case 2: return this.GetRed(ref this._symbols, 2);
+				case 2: return this.GetRed(ref this._qualifier, 2);
 				
 				default: return null;
 	        }
@@ -607,7 +619,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	        switch (index)
 	        {
 				
-				case 2: return this._symbols;
+				case 2: return this._qualifier;
 				
 				default: return null;
 	        }
@@ -616,36 +628,42 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	
 	    public UsingMetaModelSyntax WithKUsing(__SyntaxToken kUsing)
 		{
-			return this.Update(kUsing, this.KMetamodel, this.Symbols, this.TSemicolon);
+			return this.Update(kUsing, this.KMetamodel, this.Qualifier, this.TSemicolon);
 		}
 			
 	        
 	
 	    public UsingMetaModelSyntax WithKMetamodel(__SyntaxToken kMetamodel)
 		{
-			return this.Update(this.KUsing, kMetamodel, this.Symbols, this.TSemicolon);
+			return this.Update(this.KUsing, kMetamodel, this.Qualifier, this.TSemicolon);
 		}
 			
 	        
 	
-	    public UsingMetaModelSyntax WithSymbols(QualifierSyntax symbols)
+	    public UsingMetaModelSyntax WithQualifier(global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<IdentifierSyntax> qualifier)
 		{
-			return this.Update(this.KUsing, this.KMetamodel, symbols, this.TSemicolon);
+			return this.Update(this.KUsing, this.KMetamodel, qualifier, this.TSemicolon);
+		}
+			
+	
+	    public UsingMetaModelSyntax AddQualifier(params IdentifierSyntax[] qualifier)
+		{
+			return this.WithQualifier(this.Qualifier.AddRange(qualifier));
 		}
 			
 	        
 	
 	    public UsingMetaModelSyntax WithTSemicolon(__SyntaxToken tSemicolon)
 		{
-			return this.Update(this.KUsing, this.KMetamodel, this.Symbols, tSemicolon);
+			return this.Update(this.KUsing, this.KMetamodel, this.Qualifier, tSemicolon);
 		}
 			
 	
-	    public UsingMetaModelSyntax Update(__SyntaxToken kUsing, __SyntaxToken kMetamodel, QualifierSyntax symbols, __SyntaxToken tSemicolon)
+	    public UsingMetaModelSyntax Update(__SyntaxToken kUsing, __SyntaxToken kMetamodel, global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<IdentifierSyntax> qualifier, __SyntaxToken tSemicolon)
 	    {
-	        if (this.KUsing != kUsing || this.KMetamodel != kMetamodel || this.Symbols != symbols || this.TSemicolon != tSemicolon)
+	        if (this.KUsing != kUsing || this.KMetamodel != kMetamodel || this.Qualifier != qualifier || this.TSemicolon != tSemicolon)
 	        {
-	            var newNode = CompilerLanguage.Instance.SyntaxFactory.UsingMetaModel(kUsing, kMetamodel, symbols, tSemicolon);
+	            var newNode = CompilerLanguage.Instance.SyntaxFactory.UsingMetaModel(kUsing, kMetamodel, qualifier, tSemicolon);
 	            var annotations = this.GetAnnotations();
 	            if (annotations != null && annotations.Length > 0)
 	               newNode = __SyntaxExtensions.WithAnnotations(newNode, annotations);
@@ -672,7 +690,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	}
 	public sealed class UsingSymbolsSyntax : UsingSyntax
 	{
-		private QualifierSyntax _namespaces;
+		private __SyntaxNode _qualifier;
 	
 	    public UsingSymbolsSyntax(__InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
 	        : base(green, syntaxTree, position)
@@ -716,15 +734,15 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		}
 	        
 	        
-	    public QualifierSyntax Namespaces 
+	    public global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<IdentifierSyntax> Qualifier 
 		{ 
 			get
 			{
 	        
-				var red = this.GetRed(ref this._namespaces, 2);
+				var red = this.GetRed(ref this._qualifier, 2);
 	            
-				return red;
-				
+				return red == null ? default : new global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<IdentifierSyntax>(red, this.GetChildIndex(2), reversed: false);
+	            
 			
 			} 
 		}
@@ -749,7 +767,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	        switch (index)
 	        {
 				
-				case 2: return this.GetRed(ref this._namespaces, 2);
+				case 2: return this.GetRed(ref this._qualifier, 2);
 				
 				default: return null;
 	        }
@@ -760,7 +778,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	        switch (index)
 	        {
 				
-				case 2: return this._namespaces;
+				case 2: return this._qualifier;
 				
 				default: return null;
 	        }
@@ -769,36 +787,42 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	
 	    public UsingSymbolsSyntax WithKUsing(__SyntaxToken kUsing)
 		{
-			return this.Update(kUsing, this.KSymbols, this.Namespaces, this.TSemicolon);
+			return this.Update(kUsing, this.KSymbols, this.Qualifier, this.TSemicolon);
 		}
 			
 	        
 	
 	    public UsingSymbolsSyntax WithKSymbols(__SyntaxToken kSymbols)
 		{
-			return this.Update(this.KUsing, kSymbols, this.Namespaces, this.TSemicolon);
+			return this.Update(this.KUsing, kSymbols, this.Qualifier, this.TSemicolon);
 		}
 			
 	        
 	
-	    public UsingSymbolsSyntax WithNamespaces(QualifierSyntax namespaces)
+	    public UsingSymbolsSyntax WithQualifier(global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<IdentifierSyntax> qualifier)
 		{
-			return this.Update(this.KUsing, this.KSymbols, namespaces, this.TSemicolon);
+			return this.Update(this.KUsing, this.KSymbols, qualifier, this.TSemicolon);
+		}
+			
+	
+	    public UsingSymbolsSyntax AddQualifier(params IdentifierSyntax[] qualifier)
+		{
+			return this.WithQualifier(this.Qualifier.AddRange(qualifier));
 		}
 			
 	        
 	
 	    public UsingSymbolsSyntax WithTSemicolon(__SyntaxToken tSemicolon)
 		{
-			return this.Update(this.KUsing, this.KSymbols, this.Namespaces, tSemicolon);
+			return this.Update(this.KUsing, this.KSymbols, this.Qualifier, tSemicolon);
 		}
 			
 	
-	    public UsingSymbolsSyntax Update(__SyntaxToken kUsing, __SyntaxToken kSymbols, QualifierSyntax namespaces, __SyntaxToken tSemicolon)
+	    public UsingSymbolsSyntax Update(__SyntaxToken kUsing, __SyntaxToken kSymbols, global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<IdentifierSyntax> qualifier, __SyntaxToken tSemicolon)
 	    {
-	        if (this.KUsing != kUsing || this.KSymbols != kSymbols || this.Namespaces != namespaces || this.TSemicolon != tSemicolon)
+	        if (this.KUsing != kUsing || this.KSymbols != kSymbols || this.Qualifier != qualifier || this.TSemicolon != tSemicolon)
 	        {
-	            var newNode = CompilerLanguage.Instance.SyntaxFactory.UsingSymbols(kUsing, kSymbols, namespaces, tSemicolon);
+	            var newNode = CompilerLanguage.Instance.SyntaxFactory.UsingSymbols(kUsing, kSymbols, qualifier, tSemicolon);
 	            var annotations = this.GetAnnotations();
 	            if (annotations != null && annotations.Length > 0)
 	               newNode = __SyntaxExtensions.WithAnnotations(newNode, annotations);
@@ -1297,7 +1321,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		private __SyntaxNode _annotations1;
 		private NameSyntax _name;
 		private BlockBlock1Syntax _block;
-		private AlternativeSyntax _alternatives;
+		private __SyntaxNode _alternatives;
 	
 	    public BlockSyntax(__InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
 	        : base(green, syntaxTree, position)
@@ -1539,7 +1563,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	{
 		private __SyntaxNode _annotations1;
 		private TokenBlock1Syntax _block;
-		private LAlternativeSyntax _alternatives;
+		private __SyntaxNode _alternatives;
 	
 	    public TokenSyntax(__InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
 	        : base(green, syntaxTree, position)
@@ -1733,7 +1757,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	public sealed class FragmentSyntax : GrammarRuleSyntax
 	{
 		private NameSyntax _name;
-		private LAlternativeSyntax _alternatives;
+		private __SyntaxNode _alternatives;
 	
 	    public FragmentSyntax(__InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
 	        : base(green, syntaxTree, position)
@@ -1919,7 +1943,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	{
 		private __SyntaxNode _annotations1;
 		private RuleBlock1Syntax _block;
-		private AlternativeSyntax _alternatives;
+		private __SyntaxNode _alternatives;
 	
 	    public RuleSyntax(__InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
 	        : base(green, syntaxTree, position)
@@ -2520,7 +2544,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	}
 	public sealed class BlockInlineSyntax : ElementValueSyntax
 	{
-		private AlternativeSyntax _alternatives;
+		private __SyntaxNode _alternatives;
 	
 	    public BlockInlineSyntax(__InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
 	        : base(green, syntaxTree, position)
@@ -2853,7 +2877,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	}
 	public sealed class RuleRefAlt3Syntax : ElementValueSyntax
 	{
-		private ReturnTypeQualifierSyntax _referencedTypes;
+		private __SyntaxNode _referencedTypes;
 	
 	    public RuleRefAlt3Syntax(__InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
 	        : base(green, syntaxTree, position)
@@ -3310,7 +3334,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	}
 	public sealed class LBlockSyntax : LElementValueSyntax
 	{
-		private LAlternativeSyntax _alternatives;
+		private __SyntaxNode _alternatives;
 	
 	    public LBlockSyntax(__InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
 	        : base(green, syntaxTree, position)
@@ -3761,7 +3785,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	}
 	public sealed class ArrayExpressionSyntax : ExpressionSyntax
 	{
-		private SingleExpressionSyntax _items;
+		private __SyntaxNode _items;
 	
 	    public ArrayExpressionSyntax(__InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
 	        : base(green, syntaxTree, position)
@@ -3985,7 +4009,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	}
 	public sealed class ParserAnnotationSyntax : CompilerSyntaxNode
 	{
-		private QualifierSyntax _attributeClass;
+		private __SyntaxNode _qualifier;
 		private AnnotationArgumentsSyntax _annotationArguments;
 	
 	    public ParserAnnotationSyntax(__InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
@@ -4015,15 +4039,15 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		}
 	        
 	        
-	    public QualifierSyntax AttributeClass 
+	    public global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<IdentifierSyntax> Qualifier 
 		{ 
 			get
 			{
 	        
-				var red = this.GetRed(ref this._attributeClass, 1);
+				var red = this.GetRed(ref this._qualifier, 1);
 	            
-				return red;
-				
+				return red == null ? default : new global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<IdentifierSyntax>(red, this.GetChildIndex(1), reversed: false);
+	            
 			
 			} 
 		}
@@ -4062,7 +4086,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	        switch (index)
 	        {
 				
-				case 1: return this.GetRed(ref this._attributeClass, 1);
+				case 1: return this.GetRed(ref this._qualifier, 1);
 				
 				case 2: return this.GetRed(ref this._annotationArguments, 2);
 				
@@ -4075,7 +4099,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	        switch (index)
 	        {
 				
-				case 1: return this._attributeClass;
+				case 1: return this._qualifier;
 				
 				case 2: return this._annotationArguments;
 				
@@ -4086,36 +4110,42 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	
 	    public ParserAnnotationSyntax WithTLBracket(__SyntaxToken tLBracket)
 		{
-			return this.Update(tLBracket, this.AttributeClass, this.AnnotationArguments, this.TRBracket);
+			return this.Update(tLBracket, this.Qualifier, this.AnnotationArguments, this.TRBracket);
 		}
 			
 	        
 	
-	    public ParserAnnotationSyntax WithAttributeClass(QualifierSyntax attributeClass)
+	    public ParserAnnotationSyntax WithQualifier(global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<IdentifierSyntax> qualifier)
 		{
-			return this.Update(this.TLBracket, attributeClass, this.AnnotationArguments, this.TRBracket);
+			return this.Update(this.TLBracket, qualifier, this.AnnotationArguments, this.TRBracket);
+		}
+			
+	
+	    public ParserAnnotationSyntax AddQualifier(params IdentifierSyntax[] qualifier)
+		{
+			return this.WithQualifier(this.Qualifier.AddRange(qualifier));
 		}
 			
 	        
 	
 	    public ParserAnnotationSyntax WithAnnotationArguments(AnnotationArgumentsSyntax annotationArguments)
 		{
-			return this.Update(this.TLBracket, this.AttributeClass, annotationArguments, this.TRBracket);
+			return this.Update(this.TLBracket, this.Qualifier, annotationArguments, this.TRBracket);
 		}
 			
 	        
 	
 	    public ParserAnnotationSyntax WithTRBracket(__SyntaxToken tRBracket)
 		{
-			return this.Update(this.TLBracket, this.AttributeClass, this.AnnotationArguments, tRBracket);
+			return this.Update(this.TLBracket, this.Qualifier, this.AnnotationArguments, tRBracket);
 		}
 			
 	
-	    public ParserAnnotationSyntax Update(__SyntaxToken tLBracket, QualifierSyntax attributeClass, AnnotationArgumentsSyntax annotationArguments, __SyntaxToken tRBracket)
+	    public ParserAnnotationSyntax Update(__SyntaxToken tLBracket, global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<IdentifierSyntax> qualifier, AnnotationArgumentsSyntax annotationArguments, __SyntaxToken tRBracket)
 	    {
-	        if (this.TLBracket != tLBracket || this.AttributeClass != attributeClass || this.AnnotationArguments != annotationArguments || this.TRBracket != tRBracket)
+	        if (this.TLBracket != tLBracket || this.Qualifier != qualifier || this.AnnotationArguments != annotationArguments || this.TRBracket != tRBracket)
 	        {
-	            var newNode = CompilerLanguage.Instance.SyntaxFactory.ParserAnnotation(tLBracket, attributeClass, annotationArguments, tRBracket);
+	            var newNode = CompilerLanguage.Instance.SyntaxFactory.ParserAnnotation(tLBracket, qualifier, annotationArguments, tRBracket);
 	            var annotations = this.GetAnnotations();
 	            if (annotations != null && annotations.Length > 0)
 	               newNode = __SyntaxExtensions.WithAnnotations(newNode, annotations);
@@ -4142,7 +4172,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	}
 	public sealed class LexerAnnotationSyntax : CompilerSyntaxNode
 	{
-		private QualifierSyntax _attributeClass;
+		private __SyntaxNode _qualifier;
 		private AnnotationArgumentsSyntax _annotationArguments;
 	
 	    public LexerAnnotationSyntax(__InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
@@ -4172,15 +4202,15 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		}
 	        
 	        
-	    public QualifierSyntax AttributeClass 
+	    public global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<IdentifierSyntax> Qualifier 
 		{ 
 			get
 			{
 	        
-				var red = this.GetRed(ref this._attributeClass, 1);
+				var red = this.GetRed(ref this._qualifier, 1);
 	            
-				return red;
-				
+				return red == null ? default : new global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<IdentifierSyntax>(red, this.GetChildIndex(1), reversed: false);
+	            
 			
 			} 
 		}
@@ -4219,7 +4249,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	        switch (index)
 	        {
 				
-				case 1: return this.GetRed(ref this._attributeClass, 1);
+				case 1: return this.GetRed(ref this._qualifier, 1);
 				
 				case 2: return this.GetRed(ref this._annotationArguments, 2);
 				
@@ -4232,7 +4262,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	        switch (index)
 	        {
 				
-				case 1: return this._attributeClass;
+				case 1: return this._qualifier;
 				
 				case 2: return this._annotationArguments;
 				
@@ -4243,36 +4273,42 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	
 	    public LexerAnnotationSyntax WithTLBracket(__SyntaxToken tLBracket)
 		{
-			return this.Update(tLBracket, this.AttributeClass, this.AnnotationArguments, this.TRBracket);
+			return this.Update(tLBracket, this.Qualifier, this.AnnotationArguments, this.TRBracket);
 		}
 			
 	        
 	
-	    public LexerAnnotationSyntax WithAttributeClass(QualifierSyntax attributeClass)
+	    public LexerAnnotationSyntax WithQualifier(global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<IdentifierSyntax> qualifier)
 		{
-			return this.Update(this.TLBracket, attributeClass, this.AnnotationArguments, this.TRBracket);
+			return this.Update(this.TLBracket, qualifier, this.AnnotationArguments, this.TRBracket);
+		}
+			
+	
+	    public LexerAnnotationSyntax AddQualifier(params IdentifierSyntax[] qualifier)
+		{
+			return this.WithQualifier(this.Qualifier.AddRange(qualifier));
 		}
 			
 	        
 	
 	    public LexerAnnotationSyntax WithAnnotationArguments(AnnotationArgumentsSyntax annotationArguments)
 		{
-			return this.Update(this.TLBracket, this.AttributeClass, annotationArguments, this.TRBracket);
+			return this.Update(this.TLBracket, this.Qualifier, annotationArguments, this.TRBracket);
 		}
 			
 	        
 	
 	    public LexerAnnotationSyntax WithTRBracket(__SyntaxToken tRBracket)
 		{
-			return this.Update(this.TLBracket, this.AttributeClass, this.AnnotationArguments, tRBracket);
+			return this.Update(this.TLBracket, this.Qualifier, this.AnnotationArguments, tRBracket);
 		}
 			
 	
-	    public LexerAnnotationSyntax Update(__SyntaxToken tLBracket, QualifierSyntax attributeClass, AnnotationArgumentsSyntax annotationArguments, __SyntaxToken tRBracket)
+	    public LexerAnnotationSyntax Update(__SyntaxToken tLBracket, global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<IdentifierSyntax> qualifier, AnnotationArgumentsSyntax annotationArguments, __SyntaxToken tRBracket)
 	    {
-	        if (this.TLBracket != tLBracket || this.AttributeClass != attributeClass || this.AnnotationArguments != annotationArguments || this.TRBracket != tRBracket)
+	        if (this.TLBracket != tLBracket || this.Qualifier != qualifier || this.AnnotationArguments != annotationArguments || this.TRBracket != tRBracket)
 	        {
-	            var newNode = CompilerLanguage.Instance.SyntaxFactory.LexerAnnotation(tLBracket, attributeClass, annotationArguments, tRBracket);
+	            var newNode = CompilerLanguage.Instance.SyntaxFactory.LexerAnnotation(tLBracket, qualifier, annotationArguments, tRBracket);
 	            var annotations = this.GetAnnotations();
 	            if (annotations != null && annotations.Length > 0)
 	               newNode = __SyntaxExtensions.WithAnnotations(newNode, annotations);
@@ -4299,7 +4335,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	}
 	public sealed class AnnotationArgumentsSyntax : CompilerSyntaxNode
 	{
-		private AnnotationArgumentSyntax _arguments;
+		private __SyntaxNode _arguments;
 	
 	    public AnnotationArgumentsSyntax(__InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
 	        : base(green, syntaxTree, position)
@@ -4828,7 +4864,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	}
 	public sealed class ReturnTypeQualifierAlt2Syntax : ReturnTypeQualifierSyntax
 	{
-		private QualifierSyntax _qualifier;
+		private __SyntaxNode _qualifier;
 	
 	    public ReturnTypeQualifierAlt2Syntax(__InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
 	        : base(green, syntaxTree, position)
@@ -4842,15 +4878,15 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	
 	        
 	        
-	    public QualifierSyntax Qualifier 
+	    public global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<IdentifierSyntax> Qualifier 
 		{ 
 			get
 			{
 	        
 				var red = this.GetRed(ref this._qualifier, 0);
 	            
-				return red;
-				
+				return red == null ? default : new global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<IdentifierSyntax>(red, this.GetChildIndex(0), reversed: false);
+	            
 			
 			} 
 		}
@@ -4878,13 +4914,19 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	    }
 	        
 	
-	    public ReturnTypeQualifierAlt2Syntax WithQualifier(QualifierSyntax qualifier)
+	    public ReturnTypeQualifierAlt2Syntax WithQualifier(global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<IdentifierSyntax> qualifier)
 		{
 			return this.Update(qualifier);
 		}
 			
 	
-	    public ReturnTypeQualifierAlt2Syntax Update(QualifierSyntax qualifier)
+	    public ReturnTypeQualifierAlt2Syntax AddQualifier(params IdentifierSyntax[] qualifier)
+		{
+			return this.WithQualifier(this.Qualifier.AddRange(qualifier));
+		}
+			
+	
+	    public ReturnTypeQualifierAlt2Syntax Update(global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<IdentifierSyntax> qualifier)
 	    {
 	        if (this.Qualifier != qualifier)
 	        {
@@ -5000,134 +5042,15 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	    }
 	
 	}
-	public sealed class QualifierSyntax : CompilerSyntaxNode
+	public sealed class IdentifierSyntax : CompilerSyntaxNode
 	{
-		private IdentifierSyntax _identifier1;
-		private IdentifierSyntax _identifier2;
 	
-	    public QualifierSyntax(__InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
+	    public IdentifierSyntax(__InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
 	        : base(green, syntaxTree, position)
 	    {
 	    }
 	
-	    public QualifierSyntax(__InternalSyntaxNode green, CompilerSyntaxNode parent, int position)
-	        : base(green, parent, position)
-	    {
-	    }
-	
-	        
-	        
-	    public IdentifierSyntax Identifier1 
-		{ 
-			get
-			{
-	        
-				var red = this.GetRed(ref this._identifier1, 0);
-	            
-				return red;
-				
-			
-			} 
-		}
-	        
-	        
-	    public global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<IdentifierSyntax> Identifier2 
-		{ 
-			get
-			{
-	        
-				var red = this.GetRed(ref this._identifier2, 1);
-	            
-				return red == null ? default : new global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<IdentifierSyntax>(red, this.GetChildIndex(1), reversed: true);
-	            
-			
-			} 
-		}
-	
-	    protected override __SyntaxNode GetNodeSlot(int index)
-	    {
-	        switch (index)
-	        {
-				
-				case 0: return this.GetRed(ref this._identifier1, 0);
-				
-				case 1: return this.GetRed(ref this._identifier2, 1);
-				
-				default: return null;
-	        }
-	    }
-	
-	    protected override __SyntaxNode GetCachedSlot(int index)
-	    {
-	        switch (index)
-	        {
-				
-				case 0: return this._identifier1;
-				
-				case 1: return this._identifier2;
-				
-				default: return null;
-	        }
-	    }
-	        
-	
-	    public QualifierSyntax WithIdentifier1(IdentifierSyntax identifier1)
-		{
-			return this.Update(identifier1, this.Identifier2);
-		}
-			
-	        
-	
-	    public QualifierSyntax WithIdentifier2(global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<IdentifierSyntax> identifier2)
-		{
-			return this.Update(this.Identifier1, identifier2);
-		}
-			
-	
-	    public QualifierSyntax AddIdentifier2(params IdentifierSyntax[] identifier2)
-		{
-			return this.WithIdentifier2(this.Identifier2.AddRange(identifier2));
-		}
-			
-	
-	    public QualifierSyntax Update(IdentifierSyntax identifier1, global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<IdentifierSyntax> identifier2)
-	    {
-	        if (this.Identifier1 != identifier1 || this.Identifier2 != identifier2)
-	        {
-	            var newNode = CompilerLanguage.Instance.SyntaxFactory.Qualifier(identifier1, identifier2);
-	            var annotations = this.GetAnnotations();
-	            if (annotations != null && annotations.Length > 0)
-	               newNode = __SyntaxExtensions.WithAnnotations(newNode, annotations);
-				return (QualifierSyntax)newNode;
-	        }
-	        return this;
-	    }
-	
-	    public override TResult Accept<TArg, TResult>(ICompilerSyntaxVisitor<TArg, TResult> visitor, TArg argument)
-	    {
-	        return visitor.VisitQualifier(this, argument);
-	    }
-	
-	    public override TResult Accept<TResult>(ICompilerSyntaxVisitor<TResult> visitor)
-	    {
-	        return visitor.VisitQualifier(this);
-	    }
-	
-	    public override void Accept(ICompilerSyntaxVisitor visitor)
-	    {
-	        visitor.VisitQualifier(this);
-	    }
-	
-	}
-	public sealed class IdentifierTokensSyntax : CompilerSyntaxNode
-	{
-	
-	    public IdentifierTokensSyntax(__InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
-	        : base(green, syntaxTree, position)
-	    {
-	    }
-	
-	    public IdentifierTokensSyntax(__InternalSyntaxNode green, CompilerSyntaxNode parent, int position)
+	    public IdentifierSyntax(__InternalSyntaxNode green, CompilerSyntaxNode parent, int position)
 	        : base(green, parent, position)
 	    {
 	    }
@@ -5139,7 +5062,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 			get
 			{
 	        
-				var green = (global::MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax.IdentifierTokensGreen)this.Green;
+				var green = (global::MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax.IdentifierGreen)this.Green;
 				var greenToken = green.Token;
 	            
 				return new __SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
@@ -5167,38 +5090,38 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	    }
 	        
 	
-	    public IdentifierTokensSyntax WithToken(__SyntaxToken token)
+	    public IdentifierSyntax WithToken(__SyntaxToken token)
 		{
 			return this.Update(token);
 		}
 			
 	
-	    public IdentifierTokensSyntax Update(__SyntaxToken token)
+	    public IdentifierSyntax Update(__SyntaxToken token)
 	    {
 	        if (this.Token != token)
 	        {
-	            var newNode = CompilerLanguage.Instance.SyntaxFactory.IdentifierTokens(token);
+	            var newNode = CompilerLanguage.Instance.SyntaxFactory.Identifier(token);
 	            var annotations = this.GetAnnotations();
 	            if (annotations != null && annotations.Length > 0)
 	               newNode = __SyntaxExtensions.WithAnnotations(newNode, annotations);
-				return (IdentifierTokensSyntax)newNode;
+				return (IdentifierSyntax)newNode;
 	        }
 	        return this;
 	    }
 	
 	    public override TResult Accept<TArg, TResult>(ICompilerSyntaxVisitor<TArg, TResult> visitor, TArg argument)
 	    {
-	        return visitor.VisitIdentifierTokens(this, argument);
+	        return visitor.VisitIdentifier(this, argument);
 	    }
 	
 	    public override TResult Accept<TResult>(ICompilerSyntaxVisitor<TResult> visitor)
 	    {
-	        return visitor.VisitIdentifierTokens(this);
+	        return visitor.VisitIdentifier(this);
 	    }
 	
 	    public override void Accept(ICompilerSyntaxVisitor visitor)
 	    {
-	        visitor.VisitIdentifierTokens(this);
+	        visitor.VisitIdentifier(this);
 	    }
 	
 	}
@@ -7402,45 +7325,30 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	    }
 	
 	}
-	public sealed class SimpleQualifierSyntax : SingleExpressionBlock1Syntax
+	public sealed class SingleExpressionBlock1Alt2Syntax : SingleExpressionBlock1Syntax
 	{
-		private SimpleIdentifierSyntax _simpleIdentifier1;
-		private SimpleIdentifierSyntax _simpleIdentifier2;
+		private __SyntaxNode _simpleQualifier;
 	
-	    public SimpleQualifierSyntax(__InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
+	    public SingleExpressionBlock1Alt2Syntax(__InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
 	        : base(green, syntaxTree, position)
 	    {
 	    }
 	
-	    public SimpleQualifierSyntax(__InternalSyntaxNode green, CompilerSyntaxNode parent, int position)
+	    public SingleExpressionBlock1Alt2Syntax(__InternalSyntaxNode green, CompilerSyntaxNode parent, int position)
 	        : base(green, parent, position)
 	    {
 	    }
 	
 	        
 	        
-	    public SimpleIdentifierSyntax SimpleIdentifier1 
+	    public global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<SimpleIdentifierSyntax> SimpleQualifier 
 		{ 
 			get
 			{
 	        
-				var red = this.GetRed(ref this._simpleIdentifier1, 0);
+				var red = this.GetRed(ref this._simpleQualifier, 0);
 	            
-				return red;
-				
-			
-			} 
-		}
-	        
-	        
-	    public global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<SimpleIdentifierSyntax> SimpleIdentifier2 
-		{ 
-			get
-			{
-	        
-				var red = this.GetRed(ref this._simpleIdentifier2, 1);
-	            
-				return red == null ? default : new global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<SimpleIdentifierSyntax>(red, this.GetChildIndex(1), reversed: true);
+				return red == null ? default : new global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<SimpleIdentifierSyntax>(red, this.GetChildIndex(0), reversed: false);
 	            
 			
 			} 
@@ -7451,9 +7359,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	        switch (index)
 	        {
 				
-				case 0: return this.GetRed(ref this._simpleIdentifier1, 0);
-				
-				case 1: return this.GetRed(ref this._simpleIdentifier2, 1);
+				case 0: return this.GetRed(ref this._simpleQualifier, 0);
 				
 				default: return null;
 	        }
@@ -7464,60 +7370,51 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	        switch (index)
 	        {
 				
-				case 0: return this._simpleIdentifier1;
-				
-				case 1: return this._simpleIdentifier2;
+				case 0: return this._simpleQualifier;
 				
 				default: return null;
 	        }
 	    }
 	        
 	
-	    public SimpleQualifierSyntax WithSimpleIdentifier1(SimpleIdentifierSyntax simpleIdentifier1)
+	    public SingleExpressionBlock1Alt2Syntax WithSimpleQualifier(global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<SimpleIdentifierSyntax> simpleQualifier)
 		{
-			return this.Update(simpleIdentifier1, this.SimpleIdentifier2);
-		}
-			
-	        
-	
-	    public SimpleQualifierSyntax WithSimpleIdentifier2(global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<SimpleIdentifierSyntax> simpleIdentifier2)
-		{
-			return this.Update(this.SimpleIdentifier1, simpleIdentifier2);
+			return this.Update(simpleQualifier);
 		}
 			
 	
-	    public SimpleQualifierSyntax AddSimpleIdentifier2(params SimpleIdentifierSyntax[] simpleIdentifier2)
+	    public SingleExpressionBlock1Alt2Syntax AddSimpleQualifier(params SimpleIdentifierSyntax[] simpleQualifier)
 		{
-			return this.WithSimpleIdentifier2(this.SimpleIdentifier2.AddRange(simpleIdentifier2));
+			return this.WithSimpleQualifier(this.SimpleQualifier.AddRange(simpleQualifier));
 		}
 			
 	
-	    public SimpleQualifierSyntax Update(SimpleIdentifierSyntax simpleIdentifier1, global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<SimpleIdentifierSyntax> simpleIdentifier2)
+	    public SingleExpressionBlock1Alt2Syntax Update(global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<SimpleIdentifierSyntax> simpleQualifier)
 	    {
-	        if (this.SimpleIdentifier1 != simpleIdentifier1 || this.SimpleIdentifier2 != simpleIdentifier2)
+	        if (this.SimpleQualifier != simpleQualifier)
 	        {
-	            var newNode = CompilerLanguage.Instance.SyntaxFactory.SimpleQualifier(simpleIdentifier1, simpleIdentifier2);
+	            var newNode = CompilerLanguage.Instance.SyntaxFactory.SingleExpressionBlock1Alt2(simpleQualifier);
 	            var annotations = this.GetAnnotations();
 	            if (annotations != null && annotations.Length > 0)
 	               newNode = __SyntaxExtensions.WithAnnotations(newNode, annotations);
-				return (SimpleQualifierSyntax)newNode;
+				return (SingleExpressionBlock1Alt2Syntax)newNode;
 	        }
 	        return this;
 	    }
 	
 	    public override TResult Accept<TArg, TResult>(ICompilerSyntaxVisitor<TArg, TResult> visitor, TArg argument)
 	    {
-	        return visitor.VisitSimpleQualifier(this, argument);
+	        return visitor.VisitSingleExpressionBlock1Alt2(this, argument);
 	    }
 	
 	    public override TResult Accept<TResult>(ICompilerSyntaxVisitor<TResult> visitor)
 	    {
-	        return visitor.VisitSimpleQualifier(this);
+	        return visitor.VisitSingleExpressionBlock1Alt2(this);
 	    }
 	
 	    public override void Accept(ICompilerSyntaxVisitor visitor)
 	    {
-	        visitor.VisitSimpleQualifier(this);
+	        visitor.VisitSingleExpressionBlock1Alt2(this);
 	    }
 	
 	}
@@ -7848,16 +7745,16 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	    }
 	
 	}
-	public sealed class QualifierIdentifierBlockSyntax : CompilerSyntaxNode
+	public sealed class MainQualifierBlockSyntax : CompilerSyntaxNode
 	{
 		private IdentifierSyntax _identifier;
 	
-	    public QualifierIdentifierBlockSyntax(__InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
+	    public MainQualifierBlockSyntax(__InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
 	        : base(green, syntaxTree, position)
 	    {
 	    }
 	
-	    public QualifierIdentifierBlockSyntax(__InternalSyntaxNode green, CompilerSyntaxNode parent, int position)
+	    public MainQualifierBlockSyntax(__InternalSyntaxNode green, CompilerSyntaxNode parent, int position)
 	        : base(green, parent, position)
 	    {
 	    }
@@ -7869,7 +7766,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 			get
 			{
 	        
-				var green = (global::MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax.QualifierIdentifierBlockGreen)this.Green;
+				var green = (global::MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax.MainQualifierBlockGreen)this.Green;
 				var greenToken = green.TDot;
 	            
 				return new __SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
@@ -7915,58 +7812,58 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	    }
 	        
 	
-	    public QualifierIdentifierBlockSyntax WithTDot(__SyntaxToken tDot)
+	    public MainQualifierBlockSyntax WithTDot(__SyntaxToken tDot)
 		{
 			return this.Update(tDot, this.Identifier);
 		}
 			
 	        
 	
-	    public QualifierIdentifierBlockSyntax WithIdentifier(IdentifierSyntax identifier)
+	    public MainQualifierBlockSyntax WithIdentifier(IdentifierSyntax identifier)
 		{
 			return this.Update(this.TDot, identifier);
 		}
 			
 	
-	    public QualifierIdentifierBlockSyntax Update(__SyntaxToken tDot, IdentifierSyntax identifier)
+	    public MainQualifierBlockSyntax Update(__SyntaxToken tDot, IdentifierSyntax identifier)
 	    {
 	        if (this.TDot != tDot || this.Identifier != identifier)
 	        {
-	            var newNode = CompilerLanguage.Instance.SyntaxFactory.QualifierIdentifierBlock(tDot, identifier);
+	            var newNode = CompilerLanguage.Instance.SyntaxFactory.MainQualifierBlock(tDot, identifier);
 	            var annotations = this.GetAnnotations();
 	            if (annotations != null && annotations.Length > 0)
 	               newNode = __SyntaxExtensions.WithAnnotations(newNode, annotations);
-				return (QualifierIdentifierBlockSyntax)newNode;
+				return (MainQualifierBlockSyntax)newNode;
 	        }
 	        return this;
 	    }
 	
 	    public override TResult Accept<TArg, TResult>(ICompilerSyntaxVisitor<TArg, TResult> visitor, TArg argument)
 	    {
-	        return visitor.VisitQualifierIdentifierBlock(this, argument);
+	        return visitor.VisitMainQualifierBlock(this, argument);
 	    }
 	
 	    public override TResult Accept<TResult>(ICompilerSyntaxVisitor<TResult> visitor)
 	    {
-	        return visitor.VisitQualifierIdentifierBlock(this);
+	        return visitor.VisitMainQualifierBlock(this);
 	    }
 	
 	    public override void Accept(ICompilerSyntaxVisitor visitor)
 	    {
-	        visitor.VisitQualifierIdentifierBlock(this);
+	        visitor.VisitMainQualifierBlock(this);
 	    }
 	
 	}
-	public sealed class SimpleQualifierSimpleIdentifierBlockSyntax : CompilerSyntaxNode
+	public sealed class SingleExpressionBlock1Alt2SimpleQualifierBlockSyntax : CompilerSyntaxNode
 	{
 		private SimpleIdentifierSyntax _simpleIdentifier;
 	
-	    public SimpleQualifierSimpleIdentifierBlockSyntax(__InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
+	    public SingleExpressionBlock1Alt2SimpleQualifierBlockSyntax(__InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
 	        : base(green, syntaxTree, position)
 	    {
 	    }
 	
-	    public SimpleQualifierSimpleIdentifierBlockSyntax(__InternalSyntaxNode green, CompilerSyntaxNode parent, int position)
+	    public SingleExpressionBlock1Alt2SimpleQualifierBlockSyntax(__InternalSyntaxNode green, CompilerSyntaxNode parent, int position)
 	        : base(green, parent, position)
 	    {
 	    }
@@ -7978,7 +7875,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 			get
 			{
 	        
-				var green = (global::MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax.SimpleQualifierSimpleIdentifierBlockGreen)this.Green;
+				var green = (global::MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax.SingleExpressionBlock1Alt2SimpleQualifierBlockGreen)this.Green;
 				var greenToken = green.TDot;
 	            
 				return new __SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
@@ -8024,45 +7921,45 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	    }
 	        
 	
-	    public SimpleQualifierSimpleIdentifierBlockSyntax WithTDot(__SyntaxToken tDot)
+	    public SingleExpressionBlock1Alt2SimpleQualifierBlockSyntax WithTDot(__SyntaxToken tDot)
 		{
 			return this.Update(tDot, this.SimpleIdentifier);
 		}
 			
 	        
 	
-	    public SimpleQualifierSimpleIdentifierBlockSyntax WithSimpleIdentifier(SimpleIdentifierSyntax simpleIdentifier)
+	    public SingleExpressionBlock1Alt2SimpleQualifierBlockSyntax WithSimpleIdentifier(SimpleIdentifierSyntax simpleIdentifier)
 		{
 			return this.Update(this.TDot, simpleIdentifier);
 		}
 			
 	
-	    public SimpleQualifierSimpleIdentifierBlockSyntax Update(__SyntaxToken tDot, SimpleIdentifierSyntax simpleIdentifier)
+	    public SingleExpressionBlock1Alt2SimpleQualifierBlockSyntax Update(__SyntaxToken tDot, SimpleIdentifierSyntax simpleIdentifier)
 	    {
 	        if (this.TDot != tDot || this.SimpleIdentifier != simpleIdentifier)
 	        {
-	            var newNode = CompilerLanguage.Instance.SyntaxFactory.SimpleQualifierSimpleIdentifierBlock(tDot, simpleIdentifier);
+	            var newNode = CompilerLanguage.Instance.SyntaxFactory.SingleExpressionBlock1Alt2SimpleQualifierBlock(tDot, simpleIdentifier);
 	            var annotations = this.GetAnnotations();
 	            if (annotations != null && annotations.Length > 0)
 	               newNode = __SyntaxExtensions.WithAnnotations(newNode, annotations);
-				return (SimpleQualifierSimpleIdentifierBlockSyntax)newNode;
+				return (SingleExpressionBlock1Alt2SimpleQualifierBlockSyntax)newNode;
 	        }
 	        return this;
 	    }
 	
 	    public override TResult Accept<TArg, TResult>(ICompilerSyntaxVisitor<TArg, TResult> visitor, TArg argument)
 	    {
-	        return visitor.VisitSimpleQualifierSimpleIdentifierBlock(this, argument);
+	        return visitor.VisitSingleExpressionBlock1Alt2SimpleQualifierBlock(this, argument);
 	    }
 	
 	    public override TResult Accept<TResult>(ICompilerSyntaxVisitor<TResult> visitor)
 	    {
-	        return visitor.VisitSimpleQualifierSimpleIdentifierBlock(this);
+	        return visitor.VisitSingleExpressionBlock1Alt2SimpleQualifierBlock(this);
 	    }
 	
 	    public override void Accept(ICompilerSyntaxVisitor visitor)
 	    {
-	        visitor.VisitSimpleQualifierSimpleIdentifierBlock(this);
+	        visitor.VisitSingleExpressionBlock1Alt2SimpleQualifierBlock(this);
 	    }
 	
 	}

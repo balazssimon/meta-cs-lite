@@ -194,8 +194,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
         protected override string? CompleteProperty_Name(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             var nameSyntax = this.Syntax?.Block?.SymbolProperty;
-            if (nameSyntax.HasValue) return Declaration.Language.SyntaxFacts.ExtractName(nameSyntax.Value);
-            else return null;
+            return Declaration.Language.SyntaxFacts.ExtractName(nameSyntax);
         }
 
         protected virtual MetaSymbol CompleteProperty_Value(DiagnosticBag diagnostics, CancellationToken cancellationToken)

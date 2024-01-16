@@ -28,7 +28,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
         private ImmutableArray<LookupKey> _expectedTypes;
 
         public SingleExpressionBlock1Syntax? Syntax => base.Syntax.AsNode() as SingleExpressionBlock1Syntax;
-        public SimpleQualifierSyntax? QualifierSyntax => this.Syntax as SimpleQualifierSyntax;
+        public SingleExpressionBlock1Alt2Syntax? QualifierSyntax => this.Syntax as SingleExpressionBlock1Alt2Syntax;
 
         //public SingleExpressionValueSyntax? Syntax => base.Syntax.AsNode() as SingleExpressionValueSyntax;
         //public SimpleQualifierSyntax? QualifierSyntax => (this.Syntax as SingleExpressionValueAlt2Syntax)?.Element1;
@@ -188,7 +188,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
         {
             var qualifier = this.QualifierSyntax;
             if (qualifier is null) return null;
-            if (qualifier.SimpleIdentifierList.Count == 0) return null;
+            if (qualifier.SimpleQualifier.Count == 0) return null;
             //if (qualifier.Element.Count == 0) return null;
             var context = this.AllocateLookupContext();
             context.Diagnose = true;
@@ -196,7 +196,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
             {
                 context.Validators.Add(LookupValidators.TypeOnly);
             }
-            var identifiers = qualifier.SimpleIdentifierList.Select(id => (SyntaxNodeOrToken)id).ToImmutableArray();
+            var identifiers = qualifier.SimpleQualifier.Select(id => (SyntaxNodeOrToken)id).ToImmutableArray();
             //var identifiers = qualifier.Element.Select(id => (SyntaxNodeOrToken)id).ToImmutableArray();
             var result = this.BindQualifiedName(context, identifiers);
             diagnostics.AddRange(context.Diagnostics);

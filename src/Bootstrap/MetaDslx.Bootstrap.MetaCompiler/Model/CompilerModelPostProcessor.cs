@@ -483,7 +483,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                     tokensElem.Name = "Token";
                     tokensElem.Value = tokenAlts;
                     var tokensAlt = f.Alternative();
-                    tokensAlt.Name = rule.Name + "Tokens";
+                    if (rule.Alternatives.Count > 0) tokensAlt.Name = rule.Name + "Tokens";
                     tokensAlt.Elements.Add(tokensElem);
                     rule.Alternatives.Insert(0, tokensAlt);
                 }
@@ -564,9 +564,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                                     var prevElem = alt.Elements[k - 1];
                                     if (list.RepeatedSeparatorFirst)
                                     {
-                                        prevElem.Name = prevElem.Name ?? (prevElem as RuleRef)?.Rule?.Name;
-                                        if (prevElem.Name == name && prevElem.Multiplicity == Multiplicity.ExactlyOne && prevElem.Value is RuleRef prevRule && prevRule.Rule == item)
+                                        var prevElemName = prevElem.Name ?? (prevElem.Value as RuleRef)?.Rule?.Name;
+                                        if (prevElemName == name && prevElem.Multiplicity == Multiplicity.ExactlyOne && prevElem.Value is RuleRef prevRule && prevRule.Rule == item)
                                         {
+                                            prevElem.Name = prevElemName;
                                             firstItems.Add(prevElem);
                                             firstIndex = k - 1;
                                             list.SeparatorFirst = false;
@@ -591,10 +592,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                                         var prevElem2 = alt.Elements[k - l * 2 + 1];
                                         if (list.RepeatedSeparatorFirst)
                                         {
-                                            prevElem1.Name = prevElem1.Name ?? (prevElem1 as RuleRef)?.Rule?.Name;
-                                            if (prevElem1.Name == name && prevElem1.Multiplicity == Multiplicity.ExactlyOne && prevElem1.Value is RuleRef prevRule1 && prevRule1.Rule == item &&
+                                            var prevElem1Name = prevElem1.Name ?? (prevElem1.Value as RuleRef)?.Rule?.Name;
+                                            if (prevElem1Name == name && prevElem1.Multiplicity == Multiplicity.ExactlyOne && prevElem1.Value is RuleRef prevRule1 && prevRule1.Rule == item &&
                                                 prevElem2.Multiplicity == Multiplicity.ExactlyOne && prevElem2.Value is RuleRef prevToken2 && prevToken2.Token == separator)
                                             {
+                                                prevElem1.Name = prevElem1Name;
                                                 firstItems.Insert(0, prevElem1);
                                                 firstSeparators.Insert(0, prevElem2);
                                                 firstIndex = k - l * 2;
@@ -604,10 +606,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                                         }
                                         else
                                         {
-                                            prevElem2.Name = prevElem2.Name ?? (prevElem2 as RuleRef)?.Rule?.Name;
-                                            if (prevElem2.Name == name && prevElem2.Multiplicity == Multiplicity.ExactlyOne && prevElem2.Value is RuleRef prevRule2 && prevRule2.Rule == item &&
+                                            var prevElem2Name = prevElem2.Name ?? (prevElem2.Value as RuleRef)?.Rule?.Name;
+                                            if (prevElem2Name == name && prevElem2.Multiplicity == Multiplicity.ExactlyOne && prevElem2.Value is RuleRef prevRule2 && prevRule2.Rule == item &&
                                                 prevElem1.Multiplicity == Multiplicity.ExactlyOne && prevElem1.Value is RuleRef prevToken1 && prevToken1.Token == separator)
                                             {
+                                                prevElem2.Name = prevElem2Name;
                                                 firstItems.Insert(0, prevElem2);
                                                 firstSeparators.Insert(0, prevElem1);
                                                 firstIndex = k - l * 2;
@@ -638,9 +641,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                                         }
                                         else
                                         {
-                                            nextElem.Name = nextElem.Name ?? (nextElem as RuleRef)?.Rule?.Name;
-                                            if (nextElem.Name == name && nextElem.Multiplicity.IsSingle() && nextElem.Value is RuleRef nextRule && nextRule.Rule == item)
+                                            var nextElemName = nextElem.Name ?? (nextElem.Value as RuleRef)?.Rule?.Name;
+                                            if (nextElemName == name && nextElem.Multiplicity.IsSingle() && nextElem.Value is RuleRef nextRule && nextRule.Rule == item)
                                             {
+                                                nextElem.Name = nextElemName;
                                                 lastItems.Add(nextElem);
                                                 lastIndex = k + l;
                                                 searchNextElemens = nextElem.Multiplicity == Multiplicity.ExactlyOne;
@@ -660,14 +664,14 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                                 list.LastSeparators.AddRange(lastSeparators);
                                 lastSeparators.Free();
                                 item.AllowMerge = false;
-                                if (alt.Elements.Count == 0 && rule.Alternatives.Count == 1)
+                                if (alt.Elements.Count == 0 && rule.Alternatives.Count == 1 && rule.AllowMerge)
                                 {
                                     InsertBinders(list.Binders, alt.Binders);
                                     InsertBinders(list.Binders, rule.Binders);
                                     foreach (var listRuleRef in GetRuleRefs(rule))
                                     {
                                         _model.DeleteObject(listRuleRef.Value);
-                                        listRuleRef.Name = name;
+                                        listRuleRef.Name = rule.Name ?? name;
                                         listRuleRef.Value = (SeparatedList)list.MClone();
                                     }
                                     _model.DeleteObject(list);
@@ -676,7 +680,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                                 else
                                 {
                                     var listElem = f.Element();
-                                    listElem.Name = name;
+                                    if (alt.Elements.Count == 0 && rule.Alternatives.Count == 1) listElem.Name = rule.Name ?? name;
+                                    else listElem.Name = name;
                                     listElem.Value = list;
                                     alt.Elements.Insert(firstIndex, listElem);
                                 }

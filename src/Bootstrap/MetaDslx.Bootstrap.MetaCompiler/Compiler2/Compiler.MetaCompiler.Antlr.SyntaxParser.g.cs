@@ -112,13 +112,44 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
                     
                 
                     
-                        
-                QualifierGreen? name = null;
-                if (context.e_Name is not null) name = (QualifierGreen?)this.Visit(context.e_Name) ?? QualifierGreen.__Missing;
-                            
-                else name = QualifierGreen.__Missing;
-                            
-                        
+                var qualifierBuilder = _pool.AllocateSeparated<IdentifierGreen>(reversed: false);
+     
+     
+ var e_Identifier1Context = context.e_Identifier1;
+ if (e_Identifier1Context is not null) qualifierBuilder.Add((IdentifierGreen?)this.Visit(e_Identifier1Context) ?? IdentifierGreen.__Missing);
+     
+ else qualifierBuilder.Add(IdentifierGreen.__Missing);
+     
+     
+     
+ var e_Identifier2Context = context._e_Identifier2;
+ var e_TDot1Context = context._e_TDot1;
+ for (int i = 0; i < e_Identifier2Context.Count; ++i)
+ {
+     
+     if (i < e_TDot1Context.Count)
+     {
+         var _separator = e_TDot1Context[i];
+      
+  qualifierBuilder.AddSeparator(this.VisitTerminal(_separator, CompilerSyntaxKind.TDot));
+      
+     }
+     else
+     {
+         qualifierBuilder.AddSeparator(this.VisitTerminal((IToken?)null, CompilerSyntaxKind.TDot));
+     }
+     var _item = e_Identifier2Context[i];
+  if (_item is not null) qualifierBuilder.Add((IdentifierGreen?)this.Visit(_item) ?? IdentifierGreen.__Missing);
+      
+  else qualifierBuilder.Add(IdentifierGreen.__Missing);
+      
+     
+ }
+     
+     
+     
+ var qualifier = qualifierBuilder.ToList();
+ _pool.Free(qualifierBuilder);
                     
                 
                     
@@ -155,7 +186,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
                 var endOfFileToken = this.VisitTerminal(context.e_EndOfFileToken, CompilerSyntaxKind.Eof);
                     
                 
-            	return _factory.Main(kNamespace, name, tSemicolon, usingList, declarations, endOfFileToken);
+            	return _factory.Main(kNamespace, qualifier, tSemicolon, usingList, declarations, endOfFileToken);
             }
                 
             
@@ -172,13 +203,44 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
                     
                 
                     
-                        
-                QualifierGreen? namespaces = null;
-                if (context.e_Namespaces is not null) namespaces = (QualifierGreen?)this.Visit(context.e_Namespaces) ?? QualifierGreen.__Missing;
-                            
-                else namespaces = QualifierGreen.__Missing;
-                            
-                        
+                var qualifierBuilder = _pool.AllocateSeparated<IdentifierGreen>(reversed: false);
+     
+     
+ var e_Identifier1Context = context.e_Identifier1;
+ if (e_Identifier1Context is not null) qualifierBuilder.Add((IdentifierGreen?)this.Visit(e_Identifier1Context) ?? IdentifierGreen.__Missing);
+     
+ else qualifierBuilder.Add(IdentifierGreen.__Missing);
+     
+     
+     
+ var e_Identifier2Context = context._e_Identifier2;
+ var e_TDot1Context = context._e_TDot1;
+ for (int i = 0; i < e_Identifier2Context.Count; ++i)
+ {
+     
+     if (i < e_TDot1Context.Count)
+     {
+         var _separator = e_TDot1Context[i];
+      
+  qualifierBuilder.AddSeparator(this.VisitTerminal(_separator, CompilerSyntaxKind.TDot));
+      
+     }
+     else
+     {
+         qualifierBuilder.AddSeparator(this.VisitTerminal((IToken?)null, CompilerSyntaxKind.TDot));
+     }
+     var _item = e_Identifier2Context[i];
+  if (_item is not null) qualifierBuilder.Add((IdentifierGreen?)this.Visit(_item) ?? IdentifierGreen.__Missing);
+      
+  else qualifierBuilder.Add(IdentifierGreen.__Missing);
+      
+     
+ }
+     
+     
+     
+ var qualifier = qualifierBuilder.ToList();
+ _pool.Free(qualifierBuilder);
                     
                 
                     
@@ -187,7 +249,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
                         
                     
                 
-            	return _factory.UsingAlt1(kUsing, namespaces, tSemicolon);
+            	return _factory.UsingAlt1(kUsing, qualifier, tSemicolon);
             }
                 
 
@@ -208,13 +270,44 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
                     
                 
                     
-                        
-                QualifierGreen? symbols = null;
-                if (context.e_Symbols is not null) symbols = (QualifierGreen?)this.Visit(context.e_Symbols) ?? QualifierGreen.__Missing;
-                            
-                else symbols = QualifierGreen.__Missing;
-                            
-                        
+                var qualifierBuilder = _pool.AllocateSeparated<IdentifierGreen>(reversed: false);
+     
+     
+ var e_Identifier3Context = context.e_Identifier3;
+ if (e_Identifier3Context is not null) qualifierBuilder.Add((IdentifierGreen?)this.Visit(e_Identifier3Context) ?? IdentifierGreen.__Missing);
+     
+ else qualifierBuilder.Add(IdentifierGreen.__Missing);
+     
+     
+     
+ var e_Identifier2Context = context._e_Identifier2;
+ var e_TDot1Context = context._e_TDot1;
+ for (int i = 0; i < e_Identifier2Context.Count; ++i)
+ {
+     
+     if (i < e_TDot1Context.Count)
+     {
+         var _separator = e_TDot1Context[i];
+      
+  qualifierBuilder.AddSeparator(this.VisitTerminal(_separator, CompilerSyntaxKind.TDot));
+      
+     }
+     else
+     {
+         qualifierBuilder.AddSeparator(this.VisitTerminal((IToken?)null, CompilerSyntaxKind.TDot));
+     }
+     var _item = e_Identifier2Context[i];
+  if (_item is not null) qualifierBuilder.Add((IdentifierGreen?)this.Visit(_item) ?? IdentifierGreen.__Missing);
+      
+  else qualifierBuilder.Add(IdentifierGreen.__Missing);
+      
+     
+ }
+     
+     
+     
+ var qualifier = qualifierBuilder.ToList();
+ _pool.Free(qualifierBuilder);
                     
                 
                     
@@ -223,7 +316,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
                         
                     
                 
-            	return _factory.UsingMetaModel(kUsing, kMetamodel, symbols, tSemicolon);
+            	return _factory.UsingMetaModel(kUsing, kMetamodel, qualifier, tSemicolon);
             }
                 
 
@@ -244,13 +337,44 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
                     
                 
                     
-                        
-                QualifierGreen? namespaces = null;
-                if (context.e_Namespaces1 is not null) namespaces = (QualifierGreen?)this.Visit(context.e_Namespaces1) ?? QualifierGreen.__Missing;
-                            
-                else namespaces = QualifierGreen.__Missing;
-                            
-                        
+                var qualifierBuilder = _pool.AllocateSeparated<IdentifierGreen>(reversed: false);
+     
+     
+ var e_Identifier5Context = context.e_Identifier5;
+ if (e_Identifier5Context is not null) qualifierBuilder.Add((IdentifierGreen?)this.Visit(e_Identifier5Context) ?? IdentifierGreen.__Missing);
+     
+ else qualifierBuilder.Add(IdentifierGreen.__Missing);
+     
+     
+     
+ var e_Identifier2Context = context._e_Identifier2;
+ var e_TDot1Context = context._e_TDot1;
+ for (int i = 0; i < e_Identifier2Context.Count; ++i)
+ {
+     
+     if (i < e_TDot1Context.Count)
+     {
+         var _separator = e_TDot1Context[i];
+      
+  qualifierBuilder.AddSeparator(this.VisitTerminal(_separator, CompilerSyntaxKind.TDot));
+      
+     }
+     else
+     {
+         qualifierBuilder.AddSeparator(this.VisitTerminal((IToken?)null, CompilerSyntaxKind.TDot));
+     }
+     var _item = e_Identifier2Context[i];
+  if (_item is not null) qualifierBuilder.Add((IdentifierGreen?)this.Visit(_item) ?? IdentifierGreen.__Missing);
+      
+  else qualifierBuilder.Add(IdentifierGreen.__Missing);
+      
+     
+ }
+     
+     
+     
+ var qualifier = qualifierBuilder.ToList();
+ _pool.Free(qualifierBuilder);
                     
                 
                     
@@ -259,7 +383,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
                         
                     
                 
-            	return _factory.UsingSymbols(kUsing, kSymbols, namespaces, tSemicolon);
+            	return _factory.UsingSymbols(kUsing, kSymbols, qualifier, tSemicolon);
             }
                 
             
@@ -1300,13 +1424,44 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
                     
                 
                     
-                        
-                QualifierGreen? attributeClass = null;
-                if (context.e_AttributeClass is not null) attributeClass = (QualifierGreen?)this.Visit(context.e_AttributeClass) ?? QualifierGreen.__Missing;
-                            
-                else attributeClass = QualifierGreen.__Missing;
-                            
-                        
+                var qualifierBuilder = _pool.AllocateSeparated<IdentifierGreen>(reversed: false);
+     
+     
+ var e_Identifier1Context = context.e_Identifier1;
+ if (e_Identifier1Context is not null) qualifierBuilder.Add((IdentifierGreen?)this.Visit(e_Identifier1Context) ?? IdentifierGreen.__Missing);
+     
+ else qualifierBuilder.Add(IdentifierGreen.__Missing);
+     
+     
+     
+ var e_Identifier2Context = context._e_Identifier2;
+ var e_TDot1Context = context._e_TDot1;
+ for (int i = 0; i < e_Identifier2Context.Count; ++i)
+ {
+     
+     if (i < e_TDot1Context.Count)
+     {
+         var _separator = e_TDot1Context[i];
+      
+  qualifierBuilder.AddSeparator(this.VisitTerminal(_separator, CompilerSyntaxKind.TDot));
+      
+     }
+     else
+     {
+         qualifierBuilder.AddSeparator(this.VisitTerminal((IToken?)null, CompilerSyntaxKind.TDot));
+     }
+     var _item = e_Identifier2Context[i];
+  if (_item is not null) qualifierBuilder.Add((IdentifierGreen?)this.Visit(_item) ?? IdentifierGreen.__Missing);
+      
+  else qualifierBuilder.Add(IdentifierGreen.__Missing);
+      
+     
+ }
+     
+     
+     
+ var qualifier = qualifierBuilder.ToList();
+ _pool.Free(qualifierBuilder);
                     
                 
                     
@@ -1323,7 +1478,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
                         
                     
                 
-            	return _factory.ParserAnnotation(tLBracket, attributeClass, annotationArguments, tRBracket);
+            	return _factory.ParserAnnotation(tLBracket, qualifier, annotationArguments, tRBracket);
             }
                 
             
@@ -1340,13 +1495,44 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
                     
                 
                     
-                        
-                QualifierGreen? attributeClass = null;
-                if (context.e_AttributeClass is not null) attributeClass = (QualifierGreen?)this.Visit(context.e_AttributeClass) ?? QualifierGreen.__Missing;
-                            
-                else attributeClass = QualifierGreen.__Missing;
-                            
-                        
+                var qualifierBuilder = _pool.AllocateSeparated<IdentifierGreen>(reversed: false);
+     
+     
+ var e_Identifier1Context = context.e_Identifier1;
+ if (e_Identifier1Context is not null) qualifierBuilder.Add((IdentifierGreen?)this.Visit(e_Identifier1Context) ?? IdentifierGreen.__Missing);
+     
+ else qualifierBuilder.Add(IdentifierGreen.__Missing);
+     
+     
+     
+ var e_Identifier2Context = context._e_Identifier2;
+ var e_TDot1Context = context._e_TDot1;
+ for (int i = 0; i < e_Identifier2Context.Count; ++i)
+ {
+     
+     if (i < e_TDot1Context.Count)
+     {
+         var _separator = e_TDot1Context[i];
+      
+  qualifierBuilder.AddSeparator(this.VisitTerminal(_separator, CompilerSyntaxKind.TDot));
+      
+     }
+     else
+     {
+         qualifierBuilder.AddSeparator(this.VisitTerminal((IToken?)null, CompilerSyntaxKind.TDot));
+     }
+     var _item = e_Identifier2Context[i];
+  if (_item is not null) qualifierBuilder.Add((IdentifierGreen?)this.Visit(_item) ?? IdentifierGreen.__Missing);
+      
+  else qualifierBuilder.Add(IdentifierGreen.__Missing);
+      
+     
+ }
+     
+     
+     
+ var qualifier = qualifierBuilder.ToList();
+ _pool.Free(qualifierBuilder);
                     
                 
                     
@@ -1363,7 +1549,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
                         
                     
                 
-            	return _factory.LexerAnnotation(tLBracket, attributeClass, annotationArguments, tRBracket);
+            	return _factory.LexerAnnotation(tLBracket, qualifier, annotationArguments, tRBracket);
             }
                 
             
@@ -1513,13 +1699,44 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
                	if (context == null) return ReturnTypeQualifierAlt2Green.__Missing;
                 
                     
-                        
-                QualifierGreen? qualifier = null;
-                if (context.e_Qualifier is not null) qualifier = (QualifierGreen?)this.Visit(context.e_Qualifier) ?? QualifierGreen.__Missing;
-                            
-                else qualifier = QualifierGreen.__Missing;
-                            
-                        
+                var qualifierBuilder = _pool.AllocateSeparated<IdentifierGreen>(reversed: false);
+     
+     
+ var e_Identifier1Context = context.e_Identifier1;
+ if (e_Identifier1Context is not null) qualifierBuilder.Add((IdentifierGreen?)this.Visit(e_Identifier1Context) ?? IdentifierGreen.__Missing);
+     
+ else qualifierBuilder.Add(IdentifierGreen.__Missing);
+     
+     
+     
+ var e_Identifier2Context = context._e_Identifier2;
+ var e_TDot1Context = context._e_TDot1;
+ for (int i = 0; i < e_Identifier2Context.Count; ++i)
+ {
+     
+     if (i < e_TDot1Context.Count)
+     {
+         var _separator = e_TDot1Context[i];
+      
+  qualifierBuilder.AddSeparator(this.VisitTerminal(_separator, CompilerSyntaxKind.TDot));
+      
+     }
+     else
+     {
+         qualifierBuilder.AddSeparator(this.VisitTerminal((IToken?)null, CompilerSyntaxKind.TDot));
+     }
+     var _item = e_Identifier2Context[i];
+  if (_item is not null) qualifierBuilder.Add((IdentifierGreen?)this.Visit(_item) ?? IdentifierGreen.__Missing);
+      
+  else qualifierBuilder.Add(IdentifierGreen.__Missing);
+      
+     
+ }
+     
+     
+     
+ var qualifier = qualifierBuilder.ToList();
+ _pool.Free(qualifierBuilder);
                     
                 
             	return _factory.ReturnTypeQualifierAlt2(qualifier);
@@ -1548,64 +1765,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
             
                 
 
-            public override GreenNode? VisitPr_Qualifier(CompilerParser.Pr_QualifierContext? context)
-            {
-               	if (context == null) return QualifierGreen.__Missing;
-                
-                    
-                        
-                IdentifierGreen? identifier1 = null;
-                if (context.e_Identifier is not null) identifier1 = (IdentifierGreen?)this.Visit(context.e_Identifier) ?? IdentifierGreen.__Missing;
-                            
-                else identifier1 = IdentifierGreen.__Missing;
-                            
-                        
-                    
-                
-                    
-                var identifier2Builder = _pool.AllocateSeparated<IdentifierGreen>(reversed: true);
-     
-     
-     
- var e_Identifier1Context = context._e_Identifier1;
- var e_TDot1Context = context._e_TDot1;
- for (int i = 0; i < e_Identifier1Context.Count; ++i)
- {
-     
-     if (i < e_TDot1Context.Count)
-     {
-         var _separator = e_TDot1Context[i];
-      
-  identifier2Builder.AddSeparator(this.VisitTerminal(_separator, CompilerSyntaxKind.TDot));
-      
-     }
-     else
-     {
-         identifier2Builder.AddSeparator(this.VisitTerminal((IToken?)null, CompilerSyntaxKind.TDot));
-     }
-     var _item = e_Identifier1Context[i];
-  if (_item is not null) identifier2Builder.Add((IdentifierGreen?)this.Visit(_item) ?? IdentifierGreen.__Missing);
-      
-  else identifier2Builder.Add(IdentifierGreen.__Missing);
-      
-     
- }
-     
-     
-     
- var identifier2 = identifier2Builder.ToList();
- _pool.Free(identifier2Builder);
-                    
-                
-            	return _factory.Qualifier(identifier1, identifier2);
-            }
-                
-            
-                
-
             public override GreenNode? VisitPr_Identifier(CompilerParser.Pr_IdentifierContext? context)
             {
-               	if (context == null) return IdentifierTokensGreen.__Missing;
+               	if (context == null) return IdentifierGreen.__Missing;
                 
                     
                 InternalSyntaxToken? token = null;
@@ -1614,7 +1776,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
  if (token is null) token = _factory.None;
                     
                 
-            	return _factory.IdentifierTokens(token);
+            	return _factory.Identifier(token);
             }
                 
             
@@ -2149,56 +2311,52 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
             }
                 
 
-            public override GreenNode? VisitPr_SimpleQualifier(CompilerParser.Pr_SimpleQualifierContext? context)
+            public override GreenNode? VisitPr_SingleExpressionBlock1Alt2(CompilerParser.Pr_SingleExpressionBlock1Alt2Context? context)
             {
-               	if (context == null) return SimpleQualifierGreen.__Missing;
+               	if (context == null) return SingleExpressionBlock1Alt2Green.__Missing;
                 
                     
-                        
-                SimpleIdentifierGreen? simpleIdentifier1 = null;
-                if (context.e_SimpleIdentifier is not null) simpleIdentifier1 = (SimpleIdentifierGreen?)this.Visit(context.e_SimpleIdentifier) ?? SimpleIdentifierGreen.__Missing;
-                            
-                else simpleIdentifier1 = SimpleIdentifierGreen.__Missing;
-                            
-                        
-                    
-                
-                    
-                var simpleIdentifier2Builder = _pool.AllocateSeparated<SimpleIdentifierGreen>(reversed: true);
+                var simpleQualifierBuilder = _pool.AllocateSeparated<SimpleIdentifierGreen>(reversed: false);
+     
+     
+ var e_SimpleIdentifier1Context = context.e_SimpleIdentifier1;
+ if (e_SimpleIdentifier1Context is not null) simpleQualifierBuilder.Add((SimpleIdentifierGreen?)this.Visit(e_SimpleIdentifier1Context) ?? SimpleIdentifierGreen.__Missing);
+     
+ else simpleQualifierBuilder.Add(SimpleIdentifierGreen.__Missing);
      
      
      
- var e_SimpleIdentifier1Context = context._e_SimpleIdentifier1;
+ var e_SimpleIdentifier2Context = context._e_SimpleIdentifier2;
  var e_TDot1Context = context._e_TDot1;
- for (int i = 0; i < e_SimpleIdentifier1Context.Count; ++i)
+ for (int i = 0; i < e_SimpleIdentifier2Context.Count; ++i)
  {
      
      if (i < e_TDot1Context.Count)
      {
          var _separator = e_TDot1Context[i];
       
-  simpleIdentifier2Builder.AddSeparator(this.VisitTerminal(_separator, CompilerSyntaxKind.TDot));
+  simpleQualifierBuilder.AddSeparator(this.VisitTerminal(_separator, CompilerSyntaxKind.TDot));
       
      }
      else
      {
-         simpleIdentifier2Builder.AddSeparator(this.VisitTerminal((IToken?)null, CompilerSyntaxKind.TDot));
+         simpleQualifierBuilder.AddSeparator(this.VisitTerminal((IToken?)null, CompilerSyntaxKind.TDot));
      }
-     var _item = e_SimpleIdentifier1Context[i];
-  if (_item is not null) simpleIdentifier2Builder.Add((SimpleIdentifierGreen?)this.Visit(_item) ?? SimpleIdentifierGreen.__Missing);
+     var _item = e_SimpleIdentifier2Context[i];
+  if (_item is not null) simpleQualifierBuilder.Add((SimpleIdentifierGreen?)this.Visit(_item) ?? SimpleIdentifierGreen.__Missing);
       
-  else simpleIdentifier2Builder.Add(SimpleIdentifierGreen.__Missing);
+  else simpleQualifierBuilder.Add(SimpleIdentifierGreen.__Missing);
       
      
  }
      
      
      
- var simpleIdentifier2 = simpleIdentifier2Builder.ToList();
- _pool.Free(simpleIdentifier2Builder);
+ var simpleQualifier = simpleQualifierBuilder.ToList();
+ _pool.Free(simpleQualifierBuilder);
                     
                 
-            	return _factory.SimpleQualifier(simpleIdentifier1, simpleIdentifier2);
+            	return _factory.SingleExpressionBlock1Alt2(simpleQualifier);
             }
                 
             
@@ -2282,9 +2440,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
             
                 
 
-            public override GreenNode? VisitPr_QualifierIdentifierBlock(CompilerParser.Pr_QualifierIdentifierBlockContext? context)
+            public override GreenNode? VisitPr_MainQualifierBlock6(CompilerParser.Pr_MainQualifierBlock6Context? context)
             {
-               	if (context == null) return QualifierIdentifierBlockGreen.__Missing;
+               	if (context == null) return MainQualifierBlockGreen.__Missing;
                 
                     
                         
@@ -2295,22 +2453,22 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
                     
                         
                 IdentifierGreen? identifier = null;
-                if (context.e_Identifier1 is not null) identifier = (IdentifierGreen?)this.Visit(context.e_Identifier1) ?? IdentifierGreen.__Missing;
+                if (context.e_Identifier2 is not null) identifier = (IdentifierGreen?)this.Visit(context.e_Identifier2) ?? IdentifierGreen.__Missing;
                             
                 else identifier = IdentifierGreen.__Missing;
                             
                         
                     
                 
-            	return _factory.QualifierIdentifierBlock(tDot, identifier);
+            	return _factory.MainQualifierBlock(tDot, identifier);
             }
                 
             
                 
 
-            public override GreenNode? VisitPr_SimpleQualifierSimpleIdentifierBlock1(CompilerParser.Pr_SimpleQualifierSimpleIdentifierBlock1Context? context)
+            public override GreenNode? VisitPr_SingleExpressionBlock1Alt2SimpleQualifierBlock1(CompilerParser.Pr_SingleExpressionBlock1Alt2SimpleQualifierBlock1Context? context)
             {
-               	if (context == null) return SimpleQualifierSimpleIdentifierBlockGreen.__Missing;
+               	if (context == null) return SingleExpressionBlock1Alt2SimpleQualifierBlockGreen.__Missing;
                 
                     
                         
@@ -2321,14 +2479,14 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
                     
                         
                 SimpleIdentifierGreen? simpleIdentifier = null;
-                if (context.e_SimpleIdentifier1 is not null) simpleIdentifier = (SimpleIdentifierGreen?)this.Visit(context.e_SimpleIdentifier1) ?? SimpleIdentifierGreen.__Missing;
+                if (context.e_SimpleIdentifier2 is not null) simpleIdentifier = (SimpleIdentifierGreen?)this.Visit(context.e_SimpleIdentifier2) ?? SimpleIdentifierGreen.__Missing;
                             
                 else simpleIdentifier = SimpleIdentifierGreen.__Missing;
                             
                         
                     
                 
-            	return _factory.SimpleQualifierSimpleIdentifierBlock(tDot, simpleIdentifier);
+            	return _factory.SingleExpressionBlock1Alt2SimpleQualifierBlock(tDot, simpleIdentifier);
             }
                 
             

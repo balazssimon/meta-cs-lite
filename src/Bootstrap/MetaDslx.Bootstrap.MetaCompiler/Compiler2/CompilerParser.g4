@@ -6,12 +6,12 @@ options
 } 
 
 pr_Main
-    :  e_KNamespace=LR_KNamespace  e_Name=pr_Qualifier  e_TSemicolon=LR_TSemicolon  e_UsingList+=pr_Using*  e_Declarations=pr_Declarations  e_EndOfFileToken=EOF
+    :  e_KNamespace=LR_KNamespace         e_Identifier1=pr_Identifier         (e_TDot1+=LR_TDot e_Identifier2+=pr_Identifier)*              e_TSemicolon=LR_TSemicolon  e_UsingList+=pr_Using*  e_Declarations=pr_Declarations  e_EndOfFileToken=EOF
     ;
 pr_Using
-    :  e_KUsing=LR_KUsing  e_Namespaces=pr_Qualifier  e_TSemicolon=LR_TSemicolon #pr_UsingAlt1
- |  e_KUsing1=LR_KUsing  e_KMetamodel=LR_KMetamodel  e_Symbols=pr_Qualifier  e_TSemicolon1=LR_TSemicolon #pr_UsingMetaModel
- |  e_KUsing2=LR_KUsing  e_KSymbols=LR_KSymbols  e_Namespaces1=pr_Qualifier  e_TSemicolon2=LR_TSemicolon #pr_UsingSymbols
+    :  e_KUsing=LR_KUsing         e_Identifier1=pr_Identifier         (e_TDot1+=LR_TDot e_Identifier2+=pr_Identifier)*              e_TSemicolon=LR_TSemicolon #pr_UsingAlt1
+ |  e_KUsing1=LR_KUsing  e_KMetamodel=LR_KMetamodel         e_Identifier3=pr_Identifier         (e_TDot1+=LR_TDot e_Identifier2+=pr_Identifier)*              e_TSemicolon1=LR_TSemicolon #pr_UsingMetaModel
+ |  e_KUsing2=LR_KUsing  e_KSymbols=LR_KSymbols         e_Identifier5=pr_Identifier         (e_TDot1+=LR_TDot e_Identifier2+=pr_Identifier)*              e_TSemicolon2=LR_TSemicolon #pr_UsingSymbols
     ;
 pr_Declarations
     :  e_Declarations=pr_LanguageDeclaration  e_Declarations1+=pr_Rule*
@@ -64,10 +64,10 @@ pr_SingleExpression
     :  e_Value=pr_SingleExpressionBlock1
     ;
 pr_ParserAnnotation
-    :  e_TLBracket=LR_TLBracket  e_AttributeClass=pr_Qualifier  e_AnnotationArguments=pr_AnnotationArguments?  e_TRBracket=LR_TRBracket
+    :  e_TLBracket=LR_TLBracket         e_Identifier1=pr_Identifier         (e_TDot1+=LR_TDot e_Identifier2+=pr_Identifier)*              e_AnnotationArguments=pr_AnnotationArguments?  e_TRBracket=LR_TRBracket
     ;
 pr_LexerAnnotation
-    :  e_TLBracket=LR_TLBracket  e_AttributeClass=pr_Qualifier  e_AnnotationArguments=pr_AnnotationArguments?  e_TRBracket=LR_TRBracket
+    :  e_TLBracket=LR_TLBracket         e_Identifier1=pr_Identifier         (e_TDot1+=LR_TDot e_Identifier2+=pr_Identifier)*              e_AnnotationArguments=pr_AnnotationArguments?  e_TRBracket=LR_TRBracket
     ;
 pr_AnnotationArguments
     :  e_TLParen=LR_TLParen         e_Arguments1=pr_AnnotationArgument         (e_TComma1+=LR_TComma e_Arguments2+=pr_AnnotationArgument)*              e_TRParen=LR_TRParen
@@ -81,13 +81,10 @@ pr_ReturnTypeIdentifier
     ;
 pr_ReturnTypeQualifier
     :  e_TPrimitiveType=LR_TPrimitiveType #pr_ReturnTypeQualifierAlt1
- |  e_Qualifier=pr_Qualifier #pr_ReturnTypeQualifierAlt2
+ |         e_Identifier1=pr_Identifier         (e_TDot1+=LR_TDot e_Identifier2+=pr_Identifier)*             #pr_ReturnTypeQualifierAlt2
     ;
 pr_Name
     :  e_Identifier=pr_Identifier
-    ;
-pr_Qualifier
-    :  e_Identifier=pr_Identifier              (e_TDot1+=LR_TDot e_Identifier1+=pr_Identifier)*            
     ;
 pr_Identifier
     :  e_Token=(LR_TIdentifier | LR_TVerbatimIdentifier)
@@ -144,7 +141,7 @@ pr_LBlockAlternativesBlock
     ;
 pr_SingleExpressionBlock1
     :  e_Token=(LR_KNull | LR_KTrue | LR_KFalse | LR_TInteger | LR_TString) #pr_Tokens
- |  e_SimpleIdentifier=pr_SimpleIdentifier              (e_TDot1+=LR_TDot e_SimpleIdentifier1+=pr_SimpleIdentifier)*             #pr_SimpleQualifier
+ |         e_SimpleIdentifier1=pr_SimpleIdentifier         (e_TDot1+=LR_TDot e_SimpleIdentifier2+=pr_SimpleIdentifier)*             #pr_SingleExpressionBlock1Alt2
     ;
 pr_ArrayExpressionItemsBlock
     :  e_TComma1=LR_TComma  e_Items2=pr_SingleExpression
@@ -155,9 +152,9 @@ pr_AnnotationArgumentsArgumentsBlock
 pr_AnnotationArgumentBlock1
     :  e_NamedParameter=pr_Identifier  e_TColon=LR_TColon
     ;
-pr_QualifierIdentifierBlock
-    :  e_TDot1=LR_TDot  e_Identifier1=pr_Identifier
+pr_MainQualifierBlock6
+    :  e_TDot1=LR_TDot  e_Identifier2=pr_Identifier
     ;
-pr_SimpleQualifierSimpleIdentifierBlock1
-    :  e_TDot1=LR_TDot  e_SimpleIdentifier1=pr_SimpleIdentifier
+pr_SingleExpressionBlock1Alt2SimpleQualifierBlock1
+    :  e_TDot1=LR_TDot  e_SimpleIdentifier2=pr_SimpleIdentifier
     ;

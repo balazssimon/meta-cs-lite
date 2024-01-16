@@ -38,12 +38,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Compile Remove="Compiler2\**" />
-		<None Remove="Compiler2\**" />
-		<Compile Remove="Symbols2\**" />
-		<None Remove="Symbols2\**" />
-		<Compile Remove="Syntax2\**" />
-		<None Remove="Syntax2\**" />
+		<Compile Remove="Compiler\**" />
+		<None Remove="Compiler\**" />
+		<Compile Remove="Symbols\**" />
+		<None Remove="Symbols\**" />
+		<Compile Remove="Syntax\**" />
+		<None Remove="Syntax\**" />
 	</ItemGroup>
 
 	<!--

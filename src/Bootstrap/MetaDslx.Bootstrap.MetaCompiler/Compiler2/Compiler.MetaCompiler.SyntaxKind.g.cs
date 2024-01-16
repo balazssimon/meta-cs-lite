@@ -18,7 +18,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		
 		
 		__FirstRule = Main,
-		__LastRule = SimpleQualifierSimpleIdentifierBlock,
+		__LastRule = SingleExpressionBlock1Alt2SimpleQualifierBlock,
 		
 
 		// Built-in:
@@ -262,11 +262,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
             
 		
             
-		Qualifier,
-            
-		
-            
-		IdentifierTokens,
+		Identifier,
             
 		
             
@@ -340,7 +336,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
             
 		Tokens,
             
-		SimpleQualifier,
+		SingleExpressionBlock1Alt2,
             
 		
             
@@ -356,11 +352,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
             
 		
             
-		QualifierIdentifierBlock,
+		MainQualifierBlock,
             
 		
             
-		SimpleQualifierSimpleIdentifierBlock,
+		SingleExpressionBlock1Alt2SimpleQualifierBlock,
             
 		
 	}

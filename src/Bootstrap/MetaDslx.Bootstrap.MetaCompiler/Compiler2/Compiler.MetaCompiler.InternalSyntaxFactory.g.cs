@@ -273,7 +273,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 		
 		
 			
-		internal MainGreen Main(__InternalSyntaxToken kNamespace, QualifierGreen name, __InternalSyntaxToken tSemicolon, global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<UsingGreen> usingList, DeclarationsGreen declarations, __InternalSyntaxToken endOfFileToken)
+		internal MainGreen Main(__InternalSyntaxToken kNamespace, global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<IdentifierGreen> qualifier, __InternalSyntaxToken tSemicolon, global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<UsingGreen> usingList, DeclarationsGreen declarations, __InternalSyntaxToken endOfFileToken)
 		{
 #if DEBUG
 			
@@ -287,8 +287,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 				
 			
 				
-				
-			if (name is null) throw new ArgumentNullException(nameof(name));
 				
 				
 				
@@ -325,14 +323,14 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			
 #endif
 			
-			return new MainGreen(CompilerSyntaxKind.Main, kNamespace, name, tSemicolon, usingList.Node, declarations, endOfFileToken);
+			return new MainGreen(CompilerSyntaxKind.Main, kNamespace, qualifier.Node, tSemicolon, usingList.Node, declarations, endOfFileToken);
 			
 		}
 
 			
 		
 			
-		internal UsingAlt1Green UsingAlt1(__InternalSyntaxToken kUsing, QualifierGreen namespaces, __InternalSyntaxToken tSemicolon)
+		internal UsingAlt1Green UsingAlt1(__InternalSyntaxToken kUsing, global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<IdentifierGreen> qualifier, __InternalSyntaxToken tSemicolon)
 		{
 #if DEBUG
 			
@@ -346,8 +344,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 				
 			
 				
-				
-			if (namespaces is null) throw new ArgumentNullException(nameof(namespaces));
 				
 				
 				
@@ -364,10 +360,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 #endif
 			
 			int hash;
-			var cached = __SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.UsingAlt1, kUsing, namespaces, tSemicolon, out hash);
+			var cached = __SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.UsingAlt1, kUsing, qualifier.Node, tSemicolon, out hash);
 			if (cached != null) return (UsingAlt1Green)cached;
 		
-			var result = new UsingAlt1Green(CompilerSyntaxKind.UsingAlt1, kUsing, namespaces, tSemicolon);
+			var result = new UsingAlt1Green(CompilerSyntaxKind.UsingAlt1, kUsing, qualifier.Node, tSemicolon);
 			if (hash >= 0)
 			{
 				__SyntaxNodeCache.AddNode(result, hash);
@@ -378,7 +374,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 		}
 
 			
-		internal UsingMetaModelGreen UsingMetaModel(__InternalSyntaxToken kUsing, __InternalSyntaxToken kMetamodel, QualifierGreen symbols, __InternalSyntaxToken tSemicolon)
+		internal UsingMetaModelGreen UsingMetaModel(__InternalSyntaxToken kUsing, __InternalSyntaxToken kMetamodel, global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<IdentifierGreen> qualifier, __InternalSyntaxToken tSemicolon)
 		{
 #if DEBUG
 			
@@ -402,8 +398,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			
 				
 				
-			if (symbols is null) throw new ArgumentNullException(nameof(symbols));
-				
 				
 				
 			
@@ -418,12 +412,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			
 #endif
 			
-			return new UsingMetaModelGreen(CompilerSyntaxKind.UsingMetaModel, kUsing, kMetamodel, symbols, tSemicolon);
+			return new UsingMetaModelGreen(CompilerSyntaxKind.UsingMetaModel, kUsing, kMetamodel, qualifier.Node, tSemicolon);
 			
 		}
 
 			
-		internal UsingSymbolsGreen UsingSymbols(__InternalSyntaxToken kUsing, __InternalSyntaxToken kSymbols, QualifierGreen namespaces, __InternalSyntaxToken tSemicolon)
+		internal UsingSymbolsGreen UsingSymbols(__InternalSyntaxToken kUsing, __InternalSyntaxToken kSymbols, global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<IdentifierGreen> qualifier, __InternalSyntaxToken tSemicolon)
 		{
 #if DEBUG
 			
@@ -447,8 +441,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			
 				
 				
-			if (namespaces is null) throw new ArgumentNullException(nameof(namespaces));
-				
 				
 				
 			
@@ -463,7 +455,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			
 #endif
 			
-			return new UsingSymbolsGreen(CompilerSyntaxKind.UsingSymbols, kUsing, kSymbols, namespaces, tSemicolon);
+			return new UsingSymbolsGreen(CompilerSyntaxKind.UsingSymbols, kUsing, kSymbols, qualifier.Node, tSemicolon);
 			
 		}
 
@@ -1400,7 +1392,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			
 		
 			
-		internal ParserAnnotationGreen ParserAnnotation(__InternalSyntaxToken tLBracket, QualifierGreen attributeClass, AnnotationArgumentsGreen annotationArguments, __InternalSyntaxToken tRBracket)
+		internal ParserAnnotationGreen ParserAnnotation(__InternalSyntaxToken tLBracket, global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<IdentifierGreen> qualifier, AnnotationArgumentsGreen annotationArguments, __InternalSyntaxToken tRBracket)
 		{
 #if DEBUG
 			
@@ -1414,8 +1406,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 				
 			
 				
-				
-			if (attributeClass is null) throw new ArgumentNullException(nameof(attributeClass));
 				
 				
 				
@@ -1436,14 +1426,14 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			
 #endif
 			
-			return new ParserAnnotationGreen(CompilerSyntaxKind.ParserAnnotation, tLBracket, attributeClass, annotationArguments, tRBracket);
+			return new ParserAnnotationGreen(CompilerSyntaxKind.ParserAnnotation, tLBracket, qualifier.Node, annotationArguments, tRBracket);
 			
 		}
 
 			
 		
 			
-		internal LexerAnnotationGreen LexerAnnotation(__InternalSyntaxToken tLBracket, QualifierGreen attributeClass, AnnotationArgumentsGreen annotationArguments, __InternalSyntaxToken tRBracket)
+		internal LexerAnnotationGreen LexerAnnotation(__InternalSyntaxToken tLBracket, global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<IdentifierGreen> qualifier, AnnotationArgumentsGreen annotationArguments, __InternalSyntaxToken tRBracket)
 		{
 #if DEBUG
 			
@@ -1457,8 +1447,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 				
 			
 				
-				
-			if (attributeClass is null) throw new ArgumentNullException(nameof(attributeClass));
 				
 				
 				
@@ -1479,7 +1467,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			
 #endif
 			
-			return new LexerAnnotationGreen(CompilerSyntaxKind.LexerAnnotation, tLBracket, attributeClass, annotationArguments, tRBracket);
+			return new LexerAnnotationGreen(CompilerSyntaxKind.LexerAnnotation, tLBracket, qualifier.Node, annotationArguments, tRBracket);
 			
 		}
 
@@ -1657,13 +1645,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 		}
 
 			
-		internal ReturnTypeQualifierAlt2Green ReturnTypeQualifierAlt2(QualifierGreen qualifier)
+		internal ReturnTypeQualifierAlt2Green ReturnTypeQualifierAlt2(global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<IdentifierGreen> qualifier)
 		{
 #if DEBUG
 			
 				
-				
-			if (qualifier is null) throw new ArgumentNullException(nameof(qualifier));
 				
 				
 				
@@ -1671,10 +1657,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 #endif
 			
 			int hash;
-			var cached = __SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.ReturnTypeQualifierAlt2, qualifier, out hash);
+			var cached = __SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.ReturnTypeQualifierAlt2, qualifier.Node, out hash);
 			if (cached != null) return (ReturnTypeQualifierAlt2Green)cached;
 		
-			var result = new ReturnTypeQualifierAlt2Green(CompilerSyntaxKind.ReturnTypeQualifierAlt2, qualifier);
+			var result = new ReturnTypeQualifierAlt2Green(CompilerSyntaxKind.ReturnTypeQualifierAlt2, qualifier.Node);
 			if (hash >= 0)
 			{
 				__SyntaxNodeCache.AddNode(result, hash);
@@ -1717,42 +1703,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			
 		
 			
-		internal QualifierGreen Qualifier(IdentifierGreen identifier1, global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<IdentifierGreen> identifier2)
-		{
-#if DEBUG
-			
-				
-				
-			if (identifier1 is null) throw new ArgumentNullException(nameof(identifier1));
-				
-				
-				
-			
-				
-				
-				
-				
-			
-#endif
-			
-			int hash;
-			var cached = __SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.Qualifier, identifier1, identifier2.Node, out hash);
-			if (cached != null) return (QualifierGreen)cached;
-		
-			var result = new QualifierGreen(CompilerSyntaxKind.Qualifier, identifier1, identifier2.Node);
-			if (hash >= 0)
-			{
-				__SyntaxNodeCache.AddNode(result, hash);
-			}
-		
-			return result;
-			
-		}
-
-			
-		
-			
-		internal IdentifierTokensGreen IdentifierTokens(__InternalSyntaxToken token)
+		internal IdentifierGreen Identifier(__InternalSyntaxToken token)
 		{
 #if DEBUG
 			
@@ -1768,10 +1719,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 #endif
 			
 			int hash;
-			var cached = __SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.IdentifierTokens, token, out hash);
-			if (cached != null) return (IdentifierTokensGreen)cached;
+			var cached = __SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.Identifier, token, out hash);
+			if (cached != null) return (IdentifierGreen)cached;
 		
-			var result = new IdentifierTokensGreen(CompilerSyntaxKind.IdentifierTokens, token);
+			var result = new IdentifierGreen(CompilerSyntaxKind.Identifier, token);
 			if (hash >= 0)
 			{
 				__SyntaxNodeCache.AddNode(result, hash);
@@ -2522,16 +2473,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 		}
 
 			
-		internal SimpleQualifierGreen SimpleQualifier(SimpleIdentifierGreen simpleIdentifier1, global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<SimpleIdentifierGreen> simpleIdentifier2)
+		internal SingleExpressionBlock1Alt2Green SingleExpressionBlock1Alt2(global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<SimpleIdentifierGreen> simpleQualifier)
 		{
 #if DEBUG
-			
-				
-				
-			if (simpleIdentifier1 is null) throw new ArgumentNullException(nameof(simpleIdentifier1));
-				
-				
-				
 			
 				
 				
@@ -2541,10 +2485,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 #endif
 			
 			int hash;
-			var cached = __SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.SimpleQualifier, simpleIdentifier1, simpleIdentifier2.Node, out hash);
-			if (cached != null) return (SimpleQualifierGreen)cached;
+			var cached = __SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.SingleExpressionBlock1Alt2, simpleQualifier.Node, out hash);
+			if (cached != null) return (SingleExpressionBlock1Alt2Green)cached;
 		
-			var result = new SimpleQualifierGreen(CompilerSyntaxKind.SimpleQualifier, simpleIdentifier1, simpleIdentifier2.Node);
+			var result = new SingleExpressionBlock1Alt2Green(CompilerSyntaxKind.SingleExpressionBlock1Alt2, simpleQualifier.Node);
 			if (hash >= 0)
 			{
 				__SyntaxNodeCache.AddNode(result, hash);
@@ -2674,7 +2618,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			
 		
 			
-		internal QualifierIdentifierBlockGreen QualifierIdentifierBlock(__InternalSyntaxToken tDot, IdentifierGreen identifier)
+		internal MainQualifierBlockGreen MainQualifierBlock(__InternalSyntaxToken tDot, IdentifierGreen identifier)
 		{
 #if DEBUG
 			
@@ -2697,10 +2641,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 #endif
 			
 			int hash;
-			var cached = __SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.QualifierIdentifierBlock, tDot, identifier, out hash);
-			if (cached != null) return (QualifierIdentifierBlockGreen)cached;
+			var cached = __SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.MainQualifierBlock, tDot, identifier, out hash);
+			if (cached != null) return (MainQualifierBlockGreen)cached;
 		
-			var result = new QualifierIdentifierBlockGreen(CompilerSyntaxKind.QualifierIdentifierBlock, tDot, identifier);
+			var result = new MainQualifierBlockGreen(CompilerSyntaxKind.MainQualifierBlock, tDot, identifier);
 			if (hash >= 0)
 			{
 				__SyntaxNodeCache.AddNode(result, hash);
@@ -2713,7 +2657,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			
 		
 			
-		internal SimpleQualifierSimpleIdentifierBlockGreen SimpleQualifierSimpleIdentifierBlock(__InternalSyntaxToken tDot, SimpleIdentifierGreen simpleIdentifier)
+		internal SingleExpressionBlock1Alt2SimpleQualifierBlockGreen SingleExpressionBlock1Alt2SimpleQualifierBlock(__InternalSyntaxToken tDot, SimpleIdentifierGreen simpleIdentifier)
 		{
 #if DEBUG
 			
@@ -2736,10 +2680,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 #endif
 			
 			int hash;
-			var cached = __SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.SimpleQualifierSimpleIdentifierBlock, tDot, simpleIdentifier, out hash);
-			if (cached != null) return (SimpleQualifierSimpleIdentifierBlockGreen)cached;
+			var cached = __SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.SingleExpressionBlock1Alt2SimpleQualifierBlock, tDot, simpleIdentifier, out hash);
+			if (cached != null) return (SingleExpressionBlock1Alt2SimpleQualifierBlockGreen)cached;
 		
-			var result = new SimpleQualifierSimpleIdentifierBlockGreen(CompilerSyntaxKind.SimpleQualifierSimpleIdentifierBlock, tDot, simpleIdentifier);
+			var result = new SingleExpressionBlock1Alt2SimpleQualifierBlockGreen(CompilerSyntaxKind.SingleExpressionBlock1Alt2SimpleQualifierBlock, tDot, simpleIdentifier);
 			if (hash >= 0)
 			{
 				__SyntaxNodeCache.AddNode(result, hash);

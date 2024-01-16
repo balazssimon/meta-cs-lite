@@ -729,13 +729,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
        				
 				
                     
-				case CompilerSyntaxKind.Qualifier: 
-					return "Qualifier";
-       				
-				
-                    
-				case CompilerSyntaxKind.IdentifierTokens: 
-					return "IdentifierTokens";
+				case CompilerSyntaxKind.Identifier: 
+					return "Identifier";
        				
 				
                     
@@ -828,8 +823,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 				case CompilerSyntaxKind.Tokens: 
 					return "Tokens";
        				
-				case CompilerSyntaxKind.SimpleQualifier: 
-					return "SimpleQualifier";
+				case CompilerSyntaxKind.SingleExpressionBlock1Alt2: 
+					return "SingleExpressionBlock1Alt2";
        				
 				
                     
@@ -848,13 +843,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
        				
 				
                     
-				case CompilerSyntaxKind.QualifierIdentifierBlock: 
-					return "QualifierIdentifierBlock";
+				case CompilerSyntaxKind.MainQualifierBlock: 
+					return "MainQualifierBlock";
        				
 				
                     
-				case CompilerSyntaxKind.SimpleQualifierSimpleIdentifierBlock: 
-					return "SimpleQualifierSimpleIdentifierBlock";
+				case CompilerSyntaxKind.SingleExpressionBlock1Alt2SimpleQualifierBlock: 
+					return "SingleExpressionBlock1Alt2SimpleQualifierBlock";
        				
 				
 				default:

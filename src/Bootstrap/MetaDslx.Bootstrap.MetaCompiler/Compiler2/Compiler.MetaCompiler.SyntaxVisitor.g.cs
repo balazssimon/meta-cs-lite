@@ -137,11 +137,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 			
 		
 			
-		void VisitQualifier(QualifierSyntax node);
-			
-		
-			
-		void VisitIdentifierTokens(IdentifierTokensSyntax node);
+		void VisitIdentifier(IdentifierSyntax node);
 			
 		
 			
@@ -215,7 +211,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 			
 		void VisitTokens(TokensSyntax node);
 			
-		void VisitSimpleQualifier(SimpleQualifierSyntax node);
+		void VisitSingleExpressionBlock1Alt2(SingleExpressionBlock1Alt2Syntax node);
 			
 		
 			
@@ -231,11 +227,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 			
 		
 			
-		void VisitQualifierIdentifierBlock(QualifierIdentifierBlockSyntax node);
+		void VisitMainQualifierBlock(MainQualifierBlockSyntax node);
 			
 		
 			
-		void VisitSimpleQualifierSimpleIdentifierBlock(SimpleQualifierSimpleIdentifierBlockSyntax node);
+		void VisitSingleExpressionBlock1Alt2SimpleQualifierBlock(SingleExpressionBlock1Alt2SimpleQualifierBlockSyntax node);
 			
 		
     }
@@ -515,15 +511,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		
 			
 
-		public virtual void VisitQualifier(QualifierSyntax node)
-		{
-		    this.DefaultVisit(node);
-		}
-			
-		
-			
-
-		public virtual void VisitIdentifierTokens(IdentifierTokensSyntax node)
+		public virtual void VisitIdentifier(IdentifierSyntax node)
 		{
 		    this.DefaultVisit(node);
 		}
@@ -677,7 +665,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		}
 			
 
-		public virtual void VisitSimpleQualifier(SimpleQualifierSyntax node)
+		public virtual void VisitSingleExpressionBlock1Alt2(SingleExpressionBlock1Alt2Syntax node)
 		{
 		    this.DefaultVisit(node);
 		}
@@ -709,7 +697,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		
 			
 
-		public virtual void VisitQualifierIdentifierBlock(QualifierIdentifierBlockSyntax node)
+		public virtual void VisitMainQualifierBlock(MainQualifierBlockSyntax node)
 		{
 		    this.DefaultVisit(node);
 		}
@@ -717,7 +705,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		
 			
 
-		public virtual void VisitSimpleQualifierSimpleIdentifierBlock(SimpleQualifierSimpleIdentifierBlockSyntax node)
+		public virtual void VisitSingleExpressionBlock1Alt2SimpleQualifierBlock(SingleExpressionBlock1Alt2SimpleQualifierBlockSyntax node)
 		{
 		    this.DefaultVisit(node);
 		}
@@ -848,11 +836,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 			
 		
 			
-		TResult VisitQualifier(QualifierSyntax node);
-			
-		
-			
-		TResult VisitIdentifierTokens(IdentifierTokensSyntax node);
+		TResult VisitIdentifier(IdentifierSyntax node);
 			
 		
 			
@@ -926,7 +910,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 			
 		TResult VisitTokens(TokensSyntax node);
 			
-		TResult VisitSimpleQualifier(SimpleQualifierSyntax node);
+		TResult VisitSingleExpressionBlock1Alt2(SingleExpressionBlock1Alt2Syntax node);
 			
 		
 			
@@ -942,11 +926,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 			
 		
 			
-		TResult VisitQualifierIdentifierBlock(QualifierIdentifierBlockSyntax node);
+		TResult VisitMainQualifierBlock(MainQualifierBlockSyntax node);
 			
 		
 			
-		TResult VisitSimpleQualifierSimpleIdentifierBlock(SimpleQualifierSimpleIdentifierBlockSyntax node);
+		TResult VisitSingleExpressionBlock1Alt2SimpleQualifierBlock(SingleExpressionBlock1Alt2SimpleQualifierBlockSyntax node);
 			
 		
     }
@@ -1226,15 +1210,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		
 			
 
-		public virtual TResult VisitQualifier(QualifierSyntax node)
-		{
-		    return this.DefaultVisit(node);
-		}
-			
-		
-			
-
-		public virtual TResult VisitIdentifierTokens(IdentifierTokensSyntax node)
+		public virtual TResult VisitIdentifier(IdentifierSyntax node)
 		{
 		    return this.DefaultVisit(node);
 		}
@@ -1388,7 +1364,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		}
 			
 
-		public virtual TResult VisitSimpleQualifier(SimpleQualifierSyntax node)
+		public virtual TResult VisitSingleExpressionBlock1Alt2(SingleExpressionBlock1Alt2Syntax node)
 		{
 		    return this.DefaultVisit(node);
 		}
@@ -1420,7 +1396,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		
 			
 
-		public virtual TResult VisitQualifierIdentifierBlock(QualifierIdentifierBlockSyntax node)
+		public virtual TResult VisitMainQualifierBlock(MainQualifierBlockSyntax node)
 		{
 		    return this.DefaultVisit(node);
 		}
@@ -1428,7 +1404,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		
 			
 
-		public virtual TResult VisitSimpleQualifierSimpleIdentifierBlock(SimpleQualifierSimpleIdentifierBlockSyntax node)
+		public virtual TResult VisitSingleExpressionBlock1Alt2SimpleQualifierBlock(SingleExpressionBlock1Alt2SimpleQualifierBlockSyntax node)
 		{
 		    return this.DefaultVisit(node);
 		}
@@ -1559,11 +1535,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 			
 		
 			
-		TResult VisitQualifier(QualifierSyntax node, TArg argument);
-			
-		
-			
-		TResult VisitIdentifierTokens(IdentifierTokensSyntax node, TArg argument);
+		TResult VisitIdentifier(IdentifierSyntax node, TArg argument);
 			
 		
 			
@@ -1637,7 +1609,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 			
 		TResult VisitTokens(TokensSyntax node, TArg argument);
 			
-		TResult VisitSimpleQualifier(SimpleQualifierSyntax node, TArg argument);
+		TResult VisitSingleExpressionBlock1Alt2(SingleExpressionBlock1Alt2Syntax node, TArg argument);
 			
 		
 			
@@ -1653,11 +1625,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 			
 		
 			
-		TResult VisitQualifierIdentifierBlock(QualifierIdentifierBlockSyntax node, TArg argument);
+		TResult VisitMainQualifierBlock(MainQualifierBlockSyntax node, TArg argument);
 			
 		
 			
-		TResult VisitSimpleQualifierSimpleIdentifierBlock(SimpleQualifierSimpleIdentifierBlockSyntax node, TArg argument);
+		TResult VisitSingleExpressionBlock1Alt2SimpleQualifierBlock(SingleExpressionBlock1Alt2SimpleQualifierBlockSyntax node, TArg argument);
 			
 		
     }
@@ -1937,15 +1909,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		
 			
 
-		public virtual TResult VisitQualifier(QualifierSyntax node, TArg argument)
-		{
-		    return this.DefaultVisit(node, argument);
-		}
-			
-		
-			
-
-		public virtual TResult VisitIdentifierTokens(IdentifierTokensSyntax node, TArg argument)
+		public virtual TResult VisitIdentifier(IdentifierSyntax node, TArg argument)
 		{
 		    return this.DefaultVisit(node, argument);
 		}
@@ -2099,7 +2063,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		}
 			
 
-		public virtual TResult VisitSimpleQualifier(SimpleQualifierSyntax node, TArg argument)
+		public virtual TResult VisitSingleExpressionBlock1Alt2(SingleExpressionBlock1Alt2Syntax node, TArg argument)
 		{
 		    return this.DefaultVisit(node, argument);
 		}
@@ -2131,7 +2095,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		
 			
 
-		public virtual TResult VisitQualifierIdentifierBlock(QualifierIdentifierBlockSyntax node, TArg argument)
+		public virtual TResult VisitMainQualifierBlock(MainQualifierBlockSyntax node, TArg argument)
 		{
 		    return this.DefaultVisit(node, argument);
 		}
@@ -2139,7 +2103,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		
 			
 
-		public virtual TResult VisitSimpleQualifierSimpleIdentifierBlock(SimpleQualifierSimpleIdentifierBlockSyntax node, TArg argument)
+		public virtual TResult VisitSingleExpressionBlock1Alt2SimpleQualifierBlock(SingleExpressionBlock1Alt2SimpleQualifierBlockSyntax node, TArg argument)
 		{
 		    return this.DefaultVisit(node, argument);
 		}
@@ -2166,7 +2130,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
  {
      var kNamespace = this.VisitToken(node.KNamespace);
      
-     var name = (QualifierSyntax)this.Visit(node.Name);
+     var qualifier = this.VisitList(node.Qualifier);
      
      var tSemicolon = this.VisitToken(node.TSemicolon);
      
@@ -2176,7 +2140,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
      
      var endOfFileToken = this.VisitToken(node.EndOfFileToken);
      
- 	return node.Update(kNamespace, name, tSemicolon, usingList, declarations, endOfFileToken);
+ 	return node.Update(kNamespace, qualifier, tSemicolon, usingList, declarations, endOfFileToken);
  }
 			
 		
@@ -2186,11 +2150,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
  {
      var kUsing = this.VisitToken(node.KUsing);
      
-     var namespaces = (QualifierSyntax)this.Visit(node.Namespaces);
+     var qualifier = this.VisitList(node.Qualifier);
      
      var tSemicolon = this.VisitToken(node.TSemicolon);
      
- 	return node.Update(kUsing, namespaces, tSemicolon);
+ 	return node.Update(kUsing, qualifier, tSemicolon);
  }
 			
 
@@ -2200,11 +2164,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
      
      var kMetamodel = this.VisitToken(node.KMetamodel);
      
-     var symbols = (QualifierSyntax)this.Visit(node.Symbols);
+     var qualifier = this.VisitList(node.Qualifier);
      
      var tSemicolon = this.VisitToken(node.TSemicolon);
      
- 	return node.Update(kUsing, kMetamodel, symbols, tSemicolon);
+ 	return node.Update(kUsing, kMetamodel, qualifier, tSemicolon);
  }
 			
 
@@ -2214,11 +2178,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
      
      var kSymbols = this.VisitToken(node.KSymbols);
      
-     var namespaces = (QualifierSyntax)this.Visit(node.Namespaces);
+     var qualifier = this.VisitList(node.Qualifier);
      
      var tSemicolon = this.VisitToken(node.TSemicolon);
      
- 	return node.Update(kUsing, kSymbols, namespaces, tSemicolon);
+ 	return node.Update(kUsing, kSymbols, qualifier, tSemicolon);
  }
 			
 		
@@ -2526,13 +2490,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
  {
      var tLBracket = this.VisitToken(node.TLBracket);
      
-     var attributeClass = (QualifierSyntax)this.Visit(node.AttributeClass);
+     var qualifier = this.VisitList(node.Qualifier);
      
      var annotationArguments = (AnnotationArgumentsSyntax)this.Visit(node.AnnotationArguments);
      
      var tRBracket = this.VisitToken(node.TRBracket);
      
- 	return node.Update(tLBracket, attributeClass, annotationArguments, tRBracket);
+ 	return node.Update(tLBracket, qualifier, annotationArguments, tRBracket);
  }
 			
 		
@@ -2542,13 +2506,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
  {
      var tLBracket = this.VisitToken(node.TLBracket);
      
-     var attributeClass = (QualifierSyntax)this.Visit(node.AttributeClass);
+     var qualifier = this.VisitList(node.Qualifier);
      
      var annotationArguments = (AnnotationArgumentsSyntax)this.Visit(node.AnnotationArguments);
      
      var tRBracket = this.VisitToken(node.TRBracket);
      
- 	return node.Update(tLBracket, attributeClass, annotationArguments, tRBracket);
+ 	return node.Update(tLBracket, qualifier, annotationArguments, tRBracket);
  }
 			
 		
@@ -2608,7 +2572,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 
         public virtual SyntaxNode VisitReturnTypeQualifierAlt2(ReturnTypeQualifierAlt2Syntax node)
  {
-     var qualifier = (QualifierSyntax)this.Visit(node.Qualifier);
+     var qualifier = this.VisitList(node.Qualifier);
      
  	return node.Update(qualifier);
  }
@@ -2626,19 +2590,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		
 			
 
-        public virtual SyntaxNode VisitQualifier(QualifierSyntax node)
- {
-     var identifier1 = (IdentifierSyntax)this.Visit(node.Identifier1);
-     
-     var identifier2 = this.VisitList(node.Identifier2);
-     
- 	return node.Update(identifier1, identifier2);
- }
-			
-		
-			
-
-        public virtual SyntaxNode VisitIdentifierTokens(IdentifierTokensSyntax node)
+        public virtual SyntaxNode VisitIdentifier(IdentifierSyntax node)
  {
      var token = this.VisitToken(node.Token);
      
@@ -2876,13 +2828,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
  }
 			
 
-        public virtual SyntaxNode VisitSimpleQualifier(SimpleQualifierSyntax node)
+        public virtual SyntaxNode VisitSingleExpressionBlock1Alt2(SingleExpressionBlock1Alt2Syntax node)
  {
-     var simpleIdentifier1 = (SimpleIdentifierSyntax)this.Visit(node.SimpleIdentifier1);
+     var simpleQualifier = this.VisitList(node.SimpleQualifier);
      
-     var simpleIdentifier2 = this.VisitList(node.SimpleIdentifier2);
-     
- 	return node.Update(simpleIdentifier1, simpleIdentifier2);
+ 	return node.Update(simpleQualifier);
  }
 			
 		
@@ -2924,7 +2874,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		
 			
 
-        public virtual SyntaxNode VisitQualifierIdentifierBlock(QualifierIdentifierBlockSyntax node)
+        public virtual SyntaxNode VisitMainQualifierBlock(MainQualifierBlockSyntax node)
  {
      var tDot = this.VisitToken(node.TDot);
      
@@ -2936,7 +2886,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		
 			
 
-        public virtual SyntaxNode VisitSimpleQualifierSimpleIdentifierBlock(SimpleQualifierSimpleIdentifierBlockSyntax node)
+        public virtual SyntaxNode VisitSingleExpressionBlock1Alt2SimpleQualifierBlock(SingleExpressionBlock1Alt2SimpleQualifierBlockSyntax node)
  {
      var tDot = this.VisitToken(node.TDot);
      
