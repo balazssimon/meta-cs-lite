@@ -29,60 +29,89 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
          this.Begin(__rootAnnot, node);
          try
          {
-             var __annot0 = new MetaDslx.CodeAnalysis.Binding.DefineBinder(type: typeof(MetaDslx.Bootstrap.MetaCompiler.Model.Namespace));
-  this.Begin(__annot0, node);
+             var __annot3 = new MetaDslx.CodeAnalysis.Binding.DefineBinder(type: typeof(MetaDslx.Bootstrap.MetaCompiler.Model.Namespace));
+  this.Begin(__annot3, node);
   try
   {
           
        
-   var qualifierList = node.Qualifier;
-   for (var qualifierIndex = 0; qualifierIndex < qualifierList.Count; ++qualifierIndex)
+       
+   var __annot2 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Name");
+   this.Begin(__annot2, node.Qualifier);
+   try
    {
-       bool __itemHandled = false;
-       bool __sepHandled = false;
-       
-       
-       
-       
-       
-       
-       
-       if (qualifierIndex == 0)
-       {
-           
+       var __annot1 = new MetaDslx.CodeAnalysis.Binding.NameBinder(qualifierProperty: "Declarations");
+    this.Begin(__annot1, node.Qualifier);
+    try
+    {
+        var __annot0 = new MetaDslx.CodeAnalysis.Binding.QualifierBinder();
+     this.Begin(__annot0, node.Qualifier);
+     try
+     {
+         var qualifierList = node.Qualifier;
+      for (var qualifierIndex = 0; qualifierIndex < qualifierList.Count; ++qualifierIndex)
+      {
+          bool __itemHandled = false;
+          bool __sepHandled = false;
+          
+          
+          
+          
+          
+          
+          
+          if (qualifierIndex == 0)
+          {
+              
+                  
                
-            
-        
-    this.Visit(node.Qualifier[qualifierIndex]);
-        
-        
-           __itemHandled = true;
            
-       }
+       this.Visit(node.Qualifier[qualifierIndex]);
            
-       
-       
-       if (!__itemHandled && qualifierIndex < node.Qualifier.Count)
-       {
            
+              __itemHandled = true;
+              
+          }
+              
+          
+          
+          if (!__itemHandled && qualifierIndex < node.Qualifier.Count)
+          {
+              
+                  
                
-            
-        
-    this.Visit(node.Qualifier[qualifierIndex]);
-        
-        
-       }
-       if (!__sepHandled && qualifierIndex < node.Qualifier.SeparatorCount)
-       {
            
+       this.Visit(node.Qualifier[qualifierIndex]);
+           
+           
+          }
+          if (!__sepHandled && qualifierIndex < node.Qualifier.SeparatorCount)
+          {
+              
+                  
                
-            
-        
-    //this.VisitToken(node.Qualifier.GetSeparator(qualifierIndex));
-        
-        
-       }
+           
+       //this.VisitToken(node.Qualifier.GetSeparator(qualifierIndex));
+           
+           
+          }
+      }
+     }
+     finally
+     {
+         this.End(__annot0);
+     }
+    }
+    finally
+    {
+        this.End(__annot1);
+    }
    }
+   finally
+   {
+       this.End(__annot2);
+   }
+       
        
        
        
@@ -101,6 +130,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
        
        
        
+       
            
        
    this.Visit(node.Declarations);
@@ -111,7 +141,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
   }
   finally
   {
-      this.End(__annot0);
+      this.End(__annot3);
   }
          }
          finally
@@ -121,60 +151,89 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
      }
      else
      {
-     	var __annot0 = new MetaDslx.CodeAnalysis.Binding.DefineBinder(type: typeof(MetaDslx.Bootstrap.MetaCompiler.Model.Namespace));
-  this.Begin(__annot0, node);
+     	var __annot3 = new MetaDslx.CodeAnalysis.Binding.DefineBinder(type: typeof(MetaDslx.Bootstrap.MetaCompiler.Model.Namespace));
+  this.Begin(__annot3, node);
   try
   {
           
        
-   var qualifierList = node.Qualifier;
-   for (var qualifierIndex = 0; qualifierIndex < qualifierList.Count; ++qualifierIndex)
+       
+   var __annot2 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Name");
+   this.Begin(__annot2, node.Qualifier);
+   try
    {
-       bool __itemHandled = false;
-       bool __sepHandled = false;
-       
-       
-       
-       
-       
-       
-       
-       if (qualifierIndex == 0)
-       {
-           
+       var __annot1 = new MetaDslx.CodeAnalysis.Binding.NameBinder(qualifierProperty: "Declarations");
+    this.Begin(__annot1, node.Qualifier);
+    try
+    {
+        var __annot0 = new MetaDslx.CodeAnalysis.Binding.QualifierBinder();
+     this.Begin(__annot0, node.Qualifier);
+     try
+     {
+         var qualifierList = node.Qualifier;
+      for (var qualifierIndex = 0; qualifierIndex < qualifierList.Count; ++qualifierIndex)
+      {
+          bool __itemHandled = false;
+          bool __sepHandled = false;
+          
+          
+          
+          
+          
+          
+          
+          if (qualifierIndex == 0)
+          {
+              
+                  
                
-            
-        
-    this.Visit(node.Qualifier[qualifierIndex]);
-        
-        
-           __itemHandled = true;
            
-       }
+       this.Visit(node.Qualifier[qualifierIndex]);
            
-       
-       
-       if (!__itemHandled && qualifierIndex < node.Qualifier.Count)
-       {
            
+              __itemHandled = true;
+              
+          }
+              
+          
+          
+          if (!__itemHandled && qualifierIndex < node.Qualifier.Count)
+          {
+              
+                  
                
-            
-        
-    this.Visit(node.Qualifier[qualifierIndex]);
-        
-        
-       }
-       if (!__sepHandled && qualifierIndex < node.Qualifier.SeparatorCount)
-       {
            
+       this.Visit(node.Qualifier[qualifierIndex]);
+           
+           
+          }
+          if (!__sepHandled && qualifierIndex < node.Qualifier.SeparatorCount)
+          {
+              
+                  
                
-            
-        
-    //this.VisitToken(node.Qualifier.GetSeparator(qualifierIndex));
-        
-        
-       }
+           
+       //this.VisitToken(node.Qualifier.GetSeparator(qualifierIndex));
+           
+           
+          }
+      }
+     }
+     finally
+     {
+         this.End(__annot0);
+     }
+    }
+    finally
+    {
+        this.End(__annot1);
+    }
    }
+   finally
+   {
+       this.End(__annot2);
+   }
+       
        
        
        
@@ -193,6 +252,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
        
        
        
+       
            
        
    this.Visit(node.Declarations);
@@ -203,7 +263,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
   }
   finally
   {
-      this.End(__annot0);
+      this.End(__annot3);
   }
      }
      
@@ -215,66 +275,94 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
         public virtual void VisitUsingAlt1(UsingAlt1Syntax node)
  {
      
- 	var __annot0 = new MetaDslx.CodeAnalysis.Binding.DefineBinder(type: typeof(MetaDslx.CodeAnalysis.Symbols.ImportSymbol));
- 	this.Begin(__annot0, node);
+ 	var __annot3 = new MetaDslx.CodeAnalysis.Binding.DefineBinder(type: typeof(MetaDslx.CodeAnalysis.Symbols.ImportSymbol));
+ 	this.Begin(__annot3, node);
  	try
  	{
  	        
  	     
- 	 var qualifierList = node.Qualifier;
- 	 for (var qualifierIndex = 0; qualifierIndex < qualifierList.Count; ++qualifierIndex)
+ 	     
+ 	 var __annot2 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Namespaces");
+ 	 this.Begin(__annot2, node.Qualifier);
+ 	 try
  	 {
- 	     bool __itemHandled = false;
- 	     bool __sepHandled = false;
- 	     
- 	     
- 	     
- 	     
- 	     
- 	     
- 	     
- 	     if (qualifierIndex == 0)
- 	     {
- 	         
+ 	     var __annot1 = new MetaDslx.CodeAnalysis.Binding.UseBinder(types: ImmutableArray.Create<System.Type>(typeof(MetaDslx.CodeAnalysis.Symbols.NamespaceSymbol)));
+ 	  this.Begin(__annot1, node.Qualifier);
+ 	  try
+ 	  {
+ 	      var __annot0 = new MetaDslx.CodeAnalysis.Binding.QualifierBinder();
+ 	   this.Begin(__annot0, node.Qualifier);
+ 	   try
+ 	   {
+ 	       var qualifierList = node.Qualifier;
+ 	    for (var qualifierIndex = 0; qualifierIndex < qualifierList.Count; ++qualifierIndex)
+ 	    {
+ 	        bool __itemHandled = false;
+ 	        bool __sepHandled = false;
+ 	        
+ 	        
+ 	        
+ 	        
+ 	        
+ 	        
+ 	        
+ 	        if (qualifierIndex == 0)
+ 	        {
+ 	            
+ 	                
  	             
- 	          
- 	      
- 	  this.Visit(node.Qualifier[qualifierIndex]);
- 	      
- 	      
- 	         __itemHandled = true;
  	         
- 	     }
+ 	     this.Visit(node.Qualifier[qualifierIndex]);
  	         
- 	     
- 	     
- 	     if (!__itemHandled && qualifierIndex < node.Qualifier.Count)
- 	     {
  	         
+ 	            __itemHandled = true;
+ 	            
+ 	        }
+ 	            
+ 	        
+ 	        
+ 	        if (!__itemHandled && qualifierIndex < node.Qualifier.Count)
+ 	        {
+ 	            
+ 	                
  	             
- 	          
- 	      
- 	  this.Visit(node.Qualifier[qualifierIndex]);
- 	      
- 	      
- 	     }
- 	     if (!__sepHandled && qualifierIndex < node.Qualifier.SeparatorCount)
- 	     {
  	         
+ 	     this.Visit(node.Qualifier[qualifierIndex]);
+ 	         
+ 	         
+ 	        }
+ 	        if (!__sepHandled && qualifierIndex < node.Qualifier.SeparatorCount)
+ 	        {
+ 	            
+ 	                
  	             
- 	          
- 	      
- 	  //this.VisitToken(node.Qualifier.GetSeparator(qualifierIndex));
- 	      
- 	      
- 	     }
+ 	         
+ 	     //this.VisitToken(node.Qualifier.GetSeparator(qualifierIndex));
+ 	         
+ 	         
+ 	        }
+ 	    }
+ 	   }
+ 	   finally
+ 	   {
+ 	       this.End(__annot0);
+ 	   }
+ 	  }
+ 	  finally
+ 	  {
+ 	      this.End(__annot1);
+ 	  }
+ 	 }
+ 	 finally
+ 	 {
+ 	     this.End(__annot2);
  	 }
  	     
  	     
  	}
  	finally
  	{
- 	    this.End(__annot0);
+ 	    this.End(__annot3);
  	}
      
  }
@@ -283,66 +371,94 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
         public virtual void VisitUsingMetaModel(UsingMetaModelSyntax node)
  {
      
- 	var __annot0 = new MetaDslx.CodeAnalysis.Binding.DefineBinder(type: typeof(MetaDslx.CodeAnalysis.Symbols.ImportMetaModelSymbol));
- 	this.Begin(__annot0, node);
+ 	var __annot3 = new MetaDslx.CodeAnalysis.Binding.DefineBinder(type: typeof(MetaDslx.CodeAnalysis.Symbols.ImportMetaModelSymbol));
+ 	this.Begin(__annot3, node);
  	try
  	{
  	        
  	     
- 	 var qualifierList = node.Qualifier;
- 	 for (var qualifierIndex = 0; qualifierIndex < qualifierList.Count; ++qualifierIndex)
+ 	     
+ 	 var __annot2 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Symbols");
+ 	 this.Begin(__annot2, node.Qualifier);
+ 	 try
  	 {
- 	     bool __itemHandled = false;
- 	     bool __sepHandled = false;
- 	     
- 	     
- 	     
- 	     
- 	     
- 	     
- 	     
- 	     if (qualifierIndex == 0)
- 	     {
- 	         
+ 	     var __annot1 = new MetaDslx.CodeAnalysis.Binding.UseBinder(types: ImmutableArray.Create<System.Type>(typeof(MetaDslx.CodeAnalysis.Symbols.DeclarationSymbol)));
+ 	  this.Begin(__annot1, node.Qualifier);
+ 	  try
+ 	  {
+ 	      var __annot0 = new MetaDslx.CodeAnalysis.Binding.QualifierBinder();
+ 	   this.Begin(__annot0, node.Qualifier);
+ 	   try
+ 	   {
+ 	       var qualifierList = node.Qualifier;
+ 	    for (var qualifierIndex = 0; qualifierIndex < qualifierList.Count; ++qualifierIndex)
+ 	    {
+ 	        bool __itemHandled = false;
+ 	        bool __sepHandled = false;
+ 	        
+ 	        
+ 	        
+ 	        
+ 	        
+ 	        
+ 	        
+ 	        if (qualifierIndex == 0)
+ 	        {
+ 	            
+ 	                
  	             
- 	          
- 	      
- 	  this.Visit(node.Qualifier[qualifierIndex]);
- 	      
- 	      
- 	         __itemHandled = true;
  	         
- 	     }
+ 	     this.Visit(node.Qualifier[qualifierIndex]);
  	         
- 	     
- 	     
- 	     if (!__itemHandled && qualifierIndex < node.Qualifier.Count)
- 	     {
  	         
+ 	            __itemHandled = true;
+ 	            
+ 	        }
+ 	            
+ 	        
+ 	        
+ 	        if (!__itemHandled && qualifierIndex < node.Qualifier.Count)
+ 	        {
+ 	            
+ 	                
  	             
- 	          
- 	      
- 	  this.Visit(node.Qualifier[qualifierIndex]);
- 	      
- 	      
- 	     }
- 	     if (!__sepHandled && qualifierIndex < node.Qualifier.SeparatorCount)
- 	     {
  	         
+ 	     this.Visit(node.Qualifier[qualifierIndex]);
+ 	         
+ 	         
+ 	        }
+ 	        if (!__sepHandled && qualifierIndex < node.Qualifier.SeparatorCount)
+ 	        {
+ 	            
+ 	                
  	             
- 	          
- 	      
- 	  //this.VisitToken(node.Qualifier.GetSeparator(qualifierIndex));
- 	      
- 	      
- 	     }
+ 	         
+ 	     //this.VisitToken(node.Qualifier.GetSeparator(qualifierIndex));
+ 	         
+ 	         
+ 	        }
+ 	    }
+ 	   }
+ 	   finally
+ 	   {
+ 	       this.End(__annot0);
+ 	   }
+ 	  }
+ 	  finally
+ 	  {
+ 	      this.End(__annot1);
+ 	  }
+ 	 }
+ 	 finally
+ 	 {
+ 	     this.End(__annot2);
  	 }
  	     
  	     
  	}
  	finally
  	{
- 	    this.End(__annot0);
+ 	    this.End(__annot3);
  	}
      
  }
@@ -351,66 +467,94 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
         public virtual void VisitUsingSymbols(UsingSymbolsSyntax node)
  {
      
- 	var __annot0 = new MetaDslx.CodeAnalysis.Binding.DefineBinder(type: typeof(MetaDslx.CodeAnalysis.Symbols.ImportSymbolModelSymbol));
- 	this.Begin(__annot0, node);
+ 	var __annot3 = new MetaDslx.CodeAnalysis.Binding.DefineBinder(type: typeof(MetaDslx.CodeAnalysis.Symbols.ImportSymbolModelSymbol));
+ 	this.Begin(__annot3, node);
  	try
  	{
  	        
  	     
- 	 var qualifierList = node.Qualifier;
- 	 for (var qualifierIndex = 0; qualifierIndex < qualifierList.Count; ++qualifierIndex)
+ 	     
+ 	 var __annot2 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Namespaces");
+ 	 this.Begin(__annot2, node.Qualifier);
+ 	 try
  	 {
- 	     bool __itemHandled = false;
- 	     bool __sepHandled = false;
- 	     
- 	     
- 	     
- 	     
- 	     
- 	     
- 	     
- 	     if (qualifierIndex == 0)
- 	     {
- 	         
+ 	     var __annot1 = new MetaDslx.CodeAnalysis.Binding.UseBinder(types: ImmutableArray.Create<System.Type>(typeof(MetaDslx.CodeAnalysis.Symbols.NamespaceSymbol)));
+ 	  this.Begin(__annot1, node.Qualifier);
+ 	  try
+ 	  {
+ 	      var __annot0 = new MetaDslx.CodeAnalysis.Binding.QualifierBinder();
+ 	   this.Begin(__annot0, node.Qualifier);
+ 	   try
+ 	   {
+ 	       var qualifierList = node.Qualifier;
+ 	    for (var qualifierIndex = 0; qualifierIndex < qualifierList.Count; ++qualifierIndex)
+ 	    {
+ 	        bool __itemHandled = false;
+ 	        bool __sepHandled = false;
+ 	        
+ 	        
+ 	        
+ 	        
+ 	        
+ 	        
+ 	        
+ 	        if (qualifierIndex == 0)
+ 	        {
+ 	            
+ 	                
  	             
- 	          
- 	      
- 	  this.Visit(node.Qualifier[qualifierIndex]);
- 	      
- 	      
- 	         __itemHandled = true;
  	         
- 	     }
+ 	     this.Visit(node.Qualifier[qualifierIndex]);
  	         
- 	     
- 	     
- 	     if (!__itemHandled && qualifierIndex < node.Qualifier.Count)
- 	     {
  	         
+ 	            __itemHandled = true;
+ 	            
+ 	        }
+ 	            
+ 	        
+ 	        
+ 	        if (!__itemHandled && qualifierIndex < node.Qualifier.Count)
+ 	        {
+ 	            
+ 	                
  	             
- 	          
- 	      
- 	  this.Visit(node.Qualifier[qualifierIndex]);
- 	      
- 	      
- 	     }
- 	     if (!__sepHandled && qualifierIndex < node.Qualifier.SeparatorCount)
- 	     {
  	         
+ 	     this.Visit(node.Qualifier[qualifierIndex]);
+ 	         
+ 	         
+ 	        }
+ 	        if (!__sepHandled && qualifierIndex < node.Qualifier.SeparatorCount)
+ 	        {
+ 	            
+ 	                
  	             
- 	          
- 	      
- 	  //this.VisitToken(node.Qualifier.GetSeparator(qualifierIndex));
- 	      
- 	      
- 	     }
+ 	         
+ 	     //this.VisitToken(node.Qualifier.GetSeparator(qualifierIndex));
+ 	         
+ 	         
+ 	        }
+ 	    }
+ 	   }
+ 	   finally
+ 	   {
+ 	       this.End(__annot0);
+ 	   }
+ 	  }
+ 	  finally
+ 	  {
+ 	      this.End(__annot1);
+ 	  }
+ 	 }
+ 	 finally
+ 	 {
+ 	     this.End(__annot2);
  	 }
  	     
  	     
  	}
  	finally
  	{
- 	    this.End(__annot0);
+ 	    this.End(__annot3);
  	}
      
  }
@@ -421,11 +565,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
         public virtual void VisitDeclarations(DeclarationsSyntax node)
  {
      
- 	var __annot2 = new MetaDslx.CodeAnalysis.Binding.ScopeBinder();
- 	this.Begin(__annot2, node);
+ 	var __annot3 = new MetaDslx.CodeAnalysis.Binding.ScopeBinder();
+ 	this.Begin(__annot3, node);
  	try
  	{
  	        
+ 	     
  	     
  	     
  	         
@@ -445,32 +590,42 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
  	     
  	     
  	     
- 	 var declarations2List = node.Declarations2;
- 	 for (var declarations2Index = 0; declarations2Index < declarations2List.Count; ++declarations2Index)
- 	 {
  	     
- 	         
- 	          
- 	  var __annot1 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Declarations");
- 	  this.Begin(__annot1, node.Declarations2[declarations2Index]);
- 	  try
+ 	 var __annot2 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Declarations");
+ 	 this.Begin(__annot2, node.Declarations2);
+ 	 try
+ 	 {
+ 	     var declarations2List = node.Declarations2;
+ 	  for (var declarations2Index = 0; declarations2Index < declarations2List.Count; ++declarations2Index)
  	  {
+ 	      
  	          
- 	   this.Visit(node.Declarations2[declarations2Index]);
+ 	           
+ 	   var __annot1 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Declarations");
+ 	   this.Begin(__annot1, node.Declarations2[declarations2Index]);
+ 	   try
+ 	   {
+ 	           
+ 	    this.Visit(node.Declarations2[declarations2Index]);
+ 	        
+ 	   }
+ 	   finally
+ 	   {
+ 	       this.End(__annot1);
+ 	   }
  	       
  	  }
- 	  finally
- 	  {
- 	      this.End(__annot1);
- 	  }
- 	      
+ 	 }
+ 	 finally
+ 	 {
+ 	     this.End(__annot2);
  	 }
  	     
  	     
  	}
  	finally
  	{
- 	    this.End(__annot2);
+ 	    this.End(__annot3);
  	}
      
  }
@@ -488,6 +643,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
  	        
  	     
  	     
+ 	     
  	         
  	 var __annot0 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Name");
  	 this.Begin(__annot0, node.Name);
@@ -501,6 +657,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
  	 {
  	     this.End(__annot0);
  	 }
+ 	     
  	     
  	     
  	     
@@ -536,47 +693,57 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
         public virtual void VisitGrammar(GrammarSyntax node)
  {
      
- 	var __annot2 = new MetaDslx.CodeAnalysis.Binding.DefineBinder(type: typeof(MetaDslx.Bootstrap.MetaCompiler.Model.Grammar));
- 	this.Begin(__annot2, node);
+ 	var __annot3 = new MetaDslx.CodeAnalysis.Binding.DefineBinder(type: typeof(MetaDslx.Bootstrap.MetaCompiler.Model.Grammar));
+ 	this.Begin(__annot3, node);
  	try
  	{
- 	    var __annot1 = new MetaDslx.CodeAnalysis.Binding.ScopeBinder();
- 	 this.Begin(__annot1, node);
+ 	    var __annot2 = new MetaDslx.CodeAnalysis.Binding.ScopeBinder();
+ 	 this.Begin(__annot2, node);
  	 try
  	 {
  	         
  	      
- 	  var grammarRulesList = node.GrammarRules;
- 	  for (var grammarRulesIndex = 0; grammarRulesIndex < grammarRulesList.Count; ++grammarRulesIndex)
- 	  {
  	      
- 	          
- 	           
- 	   var __annot0 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "GrammarRules");
- 	   this.Begin(__annot0, node.GrammarRules[grammarRulesIndex]);
- 	   try
+ 	  var __annot1 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "GrammarRules");
+ 	  this.Begin(__annot1, node.GrammarRules);
+ 	  try
+ 	  {
+ 	      var grammarRulesList = node.GrammarRules;
+ 	   for (var grammarRulesIndex = 0; grammarRulesIndex < grammarRulesList.Count; ++grammarRulesIndex)
  	   {
+ 	       
  	           
- 	    this.Visit(node.GrammarRules[grammarRulesIndex]);
+ 	            
+ 	    var __annot0 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "GrammarRules");
+ 	    this.Begin(__annot0, node.GrammarRules[grammarRulesIndex]);
+ 	    try
+ 	    {
+ 	            
+ 	     this.Visit(node.GrammarRules[grammarRulesIndex]);
+ 	         
+ 	    }
+ 	    finally
+ 	    {
+ 	        this.End(__annot0);
+ 	    }
  	        
  	   }
- 	   finally
- 	   {
- 	       this.End(__annot0);
- 	   }
- 	       
+ 	  }
+ 	  finally
+ 	  {
+ 	      this.End(__annot1);
  	  }
  	      
  	      
  	 }
  	 finally
  	 {
- 	     this.End(__annot1);
+ 	     this.End(__annot2);
  	 }
  	}
  	finally
  	{
- 	    this.End(__annot2);
+ 	    this.End(__annot3);
  	}
      
  }
@@ -587,6 +754,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
         public virtual void VisitGrammarRuleAlt1(GrammarRuleAlt1Syntax node)
  {
      
+ 	    
  	    
  	    
  	    
@@ -604,44 +772,186 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
         public virtual void VisitBlock(BlockSyntax node)
  {
      
- 	var __annot4 = new MetaDslx.CodeAnalysis.Binding.DefineBinder(type: typeof(MetaDslx.Bootstrap.MetaCompiler.Model.Block));
- 	this.Begin(__annot4, node);
+ 	var __annot5 = new MetaDslx.CodeAnalysis.Binding.DefineBinder(type: typeof(MetaDslx.Bootstrap.MetaCompiler.Model.Block));
+ 	this.Begin(__annot5, node);
  	try
  	{
  	        
  	     
- 	 var annotations1List = node.Annotations1;
- 	 for (var annotations1Index = 0; annotations1Index < annotations1List.Count; ++annotations1Index)
- 	 {
  	     
- 	         
- 	          
- 	  var __annot0 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Annotations");
- 	  this.Begin(__annot0, node.Annotations1[annotations1Index]);
- 	  try
+ 	 var __annot1 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Annotations");
+ 	 this.Begin(__annot1, node.Annotations1);
+ 	 try
+ 	 {
+ 	     var annotations1List = node.Annotations1;
+ 	  for (var annotations1Index = 0; annotations1Index < annotations1List.Count; ++annotations1Index)
  	  {
+ 	      
  	          
- 	   this.Visit(node.Annotations1[annotations1Index]);
+ 	           
+ 	   var __annot0 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Annotations");
+ 	   this.Begin(__annot0, node.Annotations1[annotations1Index]);
+ 	   try
+ 	   {
+ 	           
+ 	    this.Visit(node.Annotations1[annotations1Index]);
+ 	        
+ 	   }
+ 	   finally
+ 	   {
+ 	       this.End(__annot0);
+ 	   }
  	       
  	  }
- 	  finally
- 	  {
- 	      this.End(__annot0);
- 	  }
- 	      
+ 	 }
+ 	 finally
+ 	 {
+ 	     this.End(__annot1);
  	 }
  	     
  	     
  	     
  	     
+ 	     
  	         
- 	 var __annot1 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Name");
- 	 this.Begin(__annot1, node.Name);
+ 	 var __annot2 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Name");
+ 	 this.Begin(__annot2, node.Name);
  	 try
  	 {
  	         
  	  this.Visit(node.Name);
  	      
+ 	 }
+ 	 finally
+ 	 {
+ 	     this.End(__annot2);
+ 	 }
+ 	     
+ 	     
+ 	     
+ 	     
+ 	     
+ 	     
+ 	         
+ 	     
+ 	 this.Visit(node.Block);
+ 	     
+ 	     
+ 	     
+ 	     
+ 	     
+ 	     
+ 	 var alternativesList = node.Alternatives;
+ 	 for (var alternativesIndex = 0; alternativesIndex < alternativesList.Count; ++alternativesIndex)
+ 	 {
+ 	     bool __itemHandled = false;
+ 	     bool __sepHandled = false;
+ 	     
+ 	     
+ 	     
+ 	     
+ 	     
+ 	     
+ 	     
+ 	     if (alternativesIndex == 0)
+ 	     {
+ 	         
+ 	             
+ 	          
+ 	  var __annot3 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Alternatives");
+ 	  this.Begin(__annot3, node.Alternatives[alternativesIndex]);
+ 	  try
+ 	  {
+ 	          
+ 	   this.Visit(node.Alternatives[alternativesIndex]);
+ 	       
+ 	  }
+ 	  finally
+ 	  {
+ 	      this.End(__annot3);
+ 	  }
+ 	      
+ 	         __itemHandled = true;
+ 	         
+ 	     }
+ 	         
+ 	     
+ 	     
+ 	     if (!__itemHandled && alternativesIndex < node.Alternatives.Count)
+ 	     {
+ 	         
+ 	             
+ 	          
+ 	  var __annot4 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Alternatives");
+ 	  this.Begin(__annot4, node.Alternatives[alternativesIndex]);
+ 	  try
+ 	  {
+ 	          
+ 	   this.Visit(node.Alternatives[alternativesIndex]);
+ 	       
+ 	  }
+ 	  finally
+ 	  {
+ 	      this.End(__annot4);
+ 	  }
+ 	      
+ 	     }
+ 	     if (!__sepHandled && alternativesIndex < node.Alternatives.SeparatorCount)
+ 	     {
+ 	         
+ 	             
+ 	          
+ 	      
+ 	  //this.VisitToken(node.Alternatives.GetSeparator(alternativesIndex));
+ 	      
+ 	      
+ 	     }
+ 	 }
+ 	     
+ 	     
+ 	}
+ 	finally
+ 	{
+ 	    this.End(__annot5);
+ 	}
+     
+ }
+			
+
+        public virtual void VisitToken(TokenSyntax node)
+ {
+     
+ 	var __annot4 = new MetaDslx.CodeAnalysis.Binding.DefineBinder(type: typeof(MetaDslx.Bootstrap.MetaCompiler.Model.Token));
+ 	this.Begin(__annot4, node);
+ 	try
+ 	{
+ 	        
+ 	     
+ 	     
+ 	 var __annot1 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Annotations");
+ 	 this.Begin(__annot1, node.Annotations1);
+ 	 try
+ 	 {
+ 	     var annotations1List = node.Annotations1;
+ 	  for (var annotations1Index = 0; annotations1Index < annotations1List.Count; ++annotations1Index)
+ 	  {
+ 	      
+ 	          
+ 	           
+ 	   var __annot0 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Annotations");
+ 	   this.Begin(__annot0, node.Annotations1[annotations1Index]);
+ 	   try
+ 	   {
+ 	           
+ 	    this.Visit(node.Annotations1[annotations1Index]);
+ 	        
+ 	   }
+ 	   finally
+ 	   {
+ 	       this.End(__annot0);
+ 	   }
+ 	       
+ 	  }
  	 }
  	 finally
  	 {
@@ -655,6 +965,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
  	         
  	     
  	 this.Visit(node.Block);
+ 	     
  	     
  	     
  	     
@@ -737,124 +1048,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
  }
 			
 
-        public virtual void VisitToken(TokenSyntax node)
- {
-     
- 	var __annot3 = new MetaDslx.CodeAnalysis.Binding.DefineBinder(type: typeof(MetaDslx.Bootstrap.MetaCompiler.Model.Token));
- 	this.Begin(__annot3, node);
- 	try
- 	{
- 	        
- 	     
- 	 var annotations1List = node.Annotations1;
- 	 for (var annotations1Index = 0; annotations1Index < annotations1List.Count; ++annotations1Index)
- 	 {
- 	     
- 	         
- 	          
- 	  var __annot0 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Annotations");
- 	  this.Begin(__annot0, node.Annotations1[annotations1Index]);
- 	  try
- 	  {
- 	          
- 	   this.Visit(node.Annotations1[annotations1Index]);
- 	       
- 	  }
- 	  finally
- 	  {
- 	      this.End(__annot0);
- 	  }
- 	      
- 	 }
- 	     
- 	     
- 	     
- 	     
- 	         
- 	     
- 	 this.Visit(node.Block);
- 	     
- 	     
- 	     
- 	     
- 	     
- 	 var alternativesList = node.Alternatives;
- 	 for (var alternativesIndex = 0; alternativesIndex < alternativesList.Count; ++alternativesIndex)
- 	 {
- 	     bool __itemHandled = false;
- 	     bool __sepHandled = false;
- 	     
- 	     
- 	     
- 	     
- 	     
- 	     
- 	     
- 	     if (alternativesIndex == 0)
- 	     {
- 	         
- 	             
- 	          
- 	  var __annot1 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Alternatives");
- 	  this.Begin(__annot1, node.Alternatives[alternativesIndex]);
- 	  try
- 	  {
- 	          
- 	   this.Visit(node.Alternatives[alternativesIndex]);
- 	       
- 	  }
- 	  finally
- 	  {
- 	      this.End(__annot1);
- 	  }
- 	      
- 	         __itemHandled = true;
- 	         
- 	     }
- 	         
- 	     
- 	     
- 	     if (!__itemHandled && alternativesIndex < node.Alternatives.Count)
- 	     {
- 	         
- 	             
- 	          
- 	  var __annot2 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Alternatives");
- 	  this.Begin(__annot2, node.Alternatives[alternativesIndex]);
- 	  try
- 	  {
- 	          
- 	   this.Visit(node.Alternatives[alternativesIndex]);
- 	       
- 	  }
- 	  finally
- 	  {
- 	      this.End(__annot2);
- 	  }
- 	      
- 	     }
- 	     if (!__sepHandled && alternativesIndex < node.Alternatives.SeparatorCount)
- 	     {
- 	         
- 	             
- 	          
- 	      
- 	  //this.VisitToken(node.Alternatives.GetSeparator(alternativesIndex));
- 	      
- 	      
- 	     }
- 	 }
- 	     
- 	     
- 	}
- 	finally
- 	{
- 	    this.End(__annot3);
- 	}
-     
- }
-			
-
         public virtual void VisitFragment(FragmentSyntax node)
  {
      
@@ -863,6 +1056,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
  	try
  	{
  	        
+ 	     
  	     
  	     
  	         
@@ -878,6 +1072,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
  	 {
  	     this.End(__annot0);
  	 }
+ 	     
  	     
  	     
  	     
@@ -964,32 +1159,43 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
         public virtual void VisitRule(RuleSyntax node)
  {
      
- 	var __annot3 = new MetaDslx.CodeAnalysis.Binding.DefineBinder(type: typeof(MetaDslx.Bootstrap.MetaCompiler.Model.Rule));
- 	this.Begin(__annot3, node);
+ 	var __annot4 = new MetaDslx.CodeAnalysis.Binding.DefineBinder(type: typeof(MetaDslx.Bootstrap.MetaCompiler.Model.Rule));
+ 	this.Begin(__annot4, node);
  	try
  	{
  	        
  	     
- 	 var annotations1List = node.Annotations1;
- 	 for (var annotations1Index = 0; annotations1Index < annotations1List.Count; ++annotations1Index)
- 	 {
  	     
- 	         
- 	          
- 	  var __annot0 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Annotations");
- 	  this.Begin(__annot0, node.Annotations1[annotations1Index]);
- 	  try
+ 	 var __annot1 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Annotations");
+ 	 this.Begin(__annot1, node.Annotations1);
+ 	 try
+ 	 {
+ 	     var annotations1List = node.Annotations1;
+ 	  for (var annotations1Index = 0; annotations1Index < annotations1List.Count; ++annotations1Index)
  	  {
+ 	      
  	          
- 	   this.Visit(node.Annotations1[annotations1Index]);
+ 	           
+ 	   var __annot0 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Annotations");
+ 	   this.Begin(__annot0, node.Annotations1[annotations1Index]);
+ 	   try
+ 	   {
+ 	           
+ 	    this.Visit(node.Annotations1[annotations1Index]);
+ 	        
+ 	   }
+ 	   finally
+ 	   {
+ 	       this.End(__annot0);
+ 	   }
  	       
  	  }
- 	  finally
- 	  {
- 	      this.End(__annot0);
- 	  }
- 	      
  	 }
+ 	 finally
+ 	 {
+ 	     this.End(__annot1);
+ 	 }
+ 	     
  	     
  	     
  	     
@@ -997,6 +1203,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
  	         
  	     
  	 this.Visit(node.Block);
+ 	     
  	     
  	     
  	     
@@ -1019,8 +1226,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
  	         
  	             
  	          
- 	  var __annot1 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Alternatives");
- 	  this.Begin(__annot1, node.Alternatives[alternativesIndex]);
+ 	  var __annot2 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Alternatives");
+ 	  this.Begin(__annot2, node.Alternatives[alternativesIndex]);
  	  try
  	  {
  	          
@@ -1029,7 +1236,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
  	  }
  	  finally
  	  {
- 	      this.End(__annot1);
+ 	      this.End(__annot2);
  	  }
  	      
  	         __itemHandled = true;
@@ -1043,8 +1250,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
  	         
  	             
  	          
- 	  var __annot2 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Alternatives");
- 	  this.Begin(__annot2, node.Alternatives[alternativesIndex]);
+ 	  var __annot3 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Alternatives");
+ 	  this.Begin(__annot3, node.Alternatives[alternativesIndex]);
  	  try
  	  {
  	          
@@ -1053,7 +1260,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
  	  }
  	  finally
  	  {
- 	      this.End(__annot2);
+ 	      this.End(__annot3);
  	  }
  	      
  	     }
@@ -1073,7 +1280,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
  	}
  	finally
  	{
- 	    this.End(__annot3);
+ 	    this.End(__annot4);
  	}
      
  }
@@ -1084,11 +1291,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
         public virtual void VisitAlternative(AlternativeSyntax node)
  {
      
- 	var __annot1 = new MetaDslx.CodeAnalysis.Binding.DefineBinder(type: typeof(MetaDslx.Bootstrap.MetaCompiler.Model.Alternative));
- 	this.Begin(__annot1, node);
+ 	var __annot2 = new MetaDslx.CodeAnalysis.Binding.DefineBinder(type: typeof(MetaDslx.Bootstrap.MetaCompiler.Model.Alternative));
+ 	this.Begin(__annot2, node);
  	try
  	{
  	        
+ 	     
  	     
  	     
  	         
@@ -1099,26 +1307,37 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
  	     
  	     
  	     
- 	 var elementsList = node.Elements;
- 	 for (var elementsIndex = 0; elementsIndex < elementsList.Count; ++elementsIndex)
- 	 {
  	     
- 	         
- 	          
- 	  var __annot0 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Elements");
- 	  this.Begin(__annot0, node.Elements[elementsIndex]);
- 	  try
+ 	 var __annot1 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Elements");
+ 	 this.Begin(__annot1, node.Elements);
+ 	 try
+ 	 {
+ 	     var elementsList = node.Elements;
+ 	  for (var elementsIndex = 0; elementsIndex < elementsList.Count; ++elementsIndex)
  	  {
+ 	      
  	          
- 	   this.Visit(node.Elements[elementsIndex]);
+ 	           
+ 	   var __annot0 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Elements");
+ 	   this.Begin(__annot0, node.Elements[elementsIndex]);
+ 	   try
+ 	   {
+ 	           
+ 	    this.Visit(node.Elements[elementsIndex]);
+ 	        
+ 	   }
+ 	   finally
+ 	   {
+ 	       this.End(__annot0);
+ 	   }
  	       
  	  }
- 	  finally
- 	  {
- 	      this.End(__annot0);
- 	  }
- 	      
  	 }
+ 	 finally
+ 	 {
+ 	     this.End(__annot1);
+ 	 }
+ 	     
  	     
  	     
  	     
@@ -1133,7 +1352,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
  	}
  	finally
  	{
- 	    this.End(__annot1);
+ 	    this.End(__annot2);
  	}
      
  }
@@ -1144,11 +1363,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
         public virtual void VisitElement(ElementSyntax node)
  {
      
- 	var __annot14 = new MetaDslx.CodeAnalysis.Binding.DefineBinder(type: typeof(MetaDslx.Bootstrap.MetaCompiler.Model.Element));
- 	this.Begin(__annot14, node);
+ 	var __annot15 = new MetaDslx.CodeAnalysis.Binding.DefineBinder(type: typeof(MetaDslx.Bootstrap.MetaCompiler.Model.Element));
+ 	this.Begin(__annot15, node);
  	try
  	{
  	        
+ 	     
  	     
  	     
  	         
@@ -1159,33 +1379,44 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
  	     
  	     
  	     
- 	 var valueAnnotationsList = node.ValueAnnotations;
- 	 for (var valueAnnotationsIndex = 0; valueAnnotationsIndex < valueAnnotationsList.Count; ++valueAnnotationsIndex)
- 	 {
  	     
- 	         
- 	          
- 	  var __annot0 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "ValueAnnotations");
- 	  this.Begin(__annot0, node.ValueAnnotations[valueAnnotationsIndex]);
- 	  try
+ 	 var __annot1 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "ValueAnnotations");
+ 	 this.Begin(__annot1, node.ValueAnnotations);
+ 	 try
+ 	 {
+ 	     var valueAnnotationsList = node.ValueAnnotations;
+ 	  for (var valueAnnotationsIndex = 0; valueAnnotationsIndex < valueAnnotationsList.Count; ++valueAnnotationsIndex)
  	  {
+ 	      
  	          
- 	   this.Visit(node.ValueAnnotations[valueAnnotationsIndex]);
+ 	           
+ 	   var __annot0 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "ValueAnnotations");
+ 	   this.Begin(__annot0, node.ValueAnnotations[valueAnnotationsIndex]);
+ 	   try
+ 	   {
+ 	           
+ 	    this.Visit(node.ValueAnnotations[valueAnnotationsIndex]);
+ 	        
+ 	   }
+ 	   finally
+ 	   {
+ 	       this.End(__annot0);
+ 	   }
  	       
  	  }
- 	  finally
- 	  {
- 	      this.End(__annot0);
- 	  }
- 	      
+ 	 }
+ 	 finally
+ 	 {
+ 	     this.End(__annot1);
  	 }
  	     
  	     
  	     
  	     
+ 	     
  	         
- 	 var __annot1 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Value");
- 	 this.Begin(__annot1, node.Value);
+ 	 var __annot2 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Value");
+ 	 this.Begin(__annot2, node.Value);
  	 try
  	 {
  	         
@@ -1194,8 +1425,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
  	 }
  	 finally
  	 {
- 	     this.End(__annot1);
+ 	     this.End(__annot2);
  	 }
+ 	     
  	     
  	     
  	     
@@ -1207,12 +1439,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
  	     case CompilerSyntaxKind.TQuestion:
  	             
  	          
- 	  var __annot3 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Multiplicity");
- 	  this.Begin(__annot3, node.Multiplicity);
+ 	  var __annot4 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Multiplicity");
+ 	  this.Begin(__annot4, node.Multiplicity);
  	  try
  	  {
- 	      var __annot2 = new MetaDslx.CodeAnalysis.Binding.ConstantBinder(value: MetaDslx.Bootstrap.MetaCompiler.Model.Multiplicity.ZeroOrOne);
- 	   this.Begin(__annot2, node.Multiplicity);
+ 	      var __annot3 = new MetaDslx.CodeAnalysis.Binding.ConstantBinder(value: MetaDslx.Bootstrap.MetaCompiler.Model.Multiplicity.ZeroOrOne);
+ 	   this.Begin(__annot3, node.Multiplicity);
  	   try
  	   {
  	           
@@ -1221,12 +1453,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
  	   }
  	   finally
  	   {
- 	       this.End(__annot2);
+ 	       this.End(__annot3);
  	   }
  	  }
  	  finally
  	  {
- 	      this.End(__annot3);
+ 	      this.End(__annot4);
  	  }
  	      
  	         break;
@@ -1234,12 +1466,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
  	     case CompilerSyntaxKind.TAsterisk:
  	             
  	          
- 	  var __annot5 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Multiplicity");
- 	  this.Begin(__annot5, node.Multiplicity);
+ 	  var __annot6 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Multiplicity");
+ 	  this.Begin(__annot6, node.Multiplicity);
  	  try
  	  {
- 	      var __annot4 = new MetaDslx.CodeAnalysis.Binding.ConstantBinder(value: MetaDslx.Bootstrap.MetaCompiler.Model.Multiplicity.ZeroOrMore);
- 	   this.Begin(__annot4, node.Multiplicity);
+ 	      var __annot5 = new MetaDslx.CodeAnalysis.Binding.ConstantBinder(value: MetaDslx.Bootstrap.MetaCompiler.Model.Multiplicity.ZeroOrMore);
+ 	   this.Begin(__annot5, node.Multiplicity);
  	   try
  	   {
  	           
@@ -1248,12 +1480,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
  	   }
  	   finally
  	   {
- 	       this.End(__annot4);
+ 	       this.End(__annot5);
  	   }
  	  }
  	  finally
  	  {
- 	      this.End(__annot5);
+ 	      this.End(__annot6);
  	  }
  	      
  	         break;
@@ -1261,12 +1493,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
  	     case CompilerSyntaxKind.TPlus:
  	             
  	          
- 	  var __annot7 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Multiplicity");
- 	  this.Begin(__annot7, node.Multiplicity);
+ 	  var __annot8 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Multiplicity");
+ 	  this.Begin(__annot8, node.Multiplicity);
  	  try
  	  {
- 	      var __annot6 = new MetaDslx.CodeAnalysis.Binding.ConstantBinder(value: MetaDslx.Bootstrap.MetaCompiler.Model.Multiplicity.OneOrMore);
- 	   this.Begin(__annot6, node.Multiplicity);
+ 	      var __annot7 = new MetaDslx.CodeAnalysis.Binding.ConstantBinder(value: MetaDslx.Bootstrap.MetaCompiler.Model.Multiplicity.OneOrMore);
+ 	   this.Begin(__annot7, node.Multiplicity);
  	   try
  	   {
  	           
@@ -1275,12 +1507,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
  	   }
  	   finally
  	   {
- 	       this.End(__annot6);
+ 	       this.End(__annot7);
  	   }
  	  }
  	  finally
  	  {
- 	      this.End(__annot7);
+ 	      this.End(__annot8);
  	  }
  	      
  	         break;
@@ -1288,12 +1520,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
  	     case CompilerSyntaxKind.TQuestionQuestion:
  	             
  	          
- 	  var __annot9 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Multiplicity");
- 	  this.Begin(__annot9, node.Multiplicity);
+ 	  var __annot10 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Multiplicity");
+ 	  this.Begin(__annot10, node.Multiplicity);
  	  try
  	  {
- 	      var __annot8 = new MetaDslx.CodeAnalysis.Binding.ConstantBinder(value: MetaDslx.Bootstrap.MetaCompiler.Model.Multiplicity.NonGreedyZeroOrOne);
- 	   this.Begin(__annot8, node.Multiplicity);
+ 	      var __annot9 = new MetaDslx.CodeAnalysis.Binding.ConstantBinder(value: MetaDslx.Bootstrap.MetaCompiler.Model.Multiplicity.NonGreedyZeroOrOne);
+ 	   this.Begin(__annot9, node.Multiplicity);
  	   try
  	   {
  	           
@@ -1302,12 +1534,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
  	   }
  	   finally
  	   {
- 	       this.End(__annot8);
+ 	       this.End(__annot9);
  	   }
  	  }
  	  finally
  	  {
- 	      this.End(__annot9);
+ 	      this.End(__annot10);
  	  }
  	      
  	         break;
@@ -1315,12 +1547,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
  	     case CompilerSyntaxKind.TAsteriskQuestion:
  	             
  	          
- 	  var __annot11 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Multiplicity");
- 	  this.Begin(__annot11, node.Multiplicity);
+ 	  var __annot12 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Multiplicity");
+ 	  this.Begin(__annot12, node.Multiplicity);
  	  try
  	  {
- 	      var __annot10 = new MetaDslx.CodeAnalysis.Binding.ConstantBinder(value: MetaDslx.Bootstrap.MetaCompiler.Model.Multiplicity.NonGreedyZeroOrMore);
- 	   this.Begin(__annot10, node.Multiplicity);
+ 	      var __annot11 = new MetaDslx.CodeAnalysis.Binding.ConstantBinder(value: MetaDslx.Bootstrap.MetaCompiler.Model.Multiplicity.NonGreedyZeroOrMore);
+ 	   this.Begin(__annot11, node.Multiplicity);
  	   try
  	   {
  	           
@@ -1329,12 +1561,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
  	   }
  	   finally
  	   {
- 	       this.End(__annot10);
+ 	       this.End(__annot11);
  	   }
  	  }
  	  finally
  	  {
- 	      this.End(__annot11);
+ 	      this.End(__annot12);
  	  }
  	      
  	         break;
@@ -1342,12 +1574,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
  	     case CompilerSyntaxKind.TPlusQuestion:
  	             
  	          
- 	  var __annot13 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Multiplicity");
- 	  this.Begin(__annot13, node.Multiplicity);
+ 	  var __annot14 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Multiplicity");
+ 	  this.Begin(__annot14, node.Multiplicity);
  	  try
  	  {
- 	      var __annot12 = new MetaDslx.CodeAnalysis.Binding.ConstantBinder(value: MetaDslx.Bootstrap.MetaCompiler.Model.Multiplicity.NonGreedyOneOrMore);
- 	   this.Begin(__annot12, node.Multiplicity);
+ 	      var __annot13 = new MetaDslx.CodeAnalysis.Binding.ConstantBinder(value: MetaDslx.Bootstrap.MetaCompiler.Model.Multiplicity.NonGreedyOneOrMore);
+ 	   this.Begin(__annot13, node.Multiplicity);
  	   try
  	   {
  	           
@@ -1356,12 +1588,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
  	   }
  	   finally
  	   {
- 	       this.End(__annot12);
+ 	       this.End(__annot13);
  	   }
  	  }
  	  finally
  	  {
- 	      this.End(__annot13);
+ 	      this.End(__annot14);
  	  }
  	      
  	         break;
@@ -1376,7 +1608,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
  	}
  	finally
  	{
- 	    this.End(__annot14);
+ 	    this.End(__annot15);
  	}
      
  }
@@ -1387,6 +1619,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
         public virtual void VisitElementValueTokens(ElementValueTokensSyntax node)
  {
      
+ 	    
  	    
  	    
  	    
@@ -1439,6 +1672,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
  	try
  	{
  	        
+ 	     
  	     
  	 var alternativesList = node.Alternatives;
  	 for (var alternativesIndex = 0; alternativesIndex < alternativesList.Count; ++alternativesIndex)
@@ -1527,6 +1761,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
  	        
  	     
  	     
+ 	     
  	         
  	 var __annot1 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Rule");
  	 this.Begin(__annot1, node.Rule);
@@ -1571,6 +1806,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
  	        
  	     
  	     
+ 	     
  	         
  	 var __annot0 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "ReferencedTypes");
  	 this.Begin(__annot0, node.ReferencedTypes);
@@ -1604,6 +1840,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
  	try
  	{
  	        
+ 	     
  	     
  	 var referencedTypesList = node.ReferencedTypes;
  	 for (var referencedTypesIndex = 0; referencedTypesIndex < referencedTypesList.Count; ++referencedTypesIndex)
@@ -1687,38 +1924,48 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
         public virtual void VisitLAlternative(LAlternativeSyntax node)
  {
      
- 	var __annot1 = new MetaDslx.CodeAnalysis.Binding.DefineBinder(type: typeof(MetaDslx.Bootstrap.MetaCompiler.Model.LAlternative));
- 	this.Begin(__annot1, node);
+ 	var __annot2 = new MetaDslx.CodeAnalysis.Binding.DefineBinder(type: typeof(MetaDslx.Bootstrap.MetaCompiler.Model.LAlternative));
+ 	this.Begin(__annot2, node);
  	try
  	{
  	        
  	     
- 	 var elementsList = node.Elements;
- 	 for (var elementsIndex = 0; elementsIndex < elementsList.Count; ++elementsIndex)
- 	 {
  	     
- 	         
- 	          
- 	  var __annot0 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Elements");
- 	  this.Begin(__annot0, node.Elements[elementsIndex]);
- 	  try
+ 	 var __annot1 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Elements");
+ 	 this.Begin(__annot1, node.Elements);
+ 	 try
+ 	 {
+ 	     var elementsList = node.Elements;
+ 	  for (var elementsIndex = 0; elementsIndex < elementsList.Count; ++elementsIndex)
  	  {
+ 	      
  	          
- 	   this.Visit(node.Elements[elementsIndex]);
+ 	           
+ 	   var __annot0 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Elements");
+ 	   this.Begin(__annot0, node.Elements[elementsIndex]);
+ 	   try
+ 	   {
+ 	           
+ 	    this.Visit(node.Elements[elementsIndex]);
+ 	        
+ 	   }
+ 	   finally
+ 	   {
+ 	       this.End(__annot0);
+ 	   }
  	       
  	  }
- 	  finally
- 	  {
- 	      this.End(__annot0);
- 	  }
- 	      
+ 	 }
+ 	 finally
+ 	 {
+ 	     this.End(__annot1);
  	 }
  	     
  	     
  	}
  	finally
  	{
- 	    this.End(__annot1);
+ 	    this.End(__annot2);
  	}
      
  }
@@ -1734,6 +1981,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
  	try
  	{
  	        
+ 	     
  	     
  	     
  	         
@@ -1754,6 +2002,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
  	     
  	     
  	     
+ 	     
  	         
  	 var __annot1 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Value");
  	 this.Begin(__annot1, node.Value);
@@ -1767,6 +2016,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
  	 {
  	     this.End(__annot1);
  	 }
+ 	     
  	     
  	     
  	     
@@ -1961,6 +2211,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
  	    
  	    
  	    
+ 	    
  	switch (node.Token.GetCompilerKind())
  	{
  	        
@@ -2010,6 +2261,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
  	try
  	{
  	        
+ 	     
  	     
  	 var alternativesList = node.Alternatives;
  	 for (var alternativesIndex = 0; alternativesIndex < alternativesList.Count; ++alternativesIndex)
@@ -2098,6 +2350,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
  	        
  	     
  	     
+ 	     
  	         
  	 var __annot0 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "StartChar");
  	 this.Begin(__annot0, node.StartChar);
@@ -2111,6 +2364,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
  	 {
  	     this.End(__annot0);
  	 }
+ 	     
  	     
  	     
  	     
@@ -2149,6 +2403,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
  	try
  	{
  	        
+ 	     
  	     
  	     
  	         
@@ -2193,6 +2448,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
  	    
  	    
  	    
+ 	    
  	        
  	    
  	this.Visit(node.SingleExpression);
@@ -2212,6 +2468,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
  	try
  	{
  	        
+ 	     
  	     
  	 var itemsList = node.Items;
  	 for (var itemsIndex = 0; itemsIndex < itemsList.Count; ++itemsIndex)
@@ -2302,6 +2559,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
  	        
  	     
  	     
+ 	     
  	         
  	 var __annot0 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Value");
  	 this.Begin(__annot0, node.Value);
@@ -2332,60 +2590,89 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
         public virtual void VisitParserAnnotation(ParserAnnotationSyntax node)
  {
      
- 	var __annot0 = new MetaDslx.CodeAnalysis.Binding.DefineBinder(type: typeof(MetaDslx.Bootstrap.MetaCompiler.Model.Annotation));
- 	this.Begin(__annot0, node);
+ 	var __annot3 = new MetaDslx.CodeAnalysis.Binding.DefineBinder(type: typeof(MetaDslx.Bootstrap.MetaCompiler.Model.Annotation));
+ 	this.Begin(__annot3, node);
  	try
  	{
  	        
  	     
- 	 var qualifierList = node.Qualifier;
- 	 for (var qualifierIndex = 0; qualifierIndex < qualifierList.Count; ++qualifierIndex)
+ 	     
+ 	 var __annot2 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "AttributeClass");
+ 	 this.Begin(__annot2, node.Qualifier);
+ 	 try
  	 {
- 	     bool __itemHandled = false;
- 	     bool __sepHandled = false;
- 	     
- 	     
- 	     
- 	     
- 	     
- 	     
- 	     
- 	     if (qualifierIndex == 0)
- 	     {
- 	         
+ 	     var __annot1 = new MetaDslx.CodeAnalysis.Binding.UseBinder(types: ImmutableArray.Create<System.Type>(typeof(MetaDslx.CodeAnalysis.Binding.Binder), typeof(MetaDslx.CodeAnalysis.Annotations.Annotation)), suffixes: ImmutableArray.Create<System.String>("Binder", "Annotation"));
+ 	  this.Begin(__annot1, node.Qualifier);
+ 	  try
+ 	  {
+ 	      var __annot0 = new MetaDslx.CodeAnalysis.Binding.QualifierBinder();
+ 	   this.Begin(__annot0, node.Qualifier);
+ 	   try
+ 	   {
+ 	       var qualifierList = node.Qualifier;
+ 	    for (var qualifierIndex = 0; qualifierIndex < qualifierList.Count; ++qualifierIndex)
+ 	    {
+ 	        bool __itemHandled = false;
+ 	        bool __sepHandled = false;
+ 	        
+ 	        
+ 	        
+ 	        
+ 	        
+ 	        
+ 	        
+ 	        if (qualifierIndex == 0)
+ 	        {
+ 	            
+ 	                
  	             
- 	          
- 	      
- 	  this.Visit(node.Qualifier[qualifierIndex]);
- 	      
- 	      
- 	         __itemHandled = true;
  	         
- 	     }
+ 	     this.Visit(node.Qualifier[qualifierIndex]);
  	         
- 	     
- 	     
- 	     if (!__itemHandled && qualifierIndex < node.Qualifier.Count)
- 	     {
  	         
+ 	            __itemHandled = true;
+ 	            
+ 	        }
+ 	            
+ 	        
+ 	        
+ 	        if (!__itemHandled && qualifierIndex < node.Qualifier.Count)
+ 	        {
+ 	            
+ 	                
  	             
- 	          
- 	      
- 	  this.Visit(node.Qualifier[qualifierIndex]);
- 	      
- 	      
- 	     }
- 	     if (!__sepHandled && qualifierIndex < node.Qualifier.SeparatorCount)
- 	     {
  	         
+ 	     this.Visit(node.Qualifier[qualifierIndex]);
+ 	         
+ 	         
+ 	        }
+ 	        if (!__sepHandled && qualifierIndex < node.Qualifier.SeparatorCount)
+ 	        {
+ 	            
+ 	                
  	             
- 	          
- 	      
- 	  //this.VisitToken(node.Qualifier.GetSeparator(qualifierIndex));
- 	      
- 	      
- 	     }
+ 	         
+ 	     //this.VisitToken(node.Qualifier.GetSeparator(qualifierIndex));
+ 	         
+ 	         
+ 	        }
+ 	    }
+ 	   }
+ 	   finally
+ 	   {
+ 	       this.End(__annot0);
+ 	   }
+ 	  }
+ 	  finally
+ 	  {
+ 	      this.End(__annot1);
+ 	  }
  	 }
+ 	 finally
+ 	 {
+ 	     this.End(__annot2);
+ 	 }
+ 	     
  	     
  	     
  	     
@@ -2400,7 +2687,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
  	}
  	finally
  	{
- 	    this.End(__annot0);
+ 	    this.End(__annot3);
  	}
      
  }
@@ -2411,60 +2698,89 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
         public virtual void VisitLexerAnnotation(LexerAnnotationSyntax node)
  {
      
- 	var __annot0 = new MetaDslx.CodeAnalysis.Binding.DefineBinder(type: typeof(MetaDslx.Bootstrap.MetaCompiler.Model.Annotation));
- 	this.Begin(__annot0, node);
+ 	var __annot3 = new MetaDslx.CodeAnalysis.Binding.DefineBinder(type: typeof(MetaDslx.Bootstrap.MetaCompiler.Model.Annotation));
+ 	this.Begin(__annot3, node);
  	try
  	{
  	        
  	     
- 	 var qualifierList = node.Qualifier;
- 	 for (var qualifierIndex = 0; qualifierIndex < qualifierList.Count; ++qualifierIndex)
+ 	     
+ 	 var __annot2 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "AttributeClass");
+ 	 this.Begin(__annot2, node.Qualifier);
+ 	 try
  	 {
- 	     bool __itemHandled = false;
- 	     bool __sepHandled = false;
- 	     
- 	     
- 	     
- 	     
- 	     
- 	     
- 	     
- 	     if (qualifierIndex == 0)
- 	     {
- 	         
+ 	     var __annot1 = new MetaDslx.CodeAnalysis.Binding.UseBinder(types: ImmutableArray.Create<System.Type>(typeof(MetaDslx.CodeAnalysis.Syntax.TokenKind), typeof(MetaDslx.CodeAnalysis.Annotations.Annotation)), suffixes: ImmutableArray.Create<System.String>("TokenKind", "Annotation"));
+ 	  this.Begin(__annot1, node.Qualifier);
+ 	  try
+ 	  {
+ 	      var __annot0 = new MetaDslx.CodeAnalysis.Binding.QualifierBinder();
+ 	   this.Begin(__annot0, node.Qualifier);
+ 	   try
+ 	   {
+ 	       var qualifierList = node.Qualifier;
+ 	    for (var qualifierIndex = 0; qualifierIndex < qualifierList.Count; ++qualifierIndex)
+ 	    {
+ 	        bool __itemHandled = false;
+ 	        bool __sepHandled = false;
+ 	        
+ 	        
+ 	        
+ 	        
+ 	        
+ 	        
+ 	        
+ 	        if (qualifierIndex == 0)
+ 	        {
+ 	            
+ 	                
  	             
- 	          
- 	      
- 	  this.Visit(node.Qualifier[qualifierIndex]);
- 	      
- 	      
- 	         __itemHandled = true;
  	         
- 	     }
+ 	     this.Visit(node.Qualifier[qualifierIndex]);
  	         
- 	     
- 	     
- 	     if (!__itemHandled && qualifierIndex < node.Qualifier.Count)
- 	     {
  	         
+ 	            __itemHandled = true;
+ 	            
+ 	        }
+ 	            
+ 	        
+ 	        
+ 	        if (!__itemHandled && qualifierIndex < node.Qualifier.Count)
+ 	        {
+ 	            
+ 	                
  	             
- 	          
- 	      
- 	  this.Visit(node.Qualifier[qualifierIndex]);
- 	      
- 	      
- 	     }
- 	     if (!__sepHandled && qualifierIndex < node.Qualifier.SeparatorCount)
- 	     {
  	         
+ 	     this.Visit(node.Qualifier[qualifierIndex]);
+ 	         
+ 	         
+ 	        }
+ 	        if (!__sepHandled && qualifierIndex < node.Qualifier.SeparatorCount)
+ 	        {
+ 	            
+ 	                
  	             
- 	          
- 	      
- 	  //this.VisitToken(node.Qualifier.GetSeparator(qualifierIndex));
- 	      
- 	      
- 	     }
+ 	         
+ 	     //this.VisitToken(node.Qualifier.GetSeparator(qualifierIndex));
+ 	         
+ 	         
+ 	        }
+ 	    }
+ 	   }
+ 	   finally
+ 	   {
+ 	       this.End(__annot0);
+ 	   }
+ 	  }
+ 	  finally
+ 	  {
+ 	      this.End(__annot1);
+ 	  }
  	 }
+ 	 finally
+ 	 {
+ 	     this.End(__annot2);
+ 	 }
+ 	     
  	     
  	     
  	     
@@ -2479,7 +2795,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
  	}
  	finally
  	{
- 	    this.End(__annot0);
+ 	    this.End(__annot3);
  	}
      
  }
@@ -2490,6 +2806,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
         public virtual void VisitAnnotationArguments(AnnotationArgumentsSyntax node)
  {
      
+ 	    
  	    
  	    
  	var argumentsList = node.Arguments;
@@ -2576,9 +2893,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
  	        
  	     
  	     
+ 	     
  	         
  	     
  	 this.Visit(node.Block);
+ 	     
  	     
  	     
  	     
@@ -2626,6 +2945,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
  	    
  	    
  	    
+ 	    
  	        
  	var __annot0 = new MetaDslx.CodeAnalysis.Binding.UseBinder(types: ImmutableArray.Create<System.Type>(typeof(MetaDslx.CodeAnalysis.MetaType)));
  	this.Begin(__annot0, node.Identifier);
@@ -2661,53 +2981,72 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
      
  	    
  	    
- 	var qualifierList = node.Qualifier;
- 	for (var qualifierIndex = 0; qualifierIndex < qualifierList.Count; ++qualifierIndex)
+ 	    
+ 	var __annot1 = new MetaDslx.CodeAnalysis.Binding.UseBinder(types: ImmutableArray.Create<System.Type>(typeof(MetaDslx.CodeAnalysis.MetaType)));
+ 	this.Begin(__annot1, node.Qualifier);
+ 	try
  	{
- 	    bool __itemHandled = false;
- 	    bool __sepHandled = false;
- 	    
- 	    
- 	    
- 	    
- 	    
- 	    
- 	    
- 	    if (qualifierIndex == 0)
- 	    {
- 	        
- 	            
- 	         
- 	     
- 	 this.Visit(node.Qualifier[qualifierIndex]);
- 	     
- 	     
- 	        __itemHandled = true;
- 	        
- 	    }
- 	        
- 	    
- 	    
- 	    if (!__itemHandled && qualifierIndex < node.Qualifier.Count)
- 	    {
- 	        
- 	            
- 	         
- 	     
- 	 this.Visit(node.Qualifier[qualifierIndex]);
- 	     
- 	     
- 	    }
- 	    if (!__sepHandled && qualifierIndex < node.Qualifier.SeparatorCount)
- 	    {
- 	        
- 	            
- 	         
- 	     
- 	 //this.VisitToken(node.Qualifier.GetSeparator(qualifierIndex));
- 	     
- 	     
- 	    }
+ 	    var __annot0 = new MetaDslx.CodeAnalysis.Binding.QualifierBinder();
+ 	 this.Begin(__annot0, node.Qualifier);
+ 	 try
+ 	 {
+ 	     var qualifierList = node.Qualifier;
+ 	  for (var qualifierIndex = 0; qualifierIndex < qualifierList.Count; ++qualifierIndex)
+ 	  {
+ 	      bool __itemHandled = false;
+ 	      bool __sepHandled = false;
+ 	      
+ 	      
+ 	      
+ 	      
+ 	      
+ 	      
+ 	      
+ 	      if (qualifierIndex == 0)
+ 	      {
+ 	          
+ 	              
+ 	           
+ 	       
+ 	   this.Visit(node.Qualifier[qualifierIndex]);
+ 	       
+ 	       
+ 	          __itemHandled = true;
+ 	          
+ 	      }
+ 	          
+ 	      
+ 	      
+ 	      if (!__itemHandled && qualifierIndex < node.Qualifier.Count)
+ 	      {
+ 	          
+ 	              
+ 	           
+ 	       
+ 	   this.Visit(node.Qualifier[qualifierIndex]);
+ 	       
+ 	       
+ 	      }
+ 	      if (!__sepHandled && qualifierIndex < node.Qualifier.SeparatorCount)
+ 	      {
+ 	          
+ 	              
+ 	           
+ 	       
+ 	   //this.VisitToken(node.Qualifier.GetSeparator(qualifierIndex));
+ 	       
+ 	       
+ 	      }
+ 	  }
+ 	 }
+ 	 finally
+ 	 {
+ 	     this.End(__annot0);
+ 	 }
+ 	}
+ 	finally
+ 	{
+ 	    this.End(__annot1);
  	}
  	    
  	    
@@ -2725,6 +3064,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
  	try
  	{
  	        
+ 	     
  	     
  	     
  	         
@@ -2784,6 +3124,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
  	        
  	     
  	     
+ 	     
  	         
  	 var __annot0 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "ReturnType");
  	 this.Begin(__annot0, node.ReturnType);
@@ -2819,9 +3160,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
  	        
  	     
  	     
+ 	     
  	         
  	     
  	 this.Visit(node.Identifier);
+ 	     
  	     
  	     
  	     
@@ -2861,6 +3204,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
  	    
  	    
  	    
+ 	    
  	        
  	var __annot0 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Alternatives");
  	this.Begin(__annot0, node.Alternatives);
@@ -2886,6 +3230,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
         public virtual void VisitBlockBlock1(BlockBlock1Syntax node)
  {
      
+ 	    
  	    
  	    
  	    
@@ -2917,6 +3262,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
  	    
  	    
  	    
+ 	    
  	        
  	var __annot0 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Alternatives");
  	this.Begin(__annot0, node.Alternatives);
@@ -2942,6 +3288,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
         public virtual void VisitBlockInlineAlternativesBlock(BlockInlineAlternativesBlockSyntax node)
  {
      
+ 	    
  	    
  	    
  	    
@@ -2972,33 +3319,44 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
      
  	    
  	    
- 	var annotations1List = node.Annotations1;
- 	for (var annotations1Index = 0; annotations1Index < annotations1List.Count; ++annotations1Index)
- 	{
  	    
- 	        
- 	         
- 	 var __annot0 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Annotations");
- 	 this.Begin(__annot0, node.Annotations1[annotations1Index]);
- 	 try
+ 	var __annot1 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Annotations");
+ 	this.Begin(__annot1, node.Annotations1);
+ 	try
+ 	{
+ 	    var annotations1List = node.Annotations1;
+ 	 for (var annotations1Index = 0; annotations1Index < annotations1List.Count; ++annotations1Index)
  	 {
+ 	     
  	         
- 	  this.Visit(node.Annotations1[annotations1Index]);
+ 	          
+ 	  var __annot0 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Annotations");
+ 	  this.Begin(__annot0, node.Annotations1[annotations1Index]);
+ 	  try
+ 	  {
+ 	          
+ 	   this.Visit(node.Annotations1[annotations1Index]);
+ 	       
+ 	  }
+ 	  finally
+ 	  {
+ 	      this.End(__annot0);
+ 	  }
  	      
  	 }
- 	 finally
- 	 {
- 	     this.End(__annot0);
- 	 }
- 	     
+ 	}
+ 	finally
+ 	{
+ 	    this.End(__annot1);
  	}
  	    
  	    
  	    
  	    
+ 	    
  	        
- 	var __annot1 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Name");
- 	this.Begin(__annot1, node.Name);
+ 	var __annot2 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Name");
+ 	this.Begin(__annot2, node.Name);
  	try
  	{
  	        
@@ -3007,8 +3365,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
  	}
  	finally
  	{
- 	    this.End(__annot1);
+ 	    this.End(__annot2);
  	}
+ 	    
  	    
  	    
  	    
@@ -3030,6 +3389,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
         public virtual void VisitAlternativeBlock1Block1(AlternativeBlock1Block1Syntax node)
  {
      
+ 	    
  	    
  	    
  	    
@@ -3061,6 +3421,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
  	    
  	    
  	    
+ 	    
  	        
  	var __annot0 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "ReturnValue");
  	this.Begin(__annot0, node.ReturnValue);
@@ -3088,37 +3449,48 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
      
  	    
  	    
- 	var nameAnnotationsList = node.NameAnnotations;
- 	for (var nameAnnotationsIndex = 0; nameAnnotationsIndex < nameAnnotationsList.Count; ++nameAnnotationsIndex)
- 	{
  	    
- 	        
- 	         
- 	 var __annot0 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "NameAnnotations");
- 	 this.Begin(__annot0, node.NameAnnotations[nameAnnotationsIndex]);
- 	 try
+ 	var __annot1 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "NameAnnotations");
+ 	this.Begin(__annot1, node.NameAnnotations);
+ 	try
+ 	{
+ 	    var nameAnnotationsList = node.NameAnnotations;
+ 	 for (var nameAnnotationsIndex = 0; nameAnnotationsIndex < nameAnnotationsList.Count; ++nameAnnotationsIndex)
  	 {
+ 	     
  	         
- 	  this.Visit(node.NameAnnotations[nameAnnotationsIndex]);
+ 	          
+ 	  var __annot0 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "NameAnnotations");
+ 	  this.Begin(__annot0, node.NameAnnotations[nameAnnotationsIndex]);
+ 	  try
+ 	  {
+ 	          
+ 	   this.Visit(node.NameAnnotations[nameAnnotationsIndex]);
+ 	       
+ 	  }
+ 	  finally
+ 	  {
+ 	      this.End(__annot0);
+ 	  }
  	      
  	 }
- 	 finally
- 	 {
- 	     this.End(__annot0);
- 	 }
- 	     
+ 	}
+ 	finally
+ 	{
+ 	    this.End(__annot1);
  	}
  	    
  	    
  	    
  	    
+ 	    
  	        
- 	var __annot2 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "SymbolProperty");
- 	this.Begin(__annot2, node.SymbolProperty);
+ 	var __annot3 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "SymbolProperty");
+ 	this.Begin(__annot3, node.SymbolProperty);
  	try
  	{
- 	    var __annot1 = new MetaDslx.Bootstrap.MetaCompiler.Symbols.SymbolPropertyBinder();
- 	 this.Begin(__annot1, node.SymbolProperty);
+ 	    var __annot2 = new MetaDslx.Bootstrap.MetaCompiler.Symbols.SymbolPropertyBinder();
+ 	 this.Begin(__annot2, node.SymbolProperty);
  	 try
  	 {
  	         
@@ -3127,13 +3499,14 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
  	 }
  	 finally
  	 {
- 	     this.End(__annot1);
+ 	     this.End(__annot2);
  	 }
  	}
  	finally
  	{
- 	    this.End(__annot2);
+ 	    this.End(__annot3);
  	}
+ 	    
  	    
  	    
  	    
@@ -3145,12 +3518,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
  	    case CompilerSyntaxKind.TEq:
  	            
  	         
- 	 var __annot4 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Assignment");
- 	 this.Begin(__annot4, node.Assignment);
+ 	 var __annot5 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Assignment");
+ 	 this.Begin(__annot5, node.Assignment);
  	 try
  	 {
- 	     var __annot3 = new MetaDslx.CodeAnalysis.Binding.ConstantBinder(value: MetaDslx.Bootstrap.MetaCompiler.Model.Assignment.Assign);
- 	  this.Begin(__annot3, node.Assignment);
+ 	     var __annot4 = new MetaDslx.CodeAnalysis.Binding.ConstantBinder(value: MetaDslx.Bootstrap.MetaCompiler.Model.Assignment.Assign);
+ 	  this.Begin(__annot4, node.Assignment);
  	  try
  	  {
  	          
@@ -3159,12 +3532,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
  	  }
  	  finally
  	  {
- 	      this.End(__annot3);
+ 	      this.End(__annot4);
  	  }
  	 }
  	 finally
  	 {
- 	     this.End(__annot4);
+ 	     this.End(__annot5);
  	 }
  	     
  	        break;
@@ -3172,12 +3545,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
  	    case CompilerSyntaxKind.TQuestionEq:
  	            
  	         
- 	 var __annot6 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Assignment");
- 	 this.Begin(__annot6, node.Assignment);
+ 	 var __annot7 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Assignment");
+ 	 this.Begin(__annot7, node.Assignment);
  	 try
  	 {
- 	     var __annot5 = new MetaDslx.CodeAnalysis.Binding.ConstantBinder(value: MetaDslx.Bootstrap.MetaCompiler.Model.Assignment.QuestionAssign);
- 	  this.Begin(__annot5, node.Assignment);
+ 	     var __annot6 = new MetaDslx.CodeAnalysis.Binding.ConstantBinder(value: MetaDslx.Bootstrap.MetaCompiler.Model.Assignment.QuestionAssign);
+ 	  this.Begin(__annot6, node.Assignment);
  	  try
  	  {
  	          
@@ -3186,12 +3559,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
  	  }
  	  finally
  	  {
- 	      this.End(__annot5);
+ 	      this.End(__annot6);
  	  }
  	 }
  	 finally
  	 {
- 	     this.End(__annot6);
+ 	     this.End(__annot7);
  	 }
  	     
  	        break;
@@ -3199,12 +3572,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
  	    case CompilerSyntaxKind.TExclEq:
  	            
  	         
- 	 var __annot8 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Assignment");
- 	 this.Begin(__annot8, node.Assignment);
+ 	 var __annot9 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Assignment");
+ 	 this.Begin(__annot9, node.Assignment);
  	 try
  	 {
- 	     var __annot7 = new MetaDslx.CodeAnalysis.Binding.ConstantBinder(value: MetaDslx.Bootstrap.MetaCompiler.Model.Assignment.NegatedAssign);
- 	  this.Begin(__annot7, node.Assignment);
+ 	     var __annot8 = new MetaDslx.CodeAnalysis.Binding.ConstantBinder(value: MetaDslx.Bootstrap.MetaCompiler.Model.Assignment.NegatedAssign);
+ 	  this.Begin(__annot8, node.Assignment);
  	  try
  	  {
  	          
@@ -3213,12 +3586,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
  	  }
  	  finally
  	  {
- 	      this.End(__annot7);
+ 	      this.End(__annot8);
  	  }
  	 }
  	 finally
  	 {
- 	     this.End(__annot8);
+ 	     this.End(__annot9);
  	 }
  	     
  	        break;
@@ -3226,12 +3599,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
  	    case CompilerSyntaxKind.TPlusEq:
  	            
  	         
- 	 var __annot10 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Assignment");
- 	 this.Begin(__annot10, node.Assignment);
+ 	 var __annot11 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Assignment");
+ 	 this.Begin(__annot11, node.Assignment);
  	 try
  	 {
- 	     var __annot9 = new MetaDslx.CodeAnalysis.Binding.ConstantBinder(value: MetaDslx.Bootstrap.MetaCompiler.Model.Assignment.PlusAssign);
- 	  this.Begin(__annot9, node.Assignment);
+ 	     var __annot10 = new MetaDslx.CodeAnalysis.Binding.ConstantBinder(value: MetaDslx.Bootstrap.MetaCompiler.Model.Assignment.PlusAssign);
+ 	  this.Begin(__annot10, node.Assignment);
  	  try
  	  {
  	          
@@ -3240,12 +3613,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
  	  }
  	  finally
  	  {
- 	      this.End(__annot9);
+ 	      this.End(__annot10);
  	  }
  	 }
  	 finally
  	 {
- 	     this.End(__annot10);
+ 	     this.End(__annot11);
  	 }
  	     
  	        break;
@@ -3266,6 +3639,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
         public virtual void VisitRuleRefAlt3ReferencedTypesBlock(RuleRefAlt3ReferencedTypesBlockSyntax node)
  {
      
+ 	    
  	    
  	    
  	    
@@ -3297,6 +3671,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
  	    
  	    
  	    
+ 	    
  	        
  	var __annot0 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Name");
  	this.Begin(__annot0, node.Name);
@@ -3310,6 +3685,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
  	{
  	    this.End(__annot0);
  	}
+ 	    
  	    
  	    
  	    
@@ -3332,6 +3708,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
  	    
  	    
  	    
+ 	    
  	        
  	var __annot0 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "IsTrivia");
  	this.Begin(__annot0, node.IsTrivia);
@@ -3345,6 +3722,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
  	{
  	    this.End(__annot0);
  	}
+ 	    
  	    
  	    
  	    
@@ -3378,6 +3756,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
  	    
  	    
  	    
+ 	    
  	        
  	var __annot0 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "ReturnType");
  	this.Begin(__annot0, node.ReturnType);
@@ -3403,6 +3782,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
         public virtual void VisitTokenAlternativesBlock(TokenAlternativesBlockSyntax node)
  {
      
+ 	    
  	    
  	    
  	    
@@ -3434,6 +3814,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
  	    
  	    
  	    
+ 	    
  	        
  	var __annot0 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Alternatives");
  	this.Begin(__annot0, node.Alternatives);
@@ -3459,6 +3840,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
         public virtual void VisitLBlockAlternativesBlock(LBlockAlternativesBlockSyntax node)
  {
      
+ 	    
  	    
  	    
  	    
@@ -3526,6 +3908,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
  	    
  	    
  	    
+ 	    
  	        
  	var __annot0 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Items");
  	this.Begin(__annot0, node.Items);
@@ -3554,6 +3937,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
  	    
  	    
  	    
+ 	    
  	        
  	var __annot0 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Arguments");
  	this.Begin(__annot0, node.Arguments);
@@ -3579,6 +3963,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
         public virtual void VisitAnnotationArgumentBlock1(AnnotationArgumentBlock1Syntax node)
  {
      
+ 	    
  	    
  	    
  	    
@@ -3616,6 +4001,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Binding
         public virtual void VisitMainQualifierBlock(MainQualifierBlockSyntax node)
  {
      
+ 	    
  	    
  	    
  	    

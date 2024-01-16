@@ -133,13 +133,17 @@ finally
 end template
 
 template GenerateBinderFactoryVisitElement(Alternative alt, Element elem, ref int annotIndex)
+    [var elemName = "node."+elem.PropertyName]
     [var isList = MetaDslx.Bootstrap.MetaCompiler.Model.MultiplicityExtensions.IsList(elem.Multiplicity)]
     [if (isList)]
-[GenerateBinderFactoryVisitListElement(alt, elem, ref annotIndex)]
+[var body = GenerateBinderFactoryVisitListElement(alt, elem, ref annotIndex)]
+[GenerateBinderFactoryVisitBinders(elem.Binders, elemName, body, false, ref annotIndex)]
     [else if (elem.Value is SeparatedList sl)]
-[GenerateBinderFactoryVisitSeparatedListElement(alt, elem, sl, ref annotIndex)]
+[var body = GenerateBinderFactoryVisitSeparatedListElement(alt, elem, sl, ref annotIndex)]
+[body = GenerateBinderFactoryVisitBinders(sl.Binders, elemName, body, false, ref annotIndex)]
+[GenerateBinderFactoryVisitBinders(elem.Binders, elemName, body, false, ref annotIndex)]
     [else]
-[GenerateBinderFactoryVisitElementValue("node."+elem.PropertyName, elem, elem.Value, ref annotIndex)]
+[GenerateBinderFactoryVisitElementValue(elemName, elem, elem.Value, ref annotIndex)]
     [end if]
 end template
 

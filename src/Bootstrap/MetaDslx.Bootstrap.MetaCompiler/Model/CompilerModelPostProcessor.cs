@@ -471,8 +471,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                     InsertBinders(tokenAlts.Binders, rule.Binders);
                     foreach (var ruleRef in GetRuleRefs(rule))
                     {
+                        var tokenAltsValue = (TokenAlts)tokenAlts.MClone();
+                        InsertBinders(tokenAltsValue.Binders, ruleRef.Value.Binders);
                         _model.DeleteObject(ruleRef.Value);
-                        ruleRef.Value = (TokenAlts)tokenAlts.MClone();
+                        ruleRef.Value = tokenAltsValue;
                     }
                     _model.DeleteObject(tokenAlts);
                     _model.DeleteObject(rule);
@@ -670,9 +672,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                                     InsertBinders(list.Binders, rule.Binders);
                                     foreach (var listRuleRef in GetRuleRefs(rule))
                                     {
+                                        var slValue = (SeparatedList)list.MClone();
+                                        InsertBinders(slValue.Binders, listRuleRef.Value.Binders);
                                         _model.DeleteObject(listRuleRef.Value);
                                         listRuleRef.Name = rule.Name ?? name;
-                                        listRuleRef.Value = (SeparatedList)list.MClone();
+                                        listRuleRef.Value = slValue;
                                     }
                                     _model.DeleteObject(list);
                                     _model.DeleteObject(rule);
