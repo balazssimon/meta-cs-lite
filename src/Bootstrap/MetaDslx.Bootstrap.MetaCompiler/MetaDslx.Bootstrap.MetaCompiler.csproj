@@ -40,6 +40,10 @@
 	<ItemGroup>
 		<Compile Remove="Compiler2\**" />
 		<None Remove="Compiler2\**" />
+		<Compile Remove="Symbols2\**" />
+		<None Remove="Symbols2\**" />
+		<Compile Remove="Syntax2\**" />
+		<None Remove="Syntax2\**" />
 	</ItemGroup>
 
 	<!--
