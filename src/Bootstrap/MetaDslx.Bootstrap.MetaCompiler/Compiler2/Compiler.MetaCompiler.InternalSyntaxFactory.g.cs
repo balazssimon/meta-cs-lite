@@ -961,7 +961,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 		}
 
 			
-		internal RuleRefAlt1Green RuleRefAlt1(__InternalSyntaxToken rule)
+		internal RuleRefAlt1Green RuleRefAlt1(IdentifierGreen rule)
 		{
 #if DEBUG
 			
@@ -970,8 +970,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			if (rule is null) throw new ArgumentNullException(nameof(rule));
 				
 				
-				
-			if (rule.RawKind != (int)CompilerSyntaxKind.TIdentifier && rule.RawKind != (int)CompilerSyntaxKind.TVerbatimIdentifier) throw new ArgumentException(nameof(rule));
 				
 			
 #endif
@@ -1268,7 +1266,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 		}
 
 			
-		internal LReferenceGreen LReference(__InternalSyntaxToken rule)
+		internal LReferenceGreen LReference(IdentifierGreen rule)
 		{
 #if DEBUG
 			
@@ -1277,8 +1275,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			if (rule is null) throw new ArgumentNullException(nameof(rule));
 				
 				
-				
-			if (rule.RawKind != (int)CompilerSyntaxKind.TIdentifier && rule.RawKind != (int)CompilerSyntaxKind.TVerbatimIdentifier) throw new ArgumentException(nameof(rule));
 				
 			
 #endif
@@ -1601,26 +1597,24 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 		}
 
 			
-		internal ReturnTypeIdentifierAlt2Green ReturnTypeIdentifierAlt2(__InternalSyntaxToken tokens)
+		internal ReturnTypeIdentifierAlt2Green ReturnTypeIdentifierAlt2(IdentifierGreen identifier)
 		{
 #if DEBUG
 			
 				
 				
-			if (tokens is null) throw new ArgumentNullException(nameof(tokens));
+			if (identifier is null) throw new ArgumentNullException(nameof(identifier));
 				
 				
-				
-			if (tokens.RawKind != (int)CompilerSyntaxKind.TIdentifier && tokens.RawKind != (int)CompilerSyntaxKind.TVerbatimIdentifier) throw new ArgumentException(nameof(tokens));
 				
 			
 #endif
 			
 			int hash;
-			var cached = __SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.ReturnTypeIdentifierAlt2, tokens, out hash);
+			var cached = __SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.ReturnTypeIdentifierAlt2, identifier, out hash);
 			if (cached != null) return (ReturnTypeIdentifierAlt2Green)cached;
 		
-			var result = new ReturnTypeIdentifierAlt2Green(CompilerSyntaxKind.ReturnTypeIdentifierAlt2, tokens);
+			var result = new ReturnTypeIdentifierAlt2Green(CompilerSyntaxKind.ReturnTypeIdentifierAlt2, identifier);
 			if (hash >= 0)
 			{
 				__SyntaxNodeCache.AddNode(result, hash);
@@ -1693,26 +1687,24 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			
 		
 			
-		internal NameGreen Name(__InternalSyntaxToken tokens)
+		internal NameGreen Name(IdentifierGreen identifier)
 		{
 #if DEBUG
 			
 				
 				
-			if (tokens is null) throw new ArgumentNullException(nameof(tokens));
+			if (identifier is null) throw new ArgumentNullException(nameof(identifier));
 				
 				
-				
-			if (tokens.RawKind != (int)CompilerSyntaxKind.TIdentifier && tokens.RawKind != (int)CompilerSyntaxKind.TVerbatimIdentifier) throw new ArgumentException(nameof(tokens));
 				
 			
 #endif
 			
 			int hash;
-			var cached = __SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.Name, tokens, out hash);
+			var cached = __SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.Name, identifier, out hash);
 			if (cached != null) return (NameGreen)cached;
 		
-			var result = new NameGreen(CompilerSyntaxKind.Name, tokens);
+			var result = new NameGreen(CompilerSyntaxKind.Name, identifier);
 			if (hash >= 0)
 			{
 				__SyntaxNodeCache.AddNode(result, hash);
@@ -1725,17 +1717,15 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			
 		
 			
-		internal QualifierGreen Qualifier(__InternalSyntaxToken tokens, global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<QualifierBlock1Green> block)
+		internal QualifierGreen Qualifier(IdentifierGreen identifier1, global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<IdentifierGreen> identifier2)
 		{
 #if DEBUG
 			
 				
 				
-			if (tokens is null) throw new ArgumentNullException(nameof(tokens));
+			if (identifier1 is null) throw new ArgumentNullException(nameof(identifier1));
 				
 				
-				
-			if (tokens.RawKind != (int)CompilerSyntaxKind.TIdentifier && tokens.RawKind != (int)CompilerSyntaxKind.TVerbatimIdentifier) throw new ArgumentException(nameof(tokens));
 				
 			
 				
@@ -1746,10 +1736,42 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 #endif
 			
 			int hash;
-			var cached = __SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.Qualifier, tokens, block.Node, out hash);
+			var cached = __SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.Qualifier, identifier1, identifier2.Node, out hash);
 			if (cached != null) return (QualifierGreen)cached;
 		
-			var result = new QualifierGreen(CompilerSyntaxKind.Qualifier, tokens, block.Node);
+			var result = new QualifierGreen(CompilerSyntaxKind.Qualifier, identifier1, identifier2.Node);
+			if (hash >= 0)
+			{
+				__SyntaxNodeCache.AddNode(result, hash);
+			}
+		
+			return result;
+			
+		}
+
+			
+		
+			
+		internal IdentifierTokensGreen IdentifierTokens(__InternalSyntaxToken token)
+		{
+#if DEBUG
+			
+				
+				
+			if (token is null) throw new ArgumentNullException(nameof(token));
+				
+				
+				
+			if (token.RawKind != (int)CompilerSyntaxKind.TIdentifier && token.RawKind != (int)CompilerSyntaxKind.TVerbatimIdentifier) throw new ArgumentException(nameof(token));
+				
+			
+#endif
+			
+			int hash;
+			var cached = __SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.IdentifierTokens, token, out hash);
+			if (cached != null) return (IdentifierTokensGreen)cached;
+		
+			var result = new IdentifierTokensGreen(CompilerSyntaxKind.IdentifierTokens, token);
 			if (hash >= 0)
 			{
 				__SyntaxNodeCache.AddNode(result, hash);
@@ -1822,17 +1844,15 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 		}
 
 			
-		internal RuleBlock1Alt2Green RuleBlock1Alt2(__InternalSyntaxToken tokens, __InternalSyntaxToken kReturns, ReturnTypeQualifierGreen returnType)
+		internal RuleBlock1Alt2Green RuleBlock1Alt2(IdentifierGreen identifier, __InternalSyntaxToken kReturns, ReturnTypeQualifierGreen returnType)
 		{
 #if DEBUG
 			
 				
 				
-			if (tokens is null) throw new ArgumentNullException(nameof(tokens));
+			if (identifier is null) throw new ArgumentNullException(nameof(identifier));
 				
 				
-				
-			if (tokens.RawKind != (int)CompilerSyntaxKind.TIdentifier && tokens.RawKind != (int)CompilerSyntaxKind.TVerbatimIdentifier) throw new ArgumentException(nameof(tokens));
 				
 			
 				
@@ -1854,10 +1874,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 #endif
 			
 			int hash;
-			var cached = __SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.RuleBlock1Alt2, tokens, kReturns, returnType, out hash);
+			var cached = __SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.RuleBlock1Alt2, identifier, kReturns, returnType, out hash);
 			if (cached != null) return (RuleBlock1Alt2Green)cached;
 		
-			var result = new RuleBlock1Alt2Green(CompilerSyntaxKind.RuleBlock1Alt2, tokens, kReturns, returnType);
+			var result = new RuleBlock1Alt2Green(CompilerSyntaxKind.RuleBlock1Alt2, identifier, kReturns, returnType);
 			if (hash >= 0)
 			{
 				__SyntaxNodeCache.AddNode(result, hash);
@@ -2152,7 +2172,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			
 		
 			
-		internal ElementBlock1Green ElementBlock1(global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<ParserAnnotationGreen> nameAnnotations, __InternalSyntaxToken symbolProperty, __InternalSyntaxToken assignment)
+		internal ElementBlock1Green ElementBlock1(global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<ParserAnnotationGreen> nameAnnotations, IdentifierGreen symbolProperty, __InternalSyntaxToken assignment)
 		{
 #if DEBUG
 			
@@ -2166,8 +2186,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			if (symbolProperty is null) throw new ArgumentNullException(nameof(symbolProperty));
 				
 				
-				
-			if (symbolProperty.RawKind != (int)CompilerSyntaxKind.TIdentifier && symbolProperty.RawKind != (int)CompilerSyntaxKind.TVerbatimIdentifier) throw new ArgumentException(nameof(symbolProperty));
 				
 			
 				
@@ -2617,7 +2635,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			
 		
 			
-		internal AnnotationArgumentBlock1Green AnnotationArgumentBlock1(__InternalSyntaxToken namedParameter, __InternalSyntaxToken tColon)
+		internal AnnotationArgumentBlock1Green AnnotationArgumentBlock1(IdentifierGreen namedParameter, __InternalSyntaxToken tColon)
 		{
 #if DEBUG
 			
@@ -2626,8 +2644,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			if (namedParameter is null) throw new ArgumentNullException(nameof(namedParameter));
 				
 				
-				
-			if (namedParameter.RawKind != (int)CompilerSyntaxKind.TIdentifier && namedParameter.RawKind != (int)CompilerSyntaxKind.TVerbatimIdentifier) throw new ArgumentException(nameof(namedParameter));
 				
 			
 				
@@ -2658,7 +2674,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			
 		
 			
-		internal QualifierBlock1Green QualifierBlock1(__InternalSyntaxToken tDot, __InternalSyntaxToken tokens)
+		internal QualifierIdentifierBlockGreen QualifierIdentifierBlock(__InternalSyntaxToken tDot, IdentifierGreen identifier)
 		{
 #if DEBUG
 			
@@ -2673,20 +2689,18 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			
 				
 				
-			if (tokens is null) throw new ArgumentNullException(nameof(tokens));
+			if (identifier is null) throw new ArgumentNullException(nameof(identifier));
 				
 				
-				
-			if (tokens.RawKind != (int)CompilerSyntaxKind.TIdentifier && tokens.RawKind != (int)CompilerSyntaxKind.TVerbatimIdentifier) throw new ArgumentException(nameof(tokens));
 				
 			
 #endif
 			
 			int hash;
-			var cached = __SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.QualifierBlock1, tDot, tokens, out hash);
-			if (cached != null) return (QualifierBlock1Green)cached;
+			var cached = __SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.QualifierIdentifierBlock, tDot, identifier, out hash);
+			if (cached != null) return (QualifierIdentifierBlockGreen)cached;
 		
-			var result = new QualifierBlock1Green(CompilerSyntaxKind.QualifierBlock1, tDot, tokens);
+			var result = new QualifierIdentifierBlockGreen(CompilerSyntaxKind.QualifierIdentifierBlock, tDot, identifier);
 			if (hash >= 0)
 			{
 				__SyntaxNodeCache.AddNode(result, hash);

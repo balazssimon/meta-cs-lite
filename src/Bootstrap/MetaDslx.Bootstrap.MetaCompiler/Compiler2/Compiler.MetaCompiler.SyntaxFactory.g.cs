@@ -810,17 +810,15 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
  }
 			
 
-        public RuleRefAlt1Syntax RuleRefAlt1(__SyntaxToken rule)
+        public RuleRefAlt1Syntax RuleRefAlt1(IdentifierSyntax rule)
  {
  		
  		
- 	if (rule.RawKind != (int)__InternalSyntaxKind.None) throw new ArgumentNullException(nameof(rule));
+ 	if (rule is null) throw new ArgumentNullException(nameof(rule));
  		
  		
  		
- 	if (rule.RawKind != (int)CompilerSyntaxKind.TIdentifier && rule.RawKind != (int)CompilerSyntaxKind.TVerbatimIdentifier) throw new ArgumentException(nameof(rule));
- 		
-     return (RuleRefAlt1Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.RuleRefAlt1((__InternalSyntaxToken)rule.Node).CreateRed();
+     return (RuleRefAlt1Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.RuleRefAlt1((InternalSyntax.IdentifierGreen)rule.Green).CreateRed();
  }
 			
 
@@ -1005,17 +1003,15 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
  }
 			
 
-        public LReferenceSyntax LReference(__SyntaxToken rule)
+        public LReferenceSyntax LReference(IdentifierSyntax rule)
  {
  		
  		
- 	if (rule.RawKind != (int)__InternalSyntaxKind.None) throw new ArgumentNullException(nameof(rule));
+ 	if (rule is null) throw new ArgumentNullException(nameof(rule));
  		
  		
  		
- 	if (rule.RawKind != (int)CompilerSyntaxKind.TIdentifier && rule.RawKind != (int)CompilerSyntaxKind.TVerbatimIdentifier) throw new ArgumentException(nameof(rule));
- 		
-     return (LReferenceSyntax)CompilerLanguage.Instance.InternalSyntaxFactory.LReference((__InternalSyntaxToken)rule.Node).CreateRed();
+     return (LReferenceSyntax)CompilerLanguage.Instance.InternalSyntaxFactory.LReference((InternalSyntax.IdentifierGreen)rule.Green).CreateRed();
  }
 			
 		
@@ -1228,17 +1224,15 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
  }
 			
 
-        public ReturnTypeIdentifierAlt2Syntax ReturnTypeIdentifierAlt2(__SyntaxToken tokens)
+        public ReturnTypeIdentifierAlt2Syntax ReturnTypeIdentifierAlt2(IdentifierSyntax identifier)
  {
  		
  		
- 	if (tokens.RawKind != (int)__InternalSyntaxKind.None) throw new ArgumentNullException(nameof(tokens));
+ 	if (identifier is null) throw new ArgumentNullException(nameof(identifier));
  		
  		
  		
- 	if (tokens.RawKind != (int)CompilerSyntaxKind.TIdentifier && tokens.RawKind != (int)CompilerSyntaxKind.TVerbatimIdentifier) throw new ArgumentException(nameof(tokens));
- 		
-     return (ReturnTypeIdentifierAlt2Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.ReturnTypeIdentifierAlt2((__InternalSyntaxToken)tokens.Node).CreateRed();
+     return (ReturnTypeIdentifierAlt2Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.ReturnTypeIdentifierAlt2((InternalSyntax.IdentifierGreen)identifier.Green).CreateRed();
  }
 			
 		
@@ -1272,37 +1266,49 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		
 			
 
-        public NameSyntax Name(__SyntaxToken tokens)
+        public NameSyntax Name(IdentifierSyntax identifier)
  {
  		
  		
- 	if (tokens.RawKind != (int)__InternalSyntaxKind.None) throw new ArgumentNullException(nameof(tokens));
+ 	if (identifier is null) throw new ArgumentNullException(nameof(identifier));
  		
  		
  		
- 	if (tokens.RawKind != (int)CompilerSyntaxKind.TIdentifier && tokens.RawKind != (int)CompilerSyntaxKind.TVerbatimIdentifier) throw new ArgumentException(nameof(tokens));
- 		
-     return (NameSyntax)CompilerLanguage.Instance.InternalSyntaxFactory.Name((__InternalSyntaxToken)tokens.Node).CreateRed();
+     return (NameSyntax)CompilerLanguage.Instance.InternalSyntaxFactory.Name((InternalSyntax.IdentifierGreen)identifier.Green).CreateRed();
  }
 			
 		
 			
 
-        public QualifierSyntax Qualifier(__SyntaxToken tokens, global::MetaDslx.CodeAnalysis.SyntaxList<QualifierBlock1Syntax> block)
+        public QualifierSyntax Qualifier(IdentifierSyntax identifier1, global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<IdentifierSyntax> identifier2)
  {
  		
  		
- 	if (tokens.RawKind != (int)__InternalSyntaxKind.None) throw new ArgumentNullException(nameof(tokens));
- 		
- 		
- 		
- 	if (tokens.RawKind != (int)CompilerSyntaxKind.TIdentifier && tokens.RawKind != (int)CompilerSyntaxKind.TVerbatimIdentifier) throw new ArgumentException(nameof(tokens));
+ 	if (identifier1 is null) throw new ArgumentNullException(nameof(identifier1));
  		
  		
  		
  		
  		
-     return (QualifierSyntax)CompilerLanguage.Instance.InternalSyntaxFactory.Qualifier((__InternalSyntaxToken)tokens.Node, __GreenNodeExtensions.ToGreenList<InternalSyntax.QualifierBlock1Green>(block.Node)).CreateRed();
+ 		
+ 		
+     return (QualifierSyntax)CompilerLanguage.Instance.InternalSyntaxFactory.Qualifier((InternalSyntax.IdentifierGreen)identifier1.Green, __GreenNodeExtensions.ToGreenSeparatedList<InternalSyntax.IdentifierGreen>(identifier2.Node, reversed: true)).CreateRed();
+ }
+			
+		
+			
+
+        public IdentifierTokensSyntax IdentifierTokens(__SyntaxToken token)
+ {
+ 		
+ 		
+ 	if (token.RawKind != (int)__InternalSyntaxKind.None) throw new ArgumentNullException(nameof(token));
+ 		
+ 		
+ 		
+ 	if (token.RawKind != (int)CompilerSyntaxKind.TIdentifier && token.RawKind != (int)CompilerSyntaxKind.TVerbatimIdentifier) throw new ArgumentException(nameof(token));
+ 		
+     return (IdentifierTokensSyntax)CompilerLanguage.Instance.InternalSyntaxFactory.IdentifierTokens((__InternalSyntaxToken)token.Node).CreateRed();
  }
 			
 		
@@ -1336,15 +1342,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
  }
 			
 
-        public RuleBlock1Alt2Syntax RuleBlock1Alt2(__SyntaxToken tokens, __SyntaxToken kReturns, ReturnTypeQualifierSyntax returnType)
+        public RuleBlock1Alt2Syntax RuleBlock1Alt2(IdentifierSyntax identifier, __SyntaxToken kReturns, ReturnTypeQualifierSyntax returnType)
  {
  		
  		
- 	if (tokens.RawKind != (int)__InternalSyntaxKind.None) throw new ArgumentNullException(nameof(tokens));
+ 	if (identifier is null) throw new ArgumentNullException(nameof(identifier));
  		
  		
- 		
- 	if (tokens.RawKind != (int)CompilerSyntaxKind.TIdentifier && tokens.RawKind != (int)CompilerSyntaxKind.TVerbatimIdentifier) throw new ArgumentException(nameof(tokens));
  		
  		
  		
@@ -1360,12 +1364,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
  		
  		
  		
-     return (RuleBlock1Alt2Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.RuleBlock1Alt2((__InternalSyntaxToken)tokens.Node, (__InternalSyntaxToken)kReturns.Node, (InternalSyntax.ReturnTypeQualifierGreen)returnType.Green).CreateRed();
+     return (RuleBlock1Alt2Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.RuleBlock1Alt2((InternalSyntax.IdentifierGreen)identifier.Green, (__InternalSyntaxToken)kReturns.Node, (InternalSyntax.ReturnTypeQualifierGreen)returnType.Green).CreateRed();
  }
  
- public RuleBlock1Alt2Syntax RuleBlock1Alt2(__SyntaxToken tokens, ReturnTypeQualifierSyntax returnType)
+ public RuleBlock1Alt2Syntax RuleBlock1Alt2(IdentifierSyntax identifier, ReturnTypeQualifierSyntax returnType)
  {
- 	return this.RuleBlock1Alt2(tokens, this.Token(CompilerSyntaxKind.KReturns), returnType);
+ 	return this.RuleBlock1Alt2(identifier, this.Token(CompilerSyntaxKind.KReturns), returnType);
  }
 			
 		
@@ -1576,7 +1580,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		
 			
 
-        public ElementBlock1Syntax ElementBlock1(global::MetaDslx.CodeAnalysis.SyntaxList<ParserAnnotationSyntax> nameAnnotations, __SyntaxToken symbolProperty, __SyntaxToken assignment)
+        public ElementBlock1Syntax ElementBlock1(global::MetaDslx.CodeAnalysis.SyntaxList<ParserAnnotationSyntax> nameAnnotations, IdentifierSyntax symbolProperty, __SyntaxToken assignment)
  {
  		
  		
@@ -1584,11 +1588,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
  		
  		
  		
- 	if (symbolProperty.RawKind != (int)__InternalSyntaxKind.None) throw new ArgumentNullException(nameof(symbolProperty));
+ 	if (symbolProperty is null) throw new ArgumentNullException(nameof(symbolProperty));
  		
  		
- 		
- 	if (symbolProperty.RawKind != (int)CompilerSyntaxKind.TIdentifier && symbolProperty.RawKind != (int)CompilerSyntaxKind.TVerbatimIdentifier) throw new ArgumentException(nameof(symbolProperty));
  		
  		
  		
@@ -1598,7 +1600,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
  		
  	if (assignment.RawKind != (int)CompilerSyntaxKind.TEq && assignment.RawKind != (int)CompilerSyntaxKind.TQuestionEq && assignment.RawKind != (int)CompilerSyntaxKind.TExclEq && assignment.RawKind != (int)CompilerSyntaxKind.TPlusEq) throw new ArgumentException(nameof(assignment));
  		
-     return (ElementBlock1Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.ElementBlock1(__GreenNodeExtensions.ToGreenList<InternalSyntax.ParserAnnotationGreen>(nameAnnotations.Node), (__InternalSyntaxToken)symbolProperty.Node, (__InternalSyntaxToken)assignment.Node).CreateRed();
+     return (ElementBlock1Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.ElementBlock1(__GreenNodeExtensions.ToGreenList<InternalSyntax.ParserAnnotationGreen>(nameAnnotations.Node), (InternalSyntax.IdentifierGreen)symbolProperty.Green, (__InternalSyntaxToken)assignment.Node).CreateRed();
  }
 			
 		
@@ -1881,15 +1883,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		
 			
 
-        public AnnotationArgumentBlock1Syntax AnnotationArgumentBlock1(__SyntaxToken namedParameter, __SyntaxToken tColon)
+        public AnnotationArgumentBlock1Syntax AnnotationArgumentBlock1(IdentifierSyntax namedParameter, __SyntaxToken tColon)
  {
  		
  		
- 	if (namedParameter.RawKind != (int)__InternalSyntaxKind.None) throw new ArgumentNullException(nameof(namedParameter));
+ 	if (namedParameter is null) throw new ArgumentNullException(nameof(namedParameter));
  		
  		
- 		
- 	if (namedParameter.RawKind != (int)CompilerSyntaxKind.TIdentifier && namedParameter.RawKind != (int)CompilerSyntaxKind.TVerbatimIdentifier) throw new ArgumentException(nameof(namedParameter));
  		
  		
  		
@@ -1899,10 +1899,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
  		
  	if (tColon.RawKind != (int)CompilerSyntaxKind.TColon) throw new ArgumentException(nameof(tColon));
  		
-     return (AnnotationArgumentBlock1Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.AnnotationArgumentBlock1((__InternalSyntaxToken)namedParameter.Node, (__InternalSyntaxToken)tColon.Node).CreateRed();
+     return (AnnotationArgumentBlock1Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.AnnotationArgumentBlock1((InternalSyntax.IdentifierGreen)namedParameter.Green, (__InternalSyntaxToken)tColon.Node).CreateRed();
  }
  
- public AnnotationArgumentBlock1Syntax AnnotationArgumentBlock1(__SyntaxToken namedParameter)
+ public AnnotationArgumentBlock1Syntax AnnotationArgumentBlock1(IdentifierSyntax namedParameter)
  {
  	return this.AnnotationArgumentBlock1(namedParameter, this.Token(CompilerSyntaxKind.TColon));
  }
@@ -1910,7 +1910,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		
 			
 
-        public QualifierBlock1Syntax QualifierBlock1(__SyntaxToken tDot, __SyntaxToken tokens)
+        public QualifierIdentifierBlockSyntax QualifierIdentifierBlock(__SyntaxToken tDot, IdentifierSyntax identifier)
  {
  		
  		
@@ -1922,18 +1922,16 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
  		
  		
  		
- 	if (tokens.RawKind != (int)__InternalSyntaxKind.None) throw new ArgumentNullException(nameof(tokens));
+ 	if (identifier is null) throw new ArgumentNullException(nameof(identifier));
  		
  		
  		
- 	if (tokens.RawKind != (int)CompilerSyntaxKind.TIdentifier && tokens.RawKind != (int)CompilerSyntaxKind.TVerbatimIdentifier) throw new ArgumentException(nameof(tokens));
- 		
-     return (QualifierBlock1Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.QualifierBlock1((__InternalSyntaxToken)tDot.Node, (__InternalSyntaxToken)tokens.Node).CreateRed();
+     return (QualifierIdentifierBlockSyntax)CompilerLanguage.Instance.InternalSyntaxFactory.QualifierIdentifierBlock((__InternalSyntaxToken)tDot.Node, (InternalSyntax.IdentifierGreen)identifier.Green).CreateRed();
  }
  
- public QualifierBlock1Syntax QualifierBlock1(__SyntaxToken tokens)
+ public QualifierIdentifierBlockSyntax QualifierIdentifierBlock(IdentifierSyntax identifier)
  {
- 	return this.QualifierBlock1(this.Token(CompilerSyntaxKind.TDot), tokens);
+ 	return this.QualifierIdentifierBlock(this.Token(CompilerSyntaxKind.TDot), identifier);
  }
 			
 		
@@ -2092,6 +2090,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		        
             
 		        
+		        typeof(IdentifierTokensSyntax),
+		        
+            
+		        
 		        typeof(SimpleIdentifierSyntax),
 		        
             
@@ -2178,7 +2180,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		        
             
 		        
-		        typeof(QualifierBlock1Syntax),
+		        typeof(QualifierIdentifierBlockSyntax),
 		        
             
 		        

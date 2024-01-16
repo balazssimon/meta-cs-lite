@@ -222,6 +222,7 @@ abstract class Rule $ParserRule : GrammarRule
 {
 	type $ReturnType;
 	contains Alternative[] $Alternatives;
+	bool AllowMerge;
 
 	derived string GreenName;
 	derived string RedName;

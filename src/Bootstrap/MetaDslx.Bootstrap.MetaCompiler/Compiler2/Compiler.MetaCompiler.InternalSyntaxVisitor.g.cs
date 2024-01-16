@@ -129,6 +129,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			
 		
 			
+		public virtual void VisitIdentifierTokensGreen(IdentifierTokensGreen node) => this.DefaultVisit(node);
+			
+		
+			
 		public virtual void VisitSimpleIdentifierGreen(SimpleIdentifierGreen node) => this.DefaultVisit(node);
 			
 		
@@ -215,7 +219,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			
 		
 			
-		public virtual void VisitQualifierBlock1Green(QualifierBlock1Green node) => this.DefaultVisit(node);
+		public virtual void VisitQualifierIdentifierBlockGreen(QualifierIdentifierBlockGreen node) => this.DefaultVisit(node);
 			
 		
 			
@@ -351,6 +355,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			
 		
 			
+		public virtual TResult VisitIdentifierTokensGreen(IdentifierTokensGreen node) => this.DefaultVisit(node);
+			
+		
+			
 		public virtual TResult VisitSimpleIdentifierGreen(SimpleIdentifierGreen node) => this.DefaultVisit(node);
 			
 		
@@ -437,7 +445,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			
 		
 			
-		public virtual TResult VisitQualifierBlock1Green(QualifierBlock1Green node) => this.DefaultVisit(node);
+		public virtual TResult VisitQualifierIdentifierBlockGreen(QualifierIdentifierBlockGreen node) => this.DefaultVisit(node);
 			
 		
 			

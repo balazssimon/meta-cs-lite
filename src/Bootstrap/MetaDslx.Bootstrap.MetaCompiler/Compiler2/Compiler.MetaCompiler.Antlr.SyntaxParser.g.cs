@@ -906,10 +906,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
                	if (context == null) return RuleRefAlt1Green.__Missing;
                 
                     
-                InternalSyntaxToken? rule = null;
- if (context.LR_TIdentifier() is not null) rule = this.VisitTerminal(context.LR_TIdentifier());
- if (context.LR_TVerbatimIdentifier() is not null) rule = this.VisitTerminal(context.LR_TVerbatimIdentifier());
- if (rule is null) rule = _factory.None;
+                        
+                IdentifierGreen? rule = null;
+                if (context.e_Rule is not null) rule = (IdentifierGreen?)this.Visit(context.e_Rule) ?? IdentifierGreen.__Missing;
+                            
+                else rule = IdentifierGreen.__Missing;
+                            
+                        
                     
                 
             	return _factory.RuleRefAlt1(rule);
@@ -1170,10 +1173,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
                	if (context == null) return LReferenceGreen.__Missing;
                 
                     
-                InternalSyntaxToken? rule = null;
- if (context.LR_TIdentifier() is not null) rule = this.VisitTerminal(context.LR_TIdentifier());
- if (context.LR_TVerbatimIdentifier() is not null) rule = this.VisitTerminal(context.LR_TVerbatimIdentifier());
- if (rule is null) rule = _factory.None;
+                        
+                IdentifierGreen? rule = null;
+                if (context.e_Rule is not null) rule = (IdentifierGreen?)this.Visit(context.e_Rule) ?? IdentifierGreen.__Missing;
+                            
+                else rule = IdentifierGreen.__Missing;
+                            
+                        
                     
                 
             	return _factory.LReference(rule);
@@ -1473,13 +1479,16 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
                	if (context == null) return ReturnTypeIdentifierAlt2Green.__Missing;
                 
                     
-                InternalSyntaxToken? tokens = null;
- if (context.LR_TIdentifier() is not null) tokens = this.VisitTerminal(context.LR_TIdentifier());
- if (context.LR_TVerbatimIdentifier() is not null) tokens = this.VisitTerminal(context.LR_TVerbatimIdentifier());
- if (tokens is null) tokens = _factory.None;
+                        
+                IdentifierGreen? identifier = null;
+                if (context.e_Identifier is not null) identifier = (IdentifierGreen?)this.Visit(context.e_Identifier) ?? IdentifierGreen.__Missing;
+                            
+                else identifier = IdentifierGreen.__Missing;
+                            
+                        
                     
                 
-            	return _factory.ReturnTypeIdentifierAlt2(tokens);
+            	return _factory.ReturnTypeIdentifierAlt2(identifier);
             }
                 
             
@@ -1524,13 +1533,16 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
                	if (context == null) return NameGreen.__Missing;
                 
                     
-                InternalSyntaxToken? tokens = null;
- if (context.LR_TIdentifier() is not null) tokens = this.VisitTerminal(context.LR_TIdentifier());
- if (context.LR_TVerbatimIdentifier() is not null) tokens = this.VisitTerminal(context.LR_TVerbatimIdentifier());
- if (tokens is null) tokens = _factory.None;
+                        
+                IdentifierGreen? identifier = null;
+                if (context.e_Identifier is not null) identifier = (IdentifierGreen?)this.Visit(context.e_Identifier) ?? IdentifierGreen.__Missing;
+                            
+                else identifier = IdentifierGreen.__Missing;
+                            
+                        
                     
                 
-            	return _factory.Name(tokens);
+            	return _factory.Name(identifier);
             }
                 
             
@@ -1541,27 +1553,68 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
                	if (context == null) return QualifierGreen.__Missing;
                 
                     
-                InternalSyntaxToken? tokens = null;
- if (context.LR_TIdentifier() is not null) tokens = this.VisitTerminal(context.LR_TIdentifier());
- if (context.LR_TVerbatimIdentifier() is not null) tokens = this.VisitTerminal(context.LR_TVerbatimIdentifier());
- if (tokens is null) tokens = _factory.None;
+                        
+                IdentifierGreen? identifier1 = null;
+                if (context.e_Identifier is not null) identifier1 = (IdentifierGreen?)this.Visit(context.e_Identifier) ?? IdentifierGreen.__Missing;
+                            
+                else identifier1 = IdentifierGreen.__Missing;
+                            
+                        
                     
                 
                     
-                var e_BlockContext = context._e_Block;
- var blockBuilder = _pool.Allocate<QualifierBlock1Green>();
- for (int i = 0; i < e_BlockContext.Count; ++i)
+                var identifier2Builder = _pool.AllocateSeparated<IdentifierGreen>(reversed: true);
+     
+     
+     
+ var e_Identifier1Context = context._e_Identifier1;
+ var e_TDot1Context = context._e_TDot1;
+ for (int i = 0; i < e_Identifier1Context.Count; ++i)
  {
-             
-     if (e_BlockContext[i] is not null) blockBuilder.Add((QualifierBlock1Green?)this.Visit(e_BlockContext[i]) ?? QualifierBlock1Green.__Missing);
-     else blockBuilder.Add(QualifierBlock1Green.__Missing);
-             
+     
+     if (i < e_TDot1Context.Count)
+     {
+         var _separator = e_TDot1Context[i];
+      
+  identifier2Builder.AddSeparator(this.VisitTerminal(_separator, CompilerSyntaxKind.TDot));
+      
+     }
+     else
+     {
+         identifier2Builder.AddSeparator(this.VisitTerminal((IToken?)null, CompilerSyntaxKind.TDot));
+     }
+     var _item = e_Identifier1Context[i];
+  if (_item is not null) identifier2Builder.Add((IdentifierGreen?)this.Visit(_item) ?? IdentifierGreen.__Missing);
+      
+  else identifier2Builder.Add(IdentifierGreen.__Missing);
+      
+     
  }
- var block = blockBuilder.ToList();
- _pool.Free(blockBuilder);
+     
+     
+     
+ var identifier2 = identifier2Builder.ToList();
+ _pool.Free(identifier2Builder);
                     
                 
-            	return _factory.Qualifier(tokens, block);
+            	return _factory.Qualifier(identifier1, identifier2);
+            }
+                
+            
+                
+
+            public override GreenNode? VisitPr_Identifier(CompilerParser.Pr_IdentifierContext? context)
+            {
+               	if (context == null) return IdentifierTokensGreen.__Missing;
+                
+                    
+                InternalSyntaxToken? token = null;
+ if (context.LR_TIdentifier() is not null) token = this.VisitTerminal(context.LR_TIdentifier());
+ if (context.LR_TVerbatimIdentifier() is not null) token = this.VisitTerminal(context.LR_TVerbatimIdentifier());
+ if (token is null) token = _factory.None;
+                    
+                
+            	return _factory.IdentifierTokens(token);
             }
                 
             
@@ -1606,10 +1659,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
                	if (context == null) return RuleBlock1Alt2Green.__Missing;
                 
                     
-                InternalSyntaxToken? tokens = null;
- if (context.LR_TIdentifier() is not null) tokens = this.VisitTerminal(context.LR_TIdentifier());
- if (context.LR_TVerbatimIdentifier() is not null) tokens = this.VisitTerminal(context.LR_TVerbatimIdentifier());
- if (tokens is null) tokens = _factory.None;
+                        
+                IdentifierGreen? identifier = null;
+                if (context.e_Identifier is not null) identifier = (IdentifierGreen?)this.Visit(context.e_Identifier) ?? IdentifierGreen.__Missing;
+                            
+                else identifier = IdentifierGreen.__Missing;
+                            
+                        
                     
                 
                     
@@ -1628,7 +1684,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
                         
                     
                 
-            	return _factory.RuleBlock1Alt2(tokens, kReturns, returnType);
+            	return _factory.RuleBlock1Alt2(identifier, kReturns, returnType);
             }
                 
             
@@ -1863,10 +1919,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
                     
                 
                     
-                InternalSyntaxToken? symbolProperty = null;
- if (context.LR_TIdentifier() is not null) symbolProperty = this.VisitTerminal(context.LR_TIdentifier());
- if (context.LR_TVerbatimIdentifier() is not null) symbolProperty = this.VisitTerminal(context.LR_TVerbatimIdentifier());
- if (symbolProperty is null) symbolProperty = _factory.None;
+                        
+                IdentifierGreen? symbolProperty = null;
+                if (context.e_SymbolProperty is not null) symbolProperty = (IdentifierGreen?)this.Visit(context.e_SymbolProperty) ?? IdentifierGreen.__Missing;
+                            
+                else symbolProperty = IdentifierGreen.__Missing;
+                            
+                        
                     
                 
                     
@@ -2202,10 +2261,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
                	if (context == null) return AnnotationArgumentBlock1Green.__Missing;
                 
                     
-                InternalSyntaxToken? namedParameter = null;
- if (context.LR_TIdentifier() is not null) namedParameter = this.VisitTerminal(context.LR_TIdentifier());
- if (context.LR_TVerbatimIdentifier() is not null) namedParameter = this.VisitTerminal(context.LR_TVerbatimIdentifier());
- if (namedParameter is null) namedParameter = _factory.None;
+                        
+                IdentifierGreen? namedParameter = null;
+                if (context.e_NamedParameter is not null) namedParameter = (IdentifierGreen?)this.Visit(context.e_NamedParameter) ?? IdentifierGreen.__Missing;
+                            
+                else namedParameter = IdentifierGreen.__Missing;
+                            
+                        
                     
                 
                     
@@ -2220,24 +2282,27 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
             
                 
 
-            public override GreenNode? VisitPr_QualifierBlock1(CompilerParser.Pr_QualifierBlock1Context? context)
+            public override GreenNode? VisitPr_QualifierIdentifierBlock(CompilerParser.Pr_QualifierIdentifierBlockContext? context)
             {
-               	if (context == null) return QualifierBlock1Green.__Missing;
+               	if (context == null) return QualifierIdentifierBlockGreen.__Missing;
                 
                     
                         
-                var tDot = this.VisitTerminal(context.e_TDot, CompilerSyntaxKind.TDot);
+                var tDot = this.VisitTerminal(context.e_TDot1, CompilerSyntaxKind.TDot);
                         
                     
                 
                     
-                InternalSyntaxToken? tokens = null;
- if (context.LR_TIdentifier() is not null) tokens = this.VisitTerminal(context.LR_TIdentifier());
- if (context.LR_TVerbatimIdentifier() is not null) tokens = this.VisitTerminal(context.LR_TVerbatimIdentifier());
- if (tokens is null) tokens = _factory.None;
+                        
+                IdentifierGreen? identifier = null;
+                if (context.e_Identifier1 is not null) identifier = (IdentifierGreen?)this.Visit(context.e_Identifier1) ?? IdentifierGreen.__Missing;
+                            
+                else identifier = IdentifierGreen.__Missing;
+                            
+                        
                     
                 
-            	return _factory.QualifierBlock1(tDot, tokens);
+            	return _factory.QualifierIdentifierBlock(tDot, identifier);
             }
                 
             

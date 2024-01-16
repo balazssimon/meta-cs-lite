@@ -734,6 +734,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
        				
 				
                     
+				case CompilerSyntaxKind.IdentifierTokens: 
+					return "IdentifierTokens";
+       				
+				
+                    
 				case CompilerSyntaxKind.SimpleIdentifier: 
 					return "SimpleIdentifier";
        				
@@ -843,8 +848,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
        				
 				
                     
-				case CompilerSyntaxKind.QualifierBlock1: 
-					return "QualifierBlock1";
+				case CompilerSyntaxKind.QualifierIdentifierBlock: 
+					return "QualifierIdentifierBlock";
        				
 				
                     

@@ -266,6 +266,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
             
 		
             
+		IdentifierTokens,
+            
+		
+            
 		SimpleIdentifier,
             
 		
@@ -352,7 +356,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
             
 		
             
-		QualifierBlock1,
+		QualifierIdentifierBlock,
             
 		
             

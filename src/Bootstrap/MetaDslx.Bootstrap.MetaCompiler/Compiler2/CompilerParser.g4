@@ -40,7 +40,7 @@ pr_Element
 pr_ElementValue
     :  e_Token=(LR_KEof | LR_TString) #pr_ElementValueTokens
  |  e_TLParen=LR_TLParen         e_Alternatives1=pr_Alternative         (e_TBar1+=LR_TBar e_Alternatives2+=pr_Alternative)*              e_TRParen=LR_TRParen #pr_BlockInline
- |  e_Rule=(LR_TIdentifier | LR_TVerbatimIdentifier) #pr_RuleRefAlt1
+ |  e_Rule=pr_Identifier #pr_RuleRefAlt1
  |  e_THash=LR_THash  e_ReferencedTypes=pr_ReturnTypeQualifier #pr_RuleRefAlt2
  |  e_THashLBrace=LR_THashLBrace         e_ReferencedTypes1=pr_ReturnTypeQualifier         (e_TComma1+=LR_TComma e_ReferencedTypes2+=pr_ReturnTypeQualifier)*              e_TRBrace=LR_TRBrace #pr_RuleRefAlt3
     ;
@@ -54,7 +54,7 @@ pr_LElementValue
     :  e_Token=(LR_TString | LR_TDot) #pr_LElementValueTokens
  |  e_TLParen=LR_TLParen         e_Alternatives1=pr_LAlternative         (e_TBar1+=LR_TBar e_Alternatives2+=pr_LAlternative)*              e_TRParen=LR_TRParen #pr_LBlock
  |  e_StartChar=LR_TString  e_TDotDot=LR_TDotDot  e_EndChar=LR_TString #pr_LRange
- |  e_Rule=(LR_TIdentifier | LR_TVerbatimIdentifier) #pr_LReference
+ |  e_Rule=pr_Identifier #pr_LReference
     ;
 pr_Expression
     :  e_SingleExpression=pr_SingleExpression #pr_ExpressionAlt1
@@ -77,24 +77,27 @@ pr_AnnotationArgument
     ;
 pr_ReturnTypeIdentifier
     :  e_TPrimitiveType=LR_TPrimitiveType #pr_ReturnTypeIdentifierAlt1
- |  e_Tokens=(LR_TIdentifier | LR_TVerbatimIdentifier) #pr_ReturnTypeIdentifierAlt2
+ |  e_Identifier=pr_Identifier #pr_ReturnTypeIdentifierAlt2
     ;
 pr_ReturnTypeQualifier
     :  e_TPrimitiveType=LR_TPrimitiveType #pr_ReturnTypeQualifierAlt1
  |  e_Qualifier=pr_Qualifier #pr_ReturnTypeQualifierAlt2
     ;
 pr_Name
-    :  e_Tokens=(LR_TIdentifier | LR_TVerbatimIdentifier)
+    :  e_Identifier=pr_Identifier
     ;
 pr_Qualifier
-    :  e_Tokens=(LR_TIdentifier | LR_TVerbatimIdentifier)  e_Block+=pr_QualifierBlock1*
+    :  e_Identifier=pr_Identifier              (e_TDot1+=LR_TDot e_Identifier1+=pr_Identifier)*            
+    ;
+pr_Identifier
+    :  e_Token=(LR_TIdentifier | LR_TVerbatimIdentifier)
     ;
 pr_SimpleIdentifier
     :  e_TIdentifier=LR_TIdentifier
     ;
 pr_RuleBlock1
     :  e_ReturnType=pr_ReturnTypeIdentifier #pr_RuleBlock1Alt1
- |  e_Tokens=(LR_TIdentifier | LR_TVerbatimIdentifier)  e_KReturns=LR_KReturns  e_ReturnType1=pr_ReturnTypeQualifier #pr_RuleBlock1Alt2
+ |  e_Identifier=pr_Identifier  e_KReturns=LR_KReturns  e_ReturnType1=pr_ReturnTypeQualifier #pr_RuleBlock1Alt2
     ;
 pr_RuleAlternativesBlock
     :  e_TBar1=LR_TBar  e_Alternatives2=pr_Alternative
@@ -118,7 +121,7 @@ pr_AlternativeBlock2
     :  e_TEqGt=LR_TEqGt  e_ReturnValue=pr_Expression
     ;
 pr_ElementBlock1
-    :  e_NameAnnotations+=pr_ParserAnnotation*  e_SymbolProperty=(LR_TIdentifier | LR_TVerbatimIdentifier)  e_Assignment=(LR_TEq | LR_TQuestionEq | LR_TExclEq | LR_TPlusEq)
+    :  e_NameAnnotations+=pr_ParserAnnotation*  e_SymbolProperty=pr_Identifier  e_Assignment=(LR_TEq | LR_TQuestionEq | LR_TExclEq | LR_TPlusEq)
     ;
 pr_RuleRefAlt3ReferencedTypesBlock
     :  e_TComma1=LR_TComma  e_ReferencedTypes2=pr_ReturnTypeQualifier
@@ -150,10 +153,10 @@ pr_AnnotationArgumentsArgumentsBlock
     :  e_TComma1=LR_TComma  e_Arguments2=pr_AnnotationArgument
     ;
 pr_AnnotationArgumentBlock1
-    :  e_NamedParameter=(LR_TIdentifier | LR_TVerbatimIdentifier)  e_TColon=LR_TColon
+    :  e_NamedParameter=pr_Identifier  e_TColon=LR_TColon
     ;
-pr_QualifierBlock1
-    :  e_TDot=LR_TDot  e_Tokens=(LR_TIdentifier | LR_TVerbatimIdentifier)
+pr_QualifierIdentifierBlock
+    :  e_TDot1=LR_TDot  e_Identifier1=pr_Identifier
     ;
 pr_SimpleQualifierSimpleIdentifierBlock1
     :  e_TDot1=LR_TDot  e_SimpleIdentifier1=pr_SimpleIdentifier

@@ -438,6 +438,16 @@ public partial class CompilerParserBaseVisitor<Result> : AbstractParseTreeVisito
 	/// <return>The visitor result.</return>
 	public virtual Result VisitPr_Qualifier([NotNull] CompilerParser.Pr_QualifierContext context) { return VisitChildren(context); }
 	/// <summary>
+	/// Visit a parse tree produced by <see cref="CompilerParser.pr_Identifier"/>.
+	/// <para>
+	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
+	/// on <paramref name="context"/>.
+	/// </para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	public virtual Result VisitPr_Identifier([NotNull] CompilerParser.Pr_IdentifierContext context) { return VisitChildren(context); }
+	/// <summary>
 	/// Visit a parse tree produced by <see cref="CompilerParser.pr_SimpleIdentifier"/>.
 	/// <para>
 	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
@@ -674,7 +684,7 @@ public partial class CompilerParserBaseVisitor<Result> : AbstractParseTreeVisito
 	/// <return>The visitor result.</return>
 	public virtual Result VisitPr_AnnotationArgumentBlock1([NotNull] CompilerParser.Pr_AnnotationArgumentBlock1Context context) { return VisitChildren(context); }
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="CompilerParser.pr_QualifierBlock1"/>.
+	/// Visit a parse tree produced by <see cref="CompilerParser.pr_QualifierIdentifierBlock"/>.
 	/// <para>
 	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
 	/// on <paramref name="context"/>.
@@ -682,7 +692,7 @@ public partial class CompilerParserBaseVisitor<Result> : AbstractParseTreeVisito
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	public virtual Result VisitPr_QualifierBlock1([NotNull] CompilerParser.Pr_QualifierBlock1Context context) { return VisitChildren(context); }
+	public virtual Result VisitPr_QualifierIdentifierBlock([NotNull] CompilerParser.Pr_QualifierIdentifierBlockContext context) { return VisitChildren(context); }
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="CompilerParser.pr_SimpleQualifierSimpleIdentifierBlock1"/>.
 	/// <para>
