@@ -43,7 +43,7 @@ namespace MetaDslx.CodeAnalysis
         internal SyntaxNodeOrToken(SyntaxNode node)
             : this()
         {
-            Debug.Assert(!node.Green.IsList, "node cannot be a list");
+            //Debug.Assert(!node.Green.IsList, "node cannot be a list");
             _position = node.Position;
             _nodeOrParent = node;
             _tokenIndex = -1;
@@ -51,7 +51,7 @@ namespace MetaDslx.CodeAnalysis
 
         internal SyntaxNodeOrToken(SyntaxNode? parent, GreenNode? token, int position, int index)
         {
-            Debug.Assert(parent == null || !parent.Green.IsList, "parent cannot be a list");
+            //Debug.Assert(parent == null || !parent.Green.IsList, "parent cannot be a list");
             Debug.Assert(token != null || (parent == null && position == 0 && index == 0), "parts must form a token");
             Debug.Assert(token == null || token.IsToken, "token must be a token");
             Debug.Assert(index >= 0, "index must not be negative");

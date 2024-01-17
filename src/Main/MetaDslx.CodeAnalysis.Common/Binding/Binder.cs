@@ -26,7 +26,7 @@ namespace MetaDslx.CodeAnalysis.Binding
         public virtual SyntaxTree SyntaxTree => _parentBinder.SyntaxTree;
         public Binder ParentBinder => _parentBinder;
         public SyntaxNodeOrToken Syntax => _syntax;
-        public SourceLocation? Location => (SourceLocation?)_syntax.GetLocation();
+        public SourceLocation? Location => (_syntax.GetLocation() as SourceLocation) ?? SourceLocation.None;
         public TextSpan FullSpan => _syntax.FullSpan;
 
         public Compilation Compilation

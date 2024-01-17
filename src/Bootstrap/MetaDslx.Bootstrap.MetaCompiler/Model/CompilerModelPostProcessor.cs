@@ -1095,6 +1095,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                 {
                     mainRule = false;
                     _grammar.MainRule = rule;
+                    _grammar.RootTypeName = rule.ReturnType.FullName;
                 }
             }
             if (_defaultReferenceRule is null)
