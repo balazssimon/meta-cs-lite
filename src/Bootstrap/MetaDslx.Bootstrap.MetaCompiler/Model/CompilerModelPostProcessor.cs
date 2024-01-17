@@ -394,7 +394,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                         var celem = alt.Elements[0];
                         if (celem.Multiplicity == Multiplicity.ExactlyOne && string.IsNullOrEmpty(celem.SymbolProperty.FirstOrDefault().Name))
                         {
-                            if (celem.Value is RuleRef) skipDefineBinder = true;
+                            if (celem.Value is RuleRef rr && rr.Rule is not null) skipDefineBinder = true;
                             if (celem.Value is Block pb && !pb.ReturnType.IsNull) skipDefineBinder = true;
                         }
                     }
@@ -433,6 +433,15 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                     propName.IsArray = false;
                     propName.Values.Add(name);
                     propBinder.Arguments.Add(propName);
+                    if (elem.Assignment == Assignment.QuestionAssign || elem.Assignment == Assignment.NegatedAssign)
+                    {
+                        var propValue = f.BinderArgument();
+                        propValue.Name = "value";
+                        propValue.TypeName = typeof(object).FullName!;
+                        propValue.IsArray = false;
+                        propValue.Values.Add("true");
+                        propBinder.Arguments.Add(propValue);
+                    }
                     elem.Binders.Add(propBinder);
                 }
                 var value = elem.Value;
@@ -487,6 +496,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                     var singleToken = (RuleRef)singleElem.Value;
                     singleToken.MParent = null;
                     tokenAlts.Tokens.Add(singleToken);
+                    InsertBinders(singleToken.Binders, singleElem.Binders);
                     InsertBinders(singleToken.Binders, singleTokenAlt.Binders);
                     _model.DeleteObject(singleTokenAlt);
                 }

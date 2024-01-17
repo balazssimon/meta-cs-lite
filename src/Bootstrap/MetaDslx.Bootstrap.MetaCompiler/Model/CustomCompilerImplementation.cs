@@ -40,12 +40,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
 
         public override string? LElement_FixedText(LElement _this)
         {
-            return _this?.Value.FixedText;
+            return _this?.Value?.FixedText;
         }
 
         public override bool LElement_IsFixed(LElement _this)
         {
-            return _this?.Value.IsFixed ?? false;
+            return _this?.Value?.IsFixed ?? false;
         }
 
         public override string? LElementValue_FixedText(LElementValue _this)

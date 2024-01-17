@@ -85,6 +85,20 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 				
 				case CompilerSyntaxKind.TPlusQuestion:
 				
+				case CompilerSyntaxKind.KBool:
+				
+				case CompilerSyntaxKind.KInt:
+				
+				case CompilerSyntaxKind.KString:
+				
+				case CompilerSyntaxKind.KType:
+				
+				case CompilerSyntaxKind.KSymbol:
+				
+				case CompilerSyntaxKind.KObject:
+				
+				case CompilerSyntaxKind.KVoid:
+				
 				case CompilerSyntaxKind.KReturns:
 				
 				case CompilerSyntaxKind.TBar:
@@ -106,8 +120,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 				case CompilerSyntaxKind.TInteger:
 				
 				case CompilerSyntaxKind.TDecimal:
-				
-				case CompilerSyntaxKind.TPrimitiveType:
 				
 				case CompilerSyntaxKind.TIdentifier:
 				
@@ -203,6 +215,20 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 				case CompilerSyntaxKind.TAsteriskQuestion:
 					
 				case CompilerSyntaxKind.TPlusQuestion:
+					
+				case CompilerSyntaxKind.KBool:
+					
+				case CompilerSyntaxKind.KInt:
+					
+				case CompilerSyntaxKind.KString:
+					
+				case CompilerSyntaxKind.KType:
+					
+				case CompilerSyntaxKind.KSymbol:
+					
+				case CompilerSyntaxKind.KObject:
+					
+				case CompilerSyntaxKind.KVoid:
 					
 				case CompilerSyntaxKind.KReturns:
 					
@@ -331,6 +357,27 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 				
 				case "+?": 
 					return CompilerSyntaxKind.TPlusQuestion;
+				
+				case "bool": 
+					return CompilerSyntaxKind.KBool;
+				
+				case "int": 
+					return CompilerSyntaxKind.KInt;
+				
+				case "string": 
+					return CompilerSyntaxKind.KString;
+				
+				case "type": 
+					return CompilerSyntaxKind.KType;
+				
+				case "symbol": 
+					return CompilerSyntaxKind.KSymbol;
+				
+				case "object": 
+					return CompilerSyntaxKind.KObject;
+				
+				case "void": 
+					return CompilerSyntaxKind.KVoid;
 				
 				case "returns": 
 					return CompilerSyntaxKind.KReturns;
@@ -492,6 +539,27 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 				case CompilerSyntaxKind.TPlusQuestion: 
 					return "TPlusQuestion";
 				
+				case CompilerSyntaxKind.KBool: 
+					return "KBool";
+				
+				case CompilerSyntaxKind.KInt: 
+					return "KInt";
+				
+				case CompilerSyntaxKind.KString: 
+					return "KString";
+				
+				case CompilerSyntaxKind.KType: 
+					return "KType";
+				
+				case CompilerSyntaxKind.KSymbol: 
+					return "KSymbol";
+				
+				case CompilerSyntaxKind.KObject: 
+					return "KObject";
+				
+				case CompilerSyntaxKind.KVoid: 
+					return "KVoid";
+				
 				case CompilerSyntaxKind.KReturns: 
 					return "KReturns";
 				
@@ -524,9 +592,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 				
 				case CompilerSyntaxKind.TDecimal: 
 					return "TDecimal";
-				
-				case CompilerSyntaxKind.TPrimitiveType: 
-					return "TPrimitiveType";
 				
 				case CompilerSyntaxKind.TIdentifier: 
 					return "TIdentifier";
@@ -934,6 +999,27 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 				case CompilerSyntaxKind.TPlusQuestion: 
 					return "+?";
 				
+				case CompilerSyntaxKind.KBool: 
+					return "bool";
+				
+				case CompilerSyntaxKind.KInt: 
+					return "int";
+				
+				case CompilerSyntaxKind.KString: 
+					return "string";
+				
+				case CompilerSyntaxKind.KType: 
+					return "type";
+				
+				case CompilerSyntaxKind.KSymbol: 
+					return "symbol";
+				
+				case CompilerSyntaxKind.KObject: 
+					return "object";
+				
+				case CompilerSyntaxKind.KVoid: 
+					return "void";
+				
 				case CompilerSyntaxKind.KReturns: 
 					return "returns";
 				
@@ -1019,6 +1105,20 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 				
 				case CompilerSyntaxKind.KFragment: 
 				
+				case CompilerSyntaxKind.KBool: 
+				
+				case CompilerSyntaxKind.KInt: 
+				
+				case CompilerSyntaxKind.KString: 
+				
+				case CompilerSyntaxKind.KType: 
+				
+				case CompilerSyntaxKind.KSymbol: 
+				
+				case CompilerSyntaxKind.KObject: 
+				
+				case CompilerSyntaxKind.KVoid: 
+				
 				case CompilerSyntaxKind.KReturns: 
 				
 				case CompilerSyntaxKind.KAlt: 
@@ -1059,6 +1159,20 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 			yield return CompilerSyntaxKind.KEof;
 			
 			yield return CompilerSyntaxKind.KFragment;
+			
+			yield return CompilerSyntaxKind.KBool;
+			
+			yield return CompilerSyntaxKind.KInt;
+			
+			yield return CompilerSyntaxKind.KString;
+			
+			yield return CompilerSyntaxKind.KType;
+			
+			yield return CompilerSyntaxKind.KSymbol;
+			
+			yield return CompilerSyntaxKind.KObject;
+			
+			yield return CompilerSyntaxKind.KVoid;
 			
 			yield return CompilerSyntaxKind.KReturns;
 			
@@ -1104,6 +1218,27 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 				
 				case "fragment": 
 					return CompilerSyntaxKind.KFragment;
+				
+				case "bool": 
+					return CompilerSyntaxKind.KBool;
+				
+				case "int": 
+					return CompilerSyntaxKind.KInt;
+				
+				case "string": 
+					return CompilerSyntaxKind.KString;
+				
+				case "type": 
+					return CompilerSyntaxKind.KType;
+				
+				case "symbol": 
+					return CompilerSyntaxKind.KSymbol;
+				
+				case "object": 
+					return CompilerSyntaxKind.KObject;
+				
+				case "void": 
+					return CompilerSyntaxKind.KVoid;
 				
 				case "returns": 
 					return CompilerSyntaxKind.KReturns;

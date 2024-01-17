@@ -4669,30 +4669,30 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 	internal class ReturnTypeIdentifierAlt1Green : ReturnTypeIdentifierGreen
 	{
 		internal static new readonly ReturnTypeIdentifierAlt1Green __Missing = new ReturnTypeIdentifierAlt1Green();
-		private __InternalSyntaxToken _tPrimitiveType;
+		private __InternalSyntaxToken _tokens;
 	
-		public ReturnTypeIdentifierAlt1Green(CompilerSyntaxKind kind, __InternalSyntaxToken tPrimitiveType)
+		public ReturnTypeIdentifierAlt1Green(CompilerSyntaxKind kind, __InternalSyntaxToken tokens)
 			: base(kind, null, null)
 		{
 			SlotCount = 1;
 			
-			if (tPrimitiveType != null)
+			if (tokens != null)
 			{
-				AdjustFlagsAndWidth(tPrimitiveType);
-				_tPrimitiveType = tPrimitiveType;
+				AdjustFlagsAndWidth(tokens);
+				_tokens = tokens;
 			}
 			
 		}
 	
-		public ReturnTypeIdentifierAlt1Green(CompilerSyntaxKind kind, __InternalSyntaxToken tPrimitiveType, __DiagnosticInfo[] diagnostics, __SyntaxAnnotation[] annotations)
+		public ReturnTypeIdentifierAlt1Green(CompilerSyntaxKind kind, __InternalSyntaxToken tokens, __DiagnosticInfo[] diagnostics, __SyntaxAnnotation[] annotations)
 			: base(kind, diagnostics, annotations)
 		{
 			SlotCount = 1;
 			
-			if (tPrimitiveType != null)
+			if (tokens != null)
 			{
-				AdjustFlagsAndWidth(tPrimitiveType);
-				_tPrimitiveType = tPrimitiveType;
+				AdjustFlagsAndWidth(tokens);
+				_tokens = tokens;
 			}
 			
 		}
@@ -4703,7 +4703,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			this.flags &= ~NodeFlags.IsNotMissing;
 		}
 	
-		public __InternalSyntaxToken TPrimitiveType { get { return _tPrimitiveType; } }
+		public __InternalSyntaxToken Tokens { get { return _tokens; } }
 	
 		protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
 		{
@@ -4716,7 +4716,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			{
 				
 				
-				case 0: return _tPrimitiveType;
+				case 0: return _tokens;
 				
 				default: return null;
 			}
@@ -4728,25 +4728,25 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 	
 		public override __InternalSyntaxNode WithDiagnostics(__DiagnosticInfo[] diagnostics)
 		{
-			return new ReturnTypeIdentifierAlt1Green(this.Kind, _tPrimitiveType, diagnostics, this.GetAnnotations());
+			return new ReturnTypeIdentifierAlt1Green(this.Kind, _tokens, diagnostics, this.GetAnnotations());
 		}
 	
 		public override __InternalSyntaxNode WithAnnotations(__SyntaxAnnotation[] annotations)
 		{
-			return new ReturnTypeIdentifierAlt1Green(this.Kind, _tPrimitiveType, this.GetDiagnostics(), annotations);
+			return new ReturnTypeIdentifierAlt1Green(this.Kind, _tokens, this.GetDiagnostics(), annotations);
 		}
 	
 		public override __GreenNode Clone()
 		{
-			return new ReturnTypeIdentifierAlt1Green(this.Kind, _tPrimitiveType, this.GetDiagnostics(), this.GetAnnotations());
+			return new ReturnTypeIdentifierAlt1Green(this.Kind, _tokens, this.GetDiagnostics(), this.GetAnnotations());
 		}
 	
 	
-		public ReturnTypeIdentifierAlt1Green Update(__InternalSyntaxToken tPrimitiveType)
+		public ReturnTypeIdentifierAlt1Green Update(__InternalSyntaxToken tokens)
 		{
-			if (_tPrimitiveType != tPrimitiveType)
+			if (_tokens != tokens)
 			{
-				__InternalSyntaxNode newNode = CompilerLanguage.Instance.InternalSyntaxFactory.ReturnTypeIdentifierAlt1(tPrimitiveType);
+				__InternalSyntaxNode newNode = CompilerLanguage.Instance.InternalSyntaxFactory.ReturnTypeIdentifierAlt1(tokens);
 				var diags = this.GetDiagnostics();
 				if (diags != null && diags.Length > 0)
 					newNode = newNode.WithDiagnostics(diags);
@@ -4865,30 +4865,30 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 	internal class ReturnTypeQualifierAlt1Green : ReturnTypeQualifierGreen
 	{
 		internal static new readonly ReturnTypeQualifierAlt1Green __Missing = new ReturnTypeQualifierAlt1Green();
-		private __InternalSyntaxToken _tPrimitiveType;
+		private __InternalSyntaxToken _tokens;
 	
-		public ReturnTypeQualifierAlt1Green(CompilerSyntaxKind kind, __InternalSyntaxToken tPrimitiveType)
+		public ReturnTypeQualifierAlt1Green(CompilerSyntaxKind kind, __InternalSyntaxToken tokens)
 			: base(kind, null, null)
 		{
 			SlotCount = 1;
 			
-			if (tPrimitiveType != null)
+			if (tokens != null)
 			{
-				AdjustFlagsAndWidth(tPrimitiveType);
-				_tPrimitiveType = tPrimitiveType;
+				AdjustFlagsAndWidth(tokens);
+				_tokens = tokens;
 			}
 			
 		}
 	
-		public ReturnTypeQualifierAlt1Green(CompilerSyntaxKind kind, __InternalSyntaxToken tPrimitiveType, __DiagnosticInfo[] diagnostics, __SyntaxAnnotation[] annotations)
+		public ReturnTypeQualifierAlt1Green(CompilerSyntaxKind kind, __InternalSyntaxToken tokens, __DiagnosticInfo[] diagnostics, __SyntaxAnnotation[] annotations)
 			: base(kind, diagnostics, annotations)
 		{
 			SlotCount = 1;
 			
-			if (tPrimitiveType != null)
+			if (tokens != null)
 			{
-				AdjustFlagsAndWidth(tPrimitiveType);
-				_tPrimitiveType = tPrimitiveType;
+				AdjustFlagsAndWidth(tokens);
+				_tokens = tokens;
 			}
 			
 		}
@@ -4899,7 +4899,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			this.flags &= ~NodeFlags.IsNotMissing;
 		}
 	
-		public __InternalSyntaxToken TPrimitiveType { get { return _tPrimitiveType; } }
+		public __InternalSyntaxToken Tokens { get { return _tokens; } }
 	
 		protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
 		{
@@ -4912,7 +4912,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			{
 				
 				
-				case 0: return _tPrimitiveType;
+				case 0: return _tokens;
 				
 				default: return null;
 			}
@@ -4924,25 +4924,25 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 	
 		public override __InternalSyntaxNode WithDiagnostics(__DiagnosticInfo[] diagnostics)
 		{
-			return new ReturnTypeQualifierAlt1Green(this.Kind, _tPrimitiveType, diagnostics, this.GetAnnotations());
+			return new ReturnTypeQualifierAlt1Green(this.Kind, _tokens, diagnostics, this.GetAnnotations());
 		}
 	
 		public override __InternalSyntaxNode WithAnnotations(__SyntaxAnnotation[] annotations)
 		{
-			return new ReturnTypeQualifierAlt1Green(this.Kind, _tPrimitiveType, this.GetDiagnostics(), annotations);
+			return new ReturnTypeQualifierAlt1Green(this.Kind, _tokens, this.GetDiagnostics(), annotations);
 		}
 	
 		public override __GreenNode Clone()
 		{
-			return new ReturnTypeQualifierAlt1Green(this.Kind, _tPrimitiveType, this.GetDiagnostics(), this.GetAnnotations());
+			return new ReturnTypeQualifierAlt1Green(this.Kind, _tokens, this.GetDiagnostics(), this.GetAnnotations());
 		}
 	
 	
-		public ReturnTypeQualifierAlt1Green Update(__InternalSyntaxToken tPrimitiveType)
+		public ReturnTypeQualifierAlt1Green Update(__InternalSyntaxToken tokens)
 		{
-			if (_tPrimitiveType != tPrimitiveType)
+			if (_tokens != tokens)
 			{
-				__InternalSyntaxNode newNode = CompilerLanguage.Instance.InternalSyntaxFactory.ReturnTypeQualifierAlt1(tPrimitiveType);
+				__InternalSyntaxNode newNode = CompilerLanguage.Instance.InternalSyntaxFactory.ReturnTypeQualifierAlt1(tokens);
 				var diags = this.GetDiagnostics();
 				if (diags != null && diags.Length > 0)
 					newNode = newNode.WithDiagnostics(diags);

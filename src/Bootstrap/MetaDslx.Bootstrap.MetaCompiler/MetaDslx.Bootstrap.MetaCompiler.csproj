@@ -44,6 +44,9 @@
 		<None Remove="Symbols\**" />
 		<Compile Remove="Syntax\**" />
 		<None Remove="Syntax\**" />
+
+		<Compile Remove="Compiler3\**" />
+		<None Remove="Compiler3\**" />
 	</ItemGroup>
 
 	<!--

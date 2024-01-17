@@ -172,17 +172,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 		}
 
 		
-		public __InternalSyntaxToken TPrimitiveType(string text)
-		{
-			return Token(null, CompilerSyntaxKind.TPrimitiveType, text, null);
-		}
-
-		public __InternalSyntaxToken TPrimitiveType(string text, object value)
-		{
-			return Token(null, CompilerSyntaxKind.TPrimitiveType, text, value, null);
-		}
-
-		
 		public __InternalSyntaxToken TIdentifier(string text)
 		{
 			return Token(null, CompilerSyntaxKind.TIdentifier, text, null);
@@ -1469,26 +1458,26 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			
 		
 			
-		internal ReturnTypeIdentifierAlt1Green ReturnTypeIdentifierAlt1(__InternalSyntaxToken tPrimitiveType)
+		internal ReturnTypeIdentifierAlt1Green ReturnTypeIdentifierAlt1(__InternalSyntaxToken tokens)
 		{
 #if DEBUG
 			
 				
 				
-			if (tPrimitiveType is null) throw new ArgumentNullException(nameof(tPrimitiveType));
+			if (tokens is null) throw new ArgumentNullException(nameof(tokens));
 				
 				
 				
-			if (tPrimitiveType.RawKind != (int)CompilerSyntaxKind.TPrimitiveType) throw new ArgumentException(nameof(tPrimitiveType));
+			if (tokens.RawKind != (int)CompilerSyntaxKind.KBool && tokens.RawKind != (int)CompilerSyntaxKind.KInt && tokens.RawKind != (int)CompilerSyntaxKind.KString && tokens.RawKind != (int)CompilerSyntaxKind.KType && tokens.RawKind != (int)CompilerSyntaxKind.KSymbol && tokens.RawKind != (int)CompilerSyntaxKind.KObject && tokens.RawKind != (int)CompilerSyntaxKind.KVoid) throw new ArgumentException(nameof(tokens));
 				
 			
 #endif
 			
 			int hash;
-			var cached = __SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.ReturnTypeIdentifierAlt1, tPrimitiveType, out hash);
+			var cached = __SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.ReturnTypeIdentifierAlt1, tokens, out hash);
 			if (cached != null) return (ReturnTypeIdentifierAlt1Green)cached;
 		
-			var result = new ReturnTypeIdentifierAlt1Green(CompilerSyntaxKind.ReturnTypeIdentifierAlt1, tPrimitiveType);
+			var result = new ReturnTypeIdentifierAlt1Green(CompilerSyntaxKind.ReturnTypeIdentifierAlt1, tokens);
 			if (hash >= 0)
 			{
 				__SyntaxNodeCache.AddNode(result, hash);
@@ -1529,26 +1518,26 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			
 		
 			
-		internal ReturnTypeQualifierAlt1Green ReturnTypeQualifierAlt1(__InternalSyntaxToken tPrimitiveType)
+		internal ReturnTypeQualifierAlt1Green ReturnTypeQualifierAlt1(__InternalSyntaxToken tokens)
 		{
 #if DEBUG
 			
 				
 				
-			if (tPrimitiveType is null) throw new ArgumentNullException(nameof(tPrimitiveType));
+			if (tokens is null) throw new ArgumentNullException(nameof(tokens));
 				
 				
 				
-			if (tPrimitiveType.RawKind != (int)CompilerSyntaxKind.TPrimitiveType) throw new ArgumentException(nameof(tPrimitiveType));
+			if (tokens.RawKind != (int)CompilerSyntaxKind.KBool && tokens.RawKind != (int)CompilerSyntaxKind.KInt && tokens.RawKind != (int)CompilerSyntaxKind.KString && tokens.RawKind != (int)CompilerSyntaxKind.KType && tokens.RawKind != (int)CompilerSyntaxKind.KSymbol && tokens.RawKind != (int)CompilerSyntaxKind.KObject && tokens.RawKind != (int)CompilerSyntaxKind.KVoid) throw new ArgumentException(nameof(tokens));
 				
 			
 #endif
 			
 			int hash;
-			var cached = __SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.ReturnTypeQualifierAlt1, tPrimitiveType, out hash);
+			var cached = __SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.ReturnTypeQualifierAlt1, tokens, out hash);
 			if (cached != null) return (ReturnTypeQualifierAlt1Green)cached;
 		
-			var result = new ReturnTypeQualifierAlt1Green(CompilerSyntaxKind.ReturnTypeQualifierAlt1, tPrimitiveType);
+			var result = new ReturnTypeQualifierAlt1Green(CompilerSyntaxKind.ReturnTypeQualifierAlt1, tokens);
 			if (hash >= 0)
 			{
 				__SyntaxNodeCache.AddNode(result, hash);

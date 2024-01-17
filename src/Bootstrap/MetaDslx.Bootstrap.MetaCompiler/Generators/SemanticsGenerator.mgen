@@ -134,6 +134,7 @@ end template
 
 template GenerateBinderFactoryVisitElement(Alternative alt, Element elem, ref int annotIndex)
     [var isList = MetaDslx.Bootstrap.MetaCompiler.Model.MultiplicityExtensions.IsList(elem.Multiplicity)]
+    [var isOptional = MetaDslx.Bootstrap.MetaCompiler.Model.MultiplicityExtensions.IsOptional(elem.Multiplicity)]
     [if (isList)]
         [var elemName = "node."+elem.PropertyName+".Node"]
 [var body = GenerateBinderFactoryVisitListElements(alt, elem, ref annotIndex)]
@@ -143,6 +144,12 @@ template GenerateBinderFactoryVisitElement(Alternative alt, Element elem, ref in
 [var body = GenerateBinderFactoryVisitSeparatedListElements(alt, elem, sl, ref annotIndex)]
 [body = GenerateBinderFactoryVisitBinders(sl.Binders, elemName, body, false, ref annotIndex)]
 [GenerateBinderFactoryVisitBinders(elem.Binders, elemName, body, false, ref annotIndex)]
+    [else if (isOptional)]
+        [var elemName = "node."+elem.PropertyName]
+if ([elemName][if (elem.IsToken)].Get[Lang]Kind() != [Lang]SyntaxKind.None[else] != null[end if])
+{
+    [GenerateBinderFactoryVisitElementValue(elemName, elem, elem.Value, true, ref annotIndex)]
+}
     [else]
         [var elemName = "node."+elem.PropertyName]
 [GenerateBinderFactoryVisitElementValue(elemName, elem, elem.Value, true, ref annotIndex)]
@@ -280,7 +287,7 @@ end template
 
 template GenerateBinderFactoryVisitElementBody(string elemName, ElementValue elemValue, ref int annotIndex)
     [if (elemValue is RuleRef rr && rr.Token is not null)]
-        [var body = "//this.VisitToken("+elemName+"]);"]
+        [var body = "//this.VisitToken("+elemName+");"]
 [GenerateBinderFactoryVisitBinders(rr.Token.Binders, elemName, body, false, ref annotIndex)]
     [else]
 this.Visit([elemName]);

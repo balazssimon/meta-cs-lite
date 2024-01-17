@@ -169,17 +169,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
         }
         
 
-        public __SyntaxToken TPrimitiveType(string text)
-        {
-            return new __SyntaxToken(CompilerLanguage.Instance.InternalSyntaxFactory.TPrimitiveType(text));
-        }
-
-        public __SyntaxToken TPrimitiveType(string text, object value)
-        {
-            return new __SyntaxToken(CompilerLanguage.Instance.InternalSyntaxFactory.TPrimitiveType(text, value));
-        }
-        
-
         public __SyntaxToken TIdentifier(string text)
         {
             return new __SyntaxToken(CompilerLanguage.Instance.InternalSyntaxFactory.TIdentifier(text));
@@ -1120,17 +1109,17 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		
 			
 
-        public ReturnTypeIdentifierAlt1Syntax ReturnTypeIdentifierAlt1(__SyntaxToken tPrimitiveType)
+        public ReturnTypeIdentifierAlt1Syntax ReturnTypeIdentifierAlt1(__SyntaxToken tokens)
  {
  		
  		
- 	if (tPrimitiveType.RawKind != (int)__InternalSyntaxKind.None) throw new ArgumentNullException(nameof(tPrimitiveType));
+ 	if (tokens.RawKind != (int)__InternalSyntaxKind.None) throw new ArgumentNullException(nameof(tokens));
  		
  		
  		
- 	if (tPrimitiveType.RawKind != (int)CompilerSyntaxKind.TPrimitiveType) throw new ArgumentException(nameof(tPrimitiveType));
+ 	if (tokens.RawKind != (int)CompilerSyntaxKind.KBool && tokens.RawKind != (int)CompilerSyntaxKind.KInt && tokens.RawKind != (int)CompilerSyntaxKind.KString && tokens.RawKind != (int)CompilerSyntaxKind.KType && tokens.RawKind != (int)CompilerSyntaxKind.KSymbol && tokens.RawKind != (int)CompilerSyntaxKind.KObject && tokens.RawKind != (int)CompilerSyntaxKind.KVoid) throw new ArgumentException(nameof(tokens));
  		
-     return (ReturnTypeIdentifierAlt1Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.ReturnTypeIdentifierAlt1((__InternalSyntaxToken)tPrimitiveType.Node).CreateRed();
+     return (ReturnTypeIdentifierAlt1Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.ReturnTypeIdentifierAlt1((__InternalSyntaxToken)tokens.Node).CreateRed();
  }
 			
 
@@ -1148,17 +1137,17 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		
 			
 
-        public ReturnTypeQualifierAlt1Syntax ReturnTypeQualifierAlt1(__SyntaxToken tPrimitiveType)
+        public ReturnTypeQualifierAlt1Syntax ReturnTypeQualifierAlt1(__SyntaxToken tokens)
  {
  		
  		
- 	if (tPrimitiveType.RawKind != (int)__InternalSyntaxKind.None) throw new ArgumentNullException(nameof(tPrimitiveType));
+ 	if (tokens.RawKind != (int)__InternalSyntaxKind.None) throw new ArgumentNullException(nameof(tokens));
  		
  		
  		
- 	if (tPrimitiveType.RawKind != (int)CompilerSyntaxKind.TPrimitiveType) throw new ArgumentException(nameof(tPrimitiveType));
+ 	if (tokens.RawKind != (int)CompilerSyntaxKind.KBool && tokens.RawKind != (int)CompilerSyntaxKind.KInt && tokens.RawKind != (int)CompilerSyntaxKind.KString && tokens.RawKind != (int)CompilerSyntaxKind.KType && tokens.RawKind != (int)CompilerSyntaxKind.KSymbol && tokens.RawKind != (int)CompilerSyntaxKind.KObject && tokens.RawKind != (int)CompilerSyntaxKind.KVoid) throw new ArgumentException(nameof(tokens));
  		
-     return (ReturnTypeQualifierAlt1Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.ReturnTypeQualifierAlt1((__InternalSyntaxToken)tPrimitiveType.Node).CreateRed();
+     return (ReturnTypeQualifierAlt1Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.ReturnTypeQualifierAlt1((__InternalSyntaxToken)tokens.Node).CreateRed();
  }
 			
 

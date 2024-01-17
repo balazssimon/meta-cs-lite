@@ -2470,9 +2470,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 
         public virtual SyntaxNode VisitReturnTypeIdentifierAlt1(ReturnTypeIdentifierAlt1Syntax node)
  {
-     var tPrimitiveType = this.VisitToken(node.TPrimitiveType);
+     var tokens = this.VisitToken(node.Tokens);
      
- 	return node.Update(tPrimitiveType);
+ 	return node.Update(tokens);
  }
 			
 
@@ -2488,9 +2488,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 
         public virtual SyntaxNode VisitReturnTypeQualifierAlt1(ReturnTypeQualifierAlt1Syntax node)
  {
-     var tPrimitiveType = this.VisitToken(node.TPrimitiveType);
+     var tokens = this.VisitToken(node.Tokens);
      
- 	return node.Update(tPrimitiveType);
+ 	return node.Update(tokens);
  }
 			
 

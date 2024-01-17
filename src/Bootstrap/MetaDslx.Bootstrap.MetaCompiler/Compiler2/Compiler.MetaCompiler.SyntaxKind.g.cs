@@ -95,6 +95,20 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		
 		TPlusQuestion,
 		
+		KBool,
+		
+		KInt,
+		
+		KString,
+		
+		KType,
+		
+		KSymbol,
+		
+		KObject,
+		
+		KVoid,
+		
 		KReturns,
 		
 		TBar,
@@ -117,8 +131,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		TInteger,
 		
 		TDecimal,
-		
-		TPrimitiveType,
 		
 		TIdentifier,
 		

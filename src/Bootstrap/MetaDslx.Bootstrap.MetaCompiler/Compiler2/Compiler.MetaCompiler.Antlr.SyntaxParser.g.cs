@@ -1517,12 +1517,18 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
                	if (context == null) return ReturnTypeIdentifierAlt1Green.__Missing;
                 
                     
-                        
-                var tPrimitiveType = this.VisitTerminal(context.e_TPrimitiveType, CompilerSyntaxKind.TPrimitiveType);
-                        
+                InternalSyntaxToken? tokens = null;
+ if (context.LR_KBool() is not null) tokens = this.VisitTerminal(context.LR_KBool());
+ if (context.LR_KInt() is not null) tokens = this.VisitTerminal(context.LR_KInt());
+ if (context.LR_KString() is not null) tokens = this.VisitTerminal(context.LR_KString());
+ if (context.LR_KType() is not null) tokens = this.VisitTerminal(context.LR_KType());
+ if (context.LR_KSymbol() is not null) tokens = this.VisitTerminal(context.LR_KSymbol());
+ if (context.LR_KObject() is not null) tokens = this.VisitTerminal(context.LR_KObject());
+ if (context.LR_KVoid() is not null) tokens = this.VisitTerminal(context.LR_KVoid());
+ if (tokens is null) tokens = _factory.None;
                     
                 
-            	return _factory.ReturnTypeIdentifierAlt1(tPrimitiveType);
+            	return _factory.ReturnTypeIdentifierAlt1(tokens);
             }
                 
 
@@ -1551,12 +1557,18 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
                	if (context == null) return ReturnTypeQualifierAlt1Green.__Missing;
                 
                     
-                        
-                var tPrimitiveType = this.VisitTerminal(context.e_TPrimitiveType, CompilerSyntaxKind.TPrimitiveType);
-                        
+                InternalSyntaxToken? tokens = null;
+ if (context.LR_KBool() is not null) tokens = this.VisitTerminal(context.LR_KBool());
+ if (context.LR_KInt() is not null) tokens = this.VisitTerminal(context.LR_KInt());
+ if (context.LR_KString() is not null) tokens = this.VisitTerminal(context.LR_KString());
+ if (context.LR_KType() is not null) tokens = this.VisitTerminal(context.LR_KType());
+ if (context.LR_KSymbol() is not null) tokens = this.VisitTerminal(context.LR_KSymbol());
+ if (context.LR_KObject() is not null) tokens = this.VisitTerminal(context.LR_KObject());
+ if (context.LR_KVoid() is not null) tokens = this.VisitTerminal(context.LR_KVoid());
+ if (tokens is null) tokens = _factory.None;
                     
                 
-            	return _factory.ReturnTypeQualifierAlt1(tPrimitiveType);
+            	return _factory.ReturnTypeQualifierAlt1(tokens);
             }
                 
 

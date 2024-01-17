@@ -74,11 +74,11 @@ pr_AnnotationArgument
     :  e_Block=pr_AnnotationArgumentBlock1?  e_Value=pr_Expression
     ;
 pr_ReturnTypeIdentifier
-    :  e_TPrimitiveType=LR_TPrimitiveType #pr_ReturnTypeIdentifierAlt1
+    :  e_Tokens=(LR_KBool | LR_KInt | LR_KString | LR_KType | LR_KSymbol | LR_KObject | LR_KVoid) #pr_ReturnTypeIdentifierAlt1
  |  e_Identifier=pr_Identifier #pr_ReturnTypeIdentifierAlt2
     ;
 pr_ReturnTypeQualifier
-    :  e_TPrimitiveType=LR_TPrimitiveType #pr_ReturnTypeQualifierAlt1
+    :  e_Tokens=(LR_KBool | LR_KInt | LR_KString | LR_KType | LR_KSymbol | LR_KObject | LR_KVoid) #pr_ReturnTypeQualifierAlt1
  |         e_Identifier1=pr_Identifier         (e_TDot1+=LR_TDot e_Identifier2+=pr_Identifier)*             #pr_ReturnTypeQualifierAlt2
     ;
 pr_Name

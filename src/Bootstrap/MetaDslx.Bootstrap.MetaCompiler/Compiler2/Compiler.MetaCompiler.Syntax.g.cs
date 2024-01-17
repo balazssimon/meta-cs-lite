@@ -4280,13 +4280,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	
 	        
 	        
-	    public __SyntaxToken TPrimitiveType 
+	    public __SyntaxToken Tokens 
 		{ 
 			get
 			{
 	        
 				var green = (global::MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax.ReturnTypeIdentifierAlt1Green)this.Green;
-				var greenToken = green.TPrimitiveType;
+				var greenToken = green.Tokens;
 	            
 				return new __SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
 	            
@@ -4313,17 +4313,17 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	    }
 	        
 	
-	    public ReturnTypeIdentifierAlt1Syntax WithTPrimitiveType(__SyntaxToken tPrimitiveType)
+	    public ReturnTypeIdentifierAlt1Syntax WithTokens(__SyntaxToken tokens)
 		{
-			return this.Update(tPrimitiveType);
+			return this.Update(tokens);
 		}
 			
 	
-	    public ReturnTypeIdentifierAlt1Syntax Update(__SyntaxToken tPrimitiveType)
+	    public ReturnTypeIdentifierAlt1Syntax Update(__SyntaxToken tokens)
 	    {
-	        if (this.TPrimitiveType != tPrimitiveType)
+	        if (this.Tokens != tokens)
 	        {
-	            var newNode = CompilerLanguage.Instance.SyntaxFactory.ReturnTypeIdentifierAlt1(tPrimitiveType);
+	            var newNode = CompilerLanguage.Instance.SyntaxFactory.ReturnTypeIdentifierAlt1(tokens);
 	            var annotations = this.GetAnnotations();
 	            if (annotations != null && annotations.Length > 0)
 	               newNode = __SyntaxExtensions.WithAnnotations(newNode, annotations);
@@ -4463,13 +4463,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	
 	        
 	        
-	    public __SyntaxToken TPrimitiveType 
+	    public __SyntaxToken Tokens 
 		{ 
 			get
 			{
 	        
 				var green = (global::MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax.ReturnTypeQualifierAlt1Green)this.Green;
-				var greenToken = green.TPrimitiveType;
+				var greenToken = green.Tokens;
 	            
 				return new __SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
 	            
@@ -4496,17 +4496,17 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	    }
 	        
 	
-	    public ReturnTypeQualifierAlt1Syntax WithTPrimitiveType(__SyntaxToken tPrimitiveType)
+	    public ReturnTypeQualifierAlt1Syntax WithTokens(__SyntaxToken tokens)
 		{
-			return this.Update(tPrimitiveType);
+			return this.Update(tokens);
 		}
 			
 	
-	    public ReturnTypeQualifierAlt1Syntax Update(__SyntaxToken tPrimitiveType)
+	    public ReturnTypeQualifierAlt1Syntax Update(__SyntaxToken tokens)
 	    {
-	        if (this.TPrimitiveType != tPrimitiveType)
+	        if (this.Tokens != tokens)
 	        {
-	            var newNode = CompilerLanguage.Instance.SyntaxFactory.ReturnTypeQualifierAlt1(tPrimitiveType);
+	            var newNode = CompilerLanguage.Instance.SyntaxFactory.ReturnTypeQualifierAlt1(tokens);
 	            var annotations = this.GetAnnotations();
 	            if (annotations != null && annotations.Length > 0)
 	               newNode = __SyntaxExtensions.WithAnnotations(newNode, annotations);
