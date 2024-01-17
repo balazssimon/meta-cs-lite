@@ -20,9 +20,9 @@ Main returns Namespace:
 	eof;
 
 block Using returns ImportSymbol
-	: 'using' namespaces+=#NamespaceSymbol ';'
+	: 'using' namespaces+=#NamespaceSymbol ';'/*
 	| alt UsingMetaModel returns ImportMetaModelSymbol: 'using' 'metamodel' symbols+=#DeclarationSymbol ';'
-	| alt UsingSymbols returns ImportSymbolModelSymbol: 'using' 'symbols' namespaces+=#NamespaceSymbol ';';
+	| alt UsingSymbols returns ImportSymbolModelSymbol: 'using' 'symbols' namespaces+=#NamespaceSymbol ';'*/;
 
 [Scope]
 block Declarations: declarations+=LanguageDeclaration declarations+=Rule*;
@@ -40,7 +40,7 @@ BlockInline returns Block: '(' alternatives+=Alternative ('|' alternatives+=Alte
 Alternative: (annotations+=ParserAnnotation* 'alt' name=Name ('returns' returnType=ReturnTypeQualifier)? ':')? elements+=Element+ ('=>' returnValue=Expression)?;
 Element: (nameAnnotations+=ParserAnnotation* symbolProperty+=[SymbolProperty]Identifier assignment=Assignment)? valueAnnotations+=ParserAnnotation* value=ElementValue multiplicity=Multiplicity?;
 ElementValue: BlockInline | Eof1 | Keyword | RuleRef;
-RuleRef: rule=[Use(GrammarRule)]Identifier | '#' referencedTypes+=ReturnTypeQualifier | '#{' referencedTypes+=ReturnTypeQualifier (',' referencedTypes+=ReturnTypeQualifier)* '}' ;
+RuleRef: grammarRule=[Use(GrammarRule)]Identifier | '#' referencedTypes+=ReturnTypeQualifier | '#{' referencedTypes+=ReturnTypeQualifier (',' referencedTypes+=ReturnTypeQualifier)* '}' ;
 Eof1 returns Eof: 'eof';
 Keyword: text=TString;
 

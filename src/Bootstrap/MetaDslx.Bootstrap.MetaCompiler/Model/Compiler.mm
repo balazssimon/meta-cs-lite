@@ -112,9 +112,9 @@ abstract class LexerRule : GrammarRule
 	derived string? FixedText;
 }
 
-class Token : LexerRule
+class $Token : LexerRule
 {
-	type ReturnType;
+	type $ReturnType;
 	bool IsTrivia;
 
 	TokenKind? TokenKind;

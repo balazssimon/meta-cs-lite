@@ -23,11 +23,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 			
 		
 			
-		void VisitUsingAlt1(UsingAlt1Syntax node);
-			
-		void VisitUsingMetaModel(UsingMetaModelSyntax node);
-			
-		void VisitUsingSymbols(UsingSymbolsSyntax node);
+		void VisitUsing(UsingSyntax node);
 			
 		
 			
@@ -253,19 +249,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		
 			
 
-		public virtual void VisitUsingAlt1(UsingAlt1Syntax node)
-		{
-		    this.DefaultVisit(node);
-		}
-			
-
-		public virtual void VisitUsingMetaModel(UsingMetaModelSyntax node)
-		{
-		    this.DefaultVisit(node);
-		}
-			
-
-		public virtual void VisitUsingSymbols(UsingSymbolsSyntax node)
+		public virtual void VisitUsing(UsingSyntax node)
 		{
 		    this.DefaultVisit(node);
 		}
@@ -722,11 +706,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 			
 		
 			
-		TResult VisitUsingAlt1(UsingAlt1Syntax node);
-			
-		TResult VisitUsingMetaModel(UsingMetaModelSyntax node);
-			
-		TResult VisitUsingSymbols(UsingSymbolsSyntax node);
+		TResult VisitUsing(UsingSyntax node);
 			
 		
 			
@@ -952,19 +932,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		
 			
 
-		public virtual TResult VisitUsingAlt1(UsingAlt1Syntax node)
-		{
-		    return this.DefaultVisit(node);
-		}
-			
-
-		public virtual TResult VisitUsingMetaModel(UsingMetaModelSyntax node)
-		{
-		    return this.DefaultVisit(node);
-		}
-			
-
-		public virtual TResult VisitUsingSymbols(UsingSymbolsSyntax node)
+		public virtual TResult VisitUsing(UsingSyntax node)
 		{
 		    return this.DefaultVisit(node);
 		}
@@ -1421,11 +1389,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 			
 		
 			
-		TResult VisitUsingAlt1(UsingAlt1Syntax node, TArg argument);
-			
-		TResult VisitUsingMetaModel(UsingMetaModelSyntax node, TArg argument);
-			
-		TResult VisitUsingSymbols(UsingSymbolsSyntax node, TArg argument);
+		TResult VisitUsing(UsingSyntax node, TArg argument);
 			
 		
 			
@@ -1651,19 +1615,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		
 			
 
-		public virtual TResult VisitUsingAlt1(UsingAlt1Syntax node, TArg argument)
-		{
-		    return this.DefaultVisit(node, argument);
-		}
-			
-
-		public virtual TResult VisitUsingMetaModel(UsingMetaModelSyntax node, TArg argument)
-		{
-		    return this.DefaultVisit(node, argument);
-		}
-			
-
-		public virtual TResult VisitUsingSymbols(UsingSymbolsSyntax node, TArg argument)
+		public virtual TResult VisitUsing(UsingSyntax node, TArg argument)
 		{
 		    return this.DefaultVisit(node, argument);
 		}
@@ -2146,7 +2098,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		
 			
 
-        public virtual SyntaxNode VisitUsingAlt1(UsingAlt1Syntax node)
+        public virtual SyntaxNode VisitUsing(UsingSyntax node)
  {
      var kUsing = this.VisitToken(node.KUsing);
      
@@ -2155,34 +2107,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
      var tSemicolon = this.VisitToken(node.TSemicolon);
      
  	return node.Update(kUsing, qualifier, tSemicolon);
- }
-			
-
-        public virtual SyntaxNode VisitUsingMetaModel(UsingMetaModelSyntax node)
- {
-     var kUsing = this.VisitToken(node.KUsing);
-     
-     var kMetamodel = this.VisitToken(node.KMetamodel);
-     
-     var qualifier = this.VisitList(node.Qualifier);
-     
-     var tSemicolon = this.VisitToken(node.TSemicolon);
-     
- 	return node.Update(kUsing, kMetamodel, qualifier, tSemicolon);
- }
-			
-
-        public virtual SyntaxNode VisitUsingSymbols(UsingSymbolsSyntax node)
- {
-     var kUsing = this.VisitToken(node.KUsing);
-     
-     var kSymbols = this.VisitToken(node.KSymbols);
-     
-     var qualifier = this.VisitList(node.Qualifier);
-     
-     var tSemicolon = this.VisitToken(node.TSemicolon);
-     
- 	return node.Update(kUsing, kSymbols, qualifier, tSemicolon);
  }
 			
 		
@@ -2358,9 +2282,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 
         public virtual SyntaxNode VisitRuleRefAlt1(RuleRefAlt1Syntax node)
  {
-     var rule = (IdentifierSyntax)this.Visit(node.Rule);
+     var grammarRule = (IdentifierSyntax)this.Visit(node.GrammarRule);
      
- 	return node.Update(rule);
+ 	return node.Update(grammarRule);
  }
 			
 

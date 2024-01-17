@@ -256,7 +256,7 @@ else
     [body]
 }
     [else]
-        [var body = GenerateBinderFactoryVisitElementBody(elemName, elemValue)]
+        [var body = GenerateBinderFactoryVisitElementBody(elemName, elemValue, ref annotIndex)]
         [body = GenerateBinderFactoryVisitBinders(elemValue.Binders, elemName, body, false, ref annotIndex)]
         [if (withElemBinders)]
             [body = GenerateBinderFactoryVisitBinders(elem.Binders, elemName, body, false, ref annotIndex)]
@@ -278,9 +278,10 @@ switch ([elemName].Get[Lang]Kind())
 }
 end template
 
-template GenerateBinderFactoryVisitElementBody(string elemName, ElementValue elemValue)
+template GenerateBinderFactoryVisitElementBody(string elemName, ElementValue elemValue, ref int annotIndex)
     [if (elemValue is RuleRef rr && rr.Token is not null)]
-//this.VisitToken([elemName]);
+        [var body = "//this.VisitToken("+elemName+"]);"]
+[GenerateBinderFactoryVisitBinders(rr.Token.Binders, elemName, body, false, ref annotIndex)]
     [else]
 this.Visit([elemName]);
     [end if]

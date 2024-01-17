@@ -9,9 +9,7 @@ pr_Main
     :  e_KNamespace=LR_KNamespace         e_Identifier1=pr_Identifier         (e_TDot1+=LR_TDot e_Identifier2+=pr_Identifier)*              e_TSemicolon=LR_TSemicolon  e_UsingList+=pr_Using*  e_Declarations=pr_Declarations  e_EndOfFileToken=EOF
     ;
 pr_Using
-    :  e_KUsing=LR_KUsing         e_Identifier1=pr_Identifier         (e_TDot1+=LR_TDot e_Identifier2+=pr_Identifier)*              e_TSemicolon=LR_TSemicolon #pr_UsingAlt1
- |  e_KUsing1=LR_KUsing  e_KMetamodel=LR_KMetamodel         e_Identifier3=pr_Identifier         (e_TDot1+=LR_TDot e_Identifier2+=pr_Identifier)*              e_TSemicolon1=LR_TSemicolon #pr_UsingMetaModel
- |  e_KUsing2=LR_KUsing  e_KSymbols=LR_KSymbols         e_Identifier5=pr_Identifier         (e_TDot1+=LR_TDot e_Identifier2+=pr_Identifier)*              e_TSemicolon2=LR_TSemicolon #pr_UsingSymbols
+    :  e_KUsing=LR_KUsing         e_Identifier1=pr_Identifier         (e_TDot1+=LR_TDot e_Identifier2+=pr_Identifier)*              e_TSemicolon=LR_TSemicolon
     ;
 pr_Declarations
     :  e_Declarations=pr_LanguageDeclaration  e_Declarations1+=pr_Rule*
@@ -40,7 +38,7 @@ pr_Element
 pr_ElementValue
     :  e_Token=(LR_KEof | LR_TString) #pr_ElementValueTokens
  |  e_TLParen=LR_TLParen         e_Alternatives1=pr_Alternative         (e_TBar1+=LR_TBar e_Alternatives2+=pr_Alternative)*              e_TRParen=LR_TRParen #pr_BlockInline
- |  e_Rule=pr_Identifier #pr_RuleRefAlt1
+ |  e_GrammarRule=pr_Identifier #pr_RuleRefAlt1
  |  e_THash=LR_THash  e_ReferencedTypes=pr_ReturnTypeQualifier #pr_RuleRefAlt2
  |  e_THashLBrace=LR_THashLBrace         e_ReferencedTypes1=pr_ReturnTypeQualifier         (e_TComma1+=LR_TComma e_ReferencedTypes2+=pr_ReturnTypeQualifier)*              e_TRBrace=LR_TRBrace #pr_RuleRefAlt3
     ;
@@ -152,7 +150,7 @@ pr_AnnotationArgumentsArgumentsBlock
 pr_AnnotationArgumentBlock1
     :  e_NamedParameter=pr_Identifier  e_TColon=LR_TColon
     ;
-pr_MainQualifierBlock6
+pr_MainQualifierBlock4
     :  e_TDot1=LR_TDot  e_Identifier2=pr_Identifier
     ;
 pr_SingleExpressionBlock1Alt2SimpleQualifierBlock1

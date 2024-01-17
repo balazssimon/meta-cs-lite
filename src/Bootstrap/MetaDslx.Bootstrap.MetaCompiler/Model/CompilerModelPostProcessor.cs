@@ -80,6 +80,18 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             foreach (var fixedToken in _grammar.GrammarRules.OfType<Token>().Where(t => t.IsFixed))
             {
                 AddTokenKindFor(fixedToken);
+                if (!fixedToken.ReturnType.IsNull)
+                {
+                    var valueBinder = f.Binder();
+                    valueBinder.TypeName = typeof(MetaDslx.CodeAnalysis.Binding.ValueBinder).FullName!;
+                    var valueType = f.BinderArgument();
+                    valueType.Name = "type";
+                    valueType.TypeName = typeof(Type).FullName!;
+                    valueType.IsArray = false;
+                    valueType.Values.Add(fixedToken.ReturnType.FullName);
+                    valueBinder.Arguments.Add(valueType);
+                    fixedToken.Binders.Add(valueBinder);
+                }
                 var fixedText = fixedToken.FixedText;
                 if (!string.IsNullOrEmpty(fixedText))
                 {
@@ -143,6 +155,18 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             foreach (var token in _grammar.GrammarRules.OfType<Token>().Where(t => !t.IsFixed))
             {
                 AddTokenKindFor(token);
+                if (!token.ReturnType.IsNull)
+                {
+                    var valueBinder = f.Binder();
+                    valueBinder.TypeName = typeof(MetaDslx.CodeAnalysis.Binding.ValueBinder).FullName!;
+                    var valueType = f.BinderArgument();
+                    valueType.Name = "type";
+                    valueType.TypeName = typeof(Type).FullName!;
+                    valueType.IsArray = false;
+                    valueType.Values.Add(token.ReturnType.FullName);
+                    valueBinder.Arguments.Add(valueType);
+                    token.Binders.Add(valueBinder);
+                }
                 token.CSharpName = AddRuleName(token.Name ?? MakeTokenName(), tryWithoutIndex: true);
                 _grammar.Tokens.Add(token);
             }
@@ -985,35 +1009,38 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
 
         private void ComputeContainsBinders()
         {
-            var rules = _model.Objects.OfType<Rule>().ToList();
+            var grammarRules = _model.Objects.OfType<GrammarRule>().ToList();
             var updated = true;
             while (updated)
             {
                 updated = false;
-                foreach (var rule in rules)
+                foreach (var grammarRule in grammarRules)
                 {
-                    if (!rule.ContainsBinders && rule.Binders.Count > 0)
+                    if (!grammarRule.ContainsBinders && grammarRule.Binders.Count > 0)
                     {
-                        rule.ContainsBinders = true;
+                        grammarRule.ContainsBinders = true;
                         updated = true;
                     }
-                    foreach (var alt in rule.Alternatives)
+                    if (grammarRule is Rule rule)
                     {
-                        if (!alt.ContainsBinders && alt.Binders.Count > 0)
+                        foreach (var alt in rule.Alternatives)
                         {
-                            alt.ContainsBinders = true;
-                            rule.ContainsBinders = true;
-                            updated = true;
-                        }
-                        foreach (var elem in alt.Elements)
-                        {
-                            var oldContainsBinders = elem.ContainsBinders;
-                            ComputeContainsBinders(elem);
-                            if (!oldContainsBinders && elem.ContainsBinders)
+                            if (!alt.ContainsBinders && alt.Binders.Count > 0)
                             {
                                 alt.ContainsBinders = true;
                                 rule.ContainsBinders = true;
                                 updated = true;
+                            }
+                            foreach (var elem in alt.Elements)
+                            {
+                                var oldContainsBinders = elem.ContainsBinders;
+                                ComputeContainsBinders(elem);
+                                if (!oldContainsBinders && elem.ContainsBinders)
+                                {
+                                    alt.ContainsBinders = true;
+                                    rule.ContainsBinders = true;
+                                    updated = true;
+                                }
                             }
                         }
                     }
@@ -1027,7 +1054,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             if (elem.Value is not null && elem.Value.Binders.Count > 0) elem.ContainsBinders = true;
             if (elem.Value is RuleRef rr)
             {
-                rr.ContainsBinders = rr.Rule?.ContainsBinders ?? false;
+                rr.ContainsBinders = rr.GrammarRule?.ContainsBinders ?? false;
                 elem.ContainsBinders |= rr.ContainsBinders;
             }
             if (elem.Value is TokenAlts tas)

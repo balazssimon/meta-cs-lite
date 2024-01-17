@@ -11,11 +11,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			
 		
 			
-		public virtual void VisitUsingAlt1Green(UsingAlt1Green node) => this.DefaultVisit(node);
-			
-		public virtual void VisitUsingMetaModelGreen(UsingMetaModelGreen node) => this.DefaultVisit(node);
-			
-		public virtual void VisitUsingSymbolsGreen(UsingSymbolsGreen node) => this.DefaultVisit(node);
+		public virtual void VisitUsingGreen(UsingGreen node) => this.DefaultVisit(node);
 			
 		
 			
@@ -233,11 +229,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			
 		
 			
-		public virtual TResult VisitUsingAlt1Green(UsingAlt1Green node) => this.DefaultVisit(node);
-			
-		public virtual TResult VisitUsingMetaModelGreen(UsingMetaModelGreen node) => this.DefaultVisit(node);
-			
-		public virtual TResult VisitUsingSymbolsGreen(UsingSymbolsGreen node) => this.DefaultVisit(node);
+		public virtual TResult VisitUsingGreen(UsingGreen node) => this.DefaultVisit(node);
 			
 		
 			

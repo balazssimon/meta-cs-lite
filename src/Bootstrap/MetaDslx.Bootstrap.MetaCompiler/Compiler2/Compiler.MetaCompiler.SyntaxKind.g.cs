@@ -43,10 +43,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		
 		KUsing,
 		
-		KMetamodel,
-		
-		KSymbols,
-		
 		KLanguage,
 		
 		TColon,
@@ -148,11 +144,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
             
 		
             
-		UsingAlt1,
-            
-		UsingMetaModel,
-            
-		UsingSymbols,
+		Using,
             
 		
             

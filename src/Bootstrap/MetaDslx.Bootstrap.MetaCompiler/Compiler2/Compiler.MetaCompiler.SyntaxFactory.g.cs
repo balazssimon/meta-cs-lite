@@ -321,7 +321,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		
 			
 
-        public UsingAlt1Syntax UsingAlt1(__SyntaxToken kUsing, global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<IdentifierSyntax> qualifier, __SyntaxToken tSemicolon)
+        public UsingSyntax Using(__SyntaxToken kUsing, global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<IdentifierSyntax> qualifier, __SyntaxToken tSemicolon)
  {
  		
  		
@@ -343,90 +343,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
  		
  	if (tSemicolon.RawKind != (int)CompilerSyntaxKind.TSemicolon) throw new ArgumentException(nameof(tSemicolon));
  		
-     return (UsingAlt1Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.UsingAlt1((__InternalSyntaxToken)kUsing.Node, __GreenNodeExtensions.ToGreenSeparatedList<InternalSyntax.IdentifierGreen>(qualifier.Node, reversed: false), (__InternalSyntaxToken)tSemicolon.Node).CreateRed();
+     return (UsingSyntax)CompilerLanguage.Instance.InternalSyntaxFactory.Using((__InternalSyntaxToken)kUsing.Node, __GreenNodeExtensions.ToGreenSeparatedList<InternalSyntax.IdentifierGreen>(qualifier.Node, reversed: false), (__InternalSyntaxToken)tSemicolon.Node).CreateRed();
  }
  
- public UsingAlt1Syntax UsingAlt1(global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<IdentifierSyntax> qualifier)
+ public UsingSyntax Using(global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<IdentifierSyntax> qualifier)
  {
- 	return this.UsingAlt1(this.Token(CompilerSyntaxKind.KUsing), qualifier, this.Token(CompilerSyntaxKind.TSemicolon));
- }
-			
-
-        public UsingMetaModelSyntax UsingMetaModel(__SyntaxToken kUsing, __SyntaxToken kMetamodel, global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<IdentifierSyntax> qualifier, __SyntaxToken tSemicolon)
- {
- 		
- 		
- 	if (kUsing.RawKind != (int)__InternalSyntaxKind.None) throw new ArgumentNullException(nameof(kUsing));
- 		
- 		
- 		
- 	if (kUsing.RawKind != (int)CompilerSyntaxKind.KUsing) throw new ArgumentException(nameof(kUsing));
- 		
- 		
- 		
- 	if (kMetamodel.RawKind != (int)__InternalSyntaxKind.None) throw new ArgumentNullException(nameof(kMetamodel));
- 		
- 		
- 		
- 	if (kMetamodel.RawKind != (int)CompilerSyntaxKind.KMetamodel) throw new ArgumentException(nameof(kMetamodel));
- 		
- 		
- 		
- 		
- 		
- 		
- 		
- 	if (tSemicolon.RawKind != (int)__InternalSyntaxKind.None) throw new ArgumentNullException(nameof(tSemicolon));
- 		
- 		
- 		
- 	if (tSemicolon.RawKind != (int)CompilerSyntaxKind.TSemicolon) throw new ArgumentException(nameof(tSemicolon));
- 		
-     return (UsingMetaModelSyntax)CompilerLanguage.Instance.InternalSyntaxFactory.UsingMetaModel((__InternalSyntaxToken)kUsing.Node, (__InternalSyntaxToken)kMetamodel.Node, __GreenNodeExtensions.ToGreenSeparatedList<InternalSyntax.IdentifierGreen>(qualifier.Node, reversed: false), (__InternalSyntaxToken)tSemicolon.Node).CreateRed();
- }
- 
- public UsingMetaModelSyntax UsingMetaModel(global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<IdentifierSyntax> qualifier)
- {
- 	return this.UsingMetaModel(this.Token(CompilerSyntaxKind.KUsing), this.Token(CompilerSyntaxKind.KMetamodel), qualifier, this.Token(CompilerSyntaxKind.TSemicolon));
- }
-			
-
-        public UsingSymbolsSyntax UsingSymbols(__SyntaxToken kUsing, __SyntaxToken kSymbols, global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<IdentifierSyntax> qualifier, __SyntaxToken tSemicolon)
- {
- 		
- 		
- 	if (kUsing.RawKind != (int)__InternalSyntaxKind.None) throw new ArgumentNullException(nameof(kUsing));
- 		
- 		
- 		
- 	if (kUsing.RawKind != (int)CompilerSyntaxKind.KUsing) throw new ArgumentException(nameof(kUsing));
- 		
- 		
- 		
- 	if (kSymbols.RawKind != (int)__InternalSyntaxKind.None) throw new ArgumentNullException(nameof(kSymbols));
- 		
- 		
- 		
- 	if (kSymbols.RawKind != (int)CompilerSyntaxKind.KSymbols) throw new ArgumentException(nameof(kSymbols));
- 		
- 		
- 		
- 		
- 		
- 		
- 		
- 	if (tSemicolon.RawKind != (int)__InternalSyntaxKind.None) throw new ArgumentNullException(nameof(tSemicolon));
- 		
- 		
- 		
- 	if (tSemicolon.RawKind != (int)CompilerSyntaxKind.TSemicolon) throw new ArgumentException(nameof(tSemicolon));
- 		
-     return (UsingSymbolsSyntax)CompilerLanguage.Instance.InternalSyntaxFactory.UsingSymbols((__InternalSyntaxToken)kUsing.Node, (__InternalSyntaxToken)kSymbols.Node, __GreenNodeExtensions.ToGreenSeparatedList<InternalSyntax.IdentifierGreen>(qualifier.Node, reversed: false), (__InternalSyntaxToken)tSemicolon.Node).CreateRed();
- }
- 
- public UsingSymbolsSyntax UsingSymbols(global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<IdentifierSyntax> qualifier)
- {
- 	return this.UsingSymbols(this.Token(CompilerSyntaxKind.KUsing), this.Token(CompilerSyntaxKind.KSymbols), qualifier, this.Token(CompilerSyntaxKind.TSemicolon));
+ 	return this.Using(this.Token(CompilerSyntaxKind.KUsing), qualifier, this.Token(CompilerSyntaxKind.TSemicolon));
  }
 			
 		
@@ -802,15 +724,15 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
  }
 			
 
-        public RuleRefAlt1Syntax RuleRefAlt1(IdentifierSyntax rule)
+        public RuleRefAlt1Syntax RuleRefAlt1(IdentifierSyntax grammarRule)
  {
  		
  		
- 	if (rule is null) throw new ArgumentNullException(nameof(rule));
+ 	if (grammarRule is null) throw new ArgumentNullException(nameof(grammarRule));
  		
  		
  		
-     return (RuleRefAlt1Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.RuleRefAlt1((InternalSyntax.IdentifierGreen)rule.Green).CreateRed();
+     return (RuleRefAlt1Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.RuleRefAlt1((InternalSyntax.IdentifierGreen)grammarRule.Green).CreateRed();
  }
 			
 
@@ -1934,11 +1856,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		        
             
 		        
-		        typeof(UsingAlt1Syntax),
-		        
-		        typeof(UsingMetaModelSyntax),
-		        
-		        typeof(UsingSymbolsSyntax),
+		        typeof(UsingSyntax),
 		        
             
 		        

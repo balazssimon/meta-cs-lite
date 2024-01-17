@@ -330,7 +330,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			
 		
 			
-		internal UsingAlt1Green UsingAlt1(__InternalSyntaxToken kUsing, global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<IdentifierGreen> qualifier, __InternalSyntaxToken tSemicolon)
+		internal UsingGreen Using(__InternalSyntaxToken kUsing, global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<IdentifierGreen> qualifier, __InternalSyntaxToken tSemicolon)
 		{
 #if DEBUG
 			
@@ -360,102 +360,16 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 #endif
 			
 			int hash;
-			var cached = __SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.UsingAlt1, kUsing, qualifier.Node, tSemicolon, out hash);
-			if (cached != null) return (UsingAlt1Green)cached;
+			var cached = __SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.Using, kUsing, qualifier.Node, tSemicolon, out hash);
+			if (cached != null) return (UsingGreen)cached;
 		
-			var result = new UsingAlt1Green(CompilerSyntaxKind.UsingAlt1, kUsing, qualifier.Node, tSemicolon);
+			var result = new UsingGreen(CompilerSyntaxKind.Using, kUsing, qualifier.Node, tSemicolon);
 			if (hash >= 0)
 			{
 				__SyntaxNodeCache.AddNode(result, hash);
 			}
 		
 			return result;
-			
-		}
-
-			
-		internal UsingMetaModelGreen UsingMetaModel(__InternalSyntaxToken kUsing, __InternalSyntaxToken kMetamodel, global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<IdentifierGreen> qualifier, __InternalSyntaxToken tSemicolon)
-		{
-#if DEBUG
-			
-				
-				
-			if (kUsing is null) throw new ArgumentNullException(nameof(kUsing));
-				
-				
-				
-			if (kUsing.RawKind != (int)CompilerSyntaxKind.KUsing) throw new ArgumentException(nameof(kUsing));
-				
-			
-				
-				
-			if (kMetamodel is null) throw new ArgumentNullException(nameof(kMetamodel));
-				
-				
-				
-			if (kMetamodel.RawKind != (int)CompilerSyntaxKind.KMetamodel) throw new ArgumentException(nameof(kMetamodel));
-				
-			
-				
-				
-				
-				
-			
-				
-				
-			if (tSemicolon is null) throw new ArgumentNullException(nameof(tSemicolon));
-				
-				
-				
-			if (tSemicolon.RawKind != (int)CompilerSyntaxKind.TSemicolon) throw new ArgumentException(nameof(tSemicolon));
-				
-			
-#endif
-			
-			return new UsingMetaModelGreen(CompilerSyntaxKind.UsingMetaModel, kUsing, kMetamodel, qualifier.Node, tSemicolon);
-			
-		}
-
-			
-		internal UsingSymbolsGreen UsingSymbols(__InternalSyntaxToken kUsing, __InternalSyntaxToken kSymbols, global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<IdentifierGreen> qualifier, __InternalSyntaxToken tSemicolon)
-		{
-#if DEBUG
-			
-				
-				
-			if (kUsing is null) throw new ArgumentNullException(nameof(kUsing));
-				
-				
-				
-			if (kUsing.RawKind != (int)CompilerSyntaxKind.KUsing) throw new ArgumentException(nameof(kUsing));
-				
-			
-				
-				
-			if (kSymbols is null) throw new ArgumentNullException(nameof(kSymbols));
-				
-				
-				
-			if (kSymbols.RawKind != (int)CompilerSyntaxKind.KSymbols) throw new ArgumentException(nameof(kSymbols));
-				
-			
-				
-				
-				
-				
-			
-				
-				
-			if (tSemicolon is null) throw new ArgumentNullException(nameof(tSemicolon));
-				
-				
-				
-			if (tSemicolon.RawKind != (int)CompilerSyntaxKind.TSemicolon) throw new ArgumentException(nameof(tSemicolon));
-				
-			
-#endif
-			
-			return new UsingSymbolsGreen(CompilerSyntaxKind.UsingSymbols, kUsing, kSymbols, qualifier.Node, tSemicolon);
 			
 		}
 
@@ -953,13 +867,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 		}
 
 			
-		internal RuleRefAlt1Green RuleRefAlt1(IdentifierGreen rule)
+		internal RuleRefAlt1Green RuleRefAlt1(IdentifierGreen grammarRule)
 		{
 #if DEBUG
 			
 				
 				
-			if (rule is null) throw new ArgumentNullException(nameof(rule));
+			if (grammarRule is null) throw new ArgumentNullException(nameof(grammarRule));
 				
 				
 				
@@ -967,10 +881,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 #endif
 			
 			int hash;
-			var cached = __SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.RuleRefAlt1, rule, out hash);
+			var cached = __SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.RuleRefAlt1, grammarRule, out hash);
 			if (cached != null) return (RuleRefAlt1Green)cached;
 		
-			var result = new RuleRefAlt1Green(CompilerSyntaxKind.RuleRefAlt1, rule);
+			var result = new RuleRefAlt1Green(CompilerSyntaxKind.RuleRefAlt1, grammarRule);
 			if (hash >= 0)
 			{
 				__SyntaxNodeCache.AddNode(result, hash);

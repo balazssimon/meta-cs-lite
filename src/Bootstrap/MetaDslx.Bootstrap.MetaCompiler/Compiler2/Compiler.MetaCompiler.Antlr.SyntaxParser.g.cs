@@ -192,9 +192,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
             
                 
 
-            public override GreenNode? VisitPr_UsingAlt1(CompilerParser.Pr_UsingAlt1Context? context)
+            public override GreenNode? VisitPr_Using(CompilerParser.Pr_UsingContext? context)
             {
-               	if (context == null) return UsingAlt1Green.__Missing;
+               	if (context == null) return UsingGreen.__Missing;
                 
                     
                         
@@ -249,141 +249,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
                         
                     
                 
-            	return _factory.UsingAlt1(kUsing, qualifier, tSemicolon);
-            }
-                
-
-            public override GreenNode? VisitPr_UsingMetaModel(CompilerParser.Pr_UsingMetaModelContext? context)
-            {
-               	if (context == null) return UsingMetaModelGreen.__Missing;
-                
-                    
-                        
-                var kUsing = this.VisitTerminal(context.e_KUsing1, CompilerSyntaxKind.KUsing);
-                        
-                    
-                
-                    
-                        
-                var kMetamodel = this.VisitTerminal(context.e_KMetamodel, CompilerSyntaxKind.KMetamodel);
-                        
-                    
-                
-                    
-                var qualifierBuilder = _pool.AllocateSeparated<IdentifierGreen>(reversed: false);
-     
-     
- var e_Identifier3Context = context.e_Identifier3;
- if (e_Identifier3Context is not null) qualifierBuilder.Add((IdentifierGreen?)this.Visit(e_Identifier3Context) ?? IdentifierGreen.__Missing);
-     
- else qualifierBuilder.Add(IdentifierGreen.__Missing);
-     
-     
-     
- var e_Identifier2Context = context._e_Identifier2;
- var e_TDot1Context = context._e_TDot1;
- for (int i = 0; i < e_Identifier2Context.Count; ++i)
- {
-     
-     if (i < e_TDot1Context.Count)
-     {
-         var _separator = e_TDot1Context[i];
-      
-  qualifierBuilder.AddSeparator(this.VisitTerminal(_separator, CompilerSyntaxKind.TDot));
-      
-     }
-     else
-     {
-         qualifierBuilder.AddSeparator(this.VisitTerminal((IToken?)null, CompilerSyntaxKind.TDot));
-     }
-     var _item = e_Identifier2Context[i];
-  if (_item is not null) qualifierBuilder.Add((IdentifierGreen?)this.Visit(_item) ?? IdentifierGreen.__Missing);
-      
-  else qualifierBuilder.Add(IdentifierGreen.__Missing);
-      
-     
- }
-     
-     
-     
- var qualifier = qualifierBuilder.ToList();
- _pool.Free(qualifierBuilder);
-                    
-                
-                    
-                        
-                var tSemicolon = this.VisitTerminal(context.e_TSemicolon1, CompilerSyntaxKind.TSemicolon);
-                        
-                    
-                
-            	return _factory.UsingMetaModel(kUsing, kMetamodel, qualifier, tSemicolon);
-            }
-                
-
-            public override GreenNode? VisitPr_UsingSymbols(CompilerParser.Pr_UsingSymbolsContext? context)
-            {
-               	if (context == null) return UsingSymbolsGreen.__Missing;
-                
-                    
-                        
-                var kUsing = this.VisitTerminal(context.e_KUsing2, CompilerSyntaxKind.KUsing);
-                        
-                    
-                
-                    
-                        
-                var kSymbols = this.VisitTerminal(context.e_KSymbols, CompilerSyntaxKind.KSymbols);
-                        
-                    
-                
-                    
-                var qualifierBuilder = _pool.AllocateSeparated<IdentifierGreen>(reversed: false);
-     
-     
- var e_Identifier5Context = context.e_Identifier5;
- if (e_Identifier5Context is not null) qualifierBuilder.Add((IdentifierGreen?)this.Visit(e_Identifier5Context) ?? IdentifierGreen.__Missing);
-     
- else qualifierBuilder.Add(IdentifierGreen.__Missing);
-     
-     
-     
- var e_Identifier2Context = context._e_Identifier2;
- var e_TDot1Context = context._e_TDot1;
- for (int i = 0; i < e_Identifier2Context.Count; ++i)
- {
-     
-     if (i < e_TDot1Context.Count)
-     {
-         var _separator = e_TDot1Context[i];
-      
-  qualifierBuilder.AddSeparator(this.VisitTerminal(_separator, CompilerSyntaxKind.TDot));
-      
-     }
-     else
-     {
-         qualifierBuilder.AddSeparator(this.VisitTerminal((IToken?)null, CompilerSyntaxKind.TDot));
-     }
-     var _item = e_Identifier2Context[i];
-  if (_item is not null) qualifierBuilder.Add((IdentifierGreen?)this.Visit(_item) ?? IdentifierGreen.__Missing);
-      
-  else qualifierBuilder.Add(IdentifierGreen.__Missing);
-      
-     
- }
-     
-     
-     
- var qualifier = qualifierBuilder.ToList();
- _pool.Free(qualifierBuilder);
-                    
-                
-                    
-                        
-                var tSemicolon = this.VisitTerminal(context.e_TSemicolon2, CompilerSyntaxKind.TSemicolon);
-                        
-                    
-                
-            	return _factory.UsingSymbols(kUsing, kSymbols, qualifier, tSemicolon);
+            	return _factory.Using(kUsing, qualifier, tSemicolon);
             }
                 
             
@@ -1031,15 +897,15 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
                 
                     
                         
-                IdentifierGreen? rule = null;
-                if (context.e_Rule is not null) rule = (IdentifierGreen?)this.Visit(context.e_Rule) ?? IdentifierGreen.__Missing;
+                IdentifierGreen? grammarRule = null;
+                if (context.e_GrammarRule is not null) grammarRule = (IdentifierGreen?)this.Visit(context.e_GrammarRule) ?? IdentifierGreen.__Missing;
                             
-                else rule = IdentifierGreen.__Missing;
+                else grammarRule = IdentifierGreen.__Missing;
                             
                         
                     
                 
-            	return _factory.RuleRefAlt1(rule);
+            	return _factory.RuleRefAlt1(grammarRule);
             }
                 
 
@@ -2440,7 +2306,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
             
                 
 
-            public override GreenNode? VisitPr_MainQualifierBlock6(CompilerParser.Pr_MainQualifierBlock6Context? context)
+            public override GreenNode? VisitPr_MainQualifierBlock4(CompilerParser.Pr_MainQualifierBlock4Context? context)
             {
                	if (context == null) return MainQualifierBlockGreen.__Missing;
                 
