@@ -771,17 +771,6 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
             _osb.WriteLine("#line hidden");
         }
 
-        private enum ControlStatementKind
-        {
-            None,
-            Expression,
-            Statement,
-            StatementWithSemicolon,
-            BeginStatement,
-            EndStatement,
-            TemplateControlEnd
-        }
-
         private struct ControlStatement
         {
             public ControlStatementKind Kind;

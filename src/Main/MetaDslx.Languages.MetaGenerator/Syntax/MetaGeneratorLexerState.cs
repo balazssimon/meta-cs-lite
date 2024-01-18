@@ -13,9 +13,10 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
         ControlEnd,
         TemplateHeader,
         TemplateHeaderEnd,
+        TemplateOutputLineStart,
         TemplateOutput,
         TemplateControl,
-        TemplateControlContextual,
+        TemplateFormatter,
         TemplateEnd,
         End,
         Eof

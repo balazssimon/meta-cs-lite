@@ -22,7 +22,11 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
             _lexerState = lexerState;
         }
 
-        public MetaGeneratorTokenKind Kind => _kind;
+        public MetaGeneratorTokenKind Kind
+        {
+            get => _kind;
+            internal set => _kind = value;
+        }
         public string Text => _text;
         public int Position => _position;
         public MetaGeneratorLexerState LexerState => _lexerState;

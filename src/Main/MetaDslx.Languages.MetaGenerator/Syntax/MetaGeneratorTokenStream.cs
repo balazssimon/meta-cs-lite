@@ -15,7 +15,7 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
         }
 
         private MetaGeneratorLexer _lexer;
-        private MetaGeneratorLexerState _fetchState;
+        private bool _fetchEndOfFile;
         private List<Entry> _tokens;
         private int _position;
         private bool _endOfFile;
@@ -24,7 +24,7 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
         public MetaGeneratorTokenStream(MetaGeneratorLexer lexer)
         {
             _lexer = lexer;
-            _fetchState = MetaGeneratorLexerState.None;
+            _fetchEndOfFile = false;
             _tokens = new List<Entry>();
         }
 
@@ -87,11 +87,12 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
 
         private bool FetchToken()
         {
-            if (_fetchState != MetaGeneratorLexerState.Eof)
+            if (!_fetchEndOfFile)
             {
                 var entry = new Entry() { Token = MetaGeneratorToken.None, Line = _lexer.Line, Character = _lexer.Column };
-                entry.Token = _lexer.Lex(ref _fetchState);
+                entry.Token = _lexer.Lex();
                 _tokens.Add(entry);
+                if (entry.Token.Kind == MetaGeneratorTokenKind.EndOfFile) _fetchEndOfFile = true;
                 return true;
             }
             return false;
