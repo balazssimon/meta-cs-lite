@@ -894,11 +894,18 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
             "control", "generator", "template"
         };
 
+        public const string BeforeKeyword = "before";
         public const string SeparatorKeyword = "separator";
+        public const string AfterKeyword = "after";
+
+        public static readonly HashSet<string> SeparatorControlKeywords = new HashSet<string>()
+        {
+            BeforeKeyword, SeparatorKeyword, AfterKeyword
+        };
 
         public static readonly HashSet<string> TemplateControlKeywords = new HashSet<string>()
         {
-            "end", "template", SeparatorKeyword
+            "end", "template", BeforeKeyword, SeparatorKeyword, AfterKeyword
         };
 
         public const string MultiLineKeyword = "=";

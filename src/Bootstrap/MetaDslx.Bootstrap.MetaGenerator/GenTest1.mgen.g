@@ -22,22 +22,225 @@ namespace MetaDslx.Bootstrap.MetaGenerator
     public partial class GenTest1
     #line hidden
     {
-        #line (8,9)-(8,32) 22 "..\..\..\GenTest1.mgen"
+        #line (8,9)-(8,49) 22 "..\..\..\GenTest1.mgen"
+        public string SayHelloSep1(IEnumerable<string> names)
+        #line hidden
+        {
+            var __cb = global::MetaDslx.CodeGeneration.CodeBuilder.GetInstance();
+            #line (9,6)-(9,33) 13 "..\..\..\GenTest1.mgen"
+            foreach (var name in names)
+            #line hidden
+            
+            {
+                __cb.Push("");
+                #line (10,9)-(10,15) 29 "..\..\..\GenTest1.mgen"
+                __cb.Write("Hello,");
+                #line hidden
+                #line (10,15)-(10,16) 29 "..\..\..\GenTest1.mgen"
+                __cb.Write(" ");
+                #line hidden
+                #line (10,17)-(10,21) 28 "..\..\..\GenTest1.mgen"
+                __cb.Write(name);
+                #line hidden
+                #line (10,22)-(10,23) 29 "..\..\..\GenTest1.mgen"
+                __cb.Write("!");
+                #line hidden
+                __cb.WriteLine();
+                __cb.Pop();
+            }
+            return __cb.ToStringAndFree();
+        }
+        
+        #line (14,9)-(14,49) 22 "..\..\..\GenTest1.mgen"
+        public string SayHelloSep2(IEnumerable<string> names)
+        #line hidden
+        {
+            var __cb = global::MetaDslx.CodeGeneration.CodeBuilder.GetInstance();
+            var __first1 = true;
+            #line (15,6)-(15,34) 13 "..\..\..\GenTest1.mgen"
+            foreach (var name in names) 
+            #line hidden
+            
+            {
+                if (__first1)
+                {
+                    __first1 = false;
+                }
+                else
+                {
+                    __cb.IgnoreLastLineEnd = false;
+                    #line (15,44)-(15,53) 32 "..\..\..\GenTest1.mgen"
+                    __cb.Write("===\r\n");
+                    #line hidden
+                    __cb.IgnoreLastLineEnd = true;
+                }
+                __cb.Push("");
+                #line (16,9)-(16,15) 29 "..\..\..\GenTest1.mgen"
+                __cb.Write("Hello,");
+                #line hidden
+                #line (16,15)-(16,16) 29 "..\..\..\GenTest1.mgen"
+                __cb.Write(" ");
+                #line hidden
+                #line (16,17)-(16,21) 28 "..\..\..\GenTest1.mgen"
+                __cb.Write(name);
+                #line hidden
+                #line (16,22)-(16,23) 29 "..\..\..\GenTest1.mgen"
+                __cb.Write("!");
+                #line hidden
+                __cb.WriteLine();
+                __cb.Pop();
+            }
+            return __cb.ToStringAndFree();
+        }
+        
+        #line (20,9)-(20,49) 22 "..\..\..\GenTest1.mgen"
+        public string SayHelloSep3(IEnumerable<string> names)
+        #line hidden
+        {
+            var __cb = global::MetaDslx.CodeGeneration.CodeBuilder.GetInstance();
+            var __first1 = true;
+            #line (21,6)-(21,34) 13 "..\..\..\GenTest1.mgen"
+            foreach (var name in names) 
+            #line hidden
+            
+            {
+                if (__first1)
+                {
+                    __first1 = false;
+                    __cb.IgnoreLastLineEnd = false;
+                    #line (21,41)-(21,51) 32 "..\..\..\GenTest1.mgen"
+                    __cb.Write(">>>\r\n" );
+                    #line hidden
+                    __cb.IgnoreLastLineEnd = true;
+                }
+                else
+                {
+                    __cb.IgnoreLastLineEnd = false;
+                    #line (21,61)-(21,71) 32 "..\..\..\GenTest1.mgen"
+                    __cb.Write("---\r\n" );
+                    #line hidden
+                    __cb.IgnoreLastLineEnd = true;
+                }
+                __cb.Push("");
+                #line (22,9)-(22,15) 29 "..\..\..\GenTest1.mgen"
+                __cb.Write("Hello,");
+                #line hidden
+                #line (22,15)-(22,16) 29 "..\..\..\GenTest1.mgen"
+                __cb.Write(" ");
+                #line hidden
+                #line (22,17)-(22,21) 28 "..\..\..\GenTest1.mgen"
+                __cb.Write(name);
+                #line hidden
+                #line (22,22)-(22,23) 29 "..\..\..\GenTest1.mgen"
+                __cb.Write("!");
+                #line hidden
+                __cb.WriteLine();
+                __cb.Pop();
+            }
+            if (!__first1)
+            {
+                __cb.IgnoreLastLineEnd = false;
+                #line (21,77)-(21,86) 28 "..\..\..\GenTest1.mgen"
+                __cb.Write("<<<\r\n");
+                #line hidden
+                __cb.IgnoreLastLineEnd = true;
+            }
+            return __cb.ToStringAndFree();
+        }
+        
+        #line (26,9)-(26,49) 22 "..\..\..\GenTest1.mgen"
+        public string SayHelloSep4(IEnumerable<string> names)
+        #line hidden
+        {
+            var __cb = global::MetaDslx.CodeGeneration.CodeBuilder.GetInstance();
+            __cb.Push("");
+            var __first1 = true;
+            foreach (var __item2 in 
+            #line (27,6)-(27,12) 13 "..\..\..\GenTest1.mgen"
+            names 
+            #line hidden
+            )
+            {
+                if (__first1)
+                {
+                    __first1 = false;
+                }
+                else
+                {
+                    __cb.IgnoreLastLineEnd = false;
+                    #line (27,22)-(27,26) 32 "..\..\..\GenTest1.mgen"
+                    __cb.Write(", ");
+                    #line hidden
+                    __cb.IgnoreLastLineEnd = true;
+                }
+                __cb.Write({item});
+            }
+            __cb.WriteLine();
+            __cb.Pop();
+            return __cb.ToStringAndFree();
+        }
+        
+        #line (30,9)-(30,49) 22 "..\..\..\GenTest1.mgen"
+        public string SayHelloSep5(IEnumerable<string> names)
+        #line hidden
+        {
+            var __cb = global::MetaDslx.CodeGeneration.CodeBuilder.GetInstance();
+            __cb.Push("");
+            var __first1 = true;
+            foreach (var __item2 in 
+            #line (31,6)-(31,12) 13 "..\..\..\GenTest1.mgen"
+            names 
+            #line hidden
+            )
+            {
+                if (__first1)
+                {
+                    __first1 = false;
+                    __cb.IgnoreLastLineEnd = false;
+                    #line (31,19)-(31,23) 32 "..\..\..\GenTest1.mgen"
+                    __cb.Write("[" , ignoreLastLineEnd: false);
+                    #line hidden
+                    __cb.IgnoreLastLineEnd = true;
+                }
+                else
+                {
+                    __cb.IgnoreLastLineEnd = false;
+                    #line (31,33)-(31,38) 32 "..\..\..\GenTest1.mgen"
+                    __cb.Write(", " );
+                    #line hidden
+                    __cb.IgnoreLastLineEnd = true;
+                }
+                __cb.Write({item});
+            }
+            if (!__first1)
+            {
+                __cb.IgnoreLastLineEnd = false;
+                #line (31,44)-(31,47) 28 "..\..\..\GenTest1.mgen"
+                __cb.Write("]");
+                #line hidden
+                __cb.IgnoreLastLineEnd = true;
+            }
+            __cb.WriteLine();
+            __cb.Pop();
+            return __cb.ToStringAndFree();
+        }
+        
+        #line (34,9)-(34,32) 22 "..\..\..\GenTest1.mgen"
         public string SayHello1(string name)
         #line hidden
         {
             var __cb = global::MetaDslx.CodeGeneration.CodeBuilder.GetInstance();
             __cb.Push("");
-            #line (9,1)-(9,7) 25 "..\..\..\GenTest1.mgen"
+            #line (35,1)-(35,7) 25 "..\..\..\GenTest1.mgen"
             __cb.Write("Hello,");
             #line hidden
-            #line (9,7)-(9,8) 25 "..\..\..\GenTest1.mgen"
+            #line (35,7)-(35,8) 25 "..\..\..\GenTest1.mgen"
             __cb.Write(" ");
             #line hidden
-            #line (9,9)-(9,13) 24 "..\..\..\GenTest1.mgen"
+            #line (35,9)-(35,13) 24 "..\..\..\GenTest1.mgen"
             __cb.Write(name);
             #line hidden
-            #line (9,14)-(9,15) 25 "..\..\..\GenTest1.mgen"
+            #line (35,14)-(35,15) 25 "..\..\..\GenTest1.mgen"
             __cb.Write("!");
             #line hidden
             __cb.WriteLine();
@@ -45,22 +248,22 @@ namespace MetaDslx.Bootstrap.MetaGenerator
             return __cb.ToStringAndFree();
         }
         
-        #line (12,9)-(12,32) 22 "..\..\..\GenTest1.mgen"
+        #line (38,9)-(38,32) 22 "..\..\..\GenTest1.mgen"
         public string SayHello2(string name)
         #line hidden
         {
             var __cb = global::MetaDslx.CodeGeneration.CodeBuilder.GetInstance();
             __cb.Push("");
-            #line (13,3)-(13,9) 25 "..\..\..\GenTest1.mgen"
+            #line (39,3)-(39,9) 25 "..\..\..\GenTest1.mgen"
             __cb.Write("Hello,");
             #line hidden
-            #line (13,9)-(13,10) 25 "..\..\..\GenTest1.mgen"
+            #line (39,9)-(39,10) 25 "..\..\..\GenTest1.mgen"
             __cb.Write(" ");
             #line hidden
-            #line (13,11)-(13,15) 24 "..\..\..\GenTest1.mgen"
+            #line (39,11)-(39,15) 24 "..\..\..\GenTest1.mgen"
             __cb.Write(name);
             #line hidden
-            #line (13,16)-(13,17) 25 "..\..\..\GenTest1.mgen"
+            #line (39,16)-(39,17) 25 "..\..\..\GenTest1.mgen"
             __cb.Write("!");
             #line hidden
             __cb.WriteLine();
@@ -68,27 +271,27 @@ namespace MetaDslx.Bootstrap.MetaGenerator
             return __cb.ToStringAndFree();
         }
         
-        #line (16,9)-(16,32) 22 "..\..\..\GenTest1.mgen"
+        #line (42,9)-(42,32) 22 "..\..\..\GenTest1.mgen"
         public string SayHello3(string name)
         #line hidden
         {
             var __cb = global::MetaDslx.CodeGeneration.CodeBuilder.GetInstance();
-            #line (17,4)-(17,24) 13 "..\..\..\GenTest1.mgen"
+            #line (43,4)-(43,24) 13 "..\..\..\GenTest1.mgen"
             if (name != "Alice")
             #line hidden
             
             {
                 __cb.Push("");
-                #line (18,5)-(18,11) 29 "..\..\..\GenTest1.mgen"
+                #line (44,5)-(44,11) 29 "..\..\..\GenTest1.mgen"
                 __cb.Write("Hello,");
                 #line hidden
-                #line (18,11)-(18,12) 29 "..\..\..\GenTest1.mgen"
+                #line (44,11)-(44,12) 29 "..\..\..\GenTest1.mgen"
                 __cb.Write(" ");
                 #line hidden
-                #line (18,13)-(18,17) 28 "..\..\..\GenTest1.mgen"
+                #line (44,13)-(44,17) 28 "..\..\..\GenTest1.mgen"
                 __cb.Write(name);
                 #line hidden
-                #line (18,18)-(18,19) 29 "..\..\..\GenTest1.mgen"
+                #line (44,18)-(44,19) 29 "..\..\..\GenTest1.mgen"
                 __cb.Write("!");
                 #line hidden
                 __cb.WriteLine();
@@ -97,42 +300,42 @@ namespace MetaDslx.Bootstrap.MetaGenerator
             return __cb.ToStringAndFree();
         }
         
-        #line (22,9)-(22,32) 22 "..\..\..\GenTest1.mgen"
+        #line (48,9)-(48,32) 22 "..\..\..\GenTest1.mgen"
         public string SayHello4(string name)
         #line hidden
         {
             var __cb = global::MetaDslx.CodeGeneration.CodeBuilder.GetInstance();
-            #line (23,4)-(23,24) 13 "..\..\..\GenTest1.mgen"
+            #line (49,4)-(49,24) 13 "..\..\..\GenTest1.mgen"
             if (name != "Alice")
             #line hidden
             
             {
                 __cb.Push("");
-                #line (24,5)-(24,11) 29 "..\..\..\GenTest1.mgen"
+                #line (50,5)-(50,11) 29 "..\..\..\GenTest1.mgen"
                 __cb.Write("Hello,");
                 #line hidden
-                #line (24,11)-(24,12) 29 "..\..\..\GenTest1.mgen"
+                #line (50,11)-(50,12) 29 "..\..\..\GenTest1.mgen"
                 __cb.Write(" ");
                 #line hidden
-                #line (24,13)-(24,17) 28 "..\..\..\GenTest1.mgen"
+                #line (50,13)-(50,17) 28 "..\..\..\GenTest1.mgen"
                 __cb.Write(name);
                 #line hidden
-                #line (24,18)-(24,19) 29 "..\..\..\GenTest1.mgen"
+                #line (50,18)-(50,19) 29 "..\..\..\GenTest1.mgen"
                 __cb.Write("!");
                 #line hidden
                 __cb.WriteLine();
                 __cb.Pop();
                 __cb.Push("  ");
-                #line (25,7)-(25,14) 29 "..\..\..\GenTest1.mgen"
+                #line (51,7)-(51,14) 29 "..\..\..\GenTest1.mgen"
                 __cb.Write("Hello2,");
                 #line hidden
-                #line (25,14)-(25,15) 29 "..\..\..\GenTest1.mgen"
+                #line (51,14)-(51,15) 29 "..\..\..\GenTest1.mgen"
                 __cb.Write(" ");
                 #line hidden
-                #line (25,16)-(25,20) 28 "..\..\..\GenTest1.mgen"
+                #line (51,16)-(51,20) 28 "..\..\..\GenTest1.mgen"
                 __cb.Write(name);
                 #line hidden
-                #line (25,21)-(25,22) 29 "..\..\..\GenTest1.mgen"
+                #line (51,21)-(51,22) 29 "..\..\..\GenTest1.mgen"
                 __cb.Write("!");
                 #line hidden
                 __cb.WriteLine();
@@ -141,75 +344,75 @@ namespace MetaDslx.Bootstrap.MetaGenerator
             return __cb.ToStringAndFree();
         }
         
-        #line (29,9)-(29,32) 22 "..\..\..\GenTest1.mgen"
+        #line (55,9)-(55,32) 22 "..\..\..\GenTest1.mgen"
         public string SayHello5(string name)
         #line hidden
         {
             var __cb = global::MetaDslx.CodeGeneration.CodeBuilder.GetInstance();
-            #line (30,4)-(30,24) 13 "..\..\..\GenTest1.mgen"
+            #line (56,4)-(56,24) 13 "..\..\..\GenTest1.mgen"
             if (name != "Alice")
             #line hidden
             
             {
                 __cb.Push("");
-                #line (31,5)-(31,11) 29 "..\..\..\GenTest1.mgen"
+                #line (57,5)-(57,11) 29 "..\..\..\GenTest1.mgen"
                 __cb.Write("Hello,");
                 #line hidden
-                #line (31,11)-(31,12) 29 "..\..\..\GenTest1.mgen"
+                #line (57,11)-(57,12) 29 "..\..\..\GenTest1.mgen"
                 __cb.Write(" ");
                 #line hidden
-                #line (31,13)-(31,17) 28 "..\..\..\GenTest1.mgen"
+                #line (57,13)-(57,17) 28 "..\..\..\GenTest1.mgen"
                 __cb.Write(name);
                 #line hidden
-                #line (31,18)-(31,19) 29 "..\..\..\GenTest1.mgen"
+                #line (57,18)-(57,19) 29 "..\..\..\GenTest1.mgen"
                 __cb.Write("!");
                 #line hidden
                 __cb.WriteLine();
                 __cb.Pop();
                 __cb.Push("");
-                #line (32,6)-(32,21) 28 "..\..\..\GenTest1.mgen"
+                #line (58,6)-(58,21) 28 "..\..\..\GenTest1.mgen"
                 __cb.Write(SayHello1(name));
                 #line hidden
                 __cb.WriteLine();
                 __cb.Pop();
                 __cb.Push("  ");
-                #line (33,8)-(33,23) 28 "..\..\..\GenTest1.mgen"
+                #line (59,8)-(59,23) 28 "..\..\..\GenTest1.mgen"
                 __cb.Write(SayHello2(name));
                 #line hidden
                 __cb.WriteLine();
                 __cb.Pop();
                 __cb.Push("  ");
-                #line (34,7)-(34,10) 29 "..\..\..\GenTest1.mgen"
+                #line (60,7)-(60,10) 29 "..\..\..\GenTest1.mgen"
                 __cb.Write("AAA");
                 #line hidden
                 __cb.WriteLine();
                 __cb.Pop();
                 __cb.Push(" ");
-                #line (35,6)-(35,8) 29 "..\..\..\GenTest1.mgen"
+                #line (61,6)-(61,8) 29 "..\..\..\GenTest1.mgen"
                 __cb.Write("BB");
                 #line hidden
                 __cb.WriteLine();
                 __cb.Pop();
                 __cb.Push("");
-                #line (36,5)-(36,7) 29 "..\..\..\GenTest1.mgen"
+                #line (62,5)-(62,7) 29 "..\..\..\GenTest1.mgen"
                 __cb.Write("CC");
                 #line hidden
                 __cb.WriteLine();
                 __cb.Pop();
                 __cb.Push("");
-                #line (37,5)-(37,7) 29 "..\..\..\GenTest1.mgen"
+                #line (63,5)-(63,7) 29 "..\..\..\GenTest1.mgen"
                 __cb.Write("aa");
                 #line hidden
                 __cb.WriteLine();
                 __cb.Pop();
                 __cb.Push("");
-                #line (38,4)-(38,6) 29 "..\..\..\GenTest1.mgen"
+                #line (64,4)-(64,6) 29 "..\..\..\GenTest1.mgen"
                 __cb.Write("DD");
                 #line hidden
                 __cb.WriteLine();
                 __cb.Pop();
                 __cb.Push("");
-                #line (39,3)-(39,5) 29 "..\..\..\GenTest1.mgen"
+                #line (65,3)-(65,5) 29 "..\..\..\GenTest1.mgen"
                 __cb.Write("EE");
                 #line hidden
                 __cb.WriteLine();
@@ -218,42 +421,42 @@ namespace MetaDslx.Bootstrap.MetaGenerator
             return __cb.ToStringAndFree();
         }
         
-        #line (43,9)-(43,32) 22 "..\..\..\GenTest1.mgen"
+        #line (69,9)-(69,32) 22 "..\..\..\GenTest1.mgen"
         public string SayHello6(string name)
         #line hidden
         {
             var __cb = global::MetaDslx.CodeGeneration.CodeBuilder.GetInstance();
-            #line (45,4)-(45,24) 13 "..\..\..\GenTest1.mgen"
+            #line (71,4)-(71,24) 13 "..\..\..\GenTest1.mgen"
             if (name != "Alice")
             #line hidden
             
             {
                 __cb.Push("    ");
-                #line (46,5)-(46,11) 29 "..\..\..\GenTest1.mgen"
+                #line (72,5)-(72,11) 29 "..\..\..\GenTest1.mgen"
                 __cb.Write("Hello,");
                 #line hidden
-                #line (46,11)-(46,12) 29 "..\..\..\GenTest1.mgen"
+                #line (72,11)-(72,12) 29 "..\..\..\GenTest1.mgen"
                 __cb.Write(" ");
                 #line hidden
-                #line (46,13)-(46,17) 28 "..\..\..\GenTest1.mgen"
+                #line (72,13)-(72,17) 28 "..\..\..\GenTest1.mgen"
                 __cb.Write(name);
                 #line hidden
-                #line (46,18)-(46,19) 29 "..\..\..\GenTest1.mgen"
+                #line (72,18)-(72,19) 29 "..\..\..\GenTest1.mgen"
                 __cb.Write("!");
                 #line hidden
                 __cb.WriteLine();
                 __cb.Pop();
                 __cb.Push("      ");
-                #line (47,7)-(47,14) 29 "..\..\..\GenTest1.mgen"
+                #line (73,7)-(73,14) 29 "..\..\..\GenTest1.mgen"
                 __cb.Write("Hello2,");
                 #line hidden
-                #line (47,14)-(47,15) 29 "..\..\..\GenTest1.mgen"
+                #line (73,14)-(73,15) 29 "..\..\..\GenTest1.mgen"
                 __cb.Write(" ");
                 #line hidden
-                #line (47,16)-(47,20) 28 "..\..\..\GenTest1.mgen"
+                #line (73,16)-(73,20) 28 "..\..\..\GenTest1.mgen"
                 __cb.Write(name);
                 #line hidden
-                #line (47,21)-(47,22) 29 "..\..\..\GenTest1.mgen"
+                #line (73,21)-(73,22) 29 "..\..\..\GenTest1.mgen"
                 __cb.Write("!");
                 #line hidden
                 __cb.WriteLine();
@@ -262,150 +465,150 @@ namespace MetaDslx.Bootstrap.MetaGenerator
             return __cb.ToStringAndFree();
         }
         
-        #line (51,9)-(51,32) 22 "..\..\..\GenTest1.mgen"
+        #line (77,9)-(77,32) 22 "..\..\..\GenTest1.mgen"
         public string SayHello7(string name)
         #line hidden
         {
             var __cb = global::MetaDslx.CodeGeneration.CodeBuilder.GetInstance();
-            #line (53,4)-(53,24) 13 "..\..\..\GenTest1.mgen"
+            #line (79,4)-(79,24) 13 "..\..\..\GenTest1.mgen"
             if (name != "Alice")
             #line hidden
             
             {
                 __cb.Push("    ");
-                #line (54,5)-(54,11) 29 "..\..\..\GenTest1.mgen"
+                #line (80,5)-(80,11) 29 "..\..\..\GenTest1.mgen"
                 __cb.Write("Hello,");
                 #line hidden
-                #line (54,11)-(54,12) 29 "..\..\..\GenTest1.mgen"
+                #line (80,11)-(80,12) 29 "..\..\..\GenTest1.mgen"
                 __cb.Write(" ");
                 #line hidden
-                #line (54,13)-(54,17) 28 "..\..\..\GenTest1.mgen"
+                #line (80,13)-(80,17) 28 "..\..\..\GenTest1.mgen"
                 __cb.Write(name);
                 #line hidden
-                #line (54,18)-(54,19) 29 "..\..\..\GenTest1.mgen"
+                #line (80,18)-(80,19) 29 "..\..\..\GenTest1.mgen"
                 __cb.Write("!");
                 #line hidden
                 __cb.WriteLine();
                 __cb.Pop();
                 __cb.Push("      ");
-                #line (55,7)-(55,14) 29 "..\..\..\GenTest1.mgen"
+                #line (81,7)-(81,14) 29 "..\..\..\GenTest1.mgen"
                 __cb.Write("Hello2,");
                 #line hidden
-                #line (55,14)-(55,15) 29 "..\..\..\GenTest1.mgen"
+                #line (81,14)-(81,15) 29 "..\..\..\GenTest1.mgen"
                 __cb.Write(" ");
                 #line hidden
-                #line (55,16)-(55,20) 28 "..\..\..\GenTest1.mgen"
+                #line (81,16)-(81,20) 28 "..\..\..\GenTest1.mgen"
                 __cb.Write(name);
                 #line hidden
-                #line (55,21)-(55,22) 29 "..\..\..\GenTest1.mgen"
+                #line (81,21)-(81,22) 29 "..\..\..\GenTest1.mgen"
                 __cb.Write("!");
                 #line hidden
                 __cb.WriteLine();
                 __cb.Pop();
             }
-            #line (58,4)-(58,24) 13 "..\..\..\GenTest1.mgen"
+            #line (84,4)-(84,24) 13 "..\..\..\GenTest1.mgen"
             if (name != "Alice")
             #line hidden
             
             {
                 __cb.Push("");
-                #line (59,5)-(59,11) 29 "..\..\..\GenTest1.mgen"
+                #line (85,5)-(85,11) 29 "..\..\..\GenTest1.mgen"
                 __cb.Write("Hello,");
                 #line hidden
-                #line (59,11)-(59,12) 29 "..\..\..\GenTest1.mgen"
+                #line (85,11)-(85,12) 29 "..\..\..\GenTest1.mgen"
                 __cb.Write(" ");
                 #line hidden
-                #line (59,13)-(59,17) 28 "..\..\..\GenTest1.mgen"
+                #line (85,13)-(85,17) 28 "..\..\..\GenTest1.mgen"
                 __cb.Write(name);
                 #line hidden
-                #line (59,18)-(59,19) 29 "..\..\..\GenTest1.mgen"
+                #line (85,18)-(85,19) 29 "..\..\..\GenTest1.mgen"
                 __cb.Write("!");
                 #line hidden
                 __cb.WriteLine();
                 __cb.Pop();
                 __cb.Push("  ");
-                #line (60,7)-(60,14) 29 "..\..\..\GenTest1.mgen"
+                #line (86,7)-(86,14) 29 "..\..\..\GenTest1.mgen"
                 __cb.Write("Hello2,");
                 #line hidden
-                #line (60,14)-(60,15) 29 "..\..\..\GenTest1.mgen"
+                #line (86,14)-(86,15) 29 "..\..\..\GenTest1.mgen"
                 __cb.Write(" ");
                 #line hidden
-                #line (60,16)-(60,20) 28 "..\..\..\GenTest1.mgen"
+                #line (86,16)-(86,20) 28 "..\..\..\GenTest1.mgen"
                 __cb.Write(name);
                 #line hidden
-                #line (60,21)-(60,22) 29 "..\..\..\GenTest1.mgen"
+                #line (86,21)-(86,22) 29 "..\..\..\GenTest1.mgen"
                 __cb.Write("!");
                 #line hidden
                 __cb.WriteLine();
                 __cb.Pop();
             }
-            #line (63,4)-(63,24) 13 "..\..\..\GenTest1.mgen"
+            #line (89,4)-(89,24) 13 "..\..\..\GenTest1.mgen"
             if (name != "Alice")
             #line hidden
             
             {
                 __cb.Push("    ");
-                #line (64,5)-(64,11) 29 "..\..\..\GenTest1.mgen"
+                #line (90,5)-(90,11) 29 "..\..\..\GenTest1.mgen"
                 __cb.Write("Hello,");
                 #line hidden
-                #line (64,11)-(64,12) 29 "..\..\..\GenTest1.mgen"
+                #line (90,11)-(90,12) 29 "..\..\..\GenTest1.mgen"
                 __cb.Write(" ");
                 #line hidden
-                #line (64,13)-(64,17) 28 "..\..\..\GenTest1.mgen"
+                #line (90,13)-(90,17) 28 "..\..\..\GenTest1.mgen"
                 __cb.Write(name);
                 #line hidden
-                #line (64,18)-(64,19) 29 "..\..\..\GenTest1.mgen"
+                #line (90,18)-(90,19) 29 "..\..\..\GenTest1.mgen"
                 __cb.Write("!");
                 #line hidden
                 __cb.WriteLine();
                 __cb.Pop();
                 __cb.Push("      ");
-                #line (65,7)-(65,14) 29 "..\..\..\GenTest1.mgen"
+                #line (91,7)-(91,14) 29 "..\..\..\GenTest1.mgen"
                 __cb.Write("Hello2,");
                 #line hidden
-                #line (65,14)-(65,15) 29 "..\..\..\GenTest1.mgen"
+                #line (91,14)-(91,15) 29 "..\..\..\GenTest1.mgen"
                 __cb.Write(" ");
                 #line hidden
-                #line (65,16)-(65,20) 28 "..\..\..\GenTest1.mgen"
+                #line (91,16)-(91,20) 28 "..\..\..\GenTest1.mgen"
                 __cb.Write(name);
                 #line hidden
-                #line (65,21)-(65,22) 29 "..\..\..\GenTest1.mgen"
+                #line (91,21)-(91,22) 29 "..\..\..\GenTest1.mgen"
                 __cb.Write("!");
                 #line hidden
                 __cb.WriteLine();
                 __cb.Pop();
             }
-            #line (68,4)-(68,24) 13 "..\..\..\GenTest1.mgen"
+            #line (94,4)-(94,24) 13 "..\..\..\GenTest1.mgen"
             if (name != "Alice")
             #line hidden
             
             {
                 __cb.Push("");
-                #line (69,5)-(69,11) 29 "..\..\..\GenTest1.mgen"
+                #line (95,5)-(95,11) 29 "..\..\..\GenTest1.mgen"
                 __cb.Write("Hello,");
                 #line hidden
-                #line (69,11)-(69,12) 29 "..\..\..\GenTest1.mgen"
+                #line (95,11)-(95,12) 29 "..\..\..\GenTest1.mgen"
                 __cb.Write(" ");
                 #line hidden
-                #line (69,13)-(69,17) 28 "..\..\..\GenTest1.mgen"
+                #line (95,13)-(95,17) 28 "..\..\..\GenTest1.mgen"
                 __cb.Write(name);
                 #line hidden
-                #line (69,18)-(69,19) 29 "..\..\..\GenTest1.mgen"
+                #line (95,18)-(95,19) 29 "..\..\..\GenTest1.mgen"
                 __cb.Write("!");
                 #line hidden
                 __cb.WriteLine();
                 __cb.Pop();
                 __cb.Push("  ");
-                #line (70,7)-(70,14) 29 "..\..\..\GenTest1.mgen"
+                #line (96,7)-(96,14) 29 "..\..\..\GenTest1.mgen"
                 __cb.Write("Hello2,");
                 #line hidden
-                #line (70,14)-(70,15) 29 "..\..\..\GenTest1.mgen"
+                #line (96,14)-(96,15) 29 "..\..\..\GenTest1.mgen"
                 __cb.Write(" ");
                 #line hidden
-                #line (70,16)-(70,20) 28 "..\..\..\GenTest1.mgen"
+                #line (96,16)-(96,20) 28 "..\..\..\GenTest1.mgen"
                 __cb.Write(name);
                 #line hidden
-                #line (70,21)-(70,22) 29 "..\..\..\GenTest1.mgen"
+                #line (96,21)-(96,22) 29 "..\..\..\GenTest1.mgen"
                 __cb.Write("!");
                 #line hidden
                 __cb.WriteLine();
@@ -414,65 +617,65 @@ namespace MetaDslx.Bootstrap.MetaGenerator
             return __cb.ToStringAndFree();
         }
         
-        #line (74,9)-(74,61) 22 "..\..\..\GenTest1.mgen"
+        #line (100,9)-(100,61) 22 "..\..\..\GenTest1.mgen"
         public string SayHelloIf(IEnumerable<string> names, bool morning)
         #line hidden
         {
             var __cb = global::MetaDslx.CodeGeneration.CodeBuilder.GetInstance();
-            #line (75,4)-(75,31) 13 "..\..\..\GenTest1.mgen"
+            #line (101,4)-(101,31) 13 "..\..\..\GenTest1.mgen"
             foreach (var name in names)
             #line hidden
             
             {
-                #line (76,6)-(76,18) 17 "..\..\..\GenTest1.mgen"
+                #line (102,6)-(102,18) 17 "..\..\..\GenTest1.mgen"
                 if (morning)
                 #line hidden
                 
                 {
                     __cb.Push("");
-                    #line (77,5)-(77,9) 33 "..\..\..\GenTest1.mgen"
+                    #line (103,5)-(103,9) 33 "..\..\..\GenTest1.mgen"
                     __cb.Write("Good");
                     #line hidden
-                    #line (77,9)-(77,10) 33 "..\..\..\GenTest1.mgen"
+                    #line (103,9)-(103,10) 33 "..\..\..\GenTest1.mgen"
                     __cb.Write(" ");
                     #line hidden
-                    #line (77,10)-(77,18) 33 "..\..\..\GenTest1.mgen"
+                    #line (103,10)-(103,18) 33 "..\..\..\GenTest1.mgen"
                     __cb.Write("morning,");
                     #line hidden
-                    #line (77,18)-(77,19) 33 "..\..\..\GenTest1.mgen"
+                    #line (103,18)-(103,19) 33 "..\..\..\GenTest1.mgen"
                     __cb.Write(" ");
                     #line hidden
-                    #line (77,20)-(77,24) 32 "..\..\..\GenTest1.mgen"
+                    #line (103,20)-(103,24) 32 "..\..\..\GenTest1.mgen"
                     __cb.Write(name);
                     #line hidden
-                    #line (77,25)-(77,26) 33 "..\..\..\GenTest1.mgen"
+                    #line (103,25)-(103,26) 33 "..\..\..\GenTest1.mgen"
                     __cb.Write("!");
                     #line hidden
                     __cb.WriteLine();
                     __cb.Pop();
                 }
-                #line (78,6)-(78,10) 17 "..\..\..\GenTest1.mgen"
+                #line (104,6)-(104,10) 17 "..\..\..\GenTest1.mgen"
                 else
                 #line hidden
                 
                 {
                     __cb.Push("");
-                    #line (79,5)-(79,9) 33 "..\..\..\GenTest1.mgen"
+                    #line (105,5)-(105,9) 33 "..\..\..\GenTest1.mgen"
                     __cb.Write("Good");
                     #line hidden
-                    #line (79,9)-(79,10) 33 "..\..\..\GenTest1.mgen"
+                    #line (105,9)-(105,10) 33 "..\..\..\GenTest1.mgen"
                     __cb.Write(" ");
                     #line hidden
-                    #line (79,10)-(79,18) 33 "..\..\..\GenTest1.mgen"
+                    #line (105,10)-(105,18) 33 "..\..\..\GenTest1.mgen"
                     __cb.Write("evening,");
                     #line hidden
-                    #line (79,18)-(79,19) 33 "..\..\..\GenTest1.mgen"
+                    #line (105,18)-(105,19) 33 "..\..\..\GenTest1.mgen"
                     __cb.Write(" ");
                     #line hidden
-                    #line (79,20)-(79,24) 32 "..\..\..\GenTest1.mgen"
+                    #line (105,20)-(105,24) 32 "..\..\..\GenTest1.mgen"
                     __cb.Write(name);
                     #line hidden
-                    #line (79,25)-(79,26) 33 "..\..\..\GenTest1.mgen"
+                    #line (105,25)-(105,26) 33 "..\..\..\GenTest1.mgen"
                     __cb.Write("!");
                     #line hidden
                     __cb.WriteLine();
@@ -482,123 +685,123 @@ namespace MetaDslx.Bootstrap.MetaGenerator
             return __cb.ToStringAndFree();
         }
         
-        #line (84,9)-(84,43) 22 "..\..\..\GenTest1.mgen"
+        #line (110,9)-(110,43) 22 "..\..\..\GenTest1.mgen"
         public string SayHelloSC(string name, int time)
         #line hidden
         {
             var __cb = global::MetaDslx.CodeGeneration.CodeBuilder.GetInstance();
-            #line (86,4)-(86,17) 13 "..\..\..\GenTest1.mgen"
+            #line (112,4)-(112,17) 13 "..\..\..\GenTest1.mgen"
             switch (time)
             #line hidden
             
             {
-                #line (87,6)-(87,13) 17 "..\..\..\GenTest1.mgen"
+                #line (113,6)-(113,13) 17 "..\..\..\GenTest1.mgen"
                 case 1:
                 #line hidden
                 
                 {
                     __cb.Push("      ");
-                    #line (88,7)-(88,11) 33 "..\..\..\GenTest1.mgen"
+                    #line (114,7)-(114,11) 33 "..\..\..\GenTest1.mgen"
                     __cb.Write("Good");
                     #line hidden
-                    #line (88,11)-(88,12) 33 "..\..\..\GenTest1.mgen"
+                    #line (114,11)-(114,12) 33 "..\..\..\GenTest1.mgen"
                     __cb.Write(" ");
                     #line hidden
-                    #line (88,12)-(88,20) 33 "..\..\..\GenTest1.mgen"
+                    #line (114,12)-(114,20) 33 "..\..\..\GenTest1.mgen"
                     __cb.Write("morning,");
                     #line hidden
-                    #line (88,20)-(88,21) 33 "..\..\..\GenTest1.mgen"
+                    #line (114,20)-(114,21) 33 "..\..\..\GenTest1.mgen"
                     __cb.Write(" ");
                     #line hidden
-                    #line (88,22)-(88,26) 32 "..\..\..\GenTest1.mgen"
+                    #line (114,22)-(114,26) 32 "..\..\..\GenTest1.mgen"
                     __cb.Write(name);
                     #line hidden
-                    #line (88,27)-(88,28) 33 "..\..\..\GenTest1.mgen"
+                    #line (114,27)-(114,28) 33 "..\..\..\GenTest1.mgen"
                     __cb.Write("!");
                     #line hidden
                     __cb.WriteLine();
                     __cb.Pop();
                     break;
                 }
-                #line (89,6)-(89,21) 17 "..\..\..\GenTest1.mgen"
+                #line (115,6)-(115,21) 17 "..\..\..\GenTest1.mgen"
                 case 2: case 3:
                 #line hidden
                 
                 {
                     __cb.Push("      ");
-                    #line (90,7)-(90,11) 33 "..\..\..\GenTest1.mgen"
+                    #line (116,7)-(116,11) 33 "..\..\..\GenTest1.mgen"
                     __cb.Write("Good");
                     #line hidden
-                    #line (90,11)-(90,12) 33 "..\..\..\GenTest1.mgen"
+                    #line (116,11)-(116,12) 33 "..\..\..\GenTest1.mgen"
                     __cb.Write(" ");
                     #line hidden
-                    #line (90,12)-(90,22) 33 "..\..\..\GenTest1.mgen"
+                    #line (116,12)-(116,22) 33 "..\..\..\GenTest1.mgen"
                     __cb.Write("afternoon,");
                     #line hidden
-                    #line (90,22)-(90,23) 33 "..\..\..\GenTest1.mgen"
+                    #line (116,22)-(116,23) 33 "..\..\..\GenTest1.mgen"
                     __cb.Write(" ");
                     #line hidden
-                    #line (90,24)-(90,28) 32 "..\..\..\GenTest1.mgen"
+                    #line (116,24)-(116,28) 32 "..\..\..\GenTest1.mgen"
                     __cb.Write(name);
                     #line hidden
-                    #line (90,29)-(90,30) 33 "..\..\..\GenTest1.mgen"
+                    #line (116,29)-(116,30) 33 "..\..\..\GenTest1.mgen"
                     __cb.Write("!");
                     #line hidden
                     __cb.WriteLine();
                     __cb.Pop();
                     break;
                 }
-                #line (91,6)-(91,13) 17 "..\..\..\GenTest1.mgen"
+                #line (117,6)-(117,13) 17 "..\..\..\GenTest1.mgen"
                 case 4:
                 #line hidden
                 
                 {
                     break;
                 }
-                #line (91,15)-(91,22) 17 "..\..\..\GenTest1.mgen"
+                #line (117,15)-(117,22) 17 "..\..\..\GenTest1.mgen"
                 case 5:
                 #line hidden
                 
                 {
                     __cb.Push("      ");
-                    #line (92,7)-(92,11) 33 "..\..\..\GenTest1.mgen"
+                    #line (118,7)-(118,11) 33 "..\..\..\GenTest1.mgen"
                     __cb.Write("Good");
                     #line hidden
-                    #line (92,11)-(92,12) 33 "..\..\..\GenTest1.mgen"
+                    #line (118,11)-(118,12) 33 "..\..\..\GenTest1.mgen"
                     __cb.Write(" ");
                     #line hidden
-                    #line (92,12)-(92,20) 33 "..\..\..\GenTest1.mgen"
+                    #line (118,12)-(118,20) 33 "..\..\..\GenTest1.mgen"
                     __cb.Write("evening,");
                     #line hidden
-                    #line (92,20)-(92,21) 33 "..\..\..\GenTest1.mgen"
+                    #line (118,20)-(118,21) 33 "..\..\..\GenTest1.mgen"
                     __cb.Write(" ");
                     #line hidden
-                    #line (92,22)-(92,26) 32 "..\..\..\GenTest1.mgen"
+                    #line (118,22)-(118,26) 32 "..\..\..\GenTest1.mgen"
                     __cb.Write(name);
                     #line hidden
-                    #line (92,27)-(92,28) 33 "..\..\..\GenTest1.mgen"
+                    #line (118,27)-(118,28) 33 "..\..\..\GenTest1.mgen"
                     __cb.Write("!");
                     #line hidden
                     __cb.WriteLine();
                     __cb.Pop();
                     break;
                 }
-                #line (93,6)-(93,14) 17 "..\..\..\GenTest1.mgen"
+                #line (119,6)-(119,14) 17 "..\..\..\GenTest1.mgen"
                 default:
                 #line hidden
                 
                 {
                     __cb.Push("      ");
-                    #line (94,7)-(94,13) 33 "..\..\..\GenTest1.mgen"
+                    #line (120,7)-(120,13) 33 "..\..\..\GenTest1.mgen"
                     __cb.Write("Hello,");
                     #line hidden
-                    #line (94,13)-(94,14) 33 "..\..\..\GenTest1.mgen"
+                    #line (120,13)-(120,14) 33 "..\..\..\GenTest1.mgen"
                     __cb.Write(" ");
                     #line hidden
-                    #line (94,15)-(94,19) 32 "..\..\..\GenTest1.mgen"
+                    #line (120,15)-(120,19) 32 "..\..\..\GenTest1.mgen"
                     __cb.Write(name);
                     #line hidden
-                    #line (94,20)-(94,21) 33 "..\..\..\GenTest1.mgen"
+                    #line (120,20)-(120,21) 33 "..\..\..\GenTest1.mgen"
                     __cb.Write("!");
                     #line hidden
                     __cb.WriteLine();

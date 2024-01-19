@@ -1,6 +1,7 @@
 ﻿using MetaDslx.CodeAnalysis.Text;
 using MetaDslx.Languages.MetaGenerator.Syntax;
 
+
 var filePath = @"..\..\..\GenTest1.mgen";
 var mgenCompiler = new MetaGeneratorParser(filePath, SourceText.From(File.ReadAllText(filePath)));
 var csharpCode = mgenCompiler.Compile();

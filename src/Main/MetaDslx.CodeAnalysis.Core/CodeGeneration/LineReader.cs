@@ -7,6 +7,7 @@ namespace MetaDslx.CodeGeneration
     public ref struct LineReader
     {
         private ReadOnlySpan<char> _code;
+        private bool _endsWithLineEnd;
         private bool _hasExtraLineEnd;
 
         public LineReader(ReadOnlySpan<char> code)
@@ -17,6 +18,7 @@ namespace MetaDslx.CodeGeneration
             {
                 --lastIndex;
             }
+            _endsWithLineEnd = lastIndex + 1 < _code.Length;
             _hasExtraLineEnd = false;
             if (lastIndex + 2 < _code.Length)
             {
@@ -43,6 +45,7 @@ namespace MetaDslx.CodeGeneration
         }
 
         public bool EndOfStream => _code.Length == 0;
+        public bool EndsWithLineEnd => _endsWithLineEnd;
         public bool HasExtraLineEnd => _hasExtraLineEnd;
 
         public ReadOnlySpan<char> ReadLine()
