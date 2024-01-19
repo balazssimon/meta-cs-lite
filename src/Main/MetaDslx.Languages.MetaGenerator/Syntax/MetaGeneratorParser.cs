@@ -315,6 +315,15 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
                 {
                     if (!state.IsEndWritten && state.BeginKeyword.Text != "template")
                     {
+                        if (MetaGeneratorLexer.BlockWithOptionalContentKeywords.Contains(state.BeginKeyword.Text))
+                        {
+                            if (state.BlockKeyword.Text != state.BeginKeyword.Text)
+                            {
+                                if (MetaGeneratorLexer.BlockWithBreakKeywords.Contains(state.BlockKeyword.Text)) _osb.WriteLine("break;");
+                                _osb.Pop();
+                                _osb.WriteLine("}");
+                            }
+                        }
                         _osb.Pop();
                         _osb.WriteLine("}");
                         state.IsEndWritten = true;
@@ -472,10 +481,16 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
             }
             else if (stmt.Kind == ControlStatementKind.BeginStatement)
             {
-                if (MetaGeneratorLexer.BlockWithoutEndKeywords.Contains(stmt.Keyword.Text))
+                var keyword = stmt.Keyword.Text;
+                if (MetaGeneratorLexer.BlockWithoutEndKeywords.Contains(keyword))
                 {
-                    _osb.Pop();
-                    _osb.WriteLine("}");
+                    if (!MetaGeneratorLexer.BlockWithoutBeginningKeywords.Contains(keyword) || state.BlockKeyword.Text != state.BeginKeyword.Text)
+                    {
+                        if (MetaGeneratorLexer.BlockWithBreakKeywords.Contains(state.BlockKeyword.Text)) _osb.WriteLine("break;");
+                        _osb.Pop();
+                        _osb.WriteLine("}");
+                    }
+                    state.BlockKeyword = stmt.Keyword;
                 }
                 var first = state.GetNextVariableName("first");
                 if (stmt.SeparatorTokenCount > 0)

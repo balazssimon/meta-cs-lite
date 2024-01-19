@@ -70,3 +70,27 @@ template SayHello7(string name)
       Hello2, [name]!
   [end if]
 end template
+
+template SayHelloIf(IEnumerable<string> names, bool morning)
+  [foreach (var name in names)]
+    [if (morning)]
+    Good morning, [name]!
+    [else]
+    Good evening, [name]!
+    [end if]
+  [end foreach]
+end template
+
+template SayHelloSC(string name, int time)
+[<]
+  [switch (time)]
+    [case 1:]
+      Good morning, [name]!
+    [case 2: case 3:]
+      Good afternoon, [name]!
+    [case 4:][case 5:]
+      Good evening, [name]!
+    [default:]
+      Hello, [name]!
+  [end switch]
+end template

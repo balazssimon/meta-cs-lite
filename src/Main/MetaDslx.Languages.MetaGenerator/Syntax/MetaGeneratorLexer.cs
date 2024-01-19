@@ -845,6 +845,21 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
             "if", "for", "foreach", "lock", "switch", "try", "while"
         };
 
+        public static readonly HashSet<string> BlockWithOptionalContentKeywords = new HashSet<string>()
+        {
+            "switch"
+        };
+
+        public static readonly HashSet<string> BlockWithoutBeginningKeywords = new HashSet<string>()
+        {
+            "case", "default"
+        };
+
+        public static readonly HashSet<string> BlockWithBreakKeywords = new HashSet<string>()
+        {
+            "case", "default"
+        };
+
         public static readonly HashSet<string> BlockWithoutEndKeywords = new HashSet<string>()
         {
             "case", "catch", "default", "else", "finally"
