@@ -582,7 +582,12 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
                 if (state == MetaGeneratorLexerState.ControlBeginWs && ControlShortcutKeywords.Contains(lexeme))
                 {
                     kind = MetaGeneratorTokenKind.Keyword;
-                    if (lexeme == QuotsKeyword)
+                    if (lexeme == DefaultKeyword)
+                    {
+                        _controlBegin = "[";
+                        _controlEnd = "]";
+                    }
+                    else if (lexeme == QuotsKeyword)
                     {
                         _controlBegin = "«";
                         _controlEnd = "»";
@@ -892,11 +897,12 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
             MultiLineKeyword, SingleLineKeyword, SkipLineEndKeyword, RelativeIndentKeyword, AbsoluteIndentKeyword,
         };
 
-        public const string QuotsKeyword = "quots";
+        public const string QuotsKeyword = "chevrons";
+        public const string DefaultKeyword = "default";
 
         public static readonly HashSet<string> ControlShortcutKeywords = new HashSet<string>()
         {
-            QuotsKeyword
+            DefaultKeyword, QuotsKeyword
         };
     }
 }

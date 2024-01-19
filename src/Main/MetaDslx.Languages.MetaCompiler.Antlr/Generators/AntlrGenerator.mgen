@@ -22,21 +22,21 @@ template GenerateLexerRule(LexerRule rule)
 end template
 
 template GenerateLexerRuleAlts(List<LexerRuleAlternative> alternatives)
-[$-]
+[-]
 [foreach (var alt in alternatives) separator " | "]
 [GenerateLexerRuleElements(alt)]
 [end foreach]
 end template
 
 template GenerateLexerRuleElements(LexerRuleAlternative alt)
-[$-]
+[-]
 [foreach (var elem in alt.Elements) separator " "]
 [elem.IsNegated ? "~" : ""][GenerateLexerRuleElement(elem)][GenerateMultiplicity(elem.Multiplicity)]
 [end foreach]
 end template
 
 template GenerateLexerRuleElement(LexerRuleElement elem)
-[$-]
+[-]
 [if (elem is LexerRuleReferenceElement ruleRefElem)]
 [ruleRefElem.Rule.AntlrName]
 [else if (elem is LexerRuleFixedStringElement fixedElem)]
@@ -53,7 +53,7 @@ template GenerateLexerRuleElement(LexerRuleElement elem)
 end template
 
 template GenerateMultiplicity(Multiplicity multiplicity)
-[$-]
+[-]
 [if (multiplicity == Multiplicity.ZeroOrOne)]?
 [else if (multiplicity == Multiplicity.ZeroOrMore)]*
 [else if (multiplicity == Multiplicity.OneOrMore)]+
@@ -64,7 +64,7 @@ template GenerateMultiplicity(Multiplicity multiplicity)
 end template
 
 template GenerateAssignment(Multiplicity multiplicity)
-[$-]
+[-]
 [if (multiplicity.IsList())]+=[else]=[end if]
 end template
 
@@ -97,14 +97,14 @@ template GenerateParserRuleAlts(List<ParserRuleAlternative> alternatives)
 end template
 
 template GenerateParserRuleElements(ParserRuleAlternative alt)
-[$-]
+[-]
 [foreach (var elem in alt.Elements) separator " "]
 [GenerateParserRuleElement(elem)]
 [end foreach]
 end template
 
 template GenerateParserRuleElement(ParserRuleElement elem)
-[$-]
+[-]
 [if (elem is ParserRuleReferenceElement ruleRefElem)]
  [elem.AntlrName][GenerateAssignment(elem.Multiplicity)][elem.IsNegated ? "~" : ""][ruleRefElem.Rule.AntlrName][GenerateMultiplicity(elem.Multiplicity)]
 [else if (elem is ParserRuleEofElement eofElem)]
