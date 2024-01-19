@@ -46,6 +46,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetaDslx.Bootstrap.MetaMode
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetaDslx.CodeAnalysis.Analyzers", "Main\MetaDslx.CodeAnalysis.Analyzers\MetaDslx.CodeAnalysis.Analyzers.csproj", "{F17FB7CC-0C5B-46F0-9994-7E8BDC2B4501}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetaDslx.Bootstrap.MetaGenerator", "Bootstrap\MetaDslx.Bootstrap.MetaGenerator\MetaDslx.Bootstrap.MetaGenerator.csproj", "{5B65A9E0-A355-4056-A738-B4DEF2A9CB4C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -214,6 +216,14 @@ Global
 		{F17FB7CC-0C5B-46F0-9994-7E8BDC2B4501}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F17FB7CC-0C5B-46F0-9994-7E8BDC2B4501}.Release|x86.ActiveCfg = Release|Any CPU
 		{F17FB7CC-0C5B-46F0-9994-7E8BDC2B4501}.Release|x86.Build.0 = Release|Any CPU
+		{5B65A9E0-A355-4056-A738-B4DEF2A9CB4C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5B65A9E0-A355-4056-A738-B4DEF2A9CB4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5B65A9E0-A355-4056-A738-B4DEF2A9CB4C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{5B65A9E0-A355-4056-A738-B4DEF2A9CB4C}.Debug|x86.Build.0 = Debug|Any CPU
+		{5B65A9E0-A355-4056-A738-B4DEF2A9CB4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5B65A9E0-A355-4056-A738-B4DEF2A9CB4C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5B65A9E0-A355-4056-A738-B4DEF2A9CB4C}.Release|x86.ActiveCfg = Release|Any CPU
+		{5B65A9E0-A355-4056-A738-B4DEF2A9CB4C}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

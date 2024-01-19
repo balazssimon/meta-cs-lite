@@ -11,6 +11,7 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
         EndOfFile,
         Whitespace,
         EndOfLine,
+        IgnoredEndOfLine,
         SingleLineComment,
         MultiLineComment,
         Identifier,
@@ -27,5 +28,35 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
         TemplateControlBegin,
         TemplateControlEnd,
         Other
+    }
+
+    public static class MetaGeneratorTokenKindExtensions
+    {
+        public static bool IsTemplateOutput(this MetaGeneratorTokenKind kind)
+        {
+            switch (kind)
+            {
+                case MetaGeneratorTokenKind.TemplateOutputText:
+                case MetaGeneratorTokenKind.TemplateOutputWhitespace:
+                case MetaGeneratorTokenKind.TemplateOutputIgnoredWhitespace:
+                case MetaGeneratorTokenKind.TemplateOutputInvalidWhitespace:
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
+        public static bool IsTemplateWhitespace(this MetaGeneratorTokenKind kind)
+        {
+            switch (kind)
+            {
+                case MetaGeneratorTokenKind.TemplateOutputWhitespace:
+                case MetaGeneratorTokenKind.TemplateOutputIgnoredWhitespace:
+                case MetaGeneratorTokenKind.TemplateOutputInvalidWhitespace:
+                    return true;
+                default:
+                    return false;
+            }
+        }
     }
 }

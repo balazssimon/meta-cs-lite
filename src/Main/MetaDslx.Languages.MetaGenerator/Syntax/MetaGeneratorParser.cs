@@ -9,6 +9,7 @@ using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
+using Roslyn.Utilities;
 
 namespace MetaDslx.Languages.MetaGenerator.Syntax
 {
@@ -31,6 +32,7 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
         private TemplateInfo? _currentTemplateInfo;
         private List<ControlInfo> _controlInfos;
         private List<TemplateInfo> _templateInfos;
+        private int _tokenIndex;
 
         public MetaGeneratorParser(string filePath, SourceText templateCode)
         {
@@ -300,7 +302,7 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
         {
             while (!_tokens.EndOfFile && !state.IsEnd)
             {
-                var position = _tokens.LinePosition;
+                var tokenIndex = _tokenIndex;
                 if (state.IsControl)
                 {
                     ParseTemplateControl(ref state);
@@ -318,7 +320,7 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
                         state.IsEndWritten = true;
                     }
                 }
-                if (_tokens.LinePosition == position)
+                if (tokenIndex == _tokenIndex)
                 {
                     Unexpected();
                     EatToken();
@@ -330,26 +332,46 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
         {
             var token = _tokens.CurrentToken;
             var lineStart = _tokens.Character == 0;
-            if (token.Kind == MetaGeneratorTokenKind.TemplateOutputText || token.Kind == MetaGeneratorTokenKind.TemplateOutputWhitespace)
+            if (token.Kind.IsTemplateOutput())
             {
-                StartInputSpan();
-                EatToken();
-                var templateOutputSpan = EndInputSpan();
-                if (_currentTemplateInfo != null)
+                if (lineStart && token.Kind.IsTemplateWhitespace())
                 {
-                    _currentTemplateInfo.Outputs.Add(templateOutputSpan);
-                }
-                if (lineStart && token.Kind == MetaGeneratorTokenKind.TemplateOutputWhitespace)
-                {
-                    state.IsEmptyLine = true;
-                    _osb.Write("__cb.Push(\"");
-                    _osb.Write(token.EscapedTextForString);
-                    _osb.WriteLine("\");");
+                    bool hasWhitespace = false;
+                    var indentBuilder = PooledStringBuilder.GetInstance();
+                    var sb = indentBuilder.Builder;
+                    while (token.Kind.IsTemplateWhitespace())
+                    {
+                        if (token.Kind != MetaGeneratorTokenKind.TemplateOutputIgnoredWhitespace)
+                        {
+                            hasWhitespace = true;
+                            sb.Append(token.Text);
+                        }
+                        StartInputSpan();
+                        EatToken();
+                        var templateOutputSpan = EndInputSpan();
+                        if (_currentTemplateInfo != null)
+                        {
+                            _currentTemplateInfo.Outputs.Add(templateOutputSpan);
+                        }
+                        token = _tokens.CurrentToken;
+                    }
+                    var indent = indentBuilder.ToStringAndFree();
+                    if (hasWhitespace)
+                    {
+                        _osb.Write("__cb.Push(");
+                        _osb.Write(indent.EncodeString());
+                        _osb.WriteLine(");");
+                    }
                 }
                 else
                 {
-                    state.IsEmptyLine = false;
-                    if (lineStart) _osb.Write("__cb.Push(\"\");");
+                    StartInputSpan();
+                    EatToken();
+                    var templateOutputSpan = EndInputSpan();
+                    if (_currentTemplateInfo != null)
+                    {
+                        _currentTemplateInfo.Outputs.Add(templateOutputSpan);
+                    }
                     StartOutputSpan(_osb.Prefix.Length + 12);
                     _osb.Write("__cb.Write(\"");
                     _osb.Write(token.EscapedTextForString);
@@ -357,7 +379,7 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
                     EndOutputSpan();
                 }
             }
-            else if (token.Kind == MetaGeneratorTokenKind.EndOfLine)
+            else if (token.Kind == MetaGeneratorTokenKind.EndOfLine || token.Kind == MetaGeneratorTokenKind.IgnoredEndOfLine)
             {
                 StartInputSpan();
                 EatToken();
@@ -366,30 +388,19 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
                 {
                     _currentTemplateInfo.Outputs.Add(templateOutputSpan);
                 }
-                if (state.IsEmptyLine)
+                if (token.Kind == MetaGeneratorTokenKind.EndOfLine)
                 {
                     _osb.WriteLine("__cb.WriteLine();");
-                    _osb.WriteLine("__cb.Pop();");
-                }
-                else if (lineStart)
-                {
-                    _osb.WriteLine("__cb.WriteLine();");
-                }
-                else
-                {
-                    _osb.WriteLine("__cb.AppendLine();");
                     _osb.WriteLine("__cb.Pop();");
                 }
             }
             else if (token.Kind == MetaGeneratorTokenKind.TemplateControlBegin)
             {
-                state.IsEmptyLine = false;
                 state.IsControl = true;
                 EatToken();
             }
             else if (token.Kind == MetaGeneratorTokenKind.Keyword && token.Text == "end")
             {
-                state.IsEmptyLine = false;
                 var stmt = TryMatchControlStatement();
                 if (stmt.Kind == ControlStatementKind.EndStatement && stmt.Keyword.Text == "template")
                 {
@@ -433,7 +444,7 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
             }
             else if (stmt.Kind == ControlStatementKind.Statement || stmt.Kind == ControlStatementKind.StatementWithSemicolon)
             {
-                if (stmt.Keyword.Kind == MetaGeneratorTokenKind.GeneratorKeyword && MetaGeneratorLexer.TemplateModifierKeywords.Contains(stmt.Keyword.Text))
+                if (stmt.Keyword.Kind == MetaGeneratorTokenKind.FormatterKeyword && MetaGeneratorLexer.TemplateFormatterKeywords.Contains(stmt.Keyword.Text))
                 {
                     EatTokens(stmt.TokenCount);
                     var keyword = stmt.Keyword.Text;
@@ -442,7 +453,9 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
                         case MetaGeneratorLexer.SingleLineKeyword: _osb.WriteLine("__cb.SingleLineMode = true;"); break;
                         case MetaGeneratorLexer.MultiLineKeyword: _osb.WriteLine("__cb.SingleLineMode = false;"); break;
                         case MetaGeneratorLexer.SkipLineEndKeyword: _osb.WriteLine("__cb.SkipLineEnd = true;"); break;
-                        default: throw new InvalidOperationException("Unknown TemplateModifierKeyword: " + keyword);
+                        case MetaGeneratorLexer.RelativeIndentKeyword: break;
+                        case MetaGeneratorLexer.AbsoluteIndentKeyword: break;
+                        default: throw new InvalidOperationException("Unknown TemplateFormatterKeyword: " + keyword);
                     }
                 }
                 else
@@ -542,6 +555,7 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
         private void EatToken()
         {
             var token = _tokens.EatToken();
+            ++_tokenIndex;
             if (_collectInput) _isb.Write(token.Text);
         }
 
@@ -555,7 +569,11 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
 
         private void SkipWs(bool skipSemicolon = false)
         {
-            while (IsWhitespaceOrComment() || skipSemicolon && _tokens.CurrentToken.Kind == MetaGeneratorTokenKind.Other && _tokens.CurrentToken.Text == ";") _tokens.EatToken();
+            while (IsWhitespaceOrComment() || skipSemicolon && _tokens.CurrentToken.Kind == MetaGeneratorTokenKind.Other && _tokens.CurrentToken.Text == ";")
+            {
+                _tokens.EatToken();
+                ++_tokenIndex;
+            }
         }
 
         private MetaGeneratorToken SkipWs(ref int index)
@@ -594,9 +612,9 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
                     result.Keyword = token;
                 }
             }
-            else if (token.Kind == MetaGeneratorTokenKind.GeneratorKeyword)
+            else if (token.Kind == MetaGeneratorTokenKind.FormatterKeyword)
             {
-                if (MetaGeneratorLexer.TemplateModifierKeywords.Contains(token.Text))
+                if (MetaGeneratorLexer.TemplateFormatterKeywords.Contains(token.Text))
                 {
                     result.Kind = ControlStatementKind.Statement;
                     result.Keyword = token;
@@ -679,7 +697,7 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
             {
                 return true;
             }
-            if (token.Kind == MetaGeneratorTokenKind.EndOfLine)
+            if (token.Kind == MetaGeneratorTokenKind.EndOfLine || token.Kind == MetaGeneratorTokenKind.IgnoredEndOfLine)
             {
                 return true;
             }
@@ -707,7 +725,7 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
 
         private bool IsWhitespaceOrComment(MetaGeneratorToken token)
         {
-            return token.Kind == MetaGeneratorTokenKind.EndOfLine || token.Kind == MetaGeneratorTokenKind.Whitespace || token.Kind == MetaGeneratorTokenKind.SingleLineComment || token.Kind == MetaGeneratorTokenKind.MultiLineComment;
+            return token.Kind == MetaGeneratorTokenKind.EndOfLine || token.Kind == MetaGeneratorTokenKind.IgnoredEndOfLine || token.Kind == MetaGeneratorTokenKind.Whitespace || token.Kind == MetaGeneratorTokenKind.SingleLineComment || token.Kind == MetaGeneratorTokenKind.MultiLineComment;
         }
 
         private void Error(string message)
@@ -798,7 +816,6 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
         {
             public MetaGeneratorToken BeginKeyword;
             public MetaGeneratorToken BlockKeyword;
-            public bool IsEmptyLine;
             public bool IsEndWritten;
             public bool IsControl;
             public bool IsEnd;

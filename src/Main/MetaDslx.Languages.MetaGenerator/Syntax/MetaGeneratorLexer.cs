@@ -55,7 +55,7 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
         public MetaGeneratorToken Lex()
         {
             var token = FetchNextToken();
-            if (token.Kind == MetaGeneratorTokenKind.EndOfLine)
+            if (token.Kind == MetaGeneratorTokenKind.EndOfLine || token.Kind == MetaGeneratorTokenKind.IgnoredEndOfLine)
             {
                 ++_line;
                 _column = 0;
@@ -108,7 +108,7 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
             bool absoluteIndent = _absoluteIndent;
             bool isInControl = false;
             bool skip = false;
-            var state = _state;
+            bool emptyLine = true;
             var kind = ControlStatementKind.None;
             int parenthesisCounter = 0;
             int bracketCounter = 0;
@@ -119,13 +119,32 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
             while (true)
             {
                 var token = NextToken();
-                if (token.Kind != MetaGeneratorTokenKind.None) _tokens.Add(token);
-                if (token.Kind == MetaGeneratorTokenKind.EndOfFile || token.Kind == MetaGeneratorTokenKind.EndOfLine) break;
+                if (token.Kind != MetaGeneratorTokenKind.None)
+                {
+                    _tokens.Add(token);
+                }
+                if (token.Kind == MetaGeneratorTokenKind.EndOfFile ||
+                    token.Kind == MetaGeneratorTokenKind.EndOfLine ||
+                    token.Kind == MetaGeneratorTokenKind.IgnoredEndOfLine)
+                {
+                    break;
+                }
             }
             if (_tokens.Count == 0) return;
             for (int i = 0; i < _tokens.Count; i++)
             {
                 var token = _tokens[i];
+                if (!isInControl && token.Kind == MetaGeneratorTokenKind.Keyword && token.Text == "end")
+                {
+                    emptyLine = false;
+                    return;
+                }
+                if (token.Kind == MetaGeneratorTokenKind.TemplateOutputText)
+                {
+                    emptyLine = false;
+                    ++expressionCount;
+                    continue;
+                }
                 if (token.Kind == MetaGeneratorTokenKind.TemplateControlBegin)
                 {
                     isInControl = true;
@@ -141,6 +160,7 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
                         case MetaGeneratorTokenKind.EndOfFile:
                         case MetaGeneratorTokenKind.Whitespace:
                         case MetaGeneratorTokenKind.EndOfLine:
+                        case MetaGeneratorTokenKind.IgnoredEndOfLine:
                         case MetaGeneratorTokenKind.SingleLineComment:
                         case MetaGeneratorTokenKind.MultiLineComment:
                             continue;
@@ -209,12 +229,14 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
                     {
                         case ControlStatementKind.Expression:
                             ++expressionCount;
+                            emptyLine = false;
                             break;
                         case ControlStatementKind.Statement:
                         case ControlStatementKind.StatementWithSemicolon:
                         case ControlStatementKind.BeginStatement:
                         case ControlStatementKind.EndStatement:
                             ++statementCount;
+                            emptyLine = false;
                             break;
                         default:
                             break;
@@ -227,83 +249,112 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
             {
                 _computeRelativeIndent = true;
             }
-            var firstToken = _tokens[0];
-            if (firstToken.Kind != MetaGeneratorTokenKind.TemplateOutputWhitespace) return;
-            if (expressionCount == 0)
+            var lastToken = _tokens[_tokens.Count - 1];
+            if (lastToken.Kind == MetaGeneratorTokenKind.EndOfLine && expressionCount == 0 && !emptyLine)
             {
-                firstToken.Kind = MetaGeneratorTokenKind.TemplateOutputIgnoredWhitespace;
+                lastToken.Kind = MetaGeneratorTokenKind.IgnoredEndOfLine;
+                _tokens[_tokens.Count - 1] = lastToken;
             }
-            if (!absoluteIndent)
+            var firstToken = _tokens[0];
+            if (firstToken.Kind == MetaGeneratorTokenKind.TemplateOutputWhitespace)
             {
-                if (lastKind == ControlStatementKind.BeginStatement)
+                if (expressionCount == 0 && !emptyLine)
                 {
-                    var newIndentStack = ArrayBuilder<MetaGeneratorToken>.GetInstance();
-                    _tokens.RemoveAt(0);
-                    var whitespacePosition = firstToken.Position;
-                    var firstWhitespace = firstToken.Text;
-                    for (int i = 0; i < _indentStack.Count; ++i)
-                    {
-                        var indent = _indentStack[i];
-                        if (firstWhitespace.StartsWith(indent.Text))
-                        {
-                            firstWhitespace = firstWhitespace.Substring(indent.Text.Length);
-                            _tokens.Insert(i, new MetaGeneratorToken(MetaGeneratorTokenKind.TemplateOutputIgnoredWhitespace, indent.Text, whitespacePosition, MetaGeneratorLexerState.TemplateOutput));
-                            newIndentStack.Add(indent);
-                            whitespacePosition += indent.Text.Length;
-                            if (firstWhitespace.Length == 0) break;
-                        }
-                        else if (indent.Text.StartsWith(firstWhitespace))
-                        {
-                            _tokens.Insert(i, new MetaGeneratorToken(MetaGeneratorTokenKind.TemplateOutputIgnoredWhitespace, firstWhitespace, whitespacePosition, MetaGeneratorLexerState.TemplateOutput));
-                            newIndentStack.Add(new MetaGeneratorToken(indent.Kind, firstWhitespace, whitespacePosition, MetaGeneratorLexerState.TemplateOutput));
-                            whitespacePosition += firstWhitespace.Length;
-                            firstWhitespace = string.Empty;
-                            break;
-                        }
-                        else
-                        {
-                            _tokens.Insert(i, new MetaGeneratorToken(MetaGeneratorTokenKind.TemplateOutputInvalidWhitespace, firstWhitespace, whitespacePosition, MetaGeneratorLexerState.TemplateOutput));
-                            newIndentStack.Add(new MetaGeneratorToken(MetaGeneratorTokenKind.TemplateOutputIgnoredWhitespace, firstWhitespace, whitespacePosition, MetaGeneratorLexerState.TemplateOutput));
-                            whitespacePosition += firstWhitespace.Length;
-                            break;
-                        }
-                    }
-                    _indentStack.Clear();
-                    _indentStack.AddRange(newIndentStack);
-                    newIndentStack.Free();
-                    _computeRelativeIndent = true;
+                    firstToken.Kind = MetaGeneratorTokenKind.TemplateOutputIgnoredWhitespace;
+                    _tokens[0] = firstToken;
+                }
+            }
+            else
+            {
+                firstToken = new MetaGeneratorToken(expressionCount > 0 ? MetaGeneratorTokenKind.TemplateOutputWhitespace : MetaGeneratorTokenKind.TemplateOutputIgnoredWhitespace, "", firstToken.Position, MetaGeneratorLexerState.TemplateOutput);
+                _tokens.Insert(0, firstToken);
+            }
+            bool replaceFirstToken = !absoluteIndent && expressionCount > 0 && firstToken.Text.Length > 0;
+            if (replaceFirstToken) _tokens.RemoveAt(0);
+            bool recomputeIndentStack = computeRelativeIndent;// || expressionCount == 0 && statementCount > 0;
+            var newIndentStack = recomputeIndentStack ? ArrayBuilder<MetaGeneratorToken>.GetInstance() : null;
+            var whitespacePosition = firstToken.Position;
+            var firstWhitespace = firstToken.Text;
+            bool isValid = true;
+            for (int i = 0; i < _indentStack.Count; ++i)
+            {
+                var indent = _indentStack[i];
+                if (firstWhitespace.StartsWith(indent.Text))
+                {
+                    if (replaceFirstToken) _tokens.Insert(i, new MetaGeneratorToken(indent.Kind, indent.Text, whitespacePosition, MetaGeneratorLexerState.TemplateOutput));
+                    if (recomputeIndentStack) newIndentStack.Add(indent);
+                    whitespacePosition += indent.Text.Length;
+                    firstWhitespace = firstWhitespace.Substring(indent.Text.Length);
+                    if (firstWhitespace.Length == 0) break;
+                }
+                else if (indent.Text.StartsWith(firstWhitespace))
+                {
+                    if (replaceFirstToken) _tokens.Insert(i, new MetaGeneratorToken(indent.Kind, firstWhitespace, whitespacePosition, MetaGeneratorLexerState.TemplateOutput));
+                    if (recomputeIndentStack) newIndentStack.Add(new MetaGeneratorToken(indent.Kind, firstWhitespace, whitespacePosition, MetaGeneratorLexerState.TemplateOutput));
+                    whitespacePosition += firstWhitespace.Length;
+                    firstWhitespace = string.Empty;
+                    break;
                 }
                 else
                 {
-                    bool isValid = true;
-                    _tokens.RemoveAt(0);
-                    var whitespacePosition = firstToken.Position;
-                    var firstWhitespace = firstToken.Text;
-                    for (int i = 0; i < _indentStack.Count; ++i)
+                    if (replaceFirstToken) _tokens.Insert(i, new MetaGeneratorToken(MetaGeneratorTokenKind.TemplateOutputInvalidWhitespace, firstWhitespace, whitespacePosition, MetaGeneratorLexerState.TemplateOutput));
+                    if (recomputeIndentStack) newIndentStack.Add(new MetaGeneratorToken(MetaGeneratorTokenKind.TemplateOutputIgnoredWhitespace, firstWhitespace, whitespacePosition, MetaGeneratorLexerState.TemplateOutput));
+                    whitespacePosition += firstWhitespace.Length;
+                    firstWhitespace = string.Empty;
+                    isValid = false;
+                    break;
+                }
+            }
+            if (isValid && firstWhitespace.Length > 0)
+            {
+                if (replaceFirstToken) _tokens.Insert(_indentStack.Count, new MetaGeneratorToken(recomputeIndentStack ? MetaGeneratorTokenKind.TemplateOutputIgnoredWhitespace : MetaGeneratorTokenKind.TemplateOutputWhitespace, firstWhitespace, whitespacePosition, MetaGeneratorLexerState.TemplateOutput));
+                if (recomputeIndentStack) newIndentStack.Add(new MetaGeneratorToken(MetaGeneratorTokenKind.TemplateOutputIgnoredWhitespace, firstWhitespace, whitespacePosition, MetaGeneratorLexerState.TemplateOutput));
+            }
+            if (recomputeIndentStack)
+            {
+                _indentStack.Clear();
+                _indentStack.AddRange(newIndentStack);
+                newIndentStack.Free();
+            }
+            if (lastToken.Kind == MetaGeneratorTokenKind.EndOfLine)
+            {
+                var hasWhitespace = false;
+                for (int i = 0; i < _tokens.Count; ++i)
+                {
+                    if (_tokens[i].Kind.IsTemplateWhitespace())
                     {
-                        var indent = _indentStack[i];
-                        if (firstWhitespace.StartsWith(indent.Text))
+                        if (_tokens[i].Kind != MetaGeneratorTokenKind.TemplateOutputIgnoredWhitespace) hasWhitespace = true;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+                if (!hasWhitespace)
+                {
+                    _tokens.Insert(0, new MetaGeneratorToken(MetaGeneratorTokenKind.TemplateOutputWhitespace, "", firstToken.Position, MetaGeneratorLexerState.TemplateOutput));
+                }
+            }
+            else if (lastToken.Kind == MetaGeneratorTokenKind.IgnoredEndOfLine)
+            {
+                for (int i = 0; i < _tokens.Count; ++i)
+                {
+                    if (_tokens[i].Kind.IsTemplateWhitespace())
+                    {
+                        if (_tokens[i].Kind != MetaGeneratorTokenKind.TemplateOutputIgnoredWhitespace)
                         {
-                            firstWhitespace = firstWhitespace.Substring(indent.Text.Length);
-                            _tokens.Insert(i, new MetaGeneratorToken(indent.Kind, indent.Text, whitespacePosition, MetaGeneratorLexerState.TemplateOutput));
-                            whitespacePosition += indent.Text.Length;
-                        }
-                        else
-                        {
-                            _tokens.Insert(i, new MetaGeneratorToken(MetaGeneratorTokenKind.TemplateOutputInvalidWhitespace, firstWhitespace, whitespacePosition, MetaGeneratorLexerState.TemplateOutput));
-                            whitespacePosition += firstWhitespace.Length;
-                            isValid = false;
-                            break;
+                            var token = _tokens[i];
+                            token.Kind = MetaGeneratorTokenKind.TemplateOutputIgnoredWhitespace;
+                            _tokens[i] = token;
                         }
                     }
-                    if (computeRelativeIndent && isValid && firstWhitespace.Length > 0)
+                    else
                     {
-                        var ws = new MetaGeneratorToken(MetaGeneratorTokenKind.TemplateOutputIgnoredWhitespace, firstWhitespace, whitespacePosition, MetaGeneratorLexerState.TemplateOutput);
-                        _tokens.Insert(_indentStack.Count, ws);
-                        _indentStack.Add(ws);
+                        break;
                     }
                 }
             }
+            if (lastKind == ControlStatementKind.BeginStatement) _computeRelativeIndent = true;
         }
 
         private MetaGeneratorToken NextToken()
@@ -354,8 +405,14 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
                 {
                     state = MetaGeneratorLexerState.TemplateOutputLineStart;
                     _computeRelativeIndent = true;
+                    _absoluteIndent = false;
+                    _indentStack.Clear();
                 }
-                if (state == MetaGeneratorLexerState.ControlBeginWs || state == MetaGeneratorLexerState.ControlEndWs ||
+                else if (state == MetaGeneratorLexerState.TemplateOutput)
+                {
+                    state = MetaGeneratorLexerState.TemplateOutputLineStart;
+                }
+                else if (state == MetaGeneratorLexerState.ControlBeginWs || state == MetaGeneratorLexerState.ControlEndWs ||
                     state == MetaGeneratorLexerState.ControlBegin || state == MetaGeneratorLexerState.ControlEnd ||
                     state == MetaGeneratorLexerState.TemplateEnd)
                 {
@@ -376,30 +433,31 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
                 var isTemplateEnd = IsTemplateEnd();
                 while (!_text.IsReallyAtEnd() && !isControlBegin && !isTemplateEnd && ch != '\r' && ch != '\n')
                 {
-                    if (ch == ' ' || ch == '\t') kind = MetaGeneratorTokenKind.TemplateOutputWhitespace;
-                    else kind = MetaGeneratorTokenKind.TemplateOutputText;
-                    _text.NextChar();
-                    ch = _text.PeekChar();
-                    isControlBegin = IsControlBegin();
-                    isTemplateEnd = IsTemplateEnd();
-                    if (ch == ' ' && ch == '\t')
+                    if (ch == ' ' || ch == '\t')
                     {
                         if (kind == MetaGeneratorTokenKind.TemplateOutputText) break;
+                        else kind = MetaGeneratorTokenKind.TemplateOutputWhitespace;
                     }
                     else
                     {
                         if (kind == MetaGeneratorTokenKind.TemplateOutputWhitespace) break;
+                        else kind = MetaGeneratorTokenKind.TemplateOutputText;
                     }
+                    _text.NextChar();
+                    ch = _text.PeekChar();
+                    isControlBegin = IsControlBegin();
+                    isTemplateEnd = IsTemplateEnd();
                 }
                 if (kind != MetaGeneratorTokenKind.None)
                 {
+                    state = MetaGeneratorLexerState.TemplateOutput;
                     return new MetaGeneratorToken(kind, _text.GetText(false), _text.LexemeStartPosition, state);
                 }
                 if (isControlBegin)
                 {
+                    _text.AdvanceChar(_controlBegin.Length);
                     if (IsTemplateFormatter()) state = MetaGeneratorLexerState.TemplateFormatter;
                     else state = MetaGeneratorLexerState.TemplateControl;
-                    _text.AdvanceChar(_controlBegin.Length);
                     _parenthesisCounter = 0;
                     _bracketsCounter = 0;
                     _bracesCounter = 0;

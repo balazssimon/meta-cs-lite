@@ -136,7 +136,7 @@ finally
 end template
 
 template GenerateAnnotationConstructorArguments(Annotation annot)
-[$-]
+[-]
 [foreach (var arg in annot.ConstructorArguments) separator ", "]
 [arg.Name]: [arg.CSharpValue]
 [end foreach]

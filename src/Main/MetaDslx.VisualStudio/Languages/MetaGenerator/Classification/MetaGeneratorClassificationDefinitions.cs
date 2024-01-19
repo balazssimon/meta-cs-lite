@@ -48,5 +48,23 @@ namespace MetaDslx.VisualStudio.Languages.MetaGenerator.Classification
             }
         }
 
+
+        [Name(MetaGeneratorClassificationTypes.TemplateInvalidOutput), Export]
+        internal ClassificationTypeDefinition MetaGeneratorTemplateInvalidOutputClassificationType { get; set; }
+
+        [Export(typeof(EditorFormatDefinition))]
+        [UserVisible(true)]
+        [ClassificationType(ClassificationTypeNames = MetaGeneratorClassificationTypes.TemplateInvalidOutput)]
+        [Name("MetaGeneratorTemplateInvalidOutputFormatDefinition")]
+        [Order]
+        internal sealed class MetaGeneratorTemplateInvalidOutputClassificationFormat : ClassificationFormatDefinition
+        {
+            internal MetaGeneratorTemplateInvalidOutputClassificationFormat()
+            {
+                BackgroundColor = Colors.LightPink;
+                ForegroundColor = Colors.DarkRed;
+                this.DisplayName = "MetaGenerator TemplateInvalidOutput";
+            }
+        }
     }
 }

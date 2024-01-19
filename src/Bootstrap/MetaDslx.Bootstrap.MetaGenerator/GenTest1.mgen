@@ -1,0 +1,72 @@
+﻿namespace MetaDslx.Bootstrap.MetaGenerator;
+
+using System;
+using System.Linq;
+
+generator GenTest1;
+
+template SayHello1(string name)
+Hello, [name]!
+end template
+
+template SayHello2(string name)
+  Hello, [name]!
+end template
+
+template SayHello3(string name)
+  [if (name != "Alice")]
+    Hello, [name]!
+  [end if]
+end template
+
+template SayHello4(string name)
+  [if (name != "Alice")]
+    Hello, [name]!
+      Hello2, [name]!
+  [end if]
+end template
+
+template SayHello5(string name)
+  [if (name != "Alice")]
+    Hello, [name]!
+    [SayHello1(name)]
+      [SayHello2(name)]
+      AAA
+     BB
+    CC
+    aa
+   DD
+  EE
+  [end if]
+end template
+
+template SayHello6(string name)
+[<]
+  [if (name != "Alice")]
+    Hello, [name]!
+      Hello2, [name]!
+  [end if]
+end template
+
+template SayHello7(string name)
+[<]
+  [if (name != "Alice")]
+    Hello, [name]!
+      Hello2, [name]!
+  [end if]
+[>]
+  [if (name != "Alice")]
+    Hello, [name]!
+      Hello2, [name]!
+  [end if]
+[<]
+  [if (name != "Alice")]
+    Hello, [name]!
+      Hello2, [name]!
+  [end if]
+[>]
+  [if (name != "Alice")]
+    Hello, [name]!
+      Hello2, [name]!
+  [end if]
+end template

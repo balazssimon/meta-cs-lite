@@ -10,5 +10,6 @@ namespace MetaDslx.VisualStudio.Languages.MetaGenerator.Classification
     {
         internal const string TemplateControl = "MetaGeneratorTemplateControl";
         internal const string TemplateOutput = "MetaGeneratorTemplateOutput";
+        internal const string TemplateInvalidOutput = "MetaGeneratorTemplateInvalidOutput";
     }
 }

@@ -60,13 +60,12 @@ namespace MetaDslx.VisualStudio.Languages.MetaGenerator.Classification
             _classificationSpans = new List<ClassificationSpan>();
             var text = snapshot.GetText();
             var lexer = new MetaGeneratorLexer("", SourceText.From(text, Encoding.UTF8));
-            var state = MetaGeneratorLexerState.None;
-            var token = lexer.Lex(ref state);
+            var token = lexer.Lex();
             while (token.Kind != MetaGeneratorTokenKind.None && token.Kind != MetaGeneratorTokenKind.EndOfFile)
             {
                 var tokenSpan = new Span(token.Position, token.Text.Length);
                 _classificationSpans.Add(new ClassificationSpan(new SnapshotSpan(snapshot, tokenSpan), GetClassificationType(token.Kind)));
-                token = lexer.Lex(ref state);
+                token = lexer.Lex();
             }
         }
 
@@ -89,11 +88,13 @@ namespace MetaDslx.VisualStudio.Languages.MetaGenerator.Classification
                     return StandardClassificationService.StringLiteral;
                 case MetaGeneratorTokenKind.TemplateControlBegin:
                 case MetaGeneratorTokenKind.TemplateControlEnd:
-                case MetaGeneratorTokenKind.GeneratorKeyword:
+                case MetaGeneratorTokenKind.FormatterKeyword:
                     return ClassificationTypeRegistryService.GetClassificationType(MetaGeneratorClassificationTypes.TemplateControl);
                 case MetaGeneratorTokenKind.TemplateOutputText:
                 case MetaGeneratorTokenKind.TemplateOutputWhitespace:
                     return ClassificationTypeRegistryService.GetClassificationType(MetaGeneratorClassificationTypes.TemplateOutput);
+                case MetaGeneratorTokenKind.TemplateOutputInvalidWhitespace:
+                    return ClassificationTypeRegistryService.GetClassificationType(MetaGeneratorClassificationTypes.TemplateInvalidOutput);
                 default:
                     return StandardClassificationService.Other;
             }
