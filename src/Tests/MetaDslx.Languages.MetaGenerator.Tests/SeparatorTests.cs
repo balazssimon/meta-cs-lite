@@ -319,6 +319,32 @@ Bye.
         {
             var g = Generator("""
 template SayHello(IEnumerable<string> names)
+    [from name in names select SayHello(name) separator "\r\n"]
+    Bye.
+end template
+
+template SayHello(string name)
+    Hello, [name]!
+end template
+""");
+            var result = g.SayHello(new string[0]);
+            Assert.Equal(@"Bye.
+", result);
+            result = g.SayHello(new[] { "Alice" });
+            Assert.Equal(@"Hello, Alice!
+Bye.
+", result);
+            result = g.SayHello(new[] { "Alice", "Bob" });
+            Assert.Equal(@"Hello, Alice!
+Hello, Bob!
+Bye.
+", result);
+        }
+        [Fact]
+        public void TestSelect6()
+        {
+            var g = Generator("""
+template SayHello(IEnumerable<string> names)
     [from name in names select SayHello(name) before "(" separator ", " after ")"]
     Bye.
 end template
