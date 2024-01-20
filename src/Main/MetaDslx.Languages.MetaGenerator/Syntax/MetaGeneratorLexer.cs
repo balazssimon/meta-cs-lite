@@ -109,6 +109,7 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
             bool isInControl = false;
             bool skip = false;
             bool emptyLine = true;
+            bool endsWithEndStatement = false;
             var kind = ControlStatementKind.None;
             int parenthesisCounter = 0;
             int bracketCounter = 0;
@@ -142,6 +143,7 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
                 if (token.Kind == MetaGeneratorTokenKind.TemplateOutputText)
                 {
                     emptyLine = false;
+                    endsWithEndStatement = false;
                     ++expressionCount;
                     continue;
                 }
@@ -149,6 +151,7 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
                 {
                     isInControl = true;
                     skip = false;
+                    endsWithEndStatement = false;
                     kind = ControlStatementKind.Expression;
                     continue;
                 }
@@ -169,6 +172,7 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
                     }
                     if (token.Kind == MetaGeneratorTokenKind.Keyword && token.Text == "end")
                     {
+                        endsWithEndStatement = true;
                         kind = ControlStatementKind.EndStatement;
                         skip = true;
                         continue;
@@ -250,7 +254,7 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
                 _computeRelativeIndent = true;
             }
             var lastToken = _tokens[_tokens.Count - 1];
-            if (lastToken.Kind == MetaGeneratorTokenKind.EndOfLine && expressionCount == 0 && !emptyLine)
+            if (lastToken.Kind == MetaGeneratorTokenKind.EndOfLine && (expressionCount == 0 && !emptyLine || endsWithEndStatement))
             {
                 lastToken.Kind = MetaGeneratorTokenKind.IgnoredEndOfLine;
                 _tokens[_tokens.Count - 1] = lastToken;

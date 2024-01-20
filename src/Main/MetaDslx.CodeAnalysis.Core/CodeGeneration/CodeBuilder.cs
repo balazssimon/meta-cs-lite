@@ -17,7 +17,7 @@ namespace MetaDslx.CodeGeneration
         private bool _dontSplitMultiLineValues;
         private bool _singleLineMode;
         private bool _skipLineEnd;
-        private bool _ignoreLastLineEnd;
+        private bool _dontIgnoreLastLineEnd;
         private List<(string prefix, string suffix)> _indentStack;
         private int _line;
         private int _character;
@@ -31,7 +31,7 @@ namespace MetaDslx.CodeGeneration
             _dontSplitMultiLineValues = false;
             _singleLineMode = false;
             _skipLineEnd = false;
-            _ignoreLastLineEnd = false;
+            _dontIgnoreLastLineEnd = false;
             _line = 0;
             _character = 0;
             _indentStack = new List<(string prefix, string suffix)>();
@@ -56,10 +56,10 @@ namespace MetaDslx.CodeGeneration
             get => _skipLineEnd;
             set => _skipLineEnd = value;
         }
-        public bool IgnoreLastLineEnd
+        public bool DontIgnoreLastLineEnd
         {
-            get => _ignoreLastLineEnd;
-            set => _ignoreLastLineEnd = value;
+            get => _dontIgnoreLastLineEnd;
+            set => _dontIgnoreLastLineEnd = value;
         }
         public int Line => _line;
         public int Character => _character;
@@ -86,7 +86,7 @@ namespace MetaDslx.CodeGeneration
             _dontSplitMultiLineValues = false;
             _singleLineMode = false;
             _skipLineEnd = false;
-            _ignoreLastLineEnd = false;
+            _dontIgnoreLastLineEnd = false;
             _line = 0;
             _character = 0;
             _indentStack.Clear();
@@ -297,15 +297,14 @@ namespace MetaDslx.CodeGeneration
                     WriteWithoutSplit(line);
                     first = false;
                 }
-                if (reader.EndsWithLineEnd && !_ignoreLastLineEnd && !_isAtLineStart)
+                if (reader.HasExtraLineEnd)
                 {
                     EndLine();
                     WriteLine();
                 }
-                else if (reader.HasExtraLineEnd)
+                else if (reader.EndsWithLineEnd && _dontIgnoreLastLineEnd)
                 {
-                    EndLine();
-                    WriteLine();
+                    AppendLine();
                 }
             }
         }

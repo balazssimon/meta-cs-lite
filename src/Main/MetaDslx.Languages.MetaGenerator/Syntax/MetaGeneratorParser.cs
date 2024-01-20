@@ -331,15 +331,23 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
                             _osb.WriteLine($"if (!{state.LoopFirstVariableName})");
                             _osb.WriteLine("{");
                             _osb.Push();
-                            _osb.WriteLine($"__cb.IgnoreLastLineEnd = false;");
+                            _osb.WriteLine($"__cb.DontIgnoreLastLineEnd = true;");
                             StartOutputSpan(_osb.Prefix.Length + 11, state.LoopFirstVariableName);
                             _osb.Write($"__cb.Write(");
                             _osb.Write(state.LoopAfterValue);
                             _osb.WriteLine(");");
                             EndOutputSpan(state.LoopFirstVariableName);
-                            _osb.WriteLine($"__cb.IgnoreLastLineEnd = true;");
+                            _osb.WriteLine($"__cb.DontIgnoreLastLineEnd = false;");
+                            if (state.EndHasEndOfLine)
+                            {
+                                _osb.WriteLine($"__cb.AppendLine();");
+                            }
                             _osb.Pop();
                             _osb.WriteLine("}");
+                        }
+                        else if (state.EndHasEndOfLine)
+                        {
+                            _osb.WriteLine($"if (!{state.LoopFirstVariableName}) __cb.AppendLine();");
                         }
                         state.IsEndWritten = true;
                     }
@@ -482,13 +490,13 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
                         StartInputSpan();
                         EatTokens(stmt.BeforeTokenCount);
                         EndInputSpan();
-                        _osb.WriteLine($"__cb.IgnoreLastLineEnd = false;");
+                        _osb.WriteLine($"__cb.DontIgnoreLastLineEnd = true;");
                         StartOutputSpan(_osb.Prefix.Length + 11);
                         _osb.Write($"__cb.Write(");
                         _osb.Write(_isb.ToString());
-                        _osb.WriteLine(", ignoreLastLineEnd: false);");
+                        _osb.WriteLine(");");
                         EndOutputSpan();
-                        _osb.WriteLine($"__cb.IgnoreLastLineEnd = true;");
+                        _osb.WriteLine($"__cb.DontIgnoreLastLineEnd = false;");
                     }
                     _osb.Pop();
                     _osb.WriteLine("}");
@@ -501,17 +509,17 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
                         StartInputSpan();
                         EatTokens(stmt.SeparatorTokenCount);
                         EndInputSpan();
-                        _osb.WriteLine($"__cb.IgnoreLastLineEnd = false;");
+                        _osb.WriteLine($"__cb.DontIgnoreLastLineEnd = true;");
                         StartOutputSpan(_osb.Prefix.Length + 11);
                         _osb.Write($"__cb.Write(");
                         _osb.Write(_isb.ToString());
                         _osb.WriteLine(");");
                         EndOutputSpan();
-                        _osb.WriteLine($"__cb.IgnoreLastLineEnd = true;");
+                        _osb.WriteLine($"__cb.DontIgnoreLastLineEnd = false;");
                         _osb.Pop();
                         _osb.WriteLine("}");
                     }
-                    _osb.WriteLine("__cb.Write({item});");
+                    _osb.WriteLine($"__cb.Write({item});");
                     _osb.Pop();
                     _osb.WriteLine("}");
                     if (stmt.AfterTokenCount > 0)
@@ -523,13 +531,13 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
                         _osb.WriteLine($"if (!{first})");
                         _osb.WriteLine("{");
                         _osb.Push();
-                        _osb.WriteLine($"__cb.IgnoreLastLineEnd = false;");
+                        _osb.WriteLine($"__cb.DontIgnoreLastLineEnd = true;");
                         StartOutputSpan(_osb.Prefix.Length + 11);
                         _osb.Write($"__cb.Write(");
                         _osb.Write(_isb.ToString());
                         _osb.WriteLine(");");
                         EndOutputSpan();
-                        _osb.WriteLine($"__cb.IgnoreLastLineEnd = true;");
+                        _osb.WriteLine($"__cb.DontIgnoreLastLineEnd = false;");
                         _osb.Pop();
                         _osb.WriteLine("}");
                     }
@@ -586,10 +594,7 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
                 }
                 string? afterValue = null;
                 var first = state.GetNextVariableName("first");
-                if (stmt.BeforeTokenCount > 0 || stmt.SeparatorTokenCount > 0 || stmt.AfterTokenCount > 0)
-                {
-                    _osb.WriteLine($"var {first} = true;");
-                }
+                _osb.WriteLine($"var {first} = true;");
                 StartInputSpan();
                 EatTokens(stmt.TokenCount);
                 EndInputSpan();
@@ -599,55 +604,56 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
                 _osb.WriteLine();
                 _osb.WriteLine("{");
                 _osb.Push();
-                if (stmt.BeforeTokenCount > 0 || stmt.SeparatorTokenCount > 0 || stmt.AfterTokenCount > 0)
+                _osb.WriteLine($"if ({first})");
+                _osb.WriteLine("{");
+                _osb.Push();
+                _osb.WriteLine($"{first} = false;");
+                if (stmt.BeforeTokenCount > 0)
                 {
-                    _osb.WriteLine($"if ({first})");
+                    EatTokens(stmt.BeforeTokenSkip);
+                    StartInputSpan();
+                    EatTokens(stmt.BeforeTokenCount);
+                    EndInputSpan();
+                    _osb.WriteLine($"__cb.DontIgnoreLastLineEnd = true;");
+                    StartOutputSpan(_osb.Prefix.Length + 11);
+                    _osb.Write($"__cb.Write(");
+                    _osb.Write(_isb.ToString());
+                    _osb.WriteLine(");");
+                    EndOutputSpan();
+                    _osb.WriteLine($"__cb.DontIgnoreLastLineEnd = false;");
+                    if (stmt.HasEndOfLine)
+                    {
+                        _osb.WriteLine($"__cb.AppendLine();");
+                    }
+                }
+                _osb.Pop();
+                _osb.WriteLine("}");
+                if (stmt.SeparatorTokenCount > 0)
+                {
+                    _osb.WriteLine("else");
                     _osb.WriteLine("{");
                     _osb.Push();
-                    _osb.WriteLine($"{first} = false;");
-                    if (stmt.BeforeTokenCount > 0)
-                    {
-                        EatTokens(stmt.BeforeTokenSkip);
-                        StartInputSpan();
-                        EatTokens(stmt.BeforeTokenCount);
-                        EndInputSpan();
-                        _osb.WriteLine($"__cb.IgnoreLastLineEnd = false;");
-                        StartOutputSpan(_osb.Prefix.Length + 11);
-                        _osb.Write($"__cb.Write(");
-                        _osb.Write(_isb.ToString());
-                        _osb.WriteLine(");");
-                        EndOutputSpan();
-                        _osb.WriteLine($"__cb.IgnoreLastLineEnd = true;");
-                    }
+                    EatTokens(stmt.SeparatorTokenSkip);
+                    StartInputSpan();
+                    EatTokens(stmt.SeparatorTokenCount);
+                    EndInputSpan();
+                    _osb.WriteLine($"__cb.DontIgnoreLastLineEnd = true;");
+                    StartOutputSpan(_osb.Prefix.Length + 11);
+                    _osb.Write($"__cb.Write(");
+                    _osb.Write(_isb.ToString());
+                    _osb.WriteLine(");");
+                    EndOutputSpan();
+                    _osb.WriteLine($"__cb.DontIgnoreLastLineEnd = false;");
                     _osb.Pop();
                     _osb.WriteLine("}");
-                    if (stmt.SeparatorTokenCount > 0)
-                    {
-                        _osb.WriteLine("else");
-                        _osb.WriteLine("{");
-                        _osb.Push();
-                        EatTokens(stmt.SeparatorTokenSkip);
-                        StartInputSpan();
-                        EatTokens(stmt.SeparatorTokenCount);
-                        EndInputSpan();
-                        _osb.WriteLine($"__cb.IgnoreLastLineEnd = false;");
-                        StartOutputSpan(_osb.Prefix.Length + 11);
-                        _osb.Write($"__cb.Write(");
-                        _osb.Write(_isb.ToString());
-                        _osb.WriteLine(");");
-                        EndOutputSpan();
-                        _osb.WriteLine($"__cb.IgnoreLastLineEnd = true;");
-                        _osb.Pop();
-                        _osb.WriteLine("}");
-                    }
-                    if (stmt.AfterTokenCount > 0)
-                    {
-                        EatTokens(stmt.AfterTokenSkip);
-                        StartInputSpan();
-                        EatTokens(stmt.AfterTokenCount);
-                        EndInputSpan(first);
-                        afterValue = _isb.ToString();
-                    }
+                }
+                if (stmt.AfterTokenCount > 0)
+                {
+                    EatTokens(stmt.AfterTokenSkip);
+                    StartInputSpan();
+                    EatTokens(stmt.AfterTokenCount);
+                    EndInputSpan(first);
+                    afterValue = _isb.ToString();
                 }
                 if (!MetaGeneratorLexer.BlockWithoutEndKeywords.Contains(stmt.Keyword.Text))
                 {
@@ -681,6 +687,7 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
                 }
                 state.IsEnd = true;
                 state.IsTemplateEnd = stmt.Keyword.Text == "template";
+                state.EndHasEndOfLine = stmt.HasEndOfLine;
             }
             else
             {
@@ -728,6 +735,7 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
             {
                 result.Kind = ControlStatementKind.TemplateControlEnd;
                 result.TokenCount = index;
+                result.HasEndOfLine = EndOfLineFollows(index, false);
                 return result;
             }
 
@@ -736,6 +744,7 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
                 result.Kind = ControlStatementKind.EndStatement;
                 result.Keyword = SkipWs(ref index);
                 result.TokenCount = index;
+                result.HasEndOfLine = EndOfLineFollows(index, true);
                 return result;
             }
 
@@ -766,11 +775,7 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
                 token = _tokens.PeekToken(index++);
                 if (token.Kind == MetaGeneratorTokenKind.EndOfFile || token.Kind == MetaGeneratorTokenKind.TemplateControlEnd)
                 {
-                    if (collectSeparator == SeparatorControlKind.Before) result.BeforeTokenCount = index - 1 - result.BeforeTokenSkip - result.TokenCount;
-                    else if (collectSeparator == SeparatorControlKind.Separator) result.SeparatorTokenCount = index - 1 - result.SeparatorTokenSkip - result.BeforeTokenCount - result.BeforeTokenSkip - result.TokenCount;
-                    else if (collectSeparator == SeparatorControlKind.After) result.AfterTokenCount = index - 1 - result.AfterTokenSkip - result.SeparatorTokenCount - result.SeparatorTokenSkip - result.BeforeTokenCount - result.BeforeTokenSkip - result.TokenCount;
-                    else result.TokenCount = index - 1;
-                    return result;
+                    break;
                 }
                 if (token.Kind == MetaGeneratorTokenKind.Other)
                 {
@@ -804,6 +809,7 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
                             else if (collectSeparator == SeparatorControlKind.Separator) result.SeparatorTokenCount = index - result.SeparatorTokenSkip - result.BeforeTokenCount - result.BeforeTokenSkip - result.TokenCount;
                             else if (collectSeparator == SeparatorControlKind.After) result.AfterTokenCount = index - result.AfterTokenSkip - result.SeparatorTokenCount - result.SeparatorTokenSkip - result.BeforeTokenCount - result.BeforeTokenSkip - result.TokenCount;
                             else result.TokenCount = index;
+                            result.HasEndOfLine = EndOfLineFollows(index, true);
                             return result;
                         }
                     }
@@ -876,7 +882,24 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
             else if (collectSeparator == SeparatorControlKind.Separator) result.SeparatorTokenCount = index - 1 - result.SeparatorTokenSkip - result.BeforeTokenCount - result.BeforeTokenSkip - result.TokenCount;
             else if (collectSeparator == SeparatorControlKind.After) result.AfterTokenCount = index - 1 - result.AfterTokenSkip - result.SeparatorTokenCount - result.SeparatorTokenSkip - result.BeforeTokenCount - result.BeforeTokenSkip - result.TokenCount;
             else result.TokenCount = index - 1;
+            result.HasEndOfLine = EndOfLineFollows(index, false);
             return result;
+        }
+
+        private bool EndOfLineFollows(int index, bool allowTemplateControlEnd)
+        {
+            var token = _tokens.PeekToken(index);
+            var foundTemplateControlEnd = false;
+            while (IsWhitespaceOrComment(token) || (allowTemplateControlEnd && !foundTemplateControlEnd && token.Kind == MetaGeneratorTokenKind.TemplateControlEnd))
+            {
+                if (token.Kind == MetaGeneratorTokenKind.TemplateControlEnd) foundTemplateControlEnd = true;
+                if (!allowTemplateControlEnd || foundTemplateControlEnd)
+                {
+                    if (token.Kind == MetaGeneratorTokenKind.EndOfLine || token.Kind == MetaGeneratorTokenKind.IgnoredEndOfLine) return true;
+                }
+                token = _tokens.PeekToken(++index);
+            }
+            return false;
         }
 
         private bool TryMatchEndOfLine(bool allowSemicolon = true)
@@ -991,19 +1014,7 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
             public int SeparatorTokenCount;
             public int AfterTokenSkip;
             public int AfterTokenCount;
-
-            public ControlStatement()
-            {
-                Kind = ControlStatementKind.None;
-                Keyword = MetaGeneratorToken.None;
-                TokenCount = 0;
-                BeforeTokenSkip = 0;
-                BeforeTokenCount = 0;
-                SeparatorTokenSkip = 0;
-                SeparatorTokenCount = 0;
-                AfterTokenSkip = 0;
-                AfterTokenCount = 0;
-            }
+            public bool HasEndOfLine;
 
             public override string ToString()
             {
@@ -1018,10 +1029,11 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
             public bool IsEndWritten;
             public bool IsControl;
             public bool IsEnd;
+            public bool EndHasEndOfLine;
             public bool IsTemplateEnd;
             public string LoopFirstVariableName;
             public string? LoopAfterValue;
-            private int TempCounter;
+            private static int TempCounter;
 
             public string GetNextVariableName(string name)
             {
