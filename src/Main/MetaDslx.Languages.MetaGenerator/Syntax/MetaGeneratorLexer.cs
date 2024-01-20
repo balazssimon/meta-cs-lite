@@ -106,10 +106,12 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
             if (_tokens.Count > 0) return;
             bool computeRelativeIndent = _computeRelativeIndent;
             bool absoluteIndent = _absoluteIndent;
+            bool first = false;
             bool isInControl = false;
             bool skip = false;
             bool emptyLine = true;
             bool endsWithEndStatement = false;
+            bool keepNewRelativeIndent = false;
             var kind = ControlStatementKind.None;
             int parenthesisCounter = 0;
             int bracketCounter = 0;
@@ -150,6 +152,7 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
                 if (token.Kind == MetaGeneratorTokenKind.TemplateControlBegin)
                 {
                     isInControl = true;
+                    first = true;
                     skip = false;
                     endsWithEndStatement = false;
                     kind = ControlStatementKind.Expression;
@@ -157,6 +160,8 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
                 }
                 if (isInControl && !skip)
                 {
+                    var firstInControl = first;
+                    first = false;
                     switch (token.Kind)
                     {
                         case MetaGeneratorTokenKind.None:
@@ -170,22 +175,28 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
                         default:
                             break;
                     }
-                    if (token.Kind == MetaGeneratorTokenKind.Keyword && token.Text == "end")
+                    if (firstInControl && token.Kind == MetaGeneratorTokenKind.Keyword && token.Text == "end")
                     {
                         endsWithEndStatement = true;
                         kind = ControlStatementKind.EndStatement;
                         skip = true;
                         continue;
                     }
-                    if (token.Kind == MetaGeneratorTokenKind.Keyword && BlockKeywords.Contains(token.Text))
+                    if (firstInControl && token.Kind == MetaGeneratorTokenKind.Keyword && BlockKeywords.Contains(token.Text))
                     {
                         kind = ControlStatementKind.BeginStatement;
                         skip = true;
                         continue;
                     }
-                    if (token.Kind == MetaGeneratorTokenKind.FormatterKeyword && TemplateFormatterKeywords.Contains(token.Text))
+                    if (firstInControl && token.Kind == MetaGeneratorTokenKind.FormatterKeyword && TemplateFormatterKeywords.Contains(token.Text))
                     {
                         kind = ControlStatementKind.Statement;
+                        skip = true;
+                        continue;
+                    }
+                    if (firstInControl && token.Kind == MetaGeneratorTokenKind.Keyword && ExpressionBlockKeywords.Contains(token.Text))
+                    {
+                        endsWithEndStatement = true;
                         skip = true;
                         continue;
                     }
@@ -257,6 +268,7 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
             var lastKind = kind;
             if (lastKind == ControlStatementKind.BeginStatement)
             {
+                keepNewRelativeIndent = !computeRelativeIndent;
                 _computeRelativeIndent = true;
             }
             var lastToken = _tokens[_tokens.Count - 1];
@@ -279,9 +291,9 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
                 firstToken = new MetaGeneratorToken(expressionCount > 0 ? MetaGeneratorTokenKind.TemplateOutputWhitespace : MetaGeneratorTokenKind.TemplateOutputIgnoredWhitespace, "", firstToken.Position, MetaGeneratorLexerState.TemplateOutput);
                 _tokens.Insert(0, firstToken);
             }
-            bool replaceFirstToken = !absoluteIndent && expressionCount > 0 && firstToken.Text.Length > 0;
+            bool replaceFirstToken = !absoluteIndent && (expressionCount > 0 || keepNewRelativeIndent) && firstToken.Text.Length > 0;
             if (replaceFirstToken) _tokens.RemoveAt(0);
-            bool recomputeIndentStack = computeRelativeIndent;// || expressionCount == 0 && statementCount > 0;
+            bool recomputeIndentStack = computeRelativeIndent || keepNewRelativeIndent;// || expressionCount == 0 && statementCount > 0;
             var newIndentStack = recomputeIndentStack ? ArrayBuilder<MetaGeneratorToken>.GetInstance() : null;
             var whitespacePosition = firstToken.Position;
             var firstWhitespace = firstToken.Text;
@@ -291,7 +303,12 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
                 var indent = _indentStack[i];
                 if (firstWhitespace.StartsWith(indent.Text))
                 {
-                    if (replaceFirstToken) _tokens.Insert(i, new MetaGeneratorToken(indent.Kind, indent.Text, whitespacePosition, MetaGeneratorLexerState.TemplateOutput));
+                    if (replaceFirstToken)
+                    {
+                        var indentKind = indent.Kind;
+                        if (keepNewRelativeIndent && indentKind == MetaGeneratorTokenKind.TemplateOutputWhitespace) indentKind = MetaGeneratorTokenKind.TemplateOutputControlIgnoredWhitespace;
+                        _tokens.Insert(i, new MetaGeneratorToken(indentKind, indent.Text, whitespacePosition, MetaGeneratorLexerState.TemplateOutput));
+                    }
                     if (recomputeIndentStack) newIndentStack.Add(indent);
                     whitespacePosition += indent.Text.Length;
                     firstWhitespace = firstWhitespace.Substring(indent.Text.Length);
@@ -299,7 +316,12 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
                 }
                 else if (indent.Text.StartsWith(firstWhitespace))
                 {
-                    if (replaceFirstToken) _tokens.Insert(i, new MetaGeneratorToken(indent.Kind, firstWhitespace, whitespacePosition, MetaGeneratorLexerState.TemplateOutput));
+                    if (replaceFirstToken)
+                    {
+                        var indentKind = indent.Kind;
+                        if (keepNewRelativeIndent && indentKind == MetaGeneratorTokenKind.TemplateOutputWhitespace) indentKind = MetaGeneratorTokenKind.TemplateOutputControlIgnoredWhitespace;
+                        _tokens.Insert(i, new MetaGeneratorToken(indentKind, firstWhitespace, whitespacePosition, MetaGeneratorLexerState.TemplateOutput));
+                    }
                     if (recomputeIndentStack) newIndentStack.Add(new MetaGeneratorToken(indent.Kind, firstWhitespace, whitespacePosition, MetaGeneratorLexerState.TemplateOutput));
                     whitespacePosition += firstWhitespace.Length;
                     firstWhitespace = string.Empty;
@@ -317,8 +339,8 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
             }
             if (isValid && firstWhitespace.Length > 0)
             {
-                if (replaceFirstToken) _tokens.Insert(_indentStack.Count, new MetaGeneratorToken(recomputeIndentStack ? MetaGeneratorTokenKind.TemplateOutputIgnoredWhitespace : MetaGeneratorTokenKind.TemplateOutputWhitespace, firstWhitespace, whitespacePosition, MetaGeneratorLexerState.TemplateOutput));
-                if (recomputeIndentStack) newIndentStack.Add(new MetaGeneratorToken(MetaGeneratorTokenKind.TemplateOutputIgnoredWhitespace, firstWhitespace, whitespacePosition, MetaGeneratorLexerState.TemplateOutput));
+                if (replaceFirstToken) _tokens.Insert(_indentStack.Count, new MetaGeneratorToken(recomputeIndentStack ? (keepNewRelativeIndent ? MetaGeneratorTokenKind.TemplateOutputControlIgnoredWhitespace : MetaGeneratorTokenKind.TemplateOutputIgnoredWhitespace) : MetaGeneratorTokenKind.TemplateOutputWhitespace, firstWhitespace, whitespacePosition, MetaGeneratorLexerState.TemplateOutput));
+                if (recomputeIndentStack) newIndentStack.Add(new MetaGeneratorToken(keepNewRelativeIndent ? MetaGeneratorTokenKind.TemplateOutputWhitespace : MetaGeneratorTokenKind.TemplateOutputIgnoredWhitespace, firstWhitespace, whitespacePosition, MetaGeneratorLexerState.TemplateOutput));
             }
             if (recomputeIndentStack)
             {
@@ -333,7 +355,11 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
                 {
                     if (_tokens[i].Kind.IsTemplateWhitespace())
                     {
-                        if (_tokens[i].Kind != MetaGeneratorTokenKind.TemplateOutputIgnoredWhitespace) hasWhitespace = true;
+                        if (_tokens[i].Kind != MetaGeneratorTokenKind.TemplateOutputIgnoredWhitespace &&
+                            _tokens[i].Kind != MetaGeneratorTokenKind.TemplateOutputControlIgnoredWhitespace)
+                        {
+                            hasWhitespace = true;
+                        }
                     }
                     else
                     {
@@ -351,7 +377,8 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
                 {
                     if (_tokens[i].Kind.IsTemplateWhitespace())
                     {
-                        if (_tokens[i].Kind != MetaGeneratorTokenKind.TemplateOutputIgnoredWhitespace)
+                        if (_tokens[i].Kind != MetaGeneratorTokenKind.TemplateOutputIgnoredWhitespace &&
+                            _tokens[i].Kind != MetaGeneratorTokenKind.TemplateOutputControlIgnoredWhitespace)
                         {
                             var token = _tokens[i];
                             token.Kind = MetaGeneratorTokenKind.TemplateOutputIgnoredWhitespace;
@@ -544,6 +571,7 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
                 case '\\':
                 case '>':
                 case '<':
+                case '^':
                     return true;
                 default:
                     return false;
@@ -890,6 +918,11 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
             "do", "for", "foreach", "while"
         };
 
+        public static readonly HashSet<string> ExpressionBlockKeywords = new HashSet<string>()
+        {
+            "from"
+        };
+
         public static readonly HashSet<string> ContextualKeywords = new HashSet<string>()
         {
             /*"add",*/ "and", "alias", "ascending", "args", "async", "await", "by",
@@ -923,10 +956,12 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
         public const string SkipLineEndKeyword = "\\";
         public const string RelativeIndentKeyword = ">";
         public const string AbsoluteIndentKeyword = "<";
+        public const string ForceLineEndIndentKeyword = "^";
 
         public static readonly HashSet<string> TemplateFormatterKeywords = new HashSet<string>()
         {
             MultiLineKeyword, SingleLineKeyword, SkipLineEndKeyword, RelativeIndentKeyword, AbsoluteIndentKeyword,
+            ForceLineEndIndentKeyword
         };
 
         public const string QuotsKeyword = "chevrons";

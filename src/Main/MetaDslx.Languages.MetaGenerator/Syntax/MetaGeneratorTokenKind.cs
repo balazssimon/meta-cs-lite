@@ -24,6 +24,7 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
         TemplateOutputText,
         TemplateOutputWhitespace,
         TemplateOutputIgnoredWhitespace,
+        TemplateOutputControlIgnoredWhitespace,
         TemplateOutputInvalidWhitespace,
         TemplateControlBegin,
         TemplateControlEnd,
@@ -39,6 +40,7 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
                 case MetaGeneratorTokenKind.TemplateOutputText:
                 case MetaGeneratorTokenKind.TemplateOutputWhitespace:
                 case MetaGeneratorTokenKind.TemplateOutputIgnoredWhitespace:
+                case MetaGeneratorTokenKind.TemplateOutputControlIgnoredWhitespace:
                 case MetaGeneratorTokenKind.TemplateOutputInvalidWhitespace:
                     return true;
                 default:
@@ -52,6 +54,7 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
             {
                 case MetaGeneratorTokenKind.TemplateOutputWhitespace:
                 case MetaGeneratorTokenKind.TemplateOutputIgnoredWhitespace:
+                case MetaGeneratorTokenKind.TemplateOutputControlIgnoredWhitespace:
                 case MetaGeneratorTokenKind.TemplateOutputInvalidWhitespace:
                     return true;
                 default:

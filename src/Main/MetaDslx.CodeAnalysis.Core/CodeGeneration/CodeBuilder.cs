@@ -299,7 +299,7 @@ namespace MetaDslx.CodeGeneration
                 }
                 if (reader.HasExtraLineEnd)
                 {
-                    EndLine();
+                    //EndLine();
                     WriteLine();
                 }
                 else if (reader.EndsWithLineEnd && _dontIgnoreLastLineEnd)

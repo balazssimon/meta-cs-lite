@@ -22,6 +22,7 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
         private MetaGeneratorTokenStream _tokens;
         private CodeBuilder? _osb;
         private CodeBuilder? _isb;
+        private string _lastIndent;
         private bool _collectInput;
         private string? _generatorName;
         private DiagnosticBag? _diagnosticBag;
@@ -38,6 +39,7 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
         {
             _filePath = filePath;
             _templateCode = templateCode;
+            _lastIndent = string.Empty;
         }
 
         public ImmutableArray<Diagnostic> Diagnostics => _diagnostics;
@@ -331,6 +333,9 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
                             _osb.WriteLine($"if (!{state.FirstVariableName})");
                             _osb.WriteLine("{");
                             _osb.Push();
+                            _osb.Write("__cb.Push(");
+                            _osb.Write(state.BlockIndent.EncodeString());
+                            _osb.WriteLine(");");
                             _osb.WriteLine($"__cb.DontIgnoreLastLineEnd = true;");
                             StartOutputSpan(_osb.Prefix.Length + 11, state.FirstVariableName);
                             _osb.Write($"__cb.Write(");
@@ -342,6 +347,7 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
                             {
                                 _osb.WriteLine($"__cb.AppendLine();");
                             }
+                            _osb.WriteLine("__cb.Pop();");
                             _osb.Pop();
                             _osb.WriteLine("}");
                         }
@@ -375,7 +381,10 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
                     {
                         if (token.Kind != MetaGeneratorTokenKind.TemplateOutputIgnoredWhitespace)
                         {
-                            hasWhitespace = true;
+                            if (token.Kind != MetaGeneratorTokenKind.TemplateOutputControlIgnoredWhitespace)
+                            {
+                                hasWhitespace = true;
+                            }
                             sb.Append(token.Text);
                         }
                         StartInputSpan();
@@ -387,11 +396,11 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
                         }
                         token = _tokens.CurrentToken;
                     }
-                    var indent = indentBuilder.ToStringAndFree();
+                    _lastIndent = indentBuilder.ToStringAndFree();
                     if (hasWhitespace)
                     {
                         _osb.Write("__cb.Push(");
-                        _osb.Write(indent.EncodeString());
+                        _osb.Write(_lastIndent.EncodeString());
                         _osb.WriteLine(");");
                     }
                 }
@@ -465,10 +474,12 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
             }
             else if (stmt.Kind == ControlStatementKind.Expression)
             {
+                var firstToken = _tokens.CurrentToken;
+                var isFromKeyword = firstToken.Kind == MetaGeneratorTokenKind.Keyword && firstToken.Text == "from";
                 StartInputSpan();
                 EatTokens(stmt.TokenCount);
                 EndInputSpan();
-                if (stmt.BeforeTokenCount > 0 || stmt.SeparatorTokenCount > 0 || stmt.AfterTokenCount > 0)
+                if (isFromKeyword || stmt.BeforeTokenCount > 0 || stmt.SeparatorTokenCount > 0 || stmt.AfterTokenCount > 0)
                 {
                     var first = state.GetNextVariableName("first");
                     var item = state.GetNextVariableName("item");
@@ -490,6 +501,9 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
                         StartInputSpan();
                         EatTokens(stmt.BeforeTokenCount);
                         EndInputSpan();
+                        _osb.Write("__cb.Push(");
+                        _osb.Write(_lastIndent.EncodeString());
+                        _osb.WriteLine(");");
                         _osb.WriteLine($"__cb.DontIgnoreLastLineEnd = true;");
                         StartOutputSpan(_osb.Prefix.Length + 11);
                         _osb.Write($"__cb.Write(");
@@ -497,6 +511,7 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
                         _osb.WriteLine(");");
                         EndOutputSpan();
                         _osb.WriteLine($"__cb.DontIgnoreLastLineEnd = false;");
+                        _osb.WriteLine("__cb.Pop();");
                     }
                     _osb.Pop();
                     _osb.WriteLine("}");
@@ -509,6 +524,9 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
                         StartInputSpan();
                         EatTokens(stmt.SeparatorTokenCount);
                         EndInputSpan();
+                        _osb.Write("__cb.Push(");
+                        _osb.Write(_lastIndent.EncodeString());
+                        _osb.WriteLine(");");
                         _osb.WriteLine($"__cb.DontIgnoreLastLineEnd = true;");
                         StartOutputSpan(_osb.Prefix.Length + 11);
                         _osb.Write($"__cb.Write(");
@@ -516,6 +534,7 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
                         _osb.WriteLine(");");
                         EndOutputSpan();
                         _osb.WriteLine($"__cb.DontIgnoreLastLineEnd = false;");
+                        _osb.WriteLine("__cb.Pop();");
                         _osb.Pop();
                         _osb.WriteLine("}");
                     }
@@ -531,6 +550,9 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
                         _osb.WriteLine($"if (!{first})");
                         _osb.WriteLine("{");
                         _osb.Push();
+                        _osb.Write("__cb.Push(");
+                        _osb.Write(_lastIndent.EncodeString());
+                        _osb.WriteLine(");");
                         _osb.WriteLine($"__cb.DontIgnoreLastLineEnd = true;");
                         StartOutputSpan(_osb.Prefix.Length + 11);
                         _osb.Write($"__cb.Write(");
@@ -538,6 +560,7 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
                         _osb.WriteLine(");");
                         EndOutputSpan();
                         _osb.WriteLine($"__cb.DontIgnoreLastLineEnd = false;");
+                        _osb.WriteLine("__cb.Pop();");
                         _osb.Pop();
                         _osb.WriteLine("}");
                     }
@@ -563,12 +586,25 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
                     var keyword = stmt.Keyword.Text;
                     switch (keyword)
                     {
-                        case MetaGeneratorLexer.SingleLineKeyword: _osb.WriteLine("__cb.SingleLineMode = true;"); break;
-                        case MetaGeneratorLexer.MultiLineKeyword: _osb.WriteLine("__cb.SingleLineMode = false;"); break;
-                        case MetaGeneratorLexer.SkipLineEndKeyword: _osb.WriteLine("__cb.SkipLineEnd = true;"); break;
-                        case MetaGeneratorLexer.RelativeIndentKeyword: break;
-                        case MetaGeneratorLexer.AbsoluteIndentKeyword: break;
-                        default: throw new InvalidOperationException("Unknown TemplateFormatterKeyword: " + keyword);
+                        case MetaGeneratorLexer.SingleLineKeyword:
+                            _osb.WriteLine("__cb.SingleLineMode = true;");
+                            break;
+                        case MetaGeneratorLexer.MultiLineKeyword: 
+                            _osb.WriteLine("__cb.SingleLineMode = false;");
+                            if (stmt.HasEndOfLine) _osb.WriteLine("__cb.WriteLine();");
+                                break;
+                        case MetaGeneratorLexer.SkipLineEndKeyword: 
+                            _osb.WriteLine("__cb.SkipLineEnd = true;"); 
+                            break;
+                        case MetaGeneratorLexer.ForceLineEndIndentKeyword: 
+                            _osb.WriteLine("__cb.WriteLine();"); 
+                            break;
+                        case MetaGeneratorLexer.RelativeIndentKeyword: 
+                            break;
+                        case MetaGeneratorLexer.AbsoluteIndentKeyword:
+                            break;
+                        default: 
+                            throw new InvalidOperationException("Unknown TemplateFormatterKeyword: " + keyword);
                     }
                 }
                 else
@@ -629,6 +665,9 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
                         StartInputSpan();
                         EatTokens(stmt.BeforeTokenCount);
                         EndInputSpan();
+                        _osb.Write("__cb.Push(");
+                        _osb.Write(_lastIndent.EncodeString());
+                        _osb.WriteLine(");");
                         _osb.WriteLine($"__cb.DontIgnoreLastLineEnd = true;");
                         StartOutputSpan(_osb.Prefix.Length + 11);
                         _osb.Write($"__cb.Write(");
@@ -640,6 +679,7 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
                         {
                             _osb.WriteLine($"__cb.AppendLine();");
                         }
+                        _osb.WriteLine("__cb.Pop();");
                     }
                     _osb.Pop();
                     _osb.WriteLine("}");
@@ -652,6 +692,9 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
                         StartInputSpan();
                         EatTokens(stmt.SeparatorTokenCount);
                         EndInputSpan();
+                        _osb.Write("__cb.Push(");
+                        _osb.Write(_lastIndent.EncodeString());
+                        _osb.WriteLine(");");
                         _osb.WriteLine($"__cb.DontIgnoreLastLineEnd = true;");
                         StartOutputSpan(_osb.Prefix.Length + 11);
                         _osb.Write($"__cb.Write(");
@@ -659,6 +702,7 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
                         _osb.WriteLine(");");
                         EndOutputSpan();
                         _osb.WriteLine($"__cb.DontIgnoreLastLineEnd = false;");
+                        _osb.WriteLine("__cb.Pop();");
                         _osb.Pop();
                         _osb.WriteLine("}");
                     }
@@ -676,6 +720,7 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
                     var innerState = new ParserState();
                     innerState.BeginKeyword = stmt.Keyword;
                     innerState.BlockKeyword = stmt.Keyword;
+                    innerState.BlockIndent = _lastIndent;
                     innerState.IsControl = true;
                     innerState.FirstVariableName = first;
                     innerState.LoopAfterValue = afterValue;
@@ -1048,6 +1093,7 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
             public bool EndHasEndOfLine;
             public bool IsTemplateEnd;
             public string FirstVariableName;
+            public string BlockIndent;
             public string? LoopAfterValue;
             private static int TempCounter;
 
