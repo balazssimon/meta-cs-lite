@@ -189,6 +189,12 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
                         skip = true;
                         continue;
                     }
+                    if (token.Kind == MetaGeneratorTokenKind.Keyword && SeparatorControlKeywords.Contains(token.Text))
+                    {
+                        endsWithEndStatement = true;
+                        skip = true;
+                        continue;
+                    }
                     if (token.Kind == MetaGeneratorTokenKind.Other)
                     {
                         if (parenthesisCounter == 0 && bracketCounter == 0 && bracesCounter == 0)

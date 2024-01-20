@@ -1,4 +1,4 @@
-﻿using MetaDslx.Bootstrap.MetaGenerator;
+﻿//using MetaDslx.Bootstrap.MetaGenerator;
 using MetaDslx.CodeAnalysis.Text;
 using MetaDslx.Languages.MetaGenerator.Syntax;
 
@@ -17,7 +17,7 @@ else
 {
     File.WriteAllText(filePath + ".cs", csharpCode);
 }
-//*/
+/*/
 var g = new GenTest1();
 Console.WriteLine(g.SayHelloForEach1(new[] { "Alice", "Bob" }));
 Console.WriteLine("AAAAAAAAAAA");

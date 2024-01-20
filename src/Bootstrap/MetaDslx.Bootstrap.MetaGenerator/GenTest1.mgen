@@ -5,6 +5,41 @@ using System.Linq;
 
 generator GenTest1;
 
+template SayHello(string name, int time)
+  [switch (time)]
+    [case 1:]
+      Good morning, [name]!
+        Good morning2, [name]!
+      Good morning3, [name]!
+    [case 2: case 3:]
+      Good afternoon, [name]!
+      [if (name == "Alice")]
+        Good afternoon2, [name]!
+          Good afternoon3, [name]!
+        Good afternoon4, [name]!
+      [else]
+        Good afternoon5, [name]!
+          Good afternoon6, [name]!
+        Good afternoon7, [name]!
+      [end if]
+      Good afternoon8, [name]!
+    [case 4:][case 5:]
+      Good evening, [name]!
+    [default:]
+      Hello, [name]!
+      [if (name == "Alice")]
+        Hello2, [name]!
+          Hello3, [name]!
+        Hello4, [name]!
+      [else]
+        Hello5, [name]!
+          Hello6, [name]!
+        Hello7, [name]!
+      [end if]
+      Hello8, [name]!
+  [end switch]
+end template
+
 template SayHelloForEach1(IEnumerable<string> names)
     [foreach (var name in names) before ">>>\r\n" separator "---\r\n" after "<<<\r\n"]
         Hello, [name]!

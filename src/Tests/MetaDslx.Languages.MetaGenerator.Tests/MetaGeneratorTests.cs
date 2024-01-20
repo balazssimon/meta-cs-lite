@@ -72,6 +72,9 @@ generator Generator
             var systemRuntimePath = Path.Combine(coreDir, "System.Runtime.dll");
             var systemMemoryPath = Path.Combine(coreDir, "System.Memory.dll");
             var systemCollectionsPath = Path.Combine(coreDir, "System.Collections.dll");
+            var systemLinqPath = Path.Combine(coreDir, "System.Linq.dll");
+            var systemLinqExpressionsPath = Path.Combine(coreDir, "System.Linq.Expressions.dll");
+            var systemLinqQueryablePath = Path.Combine(coreDir, "System.Linq.Queryable.dll");
             return CSharpCompilation.Create(
                 assemblyName: "TestCompilation",
                 options: new CSharpCompilationOptions(
@@ -83,6 +86,9 @@ generator Generator
                     MetadataReference.CreateFromFile(systemRuntimePath),
                     MetadataReference.CreateFromFile(systemMemoryPath),
                     MetadataReference.CreateFromFile(systemCollectionsPath),
+                    MetadataReference.CreateFromFile(systemLinqPath),
+                    MetadataReference.CreateFromFile(systemLinqExpressionsPath),
+                    MetadataReference.CreateFromFile(systemLinqQueryablePath),
                     MetadataReference.CreateFromFile(typeof(object).GetTypeInfo().Assembly.Location),
                     MetadataReference.CreateFromFile(typeof(Attribute).GetTypeInfo().Assembly.Location),
                     MetadataReference.CreateFromFile(typeof(MetaDslx.CodeGeneration.CodeBuilder).GetTypeInfo().Assembly.Location),
