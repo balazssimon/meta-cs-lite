@@ -6,18 +6,19 @@ using System.Linq;
 generator GenTest1;
 
 template SayHello(IEnumerable<string> names)
-    [-]
-    enum Colors 
-    {
-        [foreach (var name in names) separator ","] 
-        [name][^]
-        [end foreach] 
-    }
-    [=]
-    enum Colors2
+    hello
+    [foreach (var name in names) separator ","]
+        [name]
+        [foreach (var name2 in names) separator ","]
+            [name2]
+        [end foreach]
+    [end foreach]
+
+    enum Colors
     {
         [foreach (var name in names) separator ","]
         [name]
         [end foreach]
     }
 end template
+

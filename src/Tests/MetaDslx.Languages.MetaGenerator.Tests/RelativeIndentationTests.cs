@@ -272,5 +272,43 @@ Hello7, Bob!
 Hello8, Bob!
 ", result);
         }
+
+        [Fact]
+        public void TestEnum()
+        {
+            var g = Generator("""
+template SayHello(IEnumerable<string> names)
+    hello
+    [foreach (var name in names)]
+        [name]
+        [foreach (var name2 in names)]
+            [name2]
+        [end foreach]
+    [end foreach]
+
+    enum Colors
+    {
+        [foreach (var name in names) separator ",\r\n"]
+        [name][\]
+        [end foreach]
+    }
+end template
+""");
+            var result = g.SayHello(new[] { "Alice", "Bob" });
+            Assert.Equal(@"hello
+Alice
+Alice
+Bob
+Bob
+Alice
+Bob
+
+enum Colors
+{
+    Alice,
+    Bob
+}
+", result);
+        }
     }
 }

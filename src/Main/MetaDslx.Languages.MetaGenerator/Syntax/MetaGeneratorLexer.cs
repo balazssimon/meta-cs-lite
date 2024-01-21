@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -291,9 +292,11 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
                 firstToken = new MetaGeneratorToken(expressionCount > 0 ? MetaGeneratorTokenKind.TemplateOutputWhitespace : MetaGeneratorTokenKind.TemplateOutputIgnoredWhitespace, "", firstToken.Position, MetaGeneratorLexerState.TemplateOutput);
                 _tokens.Insert(0, firstToken);
             }
+            if (emptyLine) _computeRelativeIndent = computeRelativeIndent;
             bool replaceFirstToken = !absoluteIndent && (expressionCount > 0 || keepNewRelativeIndent) && firstToken.Text.Length > 0;
             if (replaceFirstToken) _tokens.RemoveAt(0);
-            bool recomputeIndentStack = computeRelativeIndent || keepNewRelativeIndent;// || expressionCount == 0 && statementCount > 0;
+            var indentStackLength = _indentStack.Sum(i => i.Text.Length);
+            bool recomputeIndentStack = computeRelativeIndent || keepNewRelativeIndent || !emptyLine && firstToken.Text.Length < indentStackLength;// || expressionCount == 0 && statementCount > 0;
             var newIndentStack = recomputeIndentStack ? ArrayBuilder<MetaGeneratorToken>.GetInstance() : null;
             var whitespacePosition = firstToken.Position;
             var firstWhitespace = firstToken.Text;
