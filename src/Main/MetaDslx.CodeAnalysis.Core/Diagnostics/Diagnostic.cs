@@ -266,12 +266,12 @@ namespace MetaDslx.CodeAnalysis
 
         string IFormattable.ToString(string? ignored, IFormatProvider? formatProvider)
         {
-            return DiagnosticFormatter.Instance.Format(this, formatProvider);
+            return DiagnosticFormatter.Default.Format(this, formatProvider);
         }
 
         public override string ToString()
         {
-            return DiagnosticFormatter.Instance.Format(this, CultureInfo.CurrentUICulture);
+            return DiagnosticFormatter.Default.Format(this, CultureInfo.CurrentUICulture);
         }
 
         public abstract override bool Equals(object? obj);

@@ -14,6 +14,9 @@ namespace MetaDslx.CodeAnalysis
     /// </summary>
     public class DiagnosticFormatter
     {
+        public static readonly DiagnosticFormatter Default = new DiagnosticFormatter();
+        public static readonly DiagnosticFormatter MSBuild = new MSBuildDiagnosticFormatter();
+
         /// <summary>
         /// Formats the <see cref="Diagnostic"/> message using the optional <see cref="IFormatProvider"/>.
         /// </summary>
@@ -55,28 +58,28 @@ namespace MetaDslx.CodeAnalysis
                     return string.Format(formatter, "{0}{1}: {2}: {3}",
                                          FormatSourcePath(path, basePath, formatter),
                                          FormatSourceSpan(mappedSpan.Span, formatter),
-                                         GetMessagePrefix(diagnostic),
+                                         FormatMessagePrefix(diagnostic),
                                          diagnostic.GetMessage(culture));
 
                 default:
                     return string.Format(formatter, "{0}: {1}",
-                                         GetMessagePrefix(diagnostic),
+                                         FormatMessagePrefix(diagnostic),
                                          diagnostic.GetMessage(culture));
             }
         }
 
-        internal virtual string FormatSourcePath(string path, string? basePath, IFormatProvider? formatter)
+        internal protected virtual string FormatSourcePath(string path, string? basePath, IFormatProvider? formatter)
         {
             // ignore base path
             return path;
         }
 
-        internal virtual string FormatSourceSpan(LinePositionSpan span, IFormatProvider? formatter)
+        internal protected virtual string FormatSourceSpan(LinePositionSpan span, IFormatProvider? formatter)
         {
             return string.Format("({0},{1})", span.Start.Line + 1, span.Start.Character + 1);
         }
 
-        internal string GetMessagePrefix(Diagnostic diagnostic)
+        internal protected virtual string FormatMessagePrefix(Diagnostic diagnostic)
         {
             string prefix;
             switch (diagnostic.Severity)
@@ -97,9 +100,7 @@ namespace MetaDslx.CodeAnalysis
                     throw ExceptionUtilities.UnexpectedValue(diagnostic.Severity);
             }
             return prefix;
-            //return string.Format("{0} {1}", prefix, diagnostic.Id);
         }
 
-        internal static readonly DiagnosticFormatter Instance = new DiagnosticFormatter();
     }
 }

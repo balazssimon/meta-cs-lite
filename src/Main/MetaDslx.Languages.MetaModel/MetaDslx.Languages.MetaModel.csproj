@@ -6,7 +6,8 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <AdditionalFiles Include="Generators\*.mgen" />
+		<AdditionalFiles Include="Generators\*.mgen" />
+		<AdditionalFiles Include="Model\*.mm" />
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="Microsoft.CodeAnalysis.Common" Version="$(MicrosoftCodeAnalysisCSharpVersion)" PrivateAssets="all" />
