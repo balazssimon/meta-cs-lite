@@ -25,19 +25,19 @@ namespace MetaDslx.Languages.MetaModel.Tests
     {
         private static readonly CSharpCompilation BaseCompilation = CreateCompilation();
 
-        protected ModelFactory Factory(string mmCode, Model model, [CallerMemberName] string? method = null)
+        protected ModelFactory Factory(string mmCode, Model? model = null, [CallerMemberName] string? method = null)
         {
             var assembly = Compile(mmCode, method);
             return Factory(assembly, model);
         }
 
-        protected ModelFactory Factory(Assembly assembly, Model model, [CallerMemberName] string? method = null)
+        protected ModelFactory Factory(Assembly assembly, Model? model = null, [CallerMemberName] string? method = null)
         {
             Type? factoryType = assembly.GetType("MetaModelTests.TestModelModelFactory")!;
             Assert.NotNull(factoryType);
             var ctr = factoryType.GetConstructor(new[] { typeof(Model) });
             Assert.NotNull(ctr);
-            var factory = ctr.Invoke(new[] { model }) as ModelFactory;
+            var factory = ctr.Invoke(new[] { model ?? new Model() }) as ModelFactory;
             Assert.NotNull(factory);
             return factory!;
         }

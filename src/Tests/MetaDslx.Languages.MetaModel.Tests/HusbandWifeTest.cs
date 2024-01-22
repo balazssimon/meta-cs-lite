@@ -21,8 +21,7 @@ class Wife
         [Fact]
         public void TestHusbandToWife()
         {
-            var model = new Model();
-            dynamic f = Factory(MetaModelCode, model);
+            dynamic f = Factory(MetaModelCode);
             var husband = f.Husband();
             var wife = f.Wife();
             husband.WifeX = wife;
