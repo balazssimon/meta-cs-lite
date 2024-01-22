@@ -1,0 +1,93 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<Import Project="..\..\Versions.props" />
+
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<TargetFrameworks>$(ExecutableTargetFramework)</TargetFrameworks>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+
+		<PackAsTool>true</PackAsTool>
+		<ToolCommandName>metadslx</ToolCommandName>
+
+		<!-- NuGet -->
+		<IsPackable>true</IsPackable>
+		<Authors>Balazs Simon</Authors>
+		<PackageId>MetaDslx.BuildTools</PackageId>
+		<PackageDescription>
+			.NET core tooling for the MetaDslx DSL framework.
+		</PackageDescription>
+		<PackageLicenseFile>license.txt</PackageLicenseFile>
+		<PackageOutputPath>..\..\..\..\..\nuget\</PackageOutputPath>
+		<RepositoryUrl>https://github.com/balazssimon/meta-cs-lite.git</RepositoryUrl>
+		<IncludeSymbols>true</IncludeSymbols>
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+		<!-- Optional: Declare that the Repository URL can be published to NuSpec -->
+		<PublishRepositoryUrl>true</PublishRepositoryUrl>
+		<!-- Optional: Embed source files that are not tracked by the source control manager to the PDB -->
+		<!-- This is useful if you generate files during the build -->
+		<EmbedUntrackedSources>true</EmbedUntrackedSources>
+
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Build" Version="16.5.0" ExcludeAssets="runtime" />
+		<PackageReference Include="Microsoft.Build.Utilities.Core" Version="16.5.0" ExcludeAssets="runtime" />
+		<PackageReference Include="Microsoft.Build.Framework" Version="16.5.0" ExcludeAssets="runtime" />
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Build.Locator" Version="1.6.10" />
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="$(MicrosoftCodeAnalysisCSharpVersion)" />
+		<PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="$(MicrosoftCodeAnalysisCSharpVersion)" />
+		<PackageReference Include="Microsoft.CodeAnalysis.Workspaces.MSBuild" Version="$(MicrosoftCodeAnalysisCSharpVersion)" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Autofac" Version="$(AutofacVersion)" />
+		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="$(MicrosoftSourceLinkGitHubVersion)" PrivateAssets="All" />
+		<PackageReference Include="System.CommandLine" Version="2.0.0-beta1.20574.7" />
+		<PackageReference Include="System.CommandLine.DragonFruit" Version="0.3.0-alpha.20574.7" />
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="System.Collections.Immutable" Version="$(SystemCollectionsImmutableVersion)" />
+		<PackageReference Include="System.Reflection.Metadata" Version="$(SystemReflectionMetadataVersion)" />
+		<PackageReference Include="System.Text.Encoding.CodePages" Version="$(SystemTextEncodingCodePagesVersion)" />
+		<PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="$(SystemRuntimeCompilerServicesUnsafeVersion)" />
+		<PackageReference Include="System.Diagnostics.DiagnosticSource" Version="$(SystemDiagnosticsDiagnosticSourceVersion)" />
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\MetaDslx.CodeAnalysis.Core\MetaDslx.CodeAnalysis.Core.csproj" PrivateAssets="all" />
+		<ProjectReference Include="..\MetaDslx.CodeAnalysis.Common\MetaDslx.CodeAnalysis.Common.csproj" PrivateAssets="all" />
+		<ProjectReference Include="..\MetaDslx.Languages.MetaGenerator\MetaDslx.Languages.MetaGenerator.csproj" PrivateAssets="all" />
+		<ProjectReference Include="..\MetaDslx.Languages.MetaModel\MetaDslx.Languages.MetaModel.csproj" PrivateAssets="all" />
+		<ProjectReference Include="..\MetaDslx.Languages.MetaCompiler\MetaDslx.Languages.MetaCompiler.csproj" PrivateAssets="all" />
+		<ProjectReference Include="..\MetaDslx.Languages.MetaCompiler.Antlr\MetaDslx.Languages.MetaCompiler.Antlr.csproj" PrivateAssets="all" />
+	</ItemGroup>
+
+	<!--ItemGroup>
+		<None Include="..\MetaDslx.Languages.MetaCompiler.Antlr\tools\$(Antlr4JarName)" Pack="true" PackagePath="tools" />
+		<None Include="$(USERPROFILE)\.nuget\packages\microsoft.bcl.asyncinterfaces\$(MicrosoftBclAsyncInterfacesVersion)\lib\netstandard2.0\Microsoft.Bcl.AsyncInterfaces.dll" Pack="true" PackagePath="tools" Visible="false" />
+		<None Include="$(USERPROFILE)\.nuget\packages\autofac\$(AutofacVersion)\lib\netstandard2.0\Autofac.dll" Pack="true" PackagePath="tools" Visible="false" />
+		<None Include="$(USERPROFILE)\.nuget\packages\antlr4.runtime.standard\$(Antlr4RuntimeStandardVersion)\lib\netstandard2.0\Antlr4.Runtime.Standard.dll" Pack="true" PackagePath="tools" Visible="false" />
+		<None Include="$(USERPROFILE)\.nuget\packages\system.buffers\$(SystemBuffersVersion)\lib\netstandard2.0\System.Buffers.dll" Pack="true" PackagePath="tools" Visible="false" />
+		<None Include="$(USERPROFILE)\.nuget\packages\system.numerics.vectors\$(SystemNumericsVectorsVersion)\lib\netstandard2.0\System.Numerics.Vectors.dll" Pack="true" PackagePath="tools" Visible="false" />
+		<None Include="$(USERPROFILE)\.nuget\packages\system.memory\$(SystemMemoryVersion)\lib\netstandard2.0\System.Memory.dll" Pack="true" PackagePath="tools" Visible="false" />
+		<None Include="$(USERPROFILE)\.nuget\packages\system.threading.tasks.extensions\$(SystemThreadingTasksExtensionsVersion)\lib\netstandard2.0\System.Threading.Tasks.Extensions.dll" Pack="true" PackagePath="tools" Visible="false" />
+		<None Include="$(USERPROFILE)\.nuget\packages\system.runtime.compilerservices.unsafe\$(SystemRuntimeCompilerServicesUnsafeVersion)\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll" Pack="true" PackagePath="tools" Visible="false" />
+		<None Include="$(USERPROFILE)\.nuget\packages\system.diagnostics.diagnosticsource\$(SystemDiagnosticsDiagnosticSourceVersion)\lib\netstandard2.0\System.Diagnostics.DiagnosticSource.dll" Pack="true" PackagePath="tools" Visible="false" />
+		<None Include="$(OutputPath)\$(ExecutableTargetFramework)\MetaDslx.NetStandard20Extensions.dll" Pack="true" PackagePath="tools" Visible="false" />
+		<None Include="$(OutputPath)\$(ExecutableTargetFramework)\MetaDslx.CodeAnalysis.Core.dll" Pack="true" PackagePath="tools" Visible="true" />
+		<None Include="$(OutputPath)\$(ExecutableTargetFramework)\MetaDslx.CodeAnalysis.Common.dll" Pack="true" PackagePath="tools" Visible="true" />
+		<None Include="$(OutputPath)\$(ExecutableTargetFramework)\MetaDslx.CodeAnalysis.Parsers.Antlr.dll" Pack="true" PackagePath="tools" Visible="true" />
+		<None Include="$(OutputPath)\$(ExecutableTargetFramework)\MetaDslx.Languages.MetaGenerator.dll" Pack="true" PackagePath="tools" Visible="true" />
+		<None Include="$(OutputPath)\$(ExecutableTargetFramework)\MetaDslx.Languages.MetaModel.dll" Pack="true" PackagePath="tools" Visible="true" />
+		<None Include="$(OutputPath)\$(ExecutableTargetFramework)\MetaDslx.Languages.MetaCompiler.dll" Pack="true" PackagePath="tools" Visible="true" />
+		<None Include="$(OutputPath)\$(ExecutableTargetFramework)\MetaDslx.Languages.MetaCompiler.Antlr.dll" Pack="true" PackagePath="tools" Visible="true" />
+	</ItemGroup-->
+
+	<ItemGroup>
+		<None Include="license.txt" Pack="true" PackagePath="" />
+	</ItemGroup>
+</Project>
