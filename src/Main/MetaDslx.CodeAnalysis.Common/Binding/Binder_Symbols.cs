@@ -1,4 +1,5 @@
-﻿using MetaDslx.CodeAnalysis.PooledObjects;
+﻿using MetaDslx.CodeAnalysis.Binding.Lookup;
+using MetaDslx.CodeAnalysis.PooledObjects;
 using MetaDslx.CodeAnalysis.Symbols;
 using MetaDslx.CodeAnalysis.Symbols.Errors;
 using System;
@@ -27,6 +28,7 @@ namespace MetaDslx.CodeAnalysis.Binding
                 var qualifierContext = context.AllocateCopy();
                 qualifierContext.ClearResult();
                 qualifierContext.Validators.Clear();
+                qualifierContext.Validators.Add(LookupValidators.NamespaceOrTypeOnly);
                 result.Add(BindDeclarationOrAliasSymbolInternal(qualifierContext, qualifier[0]));
                 context.Diagnostics.AddRange(qualifierContext.Diagnostics);
                 var previous = result[0];
@@ -64,6 +66,7 @@ namespace MetaDslx.CodeAnalysis.Binding
                 var qualifierContext = context.AllocateCopy();
                 qualifierContext.ClearResult();
                 qualifierContext.Validators.Clear();
+                qualifierContext.Validators.Add(LookupValidators.NamespaceOrTypeOnly);
                 qualifierContext.SetName(qualifier[0]);
                 result.Add(BindDeclarationOrAliasSymbolInternal(qualifierContext));
                 context.Diagnostics.AddRange(qualifierContext.Diagnostics);

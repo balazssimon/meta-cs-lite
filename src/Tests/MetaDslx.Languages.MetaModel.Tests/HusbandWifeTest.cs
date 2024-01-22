@@ -9,12 +9,12 @@ namespace MetaDslx.Languages.MetaModel.Tests
         private const string MetaModelCode = @"
 class Husband
 {
-    Wife WifeX opposite Wife.HusbandX;
+    Wife Wife opposite Wife.Husband;
 }
 
 class Wife
 {
-    Husband HusbandX opposite Husband.WifeX;
+    Husband Husband opposite Husband.Wife;
 }
 ";
 
@@ -24,9 +24,9 @@ class Wife
             dynamic f = Factory(MetaModelCode);
             var husband = f.Husband();
             var wife = f.Wife();
-            husband.WifeX = wife;
-            Assert.Equal(wife, husband.WifeX);
-            Assert.Equal(husband, wife.HusbandX);
+            husband.Wife = wife;
+            Assert.Equal(wife, husband.Wife);
+            Assert.Equal(husband, wife.Husband);
         }
     }
 }

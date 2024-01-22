@@ -15,6 +15,8 @@ using MetaDslx.CodeAnalysis.Symbols;
 using MetaDslx.Bootstrap.MetaCompiler.Model;
 using MetaDslx.Modeling;
 
+//CompileMetaModel("HusbandWife", @"..\..\..", @"..\..\..");
+
 //CompileMetaModel("Meta", @"..\..\..\..\..\Main\MetaDslx.Languages.MetaModel\Model", @"..\..\..\..\..\Main\MetaDslx.Languages.MetaModel\Model");
 //CompileMetaCompiler("Meta", @"..\..\..\..\..\Main\MetaDslx.Languages.MetaModel\Language", @"..\..\..\..\..\Main\MetaDslx.Languages.MetaModel\Compiler");
 //CompileWithMetaCompiler("Meta", @"..\..\..\..\..\Main\MetaDslx.Languages.MetaModel\Language", @"..\..\..\..\..\Main\MetaDslx.Languages.MetaModel\Compiler", Meta.MInstance);
@@ -22,7 +24,7 @@ using MetaDslx.Modeling;
 //CompileMetaModel("Compiler", @"..\..\..\..\MetaDslx.Bootstrap.MetaCompiler\Model", @"..\..\..\..\MetaDslx.Bootstrap.MetaCompiler\Model");
 //CompileMetaCompiler("Compiler", @"..\..\..\..\MetaDslx.Bootstrap.MetaCompiler\Language", @"..\..\..\..\MetaDslx.Bootstrap.MetaCompiler\Compiler");
 //CompileWithMetaCompiler("Compiler2", @"..\..\..\..\MetaDslx.Bootstrap.MetaCompiler\Language", @"..\..\..\..\MetaDslx.Bootstrap.MetaCompiler\Compiler2", MetaDslx.Bootstrap.MetaCompiler.Model.Compiler.MInstance);
-CompileWithMetaCompiler("Compiler2", @"..\..\..\..\MetaDslx.Bootstrap.MetaCompiler\Language", @"..\..\..\..\MetaDslx.Bootstrap.MetaCompiler\Compiler3", MetaDslx.Bootstrap.MetaCompiler.Model.Compiler.MInstance);
+//CompileWithMetaCompiler("Compiler2", @"..\..\..\..\MetaDslx.Bootstrap.MetaCompiler\Language", @"..\..\..\..\MetaDslx.Bootstrap.MetaCompiler\Compiler3", MetaDslx.Bootstrap.MetaCompiler.Model.Compiler.MInstance);
 
 //CompileMetaModel("Roslyn", @"..\..\..\..\MetaDslx.Bootstrap.MetaCompiler\Model", @"..\..\..\..\MetaDslx.Bootstrap.MetaCompiler\Model");
 
