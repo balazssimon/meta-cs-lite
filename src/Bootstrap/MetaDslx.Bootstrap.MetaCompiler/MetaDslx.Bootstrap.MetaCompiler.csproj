@@ -33,7 +33,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<AdditionalFiles Include="Generators\*.mgen" />
-		<AdditionalFiles Include="Model\*.mm" />
+		<AdditionalFiles Include="Generators\*.mxg" />
+		<AdditionalFiles Include="Model\*.mxm" />
 	</ItemGroup>
 </Project>
