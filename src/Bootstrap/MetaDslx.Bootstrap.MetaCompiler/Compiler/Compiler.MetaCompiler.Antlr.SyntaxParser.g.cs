@@ -530,8 +530,10 @@ public override GreenNode? VisitPr_RuleRefAlt3(CompilerParser.Pr_RuleRefAlt3Cont
     }
     var referencedTypes = referencedTypesBuilder.ToList();
     _pool.Free(referencedTypesBuilder);
+    RuleRefAlt3Block1Green? block = null;
+    if (context.e_Block is not null) block = (RuleRefAlt3Block1Green?)this.Visit(context.e_Block);
     var tRBrace = this.VisitTerminal(context.e_TRBrace, CompilerSyntaxKind.TRBrace);
-	return _factory.RuleRefAlt3(tHashLBrace, referencedTypes, tRBrace);
+	return _factory.RuleRefAlt3(tHashLBrace, referencedTypes, block, tRBrace);
 }
 
 public override GreenNode? VisitPr_LAlternative(CompilerParser.Pr_LAlternativeContext? context)
@@ -1014,6 +1016,16 @@ public override GreenNode? VisitPr_RuleRefAlt3ReferencedTypesBlock(CompilerParse
 	return _factory.RuleRefAlt3ReferencedTypesBlock(tComma, referencedTypes);
 }
 
+public override GreenNode? VisitPr_RuleRefAlt3Block1(CompilerParser.Pr_RuleRefAlt3Block1Context? context)
+{
+   	if (context == null) return RuleRefAlt3Block1Green.__Missing;
+    var tBar = this.VisitTerminal(context.e_TBar, CompilerSyntaxKind.TBar);
+    IdentifierGreen? grammarRule = null;
+    if (context.e_GrammarRule is not null) grammarRule = (IdentifierGreen?)this.Visit(context.e_GrammarRule) ?? IdentifierGreen.__Missing;
+    else grammarRule = IdentifierGreen.__Missing;
+	return _factory.RuleRefAlt3Block1(tBar, grammarRule);
+}
+
 public override GreenNode? VisitPr_TokenBlock1Alt1(CompilerParser.Pr_TokenBlock1Alt1Context? context)
 {
    	if (context == null) return TokenBlock1Alt1Green.__Missing;
@@ -1083,8 +1095,9 @@ public override GreenNode? VisitPr_Tokens(CompilerParser.Pr_TokensContext? conte
     if (context.LR_KNull() is not null) token = this.VisitTerminal(context.LR_KNull());
     if (context.LR_KTrue() is not null) token = this.VisitTerminal(context.LR_KTrue());
     if (context.LR_KFalse() is not null) token = this.VisitTerminal(context.LR_KFalse());
-    if (context.LR_TInteger() is not null) token = this.VisitTerminal(context.LR_TInteger());
     if (context.LR_TString() is not null) token = this.VisitTerminal(context.LR_TString());
+    if (context.LR_TInteger() is not null) token = this.VisitTerminal(context.LR_TInteger());
+    if (context.LR_TDecimal() is not null) token = this.VisitTerminal(context.LR_TDecimal());
     if (token is null) token = _factory.None;
 	return _factory.Tokens(token);
 }
@@ -1092,6 +1105,21 @@ public override GreenNode? VisitPr_Tokens(CompilerParser.Pr_TokensContext? conte
 public override GreenNode? VisitPr_SingleExpressionBlock1Alt2(CompilerParser.Pr_SingleExpressionBlock1Alt2Context? context)
 {
    	if (context == null) return SingleExpressionBlock1Alt2Green.__Missing;
+    InternalSyntaxToken? tokens = null;
+    if (context.LR_KBool() is not null) tokens = this.VisitTerminal(context.LR_KBool());
+    if (context.LR_KInt() is not null) tokens = this.VisitTerminal(context.LR_KInt());
+    if (context.LR_KString() is not null) tokens = this.VisitTerminal(context.LR_KString());
+    if (context.LR_KType() is not null) tokens = this.VisitTerminal(context.LR_KType());
+    if (context.LR_KSymbol() is not null) tokens = this.VisitTerminal(context.LR_KSymbol());
+    if (context.LR_KObject() is not null) tokens = this.VisitTerminal(context.LR_KObject());
+    if (context.LR_KVoid() is not null) tokens = this.VisitTerminal(context.LR_KVoid());
+    if (tokens is null) tokens = _factory.None;
+	return _factory.SingleExpressionBlock1Alt2(tokens);
+}
+
+public override GreenNode? VisitPr_SingleExpressionBlock1Alt3(CompilerParser.Pr_SingleExpressionBlock1Alt3Context? context)
+{
+   	if (context == null) return SingleExpressionBlock1Alt3Green.__Missing;
     var simpleQualifierBuilder = _pool.AllocateSeparated<SimpleIdentifierGreen>(reversed: false);
     var e_SimpleIdentifier1Context = context.e_SimpleIdentifier1;
     if (e_SimpleIdentifier1Context is not null) simpleQualifierBuilder.Add((SimpleIdentifierGreen?)this.Visit(e_SimpleIdentifier1Context) ?? SimpleIdentifierGreen.__Missing);
@@ -1115,7 +1143,7 @@ public override GreenNode? VisitPr_SingleExpressionBlock1Alt2(CompilerParser.Pr_
     }
     var simpleQualifier = simpleQualifierBuilder.ToList();
     _pool.Free(simpleQualifierBuilder);
-	return _factory.SingleExpressionBlock1Alt2(simpleQualifier);
+	return _factory.SingleExpressionBlock1Alt3(simpleQualifier);
 }
 
 public override GreenNode? VisitPr_ArrayExpressionItemsBlock(CompilerParser.Pr_ArrayExpressionItemsBlockContext? context)
@@ -1158,14 +1186,14 @@ public override GreenNode? VisitPr_MainQualifierBlock4(CompilerParser.Pr_MainQua
 	return _factory.MainQualifierBlock(tDot, identifier);
 }
 
-public override GreenNode? VisitPr_SingleExpressionBlock1Alt2SimpleQualifierBlock1(CompilerParser.Pr_SingleExpressionBlock1Alt2SimpleQualifierBlock1Context? context)
+public override GreenNode? VisitPr_SingleExpressionBlock1Alt3SimpleQualifierBlock1(CompilerParser.Pr_SingleExpressionBlock1Alt3SimpleQualifierBlock1Context? context)
 {
-   	if (context == null) return SingleExpressionBlock1Alt2SimpleQualifierBlockGreen.__Missing;
+   	if (context == null) return SingleExpressionBlock1Alt3SimpleQualifierBlockGreen.__Missing;
     var tDot = this.VisitTerminal(context.e_TDot1, CompilerSyntaxKind.TDot);
     SimpleIdentifierGreen? simpleIdentifier = null;
     if (context.e_SimpleIdentifier2 is not null) simpleIdentifier = (SimpleIdentifierGreen?)this.Visit(context.e_SimpleIdentifier2) ?? SimpleIdentifierGreen.__Missing;
     else simpleIdentifier = SimpleIdentifierGreen.__Missing;
-	return _factory.SingleExpressionBlock1Alt2SimpleQualifierBlock(tDot, simpleIdentifier);
+	return _factory.SingleExpressionBlock1Alt3SimpleQualifierBlock(tDot, simpleIdentifier);
 }
 }
 }

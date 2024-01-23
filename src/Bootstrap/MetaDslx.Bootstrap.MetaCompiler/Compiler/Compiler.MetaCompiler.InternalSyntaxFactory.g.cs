@@ -506,7 +506,7 @@ internal RuleRefAlt2Green RuleRefAlt2(__InternalSyntaxToken tHash, ReturnTypeQua
 			return result;
 		}
 
-internal RuleRefAlt3Green RuleRefAlt3(__InternalSyntaxToken tHashLBrace, global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<ReturnTypeQualifierGreen> referencedTypes, __InternalSyntaxToken tRBrace)
+internal RuleRefAlt3Green RuleRefAlt3(__InternalSyntaxToken tHashLBrace, global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<ReturnTypeQualifierGreen> referencedTypes, RuleRefAlt3Block1Green block, __InternalSyntaxToken tRBrace)
 {
 #if DEBUG
 			if (tHashLBrace is null) throw new ArgumentNullException(nameof(tHashLBrace));
@@ -514,17 +514,7 @@ internal RuleRefAlt3Green RuleRefAlt3(__InternalSyntaxToken tHashLBrace, global:
 			if (tRBrace is null) throw new ArgumentNullException(nameof(tRBrace));
 			if (tRBrace.RawKind != (int)CompilerSyntaxKind.TRBrace) throw new ArgumentException(nameof(tRBrace));
 #endif
-			int hash;
-			var cached = __SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.RuleRefAlt3, tHashLBrace, referencedTypes.Node, tRBrace, out hash);
-			if (cached != null) return (RuleRefAlt3Green)cached;
-		
-			var result = new RuleRefAlt3Green(CompilerSyntaxKind.RuleRefAlt3, tHashLBrace, referencedTypes.Node, tRBrace);
-			if (hash >= 0)
-			{
-				__SyntaxNodeCache.AddNode(result, hash);
-			}
-		
-			return result;
+			return new RuleRefAlt3Green(CompilerSyntaxKind.RuleRefAlt3, tHashLBrace, referencedTypes.Node, block, tRBrace);
 		}
 
 internal LAlternativeGreen LAlternative(global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<LElementGreen> elements)
@@ -1103,6 +1093,26 @@ internal RuleRefAlt3ReferencedTypesBlockGreen RuleRefAlt3ReferencedTypesBlock(__
 			return result;
 		}
 
+internal RuleRefAlt3Block1Green RuleRefAlt3Block1(__InternalSyntaxToken tBar, IdentifierGreen grammarRule)
+{
+#if DEBUG
+			if (tBar is null) throw new ArgumentNullException(nameof(tBar));
+			if (tBar.RawKind != (int)CompilerSyntaxKind.TBar) throw new ArgumentException(nameof(tBar));
+			if (grammarRule is null) throw new ArgumentNullException(nameof(grammarRule));
+#endif
+			int hash;
+			var cached = __SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.RuleRefAlt3Block1, tBar, grammarRule, out hash);
+			if (cached != null) return (RuleRefAlt3Block1Green)cached;
+		
+			var result = new RuleRefAlt3Block1Green(CompilerSyntaxKind.RuleRefAlt3Block1, tBar, grammarRule);
+			if (hash >= 0)
+			{
+				__SyntaxNodeCache.AddNode(result, hash);
+			}
+		
+			return result;
+		}
+
 internal TokenBlock1Alt1Green TokenBlock1Alt1(__InternalSyntaxToken kToken, NameGreen name, TokenBlock1Alt1Block1Green block)
 {
 #if DEBUG
@@ -1227,7 +1237,7 @@ internal TokensGreen Tokens(__InternalSyntaxToken token)
 {
 #if DEBUG
 			if (token is null) throw new ArgumentNullException(nameof(token));
-			if (token.RawKind != (int)CompilerSyntaxKind.KNull && token.RawKind != (int)CompilerSyntaxKind.KTrue && token.RawKind != (int)CompilerSyntaxKind.KFalse && token.RawKind != (int)CompilerSyntaxKind.TInteger && token.RawKind != (int)CompilerSyntaxKind.TString) throw new ArgumentException(nameof(token));
+			if (token.RawKind != (int)CompilerSyntaxKind.KNull && token.RawKind != (int)CompilerSyntaxKind.KTrue && token.RawKind != (int)CompilerSyntaxKind.KFalse && token.RawKind != (int)CompilerSyntaxKind.TString && token.RawKind != (int)CompilerSyntaxKind.TInteger && token.RawKind != (int)CompilerSyntaxKind.TDecimal) throw new ArgumentException(nameof(token));
 #endif
 			int hash;
 			var cached = __SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.Tokens, token, out hash);
@@ -1242,15 +1252,34 @@ internal TokensGreen Tokens(__InternalSyntaxToken token)
 			return result;
 		}
 
-internal SingleExpressionBlock1Alt2Green SingleExpressionBlock1Alt2(global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<SimpleIdentifierGreen> simpleQualifier)
+internal SingleExpressionBlock1Alt2Green SingleExpressionBlock1Alt2(__InternalSyntaxToken tokens)
+{
+#if DEBUG
+			if (tokens is null) throw new ArgumentNullException(nameof(tokens));
+			if (tokens.RawKind != (int)CompilerSyntaxKind.KBool && tokens.RawKind != (int)CompilerSyntaxKind.KInt && tokens.RawKind != (int)CompilerSyntaxKind.KString && tokens.RawKind != (int)CompilerSyntaxKind.KType && tokens.RawKind != (int)CompilerSyntaxKind.KSymbol && tokens.RawKind != (int)CompilerSyntaxKind.KObject && tokens.RawKind != (int)CompilerSyntaxKind.KVoid) throw new ArgumentException(nameof(tokens));
+#endif
+			int hash;
+			var cached = __SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.SingleExpressionBlock1Alt2, tokens, out hash);
+			if (cached != null) return (SingleExpressionBlock1Alt2Green)cached;
+		
+			var result = new SingleExpressionBlock1Alt2Green(CompilerSyntaxKind.SingleExpressionBlock1Alt2, tokens);
+			if (hash >= 0)
+			{
+				__SyntaxNodeCache.AddNode(result, hash);
+			}
+		
+			return result;
+		}
+
+internal SingleExpressionBlock1Alt3Green SingleExpressionBlock1Alt3(global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<SimpleIdentifierGreen> simpleQualifier)
 {
 #if DEBUG
 #endif
 			int hash;
-			var cached = __SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.SingleExpressionBlock1Alt2, simpleQualifier.Node, out hash);
-			if (cached != null) return (SingleExpressionBlock1Alt2Green)cached;
+			var cached = __SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.SingleExpressionBlock1Alt3, simpleQualifier.Node, out hash);
+			if (cached != null) return (SingleExpressionBlock1Alt3Green)cached;
 		
-			var result = new SingleExpressionBlock1Alt2Green(CompilerSyntaxKind.SingleExpressionBlock1Alt2, simpleQualifier.Node);
+			var result = new SingleExpressionBlock1Alt3Green(CompilerSyntaxKind.SingleExpressionBlock1Alt3, simpleQualifier.Node);
 			if (hash >= 0)
 			{
 				__SyntaxNodeCache.AddNode(result, hash);
@@ -1339,7 +1368,7 @@ internal MainQualifierBlockGreen MainQualifierBlock(__InternalSyntaxToken tDot, 
 			return result;
 		}
 
-internal SingleExpressionBlock1Alt2SimpleQualifierBlockGreen SingleExpressionBlock1Alt2SimpleQualifierBlock(__InternalSyntaxToken tDot, SimpleIdentifierGreen simpleIdentifier)
+internal SingleExpressionBlock1Alt3SimpleQualifierBlockGreen SingleExpressionBlock1Alt3SimpleQualifierBlock(__InternalSyntaxToken tDot, SimpleIdentifierGreen simpleIdentifier)
 {
 #if DEBUG
 			if (tDot is null) throw new ArgumentNullException(nameof(tDot));
@@ -1347,10 +1376,10 @@ internal SingleExpressionBlock1Alt2SimpleQualifierBlockGreen SingleExpressionBlo
 			if (simpleIdentifier is null) throw new ArgumentNullException(nameof(simpleIdentifier));
 #endif
 			int hash;
-			var cached = __SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.SingleExpressionBlock1Alt2SimpleQualifierBlock, tDot, simpleIdentifier, out hash);
-			if (cached != null) return (SingleExpressionBlock1Alt2SimpleQualifierBlockGreen)cached;
+			var cached = __SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.SingleExpressionBlock1Alt3SimpleQualifierBlock, tDot, simpleIdentifier, out hash);
+			if (cached != null) return (SingleExpressionBlock1Alt3SimpleQualifierBlockGreen)cached;
 		
-			var result = new SingleExpressionBlock1Alt2SimpleQualifierBlockGreen(CompilerSyntaxKind.SingleExpressionBlock1Alt2SimpleQualifierBlock, tDot, simpleIdentifier);
+			var result = new SingleExpressionBlock1Alt3SimpleQualifierBlockGreen(CompilerSyntaxKind.SingleExpressionBlock1Alt3SimpleQualifierBlock, tDot, simpleIdentifier);
 			if (hash >= 0)
 			{
 				__SyntaxNodeCache.AddNode(result, hash);

@@ -65,6 +65,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		void VisitAlternativeBlock2(AlternativeBlock2Syntax node);
 		void VisitElementBlock1(ElementBlock1Syntax node);
 		void VisitRuleRefAlt3ReferencedTypesBlock(RuleRefAlt3ReferencedTypesBlockSyntax node);
+		void VisitRuleRefAlt3Block1(RuleRefAlt3Block1Syntax node);
 		void VisitTokenBlock1Alt1(TokenBlock1Alt1Syntax node);
 		void VisitTokenBlock1Alt2(TokenBlock1Alt2Syntax node);
 		void VisitTokenBlock1Alt1Block1(TokenBlock1Alt1Block1Syntax node);
@@ -73,11 +74,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		void VisitLBlockAlternativesBlock(LBlockAlternativesBlockSyntax node);
 		void VisitTokens(TokensSyntax node);
 		void VisitSingleExpressionBlock1Alt2(SingleExpressionBlock1Alt2Syntax node);
+		void VisitSingleExpressionBlock1Alt3(SingleExpressionBlock1Alt3Syntax node);
 		void VisitArrayExpressionItemsBlock(ArrayExpressionItemsBlockSyntax node);
 		void VisitAnnotationArgumentsArgumentsBlock(AnnotationArgumentsArgumentsBlockSyntax node);
 		void VisitAnnotationArgumentBlock1(AnnotationArgumentBlock1Syntax node);
 		void VisitMainQualifierBlock(MainQualifierBlockSyntax node);
-		void VisitSingleExpressionBlock1Alt2SimpleQualifierBlock(SingleExpressionBlock1Alt2SimpleQualifierBlockSyntax node);
+		void VisitSingleExpressionBlock1Alt3SimpleQualifierBlock(SingleExpressionBlock1Alt3SimpleQualifierBlockSyntax node);
     }
 
 	public class CompilerSyntaxVisitor : SyntaxVisitor, ICompilerSyntaxVisitor
@@ -327,6 +329,11 @@ public virtual void VisitRuleRefAlt3ReferencedTypesBlock(RuleRefAlt3ReferencedTy
     this.DefaultVisit(node);
 }
 
+public virtual void VisitRuleRefAlt3Block1(RuleRefAlt3Block1Syntax node)
+{
+    this.DefaultVisit(node);
+}
+
 public virtual void VisitTokenBlock1Alt1(TokenBlock1Alt1Syntax node)
 {
     this.DefaultVisit(node);
@@ -367,6 +374,11 @@ public virtual void VisitSingleExpressionBlock1Alt2(SingleExpressionBlock1Alt2Sy
     this.DefaultVisit(node);
 }
 
+public virtual void VisitSingleExpressionBlock1Alt3(SingleExpressionBlock1Alt3Syntax node)
+{
+    this.DefaultVisit(node);
+}
+
 public virtual void VisitArrayExpressionItemsBlock(ArrayExpressionItemsBlockSyntax node)
 {
     this.DefaultVisit(node);
@@ -387,7 +399,7 @@ public virtual void VisitMainQualifierBlock(MainQualifierBlockSyntax node)
     this.DefaultVisit(node);
 }
 
-public virtual void VisitSingleExpressionBlock1Alt2SimpleQualifierBlock(SingleExpressionBlock1Alt2SimpleQualifierBlockSyntax node)
+public virtual void VisitSingleExpressionBlock1Alt3SimpleQualifierBlock(SingleExpressionBlock1Alt3SimpleQualifierBlockSyntax node)
 {
     this.DefaultVisit(node);
 }
@@ -444,6 +456,7 @@ public interface ICompilerSyntaxVisitor<TResult>
 	TResult VisitAlternativeBlock2(AlternativeBlock2Syntax node);
 	TResult VisitElementBlock1(ElementBlock1Syntax node);
 	TResult VisitRuleRefAlt3ReferencedTypesBlock(RuleRefAlt3ReferencedTypesBlockSyntax node);
+	TResult VisitRuleRefAlt3Block1(RuleRefAlt3Block1Syntax node);
 	TResult VisitTokenBlock1Alt1(TokenBlock1Alt1Syntax node);
 	TResult VisitTokenBlock1Alt2(TokenBlock1Alt2Syntax node);
 	TResult VisitTokenBlock1Alt1Block1(TokenBlock1Alt1Block1Syntax node);
@@ -452,11 +465,12 @@ public interface ICompilerSyntaxVisitor<TResult>
 	TResult VisitLBlockAlternativesBlock(LBlockAlternativesBlockSyntax node);
 	TResult VisitTokens(TokensSyntax node);
 	TResult VisitSingleExpressionBlock1Alt2(SingleExpressionBlock1Alt2Syntax node);
+	TResult VisitSingleExpressionBlock1Alt3(SingleExpressionBlock1Alt3Syntax node);
 	TResult VisitArrayExpressionItemsBlock(ArrayExpressionItemsBlockSyntax node);
 	TResult VisitAnnotationArgumentsArgumentsBlock(AnnotationArgumentsArgumentsBlockSyntax node);
 	TResult VisitAnnotationArgumentBlock1(AnnotationArgumentBlock1Syntax node);
 	TResult VisitMainQualifierBlock(MainQualifierBlockSyntax node);
-	TResult VisitSingleExpressionBlock1Alt2SimpleQualifierBlock(SingleExpressionBlock1Alt2SimpleQualifierBlockSyntax node);
+	TResult VisitSingleExpressionBlock1Alt3SimpleQualifierBlock(SingleExpressionBlock1Alt3SimpleQualifierBlockSyntax node);
     }
 
 public class CompilerSyntaxVisitor<TResult> : SyntaxVisitor<TResult>, ICompilerSyntaxVisitor<TResult>
@@ -706,6 +720,11 @@ public virtual TResult VisitRuleRefAlt3ReferencedTypesBlock(RuleRefAlt3Reference
     return this.DefaultVisit(node);
 }
 
+public virtual TResult VisitRuleRefAlt3Block1(RuleRefAlt3Block1Syntax node)
+{
+    return this.DefaultVisit(node);
+}
+
 public virtual TResult VisitTokenBlock1Alt1(TokenBlock1Alt1Syntax node)
 {
     return this.DefaultVisit(node);
@@ -746,6 +765,11 @@ public virtual TResult VisitSingleExpressionBlock1Alt2(SingleExpressionBlock1Alt
     return this.DefaultVisit(node);
 }
 
+public virtual TResult VisitSingleExpressionBlock1Alt3(SingleExpressionBlock1Alt3Syntax node)
+{
+    return this.DefaultVisit(node);
+}
+
 public virtual TResult VisitArrayExpressionItemsBlock(ArrayExpressionItemsBlockSyntax node)
 {
     return this.DefaultVisit(node);
@@ -766,7 +790,7 @@ public virtual TResult VisitMainQualifierBlock(MainQualifierBlockSyntax node)
     return this.DefaultVisit(node);
 }
 
-public virtual TResult VisitSingleExpressionBlock1Alt2SimpleQualifierBlock(SingleExpressionBlock1Alt2SimpleQualifierBlockSyntax node)
+public virtual TResult VisitSingleExpressionBlock1Alt3SimpleQualifierBlock(SingleExpressionBlock1Alt3SimpleQualifierBlockSyntax node)
 {
     return this.DefaultVisit(node);
 }
@@ -823,6 +847,7 @@ public interface ICompilerSyntaxVisitor<TArg, TResult>
 	TResult VisitAlternativeBlock2(AlternativeBlock2Syntax node, TArg argument);
 	TResult VisitElementBlock1(ElementBlock1Syntax node, TArg argument);
 	TResult VisitRuleRefAlt3ReferencedTypesBlock(RuleRefAlt3ReferencedTypesBlockSyntax node, TArg argument);
+	TResult VisitRuleRefAlt3Block1(RuleRefAlt3Block1Syntax node, TArg argument);
 	TResult VisitTokenBlock1Alt1(TokenBlock1Alt1Syntax node, TArg argument);
 	TResult VisitTokenBlock1Alt2(TokenBlock1Alt2Syntax node, TArg argument);
 	TResult VisitTokenBlock1Alt1Block1(TokenBlock1Alt1Block1Syntax node, TArg argument);
@@ -831,11 +856,12 @@ public interface ICompilerSyntaxVisitor<TArg, TResult>
 	TResult VisitLBlockAlternativesBlock(LBlockAlternativesBlockSyntax node, TArg argument);
 	TResult VisitTokens(TokensSyntax node, TArg argument);
 	TResult VisitSingleExpressionBlock1Alt2(SingleExpressionBlock1Alt2Syntax node, TArg argument);
+	TResult VisitSingleExpressionBlock1Alt3(SingleExpressionBlock1Alt3Syntax node, TArg argument);
 	TResult VisitArrayExpressionItemsBlock(ArrayExpressionItemsBlockSyntax node, TArg argument);
 	TResult VisitAnnotationArgumentsArgumentsBlock(AnnotationArgumentsArgumentsBlockSyntax node, TArg argument);
 	TResult VisitAnnotationArgumentBlock1(AnnotationArgumentBlock1Syntax node, TArg argument);
 	TResult VisitMainQualifierBlock(MainQualifierBlockSyntax node, TArg argument);
-	TResult VisitSingleExpressionBlock1Alt2SimpleQualifierBlock(SingleExpressionBlock1Alt2SimpleQualifierBlockSyntax node, TArg argument);
+	TResult VisitSingleExpressionBlock1Alt3SimpleQualifierBlock(SingleExpressionBlock1Alt3SimpleQualifierBlockSyntax node, TArg argument);
     }
 
 public class CompilerSyntaxVisitor<TArg, TResult> : SyntaxVisitor<TArg, TResult>, ICompilerSyntaxVisitor<TArg, TResult>
@@ -1085,6 +1111,11 @@ public virtual TResult VisitRuleRefAlt3ReferencedTypesBlock(RuleRefAlt3Reference
     return this.DefaultVisit(node, argument);
 }
 
+public virtual TResult VisitRuleRefAlt3Block1(RuleRefAlt3Block1Syntax node, TArg argument)
+{
+    return this.DefaultVisit(node, argument);
+}
+
 public virtual TResult VisitTokenBlock1Alt1(TokenBlock1Alt1Syntax node, TArg argument)
 {
     return this.DefaultVisit(node, argument);
@@ -1125,6 +1156,11 @@ public virtual TResult VisitSingleExpressionBlock1Alt2(SingleExpressionBlock1Alt
     return this.DefaultVisit(node, argument);
 }
 
+public virtual TResult VisitSingleExpressionBlock1Alt3(SingleExpressionBlock1Alt3Syntax node, TArg argument)
+{
+    return this.DefaultVisit(node, argument);
+}
+
 public virtual TResult VisitArrayExpressionItemsBlock(ArrayExpressionItemsBlockSyntax node, TArg argument)
 {
     return this.DefaultVisit(node, argument);
@@ -1145,7 +1181,7 @@ public virtual TResult VisitMainQualifierBlock(MainQualifierBlockSyntax node, TA
     return this.DefaultVisit(node, argument);
 }
 
-public virtual TResult VisitSingleExpressionBlock1Alt2SimpleQualifierBlock(SingleExpressionBlock1Alt2SimpleQualifierBlockSyntax node, TArg argument)
+public virtual TResult VisitSingleExpressionBlock1Alt3SimpleQualifierBlock(SingleExpressionBlock1Alt3SimpleQualifierBlockSyntax node, TArg argument)
 {
     return this.DefaultVisit(node, argument);
 }
@@ -1301,8 +1337,9 @@ public virtual SyntaxNode VisitRuleRefAlt3(RuleRefAlt3Syntax node)
 {
     var tHashLBrace = this.VisitToken(node.THashLBrace);
     var referencedTypes = this.VisitList(node.ReferencedTypes);
+    var block = (RuleRefAlt3Block1Syntax)this.Visit(node.Block);
     var tRBrace = this.VisitToken(node.TRBrace);
-	return node.Update(tHashLBrace, referencedTypes, tRBrace);
+	return node.Update(tHashLBrace, referencedTypes, block, tRBrace);
 }
 
 public virtual SyntaxNode VisitLAlternative(LAlternativeSyntax node)
@@ -1523,6 +1560,13 @@ public virtual SyntaxNode VisitRuleRefAlt3ReferencedTypesBlock(RuleRefAlt3Refere
 	return node.Update(tComma, referencedTypes);
 }
 
+public virtual SyntaxNode VisitRuleRefAlt3Block1(RuleRefAlt3Block1Syntax node)
+{
+    var tBar = this.VisitToken(node.TBar);
+    var grammarRule = (IdentifierSyntax)this.Visit(node.GrammarRule);
+	return node.Update(tBar, grammarRule);
+}
+
 public virtual SyntaxNode VisitTokenBlock1Alt1(TokenBlock1Alt1Syntax node)
 {
     var kToken = this.VisitToken(node.KToken);
@@ -1574,6 +1618,12 @@ public virtual SyntaxNode VisitTokens(TokensSyntax node)
 
 public virtual SyntaxNode VisitSingleExpressionBlock1Alt2(SingleExpressionBlock1Alt2Syntax node)
 {
+    var tokens = this.VisitToken(node.Tokens);
+	return node.Update(tokens);
+}
+
+public virtual SyntaxNode VisitSingleExpressionBlock1Alt3(SingleExpressionBlock1Alt3Syntax node)
+{
     var simpleQualifier = this.VisitList(node.SimpleQualifier);
 	return node.Update(simpleQualifier);
 }
@@ -1606,7 +1656,7 @@ public virtual SyntaxNode VisitMainQualifierBlock(MainQualifierBlockSyntax node)
 	return node.Update(tDot, identifier);
 }
 
-public virtual SyntaxNode VisitSingleExpressionBlock1Alt2SimpleQualifierBlock(SingleExpressionBlock1Alt2SimpleQualifierBlockSyntax node)
+public virtual SyntaxNode VisitSingleExpressionBlock1Alt3SimpleQualifierBlock(SingleExpressionBlock1Alt3SimpleQualifierBlockSyntax node)
 {
     var tDot = this.VisitToken(node.TDot);
     var simpleIdentifier = (SimpleIdentifierSyntax)this.Visit(node.SimpleIdentifier);

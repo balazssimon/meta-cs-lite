@@ -2022,6 +2022,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	public sealed class RuleRefAlt3Syntax : ElementValueSyntax
 	{
 		private __SyntaxNode _referencedTypes;
+		private RuleRefAlt3Block1Syntax _block;
 	
 	    public RuleRefAlt3Syntax(__InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
 	        : base(green, syntaxTree, position)
@@ -2050,13 +2051,21 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 				return red == null ? default : new global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<ReturnTypeQualifierSyntax>(red, this.GetChildIndex(1), reversed: false);
 	} 
 	}
+	public RuleRefAlt3Block1Syntax Block 
+		{ 
+		get
+		{
+				var red = this.GetRed(ref this._block, 2);
+	return red;
+	} 
+	}
 	public __SyntaxToken TRBrace 
 		{ 
 		get
 		{
 				var green = (global::MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax.RuleRefAlt3Green)this.Green;
 	var greenToken = green.TRBrace;
-				return new __SyntaxToken(this, greenToken, this.GetChildPosition(2), this.GetChildIndex(2));
+				return new __SyntaxToken(this, greenToken, this.GetChildPosition(3), this.GetChildIndex(3));
 	} 
 	}
 	
@@ -2065,6 +2074,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	        switch (index)
 	        {
 			case 1: return this.GetRed(ref this._referencedTypes, 1);
+			case 2: return this.GetRed(ref this._block, 2);
 			default: return null;
 	        }
 	    }
@@ -2074,18 +2084,19 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	        switch (index)
 	        {
 			case 1: return this._referencedTypes;
+			case 2: return this._block;
 			default: return null;
 	        }
 	    }
 	
 	public RuleRefAlt3Syntax WithTHashLBrace(__SyntaxToken tHashLBrace)
 		{
-		return this.Update(tHashLBrace, this.ReferencedTypes, this.TRBrace);
+		return this.Update(tHashLBrace, this.ReferencedTypes, this.Block, this.TRBrace);
 	}
 	
 	public RuleRefAlt3Syntax WithReferencedTypes(global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<ReturnTypeQualifierSyntax> referencedTypes)
 		{
-		return this.Update(this.THashLBrace, referencedTypes, this.TRBrace);
+		return this.Update(this.THashLBrace, referencedTypes, this.Block, this.TRBrace);
 	}
 	
 	public RuleRefAlt3Syntax AddReferencedTypes(params ReturnTypeQualifierSyntax[] referencedTypes)
@@ -2093,16 +2104,21 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		return this.WithReferencedTypes(this.ReferencedTypes.AddRange(referencedTypes));
 	}
 	
-	public RuleRefAlt3Syntax WithTRBrace(__SyntaxToken tRBrace)
+	public RuleRefAlt3Syntax WithBlock(RuleRefAlt3Block1Syntax block)
 		{
-		return this.Update(this.THashLBrace, this.ReferencedTypes, tRBrace);
+		return this.Update(this.THashLBrace, this.ReferencedTypes, block, this.TRBrace);
 	}
 	
-	    public RuleRefAlt3Syntax Update(__SyntaxToken tHashLBrace, global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<ReturnTypeQualifierSyntax> referencedTypes, __SyntaxToken tRBrace)
+	public RuleRefAlt3Syntax WithTRBrace(__SyntaxToken tRBrace)
+		{
+		return this.Update(this.THashLBrace, this.ReferencedTypes, this.Block, tRBrace);
+	}
+	
+	    public RuleRefAlt3Syntax Update(__SyntaxToken tHashLBrace, global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<ReturnTypeQualifierSyntax> referencedTypes, RuleRefAlt3Block1Syntax block, __SyntaxToken tRBrace)
 	    {
-	        if (this.THashLBrace != tHashLBrace || this.ReferencedTypes != referencedTypes || this.TRBrace != tRBrace)
+	        if (this.THashLBrace != tHashLBrace || this.ReferencedTypes != referencedTypes || this.Block != block || this.TRBrace != tRBrace)
 	        {
-	            var newNode = CompilerLanguage.Instance.SyntaxFactory.RuleRefAlt3(tHashLBrace, referencedTypes, tRBrace);
+	            var newNode = CompilerLanguage.Instance.SyntaxFactory.RuleRefAlt3(tHashLBrace, referencedTypes, block, tRBrace);
 	            var annotations = this.GetAnnotations();
 	            if (annotations != null && annotations.Length > 0)
 	               newNode = __SyntaxExtensions.WithAnnotations(newNode, annotations);
@@ -5031,6 +5047,96 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	    }
 	
 	}
+	
+	public sealed class RuleRefAlt3Block1Syntax : CompilerSyntaxNode
+	{
+		private IdentifierSyntax _grammarRule;
+	
+	    public RuleRefAlt3Block1Syntax(__InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
+	        : base(green, syntaxTree, position)
+	    {
+	    }
+	
+	    public RuleRefAlt3Block1Syntax(__InternalSyntaxNode green, CompilerSyntaxNode parent, int position)
+	        : base(green, parent, position)
+	    {
+	    }
+	
+	public __SyntaxToken TBar 
+		{ 
+		get
+		{
+				var green = (global::MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax.RuleRefAlt3Block1Green)this.Green;
+	var greenToken = green.TBar;
+				return new __SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
+	} 
+	}
+	public IdentifierSyntax GrammarRule 
+		{ 
+		get
+		{
+				var red = this.GetRed(ref this._grammarRule, 1);
+	return red;
+	} 
+	}
+	
+	    protected override __SyntaxNode GetNodeSlot(int index)
+	    {
+	        switch (index)
+	        {
+			case 1: return this.GetRed(ref this._grammarRule, 1);
+			default: return null;
+	        }
+	    }
+	
+	    protected override __SyntaxNode GetCachedSlot(int index)
+	    {
+	        switch (index)
+	        {
+			case 1: return this._grammarRule;
+			default: return null;
+	        }
+	    }
+	
+	public RuleRefAlt3Block1Syntax WithTBar(__SyntaxToken tBar)
+		{
+		return this.Update(tBar, this.GrammarRule);
+	}
+	
+	public RuleRefAlt3Block1Syntax WithGrammarRule(IdentifierSyntax grammarRule)
+		{
+		return this.Update(this.TBar, grammarRule);
+	}
+	
+	    public RuleRefAlt3Block1Syntax Update(__SyntaxToken tBar, IdentifierSyntax grammarRule)
+	    {
+	        if (this.TBar != tBar || this.GrammarRule != grammarRule)
+	        {
+	            var newNode = CompilerLanguage.Instance.SyntaxFactory.RuleRefAlt3Block1(tBar, grammarRule);
+	            var annotations = this.GetAnnotations();
+	            if (annotations != null && annotations.Length > 0)
+	               newNode = __SyntaxExtensions.WithAnnotations(newNode, annotations);
+			return (RuleRefAlt3Block1Syntax)newNode;
+	        }
+	        return this;
+	    }
+	
+	    public override TResult Accept<TArg, TResult>(ICompilerSyntaxVisitor<TArg, TResult> visitor, TArg argument)
+	    {
+	        return visitor.VisitRuleRefAlt3Block1(this, argument);
+	    }
+	
+	    public override TResult Accept<TResult>(ICompilerSyntaxVisitor<TResult> visitor)
+	    {
+	        return visitor.VisitRuleRefAlt3Block1(this);
+	    }
+	
+	    public override void Accept(ICompilerSyntaxVisitor visitor)
+	    {
+	        visitor.VisitRuleRefAlt3Block1(this);
+	    }
+	
+	}
 	public abstract class TokenBlock1Syntax : CompilerSyntaxNode
 	{
 	    protected TokenBlock1Syntax(__InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
@@ -5686,7 +5792,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	}
 	public sealed class SingleExpressionBlock1Alt2Syntax : SingleExpressionBlock1Syntax
 	{
-		private __SyntaxNode _simpleQualifier;
 	
 	    public SingleExpressionBlock1Alt2Syntax(__InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
 	        : base(green, syntaxTree, position)
@@ -5694,6 +5799,80 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	    }
 	
 	    public SingleExpressionBlock1Alt2Syntax(__InternalSyntaxNode green, CompilerSyntaxNode parent, int position)
+	        : base(green, parent, position)
+	    {
+	    }
+	
+	public __SyntaxToken Tokens 
+		{ 
+		get
+		{
+				var green = (global::MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax.SingleExpressionBlock1Alt2Green)this.Green;
+	var greenToken = green.Tokens;
+				return new __SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
+	} 
+	}
+	
+	    protected override __SyntaxNode GetNodeSlot(int index)
+	    {
+	        switch (index)
+	        {
+			default: return null;
+	        }
+	    }
+	
+	    protected override __SyntaxNode GetCachedSlot(int index)
+	    {
+	        switch (index)
+	        {
+			default: return null;
+	        }
+	    }
+	
+	public SingleExpressionBlock1Alt2Syntax WithTokens(__SyntaxToken tokens)
+		{
+		return this.Update(tokens);
+	}
+	
+	    public SingleExpressionBlock1Alt2Syntax Update(__SyntaxToken tokens)
+	    {
+	        if (this.Tokens != tokens)
+	        {
+	            var newNode = CompilerLanguage.Instance.SyntaxFactory.SingleExpressionBlock1Alt2(tokens);
+	            var annotations = this.GetAnnotations();
+	            if (annotations != null && annotations.Length > 0)
+	               newNode = __SyntaxExtensions.WithAnnotations(newNode, annotations);
+			return (SingleExpressionBlock1Alt2Syntax)newNode;
+	        }
+	        return this;
+	    }
+	
+	    public override TResult Accept<TArg, TResult>(ICompilerSyntaxVisitor<TArg, TResult> visitor, TArg argument)
+	    {
+	        return visitor.VisitSingleExpressionBlock1Alt2(this, argument);
+	    }
+	
+	    public override TResult Accept<TResult>(ICompilerSyntaxVisitor<TResult> visitor)
+	    {
+	        return visitor.VisitSingleExpressionBlock1Alt2(this);
+	    }
+	
+	    public override void Accept(ICompilerSyntaxVisitor visitor)
+	    {
+	        visitor.VisitSingleExpressionBlock1Alt2(this);
+	    }
+	
+	}
+	public sealed class SingleExpressionBlock1Alt3Syntax : SingleExpressionBlock1Syntax
+	{
+		private __SyntaxNode _simpleQualifier;
+	
+	    public SingleExpressionBlock1Alt3Syntax(__InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
+	        : base(green, syntaxTree, position)
+	    {
+	    }
+	
+	    public SingleExpressionBlock1Alt3Syntax(__InternalSyntaxNode green, CompilerSyntaxNode parent, int position)
 	        : base(green, parent, position)
 	    {
 	    }
@@ -5725,42 +5904,42 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	        }
 	    }
 	
-	public SingleExpressionBlock1Alt2Syntax WithSimpleQualifier(global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<SimpleIdentifierSyntax> simpleQualifier)
+	public SingleExpressionBlock1Alt3Syntax WithSimpleQualifier(global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<SimpleIdentifierSyntax> simpleQualifier)
 		{
 		return this.Update(simpleQualifier);
 	}
 	
-	public SingleExpressionBlock1Alt2Syntax AddSimpleQualifier(params SimpleIdentifierSyntax[] simpleQualifier)
+	public SingleExpressionBlock1Alt3Syntax AddSimpleQualifier(params SimpleIdentifierSyntax[] simpleQualifier)
 		{
 		return this.WithSimpleQualifier(this.SimpleQualifier.AddRange(simpleQualifier));
 	}
 	
-	    public SingleExpressionBlock1Alt2Syntax Update(global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<SimpleIdentifierSyntax> simpleQualifier)
+	    public SingleExpressionBlock1Alt3Syntax Update(global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<SimpleIdentifierSyntax> simpleQualifier)
 	    {
 	        if (this.SimpleQualifier != simpleQualifier)
 	        {
-	            var newNode = CompilerLanguage.Instance.SyntaxFactory.SingleExpressionBlock1Alt2(simpleQualifier);
+	            var newNode = CompilerLanguage.Instance.SyntaxFactory.SingleExpressionBlock1Alt3(simpleQualifier);
 	            var annotations = this.GetAnnotations();
 	            if (annotations != null && annotations.Length > 0)
 	               newNode = __SyntaxExtensions.WithAnnotations(newNode, annotations);
-			return (SingleExpressionBlock1Alt2Syntax)newNode;
+			return (SingleExpressionBlock1Alt3Syntax)newNode;
 	        }
 	        return this;
 	    }
 	
 	    public override TResult Accept<TArg, TResult>(ICompilerSyntaxVisitor<TArg, TResult> visitor, TArg argument)
 	    {
-	        return visitor.VisitSingleExpressionBlock1Alt2(this, argument);
+	        return visitor.VisitSingleExpressionBlock1Alt3(this, argument);
 	    }
 	
 	    public override TResult Accept<TResult>(ICompilerSyntaxVisitor<TResult> visitor)
 	    {
-	        return visitor.VisitSingleExpressionBlock1Alt2(this);
+	        return visitor.VisitSingleExpressionBlock1Alt3(this);
 	    }
 	
 	    public override void Accept(ICompilerSyntaxVisitor visitor)
 	    {
-	        visitor.VisitSingleExpressionBlock1Alt2(this);
+	        visitor.VisitSingleExpressionBlock1Alt3(this);
 	    }
 	
 	}
@@ -6125,16 +6304,16 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	
 	}
 	
-	public sealed class SingleExpressionBlock1Alt2SimpleQualifierBlockSyntax : CompilerSyntaxNode
+	public sealed class SingleExpressionBlock1Alt3SimpleQualifierBlockSyntax : CompilerSyntaxNode
 	{
 		private SimpleIdentifierSyntax _simpleIdentifier;
 	
-	    public SingleExpressionBlock1Alt2SimpleQualifierBlockSyntax(__InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
+	    public SingleExpressionBlock1Alt3SimpleQualifierBlockSyntax(__InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
 	        : base(green, syntaxTree, position)
 	    {
 	    }
 	
-	    public SingleExpressionBlock1Alt2SimpleQualifierBlockSyntax(__InternalSyntaxNode green, CompilerSyntaxNode parent, int position)
+	    public SingleExpressionBlock1Alt3SimpleQualifierBlockSyntax(__InternalSyntaxNode green, CompilerSyntaxNode parent, int position)
 	        : base(green, parent, position)
 	    {
 	    }
@@ -6143,7 +6322,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		{ 
 		get
 		{
-				var green = (global::MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax.SingleExpressionBlock1Alt2SimpleQualifierBlockGreen)this.Green;
+				var green = (global::MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax.SingleExpressionBlock1Alt3SimpleQualifierBlockGreen)this.Green;
 	var greenToken = green.TDot;
 				return new __SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
 	} 
@@ -6175,42 +6354,42 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	        }
 	    }
 	
-	public SingleExpressionBlock1Alt2SimpleQualifierBlockSyntax WithTDot(__SyntaxToken tDot)
+	public SingleExpressionBlock1Alt3SimpleQualifierBlockSyntax WithTDot(__SyntaxToken tDot)
 		{
 		return this.Update(tDot, this.SimpleIdentifier);
 	}
 	
-	public SingleExpressionBlock1Alt2SimpleQualifierBlockSyntax WithSimpleIdentifier(SimpleIdentifierSyntax simpleIdentifier)
+	public SingleExpressionBlock1Alt3SimpleQualifierBlockSyntax WithSimpleIdentifier(SimpleIdentifierSyntax simpleIdentifier)
 		{
 		return this.Update(this.TDot, simpleIdentifier);
 	}
 	
-	    public SingleExpressionBlock1Alt2SimpleQualifierBlockSyntax Update(__SyntaxToken tDot, SimpleIdentifierSyntax simpleIdentifier)
+	    public SingleExpressionBlock1Alt3SimpleQualifierBlockSyntax Update(__SyntaxToken tDot, SimpleIdentifierSyntax simpleIdentifier)
 	    {
 	        if (this.TDot != tDot || this.SimpleIdentifier != simpleIdentifier)
 	        {
-	            var newNode = CompilerLanguage.Instance.SyntaxFactory.SingleExpressionBlock1Alt2SimpleQualifierBlock(tDot, simpleIdentifier);
+	            var newNode = CompilerLanguage.Instance.SyntaxFactory.SingleExpressionBlock1Alt3SimpleQualifierBlock(tDot, simpleIdentifier);
 	            var annotations = this.GetAnnotations();
 	            if (annotations != null && annotations.Length > 0)
 	               newNode = __SyntaxExtensions.WithAnnotations(newNode, annotations);
-			return (SingleExpressionBlock1Alt2SimpleQualifierBlockSyntax)newNode;
+			return (SingleExpressionBlock1Alt3SimpleQualifierBlockSyntax)newNode;
 	        }
 	        return this;
 	    }
 	
 	    public override TResult Accept<TArg, TResult>(ICompilerSyntaxVisitor<TArg, TResult> visitor, TArg argument)
 	    {
-	        return visitor.VisitSingleExpressionBlock1Alt2SimpleQualifierBlock(this, argument);
+	        return visitor.VisitSingleExpressionBlock1Alt3SimpleQualifierBlock(this, argument);
 	    }
 	
 	    public override TResult Accept<TResult>(ICompilerSyntaxVisitor<TResult> visitor)
 	    {
-	        return visitor.VisitSingleExpressionBlock1Alt2SimpleQualifierBlock(this);
+	        return visitor.VisitSingleExpressionBlock1Alt3SimpleQualifierBlock(this);
 	    }
 	
 	    public override void Accept(ICompilerSyntaxVisitor visitor)
 	    {
-	        visitor.VisitSingleExpressionBlock1Alt2SimpleQualifierBlock(this);
+	        visitor.VisitSingleExpressionBlock1Alt3SimpleQualifierBlock(this);
 	    }
 	
 	}

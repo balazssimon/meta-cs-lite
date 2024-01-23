@@ -24,6 +24,8 @@ namespace [Namespace].Syntax.InternalSyntax
 	using __SyntaxToken = global::MetaDslx.CodeAnalysis.SyntaxToken;
 	using __SyntaxTrivia = global::MetaDslx.CodeAnalysis.SyntaxTrivia;
 	using __SyntaxNode = global::MetaDslx.CodeAnalysis.SyntaxNode;
+	using __ArgumentNullException = global::System.ArgumentNullException;
+    using __ArgumentException = global::System.ArgumentException;
 
     internal abstract class GreenSyntaxNode : __InternalSyntaxNode
     {
@@ -290,7 +292,7 @@ namespace [Namespace].Syntax.InternalSyntax
 	        {
 	            if (![Lang]Language.Instance.SyntaxFacts.IsToken(kind))
 	            {
-	                throw new ArgumentException(string.Format("Invalid [Lang]SyntaxKind: {0}. This method can only be used to create tokens.", kind), nameof(kind));
+	                throw new __ArgumentNullException(string.Format("Invalid [Lang]SyntaxKind: {0}. This method can only be used to create tokens.", kind), nameof(kind));
 	            }
 	            return CreateMissing(kind, null, null);
 	        }
@@ -302,7 +304,7 @@ namespace [Namespace].Syntax.InternalSyntax
 	        {
 	            if (![Lang]Language.Instance.SyntaxFacts.IsToken(kind))
 	            {
-	                throw new ArgumentException(string.Format("Invalid [Lang]SyntaxKind: {0}. This method can only be used to create tokens.", kind), nameof(kind));
+	                throw new __ArgumentNullException(string.Format("Invalid [Lang]SyntaxKind: {0}. This method can only be used to create tokens.", kind), nameof(kind));
 	            }
 	            return CreateMissing(kind, leading, trailing);
 	        }
@@ -355,7 +357,7 @@ namespace [Namespace].Syntax.InternalSyntax
 	            s_tokensWithSingleTrailingCRLF["["](int)kind["]"].Value = new SyntaxTokenWithTrivia(([Lang]SyntaxKind)kind, null, factory.CarriageReturnLineFeed);
 	        }
 	    }
-	    internal static IEnumerable<GreenSyntaxToken> GetWellKnownTokens()
+	    internal static global::System.Collections.Generic.IEnumerable<GreenSyntaxToken> GetWellKnownTokens()
 	    {
 	        foreach (var element in s_tokensWithNoTrivia)
 	        {
@@ -783,7 +785,7 @@ namespace [Namespace].Syntax.InternalSyntax
 	        {
 	            get
 	            {
-	                return Convert.ToString(this.ValueField, global::System.Globalization.CultureInfo.InvariantCulture);
+	                return global::System.Convert.ToString(this.ValueField, global::System.Globalization.CultureInfo.InvariantCulture);
 	            }
 	        }
 	        public override __InternalSyntaxToken TokenWithLeadingTrivia(__GreenNode trivia)
@@ -1121,6 +1123,9 @@ namespace [Namespace].Syntax.InternalSyntax
 	using __SyntaxNode = global::MetaDslx.CodeAnalysis.SyntaxNode;
 	using __SourceText = global::MetaDslx.CodeAnalysis.Text.SourceText;
 	using __TextChangeRange = global::MetaDslx.CodeAnalysis.Text.TextChangeRange;
+	using __CancellationToken = global::System.Threading.CancellationToken;
+	using __ArgumentNullException = global::System.ArgumentNullException;
+    using __ArgumentException = global::System.ArgumentException;
 
 	public partial class [Lang]InternalSyntaxFactory : global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.InternalSyntaxFactory
 	{
@@ -1134,7 +1139,7 @@ namespace [Namespace].Syntax.InternalSyntax
 			return new [Lang]SyntaxLexer(text, ([Lang]ParseOptions)(options ?? [Lang]ParseOptions.Default));
 		}
 
-		public override __SyntaxParser CreateParser(__SyntaxLexer lexer, __IncrementalParseData? oldParseData, IEnumerable<__TextChangeRange>? changes, CancellationToken cancellationToken = default)
+		public override __SyntaxParser CreateParser(__SyntaxLexer lexer, __IncrementalParseData? oldParseData, global::System.Collections.Generic.IEnumerable<__TextChangeRange>? changes, __CancellationToken cancellationToken = default)
         {
 			return new [Lang]SyntaxParser(([Lang]SyntaxLexer)lexer, oldParseData, changes, cancellationToken);
 		}
@@ -1243,7 +1248,7 @@ namespace [Namespace].Syntax.InternalSyntax
 	        return GreenSyntaxToken.WithValue(([Lang]SyntaxKind)__InternalSyntaxKind.BadToken, leading, text, text, trailing);
 	    }
 
-        public override IEnumerable<__InternalSyntaxToken> GetWellKnownTokens()
+        public override global::System.Collections.Generic.IEnumerable<__InternalSyntaxToken> GetWellKnownTokens()
 	    {
 	        return GreenSyntaxToken.GetWellKnownTokens();
 	    }
@@ -1276,11 +1281,11 @@ template GenerateInternalSyntaxFactoryCreate(Alternative alt)
 			[foreach (var elem in alt.Elements)]
 				[var greenSyntaxNullCondition = elem.GreenSyntaxNullCondition]
 				[if (greenSyntaxNullCondition is not null)]
-			if ([greenSyntaxNullCondition]) throw new ArgumentNullException(nameof([elem.ParameterName]));
+			if ([greenSyntaxNullCondition]) throw new __ArgumentNullException(nameof([elem.ParameterName]));
 				[end if]
 				[var greenSyntaxCondition = elem.GreenSyntaxCondition]
 				[if (greenSyntaxCondition is not null)]
-			if ([greenSyntaxCondition]) throw new ArgumentException(nameof([elem.ParameterName]));
+			if ([greenSyntaxCondition]) throw new __ArgumentException(nameof([elem.ParameterName]));
 				[end if]
 			[end foreach]
 #endif

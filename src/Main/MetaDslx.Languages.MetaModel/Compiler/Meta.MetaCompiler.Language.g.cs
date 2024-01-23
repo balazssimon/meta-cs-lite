@@ -7,8 +7,8 @@ using MetaDslx.CodeAnalysis.Syntax.InternalSyntax;
 
 namespace MetaDslx.Languages.MetaModel.Compiler
 {
-    using MetaDslx.Languages.MetaModel.Compiler.Syntax;
-    using MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax;
+    using global::MetaDslx.Languages.MetaModel.Compiler.Syntax;
+    using global::MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax;
 
     public sealed partial class MetaLanguage : Language
     {

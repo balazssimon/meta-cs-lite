@@ -499,6 +499,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	return "ElementBlock1";
 				case CompilerSyntaxKind.RuleRefAlt3ReferencedTypesBlock: 
 	return "RuleRefAlt3ReferencedTypesBlock";
+				case CompilerSyntaxKind.RuleRefAlt3Block1: 
+	return "RuleRefAlt3Block1";
 				case CompilerSyntaxKind.TokenBlock1Alt1: 
 	return "TokenBlock1Alt1";
 				case CompilerSyntaxKind.TokenBlock1Alt2: 
@@ -515,6 +517,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	return "Tokens";
 				case CompilerSyntaxKind.SingleExpressionBlock1Alt2: 
 	return "SingleExpressionBlock1Alt2";
+				case CompilerSyntaxKind.SingleExpressionBlock1Alt3: 
+	return "SingleExpressionBlock1Alt3";
 				case CompilerSyntaxKind.ArrayExpressionItemsBlock: 
 	return "ArrayExpressionItemsBlock";
 				case CompilerSyntaxKind.AnnotationArgumentsArgumentsBlock: 
@@ -523,8 +527,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	return "AnnotationArgumentBlock1";
 				case CompilerSyntaxKind.MainQualifierBlock: 
 	return "MainQualifierBlock";
-				case CompilerSyntaxKind.SingleExpressionBlock1Alt2SimpleQualifierBlock: 
-	return "SingleExpressionBlock1Alt2SimpleQualifierBlock";
+				case CompilerSyntaxKind.SingleExpressionBlock1Alt3SimpleQualifierBlock: 
+	return "SingleExpressionBlock1Alt3SimpleQualifierBlock";
 default:
 	return string.Empty;
 }

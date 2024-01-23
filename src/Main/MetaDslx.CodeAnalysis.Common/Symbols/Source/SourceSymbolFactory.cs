@@ -85,6 +85,9 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
 
         protected Symbol? CreateSymbol(Type symbolType, ISourceSymbol container, MergedDeclaration declaration, DiagnosticBag diagnostics)
         {
+            if (container is null) throw new ArgumentNullException(nameof(container));
+            if (container is ModuleSymbol) throw new ArgumentException("ModuleSymbol is unexpected here.", nameof(container));
+            if (container is AssemblySymbol) throw new ArgumentException("AssemblySymbol is unexpected here.", nameof(container));
             var location = declaration.NameLocations.FirstOrDefault() ?? declaration.SyntaxReferences.FirstOrDefault().GetLocation();
             if (declaration?.ModelObjectType is null) return null;
             if (_non_mo_constructors.TryGetValue(declaration.ModelObjectType, out var non_mo_constructor))
@@ -97,7 +100,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
                 var info = GetModelObjectInfo(declaration.ModelObjectType);
                 if (info is null)
                 {
-                    var objectName = container is null || container is ModuleSymbol ? "the root namespace" : $"the declaration '{declaration.Name}'";
+                    var objectName = container is SourceRootNamespaceSymbol ? "the root namespace" : $"the declaration '{declaration.Name}'";
                     var diagnostic = Diagnostic.Create(CommonErrorCode.ERR_DeclarationError, location, $"Could not determine the model object information for {objectName} of type '{declaration.ModelObjectType.FullName}'. Are you missing a meta model reference?");
                     diagnostics.Add(diagnostic);
                     return Compilation[declaration.Language].ErrorSymbolFactory.CreateSymbol(symbolType, (Symbol)container, new ErrorSymbolInfo(declaration.Name, declaration.MetadataName, ImmutableArray<Symbol>.Empty, diagnostic));
@@ -105,7 +108,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
                 var infoSymbolType = info.SymbolType.AsType();
                 if (infoSymbolType is null)
                 {
-                    var objectName = container is null || container is ModuleSymbol ? "the root namespace" : $"the declaration '{declaration.Name}'";
+                    var objectName = container is SourceRootNamespaceSymbol ? "the root namespace" : $"the declaration '{declaration.Name}'";
                     var diagnostic = Diagnostic.Create(CommonErrorCode.ERR_DeclarationError, location, $"There is no symbol type defined for for {objectName} of type '{declaration.ModelObjectType.FullName}'. Are you missing a meta model reference?'");
                     diagnostics.Add(diagnostic);
                     return Compilation[declaration.Language].ErrorSymbolFactory.CreateSymbol(symbolType, (Symbol)container, new ErrorSymbolInfo(declaration.Name, declaration.MetadataName, ImmutableArray<Symbol>.Empty, diagnostic));
@@ -128,6 +131,10 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
                                 var box = qslot?.Add(modelObject);
                                 box.Syntax = declaration.SyntaxReferences.FirstOrDefault();
                             }
+                        }
+                        else if (container is SourceRootNamespaceSymbol rootNs)
+                        {
+                            rootNs.Model.AttachObject(modelObject);
                         }
                     }
                     var symbol = constructor((Symbol)container, declaration, modelObject);

@@ -16,7 +16,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler
 
         public override BinderFactoryVisitor CreateBinderFactoryVisitor(BinderFactory binderFactory)
         {
-            return new MetaDslx.Languages.MetaModel.Compiler.Binding.MetaBinderFactoryVisitor(binderFactory);
+            return new global::MetaDslx.Languages.MetaModel.Compiler.Binding.MetaBinderFactoryVisitor(binderFactory);
         }
     }
 }

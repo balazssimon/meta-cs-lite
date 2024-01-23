@@ -1536,34 +1536,34 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
             #line (103,20)-(103,21) 25 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
             __cb.Write(" ");
             #line hidden
-            #line (103,21)-(103,41) 25 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
-            __cb.Write("InternalSyntaxToken?");
+            #line (103,21)-(103,31) 25 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
+            __cb.Write("GreenNode?");
             #line hidden
-            #line (103,41)-(103,42) 25 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
+            #line (103,31)-(103,32) 25 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
             __cb.Write(" ");
             #line hidden
-            #line (103,42)-(103,63) 25 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
+            #line (103,32)-(103,53) 25 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
             __cb.Write("VisitTerminal(IToken?");
             #line hidden
-            #line (103,63)-(103,64) 25 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
+            #line (103,53)-(103,54) 25 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
             __cb.Write(" ");
             #line hidden
-            #line (103,64)-(103,70) 25 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
+            #line (103,54)-(103,60) 25 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
             __cb.Write("token,");
             #line hidden
-            #line (103,70)-(103,71) 25 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
+            #line (103,60)-(103,61) 25 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
             __cb.Write(" ");
             #line hidden
-            #line (103,72)-(103,76) 24 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
+            #line (103,62)-(103,66) 24 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
             __cb.Write(Lang);
             #line hidden
-            #line (103,77)-(103,87) 25 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
+            #line (103,67)-(103,77) 25 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
             __cb.Write("SyntaxKind");
             #line hidden
-            #line (103,87)-(103,88) 25 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
+            #line (103,77)-(103,78) 25 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
             __cb.Write(" ");
             #line hidden
-            #line (103,88)-(103,93) 25 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
+            #line (103,78)-(103,83) 25 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
             __cb.Write("kind)");
             #line hidden
             __cb.WriteLine();
@@ -1776,19 +1776,19 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
             #line (115,19)-(115,20) 25 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
             __cb.Write(" ");
             #line hidden
-            #line (115,20)-(115,40) 25 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
-            __cb.Write("InternalSyntaxToken?");
+            #line (115,20)-(115,30) 25 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
+            __cb.Write("GreenNode?");
             #line hidden
-            #line (115,40)-(115,41) 25 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
+            #line (115,30)-(115,31) 25 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
             __cb.Write(" ");
             #line hidden
-            #line (115,41)-(115,62) 25 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
+            #line (115,31)-(115,52) 25 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
             __cb.Write("VisitTerminal(IToken?");
             #line hidden
-            #line (115,62)-(115,63) 25 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
+            #line (115,52)-(115,53) 25 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
             __cb.Write(" ");
             #line hidden
-            #line (115,63)-(115,69) 25 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
+            #line (115,53)-(115,59) 25 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
             __cb.Write("token)");
             #line hidden
             __cb.WriteLine();
@@ -1836,34 +1836,34 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
             #line (120,20)-(120,21) 25 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
             __cb.Write(" ");
             #line hidden
-            #line (120,21)-(120,41) 25 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
-            __cb.Write("InternalSyntaxToken?");
+            #line (120,21)-(120,31) 25 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
+            __cb.Write("GreenNode?");
             #line hidden
-            #line (120,41)-(120,42) 25 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
+            #line (120,31)-(120,32) 25 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
             __cb.Write(" ");
             #line hidden
-            #line (120,42)-(120,70) 25 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
+            #line (120,32)-(120,60) 25 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
             __cb.Write("VisitTerminal(ITerminalNode?");
             #line hidden
-            #line (120,70)-(120,71) 25 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
+            #line (120,60)-(120,61) 25 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
             __cb.Write(" ");
             #line hidden
-            #line (120,71)-(120,76) 25 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
+            #line (120,61)-(120,66) 25 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
             __cb.Write("node,");
             #line hidden
-            #line (120,76)-(120,77) 25 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
+            #line (120,66)-(120,67) 25 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
             __cb.Write(" ");
             #line hidden
-            #line (120,78)-(120,82) 24 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
+            #line (120,68)-(120,72) 24 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
             __cb.Write(Lang);
             #line hidden
-            #line (120,83)-(120,93) 25 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
+            #line (120,73)-(120,83) 25 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
             __cb.Write("SyntaxKind");
             #line hidden
-            #line (120,93)-(120,94) 25 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
+            #line (120,83)-(120,84) 25 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
             __cb.Write(" ");
             #line hidden
-            #line (120,94)-(120,99) 25 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
+            #line (120,84)-(120,89) 25 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
             __cb.Write("kind)");
             #line hidden
             __cb.WriteLine();
@@ -2076,19 +2076,19 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
             #line (132,28)-(132,29) 25 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
             __cb.Write(" ");
             #line hidden
-            #line (132,29)-(132,49) 25 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
-            __cb.Write("InternalSyntaxToken?");
+            #line (132,29)-(132,39) 25 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
+            __cb.Write("GreenNode?");
             #line hidden
-            #line (132,49)-(132,50) 25 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
+            #line (132,39)-(132,40) 25 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
             __cb.Write(" ");
             #line hidden
-            #line (132,50)-(132,78) 25 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
+            #line (132,40)-(132,68) 25 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
             __cb.Write("VisitTerminal(ITerminalNode?");
             #line hidden
-            #line (132,78)-(132,79) 25 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
+            #line (132,68)-(132,69) 25 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
             __cb.Write(" ");
             #line hidden
-            #line (132,79)-(132,84) 25 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
+            #line (132,69)-(132,74) 25 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
             __cb.Write("node)");
             #line hidden
             __cb.WriteLine();
@@ -2332,22 +2332,22 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
                             #line (151,43)-(151,44) 41 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
                             __cb.Write(" ");
                             #line hidden
-                            #line (151,44)-(151,71) 41 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
-                            __cb.Write("this.VisitTerminal(context.");
+                            #line (151,44)-(151,93) 41 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
+                            __cb.Write("(InternalSyntaxToken?)this.VisitTerminal(context.");
                             #line hidden
-                            #line (151,72)-(151,86) 40 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
+                            #line (151,94)-(151,108) 40 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
                             __cb.Write(elem.AntlrName);
                             #line hidden
-                            #line (151,87)-(151,88) 41 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
+                            #line (151,109)-(151,110) 41 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
                             __cb.Write(",");
                             #line hidden
-                            #line (151,88)-(151,89) 41 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
+                            #line (151,110)-(151,111) 41 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
                             __cb.Write(" ");
                             #line hidden
-                            #line (151,90)-(151,94) 40 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
+                            #line (151,112)-(151,116) 40 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
                             __cb.Write(Lang);
                             #line hidden
-                            #line (151,95)-(151,111) 41 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
+                            #line (151,117)-(151,133) 41 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
                             __cb.Write("SyntaxKind.Eof);");
                             #line hidden
                             __cb.WriteLine();
@@ -2391,14 +2391,14 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
                                 #line (154,43)-(154,44) 45 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
                                 __cb.Write(" ");
                                 #line hidden
-                                #line (154,44)-(154,71) 45 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
-                                __cb.Write("this.VisitTerminal(context.");
+                                #line (154,44)-(154,93) 45 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
+                                __cb.Write("(InternalSyntaxToken?)this.VisitTerminal(context.");
                                 #line hidden
-                                #line (154,72)-(154,86) 44 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
+                                #line (154,94)-(154,108) 44 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
                                 __cb.Write(elem.AntlrName);
                                 #line hidden
                                 var __first29 = true;
-                                #line (154,88)-(154,124) 33 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
+                                #line (154,110)-(154,146) 33 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
                                 if (!elem.Multiplicity.IsOptional())
                                 #line hidden
                                 
@@ -2407,23 +2407,23 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
                                     {
                                         __first29 = false;
                                     }
-                                    #line (154,125)-(154,126) 49 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
+                                    #line (154,147)-(154,148) 49 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
                                     __cb.Write(",");
                                     #line hidden
-                                    #line (154,126)-(154,127) 49 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
+                                    #line (154,148)-(154,149) 49 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
                                     __cb.Write(" ");
                                     #line hidden
-                                    #line (154,128)-(154,132) 48 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
+                                    #line (154,150)-(154,154) 48 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
                                     __cb.Write(Lang);
                                     #line hidden
-                                    #line (154,133)-(154,144) 49 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
+                                    #line (154,155)-(154,166) 49 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
                                     __cb.Write("SyntaxKind.");
                                     #line hidden
-                                    #line (154,145)-(154,164) 48 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
+                                    #line (154,167)-(154,186) 48 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
                                     __cb.Write(rr.Token.CSharpName);
                                     #line hidden
                                 }
-                                #line (154,173)-(154,175) 45 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
+                                #line (154,195)-(154,197) 45 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
                                 __cb.Write(");");
                                 #line hidden
                                 __cb.WriteLine();
@@ -2755,13 +2755,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
                 #line (177,74)-(177,75) 29 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
                 __cb.Write(" ");
                 #line hidden
-                #line (177,75)-(177,102) 29 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
-                __cb.Write("this.VisitTerminal(context.");
+                #line (177,75)-(177,124) 29 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
+                __cb.Write("(InternalSyntaxToken?)this.VisitTerminal(context.");
                 #line hidden
-                #line (177,103)-(177,124) 28 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
+                #line (177,125)-(177,146) 28 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
                 __cb.Write(token.Token.AntlrName);
                 #line hidden
-                #line (177,125)-(177,129) 29 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
+                #line (177,147)-(177,151) 29 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
                 __cb.Write("());");
                 #line hidden
                 __cb.WriteLine();
@@ -2976,19 +2976,19 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
                 #line (190,6)-(190,24) 28 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
                 __cb.Write(elem.ParameterName);
                 #line hidden
-                #line (190,25)-(190,56) 29 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
-                __cb.Write("Builder.Add(this.VisitTerminal(");
+                #line (190,25)-(190,78) 29 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
+                __cb.Write("Builder.Add((InternalSyntaxToken?)this.VisitTerminal(");
                 #line hidden
-                #line (190,57)-(190,71) 28 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
+                #line (190,79)-(190,93) 28 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
                 __cb.Write(elem.AntlrName);
                 #line hidden
-                #line (190,72)-(190,79) 29 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
+                #line (190,94)-(190,101) 29 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
                 __cb.Write("Context");
                 #line hidden
-                #line (190,80)-(190,85) 28 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
+                #line (190,102)-(190,107) 28 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
                 __cb.Write("[i]");
                 #line hidden
-                #line (190,86)-(190,89) 29 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
+                #line (190,108)-(190,111) 29 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
                 __cb.Write("));");
                 #line hidden
                 __cb.WriteLine();
@@ -3497,22 +3497,22 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
                 #line (229,10)-(229,17) 28 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
                 __cb.Write(builder);
                 #line hidden
-                #line (229,18)-(229,65) 29 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
-                __cb.Write(".AddSeparator(this.VisitTerminal((IToken?)null,");
+                #line (229,18)-(229,87) 29 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
+                __cb.Write(".AddSeparator((InternalSyntaxToken?)this.VisitTerminal((IToken?)null,");
                 #line hidden
-                #line (229,65)-(229,66) 29 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
+                #line (229,87)-(229,88) 29 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
                 __cb.Write(" ");
                 #line hidden
-                #line (229,67)-(229,71) 28 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
+                #line (229,89)-(229,93) 28 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
                 __cb.Write(Lang);
                 #line hidden
-                #line (229,72)-(229,83) 29 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
+                #line (229,94)-(229,105) 29 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
                 __cb.Write("SyntaxKind.");
                 #line hidden
-                #line (229,84)-(229,115) 28 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
+                #line (229,106)-(229,137) 28 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
                 __cb.Write(sl.RepeatedSeparator.CSharpName);
                 #line hidden
-                #line (229,116)-(229,119) 29 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
+                #line (229,138)-(229,141) 29 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
                 __cb.Write("));");
                 #line hidden
                 __cb.WriteLine();
@@ -3606,22 +3606,22 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
                 #line (240,10)-(240,17) 28 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
                 __cb.Write(builder);
                 #line hidden
-                #line (240,18)-(240,65) 29 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
-                __cb.Write(".AddSeparator(this.VisitTerminal((IToken?)null,");
+                #line (240,18)-(240,87) 29 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
+                __cb.Write(".AddSeparator((InternalSyntaxToken?)this.VisitTerminal((IToken?)null,");
                 #line hidden
-                #line (240,65)-(240,66) 29 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
+                #line (240,87)-(240,88) 29 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
                 __cb.Write(" ");
                 #line hidden
-                #line (240,67)-(240,71) 28 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
+                #line (240,89)-(240,93) 28 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
                 __cb.Write(Lang);
                 #line hidden
-                #line (240,72)-(240,83) 29 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
+                #line (240,94)-(240,105) 29 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
                 __cb.Write("SyntaxKind.");
                 #line hidden
-                #line (240,84)-(240,115) 28 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
+                #line (240,106)-(240,137) 28 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
                 __cb.Write(sl.RepeatedSeparator.CSharpName);
                 #line hidden
-                #line (240,116)-(240,119) 29 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
+                #line (240,138)-(240,141) 29 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
                 __cb.Write("));");
                 #line hidden
                 __cb.WriteLine();
@@ -4007,13 +4007,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
                 #line (274,43)-(274,50) 28 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
                 __cb.Write(builder);
                 #line hidden
-                #line (274,51)-(274,84) 29 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
-                __cb.Write(".AddSeparator(this.VisitTerminal(");
+                #line (274,51)-(274,106) 29 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
+                __cb.Write(".AddSeparator((InternalSyntaxToken?)this.VisitTerminal(");
                 #line hidden
-                #line (274,85)-(274,99) 28 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
+                #line (274,107)-(274,121) 28 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
                 __cb.Write(elem.AntlrName);
                 #line hidden
-                #line (274,100)-(274,110) 29 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
+                #line (274,122)-(274,132) 29 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
                 __cb.Write("Context));");
                 #line hidden
                 __cb.WriteLine();
@@ -4032,28 +4032,28 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
                 #line (276,2)-(276,9) 28 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
                 __cb.Write(builder);
                 #line hidden
-                #line (276,10)-(276,43) 29 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
-                __cb.Write(".AddSeparator(this.VisitTerminal(");
+                #line (276,10)-(276,65) 29 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
+                __cb.Write(".AddSeparator((InternalSyntaxToken?)this.VisitTerminal(");
                 #line hidden
-                #line (276,44)-(276,58) 28 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
+                #line (276,66)-(276,80) 28 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
                 __cb.Write(elem.AntlrName);
                 #line hidden
-                #line (276,59)-(276,67) 29 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
+                #line (276,81)-(276,89) 29 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
                 __cb.Write("Context,");
                 #line hidden
-                #line (276,67)-(276,68) 29 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
+                #line (276,89)-(276,90) 29 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
                 __cb.Write(" ");
                 #line hidden
-                #line (276,69)-(276,73) 28 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
+                #line (276,91)-(276,95) 28 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
                 __cb.Write(Lang);
                 #line hidden
-                #line (276,74)-(276,85) 29 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
+                #line (276,96)-(276,107) 29 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
                 __cb.Write("SyntaxKind.");
                 #line hidden
-                #line (276,86)-(276,101) 28 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
+                #line (276,108)-(276,123) 28 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
                 __cb.Write(elem.CSharpName);
                 #line hidden
-                #line (276,102)-(276,105) 29 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
+                #line (276,124)-(276,127) 29 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
                 __cb.Write("));");
                 #line hidden
                 __cb.WriteLine();
@@ -4297,8 +4297,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
                 #line (291,43)-(291,50) 28 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
                 __cb.Write(builder);
                 #line hidden
-                #line (291,51)-(291,97) 29 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
-                __cb.Write(".AddSeparator(this.VisitTerminal(_separator));");
+                #line (291,51)-(291,119) 29 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
+                __cb.Write(".AddSeparator((InternalSyntaxToken?)this.VisitTerminal(_separator));");
                 #line hidden
                 __cb.WriteLine();
                 __cb.Pop();
@@ -4316,22 +4316,22 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
                 #line (293,2)-(293,9) 28 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
                 __cb.Write(builder);
                 #line hidden
-                #line (293,10)-(293,54) 29 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
-                __cb.Write(".AddSeparator(this.VisitTerminal(_separator,");
+                #line (293,10)-(293,76) 29 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
+                __cb.Write(".AddSeparator((InternalSyntaxToken?)this.VisitTerminal(_separator,");
                 #line hidden
-                #line (293,54)-(293,55) 29 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
+                #line (293,76)-(293,77) 29 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
                 __cb.Write(" ");
                 #line hidden
-                #line (293,56)-(293,60) 28 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
+                #line (293,78)-(293,82) 28 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
                 __cb.Write(Lang);
                 #line hidden
-                #line (293,61)-(293,72) 29 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
+                #line (293,83)-(293,94) 29 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
                 __cb.Write("SyntaxKind.");
                 #line hidden
-                #line (293,73)-(293,88) 28 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
+                #line (293,95)-(293,110) 28 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
                 __cb.Write(elem.CSharpName);
                 #line hidden
-                #line (293,89)-(293,92) 29 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
+                #line (293,111)-(293,114) 29 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\AntlrSyntaxGenerator.mgen"
                 __cb.Write("));");
                 #line hidden
                 __cb.WriteLine();

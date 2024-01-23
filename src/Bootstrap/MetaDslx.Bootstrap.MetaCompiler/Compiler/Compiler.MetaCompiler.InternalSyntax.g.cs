@@ -2820,12 +2820,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 		internal static new readonly RuleRefAlt3Green __Missing = new RuleRefAlt3Green();
 		private __InternalSyntaxToken _tHashLBrace;
 		private __GreenNode _referencedTypes;
+		private RuleRefAlt3Block1Green _block;
 		private __InternalSyntaxToken _tRBrace;
 	
-		public RuleRefAlt3Green(CompilerSyntaxKind kind, __InternalSyntaxToken tHashLBrace, __GreenNode referencedTypes, __InternalSyntaxToken tRBrace)
+		public RuleRefAlt3Green(CompilerSyntaxKind kind, __InternalSyntaxToken tHashLBrace, __GreenNode referencedTypes, RuleRefAlt3Block1Green block, __InternalSyntaxToken tRBrace)
 			: base(kind, null, null)
 		{
-			SlotCount = 3;
+			SlotCount = 4;
 			if (tHashLBrace != null)
 			{
 				AdjustFlagsAndWidth(tHashLBrace);
@@ -2835,6 +2836,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			{
 				AdjustFlagsAndWidth(referencedTypes);
 				_referencedTypes = referencedTypes;
+			}
+			if (block != null)
+			{
+				AdjustFlagsAndWidth(block);
+				_block = block;
 			}
 			if (tRBrace != null)
 			{
@@ -2843,10 +2849,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			}
 		}
 	
-		public RuleRefAlt3Green(CompilerSyntaxKind kind, __InternalSyntaxToken tHashLBrace, __GreenNode referencedTypes, __InternalSyntaxToken tRBrace, __DiagnosticInfo[] diagnostics, __SyntaxAnnotation[] annotations)
+		public RuleRefAlt3Green(CompilerSyntaxKind kind, __InternalSyntaxToken tHashLBrace, __GreenNode referencedTypes, RuleRefAlt3Block1Green block, __InternalSyntaxToken tRBrace, __DiagnosticInfo[] diagnostics, __SyntaxAnnotation[] annotations)
 			: base(kind, diagnostics, annotations)
 		{
-			SlotCount = 3;
+			SlotCount = 4;
 			if (tHashLBrace != null)
 			{
 				AdjustFlagsAndWidth(tHashLBrace);
@@ -2856,6 +2862,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			{
 				AdjustFlagsAndWidth(referencedTypes);
 				_referencedTypes = referencedTypes;
+			}
+			if (block != null)
+			{
+				AdjustFlagsAndWidth(block);
+				_block = block;
 			}
 			if (tRBrace != null)
 			{
@@ -2872,6 +2883,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 	
 		public __InternalSyntaxToken THashLBrace { get { return _tHashLBrace; } }
 		public global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<ReturnTypeQualifierGreen> ReferencedTypes { get { return new global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<ReturnTypeQualifierGreen>(_referencedTypes, reversed: false); } }
+		public RuleRefAlt3Block1Green Block { get { return _block; } }
 		public __InternalSyntaxToken TRBrace { get { return _tRBrace; } }
 	
 		protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
@@ -2885,7 +2897,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			{
 				case 0: return _tHashLBrace;
 				case 1: return _referencedTypes;
-				case 2: return _tRBrace;
+				case 2: return _block;
+				case 3: return _tRBrace;
 				default: return null;
 			}
 		}
@@ -2896,25 +2909,25 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 	
 		public override __InternalSyntaxNode WithDiagnostics(__DiagnosticInfo[] diagnostics)
 		{
-			return new RuleRefAlt3Green(this.Kind, _tHashLBrace, _referencedTypes, _tRBrace, diagnostics, this.GetAnnotations());
+			return new RuleRefAlt3Green(this.Kind, _tHashLBrace, _referencedTypes, _block, _tRBrace, diagnostics, this.GetAnnotations());
 		}
 	
 		public override __InternalSyntaxNode WithAnnotations(__SyntaxAnnotation[] annotations)
 		{
-			return new RuleRefAlt3Green(this.Kind, _tHashLBrace, _referencedTypes, _tRBrace, this.GetDiagnostics(), annotations);
+			return new RuleRefAlt3Green(this.Kind, _tHashLBrace, _referencedTypes, _block, _tRBrace, this.GetDiagnostics(), annotations);
 		}
 	
 		public override __GreenNode Clone()
 		{
-			return new RuleRefAlt3Green(this.Kind, _tHashLBrace, _referencedTypes, _tRBrace, this.GetDiagnostics(), this.GetAnnotations());
+			return new RuleRefAlt3Green(this.Kind, _tHashLBrace, _referencedTypes, _block, _tRBrace, this.GetDiagnostics(), this.GetAnnotations());
 		}
 	
 	
-		public RuleRefAlt3Green Update(__InternalSyntaxToken tHashLBrace, global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<ReturnTypeQualifierGreen> referencedTypes, __InternalSyntaxToken tRBrace)
+		public RuleRefAlt3Green Update(__InternalSyntaxToken tHashLBrace, global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<ReturnTypeQualifierGreen> referencedTypes, RuleRefAlt3Block1Green block, __InternalSyntaxToken tRBrace)
 		{
-			if (_tHashLBrace != tHashLBrace || _referencedTypes != referencedTypes.Node || _tRBrace != tRBrace)
+			if (_tHashLBrace != tHashLBrace || _referencedTypes != referencedTypes.Node || _block != block || _tRBrace != tRBrace)
 			{
-				__InternalSyntaxNode newNode = CompilerLanguage.Instance.InternalSyntaxFactory.RuleRefAlt3(tHashLBrace, referencedTypes, tRBrace);
+				__InternalSyntaxNode newNode = CompilerLanguage.Instance.InternalSyntaxFactory.RuleRefAlt3(tHashLBrace, referencedTypes, block, tRBrace);
 				var diags = this.GetDiagnostics();
 				if (diags != null && diags.Length > 0)
 					newNode = newNode.WithDiagnostics(diags);
@@ -6078,6 +6091,106 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 		}
 	}
 	
+	
+	internal class RuleRefAlt3Block1Green : GreenSyntaxNode
+	{
+		internal static new readonly RuleRefAlt3Block1Green __Missing = new RuleRefAlt3Block1Green();
+		private __InternalSyntaxToken _tBar;
+		private IdentifierGreen _grammarRule;
+	
+		public RuleRefAlt3Block1Green(CompilerSyntaxKind kind, __InternalSyntaxToken tBar, IdentifierGreen grammarRule)
+			: base(kind, null, null)
+		{
+			SlotCount = 2;
+			if (tBar != null)
+			{
+				AdjustFlagsAndWidth(tBar);
+				_tBar = tBar;
+			}
+			if (grammarRule != null)
+			{
+				AdjustFlagsAndWidth(grammarRule);
+				_grammarRule = grammarRule;
+			}
+		}
+	
+		public RuleRefAlt3Block1Green(CompilerSyntaxKind kind, __InternalSyntaxToken tBar, IdentifierGreen grammarRule, __DiagnosticInfo[] diagnostics, __SyntaxAnnotation[] annotations)
+			: base(kind, diagnostics, annotations)
+		{
+			SlotCount = 2;
+			if (tBar != null)
+			{
+				AdjustFlagsAndWidth(tBar);
+				_tBar = tBar;
+			}
+			if (grammarRule != null)
+			{
+				AdjustFlagsAndWidth(grammarRule);
+				_grammarRule = grammarRule;
+			}
+		}
+	
+		private RuleRefAlt3Block1Green()
+			: base((CompilerSyntaxKind)CompilerSyntaxKind.RuleRefAlt3Block1, null, null)
+		{
+			this.flags &= ~NodeFlags.IsNotMissing;
+		}
+	
+		public __InternalSyntaxToken TBar { get { return _tBar; } }
+		public IdentifierGreen GrammarRule { get { return _grammarRule; } }
+	
+		protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
+		{
+			return new global::MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.RuleRefAlt3Block1Syntax(this, (CompilerSyntaxNode)parent, position);
+		}
+	
+		protected override __GreenNode GetSlot(int index)
+		{
+			switch (index)
+			{
+				case 0: return _tBar;
+				case 1: return _grammarRule;
+				default: return null;
+			}
+		}
+	
+		public override TResult Accept<TResult>(CompilerInternalSyntaxVisitor<TResult> visitor) => visitor.VisitRuleRefAlt3Block1Green(this);
+	
+		public override void Accept(CompilerInternalSyntaxVisitor visitor) => visitor.VisitRuleRefAlt3Block1Green(this);
+	
+		public override __InternalSyntaxNode WithDiagnostics(__DiagnosticInfo[] diagnostics)
+		{
+			return new RuleRefAlt3Block1Green(this.Kind, _tBar, _grammarRule, diagnostics, this.GetAnnotations());
+		}
+	
+		public override __InternalSyntaxNode WithAnnotations(__SyntaxAnnotation[] annotations)
+		{
+			return new RuleRefAlt3Block1Green(this.Kind, _tBar, _grammarRule, this.GetDiagnostics(), annotations);
+		}
+	
+		public override __GreenNode Clone()
+		{
+			return new RuleRefAlt3Block1Green(this.Kind, _tBar, _grammarRule, this.GetDiagnostics(), this.GetAnnotations());
+		}
+	
+	
+		public RuleRefAlt3Block1Green Update(__InternalSyntaxToken tBar, IdentifierGreen grammarRule)
+		{
+			if (_tBar != tBar || _grammarRule != grammarRule)
+			{
+				__InternalSyntaxNode newNode = CompilerLanguage.Instance.InternalSyntaxFactory.RuleRefAlt3Block1(tBar, grammarRule);
+				var diags = this.GetDiagnostics();
+				if (diags != null && diags.Length > 0)
+					newNode = newNode.WithDiagnostics(diags);
+				var annotations = this.GetAnnotations();
+				if (annotations != null && annotations.Length > 0)
+					newNode = newNode.WithAnnotations(annotations);
+				return (RuleRefAlt3Block1Green)newNode;
+			}
+			return this;
+		}
+	}
+	
 	internal abstract class TokenBlock1Green : GreenSyntaxNode
 	{
 		internal static readonly TokenBlock1Green __Missing = TokenBlock1Alt1Green.__Missing;
@@ -6798,9 +6911,95 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 	internal class SingleExpressionBlock1Alt2Green : SingleExpressionBlock1Green
 	{
 		internal static new readonly SingleExpressionBlock1Alt2Green __Missing = new SingleExpressionBlock1Alt2Green();
+		private __InternalSyntaxToken _tokens;
+	
+		public SingleExpressionBlock1Alt2Green(CompilerSyntaxKind kind, __InternalSyntaxToken tokens)
+			: base(kind, null, null)
+		{
+			SlotCount = 1;
+			if (tokens != null)
+			{
+				AdjustFlagsAndWidth(tokens);
+				_tokens = tokens;
+			}
+		}
+	
+		public SingleExpressionBlock1Alt2Green(CompilerSyntaxKind kind, __InternalSyntaxToken tokens, __DiagnosticInfo[] diagnostics, __SyntaxAnnotation[] annotations)
+			: base(kind, diagnostics, annotations)
+		{
+			SlotCount = 1;
+			if (tokens != null)
+			{
+				AdjustFlagsAndWidth(tokens);
+				_tokens = tokens;
+			}
+		}
+	
+		private SingleExpressionBlock1Alt2Green()
+			: base((CompilerSyntaxKind)CompilerSyntaxKind.SingleExpressionBlock1Alt2, null, null)
+		{
+			this.flags &= ~NodeFlags.IsNotMissing;
+		}
+	
+		public __InternalSyntaxToken Tokens { get { return _tokens; } }
+	
+		protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
+		{
+			return new global::MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.SingleExpressionBlock1Alt2Syntax(this, (CompilerSyntaxNode)parent, position);
+		}
+	
+		protected override __GreenNode GetSlot(int index)
+		{
+			switch (index)
+			{
+				case 0: return _tokens;
+				default: return null;
+			}
+		}
+	
+		public override TResult Accept<TResult>(CompilerInternalSyntaxVisitor<TResult> visitor) => visitor.VisitSingleExpressionBlock1Alt2Green(this);
+	
+		public override void Accept(CompilerInternalSyntaxVisitor visitor) => visitor.VisitSingleExpressionBlock1Alt2Green(this);
+	
+		public override __InternalSyntaxNode WithDiagnostics(__DiagnosticInfo[] diagnostics)
+		{
+			return new SingleExpressionBlock1Alt2Green(this.Kind, _tokens, diagnostics, this.GetAnnotations());
+		}
+	
+		public override __InternalSyntaxNode WithAnnotations(__SyntaxAnnotation[] annotations)
+		{
+			return new SingleExpressionBlock1Alt2Green(this.Kind, _tokens, this.GetDiagnostics(), annotations);
+		}
+	
+		public override __GreenNode Clone()
+		{
+			return new SingleExpressionBlock1Alt2Green(this.Kind, _tokens, this.GetDiagnostics(), this.GetAnnotations());
+		}
+	
+	
+		public SingleExpressionBlock1Alt2Green Update(__InternalSyntaxToken tokens)
+		{
+			if (_tokens != tokens)
+			{
+				__InternalSyntaxNode newNode = CompilerLanguage.Instance.InternalSyntaxFactory.SingleExpressionBlock1Alt2(tokens);
+				var diags = this.GetDiagnostics();
+				if (diags != null && diags.Length > 0)
+					newNode = newNode.WithDiagnostics(diags);
+				var annotations = this.GetAnnotations();
+				if (annotations != null && annotations.Length > 0)
+					newNode = newNode.WithAnnotations(annotations);
+				return (SingleExpressionBlock1Alt2Green)newNode;
+			}
+			return this;
+		}
+	}
+	
+	internal class SingleExpressionBlock1Alt3Green : SingleExpressionBlock1Green
+	{
+		internal static new readonly SingleExpressionBlock1Alt3Green __Missing = new SingleExpressionBlock1Alt3Green();
 		private __GreenNode _simpleQualifier;
 	
-		public SingleExpressionBlock1Alt2Green(CompilerSyntaxKind kind, __GreenNode simpleQualifier)
+		public SingleExpressionBlock1Alt3Green(CompilerSyntaxKind kind, __GreenNode simpleQualifier)
 			: base(kind, null, null)
 		{
 			SlotCount = 1;
@@ -6811,7 +7010,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			}
 		}
 	
-		public SingleExpressionBlock1Alt2Green(CompilerSyntaxKind kind, __GreenNode simpleQualifier, __DiagnosticInfo[] diagnostics, __SyntaxAnnotation[] annotations)
+		public SingleExpressionBlock1Alt3Green(CompilerSyntaxKind kind, __GreenNode simpleQualifier, __DiagnosticInfo[] diagnostics, __SyntaxAnnotation[] annotations)
 			: base(kind, diagnostics, annotations)
 		{
 			SlotCount = 1;
@@ -6822,8 +7021,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			}
 		}
 	
-		private SingleExpressionBlock1Alt2Green()
-			: base((CompilerSyntaxKind)CompilerSyntaxKind.SingleExpressionBlock1Alt2, null, null)
+		private SingleExpressionBlock1Alt3Green()
+			: base((CompilerSyntaxKind)CompilerSyntaxKind.SingleExpressionBlock1Alt3, null, null)
 		{
 			this.flags &= ~NodeFlags.IsNotMissing;
 		}
@@ -6832,7 +7031,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 	
 		protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
 		{
-			return new global::MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.SingleExpressionBlock1Alt2Syntax(this, (CompilerSyntaxNode)parent, position);
+			return new global::MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.SingleExpressionBlock1Alt3Syntax(this, (CompilerSyntaxNode)parent, position);
 		}
 	
 		protected override __GreenNode GetSlot(int index)
@@ -6844,38 +7043,38 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			}
 		}
 	
-		public override TResult Accept<TResult>(CompilerInternalSyntaxVisitor<TResult> visitor) => visitor.VisitSingleExpressionBlock1Alt2Green(this);
+		public override TResult Accept<TResult>(CompilerInternalSyntaxVisitor<TResult> visitor) => visitor.VisitSingleExpressionBlock1Alt3Green(this);
 	
-		public override void Accept(CompilerInternalSyntaxVisitor visitor) => visitor.VisitSingleExpressionBlock1Alt2Green(this);
+		public override void Accept(CompilerInternalSyntaxVisitor visitor) => visitor.VisitSingleExpressionBlock1Alt3Green(this);
 	
 		public override __InternalSyntaxNode WithDiagnostics(__DiagnosticInfo[] diagnostics)
 		{
-			return new SingleExpressionBlock1Alt2Green(this.Kind, _simpleQualifier, diagnostics, this.GetAnnotations());
+			return new SingleExpressionBlock1Alt3Green(this.Kind, _simpleQualifier, diagnostics, this.GetAnnotations());
 		}
 	
 		public override __InternalSyntaxNode WithAnnotations(__SyntaxAnnotation[] annotations)
 		{
-			return new SingleExpressionBlock1Alt2Green(this.Kind, _simpleQualifier, this.GetDiagnostics(), annotations);
+			return new SingleExpressionBlock1Alt3Green(this.Kind, _simpleQualifier, this.GetDiagnostics(), annotations);
 		}
 	
 		public override __GreenNode Clone()
 		{
-			return new SingleExpressionBlock1Alt2Green(this.Kind, _simpleQualifier, this.GetDiagnostics(), this.GetAnnotations());
+			return new SingleExpressionBlock1Alt3Green(this.Kind, _simpleQualifier, this.GetDiagnostics(), this.GetAnnotations());
 		}
 	
 	
-		public SingleExpressionBlock1Alt2Green Update(global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<SimpleIdentifierGreen> simpleQualifier)
+		public SingleExpressionBlock1Alt3Green Update(global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<SimpleIdentifierGreen> simpleQualifier)
 		{
 			if (_simpleQualifier != simpleQualifier.Node)
 			{
-				__InternalSyntaxNode newNode = CompilerLanguage.Instance.InternalSyntaxFactory.SingleExpressionBlock1Alt2(simpleQualifier);
+				__InternalSyntaxNode newNode = CompilerLanguage.Instance.InternalSyntaxFactory.SingleExpressionBlock1Alt3(simpleQualifier);
 				var diags = this.GetDiagnostics();
 				if (diags != null && diags.Length > 0)
 					newNode = newNode.WithDiagnostics(diags);
 				var annotations = this.GetAnnotations();
 				if (annotations != null && annotations.Length > 0)
 					newNode = newNode.WithAnnotations(annotations);
-				return (SingleExpressionBlock1Alt2Green)newNode;
+				return (SingleExpressionBlock1Alt3Green)newNode;
 			}
 			return this;
 		}
@@ -7282,13 +7481,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 	}
 	
 	
-	internal class SingleExpressionBlock1Alt2SimpleQualifierBlockGreen : GreenSyntaxNode
+	internal class SingleExpressionBlock1Alt3SimpleQualifierBlockGreen : GreenSyntaxNode
 	{
-		internal static new readonly SingleExpressionBlock1Alt2SimpleQualifierBlockGreen __Missing = new SingleExpressionBlock1Alt2SimpleQualifierBlockGreen();
+		internal static new readonly SingleExpressionBlock1Alt3SimpleQualifierBlockGreen __Missing = new SingleExpressionBlock1Alt3SimpleQualifierBlockGreen();
 		private __InternalSyntaxToken _tDot;
 		private SimpleIdentifierGreen _simpleIdentifier;
 	
-		public SingleExpressionBlock1Alt2SimpleQualifierBlockGreen(CompilerSyntaxKind kind, __InternalSyntaxToken tDot, SimpleIdentifierGreen simpleIdentifier)
+		public SingleExpressionBlock1Alt3SimpleQualifierBlockGreen(CompilerSyntaxKind kind, __InternalSyntaxToken tDot, SimpleIdentifierGreen simpleIdentifier)
 			: base(kind, null, null)
 		{
 			SlotCount = 2;
@@ -7304,7 +7503,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			}
 		}
 	
-		public SingleExpressionBlock1Alt2SimpleQualifierBlockGreen(CompilerSyntaxKind kind, __InternalSyntaxToken tDot, SimpleIdentifierGreen simpleIdentifier, __DiagnosticInfo[] diagnostics, __SyntaxAnnotation[] annotations)
+		public SingleExpressionBlock1Alt3SimpleQualifierBlockGreen(CompilerSyntaxKind kind, __InternalSyntaxToken tDot, SimpleIdentifierGreen simpleIdentifier, __DiagnosticInfo[] diagnostics, __SyntaxAnnotation[] annotations)
 			: base(kind, diagnostics, annotations)
 		{
 			SlotCount = 2;
@@ -7320,8 +7519,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			}
 		}
 	
-		private SingleExpressionBlock1Alt2SimpleQualifierBlockGreen()
-			: base((CompilerSyntaxKind)CompilerSyntaxKind.SingleExpressionBlock1Alt2SimpleQualifierBlock, null, null)
+		private SingleExpressionBlock1Alt3SimpleQualifierBlockGreen()
+			: base((CompilerSyntaxKind)CompilerSyntaxKind.SingleExpressionBlock1Alt3SimpleQualifierBlock, null, null)
 		{
 			this.flags &= ~NodeFlags.IsNotMissing;
 		}
@@ -7331,7 +7530,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 	
 		protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
 		{
-			return new global::MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.SingleExpressionBlock1Alt2SimpleQualifierBlockSyntax(this, (CompilerSyntaxNode)parent, position);
+			return new global::MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.SingleExpressionBlock1Alt3SimpleQualifierBlockSyntax(this, (CompilerSyntaxNode)parent, position);
 		}
 	
 		protected override __GreenNode GetSlot(int index)
@@ -7344,38 +7543,38 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			}
 		}
 	
-		public override TResult Accept<TResult>(CompilerInternalSyntaxVisitor<TResult> visitor) => visitor.VisitSingleExpressionBlock1Alt2SimpleQualifierBlockGreen(this);
+		public override TResult Accept<TResult>(CompilerInternalSyntaxVisitor<TResult> visitor) => visitor.VisitSingleExpressionBlock1Alt3SimpleQualifierBlockGreen(this);
 	
-		public override void Accept(CompilerInternalSyntaxVisitor visitor) => visitor.VisitSingleExpressionBlock1Alt2SimpleQualifierBlockGreen(this);
+		public override void Accept(CompilerInternalSyntaxVisitor visitor) => visitor.VisitSingleExpressionBlock1Alt3SimpleQualifierBlockGreen(this);
 	
 		public override __InternalSyntaxNode WithDiagnostics(__DiagnosticInfo[] diagnostics)
 		{
-			return new SingleExpressionBlock1Alt2SimpleQualifierBlockGreen(this.Kind, _tDot, _simpleIdentifier, diagnostics, this.GetAnnotations());
+			return new SingleExpressionBlock1Alt3SimpleQualifierBlockGreen(this.Kind, _tDot, _simpleIdentifier, diagnostics, this.GetAnnotations());
 		}
 	
 		public override __InternalSyntaxNode WithAnnotations(__SyntaxAnnotation[] annotations)
 		{
-			return new SingleExpressionBlock1Alt2SimpleQualifierBlockGreen(this.Kind, _tDot, _simpleIdentifier, this.GetDiagnostics(), annotations);
+			return new SingleExpressionBlock1Alt3SimpleQualifierBlockGreen(this.Kind, _tDot, _simpleIdentifier, this.GetDiagnostics(), annotations);
 		}
 	
 		public override __GreenNode Clone()
 		{
-			return new SingleExpressionBlock1Alt2SimpleQualifierBlockGreen(this.Kind, _tDot, _simpleIdentifier, this.GetDiagnostics(), this.GetAnnotations());
+			return new SingleExpressionBlock1Alt3SimpleQualifierBlockGreen(this.Kind, _tDot, _simpleIdentifier, this.GetDiagnostics(), this.GetAnnotations());
 		}
 	
 	
-		public SingleExpressionBlock1Alt2SimpleQualifierBlockGreen Update(__InternalSyntaxToken tDot, SimpleIdentifierGreen simpleIdentifier)
+		public SingleExpressionBlock1Alt3SimpleQualifierBlockGreen Update(__InternalSyntaxToken tDot, SimpleIdentifierGreen simpleIdentifier)
 		{
 			if (_tDot != tDot || _simpleIdentifier != simpleIdentifier)
 			{
-				__InternalSyntaxNode newNode = CompilerLanguage.Instance.InternalSyntaxFactory.SingleExpressionBlock1Alt2SimpleQualifierBlock(tDot, simpleIdentifier);
+				__InternalSyntaxNode newNode = CompilerLanguage.Instance.InternalSyntaxFactory.SingleExpressionBlock1Alt3SimpleQualifierBlock(tDot, simpleIdentifier);
 				var diags = this.GetDiagnostics();
 				if (diags != null && diags.Length > 0)
 					newNode = newNode.WithDiagnostics(diags);
 				var annotations = this.GetAnnotations();
 				if (annotations != null && annotations.Length > 0)
 					newNode = newNode.WithAnnotations(annotations);
-				return (SingleExpressionBlock1Alt2SimpleQualifierBlockGreen)newNode;
+				return (SingleExpressionBlock1Alt3SimpleQualifierBlockGreen)newNode;
 			}
 			return this;
 		}

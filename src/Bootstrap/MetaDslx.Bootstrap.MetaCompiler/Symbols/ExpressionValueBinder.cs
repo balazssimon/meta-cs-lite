@@ -28,10 +28,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
         private ImmutableArray<LookupKey> _expectedTypes;
 
         public SingleExpressionBlock1Syntax? Syntax => base.Syntax.AsNode() as SingleExpressionBlock1Syntax;
-        public SingleExpressionBlock1Alt2Syntax? QualifierSyntax => this.Syntax as SingleExpressionBlock1Alt2Syntax;
-
-        //public SingleExpressionValueSyntax? Syntax => base.Syntax.AsNode() as SingleExpressionValueSyntax;
-        //public SimpleQualifierSyntax? QualifierSyntax => (this.Syntax as SingleExpressionValueAlt2Syntax)?.Element1;
+        public SingleExpressionBlock1Alt2Syntax? TokensSyntax => this.Syntax as SingleExpressionBlock1Alt2Syntax;
+        public SingleExpressionBlock1Alt3Syntax? QualifierSyntax => this.Syntax as SingleExpressionBlock1Alt3Syntax;
 
         public ExpressionSymbol? ContainingExpression 
         {
@@ -186,17 +184,22 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
 
         private object? BindSymbol(MetaType expectedType, DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            var qualifier = this.QualifierSyntax;
-            if (qualifier is null) return null;
-            if (qualifier.SimpleQualifier.Count == 0) return null;
-            //if (qualifier.Element.Count == 0) return null;
+            var identifiers = ImmutableArray<SyntaxNodeOrToken>.Empty;
+            if (this.TokensSyntax is not null)
+            {
+                identifiers = ImmutableArray.Create<SyntaxNodeOrToken>(this.TokensSyntax.Tokens);
+            }
+            else if (this.QualifierSyntax is not null)
+            {
+                identifiers = this.QualifierSyntax.SimpleQualifier.Select(id => (SyntaxNodeOrToken)id).ToImmutableArray();
+            }
+            if (identifiers.Length == 0) return null;
             var context = this.AllocateLookupContext();
             context.Diagnose = true;
             if (expectedType.SpecialType == SpecialType.System_Type || expectedType.SpecialType == SpecialType.MetaDslx_CodeAnalysis_MetaType) 
             {
                 context.Validators.Add(LookupValidators.TypeOnly);
             }
-            var identifiers = qualifier.SimpleQualifier.Select(id => (SyntaxNodeOrToken)id).ToImmutableArray();
             //var identifiers = qualifier.Element.Select(id => (SyntaxNodeOrToken)id).ToImmutableArray();
             var result = this.BindQualifiedName(context, identifiers);
             diagnostics.AddRange(context.Diagnostics);

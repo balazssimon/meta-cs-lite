@@ -40,7 +40,7 @@ pr_ElementValue
     | e_TLParen=LR_TLParen e_Alternatives1=pr_Alternative(e_TBar1+=LR_TBar e_Alternatives2+=pr_Alternative)* e_TRParen=LR_TRParen #pr_BlockInline
     | e_GrammarRule=pr_Identifier #pr_RuleRefAlt1
     | e_THash=LR_THash e_ReferencedTypes=pr_ReturnTypeQualifier #pr_RuleRefAlt2
-    | e_THashLBrace=LR_THashLBrace e_ReferencedTypes1=pr_ReturnTypeQualifier(e_TComma1+=LR_TComma e_ReferencedTypes2+=pr_ReturnTypeQualifier)* e_TRBrace=LR_TRBrace #pr_RuleRefAlt3
+    | e_THashLBrace=LR_THashLBrace e_ReferencedTypes1=pr_ReturnTypeQualifier(e_TComma1+=LR_TComma e_ReferencedTypes2+=pr_ReturnTypeQualifier)* e_Block=pr_RuleRefAlt3Block1? e_TRBrace=LR_TRBrace #pr_RuleRefAlt3
     ;
 pr_LAlternative
     : e_Elements+=pr_LElement*
@@ -121,6 +121,9 @@ pr_ElementBlock1
 pr_RuleRefAlt3ReferencedTypesBlock
     : e_TComma1=LR_TComma e_ReferencedTypes2=pr_ReturnTypeQualifier
     ;
+pr_RuleRefAlt3Block1
+    : e_TBar=LR_TBar e_GrammarRule=pr_Identifier
+    ;
 pr_TokenBlock1
     : e_KToken=LR_KToken e_Name=pr_Name e_Block=pr_TokenBlock1Alt1Block1? #pr_TokenBlock1Alt1
     | e_IsTrivia=LR_KHidden e_Name1=pr_Name #pr_TokenBlock1Alt2
@@ -138,8 +141,9 @@ pr_LBlockAlternativesBlock
     : e_TBar1=LR_TBar e_Alternatives2=pr_LAlternative
     ;
 pr_SingleExpressionBlock1
-    : e_Token=(LR_KNull | LR_KTrue | LR_KFalse | LR_TInteger | LR_TString) #pr_Tokens
-    | e_SimpleIdentifier1=pr_SimpleIdentifier(e_TDot1+=LR_TDot e_SimpleIdentifier2+=pr_SimpleIdentifier)* #pr_SingleExpressionBlock1Alt2
+    : e_Token=(LR_KNull | LR_KTrue | LR_KFalse | LR_TString | LR_TInteger | LR_TDecimal) #pr_Tokens
+    | e_Tokens=(LR_KBool | LR_KInt | LR_KString | LR_KType | LR_KSymbol | LR_KObject | LR_KVoid) #pr_SingleExpressionBlock1Alt2
+    | e_SimpleIdentifier1=pr_SimpleIdentifier(e_TDot1+=LR_TDot e_SimpleIdentifier2+=pr_SimpleIdentifier)* #pr_SingleExpressionBlock1Alt3
     ;
 pr_ArrayExpressionItemsBlock
     : e_TComma1=LR_TComma e_Items2=pr_SingleExpression
@@ -153,6 +157,6 @@ pr_AnnotationArgumentBlock1
 pr_MainQualifierBlock4
     : e_TDot1=LR_TDot e_Identifier2=pr_Identifier
     ;
-pr_SingleExpressionBlock1Alt2SimpleQualifierBlock1
+pr_SingleExpressionBlock1Alt3SimpleQualifierBlock1
     : e_TDot1=LR_TDot e_SimpleIdentifier2=pr_SimpleIdentifier
     ;

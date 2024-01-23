@@ -40,7 +40,7 @@ BlockInline returns Block: '(' alternatives+=Alternative ('|' alternatives+=Alte
 Alternative: (annotations+=ParserAnnotation* 'alt' name=Name ('returns' returnType=ReturnTypeQualifier)? ':')? elements+=Element+ ('=>' returnValue=Expression)?;
 Element: (nameAnnotations+=ParserAnnotation* symbolProperty+=[SymbolProperty]Identifier assignment=Assignment)? valueAnnotations+=ParserAnnotation* value=ElementValue multiplicity=Multiplicity?;
 ElementValue: BlockInline | Eof1 | Keyword | RuleRef;
-RuleRef: grammarRule=[Use(GrammarRule)]Identifier | '#' referencedTypes+=ReturnTypeQualifier | '#{' referencedTypes+=ReturnTypeQualifier (',' referencedTypes+=ReturnTypeQualifier)* '|' grammarRule=[Use(GrammarRule)]Identifier '}' ;
+RuleRef: grammarRule=[Use(GrammarRule)]Identifier | '#' referencedTypes+=ReturnTypeQualifier | '#{' referencedTypes+=ReturnTypeQualifier (',' referencedTypes+=ReturnTypeQualifier)* ('|' grammarRule=[Use(GrammarRule)]Identifier)? '}' ;
 Eof1 returns Eof: 'eof';
 Keyword: text=TString;
 
@@ -62,7 +62,7 @@ LRange: startChar=TString '..' endChar=TString;
 LBlock: '(' alternatives+=LAlternative ('|' alternatives+=LAlternative)* ')';
 
 Expression: SingleExpression | ArrayExpression;
-SingleExpression returns Expression: value=[ExpressionValue]('null' | 'true' | 'false' | TInteger | TString | SimpleQualifier);
+SingleExpression returns Expression: value=[ExpressionValue]('null' | 'true' | 'false' | TString | TInteger | TDecimal | PrimitiveType | SimpleQualifier);
 ArrayExpression: '{' (items+=SingleExpression (',' items+=SingleExpression)*)? '}';
 
 ParserAnnotation returns MetaDslx.Bootstrap.MetaCompiler.Model.Annotation: '[' attributeClass=[Use(types:{MetaDslx.CodeAnalysis.Binding.Binder,MetaDslx.CodeAnalysis.Annotations.Annotation},suffixes:{"Binder","Annotation"})]Qualifier AnnotationArguments? ']';

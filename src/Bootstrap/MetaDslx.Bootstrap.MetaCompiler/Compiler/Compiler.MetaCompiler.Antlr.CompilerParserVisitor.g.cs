@@ -342,6 +342,12 @@ public interface ICompilerParserVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitPr_RuleRefAlt3ReferencedTypesBlock([NotNull] CompilerParser.Pr_RuleRefAlt3ReferencedTypesBlockContext context);
 	/// <summary>
+	/// Visit a parse tree produced by <see cref="CompilerParser.pr_RuleRefAlt3Block1"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitPr_RuleRefAlt3Block1([NotNull] CompilerParser.Pr_RuleRefAlt3Block1Context context);
+	/// <summary>
 	/// Visit a parse tree produced by the <c>pr_TokenBlock1Alt1</c>
 	/// labeled alternative in <see cref="CompilerParser.pr_TokenBlock1"/>.
 	/// </summary>
@@ -394,6 +400,13 @@ public interface ICompilerParserVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitPr_SingleExpressionBlock1Alt2([NotNull] CompilerParser.Pr_SingleExpressionBlock1Alt2Context context);
 	/// <summary>
+	/// Visit a parse tree produced by the <c>pr_SingleExpressionBlock1Alt3</c>
+	/// labeled alternative in <see cref="CompilerParser.pr_SingleExpressionBlock1"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitPr_SingleExpressionBlock1Alt3([NotNull] CompilerParser.Pr_SingleExpressionBlock1Alt3Context context);
+	/// <summary>
 	/// Visit a parse tree produced by <see cref="CompilerParser.pr_ArrayExpressionItemsBlock"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
@@ -418,10 +431,10 @@ public interface ICompilerParserVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitPr_MainQualifierBlock4([NotNull] CompilerParser.Pr_MainQualifierBlock4Context context);
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="CompilerParser.pr_SingleExpressionBlock1Alt2SimpleQualifierBlock1"/>.
+	/// Visit a parse tree produced by <see cref="CompilerParser.pr_SingleExpressionBlock1Alt3SimpleQualifierBlock1"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	Result VisitPr_SingleExpressionBlock1Alt2SimpleQualifierBlock1([NotNull] CompilerParser.Pr_SingleExpressionBlock1Alt2SimpleQualifierBlock1Context context);
+	Result VisitPr_SingleExpressionBlock1Alt3SimpleQualifierBlock1([NotNull] CompilerParser.Pr_SingleExpressionBlock1Alt3SimpleQualifierBlock1Context context);
 }
 } // namespace MetaDslx.Bootstrap.MetaCompiler.Compiler

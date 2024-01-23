@@ -43,7 +43,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
             MetaLanguageVersion languageVersion = MetaLanguageVersion.Default,
             DocumentationMode documentationMode = DocumentationMode.Parse,
             SourceCodeKind kind = SourceCodeKind.Regular,
-            IEnumerable<string>? preprocessorSymbols = null)
+            global::System.Collections.Generic.IEnumerable<string>? preprocessorSymbols = null)
             : this(languageVersion,
                   documentationMode,
                   kind,
@@ -97,7 +97,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
             return new MetaParseOptions(this) { SpecifiedLanguageVersion = version, LanguageVersion = effectiveLanguageVersion };
         }
 
-        public MetaParseOptions WithPreprocessorSymbols(IEnumerable<string>? preprocessorSymbols)
+        public MetaParseOptions WithPreprocessorSymbols(global::System.Collections.Generic.IEnumerable<string>? preprocessorSymbols)
         {
             return WithPreprocessorSymbols(preprocessorSymbols.AsImmutableOrNull());
         }

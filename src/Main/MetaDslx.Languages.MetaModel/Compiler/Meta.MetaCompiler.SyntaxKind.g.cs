@@ -1,31 +1,33 @@
-using MetaDslx.CodeAnalysis;
-using MetaDslx.CodeAnalysis.Syntax.InternalSyntax;
 
 #nullable enable
 
 namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
 {
+    using __SyntaxToken = global::MetaDslx.CodeAnalysis.SyntaxToken;
+    using __InternalSyntaxKind = global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.InternalSyntaxKind;
+
 	public enum MetaSyntaxKind
 	{
 		__FirstToken = TComma,
-		__LastToken = TMultiLineComment,
+		__LastToken = TInvalidToken,
 		__FirstFixedToken = TComma,
 		__LastFixedToken = TDot,
 		__FirstRule = Main,
-		__LastRule = QualifierListBlock1,
+		__LastRule = QualifierQualifierBlock,
 
 		// Built-in:
-		None = InternalSyntaxKind.None,
-		List = InternalSyntaxKind.List,
-		BadToken = InternalSyntaxKind.BadToken,
-		MissingToken = InternalSyntaxKind.MissingToken,
-		SkippedTokensTrivia = InternalSyntaxKind.SkippedTokensTrivia,
-		DisabledTextTrivia = InternalSyntaxKind.DisabledTextTrivia,
-		ConflictMarkerTrivia = InternalSyntaxKind.ConflictMarkerTrivia,
-		Eof = InternalSyntaxKind.Eof,
+		None = __InternalSyntaxKind.None,
+		List = __InternalSyntaxKind.List,
+		BadToken = __InternalSyntaxKind.BadToken,
+		MissingToken = __InternalSyntaxKind.MissingToken,
+		SkippedTokensTrivia = __InternalSyntaxKind.SkippedTokensTrivia,
+		DisabledTextTrivia = __InternalSyntaxKind.DisabledTextTrivia,
+		ConflictMarkerTrivia = __InternalSyntaxKind.ConflictMarkerTrivia,
+		Eof = __InternalSyntaxKind.Eof,
 
 		// Tokens:
 		TComma,
+		TUtf8Bom,
 		KNamespace,
 		TSemicolon,
 		KUsing,
@@ -38,13 +40,14 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
 		KClass,
 		TDollar,
 		TColon,
-		KContains,
-		KDerived,
 		KOpposite,
 		KSubsets,
 		KRedefines,
 		TLParen,
 		TRParen,
+		TLBracket,
+		TRBracket,
+		TQuestion,
 		KBool,
 		KInt,
 		KString,
@@ -52,18 +55,19 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
 		KSymbol,
 		KObject,
 		KVoid,
-		TLBracket,
-		TRBracket,
-		TQuestion,
+		KContains,
+		KDerived,
 		TDot,
 		TInteger,
 		TDecimal,
 		TIdentifier,
+		TVerbatimIdentifier,
 		TString,
 		TWhitespace,
 		TLineEnd,
 		TSingleLineComment,
 		TMultiLineComment,
+		TInvalidToken,
 
 		// Rules:
 		Main,
@@ -74,7 +78,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
 		MetaEnum,
 		MetaClass,
 		EnumBody,
-		EnumLiterals,
 		MetaEnumLiteral,
 		ClassNameAlt1,
 		ClassNameAlt2,
@@ -85,36 +88,30 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
 		MetaProperty,
 		PropertyNameAlt1,
 		PropertyNameAlt2,
+		MetaOperation,
+		MetaParameter,
+		TypeReferenceTokens,
+		SimpleTypeReferenceAlt2,
+		MetaArrayType,
+		MetaNullableType,
+		Name,
+		Qualifier,
+		Identifier,
+		EnumBodyEnumLiteralsBlock,
+		BaseClassesBaseTypesBlock,
 		PropertyOpposite,
 		PropertySubsets,
 		PropertyRedefines,
-		MetaOperation,
-		ParameterList,
-		MetaParameter,
-		MetaArrayType,
-		MetaNullableType,
-		TypeReferenceAlt4,
-		TypeReferenceTokens,
-		Name,
-		Qualifier,
-		QualifierList,
-		Identifier,
-		EnumLiteralsBlock1,
-		BaseClassesBlock1,
-		MetaPropertyBlock2Alt1,
-		MetaPropertyBlock2Alt2,
-		MetaPropertyBlock2Alt3,
-		PropertyOppositeBlock1,
-		PropertySubsetsBlock1,
-		PropertyRedefinesBlock1,
-		ParameterListBlock1,
-		QualifierBlock1,
-		QualifierListBlock1,
-	}
+		PropertyOppositeOppositePropertiesBlock,
+		PropertySubsetsSubsettedPropertiesBlock,
+		PropertyRedefinesRedefinedPropertiesBlock,
+		MetaOperationParameterListBlock,
+		QualifierQualifierBlock,
+}
 
     public static class MetaSyntaxKindExtensions
     {
-        public static MetaSyntaxKind GetMetaKind(this SyntaxToken token)
+        public static MetaSyntaxKind GetMetaKind(this __SyntaxToken token)
         {
             return (MetaSyntaxKind)token.RawKind;
         }

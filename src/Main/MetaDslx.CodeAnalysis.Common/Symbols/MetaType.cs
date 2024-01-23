@@ -521,7 +521,11 @@ namespace MetaDslx.CodeAnalysis
                 {
                     if (type.GenericTypeArguments.Length == 1)
                     {
-                        if (type.Namespace == "System.Collections.Generic")
+                        if (type.FullName == "System.Nullable")
+                        {
+                            return false;
+                        }
+                        else if (type.Namespace == "System.Collections.Generic")
                         {
                             return true;
                         }
@@ -547,7 +551,8 @@ namespace MetaDslx.CodeAnalysis
                 var msts = csts?.CSharpSymbol as INamedTypeSymbol;
                 if (msts is not null && msts.IsGenericType && msts.TypeArguments.Length == 1)
                 {
-                    return true;
+                    if (msts.ToDisplayString(Microsoft.CodeAnalysis.SymbolDisplayFormat.FullyQualifiedFormat).StartsWith("global::System.Nullable<")) return false;
+                    else return true;
                 }
                 return false;
             }

@@ -13,7 +13,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		__FirstFixedToken = TComma,
 		__LastFixedToken = KFalse,
 		__FirstRule = Main,
-		__LastRule = SingleExpressionBlock1Alt2SimpleQualifierBlock,
+		__LastRule = SingleExpressionBlock1Alt3SimpleQualifierBlock,
 
 		// Built-in:
 		None = __InternalSyntaxKind.None,
@@ -133,6 +133,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		AlternativeBlock2,
 		ElementBlock1,
 		RuleRefAlt3ReferencedTypesBlock,
+		RuleRefAlt3Block1,
 		TokenBlock1Alt1,
 		TokenBlock1Alt2,
 		TokenBlock1Alt1Block1,
@@ -141,11 +142,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		LBlockAlternativesBlock,
 		Tokens,
 		SingleExpressionBlock1Alt2,
+		SingleExpressionBlock1Alt3,
 		ArrayExpressionItemsBlock,
 		AnnotationArgumentsArgumentsBlock,
 		AnnotationArgumentBlock1,
 		MainQualifierBlock,
-		SingleExpressionBlock1Alt2SimpleQualifierBlock,
+		SingleExpressionBlock1Alt3SimpleQualifierBlock,
 }
 
     public static class CompilerSyntaxKindExtensions

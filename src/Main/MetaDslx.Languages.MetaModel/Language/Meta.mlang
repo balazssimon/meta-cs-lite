@@ -32,27 +32,27 @@ block EnumBody: '{' EnumLiterals? '}';
 block EnumLiterals : literals+=MetaEnumLiteral (',' literals+=MetaEnumLiteral)* ;
 MetaEnumLiteral: name=Name;
 
-MetaClass: isAbstract?='abstract'? 'class' name=ClassName BaseClasses? ClassBody;
+MetaClass: isAbstract?='abstract'? 'class' [Name]ClassName BaseClasses? ClassBody;
 [Name]
 [Identifier]
-block ClassName: TIdentifier? '$' symbolType=[Use(types: Symbol, suffixes: Symbol)]Identifier | TIdentifier;
-block BaseClasses: (':' baseTypes+=#{MetaClass|QualifierList});
+block ClassName: Identifier? '$' symbolType=[Use(types: Symbol, suffixes: Symbol)]Identifier | Identifier;
+block BaseClasses: ':' baseTypes+=#{MetaClass} (',' baseTypes+=#{MetaClass})*;
 [Scope]
 block ClassBody: '{' ClassMember* '}';
 
 block ClassMember: properties+=MetaProperty | operations+=MetaOperation;
 
-MetaProperty: (isContainment?='contains' | isDerived?='derived')? type=TypeReference name=PropertyName (PropertyOpposite | PropertySubsets | PropertyRedefines)* ';';
+MetaProperty: (isContainment?='contains' | isDerived?='derived')? @type=TypeReference [Name]PropertyName (PropertyOpposite | PropertySubsets | PropertyRedefines)* ';';
 [Name]
 [Identifier]
-block PropertyName: TIdentifier? '$' symbolProperty=[Value(string)]TIdentifier | TIdentifier;
+block PropertyName: Identifier? '$' symbolProperty=[Value(string)]Identifier | Identifier;
 block PropertyOpposite: 'opposite' oppositeProperties+=#MetaProperty (',' oppositeProperties+=#MetaProperty)*;
 block PropertySubsets: 'subsets' subsettedProperties+=#MetaProperty (',' subsettedProperties+=#MetaProperty)*;
 block PropertyRedefines: 'redefines' redefinedProperties+=#MetaProperty (',' redefinedProperties+=#MetaProperty)*;
 
 MetaOperation: returnType=TypeReference name=Name '(' ParameterList? ')' ';';
 block ParameterList: parameters+=MetaParameter (',' parameters+=MetaParameter)*;
-MetaParameter: type=TypeReference name=Name;
+MetaParameter: @type=TypeReference name=Name;
 
 TypeReference returns MetaDslx.CodeAnalysis.MetaType: SimpleTypeReference | MetaArrayType | MetaNullableType;
 MetaArrayType: itemType=TypeReference '[' ']';
@@ -83,7 +83,7 @@ block QualifierList: Qualifier (',' Qualifier)*;
 block Identifier: TIdentifier | TVerbatimIdentifier;
 
 block SimpleQualifier: SimpleIdentifier ('.' SimpleIdentifier)*;
-block SimpleIdentifier: TIdentifier;
+block SimpleIdentifier: TIdentifier | TVerbatimIdentifier;
 
 [Number]
 token TInteger returns int32: '0'| '1'..'9' ('0'..'9')* ;

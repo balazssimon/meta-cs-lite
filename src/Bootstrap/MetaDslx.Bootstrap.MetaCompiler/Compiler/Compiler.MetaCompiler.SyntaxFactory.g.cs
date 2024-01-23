@@ -436,18 +436,18 @@ public RuleRefAlt2Syntax RuleRefAlt2(ReturnTypeQualifierSyntax referencedTypes)
 	return this.RuleRefAlt2(this.Token(CompilerSyntaxKind.THash), referencedTypes);
 }
 
-public RuleRefAlt3Syntax RuleRefAlt3(__SyntaxToken tHashLBrace, global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<ReturnTypeQualifierSyntax> referencedTypes, __SyntaxToken tRBrace)
+public RuleRefAlt3Syntax RuleRefAlt3(__SyntaxToken tHashLBrace, global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<ReturnTypeQualifierSyntax> referencedTypes, RuleRefAlt3Block1Syntax block, __SyntaxToken tRBrace)
 {
 	if (tHashLBrace.RawKind != (int)__InternalSyntaxKind.None) throw new ArgumentNullException(nameof(tHashLBrace));
 	if (tHashLBrace.RawKind != (int)CompilerSyntaxKind.THashLBrace) throw new ArgumentException(nameof(tHashLBrace));
 	if (tRBrace.RawKind != (int)__InternalSyntaxKind.None) throw new ArgumentNullException(nameof(tRBrace));
 	if (tRBrace.RawKind != (int)CompilerSyntaxKind.TRBrace) throw new ArgumentException(nameof(tRBrace));
-    return (RuleRefAlt3Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.RuleRefAlt3((__InternalSyntaxToken)tHashLBrace.Node, __GreenNodeExtensions.ToGreenSeparatedList<InternalSyntax.ReturnTypeQualifierGreen>(referencedTypes.Node, reversed: false), (__InternalSyntaxToken)tRBrace.Node).CreateRed();
+    return (RuleRefAlt3Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.RuleRefAlt3((__InternalSyntaxToken)tHashLBrace.Node, __GreenNodeExtensions.ToGreenSeparatedList<InternalSyntax.ReturnTypeQualifierGreen>(referencedTypes.Node, reversed: false), (InternalSyntax.RuleRefAlt3Block1Green)block.Green, (__InternalSyntaxToken)tRBrace.Node).CreateRed();
 }
 
 public RuleRefAlt3Syntax RuleRefAlt3(global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<ReturnTypeQualifierSyntax> referencedTypes)
 {
-	return this.RuleRefAlt3(this.Token(CompilerSyntaxKind.THashLBrace), referencedTypes, this.Token(CompilerSyntaxKind.TRBrace));
+	return this.RuleRefAlt3(this.Token(CompilerSyntaxKind.THashLBrace), referencedTypes, default, this.Token(CompilerSyntaxKind.TRBrace));
 }
 
 public LAlternativeSyntax LAlternative(global::MetaDslx.CodeAnalysis.SyntaxList<LElementSyntax> elements)
@@ -769,6 +769,19 @@ public RuleRefAlt3ReferencedTypesBlockSyntax RuleRefAlt3ReferencedTypesBlock(Ret
 	return this.RuleRefAlt3ReferencedTypesBlock(this.Token(CompilerSyntaxKind.TComma), referencedTypes);
 }
 
+public RuleRefAlt3Block1Syntax RuleRefAlt3Block1(__SyntaxToken tBar, IdentifierSyntax grammarRule)
+{
+	if (tBar.RawKind != (int)__InternalSyntaxKind.None) throw new ArgumentNullException(nameof(tBar));
+	if (tBar.RawKind != (int)CompilerSyntaxKind.TBar) throw new ArgumentException(nameof(tBar));
+	if (grammarRule is null) throw new ArgumentNullException(nameof(grammarRule));
+    return (RuleRefAlt3Block1Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.RuleRefAlt3Block1((__InternalSyntaxToken)tBar.Node, (InternalSyntax.IdentifierGreen)grammarRule.Green).CreateRed();
+}
+
+public RuleRefAlt3Block1Syntax RuleRefAlt3Block1(IdentifierSyntax grammarRule)
+{
+	return this.RuleRefAlt3Block1(this.Token(CompilerSyntaxKind.TBar), grammarRule);
+}
+
 public TokenBlock1Alt1Syntax TokenBlock1Alt1(__SyntaxToken kToken, NameSyntax name, TokenBlock1Alt1Block1Syntax block)
 {
 	if (kToken.RawKind != (int)__InternalSyntaxKind.None) throw new ArgumentNullException(nameof(kToken));
@@ -850,13 +863,20 @@ public LBlockAlternativesBlockSyntax LBlockAlternativesBlock(LAlternativeSyntax 
 public TokensSyntax Tokens(__SyntaxToken token)
 {
 	if (token.RawKind != (int)__InternalSyntaxKind.None) throw new ArgumentNullException(nameof(token));
-	if (token.RawKind != (int)CompilerSyntaxKind.KNull && token.RawKind != (int)CompilerSyntaxKind.KTrue && token.RawKind != (int)CompilerSyntaxKind.KFalse && token.RawKind != (int)CompilerSyntaxKind.TInteger && token.RawKind != (int)CompilerSyntaxKind.TString) throw new ArgumentException(nameof(token));
+	if (token.RawKind != (int)CompilerSyntaxKind.KNull && token.RawKind != (int)CompilerSyntaxKind.KTrue && token.RawKind != (int)CompilerSyntaxKind.KFalse && token.RawKind != (int)CompilerSyntaxKind.TString && token.RawKind != (int)CompilerSyntaxKind.TInteger && token.RawKind != (int)CompilerSyntaxKind.TDecimal) throw new ArgumentException(nameof(token));
     return (TokensSyntax)CompilerLanguage.Instance.InternalSyntaxFactory.Tokens((__InternalSyntaxToken)token.Node).CreateRed();
 }
 
-public SingleExpressionBlock1Alt2Syntax SingleExpressionBlock1Alt2(global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<SimpleIdentifierSyntax> simpleQualifier)
+public SingleExpressionBlock1Alt2Syntax SingleExpressionBlock1Alt2(__SyntaxToken tokens)
 {
-    return (SingleExpressionBlock1Alt2Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.SingleExpressionBlock1Alt2(__GreenNodeExtensions.ToGreenSeparatedList<InternalSyntax.SimpleIdentifierGreen>(simpleQualifier.Node, reversed: false)).CreateRed();
+	if (tokens.RawKind != (int)__InternalSyntaxKind.None) throw new ArgumentNullException(nameof(tokens));
+	if (tokens.RawKind != (int)CompilerSyntaxKind.KBool && tokens.RawKind != (int)CompilerSyntaxKind.KInt && tokens.RawKind != (int)CompilerSyntaxKind.KString && tokens.RawKind != (int)CompilerSyntaxKind.KType && tokens.RawKind != (int)CompilerSyntaxKind.KSymbol && tokens.RawKind != (int)CompilerSyntaxKind.KObject && tokens.RawKind != (int)CompilerSyntaxKind.KVoid) throw new ArgumentException(nameof(tokens));
+    return (SingleExpressionBlock1Alt2Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.SingleExpressionBlock1Alt2((__InternalSyntaxToken)tokens.Node).CreateRed();
+}
+
+public SingleExpressionBlock1Alt3Syntax SingleExpressionBlock1Alt3(global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<SimpleIdentifierSyntax> simpleQualifier)
+{
+    return (SingleExpressionBlock1Alt3Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.SingleExpressionBlock1Alt3(__GreenNodeExtensions.ToGreenSeparatedList<InternalSyntax.SimpleIdentifierGreen>(simpleQualifier.Node, reversed: false)).CreateRed();
 }
 
 public ArrayExpressionItemsBlockSyntax ArrayExpressionItemsBlock(__SyntaxToken tComma, SingleExpressionSyntax items)
@@ -911,17 +931,17 @@ public MainQualifierBlockSyntax MainQualifierBlock(IdentifierSyntax identifier)
 	return this.MainQualifierBlock(this.Token(CompilerSyntaxKind.TDot), identifier);
 }
 
-public SingleExpressionBlock1Alt2SimpleQualifierBlockSyntax SingleExpressionBlock1Alt2SimpleQualifierBlock(__SyntaxToken tDot, SimpleIdentifierSyntax simpleIdentifier)
+public SingleExpressionBlock1Alt3SimpleQualifierBlockSyntax SingleExpressionBlock1Alt3SimpleQualifierBlock(__SyntaxToken tDot, SimpleIdentifierSyntax simpleIdentifier)
 {
 	if (tDot.RawKind != (int)__InternalSyntaxKind.None) throw new ArgumentNullException(nameof(tDot));
 	if (tDot.RawKind != (int)CompilerSyntaxKind.TDot) throw new ArgumentException(nameof(tDot));
 	if (simpleIdentifier is null) throw new ArgumentNullException(nameof(simpleIdentifier));
-    return (SingleExpressionBlock1Alt2SimpleQualifierBlockSyntax)CompilerLanguage.Instance.InternalSyntaxFactory.SingleExpressionBlock1Alt2SimpleQualifierBlock((__InternalSyntaxToken)tDot.Node, (InternalSyntax.SimpleIdentifierGreen)simpleIdentifier.Green).CreateRed();
+    return (SingleExpressionBlock1Alt3SimpleQualifierBlockSyntax)CompilerLanguage.Instance.InternalSyntaxFactory.SingleExpressionBlock1Alt3SimpleQualifierBlock((__InternalSyntaxToken)tDot.Node, (InternalSyntax.SimpleIdentifierGreen)simpleIdentifier.Green).CreateRed();
 }
 
-public SingleExpressionBlock1Alt2SimpleQualifierBlockSyntax SingleExpressionBlock1Alt2SimpleQualifierBlock(SimpleIdentifierSyntax simpleIdentifier)
+public SingleExpressionBlock1Alt3SimpleQualifierBlockSyntax SingleExpressionBlock1Alt3SimpleQualifierBlock(SimpleIdentifierSyntax simpleIdentifier)
 {
-	return this.SingleExpressionBlock1Alt2SimpleQualifierBlock(this.Token(CompilerSyntaxKind.TDot), simpleIdentifier);
+	return this.SingleExpressionBlock1Alt3SimpleQualifierBlock(this.Token(CompilerSyntaxKind.TDot), simpleIdentifier);
 }
 		
         internal static IEnumerable<__Type> GetNodeTypes()
@@ -975,6 +995,7 @@ typeof(AlternativeBlock1Block1Syntax),
 typeof(AlternativeBlock2Syntax),
 typeof(ElementBlock1Syntax),
 typeof(RuleRefAlt3ReferencedTypesBlockSyntax),
+typeof(RuleRefAlt3Block1Syntax),
 typeof(TokenBlock1Alt1Syntax),
 typeof(TokenBlock1Alt2Syntax),
 typeof(TokenBlock1Alt1Block1Syntax),
@@ -983,11 +1004,12 @@ typeof(FragmentAlternativesBlockSyntax),
 typeof(LBlockAlternativesBlockSyntax),
 typeof(TokensSyntax),
 typeof(SingleExpressionBlock1Alt2Syntax),
+typeof(SingleExpressionBlock1Alt3Syntax),
 typeof(ArrayExpressionItemsBlockSyntax),
 typeof(AnnotationArgumentsArgumentsBlockSyntax),
 typeof(AnnotationArgumentBlock1Syntax),
 typeof(MainQualifierBlockSyntax),
-typeof(SingleExpressionBlock1Alt2SimpleQualifierBlockSyntax),
+typeof(SingleExpressionBlock1Alt3SimpleQualifierBlockSyntax),
 };
         }
 

@@ -79,6 +79,8 @@ template GenerateSyntaxFacts()
 
 namespace [Namespace].Syntax
 {
+    using System.Linq;
+
 	public class [Lang]SyntaxFacts : global::MetaDslx.CodeAnalysis.Syntax.SyntaxFacts
 	{
 		public [Lang]SyntaxKind DefaultWhitespaceKind => [Lang]SyntaxKind.[Grammar.DefaultWhitespace?.CSharpName ?? "None"];
@@ -257,7 +259,7 @@ namespace [Namespace].Syntax
 			return IsReservedKeyword(([Lang]SyntaxKind)rawKind);
         }
 
-        public IEnumerable<[Lang]SyntaxKind> GetReservedKeywordKinds()
+        public global::System.Collections.Generic.IEnumerable<[Lang]SyntaxKind> GetReservedKeywordKinds()
         {
 			[foreach (var token in keywordTokens)]
 			yield return [Lang]SyntaxKind.[token.CSharpName];
@@ -265,7 +267,7 @@ namespace [Namespace].Syntax
 			yield break;
         }
 
-        protected override IEnumerable<int> GetReservedKeywordRawKinds()
+        protected override global::System.Collections.Generic.IEnumerable<int> GetReservedKeywordRawKinds()
         {
 			return GetReservedKeywordKinds().Select(kind => (int)kind);
         }
@@ -302,12 +304,12 @@ namespace [Namespace].Syntax
 			return IsContextualKeyword(([Lang]SyntaxKind)rawKind);
         }
 
-        public IEnumerable<[Lang]SyntaxKind> GetContextualKeywordKinds()
+        public global::System.Collections.Generic.IEnumerable<[Lang]SyntaxKind> GetContextualKeywordKinds()
         {
 			yield break;
         }
 
-		protected override IEnumerable<int> GetContextualKeywordRawKinds()
+		protected override global::System.Collections.Generic.IEnumerable<int> GetContextualKeywordRawKinds()
 		{
 			return GetContextualKeywordKinds().Select(kind => (int)kind);
 		}
@@ -1326,6 +1328,9 @@ namespace [Namespace].Syntax
 	using __SyntaxNode = global::MetaDslx.CodeAnalysis.SyntaxNode;
 	using __SourceText = global::MetaDslx.CodeAnalysis.Text.SourceText;
 	using __TextChangeRange = global::MetaDslx.CodeAnalysis.Text.TextChangeRange;
+    using __CancellationToken = global::System.Threading.CancellationToken;
+	using __ArgumentNullException = global::System.ArgumentNullException;
+    using __ArgumentException = global::System.ArgumentException;
 
 	public class [Lang]SyntaxFactory : global::MetaDslx.CodeAnalysis.Syntax.SyntaxFactory
 	{
@@ -1354,7 +1359,7 @@ namespace [Namespace].Syntax
 			[Lang]ParseOptions options = null,
 			string path = "",
 			__Encoding encoding = null,
-			CancellationToken cancellationToken = default(CancellationToken))
+			__CancellationToken cancellationToken = default)
 		{
 			return ([Lang]SyntaxTree)this.ParseSyntaxTreeCore(__SourceText.From(text, encoding), options, path, cancellationToken);
 		}
@@ -1366,7 +1371,7 @@ namespace [Namespace].Syntax
 			__SourceText text,
 			[Lang]ParseOptions? options = null,
 			string path = "",
-			CancellationToken cancellationToken = default(CancellationToken))
+			__CancellationToken cancellationToken = default)
 		{
 			return ([Lang]SyntaxTree)this.ParseSyntaxTreeCore(text, options, path, cancellationToken);
 		}
@@ -1375,7 +1380,7 @@ namespace [Namespace].Syntax
 			__SourceText text,
 			__ParseOptions? options = null,
 			string path = "",
-			CancellationToken cancellationToken = default(CancellationToken))
+			__CancellationToken cancellationToken = default)
 		{
 			return [Lang]SyntaxTree.ParseText(text, ([Lang]ParseOptions?)options, path, cancellationToken);
 		}
@@ -1466,7 +1471,7 @@ namespace [Namespace].Syntax
 			[end foreach]
 		[end foreach]		
 
-        internal static IEnumerable<__Type> GetNodeTypes()
+        internal static global::System.Collections.Generic.IEnumerable<__Type> GetNodeTypes()
         {
             return new __Type["[]"] {
             [foreach (var rule in Rules)]
@@ -1487,11 +1492,11 @@ public [alt.RedName] [alt.CSharpName]([alt.RedUpdateParameters])
 	[foreach (var elem in alt.Elements)]
 		[var redSyntaxNullCondition = elem.RedSyntaxNullCondition]
 		[if (redSyntaxNullCondition is not null)]
-	if ([redSyntaxNullCondition]) throw new ArgumentNullException(nameof([elem.ParameterName]));
+	if ([redSyntaxNullCondition]) throw new __ArgumentNullException(nameof([elem.ParameterName]));
 		[end if]
 		[var redSyntaxCondition = elem.RedSyntaxCondition]
 		[if (redSyntaxCondition is not null)]
-	if ([redSyntaxCondition]) throw new ArgumentException(nameof([elem.ParameterName]));
+	if ([redSyntaxCondition]) throw new __ArgumentException(nameof([elem.ParameterName]));
 		[end if]
 	[end foreach]
     return ([alt.RedName])[Lang]Language.Instance.InternalSyntaxFactory.[alt.CSharpName]([alt.RedToGreenArgumentList]).CreateRed();
@@ -1551,7 +1556,7 @@ namespace [Namespace].Syntax
             [Lang]LanguageVersion languageVersion = [Lang]LanguageVersion.Default,
             DocumentationMode documentationMode = DocumentationMode.Parse,
             SourceCodeKind kind = SourceCodeKind.Regular,
-            IEnumerable<string>? preprocessorSymbols = null)
+            global::System.Collections.Generic.IEnumerable<string>? preprocessorSymbols = null)
             : this(languageVersion,
                   documentationMode,
                   kind,
@@ -1605,7 +1610,7 @@ namespace [Namespace].Syntax
             return new [Lang]ParseOptions(this) { SpecifiedLanguageVersion = version, LanguageVersion = effectiveLanguageVersion };
         }
 
-        public [Lang]ParseOptions WithPreprocessorSymbols(IEnumerable<string>? preprocessorSymbols)
+        public [Lang]ParseOptions WithPreprocessorSymbols(global::System.Collections.Generic.IEnumerable<string>? preprocessorSymbols)
         {
             return WithPreprocessorSymbols(preprocessorSymbols.AsImmutableOrNull());
         }

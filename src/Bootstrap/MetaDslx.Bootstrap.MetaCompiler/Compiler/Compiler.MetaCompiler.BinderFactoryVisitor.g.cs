@@ -990,6 +990,10 @@ public virtual void VisitRuleRefAlt3(RuleRefAlt3Syntax node)
 	            //this.VisitToken(node.ReferencedTypes.GetSeparator(referencedTypesIndex));
 	        }
 	    }
+	    if (node.Block != null)
+	    {
+	        this.Visit(node.Block);
+	    }
 	        
 	}
 	finally
@@ -2112,6 +2116,30 @@ public virtual void VisitRuleRefAlt3ReferencedTypesBlock(RuleRefAlt3ReferencedTy
 	    
 }
 
+public virtual void VisitRuleRefAlt3Block1(RuleRefAlt3Block1Syntax node)
+{
+	var __annot1 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "GrammarRule");
+	this.Begin(__annot1, node.GrammarRule);
+	try
+	{
+	    var __annot0 = new MetaDslx.CodeAnalysis.Binding.UseBinder(types: ImmutableArray.Create<System.Type>(typeof(MetaDslx.Bootstrap.MetaCompiler.Model.GrammarRule)));
+	    this.Begin(__annot0, node.GrammarRule);
+	    try
+	    {
+	        this.Visit(node.GrammarRule);
+	    }
+	    finally
+	    {
+	        this.End(__annot0);
+	    }
+	}
+	finally
+	{
+	    this.End(__annot1);
+	}
+	    
+}
+
 public virtual void VisitTokenBlock1Alt1(TokenBlock1Alt1Syntax node)
 {
 	var __annot0 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Name");
@@ -2232,6 +2260,62 @@ public virtual void VisitTokens(TokensSyntax node)
 
 public virtual void VisitSingleExpressionBlock1Alt2(SingleExpressionBlock1Alt2Syntax node)
 {
+	var __annot1 = new MetaDslx.Bootstrap.MetaCompiler.Symbols.ExpressionValueBinder();
+	this.Begin(__annot1, node);
+	try
+	{
+	    if (node.Tokens.GetCompilerKind() != CompilerSyntaxKind.None)
+	    {
+	        var __annot0 = new MetaDslx.CodeAnalysis.Binding.ValueBinder(type: typeof(MetaDslx.CodeAnalysis.MetaType));
+	        this.Begin(__annot0, node.Tokens);
+	        try
+	        {
+	            switch (node.Tokens.GetCompilerKind())
+	            {
+	                case CompilerSyntaxKind.KBool:
+	                    //this.VisitToken(node.Tokens);
+	                    break;
+	                case CompilerSyntaxKind.KInt:
+	                    //this.VisitToken(node.Tokens);
+	                    break;
+	                case CompilerSyntaxKind.KString:
+	                    //this.VisitToken(node.Tokens);
+	                    break;
+	                case CompilerSyntaxKind.KType:
+	                    //this.VisitToken(node.Tokens);
+	                    break;
+	                case CompilerSyntaxKind.KSymbol:
+	                    //this.VisitToken(node.Tokens);
+	                    break;
+	                case CompilerSyntaxKind.KObject:
+	                    //this.VisitToken(node.Tokens);
+	                    break;
+	                case CompilerSyntaxKind.KVoid:
+	                    //this.VisitToken(node.Tokens);
+	                    break;
+	                default:
+	                    break;
+	            }
+	        }
+	        finally
+	        {
+	            this.End(__annot0);
+	        }
+	    }
+	    else
+	    {
+	        // default
+	    }
+	        
+	}
+	finally
+	{
+	    this.End(__annot1);
+	}
+}
+
+public virtual void VisitSingleExpressionBlock1Alt3(SingleExpressionBlock1Alt3Syntax node)
+{
 	var __annot0 = new MetaDslx.Bootstrap.MetaCompiler.Symbols.ExpressionValueBinder();
 	this.Begin(__annot0, node);
 	try
@@ -2304,7 +2388,7 @@ public virtual void VisitMainQualifierBlock(MainQualifierBlockSyntax node)
 	    
 }
 
-public virtual void VisitSingleExpressionBlock1Alt2SimpleQualifierBlock(SingleExpressionBlock1Alt2SimpleQualifierBlockSyntax node)
+public virtual void VisitSingleExpressionBlock1Alt3SimpleQualifierBlock(SingleExpressionBlock1Alt3SimpleQualifierBlockSyntax node)
 {
 	    
 }

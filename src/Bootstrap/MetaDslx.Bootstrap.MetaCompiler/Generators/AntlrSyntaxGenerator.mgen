@@ -100,7 +100,7 @@ namespace [Namespace].Syntax
 				_factory = ([Lang]InternalSyntaxFactory)_parser.Language.InternalSyntaxFactory;
             }
 
-            private InternalSyntaxToken? VisitTerminal(IToken? token, [Lang]SyntaxKind kind)
+            private GreenNode? VisitTerminal(IToken? token, [Lang]SyntaxKind kind)
             {
 				if (token == null)
 				{
@@ -112,12 +112,12 @@ namespace [Namespace].Syntax
 				return green;
             }
 
-            public InternalSyntaxToken? VisitTerminal(IToken? token)
+            public GreenNode? VisitTerminal(IToken? token)
             {
 				return VisitTerminal(token, [Lang]SyntaxKind.None);
             }
 
-            private InternalSyntaxToken? VisitTerminal(ITerminalNode? node, [Lang]SyntaxKind kind)
+            private GreenNode? VisitTerminal(ITerminalNode? node, [Lang]SyntaxKind kind)
             {
                 if (node?.Symbol == null)
 				{
@@ -129,7 +129,7 @@ namespace [Namespace].Syntax
 				return green;
 			}
 
-            public override InternalSyntaxToken? VisitTerminal(ITerminalNode? node)
+            public override GreenNode? VisitTerminal(ITerminalNode? node)
             {
                 return VisitTerminal(node, [Lang]SyntaxKind.None);
             }
@@ -148,10 +148,10 @@ namespace [Namespace].Syntax
                     [else if (elem.Value is TokenAlts tokenAlts)]
                 [GenerateVisitTokenAlts(elem, tokenAlts)]
                     [else if (elem.Value is Eof)]
-                var [elem.ParameterName] = this.VisitTerminal(context.[elem.AntlrName], [Lang]SyntaxKind.Eof);
+                var [elem.ParameterName] = (InternalSyntaxToken?)this.VisitTerminal(context.[elem.AntlrName], [Lang]SyntaxKind.Eof);
                     [else if (elem.Value is RuleRef rr)]
                         [if (rr.Token is not null)]
-                var [elem.ParameterName] = this.VisitTerminal(context.[elem.AntlrName][if (!elem.Multiplicity.IsOptional())], [Lang]SyntaxKind.[rr.Token.CSharpName][end if]);
+                var [elem.ParameterName] = (InternalSyntaxToken?)this.VisitTerminal(context.[elem.AntlrName][if (!elem.Multiplicity.IsOptional())], [Lang]SyntaxKind.[rr.Token.CSharpName][end if]);
                         [else if(rr.Rule is not null)]
                 [rr.GreenType]? [elem.ParameterName] = null;
                 if (context.[elem.AntlrName] is not null) [elem.ParameterName] = ([rr.GreenType]?)this.Visit(context.[elem.AntlrName])[if (!elem.Multiplicity.IsOptional())] ?? [rr.GreenType].__Missing[end if];
@@ -174,7 +174,7 @@ end template
 template GenerateVisitTokenAlts(Element elem, TokenAlts tokenAlts)
 InternalSyntaxToken? [elem.ParameterName] = null;
 [foreach (var token in tokenAlts.Tokens)]
-if (context.[token.Token.AntlrName]() is not null) [elem.ParameterName] = this.VisitTerminal(context.[token.Token.AntlrName]());
+if (context.[token.Token.AntlrName]() is not null) [elem.ParameterName] = (InternalSyntaxToken?)this.VisitTerminal(context.[token.Token.AntlrName]());
 [end foreach]
 [if (!elem.Multiplicity.IsOptional())]
 if ([elem.ParameterName] is null) [elem.ParameterName] = _factory.None;
@@ -187,7 +187,7 @@ var [elem.ParameterName]Builder = _pool.Allocate<[elem.Value.GreenType]>();
 for (int i = 0; i < [elem.AntlrName]Context.Count; ++i)
 {
             [if(elem.IsToken)]
-    [elem.ParameterName]Builder.Add(this.VisitTerminal([elem.AntlrName]Context["[i]"]));
+    [elem.ParameterName]Builder.Add((InternalSyntaxToken?)this.VisitTerminal([elem.AntlrName]Context["[i]"]));
             [else]
     if ([elem.AntlrName]Context["[i]"] is not null) [elem.ParameterName]Builder.Add(([elem.Value.GreenType]?)this.Visit([elem.AntlrName]Context["[i]"]) ?? [elem.Value.GreenType].__Missing);
     else [elem.ParameterName]Builder.Add([elem.Value.GreenType].__Missing);
@@ -226,7 +226,7 @@ for (int i = 0; i < [sl.RepeatedItem.AntlrName]Context.Count; ++i)
     }
     else
     {
-        [builder].AddSeparator(this.VisitTerminal((IToken?)null, [Lang]SyntaxKind.[sl.RepeatedSeparator.CSharpName]));
+        [builder].AddSeparator((InternalSyntaxToken?)this.VisitTerminal((IToken?)null, [Lang]SyntaxKind.[sl.RepeatedSeparator.CSharpName]));
     }
     [GenerateVisitSeparatedListItem(sl.RepeatedItem, builder, "i")]
     [else]
@@ -237,7 +237,7 @@ for (int i = 0; i < [sl.RepeatedItem.AntlrName]Context.Count; ++i)
     }
     else
     {
-        [builder].AddSeparator(this.VisitTerminal((IToken?)null, [Lang]SyntaxKind.[sl.RepeatedSeparator.CSharpName]));
+        [builder].AddSeparator((InternalSyntaxToken?)this.VisitTerminal((IToken?)null, [Lang]SyntaxKind.[sl.RepeatedSeparator.CSharpName]));
     }
     [end if]
 }
@@ -271,9 +271,9 @@ end template
 template GenerateVisitSeparatedListSeparator(Element elem, string builder)
 var _separatorContext = context.[elem.AntlrName];
     [if (elem.Multiplicity.IsOptional())]
-if ([elem.AntlrName]Context is not null) [builder].AddSeparator(this.VisitTerminal([elem.AntlrName]Context));
+if ([elem.AntlrName]Context is not null) [builder].AddSeparator((InternalSyntaxToken?)this.VisitTerminal([elem.AntlrName]Context));
     [else]
-[builder].AddSeparator(this.VisitTerminal([elem.AntlrName]Context, [Lang]SyntaxKind.[elem.CSharpName]));
+[builder].AddSeparator((InternalSyntaxToken?)this.VisitTerminal([elem.AntlrName]Context, [Lang]SyntaxKind.[elem.CSharpName]));
     [end if]
 end template
 
@@ -288,9 +288,9 @@ end template
 template GenerateVisitSeparatedListSeparator(Element elem, string builder, string index)
 var _separator = [elem.AntlrName]Context["["][index]["]"];
     [if (elem.Multiplicity.IsOptional())]
-if ([elem.AntlrName]Context is not null) [builder].AddSeparator(this.VisitTerminal(_separator));
+if ([elem.AntlrName]Context is not null) [builder].AddSeparator((InternalSyntaxToken?)this.VisitTerminal(_separator));
     [else]
-[builder].AddSeparator(this.VisitTerminal(_separator, [Lang]SyntaxKind.[elem.CSharpName]));
+[builder].AddSeparator((InternalSyntaxToken?)this.VisitTerminal(_separator, [Lang]SyntaxKind.[elem.CSharpName]));
     [end if]
 end template
 
