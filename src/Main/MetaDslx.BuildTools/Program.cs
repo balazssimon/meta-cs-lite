@@ -1,4 +1,6 @@
-﻿using MetaDslx.CodeAnalysis;
+﻿using Antlr4.Runtime;
+using MetaDslx.CodeAnalysis;
+using MetaDslx.CodeAnalysis.Parsers.Antlr;
 using MetaDslx.CodeAnalysis.PooledObjects;
 using MetaDslx.CodeAnalysis.Text;
 using MetaDslx.Languages.MetaGenerator.Syntax;
@@ -8,6 +10,10 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.MSBuild;
 using System.Collections.Immutable;
 using System.Diagnostics;
+using System.Reflection;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
+using System.Text;
 
 namespace MetaDslx.BuildTools
 {
@@ -17,13 +23,65 @@ namespace MetaDslx.BuildTools
         private const bool Bootstrap = true;
         private static readonly string[] BootstrapProjects =
         [
-            @"..\..\..\..\MetaDslx.Languages.MetaModel"
+            //@"..\..\..\..\MetaDslx.Languages.MetaModel",
+            //@"..\..\..\..\MetaDslx.Languages.MetaCompiler",
+            //@"..\..\..\..\MetaDslx.Languages.MetaCompiler.Antlr",
+            @"..\..\..\..\..\Bootstrap\MetaDslx.Bootstrap.MetaCompiler"
         ];
+        private static Microsoft.CodeAnalysis.MetadataReference[] PackageReferences;
 
         public static async Task Main(string[] args)
         {
             MSBuildLocator.RegisterDefaults();
             await Console.Out.WriteLineAsync($"Current directory is: {Directory.GetCurrentDirectory()}");
+            var coreLocation = typeof(object).GetTypeInfo().Assembly.Location;
+            var coreDir = Directory.GetParent(coreLocation)?.FullName ?? RuntimeEnvironment.GetRuntimeDirectory();
+            var netstandardPath = Path.Combine(coreDir, "netstandard.dll");
+            var mscorlibPath = Path.Combine(coreDir, "mscorlib.dll");
+            var systemRuntimePath = Path.Combine(coreDir, "System.Runtime.dll");
+            var systemReflectionMetadataPath = Path.Combine(coreDir, "System.Reflection.Metadata.dll");
+            var systemCorePath = Path.Combine(coreDir, "System.Core.dll");
+            var systemMemoryPath = Path.Combine(coreDir, "System.Memory.dll");
+            var systemBuffersPath = Path.Combine(coreDir, "System.Buffers.dll");
+            var systemThreadingPath = Path.Combine(coreDir, "System.Threading.dll");
+            var systemThreadingTasksPath = Path.Combine(coreDir, "System.Threading.Tasks.dll");
+            var systemThreadingTasksExtensionsPath = Path.Combine(coreDir, "System.Threading.Tasks.Extensions.dll");
+            var systemCollectionsPath = Path.Combine(coreDir, "System.Collections.dll");
+            var systemCollectionsImmutablePath = Path.Combine(coreDir, "System.Collections.Immutable.dll");
+            var systemLinqPath = Path.Combine(coreDir, "System.Linq.dll");
+            var systemLinqExpressionsPath = Path.Combine(coreDir, "System.Linq.Expressions.dll");
+            var systemLinqQueryablePath = Path.Combine(coreDir, "System.Linq.Queryable.dll");
+            var systemTextEncodingCodePagesPath = Path.Combine(coreDir, "System.Text.Encoding.CodePages.dll");
+            var systemRuntimeCompilerServicesUnsafePath = Path.Combine(coreDir, "System.Runtime.CompilerServices.Unsafe.dll");
+            var systemDiagnosticsDiagnosticSourcePath = Path.Combine(coreDir, "System.Diagnostics.DiagnosticSource.dll");
+            PackageReferences = [
+                Microsoft.CodeAnalysis.MetadataReference.CreateFromFile(netstandardPath),
+                Microsoft.CodeAnalysis.MetadataReference.CreateFromFile(mscorlibPath),
+                Microsoft.CodeAnalysis.MetadataReference.CreateFromFile(systemRuntimePath),
+                Microsoft.CodeAnalysis.MetadataReference.CreateFromFile(systemReflectionMetadataPath),
+                Microsoft.CodeAnalysis.MetadataReference.CreateFromFile(systemCorePath),
+                Microsoft.CodeAnalysis.MetadataReference.CreateFromFile(systemMemoryPath),
+                Microsoft.CodeAnalysis.MetadataReference.CreateFromFile(systemBuffersPath),
+                Microsoft.CodeAnalysis.MetadataReference.CreateFromFile(systemThreadingPath),
+                Microsoft.CodeAnalysis.MetadataReference.CreateFromFile(systemThreadingTasksPath),
+                Microsoft.CodeAnalysis.MetadataReference.CreateFromFile(systemThreadingTasksExtensionsPath),
+                Microsoft.CodeAnalysis.MetadataReference.CreateFromFile(systemCollectionsPath),
+                Microsoft.CodeAnalysis.MetadataReference.CreateFromFile(systemCollectionsImmutablePath),
+                Microsoft.CodeAnalysis.MetadataReference.CreateFromFile(systemLinqPath),
+                Microsoft.CodeAnalysis.MetadataReference.CreateFromFile(systemLinqExpressionsPath),
+                Microsoft.CodeAnalysis.MetadataReference.CreateFromFile(systemLinqQueryablePath),
+                Microsoft.CodeAnalysis.MetadataReference.CreateFromFile(systemTextEncodingCodePagesPath),
+                Microsoft.CodeAnalysis.MetadataReference.CreateFromFile(systemRuntimeCompilerServicesUnsafePath),
+                Microsoft.CodeAnalysis.MetadataReference.CreateFromFile(systemDiagnosticsDiagnosticSourcePath),
+                Microsoft.CodeAnalysis.MetadataReference.CreateFromFile(typeof(object).GetTypeInfo().Assembly.Location),
+                //Microsoft.CodeAnalysis.MetadataReference.CreateFromFile(typeof(Attribute).GetTypeInfo().Assembly.Location),
+                Microsoft.CodeAnalysis.MetadataReference.CreateFromFile(typeof(Microsoft.CodeAnalysis.Compilation).GetTypeInfo().Assembly.Location),
+                Microsoft.CodeAnalysis.MetadataReference.CreateFromFile(typeof(Microsoft.CodeAnalysis.CSharp.CSharpCompilation).GetTypeInfo().Assembly.Location),
+                Microsoft.CodeAnalysis.MetadataReference.CreateFromFile(typeof(IToken).GetTypeInfo().Assembly.Location),
+                Microsoft.CodeAnalysis.MetadataReference.CreateFromFile(typeof(AntlrParser).GetTypeInfo().Assembly.Location),
+                Microsoft.CodeAnalysis.MetadataReference.CreateFromFile(typeof(Autofac.IContainer).GetTypeInfo().Assembly.Location),
+                Microsoft.CodeAnalysis.MetadataReference.CreateFromFile(typeof(DynamicAttribute).GetTypeInfo().Assembly.Location),
+            ];
             if (Bootstrap)
             {
                 foreach (string project in BootstrapProjects)
@@ -71,6 +129,7 @@ namespace MetaDslx.BuildTools
                 var compilation = await project.GetCompilationAsync() as CSharpCompilation;
                 if (compilation is not null)
                 {
+                    compilation = compilation.AddReferences(PackageReferences);
                     await CompileMetaModels(compilation, mmFiles);
                 }
                 // Perform analysis...
@@ -91,12 +150,9 @@ namespace MetaDslx.BuildTools
                 var mgenCode = await File.ReadAllTextAsync(filePath);
                 var mgenCompiler = new MetaGeneratorParser(filePath, SourceText.From(mgenCode));
                 var csharpCode = mgenCompiler.Compile();
-                if (mgenCompiler.Diagnostics.Length > 0)
+                foreach (var diag in mgenCompiler.Diagnostics)
                 {
-                    foreach (var diag in mgenCompiler.Diagnostics)
-                    {
-                        await Console.Out.WriteLineAsync(DiagnosticFormatter.MSBuild.Format(diag));
-                    }
+                    await Console.Out.WriteLineAsync(DiagnosticFormatter.MSBuild.Format(diag));
                 }
                 if (!mgenCompiler.Diagnostics.Any(diag => diag.Severity == DiagnosticSeverity.Error))
                 {
@@ -141,26 +197,25 @@ namespace MetaDslx.BuildTools
                                 initialCompilation: initialCompilation,
                                 references: new[]
                                 {
-                                    MetaDslx.CodeAnalysis.MetadataReference.CreateFromMetaModel(MetaDslx.Languages.MetaModel.Model.Meta.MInstance)
+                                    MetadataReference.CreateFromMetaModel(MetaDslx.Languages.MetaModel.Model.Meta.MInstance)
                                 },
-                                options: MetaDslx.CodeAnalysis.CompilationOptions.Default.WithConcurrentBuild(false));
+                                options: CompilationOptions.Default.WithConcurrentBuild(false));
                 mmCompiler.Compile();
                 var diagnostics = mmCompiler.GetDiagnostics();
-                if (diagnostics.Length > 0)
+                var mmDiagnostics = diagnostics.Where(diag => filePaths.Contains(diag.Location?.GetLineSpan().Path ?? string.Empty)).ToImmutableArray();
+                foreach (var diag in mmDiagnostics)
                 {
-                    foreach (var diag in diagnostics)
-                    {
-                        await Console.Out.WriteLineAsync(DiagnosticFormatter.MSBuild.Format(diag));
-                    }
+                    await Console.Out.WriteLineAsync(DiagnosticFormatter.MSBuild.Format(diag));
                 }
-                if (!diagnostics.Any(diag => diag.Severity == DiagnosticSeverity.Error))
+                var model = mmCompiler.SourceModule.Model;
+                foreach (var mm in model.Objects.OfType<MetaDslx.Languages.MetaModel.Model.MetaModel>())
                 {
-                    var model = mmCompiler.SourceModule.Model;
-                    foreach (var mm in model.Objects.OfType<MetaDslx.Languages.MetaModel.Model.MetaModel>())
+                    var modelFilePath = mm.MSourceLocation?.GetLineSpan().Path;
+                    if (!mmDiagnostics.Any(diag => diag.Severity == DiagnosticSeverity.Error && diag.Location?.GetLineSpan().Path == modelFilePath))
                     {
                         var generator = new MetaDslx.Languages.MetaModel.Generators.MetaModelGenerator(Bootstrap, model, mm);
                         var csharpCode = generator.Generate();
-                        var csharpFilePath = $"{mm.MSourceLocation?.GetLineSpan().Path}.cs";
+                        var csharpFilePath = $"{modelFilePath}.cs";
                         await AddGeneratedFile(csharpFilePath, csharpCode);
                     }
                 }

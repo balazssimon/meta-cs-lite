@@ -20,7 +20,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
                 {
                     case CompilerSyntaxKind.Rule:
                         var pr = (RuleSyntax)node;
-                        return ExtractName(pr.RuleBlock1);
+                        return ExtractName(pr.Block);
                     case CompilerSyntaxKind.RuleBlock1Alt1:
                         var alt1 = (RuleBlock1Alt1Syntax)node;
                         return ExtractName(alt1.ReturnType);

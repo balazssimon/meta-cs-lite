@@ -12,7 +12,6 @@
 	<ItemGroup>
 		<PackageReference Include="Microsoft.CodeAnalysis.Common" Version="$(MicrosoftCodeAnalysisCSharpVersion)" PrivateAssets="all" />
 		<PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="$(MicrosoftCodeAnalysisCSharpVersion)" PrivateAssets="all" />
-		<PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="$(MicrosoftCodeAnalysisAnalyzersVersion)" PrivateAssets="all" />
 		<PackageReference Include="Antlr4.Runtime.Standard" Version="$(Antlr4RuntimeStandardVersion)" />
 	</ItemGroup>
 
@@ -25,9 +24,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\..\Main\MetaDslx.CodeAnalysis.Core\MetaDslx.CodeAnalysis.Core.csproj" OutputItemType="Analyzer" />
+		<ProjectReference Include="..\..\Main\MetaDslx.CodeAnalysis.Core\MetaDslx.CodeAnalysis.Core.csproj" />
 		<ProjectReference Include="..\..\Main\MetaDslx.CodeAnalysis.Common\MetaDslx.CodeAnalysis.Common.csproj" />
-		<ProjectReference Include="..\..\Main\MetaDslx.Languages.MetaGenerator\MetaDslx.Languages.MetaGenerator.csproj" OutputItemType="Analyzer" />
+		<ProjectReference Include="..\..\Main\MetaDslx.Languages.MetaGenerator\MetaDslx.Languages.MetaGenerator.csproj" />
 		<ProjectReference Include="..\..\Main\MetaDslx.Languages.MetaCompiler\MetaDslx.Languages.MetaCompiler.csproj" />
 		<ProjectReference Include="..\..\Main\MetaDslx.Languages.MetaCompiler.Antlr\MetaDslx.Languages.MetaCompiler.Antlr.csproj" />
 		<ProjectReference Include="..\..\Main\MetaDslx.Languages.MetaModel\MetaDslx.Languages.MetaModel.csproj" />
@@ -35,20 +34,6 @@
 
 	<ItemGroup>
 		<AdditionalFiles Include="Generators\*.mgen" />
+		<AdditionalFiles Include="Model\*.mm" />
 	</ItemGroup>
-
-	<ItemGroup>
-		<Compile Remove="Compiler\**" />
-		<None Remove="Compiler\**" />
-		<Compile Remove="Symbols\**" />
-		<None Remove="Symbols\**" />
-		<Compile Remove="Syntax\**" />
-		<None Remove="Syntax\**" />
-
-		<Compile Remove="Compiler3\**" />
-		<None Remove="Compiler3\**" />
-	</ItemGroup>
-
-	<!--
-	 -->
 </Project>

@@ -89,15 +89,15 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
                 {
                     var decl = Declaration.Declarations.FirstOrDefault(d => d.SyntaxReference.SyntaxTree == syntaxTree);
                     Debug.Assert(decl is not null);
-                    /*if (decl is not null)
+                    if (decl is not null)
                     {
-                        var fileNamespace = SymbolFactory.CreateSymbol<NamespaceSymbol>((ISourceSymbol)globalNamespace, Declaration);
+                        var fileNamespace = SymbolFactory.CreateSymbol<NamespaceSymbol>((ISourceSymbol)globalNamespace, Declaration, diagnostics);
                         fileNamespaces.Add(fileNamespace);
                     }
                     else
-                    {*/
+                    {
                         fileNamespaces.Add(globalNamespace);
-                    //}
+                    }
                 }
                 _fileNamespaces = fileNamespaces.ToImmutableAndFree();
             }

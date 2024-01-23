@@ -44,17 +44,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetaDslx.CodeAnalysis.Parse
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetaDslx.Bootstrap.MetaModel", "Bootstrap\MetaDslx.Bootstrap.MetaModel\MetaDslx.Bootstrap.MetaModel.csproj", "{517CBACC-CA27-4110-8939-5F36F3F695B2}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetaDslx.CodeAnalysis.Analyzers", "Main\MetaDslx.CodeAnalysis.Analyzers\MetaDslx.CodeAnalysis.Analyzers.csproj", "{F17FB7CC-0C5B-46F0-9994-7E8BDC2B4501}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetaDslx.Bootstrap.MetaGenerator", "Bootstrap\MetaDslx.Bootstrap.MetaGenerator\MetaDslx.Bootstrap.MetaGenerator.csproj", "{5B65A9E0-A355-4056-A738-B4DEF2A9CB4C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetaDslx.Languages.MetaGenerator.Tests", "Tests\MetaDslx.Languages.MetaGenerator.Tests\MetaDslx.Languages.MetaGenerator.Tests.csproj", "{2BFC2254-DBF6-4F3D-B420-A02C62D540BC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetaDslx.Languages.MetaModel.Tests", "Tests\MetaDslx.Languages.MetaModel.Tests\MetaDslx.Languages.MetaModel.Tests.csproj", "{4121AC96-D542-499C-8247-163EBF113CDD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetaDslx.Languages.MetaModel.Tests", "Tests\MetaDslx.Languages.MetaModel.Tests\MetaDslx.Languages.MetaModel.Tests.csproj", "{4121AC96-D542-499C-8247-163EBF113CDD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetaDslx.BuildTools", "Main\MetaDslx.BuildTools\MetaDslx.BuildTools.csproj", "{ADF1CE2B-51A4-42B8-90F7-93FD28A8D534}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetaDslx.BuildTools", "Main\MetaDslx.BuildTools\MetaDslx.BuildTools.csproj", "{ADF1CE2B-51A4-42B8-90F7-93FD28A8D534}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetaDslx.Bootstrap.BuildTools", "Bootstrap\MetaDslx.Bootstrap.BuildTools\MetaDslx.Bootstrap.BuildTools.csproj", "{9FEFF204-8181-4923-8708-BFC0F2143383}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetaDslx.Bootstrap.BuildTools", "Bootstrap\MetaDslx.Bootstrap.BuildTools\MetaDslx.Bootstrap.BuildTools.csproj", "{9FEFF204-8181-4923-8708-BFC0F2143383}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -216,14 +214,6 @@ Global
 		{517CBACC-CA27-4110-8939-5F36F3F695B2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{517CBACC-CA27-4110-8939-5F36F3F695B2}.Release|x86.ActiveCfg = Release|Any CPU
 		{517CBACC-CA27-4110-8939-5F36F3F695B2}.Release|x86.Build.0 = Release|Any CPU
-		{F17FB7CC-0C5B-46F0-9994-7E8BDC2B4501}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F17FB7CC-0C5B-46F0-9994-7E8BDC2B4501}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F17FB7CC-0C5B-46F0-9994-7E8BDC2B4501}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{F17FB7CC-0C5B-46F0-9994-7E8BDC2B4501}.Debug|x86.Build.0 = Debug|Any CPU
-		{F17FB7CC-0C5B-46F0-9994-7E8BDC2B4501}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F17FB7CC-0C5B-46F0-9994-7E8BDC2B4501}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F17FB7CC-0C5B-46F0-9994-7E8BDC2B4501}.Release|x86.ActiveCfg = Release|Any CPU
-		{F17FB7CC-0C5B-46F0-9994-7E8BDC2B4501}.Release|x86.Build.0 = Release|Any CPU
 		{5B65A9E0-A355-4056-A738-B4DEF2A9CB4C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5B65A9E0-A355-4056-A738-B4DEF2A9CB4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5B65A9E0-A355-4056-A738-B4DEF2A9CB4C}.Debug|x86.ActiveCfg = Debug|Any CPU

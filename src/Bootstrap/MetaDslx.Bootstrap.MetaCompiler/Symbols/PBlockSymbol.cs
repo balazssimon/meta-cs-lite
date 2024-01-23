@@ -63,7 +63,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
 
         public BlockSyntax? Syntax => this.DeclaringSyntaxReference.AsNode() as BlockSyntax;
 
-        public bool HasReturnType => this.Syntax?.BlockBlock1 is not null;
+        public bool HasReturnType => this.Syntax?.Block is not null;
 
         public bool IsResolvingExpectedTypes => _isResolvingExpectedTypes;
 

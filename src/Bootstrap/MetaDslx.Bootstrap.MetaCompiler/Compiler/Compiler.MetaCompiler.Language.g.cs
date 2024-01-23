@@ -7,8 +7,8 @@ using MetaDslx.CodeAnalysis.Syntax.InternalSyntax;
 
 namespace MetaDslx.Bootstrap.MetaCompiler.Compiler
 {
-    using MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax;
-    using MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax;
+    using global::MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax;
+    using global::MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax;
 
     public sealed partial class CompilerLanguage : Language
     {

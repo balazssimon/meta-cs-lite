@@ -67,7 +67,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
 
         public AnnotationArgumentSyntax? Syntax => this.DeclaringSyntaxReference.AsNode() as AnnotationArgumentSyntax;
 
-        public bool IsNamedArgument => Syntax?.AnnotationArgumentBlock1 is not null;
+        public bool IsNamedArgument => Syntax?.Block is not null;
 
         [ModelProperty]
         public ImmutableArray<MetaSymbol> NamedParameter
@@ -228,7 +228,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
             }
             else
             {
-                diagnostics.Add(Diagnostic.Create(CommonErrorCode.ERR_BindingError, this.Location, $"Could not determine the type of the parameter '{Syntax?.AnnotationArgumentBlock1?.NamedParameter}'"));
+                diagnostics.Add(Diagnostic.Create(CommonErrorCode.ERR_BindingError, this.Location, $"Could not determine the type of the parameter '{Syntax?.Block?.NamedParameter}'"));
             }
             return (result.ToImmutableAndFree(), kind);
         }

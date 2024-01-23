@@ -201,7 +201,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
 
         protected override string? CompleteProperty_Name(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            var nameSyntax = this.Syntax?.AlternativeBlock1?.Name;
+            var nameSyntax = this.Syntax?.Block1?.Name;
             return Declaration.Language.SyntaxFacts.ExtractName(nameSyntax);
         }
 
