@@ -29,7 +29,6 @@
 		<ProjectReference Include="..\..\Main\MetaDslx.CodeAnalysis.Common\MetaDslx.CodeAnalysis.Common.csproj" />
 		<ProjectReference Include="..\..\Main\MetaDslx.Languages.MetaGenerator\MetaDslx.Languages.MetaGenerator.csproj" />
 		<ProjectReference Include="..\..\Main\MetaDslx.Languages.MetaCompiler\MetaDslx.Languages.MetaCompiler.csproj" />
-		<ProjectReference Include="..\..\Main\MetaDslx.Languages.MetaCompiler.Antlr\MetaDslx.Languages.MetaCompiler.Antlr.csproj" />
 		<ProjectReference Include="..\..\Main\MetaDslx.Languages.MetaModel\MetaDslx.Languages.MetaModel.csproj" />
 		<ProjectReference Include="..\MetaDslx.Bootstrap.MetaCompiler\MetaDslx.Bootstrap.MetaCompiler.csproj" />
 	</ItemGroup>

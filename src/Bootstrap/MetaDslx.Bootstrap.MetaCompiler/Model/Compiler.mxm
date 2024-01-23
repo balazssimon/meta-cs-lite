@@ -7,10 +7,7 @@ metamodel Compiler;
 
 abstract class $Declaration
 {
-	contains Annotation[] Annotations $Attributes;
 	string? $Name;
-	Declaration? Parent opposite Declarations;
-	contains Declaration[] Declarations opposite Parent;
 	derived string? FullName;
 }
 
@@ -39,7 +36,6 @@ class $Grammar : Declaration
 	Token? DefaultSeparator;
 	Token? DefaultIdentifier;
 	Rule? MainRule;
-	string? RootTypeName;
 }
 
 class $Annotation
@@ -75,6 +71,7 @@ class BinderArgument
 
 class CSharpElement
 {
+	contains Annotation[] Annotations;
 	string CSharpName;
 	string AntlrName;
 	contains Binder[] Binders;
@@ -115,6 +112,7 @@ abstract class LexerRule : GrammarRule
 class $Token : LexerRule
 {
 	type $ReturnType;
+	bool $NeverNull;
 	bool IsTrivia;
 
 	TokenKind? TokenKind;
@@ -221,8 +219,8 @@ class LBlock : LElementValue
 abstract class Rule $ParserRule : GrammarRule
 {
 	type $ReturnType;
+	bool $NeverNull;
 	contains Alternative[] $Alternatives;
-	bool AllowMerge;
 
 	derived string GreenName;
 	derived string RedName;
@@ -231,6 +229,7 @@ abstract class Rule $ParserRule : GrammarRule
 class Alternative $PAlternative : Declaration, CSharpElement
 {
 	type $ReturnType;
+	bool $NeverNull;
 	contains Expression $ReturnValue;
 	contains Element[] $Elements;
 
@@ -259,14 +258,10 @@ enum Assignment
 
 class Element $PElement : CSharpElement
 {
-	contains Annotation[] NameAnnotations;
-	symbol[] $SymbolProperty;
+	string $Name;
 	Assignment $Assignment;
-	contains Annotation[] ValueAnnotations;
 	contains ElementValue $Value;
 	Multiplicity Multiplicity;
-
-	string? Name;
 
 	derived bool IsToken;
 	derived bool IsList;
@@ -325,36 +320,20 @@ class Eof : ElementValue
 	derived string RedType;
 }
 
-class Keyword : ElementValue
+class Fixed : ElementValue
 {
 	string Text;
 }
 
-class TokenAlts : ElementValue
+class Block $PBlock : ElementValue
 {
-	contains RuleRef[] Tokens;
-
-	derived string GreenType;
-	derived string? GreenSyntaxCondition;
-
-	derived string RedType;
-}
-
-class Block $PBlock : Rule, ElementValue
-{
+	contains Alternative[] $Alternatives;
 }
 
 class SeparatedList : ElementValue
 {
-	bool SeparatorFirst;
-	bool RepeatedSeparatorFirst;
-	contains Element[] FirstItems;
-	contains Element[] FirstSeparators;
-	contains Element RepeatedBlock;
-	Element RepeatedItem;
-	Element RepeatedSeparator;
-	contains Element[] LastItems;
-	contains Element[] LastSeparators;
+	contains Element Item;
+	contains Element Separator;
 
 	derived string GreenType;
 	derived string? GreenSyntaxCondition;
@@ -370,4 +349,19 @@ class Expression $ExpressionSymbol
 class ArrayExpression : Expression
 {
 	Expression[] Items;
+}
+
+class Name
+{
+	Identifier Identifier;
+}
+
+class Qualifier
+{
+	Identifier[] Identifiers;
+}
+
+class Identifier
+{
+	string Name;
 }

@@ -175,8 +175,8 @@ for (var [indexName] = 0; [indexName] < [elem.ParameterName]List.Count; ++[index
     bool __sepHandled = false;
     [var itemName = "node."+elem.PropertyName+"["+indexName+"]"]
     [var sepName = "node."+elem.PropertyName+".GetSeparator("+indexName+")"]
-    [var firstCount = Math.Max(list.FirstItems.Count, list.FirstSeparators.Count)]
-    [var lastCount = Math.Min(list.LastItems.Count, list.LastSeparators.Count)]
+    [var firstCount = System.Math.Max(list.FirstItems.Count, list.FirstSeparators.Count)]
+    [var lastCount = System.Math.Min(list.LastItems.Count, list.LastSeparators.Count)]
     [var ifElse = ""]
     [for (int i = 0; i < firstCount - 1; ++i)]
     [ifElse]if ([indexName] == [i])

@@ -54,7 +54,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
         private static readonly __ModelProperty _Grammar_DefaultSeparator;
         private static readonly __ModelProperty _Grammar_DefaultIdentifier;
         private static readonly __ModelProperty _Grammar_MainRule;
-        private static readonly __ModelProperty _Grammar_RootTypeName;
         private static readonly __ModelProperty _Annotation_AttributeClass;
         private static readonly __ModelProperty _Annotation_Arguments;
         private static readonly __ModelProperty _AnnotationArgument_NamedParameter;
@@ -81,6 +80,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
         private static readonly __ModelProperty _LexerRule_IsFixed;
         private static readonly __ModelProperty _LexerRule_FixedText;
         private static readonly __ModelProperty _Token_ReturnType;
+        private static readonly __ModelProperty _Token_NeverNull;
         private static readonly __ModelProperty _Token_IsTrivia;
         private static readonly __ModelProperty _Token_TokenKind;
         private static readonly __ModelProperty _LAlternative_IsFixed;
@@ -121,11 +121,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
         private static readonly __ModelProperty _LBlock_FixedText;
         private static readonly __ModelProperty _LBlock_Alternatives;
         private static readonly __ModelProperty _Rule_ReturnType;
+        private static readonly __ModelProperty _Rule_NeverNull;
         private static readonly __ModelProperty _Rule_Alternatives;
-        private static readonly __ModelProperty _Rule_AllowMerge;
         private static readonly __ModelProperty _Rule_GreenName;
         private static readonly __ModelProperty _Rule_RedName;
         private static readonly __ModelProperty _Alternative_ReturnType;
+        private static readonly __ModelProperty _Alternative_NeverNull;
         private static readonly __ModelProperty _Alternative_ReturnValue;
         private static readonly __ModelProperty _Alternative_Elements;
         private static readonly __ModelProperty _Alternative_GreenName;
@@ -141,12 +142,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
         private static readonly __ModelProperty _Alternative_RedToGreenOptionalArgumentList;
         private static readonly __ModelProperty _Alternative_HasRedToGreenOptionalArguments;
         private static readonly __ModelProperty _Element_NameAnnotations;
-        private static readonly __ModelProperty _Element_SymbolProperty;
+        private static readonly __ModelProperty _Element_Name;
         private static readonly __ModelProperty _Element_Assignment;
         private static readonly __ModelProperty _Element_ValueAnnotations;
         private static readonly __ModelProperty _Element_Value;
         private static readonly __ModelProperty _Element_Multiplicity;
-        private static readonly __ModelProperty _Element_Name;
         private static readonly __ModelProperty _Element_IsToken;
         private static readonly __ModelProperty _Element_IsList;
         private static readonly __ModelProperty _Element_FieldName;
@@ -181,25 +181,18 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
         private static readonly __ModelProperty _Eof_GreenType;
         private static readonly __ModelProperty _Eof_GreenSyntaxCondition;
         private static readonly __ModelProperty _Eof_RedType;
-        private static readonly __ModelProperty _Keyword_Text;
-        private static readonly __ModelProperty _TokenAlts_Tokens;
-        private static readonly __ModelProperty _TokenAlts_GreenType;
-        private static readonly __ModelProperty _TokenAlts_GreenSyntaxCondition;
-        private static readonly __ModelProperty _TokenAlts_RedType;
-        private static readonly __ModelProperty _SeparatedList_SeparatorFirst;
-        private static readonly __ModelProperty _SeparatedList_RepeatedSeparatorFirst;
-        private static readonly __ModelProperty _SeparatedList_FirstItems;
-        private static readonly __ModelProperty _SeparatedList_FirstSeparators;
-        private static readonly __ModelProperty _SeparatedList_RepeatedBlock;
-        private static readonly __ModelProperty _SeparatedList_RepeatedItem;
-        private static readonly __ModelProperty _SeparatedList_RepeatedSeparator;
-        private static readonly __ModelProperty _SeparatedList_LastItems;
-        private static readonly __ModelProperty _SeparatedList_LastSeparators;
+        private static readonly __ModelProperty _Fixed_Text;
+        private static readonly __ModelProperty _Block_Alternatives;
+        private static readonly __ModelProperty _SeparatedList_Item;
+        private static readonly __ModelProperty _SeparatedList_Separator;
         private static readonly __ModelProperty _SeparatedList_GreenType;
         private static readonly __ModelProperty _SeparatedList_GreenSyntaxCondition;
         private static readonly __ModelProperty _SeparatedList_RedType;
         private static readonly __ModelProperty _Expression_Value;
         private static readonly __ModelProperty _ArrayExpression_Items;
+        private static readonly __ModelProperty _Name_Identifier;
+        private static readonly __ModelProperty _Qualifier_Identifiers;
+        private static readonly __ModelProperty _Identifier_Name;
     
         static Compiler()
         {
@@ -222,7 +215,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             _CSharpElement_Binders = new __ModelProperty(typeof(CSharpElement), "Binders", typeof(Binder), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection, null);
             _CSharpElement_ContainsBinders = new __ModelProperty(typeof(CSharpElement), "ContainsBinders", typeof(bool), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single, null);
             _CSharpElement_CSharpName = new __ModelProperty(typeof(CSharpElement), "CSharpName", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single, null);
-            _Declaration_Annotations = new __ModelProperty(typeof(Declaration), "Annotations", typeof(Annotation), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection, "Attributes");
+            _Block_Alternatives = new __ModelProperty(typeof(Block), "Alternatives", typeof(Alternative), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection, "Alternatives");
+            _Declaration_Annotations = new __ModelProperty(typeof(Declaration), "Annotations", typeof(Annotation), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection, null);
             _Declaration_Declarations = new __ModelProperty(typeof(Declaration), "Declarations", typeof(Declaration), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection, null);
             _Declaration_FullName = new __ModelProperty(typeof(Declaration), "FullName", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
             _Declaration_Name = new __ModelProperty(typeof(Declaration), "Name", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.Name, "Name");
@@ -234,6 +228,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             _Alternative_GreenUpdateArguments = new __ModelProperty(typeof(Alternative), "GreenUpdateArguments", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
             _Alternative_GreenUpdateParameters = new __ModelProperty(typeof(Alternative), "GreenUpdateParameters", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
             _Alternative_HasRedToGreenOptionalArguments = new __ModelProperty(typeof(Alternative), "HasRedToGreenOptionalArguments", typeof(bool), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
+            _Alternative_NeverNull = new __ModelProperty(typeof(Alternative), "NeverNull", typeof(bool), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single, "NeverNull");
             _Alternative_RedName = new __ModelProperty(typeof(Alternative), "RedName", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
             _Alternative_RedOptionalUpdateParameters = new __ModelProperty(typeof(Alternative), "RedOptionalUpdateParameters", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
             _Alternative_RedToGreenArgumentList = new __ModelProperty(typeof(Alternative), "RedToGreenArgumentList", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
@@ -242,11 +237,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             _Alternative_RedUpdateParameters = new __ModelProperty(typeof(Alternative), "RedUpdateParameters", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
             _Alternative_ReturnType = new __ModelProperty(typeof(Alternative), "ReturnType", typeof(__MetaType), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single, "ReturnType");
             _Alternative_ReturnValue = new __ModelProperty(typeof(Alternative), "ReturnValue", typeof(Expression), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Single, "ReturnValue");
-            _ElementValue_GreenSyntaxCondition = new __ModelProperty(typeof(ElementValue), "GreenSyntaxCondition", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
-            _ElementValue_GreenType = new __ModelProperty(typeof(ElementValue), "GreenType", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
-            _ElementValue_RedType = new __ModelProperty(typeof(ElementValue), "RedType", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
-            _GrammarRule_Grammar = new __ModelProperty(typeof(GrammarRule), "Grammar", typeof(Grammar), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Single, null);
-            _GrammarRule_Language = new __ModelProperty(typeof(GrammarRule), "Language", typeof(Language), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
             _Element_Assignment = new __ModelProperty(typeof(Element), "Assignment", typeof(global::MetaDslx.Bootstrap.MetaCompiler.Model.Assignment), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.EnumType | __ModelPropertyFlags.Single, "Assignment");
             _Element_FieldName = new __ModelProperty(typeof(Element), "FieldName", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
             _Element_GreenFieldType = new __ModelProperty(typeof(Element), "GreenFieldType", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
@@ -259,7 +249,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             _Element_IsOptionalUpdateParameter = new __ModelProperty(typeof(Element), "IsOptionalUpdateParameter", typeof(bool), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
             _Element_IsToken = new __ModelProperty(typeof(Element), "IsToken", typeof(bool), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
             _Element_Multiplicity = new __ModelProperty(typeof(Element), "Multiplicity", typeof(global::MetaDslx.Bootstrap.MetaCompiler.Model.Multiplicity), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.EnumType | __ModelPropertyFlags.Single, null);
-            _Element_Name = new __ModelProperty(typeof(Element), "Name", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single, null);
+            _Element_Name = new __ModelProperty(typeof(Element), "Name", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.Name, "Name");
             _Element_NameAnnotations = new __ModelProperty(typeof(Element), "NameAnnotations", typeof(Annotation), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection, null);
             _Element_ParameterName = new __ModelProperty(typeof(Element), "ParameterName", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
             _Element_PropertyName = new __ModelProperty(typeof(Element), "PropertyName", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
@@ -271,20 +261,19 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             _Element_RedSyntaxNullCondition = new __ModelProperty(typeof(Element), "RedSyntaxNullCondition", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
             _Element_RedToGreenArgument = new __ModelProperty(typeof(Element), "RedToGreenArgument", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
             _Element_RedToGreenOptionalArgument = new __ModelProperty(typeof(Element), "RedToGreenOptionalArgument", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
-            _Element_SymbolProperty = new __ModelProperty(typeof(Element), "SymbolProperty", typeof(__MetaSymbol), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Collection, "SymbolProperty");
             _Element_Value = new __ModelProperty(typeof(Element), "Value", typeof(ElementValue), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Single, "Value");
             _Element_ValueAnnotations = new __ModelProperty(typeof(Element), "ValueAnnotations", typeof(Annotation), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection, null);
             _Element_VisitCall = new __ModelProperty(typeof(Element), "VisitCall", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
+            _ElementValue_GreenSyntaxCondition = new __ModelProperty(typeof(ElementValue), "GreenSyntaxCondition", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
+            _ElementValue_GreenType = new __ModelProperty(typeof(ElementValue), "GreenType", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
+            _ElementValue_RedType = new __ModelProperty(typeof(ElementValue), "RedType", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
             _Eof_GreenSyntaxCondition = new __ModelProperty(typeof(Eof), "GreenSyntaxCondition", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
             _Eof_GreenType = new __ModelProperty(typeof(Eof), "GreenType", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
             _Eof_RedType = new __ModelProperty(typeof(Eof), "RedType", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
             _Expression_Value = new __ModelProperty(typeof(Expression), "Value", typeof(__MetaSymbol), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single, "Value");
-            _Keyword_Text = new __ModelProperty(typeof(Keyword), "Text", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single, null);
-            _Language_Grammar = new __ModelProperty(typeof(Language), "Grammar", typeof(Grammar), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Single, null);
-            _Language_Namespace = new __ModelProperty(typeof(Language), "Namespace", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
-            _LexerRule_Alternatives = new __ModelProperty(typeof(LexerRule), "Alternatives", typeof(LAlternative), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection, null);
-            _LexerRule_FixedText = new __ModelProperty(typeof(LexerRule), "FixedText", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
-            _LexerRule_IsFixed = new __ModelProperty(typeof(LexerRule), "IsFixed", typeof(bool), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
+            _Fixed_Text = new __ModelProperty(typeof(Fixed), "Text", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single, null);
+            _GrammarRule_Grammar = new __ModelProperty(typeof(GrammarRule), "Grammar", typeof(Grammar), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Single, null);
+            _GrammarRule_Language = new __ModelProperty(typeof(GrammarRule), "Language", typeof(Language), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
             _Grammar_DefaultEndOfLine = new __ModelProperty(typeof(Grammar), "DefaultEndOfLine", typeof(Token), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Single, null);
             _Grammar_DefaultIdentifier = new __ModelProperty(typeof(Grammar), "DefaultIdentifier", typeof(Token), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Single, null);
             _Grammar_DefaultSeparator = new __ModelProperty(typeof(Grammar), "DefaultSeparator", typeof(Token), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Single, null);
@@ -292,13 +281,15 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             _Grammar_GrammarRules = new __ModelProperty(typeof(Grammar), "GrammarRules", typeof(GrammarRule), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection, null);
             _Grammar_Language = new __ModelProperty(typeof(Grammar), "Language", typeof(Language), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Single, null);
             _Grammar_MainRule = new __ModelProperty(typeof(Grammar), "MainRule", typeof(Rule), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Single, null);
-            _Grammar_RootTypeName = new __ModelProperty(typeof(Grammar), "RootTypeName", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single, null);
             _Grammar_Rules = new __ModelProperty(typeof(Grammar), "Rules", typeof(Rule), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection, null);
             _Grammar_TokenKinds = new __ModelProperty(typeof(Grammar), "TokenKinds", typeof(TokenKind), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection, null);
             _Grammar_Tokens = new __ModelProperty(typeof(Grammar), "Tokens", typeof(Token), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection, null);
+            _Identifier_Name = new __ModelProperty(typeof(Identifier), "Name", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single, null);
             _LAlternative_Elements = new __ModelProperty(typeof(LAlternative), "Elements", typeof(LElement), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection, null);
             _LAlternative_FixedText = new __ModelProperty(typeof(LAlternative), "FixedText", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
             _LAlternative_IsFixed = new __ModelProperty(typeof(LAlternative), "IsFixed", typeof(bool), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
+            _Language_Grammar = new __ModelProperty(typeof(Language), "Grammar", typeof(Grammar), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Single, null);
+            _Language_Namespace = new __ModelProperty(typeof(Language), "Namespace", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
             _LElement_FixedText = new __ModelProperty(typeof(LElement), "FixedText", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
             _LElement_IsFixed = new __ModelProperty(typeof(LElement), "IsFixed", typeof(bool), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
             _LElement_IsNegated = new __ModelProperty(typeof(LElement), "IsNegated", typeof(bool), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single, null);
@@ -309,6 +300,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             _LBlock_Alternatives = new __ModelProperty(typeof(LBlock), "Alternatives", typeof(LAlternative), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection, null);
             _LBlock_FixedText = new __ModelProperty(typeof(LBlock), "FixedText", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
             _LBlock_IsFixed = new __ModelProperty(typeof(LBlock), "IsFixed", typeof(bool), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
+            _LexerRule_Alternatives = new __ModelProperty(typeof(LexerRule), "Alternatives", typeof(LAlternative), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection, null);
+            _LexerRule_FixedText = new __ModelProperty(typeof(LexerRule), "FixedText", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
+            _LexerRule_IsFixed = new __ModelProperty(typeof(LexerRule), "IsFixed", typeof(bool), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
             _LFixed_FixedText = new __ModelProperty(typeof(LFixed), "FixedText", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
             _LFixed_IsFixed = new __ModelProperty(typeof(LFixed), "IsFixed", typeof(bool), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
             _LFixed_Text = new __ModelProperty(typeof(LFixed), "Text", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single, null);
@@ -333,9 +327,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             _LSetRange_StartChar = new __ModelProperty(typeof(LSetRange), "StartChar", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single, null);
             _LWildCard_FixedText = new __ModelProperty(typeof(LWildCard), "FixedText", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
             _LWildCard_IsFixed = new __ModelProperty(typeof(LWildCard), "IsFixed", typeof(bool), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
-            _Rule_AllowMerge = new __ModelProperty(typeof(Rule), "AllowMerge", typeof(bool), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single, null);
+            _Name_Identifier = new __ModelProperty(typeof(Name), "Identifier", typeof(Identifier), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Single, null);
+            _Qualifier_Identifiers = new __ModelProperty(typeof(Qualifier), "Identifiers", typeof(Identifier), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Collection, null);
             _Rule_Alternatives = new __ModelProperty(typeof(Rule), "Alternatives", typeof(Alternative), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection, "Alternatives");
             _Rule_GreenName = new __ModelProperty(typeof(Rule), "GreenName", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
+            _Rule_NeverNull = new __ModelProperty(typeof(Rule), "NeverNull", typeof(bool), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single, "NeverNull");
             _Rule_RedName = new __ModelProperty(typeof(Rule), "RedName", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
             _Rule_ReturnType = new __ModelProperty(typeof(Rule), "ReturnType", typeof(__MetaType), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single, "ReturnType");
             _RuleRef_GrammarRule = new __ModelProperty(typeof(RuleRef), "GrammarRule", typeof(GrammarRule), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Single, "Rule");
@@ -345,25 +341,15 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             _RuleRef_ReferencedTypes = new __ModelProperty(typeof(RuleRef), "ReferencedTypes", typeof(__MetaType), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Collection, "ReferencedTypes");
             _RuleRef_Rule = new __ModelProperty(typeof(RuleRef), "Rule", typeof(Rule), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
             _RuleRef_Token = new __ModelProperty(typeof(RuleRef), "Token", typeof(Token), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
-            _SeparatedList_FirstItems = new __ModelProperty(typeof(SeparatedList), "FirstItems", typeof(Element), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection, null);
-            _SeparatedList_FirstSeparators = new __ModelProperty(typeof(SeparatedList), "FirstSeparators", typeof(Element), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection, null);
             _SeparatedList_GreenSyntaxCondition = new __ModelProperty(typeof(SeparatedList), "GreenSyntaxCondition", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
             _SeparatedList_GreenType = new __ModelProperty(typeof(SeparatedList), "GreenType", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
-            _SeparatedList_LastItems = new __ModelProperty(typeof(SeparatedList), "LastItems", typeof(Element), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection, null);
-            _SeparatedList_LastSeparators = new __ModelProperty(typeof(SeparatedList), "LastSeparators", typeof(Element), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection, null);
+            _SeparatedList_Item = new __ModelProperty(typeof(SeparatedList), "Item", typeof(Element), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Single, null);
             _SeparatedList_RedType = new __ModelProperty(typeof(SeparatedList), "RedType", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
-            _SeparatedList_RepeatedBlock = new __ModelProperty(typeof(SeparatedList), "RepeatedBlock", typeof(Element), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Single, null);
-            _SeparatedList_RepeatedItem = new __ModelProperty(typeof(SeparatedList), "RepeatedItem", typeof(Element), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Single, null);
-            _SeparatedList_RepeatedSeparator = new __ModelProperty(typeof(SeparatedList), "RepeatedSeparator", typeof(Element), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Single, null);
-            _SeparatedList_RepeatedSeparatorFirst = new __ModelProperty(typeof(SeparatedList), "RepeatedSeparatorFirst", typeof(bool), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single, null);
-            _SeparatedList_SeparatorFirst = new __ModelProperty(typeof(SeparatedList), "SeparatorFirst", typeof(bool), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single, null);
+            _SeparatedList_Separator = new __ModelProperty(typeof(SeparatedList), "Separator", typeof(Element), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Single, null);
             _Token_IsTrivia = new __ModelProperty(typeof(Token), "IsTrivia", typeof(bool), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single, null);
+            _Token_NeverNull = new __ModelProperty(typeof(Token), "NeverNull", typeof(bool), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single, "NeverNull");
             _Token_ReturnType = new __ModelProperty(typeof(Token), "ReturnType", typeof(__MetaType), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single, "ReturnType");
             _Token_TokenKind = new __ModelProperty(typeof(Token), "TokenKind", typeof(TokenKind), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Single, null);
-            _TokenAlts_GreenSyntaxCondition = new __ModelProperty(typeof(TokenAlts), "GreenSyntaxCondition", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
-            _TokenAlts_GreenType = new __ModelProperty(typeof(TokenAlts), "GreenType", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
-            _TokenAlts_RedType = new __ModelProperty(typeof(TokenAlts), "RedType", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
-            _TokenAlts_Tokens = new __ModelProperty(typeof(TokenAlts), "Tokens", typeof(RuleRef), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection, null);
             _TokenKind_Name = new __ModelProperty(typeof(TokenKind), "Name", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single, null);
             _TokenKind_TypeName = new __ModelProperty(typeof(TokenKind), "TypeName", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single, null);
             _instance = new Compiler();
@@ -395,8 +381,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             enumInfosByName.Add("Multiplicity", MultiplicityInfo);
             _enumInfosByName = enumInfosByName.ToImmutable();
     
-            _classTypes = __ImmutableArray.Create<__MetaType>(typeof(Annotation), typeof(AnnotationArgument), typeof(ArrayExpression), typeof(Binder), typeof(BinderArgument), typeof(CSharpElement), typeof(Declaration), typeof(Alternative), typeof(ElementValue), typeof(GrammarRule), typeof(Block), typeof(Element), typeof(Eof), typeof(Expression), typeof(Keyword), typeof(Language), typeof(LexerRule), typeof(Fragment), typeof(Grammar), typeof(LAlternative), typeof(LElement), typeof(LElementValue), typeof(LBlock), typeof(LFixed), typeof(LRange), typeof(LReference), typeof(LSet), typeof(LSetItem), typeof(LSetChar), typeof(LSetRange), typeof(LWildCard), typeof(Namespace), typeof(Rule), typeof(RuleRef), typeof(SeparatedList), typeof(Token), typeof(TokenAlts), typeof(TokenKind));
-            _classInfos = __ImmutableArray.Create<__ModelClassInfo>(AnnotationInfo, AnnotationArgumentInfo, ArrayExpressionInfo, BinderInfo, BinderArgumentInfo, CSharpElementInfo, DeclarationInfo, AlternativeInfo, ElementValueInfo, GrammarRuleInfo, BlockInfo, ElementInfo, EofInfo, ExpressionInfo, KeywordInfo, LanguageInfo, LexerRuleInfo, FragmentInfo, GrammarInfo, LAlternativeInfo, LElementInfo, LElementValueInfo, LBlockInfo, LFixedInfo, LRangeInfo, LReferenceInfo, LSetInfo, LSetItemInfo, LSetCharInfo, LSetRangeInfo, LWildCardInfo, NamespaceInfo, RuleInfo, RuleRefInfo, SeparatedListInfo, TokenInfo, TokenAltsInfo, TokenKindInfo);
+            _classTypes = __ImmutableArray.Create<__MetaType>(typeof(Annotation), typeof(AnnotationArgument), typeof(ArrayExpression), typeof(Binder), typeof(BinderArgument), typeof(CSharpElement), typeof(Block), typeof(Declaration), typeof(Alternative), typeof(Element), typeof(ElementValue), typeof(Eof), typeof(Expression), typeof(Fixed), typeof(GrammarRule), typeof(Fragment), typeof(Grammar), typeof(Identifier), typeof(LAlternative), typeof(Language), typeof(LElement), typeof(LElementValue), typeof(LBlock), typeof(LexerRule), typeof(LFixed), typeof(LRange), typeof(LReference), typeof(LSet), typeof(LSetItem), typeof(LSetChar), typeof(LSetRange), typeof(LWildCard), typeof(Name), typeof(Namespace), typeof(Qualifier), typeof(Rule), typeof(RuleRef), typeof(SeparatedList), typeof(Token), typeof(TokenKind));
+            _classInfos = __ImmutableArray.Create<__ModelClassInfo>(AnnotationInfo, AnnotationArgumentInfo, ArrayExpressionInfo, BinderInfo, BinderArgumentInfo, CSharpElementInfo, BlockInfo, DeclarationInfo, AlternativeInfo, ElementInfo, ElementValueInfo, EofInfo, ExpressionInfo, FixedInfo, GrammarRuleInfo, FragmentInfo, GrammarInfo, IdentifierInfo, LAlternativeInfo, LanguageInfo, LElementInfo, LElementValueInfo, LBlockInfo, LexerRuleInfo, LFixedInfo, LRangeInfo, LReferenceInfo, LSetInfo, LSetItemInfo, LSetCharInfo, LSetRangeInfo, LWildCardInfo, NameInfo, NamespaceInfo, QualifierInfo, RuleInfo, RuleRefInfo, SeparatedListInfo, TokenInfo, TokenKindInfo);
             var classInfosByType = __ImmutableDictionary.CreateBuilder<__MetaType, __ModelClassInfo>();
             classInfosByType.Add(typeof(Annotation), AnnotationInfo);
             classInfosByType.Add(typeof(AnnotationArgument), AnnotationArgumentInfo);
@@ -404,23 +390,24 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             classInfosByType.Add(typeof(Binder), BinderInfo);
             classInfosByType.Add(typeof(BinderArgument), BinderArgumentInfo);
             classInfosByType.Add(typeof(CSharpElement), CSharpElementInfo);
+            classInfosByType.Add(typeof(Block), BlockInfo);
             classInfosByType.Add(typeof(Declaration), DeclarationInfo);
             classInfosByType.Add(typeof(Alternative), AlternativeInfo);
-            classInfosByType.Add(typeof(ElementValue), ElementValueInfo);
-            classInfosByType.Add(typeof(GrammarRule), GrammarRuleInfo);
-            classInfosByType.Add(typeof(Block), BlockInfo);
             classInfosByType.Add(typeof(Element), ElementInfo);
+            classInfosByType.Add(typeof(ElementValue), ElementValueInfo);
             classInfosByType.Add(typeof(Eof), EofInfo);
             classInfosByType.Add(typeof(Expression), ExpressionInfo);
-            classInfosByType.Add(typeof(Keyword), KeywordInfo);
-            classInfosByType.Add(typeof(Language), LanguageInfo);
-            classInfosByType.Add(typeof(LexerRule), LexerRuleInfo);
+            classInfosByType.Add(typeof(Fixed), FixedInfo);
+            classInfosByType.Add(typeof(GrammarRule), GrammarRuleInfo);
             classInfosByType.Add(typeof(Fragment), FragmentInfo);
             classInfosByType.Add(typeof(Grammar), GrammarInfo);
+            classInfosByType.Add(typeof(Identifier), IdentifierInfo);
             classInfosByType.Add(typeof(LAlternative), LAlternativeInfo);
+            classInfosByType.Add(typeof(Language), LanguageInfo);
             classInfosByType.Add(typeof(LElement), LElementInfo);
             classInfosByType.Add(typeof(LElementValue), LElementValueInfo);
             classInfosByType.Add(typeof(LBlock), LBlockInfo);
+            classInfosByType.Add(typeof(LexerRule), LexerRuleInfo);
             classInfosByType.Add(typeof(LFixed), LFixedInfo);
             classInfosByType.Add(typeof(LRange), LRangeInfo);
             classInfosByType.Add(typeof(LReference), LReferenceInfo);
@@ -429,12 +416,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             classInfosByType.Add(typeof(LSetChar), LSetCharInfo);
             classInfosByType.Add(typeof(LSetRange), LSetRangeInfo);
             classInfosByType.Add(typeof(LWildCard), LWildCardInfo);
+            classInfosByType.Add(typeof(Name), NameInfo);
             classInfosByType.Add(typeof(Namespace), NamespaceInfo);
+            classInfosByType.Add(typeof(Qualifier), QualifierInfo);
             classInfosByType.Add(typeof(Rule), RuleInfo);
             classInfosByType.Add(typeof(RuleRef), RuleRefInfo);
             classInfosByType.Add(typeof(SeparatedList), SeparatedListInfo);
             classInfosByType.Add(typeof(Token), TokenInfo);
-            classInfosByType.Add(typeof(TokenAlts), TokenAltsInfo);
             classInfosByType.Add(typeof(TokenKind), TokenKindInfo);
             _classInfosByType = classInfosByType.ToImmutable();
             var classInfosByName = __ImmutableDictionary.CreateBuilder<string, __ModelClassInfo>();
@@ -444,23 +432,24 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             classInfosByName.Add("Binder", BinderInfo);
             classInfosByName.Add("BinderArgument", BinderArgumentInfo);
             classInfosByName.Add("CSharpElement", CSharpElementInfo);
+            classInfosByName.Add("Block", BlockInfo);
             classInfosByName.Add("Declaration", DeclarationInfo);
             classInfosByName.Add("Alternative", AlternativeInfo);
-            classInfosByName.Add("ElementValue", ElementValueInfo);
-            classInfosByName.Add("GrammarRule", GrammarRuleInfo);
-            classInfosByName.Add("Block", BlockInfo);
             classInfosByName.Add("Element", ElementInfo);
+            classInfosByName.Add("ElementValue", ElementValueInfo);
             classInfosByName.Add("Eof", EofInfo);
             classInfosByName.Add("Expression", ExpressionInfo);
-            classInfosByName.Add("Keyword", KeywordInfo);
-            classInfosByName.Add("Language", LanguageInfo);
-            classInfosByName.Add("LexerRule", LexerRuleInfo);
+            classInfosByName.Add("Fixed", FixedInfo);
+            classInfosByName.Add("GrammarRule", GrammarRuleInfo);
             classInfosByName.Add("Fragment", FragmentInfo);
             classInfosByName.Add("Grammar", GrammarInfo);
+            classInfosByName.Add("Identifier", IdentifierInfo);
             classInfosByName.Add("LAlternative", LAlternativeInfo);
+            classInfosByName.Add("Language", LanguageInfo);
             classInfosByName.Add("LElement", LElementInfo);
             classInfosByName.Add("LElementValue", LElementValueInfo);
             classInfosByName.Add("LBlock", LBlockInfo);
+            classInfosByName.Add("LexerRule", LexerRuleInfo);
             classInfosByName.Add("LFixed", LFixedInfo);
             classInfosByName.Add("LRange", LRangeInfo);
             classInfosByName.Add("LReference", LReferenceInfo);
@@ -469,12 +458,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             classInfosByName.Add("LSetChar", LSetCharInfo);
             classInfosByName.Add("LSetRange", LSetRangeInfo);
             classInfosByName.Add("LWildCard", LWildCardInfo);
+            classInfosByName.Add("Name", NameInfo);
             classInfosByName.Add("Namespace", NamespaceInfo);
+            classInfosByName.Add("Qualifier", QualifierInfo);
             classInfosByName.Add("Rule", RuleInfo);
             classInfosByName.Add("RuleRef", RuleRefInfo);
             classInfosByName.Add("SeparatedList", SeparatedListInfo);
             classInfosByName.Add("Token", TokenInfo);
-            classInfosByName.Add("TokenAlts", TokenAltsInfo);
             classInfosByName.Add("TokenKind", TokenKindInfo);
             _classInfosByName = classInfosByName.ToImmutable();
             _model = new __Model();
@@ -524,18 +514,18 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             var obj43 = f.MetaClass();
             var obj44 = f.MetaClass();
             var obj45 = f.MetaClass();
-            var obj46 = f.MetaProperty();
-            var obj47 = f.MetaProperty();
+            var obj46 = f.MetaClass();
+            var obj47 = f.MetaClass();
             var obj48 = f.MetaProperty();
             var obj49 = f.MetaProperty();
             var obj50 = f.MetaProperty();
-            var obj51 = f.MetaArrayType();
-            var obj52 = f.MetaNullableType();
-            var obj53 = f.MetaNullableType();
-            var obj54 = f.MetaArrayType();
+            var obj51 = f.MetaProperty();
+            var obj52 = f.MetaProperty();
+            var obj53 = f.MetaArrayType();
+            var obj54 = f.MetaNullableType();
             var obj55 = f.MetaNullableType();
-            var obj56 = f.MetaProperty();
-            var obj57 = f.MetaProperty();
+            var obj56 = f.MetaArrayType();
+            var obj57 = f.MetaNullableType();
             var obj58 = f.MetaProperty();
             var obj59 = f.MetaProperty();
             var obj60 = f.MetaProperty();
@@ -547,11 +537,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             var obj66 = f.MetaProperty();
             var obj67 = f.MetaProperty();
             var obj68 = f.MetaProperty();
-            var obj69 = f.MetaArrayType();
+            var obj69 = f.MetaProperty();
             var obj70 = f.MetaArrayType();
             var obj71 = f.MetaArrayType();
             var obj72 = f.MetaArrayType();
-            var obj73 = f.MetaNullableType();
+            var obj73 = f.MetaArrayType();
             var obj74 = f.MetaNullableType();
             var obj75 = f.MetaNullableType();
             var obj76 = f.MetaNullableType();
@@ -600,66 +590,66 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             var obj119 = f.MetaProperty();
             var obj120 = f.MetaProperty();
             var obj121 = f.MetaProperty();
-            var obj122 = f.MetaNullableType();
-            var obj123 = f.MetaProperty();
+            var obj122 = f.MetaProperty();
+            var obj123 = f.MetaNullableType();
             var obj124 = f.MetaProperty();
             var obj125 = f.MetaProperty();
-            var obj126 = f.MetaNullableType();
-            var obj127 = f.MetaArrayType();
-            var obj128 = f.MetaProperty();
+            var obj126 = f.MetaProperty();
+            var obj127 = f.MetaNullableType();
+            var obj128 = f.MetaArrayType();
             var obj129 = f.MetaProperty();
             var obj130 = f.MetaProperty();
             var obj131 = f.MetaProperty();
             var obj132 = f.MetaProperty();
-            var obj133 = f.MetaNullableType();
-            var obj134 = f.MetaProperty();
+            var obj133 = f.MetaProperty();
+            var obj134 = f.MetaNullableType();
             var obj135 = f.MetaProperty();
-            var obj136 = f.MetaNullableType();
-            var obj137 = f.MetaProperty();
+            var obj136 = f.MetaProperty();
+            var obj137 = f.MetaNullableType();
             var obj138 = f.MetaProperty();
             var obj139 = f.MetaProperty();
-            var obj140 = f.MetaNullableType();
-            var obj141 = f.MetaProperty();
+            var obj140 = f.MetaProperty();
+            var obj141 = f.MetaNullableType();
             var obj142 = f.MetaProperty();
             var obj143 = f.MetaProperty();
-            var obj144 = f.MetaNullableType();
-            var obj145 = f.MetaProperty();
+            var obj144 = f.MetaProperty();
+            var obj145 = f.MetaNullableType();
             var obj146 = f.MetaProperty();
-            var obj147 = f.MetaNullableType();
-            var obj148 = f.MetaProperty();
+            var obj147 = f.MetaProperty();
+            var obj148 = f.MetaNullableType();
             var obj149 = f.MetaProperty();
             var obj150 = f.MetaProperty();
             var obj151 = f.MetaProperty();
-            var obj152 = f.MetaNullableType();
-            var obj153 = f.MetaProperty();
+            var obj152 = f.MetaProperty();
+            var obj153 = f.MetaNullableType();
             var obj154 = f.MetaProperty();
             var obj155 = f.MetaProperty();
-            var obj156 = f.MetaNullableType();
-            var obj157 = f.MetaArrayType();
-            var obj158 = f.MetaProperty();
+            var obj156 = f.MetaProperty();
+            var obj157 = f.MetaNullableType();
+            var obj158 = f.MetaArrayType();
             var obj159 = f.MetaProperty();
-            var obj160 = f.MetaNullableType();
-            var obj161 = f.MetaProperty();
+            var obj160 = f.MetaProperty();
+            var obj161 = f.MetaNullableType();
             var obj162 = f.MetaProperty();
             var obj163 = f.MetaProperty();
-            var obj164 = f.MetaNullableType();
-            var obj165 = f.MetaProperty();
+            var obj164 = f.MetaProperty();
+            var obj165 = f.MetaNullableType();
             var obj166 = f.MetaProperty();
             var obj167 = f.MetaProperty();
             var obj168 = f.MetaProperty();
-            var obj169 = f.MetaNullableType();
-            var obj170 = f.MetaProperty();
+            var obj169 = f.MetaProperty();
+            var obj170 = f.MetaNullableType();
             var obj171 = f.MetaProperty();
             var obj172 = f.MetaProperty();
-            var obj173 = f.MetaNullableType();
-            var obj174 = f.MetaArrayType();
-            var obj175 = f.MetaProperty();
+            var obj173 = f.MetaProperty();
+            var obj174 = f.MetaNullableType();
+            var obj175 = f.MetaArrayType();
             var obj176 = f.MetaProperty();
             var obj177 = f.MetaProperty();
             var obj178 = f.MetaProperty();
             var obj179 = f.MetaProperty();
-            var obj180 = f.MetaArrayType();
-            var obj181 = f.MetaProperty();
+            var obj180 = f.MetaProperty();
+            var obj181 = f.MetaArrayType();
             var obj182 = f.MetaProperty();
             var obj183 = f.MetaProperty();
             var obj184 = f.MetaProperty();
@@ -674,13 +664,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             var obj193 = f.MetaProperty();
             var obj194 = f.MetaProperty();
             var obj195 = f.MetaProperty();
-            var obj196 = f.MetaArrayType();
-            var obj197 = f.MetaEnumLiteral();
-            var obj198 = f.MetaEnumLiteral();
+            var obj196 = f.MetaProperty();
+            var obj197 = f.MetaProperty();
+            var obj198 = f.MetaArrayType();
             var obj199 = f.MetaEnumLiteral();
             var obj200 = f.MetaEnumLiteral();
-            var obj201 = f.MetaProperty();
-            var obj202 = f.MetaProperty();
+            var obj201 = f.MetaEnumLiteral();
+            var obj202 = f.MetaEnumLiteral();
             var obj203 = f.MetaProperty();
             var obj204 = f.MetaProperty();
             var obj205 = f.MetaProperty();
@@ -707,7 +697,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             var obj226 = f.MetaProperty();
             var obj227 = f.MetaProperty();
             var obj228 = f.MetaProperty();
-            var obj229 = f.MetaArrayType();
+            var obj229 = f.MetaProperty();
             var obj230 = f.MetaArrayType();
             var obj231 = f.MetaArrayType();
             var obj232 = f.MetaNullableType();
@@ -715,53 +705,41 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             var obj234 = f.MetaNullableType();
             var obj235 = f.MetaNullableType();
             var obj236 = f.MetaNullableType();
-            var obj237 = f.MetaNullableType();
+            var obj237 = f.MetaProperty();
             var obj238 = f.MetaProperty();
             var obj239 = f.MetaProperty();
-            var obj240 = f.MetaProperty();
-            var obj241 = f.MetaNullableType();
+            var obj240 = f.MetaNullableType();
+            var obj241 = f.MetaProperty();
             var obj242 = f.MetaProperty();
             var obj243 = f.MetaProperty();
             var obj244 = f.MetaProperty();
             var obj245 = f.MetaProperty();
             var obj246 = f.MetaProperty();
             var obj247 = f.MetaProperty();
-            var obj248 = f.MetaProperty();
-            var obj249 = f.MetaArrayType();
+            var obj248 = f.MetaArrayType();
+            var obj249 = f.MetaNullableType();
             var obj250 = f.MetaNullableType();
             var obj251 = f.MetaNullableType();
-            var obj252 = f.MetaNullableType();
+            var obj252 = f.MetaProperty();
             var obj253 = f.MetaProperty();
             var obj254 = f.MetaProperty();
-            var obj255 = f.MetaProperty();
-            var obj256 = f.MetaNullableType();
+            var obj255 = f.MetaNullableType();
+            var obj256 = f.MetaProperty();
             var obj257 = f.MetaProperty();
-            var obj258 = f.MetaProperty();
+            var obj258 = f.MetaArrayType();
             var obj259 = f.MetaProperty();
             var obj260 = f.MetaProperty();
             var obj261 = f.MetaProperty();
-            var obj262 = f.MetaArrayType();
-            var obj263 = f.MetaNullableType();
-            var obj264 = f.MetaProperty();
+            var obj262 = f.MetaProperty();
+            var obj263 = f.MetaProperty();
+            var obj264 = f.MetaNullableType();
             var obj265 = f.MetaProperty();
             var obj266 = f.MetaProperty();
-            var obj267 = f.MetaProperty();
+            var obj267 = f.MetaArrayType();
             var obj268 = f.MetaProperty();
             var obj269 = f.MetaProperty();
-            var obj270 = f.MetaProperty();
+            var obj270 = f.MetaArrayType();
             var obj271 = f.MetaProperty();
-            var obj272 = f.MetaProperty();
-            var obj273 = f.MetaProperty();
-            var obj274 = f.MetaProperty();
-            var obj275 = f.MetaProperty();
-            var obj276 = f.MetaArrayType();
-            var obj277 = f.MetaArrayType();
-            var obj278 = f.MetaArrayType();
-            var obj279 = f.MetaArrayType();
-            var obj280 = f.MetaNullableType();
-            var obj281 = f.MetaProperty();
-            var obj282 = f.MetaProperty();
-            var obj283 = f.MetaArrayType();
             __CustomImpl.Compiler(this);
             ((__IModelObject)obj1).MChildren.Add((__IModelObject)obj2);
             obj1.Declarations.Add(obj2);
@@ -815,6 +793,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             ((__IModelObject)obj4).MChildren.Add((__IModelObject)obj43);
             ((__IModelObject)obj4).MChildren.Add((__IModelObject)obj44);
             ((__IModelObject)obj4).MChildren.Add((__IModelObject)obj45);
+            ((__IModelObject)obj4).MChildren.Add((__IModelObject)obj46);
+            ((__IModelObject)obj4).MChildren.Add((__IModelObject)obj47);
             obj4.Declarations.Add(obj5);
             obj4.Declarations.Add(obj6);
             obj4.Declarations.Add(obj7);
@@ -856,44 +836,44 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             obj4.Declarations.Add(obj43);
             obj4.Declarations.Add(obj44);
             obj4.Declarations.Add(obj45);
+            obj4.Declarations.Add(obj46);
+            obj4.Declarations.Add(obj47);
             obj4.Name = "Model";
             obj4.Parent = obj3;
             obj5.Name = "Compiler";
             obj5.Parent = obj4;
-            ((__IModelObject)obj6).MChildren.Add((__IModelObject)obj46);
-            ((__IModelObject)obj6).MChildren.Add((__IModelObject)obj47);
             ((__IModelObject)obj6).MChildren.Add((__IModelObject)obj48);
             ((__IModelObject)obj6).MChildren.Add((__IModelObject)obj49);
             ((__IModelObject)obj6).MChildren.Add((__IModelObject)obj50);
+            ((__IModelObject)obj6).MChildren.Add((__IModelObject)obj51);
+            ((__IModelObject)obj6).MChildren.Add((__IModelObject)obj52);
             obj6.IsAbstract = true;
-            obj6.Properties.Add(obj46);
-            obj6.Properties.Add(obj47);
             obj6.Properties.Add(obj48);
             obj6.Properties.Add(obj49);
             obj6.Properties.Add(obj50);
+            obj6.Properties.Add(obj51);
+            obj6.Properties.Add(obj52);
             obj6.SymbolType = typeof(global::MetaDslx.CodeAnalysis.Symbols.DeclarationSymbol);
-            obj6.Declarations.Add(obj46);
-            obj6.Declarations.Add(obj47);
             obj6.Declarations.Add(obj48);
             obj6.Declarations.Add(obj49);
             obj6.Declarations.Add(obj50);
+            obj6.Declarations.Add(obj51);
+            obj6.Declarations.Add(obj52);
             obj6.Name = "Declaration";
             obj6.Parent = obj4;
             obj7.BaseTypes.Add(obj6);
             obj7.SymbolType = typeof(global::MetaDslx.CodeAnalysis.Symbols.NamespaceSymbol);
             obj7.Name = "Namespace";
             obj7.Parent = obj4;
-            ((__IModelObject)obj8).MChildren.Add((__IModelObject)obj56);
-            ((__IModelObject)obj8).MChildren.Add((__IModelObject)obj57);
+            ((__IModelObject)obj8).MChildren.Add((__IModelObject)obj58);
+            ((__IModelObject)obj8).MChildren.Add((__IModelObject)obj59);
             obj8.BaseTypes.Add(obj6);
-            obj8.Properties.Add(obj56);
-            obj8.Properties.Add(obj57);
-            obj8.Declarations.Add(obj56);
-            obj8.Declarations.Add(obj57);
+            obj8.Properties.Add(obj58);
+            obj8.Properties.Add(obj59);
+            obj8.Declarations.Add(obj58);
+            obj8.Declarations.Add(obj59);
             obj8.Name = "Language";
             obj8.Parent = obj4;
-            ((__IModelObject)obj9).MChildren.Add((__IModelObject)obj58);
-            ((__IModelObject)obj9).MChildren.Add((__IModelObject)obj59);
             ((__IModelObject)obj9).MChildren.Add((__IModelObject)obj60);
             ((__IModelObject)obj9).MChildren.Add((__IModelObject)obj61);
             ((__IModelObject)obj9).MChildren.Add((__IModelObject)obj62);
@@ -903,9 +883,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             ((__IModelObject)obj9).MChildren.Add((__IModelObject)obj66);
             ((__IModelObject)obj9).MChildren.Add((__IModelObject)obj67);
             ((__IModelObject)obj9).MChildren.Add((__IModelObject)obj68);
+            ((__IModelObject)obj9).MChildren.Add((__IModelObject)obj69);
             obj9.BaseTypes.Add(obj6);
-            obj9.Properties.Add(obj58);
-            obj9.Properties.Add(obj59);
             obj9.Properties.Add(obj60);
             obj9.Properties.Add(obj61);
             obj9.Properties.Add(obj62);
@@ -915,9 +894,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             obj9.Properties.Add(obj66);
             obj9.Properties.Add(obj67);
             obj9.Properties.Add(obj68);
+            obj9.Properties.Add(obj69);
             obj9.SymbolType = typeof(global::MetaDslx.Bootstrap.MetaCompiler.Symbols.GrammarSymbol);
-            obj9.Declarations.Add(obj58);
-            obj9.Declarations.Add(obj59);
             obj9.Declarations.Add(obj60);
             obj9.Declarations.Add(obj61);
             obj9.Declarations.Add(obj62);
@@ -927,6 +905,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             obj9.Declarations.Add(obj66);
             obj9.Declarations.Add(obj67);
             obj9.Declarations.Add(obj68);
+            obj9.Declarations.Add(obj69);
             obj9.Name = "Grammar";
             obj9.Parent = obj4;
             ((__IModelObject)obj10).MChildren.Add((__IModelObject)obj79);
@@ -1053,188 +1032,190 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             ((__IModelObject)obj19).MChildren.Add((__IModelObject)obj119);
             ((__IModelObject)obj19).MChildren.Add((__IModelObject)obj120);
             ((__IModelObject)obj19).MChildren.Add((__IModelObject)obj121);
+            ((__IModelObject)obj19).MChildren.Add((__IModelObject)obj122);
             obj19.BaseTypes.Add(obj18);
             obj19.Properties.Add(obj119);
             obj19.Properties.Add(obj120);
             obj19.Properties.Add(obj121);
+            obj19.Properties.Add(obj122);
             obj19.SymbolType = typeof(global::MetaDslx.Bootstrap.MetaCompiler.Symbols.TokenSymbol);
             obj19.Declarations.Add(obj119);
             obj19.Declarations.Add(obj120);
             obj19.Declarations.Add(obj121);
+            obj19.Declarations.Add(obj122);
             obj19.Name = "Token";
             obj19.Parent = obj4;
             obj20.BaseTypes.Add(obj18);
             obj20.Name = "Fragment";
             obj20.Parent = obj4;
-            ((__IModelObject)obj21).MChildren.Add((__IModelObject)obj123);
             ((__IModelObject)obj21).MChildren.Add((__IModelObject)obj124);
             ((__IModelObject)obj21).MChildren.Add((__IModelObject)obj125);
-            obj21.Properties.Add(obj123);
+            ((__IModelObject)obj21).MChildren.Add((__IModelObject)obj126);
             obj21.Properties.Add(obj124);
             obj21.Properties.Add(obj125);
+            obj21.Properties.Add(obj126);
             obj21.SymbolType = typeof(global::MetaDslx.CodeAnalysis.Symbols.Symbol);
-            obj21.Declarations.Add(obj123);
             obj21.Declarations.Add(obj124);
             obj21.Declarations.Add(obj125);
+            obj21.Declarations.Add(obj126);
             obj21.Name = "LAlternative";
             obj21.Parent = obj4;
-            ((__IModelObject)obj22).MChildren.Add((__IModelObject)obj128);
             ((__IModelObject)obj22).MChildren.Add((__IModelObject)obj129);
             ((__IModelObject)obj22).MChildren.Add((__IModelObject)obj130);
             ((__IModelObject)obj22).MChildren.Add((__IModelObject)obj131);
             ((__IModelObject)obj22).MChildren.Add((__IModelObject)obj132);
-            obj22.Properties.Add(obj128);
+            ((__IModelObject)obj22).MChildren.Add((__IModelObject)obj133);
             obj22.Properties.Add(obj129);
             obj22.Properties.Add(obj130);
             obj22.Properties.Add(obj131);
             obj22.Properties.Add(obj132);
+            obj22.Properties.Add(obj133);
             obj22.SymbolType = typeof(global::MetaDslx.CodeAnalysis.Symbols.Symbol);
-            obj22.Declarations.Add(obj128);
             obj22.Declarations.Add(obj129);
             obj22.Declarations.Add(obj130);
             obj22.Declarations.Add(obj131);
             obj22.Declarations.Add(obj132);
+            obj22.Declarations.Add(obj133);
             obj22.Name = "LElement";
             obj22.Parent = obj4;
-            ((__IModelObject)obj23).MChildren.Add((__IModelObject)obj134);
             ((__IModelObject)obj23).MChildren.Add((__IModelObject)obj135);
+            ((__IModelObject)obj23).MChildren.Add((__IModelObject)obj136);
             obj23.IsAbstract = true;
-            obj23.Properties.Add(obj134);
             obj23.Properties.Add(obj135);
+            obj23.Properties.Add(obj136);
             obj23.SymbolType = typeof(global::MetaDslx.CodeAnalysis.Symbols.Symbol);
-            obj23.Declarations.Add(obj134);
             obj23.Declarations.Add(obj135);
+            obj23.Declarations.Add(obj136);
             obj23.Name = "LElementValue";
             obj23.Parent = obj4;
-            ((__IModelObject)obj24).MChildren.Add((__IModelObject)obj137);
             ((__IModelObject)obj24).MChildren.Add((__IModelObject)obj138);
             ((__IModelObject)obj24).MChildren.Add((__IModelObject)obj139);
+            ((__IModelObject)obj24).MChildren.Add((__IModelObject)obj140);
             obj24.BaseTypes.Add(obj23);
-            obj24.Properties.Add(obj137);
             obj24.Properties.Add(obj138);
             obj24.Properties.Add(obj139);
-            obj24.Declarations.Add(obj137);
+            obj24.Properties.Add(obj140);
             obj24.Declarations.Add(obj138);
             obj24.Declarations.Add(obj139);
+            obj24.Declarations.Add(obj140);
             obj24.Name = "LReference";
             obj24.Parent = obj4;
-            ((__IModelObject)obj25).MChildren.Add((__IModelObject)obj141);
             ((__IModelObject)obj25).MChildren.Add((__IModelObject)obj142);
             ((__IModelObject)obj25).MChildren.Add((__IModelObject)obj143);
+            ((__IModelObject)obj25).MChildren.Add((__IModelObject)obj144);
             obj25.BaseTypes.Add(obj23);
-            obj25.Properties.Add(obj141);
             obj25.Properties.Add(obj142);
             obj25.Properties.Add(obj143);
-            obj25.Declarations.Add(obj141);
+            obj25.Properties.Add(obj144);
             obj25.Declarations.Add(obj142);
             obj25.Declarations.Add(obj143);
+            obj25.Declarations.Add(obj144);
             obj25.Name = "LFixed";
             obj25.Parent = obj4;
-            ((__IModelObject)obj26).MChildren.Add((__IModelObject)obj145);
             ((__IModelObject)obj26).MChildren.Add((__IModelObject)obj146);
+            ((__IModelObject)obj26).MChildren.Add((__IModelObject)obj147);
             obj26.BaseTypes.Add(obj23);
-            obj26.Properties.Add(obj145);
             obj26.Properties.Add(obj146);
-            obj26.Declarations.Add(obj145);
+            obj26.Properties.Add(obj147);
             obj26.Declarations.Add(obj146);
+            obj26.Declarations.Add(obj147);
             obj26.Name = "LWildCard";
             obj26.Parent = obj4;
-            ((__IModelObject)obj27).MChildren.Add((__IModelObject)obj148);
             ((__IModelObject)obj27).MChildren.Add((__IModelObject)obj149);
             ((__IModelObject)obj27).MChildren.Add((__IModelObject)obj150);
             ((__IModelObject)obj27).MChildren.Add((__IModelObject)obj151);
+            ((__IModelObject)obj27).MChildren.Add((__IModelObject)obj152);
             obj27.BaseTypes.Add(obj23);
-            obj27.Properties.Add(obj148);
             obj27.Properties.Add(obj149);
             obj27.Properties.Add(obj150);
             obj27.Properties.Add(obj151);
-            obj27.Declarations.Add(obj148);
+            obj27.Properties.Add(obj152);
             obj27.Declarations.Add(obj149);
             obj27.Declarations.Add(obj150);
             obj27.Declarations.Add(obj151);
+            obj27.Declarations.Add(obj152);
             obj27.Name = "LRange";
             obj27.Parent = obj4;
-            ((__IModelObject)obj28).MChildren.Add((__IModelObject)obj153);
             ((__IModelObject)obj28).MChildren.Add((__IModelObject)obj154);
             ((__IModelObject)obj28).MChildren.Add((__IModelObject)obj155);
+            ((__IModelObject)obj28).MChildren.Add((__IModelObject)obj156);
             obj28.BaseTypes.Add(obj23);
-            obj28.Properties.Add(obj153);
             obj28.Properties.Add(obj154);
             obj28.Properties.Add(obj155);
-            obj28.Declarations.Add(obj153);
+            obj28.Properties.Add(obj156);
             obj28.Declarations.Add(obj154);
             obj28.Declarations.Add(obj155);
+            obj28.Declarations.Add(obj156);
             obj28.Name = "LSet";
             obj28.Parent = obj4;
-            ((__IModelObject)obj29).MChildren.Add((__IModelObject)obj158);
             ((__IModelObject)obj29).MChildren.Add((__IModelObject)obj159);
+            ((__IModelObject)obj29).MChildren.Add((__IModelObject)obj160);
             obj29.IsAbstract = true;
-            obj29.Properties.Add(obj158);
             obj29.Properties.Add(obj159);
-            obj29.Declarations.Add(obj158);
+            obj29.Properties.Add(obj160);
             obj29.Declarations.Add(obj159);
+            obj29.Declarations.Add(obj160);
             obj29.Name = "LSetItem";
             obj29.Parent = obj4;
-            ((__IModelObject)obj30).MChildren.Add((__IModelObject)obj161);
             ((__IModelObject)obj30).MChildren.Add((__IModelObject)obj162);
             ((__IModelObject)obj30).MChildren.Add((__IModelObject)obj163);
+            ((__IModelObject)obj30).MChildren.Add((__IModelObject)obj164);
             obj30.BaseTypes.Add(obj29);
-            obj30.Properties.Add(obj161);
             obj30.Properties.Add(obj162);
             obj30.Properties.Add(obj163);
-            obj30.Declarations.Add(obj161);
+            obj30.Properties.Add(obj164);
             obj30.Declarations.Add(obj162);
             obj30.Declarations.Add(obj163);
+            obj30.Declarations.Add(obj164);
             obj30.Name = "LSetChar";
             obj30.Parent = obj4;
-            ((__IModelObject)obj31).MChildren.Add((__IModelObject)obj165);
             ((__IModelObject)obj31).MChildren.Add((__IModelObject)obj166);
             ((__IModelObject)obj31).MChildren.Add((__IModelObject)obj167);
             ((__IModelObject)obj31).MChildren.Add((__IModelObject)obj168);
+            ((__IModelObject)obj31).MChildren.Add((__IModelObject)obj169);
             obj31.BaseTypes.Add(obj29);
-            obj31.Properties.Add(obj165);
             obj31.Properties.Add(obj166);
             obj31.Properties.Add(obj167);
             obj31.Properties.Add(obj168);
-            obj31.Declarations.Add(obj165);
+            obj31.Properties.Add(obj169);
             obj31.Declarations.Add(obj166);
             obj31.Declarations.Add(obj167);
             obj31.Declarations.Add(obj168);
+            obj31.Declarations.Add(obj169);
             obj31.Name = "LSetRange";
             obj31.Parent = obj4;
-            ((__IModelObject)obj32).MChildren.Add((__IModelObject)obj170);
             ((__IModelObject)obj32).MChildren.Add((__IModelObject)obj171);
             ((__IModelObject)obj32).MChildren.Add((__IModelObject)obj172);
+            ((__IModelObject)obj32).MChildren.Add((__IModelObject)obj173);
             obj32.BaseTypes.Add(obj23);
-            obj32.Properties.Add(obj170);
             obj32.Properties.Add(obj171);
             obj32.Properties.Add(obj172);
-            obj32.Declarations.Add(obj170);
+            obj32.Properties.Add(obj173);
             obj32.Declarations.Add(obj171);
             obj32.Declarations.Add(obj172);
+            obj32.Declarations.Add(obj173);
             obj32.Name = "LBlock";
             obj32.Parent = obj4;
-            ((__IModelObject)obj33).MChildren.Add((__IModelObject)obj175);
             ((__IModelObject)obj33).MChildren.Add((__IModelObject)obj176);
             ((__IModelObject)obj33).MChildren.Add((__IModelObject)obj177);
             ((__IModelObject)obj33).MChildren.Add((__IModelObject)obj178);
             ((__IModelObject)obj33).MChildren.Add((__IModelObject)obj179);
+            ((__IModelObject)obj33).MChildren.Add((__IModelObject)obj180);
             obj33.BaseTypes.Add(obj17);
             obj33.IsAbstract = true;
-            obj33.Properties.Add(obj175);
             obj33.Properties.Add(obj176);
             obj33.Properties.Add(obj177);
             obj33.Properties.Add(obj178);
             obj33.Properties.Add(obj179);
+            obj33.Properties.Add(obj180);
             obj33.SymbolType = typeof(global::MetaDslx.Bootstrap.MetaCompiler.Symbols.ParserRuleSymbol);
-            obj33.Declarations.Add(obj175);
             obj33.Declarations.Add(obj176);
             obj33.Declarations.Add(obj177);
             obj33.Declarations.Add(obj178);
             obj33.Declarations.Add(obj179);
+            obj33.Declarations.Add(obj180);
             obj33.Name = "Rule";
             obj33.Parent = obj4;
-            ((__IModelObject)obj34).MChildren.Add((__IModelObject)obj181);
             ((__IModelObject)obj34).MChildren.Add((__IModelObject)obj182);
             ((__IModelObject)obj34).MChildren.Add((__IModelObject)obj183);
             ((__IModelObject)obj34).MChildren.Add((__IModelObject)obj184);
@@ -1249,9 +1230,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             ((__IModelObject)obj34).MChildren.Add((__IModelObject)obj193);
             ((__IModelObject)obj34).MChildren.Add((__IModelObject)obj194);
             ((__IModelObject)obj34).MChildren.Add((__IModelObject)obj195);
+            ((__IModelObject)obj34).MChildren.Add((__IModelObject)obj196);
+            ((__IModelObject)obj34).MChildren.Add((__IModelObject)obj197);
             obj34.BaseTypes.Add(obj6);
             obj34.BaseTypes.Add(obj14);
-            obj34.Properties.Add(obj181);
             obj34.Properties.Add(obj182);
             obj34.Properties.Add(obj183);
             obj34.Properties.Add(obj184);
@@ -1266,8 +1248,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             obj34.Properties.Add(obj193);
             obj34.Properties.Add(obj194);
             obj34.Properties.Add(obj195);
+            obj34.Properties.Add(obj196);
+            obj34.Properties.Add(obj197);
             obj34.SymbolType = typeof(global::MetaDslx.Bootstrap.MetaCompiler.Symbols.PAlternativeSymbol);
-            obj34.Declarations.Add(obj181);
             obj34.Declarations.Add(obj182);
             obj34.Declarations.Add(obj183);
             obj34.Declarations.Add(obj184);
@@ -1282,24 +1265,24 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             obj34.Declarations.Add(obj193);
             obj34.Declarations.Add(obj194);
             obj34.Declarations.Add(obj195);
+            obj34.Declarations.Add(obj196);
+            obj34.Declarations.Add(obj197);
             obj34.Name = "Alternative";
             obj34.Parent = obj4;
-            ((__IModelObject)obj35).MChildren.Add((__IModelObject)obj197);
-            ((__IModelObject)obj35).MChildren.Add((__IModelObject)obj198);
             ((__IModelObject)obj35).MChildren.Add((__IModelObject)obj199);
             ((__IModelObject)obj35).MChildren.Add((__IModelObject)obj200);
-            obj35.Literals.Add(obj197);
-            obj35.Literals.Add(obj198);
+            ((__IModelObject)obj35).MChildren.Add((__IModelObject)obj201);
+            ((__IModelObject)obj35).MChildren.Add((__IModelObject)obj202);
             obj35.Literals.Add(obj199);
             obj35.Literals.Add(obj200);
-            obj35.Declarations.Add(obj197);
-            obj35.Declarations.Add(obj198);
+            obj35.Literals.Add(obj201);
+            obj35.Literals.Add(obj202);
             obj35.Declarations.Add(obj199);
             obj35.Declarations.Add(obj200);
+            obj35.Declarations.Add(obj201);
+            obj35.Declarations.Add(obj202);
             obj35.Name = "Assignment";
             obj35.Parent = obj4;
-            ((__IModelObject)obj36).MChildren.Add((__IModelObject)obj201);
-            ((__IModelObject)obj36).MChildren.Add((__IModelObject)obj202);
             ((__IModelObject)obj36).MChildren.Add((__IModelObject)obj203);
             ((__IModelObject)obj36).MChildren.Add((__IModelObject)obj204);
             ((__IModelObject)obj36).MChildren.Add((__IModelObject)obj205);
@@ -1326,9 +1309,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             ((__IModelObject)obj36).MChildren.Add((__IModelObject)obj226);
             ((__IModelObject)obj36).MChildren.Add((__IModelObject)obj227);
             ((__IModelObject)obj36).MChildren.Add((__IModelObject)obj228);
+            ((__IModelObject)obj36).MChildren.Add((__IModelObject)obj229);
             obj36.BaseTypes.Add(obj14);
-            obj36.Properties.Add(obj201);
-            obj36.Properties.Add(obj202);
             obj36.Properties.Add(obj203);
             obj36.Properties.Add(obj204);
             obj36.Properties.Add(obj205);
@@ -1355,9 +1337,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             obj36.Properties.Add(obj226);
             obj36.Properties.Add(obj227);
             obj36.Properties.Add(obj228);
+            obj36.Properties.Add(obj229);
             obj36.SymbolType = typeof(global::MetaDslx.Bootstrap.MetaCompiler.Symbols.PElementSymbol);
-            obj36.Declarations.Add(obj201);
-            obj36.Declarations.Add(obj202);
             obj36.Declarations.Add(obj203);
             obj36.Declarations.Add(obj204);
             obj36.Declarations.Add(obj205);
@@ -1384,238 +1365,214 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             obj36.Declarations.Add(obj226);
             obj36.Declarations.Add(obj227);
             obj36.Declarations.Add(obj228);
+            obj36.Declarations.Add(obj229);
             obj36.Name = "Element";
             obj36.Parent = obj4;
+            ((__IModelObject)obj37).MChildren.Add((__IModelObject)obj237);
             ((__IModelObject)obj37).MChildren.Add((__IModelObject)obj238);
             ((__IModelObject)obj37).MChildren.Add((__IModelObject)obj239);
-            ((__IModelObject)obj37).MChildren.Add((__IModelObject)obj240);
             obj37.BaseTypes.Add(obj14);
             obj37.IsAbstract = true;
+            obj37.Properties.Add(obj237);
             obj37.Properties.Add(obj238);
             obj37.Properties.Add(obj239);
-            obj37.Properties.Add(obj240);
             obj37.SymbolType = typeof(global::MetaDslx.CodeAnalysis.Symbols.Symbol);
+            obj37.Declarations.Add(obj237);
             obj37.Declarations.Add(obj238);
             obj37.Declarations.Add(obj239);
-            obj37.Declarations.Add(obj240);
             obj37.Name = "ElementValue";
             obj37.Parent = obj4;
+            ((__IModelObject)obj38).MChildren.Add((__IModelObject)obj241);
             ((__IModelObject)obj38).MChildren.Add((__IModelObject)obj242);
             ((__IModelObject)obj38).MChildren.Add((__IModelObject)obj243);
             ((__IModelObject)obj38).MChildren.Add((__IModelObject)obj244);
             ((__IModelObject)obj38).MChildren.Add((__IModelObject)obj245);
             ((__IModelObject)obj38).MChildren.Add((__IModelObject)obj246);
             ((__IModelObject)obj38).MChildren.Add((__IModelObject)obj247);
-            ((__IModelObject)obj38).MChildren.Add((__IModelObject)obj248);
             obj38.BaseTypes.Add(obj37);
+            obj38.Properties.Add(obj241);
             obj38.Properties.Add(obj242);
             obj38.Properties.Add(obj243);
             obj38.Properties.Add(obj244);
             obj38.Properties.Add(obj245);
             obj38.Properties.Add(obj246);
             obj38.Properties.Add(obj247);
-            obj38.Properties.Add(obj248);
             obj38.SymbolType = typeof(global::MetaDslx.Bootstrap.MetaCompiler.Symbols.PReferenceSymbol);
+            obj38.Declarations.Add(obj241);
             obj38.Declarations.Add(obj242);
             obj38.Declarations.Add(obj243);
             obj38.Declarations.Add(obj244);
             obj38.Declarations.Add(obj245);
             obj38.Declarations.Add(obj246);
             obj38.Declarations.Add(obj247);
-            obj38.Declarations.Add(obj248);
             obj38.Name = "RuleRef";
             obj38.Parent = obj4;
+            ((__IModelObject)obj39).MChildren.Add((__IModelObject)obj252);
             ((__IModelObject)obj39).MChildren.Add((__IModelObject)obj253);
             ((__IModelObject)obj39).MChildren.Add((__IModelObject)obj254);
-            ((__IModelObject)obj39).MChildren.Add((__IModelObject)obj255);
             obj39.BaseTypes.Add(obj37);
+            obj39.Properties.Add(obj252);
             obj39.Properties.Add(obj253);
             obj39.Properties.Add(obj254);
-            obj39.Properties.Add(obj255);
+            obj39.Declarations.Add(obj252);
             obj39.Declarations.Add(obj253);
             obj39.Declarations.Add(obj254);
-            obj39.Declarations.Add(obj255);
             obj39.Name = "Eof";
             obj39.Parent = obj4;
-            ((__IModelObject)obj40).MChildren.Add((__IModelObject)obj257);
+            ((__IModelObject)obj40).MChildren.Add((__IModelObject)obj256);
             obj40.BaseTypes.Add(obj37);
-            obj40.Properties.Add(obj257);
-            obj40.Declarations.Add(obj257);
-            obj40.Name = "Keyword";
+            obj40.Properties.Add(obj256);
+            obj40.Declarations.Add(obj256);
+            obj40.Name = "Fixed";
             obj40.Parent = obj4;
-            ((__IModelObject)obj41).MChildren.Add((__IModelObject)obj258);
-            ((__IModelObject)obj41).MChildren.Add((__IModelObject)obj259);
-            ((__IModelObject)obj41).MChildren.Add((__IModelObject)obj260);
-            ((__IModelObject)obj41).MChildren.Add((__IModelObject)obj261);
+            ((__IModelObject)obj41).MChildren.Add((__IModelObject)obj257);
             obj41.BaseTypes.Add(obj37);
-            obj41.Properties.Add(obj258);
-            obj41.Properties.Add(obj259);
-            obj41.Properties.Add(obj260);
-            obj41.Properties.Add(obj261);
-            obj41.Declarations.Add(obj258);
-            obj41.Declarations.Add(obj259);
-            obj41.Declarations.Add(obj260);
-            obj41.Declarations.Add(obj261);
-            obj41.Name = "TokenAlts";
+            obj41.Properties.Add(obj257);
+            obj41.SymbolType = typeof(global::MetaDslx.Bootstrap.MetaCompiler.Symbols.PBlockSymbol);
+            obj41.Declarations.Add(obj257);
+            obj41.Name = "Block";
             obj41.Parent = obj4;
-            obj42.BaseTypes.Add(obj33);
+            ((__IModelObject)obj42).MChildren.Add((__IModelObject)obj259);
+            ((__IModelObject)obj42).MChildren.Add((__IModelObject)obj260);
+            ((__IModelObject)obj42).MChildren.Add((__IModelObject)obj261);
+            ((__IModelObject)obj42).MChildren.Add((__IModelObject)obj262);
+            ((__IModelObject)obj42).MChildren.Add((__IModelObject)obj263);
             obj42.BaseTypes.Add(obj37);
-            obj42.SymbolType = typeof(global::MetaDslx.Bootstrap.MetaCompiler.Symbols.PBlockSymbol);
-            obj42.Name = "Block";
+            obj42.Properties.Add(obj259);
+            obj42.Properties.Add(obj260);
+            obj42.Properties.Add(obj261);
+            obj42.Properties.Add(obj262);
+            obj42.Properties.Add(obj263);
+            obj42.Declarations.Add(obj259);
+            obj42.Declarations.Add(obj260);
+            obj42.Declarations.Add(obj261);
+            obj42.Declarations.Add(obj262);
+            obj42.Declarations.Add(obj263);
+            obj42.Name = "SeparatedList";
             obj42.Parent = obj4;
-            ((__IModelObject)obj43).MChildren.Add((__IModelObject)obj264);
             ((__IModelObject)obj43).MChildren.Add((__IModelObject)obj265);
-            ((__IModelObject)obj43).MChildren.Add((__IModelObject)obj266);
-            ((__IModelObject)obj43).MChildren.Add((__IModelObject)obj267);
-            ((__IModelObject)obj43).MChildren.Add((__IModelObject)obj268);
-            ((__IModelObject)obj43).MChildren.Add((__IModelObject)obj269);
-            ((__IModelObject)obj43).MChildren.Add((__IModelObject)obj270);
-            ((__IModelObject)obj43).MChildren.Add((__IModelObject)obj271);
-            ((__IModelObject)obj43).MChildren.Add((__IModelObject)obj272);
-            ((__IModelObject)obj43).MChildren.Add((__IModelObject)obj273);
-            ((__IModelObject)obj43).MChildren.Add((__IModelObject)obj274);
-            ((__IModelObject)obj43).MChildren.Add((__IModelObject)obj275);
-            obj43.BaseTypes.Add(obj37);
-            obj43.Properties.Add(obj264);
             obj43.Properties.Add(obj265);
-            obj43.Properties.Add(obj266);
-            obj43.Properties.Add(obj267);
-            obj43.Properties.Add(obj268);
-            obj43.Properties.Add(obj269);
-            obj43.Properties.Add(obj270);
-            obj43.Properties.Add(obj271);
-            obj43.Properties.Add(obj272);
-            obj43.Properties.Add(obj273);
-            obj43.Properties.Add(obj274);
-            obj43.Properties.Add(obj275);
-            obj43.Declarations.Add(obj264);
+            obj43.SymbolType = typeof(global::MetaDslx.Bootstrap.MetaCompiler.Symbols.ExpressionSymbol);
             obj43.Declarations.Add(obj265);
-            obj43.Declarations.Add(obj266);
-            obj43.Declarations.Add(obj267);
-            obj43.Declarations.Add(obj268);
-            obj43.Declarations.Add(obj269);
-            obj43.Declarations.Add(obj270);
-            obj43.Declarations.Add(obj271);
-            obj43.Declarations.Add(obj272);
-            obj43.Declarations.Add(obj273);
-            obj43.Declarations.Add(obj274);
-            obj43.Declarations.Add(obj275);
-            obj43.Name = "SeparatedList";
+            obj43.Name = "Expression";
             obj43.Parent = obj4;
-            ((__IModelObject)obj44).MChildren.Add((__IModelObject)obj281);
-            obj44.Properties.Add(obj281);
-            obj44.SymbolType = typeof(global::MetaDslx.Bootstrap.MetaCompiler.Symbols.ExpressionSymbol);
-            obj44.Declarations.Add(obj281);
-            obj44.Name = "Expression";
+            ((__IModelObject)obj44).MChildren.Add((__IModelObject)obj266);
+            obj44.BaseTypes.Add(obj43);
+            obj44.Properties.Add(obj266);
+            obj44.Declarations.Add(obj266);
+            obj44.Name = "ArrayExpression";
             obj44.Parent = obj4;
-            ((__IModelObject)obj45).MChildren.Add((__IModelObject)obj282);
-            obj45.BaseTypes.Add(obj44);
-            obj45.Properties.Add(obj282);
-            obj45.Declarations.Add(obj282);
-            obj45.Name = "ArrayExpression";
+            ((__IModelObject)obj45).MChildren.Add((__IModelObject)obj268);
+            obj45.Properties.Add(obj268);
+            obj45.Declarations.Add(obj268);
+            obj45.Name = "Name";
             obj45.Parent = obj4;
-            ((__IModelObject)obj46).MChildren.Add((__IModelObject)obj51);
-            obj46.IsContainment = true;
-            obj46.SymbolProperty = "Attributes";
-            obj46.Type = __MetaType.FromModelObject((__IModelObject)obj51);
-            obj46.Name = "Annotations";
-            obj46.Parent = obj6;
-            ((__IModelObject)obj47).MChildren.Add((__IModelObject)obj52);
-            obj47.SymbolProperty = "Name";
-            obj47.Type = __MetaType.FromModelObject((__IModelObject)obj52);
-            obj47.Name = "Name";
-            obj47.Parent = obj6;
+            ((__IModelObject)obj46).MChildren.Add((__IModelObject)obj269);
+            obj46.Properties.Add(obj269);
+            obj46.Declarations.Add(obj269);
+            obj46.Name = "Qualifier";
+            obj46.Parent = obj4;
+            ((__IModelObject)obj47).MChildren.Add((__IModelObject)obj271);
+            obj47.Properties.Add(obj271);
+            obj47.Declarations.Add(obj271);
+            obj47.Name = "Identifier";
+            obj47.Parent = obj4;
             ((__IModelObject)obj48).MChildren.Add((__IModelObject)obj53);
-            obj48.OppositeProperties.Add(obj49);
+            obj48.IsContainment = true;
             obj48.Type = __MetaType.FromModelObject((__IModelObject)obj53);
-            obj48.Name = "Parent";
+            obj48.Name = "Annotations";
             obj48.Parent = obj6;
             ((__IModelObject)obj49).MChildren.Add((__IModelObject)obj54);
-            obj49.IsContainment = true;
-            obj49.OppositeProperties.Add(obj48);
+            obj49.SymbolProperty = "Name";
             obj49.Type = __MetaType.FromModelObject((__IModelObject)obj54);
-            obj49.Name = "Declarations";
+            obj49.Name = "Name";
             obj49.Parent = obj6;
             ((__IModelObject)obj50).MChildren.Add((__IModelObject)obj55);
-            obj50.IsDerived = true;
+            obj50.OppositeProperties.Add(obj51);
             obj50.Type = __MetaType.FromModelObject((__IModelObject)obj55);
-            obj50.Name = "FullName";
+            obj50.Name = "Parent";
             obj50.Parent = obj6;
-            obj51.ItemType = __MetaType.FromModelObject((__IModelObject)obj10);
-            obj52.InnerType = typeof(string);
-            obj53.InnerType = __MetaType.FromModelObject((__IModelObject)obj6);
-            obj54.ItemType = __MetaType.FromModelObject((__IModelObject)obj6);
-            obj55.InnerType = typeof(string);
-            obj56.IsDerived = true;
-            obj56.Type = typeof(string);
-            obj56.Name = "Namespace";
-            obj56.Parent = obj8;
-            obj57.IsContainment = true;
-            obj57.SubsettedProperties.Add(obj49);
-            obj57.Type = __MetaType.FromModelObject((__IModelObject)obj9);
-            obj57.Name = "Grammar";
-            obj57.Parent = obj8;
-            obj58.RedefinedProperties.Add(obj48);
-            obj58.Type = __MetaType.FromModelObject((__IModelObject)obj8);
-            obj58.Name = "Language";
-            obj58.Parent = obj9;
-            ((__IModelObject)obj59).MChildren.Add((__IModelObject)obj69);
+            ((__IModelObject)obj51).MChildren.Add((__IModelObject)obj56);
+            obj51.IsContainment = true;
+            obj51.OppositeProperties.Add(obj50);
+            obj51.Type = __MetaType.FromModelObject((__IModelObject)obj56);
+            obj51.Name = "Declarations";
+            obj51.Parent = obj6;
+            ((__IModelObject)obj52).MChildren.Add((__IModelObject)obj57);
+            obj52.IsDerived = true;
+            obj52.Type = __MetaType.FromModelObject((__IModelObject)obj57);
+            obj52.Name = "FullName";
+            obj52.Parent = obj6;
+            obj53.ItemType = __MetaType.FromModelObject((__IModelObject)obj10);
+            obj54.InnerType = typeof(string);
+            obj55.InnerType = __MetaType.FromModelObject((__IModelObject)obj6);
+            obj56.ItemType = __MetaType.FromModelObject((__IModelObject)obj6);
+            obj57.InnerType = typeof(string);
+            obj58.IsDerived = true;
+            obj58.Type = typeof(string);
+            obj58.Name = "Namespace";
+            obj58.Parent = obj8;
             obj59.IsContainment = true;
-            obj59.RedefinedProperties.Add(obj49);
-            obj59.Type = __MetaType.FromModelObject((__IModelObject)obj69);
-            obj59.Name = "GrammarRules";
-            obj59.Parent = obj9;
-            ((__IModelObject)obj60).MChildren.Add((__IModelObject)obj70);
-            obj60.IsContainment = true;
-            obj60.Type = __MetaType.FromModelObject((__IModelObject)obj70);
-            obj60.Name = "TokenKinds";
+            obj59.SubsettedProperties.Add(obj51);
+            obj59.Type = __MetaType.FromModelObject((__IModelObject)obj9);
+            obj59.Name = "Grammar";
+            obj59.Parent = obj8;
+            obj60.RedefinedProperties.Add(obj50);
+            obj60.Type = __MetaType.FromModelObject((__IModelObject)obj8);
+            obj60.Name = "Language";
             obj60.Parent = obj9;
-            ((__IModelObject)obj61).MChildren.Add((__IModelObject)obj71);
+            ((__IModelObject)obj61).MChildren.Add((__IModelObject)obj70);
             obj61.IsContainment = true;
-            obj61.SubsettedProperties.Add(obj59);
-            obj61.Type = __MetaType.FromModelObject((__IModelObject)obj71);
-            obj61.Name = "Tokens";
+            obj61.RedefinedProperties.Add(obj51);
+            obj61.Type = __MetaType.FromModelObject((__IModelObject)obj70);
+            obj61.Name = "GrammarRules";
             obj61.Parent = obj9;
-            ((__IModelObject)obj62).MChildren.Add((__IModelObject)obj72);
+            ((__IModelObject)obj62).MChildren.Add((__IModelObject)obj71);
             obj62.IsContainment = true;
-            obj62.SubsettedProperties.Add(obj59);
-            obj62.Type = __MetaType.FromModelObject((__IModelObject)obj72);
-            obj62.Name = "Rules";
+            obj62.Type = __MetaType.FromModelObject((__IModelObject)obj71);
+            obj62.Name = "TokenKinds";
             obj62.Parent = obj9;
-            ((__IModelObject)obj63).MChildren.Add((__IModelObject)obj73);
-            obj63.Type = __MetaType.FromModelObject((__IModelObject)obj73);
-            obj63.Name = "DefaultWhitespace";
+            ((__IModelObject)obj63).MChildren.Add((__IModelObject)obj72);
+            obj63.IsContainment = true;
+            obj63.SubsettedProperties.Add(obj61);
+            obj63.Type = __MetaType.FromModelObject((__IModelObject)obj72);
+            obj63.Name = "Tokens";
             obj63.Parent = obj9;
-            ((__IModelObject)obj64).MChildren.Add((__IModelObject)obj74);
-            obj64.Type = __MetaType.FromModelObject((__IModelObject)obj74);
-            obj64.Name = "DefaultEndOfLine";
+            ((__IModelObject)obj64).MChildren.Add((__IModelObject)obj73);
+            obj64.IsContainment = true;
+            obj64.SubsettedProperties.Add(obj61);
+            obj64.Type = __MetaType.FromModelObject((__IModelObject)obj73);
+            obj64.Name = "Rules";
             obj64.Parent = obj9;
-            ((__IModelObject)obj65).MChildren.Add((__IModelObject)obj75);
-            obj65.Type = __MetaType.FromModelObject((__IModelObject)obj75);
-            obj65.Name = "DefaultSeparator";
+            ((__IModelObject)obj65).MChildren.Add((__IModelObject)obj74);
+            obj65.Type = __MetaType.FromModelObject((__IModelObject)obj74);
+            obj65.Name = "DefaultWhitespace";
             obj65.Parent = obj9;
-            ((__IModelObject)obj66).MChildren.Add((__IModelObject)obj76);
-            obj66.Type = __MetaType.FromModelObject((__IModelObject)obj76);
-            obj66.Name = "DefaultIdentifier";
+            ((__IModelObject)obj66).MChildren.Add((__IModelObject)obj75);
+            obj66.Type = __MetaType.FromModelObject((__IModelObject)obj75);
+            obj66.Name = "DefaultEndOfLine";
             obj66.Parent = obj9;
-            ((__IModelObject)obj67).MChildren.Add((__IModelObject)obj77);
-            obj67.Type = __MetaType.FromModelObject((__IModelObject)obj77);
-            obj67.Name = "MainRule";
+            ((__IModelObject)obj67).MChildren.Add((__IModelObject)obj76);
+            obj67.Type = __MetaType.FromModelObject((__IModelObject)obj76);
+            obj67.Name = "DefaultSeparator";
             obj67.Parent = obj9;
-            ((__IModelObject)obj68).MChildren.Add((__IModelObject)obj78);
-            obj68.Type = __MetaType.FromModelObject((__IModelObject)obj78);
-            obj68.Name = "RootTypeName";
+            ((__IModelObject)obj68).MChildren.Add((__IModelObject)obj77);
+            obj68.Type = __MetaType.FromModelObject((__IModelObject)obj77);
+            obj68.Name = "DefaultIdentifier";
             obj68.Parent = obj9;
-            obj69.ItemType = __MetaType.FromModelObject((__IModelObject)obj17);
-            obj70.ItemType = __MetaType.FromModelObject((__IModelObject)obj15);
-            obj71.ItemType = __MetaType.FromModelObject((__IModelObject)obj19);
-            obj72.ItemType = __MetaType.FromModelObject((__IModelObject)obj33);
-            obj73.InnerType = __MetaType.FromModelObject((__IModelObject)obj19);
+            ((__IModelObject)obj69).MChildren.Add((__IModelObject)obj78);
+            obj69.Type = __MetaType.FromModelObject((__IModelObject)obj78);
+            obj69.Name = "MainRule";
+            obj69.Parent = obj9;
+            obj70.ItemType = __MetaType.FromModelObject((__IModelObject)obj17);
+            obj71.ItemType = __MetaType.FromModelObject((__IModelObject)obj15);
+            obj72.ItemType = __MetaType.FromModelObject((__IModelObject)obj19);
+            obj73.ItemType = __MetaType.FromModelObject((__IModelObject)obj33);
             obj74.InnerType = __MetaType.FromModelObject((__IModelObject)obj19);
             obj75.InnerType = __MetaType.FromModelObject((__IModelObject)obj19);
             obj76.InnerType = __MetaType.FromModelObject((__IModelObject)obj19);
-            obj77.InnerType = __MetaType.FromModelObject((__IModelObject)obj33);
-            obj78.InnerType = typeof(string);
+            obj77.InnerType = __MetaType.FromModelObject((__IModelObject)obj19);
+            obj78.InnerType = __MetaType.FromModelObject((__IModelObject)obj33);
             obj79.SymbolProperty = "AttributeClass";
             obj79.Type = typeof(__MetaType);
             obj79.Name = "AttributeClass";
@@ -1641,7 +1598,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             obj84.Parent = obj11;
             obj85.IsContainment = true;
             obj85.SymbolProperty = "Value";
-            obj85.Type = __MetaType.FromModelObject((__IModelObject)obj44);
+            obj85.Type = __MetaType.FromModelObject((__IModelObject)obj43);
             obj85.Name = "Value";
             obj85.Parent = obj11;
             obj86.ItemType = typeof(__MetaSymbol);
@@ -1716,7 +1673,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             obj112.Type = __MetaType.FromModelObject((__IModelObject)obj8);
             obj112.Name = "Language";
             obj112.Parent = obj17;
-            obj113.RedefinedProperties.Add(obj48);
+            obj113.RedefinedProperties.Add(obj50);
             obj113.Type = __MetaType.FromModelObject((__IModelObject)obj9);
             obj113.Name = "Grammar";
             obj113.Parent = obj17;
@@ -1740,556 +1697,524 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             obj119.Type = typeof(__MetaType);
             obj119.Name = "ReturnType";
             obj119.Parent = obj19;
+            obj120.SymbolProperty = "NeverNull";
             obj120.Type = typeof(bool);
-            obj120.Name = "IsTrivia";
+            obj120.Name = "NeverNull";
             obj120.Parent = obj19;
-            ((__IModelObject)obj121).MChildren.Add((__IModelObject)obj122);
-            obj121.Type = __MetaType.FromModelObject((__IModelObject)obj122);
-            obj121.Name = "TokenKind";
+            obj121.Type = typeof(bool);
+            obj121.Name = "IsTrivia";
             obj121.Parent = obj19;
-            obj122.InnerType = __MetaType.FromModelObject((__IModelObject)obj15);
-            obj123.IsDerived = true;
-            obj123.Type = typeof(bool);
-            obj123.Name = "IsFixed";
-            obj123.Parent = obj21;
-            ((__IModelObject)obj124).MChildren.Add((__IModelObject)obj126);
+            ((__IModelObject)obj122).MChildren.Add((__IModelObject)obj123);
+            obj122.Type = __MetaType.FromModelObject((__IModelObject)obj123);
+            obj122.Name = "TokenKind";
+            obj122.Parent = obj19;
+            obj123.InnerType = __MetaType.FromModelObject((__IModelObject)obj15);
             obj124.IsDerived = true;
-            obj124.Type = __MetaType.FromModelObject((__IModelObject)obj126);
-            obj124.Name = "FixedText";
+            obj124.Type = typeof(bool);
+            obj124.Name = "IsFixed";
             obj124.Parent = obj21;
             ((__IModelObject)obj125).MChildren.Add((__IModelObject)obj127);
-            obj125.IsContainment = true;
+            obj125.IsDerived = true;
             obj125.Type = __MetaType.FromModelObject((__IModelObject)obj127);
-            obj125.Name = "Elements";
+            obj125.Name = "FixedText";
             obj125.Parent = obj21;
-            obj126.InnerType = typeof(string);
-            obj127.ItemType = __MetaType.FromModelObject((__IModelObject)obj22);
-            obj128.IsDerived = true;
-            obj128.Type = typeof(bool);
-            obj128.Name = "IsFixed";
-            obj128.Parent = obj22;
-            ((__IModelObject)obj129).MChildren.Add((__IModelObject)obj133);
+            ((__IModelObject)obj126).MChildren.Add((__IModelObject)obj128);
+            obj126.IsContainment = true;
+            obj126.Type = __MetaType.FromModelObject((__IModelObject)obj128);
+            obj126.Name = "Elements";
+            obj126.Parent = obj21;
+            obj127.InnerType = typeof(string);
+            obj128.ItemType = __MetaType.FromModelObject((__IModelObject)obj22);
             obj129.IsDerived = true;
-            obj129.Type = __MetaType.FromModelObject((__IModelObject)obj133);
-            obj129.Name = "FixedText";
+            obj129.Type = typeof(bool);
+            obj129.Name = "IsFixed";
             obj129.Parent = obj22;
-            obj130.Type = typeof(bool);
-            obj130.Name = "IsNegated";
+            ((__IModelObject)obj130).MChildren.Add((__IModelObject)obj134);
+            obj130.IsDerived = true;
+            obj130.Type = __MetaType.FromModelObject((__IModelObject)obj134);
+            obj130.Name = "FixedText";
             obj130.Parent = obj22;
-            obj131.IsContainment = true;
-            obj131.Type = __MetaType.FromModelObject((__IModelObject)obj23);
-            obj131.Name = "Value";
+            obj131.Type = typeof(bool);
+            obj131.Name = "IsNegated";
             obj131.Parent = obj22;
-            obj132.Type = __MetaType.FromModelObject((__IModelObject)obj16);
-            obj132.Name = "Multiplicity";
+            obj132.IsContainment = true;
+            obj132.Type = __MetaType.FromModelObject((__IModelObject)obj23);
+            obj132.Name = "Value";
             obj132.Parent = obj22;
-            obj133.InnerType = typeof(string);
-            obj134.IsDerived = true;
-            obj134.Type = typeof(bool);
-            obj134.Name = "IsFixed";
-            obj134.Parent = obj23;
-            ((__IModelObject)obj135).MChildren.Add((__IModelObject)obj136);
+            obj133.Type = __MetaType.FromModelObject((__IModelObject)obj16);
+            obj133.Name = "Multiplicity";
+            obj133.Parent = obj22;
+            obj134.InnerType = typeof(string);
             obj135.IsDerived = true;
-            obj135.Type = __MetaType.FromModelObject((__IModelObject)obj136);
-            obj135.Name = "FixedText";
+            obj135.Type = typeof(bool);
+            obj135.Name = "IsFixed";
             obj135.Parent = obj23;
-            obj136.InnerType = typeof(string);
-            obj137.IsDerived = true;
-            obj137.Type = typeof(bool);
-            obj137.Name = "IsFixed";
-            obj137.Parent = obj24;
-            ((__IModelObject)obj138).MChildren.Add((__IModelObject)obj140);
+            ((__IModelObject)obj136).MChildren.Add((__IModelObject)obj137);
+            obj136.IsDerived = true;
+            obj136.Type = __MetaType.FromModelObject((__IModelObject)obj137);
+            obj136.Name = "FixedText";
+            obj136.Parent = obj23;
+            obj137.InnerType = typeof(string);
             obj138.IsDerived = true;
-            obj138.Type = __MetaType.FromModelObject((__IModelObject)obj140);
-            obj138.Name = "FixedText";
+            obj138.Type = typeof(bool);
+            obj138.Name = "IsFixed";
             obj138.Parent = obj24;
-            obj139.Type = __MetaType.FromModelObject((__IModelObject)obj18);
-            obj139.Name = "Rule";
+            ((__IModelObject)obj139).MChildren.Add((__IModelObject)obj141);
+            obj139.IsDerived = true;
+            obj139.Type = __MetaType.FromModelObject((__IModelObject)obj141);
+            obj139.Name = "FixedText";
             obj139.Parent = obj24;
-            obj140.InnerType = typeof(string);
-            obj141.IsDerived = true;
-            obj141.Type = typeof(bool);
-            obj141.Name = "IsFixed";
-            obj141.Parent = obj25;
-            ((__IModelObject)obj142).MChildren.Add((__IModelObject)obj144);
+            obj140.Type = __MetaType.FromModelObject((__IModelObject)obj18);
+            obj140.Name = "Rule";
+            obj140.Parent = obj24;
+            obj141.InnerType = typeof(string);
             obj142.IsDerived = true;
-            obj142.Type = __MetaType.FromModelObject((__IModelObject)obj144);
-            obj142.Name = "FixedText";
+            obj142.Type = typeof(bool);
+            obj142.Name = "IsFixed";
             obj142.Parent = obj25;
-            obj143.Type = typeof(string);
-            obj143.Name = "Text";
+            ((__IModelObject)obj143).MChildren.Add((__IModelObject)obj145);
+            obj143.IsDerived = true;
+            obj143.Type = __MetaType.FromModelObject((__IModelObject)obj145);
+            obj143.Name = "FixedText";
             obj143.Parent = obj25;
-            obj144.InnerType = typeof(string);
-            obj145.IsDerived = true;
-            obj145.Type = typeof(bool);
-            obj145.Name = "IsFixed";
-            obj145.Parent = obj26;
-            ((__IModelObject)obj146).MChildren.Add((__IModelObject)obj147);
+            obj144.Type = typeof(string);
+            obj144.Name = "Text";
+            obj144.Parent = obj25;
+            obj145.InnerType = typeof(string);
             obj146.IsDerived = true;
-            obj146.Type = __MetaType.FromModelObject((__IModelObject)obj147);
-            obj146.Name = "FixedText";
+            obj146.Type = typeof(bool);
+            obj146.Name = "IsFixed";
             obj146.Parent = obj26;
-            obj147.InnerType = typeof(string);
-            obj148.IsDerived = true;
-            obj148.Type = typeof(bool);
-            obj148.Name = "IsFixed";
-            obj148.Parent = obj27;
-            ((__IModelObject)obj149).MChildren.Add((__IModelObject)obj152);
+            ((__IModelObject)obj147).MChildren.Add((__IModelObject)obj148);
+            obj147.IsDerived = true;
+            obj147.Type = __MetaType.FromModelObject((__IModelObject)obj148);
+            obj147.Name = "FixedText";
+            obj147.Parent = obj26;
+            obj148.InnerType = typeof(string);
             obj149.IsDerived = true;
-            obj149.Type = __MetaType.FromModelObject((__IModelObject)obj152);
-            obj149.Name = "FixedText";
+            obj149.Type = typeof(bool);
+            obj149.Name = "IsFixed";
             obj149.Parent = obj27;
-            obj150.Type = typeof(string);
-            obj150.Name = "StartChar";
+            ((__IModelObject)obj150).MChildren.Add((__IModelObject)obj153);
+            obj150.IsDerived = true;
+            obj150.Type = __MetaType.FromModelObject((__IModelObject)obj153);
+            obj150.Name = "FixedText";
             obj150.Parent = obj27;
             obj151.Type = typeof(string);
-            obj151.Name = "EndChar";
+            obj151.Name = "StartChar";
             obj151.Parent = obj27;
-            obj152.InnerType = typeof(string);
-            obj153.IsDerived = true;
-            obj153.Type = typeof(bool);
-            obj153.Name = "IsFixed";
-            obj153.Parent = obj28;
-            ((__IModelObject)obj154).MChildren.Add((__IModelObject)obj156);
+            obj152.Type = typeof(string);
+            obj152.Name = "EndChar";
+            obj152.Parent = obj27;
+            obj153.InnerType = typeof(string);
             obj154.IsDerived = true;
-            obj154.Type = __MetaType.FromModelObject((__IModelObject)obj156);
-            obj154.Name = "FixedText";
+            obj154.Type = typeof(bool);
+            obj154.Name = "IsFixed";
             obj154.Parent = obj28;
             ((__IModelObject)obj155).MChildren.Add((__IModelObject)obj157);
-            obj155.IsContainment = true;
+            obj155.IsDerived = true;
             obj155.Type = __MetaType.FromModelObject((__IModelObject)obj157);
-            obj155.Name = "Items";
+            obj155.Name = "FixedText";
             obj155.Parent = obj28;
-            obj156.InnerType = typeof(string);
-            obj157.ItemType = __MetaType.FromModelObject((__IModelObject)obj29);
-            obj158.IsDerived = true;
-            obj158.Type = typeof(bool);
-            obj158.Name = "IsFixed";
-            obj158.Parent = obj29;
-            ((__IModelObject)obj159).MChildren.Add((__IModelObject)obj160);
+            ((__IModelObject)obj156).MChildren.Add((__IModelObject)obj158);
+            obj156.IsContainment = true;
+            obj156.Type = __MetaType.FromModelObject((__IModelObject)obj158);
+            obj156.Name = "Items";
+            obj156.Parent = obj28;
+            obj157.InnerType = typeof(string);
+            obj158.ItemType = __MetaType.FromModelObject((__IModelObject)obj29);
             obj159.IsDerived = true;
-            obj159.Type = __MetaType.FromModelObject((__IModelObject)obj160);
-            obj159.Name = "FixedText";
+            obj159.Type = typeof(bool);
+            obj159.Name = "IsFixed";
             obj159.Parent = obj29;
-            obj160.InnerType = typeof(string);
-            obj161.IsDerived = true;
-            obj161.Type = typeof(bool);
-            obj161.Name = "IsFixed";
-            obj161.Parent = obj30;
-            ((__IModelObject)obj162).MChildren.Add((__IModelObject)obj164);
+            ((__IModelObject)obj160).MChildren.Add((__IModelObject)obj161);
+            obj160.IsDerived = true;
+            obj160.Type = __MetaType.FromModelObject((__IModelObject)obj161);
+            obj160.Name = "FixedText";
+            obj160.Parent = obj29;
+            obj161.InnerType = typeof(string);
             obj162.IsDerived = true;
-            obj162.Type = __MetaType.FromModelObject((__IModelObject)obj164);
-            obj162.Name = "FixedText";
+            obj162.Type = typeof(bool);
+            obj162.Name = "IsFixed";
             obj162.Parent = obj30;
-            obj163.Type = typeof(string);
-            obj163.Name = "Char";
+            ((__IModelObject)obj163).MChildren.Add((__IModelObject)obj165);
+            obj163.IsDerived = true;
+            obj163.Type = __MetaType.FromModelObject((__IModelObject)obj165);
+            obj163.Name = "FixedText";
             obj163.Parent = obj30;
-            obj164.InnerType = typeof(string);
-            obj165.IsDerived = true;
-            obj165.Type = typeof(bool);
-            obj165.Name = "IsFixed";
-            obj165.Parent = obj31;
-            ((__IModelObject)obj166).MChildren.Add((__IModelObject)obj169);
+            obj164.Type = typeof(string);
+            obj164.Name = "Char";
+            obj164.Parent = obj30;
+            obj165.InnerType = typeof(string);
             obj166.IsDerived = true;
-            obj166.Type = __MetaType.FromModelObject((__IModelObject)obj169);
-            obj166.Name = "FixedText";
+            obj166.Type = typeof(bool);
+            obj166.Name = "IsFixed";
             obj166.Parent = obj31;
-            obj167.Type = typeof(string);
-            obj167.Name = "StartChar";
+            ((__IModelObject)obj167).MChildren.Add((__IModelObject)obj170);
+            obj167.IsDerived = true;
+            obj167.Type = __MetaType.FromModelObject((__IModelObject)obj170);
+            obj167.Name = "FixedText";
             obj167.Parent = obj31;
             obj168.Type = typeof(string);
-            obj168.Name = "EndChar";
+            obj168.Name = "StartChar";
             obj168.Parent = obj31;
-            obj169.InnerType = typeof(string);
-            obj170.IsDerived = true;
-            obj170.Type = typeof(bool);
-            obj170.Name = "IsFixed";
-            obj170.Parent = obj32;
-            ((__IModelObject)obj171).MChildren.Add((__IModelObject)obj173);
+            obj169.Type = typeof(string);
+            obj169.Name = "EndChar";
+            obj169.Parent = obj31;
+            obj170.InnerType = typeof(string);
             obj171.IsDerived = true;
-            obj171.Type = __MetaType.FromModelObject((__IModelObject)obj173);
-            obj171.Name = "FixedText";
+            obj171.Type = typeof(bool);
+            obj171.Name = "IsFixed";
             obj171.Parent = obj32;
             ((__IModelObject)obj172).MChildren.Add((__IModelObject)obj174);
-            obj172.IsContainment = true;
+            obj172.IsDerived = true;
             obj172.Type = __MetaType.FromModelObject((__IModelObject)obj174);
-            obj172.Name = "Alternatives";
+            obj172.Name = "FixedText";
             obj172.Parent = obj32;
-            obj173.InnerType = typeof(string);
-            obj174.ItemType = __MetaType.FromModelObject((__IModelObject)obj21);
-            obj175.SymbolProperty = "ReturnType";
-            obj175.Type = typeof(__MetaType);
-            obj175.Name = "ReturnType";
-            obj175.Parent = obj33;
-            ((__IModelObject)obj176).MChildren.Add((__IModelObject)obj180);
-            obj176.IsContainment = true;
-            obj176.SymbolProperty = "Alternatives";
-            obj176.Type = __MetaType.FromModelObject((__IModelObject)obj180);
-            obj176.Name = "Alternatives";
+            ((__IModelObject)obj173).MChildren.Add((__IModelObject)obj175);
+            obj173.IsContainment = true;
+            obj173.Type = __MetaType.FromModelObject((__IModelObject)obj175);
+            obj173.Name = "Alternatives";
+            obj173.Parent = obj32;
+            obj174.InnerType = typeof(string);
+            obj175.ItemType = __MetaType.FromModelObject((__IModelObject)obj21);
+            obj176.SymbolProperty = "ReturnType";
+            obj176.Type = typeof(__MetaType);
+            obj176.Name = "ReturnType";
             obj176.Parent = obj33;
+            obj177.SymbolProperty = "NeverNull";
             obj177.Type = typeof(bool);
-            obj177.Name = "AllowMerge";
+            obj177.Name = "NeverNull";
             obj177.Parent = obj33;
-            obj178.IsDerived = true;
-            obj178.Type = typeof(string);
-            obj178.Name = "GreenName";
+            ((__IModelObject)obj178).MChildren.Add((__IModelObject)obj181);
+            obj178.IsContainment = true;
+            obj178.SymbolProperty = "Alternatives";
+            obj178.Type = __MetaType.FromModelObject((__IModelObject)obj181);
+            obj178.Name = "Alternatives";
             obj178.Parent = obj33;
             obj179.IsDerived = true;
             obj179.Type = typeof(string);
-            obj179.Name = "RedName";
+            obj179.Name = "GreenName";
             obj179.Parent = obj33;
-            obj180.ItemType = __MetaType.FromModelObject((__IModelObject)obj34);
-            obj181.SymbolProperty = "ReturnType";
-            obj181.Type = typeof(__MetaType);
-            obj181.Name = "ReturnType";
-            obj181.Parent = obj34;
-            obj182.IsContainment = true;
-            obj182.SymbolProperty = "ReturnValue";
-            obj182.Type = __MetaType.FromModelObject((__IModelObject)obj44);
-            obj182.Name = "ReturnValue";
+            obj180.IsDerived = true;
+            obj180.Type = typeof(string);
+            obj180.Name = "RedName";
+            obj180.Parent = obj33;
+            obj181.ItemType = __MetaType.FromModelObject((__IModelObject)obj34);
+            obj182.SymbolProperty = "ReturnType";
+            obj182.Type = typeof(__MetaType);
+            obj182.Name = "ReturnType";
             obj182.Parent = obj34;
-            ((__IModelObject)obj183).MChildren.Add((__IModelObject)obj196);
-            obj183.IsContainment = true;
-            obj183.SymbolProperty = "Elements";
-            obj183.Type = __MetaType.FromModelObject((__IModelObject)obj196);
-            obj183.Name = "Elements";
+            obj183.SymbolProperty = "NeverNull";
+            obj183.Type = typeof(bool);
+            obj183.Name = "NeverNull";
             obj183.Parent = obj34;
-            obj184.IsDerived = true;
-            obj184.Type = typeof(string);
-            obj184.Name = "GreenName";
+            obj184.IsContainment = true;
+            obj184.SymbolProperty = "ReturnValue";
+            obj184.Type = __MetaType.FromModelObject((__IModelObject)obj43);
+            obj184.Name = "ReturnValue";
             obj184.Parent = obj34;
-            obj185.IsDerived = true;
-            obj185.Type = typeof(string);
-            obj185.Name = "GreenConstructorParameters";
+            ((__IModelObject)obj185).MChildren.Add((__IModelObject)obj198);
+            obj185.IsContainment = true;
+            obj185.SymbolProperty = "Elements";
+            obj185.Type = __MetaType.FromModelObject((__IModelObject)obj198);
+            obj185.Name = "Elements";
             obj185.Parent = obj34;
             obj186.IsDerived = true;
             obj186.Type = typeof(string);
-            obj186.Name = "GreenConstructorArguments";
+            obj186.Name = "GreenName";
             obj186.Parent = obj34;
             obj187.IsDerived = true;
             obj187.Type = typeof(string);
-            obj187.Name = "GreenUpdateParameters";
+            obj187.Name = "GreenConstructorParameters";
             obj187.Parent = obj34;
             obj188.IsDerived = true;
             obj188.Type = typeof(string);
-            obj188.Name = "GreenUpdateArguments";
+            obj188.Name = "GreenConstructorArguments";
             obj188.Parent = obj34;
             obj189.IsDerived = true;
             obj189.Type = typeof(string);
-            obj189.Name = "RedName";
+            obj189.Name = "GreenUpdateParameters";
             obj189.Parent = obj34;
             obj190.IsDerived = true;
             obj190.Type = typeof(string);
-            obj190.Name = "RedUpdateParameters";
+            obj190.Name = "GreenUpdateArguments";
             obj190.Parent = obj34;
             obj191.IsDerived = true;
             obj191.Type = typeof(string);
-            obj191.Name = "RedUpdateArguments";
+            obj191.Name = "RedName";
             obj191.Parent = obj34;
             obj192.IsDerived = true;
             obj192.Type = typeof(string);
-            obj192.Name = "RedOptionalUpdateParameters";
+            obj192.Name = "RedUpdateParameters";
             obj192.Parent = obj34;
             obj193.IsDerived = true;
             obj193.Type = typeof(string);
-            obj193.Name = "RedToGreenArgumentList";
+            obj193.Name = "RedUpdateArguments";
             obj193.Parent = obj34;
             obj194.IsDerived = true;
             obj194.Type = typeof(string);
-            obj194.Name = "RedToGreenOptionalArgumentList";
+            obj194.Name = "RedOptionalUpdateParameters";
             obj194.Parent = obj34;
             obj195.IsDerived = true;
-            obj195.Type = typeof(bool);
-            obj195.Name = "HasRedToGreenOptionalArguments";
+            obj195.Type = typeof(string);
+            obj195.Name = "RedToGreenArgumentList";
             obj195.Parent = obj34;
-            obj196.ItemType = __MetaType.FromModelObject((__IModelObject)obj36);
-            obj197.Name = "Assign";
-            obj197.Parent = obj35;
-            obj198.Name = "QuestionAssign";
-            obj198.Parent = obj35;
-            obj199.Name = "NegatedAssign";
+            obj196.IsDerived = true;
+            obj196.Type = typeof(string);
+            obj196.Name = "RedToGreenOptionalArgumentList";
+            obj196.Parent = obj34;
+            obj197.IsDerived = true;
+            obj197.Type = typeof(bool);
+            obj197.Name = "HasRedToGreenOptionalArguments";
+            obj197.Parent = obj34;
+            obj198.ItemType = __MetaType.FromModelObject((__IModelObject)obj36);
+            obj199.Name = "Assign";
             obj199.Parent = obj35;
-            obj200.Name = "PlusAssign";
+            obj200.Name = "QuestionAssign";
             obj200.Parent = obj35;
-            ((__IModelObject)obj201).MChildren.Add((__IModelObject)obj229);
-            obj201.IsContainment = true;
-            obj201.Type = __MetaType.FromModelObject((__IModelObject)obj229);
-            obj201.Name = "NameAnnotations";
-            obj201.Parent = obj36;
-            ((__IModelObject)obj202).MChildren.Add((__IModelObject)obj230);
-            obj202.SymbolProperty = "SymbolProperty";
-            obj202.Type = __MetaType.FromModelObject((__IModelObject)obj230);
-            obj202.Name = "SymbolProperty";
-            obj202.Parent = obj36;
-            obj203.SymbolProperty = "Assignment";
-            obj203.Type = __MetaType.FromModelObject((__IModelObject)obj35);
-            obj203.Name = "Assignment";
+            obj201.Name = "NegatedAssign";
+            obj201.Parent = obj35;
+            obj202.Name = "PlusAssign";
+            obj202.Parent = obj35;
+            ((__IModelObject)obj203).MChildren.Add((__IModelObject)obj230);
+            obj203.IsContainment = true;
+            obj203.Type = __MetaType.FromModelObject((__IModelObject)obj230);
+            obj203.Name = "NameAnnotations";
             obj203.Parent = obj36;
-            ((__IModelObject)obj204).MChildren.Add((__IModelObject)obj231);
-            obj204.IsContainment = true;
-            obj204.Type = __MetaType.FromModelObject((__IModelObject)obj231);
-            obj204.Name = "ValueAnnotations";
+            obj204.SymbolProperty = "Name";
+            obj204.Type = typeof(string);
+            obj204.Name = "Name";
             obj204.Parent = obj36;
-            obj205.IsContainment = true;
-            obj205.SymbolProperty = "Value";
-            obj205.Type = __MetaType.FromModelObject((__IModelObject)obj37);
-            obj205.Name = "Value";
+            obj205.SymbolProperty = "Assignment";
+            obj205.Type = __MetaType.FromModelObject((__IModelObject)obj35);
+            obj205.Name = "Assignment";
             obj205.Parent = obj36;
-            obj206.Type = __MetaType.FromModelObject((__IModelObject)obj16);
-            obj206.Name = "Multiplicity";
+            ((__IModelObject)obj206).MChildren.Add((__IModelObject)obj231);
+            obj206.IsContainment = true;
+            obj206.Type = __MetaType.FromModelObject((__IModelObject)obj231);
+            obj206.Name = "ValueAnnotations";
             obj206.Parent = obj36;
-            ((__IModelObject)obj207).MChildren.Add((__IModelObject)obj232);
-            obj207.Type = __MetaType.FromModelObject((__IModelObject)obj232);
-            obj207.Name = "Name";
+            obj207.IsContainment = true;
+            obj207.SymbolProperty = "Value";
+            obj207.Type = __MetaType.FromModelObject((__IModelObject)obj37);
+            obj207.Name = "Value";
             obj207.Parent = obj36;
-            obj208.IsDerived = true;
-            obj208.Type = typeof(bool);
-            obj208.Name = "IsToken";
+            obj208.Type = __MetaType.FromModelObject((__IModelObject)obj16);
+            obj208.Name = "Multiplicity";
             obj208.Parent = obj36;
             obj209.IsDerived = true;
             obj209.Type = typeof(bool);
-            obj209.Name = "IsList";
+            obj209.Name = "IsToken";
             obj209.Parent = obj36;
             obj210.IsDerived = true;
-            obj210.Type = typeof(string);
-            obj210.Name = "FieldName";
+            obj210.Type = typeof(bool);
+            obj210.Name = "IsList";
             obj210.Parent = obj36;
             obj211.IsDerived = true;
             obj211.Type = typeof(string);
-            obj211.Name = "ParameterName";
+            obj211.Name = "FieldName";
             obj211.Parent = obj36;
             obj212.IsDerived = true;
             obj212.Type = typeof(string);
-            obj212.Name = "PropertyName";
+            obj212.Name = "ParameterName";
             obj212.Parent = obj36;
             obj213.IsDerived = true;
             obj213.Type = typeof(string);
-            obj213.Name = "GreenFieldType";
+            obj213.Name = "PropertyName";
             obj213.Parent = obj36;
             obj214.IsDerived = true;
             obj214.Type = typeof(string);
-            obj214.Name = "GreenParameterValue";
+            obj214.Name = "GreenFieldType";
             obj214.Parent = obj36;
             obj215.IsDerived = true;
             obj215.Type = typeof(string);
-            obj215.Name = "GreenPropertyType";
+            obj215.Name = "GreenParameterValue";
             obj215.Parent = obj36;
             obj216.IsDerived = true;
             obj216.Type = typeof(string);
-            obj216.Name = "GreenPropertyValue";
+            obj216.Name = "GreenPropertyType";
             obj216.Parent = obj36;
-            ((__IModelObject)obj217).MChildren.Add((__IModelObject)obj233);
             obj217.IsDerived = true;
-            obj217.Type = __MetaType.FromModelObject((__IModelObject)obj233);
-            obj217.Name = "GreenSyntaxNullCondition";
+            obj217.Type = typeof(string);
+            obj217.Name = "GreenPropertyValue";
             obj217.Parent = obj36;
-            ((__IModelObject)obj218).MChildren.Add((__IModelObject)obj234);
+            ((__IModelObject)obj218).MChildren.Add((__IModelObject)obj232);
             obj218.IsDerived = true;
-            obj218.Type = __MetaType.FromModelObject((__IModelObject)obj234);
-            obj218.Name = "GreenSyntaxCondition";
+            obj218.Type = __MetaType.FromModelObject((__IModelObject)obj232);
+            obj218.Name = "GreenSyntaxNullCondition";
             obj218.Parent = obj36;
+            ((__IModelObject)obj219).MChildren.Add((__IModelObject)obj233);
             obj219.IsDerived = true;
-            obj219.Type = typeof(bool);
-            obj219.Name = "IsOptionalUpdateParameter";
+            obj219.Type = __MetaType.FromModelObject((__IModelObject)obj233);
+            obj219.Name = "GreenSyntaxCondition";
             obj219.Parent = obj36;
             obj220.IsDerived = true;
-            obj220.Type = typeof(string);
-            obj220.Name = "RedFieldType";
+            obj220.Type = typeof(bool);
+            obj220.Name = "IsOptionalUpdateParameter";
             obj220.Parent = obj36;
             obj221.IsDerived = true;
             obj221.Type = typeof(string);
-            obj221.Name = "RedParameterValue";
+            obj221.Name = "RedFieldType";
             obj221.Parent = obj36;
             obj222.IsDerived = true;
             obj222.Type = typeof(string);
-            obj222.Name = "RedPropertyType";
+            obj222.Name = "RedParameterValue";
             obj222.Parent = obj36;
             obj223.IsDerived = true;
             obj223.Type = typeof(string);
-            obj223.Name = "RedPropertyValue";
+            obj223.Name = "RedPropertyType";
             obj223.Parent = obj36;
             obj224.IsDerived = true;
             obj224.Type = typeof(string);
-            obj224.Name = "RedToGreenArgument";
+            obj224.Name = "RedPropertyValue";
             obj224.Parent = obj36;
             obj225.IsDerived = true;
             obj225.Type = typeof(string);
-            obj225.Name = "RedToGreenOptionalArgument";
+            obj225.Name = "RedToGreenArgument";
             obj225.Parent = obj36;
-            ((__IModelObject)obj226).MChildren.Add((__IModelObject)obj235);
             obj226.IsDerived = true;
-            obj226.Type = __MetaType.FromModelObject((__IModelObject)obj235);
-            obj226.Name = "RedSyntaxNullCondition";
+            obj226.Type = typeof(string);
+            obj226.Name = "RedToGreenOptionalArgument";
             obj226.Parent = obj36;
-            ((__IModelObject)obj227).MChildren.Add((__IModelObject)obj236);
+            ((__IModelObject)obj227).MChildren.Add((__IModelObject)obj234);
             obj227.IsDerived = true;
-            obj227.Type = __MetaType.FromModelObject((__IModelObject)obj236);
-            obj227.Name = "RedSyntaxCondition";
+            obj227.Type = __MetaType.FromModelObject((__IModelObject)obj234);
+            obj227.Name = "RedSyntaxNullCondition";
             obj227.Parent = obj36;
-            ((__IModelObject)obj228).MChildren.Add((__IModelObject)obj237);
+            ((__IModelObject)obj228).MChildren.Add((__IModelObject)obj235);
             obj228.IsDerived = true;
-            obj228.Type = __MetaType.FromModelObject((__IModelObject)obj237);
-            obj228.Name = "VisitCall";
+            obj228.Type = __MetaType.FromModelObject((__IModelObject)obj235);
+            obj228.Name = "RedSyntaxCondition";
             obj228.Parent = obj36;
-            obj229.ItemType = __MetaType.FromModelObject((__IModelObject)obj10);
-            obj230.ItemType = typeof(__MetaSymbol);
+            ((__IModelObject)obj229).MChildren.Add((__IModelObject)obj236);
+            obj229.IsDerived = true;
+            obj229.Type = __MetaType.FromModelObject((__IModelObject)obj236);
+            obj229.Name = "VisitCall";
+            obj229.Parent = obj36;
+            obj230.ItemType = __MetaType.FromModelObject((__IModelObject)obj10);
             obj231.ItemType = __MetaType.FromModelObject((__IModelObject)obj10);
             obj232.InnerType = typeof(string);
             obj233.InnerType = typeof(string);
             obj234.InnerType = typeof(string);
             obj235.InnerType = typeof(string);
             obj236.InnerType = typeof(string);
-            obj237.InnerType = typeof(string);
+            obj237.IsDerived = true;
+            obj237.Type = typeof(string);
+            obj237.Name = "GreenType";
+            obj237.Parent = obj37;
+            ((__IModelObject)obj238).MChildren.Add((__IModelObject)obj240);
             obj238.IsDerived = true;
-            obj238.Type = typeof(string);
-            obj238.Name = "GreenType";
+            obj238.Type = __MetaType.FromModelObject((__IModelObject)obj240);
+            obj238.Name = "GreenSyntaxCondition";
             obj238.Parent = obj37;
-            ((__IModelObject)obj239).MChildren.Add((__IModelObject)obj241);
             obj239.IsDerived = true;
-            obj239.Type = __MetaType.FromModelObject((__IModelObject)obj241);
-            obj239.Name = "GreenSyntaxCondition";
+            obj239.Type = typeof(string);
+            obj239.Name = "RedType";
             obj239.Parent = obj37;
-            obj240.IsDerived = true;
-            obj240.Type = typeof(string);
-            obj240.Name = "RedType";
-            obj240.Parent = obj37;
-            obj241.InnerType = typeof(string);
-            obj242.SymbolProperty = "Rule";
-            obj242.Type = __MetaType.FromModelObject((__IModelObject)obj17);
-            obj242.Name = "GrammarRule";
+            obj240.InnerType = typeof(string);
+            obj241.SymbolProperty = "Rule";
+            obj241.Type = __MetaType.FromModelObject((__IModelObject)obj17);
+            obj241.Name = "GrammarRule";
+            obj241.Parent = obj38;
+            ((__IModelObject)obj242).MChildren.Add((__IModelObject)obj248);
+            obj242.SymbolProperty = "ReferencedTypes";
+            obj242.Type = __MetaType.FromModelObject((__IModelObject)obj248);
+            obj242.Name = "ReferencedTypes";
             obj242.Parent = obj38;
             ((__IModelObject)obj243).MChildren.Add((__IModelObject)obj249);
-            obj243.SymbolProperty = "ReferencedTypes";
+            obj243.IsDerived = true;
             obj243.Type = __MetaType.FromModelObject((__IModelObject)obj249);
-            obj243.Name = "ReferencedTypes";
+            obj243.Name = "Token";
             obj243.Parent = obj38;
             ((__IModelObject)obj244).MChildren.Add((__IModelObject)obj250);
             obj244.IsDerived = true;
             obj244.Type = __MetaType.FromModelObject((__IModelObject)obj250);
-            obj244.Name = "Token";
+            obj244.Name = "Rule";
             obj244.Parent = obj38;
-            ((__IModelObject)obj245).MChildren.Add((__IModelObject)obj251);
             obj245.IsDerived = true;
-            obj245.Type = __MetaType.FromModelObject((__IModelObject)obj251);
-            obj245.Name = "Rule";
+            obj245.Type = typeof(string);
+            obj245.Name = "GreenType";
             obj245.Parent = obj38;
+            ((__IModelObject)obj246).MChildren.Add((__IModelObject)obj251);
             obj246.IsDerived = true;
-            obj246.Type = typeof(string);
-            obj246.Name = "GreenType";
+            obj246.Type = __MetaType.FromModelObject((__IModelObject)obj251);
+            obj246.Name = "GreenSyntaxCondition";
             obj246.Parent = obj38;
-            ((__IModelObject)obj247).MChildren.Add((__IModelObject)obj252);
             obj247.IsDerived = true;
-            obj247.Type = __MetaType.FromModelObject((__IModelObject)obj252);
-            obj247.Name = "GreenSyntaxCondition";
+            obj247.Type = typeof(string);
+            obj247.Name = "RedType";
             obj247.Parent = obj38;
-            obj248.IsDerived = true;
-            obj248.Type = typeof(string);
-            obj248.Name = "RedType";
-            obj248.Parent = obj38;
-            obj249.ItemType = typeof(__MetaType);
-            obj250.InnerType = __MetaType.FromModelObject((__IModelObject)obj19);
-            obj251.InnerType = __MetaType.FromModelObject((__IModelObject)obj33);
-            obj252.InnerType = typeof(string);
+            obj248.ItemType = typeof(__MetaType);
+            obj249.InnerType = __MetaType.FromModelObject((__IModelObject)obj19);
+            obj250.InnerType = __MetaType.FromModelObject((__IModelObject)obj33);
+            obj251.InnerType = typeof(string);
+            obj252.IsDerived = true;
+            obj252.Type = typeof(string);
+            obj252.Name = "GreenType";
+            obj252.Parent = obj39;
+            ((__IModelObject)obj253).MChildren.Add((__IModelObject)obj255);
             obj253.IsDerived = true;
-            obj253.Type = typeof(string);
-            obj253.Name = "GreenType";
+            obj253.Type = __MetaType.FromModelObject((__IModelObject)obj255);
+            obj253.Name = "GreenSyntaxCondition";
             obj253.Parent = obj39;
-            ((__IModelObject)obj254).MChildren.Add((__IModelObject)obj256);
             obj254.IsDerived = true;
-            obj254.Type = __MetaType.FromModelObject((__IModelObject)obj256);
-            obj254.Name = "GreenSyntaxCondition";
+            obj254.Type = typeof(string);
+            obj254.Name = "RedType";
             obj254.Parent = obj39;
-            obj255.IsDerived = true;
-            obj255.Type = typeof(string);
-            obj255.Name = "RedType";
-            obj255.Parent = obj39;
-            obj256.InnerType = typeof(string);
-            obj257.Type = typeof(string);
-            obj257.Name = "Text";
-            obj257.Parent = obj40;
-            ((__IModelObject)obj258).MChildren.Add((__IModelObject)obj262);
-            obj258.IsContainment = true;
-            obj258.Type = __MetaType.FromModelObject((__IModelObject)obj262);
-            obj258.Name = "Tokens";
-            obj258.Parent = obj41;
-            obj259.IsDerived = true;
-            obj259.Type = typeof(string);
-            obj259.Name = "GreenType";
-            obj259.Parent = obj41;
-            ((__IModelObject)obj260).MChildren.Add((__IModelObject)obj263);
-            obj260.IsDerived = true;
-            obj260.Type = __MetaType.FromModelObject((__IModelObject)obj263);
-            obj260.Name = "GreenSyntaxCondition";
-            obj260.Parent = obj41;
+            obj255.InnerType = typeof(string);
+            obj256.Type = typeof(string);
+            obj256.Name = "Text";
+            obj256.Parent = obj40;
+            ((__IModelObject)obj257).MChildren.Add((__IModelObject)obj258);
+            obj257.IsContainment = true;
+            obj257.SymbolProperty = "Alternatives";
+            obj257.Type = __MetaType.FromModelObject((__IModelObject)obj258);
+            obj257.Name = "Alternatives";
+            obj257.Parent = obj41;
+            obj258.ItemType = __MetaType.FromModelObject((__IModelObject)obj34);
+            obj259.IsContainment = true;
+            obj259.Type = __MetaType.FromModelObject((__IModelObject)obj36);
+            obj259.Name = "Item";
+            obj259.Parent = obj42;
+            obj260.IsContainment = true;
+            obj260.Type = __MetaType.FromModelObject((__IModelObject)obj36);
+            obj260.Name = "Separator";
+            obj260.Parent = obj42;
             obj261.IsDerived = true;
             obj261.Type = typeof(string);
-            obj261.Name = "RedType";
-            obj261.Parent = obj41;
-            obj262.ItemType = __MetaType.FromModelObject((__IModelObject)obj38);
-            obj263.InnerType = typeof(string);
-            obj264.Type = typeof(bool);
-            obj264.Name = "SeparatorFirst";
-            obj264.Parent = obj43;
-            obj265.Type = typeof(bool);
-            obj265.Name = "RepeatedSeparatorFirst";
+            obj261.Name = "GreenType";
+            obj261.Parent = obj42;
+            ((__IModelObject)obj262).MChildren.Add((__IModelObject)obj264);
+            obj262.IsDerived = true;
+            obj262.Type = __MetaType.FromModelObject((__IModelObject)obj264);
+            obj262.Name = "GreenSyntaxCondition";
+            obj262.Parent = obj42;
+            obj263.IsDerived = true;
+            obj263.Type = typeof(string);
+            obj263.Name = "RedType";
+            obj263.Parent = obj42;
+            obj264.InnerType = typeof(string);
+            obj265.SymbolProperty = "Value";
+            obj265.Type = typeof(__MetaSymbol);
+            obj265.Name = "Value";
             obj265.Parent = obj43;
-            ((__IModelObject)obj266).MChildren.Add((__IModelObject)obj276);
-            obj266.IsContainment = true;
-            obj266.Type = __MetaType.FromModelObject((__IModelObject)obj276);
-            obj266.Name = "FirstItems";
-            obj266.Parent = obj43;
-            ((__IModelObject)obj267).MChildren.Add((__IModelObject)obj277);
-            obj267.IsContainment = true;
-            obj267.Type = __MetaType.FromModelObject((__IModelObject)obj277);
-            obj267.Name = "FirstSeparators";
-            obj267.Parent = obj43;
-            obj268.IsContainment = true;
-            obj268.Type = __MetaType.FromModelObject((__IModelObject)obj36);
-            obj268.Name = "RepeatedBlock";
-            obj268.Parent = obj43;
-            obj269.Type = __MetaType.FromModelObject((__IModelObject)obj36);
-            obj269.Name = "RepeatedItem";
-            obj269.Parent = obj43;
-            obj270.Type = __MetaType.FromModelObject((__IModelObject)obj36);
-            obj270.Name = "RepeatedSeparator";
-            obj270.Parent = obj43;
-            ((__IModelObject)obj271).MChildren.Add((__IModelObject)obj278);
-            obj271.IsContainment = true;
-            obj271.Type = __MetaType.FromModelObject((__IModelObject)obj278);
-            obj271.Name = "LastItems";
-            obj271.Parent = obj43;
-            ((__IModelObject)obj272).MChildren.Add((__IModelObject)obj279);
-            obj272.IsContainment = true;
-            obj272.Type = __MetaType.FromModelObject((__IModelObject)obj279);
-            obj272.Name = "LastSeparators";
-            obj272.Parent = obj43;
-            obj273.IsDerived = true;
-            obj273.Type = typeof(string);
-            obj273.Name = "GreenType";
-            obj273.Parent = obj43;
-            ((__IModelObject)obj274).MChildren.Add((__IModelObject)obj280);
-            obj274.IsDerived = true;
-            obj274.Type = __MetaType.FromModelObject((__IModelObject)obj280);
-            obj274.Name = "GreenSyntaxCondition";
-            obj274.Parent = obj43;
-            obj275.IsDerived = true;
-            obj275.Type = typeof(string);
-            obj275.Name = "RedType";
-            obj275.Parent = obj43;
-            obj276.ItemType = __MetaType.FromModelObject((__IModelObject)obj36);
-            obj277.ItemType = __MetaType.FromModelObject((__IModelObject)obj36);
-            obj278.ItemType = __MetaType.FromModelObject((__IModelObject)obj36);
-            obj279.ItemType = __MetaType.FromModelObject((__IModelObject)obj36);
-            obj280.InnerType = typeof(string);
-            obj281.SymbolProperty = "Value";
-            obj281.Type = typeof(__MetaSymbol);
-            obj281.Name = "Value";
-            obj281.Parent = obj44;
-            ((__IModelObject)obj282).MChildren.Add((__IModelObject)obj283);
-            obj282.Type = __MetaType.FromModelObject((__IModelObject)obj283);
-            obj282.Name = "Items";
-            obj282.Parent = obj45;
-            obj283.ItemType = __MetaType.FromModelObject((__IModelObject)obj44);
+            ((__IModelObject)obj266).MChildren.Add((__IModelObject)obj267);
+            obj266.Type = __MetaType.FromModelObject((__IModelObject)obj267);
+            obj266.Name = "Items";
+            obj266.Parent = obj44;
+            obj267.ItemType = __MetaType.FromModelObject((__IModelObject)obj43);
+            obj268.Type = __MetaType.FromModelObject((__IModelObject)obj47);
+            obj268.Name = "Identifier";
+            obj268.Parent = obj45;
+            ((__IModelObject)obj269).MChildren.Add((__IModelObject)obj270);
+            obj269.Type = __MetaType.FromModelObject((__IModelObject)obj270);
+            obj269.Name = "Identifiers";
+            obj269.Parent = obj46;
+            obj270.ItemType = __MetaType.FromModelObject((__IModelObject)obj47);
+            obj271.Type = typeof(string);
+            obj271.Name = "Name";
+            obj271.Parent = obj47;
             _model.IsSealed = true;
         }
     
@@ -2339,6 +2264,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
         public static __ModelProperty CSharpElement_AntlrName => _CSharpElement_AntlrName;
         public static __ModelProperty CSharpElement_Binders => _CSharpElement_Binders;
         public static __ModelProperty CSharpElement_ContainsBinders => _CSharpElement_ContainsBinders;
+        public static __ModelClassInfo BlockInfo => __Impl.Block_Impl.__Info.Instance;
+        public static __ModelProperty Block_Alternatives => _Block_Alternatives;
         public static __ModelClassInfo DeclarationInfo => __Impl.Declaration_Impl.__Info.Instance;
         public static __ModelProperty Declaration_Annotations => _Declaration_Annotations;
         public static __ModelProperty Declaration_Name => _Declaration_Name;
@@ -2347,6 +2274,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
         public static __ModelProperty Declaration_FullName => _Declaration_FullName;
         public static __ModelClassInfo AlternativeInfo => __Impl.Alternative_Impl.__Info.Instance;
         public static __ModelProperty Alternative_ReturnType => _Alternative_ReturnType;
+        public static __ModelProperty Alternative_NeverNull => _Alternative_NeverNull;
         public static __ModelProperty Alternative_ReturnValue => _Alternative_ReturnValue;
         public static __ModelProperty Alternative_Elements => _Alternative_Elements;
         public static __ModelProperty Alternative_GreenName => _Alternative_GreenName;
@@ -2361,22 +2289,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
         public static __ModelProperty Alternative_RedToGreenArgumentList => _Alternative_RedToGreenArgumentList;
         public static __ModelProperty Alternative_RedToGreenOptionalArgumentList => _Alternative_RedToGreenOptionalArgumentList;
         public static __ModelProperty Alternative_HasRedToGreenOptionalArguments => _Alternative_HasRedToGreenOptionalArguments;
-        public static __ModelClassInfo ElementValueInfo => __Impl.ElementValue_Impl.__Info.Instance;
-        public static __ModelProperty ElementValue_GreenType => _ElementValue_GreenType;
-        public static __ModelProperty ElementValue_GreenSyntaxCondition => _ElementValue_GreenSyntaxCondition;
-        public static __ModelProperty ElementValue_RedType => _ElementValue_RedType;
-        public static __ModelClassInfo GrammarRuleInfo => __Impl.GrammarRule_Impl.__Info.Instance;
-        public static __ModelProperty GrammarRule_Language => _GrammarRule_Language;
-        public static __ModelProperty GrammarRule_Grammar => _GrammarRule_Grammar;
-        public static __ModelClassInfo BlockInfo => __Impl.Block_Impl.__Info.Instance;
         public static __ModelClassInfo ElementInfo => __Impl.Element_Impl.__Info.Instance;
         public static __ModelProperty Element_NameAnnotations => _Element_NameAnnotations;
-        public static __ModelProperty Element_SymbolProperty => _Element_SymbolProperty;
+        public static __ModelProperty Element_Name => _Element_Name;
         public static __ModelProperty Element_Assignment => _Element_Assignment;
         public static __ModelProperty Element_ValueAnnotations => _Element_ValueAnnotations;
         public static __ModelProperty Element_Value => _Element_Value;
         public static __ModelProperty Element_Multiplicity => _Element_Multiplicity;
-        public static __ModelProperty Element_Name => _Element_Name;
         public static __ModelProperty Element_IsToken => _Element_IsToken;
         public static __ModelProperty Element_IsList => _Element_IsList;
         public static __ModelProperty Element_FieldName => _Element_FieldName;
@@ -2398,21 +2317,21 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
         public static __ModelProperty Element_RedSyntaxNullCondition => _Element_RedSyntaxNullCondition;
         public static __ModelProperty Element_RedSyntaxCondition => _Element_RedSyntaxCondition;
         public static __ModelProperty Element_VisitCall => _Element_VisitCall;
+        public static __ModelClassInfo ElementValueInfo => __Impl.ElementValue_Impl.__Info.Instance;
+        public static __ModelProperty ElementValue_GreenType => _ElementValue_GreenType;
+        public static __ModelProperty ElementValue_GreenSyntaxCondition => _ElementValue_GreenSyntaxCondition;
+        public static __ModelProperty ElementValue_RedType => _ElementValue_RedType;
         public static __ModelClassInfo EofInfo => __Impl.Eof_Impl.__Info.Instance;
         public static __ModelProperty Eof_GreenType => _Eof_GreenType;
         public static __ModelProperty Eof_GreenSyntaxCondition => _Eof_GreenSyntaxCondition;
         public static __ModelProperty Eof_RedType => _Eof_RedType;
         public static __ModelClassInfo ExpressionInfo => __Impl.Expression_Impl.__Info.Instance;
         public static __ModelProperty Expression_Value => _Expression_Value;
-        public static __ModelClassInfo KeywordInfo => __Impl.Keyword_Impl.__Info.Instance;
-        public static __ModelProperty Keyword_Text => _Keyword_Text;
-        public static __ModelClassInfo LanguageInfo => __Impl.Language_Impl.__Info.Instance;
-        public static __ModelProperty Language_Namespace => _Language_Namespace;
-        public static __ModelProperty Language_Grammar => _Language_Grammar;
-        public static __ModelClassInfo LexerRuleInfo => __Impl.LexerRule_Impl.__Info.Instance;
-        public static __ModelProperty LexerRule_Alternatives => _LexerRule_Alternatives;
-        public static __ModelProperty LexerRule_IsFixed => _LexerRule_IsFixed;
-        public static __ModelProperty LexerRule_FixedText => _LexerRule_FixedText;
+        public static __ModelClassInfo FixedInfo => __Impl.Fixed_Impl.__Info.Instance;
+        public static __ModelProperty Fixed_Text => _Fixed_Text;
+        public static __ModelClassInfo GrammarRuleInfo => __Impl.GrammarRule_Impl.__Info.Instance;
+        public static __ModelProperty GrammarRule_Language => _GrammarRule_Language;
+        public static __ModelProperty GrammarRule_Grammar => _GrammarRule_Grammar;
         public static __ModelClassInfo FragmentInfo => __Impl.Fragment_Impl.__Info.Instance;
         public static __ModelClassInfo GrammarInfo => __Impl.Grammar_Impl.__Info.Instance;
         public static __ModelProperty Grammar_Language => _Grammar_Language;
@@ -2425,11 +2344,15 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
         public static __ModelProperty Grammar_DefaultSeparator => _Grammar_DefaultSeparator;
         public static __ModelProperty Grammar_DefaultIdentifier => _Grammar_DefaultIdentifier;
         public static __ModelProperty Grammar_MainRule => _Grammar_MainRule;
-        public static __ModelProperty Grammar_RootTypeName => _Grammar_RootTypeName;
+        public static __ModelClassInfo IdentifierInfo => __Impl.Identifier_Impl.__Info.Instance;
+        public static __ModelProperty Identifier_Name => _Identifier_Name;
         public static __ModelClassInfo LAlternativeInfo => __Impl.LAlternative_Impl.__Info.Instance;
         public static __ModelProperty LAlternative_IsFixed => _LAlternative_IsFixed;
         public static __ModelProperty LAlternative_FixedText => _LAlternative_FixedText;
         public static __ModelProperty LAlternative_Elements => _LAlternative_Elements;
+        public static __ModelClassInfo LanguageInfo => __Impl.Language_Impl.__Info.Instance;
+        public static __ModelProperty Language_Namespace => _Language_Namespace;
+        public static __ModelProperty Language_Grammar => _Language_Grammar;
         public static __ModelClassInfo LElementInfo => __Impl.LElement_Impl.__Info.Instance;
         public static __ModelProperty LElement_IsFixed => _LElement_IsFixed;
         public static __ModelProperty LElement_FixedText => _LElement_FixedText;
@@ -2443,6 +2366,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
         public static __ModelProperty LBlock_IsFixed => _LBlock_IsFixed;
         public static __ModelProperty LBlock_FixedText => _LBlock_FixedText;
         public static __ModelProperty LBlock_Alternatives => _LBlock_Alternatives;
+        public static __ModelClassInfo LexerRuleInfo => __Impl.LexerRule_Impl.__Info.Instance;
+        public static __ModelProperty LexerRule_Alternatives => _LexerRule_Alternatives;
+        public static __ModelProperty LexerRule_IsFixed => _LexerRule_IsFixed;
+        public static __ModelProperty LexerRule_FixedText => _LexerRule_FixedText;
         public static __ModelClassInfo LFixedInfo => __Impl.LFixed_Impl.__Info.Instance;
         public static __ModelProperty LFixed_IsFixed => _LFixed_IsFixed;
         public static __ModelProperty LFixed_FixedText => _LFixed_FixedText;
@@ -2475,11 +2402,15 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
         public static __ModelClassInfo LWildCardInfo => __Impl.LWildCard_Impl.__Info.Instance;
         public static __ModelProperty LWildCard_IsFixed => _LWildCard_IsFixed;
         public static __ModelProperty LWildCard_FixedText => _LWildCard_FixedText;
+        public static __ModelClassInfo NameInfo => __Impl.Name_Impl.__Info.Instance;
+        public static __ModelProperty Name_Identifier => _Name_Identifier;
         public static __ModelClassInfo NamespaceInfo => __Impl.Namespace_Impl.__Info.Instance;
+        public static __ModelClassInfo QualifierInfo => __Impl.Qualifier_Impl.__Info.Instance;
+        public static __ModelProperty Qualifier_Identifiers => _Qualifier_Identifiers;
         public static __ModelClassInfo RuleInfo => __Impl.Rule_Impl.__Info.Instance;
         public static __ModelProperty Rule_ReturnType => _Rule_ReturnType;
+        public static __ModelProperty Rule_NeverNull => _Rule_NeverNull;
         public static __ModelProperty Rule_Alternatives => _Rule_Alternatives;
-        public static __ModelProperty Rule_AllowMerge => _Rule_AllowMerge;
         public static __ModelProperty Rule_GreenName => _Rule_GreenName;
         public static __ModelProperty Rule_RedName => _Rule_RedName;
         public static __ModelClassInfo RuleRefInfo => __Impl.RuleRef_Impl.__Info.Instance;
@@ -2491,27 +2422,16 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
         public static __ModelProperty RuleRef_GreenSyntaxCondition => _RuleRef_GreenSyntaxCondition;
         public static __ModelProperty RuleRef_RedType => _RuleRef_RedType;
         public static __ModelClassInfo SeparatedListInfo => __Impl.SeparatedList_Impl.__Info.Instance;
-        public static __ModelProperty SeparatedList_SeparatorFirst => _SeparatedList_SeparatorFirst;
-        public static __ModelProperty SeparatedList_RepeatedSeparatorFirst => _SeparatedList_RepeatedSeparatorFirst;
-        public static __ModelProperty SeparatedList_FirstItems => _SeparatedList_FirstItems;
-        public static __ModelProperty SeparatedList_FirstSeparators => _SeparatedList_FirstSeparators;
-        public static __ModelProperty SeparatedList_RepeatedBlock => _SeparatedList_RepeatedBlock;
-        public static __ModelProperty SeparatedList_RepeatedItem => _SeparatedList_RepeatedItem;
-        public static __ModelProperty SeparatedList_RepeatedSeparator => _SeparatedList_RepeatedSeparator;
-        public static __ModelProperty SeparatedList_LastItems => _SeparatedList_LastItems;
-        public static __ModelProperty SeparatedList_LastSeparators => _SeparatedList_LastSeparators;
+        public static __ModelProperty SeparatedList_Item => _SeparatedList_Item;
+        public static __ModelProperty SeparatedList_Separator => _SeparatedList_Separator;
         public static __ModelProperty SeparatedList_GreenType => _SeparatedList_GreenType;
         public static __ModelProperty SeparatedList_GreenSyntaxCondition => _SeparatedList_GreenSyntaxCondition;
         public static __ModelProperty SeparatedList_RedType => _SeparatedList_RedType;
         public static __ModelClassInfo TokenInfo => __Impl.Token_Impl.__Info.Instance;
         public static __ModelProperty Token_ReturnType => _Token_ReturnType;
+        public static __ModelProperty Token_NeverNull => _Token_NeverNull;
         public static __ModelProperty Token_IsTrivia => _Token_IsTrivia;
         public static __ModelProperty Token_TokenKind => _Token_TokenKind;
-        public static __ModelClassInfo TokenAltsInfo => __Impl.TokenAlts_Impl.__Info.Instance;
-        public static __ModelProperty TokenAlts_Tokens => _TokenAlts_Tokens;
-        public static __ModelProperty TokenAlts_GreenType => _TokenAlts_GreenType;
-        public static __ModelProperty TokenAlts_GreenSyntaxCondition => _TokenAlts_GreenSyntaxCondition;
-        public static __ModelProperty TokenAlts_RedType => _TokenAlts_RedType;
         public static __ModelClassInfo TokenKindInfo => __Impl.TokenKind_Impl.__Info.Instance;
         public static __ModelProperty TokenKind_Name => _TokenKind_Name;
         public static __ModelProperty TokenKind_TypeName => _TokenKind_TypeName;
@@ -2554,14 +2474,14 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             return (CSharpElement)Compiler.CSharpElementInfo.Create(Model, id)!;
         }
     
-        public Alternative Alternative(string? id = null)
-        {
-            return (Alternative)Compiler.AlternativeInfo.Create(Model, id)!;
-        }
-    
         public Block Block(string? id = null)
         {
             return (Block)Compiler.BlockInfo.Create(Model, id)!;
+        }
+    
+        public Alternative Alternative(string? id = null)
+        {
+            return (Alternative)Compiler.AlternativeInfo.Create(Model, id)!;
         }
     
         public Element Element(string? id = null)
@@ -2579,14 +2499,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             return (Expression)Compiler.ExpressionInfo.Create(Model, id)!;
         }
     
-        public Keyword Keyword(string? id = null)
+        public Fixed Fixed(string? id = null)
         {
-            return (Keyword)Compiler.KeywordInfo.Create(Model, id)!;
-        }
-    
-        public Language Language(string? id = null)
-        {
-            return (Language)Compiler.LanguageInfo.Create(Model, id)!;
+            return (Fixed)Compiler.FixedInfo.Create(Model, id)!;
         }
     
         public Fragment Fragment(string? id = null)
@@ -2599,9 +2514,19 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             return (Grammar)Compiler.GrammarInfo.Create(Model, id)!;
         }
     
+        public Identifier Identifier(string? id = null)
+        {
+            return (Identifier)Compiler.IdentifierInfo.Create(Model, id)!;
+        }
+    
         public LAlternative LAlternative(string? id = null)
         {
             return (LAlternative)Compiler.LAlternativeInfo.Create(Model, id)!;
+        }
+    
+        public Language Language(string? id = null)
+        {
+            return (Language)Compiler.LanguageInfo.Create(Model, id)!;
         }
     
         public LElement LElement(string? id = null)
@@ -2649,9 +2574,19 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             return (LWildCard)Compiler.LWildCardInfo.Create(Model, id)!;
         }
     
+        public Name Name(string? id = null)
+        {
+            return (Name)Compiler.NameInfo.Create(Model, id)!;
+        }
+    
         public Namespace Namespace(string? id = null)
         {
             return (Namespace)Compiler.NamespaceInfo.Create(Model, id)!;
+        }
+    
+        public Qualifier Qualifier(string? id = null)
+        {
+            return (Qualifier)Compiler.QualifierInfo.Create(Model, id)!;
         }
     
         public RuleRef RuleRef(string? id = null)
@@ -2667,11 +2602,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
         public Token Token(string? id = null)
         {
             return (Token)Compiler.TokenInfo.Create(Model, id)!;
-        }
-    
-        public TokenAlts TokenAlts(string? id = null)
-        {
-            return (TokenAlts)Compiler.TokenAltsInfo.Create(Model, id)!;
         }
     
         public TokenKind TokenKind(string? id = null)
@@ -2718,14 +2648,14 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             return (CSharpElement)Compiler.CSharpElementInfo.Create(model, id)!;
         }
     
-        public Alternative Alternative(__Model model, string? id = null)
-        {
-            return (Alternative)Compiler.AlternativeInfo.Create(model, id)!;
-        }
-    
         public Block Block(__Model model, string? id = null)
         {
             return (Block)Compiler.BlockInfo.Create(model, id)!;
+        }
+    
+        public Alternative Alternative(__Model model, string? id = null)
+        {
+            return (Alternative)Compiler.AlternativeInfo.Create(model, id)!;
         }
     
         public Element Element(__Model model, string? id = null)
@@ -2743,14 +2673,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             return (Expression)Compiler.ExpressionInfo.Create(model, id)!;
         }
     
-        public Keyword Keyword(__Model model, string? id = null)
+        public Fixed Fixed(__Model model, string? id = null)
         {
-            return (Keyword)Compiler.KeywordInfo.Create(model, id)!;
-        }
-    
-        public Language Language(__Model model, string? id = null)
-        {
-            return (Language)Compiler.LanguageInfo.Create(model, id)!;
+            return (Fixed)Compiler.FixedInfo.Create(model, id)!;
         }
     
         public Fragment Fragment(__Model model, string? id = null)
@@ -2763,9 +2688,19 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             return (Grammar)Compiler.GrammarInfo.Create(model, id)!;
         }
     
+        public Identifier Identifier(__Model model, string? id = null)
+        {
+            return (Identifier)Compiler.IdentifierInfo.Create(model, id)!;
+        }
+    
         public LAlternative LAlternative(__Model model, string? id = null)
         {
             return (LAlternative)Compiler.LAlternativeInfo.Create(model, id)!;
+        }
+    
+        public Language Language(__Model model, string? id = null)
+        {
+            return (Language)Compiler.LanguageInfo.Create(model, id)!;
         }
     
         public LElement LElement(__Model model, string? id = null)
@@ -2813,9 +2748,19 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             return (LWildCard)Compiler.LWildCardInfo.Create(model, id)!;
         }
     
+        public Name Name(__Model model, string? id = null)
+        {
+            return (Name)Compiler.NameInfo.Create(model, id)!;
+        }
+    
         public Namespace Namespace(__Model model, string? id = null)
         {
             return (Namespace)Compiler.NamespaceInfo.Create(model, id)!;
+        }
+    
+        public Qualifier Qualifier(__Model model, string? id = null)
+        {
+            return (Qualifier)Compiler.QualifierInfo.Create(model, id)!;
         }
     
         public RuleRef RuleRef(__Model model, string? id = null)
@@ -2831,11 +2776,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
         public Token Token(__Model model, string? id = null)
         {
             return (Token)Compiler.TokenInfo.Create(model, id)!;
-        }
-    
-        public TokenAlts TokenAlts(__Model model, string? id = null)
-        {
-            return (TokenAlts)Compiler.TokenAltsInfo.Create(model, id)!;
         }
     
         public TokenKind TokenKind(__Model model, string? id = null)
@@ -2915,6 +2855,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
     
     }
 
+    public interface Block : global::MetaDslx.Bootstrap.MetaCompiler.Model.ElementValue
+    {
+        global::MetaDslx.Modeling.ICollectionSlot<Alternative> Alternatives { get; }
+    
+    }
+
     public interface Declaration : __IModelObject
     {
         global::MetaDslx.Modeling.ICollectionSlot<Annotation> Annotations { get; }
@@ -2934,6 +2880,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
         string GreenUpdateArguments { get; }
         string GreenUpdateParameters { get; }
         bool HasRedToGreenOptionalArguments { get; }
+        bool NeverNull { get; set; }
         string RedName { get; }
         string RedOptionalUpdateParameters { get; }
         string RedToGreenArgumentList { get; }
@@ -2942,26 +2889,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
         string RedUpdateParameters { get; }
         __MetaType ReturnType { get; set; }
         Expression ReturnValue { get; set; }
-    
-    }
-
-    public interface ElementValue : global::MetaDslx.Bootstrap.MetaCompiler.Model.CSharpElement
-    {
-        string? GreenSyntaxCondition { get; }
-        string GreenType { get; }
-        string RedType { get; }
-    
-    }
-
-    public interface GrammarRule : global::MetaDslx.Bootstrap.MetaCompiler.Model.Declaration, global::MetaDslx.Bootstrap.MetaCompiler.Model.CSharpElement
-    {
-        Grammar Grammar { get; set; }
-        Language Language { get; }
-    
-    }
-
-    public interface Block : global::MetaDslx.Bootstrap.MetaCompiler.Model.Rule, global::MetaDslx.Bootstrap.MetaCompiler.Model.ElementValue
-    {
     
     }
 
@@ -2979,7 +2906,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
         bool IsOptionalUpdateParameter { get; }
         bool IsToken { get; }
         global::MetaDslx.Bootstrap.MetaCompiler.Model.Multiplicity Multiplicity { get; set; }
-        string? Name { get; set; }
+        string Name { get; set; }
         global::MetaDslx.Modeling.ICollectionSlot<Annotation> NameAnnotations { get; }
         string ParameterName { get; }
         string PropertyName { get; }
@@ -2991,10 +2918,17 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
         string? RedSyntaxNullCondition { get; }
         string RedToGreenArgument { get; }
         string RedToGreenOptionalArgument { get; }
-        global::MetaDslx.Modeling.ICollectionSlot<__MetaSymbol> SymbolProperty { get; }
         ElementValue Value { get; set; }
         global::MetaDslx.Modeling.ICollectionSlot<Annotation> ValueAnnotations { get; }
         string? VisitCall { get; }
+    
+    }
+
+    public interface ElementValue : global::MetaDslx.Bootstrap.MetaCompiler.Model.CSharpElement
+    {
+        string? GreenSyntaxCondition { get; }
+        string GreenType { get; }
+        string RedType { get; }
     
     }
 
@@ -3012,24 +2946,16 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
     
     }
 
-    public interface Keyword : global::MetaDslx.Bootstrap.MetaCompiler.Model.ElementValue
+    public interface Fixed : global::MetaDslx.Bootstrap.MetaCompiler.Model.ElementValue
     {
         string Text { get; set; }
     
     }
 
-    public interface Language : global::MetaDslx.Bootstrap.MetaCompiler.Model.Declaration
+    public interface GrammarRule : global::MetaDslx.Bootstrap.MetaCompiler.Model.Declaration, global::MetaDslx.Bootstrap.MetaCompiler.Model.CSharpElement
     {
         Grammar Grammar { get; set; }
-        string Namespace { get; }
-    
-    }
-
-    public interface LexerRule : global::MetaDslx.Bootstrap.MetaCompiler.Model.GrammarRule
-    {
-        global::MetaDslx.Modeling.ICollectionSlot<LAlternative> Alternatives { get; }
-        string? FixedText { get; }
-        bool IsFixed { get; }
+        Language Language { get; }
     
     }
 
@@ -3047,10 +2973,15 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
         global::MetaDslx.Modeling.ICollectionSlot<GrammarRule> GrammarRules { get; }
         Language Language { get; set; }
         Rule? MainRule { get; set; }
-        string? RootTypeName { get; set; }
         global::MetaDslx.Modeling.ICollectionSlot<Rule> Rules { get; }
         global::MetaDslx.Modeling.ICollectionSlot<TokenKind> TokenKinds { get; }
         global::MetaDslx.Modeling.ICollectionSlot<Token> Tokens { get; }
+    
+    }
+
+    public interface Identifier : __IModelObject
+    {
+        string Name { get; set; }
     
     }
 
@@ -3059,6 +2990,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
         global::MetaDslx.Modeling.ICollectionSlot<LElement> Elements { get; }
         string? FixedText { get; }
         bool IsFixed { get; }
+    
+    }
+
+    public interface Language : global::MetaDslx.Bootstrap.MetaCompiler.Model.Declaration
+    {
+        Grammar Grammar { get; set; }
+        string Namespace { get; }
     
     }
 
@@ -3084,6 +3022,14 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
         global::MetaDslx.Modeling.ICollectionSlot<LAlternative> Alternatives { get; }
         new string? FixedText { get; }
         new bool IsFixed { get; }
+    
+    }
+
+    public interface LexerRule : global::MetaDslx.Bootstrap.MetaCompiler.Model.GrammarRule
+    {
+        global::MetaDslx.Modeling.ICollectionSlot<LAlternative> Alternatives { get; }
+        string? FixedText { get; }
+        bool IsFixed { get; }
     
     }
 
@@ -3151,16 +3097,28 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
     
     }
 
+    public interface Name : __IModelObject
+    {
+        Identifier Identifier { get; set; }
+    
+    }
+
     public interface Namespace : global::MetaDslx.Bootstrap.MetaCompiler.Model.Declaration
     {
     
     }
 
+    public interface Qualifier : __IModelObject
+    {
+        global::MetaDslx.Modeling.ICollectionSlot<Identifier> Identifiers { get; }
+    
+    }
+
     public interface Rule : global::MetaDslx.Bootstrap.MetaCompiler.Model.GrammarRule
     {
-        bool AllowMerge { get; set; }
         global::MetaDslx.Modeling.ICollectionSlot<Alternative> Alternatives { get; }
         string GreenName { get; }
+        bool NeverNull { get; set; }
         string RedName { get; }
         __MetaType ReturnType { get; set; }
     
@@ -3180,35 +3138,20 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
 
     public interface SeparatedList : global::MetaDslx.Bootstrap.MetaCompiler.Model.ElementValue
     {
-        global::MetaDslx.Modeling.ICollectionSlot<Element> FirstItems { get; }
-        global::MetaDslx.Modeling.ICollectionSlot<Element> FirstSeparators { get; }
         new string? GreenSyntaxCondition { get; }
         new string GreenType { get; }
-        global::MetaDslx.Modeling.ICollectionSlot<Element> LastItems { get; }
-        global::MetaDslx.Modeling.ICollectionSlot<Element> LastSeparators { get; }
+        Element Item { get; set; }
         new string RedType { get; }
-        Element RepeatedBlock { get; set; }
-        Element RepeatedItem { get; set; }
-        Element RepeatedSeparator { get; set; }
-        bool RepeatedSeparatorFirst { get; set; }
-        bool SeparatorFirst { get; set; }
+        Element Separator { get; set; }
     
     }
 
     public interface Token : global::MetaDslx.Bootstrap.MetaCompiler.Model.LexerRule
     {
         bool IsTrivia { get; set; }
+        bool NeverNull { get; set; }
         __MetaType ReturnType { get; set; }
         TokenKind? TokenKind { get; set; }
-    
-    }
-
-    public interface TokenAlts : global::MetaDslx.Bootstrap.MetaCompiler.Model.ElementValue
-    {
-        new string? GreenSyntaxCondition { get; }
-        new string GreenType { get; }
-        new string RedType { get; }
-        global::MetaDslx.Modeling.ICollectionSlot<RuleRef> Tokens { get; }
     
     }
 
@@ -3258,6 +3201,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
         void CSharpElement(CSharpElement _this);
     
         /// <summary>
+        /// Constructor for the class Block
+        /// </summary>
+        void Block(Block _this);
+    
+        /// <summary>
         /// Constructor for the class Declaration
         /// </summary>
         void Declaration(Declaration _this);
@@ -3268,24 +3216,14 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
         void Alternative(Alternative _this);
     
         /// <summary>
-        /// Constructor for the class ElementValue
-        /// </summary>
-        void ElementValue(ElementValue _this);
-    
-        /// <summary>
-        /// Constructor for the class GrammarRule
-        /// </summary>
-        void GrammarRule(GrammarRule _this);
-    
-        /// <summary>
-        /// Constructor for the class Block
-        /// </summary>
-        void Block(Block _this);
-    
-        /// <summary>
         /// Constructor for the class Element
         /// </summary>
         void Element(Element _this);
+    
+        /// <summary>
+        /// Constructor for the class ElementValue
+        /// </summary>
+        void ElementValue(ElementValue _this);
     
         /// <summary>
         /// Constructor for the class Eof
@@ -3298,19 +3236,14 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
         void Expression(Expression _this);
     
         /// <summary>
-        /// Constructor for the class Keyword
+        /// Constructor for the class Fixed
         /// </summary>
-        void Keyword(Keyword _this);
+        void Fixed(Fixed _this);
     
         /// <summary>
-        /// Constructor for the class Language
+        /// Constructor for the class GrammarRule
         /// </summary>
-        void Language(Language _this);
-    
-        /// <summary>
-        /// Constructor for the class LexerRule
-        /// </summary>
-        void LexerRule(LexerRule _this);
+        void GrammarRule(GrammarRule _this);
     
         /// <summary>
         /// Constructor for the class Fragment
@@ -3323,9 +3256,19 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
         void Grammar(Grammar _this);
     
         /// <summary>
+        /// Constructor for the class Identifier
+        /// </summary>
+        void Identifier(Identifier _this);
+    
+        /// <summary>
         /// Constructor for the class LAlternative
         /// </summary>
         void LAlternative(LAlternative _this);
+    
+        /// <summary>
+        /// Constructor for the class Language
+        /// </summary>
+        void Language(Language _this);
     
         /// <summary>
         /// Constructor for the class LElement
@@ -3341,6 +3284,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
         /// Constructor for the class LBlock
         /// </summary>
         void LBlock(LBlock _this);
+    
+        /// <summary>
+        /// Constructor for the class LexerRule
+        /// </summary>
+        void LexerRule(LexerRule _this);
     
         /// <summary>
         /// Constructor for the class LFixed
@@ -3383,9 +3331,19 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
         void LWildCard(LWildCard _this);
     
         /// <summary>
+        /// Constructor for the class Name
+        /// </summary>
+        void Name(Name _this);
+    
+        /// <summary>
         /// Constructor for the class Namespace
         /// </summary>
         void Namespace(Namespace _this);
+    
+        /// <summary>
+        /// Constructor for the class Qualifier
+        /// </summary>
+        void Qualifier(Qualifier _this);
     
         /// <summary>
         /// Constructor for the class Rule
@@ -3406,11 +3364,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
         /// Constructor for the class Token
         /// </summary>
         void Token(Token _this);
-    
-        /// <summary>
-        /// Constructor for the class TokenAlts
-        /// </summary>
-        void TokenAlts(TokenAlts _this);
     
         /// <summary>
         /// Constructor for the class TokenKind
@@ -3487,26 +3440,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
         /// Computation of the derived property Alternative.HasRedToGreenOptionalArguments
         /// </summary>
         bool Alternative_HasRedToGreenOptionalArguments(Alternative _this);
-    
-        /// <summary>
-        /// Computation of the derived property ElementValue.GreenType
-        /// </summary>
-        string ElementValue_GreenType(ElementValue _this);
-    
-        /// <summary>
-        /// Computation of the derived property ElementValue.GreenSyntaxCondition
-        /// </summary>
-        string? ElementValue_GreenSyntaxCondition(ElementValue _this);
-    
-        /// <summary>
-        /// Computation of the derived property ElementValue.RedType
-        /// </summary>
-        string ElementValue_RedType(ElementValue _this);
-    
-        /// <summary>
-        /// Computation of the derived property GrammarRule.Language
-        /// </summary>
-        Language GrammarRule_Language(GrammarRule _this);
     
         /// <summary>
         /// Computation of the derived property Element.IsToken
@@ -3614,6 +3547,21 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
         string? Element_VisitCall(Element _this);
     
         /// <summary>
+        /// Computation of the derived property ElementValue.GreenType
+        /// </summary>
+        string ElementValue_GreenType(ElementValue _this);
+    
+        /// <summary>
+        /// Computation of the derived property ElementValue.GreenSyntaxCondition
+        /// </summary>
+        string? ElementValue_GreenSyntaxCondition(ElementValue _this);
+    
+        /// <summary>
+        /// Computation of the derived property ElementValue.RedType
+        /// </summary>
+        string ElementValue_RedType(ElementValue _this);
+    
+        /// <summary>
         /// Computation of the derived property Eof.GreenType
         /// </summary>
         string Eof_GreenType(Eof _this);
@@ -3629,19 +3577,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
         string Eof_RedType(Eof _this);
     
         /// <summary>
-        /// Computation of the derived property Language.Namespace
+        /// Computation of the derived property GrammarRule.Language
         /// </summary>
-        string Language_Namespace(Language _this);
-    
-        /// <summary>
-        /// Computation of the derived property LexerRule.IsFixed
-        /// </summary>
-        bool LexerRule_IsFixed(LexerRule _this);
-    
-        /// <summary>
-        /// Computation of the derived property LexerRule.FixedText
-        /// </summary>
-        string? LexerRule_FixedText(LexerRule _this);
+        Language GrammarRule_Language(GrammarRule _this);
     
         /// <summary>
         /// Computation of the derived property LAlternative.IsFixed
@@ -3652,6 +3590,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
         /// Computation of the derived property LAlternative.FixedText
         /// </summary>
         string? LAlternative_FixedText(LAlternative _this);
+    
+        /// <summary>
+        /// Computation of the derived property Language.Namespace
+        /// </summary>
+        string Language_Namespace(Language _this);
     
         /// <summary>
         /// Computation of the derived property LElement.IsFixed
@@ -3682,6 +3625,16 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
         /// Computation of the derived property LBlock.FixedText
         /// </summary>
         string? LBlock_FixedText(LBlock _this);
+    
+        /// <summary>
+        /// Computation of the derived property LexerRule.IsFixed
+        /// </summary>
+        bool LexerRule_IsFixed(LexerRule _this);
+    
+        /// <summary>
+        /// Computation of the derived property LexerRule.FixedText
+        /// </summary>
+        string? LexerRule_FixedText(LexerRule _this);
     
         /// <summary>
         /// Computation of the derived property LFixed.IsFixed
@@ -3813,21 +3766,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
         /// </summary>
         string SeparatedList_RedType(SeparatedList _this);
     
-        /// <summary>
-        /// Computation of the derived property TokenAlts.GreenType
-        /// </summary>
-        string TokenAlts_GreenType(TokenAlts _this);
-    
-        /// <summary>
-        /// Computation of the derived property TokenAlts.GreenSyntaxCondition
-        /// </summary>
-        string? TokenAlts_GreenSyntaxCondition(TokenAlts _this);
-    
-        /// <summary>
-        /// Computation of the derived property TokenAlts.RedType
-        /// </summary>
-        string TokenAlts_RedType(TokenAlts _this);
-    
     
     }
     
@@ -3883,6 +3821,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
         }
     
         /// <summary>
+        /// Constructor for the class Block
+        /// </summary>
+        public virtual void Block(Block _this)
+        {
+        }
+    
+        /// <summary>
         /// Constructor for the class Declaration
         /// </summary>
         public virtual void Declaration(Declaration _this)
@@ -3897,30 +3842,16 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
         }
     
         /// <summary>
-        /// Constructor for the class ElementValue
-        /// </summary>
-        public virtual void ElementValue(ElementValue _this)
-        {
-        }
-    
-        /// <summary>
-        /// Constructor for the class GrammarRule
-        /// </summary>
-        public virtual void GrammarRule(GrammarRule _this)
-        {
-        }
-    
-        /// <summary>
-        /// Constructor for the class Block
-        /// </summary>
-        public virtual void Block(Block _this)
-        {
-        }
-    
-        /// <summary>
         /// Constructor for the class Element
         /// </summary>
         public virtual void Element(Element _this)
+        {
+        }
+    
+        /// <summary>
+        /// Constructor for the class ElementValue
+        /// </summary>
+        public virtual void ElementValue(ElementValue _this)
         {
         }
     
@@ -3939,23 +3870,16 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
         }
     
         /// <summary>
-        /// Constructor for the class Keyword
+        /// Constructor for the class Fixed
         /// </summary>
-        public virtual void Keyword(Keyword _this)
+        public virtual void Fixed(Fixed _this)
         {
         }
     
         /// <summary>
-        /// Constructor for the class Language
+        /// Constructor for the class GrammarRule
         /// </summary>
-        public virtual void Language(Language _this)
-        {
-        }
-    
-        /// <summary>
-        /// Constructor for the class LexerRule
-        /// </summary>
-        public virtual void LexerRule(LexerRule _this)
+        public virtual void GrammarRule(GrammarRule _this)
         {
         }
     
@@ -3974,9 +3898,23 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
         }
     
         /// <summary>
+        /// Constructor for the class Identifier
+        /// </summary>
+        public virtual void Identifier(Identifier _this)
+        {
+        }
+    
+        /// <summary>
         /// Constructor for the class LAlternative
         /// </summary>
         public virtual void LAlternative(LAlternative _this)
+        {
+        }
+    
+        /// <summary>
+        /// Constructor for the class Language
+        /// </summary>
+        public virtual void Language(Language _this)
         {
         }
     
@@ -3998,6 +3936,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
         /// Constructor for the class LBlock
         /// </summary>
         public virtual void LBlock(LBlock _this)
+        {
+        }
+    
+        /// <summary>
+        /// Constructor for the class LexerRule
+        /// </summary>
+        public virtual void LexerRule(LexerRule _this)
         {
         }
     
@@ -4058,9 +4003,23 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
         }
     
         /// <summary>
+        /// Constructor for the class Name
+        /// </summary>
+        public virtual void Name(Name _this)
+        {
+        }
+    
+        /// <summary>
         /// Constructor for the class Namespace
         /// </summary>
         public virtual void Namespace(Namespace _this)
+        {
+        }
+    
+        /// <summary>
+        /// Constructor for the class Qualifier
+        /// </summary>
+        public virtual void Qualifier(Qualifier _this)
         {
         }
     
@@ -4089,13 +4048,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
         /// Constructor for the class Token
         /// </summary>
         public virtual void Token(Token _this)
-        {
-        }
-    
-        /// <summary>
-        /// Constructor for the class TokenAlts
-        /// </summary>
-        public virtual void TokenAlts(TokenAlts _this)
         {
         }
     
@@ -4176,26 +4128,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
         /// Computation of the derived property Alternative.HasRedToGreenOptionalArguments
         /// </summary>
         public abstract bool Alternative_HasRedToGreenOptionalArguments(Alternative _this);
-    
-        /// <summary>
-        /// Computation of the derived property ElementValue.GreenType
-        /// </summary>
-        public abstract string ElementValue_GreenType(ElementValue _this);
-    
-        /// <summary>
-        /// Computation of the derived property ElementValue.GreenSyntaxCondition
-        /// </summary>
-        public abstract string? ElementValue_GreenSyntaxCondition(ElementValue _this);
-    
-        /// <summary>
-        /// Computation of the derived property ElementValue.RedType
-        /// </summary>
-        public abstract string ElementValue_RedType(ElementValue _this);
-    
-        /// <summary>
-        /// Computation of the derived property GrammarRule.Language
-        /// </summary>
-        public abstract Language GrammarRule_Language(GrammarRule _this);
     
         /// <summary>
         /// Computation of the derived property Element.IsToken
@@ -4303,6 +4235,21 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
         public abstract string? Element_VisitCall(Element _this);
     
         /// <summary>
+        /// Computation of the derived property ElementValue.GreenType
+        /// </summary>
+        public abstract string ElementValue_GreenType(ElementValue _this);
+    
+        /// <summary>
+        /// Computation of the derived property ElementValue.GreenSyntaxCondition
+        /// </summary>
+        public abstract string? ElementValue_GreenSyntaxCondition(ElementValue _this);
+    
+        /// <summary>
+        /// Computation of the derived property ElementValue.RedType
+        /// </summary>
+        public abstract string ElementValue_RedType(ElementValue _this);
+    
+        /// <summary>
         /// Computation of the derived property Eof.GreenType
         /// </summary>
         public abstract string Eof_GreenType(Eof _this);
@@ -4318,19 +4265,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
         public abstract string Eof_RedType(Eof _this);
     
         /// <summary>
-        /// Computation of the derived property Language.Namespace
+        /// Computation of the derived property GrammarRule.Language
         /// </summary>
-        public abstract string Language_Namespace(Language _this);
-    
-        /// <summary>
-        /// Computation of the derived property LexerRule.IsFixed
-        /// </summary>
-        public abstract bool LexerRule_IsFixed(LexerRule _this);
-    
-        /// <summary>
-        /// Computation of the derived property LexerRule.FixedText
-        /// </summary>
-        public abstract string? LexerRule_FixedText(LexerRule _this);
+        public abstract Language GrammarRule_Language(GrammarRule _this);
     
         /// <summary>
         /// Computation of the derived property LAlternative.IsFixed
@@ -4341,6 +4278,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
         /// Computation of the derived property LAlternative.FixedText
         /// </summary>
         public abstract string? LAlternative_FixedText(LAlternative _this);
+    
+        /// <summary>
+        /// Computation of the derived property Language.Namespace
+        /// </summary>
+        public abstract string Language_Namespace(Language _this);
     
         /// <summary>
         /// Computation of the derived property LElement.IsFixed
@@ -4371,6 +4313,16 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
         /// Computation of the derived property LBlock.FixedText
         /// </summary>
         public abstract string? LBlock_FixedText(LBlock _this);
+    
+        /// <summary>
+        /// Computation of the derived property LexerRule.IsFixed
+        /// </summary>
+        public abstract bool LexerRule_IsFixed(LexerRule _this);
+    
+        /// <summary>
+        /// Computation of the derived property LexerRule.FixedText
+        /// </summary>
+        public abstract string? LexerRule_FixedText(LexerRule _this);
     
         /// <summary>
         /// Computation of the derived property LFixed.IsFixed
@@ -4501,21 +4453,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
         /// Computation of the derived property SeparatedList.RedType
         /// </summary>
         public abstract string SeparatedList_RedType(SeparatedList _this);
-    
-        /// <summary>
-        /// Computation of the derived property TokenAlts.GreenType
-        /// </summary>
-        public abstract string TokenAlts_GreenType(TokenAlts _this);
-    
-        /// <summary>
-        /// Computation of the derived property TokenAlts.GreenSyntaxCondition
-        /// </summary>
-        public abstract string? TokenAlts_GreenSyntaxCondition(TokenAlts _this);
-    
-        /// <summary>
-        /// Computation of the derived property TokenAlts.RedType
-        /// </summary>
-        public abstract string TokenAlts_RedType(TokenAlts _this);
     
     
     }
@@ -5228,6 +5165,147 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
         }
     }
 
+    internal class Block_Impl : __MetaModelObject, Block
+    {
+        private Block_Impl(string? id)
+            : base(id)
+        {
+            Compiler.__CustomImpl.CSharpElement(this);
+            Compiler.__CustomImpl.ElementValue(this);
+            Compiler.__CustomImpl.Block(this);
+        }
+    
+        public override __ModelClassInfo MInfo => __Info.Instance;
+    
+        public global::MetaDslx.Modeling.ICollectionSlot<Alternative> Alternatives
+        {
+            get => MGetCollection<Alternative>(Compiler.Block_Alternatives);
+        }
+    
+        public string? GreenSyntaxCondition
+        {
+            get => Compiler.__CustomImpl.ElementValue_GreenSyntaxCondition(this);
+        }
+    
+        public string GreenType
+        {
+            get => Compiler.__CustomImpl.ElementValue_GreenType(this);
+        }
+    
+        public string RedType
+        {
+            get => Compiler.__CustomImpl.ElementValue_RedType(this);
+        }
+    
+        public string AntlrName
+        {
+            get => MGet<string>(Compiler.CSharpElement_AntlrName);
+            set => MSet<string>(Compiler.CSharpElement_AntlrName, value);
+        }
+    
+        public global::MetaDslx.Modeling.ICollectionSlot<Binder> Binders
+        {
+            get => MGetCollection<Binder>(Compiler.CSharpElement_Binders);
+        }
+    
+        public bool ContainsBinders
+        {
+            get => MGet<bool>(Compiler.CSharpElement_ContainsBinders);
+            set => MSet<bool>(Compiler.CSharpElement_ContainsBinders, value);
+        }
+    
+        public string CSharpName
+        {
+            get => MGet<string>(Compiler.CSharpElement_CSharpName);
+            set => MSet<string>(Compiler.CSharpElement_CSharpName, value);
+        }
+    
+    
+    
+        internal class __Info : __ModelClassInfo
+        {
+            public static readonly __Info Instance = new __Info();
+    
+            private readonly global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo> _baseTypes;
+            private readonly global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo> _allBaseTypes;
+            private readonly global::System.Collections.Immutable.ImmutableArray<__ModelProperty> _declaredProperties;
+            private readonly global::System.Collections.Immutable.ImmutableArray<__ModelProperty> _allDeclaredProperties;
+            private readonly global::System.Collections.Immutable.ImmutableArray<__ModelProperty> _publicProperties;
+            private readonly global::System.Collections.Immutable.ImmutableDictionary<string, __ModelProperty> _publicPropertiesByName;
+            private readonly global::System.Collections.Immutable.ImmutableDictionary<__ModelProperty, __ModelPropertyInfo> _modelPropertyInfos;
+            private readonly global::System.Collections.Immutable.ImmutableArray<__ModelOperation> _declaredOperations;
+            private readonly global::System.Collections.Immutable.ImmutableArray<__ModelOperation> _allDeclaredOperations;
+            private readonly global::System.Collections.Immutable.ImmutableArray<__ModelOperation> _publicOperations;
+            private readonly global::System.Collections.Immutable.ImmutableDictionary<__ModelOperation, __ModelOperationInfo> _modelOperationInfos;
+    
+            private __Info() 
+            {
+                _baseTypes = __ImmutableArray.Create<__ModelClassInfo>(Compiler.ElementValueInfo);
+                _allBaseTypes = __ImmutableArray.Create<__ModelClassInfo>(Compiler.ElementValueInfo, Compiler.CSharpElementInfo);
+                _declaredProperties = __ImmutableArray.Create<__ModelProperty>(Compiler.Block_Alternatives);
+                _allDeclaredProperties = __ImmutableArray.Create<__ModelProperty>(Compiler.Block_Alternatives, Compiler.ElementValue_GreenSyntaxCondition, Compiler.ElementValue_GreenType, Compiler.ElementValue_RedType, Compiler.CSharpElement_AntlrName, Compiler.CSharpElement_Binders, Compiler.CSharpElement_ContainsBinders, Compiler.CSharpElement_CSharpName);
+                _publicProperties = __ImmutableArray.Create<__ModelProperty>(Compiler.Block_Alternatives, Compiler.ElementValue_GreenSyntaxCondition, Compiler.ElementValue_GreenType, Compiler.ElementValue_RedType, Compiler.CSharpElement_AntlrName, Compiler.CSharpElement_Binders, Compiler.CSharpElement_ContainsBinders, Compiler.CSharpElement_CSharpName);
+                var publicPropertiesByName = __ImmutableDictionary.CreateBuilder<string, __ModelProperty>();
+                publicPropertiesByName.Add("Alternatives", Compiler.Block_Alternatives);
+                publicPropertiesByName.Add("GreenSyntaxCondition", Compiler.ElementValue_GreenSyntaxCondition);
+                publicPropertiesByName.Add("GreenType", Compiler.ElementValue_GreenType);
+                publicPropertiesByName.Add("RedType", Compiler.ElementValue_RedType);
+                publicPropertiesByName.Add("AntlrName", Compiler.CSharpElement_AntlrName);
+                publicPropertiesByName.Add("Binders", Compiler.CSharpElement_Binders);
+                publicPropertiesByName.Add("ContainsBinders", Compiler.CSharpElement_ContainsBinders);
+                publicPropertiesByName.Add("CSharpName", Compiler.CSharpElement_CSharpName);
+                _publicPropertiesByName = publicPropertiesByName.ToImmutable();
+                var modelPropertyInfos = __ImmutableDictionary.CreateBuilder<__ModelProperty, __ModelPropertyInfo>();
+                modelPropertyInfos.Add(Compiler.Block_Alternatives, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Block_Alternatives, __ImmutableArray.Create<__ModelProperty>(Compiler.Block_Alternatives), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
+                modelPropertyInfos.Add(Compiler.ElementValue_GreenSyntaxCondition, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.ElementValue_GreenSyntaxCondition, __ImmutableArray.Create<__ModelProperty>(Compiler.ElementValue_GreenSyntaxCondition), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
+                modelPropertyInfos.Add(Compiler.ElementValue_GreenType, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.ElementValue_GreenType, __ImmutableArray.Create<__ModelProperty>(Compiler.ElementValue_GreenType), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
+                modelPropertyInfos.Add(Compiler.ElementValue_RedType, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.ElementValue_RedType, __ImmutableArray.Create<__ModelProperty>(Compiler.ElementValue_RedType), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
+                modelPropertyInfos.Add(Compiler.CSharpElement_AntlrName, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.CSharpElement_AntlrName, __ImmutableArray.Create<__ModelProperty>(Compiler.CSharpElement_AntlrName), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
+                modelPropertyInfos.Add(Compiler.CSharpElement_Binders, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.CSharpElement_Binders, __ImmutableArray.Create<__ModelProperty>(Compiler.CSharpElement_Binders), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
+                modelPropertyInfos.Add(Compiler.CSharpElement_ContainsBinders, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.CSharpElement_ContainsBinders, __ImmutableArray.Create<__ModelProperty>(Compiler.CSharpElement_ContainsBinders), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
+                modelPropertyInfos.Add(Compiler.CSharpElement_CSharpName, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.CSharpElement_CSharpName, __ImmutableArray.Create<__ModelProperty>(Compiler.CSharpElement_CSharpName), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
+                _modelPropertyInfos = modelPropertyInfos.ToImmutable();
+    
+                _declaredOperations = __ImmutableArray.Create<__ModelOperation>();
+                _allDeclaredOperations = __ImmutableArray.Create<__ModelOperation>();
+                _publicOperations = __ImmutableArray.Create<__ModelOperation>();
+                var modelOperationInfos = __ImmutableDictionary.CreateBuilder<__ModelOperation, __ModelOperationInfo>();
+                _modelOperationInfos = modelOperationInfos.ToImmutable();
+            }
+    
+            public override __MetaModel MetaModel => Compiler.MInstance;
+            public override __MetaType MetaType => typeof(Block);
+    
+            public override __MetaType SymbolType => typeof(global::MetaDslx.Bootstrap.MetaCompiler.Symbols.PBlockSymbol);
+            public override __ModelProperty? NameProperty => null;
+            public override __ModelProperty? TypeProperty => null;
+            public override global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo> BaseTypes => _baseTypes;
+            public override global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo> AllBaseTypes => _allBaseTypes;
+            public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> DeclaredProperties => _declaredProperties;
+            public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> AllDeclaredProperties => _allDeclaredProperties;
+            public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> PublicProperties => _publicProperties;
+            public override global::System.Collections.Immutable.ImmutableArray<__ModelOperation> DeclaredOperations => _declaredOperations;
+            public override global::System.Collections.Immutable.ImmutableArray<__ModelOperation> AllDeclaredOperations => _allDeclaredOperations;
+            public override global::System.Collections.Immutable.ImmutableArray<__ModelOperation> PublicOperations => _publicOperations;
+    
+            protected override global::System.Collections.Immutable.ImmutableDictionary<string, __ModelProperty> PublicPropertiesByName => _publicPropertiesByName;
+            protected override global::System.Collections.Immutable.ImmutableDictionary<__ModelProperty, __ModelPropertyInfo> ModelPropertyInfos => _modelPropertyInfos;
+            protected override global::System.Collections.Immutable.ImmutableDictionary<__ModelOperation, __ModelOperationInfo> ModelOperationInfos => _modelOperationInfos;
+    
+            public override __IModelObject? Create(__Model? model = null, string? id = null)
+            {
+                var result = new Block_Impl(id);
+                if (model is not null) model.AttachObject(result);
+                return result;
+            }
+    
+            public override string ToString()
+            {
+                return "Compiler.BlockInfo";
+            }
+        }
+    }
+
     internal class Declaration_Impl : __MetaModelObject, Declaration
     {
         private Declaration_Impl(string? id)
@@ -5392,6 +5470,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
             get => Compiler.__CustomImpl.Alternative_HasRedToGreenOptionalArguments(this);
         }
     
+        public bool NeverNull
+        {
+            get => MGet<bool>(Compiler.Alternative_NeverNull);
+            set => MSet<bool>(Compiler.Alternative_NeverNull, value);
+        }
+    
         public string RedName
         {
             get => Compiler.__CustomImpl.Alternative_RedName(this);
@@ -5506,9 +5590,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
             {
                 _baseTypes = __ImmutableArray.Create<__ModelClassInfo>(Compiler.CSharpElementInfo, Compiler.DeclarationInfo);
                 _allBaseTypes = __ImmutableArray.Create<__ModelClassInfo>(Compiler.CSharpElementInfo, Compiler.DeclarationInfo);
-                _declaredProperties = __ImmutableArray.Create<__ModelProperty>(Compiler.Alternative_Elements, Compiler.Alternative_GreenConstructorArguments, Compiler.Alternative_GreenConstructorParameters, Compiler.Alternative_GreenName, Compiler.Alternative_GreenUpdateArguments, Compiler.Alternative_GreenUpdateParameters, Compiler.Alternative_HasRedToGreenOptionalArguments, Compiler.Alternative_RedName, Compiler.Alternative_RedOptionalUpdateParameters, Compiler.Alternative_RedToGreenArgumentList, Compiler.Alternative_RedToGreenOptionalArgumentList, Compiler.Alternative_RedUpdateArguments, Compiler.Alternative_RedUpdateParameters, Compiler.Alternative_ReturnType, Compiler.Alternative_ReturnValue);
-                _allDeclaredProperties = __ImmutableArray.Create<__ModelProperty>(Compiler.Alternative_Elements, Compiler.Alternative_GreenConstructorArguments, Compiler.Alternative_GreenConstructorParameters, Compiler.Alternative_GreenName, Compiler.Alternative_GreenUpdateArguments, Compiler.Alternative_GreenUpdateParameters, Compiler.Alternative_HasRedToGreenOptionalArguments, Compiler.Alternative_RedName, Compiler.Alternative_RedOptionalUpdateParameters, Compiler.Alternative_RedToGreenArgumentList, Compiler.Alternative_RedToGreenOptionalArgumentList, Compiler.Alternative_RedUpdateArguments, Compiler.Alternative_RedUpdateParameters, Compiler.Alternative_ReturnType, Compiler.Alternative_ReturnValue, Compiler.CSharpElement_AntlrName, Compiler.CSharpElement_Binders, Compiler.CSharpElement_ContainsBinders, Compiler.CSharpElement_CSharpName, Compiler.Declaration_Annotations, Compiler.Declaration_Declarations, Compiler.Declaration_FullName, Compiler.Declaration_Name, Compiler.Declaration_Parent);
-                _publicProperties = __ImmutableArray.Create<__ModelProperty>(Compiler.Alternative_Elements, Compiler.Alternative_GreenConstructorArguments, Compiler.Alternative_GreenConstructorParameters, Compiler.Alternative_GreenName, Compiler.Alternative_GreenUpdateArguments, Compiler.Alternative_GreenUpdateParameters, Compiler.Alternative_HasRedToGreenOptionalArguments, Compiler.Alternative_RedName, Compiler.Alternative_RedOptionalUpdateParameters, Compiler.Alternative_RedToGreenArgumentList, Compiler.Alternative_RedToGreenOptionalArgumentList, Compiler.Alternative_RedUpdateArguments, Compiler.Alternative_RedUpdateParameters, Compiler.Alternative_ReturnType, Compiler.Alternative_ReturnValue, Compiler.CSharpElement_AntlrName, Compiler.CSharpElement_Binders, Compiler.CSharpElement_ContainsBinders, Compiler.CSharpElement_CSharpName, Compiler.Declaration_Annotations, Compiler.Declaration_Declarations, Compiler.Declaration_FullName, Compiler.Declaration_Name, Compiler.Declaration_Parent);
+                _declaredProperties = __ImmutableArray.Create<__ModelProperty>(Compiler.Alternative_Elements, Compiler.Alternative_GreenConstructorArguments, Compiler.Alternative_GreenConstructorParameters, Compiler.Alternative_GreenName, Compiler.Alternative_GreenUpdateArguments, Compiler.Alternative_GreenUpdateParameters, Compiler.Alternative_HasRedToGreenOptionalArguments, Compiler.Alternative_NeverNull, Compiler.Alternative_RedName, Compiler.Alternative_RedOptionalUpdateParameters, Compiler.Alternative_RedToGreenArgumentList, Compiler.Alternative_RedToGreenOptionalArgumentList, Compiler.Alternative_RedUpdateArguments, Compiler.Alternative_RedUpdateParameters, Compiler.Alternative_ReturnType, Compiler.Alternative_ReturnValue);
+                _allDeclaredProperties = __ImmutableArray.Create<__ModelProperty>(Compiler.Alternative_Elements, Compiler.Alternative_GreenConstructorArguments, Compiler.Alternative_GreenConstructorParameters, Compiler.Alternative_GreenName, Compiler.Alternative_GreenUpdateArguments, Compiler.Alternative_GreenUpdateParameters, Compiler.Alternative_HasRedToGreenOptionalArguments, Compiler.Alternative_NeverNull, Compiler.Alternative_RedName, Compiler.Alternative_RedOptionalUpdateParameters, Compiler.Alternative_RedToGreenArgumentList, Compiler.Alternative_RedToGreenOptionalArgumentList, Compiler.Alternative_RedUpdateArguments, Compiler.Alternative_RedUpdateParameters, Compiler.Alternative_ReturnType, Compiler.Alternative_ReturnValue, Compiler.CSharpElement_AntlrName, Compiler.CSharpElement_Binders, Compiler.CSharpElement_ContainsBinders, Compiler.CSharpElement_CSharpName, Compiler.Declaration_Annotations, Compiler.Declaration_Declarations, Compiler.Declaration_FullName, Compiler.Declaration_Name, Compiler.Declaration_Parent);
+                _publicProperties = __ImmutableArray.Create<__ModelProperty>(Compiler.Alternative_Elements, Compiler.Alternative_GreenConstructorArguments, Compiler.Alternative_GreenConstructorParameters, Compiler.Alternative_GreenName, Compiler.Alternative_GreenUpdateArguments, Compiler.Alternative_GreenUpdateParameters, Compiler.Alternative_HasRedToGreenOptionalArguments, Compiler.Alternative_NeverNull, Compiler.Alternative_RedName, Compiler.Alternative_RedOptionalUpdateParameters, Compiler.Alternative_RedToGreenArgumentList, Compiler.Alternative_RedToGreenOptionalArgumentList, Compiler.Alternative_RedUpdateArguments, Compiler.Alternative_RedUpdateParameters, Compiler.Alternative_ReturnType, Compiler.Alternative_ReturnValue, Compiler.CSharpElement_AntlrName, Compiler.CSharpElement_Binders, Compiler.CSharpElement_ContainsBinders, Compiler.CSharpElement_CSharpName, Compiler.Declaration_Annotations, Compiler.Declaration_Declarations, Compiler.Declaration_FullName, Compiler.Declaration_Name, Compiler.Declaration_Parent);
                 var publicPropertiesByName = __ImmutableDictionary.CreateBuilder<string, __ModelProperty>();
                 publicPropertiesByName.Add("Elements", Compiler.Alternative_Elements);
                 publicPropertiesByName.Add("GreenConstructorArguments", Compiler.Alternative_GreenConstructorArguments);
@@ -5517,6 +5601,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
                 publicPropertiesByName.Add("GreenUpdateArguments", Compiler.Alternative_GreenUpdateArguments);
                 publicPropertiesByName.Add("GreenUpdateParameters", Compiler.Alternative_GreenUpdateParameters);
                 publicPropertiesByName.Add("HasRedToGreenOptionalArguments", Compiler.Alternative_HasRedToGreenOptionalArguments);
+                publicPropertiesByName.Add("NeverNull", Compiler.Alternative_NeverNull);
                 publicPropertiesByName.Add("RedName", Compiler.Alternative_RedName);
                 publicPropertiesByName.Add("RedOptionalUpdateParameters", Compiler.Alternative_RedOptionalUpdateParameters);
                 publicPropertiesByName.Add("RedToGreenArgumentList", Compiler.Alternative_RedToGreenArgumentList);
@@ -5543,6 +5628,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
                 modelPropertyInfos.Add(Compiler.Alternative_GreenUpdateArguments, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Alternative_GreenUpdateArguments, __ImmutableArray.Create<__ModelProperty>(Compiler.Alternative_GreenUpdateArguments), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
                 modelPropertyInfos.Add(Compiler.Alternative_GreenUpdateParameters, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Alternative_GreenUpdateParameters, __ImmutableArray.Create<__ModelProperty>(Compiler.Alternative_GreenUpdateParameters), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
                 modelPropertyInfos.Add(Compiler.Alternative_HasRedToGreenOptionalArguments, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Alternative_HasRedToGreenOptionalArguments, __ImmutableArray.Create<__ModelProperty>(Compiler.Alternative_HasRedToGreenOptionalArguments), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
+                modelPropertyInfos.Add(Compiler.Alternative_NeverNull, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Alternative_NeverNull, __ImmutableArray.Create<__ModelProperty>(Compiler.Alternative_NeverNull), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
                 modelPropertyInfos.Add(Compiler.Alternative_RedName, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Alternative_RedName, __ImmutableArray.Create<__ModelProperty>(Compiler.Alternative_RedName), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
                 modelPropertyInfos.Add(Compiler.Alternative_RedOptionalUpdateParameters, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Alternative_RedOptionalUpdateParameters, __ImmutableArray.Create<__ModelProperty>(Compiler.Alternative_RedOptionalUpdateParameters), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
                 modelPropertyInfos.Add(Compiler.Alternative_RedToGreenArgumentList, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Alternative_RedToGreenArgumentList, __ImmutableArray.Create<__ModelProperty>(Compiler.Alternative_RedToGreenArgumentList), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
@@ -5598,6 +5684,311 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
             public override string ToString()
             {
                 return "Compiler.AlternativeInfo";
+            }
+        }
+    }
+
+    internal class Element_Impl : __MetaModelObject, Element
+    {
+        private Element_Impl(string? id)
+            : base(id)
+        {
+            Compiler.__CustomImpl.CSharpElement(this);
+            Compiler.__CustomImpl.Element(this);
+        }
+    
+        public override __ModelClassInfo MInfo => __Info.Instance;
+    
+        public global::MetaDslx.Bootstrap.MetaCompiler.Model.Assignment Assignment
+        {
+            get => MGet<global::MetaDslx.Bootstrap.MetaCompiler.Model.Assignment>(Compiler.Element_Assignment);
+            set => MSet<global::MetaDslx.Bootstrap.MetaCompiler.Model.Assignment>(Compiler.Element_Assignment, value);
+        }
+    
+        public string FieldName
+        {
+            get => Compiler.__CustomImpl.Element_FieldName(this);
+        }
+    
+        public string GreenFieldType
+        {
+            get => Compiler.__CustomImpl.Element_GreenFieldType(this);
+        }
+    
+        public string GreenParameterValue
+        {
+            get => Compiler.__CustomImpl.Element_GreenParameterValue(this);
+        }
+    
+        public string GreenPropertyType
+        {
+            get => Compiler.__CustomImpl.Element_GreenPropertyType(this);
+        }
+    
+        public string GreenPropertyValue
+        {
+            get => Compiler.__CustomImpl.Element_GreenPropertyValue(this);
+        }
+    
+        public string? GreenSyntaxCondition
+        {
+            get => Compiler.__CustomImpl.Element_GreenSyntaxCondition(this);
+        }
+    
+        public string? GreenSyntaxNullCondition
+        {
+            get => Compiler.__CustomImpl.Element_GreenSyntaxNullCondition(this);
+        }
+    
+        public bool IsList
+        {
+            get => Compiler.__CustomImpl.Element_IsList(this);
+        }
+    
+        public bool IsOptionalUpdateParameter
+        {
+            get => Compiler.__CustomImpl.Element_IsOptionalUpdateParameter(this);
+        }
+    
+        public bool IsToken
+        {
+            get => Compiler.__CustomImpl.Element_IsToken(this);
+        }
+    
+        public global::MetaDslx.Bootstrap.MetaCompiler.Model.Multiplicity Multiplicity
+        {
+            get => MGet<global::MetaDslx.Bootstrap.MetaCompiler.Model.Multiplicity>(Compiler.Element_Multiplicity);
+            set => MSet<global::MetaDslx.Bootstrap.MetaCompiler.Model.Multiplicity>(Compiler.Element_Multiplicity, value);
+        }
+    
+        public string Name
+        {
+            get => MGet<string>(Compiler.Element_Name);
+            set => MSet<string>(Compiler.Element_Name, value);
+        }
+    
+        public global::MetaDslx.Modeling.ICollectionSlot<Annotation> NameAnnotations
+        {
+            get => MGetCollection<Annotation>(Compiler.Element_NameAnnotations);
+        }
+    
+        public string ParameterName
+        {
+            get => Compiler.__CustomImpl.Element_ParameterName(this);
+        }
+    
+        public string PropertyName
+        {
+            get => Compiler.__CustomImpl.Element_PropertyName(this);
+        }
+    
+        public string RedFieldType
+        {
+            get => Compiler.__CustomImpl.Element_RedFieldType(this);
+        }
+    
+        public string RedParameterValue
+        {
+            get => Compiler.__CustomImpl.Element_RedParameterValue(this);
+        }
+    
+        public string RedPropertyType
+        {
+            get => Compiler.__CustomImpl.Element_RedPropertyType(this);
+        }
+    
+        public string RedPropertyValue
+        {
+            get => Compiler.__CustomImpl.Element_RedPropertyValue(this);
+        }
+    
+        public string? RedSyntaxCondition
+        {
+            get => Compiler.__CustomImpl.Element_RedSyntaxCondition(this);
+        }
+    
+        public string? RedSyntaxNullCondition
+        {
+            get => Compiler.__CustomImpl.Element_RedSyntaxNullCondition(this);
+        }
+    
+        public string RedToGreenArgument
+        {
+            get => Compiler.__CustomImpl.Element_RedToGreenArgument(this);
+        }
+    
+        public string RedToGreenOptionalArgument
+        {
+            get => Compiler.__CustomImpl.Element_RedToGreenOptionalArgument(this);
+        }
+    
+        public ElementValue Value
+        {
+            get => MGet<ElementValue>(Compiler.Element_Value);
+            set => MSet<ElementValue>(Compiler.Element_Value, value);
+        }
+    
+        public global::MetaDslx.Modeling.ICollectionSlot<Annotation> ValueAnnotations
+        {
+            get => MGetCollection<Annotation>(Compiler.Element_ValueAnnotations);
+        }
+    
+        public string? VisitCall
+        {
+            get => Compiler.__CustomImpl.Element_VisitCall(this);
+        }
+    
+        public string AntlrName
+        {
+            get => MGet<string>(Compiler.CSharpElement_AntlrName);
+            set => MSet<string>(Compiler.CSharpElement_AntlrName, value);
+        }
+    
+        public global::MetaDslx.Modeling.ICollectionSlot<Binder> Binders
+        {
+            get => MGetCollection<Binder>(Compiler.CSharpElement_Binders);
+        }
+    
+        public bool ContainsBinders
+        {
+            get => MGet<bool>(Compiler.CSharpElement_ContainsBinders);
+            set => MSet<bool>(Compiler.CSharpElement_ContainsBinders, value);
+        }
+    
+        public string CSharpName
+        {
+            get => MGet<string>(Compiler.CSharpElement_CSharpName);
+            set => MSet<string>(Compiler.CSharpElement_CSharpName, value);
+        }
+    
+    
+    
+        internal class __Info : __ModelClassInfo
+        {
+            public static readonly __Info Instance = new __Info();
+    
+            private readonly global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo> _baseTypes;
+            private readonly global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo> _allBaseTypes;
+            private readonly global::System.Collections.Immutable.ImmutableArray<__ModelProperty> _declaredProperties;
+            private readonly global::System.Collections.Immutable.ImmutableArray<__ModelProperty> _allDeclaredProperties;
+            private readonly global::System.Collections.Immutable.ImmutableArray<__ModelProperty> _publicProperties;
+            private readonly global::System.Collections.Immutable.ImmutableDictionary<string, __ModelProperty> _publicPropertiesByName;
+            private readonly global::System.Collections.Immutable.ImmutableDictionary<__ModelProperty, __ModelPropertyInfo> _modelPropertyInfos;
+            private readonly global::System.Collections.Immutable.ImmutableArray<__ModelOperation> _declaredOperations;
+            private readonly global::System.Collections.Immutable.ImmutableArray<__ModelOperation> _allDeclaredOperations;
+            private readonly global::System.Collections.Immutable.ImmutableArray<__ModelOperation> _publicOperations;
+            private readonly global::System.Collections.Immutable.ImmutableDictionary<__ModelOperation, __ModelOperationInfo> _modelOperationInfos;
+    
+            private __Info() 
+            {
+                _baseTypes = __ImmutableArray.Create<__ModelClassInfo>(Compiler.CSharpElementInfo);
+                _allBaseTypes = __ImmutableArray.Create<__ModelClassInfo>(Compiler.CSharpElementInfo);
+                _declaredProperties = __ImmutableArray.Create<__ModelProperty>(Compiler.Element_Assignment, Compiler.Element_FieldName, Compiler.Element_GreenFieldType, Compiler.Element_GreenParameterValue, Compiler.Element_GreenPropertyType, Compiler.Element_GreenPropertyValue, Compiler.Element_GreenSyntaxCondition, Compiler.Element_GreenSyntaxNullCondition, Compiler.Element_IsList, Compiler.Element_IsOptionalUpdateParameter, Compiler.Element_IsToken, Compiler.Element_Multiplicity, Compiler.Element_Name, Compiler.Element_NameAnnotations, Compiler.Element_ParameterName, Compiler.Element_PropertyName, Compiler.Element_RedFieldType, Compiler.Element_RedParameterValue, Compiler.Element_RedPropertyType, Compiler.Element_RedPropertyValue, Compiler.Element_RedSyntaxCondition, Compiler.Element_RedSyntaxNullCondition, Compiler.Element_RedToGreenArgument, Compiler.Element_RedToGreenOptionalArgument, Compiler.Element_Value, Compiler.Element_ValueAnnotations, Compiler.Element_VisitCall);
+                _allDeclaredProperties = __ImmutableArray.Create<__ModelProperty>(Compiler.Element_Assignment, Compiler.Element_FieldName, Compiler.Element_GreenFieldType, Compiler.Element_GreenParameterValue, Compiler.Element_GreenPropertyType, Compiler.Element_GreenPropertyValue, Compiler.Element_GreenSyntaxCondition, Compiler.Element_GreenSyntaxNullCondition, Compiler.Element_IsList, Compiler.Element_IsOptionalUpdateParameter, Compiler.Element_IsToken, Compiler.Element_Multiplicity, Compiler.Element_Name, Compiler.Element_NameAnnotations, Compiler.Element_ParameterName, Compiler.Element_PropertyName, Compiler.Element_RedFieldType, Compiler.Element_RedParameterValue, Compiler.Element_RedPropertyType, Compiler.Element_RedPropertyValue, Compiler.Element_RedSyntaxCondition, Compiler.Element_RedSyntaxNullCondition, Compiler.Element_RedToGreenArgument, Compiler.Element_RedToGreenOptionalArgument, Compiler.Element_Value, Compiler.Element_ValueAnnotations, Compiler.Element_VisitCall, Compiler.CSharpElement_AntlrName, Compiler.CSharpElement_Binders, Compiler.CSharpElement_ContainsBinders, Compiler.CSharpElement_CSharpName);
+                _publicProperties = __ImmutableArray.Create<__ModelProperty>(Compiler.Element_Assignment, Compiler.Element_FieldName, Compiler.Element_GreenFieldType, Compiler.Element_GreenParameterValue, Compiler.Element_GreenPropertyType, Compiler.Element_GreenPropertyValue, Compiler.Element_GreenSyntaxCondition, Compiler.Element_GreenSyntaxNullCondition, Compiler.Element_IsList, Compiler.Element_IsOptionalUpdateParameter, Compiler.Element_IsToken, Compiler.Element_Multiplicity, Compiler.Element_Name, Compiler.Element_NameAnnotations, Compiler.Element_ParameterName, Compiler.Element_PropertyName, Compiler.Element_RedFieldType, Compiler.Element_RedParameterValue, Compiler.Element_RedPropertyType, Compiler.Element_RedPropertyValue, Compiler.Element_RedSyntaxCondition, Compiler.Element_RedSyntaxNullCondition, Compiler.Element_RedToGreenArgument, Compiler.Element_RedToGreenOptionalArgument, Compiler.Element_Value, Compiler.Element_ValueAnnotations, Compiler.Element_VisitCall, Compiler.CSharpElement_AntlrName, Compiler.CSharpElement_Binders, Compiler.CSharpElement_ContainsBinders, Compiler.CSharpElement_CSharpName);
+                var publicPropertiesByName = __ImmutableDictionary.CreateBuilder<string, __ModelProperty>();
+                publicPropertiesByName.Add("Assignment", Compiler.Element_Assignment);
+                publicPropertiesByName.Add("FieldName", Compiler.Element_FieldName);
+                publicPropertiesByName.Add("GreenFieldType", Compiler.Element_GreenFieldType);
+                publicPropertiesByName.Add("GreenParameterValue", Compiler.Element_GreenParameterValue);
+                publicPropertiesByName.Add("GreenPropertyType", Compiler.Element_GreenPropertyType);
+                publicPropertiesByName.Add("GreenPropertyValue", Compiler.Element_GreenPropertyValue);
+                publicPropertiesByName.Add("GreenSyntaxCondition", Compiler.Element_GreenSyntaxCondition);
+                publicPropertiesByName.Add("GreenSyntaxNullCondition", Compiler.Element_GreenSyntaxNullCondition);
+                publicPropertiesByName.Add("IsList", Compiler.Element_IsList);
+                publicPropertiesByName.Add("IsOptionalUpdateParameter", Compiler.Element_IsOptionalUpdateParameter);
+                publicPropertiesByName.Add("IsToken", Compiler.Element_IsToken);
+                publicPropertiesByName.Add("Multiplicity", Compiler.Element_Multiplicity);
+                publicPropertiesByName.Add("Name", Compiler.Element_Name);
+                publicPropertiesByName.Add("NameAnnotations", Compiler.Element_NameAnnotations);
+                publicPropertiesByName.Add("ParameterName", Compiler.Element_ParameterName);
+                publicPropertiesByName.Add("PropertyName", Compiler.Element_PropertyName);
+                publicPropertiesByName.Add("RedFieldType", Compiler.Element_RedFieldType);
+                publicPropertiesByName.Add("RedParameterValue", Compiler.Element_RedParameterValue);
+                publicPropertiesByName.Add("RedPropertyType", Compiler.Element_RedPropertyType);
+                publicPropertiesByName.Add("RedPropertyValue", Compiler.Element_RedPropertyValue);
+                publicPropertiesByName.Add("RedSyntaxCondition", Compiler.Element_RedSyntaxCondition);
+                publicPropertiesByName.Add("RedSyntaxNullCondition", Compiler.Element_RedSyntaxNullCondition);
+                publicPropertiesByName.Add("RedToGreenArgument", Compiler.Element_RedToGreenArgument);
+                publicPropertiesByName.Add("RedToGreenOptionalArgument", Compiler.Element_RedToGreenOptionalArgument);
+                publicPropertiesByName.Add("Value", Compiler.Element_Value);
+                publicPropertiesByName.Add("ValueAnnotations", Compiler.Element_ValueAnnotations);
+                publicPropertiesByName.Add("VisitCall", Compiler.Element_VisitCall);
+                publicPropertiesByName.Add("AntlrName", Compiler.CSharpElement_AntlrName);
+                publicPropertiesByName.Add("Binders", Compiler.CSharpElement_Binders);
+                publicPropertiesByName.Add("ContainsBinders", Compiler.CSharpElement_ContainsBinders);
+                publicPropertiesByName.Add("CSharpName", Compiler.CSharpElement_CSharpName);
+                _publicPropertiesByName = publicPropertiesByName.ToImmutable();
+                var modelPropertyInfos = __ImmutableDictionary.CreateBuilder<__ModelProperty, __ModelPropertyInfo>();
+                modelPropertyInfos.Add(Compiler.Element_Assignment, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Element_Assignment, __ImmutableArray.Create<__ModelProperty>(Compiler.Element_Assignment), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
+                modelPropertyInfos.Add(Compiler.Element_FieldName, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Element_FieldName, __ImmutableArray.Create<__ModelProperty>(Compiler.Element_FieldName), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
+                modelPropertyInfos.Add(Compiler.Element_GreenFieldType, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Element_GreenFieldType, __ImmutableArray.Create<__ModelProperty>(Compiler.Element_GreenFieldType), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
+                modelPropertyInfos.Add(Compiler.Element_GreenParameterValue, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Element_GreenParameterValue, __ImmutableArray.Create<__ModelProperty>(Compiler.Element_GreenParameterValue), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
+                modelPropertyInfos.Add(Compiler.Element_GreenPropertyType, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Element_GreenPropertyType, __ImmutableArray.Create<__ModelProperty>(Compiler.Element_GreenPropertyType), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
+                modelPropertyInfos.Add(Compiler.Element_GreenPropertyValue, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Element_GreenPropertyValue, __ImmutableArray.Create<__ModelProperty>(Compiler.Element_GreenPropertyValue), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
+                modelPropertyInfos.Add(Compiler.Element_GreenSyntaxCondition, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Element_GreenSyntaxCondition, __ImmutableArray.Create<__ModelProperty>(Compiler.Element_GreenSyntaxCondition), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
+                modelPropertyInfos.Add(Compiler.Element_GreenSyntaxNullCondition, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Element_GreenSyntaxNullCondition, __ImmutableArray.Create<__ModelProperty>(Compiler.Element_GreenSyntaxNullCondition), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
+                modelPropertyInfos.Add(Compiler.Element_IsList, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Element_IsList, __ImmutableArray.Create<__ModelProperty>(Compiler.Element_IsList), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
+                modelPropertyInfos.Add(Compiler.Element_IsOptionalUpdateParameter, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Element_IsOptionalUpdateParameter, __ImmutableArray.Create<__ModelProperty>(Compiler.Element_IsOptionalUpdateParameter), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
+                modelPropertyInfos.Add(Compiler.Element_IsToken, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Element_IsToken, __ImmutableArray.Create<__ModelProperty>(Compiler.Element_IsToken), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
+                modelPropertyInfos.Add(Compiler.Element_Multiplicity, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Element_Multiplicity, __ImmutableArray.Create<__ModelProperty>(Compiler.Element_Multiplicity), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
+                modelPropertyInfos.Add(Compiler.Element_Name, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Element_Name, __ImmutableArray.Create<__ModelProperty>(Compiler.Element_Name), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
+                modelPropertyInfos.Add(Compiler.Element_NameAnnotations, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Element_NameAnnotations, __ImmutableArray.Create<__ModelProperty>(Compiler.Element_NameAnnotations), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
+                modelPropertyInfos.Add(Compiler.Element_ParameterName, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Element_ParameterName, __ImmutableArray.Create<__ModelProperty>(Compiler.Element_ParameterName), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
+                modelPropertyInfos.Add(Compiler.Element_PropertyName, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Element_PropertyName, __ImmutableArray.Create<__ModelProperty>(Compiler.Element_PropertyName), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
+                modelPropertyInfos.Add(Compiler.Element_RedFieldType, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Element_RedFieldType, __ImmutableArray.Create<__ModelProperty>(Compiler.Element_RedFieldType), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
+                modelPropertyInfos.Add(Compiler.Element_RedParameterValue, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Element_RedParameterValue, __ImmutableArray.Create<__ModelProperty>(Compiler.Element_RedParameterValue), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
+                modelPropertyInfos.Add(Compiler.Element_RedPropertyType, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Element_RedPropertyType, __ImmutableArray.Create<__ModelProperty>(Compiler.Element_RedPropertyType), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
+                modelPropertyInfos.Add(Compiler.Element_RedPropertyValue, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Element_RedPropertyValue, __ImmutableArray.Create<__ModelProperty>(Compiler.Element_RedPropertyValue), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
+                modelPropertyInfos.Add(Compiler.Element_RedSyntaxCondition, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Element_RedSyntaxCondition, __ImmutableArray.Create<__ModelProperty>(Compiler.Element_RedSyntaxCondition), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
+                modelPropertyInfos.Add(Compiler.Element_RedSyntaxNullCondition, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Element_RedSyntaxNullCondition, __ImmutableArray.Create<__ModelProperty>(Compiler.Element_RedSyntaxNullCondition), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
+                modelPropertyInfos.Add(Compiler.Element_RedToGreenArgument, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Element_RedToGreenArgument, __ImmutableArray.Create<__ModelProperty>(Compiler.Element_RedToGreenArgument), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
+                modelPropertyInfos.Add(Compiler.Element_RedToGreenOptionalArgument, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Element_RedToGreenOptionalArgument, __ImmutableArray.Create<__ModelProperty>(Compiler.Element_RedToGreenOptionalArgument), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
+                modelPropertyInfos.Add(Compiler.Element_Value, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Element_Value, __ImmutableArray.Create<__ModelProperty>(Compiler.Element_Value), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
+                modelPropertyInfos.Add(Compiler.Element_ValueAnnotations, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Element_ValueAnnotations, __ImmutableArray.Create<__ModelProperty>(Compiler.Element_ValueAnnotations), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
+                modelPropertyInfos.Add(Compiler.Element_VisitCall, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Element_VisitCall, __ImmutableArray.Create<__ModelProperty>(Compiler.Element_VisitCall), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
+                modelPropertyInfos.Add(Compiler.CSharpElement_AntlrName, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.CSharpElement_AntlrName, __ImmutableArray.Create<__ModelProperty>(Compiler.CSharpElement_AntlrName), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
+                modelPropertyInfos.Add(Compiler.CSharpElement_Binders, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.CSharpElement_Binders, __ImmutableArray.Create<__ModelProperty>(Compiler.CSharpElement_Binders), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
+                modelPropertyInfos.Add(Compiler.CSharpElement_ContainsBinders, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.CSharpElement_ContainsBinders, __ImmutableArray.Create<__ModelProperty>(Compiler.CSharpElement_ContainsBinders), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
+                modelPropertyInfos.Add(Compiler.CSharpElement_CSharpName, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.CSharpElement_CSharpName, __ImmutableArray.Create<__ModelProperty>(Compiler.CSharpElement_CSharpName), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
+                _modelPropertyInfos = modelPropertyInfos.ToImmutable();
+    
+                _declaredOperations = __ImmutableArray.Create<__ModelOperation>();
+                _allDeclaredOperations = __ImmutableArray.Create<__ModelOperation>();
+                _publicOperations = __ImmutableArray.Create<__ModelOperation>();
+                var modelOperationInfos = __ImmutableDictionary.CreateBuilder<__ModelOperation, __ModelOperationInfo>();
+                _modelOperationInfos = modelOperationInfos.ToImmutable();
+            }
+    
+            public override __MetaModel MetaModel => Compiler.MInstance;
+            public override __MetaType MetaType => typeof(Element);
+    
+            public override __MetaType SymbolType => typeof(global::MetaDslx.Bootstrap.MetaCompiler.Symbols.PElementSymbol);
+            public override __ModelProperty? NameProperty => Compiler.Element_Name;
+            public override __ModelProperty? TypeProperty => null;
+            public override global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo> BaseTypes => _baseTypes;
+            public override global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo> AllBaseTypes => _allBaseTypes;
+            public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> DeclaredProperties => _declaredProperties;
+            public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> AllDeclaredProperties => _allDeclaredProperties;
+            public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> PublicProperties => _publicProperties;
+            public override global::System.Collections.Immutable.ImmutableArray<__ModelOperation> DeclaredOperations => _declaredOperations;
+            public override global::System.Collections.Immutable.ImmutableArray<__ModelOperation> AllDeclaredOperations => _allDeclaredOperations;
+            public override global::System.Collections.Immutable.ImmutableArray<__ModelOperation> PublicOperations => _publicOperations;
+    
+            protected override global::System.Collections.Immutable.ImmutableDictionary<string, __ModelProperty> PublicPropertiesByName => _publicPropertiesByName;
+            protected override global::System.Collections.Immutable.ImmutableDictionary<__ModelProperty, __ModelPropertyInfo> ModelPropertyInfos => _modelPropertyInfos;
+            protected override global::System.Collections.Immutable.ImmutableDictionary<__ModelOperation, __ModelOperationInfo> ModelOperationInfos => _modelOperationInfos;
+    
+            public override __IModelObject? Create(__Model? model = null, string? id = null)
+            {
+                var result = new Element_Impl(id);
+                if (model is not null) model.AttachObject(result);
+                return result;
+            }
+    
+            public override string ToString()
+            {
+                return "Compiler.ElementInfo";
             }
         }
     }
@@ -5731,709 +6122,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
             public override string ToString()
             {
                 return "Compiler.ElementValueInfo";
-            }
-        }
-    }
-
-    internal class GrammarRule_Impl : __MetaModelObject, GrammarRule
-    {
-        private GrammarRule_Impl(string? id)
-            : base(id)
-        {
-            Compiler.__CustomImpl.Declaration(this);
-            Compiler.__CustomImpl.CSharpElement(this);
-            Compiler.__CustomImpl.GrammarRule(this);
-        }
-    
-        public override __ModelClassInfo MInfo => __Info.Instance;
-    
-        public Grammar Grammar
-        {
-            get => MGet<Grammar>(Compiler.GrammarRule_Grammar);
-            set => MSet<Grammar>(Compiler.GrammarRule_Grammar, value);
-        }
-    
-        public Language Language
-        {
-            get => Compiler.__CustomImpl.GrammarRule_Language(this);
-        }
-    
-        public string AntlrName
-        {
-            get => MGet<string>(Compiler.CSharpElement_AntlrName);
-            set => MSet<string>(Compiler.CSharpElement_AntlrName, value);
-        }
-    
-        public global::MetaDslx.Modeling.ICollectionSlot<Binder> Binders
-        {
-            get => MGetCollection<Binder>(Compiler.CSharpElement_Binders);
-        }
-    
-        public bool ContainsBinders
-        {
-            get => MGet<bool>(Compiler.CSharpElement_ContainsBinders);
-            set => MSet<bool>(Compiler.CSharpElement_ContainsBinders, value);
-        }
-    
-        public string CSharpName
-        {
-            get => MGet<string>(Compiler.CSharpElement_CSharpName);
-            set => MSet<string>(Compiler.CSharpElement_CSharpName, value);
-        }
-    
-        public global::MetaDslx.Modeling.ICollectionSlot<Annotation> Annotations
-        {
-            get => MGetCollection<Annotation>(Compiler.Declaration_Annotations);
-        }
-    
-        public global::MetaDslx.Modeling.ICollectionSlot<Declaration> Declarations
-        {
-            get => MGetCollection<Declaration>(Compiler.Declaration_Declarations);
-        }
-    
-        public string? FullName
-        {
-            get => Compiler.__CustomImpl.Declaration_FullName(this);
-        }
-    
-        public string? Name
-        {
-            get => MGet<string?>(Compiler.Declaration_Name);
-            set => MSet<string?>(Compiler.Declaration_Name, value);
-        }
-    
-        public Declaration? Parent
-        {
-            get => MGet<Declaration?>(Compiler.Declaration_Parent);
-            set => MSet<Declaration?>(Compiler.Declaration_Parent, value);
-        }
-    
-    
-    
-        internal class __Info : __ModelClassInfo
-        {
-            public static readonly __Info Instance = new __Info();
-    
-            private readonly global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo> _baseTypes;
-            private readonly global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo> _allBaseTypes;
-            private readonly global::System.Collections.Immutable.ImmutableArray<__ModelProperty> _declaredProperties;
-            private readonly global::System.Collections.Immutable.ImmutableArray<__ModelProperty> _allDeclaredProperties;
-            private readonly global::System.Collections.Immutable.ImmutableArray<__ModelProperty> _publicProperties;
-            private readonly global::System.Collections.Immutable.ImmutableDictionary<string, __ModelProperty> _publicPropertiesByName;
-            private readonly global::System.Collections.Immutable.ImmutableDictionary<__ModelProperty, __ModelPropertyInfo> _modelPropertyInfos;
-            private readonly global::System.Collections.Immutable.ImmutableArray<__ModelOperation> _declaredOperations;
-            private readonly global::System.Collections.Immutable.ImmutableArray<__ModelOperation> _allDeclaredOperations;
-            private readonly global::System.Collections.Immutable.ImmutableArray<__ModelOperation> _publicOperations;
-            private readonly global::System.Collections.Immutable.ImmutableDictionary<__ModelOperation, __ModelOperationInfo> _modelOperationInfos;
-    
-            private __Info() 
-            {
-                _baseTypes = __ImmutableArray.Create<__ModelClassInfo>(Compiler.CSharpElementInfo, Compiler.DeclarationInfo);
-                _allBaseTypes = __ImmutableArray.Create<__ModelClassInfo>(Compiler.CSharpElementInfo, Compiler.DeclarationInfo);
-                _declaredProperties = __ImmutableArray.Create<__ModelProperty>(Compiler.GrammarRule_Grammar, Compiler.GrammarRule_Language);
-                _allDeclaredProperties = __ImmutableArray.Create<__ModelProperty>(Compiler.GrammarRule_Grammar, Compiler.GrammarRule_Language, Compiler.CSharpElement_AntlrName, Compiler.CSharpElement_Binders, Compiler.CSharpElement_ContainsBinders, Compiler.CSharpElement_CSharpName, Compiler.Declaration_Annotations, Compiler.Declaration_Declarations, Compiler.Declaration_FullName, Compiler.Declaration_Name, Compiler.Declaration_Parent);
-                _publicProperties = __ImmutableArray.Create<__ModelProperty>(Compiler.GrammarRule_Grammar, Compiler.GrammarRule_Language, Compiler.CSharpElement_AntlrName, Compiler.CSharpElement_Binders, Compiler.CSharpElement_ContainsBinders, Compiler.CSharpElement_CSharpName, Compiler.Declaration_Annotations, Compiler.Declaration_Declarations, Compiler.Declaration_FullName, Compiler.Declaration_Name, Compiler.Declaration_Parent);
-                var publicPropertiesByName = __ImmutableDictionary.CreateBuilder<string, __ModelProperty>();
-                publicPropertiesByName.Add("Grammar", Compiler.GrammarRule_Grammar);
-                publicPropertiesByName.Add("Language", Compiler.GrammarRule_Language);
-                publicPropertiesByName.Add("AntlrName", Compiler.CSharpElement_AntlrName);
-                publicPropertiesByName.Add("Binders", Compiler.CSharpElement_Binders);
-                publicPropertiesByName.Add("ContainsBinders", Compiler.CSharpElement_ContainsBinders);
-                publicPropertiesByName.Add("CSharpName", Compiler.CSharpElement_CSharpName);
-                publicPropertiesByName.Add("Annotations", Compiler.Declaration_Annotations);
-                publicPropertiesByName.Add("Declarations", Compiler.Declaration_Declarations);
-                publicPropertiesByName.Add("FullName", Compiler.Declaration_FullName);
-                publicPropertiesByName.Add("Name", Compiler.Declaration_Name);
-                publicPropertiesByName.Add("Parent", Compiler.Declaration_Parent);
-                _publicPropertiesByName = publicPropertiesByName.ToImmutable();
-                var modelPropertyInfos = __ImmutableDictionary.CreateBuilder<__ModelProperty, __ModelPropertyInfo>();
-                modelPropertyInfos.Add(Compiler.GrammarRule_Grammar, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.GrammarRule_Grammar, __ImmutableArray.Create<__ModelProperty>(Compiler.GrammarRule_Grammar, Compiler.Declaration_Parent), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(Compiler.Declaration_Parent), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
-                modelPropertyInfos.Add(Compiler.GrammarRule_Language, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.GrammarRule_Language, __ImmutableArray.Create<__ModelProperty>(Compiler.GrammarRule_Language), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
-                modelPropertyInfos.Add(Compiler.CSharpElement_AntlrName, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.CSharpElement_AntlrName, __ImmutableArray.Create<__ModelProperty>(Compiler.CSharpElement_AntlrName), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
-                modelPropertyInfos.Add(Compiler.CSharpElement_Binders, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.CSharpElement_Binders, __ImmutableArray.Create<__ModelProperty>(Compiler.CSharpElement_Binders), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
-                modelPropertyInfos.Add(Compiler.CSharpElement_ContainsBinders, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.CSharpElement_ContainsBinders, __ImmutableArray.Create<__ModelProperty>(Compiler.CSharpElement_ContainsBinders), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
-                modelPropertyInfos.Add(Compiler.CSharpElement_CSharpName, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.CSharpElement_CSharpName, __ImmutableArray.Create<__ModelProperty>(Compiler.CSharpElement_CSharpName), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
-                modelPropertyInfos.Add(Compiler.Declaration_Annotations, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Declaration_Annotations, __ImmutableArray.Create<__ModelProperty>(Compiler.Declaration_Annotations), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
-                modelPropertyInfos.Add(Compiler.Declaration_Declarations, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Declaration_Declarations, __ImmutableArray.Create<__ModelProperty>(Compiler.Declaration_Declarations), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection), __ImmutableArray.Create<__ModelProperty>(Compiler.Declaration_Parent), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
-                modelPropertyInfos.Add(Compiler.Declaration_FullName, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Declaration_FullName, __ImmutableArray.Create<__ModelProperty>(Compiler.Declaration_FullName), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
-                modelPropertyInfos.Add(Compiler.Declaration_Name, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Declaration_Name, __ImmutableArray.Create<__ModelProperty>(Compiler.Declaration_Name), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
-                modelPropertyInfos.Add(Compiler.Declaration_Parent, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.GrammarRule_Grammar, __ImmutableArray.Create<__ModelProperty>(Compiler.GrammarRule_Grammar, Compiler.Declaration_Parent), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(Compiler.Declaration_Declarations), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(Compiler.GrammarRule_Grammar), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
-                _modelPropertyInfos = modelPropertyInfos.ToImmutable();
-    
-                _declaredOperations = __ImmutableArray.Create<__ModelOperation>();
-                _allDeclaredOperations = __ImmutableArray.Create<__ModelOperation>();
-                _publicOperations = __ImmutableArray.Create<__ModelOperation>();
-                var modelOperationInfos = __ImmutableDictionary.CreateBuilder<__ModelOperation, __ModelOperationInfo>();
-                _modelOperationInfos = modelOperationInfos.ToImmutable();
-            }
-    
-            public override __MetaModel MetaModel => Compiler.MInstance;
-            public override __MetaType MetaType => typeof(GrammarRule);
-    
-            public override __MetaType SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.DeclarationSymbol);
-            public override __ModelProperty? NameProperty => Compiler.Declaration_Name;
-            public override __ModelProperty? TypeProperty => null;
-            public override global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo> BaseTypes => _baseTypes;
-            public override global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo> AllBaseTypes => _allBaseTypes;
-            public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> DeclaredProperties => _declaredProperties;
-            public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> AllDeclaredProperties => _allDeclaredProperties;
-            public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> PublicProperties => _publicProperties;
-            public override global::System.Collections.Immutable.ImmutableArray<__ModelOperation> DeclaredOperations => _declaredOperations;
-            public override global::System.Collections.Immutable.ImmutableArray<__ModelOperation> AllDeclaredOperations => _allDeclaredOperations;
-            public override global::System.Collections.Immutable.ImmutableArray<__ModelOperation> PublicOperations => _publicOperations;
-    
-            protected override global::System.Collections.Immutable.ImmutableDictionary<string, __ModelProperty> PublicPropertiesByName => _publicPropertiesByName;
-            protected override global::System.Collections.Immutable.ImmutableDictionary<__ModelProperty, __ModelPropertyInfo> ModelPropertyInfos => _modelPropertyInfos;
-            protected override global::System.Collections.Immutable.ImmutableDictionary<__ModelOperation, __ModelOperationInfo> ModelOperationInfos => _modelOperationInfos;
-    
-            public override __IModelObject? Create(__Model? model = null, string? id = null)
-            {
-                var result = new GrammarRule_Impl(id);
-                if (model is not null) model.AttachObject(result);
-                return result;
-            }
-    
-            public override string ToString()
-            {
-                return "Compiler.GrammarRuleInfo";
-            }
-        }
-    }
-
-    internal class Block_Impl : __MetaModelObject, Block
-    {
-        private Block_Impl(string? id)
-            : base(id)
-        {
-            Compiler.__CustomImpl.Declaration(this);
-            Compiler.__CustomImpl.CSharpElement(this);
-            Compiler.__CustomImpl.GrammarRule(this);
-            Compiler.__CustomImpl.Rule(this);
-            Compiler.__CustomImpl.ElementValue(this);
-            Compiler.__CustomImpl.Block(this);
-        }
-    
-        public override __ModelClassInfo MInfo => __Info.Instance;
-    
-        public string? GreenSyntaxCondition
-        {
-            get => Compiler.__CustomImpl.ElementValue_GreenSyntaxCondition(this);
-        }
-    
-        public string GreenType
-        {
-            get => Compiler.__CustomImpl.ElementValue_GreenType(this);
-        }
-    
-        public string RedType
-        {
-            get => Compiler.__CustomImpl.ElementValue_RedType(this);
-        }
-    
-        public bool AllowMerge
-        {
-            get => MGet<bool>(Compiler.Rule_AllowMerge);
-            set => MSet<bool>(Compiler.Rule_AllowMerge, value);
-        }
-    
-        public global::MetaDslx.Modeling.ICollectionSlot<Alternative> Alternatives
-        {
-            get => MGetCollection<Alternative>(Compiler.Rule_Alternatives);
-        }
-    
-        public string GreenName
-        {
-            get => Compiler.__CustomImpl.Rule_GreenName(this);
-        }
-    
-        public string RedName
-        {
-            get => Compiler.__CustomImpl.Rule_RedName(this);
-        }
-    
-        public __MetaType ReturnType
-        {
-            get => MGet<__MetaType>(Compiler.Rule_ReturnType);
-            set => MSet<__MetaType>(Compiler.Rule_ReturnType, value);
-        }
-    
-        public Grammar Grammar
-        {
-            get => MGet<Grammar>(Compiler.GrammarRule_Grammar);
-            set => MSet<Grammar>(Compiler.GrammarRule_Grammar, value);
-        }
-    
-        public Language Language
-        {
-            get => Compiler.__CustomImpl.GrammarRule_Language(this);
-        }
-    
-        public string AntlrName
-        {
-            get => MGet<string>(Compiler.CSharpElement_AntlrName);
-            set => MSet<string>(Compiler.CSharpElement_AntlrName, value);
-        }
-    
-        public global::MetaDslx.Modeling.ICollectionSlot<Binder> Binders
-        {
-            get => MGetCollection<Binder>(Compiler.CSharpElement_Binders);
-        }
-    
-        public bool ContainsBinders
-        {
-            get => MGet<bool>(Compiler.CSharpElement_ContainsBinders);
-            set => MSet<bool>(Compiler.CSharpElement_ContainsBinders, value);
-        }
-    
-        public string CSharpName
-        {
-            get => MGet<string>(Compiler.CSharpElement_CSharpName);
-            set => MSet<string>(Compiler.CSharpElement_CSharpName, value);
-        }
-    
-        public global::MetaDslx.Modeling.ICollectionSlot<Annotation> Annotations
-        {
-            get => MGetCollection<Annotation>(Compiler.Declaration_Annotations);
-        }
-    
-        public global::MetaDslx.Modeling.ICollectionSlot<Declaration> Declarations
-        {
-            get => MGetCollection<Declaration>(Compiler.Declaration_Declarations);
-        }
-    
-        public string? FullName
-        {
-            get => Compiler.__CustomImpl.Declaration_FullName(this);
-        }
-    
-        public string? Name
-        {
-            get => MGet<string?>(Compiler.Declaration_Name);
-            set => MSet<string?>(Compiler.Declaration_Name, value);
-        }
-    
-        public Declaration? Parent
-        {
-            get => MGet<Declaration?>(Compiler.Declaration_Parent);
-            set => MSet<Declaration?>(Compiler.Declaration_Parent, value);
-        }
-    
-    
-    
-        internal class __Info : __ModelClassInfo
-        {
-            public static readonly __Info Instance = new __Info();
-    
-            private readonly global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo> _baseTypes;
-            private readonly global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo> _allBaseTypes;
-            private readonly global::System.Collections.Immutable.ImmutableArray<__ModelProperty> _declaredProperties;
-            private readonly global::System.Collections.Immutable.ImmutableArray<__ModelProperty> _allDeclaredProperties;
-            private readonly global::System.Collections.Immutable.ImmutableArray<__ModelProperty> _publicProperties;
-            private readonly global::System.Collections.Immutable.ImmutableDictionary<string, __ModelProperty> _publicPropertiesByName;
-            private readonly global::System.Collections.Immutable.ImmutableDictionary<__ModelProperty, __ModelPropertyInfo> _modelPropertyInfos;
-            private readonly global::System.Collections.Immutable.ImmutableArray<__ModelOperation> _declaredOperations;
-            private readonly global::System.Collections.Immutable.ImmutableArray<__ModelOperation> _allDeclaredOperations;
-            private readonly global::System.Collections.Immutable.ImmutableArray<__ModelOperation> _publicOperations;
-            private readonly global::System.Collections.Immutable.ImmutableDictionary<__ModelOperation, __ModelOperationInfo> _modelOperationInfos;
-    
-            private __Info() 
-            {
-                _baseTypes = __ImmutableArray.Create<__ModelClassInfo>(Compiler.ElementValueInfo, Compiler.RuleInfo);
-                _allBaseTypes = __ImmutableArray.Create<__ModelClassInfo>(Compiler.ElementValueInfo, Compiler.RuleInfo, Compiler.GrammarRuleInfo, Compiler.CSharpElementInfo, Compiler.DeclarationInfo);
-                _declaredProperties = __ImmutableArray.Create<__ModelProperty>();
-                _allDeclaredProperties = __ImmutableArray.Create<__ModelProperty>(Compiler.ElementValue_GreenSyntaxCondition, Compiler.ElementValue_GreenType, Compiler.ElementValue_RedType, Compiler.Rule_AllowMerge, Compiler.Rule_Alternatives, Compiler.Rule_GreenName, Compiler.Rule_RedName, Compiler.Rule_ReturnType, Compiler.GrammarRule_Grammar, Compiler.GrammarRule_Language, Compiler.CSharpElement_AntlrName, Compiler.CSharpElement_Binders, Compiler.CSharpElement_ContainsBinders, Compiler.CSharpElement_CSharpName, Compiler.Declaration_Annotations, Compiler.Declaration_Declarations, Compiler.Declaration_FullName, Compiler.Declaration_Name, Compiler.Declaration_Parent);
-                _publicProperties = __ImmutableArray.Create<__ModelProperty>(Compiler.ElementValue_GreenSyntaxCondition, Compiler.ElementValue_GreenType, Compiler.ElementValue_RedType, Compiler.Rule_AllowMerge, Compiler.Rule_Alternatives, Compiler.Rule_GreenName, Compiler.Rule_RedName, Compiler.Rule_ReturnType, Compiler.GrammarRule_Grammar, Compiler.GrammarRule_Language, Compiler.CSharpElement_AntlrName, Compiler.CSharpElement_Binders, Compiler.CSharpElement_ContainsBinders, Compiler.CSharpElement_CSharpName, Compiler.Declaration_Annotations, Compiler.Declaration_Declarations, Compiler.Declaration_FullName, Compiler.Declaration_Name, Compiler.Declaration_Parent);
-                var publicPropertiesByName = __ImmutableDictionary.CreateBuilder<string, __ModelProperty>();
-                publicPropertiesByName.Add("GreenSyntaxCondition", Compiler.ElementValue_GreenSyntaxCondition);
-                publicPropertiesByName.Add("GreenType", Compiler.ElementValue_GreenType);
-                publicPropertiesByName.Add("RedType", Compiler.ElementValue_RedType);
-                publicPropertiesByName.Add("AllowMerge", Compiler.Rule_AllowMerge);
-                publicPropertiesByName.Add("Alternatives", Compiler.Rule_Alternatives);
-                publicPropertiesByName.Add("GreenName", Compiler.Rule_GreenName);
-                publicPropertiesByName.Add("RedName", Compiler.Rule_RedName);
-                publicPropertiesByName.Add("ReturnType", Compiler.Rule_ReturnType);
-                publicPropertiesByName.Add("Grammar", Compiler.GrammarRule_Grammar);
-                publicPropertiesByName.Add("Language", Compiler.GrammarRule_Language);
-                publicPropertiesByName.Add("AntlrName", Compiler.CSharpElement_AntlrName);
-                publicPropertiesByName.Add("Binders", Compiler.CSharpElement_Binders);
-                publicPropertiesByName.Add("ContainsBinders", Compiler.CSharpElement_ContainsBinders);
-                publicPropertiesByName.Add("CSharpName", Compiler.CSharpElement_CSharpName);
-                publicPropertiesByName.Add("Annotations", Compiler.Declaration_Annotations);
-                publicPropertiesByName.Add("Declarations", Compiler.Declaration_Declarations);
-                publicPropertiesByName.Add("FullName", Compiler.Declaration_FullName);
-                publicPropertiesByName.Add("Name", Compiler.Declaration_Name);
-                publicPropertiesByName.Add("Parent", Compiler.Declaration_Parent);
-                _publicPropertiesByName = publicPropertiesByName.ToImmutable();
-                var modelPropertyInfos = __ImmutableDictionary.CreateBuilder<__ModelProperty, __ModelPropertyInfo>();
-                modelPropertyInfos.Add(Compiler.ElementValue_GreenSyntaxCondition, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.ElementValue_GreenSyntaxCondition, __ImmutableArray.Create<__ModelProperty>(Compiler.ElementValue_GreenSyntaxCondition), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
-                modelPropertyInfos.Add(Compiler.ElementValue_GreenType, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.ElementValue_GreenType, __ImmutableArray.Create<__ModelProperty>(Compiler.ElementValue_GreenType), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
-                modelPropertyInfos.Add(Compiler.ElementValue_RedType, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.ElementValue_RedType, __ImmutableArray.Create<__ModelProperty>(Compiler.ElementValue_RedType), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
-                modelPropertyInfos.Add(Compiler.Rule_AllowMerge, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Rule_AllowMerge, __ImmutableArray.Create<__ModelProperty>(Compiler.Rule_AllowMerge), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
-                modelPropertyInfos.Add(Compiler.Rule_Alternatives, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Rule_Alternatives, __ImmutableArray.Create<__ModelProperty>(Compiler.Rule_Alternatives), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
-                modelPropertyInfos.Add(Compiler.Rule_GreenName, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Rule_GreenName, __ImmutableArray.Create<__ModelProperty>(Compiler.Rule_GreenName), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
-                modelPropertyInfos.Add(Compiler.Rule_RedName, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Rule_RedName, __ImmutableArray.Create<__ModelProperty>(Compiler.Rule_RedName), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
-                modelPropertyInfos.Add(Compiler.Rule_ReturnType, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Rule_ReturnType, __ImmutableArray.Create<__ModelProperty>(Compiler.Rule_ReturnType), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
-                modelPropertyInfos.Add(Compiler.GrammarRule_Grammar, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.GrammarRule_Grammar, __ImmutableArray.Create<__ModelProperty>(Compiler.GrammarRule_Grammar, Compiler.Declaration_Parent), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(Compiler.Declaration_Parent), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
-                modelPropertyInfos.Add(Compiler.GrammarRule_Language, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.GrammarRule_Language, __ImmutableArray.Create<__ModelProperty>(Compiler.GrammarRule_Language), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
-                modelPropertyInfos.Add(Compiler.CSharpElement_AntlrName, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.CSharpElement_AntlrName, __ImmutableArray.Create<__ModelProperty>(Compiler.CSharpElement_AntlrName), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
-                modelPropertyInfos.Add(Compiler.CSharpElement_Binders, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.CSharpElement_Binders, __ImmutableArray.Create<__ModelProperty>(Compiler.CSharpElement_Binders), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
-                modelPropertyInfos.Add(Compiler.CSharpElement_ContainsBinders, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.CSharpElement_ContainsBinders, __ImmutableArray.Create<__ModelProperty>(Compiler.CSharpElement_ContainsBinders), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
-                modelPropertyInfos.Add(Compiler.CSharpElement_CSharpName, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.CSharpElement_CSharpName, __ImmutableArray.Create<__ModelProperty>(Compiler.CSharpElement_CSharpName), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
-                modelPropertyInfos.Add(Compiler.Declaration_Annotations, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Declaration_Annotations, __ImmutableArray.Create<__ModelProperty>(Compiler.Declaration_Annotations), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
-                modelPropertyInfos.Add(Compiler.Declaration_Declarations, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Declaration_Declarations, __ImmutableArray.Create<__ModelProperty>(Compiler.Declaration_Declarations), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection), __ImmutableArray.Create<__ModelProperty>(Compiler.Declaration_Parent), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
-                modelPropertyInfos.Add(Compiler.Declaration_FullName, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Declaration_FullName, __ImmutableArray.Create<__ModelProperty>(Compiler.Declaration_FullName), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
-                modelPropertyInfos.Add(Compiler.Declaration_Name, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Declaration_Name, __ImmutableArray.Create<__ModelProperty>(Compiler.Declaration_Name), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
-                modelPropertyInfos.Add(Compiler.Declaration_Parent, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.GrammarRule_Grammar, __ImmutableArray.Create<__ModelProperty>(Compiler.GrammarRule_Grammar, Compiler.Declaration_Parent), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(Compiler.Declaration_Declarations), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(Compiler.GrammarRule_Grammar), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
-                _modelPropertyInfos = modelPropertyInfos.ToImmutable();
-    
-                _declaredOperations = __ImmutableArray.Create<__ModelOperation>();
-                _allDeclaredOperations = __ImmutableArray.Create<__ModelOperation>();
-                _publicOperations = __ImmutableArray.Create<__ModelOperation>();
-                var modelOperationInfos = __ImmutableDictionary.CreateBuilder<__ModelOperation, __ModelOperationInfo>();
-                _modelOperationInfos = modelOperationInfos.ToImmutable();
-            }
-    
-            public override __MetaModel MetaModel => Compiler.MInstance;
-            public override __MetaType MetaType => typeof(Block);
-    
-            public override __MetaType SymbolType => typeof(global::MetaDslx.Bootstrap.MetaCompiler.Symbols.PBlockSymbol);
-            public override __ModelProperty? NameProperty => Compiler.Declaration_Name;
-            public override __ModelProperty? TypeProperty => null;
-            public override global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo> BaseTypes => _baseTypes;
-            public override global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo> AllBaseTypes => _allBaseTypes;
-            public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> DeclaredProperties => _declaredProperties;
-            public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> AllDeclaredProperties => _allDeclaredProperties;
-            public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> PublicProperties => _publicProperties;
-            public override global::System.Collections.Immutable.ImmutableArray<__ModelOperation> DeclaredOperations => _declaredOperations;
-            public override global::System.Collections.Immutable.ImmutableArray<__ModelOperation> AllDeclaredOperations => _allDeclaredOperations;
-            public override global::System.Collections.Immutable.ImmutableArray<__ModelOperation> PublicOperations => _publicOperations;
-    
-            protected override global::System.Collections.Immutable.ImmutableDictionary<string, __ModelProperty> PublicPropertiesByName => _publicPropertiesByName;
-            protected override global::System.Collections.Immutable.ImmutableDictionary<__ModelProperty, __ModelPropertyInfo> ModelPropertyInfos => _modelPropertyInfos;
-            protected override global::System.Collections.Immutable.ImmutableDictionary<__ModelOperation, __ModelOperationInfo> ModelOperationInfos => _modelOperationInfos;
-    
-            public override __IModelObject? Create(__Model? model = null, string? id = null)
-            {
-                var result = new Block_Impl(id);
-                if (model is not null) model.AttachObject(result);
-                return result;
-            }
-    
-            public override string ToString()
-            {
-                return "Compiler.BlockInfo";
-            }
-        }
-    }
-
-    internal class Element_Impl : __MetaModelObject, Element
-    {
-        private Element_Impl(string? id)
-            : base(id)
-        {
-            Compiler.__CustomImpl.CSharpElement(this);
-            Compiler.__CustomImpl.Element(this);
-        }
-    
-        public override __ModelClassInfo MInfo => __Info.Instance;
-    
-        public global::MetaDslx.Bootstrap.MetaCompiler.Model.Assignment Assignment
-        {
-            get => MGet<global::MetaDslx.Bootstrap.MetaCompiler.Model.Assignment>(Compiler.Element_Assignment);
-            set => MSet<global::MetaDslx.Bootstrap.MetaCompiler.Model.Assignment>(Compiler.Element_Assignment, value);
-        }
-    
-        public string FieldName
-        {
-            get => Compiler.__CustomImpl.Element_FieldName(this);
-        }
-    
-        public string GreenFieldType
-        {
-            get => Compiler.__CustomImpl.Element_GreenFieldType(this);
-        }
-    
-        public string GreenParameterValue
-        {
-            get => Compiler.__CustomImpl.Element_GreenParameterValue(this);
-        }
-    
-        public string GreenPropertyType
-        {
-            get => Compiler.__CustomImpl.Element_GreenPropertyType(this);
-        }
-    
-        public string GreenPropertyValue
-        {
-            get => Compiler.__CustomImpl.Element_GreenPropertyValue(this);
-        }
-    
-        public string? GreenSyntaxCondition
-        {
-            get => Compiler.__CustomImpl.Element_GreenSyntaxCondition(this);
-        }
-    
-        public string? GreenSyntaxNullCondition
-        {
-            get => Compiler.__CustomImpl.Element_GreenSyntaxNullCondition(this);
-        }
-    
-        public bool IsList
-        {
-            get => Compiler.__CustomImpl.Element_IsList(this);
-        }
-    
-        public bool IsOptionalUpdateParameter
-        {
-            get => Compiler.__CustomImpl.Element_IsOptionalUpdateParameter(this);
-        }
-    
-        public bool IsToken
-        {
-            get => Compiler.__CustomImpl.Element_IsToken(this);
-        }
-    
-        public global::MetaDslx.Bootstrap.MetaCompiler.Model.Multiplicity Multiplicity
-        {
-            get => MGet<global::MetaDslx.Bootstrap.MetaCompiler.Model.Multiplicity>(Compiler.Element_Multiplicity);
-            set => MSet<global::MetaDslx.Bootstrap.MetaCompiler.Model.Multiplicity>(Compiler.Element_Multiplicity, value);
-        }
-    
-        public string? Name
-        {
-            get => MGet<string?>(Compiler.Element_Name);
-            set => MSet<string?>(Compiler.Element_Name, value);
-        }
-    
-        public global::MetaDslx.Modeling.ICollectionSlot<Annotation> NameAnnotations
-        {
-            get => MGetCollection<Annotation>(Compiler.Element_NameAnnotations);
-        }
-    
-        public string ParameterName
-        {
-            get => Compiler.__CustomImpl.Element_ParameterName(this);
-        }
-    
-        public string PropertyName
-        {
-            get => Compiler.__CustomImpl.Element_PropertyName(this);
-        }
-    
-        public string RedFieldType
-        {
-            get => Compiler.__CustomImpl.Element_RedFieldType(this);
-        }
-    
-        public string RedParameterValue
-        {
-            get => Compiler.__CustomImpl.Element_RedParameterValue(this);
-        }
-    
-        public string RedPropertyType
-        {
-            get => Compiler.__CustomImpl.Element_RedPropertyType(this);
-        }
-    
-        public string RedPropertyValue
-        {
-            get => Compiler.__CustomImpl.Element_RedPropertyValue(this);
-        }
-    
-        public string? RedSyntaxCondition
-        {
-            get => Compiler.__CustomImpl.Element_RedSyntaxCondition(this);
-        }
-    
-        public string? RedSyntaxNullCondition
-        {
-            get => Compiler.__CustomImpl.Element_RedSyntaxNullCondition(this);
-        }
-    
-        public string RedToGreenArgument
-        {
-            get => Compiler.__CustomImpl.Element_RedToGreenArgument(this);
-        }
-    
-        public string RedToGreenOptionalArgument
-        {
-            get => Compiler.__CustomImpl.Element_RedToGreenOptionalArgument(this);
-        }
-    
-        public global::MetaDslx.Modeling.ICollectionSlot<__MetaSymbol> SymbolProperty
-        {
-            get => MGetCollection<__MetaSymbol>(Compiler.Element_SymbolProperty);
-        }
-    
-        public ElementValue Value
-        {
-            get => MGet<ElementValue>(Compiler.Element_Value);
-            set => MSet<ElementValue>(Compiler.Element_Value, value);
-        }
-    
-        public global::MetaDslx.Modeling.ICollectionSlot<Annotation> ValueAnnotations
-        {
-            get => MGetCollection<Annotation>(Compiler.Element_ValueAnnotations);
-        }
-    
-        public string? VisitCall
-        {
-            get => Compiler.__CustomImpl.Element_VisitCall(this);
-        }
-    
-        public string AntlrName
-        {
-            get => MGet<string>(Compiler.CSharpElement_AntlrName);
-            set => MSet<string>(Compiler.CSharpElement_AntlrName, value);
-        }
-    
-        public global::MetaDslx.Modeling.ICollectionSlot<Binder> Binders
-        {
-            get => MGetCollection<Binder>(Compiler.CSharpElement_Binders);
-        }
-    
-        public bool ContainsBinders
-        {
-            get => MGet<bool>(Compiler.CSharpElement_ContainsBinders);
-            set => MSet<bool>(Compiler.CSharpElement_ContainsBinders, value);
-        }
-    
-        public string CSharpName
-        {
-            get => MGet<string>(Compiler.CSharpElement_CSharpName);
-            set => MSet<string>(Compiler.CSharpElement_CSharpName, value);
-        }
-    
-    
-    
-        internal class __Info : __ModelClassInfo
-        {
-            public static readonly __Info Instance = new __Info();
-    
-            private readonly global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo> _baseTypes;
-            private readonly global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo> _allBaseTypes;
-            private readonly global::System.Collections.Immutable.ImmutableArray<__ModelProperty> _declaredProperties;
-            private readonly global::System.Collections.Immutable.ImmutableArray<__ModelProperty> _allDeclaredProperties;
-            private readonly global::System.Collections.Immutable.ImmutableArray<__ModelProperty> _publicProperties;
-            private readonly global::System.Collections.Immutable.ImmutableDictionary<string, __ModelProperty> _publicPropertiesByName;
-            private readonly global::System.Collections.Immutable.ImmutableDictionary<__ModelProperty, __ModelPropertyInfo> _modelPropertyInfos;
-            private readonly global::System.Collections.Immutable.ImmutableArray<__ModelOperation> _declaredOperations;
-            private readonly global::System.Collections.Immutable.ImmutableArray<__ModelOperation> _allDeclaredOperations;
-            private readonly global::System.Collections.Immutable.ImmutableArray<__ModelOperation> _publicOperations;
-            private readonly global::System.Collections.Immutable.ImmutableDictionary<__ModelOperation, __ModelOperationInfo> _modelOperationInfos;
-    
-            private __Info() 
-            {
-                _baseTypes = __ImmutableArray.Create<__ModelClassInfo>(Compiler.CSharpElementInfo);
-                _allBaseTypes = __ImmutableArray.Create<__ModelClassInfo>(Compiler.CSharpElementInfo);
-                _declaredProperties = __ImmutableArray.Create<__ModelProperty>(Compiler.Element_Assignment, Compiler.Element_FieldName, Compiler.Element_GreenFieldType, Compiler.Element_GreenParameterValue, Compiler.Element_GreenPropertyType, Compiler.Element_GreenPropertyValue, Compiler.Element_GreenSyntaxCondition, Compiler.Element_GreenSyntaxNullCondition, Compiler.Element_IsList, Compiler.Element_IsOptionalUpdateParameter, Compiler.Element_IsToken, Compiler.Element_Multiplicity, Compiler.Element_Name, Compiler.Element_NameAnnotations, Compiler.Element_ParameterName, Compiler.Element_PropertyName, Compiler.Element_RedFieldType, Compiler.Element_RedParameterValue, Compiler.Element_RedPropertyType, Compiler.Element_RedPropertyValue, Compiler.Element_RedSyntaxCondition, Compiler.Element_RedSyntaxNullCondition, Compiler.Element_RedToGreenArgument, Compiler.Element_RedToGreenOptionalArgument, Compiler.Element_SymbolProperty, Compiler.Element_Value, Compiler.Element_ValueAnnotations, Compiler.Element_VisitCall);
-                _allDeclaredProperties = __ImmutableArray.Create<__ModelProperty>(Compiler.Element_Assignment, Compiler.Element_FieldName, Compiler.Element_GreenFieldType, Compiler.Element_GreenParameterValue, Compiler.Element_GreenPropertyType, Compiler.Element_GreenPropertyValue, Compiler.Element_GreenSyntaxCondition, Compiler.Element_GreenSyntaxNullCondition, Compiler.Element_IsList, Compiler.Element_IsOptionalUpdateParameter, Compiler.Element_IsToken, Compiler.Element_Multiplicity, Compiler.Element_Name, Compiler.Element_NameAnnotations, Compiler.Element_ParameterName, Compiler.Element_PropertyName, Compiler.Element_RedFieldType, Compiler.Element_RedParameterValue, Compiler.Element_RedPropertyType, Compiler.Element_RedPropertyValue, Compiler.Element_RedSyntaxCondition, Compiler.Element_RedSyntaxNullCondition, Compiler.Element_RedToGreenArgument, Compiler.Element_RedToGreenOptionalArgument, Compiler.Element_SymbolProperty, Compiler.Element_Value, Compiler.Element_ValueAnnotations, Compiler.Element_VisitCall, Compiler.CSharpElement_AntlrName, Compiler.CSharpElement_Binders, Compiler.CSharpElement_ContainsBinders, Compiler.CSharpElement_CSharpName);
-                _publicProperties = __ImmutableArray.Create<__ModelProperty>(Compiler.Element_Assignment, Compiler.Element_FieldName, Compiler.Element_GreenFieldType, Compiler.Element_GreenParameterValue, Compiler.Element_GreenPropertyType, Compiler.Element_GreenPropertyValue, Compiler.Element_GreenSyntaxCondition, Compiler.Element_GreenSyntaxNullCondition, Compiler.Element_IsList, Compiler.Element_IsOptionalUpdateParameter, Compiler.Element_IsToken, Compiler.Element_Multiplicity, Compiler.Element_Name, Compiler.Element_NameAnnotations, Compiler.Element_ParameterName, Compiler.Element_PropertyName, Compiler.Element_RedFieldType, Compiler.Element_RedParameterValue, Compiler.Element_RedPropertyType, Compiler.Element_RedPropertyValue, Compiler.Element_RedSyntaxCondition, Compiler.Element_RedSyntaxNullCondition, Compiler.Element_RedToGreenArgument, Compiler.Element_RedToGreenOptionalArgument, Compiler.Element_SymbolProperty, Compiler.Element_Value, Compiler.Element_ValueAnnotations, Compiler.Element_VisitCall, Compiler.CSharpElement_AntlrName, Compiler.CSharpElement_Binders, Compiler.CSharpElement_ContainsBinders, Compiler.CSharpElement_CSharpName);
-                var publicPropertiesByName = __ImmutableDictionary.CreateBuilder<string, __ModelProperty>();
-                publicPropertiesByName.Add("Assignment", Compiler.Element_Assignment);
-                publicPropertiesByName.Add("FieldName", Compiler.Element_FieldName);
-                publicPropertiesByName.Add("GreenFieldType", Compiler.Element_GreenFieldType);
-                publicPropertiesByName.Add("GreenParameterValue", Compiler.Element_GreenParameterValue);
-                publicPropertiesByName.Add("GreenPropertyType", Compiler.Element_GreenPropertyType);
-                publicPropertiesByName.Add("GreenPropertyValue", Compiler.Element_GreenPropertyValue);
-                publicPropertiesByName.Add("GreenSyntaxCondition", Compiler.Element_GreenSyntaxCondition);
-                publicPropertiesByName.Add("GreenSyntaxNullCondition", Compiler.Element_GreenSyntaxNullCondition);
-                publicPropertiesByName.Add("IsList", Compiler.Element_IsList);
-                publicPropertiesByName.Add("IsOptionalUpdateParameter", Compiler.Element_IsOptionalUpdateParameter);
-                publicPropertiesByName.Add("IsToken", Compiler.Element_IsToken);
-                publicPropertiesByName.Add("Multiplicity", Compiler.Element_Multiplicity);
-                publicPropertiesByName.Add("Name", Compiler.Element_Name);
-                publicPropertiesByName.Add("NameAnnotations", Compiler.Element_NameAnnotations);
-                publicPropertiesByName.Add("ParameterName", Compiler.Element_ParameterName);
-                publicPropertiesByName.Add("PropertyName", Compiler.Element_PropertyName);
-                publicPropertiesByName.Add("RedFieldType", Compiler.Element_RedFieldType);
-                publicPropertiesByName.Add("RedParameterValue", Compiler.Element_RedParameterValue);
-                publicPropertiesByName.Add("RedPropertyType", Compiler.Element_RedPropertyType);
-                publicPropertiesByName.Add("RedPropertyValue", Compiler.Element_RedPropertyValue);
-                publicPropertiesByName.Add("RedSyntaxCondition", Compiler.Element_RedSyntaxCondition);
-                publicPropertiesByName.Add("RedSyntaxNullCondition", Compiler.Element_RedSyntaxNullCondition);
-                publicPropertiesByName.Add("RedToGreenArgument", Compiler.Element_RedToGreenArgument);
-                publicPropertiesByName.Add("RedToGreenOptionalArgument", Compiler.Element_RedToGreenOptionalArgument);
-                publicPropertiesByName.Add("SymbolProperty", Compiler.Element_SymbolProperty);
-                publicPropertiesByName.Add("Value", Compiler.Element_Value);
-                publicPropertiesByName.Add("ValueAnnotations", Compiler.Element_ValueAnnotations);
-                publicPropertiesByName.Add("VisitCall", Compiler.Element_VisitCall);
-                publicPropertiesByName.Add("AntlrName", Compiler.CSharpElement_AntlrName);
-                publicPropertiesByName.Add("Binders", Compiler.CSharpElement_Binders);
-                publicPropertiesByName.Add("ContainsBinders", Compiler.CSharpElement_ContainsBinders);
-                publicPropertiesByName.Add("CSharpName", Compiler.CSharpElement_CSharpName);
-                _publicPropertiesByName = publicPropertiesByName.ToImmutable();
-                var modelPropertyInfos = __ImmutableDictionary.CreateBuilder<__ModelProperty, __ModelPropertyInfo>();
-                modelPropertyInfos.Add(Compiler.Element_Assignment, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Element_Assignment, __ImmutableArray.Create<__ModelProperty>(Compiler.Element_Assignment), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
-                modelPropertyInfos.Add(Compiler.Element_FieldName, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Element_FieldName, __ImmutableArray.Create<__ModelProperty>(Compiler.Element_FieldName), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
-                modelPropertyInfos.Add(Compiler.Element_GreenFieldType, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Element_GreenFieldType, __ImmutableArray.Create<__ModelProperty>(Compiler.Element_GreenFieldType), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
-                modelPropertyInfos.Add(Compiler.Element_GreenParameterValue, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Element_GreenParameterValue, __ImmutableArray.Create<__ModelProperty>(Compiler.Element_GreenParameterValue), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
-                modelPropertyInfos.Add(Compiler.Element_GreenPropertyType, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Element_GreenPropertyType, __ImmutableArray.Create<__ModelProperty>(Compiler.Element_GreenPropertyType), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
-                modelPropertyInfos.Add(Compiler.Element_GreenPropertyValue, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Element_GreenPropertyValue, __ImmutableArray.Create<__ModelProperty>(Compiler.Element_GreenPropertyValue), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
-                modelPropertyInfos.Add(Compiler.Element_GreenSyntaxCondition, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Element_GreenSyntaxCondition, __ImmutableArray.Create<__ModelProperty>(Compiler.Element_GreenSyntaxCondition), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
-                modelPropertyInfos.Add(Compiler.Element_GreenSyntaxNullCondition, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Element_GreenSyntaxNullCondition, __ImmutableArray.Create<__ModelProperty>(Compiler.Element_GreenSyntaxNullCondition), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
-                modelPropertyInfos.Add(Compiler.Element_IsList, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Element_IsList, __ImmutableArray.Create<__ModelProperty>(Compiler.Element_IsList), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
-                modelPropertyInfos.Add(Compiler.Element_IsOptionalUpdateParameter, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Element_IsOptionalUpdateParameter, __ImmutableArray.Create<__ModelProperty>(Compiler.Element_IsOptionalUpdateParameter), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
-                modelPropertyInfos.Add(Compiler.Element_IsToken, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Element_IsToken, __ImmutableArray.Create<__ModelProperty>(Compiler.Element_IsToken), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
-                modelPropertyInfos.Add(Compiler.Element_Multiplicity, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Element_Multiplicity, __ImmutableArray.Create<__ModelProperty>(Compiler.Element_Multiplicity), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
-                modelPropertyInfos.Add(Compiler.Element_Name, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Element_Name, __ImmutableArray.Create<__ModelProperty>(Compiler.Element_Name), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
-                modelPropertyInfos.Add(Compiler.Element_NameAnnotations, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Element_NameAnnotations, __ImmutableArray.Create<__ModelProperty>(Compiler.Element_NameAnnotations), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
-                modelPropertyInfos.Add(Compiler.Element_ParameterName, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Element_ParameterName, __ImmutableArray.Create<__ModelProperty>(Compiler.Element_ParameterName), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
-                modelPropertyInfos.Add(Compiler.Element_PropertyName, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Element_PropertyName, __ImmutableArray.Create<__ModelProperty>(Compiler.Element_PropertyName), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
-                modelPropertyInfos.Add(Compiler.Element_RedFieldType, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Element_RedFieldType, __ImmutableArray.Create<__ModelProperty>(Compiler.Element_RedFieldType), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
-                modelPropertyInfos.Add(Compiler.Element_RedParameterValue, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Element_RedParameterValue, __ImmutableArray.Create<__ModelProperty>(Compiler.Element_RedParameterValue), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
-                modelPropertyInfos.Add(Compiler.Element_RedPropertyType, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Element_RedPropertyType, __ImmutableArray.Create<__ModelProperty>(Compiler.Element_RedPropertyType), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
-                modelPropertyInfos.Add(Compiler.Element_RedPropertyValue, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Element_RedPropertyValue, __ImmutableArray.Create<__ModelProperty>(Compiler.Element_RedPropertyValue), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
-                modelPropertyInfos.Add(Compiler.Element_RedSyntaxCondition, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Element_RedSyntaxCondition, __ImmutableArray.Create<__ModelProperty>(Compiler.Element_RedSyntaxCondition), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
-                modelPropertyInfos.Add(Compiler.Element_RedSyntaxNullCondition, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Element_RedSyntaxNullCondition, __ImmutableArray.Create<__ModelProperty>(Compiler.Element_RedSyntaxNullCondition), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
-                modelPropertyInfos.Add(Compiler.Element_RedToGreenArgument, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Element_RedToGreenArgument, __ImmutableArray.Create<__ModelProperty>(Compiler.Element_RedToGreenArgument), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
-                modelPropertyInfos.Add(Compiler.Element_RedToGreenOptionalArgument, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Element_RedToGreenOptionalArgument, __ImmutableArray.Create<__ModelProperty>(Compiler.Element_RedToGreenOptionalArgument), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
-                modelPropertyInfos.Add(Compiler.Element_SymbolProperty, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Element_SymbolProperty, __ImmutableArray.Create<__ModelProperty>(Compiler.Element_SymbolProperty), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Collection), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
-                modelPropertyInfos.Add(Compiler.Element_Value, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Element_Value, __ImmutableArray.Create<__ModelProperty>(Compiler.Element_Value), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
-                modelPropertyInfos.Add(Compiler.Element_ValueAnnotations, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Element_ValueAnnotations, __ImmutableArray.Create<__ModelProperty>(Compiler.Element_ValueAnnotations), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
-                modelPropertyInfos.Add(Compiler.Element_VisitCall, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Element_VisitCall, __ImmutableArray.Create<__ModelProperty>(Compiler.Element_VisitCall), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
-                modelPropertyInfos.Add(Compiler.CSharpElement_AntlrName, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.CSharpElement_AntlrName, __ImmutableArray.Create<__ModelProperty>(Compiler.CSharpElement_AntlrName), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
-                modelPropertyInfos.Add(Compiler.CSharpElement_Binders, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.CSharpElement_Binders, __ImmutableArray.Create<__ModelProperty>(Compiler.CSharpElement_Binders), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
-                modelPropertyInfos.Add(Compiler.CSharpElement_ContainsBinders, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.CSharpElement_ContainsBinders, __ImmutableArray.Create<__ModelProperty>(Compiler.CSharpElement_ContainsBinders), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
-                modelPropertyInfos.Add(Compiler.CSharpElement_CSharpName, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.CSharpElement_CSharpName, __ImmutableArray.Create<__ModelProperty>(Compiler.CSharpElement_CSharpName), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
-                _modelPropertyInfos = modelPropertyInfos.ToImmutable();
-    
-                _declaredOperations = __ImmutableArray.Create<__ModelOperation>();
-                _allDeclaredOperations = __ImmutableArray.Create<__ModelOperation>();
-                _publicOperations = __ImmutableArray.Create<__ModelOperation>();
-                var modelOperationInfos = __ImmutableDictionary.CreateBuilder<__ModelOperation, __ModelOperationInfo>();
-                _modelOperationInfos = modelOperationInfos.ToImmutable();
-            }
-    
-            public override __MetaModel MetaModel => Compiler.MInstance;
-            public override __MetaType MetaType => typeof(Element);
-    
-            public override __MetaType SymbolType => typeof(global::MetaDslx.Bootstrap.MetaCompiler.Symbols.PElementSymbol);
-            public override __ModelProperty? NameProperty => null;
-            public override __ModelProperty? TypeProperty => null;
-            public override global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo> BaseTypes => _baseTypes;
-            public override global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo> AllBaseTypes => _allBaseTypes;
-            public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> DeclaredProperties => _declaredProperties;
-            public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> AllDeclaredProperties => _allDeclaredProperties;
-            public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> PublicProperties => _publicProperties;
-            public override global::System.Collections.Immutable.ImmutableArray<__ModelOperation> DeclaredOperations => _declaredOperations;
-            public override global::System.Collections.Immutable.ImmutableArray<__ModelOperation> AllDeclaredOperations => _allDeclaredOperations;
-            public override global::System.Collections.Immutable.ImmutableArray<__ModelOperation> PublicOperations => _publicOperations;
-    
-            protected override global::System.Collections.Immutable.ImmutableDictionary<string, __ModelProperty> PublicPropertiesByName => _publicPropertiesByName;
-            protected override global::System.Collections.Immutable.ImmutableDictionary<__ModelProperty, __ModelPropertyInfo> ModelPropertyInfos => _modelPropertyInfos;
-            protected override global::System.Collections.Immutable.ImmutableDictionary<__ModelOperation, __ModelOperationInfo> ModelOperationInfos => _modelOperationInfos;
-    
-            public override __IModelObject? Create(__Model? model = null, string? id = null)
-            {
-                var result = new Element_Impl(id);
-                if (model is not null) model.AttachObject(result);
-                return result;
-            }
-    
-            public override string ToString()
-            {
-                return "Compiler.ElementInfo";
             }
         }
     }
@@ -6681,22 +6369,22 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
         }
     }
 
-    internal class Keyword_Impl : __MetaModelObject, Keyword
+    internal class Fixed_Impl : __MetaModelObject, Fixed
     {
-        private Keyword_Impl(string? id)
+        private Fixed_Impl(string? id)
             : base(id)
         {
             Compiler.__CustomImpl.CSharpElement(this);
             Compiler.__CustomImpl.ElementValue(this);
-            Compiler.__CustomImpl.Keyword(this);
+            Compiler.__CustomImpl.Fixed(this);
         }
     
         public override __ModelClassInfo MInfo => __Info.Instance;
     
         public string Text
         {
-            get => MGet<string>(Compiler.Keyword_Text);
-            set => MSet<string>(Compiler.Keyword_Text, value);
+            get => MGet<string>(Compiler.Fixed_Text);
+            set => MSet<string>(Compiler.Fixed_Text, value);
         }
     
         public string? GreenSyntaxCondition
@@ -6759,11 +6447,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
             {
                 _baseTypes = __ImmutableArray.Create<__ModelClassInfo>(Compiler.ElementValueInfo);
                 _allBaseTypes = __ImmutableArray.Create<__ModelClassInfo>(Compiler.ElementValueInfo, Compiler.CSharpElementInfo);
-                _declaredProperties = __ImmutableArray.Create<__ModelProperty>(Compiler.Keyword_Text);
-                _allDeclaredProperties = __ImmutableArray.Create<__ModelProperty>(Compiler.Keyword_Text, Compiler.ElementValue_GreenSyntaxCondition, Compiler.ElementValue_GreenType, Compiler.ElementValue_RedType, Compiler.CSharpElement_AntlrName, Compiler.CSharpElement_Binders, Compiler.CSharpElement_ContainsBinders, Compiler.CSharpElement_CSharpName);
-                _publicProperties = __ImmutableArray.Create<__ModelProperty>(Compiler.Keyword_Text, Compiler.ElementValue_GreenSyntaxCondition, Compiler.ElementValue_GreenType, Compiler.ElementValue_RedType, Compiler.CSharpElement_AntlrName, Compiler.CSharpElement_Binders, Compiler.CSharpElement_ContainsBinders, Compiler.CSharpElement_CSharpName);
+                _declaredProperties = __ImmutableArray.Create<__ModelProperty>(Compiler.Fixed_Text);
+                _allDeclaredProperties = __ImmutableArray.Create<__ModelProperty>(Compiler.Fixed_Text, Compiler.ElementValue_GreenSyntaxCondition, Compiler.ElementValue_GreenType, Compiler.ElementValue_RedType, Compiler.CSharpElement_AntlrName, Compiler.CSharpElement_Binders, Compiler.CSharpElement_ContainsBinders, Compiler.CSharpElement_CSharpName);
+                _publicProperties = __ImmutableArray.Create<__ModelProperty>(Compiler.Fixed_Text, Compiler.ElementValue_GreenSyntaxCondition, Compiler.ElementValue_GreenType, Compiler.ElementValue_RedType, Compiler.CSharpElement_AntlrName, Compiler.CSharpElement_Binders, Compiler.CSharpElement_ContainsBinders, Compiler.CSharpElement_CSharpName);
                 var publicPropertiesByName = __ImmutableDictionary.CreateBuilder<string, __ModelProperty>();
-                publicPropertiesByName.Add("Text", Compiler.Keyword_Text);
+                publicPropertiesByName.Add("Text", Compiler.Fixed_Text);
                 publicPropertiesByName.Add("GreenSyntaxCondition", Compiler.ElementValue_GreenSyntaxCondition);
                 publicPropertiesByName.Add("GreenType", Compiler.ElementValue_GreenType);
                 publicPropertiesByName.Add("RedType", Compiler.ElementValue_RedType);
@@ -6773,7 +6461,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
                 publicPropertiesByName.Add("CSharpName", Compiler.CSharpElement_CSharpName);
                 _publicPropertiesByName = publicPropertiesByName.ToImmutable();
                 var modelPropertyInfos = __ImmutableDictionary.CreateBuilder<__ModelProperty, __ModelPropertyInfo>();
-                modelPropertyInfos.Add(Compiler.Keyword_Text, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Keyword_Text, __ImmutableArray.Create<__ModelProperty>(Compiler.Keyword_Text), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
+                modelPropertyInfos.Add(Compiler.Fixed_Text, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Fixed_Text, __ImmutableArray.Create<__ModelProperty>(Compiler.Fixed_Text), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
                 modelPropertyInfos.Add(Compiler.ElementValue_GreenSyntaxCondition, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.ElementValue_GreenSyntaxCondition, __ImmutableArray.Create<__ModelProperty>(Compiler.ElementValue_GreenSyntaxCondition), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
                 modelPropertyInfos.Add(Compiler.ElementValue_GreenType, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.ElementValue_GreenType, __ImmutableArray.Create<__ModelProperty>(Compiler.ElementValue_GreenType), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
                 modelPropertyInfos.Add(Compiler.ElementValue_RedType, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.ElementValue_RedType, __ImmutableArray.Create<__ModelProperty>(Compiler.ElementValue_RedType), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
@@ -6791,7 +6479,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
             }
     
             public override __MetaModel MetaModel => Compiler.MInstance;
-            public override __MetaType MetaType => typeof(Keyword);
+            public override __MetaType MetaType => typeof(Fixed);
     
             public override __MetaType SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.Symbol);
             public override __ModelProperty? NameProperty => null;
@@ -6811,178 +6499,29 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
     
             public override __IModelObject? Create(__Model? model = null, string? id = null)
             {
-                var result = new Keyword_Impl(id);
+                var result = new Fixed_Impl(id);
                 if (model is not null) model.AttachObject(result);
                 return result;
             }
     
             public override string ToString()
             {
-                return "Compiler.KeywordInfo";
+                return "Compiler.FixedInfo";
             }
         }
     }
 
-    internal class Language_Impl : __MetaModelObject, Language
+    internal class GrammarRule_Impl : __MetaModelObject, GrammarRule
     {
-        private Language_Impl(string? id)
-            : base(id)
-        {
-            Compiler.__CustomImpl.Declaration(this);
-            Compiler.__CustomImpl.Language(this);
-        }
-    
-        public override __ModelClassInfo MInfo => __Info.Instance;
-    
-        public Grammar Grammar
-        {
-            get => MGet<Grammar>(Compiler.Language_Grammar);
-            set => MSet<Grammar>(Compiler.Language_Grammar, value);
-        }
-    
-        public string Namespace
-        {
-            get => Compiler.__CustomImpl.Language_Namespace(this);
-        }
-    
-        public global::MetaDslx.Modeling.ICollectionSlot<Annotation> Annotations
-        {
-            get => MGetCollection<Annotation>(Compiler.Declaration_Annotations);
-        }
-    
-        public global::MetaDslx.Modeling.ICollectionSlot<Declaration> Declarations
-        {
-            get => MGetCollection<Declaration>(Compiler.Declaration_Declarations);
-        }
-    
-        public string? FullName
-        {
-            get => Compiler.__CustomImpl.Declaration_FullName(this);
-        }
-    
-        public string? Name
-        {
-            get => MGet<string?>(Compiler.Declaration_Name);
-            set => MSet<string?>(Compiler.Declaration_Name, value);
-        }
-    
-        public Declaration? Parent
-        {
-            get => MGet<Declaration?>(Compiler.Declaration_Parent);
-            set => MSet<Declaration?>(Compiler.Declaration_Parent, value);
-        }
-    
-    
-    
-        internal class __Info : __ModelClassInfo
-        {
-            public static readonly __Info Instance = new __Info();
-    
-            private readonly global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo> _baseTypes;
-            private readonly global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo> _allBaseTypes;
-            private readonly global::System.Collections.Immutable.ImmutableArray<__ModelProperty> _declaredProperties;
-            private readonly global::System.Collections.Immutable.ImmutableArray<__ModelProperty> _allDeclaredProperties;
-            private readonly global::System.Collections.Immutable.ImmutableArray<__ModelProperty> _publicProperties;
-            private readonly global::System.Collections.Immutable.ImmutableDictionary<string, __ModelProperty> _publicPropertiesByName;
-            private readonly global::System.Collections.Immutable.ImmutableDictionary<__ModelProperty, __ModelPropertyInfo> _modelPropertyInfos;
-            private readonly global::System.Collections.Immutable.ImmutableArray<__ModelOperation> _declaredOperations;
-            private readonly global::System.Collections.Immutable.ImmutableArray<__ModelOperation> _allDeclaredOperations;
-            private readonly global::System.Collections.Immutable.ImmutableArray<__ModelOperation> _publicOperations;
-            private readonly global::System.Collections.Immutable.ImmutableDictionary<__ModelOperation, __ModelOperationInfo> _modelOperationInfos;
-    
-            private __Info() 
-            {
-                _baseTypes = __ImmutableArray.Create<__ModelClassInfo>(Compiler.DeclarationInfo);
-                _allBaseTypes = __ImmutableArray.Create<__ModelClassInfo>(Compiler.DeclarationInfo);
-                _declaredProperties = __ImmutableArray.Create<__ModelProperty>(Compiler.Language_Grammar, Compiler.Language_Namespace);
-                _allDeclaredProperties = __ImmutableArray.Create<__ModelProperty>(Compiler.Language_Grammar, Compiler.Language_Namespace, Compiler.Declaration_Annotations, Compiler.Declaration_Declarations, Compiler.Declaration_FullName, Compiler.Declaration_Name, Compiler.Declaration_Parent);
-                _publicProperties = __ImmutableArray.Create<__ModelProperty>(Compiler.Language_Grammar, Compiler.Language_Namespace, Compiler.Declaration_Annotations, Compiler.Declaration_Declarations, Compiler.Declaration_FullName, Compiler.Declaration_Name, Compiler.Declaration_Parent);
-                var publicPropertiesByName = __ImmutableDictionary.CreateBuilder<string, __ModelProperty>();
-                publicPropertiesByName.Add("Grammar", Compiler.Language_Grammar);
-                publicPropertiesByName.Add("Namespace", Compiler.Language_Namespace);
-                publicPropertiesByName.Add("Annotations", Compiler.Declaration_Annotations);
-                publicPropertiesByName.Add("Declarations", Compiler.Declaration_Declarations);
-                publicPropertiesByName.Add("FullName", Compiler.Declaration_FullName);
-                publicPropertiesByName.Add("Name", Compiler.Declaration_Name);
-                publicPropertiesByName.Add("Parent", Compiler.Declaration_Parent);
-                _publicPropertiesByName = publicPropertiesByName.ToImmutable();
-                var modelPropertyInfos = __ImmutableDictionary.CreateBuilder<__ModelProperty, __ModelPropertyInfo>();
-                modelPropertyInfos.Add(Compiler.Language_Grammar, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Language_Grammar, __ImmutableArray.Create<__ModelProperty>(Compiler.Language_Grammar), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(Compiler.Declaration_Declarations), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
-                modelPropertyInfos.Add(Compiler.Language_Namespace, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Language_Namespace, __ImmutableArray.Create<__ModelProperty>(Compiler.Language_Namespace), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
-                modelPropertyInfos.Add(Compiler.Declaration_Annotations, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Declaration_Annotations, __ImmutableArray.Create<__ModelProperty>(Compiler.Declaration_Annotations), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
-                modelPropertyInfos.Add(Compiler.Declaration_Declarations, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Declaration_Declarations, __ImmutableArray.Create<__ModelProperty>(Compiler.Declaration_Declarations), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection), __ImmutableArray.Create<__ModelProperty>(Compiler.Declaration_Parent), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(Compiler.Language_Grammar), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
-                modelPropertyInfos.Add(Compiler.Declaration_FullName, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Declaration_FullName, __ImmutableArray.Create<__ModelProperty>(Compiler.Declaration_FullName), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
-                modelPropertyInfos.Add(Compiler.Declaration_Name, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Declaration_Name, __ImmutableArray.Create<__ModelProperty>(Compiler.Declaration_Name), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
-                modelPropertyInfos.Add(Compiler.Declaration_Parent, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Declaration_Parent, __ImmutableArray.Create<__ModelProperty>(Compiler.Declaration_Parent), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(Compiler.Declaration_Declarations), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
-                _modelPropertyInfos = modelPropertyInfos.ToImmutable();
-    
-                _declaredOperations = __ImmutableArray.Create<__ModelOperation>();
-                _allDeclaredOperations = __ImmutableArray.Create<__ModelOperation>();
-                _publicOperations = __ImmutableArray.Create<__ModelOperation>();
-                var modelOperationInfos = __ImmutableDictionary.CreateBuilder<__ModelOperation, __ModelOperationInfo>();
-                _modelOperationInfos = modelOperationInfos.ToImmutable();
-            }
-    
-            public override __MetaModel MetaModel => Compiler.MInstance;
-            public override __MetaType MetaType => typeof(Language);
-    
-            public override __MetaType SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.DeclarationSymbol);
-            public override __ModelProperty? NameProperty => Compiler.Declaration_Name;
-            public override __ModelProperty? TypeProperty => null;
-            public override global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo> BaseTypes => _baseTypes;
-            public override global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo> AllBaseTypes => _allBaseTypes;
-            public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> DeclaredProperties => _declaredProperties;
-            public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> AllDeclaredProperties => _allDeclaredProperties;
-            public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> PublicProperties => _publicProperties;
-            public override global::System.Collections.Immutable.ImmutableArray<__ModelOperation> DeclaredOperations => _declaredOperations;
-            public override global::System.Collections.Immutable.ImmutableArray<__ModelOperation> AllDeclaredOperations => _allDeclaredOperations;
-            public override global::System.Collections.Immutable.ImmutableArray<__ModelOperation> PublicOperations => _publicOperations;
-    
-            protected override global::System.Collections.Immutable.ImmutableDictionary<string, __ModelProperty> PublicPropertiesByName => _publicPropertiesByName;
-            protected override global::System.Collections.Immutable.ImmutableDictionary<__ModelProperty, __ModelPropertyInfo> ModelPropertyInfos => _modelPropertyInfos;
-            protected override global::System.Collections.Immutable.ImmutableDictionary<__ModelOperation, __ModelOperationInfo> ModelOperationInfos => _modelOperationInfos;
-    
-            public override __IModelObject? Create(__Model? model = null, string? id = null)
-            {
-                var result = new Language_Impl(id);
-                if (model is not null) model.AttachObject(result);
-                return result;
-            }
-    
-            public override string ToString()
-            {
-                return "Compiler.LanguageInfo";
-            }
-        }
-    }
-
-    internal class LexerRule_Impl : __MetaModelObject, LexerRule
-    {
-        private LexerRule_Impl(string? id)
+        private GrammarRule_Impl(string? id)
             : base(id)
         {
             Compiler.__CustomImpl.Declaration(this);
             Compiler.__CustomImpl.CSharpElement(this);
             Compiler.__CustomImpl.GrammarRule(this);
-            Compiler.__CustomImpl.LexerRule(this);
         }
     
         public override __ModelClassInfo MInfo => __Info.Instance;
-    
-        public global::MetaDslx.Modeling.ICollectionSlot<LAlternative> Alternatives
-        {
-            get => MGetCollection<LAlternative>(Compiler.LexerRule_Alternatives);
-        }
-    
-        public string? FixedText
-        {
-            get => Compiler.__CustomImpl.LexerRule_FixedText(this);
-        }
-    
-        public bool IsFixed
-        {
-            get => Compiler.__CustomImpl.LexerRule_IsFixed(this);
-        }
     
         public Grammar Grammar
         {
@@ -7065,15 +6604,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
     
             private __Info() 
             {
-                _baseTypes = __ImmutableArray.Create<__ModelClassInfo>(Compiler.GrammarRuleInfo);
-                _allBaseTypes = __ImmutableArray.Create<__ModelClassInfo>(Compiler.GrammarRuleInfo, Compiler.CSharpElementInfo, Compiler.DeclarationInfo);
-                _declaredProperties = __ImmutableArray.Create<__ModelProperty>(Compiler.LexerRule_Alternatives, Compiler.LexerRule_FixedText, Compiler.LexerRule_IsFixed);
-                _allDeclaredProperties = __ImmutableArray.Create<__ModelProperty>(Compiler.LexerRule_Alternatives, Compiler.LexerRule_FixedText, Compiler.LexerRule_IsFixed, Compiler.GrammarRule_Grammar, Compiler.GrammarRule_Language, Compiler.CSharpElement_AntlrName, Compiler.CSharpElement_Binders, Compiler.CSharpElement_ContainsBinders, Compiler.CSharpElement_CSharpName, Compiler.Declaration_Annotations, Compiler.Declaration_Declarations, Compiler.Declaration_FullName, Compiler.Declaration_Name, Compiler.Declaration_Parent);
-                _publicProperties = __ImmutableArray.Create<__ModelProperty>(Compiler.LexerRule_Alternatives, Compiler.LexerRule_FixedText, Compiler.LexerRule_IsFixed, Compiler.GrammarRule_Grammar, Compiler.GrammarRule_Language, Compiler.CSharpElement_AntlrName, Compiler.CSharpElement_Binders, Compiler.CSharpElement_ContainsBinders, Compiler.CSharpElement_CSharpName, Compiler.Declaration_Annotations, Compiler.Declaration_Declarations, Compiler.Declaration_FullName, Compiler.Declaration_Name, Compiler.Declaration_Parent);
+                _baseTypes = __ImmutableArray.Create<__ModelClassInfo>(Compiler.CSharpElementInfo, Compiler.DeclarationInfo);
+                _allBaseTypes = __ImmutableArray.Create<__ModelClassInfo>(Compiler.CSharpElementInfo, Compiler.DeclarationInfo);
+                _declaredProperties = __ImmutableArray.Create<__ModelProperty>(Compiler.GrammarRule_Grammar, Compiler.GrammarRule_Language);
+                _allDeclaredProperties = __ImmutableArray.Create<__ModelProperty>(Compiler.GrammarRule_Grammar, Compiler.GrammarRule_Language, Compiler.CSharpElement_AntlrName, Compiler.CSharpElement_Binders, Compiler.CSharpElement_ContainsBinders, Compiler.CSharpElement_CSharpName, Compiler.Declaration_Annotations, Compiler.Declaration_Declarations, Compiler.Declaration_FullName, Compiler.Declaration_Name, Compiler.Declaration_Parent);
+                _publicProperties = __ImmutableArray.Create<__ModelProperty>(Compiler.GrammarRule_Grammar, Compiler.GrammarRule_Language, Compiler.CSharpElement_AntlrName, Compiler.CSharpElement_Binders, Compiler.CSharpElement_ContainsBinders, Compiler.CSharpElement_CSharpName, Compiler.Declaration_Annotations, Compiler.Declaration_Declarations, Compiler.Declaration_FullName, Compiler.Declaration_Name, Compiler.Declaration_Parent);
                 var publicPropertiesByName = __ImmutableDictionary.CreateBuilder<string, __ModelProperty>();
-                publicPropertiesByName.Add("Alternatives", Compiler.LexerRule_Alternatives);
-                publicPropertiesByName.Add("FixedText", Compiler.LexerRule_FixedText);
-                publicPropertiesByName.Add("IsFixed", Compiler.LexerRule_IsFixed);
                 publicPropertiesByName.Add("Grammar", Compiler.GrammarRule_Grammar);
                 publicPropertiesByName.Add("Language", Compiler.GrammarRule_Language);
                 publicPropertiesByName.Add("AntlrName", Compiler.CSharpElement_AntlrName);
@@ -7087,9 +6623,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
                 publicPropertiesByName.Add("Parent", Compiler.Declaration_Parent);
                 _publicPropertiesByName = publicPropertiesByName.ToImmutable();
                 var modelPropertyInfos = __ImmutableDictionary.CreateBuilder<__ModelProperty, __ModelPropertyInfo>();
-                modelPropertyInfos.Add(Compiler.LexerRule_Alternatives, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.LexerRule_Alternatives, __ImmutableArray.Create<__ModelProperty>(Compiler.LexerRule_Alternatives), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
-                modelPropertyInfos.Add(Compiler.LexerRule_FixedText, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.LexerRule_FixedText, __ImmutableArray.Create<__ModelProperty>(Compiler.LexerRule_FixedText), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
-                modelPropertyInfos.Add(Compiler.LexerRule_IsFixed, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.LexerRule_IsFixed, __ImmutableArray.Create<__ModelProperty>(Compiler.LexerRule_IsFixed), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
                 modelPropertyInfos.Add(Compiler.GrammarRule_Grammar, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.GrammarRule_Grammar, __ImmutableArray.Create<__ModelProperty>(Compiler.GrammarRule_Grammar, Compiler.Declaration_Parent), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(Compiler.Declaration_Parent), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
                 modelPropertyInfos.Add(Compiler.GrammarRule_Language, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.GrammarRule_Language, __ImmutableArray.Create<__ModelProperty>(Compiler.GrammarRule_Language), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
                 modelPropertyInfos.Add(Compiler.CSharpElement_AntlrName, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.CSharpElement_AntlrName, __ImmutableArray.Create<__ModelProperty>(Compiler.CSharpElement_AntlrName), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
@@ -7111,7 +6644,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
             }
     
             public override __MetaModel MetaModel => Compiler.MInstance;
-            public override __MetaType MetaType => typeof(LexerRule);
+            public override __MetaType MetaType => typeof(GrammarRule);
     
             public override __MetaType SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.DeclarationSymbol);
             public override __ModelProperty? NameProperty => Compiler.Declaration_Name;
@@ -7131,14 +6664,14 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
     
             public override __IModelObject? Create(__Model? model = null, string? id = null)
             {
-                var result = new LexerRule_Impl(id);
+                var result = new GrammarRule_Impl(id);
                 if (model is not null) model.AttachObject(result);
                 return result;
             }
     
             public override string ToString()
             {
-                return "Compiler.LexerRuleInfo";
+                return "Compiler.GrammarRuleInfo";
             }
         }
     }
@@ -7383,12 +6916,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
             set => MSet<Rule?>(Compiler.Grammar_MainRule, value);
         }
     
-        public string? RootTypeName
-        {
-            get => MGet<string?>(Compiler.Grammar_RootTypeName);
-            set => MSet<string?>(Compiler.Grammar_RootTypeName, value);
-        }
-    
         public global::MetaDslx.Modeling.ICollectionSlot<Rule> Rules
         {
             get => MGetCollection<Rule>(Compiler.Grammar_Rules);
@@ -7453,9 +6980,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
             {
                 _baseTypes = __ImmutableArray.Create<__ModelClassInfo>(Compiler.DeclarationInfo);
                 _allBaseTypes = __ImmutableArray.Create<__ModelClassInfo>(Compiler.DeclarationInfo);
-                _declaredProperties = __ImmutableArray.Create<__ModelProperty>(Compiler.Grammar_DefaultEndOfLine, Compiler.Grammar_DefaultIdentifier, Compiler.Grammar_DefaultSeparator, Compiler.Grammar_DefaultWhitespace, Compiler.Grammar_GrammarRules, Compiler.Grammar_Language, Compiler.Grammar_MainRule, Compiler.Grammar_RootTypeName, Compiler.Grammar_Rules, Compiler.Grammar_TokenKinds, Compiler.Grammar_Tokens);
-                _allDeclaredProperties = __ImmutableArray.Create<__ModelProperty>(Compiler.Grammar_DefaultEndOfLine, Compiler.Grammar_DefaultIdentifier, Compiler.Grammar_DefaultSeparator, Compiler.Grammar_DefaultWhitespace, Compiler.Grammar_GrammarRules, Compiler.Grammar_Language, Compiler.Grammar_MainRule, Compiler.Grammar_RootTypeName, Compiler.Grammar_Rules, Compiler.Grammar_TokenKinds, Compiler.Grammar_Tokens, Compiler.Declaration_Annotations, Compiler.Declaration_Declarations, Compiler.Declaration_FullName, Compiler.Declaration_Name, Compiler.Declaration_Parent);
-                _publicProperties = __ImmutableArray.Create<__ModelProperty>(Compiler.Grammar_DefaultEndOfLine, Compiler.Grammar_DefaultIdentifier, Compiler.Grammar_DefaultSeparator, Compiler.Grammar_DefaultWhitespace, Compiler.Grammar_GrammarRules, Compiler.Grammar_Language, Compiler.Grammar_MainRule, Compiler.Grammar_RootTypeName, Compiler.Grammar_Rules, Compiler.Grammar_TokenKinds, Compiler.Grammar_Tokens, Compiler.Declaration_Annotations, Compiler.Declaration_Declarations, Compiler.Declaration_FullName, Compiler.Declaration_Name, Compiler.Declaration_Parent);
+                _declaredProperties = __ImmutableArray.Create<__ModelProperty>(Compiler.Grammar_DefaultEndOfLine, Compiler.Grammar_DefaultIdentifier, Compiler.Grammar_DefaultSeparator, Compiler.Grammar_DefaultWhitespace, Compiler.Grammar_GrammarRules, Compiler.Grammar_Language, Compiler.Grammar_MainRule, Compiler.Grammar_Rules, Compiler.Grammar_TokenKinds, Compiler.Grammar_Tokens);
+                _allDeclaredProperties = __ImmutableArray.Create<__ModelProperty>(Compiler.Grammar_DefaultEndOfLine, Compiler.Grammar_DefaultIdentifier, Compiler.Grammar_DefaultSeparator, Compiler.Grammar_DefaultWhitespace, Compiler.Grammar_GrammarRules, Compiler.Grammar_Language, Compiler.Grammar_MainRule, Compiler.Grammar_Rules, Compiler.Grammar_TokenKinds, Compiler.Grammar_Tokens, Compiler.Declaration_Annotations, Compiler.Declaration_Declarations, Compiler.Declaration_FullName, Compiler.Declaration_Name, Compiler.Declaration_Parent);
+                _publicProperties = __ImmutableArray.Create<__ModelProperty>(Compiler.Grammar_DefaultEndOfLine, Compiler.Grammar_DefaultIdentifier, Compiler.Grammar_DefaultSeparator, Compiler.Grammar_DefaultWhitespace, Compiler.Grammar_GrammarRules, Compiler.Grammar_Language, Compiler.Grammar_MainRule, Compiler.Grammar_Rules, Compiler.Grammar_TokenKinds, Compiler.Grammar_Tokens, Compiler.Declaration_Annotations, Compiler.Declaration_Declarations, Compiler.Declaration_FullName, Compiler.Declaration_Name, Compiler.Declaration_Parent);
                 var publicPropertiesByName = __ImmutableDictionary.CreateBuilder<string, __ModelProperty>();
                 publicPropertiesByName.Add("DefaultEndOfLine", Compiler.Grammar_DefaultEndOfLine);
                 publicPropertiesByName.Add("DefaultIdentifier", Compiler.Grammar_DefaultIdentifier);
@@ -7464,7 +6991,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
                 publicPropertiesByName.Add("GrammarRules", Compiler.Grammar_GrammarRules);
                 publicPropertiesByName.Add("Language", Compiler.Grammar_Language);
                 publicPropertiesByName.Add("MainRule", Compiler.Grammar_MainRule);
-                publicPropertiesByName.Add("RootTypeName", Compiler.Grammar_RootTypeName);
                 publicPropertiesByName.Add("Rules", Compiler.Grammar_Rules);
                 publicPropertiesByName.Add("TokenKinds", Compiler.Grammar_TokenKinds);
                 publicPropertiesByName.Add("Tokens", Compiler.Grammar_Tokens);
@@ -7482,7 +7008,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
                 modelPropertyInfos.Add(Compiler.Grammar_GrammarRules, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Grammar_GrammarRules, __ImmutableArray.Create<__ModelProperty>(Compiler.Grammar_GrammarRules, Compiler.Declaration_Declarations), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(Compiler.Grammar_Rules, Compiler.Grammar_Tokens), __ImmutableArray.Create<__ModelProperty>(Compiler.Declaration_Declarations), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
                 modelPropertyInfos.Add(Compiler.Grammar_Language, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Grammar_Language, __ImmutableArray.Create<__ModelProperty>(Compiler.Grammar_Language, Compiler.Declaration_Parent), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(Compiler.Declaration_Parent), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
                 modelPropertyInfos.Add(Compiler.Grammar_MainRule, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Grammar_MainRule, __ImmutableArray.Create<__ModelProperty>(Compiler.Grammar_MainRule), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
-                modelPropertyInfos.Add(Compiler.Grammar_RootTypeName, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Grammar_RootTypeName, __ImmutableArray.Create<__ModelProperty>(Compiler.Grammar_RootTypeName), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
                 modelPropertyInfos.Add(Compiler.Grammar_Rules, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Grammar_Rules, __ImmutableArray.Create<__ModelProperty>(Compiler.Grammar_Rules), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(Compiler.Grammar_GrammarRules), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
                 modelPropertyInfos.Add(Compiler.Grammar_TokenKinds, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Grammar_TokenKinds, __ImmutableArray.Create<__ModelProperty>(Compiler.Grammar_TokenKinds), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
                 modelPropertyInfos.Add(Compiler.Grammar_Tokens, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Grammar_Tokens, __ImmutableArray.Create<__ModelProperty>(Compiler.Grammar_Tokens), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(Compiler.Grammar_GrammarRules), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
@@ -7529,6 +7054,94 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
             public override string ToString()
             {
                 return "Compiler.GrammarInfo";
+            }
+        }
+    }
+
+    internal class Identifier_Impl : __MetaModelObject, Identifier
+    {
+        private Identifier_Impl(string? id)
+            : base(id)
+        {
+            Compiler.__CustomImpl.Identifier(this);
+        }
+    
+        public override __ModelClassInfo MInfo => __Info.Instance;
+    
+        public string Name
+        {
+            get => MGet<string>(Compiler.Identifier_Name);
+            set => MSet<string>(Compiler.Identifier_Name, value);
+        }
+    
+    
+    
+        internal class __Info : __ModelClassInfo
+        {
+            public static readonly __Info Instance = new __Info();
+    
+            private readonly global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo> _baseTypes;
+            private readonly global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo> _allBaseTypes;
+            private readonly global::System.Collections.Immutable.ImmutableArray<__ModelProperty> _declaredProperties;
+            private readonly global::System.Collections.Immutable.ImmutableArray<__ModelProperty> _allDeclaredProperties;
+            private readonly global::System.Collections.Immutable.ImmutableArray<__ModelProperty> _publicProperties;
+            private readonly global::System.Collections.Immutable.ImmutableDictionary<string, __ModelProperty> _publicPropertiesByName;
+            private readonly global::System.Collections.Immutable.ImmutableDictionary<__ModelProperty, __ModelPropertyInfo> _modelPropertyInfos;
+            private readonly global::System.Collections.Immutable.ImmutableArray<__ModelOperation> _declaredOperations;
+            private readonly global::System.Collections.Immutable.ImmutableArray<__ModelOperation> _allDeclaredOperations;
+            private readonly global::System.Collections.Immutable.ImmutableArray<__ModelOperation> _publicOperations;
+            private readonly global::System.Collections.Immutable.ImmutableDictionary<__ModelOperation, __ModelOperationInfo> _modelOperationInfos;
+    
+            private __Info() 
+            {
+                _baseTypes = __ImmutableArray.Create<__ModelClassInfo>();
+                _allBaseTypes = __ImmutableArray.Create<__ModelClassInfo>();
+                _declaredProperties = __ImmutableArray.Create<__ModelProperty>(Compiler.Identifier_Name);
+                _allDeclaredProperties = __ImmutableArray.Create<__ModelProperty>(Compiler.Identifier_Name);
+                _publicProperties = __ImmutableArray.Create<__ModelProperty>(Compiler.Identifier_Name);
+                var publicPropertiesByName = __ImmutableDictionary.CreateBuilder<string, __ModelProperty>();
+                publicPropertiesByName.Add("Name", Compiler.Identifier_Name);
+                _publicPropertiesByName = publicPropertiesByName.ToImmutable();
+                var modelPropertyInfos = __ImmutableDictionary.CreateBuilder<__ModelProperty, __ModelPropertyInfo>();
+                modelPropertyInfos.Add(Compiler.Identifier_Name, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Identifier_Name, __ImmutableArray.Create<__ModelProperty>(Compiler.Identifier_Name), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
+                _modelPropertyInfos = modelPropertyInfos.ToImmutable();
+    
+                _declaredOperations = __ImmutableArray.Create<__ModelOperation>();
+                _allDeclaredOperations = __ImmutableArray.Create<__ModelOperation>();
+                _publicOperations = __ImmutableArray.Create<__ModelOperation>();
+                var modelOperationInfos = __ImmutableDictionary.CreateBuilder<__ModelOperation, __ModelOperationInfo>();
+                _modelOperationInfos = modelOperationInfos.ToImmutable();
+            }
+    
+            public override __MetaModel MetaModel => Compiler.MInstance;
+            public override __MetaType MetaType => typeof(Identifier);
+    
+            public override __MetaType SymbolType => default;
+            public override __ModelProperty? NameProperty => null;
+            public override __ModelProperty? TypeProperty => null;
+            public override global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo> BaseTypes => _baseTypes;
+            public override global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo> AllBaseTypes => _allBaseTypes;
+            public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> DeclaredProperties => _declaredProperties;
+            public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> AllDeclaredProperties => _allDeclaredProperties;
+            public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> PublicProperties => _publicProperties;
+            public override global::System.Collections.Immutable.ImmutableArray<__ModelOperation> DeclaredOperations => _declaredOperations;
+            public override global::System.Collections.Immutable.ImmutableArray<__ModelOperation> AllDeclaredOperations => _allDeclaredOperations;
+            public override global::System.Collections.Immutable.ImmutableArray<__ModelOperation> PublicOperations => _publicOperations;
+    
+            protected override global::System.Collections.Immutable.ImmutableDictionary<string, __ModelProperty> PublicPropertiesByName => _publicPropertiesByName;
+            protected override global::System.Collections.Immutable.ImmutableDictionary<__ModelProperty, __ModelPropertyInfo> ModelPropertyInfos => _modelPropertyInfos;
+            protected override global::System.Collections.Immutable.ImmutableDictionary<__ModelOperation, __ModelOperationInfo> ModelOperationInfos => _modelOperationInfos;
+    
+            public override __IModelObject? Create(__Model? model = null, string? id = null)
+            {
+                var result = new Identifier_Impl(id);
+                if (model is not null) model.AttachObject(result);
+                return result;
+            }
+    
+            public override string ToString()
+            {
+                return "Compiler.IdentifierInfo";
             }
         }
     }
@@ -7630,6 +7243,139 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
             public override string ToString()
             {
                 return "Compiler.LAlternativeInfo";
+            }
+        }
+    }
+
+    internal class Language_Impl : __MetaModelObject, Language
+    {
+        private Language_Impl(string? id)
+            : base(id)
+        {
+            Compiler.__CustomImpl.Declaration(this);
+            Compiler.__CustomImpl.Language(this);
+        }
+    
+        public override __ModelClassInfo MInfo => __Info.Instance;
+    
+        public Grammar Grammar
+        {
+            get => MGet<Grammar>(Compiler.Language_Grammar);
+            set => MSet<Grammar>(Compiler.Language_Grammar, value);
+        }
+    
+        public string Namespace
+        {
+            get => Compiler.__CustomImpl.Language_Namespace(this);
+        }
+    
+        public global::MetaDslx.Modeling.ICollectionSlot<Annotation> Annotations
+        {
+            get => MGetCollection<Annotation>(Compiler.Declaration_Annotations);
+        }
+    
+        public global::MetaDslx.Modeling.ICollectionSlot<Declaration> Declarations
+        {
+            get => MGetCollection<Declaration>(Compiler.Declaration_Declarations);
+        }
+    
+        public string? FullName
+        {
+            get => Compiler.__CustomImpl.Declaration_FullName(this);
+        }
+    
+        public string? Name
+        {
+            get => MGet<string?>(Compiler.Declaration_Name);
+            set => MSet<string?>(Compiler.Declaration_Name, value);
+        }
+    
+        public Declaration? Parent
+        {
+            get => MGet<Declaration?>(Compiler.Declaration_Parent);
+            set => MSet<Declaration?>(Compiler.Declaration_Parent, value);
+        }
+    
+    
+    
+        internal class __Info : __ModelClassInfo
+        {
+            public static readonly __Info Instance = new __Info();
+    
+            private readonly global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo> _baseTypes;
+            private readonly global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo> _allBaseTypes;
+            private readonly global::System.Collections.Immutable.ImmutableArray<__ModelProperty> _declaredProperties;
+            private readonly global::System.Collections.Immutable.ImmutableArray<__ModelProperty> _allDeclaredProperties;
+            private readonly global::System.Collections.Immutable.ImmutableArray<__ModelProperty> _publicProperties;
+            private readonly global::System.Collections.Immutable.ImmutableDictionary<string, __ModelProperty> _publicPropertiesByName;
+            private readonly global::System.Collections.Immutable.ImmutableDictionary<__ModelProperty, __ModelPropertyInfo> _modelPropertyInfos;
+            private readonly global::System.Collections.Immutable.ImmutableArray<__ModelOperation> _declaredOperations;
+            private readonly global::System.Collections.Immutable.ImmutableArray<__ModelOperation> _allDeclaredOperations;
+            private readonly global::System.Collections.Immutable.ImmutableArray<__ModelOperation> _publicOperations;
+            private readonly global::System.Collections.Immutable.ImmutableDictionary<__ModelOperation, __ModelOperationInfo> _modelOperationInfos;
+    
+            private __Info() 
+            {
+                _baseTypes = __ImmutableArray.Create<__ModelClassInfo>(Compiler.DeclarationInfo);
+                _allBaseTypes = __ImmutableArray.Create<__ModelClassInfo>(Compiler.DeclarationInfo);
+                _declaredProperties = __ImmutableArray.Create<__ModelProperty>(Compiler.Language_Grammar, Compiler.Language_Namespace);
+                _allDeclaredProperties = __ImmutableArray.Create<__ModelProperty>(Compiler.Language_Grammar, Compiler.Language_Namespace, Compiler.Declaration_Annotations, Compiler.Declaration_Declarations, Compiler.Declaration_FullName, Compiler.Declaration_Name, Compiler.Declaration_Parent);
+                _publicProperties = __ImmutableArray.Create<__ModelProperty>(Compiler.Language_Grammar, Compiler.Language_Namespace, Compiler.Declaration_Annotations, Compiler.Declaration_Declarations, Compiler.Declaration_FullName, Compiler.Declaration_Name, Compiler.Declaration_Parent);
+                var publicPropertiesByName = __ImmutableDictionary.CreateBuilder<string, __ModelProperty>();
+                publicPropertiesByName.Add("Grammar", Compiler.Language_Grammar);
+                publicPropertiesByName.Add("Namespace", Compiler.Language_Namespace);
+                publicPropertiesByName.Add("Annotations", Compiler.Declaration_Annotations);
+                publicPropertiesByName.Add("Declarations", Compiler.Declaration_Declarations);
+                publicPropertiesByName.Add("FullName", Compiler.Declaration_FullName);
+                publicPropertiesByName.Add("Name", Compiler.Declaration_Name);
+                publicPropertiesByName.Add("Parent", Compiler.Declaration_Parent);
+                _publicPropertiesByName = publicPropertiesByName.ToImmutable();
+                var modelPropertyInfos = __ImmutableDictionary.CreateBuilder<__ModelProperty, __ModelPropertyInfo>();
+                modelPropertyInfos.Add(Compiler.Language_Grammar, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Language_Grammar, __ImmutableArray.Create<__ModelProperty>(Compiler.Language_Grammar), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(Compiler.Declaration_Declarations), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
+                modelPropertyInfos.Add(Compiler.Language_Namespace, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Language_Namespace, __ImmutableArray.Create<__ModelProperty>(Compiler.Language_Namespace), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
+                modelPropertyInfos.Add(Compiler.Declaration_Annotations, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Declaration_Annotations, __ImmutableArray.Create<__ModelProperty>(Compiler.Declaration_Annotations), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
+                modelPropertyInfos.Add(Compiler.Declaration_Declarations, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Declaration_Declarations, __ImmutableArray.Create<__ModelProperty>(Compiler.Declaration_Declarations), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection), __ImmutableArray.Create<__ModelProperty>(Compiler.Declaration_Parent), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(Compiler.Language_Grammar), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
+                modelPropertyInfos.Add(Compiler.Declaration_FullName, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Declaration_FullName, __ImmutableArray.Create<__ModelProperty>(Compiler.Declaration_FullName), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
+                modelPropertyInfos.Add(Compiler.Declaration_Name, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Declaration_Name, __ImmutableArray.Create<__ModelProperty>(Compiler.Declaration_Name), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
+                modelPropertyInfos.Add(Compiler.Declaration_Parent, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Declaration_Parent, __ImmutableArray.Create<__ModelProperty>(Compiler.Declaration_Parent), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(Compiler.Declaration_Declarations), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
+                _modelPropertyInfos = modelPropertyInfos.ToImmutable();
+    
+                _declaredOperations = __ImmutableArray.Create<__ModelOperation>();
+                _allDeclaredOperations = __ImmutableArray.Create<__ModelOperation>();
+                _publicOperations = __ImmutableArray.Create<__ModelOperation>();
+                var modelOperationInfos = __ImmutableDictionary.CreateBuilder<__ModelOperation, __ModelOperationInfo>();
+                _modelOperationInfos = modelOperationInfos.ToImmutable();
+            }
+    
+            public override __MetaModel MetaModel => Compiler.MInstance;
+            public override __MetaType MetaType => typeof(Language);
+    
+            public override __MetaType SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.DeclarationSymbol);
+            public override __ModelProperty? NameProperty => Compiler.Declaration_Name;
+            public override __ModelProperty? TypeProperty => null;
+            public override global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo> BaseTypes => _baseTypes;
+            public override global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo> AllBaseTypes => _allBaseTypes;
+            public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> DeclaredProperties => _declaredProperties;
+            public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> AllDeclaredProperties => _allDeclaredProperties;
+            public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> PublicProperties => _publicProperties;
+            public override global::System.Collections.Immutable.ImmutableArray<__ModelOperation> DeclaredOperations => _declaredOperations;
+            public override global::System.Collections.Immutable.ImmutableArray<__ModelOperation> AllDeclaredOperations => _allDeclaredOperations;
+            public override global::System.Collections.Immutable.ImmutableArray<__ModelOperation> PublicOperations => _publicOperations;
+    
+            protected override global::System.Collections.Immutable.ImmutableDictionary<string, __ModelProperty> PublicPropertiesByName => _publicPropertiesByName;
+            protected override global::System.Collections.Immutable.ImmutableDictionary<__ModelProperty, __ModelPropertyInfo> ModelPropertyInfos => _modelPropertyInfos;
+            protected override global::System.Collections.Immutable.ImmutableDictionary<__ModelOperation, __ModelOperationInfo> ModelOperationInfos => _modelOperationInfos;
+    
+            public override __IModelObject? Create(__Model? model = null, string? id = null)
+            {
+                var result = new Language_Impl(id);
+                if (model is not null) model.AttachObject(result);
+                return result;
+            }
+    
+            public override string ToString()
+            {
+                return "Compiler.LanguageInfo";
             }
         }
     }
@@ -7958,6 +7704,193 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
             public override string ToString()
             {
                 return "Compiler.LBlockInfo";
+            }
+        }
+    }
+
+    internal class LexerRule_Impl : __MetaModelObject, LexerRule
+    {
+        private LexerRule_Impl(string? id)
+            : base(id)
+        {
+            Compiler.__CustomImpl.Declaration(this);
+            Compiler.__CustomImpl.CSharpElement(this);
+            Compiler.__CustomImpl.GrammarRule(this);
+            Compiler.__CustomImpl.LexerRule(this);
+        }
+    
+        public override __ModelClassInfo MInfo => __Info.Instance;
+    
+        public global::MetaDslx.Modeling.ICollectionSlot<LAlternative> Alternatives
+        {
+            get => MGetCollection<LAlternative>(Compiler.LexerRule_Alternatives);
+        }
+    
+        public string? FixedText
+        {
+            get => Compiler.__CustomImpl.LexerRule_FixedText(this);
+        }
+    
+        public bool IsFixed
+        {
+            get => Compiler.__CustomImpl.LexerRule_IsFixed(this);
+        }
+    
+        public Grammar Grammar
+        {
+            get => MGet<Grammar>(Compiler.GrammarRule_Grammar);
+            set => MSet<Grammar>(Compiler.GrammarRule_Grammar, value);
+        }
+    
+        public Language Language
+        {
+            get => Compiler.__CustomImpl.GrammarRule_Language(this);
+        }
+    
+        public string AntlrName
+        {
+            get => MGet<string>(Compiler.CSharpElement_AntlrName);
+            set => MSet<string>(Compiler.CSharpElement_AntlrName, value);
+        }
+    
+        public global::MetaDslx.Modeling.ICollectionSlot<Binder> Binders
+        {
+            get => MGetCollection<Binder>(Compiler.CSharpElement_Binders);
+        }
+    
+        public bool ContainsBinders
+        {
+            get => MGet<bool>(Compiler.CSharpElement_ContainsBinders);
+            set => MSet<bool>(Compiler.CSharpElement_ContainsBinders, value);
+        }
+    
+        public string CSharpName
+        {
+            get => MGet<string>(Compiler.CSharpElement_CSharpName);
+            set => MSet<string>(Compiler.CSharpElement_CSharpName, value);
+        }
+    
+        public global::MetaDslx.Modeling.ICollectionSlot<Annotation> Annotations
+        {
+            get => MGetCollection<Annotation>(Compiler.Declaration_Annotations);
+        }
+    
+        public global::MetaDslx.Modeling.ICollectionSlot<Declaration> Declarations
+        {
+            get => MGetCollection<Declaration>(Compiler.Declaration_Declarations);
+        }
+    
+        public string? FullName
+        {
+            get => Compiler.__CustomImpl.Declaration_FullName(this);
+        }
+    
+        public string? Name
+        {
+            get => MGet<string?>(Compiler.Declaration_Name);
+            set => MSet<string?>(Compiler.Declaration_Name, value);
+        }
+    
+        public Declaration? Parent
+        {
+            get => MGet<Declaration?>(Compiler.Declaration_Parent);
+            set => MSet<Declaration?>(Compiler.Declaration_Parent, value);
+        }
+    
+    
+    
+        internal class __Info : __ModelClassInfo
+        {
+            public static readonly __Info Instance = new __Info();
+    
+            private readonly global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo> _baseTypes;
+            private readonly global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo> _allBaseTypes;
+            private readonly global::System.Collections.Immutable.ImmutableArray<__ModelProperty> _declaredProperties;
+            private readonly global::System.Collections.Immutable.ImmutableArray<__ModelProperty> _allDeclaredProperties;
+            private readonly global::System.Collections.Immutable.ImmutableArray<__ModelProperty> _publicProperties;
+            private readonly global::System.Collections.Immutable.ImmutableDictionary<string, __ModelProperty> _publicPropertiesByName;
+            private readonly global::System.Collections.Immutable.ImmutableDictionary<__ModelProperty, __ModelPropertyInfo> _modelPropertyInfos;
+            private readonly global::System.Collections.Immutable.ImmutableArray<__ModelOperation> _declaredOperations;
+            private readonly global::System.Collections.Immutable.ImmutableArray<__ModelOperation> _allDeclaredOperations;
+            private readonly global::System.Collections.Immutable.ImmutableArray<__ModelOperation> _publicOperations;
+            private readonly global::System.Collections.Immutable.ImmutableDictionary<__ModelOperation, __ModelOperationInfo> _modelOperationInfos;
+    
+            private __Info() 
+            {
+                _baseTypes = __ImmutableArray.Create<__ModelClassInfo>(Compiler.GrammarRuleInfo);
+                _allBaseTypes = __ImmutableArray.Create<__ModelClassInfo>(Compiler.GrammarRuleInfo, Compiler.CSharpElementInfo, Compiler.DeclarationInfo);
+                _declaredProperties = __ImmutableArray.Create<__ModelProperty>(Compiler.LexerRule_Alternatives, Compiler.LexerRule_FixedText, Compiler.LexerRule_IsFixed);
+                _allDeclaredProperties = __ImmutableArray.Create<__ModelProperty>(Compiler.LexerRule_Alternatives, Compiler.LexerRule_FixedText, Compiler.LexerRule_IsFixed, Compiler.GrammarRule_Grammar, Compiler.GrammarRule_Language, Compiler.CSharpElement_AntlrName, Compiler.CSharpElement_Binders, Compiler.CSharpElement_ContainsBinders, Compiler.CSharpElement_CSharpName, Compiler.Declaration_Annotations, Compiler.Declaration_Declarations, Compiler.Declaration_FullName, Compiler.Declaration_Name, Compiler.Declaration_Parent);
+                _publicProperties = __ImmutableArray.Create<__ModelProperty>(Compiler.LexerRule_Alternatives, Compiler.LexerRule_FixedText, Compiler.LexerRule_IsFixed, Compiler.GrammarRule_Grammar, Compiler.GrammarRule_Language, Compiler.CSharpElement_AntlrName, Compiler.CSharpElement_Binders, Compiler.CSharpElement_ContainsBinders, Compiler.CSharpElement_CSharpName, Compiler.Declaration_Annotations, Compiler.Declaration_Declarations, Compiler.Declaration_FullName, Compiler.Declaration_Name, Compiler.Declaration_Parent);
+                var publicPropertiesByName = __ImmutableDictionary.CreateBuilder<string, __ModelProperty>();
+                publicPropertiesByName.Add("Alternatives", Compiler.LexerRule_Alternatives);
+                publicPropertiesByName.Add("FixedText", Compiler.LexerRule_FixedText);
+                publicPropertiesByName.Add("IsFixed", Compiler.LexerRule_IsFixed);
+                publicPropertiesByName.Add("Grammar", Compiler.GrammarRule_Grammar);
+                publicPropertiesByName.Add("Language", Compiler.GrammarRule_Language);
+                publicPropertiesByName.Add("AntlrName", Compiler.CSharpElement_AntlrName);
+                publicPropertiesByName.Add("Binders", Compiler.CSharpElement_Binders);
+                publicPropertiesByName.Add("ContainsBinders", Compiler.CSharpElement_ContainsBinders);
+                publicPropertiesByName.Add("CSharpName", Compiler.CSharpElement_CSharpName);
+                publicPropertiesByName.Add("Annotations", Compiler.Declaration_Annotations);
+                publicPropertiesByName.Add("Declarations", Compiler.Declaration_Declarations);
+                publicPropertiesByName.Add("FullName", Compiler.Declaration_FullName);
+                publicPropertiesByName.Add("Name", Compiler.Declaration_Name);
+                publicPropertiesByName.Add("Parent", Compiler.Declaration_Parent);
+                _publicPropertiesByName = publicPropertiesByName.ToImmutable();
+                var modelPropertyInfos = __ImmutableDictionary.CreateBuilder<__ModelProperty, __ModelPropertyInfo>();
+                modelPropertyInfos.Add(Compiler.LexerRule_Alternatives, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.LexerRule_Alternatives, __ImmutableArray.Create<__ModelProperty>(Compiler.LexerRule_Alternatives), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
+                modelPropertyInfos.Add(Compiler.LexerRule_FixedText, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.LexerRule_FixedText, __ImmutableArray.Create<__ModelProperty>(Compiler.LexerRule_FixedText), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
+                modelPropertyInfos.Add(Compiler.LexerRule_IsFixed, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.LexerRule_IsFixed, __ImmutableArray.Create<__ModelProperty>(Compiler.LexerRule_IsFixed), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
+                modelPropertyInfos.Add(Compiler.GrammarRule_Grammar, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.GrammarRule_Grammar, __ImmutableArray.Create<__ModelProperty>(Compiler.GrammarRule_Grammar, Compiler.Declaration_Parent), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(Compiler.Declaration_Parent), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
+                modelPropertyInfos.Add(Compiler.GrammarRule_Language, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.GrammarRule_Language, __ImmutableArray.Create<__ModelProperty>(Compiler.GrammarRule_Language), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
+                modelPropertyInfos.Add(Compiler.CSharpElement_AntlrName, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.CSharpElement_AntlrName, __ImmutableArray.Create<__ModelProperty>(Compiler.CSharpElement_AntlrName), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
+                modelPropertyInfos.Add(Compiler.CSharpElement_Binders, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.CSharpElement_Binders, __ImmutableArray.Create<__ModelProperty>(Compiler.CSharpElement_Binders), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
+                modelPropertyInfos.Add(Compiler.CSharpElement_ContainsBinders, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.CSharpElement_ContainsBinders, __ImmutableArray.Create<__ModelProperty>(Compiler.CSharpElement_ContainsBinders), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
+                modelPropertyInfos.Add(Compiler.CSharpElement_CSharpName, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.CSharpElement_CSharpName, __ImmutableArray.Create<__ModelProperty>(Compiler.CSharpElement_CSharpName), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
+                modelPropertyInfos.Add(Compiler.Declaration_Annotations, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Declaration_Annotations, __ImmutableArray.Create<__ModelProperty>(Compiler.Declaration_Annotations), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
+                modelPropertyInfos.Add(Compiler.Declaration_Declarations, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Declaration_Declarations, __ImmutableArray.Create<__ModelProperty>(Compiler.Declaration_Declarations), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection), __ImmutableArray.Create<__ModelProperty>(Compiler.Declaration_Parent), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
+                modelPropertyInfos.Add(Compiler.Declaration_FullName, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Declaration_FullName, __ImmutableArray.Create<__ModelProperty>(Compiler.Declaration_FullName), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
+                modelPropertyInfos.Add(Compiler.Declaration_Name, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Declaration_Name, __ImmutableArray.Create<__ModelProperty>(Compiler.Declaration_Name), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
+                modelPropertyInfos.Add(Compiler.Declaration_Parent, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.GrammarRule_Grammar, __ImmutableArray.Create<__ModelProperty>(Compiler.GrammarRule_Grammar, Compiler.Declaration_Parent), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(Compiler.Declaration_Declarations), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(Compiler.GrammarRule_Grammar), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
+                _modelPropertyInfos = modelPropertyInfos.ToImmutable();
+    
+                _declaredOperations = __ImmutableArray.Create<__ModelOperation>();
+                _allDeclaredOperations = __ImmutableArray.Create<__ModelOperation>();
+                _publicOperations = __ImmutableArray.Create<__ModelOperation>();
+                var modelOperationInfos = __ImmutableDictionary.CreateBuilder<__ModelOperation, __ModelOperationInfo>();
+                _modelOperationInfos = modelOperationInfos.ToImmutable();
+            }
+    
+            public override __MetaModel MetaModel => Compiler.MInstance;
+            public override __MetaType MetaType => typeof(LexerRule);
+    
+            public override __MetaType SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.DeclarationSymbol);
+            public override __ModelProperty? NameProperty => Compiler.Declaration_Name;
+            public override __ModelProperty? TypeProperty => null;
+            public override global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo> BaseTypes => _baseTypes;
+            public override global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo> AllBaseTypes => _allBaseTypes;
+            public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> DeclaredProperties => _declaredProperties;
+            public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> AllDeclaredProperties => _allDeclaredProperties;
+            public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> PublicProperties => _publicProperties;
+            public override global::System.Collections.Immutable.ImmutableArray<__ModelOperation> DeclaredOperations => _declaredOperations;
+            public override global::System.Collections.Immutable.ImmutableArray<__ModelOperation> AllDeclaredOperations => _allDeclaredOperations;
+            public override global::System.Collections.Immutable.ImmutableArray<__ModelOperation> PublicOperations => _publicOperations;
+    
+            protected override global::System.Collections.Immutable.ImmutableDictionary<string, __ModelProperty> PublicPropertiesByName => _publicPropertiesByName;
+            protected override global::System.Collections.Immutable.ImmutableDictionary<__ModelProperty, __ModelPropertyInfo> ModelPropertyInfos => _modelPropertyInfos;
+            protected override global::System.Collections.Immutable.ImmutableDictionary<__ModelOperation, __ModelOperationInfo> ModelOperationInfos => _modelOperationInfos;
+    
+            public override __IModelObject? Create(__Model? model = null, string? id = null)
+            {
+                var result = new LexerRule_Impl(id);
+                if (model is not null) model.AttachObject(result);
+                return result;
+            }
+    
+            public override string ToString()
+            {
+                return "Compiler.LexerRuleInfo";
             }
         }
     }
@@ -8882,6 +8815,94 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
         }
     }
 
+    internal class Name_Impl : __MetaModelObject, Name
+    {
+        private Name_Impl(string? id)
+            : base(id)
+        {
+            Compiler.__CustomImpl.Name(this);
+        }
+    
+        public override __ModelClassInfo MInfo => __Info.Instance;
+    
+        public Identifier Identifier
+        {
+            get => MGet<Identifier>(Compiler.Name_Identifier);
+            set => MSet<Identifier>(Compiler.Name_Identifier, value);
+        }
+    
+    
+    
+        internal class __Info : __ModelClassInfo
+        {
+            public static readonly __Info Instance = new __Info();
+    
+            private readonly global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo> _baseTypes;
+            private readonly global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo> _allBaseTypes;
+            private readonly global::System.Collections.Immutable.ImmutableArray<__ModelProperty> _declaredProperties;
+            private readonly global::System.Collections.Immutable.ImmutableArray<__ModelProperty> _allDeclaredProperties;
+            private readonly global::System.Collections.Immutable.ImmutableArray<__ModelProperty> _publicProperties;
+            private readonly global::System.Collections.Immutable.ImmutableDictionary<string, __ModelProperty> _publicPropertiesByName;
+            private readonly global::System.Collections.Immutable.ImmutableDictionary<__ModelProperty, __ModelPropertyInfo> _modelPropertyInfos;
+            private readonly global::System.Collections.Immutable.ImmutableArray<__ModelOperation> _declaredOperations;
+            private readonly global::System.Collections.Immutable.ImmutableArray<__ModelOperation> _allDeclaredOperations;
+            private readonly global::System.Collections.Immutable.ImmutableArray<__ModelOperation> _publicOperations;
+            private readonly global::System.Collections.Immutable.ImmutableDictionary<__ModelOperation, __ModelOperationInfo> _modelOperationInfos;
+    
+            private __Info() 
+            {
+                _baseTypes = __ImmutableArray.Create<__ModelClassInfo>();
+                _allBaseTypes = __ImmutableArray.Create<__ModelClassInfo>();
+                _declaredProperties = __ImmutableArray.Create<__ModelProperty>(Compiler.Name_Identifier);
+                _allDeclaredProperties = __ImmutableArray.Create<__ModelProperty>(Compiler.Name_Identifier);
+                _publicProperties = __ImmutableArray.Create<__ModelProperty>(Compiler.Name_Identifier);
+                var publicPropertiesByName = __ImmutableDictionary.CreateBuilder<string, __ModelProperty>();
+                publicPropertiesByName.Add("Identifier", Compiler.Name_Identifier);
+                _publicPropertiesByName = publicPropertiesByName.ToImmutable();
+                var modelPropertyInfos = __ImmutableDictionary.CreateBuilder<__ModelProperty, __ModelPropertyInfo>();
+                modelPropertyInfos.Add(Compiler.Name_Identifier, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Name_Identifier, __ImmutableArray.Create<__ModelProperty>(Compiler.Name_Identifier), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
+                _modelPropertyInfos = modelPropertyInfos.ToImmutable();
+    
+                _declaredOperations = __ImmutableArray.Create<__ModelOperation>();
+                _allDeclaredOperations = __ImmutableArray.Create<__ModelOperation>();
+                _publicOperations = __ImmutableArray.Create<__ModelOperation>();
+                var modelOperationInfos = __ImmutableDictionary.CreateBuilder<__ModelOperation, __ModelOperationInfo>();
+                _modelOperationInfos = modelOperationInfos.ToImmutable();
+            }
+    
+            public override __MetaModel MetaModel => Compiler.MInstance;
+            public override __MetaType MetaType => typeof(Name);
+    
+            public override __MetaType SymbolType => default;
+            public override __ModelProperty? NameProperty => null;
+            public override __ModelProperty? TypeProperty => null;
+            public override global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo> BaseTypes => _baseTypes;
+            public override global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo> AllBaseTypes => _allBaseTypes;
+            public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> DeclaredProperties => _declaredProperties;
+            public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> AllDeclaredProperties => _allDeclaredProperties;
+            public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> PublicProperties => _publicProperties;
+            public override global::System.Collections.Immutable.ImmutableArray<__ModelOperation> DeclaredOperations => _declaredOperations;
+            public override global::System.Collections.Immutable.ImmutableArray<__ModelOperation> AllDeclaredOperations => _allDeclaredOperations;
+            public override global::System.Collections.Immutable.ImmutableArray<__ModelOperation> PublicOperations => _publicOperations;
+    
+            protected override global::System.Collections.Immutable.ImmutableDictionary<string, __ModelProperty> PublicPropertiesByName => _publicPropertiesByName;
+            protected override global::System.Collections.Immutable.ImmutableDictionary<__ModelProperty, __ModelPropertyInfo> ModelPropertyInfos => _modelPropertyInfos;
+            protected override global::System.Collections.Immutable.ImmutableDictionary<__ModelOperation, __ModelOperationInfo> ModelOperationInfos => _modelOperationInfos;
+    
+            public override __IModelObject? Create(__Model? model = null, string? id = null)
+            {
+                var result = new Name_Impl(id);
+                if (model is not null) model.AttachObject(result);
+                return result;
+            }
+    
+            public override string ToString()
+            {
+                return "Compiler.NameInfo";
+            }
+        }
+    }
+
     internal class Namespace_Impl : __MetaModelObject, Namespace
     {
         private Namespace_Impl(string? id)
@@ -9000,6 +9021,93 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
         }
     }
 
+    internal class Qualifier_Impl : __MetaModelObject, Qualifier
+    {
+        private Qualifier_Impl(string? id)
+            : base(id)
+        {
+            Compiler.__CustomImpl.Qualifier(this);
+        }
+    
+        public override __ModelClassInfo MInfo => __Info.Instance;
+    
+        public global::MetaDslx.Modeling.ICollectionSlot<Identifier> Identifiers
+        {
+            get => MGetCollection<Identifier>(Compiler.Qualifier_Identifiers);
+        }
+    
+    
+    
+        internal class __Info : __ModelClassInfo
+        {
+            public static readonly __Info Instance = new __Info();
+    
+            private readonly global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo> _baseTypes;
+            private readonly global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo> _allBaseTypes;
+            private readonly global::System.Collections.Immutable.ImmutableArray<__ModelProperty> _declaredProperties;
+            private readonly global::System.Collections.Immutable.ImmutableArray<__ModelProperty> _allDeclaredProperties;
+            private readonly global::System.Collections.Immutable.ImmutableArray<__ModelProperty> _publicProperties;
+            private readonly global::System.Collections.Immutable.ImmutableDictionary<string, __ModelProperty> _publicPropertiesByName;
+            private readonly global::System.Collections.Immutable.ImmutableDictionary<__ModelProperty, __ModelPropertyInfo> _modelPropertyInfos;
+            private readonly global::System.Collections.Immutable.ImmutableArray<__ModelOperation> _declaredOperations;
+            private readonly global::System.Collections.Immutable.ImmutableArray<__ModelOperation> _allDeclaredOperations;
+            private readonly global::System.Collections.Immutable.ImmutableArray<__ModelOperation> _publicOperations;
+            private readonly global::System.Collections.Immutable.ImmutableDictionary<__ModelOperation, __ModelOperationInfo> _modelOperationInfos;
+    
+            private __Info() 
+            {
+                _baseTypes = __ImmutableArray.Create<__ModelClassInfo>();
+                _allBaseTypes = __ImmutableArray.Create<__ModelClassInfo>();
+                _declaredProperties = __ImmutableArray.Create<__ModelProperty>(Compiler.Qualifier_Identifiers);
+                _allDeclaredProperties = __ImmutableArray.Create<__ModelProperty>(Compiler.Qualifier_Identifiers);
+                _publicProperties = __ImmutableArray.Create<__ModelProperty>(Compiler.Qualifier_Identifiers);
+                var publicPropertiesByName = __ImmutableDictionary.CreateBuilder<string, __ModelProperty>();
+                publicPropertiesByName.Add("Identifiers", Compiler.Qualifier_Identifiers);
+                _publicPropertiesByName = publicPropertiesByName.ToImmutable();
+                var modelPropertyInfos = __ImmutableDictionary.CreateBuilder<__ModelProperty, __ModelPropertyInfo>();
+                modelPropertyInfos.Add(Compiler.Qualifier_Identifiers, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Qualifier_Identifiers, __ImmutableArray.Create<__ModelProperty>(Compiler.Qualifier_Identifiers), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Collection), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
+                _modelPropertyInfos = modelPropertyInfos.ToImmutable();
+    
+                _declaredOperations = __ImmutableArray.Create<__ModelOperation>();
+                _allDeclaredOperations = __ImmutableArray.Create<__ModelOperation>();
+                _publicOperations = __ImmutableArray.Create<__ModelOperation>();
+                var modelOperationInfos = __ImmutableDictionary.CreateBuilder<__ModelOperation, __ModelOperationInfo>();
+                _modelOperationInfos = modelOperationInfos.ToImmutable();
+            }
+    
+            public override __MetaModel MetaModel => Compiler.MInstance;
+            public override __MetaType MetaType => typeof(Qualifier);
+    
+            public override __MetaType SymbolType => default;
+            public override __ModelProperty? NameProperty => null;
+            public override __ModelProperty? TypeProperty => null;
+            public override global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo> BaseTypes => _baseTypes;
+            public override global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo> AllBaseTypes => _allBaseTypes;
+            public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> DeclaredProperties => _declaredProperties;
+            public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> AllDeclaredProperties => _allDeclaredProperties;
+            public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> PublicProperties => _publicProperties;
+            public override global::System.Collections.Immutable.ImmutableArray<__ModelOperation> DeclaredOperations => _declaredOperations;
+            public override global::System.Collections.Immutable.ImmutableArray<__ModelOperation> AllDeclaredOperations => _allDeclaredOperations;
+            public override global::System.Collections.Immutable.ImmutableArray<__ModelOperation> PublicOperations => _publicOperations;
+    
+            protected override global::System.Collections.Immutable.ImmutableDictionary<string, __ModelProperty> PublicPropertiesByName => _publicPropertiesByName;
+            protected override global::System.Collections.Immutable.ImmutableDictionary<__ModelProperty, __ModelPropertyInfo> ModelPropertyInfos => _modelPropertyInfos;
+            protected override global::System.Collections.Immutable.ImmutableDictionary<__ModelOperation, __ModelOperationInfo> ModelOperationInfos => _modelOperationInfos;
+    
+            public override __IModelObject? Create(__Model? model = null, string? id = null)
+            {
+                var result = new Qualifier_Impl(id);
+                if (model is not null) model.AttachObject(result);
+                return result;
+            }
+    
+            public override string ToString()
+            {
+                return "Compiler.QualifierInfo";
+            }
+        }
+    }
+
     internal class Rule_Impl : __MetaModelObject, Rule
     {
         private Rule_Impl(string? id)
@@ -9013,12 +9121,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
     
         public override __ModelClassInfo MInfo => __Info.Instance;
     
-        public bool AllowMerge
-        {
-            get => MGet<bool>(Compiler.Rule_AllowMerge);
-            set => MSet<bool>(Compiler.Rule_AllowMerge, value);
-        }
-    
         public global::MetaDslx.Modeling.ICollectionSlot<Alternative> Alternatives
         {
             get => MGetCollection<Alternative>(Compiler.Rule_Alternatives);
@@ -9027,6 +9129,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
         public string GreenName
         {
             get => Compiler.__CustomImpl.Rule_GreenName(this);
+        }
+    
+        public bool NeverNull
+        {
+            get => MGet<bool>(Compiler.Rule_NeverNull);
+            set => MSet<bool>(Compiler.Rule_NeverNull, value);
         }
     
         public string RedName
@@ -9123,13 +9231,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
             {
                 _baseTypes = __ImmutableArray.Create<__ModelClassInfo>(Compiler.GrammarRuleInfo);
                 _allBaseTypes = __ImmutableArray.Create<__ModelClassInfo>(Compiler.GrammarRuleInfo, Compiler.CSharpElementInfo, Compiler.DeclarationInfo);
-                _declaredProperties = __ImmutableArray.Create<__ModelProperty>(Compiler.Rule_AllowMerge, Compiler.Rule_Alternatives, Compiler.Rule_GreenName, Compiler.Rule_RedName, Compiler.Rule_ReturnType);
-                _allDeclaredProperties = __ImmutableArray.Create<__ModelProperty>(Compiler.Rule_AllowMerge, Compiler.Rule_Alternatives, Compiler.Rule_GreenName, Compiler.Rule_RedName, Compiler.Rule_ReturnType, Compiler.GrammarRule_Grammar, Compiler.GrammarRule_Language, Compiler.CSharpElement_AntlrName, Compiler.CSharpElement_Binders, Compiler.CSharpElement_ContainsBinders, Compiler.CSharpElement_CSharpName, Compiler.Declaration_Annotations, Compiler.Declaration_Declarations, Compiler.Declaration_FullName, Compiler.Declaration_Name, Compiler.Declaration_Parent);
-                _publicProperties = __ImmutableArray.Create<__ModelProperty>(Compiler.Rule_AllowMerge, Compiler.Rule_Alternatives, Compiler.Rule_GreenName, Compiler.Rule_RedName, Compiler.Rule_ReturnType, Compiler.GrammarRule_Grammar, Compiler.GrammarRule_Language, Compiler.CSharpElement_AntlrName, Compiler.CSharpElement_Binders, Compiler.CSharpElement_ContainsBinders, Compiler.CSharpElement_CSharpName, Compiler.Declaration_Annotations, Compiler.Declaration_Declarations, Compiler.Declaration_FullName, Compiler.Declaration_Name, Compiler.Declaration_Parent);
+                _declaredProperties = __ImmutableArray.Create<__ModelProperty>(Compiler.Rule_Alternatives, Compiler.Rule_GreenName, Compiler.Rule_NeverNull, Compiler.Rule_RedName, Compiler.Rule_ReturnType);
+                _allDeclaredProperties = __ImmutableArray.Create<__ModelProperty>(Compiler.Rule_Alternatives, Compiler.Rule_GreenName, Compiler.Rule_NeverNull, Compiler.Rule_RedName, Compiler.Rule_ReturnType, Compiler.GrammarRule_Grammar, Compiler.GrammarRule_Language, Compiler.CSharpElement_AntlrName, Compiler.CSharpElement_Binders, Compiler.CSharpElement_ContainsBinders, Compiler.CSharpElement_CSharpName, Compiler.Declaration_Annotations, Compiler.Declaration_Declarations, Compiler.Declaration_FullName, Compiler.Declaration_Name, Compiler.Declaration_Parent);
+                _publicProperties = __ImmutableArray.Create<__ModelProperty>(Compiler.Rule_Alternatives, Compiler.Rule_GreenName, Compiler.Rule_NeverNull, Compiler.Rule_RedName, Compiler.Rule_ReturnType, Compiler.GrammarRule_Grammar, Compiler.GrammarRule_Language, Compiler.CSharpElement_AntlrName, Compiler.CSharpElement_Binders, Compiler.CSharpElement_ContainsBinders, Compiler.CSharpElement_CSharpName, Compiler.Declaration_Annotations, Compiler.Declaration_Declarations, Compiler.Declaration_FullName, Compiler.Declaration_Name, Compiler.Declaration_Parent);
                 var publicPropertiesByName = __ImmutableDictionary.CreateBuilder<string, __ModelProperty>();
-                publicPropertiesByName.Add("AllowMerge", Compiler.Rule_AllowMerge);
                 publicPropertiesByName.Add("Alternatives", Compiler.Rule_Alternatives);
                 publicPropertiesByName.Add("GreenName", Compiler.Rule_GreenName);
+                publicPropertiesByName.Add("NeverNull", Compiler.Rule_NeverNull);
                 publicPropertiesByName.Add("RedName", Compiler.Rule_RedName);
                 publicPropertiesByName.Add("ReturnType", Compiler.Rule_ReturnType);
                 publicPropertiesByName.Add("Grammar", Compiler.GrammarRule_Grammar);
@@ -9145,9 +9253,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
                 publicPropertiesByName.Add("Parent", Compiler.Declaration_Parent);
                 _publicPropertiesByName = publicPropertiesByName.ToImmutable();
                 var modelPropertyInfos = __ImmutableDictionary.CreateBuilder<__ModelProperty, __ModelPropertyInfo>();
-                modelPropertyInfos.Add(Compiler.Rule_AllowMerge, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Rule_AllowMerge, __ImmutableArray.Create<__ModelProperty>(Compiler.Rule_AllowMerge), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
                 modelPropertyInfos.Add(Compiler.Rule_Alternatives, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Rule_Alternatives, __ImmutableArray.Create<__ModelProperty>(Compiler.Rule_Alternatives), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
                 modelPropertyInfos.Add(Compiler.Rule_GreenName, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Rule_GreenName, __ImmutableArray.Create<__ModelProperty>(Compiler.Rule_GreenName), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
+                modelPropertyInfos.Add(Compiler.Rule_NeverNull, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Rule_NeverNull, __ImmutableArray.Create<__ModelProperty>(Compiler.Rule_NeverNull), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
                 modelPropertyInfos.Add(Compiler.Rule_RedName, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Rule_RedName, __ImmutableArray.Create<__ModelProperty>(Compiler.Rule_RedName), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
                 modelPropertyInfos.Add(Compiler.Rule_ReturnType, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Rule_ReturnType, __ImmutableArray.Create<__ModelProperty>(Compiler.Rule_ReturnType), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
                 modelPropertyInfos.Add(Compiler.GrammarRule_Grammar, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.GrammarRule_Grammar, __ImmutableArray.Create<__ModelProperty>(Compiler.GrammarRule_Grammar, Compiler.Declaration_Parent), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(Compiler.Declaration_Parent), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
@@ -9399,16 +9507,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
     
         public override __ModelClassInfo MInfo => __Info.Instance;
     
-        public global::MetaDslx.Modeling.ICollectionSlot<Element> FirstItems
-        {
-            get => MGetCollection<Element>(Compiler.SeparatedList_FirstItems);
-        }
-    
-        public global::MetaDslx.Modeling.ICollectionSlot<Element> FirstSeparators
-        {
-            get => MGetCollection<Element>(Compiler.SeparatedList_FirstSeparators);
-        }
-    
         public string? GreenSyntaxCondition
         {
             get => Compiler.__CustomImpl.SeparatedList_GreenSyntaxCondition(this);
@@ -9419,14 +9517,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
             get => Compiler.__CustomImpl.SeparatedList_GreenType(this);
         }
     
-        public global::MetaDslx.Modeling.ICollectionSlot<Element> LastItems
+        public Element Item
         {
-            get => MGetCollection<Element>(Compiler.SeparatedList_LastItems);
-        }
-    
-        public global::MetaDslx.Modeling.ICollectionSlot<Element> LastSeparators
-        {
-            get => MGetCollection<Element>(Compiler.SeparatedList_LastSeparators);
+            get => MGet<Element>(Compiler.SeparatedList_Item);
+            set => MSet<Element>(Compiler.SeparatedList_Item, value);
         }
     
         public string RedType
@@ -9434,34 +9528,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
             get => Compiler.__CustomImpl.SeparatedList_RedType(this);
         }
     
-        public Element RepeatedBlock
+        public Element Separator
         {
-            get => MGet<Element>(Compiler.SeparatedList_RepeatedBlock);
-            set => MSet<Element>(Compiler.SeparatedList_RepeatedBlock, value);
-        }
-    
-        public Element RepeatedItem
-        {
-            get => MGet<Element>(Compiler.SeparatedList_RepeatedItem);
-            set => MSet<Element>(Compiler.SeparatedList_RepeatedItem, value);
-        }
-    
-        public Element RepeatedSeparator
-        {
-            get => MGet<Element>(Compiler.SeparatedList_RepeatedSeparator);
-            set => MSet<Element>(Compiler.SeparatedList_RepeatedSeparator, value);
-        }
-    
-        public bool RepeatedSeparatorFirst
-        {
-            get => MGet<bool>(Compiler.SeparatedList_RepeatedSeparatorFirst);
-            set => MSet<bool>(Compiler.SeparatedList_RepeatedSeparatorFirst, value);
-        }
-    
-        public bool SeparatorFirst
-        {
-            get => MGet<bool>(Compiler.SeparatedList_SeparatorFirst);
-            set => MSet<bool>(Compiler.SeparatedList_SeparatorFirst, value);
+            get => MGet<Element>(Compiler.SeparatedList_Separator);
+            set => MSet<Element>(Compiler.SeparatedList_Separator, value);
         }
     
         [global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)]
@@ -9527,40 +9597,26 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
             {
                 _baseTypes = __ImmutableArray.Create<__ModelClassInfo>(Compiler.ElementValueInfo);
                 _allBaseTypes = __ImmutableArray.Create<__ModelClassInfo>(Compiler.ElementValueInfo, Compiler.CSharpElementInfo);
-                _declaredProperties = __ImmutableArray.Create<__ModelProperty>(Compiler.SeparatedList_FirstItems, Compiler.SeparatedList_FirstSeparators, Compiler.SeparatedList_GreenSyntaxCondition, Compiler.SeparatedList_GreenType, Compiler.SeparatedList_LastItems, Compiler.SeparatedList_LastSeparators, Compiler.SeparatedList_RedType, Compiler.SeparatedList_RepeatedBlock, Compiler.SeparatedList_RepeatedItem, Compiler.SeparatedList_RepeatedSeparator, Compiler.SeparatedList_RepeatedSeparatorFirst, Compiler.SeparatedList_SeparatorFirst);
-                _allDeclaredProperties = __ImmutableArray.Create<__ModelProperty>(Compiler.SeparatedList_FirstItems, Compiler.SeparatedList_FirstSeparators, Compiler.SeparatedList_GreenSyntaxCondition, Compiler.SeparatedList_GreenType, Compiler.SeparatedList_LastItems, Compiler.SeparatedList_LastSeparators, Compiler.SeparatedList_RedType, Compiler.SeparatedList_RepeatedBlock, Compiler.SeparatedList_RepeatedItem, Compiler.SeparatedList_RepeatedSeparator, Compiler.SeparatedList_RepeatedSeparatorFirst, Compiler.SeparatedList_SeparatorFirst, Compiler.ElementValue_GreenSyntaxCondition, Compiler.ElementValue_GreenType, Compiler.ElementValue_RedType, Compiler.CSharpElement_AntlrName, Compiler.CSharpElement_Binders, Compiler.CSharpElement_ContainsBinders, Compiler.CSharpElement_CSharpName);
-                _publicProperties = __ImmutableArray.Create<__ModelProperty>(Compiler.SeparatedList_FirstItems, Compiler.SeparatedList_FirstSeparators, Compiler.SeparatedList_GreenSyntaxCondition, Compiler.SeparatedList_GreenType, Compiler.SeparatedList_LastItems, Compiler.SeparatedList_LastSeparators, Compiler.SeparatedList_RedType, Compiler.SeparatedList_RepeatedBlock, Compiler.SeparatedList_RepeatedItem, Compiler.SeparatedList_RepeatedSeparator, Compiler.SeparatedList_RepeatedSeparatorFirst, Compiler.SeparatedList_SeparatorFirst, Compiler.CSharpElement_AntlrName, Compiler.CSharpElement_Binders, Compiler.CSharpElement_ContainsBinders, Compiler.CSharpElement_CSharpName);
+                _declaredProperties = __ImmutableArray.Create<__ModelProperty>(Compiler.SeparatedList_GreenSyntaxCondition, Compiler.SeparatedList_GreenType, Compiler.SeparatedList_Item, Compiler.SeparatedList_RedType, Compiler.SeparatedList_Separator);
+                _allDeclaredProperties = __ImmutableArray.Create<__ModelProperty>(Compiler.SeparatedList_GreenSyntaxCondition, Compiler.SeparatedList_GreenType, Compiler.SeparatedList_Item, Compiler.SeparatedList_RedType, Compiler.SeparatedList_Separator, Compiler.ElementValue_GreenSyntaxCondition, Compiler.ElementValue_GreenType, Compiler.ElementValue_RedType, Compiler.CSharpElement_AntlrName, Compiler.CSharpElement_Binders, Compiler.CSharpElement_ContainsBinders, Compiler.CSharpElement_CSharpName);
+                _publicProperties = __ImmutableArray.Create<__ModelProperty>(Compiler.SeparatedList_GreenSyntaxCondition, Compiler.SeparatedList_GreenType, Compiler.SeparatedList_Item, Compiler.SeparatedList_RedType, Compiler.SeparatedList_Separator, Compiler.CSharpElement_AntlrName, Compiler.CSharpElement_Binders, Compiler.CSharpElement_ContainsBinders, Compiler.CSharpElement_CSharpName);
                 var publicPropertiesByName = __ImmutableDictionary.CreateBuilder<string, __ModelProperty>();
-                publicPropertiesByName.Add("FirstItems", Compiler.SeparatedList_FirstItems);
-                publicPropertiesByName.Add("FirstSeparators", Compiler.SeparatedList_FirstSeparators);
                 publicPropertiesByName.Add("GreenSyntaxCondition", Compiler.SeparatedList_GreenSyntaxCondition);
                 publicPropertiesByName.Add("GreenType", Compiler.SeparatedList_GreenType);
-                publicPropertiesByName.Add("LastItems", Compiler.SeparatedList_LastItems);
-                publicPropertiesByName.Add("LastSeparators", Compiler.SeparatedList_LastSeparators);
+                publicPropertiesByName.Add("Item", Compiler.SeparatedList_Item);
                 publicPropertiesByName.Add("RedType", Compiler.SeparatedList_RedType);
-                publicPropertiesByName.Add("RepeatedBlock", Compiler.SeparatedList_RepeatedBlock);
-                publicPropertiesByName.Add("RepeatedItem", Compiler.SeparatedList_RepeatedItem);
-                publicPropertiesByName.Add("RepeatedSeparator", Compiler.SeparatedList_RepeatedSeparator);
-                publicPropertiesByName.Add("RepeatedSeparatorFirst", Compiler.SeparatedList_RepeatedSeparatorFirst);
-                publicPropertiesByName.Add("SeparatorFirst", Compiler.SeparatedList_SeparatorFirst);
+                publicPropertiesByName.Add("Separator", Compiler.SeparatedList_Separator);
                 publicPropertiesByName.Add("AntlrName", Compiler.CSharpElement_AntlrName);
                 publicPropertiesByName.Add("Binders", Compiler.CSharpElement_Binders);
                 publicPropertiesByName.Add("ContainsBinders", Compiler.CSharpElement_ContainsBinders);
                 publicPropertiesByName.Add("CSharpName", Compiler.CSharpElement_CSharpName);
                 _publicPropertiesByName = publicPropertiesByName.ToImmutable();
                 var modelPropertyInfos = __ImmutableDictionary.CreateBuilder<__ModelProperty, __ModelPropertyInfo>();
-                modelPropertyInfos.Add(Compiler.SeparatedList_FirstItems, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.SeparatedList_FirstItems, __ImmutableArray.Create<__ModelProperty>(Compiler.SeparatedList_FirstItems), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
-                modelPropertyInfos.Add(Compiler.SeparatedList_FirstSeparators, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.SeparatedList_FirstSeparators, __ImmutableArray.Create<__ModelProperty>(Compiler.SeparatedList_FirstSeparators), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
                 modelPropertyInfos.Add(Compiler.SeparatedList_GreenSyntaxCondition, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.SeparatedList_GreenSyntaxCondition, __ImmutableArray.Create<__ModelProperty>(Compiler.SeparatedList_GreenSyntaxCondition), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(Compiler.ElementValue_GreenSyntaxCondition), __ImmutableArray.Create<__ModelProperty>()));
                 modelPropertyInfos.Add(Compiler.SeparatedList_GreenType, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.SeparatedList_GreenType, __ImmutableArray.Create<__ModelProperty>(Compiler.SeparatedList_GreenType), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(Compiler.ElementValue_GreenType), __ImmutableArray.Create<__ModelProperty>()));
-                modelPropertyInfos.Add(Compiler.SeparatedList_LastItems, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.SeparatedList_LastItems, __ImmutableArray.Create<__ModelProperty>(Compiler.SeparatedList_LastItems), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
-                modelPropertyInfos.Add(Compiler.SeparatedList_LastSeparators, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.SeparatedList_LastSeparators, __ImmutableArray.Create<__ModelProperty>(Compiler.SeparatedList_LastSeparators), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
+                modelPropertyInfos.Add(Compiler.SeparatedList_Item, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.SeparatedList_Item, __ImmutableArray.Create<__ModelProperty>(Compiler.SeparatedList_Item), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
                 modelPropertyInfos.Add(Compiler.SeparatedList_RedType, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.SeparatedList_RedType, __ImmutableArray.Create<__ModelProperty>(Compiler.SeparatedList_RedType), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(Compiler.ElementValue_RedType), __ImmutableArray.Create<__ModelProperty>()));
-                modelPropertyInfos.Add(Compiler.SeparatedList_RepeatedBlock, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.SeparatedList_RepeatedBlock, __ImmutableArray.Create<__ModelProperty>(Compiler.SeparatedList_RepeatedBlock), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
-                modelPropertyInfos.Add(Compiler.SeparatedList_RepeatedItem, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.SeparatedList_RepeatedItem, __ImmutableArray.Create<__ModelProperty>(Compiler.SeparatedList_RepeatedItem), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
-                modelPropertyInfos.Add(Compiler.SeparatedList_RepeatedSeparator, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.SeparatedList_RepeatedSeparator, __ImmutableArray.Create<__ModelProperty>(Compiler.SeparatedList_RepeatedSeparator), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
-                modelPropertyInfos.Add(Compiler.SeparatedList_RepeatedSeparatorFirst, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.SeparatedList_RepeatedSeparatorFirst, __ImmutableArray.Create<__ModelProperty>(Compiler.SeparatedList_RepeatedSeparatorFirst), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
-                modelPropertyInfos.Add(Compiler.SeparatedList_SeparatorFirst, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.SeparatedList_SeparatorFirst, __ImmutableArray.Create<__ModelProperty>(Compiler.SeparatedList_SeparatorFirst), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
+                modelPropertyInfos.Add(Compiler.SeparatedList_Separator, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.SeparatedList_Separator, __ImmutableArray.Create<__ModelProperty>(Compiler.SeparatedList_Separator), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
                 modelPropertyInfos.Add(Compiler.ElementValue_GreenSyntaxCondition, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.ElementValue_GreenSyntaxCondition, __ImmutableArray.Create<__ModelProperty>(Compiler.ElementValue_GreenSyntaxCondition), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(Compiler.SeparatedList_GreenSyntaxCondition)));
                 modelPropertyInfos.Add(Compiler.ElementValue_GreenType, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.ElementValue_GreenType, __ImmutableArray.Create<__ModelProperty>(Compiler.ElementValue_GreenType), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(Compiler.SeparatedList_GreenType)));
                 modelPropertyInfos.Add(Compiler.ElementValue_RedType, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.ElementValue_RedType, __ImmutableArray.Create<__ModelProperty>(Compiler.ElementValue_RedType), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(Compiler.SeparatedList_RedType)));
@@ -9628,6 +9684,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
         {
             get => MGet<bool>(Compiler.Token_IsTrivia);
             set => MSet<bool>(Compiler.Token_IsTrivia, value);
+        }
+    
+        public bool NeverNull
+        {
+            get => MGet<bool>(Compiler.Token_NeverNull);
+            set => MSet<bool>(Compiler.Token_NeverNull, value);
         }
     
         public __MetaType ReturnType
@@ -9740,11 +9802,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
             {
                 _baseTypes = __ImmutableArray.Create<__ModelClassInfo>(Compiler.LexerRuleInfo);
                 _allBaseTypes = __ImmutableArray.Create<__ModelClassInfo>(Compiler.LexerRuleInfo, Compiler.GrammarRuleInfo, Compiler.CSharpElementInfo, Compiler.DeclarationInfo);
-                _declaredProperties = __ImmutableArray.Create<__ModelProperty>(Compiler.Token_IsTrivia, Compiler.Token_ReturnType, Compiler.Token_TokenKind);
-                _allDeclaredProperties = __ImmutableArray.Create<__ModelProperty>(Compiler.Token_IsTrivia, Compiler.Token_ReturnType, Compiler.Token_TokenKind, Compiler.LexerRule_Alternatives, Compiler.LexerRule_FixedText, Compiler.LexerRule_IsFixed, Compiler.GrammarRule_Grammar, Compiler.GrammarRule_Language, Compiler.CSharpElement_AntlrName, Compiler.CSharpElement_Binders, Compiler.CSharpElement_ContainsBinders, Compiler.CSharpElement_CSharpName, Compiler.Declaration_Annotations, Compiler.Declaration_Declarations, Compiler.Declaration_FullName, Compiler.Declaration_Name, Compiler.Declaration_Parent);
-                _publicProperties = __ImmutableArray.Create<__ModelProperty>(Compiler.Token_IsTrivia, Compiler.Token_ReturnType, Compiler.Token_TokenKind, Compiler.LexerRule_Alternatives, Compiler.LexerRule_FixedText, Compiler.LexerRule_IsFixed, Compiler.GrammarRule_Grammar, Compiler.GrammarRule_Language, Compiler.CSharpElement_AntlrName, Compiler.CSharpElement_Binders, Compiler.CSharpElement_ContainsBinders, Compiler.CSharpElement_CSharpName, Compiler.Declaration_Annotations, Compiler.Declaration_Declarations, Compiler.Declaration_FullName, Compiler.Declaration_Name, Compiler.Declaration_Parent);
+                _declaredProperties = __ImmutableArray.Create<__ModelProperty>(Compiler.Token_IsTrivia, Compiler.Token_NeverNull, Compiler.Token_ReturnType, Compiler.Token_TokenKind);
+                _allDeclaredProperties = __ImmutableArray.Create<__ModelProperty>(Compiler.Token_IsTrivia, Compiler.Token_NeverNull, Compiler.Token_ReturnType, Compiler.Token_TokenKind, Compiler.LexerRule_Alternatives, Compiler.LexerRule_FixedText, Compiler.LexerRule_IsFixed, Compiler.GrammarRule_Grammar, Compiler.GrammarRule_Language, Compiler.CSharpElement_AntlrName, Compiler.CSharpElement_Binders, Compiler.CSharpElement_ContainsBinders, Compiler.CSharpElement_CSharpName, Compiler.Declaration_Annotations, Compiler.Declaration_Declarations, Compiler.Declaration_FullName, Compiler.Declaration_Name, Compiler.Declaration_Parent);
+                _publicProperties = __ImmutableArray.Create<__ModelProperty>(Compiler.Token_IsTrivia, Compiler.Token_NeverNull, Compiler.Token_ReturnType, Compiler.Token_TokenKind, Compiler.LexerRule_Alternatives, Compiler.LexerRule_FixedText, Compiler.LexerRule_IsFixed, Compiler.GrammarRule_Grammar, Compiler.GrammarRule_Language, Compiler.CSharpElement_AntlrName, Compiler.CSharpElement_Binders, Compiler.CSharpElement_ContainsBinders, Compiler.CSharpElement_CSharpName, Compiler.Declaration_Annotations, Compiler.Declaration_Declarations, Compiler.Declaration_FullName, Compiler.Declaration_Name, Compiler.Declaration_Parent);
                 var publicPropertiesByName = __ImmutableDictionary.CreateBuilder<string, __ModelProperty>();
                 publicPropertiesByName.Add("IsTrivia", Compiler.Token_IsTrivia);
+                publicPropertiesByName.Add("NeverNull", Compiler.Token_NeverNull);
                 publicPropertiesByName.Add("ReturnType", Compiler.Token_ReturnType);
                 publicPropertiesByName.Add("TokenKind", Compiler.Token_TokenKind);
                 publicPropertiesByName.Add("Alternatives", Compiler.LexerRule_Alternatives);
@@ -9764,6 +9827,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
                 _publicPropertiesByName = publicPropertiesByName.ToImmutable();
                 var modelPropertyInfos = __ImmutableDictionary.CreateBuilder<__ModelProperty, __ModelPropertyInfo>();
                 modelPropertyInfos.Add(Compiler.Token_IsTrivia, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Token_IsTrivia, __ImmutableArray.Create<__ModelProperty>(Compiler.Token_IsTrivia), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
+                modelPropertyInfos.Add(Compiler.Token_NeverNull, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Token_NeverNull, __ImmutableArray.Create<__ModelProperty>(Compiler.Token_NeverNull), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
                 modelPropertyInfos.Add(Compiler.Token_ReturnType, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Token_ReturnType, __ImmutableArray.Create<__ModelProperty>(Compiler.Token_ReturnType), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
                 modelPropertyInfos.Add(Compiler.Token_TokenKind, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Token_TokenKind, __ImmutableArray.Create<__ModelProperty>(Compiler.Token_TokenKind), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
                 modelPropertyInfos.Add(Compiler.LexerRule_Alternatives, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.LexerRule_Alternatives, __ImmutableArray.Create<__ModelProperty>(Compiler.LexerRule_Alternatives), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
@@ -9818,168 +9882,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
             public override string ToString()
             {
                 return "Compiler.TokenInfo";
-            }
-        }
-    }
-
-    internal class TokenAlts_Impl : __MetaModelObject, TokenAlts
-    {
-        private TokenAlts_Impl(string? id)
-            : base(id)
-        {
-            Compiler.__CustomImpl.CSharpElement(this);
-            Compiler.__CustomImpl.ElementValue(this);
-            Compiler.__CustomImpl.TokenAlts(this);
-        }
-    
-        public override __ModelClassInfo MInfo => __Info.Instance;
-    
-        public string? GreenSyntaxCondition
-        {
-            get => Compiler.__CustomImpl.TokenAlts_GreenSyntaxCondition(this);
-        }
-    
-        public string GreenType
-        {
-            get => Compiler.__CustomImpl.TokenAlts_GreenType(this);
-        }
-    
-        public string RedType
-        {
-            get => Compiler.__CustomImpl.TokenAlts_RedType(this);
-        }
-    
-        public global::MetaDslx.Modeling.ICollectionSlot<RuleRef> Tokens
-        {
-            get => MGetCollection<RuleRef>(Compiler.TokenAlts_Tokens);
-        }
-    
-        [global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)]
-        string? ElementValue.GreenSyntaxCondition
-        {
-            get => Compiler.__CustomImpl.TokenAlts_GreenSyntaxCondition(this);
-        }
-    
-        [global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)]
-        string ElementValue.GreenType
-        {
-            get => Compiler.__CustomImpl.TokenAlts_GreenType(this);
-        }
-    
-        [global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)]
-        string ElementValue.RedType
-        {
-            get => Compiler.__CustomImpl.TokenAlts_RedType(this);
-        }
-    
-        public string AntlrName
-        {
-            get => MGet<string>(Compiler.CSharpElement_AntlrName);
-            set => MSet<string>(Compiler.CSharpElement_AntlrName, value);
-        }
-    
-        public global::MetaDslx.Modeling.ICollectionSlot<Binder> Binders
-        {
-            get => MGetCollection<Binder>(Compiler.CSharpElement_Binders);
-        }
-    
-        public bool ContainsBinders
-        {
-            get => MGet<bool>(Compiler.CSharpElement_ContainsBinders);
-            set => MSet<bool>(Compiler.CSharpElement_ContainsBinders, value);
-        }
-    
-        public string CSharpName
-        {
-            get => MGet<string>(Compiler.CSharpElement_CSharpName);
-            set => MSet<string>(Compiler.CSharpElement_CSharpName, value);
-        }
-    
-    
-    
-        internal class __Info : __ModelClassInfo
-        {
-            public static readonly __Info Instance = new __Info();
-    
-            private readonly global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo> _baseTypes;
-            private readonly global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo> _allBaseTypes;
-            private readonly global::System.Collections.Immutable.ImmutableArray<__ModelProperty> _declaredProperties;
-            private readonly global::System.Collections.Immutable.ImmutableArray<__ModelProperty> _allDeclaredProperties;
-            private readonly global::System.Collections.Immutable.ImmutableArray<__ModelProperty> _publicProperties;
-            private readonly global::System.Collections.Immutable.ImmutableDictionary<string, __ModelProperty> _publicPropertiesByName;
-            private readonly global::System.Collections.Immutable.ImmutableDictionary<__ModelProperty, __ModelPropertyInfo> _modelPropertyInfos;
-            private readonly global::System.Collections.Immutable.ImmutableArray<__ModelOperation> _declaredOperations;
-            private readonly global::System.Collections.Immutable.ImmutableArray<__ModelOperation> _allDeclaredOperations;
-            private readonly global::System.Collections.Immutable.ImmutableArray<__ModelOperation> _publicOperations;
-            private readonly global::System.Collections.Immutable.ImmutableDictionary<__ModelOperation, __ModelOperationInfo> _modelOperationInfos;
-    
-            private __Info() 
-            {
-                _baseTypes = __ImmutableArray.Create<__ModelClassInfo>(Compiler.ElementValueInfo);
-                _allBaseTypes = __ImmutableArray.Create<__ModelClassInfo>(Compiler.ElementValueInfo, Compiler.CSharpElementInfo);
-                _declaredProperties = __ImmutableArray.Create<__ModelProperty>(Compiler.TokenAlts_GreenSyntaxCondition, Compiler.TokenAlts_GreenType, Compiler.TokenAlts_RedType, Compiler.TokenAlts_Tokens);
-                _allDeclaredProperties = __ImmutableArray.Create<__ModelProperty>(Compiler.TokenAlts_GreenSyntaxCondition, Compiler.TokenAlts_GreenType, Compiler.TokenAlts_RedType, Compiler.TokenAlts_Tokens, Compiler.ElementValue_GreenSyntaxCondition, Compiler.ElementValue_GreenType, Compiler.ElementValue_RedType, Compiler.CSharpElement_AntlrName, Compiler.CSharpElement_Binders, Compiler.CSharpElement_ContainsBinders, Compiler.CSharpElement_CSharpName);
-                _publicProperties = __ImmutableArray.Create<__ModelProperty>(Compiler.TokenAlts_GreenSyntaxCondition, Compiler.TokenAlts_GreenType, Compiler.TokenAlts_RedType, Compiler.TokenAlts_Tokens, Compiler.CSharpElement_AntlrName, Compiler.CSharpElement_Binders, Compiler.CSharpElement_ContainsBinders, Compiler.CSharpElement_CSharpName);
-                var publicPropertiesByName = __ImmutableDictionary.CreateBuilder<string, __ModelProperty>();
-                publicPropertiesByName.Add("GreenSyntaxCondition", Compiler.TokenAlts_GreenSyntaxCondition);
-                publicPropertiesByName.Add("GreenType", Compiler.TokenAlts_GreenType);
-                publicPropertiesByName.Add("RedType", Compiler.TokenAlts_RedType);
-                publicPropertiesByName.Add("Tokens", Compiler.TokenAlts_Tokens);
-                publicPropertiesByName.Add("AntlrName", Compiler.CSharpElement_AntlrName);
-                publicPropertiesByName.Add("Binders", Compiler.CSharpElement_Binders);
-                publicPropertiesByName.Add("ContainsBinders", Compiler.CSharpElement_ContainsBinders);
-                publicPropertiesByName.Add("CSharpName", Compiler.CSharpElement_CSharpName);
-                _publicPropertiesByName = publicPropertiesByName.ToImmutable();
-                var modelPropertyInfos = __ImmutableDictionary.CreateBuilder<__ModelProperty, __ModelPropertyInfo>();
-                modelPropertyInfos.Add(Compiler.TokenAlts_GreenSyntaxCondition, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.TokenAlts_GreenSyntaxCondition, __ImmutableArray.Create<__ModelProperty>(Compiler.TokenAlts_GreenSyntaxCondition), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(Compiler.ElementValue_GreenSyntaxCondition), __ImmutableArray.Create<__ModelProperty>()));
-                modelPropertyInfos.Add(Compiler.TokenAlts_GreenType, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.TokenAlts_GreenType, __ImmutableArray.Create<__ModelProperty>(Compiler.TokenAlts_GreenType), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(Compiler.ElementValue_GreenType), __ImmutableArray.Create<__ModelProperty>()));
-                modelPropertyInfos.Add(Compiler.TokenAlts_RedType, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.TokenAlts_RedType, __ImmutableArray.Create<__ModelProperty>(Compiler.TokenAlts_RedType), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(Compiler.ElementValue_RedType), __ImmutableArray.Create<__ModelProperty>()));
-                modelPropertyInfos.Add(Compiler.TokenAlts_Tokens, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.TokenAlts_Tokens, __ImmutableArray.Create<__ModelProperty>(Compiler.TokenAlts_Tokens), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
-                modelPropertyInfos.Add(Compiler.ElementValue_GreenSyntaxCondition, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.ElementValue_GreenSyntaxCondition, __ImmutableArray.Create<__ModelProperty>(Compiler.ElementValue_GreenSyntaxCondition), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(Compiler.TokenAlts_GreenSyntaxCondition)));
-                modelPropertyInfos.Add(Compiler.ElementValue_GreenType, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.ElementValue_GreenType, __ImmutableArray.Create<__ModelProperty>(Compiler.ElementValue_GreenType), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(Compiler.TokenAlts_GreenType)));
-                modelPropertyInfos.Add(Compiler.ElementValue_RedType, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.ElementValue_RedType, __ImmutableArray.Create<__ModelProperty>(Compiler.ElementValue_RedType), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(Compiler.TokenAlts_RedType)));
-                modelPropertyInfos.Add(Compiler.CSharpElement_AntlrName, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.CSharpElement_AntlrName, __ImmutableArray.Create<__ModelProperty>(Compiler.CSharpElement_AntlrName), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
-                modelPropertyInfos.Add(Compiler.CSharpElement_Binders, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.CSharpElement_Binders, __ImmutableArray.Create<__ModelProperty>(Compiler.CSharpElement_Binders), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
-                modelPropertyInfos.Add(Compiler.CSharpElement_ContainsBinders, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.CSharpElement_ContainsBinders, __ImmutableArray.Create<__ModelProperty>(Compiler.CSharpElement_ContainsBinders), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
-                modelPropertyInfos.Add(Compiler.CSharpElement_CSharpName, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.CSharpElement_CSharpName, __ImmutableArray.Create<__ModelProperty>(Compiler.CSharpElement_CSharpName), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
-                _modelPropertyInfos = modelPropertyInfos.ToImmutable();
-    
-                _declaredOperations = __ImmutableArray.Create<__ModelOperation>();
-                _allDeclaredOperations = __ImmutableArray.Create<__ModelOperation>();
-                _publicOperations = __ImmutableArray.Create<__ModelOperation>();
-                var modelOperationInfos = __ImmutableDictionary.CreateBuilder<__ModelOperation, __ModelOperationInfo>();
-                _modelOperationInfos = modelOperationInfos.ToImmutable();
-            }
-    
-            public override __MetaModel MetaModel => Compiler.MInstance;
-            public override __MetaType MetaType => typeof(TokenAlts);
-    
-            public override __MetaType SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.Symbol);
-            public override __ModelProperty? NameProperty => null;
-            public override __ModelProperty? TypeProperty => null;
-            public override global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo> BaseTypes => _baseTypes;
-            public override global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo> AllBaseTypes => _allBaseTypes;
-            public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> DeclaredProperties => _declaredProperties;
-            public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> AllDeclaredProperties => _allDeclaredProperties;
-            public override global::System.Collections.Immutable.ImmutableArray<__ModelProperty> PublicProperties => _publicProperties;
-            public override global::System.Collections.Immutable.ImmutableArray<__ModelOperation> DeclaredOperations => _declaredOperations;
-            public override global::System.Collections.Immutable.ImmutableArray<__ModelOperation> AllDeclaredOperations => _allDeclaredOperations;
-            public override global::System.Collections.Immutable.ImmutableArray<__ModelOperation> PublicOperations => _publicOperations;
-    
-            protected override global::System.Collections.Immutable.ImmutableDictionary<string, __ModelProperty> PublicPropertiesByName => _publicPropertiesByName;
-            protected override global::System.Collections.Immutable.ImmutableDictionary<__ModelProperty, __ModelPropertyInfo> ModelPropertyInfos => _modelPropertyInfos;
-            protected override global::System.Collections.Immutable.ImmutableDictionary<__ModelOperation, __ModelOperationInfo> ModelOperationInfos => _modelOperationInfos;
-    
-            public override __IModelObject? Create(__Model? model = null, string? id = null)
-            {
-                var result = new TokenAlts_Impl(id);
-                if (model is not null) model.AttachObject(result);
-                return result;
-            }
-    
-            public override string ToString()
-            {
-                return "Compiler.TokenAltsInfo";
             }
         }
     }

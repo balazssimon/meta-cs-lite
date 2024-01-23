@@ -3,6 +3,7 @@ using MetaDslx.CodeAnalysis;
 using MetaDslx.CodeAnalysis.Parsers.Antlr;
 using MetaDslx.CodeAnalysis.PooledObjects;
 using MetaDslx.CodeAnalysis.Text;
+using MetaDslx.Languages.MetaCompiler.Compiler;
 using MetaDslx.Languages.MetaGenerator.Syntax;
 using MetaDslx.Languages.MetaModel.Compiler;
 using Microsoft.Build.Locator;
@@ -14,6 +15,7 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Xml.Linq;
 
 namespace MetaDslx.BuildTools
 {
@@ -23,10 +25,10 @@ namespace MetaDslx.BuildTools
         private const bool Bootstrap = true;
         private static readonly string[] BootstrapProjects =
         [
-            @"..\..\..\..\MetaDslx.Languages.MetaModel",
+            //@"..\..\..\..\MetaDslx.Languages.MetaModel",
             //@"..\..\..\..\MetaDslx.Languages.MetaCompiler",
             //@"..\..\..\..\MetaDslx.Languages.MetaCompiler.Antlr",
-            //@"..\..\..\..\..\Bootstrap\MetaDslx.Bootstrap.MetaCompiler"
+            @"..\..\..\..\..\Bootstrap\MetaDslx.Bootstrap.MetaCompiler"
         ];
         private static Microsoft.CodeAnalysis.MetadataReference[] PackageReferences;
 
@@ -119,26 +121,27 @@ namespace MetaDslx.BuildTools
             using (var workspace = MSBuildWorkspace.Create())
             {
                 var project = await workspace.OpenProjectAsync(projectFile);
-                var mgenFiles = project.AdditionalDocuments.Where(doc => Path.GetExtension(doc.FilePath) == ".mxg").ToImmutableArray();
-                var mmFiles = project.AdditionalDocuments.Where(doc => Path.GetExtension(doc.FilePath) == ".mxm").ToImmutableArray();
-                var mlangFiles = project.AdditionalDocuments.Where(doc => Path.GetExtension(doc.FilePath) == ".mxl").ToImmutableArray();
-                foreach (var mgenFile in mgenFiles)
+                var mxgFiles = project.AdditionalDocuments.Where(doc => Path.GetExtension(doc.FilePath) == ".mxg").ToImmutableArray();
+                var mxmFiles = project.AdditionalDocuments.Where(doc => Path.GetExtension(doc.FilePath) == ".mxm").ToImmutableArray();
+                var mxlFiles = project.AdditionalDocuments.Where(doc => Path.GetExtension(doc.FilePath) == ".mxl").ToImmutableArray();
+                /*foreach (var mxgFile in mxgFiles)
                 {
-                    await CompileMetaGenerator(mgenFile);
-                }
+                    await CompileMetaGenerator(mxgFile);
+                }*/
                 var compilation = await project.GetCompilationAsync() as CSharpCompilation;
                 if (compilation is not null)
                 {
                     compilation = compilation.AddReferences(PackageReferences);
-                    await CompileMetaModels(compilation, mmFiles);
+                    //await CompileMetaModels(compilation, mxmFiles);
+                    await CompileMetaLanguages(compilation, mxlFiles);
                 }
                 // Perform analysis...
             }
         }
 
-        private static async Task CompileMetaGenerator(Microsoft.CodeAnalysis.TextDocument mgenFile)
+        private static async Task CompileMetaGenerator(Microsoft.CodeAnalysis.TextDocument mxgFile)
         {
-            var filePath = mgenFile.FilePath;
+            var filePath = mxgFile.FilePath;
             if (!File.Exists(filePath)) 
             {
                 await Console.Out.WriteLineAsync($"{filePath}(1,1,1,1): error: File '{filePath}' does not exist.");
@@ -147,14 +150,14 @@ namespace MetaDslx.BuildTools
             try
             {
                 var csharpFilePath = filePath + ".cs";
-                var mgenCode = await File.ReadAllTextAsync(filePath);
-                var mgenCompiler = new MetaGeneratorParser(filePath, SourceText.From(mgenCode));
-                var csharpCode = mgenCompiler.Compile();
-                foreach (var diag in mgenCompiler.Diagnostics)
+                var mxgCode = await File.ReadAllTextAsync(filePath);
+                var mxgCompiler = new MetaGeneratorParser(filePath, SourceText.From(mxgCode));
+                var csharpCode = mxgCompiler.Compile();
+                foreach (var diag in mxgCompiler.Diagnostics)
                 {
                     await Console.Out.WriteLineAsync(DiagnosticFormatter.MSBuild.Format(diag));
                 }
-                if (!mgenCompiler.Diagnostics.Any(diag => diag.Severity == DiagnosticSeverity.Error))
+                if (!mxgCompiler.Diagnostics.Any(diag => diag.Severity == DiagnosticSeverity.Error))
                 {
                     await AddGeneratedFile(csharpFilePath, csharpCode);
                 }
@@ -167,12 +170,12 @@ namespace MetaDslx.BuildTools
             }
         }
 
-        private static async Task CompileMetaModels(CSharpCompilation initialCompilation, ImmutableArray<Microsoft.CodeAnalysis.TextDocument> mmFiles)
+        private static async Task CompileMetaModels(CSharpCompilation initialCompilation, ImmutableArray<Microsoft.CodeAnalysis.TextDocument> mxmFiles)
         {
             var filePaths = ArrayBuilder<string>.GetInstance();
-            foreach (var mmFile in mmFiles)
+            foreach (var mxmFile in mxmFiles)
             {
-                var filePath = mmFile.FilePath;
+                var filePath = mxmFile.FilePath;
                 if (File.Exists(filePath))
                 {
                     filePaths.Add(filePath);
@@ -185,41 +188,41 @@ namespace MetaDslx.BuildTools
             if (filePaths.Count == 0) return;
             try
             {
-                var mmTrees = ArrayBuilder<SyntaxTree>.GetInstance();
+                var mxmTrees = ArrayBuilder<SyntaxTree>.GetInstance();
                 foreach (var filePath in filePaths)
                 {
-                    var mmCode = await File.ReadAllTextAsync(filePath);
-                    var mmTree = MetaSyntaxTree.ParseText(mmCode, path: filePath);
-                    mmTrees.Add(mmTree);
+                    var mxmCode = await File.ReadAllTextAsync(filePath);
+                    var mxmTree = MetaSyntaxTree.ParseText(mxmCode, path: filePath);
+                    mxmTrees.Add(mxmTree);
                 }
-                var mmCompiler = Compilation.Create("Meta",
-                                syntaxTrees: mmTrees,
+                var mxmCompiler = Compilation.Create("Meta",
+                                syntaxTrees: mxmTrees,
                                 initialCompilation: initialCompilation,
                                 references: new[]
                                 {
                                     MetadataReference.CreateFromMetaModel(MetaDslx.Languages.MetaModel.Model.Meta.MInstance)
                                 },
                                 options: CompilationOptions.Default.WithConcurrentBuild(false));
-                mmCompiler.Compile();
-                var diagnostics = mmCompiler.GetDiagnostics();
-                var mmDiagnostics = diagnostics.Where(diag => filePaths.Contains(diag.Location?.GetLineSpan().Path ?? string.Empty)).ToImmutableArray();
-                foreach (var diag in mmDiagnostics)
+                mxmCompiler.Compile();
+                var diagnostics = mxmCompiler.GetDiagnostics();
+                var mxmDiagnostics = diagnostics.Where(diag => filePaths.Contains(diag.Location?.GetLineSpan().Path ?? string.Empty)).ToImmutableArray();
+                foreach (var diag in mxmDiagnostics)
                 {
                     await Console.Out.WriteLineAsync(DiagnosticFormatter.MSBuild.Format(diag));
                 }
-                var model = mmCompiler.SourceModule.Model;
-                foreach (var mm in model.Objects.OfType<MetaDslx.Languages.MetaModel.Model.MetaModel>())
+                var model = mxmCompiler.SourceModule.Model;
+                foreach (var mxm in model.Objects.OfType<MetaDslx.Languages.MetaModel.Model.MetaModel>())
                 {
-                    var modelFilePath = mm.MSourceLocation?.GetLineSpan().Path;
-                    if (!mmDiagnostics.Any(diag => diag.Severity == DiagnosticSeverity.Error && diag.Location?.GetLineSpan().Path == modelFilePath))
+                    var modelFilePath = mxm.MSourceLocation?.GetLineSpan().Path;
+                    if (!mxmDiagnostics.Any(diag => diag.Severity == DiagnosticSeverity.Error && diag.Location?.GetLineSpan().Path == modelFilePath))
                     {
-                        var generator = new MetaDslx.Languages.MetaModel.Generators.MetaModelGenerator(Bootstrap, model, mm);
+                        var generator = new MetaDslx.Languages.MetaModel.Generators.MetaModelGenerator(Bootstrap, model, mxm);
                         var csharpCode = generator.Generate();
                         var csharpFilePath = $"{modelFilePath}.cs";
                         await AddGeneratedFile(csharpFilePath, csharpCode);
                     }
                 }
-                mmTrees.Free();
+                mxmTrees.Free();
             }
             catch (Exception ex)
             {
@@ -228,6 +231,118 @@ namespace MetaDslx.BuildTools
                 await Console.Out.WriteLineAsync(DiagnosticFormatter.MSBuild.Format(exDiag));
             }
             filePaths.Free();
+        }
+
+        private static async Task CompileMetaLanguages(CSharpCompilation initialCompilation, ImmutableArray<Microsoft.CodeAnalysis.TextDocument> mxlFiles)
+        {
+            var filePaths = ArrayBuilder<string>.GetInstance();
+            foreach (var mxlFile in mxlFiles)
+            {
+                var filePath = mxlFile.FilePath;
+                if (File.Exists(filePath))
+                {
+                    filePaths.Add(filePath);
+                }
+                else
+                {
+                    await Console.Out.WriteLineAsync($"{filePath}(1,1,1,1): error: File '{filePath}' does not exist.");
+                }
+            }
+            if (filePaths.Count == 0) return;
+            try
+            {
+                var mxlTrees = ArrayBuilder<SyntaxTree>.GetInstance();
+                foreach (var filePath in filePaths)
+                {
+                    var mxlCode = await File.ReadAllTextAsync(filePath);
+                    var mxlTree = CompilerSyntaxTree.ParseText(mxlCode, path: filePath);
+                    mxlTrees.Add(mxlTree);
+                }
+                var mxlCompiler = Compilation.Create("Meta",
+                                syntaxTrees: mxlTrees,
+                                initialCompilation: initialCompilation,
+                                references: new[]
+                                {
+                                    MetadataReference.CreateFromMetaModel(MetaDslx.Languages.MetaCompiler.Model.Compiler.MInstance)
+                                },
+                                options: CompilationOptions.Default.WithConcurrentBuild(false));
+                mxlCompiler.Compile();
+                var diagnostics = mxlCompiler.GetDiagnostics();
+                var mxlDiagnostics = diagnostics.Where(diag => filePaths.Contains(diag.Location?.GetLineSpan().Path ?? string.Empty)).ToImmutableArray();
+                foreach (var diag in mxlDiagnostics)
+                {
+                    await Console.Out.WriteLineAsync(DiagnosticFormatter.MSBuild.Format(diag));
+                }
+                var model = mxlCompiler.SourceModule.Model;
+                foreach (var language in model.Objects.OfType<MetaDslx.Languages.MetaCompiler.Model.Language>())
+                {
+                    var modelFilePath = language.MSourceLocation?.GetLineSpan().Path;
+                    if (!mxlDiagnostics.Any(diag => diag.Severity == DiagnosticSeverity.Error && diag.Location?.GetLineSpan().Path == modelFilePath))
+                    {
+                        await GenerateCompilerFiles(modelFilePath, language);
+                    }
+                }
+                mxlTrees.Free();
+            }
+            catch (Exception ex)
+            {
+                var exLocation = ExternalFileLocation.Create(filePaths[0], TextSpan.FromBounds(0, 0), new LinePositionSpan(LinePosition.Zero, LinePosition.Zero));
+                var exDiag = Diagnostic.Create(ErrorCode.ERR_CodeGenerationError, exLocation, ex.ToString().Replace('\r', ' ').Replace('\n', ' '));
+                await Console.Out.WriteLineAsync(DiagnosticFormatter.MSBuild.Format(exDiag));
+            }
+            filePaths.Free();
+        }
+
+        private static async Task GenerateCompilerFiles(string originalFilePath, MetaDslx.Languages.MetaCompiler.Model.Language language)
+        {
+            var generator = new MetaDslx.Languages.MetaCompiler.Generators.RoslynApiGenerator(language);
+            var languageCode = generator.GenerateLanguage();
+            File.WriteAllText($"{originalFilePath}.Language.g.cs", languageCode);
+            var languageVersionCode = generator.GenerateLanguageVersion();
+            File.WriteAllText($"{originalFilePath}.LanguageVersion.g.cs", languageVersionCode);
+            var parseOptionsCode = generator.GenerateParseOptions();
+            File.WriteAllText($"{originalFilePath}.ParseOptions.g.cs", parseOptionsCode);
+            var syntaxKindCode = generator.GenerateSyntaxKind();
+            File.WriteAllText($"{originalFilePath}.SyntaxKind.g.cs", syntaxKindCode);
+            var syntaxFactsCode = generator.GenerateSyntaxFacts();
+            File.WriteAllText($"{originalFilePath}.SyntaxFacts.g.cs", syntaxFactsCode);
+            var internalSyntaxCode = generator.GenerateInternalSyntax();
+            File.WriteAllText($"{originalFilePath}.InternalSyntax.g.cs", internalSyntaxCode);
+            var internalSyntaxVisitorCode = generator.GenerateInternalSyntaxVisitor();
+            File.WriteAllText($"{originalFilePath}.InternalSyntaxVisitor.g.cs", internalSyntaxVisitorCode);
+            var internalSyntaxFactoryCode = generator.GenerateInternalSyntaxFactory();
+            File.WriteAllText($"{originalFilePath}.InternalSyntaxFactory.g.cs", internalSyntaxFactoryCode);
+            var syntaxCode = generator.GenerateSyntax();
+            File.WriteAllText($"{originalFilePath}.Syntax.g.cs", syntaxCode);
+            var syntaxTreeCode = generator.GenerateSyntaxTree();
+            File.WriteAllText($"{originalFilePath}.SyntaxTree.g.cs", syntaxTreeCode);
+            var syntaxVisitorCode = generator.GenerateSyntaxVisitor();
+            File.WriteAllText($"{originalFilePath}.SyntaxVisitor.g.cs", syntaxVisitorCode);
+            var syntaxFactoryCode = generator.GenerateSyntaxFactory();
+            File.WriteAllText($"{originalFilePath}.SyntaxFactory.g.cs", syntaxFactoryCode);
+            var binderFactoryVisitorCode = generator.GenerateBinderFactoryVisitor();
+            File.WriteAllText($"{originalFilePath}.BinderFactoryVisitor.g.cs", binderFactoryVisitorCode);
+            var semanticsFactoryCode = generator.GenerateSemanticsFactory();
+            File.WriteAllText($"{originalFilePath}.SemanticsFactory.g.cs", semanticsFactoryCode);
+            var compilationFactoryCode = generator.GenerateCompilationFactory();
+            File.WriteAllText($"{originalFilePath}.CompilationFactory.g.cs", compilationFactoryCode);
+            var antlrDiagnostics = MetaDslx.CodeAnalysis.DiagnosticBag.GetInstance();
+            var antlrCodes = generator.GenerateAntlr(originalFilePath, antlrDiagnostics, default);
+            if (antlrDiagnostics.HasAnyErrors())
+            {
+                foreach (var diag in antlrDiagnostics.ToReadOnly())
+                {
+                    Console.WriteLine(diag);
+                }
+            }
+            else
+            {
+                foreach (var antlrCode in antlrCodes)
+                {
+                    File.WriteAllText($"{originalFilePath}.{antlrCode.FileName}", antlrCode.Content);
+                }
+            }
+            antlrDiagnostics.Free();
         }
 
         private static async Task AddGeneratedFile(string filePath, string content)

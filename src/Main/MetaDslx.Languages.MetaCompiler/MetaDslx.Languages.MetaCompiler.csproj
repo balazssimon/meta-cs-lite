@@ -17,20 +17,32 @@
 	</ItemGroup>
 
 	<ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
-		<PackageReference Include="System.Memory" Version="$(SystemMemoryVersion)" OutputItemType="Analyzer" />
-		<PackageReference Include="System.Threading.Tasks.Extensions" Version="$(SystemThreadingTasksExtensionsVersion)" OutputItemType="Analyzer" />
+		<PackageReference Include="System.Memory" Version="$(SystemMemoryVersion)" />
+		<PackageReference Include="System.Threading.Tasks.Extensions" Version="$(SystemThreadingTasksExtensionsVersion)" />
 	</ItemGroup>
 	<ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
-		<ProjectReference Include="..\MetaDslx.NetStandard20Extensions\MetaDslx.NetStandard20Extensions.csproj" OutputItemType="Analyzer" />
+		<ProjectReference Include="..\MetaDslx.NetStandard20Extensions\MetaDslx.NetStandard20Extensions.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\MetaDslx.CodeAnalysis.Core\MetaDslx.CodeAnalysis.Core.csproj" OutputItemType="Analyzer" />
-		<ProjectReference Include="..\MetaDslx.Languages.MetaGenerator\MetaDslx.Languages.MetaGenerator.csproj" OutputItemType="Analyzer" />
+		<ProjectReference Include="..\MetaDslx.CodeAnalysis.Core\MetaDslx.CodeAnalysis.Core.csproj" />
+		<ProjectReference Include="..\MetaDslx.CodeAnalysis.Common\MetaDslx.CodeAnalysis.Common.csproj" />
+		<ProjectReference Include="..\MetaDslx.CodeAnalysis.Parsers.Antlr\MetaDslx.CodeAnalysis.Parsers.Antlr.csproj" />
+		<ProjectReference Include="..\MetaDslx.Languages.MetaModel\MetaDslx.Languages.MetaModel.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<AdditionalFiles Include="Generators\*.mgen" />
+		<AdditionalFiles Include="Generators\*.mxg" />
+		<AdditionalFiles Include="Model\*.mxm" />
+		<AdditionalFiles Include="Language\*.mxl" />
+	</ItemGroup>
+	<ItemGroup>
+		<None Remove="tools\antlr-4.13.0-complete.jar" />
+	</ItemGroup>
+	<ItemGroup>
+		<Content Include="tools\antlr-4.13.0-complete.jar">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
 	</ItemGroup>
 
 </Project>

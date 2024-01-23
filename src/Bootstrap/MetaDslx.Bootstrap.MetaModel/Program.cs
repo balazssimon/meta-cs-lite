@@ -18,11 +18,11 @@ using MetaDslx.Modeling;
 
 //CompileMetaModel("Meta", @"..\..\..\..\..\Main\MetaDslx.Languages.MetaModel\Model", @"..\..\..\..\..\Main\MetaDslx.Languages.MetaModel\Model");
 //CompileMetaCompiler("Meta", @"..\..\..\..\..\Main\MetaDslx.Languages.MetaModel\Language", @"..\..\..\..\..\Main\MetaDslx.Languages.MetaModel\Compiler");
-CompileWithMetaCompiler("Meta", @"..\..\..\..\..\Main\MetaDslx.Languages.MetaModel\Language", @"..\..\..\..\..\Main\MetaDslx.Languages.MetaModel\Compiler", MetaDslx.Bootstrap.MetaCompiler.Model.Compiler.MInstance);
+//CompileWithMetaCompiler("Meta", @"..\..\..\..\..\Main\MetaDslx.Languages.MetaModel\Language", @"..\..\..\..\..\Main\MetaDslx.Languages.MetaModel\Compiler", MetaDslx.Bootstrap.MetaCompiler.Model.Compiler.MInstance);
 
 //CompileMetaModel("Compiler", @"..\..\..\..\MetaDslx.Bootstrap.MetaCompiler\Model", @"..\..\..\..\MetaDslx.Bootstrap.MetaCompiler\Model");
 //CompileMetaCompiler("Compiler", @"..\..\..\..\MetaDslx.Bootstrap.MetaCompiler\Language", @"..\..\..\..\MetaDslx.Bootstrap.MetaCompiler\Compiler");
-//CompileWithMetaCompiler("Compiler2", @"..\..\..\..\MetaDslx.Bootstrap.MetaCompiler\Language", @"..\..\..\..\MetaDslx.Bootstrap.MetaCompiler\Compiler", MetaDslx.Bootstrap.MetaCompiler.Model.Compiler.MInstance);
+CompileWithMetaCompiler("Compiler", @"..\..\..\..\MetaDslx.Bootstrap.MetaCompiler\Language", @"..\..\..\..\MetaDslx.Bootstrap.MetaCompiler\Compiler2", MetaDslx.Bootstrap.MetaCompiler.Model.Compiler.MInstance);
 //CompileWithMetaCompiler("Compiler2", @"..\..\..\..\MetaDslx.Bootstrap.MetaCompiler\Language", @"..\..\..\..\MetaDslx.Bootstrap.MetaCompiler\Compiler3", MetaDslx.Bootstrap.MetaCompiler.Model.Compiler.MInstance);
 
 //CompileMetaModel("Roslyn", @"..\..\..\..\MetaDslx.Bootstrap.MetaCompiler\Model", @"..\..\..\..\MetaDslx.Bootstrap.MetaCompiler\Model");
@@ -135,8 +135,8 @@ namespace MyCode
     {
         Console.WriteLine(formatter.Format(diag));
     }
-    var mlangCode = File.ReadAllText(Path.Combine(inputDir, $"{name}.mlang"));
-    var mlangTree = MetaDslx.Bootstrap.MetaCompiler.Compiler.CompilerSyntaxTree.ParseText(mlangCode, path: $"{name}.mlang");
+    var mlangCode = File.ReadAllText(Path.Combine(inputDir, $"{name}.mxl"));
+    var mlangTree = MetaDslx.Bootstrap.MetaCompiler.Compiler.CompilerSyntaxTree.ParseText(mlangCode, path: $"{name}.mxl");
     var mlangCompilation = MetaDslx.CodeAnalysis.Compilation.Create(name, syntaxTrees: new[] { mlangTree }, initialCompilation: (CSharpCompilation)inputCompilation,
         references: new[] { MetaDslx.CodeAnalysis.MetadataReference.CreateFromMetaModel(metaModel) }, options: MetaDslx.CodeAnalysis.CompilationOptions.Default.WithConcurrentBuild(false));
     var rootBinder = mlangCompilation.GetRootBinder(mlangTree);

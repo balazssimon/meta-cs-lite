@@ -16,46 +16,41 @@ language Compiler;
 Main returns Namespace:
 	'namespace' name=[Name(qualifierProperty:Declarations)]Qualifier ';'
 	Using*
-	Declarations
+	[Scope](declarations+=LanguageDeclaration)
 	eof;
 
-Using returns ImportSymbol
-	: /*{ImportMetaModelSymbol} 'using' 'metamodel' symbols+=#DeclaredSymbol ';'
-	| {ImportSymbolModelSymbol} 'using' 'symbols' namespaces+=#NamespaceSymbol ';'
-	|*/ 'using' namespaces+=#NamespaceSymbol ';'
-	;
+Using returns ImportSymbol : 'using' namespaces+=#{NamespaceSymbol|Qualifier} ';';
 
-[Scope]
-part Declarations: declarations+=LanguageDeclaration declarations+=Rule*;
-
-LanguageDeclaration returns MetaDslx.Bootstrap.MetaCompiler.Model.Language: 'language' name=Name ';' grammar=Grammar;
+LanguageDeclaration returns MetaDslx.Bootstrap.MetaCompiler.Model.Language: 
+	'language' name=Name ';' 
+	grammar=Grammar;
 
 Grammar: [Scope](grammarRules+=GrammarRule*);
 
-GrammarRule: Rule | Block | LexerRule;
+GrammarRule: Rule | LexerRule;
 
-Rule: annotations+=ParserAnnotation* [Name](returnType=ReturnTypeIdentifier | Identifier 'returns' returnType=ReturnTypeQualifier) ':' alternatives+=Alternative ('|' alternatives+=Alternative)* ';';
-Block: annotations+=ParserAnnotation* 'block' name=Name ('returns' returnType=ReturnTypeQualifier)? ':' alternatives+=Alternative ('|' alternatives+=Alternative)* ';';
-BlockInline returns Block: '(' alternatives+=Alternative ('|' alternatives+=Alternative)* ')';
-
-Alternative: (annotations+=ParserAnnotation* 'alt' name=Name ('returns' returnType=ReturnTypeQualifier)? ':')? elements+=Element+ ('=>' returnValue=Expression)?;
-Element: (nameAnnotations+=ParserAnnotation* symbolProperty+=[SymbolProperty]Identifier assignment=Assignment)? valueAnnotations+=ParserAnnotation* value=ElementValue multiplicity=Multiplicity?;
-ElementValue: BlockInline | Eof1 | Keyword | RuleRef;
-RuleRef: grammarRule=[Use(GrammarRule)]Identifier | '#' referencedTypes+=ReturnTypeQualifier | '#{' referencedTypes+=ReturnTypeQualifier (',' referencedTypes+=ReturnTypeQualifier)* '}' ;
+Rule: annotations+=ParserAnnotation* [Name](returnType=TypeReferenceIdentifier | Identifier 'returns' returnType=TypeReference) ':' alternatives+=Alternative ('|' alternatives+=Alternative)* ';';
+Alternative: (annotations+=ParserAnnotation* 'alt' name=Name ('returns' returnType=TypeReference)? ':')? elements+=Element+ ('=>' returnValue=Expression)?;
+Element: (nameAnnotations+=ParserAnnotation* name=Name assignment=Assignment)? valueAnnotations+=ParserAnnotation* value=ElementValue multiplicity=Multiplicity?;
+ElementValue: Block | Eof1 | Fixed | RuleRef;
+Block: '(' alternatives+=Alternative ('|' alternatives+=Alternative)* ')';
+RuleRef: grammarRule=#GrammarRule | '#' referencedTypes+=TypeReference | '#{' referencedTypes+=TypeReference (',' referencedTypes+=TypeReference)* ('|' grammarRule=#GrammarRule)? '}' ;
 Eof1 returns Eof: 'eof';
-Keyword: text=TString;
+Fixed: text=TString;
+SeparatedList: '(' item= ')';
+SeparatedListItem returns Element: (nameAnnotations+=ParserAnnotation* name=Name assignment=Assignment)? valueAnnotations+=ParserAnnotation* value=RuleRef;
 
 LexerRule: Token | Fragment;
-Token: annotations+=LexerAnnotation* ('token' name=Name ('returns' returnType=ReturnTypeQualifier)? | isTrivia?='hidden' name=Name) ':' alternatives+=LAlternative ('|' alternatives+=LAlternative)* ';';
+Token: annotations+=LexerAnnotation* ('token' name=Name ('returns' returnType=TypeReference)? | isTrivia?='hidden' name=Name) ':' alternatives+=LAlternative ('|' alternatives+=LAlternative)* ';';
 Fragment: 'fragment' name=Name ':' alternatives+=LAlternative ('|' alternatives+=LAlternative)* ';';
 LAlternative: elements+=LElement*;
 LElement: isNegated?='~'? value=LElementValue multiplicity=Multiplicity?;
 LElementValue: LBlock | LFixed | LWildCard | LRange | LReference /*| LSet*/;
-LReference: rule=[Use(LexerRule)]Identifier;
+LReference: rule=#LexerRule;
 LFixed: text=TString;
 LWildCard: '.';
-LRange: StartChar=TString '..' EndChar=TString;
-// TODO: add sets if lexer modes are available
+LRange: startChar=TString '..' endChar=TString;
+// TODO: add sets when lexer modes are available
 //LSet: '[' items+=LSetItem* ']';
 //LSetItem: LSetChar | LSetRange;
 //LSetChar: 
@@ -63,13 +58,12 @@ LRange: StartChar=TString '..' EndChar=TString;
 LBlock: '(' alternatives+=LAlternative ('|' alternatives+=LAlternative)* ')';
 
 Expression: SingleExpression | ArrayExpression;
-SingleExpression returns Expression: value=[ExpressionValue]('null' | 'true' | 'false' | TInteger | TString | SimpleQualifier);
+SingleExpression returns Expression: value=[ExpressionValue]('null' | 'true' | 'false' | TString | TInteger | TDecimal | PrimitiveType | Qualifier);
 ArrayExpression: '{' (items+=SingleExpression (',' items+=SingleExpression)*)? '}';
 
-ParserAnnotation returns MetaDslx.Bootstrap.MetaCompiler.Model.Annotation: '[' attributeClass=[Use(types:{MetaDslx.CodeAnalysis.Binding.Binder,MetaDslx.CodeAnalysis.Annotations.Annotation},suffixes:{Binder,Annotation})]Qualifier AnnotationArguments? ']';
-LexerAnnotation returns MetaDslx.Bootstrap.MetaCompiler.Model.Annotation: '[' attributeClass=[Use(types:{MetaDslx.CodeAnalysis.Syntax.TokenKind,MetaDslx.CodeAnalysis.Annotations.Annotation},suffixes:{TokenKind,Annotation})]Qualifier AnnotationArguments? ']';
-part AnnotationArguments: '(' arguments+=AnnotationArgument (',' arguments+=AnnotationArgument)* ')';
-AnnotationArgument: (namedParameter=[AnnotationArgument]Identifier ':')? value=Expression;
+ParserAnnotation returns MetaDslx.Bootstrap.MetaCompiler.Model.Annotation: '[' attributeClass=[Use(types:{MetaDslx.CodeAnalysis.Binding.Binder,MetaDslx.CodeAnalysis.Annotations.Annotation},suffixes:{"Binder","Annotation"})]Qualifier '(' arguments+=AnnotationArgument (',' arguments+=AnnotationArgument)* ')'? ']';
+LexerAnnotation returns MetaDslx.Bootstrap.MetaCompiler.Model.Annotation: '[' attributeClass=[Use(types:{MetaDslx.CodeAnalysis.Syntax.TokenKind,MetaDslx.CodeAnalysis.Annotations.Annotation},suffixes:{"TokenKind","Annotation"})]Qualifier '(' arguments+=AnnotationArgument (',' arguments+=AnnotationArgument)* ')'? ']';
+AnnotationArgument: (namedParameter+=[AnnotationArgument]Identifier ':')? value=Expression;
 
 Assignment
 	: '=' => Assign
@@ -87,32 +81,10 @@ Multiplicity
 	| '+?' => NonGreedyOneOrMore
 	;
 
-[Use(MetaType)]
-part ReturnTypeIdentifier: TPrimitiveType | Identifier;
+TypeReferenceIdentifier returns type: PrimitiveType | #MetaType;
+TypeReference returns type: PrimitiveType | #{MetaType|Qualifier};
 
-[Use(MetaType)]
-part ReturnTypeQualifier: TPrimitiveType | Qualifier;
-
-[Name]
-part Name: Identifier;
-
-[DefaultReference]
-[Qualifier]
-part Qualifier: Identifier ('.' Identifier)*;
-
-part QualifierList: Qualifier (',' Qualifier)*;
-
-[Identifier]
-part Identifier: TIdentifier | TVerbatimIdentifier;
-
-part SimpleQualifier: SimpleIdentifier ('.' SimpleIdentifier)*;
-part SimpleIdentifier: TIdentifier;
-
-token TInteger[Number] returns int: '0'| '1'..'9' ('0'..'9')* ;
-
-token TDecimal[Number] returns double: ('0'|'1'..'9' ('0'..'9')*) '.' ('0'..'9')+ ;
-
-token TPrimitiveType returns MetaType
+PrimitiveType returns type
 	: 'bool'
 	| 'int'
 	| 'string'
@@ -122,12 +94,32 @@ token TPrimitiveType returns MetaType
 	| 'void'
 	;
 
-token TIdentifier[DefaultIdentifier]: ('_'|'a'..'z'|'A'..'Z')+('_'|'a'..'z'|'A'..'Z'|'0'..'9')*;
-token TVerbatimIdentifier[Identifier]: '@'('_'|'a'..'z'|'A'..'Z')+('_'|'a'..'z'|'A'..'Z'|'0'..'9')*;
+[Name]
+Name: identifier=Identifier;
 
-token TComma[DefaultSeparator]: ',' ;
+[Qualifier]
+Qualifier: identifiers+=Identifier ('.' identifiers+=Identifier)*;
 
-token TString[String] returns string
+[DefaultReference]
+[Identifier]
+Identifier: name=TIdentifier | name=TVerbatimIdentifier;
+
+[Number]
+token TInteger returns int32: '0'| '1'..'9' ('0'..'9')* ;
+
+[Number]
+token TDecimal returns double: ('0'|'1'..'9' ('0'..'9')*) '.' ('0'..'9')+ ;
+
+[DefaultIdentifier]
+token TIdentifier: ('_'|'a'..'z'|'A'..'Z')+('_'|'a'..'z'|'A'..'Z'|'0'..'9')*;
+[Identifier]
+token TVerbatimIdentifier: '@'('_'|'a'..'z'|'A'..'Z')+('_'|'a'..'z'|'A'..'Z'|'0'..'9')*;
+
+[DefaultSeparator]
+token TComma: ',' ;
+
+[String]
+token TString returns string
     : '"' DoubleQuoteTextCharacter* '"'
     | '\'' SingleQuoteTextCharacter* '\'';
 
@@ -142,14 +134,19 @@ fragment CharacterEscapeUnicode
     | '\\U' HexDigit HexDigit HexDigit HexDigit HexDigit HexDigit HexDigit HexDigit;
 fragment HexDigit : ('0'..'9' | 'a'..'f' | 'A'..'F');
 
-token Utf8Bom[Whitespace]: '\u00EF' '\u00BB' '\u00BF';
+[Whitespace]
+hidden TUtf8Bom: '\u00EF' '\u00BB' '\u00BF';
 
-token TWhitespace[DefaultWhitespace]: ('\t'|' ') +;
+[DefaultWhitespace]
+hidden TWhitespace: ('\t'|' ') +;
 
-token TLineEnd[DefaultEndOfLine]: ('\r\n' | '\r' | '\n');
+[DefaultEndOfLine]
+hidden TLineEnd: ('\r\n' | '\r' | '\n');
 
-token TSingleLineComment[SingleLineComment]: '//' ~('\r' | '\n')*;
+[SingleLineComment]
+hidden TSingleLineComment: '//' ~('\r' | '\n')*;
 
-token TMultiLineComment[MultiLineComment]: '/*' .*? '*/';
+[MultiLineComment]
+hidden TMultiLineComment: '/*' .*? '*/';
 
-token TInvalidToken: .;
+hidden TInvalidToken: .;

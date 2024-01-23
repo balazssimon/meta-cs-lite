@@ -19,6 +19,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
         {
             public static readonly CompletionPart StartComputingProperty_ReturnType = new CompletionPart(nameof(StartComputingProperty_ReturnType));
             public static readonly CompletionPart FinishComputingProperty_ReturnType = new CompletionPart(nameof(FinishComputingProperty_ReturnType));
+            public static readonly CompletionPart StartComputingProperty_NeverNull = new CompletionPart(nameof(StartComputingProperty_NeverNull));
+            public static readonly CompletionPart FinishComputingProperty_NeverNull = new CompletionPart(nameof(FinishComputingProperty_NeverNull));
             public static readonly CompletionPart StartComputingProperty_ExpectedTypes = new CompletionPart(nameof(StartComputingProperty_ExpectedTypes));
             public static readonly CompletionPart FinishComputingProperty_ExpectedTypes = new CompletionPart(nameof(FinishComputingProperty_ExpectedTypes));
             public static readonly CompletionPart StartComputingProperty_Members = DeclarationSymbol.CompletionParts.StartComputingProperty_Members;
@@ -32,6 +34,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
             public static readonly CompletionGraph CompletionGraph =
                 CompletionGraph.CreateFromParts(
                     StartComputingProperty_ReturnType, FinishComputingProperty_ReturnType,
+                    StartComputingProperty_NeverNull, FinishComputingProperty_NeverNull,
                     StartComputingProperty_ExpectedTypes, FinishComputingProperty_ExpectedTypes,
                     StartComputingProperty_Members, FinishComputingProperty_Members,
                     StartComputingProperty_TypeArguments, FinishComputingProperty_TypeArguments,
@@ -41,6 +44,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
 
         private ImmutableArray<MetaType> _expectedTypes;
         private MetaType _returnType;
+        private bool _neverNull;
 
         public TokenSymbol(Symbol container, MergedDeclaration declaration, IModelObject modelObject)
             : base(container, declaration, modelObject)
@@ -60,6 +64,16 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
             {
                 ForceComplete(CompletionParts.FinishComputingProperty_ReturnType, null, default);
                 return _returnType;
+            }
+        }
+
+        [ModelProperty]
+        public bool NeverNull
+        {
+            get
+            {
+                ForceComplete(CompletionParts.FinishComputingProperty_NeverNull, null, default);
+                return _neverNull;
             }
         }
 
@@ -86,6 +100,18 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
                 }
                 return true;
             }
+            else if (incompletePart == CompletionParts.StartComputingProperty_NeverNull || incompletePart == CompletionParts.FinishComputingProperty_NeverNull)
+            {
+                if (NotePartComplete(CompletionParts.StartComputingProperty_NeverNull))
+                {
+                    var diagnostics = DiagnosticBag.GetInstance();
+                    _neverNull = CompleteProperty_NeverNull(diagnostics, cancellationToken);
+                    AddSymbolDiagnostics(diagnostics);
+                    diagnostics.Free();
+                    NotePartComplete(CompletionParts.FinishComputingProperty_NeverNull);
+                }
+                return true;
+            }
             else if (incompletePart == CompletionParts.StartComputingProperty_ExpectedTypes || incompletePart == CompletionParts.FinishComputingProperty_ExpectedTypes)
             {
                 if (NotePartComplete(CompletionParts.StartComputingProperty_ExpectedTypes))
@@ -108,6 +134,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
         protected virtual MetaType CompleteProperty_ReturnType(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             return SymbolFactory.GetSymbolPropertyValue<MetaType>(this, nameof(ReturnType), diagnostics, cancellationToken);
+        }
+
+        protected virtual bool CompleteProperty_NeverNull(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        {
+            return SymbolFactory.GetSymbolPropertyValue<bool>(this, nameof(NeverNull), diagnostics, cancellationToken);
         }
 
         protected virtual ImmutableArray<MetaType> CompleteProperty_ExpectedTypes(DiagnosticBag diagnostics, CancellationToken cancellationToken)
