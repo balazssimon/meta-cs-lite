@@ -7,6 +7,7 @@
 
 	<ItemGroup>
 		<AdditionalFiles Include="Generators\*.mxg" />
+		<AdditionalFiles Include="Model\*.mxm" />
 		<AdditionalFiles Include="Language\*.mxl" />
 	</ItemGroup>
 

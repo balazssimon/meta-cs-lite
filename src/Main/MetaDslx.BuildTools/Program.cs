@@ -26,7 +26,7 @@ namespace MetaDslx.BuildTools
             @"..\..\..\..\MetaDslx.Languages.MetaModel",
             //@"..\..\..\..\MetaDslx.Languages.MetaCompiler",
             //@"..\..\..\..\MetaDslx.Languages.MetaCompiler.Antlr",
-            @"..\..\..\..\..\Bootstrap\MetaDslx.Bootstrap.MetaCompiler"
+            //@"..\..\..\..\..\Bootstrap\MetaDslx.Bootstrap.MetaCompiler"
         ];
         private static Microsoft.CodeAnalysis.MetadataReference[] PackageReferences;
 

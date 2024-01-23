@@ -17975,15 +17975,15 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
             __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
-            var __first131 = true;
+            var __first48 = true;
             #line (945,3)-(945,30) 13 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\InternalSyntaxGenerator.mxg"
             foreach (var rule in Rules)
             #line hidden
             
             {
-                if (__first131)
+                if (__first48)
                 {
-                    __first131 = false;
+                    __first48 = false;
                 }
                 __cb.Push("\t");
                 #line (946,3)-(946,35) 28 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\InternalSyntaxGenerator.mxg"
@@ -17992,7 +17992,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
                 __cb.WriteLine();
                 __cb.Pop();
             }
-            if (!__first131) __cb.AppendLine();
+            if (!__first48) __cb.AppendLine();
             __cb.Push("");
             #line (948,1)-(948,2) 25 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\InternalSyntaxGenerator.mxg"
             __cb.Write("}");
@@ -18013,15 +18013,15 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            var __first132 = true;
+            var __first49 = true;
             #line (953,2)-(953,40) 13 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\InternalSyntaxGenerator.mxg"
             foreach (var alt in rule.Alternatives)
             #line hidden
             
             {
-                if (__first132)
+                if (__first49)
                 {
-                    __first132 = false;
+                    __first49 = false;
                 }
                 __cb.Push("");
                 #line (954,2)-(954,42) 28 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\InternalSyntaxGenerator.mxg"
@@ -18030,7 +18030,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
                 __cb.WriteLine();
                 __cb.Pop();
             }
-            if (!__first132) __cb.AppendLine();
+            if (!__first49) __cb.AppendLine();
             return __cb.ToStringAndFree();
         }
         
@@ -18039,15 +18039,15 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
         #line hidden
         {
             var __cb = global::MetaDslx.CodeGeneration.CodeBuilder.GetInstance();
-            var __first133 = true;
+            var __first50 = true;
             #line (959,2)-(959,34) 13 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\InternalSyntaxGenerator.mxg"
             if (rule.Alternatives.Count > 1)
             #line hidden
             
             {
-                if (__first133)
+                if (__first50)
                 {
-                    __first133 = false;
+                    __first50 = false;
                 }
                 __cb.Push("");
                 #line (960,1)-(960,9) 29 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\InternalSyntaxGenerator.mxg"
@@ -18246,7 +18246,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
                 __cb.WriteLine();
                 __cb.Pop();
             }
-            if (!__first133) __cb.AppendLine();
+            if (!__first50) __cb.AppendLine();
             return __cb.ToStringAndFree();
         }
         
@@ -18348,15 +18348,15 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            var __first134 = true;
+            var __first51 = true;
             #line (978,3)-(978,37) 13 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\InternalSyntaxGenerator.mxg"
             foreach (var elem in alt.Elements)
             #line hidden
             
             {
-                if (__first134)
+                if (__first51)
                 {
-                    __first134 = false;
+                    __first51 = false;
                 }
                 __cb.Push("\t");
                 #line (979,2)-(979,9) 29 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\InternalSyntaxGenerator.mxg"
@@ -18380,7 +18380,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
                 __cb.WriteLine();
                 __cb.Pop();
             }
-            if (!__first134) __cb.AppendLine();
+            if (!__first51) __cb.AppendLine();
             __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
@@ -18468,15 +18468,15 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            var __first135 = true;
+            var __first52 = true;
             #line (986,4)-(986,38) 13 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\InternalSyntaxGenerator.mxg"
             foreach (var elem in alt.Elements)
             #line hidden
             
             {
-                if (__first135)
+                if (__first52)
                 {
-                    __first135 = false;
+                    __first52 = false;
                 }
                 __cb.Push("\t\t");
                 #line (987,3)-(987,5) 29 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\InternalSyntaxGenerator.mxg"
@@ -18551,7 +18551,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
                 __cb.WriteLine();
                 __cb.Pop();
             }
-            if (!__first135) __cb.AppendLine();
+            if (!__first52) __cb.AppendLine();
             __cb.Push("\t");
             #line (993,2)-(993,3) 25 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\InternalSyntaxGenerator.mxg"
             __cb.Write("}");
@@ -18675,15 +18675,15 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            var __first136 = true;
+            var __first53 = true;
             #line (999,4)-(999,38) 13 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\InternalSyntaxGenerator.mxg"
             foreach (var elem in alt.Elements)
             #line hidden
             
             {
-                if (__first136)
+                if (__first53)
                 {
-                    __first136 = false;
+                    __first53 = false;
                 }
                 __cb.Push("\t\t");
                 #line (1000,3)-(1000,5) 29 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\InternalSyntaxGenerator.mxg"
@@ -18758,7 +18758,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
                 __cb.WriteLine();
                 __cb.Pop();
             }
-            if (!__first136) __cb.AppendLine();
+            if (!__first53) __cb.AppendLine();
             __cb.Push("\t");
             #line (1006,2)-(1006,3) 25 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\InternalSyntaxGenerator.mxg"
             __cb.Write("}");
@@ -18858,15 +18858,15 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
             __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
-            var __first137 = true;
+            var __first54 = true;
             #line (1014,3)-(1014,37) 13 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\InternalSyntaxGenerator.mxg"
             foreach (var elem in alt.Elements)
             #line hidden
             
             {
-                if (__first137)
+                if (__first54)
                 {
-                    __first137 = false;
+                    __first54 = false;
                 }
                 __cb.Push("\t");
                 #line (1015,2)-(1015,8) 29 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\InternalSyntaxGenerator.mxg"
@@ -18932,7 +18932,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
                 __cb.WriteLine();
                 __cb.Pop();
             }
-            if (!__first137) __cb.AppendLine();
+            if (!__first54) __cb.AppendLine();
             __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
@@ -19099,15 +19099,15 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
             var slotIndex = 0;
             #line hidden
             
-            var __first138 = true;
+            var __first55 = true;
             #line (1028,5)-(1028,39) 13 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\InternalSyntaxGenerator.mxg"
             foreach (var elem in alt.Elements)
             #line hidden
             
             {
-                if (__first138)
+                if (__first55)
                 {
-                    __first138 = false;
+                    __first55 = false;
                 }
                 __cb.Push("\t\t\t");
                 #line (1029,4)-(1029,8) 29 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\InternalSyntaxGenerator.mxg"
@@ -19140,7 +19140,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
                 __cb.WriteLine();
                 __cb.Pop();
             }
-            if (!__first138) __cb.AppendLine();
+            if (!__first55) __cb.AppendLine();
             __cb.Push("\t\t\t");
             #line (1031,4)-(1031,12) 25 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\InternalSyntaxGenerator.mxg"
             __cb.Write("default:");
@@ -19583,15 +19583,15 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
             #line (1057,6)-(1057,7) 25 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\InternalSyntaxGenerator.mxg"
             __cb.Write("(");
             #line hidden
-            var __first139 = true;
+            var __first56 = true;
             #line (1057,8)-(1057,43) 13 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\InternalSyntaxGenerator.mxg"
             foreach (var elem in alt.Elements) 
             #line hidden
             
             {
-                if (__first139)
+                if (__first56)
                 {
-                    __first139 = false;
+                    __first56 = false;
                 }
                 else
                 {
@@ -20025,25 +20025,25 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            var __first140 = true;
+            var __first57 = true;
             #line (1082,4)-(1082,31) 13 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\InternalSyntaxGenerator.mxg"
             foreach (var rule in Rules)
             #line hidden
             
             {
-                if (__first140)
+                if (__first57)
                 {
-                    __first140 = false;
+                    __first57 = false;
                 }
-                var __first141 = true;
+                var __first58 = true;
                 #line (1083,5)-(1083,43) 17 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\InternalSyntaxGenerator.mxg"
                 foreach (var alt in rule.Alternatives)
                 #line hidden
                 
                 {
-                    if (__first141)
+                    if (__first58)
                     {
-                        __first141 = false;
+                        __first58 = false;
                     }
                     __cb.Push("\t\t");
                     #line (1084,3)-(1084,9) 33 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\InternalSyntaxGenerator.mxg"
@@ -20097,9 +20097,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
                     __cb.WriteLine();
                     __cb.Pop();
                 }
-                if (!__first141) __cb.AppendLine();
+                if (!__first58) __cb.AppendLine();
             }
-            if (!__first140) __cb.AppendLine();
+            if (!__first57) __cb.AppendLine();
             __cb.Push("\t");
             #line (1087,2)-(1087,3) 25 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\InternalSyntaxGenerator.mxg"
             __cb.Write("}");
@@ -20190,25 +20190,25 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            var __first142 = true;
+            var __first59 = true;
             #line (1092,4)-(1092,31) 13 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\InternalSyntaxGenerator.mxg"
             foreach (var rule in Rules)
             #line hidden
             
             {
-                if (__first142)
+                if (__first59)
                 {
-                    __first142 = false;
+                    __first59 = false;
                 }
-                var __first143 = true;
+                var __first60 = true;
                 #line (1093,5)-(1093,43) 17 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\InternalSyntaxGenerator.mxg"
                 foreach (var alt in rule.Alternatives)
                 #line hidden
                 
                 {
-                    if (__first143)
+                    if (__first60)
                     {
-                        __first143 = false;
+                        __first60 = false;
                     }
                     __cb.Push("\t\t");
                     #line (1094,3)-(1094,9) 33 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\InternalSyntaxGenerator.mxg"
@@ -20262,9 +20262,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
                     __cb.WriteLine();
                     __cb.Pop();
                 }
-                if (!__first143) __cb.AppendLine();
+                if (!__first60) __cb.AppendLine();
             }
-            if (!__first142) __cb.AppendLine();
+            if (!__first59) __cb.AppendLine();
             __cb.Push("\t");
             #line (1097,2)-(1097,3) 25 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\InternalSyntaxGenerator.mxg"
             __cb.Write("}");
@@ -23555,15 +23555,15 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
             __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
-            var __first144 = true;
+            var __first61 = true;
             #line (1256,4)-(1256,55) 13 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\InternalSyntaxGenerator.mxg"
             foreach (var rule in Tokens.Where(t => !t.IsFixed))
             #line hidden
             
             {
-                if (__first144)
+                if (__first61)
                 {
-                    __first144 = false;
+                    __first61 = false;
                 }
                 __cb.Push("\t\t");
                 #line (1257,3)-(1257,9) 29 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\InternalSyntaxGenerator.mxg"
@@ -23746,26 +23746,26 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
                 __cb.WriteLine();
                 __cb.Pop();
             }
-            if (!__first144) __cb.AppendLine();
-            var __first145 = true;
+            if (!__first61) __cb.AppendLine();
+            var __first62 = true;
             #line (1268,4)-(1268,31) 13 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\InternalSyntaxGenerator.mxg"
             foreach (var rule in Rules)
             #line hidden
             
             {
-                if (__first145)
+                if (__first62)
                 {
-                    __first145 = false;
+                    __first62 = false;
                 }
-                var __first146 = true;
+                var __first63 = true;
                 #line (1269,5)-(1269,43) 17 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\InternalSyntaxGenerator.mxg"
                 foreach (var alt in rule.Alternatives)
                 #line hidden
                 
                 {
-                    if (__first146)
+                    if (__first63)
                     {
-                        __first146 = false;
+                        __first63 = false;
                     }
                     __cb.Push("");
                     #line (1270,2)-(1270,42) 32 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\InternalSyntaxGenerator.mxg"
@@ -23774,9 +23774,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
                     __cb.WriteLine();
                     __cb.Pop();
                 }
-                if (!__first146) __cb.AppendLine();
+                if (!__first63) __cb.AppendLine();
             }
-            if (!__first145) __cb.AppendLine();
+            if (!__first62) __cb.AppendLine();
             __cb.Push("\t");
             #line (1273,2)-(1273,3) 25 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\InternalSyntaxGenerator.mxg"
             __cb.Write("}");
@@ -23842,29 +23842,29 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            var __first147 = true;
+            var __first64 = true;
             #line (1281,5)-(1281,39) 13 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\InternalSyntaxGenerator.mxg"
             foreach (var elem in alt.Elements)
             #line hidden
             
             {
-                if (__first147)
+                if (__first64)
                 {
-                    __first147 = false;
+                    __first64 = false;
                 }
                 #line (1282,6)-(1282,66) 17 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\InternalSyntaxGenerator.mxg"
                 var greenSyntaxNullCondition = elem.GreenSyntaxNullCondition;
                 #line hidden
                 
-                var __first148 = true;
+                var __first65 = true;
                 #line (1283,6)-(1283,47) 17 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\InternalSyntaxGenerator.mxg"
                 if (greenSyntaxNullCondition is not null)
                 #line hidden
                 
                 {
-                    if (__first148)
+                    if (__first65)
                     {
-                        __first148 = false;
+                        __first65 = false;
                     }
                     __cb.Push("\t\t\t");
                     #line (1284,4)-(1284,6) 33 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\InternalSyntaxGenerator.mxg"
@@ -23909,20 +23909,20 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
                     __cb.WriteLine();
                     __cb.Pop();
                 }
-                if (!__first148) __cb.AppendLine();
+                if (!__first65) __cb.AppendLine();
                 #line (1286,6)-(1286,58) 17 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\InternalSyntaxGenerator.mxg"
                 var greenSyntaxCondition = elem.GreenSyntaxCondition;
                 #line hidden
                 
-                var __first149 = true;
+                var __first66 = true;
                 #line (1287,6)-(1287,43) 17 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\InternalSyntaxGenerator.mxg"
                 if (greenSyntaxCondition is not null)
                 #line hidden
                 
                 {
-                    if (__first149)
+                    if (__first66)
                     {
-                        __first149 = false;
+                        __first66 = false;
                     }
                     __cb.Push("\t\t\t");
                     #line (1288,4)-(1288,6) 33 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\InternalSyntaxGenerator.mxg"
@@ -23967,24 +23967,24 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
                     __cb.WriteLine();
                     __cb.Pop();
                 }
-                if (!__first149) __cb.AppendLine();
+                if (!__first66) __cb.AppendLine();
             }
-            if (!__first147) __cb.AppendLine();
+            if (!__first64) __cb.AppendLine();
             __cb.Push("");
             #line (1291,1)-(1291,7) 25 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\InternalSyntaxGenerator.mxg"
             __cb.Write("#endif");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            var __first150 = true;
+            var __first67 = true;
             #line (1292,5)-(1292,33) 13 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\InternalSyntaxGenerator.mxg"
             if (alt.Elements.Count <= 3)
             #line hidden
             
             {
-                if (__first150)
+                if (__first67)
                 {
-                    __first150 = false;
+                    __first67 = false;
                 }
                 __cb.Push("\t\t\t");
                 #line (1293,4)-(1293,7) 29 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\InternalSyntaxGenerator.mxg"
@@ -24035,15 +24035,15 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
                 #line (1294,87)-(1294,101) 28 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\InternalSyntaxGenerator.mxg"
                 __cb.Write(alt.CSharpName);
                 #line hidden
-                var __first151 = true;
+                var __first68 = true;
                 #line (1294,103)-(1294,137) 17 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\InternalSyntaxGenerator.mxg"
                 foreach (var elem in alt.Elements)
                 #line hidden
                 
                 {
-                    if (__first151)
+                    if (__first68)
                     {
-                        __first151 = false;
+                        __first68 = false;
                     }
                     #line (1294,138)-(1294,139) 33 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\InternalSyntaxGenerator.mxg"
                     __cb.Write(",");
@@ -24157,15 +24157,15 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
                 #line (1297,55)-(1297,69) 28 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\InternalSyntaxGenerator.mxg"
                 __cb.Write(alt.CSharpName);
                 #line hidden
-                var __first152 = true;
+                var __first69 = true;
                 #line (1297,71)-(1297,105) 17 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\InternalSyntaxGenerator.mxg"
                 foreach (var elem in alt.Elements)
                 #line hidden
                 
                 {
-                    if (__first152)
+                    if (__first69)
                     {
-                        __first152 = false;
+                        __first69 = false;
                     }
                     #line (1297,106)-(1297,107) 33 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\InternalSyntaxGenerator.mxg"
                     __cb.Write(",");
@@ -24251,9 +24251,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
             #line hidden
             
             {
-                if (__first150)
+                if (__first67)
                 {
-                    __first150 = false;
+                    __first67 = false;
                 }
                 __cb.Push("\t\t\t");
                 #line (1305,4)-(1305,10) 29 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\InternalSyntaxGenerator.mxg"
@@ -24283,15 +24283,15 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
                 #line (1305,49)-(1305,63) 28 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\InternalSyntaxGenerator.mxg"
                 __cb.Write(alt.CSharpName);
                 #line hidden
-                var __first153 = true;
+                var __first70 = true;
                 #line (1305,65)-(1305,99) 17 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\InternalSyntaxGenerator.mxg"
                 foreach (var elem in alt.Elements)
                 #line hidden
                 
                 {
-                    if (__first153)
+                    if (__first70)
                     {
-                        __first153 = false;
+                        __first70 = false;
                     }
                     #line (1305,100)-(1305,101) 33 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\InternalSyntaxGenerator.mxg"
                     __cb.Write(",");
@@ -24309,7 +24309,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
                 __cb.WriteLine();
                 __cb.Pop();
             }
-            if (!__first150) __cb.AppendLine();
+            if (!__first67) __cb.AppendLine();
             __cb.Push("\t\t");
             #line (1307,3)-(1307,4) 25 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Bootstrap\MetaDslx.Bootstrap.MetaCompiler\Generators\InternalSyntaxGenerator.mxg"
             __cb.Write("}");

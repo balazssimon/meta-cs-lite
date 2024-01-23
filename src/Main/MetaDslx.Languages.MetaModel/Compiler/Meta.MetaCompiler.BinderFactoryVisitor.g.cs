@@ -800,48 +800,25 @@ public virtual void VisitMetaParameter(MetaParameterSyntax node)
 
 public virtual void VisitTypeReferenceTokens(TypeReferenceTokensSyntax node)
 {
-	if (node.Token.GetMetaKind() != MetaSyntaxKind.None)
-	{
-	    switch (node.Token.GetMetaKind())
-	    {
-	        case MetaSyntaxKind.KBool:
-	            var __annot0 = new MetaDslx.CodeAnalysis.Binding.ValueBinder(type: typeof(MetaDslx.CodeAnalysis.MetaType));
-	            this.Begin(__annot0, node.Token);
-	            try
-	            {
-	                //this.VisitToken(node.Token);
-	            }
-	            finally
-	            {
-	                this.End(__annot0);
-	            }
-	            break;
-	        case MetaSyntaxKind.KInt:
-	            //this.VisitToken(node.Token);
-	            break;
-	        case MetaSyntaxKind.KString:
-	            //this.VisitToken(node.Token);
-	            break;
-	        case MetaSyntaxKind.KType:
-	            //this.VisitToken(node.Token);
-	            break;
-	        case MetaSyntaxKind.KSymbol:
-	            //this.VisitToken(node.Token);
-	            break;
-	        case MetaSyntaxKind.KObject:
-	            //this.VisitToken(node.Token);
-	            break;
-	        case MetaSyntaxKind.KVoid:
-	            //this.VisitToken(node.Token);
-	            break;
-	        default:
-	            break;
-	    }
-	}
-	else
-	{
-	    // default
-	}
+
+			if (node.Token.GetMetaKind() != MetaSyntaxKind.None)
+			{
+				//switch!!!
+				var __annot0 = new MetaDslx.CodeAnalysis.Binding.ValueBinder(type: typeof(MetaDslx.CodeAnalysis.MetaType));
+				this.Begin(__annot0, node.Token);
+				try
+				{
+					//this.VisitToken(node.Token);
+				}
+				finally
+				{
+					this.End(__annot0);
+				}
+			}
+			else
+			{
+				// default
+			}
 	    
 }
 
