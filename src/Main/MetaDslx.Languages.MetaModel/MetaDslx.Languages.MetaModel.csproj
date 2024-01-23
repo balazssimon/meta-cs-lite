@@ -6,10 +6,17 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<AdditionalFiles Include="Generators\*.mgen" />
-		<AdditionalFiles Include="Model\*.mm" />
-		<AdditionalFiles Include="Language\*.mlang" />
+		<AdditionalFiles Include="Generators\*.mxg" />
+		<AdditionalFiles Include="Model\*.mxm" />
+		<AdditionalFiles Include="Language\*.mxl" />
 	</ItemGroup>
+
+	<ItemGroup>
+	  <AdditionalFiles Remove="Generators\MetaModelGenerator.mxg" />
+	  <AdditionalFiles Remove="Language\Meta.mxl" />
+	  <AdditionalFiles Remove="Model\Meta.mxm" />
+	</ItemGroup>
+
 	<ItemGroup>
 		<PackageReference Include="Microsoft.CodeAnalysis.Common" Version="$(MicrosoftCodeAnalysisCSharpVersion)" PrivateAssets="all" />
 		<PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="$(MicrosoftCodeAnalysisCSharpVersion)" PrivateAssets="all" />

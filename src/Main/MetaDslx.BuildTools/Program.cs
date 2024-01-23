@@ -23,7 +23,7 @@ namespace MetaDslx.BuildTools
         private const bool Bootstrap = true;
         private static readonly string[] BootstrapProjects =
         [
-            //@"..\..\..\..\MetaDslx.Languages.MetaModel",
+            @"..\..\..\..\MetaDslx.Languages.MetaModel",
             //@"..\..\..\..\MetaDslx.Languages.MetaCompiler",
             //@"..\..\..\..\MetaDslx.Languages.MetaCompiler.Antlr",
             @"..\..\..\..\..\Bootstrap\MetaDslx.Bootstrap.MetaCompiler"
@@ -119,9 +119,9 @@ namespace MetaDslx.BuildTools
             using (var workspace = MSBuildWorkspace.Create())
             {
                 var project = await workspace.OpenProjectAsync(projectFile);
-                var mgenFiles = project.AdditionalDocuments.Where(doc => Path.GetExtension(doc.FilePath) == ".mgen").ToImmutableArray();
-                var mmFiles = project.AdditionalDocuments.Where(doc => Path.GetExtension(doc.FilePath) == ".mm").ToImmutableArray();
-                var mlangFiles = project.AdditionalDocuments.Where(doc => Path.GetExtension(doc.FilePath) == ".mlang").ToImmutableArray();
+                var mgenFiles = project.AdditionalDocuments.Where(doc => Path.GetExtension(doc.FilePath) == ".mxg").ToImmutableArray();
+                var mmFiles = project.AdditionalDocuments.Where(doc => Path.GetExtension(doc.FilePath) == ".mxm").ToImmutableArray();
+                var mlangFiles = project.AdditionalDocuments.Where(doc => Path.GetExtension(doc.FilePath) == ".mxl").ToImmutableArray();
                 foreach (var mgenFile in mgenFiles)
                 {
                     await CompileMetaGenerator(mgenFile);
