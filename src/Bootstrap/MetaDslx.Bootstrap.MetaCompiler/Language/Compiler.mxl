@@ -14,7 +14,7 @@ using MetaDslx.Bootstrap.MetaCompiler.Symbols;
 language Compiler;
 
 Main returns Namespace:
-	'namespace' name=[Name(qualifierProperty:Declarations)]Qualifier ';'
+	'namespace' [Name(qualifierProperty:Declarations)]Qualifier ';'
 	Using*
 	[Scope](declarations+=LanguageDeclaration)
 	eof;
@@ -22,7 +22,7 @@ Main returns Namespace:
 Using returns ImportSymbol : 'using' namespaces+=#{NamespaceSymbol|Qualifier} ';';
 
 LanguageDeclaration returns MetaDslx.Bootstrap.MetaCompiler.Model.Language: 
-	'language' name=Name ';' 
+	'language' Name ';' 
 	grammar=Grammar;
 
 Grammar: [Scope](grammarRules+=GrammarRule*);
@@ -30,19 +30,22 @@ Grammar: [Scope](grammarRules+=GrammarRule*);
 GrammarRule: Rule | LexerRule;
 
 Rule: annotations+=ParserAnnotation* [Name](returnType=TypeReferenceIdentifier | Identifier 'returns' returnType=TypeReference) ':' alternatives+=Alternative ('|' alternatives+=Alternative)* ';';
-Alternative: (annotations+=ParserAnnotation* 'alt' name=Name ('returns' returnType=TypeReference)? ':')? elements+=Element+ ('=>' returnValue=Expression)?;
-Element: (nameAnnotations+=ParserAnnotation* name=Name assignment=Assignment)? valueAnnotations+=ParserAnnotation* value=ElementValue multiplicity=Multiplicity?;
+Alternative: (annotations+=ParserAnnotation* 'alt' Name ('returns' returnType=TypeReference)? ':')? elements+=Element+ ('=>' returnValue=Expression)?;
+Element: (annotations+=ParserAnnotation* Name assignment=Assignment)? value=ElementValue multiplicity=Multiplicity?;
 ElementValue: Block | Eof1 | Fixed | RuleRef;
-Block: '(' alternatives+=Alternative ('|' alternatives+=Alternative)* ')';
-RuleRef: grammarRule=#GrammarRule | '#' referencedTypes+=TypeReference | '#{' referencedTypes+=TypeReference (',' referencedTypes+=TypeReference)* ('|' grammarRule=#GrammarRule)? '}' ;
+Block: annotations+=ParserAnnotation* '(' alternatives+=BlockAlternative ('|' alternatives+=BlockAlternative)* ')';
+BlockAlternative returns Alternative: elements+=Element+ ('=>' returnValue=Expression)?;
+RuleRef
+	: annotations+=ParserAnnotation* grammarRule=#GrammarRule 
+	| annotations+=ParserAnnotation* '#' referencedTypes+=TypeReference 
+	| annotations+=ParserAnnotation* '#{' referencedTypes+=TypeReference (',' referencedTypes+=TypeReference)* ('|' grammarRule=#GrammarRule)? '}' 
+	;
 Eof1 returns Eof: 'eof';
-Fixed: text=TString;
-SeparatedList: '(' item= ')';
-SeparatedListItem returns Element: (nameAnnotations+=ParserAnnotation* name=Name assignment=Assignment)? valueAnnotations+=ParserAnnotation* value=RuleRef;
+Fixed: annotations+=ParserAnnotation* text=TString;
 
 LexerRule: Token | Fragment;
-Token: annotations+=LexerAnnotation* ('token' name=Name ('returns' returnType=TypeReference)? | isTrivia?='hidden' name=Name) ':' alternatives+=LAlternative ('|' alternatives+=LAlternative)* ';';
-Fragment: 'fragment' name=Name ':' alternatives+=LAlternative ('|' alternatives+=LAlternative)* ';';
+Token: annotations+=LexerAnnotation* ('token' Name ('returns' returnType=TypeReference)? | isTrivia?='hidden' Name) ':' alternatives+=LAlternative ('|' alternatives+=LAlternative)* ';';
+Fragment: 'fragment' Name ':' alternatives+=LAlternative ('|' alternatives+=LAlternative)* ';';
 LAlternative: elements+=LElement*;
 LElement: isNegated?='~'? value=LElementValue multiplicity=Multiplicity?;
 LElementValue: LBlock | LFixed | LWildCard | LRange | LReference /*| LSet*/;
@@ -111,9 +114,9 @@ token TInteger returns int32: '0'| '1'..'9' ('0'..'9')* ;
 token TDecimal returns double: ('0'|'1'..'9' ('0'..'9')*) '.' ('0'..'9')+ ;
 
 [DefaultIdentifier]
-token TIdentifier: ('_'|'a'..'z'|'A'..'Z')+('_'|'a'..'z'|'A'..'Z'|'0'..'9')*;
+token TIdentifier returns string: ('_'|'a'..'z'|'A'..'Z')+('_'|'a'..'z'|'A'..'Z'|'0'..'9')*;
 [Identifier]
-token TVerbatimIdentifier: '@'('_'|'a'..'z'|'A'..'Z')+('_'|'a'..'z'|'A'..'Z'|'0'..'9')*;
+token TVerbatimIdentifier returns string: '@'('_'|'a'..'z'|'A'..'Z')+('_'|'a'..'z'|'A'..'Z'|'0'..'9')*;
 
 [DefaultSeparator]
 token TComma: ',' ;

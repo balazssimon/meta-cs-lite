@@ -16,6 +16,7 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
     public class MetaGeneratorParser
     {
         private string _filePath;
+        private string _fileName;
         private SourceText _templateCode;
         private string? _compiledCode;
         private MetaGeneratorLexer _lexer;
@@ -38,6 +39,7 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
         public MetaGeneratorParser(string filePath, SourceText templateCode)
         {
             _filePath = filePath;
+            _fileName = Path.GetFileName(filePath);
             _templateCode = templateCode;
             _lastIndent = string.Empty;
         }
@@ -1055,7 +1057,7 @@ namespace MetaDslx.Languages.MetaGenerator.Syntax
             _osb.AppendLine();
             var start = inputSpan.LinePositionSpan.Start;
             var end = inputSpan.LinePositionSpan.End;
-            _osb.WriteLine($"#line ({start.Line + 1},{start.Character + 1})-({end.Line + 1},{end.Character + 1}) {ignoreChars + 1} \"{_filePath}\"");
+            _osb.WriteLine($"#line ({start.Line + 1},{start.Character + 1})-({end.Line + 1},{end.Character + 1}) {ignoreChars + 1} {_fileName.EncodeString()}");
         }
 
         private void EndOutputSpan(string? name = null)

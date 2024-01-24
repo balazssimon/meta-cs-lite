@@ -3,6 +3,8 @@
 
 namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 {
+    using System.Linq;
+
 	public class CompilerSyntaxFacts : global::MetaDslx.CodeAnalysis.Syntax.SyntaxFacts
 	{
 		public CompilerSyntaxKind DefaultWhitespaceKind => CompilerSyntaxKind.TWhitespace;
@@ -29,7 +31,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 				case CompilerSyntaxKind.KUsing:
 				case CompilerSyntaxKind.KLanguage:
 				case CompilerSyntaxKind.TColon:
-				case CompilerSyntaxKind.KBlock:
 				case CompilerSyntaxKind.TLParen:
 				case CompilerSyntaxKind.TRParen:
 				case CompilerSyntaxKind.THash:
@@ -101,7 +102,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 				case CompilerSyntaxKind.KUsing:
 				case CompilerSyntaxKind.KLanguage:
 				case CompilerSyntaxKind.TColon:
-				case CompilerSyntaxKind.KBlock:
 				case CompilerSyntaxKind.TLParen:
 				case CompilerSyntaxKind.TRParen:
 				case CompilerSyntaxKind.THash:
@@ -170,8 +170,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 					return CompilerSyntaxKind.KLanguage;
 				case ":": 
 					return CompilerSyntaxKind.TColon;
-				case "block": 
-					return CompilerSyntaxKind.KBlock;
 				case "(": 
 					return CompilerSyntaxKind.TLParen;
 				case ")": 
@@ -303,8 +301,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 					return "KLanguage";
 				case CompilerSyntaxKind.TColon: 
 					return "TColon";
-				case CompilerSyntaxKind.KBlock: 
-					return "KBlock";
 				case CompilerSyntaxKind.TLParen: 
 					return "TLParen";
 				case CompilerSyntaxKind.TRParen: 
@@ -407,36 +403,34 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	return "Main";
 				case CompilerSyntaxKind.Using: 
 	return "Using";
-				case CompilerSyntaxKind.Declarations: 
-	return "Declarations";
 				case CompilerSyntaxKind.LanguageDeclaration: 
 	return "LanguageDeclaration";
 				case CompilerSyntaxKind.Grammar: 
 	return "Grammar";
-				case CompilerSyntaxKind.GrammarRuleAlt1: 
-	return "GrammarRuleAlt1";
-				case CompilerSyntaxKind.Block: 
-	return "Block";
+				case CompilerSyntaxKind.Rule: 
+	return "Rule";
 				case CompilerSyntaxKind.Token: 
 	return "Token";
 				case CompilerSyntaxKind.Fragment: 
 	return "Fragment";
-				case CompilerSyntaxKind.Rule: 
-	return "Rule";
 				case CompilerSyntaxKind.Alternative: 
 	return "Alternative";
 				case CompilerSyntaxKind.Element: 
 	return "Element";
-				case CompilerSyntaxKind.ElementValueTokens: 
-	return "ElementValueTokens";
-				case CompilerSyntaxKind.BlockInline: 
-	return "BlockInline";
+				case CompilerSyntaxKind.Block: 
+	return "Block";
+				case CompilerSyntaxKind.Eof1: 
+	return "Eof1";
+				case CompilerSyntaxKind.Fixed: 
+	return "Fixed";
 				case CompilerSyntaxKind.RuleRefAlt1: 
 	return "RuleRefAlt1";
 				case CompilerSyntaxKind.RuleRefAlt2: 
 	return "RuleRefAlt2";
 				case CompilerSyntaxKind.RuleRefAlt3: 
 	return "RuleRefAlt3";
+				case CompilerSyntaxKind.BlockAlternative: 
+	return "BlockAlternative";
 				case CompilerSyntaxKind.LAlternative: 
 	return "LAlternative";
 				case CompilerSyntaxKind.LElement: 
@@ -459,44 +453,38 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	return "ParserAnnotation";
 				case CompilerSyntaxKind.LexerAnnotation: 
 	return "LexerAnnotation";
-				case CompilerSyntaxKind.AnnotationArguments: 
-	return "AnnotationArguments";
 				case CompilerSyntaxKind.AnnotationArgument: 
 	return "AnnotationArgument";
-				case CompilerSyntaxKind.ReturnTypeIdentifierAlt1: 
-	return "ReturnTypeIdentifierAlt1";
-				case CompilerSyntaxKind.ReturnTypeIdentifierAlt2: 
-	return "ReturnTypeIdentifierAlt2";
-				case CompilerSyntaxKind.ReturnTypeQualifierAlt1: 
-	return "ReturnTypeQualifierAlt1";
-				case CompilerSyntaxKind.ReturnTypeQualifierAlt2: 
-	return "ReturnTypeQualifierAlt2";
+				case CompilerSyntaxKind.TypeReferenceIdentifierAlt1: 
+	return "TypeReferenceIdentifierAlt1";
+				case CompilerSyntaxKind.TypeReferenceIdentifierAlt2: 
+	return "TypeReferenceIdentifierAlt2";
+				case CompilerSyntaxKind.TypeReferenceAlt1: 
+	return "TypeReferenceAlt1";
+				case CompilerSyntaxKind.TypeReferenceAlt2: 
+	return "TypeReferenceAlt2";
 				case CompilerSyntaxKind.Name: 
 	return "Name";
 				case CompilerSyntaxKind.Identifier: 
 	return "Identifier";
-				case CompilerSyntaxKind.SimpleIdentifier: 
-	return "SimpleIdentifier";
+				case CompilerSyntaxKind.MainBlock1: 
+	return "MainBlock1";
 				case CompilerSyntaxKind.RuleBlock1Alt1: 
 	return "RuleBlock1Alt1";
 				case CompilerSyntaxKind.RuleBlock1Alt2: 
 	return "RuleBlock1Alt2";
 				case CompilerSyntaxKind.RuleAlternativesBlock: 
 	return "RuleAlternativesBlock";
-				case CompilerSyntaxKind.BlockBlock1: 
-	return "BlockBlock1";
-				case CompilerSyntaxKind.BlockAlternativesBlock: 
-	return "BlockAlternativesBlock";
-				case CompilerSyntaxKind.BlockInlineAlternativesBlock: 
-	return "BlockInlineAlternativesBlock";
 				case CompilerSyntaxKind.AlternativeBlock1: 
 	return "AlternativeBlock1";
-				case CompilerSyntaxKind.AlternativeBlock1Block1: 
-	return "AlternativeBlock1Block1";
 				case CompilerSyntaxKind.AlternativeBlock2: 
 	return "AlternativeBlock2";
 				case CompilerSyntaxKind.ElementBlock1: 
 	return "ElementBlock1";
+				case CompilerSyntaxKind.BlockAlternativesBlock: 
+	return "BlockAlternativesBlock";
+				case CompilerSyntaxKind.BlockAlternativeBlock1: 
+	return "BlockAlternativeBlock1";
 				case CompilerSyntaxKind.RuleRefAlt3ReferencedTypesBlock: 
 	return "RuleRefAlt3ReferencedTypesBlock";
 				case CompilerSyntaxKind.RuleRefAlt3Block1: 
@@ -505,8 +493,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	return "TokenBlock1Alt1";
 				case CompilerSyntaxKind.TokenBlock1Alt2: 
 	return "TokenBlock1Alt2";
-				case CompilerSyntaxKind.TokenBlock1Alt1Block1: 
-	return "TokenBlock1Alt1Block1";
 				case CompilerSyntaxKind.TokenAlternativesBlock: 
 	return "TokenAlternativesBlock";
 				case CompilerSyntaxKind.FragmentAlternativesBlock: 
@@ -519,16 +505,20 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	return "SingleExpressionBlock1Alt2";
 				case CompilerSyntaxKind.SingleExpressionBlock1Alt3: 
 	return "SingleExpressionBlock1Alt3";
-				case CompilerSyntaxKind.ArrayExpressionItemsBlock: 
-	return "ArrayExpressionItemsBlock";
-				case CompilerSyntaxKind.AnnotationArgumentsArgumentsBlock: 
-	return "AnnotationArgumentsArgumentsBlock";
+				case CompilerSyntaxKind.ParserAnnotationArgumentsBlock: 
+	return "ParserAnnotationArgumentsBlock";
+				case CompilerSyntaxKind.LexerAnnotationArgumentsBlock: 
+	return "LexerAnnotationArgumentsBlock";
 				case CompilerSyntaxKind.AnnotationArgumentBlock1: 
 	return "AnnotationArgumentBlock1";
 				case CompilerSyntaxKind.MainQualifierBlock: 
 	return "MainQualifierBlock";
-				case CompilerSyntaxKind.SingleExpressionBlock1Alt3SimpleQualifierBlock: 
-	return "SingleExpressionBlock1Alt3SimpleQualifierBlock";
+				case CompilerSyntaxKind.AlternativeBlock1Block1: 
+	return "AlternativeBlock1Block1";
+				case CompilerSyntaxKind.TokenBlock1Alt1Block1: 
+	return "TokenBlock1Alt1Block1";
+				case CompilerSyntaxKind.ArrayExpressionItemsBlock: 
+	return "ArrayExpressionItemsBlock";
 default:
 	return string.Empty;
 }
@@ -557,8 +547,6 @@ public string GetText(CompilerSyntaxKind kind)
 			return "language";
 		case CompilerSyntaxKind.TColon: 
 			return ":";
-		case CompilerSyntaxKind.KBlock: 
-			return "block";
 		case CompilerSyntaxKind.TLParen: 
 			return "(";
 		case CompilerSyntaxKind.TRParen: 
@@ -675,7 +663,6 @@ public bool IsTrivia(CompilerSyntaxKind kind)
 		case CompilerSyntaxKind.KNamespace: 
 		case CompilerSyntaxKind.KUsing: 
 		case CompilerSyntaxKind.KLanguage: 
-		case CompilerSyntaxKind.KBlock: 
 		case CompilerSyntaxKind.KEof: 
 		case CompilerSyntaxKind.KFragment: 
 		case CompilerSyntaxKind.KBool: 
@@ -703,12 +690,11 @@ public bool IsTrivia(CompilerSyntaxKind kind)
 	return IsReservedKeyword((CompilerSyntaxKind)rawKind);
         }
 
-        public IEnumerable<CompilerSyntaxKind> GetReservedKeywordKinds()
+        public global::System.Collections.Generic.IEnumerable<CompilerSyntaxKind> GetReservedKeywordKinds()
         {
 	yield return CompilerSyntaxKind.KNamespace;
 	yield return CompilerSyntaxKind.KUsing;
 	yield return CompilerSyntaxKind.KLanguage;
-	yield return CompilerSyntaxKind.KBlock;
 	yield return CompilerSyntaxKind.KEof;
 	yield return CompilerSyntaxKind.KFragment;
 	yield return CompilerSyntaxKind.KBool;
@@ -728,7 +714,7 @@ public bool IsTrivia(CompilerSyntaxKind kind)
 	yield break;
         }
 
-        protected override IEnumerable<int> GetReservedKeywordRawKinds()
+        protected override global::System.Collections.Generic.IEnumerable<int> GetReservedKeywordRawKinds()
         {
 	return GetReservedKeywordKinds().Select(kind => (int)kind);
         }
@@ -743,8 +729,6 @@ public bool IsTrivia(CompilerSyntaxKind kind)
 			return CompilerSyntaxKind.KUsing;
 		case "language": 
 			return CompilerSyntaxKind.KLanguage;
-		case "block": 
-			return CompilerSyntaxKind.KBlock;
 		case "eof": 
 			return CompilerSyntaxKind.KEof;
 		case "fragment": 
@@ -801,12 +785,12 @@ public bool IsTrivia(CompilerSyntaxKind kind)
 	return IsContextualKeyword((CompilerSyntaxKind)rawKind);
         }
 
-        public IEnumerable<CompilerSyntaxKind> GetContextualKeywordKinds()
+        public global::System.Collections.Generic.IEnumerable<CompilerSyntaxKind> GetContextualKeywordKinds()
         {
 	yield break;
         }
 
-protected override IEnumerable<int> GetContextualKeywordRawKinds()
+protected override global::System.Collections.Generic.IEnumerable<int> GetContextualKeywordRawKinds()
 {
 	return GetContextualKeywordKinds().Select(kind => (int)kind);
 }

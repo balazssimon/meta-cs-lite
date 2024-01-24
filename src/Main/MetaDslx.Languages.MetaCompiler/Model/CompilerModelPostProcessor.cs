@@ -33,12 +33,17 @@ namespace MetaDslx.Languages.MetaCompiler.Model
         private CompilerModelFactory f;
 
 
-        public CompilerModelPostProcessor(MetaDslx.Modeling.Model model)
+        public CompilerModelPostProcessor(Language language)
         {
-            _model = model;
+            _language = language;
+            _grammar = _language?.Grammar;
+            _model = _language.MModel;
         }
 
         public MetaDslx.Modeling.Model Model => _model;
+
+        public ImmutableArray<Rule> AllRules => _language.GetAllContainedObjects<Rule>();
+        public ImmutableArray<Token> AllTokens => _language.GetAllContainedObjects<Token>();
 
         public ImmutableArray<Diagnostic> GetDiagnostics()
         {
@@ -50,8 +55,6 @@ namespace MetaDslx.Languages.MetaCompiler.Model
             if (_diagnostics is not null) return;
             _cancellationToken = cancellationToken;
             _diagnostics = new DiagnosticBag();
-            _language = _model.Objects.OfType<Language>().FirstOrDefault();
-            _grammar = _language?.Grammar;
             if (_grammar is null) return;
             f = new CompilerModelFactory(_model);
             _ruleNames = new HashSet<string>();
@@ -72,13 +75,13 @@ namespace MetaDslx.Languages.MetaCompiler.Model
         private void AddTokens()
         {
             AddFixedTokens();
-            AddFixedTokensFromRules(_model.Objects.OfType<Rule>().ToImmutableArray());
+            AddFixedTokensFromRules(AllRules);
             AddNonFixedTokens();
         }
 
         private void AddFixedTokens()
         {
-            foreach (var fixedToken in _grammar.GrammarRules.OfType<Token>().Where(t => t.IsFixed))
+            foreach (var fixedToken in AllTokens.Where(t => t.IsFixed))
             {
                 AddTokenKindFor(fixedToken);
                 if (!fixedToken.ReturnType.IsNull)
@@ -153,7 +156,7 @@ namespace MetaDslx.Languages.MetaCompiler.Model
 
         private void AddNonFixedTokens()
         {
-            foreach (var token in _grammar.GrammarRules.OfType<Token>().Where(t => !t.IsFixed))
+            foreach (var token in AllTokens.Where(t => !t.IsFixed))
             {
                 AddTokenKindFor(token);
                 if (!token.ReturnType.IsNull)
@@ -326,7 +329,7 @@ namespace MetaDslx.Languages.MetaCompiler.Model
 
         private void AddRules()
         {
-            var allRules = _model.Objects.OfType<Rule>().ToList();
+            var allRules = AllRules;
             foreach (var rule in allRules)
             {
                 AddBinders(rule.Binders, rule.Annotations);
@@ -348,7 +351,7 @@ namespace MetaDslx.Languages.MetaCompiler.Model
             while (unusedRules)
             {
                 unusedRules = false;
-                for (int i = allRules.Count - 1; i >= 0; --i)
+                for (int i = allRules.Length - 1; i >= 0; --i)
                 {
                     var rule = allRules[i];
                     if (rule == _grammar.MainRule) continue;
@@ -484,8 +487,8 @@ namespace MetaDslx.Languages.MetaCompiler.Model
 
         private void MergeSingleTokenAlts()
         {
-            var rules = _model.Objects.OfType<Rule>().ToList();
-            for (int i = 0; i < rules.Count; ++i)
+            var rules = AllRules;
+            for (int i = 0; i < rules.Length; ++i)
             {
                 var rule = rules[i];
                 var singleTokenAlts = rule.Alternatives.Where(IsSingleTokenAlt).ToImmutableArray();
@@ -540,8 +543,8 @@ namespace MetaDslx.Languages.MetaCompiler.Model
         
         private void MergeSeparatedLists()
         {
-            var rules = _model.Objects.OfType<Rule>().ToList();
-            for (int i = 0; i < rules.Count; ++i)
+            var rules = AllRules;
+            for (int i = 0; i < rules.Length; ++i)
             {
                 var rule = rules[i];
                 for (int j = 0; j < rule.Alternatives.Count; ++j)
@@ -1020,7 +1023,7 @@ namespace MetaDslx.Languages.MetaCompiler.Model
 
         private void ComputeContainsBinders()
         {
-            var grammarRules = _model.Objects.OfType<GrammarRule>().ToList();
+            var grammarRules = _grammar.GrammarRules.ToImmutableArray();
             var updated = true;
             while (updated)
             {

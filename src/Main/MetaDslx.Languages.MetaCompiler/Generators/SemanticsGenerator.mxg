@@ -1,6 +1,7 @@
 namespace MetaDslx.Languages.MetaCompiler.Generators
 
 using MetaDslx.Languages.MetaCompiler.Model
+using System
 using System.Collections.Generic
 using System.Collections.Immutable
 using System.Linq

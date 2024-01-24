@@ -87,16 +87,197 @@ namespace MetaDslx.CodeAnalysis
             }
         }
 
-        public string FullName
+        public string MetadataName
         {
             get
             {
                 if (IsNull) return null;
+                switch (this.SpecialType)
+                {
+                    case SpecialType.None:
+                        return null;
+                    case SpecialType.System_Object:
+                        return "System.Object";
+                    case SpecialType.System_Enum:
+                        return "System.Enum";
+                    case SpecialType.System_MulticastDelegate:
+                        return "System.MulticastDelegate";
+                    case SpecialType.System_Delegate:
+                        return "System.Delegate";
+                    case SpecialType.System_ValueType:
+                        return "System.ValueType";
+                    case SpecialType.System_Void:
+                        return "System.Void";
+                    case SpecialType.System_Boolean:
+                        return "System.Boolean";
+                    case SpecialType.System_Char:
+                        return "System.Char";
+                    case SpecialType.System_SByte:
+                        return "System.SByte";
+                    case SpecialType.System_Byte:
+                        return "System.Byte";
+                    case SpecialType.System_Int16:
+                        return "System.Int16";
+                    case SpecialType.System_UInt16:
+                        return "System.UInt16";
+                    case SpecialType.System_Int32:
+                        return "System.Int32";
+                    case SpecialType.System_UInt32:
+                        return "System.UInt32";
+                    case SpecialType.System_Int64:
+                        return "System.Int64";
+                    case SpecialType.System_UInt64:
+                        return "System.UInt64";
+                    case SpecialType.System_Decimal:
+                        return "System.Decimal";
+                    case SpecialType.System_Single:
+                        return "System.Single";
+                    case SpecialType.System_Double:
+                        return "System.Double";
+                    case SpecialType.System_String:
+                        return "System.String";
+                    case SpecialType.System_IntPtr:
+                        return "System.IntPtr";
+                    case SpecialType.System_UIntPtr:
+                        return "System.UIntPtr";
+                    case SpecialType.System_Array:
+                        return "System.Array";
+                    case SpecialType.System_Collections_IEnumerable:
+                        return "System.Collections.IEnumerable";
+                    case SpecialType.System_Collections_Generic_IEnumerable_T:
+                        return "System.Collections.Generic.IEnumerable`1";
+                    case SpecialType.System_Collections_Generic_IList_T:
+                        return "System.Collections.Generic.IList`1";
+                    case SpecialType.System_Collections_Generic_ICollection_T:
+                        return "System.Collections.Generic.ICollection`1";
+                    case SpecialType.System_Collections_IEnumerator:
+                        return "System.Collections.IEnumerator";
+                    case SpecialType.System_Collections_Generic_IEnumerator_T:
+                        return "System.Collections.Generic.IEnumerator`1";
+                    case SpecialType.System_Collections_Generic_IReadOnlyList_T:
+                        return "System.Collections.Generic.IReadOnlyList`1";
+                    case SpecialType.System_Collections_Generic_IReadOnlyCollection_T:
+                        return "System.Collections.Generic.IReadOnlyCollection`1";
+                    case SpecialType.System_Nullable_T:
+                        return "System.Nullable`1";
+                    case SpecialType.System_DateTime:
+                        return "System.DateTime";
+                    case SpecialType.System_Runtime_CompilerServices_IsVolatile:
+                        return "System.Runtime.CompilerServices.IsVolatile";
+                    case SpecialType.System_IDisposable:
+                        return "System.IDisposable";
+                    case SpecialType.System_TypedReference:
+                        return "System.TypedReference";
+                    case SpecialType.System_ArgIterator:
+                        return "System.ArgIterator";
+                    case SpecialType.System_RuntimeArgumentHandle:
+                        return "System.RuntimeArgumentHandle";
+                    case SpecialType.System_RuntimeFieldHandle:
+                        return "System.RuntimeFieldHandle";
+                    case SpecialType.System_RuntimeMethodHandle:
+                        return "System.RuntimeMethodHandle";
+                    case SpecialType.System_RuntimeTypeHandle:
+                        return "System.RuntimeTypeHandle";
+                    case SpecialType.System_IAsyncResult:
+                        return "System.IAsyncResult";
+                    case SpecialType.System_AsyncCallback:
+                        return "System.AsyncCallback";
+                    case SpecialType.System_Runtime_CompilerServices_RuntimeFeature:
+                        return "System.Runtime.CompilerServices.RuntimeFeature";
+                    case SpecialType.System_Runtime_CompilerServices_PreserveBaseOverridesAttribute:
+                        return "System.Runtime.CompilerServices.PreserveBaseOverridesAttribute";
+                    case SpecialType.System_Type:
+                        return "System.Type";
+                    case SpecialType.MetaDslx_CodeAnalysis_MetaType:
+                        return "MetaDslx.CodeAnalysis.MetaType";
+                    case SpecialType.MetaDslx_CodeAnalysis_MetaSymbol:
+                        return "MetaDslx.CodeAnalysis.MetaSymbol";
+                    case SpecialType.MetaDslx_Modeling_Model:
+                        return "MetaDslx.Modeling.Model";
+                    case SpecialType.MetaDslx_Modeling_ModelGroup:
+                        return "MetaDslx.Modeling.ModelGroup";
+                    case SpecialType.MetaDslx_Modeling_MetaModel:
+                        return "MetaDslx.Modeling.MetaModel";
+                    case SpecialType.MetaDslx_Modeling_IModelObject:
+                        return "MetaDslx.Modeling.IModelObject";
+                    case SpecialType.MetaDslx_Modeling_ModelObject:
+                        return "MetaDslx.Modeling.ModelObject";
+                    case SpecialType.MetaDslx_Modeling_ModelProperty:
+                        return "MetaDslx.Modeling.ModelProperty";
+                    case SpecialType.MetaDslx_Modeling_IModelCollection:
+                        return "MetaDslx.Modeling.IModelCollection";
+                    case SpecialType.MetaDslx_CodeAnalysis_Symbol:
+                        return "MetaDslx.CodeAnalysis.Symbol";
+                    case SpecialType.MetaDslx_CodeAnalysis_AssemblySymbol:
+                        return "MetaDslx.CodeAnalysis.AssemblySymbol";
+                    case SpecialType.MetaDslx_CodeAnalysis_ModuleSymbol:
+                        return "MetaDslx.CodeAnalysis.ModuleSymbol";
+                    case SpecialType.MetaDslx_CodeAnalysis_TypeSymbol:
+                        return "MetaDslx.CodeAnalysis.TypeSymbol";
+                    case SpecialType.MetaDslx_CodeAnalysis_NamespaceSymbol:
+                        return "MetaDslx.CodeAnalysis.NamespaceSymbol";
+                    default:
+                        break;
+                }
                 if (IsName) return (string)_original;
                 if (IsType) return OriginalType.FullName;
                 if (IsTypeSymbol) return SymbolDisplayFormat.QualifiedNameOnlyFormat.ToString(OriginalTypeSymbol);
                 if (IsModelObject) return MetaSymbol.GetModelObjectFullName(OriginalModelObject);
                 return null;
+            }
+        }
+
+        public string FullName
+        {
+            get
+            {
+                if (IsNull) return null;
+                string? result = null;
+                if (result is null && IsName) result = (string)_original;
+                if (result is null && IsType) result = OriginalType.FullName;
+                if (result is null && IsTypeSymbol) result = SymbolDisplayFormat.QualifiedNameOnlyFormat.ToString(OriginalTypeSymbol);
+                if (result is null && IsModelObject) result = MetaSymbol.GetModelObjectFullName(OriginalModelObject);
+                switch (result)
+                {
+                    case "void":
+                        return "System.Void";
+                    case "object":
+                        return "System.Object";
+                    case "bool":
+                        return "System.Boolean";
+                    case "char":
+                        return "System.Char";
+                    case "string":
+                        return "System.String";
+                    case "byte":
+                        return "System.Byte";
+                    case "sbyte":
+                        return "System.SByte";
+                    case "short":
+                        return "System.Int16";
+                    case "ushort":
+                        return "System.UInt16";
+                    case "int":
+                        return "System.Int32";
+                    case "uint":
+                        return "System.UInt32";
+                    case "long":
+                        return "System.Int64";
+                    case "ulong":
+                        return "System.UInt64";
+                    case "float":
+                        return "System.Single";
+                    case "double":
+                        return "System.Double";
+                    case "decimal":
+                        return "System.Decimal";
+                    case "type":
+                        return "MetaDslx.CodeAnalysis.MetaType";
+                    case "symbol":
+                        return "MetaDslx.CodeAnalysis.MetaSymbol";
+                    default:
+                        return result;
+                }
             }
         }
 

@@ -31,8 +31,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
             public static readonly CompletionPart FinishComputingProperty_Assignment = new CompletionPart(nameof(FinishComputingProperty_Assignment));
             public static readonly CompletionPart StartComputingProperty_SymbolProperty = new CompletionPart(nameof(StartComputingProperty_SymbolProperty));
             public static readonly CompletionPart FinishComputingProperty_SymbolProperty = new CompletionPart(nameof(FinishComputingProperty_SymbolProperty));
-            public static readonly CompletionPart StartComputingProperty_ExpectedTypes = new CompletionPart(nameof(StartComputingProperty_ExpectedTypes));
-            public static readonly CompletionPart FinishComputingProperty_ExpectedTypes = new CompletionPart(nameof(FinishComputingProperty_ExpectedTypes));
+            public static readonly CompletionPart StartComputingProperty_ExpectedType = new CompletionPart(nameof(StartComputingProperty_ExpectedType));
+            public static readonly CompletionPart FinishComputingProperty_ExpectedType = new CompletionPart(nameof(FinishComputingProperty_ExpectedType));
             public static readonly CompletionPart StartComputingProperty_Members = DeclarationSymbol.CompletionParts.StartComputingProperty_Members;
             public static readonly CompletionPart FinishComputingProperty_Members = DeclarationSymbol.CompletionParts.FinishComputingProperty_Members;
             public static readonly CompletionPart StartComputingProperty_TypeArguments = DeclarationSymbol.CompletionParts.StartComputingProperty_TypeArguments;
@@ -46,7 +46,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
                     StartComputingProperty_Value, FinishComputingProperty_Value,
                     StartComputingProperty_Assignment, FinishComputingProperty_Assignment,
                     StartComputingProperty_SymbolProperty, FinishComputingProperty_SymbolProperty,
-                    StartComputingProperty_ExpectedTypes, FinishComputingProperty_ExpectedTypes,
+                    StartComputingProperty_ExpectedType, FinishComputingProperty_ExpectedType,
                     StartComputingProperty_Members, FinishComputingProperty_Members,
                     StartComputingProperty_TypeArguments, FinishComputingProperty_TypeArguments,
                     StartComputingProperty_Imports, FinishComputingProperty_Imports,
@@ -63,8 +63,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
 
         private MetaSymbol _value;
         private Assignment _assignment;
-        private ImmutableArray<MetaSymbol> _symbolProperty;
-        private ImmutableArray<MetaType> _expectedTypes;
+        private MetaSymbol _symbolProperty;
+        private MetaType _expectedType;
         private ExpectedTypeKind _expectedTypeKind;
 
         public PElementSymbol(Symbol container, MergedDeclaration declaration, IModelObject modelObject)
@@ -105,7 +105,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
         }
 
         [ModelProperty]
-        public ImmutableArray<MetaSymbol> SymbolProperty
+        public MetaSymbol SymbolProperty
         {
             get
             {
@@ -114,12 +114,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
             }
         }
 
-        public ImmutableArray<MetaType> ExpectedTypes
+        public MetaType ExpectedType
         {
             get
             {
-                ForceComplete(CompletionParts.FinishComputingProperty_ExpectedTypes, null, default);
-                return _expectedTypes;
+                ForceComplete(CompletionParts.FinishComputingProperty_ExpectedType, null, default);
+                return _expectedType;
             }
         }
 
@@ -127,7 +127,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
         {
             get
             {
-                ForceComplete(CompletionParts.FinishComputingProperty_ExpectedTypes, null, default);
+                ForceComplete(CompletionParts.FinishComputingProperty_ExpectedType, null, default);
                 return _expectedTypeKind;
             }
         }
@@ -170,17 +170,17 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
                 }
                 return true;
             }
-            else if (incompletePart == CompletionParts.StartComputingProperty_ExpectedTypes || incompletePart == CompletionParts.FinishComputingProperty_ExpectedTypes)
+            else if (incompletePart == CompletionParts.StartComputingProperty_ExpectedType || incompletePart == CompletionParts.FinishComputingProperty_ExpectedType)
             {
-                if (NotePartComplete(CompletionParts.StartComputingProperty_ExpectedTypes))
+                if (NotePartComplete(CompletionParts.StartComputingProperty_ExpectedType))
                 {
                     var diagnostics = DiagnosticBag.GetInstance();
-                    var expectedTypes = CompleteProperty_ExpectedTypes(diagnostics, cancellationToken);
-                    _expectedTypes = expectedTypes.ExpectedTypes;
-                    _expectedTypeKind = expectedTypes.ExpectedTypeKind;
+                    var expectedType = CompleteProperty_ExpectedType(diagnostics, cancellationToken);
+                    _expectedType = expectedType.ExpectedType;
+                    _expectedTypeKind = expectedType.ExpectedTypeKind;
                     AddSymbolDiagnostics(diagnostics);
                     diagnostics.Free();
-                    NotePartComplete(CompletionParts.FinishComputingProperty_ExpectedTypes);
+                    NotePartComplete(CompletionParts.FinishComputingProperty_ExpectedType);
                 }
                 return true;
             }
@@ -189,12 +189,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
                 return true;
             }
             return false;
-        }
-
-        protected override string? CompleteProperty_Name(DiagnosticBag diagnostics, CancellationToken cancellationToken)
-        {
-            var nameSyntax = this.Syntax?.Block?.SymbolProperty;
-            return Declaration.Language.SyntaxFacts.ExtractName(nameSyntax);
         }
 
         protected virtual MetaSymbol CompleteProperty_Value(DiagnosticBag diagnostics, CancellationToken cancellationToken)
@@ -212,7 +206,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
             return SymbolFactory.GetSymbolPropertyValues<MetaSymbol>(this, nameof(SymbolProperty), diagnostics, cancellationToken);
         }
 
-        private (ImmutableArray<MetaType> ExpectedTypes, ExpectedTypeKind ExpectedTypeKind) CompleteProperty_ExpectedTypes(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        private (ImmutableArray<MetaType> ExpectedType, ExpectedTypeKind ExpectedTypeKind) CompleteProperty_ExpectedType(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             if (this.IsNamedElement)
             {
@@ -245,7 +239,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
                 var alt = this.ContainingPAlternativeSymbol;
                 if (alt is not null && !this.IsBlock)
                 {
-                    return (alt.ExpectedTypes, alt.ExpectedTypes.Length > 0 ? ExpectedTypeKind.Simple : ExpectedTypeKind.None);
+                    return (alt.ExpectedType, alt.ExpectedType.Length > 0 ? ExpectedTypeKind.Simple : ExpectedTypeKind.None);
                 }
             }
             return (ImmutableArray<MetaType>.Empty, ExpectedTypeKind.None);
@@ -295,11 +289,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
                             diagnostics.Add(Diagnostic.Create(CompilerErrorCode.ERR_InvalidBlockAssignment, this.Location, pb.Name));
                         }
                     }
-                    if (!this.IsBlock && this.ExpectedTypes.IsDefaultOrEmpty)
+                    if (!this.IsBlock && this.ExpectedType.IsDefaultOrEmpty)
                     {
                         diagnostics.Add(Diagnostic.Create(ErrorCode.ERR_InternalError, this.Location, $"There are no expected types for the element '{this.Name}'"));
                     }
-                    foreach (var expType in this.ExpectedTypes)
+                    foreach (var expType in this.ExpectedType)
                     {
                         if (expType.TryGetCoreType(out var coreType, diagnostics, cancellationToken))
                         {
@@ -358,7 +352,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
         private string ResolveExpectedTypeTrace(MetaType expectedType)
         {
             var grammar = this.ContainingGrammarSymbol;
-            var trace = grammar is null ? "" : string.Join(", ", grammar.ResolveTrace(this, et => et.Element.ExpectedTypes.Contains(expectedType)));
+            var trace = grammar is null ? "" : string.Join(", ", grammar.ResolveTrace(this, et => et.Element.ExpectedType.Contains(expectedType)));
             return trace;
         }
 

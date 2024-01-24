@@ -8,6 +8,8 @@ metamodel Compiler;
 abstract class $Declaration
 {
 	string? $Name;
+	Declaration? Parent opposite Declarations;
+	contains Declaration[] Declarations opposite Parent;
 	derived string? FullName;
 }
 
@@ -30,6 +32,7 @@ class $Grammar : Declaration
 	contains TokenKind[] TokenKinds;
 	contains Token[] Tokens subsets GrammarRules;
 	contains Rule[] Rules subsets GrammarRules;
+	Block[] Blocks;
 
 	Token? DefaultWhitespace;
 	Token? DefaultEndOfLine;
@@ -112,7 +115,6 @@ abstract class LexerRule : GrammarRule
 class $Token : LexerRule
 {
 	type $ReturnType;
-	bool $NeverNull;
 	bool IsTrivia;
 
 	TokenKind? TokenKind;
@@ -216,11 +218,11 @@ class LBlock : LElementValue
 	contains LAlternative[] Alternatives;
 }
 
-abstract class Rule $ParserRule : GrammarRule
+class Rule $ParserRule : GrammarRule
 {
 	type $ReturnType;
-	bool $NeverNull;
 	contains Alternative[] $Alternatives;
+	Alternative? BaseRule;
 
 	derived string GreenName;
 	derived string RedName;
@@ -229,7 +231,6 @@ abstract class Rule $ParserRule : GrammarRule
 class Alternative $PAlternative : Declaration, CSharpElement
 {
 	type $ReturnType;
-	bool $NeverNull;
 	contains Expression $ReturnValue;
 	contains Element[] $Elements;
 
@@ -258,7 +259,7 @@ enum Assignment
 
 class Element $PElement : CSharpElement
 {
-	string $Name;
+	string? $Name;
 	Assignment $Assignment;
 	contains ElementValue $Value;
 	Multiplicity Multiplicity;
@@ -325,6 +326,16 @@ class Fixed : ElementValue
 	string Text;
 }
 
+class TokenAlts : ElementValue
+{
+	contains RuleRef[] Tokens;
+
+	derived string GreenType;
+	derived string? GreenSyntaxCondition;
+
+	derived string RedType;
+}
+
 class Block $PBlock : ElementValue
 {
 	contains Alternative[] $Alternatives;
@@ -332,8 +343,15 @@ class Block $PBlock : ElementValue
 
 class SeparatedList : ElementValue
 {
-	contains Element Item;
-	contains Element Separator;
+	bool SeparatorFirst;
+	bool RepeatedSeparatorFirst;
+	contains Element[] FirstItems;
+	contains Element[] FirstSeparators;
+	contains Element RepeatedBlock;
+	Element RepeatedItem;
+	Element RepeatedSeparator;
+	contains Element[] LastItems;
+	contains Element[] LastSeparators;
 
 	derived string GreenType;
 	derived string? GreenSyntaxCondition;

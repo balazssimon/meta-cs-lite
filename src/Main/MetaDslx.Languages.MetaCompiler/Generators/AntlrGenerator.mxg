@@ -57,7 +57,7 @@ template GenerateLexerRuleElement(LElementValue elem)
 [else if (elem is LRange rangeElem)]
 [rangeElem.StartChar.EncodeString('\'')]..[rangeElem.EndChar.EncodeString('\'')]
 [else]
-!!! ERROR: unknown lexer rule element value type [elem.GetType()]
+!!! ERROR: unknown lexer rule element value type [elem.MInfo.MetaType]
 [end if]
 end template
 
@@ -158,6 +158,6 @@ template GenerateParserRuleElement(Element elem)
  [GenerateParserRuleElement(listElem.LastSeparators[listElem.LastSeparators.Count-1])]
     [end if]
 [else]
-!!! ERROR: unknown lexer rule element type [elem.GetType()]
+!!! ERROR: unknown lexer rule element type [elem.MInfo.MetaType]
 [end if]
 end template

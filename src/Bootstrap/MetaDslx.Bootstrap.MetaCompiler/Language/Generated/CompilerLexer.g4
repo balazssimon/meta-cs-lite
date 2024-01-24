@@ -7,7 +7,6 @@ LR_TSemicolon: ';';
 LR_KUsing: 'using';
 LR_KLanguage: 'language';
 LR_TColon: ':';
-LR_KBlock: 'block';
 LR_TLParen: '(';
 LR_TRParen: ')';
 LR_THash: '#';

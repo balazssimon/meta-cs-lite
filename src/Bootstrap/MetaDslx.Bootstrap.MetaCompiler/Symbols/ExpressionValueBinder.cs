@@ -191,7 +191,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
             }
             else if (this.QualifierSyntax is not null)
             {
-                identifiers = this.QualifierSyntax.SimpleQualifier.Select(id => (SyntaxNodeOrToken)id).ToImmutableArray();
+                identifiers = this.QualifierSyntax.Qualifier.Select(id => (SyntaxNodeOrToken)id).ToImmutableArray();
             }
             if (identifiers.Length == 0) return null;
             var context = this.AllocateLookupContext();

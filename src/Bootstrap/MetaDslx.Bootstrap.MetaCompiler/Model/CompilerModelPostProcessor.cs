@@ -32,9 +32,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
         private CompilerModelFactory f;
 
 
-        public CompilerModelPostProcessor(MetaDslx.Modeling.Model model)
+        public CompilerModelPostProcessor(Language language)
         {
-            _model = model;
+            _language = language;
+            _grammar = _language?.Grammar;
+            _model = _language.MModel;
         }
 
         public MetaDslx.Modeling.Model Model => _model;
@@ -49,8 +51,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             if (_diagnostics is not null) return;
             _cancellationToken = cancellationToken;
             _diagnostics = new DiagnosticBag();
-            _language = _model.Objects.OfType<Language>().FirstOrDefault();
-            _grammar = _language?.Grammar;
             if (_grammar is null) return;
             f = new CompilerModelFactory(_model);
             _ruleNames = new HashSet<string>();
@@ -61,8 +61,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             SetDefaults();
             AddRules();
             MergeSeparatedLists();
-            MergeSingleAlts();
             MergeSingleTokenAlts();
+            MergeSingleAlts();
             AddCSharpNames();
             AddAntlrNames();
             ComputeContainsBinders();
@@ -70,14 +70,15 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
 
         private void AddTokens()
         {
-            AddFixedTokens();
-            AddFixedTokensFromRules(_model.Objects.OfType<Rule>().ToImmutableArray());
-            AddNonFixedTokens();
+            var allTokens = _grammar.GetAllContainedObjects<Token>();
+            AddFixedTokens(allTokens);
+            AddFixedTokensFromRules();
+            AddNonFixedTokens(allTokens);
         }
 
-        private void AddFixedTokens()
+        private void AddFixedTokens(ImmutableArray<Token> allTokens)
         {
-            foreach (var fixedToken in _grammar.GrammarRules.OfType<Token>().Where(t => t.IsFixed))
+            foreach (var fixedToken in allTokens.Where(t => t.IsFixed))
             {
                 AddTokenKindFor(fixedToken);
                 if (!fixedToken.ReturnType.IsNull)
@@ -113,46 +114,41 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             }
         }
 
-        private void AddFixedTokensFromRules(ImmutableArray<Rule> rules)
+        private void AddFixedTokensFromRules()
         {
-            foreach (var rule in rules)
+            foreach (var fixedValue in _grammar.GetAllContainedObjects<Fixed>())
             {
-                foreach (var alt in rule.Alternatives)
+                var elem = fixedValue.MParent as Element;
+                if (elem is not null)
                 {
-                    foreach (var elem in alt.Elements)
+                    if (!_fixedTokens.TryGetValue(fixedValue.Text, out var fixedToken))
                     {
-                        if (elem.Value is Keyword keyword)
-                        {
-                            if (!_fixedTokens.TryGetValue(keyword.Text, out var fixedToken))
-                            {
-                                fixedToken = f.Token();
-                                fixedToken.CSharpName = MakeFixedTokenName(keyword.Text);
-                                fixedToken.Name = fixedToken.CSharpName;
-                                if (keyword.Text.IsIdentifier()) fixedToken.TokenKind = _keywordKind;
-                                var ftAlt = f.LAlternative();
-                                fixedToken.Alternatives.Add(ftAlt);
-                                var ftElem = f.LElement();
-                                ftAlt.Elements.Add(ftElem);
-                                var ftFixed = f.LFixed();
-                                ftElem.Value = ftFixed;
-                                ftFixed.Text = keyword.Text;
-                                _fixedTokens.Add(keyword.Text, fixedToken);
-                                _grammar.Tokens.Add(fixedToken);
-                            }
-                            var tokenRef = f.RuleRef();
-                            tokenRef.GrammarRule = fixedToken;
-                            elem.Value = tokenRef;
-                            tokenRef.MSourceLocation = keyword.MSourceLocation;
-                            _model.DeleteObject(keyword, _cancellationToken);
-                        }
+                        fixedToken = f.Token();
+                        fixedToken.CSharpName = MakeFixedTokenName(fixedValue.Text);
+                        fixedToken.Name = fixedToken.CSharpName;
+                        if (fixedValue.Text.IsIdentifier()) fixedToken.TokenKind = _keywordKind;
+                        var ftAlt = f.LAlternative();
+                        fixedToken.Alternatives.Add(ftAlt);
+                        var ftElem = f.LElement();
+                        ftAlt.Elements.Add(ftElem);
+                        var ftFixed = f.LFixed();
+                        ftElem.Value = ftFixed;
+                        ftFixed.Text = fixedValue.Text;
+                        _fixedTokens.Add(fixedValue.Text, fixedToken);
+                        _grammar.Tokens.Add(fixedToken);
                     }
+                    var tokenRef = f.RuleRef();
+                    tokenRef.GrammarRule = fixedToken;
+                    elem.Value = tokenRef;
+                    tokenRef.MSourceLocation = fixedValue.MSourceLocation;
+                    _model.DeleteObject(fixedValue, _cancellationToken);
                 }
             }
         }
 
-        private void AddNonFixedTokens()
+        private void AddNonFixedTokens(ImmutableArray<Token> allTokens)
         {
-            foreach (var token in _grammar.GrammarRules.OfType<Token>().Where(t => !t.IsFixed))
+            foreach (var token in allTokens.Where(t => !t.IsFixed))
             {
                 AddTokenKindFor(token);
                 if (!token.ReturnType.IsNull)
@@ -180,7 +176,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             if (tokenKindName is not null && tokenKindName.EndsWith("TokenKind") && !string.IsNullOrEmpty(tokenKindFullName))
             {
                 tokenKindName = tokenKindName.Substring(0, tokenKindName.Length - 9);
-                if (!_tokenKinds.TryGetValue(tokenKindFullName, out var tokenKind)) 
+                if (!_tokenKinds.TryGetValue(tokenKindFullName, out var tokenKind))
                 {
                     tokenKind = AddTokenKind(tokenKindName, tokenKindFullName);
                 }
@@ -325,29 +321,18 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
 
         private void AddRules()
         {
-            var allRules = _model.Objects.OfType<Rule>().ToList();
+            var allRules = _grammar.GetAllContainedObjects<Rule>();
             foreach (var rule in allRules)
             {
                 AddBinders(rule.Binders, rule.Annotations);
-                AddAlternatives(rule);
-            }
-            foreach (var rule in allRules)
-            {
-                if (rule is Block blk && blk.MParent is Element elem)
-                {
-                    var blockRef = f.RuleRef();
-                    blockRef.GrammarRule = blk;
-                    elem.Value = blockRef;
-                }
-                _grammar.Rules.Add(rule);
-                rule.AllowMerge = true;
+                AddAlternatives(rule.Alternatives);
             }
             var unusedRules = true;
             var first = true;
             while (unusedRules)
             {
                 unusedRules = false;
-                for (int i = allRules.Count - 1; i >= 0; --i)
+                for (int i = allRules.Length - 1; i >= 0; --i)
                 {
                     var rule = allRules[i];
                     if (rule == _grammar.MainRule) continue;
@@ -367,9 +352,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             }
         }
 
-        private void AddAlternatives(Rule rule)
+        private void AddAlternatives(IList<Alternative> alternatives)
         {
-            foreach (var alt in rule.Alternatives)
+            foreach (var alt in alternatives)
             {
                 AddBinders(alt.Binders, alt.Annotations);
                 if (alt.ReturnValue is not null)
@@ -392,10 +377,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                     if (alt.Elements.Count == 1)
                     {
                         var celem = alt.Elements[0];
-                        if (celem.Multiplicity == Multiplicity.ExactlyOne && string.IsNullOrEmpty(celem.SymbolProperty.FirstOrDefault().Name))
+                        if (celem.Multiplicity == Multiplicity.ExactlyOne && string.IsNullOrEmpty(celem.Name))
                         {
                             if (celem.Value is RuleRef rr && rr.Rule is not null) skipDefineBinder = true;
-                            if (celem.Value is Block pb && !pb.ReturnType.IsNull) skipDefineBinder = true;
                         }
                     }
                     if (!skipDefineBinder)
@@ -419,9 +403,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
         {
             foreach (var elem in alt.Elements)
             {
-                var name = elem.SymbolProperty.FirstOrDefault().Name;
-                elem.Name = name;
-                AddBinders(elem.Binders, elem.NameAnnotations);
+                var name = elem.Name;
+                AddBinders(elem.Binders, elem.Annotations);
                 if (!string.IsNullOrEmpty(name))
                 {
                     var propBinder = f.Binder();
@@ -445,7 +428,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                     elem.Binders.Add(propBinder);
                 }
                 var value = elem.Value;
-                AddBinders(value.Binders, elem.ValueAnnotations);
+                AddBinders(value.Binders, value.Annotations);
                 if (value is RuleRef rr)
                 {
                     if (rr.ReferencedTypes.Count > 0)
@@ -465,6 +448,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                         value.Binders.Add(useBinder);
                     }
                 }
+                else if (value is Block blk)
+                {
+                    _grammar.Blocks.Add(blk);
+                    AddAlternatives(blk.Alternatives);
+                }
             }
         }
 
@@ -481,315 +469,266 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             return result.ToImmutableAndFree();
         }
 
-        private void MergeSingleTokenAlts()
+        private void MergeSeparatedLists()
         {
-            var rules = _model.Objects.OfType<Rule>().ToList();
-            for (int i = 0; i < rules.Count; ++i)
+            foreach (var rule in _grammar.Rules)
             {
-                var rule = rules[i];
-                var singleTokenAlts = rule.Alternatives.Where(IsSingleTokenAlt).ToImmutableArray();
-                if (singleTokenAlts.Length < 2) continue;
-                var tokenAlts = f.TokenAlts();
-                foreach (var singleTokenAlt in singleTokenAlts)
+                foreach (var alt in rule.Alternatives)
                 {
-                    var singleElem = singleTokenAlt.Elements[0];
-                    var singleToken = (RuleRef)singleElem.Value;
-                    singleToken.MParent = null;
-                    tokenAlts.Tokens.Add(singleToken);
-                    InsertBinders(singleToken.Binders, singleElem.Binders);
-                    InsertBinders(singleToken.Binders, singleTokenAlt.Binders);
-                    _model.DeleteObject(singleTokenAlt);
-                }
-                if (rule.Alternatives.Count == 0 && rule.AllowMerge)
-                {
-                    InsertBinders(tokenAlts.Binders, rule.Binders);
-                    foreach (var ruleRef in GetRuleRefs(rule))
-                    {
-                        var tokenAltsValue = (TokenAlts)tokenAlts.MClone();
-                        InsertBinders(tokenAltsValue.Binders, ruleRef.Value.Binders);
-                        _model.DeleteObject(ruleRef.Value);
-                        ruleRef.Value = tokenAltsValue;
-                    }
-                    _model.DeleteObject(tokenAlts);
-                    _model.DeleteObject(rule);
-                }
-                else
-                {
-                    var tokensElem = f.Element();
-                    tokensElem.Name = "Token";
-                    tokensElem.Value = tokenAlts;
-                    var tokensAlt = f.Alternative();
-                    if (rule.Alternatives.Count > 0) tokensAlt.Name = rule.Name + "Tokens";
-                    tokensAlt.Elements.Add(tokensElem);
-                    rule.Alternatives.Insert(0, tokensAlt);
+                    MergeSeparatedLists(alt);
                 }
             }
+            foreach (var block in _grammar.Blocks)
+            {
+                foreach (var alt in block.Alternatives)
+                {
+                    MergeSeparatedLists(alt);
+                }
+            }
+        }
+
+        private void MergeSeparatedLists(Alternative alt)
+        {
+            for (int k = 0; k < alt.Elements.Count; ++k)
+            {
+                var elem = alt.Elements[k];
+                if (string.IsNullOrEmpty(elem.Name) && elem.Multiplicity.IsList() && elem.Value is Block blk && blk.Alternatives.Count == 1)
+                {
+                    SeparatedList? list = null;
+                    Rule? item = null;
+                    Token? separator = null;
+                    string? name = null;
+                    var repeatedAlt = blk.Alternatives[0];
+                    if (repeatedAlt.Elements.Count == 2)
+                    {
+                        var repeatedElem1 = repeatedAlt.Elements[0];
+                        var repeatedElem2 = repeatedAlt.Elements[1];
+                        if (repeatedElem1.Multiplicity.IsSingle() && repeatedElem1.Value is RuleRef rr1 &&
+                            repeatedElem2.Multiplicity.IsSingle() && repeatedElem2.Value is RuleRef rr2)
+                        {
+                            if (rr1.Token is not null && rr2.Rule is not null)
+                            {
+                                list = f.SeparatedList();
+                                list.RepeatedSeparatorFirst = true;
+                                list.RepeatedSeparator = repeatedElem1;
+                                list.RepeatedItem = repeatedElem2;
+                                separator = rr1.Token;
+                                item = rr2.Rule;
+                                name = repeatedElem2.Name ?? rr2.Rule.Name;
+                            }
+                            else if (rr1.Rule is not null && rr2.Token is not null)
+                            {
+                                list = f.SeparatedList();
+                                list.RepeatedSeparatorFirst = false;
+                                list.RepeatedSeparator = repeatedElem2;
+                                list.RepeatedItem = repeatedElem1;
+                                separator = rr2.Token;
+                                item = rr1.Rule;
+                                name = repeatedElem1.Name ?? rr1.Rule.Name;
+                            }
+                        }
+                    }
+                    if (list is not null && item is not null)
+                    {
+                        list.SeparatorFirst = list.RepeatedSeparatorFirst;
+                        var firstIndex = k;
+                        var lastIndex = k;
+                        var firstItems = ArrayBuilder<Element>.GetInstance();
+                        var firstSeparators = ArrayBuilder<Element>.GetInstance();
+                        var lastItems = ArrayBuilder<Element>.GetInstance();
+                        var lastSeparators = ArrayBuilder<Element>.GetInstance();
+                        if (k > 0)
+                        {
+                            var searchPrevElemens = false;
+                            var prevElem = alt.Elements[k - 1];
+                            if (list.RepeatedSeparatorFirst)
+                            {
+                                var prevElemName = prevElem.Name ?? (prevElem.Value as RuleRef)?.Rule?.Name;
+                                if (prevElemName == name && prevElem.Multiplicity == Multiplicity.ExactlyOne && prevElem.Value is RuleRef prevRule && prevRule.Rule == item)
+                                {
+                                    prevElem.Name = prevElemName;
+                                    firstItems.Add(prevElem);
+                                    firstIndex = k - 1;
+                                    list.SeparatorFirst = false;
+                                    searchPrevElemens = true;
+                                }
+                            }
+                            else
+                            {
+                                if (prevElem.Multiplicity == Multiplicity.ExactlyOne && prevElem.Value is RuleRef prevToken && prevToken.Token == separator)
+                                {
+                                    firstSeparators.Add(prevElem);
+                                    firstIndex = k - 1;
+                                    list.SeparatorFirst = true;
+                                    searchPrevElemens = true;
+                                }
+                            }
+                            var l = 1;
+                            while (searchPrevElemens && k - l * 2 >= 0)
+                            {
+                                searchPrevElemens = false;
+                                var prevElem1 = alt.Elements[k - l * 2];
+                                var prevElem2 = alt.Elements[k - l * 2 + 1];
+                                if (list.RepeatedSeparatorFirst)
+                                {
+                                    var prevElem1Name = prevElem1.Name ?? (prevElem1.Value as RuleRef)?.Rule?.Name;
+                                    if (prevElem1Name == name && prevElem1.Multiplicity == Multiplicity.ExactlyOne && prevElem1.Value is RuleRef prevRule1 && prevRule1.Rule == item &&
+                                        prevElem2.Multiplicity == Multiplicity.ExactlyOne && prevElem2.Value is RuleRef prevToken2 && prevToken2.Token == separator)
+                                    {
+                                        prevElem1.Name = prevElem1Name;
+                                        firstItems.Insert(0, prevElem1);
+                                        firstSeparators.Insert(0, prevElem2);
+                                        firstIndex = k - l * 2;
+                                        list.SeparatorFirst = false;
+                                        searchPrevElemens = true;
+                                    }
+                                }
+                                else
+                                {
+                                    var prevElem2Name = prevElem2.Name ?? (prevElem2.Value as RuleRef)?.Rule?.Name;
+                                    if (prevElem2Name == name && prevElem2.Multiplicity == Multiplicity.ExactlyOne && prevElem2.Value is RuleRef prevRule2 && prevRule2.Rule == item &&
+                                        prevElem1.Multiplicity == Multiplicity.ExactlyOne && prevElem1.Value is RuleRef prevToken1 && prevToken1.Token == separator)
+                                    {
+                                        prevElem2.Name = prevElem2Name;
+                                        firstItems.Insert(0, prevElem2);
+                                        firstSeparators.Insert(0, prevElem1);
+                                        firstIndex = k - l * 2;
+                                        list.SeparatorFirst = true;
+                                        searchPrevElemens = true;
+                                    }
+                                }
+                                ++l;
+                            }
+                        }
+                        if (k < alt.Elements.Count - 1)
+                        {
+                            var searchNextElemens = true;
+                            var l = 1;
+                            while (searchNextElemens && k + l < alt.Elements.Count)
+                            {
+                                searchNextElemens = false;
+                                var nextElem = alt.Elements[k + l];
+                                var mustBeSeparator = list.RepeatedSeparatorFirst ? l % 2 == 1 : l % 2 == 0;
+                                if (mustBeSeparator)
+                                {
+                                    if (nextElem.Multiplicity.IsSingle() && nextElem.Value is RuleRef nextToken && nextToken.Token == separator)
+                                    {
+                                        lastSeparators.Add(nextElem);
+                                        lastIndex = k + l;
+                                        searchNextElemens = nextElem.Multiplicity == Multiplicity.ExactlyOne;
+                                    }
+                                }
+                                else
+                                {
+                                    var nextElemName = nextElem.Name ?? (nextElem.Value as RuleRef)?.Rule?.Name;
+                                    if (nextElemName == name && nextElem.Multiplicity.IsSingle() && nextElem.Value is RuleRef nextRule && nextRule.Rule == item)
+                                    {
+                                        nextElem.Name = nextElemName;
+                                        lastItems.Add(nextElem);
+                                        lastIndex = k + l;
+                                        searchNextElemens = nextElem.Multiplicity == Multiplicity.ExactlyOne;
+                                    }
+                                }
+                                ++l;
+                            }
+                        }
+                        alt.Elements.RemoveRange(firstIndex, lastIndex - firstIndex + 1);
+                        list.FirstItems.AddRange(firstItems);
+                        firstItems.Free();
+                        list.FirstSeparators.AddRange(firstSeparators);
+                        firstSeparators.Free();
+                        list.RepeatedBlock = elem;
+                        list.LastItems.AddRange(lastItems);
+                        lastItems.Free();
+                        list.LastSeparators.AddRange(lastSeparators);
+                        lastSeparators.Free();
+                        var listElem = f.Element();
+                        listElem.Name = name;
+                        listElem.Value = list;
+                        alt.Elements.Insert(firstIndex, listElem);
+                    }
+                }
+            }
+        }
+
+        private void MergeSingleTokenAlts()
+        {
+            foreach (var rule in _grammar.Rules)
+            {
+                var tokenAlts = MergeSingleTokenAlts(rule.Alternatives);
+                if (tokenAlts is not null)
+                {
+                    var tokenElem = f.Element();
+                    tokenElem.Name = "Token";
+                    tokenElem.Value = tokenAlts;
+                    var tokenAlt = f.Alternative();
+                    tokenAlt.Elements.Add(tokenElem);
+                    rule.Alternatives.Clear();
+                    rule.Alternatives.Add(tokenAlt);
+                }
+            }
+            foreach (var block in _grammar.Blocks)
+            {
+                var elem = block.MParent as Element;
+                if (elem is not null)
+                {
+                    var tokenAlts = MergeSingleTokenAlts(block.Alternatives);
+                    if (tokenAlts is not null)
+                    {
+                        InsertBinders(tokenAlts.Binders, block.Binders);
+                        elem.Value = tokenAlts;
+                        _model.DeleteObject(block);
+                    }
+                }
+            }
+        }
+
+        private TokenAlts? MergeSingleTokenAlts(IList<Alternative> alternatives)
+        {
+            if (alternatives.Count < 2) return null;
+            var singleTokenAlts = alternatives.Where(IsSingleTokenAlt).ToImmutableArray();
+            if (singleTokenAlts.Length != alternatives.Count) return null;
+            var tokenAlts = f.TokenAlts();
+            foreach (var singleTokenAlt in singleTokenAlts)
+            {
+                var singleElem = singleTokenAlt.Elements[0];
+                var singleToken = (RuleRef)singleElem.Value;
+                singleToken.MParent = null;
+                tokenAlts.Tokens.Add(singleToken);
+                InsertBinders(singleToken.Binders, singleElem.Binders);
+                InsertBinders(singleToken.Binders, singleTokenAlt.Binders);
+                _model.DeleteObject(singleTokenAlt);
+            }
+            return tokenAlts;
         }
 
         private static bool IsSingleTokenAlt(Alternative alt)
         {
             if (alt.Elements.Count != 1) return false;
             var elem = alt.Elements[0];
-            if (elem.Multiplicity.IsSingle() && elem.Value is RuleRef rr && rr.Token is not null)
+            if (elem.Multiplicity.IsSingle() && string.IsNullOrEmpty(elem.Name) && elem.Value is RuleRef rr && rr.Token is not null)
             {
                 return true;
             }
             return false;
         }
-        
-        private void MergeSeparatedLists()
-        {
-            var rules = _model.Objects.OfType<Rule>().ToList();
-            for (int i = 0; i < rules.Count; ++i)
-            {
-                var rule = rules[i];
-                for (int j = 0; j < rule.Alternatives.Count; ++j)
-                {
-                    var alt = rule.Alternatives[j];
-                    for (int k = 0; k < alt.Elements.Count; ++k)
-                    {
-                        var elem = alt.Elements[k];
-                        if (elem.Multiplicity.IsList() && elem.Value is RuleRef ruleRef && ruleRef.Rule is not null && ruleRef.Rule.Alternatives.Count == 1)
-                        {
-                            SeparatedList? list = null;
-                            Rule? item = null;
-                            Token? separator = null;
-                            string? name = null;
-                            var repeatedAlt = ruleRef.Rule.Alternatives[0];
-                            if (repeatedAlt.Elements.Count == 2)
-                            {
-                                var repeatedElem1 = repeatedAlt.Elements[0];
-                                var repeatedElem2 = repeatedAlt.Elements[1];
-                                if (repeatedElem1.Multiplicity.IsSingle() && repeatedElem1.Value is RuleRef rr1 && 
-                                    repeatedElem2.Multiplicity.IsSingle() && repeatedElem2.Value is RuleRef rr2)
-                                {
-                                    if (rr1.Token is not null && rr2.Rule is not null)
-                                    {
-                                        list = f.SeparatedList();
-                                        list.RepeatedSeparatorFirst = true;
-                                        list.RepeatedSeparator = repeatedElem1;
-                                        list.RepeatedItem = repeatedElem2;
-                                        separator = rr1.Token;
-                                        item = rr2.Rule;
-                                        name = repeatedElem2.Name ?? rr2.Rule.Name;
-                                    }
-                                    else if (rr1.Rule is not null && rr2.Token is not null)
-                                    {
-                                        list = f.SeparatedList();
-                                        list.RepeatedSeparatorFirst = false;
-                                        list.RepeatedSeparator = repeatedElem2;
-                                        list.RepeatedItem = repeatedElem1;
-                                        separator = rr2.Token;
-                                        item = rr1.Rule;
-                                        name = repeatedElem1.Name ?? rr1.Rule.Name;
-                                    }
-                                }
-                            }
-                            if (list is not null && item is not null)
-                            {
-                                list.SeparatorFirst = list.RepeatedSeparatorFirst;
-                                var firstIndex = k;
-                                var lastIndex = k;
-                                var firstItems = ArrayBuilder<Element>.GetInstance();
-                                var firstSeparators = ArrayBuilder<Element>.GetInstance();
-                                var lastItems = ArrayBuilder<Element>.GetInstance();
-                                var lastSeparators = ArrayBuilder<Element>.GetInstance();
-                                if (k > 0)
-                                {
-                                    var searchPrevElemens = false;
-                                    var prevElem = alt.Elements[k - 1];
-                                    if (list.RepeatedSeparatorFirst)
-                                    {
-                                        var prevElemName = prevElem.Name ?? (prevElem.Value as RuleRef)?.Rule?.Name;
-                                        if (prevElemName == name && prevElem.Multiplicity == Multiplicity.ExactlyOne && prevElem.Value is RuleRef prevRule && prevRule.Rule == item)
-                                        {
-                                            prevElem.Name = prevElemName;
-                                            firstItems.Add(prevElem);
-                                            firstIndex = k - 1;
-                                            list.SeparatorFirst = false;
-                                            searchPrevElemens = true;
-                                        }
-                                    }
-                                    else
-                                    {
-                                        if (prevElem.Multiplicity == Multiplicity.ExactlyOne && prevElem.Value is RuleRef prevToken && prevToken.Token == separator)
-                                        {
-                                            firstSeparators.Add(prevElem);
-                                            firstIndex = k - 1;
-                                            list.SeparatorFirst = true;
-                                            searchPrevElemens = true;
-                                        }
-                                    }
-                                    var l = 1;
-                                    while (searchPrevElemens && k - l * 2 >= 0)
-                                    {
-                                        searchPrevElemens = false;
-                                        var prevElem1 = alt.Elements[k - l * 2];
-                                        var prevElem2 = alt.Elements[k - l * 2 + 1];
-                                        if (list.RepeatedSeparatorFirst)
-                                        {
-                                            var prevElem1Name = prevElem1.Name ?? (prevElem1.Value as RuleRef)?.Rule?.Name;
-                                            if (prevElem1Name == name && prevElem1.Multiplicity == Multiplicity.ExactlyOne && prevElem1.Value is RuleRef prevRule1 && prevRule1.Rule == item &&
-                                                prevElem2.Multiplicity == Multiplicity.ExactlyOne && prevElem2.Value is RuleRef prevToken2 && prevToken2.Token == separator)
-                                            {
-                                                prevElem1.Name = prevElem1Name;
-                                                firstItems.Insert(0, prevElem1);
-                                                firstSeparators.Insert(0, prevElem2);
-                                                firstIndex = k - l * 2;
-                                                list.SeparatorFirst = false;
-                                                searchPrevElemens = true;
-                                            }
-                                        }
-                                        else
-                                        {
-                                            var prevElem2Name = prevElem2.Name ?? (prevElem2.Value as RuleRef)?.Rule?.Name;
-                                            if (prevElem2Name == name && prevElem2.Multiplicity == Multiplicity.ExactlyOne && prevElem2.Value is RuleRef prevRule2 && prevRule2.Rule == item &&
-                                                prevElem1.Multiplicity == Multiplicity.ExactlyOne && prevElem1.Value is RuleRef prevToken1 && prevToken1.Token == separator)
-                                            {
-                                                prevElem2.Name = prevElem2Name;
-                                                firstItems.Insert(0, prevElem2);
-                                                firstSeparators.Insert(0, prevElem1);
-                                                firstIndex = k - l * 2;
-                                                list.SeparatorFirst = true;
-                                                searchPrevElemens = true;
-                                            }
-                                        }
-                                        ++l;
-                                    }
-                                }
-                                if (k < alt.Elements.Count - 1)
-                                {
-                                    var searchNextElemens = true;
-                                    var l = 1;
-                                    while (searchNextElemens && k + l < alt.Elements.Count)
-                                    {
-                                        searchNextElemens = false;
-                                        var nextElem = alt.Elements[k + l];
-                                        var mustBeSeparator = list.RepeatedSeparatorFirst ? l % 2 == 1 : l % 2 == 0;
-                                        if (mustBeSeparator)
-                                        {
-                                            if (nextElem.Multiplicity.IsSingle() && nextElem.Value is RuleRef nextToken && nextToken.Token == separator)
-                                            {
-                                                lastSeparators.Add(nextElem);
-                                                lastIndex = k + l;
-                                                searchNextElemens = nextElem.Multiplicity == Multiplicity.ExactlyOne;
-                                            }
-                                        }
-                                        else
-                                        {
-                                            var nextElemName = nextElem.Name ?? (nextElem.Value as RuleRef)?.Rule?.Name;
-                                            if (nextElemName == name && nextElem.Multiplicity.IsSingle() && nextElem.Value is RuleRef nextRule && nextRule.Rule == item)
-                                            {
-                                                nextElem.Name = nextElemName;
-                                                lastItems.Add(nextElem);
-                                                lastIndex = k + l;
-                                                searchNextElemens = nextElem.Multiplicity == Multiplicity.ExactlyOne;
-                                            }
-                                        }
-                                        ++l;
-                                    }
-                                }
-                                alt.Elements.RemoveRange(firstIndex, lastIndex - firstIndex + 1);
-                                list.FirstItems.AddRange(firstItems);
-                                firstItems.Free();
-                                list.FirstSeparators.AddRange(firstSeparators);
-                                firstSeparators.Free();
-                                list.RepeatedBlock = elem;
-                                list.LastItems.AddRange(lastItems);
-                                lastItems.Free();
-                                list.LastSeparators.AddRange(lastSeparators);
-                                lastSeparators.Free();
-                                item.AllowMerge = false;
-                                if (alt.Elements.Count == 0 && rule.Alternatives.Count == 1 && rule.AllowMerge)
-                                {
-                                    InsertBinders(list.Binders, alt.Binders);
-                                    InsertBinders(list.Binders, rule.Binders);
-                                    foreach (var listRuleRef in GetRuleRefs(rule))
-                                    {
-                                        var slValue = (SeparatedList)list.MClone();
-                                        InsertBinders(slValue.Binders, listRuleRef.Value.Binders);
-                                        _model.DeleteObject(listRuleRef.Value);
-                                        listRuleRef.Name = rule.Name ?? name;
-                                        listRuleRef.Value = slValue;
-                                    }
-                                    _model.DeleteObject(list);
-                                    _model.DeleteObject(rule);
-                                }
-                                else
-                                {
-                                    var listElem = f.Element();
-                                    if (alt.Elements.Count == 0 && rule.Alternatives.Count == 1) listElem.Name = rule.Name ?? name;
-                                    else listElem.Name = name;
-                                    listElem.Value = list;
-                                    alt.Elements.Insert(firstIndex, listElem);
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        
+
         private void MergeSingleAlts()
         {
-            var rules = _model.Objects.OfType<Rule>().ToList();
-            var merged = true;
-            while (merged)
+            foreach (var rule in _grammar.Rules)
             {
-                merged = false;
-                for (int i = 0; i < rules.Count; ++i)
+                var ruleRefs = GetRuleRefs(rule);
+                if (ruleRefs.Length == 1)
                 {
-                    var rule = rules[i];
-                    for (int j = rule.Alternatives.Count - 1; j >= 0; --j)
-                    {
-                        var alt = rule.Alternatives[j];
-                        if (alt.Elements.Count == 1)
-                        {
-                            var singleElem = alt.Elements[0];
-                            if (singleElem.Name is null && singleElem.Multiplicity == Multiplicity.ExactlyOne && singleElem.Value is RuleRef rr && rr.Rule is not null)
-                            {
-                                var rrRule = rr.Rule;
-                                if (!rrRule.AllowMerge) continue;
-                                var ruleRefCount = GetRuleRefs(rrRule).Length;
-                                if (ruleRefCount == 1)
-                                {
-                                    merged = true;
-                                    if (rrRule.Alternatives.Count == 1)
-                                    {
-                                        var rrAlt = rrRule.Alternatives[0];
-                                        if (string.IsNullOrEmpty(rrAlt.Name) && !string.IsNullOrEmpty(rrRule.Name)) rrAlt.Name = rrRule.Name;
-                                        InsertBinders(rrAlt.Binders, rrRule.Binders);
-                                        InsertBinders(rrAlt.Binders, singleElem.Value.Binders);
-                                        InsertBinders(rrAlt.Binders, singleElem.Binders);
-                                        InsertBinders(rrAlt.Binders, alt.Binders);
-                                        rrRule.Alternatives.Clear();
-                                        rule.Alternatives[j] = rrAlt;
-                                    }
-                                    else
-                                    {
-                                        rule.Alternatives.RemoveAt(j);
-                                        var altIndex = 0;
-                                        foreach (var refAlt in rrRule.Alternatives)
-                                        {
-                                            ++altIndex;
-                                            if (string.IsNullOrEmpty(refAlt.Name) && !string.IsNullOrEmpty(rrRule.Name)) refAlt.Name = rrRule.Name + "Alt" + altIndex;
-                                            InsertBinders(refAlt.Binders, rrRule.Binders);
-                                            InsertBinders(refAlt.Binders, singleElem.Value.Binders);
-                                            InsertBinders(refAlt.Binders, singleElem.Binders);
-                                            InsertBinders(refAlt.Binders, alt.Binders);
-                                        }
-                                        InsertAlternativesAt(rule.Alternatives, j, rrRule.Alternatives);
-                                    }
-                                    _model.DeleteObject(alt);
-                                    _model.DeleteObject(rrRule);
-                                }
-                            }
-                        }
-                    }
+                    var refElem = ruleRefs[0];
+                    if (refElem is null || !string.IsNullOrEmpty(refElem.Name) || refElem.Multiplicity != Multiplicity.ExactlyOne) continue;
+                    var refAlt = refElem.MParent as Alternative;
+                    if (refAlt is null || !string.IsNullOrEmpty(refAlt.Name) || refAlt.Elements.Count != 1) continue;
+                    rule.BaseRule = refAlt;
                 }
             }
         }
-        
+
         private void InsertBinders(ICollectionSlot<Binder> target, ICollectionSlot<Binder> source)
         {
             var binders = source.ToArray();
@@ -816,22 +755,22 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             foreach (var rule in _grammar.Rules.Where(r => !string.IsNullOrEmpty(r.Name)))
             {
                 if (rule.CSharpName is null) rule.CSharpName = AddRuleName(rule.Name, tryWithoutIndex: true);
-                AddCSharpNames(rule);
+                AddCSharpNames(rule.CSharpName, rule.Alternatives, clearUsedElementNames: true);
             }
         }
 
-        private void AddCSharpNames(Rule rule)
+        private void AddCSharpNames(string contextName, IList<Alternative> alternatives, bool clearUsedElementNames)
         {
             var altIndex = 0;
-            foreach (var alt in rule.Alternatives)
+            foreach (var alt in alternatives)
             {
                 ++altIndex;
                 if (alt.CSharpName is null)
                 {
                     if (string.IsNullOrEmpty(alt.Name))
                     {
-                        if (rule.Alternatives.Count == 1) alt.CSharpName = rule.CSharpName;
-                        else alt.CSharpName = AddRuleName(rule.CSharpName + "Alt", tryWithoutIndex: false, indexHint: altIndex);
+                        if (alternatives.Count == 1) alt.CSharpName = contextName;
+                        else alt.CSharpName = AddRuleName(contextName + "Alt", tryWithoutIndex: false, indexHint: altIndex);
                     }
                     else
                     {
@@ -870,20 +809,18 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
 
         private void AddCSharpNames(string? contextName, Element elem)
         {
-            if (elem.Value is RuleRef br && br.Rule is Block blk && string.IsNullOrEmpty(blk.Name))
+            if (elem.Value is Block blk)
             {
                 if (elem.Name is null) elem.Name = "Block";
                 blk.CSharpName = AddRuleName(contextName + "Block", tryWithoutIndex: false);
-                blk.Name = blk.CSharpName;
-                AddCSharpNames(blk);
+                AddCSharpNames(blk.CSharpName, blk.Alternatives, clearUsedElementNames: false);
             }
             if (elem.Value is SeparatedList sl)
             {
-                if (string.IsNullOrEmpty(elem.Name)) elem.Name = ((RuleRef)sl.RepeatedItem.Value).Rule?.Name + "List";
-                var repeatedBlock = (Block)((RuleRef)sl.RepeatedBlock.Value).Rule!;
-                if (string.IsNullOrEmpty(repeatedBlock.Name)) repeatedBlock.Name = contextName + elem.Name + "Block";
-                repeatedBlock.CSharpName = AddRuleName(repeatedBlock.Name, tryWithoutIndex: true);
-                AddCSharpNames(repeatedBlock);
+                var repeatedBlock = (Block)sl.RepeatedBlock.Value;
+                var repeatedBlockName = contextName + elem.Name + "Block";
+                repeatedBlock.CSharpName = AddRuleName(repeatedBlockName, tryWithoutIndex: true);
+                AddCSharpNames(repeatedBlock.CSharpName, repeatedBlock.Alternatives, clearUsedElementNames: false);
             }
             if (elem.Value is Eof) elem.Name = "EndOfFileToken";
             if (elem.Name is null)
@@ -1019,7 +956,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
 
         private void ComputeContainsBinders()
         {
-            var grammarRules = _model.Objects.OfType<GrammarRule>().ToList();
+            var grammarRules = _grammar.GrammarRules.ToImmutableArray();
             var updated = true;
             while (updated)
             {
@@ -1132,7 +1069,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                 {
                     mainRule = false;
                     _grammar.MainRule = rule;
-                    _grammar.RootTypeName = rule.ReturnType.FullName;
                 }
             }
             if (_defaultReferenceRule is null)
