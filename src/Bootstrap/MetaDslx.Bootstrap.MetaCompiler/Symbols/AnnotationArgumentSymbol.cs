@@ -27,8 +27,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
             public static readonly CompletionPart FinishComputingProperty_NamedParameter = new CompletionPart(nameof(FinishComputingProperty_NamedParameter));
             public static readonly CompletionPart StartComputingProperty_Parameter = new CompletionPart(nameof(StartComputingProperty_Parameter));
             public static readonly CompletionPart FinishComputingProperty_Parameter = new CompletionPart(nameof(FinishComputingProperty_Parameter));
-            public static readonly CompletionPart StartComputingProperty_ExpectedTypes = new CompletionPart(nameof(StartComputingProperty_ExpectedTypes));
-            public static readonly CompletionPart FinishComputingProperty_ExpectedTypes = new CompletionPart(nameof(FinishComputingProperty_ExpectedTypes));
             public static readonly CompletionPart StartComputingProperty_Value = new CompletionPart(nameof(StartComputingProperty_Value));
             public static readonly CompletionPart FinishComputingProperty_Value = new CompletionPart(nameof(FinishComputingProperty_Value));
             public static readonly CompletionPart StartComputingProperty_Attributes = Symbol.CompletionParts.StartComputingProperty_Attributes;
@@ -37,23 +35,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
                 CompletionGraph.CreateFromParts(
                     StartComputingProperty_NamedParameter, FinishComputingProperty_NamedParameter,
                     StartComputingProperty_Parameter, FinishComputingProperty_Parameter,
-                    StartComputingProperty_ExpectedTypes, FinishComputingProperty_ExpectedTypes,
                     StartComputingProperty_Value, FinishComputingProperty_Value,
                     StartComputingProperty_Attributes, FinishComputingProperty_Attributes);
-        }
-
-        private enum ExpectedTypeKind
-        {
-            None,
-            Bool,
-            Collection
         }
 
         private ImmutableArray<MetaSymbol> _namedParameter;
         private DeclarationSymbol? _parameter;
         private MetaType _parameterType;
-        private ImmutableArray<MetaType> _expectedTypes;
-        private ExpectedTypeKind _expectedTypeKind;
         private ExpressionSymbol _value;
 
         public AnnotationArgumentSymbol(Symbol container, MergedDeclaration declaration, IModelObject modelObject)
@@ -93,26 +81,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
         {
             get
             {
-                ForceComplete(CompletionParts.StartComputingProperty_ExpectedTypes, null, default);
+                ForceComplete(CompletionParts.FinishComputingProperty_Parameter, null, default);
                 return _parameterType;
-            }
-        }
-
-        public ImmutableArray<MetaType> ExpectedTypes
-        {
-            get
-            {
-                ForceComplete(CompletionParts.FinishComputingProperty_ExpectedTypes, null, default);
-                return _expectedTypes;
-            }
-        }
-
-        private ExpectedTypeKind ExpectedKind
-        {
-            get
-            {
-                ForceComplete(CompletionParts.FinishComputingProperty_ExpectedTypes, null, default);
-                return _expectedTypeKind;
             }
         }
 
@@ -145,25 +115,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
                 if (NotePartComplete(CompletionParts.StartComputingProperty_Parameter))
                 {
                     var diagnostics = DiagnosticBag.GetInstance();
-                    _parameter = CompleteProperty_Parameter(diagnostics, cancellationToken);
+                    var param = CompleteProperty_Parameter(diagnostics, cancellationToken);
+                    _parameter = param.Parameter;
+                    _parameterType = param.ParameterType;
                     AddSymbolDiagnostics(diagnostics);
                     diagnostics.Free();
                     NotePartComplete(CompletionParts.FinishComputingProperty_Parameter);
-                }
-                return true;
-            }
-            else if (incompletePart == CompletionParts.StartComputingProperty_ExpectedTypes || incompletePart == CompletionParts.FinishComputingProperty_ExpectedTypes)
-            {
-                if (NotePartComplete(CompletionParts.StartComputingProperty_ExpectedTypes))
-                {
-                    var diagnostics = DiagnosticBag.GetInstance();
-                    var expectedTypes = CompleteProperty_ExpectedTypes(diagnostics, cancellationToken);
-                    _expectedTypes = expectedTypes.ExpectedTypes;
-                    _expectedTypeKind = expectedTypes.ExpectedTypeKind;
-                    _parameterType = _expectedTypes.FirstOrDefault();
-                    AddSymbolDiagnostics(diagnostics);
-                    diagnostics.Free();
-                    NotePartComplete(CompletionParts.FinishComputingProperty_ExpectedTypes);
                 }
                 return true;
             }
@@ -191,46 +148,35 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
             return SymbolFactory.GetSymbolPropertyValues<MetaSymbol>(this, nameof(NamedParameter), diagnostics, cancellationToken);
         }
 
-        protected virtual DeclarationSymbol? CompleteProperty_Parameter(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        protected virtual (DeclarationSymbol? Parameter, MetaType ParameterType) CompleteProperty_Parameter(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             var index = AnnotationSymbol?.Arguments.IndexOf(this) ?? -1;
-            if (index < 0) return null;
+            if (index < 0) return default;
             var param = AnnotationSymbol?.SelectedParameters[index];
-            if (param is not null)
-            {
-                var slot = ModelObject.MGetSlot(MetaDslx.Bootstrap.MetaCompiler.Model.Compiler.AnnotationArgument_Parameter);
-                slot?.Add(param);
-            }
-            else
+            if (param is null)
             {
                 diagnostics.Add(Diagnostic.Create(CommonErrorCode.ERR_BindingError, this.Location, "Could not resolve the parameter corresponding to this argument"));
+                return default;
             }
-            return param;
-        }
-
-        private (ImmutableArray<MetaType> ExpectedTypes, ExpectedTypeKind ExpectedTypeKind) CompleteProperty_ExpectedTypes(DiagnosticBag diagnostics, CancellationToken cancellationToken)
-        {
-            var kind = ExpectedTypeKind.None;
-            var result = ArrayBuilder<MetaType>.GetInstance();
-            var csParam = Parameter as ICSharpSymbol;
+            var slot = ModelObject.MGetSlot(MetaDslx.Bootstrap.MetaCompiler.Model.Compiler.AnnotationArgument_Parameter);
+            slot?.Add(param);
+            var csParam = param as ICSharpSymbol;
             var msProp = csParam?.CSharpSymbol as IParameterSymbol;
             var msType = msProp?.Type;
             var csType = msType is null ? null : csParam?.SymbolFactory.GetSymbol<TypeSymbol>(msType, diagnostics, cancellationToken);
             var mtType = MetaType.FromTypeSymbol(csType);
             if (mtType.IsNullable) mtType.TryExtractNullableType(out mtType, diagnostics, cancellationToken);
-            if (mtType.IsCollection) kind = ExpectedTypeKind.Collection;
-            else if (mtType.SpecialType == SpecialType.System_Boolean) kind = ExpectedTypeKind.Bool;
             if (mtType.TryGetCoreType(out var coreType, diagnostics, cancellationToken) && !coreType.IsNull)
             {
-                if (!result.Contains(mtType)) result.Add(mtType);
-                var slot = ModelObject.MGetSlot(MetaDslx.Bootstrap.MetaCompiler.Model.Compiler.AnnotationArgument_ParameterType);
-                slot?.Add(mtType);
+                var typeSlot = ModelObject.MGetSlot(MetaDslx.Bootstrap.MetaCompiler.Model.Compiler.AnnotationArgument_ParameterType);
+                typeSlot?.Add(mtType);
             }
             else
             {
                 diagnostics.Add(Diagnostic.Create(CommonErrorCode.ERR_BindingError, this.Location, $"Could not determine the type of the parameter '{Syntax?.Block?.NamedParameter}'"));
+                return default;
             }
-            return (result.ToImmutableAndFree(), kind);
+            return (param, mtType);
         }
 
         protected virtual ExpressionSymbol CompleteProperty_Value(DiagnosticBag diagnostics, CancellationToken cancellationToken)

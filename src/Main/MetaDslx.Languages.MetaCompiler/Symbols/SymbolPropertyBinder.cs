@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
-using Roslyn.Utilities;
 using MetaDslx.CodeAnalysis;
 using MetaDslx.CodeAnalysis.PooledObjects;
 

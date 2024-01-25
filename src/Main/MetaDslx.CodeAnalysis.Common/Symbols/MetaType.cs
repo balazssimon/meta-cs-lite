@@ -44,9 +44,9 @@ namespace MetaDslx.CodeAnalysis
         }
 
         public static MetaType FromName(string name) => new MetaType(name);
-        public static MetaType FromType(Type type) => new MetaType(type);
-        public static MetaType FromTypeSymbol(TypeSymbol typeSymbol) => new MetaType(typeSymbol);
-        public static MetaType FromModelObject(IModelObject modelObject) => new MetaType(modelObject);
+        public static MetaType FromType(Type? type) => new MetaType(type);
+        public static MetaType FromTypeSymbol(TypeSymbol? typeSymbol) => new MetaType(typeSymbol);
+        public static MetaType FromModelObject(IModelObject? modelObject) => new MetaType(modelObject);
 
         public bool InterlockedInitialize(MetaType value)
         {

@@ -13,7 +13,6 @@ using System.Collections.Immutable;
 using MetaDslx.CodeAnalysis.PooledObjects;
 using MetaDslx.Languages.MetaCompiler.Compiler.Syntax;
 using MetaDslx.Languages.MetaCompiler.Model;
-using Roslyn.Utilities;
 
 namespace MetaDslx.Languages.MetaCompiler.Symbols
 {

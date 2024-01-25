@@ -24,7 +24,7 @@ class Language : Declaration
 	contains Grammar Grammar subsets Declaration.Declarations;
 }
 
-class $Grammar : Declaration
+class Grammar : Declaration
 {
 	Language Language redefines Declaration.Parent;
 	contains GrammarRule[] GrammarRules redefines Declaration.Declarations;

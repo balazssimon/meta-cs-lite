@@ -1,12 +1,11 @@
 ﻿using MetaDslx.CodeAnalysis.PooledObjects;
-using MetaDslx.CodeAnalysis.Symbols;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Text;
 using System.Threading;
 
-namespace Roslyn.Utilities
+namespace MetaDslx.CodeAnalysis.Symbols
 {
     public static class SymbolUtilities
     {
@@ -84,7 +83,7 @@ namespace Roslyn.Utilities
                 var current = queue[i];
                 if (current is TSymbol ts)
                 {
-                    if ((includeSelf && i == 0) || i > 0) result.Add(ts);
+                    if (includeSelf && i == 0 || i > 0) result.Add(ts);
                 }
                 queue.AddRange(current.ContainedSymbols);
                 ++i;

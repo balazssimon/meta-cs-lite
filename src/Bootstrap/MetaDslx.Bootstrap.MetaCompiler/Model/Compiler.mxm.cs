@@ -930,7 +930,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             obj9.Properties.Add(obj67);
             obj9.Properties.Add(obj68);
             obj9.Properties.Add(obj69);
-            obj9.SymbolType = typeof(global::MetaDslx.Bootstrap.MetaCompiler.Symbols.GrammarSymbol);
             obj9.Declarations.Add(obj59);
             obj9.Declarations.Add(obj60);
             obj9.Declarations.Add(obj61);
@@ -7227,7 +7226,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model.__Impl
             public override __MetaModel MetaModel => Compiler.MInstance;
             public override __MetaType MetaType => typeof(Grammar);
     
-            public override __MetaType SymbolType => typeof(global::MetaDslx.Bootstrap.MetaCompiler.Symbols.GrammarSymbol);
+            public override __MetaType SymbolType => typeof(global::MetaDslx.CodeAnalysis.Symbols.DeclarationSymbol);
             public override __ModelProperty? NameProperty => Compiler.Declaration_Name;
             public override __ModelProperty? TypeProperty => null;
             public override global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo> BaseTypes => _baseTypes;

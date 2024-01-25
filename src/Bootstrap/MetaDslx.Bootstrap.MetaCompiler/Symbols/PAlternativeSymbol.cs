@@ -26,8 +26,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
             public static readonly CompletionPart FinishComputingProperty_Elements = new CompletionPart(nameof(FinishComputingProperty_Elements));
             public static readonly CompletionPart StartComputingProperty_ReturnValue = new CompletionPart(nameof(StartComputingProperty_ReturnValue));
             public static readonly CompletionPart FinishComputingProperty_ReturnValue = new CompletionPart(nameof(FinishComputingProperty_ReturnValue));
-            public static readonly CompletionPart StartComputingProperty_ExpectedTypes = new CompletionPart(nameof(StartComputingProperty_ExpectedTypes));
-            public static readonly CompletionPart FinishComputingProperty_ExpectedTypes = new CompletionPart(nameof(FinishComputingProperty_ExpectedTypes));
+            public static readonly CompletionPart StartComputingProperty_ExpectedType = new CompletionPart(nameof(StartComputingProperty_ExpectedType));
+            public static readonly CompletionPart FinishComputingProperty_ExpectedType = new CompletionPart(nameof(FinishComputingProperty_ExpectedType));
             public static readonly CompletionPart StartComputingProperty_Members = DeclarationSymbol.CompletionParts.StartComputingProperty_Members;
             public static readonly CompletionPart FinishComputingProperty_Members = DeclarationSymbol.CompletionParts.FinishComputingProperty_Members;
             public static readonly CompletionPart StartComputingProperty_TypeArguments = DeclarationSymbol.CompletionParts.StartComputingProperty_TypeArguments;
@@ -41,15 +41,15 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
                     StartComputingProperty_ReturnType, FinishComputingProperty_ReturnType,
                     StartComputingProperty_Elements, FinishComputingProperty_Elements,
                     StartComputingProperty_ReturnValue, FinishComputingProperty_ReturnValue,
-                    StartComputingProperty_ExpectedTypes, FinishComputingProperty_ExpectedTypes,
+                    StartComputingProperty_ExpectedType, FinishComputingProperty_ExpectedType,
                     StartComputingProperty_Members, FinishComputingProperty_Members,
                     StartComputingProperty_TypeArguments, FinishComputingProperty_TypeArguments,
                     StartComputingProperty_Imports, FinishComputingProperty_Imports,
                     StartComputingProperty_Attributes, FinishComputingProperty_Attributes);
         }
 
-        private bool _isResolvingExpectedTypes;
-        private ImmutableArray<MetaType> _expectedTypes;
+        private bool _isResolvingExpectedType;
+        private MetaType _expectedType;
         private MetaType _returnType;
         private ExpressionSymbol _returnValue;
         private ImmutableArray<PElementSymbol> _elements;
@@ -63,8 +63,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
         protected override CompletionGraph CompletionGraph => CompletionParts.CompletionGraph;
 
         public AlternativeSyntax? Syntax => this.DeclaringSyntaxReference.AsNode() as AlternativeSyntax;
-
-        public GrammarSymbol? ContainingGrammarSymbol => this.GetOutermostContainingSymbol<GrammarSymbol>();
 
         public ParserRuleSymbol? ContainingParserRuleSymbol => this.ContainingSymbol as ParserRuleSymbol;
 
@@ -100,14 +98,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
             }
         }
 
-        public bool IsResolvingExpectedTypes => _isResolvingExpectedTypes || (this.ContainingPBlockSymbol?.IsResolvingExpectedTypes ?? false);
-
-        public ImmutableArray<MetaType> ExpectedTypes
+        public MetaType ExpectedType
         {
             get
             {
-                ForceComplete(CompletionParts.FinishComputingProperty_ExpectedTypes, null, default);
-                return _expectedTypes;
+                ForceComplete(CompletionParts.FinishComputingProperty_ExpectedType, null, default);
+                return _expectedType;
             }
         }
 
@@ -158,13 +154,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
             {
                 if (NotePartComplete(CompletionParts.StartComputingProperty_Elements))
                 {
-                    _isResolvingExpectedTypes = true;
+                    _isResolvingExpectedType = true;
                     var diagnostics = DiagnosticBag.GetInstance();
                     _elements = CompleteProperty_Elements(diagnostics, cancellationToken);
                     AddSymbolDiagnostics(diagnostics);
                     diagnostics.Free();
                     NotePartComplete(CompletionParts.FinishComputingProperty_Elements);
-                    _isResolvingExpectedTypes = false;
+                    _isResolvingExpectedType = false;
                 }
                 return true;
             }
@@ -180,15 +176,15 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
                 }
                 return true;
             }
-            else if (incompletePart == CompletionParts.StartComputingProperty_ExpectedTypes || incompletePart == CompletionParts.FinishComputingProperty_ExpectedTypes)
+            else if (incompletePart == CompletionParts.StartComputingProperty_ExpectedType || incompletePart == CompletionParts.FinishComputingProperty_ExpectedType)
             {
-                if (NotePartComplete(CompletionParts.StartComputingProperty_ExpectedTypes))
+                if (NotePartComplete(CompletionParts.StartComputingProperty_ExpectedType))
                 {
                     var diagnostics = DiagnosticBag.GetInstance();
-                    _expectedTypes = CompleteProperty_ExpectedTypes(diagnostics, cancellationToken);
+                    _expectedType = CompleteProperty_ExpectedType(diagnostics, cancellationToken);
                     AddSymbolDiagnostics(diagnostics);
                     diagnostics.Free();
-                    NotePartComplete(CompletionParts.FinishComputingProperty_ExpectedTypes);
+                    NotePartComplete(CompletionParts.FinishComputingProperty_ExpectedType);
                 }
                 return true;
             }
@@ -210,14 +206,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
             var returnType = SymbolFactory.GetSymbolPropertyValue<MetaType>(this, nameof(ReturnType), diagnostics, cancellationToken);
             if (returnType.IsNull)
             {
-                var block = this.ContainingPBlockSymbol;
-                if (block is not null)
-                {
-                    returnType = block.ReturnType;
-                }
-            }
-            if (returnType.IsNull)
-            {
                 var rule = this.ContainingParserRuleSymbol;
                 if (rule is not null)
                 {
@@ -237,36 +225,24 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
             return SymbolFactory.GetSymbolPropertyValue<ExpressionSymbol>(this, nameof(ReturnValue), diagnostics, cancellationToken);
         }
 
-        protected virtual ImmutableArray<MetaType> CompleteProperty_ExpectedTypes(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        protected virtual MetaType CompleteProperty_ExpectedType(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             if (!this.ReturnType.IsNull)
             {
-                return ImmutableArray.Create(this.ReturnType);
+                return this.ReturnType;
             }
             var block = this.ContainingPBlockSymbol;
-            if (block is not null && !block.IsResolvingExpectedTypes)
+            if (block is not null)
             {
-                return block.ExpectedTypes;
+                return block.ExpectedType;
             }
-            var rule = this.ContainingParserRuleSymbol;
-            if (rule is not null)
-            {
-                return rule.ExpectedTypes;
-            }
-            return ImmutableArray<MetaType>.Empty;
+            diagnostics.Add(Diagnostic.Create(CommonErrorCode.ERR_BindingError, Location, $"Could not determine the expected type of the alternative '{Name}'"));
+            return default;
         }
 
         protected override void CompletePart_Validate(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             base.CompletePart_Validate(diagnostics, cancellationToken);
-            var rule = this.ContainingParserRuleSymbol;
-            if (rule is not null)
-            {
-                if (!rule.ReturnType.IsAssignableFrom(this.ReturnType))
-                {
-                    diagnostics.Add(Diagnostic.Create(CompilerErrorCode.ERR_IncompatibleAltReturnType, this.Location, this.ReturnType, this.Name, rule.ReturnType, rule.Name));
-                }
-            }
         }
     }
 }

@@ -24,8 +24,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
             public static readonly CompletionPart FinishComputingProperty_ReturnType = new CompletionPart(nameof(FinishComputingProperty_ReturnType));
             public static readonly CompletionPart StartComputingProperty_Alternatives = new CompletionPart(nameof(StartComputingProperty_Alternatives));
             public static readonly CompletionPart FinishComputingProperty_Alternatives = new CompletionPart(nameof(FinishComputingProperty_Alternatives));
-            public static readonly CompletionPart StartComputingProperty_ExpectedTypes = new CompletionPart(nameof(StartComputingProperty_ExpectedTypes));
-            public static readonly CompletionPart FinishComputingProperty_ExpectedTypes = new CompletionPart(nameof(FinishComputingProperty_ExpectedTypes));
             public static readonly CompletionPart StartComputingProperty_Members = DeclarationSymbol.CompletionParts.StartComputingProperty_Members;
             public static readonly CompletionPart FinishComputingProperty_Members = DeclarationSymbol.CompletionParts.FinishComputingProperty_Members;
             public static readonly CompletionPart StartComputingProperty_TypeArguments = DeclarationSymbol.CompletionParts.StartComputingProperty_TypeArguments;
@@ -38,14 +36,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
                 CompletionGraph.CreateFromParts(
                     StartComputingProperty_ReturnType, FinishComputingProperty_ReturnType,
                     StartComputingProperty_Alternatives, FinishComputingProperty_Alternatives,
-                    StartComputingProperty_ExpectedTypes, FinishComputingProperty_ExpectedTypes,
                     StartComputingProperty_Members, FinishComputingProperty_Members,
                     StartComputingProperty_TypeArguments, FinishComputingProperty_TypeArguments,
                     StartComputingProperty_Imports, FinishComputingProperty_Imports,
                     StartComputingProperty_Attributes, FinishComputingProperty_Attributes);
         }
 
-        private ImmutableArray<MetaType> _expectedTypes;
         private MetaType _returnType;
         private ImmutableArray<PAlternativeSymbol> _alternatives;
 
@@ -57,8 +53,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
         protected override CompletionGraph CompletionGraph => CompletionParts.CompletionGraph;
 
         public RuleSyntax? Syntax => this.DeclaringSyntaxReference.AsNode() as RuleSyntax;
-
-        public GrammarSymbol? ContainingGrammarSymbol => this.ContainingSymbol as GrammarSymbol;
 
         [ModelProperty]
         public MetaType ReturnType
@@ -77,15 +71,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
             {
                 ForceComplete(CompletionParts.FinishComputingProperty_Alternatives, null, default);
                 return _alternatives;
-            }
-        }
-
-        public ImmutableArray<MetaType> ExpectedTypes
-        {
-            get
-            {
-                ForceComplete(CompletionParts.FinishComputingProperty_ExpectedTypes, null, default);
-                return _expectedTypes;
             }
         }
 
@@ -115,18 +100,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
                 }
                 return true;
             }
-            else if (incompletePart == CompletionParts.StartComputingProperty_ExpectedTypes || incompletePart == CompletionParts.FinishComputingProperty_ExpectedTypes)
-            {
-                if (NotePartComplete(CompletionParts.StartComputingProperty_ExpectedTypes))
-                {
-                    var diagnostics = DiagnosticBag.GetInstance();
-                    _expectedTypes = CompleteProperty_ExpectedTypes(diagnostics, cancellationToken);
-                    AddSymbolDiagnostics(diagnostics);
-                    diagnostics.Free();
-                    NotePartComplete(CompletionParts.FinishComputingProperty_ExpectedTypes);
-                }
-                return true;
-            }
             else if (base.ForceCompletePart(ref incompletePart, locationOpt, cancellationToken))
             {
                 return true;
@@ -136,7 +109,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
 
         protected virtual MetaType CompleteProperty_ReturnType(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            return SymbolFactory.GetSymbolPropertyValue<MetaType>(this, nameof(ReturnType), diagnostics, cancellationToken);
+            var returnType = SymbolFactory.GetSymbolPropertyValue<MetaType>(this, nameof(ReturnType), diagnostics, cancellationToken);
+            if (returnType.IsNull)
+            {
+                diagnostics.Add(Diagnostic.Create(CommonErrorCode.ERR_BindingError, Location, $"Could not determine the return type of the rule '{Name}'"));
+            }
+            return returnType;
         }
 
         protected virtual ImmutableArray<PAlternativeSymbol> CompleteProperty_Alternatives(DiagnosticBag diagnostics, CancellationToken cancellationToken)
@@ -144,15 +122,20 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
             return SymbolFactory.GetSymbolPropertyValues<PAlternativeSymbol>(this, nameof(Alternatives), diagnostics, cancellationToken);
         }
 
-        protected virtual ImmutableArray<MetaType> CompleteProperty_ExpectedTypes(DiagnosticBag diagnostics, CancellationToken cancellationToken)
-        {
-            if (this.ReturnType.IsNull) return ImmutableArray<MetaType>.Empty;
-            else return ImmutableArray.Create(this.ReturnType);
-        }
-
         protected override void CompletePart_Validate(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             base.CompletePart_Validate(diagnostics, cancellationToken);
+            var returnType = this.ReturnType;
+            if (!returnType.IsNull)
+            {
+                foreach (var alt in this.Alternatives)
+                {
+                    if (!returnType.IsAssignableFrom(alt.ReturnType))
+                    {
+                        diagnostics.Add(Diagnostic.Create(CompilerErrorCode.ERR_IncompatibleAltReturnType, alt.Location, alt.ReturnType, alt.Name, this.ReturnType, this.Name));
+                    }
+                }
+            }
         }
     }
 }

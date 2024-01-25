@@ -15,7 +15,6 @@ using MetaDslx.CodeAnalysis.Symbols.CSharp;
 using MetaDslx.CodeAnalysis.PooledObjects;
 using MetaDslx.Languages.MetaCompiler.Model;
 using System.ComponentModel;
-using Roslyn.Utilities;
 
 namespace MetaDslx.Languages.MetaCompiler.Symbols
 {

@@ -18,20 +18,20 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
     {
         public new static class CompletionParts
         {
-            public static readonly CompletionPart StartComputingProperty_ExpectedTypes = new CompletionPart(nameof(StartComputingProperty_ExpectedTypes));
-            public static readonly CompletionPart FinishComputingProperty_ExpectedTypes = new CompletionPart(nameof(FinishComputingProperty_ExpectedTypes));
+            public static readonly CompletionPart StartComputingProperty_ExpectedType = new CompletionPart(nameof(StartComputingProperty_ExpectedType));
+            public static readonly CompletionPart FinishComputingProperty_ExpectedType = new CompletionPart(nameof(FinishComputingProperty_ExpectedType));
             public static readonly CompletionPart StartComputingProperty_Value = new CompletionPart(nameof(StartComputingProperty_Value));
             public static readonly CompletionPart FinishComputingProperty_Value = new CompletionPart(nameof(FinishComputingProperty_Value));
             public static readonly CompletionPart StartComputingProperty_Attributes = Symbol.CompletionParts.StartComputingProperty_Attributes;
             public static readonly CompletionPart FinishComputingProperty_Attributes = Symbol.CompletionParts.FinishComputingProperty_Attributes;
             public static readonly CompletionGraph CompletionGraph =
                 CompletionGraph.CreateFromParts(
-                    StartComputingProperty_ExpectedTypes, FinishComputingProperty_ExpectedTypes,
+                    StartComputingProperty_ExpectedType, FinishComputingProperty_ExpectedType,
                     StartComputingProperty_Value, FinishComputingProperty_Value,
                     StartComputingProperty_Attributes, FinishComputingProperty_Attributes);
         }
 
-        private ImmutableArray<MetaType> _expectedTypes;
+        private MetaType _expectedType;
         private ImmutableArray<MetaSymbol> _values;
         private MetaSymbol _value;
         private PAlternativeSymbol? _containingAlternative;
@@ -43,9 +43,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
         }
 
         protected override CompletionGraph CompletionGraph => CompletionParts.CompletionGraph;
-
-        public SingleExpressionSyntax SingleExpressionSyntax => this.DeclaringSyntaxReference.AsNode() as SingleExpressionSyntax;
-        public ArrayExpressionSyntax ArrayExpressionSyntax => this.DeclaringSyntaxReference.AsNode() as ArrayExpressionSyntax;
 
         public PAlternativeSymbol? ContainingPAlternativeSymbol
         {
@@ -85,12 +82,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
             }
         }
 
-        public ImmutableArray<MetaType> ExpectedTypes
+        public MetaType ExpectedType
         {
             get
             {
-                ForceComplete(CompletionParts.FinishComputingProperty_ExpectedTypes, null, default);
-                return _expectedTypes;
+                ForceComplete(CompletionParts.FinishComputingProperty_ExpectedType, null, default);
+                return _expectedType;
             }
         }
 
@@ -115,15 +112,15 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
 
         protected override bool ForceCompletePart(ref CompletionPart incompletePart, SourceLocation? locationOpt, CancellationToken cancellationToken)
         {
-            if (incompletePart == CompletionParts.StartComputingProperty_ExpectedTypes || incompletePart == CompletionParts.FinishComputingProperty_ExpectedTypes)
+            if (incompletePart == CompletionParts.StartComputingProperty_ExpectedType || incompletePart == CompletionParts.FinishComputingProperty_ExpectedType)
             {
-                if (NotePartComplete(CompletionParts.StartComputingProperty_ExpectedTypes))
+                if (NotePartComplete(CompletionParts.StartComputingProperty_ExpectedType))
                 {
                     var diagnostics = DiagnosticBag.GetInstance();
-                    _expectedTypes = CompleteProperty_ExpectedTypes(diagnostics, cancellationToken);
+                    _expectedType = CompleteProperty_ExpectedType(diagnostics, cancellationToken);
                     AddSymbolDiagnostics(diagnostics);
                     diagnostics.Free();
-                    NotePartComplete(CompletionParts.FinishComputingProperty_ExpectedTypes);
+                    NotePartComplete(CompletionParts.FinishComputingProperty_ExpectedType);
                 }
                 return true;
             }
@@ -148,17 +145,17 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
             return false;
         }
 
-        protected virtual ImmutableArray<MetaType> CompleteProperty_ExpectedTypes(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        protected virtual MetaType CompleteProperty_ExpectedType(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             var alt = this.ContainingPAlternativeSymbol;
             if (alt is not null)
             {
-                return alt.ExpectedTypes;
+                return alt.ExpectedType;
             }
             var arg = this.ContainingAnnotationArgumentSymbol;
             if (arg is not null)
             {
-                return arg.ExpectedTypes;
+                return arg.ParameterType;
             }
             return default;
         }
@@ -177,12 +174,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
                 var valueType = this.Value.Type;
                 if (!valueType.IsNull)
                 {
-                    foreach (var expectedType in this.ExpectedTypes)
+                    var expectedType = this.ExpectedType;
+                    if (expectedType.TryGetCoreType(out var coreType, diagnostics, cancellationToken) && !valueType.IsAssignableTo(coreType))
                     {
-                        if (expectedType.TryGetCoreType(out var coreType, diagnostics, cancellationToken) && !valueType.IsAssignableTo(coreType))
-                        {
-                            diagnostics.Add(Diagnostic.Create(CompilerErrorCode.ERR_IncompatibleExpressionType, this.Location, this.DeclaringSyntaxReference, valueType, coreType));
-                        }
+                        diagnostics.Add(Diagnostic.Create(CompilerErrorCode.ERR_IncompatibleExpressionType, this.Location, this.DeclaringSyntaxReference, valueType, coreType));
                     }
                 }
                 else

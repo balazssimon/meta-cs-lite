@@ -56,8 +56,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
 
         public PElementSymbol? ContainingElementSymbol => this.ContainingSymbol as PElementSymbol;
 
-        public BlockSyntax? Syntax => this.DeclaringSyntaxReference.AsNode() as BlockSyntax;
-
         public MetaType ExpectedType
         {
             get
@@ -112,29 +110,28 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
 
         protected virtual MetaType CompleteProperty_ExpectedType(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            var elem = this.ContainingElementSymbol;
-            if (elem is not null)
-            {
-                if (elem.IsNamedElement)
-                {
-                    return elem.ExpectedType;
-                }
-                else
-                {
-                    var alt = elem.ContainingPAlternativeSymbol;
-                    if (alt is not null)
-                    {
-                        return alt.ExpectedType;
-                    }
-                }
-            }
-            diagnostics.Add(Diagnostic.Create(ErrorCode.ERR_InternalError, this.Location, $"Could not determine the expected type for the block"));
-            return default;
+            return this.ContainingElementSymbol?.ExpectedType ?? default;
         }
 
         protected virtual ImmutableArray<PAlternativeSymbol> CompleteProperty_Alternatives(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             return SymbolFactory.GetSymbolPropertyValues<PAlternativeSymbol>(this, nameof(Alternatives), diagnostics, cancellationToken);
+        }
+
+        protected override void CompletePart_Validate(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        {
+            base.CompletePart_Validate(diagnostics, cancellationToken);
+            var expectedType = this.ExpectedType;
+            if (!expectedType.IsNull)
+            {
+                foreach (var alt in Alternatives)
+                {
+                    if (alt.ReturnValue is null)
+                    {
+                        diagnostics.Add(Diagnostic.Create(CompilerErrorCode.ERR_AltMustHaveReturnValue, alt.Location, expectedType));
+                    }
+                }
+            }
         }
     }
 }

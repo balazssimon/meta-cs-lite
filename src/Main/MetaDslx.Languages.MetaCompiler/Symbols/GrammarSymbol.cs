@@ -13,7 +13,6 @@ using MetaDslx.CodeAnalysis.PooledObjects;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System.Diagnostics.CodeAnalysis;
 using MetaDslx.Languages.MetaCompiler.Model;
-using Roslyn.Utilities;
 using static System.Reflection.Metadata.BlobBuilder;
 using System.Threading;
 

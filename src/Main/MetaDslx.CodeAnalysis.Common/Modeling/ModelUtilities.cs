@@ -7,7 +7,7 @@ using System.Collections.Immutable;
 using System.Text;
 using System.Threading;
 
-namespace Roslyn.Utilities
+namespace MetaDslx.Modeling
 {
     public static class ModelUtilities
     {
@@ -85,7 +85,7 @@ namespace Roslyn.Utilities
                 var current = queue[i];
                 if (current is T ts)
                 {
-                    if ((includeSelf && i == 0) || i > 0) result.Add(ts);
+                    if (includeSelf && i == 0 || i > 0) result.Add(ts);
                 }
                 if (current is IModelObject cmobj)
                 {
