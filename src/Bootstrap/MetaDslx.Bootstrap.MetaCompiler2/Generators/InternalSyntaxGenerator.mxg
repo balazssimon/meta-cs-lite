@@ -1,0 +1,1309 @@
+﻿namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
+
+using MetaDslx.Bootstrap.MetaCompiler2.Model
+using System.Collections.Generic
+using System.Collections.Immutable
+using System.Linq
+
+generator RoslynApiGenerator
+
+template GenerateInternalSyntax()
+#nullable enable
+
+namespace [Namespace].Syntax.InternalSyntax
+{
+	using __Debug = System.Diagnostics.Debug;
+	using __Language = global::MetaDslx.CodeAnalysis.Language;
+	using __DiagnosticInfo = global::MetaDslx.CodeAnalysis.DiagnosticInfo;
+	using __SyntaxAnnotation = global::MetaDslx.CodeAnalysis.SyntaxAnnotation;
+	using __GreenNode = global::MetaDslx.CodeAnalysis.GreenNode;
+	using __InternalSyntaxKind = global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.InternalSyntaxKind;
+	using __InternalSyntaxToken = global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.InternalSyntaxToken;
+	using __InternalSyntaxTrivia = global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.InternalSyntaxTrivia;
+	using __InternalSyntaxNode = global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.InternalSyntaxNode;
+	using __SyntaxToken = global::MetaDslx.CodeAnalysis.SyntaxToken;
+	using __SyntaxTrivia = global::MetaDslx.CodeAnalysis.SyntaxTrivia;
+	using __SyntaxNode = global::MetaDslx.CodeAnalysis.SyntaxNode;
+	using __ArgumentNullException = global::System.ArgumentNullException;
+    using __ArgumentException = global::System.ArgumentException;
+
+    internal abstract class GreenSyntaxNode : __InternalSyntaxNode
+    {
+        protected GreenSyntaxNode([Lang]SyntaxKind kind)
+            : base((ushort)kind)
+        {
+        }
+
+        protected GreenSyntaxNode([Lang]SyntaxKind kind, int fullWidth)
+            : base((ushort)kind, fullWidth)
+        {
+        }
+
+        protected GreenSyntaxNode([Lang]SyntaxKind kind, __DiagnosticInfo["[]"] diagnostics)
+            : base((ushort)kind, diagnostics)
+        {
+        }
+
+        protected GreenSyntaxNode([Lang]SyntaxKind kind, __DiagnosticInfo["[]"] diagnostics, int fullWidth)
+            : base((ushort)kind, diagnostics, fullWidth)
+        {
+        }
+
+        protected GreenSyntaxNode([Lang]SyntaxKind kind, __DiagnosticInfo["[]"] diagnostics, __SyntaxAnnotation["[]"] annotations)
+            : base((ushort)kind, diagnostics, annotations)
+        {
+        }
+
+        protected GreenSyntaxNode([Lang]SyntaxKind kind, __DiagnosticInfo["[]"] diagnostics, __SyntaxAnnotation["[]"] annotations, int fullWidth)
+            : base((ushort)kind, diagnostics, annotations, fullWidth)
+        {
+        }
+
+        public override TResult Accept<TResult>(global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.InternalSyntaxVisitor<TResult> visitor)
+        {
+            if (visitor is [Lang]InternalSyntaxVisitor<TResult> typedVisitor) return this.Accept(typedVisitor);
+            else return visitor.DefaultVisit(this);
+        }
+
+        public override void Accept(global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.InternalSyntaxVisitor visitor) 
+        {
+            if (visitor is [Lang]InternalSyntaxVisitor typedVisitor) this.Accept(typedVisitor);
+            else visitor.DefaultVisit(this);
+        }
+
+        public abstract TResult Accept<TResult>([Lang]InternalSyntaxVisitor<TResult> visitor);
+        public abstract void Accept([Lang]InternalSyntaxVisitor visitor);
+
+        public override __Language Language => [Lang]Language.Instance;
+        public [Lang]SyntaxKind Kind => ([Lang]SyntaxKind)this.RawKind;
+		public override string KindText => [Lang]Language.Instance.SyntaxFacts.GetKindText(Kind);
+
+		// Use conditional weak table so we always return same identity for structured trivia
+		private static readonly global::System.Runtime.CompilerServices.ConditionalWeakTable<__SyntaxNode, global::System.Collections.Generic.Dictionary<__SyntaxTrivia, __SyntaxNode>> s_structuresTable
+			= new global::System.Runtime.CompilerServices.ConditionalWeakTable<__SyntaxNode, global::System.Collections.Generic.Dictionary<__SyntaxTrivia, __SyntaxNode>>();
+
+		/// <summary>
+		/// Gets the syntax node represented the structure of this trivia, if any. The HasStructure property can be used to 
+		/// determine if this trivia has structure.
+		/// </summary>
+		/// <returns>
+		/// A [Lang]SyntaxNode derived from StructuredTriviaSyntax, with the structured view of this trivia node. 
+		/// If this trivia node does not have structure, returns null.
+		/// </returns>
+		/// <remarks>
+		/// Some types of trivia have structure that can be accessed as additional syntax nodes.
+		/// These forms of trivia include: 
+		///   directives, where the structure describes the structure of the directive.
+		///   documentation comments, where the structure describes the XML structure of the comment.
+		///   skipped tokens, where the structure describes the tokens that were skipped by the parser.
+		/// </remarks>
+		public override __SyntaxNode GetStructure(__SyntaxTrivia trivia)
+		{
+			if (trivia.HasStructure)
+			{
+				var parent = trivia.Token.Parent;
+				if (parent != null)
+				{
+					__SyntaxNode structure;
+					var structsInParent = s_structuresTable.GetOrCreateValue(parent);
+					lock (structsInParent)
+					{
+						if (!structsInParent.TryGetValue(trivia, out structure))
+						{
+							structure = [Lang]StructuredTriviaSyntax.Create(trivia);
+							structsInParent.Add(trivia, structure);
+						}
+					}
+
+					return structure;
+				}
+				else
+				{
+					return [Lang]StructuredTriviaSyntax.Create(trivia);
+				}
+			}
+
+			return null;
+		}
+
+	}
+
+    internal class GreenSyntaxTrivia : __InternalSyntaxTrivia
+    {
+        internal GreenSyntaxTrivia([Lang]SyntaxKind kind, string text, __DiagnosticInfo["[]"] diagnostics = null, __SyntaxAnnotation["[]"] annotations = null)
+            : base((ushort)kind, text, diagnostics, annotations)
+        {
+        }
+
+		public override __Language Language => [Lang]Language.Instance;
+		public [Lang]SyntaxKind Kind => ([Lang]SyntaxKind)this.RawKind;
+		public override string KindText => [Lang]Language.Instance.SyntaxFacts.GetKindText(Kind);
+
+		internal static GreenSyntaxTrivia Create([Lang]SyntaxKind kind, string text)
+        {
+            return new GreenSyntaxTrivia(kind, text);
+        }
+
+        public override __InternalSyntaxNode WithDiagnostics(__DiagnosticInfo["[]"] diagnostics)
+        {
+            return new GreenSyntaxTrivia(this.Kind, this.Text, diagnostics, GetAnnotations());
+        }
+
+        public override __InternalSyntaxNode WithAnnotations(__SyntaxAnnotation["[]"] annotations)
+        {
+            return new GreenSyntaxTrivia(this.Kind, this.Text, GetDiagnostics(), annotations);
+        }
+
+        public override __GreenNode Clone()
+        {
+			return new GreenSyntaxTrivia(this.Kind, this.Text, GetDiagnostics(), GetAnnotations());
+		}
+
+        public static implicit operator __SyntaxTrivia(GreenSyntaxTrivia trivia)
+        {
+            return new __SyntaxTrivia(default, trivia, position: 0, index: 0);
+        }
+    }
+
+    internal abstract class GreenStructuredTriviaSyntax : GreenSyntaxNode
+    {
+        internal GreenStructuredTriviaSyntax([Lang]SyntaxKind kind, __DiagnosticInfo["[]"] diagnostics = null, __SyntaxAnnotation["[]"] annotations = null)
+            : base(kind, diagnostics, annotations)
+        {
+            this.Initialize();
+        }
+
+        private void Initialize()
+        {
+            this.flags |= NodeFlags.ContainsStructuredTrivia;
+
+            if (this.RawKind == (int)__InternalSyntaxKind.SkippedTokensTrivia)
+            {
+                this.flags |= NodeFlags.ContainsSkippedText;
+            }
+        }
+
+        public override bool IsStructuredTrivia => true;
+    }
+
+    internal sealed partial class GreenSkippedTokensTriviaSyntax : GreenStructuredTriviaSyntax
+    {
+        internal readonly __GreenNode tokens;
+
+        internal GreenSkippedTokensTriviaSyntax([Lang]SyntaxKind kind, __GreenNode tokens, __DiagnosticInfo["[]"] diagnostics = null, __SyntaxAnnotation["[]"] annotations = null)
+            : base(kind, diagnostics, annotations)
+        {
+            this.SlotCount = 1;
+            if (tokens != null)
+            {
+                this.AdjustFlagsAndWidth(tokens);
+                this.tokens = tokens;
+            }
+        }
+
+        public MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<__InternalSyntaxToken> Tokens => new MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<__InternalSyntaxToken>(this.tokens);
+
+        protected override __GreenNode GetSlot(int index)
+        {
+            switch (index)
+            {
+                case 0: return this.tokens;
+                default: return null;
+            }
+        }
+
+        protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position) => new [Lang]SkippedTokensTriviaSyntax(this, ([Lang]SyntaxNode)parent, position);
+
+        public override TResult Accept<TResult>([Lang]InternalSyntaxVisitor<TResult> visitor) => visitor.VisitSkippedTokensTrivia(this);
+
+        public override void Accept([Lang]InternalSyntaxVisitor visitor) => visitor.VisitSkippedTokensTrivia(this);
+
+        public GreenSkippedTokensTriviaSyntax Update(MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<__InternalSyntaxToken> tokens)
+        {
+            if (tokens != this.Tokens)
+            {
+                var newNode = Language.InternalSyntaxFactory.SkippedTokensTrivia(tokens.Node);
+                var diags = this.GetDiagnostics();
+                if (diags != null && diags.Length > 0)
+                    newNode = global::MetaDslx.CodeAnalysis.GreenNodeExtensions.WithDiagnosticsGreen(newNode, diags);
+                var annotations = this.GetAnnotations();
+                if (annotations != null && annotations.Length > 0)
+                    newNode = global::MetaDslx.CodeAnalysis.GreenNodeExtensions.WithAnnotationsGreen(newNode, annotations);
+                return (GreenSkippedTokensTriviaSyntax)newNode;
+            }
+            return this;
+        }
+
+		public override __InternalSyntaxNode WithDiagnostics(__DiagnosticInfo["[]"] diagnostics)
+		{
+			return new GreenSkippedTokensTriviaSyntax(this.Kind, this.tokens, diagnostics, GetAnnotations());
+		}
+
+		public override __InternalSyntaxNode WithAnnotations(__SyntaxAnnotation["[]"] annotations)
+		{
+			return new GreenSkippedTokensTriviaSyntax(this.Kind, this.tokens, GetDiagnostics(), annotations);
+		}
+
+        public override __GreenNode Clone()
+        {
+			return new GreenSkippedTokensTriviaSyntax(this.Kind, this.tokens, GetDiagnostics(), GetAnnotations());
+		}
+    }
+
+	internal partial class GreenSyntaxToken : __InternalSyntaxToken
+	{
+	    //====================
+	    // Optimization: Normally, we wouldn't accept this much duplicate code, but these constructors
+	    // are called A LOT and we want to keep them as short and simple as possible and increase the
+	    // likelihood that they will be inlined.
+	    internal GreenSyntaxToken([Lang]SyntaxKind kind)
+	        : base((ushort)kind)
+	    {
+	    }
+	    internal GreenSyntaxToken([Lang]SyntaxKind kind, __DiagnosticInfo["[]"] diagnostics)
+	        : base((ushort)kind, diagnostics)
+	    {
+	    }
+	    internal GreenSyntaxToken([Lang]SyntaxKind kind, __DiagnosticInfo["[]"] diagnostics, __SyntaxAnnotation["[]"] annotations)
+	        : base((ushort)kind, diagnostics, annotations)
+	    {
+	    }
+	    internal GreenSyntaxToken([Lang]SyntaxKind kind, int fullWidth)
+	        : base((ushort)kind, fullWidth)
+	    {
+	    }
+	    internal GreenSyntaxToken([Lang]SyntaxKind kind, int fullWidth, __DiagnosticInfo["[]"] diagnostics)
+	        : base((ushort)kind, fullWidth, diagnostics)
+	    {
+	    }
+	    internal GreenSyntaxToken([Lang]SyntaxKind kind, int fullWidth, __DiagnosticInfo["[]"] diagnostics, __SyntaxAnnotation["[]"] annotations)
+	        : base((ushort)kind, fullWidth, diagnostics, annotations)
+	    {
+	    }
+
+	    public override __Language Language => [Lang]Language.Instance;
+	    public [Lang]SyntaxKind Kind => ([Lang]SyntaxKind)this.RawKind;
+		public override string KindText => [Lang]Language.Instance.SyntaxFacts.GetKindText(Kind);
+
+		//====================
+		internal static GreenSyntaxToken Create([Lang]SyntaxKind kind)
+	    {
+	        if (kind > LastTokenWithWellKnownText)
+	        {
+	            if (![Lang]Language.Instance.SyntaxFacts.IsToken(kind))
+	            {
+	                throw new __ArgumentNullException(string.Format("Invalid [Lang]SyntaxKind: {0}. This method can only be used to create tokens.", kind), nameof(kind));
+	            }
+	            return CreateMissing(kind, null, null);
+	        }
+	        return s_tokensWithNoTrivia["["](int)kind["]"].Value;
+	    }
+	    internal static GreenSyntaxToken Create([Lang]SyntaxKind kind, __GreenNode? leading, __GreenNode? trailing)
+	    {
+	        if (kind > LastTokenWithWellKnownText)
+	        {
+	            if (![Lang]Language.Instance.SyntaxFacts.IsToken(kind))
+	            {
+	                throw new __ArgumentNullException(string.Format("Invalid [Lang]SyntaxKind: {0}. This method can only be used to create tokens.", kind), nameof(kind));
+	            }
+	            return CreateMissing(kind, leading, trailing);
+	        }
+	        if (leading == null)
+	        {
+	            if (trailing == null)
+	            {
+	                return s_tokensWithNoTrivia["["](int)kind["]"].Value;
+	            }
+	            else if (trailing == [Lang]Language.Instance.InternalSyntaxFactory.Space)
+	            {
+	                return s_tokensWithSingleTrailingSpace["["](int)kind["]"].Value;
+	            }
+	            else if (trailing == [Lang]Language.Instance.InternalSyntaxFactory.CarriageReturnLineFeed)
+	            {
+	                return s_tokensWithSingleTrailingCRLF["["](int)kind["]"].Value;
+	            }
+	        }
+	        if (leading == [Lang]Language.Instance.InternalSyntaxFactory.ElasticZeroSpace && trailing == [Lang]Language.Instance.InternalSyntaxFactory.ElasticZeroSpace)
+	        {
+	            return s_tokensWithElasticTrivia["["](int)kind["]"].Value;
+	        }
+	        return new SyntaxTokenWithTrivia(kind, leading, trailing);
+	    }
+	    internal static GreenSyntaxToken CreateMissing([Lang]SyntaxKind kind, __GreenNode? leading, __GreenNode? trailing)
+	    {
+	        return new MissingTokenWithTrivia(kind, leading, trailing);
+	    }
+	    internal static readonly [Lang]SyntaxKind FirstTokenWithWellKnownText;
+	    internal static readonly [Lang]SyntaxKind LastTokenWithWellKnownText;
+	    // TODO: eliminate the blank space before the first interesting element?
+	    private static readonly global::MetaDslx.CodeAnalysis.ArrayElement<GreenSyntaxToken>["[]"] s_tokensWithNoTrivia;
+	    private static readonly global::MetaDslx.CodeAnalysis.ArrayElement<GreenSyntaxToken>["[]"] s_tokensWithElasticTrivia;
+	    private static readonly global::MetaDslx.CodeAnalysis.ArrayElement<GreenSyntaxToken>["[]"] s_tokensWithSingleTrailingSpace;
+	    private static readonly global::MetaDslx.CodeAnalysis.ArrayElement<GreenSyntaxToken>["[]"] s_tokensWithSingleTrailingCRLF;
+	    static GreenSyntaxToken()
+	    {
+	        FirstTokenWithWellKnownText = [Lang]SyntaxKind.__FirstFixedToken;
+	        LastTokenWithWellKnownText = [Lang]SyntaxKind.__LastFixedToken;
+	        s_tokensWithNoTrivia = new global::MetaDslx.CodeAnalysis.ArrayElement<GreenSyntaxToken>["["](int)LastTokenWithWellKnownText + 1["]"];
+	        s_tokensWithElasticTrivia = new global::MetaDslx.CodeAnalysis.ArrayElement<GreenSyntaxToken>["["](int)LastTokenWithWellKnownText + 1["]"];
+	        s_tokensWithSingleTrailingSpace = new global::MetaDslx.CodeAnalysis.ArrayElement<GreenSyntaxToken>["["](int)LastTokenWithWellKnownText + 1["]"];
+	        s_tokensWithSingleTrailingCRLF = new global::MetaDslx.CodeAnalysis.ArrayElement<GreenSyntaxToken>["["](int)LastTokenWithWellKnownText + 1["]"];
+			var factory = [Lang]Language.Instance.InternalSyntaxFactory;
+	        for ([Lang]SyntaxKind kind = FirstTokenWithWellKnownText; kind <= LastTokenWithWellKnownText; kind++)
+	        {
+	            s_tokensWithNoTrivia["["](int)kind["]"].Value = new GreenSyntaxToken(([Lang]SyntaxKind)kind);
+	            s_tokensWithElasticTrivia["["](int)kind["]"].Value = new SyntaxTokenWithTrivia(([Lang]SyntaxKind)kind, factory.ElasticZeroSpace, factory.ElasticZeroSpace);
+	            s_tokensWithSingleTrailingSpace["["](int)kind["]"].Value = new SyntaxTokenWithTrivia(([Lang]SyntaxKind)kind, null, factory.Space);
+	            s_tokensWithSingleTrailingCRLF["["](int)kind["]"].Value = new SyntaxTokenWithTrivia(([Lang]SyntaxKind)kind, null, factory.CarriageReturnLineFeed);
+	        }
+	    }
+	    internal static global::System.Collections.Generic.IEnumerable<GreenSyntaxToken> GetWellKnownTokens()
+	    {
+	        foreach (var element in s_tokensWithNoTrivia)
+	        {
+	            if (element.Value != null)
+	            {
+	                yield return element.Value;
+	            }
+	        }
+	        foreach (var element in s_tokensWithElasticTrivia)
+	        {
+	            if (element.Value != null)
+	            {
+	                yield return element.Value;
+	            }
+	        }
+	        foreach (var element in s_tokensWithSingleTrailingSpace)
+	        {
+	            if (element.Value != null)
+	            {
+	                yield return element.Value;
+	            }
+	        }
+	        foreach (var element in s_tokensWithSingleTrailingCRLF)
+	        {
+	            if (element.Value != null)
+	            {
+	                yield return element.Value;
+	            }
+	        }
+	    }
+	    internal static GreenSyntaxToken Identifier([Lang]SyntaxKind kind, string text)
+	    {
+	        return new SyntaxIdentifier(kind, text);
+	    }
+	    internal static GreenSyntaxToken Identifier([Lang]SyntaxKind kind, __GreenNode leading, string text, __GreenNode trailing)
+	    {
+	        if (leading == null)
+	        {
+	            if (trailing == null)
+	            {
+	                return Identifier(kind, text);
+	            }
+	            else
+	            {
+	                return new SyntaxIdentifierWithTrailingTrivia(kind, text, trailing);
+	            }
+	        }
+	        return new SyntaxIdentifierWithTrivia(kind, kind, text, text, leading, trailing);
+	    }
+	    internal static GreenSyntaxToken Identifier([Lang]SyntaxKind kind, [Lang]SyntaxKind contextualKind, __GreenNode leading, string text, string valueText, __GreenNode trailing)
+	    {
+	        if (contextualKind == kind && valueText == text)
+	        {
+	            return Identifier(kind, leading, text, trailing);
+	        }
+	        return new SyntaxIdentifierWithTrivia(kind, contextualKind, text, valueText, leading, trailing);
+	    }
+	    internal static GreenSyntaxToken WithValue<T>([Lang]SyntaxKind kind, string text, T value)
+	    {
+	        return new SyntaxTokenWithValue<T>(kind, text, value);
+	    }
+	    internal static GreenSyntaxToken WithValue<T>([Lang]SyntaxKind kind, __GreenNode? leading, string text, T value, __GreenNode? trailing)
+	    {
+	        return new SyntaxTokenWithValueAndTrivia<T>(kind, text, value, leading, trailing);
+	    }
+	    public new virtual [Lang]SyntaxKind ContextualKind => this.Kind;
+	    public override int RawContextualKind => (int)this.ContextualKind;
+        public override __GreenNode WithLeadingTrivia(__GreenNode? trivia)
+        {
+            return TokenWithLeadingTrivia(trivia);
+        }
+		public override __GreenNode WithTrailingTrivia(__GreenNode? trivia)
+		{
+			return TokenWithTrailingTrivia(trivia);
+		}
+		public virtual __InternalSyntaxToken TokenWithLeadingTrivia(__GreenNode? trivia)
+	    {
+	        return new SyntaxTokenWithTrivia(this.Kind, trivia, null, this.GetDiagnostics(), this.GetAnnotations());
+	    }
+	    public virtual __InternalSyntaxToken TokenWithTrailingTrivia(__GreenNode? trivia)
+	    {
+	        return new SyntaxTokenWithTrivia(this.Kind, null, trivia, this.GetDiagnostics(), this.GetAnnotations());
+	    }
+	    public override __InternalSyntaxNode WithDiagnostics(__DiagnosticInfo["[]"] diagnostics)
+	    {
+	        __Debug.Assert(this.GetType() == typeof(GreenSyntaxToken));
+	        return new GreenSyntaxToken(this.Kind, this.FullWidth, diagnostics, this.GetAnnotations());
+	    }
+	    public override __InternalSyntaxNode WithAnnotations(__SyntaxAnnotation["[]"] annotations)
+	    {
+	        __Debug.Assert(this.GetType() == typeof(GreenSyntaxToken));
+	        return new GreenSyntaxToken(this.Kind, this.FullWidth, this.GetDiagnostics(), annotations);
+	    }
+		public override __GreenNode Clone()
+		{
+	        __Debug.Assert(this.GetType() == typeof(GreenSyntaxToken));
+			return new GreenSyntaxToken(this.Kind, this.FullWidth, GetDiagnostics(), GetAnnotations());
+		}
+	    public override TResult Accept<TResult>(global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.InternalSyntaxVisitor<TResult> visitor)
+	    {
+	        return visitor.VisitToken(this);
+	    }
+	    public override void Accept(global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.InternalSyntaxVisitor visitor)
+	    {
+	        visitor.VisitToken(this);
+	    }
+	    protected override void WriteTokenTo(System.IO.TextWriter writer, bool leading, bool trailing)
+	    {
+	        if (leading)
+	        {
+	            var trivia = this.GetLeadingTrivia();
+	            if (trivia != null)
+	            {
+	                trivia.WriteTo(writer);
+	            }
+	        }
+	        writer.Write(this.Text);
+	        if (trailing)
+	        {
+	            var trivia = this.GetTrailingTrivia();
+	            if (trivia != null)
+	            {
+	                trivia.WriteTo(writer);
+	            }
+	        }
+	    }
+	
+	    internal class MissingTokenWithTrivia : SyntaxTokenWithTrivia
+	    {
+	        internal MissingTokenWithTrivia([Lang]SyntaxKind kind, __GreenNode? leading, __GreenNode? trailing)
+	            : base(kind, leading, trailing)
+	        {
+	            this.flags &= ~NodeFlags.IsNotMissing;
+	        }
+	        internal MissingTokenWithTrivia([Lang]SyntaxKind kind, __GreenNode? leading, __GreenNode? trailing, __DiagnosticInfo["[]"] diagnostics, __SyntaxAnnotation["[]"] annotations)
+	            : base(kind, leading, trailing, diagnostics, annotations)
+	        {
+	            this.flags &= ~NodeFlags.IsNotMissing;
+	        }
+	        public override string Text
+	        {
+	            get { return string.Empty; }
+	        }
+	        public override object Value
+	        {
+	            get
+	            {
+	                if ([Lang]Language.Instance.SyntaxFacts.IsIdentifier(this.Kind)) return string.Empty;
+	                else return null;
+	            }
+	        }
+	        public override __InternalSyntaxToken TokenWithLeadingTrivia(__GreenNode? trivia)
+	        {
+	            return new MissingTokenWithTrivia(this.Kind, trivia, this.TrailingField, this.GetDiagnostics(), this.GetAnnotations());
+	        }
+	        public override __InternalSyntaxToken TokenWithTrailingTrivia(__GreenNode? trivia)
+	        {
+	            return new MissingTokenWithTrivia(this.Kind, this.LeadingField, trivia, this.GetDiagnostics(), this.GetAnnotations());
+	        }
+	        public override __InternalSyntaxNode WithDiagnostics(__DiagnosticInfo["[]"] diagnostics)
+	        {
+	            return new MissingTokenWithTrivia(this.Kind, this.LeadingField, this.TrailingField, diagnostics, this.GetAnnotations());
+	        }
+	        public override __InternalSyntaxNode WithAnnotations(__SyntaxAnnotation["[]"] annotations)
+	        {
+	            return new MissingTokenWithTrivia(this.Kind, this.LeadingField, this.TrailingField, this.GetDiagnostics(), annotations);
+	        }
+		    public override __GreenNode Clone()
+		    {
+			    return new MissingTokenWithTrivia(this.Kind, this.LeadingField, this.TrailingField, this.GetDiagnostics(), this.GetAnnotations());
+		    }
+	    }
+	
+	    internal class SyntaxIdentifier : GreenSyntaxToken
+	    {
+	        protected readonly string TextField;
+	        internal SyntaxIdentifier([Lang]SyntaxKind kind, string text)
+	            : base(kind, text.Length)
+	        {
+	            this.TextField = text;
+	        }
+	        internal SyntaxIdentifier([Lang]SyntaxKind kind, string text, __DiagnosticInfo["[]"] diagnostics, __SyntaxAnnotation["[]"] annotations)
+	            : base(kind, text.Length, diagnostics, annotations)
+	        {
+	            this.TextField = text;
+	        }
+	        public override string Text
+	        {
+	            get { return this.TextField; }
+	        }
+	        public override object Value
+	        {
+	            get { return this.TextField; }
+	        }
+	        public override string ValueText
+	        {
+	            get { return this.TextField; }
+	        }
+	        public override __InternalSyntaxToken TokenWithLeadingTrivia(__GreenNode trivia)
+	        {
+	            return new SyntaxIdentifierWithTrivia(this.Kind, this.ContextualKind, this.TextField, this.TextField, trivia, null, this.GetDiagnostics(), this.GetAnnotations());
+	        }
+	        public override __InternalSyntaxToken TokenWithTrailingTrivia(__GreenNode trivia)
+	        {
+	            return new SyntaxIdentifierWithTrivia(this.Kind, this.ContextualKind, this.TextField, this.TextField, null, trivia, this.GetDiagnostics(), this.GetAnnotations());
+	        }
+	        public override __InternalSyntaxNode WithDiagnostics(__DiagnosticInfo["[]"] diagnostics)
+	        {
+	            return new SyntaxIdentifier(this.Kind, this.Text, diagnostics, this.GetAnnotations());
+	        }
+	        public override __InternalSyntaxNode WithAnnotations(__SyntaxAnnotation["[]"] annotations)
+	        {
+	            return new SyntaxIdentifier(this.Kind, this.Text, this.GetDiagnostics(), annotations);
+	        }
+		    public override __GreenNode Clone()
+		    {
+			    return new SyntaxIdentifier(this.Kind, this.Text, this.GetDiagnostics(), this.GetAnnotations());
+		    }
+	    }
+	
+	    internal class SyntaxIdentifierExtended : SyntaxIdentifier
+	    {
+	        protected readonly [Lang]SyntaxKind contextualKind;
+	        protected readonly string valueText;
+	        internal SyntaxIdentifierExtended([Lang]SyntaxKind kind, [Lang]SyntaxKind contextualKind, string text, string valueText)
+	            : base(kind, text)
+	        {
+	            this.contextualKind = contextualKind;
+	            this.valueText = valueText;
+	        }
+	        internal SyntaxIdentifierExtended([Lang]SyntaxKind kind, [Lang]SyntaxKind contextualKind, string text, string valueText, __DiagnosticInfo["[]"] diagnostics, __SyntaxAnnotation["[]"] annotations)
+	            : base(kind, text, diagnostics, annotations)
+	        {
+	            this.contextualKind = contextualKind;
+	            this.valueText = valueText;
+	        }
+	        public override [Lang]SyntaxKind ContextualKind
+	        {
+	            get { return this.contextualKind; }
+	        }
+	        public override string ValueText
+	        {
+	            get { return this.valueText; }
+	        }
+	        public override object Value
+	        {
+	            get { return this.valueText; }
+	        }
+	        public override __InternalSyntaxToken TokenWithLeadingTrivia(__GreenNode trivia)
+	        {
+	            return new SyntaxIdentifierWithTrivia(this.Kind, this.contextualKind, this.TextField, this.valueText, trivia, null, this.GetDiagnostics(), this.GetAnnotations());
+	        }
+	        public override __InternalSyntaxToken TokenWithTrailingTrivia(__GreenNode trivia)
+	        {
+	            return new SyntaxIdentifierWithTrivia(this.Kind, this.contextualKind, this.TextField, this.valueText, null, trivia, this.GetDiagnostics(), this.GetAnnotations());
+	        }
+	        public override __InternalSyntaxNode WithDiagnostics(__DiagnosticInfo["[]"] diagnostics)
+	        {
+	            return new SyntaxIdentifierExtended(this.Kind, this.contextualKind, this.TextField, this.valueText, diagnostics, this.GetAnnotations());
+	        }
+	        public override __InternalSyntaxNode WithAnnotations(__SyntaxAnnotation["[]"] annotations)
+	        {
+	            return new SyntaxIdentifierExtended(this.Kind, this.contextualKind, this.TextField, this.valueText, this.GetDiagnostics(), annotations);
+	        }
+		    public override __GreenNode Clone()
+		    {
+			    return new SyntaxIdentifierExtended(this.Kind, this.contextualKind, this.TextField, this.valueText, this.GetDiagnostics(), this.GetAnnotations());
+		    }
+	    }
+	
+		internal class SyntaxIdentifierWithTrailingTrivia : SyntaxIdentifier
+	    {
+	        private readonly __GreenNode? _trailing;
+	        internal SyntaxIdentifierWithTrailingTrivia([Lang]SyntaxKind kind, string text, __GreenNode? trailing)
+	            : base(kind, text)
+	        {
+	            if (trailing != null)
+	            {
+	                this.AdjustFlagsAndWidth(trailing);
+	                _trailing = trailing;
+	            }
+	        }
+	        internal SyntaxIdentifierWithTrailingTrivia([Lang]SyntaxKind kind, string text, __GreenNode? trailing, __DiagnosticInfo["[]"] diagnostics, __SyntaxAnnotation["[]"] annotations)
+	            : base(kind, text, diagnostics, annotations)
+	        {
+	            if (trailing != null)
+	            {
+	                this.AdjustFlagsAndWidth(trailing);
+	                _trailing = trailing;
+	            }
+	        }
+	        public override __GreenNode? GetTrailingTrivia()
+	        {
+	            return _trailing;
+	        }
+	        public override __InternalSyntaxToken TokenWithLeadingTrivia(__GreenNode? trivia)
+	        {
+	            return new SyntaxIdentifierWithTrivia(this.Kind, this.ContextualKind, this.TextField, this.TextField, trivia, _trailing, this.GetDiagnostics(), this.GetAnnotations());
+	        }
+	        public override __InternalSyntaxToken TokenWithTrailingTrivia(__GreenNode? trivia)
+	        {
+	            return new SyntaxIdentifierWithTrailingTrivia(this.Kind, this.TextField, trivia, this.GetDiagnostics(), this.GetAnnotations());
+	        }
+	        public override __InternalSyntaxNode WithDiagnostics(__DiagnosticInfo["[]"] diagnostics)
+	        {
+	            return new SyntaxIdentifierWithTrailingTrivia(this.Kind, this.TextField, _trailing, diagnostics, this.GetAnnotations());
+	        }
+	        public override __InternalSyntaxNode WithAnnotations(__SyntaxAnnotation["[]"] annotations)
+	        {
+	            return new SyntaxIdentifierWithTrailingTrivia(this.Kind, this.TextField, _trailing, this.GetDiagnostics(), annotations);
+	        }
+		    public override __GreenNode Clone()
+		    {
+			    return new SyntaxIdentifierWithTrailingTrivia(this.Kind, this.TextField, _trailing, this.GetDiagnostics(), this.GetAnnotations());
+		    }
+	    }
+	
+	    internal class SyntaxIdentifierWithTrivia : SyntaxIdentifierExtended
+	    {
+	        private readonly __GreenNode? _leading;
+	        private readonly __GreenNode? _trailing;
+	        internal SyntaxIdentifierWithTrivia(
+	            [Lang]SyntaxKind kind,
+	            [Lang]SyntaxKind contextualKind,
+	            string text,
+	            string valueText,
+	            __GreenNode? leading,
+	            __GreenNode? trailing)
+	            : base(kind, contextualKind, text, valueText)
+	        {
+	            if (leading != null)
+	            {
+	                this.AdjustFlagsAndWidth(leading);
+	                _leading = leading;
+	            }
+	            if (trailing != null)
+	            {
+	                this.AdjustFlagsAndWidth(trailing);
+	                _trailing = trailing;
+	            }
+	        }
+	        internal SyntaxIdentifierWithTrivia(
+	            [Lang]SyntaxKind kind,
+	            [Lang]SyntaxKind contextualKind,
+	            string text,
+	            string valueText,
+	            __GreenNode? leading,
+	            __GreenNode? trailing,
+	            __DiagnosticInfo["[]"] diagnostics,
+	            __SyntaxAnnotation["[]"] annotations)
+	            : base(kind, contextualKind, text, valueText, diagnostics, annotations)
+	        {
+	            if (leading != null)
+	            {
+	                this.AdjustFlagsAndWidth(leading);
+	                _leading = leading;
+	            }
+	            if (trailing != null)
+	            {
+	                this.AdjustFlagsAndWidth(trailing);
+	                _trailing = trailing;
+	            }
+	        }
+	        public override __GreenNode? GetLeadingTrivia()
+	        {
+	            return _leading;
+	        }
+	        public override __GreenNode? GetTrailingTrivia()
+	        {
+	            return _trailing;
+	        }
+	        public override __InternalSyntaxToken TokenWithLeadingTrivia(__GreenNode? trivia)
+	        {
+	            return new SyntaxIdentifierWithTrivia(this.Kind, this.contextualKind, this.TextField, this.valueText, trivia, _trailing, this.GetDiagnostics(), this.GetAnnotations());
+	        }
+	        public override __InternalSyntaxToken TokenWithTrailingTrivia(__GreenNode? trivia)
+	        {
+	            return new SyntaxIdentifierWithTrivia(this.Kind, this.contextualKind, this.TextField, this.valueText, _leading, trivia, this.GetDiagnostics(), this.GetAnnotations());
+	        }
+	        public override __InternalSyntaxNode WithDiagnostics(__DiagnosticInfo["[]"] diagnostics)
+	        {
+	            return new SyntaxIdentifierWithTrivia(this.Kind, this.contextualKind, this.TextField, this.valueText, _leading, _trailing, diagnostics, this.GetAnnotations());
+	        }
+	        public override __InternalSyntaxNode WithAnnotations(__SyntaxAnnotation["[]"] annotations)
+	        {
+	            return new SyntaxIdentifierWithTrivia(this.Kind, this.contextualKind, this.TextField, this.valueText, _leading, _trailing, this.GetDiagnostics(), annotations);
+	        }
+		    public override __GreenNode Clone()
+		    {
+			    return new SyntaxIdentifierWithTrivia(this.Kind, this.contextualKind, this.TextField, this.valueText, _leading, _trailing, this.GetDiagnostics(), this.GetAnnotations());
+		    }
+	    }
+	
+	    internal class SyntaxTokenWithValue<T> : GreenSyntaxToken
+	    {
+	        protected readonly string TextField;
+	        protected readonly T ValueField;
+	        internal SyntaxTokenWithValue([Lang]SyntaxKind kind, string text, T value)
+	            : base(kind, text.Length)
+	        {
+	            this.TextField = text;
+	            this.ValueField = value;
+	        }
+	        internal SyntaxTokenWithValue([Lang]SyntaxKind kind, string text, T value, __DiagnosticInfo["[]"] diagnostics, __SyntaxAnnotation["[]"] annotations)
+	            : base(kind, text.Length, diagnostics, annotations)
+	        {
+	            this.TextField = text;
+	            this.ValueField = value;
+	        }
+	        public override string Text
+	        {
+	            get
+	            {
+	                return this.TextField;
+	            }
+	        }
+	        public override object Value
+	        {
+	            get
+	            {
+	                return this.ValueField;
+	            }
+	        }
+	        public override string ValueText
+	        {
+	            get
+	            {
+	                return global::System.Convert.ToString(this.ValueField, global::System.Globalization.CultureInfo.InvariantCulture);
+	            }
+	        }
+	        public override __InternalSyntaxToken TokenWithLeadingTrivia(__GreenNode trivia)
+	        {
+	            return new SyntaxTokenWithValueAndTrivia<T>(this.Kind, this.TextField, this.ValueField, trivia, null, this.GetDiagnostics(), this.GetAnnotations());
+	        }
+	        public override __InternalSyntaxToken TokenWithTrailingTrivia(__GreenNode trivia)
+	        {
+	            return new SyntaxTokenWithValueAndTrivia<T>(this.Kind, this.TextField, this.ValueField, null, trivia, this.GetDiagnostics(), this.GetAnnotations());
+	        }
+	        public override __InternalSyntaxNode WithDiagnostics(__DiagnosticInfo["[]"] diagnostics)
+	        {
+	            return new SyntaxTokenWithValue<T>(this.Kind, this.TextField, this.ValueField, diagnostics, this.GetAnnotations());
+	        }
+	        public override __InternalSyntaxNode WithAnnotations(__SyntaxAnnotation["[]"] annotations)
+	        {
+	            return new SyntaxTokenWithValue<T>(this.Kind, this.TextField, this.ValueField, this.GetDiagnostics(), annotations);
+	        }
+		    public override __GreenNode Clone()
+		    {
+			    return new SyntaxTokenWithValue<T>(this.Kind, this.TextField, this.ValueField, this.GetDiagnostics(), this.GetAnnotations());
+		    }
+	    }
+	
+	    internal class SyntaxTokenWithValueAndTrivia<T> : SyntaxTokenWithValue<T>
+	    {
+	        private readonly __GreenNode? _leading;
+	        private readonly __GreenNode? _trailing;
+	        internal SyntaxTokenWithValueAndTrivia([Lang]SyntaxKind kind, string text, T value, __GreenNode? leading, __GreenNode? trailing)
+	            : base(kind, text, value)
+	        {
+	            if (leading != null)
+	            {
+	                this.AdjustFlagsAndWidth(leading);
+	                _leading = leading;
+	            }
+	            if (trailing != null)
+	            {
+	                this.AdjustFlagsAndWidth(trailing);
+	                _trailing = trailing;
+	            }
+	        }
+	        internal SyntaxTokenWithValueAndTrivia(
+	            [Lang]SyntaxKind kind,
+	            string text,
+	            T value,
+	            __GreenNode? leading,
+	            __GreenNode? trailing,
+	            __DiagnosticInfo["[]"] diagnostics,
+	            __SyntaxAnnotation["[]"] annotations)
+	            : base(kind, text, value, diagnostics, annotations)
+	        {
+	            if (leading != null)
+	            {
+	                this.AdjustFlagsAndWidth(leading);
+	                _leading = leading;
+	            }
+	            if (trailing != null)
+	            {
+	                this.AdjustFlagsAndWidth(trailing);
+	                _trailing = trailing;
+	            }
+	        }
+	        public override __GreenNode? GetLeadingTrivia()
+	        {
+	            return _leading;
+	        }
+	        public override __GreenNode? GetTrailingTrivia()
+	        {
+	            return _trailing;
+	        }
+	        public override __InternalSyntaxToken TokenWithLeadingTrivia(__GreenNode? trivia)
+	        {
+	            return new SyntaxTokenWithValueAndTrivia<T>(this.Kind, this.TextField, this.ValueField, trivia, _trailing, this.GetDiagnostics(), this.GetAnnotations());
+	        }
+	        public override __InternalSyntaxToken TokenWithTrailingTrivia(__GreenNode? trivia)
+	        {
+	            return new SyntaxTokenWithValueAndTrivia<T>(this.Kind, this.TextField, this.ValueField, _leading, trivia, this.GetDiagnostics(), this.GetAnnotations());
+	        }
+	        public override __InternalSyntaxNode WithDiagnostics(__DiagnosticInfo["[]"] diagnostics)
+	        {
+	            return new SyntaxTokenWithValueAndTrivia<T>(this.Kind, this.TextField, this.ValueField, _leading, _trailing, diagnostics, this.GetAnnotations());
+	        }
+	        public override __InternalSyntaxNode WithAnnotations(__SyntaxAnnotation["[]"] annotations)
+	        {
+	            return new SyntaxTokenWithValueAndTrivia<T>(this.Kind, this.TextField, this.ValueField, _leading, _trailing, this.GetDiagnostics(), annotations);
+	        }
+		    public override __GreenNode Clone()
+		    {
+			    return new SyntaxTokenWithValueAndTrivia<T>(this.Kind, this.TextField, this.ValueField, _leading, _trailing, this.GetDiagnostics(), this.GetAnnotations());
+		    }
+	    }
+	
+	    internal class SyntaxTokenWithTrivia : GreenSyntaxToken
+	    {
+	        protected readonly __GreenNode? LeadingField;
+	        protected readonly __GreenNode? TrailingField;
+	        internal SyntaxTokenWithTrivia([Lang]SyntaxKind kind, __GreenNode? leading, __GreenNode? trailing)
+	            : base(kind)
+	        {
+	            if (leading != null)
+	            {
+	                this.AdjustFlagsAndWidth(leading);
+	                this.LeadingField = leading;
+	            }
+	            if (trailing != null)
+	            {
+	                this.AdjustFlagsAndWidth(trailing);
+	                this.TrailingField = trailing;
+	            }
+	        }
+	        internal SyntaxTokenWithTrivia([Lang]SyntaxKind kind, __GreenNode? leading, __GreenNode? trailing, __DiagnosticInfo["[]"] diagnostics, __SyntaxAnnotation["[]"] annotations)
+	            : base(kind, diagnostics, annotations)
+	        {
+	            if (leading != null)
+	            {
+	                this.AdjustFlagsAndWidth(leading);
+	                this.LeadingField = leading;
+	            }
+	            if (trailing != null)
+	            {
+	                this.AdjustFlagsAndWidth(trailing);
+	                this.TrailingField = trailing;
+	            }
+	        }
+	        public override __GreenNode? GetLeadingTrivia()
+	        {
+	            return this.LeadingField;
+	        }
+	        public override __GreenNode? GetTrailingTrivia()
+	        {
+	            return this.TrailingField;
+	        }
+	        public override __InternalSyntaxToken TokenWithLeadingTrivia(__GreenNode? trivia)
+	        {
+	            return new SyntaxTokenWithTrivia(this.Kind, trivia, this.TrailingField, this.GetDiagnostics(), this.GetAnnotations());
+	        }
+	        public override __InternalSyntaxToken TokenWithTrailingTrivia(__GreenNode? trivia)
+	        {
+	            return new SyntaxTokenWithTrivia(this.Kind, this.LeadingField, trivia, this.GetDiagnostics(), this.GetAnnotations());
+	        }
+	        public override __InternalSyntaxNode WithDiagnostics(__DiagnosticInfo["[]"] diagnostics)
+	        {
+	            return new SyntaxTokenWithTrivia(this.Kind, this.LeadingField, this.TrailingField, diagnostics, this.GetAnnotations());
+	        }
+	        public override __InternalSyntaxNode WithAnnotations(__SyntaxAnnotation["[]"] annotations)
+	        {
+	            return new SyntaxTokenWithTrivia(this.Kind, this.LeadingField, this.TrailingField, this.GetDiagnostics(), annotations);
+	        }
+		    public override __GreenNode Clone()
+		    {
+			    return new SyntaxTokenWithTrivia(this.Kind, this.LeadingField, this.TrailingField, this.GetDiagnostics(), this.GetAnnotations());
+		    }
+	    }
+	}
+
+	[foreach (var rule in Rules)]
+	[GenerateInternalSyntaxRule(rule)]
+	[end foreach]
+}
+end template
+
+template GenerateInternalSyntaxRule(Rule rule)
+[GenerateInternalSyntaxRuleBase(rule)]
+[foreach (var alt in rule.Alternatives)]
+[GenerateInternalSyntaxRuleAlt(rule, alt)]
+[end foreach]
+end template
+
+template GenerateInternalSyntaxRuleBase(Rule rule)
+[if (rule.Alternatives.Count > 1)]
+internal abstract class [rule.GreenName] : GreenSyntaxNode
+{
+	[var firstAlt = rule.Alternatives[0]]
+	internal static readonly [rule.GreenName] __Missing = [firstAlt.GreenName].__Missing;
+
+    protected [rule.GreenName]([Lang]SyntaxKind kind, __DiagnosticInfo["[]"] diagnostics, __SyntaxAnnotation["[]"] annotations)
+        : base(kind, diagnostics, annotations)
+    {
+    }
+}
+
+[end if]
+end template
+
+template GenerateInternalSyntaxRuleAlt(Rule rule, Alternative alt)
+internal class [alt.GreenName] : [rule.Alternatives.Count == 1 ? "GreenSyntaxNode" : rule.GreenName]
+{
+	internal static new readonly [alt.GreenName] __Missing = new [alt.GreenName]();
+	[foreach (var elem in alt.Elements)]
+	private [elem.GreenFieldType] [elem.FieldName];
+	[end foreach]
+
+	public [alt.GreenName]([Lang]SyntaxKind kind[alt.GreenConstructorParameters])
+		: base(kind, null, null)
+	{
+		SlotCount = [alt.Elements.Count];
+		[foreach (var elem in alt.Elements)]
+		if ([elem.ParameterName] != null)
+		{
+			AdjustFlagsAndWidth([elem.ParameterName]);
+			[elem.FieldName] = [elem.ParameterName];
+		}
+		[end foreach]
+	}
+
+	public [alt.GreenName]([Lang]SyntaxKind kind[alt.GreenConstructorParameters], __DiagnosticInfo["[]"] diagnostics, __SyntaxAnnotation["[]"] annotations)
+		: base(kind, diagnostics, annotations)
+	{
+		SlotCount = [alt.Elements.Count];
+		[foreach (var elem in alt.Elements)]
+		if ([elem.ParameterName] != null)
+		{
+			AdjustFlagsAndWidth([elem.ParameterName]);
+			[elem.FieldName] = [elem.ParameterName];
+		}
+		[end foreach]
+	}
+
+	private [alt.GreenName]()
+		: base(([Lang]SyntaxKind)[Lang]SyntaxKind.[alt.CSharpName], null, null)
+	{
+		this.flags &= ~NodeFlags.IsNotMissing;
+	}
+
+	[foreach (var elem in alt.Elements)]
+	public [elem.GreenPropertyType] [elem.PropertyName] { get { return [elem.GreenPropertyValue]; } }
+	[end foreach]
+
+	protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
+	{
+		return new global::[Namespace].Syntax.[alt.RedName](this, ([Lang]SyntaxNode)parent, position);
+	}
+
+	protected override __GreenNode GetSlot(int index)
+	{
+		switch (index)
+		{
+			[var slotIndex = 0]
+			[foreach (var elem in alt.Elements)]
+			case [slotIndex++]: return [elem.FieldName];
+			[end foreach]
+			default: return null;
+		}
+	}
+
+	public override TResult Accept<TResult>([Lang]InternalSyntaxVisitor<TResult> visitor) => visitor.Visit[alt.GreenName](this);
+
+	public override void Accept([Lang]InternalSyntaxVisitor visitor) => visitor.Visit[alt.GreenName](this);
+
+	public override __InternalSyntaxNode WithDiagnostics(__DiagnosticInfo["[]"] diagnostics)
+	{
+		return new [alt.GreenName](this.Kind[alt.GreenConstructorArguments], diagnostics, this.GetAnnotations());
+	}
+
+	public override __InternalSyntaxNode WithAnnotations(__SyntaxAnnotation["[]"] annotations)
+	{
+		return new [alt.GreenName](this.Kind[alt.GreenConstructorArguments], this.GetDiagnostics(), annotations);
+	}
+
+	public override __GreenNode Clone()
+	{
+		return new [alt.GreenName](this.Kind[alt.GreenConstructorArguments], this.GetDiagnostics(), this.GetAnnotations());
+	}
+
+
+	public [alt.GreenName] Update([alt.GreenUpdateParameters])
+	{
+		if ([foreach (var elem in alt.Elements) separator " || "][elem.FieldName] != [elem.GreenParameterValue][end foreach])
+		{
+			__InternalSyntaxNode newNode = [Lang]Language.Instance.InternalSyntaxFactory.[alt.CSharpName]([alt.GreenUpdateArguments]);
+			var diags = this.GetDiagnostics();
+			if (diags != null && diags.Length > 0)
+				newNode = newNode.WithDiagnostics(diags);
+			var annotations = this.GetAnnotations();
+			if (annotations != null && annotations.Length > 0)
+				newNode = newNode.WithAnnotations(annotations);
+			return ([alt.GreenName])newNode;
+		}
+		return this;
+	}
+}
+
+end template
+
+template GenerateInternalSyntaxVisitor()
+#nullable enable
+
+namespace [Namespace].Syntax.InternalSyntax
+{
+	internal class [Lang]InternalSyntaxVisitor : global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.InternalSyntaxVisitor
+	{
+		public virtual void VisitSkippedTokensTrivia(GreenSkippedTokensTriviaSyntax node) => this.DefaultVisit(node);
+		[foreach (var rule in Rules)]
+			[foreach (var alt in rule.Alternatives)]
+		public virtual void Visit[alt.GreenName]([alt.GreenName] node) => this.DefaultVisit(node);
+			[end foreach]
+		[end foreach]
+	}
+
+	internal class [Lang]InternalSyntaxVisitor<TResult> : global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.InternalSyntaxVisitor<TResult>
+	{
+		public virtual TResult VisitSkippedTokensTrivia(GreenSkippedTokensTriviaSyntax node) => this.DefaultVisit(node);
+		[foreach (var rule in Rules)]
+			[foreach (var alt in rule.Alternatives)]
+		public virtual TResult Visit[alt.GreenName]([alt.GreenName] node) => this.DefaultVisit(node);
+			[end foreach]
+		[end foreach]
+	}
+}
+end template
+
+template GenerateInternalSyntaxFactory()
+#nullable enable
+
+namespace [Namespace].Syntax.InternalSyntax
+{
+	using __Debug = System.Diagnostics.Debug;
+	using __Language = global::MetaDslx.CodeAnalysis.Language;
+	using __ParseOptions = global::MetaDslx.CodeAnalysis.ParseOptions;
+	using __DiagnosticInfo = global::MetaDslx.CodeAnalysis.DiagnosticInfo;
+	using __SyntaxAnnotation = global::MetaDslx.CodeAnalysis.SyntaxAnnotation;
+	using __GreenNode = global::MetaDslx.CodeAnalysis.GreenNode;
+	using __SyntaxNodeCache = MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxNodeCache;
+	using __InternalSyntaxKind = global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.InternalSyntaxKind;
+	using __InternalSyntaxToken = global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.InternalSyntaxToken;
+	using __InternalSyntaxTrivia = global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.InternalSyntaxTrivia;
+	using __InternalSyntaxNode = global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.InternalSyntaxNode;
+	using __IncrementalParseData = global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.IncrementalParseData;
+	using __SyntaxLexer = global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxLexer;
+	using __SyntaxParser = global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxParser;
+	using __SyntaxFacts = global::MetaDslx.CodeAnalysis.Syntax.SyntaxFacts;
+	using __SyntaxToken = global::MetaDslx.CodeAnalysis.SyntaxToken;
+	using __SyntaxTrivia = global::MetaDslx.CodeAnalysis.SyntaxTrivia;
+	using __SyntaxNode = global::MetaDslx.CodeAnalysis.SyntaxNode;
+	using __SourceText = global::MetaDslx.CodeAnalysis.Text.SourceText;
+	using __TextChangeRange = global::MetaDslx.CodeAnalysis.Text.TextChangeRange;
+	using __CancellationToken = global::System.Threading.CancellationToken;
+	using __ArgumentNullException = global::System.ArgumentNullException;
+    using __ArgumentException = global::System.ArgumentException;
+
+	public partial class [Lang]InternalSyntaxFactory : global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.InternalSyntaxFactory
+	{
+		public [Lang]InternalSyntaxFactory(__SyntaxFacts syntaxFacts) 
+		    : base(syntaxFacts)
+		{
+		}
+	
+		public override __SyntaxLexer CreateLexer(__SourceText text, __ParseOptions? options)
+		{
+			return new [Lang]SyntaxLexer(text, ([Lang]ParseOptions)(options ?? [Lang]ParseOptions.Default));
+		}
+
+		public override __SyntaxParser CreateParser(__SyntaxLexer lexer, __IncrementalParseData? oldParseData, global::System.Collections.Generic.IEnumerable<__TextChangeRange>? changes, __CancellationToken cancellationToken = default)
+        {
+			return new [Lang]SyntaxParser(([Lang]SyntaxLexer)lexer, oldParseData, changes, cancellationToken);
+		}
+
+		public __InternalSyntaxTrivia Trivia([Lang]SyntaxKind kind, string text, bool elastic = false)
+        {
+			var trivia = GreenSyntaxTrivia.Create(kind, text);
+			if (!elastic) return trivia;
+			return global::MetaDslx.CodeAnalysis.GreenNodeExtensions.WithAnnotationsGreen(trivia, new["[]"] { __SyntaxAnnotation.ElasticAnnotation });
+		}
+
+		protected override __InternalSyntaxTrivia Trivia(int kind, string text, bool elastic = false)
+	    {
+	        return Trivia(([Lang]SyntaxKind)kind, text, elastic);
+	    }
+	
+		public override __InternalSyntaxNode SkippedTokensTrivia(__GreenNode token)
+		{
+			return new GreenSkippedTokensTriviaSyntax(([Lang]SyntaxKind)__InternalSyntaxKind.SkippedTokensTrivia, token);
+		}
+	
+	    public __InternalSyntaxToken Token([Lang]SyntaxKind kind)
+	    {
+	        return GreenSyntaxToken.Create(kind);
+	    }
+
+        protected override __InternalSyntaxToken Token(int kind)
+        {
+			return Token(([Lang]SyntaxKind)kind);
+        }
+
+        public __InternalSyntaxToken Token(__GreenNode? leading, [Lang]SyntaxKind kind, __GreenNode? trailing)
+	    {
+	        return GreenSyntaxToken.Create(kind, leading, trailing);
+	    }
+
+        protected override __InternalSyntaxToken Token(__GreenNode? leading, int kind, __GreenNode? trailing)
+        {
+			return Token(leading, ([Lang]SyntaxKind)kind, trailing);
+        }
+
+        public __InternalSyntaxToken Token(__GreenNode? leading, [Lang]SyntaxKind kind, string text, __GreenNode? trailing)
+	    {
+	        __Debug.Assert([Lang]Language.Instance.SyntaxFacts.IsToken(kind));
+	        string defaultText = [Lang]Language.Instance.SyntaxFacts.GetText(kind);
+	        return kind >= GreenSyntaxToken.FirstTokenWithWellKnownText && kind <= GreenSyntaxToken.LastTokenWithWellKnownText && text == defaultText
+	            ? Token(leading, kind, trailing)
+	            : GreenSyntaxToken.Identifier(kind, leading, text, trailing);
+	    }
+
+        protected override __InternalSyntaxToken Token(__GreenNode? leading, int kind, string text, __GreenNode? trailing)
+        {
+            return Token(leading, ([Lang]SyntaxKind)kind, text, trailing);
+        }
+
+        public __InternalSyntaxToken Token(__GreenNode? leading, [Lang]SyntaxKind kind, string text, string valueText, __GreenNode? trailing)
+	    {
+	        __Debug.Assert([Lang]Language.Instance.SyntaxFacts.IsToken(kind));
+	        string defaultText = [Lang]Language.Instance.SyntaxFacts.GetText(kind);
+	        return kind >= GreenSyntaxToken.FirstTokenWithWellKnownText && kind <= GreenSyntaxToken.LastTokenWithWellKnownText && text == defaultText && valueText == defaultText
+	            ? Token(leading, kind, trailing)
+	            : GreenSyntaxToken.WithValue(kind, leading, text, valueText, trailing);
+	    }
+
+		protected override __InternalSyntaxToken Token(__GreenNode? leading, int kind, string text, string valueText, __GreenNode? trailing)
+		{
+			return Token(leading, ([Lang]SyntaxKind)kind, text, valueText, trailing);
+		}
+
+		public __InternalSyntaxToken Token(__GreenNode? leading, [Lang]SyntaxKind kind, string text, object value, __GreenNode? trailing)
+	    {
+	        __Debug.Assert([Lang]Language.Instance.SyntaxFacts.IsToken(kind));
+	        string defaultText = [Lang]Language.Instance.SyntaxFacts.GetText(kind);
+	        return kind >= GreenSyntaxToken.FirstTokenWithWellKnownText && kind <= GreenSyntaxToken.LastTokenWithWellKnownText && text == defaultText && defaultText.Equals(value)
+	            ? Token(leading, kind, trailing)
+	            : GreenSyntaxToken.WithValue(kind, leading, text, value, trailing);
+	    }
+
+		protected override __InternalSyntaxToken Token(__GreenNode? leading, int kind, string text, object value, __GreenNode? trailing)
+		{
+			return Token(leading, ([Lang]SyntaxKind)kind, text, value, trailing);
+		}
+
+		public __InternalSyntaxToken MissingToken([Lang]SyntaxKind kind)
+	    {
+	        return GreenSyntaxToken.CreateMissing(kind, null, null);
+	    }
+
+        protected override __InternalSyntaxToken MissingToken(int kind)
+        {
+			return MissingToken(([Lang]SyntaxKind)kind);
+        }
+
+        public __InternalSyntaxToken MissingToken(__GreenNode? leading, [Lang]SyntaxKind kind, __GreenNode? trailing)
+	    {
+	        return GreenSyntaxToken.CreateMissing(kind, leading, trailing);
+	    }
+
+        protected override __InternalSyntaxToken MissingToken(__GreenNode? leading, int kind, __GreenNode? trailing)
+        {
+			return MissingToken(leading, ([Lang]SyntaxKind)kind, trailing);
+        }
+
+        public override __InternalSyntaxToken BadToken(__GreenNode? leading, string text, __GreenNode? trailing)
+	    {
+	        return GreenSyntaxToken.WithValue(([Lang]SyntaxKind)__InternalSyntaxKind.BadToken, leading, text, text, trailing);
+	    }
+
+        public override global::System.Collections.Generic.IEnumerable<__InternalSyntaxToken> GetWellKnownTokens()
+	    {
+	        return GreenSyntaxToken.GetWellKnownTokens();
+	    }
+
+		[foreach (var rule in Tokens.Where(t => !t.IsFixed))]
+		public __InternalSyntaxToken [rule.CSharpName](string text)
+		{
+			return Token(null, [Lang]SyntaxKind.[rule.CSharpName], text, null);
+		}
+
+		public __InternalSyntaxToken [rule.CSharpName](string text, object value)
+		{
+			return Token(null, [Lang]SyntaxKind.[rule.CSharpName], text, value, null);
+		}
+
+		[end foreach]
+		[foreach (var rule in Rules)]
+			[foreach (var alt in rule.Alternatives)]
+[GenerateInternalSyntaxFactoryCreate(alt)]
+			[end foreach]
+		[end foreach]
+	}
+}
+end template
+
+template GenerateInternalSyntaxFactoryCreate(Alternative alt)
+		internal [alt.GreenName] [alt.CSharpName]([alt.GreenUpdateParameters])
+		{
+#if DEBUG
+			[foreach (var elem in alt.Elements)]
+				[var greenSyntaxNullCondition = elem.GreenSyntaxNullCondition]
+				[if (greenSyntaxNullCondition is not null)]
+			if ([greenSyntaxNullCondition]) throw new __ArgumentNullException(nameof([elem.ParameterName]));
+				[end if]
+				[var greenSyntaxCondition = elem.GreenSyntaxCondition]
+				[if (greenSyntaxCondition is not null)]
+			if ([greenSyntaxCondition]) throw new __ArgumentException(nameof([elem.ParameterName]));
+				[end if]
+			[end foreach]
+#endif
+			[if (alt.Elements.Count <= 3)]
+			int hash;
+			var cached = __SyntaxNodeCache.TryGetNode((int)([Lang]SyntaxKind)[Lang]SyntaxKind.[alt.CSharpName][foreach (var elem in alt.Elements)], [elem.GreenParameterValue][end foreach], out hash);
+			if (cached != null) return ([alt.GreenName])cached;
+		
+			var result = new [alt.GreenName]([Lang]SyntaxKind.[alt.CSharpName][foreach (var elem in alt.Elements)], [elem.GreenParameterValue][end foreach]);
+			if (hash >= 0)
+			{
+				__SyntaxNodeCache.AddNode(result, hash);
+			}
+		
+			return result;
+			[else]
+			return new [alt.GreenName]([Lang]SyntaxKind.[alt.CSharpName][foreach (var elem in alt.Elements)], [elem.GreenParameterValue][end foreach]);
+			[end if]
+		}
+
+end template

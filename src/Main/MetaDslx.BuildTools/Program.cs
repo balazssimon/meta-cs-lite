@@ -3,8 +3,13 @@ using MetaDslx.CodeAnalysis;
 using MetaDslx.CodeAnalysis.Parsers.Antlr;
 using MetaDslx.CodeAnalysis.PooledObjects;
 using MetaDslx.CodeAnalysis.Text;
+#if MetaDslxBootstrap
+using MetaDslx.Bootstrap.MetaCompiler.Compiler;
+using MetaDslx.Bootstrap.MetaCompiler.Model;
+#else
 using MetaDslx.Languages.MetaCompiler.Compiler;
 using MetaDslx.Languages.MetaCompiler.Model;
+#endif
 using MetaDslx.Languages.MetaGenerator.Syntax;
 using MetaDslx.Languages.MetaModel.Compiler;
 using MetaDslx.Modeling;
@@ -21,15 +26,23 @@ using System.Xml.Linq;
 
 namespace MetaDslx.BuildTools
 {
+#if MetaDslxBootstrap
+    using MetaCompiler = MetaDslx.Bootstrap.MetaCompiler;
+#else
+    using MetaCompiler = MetaDslx.Languages.MetaCompiler;
+#endif
 
     public class Program
     {
-        private const bool Bootstrap = true;
         private static readonly string[] BootstrapProjects =
         [
             //@"..\..\..\..\MetaDslx.Languages.MetaModel",
             //@"..\..\..\..\MetaDslx.Languages.MetaCompiler",
+#if MetaDslxBootstrap
+            @"..\..\..\..\..\Bootstrap\MetaDslx.Bootstrap.MetaCompiler2"
+#else
             @"..\..\..\..\..\Bootstrap\MetaDslx.Bootstrap.MetaCompiler"
+#endif
         ];
         private static Microsoft.CodeAnalysis.MetadataReference[] PackageReferences;
 
@@ -85,7 +98,7 @@ namespace MetaDslx.BuildTools
                 Microsoft.CodeAnalysis.MetadataReference.CreateFromFile(typeof(Autofac.IContainer).GetTypeInfo().Assembly.Location),
                 Microsoft.CodeAnalysis.MetadataReference.CreateFromFile(typeof(DynamicAttribute).GetTypeInfo().Assembly.Location),
             ];
-            if (Bootstrap)
+            if (BootstrapProjects.Length > 0)
             {
                 foreach (string project in BootstrapProjects)
                 {
@@ -217,7 +230,12 @@ namespace MetaDslx.BuildTools
                     var modelFilePath = mxm.MSourceLocation?.GetLineSpan().Path;
                     if (!mxmDiagnostics.Any(diag => diag.Severity == DiagnosticSeverity.Error && diag.Location?.GetLineSpan().Path == modelFilePath))
                     {
-                        var generator = new MetaDslx.Languages.MetaModel.Generators.MetaModelGenerator(Bootstrap, model, mxm);
+#if MetaDslxBootstrap
+                        var bootstrap = true;
+#else
+                        var bootstrap = false;
+#endif
+                        var generator = new MetaDslx.Languages.MetaModel.Generators.MetaModelGenerator(bootstrap, model, mxm);
                         var csharpCode = generator.Generate();
                         var csharpFilePath = $"{modelFilePath}.cs";
                         await AddGeneratedFile(csharpFilePath, csharpCode);
@@ -264,7 +282,7 @@ namespace MetaDslx.BuildTools
                                 initialCompilation: initialCompilation,
                                 references: new[]
                                 {
-                                    MetadataReference.CreateFromMetaModel(MetaDslx.Languages.MetaCompiler.Model.Compiler.MInstance)
+                                    MetadataReference.CreateFromMetaModel(MetaCompiler.Model.Compiler.MInstance)
                                 },
                                 options: CompilationOptions.Default.WithConcurrentBuild(false));
                 mxlCompiler.Compile();
@@ -275,7 +293,7 @@ namespace MetaDslx.BuildTools
                     await Console.Out.WriteLineAsync(DiagnosticFormatter.MSBuild.Format(diag));
                 }
                 var model = mxlCompiler.SourceModule.Model;
-                var languages = model.Objects.OfType<MetaDslx.Languages.MetaCompiler.Model.Language>().ToImmutableArray();
+                var languages = model.Objects.OfType<MetaCompiler.Model.Language>().ToImmutableArray();
                 foreach (var language in languages)
                 {
                     var modelFilePath = language.MSourceLocation?.GetLineSpan().Path;
@@ -305,14 +323,14 @@ namespace MetaDslx.BuildTools
             filePaths.Free();
         }
 
-        private static async Task GenerateCompilerFiles(string originalFilePath, MetaDslx.Languages.MetaCompiler.Model.Language language)
+        private static async Task GenerateCompilerFiles(string originalFilePath, MetaCompiler.Model.Language language)
         {
             var outputDir = Path.Combine(Path.GetDirectoryName(originalFilePath), "Generated");
+            var langFileName = Path.GetFileNameWithoutExtension(originalFilePath);
             Directory.CreateDirectory(outputDir);
             var xmi = new XmiSerializer();
-            var modelFilePath = language.MSourceLocation?.GetLineSpan().Path;
-            xmi.WriteModelToFile(Path.Combine(outputDir, Path.GetFileNameWithoutExtension(modelFilePath)+".xmi"), language.MModel);
-            var generator = new MetaDslx.Languages.MetaCompiler.Generators.RoslynApiGenerator(language);
+            xmi.WriteModelToFile(Path.Combine(outputDir, langFileName + ".xmi"), language.MModel);
+            var generator = new MetaCompiler.Generators.RoslynApiGenerator(language);
             var antlrDiagnostics = MetaDslx.CodeAnalysis.DiagnosticBag.GetInstance();
             var antlrCodes = generator.GenerateAntlr(originalFilePath, antlrDiagnostics, default);
             if (antlrDiagnostics.HasAnyErrors())
@@ -323,45 +341,45 @@ namespace MetaDslx.BuildTools
                 }
                 foreach (var antlrCode in antlrCodes.Where(ac => ac.FileName.EndsWith(".g4")))
                 {
-                    await AddGeneratedFile(Path.Combine(outputDir, antlrCode.FileName), antlrCode.Content);
+                    await AddGeneratedFile(Path.Combine(outputDir, $"{langFileName}.{antlrCode.FileName}"), antlrCode.Content);
                 }
             }
             else
             {
                 foreach (var antlrCode in antlrCodes)
                 {
-                    await AddGeneratedFile(Path.Combine(outputDir, antlrCode.FileName), antlrCode.Content);
+                    await AddGeneratedFile(Path.Combine(outputDir, $"{langFileName}.{antlrCode.FileName}"), antlrCode.Content);
                 }
                 var languageCode = generator.GenerateLanguage();
-                await AddGeneratedFile(Path.Combine(outputDir, "Language.g.cs"), languageCode);
+                await AddGeneratedFile(Path.Combine(outputDir, $"{langFileName}.Language.g.cs"), languageCode);
                 var languageVersionCode = generator.GenerateLanguageVersion();
-                await AddGeneratedFile(Path.Combine(outputDir, "LanguageVersion.g.cs"), languageVersionCode);
+                await AddGeneratedFile(Path.Combine(outputDir, $"{langFileName}.LanguageVersion.g.cs"), languageVersionCode);
                 var parseOptionsCode = generator.GenerateParseOptions();
-                await AddGeneratedFile(Path.Combine(outputDir, "ParseOptions.g.cs"), parseOptionsCode);
+                await AddGeneratedFile(Path.Combine(outputDir, $"{langFileName}.ParseOptions.g.cs"), parseOptionsCode);
                 var syntaxKindCode = generator.GenerateSyntaxKind();
-                await AddGeneratedFile(Path.Combine(outputDir, "SyntaxKind.g.cs"), syntaxKindCode);
+                await AddGeneratedFile(Path.Combine(outputDir, $"{langFileName}.SyntaxKind.g.cs"), syntaxKindCode);
                 var syntaxFactsCode = generator.GenerateSyntaxFacts();
-                await AddGeneratedFile(Path.Combine(outputDir, "SyntaxFacts.g.cs"), syntaxFactsCode);
+                await AddGeneratedFile(Path.Combine(outputDir, $"{langFileName}.SyntaxFacts.g.cs"), syntaxFactsCode);
                 var internalSyntaxCode = generator.GenerateInternalSyntax();
-                await AddGeneratedFile(Path.Combine(outputDir, "InternalSyntax.g.cs"), internalSyntaxCode);
+                await AddGeneratedFile(Path.Combine(outputDir, $"{langFileName}.InternalSyntax.g.cs"), internalSyntaxCode);
                 var internalSyntaxVisitorCode = generator.GenerateInternalSyntaxVisitor();
-                await AddGeneratedFile(Path.Combine(outputDir, "InternalSyntaxVisitor.g.cs"), internalSyntaxVisitorCode);
+                await AddGeneratedFile(Path.Combine(outputDir, $"{langFileName}.InternalSyntaxVisitor.g.cs"), internalSyntaxVisitorCode);
                 var internalSyntaxFactoryCode = generator.GenerateInternalSyntaxFactory();
-                await AddGeneratedFile(Path.Combine(outputDir, "InternalSyntaxFactory.g.cs"), internalSyntaxFactoryCode);
+                await AddGeneratedFile(Path.Combine(outputDir, $"{langFileName}.InternalSyntaxFactory.g.cs"), internalSyntaxFactoryCode);
                 var syntaxCode = generator.GenerateSyntax();
-                await AddGeneratedFile(Path.Combine(outputDir, "Syntax.g.cs"), syntaxCode);
+                await AddGeneratedFile(Path.Combine(outputDir, $"{langFileName}.Syntax.g.cs"), syntaxCode);
                 var syntaxTreeCode = generator.GenerateSyntaxTree();
-                await AddGeneratedFile(Path.Combine(outputDir, "SyntaxTree.g.cs"), syntaxTreeCode);
+                await AddGeneratedFile(Path.Combine(outputDir, $"{langFileName}.SyntaxTree.g.cs"), syntaxTreeCode);
                 var syntaxVisitorCode = generator.GenerateSyntaxVisitor();
-                await AddGeneratedFile(Path.Combine(outputDir, "SyntaxVisitor.g.cs"), syntaxVisitorCode);
+                await AddGeneratedFile(Path.Combine(outputDir, $"{langFileName}.SyntaxVisitor.g.cs"), syntaxVisitorCode);
                 var syntaxFactoryCode = generator.GenerateSyntaxFactory();
-                await AddGeneratedFile(Path.Combine(outputDir, "SyntaxFactory.g.cs"), syntaxFactoryCode);
+                await AddGeneratedFile(Path.Combine(outputDir, $"{langFileName}.SyntaxFactory.g.cs"), syntaxFactoryCode);
                 var binderFactoryVisitorCode = generator.GenerateBinderFactoryVisitor();
-                await AddGeneratedFile(Path.Combine(outputDir, "BinderFactoryVisitor.g.cs"), binderFactoryVisitorCode);
+                await AddGeneratedFile(Path.Combine(outputDir, $"{langFileName}.BinderFactoryVisitor.g.cs"), binderFactoryVisitorCode);
                 var semanticsFactoryCode = generator.GenerateSemanticsFactory();
-                await AddGeneratedFile(Path.Combine(outputDir, "SemanticsFactory.g.cs"), semanticsFactoryCode);
+                await AddGeneratedFile(Path.Combine(outputDir, $"{langFileName}.SemanticsFactory.g.cs"), semanticsFactoryCode);
                 var compilationFactoryCode = generator.GenerateCompilationFactory();
-                await AddGeneratedFile(Path.Combine(outputDir, "CompilationFactory.g.cs"), compilationFactoryCode);
+                await AddGeneratedFile(Path.Combine(outputDir, $"{langFileName}.CompilationFactory.g.cs"), compilationFactoryCode);
             }
             antlrDiagnostics.Free();
         }

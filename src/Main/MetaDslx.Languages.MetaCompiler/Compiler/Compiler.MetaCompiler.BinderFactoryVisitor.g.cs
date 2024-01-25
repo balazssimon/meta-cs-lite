@@ -20,7 +20,7 @@ public virtual void VisitMain(MainSyntax node)
 {
     if (this.IsRoot)
     {
-        var __rootAnnot = new global::MetaDslx.CodeAnalysis.Binding.RootBinder(node.SyntaxTree, type: typeof(MetaDslx.Languages.MetaCompiler.Model.Namespace));
+        var __rootAnnot = new global::MetaDslx.CodeAnalysis.Binding.RootBinder(node.SyntaxTree);
         this.Begin(__rootAnnot, node);
         try
         {

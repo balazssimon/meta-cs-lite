@@ -369,17 +369,3 @@ class ArrayExpression : Expression
 	Expression[] Items;
 }
 
-class Name
-{
-	Identifier Identifier;
-}
-
-class Qualifier
-{
-	Identifier[] Identifiers;
-}
-
-class Identifier
-{
-	string Name;
-}

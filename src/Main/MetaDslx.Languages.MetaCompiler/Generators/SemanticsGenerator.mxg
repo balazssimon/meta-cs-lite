@@ -73,11 +73,7 @@ public virtual void Visit[alt.CSharpName]([alt.RedName] node)
     [if (rule == Grammar.MainRule)]
     if (this.IsRoot)
     {
-        [if (Grammar.RootTypeName is not null)]
-        var __rootAnnot = new global::MetaDslx.CodeAnalysis.Binding.RootBinder(node.SyntaxTree, type: typeof([Grammar.RootTypeName]));
-        [else]
-        var __rootAnnot = new global::MetaDslx.CodeAnalysis.Binding.RootBinder(node.SyntaxTree, type: null);
-        [end if]
+        var __rootAnnot = new global::MetaDslx.CodeAnalysis.Binding.RootBinder(node.SyntaxTree);
         this.Begin(__rootAnnot, node);
         try
         {

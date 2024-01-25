@@ -98,14 +98,14 @@ PrimitiveType returns type
 	;
 
 [Name]
-Name: identifier=Identifier;
+Name returns void: Identifier;
 
 [Qualifier]
-Qualifier: identifiers+=Identifier ('.' identifiers+=Identifier)*;
+Qualifier returns void: Identifier ('.' Identifier)*;
 
 [DefaultReference]
 [Identifier]
-Identifier: name=TIdentifier | name=TVerbatimIdentifier;
+Identifier returns void: TIdentifier | TVerbatimIdentifier;
 
 [Number]
 token TInteger returns int32: '0'| '1'..'9' ('0'..'9')* ;

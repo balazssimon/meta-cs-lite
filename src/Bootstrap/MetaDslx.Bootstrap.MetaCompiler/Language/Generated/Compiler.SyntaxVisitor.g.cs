@@ -1565,8 +1565,8 @@ public virtual SyntaxNode VisitAnnotationArgumentBlock1(AnnotationArgumentBlock1
 public virtual SyntaxNode VisitMainQualifierBlock(MainQualifierBlockSyntax node)
 {
     var tDot = this.VisitToken(node.TDot);
-    var identifiers = (IdentifierSyntax)this.Visit(node.Identifiers);
-	return node.Update(tDot, identifiers);
+    var identifier = (IdentifierSyntax)this.Visit(node.Identifier);
+	return node.Update(tDot, identifier);
 }
 
 public virtual SyntaxNode VisitAlternativeBlock1Block1(AlternativeBlock1Block1Syntax node)

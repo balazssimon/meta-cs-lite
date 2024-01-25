@@ -392,8 +392,8 @@ namespace MetaDslx.Languages.MetaCompiler.Model
                 }
                 else if (!alt.ReturnType.IsNull)
                 {
-                    var skipDefineBinder = false;
-                    if (alt.Elements.Count == 1)
+                    var skipDefineBinder = alt.ReturnType.SpecialType == SpecialType.System_Void;
+                    if (alt.Elements.Count == 1 && !skipDefineBinder)
                     {
                         var celem = alt.Elements[0];
                         if (celem.Multiplicity == Multiplicity.ExactlyOne && string.IsNullOrEmpty(celem.SymbolProperty.FirstOrDefault().Name))

@@ -1261,18 +1261,18 @@ internal AnnotationArgumentBlock1Green AnnotationArgumentBlock1(IdentifierGreen 
 			return result;
 		}
 
-internal MainQualifierBlockGreen MainQualifierBlock(__InternalSyntaxToken tDot, IdentifierGreen identifiers)
+internal MainQualifierBlockGreen MainQualifierBlock(__InternalSyntaxToken tDot, IdentifierGreen identifier)
 {
 #if DEBUG
 			if (tDot is null) throw new __ArgumentNullException(nameof(tDot));
 			if (tDot.RawKind != (int)CompilerSyntaxKind.TDot) throw new __ArgumentException(nameof(tDot));
-			if (identifiers is null) throw new __ArgumentNullException(nameof(identifiers));
+			if (identifier is null) throw new __ArgumentNullException(nameof(identifier));
 #endif
 			int hash;
-			var cached = __SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.MainQualifierBlock, tDot, identifiers, out hash);
+			var cached = __SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.MainQualifierBlock, tDot, identifier, out hash);
 			if (cached != null) return (MainQualifierBlockGreen)cached;
 		
-			var result = new MainQualifierBlockGreen(CompilerSyntaxKind.MainQualifierBlock, tDot, identifiers);
+			var result = new MainQualifierBlockGreen(CompilerSyntaxKind.MainQualifierBlock, tDot, identifier);
 			if (hash >= 0)
 			{
 				__SyntaxNodeCache.AddNode(result, hash);

@@ -866,17 +866,17 @@ public AnnotationArgumentBlock1Syntax AnnotationArgumentBlock1(IdentifierSyntax 
 	return this.AnnotationArgumentBlock1(namedParameter, this.Token(CompilerSyntaxKind.TColon));
 }
 
-public MainQualifierBlockSyntax MainQualifierBlock(__SyntaxToken tDot, IdentifierSyntax identifiers)
+public MainQualifierBlockSyntax MainQualifierBlock(__SyntaxToken tDot, IdentifierSyntax identifier)
 {
 	if (tDot.RawKind != (int)__InternalSyntaxKind.None) throw new __ArgumentNullException(nameof(tDot));
 	if (tDot.RawKind != (int)CompilerSyntaxKind.TDot) throw new __ArgumentException(nameof(tDot));
-	if (identifiers is null) throw new __ArgumentNullException(nameof(identifiers));
-    return (MainQualifierBlockSyntax)CompilerLanguage.Instance.InternalSyntaxFactory.MainQualifierBlock((__InternalSyntaxToken)tDot.Node, (InternalSyntax.IdentifierGreen)identifiers.Green).CreateRed();
+	if (identifier is null) throw new __ArgumentNullException(nameof(identifier));
+    return (MainQualifierBlockSyntax)CompilerLanguage.Instance.InternalSyntaxFactory.MainQualifierBlock((__InternalSyntaxToken)tDot.Node, (InternalSyntax.IdentifierGreen)identifier.Green).CreateRed();
 }
 
-public MainQualifierBlockSyntax MainQualifierBlock(IdentifierSyntax identifiers)
+public MainQualifierBlockSyntax MainQualifierBlock(IdentifierSyntax identifier)
 {
-	return this.MainQualifierBlock(this.Token(CompilerSyntaxKind.TDot), identifiers);
+	return this.MainQualifierBlock(this.Token(CompilerSyntaxKind.TDot), identifier);
 }
 
 public AlternativeBlock1Block1Syntax AlternativeBlock1Block1(__SyntaxToken kReturns, TypeReferenceSyntax returnType)

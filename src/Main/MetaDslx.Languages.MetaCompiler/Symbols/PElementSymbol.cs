@@ -307,7 +307,7 @@ namespace MetaDslx.Languages.MetaCompiler.Symbols
                             {
                                 if (rule.OriginalSymbol is ParserRuleSymbol pr)
                                 {
-                                    if (!pr.ReturnType.IsAssignableTo(coreType))
+                                    if (pr.ReturnType.SpecialType != SpecialType.System_Void && !pr.ReturnType.IsAssignableTo(coreType))
                                     {
                                         diagnostics.Add(Diagnostic.Create(CompilerErrorCode.ERR_ValueTypeMismatch, this.Location, pr.ReturnType, coreType, ResolveExpectedTypeTrace(coreType)));
                                     }

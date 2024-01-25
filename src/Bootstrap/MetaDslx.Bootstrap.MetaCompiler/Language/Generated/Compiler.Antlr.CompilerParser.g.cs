@@ -137,11 +137,11 @@ public partial class CompilerParser : global::MetaDslx.CodeAnalysis.Parsers.Antl
 
 	public partial class Pr_MainContext : ParserRuleContext {
 		public IToken e_KNamespace;
-		public Pr_IdentifierContext e_Identifiers1;
+		public Pr_IdentifierContext e_Identifier1;
 		public IToken _LR_TDot;
 		public IList<IToken> _e_TDot1 = new List<IToken>();
 		public Pr_IdentifierContext _pr_Identifier;
-		public IList<Pr_IdentifierContext> _e_Identifiers2 = new List<Pr_IdentifierContext>();
+		public IList<Pr_IdentifierContext> _e_Identifier2 = new List<Pr_IdentifierContext>();
 		public IToken e_TSemicolon;
 		public Pr_UsingContext _pr_Using;
 		public IList<Pr_UsingContext> _e_UsingList = new List<Pr_UsingContext>();
@@ -193,7 +193,7 @@ public partial class CompilerParser : global::MetaDslx.CodeAnalysis.Parsers.Antl
 			State = 86;
 			_localctx.e_KNamespace = Match(LR_KNamespace);
 			State = 87;
-			_localctx.e_Identifiers1 = pr_Identifier();
+			_localctx.e_Identifier1 = pr_Identifier();
 			State = 92;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
@@ -205,7 +205,7 @@ public partial class CompilerParser : global::MetaDslx.CodeAnalysis.Parsers.Antl
 				_localctx._e_TDot1.Add(_localctx._LR_TDot);
 				State = 89;
 				_localctx._pr_Identifier = pr_Identifier();
-				_localctx._e_Identifiers2.Add(_localctx._pr_Identifier);
+				_localctx._e_Identifier2.Add(_localctx._pr_Identifier);
 				}
 				}
 				State = 94;
@@ -248,11 +248,11 @@ public partial class CompilerParser : global::MetaDslx.CodeAnalysis.Parsers.Antl
 
 	public partial class Pr_UsingContext : ParserRuleContext {
 		public IToken e_KUsing;
-		public Pr_IdentifierContext e_Identifiers1;
+		public Pr_IdentifierContext e_Identifier1;
 		public IToken _LR_TDot;
 		public IList<IToken> _e_TDot1 = new List<IToken>();
 		public Pr_IdentifierContext _pr_Identifier;
-		public IList<Pr_IdentifierContext> _e_Identifiers2 = new List<Pr_IdentifierContext>();
+		public IList<Pr_IdentifierContext> _e_Identifier2 = new List<Pr_IdentifierContext>();
 		public IToken e_TSemicolon;
 		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_KUsing() { return GetToken(CompilerParser.LR_KUsing, 0); }
 		[System.Diagnostics.DebuggerNonUserCode] public Pr_IdentifierContext[] pr_Identifier() {
@@ -290,7 +290,7 @@ public partial class CompilerParser : global::MetaDslx.CodeAnalysis.Parsers.Antl
 			State = 105;
 			_localctx.e_KUsing = Match(LR_KUsing);
 			State = 106;
-			_localctx.e_Identifiers1 = pr_Identifier();
+			_localctx.e_Identifier1 = pr_Identifier();
 			State = 111;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
@@ -302,7 +302,7 @@ public partial class CompilerParser : global::MetaDslx.CodeAnalysis.Parsers.Antl
 				_localctx._e_TDot1.Add(_localctx._LR_TDot);
 				State = 108;
 				_localctx._pr_Identifier = pr_Identifier();
-				_localctx._e_Identifiers2.Add(_localctx._pr_Identifier);
+				_localctx._e_Identifier2.Add(_localctx._pr_Identifier);
 				}
 				}
 				State = 113;
@@ -1794,11 +1794,11 @@ public partial class CompilerParser : global::MetaDslx.CodeAnalysis.Parsers.Antl
 
 	public partial class Pr_ParserAnnotationContext : ParserRuleContext {
 		public IToken e_TLBracket;
-		public Pr_IdentifierContext e_Identifiers1;
+		public Pr_IdentifierContext e_Identifier1;
 		public IToken _LR_TDot;
 		public IList<IToken> _e_TDot1 = new List<IToken>();
 		public Pr_IdentifierContext _pr_Identifier;
-		public IList<Pr_IdentifierContext> _e_Identifiers2 = new List<Pr_IdentifierContext>();
+		public IList<Pr_IdentifierContext> _e_Identifier2 = new List<Pr_IdentifierContext>();
 		public IToken e_TLParen;
 		public Pr_AnnotationArgumentContext e_Arguments1;
 		public IToken _LR_TComma;
@@ -1855,7 +1855,7 @@ public partial class CompilerParser : global::MetaDslx.CodeAnalysis.Parsers.Antl
 			State = 313;
 			_localctx.e_TLBracket = Match(LR_TLBracket);
 			State = 314;
-			_localctx.e_Identifiers1 = pr_Identifier();
+			_localctx.e_Identifier1 = pr_Identifier();
 			State = 319;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
@@ -1867,7 +1867,7 @@ public partial class CompilerParser : global::MetaDslx.CodeAnalysis.Parsers.Antl
 				_localctx._e_TDot1.Add(_localctx._LR_TDot);
 				State = 316;
 				_localctx._pr_Identifier = pr_Identifier();
-				_localctx._e_Identifiers2.Add(_localctx._pr_Identifier);
+				_localctx._e_Identifier2.Add(_localctx._pr_Identifier);
 				}
 				}
 				State = 321;
@@ -1923,11 +1923,11 @@ public partial class CompilerParser : global::MetaDslx.CodeAnalysis.Parsers.Antl
 
 	public partial class Pr_LexerAnnotationContext : ParserRuleContext {
 		public IToken e_TLBracket;
-		public Pr_IdentifierContext e_Identifiers1;
+		public Pr_IdentifierContext e_Identifier1;
 		public IToken _LR_TDot;
 		public IList<IToken> _e_TDot1 = new List<IToken>();
 		public Pr_IdentifierContext _pr_Identifier;
-		public IList<Pr_IdentifierContext> _e_Identifiers2 = new List<Pr_IdentifierContext>();
+		public IList<Pr_IdentifierContext> _e_Identifier2 = new List<Pr_IdentifierContext>();
 		public IToken e_TLParen;
 		public Pr_AnnotationArgumentContext e_Arguments1;
 		public IToken _LR_TComma;
@@ -1984,7 +1984,7 @@ public partial class CompilerParser : global::MetaDslx.CodeAnalysis.Parsers.Antl
 			State = 336;
 			_localctx.e_TLBracket = Match(LR_TLBracket);
 			State = 337;
-			_localctx.e_Identifiers1 = pr_Identifier();
+			_localctx.e_Identifier1 = pr_Identifier();
 			State = 342;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
@@ -1996,7 +1996,7 @@ public partial class CompilerParser : global::MetaDslx.CodeAnalysis.Parsers.Antl
 				_localctx._e_TDot1.Add(_localctx._LR_TDot);
 				State = 339;
 				_localctx._pr_Identifier = pr_Identifier();
-				_localctx._e_Identifiers2.Add(_localctx._pr_Identifier);
+				_localctx._e_Identifier2.Add(_localctx._pr_Identifier);
 				}
 				}
 				State = 344;
@@ -2232,11 +2232,11 @@ public partial class CompilerParser : global::MetaDslx.CodeAnalysis.Parsers.Antl
 		}
 	}
 	public partial class Pr_TypeReferenceAlt2Context : Pr_TypeReferenceContext {
-		public Pr_IdentifierContext e_Identifiers1;
+		public Pr_IdentifierContext e_Identifier1;
 		public IToken _LR_TDot;
 		public IList<IToken> _e_TDot1 = new List<IToken>();
 		public Pr_IdentifierContext _pr_Identifier;
-		public IList<Pr_IdentifierContext> _e_Identifiers2 = new List<Pr_IdentifierContext>();
+		public IList<Pr_IdentifierContext> _e_Identifier2 = new List<Pr_IdentifierContext>();
 		[System.Diagnostics.DebuggerNonUserCode] public Pr_IdentifierContext[] pr_Identifier() {
 			return GetRuleContexts<Pr_IdentifierContext>();
 		}
@@ -2293,7 +2293,7 @@ public partial class CompilerParser : global::MetaDslx.CodeAnalysis.Parsers.Antl
 				EnterOuterAlt(_localctx, 2);
 				{
 				State = 369;
-				((Pr_TypeReferenceAlt2Context)_localctx).e_Identifiers1 = pr_Identifier();
+				((Pr_TypeReferenceAlt2Context)_localctx).e_Identifier1 = pr_Identifier();
 				State = 374;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
@@ -2305,7 +2305,7 @@ public partial class CompilerParser : global::MetaDslx.CodeAnalysis.Parsers.Antl
 					((Pr_TypeReferenceAlt2Context)_localctx)._e_TDot1.Add(((Pr_TypeReferenceAlt2Context)_localctx)._LR_TDot);
 					State = 371;
 					((Pr_TypeReferenceAlt2Context)_localctx)._pr_Identifier = pr_Identifier();
-					((Pr_TypeReferenceAlt2Context)_localctx)._e_Identifiers2.Add(((Pr_TypeReferenceAlt2Context)_localctx)._pr_Identifier);
+					((Pr_TypeReferenceAlt2Context)_localctx)._e_Identifier2.Add(((Pr_TypeReferenceAlt2Context)_localctx)._pr_Identifier);
 					}
 					}
 					State = 376;
@@ -3234,11 +3234,11 @@ public partial class CompilerParser : global::MetaDslx.CodeAnalysis.Parsers.Antl
 		}
 	}
 	public partial class Pr_SingleExpressionBlock1Alt3Context : Pr_SingleExpressionBlock1Context {
-		public Pr_IdentifierContext e_Identifiers1;
+		public Pr_IdentifierContext e_Identifier1;
 		public IToken _LR_TDot;
 		public IList<IToken> _e_TDot1 = new List<IToken>();
 		public Pr_IdentifierContext _pr_Identifier;
-		public IList<Pr_IdentifierContext> _e_Identifiers2 = new List<Pr_IdentifierContext>();
+		public IList<Pr_IdentifierContext> _e_Identifier2 = new List<Pr_IdentifierContext>();
 		[System.Diagnostics.DebuggerNonUserCode] public Pr_IdentifierContext[] pr_Identifier() {
 			return GetRuleContexts<Pr_IdentifierContext>();
 		}
@@ -3333,7 +3333,7 @@ public partial class CompilerParser : global::MetaDslx.CodeAnalysis.Parsers.Antl
 				EnterOuterAlt(_localctx, 3);
 				{
 				State = 452;
-				((Pr_SingleExpressionBlock1Alt3Context)_localctx).e_Identifiers1 = pr_Identifier();
+				((Pr_SingleExpressionBlock1Alt3Context)_localctx).e_Identifier1 = pr_Identifier();
 				State = 457;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
@@ -3345,7 +3345,7 @@ public partial class CompilerParser : global::MetaDslx.CodeAnalysis.Parsers.Antl
 					((Pr_SingleExpressionBlock1Alt3Context)_localctx)._e_TDot1.Add(((Pr_SingleExpressionBlock1Alt3Context)_localctx)._LR_TDot);
 					State = 454;
 					((Pr_SingleExpressionBlock1Alt3Context)_localctx)._pr_Identifier = pr_Identifier();
-					((Pr_SingleExpressionBlock1Alt3Context)_localctx)._e_Identifiers2.Add(((Pr_SingleExpressionBlock1Alt3Context)_localctx)._pr_Identifier);
+					((Pr_SingleExpressionBlock1Alt3Context)_localctx)._e_Identifier2.Add(((Pr_SingleExpressionBlock1Alt3Context)_localctx)._pr_Identifier);
 					}
 					}
 					State = 459;
@@ -3503,7 +3503,7 @@ public partial class CompilerParser : global::MetaDslx.CodeAnalysis.Parsers.Antl
 
 	public partial class Pr_MainQualifierBlock6Context : ParserRuleContext {
 		public IToken e_TDot1;
-		public Pr_IdentifierContext e_Identifiers2;
+		public Pr_IdentifierContext e_Identifier2;
 		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TDot() { return GetToken(CompilerParser.LR_TDot, 0); }
 		[System.Diagnostics.DebuggerNonUserCode] public Pr_IdentifierContext pr_Identifier() {
 			return GetRuleContext<Pr_IdentifierContext>(0);
@@ -3531,7 +3531,7 @@ public partial class CompilerParser : global::MetaDslx.CodeAnalysis.Parsers.Antl
 			State = 471;
 			_localctx.e_TDot1 = Match(LR_TDot);
 			State = 472;
-			_localctx.e_Identifiers2 = pr_Identifier();
+			_localctx.e_Identifier2 = pr_Identifier();
 			}
 		}
 		catch (RecognitionException re) {

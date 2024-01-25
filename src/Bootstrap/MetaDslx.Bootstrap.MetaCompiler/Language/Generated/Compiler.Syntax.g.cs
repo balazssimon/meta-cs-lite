@@ -5811,7 +5811,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	
 	public sealed class MainQualifierBlockSyntax : CompilerSyntaxNode
 	{
-		private IdentifierSyntax _identifiers;
+		private IdentifierSyntax _identifier;
 	
 	    public MainQualifierBlockSyntax(__InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
 	        : base(green, syntaxTree, position)
@@ -5832,11 +5832,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 				return new __SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
 	} 
 	}
-	public IdentifierSyntax Identifiers 
+	public IdentifierSyntax Identifier 
 		{ 
 		get
 		{
-				var red = this.GetRed(ref this._identifiers, 1);
+				var red = this.GetRed(ref this._identifier, 1);
 	return red;
 	} 
 	}
@@ -5845,7 +5845,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	    {
 	        switch (index)
 	        {
-			case 1: return this.GetRed(ref this._identifiers, 1);
+			case 1: return this.GetRed(ref this._identifier, 1);
 			default: return null;
 	        }
 	    }
@@ -5854,26 +5854,26 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	    {
 	        switch (index)
 	        {
-			case 1: return this._identifiers;
+			case 1: return this._identifier;
 			default: return null;
 	        }
 	    }
 	
 	public MainQualifierBlockSyntax WithTDot(__SyntaxToken tDot)
 		{
-		return this.Update(tDot, this.Identifiers);
+		return this.Update(tDot, this.Identifier);
 	}
 	
-	public MainQualifierBlockSyntax WithIdentifiers(IdentifierSyntax identifiers)
+	public MainQualifierBlockSyntax WithIdentifier(IdentifierSyntax identifier)
 		{
-		return this.Update(this.TDot, identifiers);
+		return this.Update(this.TDot, identifier);
 	}
 	
-	    public MainQualifierBlockSyntax Update(__SyntaxToken tDot, IdentifierSyntax identifiers)
+	    public MainQualifierBlockSyntax Update(__SyntaxToken tDot, IdentifierSyntax identifier)
 	    {
-	        if (this.TDot != tDot || this.Identifiers != identifiers)
+	        if (this.TDot != tDot || this.Identifier != identifier)
 	        {
-	            var newNode = CompilerLanguage.Instance.SyntaxFactory.MainQualifierBlock(tDot, identifiers);
+	            var newNode = CompilerLanguage.Instance.SyntaxFactory.MainQualifierBlock(tDot, identifier);
 	            var annotations = this.GetAnnotations();
 	            if (annotations != null && annotations.Length > 0)
 	               newNode = __SyntaxExtensions.WithAnnotations(newNode, annotations);

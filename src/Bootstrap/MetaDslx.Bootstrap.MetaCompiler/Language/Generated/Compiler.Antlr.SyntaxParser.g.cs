@@ -104,12 +104,12 @@ public override GreenNode? VisitPr_Main(CompilerParser.Pr_MainContext? context)
    	if (context == null) return MainGreen.__Missing;
     var kNamespace = (InternalSyntaxToken?)this.VisitTerminal(context.e_KNamespace, CompilerSyntaxKind.KNamespace);
     var qualifierBuilder = _pool.AllocateSeparated<IdentifierGreen>(reversed: false);
-    var e_Identifiers1Context = context.e_Identifiers1;
-    if (e_Identifiers1Context is not null) qualifierBuilder.Add((IdentifierGreen?)this.Visit(e_Identifiers1Context) ?? IdentifierGreen.__Missing);
+    var e_Identifier1Context = context.e_Identifier1;
+    if (e_Identifier1Context is not null) qualifierBuilder.Add((IdentifierGreen?)this.Visit(e_Identifier1Context) ?? IdentifierGreen.__Missing);
     else qualifierBuilder.Add(IdentifierGreen.__Missing);
-    var e_Identifiers2Context = context._e_Identifiers2;
+    var e_Identifier2Context = context._e_Identifier2;
     var e_TDot1Context = context._e_TDot1;
-    for (int i = 0; i < e_Identifiers2Context.Count; ++i)
+    for (int i = 0; i < e_Identifier2Context.Count; ++i)
     {
         if (i < e_TDot1Context.Count)
         {
@@ -120,7 +120,7 @@ public override GreenNode? VisitPr_Main(CompilerParser.Pr_MainContext? context)
         {
             qualifierBuilder.AddSeparator((InternalSyntaxToken?)this.VisitTerminal((IToken?)null, CompilerSyntaxKind.TDot));
         }
-        var _item = e_Identifiers2Context[i];
+        var _item = e_Identifier2Context[i];
         if (_item is not null) qualifierBuilder.Add((IdentifierGreen?)this.Visit(_item) ?? IdentifierGreen.__Missing);
         else qualifierBuilder.Add(IdentifierGreen.__Missing);
     }
@@ -148,12 +148,12 @@ public override GreenNode? VisitPr_Using(CompilerParser.Pr_UsingContext? context
    	if (context == null) return UsingGreen.__Missing;
     var kUsing = (InternalSyntaxToken?)this.VisitTerminal(context.e_KUsing, CompilerSyntaxKind.KUsing);
     var qualifierBuilder = _pool.AllocateSeparated<IdentifierGreen>(reversed: false);
-    var e_Identifiers1Context = context.e_Identifiers1;
-    if (e_Identifiers1Context is not null) qualifierBuilder.Add((IdentifierGreen?)this.Visit(e_Identifiers1Context) ?? IdentifierGreen.__Missing);
+    var e_Identifier1Context = context.e_Identifier1;
+    if (e_Identifier1Context is not null) qualifierBuilder.Add((IdentifierGreen?)this.Visit(e_Identifier1Context) ?? IdentifierGreen.__Missing);
     else qualifierBuilder.Add(IdentifierGreen.__Missing);
-    var e_Identifiers2Context = context._e_Identifiers2;
+    var e_Identifier2Context = context._e_Identifier2;
     var e_TDot1Context = context._e_TDot1;
-    for (int i = 0; i < e_Identifiers2Context.Count; ++i)
+    for (int i = 0; i < e_Identifier2Context.Count; ++i)
     {
         if (i < e_TDot1Context.Count)
         {
@@ -164,7 +164,7 @@ public override GreenNode? VisitPr_Using(CompilerParser.Pr_UsingContext? context
         {
             qualifierBuilder.AddSeparator((InternalSyntaxToken?)this.VisitTerminal((IToken?)null, CompilerSyntaxKind.TDot));
         }
-        var _item = e_Identifiers2Context[i];
+        var _item = e_Identifier2Context[i];
         if (_item is not null) qualifierBuilder.Add((IdentifierGreen?)this.Visit(_item) ?? IdentifierGreen.__Missing);
         else qualifierBuilder.Add(IdentifierGreen.__Missing);
     }
@@ -665,12 +665,12 @@ public override GreenNode? VisitPr_ParserAnnotation(CompilerParser.Pr_ParserAnno
    	if (context == null) return ParserAnnotationGreen.__Missing;
     var tLBracket = (InternalSyntaxToken?)this.VisitTerminal(context.e_TLBracket, CompilerSyntaxKind.TLBracket);
     var qualifierBuilder = _pool.AllocateSeparated<IdentifierGreen>(reversed: false);
-    var e_Identifiers1Context = context.e_Identifiers1;
-    if (e_Identifiers1Context is not null) qualifierBuilder.Add((IdentifierGreen?)this.Visit(e_Identifiers1Context) ?? IdentifierGreen.__Missing);
+    var e_Identifier1Context = context.e_Identifier1;
+    if (e_Identifier1Context is not null) qualifierBuilder.Add((IdentifierGreen?)this.Visit(e_Identifier1Context) ?? IdentifierGreen.__Missing);
     else qualifierBuilder.Add(IdentifierGreen.__Missing);
-    var e_Identifiers2Context = context._e_Identifiers2;
+    var e_Identifier2Context = context._e_Identifier2;
     var e_TDot1Context = context._e_TDot1;
-    for (int i = 0; i < e_Identifiers2Context.Count; ++i)
+    for (int i = 0; i < e_Identifier2Context.Count; ++i)
     {
         if (i < e_TDot1Context.Count)
         {
@@ -681,7 +681,7 @@ public override GreenNode? VisitPr_ParserAnnotation(CompilerParser.Pr_ParserAnno
         {
             qualifierBuilder.AddSeparator((InternalSyntaxToken?)this.VisitTerminal((IToken?)null, CompilerSyntaxKind.TDot));
         }
-        var _item = e_Identifiers2Context[i];
+        var _item = e_Identifier2Context[i];
         if (_item is not null) qualifierBuilder.Add((IdentifierGreen?)this.Visit(_item) ?? IdentifierGreen.__Missing);
         else qualifierBuilder.Add(IdentifierGreen.__Missing);
     }
@@ -721,12 +721,12 @@ public override GreenNode? VisitPr_LexerAnnotation(CompilerParser.Pr_LexerAnnota
    	if (context == null) return LexerAnnotationGreen.__Missing;
     var tLBracket = (InternalSyntaxToken?)this.VisitTerminal(context.e_TLBracket, CompilerSyntaxKind.TLBracket);
     var qualifierBuilder = _pool.AllocateSeparated<IdentifierGreen>(reversed: false);
-    var e_Identifiers1Context = context.e_Identifiers1;
-    if (e_Identifiers1Context is not null) qualifierBuilder.Add((IdentifierGreen?)this.Visit(e_Identifiers1Context) ?? IdentifierGreen.__Missing);
+    var e_Identifier1Context = context.e_Identifier1;
+    if (e_Identifier1Context is not null) qualifierBuilder.Add((IdentifierGreen?)this.Visit(e_Identifier1Context) ?? IdentifierGreen.__Missing);
     else qualifierBuilder.Add(IdentifierGreen.__Missing);
-    var e_Identifiers2Context = context._e_Identifiers2;
+    var e_Identifier2Context = context._e_Identifier2;
     var e_TDot1Context = context._e_TDot1;
-    for (int i = 0; i < e_Identifiers2Context.Count; ++i)
+    for (int i = 0; i < e_Identifier2Context.Count; ++i)
     {
         if (i < e_TDot1Context.Count)
         {
@@ -737,7 +737,7 @@ public override GreenNode? VisitPr_LexerAnnotation(CompilerParser.Pr_LexerAnnota
         {
             qualifierBuilder.AddSeparator((InternalSyntaxToken?)this.VisitTerminal((IToken?)null, CompilerSyntaxKind.TDot));
         }
-        var _item = e_Identifiers2Context[i];
+        var _item = e_Identifier2Context[i];
         if (_item is not null) qualifierBuilder.Add((IdentifierGreen?)this.Visit(_item) ?? IdentifierGreen.__Missing);
         else qualifierBuilder.Add(IdentifierGreen.__Missing);
     }
@@ -826,12 +826,12 @@ public override GreenNode? VisitPr_TypeReferenceAlt2(CompilerParser.Pr_TypeRefer
 {
    	if (context == null) return TypeReferenceAlt2Green.__Missing;
     var qualifierBuilder = _pool.AllocateSeparated<IdentifierGreen>(reversed: false);
-    var e_Identifiers1Context = context.e_Identifiers1;
-    if (e_Identifiers1Context is not null) qualifierBuilder.Add((IdentifierGreen?)this.Visit(e_Identifiers1Context) ?? IdentifierGreen.__Missing);
+    var e_Identifier1Context = context.e_Identifier1;
+    if (e_Identifier1Context is not null) qualifierBuilder.Add((IdentifierGreen?)this.Visit(e_Identifier1Context) ?? IdentifierGreen.__Missing);
     else qualifierBuilder.Add(IdentifierGreen.__Missing);
-    var e_Identifiers2Context = context._e_Identifiers2;
+    var e_Identifier2Context = context._e_Identifier2;
     var e_TDot1Context = context._e_TDot1;
-    for (int i = 0; i < e_Identifiers2Context.Count; ++i)
+    for (int i = 0; i < e_Identifier2Context.Count; ++i)
     {
         if (i < e_TDot1Context.Count)
         {
@@ -842,7 +842,7 @@ public override GreenNode? VisitPr_TypeReferenceAlt2(CompilerParser.Pr_TypeRefer
         {
             qualifierBuilder.AddSeparator((InternalSyntaxToken?)this.VisitTerminal((IToken?)null, CompilerSyntaxKind.TDot));
         }
-        var _item = e_Identifiers2Context[i];
+        var _item = e_Identifier2Context[i];
         if (_item is not null) qualifierBuilder.Add((IdentifierGreen?)this.Visit(_item) ?? IdentifierGreen.__Missing);
         else qualifierBuilder.Add(IdentifierGreen.__Missing);
     }
@@ -1092,12 +1092,12 @@ public override GreenNode? VisitPr_SingleExpressionBlock1Alt3(CompilerParser.Pr_
 {
    	if (context == null) return SingleExpressionBlock1Alt3Green.__Missing;
     var qualifierBuilder = _pool.AllocateSeparated<IdentifierGreen>(reversed: false);
-    var e_Identifiers1Context = context.e_Identifiers1;
-    if (e_Identifiers1Context is not null) qualifierBuilder.Add((IdentifierGreen?)this.Visit(e_Identifiers1Context) ?? IdentifierGreen.__Missing);
+    var e_Identifier1Context = context.e_Identifier1;
+    if (e_Identifier1Context is not null) qualifierBuilder.Add((IdentifierGreen?)this.Visit(e_Identifier1Context) ?? IdentifierGreen.__Missing);
     else qualifierBuilder.Add(IdentifierGreen.__Missing);
-    var e_Identifiers2Context = context._e_Identifiers2;
+    var e_Identifier2Context = context._e_Identifier2;
     var e_TDot1Context = context._e_TDot1;
-    for (int i = 0; i < e_Identifiers2Context.Count; ++i)
+    for (int i = 0; i < e_Identifier2Context.Count; ++i)
     {
         if (i < e_TDot1Context.Count)
         {
@@ -1108,7 +1108,7 @@ public override GreenNode? VisitPr_SingleExpressionBlock1Alt3(CompilerParser.Pr_
         {
             qualifierBuilder.AddSeparator((InternalSyntaxToken?)this.VisitTerminal((IToken?)null, CompilerSyntaxKind.TDot));
         }
-        var _item = e_Identifiers2Context[i];
+        var _item = e_Identifier2Context[i];
         if (_item is not null) qualifierBuilder.Add((IdentifierGreen?)this.Visit(_item) ?? IdentifierGreen.__Missing);
         else qualifierBuilder.Add(IdentifierGreen.__Missing);
     }
@@ -1151,10 +1151,10 @@ public override GreenNode? VisitPr_MainQualifierBlock6(CompilerParser.Pr_MainQua
 {
    	if (context == null) return MainQualifierBlockGreen.__Missing;
     var tDot = (InternalSyntaxToken?)this.VisitTerminal(context.e_TDot1, CompilerSyntaxKind.TDot);
-    IdentifierGreen? identifiers = null;
-    if (context.e_Identifiers2 is not null) identifiers = (IdentifierGreen?)this.Visit(context.e_Identifiers2) ?? IdentifierGreen.__Missing;
-    else identifiers = IdentifierGreen.__Missing;
-	return _factory.MainQualifierBlock(tDot, identifiers);
+    IdentifierGreen? identifier = null;
+    if (context.e_Identifier2 is not null) identifier = (IdentifierGreen?)this.Visit(context.e_Identifier2) ?? IdentifierGreen.__Missing;
+    else identifier = IdentifierGreen.__Missing;
+	return _factory.MainQualifierBlock(tDot, identifier);
 }
 
 public override GreenNode? VisitPr_AlternativeBlock1Block1(CompilerParser.Pr_AlternativeBlock1Block1Context? context)

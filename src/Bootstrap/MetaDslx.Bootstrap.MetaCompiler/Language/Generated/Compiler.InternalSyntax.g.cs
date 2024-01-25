@@ -6913,9 +6913,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 	{
 		internal static new readonly MainQualifierBlockGreen __Missing = new MainQualifierBlockGreen();
 		private __InternalSyntaxToken _tDot;
-		private IdentifierGreen _identifiers;
+		private IdentifierGreen _identifier;
 	
-		public MainQualifierBlockGreen(CompilerSyntaxKind kind, __InternalSyntaxToken tDot, IdentifierGreen identifiers)
+		public MainQualifierBlockGreen(CompilerSyntaxKind kind, __InternalSyntaxToken tDot, IdentifierGreen identifier)
 			: base(kind, null, null)
 		{
 			SlotCount = 2;
@@ -6924,14 +6924,14 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 				AdjustFlagsAndWidth(tDot);
 				_tDot = tDot;
 			}
-			if (identifiers != null)
+			if (identifier != null)
 			{
-				AdjustFlagsAndWidth(identifiers);
-				_identifiers = identifiers;
+				AdjustFlagsAndWidth(identifier);
+				_identifier = identifier;
 			}
 		}
 	
-		public MainQualifierBlockGreen(CompilerSyntaxKind kind, __InternalSyntaxToken tDot, IdentifierGreen identifiers, __DiagnosticInfo[] diagnostics, __SyntaxAnnotation[] annotations)
+		public MainQualifierBlockGreen(CompilerSyntaxKind kind, __InternalSyntaxToken tDot, IdentifierGreen identifier, __DiagnosticInfo[] diagnostics, __SyntaxAnnotation[] annotations)
 			: base(kind, diagnostics, annotations)
 		{
 			SlotCount = 2;
@@ -6940,10 +6940,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 				AdjustFlagsAndWidth(tDot);
 				_tDot = tDot;
 			}
-			if (identifiers != null)
+			if (identifier != null)
 			{
-				AdjustFlagsAndWidth(identifiers);
-				_identifiers = identifiers;
+				AdjustFlagsAndWidth(identifier);
+				_identifier = identifier;
 			}
 		}
 	
@@ -6954,7 +6954,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 		}
 	
 		public __InternalSyntaxToken TDot { get { return _tDot; } }
-		public IdentifierGreen Identifiers { get { return _identifiers; } }
+		public IdentifierGreen Identifier { get { return _identifier; } }
 	
 		protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
 		{
@@ -6966,7 +6966,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 			switch (index)
 			{
 				case 0: return _tDot;
-				case 1: return _identifiers;
+				case 1: return _identifier;
 				default: return null;
 			}
 		}
@@ -6977,25 +6977,25 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax
 	
 		public override __InternalSyntaxNode WithDiagnostics(__DiagnosticInfo[] diagnostics)
 		{
-			return new MainQualifierBlockGreen(this.Kind, _tDot, _identifiers, diagnostics, this.GetAnnotations());
+			return new MainQualifierBlockGreen(this.Kind, _tDot, _identifier, diagnostics, this.GetAnnotations());
 		}
 	
 		public override __InternalSyntaxNode WithAnnotations(__SyntaxAnnotation[] annotations)
 		{
-			return new MainQualifierBlockGreen(this.Kind, _tDot, _identifiers, this.GetDiagnostics(), annotations);
+			return new MainQualifierBlockGreen(this.Kind, _tDot, _identifier, this.GetDiagnostics(), annotations);
 		}
 	
 		public override __GreenNode Clone()
 		{
-			return new MainQualifierBlockGreen(this.Kind, _tDot, _identifiers, this.GetDiagnostics(), this.GetAnnotations());
+			return new MainQualifierBlockGreen(this.Kind, _tDot, _identifier, this.GetDiagnostics(), this.GetAnnotations());
 		}
 	
 	
-		public MainQualifierBlockGreen Update(__InternalSyntaxToken tDot, IdentifierGreen identifiers)
+		public MainQualifierBlockGreen Update(__InternalSyntaxToken tDot, IdentifierGreen identifier)
 		{
-			if (_tDot != tDot || _identifiers != identifiers)
+			if (_tDot != tDot || _identifier != identifier)
 			{
-				__InternalSyntaxNode newNode = CompilerLanguage.Instance.InternalSyntaxFactory.MainQualifierBlock(tDot, identifiers);
+				__InternalSyntaxNode newNode = CompilerLanguage.Instance.InternalSyntaxFactory.MainQualifierBlock(tDot, identifier);
 				var diags = this.GetDiagnostics();
 				if (diags != null && diags.Length > 0)
 					newNode = newNode.WithDiagnostics(diags);
