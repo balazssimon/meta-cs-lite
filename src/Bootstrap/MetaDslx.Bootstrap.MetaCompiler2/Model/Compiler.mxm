@@ -262,7 +262,6 @@ class Element $PElement : CSharpElement
 	string? $Name;
 	Assignment $Assignment;
 	contains ElementValue $Value;
-	Multiplicity Multiplicity;
 
 	derived bool IsToken;
 	derived bool IsList;
@@ -293,6 +292,8 @@ class Element $PElement : CSharpElement
 
 abstract class ElementValue $Symbol : CSharpElement
 {
+	Multiplicity Multiplicity;
+
 	derived string GreenType;
 	derived string? GreenSyntaxCondition;
 
@@ -369,17 +370,3 @@ class ArrayExpression : Expression
 	Expression[] Items;
 }
 
-class Name $Symbol
-{
-	Identifier Identifier;
-}
-
-class Qualifier $Symbol
-{
-	Identifier[] Identifiers;
-}
-
-class Identifier $Symbol
-{
-	string Name;
-}

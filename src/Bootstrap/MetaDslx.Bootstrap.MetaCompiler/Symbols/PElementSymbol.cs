@@ -272,12 +272,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
                                     var prefRule = pref.Rule;
                                     if (prefRule.OriginalSymbol is ParserRuleSymbol pr)
                                     {
-                                        if (!pr.ReturnType.IsAssignableTo(coreType))
+                                        if (!pr.ReturnType.IsAssignableTo(coreType) && pr.ReturnType.SpecialType != SpecialType.System_Object)
                                         {
                                             diagnostics.Add(Diagnostic.Create(CompilerErrorCode.ERR_ValueTypeMismatch, this.Location, pr.ReturnType, coreType));
                                         }
                                     }
-                                    else if (prefRule.OriginalSymbol is TokenSymbol lr)
+                                    else if (prefRule.OriginalSymbol is TokenSymbol lr && lr.ReturnType.SpecialType != SpecialType.System_Object)
                                     {
                                         if (!lr.ReturnType.IsAssignableTo(coreType))
                                         {
