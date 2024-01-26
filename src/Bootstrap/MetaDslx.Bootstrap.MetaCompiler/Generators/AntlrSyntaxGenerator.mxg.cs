@@ -49,61 +49,61 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
         {
             var __cb = global::MetaDslx.CodeGeneration.CodeBuilder.GetInstance();
             __cb.Push("");
-            #line (13,1)-(13,6) 25 "AntlrSyntaxGenerator.mxg"
+            #line (13,5)-(13,10) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("using");
             #line hidden
-            #line (13,6)-(13,7) 25 "AntlrSyntaxGenerator.mxg"
+            #line (13,10)-(13,11) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (13,7)-(13,29) 25 "AntlrSyntaxGenerator.mxg"
+            #line (13,11)-(13,33) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("MetaDslx.CodeAnalysis;");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("");
-            #line (14,1)-(14,6) 25 "AntlrSyntaxGenerator.mxg"
+            #line (14,5)-(14,10) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("using");
             #line hidden
-            #line (14,6)-(14,7) 25 "AntlrSyntaxGenerator.mxg"
+            #line (14,10)-(14,11) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (14,7)-(14,36) 25 "AntlrSyntaxGenerator.mxg"
+            #line (14,11)-(14,40) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("MetaDslx.CodeAnalysis.Syntax;");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("");
-            #line (15,1)-(15,6) 25 "AntlrSyntaxGenerator.mxg"
+            #line (15,5)-(15,10) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("using");
             #line hidden
-            #line (15,6)-(15,7) 25 "AntlrSyntaxGenerator.mxg"
+            #line (15,10)-(15,11) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (15,7)-(15,51) 25 "AntlrSyntaxGenerator.mxg"
+            #line (15,11)-(15,55) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("MetaDslx.CodeAnalysis.Syntax.InternalSyntax;");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("");
-            #line (16,1)-(16,6) 25 "AntlrSyntaxGenerator.mxg"
+            #line (16,5)-(16,10) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("using");
             #line hidden
-            #line (16,6)-(16,7) 25 "AntlrSyntaxGenerator.mxg"
+            #line (16,10)-(16,11) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (16,7)-(16,34) 25 "AntlrSyntaxGenerator.mxg"
+            #line (16,11)-(16,38) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("MetaDslx.CodeAnalysis.Text;");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("");
-            #line (17,1)-(17,6) 25 "AntlrSyntaxGenerator.mxg"
+            #line (17,5)-(17,10) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("using");
             #line hidden
-            #line (17,6)-(17,7) 25 "AntlrSyntaxGenerator.mxg"
+            #line (17,10)-(17,11) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (17,7)-(17,43) 25 "AntlrSyntaxGenerator.mxg"
+            #line (17,11)-(17,47) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("MetaDslx.CodeAnalysis.Parsers.Antlr;");
             #line hidden
             __cb.WriteLine();
@@ -112,13 +112,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("");
-            #line (19,1)-(19,10) 25 "AntlrSyntaxGenerator.mxg"
+            #line (19,5)-(19,14) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("#nullable");
             #line hidden
-            #line (19,10)-(19,11) 25 "AntlrSyntaxGenerator.mxg"
+            #line (19,14)-(19,15) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (19,11)-(19,17) 25 "AntlrSyntaxGenerator.mxg"
+            #line (19,15)-(19,21) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("enable");
             #line hidden
             __cb.WriteLine();
@@ -127,136 +127,136 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("");
-            #line (21,1)-(21,10) 25 "AntlrSyntaxGenerator.mxg"
+            #line (21,5)-(21,14) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("namespace");
             #line hidden
-            #line (21,10)-(21,11) 25 "AntlrSyntaxGenerator.mxg"
+            #line (21,14)-(21,15) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (21,12)-(21,21) 24 "AntlrSyntaxGenerator.mxg"
+            #line (21,16)-(21,25) 24 "AntlrSyntaxGenerator.mxg"
             __cb.Write(Namespace);
             #line hidden
-            #line (21,22)-(21,29) 25 "AntlrSyntaxGenerator.mxg"
+            #line (21,26)-(21,33) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(".Syntax");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("");
-            #line (22,1)-(22,2) 25 "AntlrSyntaxGenerator.mxg"
+            #line (22,5)-(22,6) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("{");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("    ");
-            #line (23,5)-(23,11) 25 "AntlrSyntaxGenerator.mxg"
+            #line (23,9)-(23,15) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("public");
             #line hidden
-            #line (23,11)-(23,12) 25 "AntlrSyntaxGenerator.mxg"
+            #line (23,15)-(23,16) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (23,12)-(23,19) 25 "AntlrSyntaxGenerator.mxg"
+            #line (23,16)-(23,23) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("partial");
             #line hidden
-            #line (23,19)-(23,20) 25 "AntlrSyntaxGenerator.mxg"
+            #line (23,23)-(23,24) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (23,20)-(23,25) 25 "AntlrSyntaxGenerator.mxg"
+            #line (23,24)-(23,29) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("class");
             #line hidden
-            #line (23,25)-(23,26) 25 "AntlrSyntaxGenerator.mxg"
+            #line (23,29)-(23,30) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (23,27)-(23,31) 24 "AntlrSyntaxGenerator.mxg"
+            #line (23,31)-(23,35) 24 "AntlrSyntaxGenerator.mxg"
             __cb.Write(Lang);
             #line hidden
-            #line (23,32)-(23,43) 25 "AntlrSyntaxGenerator.mxg"
+            #line (23,36)-(23,47) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("SyntaxLexer");
             #line hidden
-            #line (23,43)-(23,44) 25 "AntlrSyntaxGenerator.mxg"
+            #line (23,47)-(23,48) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (23,44)-(23,45) 25 "AntlrSyntaxGenerator.mxg"
+            #line (23,48)-(23,49) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(":");
             #line hidden
-            #line (23,45)-(23,46) 25 "AntlrSyntaxGenerator.mxg"
+            #line (23,49)-(23,50) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (23,46)-(23,62) 25 "AntlrSyntaxGenerator.mxg"
+            #line (23,50)-(23,66) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("AntlrSyntaxLexer");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("    ");
-            #line (24,5)-(24,6) 25 "AntlrSyntaxGenerator.mxg"
+            #line (24,9)-(24,10) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("{");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (25,9)-(25,15) 25 "AntlrSyntaxGenerator.mxg"
+            #line (25,13)-(25,19) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("public");
             #line hidden
-            #line (25,15)-(25,16) 25 "AntlrSyntaxGenerator.mxg"
+            #line (25,19)-(25,20) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (25,17)-(25,21) 24 "AntlrSyntaxGenerator.mxg"
+            #line (25,21)-(25,25) 24 "AntlrSyntaxGenerator.mxg"
             __cb.Write(Lang);
             #line hidden
-            #line (25,22)-(25,44) 25 "AntlrSyntaxGenerator.mxg"
+            #line (25,26)-(25,48) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("SyntaxLexer(SourceText");
             #line hidden
-            #line (25,44)-(25,45) 25 "AntlrSyntaxGenerator.mxg"
+            #line (25,48)-(25,49) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (25,45)-(25,50) 25 "AntlrSyntaxGenerator.mxg"
+            #line (25,49)-(25,54) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("text,");
             #line hidden
-            #line (25,50)-(25,51) 25 "AntlrSyntaxGenerator.mxg"
+            #line (25,54)-(25,55) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (25,52)-(25,56) 24 "AntlrSyntaxGenerator.mxg"
+            #line (25,56)-(25,60) 24 "AntlrSyntaxGenerator.mxg"
             __cb.Write(Lang);
             #line hidden
-            #line (25,57)-(25,69) 25 "AntlrSyntaxGenerator.mxg"
+            #line (25,61)-(25,73) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("ParseOptions");
             #line hidden
-            #line (25,69)-(25,70) 25 "AntlrSyntaxGenerator.mxg"
+            #line (25,73)-(25,74) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (25,70)-(25,78) 25 "AntlrSyntaxGenerator.mxg"
+            #line (25,74)-(25,82) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("options)");
             #line hidden
-            #line (25,78)-(25,79) 25 "AntlrSyntaxGenerator.mxg"
+            #line (25,82)-(25,83) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (26,13)-(26,14) 25 "AntlrSyntaxGenerator.mxg"
+            #line (26,17)-(26,18) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(":");
             #line hidden
-            #line (26,14)-(26,15) 25 "AntlrSyntaxGenerator.mxg"
+            #line (26,18)-(26,19) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (26,15)-(26,25) 25 "AntlrSyntaxGenerator.mxg"
+            #line (26,19)-(26,29) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("base(text,");
             #line hidden
-            #line (26,25)-(26,26) 25 "AntlrSyntaxGenerator.mxg"
+            #line (26,29)-(26,30) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (26,26)-(26,34) 25 "AntlrSyntaxGenerator.mxg"
+            #line (26,30)-(26,38) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("options)");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (27,9)-(27,10) 25 "AntlrSyntaxGenerator.mxg"
+            #line (27,13)-(27,14) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("{");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (28,9)-(28,10) 25 "AntlrSyntaxGenerator.mxg"
+            #line (28,13)-(28,14) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("}");
             #line hidden
             __cb.WriteLine();
@@ -265,46 +265,46 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (30,9)-(30,18) 25 "AntlrSyntaxGenerator.mxg"
+            #line (30,13)-(30,22) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("protected");
-            #line hidden
-            #line (30,18)-(30,19) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (30,19)-(30,22) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write("new");
             #line hidden
             #line (30,22)-(30,23) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (30,24)-(30,28) 24 "AntlrSyntaxGenerator.mxg"
+            #line (30,23)-(30,26) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("new");
+            #line hidden
+            #line (30,26)-(30,27) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (30,28)-(30,32) 24 "AntlrSyntaxGenerator.mxg"
             __cb.Write(Lang);
             #line hidden
-            #line (30,29)-(30,34) 25 "AntlrSyntaxGenerator.mxg"
+            #line (30,33)-(30,38) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("Lexer");
             #line hidden
-            #line (30,34)-(30,35) 25 "AntlrSyntaxGenerator.mxg"
+            #line (30,38)-(30,39) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (30,35)-(30,45) 25 "AntlrSyntaxGenerator.mxg"
+            #line (30,39)-(30,49) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("AntlrLexer");
             #line hidden
-            #line (30,45)-(30,46) 25 "AntlrSyntaxGenerator.mxg"
+            #line (30,49)-(30,50) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (30,46)-(30,48) 25 "AntlrSyntaxGenerator.mxg"
+            #line (30,50)-(30,52) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("=>");
             #line hidden
-            #line (30,48)-(30,49) 25 "AntlrSyntaxGenerator.mxg"
+            #line (30,52)-(30,53) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (30,49)-(30,50) 25 "AntlrSyntaxGenerator.mxg"
+            #line (30,53)-(30,54) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("(");
             #line hidden
-            #line (30,51)-(30,55) 24 "AntlrSyntaxGenerator.mxg"
+            #line (30,55)-(30,59) 24 "AntlrSyntaxGenerator.mxg"
             __cb.Write(Lang);
             #line hidden
-            #line (30,56)-(30,78) 25 "AntlrSyntaxGenerator.mxg"
+            #line (30,60)-(30,82) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("Lexer)base.AntlrLexer;");
             #line hidden
             __cb.WriteLine();
@@ -313,13 +313,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("    ");
-            #line (32,5)-(32,6) 25 "AntlrSyntaxGenerator.mxg"
+            #line (32,9)-(32,10) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("}");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("");
-            #line (33,1)-(33,2) 25 "AntlrSyntaxGenerator.mxg"
+            #line (33,5)-(33,6) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("}");
             #line hidden
             __cb.WriteLine();
@@ -333,172 +333,172 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
         {
             var __cb = global::MetaDslx.CodeGeneration.CodeBuilder.GetInstance();
             __cb.Push("");
-            #line (37,1)-(37,6) 25 "AntlrSyntaxGenerator.mxg"
+            #line (37,5)-(37,10) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("using");
             #line hidden
-            #line (37,6)-(37,7) 25 "AntlrSyntaxGenerator.mxg"
+            #line (37,10)-(37,11) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (37,7)-(37,34) 25 "AntlrSyntaxGenerator.mxg"
+            #line (37,11)-(37,38) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("System.Collections.Generic;");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("");
-            #line (38,1)-(38,6) 25 "AntlrSyntaxGenerator.mxg"
+            #line (38,5)-(38,10) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("using");
             #line hidden
-            #line (38,6)-(38,7) 25 "AntlrSyntaxGenerator.mxg"
+            #line (38,10)-(38,11) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (38,7)-(38,26) 25 "AntlrSyntaxGenerator.mxg"
+            #line (38,11)-(38,30) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("System.Diagnostics;");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("");
-            #line (39,1)-(39,6) 25 "AntlrSyntaxGenerator.mxg"
+            #line (39,5)-(39,10) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("using");
             #line hidden
-            #line (39,6)-(39,7) 25 "AntlrSyntaxGenerator.mxg"
+            #line (39,10)-(39,11) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (39,7)-(39,19) 25 "AntlrSyntaxGenerator.mxg"
+            #line (39,11)-(39,23) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("System.Linq;");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("");
-            #line (40,1)-(40,6) 25 "AntlrSyntaxGenerator.mxg"
+            #line (40,5)-(40,10) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("using");
             #line hidden
-            #line (40,6)-(40,7) 25 "AntlrSyntaxGenerator.mxg"
+            #line (40,10)-(40,11) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (40,7)-(40,19) 25 "AntlrSyntaxGenerator.mxg"
+            #line (40,11)-(40,23) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("System.Text;");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("");
-            #line (41,1)-(41,6) 25 "AntlrSyntaxGenerator.mxg"
+            #line (41,5)-(41,10) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("using");
             #line hidden
-            #line (41,6)-(41,7) 25 "AntlrSyntaxGenerator.mxg"
+            #line (41,10)-(41,11) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (41,7)-(41,24) 25 "AntlrSyntaxGenerator.mxg"
+            #line (41,11)-(41,28) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("System.Threading;");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("");
-            #line (42,1)-(42,6) 25 "AntlrSyntaxGenerator.mxg"
+            #line (42,5)-(42,10) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("using");
             #line hidden
-            #line (42,6)-(42,7) 25 "AntlrSyntaxGenerator.mxg"
+            #line (42,10)-(42,11) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (42,7)-(42,30) 25 "AntlrSyntaxGenerator.mxg"
+            #line (42,11)-(42,34) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("System.Threading.Tasks;");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("");
-            #line (43,1)-(43,6) 25 "AntlrSyntaxGenerator.mxg"
+            #line (43,5)-(43,10) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("using");
             #line hidden
-            #line (43,6)-(43,7) 25 "AntlrSyntaxGenerator.mxg"
+            #line (43,10)-(43,11) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (43,7)-(43,22) 25 "AntlrSyntaxGenerator.mxg"
+            #line (43,11)-(43,26) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("Antlr4.Runtime;");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("");
-            #line (44,1)-(44,6) 25 "AntlrSyntaxGenerator.mxg"
+            #line (44,5)-(44,10) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("using");
             #line hidden
-            #line (44,6)-(44,7) 25 "AntlrSyntaxGenerator.mxg"
+            #line (44,10)-(44,11) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (44,7)-(44,27) 25 "AntlrSyntaxGenerator.mxg"
+            #line (44,11)-(44,31) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("Antlr4.Runtime.Tree;");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("");
-            #line (45,1)-(45,6) 25 "AntlrSyntaxGenerator.mxg"
+            #line (45,5)-(45,10) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("using");
             #line hidden
-            #line (45,6)-(45,7) 25 "AntlrSyntaxGenerator.mxg"
+            #line (45,10)-(45,11) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (45,7)-(45,29) 25 "AntlrSyntaxGenerator.mxg"
+            #line (45,11)-(45,33) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("MetaDslx.CodeAnalysis;");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("");
-            #line (46,1)-(46,6) 25 "AntlrSyntaxGenerator.mxg"
+            #line (46,5)-(46,10) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("using");
             #line hidden
-            #line (46,6)-(46,7) 25 "AntlrSyntaxGenerator.mxg"
+            #line (46,10)-(46,11) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (46,7)-(46,36) 25 "AntlrSyntaxGenerator.mxg"
+            #line (46,11)-(46,40) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("MetaDslx.CodeAnalysis.Syntax;");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("");
-            #line (47,1)-(47,6) 25 "AntlrSyntaxGenerator.mxg"
+            #line (47,5)-(47,10) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("using");
             #line hidden
-            #line (47,6)-(47,7) 25 "AntlrSyntaxGenerator.mxg"
+            #line (47,10)-(47,11) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (47,7)-(47,51) 25 "AntlrSyntaxGenerator.mxg"
+            #line (47,11)-(47,55) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("MetaDslx.CodeAnalysis.Syntax.InternalSyntax;");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("");
-            #line (48,1)-(48,6) 25 "AntlrSyntaxGenerator.mxg"
+            #line (48,5)-(48,10) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("using");
             #line hidden
-            #line (48,6)-(48,7) 25 "AntlrSyntaxGenerator.mxg"
+            #line (48,10)-(48,11) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (48,7)-(48,34) 25 "AntlrSyntaxGenerator.mxg"
+            #line (48,11)-(48,38) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("MetaDslx.CodeAnalysis.Text;");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("");
-            #line (49,1)-(49,6) 25 "AntlrSyntaxGenerator.mxg"
+            #line (49,5)-(49,10) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("using");
             #line hidden
-            #line (49,6)-(49,7) 25 "AntlrSyntaxGenerator.mxg"
+            #line (49,10)-(49,11) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (49,7)-(49,43) 25 "AntlrSyntaxGenerator.mxg"
+            #line (49,11)-(49,47) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("MetaDslx.CodeAnalysis.Parsers.Antlr;");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("");
-            #line (50,1)-(50,6) 25 "AntlrSyntaxGenerator.mxg"
+            #line (50,5)-(50,10) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("using");
             #line hidden
-            #line (50,6)-(50,7) 25 "AntlrSyntaxGenerator.mxg"
+            #line (50,10)-(50,11) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (50,8)-(50,17) 24 "AntlrSyntaxGenerator.mxg"
+            #line (50,12)-(50,21) 24 "AntlrSyntaxGenerator.mxg"
             __cb.Write(Namespace);
             #line hidden
-            #line (50,18)-(50,41) 25 "AntlrSyntaxGenerator.mxg"
+            #line (50,22)-(50,45) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(".Syntax.InternalSyntax;");
             #line hidden
             __cb.WriteLine();
@@ -507,13 +507,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("");
-            #line (52,1)-(52,10) 25 "AntlrSyntaxGenerator.mxg"
+            #line (52,5)-(52,14) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("#nullable");
             #line hidden
-            #line (52,10)-(52,11) 25 "AntlrSyntaxGenerator.mxg"
+            #line (52,14)-(52,15) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (52,11)-(52,17) 25 "AntlrSyntaxGenerator.mxg"
+            #line (52,15)-(52,21) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("enable");
             #line hidden
             __cb.WriteLine();
@@ -522,91 +522,91 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("");
-            #line (54,1)-(54,10) 25 "AntlrSyntaxGenerator.mxg"
+            #line (54,5)-(54,14) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("namespace");
             #line hidden
-            #line (54,10)-(54,11) 25 "AntlrSyntaxGenerator.mxg"
+            #line (54,14)-(54,15) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (54,12)-(54,21) 24 "AntlrSyntaxGenerator.mxg"
+            #line (54,16)-(54,25) 24 "AntlrSyntaxGenerator.mxg"
             __cb.Write(Namespace);
             #line hidden
-            #line (54,22)-(54,29) 25 "AntlrSyntaxGenerator.mxg"
+            #line (54,26)-(54,33) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(".Syntax");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("");
-            #line (55,1)-(55,2) 25 "AntlrSyntaxGenerator.mxg"
+            #line (55,5)-(55,6) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("{");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("    ");
-            #line (56,5)-(56,11) 25 "AntlrSyntaxGenerator.mxg"
+            #line (56,9)-(56,15) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("public");
             #line hidden
-            #line (56,11)-(56,12) 25 "AntlrSyntaxGenerator.mxg"
+            #line (56,15)-(56,16) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (56,12)-(56,19) 25 "AntlrSyntaxGenerator.mxg"
+            #line (56,16)-(56,23) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("partial");
             #line hidden
-            #line (56,19)-(56,20) 25 "AntlrSyntaxGenerator.mxg"
+            #line (56,23)-(56,24) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (56,20)-(56,25) 25 "AntlrSyntaxGenerator.mxg"
+            #line (56,24)-(56,29) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("class");
             #line hidden
-            #line (56,25)-(56,26) 25 "AntlrSyntaxGenerator.mxg"
+            #line (56,29)-(56,30) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (56,27)-(56,31) 24 "AntlrSyntaxGenerator.mxg"
+            #line (56,31)-(56,35) 24 "AntlrSyntaxGenerator.mxg"
             __cb.Write(Lang);
             #line hidden
-            #line (56,32)-(56,44) 25 "AntlrSyntaxGenerator.mxg"
+            #line (56,36)-(56,48) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("SyntaxParser");
             #line hidden
-            #line (56,44)-(56,45) 25 "AntlrSyntaxGenerator.mxg"
+            #line (56,48)-(56,49) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (56,45)-(56,46) 25 "AntlrSyntaxGenerator.mxg"
+            #line (56,49)-(56,50) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(":");
             #line hidden
-            #line (56,46)-(56,47) 25 "AntlrSyntaxGenerator.mxg"
+            #line (56,50)-(56,51) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (56,47)-(56,64) 25 "AntlrSyntaxGenerator.mxg"
+            #line (56,51)-(56,68) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("AntlrSyntaxParser");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("    ");
-            #line (57,5)-(57,6) 25 "AntlrSyntaxGenerator.mxg"
+            #line (57,9)-(57,10) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("{");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (58,9)-(58,16) 25 "AntlrSyntaxGenerator.mxg"
+            #line (58,13)-(58,20) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("private");
             #line hidden
-            #line (58,16)-(58,17) 25 "AntlrSyntaxGenerator.mxg"
+            #line (58,20)-(58,21) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (58,17)-(58,25) 25 "AntlrSyntaxGenerator.mxg"
+            #line (58,21)-(58,29) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("readonly");
             #line hidden
-            #line (58,25)-(58,26) 25 "AntlrSyntaxGenerator.mxg"
+            #line (58,29)-(58,30) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (58,26)-(58,46) 25 "AntlrSyntaxGenerator.mxg"
+            #line (58,30)-(58,50) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("AntlrToRoslynVisitor");
             #line hidden
-            #line (58,46)-(58,47) 25 "AntlrSyntaxGenerator.mxg"
+            #line (58,50)-(58,51) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (58,47)-(58,56) 25 "AntlrSyntaxGenerator.mxg"
+            #line (58,51)-(58,60) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("_visitor;");
             #line hidden
             __cb.WriteLine();
@@ -615,145 +615,145 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (60,9)-(60,15) 25 "AntlrSyntaxGenerator.mxg"
+            #line (60,13)-(60,19) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("public");
             #line hidden
-            #line (60,15)-(60,16) 25 "AntlrSyntaxGenerator.mxg"
+            #line (60,19)-(60,20) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (60,17)-(60,21) 24 "AntlrSyntaxGenerator.mxg"
+            #line (60,21)-(60,25) 24 "AntlrSyntaxGenerator.mxg"
             __cb.Write(Lang);
             #line hidden
-            #line (60,22)-(60,35) 25 "AntlrSyntaxGenerator.mxg"
+            #line (60,26)-(60,39) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("SyntaxParser(");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (61,14)-(61,18) 24 "AntlrSyntaxGenerator.mxg"
+            #line (61,18)-(61,22) 24 "AntlrSyntaxGenerator.mxg"
             __cb.Write(Lang);
             #line hidden
-            #line (61,19)-(61,30) 25 "AntlrSyntaxGenerator.mxg"
+            #line (61,23)-(61,34) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("SyntaxLexer");
             #line hidden
-            #line (61,30)-(61,31) 25 "AntlrSyntaxGenerator.mxg"
+            #line (61,34)-(61,35) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (61,31)-(61,37) 25 "AntlrSyntaxGenerator.mxg"
+            #line (61,35)-(61,41) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("lexer,");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("\t\t\t");
-            #line (62,4)-(62,25) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Push("            ");
+            #line (62,17)-(62,38) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("IncrementalParseData?");
             #line hidden
-            #line (62,25)-(62,26) 25 "AntlrSyntaxGenerator.mxg"
+            #line (62,38)-(62,39) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (62,26)-(62,39) 25 "AntlrSyntaxGenerator.mxg"
+            #line (62,39)-(62,52) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("oldParseData,");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (63,13)-(63,41) 25 "AntlrSyntaxGenerator.mxg"
+            #line (63,17)-(63,45) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("IEnumerable<TextChangeRange>");
             #line hidden
-            #line (63,41)-(63,42) 25 "AntlrSyntaxGenerator.mxg"
+            #line (63,45)-(63,46) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (63,42)-(63,50) 25 "AntlrSyntaxGenerator.mxg"
+            #line (63,46)-(63,54) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("changes,");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (64,13)-(64,30) 25 "AntlrSyntaxGenerator.mxg"
+            #line (64,17)-(64,34) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("CancellationToken");
             #line hidden
-            #line (64,30)-(64,31) 25 "AntlrSyntaxGenerator.mxg"
+            #line (64,34)-(64,35) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (64,31)-(64,48) 25 "AntlrSyntaxGenerator.mxg"
+            #line (64,35)-(64,52) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("cancellationToken");
             #line hidden
-            #line (64,48)-(64,49) 25 "AntlrSyntaxGenerator.mxg"
+            #line (64,52)-(64,53) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (64,49)-(64,50) 25 "AntlrSyntaxGenerator.mxg"
+            #line (64,53)-(64,54) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("=");
             #line hidden
-            #line (64,50)-(64,51) 25 "AntlrSyntaxGenerator.mxg"
+            #line (64,54)-(64,55) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (64,51)-(64,59) 25 "AntlrSyntaxGenerator.mxg"
+            #line (64,55)-(64,63) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("default)");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (65,13)-(65,14) 25 "AntlrSyntaxGenerator.mxg"
+            #line (65,17)-(65,18) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(":");
             #line hidden
-            #line (65,14)-(65,15) 25 "AntlrSyntaxGenerator.mxg"
+            #line (65,18)-(65,19) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (65,15)-(65,26) 25 "AntlrSyntaxGenerator.mxg"
+            #line (65,19)-(65,30) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("base(lexer,");
             #line hidden
-            #line (65,26)-(65,27) 25 "AntlrSyntaxGenerator.mxg"
+            #line (65,30)-(65,31) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (65,27)-(65,40) 25 "AntlrSyntaxGenerator.mxg"
+            #line (65,31)-(65,44) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("oldParseData,");
             #line hidden
-            #line (65,40)-(65,41) 25 "AntlrSyntaxGenerator.mxg"
+            #line (65,44)-(65,45) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (65,41)-(65,49) 25 "AntlrSyntaxGenerator.mxg"
+            #line (65,45)-(65,53) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("changes,");
             #line hidden
-            #line (65,49)-(65,50) 25 "AntlrSyntaxGenerator.mxg"
+            #line (65,53)-(65,54) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (65,50)-(65,68) 25 "AntlrSyntaxGenerator.mxg"
+            #line (65,54)-(65,72) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("cancellationToken)");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (66,9)-(66,10) 25 "AntlrSyntaxGenerator.mxg"
+            #line (66,13)-(66,14) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("{");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (67,13)-(67,21) 25 "AntlrSyntaxGenerator.mxg"
+            #line (67,17)-(67,25) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("_visitor");
             #line hidden
-            #line (67,21)-(67,22) 25 "AntlrSyntaxGenerator.mxg"
+            #line (67,25)-(67,26) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (67,22)-(67,23) 25 "AntlrSyntaxGenerator.mxg"
+            #line (67,26)-(67,27) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("=");
-            #line hidden
-            #line (67,23)-(67,24) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (67,24)-(67,27) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write("new");
             #line hidden
             #line (67,27)-(67,28) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (67,28)-(67,55) 25 "AntlrSyntaxGenerator.mxg"
+            #line (67,28)-(67,31) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("new");
+            #line hidden
+            #line (67,31)-(67,32) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (67,32)-(67,59) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("AntlrToRoslynVisitor(this);");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (68,9)-(68,10) 25 "AntlrSyntaxGenerator.mxg"
+            #line (68,13)-(68,14) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("}");
             #line hidden
             __cb.WriteLine();
@@ -762,46 +762,46 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (70,9)-(70,18) 25 "AntlrSyntaxGenerator.mxg"
+            #line (70,13)-(70,22) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("protected");
-            #line hidden
-            #line (70,18)-(70,19) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (70,19)-(70,22) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write("new");
             #line hidden
             #line (70,22)-(70,23) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (70,24)-(70,28) 24 "AntlrSyntaxGenerator.mxg"
+            #line (70,23)-(70,26) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("new");
+            #line hidden
+            #line (70,26)-(70,27) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (70,28)-(70,32) 24 "AntlrSyntaxGenerator.mxg"
             __cb.Write(Lang);
             #line hidden
-            #line (70,29)-(70,35) 25 "AntlrSyntaxGenerator.mxg"
+            #line (70,33)-(70,39) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("Parser");
             #line hidden
-            #line (70,35)-(70,36) 25 "AntlrSyntaxGenerator.mxg"
+            #line (70,39)-(70,40) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (70,36)-(70,47) 25 "AntlrSyntaxGenerator.mxg"
+            #line (70,40)-(70,51) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("AntlrParser");
             #line hidden
-            #line (70,47)-(70,48) 25 "AntlrSyntaxGenerator.mxg"
+            #line (70,51)-(70,52) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (70,48)-(70,50) 25 "AntlrSyntaxGenerator.mxg"
+            #line (70,52)-(70,54) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("=>");
             #line hidden
-            #line (70,50)-(70,51) 25 "AntlrSyntaxGenerator.mxg"
+            #line (70,54)-(70,55) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (70,51)-(70,52) 25 "AntlrSyntaxGenerator.mxg"
+            #line (70,55)-(70,56) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("(");
             #line hidden
-            #line (70,53)-(70,57) 24 "AntlrSyntaxGenerator.mxg"
+            #line (70,57)-(70,61) 24 "AntlrSyntaxGenerator.mxg"
             __cb.Write(Lang);
             #line hidden
-            #line (70,58)-(70,82) 25 "AntlrSyntaxGenerator.mxg"
+            #line (70,62)-(70,86) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("Parser)base.AntlrParser;");
             #line hidden
             __cb.WriteLine();
@@ -809,140 +809,140 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
             __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("\t\t");
-            #line (72,3)-(72,12) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Push("        ");
+            #line (72,13)-(72,22) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("protected");
             #line hidden
-            #line (72,12)-(72,13) 25 "AntlrSyntaxGenerator.mxg"
+            #line (72,22)-(72,23) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (72,13)-(72,21) 25 "AntlrSyntaxGenerator.mxg"
+            #line (72,23)-(72,31) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("override");
             #line hidden
-            #line (72,21)-(72,22) 25 "AntlrSyntaxGenerator.mxg"
+            #line (72,31)-(72,32) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (72,22)-(72,32) 25 "AntlrSyntaxGenerator.mxg"
+            #line (72,32)-(72,42) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("SyntaxNode");
             #line hidden
-            #line (72,32)-(72,33) 25 "AntlrSyntaxGenerator.mxg"
+            #line (72,42)-(72,43) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (72,33)-(72,44) 25 "AntlrSyntaxGenerator.mxg"
+            #line (72,43)-(72,54) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("ParseRoot()");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("\t\t");
-            #line (73,3)-(73,4) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Push("        ");
+            #line (73,13)-(73,14) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("{");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (74,13)-(74,25) 25 "AntlrSyntaxGenerator.mxg"
+            #line (74,17)-(74,29) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("ParserState?");
             #line hidden
-            #line (74,25)-(74,26) 25 "AntlrSyntaxGenerator.mxg"
+            #line (74,29)-(74,30) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (74,26)-(74,31) 25 "AntlrSyntaxGenerator.mxg"
+            #line (74,30)-(74,35) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("state");
             #line hidden
-            #line (74,31)-(74,32) 25 "AntlrSyntaxGenerator.mxg"
+            #line (74,35)-(74,36) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (74,32)-(74,33) 25 "AntlrSyntaxGenerator.mxg"
+            #line (74,36)-(74,37) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("=");
             #line hidden
-            #line (74,33)-(74,34) 25 "AntlrSyntaxGenerator.mxg"
+            #line (74,37)-(74,38) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (74,34)-(74,39) 25 "AntlrSyntaxGenerator.mxg"
+            #line (74,38)-(74,43) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("null;");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("\t\t\t");
-            #line (75,4)-(75,14) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Push("            ");
+            #line (75,17)-(75,27) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("GreenNode?");
             #line hidden
-            #line (75,14)-(75,15) 25 "AntlrSyntaxGenerator.mxg"
+            #line (75,27)-(75,28) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (75,15)-(75,20) 25 "AntlrSyntaxGenerator.mxg"
+            #line (75,28)-(75,33) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("green");
             #line hidden
-            #line (75,20)-(75,21) 25 "AntlrSyntaxGenerator.mxg"
+            #line (75,33)-(75,34) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (75,21)-(75,22) 25 "AntlrSyntaxGenerator.mxg"
+            #line (75,34)-(75,35) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("=");
             #line hidden
-            #line (75,22)-(75,23) 25 "AntlrSyntaxGenerator.mxg"
+            #line (75,35)-(75,36) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (75,23)-(75,33) 25 "AntlrSyntaxGenerator.mxg"
+            #line (75,36)-(75,46) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("this.Parse");
             #line hidden
-            #line (75,34)-(75,54) 24 "AntlrSyntaxGenerator.mxg"
+            #line (75,47)-(75,67) 24 "AntlrSyntaxGenerator.mxg"
             __cb.Write(MainRule?.CSharpName);
             #line hidden
-            #line (75,55)-(75,59) 25 "AntlrSyntaxGenerator.mxg"
+            #line (75,68)-(75,72) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("(ref");
             #line hidden
-            #line (75,59)-(75,60) 25 "AntlrSyntaxGenerator.mxg"
+            #line (75,72)-(75,73) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (75,60)-(75,67) 25 "AntlrSyntaxGenerator.mxg"
+            #line (75,73)-(75,80) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("state);");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("\t\t\t");
-            #line (76,4)-(76,7) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Push("            ");
+            #line (76,17)-(76,20) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("var");
             #line hidden
-            #line (76,7)-(76,8) 25 "AntlrSyntaxGenerator.mxg"
+            #line (76,20)-(76,21) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (76,8)-(76,11) 25 "AntlrSyntaxGenerator.mxg"
+            #line (76,21)-(76,24) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("red");
             #line hidden
-            #line (76,11)-(76,12) 25 "AntlrSyntaxGenerator.mxg"
+            #line (76,24)-(76,25) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (76,12)-(76,13) 25 "AntlrSyntaxGenerator.mxg"
+            #line (76,25)-(76,26) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("=");
             #line hidden
-            #line (76,13)-(76,14) 25 "AntlrSyntaxGenerator.mxg"
+            #line (76,26)-(76,27) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (76,14)-(76,15) 25 "AntlrSyntaxGenerator.mxg"
+            #line (76,27)-(76,28) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("(");
             #line hidden
-            #line (76,16)-(76,20) 24 "AntlrSyntaxGenerator.mxg"
+            #line (76,29)-(76,33) 24 "AntlrSyntaxGenerator.mxg"
             __cb.Write(Lang);
             #line hidden
-            #line (76,21)-(76,51) 25 "AntlrSyntaxGenerator.mxg"
+            #line (76,34)-(76,64) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("SyntaxNode)green!.CreateRed();");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("\t\t\t");
-            #line (77,4)-(77,10) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Push("            ");
+            #line (77,17)-(77,23) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("return");
             #line hidden
-            #line (77,10)-(77,11) 25 "AntlrSyntaxGenerator.mxg"
+            #line (77,23)-(77,24) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (77,11)-(77,15) 25 "AntlrSyntaxGenerator.mxg"
+            #line (77,24)-(77,28) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("red;");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("\t\t");
-            #line (78,3)-(78,4) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Push("        ");
+            #line (78,13)-(78,14) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("}");
             #line hidden
             __cb.WriteLine();
@@ -951,73 +951,73 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (80,9)-(80,16) 25 "AntlrSyntaxGenerator.mxg"
+            #line (80,13)-(80,20) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("private");
             #line hidden
-            #line (80,16)-(80,17) 25 "AntlrSyntaxGenerator.mxg"
+            #line (80,20)-(80,21) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (80,17)-(80,27) 25 "AntlrSyntaxGenerator.mxg"
+            #line (80,21)-(80,31) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("GreenNode?");
             #line hidden
-            #line (80,27)-(80,28) 25 "AntlrSyntaxGenerator.mxg"
+            #line (80,31)-(80,32) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (80,28)-(80,33) 25 "AntlrSyntaxGenerator.mxg"
+            #line (80,32)-(80,37) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("Parse");
             #line hidden
-            #line (80,34)-(80,54) 24 "AntlrSyntaxGenerator.mxg"
+            #line (80,38)-(80,58) 24 "AntlrSyntaxGenerator.mxg"
             __cb.Write(MainRule?.CSharpName);
             #line hidden
-            #line (80,55)-(80,59) 25 "AntlrSyntaxGenerator.mxg"
+            #line (80,59)-(80,63) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("(ref");
             #line hidden
-            #line (80,59)-(80,60) 25 "AntlrSyntaxGenerator.mxg"
+            #line (80,63)-(80,64) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (80,60)-(80,72) 25 "AntlrSyntaxGenerator.mxg"
+            #line (80,64)-(80,76) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("ParserState?");
             #line hidden
-            #line (80,72)-(80,73) 25 "AntlrSyntaxGenerator.mxg"
+            #line (80,76)-(80,77) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (80,73)-(80,79) 25 "AntlrSyntaxGenerator.mxg"
+            #line (80,77)-(80,83) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("state)");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (81,9)-(81,10) 25 "AntlrSyntaxGenerator.mxg"
+            #line (81,13)-(81,14) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("{");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (82,13)-(82,19) 25 "AntlrSyntaxGenerator.mxg"
+            #line (82,17)-(82,23) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("return");
             #line hidden
-            #line (82,19)-(82,20) 25 "AntlrSyntaxGenerator.mxg"
+            #line (82,23)-(82,24) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (82,20)-(82,34) 25 "AntlrSyntaxGenerator.mxg"
+            #line (82,24)-(82,38) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("_visitor.Visit");
             #line hidden
-            #line (82,35)-(82,70) 24 "AntlrSyntaxGenerator.mxg"
+            #line (82,39)-(82,74) 24 "AntlrSyntaxGenerator.mxg"
             __cb.Write(MainRule?.AntlrName?.ToPascalCase());
             #line hidden
-            #line (82,71)-(82,84) 25 "AntlrSyntaxGenerator.mxg"
+            #line (82,75)-(82,88) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("(AntlrParser.");
             #line hidden
-            #line (82,85)-(82,104) 24 "AntlrSyntaxGenerator.mxg"
+            #line (82,89)-(82,108) 24 "AntlrSyntaxGenerator.mxg"
             __cb.Write(MainRule?.AntlrName);
             #line hidden
-            #line (82,105)-(82,109) 25 "AntlrSyntaxGenerator.mxg"
+            #line (82,109)-(82,113) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("());");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (83,9)-(83,10) 25 "AntlrSyntaxGenerator.mxg"
+            #line (83,13)-(83,14) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("}");
             #line hidden
             __cb.WriteLine();
@@ -1026,322 +1026,322 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (85,9)-(85,16) 25 "AntlrSyntaxGenerator.mxg"
+            #line (85,13)-(85,20) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("private");
             #line hidden
-            #line (85,16)-(85,17) 25 "AntlrSyntaxGenerator.mxg"
+            #line (85,20)-(85,21) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (85,17)-(85,22) 25 "AntlrSyntaxGenerator.mxg"
+            #line (85,21)-(85,26) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("class");
             #line hidden
-            #line (85,22)-(85,23) 25 "AntlrSyntaxGenerator.mxg"
+            #line (85,26)-(85,27) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (85,23)-(85,43) 25 "AntlrSyntaxGenerator.mxg"
+            #line (85,27)-(85,47) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("AntlrToRoslynVisitor");
             #line hidden
-            #line (85,43)-(85,44) 25 "AntlrSyntaxGenerator.mxg"
+            #line (85,47)-(85,48) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (85,44)-(85,45) 25 "AntlrSyntaxGenerator.mxg"
+            #line (85,48)-(85,49) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(":");
             #line hidden
-            #line (85,45)-(85,46) 25 "AntlrSyntaxGenerator.mxg"
+            #line (85,49)-(85,50) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (85,47)-(85,51) 24 "AntlrSyntaxGenerator.mxg"
+            #line (85,51)-(85,55) 24 "AntlrSyntaxGenerator.mxg"
             __cb.Write(Lang);
             #line hidden
-            #line (85,52)-(85,81) 25 "AntlrSyntaxGenerator.mxg"
+            #line (85,56)-(85,85) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("ParserBaseVisitor<GreenNode?>");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
-            #line (86,9)-(86,10) 25 "AntlrSyntaxGenerator.mxg"
+            #line (86,13)-(86,14) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("{");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("\t\t\t");
-            #line (87,4)-(87,6) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Push("            ");
+            #line (87,17)-(87,19) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("//");
-            #line hidden
-            #line (87,6)-(87,7) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (87,7)-(87,11) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write("list");
-            #line hidden
-            #line (87,11)-(87,12) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (87,12)-(87,17) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write("pools");
-            #line hidden
-            #line (87,17)-(87,18) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (87,18)-(87,19) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write("-");
             #line hidden
             #line (87,19)-(87,20) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (87,20)-(87,30) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write("allocators");
+            #line (87,20)-(87,24) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("list");
+            #line hidden
+            #line (87,24)-(87,25) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (87,25)-(87,30) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("pools");
             #line hidden
             #line (87,30)-(87,31) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (87,31)-(87,34) 25 "AntlrSyntaxGenerator.mxg"
+            #line (87,31)-(87,32) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("-");
+            #line hidden
+            #line (87,32)-(87,33) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (87,33)-(87,43) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("allocators");
+            #line hidden
+            #line (87,43)-(87,44) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (87,44)-(87,47) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("for");
             #line hidden
-            #line (87,34)-(87,35) 25 "AntlrSyntaxGenerator.mxg"
+            #line (87,47)-(87,48) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (87,35)-(87,40) 25 "AntlrSyntaxGenerator.mxg"
+            #line (87,48)-(87,53) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("lists");
             #line hidden
-            #line (87,40)-(87,41) 25 "AntlrSyntaxGenerator.mxg"
+            #line (87,53)-(87,54) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (87,41)-(87,45) 25 "AntlrSyntaxGenerator.mxg"
+            #line (87,54)-(87,58) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("that");
             #line hidden
-            #line (87,45)-(87,46) 25 "AntlrSyntaxGenerator.mxg"
+            #line (87,58)-(87,59) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (87,46)-(87,49) 25 "AntlrSyntaxGenerator.mxg"
+            #line (87,59)-(87,62) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("are");
             #line hidden
-            #line (87,49)-(87,50) 25 "AntlrSyntaxGenerator.mxg"
+            #line (87,62)-(87,63) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (87,50)-(87,54) 25 "AntlrSyntaxGenerator.mxg"
+            #line (87,63)-(87,67) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("used");
             #line hidden
-            #line (87,54)-(87,55) 25 "AntlrSyntaxGenerator.mxg"
+            #line (87,67)-(87,68) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (87,55)-(87,57) 25 "AntlrSyntaxGenerator.mxg"
+            #line (87,68)-(87,70) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("to");
             #line hidden
-            #line (87,57)-(87,58) 25 "AntlrSyntaxGenerator.mxg"
+            #line (87,70)-(87,71) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (87,58)-(87,63) 25 "AntlrSyntaxGenerator.mxg"
+            #line (87,71)-(87,76) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("build");
-            #line hidden
-            #line (87,63)-(87,64) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (87,64)-(87,73) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write("sequences");
-            #line hidden
-            #line (87,73)-(87,74) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (87,74)-(87,76) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write("of");
             #line hidden
             #line (87,76)-(87,77) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (87,77)-(87,83) 25 "AntlrSyntaxGenerator.mxg"
+            #line (87,77)-(87,86) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("sequences");
+            #line hidden
+            #line (87,86)-(87,87) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (87,87)-(87,89) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("of");
+            #line hidden
+            #line (87,89)-(87,90) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (87,90)-(87,96) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("nodes.");
             #line hidden
-            #line (87,83)-(87,84) 25 "AntlrSyntaxGenerator.mxg"
+            #line (87,96)-(87,97) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (87,84)-(87,87) 25 "AntlrSyntaxGenerator.mxg"
+            #line (87,97)-(87,100) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("The");
             #line hidden
-            #line (87,87)-(87,88) 25 "AntlrSyntaxGenerator.mxg"
+            #line (87,100)-(87,101) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (87,88)-(87,93) 25 "AntlrSyntaxGenerator.mxg"
+            #line (87,101)-(87,106) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("lists");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("\t\t\t");
-            #line (88,4)-(88,6) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Push("            ");
+            #line (88,17)-(88,19) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("//");
             #line hidden
-            #line (88,6)-(88,7) 25 "AntlrSyntaxGenerator.mxg"
+            #line (88,19)-(88,20) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (88,7)-(88,10) 25 "AntlrSyntaxGenerator.mxg"
+            #line (88,20)-(88,23) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("can");
             #line hidden
-            #line (88,10)-(88,11) 25 "AntlrSyntaxGenerator.mxg"
+            #line (88,23)-(88,24) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (88,11)-(88,13) 25 "AntlrSyntaxGenerator.mxg"
+            #line (88,24)-(88,26) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("be");
             #line hidden
-            #line (88,13)-(88,14) 25 "AntlrSyntaxGenerator.mxg"
+            #line (88,26)-(88,27) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (88,14)-(88,20) 25 "AntlrSyntaxGenerator.mxg"
+            #line (88,27)-(88,33) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("reused");
             #line hidden
-            #line (88,20)-(88,21) 25 "AntlrSyntaxGenerator.mxg"
+            #line (88,33)-(88,34) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (88,21)-(88,27) 25 "AntlrSyntaxGenerator.mxg"
+            #line (88,34)-(88,40) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("(hence");
             #line hidden
-            #line (88,27)-(88,28) 25 "AntlrSyntaxGenerator.mxg"
+            #line (88,40)-(88,41) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (88,28)-(88,35) 25 "AntlrSyntaxGenerator.mxg"
+            #line (88,41)-(88,48) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("pooled)");
             #line hidden
-            #line (88,35)-(88,36) 25 "AntlrSyntaxGenerator.mxg"
+            #line (88,48)-(88,49) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (88,36)-(88,41) 25 "AntlrSyntaxGenerator.mxg"
+            #line (88,49)-(88,54) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("since");
             #line hidden
-            #line (88,41)-(88,42) 25 "AntlrSyntaxGenerator.mxg"
+            #line (88,54)-(88,55) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (88,42)-(88,45) 25 "AntlrSyntaxGenerator.mxg"
+            #line (88,55)-(88,58) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("the");
             #line hidden
-            #line (88,45)-(88,46) 25 "AntlrSyntaxGenerator.mxg"
+            #line (88,58)-(88,59) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (88,46)-(88,52) 25 "AntlrSyntaxGenerator.mxg"
+            #line (88,59)-(88,65) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("syntax");
             #line hidden
-            #line (88,52)-(88,53) 25 "AntlrSyntaxGenerator.mxg"
+            #line (88,65)-(88,66) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (88,53)-(88,60) 25 "AntlrSyntaxGenerator.mxg"
+            #line (88,66)-(88,73) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("factory");
             #line hidden
-            #line (88,60)-(88,61) 25 "AntlrSyntaxGenerator.mxg"
+            #line (88,73)-(88,74) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (88,61)-(88,68) 25 "AntlrSyntaxGenerator.mxg"
+            #line (88,74)-(88,81) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("methods");
             #line hidden
-            #line (88,68)-(88,69) 25 "AntlrSyntaxGenerator.mxg"
+            #line (88,81)-(88,82) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (88,69)-(88,74) 25 "AntlrSyntaxGenerator.mxg"
+            #line (88,82)-(88,87) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("don't");
             #line hidden
-            #line (88,74)-(88,75) 25 "AntlrSyntaxGenerator.mxg"
+            #line (88,87)-(88,88) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (88,75)-(88,79) 25 "AntlrSyntaxGenerator.mxg"
+            #line (88,88)-(88,92) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("keep");
             #line hidden
-            #line (88,79)-(88,80) 25 "AntlrSyntaxGenerator.mxg"
+            #line (88,92)-(88,93) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (88,80)-(88,90) 25 "AntlrSyntaxGenerator.mxg"
+            #line (88,93)-(88,103) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("references");
             #line hidden
-            #line (88,90)-(88,91) 25 "AntlrSyntaxGenerator.mxg"
+            #line (88,103)-(88,104) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (88,91)-(88,93) 25 "AntlrSyntaxGenerator.mxg"
+            #line (88,104)-(88,106) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("to");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("\t\t\t");
-            #line (89,4)-(89,6) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Push("            ");
+            #line (89,17)-(89,19) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("//");
             #line hidden
-            #line (89,6)-(89,7) 25 "AntlrSyntaxGenerator.mxg"
+            #line (89,19)-(89,20) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (89,7)-(89,11) 25 "AntlrSyntaxGenerator.mxg"
+            #line (89,20)-(89,24) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("them");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("\t\t\t");
-            #line (90,4)-(90,11) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Push("            ");
+            #line (90,17)-(90,24) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("private");
             #line hidden
-            #line (90,11)-(90,12) 25 "AntlrSyntaxGenerator.mxg"
+            #line (90,24)-(90,25) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (90,12)-(90,20) 25 "AntlrSyntaxGenerator.mxg"
+            #line (90,25)-(90,33) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("readonly");
             #line hidden
-            #line (90,20)-(90,21) 25 "AntlrSyntaxGenerator.mxg"
+            #line (90,33)-(90,34) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (90,21)-(90,35) 25 "AntlrSyntaxGenerator.mxg"
+            #line (90,34)-(90,48) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("SyntaxListPool");
             #line hidden
-            #line (90,35)-(90,36) 25 "AntlrSyntaxGenerator.mxg"
+            #line (90,48)-(90,49) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (90,36)-(90,41) 25 "AntlrSyntaxGenerator.mxg"
+            #line (90,49)-(90,54) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("_pool");
             #line hidden
-            #line (90,41)-(90,42) 25 "AntlrSyntaxGenerator.mxg"
+            #line (90,54)-(90,55) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (90,42)-(90,43) 25 "AntlrSyntaxGenerator.mxg"
+            #line (90,55)-(90,56) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("=");
             #line hidden
-            #line (90,43)-(90,44) 25 "AntlrSyntaxGenerator.mxg"
+            #line (90,56)-(90,57) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (90,44)-(90,47) 25 "AntlrSyntaxGenerator.mxg"
+            #line (90,57)-(90,60) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("new");
             #line hidden
-            #line (90,47)-(90,48) 25 "AntlrSyntaxGenerator.mxg"
+            #line (90,60)-(90,61) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (90,48)-(90,65) 25 "AntlrSyntaxGenerator.mxg"
+            #line (90,61)-(90,78) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("SyntaxListPool();");
             #line hidden
-            #line (90,65)-(90,66) 25 "AntlrSyntaxGenerator.mxg"
+            #line (90,78)-(90,79) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (90,66)-(90,68) 25 "AntlrSyntaxGenerator.mxg"
+            #line (90,79)-(90,81) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("//");
             #line hidden
-            #line (90,68)-(90,69) 25 "AntlrSyntaxGenerator.mxg"
+            #line (90,81)-(90,82) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (90,69)-(90,74) 25 "AntlrSyntaxGenerator.mxg"
+            #line (90,82)-(90,87) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("Don't");
             #line hidden
-            #line (90,74)-(90,75) 25 "AntlrSyntaxGenerator.mxg"
+            #line (90,87)-(90,88) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (90,75)-(90,79) 25 "AntlrSyntaxGenerator.mxg"
+            #line (90,88)-(90,92) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("need");
             #line hidden
-            #line (90,79)-(90,80) 25 "AntlrSyntaxGenerator.mxg"
+            #line (90,92)-(90,93) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (90,80)-(90,82) 25 "AntlrSyntaxGenerator.mxg"
+            #line (90,93)-(90,95) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("to");
             #line hidden
-            #line (90,82)-(90,83) 25 "AntlrSyntaxGenerator.mxg"
+            #line (90,95)-(90,96) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (90,83)-(90,88) 25 "AntlrSyntaxGenerator.mxg"
+            #line (90,96)-(90,101) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("reset");
             #line hidden
-            #line (90,88)-(90,89) 25 "AntlrSyntaxGenerator.mxg"
+            #line (90,101)-(90,102) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (90,89)-(90,94) 25 "AntlrSyntaxGenerator.mxg"
+            #line (90,102)-(90,107) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("this.");
             #line hidden
             __cb.WriteLine();
@@ -1350,79 +1350,79 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (92,13)-(92,20) 25 "AntlrSyntaxGenerator.mxg"
+            #line (92,17)-(92,24) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("private");
             #line hidden
-            #line (92,20)-(92,21) 25 "AntlrSyntaxGenerator.mxg"
+            #line (92,24)-(92,25) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (92,21)-(92,29) 25 "AntlrSyntaxGenerator.mxg"
+            #line (92,25)-(92,33) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("readonly");
             #line hidden
-            #line (92,29)-(92,30) 25 "AntlrSyntaxGenerator.mxg"
+            #line (92,33)-(92,34) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (92,31)-(92,35) 24 "AntlrSyntaxGenerator.mxg"
+            #line (92,35)-(92,39) 24 "AntlrSyntaxGenerator.mxg"
             __cb.Write(Lang);
             #line hidden
-            #line (92,36)-(92,48) 25 "AntlrSyntaxGenerator.mxg"
+            #line (92,40)-(92,52) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("SyntaxParser");
             #line hidden
-            #line (92,48)-(92,49) 25 "AntlrSyntaxGenerator.mxg"
+            #line (92,52)-(92,53) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (92,49)-(92,57) 25 "AntlrSyntaxGenerator.mxg"
+            #line (92,53)-(92,61) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("_parser;");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (93,13)-(93,20) 25 "AntlrSyntaxGenerator.mxg"
+            #line (93,17)-(93,24) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("private");
             #line hidden
-            #line (93,20)-(93,21) 25 "AntlrSyntaxGenerator.mxg"
+            #line (93,24)-(93,25) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (93,21)-(93,29) 25 "AntlrSyntaxGenerator.mxg"
+            #line (93,25)-(93,33) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("readonly");
             #line hidden
-            #line (93,29)-(93,30) 25 "AntlrSyntaxGenerator.mxg"
+            #line (93,33)-(93,34) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (93,30)-(93,46) 25 "AntlrSyntaxGenerator.mxg"
+            #line (93,34)-(93,50) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("AntlrTokenStream");
             #line hidden
-            #line (93,46)-(93,47) 25 "AntlrSyntaxGenerator.mxg"
+            #line (93,50)-(93,51) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (93,47)-(93,60) 25 "AntlrSyntaxGenerator.mxg"
+            #line (93,51)-(93,64) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("_tokenStream;");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("\t\t\t");
-            #line (94,4)-(94,11) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Push("            ");
+            #line (94,17)-(94,24) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("private");
             #line hidden
-            #line (94,11)-(94,12) 25 "AntlrSyntaxGenerator.mxg"
+            #line (94,24)-(94,25) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (94,12)-(94,20) 25 "AntlrSyntaxGenerator.mxg"
+            #line (94,25)-(94,33) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("readonly");
             #line hidden
-            #line (94,20)-(94,21) 25 "AntlrSyntaxGenerator.mxg"
+            #line (94,33)-(94,34) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (94,22)-(94,26) 24 "AntlrSyntaxGenerator.mxg"
+            #line (94,35)-(94,39) 24 "AntlrSyntaxGenerator.mxg"
             __cb.Write(Lang);
             #line hidden
-            #line (94,27)-(94,48) 25 "AntlrSyntaxGenerator.mxg"
+            #line (94,40)-(94,61) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("InternalSyntaxFactory");
             #line hidden
-            #line (94,48)-(94,49) 25 "AntlrSyntaxGenerator.mxg"
+            #line (94,61)-(94,62) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (94,49)-(94,58) 25 "AntlrSyntaxGenerator.mxg"
+            #line (94,62)-(94,71) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("_factory;");
             #line hidden
             __cb.WriteLine();
@@ -1431,97 +1431,97 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (96,13)-(96,19) 25 "AntlrSyntaxGenerator.mxg"
+            #line (96,17)-(96,23) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("public");
             #line hidden
-            #line (96,19)-(96,20) 25 "AntlrSyntaxGenerator.mxg"
+            #line (96,23)-(96,24) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (96,20)-(96,41) 25 "AntlrSyntaxGenerator.mxg"
+            #line (96,24)-(96,45) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("AntlrToRoslynVisitor(");
             #line hidden
-            #line (96,42)-(96,46) 24 "AntlrSyntaxGenerator.mxg"
+            #line (96,46)-(96,50) 24 "AntlrSyntaxGenerator.mxg"
             __cb.Write(Lang);
             #line hidden
-            #line (96,47)-(96,59) 25 "AntlrSyntaxGenerator.mxg"
+            #line (96,51)-(96,63) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("SyntaxParser");
             #line hidden
-            #line (96,59)-(96,60) 25 "AntlrSyntaxGenerator.mxg"
+            #line (96,63)-(96,64) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (96,60)-(96,67) 25 "AntlrSyntaxGenerator.mxg"
+            #line (96,64)-(96,71) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("parser)");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (97,13)-(97,14) 25 "AntlrSyntaxGenerator.mxg"
+            #line (97,17)-(97,18) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("{");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("                ");
-            #line (98,17)-(98,24) 25 "AntlrSyntaxGenerator.mxg"
+            #line (98,21)-(98,28) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("_parser");
             #line hidden
-            #line (98,24)-(98,25) 25 "AntlrSyntaxGenerator.mxg"
+            #line (98,28)-(98,29) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (98,25)-(98,26) 25 "AntlrSyntaxGenerator.mxg"
+            #line (98,29)-(98,30) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("=");
             #line hidden
-            #line (98,26)-(98,27) 25 "AntlrSyntaxGenerator.mxg"
+            #line (98,30)-(98,31) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (98,27)-(98,34) 25 "AntlrSyntaxGenerator.mxg"
+            #line (98,31)-(98,38) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("parser;");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("                ");
-            #line (99,17)-(99,29) 25 "AntlrSyntaxGenerator.mxg"
+            #line (99,21)-(99,33) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("_tokenStream");
             #line hidden
-            #line (99,29)-(99,30) 25 "AntlrSyntaxGenerator.mxg"
+            #line (99,33)-(99,34) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (99,30)-(99,31) 25 "AntlrSyntaxGenerator.mxg"
+            #line (99,34)-(99,35) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("=");
             #line hidden
-            #line (99,31)-(99,32) 25 "AntlrSyntaxGenerator.mxg"
+            #line (99,35)-(99,36) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (99,32)-(99,82) 25 "AntlrSyntaxGenerator.mxg"
+            #line (99,36)-(99,86) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("(AntlrTokenStream)_parser.AntlrParser.InputStream;");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("\t\t\t\t");
-            #line (100,5)-(100,13) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Push("                ");
+            #line (100,21)-(100,29) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("_factory");
             #line hidden
-            #line (100,13)-(100,14) 25 "AntlrSyntaxGenerator.mxg"
+            #line (100,29)-(100,30) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (100,14)-(100,15) 25 "AntlrSyntaxGenerator.mxg"
+            #line (100,30)-(100,31) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("=");
             #line hidden
-            #line (100,15)-(100,16) 25 "AntlrSyntaxGenerator.mxg"
+            #line (100,31)-(100,32) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (100,16)-(100,17) 25 "AntlrSyntaxGenerator.mxg"
+            #line (100,32)-(100,33) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("(");
             #line hidden
-            #line (100,18)-(100,22) 24 "AntlrSyntaxGenerator.mxg"
+            #line (100,34)-(100,38) 24 "AntlrSyntaxGenerator.mxg"
             __cb.Write(Lang);
             #line hidden
-            #line (100,23)-(100,84) 25 "AntlrSyntaxGenerator.mxg"
+            #line (100,39)-(100,100) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("InternalSyntaxFactory)_parser.Language.InternalSyntaxFactory;");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (101,13)-(101,14) 25 "AntlrSyntaxGenerator.mxg"
+            #line (101,17)-(101,18) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("}");
             #line hidden
             __cb.WriteLine();
@@ -1530,238 +1530,238 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (103,13)-(103,20) 25 "AntlrSyntaxGenerator.mxg"
+            #line (103,17)-(103,24) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("private");
             #line hidden
-            #line (103,20)-(103,21) 25 "AntlrSyntaxGenerator.mxg"
+            #line (103,24)-(103,25) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (103,21)-(103,31) 25 "AntlrSyntaxGenerator.mxg"
+            #line (103,25)-(103,35) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("GreenNode?");
             #line hidden
-            #line (103,31)-(103,32) 25 "AntlrSyntaxGenerator.mxg"
+            #line (103,35)-(103,36) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (103,32)-(103,53) 25 "AntlrSyntaxGenerator.mxg"
+            #line (103,36)-(103,57) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("VisitTerminal(IToken?");
             #line hidden
-            #line (103,53)-(103,54) 25 "AntlrSyntaxGenerator.mxg"
+            #line (103,57)-(103,58) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (103,54)-(103,60) 25 "AntlrSyntaxGenerator.mxg"
+            #line (103,58)-(103,64) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("token,");
             #line hidden
-            #line (103,60)-(103,61) 25 "AntlrSyntaxGenerator.mxg"
+            #line (103,64)-(103,65) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (103,62)-(103,66) 24 "AntlrSyntaxGenerator.mxg"
+            #line (103,66)-(103,70) 24 "AntlrSyntaxGenerator.mxg"
             __cb.Write(Lang);
             #line hidden
-            #line (103,67)-(103,77) 25 "AntlrSyntaxGenerator.mxg"
+            #line (103,71)-(103,81) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("SyntaxKind");
             #line hidden
-            #line (103,77)-(103,78) 25 "AntlrSyntaxGenerator.mxg"
+            #line (103,81)-(103,82) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (103,78)-(103,83) 25 "AntlrSyntaxGenerator.mxg"
+            #line (103,82)-(103,87) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("kind)");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (104,13)-(104,14) 25 "AntlrSyntaxGenerator.mxg"
+            #line (104,17)-(104,18) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("{");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("\t\t\t\t");
-            #line (105,5)-(105,7) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Push("                ");
+            #line (105,21)-(105,23) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("if");
             #line hidden
-            #line (105,7)-(105,8) 25 "AntlrSyntaxGenerator.mxg"
+            #line (105,23)-(105,24) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (105,8)-(105,14) 25 "AntlrSyntaxGenerator.mxg"
+            #line (105,24)-(105,30) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("(token");
             #line hidden
-            #line (105,14)-(105,15) 25 "AntlrSyntaxGenerator.mxg"
+            #line (105,30)-(105,31) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (105,15)-(105,17) 25 "AntlrSyntaxGenerator.mxg"
+            #line (105,31)-(105,33) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("==");
             #line hidden
-            #line (105,17)-(105,18) 25 "AntlrSyntaxGenerator.mxg"
+            #line (105,33)-(105,34) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (105,18)-(105,23) 25 "AntlrSyntaxGenerator.mxg"
+            #line (105,34)-(105,39) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("null)");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("\t\t\t\t");
-            #line (106,5)-(106,6) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Push("                ");
+            #line (106,21)-(106,22) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("{");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("\t\t\t\t\t");
-            #line (107,6)-(107,8) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Push("                    ");
+            #line (107,25)-(107,27) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("if");
             #line hidden
-            #line (107,8)-(107,9) 25 "AntlrSyntaxGenerator.mxg"
+            #line (107,27)-(107,28) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (107,9)-(107,14) 25 "AntlrSyntaxGenerator.mxg"
+            #line (107,28)-(107,33) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("(kind");
             #line hidden
-            #line (107,14)-(107,15) 25 "AntlrSyntaxGenerator.mxg"
+            #line (107,33)-(107,34) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (107,15)-(107,17) 25 "AntlrSyntaxGenerator.mxg"
+            #line (107,34)-(107,36) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("!=");
             #line hidden
-            #line (107,17)-(107,18) 25 "AntlrSyntaxGenerator.mxg"
+            #line (107,36)-(107,37) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (107,19)-(107,23) 24 "AntlrSyntaxGenerator.mxg"
+            #line (107,38)-(107,42) 24 "AntlrSyntaxGenerator.mxg"
             __cb.Write(Lang);
             #line hidden
-            #line (107,24)-(107,40) 25 "AntlrSyntaxGenerator.mxg"
+            #line (107,43)-(107,59) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("SyntaxKind.None)");
             #line hidden
-            #line (107,40)-(107,41) 25 "AntlrSyntaxGenerator.mxg"
+            #line (107,59)-(107,60) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (107,41)-(107,47) 25 "AntlrSyntaxGenerator.mxg"
+            #line (107,60)-(107,66) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("return");
             #line hidden
-            #line (107,47)-(107,48) 25 "AntlrSyntaxGenerator.mxg"
+            #line (107,66)-(107,67) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (107,48)-(107,107) 25 "AntlrSyntaxGenerator.mxg"
+            #line (107,67)-(107,126) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("_tokenStream.ConsumeGreenToken(_factory.MissingToken(kind),");
             #line hidden
-            #line (107,107)-(107,108) 25 "AntlrSyntaxGenerator.mxg"
+            #line (107,126)-(107,127) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (107,108)-(107,117) 25 "AntlrSyntaxGenerator.mxg"
+            #line (107,127)-(107,136) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("_parser);");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("\t\t\t\t\t");
-            #line (108,6)-(108,10) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Push("                    ");
+            #line (108,25)-(108,29) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("else");
             #line hidden
-            #line (108,10)-(108,11) 25 "AntlrSyntaxGenerator.mxg"
+            #line (108,29)-(108,30) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (108,11)-(108,17) 25 "AntlrSyntaxGenerator.mxg"
+            #line (108,30)-(108,36) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("return");
             #line hidden
-            #line (108,17)-(108,18) 25 "AntlrSyntaxGenerator.mxg"
+            #line (108,36)-(108,37) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (108,18)-(108,23) 25 "AntlrSyntaxGenerator.mxg"
+            #line (108,37)-(108,42) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("null;");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("\t\t\t\t");
-            #line (109,5)-(109,6) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Push("                ");
+            #line (109,21)-(109,22) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("}");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("                ");
-            #line (110,17)-(110,20) 25 "AntlrSyntaxGenerator.mxg"
+            #line (110,21)-(110,24) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("var");
             #line hidden
-            #line (110,20)-(110,21) 25 "AntlrSyntaxGenerator.mxg"
+            #line (110,24)-(110,25) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (110,21)-(110,26) 25 "AntlrSyntaxGenerator.mxg"
+            #line (110,25)-(110,30) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("green");
             #line hidden
-            #line (110,26)-(110,27) 25 "AntlrSyntaxGenerator.mxg"
+            #line (110,30)-(110,31) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (110,27)-(110,28) 25 "AntlrSyntaxGenerator.mxg"
+            #line (110,31)-(110,32) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("=");
             #line hidden
-            #line (110,28)-(110,29) 25 "AntlrSyntaxGenerator.mxg"
+            #line (110,32)-(110,33) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (110,29)-(110,66) 25 "AntlrSyntaxGenerator.mxg"
+            #line (110,33)-(110,70) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("_tokenStream.ConsumeGreenToken(token,");
             #line hidden
-            #line (110,66)-(110,67) 25 "AntlrSyntaxGenerator.mxg"
+            #line (110,70)-(110,71) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (110,67)-(110,76) 25 "AntlrSyntaxGenerator.mxg"
+            #line (110,71)-(110,80) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("_parser);");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("\t\t\t\t");
-            #line (111,5)-(111,22) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Push("                ");
+            #line (111,21)-(111,38) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("Debug.Assert(kind");
             #line hidden
-            #line (111,22)-(111,23) 25 "AntlrSyntaxGenerator.mxg"
+            #line (111,38)-(111,39) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (111,23)-(111,25) 25 "AntlrSyntaxGenerator.mxg"
+            #line (111,39)-(111,41) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("==");
             #line hidden
-            #line (111,25)-(111,26) 25 "AntlrSyntaxGenerator.mxg"
+            #line (111,41)-(111,42) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (111,27)-(111,31) 24 "AntlrSyntaxGenerator.mxg"
+            #line (111,43)-(111,47) 24 "AntlrSyntaxGenerator.mxg"
             __cb.Write(Lang);
             #line hidden
-            #line (111,32)-(111,47) 25 "AntlrSyntaxGenerator.mxg"
+            #line (111,48)-(111,63) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("SyntaxKind.None");
             #line hidden
-            #line (111,47)-(111,48) 25 "AntlrSyntaxGenerator.mxg"
+            #line (111,63)-(111,64) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (111,48)-(111,50) 25 "AntlrSyntaxGenerator.mxg"
+            #line (111,64)-(111,66) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("||");
             #line hidden
-            #line (111,50)-(111,51) 25 "AntlrSyntaxGenerator.mxg"
+            #line (111,66)-(111,67) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (111,51)-(111,64) 25 "AntlrSyntaxGenerator.mxg"
+            #line (111,67)-(111,80) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("green.RawKind");
             #line hidden
-            #line (111,64)-(111,65) 25 "AntlrSyntaxGenerator.mxg"
+            #line (111,80)-(111,81) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (111,65)-(111,67) 25 "AntlrSyntaxGenerator.mxg"
+            #line (111,81)-(111,83) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("==");
             #line hidden
-            #line (111,67)-(111,68) 25 "AntlrSyntaxGenerator.mxg"
+            #line (111,83)-(111,84) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (111,68)-(111,79) 25 "AntlrSyntaxGenerator.mxg"
+            #line (111,84)-(111,95) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("(int)kind);");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("\t\t\t\t");
-            #line (112,5)-(112,11) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Push("                ");
+            #line (112,21)-(112,27) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("return");
             #line hidden
-            #line (112,11)-(112,12) 25 "AntlrSyntaxGenerator.mxg"
+            #line (112,27)-(112,28) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (112,12)-(112,18) 25 "AntlrSyntaxGenerator.mxg"
+            #line (112,28)-(112,34) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("green;");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (113,13)-(113,14) 25 "AntlrSyntaxGenerator.mxg"
+            #line (113,17)-(113,18) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("}");
             #line hidden
             __cb.WriteLine();
@@ -1770,58 +1770,58 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (115,13)-(115,19) 25 "AntlrSyntaxGenerator.mxg"
+            #line (115,17)-(115,23) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("public");
             #line hidden
-            #line (115,19)-(115,20) 25 "AntlrSyntaxGenerator.mxg"
+            #line (115,23)-(115,24) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (115,20)-(115,30) 25 "AntlrSyntaxGenerator.mxg"
+            #line (115,24)-(115,34) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("GreenNode?");
             #line hidden
-            #line (115,30)-(115,31) 25 "AntlrSyntaxGenerator.mxg"
+            #line (115,34)-(115,35) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (115,31)-(115,52) 25 "AntlrSyntaxGenerator.mxg"
+            #line (115,35)-(115,56) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("VisitTerminal(IToken?");
             #line hidden
-            #line (115,52)-(115,53) 25 "AntlrSyntaxGenerator.mxg"
+            #line (115,56)-(115,57) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (115,53)-(115,59) 25 "AntlrSyntaxGenerator.mxg"
+            #line (115,57)-(115,63) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("token)");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (116,13)-(116,14) 25 "AntlrSyntaxGenerator.mxg"
+            #line (116,17)-(116,18) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("{");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("\t\t\t\t");
-            #line (117,5)-(117,11) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Push("                ");
+            #line (117,21)-(117,27) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("return");
             #line hidden
-            #line (117,11)-(117,12) 25 "AntlrSyntaxGenerator.mxg"
+            #line (117,27)-(117,28) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (117,12)-(117,32) 25 "AntlrSyntaxGenerator.mxg"
+            #line (117,28)-(117,48) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("VisitTerminal(token,");
             #line hidden
-            #line (117,32)-(117,33) 25 "AntlrSyntaxGenerator.mxg"
+            #line (117,48)-(117,49) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (117,34)-(117,38) 24 "AntlrSyntaxGenerator.mxg"
+            #line (117,50)-(117,54) 24 "AntlrSyntaxGenerator.mxg"
             __cb.Write(Lang);
             #line hidden
-            #line (117,39)-(117,56) 25 "AntlrSyntaxGenerator.mxg"
+            #line (117,55)-(117,72) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("SyntaxKind.None);");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (118,13)-(118,14) 25 "AntlrSyntaxGenerator.mxg"
+            #line (118,17)-(118,18) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("}");
             #line hidden
             __cb.WriteLine();
@@ -1830,232 +1830,232 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (120,13)-(120,20) 25 "AntlrSyntaxGenerator.mxg"
+            #line (120,17)-(120,24) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("private");
             #line hidden
-            #line (120,20)-(120,21) 25 "AntlrSyntaxGenerator.mxg"
+            #line (120,24)-(120,25) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (120,21)-(120,31) 25 "AntlrSyntaxGenerator.mxg"
+            #line (120,25)-(120,35) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("GreenNode?");
             #line hidden
-            #line (120,31)-(120,32) 25 "AntlrSyntaxGenerator.mxg"
+            #line (120,35)-(120,36) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (120,32)-(120,60) 25 "AntlrSyntaxGenerator.mxg"
+            #line (120,36)-(120,64) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("VisitTerminal(ITerminalNode?");
             #line hidden
-            #line (120,60)-(120,61) 25 "AntlrSyntaxGenerator.mxg"
+            #line (120,64)-(120,65) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (120,61)-(120,66) 25 "AntlrSyntaxGenerator.mxg"
+            #line (120,65)-(120,70) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("node,");
             #line hidden
-            #line (120,66)-(120,67) 25 "AntlrSyntaxGenerator.mxg"
+            #line (120,70)-(120,71) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (120,68)-(120,72) 24 "AntlrSyntaxGenerator.mxg"
+            #line (120,72)-(120,76) 24 "AntlrSyntaxGenerator.mxg"
             __cb.Write(Lang);
             #line hidden
-            #line (120,73)-(120,83) 25 "AntlrSyntaxGenerator.mxg"
+            #line (120,77)-(120,87) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("SyntaxKind");
             #line hidden
-            #line (120,83)-(120,84) 25 "AntlrSyntaxGenerator.mxg"
+            #line (120,87)-(120,88) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (120,84)-(120,89) 25 "AntlrSyntaxGenerator.mxg"
+            #line (120,88)-(120,93) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("kind)");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (121,13)-(121,14) 25 "AntlrSyntaxGenerator.mxg"
+            #line (121,17)-(121,18) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("{");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("                ");
-            #line (122,17)-(122,19) 25 "AntlrSyntaxGenerator.mxg"
+            #line (122,21)-(122,23) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("if");
             #line hidden
-            #line (122,19)-(122,20) 25 "AntlrSyntaxGenerator.mxg"
+            #line (122,23)-(122,24) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (122,20)-(122,33) 25 "AntlrSyntaxGenerator.mxg"
+            #line (122,24)-(122,37) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("(node?.Symbol");
             #line hidden
-            #line (122,33)-(122,34) 25 "AntlrSyntaxGenerator.mxg"
+            #line (122,37)-(122,38) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (122,34)-(122,36) 25 "AntlrSyntaxGenerator.mxg"
+            #line (122,38)-(122,40) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("==");
             #line hidden
-            #line (122,36)-(122,37) 25 "AntlrSyntaxGenerator.mxg"
+            #line (122,40)-(122,41) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (122,37)-(122,42) 25 "AntlrSyntaxGenerator.mxg"
+            #line (122,41)-(122,46) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("null)");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("\t\t\t\t");
-            #line (123,5)-(123,6) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Push("                ");
+            #line (123,21)-(123,22) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("{");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("\t\t\t\t\t");
-            #line (124,6)-(124,8) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Push("                    ");
+            #line (124,25)-(124,27) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("if");
             #line hidden
-            #line (124,8)-(124,9) 25 "AntlrSyntaxGenerator.mxg"
+            #line (124,27)-(124,28) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (124,9)-(124,14) 25 "AntlrSyntaxGenerator.mxg"
+            #line (124,28)-(124,33) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("(kind");
             #line hidden
-            #line (124,14)-(124,15) 25 "AntlrSyntaxGenerator.mxg"
+            #line (124,33)-(124,34) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (124,15)-(124,17) 25 "AntlrSyntaxGenerator.mxg"
+            #line (124,34)-(124,36) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("!=");
             #line hidden
-            #line (124,17)-(124,18) 25 "AntlrSyntaxGenerator.mxg"
+            #line (124,36)-(124,37) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (124,19)-(124,23) 24 "AntlrSyntaxGenerator.mxg"
+            #line (124,38)-(124,42) 24 "AntlrSyntaxGenerator.mxg"
             __cb.Write(Lang);
             #line hidden
-            #line (124,24)-(124,40) 25 "AntlrSyntaxGenerator.mxg"
+            #line (124,43)-(124,59) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("SyntaxKind.None)");
             #line hidden
-            #line (124,40)-(124,41) 25 "AntlrSyntaxGenerator.mxg"
+            #line (124,59)-(124,60) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (124,41)-(124,47) 25 "AntlrSyntaxGenerator.mxg"
+            #line (124,60)-(124,66) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("return");
             #line hidden
-            #line (124,47)-(124,48) 25 "AntlrSyntaxGenerator.mxg"
+            #line (124,66)-(124,67) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (124,48)-(124,76) 25 "AntlrSyntaxGenerator.mxg"
+            #line (124,67)-(124,95) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("_factory.MissingToken(kind);");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("\t\t\t\t\t");
-            #line (125,6)-(125,10) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Push("                    ");
+            #line (125,25)-(125,29) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("else");
             #line hidden
-            #line (125,10)-(125,11) 25 "AntlrSyntaxGenerator.mxg"
+            #line (125,29)-(125,30) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (125,11)-(125,17) 25 "AntlrSyntaxGenerator.mxg"
+            #line (125,30)-(125,36) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("return");
             #line hidden
-            #line (125,17)-(125,18) 25 "AntlrSyntaxGenerator.mxg"
+            #line (125,36)-(125,37) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (125,18)-(125,23) 25 "AntlrSyntaxGenerator.mxg"
+            #line (125,37)-(125,42) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("null;");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("\t\t\t\t");
-            #line (126,5)-(126,6) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Push("                ");
+            #line (126,21)-(126,22) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("}");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("                ");
-            #line (127,17)-(127,20) 25 "AntlrSyntaxGenerator.mxg"
+            #line (127,21)-(127,24) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("var");
             #line hidden
-            #line (127,20)-(127,21) 25 "AntlrSyntaxGenerator.mxg"
+            #line (127,24)-(127,25) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (127,21)-(127,26) 25 "AntlrSyntaxGenerator.mxg"
+            #line (127,25)-(127,30) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("green");
             #line hidden
-            #line (127,26)-(127,27) 25 "AntlrSyntaxGenerator.mxg"
+            #line (127,30)-(127,31) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (127,27)-(127,28) 25 "AntlrSyntaxGenerator.mxg"
+            #line (127,31)-(127,32) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("=");
             #line hidden
-            #line (127,28)-(127,29) 25 "AntlrSyntaxGenerator.mxg"
+            #line (127,32)-(127,33) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (127,29)-(127,72) 25 "AntlrSyntaxGenerator.mxg"
+            #line (127,33)-(127,76) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("_tokenStream.ConsumeGreenToken(node.Symbol,");
             #line hidden
-            #line (127,72)-(127,73) 25 "AntlrSyntaxGenerator.mxg"
+            #line (127,76)-(127,77) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (127,73)-(127,82) 25 "AntlrSyntaxGenerator.mxg"
+            #line (127,77)-(127,86) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("_parser);");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("\t\t\t\t");
-            #line (128,5)-(128,22) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Push("                ");
+            #line (128,21)-(128,38) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("Debug.Assert(kind");
             #line hidden
-            #line (128,22)-(128,23) 25 "AntlrSyntaxGenerator.mxg"
+            #line (128,38)-(128,39) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (128,23)-(128,25) 25 "AntlrSyntaxGenerator.mxg"
+            #line (128,39)-(128,41) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("==");
             #line hidden
-            #line (128,25)-(128,26) 25 "AntlrSyntaxGenerator.mxg"
+            #line (128,41)-(128,42) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (128,27)-(128,31) 24 "AntlrSyntaxGenerator.mxg"
+            #line (128,43)-(128,47) 24 "AntlrSyntaxGenerator.mxg"
             __cb.Write(Lang);
             #line hidden
-            #line (128,32)-(128,47) 25 "AntlrSyntaxGenerator.mxg"
+            #line (128,48)-(128,63) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("SyntaxKind.None");
             #line hidden
-            #line (128,47)-(128,48) 25 "AntlrSyntaxGenerator.mxg"
+            #line (128,63)-(128,64) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (128,48)-(128,50) 25 "AntlrSyntaxGenerator.mxg"
+            #line (128,64)-(128,66) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("||");
             #line hidden
-            #line (128,50)-(128,51) 25 "AntlrSyntaxGenerator.mxg"
+            #line (128,66)-(128,67) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (128,51)-(128,64) 25 "AntlrSyntaxGenerator.mxg"
+            #line (128,67)-(128,80) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("green.RawKind");
             #line hidden
-            #line (128,64)-(128,65) 25 "AntlrSyntaxGenerator.mxg"
+            #line (128,80)-(128,81) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (128,65)-(128,67) 25 "AntlrSyntaxGenerator.mxg"
+            #line (128,81)-(128,83) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("==");
             #line hidden
-            #line (128,67)-(128,68) 25 "AntlrSyntaxGenerator.mxg"
+            #line (128,83)-(128,84) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (128,68)-(128,79) 25 "AntlrSyntaxGenerator.mxg"
+            #line (128,84)-(128,95) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("(int)kind);");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("\t\t\t\t");
-            #line (129,5)-(129,11) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Push("                ");
+            #line (129,21)-(129,27) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("return");
             #line hidden
-            #line (129,11)-(129,12) 25 "AntlrSyntaxGenerator.mxg"
+            #line (129,27)-(129,28) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (129,12)-(129,18) 25 "AntlrSyntaxGenerator.mxg"
+            #line (129,28)-(129,34) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("green;");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("\t\t\t");
-            #line (130,4)-(130,5) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Push("            ");
+            #line (130,17)-(130,18) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("}");
             #line hidden
             __cb.WriteLine();
@@ -2064,602 +2064,142 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (132,13)-(132,19) 25 "AntlrSyntaxGenerator.mxg"
+            #line (132,17)-(132,23) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("public");
             #line hidden
-            #line (132,19)-(132,20) 25 "AntlrSyntaxGenerator.mxg"
+            #line (132,23)-(132,24) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (132,20)-(132,28) 25 "AntlrSyntaxGenerator.mxg"
+            #line (132,24)-(132,32) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("override");
             #line hidden
-            #line (132,28)-(132,29) 25 "AntlrSyntaxGenerator.mxg"
+            #line (132,32)-(132,33) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (132,29)-(132,39) 25 "AntlrSyntaxGenerator.mxg"
+            #line (132,33)-(132,43) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("GreenNode?");
             #line hidden
-            #line (132,39)-(132,40) 25 "AntlrSyntaxGenerator.mxg"
+            #line (132,43)-(132,44) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (132,40)-(132,68) 25 "AntlrSyntaxGenerator.mxg"
+            #line (132,44)-(132,72) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("VisitTerminal(ITerminalNode?");
             #line hidden
-            #line (132,68)-(132,69) 25 "AntlrSyntaxGenerator.mxg"
+            #line (132,72)-(132,73) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (132,69)-(132,74) 25 "AntlrSyntaxGenerator.mxg"
+            #line (132,73)-(132,78) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("node)");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (133,13)-(133,14) 25 "AntlrSyntaxGenerator.mxg"
+            #line (133,17)-(133,18) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("{");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("                ");
-            #line (134,17)-(134,23) 25 "AntlrSyntaxGenerator.mxg"
+            #line (134,21)-(134,27) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("return");
             #line hidden
-            #line (134,23)-(134,24) 25 "AntlrSyntaxGenerator.mxg"
+            #line (134,27)-(134,28) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (134,24)-(134,43) 25 "AntlrSyntaxGenerator.mxg"
+            #line (134,28)-(134,47) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("VisitTerminal(node,");
             #line hidden
-            #line (134,43)-(134,44) 25 "AntlrSyntaxGenerator.mxg"
+            #line (134,47)-(134,48) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (134,45)-(134,49) 24 "AntlrSyntaxGenerator.mxg"
+            #line (134,49)-(134,53) 24 "AntlrSyntaxGenerator.mxg"
             __cb.Write(Lang);
             #line hidden
-            #line (134,50)-(134,67) 25 "AntlrSyntaxGenerator.mxg"
+            #line (134,54)-(134,71) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("SyntaxKind.None);");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("            ");
-            #line (135,13)-(135,14) 25 "AntlrSyntaxGenerator.mxg"
+            #line (135,17)-(135,18) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("}");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
-            __cb.WriteLine();
-            __cb.Pop();
-            var __first25 = true;
-            #line (137,14)-(137,41) 13 "AntlrSyntaxGenerator.mxg"
+            var __first26 = true;
+            #line (136,18)-(136,45) 13 "AntlrSyntaxGenerator.mxg"
             foreach (var rule in Rules)
             #line hidden
             
             {
-                if (__first25)
+                if (__first26)
                 {
-                    __first25 = false;
+                    __first26 = false;
                 }
-                var __first26 = true;
-                #line (138,18)-(138,56) 17 "AntlrSyntaxGenerator.mxg"
+                var __first27 = true;
+                #line (137,22)-(137,60) 17 "AntlrSyntaxGenerator.mxg"
                 foreach (var alt in rule.Alternatives)
                 #line hidden
                 
                 {
-                    if (__first26)
+                    if (__first27)
                     {
-                        __first26 = false;
+                        __first27 = false;
                     }
-                    __cb.Push("");
-                    __cb.WriteLine();
-                    __cb.Pop();
-                    __cb.Push("");
-                    #line (140,13)-(140,19) 33 "AntlrSyntaxGenerator.mxg"
-                    __cb.Write("public");
-                    #line hidden
-                    #line (140,19)-(140,20) 33 "AntlrSyntaxGenerator.mxg"
-                    __cb.Write(" ");
-                    #line hidden
-                    #line (140,20)-(140,28) 33 "AntlrSyntaxGenerator.mxg"
-                    __cb.Write("override");
-                    #line hidden
-                    #line (140,28)-(140,29) 33 "AntlrSyntaxGenerator.mxg"
-                    __cb.Write(" ");
-                    #line hidden
-                    #line (140,29)-(140,39) 33 "AntlrSyntaxGenerator.mxg"
-                    __cb.Write("GreenNode?");
-                    #line hidden
-                    #line (140,39)-(140,40) 33 "AntlrSyntaxGenerator.mxg"
-                    __cb.Write(" ");
-                    #line hidden
-                    #line (140,40)-(140,45) 33 "AntlrSyntaxGenerator.mxg"
-                    __cb.Write("Visit");
-                    #line hidden
-                    #line (140,46)-(140,74) 32 "AntlrSyntaxGenerator.mxg"
-                    __cb.Write(alt.AntlrName.ToPascalCase());
-                    #line hidden
-                    #line (140,75)-(140,76) 33 "AntlrSyntaxGenerator.mxg"
-                    __cb.Write("(");
-                    #line hidden
-                    #line (140,77)-(140,81) 32 "AntlrSyntaxGenerator.mxg"
-                    __cb.Write(Lang);
-                    #line hidden
-                    #line (140,82)-(140,89) 33 "AntlrSyntaxGenerator.mxg"
-                    __cb.Write("Parser.");
-                    #line hidden
-                    #line (140,90)-(140,118) 32 "AntlrSyntaxGenerator.mxg"
-                    __cb.Write(alt.AntlrName.ToPascalCase());
-                    #line hidden
-                    #line (140,119)-(140,127) 33 "AntlrSyntaxGenerator.mxg"
-                    __cb.Write("Context?");
-                    #line hidden
-                    #line (140,127)-(140,128) 33 "AntlrSyntaxGenerator.mxg"
-                    __cb.Write(" ");
-                    #line hidden
-                    #line (140,128)-(140,136) 33 "AntlrSyntaxGenerator.mxg"
-                    __cb.Write("context)");
-                    #line hidden
-                    __cb.WriteLine();
-                    __cb.Pop();
-                    __cb.Push("");
-                    #line (141,13)-(141,14) 33 "AntlrSyntaxGenerator.mxg"
-                    __cb.Write("{");
-                    #line hidden
-                    __cb.WriteLine();
-                    __cb.Pop();
-                    __cb.Push("   \t");
-                    #line (142,17)-(142,19) 33 "AntlrSyntaxGenerator.mxg"
-                    __cb.Write("if");
-                    #line hidden
-                    #line (142,19)-(142,20) 33 "AntlrSyntaxGenerator.mxg"
-                    __cb.Write(" ");
-                    #line hidden
-                    #line (142,20)-(142,28) 33 "AntlrSyntaxGenerator.mxg"
-                    __cb.Write("(context");
-                    #line hidden
-                    #line (142,28)-(142,29) 33 "AntlrSyntaxGenerator.mxg"
-                    __cb.Write(" ");
-                    #line hidden
-                    #line (142,29)-(142,31) 33 "AntlrSyntaxGenerator.mxg"
-                    __cb.Write("==");
-                    #line hidden
-                    #line (142,31)-(142,32) 33 "AntlrSyntaxGenerator.mxg"
-                    __cb.Write(" ");
-                    #line hidden
-                    #line (142,32)-(142,37) 33 "AntlrSyntaxGenerator.mxg"
-                    __cb.Write("null)");
-                    #line hidden
-                    #line (142,37)-(142,38) 33 "AntlrSyntaxGenerator.mxg"
-                    __cb.Write(" ");
-                    #line hidden
-                    #line (142,38)-(142,44) 33 "AntlrSyntaxGenerator.mxg"
-                    __cb.Write("return");
-                    #line hidden
-                    #line (142,44)-(142,45) 33 "AntlrSyntaxGenerator.mxg"
-                    __cb.Write(" ");
-                    #line hidden
-                    #line (142,46)-(142,59) 32 "AntlrSyntaxGenerator.mxg"
-                    __cb.Write(alt.GreenName);
-                    #line hidden
-                    #line (142,60)-(142,71) 33 "AntlrSyntaxGenerator.mxg"
-                    __cb.Write(".__Missing;");
-                    #line hidden
-                    __cb.WriteLine();
-                    __cb.Pop();
-                    var __first27 = true;
-                    #line (143,18)-(143,52) 21 "AntlrSyntaxGenerator.mxg"
-                    foreach (var elem in alt.Elements)
-                    #line hidden
-                    
-                    {
-                        if (__first27)
-                        {
-                            __first27 = false;
-                        }
-                        var __first28 = true;
-                        #line (144,22)-(144,57) 25 "AntlrSyntaxGenerator.mxg"
-                        if (elem.Value is SeparatedList sl)
-                        #line hidden
-                        
-                        {
-                            if (__first28)
-                            {
-                                __first28 = false;
-                            }
-                            __cb.Push("    ");
-                            #line (145,18)-(145,54) 40 "AntlrSyntaxGenerator.mxg"
-                            __cb.Write(GenerateVisitSeparatedList(elem, sl));
-                            #line hidden
-                            __cb.WriteLine();
-                            __cb.Pop();
-                        }
-                        #line (146,22)-(146,64) 25 "AntlrSyntaxGenerator.mxg"
-                        else if (elem.Value.Multiplicity.IsList())
-                        #line hidden
-                        
-                        {
-                            if (__first28)
-                            {
-                                __first28 = false;
-                            }
-                            __cb.Push("    ");
-                            #line (147,18)-(147,41) 40 "AntlrSyntaxGenerator.mxg"
-                            __cb.Write(GenerateVisitList(elem));
-                            #line hidden
-                            __cb.WriteLine();
-                            __cb.Pop();
-                        }
-                        #line (148,22)-(148,65) 25 "AntlrSyntaxGenerator.mxg"
-                        else if (elem.Value is TokenAlts tokenAlts)
-                        #line hidden
-                        
-                        {
-                            if (__first28)
-                            {
-                                __first28 = false;
-                            }
-                            __cb.Push("    ");
-                            #line (149,18)-(149,57) 40 "AntlrSyntaxGenerator.mxg"
-                            __cb.Write(GenerateVisitTokenAlts(elem, tokenAlts));
-                            #line hidden
-                            __cb.WriteLine();
-                            __cb.Pop();
-                        }
-                        #line (150,22)-(150,49) 25 "AntlrSyntaxGenerator.mxg"
-                        else if (elem.Value is Eof)
-                        #line hidden
-                        
-                        {
-                            if (__first28)
-                            {
-                                __first28 = false;
-                            }
-                            __cb.Push("    ");
-                            #line (151,17)-(151,20) 41 "AntlrSyntaxGenerator.mxg"
-                            __cb.Write("var");
-                            #line hidden
-                            #line (151,20)-(151,21) 41 "AntlrSyntaxGenerator.mxg"
-                            __cb.Write(" ");
-                            #line hidden
-                            #line (151,22)-(151,40) 40 "AntlrSyntaxGenerator.mxg"
-                            __cb.Write(elem.ParameterName);
-                            #line hidden
-                            #line (151,41)-(151,42) 41 "AntlrSyntaxGenerator.mxg"
-                            __cb.Write(" ");
-                            #line hidden
-                            #line (151,42)-(151,43) 41 "AntlrSyntaxGenerator.mxg"
-                            __cb.Write("=");
-                            #line hidden
-                            #line (151,43)-(151,44) 41 "AntlrSyntaxGenerator.mxg"
-                            __cb.Write(" ");
-                            #line hidden
-                            #line (151,44)-(151,93) 41 "AntlrSyntaxGenerator.mxg"
-                            __cb.Write("(InternalSyntaxToken?)this.VisitTerminal(context.");
-                            #line hidden
-                            #line (151,94)-(151,108) 40 "AntlrSyntaxGenerator.mxg"
-                            __cb.Write(elem.AntlrName);
-                            #line hidden
-                            #line (151,109)-(151,110) 41 "AntlrSyntaxGenerator.mxg"
-                            __cb.Write(",");
-                            #line hidden
-                            #line (151,110)-(151,111) 41 "AntlrSyntaxGenerator.mxg"
-                            __cb.Write(" ");
-                            #line hidden
-                            #line (151,112)-(151,116) 40 "AntlrSyntaxGenerator.mxg"
-                            __cb.Write(Lang);
-                            #line hidden
-                            #line (151,117)-(151,133) 41 "AntlrSyntaxGenerator.mxg"
-                            __cb.Write("SyntaxKind.Eof);");
-                            #line hidden
-                            __cb.WriteLine();
-                            __cb.Pop();
-                        }
-                        #line (152,22)-(152,56) 25 "AntlrSyntaxGenerator.mxg"
-                        else if (elem.Value is RuleRef rr)
-                        #line hidden
-                        
-                        {
-                            if (__first28)
-                            {
-                                __first28 = false;
-                            }
-                            var __first29 = true;
-                            #line (153,26)-(153,51) 29 "AntlrSyntaxGenerator.mxg"
-                            if (rr.Token is not null)
-                            #line hidden
-                            
-                            {
-                                if (__first29)
-                                {
-                                    __first29 = false;
-                                }
-                                __cb.Push("    ");
-                                #line (154,17)-(154,20) 45 "AntlrSyntaxGenerator.mxg"
-                                __cb.Write("var");
-                                #line hidden
-                                #line (154,20)-(154,21) 45 "AntlrSyntaxGenerator.mxg"
-                                __cb.Write(" ");
-                                #line hidden
-                                #line (154,22)-(154,40) 44 "AntlrSyntaxGenerator.mxg"
-                                __cb.Write(elem.ParameterName);
-                                #line hidden
-                                #line (154,41)-(154,42) 45 "AntlrSyntaxGenerator.mxg"
-                                __cb.Write(" ");
-                                #line hidden
-                                #line (154,42)-(154,43) 45 "AntlrSyntaxGenerator.mxg"
-                                __cb.Write("=");
-                                #line hidden
-                                #line (154,43)-(154,44) 45 "AntlrSyntaxGenerator.mxg"
-                                __cb.Write(" ");
-                                #line hidden
-                                #line (154,44)-(154,93) 45 "AntlrSyntaxGenerator.mxg"
-                                __cb.Write("(InternalSyntaxToken?)this.VisitTerminal(context.");
-                                #line hidden
-                                #line (154,94)-(154,108) 44 "AntlrSyntaxGenerator.mxg"
-                                __cb.Write(elem.AntlrName);
-                                #line hidden
-                                var __first30 = true;
-                                #line (154,110)-(154,152) 33 "AntlrSyntaxGenerator.mxg"
-                                if (!elem.Value.Multiplicity.IsOptional())
-                                #line hidden
-                                
-                                {
-                                    if (__first30)
-                                    {
-                                        __first30 = false;
-                                    }
-                                    #line (154,153)-(154,154) 49 "AntlrSyntaxGenerator.mxg"
-                                    __cb.Write(",");
-                                    #line hidden
-                                    #line (154,154)-(154,155) 49 "AntlrSyntaxGenerator.mxg"
-                                    __cb.Write(" ");
-                                    #line hidden
-                                    #line (154,156)-(154,160) 48 "AntlrSyntaxGenerator.mxg"
-                                    __cb.Write(Lang);
-                                    #line hidden
-                                    #line (154,161)-(154,172) 49 "AntlrSyntaxGenerator.mxg"
-                                    __cb.Write("SyntaxKind.");
-                                    #line hidden
-                                    #line (154,173)-(154,192) 48 "AntlrSyntaxGenerator.mxg"
-                                    __cb.Write(rr.Token.CSharpName);
-                                    #line hidden
-                                }
-                                #line (154,201)-(154,203) 45 "AntlrSyntaxGenerator.mxg"
-                                __cb.Write(");");
-                                #line hidden
-                                __cb.WriteLine();
-                                __cb.Pop();
-                            }
-                            #line (155,26)-(155,54) 29 "AntlrSyntaxGenerator.mxg"
-                            else if(rr.Rule is not null)
-                            #line hidden
-                            
-                            {
-                                if (__first29)
-                                {
-                                    __first29 = false;
-                                }
-                                __cb.Push("    ");
-                                #line (156,18)-(156,30) 44 "AntlrSyntaxGenerator.mxg"
-                                __cb.Write(rr.GreenType);
-                                #line hidden
-                                #line (156,31)-(156,32) 45 "AntlrSyntaxGenerator.mxg"
-                                __cb.Write("?");
-                                #line hidden
-                                #line (156,32)-(156,33) 45 "AntlrSyntaxGenerator.mxg"
-                                __cb.Write(" ");
-                                #line hidden
-                                #line (156,34)-(156,52) 44 "AntlrSyntaxGenerator.mxg"
-                                __cb.Write(elem.ParameterName);
-                                #line hidden
-                                #line (156,53)-(156,54) 45 "AntlrSyntaxGenerator.mxg"
-                                __cb.Write(" ");
-                                #line hidden
-                                #line (156,54)-(156,55) 45 "AntlrSyntaxGenerator.mxg"
-                                __cb.Write("=");
-                                #line hidden
-                                #line (156,55)-(156,56) 45 "AntlrSyntaxGenerator.mxg"
-                                __cb.Write(" ");
-                                #line hidden
-                                #line (156,56)-(156,61) 45 "AntlrSyntaxGenerator.mxg"
-                                __cb.Write("null;");
-                                #line hidden
-                                __cb.WriteLine();
-                                __cb.Pop();
-                                __cb.Push("    ");
-                                #line (157,17)-(157,19) 45 "AntlrSyntaxGenerator.mxg"
-                                __cb.Write("if");
-                                #line hidden
-                                #line (157,19)-(157,20) 45 "AntlrSyntaxGenerator.mxg"
-                                __cb.Write(" ");
-                                #line hidden
-                                #line (157,20)-(157,29) 45 "AntlrSyntaxGenerator.mxg"
-                                __cb.Write("(context.");
-                                #line hidden
-                                #line (157,30)-(157,44) 44 "AntlrSyntaxGenerator.mxg"
-                                __cb.Write(elem.AntlrName);
-                                #line hidden
-                                #line (157,45)-(157,46) 45 "AntlrSyntaxGenerator.mxg"
-                                __cb.Write(" ");
-                                #line hidden
-                                #line (157,46)-(157,48) 45 "AntlrSyntaxGenerator.mxg"
-                                __cb.Write("is");
-                                #line hidden
-                                #line (157,48)-(157,49) 45 "AntlrSyntaxGenerator.mxg"
-                                __cb.Write(" ");
-                                #line hidden
-                                #line (157,49)-(157,52) 45 "AntlrSyntaxGenerator.mxg"
-                                __cb.Write("not");
-                                #line hidden
-                                #line (157,52)-(157,53) 45 "AntlrSyntaxGenerator.mxg"
-                                __cb.Write(" ");
-                                #line hidden
-                                #line (157,53)-(157,58) 45 "AntlrSyntaxGenerator.mxg"
-                                __cb.Write("null)");
-                                #line hidden
-                                #line (157,58)-(157,59) 45 "AntlrSyntaxGenerator.mxg"
-                                __cb.Write(" ");
-                                #line hidden
-                                #line (157,60)-(157,78) 44 "AntlrSyntaxGenerator.mxg"
-                                __cb.Write(elem.ParameterName);
-                                #line hidden
-                                #line (157,79)-(157,80) 45 "AntlrSyntaxGenerator.mxg"
-                                __cb.Write(" ");
-                                #line hidden
-                                #line (157,80)-(157,81) 45 "AntlrSyntaxGenerator.mxg"
-                                __cb.Write("=");
-                                #line hidden
-                                #line (157,81)-(157,82) 45 "AntlrSyntaxGenerator.mxg"
-                                __cb.Write(" ");
-                                #line hidden
-                                #line (157,82)-(157,83) 45 "AntlrSyntaxGenerator.mxg"
-                                __cb.Write("(");
-                                #line hidden
-                                #line (157,84)-(157,96) 44 "AntlrSyntaxGenerator.mxg"
-                                __cb.Write(rr.GreenType);
-                                #line hidden
-                                #line (157,97)-(157,118) 45 "AntlrSyntaxGenerator.mxg"
-                                __cb.Write("?)this.Visit(context.");
-                                #line hidden
-                                #line (157,119)-(157,133) 44 "AntlrSyntaxGenerator.mxg"
-                                __cb.Write(elem.AntlrName);
-                                #line hidden
-                                #line (157,134)-(157,135) 45 "AntlrSyntaxGenerator.mxg"
-                                __cb.Write(")");
-                                #line hidden
-                                var __first31 = true;
-                                #line (157,136)-(157,178) 33 "AntlrSyntaxGenerator.mxg"
-                                if (!elem.Value.Multiplicity.IsOptional())
-                                #line hidden
-                                
-                                {
-                                    if (__first31)
-                                    {
-                                        __first31 = false;
-                                    }
-                                    #line (157,179)-(157,180) 49 "AntlrSyntaxGenerator.mxg"
-                                    __cb.Write(" ");
-                                    #line hidden
-                                    #line (157,180)-(157,182) 49 "AntlrSyntaxGenerator.mxg"
-                                    __cb.Write("??");
-                                    #line hidden
-                                    #line (157,182)-(157,183) 49 "AntlrSyntaxGenerator.mxg"
-                                    __cb.Write(" ");
-                                    #line hidden
-                                    #line (157,184)-(157,196) 48 "AntlrSyntaxGenerator.mxg"
-                                    __cb.Write(rr.GreenType);
-                                    #line hidden
-                                    #line (157,197)-(157,207) 49 "AntlrSyntaxGenerator.mxg"
-                                    __cb.Write(".__Missing");
-                                    #line hidden
-                                }
-                                #line (157,215)-(157,216) 45 "AntlrSyntaxGenerator.mxg"
-                                __cb.Write(";");
-                                #line hidden
-                                __cb.WriteLine();
-                                __cb.Pop();
-                                var __first32 = true;
-                                #line (158,30)-(158,72) 33 "AntlrSyntaxGenerator.mxg"
-                                if (!elem.Value.Multiplicity.IsOptional())
-                                #line hidden
-                                
-                                {
-                                    if (__first32)
-                                    {
-                                        __first32 = false;
-                                    }
-                                    __cb.Push("    ");
-                                    #line (159,17)-(159,21) 49 "AntlrSyntaxGenerator.mxg"
-                                    __cb.Write("else");
-                                    #line hidden
-                                    #line (159,21)-(159,22) 49 "AntlrSyntaxGenerator.mxg"
-                                    __cb.Write(" ");
-                                    #line hidden
-                                    #line (159,23)-(159,41) 48 "AntlrSyntaxGenerator.mxg"
-                                    __cb.Write(elem.ParameterName);
-                                    #line hidden
-                                    #line (159,42)-(159,43) 49 "AntlrSyntaxGenerator.mxg"
-                                    __cb.Write(" ");
-                                    #line hidden
-                                    #line (159,43)-(159,44) 49 "AntlrSyntaxGenerator.mxg"
-                                    __cb.Write("=");
-                                    #line hidden
-                                    #line (159,44)-(159,45) 49 "AntlrSyntaxGenerator.mxg"
-                                    __cb.Write(" ");
-                                    #line hidden
-                                    #line (159,46)-(159,58) 48 "AntlrSyntaxGenerator.mxg"
-                                    __cb.Write(rr.GreenType);
-                                    #line hidden
-                                    #line (159,59)-(159,70) 49 "AntlrSyntaxGenerator.mxg"
-                                    __cb.Write(".__Missing;");
-                                    #line hidden
-                                    __cb.WriteLine();
-                                    __cb.Pop();
-                                }
-                                if (!__first32) __cb.AppendLine();
-                            }
-                            #line (161,26)-(161,30) 29 "AntlrSyntaxGenerator.mxg"
-                            else
-                            #line hidden
-                            
-                            {
-                                if (__first29)
-                                {
-                                    __first29 = false;
-                                }
-                            }
-                            if (!__first29) __cb.AppendLine();
-                        }
-                        if (!__first28) __cb.AppendLine();
-                    }
-                    if (!__first27) __cb.AppendLine();
-                    __cb.Push("\t");
-                    #line (165,14)-(165,20) 33 "AntlrSyntaxGenerator.mxg"
-                    __cb.Write("return");
-                    #line hidden
-                    #line (165,20)-(165,21) 33 "AntlrSyntaxGenerator.mxg"
-                    __cb.Write(" ");
-                    #line hidden
-                    #line (165,21)-(165,30) 33 "AntlrSyntaxGenerator.mxg"
-                    __cb.Write("_factory.");
-                    #line hidden
-                    #line (165,31)-(165,45) 32 "AntlrSyntaxGenerator.mxg"
-                    __cb.Write(alt.CSharpName);
-                    #line hidden
-                    #line (165,46)-(165,47) 33 "AntlrSyntaxGenerator.mxg"
-                    __cb.Write("(");
-                    #line hidden
-                    #line (165,48)-(165,72) 32 "AntlrSyntaxGenerator.mxg"
-                    __cb.Write(alt.GreenUpdateArguments);
-                    #line hidden
-                    #line (165,73)-(165,75) 33 "AntlrSyntaxGenerator.mxg"
-                    __cb.Write(");");
-                    #line hidden
-                    __cb.WriteLine();
-                    __cb.Pop();
-                    __cb.Push("");
-                    #line (166,13)-(166,14) 33 "AntlrSyntaxGenerator.mxg"
-                    __cb.Write("}");
+                    __cb.Push("            ");
+                    #line (138,26)-(138,47) 32 "AntlrSyntaxGenerator.mxg"
+                    __cb.Write(GenerateVisitAlt(alt));
                     #line hidden
                     __cb.WriteLine();
                     __cb.Pop();
                 }
-                if (!__first26) __cb.AppendLine();
+                if (!__first27) __cb.AppendLine();
             }
-            if (!__first25) __cb.AppendLine();
-            __cb.Push("");
-            #line (169,9)-(169,10) 25 "AntlrSyntaxGenerator.mxg"
+            if (!__first26) __cb.AppendLine();
+            var __first28 = true;
+            #line (141,18)-(141,47) 13 "AntlrSyntaxGenerator.mxg"
+            foreach (var block in Blocks)
+            #line hidden
+            
+            {
+                if (__first28)
+                {
+                    __first28 = false;
+                }
+                var __first29 = true;
+                #line (142,22)-(142,61) 17 "AntlrSyntaxGenerator.mxg"
+                foreach (var alt in block.Alternatives)
+                #line hidden
+                
+                {
+                    if (__first29)
+                    {
+                        __first29 = false;
+                    }
+                    __cb.Push("            ");
+                    #line (143,26)-(143,47) 32 "AntlrSyntaxGenerator.mxg"
+                    __cb.Write(GenerateVisitAlt(alt));
+                    #line hidden
+                    __cb.WriteLine();
+                    __cb.Pop();
+                }
+                if (!__first29) __cb.AppendLine();
+            }
+            if (!__first28) __cb.AppendLine();
+            __cb.Push("        ");
+            #line (146,13)-(146,14) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("}");
+            #line hidden
+            __cb.WriteLine();
+            __cb.Pop();
+            __cb.Push("    ");
+            #line (147,9)-(147,10) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("}");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("");
-            #line (170,5)-(170,6) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write("}");
-            #line hidden
-            __cb.WriteLine();
-            __cb.Pop();
-            __cb.Push("");
-            #line (171,1)-(171,2) 25 "AntlrSyntaxGenerator.mxg"
+            #line (148,5)-(148,6) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("}");
             #line hidden
             __cb.WriteLine();
@@ -2667,603 +2207,707 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
             return __cb.ToStringAndFree();
         }
         
-        #line (174,9)-(174,67) 22 "AntlrSyntaxGenerator.mxg"
+        #line (151,9)-(151,43) 22 "AntlrSyntaxGenerator.mxg"
+        public string GenerateVisitAlt(Alternative alt)
+        #line hidden
+        {
+            var __cb = global::MetaDslx.CodeGeneration.CodeBuilder.GetInstance();
+            __cb.Push("");
+            __cb.WriteLine();
+            __cb.Pop();
+            __cb.Push("");
+            #line (153,5)-(153,11) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("public");
+            #line hidden
+            #line (153,11)-(153,12) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (153,12)-(153,20) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("override");
+            #line hidden
+            #line (153,20)-(153,21) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (153,21)-(153,31) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("GreenNode?");
+            #line hidden
+            #line (153,31)-(153,32) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (153,32)-(153,37) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("Visit");
+            #line hidden
+            #line (153,38)-(153,66) 24 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(alt.AntlrName.ToPascalCase());
+            #line hidden
+            #line (153,67)-(153,68) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("(");
+            #line hidden
+            #line (153,69)-(153,73) 24 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(Lang);
+            #line hidden
+            #line (153,74)-(153,81) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("Parser.");
+            #line hidden
+            #line (153,82)-(153,110) 24 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(alt.AntlrName.ToPascalCase());
+            #line hidden
+            #line (153,111)-(153,119) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("Context?");
+            #line hidden
+            #line (153,119)-(153,120) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (153,120)-(153,128) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("context)");
+            #line hidden
+            __cb.WriteLine();
+            __cb.Pop();
+            __cb.Push("");
+            #line (154,5)-(154,6) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("{");
+            #line hidden
+            __cb.WriteLine();
+            __cb.Pop();
+            __cb.Push("    ");
+            #line (155,9)-(155,11) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("if");
+            #line hidden
+            #line (155,11)-(155,12) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (155,12)-(155,20) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("(context");
+            #line hidden
+            #line (155,20)-(155,21) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (155,21)-(155,23) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("==");
+            #line hidden
+            #line (155,23)-(155,24) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (155,24)-(155,29) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("null)");
+            #line hidden
+            #line (155,29)-(155,30) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (155,30)-(155,36) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("return");
+            #line hidden
+            #line (155,36)-(155,37) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (155,38)-(155,51) 24 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(alt.GreenName);
+            #line hidden
+            #line (155,52)-(155,63) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(".__Missing;");
+            #line hidden
+            __cb.WriteLine();
+            __cb.Pop();
+            var __first30 = true;
+            #line (156,10)-(156,44) 13 "AntlrSyntaxGenerator.mxg"
+            foreach (var elem in alt.Elements)
+            #line hidden
+            
+            {
+                if (__first30)
+                {
+                    __first30 = false;
+                }
+                var __first31 = true;
+                #line (157,14)-(157,49) 17 "AntlrSyntaxGenerator.mxg"
+                if (elem.Value is SeparatedList sl)
+                #line hidden
+                
+                {
+                    if (__first31)
+                    {
+                        __first31 = false;
+                    }
+                    __cb.Push("    ");
+                    #line (158,18)-(158,54) 32 "AntlrSyntaxGenerator.mxg"
+                    __cb.Write(GenerateVisitSeparatedList(elem, sl));
+                    #line hidden
+                    __cb.WriteLine();
+                    __cb.Pop();
+                }
+                #line (159,14)-(159,56) 17 "AntlrSyntaxGenerator.mxg"
+                else if (elem.Value.Multiplicity.IsList())
+                #line hidden
+                
+                {
+                    if (__first31)
+                    {
+                        __first31 = false;
+                    }
+                    __cb.Push("    ");
+                    #line (160,18)-(160,41) 32 "AntlrSyntaxGenerator.mxg"
+                    __cb.Write(GenerateVisitList(elem));
+                    #line hidden
+                    __cb.WriteLine();
+                    __cb.Pop();
+                }
+                #line (161,14)-(161,57) 17 "AntlrSyntaxGenerator.mxg"
+                else if (elem.Value is TokenAlts tokenAlts)
+                #line hidden
+                
+                {
+                    if (__first31)
+                    {
+                        __first31 = false;
+                    }
+                    __cb.Push("    ");
+                    #line (162,18)-(162,57) 32 "AntlrSyntaxGenerator.mxg"
+                    __cb.Write(GenerateVisitTokenAlts(elem, tokenAlts));
+                    #line hidden
+                    __cb.WriteLine();
+                    __cb.Pop();
+                }
+                #line (163,14)-(163,41) 17 "AntlrSyntaxGenerator.mxg"
+                else if (elem.Value is Eof)
+                #line hidden
+                
+                {
+                    if (__first31)
+                    {
+                        __first31 = false;
+                    }
+                    __cb.Push("    ");
+                    #line (164,17)-(164,20) 33 "AntlrSyntaxGenerator.mxg"
+                    __cb.Write("var");
+                    #line hidden
+                    #line (164,20)-(164,21) 33 "AntlrSyntaxGenerator.mxg"
+                    __cb.Write(" ");
+                    #line hidden
+                    #line (164,22)-(164,40) 32 "AntlrSyntaxGenerator.mxg"
+                    __cb.Write(elem.ParameterName);
+                    #line hidden
+                    #line (164,41)-(164,42) 33 "AntlrSyntaxGenerator.mxg"
+                    __cb.Write(" ");
+                    #line hidden
+                    #line (164,42)-(164,43) 33 "AntlrSyntaxGenerator.mxg"
+                    __cb.Write("=");
+                    #line hidden
+                    #line (164,43)-(164,44) 33 "AntlrSyntaxGenerator.mxg"
+                    __cb.Write(" ");
+                    #line hidden
+                    #line (164,44)-(164,93) 33 "AntlrSyntaxGenerator.mxg"
+                    __cb.Write("(InternalSyntaxToken?)this.VisitTerminal(context.");
+                    #line hidden
+                    #line (164,94)-(164,108) 32 "AntlrSyntaxGenerator.mxg"
+                    __cb.Write(elem.AntlrName);
+                    #line hidden
+                    #line (164,109)-(164,110) 33 "AntlrSyntaxGenerator.mxg"
+                    __cb.Write(",");
+                    #line hidden
+                    #line (164,110)-(164,111) 33 "AntlrSyntaxGenerator.mxg"
+                    __cb.Write(" ");
+                    #line hidden
+                    #line (164,112)-(164,116) 32 "AntlrSyntaxGenerator.mxg"
+                    __cb.Write(Lang);
+                    #line hidden
+                    #line (164,117)-(164,133) 33 "AntlrSyntaxGenerator.mxg"
+                    __cb.Write("SyntaxKind.Eof);");
+                    #line hidden
+                    __cb.WriteLine();
+                    __cb.Pop();
+                }
+                #line (165,14)-(165,47) 17 "AntlrSyntaxGenerator.mxg"
+                else if (elem.Value is Block blk)
+                #line hidden
+                
+                {
+                    if (__first31)
+                    {
+                        __first31 = false;
+                    }
+                    __cb.Push("    ");
+                    #line (166,18)-(166,31) 32 "AntlrSyntaxGenerator.mxg"
+                    __cb.Write(blk.GreenType);
+                    #line hidden
+                    #line (166,32)-(166,33) 33 "AntlrSyntaxGenerator.mxg"
+                    __cb.Write("?");
+                    #line hidden
+                    #line (166,33)-(166,34) 33 "AntlrSyntaxGenerator.mxg"
+                    __cb.Write(" ");
+                    #line hidden
+                    #line (166,35)-(166,53) 32 "AntlrSyntaxGenerator.mxg"
+                    __cb.Write(elem.ParameterName);
+                    #line hidden
+                    #line (166,54)-(166,55) 33 "AntlrSyntaxGenerator.mxg"
+                    __cb.Write(" ");
+                    #line hidden
+                    #line (166,55)-(166,56) 33 "AntlrSyntaxGenerator.mxg"
+                    __cb.Write("=");
+                    #line hidden
+                    #line (166,56)-(166,57) 33 "AntlrSyntaxGenerator.mxg"
+                    __cb.Write(" ");
+                    #line hidden
+                    #line (166,57)-(166,62) 33 "AntlrSyntaxGenerator.mxg"
+                    __cb.Write("null;");
+                    #line hidden
+                    __cb.WriteLine();
+                    __cb.Pop();
+                    __cb.Push("    ");
+                    #line (167,17)-(167,19) 33 "AntlrSyntaxGenerator.mxg"
+                    __cb.Write("if");
+                    #line hidden
+                    #line (167,19)-(167,20) 33 "AntlrSyntaxGenerator.mxg"
+                    __cb.Write(" ");
+                    #line hidden
+                    #line (167,20)-(167,29) 33 "AntlrSyntaxGenerator.mxg"
+                    __cb.Write("(context.");
+                    #line hidden
+                    #line (167,30)-(167,44) 32 "AntlrSyntaxGenerator.mxg"
+                    __cb.Write(elem.AntlrName);
+                    #line hidden
+                    #line (167,45)-(167,46) 33 "AntlrSyntaxGenerator.mxg"
+                    __cb.Write(" ");
+                    #line hidden
+                    #line (167,46)-(167,48) 33 "AntlrSyntaxGenerator.mxg"
+                    __cb.Write("is");
+                    #line hidden
+                    #line (167,48)-(167,49) 33 "AntlrSyntaxGenerator.mxg"
+                    __cb.Write(" ");
+                    #line hidden
+                    #line (167,49)-(167,52) 33 "AntlrSyntaxGenerator.mxg"
+                    __cb.Write("not");
+                    #line hidden
+                    #line (167,52)-(167,53) 33 "AntlrSyntaxGenerator.mxg"
+                    __cb.Write(" ");
+                    #line hidden
+                    #line (167,53)-(167,58) 33 "AntlrSyntaxGenerator.mxg"
+                    __cb.Write("null)");
+                    #line hidden
+                    #line (167,58)-(167,59) 33 "AntlrSyntaxGenerator.mxg"
+                    __cb.Write(" ");
+                    #line hidden
+                    #line (167,60)-(167,78) 32 "AntlrSyntaxGenerator.mxg"
+                    __cb.Write(elem.ParameterName);
+                    #line hidden
+                    #line (167,79)-(167,80) 33 "AntlrSyntaxGenerator.mxg"
+                    __cb.Write(" ");
+                    #line hidden
+                    #line (167,80)-(167,81) 33 "AntlrSyntaxGenerator.mxg"
+                    __cb.Write("=");
+                    #line hidden
+                    #line (167,81)-(167,82) 33 "AntlrSyntaxGenerator.mxg"
+                    __cb.Write(" ");
+                    #line hidden
+                    #line (167,82)-(167,83) 33 "AntlrSyntaxGenerator.mxg"
+                    __cb.Write("(");
+                    #line hidden
+                    #line (167,84)-(167,97) 32 "AntlrSyntaxGenerator.mxg"
+                    __cb.Write(blk.GreenType);
+                    #line hidden
+                    #line (167,98)-(167,119) 33 "AntlrSyntaxGenerator.mxg"
+                    __cb.Write("?)this.Visit(context.");
+                    #line hidden
+                    #line (167,120)-(167,134) 32 "AntlrSyntaxGenerator.mxg"
+                    __cb.Write(elem.AntlrName);
+                    #line hidden
+                    #line (167,135)-(167,136) 33 "AntlrSyntaxGenerator.mxg"
+                    __cb.Write(")");
+                    #line hidden
+                    var __first32 = true;
+                    #line (167,137)-(167,179) 21 "AntlrSyntaxGenerator.mxg"
+                    if (!elem.Value.Multiplicity.IsOptional())
+                    #line hidden
+                    
+                    {
+                        if (__first32)
+                        {
+                            __first32 = false;
+                        }
+                        #line (167,180)-(167,181) 37 "AntlrSyntaxGenerator.mxg"
+                        __cb.Write(" ");
+                        #line hidden
+                        #line (167,181)-(167,183) 37 "AntlrSyntaxGenerator.mxg"
+                        __cb.Write("??");
+                        #line hidden
+                        #line (167,183)-(167,184) 37 "AntlrSyntaxGenerator.mxg"
+                        __cb.Write(" ");
+                        #line hidden
+                        #line (167,185)-(167,198) 36 "AntlrSyntaxGenerator.mxg"
+                        __cb.Write(blk.GreenType);
+                        #line hidden
+                        #line (167,199)-(167,209) 37 "AntlrSyntaxGenerator.mxg"
+                        __cb.Write(".__Missing");
+                        #line hidden
+                    }
+                    #line (167,217)-(167,218) 33 "AntlrSyntaxGenerator.mxg"
+                    __cb.Write(";");
+                    #line hidden
+                    __cb.WriteLine();
+                    __cb.Pop();
+                    var __first33 = true;
+                    #line (168,18)-(168,60) 21 "AntlrSyntaxGenerator.mxg"
+                    if (!elem.Value.Multiplicity.IsOptional())
+                    #line hidden
+                    
+                    {
+                        if (__first33)
+                        {
+                            __first33 = false;
+                        }
+                        __cb.Push("    ");
+                        #line (169,21)-(169,25) 37 "AntlrSyntaxGenerator.mxg"
+                        __cb.Write("else");
+                        #line hidden
+                        #line (169,25)-(169,26) 37 "AntlrSyntaxGenerator.mxg"
+                        __cb.Write(" ");
+                        #line hidden
+                        #line (169,27)-(169,45) 36 "AntlrSyntaxGenerator.mxg"
+                        __cb.Write(elem.ParameterName);
+                        #line hidden
+                        #line (169,46)-(169,47) 37 "AntlrSyntaxGenerator.mxg"
+                        __cb.Write(" ");
+                        #line hidden
+                        #line (169,47)-(169,48) 37 "AntlrSyntaxGenerator.mxg"
+                        __cb.Write("=");
+                        #line hidden
+                        #line (169,48)-(169,49) 37 "AntlrSyntaxGenerator.mxg"
+                        __cb.Write(" ");
+                        #line hidden
+                        #line (169,50)-(169,63) 36 "AntlrSyntaxGenerator.mxg"
+                        __cb.Write(blk.GreenType);
+                        #line hidden
+                        #line (169,64)-(169,75) 37 "AntlrSyntaxGenerator.mxg"
+                        __cb.Write(".__Missing;");
+                        #line hidden
+                        __cb.WriteLine();
+                        __cb.Pop();
+                    }
+                    if (!__first33) __cb.AppendLine();
+                }
+                #line (171,14)-(171,48) 17 "AntlrSyntaxGenerator.mxg"
+                else if (elem.Value is RuleRef rr)
+                #line hidden
+                
+                {
+                    if (__first31)
+                    {
+                        __first31 = false;
+                    }
+                    var __first34 = true;
+                    #line (172,18)-(172,43) 21 "AntlrSyntaxGenerator.mxg"
+                    if (rr.Token is not null)
+                    #line hidden
+                    
+                    {
+                        if (__first34)
+                        {
+                            __first34 = false;
+                        }
+                        __cb.Push("    ");
+                        #line (173,21)-(173,24) 37 "AntlrSyntaxGenerator.mxg"
+                        __cb.Write("var");
+                        #line hidden
+                        #line (173,24)-(173,25) 37 "AntlrSyntaxGenerator.mxg"
+                        __cb.Write(" ");
+                        #line hidden
+                        #line (173,26)-(173,44) 36 "AntlrSyntaxGenerator.mxg"
+                        __cb.Write(elem.ParameterName);
+                        #line hidden
+                        #line (173,45)-(173,46) 37 "AntlrSyntaxGenerator.mxg"
+                        __cb.Write(" ");
+                        #line hidden
+                        #line (173,46)-(173,47) 37 "AntlrSyntaxGenerator.mxg"
+                        __cb.Write("=");
+                        #line hidden
+                        #line (173,47)-(173,48) 37 "AntlrSyntaxGenerator.mxg"
+                        __cb.Write(" ");
+                        #line hidden
+                        #line (173,48)-(173,97) 37 "AntlrSyntaxGenerator.mxg"
+                        __cb.Write("(InternalSyntaxToken?)this.VisitTerminal(context.");
+                        #line hidden
+                        #line (173,98)-(173,112) 36 "AntlrSyntaxGenerator.mxg"
+                        __cb.Write(elem.AntlrName);
+                        #line hidden
+                        var __first35 = true;
+                        #line (173,114)-(173,156) 25 "AntlrSyntaxGenerator.mxg"
+                        if (!elem.Value.Multiplicity.IsOptional())
+                        #line hidden
+                        
+                        {
+                            if (__first35)
+                            {
+                                __first35 = false;
+                            }
+                            #line (173,157)-(173,158) 41 "AntlrSyntaxGenerator.mxg"
+                            __cb.Write(",");
+                            #line hidden
+                            #line (173,158)-(173,159) 41 "AntlrSyntaxGenerator.mxg"
+                            __cb.Write(" ");
+                            #line hidden
+                            #line (173,160)-(173,164) 40 "AntlrSyntaxGenerator.mxg"
+                            __cb.Write(Lang);
+                            #line hidden
+                            #line (173,165)-(173,176) 41 "AntlrSyntaxGenerator.mxg"
+                            __cb.Write("SyntaxKind.");
+                            #line hidden
+                            #line (173,177)-(173,196) 40 "AntlrSyntaxGenerator.mxg"
+                            __cb.Write(rr.Token.CSharpName);
+                            #line hidden
+                        }
+                        #line (173,205)-(173,207) 37 "AntlrSyntaxGenerator.mxg"
+                        __cb.Write(");");
+                        #line hidden
+                        __cb.WriteLine();
+                        __cb.Pop();
+                    }
+                    #line (174,18)-(174,46) 21 "AntlrSyntaxGenerator.mxg"
+                    else if(rr.Rule is not null)
+                    #line hidden
+                    
+                    {
+                        if (__first34)
+                        {
+                            __first34 = false;
+                        }
+                        __cb.Push("    ");
+                        #line (175,22)-(175,34) 36 "AntlrSyntaxGenerator.mxg"
+                        __cb.Write(rr.GreenType);
+                        #line hidden
+                        #line (175,35)-(175,36) 37 "AntlrSyntaxGenerator.mxg"
+                        __cb.Write("?");
+                        #line hidden
+                        #line (175,36)-(175,37) 37 "AntlrSyntaxGenerator.mxg"
+                        __cb.Write(" ");
+                        #line hidden
+                        #line (175,38)-(175,56) 36 "AntlrSyntaxGenerator.mxg"
+                        __cb.Write(elem.ParameterName);
+                        #line hidden
+                        #line (175,57)-(175,58) 37 "AntlrSyntaxGenerator.mxg"
+                        __cb.Write(" ");
+                        #line hidden
+                        #line (175,58)-(175,59) 37 "AntlrSyntaxGenerator.mxg"
+                        __cb.Write("=");
+                        #line hidden
+                        #line (175,59)-(175,60) 37 "AntlrSyntaxGenerator.mxg"
+                        __cb.Write(" ");
+                        #line hidden
+                        #line (175,60)-(175,65) 37 "AntlrSyntaxGenerator.mxg"
+                        __cb.Write("null;");
+                        #line hidden
+                        __cb.WriteLine();
+                        __cb.Pop();
+                        __cb.Push("    ");
+                        #line (176,21)-(176,23) 37 "AntlrSyntaxGenerator.mxg"
+                        __cb.Write("if");
+                        #line hidden
+                        #line (176,23)-(176,24) 37 "AntlrSyntaxGenerator.mxg"
+                        __cb.Write(" ");
+                        #line hidden
+                        #line (176,24)-(176,33) 37 "AntlrSyntaxGenerator.mxg"
+                        __cb.Write("(context.");
+                        #line hidden
+                        #line (176,34)-(176,48) 36 "AntlrSyntaxGenerator.mxg"
+                        __cb.Write(elem.AntlrName);
+                        #line hidden
+                        #line (176,49)-(176,50) 37 "AntlrSyntaxGenerator.mxg"
+                        __cb.Write(" ");
+                        #line hidden
+                        #line (176,50)-(176,52) 37 "AntlrSyntaxGenerator.mxg"
+                        __cb.Write("is");
+                        #line hidden
+                        #line (176,52)-(176,53) 37 "AntlrSyntaxGenerator.mxg"
+                        __cb.Write(" ");
+                        #line hidden
+                        #line (176,53)-(176,56) 37 "AntlrSyntaxGenerator.mxg"
+                        __cb.Write("not");
+                        #line hidden
+                        #line (176,56)-(176,57) 37 "AntlrSyntaxGenerator.mxg"
+                        __cb.Write(" ");
+                        #line hidden
+                        #line (176,57)-(176,62) 37 "AntlrSyntaxGenerator.mxg"
+                        __cb.Write("null)");
+                        #line hidden
+                        #line (176,62)-(176,63) 37 "AntlrSyntaxGenerator.mxg"
+                        __cb.Write(" ");
+                        #line hidden
+                        #line (176,64)-(176,82) 36 "AntlrSyntaxGenerator.mxg"
+                        __cb.Write(elem.ParameterName);
+                        #line hidden
+                        #line (176,83)-(176,84) 37 "AntlrSyntaxGenerator.mxg"
+                        __cb.Write(" ");
+                        #line hidden
+                        #line (176,84)-(176,85) 37 "AntlrSyntaxGenerator.mxg"
+                        __cb.Write("=");
+                        #line hidden
+                        #line (176,85)-(176,86) 37 "AntlrSyntaxGenerator.mxg"
+                        __cb.Write(" ");
+                        #line hidden
+                        #line (176,86)-(176,87) 37 "AntlrSyntaxGenerator.mxg"
+                        __cb.Write("(");
+                        #line hidden
+                        #line (176,88)-(176,100) 36 "AntlrSyntaxGenerator.mxg"
+                        __cb.Write(rr.GreenType);
+                        #line hidden
+                        #line (176,101)-(176,122) 37 "AntlrSyntaxGenerator.mxg"
+                        __cb.Write("?)this.Visit(context.");
+                        #line hidden
+                        #line (176,123)-(176,137) 36 "AntlrSyntaxGenerator.mxg"
+                        __cb.Write(elem.AntlrName);
+                        #line hidden
+                        #line (176,138)-(176,139) 37 "AntlrSyntaxGenerator.mxg"
+                        __cb.Write(")");
+                        #line hidden
+                        var __first36 = true;
+                        #line (176,140)-(176,182) 25 "AntlrSyntaxGenerator.mxg"
+                        if (!elem.Value.Multiplicity.IsOptional())
+                        #line hidden
+                        
+                        {
+                            if (__first36)
+                            {
+                                __first36 = false;
+                            }
+                            #line (176,183)-(176,184) 41 "AntlrSyntaxGenerator.mxg"
+                            __cb.Write(" ");
+                            #line hidden
+                            #line (176,184)-(176,186) 41 "AntlrSyntaxGenerator.mxg"
+                            __cb.Write("??");
+                            #line hidden
+                            #line (176,186)-(176,187) 41 "AntlrSyntaxGenerator.mxg"
+                            __cb.Write(" ");
+                            #line hidden
+                            #line (176,188)-(176,200) 40 "AntlrSyntaxGenerator.mxg"
+                            __cb.Write(rr.GreenType);
+                            #line hidden
+                            #line (176,201)-(176,211) 41 "AntlrSyntaxGenerator.mxg"
+                            __cb.Write(".__Missing");
+                            #line hidden
+                        }
+                        #line (176,219)-(176,220) 37 "AntlrSyntaxGenerator.mxg"
+                        __cb.Write(";");
+                        #line hidden
+                        __cb.WriteLine();
+                        __cb.Pop();
+                        var __first37 = true;
+                        #line (177,22)-(177,64) 25 "AntlrSyntaxGenerator.mxg"
+                        if (!elem.Value.Multiplicity.IsOptional())
+                        #line hidden
+                        
+                        {
+                            if (__first37)
+                            {
+                                __first37 = false;
+                            }
+                            __cb.Push("    ");
+                            #line (178,25)-(178,29) 41 "AntlrSyntaxGenerator.mxg"
+                            __cb.Write("else");
+                            #line hidden
+                            #line (178,29)-(178,30) 41 "AntlrSyntaxGenerator.mxg"
+                            __cb.Write(" ");
+                            #line hidden
+                            #line (178,31)-(178,49) 40 "AntlrSyntaxGenerator.mxg"
+                            __cb.Write(elem.ParameterName);
+                            #line hidden
+                            #line (178,50)-(178,51) 41 "AntlrSyntaxGenerator.mxg"
+                            __cb.Write(" ");
+                            #line hidden
+                            #line (178,51)-(178,52) 41 "AntlrSyntaxGenerator.mxg"
+                            __cb.Write("=");
+                            #line hidden
+                            #line (178,52)-(178,53) 41 "AntlrSyntaxGenerator.mxg"
+                            __cb.Write(" ");
+                            #line hidden
+                            #line (178,54)-(178,66) 40 "AntlrSyntaxGenerator.mxg"
+                            __cb.Write(rr.GreenType);
+                            #line hidden
+                            #line (178,67)-(178,78) 41 "AntlrSyntaxGenerator.mxg"
+                            __cb.Write(".__Missing;");
+                            #line hidden
+                            __cb.WriteLine();
+                            __cb.Pop();
+                        }
+                        if (!__first37) __cb.AppendLine();
+                    }
+                    #line (180,18)-(180,22) 21 "AntlrSyntaxGenerator.mxg"
+                    else
+                    #line hidden
+                    
+                    {
+                        if (__first34)
+                        {
+                            __first34 = false;
+                        }
+                    }
+                    if (!__first34) __cb.AppendLine();
+                }
+                if (!__first31) __cb.AppendLine();
+            }
+            if (!__first30) __cb.AppendLine();
+            __cb.Push("    ");
+            #line (184,9)-(184,15) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("return");
+            #line hidden
+            #line (184,15)-(184,16) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (184,16)-(184,25) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("_factory.");
+            #line hidden
+            #line (184,26)-(184,40) 24 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(alt.CSharpName);
+            #line hidden
+            #line (184,41)-(184,42) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("(");
+            #line hidden
+            #line (184,43)-(184,67) 24 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(alt.GreenUpdateArguments);
+            #line hidden
+            #line (184,68)-(184,70) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(");");
+            #line hidden
+            __cb.WriteLine();
+            __cb.Pop();
+            __cb.Push("");
+            #line (185,5)-(185,6) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("}");
+            #line hidden
+            __cb.WriteLine();
+            __cb.Pop();
+            return __cb.ToStringAndFree();
+        }
+        
+        #line (188,9)-(188,67) 22 "AntlrSyntaxGenerator.mxg"
         public string GenerateVisitTokenAlts(Element elem, TokenAlts tokenAlts)
         #line hidden
         {
             var __cb = global::MetaDslx.CodeGeneration.CodeBuilder.GetInstance();
             __cb.Push("");
-            #line (175,1)-(175,21) 25 "AntlrSyntaxGenerator.mxg"
+            #line (189,5)-(189,25) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("InternalSyntaxToken?");
             #line hidden
-            #line (175,21)-(175,22) 25 "AntlrSyntaxGenerator.mxg"
+            #line (189,25)-(189,26) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (175,23)-(175,41) 24 "AntlrSyntaxGenerator.mxg"
+            #line (189,27)-(189,45) 24 "AntlrSyntaxGenerator.mxg"
             __cb.Write(elem.ParameterName);
             #line hidden
-            #line (175,42)-(175,43) 25 "AntlrSyntaxGenerator.mxg"
+            #line (189,46)-(189,47) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (175,43)-(175,44) 25 "AntlrSyntaxGenerator.mxg"
+            #line (189,47)-(189,48) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("=");
             #line hidden
-            #line (175,44)-(175,45) 25 "AntlrSyntaxGenerator.mxg"
+            #line (189,48)-(189,49) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (175,45)-(175,50) 25 "AntlrSyntaxGenerator.mxg"
+            #line (189,49)-(189,54) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("null;");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            var __first33 = true;
-            #line (176,2)-(176,41) 13 "AntlrSyntaxGenerator.mxg"
-            foreach (var token in tokenAlts.Tokens)
-            #line hidden
-            
-            {
-                if (__first33)
-                {
-                    __first33 = false;
-                }
-                __cb.Push("");
-                #line (177,1)-(177,3) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write("if");
-                #line hidden
-                #line (177,3)-(177,4) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write(" ");
-                #line hidden
-                #line (177,4)-(177,13) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write("(context.");
-                #line hidden
-                #line (177,14)-(177,35) 28 "AntlrSyntaxGenerator.mxg"
-                __cb.Write(token.Token.AntlrName);
-                #line hidden
-                #line (177,36)-(177,38) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write("()");
-                #line hidden
-                #line (177,38)-(177,39) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write(" ");
-                #line hidden
-                #line (177,39)-(177,41) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write("is");
-                #line hidden
-                #line (177,41)-(177,42) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write(" ");
-                #line hidden
-                #line (177,42)-(177,45) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write("not");
-                #line hidden
-                #line (177,45)-(177,46) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write(" ");
-                #line hidden
-                #line (177,46)-(177,51) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write("null)");
-                #line hidden
-                #line (177,51)-(177,52) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write(" ");
-                #line hidden
-                #line (177,53)-(177,71) 28 "AntlrSyntaxGenerator.mxg"
-                __cb.Write(elem.ParameterName);
-                #line hidden
-                #line (177,72)-(177,73) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write(" ");
-                #line hidden
-                #line (177,73)-(177,74) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write("=");
-                #line hidden
-                #line (177,74)-(177,75) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write(" ");
-                #line hidden
-                #line (177,75)-(177,124) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write("(InternalSyntaxToken?)this.VisitTerminal(context.");
-                #line hidden
-                #line (177,125)-(177,146) 28 "AntlrSyntaxGenerator.mxg"
-                __cb.Write(token.Token.AntlrName);
-                #line hidden
-                #line (177,147)-(177,151) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write("());");
-                #line hidden
-                __cb.WriteLine();
-                __cb.Pop();
-            }
-            if (!__first33) __cb.AppendLine();
-            var __first34 = true;
-            #line (179,2)-(179,44) 13 "AntlrSyntaxGenerator.mxg"
-            if (!elem.Value.Multiplicity.IsOptional())
-            #line hidden
-            
-            {
-                if (__first34)
-                {
-                    __first34 = false;
-                }
-                __cb.Push("");
-                #line (180,1)-(180,3) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write("if");
-                #line hidden
-                #line (180,3)-(180,4) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write(" ");
-                #line hidden
-                #line (180,4)-(180,5) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write("(");
-                #line hidden
-                #line (180,6)-(180,24) 28 "AntlrSyntaxGenerator.mxg"
-                __cb.Write(elem.ParameterName);
-                #line hidden
-                #line (180,25)-(180,26) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write(" ");
-                #line hidden
-                #line (180,26)-(180,28) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write("is");
-                #line hidden
-                #line (180,28)-(180,29) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write(" ");
-                #line hidden
-                #line (180,29)-(180,34) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write("null)");
-                #line hidden
-                #line (180,34)-(180,35) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write(" ");
-                #line hidden
-                #line (180,36)-(180,54) 28 "AntlrSyntaxGenerator.mxg"
-                __cb.Write(elem.ParameterName);
-                #line hidden
-                #line (180,55)-(180,56) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write(" ");
-                #line hidden
-                #line (180,56)-(180,57) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write("=");
-                #line hidden
-                #line (180,57)-(180,58) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write(" ");
-                #line hidden
-                #line (180,58)-(180,72) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write("_factory.None;");
-                #line hidden
-                __cb.WriteLine();
-                __cb.Pop();
-            }
-            if (!__first34) __cb.AppendLine();
-            return __cb.ToStringAndFree();
-        }
-        
-        #line (184,9)-(184,41) 22 "AntlrSyntaxGenerator.mxg"
-        public string GenerateVisitList(Element elem)
-        #line hidden
-        {
-            var __cb = global::MetaDslx.CodeGeneration.CodeBuilder.GetInstance();
-            __cb.Push("");
-            #line (185,1)-(185,4) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write("var");
-            #line hidden
-            #line (185,4)-(185,5) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (185,6)-(185,20) 24 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(elem.AntlrName);
-            #line hidden
-            #line (185,21)-(185,28) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write("Context");
-            #line hidden
-            #line (185,28)-(185,29) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (185,29)-(185,30) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write("=");
-            #line hidden
-            #line (185,30)-(185,31) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (185,31)-(185,40) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write("context._");
-            #line hidden
-            #line (185,41)-(185,55) 24 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(elem.AntlrName);
-            #line hidden
-            #line (185,56)-(185,57) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(";");
-            #line hidden
-            __cb.WriteLine();
-            __cb.Pop();
-            __cb.Push("");
-            #line (186,1)-(186,4) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write("var");
-            #line hidden
-            #line (186,4)-(186,5) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (186,6)-(186,24) 24 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(elem.ParameterName);
-            #line hidden
-            #line (186,25)-(186,32) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write("Builder");
-            #line hidden
-            #line (186,32)-(186,33) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (186,33)-(186,34) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write("=");
-            #line hidden
-            #line (186,34)-(186,35) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (186,35)-(186,50) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write("_pool.Allocate<");
-            #line hidden
-            #line (186,51)-(186,71) 24 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(elem.Value.GreenType);
-            #line hidden
-            #line (186,72)-(186,76) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(">();");
-            #line hidden
-            __cb.WriteLine();
-            __cb.Pop();
-            __cb.Push("");
-            #line (187,1)-(187,4) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write("for");
-            #line hidden
-            #line (187,4)-(187,5) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (187,5)-(187,9) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write("(int");
-            #line hidden
-            #line (187,9)-(187,10) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (187,10)-(187,11) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write("i");
-            #line hidden
-            #line (187,11)-(187,12) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (187,12)-(187,13) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write("=");
-            #line hidden
-            #line (187,13)-(187,14) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (187,14)-(187,16) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write("0;");
-            #line hidden
-            #line (187,16)-(187,17) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (187,17)-(187,18) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write("i");
-            #line hidden
-            #line (187,18)-(187,19) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (187,19)-(187,20) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write("<");
-            #line hidden
-            #line (187,20)-(187,21) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (187,22)-(187,36) 24 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(elem.AntlrName);
-            #line hidden
-            #line (187,37)-(187,51) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write("Context.Count;");
-            #line hidden
-            #line (187,51)-(187,52) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (187,52)-(187,56) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write("++i)");
-            #line hidden
-            __cb.WriteLine();
-            __cb.Pop();
-            __cb.Push("");
-            #line (188,1)-(188,2) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write("{");
-            #line hidden
-            __cb.WriteLine();
-            __cb.Pop();
-            var __first35 = true;
-            #line (189,14)-(189,30) 13 "AntlrSyntaxGenerator.mxg"
-            if(elem.IsToken)
-            #line hidden
-            
-            {
-                if (__first35)
-                {
-                    __first35 = false;
-                }
-                __cb.Push("    ");
-                #line (190,6)-(190,24) 28 "AntlrSyntaxGenerator.mxg"
-                __cb.Write(elem.ParameterName);
-                #line hidden
-                #line (190,25)-(190,78) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write("Builder.Add((InternalSyntaxToken?)this.VisitTerminal(");
-                #line hidden
-                #line (190,79)-(190,93) 28 "AntlrSyntaxGenerator.mxg"
-                __cb.Write(elem.AntlrName);
-                #line hidden
-                #line (190,94)-(190,101) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write("Context");
-                #line hidden
-                #line (190,102)-(190,107) 28 "AntlrSyntaxGenerator.mxg"
-                __cb.Write("[i]");
-                #line hidden
-                #line (190,108)-(190,111) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write("));");
-                #line hidden
-                __cb.WriteLine();
-                __cb.Pop();
-            }
-            #line (191,14)-(191,18) 13 "AntlrSyntaxGenerator.mxg"
-            else
-            #line hidden
-            
-            {
-                if (__first35)
-                {
-                    __first35 = false;
-                }
-                __cb.Push("    ");
-                #line (192,5)-(192,7) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write("if");
-                #line hidden
-                #line (192,7)-(192,8) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write(" ");
-                #line hidden
-                #line (192,8)-(192,9) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write("(");
-                #line hidden
-                #line (192,10)-(192,24) 28 "AntlrSyntaxGenerator.mxg"
-                __cb.Write(elem.AntlrName);
-                #line hidden
-                #line (192,25)-(192,32) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write("Context");
-                #line hidden
-                #line (192,33)-(192,38) 28 "AntlrSyntaxGenerator.mxg"
-                __cb.Write("[i]");
-                #line hidden
-                #line (192,39)-(192,40) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write(" ");
-                #line hidden
-                #line (192,40)-(192,42) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write("is");
-                #line hidden
-                #line (192,42)-(192,43) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write(" ");
-                #line hidden
-                #line (192,43)-(192,46) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write("not");
-                #line hidden
-                #line (192,46)-(192,47) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write(" ");
-                #line hidden
-                #line (192,47)-(192,52) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write("null)");
-                #line hidden
-                #line (192,52)-(192,53) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write(" ");
-                #line hidden
-                #line (192,54)-(192,72) 28 "AntlrSyntaxGenerator.mxg"
-                __cb.Write(elem.ParameterName);
-                #line hidden
-                #line (192,73)-(192,86) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write("Builder.Add((");
-                #line hidden
-                #line (192,87)-(192,107) 28 "AntlrSyntaxGenerator.mxg"
-                __cb.Write(elem.Value.GreenType);
-                #line hidden
-                #line (192,108)-(192,121) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write("?)this.Visit(");
-                #line hidden
-                #line (192,122)-(192,136) 28 "AntlrSyntaxGenerator.mxg"
-                __cb.Write(elem.AntlrName);
-                #line hidden
-                #line (192,137)-(192,144) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write("Context");
-                #line hidden
-                #line (192,145)-(192,150) 28 "AntlrSyntaxGenerator.mxg"
-                __cb.Write("[i]");
-                #line hidden
-                #line (192,151)-(192,152) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write(")");
-                #line hidden
-                #line (192,152)-(192,153) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write(" ");
-                #line hidden
-                #line (192,153)-(192,155) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write("??");
-                #line hidden
-                #line (192,155)-(192,156) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write(" ");
-                #line hidden
-                #line (192,157)-(192,177) 28 "AntlrSyntaxGenerator.mxg"
-                __cb.Write(elem.Value.GreenType);
-                #line hidden
-                #line (192,178)-(192,190) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write(".__Missing);");
-                #line hidden
-                __cb.WriteLine();
-                __cb.Pop();
-                __cb.Push("    ");
-                #line (193,5)-(193,9) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write("else");
-                #line hidden
-                #line (193,9)-(193,10) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write(" ");
-                #line hidden
-                #line (193,11)-(193,29) 28 "AntlrSyntaxGenerator.mxg"
-                __cb.Write(elem.ParameterName);
-                #line hidden
-                #line (193,30)-(193,42) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write("Builder.Add(");
-                #line hidden
-                #line (193,43)-(193,63) 28 "AntlrSyntaxGenerator.mxg"
-                __cb.Write(elem.Value.GreenType);
-                #line hidden
-                #line (193,64)-(193,76) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write(".__Missing);");
-                #line hidden
-                __cb.WriteLine();
-                __cb.Pop();
-            }
-            if (!__first35) __cb.AppendLine();
-            __cb.Push("");
-            #line (195,1)-(195,2) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write("}");
-            #line hidden
-            __cb.WriteLine();
-            __cb.Pop();
-            __cb.Push("");
-            #line (196,1)-(196,4) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write("var");
-            #line hidden
-            #line (196,4)-(196,5) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (196,6)-(196,24) 24 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(elem.ParameterName);
-            #line hidden
-            #line (196,25)-(196,26) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (196,26)-(196,27) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write("=");
-            #line hidden
-            #line (196,27)-(196,28) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (196,29)-(196,47) 24 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(elem.ParameterName);
-            #line hidden
-            #line (196,48)-(196,65) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write("Builder.ToList();");
-            #line hidden
-            __cb.WriteLine();
-            __cb.Pop();
-            __cb.Push("");
-            #line (197,1)-(197,12) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write("_pool.Free(");
-            #line hidden
-            #line (197,13)-(197,31) 24 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(elem.ParameterName);
-            #line hidden
-            #line (197,32)-(197,41) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write("Builder);");
-            #line hidden
-            __cb.WriteLine();
-            __cb.Pop();
-            return __cb.ToStringAndFree();
-        }
-        
-        #line (200,9)-(200,68) 22 "AntlrSyntaxGenerator.mxg"
-        public string GenerateVisitSeparatedList(Element elem, SeparatedList sl)
-        #line hidden
-        {
-            var __cb = global::MetaDslx.CodeGeneration.CodeBuilder.GetInstance();
-            #line (201,2)-(201,44) 13 "AntlrSyntaxGenerator.mxg"
-            var builder = elem.ParameterName+"Builder";
-            #line hidden
-            
-            __cb.Push("");
-            #line (202,1)-(202,4) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write("var");
-            #line hidden
-            #line (202,4)-(202,5) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (202,6)-(202,13) 24 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(builder);
-            #line hidden
-            #line (202,14)-(202,15) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (202,15)-(202,16) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write("=");
-            #line hidden
-            #line (202,16)-(202,17) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (202,17)-(202,41) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write("_pool.AllocateSeparated<");
-            #line hidden
-            #line (202,42)-(202,54) 24 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(sl.GreenType);
-            #line hidden
-            #line (202,55)-(202,66) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(">(reversed:");
-            #line hidden
-            #line (202,66)-(202,67) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (202,68)-(202,104) 24 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(sl.SeparatorFirst ? "true" : "false");
-            #line hidden
-            #line (202,105)-(202,107) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(");");
-            #line hidden
-            __cb.WriteLine();
-            __cb.Pop();
-            var __first36 = true;
-            #line (203,6)-(203,83) 13 "AntlrSyntaxGenerator.mxg"
-            for (int i = 0; i < sl.FirstItems.Count && i < sl.FirstSeparators.Count; ++i)
-            #line hidden
-            
-            {
-                if (__first36)
-                {
-                    __first36 = false;
-                }
-                var __first37 = true;
-                #line (204,10)-(204,32) 17 "AntlrSyntaxGenerator.mxg"
-                if (sl.SeparatorFirst)
-                #line hidden
-                
-                {
-                    if (__first37)
-                    {
-                        __first37 = false;
-                    }
-                    __cb.Push("");
-                    #line (205,2)-(205,69) 32 "AntlrSyntaxGenerator.mxg"
-                    __cb.Write(GenerateVisitSeparatedListSeparator(sl.FirstSeparators[i], builder));
-                    #line hidden
-                    __cb.WriteLine();
-                    __cb.Pop();
-                    __cb.Push("");
-                    #line (206,2)-(206,59) 32 "AntlrSyntaxGenerator.mxg"
-                    __cb.Write(GenerateVisitSeparatedListItem(sl.FirstItems[i], builder));
-                    #line hidden
-                    __cb.WriteLine();
-                    __cb.Pop();
-                }
-                #line (207,10)-(207,14) 17 "AntlrSyntaxGenerator.mxg"
-                else
-                #line hidden
-                
-                {
-                    if (__first37)
-                    {
-                        __first37 = false;
-                    }
-                    __cb.Push("");
-                    #line (208,2)-(208,59) 32 "AntlrSyntaxGenerator.mxg"
-                    __cb.Write(GenerateVisitSeparatedListItem(sl.FirstItems[i], builder));
-                    #line hidden
-                    __cb.WriteLine();
-                    __cb.Pop();
-                    __cb.Push("");
-                    #line (209,2)-(209,69) 32 "AntlrSyntaxGenerator.mxg"
-                    __cb.Write(GenerateVisitSeparatedListSeparator(sl.FirstSeparators[i], builder));
-                    #line hidden
-                    __cb.WriteLine();
-                    __cb.Pop();
-                }
-                if (!__first37) __cb.AppendLine();
-            }
-            if (!__first36) __cb.AppendLine();
             var __first38 = true;
-            #line (212,6)-(212,57) 13 "AntlrSyntaxGenerator.mxg"
-            if (sl.FirstItems.Count > sl.FirstSeparators.Count)
+            #line (190,6)-(190,45) 13 "AntlrSyntaxGenerator.mxg"
+            foreach (var token in tokenAlts.Tokens)
             #line hidden
             
             {
@@ -3272,16 +2916,70 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
                     __first38 = false;
                 }
                 __cb.Push("");
-                #line (213,2)-(213,79) 28 "AntlrSyntaxGenerator.mxg"
-                __cb.Write(GenerateVisitSeparatedListItem(sl.FirstItems[sl.FirstItems.Count-1], builder));
+                #line (191,9)-(191,11) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write("if");
+                #line hidden
+                #line (191,11)-(191,12) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write(" ");
+                #line hidden
+                #line (191,12)-(191,21) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write("(context.");
+                #line hidden
+                #line (191,22)-(191,43) 28 "AntlrSyntaxGenerator.mxg"
+                __cb.Write(token.Token.AntlrName);
+                #line hidden
+                #line (191,44)-(191,46) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write("()");
+                #line hidden
+                #line (191,46)-(191,47) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write(" ");
+                #line hidden
+                #line (191,47)-(191,49) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write("is");
+                #line hidden
+                #line (191,49)-(191,50) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write(" ");
+                #line hidden
+                #line (191,50)-(191,53) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write("not");
+                #line hidden
+                #line (191,53)-(191,54) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write(" ");
+                #line hidden
+                #line (191,54)-(191,59) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write("null)");
+                #line hidden
+                #line (191,59)-(191,60) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write(" ");
+                #line hidden
+                #line (191,61)-(191,79) 28 "AntlrSyntaxGenerator.mxg"
+                __cb.Write(elem.ParameterName);
+                #line hidden
+                #line (191,80)-(191,81) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write(" ");
+                #line hidden
+                #line (191,81)-(191,82) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write("=");
+                #line hidden
+                #line (191,82)-(191,83) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write(" ");
+                #line hidden
+                #line (191,83)-(191,132) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write("(InternalSyntaxToken?)this.VisitTerminal(context.");
+                #line hidden
+                #line (191,133)-(191,154) 28 "AntlrSyntaxGenerator.mxg"
+                __cb.Write(token.Token.AntlrName);
+                #line hidden
+                #line (191,155)-(191,159) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write("());");
                 #line hidden
                 __cb.WriteLine();
                 __cb.Pop();
             }
             if (!__first38) __cb.AppendLine();
             var __first39 = true;
-            #line (215,6)-(215,57) 13 "AntlrSyntaxGenerator.mxg"
-            if (sl.FirstSeparators.Count > sl.FirstItems.Count)
+            #line (193,6)-(193,48) 13 "AntlrSyntaxGenerator.mxg"
+            if (!elem.Value.Multiplicity.IsOptional())
             #line hidden
             
             {
@@ -3290,145 +2988,192 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
                     __first39 = false;
                 }
                 __cb.Push("");
-                #line (216,2)-(216,94) 28 "AntlrSyntaxGenerator.mxg"
-                __cb.Write(GenerateVisitSeparatedListSeparator(sl.FirstSeparators[sl.FirstSeparators.Count-1], builder));
+                #line (194,9)-(194,11) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write("if");
+                #line hidden
+                #line (194,11)-(194,12) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write(" ");
+                #line hidden
+                #line (194,12)-(194,13) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write("(");
+                #line hidden
+                #line (194,14)-(194,32) 28 "AntlrSyntaxGenerator.mxg"
+                __cb.Write(elem.ParameterName);
+                #line hidden
+                #line (194,33)-(194,34) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write(" ");
+                #line hidden
+                #line (194,34)-(194,36) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write("is");
+                #line hidden
+                #line (194,36)-(194,37) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write(" ");
+                #line hidden
+                #line (194,37)-(194,42) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write("null)");
+                #line hidden
+                #line (194,42)-(194,43) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write(" ");
+                #line hidden
+                #line (194,44)-(194,62) 28 "AntlrSyntaxGenerator.mxg"
+                __cb.Write(elem.ParameterName);
+                #line hidden
+                #line (194,63)-(194,64) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write(" ");
+                #line hidden
+                #line (194,64)-(194,65) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write("=");
+                #line hidden
+                #line (194,65)-(194,66) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write(" ");
+                #line hidden
+                #line (194,66)-(194,80) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write("_factory.None;");
                 #line hidden
                 __cb.WriteLine();
                 __cb.Pop();
             }
             if (!__first39) __cb.AppendLine();
+            return __cb.ToStringAndFree();
+        }
+        
+        #line (198,9)-(198,41) 22 "AntlrSyntaxGenerator.mxg"
+        public string GenerateVisitList(Element elem)
+        #line hidden
+        {
+            var __cb = global::MetaDslx.CodeGeneration.CodeBuilder.GetInstance();
             __cb.Push("");
-            #line (218,1)-(218,4) 25 "AntlrSyntaxGenerator.mxg"
+            #line (199,5)-(199,8) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("var");
             #line hidden
-            #line (218,4)-(218,5) 25 "AntlrSyntaxGenerator.mxg"
+            #line (199,8)-(199,9) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (218,6)-(218,31) 24 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(sl.RepeatedItem.AntlrName);
+            #line (199,10)-(199,24) 24 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(elem.AntlrName);
             #line hidden
-            #line (218,32)-(218,39) 25 "AntlrSyntaxGenerator.mxg"
+            #line (199,25)-(199,32) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("Context");
             #line hidden
-            #line (218,39)-(218,40) 25 "AntlrSyntaxGenerator.mxg"
+            #line (199,32)-(199,33) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (218,40)-(218,41) 25 "AntlrSyntaxGenerator.mxg"
+            #line (199,33)-(199,34) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("=");
             #line hidden
-            #line (218,41)-(218,42) 25 "AntlrSyntaxGenerator.mxg"
+            #line (199,34)-(199,35) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (218,42)-(218,51) 25 "AntlrSyntaxGenerator.mxg"
+            #line (199,35)-(199,44) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("context._");
             #line hidden
-            #line (218,52)-(218,77) 24 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(sl.RepeatedItem.AntlrName);
+            #line (199,45)-(199,59) 24 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(elem.AntlrName);
             #line hidden
-            #line (218,78)-(218,79) 25 "AntlrSyntaxGenerator.mxg"
+            #line (199,60)-(199,61) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(";");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("");
-            #line (219,1)-(219,4) 25 "AntlrSyntaxGenerator.mxg"
+            #line (200,5)-(200,8) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("var");
             #line hidden
-            #line (219,4)-(219,5) 25 "AntlrSyntaxGenerator.mxg"
+            #line (200,8)-(200,9) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (219,6)-(219,36) 24 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(sl.RepeatedSeparator.AntlrName);
+            #line (200,10)-(200,28) 24 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(elem.ParameterName);
             #line hidden
-            #line (219,37)-(219,44) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write("Context");
+            #line (200,29)-(200,36) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("Builder");
             #line hidden
-            #line (219,44)-(219,45) 25 "AntlrSyntaxGenerator.mxg"
+            #line (200,36)-(200,37) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (219,45)-(219,46) 25 "AntlrSyntaxGenerator.mxg"
+            #line (200,37)-(200,38) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("=");
             #line hidden
-            #line (219,46)-(219,47) 25 "AntlrSyntaxGenerator.mxg"
+            #line (200,38)-(200,39) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (219,47)-(219,56) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write("context._");
+            #line (200,39)-(200,54) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("_pool.Allocate<");
             #line hidden
-            #line (219,57)-(219,87) 24 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(sl.RepeatedSeparator.AntlrName);
+            #line (200,55)-(200,75) 24 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(elem.Value.GreenType);
             #line hidden
-            #line (219,88)-(219,89) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(";");
+            #line (200,76)-(200,80) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(">();");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("");
-            #line (220,1)-(220,4) 25 "AntlrSyntaxGenerator.mxg"
+            #line (201,5)-(201,8) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("for");
             #line hidden
-            #line (220,4)-(220,5) 25 "AntlrSyntaxGenerator.mxg"
+            #line (201,8)-(201,9) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (220,5)-(220,9) 25 "AntlrSyntaxGenerator.mxg"
+            #line (201,9)-(201,13) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("(int");
             #line hidden
-            #line (220,9)-(220,10) 25 "AntlrSyntaxGenerator.mxg"
+            #line (201,13)-(201,14) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (220,10)-(220,11) 25 "AntlrSyntaxGenerator.mxg"
+            #line (201,14)-(201,15) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("i");
             #line hidden
-            #line (220,11)-(220,12) 25 "AntlrSyntaxGenerator.mxg"
+            #line (201,15)-(201,16) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (220,12)-(220,13) 25 "AntlrSyntaxGenerator.mxg"
+            #line (201,16)-(201,17) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("=");
             #line hidden
-            #line (220,13)-(220,14) 25 "AntlrSyntaxGenerator.mxg"
+            #line (201,17)-(201,18) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (220,14)-(220,16) 25 "AntlrSyntaxGenerator.mxg"
+            #line (201,18)-(201,20) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("0;");
             #line hidden
-            #line (220,16)-(220,17) 25 "AntlrSyntaxGenerator.mxg"
+            #line (201,20)-(201,21) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (220,17)-(220,18) 25 "AntlrSyntaxGenerator.mxg"
+            #line (201,21)-(201,22) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("i");
             #line hidden
-            #line (220,18)-(220,19) 25 "AntlrSyntaxGenerator.mxg"
+            #line (201,22)-(201,23) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (220,19)-(220,20) 25 "AntlrSyntaxGenerator.mxg"
+            #line (201,23)-(201,24) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("<");
             #line hidden
-            #line (220,20)-(220,21) 25 "AntlrSyntaxGenerator.mxg"
+            #line (201,24)-(201,25) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (220,22)-(220,47) 24 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(sl.RepeatedItem.AntlrName);
+            #line (201,26)-(201,40) 24 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(elem.AntlrName);
             #line hidden
-            #line (220,48)-(220,62) 25 "AntlrSyntaxGenerator.mxg"
+            #line (201,41)-(201,55) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("Context.Count;");
             #line hidden
-            #line (220,62)-(220,63) 25 "AntlrSyntaxGenerator.mxg"
+            #line (201,55)-(201,56) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (220,63)-(220,67) 25 "AntlrSyntaxGenerator.mxg"
+            #line (201,56)-(201,60) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("++i)");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("");
-            #line (221,1)-(221,2) 25 "AntlrSyntaxGenerator.mxg"
+            #line (202,5)-(202,6) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("{");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
             var __first40 = true;
-            #line (222,6)-(222,36) 13 "AntlrSyntaxGenerator.mxg"
-            if (sl.RepeatedSeparatorFirst)
+            #line (203,10)-(203,26) 13 "AntlrSyntaxGenerator.mxg"
+            if(elem.IsToken)
             #line hidden
             
             {
@@ -3437,100 +3182,28 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
                     __first40 = false;
                 }
                 __cb.Push("    ");
-                #line (223,5)-(223,7) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write("if");
+                #line (204,14)-(204,32) 28 "AntlrSyntaxGenerator.mxg"
+                __cb.Write(elem.ParameterName);
                 #line hidden
-                #line (223,7)-(223,8) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write(" ");
+                #line (204,33)-(204,86) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write("Builder.Add((InternalSyntaxToken?)this.VisitTerminal(");
                 #line hidden
-                #line (223,8)-(223,10) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write("(i");
+                #line (204,87)-(204,101) 28 "AntlrSyntaxGenerator.mxg"
+                __cb.Write(elem.AntlrName);
                 #line hidden
-                #line (223,10)-(223,11) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write(" ");
+                #line (204,102)-(204,109) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write("Context");
                 #line hidden
-                #line (223,11)-(223,12) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write("<");
+                #line (204,110)-(204,115) 28 "AntlrSyntaxGenerator.mxg"
+                __cb.Write("[i]");
                 #line hidden
-                #line (223,12)-(223,13) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write(" ");
-                #line hidden
-                #line (223,14)-(223,44) 28 "AntlrSyntaxGenerator.mxg"
-                __cb.Write(sl.RepeatedSeparator.AntlrName);
-                #line hidden
-                #line (223,45)-(223,59) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write("Context.Count)");
-                #line hidden
-                __cb.WriteLine();
-                __cb.Pop();
-                __cb.Push("    ");
-                #line (224,5)-(224,6) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write("{");
-                #line hidden
-                __cb.WriteLine();
-                __cb.Pop();
-                __cb.Push("        ");
-                #line (225,10)-(225,81) 28 "AntlrSyntaxGenerator.mxg"
-                __cb.Write(GenerateVisitSeparatedListSeparator(sl.RepeatedSeparator, builder, "i"));
-                #line hidden
-                __cb.WriteLine();
-                __cb.Pop();
-                __cb.Push("    ");
-                #line (226,5)-(226,6) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write("}");
-                #line hidden
-                __cb.WriteLine();
-                __cb.Pop();
-                __cb.Push("    ");
-                #line (227,5)-(227,9) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write("else");
-                #line hidden
-                __cb.WriteLine();
-                __cb.Pop();
-                __cb.Push("    ");
-                #line (228,5)-(228,6) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write("{");
-                #line hidden
-                __cb.WriteLine();
-                __cb.Pop();
-                __cb.Push("        ");
-                #line (229,10)-(229,17) 28 "AntlrSyntaxGenerator.mxg"
-                __cb.Write(builder);
-                #line hidden
-                #line (229,18)-(229,87) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write(".AddSeparator((InternalSyntaxToken?)this.VisitTerminal((IToken?)null,");
-                #line hidden
-                #line (229,87)-(229,88) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write(" ");
-                #line hidden
-                #line (229,89)-(229,93) 28 "AntlrSyntaxGenerator.mxg"
-                __cb.Write(Lang);
-                #line hidden
-                #line (229,94)-(229,105) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write("SyntaxKind.");
-                #line hidden
-                #line (229,106)-(229,137) 28 "AntlrSyntaxGenerator.mxg"
-                __cb.Write(sl.RepeatedSeparator.CSharpName);
-                #line hidden
-                #line (229,138)-(229,141) 29 "AntlrSyntaxGenerator.mxg"
+                #line (204,116)-(204,119) 29 "AntlrSyntaxGenerator.mxg"
                 __cb.Write("));");
                 #line hidden
                 __cb.WriteLine();
                 __cb.Pop();
-                __cb.Push("    ");
-                #line (230,5)-(230,6) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write("}");
-                #line hidden
-                __cb.WriteLine();
-                __cb.Pop();
-                __cb.Push("    ");
-                #line (231,6)-(231,67) 28 "AntlrSyntaxGenerator.mxg"
-                __cb.Write(GenerateVisitSeparatedListItem(sl.RepeatedItem, builder, "i"));
-                #line hidden
-                __cb.WriteLine();
-                __cb.Pop();
             }
-            #line (232,6)-(232,10) 13 "AntlrSyntaxGenerator.mxg"
+            #line (205,10)-(205,14) 13 "AntlrSyntaxGenerator.mxg"
             else
             #line hidden
             
@@ -3540,109 +3213,208 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
                     __first40 = false;
                 }
                 __cb.Push("    ");
-                #line (233,6)-(233,67) 28 "AntlrSyntaxGenerator.mxg"
-                __cb.Write(GenerateVisitSeparatedListItem(sl.RepeatedItem, builder, "i"));
-                #line hidden
-                __cb.WriteLine();
-                __cb.Pop();
-                __cb.Push("    ");
-                #line (234,5)-(234,7) 29 "AntlrSyntaxGenerator.mxg"
+                #line (206,13)-(206,15) 29 "AntlrSyntaxGenerator.mxg"
                 __cb.Write("if");
                 #line hidden
-                #line (234,7)-(234,8) 29 "AntlrSyntaxGenerator.mxg"
+                #line (206,15)-(206,16) 29 "AntlrSyntaxGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (234,8)-(234,10) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write("(i");
+                #line (206,16)-(206,17) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write("(");
                 #line hidden
-                #line (234,10)-(234,11) 29 "AntlrSyntaxGenerator.mxg"
+                #line (206,18)-(206,32) 28 "AntlrSyntaxGenerator.mxg"
+                __cb.Write(elem.AntlrName);
+                #line hidden
+                #line (206,33)-(206,40) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write("Context");
+                #line hidden
+                #line (206,41)-(206,46) 28 "AntlrSyntaxGenerator.mxg"
+                __cb.Write("[i]");
+                #line hidden
+                #line (206,47)-(206,48) 29 "AntlrSyntaxGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (234,11)-(234,12) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write("<");
+                #line (206,48)-(206,50) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write("is");
                 #line hidden
-                #line (234,12)-(234,13) 29 "AntlrSyntaxGenerator.mxg"
+                #line (206,50)-(206,51) 29 "AntlrSyntaxGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (234,14)-(234,44) 28 "AntlrSyntaxGenerator.mxg"
-                __cb.Write(sl.RepeatedSeparator.AntlrName);
+                #line (206,51)-(206,54) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write("not");
                 #line hidden
-                #line (234,45)-(234,59) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write("Context.Count)");
+                #line (206,54)-(206,55) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write(" ");
+                #line hidden
+                #line (206,55)-(206,60) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write("null)");
+                #line hidden
+                #line (206,60)-(206,61) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write(" ");
+                #line hidden
+                #line (206,62)-(206,80) 28 "AntlrSyntaxGenerator.mxg"
+                __cb.Write(elem.ParameterName);
+                #line hidden
+                #line (206,81)-(206,94) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write("Builder.Add((");
+                #line hidden
+                #line (206,95)-(206,115) 28 "AntlrSyntaxGenerator.mxg"
+                __cb.Write(elem.Value.GreenType);
+                #line hidden
+                #line (206,116)-(206,129) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write("?)this.Visit(");
+                #line hidden
+                #line (206,130)-(206,144) 28 "AntlrSyntaxGenerator.mxg"
+                __cb.Write(elem.AntlrName);
+                #line hidden
+                #line (206,145)-(206,152) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write("Context");
+                #line hidden
+                #line (206,153)-(206,158) 28 "AntlrSyntaxGenerator.mxg"
+                __cb.Write("[i]");
+                #line hidden
+                #line (206,159)-(206,160) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write(")");
+                #line hidden
+                #line (206,160)-(206,161) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write(" ");
+                #line hidden
+                #line (206,161)-(206,163) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write("??");
+                #line hidden
+                #line (206,163)-(206,164) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write(" ");
+                #line hidden
+                #line (206,165)-(206,185) 28 "AntlrSyntaxGenerator.mxg"
+                __cb.Write(elem.Value.GreenType);
+                #line hidden
+                #line (206,186)-(206,198) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write(".__Missing);");
                 #line hidden
                 __cb.WriteLine();
                 __cb.Pop();
                 __cb.Push("    ");
-                #line (235,5)-(235,6) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write("{");
-                #line hidden
-                __cb.WriteLine();
-                __cb.Pop();
-                __cb.Push("        ");
-                #line (236,10)-(236,81) 28 "AntlrSyntaxGenerator.mxg"
-                __cb.Write(GenerateVisitSeparatedListSeparator(sl.RepeatedSeparator, builder, "i"));
-                #line hidden
-                __cb.WriteLine();
-                __cb.Pop();
-                __cb.Push("    ");
-                #line (237,5)-(237,6) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write("}");
-                #line hidden
-                __cb.WriteLine();
-                __cb.Pop();
-                __cb.Push("    ");
-                #line (238,5)-(238,9) 29 "AntlrSyntaxGenerator.mxg"
+                #line (207,13)-(207,17) 29 "AntlrSyntaxGenerator.mxg"
                 __cb.Write("else");
                 #line hidden
-                __cb.WriteLine();
-                __cb.Pop();
-                __cb.Push("    ");
-                #line (239,5)-(239,6) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write("{");
-                #line hidden
-                __cb.WriteLine();
-                __cb.Pop();
-                __cb.Push("        ");
-                #line (240,10)-(240,17) 28 "AntlrSyntaxGenerator.mxg"
-                __cb.Write(builder);
-                #line hidden
-                #line (240,18)-(240,87) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write(".AddSeparator((InternalSyntaxToken?)this.VisitTerminal((IToken?)null,");
-                #line hidden
-                #line (240,87)-(240,88) 29 "AntlrSyntaxGenerator.mxg"
+                #line (207,17)-(207,18) 29 "AntlrSyntaxGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (240,89)-(240,93) 28 "AntlrSyntaxGenerator.mxg"
-                __cb.Write(Lang);
+                #line (207,19)-(207,37) 28 "AntlrSyntaxGenerator.mxg"
+                __cb.Write(elem.ParameterName);
                 #line hidden
-                #line (240,94)-(240,105) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write("SyntaxKind.");
+                #line (207,38)-(207,50) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write("Builder.Add(");
                 #line hidden
-                #line (240,106)-(240,137) 28 "AntlrSyntaxGenerator.mxg"
-                __cb.Write(sl.RepeatedSeparator.CSharpName);
+                #line (207,51)-(207,71) 28 "AntlrSyntaxGenerator.mxg"
+                __cb.Write(elem.Value.GreenType);
                 #line hidden
-                #line (240,138)-(240,141) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write("));");
-                #line hidden
-                __cb.WriteLine();
-                __cb.Pop();
-                __cb.Push("    ");
-                #line (241,5)-(241,6) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write("}");
+                #line (207,72)-(207,84) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write(".__Missing);");
                 #line hidden
                 __cb.WriteLine();
                 __cb.Pop();
             }
             if (!__first40) __cb.AppendLine();
             __cb.Push("");
-            #line (243,1)-(243,2) 25 "AntlrSyntaxGenerator.mxg"
+            #line (209,5)-(209,6) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("}");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
+            __cb.Push("");
+            #line (210,5)-(210,8) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("var");
+            #line hidden
+            #line (210,8)-(210,9) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (210,10)-(210,28) 24 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(elem.ParameterName);
+            #line hidden
+            #line (210,29)-(210,30) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (210,30)-(210,31) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("=");
+            #line hidden
+            #line (210,31)-(210,32) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (210,33)-(210,51) 24 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(elem.ParameterName);
+            #line hidden
+            #line (210,52)-(210,69) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("Builder.ToList();");
+            #line hidden
+            __cb.WriteLine();
+            __cb.Pop();
+            __cb.Push("");
+            #line (211,5)-(211,16) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("_pool.Free(");
+            #line hidden
+            #line (211,17)-(211,35) 24 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(elem.ParameterName);
+            #line hidden
+            #line (211,36)-(211,45) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("Builder);");
+            #line hidden
+            __cb.WriteLine();
+            __cb.Pop();
+            return __cb.ToStringAndFree();
+        }
+        
+        #line (214,9)-(214,68) 22 "AntlrSyntaxGenerator.mxg"
+        public string GenerateVisitSeparatedList(Element elem, SeparatedList sl)
+        #line hidden
+        {
+            var __cb = global::MetaDslx.CodeGeneration.CodeBuilder.GetInstance();
+            #line (215,6)-(215,48) 13 "AntlrSyntaxGenerator.mxg"
+            var builder = elem.ParameterName+"Builder";
+            #line hidden
+            
+            __cb.Push("");
+            #line (216,5)-(216,8) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("var");
+            #line hidden
+            #line (216,8)-(216,9) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (216,10)-(216,17) 24 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(builder);
+            #line hidden
+            #line (216,18)-(216,19) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (216,19)-(216,20) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("=");
+            #line hidden
+            #line (216,20)-(216,21) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (216,21)-(216,45) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("_pool.AllocateSeparated<");
+            #line hidden
+            #line (216,46)-(216,58) 24 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(sl.GreenType);
+            #line hidden
+            #line (216,59)-(216,70) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(">(reversed:");
+            #line hidden
+            #line (216,70)-(216,71) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (216,72)-(216,108) 24 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(sl.SeparatorFirst ? "true" : "false");
+            #line hidden
+            #line (216,109)-(216,111) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(");");
+            #line hidden
+            __cb.WriteLine();
+            __cb.Pop();
             var __first41 = true;
-            #line (244,6)-(244,81) 13 "AntlrSyntaxGenerator.mxg"
-            for (int i = 0; i < sl.LastItems.Count && i < sl.LastSeparators.Count; ++i)
+            #line (217,6)-(217,83) 13 "AntlrSyntaxGenerator.mxg"
+            for (int i = 0; i < sl.FirstItems.Count && i < sl.FirstSeparators.Count; ++i)
             #line hidden
             
             {
@@ -3651,8 +3423,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
                     __first41 = false;
                 }
                 var __first42 = true;
-                #line (245,10)-(245,40) 17 "AntlrSyntaxGenerator.mxg"
-                if (sl.RepeatedSeparatorFirst)
+                #line (218,10)-(218,32) 17 "AntlrSyntaxGenerator.mxg"
+                if (sl.SeparatorFirst)
                 #line hidden
                 
                 {
@@ -3661,19 +3433,19 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
                         __first42 = false;
                     }
                     __cb.Push("");
-                    #line (246,2)-(246,68) 32 "AntlrSyntaxGenerator.mxg"
-                    __cb.Write(GenerateVisitSeparatedListSeparator(sl.LastSeparators[i], builder));
+                    #line (219,14)-(219,81) 32 "AntlrSyntaxGenerator.mxg"
+                    __cb.Write(GenerateVisitSeparatedListSeparator(sl.FirstSeparators[i], builder));
                     #line hidden
                     __cb.WriteLine();
                     __cb.Pop();
                     __cb.Push("");
-                    #line (247,2)-(247,64) 32 "AntlrSyntaxGenerator.mxg"
-                    __cb.Write(GenerateVisitSeparatedListItem(sl.LastItems[i], builder, null));
+                    #line (220,14)-(220,71) 32 "AntlrSyntaxGenerator.mxg"
+                    __cb.Write(GenerateVisitSeparatedListItem(sl.FirstItems[i], builder));
                     #line hidden
                     __cb.WriteLine();
                     __cb.Pop();
                 }
-                #line (248,10)-(248,14) 17 "AntlrSyntaxGenerator.mxg"
+                #line (221,10)-(221,14) 17 "AntlrSyntaxGenerator.mxg"
                 else
                 #line hidden
                 
@@ -3683,14 +3455,14 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
                         __first42 = false;
                     }
                     __cb.Push("");
-                    #line (249,2)-(249,64) 32 "AntlrSyntaxGenerator.mxg"
-                    __cb.Write(GenerateVisitSeparatedListItem(sl.LastItems[i], builder, null));
+                    #line (222,14)-(222,71) 32 "AntlrSyntaxGenerator.mxg"
+                    __cb.Write(GenerateVisitSeparatedListItem(sl.FirstItems[i], builder));
                     #line hidden
                     __cb.WriteLine();
                     __cb.Pop();
                     __cb.Push("");
-                    #line (250,2)-(250,68) 32 "AntlrSyntaxGenerator.mxg"
-                    __cb.Write(GenerateVisitSeparatedListSeparator(sl.LastSeparators[i], builder));
+                    #line (223,14)-(223,81) 32 "AntlrSyntaxGenerator.mxg"
+                    __cb.Write(GenerateVisitSeparatedListSeparator(sl.FirstSeparators[i], builder));
                     #line hidden
                     __cb.WriteLine();
                     __cb.Pop();
@@ -3699,8 +3471,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
             }
             if (!__first41) __cb.AppendLine();
             var __first43 = true;
-            #line (253,6)-(253,55) 13 "AntlrSyntaxGenerator.mxg"
-            if (sl.LastItems.Count > sl.LastSeparators.Count)
+            #line (226,6)-(226,57) 13 "AntlrSyntaxGenerator.mxg"
+            if (sl.FirstItems.Count > sl.FirstSeparators.Count)
             #line hidden
             
             {
@@ -3709,16 +3481,16 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
                     __first43 = false;
                 }
                 __cb.Push("");
-                #line (254,2)-(254,77) 28 "AntlrSyntaxGenerator.mxg"
-                __cb.Write(GenerateVisitSeparatedListItem(sl.LastItems[sl.LastItems.Count-1], builder));
+                #line (227,10)-(227,87) 28 "AntlrSyntaxGenerator.mxg"
+                __cb.Write(GenerateVisitSeparatedListItem(sl.FirstItems[sl.FirstItems.Count-1], builder));
                 #line hidden
                 __cb.WriteLine();
                 __cb.Pop();
             }
             if (!__first43) __cb.AppendLine();
             var __first44 = true;
-            #line (256,6)-(256,55) 13 "AntlrSyntaxGenerator.mxg"
-            if (sl.LastSeparators.Count > sl.LastItems.Count)
+            #line (229,6)-(229,57) 13 "AntlrSyntaxGenerator.mxg"
+            if (sl.FirstSeparators.Count > sl.FirstItems.Count)
             #line hidden
             
             {
@@ -3727,168 +3499,145 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
                     __first44 = false;
                 }
                 __cb.Push("");
-                #line (257,2)-(257,92) 28 "AntlrSyntaxGenerator.mxg"
-                __cb.Write(GenerateVisitSeparatedListSeparator(sl.LastSeparators[sl.LastSeparators.Count-1], builder));
+                #line (230,10)-(230,102) 28 "AntlrSyntaxGenerator.mxg"
+                __cb.Write(GenerateVisitSeparatedListSeparator(sl.FirstSeparators[sl.FirstSeparators.Count-1], builder));
                 #line hidden
                 __cb.WriteLine();
                 __cb.Pop();
             }
             if (!__first44) __cb.AppendLine();
             __cb.Push("");
-            #line (259,1)-(259,4) 25 "AntlrSyntaxGenerator.mxg"
+            #line (232,5)-(232,8) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("var");
             #line hidden
-            #line (259,4)-(259,5) 25 "AntlrSyntaxGenerator.mxg"
+            #line (232,8)-(232,9) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (259,6)-(259,24) 24 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(elem.ParameterName);
+            #line (232,10)-(232,35) 24 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(sl.RepeatedItem.AntlrName);
             #line hidden
-            #line (259,25)-(259,26) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (259,26)-(259,27) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write("=");
-            #line hidden
-            #line (259,27)-(259,28) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (259,29)-(259,36) 24 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(builder);
-            #line hidden
-            #line (259,37)-(259,47) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(".ToList();");
-            #line hidden
-            __cb.WriteLine();
-            __cb.Pop();
-            __cb.Push("");
-            #line (260,1)-(260,12) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write("_pool.Free(");
-            #line hidden
-            #line (260,13)-(260,20) 24 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(builder);
-            #line hidden
-            #line (260,21)-(260,23) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(");");
-            #line hidden
-            __cb.WriteLine();
-            __cb.Pop();
-            return __cb.ToStringAndFree();
-        }
-        
-        #line (263,9)-(263,70) 22 "AntlrSyntaxGenerator.mxg"
-        public string GenerateVisitSeparatedListItem(Element elem, string builder)
-        #line hidden
-        {
-            var __cb = global::MetaDslx.CodeGeneration.CodeBuilder.GetInstance();
-            __cb.Push("");
-            #line (264,1)-(264,4) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write("var");
-            #line hidden
-            #line (264,4)-(264,5) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (264,6)-(264,20) 24 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(elem.AntlrName);
-            #line hidden
-            #line (264,21)-(264,28) 25 "AntlrSyntaxGenerator.mxg"
+            #line (232,36)-(232,43) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("Context");
             #line hidden
-            #line (264,28)-(264,29) 25 "AntlrSyntaxGenerator.mxg"
+            #line (232,43)-(232,44) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (264,29)-(264,30) 25 "AntlrSyntaxGenerator.mxg"
+            #line (232,44)-(232,45) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("=");
             #line hidden
-            #line (264,30)-(264,31) 25 "AntlrSyntaxGenerator.mxg"
+            #line (232,45)-(232,46) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (264,31)-(264,39) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write("context.");
+            #line (232,46)-(232,55) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("context._");
             #line hidden
-            #line (264,40)-(264,54) 24 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(elem.AntlrName);
+            #line (232,56)-(232,81) 24 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(sl.RepeatedItem.AntlrName);
             #line hidden
-            #line (264,55)-(264,56) 25 "AntlrSyntaxGenerator.mxg"
+            #line (232,82)-(232,83) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(";");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("");
-            #line (265,1)-(265,3) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write("if");
+            #line (233,5)-(233,8) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("var");
             #line hidden
-            #line (265,3)-(265,4) 25 "AntlrSyntaxGenerator.mxg"
+            #line (233,8)-(233,9) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (265,4)-(265,5) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write("(");
+            #line (233,10)-(233,40) 24 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(sl.RepeatedSeparator.AntlrName);
             #line hidden
-            #line (265,6)-(265,20) 24 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(elem.AntlrName);
-            #line hidden
-            #line (265,21)-(265,28) 25 "AntlrSyntaxGenerator.mxg"
+            #line (233,41)-(233,48) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("Context");
             #line hidden
-            #line (265,28)-(265,29) 25 "AntlrSyntaxGenerator.mxg"
+            #line (233,48)-(233,49) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (265,29)-(265,31) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write("is");
+            #line (233,49)-(233,50) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("=");
             #line hidden
-            #line (265,31)-(265,32) 25 "AntlrSyntaxGenerator.mxg"
+            #line (233,50)-(233,51) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (265,32)-(265,35) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write("not");
+            #line (233,51)-(233,60) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("context._");
             #line hidden
-            #line (265,35)-(265,36) 25 "AntlrSyntaxGenerator.mxg"
+            #line (233,61)-(233,91) 24 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(sl.RepeatedSeparator.AntlrName);
+            #line hidden
+            #line (233,92)-(233,93) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(";");
+            #line hidden
+            __cb.WriteLine();
+            __cb.Pop();
+            __cb.Push("");
+            #line (234,5)-(234,8) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("for");
+            #line hidden
+            #line (234,8)-(234,9) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (265,36)-(265,41) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write("null)");
+            #line (234,9)-(234,13) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("(int");
             #line hidden
-            #line (265,41)-(265,42) 25 "AntlrSyntaxGenerator.mxg"
+            #line (234,13)-(234,14) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (265,43)-(265,50) 24 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(builder);
+            #line (234,14)-(234,15) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("i");
             #line hidden
-            #line (265,51)-(265,57) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(".Add((");
-            #line hidden
-            #line (265,58)-(265,78) 24 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(elem.Value.GreenType);
-            #line hidden
-            #line (265,79)-(265,92) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write("?)this.Visit(");
-            #line hidden
-            #line (265,93)-(265,107) 24 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(elem.AntlrName);
-            #line hidden
-            #line (265,108)-(265,116) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write("Context)");
-            #line hidden
-            #line (265,116)-(265,117) 25 "AntlrSyntaxGenerator.mxg"
+            #line (234,15)-(234,16) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (265,117)-(265,119) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write("??");
+            #line (234,16)-(234,17) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("=");
             #line hidden
-            #line (265,119)-(265,120) 25 "AntlrSyntaxGenerator.mxg"
+            #line (234,17)-(234,18) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (265,121)-(265,141) 24 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(elem.Value.GreenType);
+            #line (234,18)-(234,20) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("0;");
             #line hidden
-            #line (265,142)-(265,154) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(".__Missing);");
+            #line (234,20)-(234,21) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (234,21)-(234,22) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("i");
+            #line hidden
+            #line (234,22)-(234,23) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (234,23)-(234,24) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("<");
+            #line hidden
+            #line (234,24)-(234,25) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (234,26)-(234,51) 24 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(sl.RepeatedItem.AntlrName);
+            #line hidden
+            #line (234,52)-(234,66) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("Context.Count;");
+            #line hidden
+            #line (234,66)-(234,67) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (234,67)-(234,71) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("++i)");
+            #line hidden
+            __cb.WriteLine();
+            __cb.Pop();
+            __cb.Push("");
+            #line (235,5)-(235,6) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("{");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
             var __first45 = true;
-            #line (266,6)-(266,48) 13 "AntlrSyntaxGenerator.mxg"
-            if (!elem.Value.Multiplicity.IsOptional())
+            #line (236,10)-(236,40) 13 "AntlrSyntaxGenerator.mxg"
+            if (sl.RepeatedSeparatorFirst)
             #line hidden
             
             {
@@ -3896,70 +3645,213 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
                 {
                     __first45 = false;
                 }
-                __cb.Push("");
-                #line (267,1)-(267,5) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write("else");
+                __cb.Push("    ");
+                #line (237,13)-(237,15) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write("if");
                 #line hidden
-                #line (267,5)-(267,6) 29 "AntlrSyntaxGenerator.mxg"
+                #line (237,15)-(237,16) 29 "AntlrSyntaxGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (267,7)-(267,14) 28 "AntlrSyntaxGenerator.mxg"
+                #line (237,16)-(237,18) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write("(i");
+                #line hidden
+                #line (237,18)-(237,19) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write(" ");
+                #line hidden
+                #line (237,19)-(237,20) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write("<");
+                #line hidden
+                #line (237,20)-(237,21) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write(" ");
+                #line hidden
+                #line (237,22)-(237,52) 28 "AntlrSyntaxGenerator.mxg"
+                __cb.Write(sl.RepeatedSeparator.AntlrName);
+                #line hidden
+                #line (237,53)-(237,67) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write("Context.Count)");
+                #line hidden
+                __cb.WriteLine();
+                __cb.Pop();
+                __cb.Push("    ");
+                #line (238,13)-(238,14) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write("{");
+                #line hidden
+                __cb.WriteLine();
+                __cb.Pop();
+                __cb.Push("        ");
+                #line (239,18)-(239,89) 28 "AntlrSyntaxGenerator.mxg"
+                __cb.Write(GenerateVisitSeparatedListSeparator(sl.RepeatedSeparator, builder, "i"));
+                #line hidden
+                __cb.WriteLine();
+                __cb.Pop();
+                __cb.Push("    ");
+                #line (240,13)-(240,14) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write("}");
+                #line hidden
+                __cb.WriteLine();
+                __cb.Pop();
+                __cb.Push("    ");
+                #line (241,13)-(241,17) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write("else");
+                #line hidden
+                __cb.WriteLine();
+                __cb.Pop();
+                __cb.Push("    ");
+                #line (242,13)-(242,14) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write("{");
+                #line hidden
+                __cb.WriteLine();
+                __cb.Pop();
+                __cb.Push("        ");
+                #line (243,18)-(243,25) 28 "AntlrSyntaxGenerator.mxg"
                 __cb.Write(builder);
                 #line hidden
-                #line (267,15)-(267,20) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write(".Add(");
+                #line (243,26)-(243,95) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write(".AddSeparator((InternalSyntaxToken?)this.VisitTerminal((IToken?)null,");
                 #line hidden
-                #line (267,21)-(267,41) 28 "AntlrSyntaxGenerator.mxg"
-                __cb.Write(elem.Value.GreenType);
+                #line (243,95)-(243,96) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write(" ");
                 #line hidden
-                #line (267,42)-(267,54) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write(".__Missing);");
+                #line (243,97)-(243,101) 28 "AntlrSyntaxGenerator.mxg"
+                __cb.Write(Lang);
+                #line hidden
+                #line (243,102)-(243,113) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write("SyntaxKind.");
+                #line hidden
+                #line (243,114)-(243,145) 28 "AntlrSyntaxGenerator.mxg"
+                __cb.Write(sl.RepeatedSeparator.CSharpName);
+                #line hidden
+                #line (243,146)-(243,149) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write("));");
+                #line hidden
+                __cb.WriteLine();
+                __cb.Pop();
+                __cb.Push("    ");
+                #line (244,13)-(244,14) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write("}");
+                #line hidden
+                __cb.WriteLine();
+                __cb.Pop();
+                __cb.Push("    ");
+                #line (245,14)-(245,75) 28 "AntlrSyntaxGenerator.mxg"
+                __cb.Write(GenerateVisitSeparatedListItem(sl.RepeatedItem, builder, "i"));
+                #line hidden
+                __cb.WriteLine();
+                __cb.Pop();
+            }
+            #line (246,10)-(246,14) 13 "AntlrSyntaxGenerator.mxg"
+            else
+            #line hidden
+            
+            {
+                if (__first45)
+                {
+                    __first45 = false;
+                }
+                __cb.Push("    ");
+                #line (247,14)-(247,75) 28 "AntlrSyntaxGenerator.mxg"
+                __cb.Write(GenerateVisitSeparatedListItem(sl.RepeatedItem, builder, "i"));
+                #line hidden
+                __cb.WriteLine();
+                __cb.Pop();
+                __cb.Push("    ");
+                #line (248,13)-(248,15) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write("if");
+                #line hidden
+                #line (248,15)-(248,16) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write(" ");
+                #line hidden
+                #line (248,16)-(248,18) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write("(i");
+                #line hidden
+                #line (248,18)-(248,19) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write(" ");
+                #line hidden
+                #line (248,19)-(248,20) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write("<");
+                #line hidden
+                #line (248,20)-(248,21) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write(" ");
+                #line hidden
+                #line (248,22)-(248,52) 28 "AntlrSyntaxGenerator.mxg"
+                __cb.Write(sl.RepeatedSeparator.AntlrName);
+                #line hidden
+                #line (248,53)-(248,67) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write("Context.Count)");
+                #line hidden
+                __cb.WriteLine();
+                __cb.Pop();
+                __cb.Push("    ");
+                #line (249,13)-(249,14) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write("{");
+                #line hidden
+                __cb.WriteLine();
+                __cb.Pop();
+                __cb.Push("        ");
+                #line (250,18)-(250,89) 28 "AntlrSyntaxGenerator.mxg"
+                __cb.Write(GenerateVisitSeparatedListSeparator(sl.RepeatedSeparator, builder, "i"));
+                #line hidden
+                __cb.WriteLine();
+                __cb.Pop();
+                __cb.Push("    ");
+                #line (251,13)-(251,14) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write("}");
+                #line hidden
+                __cb.WriteLine();
+                __cb.Pop();
+                __cb.Push("    ");
+                #line (252,13)-(252,17) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write("else");
+                #line hidden
+                __cb.WriteLine();
+                __cb.Pop();
+                __cb.Push("    ");
+                #line (253,13)-(253,14) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write("{");
+                #line hidden
+                __cb.WriteLine();
+                __cb.Pop();
+                __cb.Push("        ");
+                #line (254,18)-(254,25) 28 "AntlrSyntaxGenerator.mxg"
+                __cb.Write(builder);
+                #line hidden
+                #line (254,26)-(254,95) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write(".AddSeparator((InternalSyntaxToken?)this.VisitTerminal((IToken?)null,");
+                #line hidden
+                #line (254,95)-(254,96) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write(" ");
+                #line hidden
+                #line (254,97)-(254,101) 28 "AntlrSyntaxGenerator.mxg"
+                __cb.Write(Lang);
+                #line hidden
+                #line (254,102)-(254,113) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write("SyntaxKind.");
+                #line hidden
+                #line (254,114)-(254,145) 28 "AntlrSyntaxGenerator.mxg"
+                __cb.Write(sl.RepeatedSeparator.CSharpName);
+                #line hidden
+                #line (254,146)-(254,149) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write("));");
+                #line hidden
+                __cb.WriteLine();
+                __cb.Pop();
+                __cb.Push("    ");
+                #line (255,13)-(255,14) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write("}");
                 #line hidden
                 __cb.WriteLine();
                 __cb.Pop();
             }
             if (!__first45) __cb.AppendLine();
-            return __cb.ToStringAndFree();
-        }
-        
-        #line (271,9)-(271,75) 22 "AntlrSyntaxGenerator.mxg"
-        public string GenerateVisitSeparatedListSeparator(Element elem, string builder)
-        #line hidden
-        {
-            var __cb = global::MetaDslx.CodeGeneration.CodeBuilder.GetInstance();
             __cb.Push("");
-            #line (272,1)-(272,4) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write("var");
-            #line hidden
-            #line (272,4)-(272,5) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (272,5)-(272,22) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write("_separatorContext");
-            #line hidden
-            #line (272,22)-(272,23) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (272,23)-(272,24) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write("=");
-            #line hidden
-            #line (272,24)-(272,25) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (272,25)-(272,33) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write("context.");
-            #line hidden
-            #line (272,34)-(272,48) 24 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(elem.AntlrName);
-            #line hidden
-            #line (272,49)-(272,50) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(";");
+            #line (257,5)-(257,6) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("}");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
             var __first46 = true;
-            #line (273,6)-(273,47) 13 "AntlrSyntaxGenerator.mxg"
-            if (elem.Value.Multiplicity.IsOptional())
+            #line (258,6)-(258,81) 13 "AntlrSyntaxGenerator.mxg"
+            for (int i = 0; i < sl.LastItems.Count && i < sl.LastSeparators.Count; ++i)
             #line hidden
             
             {
@@ -3967,289 +3859,57 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
                 {
                     __first46 = false;
                 }
-                __cb.Push("");
-                #line (274,1)-(274,3) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write("if");
+                var __first47 = true;
+                #line (259,10)-(259,40) 17 "AntlrSyntaxGenerator.mxg"
+                if (sl.RepeatedSeparatorFirst)
                 #line hidden
-                #line (274,3)-(274,4) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write(" ");
-                #line hidden
-                #line (274,4)-(274,5) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write("(");
-                #line hidden
-                #line (274,6)-(274,20) 28 "AntlrSyntaxGenerator.mxg"
-                __cb.Write(elem.AntlrName);
-                #line hidden
-                #line (274,21)-(274,28) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write("Context");
-                #line hidden
-                #line (274,28)-(274,29) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write(" ");
-                #line hidden
-                #line (274,29)-(274,31) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write("is");
-                #line hidden
-                #line (274,31)-(274,32) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write(" ");
-                #line hidden
-                #line (274,32)-(274,35) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write("not");
-                #line hidden
-                #line (274,35)-(274,36) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write(" ");
-                #line hidden
-                #line (274,36)-(274,41) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write("null)");
-                #line hidden
-                #line (274,41)-(274,42) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write(" ");
-                #line hidden
-                #line (274,43)-(274,50) 28 "AntlrSyntaxGenerator.mxg"
-                __cb.Write(builder);
-                #line hidden
-                #line (274,51)-(274,106) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write(".AddSeparator((InternalSyntaxToken?)this.VisitTerminal(");
-                #line hidden
-                #line (274,107)-(274,121) 28 "AntlrSyntaxGenerator.mxg"
-                __cb.Write(elem.AntlrName);
-                #line hidden
-                #line (274,122)-(274,132) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write("Context));");
-                #line hidden
-                __cb.WriteLine();
-                __cb.Pop();
-            }
-            #line (275,6)-(275,10) 13 "AntlrSyntaxGenerator.mxg"
-            else
-            #line hidden
-            
-            {
-                if (__first46)
+                
                 {
-                    __first46 = false;
+                    if (__first47)
+                    {
+                        __first47 = false;
+                    }
+                    __cb.Push("");
+                    #line (260,14)-(260,80) 32 "AntlrSyntaxGenerator.mxg"
+                    __cb.Write(GenerateVisitSeparatedListSeparator(sl.LastSeparators[i], builder));
+                    #line hidden
+                    __cb.WriteLine();
+                    __cb.Pop();
+                    __cb.Push("");
+                    #line (261,14)-(261,76) 32 "AntlrSyntaxGenerator.mxg"
+                    __cb.Write(GenerateVisitSeparatedListItem(sl.LastItems[i], builder, null));
+                    #line hidden
+                    __cb.WriteLine();
+                    __cb.Pop();
                 }
-                __cb.Push("");
-                #line (276,2)-(276,9) 28 "AntlrSyntaxGenerator.mxg"
-                __cb.Write(builder);
+                #line (262,10)-(262,14) 17 "AntlrSyntaxGenerator.mxg"
+                else
                 #line hidden
-                #line (276,10)-(276,65) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write(".AddSeparator((InternalSyntaxToken?)this.VisitTerminal(");
-                #line hidden
-                #line (276,66)-(276,80) 28 "AntlrSyntaxGenerator.mxg"
-                __cb.Write(elem.AntlrName);
-                #line hidden
-                #line (276,81)-(276,89) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write("Context,");
-                #line hidden
-                #line (276,89)-(276,90) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write(" ");
-                #line hidden
-                #line (276,91)-(276,95) 28 "AntlrSyntaxGenerator.mxg"
-                __cb.Write(Lang);
-                #line hidden
-                #line (276,96)-(276,107) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write("SyntaxKind.");
-                #line hidden
-                #line (276,108)-(276,123) 28 "AntlrSyntaxGenerator.mxg"
-                __cb.Write(elem.CSharpName);
-                #line hidden
-                #line (276,124)-(276,127) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write("));");
-                #line hidden
-                __cb.WriteLine();
-                __cb.Pop();
+                
+                {
+                    if (__first47)
+                    {
+                        __first47 = false;
+                    }
+                    __cb.Push("");
+                    #line (263,14)-(263,76) 32 "AntlrSyntaxGenerator.mxg"
+                    __cb.Write(GenerateVisitSeparatedListItem(sl.LastItems[i], builder, null));
+                    #line hidden
+                    __cb.WriteLine();
+                    __cb.Pop();
+                    __cb.Push("");
+                    #line (264,14)-(264,80) 32 "AntlrSyntaxGenerator.mxg"
+                    __cb.Write(GenerateVisitSeparatedListSeparator(sl.LastSeparators[i], builder));
+                    #line hidden
+                    __cb.WriteLine();
+                    __cb.Pop();
+                }
+                if (!__first47) __cb.AppendLine();
             }
             if (!__first46) __cb.AppendLine();
-            return __cb.ToStringAndFree();
-        }
-        
-        #line (280,9)-(280,84) 22 "AntlrSyntaxGenerator.mxg"
-        public string GenerateVisitSeparatedListItem(Element elem, string builder, string index)
-        #line hidden
-        {
-            var __cb = global::MetaDslx.CodeGeneration.CodeBuilder.GetInstance();
-            __cb.Push("");
-            #line (281,1)-(281,4) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write("var");
-            #line hidden
-            #line (281,4)-(281,5) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (281,5)-(281,10) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write("_item");
-            #line hidden
-            #line (281,10)-(281,11) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (281,11)-(281,12) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write("=");
-            #line hidden
-            #line (281,12)-(281,13) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (281,14)-(281,28) 24 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(elem.AntlrName);
-            #line hidden
-            #line (281,29)-(281,36) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write("Context");
-            #line hidden
-            #line (281,37)-(281,40) 24 "AntlrSyntaxGenerator.mxg"
-            __cb.Write("[");
-            #line hidden
-            #line (281,42)-(281,47) 24 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(index);
-            #line hidden
-            #line (281,49)-(281,52) 24 "AntlrSyntaxGenerator.mxg"
-            __cb.Write("]");
-            #line hidden
-            #line (281,53)-(281,54) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(";");
-            #line hidden
-            __cb.WriteLine();
-            __cb.Pop();
-            __cb.Push("");
-            #line (282,1)-(282,3) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write("if");
-            #line hidden
-            #line (282,3)-(282,4) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (282,4)-(282,10) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write("(_item");
-            #line hidden
-            #line (282,10)-(282,11) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (282,11)-(282,13) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write("is");
-            #line hidden
-            #line (282,13)-(282,14) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (282,14)-(282,17) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write("not");
-            #line hidden
-            #line (282,17)-(282,18) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (282,18)-(282,23) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write("null)");
-            #line hidden
-            #line (282,23)-(282,24) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (282,25)-(282,32) 24 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(builder);
-            #line hidden
-            #line (282,33)-(282,39) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(".Add((");
-            #line hidden
-            #line (282,40)-(282,60) 24 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(elem.Value.GreenType);
-            #line hidden
-            #line (282,61)-(282,80) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write("?)this.Visit(_item)");
-            #line hidden
-            #line (282,80)-(282,81) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (282,81)-(282,83) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write("??");
-            #line hidden
-            #line (282,83)-(282,84) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (282,85)-(282,105) 24 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(elem.Value.GreenType);
-            #line hidden
-            #line (282,106)-(282,118) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(".__Missing);");
-            #line hidden
-            __cb.WriteLine();
-            __cb.Pop();
-            var __first47 = true;
-            #line (283,6)-(283,48) 13 "AntlrSyntaxGenerator.mxg"
-            if (!elem.Value.Multiplicity.IsOptional())
-            #line hidden
-            
-            {
-                if (__first47)
-                {
-                    __first47 = false;
-                }
-                __cb.Push("");
-                #line (284,1)-(284,5) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write("else");
-                #line hidden
-                #line (284,5)-(284,6) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write(" ");
-                #line hidden
-                #line (284,7)-(284,14) 28 "AntlrSyntaxGenerator.mxg"
-                __cb.Write(builder);
-                #line hidden
-                #line (284,15)-(284,20) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write(".Add(");
-                #line hidden
-                #line (284,21)-(284,41) 28 "AntlrSyntaxGenerator.mxg"
-                __cb.Write(elem.Value.GreenType);
-                #line hidden
-                #line (284,42)-(284,54) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write(".__Missing);");
-                #line hidden
-                __cb.WriteLine();
-                __cb.Pop();
-            }
-            if (!__first47) __cb.AppendLine();
-            return __cb.ToStringAndFree();
-        }
-        
-        #line (288,9)-(288,89) 22 "AntlrSyntaxGenerator.mxg"
-        public string GenerateVisitSeparatedListSeparator(Element elem, string builder, string index)
-        #line hidden
-        {
-            var __cb = global::MetaDslx.CodeGeneration.CodeBuilder.GetInstance();
-            __cb.Push("");
-            #line (289,1)-(289,4) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write("var");
-            #line hidden
-            #line (289,4)-(289,5) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (289,5)-(289,15) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write("_separator");
-            #line hidden
-            #line (289,15)-(289,16) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (289,16)-(289,17) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write("=");
-            #line hidden
-            #line (289,17)-(289,18) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (289,19)-(289,33) 24 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(elem.AntlrName);
-            #line hidden
-            #line (289,34)-(289,41) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write("Context");
-            #line hidden
-            #line (289,42)-(289,45) 24 "AntlrSyntaxGenerator.mxg"
-            __cb.Write("[");
-            #line hidden
-            #line (289,47)-(289,52) 24 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(index);
-            #line hidden
-            #line (289,54)-(289,57) 24 "AntlrSyntaxGenerator.mxg"
-            __cb.Write("]");
-            #line hidden
-            #line (289,58)-(289,59) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(";");
-            #line hidden
-            __cb.WriteLine();
-            __cb.Pop();
             var __first48 = true;
-            #line (290,6)-(290,47) 13 "AntlrSyntaxGenerator.mxg"
-            if (elem.Value.Multiplicity.IsOptional())
+            #line (267,6)-(267,55) 13 "AntlrSyntaxGenerator.mxg"
+            if (sl.LastItems.Count > sl.LastSeparators.Count)
             #line hidden
             
             {
@@ -4258,150 +3918,699 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
                     __first48 = false;
                 }
                 __cb.Push("");
-                #line (291,1)-(291,3) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write("if");
-                #line hidden
-                #line (291,3)-(291,4) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write(" ");
-                #line hidden
-                #line (291,4)-(291,5) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write("(");
-                #line hidden
-                #line (291,6)-(291,20) 28 "AntlrSyntaxGenerator.mxg"
-                __cb.Write(elem.AntlrName);
-                #line hidden
-                #line (291,21)-(291,28) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write("Context");
-                #line hidden
-                #line (291,28)-(291,29) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write(" ");
-                #line hidden
-                #line (291,29)-(291,31) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write("is");
-                #line hidden
-                #line (291,31)-(291,32) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write(" ");
-                #line hidden
-                #line (291,32)-(291,35) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write("not");
-                #line hidden
-                #line (291,35)-(291,36) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write(" ");
-                #line hidden
-                #line (291,36)-(291,41) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write("null)");
-                #line hidden
-                #line (291,41)-(291,42) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write(" ");
-                #line hidden
-                #line (291,43)-(291,50) 28 "AntlrSyntaxGenerator.mxg"
-                __cb.Write(builder);
-                #line hidden
-                #line (291,51)-(291,119) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write(".AddSeparator((InternalSyntaxToken?)this.VisitTerminal(_separator));");
-                #line hidden
-                __cb.WriteLine();
-                __cb.Pop();
-            }
-            #line (292,6)-(292,10) 13 "AntlrSyntaxGenerator.mxg"
-            else
-            #line hidden
-            
-            {
-                if (__first48)
-                {
-                    __first48 = false;
-                }
-                __cb.Push("");
-                #line (293,2)-(293,9) 28 "AntlrSyntaxGenerator.mxg"
-                __cb.Write(builder);
-                #line hidden
-                #line (293,10)-(293,76) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write(".AddSeparator((InternalSyntaxToken?)this.VisitTerminal(_separator,");
-                #line hidden
-                #line (293,76)-(293,77) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write(" ");
-                #line hidden
-                #line (293,78)-(293,82) 28 "AntlrSyntaxGenerator.mxg"
-                __cb.Write(Lang);
-                #line hidden
-                #line (293,83)-(293,94) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write("SyntaxKind.");
-                #line hidden
-                #line (293,95)-(293,110) 28 "AntlrSyntaxGenerator.mxg"
-                __cb.Write(elem.CSharpName);
-                #line hidden
-                #line (293,111)-(293,114) 29 "AntlrSyntaxGenerator.mxg"
-                __cb.Write("));");
+                #line (268,10)-(268,85) 28 "AntlrSyntaxGenerator.mxg"
+                __cb.Write(GenerateVisitSeparatedListItem(sl.LastItems[sl.LastItems.Count-1], builder));
                 #line hidden
                 __cb.WriteLine();
                 __cb.Pop();
             }
             if (!__first48) __cb.AppendLine();
+            var __first49 = true;
+            #line (270,6)-(270,55) 13 "AntlrSyntaxGenerator.mxg"
+            if (sl.LastSeparators.Count > sl.LastItems.Count)
+            #line hidden
+            
+            {
+                if (__first49)
+                {
+                    __first49 = false;
+                }
+                __cb.Push("");
+                #line (271,10)-(271,100) 28 "AntlrSyntaxGenerator.mxg"
+                __cb.Write(GenerateVisitSeparatedListSeparator(sl.LastSeparators[sl.LastSeparators.Count-1], builder));
+                #line hidden
+                __cb.WriteLine();
+                __cb.Pop();
+            }
+            if (!__first49) __cb.AppendLine();
+            __cb.Push("");
+            #line (273,5)-(273,8) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("var");
+            #line hidden
+            #line (273,8)-(273,9) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (273,10)-(273,28) 24 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(elem.ParameterName);
+            #line hidden
+            #line (273,29)-(273,30) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (273,30)-(273,31) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("=");
+            #line hidden
+            #line (273,31)-(273,32) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (273,33)-(273,40) 24 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(builder);
+            #line hidden
+            #line (273,41)-(273,51) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(".ToList();");
+            #line hidden
+            __cb.WriteLine();
+            __cb.Pop();
+            __cb.Push("");
+            #line (274,5)-(274,16) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("_pool.Free(");
+            #line hidden
+            #line (274,17)-(274,24) 24 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(builder);
+            #line hidden
+            #line (274,25)-(274,27) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(");");
+            #line hidden
+            __cb.WriteLine();
+            __cb.Pop();
             return __cb.ToStringAndFree();
         }
         
-        #line (297,9)-(297,46) 22 "AntlrSyntaxGenerator.mxg"
+        #line (277,9)-(277,70) 22 "AntlrSyntaxGenerator.mxg"
+        public string GenerateVisitSeparatedListItem(Element elem, string builder)
+        #line hidden
+        {
+            var __cb = global::MetaDslx.CodeGeneration.CodeBuilder.GetInstance();
+            __cb.Push("");
+            #line (278,5)-(278,8) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("var");
+            #line hidden
+            #line (278,8)-(278,9) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (278,10)-(278,24) 24 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(elem.AntlrName);
+            #line hidden
+            #line (278,25)-(278,32) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("Context");
+            #line hidden
+            #line (278,32)-(278,33) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (278,33)-(278,34) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("=");
+            #line hidden
+            #line (278,34)-(278,35) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (278,35)-(278,43) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("context.");
+            #line hidden
+            #line (278,44)-(278,58) 24 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(elem.AntlrName);
+            #line hidden
+            #line (278,59)-(278,60) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(";");
+            #line hidden
+            __cb.WriteLine();
+            __cb.Pop();
+            __cb.Push("");
+            #line (279,5)-(279,7) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("if");
+            #line hidden
+            #line (279,7)-(279,8) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (279,8)-(279,9) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("(");
+            #line hidden
+            #line (279,10)-(279,24) 24 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(elem.AntlrName);
+            #line hidden
+            #line (279,25)-(279,32) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("Context");
+            #line hidden
+            #line (279,32)-(279,33) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (279,33)-(279,35) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("is");
+            #line hidden
+            #line (279,35)-(279,36) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (279,36)-(279,39) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("not");
+            #line hidden
+            #line (279,39)-(279,40) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (279,40)-(279,45) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("null)");
+            #line hidden
+            #line (279,45)-(279,46) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (279,47)-(279,54) 24 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(builder);
+            #line hidden
+            #line (279,55)-(279,61) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(".Add((");
+            #line hidden
+            #line (279,62)-(279,82) 24 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(elem.Value.GreenType);
+            #line hidden
+            #line (279,83)-(279,96) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("?)this.Visit(");
+            #line hidden
+            #line (279,97)-(279,111) 24 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(elem.AntlrName);
+            #line hidden
+            #line (279,112)-(279,120) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("Context)");
+            #line hidden
+            #line (279,120)-(279,121) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (279,121)-(279,123) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("??");
+            #line hidden
+            #line (279,123)-(279,124) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (279,125)-(279,145) 24 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(elem.Value.GreenType);
+            #line hidden
+            #line (279,146)-(279,158) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(".__Missing);");
+            #line hidden
+            __cb.WriteLine();
+            __cb.Pop();
+            var __first50 = true;
+            #line (280,6)-(280,48) 13 "AntlrSyntaxGenerator.mxg"
+            if (!elem.Value.Multiplicity.IsOptional())
+            #line hidden
+            
+            {
+                if (__first50)
+                {
+                    __first50 = false;
+                }
+                __cb.Push("");
+                #line (281,9)-(281,13) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write("else");
+                #line hidden
+                #line (281,13)-(281,14) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write(" ");
+                #line hidden
+                #line (281,15)-(281,22) 28 "AntlrSyntaxGenerator.mxg"
+                __cb.Write(builder);
+                #line hidden
+                #line (281,23)-(281,28) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write(".Add(");
+                #line hidden
+                #line (281,29)-(281,49) 28 "AntlrSyntaxGenerator.mxg"
+                __cb.Write(elem.Value.GreenType);
+                #line hidden
+                #line (281,50)-(281,62) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write(".__Missing);");
+                #line hidden
+                __cb.WriteLine();
+                __cb.Pop();
+            }
+            if (!__first50) __cb.AppendLine();
+            return __cb.ToStringAndFree();
+        }
+        
+        #line (285,9)-(285,75) 22 "AntlrSyntaxGenerator.mxg"
+        public string GenerateVisitSeparatedListSeparator(Element elem, string builder)
+        #line hidden
+        {
+            var __cb = global::MetaDslx.CodeGeneration.CodeBuilder.GetInstance();
+            __cb.Push("");
+            #line (286,5)-(286,8) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("var");
+            #line hidden
+            #line (286,8)-(286,9) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (286,9)-(286,26) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("_separatorContext");
+            #line hidden
+            #line (286,26)-(286,27) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (286,27)-(286,28) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("=");
+            #line hidden
+            #line (286,28)-(286,29) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (286,29)-(286,37) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("context.");
+            #line hidden
+            #line (286,38)-(286,52) 24 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(elem.AntlrName);
+            #line hidden
+            #line (286,53)-(286,54) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(";");
+            #line hidden
+            __cb.WriteLine();
+            __cb.Pop();
+            var __first51 = true;
+            #line (287,6)-(287,47) 13 "AntlrSyntaxGenerator.mxg"
+            if (elem.Value.Multiplicity.IsOptional())
+            #line hidden
+            
+            {
+                if (__first51)
+                {
+                    __first51 = false;
+                }
+                __cb.Push("");
+                #line (288,9)-(288,11) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write("if");
+                #line hidden
+                #line (288,11)-(288,12) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write(" ");
+                #line hidden
+                #line (288,12)-(288,13) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write("(");
+                #line hidden
+                #line (288,14)-(288,28) 28 "AntlrSyntaxGenerator.mxg"
+                __cb.Write(elem.AntlrName);
+                #line hidden
+                #line (288,29)-(288,36) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write("Context");
+                #line hidden
+                #line (288,36)-(288,37) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write(" ");
+                #line hidden
+                #line (288,37)-(288,39) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write("is");
+                #line hidden
+                #line (288,39)-(288,40) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write(" ");
+                #line hidden
+                #line (288,40)-(288,43) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write("not");
+                #line hidden
+                #line (288,43)-(288,44) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write(" ");
+                #line hidden
+                #line (288,44)-(288,49) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write("null)");
+                #line hidden
+                #line (288,49)-(288,50) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write(" ");
+                #line hidden
+                #line (288,51)-(288,58) 28 "AntlrSyntaxGenerator.mxg"
+                __cb.Write(builder);
+                #line hidden
+                #line (288,59)-(288,114) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write(".AddSeparator((InternalSyntaxToken?)this.VisitTerminal(");
+                #line hidden
+                #line (288,115)-(288,129) 28 "AntlrSyntaxGenerator.mxg"
+                __cb.Write(elem.AntlrName);
+                #line hidden
+                #line (288,130)-(288,140) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write("Context));");
+                #line hidden
+                __cb.WriteLine();
+                __cb.Pop();
+            }
+            #line (289,6)-(289,10) 13 "AntlrSyntaxGenerator.mxg"
+            else
+            #line hidden
+            
+            {
+                if (__first51)
+                {
+                    __first51 = false;
+                }
+                __cb.Push("");
+                #line (290,10)-(290,17) 28 "AntlrSyntaxGenerator.mxg"
+                __cb.Write(builder);
+                #line hidden
+                #line (290,18)-(290,73) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write(".AddSeparator((InternalSyntaxToken?)this.VisitTerminal(");
+                #line hidden
+                #line (290,74)-(290,88) 28 "AntlrSyntaxGenerator.mxg"
+                __cb.Write(elem.AntlrName);
+                #line hidden
+                #line (290,89)-(290,97) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write("Context,");
+                #line hidden
+                #line (290,97)-(290,98) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write(" ");
+                #line hidden
+                #line (290,99)-(290,103) 28 "AntlrSyntaxGenerator.mxg"
+                __cb.Write(Lang);
+                #line hidden
+                #line (290,104)-(290,115) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write("SyntaxKind.");
+                #line hidden
+                #line (290,116)-(290,131) 28 "AntlrSyntaxGenerator.mxg"
+                __cb.Write(elem.CSharpName);
+                #line hidden
+                #line (290,132)-(290,135) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write("));");
+                #line hidden
+                __cb.WriteLine();
+                __cb.Pop();
+            }
+            if (!__first51) __cb.AppendLine();
+            return __cb.ToStringAndFree();
+        }
+        
+        #line (294,9)-(294,84) 22 "AntlrSyntaxGenerator.mxg"
+        public string GenerateVisitSeparatedListItem(Element elem, string builder, string index)
+        #line hidden
+        {
+            var __cb = global::MetaDslx.CodeGeneration.CodeBuilder.GetInstance();
+            __cb.Push("");
+            #line (295,5)-(295,8) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("var");
+            #line hidden
+            #line (295,8)-(295,9) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (295,9)-(295,14) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("_item");
+            #line hidden
+            #line (295,14)-(295,15) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (295,15)-(295,16) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("=");
+            #line hidden
+            #line (295,16)-(295,17) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (295,18)-(295,32) 24 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(elem.AntlrName);
+            #line hidden
+            #line (295,33)-(295,40) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("Context");
+            #line hidden
+            #line (295,41)-(295,44) 24 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("[");
+            #line hidden
+            #line (295,46)-(295,51) 24 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(index);
+            #line hidden
+            #line (295,53)-(295,56) 24 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("]");
+            #line hidden
+            #line (295,57)-(295,58) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(";");
+            #line hidden
+            __cb.WriteLine();
+            __cb.Pop();
+            __cb.Push("");
+            #line (296,5)-(296,7) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("if");
+            #line hidden
+            #line (296,7)-(296,8) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (296,8)-(296,14) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("(_item");
+            #line hidden
+            #line (296,14)-(296,15) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (296,15)-(296,17) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("is");
+            #line hidden
+            #line (296,17)-(296,18) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (296,18)-(296,21) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("not");
+            #line hidden
+            #line (296,21)-(296,22) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (296,22)-(296,27) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("null)");
+            #line hidden
+            #line (296,27)-(296,28) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (296,29)-(296,36) 24 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(builder);
+            #line hidden
+            #line (296,37)-(296,43) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(".Add((");
+            #line hidden
+            #line (296,44)-(296,64) 24 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(elem.Value.GreenType);
+            #line hidden
+            #line (296,65)-(296,84) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("?)this.Visit(_item)");
+            #line hidden
+            #line (296,84)-(296,85) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (296,85)-(296,87) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("??");
+            #line hidden
+            #line (296,87)-(296,88) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (296,89)-(296,109) 24 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(elem.Value.GreenType);
+            #line hidden
+            #line (296,110)-(296,122) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(".__Missing);");
+            #line hidden
+            __cb.WriteLine();
+            __cb.Pop();
+            var __first52 = true;
+            #line (297,6)-(297,48) 13 "AntlrSyntaxGenerator.mxg"
+            if (!elem.Value.Multiplicity.IsOptional())
+            #line hidden
+            
+            {
+                if (__first52)
+                {
+                    __first52 = false;
+                }
+                __cb.Push("");
+                #line (298,9)-(298,13) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write("else");
+                #line hidden
+                #line (298,13)-(298,14) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write(" ");
+                #line hidden
+                #line (298,15)-(298,22) 28 "AntlrSyntaxGenerator.mxg"
+                __cb.Write(builder);
+                #line hidden
+                #line (298,23)-(298,28) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write(".Add(");
+                #line hidden
+                #line (298,29)-(298,49) 28 "AntlrSyntaxGenerator.mxg"
+                __cb.Write(elem.Value.GreenType);
+                #line hidden
+                #line (298,50)-(298,62) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write(".__Missing);");
+                #line hidden
+                __cb.WriteLine();
+                __cb.Pop();
+            }
+            if (!__first52) __cb.AppendLine();
+            return __cb.ToStringAndFree();
+        }
+        
+        #line (302,9)-(302,89) 22 "AntlrSyntaxGenerator.mxg"
+        public string GenerateVisitSeparatedListSeparator(Element elem, string builder, string index)
+        #line hidden
+        {
+            var __cb = global::MetaDslx.CodeGeneration.CodeBuilder.GetInstance();
+            __cb.Push("");
+            #line (303,5)-(303,8) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("var");
+            #line hidden
+            #line (303,8)-(303,9) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (303,9)-(303,19) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("_separator");
+            #line hidden
+            #line (303,19)-(303,20) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (303,20)-(303,21) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("=");
+            #line hidden
+            #line (303,21)-(303,22) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (303,23)-(303,37) 24 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(elem.AntlrName);
+            #line hidden
+            #line (303,38)-(303,45) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("Context");
+            #line hidden
+            #line (303,46)-(303,49) 24 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("[");
+            #line hidden
+            #line (303,51)-(303,56) 24 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(index);
+            #line hidden
+            #line (303,58)-(303,61) 24 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("]");
+            #line hidden
+            #line (303,62)-(303,63) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(";");
+            #line hidden
+            __cb.WriteLine();
+            __cb.Pop();
+            var __first53 = true;
+            #line (304,6)-(304,47) 13 "AntlrSyntaxGenerator.mxg"
+            if (elem.Value.Multiplicity.IsOptional())
+            #line hidden
+            
+            {
+                if (__first53)
+                {
+                    __first53 = false;
+                }
+                __cb.Push("");
+                #line (305,9)-(305,11) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write("if");
+                #line hidden
+                #line (305,11)-(305,12) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write(" ");
+                #line hidden
+                #line (305,12)-(305,13) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write("(");
+                #line hidden
+                #line (305,14)-(305,28) 28 "AntlrSyntaxGenerator.mxg"
+                __cb.Write(elem.AntlrName);
+                #line hidden
+                #line (305,29)-(305,36) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write("Context");
+                #line hidden
+                #line (305,36)-(305,37) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write(" ");
+                #line hidden
+                #line (305,37)-(305,39) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write("is");
+                #line hidden
+                #line (305,39)-(305,40) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write(" ");
+                #line hidden
+                #line (305,40)-(305,43) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write("not");
+                #line hidden
+                #line (305,43)-(305,44) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write(" ");
+                #line hidden
+                #line (305,44)-(305,49) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write("null)");
+                #line hidden
+                #line (305,49)-(305,50) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write(" ");
+                #line hidden
+                #line (305,51)-(305,58) 28 "AntlrSyntaxGenerator.mxg"
+                __cb.Write(builder);
+                #line hidden
+                #line (305,59)-(305,127) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write(".AddSeparator((InternalSyntaxToken?)this.VisitTerminal(_separator));");
+                #line hidden
+                __cb.WriteLine();
+                __cb.Pop();
+            }
+            #line (306,6)-(306,10) 13 "AntlrSyntaxGenerator.mxg"
+            else
+            #line hidden
+            
+            {
+                if (__first53)
+                {
+                    __first53 = false;
+                }
+                __cb.Push("");
+                #line (307,10)-(307,17) 28 "AntlrSyntaxGenerator.mxg"
+                __cb.Write(builder);
+                #line hidden
+                #line (307,18)-(307,84) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write(".AddSeparator((InternalSyntaxToken?)this.VisitTerminal(_separator,");
+                #line hidden
+                #line (307,84)-(307,85) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write(" ");
+                #line hidden
+                #line (307,86)-(307,90) 28 "AntlrSyntaxGenerator.mxg"
+                __cb.Write(Lang);
+                #line hidden
+                #line (307,91)-(307,102) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write("SyntaxKind.");
+                #line hidden
+                #line (307,103)-(307,118) 28 "AntlrSyntaxGenerator.mxg"
+                __cb.Write(elem.CSharpName);
+                #line hidden
+                #line (307,119)-(307,122) 29 "AntlrSyntaxGenerator.mxg"
+                __cb.Write("));");
+                #line hidden
+                __cb.WriteLine();
+                __cb.Pop();
+            }
+            if (!__first53) __cb.AppendLine();
+            return __cb.ToStringAndFree();
+        }
+        
+        #line (311,9)-(311,46) 22 "AntlrSyntaxGenerator.mxg"
         public string GenerateAntlrInternalSyntaxFactory()
         #line hidden
         {
             var __cb = global::MetaDslx.CodeGeneration.CodeBuilder.GetInstance();
             __cb.Push("");
-            #line (298,1)-(298,6) 25 "AntlrSyntaxGenerator.mxg"
+            #line (312,5)-(312,10) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("using");
             #line hidden
-            #line (298,6)-(298,7) 25 "AntlrSyntaxGenerator.mxg"
+            #line (312,10)-(312,11) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (298,7)-(298,29) 25 "AntlrSyntaxGenerator.mxg"
+            #line (312,11)-(312,33) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("MetaDslx.CodeAnalysis;");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("");
-            #line (299,1)-(299,6) 25 "AntlrSyntaxGenerator.mxg"
+            #line (313,5)-(313,10) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("using");
             #line hidden
-            #line (299,6)-(299,7) 25 "AntlrSyntaxGenerator.mxg"
+            #line (313,10)-(313,11) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (299,7)-(299,36) 25 "AntlrSyntaxGenerator.mxg"
+            #line (313,11)-(313,40) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("MetaDslx.CodeAnalysis.Syntax;");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("");
-            #line (300,1)-(300,6) 25 "AntlrSyntaxGenerator.mxg"
+            #line (314,5)-(314,10) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("using");
             #line hidden
-            #line (300,6)-(300,7) 25 "AntlrSyntaxGenerator.mxg"
+            #line (314,10)-(314,11) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (300,7)-(300,51) 25 "AntlrSyntaxGenerator.mxg"
+            #line (314,11)-(314,55) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("MetaDslx.CodeAnalysis.Syntax.InternalSyntax;");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("");
-            #line (301,1)-(301,6) 25 "AntlrSyntaxGenerator.mxg"
+            #line (315,5)-(315,10) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("using");
             #line hidden
-            #line (301,6)-(301,7) 25 "AntlrSyntaxGenerator.mxg"
+            #line (315,10)-(315,11) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (301,7)-(301,43) 25 "AntlrSyntaxGenerator.mxg"
+            #line (315,11)-(315,47) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("MetaDslx.CodeAnalysis.Parsers.Antlr;");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("");
-            #line (302,1)-(302,6) 25 "AntlrSyntaxGenerator.mxg"
+            #line (316,5)-(316,10) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("using");
             #line hidden
-            #line (302,6)-(302,7) 25 "AntlrSyntaxGenerator.mxg"
+            #line (316,10)-(316,11) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (302,7)-(302,22) 25 "AntlrSyntaxGenerator.mxg"
+            #line (316,11)-(316,26) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("Antlr4.Runtime;");
             #line hidden
             __cb.WriteLine();
@@ -4410,13 +4619,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("");
-            #line (304,1)-(304,10) 25 "AntlrSyntaxGenerator.mxg"
+            #line (318,5)-(318,14) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("#nullable");
             #line hidden
-            #line (304,10)-(304,11) 25 "AntlrSyntaxGenerator.mxg"
+            #line (318,14)-(318,15) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (304,11)-(304,17) 25 "AntlrSyntaxGenerator.mxg"
+            #line (318,15)-(318,21) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("enable");
             #line hidden
             __cb.WriteLine();
@@ -4425,184 +4634,184 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("");
-            #line (306,1)-(306,10) 25 "AntlrSyntaxGenerator.mxg"
+            #line (320,5)-(320,14) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("namespace");
             #line hidden
-            #line (306,10)-(306,11) 25 "AntlrSyntaxGenerator.mxg"
+            #line (320,14)-(320,15) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (306,12)-(306,21) 24 "AntlrSyntaxGenerator.mxg"
+            #line (320,16)-(320,25) 24 "AntlrSyntaxGenerator.mxg"
             __cb.Write(Namespace);
             #line hidden
-            #line (306,22)-(306,44) 25 "AntlrSyntaxGenerator.mxg"
+            #line (320,26)-(320,48) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(".Syntax.InternalSyntax");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("");
-            #line (307,1)-(307,2) 25 "AntlrSyntaxGenerator.mxg"
+            #line (321,5)-(321,6) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("{");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("    ");
-            #line (308,5)-(308,11) 25 "AntlrSyntaxGenerator.mxg"
+            #line (322,9)-(322,15) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("public");
             #line hidden
-            #line (308,11)-(308,12) 25 "AntlrSyntaxGenerator.mxg"
+            #line (322,15)-(322,16) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (308,12)-(308,19) 25 "AntlrSyntaxGenerator.mxg"
+            #line (322,16)-(322,23) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("partial");
             #line hidden
-            #line (308,19)-(308,20) 25 "AntlrSyntaxGenerator.mxg"
+            #line (322,23)-(322,24) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (308,20)-(308,25) 25 "AntlrSyntaxGenerator.mxg"
+            #line (322,24)-(322,29) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("class");
             #line hidden
-            #line (308,25)-(308,26) 25 "AntlrSyntaxGenerator.mxg"
+            #line (322,29)-(322,30) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (308,27)-(308,31) 24 "AntlrSyntaxGenerator.mxg"
+            #line (322,31)-(322,35) 24 "AntlrSyntaxGenerator.mxg"
             __cb.Write(Lang);
             #line hidden
-            #line (308,32)-(308,53) 25 "AntlrSyntaxGenerator.mxg"
+            #line (322,36)-(322,57) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("InternalSyntaxFactory");
             #line hidden
-            #line (308,53)-(308,54) 25 "AntlrSyntaxGenerator.mxg"
+            #line (322,57)-(322,58) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (308,54)-(308,55) 25 "AntlrSyntaxGenerator.mxg"
+            #line (322,58)-(322,59) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(":");
             #line hidden
-            #line (308,55)-(308,56) 25 "AntlrSyntaxGenerator.mxg"
+            #line (322,59)-(322,60) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (308,56)-(308,75) 25 "AntlrSyntaxGenerator.mxg"
+            #line (322,60)-(322,79) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("IAntlrSyntaxFactory");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("    ");
-            #line (309,5)-(309,6) 25 "AntlrSyntaxGenerator.mxg"
+            #line (323,9)-(323,10) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("{");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("\t    ");
-            #line (310,6)-(310,16) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Push("        ");
+            #line (324,13)-(324,23) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("AntlrLexer");
             #line hidden
-            #line (310,16)-(310,17) 25 "AntlrSyntaxGenerator.mxg"
+            #line (324,23)-(324,24) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (310,17)-(310,65) 25 "AntlrSyntaxGenerator.mxg"
+            #line (324,24)-(324,72) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("IAntlrSyntaxFactory.CreateAntlrLexer(ICharStream");
             #line hidden
-            #line (310,65)-(310,66) 25 "AntlrSyntaxGenerator.mxg"
+            #line (324,72)-(324,73) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (310,66)-(310,72) 25 "AntlrSyntaxGenerator.mxg"
+            #line (324,73)-(324,79) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("input)");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("\t    ");
-            #line (311,6)-(311,7) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Push("        ");
+            #line (325,13)-(325,14) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("{");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("\t        ");
-            #line (312,10)-(312,16) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Push("            ");
+            #line (326,17)-(326,23) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("return");
             #line hidden
-            #line (312,16)-(312,17) 25 "AntlrSyntaxGenerator.mxg"
+            #line (326,23)-(326,24) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (312,17)-(312,20) 25 "AntlrSyntaxGenerator.mxg"
+            #line (326,24)-(326,27) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("new");
             #line hidden
-            #line (312,20)-(312,21) 25 "AntlrSyntaxGenerator.mxg"
+            #line (326,27)-(326,28) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write(" ");
             #line hidden
-            #line (312,22)-(312,26) 24 "AntlrSyntaxGenerator.mxg"
+            #line (326,29)-(326,33) 24 "AntlrSyntaxGenerator.mxg"
             __cb.Write(Lang);
             #line hidden
-            #line (312,27)-(312,40) 25 "AntlrSyntaxGenerator.mxg"
+            #line (326,34)-(326,47) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("Lexer(input);");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("\t    ");
-            #line (313,6)-(313,7) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write("}");
-            #line hidden
-            __cb.WriteLine();
-            __cb.Pop();
-            __cb.Push("\t");
-            __cb.WriteLine();
-            __cb.Pop();
-            __cb.Push("\t    ");
-            #line (315,6)-(315,17) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write("AntlrParser");
-            #line hidden
-            #line (315,17)-(315,18) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (315,18)-(315,68) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write("IAntlrSyntaxFactory.CreateAntlrParser(ITokenStream");
-            #line hidden
-            #line (315,68)-(315,69) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (315,69)-(315,75) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write("input)");
-            #line hidden
-            __cb.WriteLine();
-            __cb.Pop();
-            __cb.Push("\t    ");
-            #line (316,6)-(316,7) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write("{");
-            #line hidden
-            __cb.WriteLine();
-            __cb.Pop();
-            __cb.Push("\t        ");
-            #line (317,10)-(317,16) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write("return");
-            #line hidden
-            #line (317,16)-(317,17) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (317,17)-(317,20) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write("new");
-            #line hidden
-            #line (317,20)-(317,21) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (317,22)-(317,26) 24 "AntlrSyntaxGenerator.mxg"
-            __cb.Write(Lang);
-            #line hidden
-            #line (317,27)-(317,41) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write("Parser(input);");
-            #line hidden
-            __cb.WriteLine();
-            __cb.Pop();
-            __cb.Push("\t    ");
-            #line (318,6)-(318,7) 25 "AntlrSyntaxGenerator.mxg"
-            __cb.Write("}");
-            #line hidden
-            __cb.WriteLine();
-            __cb.Pop();
-            __cb.Push("    ");
-            #line (319,5)-(319,6) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Push("        ");
+            #line (327,13)-(327,14) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("}");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("");
-            #line (320,1)-(320,2) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.WriteLine();
+            __cb.Pop();
+            __cb.Push("        ");
+            #line (329,13)-(329,24) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("AntlrParser");
+            #line hidden
+            #line (329,24)-(329,25) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (329,25)-(329,75) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("IAntlrSyntaxFactory.CreateAntlrParser(ITokenStream");
+            #line hidden
+            #line (329,75)-(329,76) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (329,76)-(329,82) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("input)");
+            #line hidden
+            __cb.WriteLine();
+            __cb.Pop();
+            __cb.Push("        ");
+            #line (330,13)-(330,14) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("{");
+            #line hidden
+            __cb.WriteLine();
+            __cb.Pop();
+            __cb.Push("            ");
+            #line (331,17)-(331,23) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("return");
+            #line hidden
+            #line (331,23)-(331,24) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (331,24)-(331,27) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("new");
+            #line hidden
+            #line (331,27)-(331,28) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (331,29)-(331,33) 24 "AntlrSyntaxGenerator.mxg"
+            __cb.Write(Lang);
+            #line hidden
+            #line (331,34)-(331,48) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("Parser(input);");
+            #line hidden
+            __cb.WriteLine();
+            __cb.Pop();
+            __cb.Push("        ");
+            #line (332,13)-(332,14) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("}");
+            #line hidden
+            __cb.WriteLine();
+            __cb.Pop();
+            __cb.Push("    ");
+            #line (333,9)-(333,10) 25 "AntlrSyntaxGenerator.mxg"
+            __cb.Write("}");
+            #line hidden
+            __cb.WriteLine();
+            __cb.Pop();
+            __cb.Push("");
+            #line (334,5)-(334,6) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("}");
             #line hidden
             __cb.WriteLine();

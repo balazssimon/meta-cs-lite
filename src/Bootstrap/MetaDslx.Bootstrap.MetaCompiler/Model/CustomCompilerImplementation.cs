@@ -566,6 +566,30 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             return _this.Value.Multiplicity.IsList() || _this.Value is SeparatedList;
         }
 
+        public override string Block_GreenType(Block _this)
+        {
+            return _this.GreenName;
+        }
+
+        public override string? Block_GreenSyntaxCondition(Block _this)
+        {
+            return null;
+        }
+
+        public override string Block_RedType(Block _this)
+        {
+            return _this.RedName;
+        }
+
+        public override string Block_GreenName(Block _this)
+        {
+            return $"{_this.CSharpName}Green";
+        }
+
+        public override string Block_RedName(Block _this)
+        {
+            return $"{_this.CSharpName}Syntax";
+        }
     }
 
 }

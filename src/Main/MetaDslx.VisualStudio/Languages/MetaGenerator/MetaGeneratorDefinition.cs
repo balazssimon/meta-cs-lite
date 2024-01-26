@@ -12,11 +12,11 @@ namespace MetaDslx.VisualStudio.Languages.MetaGenerator
     public sealed class MetaGeneratorDefinition
     {
         public const string ContentType = "MetaGenerator";
-        public const string FileExtension = ".mgen";
+        public const string FileExtension = ".mxg";
 
         public const string GeneratorServiceGuid = "46F65E7B-4C31-43B1-B69C-E4FE342075DA";
         public const string GeneratorServiceName = "C# Code Generator for MetaDslx Generator";
-        public const string FilterList = "MetaDslx Generator Files (*.mgen)\n*.mgen";
+        public const string FilterList = "MetaDslx Generator Files (*.mxg)\n*.mxg";
 
         /// <summary>
         /// Exports the MetaGenerator content type

@@ -30,8 +30,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<AdditionalFiles Include="Model\*.mxm" />
+		<!--
 		<AdditionalFiles Include="Language\*.mxl" />
+		-->
+		<AdditionalFiles Include="Model\*.mxm" />
 		<AdditionalFiles Include="Generators\*.mxg" />
 	</ItemGroup>
 	<ItemGroup>

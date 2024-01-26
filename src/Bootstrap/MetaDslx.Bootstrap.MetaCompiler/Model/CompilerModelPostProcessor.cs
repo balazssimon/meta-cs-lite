@@ -324,6 +324,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             var allRules = _grammar.GetAllContainedObjects<Rule>();
             foreach (var rule in allRules)
             {
+                _grammar.Rules.Add(rule);
                 AddBinders(rule.Binders, rule.Annotations);
                 AddAlternatives(rule.Alternatives);
             }
@@ -755,7 +756,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
 
         private void AddCSharpNames()
         {
-            foreach (var rule in _grammar.Rules.Where(r => !string.IsNullOrEmpty(r.Name)))
+            foreach (var rule in _grammar.Rules)
             {
                 if (rule.CSharpName is null) rule.CSharpName = AddRuleName(rule.Name, tryWithoutIndex: true);
                 AddCSharpNames(rule.CSharpName, rule.Alternatives, clearUsedElementNames: true);
@@ -820,12 +821,16 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             }
             if (elem.Value is SeparatedList sl)
             {
+                if (elem.Name is null) elem.Name = "List";
                 var repeatedBlock = (Block)sl.RepeatedBlock.Value;
                 var repeatedBlockName = contextName + elem.Name + "Block";
                 repeatedBlock.CSharpName = AddRuleName(repeatedBlockName, tryWithoutIndex: true);
                 AddCSharpNames(repeatedBlock.CSharpName, repeatedBlock.Alternatives, clearUsedElementNames: false);
             }
-            if (elem.Value is Eof) elem.Name = "EndOfFileToken";
+            if (elem.Value is Eof)
+            {
+                elem.Name = "EndOfFileToken";
+            }
             if (elem.Name is null)
             {
                 if (elem.Value is RuleRef rr)
@@ -836,10 +841,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                 else if (elem.Value is TokenAlts)
                 {
                     elem.Name = "Tokens";
-                }
-                else if (elem.Value is SeparatedList)
-                {
-                    elem.Name = "List";
                 }
             }
         }
@@ -921,6 +922,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                 usedElementNames.Clear();
                 AddAntlrNames(rule, usedElementNames);
             }
+            foreach (var block in _grammar.Blocks)
+            {
+                if (block.AntlrName is null) block.AntlrName = $"pr_{block.CSharpName}";
+                usedElementNames.Clear();
+                AddAntlrNames(block, usedElementNames);
+            }
             usedElementNames.Free();
         }
 
@@ -929,6 +936,15 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             foreach (var alt in rule.Alternatives)
             {
                 if (alt.AntlrName is null) alt.AntlrName = rule.Alternatives.Count == 1 ? rule.AntlrName : $"pr_{alt.CSharpName}";
+                AddAntlrNames(alt, usedElementNames);
+            }
+        }
+
+        private void AddAntlrNames(Block block, HashSet<string> usedElementNames)
+        {
+            foreach (var alt in block.Alternatives)
+            {
+                if (alt.AntlrName is null) alt.AntlrName = block.Alternatives.Count == 1 ? block.AntlrName : $"pr_{alt.CSharpName}";
                 AddAntlrNames(alt, usedElementNames);
             }
         }
@@ -989,6 +1005,29 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                                 {
                                     alt.ContainsBinders = true;
                                     rule.ContainsBinders = true;
+                                    updated = true;
+                                }
+                            }
+                        }
+                    }
+                    else if (grammarRule is Block block)
+                    {
+                        foreach (var alt in block.Alternatives)
+                        {
+                            if (!alt.ContainsBinders && alt.Binders.Count > 0)
+                            {
+                                alt.ContainsBinders = true;
+                                block.ContainsBinders = true;
+                                updated = true;
+                            }
+                            foreach (var elem in alt.Elements)
+                            {
+                                var oldContainsBinders = elem.ContainsBinders;
+                                ComputeContainsBinders(elem);
+                                if (!oldContainsBinders && elem.ContainsBinders)
+                                {
+                                    alt.ContainsBinders = true;
+                                    block.ContainsBinders = true;
                                     updated = true;
                                 }
                             }
