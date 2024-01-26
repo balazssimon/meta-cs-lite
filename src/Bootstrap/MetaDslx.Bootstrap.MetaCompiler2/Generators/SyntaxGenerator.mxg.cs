@@ -56,7 +56,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             var nonFixedTokens = Tokens.Where(lr => !lr.IsFixed).ToImmutableArray();
             #line hidden
             
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("");
@@ -71,7 +70,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("");
@@ -143,7 +141,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("\t");
@@ -335,7 +332,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
                 __cb.Pop();
             }
             if (!__first92) __cb.AppendLine();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("\t\t");
@@ -494,7 +490,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("\t\t");
@@ -551,7 +546,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
                 __cb.Pop();
             }
             if (!__first94) __cb.AppendLine();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("\t\t");
@@ -605,7 +599,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("    ");
@@ -748,7 +741,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             var keywordTokens = fixedTokens.Where(lr => lr.FixedText.IsIdentifier()).ToImmutableArray();
             #line hidden
             
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("");
@@ -763,7 +755,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("");
@@ -799,7 +790,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("\t");
@@ -1051,7 +1041,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("\t\t");
@@ -1234,7 +1223,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("\t\t");
@@ -1381,7 +1369,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("\t\t");
@@ -1444,7 +1431,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("\t\t");
@@ -1588,7 +1574,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("\t\t");
@@ -1651,7 +1636,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
@@ -1789,7 +1773,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
@@ -1846,10 +1829,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
@@ -1906,7 +1887,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
@@ -1969,7 +1949,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("\t\t");
@@ -2365,7 +2344,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("");
@@ -2428,7 +2406,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("");
@@ -2566,7 +2543,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("");
@@ -2629,7 +2605,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("");
@@ -2770,7 +2745,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
@@ -2833,7 +2807,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
@@ -2974,7 +2947,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
@@ -3037,7 +3009,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
@@ -3127,7 +3098,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
@@ -3190,7 +3160,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
@@ -3322,7 +3291,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
@@ -3379,7 +3347,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
@@ -3460,7 +3427,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
@@ -3523,7 +3489,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
@@ -3574,7 +3539,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("");
@@ -3637,7 +3601,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("");
@@ -3718,7 +3681,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
@@ -3775,7 +3737,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
@@ -3862,7 +3823,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
@@ -3925,7 +3885,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
@@ -4012,7 +3971,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
@@ -4075,7 +4033,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
@@ -4162,7 +4119,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
@@ -4225,7 +4181,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
@@ -4312,7 +4267,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
@@ -4375,7 +4329,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
@@ -4462,7 +4415,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
@@ -4525,7 +4477,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
@@ -4612,7 +4563,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
@@ -4675,7 +4625,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
@@ -4764,7 +4713,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("");
@@ -5172,7 +5120,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("    ");
@@ -5304,7 +5251,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
@@ -5391,7 +5337,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
@@ -5508,7 +5453,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
@@ -5568,7 +5512,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
@@ -5721,7 +5664,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
@@ -5784,7 +5726,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
@@ -5895,7 +5836,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
@@ -5934,7 +5874,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
@@ -6075,7 +6014,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("    ");
@@ -6630,7 +6568,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("    ");
@@ -6771,7 +6708,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
@@ -6939,7 +6875,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
@@ -7026,7 +6961,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("\t\t");
@@ -7113,7 +7047,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("\t\t");
@@ -7206,7 +7139,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("\t\t");
@@ -7269,7 +7201,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
@@ -7326,7 +7257,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
@@ -7548,7 +7478,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
@@ -7602,7 +7531,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
@@ -7671,7 +7599,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             var __first111 = true;
@@ -7880,7 +7807,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
                 #line hidden
                 __cb.WriteLine();
                 __cb.Pop();
-                __cb.Push("");
                 __cb.WriteLine();
                 __cb.Pop();
                 __cb.Push("    ");
@@ -7973,7 +7899,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
                 #line hidden
                 __cb.WriteLine();
                 __cb.Pop();
-                __cb.Push("");
                 __cb.WriteLine();
                 __cb.Pop();
             }
@@ -8064,7 +7989,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
                 __cb.Pop();
             }
             if (!__first114) __cb.AppendLine();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("    ");
@@ -8151,7 +8075,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("    ");
@@ -8238,7 +8161,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             var __first115 = true;
@@ -8793,7 +8715,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
                 __cb.Pop();
             }
             if (!__first115) __cb.AppendLine();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("    ");
@@ -8940,7 +8861,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("    ");
@@ -9086,7 +9006,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
                 var isList = MetaDslx.Bootstrap.MetaCompiler2.Model.MultiplicityExtensions.IsList(elem.Multiplicity) || elem.Value is SeparatedList;
                 #line hidden
                 
-                __cb.Push("");
                 __cb.WriteLine();
                 __cb.Pop();
                 __cb.Push("");
@@ -9186,10 +9105,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
                     {
                         __first123 = false;
                     }
-                    __cb.Push("");
                     __cb.WriteLine();
                     __cb.Pop();
-                    __cb.Push("");
+                    __cb.Push("    ");
                     #line (695,5)-(695,11) 33 "SyntaxGenerator.mxg"
                     __cb.Write("public");
                     #line hidden
@@ -9277,7 +9195,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
                 if (!__first123) __cb.AppendLine();
             }
             if (!__first121) __cb.AppendLine();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("    ");
@@ -9547,7 +9464,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("    ");
@@ -9646,7 +9562,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("    ");
@@ -9715,7 +9630,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("    ");
@@ -9778,7 +9692,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("");
@@ -9969,7 +9882,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("");
@@ -9984,7 +9896,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("");
@@ -10188,7 +10099,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
@@ -10326,7 +10236,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
@@ -10473,7 +10382,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
@@ -10605,7 +10513,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
@@ -10755,7 +10662,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
@@ -11169,7 +11075,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
@@ -11520,7 +11425,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
@@ -12072,7 +11976,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
@@ -12399,7 +12302,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
@@ -13098,7 +13000,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
@@ -13371,7 +13272,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
@@ -13929,7 +13829,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
@@ -14805,7 +14704,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
@@ -15468,7 +15366,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
@@ -15537,7 +15434,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
@@ -15606,7 +15502,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
@@ -15780,7 +15675,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
@@ -15789,7 +15683,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
@@ -19082,7 +18975,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("");
@@ -19097,7 +18989,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("");
@@ -19121,7 +19012,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("\t");
@@ -19235,7 +19125,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("\t");
@@ -19363,10 +19252,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
                     {
                         __first128 = false;
                     }
-                    __cb.Push("");
                     __cb.WriteLine();
                     __cb.Pop();
-                    __cb.Push("");
+                    __cb.Push("\t\t");
                     #line (1209,3)-(1209,9) 33 "SyntaxGenerator.mxg"
                     __cb.Write("public");
                     #line hidden
@@ -19405,19 +19293,19 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
                     #line hidden
                     __cb.WriteLine();
                     __cb.Pop();
-                    __cb.Push("");
+                    __cb.Push("\t\t");
                     #line (1210,3)-(1210,4) 33 "SyntaxGenerator.mxg"
                     __cb.Write("{");
                     #line hidden
                     __cb.WriteLine();
                     __cb.Pop();
-                    __cb.Push("    ");
+                    __cb.Push("\t\t    ");
                     #line (1211,7)-(1211,31) 33 "SyntaxGenerator.mxg"
                     __cb.Write("this.DefaultVisit(node);");
                     #line hidden
                     __cb.WriteLine();
                     __cb.Pop();
-                    __cb.Push("");
+                    __cb.Push("\t\t");
                     #line (1212,3)-(1212,4) 33 "SyntaxGenerator.mxg"
                     __cb.Write("}");
                     #line hidden
@@ -19433,10 +19321,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
+            __cb.Push("\t");
             #line (1217,2)-(1217,8) 25 "SyntaxGenerator.mxg"
             __cb.Write("public");
             #line hidden
@@ -19463,13 +19350,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
+            __cb.Push("\t");
             #line (1218,2)-(1218,3) 25 "SyntaxGenerator.mxg"
             __cb.Write("{");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("    ");
+            __cb.Push("\t    ");
             #line (1219,6)-(1219,13) 25 "SyntaxGenerator.mxg"
             __cb.Write("TResult");
             #line hidden
@@ -19513,7 +19400,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
                     {
                         __first130 = false;
                     }
-                    __cb.Push("\t");
+                    __cb.Push("\t\t");
                     #line (1222,3)-(1222,10) 33 "SyntaxGenerator.mxg"
                     __cb.Write("TResult");
                     #line hidden
@@ -19550,10 +19437,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
+            __cb.Push("\t");
             #line (1227,2)-(1227,8) 25 "SyntaxGenerator.mxg"
             __cb.Write("public");
             #line hidden
@@ -19598,13 +19484,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
+            __cb.Push("\t");
             #line (1228,2)-(1228,3) 25 "SyntaxGenerator.mxg"
             __cb.Write("{");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("    ");
+            __cb.Push("\t    ");
             #line (1229,6)-(1229,12) 25 "SyntaxGenerator.mxg"
             __cb.Write("public");
             #line hidden
@@ -19640,13 +19526,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("    ");
+            __cb.Push("\t    ");
             #line (1230,6)-(1230,7) 25 "SyntaxGenerator.mxg"
             __cb.Write("{");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("        ");
+            __cb.Push("\t        ");
             #line (1231,10)-(1231,16) 25 "SyntaxGenerator.mxg"
             __cb.Write("return");
             #line hidden
@@ -19658,7 +19544,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("    ");
+            __cb.Push("\t    ");
             #line (1232,6)-(1232,7) 25 "SyntaxGenerator.mxg"
             __cb.Write("}");
             #line hidden
@@ -19684,10 +19570,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
                     {
                         __first132 = false;
                     }
-                    __cb.Push("");
                     __cb.WriteLine();
                     __cb.Pop();
-                    __cb.Push("");
+                    __cb.Push("\t\t");
                     #line (1236,3)-(1236,9) 33 "SyntaxGenerator.mxg"
                     __cb.Write("public");
                     #line hidden
@@ -19726,13 +19611,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
                     #line hidden
                     __cb.WriteLine();
                     __cb.Pop();
-                    __cb.Push("");
+                    __cb.Push("\t\t");
                     #line (1237,3)-(1237,4) 33 "SyntaxGenerator.mxg"
                     __cb.Write("{");
                     #line hidden
                     __cb.WriteLine();
                     __cb.Pop();
-                    __cb.Push("    ");
+                    __cb.Push("\t\t    ");
                     #line (1238,7)-(1238,13) 33 "SyntaxGenerator.mxg"
                     __cb.Write("return");
                     #line hidden
@@ -19744,7 +19629,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
                     #line hidden
                     __cb.WriteLine();
                     __cb.Pop();
-                    __cb.Push("");
+                    __cb.Push("\t\t");
                     #line (1239,3)-(1239,4) 33 "SyntaxGenerator.mxg"
                     __cb.Write("}");
                     #line hidden
@@ -19760,10 +19645,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
+            __cb.Push("\t");
             #line (1244,2)-(1244,8) 25 "SyntaxGenerator.mxg"
             __cb.Write("public");
             #line hidden
@@ -19796,13 +19680,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
+            __cb.Push("\t");
             #line (1245,2)-(1245,3) 25 "SyntaxGenerator.mxg"
             __cb.Write("{");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("    ");
+            __cb.Push("\t    ");
             #line (1246,6)-(1246,13) 25 "SyntaxGenerator.mxg"
             __cb.Write("TResult");
             #line hidden
@@ -19858,7 +19742,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
                     {
                         __first134 = false;
                     }
-                    __cb.Push("\t");
+                    __cb.Push("\t\t");
                     #line (1249,3)-(1249,10) 33 "SyntaxGenerator.mxg"
                     __cb.Write("TResult");
                     #line hidden
@@ -19907,10 +19791,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
+            __cb.Push("\t");
             #line (1254,2)-(1254,8) 25 "SyntaxGenerator.mxg"
             __cb.Write("public");
             #line hidden
@@ -19973,13 +19856,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
+            __cb.Push("\t");
             #line (1255,2)-(1255,3) 25 "SyntaxGenerator.mxg"
             __cb.Write("{");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("    ");
+            __cb.Push("\t    ");
             #line (1256,6)-(1256,12) 25 "SyntaxGenerator.mxg"
             __cb.Write("public");
             #line hidden
@@ -20027,13 +19910,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("    ");
+            __cb.Push("\t    ");
             #line (1257,6)-(1257,7) 25 "SyntaxGenerator.mxg"
             __cb.Write("{");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("        ");
+            __cb.Push("\t        ");
             #line (1258,10)-(1258,16) 25 "SyntaxGenerator.mxg"
             __cb.Write("return");
             #line hidden
@@ -20051,7 +19934,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("    ");
+            __cb.Push("\t    ");
             #line (1259,6)-(1259,7) 25 "SyntaxGenerator.mxg"
             __cb.Write("}");
             #line hidden
@@ -20077,10 +19960,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
                     {
                         __first136 = false;
                     }
-                    __cb.Push("");
                     __cb.WriteLine();
                     __cb.Pop();
-                    __cb.Push("");
+                    __cb.Push("\t\t");
                     #line (1263,3)-(1263,9) 33 "SyntaxGenerator.mxg"
                     __cb.Write("public");
                     #line hidden
@@ -20131,13 +20013,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
                     #line hidden
                     __cb.WriteLine();
                     __cb.Pop();
-                    __cb.Push("");
+                    __cb.Push("\t\t");
                     #line (1264,3)-(1264,4) 33 "SyntaxGenerator.mxg"
                     __cb.Write("{");
                     #line hidden
                     __cb.WriteLine();
                     __cb.Pop();
-                    __cb.Push("    ");
+                    __cb.Push("\t\t    ");
                     #line (1265,7)-(1265,13) 33 "SyntaxGenerator.mxg"
                     __cb.Write("return");
                     #line hidden
@@ -20155,7 +20037,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
                     #line hidden
                     __cb.WriteLine();
                     __cb.Pop();
-                    __cb.Push("");
+                    __cb.Push("\t\t");
                     #line (1266,3)-(1266,4) 33 "SyntaxGenerator.mxg"
                     __cb.Write("}");
                     #line hidden
@@ -20171,10 +20053,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
+            __cb.Push("\t");
             #line (1271,2)-(1271,8) 25 "SyntaxGenerator.mxg"
             __cb.Write("public");
             #line hidden
@@ -20219,13 +20100,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
+            __cb.Push("\t");
             #line (1272,2)-(1272,3) 25 "SyntaxGenerator.mxg"
             __cb.Write("{");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("    ");
+            __cb.Push("\t    ");
             #line (1273,6)-(1273,12) 25 "SyntaxGenerator.mxg"
             __cb.Write("public");
             #line hidden
@@ -20258,7 +20139,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("\t\t");
+            __cb.Push("\t\t\t");
             #line (1274,4)-(1274,5) 25 "SyntaxGenerator.mxg"
             __cb.Write(":");
             #line hidden
@@ -20282,13 +20163,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("    ");
+            __cb.Push("\t    ");
             #line (1275,6)-(1275,7) 25 "SyntaxGenerator.mxg"
             __cb.Write("{");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("    ");
+            __cb.Push("\t    ");
             #line (1276,6)-(1276,7) 25 "SyntaxGenerator.mxg"
             __cb.Write("}");
             #line hidden
@@ -20297,7 +20178,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             __cb.Push("\t");
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("    ");
+            __cb.Push("\t    ");
             #line (1278,6)-(1278,12) 25 "SyntaxGenerator.mxg"
             __cb.Write("public");
             #line hidden
@@ -20333,13 +20214,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("    ");
+            __cb.Push("\t    ");
             #line (1279,6)-(1279,7) 25 "SyntaxGenerator.mxg"
             __cb.Write("{");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("      ");
+            __cb.Push("\t      ");
             #line (1280,8)-(1280,11) 25 "SyntaxGenerator.mxg"
             __cb.Write("var");
             #line hidden
@@ -20363,7 +20244,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("      ");
+            __cb.Push("\t      ");
             #line (1281,8)-(1281,14) 25 "SyntaxGenerator.mxg"
             __cb.Write("return");
             #line hidden
@@ -20375,7 +20256,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("    ");
+            __cb.Push("\t    ");
             #line (1282,6)-(1282,7) 25 "SyntaxGenerator.mxg"
             __cb.Write("}");
             #line hidden
@@ -20401,10 +20282,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
                     {
                         __first138 = false;
                     }
-                    __cb.Push("");
                     __cb.WriteLine();
                     __cb.Pop();
-                    __cb.Push("");
+                    __cb.Push("        ");
                     #line (1286,10)-(1286,42) 32 "SyntaxGenerator.mxg"
                     __cb.Write(GenerateSyntaxRewriterVisit(alt));
                     #line hidden
@@ -20568,7 +20448,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("");
@@ -21192,7 +21071,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("\t");
@@ -21324,7 +21202,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("\t    ");
@@ -21366,7 +21243,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("\t\t");
@@ -21618,7 +21494,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("\t\t");
@@ -21891,7 +21766,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("\t\t");
@@ -22134,7 +22008,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("\t\t");
@@ -22470,7 +22343,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
@@ -22833,7 +22705,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
@@ -23331,7 +23202,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
@@ -24141,7 +24011,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
@@ -24540,7 +24409,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
@@ -25092,7 +24960,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             var __first140 = true;
@@ -25105,10 +24972,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
                 {
                     __first140 = false;
                 }
-                __cb.Push("");
                 __cb.WriteLine();
                 __cb.Pop();
-                __cb.Push("");
+                __cb.Push("        ");
                 #line (1457,9)-(1457,15) 29 "SyntaxGenerator.mxg"
                 __cb.Write("public");
                 #line hidden
@@ -25135,13 +25001,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
                 #line hidden
                 __cb.WriteLine();
                 __cb.Pop();
-                __cb.Push("");
+                __cb.Push("        ");
                 #line (1458,9)-(1458,10) 29 "SyntaxGenerator.mxg"
                 __cb.Write("{");
                 #line hidden
                 __cb.WriteLine();
                 __cb.Pop();
-                __cb.Push("    ");
+                __cb.Push("            ");
                 #line (1459,13)-(1459,19) 29 "SyntaxGenerator.mxg"
                 __cb.Write("return");
                 #line hidden
@@ -25171,16 +25037,15 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
                 #line hidden
                 __cb.WriteLine();
                 __cb.Pop();
-                __cb.Push("");
+                __cb.Push("        ");
                 #line (1460,9)-(1460,10) 29 "SyntaxGenerator.mxg"
                 __cb.Write("}");
                 #line hidden
                 __cb.WriteLine();
                 __cb.Pop();
-                __cb.Push("");
                 __cb.WriteLine();
                 __cb.Pop();
-                __cb.Push("");
+                __cb.Push("        ");
                 #line (1462,9)-(1462,15) 29 "SyntaxGenerator.mxg"
                 __cb.Write("public");
                 #line hidden
@@ -25219,13 +25084,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
                 #line hidden
                 __cb.WriteLine();
                 __cb.Pop();
-                __cb.Push("");
+                __cb.Push("        ");
                 #line (1463,9)-(1463,10) 29 "SyntaxGenerator.mxg"
                 __cb.Write("{");
                 #line hidden
                 __cb.WriteLine();
                 __cb.Pop();
-                __cb.Push("    ");
+                __cb.Push("            ");
                 #line (1464,13)-(1464,19) 29 "SyntaxGenerator.mxg"
                 __cb.Write("return");
                 #line hidden
@@ -25261,7 +25126,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
                 #line hidden
                 __cb.WriteLine();
                 __cb.Pop();
-                __cb.Push("");
+                __cb.Push("        ");
                 #line (1465,9)-(1465,10) 29 "SyntaxGenerator.mxg"
                 __cb.Write("}");
                 #line hidden
@@ -25289,10 +25154,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
                     {
                         __first142 = false;
                     }
-                    __cb.Push("");
                     __cb.WriteLine();
                     __cb.Pop();
-                    __cb.Push("");
+                    __cb.Push("        ");
                     #line (1470,10)-(1470,42) 32 "SyntaxGenerator.mxg"
                     __cb.Write(GenerateSyntaxFactoryCreate(alt));
                     #line hidden
@@ -25304,7 +25168,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line (1472,16)-(1472,18) 25 "SyntaxGenerator.mxg"
             __cb.Write("\t\t");
             #line hidden
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
@@ -25412,7 +25275,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("    ");
@@ -25651,7 +25513,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
                 {
                     __first148 = false;
                 }
-                __cb.Push("");
                 __cb.WriteLine();
                 __cb.Pop();
                 __cb.Push("");
@@ -25823,7 +25684,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("");
@@ -25838,7 +25698,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("");
@@ -26153,7 +26012,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
@@ -26198,7 +26056,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
@@ -26402,7 +26259,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
@@ -26684,7 +26540,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
@@ -26723,7 +26578,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
@@ -26897,7 +26751,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
@@ -27104,7 +26957,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
@@ -27206,7 +27058,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
@@ -27248,7 +27099,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
@@ -27338,7 +27188,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("            ");
@@ -27398,7 +27247,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
@@ -27488,7 +27336,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("            ");
@@ -27590,7 +27437,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
@@ -27644,7 +27490,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
@@ -27710,7 +27555,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
@@ -27788,7 +27632,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("            ");
@@ -27827,7 +27670,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("            ");
@@ -27887,7 +27729,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
@@ -27977,7 +27818,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("            ");
@@ -28037,7 +27877,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
@@ -28094,7 +27933,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
@@ -28151,7 +27989,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
@@ -28277,7 +28114,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
@@ -28469,7 +28305,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
@@ -28610,7 +28445,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("            ");
@@ -28787,7 +28621,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
@@ -28859,7 +28692,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
@@ -28940,7 +28772,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("            ");
@@ -28979,7 +28810,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("            ");
@@ -29012,7 +28842,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");

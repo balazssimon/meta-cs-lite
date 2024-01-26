@@ -89,7 +89,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("");
@@ -104,7 +103,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("");
@@ -164,7 +162,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("    ");
@@ -235,7 +232,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("");
@@ -250,7 +246,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("");
@@ -475,7 +470,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
@@ -484,7 +478,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
@@ -682,7 +675,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");

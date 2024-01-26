@@ -69,7 +69,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             var __first1 = true;
@@ -607,7 +606,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("");
@@ -655,12 +653,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             var __first9 = true;
-            #line (88,6)-(88,33) 13 "AntlrGenerator.mxg"
-            foreach (var rule in Rules)
+            #line (88,6)-(88,42) 13 "AntlrGenerator.mxg"
+            foreach (var rule in RulesAndBlocks)
             #line hidden
             
             {
@@ -676,9 +673,47 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
                 __cb.Pop();
             }
             if (!__first9) __cb.AppendLine();
+            return __cb.ToStringAndFree();
+        }
+        
+        #line (93,9)-(93,39) 22 "AntlrGenerator.mxg"
+        public string GenerateParserRule(Rule rule)
+        #line hidden
+        {
+            var __cb = global::MetaDslx.CodeGeneration.CodeBuilder.GetInstance();
+            __cb.Push("");
+            #line (94,6)-(94,20) 24 "AntlrGenerator.mxg"
+            __cb.Write(rule.AntlrName);
+            #line hidden
+            __cb.WriteLine();
+            __cb.Pop();
+            __cb.Push("    ");
+            #line (95,10)-(95,51) 24 "AntlrGenerator.mxg"
+            __cb.Write(GenerateParserRuleAlts(rule.Alternatives));
+            #line hidden
+            __cb.WriteLine();
+            __cb.Pop();
+            __cb.Push("    ");
+            #line (96,9)-(96,10) 25 "AntlrGenerator.mxg"
+            __cb.Write(";");
+            #line hidden
+            __cb.WriteLine();
+            __cb.Pop();
+            return __cb.ToStringAndFree();
+        }
+        
+        #line (99,9)-(99,65) 22 "AntlrGenerator.mxg"
+        public string GenerateParserRuleAlts(IList<Alternative> alternatives)
+        #line hidden
+        {
+            var __cb = global::MetaDslx.CodeGeneration.CodeBuilder.GetInstance();
+            #line (100,6)-(100,19) 13 "AntlrGenerator.mxg"
+            var sep = ":";
+            #line hidden
+            
             var __first10 = true;
-            #line (91,6)-(91,35) 13 "AntlrGenerator.mxg"
-            foreach (var block in Blocks)
+            #line (101,6)-(101,39) 13 "AntlrGenerator.mxg"
+            foreach (var alt in alternatives)
             #line hidden
             
             {
@@ -686,136 +721,98 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
                 {
                     __first10 = false;
                 }
-                __cb.Push("");
-                #line (92,10)-(92,35) 28 "AntlrGenerator.mxg"
-                __cb.Write(GenerateParserRule(block));
+                #line (102,10)-(102,13) 28 "AntlrGenerator.mxg"
+                __cb.Write(sep);
                 #line hidden
-                __cb.WriteLine();
-                __cb.Pop();
+                #line (102,14)-(102,15) 29 "AntlrGenerator.mxg"
+                __cb.Write(" ");
+                #line hidden
+                #line (102,16)-(102,47) 28 "AntlrGenerator.mxg"
+                __cb.Write(GenerateParserRuleElements(alt));
+                #line hidden
+                var __first11 = true;
+                #line (102,49)-(102,76) 17 "AntlrGenerator.mxg"
+                if (alternatives.Count > 1)
+                #line hidden
+                
+                {
+                    if (__first11)
+                    {
+                        __first11 = false;
+                    }
+                    #line (102,77)-(102,78) 33 "AntlrGenerator.mxg"
+                    __cb.Write(" ");
+                    #line hidden
+                    #line (102,78)-(102,79) 33 "AntlrGenerator.mxg"
+                    __cb.Write("#");
+                    #line hidden
+                    #line (102,80)-(102,93) 32 "AntlrGenerator.mxg"
+                    __cb.Write(alt.AntlrName);
+                    #line hidden
+                }
+                if (!__first11) __cb.AppendLine();
+                #line (103,10)-(103,19) 17 "AntlrGenerator.mxg"
+                sep = "|";
+                #line hidden
+                
             }
             if (!__first10) __cb.AppendLine();
             return __cb.ToStringAndFree();
         }
         
-        #line (96,9)-(96,39) 22 "AntlrGenerator.mxg"
-        public string GenerateParserRule(Rule rule)
-        #line hidden
-        {
-            var __cb = global::MetaDslx.CodeGeneration.CodeBuilder.GetInstance();
-            __cb.Push("");
-            #line (97,6)-(97,20) 24 "AntlrGenerator.mxg"
-            __cb.Write(rule.AntlrName);
-            #line hidden
-            __cb.WriteLine();
-            __cb.Pop();
-            __cb.Push("    ");
-            #line (98,10)-(98,51) 24 "AntlrGenerator.mxg"
-            __cb.Write(GenerateParserRuleAlts(rule.Alternatives));
-            #line hidden
-            __cb.WriteLine();
-            __cb.Pop();
-            __cb.Push("    ");
-            #line (99,9)-(99,10) 25 "AntlrGenerator.mxg"
-            __cb.Write(";");
-            #line hidden
-            __cb.WriteLine();
-            __cb.Pop();
-            return __cb.ToStringAndFree();
-        }
-        
-        #line (102,9)-(102,41) 22 "AntlrGenerator.mxg"
-        public string GenerateParserRule(Block block)
-        #line hidden
-        {
-            var __cb = global::MetaDslx.CodeGeneration.CodeBuilder.GetInstance();
-            __cb.Push("");
-            #line (103,6)-(103,21) 24 "AntlrGenerator.mxg"
-            __cb.Write(block.AntlrName);
-            #line hidden
-            __cb.WriteLine();
-            __cb.Pop();
-            __cb.Push("    ");
-            #line (104,10)-(104,52) 24 "AntlrGenerator.mxg"
-            __cb.Write(GenerateParserRuleAlts(block.Alternatives));
-            #line hidden
-            __cb.WriteLine();
-            __cb.Pop();
-            __cb.Push("    ");
-            #line (105,9)-(105,10) 25 "AntlrGenerator.mxg"
-            __cb.Write(";");
-            #line hidden
-            __cb.WriteLine();
-            __cb.Pop();
-            return __cb.ToStringAndFree();
-        }
-        
-        #line (108,9)-(108,65) 22 "AntlrGenerator.mxg"
-        public string GenerateParserRuleAlts(IList<Alternative> alternatives)
-        #line hidden
-        {
-            var __cb = global::MetaDslx.CodeGeneration.CodeBuilder.GetInstance();
-            #line (109,6)-(109,19) 13 "AntlrGenerator.mxg"
-            var sep = ":";
-            #line hidden
-            
-            var __first11 = true;
-            #line (110,6)-(110,39) 13 "AntlrGenerator.mxg"
-            foreach (var alt in alternatives)
-            #line hidden
-            
-            {
-                if (__first11)
-                {
-                    __first11 = false;
-                }
-                #line (111,10)-(111,13) 28 "AntlrGenerator.mxg"
-                __cb.Write(sep);
-                #line hidden
-                #line (111,14)-(111,15) 29 "AntlrGenerator.mxg"
-                __cb.Write(" ");
-                #line hidden
-                #line (111,16)-(111,47) 28 "AntlrGenerator.mxg"
-                __cb.Write(GenerateParserRuleElements(alt));
-                #line hidden
-                var __first12 = true;
-                #line (111,49)-(111,76) 17 "AntlrGenerator.mxg"
-                if (alternatives.Count > 1)
-                #line hidden
-                
-                {
-                    if (__first12)
-                    {
-                        __first12 = false;
-                    }
-                    #line (111,77)-(111,78) 33 "AntlrGenerator.mxg"
-                    __cb.Write(" ");
-                    #line hidden
-                    #line (111,78)-(111,79) 33 "AntlrGenerator.mxg"
-                    __cb.Write("#");
-                    #line hidden
-                    #line (111,80)-(111,93) 32 "AntlrGenerator.mxg"
-                    __cb.Write(alt.AntlrName);
-                    #line hidden
-                }
-                if (!__first12) __cb.AppendLine();
-                #line (112,10)-(112,19) 17 "AntlrGenerator.mxg"
-                sep = "|";
-                #line hidden
-                
-            }
-            if (!__first11) __cb.AppendLine();
-            return __cb.ToStringAndFree();
-        }
-        
-        #line (116,9)-(116,53) 22 "AntlrGenerator.mxg"
+        #line (107,9)-(107,53) 22 "AntlrGenerator.mxg"
         public string GenerateParserRuleElements(Alternative alt)
         #line hidden
         {
             var __cb = global::MetaDslx.CodeGeneration.CodeBuilder.GetInstance();
             __cb.SingleLineMode = true;
-            var __first13 = true;
-            #line (118,6)-(118,41) 13 "AntlrGenerator.mxg"
+            var __first12 = true;
+            #line (109,6)-(109,41) 13 "AntlrGenerator.mxg"
             foreach (var elem in alt.Elements) 
+            #line hidden
+            
+            {
+                if (__first12)
+                {
+                    __first12 = false;
+                }
+                else
+                {
+                    __cb.Push("");
+                    __cb.DontIgnoreLastLineEnd = true;
+                    #line (109,51)-(109,54) 32 "AntlrGenerator.mxg"
+                    __cb.Write(" ");
+                    #line hidden
+                    __cb.DontIgnoreLastLineEnd = false;
+                    __cb.Pop();
+                }
+                __cb.Push("");
+                #line (110,10)-(110,41) 28 "AntlrGenerator.mxg"
+                __cb.Write(GenerateParserRuleElement(elem));
+                #line hidden
+                __cb.WriteLine();
+                __cb.Pop();
+            }
+            if (!__first12) __cb.AppendLine();
+            return __cb.ToStringAndFree();
+        }
+        
+        #line (114,9)-(114,49) 22 "AntlrGenerator.mxg"
+        public string GenerateParserRuleElement(Element elem)
+        #line hidden
+        {
+            var __cb = global::MetaDslx.CodeGeneration.CodeBuilder.GetInstance();
+            __cb.SingleLineMode = true;
+            #line (115,8)-(115,9) 25 "AntlrGenerator.mxg"
+            __cb.Write(" ");
+            #line hidden
+            #line (116,6)-(116,28) 13 "AntlrGenerator.mxg"
+            var value = elem.Value;
+            #line hidden
+            
+            var __first13 = true;
+            #line (117,6)-(117,39) 13 "AntlrGenerator.mxg"
+            if (value is RuleRef ruleRefElem)
             #line hidden
             
             {
@@ -823,231 +820,205 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
                 {
                     __first13 = false;
                 }
-                else
-                {
-                    __cb.Push("");
-                    __cb.DontIgnoreLastLineEnd = true;
-                    #line (118,51)-(118,54) 32 "AntlrGenerator.mxg"
-                    __cb.Write(" ");
-                    #line hidden
-                    __cb.DontIgnoreLastLineEnd = false;
-                    __cb.Pop();
-                }
                 __cb.Push("");
-                #line (119,10)-(119,41) 28 "AntlrGenerator.mxg"
-                __cb.Write(GenerateParserRuleElement(elem));
-                #line hidden
-                __cb.WriteLine();
-                __cb.Pop();
-            }
-            if (!__first13) __cb.AppendLine();
-            return __cb.ToStringAndFree();
-        }
-        
-        #line (123,9)-(123,49) 22 "AntlrGenerator.mxg"
-        public string GenerateParserRuleElement(Element elem)
-        #line hidden
-        {
-            var __cb = global::MetaDslx.CodeGeneration.CodeBuilder.GetInstance();
-            __cb.SingleLineMode = true;
-            #line (124,8)-(124,9) 25 "AntlrGenerator.mxg"
-            __cb.Write(" ");
-            #line hidden
-            #line (125,6)-(125,28) 13 "AntlrGenerator.mxg"
-            var value = elem.Value;
-            #line hidden
-            
-            var __first14 = true;
-            #line (126,6)-(126,39) 13 "AntlrGenerator.mxg"
-            if (value is RuleRef ruleRefElem)
-            #line hidden
-            
-            {
-                if (__first14)
-                {
-                    __first14 = false;
-                }
-                __cb.Push("");
-                #line (127,10)-(127,24) 28 "AntlrGenerator.mxg"
+                #line (118,10)-(118,24) 28 "AntlrGenerator.mxg"
                 __cb.Write(elem.AntlrName);
                 #line hidden
-                #line (127,26)-(127,69) 28 "AntlrGenerator.mxg"
+                #line (118,26)-(118,69) 28 "AntlrGenerator.mxg"
                 __cb.Write(GenerateAssignment(elem.Value.Multiplicity));
                 #line hidden
-                #line (127,71)-(127,104) 28 "AntlrGenerator.mxg"
+                #line (118,71)-(118,104) 28 "AntlrGenerator.mxg"
                 __cb.Write(ruleRefElem.GrammarRule.AntlrName);
                 #line hidden
-                #line (127,106)-(127,151) 28 "AntlrGenerator.mxg"
+                #line (118,106)-(118,151) 28 "AntlrGenerator.mxg"
                 __cb.Write(GenerateMultiplicity(elem.Value.Multiplicity));
                 #line hidden
                 __cb.WriteLine();
                 __cb.Pop();
             }
-            #line (128,6)-(128,40) 13 "AntlrGenerator.mxg"
+            #line (119,6)-(119,40) 13 "AntlrGenerator.mxg"
             else if (value is Block blockElem)
             #line hidden
             
             {
-                if (__first14)
+                if (__first13)
                 {
-                    __first14 = false;
+                    __first13 = false;
                 }
                 __cb.Push("");
-                #line (129,10)-(129,24) 28 "AntlrGenerator.mxg"
+                #line (120,10)-(120,24) 28 "AntlrGenerator.mxg"
                 __cb.Write(elem.AntlrName);
                 #line hidden
-                #line (129,26)-(129,69) 28 "AntlrGenerator.mxg"
+                #line (120,26)-(120,69) 28 "AntlrGenerator.mxg"
                 __cb.Write(GenerateAssignment(elem.Value.Multiplicity));
                 #line hidden
-                #line (129,71)-(129,90) 28 "AntlrGenerator.mxg"
+                #line (120,71)-(120,90) 28 "AntlrGenerator.mxg"
                 __cb.Write(blockElem.AntlrName);
                 #line hidden
-                #line (129,92)-(129,137) 28 "AntlrGenerator.mxg"
+                #line (120,92)-(120,137) 28 "AntlrGenerator.mxg"
                 __cb.Write(GenerateMultiplicity(elem.Value.Multiplicity));
                 #line hidden
                 __cb.WriteLine();
                 __cb.Pop();
             }
-            #line (130,6)-(130,36) 13 "AntlrGenerator.mxg"
+            #line (121,6)-(121,36) 13 "AntlrGenerator.mxg"
             else if (value is Eof eofElem)
             #line hidden
             
             {
-                if (__first14)
+                if (__first13)
                 {
-                    __first14 = false;
+                    __first13 = false;
                 }
                 __cb.Push("");
-                #line (131,10)-(131,24) 28 "AntlrGenerator.mxg"
+                #line (122,10)-(122,24) 28 "AntlrGenerator.mxg"
                 __cb.Write(elem.AntlrName);
                 #line hidden
-                #line (131,26)-(131,69) 28 "AntlrGenerator.mxg"
+                #line (122,26)-(122,69) 28 "AntlrGenerator.mxg"
                 __cb.Write(GenerateAssignment(elem.Value.Multiplicity));
                 #line hidden
-                #line (131,70)-(131,73) 29 "AntlrGenerator.mxg"
+                #line (122,70)-(122,73) 29 "AntlrGenerator.mxg"
                 __cb.Write("EOF");
                 #line hidden
                 __cb.WriteLine();
                 __cb.Pop();
             }
-            #line (132,6)-(132,48) 13 "AntlrGenerator.mxg"
+            #line (123,6)-(123,48) 13 "AntlrGenerator.mxg"
             else if (value is TokenAlts tokenAltsElem)
             #line hidden
             
             {
-                if (__first14)
+                if (__first13)
                 {
-                    __first14 = false;
+                    __first13 = false;
                 }
                 __cb.Push("");
-                #line (133,10)-(133,24) 28 "AntlrGenerator.mxg"
+                #line (124,10)-(124,24) 28 "AntlrGenerator.mxg"
                 __cb.Write(elem.AntlrName);
                 #line hidden
-                #line (133,25)-(133,27) 29 "AntlrGenerator.mxg"
+                #line (124,25)-(124,27) 29 "AntlrGenerator.mxg"
                 __cb.Write("=(");
                 #line hidden
-                var __first15 = true;
-                foreach (var __item16 in 
-                #line (133,28)-(133,92) 17 "AntlrGenerator.mxg"
+                var __first14 = true;
+                foreach (var __item15 in 
+                #line (124,28)-(124,92) 17 "AntlrGenerator.mxg"
                 from token in tokenAltsElem.Tokens select token.Token.AntlrName 
                 #line hidden
                 )
                 {
-                    if (__first15)
+                    if (__first14)
                     {
-                        __first15 = false;
+                        __first14 = false;
                     }
                     else
                     {
                         __cb.Push("");
                         __cb.DontIgnoreLastLineEnd = true;
-                        #line (133,102)-(133,107) 36 "AntlrGenerator.mxg"
+                        #line (124,102)-(124,107) 36 "AntlrGenerator.mxg"
                         __cb.Write(" | ");
                         #line hidden
                         __cb.DontIgnoreLastLineEnd = false;
                         __cb.Pop();
                     }
-                    __cb.Write(__item16);
+                    __cb.Write(__item15);
                 }
-                #line (133,108)-(133,109) 29 "AntlrGenerator.mxg"
+                #line (124,108)-(124,109) 29 "AntlrGenerator.mxg"
                 __cb.Write(")");
                 #line hidden
-                #line (133,110)-(133,155) 28 "AntlrGenerator.mxg"
+                #line (124,110)-(124,155) 28 "AntlrGenerator.mxg"
                 __cb.Write(GenerateMultiplicity(elem.Value.Multiplicity));
                 #line hidden
                 __cb.WriteLine();
                 __cb.Pop();
             }
-            #line (134,6)-(134,47) 13 "AntlrGenerator.mxg"
+            #line (125,6)-(125,47) 13 "AntlrGenerator.mxg"
             else if (value is SeparatedList listElem)
             #line hidden
             
             {
-                if (__first14)
+                if (__first13)
                 {
-                    __first14 = false;
+                    __first13 = false;
                 }
-                var __first17 = true;
-                #line (135,10)-(135,99) 17 "AntlrGenerator.mxg"
+                var __first16 = true;
+                #line (126,10)-(126,99) 17 "AntlrGenerator.mxg"
                 for (int i = 0; i < listElem.FirstItems.Count && i < listElem.FirstSeparators.Count; ++i)
                 #line hidden
                 
                 {
-                    if (__first17)
+                    if (__first16)
                     {
-                        __first17 = false;
+                        __first16 = false;
                     }
-                    var __first18 = true;
-                    #line (136,14)-(136,42) 21 "AntlrGenerator.mxg"
+                    var __first17 = true;
+                    #line (127,14)-(127,42) 21 "AntlrGenerator.mxg"
                     if (listElem.SeparatorFirst)
                     #line hidden
                     
                     {
-                        if (__first18)
+                        if (__first17)
                         {
-                            __first18 = false;
+                            __first17 = false;
                         }
                         __cb.Push("");
-                        #line (137,18)-(137,72) 36 "AntlrGenerator.mxg"
+                        #line (128,18)-(128,72) 36 "AntlrGenerator.mxg"
                         __cb.Write(GenerateParserRuleElement(listElem.FirstSeparators[i]));
                         #line hidden
                         __cb.WriteLine();
                         __cb.Pop();
                         __cb.Push("");
-                        #line (138,18)-(138,67) 36 "AntlrGenerator.mxg"
+                        #line (129,18)-(129,67) 36 "AntlrGenerator.mxg"
                         __cb.Write(GenerateParserRuleElement(listElem.FirstItems[i]));
                         #line hidden
                         __cb.WriteLine();
                         __cb.Pop();
                     }
-                    #line (139,14)-(139,18) 21 "AntlrGenerator.mxg"
+                    #line (130,14)-(130,18) 21 "AntlrGenerator.mxg"
                     else
                     #line hidden
                     
                     {
-                        if (__first18)
+                        if (__first17)
                         {
-                            __first18 = false;
+                            __first17 = false;
                         }
                         __cb.Push("");
-                        #line (140,18)-(140,67) 36 "AntlrGenerator.mxg"
+                        #line (131,18)-(131,67) 36 "AntlrGenerator.mxg"
                         __cb.Write(GenerateParserRuleElement(listElem.FirstItems[i]));
                         #line hidden
                         __cb.WriteLine();
                         __cb.Pop();
                         __cb.Push("");
-                        #line (141,18)-(141,72) 36 "AntlrGenerator.mxg"
+                        #line (132,18)-(132,72) 36 "AntlrGenerator.mxg"
                         __cb.Write(GenerateParserRuleElement(listElem.FirstSeparators[i]));
                         #line hidden
                         __cb.WriteLine();
                         __cb.Pop();
                     }
-                    if (!__first18) __cb.AppendLine();
+                    if (!__first17) __cb.AppendLine();
                 }
-                if (!__first17) __cb.AppendLine();
-                var __first19 = true;
-                #line (144,10)-(144,73) 17 "AntlrGenerator.mxg"
+                if (!__first16) __cb.AppendLine();
+                var __first18 = true;
+                #line (135,10)-(135,73) 17 "AntlrGenerator.mxg"
                 if (listElem.FirstItems.Count > listElem.FirstSeparators.Count)
+                #line hidden
+                
+                {
+                    if (__first18)
+                    {
+                        __first18 = false;
+                    }
+                    __cb.Push("");
+                    #line (136,14)-(136,89) 32 "AntlrGenerator.mxg"
+                    __cb.Write(GenerateParserRuleElement(listElem.FirstItems[listElem.FirstItems.Count-1]));
+                    #line hidden
+                    __cb.WriteLine();
+                    __cb.Pop();
+                }
+                if (!__first18) __cb.AppendLine();
+                var __first19 = true;
+                #line (138,10)-(138,73) 17 "AntlrGenerator.mxg"
+                if (listElem.FirstSeparators.Count > listElem.FirstItems.Count)
                 #line hidden
                 
                 {
@@ -1056,16 +1027,16 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
                         __first19 = false;
                     }
                     __cb.Push("");
-                    #line (145,14)-(145,89) 32 "AntlrGenerator.mxg"
-                    __cb.Write(GenerateParserRuleElement(listElem.FirstItems[listElem.FirstItems.Count-1]));
+                    #line (139,14)-(139,99) 32 "AntlrGenerator.mxg"
+                    __cb.Write(GenerateParserRuleElement(listElem.FirstSeparators[listElem.FirstSeparators.Count-1]));
                     #line hidden
                     __cb.WriteLine();
                     __cb.Pop();
                 }
                 if (!__first19) __cb.AppendLine();
                 var __first20 = true;
-                #line (147,10)-(147,73) 17 "AntlrGenerator.mxg"
-                if (listElem.FirstSeparators.Count > listElem.FirstItems.Count)
+                #line (141,10)-(141,46) 17 "AntlrGenerator.mxg"
+                if (listElem.RepeatedSeparatorFirst)
                 #line hidden
                 
                 {
@@ -1074,162 +1045,162 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
                         __first20 = false;
                     }
                     __cb.Push("");
-                    #line (148,14)-(148,99) 32 "AntlrGenerator.mxg"
-                    __cb.Write(GenerateParserRuleElement(listElem.FirstSeparators[listElem.FirstSeparators.Count-1]));
+                    #line (142,13)-(142,14) 33 "AntlrGenerator.mxg"
+                    __cb.Write("(");
+                    #line hidden
+                    #line (142,15)-(142,51) 32 "AntlrGenerator.mxg"
+                    __cb.Write(listElem.RepeatedSeparator.AntlrName);
+                    #line hidden
+                    #line (142,52)-(142,54) 33 "AntlrGenerator.mxg"
+                    __cb.Write("+=");
+                    #line hidden
+                    #line (142,55)-(142,114) 32 "AntlrGenerator.mxg"
+                    __cb.Write(((RuleRef)listElem.RepeatedSeparator.Value).Token.AntlrName);
+                    #line hidden
+                    #line (142,115)-(142,116) 33 "AntlrGenerator.mxg"
+                    __cb.Write(" ");
+                    #line hidden
+                    #line (142,117)-(142,148) 32 "AntlrGenerator.mxg"
+                    __cb.Write(listElem.RepeatedItem.AntlrName);
+                    #line hidden
+                    #line (142,149)-(142,151) 33 "AntlrGenerator.mxg"
+                    __cb.Write("+=");
+                    #line hidden
+                    #line (142,152)-(142,205) 32 "AntlrGenerator.mxg"
+                    __cb.Write(((RuleRef)listElem.RepeatedItem.Value).Rule.AntlrName);
+                    #line hidden
+                    #line (142,206)-(142,207) 33 "AntlrGenerator.mxg"
+                    __cb.Write(")");
+                    #line hidden
+                    #line (142,208)-(142,271) 32 "AntlrGenerator.mxg"
+                    __cb.Write(GenerateMultiplicity(listElem.RepeatedBlock.Value.Multiplicity));
+                    #line hidden
+                    __cb.WriteLine();
+                    __cb.Pop();
+                }
+                #line (143,10)-(143,14) 17 "AntlrGenerator.mxg"
+                else
+                #line hidden
+                
+                {
+                    if (__first20)
+                    {
+                        __first20 = false;
+                    }
+                    __cb.Push("");
+                    #line (144,13)-(144,14) 33 "AntlrGenerator.mxg"
+                    __cb.Write("(");
+                    #line hidden
+                    #line (144,15)-(144,46) 32 "AntlrGenerator.mxg"
+                    __cb.Write(listElem.RepeatedItem.AntlrName);
+                    #line hidden
+                    #line (144,47)-(144,49) 33 "AntlrGenerator.mxg"
+                    __cb.Write("+=");
+                    #line hidden
+                    #line (144,50)-(144,103) 32 "AntlrGenerator.mxg"
+                    __cb.Write(((RuleRef)listElem.RepeatedItem.Value).Rule.AntlrName);
+                    #line hidden
+                    #line (144,104)-(144,105) 33 "AntlrGenerator.mxg"
+                    __cb.Write(" ");
+                    #line hidden
+                    #line (144,106)-(144,142) 32 "AntlrGenerator.mxg"
+                    __cb.Write(listElem.RepeatedSeparator.AntlrName);
+                    #line hidden
+                    #line (144,143)-(144,145) 33 "AntlrGenerator.mxg"
+                    __cb.Write("+=");
+                    #line hidden
+                    #line (144,146)-(144,205) 32 "AntlrGenerator.mxg"
+                    __cb.Write(((RuleRef)listElem.RepeatedSeparator.Value).Token.AntlrName);
+                    #line hidden
+                    #line (144,206)-(144,207) 33 "AntlrGenerator.mxg"
+                    __cb.Write(")");
+                    #line hidden
+                    #line (144,208)-(144,271) 32 "AntlrGenerator.mxg"
+                    __cb.Write(GenerateMultiplicity(listElem.RepeatedBlock.Value.Multiplicity));
                     #line hidden
                     __cb.WriteLine();
                     __cb.Pop();
                 }
                 if (!__first20) __cb.AppendLine();
                 var __first21 = true;
-                #line (150,10)-(150,46) 17 "AntlrGenerator.mxg"
-                if (listElem.RepeatedSeparatorFirst)
-                #line hidden
-                
-                {
-                    if (__first21)
-                    {
-                        __first21 = false;
-                    }
-                    __cb.Push("");
-                    #line (151,13)-(151,14) 33 "AntlrGenerator.mxg"
-                    __cb.Write("(");
-                    #line hidden
-                    #line (151,15)-(151,51) 32 "AntlrGenerator.mxg"
-                    __cb.Write(listElem.RepeatedSeparator.AntlrName);
-                    #line hidden
-                    #line (151,52)-(151,54) 33 "AntlrGenerator.mxg"
-                    __cb.Write("+=");
-                    #line hidden
-                    #line (151,55)-(151,114) 32 "AntlrGenerator.mxg"
-                    __cb.Write(((RuleRef)listElem.RepeatedSeparator.Value).Token.AntlrName);
-                    #line hidden
-                    #line (151,115)-(151,116) 33 "AntlrGenerator.mxg"
-                    __cb.Write(" ");
-                    #line hidden
-                    #line (151,117)-(151,148) 32 "AntlrGenerator.mxg"
-                    __cb.Write(listElem.RepeatedItem.AntlrName);
-                    #line hidden
-                    #line (151,149)-(151,151) 33 "AntlrGenerator.mxg"
-                    __cb.Write("+=");
-                    #line hidden
-                    #line (151,152)-(151,205) 32 "AntlrGenerator.mxg"
-                    __cb.Write(((RuleRef)listElem.RepeatedItem.Value).Rule.AntlrName);
-                    #line hidden
-                    #line (151,206)-(151,207) 33 "AntlrGenerator.mxg"
-                    __cb.Write(")");
-                    #line hidden
-                    #line (151,208)-(151,271) 32 "AntlrGenerator.mxg"
-                    __cb.Write(GenerateMultiplicity(listElem.RepeatedBlock.Value.Multiplicity));
-                    #line hidden
-                    __cb.WriteLine();
-                    __cb.Pop();
-                }
-                #line (152,10)-(152,14) 17 "AntlrGenerator.mxg"
-                else
-                #line hidden
-                
-                {
-                    if (__first21)
-                    {
-                        __first21 = false;
-                    }
-                    __cb.Push("");
-                    #line (153,13)-(153,14) 33 "AntlrGenerator.mxg"
-                    __cb.Write("(");
-                    #line hidden
-                    #line (153,15)-(153,46) 32 "AntlrGenerator.mxg"
-                    __cb.Write(listElem.RepeatedItem.AntlrName);
-                    #line hidden
-                    #line (153,47)-(153,49) 33 "AntlrGenerator.mxg"
-                    __cb.Write("+=");
-                    #line hidden
-                    #line (153,50)-(153,103) 32 "AntlrGenerator.mxg"
-                    __cb.Write(((RuleRef)listElem.RepeatedItem.Value).Rule.AntlrName);
-                    #line hidden
-                    #line (153,104)-(153,105) 33 "AntlrGenerator.mxg"
-                    __cb.Write(" ");
-                    #line hidden
-                    #line (153,106)-(153,142) 32 "AntlrGenerator.mxg"
-                    __cb.Write(listElem.RepeatedSeparator.AntlrName);
-                    #line hidden
-                    #line (153,143)-(153,145) 33 "AntlrGenerator.mxg"
-                    __cb.Write("+=");
-                    #line hidden
-                    #line (153,146)-(153,205) 32 "AntlrGenerator.mxg"
-                    __cb.Write(((RuleRef)listElem.RepeatedSeparator.Value).Token.AntlrName);
-                    #line hidden
-                    #line (153,206)-(153,207) 33 "AntlrGenerator.mxg"
-                    __cb.Write(")");
-                    #line hidden
-                    #line (153,208)-(153,271) 32 "AntlrGenerator.mxg"
-                    __cb.Write(GenerateMultiplicity(listElem.RepeatedBlock.Value.Multiplicity));
-                    #line hidden
-                    __cb.WriteLine();
-                    __cb.Pop();
-                }
-                if (!__first21) __cb.AppendLine();
-                var __first22 = true;
-                #line (155,10)-(155,97) 17 "AntlrGenerator.mxg"
+                #line (146,10)-(146,97) 17 "AntlrGenerator.mxg"
                 for (int i = 0; i < listElem.LastItems.Count && i < listElem.LastSeparators.Count; ++i)
                 #line hidden
                 
                 {
-                    if (__first22)
+                    if (__first21)
                     {
-                        __first22 = false;
+                        __first21 = false;
                     }
-                    var __first23 = true;
-                    #line (156,14)-(156,50) 21 "AntlrGenerator.mxg"
+                    var __first22 = true;
+                    #line (147,14)-(147,50) 21 "AntlrGenerator.mxg"
                     if (listElem.RepeatedSeparatorFirst)
                     #line hidden
                     
                     {
-                        if (__first23)
+                        if (__first22)
                         {
-                            __first23 = false;
+                            __first22 = false;
                         }
                         __cb.Push("");
-                        #line (157,18)-(157,71) 36 "AntlrGenerator.mxg"
+                        #line (148,18)-(148,71) 36 "AntlrGenerator.mxg"
                         __cb.Write(GenerateParserRuleElement(listElem.LastSeparators[i]));
                         #line hidden
                         __cb.WriteLine();
                         __cb.Pop();
                         __cb.Push("");
-                        #line (158,18)-(158,66) 36 "AntlrGenerator.mxg"
+                        #line (149,18)-(149,66) 36 "AntlrGenerator.mxg"
                         __cb.Write(GenerateParserRuleElement(listElem.LastItems[i]));
                         #line hidden
                         __cb.WriteLine();
                         __cb.Pop();
                     }
-                    #line (159,14)-(159,18) 21 "AntlrGenerator.mxg"
+                    #line (150,14)-(150,18) 21 "AntlrGenerator.mxg"
                     else
                     #line hidden
                     
                     {
-                        if (__first23)
+                        if (__first22)
                         {
-                            __first23 = false;
+                            __first22 = false;
                         }
                         __cb.Push("");
-                        #line (160,18)-(160,66) 36 "AntlrGenerator.mxg"
+                        #line (151,18)-(151,66) 36 "AntlrGenerator.mxg"
                         __cb.Write(GenerateParserRuleElement(listElem.LastItems[i]));
                         #line hidden
                         __cb.WriteLine();
                         __cb.Pop();
                         __cb.Push("");
-                        #line (161,18)-(161,71) 36 "AntlrGenerator.mxg"
+                        #line (152,18)-(152,71) 36 "AntlrGenerator.mxg"
                         __cb.Write(GenerateParserRuleElement(listElem.LastSeparators[i]));
                         #line hidden
                         __cb.WriteLine();
                         __cb.Pop();
                     }
-                    if (!__first23) __cb.AppendLine();
+                    if (!__first22) __cb.AppendLine();
                 }
-                if (!__first22) __cb.AppendLine();
-                var __first24 = true;
-                #line (164,10)-(164,71) 17 "AntlrGenerator.mxg"
+                if (!__first21) __cb.AppendLine();
+                var __first23 = true;
+                #line (155,10)-(155,71) 17 "AntlrGenerator.mxg"
                 if (listElem.LastItems.Count > listElem.LastSeparators.Count)
+                #line hidden
+                
+                {
+                    if (__first23)
+                    {
+                        __first23 = false;
+                    }
+                    __cb.Push("");
+                    #line (156,14)-(156,87) 32 "AntlrGenerator.mxg"
+                    __cb.Write(GenerateParserRuleElement(listElem.LastItems[listElem.LastItems.Count-1]));
+                    #line hidden
+                    __cb.WriteLine();
+                    __cb.Pop();
+                }
+                if (!__first23) __cb.AppendLine();
+                var __first24 = true;
+                #line (158,10)-(158,71) 17 "AntlrGenerator.mxg"
+                if (listElem.LastSeparators.Count > listElem.LastItems.Count)
                 #line hidden
                 
                 {
@@ -1238,91 +1209,73 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
                         __first24 = false;
                     }
                     __cb.Push("");
-                    #line (165,14)-(165,87) 32 "AntlrGenerator.mxg"
-                    __cb.Write(GenerateParserRuleElement(listElem.LastItems[listElem.LastItems.Count-1]));
-                    #line hidden
-                    __cb.WriteLine();
-                    __cb.Pop();
-                }
-                if (!__first24) __cb.AppendLine();
-                var __first25 = true;
-                #line (167,10)-(167,71) 17 "AntlrGenerator.mxg"
-                if (listElem.LastSeparators.Count > listElem.LastItems.Count)
-                #line hidden
-                
-                {
-                    if (__first25)
-                    {
-                        __first25 = false;
-                    }
-                    __cb.Push("");
-                    #line (168,14)-(168,97) 32 "AntlrGenerator.mxg"
+                    #line (159,14)-(159,97) 32 "AntlrGenerator.mxg"
                     __cb.Write(GenerateParserRuleElement(listElem.LastSeparators[listElem.LastSeparators.Count-1]));
                     #line hidden
                     __cb.WriteLine();
                     __cb.Pop();
                 }
-                if (!__first25) __cb.AppendLine();
+                if (!__first24) __cb.AppendLine();
             }
-            #line (170,6)-(170,10) 13 "AntlrGenerator.mxg"
+            #line (161,6)-(161,10) 13 "AntlrGenerator.mxg"
             else
             #line hidden
             
             {
-                if (__first14)
+                if (__first13)
                 {
-                    __first14 = false;
+                    __first13 = false;
                 }
                 __cb.Push("");
-                #line (171,9)-(171,12) 29 "AntlrGenerator.mxg"
+                #line (162,9)-(162,12) 29 "AntlrGenerator.mxg"
                 __cb.Write("!!!");
                 #line hidden
-                #line (171,12)-(171,13) 29 "AntlrGenerator.mxg"
+                #line (162,12)-(162,13) 29 "AntlrGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (171,13)-(171,19) 29 "AntlrGenerator.mxg"
+                #line (162,13)-(162,19) 29 "AntlrGenerator.mxg"
                 __cb.Write("ERROR:");
                 #line hidden
-                #line (171,19)-(171,20) 29 "AntlrGenerator.mxg"
+                #line (162,19)-(162,20) 29 "AntlrGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (171,20)-(171,27) 29 "AntlrGenerator.mxg"
+                #line (162,20)-(162,27) 29 "AntlrGenerator.mxg"
                 __cb.Write("unknown");
                 #line hidden
-                #line (171,27)-(171,28) 29 "AntlrGenerator.mxg"
+                #line (162,27)-(162,28) 29 "AntlrGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (171,28)-(171,34) 29 "AntlrGenerator.mxg"
+                #line (162,28)-(162,34) 29 "AntlrGenerator.mxg"
                 __cb.Write("parser");
                 #line hidden
-                #line (171,34)-(171,35) 29 "AntlrGenerator.mxg"
+                #line (162,34)-(162,35) 29 "AntlrGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (171,35)-(171,39) 29 "AntlrGenerator.mxg"
+                #line (162,35)-(162,39) 29 "AntlrGenerator.mxg"
                 __cb.Write("rule");
                 #line hidden
-                #line (171,39)-(171,40) 29 "AntlrGenerator.mxg"
+                #line (162,39)-(162,40) 29 "AntlrGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (171,40)-(171,47) 29 "AntlrGenerator.mxg"
+                #line (162,40)-(162,47) 29 "AntlrGenerator.mxg"
                 __cb.Write("element");
                 #line hidden
-                #line (171,47)-(171,48) 29 "AntlrGenerator.mxg"
+                #line (162,47)-(162,48) 29 "AntlrGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (171,48)-(171,52) 29 "AntlrGenerator.mxg"
+                #line (162,48)-(162,52) 29 "AntlrGenerator.mxg"
                 __cb.Write("type");
                 #line hidden
-                #line (171,52)-(171,53) 29 "AntlrGenerator.mxg"
+                #line (162,52)-(162,53) 29 "AntlrGenerator.mxg"
                 __cb.Write(" ");
                 #line hidden
-                #line (171,54)-(171,73) 28 "AntlrGenerator.mxg"
+                #line (162,54)-(162,73) 28 "AntlrGenerator.mxg"
                 __cb.Write(elem.MInfo.MetaType);
                 #line hidden
                 __cb.WriteLine();
                 __cb.Pop();
             }
-            if (!__first14) __cb.AppendLine();
+            if (!__first13) __cb.AppendLine();
             return __cb.ToStringAndFree();
         }
         

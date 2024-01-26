@@ -133,13 +133,8 @@ template GenerateAntlrSyntaxParser()
                 {
                     return VisitTerminal(node, [Lang]SyntaxKind.None);
                 }
-                [foreach (var rule in Rules)]
+                [foreach (var rule in RulesAndBlocks)]
                     [foreach (var alt in rule.Alternatives)]
-                        [GenerateVisitAlt(alt)]
-                    [end foreach]
-                [end foreach]
-                [foreach (var block in Blocks)]
-                    [foreach (var alt in block.Alternatives)]
                         [GenerateVisitAlt(alt)]
                     [end foreach]
                 [end foreach]

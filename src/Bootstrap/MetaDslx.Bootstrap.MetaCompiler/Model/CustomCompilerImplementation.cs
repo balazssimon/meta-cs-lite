@@ -581,15 +581,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             return _this.RedName;
         }
 
-        public override string Block_GreenName(Block _this)
-        {
-            return $"{_this.CSharpName}Green";
-        }
-
-        public override string Block_RedName(Block _this)
-        {
-            return $"{_this.CSharpName}Syntax";
-        }
     }
 
 }

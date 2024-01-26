@@ -29,9 +29,9 @@ template GenerateSyntaxKind()
                 __FirstFixedToken = [fixedTokens.FirstOrDefault()?.CSharpName],
                 __LastFixedToken = [fixedTokens.LastOrDefault()?.CSharpName],
             [end if]
-            [if (Rules.Count > 0)]
-                __FirstRule = [Rules.FirstOrDefault()?.CSharpName],
-                __LastRule = [Rules.LastOrDefault()?.Alternatives?.LastOrDefault()?.CSharpName],
+            [if (RulesAndBlocks.Count > 0)]
+                __FirstRule = [RulesAndBlocks.FirstOrDefault()?.CSharpName],
+                __LastRule = [RulesAndBlocks.LastOrDefault()?.Alternatives?.LastOrDefault()?.CSharpName],
             [end if]
 
             // Built-in:
@@ -53,13 +53,8 @@ template GenerateSyntaxKind()
             [end foreach]
 
             // Rules:
-            [foreach (var rule in Rules)]
+            [foreach (var rule in RulesAndBlocks)]
                 [foreach (var alt in rule.Alternatives)]
-            [alt.CSharpName],
-                [end foreach]
-            [end foreach]
-            [foreach (var block in Blocks)]
-                [foreach (var alt in block.Alternatives)]
             [alt.CSharpName],
                 [end foreach]
             [end foreach]
@@ -190,14 +185,8 @@ template GenerateSyntaxFacts()
                         case [Lang]SyntaxKind.[token.CSharpName]: 
                             return "[token.CSharpName]";
                     [end foreach]
-                    [foreach (var rule in Rules)]
+                    [foreach (var rule in RulesAndBlocks)]
                         [foreach (var alt in rule.Alternatives)]
-                            case [Lang]SyntaxKind.[alt.CSharpName]: 
-                                return "[alt.CSharpName]";
-                        [end foreach]
-                    [end foreach]
-                    [foreach (var block in Blocks)]
-                        [foreach (var alt in block.Alternatives)]
                             case [Lang]SyntaxKind.[alt.CSharpName]: 
                                 return "[alt.CSharpName]";
                         [end foreach]
@@ -596,11 +585,8 @@ template GenerateSyntax()
             }
         }
 
-        [foreach (var rule in Rules)]
+        [foreach (var rule in RulesAndBlocks)]
             [GenerateSyntaxRule(rule)]
-        [end foreach]
-        [foreach (var block in Blocks)]
-            [GenerateSyntaxRule(block)]
         [end foreach]
     }
 end template
@@ -1236,7 +1222,7 @@ template GenerateSyntaxVisitor()
         public interface I[Lang]SyntaxVisitor
         {
             void VisitSkippedTokensTrivia([Lang]SkippedTokensTriviaSyntax node);
-            [foreach (var rule in Rules)]
+            [foreach (var rule in RulesAndBlocks)]
                 [foreach (var alt in rule.Alternatives)]
                     void Visit[alt.CSharpName]([alt.RedName] node);
                 [end foreach]
@@ -1250,7 +1236,7 @@ template GenerateSyntaxVisitor()
                 this.DefaultVisit(node);
             }
 
-            [foreach (var rule in Rules)]
+            [foreach (var rule in RulesAndBlocks)]
                 [foreach (var alt in rule.Alternatives)]
                     public virtual void Visit[alt.CSharpName]([alt.RedName] node)
                     {
@@ -1264,7 +1250,7 @@ template GenerateSyntaxVisitor()
         public interface I[Lang]SyntaxVisitor<TResult> 
         {
             TResult VisitSkippedTokensTrivia([Lang]SkippedTokensTriviaSyntax node);
-            [foreach (var rule in Rules)]
+            [foreach (var rule in RulesAndBlocks)]
                 [foreach (var alt in rule.Alternatives)]
                     TResult Visit[alt.CSharpName]([alt.RedName] node);
                 [end foreach]
@@ -1278,7 +1264,7 @@ template GenerateSyntaxVisitor()
                 return this.DefaultVisit(node);
             }
 
-            [foreach (var rule in Rules)]
+            [foreach (var rule in RulesAndBlocks)]
                 [foreach (var alt in rule.Alternatives)]
                     public virtual TResult Visit[alt.CSharpName]([alt.RedName] node)
                     {
@@ -1292,7 +1278,7 @@ template GenerateSyntaxVisitor()
         public interface I[Lang]SyntaxVisitor<TArg, TResult> 
         {
             TResult VisitSkippedTokensTrivia([Lang]SkippedTokensTriviaSyntax node, TArg argument);
-            [foreach (var rule in Rules)]
+            [foreach (var rule in RulesAndBlocks)]
                 [foreach (var alt in rule.Alternatives)]
                     TResult Visit[alt.CSharpName]([alt.RedName] node, TArg argument);
                 [end foreach]
@@ -1306,7 +1292,7 @@ template GenerateSyntaxVisitor()
                 return this.DefaultVisit(node, argument);
             }
 
-            [foreach (var rule in Rules)]
+            [foreach (var rule in RulesAndBlocks)]
                 [foreach (var alt in rule.Alternatives)]
                     public virtual TResult Visit[alt.CSharpName]([alt.RedName] node, TArg argument)
                     {
@@ -1330,18 +1316,12 @@ template GenerateSyntaxVisitor()
               return node.Update(tokens);
             }
 
-            [foreach (var rule in Rules)]
+            [foreach (var rule in RulesAndBlocks)]
                 [foreach (var alt in rule.Alternatives)]
             [GenerateSyntaxRewriterVisit(alt)]
 
                 [end foreach]
-            [end foreach]        
-            [foreach (var block in Blocks)]
-                [foreach (var alt in block.Alternatives)]
-            [GenerateSyntaxRewriterVisit(alt)]
-
-                [end foreach]
-            [end foreach]        
+            [end foreach]
         }
     }
 end template
@@ -1520,14 +1500,8 @@ template GenerateSyntaxFactory()
                     return new __SyntaxToken([Lang]Language.Instance.InternalSyntaxFactory.[token.CSharpName](text, value));
                 }
             [end foreach]
-            [foreach (var rule in Rules)]
+            [foreach (var rule in RulesAndBlocks)]
                 [foreach (var alt in rule.Alternatives)]
-
-                    [GenerateSyntaxFactoryCreate(alt)]
-                [end foreach]
-            [end foreach]
-            [foreach (var block in Blocks)]
-                [foreach (var alt in block.Alternatives)]
 
                     [GenerateSyntaxFactoryCreate(alt)]
                 [end foreach]
@@ -1536,13 +1510,8 @@ template GenerateSyntaxFactory()
             internal static global::System.Collections.Generic.IEnumerable<__Type> GetNodeTypes()
             {
                 return new __Type["[]"] {
-                    [foreach (var rule in Rules)]
+                    [foreach (var rule in RulesAndBlocks)]
                         [foreach(var alt in rule.Alternatives)]
-                            typeof([alt.RedName]),
-                        [end foreach]
-                    [end foreach]
-                    [foreach (var block in Blocks)]
-                        [foreach(var alt in block.Alternatives)]
                             typeof([alt.RedName]),
                         [end foreach]
                     [end foreach]

@@ -1037,11 +1037,8 @@ template GenerateInternalSyntax()
             }
         }
 
-        [foreach (var rule in Rules)]
+        [foreach (var rule in RulesAndBlocks)]
             [GenerateInternalSyntaxRule(rule)]
-        [end foreach]
-        [foreach (var block in Blocks)]
-            [GenerateInternalSyntaxRule(block)]
         [end foreach]
     }
 end template
@@ -1177,13 +1174,8 @@ template GenerateInternalSyntaxVisitor()
         internal class [Lang]InternalSyntaxVisitor : global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.InternalSyntaxVisitor
         {
             public virtual void VisitSkippedTokensTrivia(GreenSkippedTokensTriviaSyntax node) => this.DefaultVisit(node);
-            [foreach (var rule in Rules)]
+            [foreach (var rule in RulesAndBlocks)]
                 [foreach (var alt in rule.Alternatives)]
-                    public virtual void Visit[alt.GreenName]([alt.GreenName] node) => this.DefaultVisit(node);
-                [end foreach]
-            [end foreach]
-            [foreach (var block in Blocks)]
-                [foreach (var alt in block.Alternatives)]
                     public virtual void Visit[alt.GreenName]([alt.GreenName] node) => this.DefaultVisit(node);
                 [end foreach]
             [end foreach]
@@ -1192,13 +1184,8 @@ template GenerateInternalSyntaxVisitor()
         internal class [Lang]InternalSyntaxVisitor<TResult> : global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.InternalSyntaxVisitor<TResult>
         {
             public virtual TResult VisitSkippedTokensTrivia(GreenSkippedTokensTriviaSyntax node) => this.DefaultVisit(node);
-            [foreach (var rule in Rules)]
+            [foreach (var rule in RulesAndBlocks)]
                 [foreach (var alt in rule.Alternatives)]
-                    public virtual TResult Visit[alt.GreenName]([alt.GreenName] node) => this.DefaultVisit(node);
-                [end foreach]
-            [end foreach]
-            [foreach (var block in Blocks)]
-                [foreach (var alt in block.Alternatives)]
                     public virtual TResult Visit[alt.GreenName]([alt.GreenName] node) => this.DefaultVisit(node);
                 [end foreach]
             [end foreach]
@@ -1373,13 +1360,8 @@ template GenerateInternalSyntaxFactory()
                 }
 
             [end foreach]
-            [foreach (var rule in Rules)]
+            [foreach (var rule in RulesAndBlocks)]
                 [foreach (var alt in rule.Alternatives)]
-                    [GenerateInternalSyntaxFactoryCreate(alt)]
-                [end foreach]
-            [end foreach]
-            [foreach (var block in Blocks)]
-                [foreach (var alt in block.Alternatives)]
                     [GenerateInternalSyntaxFactoryCreate(alt)]
                 [end foreach]
             [end foreach]

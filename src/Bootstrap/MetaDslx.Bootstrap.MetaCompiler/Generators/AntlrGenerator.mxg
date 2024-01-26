@@ -85,11 +85,8 @@ template GenerateParser()
         tokenVocab = [Lang]Lexer; 
     } 
 
-    [foreach (var rule in Rules)]
+    [foreach (var rule in RulesAndBlocks)]
         [GenerateParserRule(rule)]
-    [end foreach]
-    [foreach (var block in Blocks)]
-        [GenerateParserRule(block)]
     [end foreach]
 end template
 

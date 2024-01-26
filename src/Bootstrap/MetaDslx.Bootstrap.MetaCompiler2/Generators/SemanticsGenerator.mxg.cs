@@ -89,7 +89,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("");
@@ -104,7 +103,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("");
@@ -230,7 +228,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
@@ -361,7 +358,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("");
@@ -376,7 +372,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("");
@@ -418,7 +413,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("    ");
@@ -517,7 +511,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             var __first71 = true;
@@ -540,10 +533,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
                     {
                         __first72 = false;
                     }
-                    __cb.Push("");
                     __cb.WriteLine();
                     __cb.Pop();
-                    __cb.Push("");
+                    __cb.Push("        ");
                     #line (58,10)-(58,47) 32 "SemanticsGenerator.mxg"
                     __cb.Write(GenerateBinderFactoryVisit(rule, alt));
                     #line hidden
@@ -553,7 +545,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
                 if (!__first72) __cb.AppendLine();
             }
             if (!__first71) __cb.AppendLine();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("");

@@ -321,7 +321,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
 
         private void AddRules()
         {
-            var allRules = _grammar.GetAllContainedObjects<Rule>();
+            var allRules = _grammar.GrammarRules.OfType<Rule>().ToList();
             foreach (var rule in allRules)
             {
                 _grammar.Rules.Add(rule);
@@ -330,13 +330,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             }
             var unusedRules = true;
             var first = true;
-            var usedRules = allRules.ToList();
             while (unusedRules)
             {
                 unusedRules = false;
-                for (int i = usedRules.Count - 1; i >= 0; --i)
+                for (int i = allRules.Count - 1; i >= 0; --i)
                 {
-                    var rule = usedRules[i];
+                    var rule = allRules[i];
                     if (rule == _grammar.MainRule) continue;
                     var ruleRefCount = GetRuleRefs(rule).Length;
                     if (ruleRefCount == 0)
@@ -346,7 +345,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                             _diagnostics.Add(Diagnostic.Create(ErrorCode.WRN_SyntaxWarning, rule.MLocation, $"Rule '{rule.Name}' is never used."));
                         }
                         _model.DeleteObject(rule);
-                        usedRules.RemoveAt(i);
+                        allRules.RemoveAt(i);
                         unusedRules = true;
                     }
                 }
@@ -731,6 +730,18 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                     rule.BaseRule = refAlt;
                 }
             }
+            foreach (var block in _grammar.Blocks)
+            {
+                var ruleRefs = GetRuleRefs(block);
+                if (ruleRefs.Length == 1)
+                {
+                    var refElem = ruleRefs[0];
+                    if (refElem is null || !string.IsNullOrEmpty(refElem.Name) || refElem.Value.Multiplicity != Multiplicity.ExactlyOne) continue;
+                    var refAlt = refElem.MParent as Alternative;
+                    if (refAlt is null || !string.IsNullOrEmpty(refAlt.Name) || refAlt.Elements.Count != 1) continue;
+                    block.BaseRule = refAlt;
+                }
+            }
         }
 
         private void InsertBinders(ICollectionSlot<Binder> target, ICollectionSlot<Binder> source)
@@ -1010,26 +1021,31 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                             }
                         }
                     }
-                    else if (grammarRule is Block block)
+                }
+                foreach (var block in _grammar.Blocks)
+                {
+                    if (!block.ContainsBinders && block.Binders.Count > 0)
                     {
-                        foreach (var alt in block.Alternatives)
+                        block.ContainsBinders = true;
+                        updated = true;
+                    }
+                    foreach (var alt in block.Alternatives)
+                    {
+                        if (!alt.ContainsBinders && alt.Binders.Count > 0)
                         {
-                            if (!alt.ContainsBinders && alt.Binders.Count > 0)
+                            alt.ContainsBinders = true;
+                            block.ContainsBinders = true;
+                            updated = true;
+                        }
+                        foreach (var elem in alt.Elements)
+                        {
+                            var oldContainsBinders = elem.ContainsBinders;
+                            ComputeContainsBinders(elem);
+                            if (!oldContainsBinders && elem.ContainsBinders)
                             {
                                 alt.ContainsBinders = true;
                                 block.ContainsBinders = true;
                                 updated = true;
-                            }
-                            foreach (var elem in alt.Elements)
-                            {
-                                var oldContainsBinders = elem.ContainsBinders;
-                                ComputeContainsBinders(elem);
-                                if (!oldContainsBinders && elem.ContainsBinders)
-                                {
-                                    alt.ContainsBinders = true;
-                                    block.ContainsBinders = true;
-                                    updated = true;
-                                }
                             }
                         }
                     }
@@ -1045,6 +1061,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             {
                 rr.ContainsBinders = rr.GrammarRule?.ContainsBinders ?? false;
                 elem.ContainsBinders |= rr.ContainsBinders;
+            }
+            if (elem.Value is Block blk)
+            {
+                elem.ContainsBinders |= blk.ContainsBinders;
             }
             if (elem.Value is TokenAlts tas)
             {

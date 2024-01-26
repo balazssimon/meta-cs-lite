@@ -339,11 +339,6 @@ class TokenAlts : ElementValue
 
 class Block $PBlock : ElementValue, Rule
 {
-	contains Alternative[] $Alternatives;
-
-	derived string GreenName;
-	derived string RedName;
-	
 	derived string GreenType;
 	derived string? GreenSyntaxCondition;
 

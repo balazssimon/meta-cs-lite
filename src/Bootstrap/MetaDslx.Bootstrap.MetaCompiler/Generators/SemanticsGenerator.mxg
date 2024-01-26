@@ -52,16 +52,10 @@ template GenerateBinderFactoryVisitor()
             {
             }
 
-            [foreach (var rule in Rules)]
+            [foreach (var rule in RulesAndBlocks)]
                 [foreach (var alt in rule.Alternatives)]
 
                     [GenerateBinderFactoryVisitRule(rule, alt)]
-                [end foreach]
-            [end foreach]
-            [foreach (var block in Blocks)]
-                [foreach (var alt in block.Alternatives)]
-
-                    [GenerateBinderFactoryVisitRule(block, alt)]
                 [end foreach]
             [end foreach]
 
@@ -76,12 +70,12 @@ template GenerateBinderFactoryVisitRule(Rule rule, Alternative alt)
     public virtual void Visit[alt.CSharpName]([alt.RedName] node)
     {
         [var annotIndex = 0]
-        [var body = GenerateBinderFactoryVisitAlt(rule, alt)]
+        [var body = GenerateBinderFactoryVisitAlt(alt, ref annotIndex)]
         [body = GenerateBinderFactoryVisitBinders(rule.Binders, "node", body, false, ref annotIndex)]
     }
 end template
 
-template GenerateBinderFactoryVisitAlt(Rule rule, Alternative alt, ref int annotIndex)
+template GenerateBinderFactoryVisitAlt(Alternative alt, ref int annotIndex)
     [var body = GenerateBinderFactoryVisitElements(alt, ref annotIndex)]
     [GenerateBinderFactoryVisitBinders(alt.Binders, "node", body, false, ref annotIndex)]
 end template
