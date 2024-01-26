@@ -14,7 +14,7 @@ using MetaDslx.Bootstrap.MetaCompiler2.Symbols;
 language Compiler;
 
 Main returns Namespace:
-	'namespace' [Name(qualifierProperty:Declarations)]Qualifier ';'
+	'namespace' [Name(qualifierProperty:"Declarations")]Qualifier ';'
 	Using*
 	[Scope](declarations+=LanguageDeclaration)
 	eof;
@@ -32,16 +32,16 @@ GrammarRule: Rule | LexerRule;
 Rule: annotations+=ParserAnnotation* [Name](returnType=TypeReferenceIdentifier | Identifier 'returns' returnType=TypeReference) ':' alternatives+=Alternative ('|' alternatives+=Alternative)* ';';
 Alternative: (annotations+=ParserAnnotation* 'alt' Name ('returns' returnType=TypeReference)? ':')? elements+=Element+ ('=>' returnValue=Expression)?;
 Element: (annotations+=ParserAnnotation* Name assignment=Assignment)? value=ElementValue multiplicity=Multiplicity?;
-ElementValue: Block | Eof1 | Fixed | RuleRef;
-Block: annotations+=ParserAnnotation* '(' alternatives+=BlockAlternative ('|' alternatives+=BlockAlternative)* ')';
+ElementValue: annotations+=ParserAnnotation* (Block | Eof1 | Fixed | RuleRef);
+Block: '(' alternatives+=BlockAlternative ('|' alternatives+=BlockAlternative)* ')';
 BlockAlternative returns Alternative: elements+=Element+ ('=>' returnValue=Expression)?;
 RuleRef
-	: annotations+=ParserAnnotation* grammarRule=#GrammarRule 
-	| annotations+=ParserAnnotation* '#' referencedTypes+=TypeReference 
-	| annotations+=ParserAnnotation* '#{' referencedTypes+=TypeReference (',' referencedTypes+=TypeReference)* ('|' grammarRule=#GrammarRule)? '}' 
+	: grammarRule=#GrammarRule 
+	| '#' referencedTypes+=TypeReference 
+	| '#{' referencedTypes+=TypeReference (',' referencedTypes+=TypeReference)* ('|' grammarRule=#GrammarRule)? '}' 
 	;
 Eof1 returns Eof: 'eof';
-Fixed: annotations+=ParserAnnotation* text=TString;
+Fixed: text=TString;
 
 LexerRule: Token | Fragment;
 Token: annotations+=LexerAnnotation* ('token' Name ('returns' returnType=TypeReference)? | isTrivia?='hidden' Name) ':' alternatives+=LAlternative ('|' alternatives+=LAlternative)* ';';
@@ -108,7 +108,7 @@ Qualifier: identifiers+=Identifier ('.' identifiers+=Identifier)*;
 Identifier: name=TIdentifier | name=TVerbatimIdentifier;
 
 [Number]
-token TInteger returns int32: '0'| '1'..'9' ('0'..'9')* ;
+token TInteger returns int: '0'| '1'..'9' ('0'..'9')* ;
 
 [Number]
 token TDecimal returns double: ('0'|'1'..'9' ('0'..'9')*) '.' ('0'..'9')+ ;

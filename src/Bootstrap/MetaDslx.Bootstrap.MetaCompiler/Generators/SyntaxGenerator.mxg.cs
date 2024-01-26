@@ -8255,8 +8255,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
                 var elemIndex = alt.Elements.IndexOf(elem);
                 #line hidden
                 
-                #line (638,10)-(638,109) 17 "SyntaxGenerator.mxg"
-                var isList = MetaDslx.Bootstrap.MetaCompiler.Model.MultiplicityExtensions.IsList(elem.Multiplicity);
+                #line (638,10)-(638,115) 17 "SyntaxGenerator.mxg"
+                var isList = MetaDslx.Bootstrap.MetaCompiler.Model.MultiplicityExtensions.IsList(elem.Value.Multiplicity);
                 #line hidden
                 
                 __cb.Push("");
@@ -9082,8 +9082,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
                 {
                     __first121 = false;
                 }
-                #line (687,10)-(687,140) 17 "SyntaxGenerator.mxg"
-                var isList = MetaDslx.Bootstrap.MetaCompiler.Model.MultiplicityExtensions.IsList(elem.Multiplicity) || elem.Value is SeparatedList;
+                #line (687,10)-(687,146) 17 "SyntaxGenerator.mxg"
+                var isList = MetaDslx.Bootstrap.MetaCompiler.Model.MultiplicityExtensions.IsList(elem.Value.Multiplicity) || elem.Value is SeparatedList;
                 #line hidden
                 
                 __cb.Push("");

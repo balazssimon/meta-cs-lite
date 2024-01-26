@@ -186,6 +186,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
             var nameSyntax = nameBlock.Name;
             if (nameSyntax is null) return default;
             MetaType result = default;
+
             if (qualifier.IsName)
             {
                 diagnostics.Add(Diagnostic.Create(CommonErrorCode.ERR_DottedNameNotFoundInAgg, Location, Name, qualifier));
@@ -205,8 +206,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
             else if (qualifier.IsTypeSymbol)
             {
                 var nameBinder = this.DeclaringCompilation.GetBinder(nameSyntax);
-                var ctx = nameBinder.AllocateLookupContext(name: Name, qualifier: qualifier.OriginalTypeSymbol, diagnose: true, isLookup: true);
+                var ctx = nameBinder.AllocateLookupContext(name: Name, qualifier: qualifier.OriginalTypeSymbol, diagnose: true, isLookup: true, isCaseSensitive: false);
                 var prop = nameBinder.BindDeclarationSymbol(ctx, nameSyntax);
+                diagnostics.AddRange(ctx.Diagnostics);
+                ctx.Free();
                 if (prop is null) return default;
                 var csProp = prop as ICSharpSymbol;
                 var msProp = csProp?.CSharpSymbol as IPropertySymbol;

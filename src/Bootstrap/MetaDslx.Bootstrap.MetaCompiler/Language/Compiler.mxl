@@ -31,17 +31,17 @@ GrammarRule: Rule | LexerRule;
 
 Rule: annotations+=ParserAnnotation* [Name](returnType=TypeReferenceIdentifier | Identifier 'returns' returnType=TypeReference) ':' alternatives+=Alternative ('|' alternatives+=Alternative)* ';';
 Alternative: (annotations+=ParserAnnotation* 'alt' Name ('returns' returnType=TypeReference)? ':')? elements+=Element+ ('=>' returnValue=Expression)?;
-Element: (annotations+=ParserAnnotation* Name assignment=Assignment)? value=ElementValue multiplicity=Multiplicity?;
-ElementValue: Block | Eof1 | Fixed | RuleRef;
-Block: annotations+=ParserAnnotation* '(' alternatives+=BlockAlternative ('|' alternatives+=BlockAlternative)* ')';
+Element: (annotations+=ParserAnnotation* Name assignment=Assignment)? value=ElementValue;
+ElementValue: annotations+=ParserAnnotation* (Block | Eof1 | Fixed | RuleRef) multiplicity=Multiplicity?;
+Block: '(' alternatives+=BlockAlternative ('|' alternatives+=BlockAlternative)* ')';
 BlockAlternative returns Alternative: elements+=Element+ ('=>' returnValue=Expression)?;
 RuleRef
-	: annotations+=ParserAnnotation* grammarRule=#GrammarRule 
-	| annotations+=ParserAnnotation* '#' referencedTypes+=TypeReference 
-	| annotations+=ParserAnnotation* '#{' referencedTypes+=TypeReference (',' referencedTypes+=TypeReference)* ('|' grammarRule=#GrammarRule)? '}' 
+	: grammarRule=#GrammarRule 
+	| '#' referencedTypes+=TypeReference 
+	| '#{' referencedTypes+=TypeReference (',' referencedTypes+=TypeReference)* ('|' grammarRule=#GrammarRule)? '}' 
 	;
 Eof1 returns Eof: 'eof';
-Fixed: annotations+=ParserAnnotation* text=TString;
+Fixed: text=TString;
 
 LexerRule: Token | Fragment;
 Token: annotations+=LexerAnnotation* ('token' Name ('returns' returnType=TypeReference)? | isTrivia?='hidden' Name) ':' alternatives+=LAlternative ('|' alternatives+=LAlternative)* ';';
@@ -61,11 +61,11 @@ LRange: startChar=TString '..' endChar=TString;
 LBlock: '(' alternatives+=LAlternative ('|' alternatives+=LAlternative)* ')';
 
 Expression: SingleExpression | ArrayExpression;
-SingleExpression returns Expression: value=[ExpressionValue]('null' | 'true' | 'false' | TString | TInteger | TDecimal | PrimitiveType | Qualifier);
+SingleExpression returns Expression: value=[Value]('null' | 'true' | 'false' | TString | TInteger | TDecimal | PrimitiveType) | value=[ExpressionValue]Qualifier;
 ArrayExpression: '{' (items+=SingleExpression (',' items+=SingleExpression)*)? '}';
 
-ParserAnnotation returns MetaDslx.Bootstrap.MetaCompiler.Model.Annotation: '[' attributeClass=[Use(types:{MetaDslx.CodeAnalysis.Binding.Binder,MetaDslx.CodeAnalysis.Annotations.Annotation},suffixes:{"Binder","Annotation"})]Qualifier '(' arguments+=AnnotationArgument (',' arguments+=AnnotationArgument)* ')'? ']';
-LexerAnnotation returns MetaDslx.Bootstrap.MetaCompiler.Model.Annotation: '[' attributeClass=[Use(types:{MetaDslx.CodeAnalysis.Syntax.TokenKind,MetaDslx.CodeAnalysis.Annotations.Annotation},suffixes:{"TokenKind","Annotation"})]Qualifier '(' arguments+=AnnotationArgument (',' arguments+=AnnotationArgument)* ')'? ']';
+ParserAnnotation returns MetaDslx.Bootstrap.MetaCompiler.Model.Annotation: '[' attributeClass=[Use(types:{MetaDslx.CodeAnalysis.Binding.Binder,MetaDslx.CodeAnalysis.Annotations.Annotation},suffixes:{"Binder","Annotation"})]Qualifier ('(' arguments+=AnnotationArgument (',' arguments+=AnnotationArgument)* ')')? ']';
+LexerAnnotation returns MetaDslx.Bootstrap.MetaCompiler.Model.Annotation: '[' attributeClass=[Use(types:{MetaDslx.CodeAnalysis.Syntax.TokenKind,MetaDslx.CodeAnalysis.Annotations.Annotation},suffixes:{"TokenKind","Annotation"})]Qualifier ('(' arguments+=AnnotationArgument (',' arguments+=AnnotationArgument)* ')')? ']';
 AnnotationArgument: (namedParameter+=[AnnotationArgument]Identifier ':')? value=Expression;
 
 Assignment
@@ -90,6 +90,7 @@ TypeReference returns type: PrimitiveType | #{MetaType|Qualifier};
 PrimitiveType returns type
 	: 'bool'
 	| 'int'
+	| 'double'
 	| 'string'
 	| 'type'
 	| 'symbol'
@@ -108,10 +109,10 @@ Qualifier returns void: Identifier ('.' Identifier)*;
 Identifier returns void: TIdentifier | TVerbatimIdentifier;
 
 [Number]
-token TInteger returns int32: '0'| '1'..'9' ('0'..'9')* ;
+token TInteger returns int: '0'| '1'..'9' ('0'..'9')* ;
 
 [Number]
-token TDecimal returns double: ('0'|'1'..'9' ('0'..'9')*) '.' ('0'..'9')+ ;
+token TDecimal returns string: ('0'|'1'..'9' ('0'..'9')*) '.' ('0'..'9')+ ;
 
 [DefaultIdentifier]
 token TIdentifier returns string: ('_'|'a'..'z'|'A'..'Z')+('_'|'a'..'z'|'A'..'Z'|'0'..'9')*;

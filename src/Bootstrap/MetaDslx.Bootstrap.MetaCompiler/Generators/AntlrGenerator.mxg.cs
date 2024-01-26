@@ -824,14 +824,14 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
                 #line (119,3)-(119,17) 28 "AntlrGenerator.mxg"
                 __cb.Write(elem.AntlrName);
                 #line hidden
-                #line (119,19)-(119,56) 28 "AntlrGenerator.mxg"
-                __cb.Write(GenerateAssignment(elem.Multiplicity));
+                #line (119,19)-(119,62) 28 "AntlrGenerator.mxg"
+                __cb.Write(GenerateAssignment(elem.Value.Multiplicity));
                 #line hidden
-                #line (119,58)-(119,91) 28 "AntlrGenerator.mxg"
+                #line (119,64)-(119,97) 28 "AntlrGenerator.mxg"
                 __cb.Write(ruleRefElem.GrammarRule.AntlrName);
                 #line hidden
-                #line (119,93)-(119,132) 28 "AntlrGenerator.mxg"
-                __cb.Write(GenerateMultiplicity(elem.Multiplicity));
+                #line (119,99)-(119,144) 28 "AntlrGenerator.mxg"
+                __cb.Write(GenerateMultiplicity(elem.Value.Multiplicity));
                 #line hidden
                 __cb.WriteLine();
                 __cb.Pop();
@@ -849,10 +849,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
                 #line (121,3)-(121,17) 28 "AntlrGenerator.mxg"
                 __cb.Write(elem.AntlrName);
                 #line hidden
-                #line (121,19)-(121,56) 28 "AntlrGenerator.mxg"
-                __cb.Write(GenerateAssignment(elem.Multiplicity));
+                #line (121,19)-(121,62) 28 "AntlrGenerator.mxg"
+                __cb.Write(GenerateAssignment(elem.Value.Multiplicity));
                 #line hidden
-                #line (121,57)-(121,60) 29 "AntlrGenerator.mxg"
+                #line (121,63)-(121,66) 29 "AntlrGenerator.mxg"
                 __cb.Write("EOF");
                 #line hidden
                 __cb.WriteLine();
@@ -901,8 +901,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
                 #line (123,117)-(123,118) 29 "AntlrGenerator.mxg"
                 __cb.Write(")");
                 #line hidden
-                #line (123,119)-(123,158) 28 "AntlrGenerator.mxg"
-                __cb.Write(GenerateMultiplicity(elem.Multiplicity));
+                #line (123,119)-(123,164) 28 "AntlrGenerator.mxg"
+                __cb.Write(GenerateMultiplicity(elem.Value.Multiplicity));
                 #line hidden
                 __cb.WriteLine();
                 __cb.Pop();
@@ -1048,8 +1048,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
                     #line (141,195)-(141,196) 33 "AntlrGenerator.mxg"
                     __cb.Write(")");
                     #line hidden
-                    #line (141,197)-(141,254) 32 "AntlrGenerator.mxg"
-                    __cb.Write(GenerateMultiplicity(listElem.RepeatedBlock.Multiplicity));
+                    #line (141,197)-(141,260) 32 "AntlrGenerator.mxg"
+                    __cb.Write(GenerateMultiplicity(listElem.RepeatedBlock.Value.Multiplicity));
                     #line hidden
                     __cb.WriteLine();
                     __cb.Pop();
@@ -1091,8 +1091,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
                     #line (143,195)-(143,196) 33 "AntlrGenerator.mxg"
                     __cb.Write(")");
                     #line hidden
-                    #line (143,197)-(143,254) 32 "AntlrGenerator.mxg"
-                    __cb.Write(GenerateMultiplicity(listElem.RepeatedBlock.Multiplicity));
+                    #line (143,197)-(143,260) 32 "AntlrGenerator.mxg"
+                    __cb.Write(GenerateMultiplicity(listElem.RepeatedBlock.Value.Multiplicity));
                     #line hidden
                     __cb.WriteLine();
                     __cb.Pop();

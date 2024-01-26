@@ -405,7 +405,9 @@ namespace MetaDslx.Languages.MetaCompiler.Model
                     if (!skipDefineBinder)
                     {
                         var defBinder = f.Binder();
-                        defBinder.TypeName = typeof(MetaDslx.CodeAnalysis.Binding.DefineBinder).FullName!;
+                        var isPrimitive = alt.ReturnType.MetaKeyword != null;
+                        if (isPrimitive) defBinder.TypeName = typeof(MetaDslx.CodeAnalysis.Binding.ValueBinder).FullName!;
+                        else defBinder.TypeName = typeof(MetaDslx.CodeAnalysis.Binding.DefineBinder).FullName!;
                         var defType = f.BinderArgument();
                         defType.Name = "type";
                         defType.TypeName = typeof(Type).FullName!;

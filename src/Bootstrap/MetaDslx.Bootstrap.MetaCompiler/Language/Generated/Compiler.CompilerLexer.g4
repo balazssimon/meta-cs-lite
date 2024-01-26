@@ -32,6 +32,7 @@ LR_TAsteriskQuestion: '*?';
 LR_TPlusQuestion: '+?';
 LR_KBool: 'bool';
 LR_KInt: 'int';
+LR_KDouble: 'double';
 LR_KString: 'string';
 LR_KType: 'type';
 LR_KSymbol: 'symbol';

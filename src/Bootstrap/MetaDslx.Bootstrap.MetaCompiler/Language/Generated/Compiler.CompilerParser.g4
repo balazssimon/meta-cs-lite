@@ -26,15 +26,10 @@ pr_Alternative
     : e_Block=pr_AlternativeBlock1? e_Elements+=pr_Element+ e_Block1=pr_AlternativeBlock2?
     ;
 pr_Element
-    : e_Block=pr_ElementBlock1? e_Value=pr_ElementValue e_Multiplicity=(LR_TQuestion | LR_TAsterisk | LR_TPlus | LR_TQuestionQuestion | LR_TAsteriskQuestion | LR_TPlusQuestion)?
+    : e_Block=pr_ElementBlock1? e_Value=pr_ElementValue
     ;
 pr_ElementValue
-    : e_Annotations+=pr_ParserAnnotation* e_TLParen=LR_TLParen e_Alternatives1=pr_BlockAlternative(e_TBar1+=LR_TBar e_Alternatives2+=pr_BlockAlternative)* e_TRParen=LR_TRParen #pr_Block
-    | e_KEof=LR_KEof #pr_Eof1
-    | e_Annotations1+=pr_ParserAnnotation* e_Text=LR_TString #pr_Fixed
-    | e_Annotations2+=pr_ParserAnnotation* e_GrammarRule=pr_Identifier #pr_RuleRefAlt1
-    | e_Annotations3+=pr_ParserAnnotation* e_THash=LR_THash e_ReferencedTypes=pr_TypeReference #pr_RuleRefAlt2
-    | e_Annotations4+=pr_ParserAnnotation* e_THashLBrace=LR_THashLBrace e_ReferencedTypes1=pr_TypeReference(e_TComma1+=LR_TComma e_ReferencedTypes2+=pr_TypeReference)* e_Block=pr_RuleRefAlt3Block1? e_TRBrace=LR_TRBrace #pr_RuleRefAlt3
+    : e_Annotations+=pr_ParserAnnotation* e_Block=pr_ElementValueBlock1 e_Multiplicity=(LR_TQuestion | LR_TAsterisk | LR_TPlus | LR_TQuestionQuestion | LR_TAsteriskQuestion | LR_TPlusQuestion)?
     ;
 pr_BlockAlternative
     : e_Elements+=pr_Element+ e_Block=pr_BlockAlternativeBlock1?
@@ -59,20 +54,20 @@ pr_SingleExpression
     : e_Value=pr_SingleExpressionBlock1
     ;
 pr_ParserAnnotation
-    : e_TLBracket=LR_TLBracket e_Identifier1=pr_Identifier(e_TDot1+=LR_TDot e_Identifier2+=pr_Identifier)* e_TLParen=LR_TLParen e_Arguments1=pr_AnnotationArgument(e_TComma1+=LR_TComma e_Arguments2+=pr_AnnotationArgument)* e_TRParen=LR_TRParen? e_TRBracket=LR_TRBracket
+    : e_TLBracket=LR_TLBracket e_Identifier1=pr_Identifier(e_TDot1+=LR_TDot e_Identifier2+=pr_Identifier)* e_Block=pr_ParserAnnotationBlock1? e_TRBracket=LR_TRBracket
     ;
 pr_LexerAnnotation
-    : e_TLBracket=LR_TLBracket e_Identifier1=pr_Identifier(e_TDot1+=LR_TDot e_Identifier2+=pr_Identifier)* e_TLParen=LR_TLParen e_Arguments1=pr_AnnotationArgument(e_TComma1+=LR_TComma e_Arguments2+=pr_AnnotationArgument)* e_TRParen=LR_TRParen? e_TRBracket=LR_TRBracket
+    : e_TLBracket=LR_TLBracket e_Identifier1=pr_Identifier(e_TDot1+=LR_TDot e_Identifier2+=pr_Identifier)* e_Block=pr_LexerAnnotationBlock1? e_TRBracket=LR_TRBracket
     ;
 pr_AnnotationArgument
     : e_Block=pr_AnnotationArgumentBlock1? e_Value=pr_Expression
     ;
 pr_TypeReferenceIdentifier
-    : e_Tokens=(LR_KBool | LR_KInt | LR_KString | LR_KType | LR_KSymbol | LR_KObject | LR_KVoid) #pr_TypeReferenceIdentifierAlt1
+    : e_Tokens=(LR_KBool | LR_KInt | LR_KDouble | LR_KString | LR_KType | LR_KSymbol | LR_KObject | LR_KVoid) #pr_TypeReferenceIdentifierAlt1
     | e_Identifier=pr_Identifier #pr_TypeReferenceIdentifierAlt2
     ;
 pr_TypeReference
-    : e_Tokens=(LR_KBool | LR_KInt | LR_KString | LR_KType | LR_KSymbol | LR_KObject | LR_KVoid) #pr_TypeReferenceAlt1
+    : e_Tokens=(LR_KBool | LR_KInt | LR_KDouble | LR_KString | LR_KType | LR_KSymbol | LR_KObject | LR_KVoid) #pr_TypeReferenceAlt1
     | e_Identifier1=pr_Identifier(e_TDot1+=LR_TDot e_Identifier2+=pr_Identifier)* #pr_TypeReferenceAlt2
     ;
 pr_Name
@@ -100,13 +95,20 @@ pr_AlternativeBlock2
 pr_ElementBlock1
     : e_Annotations+=pr_ParserAnnotation* e_Name=pr_Name e_Assignment=(LR_TEq | LR_TQuestionEq | LR_TExclEq | LR_TPlusEq)
     ;
-pr_BlockAlternativesBlock
+pr_ElementValueBlock1
+    : e_Token=(LR_KEof | LR_TString) #pr_Tokens
+    | e_TLParen=LR_TLParen e_Alternatives1=pr_BlockAlternative(e_TBar1+=LR_TBar e_Alternatives2+=pr_BlockAlternative)* e_TRParen=LR_TRParen #pr_Block
+    | e_GrammarRule=pr_Identifier #pr_RuleRefAlt1
+    | e_THash=LR_THash e_ReferencedTypes=pr_TypeReference #pr_RuleRefAlt2
+    | e_THashLBrace=LR_THashLBrace e_ReferencedTypes1=pr_TypeReference(e_TComma1+=LR_TComma e_ReferencedTypes2+=pr_TypeReference)* e_Block=pr_RuleRefAlt3Block1? e_TRBrace=LR_TRBrace #pr_RuleRefAlt3
+    ;
+pr_BlockAlternativesBlock1
     : e_TBar1=LR_TBar e_Alternatives2=pr_BlockAlternative
     ;
 pr_BlockAlternativeBlock1
     : e_TEqGt=LR_TEqGt e_ReturnValue=pr_Expression
     ;
-pr_RuleRefAlt3ReferencedTypesBlock
+pr_RuleRefAlt3ReferencedTypesBlock1
     : e_TComma1=LR_TComma e_ReferencedTypes2=pr_TypeReference
     ;
 pr_RuleRefAlt3Block1
@@ -126,15 +128,15 @@ pr_LBlockAlternativesBlock
     : e_TBar1=LR_TBar e_Alternatives2=pr_LAlternative
     ;
 pr_SingleExpressionBlock1
-    : e_Token=(LR_KNull | LR_KTrue | LR_KFalse | LR_TString | LR_TInteger | LR_TDecimal) #pr_Tokens
-    | e_Tokens=(LR_KBool | LR_KInt | LR_KString | LR_KType | LR_KSymbol | LR_KObject | LR_KVoid) #pr_SingleExpressionBlock1Alt2
+    : e_Token=(LR_KNull | LR_KTrue | LR_KFalse | LR_TString | LR_TInteger | LR_TDecimal) #pr_Tokens1
+    | e_Tokens=(LR_KBool | LR_KInt | LR_KDouble | LR_KString | LR_KType | LR_KSymbol | LR_KObject | LR_KVoid) #pr_SingleExpressionBlock1Alt2
     | e_Identifier1=pr_Identifier(e_TDot1+=LR_TDot e_Identifier2+=pr_Identifier)* #pr_SingleExpressionBlock1Alt3
     ;
-pr_ParserAnnotationArgumentsBlock
-    : e_TComma1=LR_TComma e_Arguments2=pr_AnnotationArgument
+pr_ParserAnnotationBlock1
+    : e_TLParen=LR_TLParen e_Arguments1=pr_AnnotationArgument(e_TComma1+=LR_TComma e_Arguments2+=pr_AnnotationArgument)* e_TRParen=LR_TRParen
     ;
-pr_LexerAnnotationArgumentsBlock
-    : e_TComma1=LR_TComma e_Arguments2=pr_AnnotationArgument
+pr_LexerAnnotationBlock1
+    : e_TLParen=LR_TLParen e_Arguments1=pr_AnnotationArgument(e_TComma1+=LR_TComma e_Arguments2+=pr_AnnotationArgument)* e_TRParen=LR_TRParen
     ;
 pr_AnnotationArgumentBlock1
     : e_NamedParameter=pr_Identifier e_TColon=LR_TColon
@@ -150,4 +152,10 @@ pr_TokenBlock1Alt1Block1
     ;
 pr_ArrayExpressionItemsBlock
     : e_TComma1=LR_TComma e_Items2=pr_SingleExpression
+    ;
+pr_ParserAnnotationBlock1ArgumentsBlock1
+    : e_TComma1=LR_TComma e_Arguments2=pr_AnnotationArgument
+    ;
+pr_LexerAnnotationBlock1ArgumentsBlock1
+    : e_TComma1=LR_TComma e_Arguments2=pr_AnnotationArgument
     ;

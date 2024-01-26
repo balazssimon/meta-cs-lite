@@ -26,12 +26,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		void VisitFragment(FragmentSyntax node);
 		void VisitAlternative(AlternativeSyntax node);
 		void VisitElement(ElementSyntax node);
-		void VisitBlock(BlockSyntax node);
-		void VisitEof1(Eof1Syntax node);
-		void VisitFixed(FixedSyntax node);
-		void VisitRuleRefAlt1(RuleRefAlt1Syntax node);
-		void VisitRuleRefAlt2(RuleRefAlt2Syntax node);
-		void VisitRuleRefAlt3(RuleRefAlt3Syntax node);
+		void VisitElementValue(ElementValueSyntax node);
 		void VisitBlockAlternative(BlockAlternativeSyntax node);
 		void VisitLAlternative(LAlternativeSyntax node);
 		void VisitLElement(LElementSyntax node);
@@ -58,6 +53,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		void VisitAlternativeBlock1(AlternativeBlock1Syntax node);
 		void VisitAlternativeBlock2(AlternativeBlock2Syntax node);
 		void VisitElementBlock1(ElementBlock1Syntax node);
+		void VisitTokens(TokensSyntax node);
+		void VisitBlock(BlockSyntax node);
+		void VisitRuleRefAlt1(RuleRefAlt1Syntax node);
+		void VisitRuleRefAlt2(RuleRefAlt2Syntax node);
+		void VisitRuleRefAlt3(RuleRefAlt3Syntax node);
 		void VisitBlockAlternativesBlock(BlockAlternativesBlockSyntax node);
 		void VisitBlockAlternativeBlock1(BlockAlternativeBlock1Syntax node);
 		void VisitRuleRefAlt3ReferencedTypesBlock(RuleRefAlt3ReferencedTypesBlockSyntax node);
@@ -67,16 +67,18 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		void VisitTokenAlternativesBlock(TokenAlternativesBlockSyntax node);
 		void VisitFragmentAlternativesBlock(FragmentAlternativesBlockSyntax node);
 		void VisitLBlockAlternativesBlock(LBlockAlternativesBlockSyntax node);
-		void VisitTokens(TokensSyntax node);
+		void VisitTokens1(Tokens1Syntax node);
 		void VisitSingleExpressionBlock1Alt2(SingleExpressionBlock1Alt2Syntax node);
 		void VisitSingleExpressionBlock1Alt3(SingleExpressionBlock1Alt3Syntax node);
-		void VisitParserAnnotationArgumentsBlock(ParserAnnotationArgumentsBlockSyntax node);
-		void VisitLexerAnnotationArgumentsBlock(LexerAnnotationArgumentsBlockSyntax node);
+		void VisitParserAnnotationBlock1(ParserAnnotationBlock1Syntax node);
+		void VisitLexerAnnotationBlock1(LexerAnnotationBlock1Syntax node);
 		void VisitAnnotationArgumentBlock1(AnnotationArgumentBlock1Syntax node);
 		void VisitMainQualifierBlock(MainQualifierBlockSyntax node);
 		void VisitAlternativeBlock1Block1(AlternativeBlock1Block1Syntax node);
 		void VisitTokenBlock1Alt1Block1(TokenBlock1Alt1Block1Syntax node);
 		void VisitArrayExpressionItemsBlock(ArrayExpressionItemsBlockSyntax node);
+		void VisitParserAnnotationBlock1ArgumentsBlock(ParserAnnotationBlock1ArgumentsBlockSyntax node);
+		void VisitLexerAnnotationBlock1ArgumentsBlock(LexerAnnotationBlock1ArgumentsBlockSyntax node);
     }
 
 	public class CompilerSyntaxVisitor : SyntaxVisitor, ICompilerSyntaxVisitor
@@ -131,32 +133,7 @@ public virtual void VisitElement(ElementSyntax node)
     this.DefaultVisit(node);
 }
 
-public virtual void VisitBlock(BlockSyntax node)
-{
-    this.DefaultVisit(node);
-}
-
-public virtual void VisitEof1(Eof1Syntax node)
-{
-    this.DefaultVisit(node);
-}
-
-public virtual void VisitFixed(FixedSyntax node)
-{
-    this.DefaultVisit(node);
-}
-
-public virtual void VisitRuleRefAlt1(RuleRefAlt1Syntax node)
-{
-    this.DefaultVisit(node);
-}
-
-public virtual void VisitRuleRefAlt2(RuleRefAlt2Syntax node)
-{
-    this.DefaultVisit(node);
-}
-
-public virtual void VisitRuleRefAlt3(RuleRefAlt3Syntax node)
+public virtual void VisitElementValue(ElementValueSyntax node)
 {
     this.DefaultVisit(node);
 }
@@ -291,6 +268,31 @@ public virtual void VisitElementBlock1(ElementBlock1Syntax node)
     this.DefaultVisit(node);
 }
 
+public virtual void VisitTokens(TokensSyntax node)
+{
+    this.DefaultVisit(node);
+}
+
+public virtual void VisitBlock(BlockSyntax node)
+{
+    this.DefaultVisit(node);
+}
+
+public virtual void VisitRuleRefAlt1(RuleRefAlt1Syntax node)
+{
+    this.DefaultVisit(node);
+}
+
+public virtual void VisitRuleRefAlt2(RuleRefAlt2Syntax node)
+{
+    this.DefaultVisit(node);
+}
+
+public virtual void VisitRuleRefAlt3(RuleRefAlt3Syntax node)
+{
+    this.DefaultVisit(node);
+}
+
 public virtual void VisitBlockAlternativesBlock(BlockAlternativesBlockSyntax node)
 {
     this.DefaultVisit(node);
@@ -336,7 +338,7 @@ public virtual void VisitLBlockAlternativesBlock(LBlockAlternativesBlockSyntax n
     this.DefaultVisit(node);
 }
 
-public virtual void VisitTokens(TokensSyntax node)
+public virtual void VisitTokens1(Tokens1Syntax node)
 {
     this.DefaultVisit(node);
 }
@@ -351,12 +353,12 @@ public virtual void VisitSingleExpressionBlock1Alt3(SingleExpressionBlock1Alt3Sy
     this.DefaultVisit(node);
 }
 
-public virtual void VisitParserAnnotationArgumentsBlock(ParserAnnotationArgumentsBlockSyntax node)
+public virtual void VisitParserAnnotationBlock1(ParserAnnotationBlock1Syntax node)
 {
     this.DefaultVisit(node);
 }
 
-public virtual void VisitLexerAnnotationArgumentsBlock(LexerAnnotationArgumentsBlockSyntax node)
+public virtual void VisitLexerAnnotationBlock1(LexerAnnotationBlock1Syntax node)
 {
     this.DefaultVisit(node);
 }
@@ -385,6 +387,16 @@ public virtual void VisitArrayExpressionItemsBlock(ArrayExpressionItemsBlockSynt
 {
     this.DefaultVisit(node);
 }
+
+public virtual void VisitParserAnnotationBlock1ArgumentsBlock(ParserAnnotationBlock1ArgumentsBlockSyntax node)
+{
+    this.DefaultVisit(node);
+}
+
+public virtual void VisitLexerAnnotationBlock1ArgumentsBlock(LexerAnnotationBlock1ArgumentsBlockSyntax node)
+{
+    this.DefaultVisit(node);
+}
     }
 
 public interface ICompilerSyntaxVisitor<TResult> 
@@ -399,12 +411,7 @@ public interface ICompilerSyntaxVisitor<TResult>
 	TResult VisitFragment(FragmentSyntax node);
 	TResult VisitAlternative(AlternativeSyntax node);
 	TResult VisitElement(ElementSyntax node);
-	TResult VisitBlock(BlockSyntax node);
-	TResult VisitEof1(Eof1Syntax node);
-	TResult VisitFixed(FixedSyntax node);
-	TResult VisitRuleRefAlt1(RuleRefAlt1Syntax node);
-	TResult VisitRuleRefAlt2(RuleRefAlt2Syntax node);
-	TResult VisitRuleRefAlt3(RuleRefAlt3Syntax node);
+	TResult VisitElementValue(ElementValueSyntax node);
 	TResult VisitBlockAlternative(BlockAlternativeSyntax node);
 	TResult VisitLAlternative(LAlternativeSyntax node);
 	TResult VisitLElement(LElementSyntax node);
@@ -431,6 +438,11 @@ public interface ICompilerSyntaxVisitor<TResult>
 	TResult VisitAlternativeBlock1(AlternativeBlock1Syntax node);
 	TResult VisitAlternativeBlock2(AlternativeBlock2Syntax node);
 	TResult VisitElementBlock1(ElementBlock1Syntax node);
+	TResult VisitTokens(TokensSyntax node);
+	TResult VisitBlock(BlockSyntax node);
+	TResult VisitRuleRefAlt1(RuleRefAlt1Syntax node);
+	TResult VisitRuleRefAlt2(RuleRefAlt2Syntax node);
+	TResult VisitRuleRefAlt3(RuleRefAlt3Syntax node);
 	TResult VisitBlockAlternativesBlock(BlockAlternativesBlockSyntax node);
 	TResult VisitBlockAlternativeBlock1(BlockAlternativeBlock1Syntax node);
 	TResult VisitRuleRefAlt3ReferencedTypesBlock(RuleRefAlt3ReferencedTypesBlockSyntax node);
@@ -440,16 +452,18 @@ public interface ICompilerSyntaxVisitor<TResult>
 	TResult VisitTokenAlternativesBlock(TokenAlternativesBlockSyntax node);
 	TResult VisitFragmentAlternativesBlock(FragmentAlternativesBlockSyntax node);
 	TResult VisitLBlockAlternativesBlock(LBlockAlternativesBlockSyntax node);
-	TResult VisitTokens(TokensSyntax node);
+	TResult VisitTokens1(Tokens1Syntax node);
 	TResult VisitSingleExpressionBlock1Alt2(SingleExpressionBlock1Alt2Syntax node);
 	TResult VisitSingleExpressionBlock1Alt3(SingleExpressionBlock1Alt3Syntax node);
-	TResult VisitParserAnnotationArgumentsBlock(ParserAnnotationArgumentsBlockSyntax node);
-	TResult VisitLexerAnnotationArgumentsBlock(LexerAnnotationArgumentsBlockSyntax node);
+	TResult VisitParserAnnotationBlock1(ParserAnnotationBlock1Syntax node);
+	TResult VisitLexerAnnotationBlock1(LexerAnnotationBlock1Syntax node);
 	TResult VisitAnnotationArgumentBlock1(AnnotationArgumentBlock1Syntax node);
 	TResult VisitMainQualifierBlock(MainQualifierBlockSyntax node);
 	TResult VisitAlternativeBlock1Block1(AlternativeBlock1Block1Syntax node);
 	TResult VisitTokenBlock1Alt1Block1(TokenBlock1Alt1Block1Syntax node);
 	TResult VisitArrayExpressionItemsBlock(ArrayExpressionItemsBlockSyntax node);
+	TResult VisitParserAnnotationBlock1ArgumentsBlock(ParserAnnotationBlock1ArgumentsBlockSyntax node);
+	TResult VisitLexerAnnotationBlock1ArgumentsBlock(LexerAnnotationBlock1ArgumentsBlockSyntax node);
     }
 
 public class CompilerSyntaxVisitor<TResult> : SyntaxVisitor<TResult>, ICompilerSyntaxVisitor<TResult>
@@ -504,32 +518,7 @@ public virtual TResult VisitElement(ElementSyntax node)
     return this.DefaultVisit(node);
 }
 
-public virtual TResult VisitBlock(BlockSyntax node)
-{
-    return this.DefaultVisit(node);
-}
-
-public virtual TResult VisitEof1(Eof1Syntax node)
-{
-    return this.DefaultVisit(node);
-}
-
-public virtual TResult VisitFixed(FixedSyntax node)
-{
-    return this.DefaultVisit(node);
-}
-
-public virtual TResult VisitRuleRefAlt1(RuleRefAlt1Syntax node)
-{
-    return this.DefaultVisit(node);
-}
-
-public virtual TResult VisitRuleRefAlt2(RuleRefAlt2Syntax node)
-{
-    return this.DefaultVisit(node);
-}
-
-public virtual TResult VisitRuleRefAlt3(RuleRefAlt3Syntax node)
+public virtual TResult VisitElementValue(ElementValueSyntax node)
 {
     return this.DefaultVisit(node);
 }
@@ -664,6 +653,31 @@ public virtual TResult VisitElementBlock1(ElementBlock1Syntax node)
     return this.DefaultVisit(node);
 }
 
+public virtual TResult VisitTokens(TokensSyntax node)
+{
+    return this.DefaultVisit(node);
+}
+
+public virtual TResult VisitBlock(BlockSyntax node)
+{
+    return this.DefaultVisit(node);
+}
+
+public virtual TResult VisitRuleRefAlt1(RuleRefAlt1Syntax node)
+{
+    return this.DefaultVisit(node);
+}
+
+public virtual TResult VisitRuleRefAlt2(RuleRefAlt2Syntax node)
+{
+    return this.DefaultVisit(node);
+}
+
+public virtual TResult VisitRuleRefAlt3(RuleRefAlt3Syntax node)
+{
+    return this.DefaultVisit(node);
+}
+
 public virtual TResult VisitBlockAlternativesBlock(BlockAlternativesBlockSyntax node)
 {
     return this.DefaultVisit(node);
@@ -709,7 +723,7 @@ public virtual TResult VisitLBlockAlternativesBlock(LBlockAlternativesBlockSynta
     return this.DefaultVisit(node);
 }
 
-public virtual TResult VisitTokens(TokensSyntax node)
+public virtual TResult VisitTokens1(Tokens1Syntax node)
 {
     return this.DefaultVisit(node);
 }
@@ -724,12 +738,12 @@ public virtual TResult VisitSingleExpressionBlock1Alt3(SingleExpressionBlock1Alt
     return this.DefaultVisit(node);
 }
 
-public virtual TResult VisitParserAnnotationArgumentsBlock(ParserAnnotationArgumentsBlockSyntax node)
+public virtual TResult VisitParserAnnotationBlock1(ParserAnnotationBlock1Syntax node)
 {
     return this.DefaultVisit(node);
 }
 
-public virtual TResult VisitLexerAnnotationArgumentsBlock(LexerAnnotationArgumentsBlockSyntax node)
+public virtual TResult VisitLexerAnnotationBlock1(LexerAnnotationBlock1Syntax node)
 {
     return this.DefaultVisit(node);
 }
@@ -758,6 +772,16 @@ public virtual TResult VisitArrayExpressionItemsBlock(ArrayExpressionItemsBlockS
 {
     return this.DefaultVisit(node);
 }
+
+public virtual TResult VisitParserAnnotationBlock1ArgumentsBlock(ParserAnnotationBlock1ArgumentsBlockSyntax node)
+{
+    return this.DefaultVisit(node);
+}
+
+public virtual TResult VisitLexerAnnotationBlock1ArgumentsBlock(LexerAnnotationBlock1ArgumentsBlockSyntax node)
+{
+    return this.DefaultVisit(node);
+}
     }
 
 public interface ICompilerSyntaxVisitor<TArg, TResult> 
@@ -772,12 +796,7 @@ public interface ICompilerSyntaxVisitor<TArg, TResult>
 	TResult VisitFragment(FragmentSyntax node, TArg argument);
 	TResult VisitAlternative(AlternativeSyntax node, TArg argument);
 	TResult VisitElement(ElementSyntax node, TArg argument);
-	TResult VisitBlock(BlockSyntax node, TArg argument);
-	TResult VisitEof1(Eof1Syntax node, TArg argument);
-	TResult VisitFixed(FixedSyntax node, TArg argument);
-	TResult VisitRuleRefAlt1(RuleRefAlt1Syntax node, TArg argument);
-	TResult VisitRuleRefAlt2(RuleRefAlt2Syntax node, TArg argument);
-	TResult VisitRuleRefAlt3(RuleRefAlt3Syntax node, TArg argument);
+	TResult VisitElementValue(ElementValueSyntax node, TArg argument);
 	TResult VisitBlockAlternative(BlockAlternativeSyntax node, TArg argument);
 	TResult VisitLAlternative(LAlternativeSyntax node, TArg argument);
 	TResult VisitLElement(LElementSyntax node, TArg argument);
@@ -804,6 +823,11 @@ public interface ICompilerSyntaxVisitor<TArg, TResult>
 	TResult VisitAlternativeBlock1(AlternativeBlock1Syntax node, TArg argument);
 	TResult VisitAlternativeBlock2(AlternativeBlock2Syntax node, TArg argument);
 	TResult VisitElementBlock1(ElementBlock1Syntax node, TArg argument);
+	TResult VisitTokens(TokensSyntax node, TArg argument);
+	TResult VisitBlock(BlockSyntax node, TArg argument);
+	TResult VisitRuleRefAlt1(RuleRefAlt1Syntax node, TArg argument);
+	TResult VisitRuleRefAlt2(RuleRefAlt2Syntax node, TArg argument);
+	TResult VisitRuleRefAlt3(RuleRefAlt3Syntax node, TArg argument);
 	TResult VisitBlockAlternativesBlock(BlockAlternativesBlockSyntax node, TArg argument);
 	TResult VisitBlockAlternativeBlock1(BlockAlternativeBlock1Syntax node, TArg argument);
 	TResult VisitRuleRefAlt3ReferencedTypesBlock(RuleRefAlt3ReferencedTypesBlockSyntax node, TArg argument);
@@ -813,16 +837,18 @@ public interface ICompilerSyntaxVisitor<TArg, TResult>
 	TResult VisitTokenAlternativesBlock(TokenAlternativesBlockSyntax node, TArg argument);
 	TResult VisitFragmentAlternativesBlock(FragmentAlternativesBlockSyntax node, TArg argument);
 	TResult VisitLBlockAlternativesBlock(LBlockAlternativesBlockSyntax node, TArg argument);
-	TResult VisitTokens(TokensSyntax node, TArg argument);
+	TResult VisitTokens1(Tokens1Syntax node, TArg argument);
 	TResult VisitSingleExpressionBlock1Alt2(SingleExpressionBlock1Alt2Syntax node, TArg argument);
 	TResult VisitSingleExpressionBlock1Alt3(SingleExpressionBlock1Alt3Syntax node, TArg argument);
-	TResult VisitParserAnnotationArgumentsBlock(ParserAnnotationArgumentsBlockSyntax node, TArg argument);
-	TResult VisitLexerAnnotationArgumentsBlock(LexerAnnotationArgumentsBlockSyntax node, TArg argument);
+	TResult VisitParserAnnotationBlock1(ParserAnnotationBlock1Syntax node, TArg argument);
+	TResult VisitLexerAnnotationBlock1(LexerAnnotationBlock1Syntax node, TArg argument);
 	TResult VisitAnnotationArgumentBlock1(AnnotationArgumentBlock1Syntax node, TArg argument);
 	TResult VisitMainQualifierBlock(MainQualifierBlockSyntax node, TArg argument);
 	TResult VisitAlternativeBlock1Block1(AlternativeBlock1Block1Syntax node, TArg argument);
 	TResult VisitTokenBlock1Alt1Block1(TokenBlock1Alt1Block1Syntax node, TArg argument);
 	TResult VisitArrayExpressionItemsBlock(ArrayExpressionItemsBlockSyntax node, TArg argument);
+	TResult VisitParserAnnotationBlock1ArgumentsBlock(ParserAnnotationBlock1ArgumentsBlockSyntax node, TArg argument);
+	TResult VisitLexerAnnotationBlock1ArgumentsBlock(LexerAnnotationBlock1ArgumentsBlockSyntax node, TArg argument);
     }
 
 public class CompilerSyntaxVisitor<TArg, TResult> : SyntaxVisitor<TArg, TResult>, ICompilerSyntaxVisitor<TArg, TResult>
@@ -877,32 +903,7 @@ public virtual TResult VisitElement(ElementSyntax node, TArg argument)
     return this.DefaultVisit(node, argument);
 }
 
-public virtual TResult VisitBlock(BlockSyntax node, TArg argument)
-{
-    return this.DefaultVisit(node, argument);
-}
-
-public virtual TResult VisitEof1(Eof1Syntax node, TArg argument)
-{
-    return this.DefaultVisit(node, argument);
-}
-
-public virtual TResult VisitFixed(FixedSyntax node, TArg argument)
-{
-    return this.DefaultVisit(node, argument);
-}
-
-public virtual TResult VisitRuleRefAlt1(RuleRefAlt1Syntax node, TArg argument)
-{
-    return this.DefaultVisit(node, argument);
-}
-
-public virtual TResult VisitRuleRefAlt2(RuleRefAlt2Syntax node, TArg argument)
-{
-    return this.DefaultVisit(node, argument);
-}
-
-public virtual TResult VisitRuleRefAlt3(RuleRefAlt3Syntax node, TArg argument)
+public virtual TResult VisitElementValue(ElementValueSyntax node, TArg argument)
 {
     return this.DefaultVisit(node, argument);
 }
@@ -1037,6 +1038,31 @@ public virtual TResult VisitElementBlock1(ElementBlock1Syntax node, TArg argumen
     return this.DefaultVisit(node, argument);
 }
 
+public virtual TResult VisitTokens(TokensSyntax node, TArg argument)
+{
+    return this.DefaultVisit(node, argument);
+}
+
+public virtual TResult VisitBlock(BlockSyntax node, TArg argument)
+{
+    return this.DefaultVisit(node, argument);
+}
+
+public virtual TResult VisitRuleRefAlt1(RuleRefAlt1Syntax node, TArg argument)
+{
+    return this.DefaultVisit(node, argument);
+}
+
+public virtual TResult VisitRuleRefAlt2(RuleRefAlt2Syntax node, TArg argument)
+{
+    return this.DefaultVisit(node, argument);
+}
+
+public virtual TResult VisitRuleRefAlt3(RuleRefAlt3Syntax node, TArg argument)
+{
+    return this.DefaultVisit(node, argument);
+}
+
 public virtual TResult VisitBlockAlternativesBlock(BlockAlternativesBlockSyntax node, TArg argument)
 {
     return this.DefaultVisit(node, argument);
@@ -1082,7 +1108,7 @@ public virtual TResult VisitLBlockAlternativesBlock(LBlockAlternativesBlockSynta
     return this.DefaultVisit(node, argument);
 }
 
-public virtual TResult VisitTokens(TokensSyntax node, TArg argument)
+public virtual TResult VisitTokens1(Tokens1Syntax node, TArg argument)
 {
     return this.DefaultVisit(node, argument);
 }
@@ -1097,12 +1123,12 @@ public virtual TResult VisitSingleExpressionBlock1Alt3(SingleExpressionBlock1Alt
     return this.DefaultVisit(node, argument);
 }
 
-public virtual TResult VisitParserAnnotationArgumentsBlock(ParserAnnotationArgumentsBlockSyntax node, TArg argument)
+public virtual TResult VisitParserAnnotationBlock1(ParserAnnotationBlock1Syntax node, TArg argument)
 {
     return this.DefaultVisit(node, argument);
 }
 
-public virtual TResult VisitLexerAnnotationArgumentsBlock(LexerAnnotationArgumentsBlockSyntax node, TArg argument)
+public virtual TResult VisitLexerAnnotationBlock1(LexerAnnotationBlock1Syntax node, TArg argument)
 {
     return this.DefaultVisit(node, argument);
 }
@@ -1128,6 +1154,16 @@ public virtual TResult VisitTokenBlock1Alt1Block1(TokenBlock1Alt1Block1Syntax no
 }
 
 public virtual TResult VisitArrayExpressionItemsBlock(ArrayExpressionItemsBlockSyntax node, TArg argument)
+{
+    return this.DefaultVisit(node, argument);
+}
+
+public virtual TResult VisitParserAnnotationBlock1ArgumentsBlock(ParserAnnotationBlock1ArgumentsBlockSyntax node, TArg argument)
+{
+    return this.DefaultVisit(node, argument);
+}
+
+public virtual TResult VisitLexerAnnotationBlock1ArgumentsBlock(LexerAnnotationBlock1ArgumentsBlockSyntax node, TArg argument)
 {
     return this.DefaultVisit(node, argument);
 }
@@ -1222,55 +1258,15 @@ public virtual SyntaxNode VisitElement(ElementSyntax node)
 {
     var block = (ElementBlock1Syntax)this.Visit(node.Block);
     var value = (ElementValueSyntax)this.Visit(node.Value);
+	return node.Update(block, value);
+}
+
+public virtual SyntaxNode VisitElementValue(ElementValueSyntax node)
+{
+    var annotations1 = this.VisitList(node.Annotations1);
+    var block = (ElementValueBlock1Syntax)this.Visit(node.Block);
     var multiplicity = this.VisitToken(node.Multiplicity);
-	return node.Update(block, value, multiplicity);
-}
-
-public virtual SyntaxNode VisitBlock(BlockSyntax node)
-{
-    var annotations1 = this.VisitList(node.Annotations1);
-    var tLParen = this.VisitToken(node.TLParen);
-    var alternatives = this.VisitList(node.Alternatives);
-    var tRParen = this.VisitToken(node.TRParen);
-	return node.Update(annotations1, tLParen, alternatives, tRParen);
-}
-
-public virtual SyntaxNode VisitEof1(Eof1Syntax node)
-{
-    var kEof = this.VisitToken(node.KEof);
-	return node.Update(kEof);
-}
-
-public virtual SyntaxNode VisitFixed(FixedSyntax node)
-{
-    var annotations1 = this.VisitList(node.Annotations1);
-    var text = this.VisitToken(node.Text);
-	return node.Update(annotations1, text);
-}
-
-public virtual SyntaxNode VisitRuleRefAlt1(RuleRefAlt1Syntax node)
-{
-    var annotations1 = this.VisitList(node.Annotations1);
-    var grammarRule = (IdentifierSyntax)this.Visit(node.GrammarRule);
-	return node.Update(annotations1, grammarRule);
-}
-
-public virtual SyntaxNode VisitRuleRefAlt2(RuleRefAlt2Syntax node)
-{
-    var annotations1 = this.VisitList(node.Annotations1);
-    var tHash = this.VisitToken(node.THash);
-    var referencedTypes = (TypeReferenceSyntax)this.Visit(node.ReferencedTypes);
-	return node.Update(annotations1, tHash, referencedTypes);
-}
-
-public virtual SyntaxNode VisitRuleRefAlt3(RuleRefAlt3Syntax node)
-{
-    var annotations1 = this.VisitList(node.Annotations1);
-    var tHashLBrace = this.VisitToken(node.THashLBrace);
-    var referencedTypes = this.VisitList(node.ReferencedTypes);
-    var block = (RuleRefAlt3Block1Syntax)this.Visit(node.Block);
-    var tRBrace = this.VisitToken(node.TRBrace);
-	return node.Update(annotations1, tHashLBrace, referencedTypes, block, tRBrace);
+	return node.Update(annotations1, block, multiplicity);
 }
 
 public virtual SyntaxNode VisitBlockAlternative(BlockAlternativeSyntax node)
@@ -1346,22 +1342,18 @@ public virtual SyntaxNode VisitParserAnnotation(ParserAnnotationSyntax node)
 {
     var tLBracket = this.VisitToken(node.TLBracket);
     var qualifier = this.VisitList(node.Qualifier);
-    var tLParen = this.VisitToken(node.TLParen);
-    var arguments = this.VisitList(node.Arguments);
-    var tRParen = this.VisitToken(node.TRParen);
+    var block = (ParserAnnotationBlock1Syntax)this.Visit(node.Block);
     var tRBracket = this.VisitToken(node.TRBracket);
-	return node.Update(tLBracket, qualifier, tLParen, arguments, tRParen, tRBracket);
+	return node.Update(tLBracket, qualifier, block, tRBracket);
 }
 
 public virtual SyntaxNode VisitLexerAnnotation(LexerAnnotationSyntax node)
 {
     var tLBracket = this.VisitToken(node.TLBracket);
     var qualifier = this.VisitList(node.Qualifier);
-    var tLParen = this.VisitToken(node.TLParen);
-    var arguments = this.VisitList(node.Arguments);
-    var tRParen = this.VisitToken(node.TRParen);
+    var block = (LexerAnnotationBlock1Syntax)this.Visit(node.Block);
     var tRBracket = this.VisitToken(node.TRBracket);
-	return node.Update(tLBracket, qualifier, tLParen, arguments, tRParen, tRBracket);
+	return node.Update(tLBracket, qualifier, block, tRBracket);
 }
 
 public virtual SyntaxNode VisitAnnotationArgument(AnnotationArgumentSyntax node)
@@ -1459,6 +1451,42 @@ public virtual SyntaxNode VisitElementBlock1(ElementBlock1Syntax node)
 	return node.Update(annotations1, name, assignment);
 }
 
+public virtual SyntaxNode VisitTokens(TokensSyntax node)
+{
+    var token = this.VisitToken(node.Token);
+	return node.Update(token);
+}
+
+public virtual SyntaxNode VisitBlock(BlockSyntax node)
+{
+    var tLParen = this.VisitToken(node.TLParen);
+    var alternatives = this.VisitList(node.Alternatives);
+    var tRParen = this.VisitToken(node.TRParen);
+	return node.Update(tLParen, alternatives, tRParen);
+}
+
+public virtual SyntaxNode VisitRuleRefAlt1(RuleRefAlt1Syntax node)
+{
+    var grammarRule = (IdentifierSyntax)this.Visit(node.GrammarRule);
+	return node.Update(grammarRule);
+}
+
+public virtual SyntaxNode VisitRuleRefAlt2(RuleRefAlt2Syntax node)
+{
+    var tHash = this.VisitToken(node.THash);
+    var referencedTypes = (TypeReferenceSyntax)this.Visit(node.ReferencedTypes);
+	return node.Update(tHash, referencedTypes);
+}
+
+public virtual SyntaxNode VisitRuleRefAlt3(RuleRefAlt3Syntax node)
+{
+    var tHashLBrace = this.VisitToken(node.THashLBrace);
+    var referencedTypes = this.VisitList(node.ReferencedTypes);
+    var block = (RuleRefAlt3Block1Syntax)this.Visit(node.Block);
+    var tRBrace = this.VisitToken(node.TRBrace);
+	return node.Update(tHashLBrace, referencedTypes, block, tRBrace);
+}
+
 public virtual SyntaxNode VisitBlockAlternativesBlock(BlockAlternativesBlockSyntax node)
 {
     var tBar = this.VisitToken(node.TBar);
@@ -1523,7 +1551,7 @@ public virtual SyntaxNode VisitLBlockAlternativesBlock(LBlockAlternativesBlockSy
 	return node.Update(tBar, alternatives);
 }
 
-public virtual SyntaxNode VisitTokens(TokensSyntax node)
+public virtual SyntaxNode VisitTokens1(Tokens1Syntax node)
 {
     var token = this.VisitToken(node.Token);
 	return node.Update(token);
@@ -1541,18 +1569,20 @@ public virtual SyntaxNode VisitSingleExpressionBlock1Alt3(SingleExpressionBlock1
 	return node.Update(qualifier);
 }
 
-public virtual SyntaxNode VisitParserAnnotationArgumentsBlock(ParserAnnotationArgumentsBlockSyntax node)
+public virtual SyntaxNode VisitParserAnnotationBlock1(ParserAnnotationBlock1Syntax node)
 {
-    var tComma = this.VisitToken(node.TComma);
-    var arguments = (AnnotationArgumentSyntax)this.Visit(node.Arguments);
-	return node.Update(tComma, arguments);
+    var tLParen = this.VisitToken(node.TLParen);
+    var arguments = this.VisitList(node.Arguments);
+    var tRParen = this.VisitToken(node.TRParen);
+	return node.Update(tLParen, arguments, tRParen);
 }
 
-public virtual SyntaxNode VisitLexerAnnotationArgumentsBlock(LexerAnnotationArgumentsBlockSyntax node)
+public virtual SyntaxNode VisitLexerAnnotationBlock1(LexerAnnotationBlock1Syntax node)
 {
-    var tComma = this.VisitToken(node.TComma);
-    var arguments = (AnnotationArgumentSyntax)this.Visit(node.Arguments);
-	return node.Update(tComma, arguments);
+    var tLParen = this.VisitToken(node.TLParen);
+    var arguments = this.VisitList(node.Arguments);
+    var tRParen = this.VisitToken(node.TRParen);
+	return node.Update(tLParen, arguments, tRParen);
 }
 
 public virtual SyntaxNode VisitAnnotationArgumentBlock1(AnnotationArgumentBlock1Syntax node)
@@ -1588,6 +1618,20 @@ public virtual SyntaxNode VisitArrayExpressionItemsBlock(ArrayExpressionItemsBlo
     var tComma = this.VisitToken(node.TComma);
     var items = (SingleExpressionSyntax)this.Visit(node.Items);
 	return node.Update(tComma, items);
+}
+
+public virtual SyntaxNode VisitParserAnnotationBlock1ArgumentsBlock(ParserAnnotationBlock1ArgumentsBlockSyntax node)
+{
+    var tComma = this.VisitToken(node.TComma);
+    var arguments = (AnnotationArgumentSyntax)this.Visit(node.Arguments);
+	return node.Update(tComma, arguments);
+}
+
+public virtual SyntaxNode VisitLexerAnnotationBlock1ArgumentsBlock(LexerAnnotationBlock1ArgumentsBlockSyntax node)
+{
+    var tComma = this.VisitToken(node.TComma);
+    var arguments = (AnnotationArgumentSyntax)this.Visit(node.Arguments);
+	return node.Update(tComma, arguments);
 }
 		}
 }

@@ -85,6 +85,7 @@ TypeReference returns type: PrimitiveType | #{MetaType|Qualifier};
 PrimitiveType returns type
 	: 'bool'
 	| 'int'
+	| 'double'
 	| 'string'
 	| 'type'
 	| 'symbol'
@@ -103,7 +104,7 @@ Qualifier: identifiers+=Identifier ('.' identifiers+=Identifier)*;
 Identifier: name=TIdentifier | name=TVerbatimIdentifier;
 
 [Number]
-token TInteger returns int32: '0'| '1'..'9' ('0'..'9')* ;
+token TInteger returns int: '0'| '1'..'9' ('0'..'9')* ;
 
 [Number]
 token TDecimal returns double: ('0'|'1'..'9' ('0'..'9')*) '.' ('0'..'9')+ ;

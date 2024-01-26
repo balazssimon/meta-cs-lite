@@ -129,8 +129,8 @@ finally
 end template
 
 template GenerateBinderFactoryVisitElement(Alternative alt, Element elem, ref int annotIndex)
-    [var isList = MetaDslx.Bootstrap.MetaCompiler.Model.MultiplicityExtensions.IsList(elem.Multiplicity)]
-    [var isOptional = MetaDslx.Bootstrap.MetaCompiler.Model.MultiplicityExtensions.IsOptional(elem.Multiplicity)]
+    [var isList = MetaDslx.Bootstrap.MetaCompiler.Model.MultiplicityExtensions.IsList(elem.Value.Multiplicity)]
+    [var isOptional = MetaDslx.Bootstrap.MetaCompiler.Model.MultiplicityExtensions.IsOptional(elem.Value.Multiplicity)]
     [if (isList)]
         [var elemName = "node."+elem.PropertyName+".Node"]
 [var body = GenerateBinderFactoryVisitListElements(alt, elem, ref annotIndex)]

@@ -20,9 +20,16 @@ namespace MetaDslx.CodeAnalysis.Binding
 
         public UseBinder(ImmutableArray<Type> types = default, ImmutableArray<string> prefixes = default, ImmutableArray<string> suffixes = default)
         {
-            _isType = types.Contains(typeof(MetaType)) || types.Contains(typeof(Type));
-            _isSymbol = types.Contains(typeof(MetaSymbol)) || types.Contains(typeof(object));
-            _types = types.SelectAsArray(t => MetaType.FromType(t));
+            if (!types.IsDefault)
+            {
+                _isType = (types.Contains(typeof(MetaType)) || types.Contains(typeof(Type)));
+                _isSymbol = types.Contains(typeof(MetaSymbol)) || types.Contains(typeof(object));
+                _types = types.SelectAsArray(t => MetaType.FromType(t));
+            }
+            else
+            {
+                _types = ImmutableArray<MetaType>.Empty;
+            }
             _prefixes = prefixes;
             _suffixes = suffixes;
         }

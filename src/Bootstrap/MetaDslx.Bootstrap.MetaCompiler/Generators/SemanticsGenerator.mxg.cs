@@ -1063,12 +1063,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
         #line hidden
         {
             var __cb = global::MetaDslx.CodeGeneration.CodeBuilder.GetInstance();
-            #line (132,6)-(132,105) 13 "SemanticsGenerator.mxg"
-            var isList = MetaDslx.Bootstrap.MetaCompiler.Model.MultiplicityExtensions.IsList(elem.Multiplicity);
+            #line (132,6)-(132,111) 13 "SemanticsGenerator.mxg"
+            var isList = MetaDslx.Bootstrap.MetaCompiler.Model.MultiplicityExtensions.IsList(elem.Value.Multiplicity);
             #line hidden
             
-            #line (133,6)-(133,113) 13 "SemanticsGenerator.mxg"
-            var isOptional = MetaDslx.Bootstrap.MetaCompiler.Model.MultiplicityExtensions.IsOptional(elem.Multiplicity);
+            #line (133,6)-(133,119) 13 "SemanticsGenerator.mxg"
+            var isOptional = MetaDslx.Bootstrap.MetaCompiler.Model.MultiplicityExtensions.IsOptional(elem.Value.Multiplicity);
             #line hidden
             
             var __first76 = true;

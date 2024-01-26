@@ -143,7 +143,7 @@ namespace [Namespace].Syntax
                 [foreach (var elem in alt.Elements)]
                     [if (elem.Value is SeparatedList sl)]
                 [GenerateVisitSeparatedList(elem, sl)]
-                    [else if (elem.Multiplicity.IsList())]
+                    [else if (elem.Value.Multiplicity.IsList())]
                 [GenerateVisitList(elem)]
                     [else if (elem.Value is TokenAlts tokenAlts)]
                 [GenerateVisitTokenAlts(elem, tokenAlts)]
@@ -151,11 +151,11 @@ namespace [Namespace].Syntax
                 var [elem.ParameterName] = (InternalSyntaxToken?)this.VisitTerminal(context.[elem.AntlrName], [Lang]SyntaxKind.Eof);
                     [else if (elem.Value is RuleRef rr)]
                         [if (rr.Token is not null)]
-                var [elem.ParameterName] = (InternalSyntaxToken?)this.VisitTerminal(context.[elem.AntlrName][if (!elem.Multiplicity.IsOptional())], [Lang]SyntaxKind.[rr.Token.CSharpName][end if]);
+                var [elem.ParameterName] = (InternalSyntaxToken?)this.VisitTerminal(context.[elem.AntlrName][if (!elem.Value.Multiplicity.IsOptional())], [Lang]SyntaxKind.[rr.Token.CSharpName][end if]);
                         [else if(rr.Rule is not null)]
                 [rr.GreenType]? [elem.ParameterName] = null;
-                if (context.[elem.AntlrName] is not null) [elem.ParameterName] = ([rr.GreenType]?)this.Visit(context.[elem.AntlrName])[if (!elem.Multiplicity.IsOptional())] ?? [rr.GreenType].__Missing[end if];
-                            [if (!elem.Multiplicity.IsOptional())]
+                if (context.[elem.AntlrName] is not null) [elem.ParameterName] = ([rr.GreenType]?)this.Visit(context.[elem.AntlrName])[if (!elem.Value.Multiplicity.IsOptional())] ?? [rr.GreenType].__Missing[end if];
+                            [if (!elem.Value.Multiplicity.IsOptional())]
                 else [elem.ParameterName] = [rr.GreenType].__Missing;
                             [end if]
                         [else]
@@ -176,7 +176,7 @@ InternalSyntaxToken? [elem.ParameterName] = null;
 [foreach (var token in tokenAlts.Tokens)]
 if (context.[token.Token.AntlrName]() is not null) [elem.ParameterName] = (InternalSyntaxToken?)this.VisitTerminal(context.[token.Token.AntlrName]());
 [end foreach]
-[if (!elem.Multiplicity.IsOptional())]
+[if (!elem.Value.Multiplicity.IsOptional())]
 if ([elem.ParameterName] is null) [elem.ParameterName] = _factory.None;
 [end if]
 end template
@@ -263,14 +263,14 @@ end template
 template GenerateVisitSeparatedListItem(Element elem, string builder)
 var [elem.AntlrName]Context = context.[elem.AntlrName];
 if ([elem.AntlrName]Context is not null) [builder].Add(([elem.Value.GreenType]?)this.Visit([elem.AntlrName]Context) ?? [elem.Value.GreenType].__Missing);
-    [if (!elem.Multiplicity.IsOptional())]
+    [if (!elem.Value.Multiplicity.IsOptional())]
 else [builder].Add([elem.Value.GreenType].__Missing);
     [end if]
 end template
 
 template GenerateVisitSeparatedListSeparator(Element elem, string builder)
 var _separatorContext = context.[elem.AntlrName];
-    [if (elem.Multiplicity.IsOptional())]
+    [if (elem.Value.Multiplicity.IsOptional())]
 if ([elem.AntlrName]Context is not null) [builder].AddSeparator((InternalSyntaxToken?)this.VisitTerminal([elem.AntlrName]Context));
     [else]
 [builder].AddSeparator((InternalSyntaxToken?)this.VisitTerminal([elem.AntlrName]Context, [Lang]SyntaxKind.[elem.CSharpName]));
@@ -280,14 +280,14 @@ end template
 template GenerateVisitSeparatedListItem(Element elem, string builder, string index)
 var _item = [elem.AntlrName]Context["["][index]["]"];
 if (_item is not null) [builder].Add(([elem.Value.GreenType]?)this.Visit(_item) ?? [elem.Value.GreenType].__Missing);
-    [if (!elem.Multiplicity.IsOptional())]
+    [if (!elem.Value.Multiplicity.IsOptional())]
 else [builder].Add([elem.Value.GreenType].__Missing);
     [end if]
 end template
 
 template GenerateVisitSeparatedListSeparator(Element elem, string builder, string index)
 var _separator = [elem.AntlrName]Context["["][index]["]"];
-    [if (elem.Multiplicity.IsOptional())]
+    [if (elem.Value.Multiplicity.IsOptional())]
 if ([elem.AntlrName]Context is not null) [builder].AddSeparator((InternalSyntaxToken?)this.VisitTerminal(_separator));
     [else]
 [builder].AddSeparator((InternalSyntaxToken?)this.VisitTerminal(_separator, [Lang]SyntaxKind.[elem.CSharpName]));

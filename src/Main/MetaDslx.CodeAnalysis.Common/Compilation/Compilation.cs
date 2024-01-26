@@ -1052,9 +1052,9 @@ namespace MetaDslx.CodeAnalysis
         public TypeSymbol? ResolveType(string fullName)
         {
             var qualifiedName = fullName.Split('.').ToImmutableArray();
-            var context = BuckStopsHereBinder.AllocateLookupContext(validators: new[] { LookupValidators.TypeOnly });
-            var results = BuckStopsHereBinder.BindQualifiedName(context, qualifiedName);
-            if (results.Length == 1) return results[0] as TypeSymbol;
+            var context = BuckStopsHereBinder.AllocateLookupContext(qualifier: GlobalNamespace, validators: new[] { LookupValidators.TypeOnly });
+            var result = BuckStopsHereBinder.BindQualifiedName(context, qualifiedName);
+            if (result.Length > 0 && result.Length == qualifiedName.Length) return result[result.Length - 1] as TypeSymbol;
             else return null;
         }
 

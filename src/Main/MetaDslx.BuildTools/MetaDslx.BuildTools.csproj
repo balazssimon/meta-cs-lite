@@ -12,6 +12,10 @@
 
 		<DefineConstants>$(DefineConstants);MetaDslxBootstrap</DefineConstants>
 		<MetaDslxBootstrap>true</MetaDslxBootstrap>
+		<!--
+		<DefineConstants>$(DefineConstants)</DefineConstants>
+		<MetaDslxBootstrap>false</MetaDslxBootstrap>
+		-->
 
 		<!-- NuGet -->
 		<IsPackable>true</IsPackable>

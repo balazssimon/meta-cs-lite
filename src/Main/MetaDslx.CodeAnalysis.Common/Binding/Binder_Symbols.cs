@@ -71,7 +71,7 @@ namespace MetaDslx.CodeAnalysis.Binding
                 result.Add(BindDeclarationOrAliasSymbolInternal(qualifierContext));
                 context.Diagnostics.AddRange(qualifierContext.Diagnostics);
                 var previous = result[0];
-                for (int i = 0; i < qualifier.Length; i++)
+                for (int i = 1; i < qualifier.Length; i++)
                 {
                     if (previous is null || previous.IsError) break;
                     var isFinal = i == qualifier.Length - 1;

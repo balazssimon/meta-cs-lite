@@ -56,6 +56,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 				case CompilerSyntaxKind.TPlusQuestion:
 				case CompilerSyntaxKind.KBool:
 				case CompilerSyntaxKind.KInt:
+				case CompilerSyntaxKind.KDouble:
 				case CompilerSyntaxKind.KString:
 				case CompilerSyntaxKind.KType:
 				case CompilerSyntaxKind.KSymbol:
@@ -127,6 +128,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 				case CompilerSyntaxKind.TPlusQuestion:
 				case CompilerSyntaxKind.KBool:
 				case CompilerSyntaxKind.KInt:
+				case CompilerSyntaxKind.KDouble:
 				case CompilerSyntaxKind.KString:
 				case CompilerSyntaxKind.KType:
 				case CompilerSyntaxKind.KSymbol:
@@ -220,6 +222,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 					return CompilerSyntaxKind.KBool;
 				case "int": 
 					return CompilerSyntaxKind.KInt;
+				case "double": 
+					return CompilerSyntaxKind.KDouble;
 				case "string": 
 					return CompilerSyntaxKind.KString;
 				case "type": 
@@ -351,6 +355,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 					return "KBool";
 				case CompilerSyntaxKind.KInt: 
 					return "KInt";
+				case CompilerSyntaxKind.KDouble: 
+					return "KDouble";
 				case CompilerSyntaxKind.KString: 
 					return "KString";
 				case CompilerSyntaxKind.KType: 
@@ -417,18 +423,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	return "Alternative";
 				case CompilerSyntaxKind.Element: 
 	return "Element";
-				case CompilerSyntaxKind.Block: 
-	return "Block";
-				case CompilerSyntaxKind.Eof1: 
-	return "Eof1";
-				case CompilerSyntaxKind.Fixed: 
-	return "Fixed";
-				case CompilerSyntaxKind.RuleRefAlt1: 
-	return "RuleRefAlt1";
-				case CompilerSyntaxKind.RuleRefAlt2: 
-	return "RuleRefAlt2";
-				case CompilerSyntaxKind.RuleRefAlt3: 
-	return "RuleRefAlt3";
+				case CompilerSyntaxKind.ElementValue: 
+	return "ElementValue";
 				case CompilerSyntaxKind.BlockAlternative: 
 	return "BlockAlternative";
 				case CompilerSyntaxKind.LAlternative: 
@@ -481,6 +477,16 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	return "AlternativeBlock2";
 				case CompilerSyntaxKind.ElementBlock1: 
 	return "ElementBlock1";
+				case CompilerSyntaxKind.Tokens: 
+	return "Tokens";
+				case CompilerSyntaxKind.Block: 
+	return "Block";
+				case CompilerSyntaxKind.RuleRefAlt1: 
+	return "RuleRefAlt1";
+				case CompilerSyntaxKind.RuleRefAlt2: 
+	return "RuleRefAlt2";
+				case CompilerSyntaxKind.RuleRefAlt3: 
+	return "RuleRefAlt3";
 				case CompilerSyntaxKind.BlockAlternativesBlock: 
 	return "BlockAlternativesBlock";
 				case CompilerSyntaxKind.BlockAlternativeBlock1: 
@@ -499,16 +505,16 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	return "FragmentAlternativesBlock";
 				case CompilerSyntaxKind.LBlockAlternativesBlock: 
 	return "LBlockAlternativesBlock";
-				case CompilerSyntaxKind.Tokens: 
-	return "Tokens";
+				case CompilerSyntaxKind.Tokens1: 
+	return "Tokens1";
 				case CompilerSyntaxKind.SingleExpressionBlock1Alt2: 
 	return "SingleExpressionBlock1Alt2";
 				case CompilerSyntaxKind.SingleExpressionBlock1Alt3: 
 	return "SingleExpressionBlock1Alt3";
-				case CompilerSyntaxKind.ParserAnnotationArgumentsBlock: 
-	return "ParserAnnotationArgumentsBlock";
-				case CompilerSyntaxKind.LexerAnnotationArgumentsBlock: 
-	return "LexerAnnotationArgumentsBlock";
+				case CompilerSyntaxKind.ParserAnnotationBlock1: 
+	return "ParserAnnotationBlock1";
+				case CompilerSyntaxKind.LexerAnnotationBlock1: 
+	return "LexerAnnotationBlock1";
 				case CompilerSyntaxKind.AnnotationArgumentBlock1: 
 	return "AnnotationArgumentBlock1";
 				case CompilerSyntaxKind.MainQualifierBlock: 
@@ -519,6 +525,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	return "TokenBlock1Alt1Block1";
 				case CompilerSyntaxKind.ArrayExpressionItemsBlock: 
 	return "ArrayExpressionItemsBlock";
+				case CompilerSyntaxKind.ParserAnnotationBlock1ArgumentsBlock: 
+	return "ParserAnnotationBlock1ArgumentsBlock";
+				case CompilerSyntaxKind.LexerAnnotationBlock1ArgumentsBlock: 
+	return "LexerAnnotationBlock1ArgumentsBlock";
 default:
 	return string.Empty;
 }
@@ -597,6 +607,8 @@ public string GetText(CompilerSyntaxKind kind)
 			return "bool";
 		case CompilerSyntaxKind.KInt: 
 			return "int";
+		case CompilerSyntaxKind.KDouble: 
+			return "double";
 		case CompilerSyntaxKind.KString: 
 			return "string";
 		case CompilerSyntaxKind.KType: 
@@ -667,6 +679,7 @@ public bool IsTrivia(CompilerSyntaxKind kind)
 		case CompilerSyntaxKind.KFragment: 
 		case CompilerSyntaxKind.KBool: 
 		case CompilerSyntaxKind.KInt: 
+		case CompilerSyntaxKind.KDouble: 
 		case CompilerSyntaxKind.KString: 
 		case CompilerSyntaxKind.KType: 
 		case CompilerSyntaxKind.KSymbol: 
@@ -699,6 +712,7 @@ public bool IsTrivia(CompilerSyntaxKind kind)
 	yield return CompilerSyntaxKind.KFragment;
 	yield return CompilerSyntaxKind.KBool;
 	yield return CompilerSyntaxKind.KInt;
+	yield return CompilerSyntaxKind.KDouble;
 	yield return CompilerSyntaxKind.KString;
 	yield return CompilerSyntaxKind.KType;
 	yield return CompilerSyntaxKind.KSymbol;
@@ -737,6 +751,8 @@ public bool IsTrivia(CompilerSyntaxKind kind)
 			return CompilerSyntaxKind.KBool;
 		case "int": 
 			return CompilerSyntaxKind.KInt;
+		case "double": 
+			return CompilerSyntaxKind.KDouble;
 		case "string": 
 			return CompilerSyntaxKind.KString;
 		case "type": 

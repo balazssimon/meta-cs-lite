@@ -24,6 +24,7 @@ namespace MetaDslx.CodeAnalysis.Binding
             TypeSymbol? accessThroughType = null,
             IEnumerable<TypeSymbol>? baseTypesBeingResolved = null,
             bool diagnose = false,
+            bool isCaseSensitive = true,
             bool inImport = false,
             bool isLookup = false,
             object? multiLookupKey = null,
@@ -40,6 +41,7 @@ namespace MetaDslx.CodeAnalysis.Binding
             if (baseTypesBeingResolved is not null) context.BaseTypesBeingResolved.UnionWith(baseTypesBeingResolved);
             context.AccessThroughType = accessThroughType;
             context.Diagnose = diagnose;
+            context.IsCaseSensitive = isCaseSensitive;
             context.InImport = inImport;
             context.IsLookup = isLookup;
             return context;

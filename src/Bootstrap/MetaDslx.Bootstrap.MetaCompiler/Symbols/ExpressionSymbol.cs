@@ -175,9 +175,19 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
                 if (!valueType.IsNull)
                 {
                     var expectedType = this.ExpectedType;
-                    if (expectedType.TryGetCoreType(out var coreType, diagnostics, cancellationToken) && !valueType.IsAssignableTo(coreType))
+                    if (expectedType.TryGetCoreType(out var coreType, diagnostics, cancellationToken))
                     {
-                        diagnostics.Add(Diagnostic.Create(CompilerErrorCode.ERR_IncompatibleExpressionType, this.Location, this.DeclaringSyntaxReference, valueType, coreType));
+                        if (!valueType.IsAssignableTo(coreType))
+                        {
+                            if (valueType.SpecialType == SpecialType.System_String && (coreType.SpecialType == SpecialType.System_Type || coreType.SpecialType == SpecialType.MetaDslx_CodeAnalysis_MetaType))
+                            {
+                                // nop
+                            }
+                            else
+                            {
+                                diagnostics.Add(Diagnostic.Create(CompilerErrorCode.ERR_IncompatibleExpressionType, this.Location, this.DeclaringSyntaxReference, valueType, coreType));
+                            }
+                        }
                     }
                 }
                 else
