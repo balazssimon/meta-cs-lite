@@ -1,6 +1,7 @@
 ﻿using MetaDslx.CodeAnalysis.Declarations;
 using MetaDslx.CodeAnalysis.PooledObjects;
 using MetaDslx.CodeAnalysis.Symbols;
+using MetaDslx.Modeling;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -12,20 +13,20 @@ namespace MetaDslx.CodeAnalysis.Binding
     public class NameBinder : Binder, INameBinder
     {
         private readonly Type? _qualifierType;
-        private readonly string? _qualifierProperty;
+        private readonly ModelProperty? _qualifierProperty;
 
-        public NameBinder(Type? qualifierType = null, string? qualifierProperty = null)
+        public NameBinder(Type? qualifierType = null, ModelProperty? qualifierProperty = null)
         {
             _qualifierType = qualifierType;
             _qualifierProperty = qualifierProperty;
         }
 
         public Type? QualifierType => _qualifierType;
-        public string? QualifierProperty => _qualifierProperty;
+        public ModelProperty? QualifierProperty => _qualifierProperty;
 
         protected override ImmutableArray<SingleDeclaration> BuildDeclarationTree(SingleDeclarationBuilder builder)
         {
-            builder.BeginName(_qualifierType, _qualifierProperty);
+            builder.BeginName(_qualifierType, _qualifierProperty?.Name);
             try
             {
                 var result = base.BuildDeclarationTree(builder);
@@ -72,7 +73,7 @@ namespace MetaDslx.CodeAnalysis.Binding
             }
             if (QualifierProperty is not null)
             {
-                sb.Append(QualifierProperty);
+                sb.Append(QualifierProperty.Name);
             }
             sb.Append("]");
             return builder.ToStringAndFree();

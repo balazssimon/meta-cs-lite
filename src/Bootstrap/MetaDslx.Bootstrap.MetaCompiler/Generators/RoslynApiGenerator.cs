@@ -34,6 +34,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
 
         public IList<Token> Tokens => Grammar.Tokens;
         public IList<Rule> Rules => Grammar.Rules;
+        public IList<Block> Blocks => Grammar.Blocks;
         public IList<Token> FixedTokens => Grammar.Tokens.Where(t => t.IsFixed).ToList();
         public IList<Token> NonFixedTokens => Grammar.Tokens.Where(t => !t.IsFixed).ToList();
         public IList<Fragment> Fragments => Grammar.GrammarRules.OfType<Fragment>().ToList();
@@ -63,7 +64,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
                     {
                         foreach (var diag in antlrTool.Diagnostics)
                         {
-                            var metaDiag = MetaDslx.CodeAnalysis.Diagnostic.Create(ErrorCode.ERR_SyntaxError, new ExternalFileLocation(diag.FilePath, TextSpan.FromBounds(0, 0), new LinePositionSpan(new LinePosition(diag.Line, diag.Column), new LinePosition(diag.Line, diag.Column))), diag.Message);
+                            var metaDiag = MetaDslx.CodeAnalysis.Diagnostic.Create(ErrorCode.ERR_SyntaxError, new ExternalFileLocation(diag.FilePath ?? path, TextSpan.FromBounds(0, 0), new LinePositionSpan(new LinePosition(diag.Line, diag.Column), new LinePosition(diag.Line, diag.Column))), diag.Message);
                             diagnostics.Add(metaDiag);
                         }
                     }
@@ -102,7 +103,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
                     {
                         foreach (var diag in antlrTool.Diagnostics)
                         {
-                            var metaDiag = MetaDslx.CodeAnalysis.Diagnostic.Create(ErrorCode.ERR_SyntaxError, new ExternalFileLocation(diag.FilePath, TextSpan.FromBounds(0, 0), new LinePositionSpan(new LinePosition(diag.Line, diag.Column), new LinePosition(diag.Line, diag.Column))), diag.Message);
+                            var metaDiag = MetaDslx.CodeAnalysis.Diagnostic.Create(ErrorCode.ERR_SyntaxError, new ExternalFileLocation(diag.FilePath ?? path, TextSpan.FromBounds(0, 0), new LinePositionSpan(new LinePosition(diag.Line, diag.Column), new LinePosition(diag.Line, diag.Column))), diag.Message);
                             diagnostics.Add(metaDiag);
                         }
                     }

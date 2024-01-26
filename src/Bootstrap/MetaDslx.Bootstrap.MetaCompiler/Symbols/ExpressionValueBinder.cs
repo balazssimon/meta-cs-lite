@@ -20,9 +20,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
     internal class ExpressionValueBinder : UseBinder
     {
         private ExpressionSymbol? _containingExpression;
+        private MetaType _modelObjectType;
         private MetaType _expectedType;
 
         public ExpressionValueBinder()
+            : base(types: ImmutableArray.Create(typeof(MetaSymbol)))
         {
             
         }
@@ -85,6 +87,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
                     }
                 }
             }
+            var containingAlt = expr.GetOutermostContainingSymbol<PAlternativeSymbol>();
+            if (containingAlt is not null)
+            {
+                _modelObjectType = containingAlt.ReturnType.AsTypeSymbol(Compilation);
+            }
             if (result.IsNull) return default;
             if (result.TryGetCoreType(out var coreType, diagnostics, cancellationToken) && !coreType.IsNull)
             {
@@ -98,10 +105,17 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
 
         protected override void AdjustFinalLookupContext(LookupContext context)
         {
-            var expectedType = ExpectedType;
-            if (expectedType.IsEnum && context.Qualifier is null)
+            if (context.Qualifier is null)
             {
-                context.Qualifier = expectedType.AsTypeSymbol(this.Compilation);
+                var expectedType = ExpectedType;
+                if (expectedType.IsEnum)
+                {
+                    context.Qualifier = expectedType.AsTypeSymbol(this.Compilation);
+                }
+                if (expectedType.FullName == typeof(ModelProperty).FullName)
+                {
+                    context.Qualifier = _modelObjectType.AsTypeSymbol(this.Compilation);
+                }
             }
             base.AdjustFinalLookupContext(context);
         }

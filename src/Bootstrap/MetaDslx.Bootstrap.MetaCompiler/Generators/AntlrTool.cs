@@ -68,7 +68,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
             {
                 if (GrammarFiles.Count == 0)
                 {
-                    throw new FileNotFoundException("There is no input file.");
+                    AddDiagnosticError("There is no input file.");
+                    return false;
                 }
 
                 if (string.IsNullOrWhiteSpace(JavaExe))
@@ -82,7 +83,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
 
                 if (string.IsNullOrWhiteSpace(JavaExe) || !File.Exists(JavaExe))
                 {
-                    throw new FileNotFoundException("Could not find 'java.exe'. Please, install a JRE and set the JAVA_HOME environment variable.");
+                    AddDiagnosticError("Could not find 'java.exe'. Please, install a JRE and set the JAVA_HOME environment variable.");
+                    return false;
                 }
 
                 if (string.IsNullOrWhiteSpace(ToolPath))
@@ -90,16 +92,20 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
                     var assemblyPath = Path.GetDirectoryName(typeof(AntlrTool).Assembly.Location);
                     var toolFolder = Path.Combine(assemblyPath, "tools");
                     ToolPath = toolFolder;
-                    foreach (var antlrJarName in Directory.EnumerateFiles(toolFolder, "antlr-*-complete.jar"))
+                    if (Directory.Exists(toolFolder))
                     {
-                        ToolPath = antlrJarName;
-                        break;
+                        foreach (var antlrJarName in Directory.EnumerateFiles(toolFolder, "antlr-*-complete.jar"))
+                        {
+                            ToolPath = antlrJarName;
+                            break;
+                        }
                     }
                 }
 
                 if (string.IsNullOrWhiteSpace(ToolPath) || !File.Exists(ToolPath))
                 {
-                    throw new FileNotFoundException($"Could not find the ANTLR tools JAR at '{ToolPath}'.");
+                    AddDiagnosticError($"Could not find the ANTLR tools JAR at '{ToolPath}'.");
+                    return false;
                 }
 
                 // Because we're using the Java version of the Antlr tool,
@@ -244,17 +250,17 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
 
         private void AddDiagnosticInfo(string message)
         {
-            this.AddDiagnostic(DiagnosticSeverity.Info, -1, null, -1, -1, message);
+            this.AddDiagnostic(DiagnosticSeverity.Info, -1, null, 0, 0, message);
         }
 
         private void AddDiagnosticError(string message)
         {
-            this.AddDiagnostic(DiagnosticSeverity.Error, -1, null, -1, -1, message);
+            this.AddDiagnostic(DiagnosticSeverity.Error, -1, null, 0, 0, message);
         }
 
         private void ProcessException(Exception ex)
         {
-            this.AddDiagnostic(DiagnosticSeverity.Error, -1, null, -1, -1, ex.ToString().Replace('\r', ' ').Replace('\n', ' '));
+            this.AddDiagnostic(DiagnosticSeverity.Error, -1, null, 0, 0, ex.ToString().Replace('\r', ' ').Replace('\n', ' '));
         }
 
         internal static bool IsFatalException(Exception exception)
@@ -311,7 +317,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
         private static readonly Regex GeneratedFileMessageFormat = new Regex(@"^Generating file '(?<OUTPUT>.*?)' for grammar '(?<GRAMMAR>.*?)'$", RegexOptions.Compiled);
         //private static readonly Regex GeneratedFileMessageFormat = new Regex(@"^(?<OUTPUT>.*?)\s*:\s*(?<GRAMMAR>.*?)$", RegexOptions.Compiled);
         private static readonly Regex DependFileMessageFormat = new Regex(@"^(?<OUTPUT>\S+)\s*:", RegexOptions.Compiled);
-        
+
         private void HandleErrorDataReceived(object sender, DataReceivedEventArgs e)
         {
             HandleErrorDataReceived(e.Data);
@@ -327,7 +333,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
                 Match match = ErrorMessageFormat.Match(data);
                 if (!match.Success)
                 {
-                    this.AddDiagnostic(DiagnosticSeverity.Info, -1, null, -1, -1, data);
+                    this.AddDiagnostic(DiagnosticSeverity.Info, -1, null, 0, 0, data);
                     return;
                 }
 
@@ -375,7 +381,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
                 Match match = GeneratedFileMessageFormat.Match(data);
                 if (!match.Success)
                 {
-                    this.AddDiagnostic(DiagnosticSeverity.Info, -1, null, -1, -1, data);
+                    this.AddDiagnostic(DiagnosticSeverity.Info, -1, null, 0, 0, data);
                     return;
                 }
 
@@ -387,7 +393,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
             }
             catch (Exception ex)
             {
-                this.AddDiagnostic(DiagnosticSeverity.Error, -1, null, -1, -1, ex.ToString().Replace('\r', ' ').Replace('\n', ' '));
+                this.AddDiagnostic(DiagnosticSeverity.Error, -1, null, 0, 0, ex.ToString().Replace('\r', ' ').Replace('\n', ' '));
             }
         }
 
@@ -402,7 +408,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
                 Match match = DependFileMessageFormat.Match(data);
                 if (!match.Success)
                 {
-                    this.AddDiagnostic(DiagnosticSeverity.Info, -1, null, -1, -1, data);
+                    this.AddDiagnostic(DiagnosticSeverity.Info, -1, null, 0, 0, data);
                     return;
                 }
 
@@ -414,7 +420,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
             }
             catch (Exception ex)
             {
-                this.AddDiagnostic(DiagnosticSeverity.Error, -1, null, -1, -1, ex.ToString().Replace('\r', ' ').Replace('\n', ' '));
+                this.AddDiagnostic(DiagnosticSeverity.Error, -1, null, 0, 0, ex.ToString().Replace('\r', ' ').Replace('\n', ' '));
             }
         }
 

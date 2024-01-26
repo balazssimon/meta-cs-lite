@@ -179,7 +179,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
                     {
                         if (!valueType.IsAssignableTo(coreType))
                         {
-                            if (valueType.SpecialType == SpecialType.System_String && (coreType.SpecialType == SpecialType.System_Type || coreType.SpecialType == SpecialType.MetaDslx_CodeAnalysis_MetaType))
+                            if (coreType.SpecialType == SpecialType.MetaDslx_Modeling_ModelProperty && valueType.IsAssignableTo(typeof(DeclarationSymbol)))
                             {
                                 // nop
                             }

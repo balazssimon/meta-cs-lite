@@ -244,17 +244,17 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
 
         private void AddDiagnosticInfo(string message)
         {
-            this.AddDiagnostic(DiagnosticSeverity.Info, -1, null, -1, -1, message);
+            this.AddDiagnostic(DiagnosticSeverity.Info, -1, null, 0, 0, message);
         }
 
         private void AddDiagnosticError(string message)
         {
-            this.AddDiagnostic(DiagnosticSeverity.Error, -1, null, -1, -1, message);
+            this.AddDiagnostic(DiagnosticSeverity.Error, -1, null, 0, 0, message);
         }
 
         private void ProcessException(Exception ex)
         {
-            this.AddDiagnostic(DiagnosticSeverity.Error, -1, null, -1, -1, ex.ToString().Replace('\r', ' ').Replace('\n', ' '));
+            this.AddDiagnostic(DiagnosticSeverity.Error, -1, null, 0, 0, ex.ToString().Replace('\r', ' ').Replace('\n', ' '));
         }
 
         internal static bool IsFatalException(Exception exception)
@@ -327,7 +327,7 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
                 Match match = ErrorMessageFormat.Match(data);
                 if (!match.Success)
                 {
-                    this.AddDiagnostic(DiagnosticSeverity.Info, -1, null, -1, -1, data);
+                    this.AddDiagnostic(DiagnosticSeverity.Info, -1, null, 0, 0, data);
                     return;
                 }
 
@@ -375,7 +375,7 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
                 Match match = GeneratedFileMessageFormat.Match(data);
                 if (!match.Success)
                 {
-                    this.AddDiagnostic(DiagnosticSeverity.Info, -1, null, -1, -1, data);
+                    this.AddDiagnostic(DiagnosticSeverity.Info, -1, null, 0, 0, data);
                     return;
                 }
 
@@ -387,7 +387,7 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             }
             catch (Exception ex)
             {
-                this.AddDiagnostic(DiagnosticSeverity.Error, -1, null, -1, -1, ex.ToString().Replace('\r', ' ').Replace('\n', ' '));
+                this.AddDiagnostic(DiagnosticSeverity.Error, -1, null, 0, 0, ex.ToString().Replace('\r', ' ').Replace('\n', ' '));
             }
         }
 
@@ -402,7 +402,7 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
                 Match match = DependFileMessageFormat.Match(data);
                 if (!match.Success)
                 {
-                    this.AddDiagnostic(DiagnosticSeverity.Info, -1, null, -1, -1, data);
+                    this.AddDiagnostic(DiagnosticSeverity.Info, -1, null, 0, 0, data);
                     return;
                 }
 
@@ -414,7 +414,7 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             }
             catch (Exception ex)
             {
-                this.AddDiagnostic(DiagnosticSeverity.Error, -1, null, -1, -1, ex.ToString().Replace('\r', ' ').Replace('\n', ' '));
+                this.AddDiagnostic(DiagnosticSeverity.Error, -1, null, 0, 0, ex.ToString().Replace('\r', ' ').Replace('\n', ' '));
             }
         }
 

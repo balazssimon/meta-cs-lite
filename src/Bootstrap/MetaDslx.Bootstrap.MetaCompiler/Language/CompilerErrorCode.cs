@@ -42,7 +42,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler
         /// <summary>
         /// Value of type '{0}' cannot be assigned to the expected type '{1}'
         /// </summary>
-        public static readonly DiagnosticDescriptor ERR_ValueTypeMismatch = DiagnosticDescriptor.Error(nameof(ERR_ValueTypeMismatch), "Value type mismatch", "Value of type '{0}' cannot be assigned to the expected type '{1}' [{2}]");
+        public static readonly DiagnosticDescriptor ERR_ValueTypeMismatch = DiagnosticDescriptor.Error(nameof(ERR_ValueTypeMismatch), "Value type mismatch", "Value of type '{0}' cannot be assigned to the expected type '{1}'");
 
         /// <summary>
         /// Rule '{0}' with return type '{1}' should be assigned to a property

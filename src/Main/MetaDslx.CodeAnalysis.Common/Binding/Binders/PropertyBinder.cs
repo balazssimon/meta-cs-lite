@@ -93,7 +93,7 @@ namespace MetaDslx.CodeAnalysis.Binding
                         if (value is IErrorSymbol) continue;
                         if (value is null)
                         {
-                            if (propertyType.IsNull || !propertyType.IsValueType)
+                            if (propertyType.IsNull || !propertyType.IsValueType || propertyType.SpecialType == SpecialType.MetaDslx_CodeAnalysis_MetaType || propertyType.SpecialType == SpecialType.MetaDslx_CodeAnalysis_MetaSymbol)
                             {
                                 result.Add(value);
                             }

@@ -32,7 +32,7 @@ public virtual void VisitMain(MainSyntax node)
                 this.Begin(__annot2, node.Qualifier.Node);
                 try
                 {
-                    var __annot1 = new MetaDslx.CodeAnalysis.Binding.NameBinder(qualifierProperty: "Declarations");
+                    var __annot1 = new MetaDslx.CodeAnalysis.Binding.NameBinder(qualifierProperty: MetaDslx.Languages.MetaModel.Model.Meta.MetaDeclaration_Declarations);
                     this.Begin(__annot1, node.Qualifier.Node);
                     try
                     {
@@ -102,7 +102,7 @@ public virtual void VisitMain(MainSyntax node)
     	    this.Begin(__annot2, node.Qualifier.Node);
     	    try
     	    {
-    	        var __annot1 = new MetaDslx.CodeAnalysis.Binding.NameBinder(qualifierProperty: "Declarations");
+    	        var __annot1 = new MetaDslx.CodeAnalysis.Binding.NameBinder(qualifierProperty: MetaDslx.Languages.MetaModel.Model.Meta.MetaDeclaration_Declarations);
     	        this.Begin(__annot1, node.Qualifier.Node);
     	        try
     	        {

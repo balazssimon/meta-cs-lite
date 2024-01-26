@@ -423,8 +423,18 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	return "Alternative";
 				case CompilerSyntaxKind.Element: 
 	return "Element";
-				case CompilerSyntaxKind.ElementValue: 
-	return "ElementValue";
+				case CompilerSyntaxKind.Block: 
+	return "Block";
+				case CompilerSyntaxKind.Eof1: 
+	return "Eof1";
+				case CompilerSyntaxKind.Fixed: 
+	return "Fixed";
+				case CompilerSyntaxKind.RuleRefAlt1: 
+	return "RuleRefAlt1";
+				case CompilerSyntaxKind.RuleRefAlt2: 
+	return "RuleRefAlt2";
+				case CompilerSyntaxKind.RuleRefAlt3: 
+	return "RuleRefAlt3";
 				case CompilerSyntaxKind.BlockAlternative: 
 	return "BlockAlternative";
 				case CompilerSyntaxKind.LAlternative: 
@@ -443,8 +453,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	return "ExpressionAlt1";
 				case CompilerSyntaxKind.ArrayExpression: 
 	return "ArrayExpression";
-				case CompilerSyntaxKind.SingleExpression: 
-	return "SingleExpression";
+				case CompilerSyntaxKind.SingleExpressionAlt1: 
+	return "SingleExpressionAlt1";
+				case CompilerSyntaxKind.SingleExpressionAlt2: 
+	return "SingleExpressionAlt2";
 				case CompilerSyntaxKind.ParserAnnotation: 
 	return "ParserAnnotation";
 				case CompilerSyntaxKind.LexerAnnotation: 
@@ -477,16 +489,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	return "AlternativeBlock2";
 				case CompilerSyntaxKind.ElementBlock1: 
 	return "ElementBlock1";
-				case CompilerSyntaxKind.Tokens: 
-	return "Tokens";
-				case CompilerSyntaxKind.Block: 
-	return "Block";
-				case CompilerSyntaxKind.RuleRefAlt1: 
-	return "RuleRefAlt1";
-				case CompilerSyntaxKind.RuleRefAlt2: 
-	return "RuleRefAlt2";
-				case CompilerSyntaxKind.RuleRefAlt3: 
-	return "RuleRefAlt3";
 				case CompilerSyntaxKind.BlockAlternativesBlock: 
 	return "BlockAlternativesBlock";
 				case CompilerSyntaxKind.BlockAlternativeBlock1: 
@@ -505,12 +507,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	return "FragmentAlternativesBlock";
 				case CompilerSyntaxKind.LBlockAlternativesBlock: 
 	return "LBlockAlternativesBlock";
-				case CompilerSyntaxKind.Tokens1: 
-	return "Tokens1";
-				case CompilerSyntaxKind.SingleExpressionBlock1Alt2: 
-	return "SingleExpressionBlock1Alt2";
-				case CompilerSyntaxKind.SingleExpressionBlock1Alt3: 
-	return "SingleExpressionBlock1Alt3";
+				case CompilerSyntaxKind.Tokens: 
+	return "Tokens";
+				case CompilerSyntaxKind.SingleExpressionAlt1Block1Alt2: 
+	return "SingleExpressionAlt1Block1Alt2";
 				case CompilerSyntaxKind.ParserAnnotationBlock1: 
 	return "ParserAnnotationBlock1";
 				case CompilerSyntaxKind.LexerAnnotationBlock1: 

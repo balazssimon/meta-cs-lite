@@ -329,12 +329,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             }
             var unusedRules = true;
             var first = true;
+            var usedRules = allRules.ToList();
             while (unusedRules)
             {
                 unusedRules = false;
-                for (int i = allRules.Length - 1; i >= 0; --i)
+                for (int i = usedRules.Count - 1; i >= 0; --i)
                 {
-                    var rule = allRules[i];
+                    var rule = usedRules[i];
                     if (rule == _grammar.MainRule) continue;
                     var ruleRefCount = GetRuleRefs(rule).Length;
                     if (ruleRefCount == 0)
@@ -344,7 +345,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                             _diagnostics.Add(Diagnostic.Create(ErrorCode.WRN_SyntaxWarning, rule.MLocation, $"Rule '{rule.Name}' is never used."));
                         }
                         _model.DeleteObject(rule);
-                        allRules.RemoveAt(i);
+                        usedRules.RemoveAt(i);
                         unusedRules = true;
                     }
                 }

@@ -369,16 +369,85 @@ public ElementSyntax Element(ElementValueSyntax value)
 	return this.Element(default, value);
 }
 
-public ElementValueSyntax ElementValue(global::MetaDslx.CodeAnalysis.SyntaxList<ParserAnnotationSyntax> annotations1, ElementValueBlock1Syntax block, __SyntaxToken multiplicity)
+public BlockSyntax Block(global::MetaDslx.CodeAnalysis.SyntaxList<ParserAnnotationSyntax> annotations1, __SyntaxToken tLParen, global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<BlockAlternativeSyntax> alternatives, __SyntaxToken tRParen, __SyntaxToken multiplicity)
 {
-	if (block is null) throw new __ArgumentNullException(nameof(block));
+	if (tLParen.RawKind != (int)__InternalSyntaxKind.None) throw new __ArgumentNullException(nameof(tLParen));
+	if (tLParen.RawKind != (int)CompilerSyntaxKind.TLParen) throw new __ArgumentException(nameof(tLParen));
+	if (tRParen.RawKind != (int)__InternalSyntaxKind.None) throw new __ArgumentNullException(nameof(tRParen));
+	if (tRParen.RawKind != (int)CompilerSyntaxKind.TRParen) throw new __ArgumentException(nameof(tRParen));
 	if (multiplicity.RawKind != (int)__InternalSyntaxKind.None && (multiplicity.RawKind != (int)CompilerSyntaxKind.TQuestion && multiplicity.RawKind != (int)CompilerSyntaxKind.TAsterisk && multiplicity.RawKind != (int)CompilerSyntaxKind.TPlus && multiplicity.RawKind != (int)CompilerSyntaxKind.TQuestionQuestion && multiplicity.RawKind != (int)CompilerSyntaxKind.TAsteriskQuestion && multiplicity.RawKind != (int)CompilerSyntaxKind.TPlusQuestion)) throw new __ArgumentException(nameof(multiplicity));
-    return (ElementValueSyntax)CompilerLanguage.Instance.InternalSyntaxFactory.ElementValue(__GreenNodeExtensions.ToGreenList<InternalSyntax.ParserAnnotationGreen>(annotations1.Node), (InternalSyntax.ElementValueBlock1Green)block.Green, (__InternalSyntaxToken)multiplicity.Node).CreateRed();
+    return (BlockSyntax)CompilerLanguage.Instance.InternalSyntaxFactory.Block(__GreenNodeExtensions.ToGreenList<InternalSyntax.ParserAnnotationGreen>(annotations1.Node), (__InternalSyntaxToken)tLParen.Node, __GreenNodeExtensions.ToGreenSeparatedList<InternalSyntax.BlockAlternativeGreen>(alternatives.Node, reversed: false), (__InternalSyntaxToken)tRParen.Node, (__InternalSyntaxToken)multiplicity.Node).CreateRed();
 }
 
-public ElementValueSyntax ElementValue(global::MetaDslx.CodeAnalysis.SyntaxList<ParserAnnotationSyntax> annotations1, ElementValueBlock1Syntax block)
+public BlockSyntax Block(global::MetaDslx.CodeAnalysis.SyntaxList<ParserAnnotationSyntax> annotations1, global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<BlockAlternativeSyntax> alternatives)
 {
-	return this.ElementValue(annotations1, block, default);
+	return this.Block(annotations1, this.Token(CompilerSyntaxKind.TLParen), alternatives, this.Token(CompilerSyntaxKind.TRParen), default);
+}
+
+public Eof1Syntax Eof1(__SyntaxToken kEof)
+{
+	if (kEof.RawKind != (int)__InternalSyntaxKind.None) throw new __ArgumentNullException(nameof(kEof));
+	if (kEof.RawKind != (int)CompilerSyntaxKind.KEof) throw new __ArgumentException(nameof(kEof));
+    return (Eof1Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.Eof1((__InternalSyntaxToken)kEof.Node).CreateRed();
+}
+
+public Eof1Syntax Eof1()
+{
+	return this.Eof1(this.Token(CompilerSyntaxKind.KEof));
+}
+
+public FixedSyntax Fixed(global::MetaDslx.CodeAnalysis.SyntaxList<ParserAnnotationSyntax> annotations1, __SyntaxToken text, __SyntaxToken multiplicity)
+{
+	if (text.RawKind != (int)__InternalSyntaxKind.None) throw new __ArgumentNullException(nameof(text));
+	if (text.RawKind != (int)CompilerSyntaxKind.TString) throw new __ArgumentException(nameof(text));
+	if (multiplicity.RawKind != (int)__InternalSyntaxKind.None && (multiplicity.RawKind != (int)CompilerSyntaxKind.TQuestion && multiplicity.RawKind != (int)CompilerSyntaxKind.TAsterisk && multiplicity.RawKind != (int)CompilerSyntaxKind.TPlus && multiplicity.RawKind != (int)CompilerSyntaxKind.TQuestionQuestion && multiplicity.RawKind != (int)CompilerSyntaxKind.TAsteriskQuestion && multiplicity.RawKind != (int)CompilerSyntaxKind.TPlusQuestion)) throw new __ArgumentException(nameof(multiplicity));
+    return (FixedSyntax)CompilerLanguage.Instance.InternalSyntaxFactory.Fixed(__GreenNodeExtensions.ToGreenList<InternalSyntax.ParserAnnotationGreen>(annotations1.Node), (__InternalSyntaxToken)text.Node, (__InternalSyntaxToken)multiplicity.Node).CreateRed();
+}
+
+public FixedSyntax Fixed(global::MetaDslx.CodeAnalysis.SyntaxList<ParserAnnotationSyntax> annotations1, __SyntaxToken text)
+{
+	return this.Fixed(annotations1, this.Token(CompilerSyntaxKind.TString), default);
+}
+
+public RuleRefAlt1Syntax RuleRefAlt1(global::MetaDslx.CodeAnalysis.SyntaxList<ParserAnnotationSyntax> annotations1, IdentifierSyntax grammarRule, __SyntaxToken multiplicity)
+{
+	if (grammarRule is null) throw new __ArgumentNullException(nameof(grammarRule));
+	if (multiplicity.RawKind != (int)__InternalSyntaxKind.None && (multiplicity.RawKind != (int)CompilerSyntaxKind.TQuestion && multiplicity.RawKind != (int)CompilerSyntaxKind.TAsterisk && multiplicity.RawKind != (int)CompilerSyntaxKind.TPlus && multiplicity.RawKind != (int)CompilerSyntaxKind.TQuestionQuestion && multiplicity.RawKind != (int)CompilerSyntaxKind.TAsteriskQuestion && multiplicity.RawKind != (int)CompilerSyntaxKind.TPlusQuestion)) throw new __ArgumentException(nameof(multiplicity));
+    return (RuleRefAlt1Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.RuleRefAlt1(__GreenNodeExtensions.ToGreenList<InternalSyntax.ParserAnnotationGreen>(annotations1.Node), (InternalSyntax.IdentifierGreen)grammarRule.Green, (__InternalSyntaxToken)multiplicity.Node).CreateRed();
+}
+
+public RuleRefAlt1Syntax RuleRefAlt1(global::MetaDslx.CodeAnalysis.SyntaxList<ParserAnnotationSyntax> annotations1, IdentifierSyntax grammarRule)
+{
+	return this.RuleRefAlt1(annotations1, grammarRule, default);
+}
+
+public RuleRefAlt2Syntax RuleRefAlt2(global::MetaDslx.CodeAnalysis.SyntaxList<ParserAnnotationSyntax> annotations1, __SyntaxToken tHash, TypeReferenceSyntax referencedTypes, __SyntaxToken multiplicity)
+{
+	if (tHash.RawKind != (int)__InternalSyntaxKind.None) throw new __ArgumentNullException(nameof(tHash));
+	if (tHash.RawKind != (int)CompilerSyntaxKind.THash) throw new __ArgumentException(nameof(tHash));
+	if (referencedTypes is null) throw new __ArgumentNullException(nameof(referencedTypes));
+	if (multiplicity.RawKind != (int)__InternalSyntaxKind.None && (multiplicity.RawKind != (int)CompilerSyntaxKind.TQuestion && multiplicity.RawKind != (int)CompilerSyntaxKind.TAsterisk && multiplicity.RawKind != (int)CompilerSyntaxKind.TPlus && multiplicity.RawKind != (int)CompilerSyntaxKind.TQuestionQuestion && multiplicity.RawKind != (int)CompilerSyntaxKind.TAsteriskQuestion && multiplicity.RawKind != (int)CompilerSyntaxKind.TPlusQuestion)) throw new __ArgumentException(nameof(multiplicity));
+    return (RuleRefAlt2Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.RuleRefAlt2(__GreenNodeExtensions.ToGreenList<InternalSyntax.ParserAnnotationGreen>(annotations1.Node), (__InternalSyntaxToken)tHash.Node, (InternalSyntax.TypeReferenceGreen)referencedTypes.Green, (__InternalSyntaxToken)multiplicity.Node).CreateRed();
+}
+
+public RuleRefAlt2Syntax RuleRefAlt2(global::MetaDslx.CodeAnalysis.SyntaxList<ParserAnnotationSyntax> annotations1, TypeReferenceSyntax referencedTypes)
+{
+	return this.RuleRefAlt2(annotations1, this.Token(CompilerSyntaxKind.THash), referencedTypes, default);
+}
+
+public RuleRefAlt3Syntax RuleRefAlt3(global::MetaDslx.CodeAnalysis.SyntaxList<ParserAnnotationSyntax> annotations1, __SyntaxToken tHashLBrace, global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<TypeReferenceSyntax> referencedTypes, RuleRefAlt3Block1Syntax block, __SyntaxToken tRBrace, __SyntaxToken multiplicity)
+{
+	if (tHashLBrace.RawKind != (int)__InternalSyntaxKind.None) throw new __ArgumentNullException(nameof(tHashLBrace));
+	if (tHashLBrace.RawKind != (int)CompilerSyntaxKind.THashLBrace) throw new __ArgumentException(nameof(tHashLBrace));
+	if (tRBrace.RawKind != (int)__InternalSyntaxKind.None) throw new __ArgumentNullException(nameof(tRBrace));
+	if (tRBrace.RawKind != (int)CompilerSyntaxKind.TRBrace) throw new __ArgumentException(nameof(tRBrace));
+	if (multiplicity.RawKind != (int)__InternalSyntaxKind.None && (multiplicity.RawKind != (int)CompilerSyntaxKind.TQuestion && multiplicity.RawKind != (int)CompilerSyntaxKind.TAsterisk && multiplicity.RawKind != (int)CompilerSyntaxKind.TPlus && multiplicity.RawKind != (int)CompilerSyntaxKind.TQuestionQuestion && multiplicity.RawKind != (int)CompilerSyntaxKind.TAsteriskQuestion && multiplicity.RawKind != (int)CompilerSyntaxKind.TPlusQuestion)) throw new __ArgumentException(nameof(multiplicity));
+    return (RuleRefAlt3Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.RuleRefAlt3(__GreenNodeExtensions.ToGreenList<InternalSyntax.ParserAnnotationGreen>(annotations1.Node), (__InternalSyntaxToken)tHashLBrace.Node, __GreenNodeExtensions.ToGreenSeparatedList<InternalSyntax.TypeReferenceGreen>(referencedTypes.Node, reversed: false), (InternalSyntax.RuleRefAlt3Block1Green)block.Green, (__InternalSyntaxToken)tRBrace.Node, (__InternalSyntaxToken)multiplicity.Node).CreateRed();
+}
+
+public RuleRefAlt3Syntax RuleRefAlt3(global::MetaDslx.CodeAnalysis.SyntaxList<ParserAnnotationSyntax> annotations1, global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<TypeReferenceSyntax> referencedTypes)
+{
+	return this.RuleRefAlt3(annotations1, this.Token(CompilerSyntaxKind.THashLBrace), referencedTypes, default, this.Token(CompilerSyntaxKind.TRBrace), default);
 }
 
 public BlockAlternativeSyntax BlockAlternative(global::MetaDslx.CodeAnalysis.SyntaxList<ElementSyntax> elements, BlockAlternativeBlock1Syntax block)
@@ -472,10 +541,15 @@ public ArrayExpressionSyntax ArrayExpression()
 	return this.ArrayExpression(this.Token(CompilerSyntaxKind.TLBrace), default, this.Token(CompilerSyntaxKind.TRBrace));
 }
 
-public SingleExpressionSyntax SingleExpression(SingleExpressionBlock1Syntax value)
+public SingleExpressionAlt1Syntax SingleExpressionAlt1(SingleExpressionAlt1Block1Syntax value)
 {
 	if (value is null) throw new __ArgumentNullException(nameof(value));
-    return (SingleExpressionSyntax)CompilerLanguage.Instance.InternalSyntaxFactory.SingleExpression((InternalSyntax.SingleExpressionBlock1Green)value.Green).CreateRed();
+    return (SingleExpressionAlt1Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.SingleExpressionAlt1((InternalSyntax.SingleExpressionAlt1Block1Green)value.Green).CreateRed();
+}
+
+public SingleExpressionAlt2Syntax SingleExpressionAlt2(global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<IdentifierSyntax> qualifier)
+{
+    return (SingleExpressionAlt2Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.SingleExpressionAlt2(__GreenNodeExtensions.ToGreenSeparatedList<InternalSyntax.IdentifierGreen>(qualifier.Node, reversed: false)).CreateRed();
 }
 
 public ParserAnnotationSyntax ParserAnnotation(__SyntaxToken tLBracket, global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<IdentifierSyntax> qualifier, ParserAnnotationBlock1Syntax block, __SyntaxToken tRBracket)
@@ -630,60 +704,6 @@ public ElementBlock1Syntax ElementBlock1(global::MetaDslx.CodeAnalysis.SyntaxLis
     return (ElementBlock1Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.ElementBlock1(__GreenNodeExtensions.ToGreenList<InternalSyntax.ParserAnnotationGreen>(annotations1.Node), (InternalSyntax.NameGreen)name.Green, (__InternalSyntaxToken)assignment.Node).CreateRed();
 }
 
-public TokensSyntax Tokens(__SyntaxToken token)
-{
-	if (token.RawKind != (int)__InternalSyntaxKind.None) throw new __ArgumentNullException(nameof(token));
-	if (token.RawKind != (int)CompilerSyntaxKind.KEof && token.RawKind != (int)CompilerSyntaxKind.TString) throw new __ArgumentException(nameof(token));
-    return (TokensSyntax)CompilerLanguage.Instance.InternalSyntaxFactory.Tokens((__InternalSyntaxToken)token.Node).CreateRed();
-}
-
-public BlockSyntax Block(__SyntaxToken tLParen, global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<BlockAlternativeSyntax> alternatives, __SyntaxToken tRParen)
-{
-	if (tLParen.RawKind != (int)__InternalSyntaxKind.None) throw new __ArgumentNullException(nameof(tLParen));
-	if (tLParen.RawKind != (int)CompilerSyntaxKind.TLParen) throw new __ArgumentException(nameof(tLParen));
-	if (tRParen.RawKind != (int)__InternalSyntaxKind.None) throw new __ArgumentNullException(nameof(tRParen));
-	if (tRParen.RawKind != (int)CompilerSyntaxKind.TRParen) throw new __ArgumentException(nameof(tRParen));
-    return (BlockSyntax)CompilerLanguage.Instance.InternalSyntaxFactory.Block((__InternalSyntaxToken)tLParen.Node, __GreenNodeExtensions.ToGreenSeparatedList<InternalSyntax.BlockAlternativeGreen>(alternatives.Node, reversed: false), (__InternalSyntaxToken)tRParen.Node).CreateRed();
-}
-
-public BlockSyntax Block(global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<BlockAlternativeSyntax> alternatives)
-{
-	return this.Block(this.Token(CompilerSyntaxKind.TLParen), alternatives, this.Token(CompilerSyntaxKind.TRParen));
-}
-
-public RuleRefAlt1Syntax RuleRefAlt1(IdentifierSyntax grammarRule)
-{
-	if (grammarRule is null) throw new __ArgumentNullException(nameof(grammarRule));
-    return (RuleRefAlt1Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.RuleRefAlt1((InternalSyntax.IdentifierGreen)grammarRule.Green).CreateRed();
-}
-
-public RuleRefAlt2Syntax RuleRefAlt2(__SyntaxToken tHash, TypeReferenceSyntax referencedTypes)
-{
-	if (tHash.RawKind != (int)__InternalSyntaxKind.None) throw new __ArgumentNullException(nameof(tHash));
-	if (tHash.RawKind != (int)CompilerSyntaxKind.THash) throw new __ArgumentException(nameof(tHash));
-	if (referencedTypes is null) throw new __ArgumentNullException(nameof(referencedTypes));
-    return (RuleRefAlt2Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.RuleRefAlt2((__InternalSyntaxToken)tHash.Node, (InternalSyntax.TypeReferenceGreen)referencedTypes.Green).CreateRed();
-}
-
-public RuleRefAlt2Syntax RuleRefAlt2(TypeReferenceSyntax referencedTypes)
-{
-	return this.RuleRefAlt2(this.Token(CompilerSyntaxKind.THash), referencedTypes);
-}
-
-public RuleRefAlt3Syntax RuleRefAlt3(__SyntaxToken tHashLBrace, global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<TypeReferenceSyntax> referencedTypes, RuleRefAlt3Block1Syntax block, __SyntaxToken tRBrace)
-{
-	if (tHashLBrace.RawKind != (int)__InternalSyntaxKind.None) throw new __ArgumentNullException(nameof(tHashLBrace));
-	if (tHashLBrace.RawKind != (int)CompilerSyntaxKind.THashLBrace) throw new __ArgumentException(nameof(tHashLBrace));
-	if (tRBrace.RawKind != (int)__InternalSyntaxKind.None) throw new __ArgumentNullException(nameof(tRBrace));
-	if (tRBrace.RawKind != (int)CompilerSyntaxKind.TRBrace) throw new __ArgumentException(nameof(tRBrace));
-    return (RuleRefAlt3Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.RuleRefAlt3((__InternalSyntaxToken)tHashLBrace.Node, __GreenNodeExtensions.ToGreenSeparatedList<InternalSyntax.TypeReferenceGreen>(referencedTypes.Node, reversed: false), (InternalSyntax.RuleRefAlt3Block1Green)block.Green, (__InternalSyntaxToken)tRBrace.Node).CreateRed();
-}
-
-public RuleRefAlt3Syntax RuleRefAlt3(global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<TypeReferenceSyntax> referencedTypes)
-{
-	return this.RuleRefAlt3(this.Token(CompilerSyntaxKind.THashLBrace), referencedTypes, default, this.Token(CompilerSyntaxKind.TRBrace));
-}
-
 public BlockAlternativesBlockSyntax BlockAlternativesBlock(__SyntaxToken tBar, BlockAlternativeSyntax alternatives)
 {
 	if (tBar.RawKind != (int)__InternalSyntaxKind.None) throw new __ArgumentNullException(nameof(tBar));
@@ -801,23 +821,18 @@ public LBlockAlternativesBlockSyntax LBlockAlternativesBlock(LAlternativeSyntax 
 	return this.LBlockAlternativesBlock(this.Token(CompilerSyntaxKind.TBar), alternatives);
 }
 
-public Tokens1Syntax Tokens1(__SyntaxToken token)
+public TokensSyntax Tokens(__SyntaxToken token)
 {
 	if (token.RawKind != (int)__InternalSyntaxKind.None) throw new __ArgumentNullException(nameof(token));
 	if (token.RawKind != (int)CompilerSyntaxKind.KNull && token.RawKind != (int)CompilerSyntaxKind.KTrue && token.RawKind != (int)CompilerSyntaxKind.KFalse && token.RawKind != (int)CompilerSyntaxKind.TString && token.RawKind != (int)CompilerSyntaxKind.TInteger && token.RawKind != (int)CompilerSyntaxKind.TDecimal) throw new __ArgumentException(nameof(token));
-    return (Tokens1Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.Tokens1((__InternalSyntaxToken)token.Node).CreateRed();
+    return (TokensSyntax)CompilerLanguage.Instance.InternalSyntaxFactory.Tokens((__InternalSyntaxToken)token.Node).CreateRed();
 }
 
-public SingleExpressionBlock1Alt2Syntax SingleExpressionBlock1Alt2(__SyntaxToken tokens)
+public SingleExpressionAlt1Block1Alt2Syntax SingleExpressionAlt1Block1Alt2(__SyntaxToken tokens)
 {
 	if (tokens.RawKind != (int)__InternalSyntaxKind.None) throw new __ArgumentNullException(nameof(tokens));
 	if (tokens.RawKind != (int)CompilerSyntaxKind.KBool && tokens.RawKind != (int)CompilerSyntaxKind.KInt && tokens.RawKind != (int)CompilerSyntaxKind.KDouble && tokens.RawKind != (int)CompilerSyntaxKind.KString && tokens.RawKind != (int)CompilerSyntaxKind.KType && tokens.RawKind != (int)CompilerSyntaxKind.KSymbol && tokens.RawKind != (int)CompilerSyntaxKind.KObject && tokens.RawKind != (int)CompilerSyntaxKind.KVoid) throw new __ArgumentException(nameof(tokens));
-    return (SingleExpressionBlock1Alt2Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.SingleExpressionBlock1Alt2((__InternalSyntaxToken)tokens.Node).CreateRed();
-}
-
-public SingleExpressionBlock1Alt3Syntax SingleExpressionBlock1Alt3(global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<IdentifierSyntax> qualifier)
-{
-    return (SingleExpressionBlock1Alt3Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.SingleExpressionBlock1Alt3(__GreenNodeExtensions.ToGreenSeparatedList<InternalSyntax.IdentifierGreen>(qualifier.Node, reversed: false)).CreateRed();
+    return (SingleExpressionAlt1Block1Alt2Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.SingleExpressionAlt1Block1Alt2((__InternalSyntaxToken)tokens.Node).CreateRed();
 }
 
 public ParserAnnotationBlock1Syntax ParserAnnotationBlock1(__SyntaxToken tLParen, global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<AnnotationArgumentSyntax> arguments, __SyntaxToken tRParen)
@@ -951,7 +966,12 @@ typeof(TokenSyntax),
 typeof(FragmentSyntax),
 typeof(AlternativeSyntax),
 typeof(ElementSyntax),
-typeof(ElementValueSyntax),
+typeof(BlockSyntax),
+typeof(Eof1Syntax),
+typeof(FixedSyntax),
+typeof(RuleRefAlt1Syntax),
+typeof(RuleRefAlt2Syntax),
+typeof(RuleRefAlt3Syntax),
 typeof(BlockAlternativeSyntax),
 typeof(LAlternativeSyntax),
 typeof(LElementSyntax),
@@ -961,7 +981,8 @@ typeof(LRangeSyntax),
 typeof(LReferenceSyntax),
 typeof(ExpressionAlt1Syntax),
 typeof(ArrayExpressionSyntax),
-typeof(SingleExpressionSyntax),
+typeof(SingleExpressionAlt1Syntax),
+typeof(SingleExpressionAlt2Syntax),
 typeof(ParserAnnotationSyntax),
 typeof(LexerAnnotationSyntax),
 typeof(AnnotationArgumentSyntax),
@@ -978,11 +999,6 @@ typeof(RuleAlternativesBlockSyntax),
 typeof(AlternativeBlock1Syntax),
 typeof(AlternativeBlock2Syntax),
 typeof(ElementBlock1Syntax),
-typeof(TokensSyntax),
-typeof(BlockSyntax),
-typeof(RuleRefAlt1Syntax),
-typeof(RuleRefAlt2Syntax),
-typeof(RuleRefAlt3Syntax),
 typeof(BlockAlternativesBlockSyntax),
 typeof(BlockAlternativeBlock1Syntax),
 typeof(RuleRefAlt3ReferencedTypesBlockSyntax),
@@ -992,9 +1008,8 @@ typeof(TokenBlock1Alt2Syntax),
 typeof(TokenAlternativesBlockSyntax),
 typeof(FragmentAlternativesBlockSyntax),
 typeof(LBlockAlternativesBlockSyntax),
-typeof(Tokens1Syntax),
-typeof(SingleExpressionBlock1Alt2Syntax),
-typeof(SingleExpressionBlock1Alt3Syntax),
+typeof(TokensSyntax),
+typeof(SingleExpressionAlt1Block1Alt2Syntax),
 typeof(ParserAnnotationBlock1Syntax),
 typeof(LexerAnnotationBlock1Syntax),
 typeof(AnnotationArgumentBlock1Syntax),

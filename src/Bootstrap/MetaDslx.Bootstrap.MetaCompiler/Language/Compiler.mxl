@@ -14,7 +14,7 @@ using MetaDslx.Bootstrap.MetaCompiler.Symbols;
 language Compiler;
 
 Main returns Namespace:
-	'namespace' [Name(qualifierProperty:Declarations)]Qualifier ';'
+	'namespace' [Name(qualifierProperty:"Declarations")]Qualifier ';'
 	Using*
 	[Scope](declarations+=LanguageDeclaration)
 	eof;
@@ -32,16 +32,16 @@ GrammarRule: Rule | LexerRule;
 Rule: annotations+=ParserAnnotation* [Name](returnType=TypeReferenceIdentifier | Identifier 'returns' returnType=TypeReference) ':' alternatives+=Alternative ('|' alternatives+=Alternative)* ';';
 Alternative: (annotations+=ParserAnnotation* 'alt' Name ('returns' returnType=TypeReference)? ':')? elements+=Element+ ('=>' returnValue=Expression)?;
 Element: (annotations+=ParserAnnotation* Name assignment=Assignment)? value=ElementValue;
-ElementValue: annotations+=ParserAnnotation* (Block | Eof1 | Fixed | RuleRef) multiplicity=Multiplicity?;
-Block: '(' alternatives+=BlockAlternative ('|' alternatives+=BlockAlternative)* ')';
+ElementValue: Block | Eof1 | Fixed | RuleRef;
+Block: annotations+=ParserAnnotation* '(' alternatives+=BlockAlternative ('|' alternatives+=BlockAlternative)* ')' multiplicity=Multiplicity?;
 BlockAlternative returns Alternative: elements+=Element+ ('=>' returnValue=Expression)?;
 RuleRef
-	: grammarRule=#GrammarRule 
-	| '#' referencedTypes+=TypeReference 
-	| '#{' referencedTypes+=TypeReference (',' referencedTypes+=TypeReference)* ('|' grammarRule=#GrammarRule)? '}' 
+	: annotations+=ParserAnnotation* grammarRule=#GrammarRule  multiplicity=Multiplicity?
+	| annotations+=ParserAnnotation* '#' referencedTypes+=TypeReference  multiplicity=Multiplicity?
+	| annotations+=ParserAnnotation* '#{' referencedTypes+=TypeReference (',' referencedTypes+=TypeReference)* ('|' grammarRule=#GrammarRule)? '}'  multiplicity=Multiplicity?
 	;
 Eof1 returns Eof: 'eof';
-Fixed: text=TString;
+Fixed: annotations+=ParserAnnotation* text=TString multiplicity=Multiplicity?;
 
 LexerRule: Token | Fragment;
 Token: annotations+=LexerAnnotation* ('token' Name ('returns' returnType=TypeReference)? | isTrivia?='hidden' Name) ':' alternatives+=LAlternative ('|' alternatives+=LAlternative)* ';';

@@ -182,11 +182,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
             var qualifier = qualifierOpt.Value;
             if (qualifier.IsNull) return default;
             var nameBlock = this.Syntax?.Block;
-            if (nameBlock is null) return (qualifier, ExpectedTypeKind.Simple);
+            if (nameBlock is null) return default;
             var nameSyntax = nameBlock.Name;
             if (nameSyntax is null) return default;
             MetaType result = default;
-
             if (qualifier.IsName)
             {
                 diagnostics.Add(Diagnostic.Create(CommonErrorCode.ERR_DottedNameNotFoundInAgg, Location, Name, qualifier));

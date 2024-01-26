@@ -354,9 +354,9 @@ public override GreenNode? VisitPr_Element(CompilerParser.Pr_ElementContext? con
 	return _factory.Element(block, value);
 }
 
-public override GreenNode? VisitPr_ElementValue(CompilerParser.Pr_ElementValueContext? context)
+public override GreenNode? VisitPr_Block(CompilerParser.Pr_BlockContext? context)
 {
-   	if (context == null) return ElementValueGreen.__Missing;
+   	if (context == null) return BlockGreen.__Missing;
     var e_AnnotationsContext = context._e_Annotations;
     var annotations1Builder = _pool.Allocate<ParserAnnotationGreen>();
     for (int i = 0; i < e_AnnotationsContext.Count; ++i)
@@ -366,9 +366,31 @@ public override GreenNode? VisitPr_ElementValue(CompilerParser.Pr_ElementValueCo
     }
     var annotations1 = annotations1Builder.ToList();
     _pool.Free(annotations1Builder);
-    ElementValueBlock1Green? block = null;
-    if (context.e_Block is not null) block = (ElementValueBlock1Green?)this.Visit(context.e_Block) ?? ElementValueBlock1Green.__Missing;
-    else block = ElementValueBlock1Green.__Missing;
+    var tLParen = (InternalSyntaxToken?)this.VisitTerminal(context.e_TLParen, CompilerSyntaxKind.TLParen);
+    var alternativesBuilder = _pool.AllocateSeparated<BlockAlternativeGreen>(reversed: false);
+    var e_Alternatives1Context = context.e_Alternatives1;
+    if (e_Alternatives1Context is not null) alternativesBuilder.Add((BlockAlternativeGreen?)this.Visit(e_Alternatives1Context) ?? BlockAlternativeGreen.__Missing);
+    else alternativesBuilder.Add(BlockAlternativeGreen.__Missing);
+    var e_Alternatives2Context = context._e_Alternatives2;
+    var e_TBar1Context = context._e_TBar1;
+    for (int i = 0; i < e_Alternatives2Context.Count; ++i)
+    {
+        if (i < e_TBar1Context.Count)
+        {
+            var _separator = e_TBar1Context[i];
+            alternativesBuilder.AddSeparator((InternalSyntaxToken?)this.VisitTerminal(_separator, CompilerSyntaxKind.TBar));
+        }
+        else
+        {
+            alternativesBuilder.AddSeparator((InternalSyntaxToken?)this.VisitTerminal((IToken?)null, CompilerSyntaxKind.TBar));
+        }
+        var _item = e_Alternatives2Context[i];
+        if (_item is not null) alternativesBuilder.Add((BlockAlternativeGreen?)this.Visit(_item) ?? BlockAlternativeGreen.__Missing);
+        else alternativesBuilder.Add(BlockAlternativeGreen.__Missing);
+    }
+    var alternatives = alternativesBuilder.ToList();
+    _pool.Free(alternativesBuilder);
+    var tRParen = (InternalSyntaxToken?)this.VisitTerminal(context.e_TRParen, CompilerSyntaxKind.TRParen);
     InternalSyntaxToken? multiplicity = null;
     if (context.LR_TQuestion() is not null) multiplicity = (InternalSyntaxToken?)this.VisitTerminal(context.LR_TQuestion());
     if (context.LR_TAsterisk() is not null) multiplicity = (InternalSyntaxToken?)this.VisitTerminal(context.LR_TAsterisk());
@@ -376,7 +398,137 @@ public override GreenNode? VisitPr_ElementValue(CompilerParser.Pr_ElementValueCo
     if (context.LR_TQuestionQuestion() is not null) multiplicity = (InternalSyntaxToken?)this.VisitTerminal(context.LR_TQuestionQuestion());
     if (context.LR_TAsteriskQuestion() is not null) multiplicity = (InternalSyntaxToken?)this.VisitTerminal(context.LR_TAsteriskQuestion());
     if (context.LR_TPlusQuestion() is not null) multiplicity = (InternalSyntaxToken?)this.VisitTerminal(context.LR_TPlusQuestion());
-	return _factory.ElementValue(annotations1, block, multiplicity);
+	return _factory.Block(annotations1, tLParen, alternatives, tRParen, multiplicity);
+}
+
+public override GreenNode? VisitPr_Eof1(CompilerParser.Pr_Eof1Context? context)
+{
+   	if (context == null) return Eof1Green.__Missing;
+    var kEof = (InternalSyntaxToken?)this.VisitTerminal(context.e_KEof, CompilerSyntaxKind.KEof);
+	return _factory.Eof1(kEof);
+}
+
+public override GreenNode? VisitPr_Fixed(CompilerParser.Pr_FixedContext? context)
+{
+   	if (context == null) return FixedGreen.__Missing;
+    var e_Annotations1Context = context._e_Annotations1;
+    var annotations1Builder = _pool.Allocate<ParserAnnotationGreen>();
+    for (int i = 0; i < e_Annotations1Context.Count; ++i)
+    {
+        if (e_Annotations1Context[i] is not null) annotations1Builder.Add((ParserAnnotationGreen?)this.Visit(e_Annotations1Context[i]) ?? ParserAnnotationGreen.__Missing);
+        else annotations1Builder.Add(ParserAnnotationGreen.__Missing);
+    }
+    var annotations1 = annotations1Builder.ToList();
+    _pool.Free(annotations1Builder);
+    var text = (InternalSyntaxToken?)this.VisitTerminal(context.e_Text, CompilerSyntaxKind.TString);
+    InternalSyntaxToken? multiplicity = null;
+    if (context.LR_TQuestion() is not null) multiplicity = (InternalSyntaxToken?)this.VisitTerminal(context.LR_TQuestion());
+    if (context.LR_TAsterisk() is not null) multiplicity = (InternalSyntaxToken?)this.VisitTerminal(context.LR_TAsterisk());
+    if (context.LR_TPlus() is not null) multiplicity = (InternalSyntaxToken?)this.VisitTerminal(context.LR_TPlus());
+    if (context.LR_TQuestionQuestion() is not null) multiplicity = (InternalSyntaxToken?)this.VisitTerminal(context.LR_TQuestionQuestion());
+    if (context.LR_TAsteriskQuestion() is not null) multiplicity = (InternalSyntaxToken?)this.VisitTerminal(context.LR_TAsteriskQuestion());
+    if (context.LR_TPlusQuestion() is not null) multiplicity = (InternalSyntaxToken?)this.VisitTerminal(context.LR_TPlusQuestion());
+	return _factory.Fixed(annotations1, text, multiplicity);
+}
+
+public override GreenNode? VisitPr_RuleRefAlt1(CompilerParser.Pr_RuleRefAlt1Context? context)
+{
+   	if (context == null) return RuleRefAlt1Green.__Missing;
+    var e_Annotations2Context = context._e_Annotations2;
+    var annotations1Builder = _pool.Allocate<ParserAnnotationGreen>();
+    for (int i = 0; i < e_Annotations2Context.Count; ++i)
+    {
+        if (e_Annotations2Context[i] is not null) annotations1Builder.Add((ParserAnnotationGreen?)this.Visit(e_Annotations2Context[i]) ?? ParserAnnotationGreen.__Missing);
+        else annotations1Builder.Add(ParserAnnotationGreen.__Missing);
+    }
+    var annotations1 = annotations1Builder.ToList();
+    _pool.Free(annotations1Builder);
+    IdentifierGreen? grammarRule = null;
+    if (context.e_GrammarRule is not null) grammarRule = (IdentifierGreen?)this.Visit(context.e_GrammarRule) ?? IdentifierGreen.__Missing;
+    else grammarRule = IdentifierGreen.__Missing;
+    InternalSyntaxToken? multiplicity = null;
+    if (context.LR_TQuestion() is not null) multiplicity = (InternalSyntaxToken?)this.VisitTerminal(context.LR_TQuestion());
+    if (context.LR_TAsterisk() is not null) multiplicity = (InternalSyntaxToken?)this.VisitTerminal(context.LR_TAsterisk());
+    if (context.LR_TPlus() is not null) multiplicity = (InternalSyntaxToken?)this.VisitTerminal(context.LR_TPlus());
+    if (context.LR_TQuestionQuestion() is not null) multiplicity = (InternalSyntaxToken?)this.VisitTerminal(context.LR_TQuestionQuestion());
+    if (context.LR_TAsteriskQuestion() is not null) multiplicity = (InternalSyntaxToken?)this.VisitTerminal(context.LR_TAsteriskQuestion());
+    if (context.LR_TPlusQuestion() is not null) multiplicity = (InternalSyntaxToken?)this.VisitTerminal(context.LR_TPlusQuestion());
+	return _factory.RuleRefAlt1(annotations1, grammarRule, multiplicity);
+}
+
+public override GreenNode? VisitPr_RuleRefAlt2(CompilerParser.Pr_RuleRefAlt2Context? context)
+{
+   	if (context == null) return RuleRefAlt2Green.__Missing;
+    var e_Annotations3Context = context._e_Annotations3;
+    var annotations1Builder = _pool.Allocate<ParserAnnotationGreen>();
+    for (int i = 0; i < e_Annotations3Context.Count; ++i)
+    {
+        if (e_Annotations3Context[i] is not null) annotations1Builder.Add((ParserAnnotationGreen?)this.Visit(e_Annotations3Context[i]) ?? ParserAnnotationGreen.__Missing);
+        else annotations1Builder.Add(ParserAnnotationGreen.__Missing);
+    }
+    var annotations1 = annotations1Builder.ToList();
+    _pool.Free(annotations1Builder);
+    var tHash = (InternalSyntaxToken?)this.VisitTerminal(context.e_THash, CompilerSyntaxKind.THash);
+    TypeReferenceGreen? referencedTypes = null;
+    if (context.e_ReferencedTypes is not null) referencedTypes = (TypeReferenceGreen?)this.Visit(context.e_ReferencedTypes) ?? TypeReferenceGreen.__Missing;
+    else referencedTypes = TypeReferenceGreen.__Missing;
+    InternalSyntaxToken? multiplicity = null;
+    if (context.LR_TQuestion() is not null) multiplicity = (InternalSyntaxToken?)this.VisitTerminal(context.LR_TQuestion());
+    if (context.LR_TAsterisk() is not null) multiplicity = (InternalSyntaxToken?)this.VisitTerminal(context.LR_TAsterisk());
+    if (context.LR_TPlus() is not null) multiplicity = (InternalSyntaxToken?)this.VisitTerminal(context.LR_TPlus());
+    if (context.LR_TQuestionQuestion() is not null) multiplicity = (InternalSyntaxToken?)this.VisitTerminal(context.LR_TQuestionQuestion());
+    if (context.LR_TAsteriskQuestion() is not null) multiplicity = (InternalSyntaxToken?)this.VisitTerminal(context.LR_TAsteriskQuestion());
+    if (context.LR_TPlusQuestion() is not null) multiplicity = (InternalSyntaxToken?)this.VisitTerminal(context.LR_TPlusQuestion());
+	return _factory.RuleRefAlt2(annotations1, tHash, referencedTypes, multiplicity);
+}
+
+public override GreenNode? VisitPr_RuleRefAlt3(CompilerParser.Pr_RuleRefAlt3Context? context)
+{
+   	if (context == null) return RuleRefAlt3Green.__Missing;
+    var e_Annotations4Context = context._e_Annotations4;
+    var annotations1Builder = _pool.Allocate<ParserAnnotationGreen>();
+    for (int i = 0; i < e_Annotations4Context.Count; ++i)
+    {
+        if (e_Annotations4Context[i] is not null) annotations1Builder.Add((ParserAnnotationGreen?)this.Visit(e_Annotations4Context[i]) ?? ParserAnnotationGreen.__Missing);
+        else annotations1Builder.Add(ParserAnnotationGreen.__Missing);
+    }
+    var annotations1 = annotations1Builder.ToList();
+    _pool.Free(annotations1Builder);
+    var tHashLBrace = (InternalSyntaxToken?)this.VisitTerminal(context.e_THashLBrace, CompilerSyntaxKind.THashLBrace);
+    var referencedTypesBuilder = _pool.AllocateSeparated<TypeReferenceGreen>(reversed: false);
+    var e_ReferencedTypes1Context = context.e_ReferencedTypes1;
+    if (e_ReferencedTypes1Context is not null) referencedTypesBuilder.Add((TypeReferenceGreen?)this.Visit(e_ReferencedTypes1Context) ?? TypeReferenceGreen.__Missing);
+    else referencedTypesBuilder.Add(TypeReferenceGreen.__Missing);
+    var e_ReferencedTypes2Context = context._e_ReferencedTypes2;
+    var e_TComma1Context = context._e_TComma1;
+    for (int i = 0; i < e_ReferencedTypes2Context.Count; ++i)
+    {
+        if (i < e_TComma1Context.Count)
+        {
+            var _separator = e_TComma1Context[i];
+            referencedTypesBuilder.AddSeparator((InternalSyntaxToken?)this.VisitTerminal(_separator, CompilerSyntaxKind.TComma));
+        }
+        else
+        {
+            referencedTypesBuilder.AddSeparator((InternalSyntaxToken?)this.VisitTerminal((IToken?)null, CompilerSyntaxKind.TComma));
+        }
+        var _item = e_ReferencedTypes2Context[i];
+        if (_item is not null) referencedTypesBuilder.Add((TypeReferenceGreen?)this.Visit(_item) ?? TypeReferenceGreen.__Missing);
+        else referencedTypesBuilder.Add(TypeReferenceGreen.__Missing);
+    }
+    var referencedTypes = referencedTypesBuilder.ToList();
+    _pool.Free(referencedTypesBuilder);
+    RuleRefAlt3Block1Green? block = null;
+    if (context.e_Block is not null) block = (RuleRefAlt3Block1Green?)this.Visit(context.e_Block);
+    var tRBrace = (InternalSyntaxToken?)this.VisitTerminal(context.e_TRBrace, CompilerSyntaxKind.TRBrace);
+    InternalSyntaxToken? multiplicity = null;
+    if (context.LR_TQuestion() is not null) multiplicity = (InternalSyntaxToken?)this.VisitTerminal(context.LR_TQuestion());
+    if (context.LR_TAsterisk() is not null) multiplicity = (InternalSyntaxToken?)this.VisitTerminal(context.LR_TAsterisk());
+    if (context.LR_TPlus() is not null) multiplicity = (InternalSyntaxToken?)this.VisitTerminal(context.LR_TPlus());
+    if (context.LR_TQuestionQuestion() is not null) multiplicity = (InternalSyntaxToken?)this.VisitTerminal(context.LR_TQuestionQuestion());
+    if (context.LR_TAsteriskQuestion() is not null) multiplicity = (InternalSyntaxToken?)this.VisitTerminal(context.LR_TAsteriskQuestion());
+    if (context.LR_TPlusQuestion() is not null) multiplicity = (InternalSyntaxToken?)this.VisitTerminal(context.LR_TPlusQuestion());
+	return _factory.RuleRefAlt3(annotations1, tHashLBrace, referencedTypes, block, tRBrace, multiplicity);
 }
 
 public override GreenNode? VisitPr_BlockAlternative(CompilerParser.Pr_BlockAlternativeContext? context)
@@ -527,13 +679,42 @@ public override GreenNode? VisitPr_ArrayExpression(CompilerParser.Pr_ArrayExpres
 	return _factory.ArrayExpression(tLBrace, items, tRBrace);
 }
 
-public override GreenNode? VisitPr_SingleExpression(CompilerParser.Pr_SingleExpressionContext? context)
+public override GreenNode? VisitPr_SingleExpressionAlt1(CompilerParser.Pr_SingleExpressionAlt1Context? context)
 {
-   	if (context == null) return SingleExpressionGreen.__Missing;
-    SingleExpressionBlock1Green? value = null;
-    if (context.e_Value is not null) value = (SingleExpressionBlock1Green?)this.Visit(context.e_Value) ?? SingleExpressionBlock1Green.__Missing;
-    else value = SingleExpressionBlock1Green.__Missing;
-	return _factory.SingleExpression(value);
+   	if (context == null) return SingleExpressionAlt1Green.__Missing;
+    SingleExpressionAlt1Block1Green? value = null;
+    if (context.e_Value is not null) value = (SingleExpressionAlt1Block1Green?)this.Visit(context.e_Value) ?? SingleExpressionAlt1Block1Green.__Missing;
+    else value = SingleExpressionAlt1Block1Green.__Missing;
+	return _factory.SingleExpressionAlt1(value);
+}
+
+public override GreenNode? VisitPr_SingleExpressionAlt2(CompilerParser.Pr_SingleExpressionAlt2Context? context)
+{
+   	if (context == null) return SingleExpressionAlt2Green.__Missing;
+    var qualifierBuilder = _pool.AllocateSeparated<IdentifierGreen>(reversed: false);
+    var e_Identifier1Context = context.e_Identifier1;
+    if (e_Identifier1Context is not null) qualifierBuilder.Add((IdentifierGreen?)this.Visit(e_Identifier1Context) ?? IdentifierGreen.__Missing);
+    else qualifierBuilder.Add(IdentifierGreen.__Missing);
+    var e_Identifier2Context = context._e_Identifier2;
+    var e_TDot1Context = context._e_TDot1;
+    for (int i = 0; i < e_Identifier2Context.Count; ++i)
+    {
+        if (i < e_TDot1Context.Count)
+        {
+            var _separator = e_TDot1Context[i];
+            qualifierBuilder.AddSeparator((InternalSyntaxToken?)this.VisitTerminal(_separator, CompilerSyntaxKind.TDot));
+        }
+        else
+        {
+            qualifierBuilder.AddSeparator((InternalSyntaxToken?)this.VisitTerminal((IToken?)null, CompilerSyntaxKind.TDot));
+        }
+        var _item = e_Identifier2Context[i];
+        if (_item is not null) qualifierBuilder.Add((IdentifierGreen?)this.Visit(_item) ?? IdentifierGreen.__Missing);
+        else qualifierBuilder.Add(IdentifierGreen.__Missing);
+    }
+    var qualifier = qualifierBuilder.ToList();
+    _pool.Free(qualifierBuilder);
+	return _factory.SingleExpressionAlt2(qualifier);
 }
 
 public override GreenNode? VisitPr_ParserAnnotation(CompilerParser.Pr_ParserAnnotationContext? context)
@@ -799,100 +980,7 @@ public override GreenNode? VisitPr_ElementBlock1(CompilerParser.Pr_ElementBlock1
 	return _factory.ElementBlock1(annotations1, name, assignment);
 }
 
-public override GreenNode? VisitPr_Tokens(CompilerParser.Pr_TokensContext? context)
-{
-   	if (context == null) return TokensGreen.__Missing;
-    InternalSyntaxToken? token = null;
-    if (context.LR_KEof() is not null) token = (InternalSyntaxToken?)this.VisitTerminal(context.LR_KEof());
-    if (context.LR_TString() is not null) token = (InternalSyntaxToken?)this.VisitTerminal(context.LR_TString());
-    if (token is null) token = _factory.None;
-	return _factory.Tokens(token);
-}
-
-public override GreenNode? VisitPr_Block(CompilerParser.Pr_BlockContext? context)
-{
-   	if (context == null) return BlockGreen.__Missing;
-    var tLParen = (InternalSyntaxToken?)this.VisitTerminal(context.e_TLParen, CompilerSyntaxKind.TLParen);
-    var alternativesBuilder = _pool.AllocateSeparated<BlockAlternativeGreen>(reversed: false);
-    var e_Alternatives1Context = context.e_Alternatives1;
-    if (e_Alternatives1Context is not null) alternativesBuilder.Add((BlockAlternativeGreen?)this.Visit(e_Alternatives1Context) ?? BlockAlternativeGreen.__Missing);
-    else alternativesBuilder.Add(BlockAlternativeGreen.__Missing);
-    var e_Alternatives2Context = context._e_Alternatives2;
-    var e_TBar1Context = context._e_TBar1;
-    for (int i = 0; i < e_Alternatives2Context.Count; ++i)
-    {
-        if (i < e_TBar1Context.Count)
-        {
-            var _separator = e_TBar1Context[i];
-            alternativesBuilder.AddSeparator((InternalSyntaxToken?)this.VisitTerminal(_separator, CompilerSyntaxKind.TBar));
-        }
-        else
-        {
-            alternativesBuilder.AddSeparator((InternalSyntaxToken?)this.VisitTerminal((IToken?)null, CompilerSyntaxKind.TBar));
-        }
-        var _item = e_Alternatives2Context[i];
-        if (_item is not null) alternativesBuilder.Add((BlockAlternativeGreen?)this.Visit(_item) ?? BlockAlternativeGreen.__Missing);
-        else alternativesBuilder.Add(BlockAlternativeGreen.__Missing);
-    }
-    var alternatives = alternativesBuilder.ToList();
-    _pool.Free(alternativesBuilder);
-    var tRParen = (InternalSyntaxToken?)this.VisitTerminal(context.e_TRParen, CompilerSyntaxKind.TRParen);
-	return _factory.Block(tLParen, alternatives, tRParen);
-}
-
-public override GreenNode? VisitPr_RuleRefAlt1(CompilerParser.Pr_RuleRefAlt1Context? context)
-{
-   	if (context == null) return RuleRefAlt1Green.__Missing;
-    IdentifierGreen? grammarRule = null;
-    if (context.e_GrammarRule is not null) grammarRule = (IdentifierGreen?)this.Visit(context.e_GrammarRule) ?? IdentifierGreen.__Missing;
-    else grammarRule = IdentifierGreen.__Missing;
-	return _factory.RuleRefAlt1(grammarRule);
-}
-
-public override GreenNode? VisitPr_RuleRefAlt2(CompilerParser.Pr_RuleRefAlt2Context? context)
-{
-   	if (context == null) return RuleRefAlt2Green.__Missing;
-    var tHash = (InternalSyntaxToken?)this.VisitTerminal(context.e_THash, CompilerSyntaxKind.THash);
-    TypeReferenceGreen? referencedTypes = null;
-    if (context.e_ReferencedTypes is not null) referencedTypes = (TypeReferenceGreen?)this.Visit(context.e_ReferencedTypes) ?? TypeReferenceGreen.__Missing;
-    else referencedTypes = TypeReferenceGreen.__Missing;
-	return _factory.RuleRefAlt2(tHash, referencedTypes);
-}
-
-public override GreenNode? VisitPr_RuleRefAlt3(CompilerParser.Pr_RuleRefAlt3Context? context)
-{
-   	if (context == null) return RuleRefAlt3Green.__Missing;
-    var tHashLBrace = (InternalSyntaxToken?)this.VisitTerminal(context.e_THashLBrace, CompilerSyntaxKind.THashLBrace);
-    var referencedTypesBuilder = _pool.AllocateSeparated<TypeReferenceGreen>(reversed: false);
-    var e_ReferencedTypes1Context = context.e_ReferencedTypes1;
-    if (e_ReferencedTypes1Context is not null) referencedTypesBuilder.Add((TypeReferenceGreen?)this.Visit(e_ReferencedTypes1Context) ?? TypeReferenceGreen.__Missing);
-    else referencedTypesBuilder.Add(TypeReferenceGreen.__Missing);
-    var e_ReferencedTypes2Context = context._e_ReferencedTypes2;
-    var e_TComma1Context = context._e_TComma1;
-    for (int i = 0; i < e_ReferencedTypes2Context.Count; ++i)
-    {
-        if (i < e_TComma1Context.Count)
-        {
-            var _separator = e_TComma1Context[i];
-            referencedTypesBuilder.AddSeparator((InternalSyntaxToken?)this.VisitTerminal(_separator, CompilerSyntaxKind.TComma));
-        }
-        else
-        {
-            referencedTypesBuilder.AddSeparator((InternalSyntaxToken?)this.VisitTerminal((IToken?)null, CompilerSyntaxKind.TComma));
-        }
-        var _item = e_ReferencedTypes2Context[i];
-        if (_item is not null) referencedTypesBuilder.Add((TypeReferenceGreen?)this.Visit(_item) ?? TypeReferenceGreen.__Missing);
-        else referencedTypesBuilder.Add(TypeReferenceGreen.__Missing);
-    }
-    var referencedTypes = referencedTypesBuilder.ToList();
-    _pool.Free(referencedTypesBuilder);
-    RuleRefAlt3Block1Green? block = null;
-    if (context.e_Block is not null) block = (RuleRefAlt3Block1Green?)this.Visit(context.e_Block);
-    var tRBrace = (InternalSyntaxToken?)this.VisitTerminal(context.e_TRBrace, CompilerSyntaxKind.TRBrace);
-	return _factory.RuleRefAlt3(tHashLBrace, referencedTypes, block, tRBrace);
-}
-
-public override GreenNode? VisitPr_BlockAlternativesBlock1(CompilerParser.Pr_BlockAlternativesBlock1Context? context)
+public override GreenNode? VisitPr_BlockAlternativesBlock(CompilerParser.Pr_BlockAlternativesBlockContext? context)
 {
    	if (context == null) return BlockAlternativesBlockGreen.__Missing;
     var tBar = (InternalSyntaxToken?)this.VisitTerminal(context.e_TBar1, CompilerSyntaxKind.TBar);
@@ -912,7 +1000,7 @@ public override GreenNode? VisitPr_BlockAlternativeBlock1(CompilerParser.Pr_Bloc
 	return _factory.BlockAlternativeBlock1(tEqGt, returnValue);
 }
 
-public override GreenNode? VisitPr_RuleRefAlt3ReferencedTypesBlock1(CompilerParser.Pr_RuleRefAlt3ReferencedTypesBlock1Context? context)
+public override GreenNode? VisitPr_RuleRefAlt3ReferencedTypesBlock(CompilerParser.Pr_RuleRefAlt3ReferencedTypesBlockContext? context)
 {
    	if (context == null) return RuleRefAlt3ReferencedTypesBlockGreen.__Missing;
     var tComma = (InternalSyntaxToken?)this.VisitTerminal(context.e_TComma1, CompilerSyntaxKind.TComma);
@@ -984,9 +1072,9 @@ public override GreenNode? VisitPr_LBlockAlternativesBlock(CompilerParser.Pr_LBl
 	return _factory.LBlockAlternativesBlock(tBar, alternatives);
 }
 
-public override GreenNode? VisitPr_Tokens1(CompilerParser.Pr_Tokens1Context? context)
+public override GreenNode? VisitPr_Tokens(CompilerParser.Pr_TokensContext? context)
 {
-   	if (context == null) return Tokens1Green.__Missing;
+   	if (context == null) return TokensGreen.__Missing;
     InternalSyntaxToken? token = null;
     if (context.LR_KNull() is not null) token = (InternalSyntaxToken?)this.VisitTerminal(context.LR_KNull());
     if (context.LR_KTrue() is not null) token = (InternalSyntaxToken?)this.VisitTerminal(context.LR_KTrue());
@@ -995,12 +1083,12 @@ public override GreenNode? VisitPr_Tokens1(CompilerParser.Pr_Tokens1Context? con
     if (context.LR_TInteger() is not null) token = (InternalSyntaxToken?)this.VisitTerminal(context.LR_TInteger());
     if (context.LR_TDecimal() is not null) token = (InternalSyntaxToken?)this.VisitTerminal(context.LR_TDecimal());
     if (token is null) token = _factory.None;
-	return _factory.Tokens1(token);
+	return _factory.Tokens(token);
 }
 
-public override GreenNode? VisitPr_SingleExpressionBlock1Alt2(CompilerParser.Pr_SingleExpressionBlock1Alt2Context? context)
+public override GreenNode? VisitPr_SingleExpressionAlt1Block1Alt2(CompilerParser.Pr_SingleExpressionAlt1Block1Alt2Context? context)
 {
-   	if (context == null) return SingleExpressionBlock1Alt2Green.__Missing;
+   	if (context == null) return SingleExpressionAlt1Block1Alt2Green.__Missing;
     InternalSyntaxToken? tokens = null;
     if (context.LR_KBool() is not null) tokens = (InternalSyntaxToken?)this.VisitTerminal(context.LR_KBool());
     if (context.LR_KInt() is not null) tokens = (InternalSyntaxToken?)this.VisitTerminal(context.LR_KInt());
@@ -1011,36 +1099,7 @@ public override GreenNode? VisitPr_SingleExpressionBlock1Alt2(CompilerParser.Pr_
     if (context.LR_KObject() is not null) tokens = (InternalSyntaxToken?)this.VisitTerminal(context.LR_KObject());
     if (context.LR_KVoid() is not null) tokens = (InternalSyntaxToken?)this.VisitTerminal(context.LR_KVoid());
     if (tokens is null) tokens = _factory.None;
-	return _factory.SingleExpressionBlock1Alt2(tokens);
-}
-
-public override GreenNode? VisitPr_SingleExpressionBlock1Alt3(CompilerParser.Pr_SingleExpressionBlock1Alt3Context? context)
-{
-   	if (context == null) return SingleExpressionBlock1Alt3Green.__Missing;
-    var qualifierBuilder = _pool.AllocateSeparated<IdentifierGreen>(reversed: false);
-    var e_Identifier1Context = context.e_Identifier1;
-    if (e_Identifier1Context is not null) qualifierBuilder.Add((IdentifierGreen?)this.Visit(e_Identifier1Context) ?? IdentifierGreen.__Missing);
-    else qualifierBuilder.Add(IdentifierGreen.__Missing);
-    var e_Identifier2Context = context._e_Identifier2;
-    var e_TDot1Context = context._e_TDot1;
-    for (int i = 0; i < e_Identifier2Context.Count; ++i)
-    {
-        if (i < e_TDot1Context.Count)
-        {
-            var _separator = e_TDot1Context[i];
-            qualifierBuilder.AddSeparator((InternalSyntaxToken?)this.VisitTerminal(_separator, CompilerSyntaxKind.TDot));
-        }
-        else
-        {
-            qualifierBuilder.AddSeparator((InternalSyntaxToken?)this.VisitTerminal((IToken?)null, CompilerSyntaxKind.TDot));
-        }
-        var _item = e_Identifier2Context[i];
-        if (_item is not null) qualifierBuilder.Add((IdentifierGreen?)this.Visit(_item) ?? IdentifierGreen.__Missing);
-        else qualifierBuilder.Add(IdentifierGreen.__Missing);
-    }
-    var qualifier = qualifierBuilder.ToList();
-    _pool.Free(qualifierBuilder);
-	return _factory.SingleExpressionBlock1Alt3(qualifier);
+	return _factory.SingleExpressionAlt1Block1Alt2(tokens);
 }
 
 public override GreenNode? VisitPr_ParserAnnotationBlock1(CompilerParser.Pr_ParserAnnotationBlock1Context? context)
@@ -1115,7 +1174,7 @@ public override GreenNode? VisitPr_AnnotationArgumentBlock1(CompilerParser.Pr_An
 	return _factory.AnnotationArgumentBlock1(namedParameter, tColon);
 }
 
-public override GreenNode? VisitPr_MainQualifierBlock6(CompilerParser.Pr_MainQualifierBlock6Context? context)
+public override GreenNode? VisitPr_MainQualifierBlock5(CompilerParser.Pr_MainQualifierBlock5Context? context)
 {
    	if (context == null) return MainQualifierBlockGreen.__Missing;
     var tDot = (InternalSyntaxToken?)this.VisitTerminal(context.e_TDot1, CompilerSyntaxKind.TDot);

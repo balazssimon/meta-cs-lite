@@ -1278,18 +1278,30 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	    }
 	
 	}
-	
-	public sealed class ElementValueSyntax : CompilerSyntaxNode
+	public abstract class ElementValueSyntax : CompilerSyntaxNode
 	{
-		private __SyntaxNode _annotations1;
-		private ElementValueBlock1Syntax _block;
-	
-	    public ElementValueSyntax(__InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
+	    protected ElementValueSyntax(__InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
 	        : base(green, syntaxTree, position)
 	    {
 	    }
 	
-	    public ElementValueSyntax(__InternalSyntaxNode green, CompilerSyntaxNode parent, int position)
+	    protected ElementValueSyntax(__InternalSyntaxNode green, CompilerSyntaxNode parent, int position)
+	        : base(green, parent, position)
+	    {
+	    }
+	}
+	
+	public sealed class BlockSyntax : ElementValueSyntax
+	{
+		private __SyntaxNode _annotations1;
+		private __SyntaxNode _alternatives;
+	
+	    public BlockSyntax(__InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
+	        : base(green, syntaxTree, position)
+	    {
+	    }
+	
+	    public BlockSyntax(__InternalSyntaxNode green, CompilerSyntaxNode parent, int position)
 	        : base(green, parent, position)
 	    {
 	    }
@@ -1302,19 +1314,235 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 				return red == null ? default : new global::MetaDslx.CodeAnalysis.SyntaxList<ParserAnnotationSyntax>(red);
 	} 
 	}
-	public ElementValueBlock1Syntax Block 
+	public __SyntaxToken TLParen 
 		{ 
 		get
 		{
-				var red = this.GetRed(ref this._block, 1);
-	return red;
+				var green = (global::MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax.BlockGreen)this.Green;
+	var greenToken = green.TLParen;
+				return new __SyntaxToken(this, greenToken, this.GetChildPosition(1), this.GetChildIndex(1));
+	} 
+	}
+	public global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<BlockAlternativeSyntax> Alternatives 
+		{ 
+		get
+		{
+				var red = this.GetRed(ref this._alternatives, 2);
+				return red == null ? default : new global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<BlockAlternativeSyntax>(red, this.GetChildIndex(2), reversed: false);
+	} 
+	}
+	public __SyntaxToken TRParen 
+		{ 
+		get
+		{
+				var green = (global::MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax.BlockGreen)this.Green;
+	var greenToken = green.TRParen;
+				return new __SyntaxToken(this, greenToken, this.GetChildPosition(3), this.GetChildIndex(3));
 	} 
 	}
 	public __SyntaxToken Multiplicity 
 		{ 
 		get
 		{
-				var green = (global::MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax.ElementValueGreen)this.Green;
+				var green = (global::MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax.BlockGreen)this.Green;
+	var greenToken = green.Multiplicity;
+				return new __SyntaxToken(this, greenToken, this.GetChildPosition(4), this.GetChildIndex(4));
+	} 
+	}
+	
+	    protected override __SyntaxNode GetNodeSlot(int index)
+	    {
+	        switch (index)
+	        {
+			case 0: return this.GetRed(ref this._annotations1, 0);
+			case 2: return this.GetRed(ref this._alternatives, 2);
+			default: return null;
+	        }
+	    }
+	
+	    protected override __SyntaxNode GetCachedSlot(int index)
+	    {
+	        switch (index)
+	        {
+			case 0: return this._annotations1;
+			case 2: return this._alternatives;
+			default: return null;
+	        }
+	    }
+	
+	public BlockSyntax WithAnnotations1(global::MetaDslx.CodeAnalysis.SyntaxList<ParserAnnotationSyntax> annotations1)
+		{
+		return this.Update(annotations1, this.TLParen, this.Alternatives, this.TRParen, this.Multiplicity);
+	}
+	
+	public BlockSyntax AddAnnotations1(params ParserAnnotationSyntax[] annotations1)
+		{
+		return this.WithAnnotations1(this.Annotations1.AddRange(annotations1));
+	}
+	
+	public BlockSyntax WithTLParen(__SyntaxToken tLParen)
+		{
+		return this.Update(this.Annotations1, tLParen, this.Alternatives, this.TRParen, this.Multiplicity);
+	}
+	
+	public BlockSyntax WithAlternatives(global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<BlockAlternativeSyntax> alternatives)
+		{
+		return this.Update(this.Annotations1, this.TLParen, alternatives, this.TRParen, this.Multiplicity);
+	}
+	
+	public BlockSyntax AddAlternatives(params BlockAlternativeSyntax[] alternatives)
+		{
+		return this.WithAlternatives(this.Alternatives.AddRange(alternatives));
+	}
+	
+	public BlockSyntax WithTRParen(__SyntaxToken tRParen)
+		{
+		return this.Update(this.Annotations1, this.TLParen, this.Alternatives, tRParen, this.Multiplicity);
+	}
+	
+	public BlockSyntax WithMultiplicity(__SyntaxToken multiplicity)
+		{
+		return this.Update(this.Annotations1, this.TLParen, this.Alternatives, this.TRParen, multiplicity);
+	}
+	
+	    public BlockSyntax Update(global::MetaDslx.CodeAnalysis.SyntaxList<ParserAnnotationSyntax> annotations1, __SyntaxToken tLParen, global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<BlockAlternativeSyntax> alternatives, __SyntaxToken tRParen, __SyntaxToken multiplicity)
+	    {
+	        if (this.Annotations1 != annotations1 || this.TLParen != tLParen || this.Alternatives != alternatives || this.TRParen != tRParen || this.Multiplicity != multiplicity)
+	        {
+	            var newNode = CompilerLanguage.Instance.SyntaxFactory.Block(annotations1, tLParen, alternatives, tRParen, multiplicity);
+	            var annotations = this.GetAnnotations();
+	            if (annotations != null && annotations.Length > 0)
+	               newNode = __SyntaxExtensions.WithAnnotations(newNode, annotations);
+			return (BlockSyntax)newNode;
+	        }
+	        return this;
+	    }
+	
+	    public override TResult Accept<TArg, TResult>(ICompilerSyntaxVisitor<TArg, TResult> visitor, TArg argument)
+	    {
+	        return visitor.VisitBlock(this, argument);
+	    }
+	
+	    public override TResult Accept<TResult>(ICompilerSyntaxVisitor<TResult> visitor)
+	    {
+	        return visitor.VisitBlock(this);
+	    }
+	
+	    public override void Accept(ICompilerSyntaxVisitor visitor)
+	    {
+	        visitor.VisitBlock(this);
+	    }
+	
+	}
+	public sealed class Eof1Syntax : ElementValueSyntax
+	{
+	
+	    public Eof1Syntax(__InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
+	        : base(green, syntaxTree, position)
+	    {
+	    }
+	
+	    public Eof1Syntax(__InternalSyntaxNode green, CompilerSyntaxNode parent, int position)
+	        : base(green, parent, position)
+	    {
+	    }
+	
+	public __SyntaxToken KEof 
+		{ 
+		get
+		{
+				var green = (global::MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax.Eof1Green)this.Green;
+	var greenToken = green.KEof;
+				return new __SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
+	} 
+	}
+	
+	    protected override __SyntaxNode GetNodeSlot(int index)
+	    {
+	        switch (index)
+	        {
+			default: return null;
+	        }
+	    }
+	
+	    protected override __SyntaxNode GetCachedSlot(int index)
+	    {
+	        switch (index)
+	        {
+			default: return null;
+	        }
+	    }
+	
+	public Eof1Syntax WithKEof(__SyntaxToken kEof)
+		{
+		return this.Update(kEof);
+	}
+	
+	    public Eof1Syntax Update(__SyntaxToken kEof)
+	    {
+	        if (this.KEof != kEof)
+	        {
+	            var newNode = CompilerLanguage.Instance.SyntaxFactory.Eof1(kEof);
+	            var annotations = this.GetAnnotations();
+	            if (annotations != null && annotations.Length > 0)
+	               newNode = __SyntaxExtensions.WithAnnotations(newNode, annotations);
+			return (Eof1Syntax)newNode;
+	        }
+	        return this;
+	    }
+	
+	    public override TResult Accept<TArg, TResult>(ICompilerSyntaxVisitor<TArg, TResult> visitor, TArg argument)
+	    {
+	        return visitor.VisitEof1(this, argument);
+	    }
+	
+	    public override TResult Accept<TResult>(ICompilerSyntaxVisitor<TResult> visitor)
+	    {
+	        return visitor.VisitEof1(this);
+	    }
+	
+	    public override void Accept(ICompilerSyntaxVisitor visitor)
+	    {
+	        visitor.VisitEof1(this);
+	    }
+	
+	}
+	public sealed class FixedSyntax : ElementValueSyntax
+	{
+		private __SyntaxNode _annotations1;
+	
+	    public FixedSyntax(__InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
+	        : base(green, syntaxTree, position)
+	    {
+	    }
+	
+	    public FixedSyntax(__InternalSyntaxNode green, CompilerSyntaxNode parent, int position)
+	        : base(green, parent, position)
+	    {
+	    }
+	
+	public global::MetaDslx.CodeAnalysis.SyntaxList<ParserAnnotationSyntax> Annotations1 
+		{ 
+		get
+		{
+				var red = this.GetRed(ref this._annotations1, 0);
+				return red == null ? default : new global::MetaDslx.CodeAnalysis.SyntaxList<ParserAnnotationSyntax>(red);
+	} 
+	}
+	public __SyntaxToken Text 
+		{ 
+		get
+		{
+				var green = (global::MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax.FixedGreen)this.Green;
+	var greenToken = green.Text;
+				return new __SyntaxToken(this, greenToken, this.GetChildPosition(1), this.GetChildIndex(1));
+	} 
+	}
+	public __SyntaxToken Multiplicity 
+		{ 
+		get
+		{
+				var green = (global::MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax.FixedGreen)this.Green;
 	var greenToken = green.Multiplicity;
 				return new __SyntaxToken(this, greenToken, this.GetChildPosition(2), this.GetChildIndex(2));
 	} 
@@ -1325,7 +1553,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	        switch (index)
 	        {
 			case 0: return this.GetRed(ref this._annotations1, 0);
-			case 1: return this.GetRed(ref this._block, 1);
 			default: return null;
 	        }
 	    }
@@ -1335,57 +1562,449 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	        switch (index)
 	        {
 			case 0: return this._annotations1;
-			case 1: return this._block;
 			default: return null;
 	        }
 	    }
 	
-	public ElementValueSyntax WithAnnotations1(global::MetaDslx.CodeAnalysis.SyntaxList<ParserAnnotationSyntax> annotations1)
+	public FixedSyntax WithAnnotations1(global::MetaDslx.CodeAnalysis.SyntaxList<ParserAnnotationSyntax> annotations1)
 		{
-		return this.Update(annotations1, this.Block, this.Multiplicity);
+		return this.Update(annotations1, this.Text, this.Multiplicity);
 	}
 	
-	public ElementValueSyntax AddAnnotations1(params ParserAnnotationSyntax[] annotations1)
+	public FixedSyntax AddAnnotations1(params ParserAnnotationSyntax[] annotations1)
 		{
 		return this.WithAnnotations1(this.Annotations1.AddRange(annotations1));
 	}
 	
-	public ElementValueSyntax WithBlock(ElementValueBlock1Syntax block)
+	public FixedSyntax WithText(__SyntaxToken text)
 		{
-		return this.Update(this.Annotations1, block, this.Multiplicity);
+		return this.Update(this.Annotations1, text, this.Multiplicity);
 	}
 	
-	public ElementValueSyntax WithMultiplicity(__SyntaxToken multiplicity)
+	public FixedSyntax WithMultiplicity(__SyntaxToken multiplicity)
 		{
-		return this.Update(this.Annotations1, this.Block, multiplicity);
+		return this.Update(this.Annotations1, this.Text, multiplicity);
 	}
 	
-	    public ElementValueSyntax Update(global::MetaDslx.CodeAnalysis.SyntaxList<ParserAnnotationSyntax> annotations1, ElementValueBlock1Syntax block, __SyntaxToken multiplicity)
+	    public FixedSyntax Update(global::MetaDslx.CodeAnalysis.SyntaxList<ParserAnnotationSyntax> annotations1, __SyntaxToken text, __SyntaxToken multiplicity)
 	    {
-	        if (this.Annotations1 != annotations1 || this.Block != block || this.Multiplicity != multiplicity)
+	        if (this.Annotations1 != annotations1 || this.Text != text || this.Multiplicity != multiplicity)
 	        {
-	            var newNode = CompilerLanguage.Instance.SyntaxFactory.ElementValue(annotations1, block, multiplicity);
+	            var newNode = CompilerLanguage.Instance.SyntaxFactory.Fixed(annotations1, text, multiplicity);
 	            var annotations = this.GetAnnotations();
 	            if (annotations != null && annotations.Length > 0)
 	               newNode = __SyntaxExtensions.WithAnnotations(newNode, annotations);
-			return (ElementValueSyntax)newNode;
+			return (FixedSyntax)newNode;
 	        }
 	        return this;
 	    }
 	
 	    public override TResult Accept<TArg, TResult>(ICompilerSyntaxVisitor<TArg, TResult> visitor, TArg argument)
 	    {
-	        return visitor.VisitElementValue(this, argument);
+	        return visitor.VisitFixed(this, argument);
 	    }
 	
 	    public override TResult Accept<TResult>(ICompilerSyntaxVisitor<TResult> visitor)
 	    {
-	        return visitor.VisitElementValue(this);
+	        return visitor.VisitFixed(this);
 	    }
 	
 	    public override void Accept(ICompilerSyntaxVisitor visitor)
 	    {
-	        visitor.VisitElementValue(this);
+	        visitor.VisitFixed(this);
+	    }
+	
+	}
+	public sealed class RuleRefAlt1Syntax : ElementValueSyntax
+	{
+		private __SyntaxNode _annotations1;
+		private IdentifierSyntax _grammarRule;
+	
+	    public RuleRefAlt1Syntax(__InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
+	        : base(green, syntaxTree, position)
+	    {
+	    }
+	
+	    public RuleRefAlt1Syntax(__InternalSyntaxNode green, CompilerSyntaxNode parent, int position)
+	        : base(green, parent, position)
+	    {
+	    }
+	
+	public global::MetaDslx.CodeAnalysis.SyntaxList<ParserAnnotationSyntax> Annotations1 
+		{ 
+		get
+		{
+				var red = this.GetRed(ref this._annotations1, 0);
+				return red == null ? default : new global::MetaDslx.CodeAnalysis.SyntaxList<ParserAnnotationSyntax>(red);
+	} 
+	}
+	public IdentifierSyntax GrammarRule 
+		{ 
+		get
+		{
+				var red = this.GetRed(ref this._grammarRule, 1);
+	return red;
+	} 
+	}
+	public __SyntaxToken Multiplicity 
+		{ 
+		get
+		{
+				var green = (global::MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax.RuleRefAlt1Green)this.Green;
+	var greenToken = green.Multiplicity;
+				return new __SyntaxToken(this, greenToken, this.GetChildPosition(2), this.GetChildIndex(2));
+	} 
+	}
+	
+	    protected override __SyntaxNode GetNodeSlot(int index)
+	    {
+	        switch (index)
+	        {
+			case 0: return this.GetRed(ref this._annotations1, 0);
+			case 1: return this.GetRed(ref this._grammarRule, 1);
+			default: return null;
+	        }
+	    }
+	
+	    protected override __SyntaxNode GetCachedSlot(int index)
+	    {
+	        switch (index)
+	        {
+			case 0: return this._annotations1;
+			case 1: return this._grammarRule;
+			default: return null;
+	        }
+	    }
+	
+	public RuleRefAlt1Syntax WithAnnotations1(global::MetaDslx.CodeAnalysis.SyntaxList<ParserAnnotationSyntax> annotations1)
+		{
+		return this.Update(annotations1, this.GrammarRule, this.Multiplicity);
+	}
+	
+	public RuleRefAlt1Syntax AddAnnotations1(params ParserAnnotationSyntax[] annotations1)
+		{
+		return this.WithAnnotations1(this.Annotations1.AddRange(annotations1));
+	}
+	
+	public RuleRefAlt1Syntax WithGrammarRule(IdentifierSyntax grammarRule)
+		{
+		return this.Update(this.Annotations1, grammarRule, this.Multiplicity);
+	}
+	
+	public RuleRefAlt1Syntax WithMultiplicity(__SyntaxToken multiplicity)
+		{
+		return this.Update(this.Annotations1, this.GrammarRule, multiplicity);
+	}
+	
+	    public RuleRefAlt1Syntax Update(global::MetaDslx.CodeAnalysis.SyntaxList<ParserAnnotationSyntax> annotations1, IdentifierSyntax grammarRule, __SyntaxToken multiplicity)
+	    {
+	        if (this.Annotations1 != annotations1 || this.GrammarRule != grammarRule || this.Multiplicity != multiplicity)
+	        {
+	            var newNode = CompilerLanguage.Instance.SyntaxFactory.RuleRefAlt1(annotations1, grammarRule, multiplicity);
+	            var annotations = this.GetAnnotations();
+	            if (annotations != null && annotations.Length > 0)
+	               newNode = __SyntaxExtensions.WithAnnotations(newNode, annotations);
+			return (RuleRefAlt1Syntax)newNode;
+	        }
+	        return this;
+	    }
+	
+	    public override TResult Accept<TArg, TResult>(ICompilerSyntaxVisitor<TArg, TResult> visitor, TArg argument)
+	    {
+	        return visitor.VisitRuleRefAlt1(this, argument);
+	    }
+	
+	    public override TResult Accept<TResult>(ICompilerSyntaxVisitor<TResult> visitor)
+	    {
+	        return visitor.VisitRuleRefAlt1(this);
+	    }
+	
+	    public override void Accept(ICompilerSyntaxVisitor visitor)
+	    {
+	        visitor.VisitRuleRefAlt1(this);
+	    }
+	
+	}
+	public sealed class RuleRefAlt2Syntax : ElementValueSyntax
+	{
+		private __SyntaxNode _annotations1;
+		private TypeReferenceSyntax _referencedTypes;
+	
+	    public RuleRefAlt2Syntax(__InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
+	        : base(green, syntaxTree, position)
+	    {
+	    }
+	
+	    public RuleRefAlt2Syntax(__InternalSyntaxNode green, CompilerSyntaxNode parent, int position)
+	        : base(green, parent, position)
+	    {
+	    }
+	
+	public global::MetaDslx.CodeAnalysis.SyntaxList<ParserAnnotationSyntax> Annotations1 
+		{ 
+		get
+		{
+				var red = this.GetRed(ref this._annotations1, 0);
+				return red == null ? default : new global::MetaDslx.CodeAnalysis.SyntaxList<ParserAnnotationSyntax>(red);
+	} 
+	}
+	public __SyntaxToken THash 
+		{ 
+		get
+		{
+				var green = (global::MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax.RuleRefAlt2Green)this.Green;
+	var greenToken = green.THash;
+				return new __SyntaxToken(this, greenToken, this.GetChildPosition(1), this.GetChildIndex(1));
+	} 
+	}
+	public TypeReferenceSyntax ReferencedTypes 
+		{ 
+		get
+		{
+				var red = this.GetRed(ref this._referencedTypes, 2);
+	return red;
+	} 
+	}
+	public __SyntaxToken Multiplicity 
+		{ 
+		get
+		{
+				var green = (global::MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax.RuleRefAlt2Green)this.Green;
+	var greenToken = green.Multiplicity;
+				return new __SyntaxToken(this, greenToken, this.GetChildPosition(3), this.GetChildIndex(3));
+	} 
+	}
+	
+	    protected override __SyntaxNode GetNodeSlot(int index)
+	    {
+	        switch (index)
+	        {
+			case 0: return this.GetRed(ref this._annotations1, 0);
+			case 2: return this.GetRed(ref this._referencedTypes, 2);
+			default: return null;
+	        }
+	    }
+	
+	    protected override __SyntaxNode GetCachedSlot(int index)
+	    {
+	        switch (index)
+	        {
+			case 0: return this._annotations1;
+			case 2: return this._referencedTypes;
+			default: return null;
+	        }
+	    }
+	
+	public RuleRefAlt2Syntax WithAnnotations1(global::MetaDslx.CodeAnalysis.SyntaxList<ParserAnnotationSyntax> annotations1)
+		{
+		return this.Update(annotations1, this.THash, this.ReferencedTypes, this.Multiplicity);
+	}
+	
+	public RuleRefAlt2Syntax AddAnnotations1(params ParserAnnotationSyntax[] annotations1)
+		{
+		return this.WithAnnotations1(this.Annotations1.AddRange(annotations1));
+	}
+	
+	public RuleRefAlt2Syntax WithTHash(__SyntaxToken tHash)
+		{
+		return this.Update(this.Annotations1, tHash, this.ReferencedTypes, this.Multiplicity);
+	}
+	
+	public RuleRefAlt2Syntax WithReferencedTypes(TypeReferenceSyntax referencedTypes)
+		{
+		return this.Update(this.Annotations1, this.THash, referencedTypes, this.Multiplicity);
+	}
+	
+	public RuleRefAlt2Syntax WithMultiplicity(__SyntaxToken multiplicity)
+		{
+		return this.Update(this.Annotations1, this.THash, this.ReferencedTypes, multiplicity);
+	}
+	
+	    public RuleRefAlt2Syntax Update(global::MetaDslx.CodeAnalysis.SyntaxList<ParserAnnotationSyntax> annotations1, __SyntaxToken tHash, TypeReferenceSyntax referencedTypes, __SyntaxToken multiplicity)
+	    {
+	        if (this.Annotations1 != annotations1 || this.THash != tHash || this.ReferencedTypes != referencedTypes || this.Multiplicity != multiplicity)
+	        {
+	            var newNode = CompilerLanguage.Instance.SyntaxFactory.RuleRefAlt2(annotations1, tHash, referencedTypes, multiplicity);
+	            var annotations = this.GetAnnotations();
+	            if (annotations != null && annotations.Length > 0)
+	               newNode = __SyntaxExtensions.WithAnnotations(newNode, annotations);
+			return (RuleRefAlt2Syntax)newNode;
+	        }
+	        return this;
+	    }
+	
+	    public override TResult Accept<TArg, TResult>(ICompilerSyntaxVisitor<TArg, TResult> visitor, TArg argument)
+	    {
+	        return visitor.VisitRuleRefAlt2(this, argument);
+	    }
+	
+	    public override TResult Accept<TResult>(ICompilerSyntaxVisitor<TResult> visitor)
+	    {
+	        return visitor.VisitRuleRefAlt2(this);
+	    }
+	
+	    public override void Accept(ICompilerSyntaxVisitor visitor)
+	    {
+	        visitor.VisitRuleRefAlt2(this);
+	    }
+	
+	}
+	public sealed class RuleRefAlt3Syntax : ElementValueSyntax
+	{
+		private __SyntaxNode _annotations1;
+		private __SyntaxNode _referencedTypes;
+		private RuleRefAlt3Block1Syntax _block;
+	
+	    public RuleRefAlt3Syntax(__InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
+	        : base(green, syntaxTree, position)
+	    {
+	    }
+	
+	    public RuleRefAlt3Syntax(__InternalSyntaxNode green, CompilerSyntaxNode parent, int position)
+	        : base(green, parent, position)
+	    {
+	    }
+	
+	public global::MetaDslx.CodeAnalysis.SyntaxList<ParserAnnotationSyntax> Annotations1 
+		{ 
+		get
+		{
+				var red = this.GetRed(ref this._annotations1, 0);
+				return red == null ? default : new global::MetaDslx.CodeAnalysis.SyntaxList<ParserAnnotationSyntax>(red);
+	} 
+	}
+	public __SyntaxToken THashLBrace 
+		{ 
+		get
+		{
+				var green = (global::MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax.RuleRefAlt3Green)this.Green;
+	var greenToken = green.THashLBrace;
+				return new __SyntaxToken(this, greenToken, this.GetChildPosition(1), this.GetChildIndex(1));
+	} 
+	}
+	public global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<TypeReferenceSyntax> ReferencedTypes 
+		{ 
+		get
+		{
+				var red = this.GetRed(ref this._referencedTypes, 2);
+				return red == null ? default : new global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<TypeReferenceSyntax>(red, this.GetChildIndex(2), reversed: false);
+	} 
+	}
+	public RuleRefAlt3Block1Syntax Block 
+		{ 
+		get
+		{
+				var red = this.GetRed(ref this._block, 3);
+	return red;
+	} 
+	}
+	public __SyntaxToken TRBrace 
+		{ 
+		get
+		{
+				var green = (global::MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax.RuleRefAlt3Green)this.Green;
+	var greenToken = green.TRBrace;
+				return new __SyntaxToken(this, greenToken, this.GetChildPosition(4), this.GetChildIndex(4));
+	} 
+	}
+	public __SyntaxToken Multiplicity 
+		{ 
+		get
+		{
+				var green = (global::MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax.RuleRefAlt3Green)this.Green;
+	var greenToken = green.Multiplicity;
+				return new __SyntaxToken(this, greenToken, this.GetChildPosition(5), this.GetChildIndex(5));
+	} 
+	}
+	
+	    protected override __SyntaxNode GetNodeSlot(int index)
+	    {
+	        switch (index)
+	        {
+			case 0: return this.GetRed(ref this._annotations1, 0);
+			case 2: return this.GetRed(ref this._referencedTypes, 2);
+			case 3: return this.GetRed(ref this._block, 3);
+			default: return null;
+	        }
+	    }
+	
+	    protected override __SyntaxNode GetCachedSlot(int index)
+	    {
+	        switch (index)
+	        {
+			case 0: return this._annotations1;
+			case 2: return this._referencedTypes;
+			case 3: return this._block;
+			default: return null;
+	        }
+	    }
+	
+	public RuleRefAlt3Syntax WithAnnotations1(global::MetaDslx.CodeAnalysis.SyntaxList<ParserAnnotationSyntax> annotations1)
+		{
+		return this.Update(annotations1, this.THashLBrace, this.ReferencedTypes, this.Block, this.TRBrace, this.Multiplicity);
+	}
+	
+	public RuleRefAlt3Syntax AddAnnotations1(params ParserAnnotationSyntax[] annotations1)
+		{
+		return this.WithAnnotations1(this.Annotations1.AddRange(annotations1));
+	}
+	
+	public RuleRefAlt3Syntax WithTHashLBrace(__SyntaxToken tHashLBrace)
+		{
+		return this.Update(this.Annotations1, tHashLBrace, this.ReferencedTypes, this.Block, this.TRBrace, this.Multiplicity);
+	}
+	
+	public RuleRefAlt3Syntax WithReferencedTypes(global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<TypeReferenceSyntax> referencedTypes)
+		{
+		return this.Update(this.Annotations1, this.THashLBrace, referencedTypes, this.Block, this.TRBrace, this.Multiplicity);
+	}
+	
+	public RuleRefAlt3Syntax AddReferencedTypes(params TypeReferenceSyntax[] referencedTypes)
+		{
+		return this.WithReferencedTypes(this.ReferencedTypes.AddRange(referencedTypes));
+	}
+	
+	public RuleRefAlt3Syntax WithBlock(RuleRefAlt3Block1Syntax block)
+		{
+		return this.Update(this.Annotations1, this.THashLBrace, this.ReferencedTypes, block, this.TRBrace, this.Multiplicity);
+	}
+	
+	public RuleRefAlt3Syntax WithTRBrace(__SyntaxToken tRBrace)
+		{
+		return this.Update(this.Annotations1, this.THashLBrace, this.ReferencedTypes, this.Block, tRBrace, this.Multiplicity);
+	}
+	
+	public RuleRefAlt3Syntax WithMultiplicity(__SyntaxToken multiplicity)
+		{
+		return this.Update(this.Annotations1, this.THashLBrace, this.ReferencedTypes, this.Block, this.TRBrace, multiplicity);
+	}
+	
+	    public RuleRefAlt3Syntax Update(global::MetaDslx.CodeAnalysis.SyntaxList<ParserAnnotationSyntax> annotations1, __SyntaxToken tHashLBrace, global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<TypeReferenceSyntax> referencedTypes, RuleRefAlt3Block1Syntax block, __SyntaxToken tRBrace, __SyntaxToken multiplicity)
+	    {
+	        if (this.Annotations1 != annotations1 || this.THashLBrace != tHashLBrace || this.ReferencedTypes != referencedTypes || this.Block != block || this.TRBrace != tRBrace || this.Multiplicity != multiplicity)
+	        {
+	            var newNode = CompilerLanguage.Instance.SyntaxFactory.RuleRefAlt3(annotations1, tHashLBrace, referencedTypes, block, tRBrace, multiplicity);
+	            var annotations = this.GetAnnotations();
+	            if (annotations != null && annotations.Length > 0)
+	               newNode = __SyntaxExtensions.WithAnnotations(newNode, annotations);
+			return (RuleRefAlt3Syntax)newNode;
+	        }
+	        return this;
+	    }
+	
+	    public override TResult Accept<TArg, TResult>(ICompilerSyntaxVisitor<TArg, TResult> visitor, TArg argument)
+	    {
+	        return visitor.VisitRuleRefAlt3(this, argument);
+	    }
+	
+	    public override TResult Accept<TResult>(ICompilerSyntaxVisitor<TResult> visitor)
+	    {
+	        return visitor.VisitRuleRefAlt3(this);
+	    }
+	
+	    public override void Accept(ICompilerSyntaxVisitor visitor)
+	    {
+	        visitor.VisitRuleRefAlt3(this);
 	    }
 	
 	}
@@ -2237,22 +2856,34 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	    }
 	
 	}
-	
-	public sealed class SingleExpressionSyntax : CompilerSyntaxNode
+	public abstract class SingleExpressionSyntax : CompilerSyntaxNode
 	{
-		private SingleExpressionBlock1Syntax _value;
-	
-	    public SingleExpressionSyntax(__InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
+	    protected SingleExpressionSyntax(__InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
 	        : base(green, syntaxTree, position)
 	    {
 	    }
 	
-	    public SingleExpressionSyntax(__InternalSyntaxNode green, CompilerSyntaxNode parent, int position)
+	    protected SingleExpressionSyntax(__InternalSyntaxNode green, CompilerSyntaxNode parent, int position)
+	        : base(green, parent, position)
+	    {
+	    }
+	}
+	
+	public sealed class SingleExpressionAlt1Syntax : SingleExpressionSyntax
+	{
+		private SingleExpressionAlt1Block1Syntax _value;
+	
+	    public SingleExpressionAlt1Syntax(__InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
+	        : base(green, syntaxTree, position)
+	    {
+	    }
+	
+	    public SingleExpressionAlt1Syntax(__InternalSyntaxNode green, CompilerSyntaxNode parent, int position)
 	        : base(green, parent, position)
 	    {
 	    }
 	
-	public SingleExpressionBlock1Syntax Value 
+	public SingleExpressionAlt1Block1Syntax Value 
 		{ 
 		get
 		{
@@ -2279,37 +2910,117 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	        }
 	    }
 	
-	public SingleExpressionSyntax WithValue(SingleExpressionBlock1Syntax value)
+	public SingleExpressionAlt1Syntax WithValue(SingleExpressionAlt1Block1Syntax value)
 		{
 		return this.Update(value);
 	}
 	
-	    public SingleExpressionSyntax Update(SingleExpressionBlock1Syntax value)
+	    public SingleExpressionAlt1Syntax Update(SingleExpressionAlt1Block1Syntax value)
 	    {
 	        if (this.Value != value)
 	        {
-	            var newNode = CompilerLanguage.Instance.SyntaxFactory.SingleExpression(value);
+	            var newNode = CompilerLanguage.Instance.SyntaxFactory.SingleExpressionAlt1(value);
 	            var annotations = this.GetAnnotations();
 	            if (annotations != null && annotations.Length > 0)
 	               newNode = __SyntaxExtensions.WithAnnotations(newNode, annotations);
-			return (SingleExpressionSyntax)newNode;
+			return (SingleExpressionAlt1Syntax)newNode;
 	        }
 	        return this;
 	    }
 	
 	    public override TResult Accept<TArg, TResult>(ICompilerSyntaxVisitor<TArg, TResult> visitor, TArg argument)
 	    {
-	        return visitor.VisitSingleExpression(this, argument);
+	        return visitor.VisitSingleExpressionAlt1(this, argument);
 	    }
 	
 	    public override TResult Accept<TResult>(ICompilerSyntaxVisitor<TResult> visitor)
 	    {
-	        return visitor.VisitSingleExpression(this);
+	        return visitor.VisitSingleExpressionAlt1(this);
 	    }
 	
 	    public override void Accept(ICompilerSyntaxVisitor visitor)
 	    {
-	        visitor.VisitSingleExpression(this);
+	        visitor.VisitSingleExpressionAlt1(this);
+	    }
+	
+	}
+	public sealed class SingleExpressionAlt2Syntax : SingleExpressionSyntax
+	{
+		private __SyntaxNode _qualifier;
+	
+	    public SingleExpressionAlt2Syntax(__InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
+	        : base(green, syntaxTree, position)
+	    {
+	    }
+	
+	    public SingleExpressionAlt2Syntax(__InternalSyntaxNode green, CompilerSyntaxNode parent, int position)
+	        : base(green, parent, position)
+	    {
+	    }
+	
+	public global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<IdentifierSyntax> Qualifier 
+		{ 
+		get
+		{
+				var red = this.GetRed(ref this._qualifier, 0);
+				return red == null ? default : new global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<IdentifierSyntax>(red, this.GetChildIndex(0), reversed: false);
+	} 
+	}
+	
+	    protected override __SyntaxNode GetNodeSlot(int index)
+	    {
+	        switch (index)
+	        {
+			case 0: return this.GetRed(ref this._qualifier, 0);
+			default: return null;
+	        }
+	    }
+	
+	    protected override __SyntaxNode GetCachedSlot(int index)
+	    {
+	        switch (index)
+	        {
+			case 0: return this._qualifier;
+			default: return null;
+	        }
+	    }
+	
+	public SingleExpressionAlt2Syntax WithQualifier(global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<IdentifierSyntax> qualifier)
+		{
+		return this.Update(qualifier);
+	}
+	
+	public SingleExpressionAlt2Syntax AddQualifier(params IdentifierSyntax[] qualifier)
+		{
+		return this.WithQualifier(this.Qualifier.AddRange(qualifier));
+	}
+	
+	    public SingleExpressionAlt2Syntax Update(global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<IdentifierSyntax> qualifier)
+	    {
+	        if (this.Qualifier != qualifier)
+	        {
+	            var newNode = CompilerLanguage.Instance.SyntaxFactory.SingleExpressionAlt2(qualifier);
+	            var annotations = this.GetAnnotations();
+	            if (annotations != null && annotations.Length > 0)
+	               newNode = __SyntaxExtensions.WithAnnotations(newNode, annotations);
+			return (SingleExpressionAlt2Syntax)newNode;
+	        }
+	        return this;
+	    }
+	
+	    public override TResult Accept<TArg, TResult>(ICompilerSyntaxVisitor<TArg, TResult> visitor, TArg argument)
+	    {
+	        return visitor.VisitSingleExpressionAlt2(this, argument);
+	    }
+	
+	    public override TResult Accept<TResult>(ICompilerSyntaxVisitor<TResult> visitor)
+	    {
+	        return visitor.VisitSingleExpressionAlt2(this);
+	    }
+	
+	    public override void Accept(ICompilerSyntaxVisitor visitor)
+	    {
+	        visitor.VisitSingleExpressionAlt2(this);
 	    }
 	
 	}
@@ -3833,488 +4544,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	    }
 	
 	}
-	public abstract class ElementValueBlock1Syntax : CompilerSyntaxNode
-	{
-	    protected ElementValueBlock1Syntax(__InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
-	        : base(green, syntaxTree, position)
-	    {
-	    }
-	
-	    protected ElementValueBlock1Syntax(__InternalSyntaxNode green, CompilerSyntaxNode parent, int position)
-	        : base(green, parent, position)
-	    {
-	    }
-	}
-	
-	public sealed class TokensSyntax : ElementValueBlock1Syntax
-	{
-	
-	    public TokensSyntax(__InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
-	        : base(green, syntaxTree, position)
-	    {
-	    }
-	
-	    public TokensSyntax(__InternalSyntaxNode green, CompilerSyntaxNode parent, int position)
-	        : base(green, parent, position)
-	    {
-	    }
-	
-	public __SyntaxToken Token 
-		{ 
-		get
-		{
-				var green = (global::MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax.TokensGreen)this.Green;
-	var greenToken = green.Token;
-				return new __SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
-	} 
-	}
-	
-	    protected override __SyntaxNode GetNodeSlot(int index)
-	    {
-	        switch (index)
-	        {
-			default: return null;
-	        }
-	    }
-	
-	    protected override __SyntaxNode GetCachedSlot(int index)
-	    {
-	        switch (index)
-	        {
-			default: return null;
-	        }
-	    }
-	
-	public TokensSyntax WithToken(__SyntaxToken token)
-		{
-		return this.Update(token);
-	}
-	
-	    public TokensSyntax Update(__SyntaxToken token)
-	    {
-	        if (this.Token != token)
-	        {
-	            var newNode = CompilerLanguage.Instance.SyntaxFactory.Tokens(token);
-	            var annotations = this.GetAnnotations();
-	            if (annotations != null && annotations.Length > 0)
-	               newNode = __SyntaxExtensions.WithAnnotations(newNode, annotations);
-			return (TokensSyntax)newNode;
-	        }
-	        return this;
-	    }
-	
-	    public override TResult Accept<TArg, TResult>(ICompilerSyntaxVisitor<TArg, TResult> visitor, TArg argument)
-	    {
-	        return visitor.VisitTokens(this, argument);
-	    }
-	
-	    public override TResult Accept<TResult>(ICompilerSyntaxVisitor<TResult> visitor)
-	    {
-	        return visitor.VisitTokens(this);
-	    }
-	
-	    public override void Accept(ICompilerSyntaxVisitor visitor)
-	    {
-	        visitor.VisitTokens(this);
-	    }
-	
-	}
-	public sealed class BlockSyntax : ElementValueBlock1Syntax
-	{
-		private __SyntaxNode _alternatives;
-	
-	    public BlockSyntax(__InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
-	        : base(green, syntaxTree, position)
-	    {
-	    }
-	
-	    public BlockSyntax(__InternalSyntaxNode green, CompilerSyntaxNode parent, int position)
-	        : base(green, parent, position)
-	    {
-	    }
-	
-	public __SyntaxToken TLParen 
-		{ 
-		get
-		{
-				var green = (global::MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax.BlockGreen)this.Green;
-	var greenToken = green.TLParen;
-				return new __SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
-	} 
-	}
-	public global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<BlockAlternativeSyntax> Alternatives 
-		{ 
-		get
-		{
-				var red = this.GetRed(ref this._alternatives, 1);
-				return red == null ? default : new global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<BlockAlternativeSyntax>(red, this.GetChildIndex(1), reversed: false);
-	} 
-	}
-	public __SyntaxToken TRParen 
-		{ 
-		get
-		{
-				var green = (global::MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax.BlockGreen)this.Green;
-	var greenToken = green.TRParen;
-				return new __SyntaxToken(this, greenToken, this.GetChildPosition(2), this.GetChildIndex(2));
-	} 
-	}
-	
-	    protected override __SyntaxNode GetNodeSlot(int index)
-	    {
-	        switch (index)
-	        {
-			case 1: return this.GetRed(ref this._alternatives, 1);
-			default: return null;
-	        }
-	    }
-	
-	    protected override __SyntaxNode GetCachedSlot(int index)
-	    {
-	        switch (index)
-	        {
-			case 1: return this._alternatives;
-			default: return null;
-	        }
-	    }
-	
-	public BlockSyntax WithTLParen(__SyntaxToken tLParen)
-		{
-		return this.Update(tLParen, this.Alternatives, this.TRParen);
-	}
-	
-	public BlockSyntax WithAlternatives(global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<BlockAlternativeSyntax> alternatives)
-		{
-		return this.Update(this.TLParen, alternatives, this.TRParen);
-	}
-	
-	public BlockSyntax AddAlternatives(params BlockAlternativeSyntax[] alternatives)
-		{
-		return this.WithAlternatives(this.Alternatives.AddRange(alternatives));
-	}
-	
-	public BlockSyntax WithTRParen(__SyntaxToken tRParen)
-		{
-		return this.Update(this.TLParen, this.Alternatives, tRParen);
-	}
-	
-	    public BlockSyntax Update(__SyntaxToken tLParen, global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<BlockAlternativeSyntax> alternatives, __SyntaxToken tRParen)
-	    {
-	        if (this.TLParen != tLParen || this.Alternatives != alternatives || this.TRParen != tRParen)
-	        {
-	            var newNode = CompilerLanguage.Instance.SyntaxFactory.Block(tLParen, alternatives, tRParen);
-	            var annotations = this.GetAnnotations();
-	            if (annotations != null && annotations.Length > 0)
-	               newNode = __SyntaxExtensions.WithAnnotations(newNode, annotations);
-			return (BlockSyntax)newNode;
-	        }
-	        return this;
-	    }
-	
-	    public override TResult Accept<TArg, TResult>(ICompilerSyntaxVisitor<TArg, TResult> visitor, TArg argument)
-	    {
-	        return visitor.VisitBlock(this, argument);
-	    }
-	
-	    public override TResult Accept<TResult>(ICompilerSyntaxVisitor<TResult> visitor)
-	    {
-	        return visitor.VisitBlock(this);
-	    }
-	
-	    public override void Accept(ICompilerSyntaxVisitor visitor)
-	    {
-	        visitor.VisitBlock(this);
-	    }
-	
-	}
-	public sealed class RuleRefAlt1Syntax : ElementValueBlock1Syntax
-	{
-		private IdentifierSyntax _grammarRule;
-	
-	    public RuleRefAlt1Syntax(__InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
-	        : base(green, syntaxTree, position)
-	    {
-	    }
-	
-	    public RuleRefAlt1Syntax(__InternalSyntaxNode green, CompilerSyntaxNode parent, int position)
-	        : base(green, parent, position)
-	    {
-	    }
-	
-	public IdentifierSyntax GrammarRule 
-		{ 
-		get
-		{
-				var red = this.GetRed(ref this._grammarRule, 0);
-	return red;
-	} 
-	}
-	
-	    protected override __SyntaxNode GetNodeSlot(int index)
-	    {
-	        switch (index)
-	        {
-			case 0: return this.GetRed(ref this._grammarRule, 0);
-			default: return null;
-	        }
-	    }
-	
-	    protected override __SyntaxNode GetCachedSlot(int index)
-	    {
-	        switch (index)
-	        {
-			case 0: return this._grammarRule;
-			default: return null;
-	        }
-	    }
-	
-	public RuleRefAlt1Syntax WithGrammarRule(IdentifierSyntax grammarRule)
-		{
-		return this.Update(grammarRule);
-	}
-	
-	    public RuleRefAlt1Syntax Update(IdentifierSyntax grammarRule)
-	    {
-	        if (this.GrammarRule != grammarRule)
-	        {
-	            var newNode = CompilerLanguage.Instance.SyntaxFactory.RuleRefAlt1(grammarRule);
-	            var annotations = this.GetAnnotations();
-	            if (annotations != null && annotations.Length > 0)
-	               newNode = __SyntaxExtensions.WithAnnotations(newNode, annotations);
-			return (RuleRefAlt1Syntax)newNode;
-	        }
-	        return this;
-	    }
-	
-	    public override TResult Accept<TArg, TResult>(ICompilerSyntaxVisitor<TArg, TResult> visitor, TArg argument)
-	    {
-	        return visitor.VisitRuleRefAlt1(this, argument);
-	    }
-	
-	    public override TResult Accept<TResult>(ICompilerSyntaxVisitor<TResult> visitor)
-	    {
-	        return visitor.VisitRuleRefAlt1(this);
-	    }
-	
-	    public override void Accept(ICompilerSyntaxVisitor visitor)
-	    {
-	        visitor.VisitRuleRefAlt1(this);
-	    }
-	
-	}
-	public sealed class RuleRefAlt2Syntax : ElementValueBlock1Syntax
-	{
-		private TypeReferenceSyntax _referencedTypes;
-	
-	    public RuleRefAlt2Syntax(__InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
-	        : base(green, syntaxTree, position)
-	    {
-	    }
-	
-	    public RuleRefAlt2Syntax(__InternalSyntaxNode green, CompilerSyntaxNode parent, int position)
-	        : base(green, parent, position)
-	    {
-	    }
-	
-	public __SyntaxToken THash 
-		{ 
-		get
-		{
-				var green = (global::MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax.RuleRefAlt2Green)this.Green;
-	var greenToken = green.THash;
-				return new __SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
-	} 
-	}
-	public TypeReferenceSyntax ReferencedTypes 
-		{ 
-		get
-		{
-				var red = this.GetRed(ref this._referencedTypes, 1);
-	return red;
-	} 
-	}
-	
-	    protected override __SyntaxNode GetNodeSlot(int index)
-	    {
-	        switch (index)
-	        {
-			case 1: return this.GetRed(ref this._referencedTypes, 1);
-			default: return null;
-	        }
-	    }
-	
-	    protected override __SyntaxNode GetCachedSlot(int index)
-	    {
-	        switch (index)
-	        {
-			case 1: return this._referencedTypes;
-			default: return null;
-	        }
-	    }
-	
-	public RuleRefAlt2Syntax WithTHash(__SyntaxToken tHash)
-		{
-		return this.Update(tHash, this.ReferencedTypes);
-	}
-	
-	public RuleRefAlt2Syntax WithReferencedTypes(TypeReferenceSyntax referencedTypes)
-		{
-		return this.Update(this.THash, referencedTypes);
-	}
-	
-	    public RuleRefAlt2Syntax Update(__SyntaxToken tHash, TypeReferenceSyntax referencedTypes)
-	    {
-	        if (this.THash != tHash || this.ReferencedTypes != referencedTypes)
-	        {
-	            var newNode = CompilerLanguage.Instance.SyntaxFactory.RuleRefAlt2(tHash, referencedTypes);
-	            var annotations = this.GetAnnotations();
-	            if (annotations != null && annotations.Length > 0)
-	               newNode = __SyntaxExtensions.WithAnnotations(newNode, annotations);
-			return (RuleRefAlt2Syntax)newNode;
-	        }
-	        return this;
-	    }
-	
-	    public override TResult Accept<TArg, TResult>(ICompilerSyntaxVisitor<TArg, TResult> visitor, TArg argument)
-	    {
-	        return visitor.VisitRuleRefAlt2(this, argument);
-	    }
-	
-	    public override TResult Accept<TResult>(ICompilerSyntaxVisitor<TResult> visitor)
-	    {
-	        return visitor.VisitRuleRefAlt2(this);
-	    }
-	
-	    public override void Accept(ICompilerSyntaxVisitor visitor)
-	    {
-	        visitor.VisitRuleRefAlt2(this);
-	    }
-	
-	}
-	public sealed class RuleRefAlt3Syntax : ElementValueBlock1Syntax
-	{
-		private __SyntaxNode _referencedTypes;
-		private RuleRefAlt3Block1Syntax _block;
-	
-	    public RuleRefAlt3Syntax(__InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
-	        : base(green, syntaxTree, position)
-	    {
-	    }
-	
-	    public RuleRefAlt3Syntax(__InternalSyntaxNode green, CompilerSyntaxNode parent, int position)
-	        : base(green, parent, position)
-	    {
-	    }
-	
-	public __SyntaxToken THashLBrace 
-		{ 
-		get
-		{
-				var green = (global::MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax.RuleRefAlt3Green)this.Green;
-	var greenToken = green.THashLBrace;
-				return new __SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
-	} 
-	}
-	public global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<TypeReferenceSyntax> ReferencedTypes 
-		{ 
-		get
-		{
-				var red = this.GetRed(ref this._referencedTypes, 1);
-				return red == null ? default : new global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<TypeReferenceSyntax>(red, this.GetChildIndex(1), reversed: false);
-	} 
-	}
-	public RuleRefAlt3Block1Syntax Block 
-		{ 
-		get
-		{
-				var red = this.GetRed(ref this._block, 2);
-	return red;
-	} 
-	}
-	public __SyntaxToken TRBrace 
-		{ 
-		get
-		{
-				var green = (global::MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax.RuleRefAlt3Green)this.Green;
-	var greenToken = green.TRBrace;
-				return new __SyntaxToken(this, greenToken, this.GetChildPosition(3), this.GetChildIndex(3));
-	} 
-	}
-	
-	    protected override __SyntaxNode GetNodeSlot(int index)
-	    {
-	        switch (index)
-	        {
-			case 1: return this.GetRed(ref this._referencedTypes, 1);
-			case 2: return this.GetRed(ref this._block, 2);
-			default: return null;
-	        }
-	    }
-	
-	    protected override __SyntaxNode GetCachedSlot(int index)
-	    {
-	        switch (index)
-	        {
-			case 1: return this._referencedTypes;
-			case 2: return this._block;
-			default: return null;
-	        }
-	    }
-	
-	public RuleRefAlt3Syntax WithTHashLBrace(__SyntaxToken tHashLBrace)
-		{
-		return this.Update(tHashLBrace, this.ReferencedTypes, this.Block, this.TRBrace);
-	}
-	
-	public RuleRefAlt3Syntax WithReferencedTypes(global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<TypeReferenceSyntax> referencedTypes)
-		{
-		return this.Update(this.THashLBrace, referencedTypes, this.Block, this.TRBrace);
-	}
-	
-	public RuleRefAlt3Syntax AddReferencedTypes(params TypeReferenceSyntax[] referencedTypes)
-		{
-		return this.WithReferencedTypes(this.ReferencedTypes.AddRange(referencedTypes));
-	}
-	
-	public RuleRefAlt3Syntax WithBlock(RuleRefAlt3Block1Syntax block)
-		{
-		return this.Update(this.THashLBrace, this.ReferencedTypes, block, this.TRBrace);
-	}
-	
-	public RuleRefAlt3Syntax WithTRBrace(__SyntaxToken tRBrace)
-		{
-		return this.Update(this.THashLBrace, this.ReferencedTypes, this.Block, tRBrace);
-	}
-	
-	    public RuleRefAlt3Syntax Update(__SyntaxToken tHashLBrace, global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<TypeReferenceSyntax> referencedTypes, RuleRefAlt3Block1Syntax block, __SyntaxToken tRBrace)
-	    {
-	        if (this.THashLBrace != tHashLBrace || this.ReferencedTypes != referencedTypes || this.Block != block || this.TRBrace != tRBrace)
-	        {
-	            var newNode = CompilerLanguage.Instance.SyntaxFactory.RuleRefAlt3(tHashLBrace, referencedTypes, block, tRBrace);
-	            var annotations = this.GetAnnotations();
-	            if (annotations != null && annotations.Length > 0)
-	               newNode = __SyntaxExtensions.WithAnnotations(newNode, annotations);
-			return (RuleRefAlt3Syntax)newNode;
-	        }
-	        return this;
-	    }
-	
-	    public override TResult Accept<TArg, TResult>(ICompilerSyntaxVisitor<TArg, TResult> visitor, TArg argument)
-	    {
-	        return visitor.VisitRuleRefAlt3(this, argument);
-	    }
-	
-	    public override TResult Accept<TResult>(ICompilerSyntaxVisitor<TResult> visitor)
-	    {
-	        return visitor.VisitRuleRefAlt3(this);
-	    }
-	
-	    public override void Accept(ICompilerSyntaxVisitor visitor)
-	    {
-	        visitor.VisitRuleRefAlt3(this);
-	    }
-	
-	}
 	
 	public sealed class BlockAlternativesBlockSyntax : CompilerSyntaxNode
 	{
@@ -5152,28 +5381,28 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	    }
 	
 	}
-	public abstract class SingleExpressionBlock1Syntax : CompilerSyntaxNode
+	public abstract class SingleExpressionAlt1Block1Syntax : CompilerSyntaxNode
 	{
-	    protected SingleExpressionBlock1Syntax(__InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
+	    protected SingleExpressionAlt1Block1Syntax(__InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
 	        : base(green, syntaxTree, position)
 	    {
 	    }
 	
-	    protected SingleExpressionBlock1Syntax(__InternalSyntaxNode green, CompilerSyntaxNode parent, int position)
+	    protected SingleExpressionAlt1Block1Syntax(__InternalSyntaxNode green, CompilerSyntaxNode parent, int position)
 	        : base(green, parent, position)
 	    {
 	    }
 	}
 	
-	public sealed class Tokens1Syntax : SingleExpressionBlock1Syntax
+	public sealed class TokensSyntax : SingleExpressionAlt1Block1Syntax
 	{
 	
-	    public Tokens1Syntax(__InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
+	    public TokensSyntax(__InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
 	        : base(green, syntaxTree, position)
 	    {
 	    }
 	
-	    public Tokens1Syntax(__InternalSyntaxNode green, CompilerSyntaxNode parent, int position)
+	    public TokensSyntax(__InternalSyntaxNode green, CompilerSyntaxNode parent, int position)
 	        : base(green, parent, position)
 	    {
 	    }
@@ -5182,7 +5411,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		{ 
 		get
 		{
-				var green = (global::MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax.Tokens1Green)this.Green;
+				var green = (global::MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax.TokensGreen)this.Green;
 	var greenToken = green.Token;
 				return new __SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
 	} 
@@ -5204,49 +5433,49 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	        }
 	    }
 	
-	public Tokens1Syntax WithToken(__SyntaxToken token)
+	public TokensSyntax WithToken(__SyntaxToken token)
 		{
 		return this.Update(token);
 	}
 	
-	    public Tokens1Syntax Update(__SyntaxToken token)
+	    public TokensSyntax Update(__SyntaxToken token)
 	    {
 	        if (this.Token != token)
 	        {
-	            var newNode = CompilerLanguage.Instance.SyntaxFactory.Tokens1(token);
+	            var newNode = CompilerLanguage.Instance.SyntaxFactory.Tokens(token);
 	            var annotations = this.GetAnnotations();
 	            if (annotations != null && annotations.Length > 0)
 	               newNode = __SyntaxExtensions.WithAnnotations(newNode, annotations);
-			return (Tokens1Syntax)newNode;
+			return (TokensSyntax)newNode;
 	        }
 	        return this;
 	    }
 	
 	    public override TResult Accept<TArg, TResult>(ICompilerSyntaxVisitor<TArg, TResult> visitor, TArg argument)
 	    {
-	        return visitor.VisitTokens1(this, argument);
+	        return visitor.VisitTokens(this, argument);
 	    }
 	
 	    public override TResult Accept<TResult>(ICompilerSyntaxVisitor<TResult> visitor)
 	    {
-	        return visitor.VisitTokens1(this);
+	        return visitor.VisitTokens(this);
 	    }
 	
 	    public override void Accept(ICompilerSyntaxVisitor visitor)
 	    {
-	        visitor.VisitTokens1(this);
+	        visitor.VisitTokens(this);
 	    }
 	
 	}
-	public sealed class SingleExpressionBlock1Alt2Syntax : SingleExpressionBlock1Syntax
+	public sealed class SingleExpressionAlt1Block1Alt2Syntax : SingleExpressionAlt1Block1Syntax
 	{
 	
-	    public SingleExpressionBlock1Alt2Syntax(__InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
+	    public SingleExpressionAlt1Block1Alt2Syntax(__InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
 	        : base(green, syntaxTree, position)
 	    {
 	    }
 	
-	    public SingleExpressionBlock1Alt2Syntax(__InternalSyntaxNode green, CompilerSyntaxNode parent, int position)
+	    public SingleExpressionAlt1Block1Alt2Syntax(__InternalSyntaxNode green, CompilerSyntaxNode parent, int position)
 	        : base(green, parent, position)
 	    {
 	    }
@@ -5255,7 +5484,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 		{ 
 		get
 		{
-				var green = (global::MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax.SingleExpressionBlock1Alt2Green)this.Green;
+				var green = (global::MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax.InternalSyntax.SingleExpressionAlt1Block1Alt2Green)this.Green;
 	var greenToken = green.Tokens;
 				return new __SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
 	} 
@@ -5277,117 +5506,37 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Compiler.Syntax
 	        }
 	    }
 	
-	public SingleExpressionBlock1Alt2Syntax WithTokens(__SyntaxToken tokens)
+	public SingleExpressionAlt1Block1Alt2Syntax WithTokens(__SyntaxToken tokens)
 		{
 		return this.Update(tokens);
 	}
 	
-	    public SingleExpressionBlock1Alt2Syntax Update(__SyntaxToken tokens)
+	    public SingleExpressionAlt1Block1Alt2Syntax Update(__SyntaxToken tokens)
 	    {
 	        if (this.Tokens != tokens)
 	        {
-	            var newNode = CompilerLanguage.Instance.SyntaxFactory.SingleExpressionBlock1Alt2(tokens);
+	            var newNode = CompilerLanguage.Instance.SyntaxFactory.SingleExpressionAlt1Block1Alt2(tokens);
 	            var annotations = this.GetAnnotations();
 	            if (annotations != null && annotations.Length > 0)
 	               newNode = __SyntaxExtensions.WithAnnotations(newNode, annotations);
-			return (SingleExpressionBlock1Alt2Syntax)newNode;
+			return (SingleExpressionAlt1Block1Alt2Syntax)newNode;
 	        }
 	        return this;
 	    }
 	
 	    public override TResult Accept<TArg, TResult>(ICompilerSyntaxVisitor<TArg, TResult> visitor, TArg argument)
 	    {
-	        return visitor.VisitSingleExpressionBlock1Alt2(this, argument);
+	        return visitor.VisitSingleExpressionAlt1Block1Alt2(this, argument);
 	    }
 	
 	    public override TResult Accept<TResult>(ICompilerSyntaxVisitor<TResult> visitor)
 	    {
-	        return visitor.VisitSingleExpressionBlock1Alt2(this);
+	        return visitor.VisitSingleExpressionAlt1Block1Alt2(this);
 	    }
 	
 	    public override void Accept(ICompilerSyntaxVisitor visitor)
 	    {
-	        visitor.VisitSingleExpressionBlock1Alt2(this);
-	    }
-	
-	}
-	public sealed class SingleExpressionBlock1Alt3Syntax : SingleExpressionBlock1Syntax
-	{
-		private __SyntaxNode _qualifier;
-	
-	    public SingleExpressionBlock1Alt3Syntax(__InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
-	        : base(green, syntaxTree, position)
-	    {
-	    }
-	
-	    public SingleExpressionBlock1Alt3Syntax(__InternalSyntaxNode green, CompilerSyntaxNode parent, int position)
-	        : base(green, parent, position)
-	    {
-	    }
-	
-	public global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<IdentifierSyntax> Qualifier 
-		{ 
-		get
-		{
-				var red = this.GetRed(ref this._qualifier, 0);
-				return red == null ? default : new global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<IdentifierSyntax>(red, this.GetChildIndex(0), reversed: false);
-	} 
-	}
-	
-	    protected override __SyntaxNode GetNodeSlot(int index)
-	    {
-	        switch (index)
-	        {
-			case 0: return this.GetRed(ref this._qualifier, 0);
-			default: return null;
-	        }
-	    }
-	
-	    protected override __SyntaxNode GetCachedSlot(int index)
-	    {
-	        switch (index)
-	        {
-			case 0: return this._qualifier;
-			default: return null;
-	        }
-	    }
-	
-	public SingleExpressionBlock1Alt3Syntax WithQualifier(global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<IdentifierSyntax> qualifier)
-		{
-		return this.Update(qualifier);
-	}
-	
-	public SingleExpressionBlock1Alt3Syntax AddQualifier(params IdentifierSyntax[] qualifier)
-		{
-		return this.WithQualifier(this.Qualifier.AddRange(qualifier));
-	}
-	
-	    public SingleExpressionBlock1Alt3Syntax Update(global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<IdentifierSyntax> qualifier)
-	    {
-	        if (this.Qualifier != qualifier)
-	        {
-	            var newNode = CompilerLanguage.Instance.SyntaxFactory.SingleExpressionBlock1Alt3(qualifier);
-	            var annotations = this.GetAnnotations();
-	            if (annotations != null && annotations.Length > 0)
-	               newNode = __SyntaxExtensions.WithAnnotations(newNode, annotations);
-			return (SingleExpressionBlock1Alt3Syntax)newNode;
-	        }
-	        return this;
-	    }
-	
-	    public override TResult Accept<TArg, TResult>(ICompilerSyntaxVisitor<TArg, TResult> visitor, TArg argument)
-	    {
-	        return visitor.VisitSingleExpressionBlock1Alt3(this, argument);
-	    }
-	
-	    public override TResult Accept<TResult>(ICompilerSyntaxVisitor<TResult> visitor)
-	    {
-	        return visitor.VisitSingleExpressionBlock1Alt3(this);
-	    }
-	
-	    public override void Accept(ICompilerSyntaxVisitor visitor)
-	    {
-	        visitor.VisitSingleExpressionBlock1Alt3(this);
+	        visitor.VisitSingleExpressionAlt1Block1Alt2(this);
 	    }
 	
 	}

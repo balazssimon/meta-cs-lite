@@ -122,7 +122,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Symbols
         {
             base.CompletePart_Validate(diagnostics, cancellationToken);
             var expectedType = this.ExpectedType;
-            if (!expectedType.IsNull)
+            if (!expectedType.IsNull && expectedType.SpecialType != SpecialType.MetaDslx_CodeAnalysis_MetaSymbol)
             {
                 foreach (var alt in Alternatives)
                 {

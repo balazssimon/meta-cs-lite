@@ -89,11 +89,20 @@ options
 [foreach (var rule in Rules)]
 [GenerateParserRule(rule)]
 [end foreach]
+[foreach (var block in Blocks)]
+[GenerateParserRule(block)]
+[end foreach]
 end template
 
 template GenerateParserRule(Rule rule)
 [rule.AntlrName]
     [GenerateParserRuleAlts(rule.Alternatives)]
+    ;
+end template
+
+template GenerateParserRule(Block block)
+[block.AntlrName]
+    [GenerateParserRuleAlts(block.Alternatives)]
     ;
 end template
 
