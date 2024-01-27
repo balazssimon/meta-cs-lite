@@ -411,6 +411,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             {
                 return $"(InternalSyntax.{rr.Rule.GreenName}){_this.ParameterName}.Green";
             }
+            else if (_this.Value is Block blk)
+            {
+                return $"(InternalSyntax.{blk.GreenName}){_this.ParameterName}.Green";
+            }
             else
             {
                 return _this.RedParameterValue;

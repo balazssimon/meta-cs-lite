@@ -986,55 +986,26 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
 
         private void ComputeContainsBinders()
         {
-            var grammarRules = _grammar.GrammarRules.ToImmutableArray();
+            var rules = new List<Rule>();
+            rules.AddRange(_grammar.Rules);
+            rules.AddRange(_grammar.Blocks);
             var updated = true;
             while (updated)
             {
                 updated = false;
-                foreach (var grammarRule in grammarRules)
+                foreach (var rule in rules)
                 {
-                    if (!grammarRule.ContainsBinders && grammarRule.Binders.Count > 0)
+                    if (!rule.ContainsBinders && rule.Binders.Count > 0)
                     {
-                        grammarRule.ContainsBinders = true;
+                        rule.ContainsBinders = true;
                         updated = true;
                     }
-                    if (grammarRule is Rule rule)
-                    {
-                        foreach (var alt in rule.Alternatives)
-                        {
-                            if (!alt.ContainsBinders && alt.Binders.Count > 0)
-                            {
-                                alt.ContainsBinders = true;
-                                rule.ContainsBinders = true;
-                                updated = true;
-                            }
-                            foreach (var elem in alt.Elements)
-                            {
-                                var oldContainsBinders = elem.ContainsBinders;
-                                ComputeContainsBinders(elem);
-                                if (!oldContainsBinders && elem.ContainsBinders)
-                                {
-                                    alt.ContainsBinders = true;
-                                    rule.ContainsBinders = true;
-                                    updated = true;
-                                }
-                            }
-                        }
-                    }
-                }
-                foreach (var block in _grammar.Blocks)
-                {
-                    if (!block.ContainsBinders && block.Binders.Count > 0)
-                    {
-                        block.ContainsBinders = true;
-                        updated = true;
-                    }
-                    foreach (var alt in block.Alternatives)
+                    foreach (var alt in rule.Alternatives)
                     {
                         if (!alt.ContainsBinders && alt.Binders.Count > 0)
                         {
                             alt.ContainsBinders = true;
-                            block.ContainsBinders = true;
+                            rule.ContainsBinders = true;
                             updated = true;
                         }
                         foreach (var elem in alt.Elements)
@@ -1044,7 +1015,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
                             if (!oldContainsBinders && elem.ContainsBinders)
                             {
                                 alt.ContainsBinders = true;
-                                block.ContainsBinders = true;
+                                rule.ContainsBinders = true;
                                 updated = true;
                             }
                         }
