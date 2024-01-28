@@ -9,155 +9,156 @@ using Roslyn.Utilities
 generator RoslynApiGenerator
 
 template GenerateLexer()
-lexer grammar [Lang]Lexer;
+    lexer grammar [Lang]Lexer;
 
-[foreach (var token in FixedTokens)]
-[GenerateToken(token)]
-[end foreach]
-[foreach (var token in NonFixedTokens)]
-[GenerateToken(token)]
-[end foreach]
-[foreach (var fragment in Fragments)]
-[GenerateFragment(fragment)]
-[end foreach]
+    [foreach (var token in FixedTokens)]
+        [GenerateToken(token)]
+    [end foreach]
+    [foreach (var token in NonFixedTokens)]
+        [GenerateToken(token)]
+    [end foreach]
+    [foreach (var fragment in Fragments)]
+        [GenerateFragment(fragment)]
+    [end foreach]
 end template
 
 template GenerateFragment(Fragment fragment)
-fragment [fragment.AntlrName]: [GenerateLexerRuleAlts(fragment.Alternatives)];
+    fragment [fragment.AntlrName]: [GenerateLexerRuleAlts(fragment.Alternatives)];
 end template
 
 template GenerateToken(Token token)
-[token.AntlrName]: [GenerateLexerRuleAlts(token.Alternatives)][token.IsTrivia ? " -> channel(HIDDEN)" : ""];
+    [token.AntlrName]: [GenerateLexerRuleAlts(token.Alternatives)][token.IsTrivia ? " -> channel(HIDDEN)" : ""];
 end template
 
 template GenerateLexerRuleAlts(IList<LAlternative> alternatives)
-[-]
-[foreach (var alt in alternatives) separator " | "]
-[GenerateLexerRuleElements(alt)]
-[end foreach]
+    [-]
+    [foreach (var alt in alternatives) separator " | "]
+        [GenerateLexerRuleElements(alt)]
+    [end foreach]
 end template
 
 template GenerateLexerRuleElements(LAlternative alt)
-[-]
-[foreach (var elem in alt.Elements) separator " "]
-[elem.IsNegated ? "~" : ""][GenerateLexerRuleElement(elem.Value)][GenerateMultiplicity(elem.Multiplicity)]
-[end foreach]
+    [-]
+    [foreach (var elem in alt.Elements) separator " "]
+        [elem.IsNegated ? "~" : ""][GenerateLexerRuleElement(elem.Value)][GenerateMultiplicity(elem.Multiplicity)]
+    [end foreach]
 end template
 
 template GenerateLexerRuleElement(LElementValue elem)
-[-]
-[if (elem is LReference ruleRefElem)]
-[ruleRefElem.Rule.AntlrName]
-[else if (elem is LFixed fixedElem)]
-[fixedElem.Text.EncodeString('\'')]
-[else if (elem is LWildCard wildCardElem)]
-.
-[else if (elem is LBlock blockElem)]
-([GenerateLexerRuleAlts(blockElem.Alternatives)])
-[else if (elem is LRange rangeElem)]
-[rangeElem.StartChar.EncodeString('\'')]..[rangeElem.EndChar.EncodeString('\'')]
-[else]
-!!! ERROR: unknown lexer rule element value type [elem.GetType()]
-[end if]
+    [-]
+    [if (elem is LReference ruleRefElem)]
+        [ruleRefElem.Rule.AntlrName]
+    [else if (elem is LFixed fixedElem)]
+        [fixedElem.Text.EncodeString('\'')]
+    [else if (elem is LWildCard wildCardElem)]
+        .
+    [else if (elem is LBlock blockElem)]
+        ([GenerateLexerRuleAlts(blockElem.Alternatives)])
+    [else if (elem is LRange rangeElem)]
+        [rangeElem.StartChar.EncodeString('\'')]..[rangeElem.EndChar.EncodeString('\'')]
+    [else]
+        !!! ERROR: unknown lexer rule element value type [elem.MInfo.MetaType]
+    [end if]
 end template
 
 template GenerateMultiplicity(Multiplicity multiplicity)
-[-]
-[if (multiplicity == Multiplicity.ZeroOrOne)]?
-[else if (multiplicity == Multiplicity.ZeroOrMore)]*
-[else if (multiplicity == Multiplicity.OneOrMore)]+
-[else if (multiplicity == Multiplicity.NonGreedyZeroOrOne)]??
-[else if (multiplicity == Multiplicity.NonGreedyZeroOrMore)]*?
-[else if (multiplicity == Multiplicity.NonGreedyOneOrMore)]+?
-[end if]
+    [-]
+    [if (multiplicity == Multiplicity.ZeroOrOne)]?
+    [else if (multiplicity == Multiplicity.ZeroOrMore)]*
+    [else if (multiplicity == Multiplicity.OneOrMore)]+
+    [else if (multiplicity == Multiplicity.NonGreedyZeroOrOne)]??
+    [else if (multiplicity == Multiplicity.NonGreedyZeroOrMore)]*?
+    [else if (multiplicity == Multiplicity.NonGreedyOneOrMore)]+?
+    [end if]
 end template
 
 template GenerateAssignment(Multiplicity multiplicity)
-[-]
-[if (multiplicity.IsList())]+=[else]=[end if]
+    [-]
+    [if (multiplicity.IsList())]+=[else]=[end if]
 end template
 
-
 template GenerateParser()
-parser grammar [Lang]Parser;
+    parser grammar [Lang]Parser;
 
-options
-{
-    tokenVocab = [Lang]Lexer; 
-} 
+    options
+    {
+        tokenVocab = [Lang]Lexer; 
+    } 
 
-[foreach (var rule in Rules)]
-[GenerateParserRule(rule)]
-[end foreach]
+    [foreach (var rule in RulesAndBlocks)]
+        [GenerateParserRule(rule)]
+    [end foreach]
 end template
 
 template GenerateParserRule(Rule rule)
-[rule.AntlrName]
-    [GenerateParserRuleAlts(rule.Alternatives)]
-    ;
+    [rule.AntlrName]
+        [GenerateParserRuleAlts(rule.Alternatives)]
+        ;
 end template
 
 template GenerateParserRuleAlts(IList<Alternative> alternatives)
-[var sep = ":"]
-[foreach (var alt in alternatives)]
-[sep] [GenerateParserRuleElements(alt)][if (alternatives.Count > 1)] #[alt.AntlrName][end if]
-[sep = "|"]
-[end foreach]
+    [var sep = ":"]
+    [foreach (var alt in alternatives)]
+        [sep] [GenerateParserRuleElements(alt)][if (alternatives.Count > 1)] #[alt.AntlrName][end if]
+        [sep = "|"]
+    [end foreach]
 end template
 
 template GenerateParserRuleElements(Alternative alt)
-[-]
-[foreach (var elem in alt.Elements) separator " "]
-[GenerateParserRuleElement(elem)]
-[end foreach]
+    [-]
+    [foreach (var elem in alt.Elements) separator " "]
+        [GenerateParserRuleElement(elem)]
+    [end foreach]
 end template
 
 template GenerateParserRuleElement(Element elem)
-[-]
-[var value = elem.Value]
-[if (value is RuleRef ruleRefElem)]
- [elem.AntlrName][GenerateAssignment(elem.Multiplicity)][ruleRefElem.GrammarRule.AntlrName][GenerateMultiplicity(elem.Multiplicity)]
-[else if (value is Eof eofElem)]
- [elem.AntlrName][GenerateAssignment(elem.Multiplicity)]EOF
-[else if (value is TokenAlts tokenAltsElem)]
- [elem.AntlrName]=([foreach (var token in tokenAltsElem.Tokens) separator " | "][token.Token.AntlrName][end foreach])[GenerateMultiplicity(elem.Multiplicity)]
-[else if (value is SeparatedList listElem)]
-    [for (int i = 0; i < listElem.FirstItems.Count && i < listElem.FirstSeparators.Count; ++i)]
-        [if (listElem.SeparatorFirst)]
- [GenerateParserRuleElement(listElem.FirstSeparators[i])]
- [GenerateParserRuleElement(listElem.FirstItems[i])]
-        [else]
- [GenerateParserRuleElement(listElem.FirstItems[i])]
- [GenerateParserRuleElement(listElem.FirstSeparators[i])]
+    [-] 
+    [var value = elem.Value]
+    [if (value is RuleRef ruleRefElem)]
+        [elem.AntlrName][GenerateAssignment(elem.Value.Multiplicity)][ruleRefElem.GrammarRule.AntlrName][GenerateMultiplicity(elem.Value.Multiplicity)]
+    [else if (value is Block blockElem)]
+        [elem.AntlrName][GenerateAssignment(elem.Value.Multiplicity)][blockElem.AntlrName][GenerateMultiplicity(elem.Value.Multiplicity)]
+    [else if (value is Eof eofElem)]
+        [elem.AntlrName][GenerateAssignment(elem.Value.Multiplicity)]EOF
+    [else if (value is TokenAlts tokenAltsElem)]
+        [elem.AntlrName]=([from token in tokenAltsElem.Tokens select token.Token.AntlrName separator " | "])[GenerateMultiplicity(elem.Value.Multiplicity)]
+    [else if (value is SeparatedList listElem)]
+        [for (int i = 0; i < listElem.FirstItems.Count && i < listElem.FirstSeparators.Count; ++i)]
+            [if (listElem.SeparatorFirst)]
+                [GenerateParserRuleElement(listElem.FirstSeparators[i])]
+                [GenerateParserRuleElement(listElem.FirstItems[i])]
+            [else]
+                [GenerateParserRuleElement(listElem.FirstItems[i])]
+                [GenerateParserRuleElement(listElem.FirstSeparators[i])]
+            [end if]
+        [end for]
+        [if (listElem.FirstItems.Count > listElem.FirstSeparators.Count)]
+            [GenerateParserRuleElement(listElem.FirstItems[listElem.FirstItems.Count-1])]
         [end if]
-    [end for]
-    [if (listElem.FirstItems.Count > listElem.FirstSeparators.Count)]
- [GenerateParserRuleElement(listElem.FirstItems[listElem.FirstItems.Count-1])]
-    [end if]
-    [if (listElem.FirstSeparators.Count > listElem.FirstItems.Count)]
- [GenerateParserRuleElement(listElem.FirstSeparators[listElem.FirstSeparators.Count-1])]
-    [end if]
-    [if (listElem.RepeatedSeparatorFirst)]
- ([listElem.RepeatedSeparator.AntlrName]+=[((RuleRef)listElem.RepeatedSeparator.Value).Token.AntlrName] [listElem.RepeatedItem.AntlrName]+=[((RuleRef)listElem.RepeatedItem.Value).Rule.AntlrName])[GenerateMultiplicity(listElem.RepeatedBlock.Multiplicity)]
-    [else]
- ([listElem.RepeatedItem.AntlrName]+=[((RuleRef)listElem.RepeatedItem.Value).Rule.AntlrName] [listElem.RepeatedSeparator.AntlrName]+=[((RuleRef)listElem.RepeatedSeparator.Value).Token.AntlrName])[GenerateMultiplicity(listElem.RepeatedBlock.Multiplicity)]
-    [end if]
-    [for (int i = 0; i < listElem.LastItems.Count && i < listElem.LastSeparators.Count; ++i)]
+        [if (listElem.FirstSeparators.Count > listElem.FirstItems.Count)]
+            [GenerateParserRuleElement(listElem.FirstSeparators[listElem.FirstSeparators.Count-1])]
+        [end if]
         [if (listElem.RepeatedSeparatorFirst)]
- [GenerateParserRuleElement(listElem.LastSeparators[i])]
- [GenerateParserRuleElement(listElem.LastItems[i])]
+            ([listElem.RepeatedSeparator.AntlrName]+=[((RuleRef)listElem.RepeatedSeparator.Value).Token.AntlrName] [listElem.RepeatedItem.AntlrName]+=[((RuleRef)listElem.RepeatedItem.Value).Rule.AntlrName])[GenerateMultiplicity(listElem.RepeatedBlock.Value.Multiplicity)]
         [else]
- [GenerateParserRuleElement(listElem.LastItems[i])]
- [GenerateParserRuleElement(listElem.LastSeparators[i])]
+            ([listElem.RepeatedItem.AntlrName]+=[((RuleRef)listElem.RepeatedItem.Value).Rule.AntlrName] [listElem.RepeatedSeparator.AntlrName]+=[((RuleRef)listElem.RepeatedSeparator.Value).Token.AntlrName])[GenerateMultiplicity(listElem.RepeatedBlock.Value.Multiplicity)]
         [end if]
-    [end for]
-    [if (listElem.LastItems.Count > listElem.LastSeparators.Count)]
- [GenerateParserRuleElement(listElem.LastItems[listElem.LastItems.Count-1])]
+        [for (int i = 0; i < listElem.LastItems.Count && i < listElem.LastSeparators.Count; ++i)]
+            [if (listElem.RepeatedSeparatorFirst)]
+                [GenerateParserRuleElement(listElem.LastSeparators[i])]
+                [GenerateParserRuleElement(listElem.LastItems[i])]
+            [else]
+                [GenerateParserRuleElement(listElem.LastItems[i])]
+                [GenerateParserRuleElement(listElem.LastSeparators[i])]
+            [end if]
+        [end for]
+        [if (listElem.LastItems.Count > listElem.LastSeparators.Count)]
+            [GenerateParserRuleElement(listElem.LastItems[listElem.LastItems.Count-1])]
+        [end if]
+        [if (listElem.LastSeparators.Count > listElem.LastItems.Count)]
+            [GenerateParserRuleElement(listElem.LastSeparators[listElem.LastSeparators.Count-1])]
+        [end if]
+    [else]
+        !!! ERROR: unknown parser rule element type [elem.MInfo.MetaType]
     [end if]
-    [if (listElem.LastSeparators.Count > listElem.LastItems.Count)]
- [GenerateParserRuleElement(listElem.LastSeparators[listElem.LastSeparators.Count-1])]
-    [end if]
-[else]
-!!! ERROR: unknown lexer rule element type [elem.GetType()]
-[end if]
 end template

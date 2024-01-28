@@ -17,19 +17,17 @@ using System.Threading.Tasks;
 
 namespace MetaDslx.Bootstrap.MetaCompiler2.Symbols
 {
-    using IPropertySymbol = Microsoft.CodeAnalysis.IPropertySymbol;
-    using IParameterSymbol = Microsoft.CodeAnalysis.IParameterSymbol;
-
-    internal class ExpressionValueBinder : ValueBinder
+    internal class ExpressionValueBinder : UseBinder
     {
         private ExpressionSymbol? _containingExpression;
-        private PAlternativeSymbol? _containingPAlternative;
-        private AnnotationArgumentSymbol? _containingAnnotationArgument;
+        private MetaType _modelObjectType;
         private MetaType _expectedType;
 
-        public SingleExpressionBlock1Syntax? Syntax => base.Syntax.AsNode() as SingleExpressionBlock1Syntax;
-        public SingleExpressionBlock1Alt2Syntax? TokensSyntax => this.Syntax as SingleExpressionBlock1Alt2Syntax;
-        public SingleExpressionBlock1Alt3Syntax? QualifierSyntax => this.Syntax as SingleExpressionBlock1Alt3Syntax;
+        public ExpressionValueBinder()
+            : base(types: ImmutableArray.Create(typeof(MetaSymbol)))
+        {
+            
+        }
 
         public ExpressionSymbol? ContainingExpression 
         {
@@ -40,6 +38,22 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Symbols
                     Interlocked.CompareExchange(ref _containingExpression, this.ContainingDefinedSymbols.OfType<ExpressionSymbol>().FirstOrDefault(), null);
                 }
                 return _containingExpression;
+            }
+        }
+
+        public MetaType ExpectedType
+        {
+            get
+            {
+                if (_expectedType.IsNull)
+                {
+                    var diagnostics = DiagnosticBag.GetInstance();
+                    var expectedType = GetExpectedType(diagnostics, cancellationToken: default);
+                    this.AddDiagnostics(diagnostics);
+                    diagnostics.Free();
+                    _expectedType.InterlockedInitialize(expectedType);
+                }
+                return _expectedType;
             }
         }
 
@@ -73,6 +87,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Symbols
                     }
                 }
             }
+            var containingAlt = expr.GetOutermostContainingSymbol<PAlternativeSymbol>();
+            if (containingAlt is not null)
+            {
+                _modelObjectType = containingAlt.ReturnType.AsTypeSymbol(Compilation);
+            }
             if (result.IsNull) return default;
             if (result.TryGetCoreType(out var coreType, diagnostics, cancellationToken) && !coreType.IsNull)
             {
@@ -84,65 +103,22 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Symbols
             }
         }
 
-        protected override ImmutableArray<object?> BindValues(CancellationToken cancellationToken = default)
+        protected override void AdjustFinalLookupContext(LookupContext context)
         {
-            var diagnostics = DiagnosticBag.GetInstance();
-            var expectedType = GetExpectedType(diagnostics, cancellationToken);
-            var result = ArrayBuilder<object?>.GetInstance();
-            if (ComputeValue(expectedType, out var value, diagnostics, cancellationToken))
+            if (context.Qualifier is null)
             {
-                result.Add(value);
-            }
-            else
-            {
-                result.Add(null);
-            }
-            this.AddDiagnostics(diagnostics);
-            diagnostics.Free();
-            return result.ToImmutableAndFree();
-        }
-
-        protected override bool ComputeValue(MetaType expectedType, out object? value, DiagnosticBag diagnostics, CancellationToken cancellationToken)
-        {
-            if (expectedType.IsEnum)
-            {
-                if (expectedType.TryGetEnumValue(this.RawValue, out var enumLiteral, diagnostics, cancellationToken))
+                var expectedType = ExpectedType;
+                if (expectedType.IsEnum)
                 {
-                    value = enumLiteral;
-                    return true;
+                    context.Qualifier = expectedType.AsTypeSymbol(this.Compilation);
+                }
+                if (expectedType.FullName == typeof(ModelProperty).FullName)
+                {
+                    context.Qualifier = _modelObjectType.AsTypeSymbol(this.Compilation);
                 }
             }
-            if (expectedType.SpecialType == CodeAnalysis.SpecialType.System_Type || expectedType.SpecialType == SpecialType.MetaDslx_CodeAnalysis_MetaType)
-            {
-                value = this.BindSymbol(expectedType, diagnostics, cancellationToken);
-                return true;
-            }
-            return base.ComputeValue(expectedType, out value, diagnostics, cancellationToken);
+            base.AdjustFinalLookupContext(context);
         }
 
-        private object? BindSymbol(MetaType expectedType, DiagnosticBag diagnostics, CancellationToken cancellationToken)
-        {
-            var identifiers = ImmutableArray<SyntaxNodeOrToken>.Empty;
-            if (this.TokensSyntax is not null)
-            {
-                identifiers = ImmutableArray.Create<SyntaxNodeOrToken>(this.TokensSyntax.Tokens);
-            }
-            else if (this.QualifierSyntax is not null)
-            {
-                identifiers = this.QualifierSyntax.Qualifier.Select(id => (SyntaxNodeOrToken)id).ToImmutableArray();
-            }
-            if (identifiers.Length == 0) return null;
-            var context = this.AllocateLookupContext();
-            context.Diagnose = true;
-            if (expectedType.SpecialType == SpecialType.System_Type || expectedType.SpecialType == SpecialType.MetaDslx_CodeAnalysis_MetaType) 
-            {
-                context.Validators.Add(LookupValidators.TypeOnly);
-            }
-            //var identifiers = qualifier.Element.Select(id => (SyntaxNodeOrToken)id).ToImmutableArray();
-            var result = this.BindQualifiedName(context, identifiers);
-            diagnostics.AddRange(context.Diagnostics);
-            context.Free();
-            return result[result.Length - 1];
-        }
     }
 }

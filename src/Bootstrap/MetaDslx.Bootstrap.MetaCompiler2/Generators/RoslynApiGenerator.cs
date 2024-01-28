@@ -19,6 +19,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
     public partial class RoslynApiGenerator
     {
         private readonly Language _language;
+        private List<Rule>? _rulesAndBlocks;
 
         public RoslynApiGenerator(Language language)
         {
@@ -34,6 +35,20 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
 
         public IList<Token> Tokens => Grammar.Tokens;
         public IList<Rule> Rules => Grammar.Rules;
+        public IList<Block> Blocks => Grammar.Blocks;
+        public IList<Rule> RulesAndBlocks
+        {
+            get
+            {
+                if (_rulesAndBlocks is null)
+                {
+                    _rulesAndBlocks = new List<Rule>();
+                    _rulesAndBlocks.AddRange(Grammar.Rules);
+                    _rulesAndBlocks.AddRange(Grammar.Blocks);
+                }
+                return _rulesAndBlocks;
+            }
+        }
         public IList<Token> FixedTokens => Grammar.Tokens.Where(t => t.IsFixed).ToList();
         public IList<Token> NonFixedTokens => Grammar.Tokens.Where(t => !t.IsFixed).ToList();
         public IList<Fragment> Fragments => Grammar.GrammarRules.OfType<Fragment>().ToList();
@@ -63,7 +78,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
                     {
                         foreach (var diag in antlrTool.Diagnostics)
                         {
-                            var metaDiag = MetaDslx.CodeAnalysis.Diagnostic.Create(ErrorCode.ERR_SyntaxError, new ExternalFileLocation(diag.FilePath, TextSpan.FromBounds(0, 0), new LinePositionSpan(new LinePosition(diag.Line, diag.Column), new LinePosition(diag.Line, diag.Column))), diag.Message);
+                            var metaDiag = MetaDslx.CodeAnalysis.Diagnostic.Create(ErrorCode.ERR_SyntaxError, new ExternalFileLocation(diag.FilePath ?? path, TextSpan.FromBounds(0, 0), new LinePositionSpan(new LinePosition(diag.Line, diag.Column), new LinePosition(diag.Line, diag.Column))), diag.Message);
                             diagnostics.Add(metaDiag);
                         }
                     }
@@ -81,7 +96,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
                         }
                         if (code is not null)
                         {
-                            result.Add(($"{Lang}.MetaCompiler.Antlr.{fileName}.g.cs", code));
+                            result.Add(($"MetaCompiler.Antlr.{fileName}.g.cs", code));
                         }
                     }
                 }
@@ -102,7 +117,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
                     {
                         foreach (var diag in antlrTool.Diagnostics)
                         {
-                            var metaDiag = MetaDslx.CodeAnalysis.Diagnostic.Create(ErrorCode.ERR_SyntaxError, new ExternalFileLocation(diag.FilePath, TextSpan.FromBounds(0, 0), new LinePositionSpan(new LinePosition(diag.Line, diag.Column), new LinePosition(diag.Line, diag.Column))), diag.Message);
+                            var metaDiag = MetaDslx.CodeAnalysis.Diagnostic.Create(ErrorCode.ERR_SyntaxError, new ExternalFileLocation(diag.FilePath ?? path, TextSpan.FromBounds(0, 0), new LinePositionSpan(new LinePosition(diag.Line, diag.Column), new LinePosition(diag.Line, diag.Column))), diag.Message);
                             diagnostics.Add(metaDiag);
                         }
                     }
@@ -120,15 +135,15 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
                         }
                         if (code is not null)
                         {
-                            result.Add(($"{Lang}.MetaCompiler.Antlr.{fileName}.g.cs", code));
+                            result.Add(($"MetaCompiler.Antlr.{fileName}.g.cs", code));
                         }
                     }
                     var syntaxLexerCode = GenerateAntlrSyntaxLexer();
-                    result.Add(($"{Lang}.MetaCompiler.Antlr.SyntaxLexer.g.cs", syntaxLexerCode));
+                    result.Add(($"MetaCompiler.Antlr.SyntaxLexer.g.cs", syntaxLexerCode));
                     var syntaxParserCode = GenerateAntlrSyntaxParser();
-                    result.Add(($"{Lang}.MetaCompiler.Antlr.SyntaxParser.g.cs", syntaxParserCode));
+                    result.Add(($"MetaCompiler.Antlr.SyntaxParser.g.cs", syntaxParserCode));
                     var syntaxFactoryCode = GenerateAntlrInternalSyntaxFactory();
-                    result.Add(($"{Lang}.MetaCompiler.Antlr.InternalSyntaxFactory.g.cs", syntaxFactoryCode));
+                    result.Add(($"MetaCompiler.Antlr.InternalSyntaxFactory.g.cs", syntaxFactoryCode));
                 }
             }
             catch (Exception ex)

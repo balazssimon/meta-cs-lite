@@ -262,6 +262,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Symbols
                 {
                     argParams.Add(selectedParameters[j]);
                 }
+                else
+                {
+                    argParams.Add(null);
+                }
             }
             return (selectedConstructor, argParams.ToImmutableAndFree());
         }

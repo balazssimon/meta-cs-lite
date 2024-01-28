@@ -39,7 +39,7 @@ namespace MetaDslx.BuildTools
             //@"..\..\..\..\MetaDslx.Languages.MetaModel",
             //@"..\..\..\..\MetaDslx.Languages.MetaCompiler",
 #if MetaDslxBootstrap
-            @"..\..\..\..\..\Bootstrap\MetaDslx.Bootstrap.MetaCompiler2"
+            @"..\..\..\..\..\Bootstrap\MetaDslx.Bootstrap.MetaCompiler3"
 #else
             @"..\..\..\..\..\Bootstrap\MetaDslx.Bootstrap.MetaCompiler"
 #endif
@@ -138,10 +138,12 @@ namespace MetaDslx.BuildTools
                 var mxgFiles = project.AdditionalDocuments.Where(doc => Path.GetExtension(doc.FilePath) == ".mxg").ToImmutableArray();
                 var mxmFiles = project.AdditionalDocuments.Where(doc => Path.GetExtension(doc.FilePath) == ".mxm").ToImmutableArray();
                 var mxlFiles = project.AdditionalDocuments.Where(doc => Path.GetExtension(doc.FilePath) == ".mxl").ToImmutableArray();
+                //*/
                 foreach (var mxgFile in mxgFiles)
                 {
                     await CompileMetaGenerator(mxgFile);
                 }
+                //*/
                 var compilation = await project.GetCompilationAsync() as CSharpCompilation;
                 if (compilation is not null)
                 {
@@ -149,6 +151,7 @@ namespace MetaDslx.BuildTools
                     await CompileMetaModels(compilation, mxmFiles);
                     await CompileMetaLanguages(compilation, mxlFiles);
                 }
+                //*/
                 // Perform analysis...
             }
         }

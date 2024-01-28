@@ -72,12 +72,14 @@ template GenerateBinderFactoryVisitRule(Rule rule, Alternative alt)
         [var annotIndex = 0]
         [var body = GenerateBinderFactoryVisitAlt(alt, ref annotIndex)]
         [body = GenerateBinderFactoryVisitBinders(rule.Binders, "node", body, false, ref annotIndex)]
+        [body]
     }
 end template
 
 template GenerateBinderFactoryVisitAlt(Alternative alt, ref int annotIndex)
     [var body = GenerateBinderFactoryVisitElements(alt, ref annotIndex)]
-    [GenerateBinderFactoryVisitBinders(alt.Binders, "node", body, false, ref annotIndex)]
+    [body = GenerateBinderFactoryVisitBinders(alt.Binders, "node", body, false, ref annotIndex)]
+    [body]
 end template
 
 template GenerateBinderFactoryVisitElements(Alternative alt, ref int annotIndex)

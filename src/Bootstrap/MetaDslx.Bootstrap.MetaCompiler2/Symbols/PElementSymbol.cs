@@ -182,7 +182,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Symbols
             var qualifier = qualifierOpt.Value;
             if (qualifier.IsNull) return default;
             var nameBlock = this.Syntax?.Block;
-            if (nameBlock is null) return (qualifier, ExpectedTypeKind.Simple);
+            if (nameBlock is null) return default;
             var nameSyntax = nameBlock.Name;
             if (nameSyntax is null) return default;
             MetaType result = default;
@@ -205,8 +205,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Symbols
             else if (qualifier.IsTypeSymbol)
             {
                 var nameBinder = this.DeclaringCompilation.GetBinder(nameSyntax);
-                var ctx = nameBinder.AllocateLookupContext(name: Name, qualifier: qualifier.OriginalTypeSymbol, diagnose: true, isLookup: true);
+                var ctx = nameBinder.AllocateLookupContext(name: Name, qualifier: qualifier.OriginalTypeSymbol, diagnose: true, isLookup: true, isCaseSensitive: false);
                 var prop = nameBinder.BindDeclarationSymbol(ctx, nameSyntax);
+                diagnostics.AddRange(ctx.Diagnostics);
+                ctx.Free();
                 if (prop is null) return default;
                 var csProp = prop as ICSharpSymbol;
                 var msProp = csProp?.CSharpSymbol as IPropertySymbol;
@@ -270,12 +272,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Symbols
                                     var prefRule = pref.Rule;
                                     if (prefRule.OriginalSymbol is ParserRuleSymbol pr)
                                     {
-                                        if (!pr.ReturnType.IsAssignableTo(coreType))
+                                        if (!pr.ReturnType.IsAssignableTo(coreType) && pr.ReturnType.SpecialType != SpecialType.System_Object)
                                         {
                                             diagnostics.Add(Diagnostic.Create(CompilerErrorCode.ERR_ValueTypeMismatch, this.Location, pr.ReturnType, coreType));
                                         }
                                     }
-                                    else if (prefRule.OriginalSymbol is TokenSymbol lr)
+                                    else if (prefRule.OriginalSymbol is TokenSymbol lr && lr.ReturnType.SpecialType != SpecialType.System_Object)
                                     {
                                         if (!lr.ReturnType.IsAssignableTo(coreType))
                                         {

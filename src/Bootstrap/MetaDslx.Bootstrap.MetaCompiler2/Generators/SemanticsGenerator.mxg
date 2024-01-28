@@ -9,284 +9,265 @@ generator RoslynApiGenerator
 
 
 template GenerateSemanticsFactory()
-using System;
-using MetaDslx.CodeAnalysis;
-using MetaDslx.CodeAnalysis.Declarations;
-using MetaDslx.CodeAnalysis.Binding;
+    using System;
+    using MetaDslx.CodeAnalysis;
+    using MetaDslx.CodeAnalysis.Declarations;
+    using MetaDslx.CodeAnalysis.Binding;
 
-#nullable enable
+    #nullable enable
 
-namespace [Namespace]
-{
-    public class [Lang]SemanticsFactory : SemanticsFactory
+    namespace [Namespace]
     {
-        public [Lang]SemanticsFactory(Compilation compilation, Language language) 
-            : base(compilation, language)
+        public class [Lang]SemanticsFactory : SemanticsFactory
         {
-        }
+            public [Lang]SemanticsFactory(Compilation compilation, Language language) 
+                : base(compilation, language)
+            {
+            }
 
-        public override BinderFactoryVisitor CreateBinderFactoryVisitor(BinderFactory binderFactory)
-        {
-            return new global::[Namespace].Binding.[Lang]BinderFactoryVisitor(binderFactory);
+            public override BinderFactoryVisitor CreateBinderFactoryVisitor(BinderFactory binderFactory)
+            {
+                return new global::[Namespace].Binding.[Lang]BinderFactoryVisitor(binderFactory);
+            }
         }
     }
-}
 end template
 
 
 template GenerateBinderFactoryVisitor()
-using System;
-using System.Collections.Immutable;
-using MetaDslx.CodeAnalysis;
+    using System;
+    using System.Collections.Immutable;
+    using MetaDslx.CodeAnalysis;
 
-#nullable enable
+    #nullable enable
 
-namespace [Namespace].Binding
-{
-    using global::[Namespace].Syntax;
-
-    public class [Lang]BinderFactoryVisitor : MetaDslx.CodeAnalysis.Binding.BinderFactoryVisitor, I[Lang]SyntaxVisitor
+    namespace [Namespace].Binding
     {
-        internal [Lang]BinderFactoryVisitor(MetaDslx.CodeAnalysis.Binding.BinderFactory binderFactory)
-            : base(binderFactory)
+        using global::[Namespace].Syntax;
+
+        public class [Lang]BinderFactoryVisitor : MetaDslx.CodeAnalysis.Binding.BinderFactoryVisitor, I[Lang]SyntaxVisitor
         {
+            internal [Lang]BinderFactoryVisitor(MetaDslx.CodeAnalysis.Binding.BinderFactory binderFactory)
+                : base(binderFactory)
+            {
+            }
+
+            [foreach (var rule in RulesAndBlocks)]
+                [foreach (var alt in rule.Alternatives)]
+
+                    [GenerateBinderFactoryVisitRule(rule, alt)]
+                [end foreach]
+            [end foreach]
+
+            public virtual void VisitSkippedTokensTrivia([Lang]SkippedTokensTriviaSyntax node)
+            {
+            }
         }
-
-		[foreach (var rule in Rules)]
-			[foreach (var alt in rule.Alternatives)]
-
-        [GenerateBinderFactoryVisit(rule, alt)]
-			[end foreach]
-		[end foreach]
-
-		public virtual void VisitSkippedTokensTrivia([Lang]SkippedTokensTriviaSyntax node)
-		{
-		}
     }
-}
 end template
 
-template GenerateBinderFactoryVisit(Rule rule, Alternative alt)
-public virtual void Visit[alt.CSharpName]([alt.RedName] node)
-{
-    [if (rule == Grammar.MainRule)]
-    if (this.IsRoot)
+template GenerateBinderFactoryVisitRule(Rule rule, Alternative alt)
+    public virtual void Visit[alt.CSharpName]([alt.RedName] node)
     {
-        var __rootAnnot = new global::MetaDslx.CodeAnalysis.Binding.RootBinder(node.SyntaxTree);
-        this.Begin(__rootAnnot, node);
-        try
-        {
-            [GenerateBinderFactoryVisitBody(rule, alt)]
-        }
-        finally
-        {
-            this.End(__rootAnnot);
-        }
+        [var annotIndex = 0]
+        [var body = GenerateBinderFactoryVisitAlt(alt, ref annotIndex)]
+        [body = GenerateBinderFactoryVisitBinders(rule.Binders, "node", body, false, ref annotIndex)]
+        [body]
     }
-    else
-    {
-    	[GenerateBinderFactoryVisitBody(rule, alt)]
-    }
-    [else]
-	[GenerateBinderFactoryVisitBody(rule, alt)]
-    [end if]
-}
 end template
 
-template GenerateBinderFactoryVisitBody(Rule rule, Alternative alt)
-[var annotIndex = 0]
-[var body = GenerateBinderFactoryVisitElements(alt, ref annotIndex)]
-[body = GenerateBinderFactoryVisitBinders(alt.Binders, "node", body, false, ref annotIndex)]
-[body = GenerateBinderFactoryVisitBinders(rule.Binders, "node", body, false, ref annotIndex)]
-[body]
+template GenerateBinderFactoryVisitAlt(Alternative alt, ref int annotIndex)
+    [var body = GenerateBinderFactoryVisitElements(alt, ref annotIndex)]
+    [body = GenerateBinderFactoryVisitBinders(alt.Binders, "node", body, false, ref annotIndex)]
+    [body]
 end template
 
 template GenerateBinderFactoryVisitElements(Alternative alt, ref int annotIndex)
-[foreach (var elem in alt.Elements.Where(e => e.ContainsBinders))]
-[GenerateBinderFactoryVisitElement(alt, elem, ref annotIndex)]
-[end foreach]    
+    [foreach (var elem in alt.Elements.Where(e => e.ContainsBinders))]
+        [GenerateBinderFactoryVisitElement(alt, elem, ref annotIndex)]
+    [end foreach]
 end template
 
 template GenerateBinderFactoryVisitBinders(IEnumerable<Binder> binders, string nodeName, string body, bool negated, ref int annotIndex)
-[foreach (var binder in binders.Where(b => b.IsNegated == negated).Reverse())]
-[body = GenerateBinderFactoryVisitBinder(binder, nodeName, body, ref annotIndex)]
-[end foreach]
-[body]
+    [foreach (var binder in binders.Where(b => b.IsNegated == negated).Reverse())]
+        [body = GenerateBinderFactoryVisitBinder(binder, nodeName, body, ref annotIndex)]
+    [end foreach]
+    [body]
 end template
 
 template GenerateBinderFactoryVisitBinder(Binder binder, string nodeName, string body, ref int annotIndex)
-[var binderVarName = "__annot"+(annotIndex++)]
-var [binderVarName] = new [binder.TypeName]([binder.ConstructorArguments]);
-this.Begin([binderVarName], [nodeName]);
-try
-{
-    [body]
-}
-finally
-{
-    this.End([binderVarName]);
-}
+    [var binderVarName = "__annot"+(annotIndex++)]
+    var [binderVarName] = new [binder.TypeName]([binder.ConstructorArguments]);
+    this.Begin([binderVarName], [nodeName]);
+    try
+    {
+        [body]
+    }
+    finally
+    {
+        this.End([binderVarName]);
+    }
 end template
 
 template GenerateBinderFactoryVisitElement(Alternative alt, Element elem, ref int annotIndex)
-    [var isList = MetaDslx.Bootstrap.MetaCompiler2.Model.MultiplicityExtensions.IsList(elem.Multiplicity)]
-    [var isOptional = MetaDslx.Bootstrap.MetaCompiler2.Model.MultiplicityExtensions.IsOptional(elem.Multiplicity)]
+    [var isList = MetaDslx.Bootstrap.MetaCompiler2.Model.MultiplicityExtensions.IsList(elem.Value.Multiplicity)]
+    [var isOptional = MetaDslx.Bootstrap.MetaCompiler2.Model.MultiplicityExtensions.IsOptional(elem.Value.Multiplicity)]
     [if (isList)]
         [var elemName = "node."+elem.PropertyName+".Node"]
-[var body = GenerateBinderFactoryVisitListElements(alt, elem, ref annotIndex)]
-[GenerateBinderFactoryVisitBinders(elem.Binders, elemName, body, false, ref annotIndex)]
+        [var body = GenerateBinderFactoryVisitListElements(alt, elem, ref annotIndex)]
+        [GenerateBinderFactoryVisitBinders(elem.Binders, elemName, body, false, ref annotIndex)]
     [else if (elem.Value is SeparatedList sl)]
         [var elemName = "node."+elem.PropertyName+".Node"]
-[var body = GenerateBinderFactoryVisitSeparatedListElements(alt, elem, sl, ref annotIndex)]
-[body = GenerateBinderFactoryVisitBinders(sl.Binders, elemName, body, false, ref annotIndex)]
-[GenerateBinderFactoryVisitBinders(elem.Binders, elemName, body, false, ref annotIndex)]
+        [var body = GenerateBinderFactoryVisitSeparatedListElements(alt, elem, sl, ref annotIndex)]
+        [body = GenerateBinderFactoryVisitBinders(sl.Binders, elemName, body, false, ref annotIndex)]
+        [GenerateBinderFactoryVisitBinders(elem.Binders, elemName, body, false, ref annotIndex)]
     [else if (isOptional)]
         [var elemName = "node."+elem.PropertyName]
-if ([elemName][if (elem.IsToken)].Get[Lang]Kind() != [Lang]SyntaxKind.None[else] != null[end if])
-{
-    [GenerateBinderFactoryVisitElementValue(elemName, elem, elem.Value, true, ref annotIndex)]
-}
+        if ([elemName][if (elem.IsToken)].Get[Lang]Kind() != [Lang]SyntaxKind.None[else] != null[end if])
+        {
+            [GenerateBinderFactoryVisitElementValue(elemName, elem, elem.Value, true, ref annotIndex)]
+        }
     [else]
         [var elemName = "node."+elem.PropertyName]
-[GenerateBinderFactoryVisitElementValue(elemName, elem, elem.Value, true, ref annotIndex)]
+        [GenerateBinderFactoryVisitElementValue(elemName, elem, elem.Value, true, ref annotIndex)]
     [end if]
 end template
 
 template GenerateBinderFactoryVisitListElements(Alternative alt, Element elem, ref int annotIndex)
-var [elem.ParameterName]List = node.[elem.PropertyName];
-[var indexName = elem.ParameterName+"Index"]
-for (var [indexName] = 0; [indexName] < [elem.ParameterName]List.Count; ++[indexName])
-{
-    [var elemName = "node."+elem.PropertyName+"["+indexName+"]"]
-    [GenerateBinderFactoryVisitElementValue(elemName, elem, elem.Value, false, ref annotIndex)]
-}
+    var [elem.ParameterName]List = node.[elem.PropertyName];
+    [var indexName = elem.ParameterName+"Index"]
+    for (var [indexName] = 0; [indexName] < [elem.ParameterName]List.Count; ++[indexName])
+    {
+        [var elemName = "node."+elem.PropertyName+"["+indexName+"]"]
+        [GenerateBinderFactoryVisitElementValue(elemName, elem, elem.Value, false, ref annotIndex)]
+    }
 end template
 
 template GenerateBinderFactoryVisitSeparatedListElements(Alternative alt, Element elem, SeparatedList list, ref int annotIndex)
-var [elem.ParameterName]List = node.[elem.PropertyName];
-[var indexName = elem.ParameterName+"Index"]
-for (var [indexName] = 0; [indexName] < [elem.ParameterName]List.Count; ++[indexName])
-{
-    bool __itemHandled = false;
-    bool __sepHandled = false;
-    [var itemName = "node."+elem.PropertyName+"["+indexName+"]"]
-    [var sepName = "node."+elem.PropertyName+".GetSeparator("+indexName+")"]
-    [var firstCount = System.Math.Max(list.FirstItems.Count, list.FirstSeparators.Count)]
-    [var lastCount = System.Math.Min(list.LastItems.Count, list.LastSeparators.Count)]
-    [var ifElse = ""]
-    [for (int i = 0; i < firstCount - 1; ++i)]
-    [ifElse]if ([indexName] == [i])
+    var [elem.ParameterName]List = node.[elem.PropertyName];
+    [var indexName = elem.ParameterName+"Index"]
+    for (var [indexName] = 0; [indexName] < [elem.ParameterName]List.Count; ++[indexName])
     {
-        [GenerateBinderFactoryVisitSeparatedListItem(itemName, list.FirstItems[i], sepName, list.FirstSeparators[i], list.SeparatorFirst, ref annotIndex)]
-        __itemHandled = true;
-        __sepHandled = true;
-    }
-        [ifElse = "else"]
-    [end for]
-    [if (firstCount > 0)]
-    [ifElse]if ([indexName] == [firstCount-1])
-    {
-        [if (list.SeparatorFirst)]
-        [GenerateBinderFactoryVisitElementValue(sepName, list.FirstSeparators[firstCount-1], list.FirstSeparators[firstCount-1].Value, true, ref annotIndex)]
-        __sepHandled = true;
-        [else]
-        [GenerateBinderFactoryVisitElementValue(itemName, list.FirstItems[firstCount-1], list.FirstItems[firstCount-1].Value, true, ref annotIndex)]
-        __itemHandled = true;
+        bool __itemHandled = false;
+        bool __sepHandled = false;
+        [var itemName = "node."+elem.PropertyName+"["+indexName+"]"]
+        [var sepName = "node."+elem.PropertyName+".GetSeparator("+indexName+")"]
+        [var firstCount = System.Math.Max(list.FirstItems.Count, list.FirstSeparators.Count)]
+        [var lastCount = System.Math.Min(list.LastItems.Count, list.LastSeparators.Count)]
+        [var ifElse = ""]
+        [for (int i = 0; i < firstCount - 1; ++i)]
+            [ifElse]if ([indexName] == [i])
+            {
+                [GenerateBinderFactoryVisitSeparatedListItem(itemName, list.FirstItems[i], sepName, list.FirstSeparators[i], list.SeparatorFirst, ref annotIndex)]
+                __itemHandled = true;
+                __sepHandled = true;
+            }
+            [ifElse = "else "]
+        [end for]
+        [if (firstCount > 0)]
+            [ifElse]if ([indexName] == [firstCount-1])
+            {
+                [if (list.SeparatorFirst)]
+                    [GenerateBinderFactoryVisitElementValue(sepName, list.FirstSeparators[firstCount-1], list.FirstSeparators[firstCount-1].Value, true, ref annotIndex)]
+                    __sepHandled = true;
+                [else]
+                    [GenerateBinderFactoryVisitElementValue(itemName, list.FirstItems[firstCount-1], list.FirstItems[firstCount-1].Value, true, ref annotIndex)]
+                    __itemHandled = true;
+                [end if]
+            }
+            [ifElse = "else "]
         [end if]
+        [for (int i = 0; i < lastCount; ++i)]
+            [ifElse]if ([indexName] == [elem.ParameterName]List.Count - [lastCount - i])
+            {
+                [var j = lastCount - 1 - i]
+                [if (j < list.LastItems.Count && j < list.LastSeparators.Count)]
+                    [GenerateBinderFactoryVisitSeparatedListItem(itemName, list.LastItems[j], sepName, list.LastSeparators[j], list.RepeatedSeparatorFirst, ref annotIndex)]
+                    __itemHandled = true;
+                    __sepHandled = true;
+                [else if (j < list.LastItems.Count)]
+                    [GenerateBinderFactoryVisitElementValue(itemName, list.LastItems[j], list.LastItems[j].Value, true, ref annotIndex)]
+                    __itemHandled = true;
+                [else if (j < list.LastSeparators.Count)]
+                    [GenerateBinderFactoryVisitElementValue(sepName, list.LastSeparators[j], list.LastSeparators[j].Value, true, ref annotIndex)]
+                    __sepHandled = true;
+                [else]
+                    INTERNAL ERROR
+                [end if]
+            }
+            [ifElse = "else "]
+        [end for]
+        if (!__itemHandled && [indexName] < node.[elem.PropertyName].Count)
+        {
+            [var repItemBody = GenerateBinderFactoryVisitElementValue(itemName, list.RepeatedItem, list.RepeatedItem.Value, true, ref annotIndex)]
+            [GenerateBinderFactoryVisitBinders(list.RepeatedBlock.Binders, itemName, repItemBody, false, ref annotIndex)]
+        }
+        if (!__sepHandled && [indexName] < node.[elem.PropertyName].SeparatorCount)
+        {
+            [var repSepBody = GenerateBinderFactoryVisitElementValue(sepName, list.RepeatedSeparator, list.RepeatedSeparator.Value, true, ref annotIndex)]
+            [GenerateBinderFactoryVisitBinders(list.RepeatedBlock.Binders, itemName, repSepBody, false, ref annotIndex)]
+        }
     }
-        [ifElse = "else"]
-    [end if]
-    [for (int i = 0; i < lastCount; ++i)]
-    [ifElse]if ([indexName] == [elem.ParameterName]List.Count - [lastCount - i])
-    {
-        [var j = lastCount - 1 - i]
-        [if (j < list.LastItems.Count && j < list.LastSeparators.Count)]
-        [GenerateBinderFactoryVisitSeparatedListItem(itemName, list.LastItems[j], sepName, list.LastSeparators[j], list.RepeatedSeparatorFirst, ref annotIndex)]
-        __itemHandled = true;
-        __sepHandled = true;
-        [else if (j < list.LastItems.Count)]
-        [GenerateBinderFactoryVisitElementValue(itemName, list.LastItems[j], list.LastItems[j].Value, true, ref annotIndex)]
-        __itemHandled = true;
-        [else if (j < list.LastSeparators.Count)]
-        [GenerateBinderFactoryVisitElementValue(sepName, list.LastSeparators[j], list.LastSeparators[j].Value, true, ref annotIndex)]
-        __sepHandled = true;
-        [else]
-        INTERNAL ERROR
-        [end if]
-    }
-        [ifElse = "else"]
-    [end for]
-    if (!__itemHandled && [indexName] < node.[elem.PropertyName].Count)
-    {
-        [var repItemBody = GenerateBinderFactoryVisitElementValue(itemName, list.RepeatedItem, list.RepeatedItem.Value, true, ref annotIndex)]
-        [GenerateBinderFactoryVisitBinders(list.RepeatedBlock.Binders, itemName, repItemBody, false, ref annotIndex)]
-    }
-    if (!__sepHandled && [indexName] < node.[elem.PropertyName].SeparatorCount)
-    {
-        [var repSepBody = GenerateBinderFactoryVisitElementValue(sepName, list.RepeatedSeparator, list.RepeatedSeparator.Value, true, ref annotIndex)]
-        [GenerateBinderFactoryVisitBinders(list.RepeatedBlock.Binders, itemName, repSepBody, false, ref annotIndex)]
-    }
-}
 end template
 
 template GenerateBinderFactoryVisitSeparatedListItem(string itemName, Element itemElem, string sepName, Element sepElem, bool separatorFirst, ref int annotIndex)
-[if (separatorFirst)]
-[GenerateBinderFactoryVisitElementValue(sepName, sepElem, sepElem.Value, true, ref annotIndex)]
-[GenerateBinderFactoryVisitElementValue(itemName, itemElem, itemElem.Value, true, ref annotIndex)]
-[else]
-[GenerateBinderFactoryVisitElementValue(itemName, itemElem, itemElem.Value, true, ref annotIndex)]
-[GenerateBinderFactoryVisitElementValue(sepName, sepElem, sepElem.Value, true, ref annotIndex)]
-[end if]
+    [if (separatorFirst)]
+        [GenerateBinderFactoryVisitElementValue(sepName, sepElem, sepElem.Value, true, ref annotIndex)]
+        [GenerateBinderFactoryVisitElementValue(itemName, itemElem, itemElem.Value, true, ref annotIndex)]
+    [else]
+        [GenerateBinderFactoryVisitElementValue(itemName, itemElem, itemElem.Value, true, ref annotIndex)]
+        [GenerateBinderFactoryVisitElementValue(sepName, sepElem, sepElem.Value, true, ref annotIndex)]
+    [end if]
 end template
 
 template GenerateBinderFactoryVisitElementValue(string elemName, Element elem, ElementValue elemValue, bool withElemBinders, ref int annotIndex)
     [if (elemValue is TokenAlts alts)]
-if ([elemName].Get[Lang]Kind() != [Lang]SyntaxKind.None)
-{
-        [var body = GenerateBinderFactoryVisitTokenAlts(elemName, elem, alts, ref annotIndex)]
-        [body = GenerateBinderFactoryVisitBinders(alts.Binders, elemName, body, false, ref annotIndex)]
-        [if (withElemBinders)]
-            [body = GenerateBinderFactoryVisitBinders(elem.Binders, elemName, body, false, ref annotIndex)]
-        [end if]
-    [body]
-}
-else
-{
-        [body = GenerateBinderFactoryVisitBinders(alts.Binders, elemName, "// default", true, ref annotIndex)]
-        [if (withElemBinders)]
-            [body = GenerateBinderFactoryVisitBinders(elem.Binders, elemName, body, true, ref annotIndex)]
-        [end if]
-    [body]
-}
+        if ([elemName].Get[Lang]Kind() != [Lang]SyntaxKind.None)
+        {
+            [var body = GenerateBinderFactoryVisitTokenAlts(elemName, elem, alts, ref annotIndex)]
+            [body = GenerateBinderFactoryVisitBinders(alts.Binders, elemName, body, false, ref annotIndex)]
+            [if (withElemBinders)]
+                [body = GenerateBinderFactoryVisitBinders(elem.Binders, elemName, body, false, ref annotIndex)]
+            [end if]
+            [body]
+        }
+        else
+        {
+            [body = GenerateBinderFactoryVisitBinders(alts.Binders, elemName, "// default", true, ref annotIndex)]
+            [if (withElemBinders)]
+                [body = GenerateBinderFactoryVisitBinders(elem.Binders, elemName, body, true, ref annotIndex)]
+            [end if]
+            [body]
+        }
     [else]
         [var body = GenerateBinderFactoryVisitElementBody(elemName, elemValue, ref annotIndex)]
         [body = GenerateBinderFactoryVisitBinders(elemValue.Binders, elemName, body, false, ref annotIndex)]
         [if (withElemBinders)]
             [body = GenerateBinderFactoryVisitBinders(elem.Binders, elemName, body, false, ref annotIndex)]
         [end if]
-[body]
+        [body]
     [end if]
 end template
 
 template GenerateBinderFactoryVisitTokenAlts(string elemName, Element elem, TokenAlts alts, ref int annotIndex)
-switch ([elemName].Get[Lang]Kind())
-{
+    switch ([elemName].Get[Lang]Kind())
+    {
         [foreach (var alt in alts.Tokens)]
-    case [Lang]SyntaxKind.[alt.Token.CSharpName]:
-        [GenerateBinderFactoryVisitElementValue(elemName, elem, alt, false, ref annotIndex)]
-        break;
+            case [Lang]SyntaxKind.[alt.Token.CSharpName]:
+                [GenerateBinderFactoryVisitElementValue(elemName, elem, alt, false, ref annotIndex)]
+                break;
         [end foreach]
-    default:
-        break;
-}
+        default:
+            break;
+    }
 end template
 
 template GenerateBinderFactoryVisitElementBody(string elemName, ElementValue elemValue, ref int annotIndex)
     [if (elemValue is RuleRef rr && rr.Token is not null)]
         [var body = "//this.VisitToken("+elemName+");"]
-[GenerateBinderFactoryVisitBinders(rr.Token.Binders, elemName, body, false, ref annotIndex)]
+        [GenerateBinderFactoryVisitBinders(rr.Token.Binders, elemName, body, false, ref annotIndex)]
     [else]
-this.Visit([elemName]);
+        this.Visit([elemName]);
     [end if]
 end template
 

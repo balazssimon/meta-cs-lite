@@ -10,313 +10,322 @@ generator RoslynApiGenerator
 
 
 template GenerateAntlrSyntaxLexer()
-using MetaDslx.CodeAnalysis;
-using MetaDslx.CodeAnalysis.Syntax;
-using MetaDslx.CodeAnalysis.Syntax.InternalSyntax;
-using MetaDslx.CodeAnalysis.Text;
-using MetaDslx.CodeAnalysis.Parsers.Antlr;
+    using MetaDslx.CodeAnalysis;
+    using MetaDslx.CodeAnalysis.Syntax;
+    using MetaDslx.CodeAnalysis.Syntax.InternalSyntax;
+    using MetaDslx.CodeAnalysis.Text;
+    using MetaDslx.CodeAnalysis.Parsers.Antlr;
 
-#nullable enable
+    #nullable enable
 
-namespace [Namespace].Syntax
-{
-    public partial class [Lang]SyntaxLexer : AntlrSyntaxLexer
+    namespace [Namespace].Syntax
     {
-        public [Lang]SyntaxLexer(SourceText text, [Lang]ParseOptions options) 
-            : base(text, options)
+        public partial class [Lang]SyntaxLexer : AntlrSyntaxLexer
         {
+            public [Lang]SyntaxLexer(SourceText text, [Lang]ParseOptions options) 
+                : base(text, options)
+            {
+            }
+
+            protected new [Lang]Lexer AntlrLexer => ([Lang]Lexer)base.AntlrLexer;
+
         }
-
-        protected new [Lang]Lexer AntlrLexer => ([Lang]Lexer)base.AntlrLexer;
-
     }
-}
 end template
 
 template GenerateAntlrSyntaxParser()
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using Antlr4.Runtime;
-using Antlr4.Runtime.Tree;
-using MetaDslx.CodeAnalysis;
-using MetaDslx.CodeAnalysis.Syntax;
-using MetaDslx.CodeAnalysis.Syntax.InternalSyntax;
-using MetaDslx.CodeAnalysis.Text;
-using MetaDslx.CodeAnalysis.Parsers.Antlr;
-using [Namespace].Syntax.InternalSyntax;
+    using System.Collections.Generic;
+    using System.Diagnostics;
+    using System.Linq;
+    using System.Text;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Antlr4.Runtime;
+    using Antlr4.Runtime.Tree;
+    using MetaDslx.CodeAnalysis;
+    using MetaDslx.CodeAnalysis.Syntax;
+    using MetaDslx.CodeAnalysis.Syntax.InternalSyntax;
+    using MetaDslx.CodeAnalysis.Text;
+    using MetaDslx.CodeAnalysis.Parsers.Antlr;
+    using [Namespace].Syntax.InternalSyntax;
 
-#nullable enable
+    #nullable enable
 
-namespace [Namespace].Syntax
-{
-    public partial class [Lang]SyntaxParser : AntlrSyntaxParser
+    namespace [Namespace].Syntax
     {
-        private readonly AntlrToRoslynVisitor _visitor;
-
-        public [Lang]SyntaxParser(
-            [Lang]SyntaxLexer lexer,
-			IncrementalParseData? oldParseData,
-            IEnumerable<TextChangeRange> changes,
-            CancellationToken cancellationToken = default)
-            : base(lexer, oldParseData, changes, cancellationToken)
+        public partial class [Lang]SyntaxParser : AntlrSyntaxParser
         {
-            _visitor = new AntlrToRoslynVisitor(this);
-        }
+            private readonly AntlrToRoslynVisitor _visitor;
 
-        protected new [Lang]Parser AntlrParser => ([Lang]Parser)base.AntlrParser;
-
-		protected override SyntaxNode ParseRoot()
-		{
-            ParserState? state = null;
-			GreenNode? green = this.Parse[MainRule?.CSharpName](ref state);
-			var red = ([Lang]SyntaxNode)green!.CreateRed();
-			return red;
-		}
-
-        private GreenNode? Parse[MainRule?.CSharpName](ref ParserState? state)
-        {
-            return _visitor.Visit[MainRule?.AntlrName?.ToPascalCase()](AntlrParser.[MainRule?.AntlrName]());
-        }
-
-        private class AntlrToRoslynVisitor : [Lang]ParserBaseVisitor<GreenNode?>
-        {
-			// list pools - allocators for lists that are used to build sequences of nodes. The lists
-			// can be reused (hence pooled) since the syntax factory methods don't keep references to
-			// them
-			private readonly SyntaxListPool _pool = new SyntaxListPool(); // Don't need to reset this.
-
-            private readonly [Lang]SyntaxParser _parser;
-            private readonly AntlrTokenStream _tokenStream;
-			private readonly [Lang]InternalSyntaxFactory _factory;
-
-            public AntlrToRoslynVisitor([Lang]SyntaxParser parser)
+            public [Lang]SyntaxParser(
+                [Lang]SyntaxLexer lexer,
+                IncrementalParseData? oldParseData,
+                IEnumerable<TextChangeRange> changes,
+                CancellationToken cancellationToken = default)
+                : base(lexer, oldParseData, changes, cancellationToken)
             {
-                _parser = parser;
-                _tokenStream = (AntlrTokenStream)_parser.AntlrParser.InputStream;
-				_factory = ([Lang]InternalSyntaxFactory)_parser.Language.InternalSyntaxFactory;
+                _visitor = new AntlrToRoslynVisitor(this);
             }
 
-            private GreenNode? VisitTerminal(IToken? token, [Lang]SyntaxKind kind)
+            protected new [Lang]Parser AntlrParser => ([Lang]Parser)base.AntlrParser;
+
+            protected override SyntaxNode ParseRoot()
             {
-				if (token == null)
-				{
-					if (kind != [Lang]SyntaxKind.None) return _tokenStream.ConsumeGreenToken(_factory.MissingToken(kind), _parser);
-					else return null;
-				}
-                var green = _tokenStream.ConsumeGreenToken(token, _parser);
-				Debug.Assert(kind == [Lang]SyntaxKind.None || green.RawKind == (int)kind);
-				return green;
+                ParserState? state = null;
+                GreenNode? green = this.Parse[MainRule?.CSharpName](ref state);
+                var red = ([Lang]SyntaxNode)green!.CreateRed();
+                return red;
             }
 
-            public GreenNode? VisitTerminal(IToken? token)
+            private GreenNode? Parse[MainRule?.CSharpName](ref ParserState? state)
             {
-				return VisitTerminal(token, [Lang]SyntaxKind.None);
+                return _visitor.Visit[MainRule?.AntlrName?.ToPascalCase()](AntlrParser.[MainRule?.AntlrName]());
             }
 
-            private GreenNode? VisitTerminal(ITerminalNode? node, [Lang]SyntaxKind kind)
+            private class AntlrToRoslynVisitor : [Lang]ParserBaseVisitor<GreenNode?>
             {
-                if (node?.Symbol == null)
-				{
-					if (kind != [Lang]SyntaxKind.None) return _factory.MissingToken(kind);
-					else return null;
-				}
-                var green = _tokenStream.ConsumeGreenToken(node.Symbol, _parser);
-				Debug.Assert(kind == [Lang]SyntaxKind.None || green.RawKind == (int)kind);
-				return green;
-			}
+                // list pools - allocators for lists that are used to build sequences of nodes. The lists
+                // can be reused (hence pooled) since the syntax factory methods don't keep references to
+                // them
+                private readonly SyntaxListPool _pool = new SyntaxListPool(); // Don't need to reset this.
 
-            public override GreenNode? VisitTerminal(ITerminalNode? node)
-            {
-                return VisitTerminal(node, [Lang]SyntaxKind.None);
-            }
+                private readonly [Lang]SyntaxParser _parser;
+                private readonly AntlrTokenStream _tokenStream;
+                private readonly [Lang]InternalSyntaxFactory _factory;
 
-            [foreach (var rule in Rules)]
-                [foreach (var alt in rule.Alternatives)]
+                public AntlrToRoslynVisitor([Lang]SyntaxParser parser)
+                {
+                    _parser = parser;
+                    _tokenStream = (AntlrTokenStream)_parser.AntlrParser.InputStream;
+                    _factory = ([Lang]InternalSyntaxFactory)_parser.Language.InternalSyntaxFactory;
+                }
 
-            public override GreenNode? Visit[alt.AntlrName.ToPascalCase()]([Lang]Parser.[alt.AntlrName.ToPascalCase()]Context? context)
-            {
-               	if (context == null) return [alt.GreenName].__Missing;
-                [foreach (var elem in alt.Elements)]
-                    [if (elem.Value is SeparatedList sl)]
-                [GenerateVisitSeparatedList(elem, sl)]
-                    [else if (elem.Multiplicity.IsList())]
-                [GenerateVisitList(elem)]
-                    [else if (elem.Value is TokenAlts tokenAlts)]
-                [GenerateVisitTokenAlts(elem, tokenAlts)]
-                    [else if (elem.Value is Eof)]
-                var [elem.ParameterName] = (InternalSyntaxToken?)this.VisitTerminal(context.[elem.AntlrName], [Lang]SyntaxKind.Eof);
-                    [else if (elem.Value is RuleRef rr)]
-                        [if (rr.Token is not null)]
-                var [elem.ParameterName] = (InternalSyntaxToken?)this.VisitTerminal(context.[elem.AntlrName][if (!elem.Multiplicity.IsOptional())], [Lang]SyntaxKind.[rr.Token.CSharpName][end if]);
-                        [else if(rr.Rule is not null)]
-                [rr.GreenType]? [elem.ParameterName] = null;
-                if (context.[elem.AntlrName] is not null) [elem.ParameterName] = ([rr.GreenType]?)this.Visit(context.[elem.AntlrName])[if (!elem.Multiplicity.IsOptional())] ?? [rr.GreenType].__Missing[end if];
-                            [if (!elem.Multiplicity.IsOptional())]
-                else [elem.ParameterName] = [rr.GreenType].__Missing;
-                            [end if]
-                        [else]
-                        [end if]
-                    [end if]
+                private GreenNode? VisitTerminal(IToken? token, [Lang]SyntaxKind kind)
+                {
+                    if (token == null)
+                    {
+                        if (kind != [Lang]SyntaxKind.None) return _tokenStream.ConsumeGreenToken(_factory.MissingToken(kind), _parser);
+                        else return null;
+                    }
+                    var green = _tokenStream.ConsumeGreenToken(token, _parser);
+                    Debug.Assert(kind == [Lang]SyntaxKind.None || green.RawKind == (int)kind);
+                    return green;
+                }
+
+                public GreenNode? VisitTerminal(IToken? token)
+                {
+                    return VisitTerminal(token, [Lang]SyntaxKind.None);
+                }
+
+                private GreenNode? VisitTerminal(ITerminalNode? node, [Lang]SyntaxKind kind)
+                {
+                    if (node?.Symbol == null)
+                    {
+                        if (kind != [Lang]SyntaxKind.None) return _factory.MissingToken(kind);
+                        else return null;
+                    }
+                    var green = _tokenStream.ConsumeGreenToken(node.Symbol, _parser);
+                    Debug.Assert(kind == [Lang]SyntaxKind.None || green.RawKind == (int)kind);
+                    return green;
+                }
+
+                public override GreenNode? VisitTerminal(ITerminalNode? node)
+                {
+                    return VisitTerminal(node, [Lang]SyntaxKind.None);
+                }
+                [foreach (var rule in RulesAndBlocks)]
+                    [foreach (var alt in rule.Alternatives)]
+                        [GenerateVisitAlt(alt)]
+                    [end foreach]
                 [end foreach]
-            	return _factory.[alt.CSharpName]([alt.GreenUpdateArguments]);
             }
-                [end foreach]
-            [end foreach]
         }
     }
-}
+end template
+
+template GenerateVisitAlt(Alternative alt)
+
+    public override GreenNode? Visit[alt.AntlrName.ToPascalCase()]([Lang]Parser.[alt.AntlrName.ToPascalCase()]Context? context)
+    {
+        if (context == null) return [alt.GreenName].__Missing;
+        [foreach (var elem in alt.Elements)]
+            [if (elem.Value is SeparatedList sl)]
+                [GenerateVisitSeparatedList(elem, sl)]
+            [else if (elem.Value.Multiplicity.IsList())]
+                [GenerateVisitList(elem)]
+            [else if (elem.Value is TokenAlts tokenAlts)]
+                [GenerateVisitTokenAlts(elem, tokenAlts)]
+            [else if (elem.Value is Eof)]
+                var [elem.ParameterName] = (InternalSyntaxToken?)this.VisitTerminal(context.[elem.AntlrName], [Lang]SyntaxKind.Eof);
+            [else if (elem.Value is Block blk)]
+                [blk.GreenType]? [elem.ParameterName] = null;
+                if (context.[elem.AntlrName] is not null) [elem.ParameterName] = ([blk.GreenType]?)this.Visit(context.[elem.AntlrName])[if (!elem.Value.Multiplicity.IsOptional())] ?? [blk.GreenType].__Missing[end if];
+                [if (!elem.Value.Multiplicity.IsOptional())]
+                    else [elem.ParameterName] = [blk.GreenType].__Missing;
+                [end if]
+            [else if (elem.Value is RuleRef rr)]
+                [if (rr.Token is not null)]
+                    var [elem.ParameterName] = (InternalSyntaxToken?)this.VisitTerminal(context.[elem.AntlrName][if (!elem.Value.Multiplicity.IsOptional())], [Lang]SyntaxKind.[rr.Token.CSharpName][end if]);
+                [else if(rr.Rule is not null)]
+                    [rr.GreenType]? [elem.ParameterName] = null;
+                    if (context.[elem.AntlrName] is not null) [elem.ParameterName] = ([rr.GreenType]?)this.Visit(context.[elem.AntlrName])[if (!elem.Value.Multiplicity.IsOptional())] ?? [rr.GreenType].__Missing[end if];
+                    [if (!elem.Value.Multiplicity.IsOptional())]
+                        else [elem.ParameterName] = [rr.GreenType].__Missing;
+                    [end if]
+                [else]
+                [end if]
+            [end if]
+        [end foreach]
+        return _factory.[alt.CSharpName]([alt.GreenUpdateArguments]);
+    }
 end template
 
 template GenerateVisitTokenAlts(Element elem, TokenAlts tokenAlts)
-InternalSyntaxToken? [elem.ParameterName] = null;
-[foreach (var token in tokenAlts.Tokens)]
-if (context.[token.Token.AntlrName]() is not null) [elem.ParameterName] = (InternalSyntaxToken?)this.VisitTerminal(context.[token.Token.AntlrName]());
-[end foreach]
-[if (!elem.Multiplicity.IsOptional())]
-if ([elem.ParameterName] is null) [elem.ParameterName] = _factory.None;
-[end if]
+    InternalSyntaxToken? [elem.ParameterName] = null;
+    [foreach (var token in tokenAlts.Tokens)]
+        if (context.[token.Token.AntlrName]() is not null) [elem.ParameterName] = (InternalSyntaxToken?)this.VisitTerminal(context.[token.Token.AntlrName]());
+    [end foreach]
+    [if (!elem.Value.Multiplicity.IsOptional())]
+        if ([elem.ParameterName] is null) [elem.ParameterName] = _factory.None;
+    [end if]
 end template
 
 template GenerateVisitList(Element elem)
-var [elem.AntlrName]Context = context._[elem.AntlrName];
-var [elem.ParameterName]Builder = _pool.Allocate<[elem.Value.GreenType]>();
-for (int i = 0; i < [elem.AntlrName]Context.Count; ++i)
-{
-            [if(elem.IsToken)]
-    [elem.ParameterName]Builder.Add((InternalSyntaxToken?)this.VisitTerminal([elem.AntlrName]Context["[i]"]));
-            [else]
-    if ([elem.AntlrName]Context["[i]"] is not null) [elem.ParameterName]Builder.Add(([elem.Value.GreenType]?)this.Visit([elem.AntlrName]Context["[i]"]) ?? [elem.Value.GreenType].__Missing);
-    else [elem.ParameterName]Builder.Add([elem.Value.GreenType].__Missing);
-            [end if]
-}
-var [elem.ParameterName] = [elem.ParameterName]Builder.ToList();
-_pool.Free([elem.ParameterName]Builder);
+    var [elem.AntlrName]Context = context._[elem.AntlrName];
+    var [elem.ParameterName]Builder = _pool.Allocate<[elem.Value.GreenType]>();
+    for (int i = 0; i < [elem.AntlrName]Context.Count; ++i)
+    {
+        [if(elem.IsToken)]
+            [elem.ParameterName]Builder.Add((InternalSyntaxToken?)this.VisitTerminal([elem.AntlrName]Context["[i]"]));
+        [else]
+            if ([elem.AntlrName]Context["[i]"] is not null) [elem.ParameterName]Builder.Add(([elem.Value.GreenType]?)this.Visit([elem.AntlrName]Context["[i]"]) ?? [elem.Value.GreenType].__Missing);
+            else [elem.ParameterName]Builder.Add([elem.Value.GreenType].__Missing);
+        [end if]
+    }
+    var [elem.ParameterName] = [elem.ParameterName]Builder.ToList();
+    _pool.Free([elem.ParameterName]Builder);
 end template
 
 template GenerateVisitSeparatedList(Element elem, SeparatedList sl)
-[var builder = elem.ParameterName+"Builder"]
-var [builder] = _pool.AllocateSeparated<[sl.GreenType]>(reversed: [sl.SeparatorFirst ? "true" : "false"]);
+    [var builder = elem.ParameterName+"Builder"]
+    var [builder] = _pool.AllocateSeparated<[sl.GreenType]>(reversed: [sl.SeparatorFirst ? "true" : "false"]);
     [for (int i = 0; i < sl.FirstItems.Count && i < sl.FirstSeparators.Count; ++i)]
         [if (sl.SeparatorFirst)]
-[GenerateVisitSeparatedListSeparator(sl.FirstSeparators[i], builder)]
-[GenerateVisitSeparatedListItem(sl.FirstItems[i], builder)]
+            [GenerateVisitSeparatedListSeparator(sl.FirstSeparators[i], builder)]
+            [GenerateVisitSeparatedListItem(sl.FirstItems[i], builder)]
         [else]
-[GenerateVisitSeparatedListItem(sl.FirstItems[i], builder)]
-[GenerateVisitSeparatedListSeparator(sl.FirstSeparators[i], builder)]
+            [GenerateVisitSeparatedListItem(sl.FirstItems[i], builder)]
+            [GenerateVisitSeparatedListSeparator(sl.FirstSeparators[i], builder)]
         [end if]
     [end for]
     [if (sl.FirstItems.Count > sl.FirstSeparators.Count)]
-[GenerateVisitSeparatedListItem(sl.FirstItems[sl.FirstItems.Count-1], builder)]
+        [GenerateVisitSeparatedListItem(sl.FirstItems[sl.FirstItems.Count-1], builder)]
     [end if]
     [if (sl.FirstSeparators.Count > sl.FirstItems.Count)]
-[GenerateVisitSeparatedListSeparator(sl.FirstSeparators[sl.FirstSeparators.Count-1], builder)]
+        [GenerateVisitSeparatedListSeparator(sl.FirstSeparators[sl.FirstSeparators.Count-1], builder)]
     [end if]
-var [sl.RepeatedItem.AntlrName]Context = context._[sl.RepeatedItem.AntlrName];
-var [sl.RepeatedSeparator.AntlrName]Context = context._[sl.RepeatedSeparator.AntlrName];
-for (int i = 0; i < [sl.RepeatedItem.AntlrName]Context.Count; ++i)
-{
-    [if (sl.RepeatedSeparatorFirst)]
-    if (i < [sl.RepeatedSeparator.AntlrName]Context.Count)
+    var [sl.RepeatedItem.AntlrName]Context = context._[sl.RepeatedItem.AntlrName];
+    var [sl.RepeatedSeparator.AntlrName]Context = context._[sl.RepeatedSeparator.AntlrName];
+    for (int i = 0; i < [sl.RepeatedItem.AntlrName]Context.Count; ++i)
     {
-        [GenerateVisitSeparatedListSeparator(sl.RepeatedSeparator, builder, "i")]
+        [if (sl.RepeatedSeparatorFirst)]
+            if (i < [sl.RepeatedSeparator.AntlrName]Context.Count)
+            {
+                [GenerateVisitSeparatedListSeparator(sl.RepeatedSeparator, builder, "i")]
+            }
+            else
+            {
+                [builder].AddSeparator((InternalSyntaxToken?)this.VisitTerminal((IToken?)null, [Lang]SyntaxKind.[sl.RepeatedSeparator.CSharpName]));
+            }
+            [GenerateVisitSeparatedListItem(sl.RepeatedItem, builder, "i")]
+        [else]
+            [GenerateVisitSeparatedListItem(sl.RepeatedItem, builder, "i")]
+            if (i < [sl.RepeatedSeparator.AntlrName]Context.Count)
+            {
+                [GenerateVisitSeparatedListSeparator(sl.RepeatedSeparator, builder, "i")]
+            }
+            else
+            {
+                [builder].AddSeparator((InternalSyntaxToken?)this.VisitTerminal((IToken?)null, [Lang]SyntaxKind.[sl.RepeatedSeparator.CSharpName]));
+            }
+        [end if]
     }
-    else
-    {
-        [builder].AddSeparator((InternalSyntaxToken?)this.VisitTerminal((IToken?)null, [Lang]SyntaxKind.[sl.RepeatedSeparator.CSharpName]));
-    }
-    [GenerateVisitSeparatedListItem(sl.RepeatedItem, builder, "i")]
-    [else]
-    [GenerateVisitSeparatedListItem(sl.RepeatedItem, builder, "i")]
-    if (i < [sl.RepeatedSeparator.AntlrName]Context.Count)
-    {
-        [GenerateVisitSeparatedListSeparator(sl.RepeatedSeparator, builder, "i")]
-    }
-    else
-    {
-        [builder].AddSeparator((InternalSyntaxToken?)this.VisitTerminal((IToken?)null, [Lang]SyntaxKind.[sl.RepeatedSeparator.CSharpName]));
-    }
-    [end if]
-}
     [for (int i = 0; i < sl.LastItems.Count && i < sl.LastSeparators.Count; ++i)]
         [if (sl.RepeatedSeparatorFirst)]
-[GenerateVisitSeparatedListSeparator(sl.LastSeparators[i], builder)]
-[GenerateVisitSeparatedListItem(sl.LastItems[i], builder, null)]
+            [GenerateVisitSeparatedListSeparator(sl.LastSeparators[i], builder)]
+            [GenerateVisitSeparatedListItem(sl.LastItems[i], builder, null)]
         [else]
-[GenerateVisitSeparatedListItem(sl.LastItems[i], builder, null)]
-[GenerateVisitSeparatedListSeparator(sl.LastSeparators[i], builder)]
+            [GenerateVisitSeparatedListItem(sl.LastItems[i], builder, null)]
+            [GenerateVisitSeparatedListSeparator(sl.LastSeparators[i], builder)]
         [end if]
     [end for]
     [if (sl.LastItems.Count > sl.LastSeparators.Count)]
-[GenerateVisitSeparatedListItem(sl.LastItems[sl.LastItems.Count-1], builder)]
+        [GenerateVisitSeparatedListItem(sl.LastItems[sl.LastItems.Count-1], builder)]
     [end if]
     [if (sl.LastSeparators.Count > sl.LastItems.Count)]
-[GenerateVisitSeparatedListSeparator(sl.LastSeparators[sl.LastSeparators.Count-1], builder)]
+        [GenerateVisitSeparatedListSeparator(sl.LastSeparators[sl.LastSeparators.Count-1], builder)]
     [end if]
-var [elem.ParameterName] = [builder].ToList();
-_pool.Free([builder]);
+    var [elem.ParameterName] = [builder].ToList();
+    _pool.Free([builder]);
 end template
 
 template GenerateVisitSeparatedListItem(Element elem, string builder)
-var [elem.AntlrName]Context = context.[elem.AntlrName];
-if ([elem.AntlrName]Context is not null) [builder].Add(([elem.Value.GreenType]?)this.Visit([elem.AntlrName]Context) ?? [elem.Value.GreenType].__Missing);
-    [if (!elem.Multiplicity.IsOptional())]
-else [builder].Add([elem.Value.GreenType].__Missing);
+    var [elem.AntlrName]Context = context.[elem.AntlrName];
+    if ([elem.AntlrName]Context is not null) [builder].Add(([elem.Value.GreenType]?)this.Visit([elem.AntlrName]Context) ?? [elem.Value.GreenType].__Missing);
+    [if (!elem.Value.Multiplicity.IsOptional())]
+        else [builder].Add([elem.Value.GreenType].__Missing);
     [end if]
 end template
 
 template GenerateVisitSeparatedListSeparator(Element elem, string builder)
-var _separatorContext = context.[elem.AntlrName];
-    [if (elem.Multiplicity.IsOptional())]
-if ([elem.AntlrName]Context is not null) [builder].AddSeparator((InternalSyntaxToken?)this.VisitTerminal([elem.AntlrName]Context));
+    var _separatorContext = context.[elem.AntlrName];
+    [if (elem.Value.Multiplicity.IsOptional())]
+        if ([elem.AntlrName]Context is not null) [builder].AddSeparator((InternalSyntaxToken?)this.VisitTerminal([elem.AntlrName]Context));
     [else]
-[builder].AddSeparator((InternalSyntaxToken?)this.VisitTerminal([elem.AntlrName]Context, [Lang]SyntaxKind.[elem.CSharpName]));
+        [builder].AddSeparator((InternalSyntaxToken?)this.VisitTerminal([elem.AntlrName]Context, [Lang]SyntaxKind.[elem.CSharpName]));
     [end if]
 end template
 
 template GenerateVisitSeparatedListItem(Element elem, string builder, string index)
-var _item = [elem.AntlrName]Context["["][index]["]"];
-if (_item is not null) [builder].Add(([elem.Value.GreenType]?)this.Visit(_item) ?? [elem.Value.GreenType].__Missing);
-    [if (!elem.Multiplicity.IsOptional())]
-else [builder].Add([elem.Value.GreenType].__Missing);
+    var _item = [elem.AntlrName]Context["["][index]["]"];
+    if (_item is not null) [builder].Add(([elem.Value.GreenType]?)this.Visit(_item) ?? [elem.Value.GreenType].__Missing);
+    [if (!elem.Value.Multiplicity.IsOptional())]
+        else [builder].Add([elem.Value.GreenType].__Missing);
     [end if]
 end template
 
 template GenerateVisitSeparatedListSeparator(Element elem, string builder, string index)
-var _separator = [elem.AntlrName]Context["["][index]["]"];
-    [if (elem.Multiplicity.IsOptional())]
-if ([elem.AntlrName]Context is not null) [builder].AddSeparator((InternalSyntaxToken?)this.VisitTerminal(_separator));
+    var _separator = [elem.AntlrName]Context["["][index]["]"];
+    [if (elem.Value.Multiplicity.IsOptional())]
+        if ([elem.AntlrName]Context is not null) [builder].AddSeparator((InternalSyntaxToken?)this.VisitTerminal(_separator));
     [else]
-[builder].AddSeparator((InternalSyntaxToken?)this.VisitTerminal(_separator, [Lang]SyntaxKind.[elem.CSharpName]));
+        [builder].AddSeparator((InternalSyntaxToken?)this.VisitTerminal(_separator, [Lang]SyntaxKind.[elem.CSharpName]));
     [end if]
 end template
 
 template GenerateAntlrInternalSyntaxFactory()
-using MetaDslx.CodeAnalysis;
-using MetaDslx.CodeAnalysis.Syntax;
-using MetaDslx.CodeAnalysis.Syntax.InternalSyntax;
-using MetaDslx.CodeAnalysis.Parsers.Antlr;
-using Antlr4.Runtime;
+    using MetaDslx.CodeAnalysis;
+    using MetaDslx.CodeAnalysis.Syntax;
+    using MetaDslx.CodeAnalysis.Syntax.InternalSyntax;
+    using MetaDslx.CodeAnalysis.Parsers.Antlr;
+    using Antlr4.Runtime;
 
-#nullable enable
+    #nullable enable
 
-namespace [Namespace].Syntax.InternalSyntax
-{
-    public partial class [Lang]InternalSyntaxFactory : IAntlrSyntaxFactory
+    namespace [Namespace].Syntax.InternalSyntax
     {
-	    AntlrLexer IAntlrSyntaxFactory.CreateAntlrLexer(ICharStream input)
-	    {
-	        return new [Lang]Lexer(input);
-	    }
-	
-	    AntlrParser IAntlrSyntaxFactory.CreateAntlrParser(ITokenStream input)
-	    {
-	        return new [Lang]Parser(input);
-	    }
+        public partial class [Lang]InternalSyntaxFactory : IAntlrSyntaxFactory
+        {
+            AntlrLexer IAntlrSyntaxFactory.CreateAntlrLexer(ICharStream input)
+            {
+                return new [Lang]Lexer(input);
+            }
+
+            AntlrParser IAntlrSyntaxFactory.CreateAntlrParser(ITokenStream input)
+            {
+                return new [Lang]Parser(input);
+            }
+        }
     }
-}
 end template
 

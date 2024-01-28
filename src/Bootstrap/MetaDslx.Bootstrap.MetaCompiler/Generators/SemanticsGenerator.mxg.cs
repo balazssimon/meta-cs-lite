@@ -668,10 +668,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Generators
             var body = GenerateBinderFactoryVisitAlt(alt, ref annotIndex);
             #line hidden
             
-            #line (74,10)-(74,101) 13 "SemanticsGenerator.mxg"
-            body = GenerateBinderFactoryVisitBinders(rule.Binders, "node", body, false, ref annotIndex);
+            __cb.Push("    ");
+            #line (74,10)-(74,94) 24 "SemanticsGenerator.mxg"
+            __cb.Write(GenerateBinderFactoryVisitBinders(rule.Binders, "node", body, false, ref annotIndex));
             #line hidden
-            
+            __cb.WriteLine();
+            __cb.Pop();
             __cb.Push("");
             #line (75,5)-(75,6) 25 "SemanticsGenerator.mxg"
             __cb.Write("}");

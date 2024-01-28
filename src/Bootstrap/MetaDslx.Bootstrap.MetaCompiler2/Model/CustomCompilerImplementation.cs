@@ -278,14 +278,14 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Model
 
         public override string Element_GreenPropertyType(Element _this)
         {
-            if (_this.Multiplicity.IsList()) return $"global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<{_this.Value.GreenType}>";
+            if (_this.Value.Multiplicity.IsList()) return $"global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<{_this.Value.GreenType}>";
             else if (_this.Value is SeparatedList) return $"global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<{_this.Value.GreenType}>";
             else return _this.Value.GreenType;
         }
 
         public override string Element_GreenPropertyValue(Element _this)
         {
-            if (_this.Multiplicity.IsList())
+            if (_this.Value.Multiplicity.IsList())
             {
                 return $"new global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<{_this.Value.GreenType}>({_this.FieldName})";
             }
@@ -304,7 +304,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Model
             if (_this.IsList) return null;
             var valueCondition = _this.Value.GreenSyntaxCondition;
             if (valueCondition is null) return null;
-            if (!_this.Multiplicity.IsOptional()) return valueCondition;
+            if (!_this.Value.Multiplicity.IsOptional()) return valueCondition;
             else if (_this.IsToken) return $"{_this.ParameterName} is not null && ({valueCondition})";
             else return $"{_this.ParameterName} is not null && ({valueCondition})";
         }
@@ -312,13 +312,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Model
         public override string? Element_GreenSyntaxNullCondition(Element _this)
         {
             if (_this.IsList) return null;
-            if (_this.Multiplicity.IsOptional()) return null;
+            if (_this.Value.Multiplicity.IsOptional()) return null;
             return $"{_this.ParameterName} is null";
         }
 
         public override bool Element_IsOptionalUpdateParameter(Element _this)
         {
-            if (_this.Multiplicity.IsOptional()) return true;
+            if (_this.Value.Multiplicity.IsOptional()) return true;
             if (_this.Value is RuleRef tr && tr.Token is not null) return tr.Token.IsFixed;
             return false;
         }
@@ -349,7 +349,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Model
 
         public override string Element_RedPropertyType(Element _this)
         {
-            if (_this.Multiplicity.IsList())
+            if (_this.Value.Multiplicity.IsList())
             {
                 if (_this.IsToken) return "__SyntaxTokenList";
                 else return $"global::MetaDslx.CodeAnalysis.SyntaxList<{_this.Value.RedType}>";
@@ -360,7 +360,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Model
 
         public override string Element_RedPropertyValue(Element _this)
         {
-            if (_this.Multiplicity.IsList())
+            if (_this.Value.Multiplicity.IsList())
             {
                 if (_this.IsToken) return $"new __SyntaxTokenList({_this.FieldName})";
                 else return $"new global::MetaDslx.CodeAnalysis.SyntaxList<{_this.Value.GreenType}>({_this.FieldName})";
@@ -380,7 +380,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Model
             if (_this.IsList) return null;
             var valueCondition = _this.Value.GreenSyntaxCondition;
             if (valueCondition is null) return null;
-            if (!_this.Multiplicity.IsOptional()) return valueCondition;
+            if (!_this.Value.Multiplicity.IsOptional()) return valueCondition;
             else if (_this.IsToken) return $"{_this.ParameterName}.RawKind != (int)__InternalSyntaxKind.None && ({valueCondition})";
             else return $"{_this.ParameterName} is not null && ({valueCondition})";
         }
@@ -388,14 +388,14 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Model
         public override string? Element_RedSyntaxNullCondition(Element _this)
         {
             if (_this.IsList) return null;
-            if (_this.Multiplicity.IsOptional()) return null;
+            if (_this.Value.Multiplicity.IsOptional()) return null;
             if (_this.IsToken) return $"{_this.ParameterName}.RawKind != (int)__InternalSyntaxKind.None";
             return $"{_this.ParameterName} is null";
         }
 
         public override string Element_RedToGreenArgument(Element _this)
         {
-            if (_this.Multiplicity.IsList())
+            if (_this.Value.Multiplicity.IsList())
             {
                 return $"__GreenNodeExtensions.ToGreenList<InternalSyntax.{_this.Value.GreenType}>({_this.ParameterName}.Node)";
             }
@@ -411,6 +411,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Model
             {
                 return $"(InternalSyntax.{rr.Rule.GreenName}){_this.ParameterName}.Green";
             }
+            else if (_this.Value is Block blk)
+            {
+                return $"(InternalSyntax.{blk.GreenName}){_this.ParameterName}.Green";
+            }
             else
             {
                 return _this.RedParameterValue;
@@ -420,9 +424,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Model
         public override string Element_RedToGreenOptionalArgument(Element _this)
         {
             var languageName = _this.GetInnermostContainingObject<Language>()?.Name;
-            if (_this.Multiplicity.IsOptional()) return "default";
-            else if (_this.Multiplicity.IsSingle() && _this.Value is Eof) return $"this.Token({languageName}SyntaxKind.Eof)";
-            else if (_this.Multiplicity.IsSingle() && _this.Value is RuleRef rr && rr.Token is not null) return $"this.Token({languageName}SyntaxKind.{rr.Token.CSharpName})";
+            if (_this.Value.Multiplicity.IsOptional()) return "default";
+            else if (_this.Value.Multiplicity.IsSingle() && _this.Value is Eof) return $"this.Token({languageName}SyntaxKind.Eof)";
+            else if (_this.Value.Multiplicity.IsSingle() && _this.Value is RuleRef rr && rr.Token is not null) return $"this.Token({languageName}SyntaxKind.{rr.Token.CSharpName})";
             else return _this.ParameterName;
         }
 
@@ -563,7 +567,22 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Model
 
         public override bool Element_IsList(Element _this)
         {
-            return _this.Multiplicity.IsList() || _this.Value is SeparatedList;
+            return _this.Value.Multiplicity.IsList() || _this.Value is SeparatedList;
+        }
+
+        public override string Block_GreenType(Block _this)
+        {
+            return _this.GreenName;
+        }
+
+        public override string? Block_GreenSyntaxCondition(Block _this)
+        {
+            return null;
+        }
+
+        public override string Block_RedType(Block _this)
+        {
+            return _this.RedName;
         }
 
     }

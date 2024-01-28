@@ -337,9 +337,12 @@ class TokenAlts : ElementValue
 	derived string RedType;
 }
 
-class Block $PBlock : ElementValue
+class Block $PBlock : ElementValue, Rule
 {
-	contains Alternative[] $Alternatives;
+	derived string GreenType;
+	derived string? GreenSyntaxCondition;
+
+	derived string RedType;
 }
 
 class SeparatedList : ElementValue

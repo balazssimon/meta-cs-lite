@@ -864,6 +864,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
         private string AddRuleName(string? ruleName, bool tryWithoutIndex, int indexHint = -1)
         {
             if (string.IsNullOrEmpty(ruleName)) ruleName = "Rule";
+            else ruleName = ruleName.ToPascalCase();
             if (tryWithoutIndex && !_ruleNames.Contains(ruleName, StringComparer.OrdinalIgnoreCase))
             {
                 _ruleNames.Add(ruleName);
@@ -897,6 +898,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler.Model
             {
                 defaultName = "Element";
                 tryWithoutIndex = false;
+            }
+            else
+            {
+                defaultName = defaultName.ToPascalCase();
             }
             if (tryWithoutIndex && !usedElementNames.Contains(defaultName, StringComparer.InvariantCultureIgnoreCase))
             {
