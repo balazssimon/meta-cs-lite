@@ -1,0 +1,76 @@
+namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
+
+using MetaDslx.Bootstrap.MetaCompiler2.Model
+using System.Collections.Generic
+using System.Collections.Immutable
+using System.Linq
+
+generator RoslynApiGenerator
+
+
+template GenerateCompilationFactory()
+    using System;
+    using MetaDslx.CodeAnalysis;
+    using MetaDslx.CodeAnalysis.Declarations;
+    using MetaDslx.CodeAnalysis.Binding;
+
+    #nullable enable
+
+    namespace [Namespace]
+    {
+        public class [Lang]CompilationFactory : CompilationFactory
+        {
+
+        }
+    }
+end template
+
+
+template GenerateCompilation()
+    using System;
+    using MetaDslx.CodeAnalysis;
+    using MetaDslx.CodeAnalysis.Declarations;
+    using MetaDslx.CodeAnalysis.Binding;
+
+    #nullable enable
+
+    namespace [Namespace]
+    {
+        public class [Lang]Compilation : Compilation
+        {
+            protected [Lang]Compilation(
+                string? assemblyName,
+                CompilationOptions options,
+                ImmutableArray<MetadataReference> references,
+                ScriptCompilationInfo? scriptCompilationInfo,
+                ReferenceManager? referenceManager, 
+                bool reuseReferenceManager,
+                SyntaxAndDeclarationManager syntaxAndDeclarations)
+                : base(assemblyName, [Lang]Language.Instance, options, references, scriptCompilationInfo, referenceManager, reuseReferenceManager, syntaxAndDeclarations)
+            {
+
+            }
+
+            public static new [Lang]Compilation Create(
+                string? assemblyName = null, 
+                IEnumerable<SyntaxTree>? syntaxTrees = null, 
+                IEnumerable<MetadataReference>? references = null, 
+                CompilationOptions? options = null)
+            {
+                return ([Lang]Compilation)Compilation.Create(assemblyName, [Lang]Language.Instance, syntaxTrees, references, options);
+            }
+
+            public static new [Lang]Compilation CreateScriptCompilation(
+                string assemblyName,
+                SyntaxTree? syntaxTree = null,
+                IEnumerable<MetadataReference>? references = null,
+                CompilationOptions? options = null,
+                Compilation? previousScriptCompilation = null,
+                Type? returnType = null,
+                Type? globalsType = null)
+            {
+                return ([Lang]Compilation)Compilation.CreateScriptCompilation(assemblyName, [Lang]Language.Instance, syntaxTree, references, options, previousScriptCompilation, returnType, globalsType);
+            }
+        }
+    }
+end template

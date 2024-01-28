@@ -21,7 +21,7 @@ Main returns Namespace:
 
 Using returns ImportSymbol 
 	: namespaces+=#{NamespaceSymbol|Qualifier} 
-	| alt returns ImportMetaModelSymbol: 'metamodel' metaModels+=#{MetaSymbol|Qualifier}
+	| alt UsingMetaModel returns ImportMetaModelSymbol: 'metamodel' metaModels+=#{MetaDslx.Modeling.MetaModel|Qualifier}
 	;
 
 LanguageDeclaration returns MetaDslx.Bootstrap.MetaCompiler2.Model.Language: 

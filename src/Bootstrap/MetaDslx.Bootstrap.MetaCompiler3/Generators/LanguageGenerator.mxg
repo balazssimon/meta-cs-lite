@@ -1,0 +1,173 @@
+﻿namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
+
+using MetaDslx.Bootstrap.MetaCompiler2.Model
+using System.Collections.Generic
+using System.Collections.Immutable
+using System.Linq
+
+generator RoslynApiGenerator
+
+template GenerateLanguage()
+    using Autofac;
+    using MetaDslx.CodeAnalysis;
+    using MetaDslx.CodeAnalysis.Syntax;
+    using MetaDslx.CodeAnalysis.Syntax.InternalSyntax;
+
+    #nullable enable
+
+    namespace [Namespace]
+    {
+        using global::[Namespace].Syntax;
+        using global::[Namespace].Syntax.InternalSyntax;
+
+        public sealed partial class [Lang]Language : Language
+        {
+            public static [Lang]Language Instance = new [Lang]Language();
+
+            public override string Name => "[Lang]";
+
+            public new [Lang]InternalSyntaxFactory InternalSyntaxFactory => ([Lang]InternalSyntaxFactory)base.InternalSyntaxFactory;
+
+            public new [Lang]SyntaxFacts SyntaxFacts => ([Lang]SyntaxFacts)base.SyntaxFacts;
+
+            public new [Lang]SyntaxFactory SyntaxFactory => ([Lang]SyntaxFactory)base.SyntaxFactory;
+
+            public new [Lang]CompilationFactory CompilationFactory => ([Lang]CompilationFactory)base.CompilationFactory;
+
+            protected override void RegisterServicesCore()
+            {
+                RegisterServices();
+                TryRegisterGlobal<SyntaxFacts, [Lang]SyntaxFacts>();
+                TryRegisterGlobal<InternalSyntaxFactory, [Lang]InternalSyntaxFactory>();
+                TryRegisterGlobal<SyntaxFactory, [Lang]SyntaxFactory>();
+                TryRegisterGlobal<CompilationFactory, [Lang]CompilationFactory>();
+                TryRegisterCompilationScoped<SemanticsFactory, [Lang]SemanticsFactory>();
+            }
+
+            partial void RegisterServices();
+        }
+    }
+end template
+
+template GenerateLanguageVersion()
+    using MetaDslx.CodeAnalysis;
+    using Roslyn.Utilities;
+
+    #nullable enable
+
+    namespace [Namespace]
+    {
+        /// <summary>
+        /// Specifies the language version.
+        /// </summary>
+        public enum [Lang]LanguageVersion
+        {
+            /// <summary>
+            /// Language version 1
+            /// </summary>
+            Version1 = 1,
+
+            /// <summary>
+            /// The latest major supported version.
+            /// </summary>
+            LatestMajor = int.MaxValue - 2,
+
+            /// <summary>
+            /// Preview of the next language version.
+            /// </summary>
+            Preview = int.MaxValue - 1,
+
+            /// <summary>
+            /// The latest supported version of the language.
+            /// </summary>
+            Latest = int.MaxValue,
+
+            /// <summary>
+            /// The default language version, which is the latest supported version.
+            /// </summary>
+            Default = 0,
+        }
+
+        public static class [Lang]LanguageVersionFacts
+        {
+            internal static bool IsValid(this [Lang]LanguageVersion value)
+            {
+                switch (value)
+                {
+                    case [Lang]LanguageVersion.Version1:
+                    case [Lang]LanguageVersion.Preview:
+                        return true;
+                }
+
+                return false;
+            }
+
+            /// <summary>
+            /// Displays the version number in the format expected on the command-line (/langver flag).
+            /// For instance, "6", "7", "7.1", "latest".
+            /// </summary>
+            public static string ToDisplayString(this [Lang]LanguageVersion version)
+            {
+                if (version == [Lang]LanguageVersion.Version1) return "1";
+                if (version == [Lang]LanguageVersion.Default) return "default";
+                if (version == [Lang]LanguageVersion.Latest) return "latest";
+                if (version == [Lang]LanguageVersion.LatestMajor) return "latestmajor";
+                if (version == [Lang]LanguageVersion.Preview) return "preview";
+                throw ExceptionUtilities.UnexpectedValue(version);
+            }
+
+            /// <summary>
+            /// Try parse a <see cref="[Lang]LanguageVersion"/> from a string input, returning default if input was null.
+            /// </summary>
+            public static bool TryParse(string version, out [Lang]LanguageVersion result)
+            {
+                if (version == null)
+                {
+                    result = [Lang]LanguageVersion.Default;
+                    return true;
+                }
+                switch (CaseInsensitiveComparison.ToLower(version))
+                {
+                    case "default":
+                        result = [Lang]LanguageVersion.Default;
+                        return true;
+                    case "latest":
+                        result = [Lang]LanguageVersion.Latest;
+                        return true;
+                    case "latestmajor":
+                        result = [Lang]LanguageVersion.LatestMajor;
+                        return true;
+                    case "preview":
+                        result = [Lang]LanguageVersion.Preview;
+                        return true;
+                    case "1":
+                    case "1.0":
+                        result = [Lang]LanguageVersion.Version1;
+                        return true;
+                    default:
+                        result = [Lang]LanguageVersion.Default;
+                        return false;
+                }
+            }
+
+            /// <summary>
+            /// Map a language version (such as Default, Latest, or VersionN) to a specific version (VersionM).
+            /// </summary>
+            internal static [Lang]LanguageVersion MapSpecifiedToEffectiveVersion(this [Lang]LanguageVersion version)
+            {
+                switch (version)
+                {
+                    case [Lang]LanguageVersion.Latest:
+                    case [Lang]LanguageVersion.Default:
+                    case [Lang]LanguageVersion.LatestMajor:
+                        return [Lang]LanguageVersion.Version1;
+                    default:
+                        return version;
+                }
+            }
+
+            public static [Lang]LanguageVersion CurrentVersion => [Lang]LanguageVersion.Version1;
+        }
+
+    }
+end template
