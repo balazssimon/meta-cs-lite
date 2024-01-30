@@ -106,31 +106,39 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
                 if (context.E_Qualifier is not null) qualifier = (QualifierGreen?)this.Visit(context.E_Qualifier) ?? QualifierGreen.__Missing;
                 else qualifier = QualifierGreen.__Missing;
                 var tSemicolon = (InternalSyntaxToken?)this.VisitTerminal(context.E_TSemicolon, CompilerSyntaxKind.TSemicolon);
-                var E_UsingListContext = context._E_UsingList;
-                var usingListBuilder = _pool.Allocate<UsingGreen>();
-                for (int i = 0; i < E_UsingListContext.Count; ++i)
+                var E_BlockContext = context._E_Block;
+                var block1Builder = _pool.Allocate<MainBlock1Green>();
+                for (int i = 0; i < E_BlockContext.Count; ++i)
                 {
-                    if (E_UsingListContext[i] is not null) usingListBuilder.Add((UsingGreen?)this.Visit(E_UsingListContext[i]) ?? UsingGreen.__Missing);
-                    else usingListBuilder.Add(UsingGreen.__Missing);
+                    if (E_BlockContext[i] is not null) block1Builder.Add((MainBlock1Green?)this.Visit(E_BlockContext[i]) ?? MainBlock1Green.__Missing);
+                    else block1Builder.Add(MainBlock1Green.__Missing);
                 }
-                var usingList = usingListBuilder.ToList();
-                _pool.Free(usingListBuilder);
-                MainBlock1Green? block = null;
-                if (context.E_Block is not null) block = (MainBlock1Green?)this.Visit(context.E_Block) ?? MainBlock1Green.__Missing;
-                else block = MainBlock1Green.__Missing;
+                var block1 = block1Builder.ToList();
+                _pool.Free(block1Builder);
+                MainBlock2Green? block2 = null;
+                if (context.E_Block1 is not null) block2 = (MainBlock2Green?)this.Visit(context.E_Block1) ?? MainBlock2Green.__Missing;
+                else block2 = MainBlock2Green.__Missing;
                 var endOfFileToken = (InternalSyntaxToken?)this.VisitTerminal(context.E_EndOfFileToken, CompilerSyntaxKind.Eof);
-                return _factory.Main(kNamespace, qualifier, tSemicolon, usingList, block, endOfFileToken);
+                return _factory.Main(kNamespace, qualifier, tSemicolon, block1, block2, endOfFileToken);
             }
             
-            public override GreenNode? VisitPr_Using(CompilerParser.Pr_UsingContext? context)
+            public override GreenNode? VisitPr_UsingMetaModel(CompilerParser.Pr_UsingMetaModelContext? context)
             {
-                if (context == null) return UsingGreen.__Missing;
-                var kUsing = (InternalSyntaxToken?)this.VisitTerminal(context.E_KUsing, CompilerSyntaxKind.KUsing);
+                if (context == null) return UsingMetaModelGreen.__Missing;
+                var kMetamodel = (InternalSyntaxToken?)this.VisitTerminal(context.E_KMetamodel, CompilerSyntaxKind.KMetamodel);
+                QualifierGreen? metaModels = null;
+                if (context.E_metaModels is not null) metaModels = (QualifierGreen?)this.Visit(context.E_metaModels) ?? QualifierGreen.__Missing;
+                else metaModels = QualifierGreen.__Missing;
+                return _factory.UsingMetaModel(kMetamodel, metaModels);
+            }
+            
+            public override GreenNode? VisitPr_UsingAlt2(CompilerParser.Pr_UsingAlt2Context? context)
+            {
+                if (context == null) return UsingAlt2Green.__Missing;
                 QualifierGreen? namespaces = null;
                 if (context.E_namespaces is not null) namespaces = (QualifierGreen?)this.Visit(context.E_namespaces) ?? QualifierGreen.__Missing;
                 else namespaces = QualifierGreen.__Missing;
-                var tSemicolon = (InternalSyntaxToken?)this.VisitTerminal(context.E_TSemicolon, CompilerSyntaxKind.TSemicolon);
-                return _factory.Using(kUsing, namespaces, tSemicolon);
+                return _factory.UsingAlt2(namespaces);
             }
             
             public override GreenNode? VisitPr_LanguageDeclaration(CompilerParser.Pr_LanguageDeclarationContext? context)
@@ -895,10 +903,21 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
             public override GreenNode? VisitPr_MainBlock1(CompilerParser.Pr_MainBlock1Context? context)
             {
                 if (context == null) return MainBlock1Green.__Missing;
+                var kUsing = (InternalSyntaxToken?)this.VisitTerminal(context.E_KUsing, CompilerSyntaxKind.KUsing);
+                UsingGreen? @using = null;
+                if (context.E_Using is not null) @using = (UsingGreen?)this.Visit(context.E_Using) ?? UsingGreen.__Missing;
+                else @using = UsingGreen.__Missing;
+                var tSemicolon = (InternalSyntaxToken?)this.VisitTerminal(context.E_TSemicolon, CompilerSyntaxKind.TSemicolon);
+                return _factory.MainBlock1(kUsing, @using, tSemicolon);
+            }
+            
+            public override GreenNode? VisitPr_MainBlock2(CompilerParser.Pr_MainBlock2Context? context)
+            {
+                if (context == null) return MainBlock2Green.__Missing;
                 LanguageDeclarationGreen? declarations = null;
                 if (context.E_declarations is not null) declarations = (LanguageDeclarationGreen?)this.Visit(context.E_declarations) ?? LanguageDeclarationGreen.__Missing;
                 else declarations = LanguageDeclarationGreen.__Missing;
-                return _factory.MainBlock1(declarations);
+                return _factory.MainBlock2(declarations);
             }
             
             public override GreenNode? VisitPr_GrammarBlock1(CompilerParser.Pr_GrammarBlock1Context? context)

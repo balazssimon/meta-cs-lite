@@ -7,21 +7,21 @@ using MetaDslx.CodeAnalysis.Syntax;
 using MetaDslx.CodeAnalysis;
 using MetaDslx.CodeAnalysis.Symbols;
 using MetaDslx.Modeling;
-using MetaDslx.Bootstrap.MetaCompiler2.Model;
 using MetaDslx.Bootstrap.MetaCompiler2.Symbols;
+using MetaDslx.Bootstrap.MetaCompiler2.Model;
 //using metamodel MetaDslx.Bootstrap.MetaCompiler2.Model.Compiler;
 
 language Compiler;
 
 Main returns Namespace:
 	'namespace' [Name(qualifierProperty:Declarations)]Qualifier ';'
-	('using' Using)*
+	('using' Using ';')*
 	[Scope](declarations+=LanguageDeclaration)
 	eof;
 
 Using returns ImportSymbol 
-	: namespaces+=#{NamespaceSymbol|Qualifier} 
-	| alt returns ImportMetaModelSymbol: 'metamodel' metaModels+=#{MetaSymbol|Qualifier}
+	: alt UsingMetaModel returns ImportMetaModelSymbol: 'metamodel' metaModels+=#{MetaDslx.Modeling.MetaModel|Qualifier}
+	| namespaces+=#{NamespaceSymbol|Qualifier} 
 	;
 
 LanguageDeclaration returns MetaDslx.Bootstrap.MetaCompiler2.Model.Language: 

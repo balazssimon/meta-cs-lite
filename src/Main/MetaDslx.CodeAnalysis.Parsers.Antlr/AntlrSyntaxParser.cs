@@ -21,7 +21,7 @@ namespace MetaDslx.CodeAnalysis.Parsers.Antlr
             : base(lexer, oldParseData, changes, cancellationToken)
         {
             _diagnostics = new List<SyntaxDiagnosticInfo>();
-            _tokenStream = new AntlrTokenStream(lexer);
+            _tokenStream = lexer.TokenStream;
             _parser = ((IAntlrSyntaxFactory)Language.InternalSyntaxFactory).CreateAntlrParser(_tokenStream);
             _parser.RemoveErrorListeners();
             _parser.AddErrorListener(this);

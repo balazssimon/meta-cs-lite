@@ -61,7 +61,7 @@ namespace MetaDslx.CodeAnalysis.Binding
         internal ImmutableArray<Binder> ResolveChildren()
         {
             var binderFactory = Compilation.GetBinderFactory(Syntax.SyntaxTree);
-            return binderFactory.BuildBinderTree(this.Syntax, this);
+            return binderFactory.BuildBinderTreeLazy(this.Syntax, this);
         }
 
         internal ImmutableArray<SingleDeclaration> BuildDeclarationTree()

@@ -39,19 +39,19 @@ public interface ICompilerParserVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitPr_Main([NotNull] CompilerParser.Pr_MainContext context);
 	/// <summary>
-	/// Visit a parse tree produced by the <c>pr_UsingAlt1</c>
-	/// labeled alternative in <see cref="CompilerParser.pr_Using"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	/// <return>The visitor result.</return>
-	Result VisitPr_UsingAlt1([NotNull] CompilerParser.Pr_UsingAlt1Context context);
-	/// <summary>
 	/// Visit a parse tree produced by the <c>pr_UsingMetaModel</c>
 	/// labeled alternative in <see cref="CompilerParser.pr_Using"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
 	Result VisitPr_UsingMetaModel([NotNull] CompilerParser.Pr_UsingMetaModelContext context);
+	/// <summary>
+	/// Visit a parse tree produced by the <c>pr_UsingAlt2</c>
+	/// labeled alternative in <see cref="CompilerParser.pr_Using"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitPr_UsingAlt2([NotNull] CompilerParser.Pr_UsingAlt2Context context);
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="CompilerParser.pr_LanguageDeclaration"/>.
 	/// </summary>
@@ -389,17 +389,17 @@ public interface ICompilerParserVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitPr_Identifier([NotNull] CompilerParser.Pr_IdentifierContext context);
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="CompilerParser.pr_MainUsingBlock"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	/// <return>The visitor result.</return>
-	Result VisitPr_MainUsingBlock([NotNull] CompilerParser.Pr_MainUsingBlockContext context);
-	/// <summary>
 	/// Visit a parse tree produced by <see cref="CompilerParser.pr_MainBlock1"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
 	Result VisitPr_MainBlock1([NotNull] CompilerParser.Pr_MainBlock1Context context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="CompilerParser.pr_MainBlock2"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitPr_MainBlock2([NotNull] CompilerParser.Pr_MainBlock2Context context);
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="CompilerParser.pr_GrammarBlock1"/>.
 	/// </summary>

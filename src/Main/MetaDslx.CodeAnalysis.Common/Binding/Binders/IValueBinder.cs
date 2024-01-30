@@ -8,5 +8,7 @@ namespace MetaDslx.CodeAnalysis.Binding
 {
     public interface IValueBinder
     {
+        string RawValue { get; }
+        MetaType Type { get; }
     }
 }

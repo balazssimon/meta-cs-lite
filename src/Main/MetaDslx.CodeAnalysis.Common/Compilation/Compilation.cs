@@ -55,6 +55,7 @@ namespace MetaDslx.CodeAnalysis
 
         private BuckStopsHereBinder? _buckStopsHereBinder;
         private DiagnosticBag? _binderDiagnostics;
+        private SymbolValueConverter? _symbolValueConverter;
 
         private ImmutableArray<Diagnostic> _diagnostics;
         private ImmutableArray<Diagnostic> _parseDiagnostics;
@@ -711,6 +712,18 @@ namespace MetaDslx.CodeAnalysis
 
         #region Binding
 
+        internal DiagnosticBag BinderDiagnostics
+        {
+            get
+            {
+                if (_binderDiagnostics is null)
+                {
+                    Interlocked.CompareExchange(ref _binderDiagnostics, new DiagnosticBag(), null);
+                }
+                return _binderDiagnostics;
+            }
+        }
+
         internal protected BuckStopsHereBinder BuckStopsHereBinder
         {
             get
@@ -839,28 +852,21 @@ namespace MetaDslx.CodeAnalysis
             return SourceModule.GetRootNamespace(syntaxTree);
         }
 
+        public SymbolValueConverter SymbolValueConverter
+        {
+            get
+            {
+                if (_symbolValueConverter is null)
+                {
+                    Interlocked.CompareExchange(ref _symbolValueConverter, MainLanguage.CompilationFactory.SymbolValueConverter(this), null);
+                }
+                return _symbolValueConverter;
+            }
+        }
+
         #endregion
 
         #region Semantic Analysis
-
-        internal void AddBinderDiagnostic(Diagnostic diagnostic)
-        {
-            if (_binderDiagnostics is null) Interlocked.CompareExchange(ref _binderDiagnostics, new DiagnosticBag(), null);
-            _binderDiagnostics.Add(diagnostic);
-        }
-
-        internal void AddBinderDiagnostics(DiagnosticBag diagnostics)
-        {
-            if (_binderDiagnostics is null) Interlocked.CompareExchange(ref _binderDiagnostics, new DiagnosticBag(), null);
-            _binderDiagnostics.AddRange(diagnostics);
-        }
-
-        internal void AddBinderDiagnostics(IEnumerable<Diagnostic> diagnostics)
-        {
-            if (_binderDiagnostics is null) Interlocked.CompareExchange(ref _binderDiagnostics, new DiagnosticBag(), null);
-            _binderDiagnostics.AddRange(diagnostics);
-        }
-
 
         public void Compile(CancellationToken cancellationToken = default)
         {
@@ -1049,8 +1055,9 @@ namespace MetaDslx.CodeAnalysis
 
         #endregion
 
-        public TypeSymbol? ResolveType(string fullName)
+        public TypeSymbol? ResolveType(string? fullName)
         {
+            if (fullName is null) return null;
             var qualifiedName = fullName.Split('.').ToImmutableArray();
             var context = BuckStopsHereBinder.AllocateLookupContext(qualifier: GlobalNamespace, validators: new[] { LookupValidators.TypeOnly });
             var result = BuckStopsHereBinder.BindQualifiedName(context, qualifiedName);

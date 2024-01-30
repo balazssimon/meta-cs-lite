@@ -9,7 +9,9 @@ namespace MetaDslx.CodeAnalysis.Binding
     public interface IPropertyBinder
     {
         string Name { get; }
-        MetaType GetValueType(CancellationToken cancellationToken = default);
+        ImmutableArray<object?> ValuesOpt { get; }
+        MetaType OwnerType { get; }
+        MetaType Type { get; }
         ImmutableArray<IValueBinder> GetValueBinders(IPropertyBinder propertyBinder, CancellationToken cancellationToken = default);
     }
 }

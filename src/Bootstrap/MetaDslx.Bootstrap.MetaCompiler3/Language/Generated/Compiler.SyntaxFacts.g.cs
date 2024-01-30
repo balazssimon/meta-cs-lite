@@ -413,10 +413,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
                     return "TInvalidToken";
                 case CompilerSyntaxKind.Main: 
                     return "Main";
-                case CompilerSyntaxKind.UsingAlt1: 
-                    return "UsingAlt1";
                 case CompilerSyntaxKind.UsingMetaModel: 
                     return "UsingMetaModel";
+                case CompilerSyntaxKind.UsingAlt2: 
+                    return "UsingAlt2";
                 case CompilerSyntaxKind.LanguageDeclaration: 
                     return "LanguageDeclaration";
                 case CompilerSyntaxKind.Grammar: 
@@ -521,10 +521,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
                     return "Qualifier";
                 case CompilerSyntaxKind.Identifier: 
                     return "Identifier";
-                case CompilerSyntaxKind.MainUsingBlock: 
-                    return "MainUsingBlock";
                 case CompilerSyntaxKind.MainBlock1: 
                     return "MainBlock1";
+                case CompilerSyntaxKind.MainBlock2: 
+                    return "MainBlock2";
                 case CompilerSyntaxKind.GrammarBlock1: 
                     return "GrammarBlock1";
                 case CompilerSyntaxKind.RuleBlock1Alt1: 

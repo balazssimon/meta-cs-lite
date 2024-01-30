@@ -4,8 +4,8 @@ using MetaDslx.CodeAnalysis.Parsers.Antlr;
 using MetaDslx.CodeAnalysis.PooledObjects;
 using MetaDslx.CodeAnalysis.Text;
 #if MetaDslxBootstrap
-using MetaDslx.Bootstrap.MetaCompiler.Compiler;
-using MetaDslx.Bootstrap.MetaCompiler.Model;
+using MetaDslx.Bootstrap.MetaCompiler2.Compiler;
+using MetaDslx.Bootstrap.MetaCompiler2.Model;
 #else
 using MetaDslx.Languages.MetaCompiler.Compiler;
 using MetaDslx.Languages.MetaCompiler.Model;
@@ -27,7 +27,7 @@ using System.Xml.Linq;
 namespace MetaDslx.BuildTools
 {
 #if MetaDslxBootstrap
-    using MetaCompiler = MetaDslx.Bootstrap.MetaCompiler;
+    using MetaCompiler = MetaDslx.Bootstrap.MetaCompiler2;
 #else
     using MetaCompiler = MetaDslx.Languages.MetaCompiler;
 #endif
@@ -300,6 +300,8 @@ namespace MetaDslx.BuildTools
                 foreach (var language in languages)
                 {
                     var modelFilePath = language.MSourceLocation?.GetLineSpan().Path;
+                    var xmi = new XmiSerializer();
+                    xmi.WriteModelToFile(Path.Combine(Path.Combine(Path.GetDirectoryName(modelFilePath), "Generated"), Path.GetFileNameWithoutExtension(modelFilePath) + ".Raw.xmi"), language.MModel);
                     if (!mxlDiagnostics.Any(diag => diag.Severity == DiagnosticSeverity.Error && diag.Location?.GetLineSpan().Path == modelFilePath))
                     {
                         var pp = new CompilerModelPostProcessor(language);

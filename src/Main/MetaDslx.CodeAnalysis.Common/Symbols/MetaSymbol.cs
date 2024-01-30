@@ -113,7 +113,8 @@ namespace MetaDslx.CodeAnalysis
 
         public IModelObject? AsModelObject(Compilation compilation)
         {
-            throw new NotImplementedException();
+            return AsModelObject();
+            // TODO
         }
 
         public IModelObject? AsModelObject(Model model)

@@ -417,7 +417,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Model
                     propName.Name = "name";
                     propName.TypeName = typeof(string).FullName!;
                     propName.IsArray = false;
-                    propName.Values.Add(name);
+                    propName.Values.Add(name.ToPascalCase());
                     propBinder.Arguments.Add(propName);
                     if (elem.Assignment == Assignment.QuestionAssign || elem.Assignment == Assignment.NegatedAssign)
                     {
@@ -431,7 +431,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Model
                     elem.Binders.Add(propBinder);
                 }
                 var value = elem.Value;
-                AddBinders(value.Binders, value.Annotations);
+                if (value is not null) AddBinders(value.Binders, value.Annotations);
                 if (value is RuleRef rr)
                 {
                     if (rr.ReferencedTypes.Count > 0)

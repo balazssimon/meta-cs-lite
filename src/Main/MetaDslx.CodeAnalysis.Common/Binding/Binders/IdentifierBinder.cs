@@ -76,44 +76,43 @@ namespace MetaDslx.CodeAnalysis.Binding
             identifierBinders.Add(this);
         }
 
-        protected override ImmutableArray<object?> BindValues(CancellationToken cancellationToken = default)
+        protected sealed override ImmutableArray<object?> ComputeValues(MetaType expectedType, DiagnosticBag diagnostics, CancellationToken cancellationToken = default)
         {
             CacheNameAndMetadataName(cancellationToken);
-            CacheSymbol(cancellationToken);
-            return _symbols;
-        }
-
-        private void CacheSymbol(CancellationToken cancellationToken = default)
-        {
             if (_symbols.IsDefault)
             {
                 var qualifier = GetEnclosingQualifierBinder();
-                if (qualifier is not null)
+                ImmutableInterlocked.InterlockedInitialize(ref _symbols, ComputeValues(expectedType, qualifier, diagnostics, cancellationToken));
+            }
+            return _symbols;
+        }
+
+        protected virtual ImmutableArray<object?> ComputeValues(MetaType expectedType, IQualifierBinder? enclosingQualifier, DiagnosticBag diagnostics, CancellationToken cancellationToken = default)
+        {
+            if (enclosingQualifier is not null && enclosingQualifier != this)
+            {
+                var multiLookup = this.GetEnclosingMultiLookupBinder();
+                var keys = multiLookup?.GetMultiLookupKeys(cancellationToken) ?? ImmutableArray<object>.Empty;
+                if (!keys.IsDefaultOrEmpty)
                 {
-                    var multiLookup = this.GetEnclosingMultiLookupBinder();
-                    var keys = multiLookup?.GetMultiLookupKeys(cancellationToken) ?? ImmutableArray<object>.Empty;
-                    if (!keys.IsDefaultOrEmpty)
+                    var symbols = ArrayBuilder<object?>.GetInstance();
+                    foreach (var key in keys)
                     {
-                        var symbols = ArrayBuilder<object?>.GetInstance();
-                        foreach (var key in keys)
-                        {
-                            var symbol = qualifier.GetIdentifierSymbol(this, key, cancellationToken);
-                            symbols.Add(symbol);
-                            if (symbol is not null && symbol is DeclarationSymbol declaredSymbol && !declaredSymbol.IsError) MarkSymbolAsUsed(declaredSymbol);
-                        }
-                        ImmutableInterlocked.InterlockedInitialize(ref _symbols, symbols.ToImmutableAndFree());
-                    }
-                    else
-                    {
-                        var symbol = qualifier.GetIdentifierSymbol(this, null, cancellationToken);
-                        ImmutableInterlocked.InterlockedInitialize(ref _symbols, ImmutableArray.Create<object?>(symbol));
+                        var symbol = enclosingQualifier.GetIdentifierSymbol(this, key, cancellationToken);
+                        symbols.Add(symbol);
                         if (symbol is not null && symbol is DeclarationSymbol declaredSymbol && !declaredSymbol.IsError) MarkSymbolAsUsed(declaredSymbol);
                     }
+                    return symbols.ToImmutableAndFree();
                 }
                 else
                 {
-                    ImmutableInterlocked.InterlockedInitialize(ref _symbols, ImmutableArray<object?>.Empty);
+                    var symbol = enclosingQualifier.GetIdentifierSymbol(this, null, cancellationToken);
+                    return ImmutableArray.Create<object?>(symbol);
                 }
+            }
+            else
+            {
+                return base.ComputeValues(expectedType, diagnostics, cancellationToken);
             }
         }
 

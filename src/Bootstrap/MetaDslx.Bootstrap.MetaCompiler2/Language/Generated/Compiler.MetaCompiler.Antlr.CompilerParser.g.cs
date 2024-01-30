@@ -19,7 +19,6 @@
 // Ambiguous reference in cref attribute
 #pragma warning disable 419
 
-namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler {
 using System;
 using System.IO;
 using System.Text;
@@ -30,4585 +29,5500 @@ using Antlr4.Runtime.Atn;
 using Antlr4.Runtime.Misc;
 using Antlr4.Runtime.Tree;
 using DFA = Antlr4.Runtime.Dfa.DFA;
-
-[System.CodeDom.Compiler.GeneratedCode("ANTLR", "4.13.0")]
-[System.CLSCompliant(false)]
-public partial class CompilerParser : global::MetaDslx.CodeAnalysis.Parsers.Antlr.AntlrParser {
-	protected static DFA[] decisionToDFA;
-	protected static PredictionContextCache sharedContextCache = new PredictionContextCache();
-	public const int
-		LR_TComma=1, LR_TUtf8Bom=2, LR_KNamespace=3, LR_TSemicolon=4, LR_KUsing=5, 
-		LR_KLanguage=6, LR_TColon=7, LR_TLParen=8, LR_TRParen=9, LR_THash=10, 
-		LR_THashLBrace=11, LR_TRBrace=12, LR_KEof=13, LR_KFragment=14, LR_TTilde=15, 
-		LR_TDot=16, LR_TDotDot=17, LR_TLBrace=18, LR_TLBracket=19, LR_TRBracket=20, 
-		LR_TEq=21, LR_TQuestionEq=22, LR_TExclEq=23, LR_TPlusEq=24, LR_TQuestion=25, 
-		LR_TAsterisk=26, LR_TPlus=27, LR_TQuestionQuestion=28, LR_TAsteriskQuestion=29, 
-		LR_TPlusQuestion=30, LR_KBool=31, LR_KInt=32, LR_KDouble=33, LR_KString=34, 
-		LR_KType=35, LR_KSymbol=36, LR_KObject=37, LR_KVoid=38, LR_KReturns=39, 
-		LR_TBar=40, LR_KAlt=41, LR_TEqGt=42, LR_KToken=43, LR_KHidden=44, LR_KNull=45, 
-		LR_KTrue=46, LR_KFalse=47, LR_TInteger=48, LR_TDecimal=49, LR_TIdentifier=50, 
-		LR_TVerbatimIdentifier=51, LR_TString=52, LR_TWhitespace=53, LR_TLineEnd=54, 
-		LR_TSingleLineComment=55, LR_TMultiLineComment=56, LR_TInvalidToken=57;
-	public const int
-		RULE_pr_Main = 0, RULE_pr_Using = 1, RULE_pr_LanguageDeclaration = 2, 
-		RULE_pr_Grammar = 3, RULE_pr_GrammarRule = 4, RULE_pr_Rule = 5, RULE_pr_Alternative = 6, 
-		RULE_pr_Element = 7, RULE_pr_ElementValue = 8, RULE_pr_Block = 9, RULE_pr_BlockAlternative = 10, 
-		RULE_pr_RuleRef = 11, RULE_pr_Eof1 = 12, RULE_pr_Fixed = 13, RULE_pr_LexerRule = 14, 
-		RULE_pr_Token = 15, RULE_pr_Fragment = 16, RULE_pr_LAlternative = 17, 
-		RULE_pr_LElement = 18, RULE_pr_LElementValue = 19, RULE_pr_LReference = 20, 
-		RULE_pr_LFixed = 21, RULE_pr_LWildCard = 22, RULE_pr_LRange = 23, RULE_pr_LBlock = 24, 
-		RULE_pr_Expression = 25, RULE_pr_SingleExpression = 26, RULE_pr_ArrayExpression = 27, 
-		RULE_pr_ParserAnnotation = 28, RULE_pr_LexerAnnotation = 29, RULE_pr_AnnotationArgument = 30, 
-		RULE_pr_Assignment = 31, RULE_pr_Multiplicity = 32, RULE_pr_TypeReferenceIdentifier = 33, 
-		RULE_pr_TypeReference = 34, RULE_pr_PrimitiveType = 35, RULE_pr_Name = 36, 
-		RULE_pr_Qualifier = 37, RULE_pr_Identifier = 38, RULE_pr_MainBlock1 = 39, 
-		RULE_pr_GrammarBlock1 = 40, RULE_pr_RuleBlock1 = 41, RULE_pr_RulealternativesBlock = 42, 
-		RULE_pr_AlternativeBlock1 = 43, RULE_pr_AlternativeBlock1Block1 = 44, 
-		RULE_pr_AlternativeBlock2 = 45, RULE_pr_ElementBlock1 = 46, RULE_pr_BlockalternativesBlock = 47, 
-		RULE_pr_BlockAlternativeBlock1 = 48, RULE_pr_RuleRefAlt3referencedTypesBlock = 49, 
-		RULE_pr_RuleRefAlt3Block1 = 50, RULE_pr_TokenBlock1 = 51, RULE_pr_TokenBlock1Alt1Block1 = 52, 
-		RULE_pr_TokenalternativesBlock = 53, RULE_pr_FragmentalternativesBlock = 54, 
-		RULE_pr_LBlockalternativesBlock = 55, RULE_pr_SingleExpressionAlt1Block1 = 56, 
-		RULE_pr_ArrayExpressionBlock1 = 57, RULE_pr_ArrayExpressionBlock1itemsBlock = 58, 
-		RULE_pr_ParserAnnotationBlock1 = 59, RULE_pr_ParserAnnotationBlock1argumentsBlock = 60, 
-		RULE_pr_LexerAnnotationBlock1 = 61, RULE_pr_LexerAnnotationBlock1argumentsBlock = 62, 
-		RULE_pr_AnnotationArgumentBlock1 = 63, RULE_pr_QualifierIdentifierBlock = 64;
-	public static readonly string[] ruleNames = {
-		"pr_Main", "pr_Using", "pr_LanguageDeclaration", "pr_Grammar", "pr_GrammarRule", 
-		"pr_Rule", "pr_Alternative", "pr_Element", "pr_ElementValue", "pr_Block", 
-		"pr_BlockAlternative", "pr_RuleRef", "pr_Eof1", "pr_Fixed", "pr_LexerRule", 
-		"pr_Token", "pr_Fragment", "pr_LAlternative", "pr_LElement", "pr_LElementValue", 
-		"pr_LReference", "pr_LFixed", "pr_LWildCard", "pr_LRange", "pr_LBlock", 
-		"pr_Expression", "pr_SingleExpression", "pr_ArrayExpression", "pr_ParserAnnotation", 
-		"pr_LexerAnnotation", "pr_AnnotationArgument", "pr_Assignment", "pr_Multiplicity", 
-		"pr_TypeReferenceIdentifier", "pr_TypeReference", "pr_PrimitiveType", 
-		"pr_Name", "pr_Qualifier", "pr_Identifier", "pr_MainBlock1", "pr_GrammarBlock1", 
-		"pr_RuleBlock1", "pr_RulealternativesBlock", "pr_AlternativeBlock1", "pr_AlternativeBlock1Block1", 
-		"pr_AlternativeBlock2", "pr_ElementBlock1", "pr_BlockalternativesBlock", 
-		"pr_BlockAlternativeBlock1", "pr_RuleRefAlt3referencedTypesBlock", "pr_RuleRefAlt3Block1", 
-		"pr_TokenBlock1", "pr_TokenBlock1Alt1Block1", "pr_TokenalternativesBlock", 
-		"pr_FragmentalternativesBlock", "pr_LBlockalternativesBlock", "pr_SingleExpressionAlt1Block1", 
-		"pr_ArrayExpressionBlock1", "pr_ArrayExpressionBlock1itemsBlock", "pr_ParserAnnotationBlock1", 
-		"pr_ParserAnnotationBlock1argumentsBlock", "pr_LexerAnnotationBlock1", 
-		"pr_LexerAnnotationBlock1argumentsBlock", "pr_AnnotationArgumentBlock1", 
-		"pr_QualifierIdentifierBlock"
+namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler
+{
+	[System.CodeDom.Compiler.GeneratedCode("ANTLR", "4.13.0")]
+	[System.CLSCompliant(false)]
+	public partial class CompilerParser : global::MetaDslx.CodeAnalysis.Parsers.Antlr.AntlrParser
+    {
+		protected static DFA[] decisionToDFA;
+		protected static PredictionContextCache sharedContextCache = new PredictionContextCache();
+		public const int
+			LR_TComma = 1, LR_TUtf8Bom = 2, LR_KNamespace = 3, LR_TSemicolon = 4, LR_KMetamodel = 5,
+			LR_KLanguage = 6, LR_TColon = 7, LR_TLParen = 8, LR_TRParen = 9, LR_THash = 10,
+			LR_THashLBrace = 11, LR_TRBrace = 12, LR_KEof = 13, LR_KFragment = 14, LR_TTilde = 15,
+			LR_TDot = 16, LR_TDotDot = 17, LR_TLBrace = 18, LR_TLBracket = 19, LR_TRBracket = 20,
+			LR_TEq = 21, LR_TQuestionEq = 22, LR_TExclEq = 23, LR_TPlusEq = 24, LR_TQuestion = 25,
+			LR_TAsterisk = 26, LR_TPlus = 27, LR_TQuestionQuestion = 28, LR_TAsteriskQuestion = 29,
+			LR_TPlusQuestion = 30, LR_KBool = 31, LR_KInt = 32, LR_KDouble = 33, LR_KString = 34,
+			LR_KType = 35, LR_KSymbol = 36, LR_KObject = 37, LR_KVoid = 38, LR_KUsing = 39,
+			LR_KReturns = 40, LR_TBar = 41, LR_KAlt = 42, LR_TEqGt = 43, LR_KToken = 44, LR_KHidden = 45,
+			LR_KNull = 46, LR_KTrue = 47, LR_KFalse = 48, LR_TInteger = 49, LR_TDecimal = 50,
+			LR_TIdentifier = 51, LR_TVerbatimIdentifier = 52, LR_TString = 53, LR_TWhitespace = 54,
+			LR_TLineEnd = 55, LR_TSingleLineComment = 56, LR_TMultiLineComment = 57, LR_TInvalidToken = 58;
+		public const int
+			RULE_pr_Main = 0, RULE_pr_Using = 1, RULE_pr_LanguageDeclaration = 2,
+			RULE_pr_Grammar = 3, RULE_pr_GrammarRule = 4, RULE_pr_Rule = 5, RULE_pr_Alternative = 6,
+			RULE_pr_Element = 7, RULE_pr_ElementValue = 8, RULE_pr_Block = 9, RULE_pr_BlockAlternative = 10,
+			RULE_pr_RuleRef = 11, RULE_pr_Eof1 = 12, RULE_pr_Fixed = 13, RULE_pr_LexerRule = 14,
+			RULE_pr_Token = 15, RULE_pr_Fragment = 16, RULE_pr_LAlternative = 17,
+			RULE_pr_LElement = 18, RULE_pr_LElementValue = 19, RULE_pr_LReference = 20,
+			RULE_pr_LFixed = 21, RULE_pr_LWildCard = 22, RULE_pr_LRange = 23, RULE_pr_LBlock = 24,
+			RULE_pr_Expression = 25, RULE_pr_SingleExpression = 26, RULE_pr_ArrayExpression = 27,
+			RULE_pr_ParserAnnotation = 28, RULE_pr_LexerAnnotation = 29, RULE_pr_AnnotationArgument = 30,
+			RULE_pr_Assignment = 31, RULE_pr_Multiplicity = 32, RULE_pr_TypeReferenceIdentifier = 33,
+			RULE_pr_TypeReference = 34, RULE_pr_PrimitiveType = 35, RULE_pr_Name = 36,
+			RULE_pr_Qualifier = 37, RULE_pr_Identifier = 38, RULE_pr_MainBlock1 = 39,
+			RULE_pr_MainBlock2 = 40, RULE_pr_GrammarBlock1 = 41, RULE_pr_RuleBlock1 = 42,
+			RULE_pr_RulealternativesBlock = 43, RULE_pr_AlternativeBlock1 = 44, RULE_pr_AlternativeBlock1Block1 = 45,
+			RULE_pr_AlternativeBlock2 = 46, RULE_pr_ElementBlock1 = 47, RULE_pr_BlockalternativesBlock = 48,
+			RULE_pr_BlockAlternativeBlock1 = 49, RULE_pr_RuleRefAlt3referencedTypesBlock = 50,
+			RULE_pr_RuleRefAlt3Block1 = 51, RULE_pr_TokenBlock1 = 52, RULE_pr_TokenBlock1Alt1Block1 = 53,
+			RULE_pr_TokenalternativesBlock = 54, RULE_pr_FragmentalternativesBlock = 55,
+			RULE_pr_LBlockalternativesBlock = 56, RULE_pr_SingleExpressionAlt1Block1 = 57,
+			RULE_pr_ArrayExpressionBlock1 = 58, RULE_pr_ArrayExpressionBlock1itemsBlock = 59,
+			RULE_pr_ParserAnnotationBlock1 = 60, RULE_pr_ParserAnnotationBlock1argumentsBlock = 61,
+			RULE_pr_LexerAnnotationBlock1 = 62, RULE_pr_LexerAnnotationBlock1argumentsBlock = 63,
+			RULE_pr_AnnotationArgumentBlock1 = 64, RULE_pr_QualifierIdentifierBlock = 65;
+		public static readonly string[] ruleNames = {
+		"pr_Main", "pr_Using", "pr_LanguageDeclaration", "pr_Grammar", "pr_GrammarRule",
+		"pr_Rule", "pr_Alternative", "pr_Element", "pr_ElementValue", "pr_Block",
+		"pr_BlockAlternative", "pr_RuleRef", "pr_Eof1", "pr_Fixed", "pr_LexerRule",
+		"pr_Token", "pr_Fragment", "pr_LAlternative", "pr_LElement", "pr_LElementValue",
+		"pr_LReference", "pr_LFixed", "pr_LWildCard", "pr_LRange", "pr_LBlock",
+		"pr_Expression", "pr_SingleExpression", "pr_ArrayExpression", "pr_ParserAnnotation",
+		"pr_LexerAnnotation", "pr_AnnotationArgument", "pr_Assignment", "pr_Multiplicity",
+		"pr_TypeReferenceIdentifier", "pr_TypeReference", "pr_PrimitiveType",
+		"pr_Name", "pr_Qualifier", "pr_Identifier", "pr_MainBlock1", "pr_MainBlock2",
+		"pr_GrammarBlock1", "pr_RuleBlock1", "pr_RulealternativesBlock", "pr_AlternativeBlock1",
+		"pr_AlternativeBlock1Block1", "pr_AlternativeBlock2", "pr_ElementBlock1",
+		"pr_BlockalternativesBlock", "pr_BlockAlternativeBlock1", "pr_RuleRefAlt3referencedTypesBlock",
+		"pr_RuleRefAlt3Block1", "pr_TokenBlock1", "pr_TokenBlock1Alt1Block1",
+		"pr_TokenalternativesBlock", "pr_FragmentalternativesBlock", "pr_LBlockalternativesBlock",
+		"pr_SingleExpressionAlt1Block1", "pr_ArrayExpressionBlock1", "pr_ArrayExpressionBlock1itemsBlock",
+		"pr_ParserAnnotationBlock1", "pr_ParserAnnotationBlock1argumentsBlock",
+		"pr_LexerAnnotationBlock1", "pr_LexerAnnotationBlock1argumentsBlock",
+		"pr_AnnotationArgumentBlock1", "pr_QualifierIdentifierBlock"
 	};
 
-	private static readonly string[] _LiteralNames = {
-		null, "','", null, "'namespace'", "';'", "'using'", "'language'", "':'", 
-		"'('", "')'", "'#'", "'#{'", "'}'", "'eof'", "'fragment'", "'~'", "'.'", 
-		"'..'", "'{'", "'['", "']'", "'='", "'?='", "'!='", "'+='", "'?'", "'*'", 
-		"'+'", "'??'", "'*?'", "'+?'", "'bool'", "'int'", "'double'", "'string'", 
-		"'type'", "'symbol'", "'object'", "'void'", "'returns'", "'|'", "'alt'", 
-		"'=>'", "'token'", "'hidden'", "'null'", "'true'", "'false'"
+		private static readonly string[] _LiteralNames = {
+		null, "','", null, "'namespace'", "';'", "'metamodel'", "'language'",
+		"':'", "'('", "')'", "'#'", "'#{'", "'}'", "'eof'", "'fragment'", "'~'",
+		"'.'", "'..'", "'{'", "'['", "']'", "'='", "'?='", "'!='", "'+='", "'?'",
+		"'*'", "'+'", "'??'", "'*?'", "'+?'", "'bool'", "'int'", "'double'", "'string'",
+		"'type'", "'symbol'", "'object'", "'void'", "'using'", "'returns'", "'|'",
+		"'alt'", "'=>'", "'token'", "'hidden'", "'null'", "'true'", "'false'"
 	};
-	private static readonly string[] _SymbolicNames = {
-		null, "LR_TComma", "LR_TUtf8Bom", "LR_KNamespace", "LR_TSemicolon", "LR_KUsing", 
-		"LR_KLanguage", "LR_TColon", "LR_TLParen", "LR_TRParen", "LR_THash", "LR_THashLBrace", 
-		"LR_TRBrace", "LR_KEof", "LR_KFragment", "LR_TTilde", "LR_TDot", "LR_TDotDot", 
-		"LR_TLBrace", "LR_TLBracket", "LR_TRBracket", "LR_TEq", "LR_TQuestionEq", 
-		"LR_TExclEq", "LR_TPlusEq", "LR_TQuestion", "LR_TAsterisk", "LR_TPlus", 
-		"LR_TQuestionQuestion", "LR_TAsteriskQuestion", "LR_TPlusQuestion", "LR_KBool", 
-		"LR_KInt", "LR_KDouble", "LR_KString", "LR_KType", "LR_KSymbol", "LR_KObject", 
-		"LR_KVoid", "LR_KReturns", "LR_TBar", "LR_KAlt", "LR_TEqGt", "LR_KToken", 
-		"LR_KHidden", "LR_KNull", "LR_KTrue", "LR_KFalse", "LR_TInteger", "LR_TDecimal", 
-		"LR_TIdentifier", "LR_TVerbatimIdentifier", "LR_TString", "LR_TWhitespace", 
-		"LR_TLineEnd", "LR_TSingleLineComment", "LR_TMultiLineComment", "LR_TInvalidToken"
+		private static readonly string[] _SymbolicNames = {
+		null, "LR_TComma", "LR_TUtf8Bom", "LR_KNamespace", "LR_TSemicolon", "LR_KMetamodel",
+		"LR_KLanguage", "LR_TColon", "LR_TLParen", "LR_TRParen", "LR_THash", "LR_THashLBrace",
+		"LR_TRBrace", "LR_KEof", "LR_KFragment", "LR_TTilde", "LR_TDot", "LR_TDotDot",
+		"LR_TLBrace", "LR_TLBracket", "LR_TRBracket", "LR_TEq", "LR_TQuestionEq",
+		"LR_TExclEq", "LR_TPlusEq", "LR_TQuestion", "LR_TAsterisk", "LR_TPlus",
+		"LR_TQuestionQuestion", "LR_TAsteriskQuestion", "LR_TPlusQuestion", "LR_KBool",
+		"LR_KInt", "LR_KDouble", "LR_KString", "LR_KType", "LR_KSymbol", "LR_KObject",
+		"LR_KVoid", "LR_KUsing", "LR_KReturns", "LR_TBar", "LR_KAlt", "LR_TEqGt",
+		"LR_KToken", "LR_KHidden", "LR_KNull", "LR_KTrue", "LR_KFalse", "LR_TInteger",
+		"LR_TDecimal", "LR_TIdentifier", "LR_TVerbatimIdentifier", "LR_TString",
+		"LR_TWhitespace", "LR_TLineEnd", "LR_TSingleLineComment", "LR_TMultiLineComment",
+		"LR_TInvalidToken"
 	};
-	public static readonly IVocabulary DefaultVocabulary = new Vocabulary(_LiteralNames, _SymbolicNames);
+		public static readonly IVocabulary DefaultVocabulary = new Vocabulary(_LiteralNames, _SymbolicNames);
 
-	[NotNull]
-	public override IVocabulary Vocabulary
-	{
-		get
+		[NotNull]
+		public override IVocabulary Vocabulary
 		{
-			return DefaultVocabulary;
+			get
+			{
+				return DefaultVocabulary;
+			}
 		}
-	}
 
-	public override string GrammarFileName { get { return "CompilerParser.g4"; } }
+		public override string GrammarFileName { get { return "CompilerParser.g4"; } }
 
-	public override string[] RuleNames { get { return ruleNames; } }
+		public override string[] RuleNames { get { return ruleNames; } }
 
-	public override int[] SerializedAtn { get { return _serializedATN; } }
+		public override int[] SerializedAtn { get { return _serializedATN; } }
 
-	static CompilerParser() {
-		decisionToDFA = new DFA[_ATN.NumberOfDecisions];
-		for (int i = 0; i < _ATN.NumberOfDecisions; i++) {
-			decisionToDFA[i] = new DFA(_ATN.GetDecisionState(i), i);
+		static CompilerParser()
+		{
+			decisionToDFA = new DFA[_ATN.NumberOfDecisions];
+			for (int i = 0; i < _ATN.NumberOfDecisions; i++)
+			{
+				decisionToDFA[i] = new DFA(_ATN.GetDecisionState(i), i);
+			}
 		}
-	}
 
 		public CompilerParser(ITokenStream input) : this(input, Console.Out, Console.Error) { }
 
 		public CompilerParser(ITokenStream input, TextWriter output, TextWriter errorOutput)
 		: base(input, output, errorOutput)
-	{
-		Interpreter = new ParserATNSimulator(this, _ATN, decisionToDFA, sharedContextCache);
-	}
-
-	public partial class Pr_MainContext : ParserRuleContext {
-		public IToken E_KNamespace;
-		public Pr_QualifierContext E_Qualifier;
-		public IToken E_TSemicolon;
-		public Pr_UsingContext _pr_Using;
-		public IList<Pr_UsingContext> _E_UsingList = new List<Pr_UsingContext>();
-		public Pr_MainBlock1Context E_Block;
-		public IToken E_EndOfFileToken;
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_KNamespace() { return GetToken(CompilerParser.LR_KNamespace, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_QualifierContext pr_Qualifier() {
-			return GetRuleContext<Pr_QualifierContext>(0);
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TSemicolon() { return GetToken(CompilerParser.LR_TSemicolon, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_MainBlock1Context pr_MainBlock1() {
-			return GetRuleContext<Pr_MainBlock1Context>(0);
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode Eof() { return GetToken(CompilerParser.Eof, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_UsingContext[] pr_Using() {
-			return GetRuleContexts<Pr_UsingContext>();
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_UsingContext pr_Using(int i) {
-			return GetRuleContext<Pr_UsingContext>(i);
-		}
-		public Pr_MainContext(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
 		{
+			Interpreter = new ParserATNSimulator(this, _ATN, decisionToDFA, sharedContextCache);
 		}
-		public override int RuleIndex { get { return RULE_pr_Main; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitPr_Main(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
 
-	[RuleVersion(0)]
-	public Pr_MainContext pr_Main() {
-		Pr_MainContext _localctx = new Pr_MainContext(Context, State);
-		EnterRule(_localctx, 0, RULE_pr_Main);
-		int _la;
-		try {
-			EnterOuterAlt(_localctx, 1);
+		public partial class Pr_MainContext : ParserRuleContext
+		{
+			public IToken E_KNamespace;
+			public Pr_QualifierContext E_Qualifier;
+			public IToken E_TSemicolon;
+			public Pr_MainBlock1Context _pr_MainBlock1;
+			public IList<Pr_MainBlock1Context> _E_Block = new List<Pr_MainBlock1Context>();
+			public Pr_MainBlock2Context E_Block1;
+			public IToken E_EndOfFileToken;
+			[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_KNamespace() { return GetToken(CompilerParser.LR_KNamespace, 0); }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_QualifierContext pr_Qualifier()
 			{
-			State = 130;
-			_localctx.E_KNamespace = Match(LR_KNamespace);
-			State = 131;
-			_localctx.E_Qualifier = pr_Qualifier();
-			State = 132;
-			_localctx.E_TSemicolon = Match(LR_TSemicolon);
-			State = 136;
-			ErrorHandler.Sync(this);
-			_la = TokenStream.LA(1);
-			while (_la==LR_KUsing) {
-				{
-				{
-				State = 133;
-				_localctx._pr_Using = pr_Using();
-				_localctx._E_UsingList.Add(_localctx._pr_Using);
-				}
-				}
-				State = 138;
-				ErrorHandler.Sync(this);
-				_la = TokenStream.LA(1);
+				return GetRuleContext<Pr_QualifierContext>(0);
 			}
-			State = 139;
-			_localctx.E_Block = pr_MainBlock1();
-			State = 140;
-			_localctx.E_EndOfFileToken = Match(Eof);
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			ErrorHandler.ReportError(this, re);
-			ErrorHandler.Recover(this, re);
-		}
-		finally {
-			ExitRule();
-		}
-		return _localctx;
-	}
-
-	public partial class Pr_UsingContext : ParserRuleContext {
-		public IToken E_KUsing;
-		public Pr_QualifierContext E_namespaces;
-		public IToken E_TSemicolon;
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_KUsing() { return GetToken(CompilerParser.LR_KUsing, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_QualifierContext pr_Qualifier() {
-			return GetRuleContext<Pr_QualifierContext>(0);
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TSemicolon() { return GetToken(CompilerParser.LR_TSemicolon, 0); }
-		public Pr_UsingContext(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
-		{
-		}
-		public override int RuleIndex { get { return RULE_pr_Using; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitPr_Using(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-
-	[RuleVersion(0)]
-	public Pr_UsingContext pr_Using() {
-		Pr_UsingContext _localctx = new Pr_UsingContext(Context, State);
-		EnterRule(_localctx, 2, RULE_pr_Using);
-		try {
-			EnterOuterAlt(_localctx, 1);
+			[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TSemicolon() { return GetToken(CompilerParser.LR_TSemicolon, 0); }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_MainBlock2Context pr_MainBlock2()
 			{
-			State = 142;
-			_localctx.E_KUsing = Match(LR_KUsing);
-			State = 143;
-			_localctx.E_namespaces = pr_Qualifier();
-			State = 144;
-			_localctx.E_TSemicolon = Match(LR_TSemicolon);
+				return GetRuleContext<Pr_MainBlock2Context>(0);
 			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			ErrorHandler.ReportError(this, re);
-			ErrorHandler.Recover(this, re);
-		}
-		finally {
-			ExitRule();
-		}
-		return _localctx;
-	}
-
-	public partial class Pr_LanguageDeclarationContext : ParserRuleContext {
-		public IToken E_KLanguage;
-		public Pr_NameContext E_Name;
-		public IToken E_TSemicolon;
-		public Pr_GrammarContext E_grammar;
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_KLanguage() { return GetToken(CompilerParser.LR_KLanguage, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_NameContext pr_Name() {
-			return GetRuleContext<Pr_NameContext>(0);
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TSemicolon() { return GetToken(CompilerParser.LR_TSemicolon, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_GrammarContext pr_Grammar() {
-			return GetRuleContext<Pr_GrammarContext>(0);
-		}
-		public Pr_LanguageDeclarationContext(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
-		{
-		}
-		public override int RuleIndex { get { return RULE_pr_LanguageDeclaration; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitPr_LanguageDeclaration(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-
-	[RuleVersion(0)]
-	public Pr_LanguageDeclarationContext pr_LanguageDeclaration() {
-		Pr_LanguageDeclarationContext _localctx = new Pr_LanguageDeclarationContext(Context, State);
-		EnterRule(_localctx, 4, RULE_pr_LanguageDeclaration);
-		try {
-			EnterOuterAlt(_localctx, 1);
+			[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode Eof() { return GetToken(CompilerParser.Eof, 0); }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_MainBlock1Context[] pr_MainBlock1()
 			{
-			State = 146;
-			_localctx.E_KLanguage = Match(LR_KLanguage);
-			State = 147;
-			_localctx.E_Name = pr_Name();
-			State = 148;
-			_localctx.E_TSemicolon = Match(LR_TSemicolon);
-			State = 149;
-			_localctx.E_grammar = pr_Grammar();
+				return GetRuleContexts<Pr_MainBlock1Context>();
 			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			ErrorHandler.ReportError(this, re);
-			ErrorHandler.Recover(this, re);
-		}
-		finally {
-			ExitRule();
-		}
-		return _localctx;
-	}
-
-	public partial class Pr_GrammarContext : ParserRuleContext {
-		public Pr_GrammarBlock1Context E_Block;
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_GrammarBlock1Context pr_GrammarBlock1() {
-			return GetRuleContext<Pr_GrammarBlock1Context>(0);
-		}
-		public Pr_GrammarContext(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
-		{
-		}
-		public override int RuleIndex { get { return RULE_pr_Grammar; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitPr_Grammar(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-
-	[RuleVersion(0)]
-	public Pr_GrammarContext pr_Grammar() {
-		Pr_GrammarContext _localctx = new Pr_GrammarContext(Context, State);
-		EnterRule(_localctx, 6, RULE_pr_Grammar);
-		try {
-			EnterOuterAlt(_localctx, 1);
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_MainBlock1Context pr_MainBlock1(int i)
 			{
-			State = 151;
-			_localctx.E_Block = pr_GrammarBlock1();
+				return GetRuleContext<Pr_MainBlock1Context>(i);
+			}
+			public Pr_MainContext(ParserRuleContext parent, int invokingState)
+				: base(parent, invokingState)
+			{
+			}
+			public override int RuleIndex { get { return RULE_pr_Main; } }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor)
+			{
+				ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
+				if (typedVisitor != null) return typedVisitor.VisitPr_Main(this);
+				else return visitor.VisitChildren(this);
 			}
 		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			ErrorHandler.ReportError(this, re);
-			ErrorHandler.Recover(this, re);
-		}
-		finally {
-			ExitRule();
-		}
-		return _localctx;
-	}
 
-	public partial class Pr_GrammarRuleContext : ParserRuleContext {
-		public Pr_GrammarRuleContext(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
+		[RuleVersion(0)]
+		public Pr_MainContext pr_Main()
 		{
-		}
-		public override int RuleIndex { get { return RULE_pr_GrammarRule; } }
-	 
-		public Pr_GrammarRuleContext() { }
-		public virtual void CopyFrom(Pr_GrammarRuleContext context) {
-			base.CopyFrom(context);
-		}
-	}
-	public partial class Pr_GrammarRuleAlt1Context : Pr_GrammarRuleContext {
-		public Pr_RuleContext E_Rule;
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_RuleContext pr_Rule() {
-			return GetRuleContext<Pr_RuleContext>(0);
-		}
-		public Pr_GrammarRuleAlt1Context(Pr_GrammarRuleContext context) { CopyFrom(context); }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitPr_GrammarRuleAlt1(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-	public partial class Pr_GrammarRuleAlt2Context : Pr_GrammarRuleContext {
-		public Pr_LexerRuleContext E_LexerRule;
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_LexerRuleContext pr_LexerRule() {
-			return GetRuleContext<Pr_LexerRuleContext>(0);
-		}
-		public Pr_GrammarRuleAlt2Context(Pr_GrammarRuleContext context) { CopyFrom(context); }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitPr_GrammarRuleAlt2(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-
-	[RuleVersion(0)]
-	public Pr_GrammarRuleContext pr_GrammarRule() {
-		Pr_GrammarRuleContext _localctx = new Pr_GrammarRuleContext(Context, State);
-		EnterRule(_localctx, 8, RULE_pr_GrammarRule);
-		try {
-			State = 155;
-			ErrorHandler.Sync(this);
-			switch ( Interpreter.AdaptivePredict(TokenStream,1,Context) ) {
-			case 1:
-				_localctx = new Pr_GrammarRuleAlt1Context(_localctx);
+			Pr_MainContext _localctx = new Pr_MainContext(Context, State);
+			EnterRule(_localctx, 0, RULE_pr_Main);
+			int _la;
+			try
+			{
 				EnterOuterAlt(_localctx, 1);
 				{
-				State = 153;
-				((Pr_GrammarRuleAlt1Context)_localctx).E_Rule = pr_Rule();
-				}
-				break;
-			case 2:
-				_localctx = new Pr_GrammarRuleAlt2Context(_localctx);
-				EnterOuterAlt(_localctx, 2);
-				{
-				State = 154;
-				((Pr_GrammarRuleAlt2Context)_localctx).E_LexerRule = pr_LexerRule();
-				}
-				break;
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			ErrorHandler.ReportError(this, re);
-			ErrorHandler.Recover(this, re);
-		}
-		finally {
-			ExitRule();
-		}
-		return _localctx;
-	}
-
-	public partial class Pr_RuleContext : ParserRuleContext {
-		public Pr_ParserAnnotationContext _pr_ParserAnnotation;
-		public IList<Pr_ParserAnnotationContext> _E_annotations = new List<Pr_ParserAnnotationContext>();
-		public Pr_RuleBlock1Context E_Block;
-		public IToken E_TColon;
-		public Pr_AlternativeContext E_alternatives1;
-		public IToken _LR_TBar;
-		public IList<IToken> _E_TBar1 = new List<IToken>();
-		public Pr_AlternativeContext _pr_Alternative;
-		public IList<Pr_AlternativeContext> _E_alternatives2 = new List<Pr_AlternativeContext>();
-		public IToken E_TSemicolon;
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_RuleBlock1Context pr_RuleBlock1() {
-			return GetRuleContext<Pr_RuleBlock1Context>(0);
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TColon() { return GetToken(CompilerParser.LR_TColon, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_AlternativeContext[] pr_Alternative() {
-			return GetRuleContexts<Pr_AlternativeContext>();
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_AlternativeContext pr_Alternative(int i) {
-			return GetRuleContext<Pr_AlternativeContext>(i);
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TSemicolon() { return GetToken(CompilerParser.LR_TSemicolon, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_ParserAnnotationContext[] pr_ParserAnnotation() {
-			return GetRuleContexts<Pr_ParserAnnotationContext>();
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_ParserAnnotationContext pr_ParserAnnotation(int i) {
-			return GetRuleContext<Pr_ParserAnnotationContext>(i);
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode[] LR_TBar() { return GetTokens(CompilerParser.LR_TBar); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TBar(int i) {
-			return GetToken(CompilerParser.LR_TBar, i);
-		}
-		public Pr_RuleContext(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
-		{
-		}
-		public override int RuleIndex { get { return RULE_pr_Rule; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitPr_Rule(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-
-	[RuleVersion(0)]
-	public Pr_RuleContext pr_Rule() {
-		Pr_RuleContext _localctx = new Pr_RuleContext(Context, State);
-		EnterRule(_localctx, 10, RULE_pr_Rule);
-		int _la;
-		try {
-			EnterOuterAlt(_localctx, 1);
-			{
-			State = 160;
-			ErrorHandler.Sync(this);
-			_la = TokenStream.LA(1);
-			while (_la==LR_TLBracket) {
-				{
-				{
-				State = 157;
-				_localctx._pr_ParserAnnotation = pr_ParserAnnotation();
-				_localctx._E_annotations.Add(_localctx._pr_ParserAnnotation);
-				}
-				}
-				State = 162;
-				ErrorHandler.Sync(this);
-				_la = TokenStream.LA(1);
-			}
-			State = 163;
-			_localctx.E_Block = pr_RuleBlock1();
-			State = 164;
-			_localctx.E_TColon = Match(LR_TColon);
-			State = 165;
-			_localctx.E_alternatives1 = pr_Alternative();
-			State = 170;
-			ErrorHandler.Sync(this);
-			_la = TokenStream.LA(1);
-			while (_la==LR_TBar) {
-				{
-				{
-				State = 166;
-				_localctx._LR_TBar = Match(LR_TBar);
-				_localctx._E_TBar1.Add(_localctx._LR_TBar);
-				State = 167;
-				_localctx._pr_Alternative = pr_Alternative();
-				_localctx._E_alternatives2.Add(_localctx._pr_Alternative);
-				}
-				}
-				State = 172;
-				ErrorHandler.Sync(this);
-				_la = TokenStream.LA(1);
-			}
-			State = 173;
-			_localctx.E_TSemicolon = Match(LR_TSemicolon);
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			ErrorHandler.ReportError(this, re);
-			ErrorHandler.Recover(this, re);
-		}
-		finally {
-			ExitRule();
-		}
-		return _localctx;
-	}
-
-	public partial class Pr_AlternativeContext : ParserRuleContext {
-		public Pr_AlternativeBlock1Context E_Block;
-		public Pr_ElementContext _pr_Element;
-		public IList<Pr_ElementContext> _E_elements = new List<Pr_ElementContext>();
-		public Pr_AlternativeBlock2Context E_Block1;
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_AlternativeBlock1Context pr_AlternativeBlock1() {
-			return GetRuleContext<Pr_AlternativeBlock1Context>(0);
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_ElementContext[] pr_Element() {
-			return GetRuleContexts<Pr_ElementContext>();
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_ElementContext pr_Element(int i) {
-			return GetRuleContext<Pr_ElementContext>(i);
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_AlternativeBlock2Context pr_AlternativeBlock2() {
-			return GetRuleContext<Pr_AlternativeBlock2Context>(0);
-		}
-		public Pr_AlternativeContext(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
-		{
-		}
-		public override int RuleIndex { get { return RULE_pr_Alternative; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitPr_Alternative(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-
-	[RuleVersion(0)]
-	public Pr_AlternativeContext pr_Alternative() {
-		Pr_AlternativeContext _localctx = new Pr_AlternativeContext(Context, State);
-		EnterRule(_localctx, 12, RULE_pr_Alternative);
-		int _la;
-		try {
-			EnterOuterAlt(_localctx, 1);
-			{
-			State = 176;
-			ErrorHandler.Sync(this);
-			switch ( Interpreter.AdaptivePredict(TokenStream,4,Context) ) {
-			case 1:
-				{
-				State = 175;
-				_localctx.E_Block = pr_AlternativeBlock1();
-				}
-				break;
-			}
-			State = 179;
-			ErrorHandler.Sync(this);
-			_la = TokenStream.LA(1);
-			do {
-				{
-				{
-				State = 178;
-				_localctx._pr_Element = pr_Element();
-				_localctx._E_elements.Add(_localctx._pr_Element);
-				}
-				}
-				State = 181;
-				ErrorHandler.Sync(this);
-				_la = TokenStream.LA(1);
-			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & 7881299348434176L) != 0) );
-			State = 184;
-			ErrorHandler.Sync(this);
-			_la = TokenStream.LA(1);
-			if (_la==LR_TEqGt) {
-				{
-				State = 183;
-				_localctx.E_Block1 = pr_AlternativeBlock2();
-				}
-			}
-
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			ErrorHandler.ReportError(this, re);
-			ErrorHandler.Recover(this, re);
-		}
-		finally {
-			ExitRule();
-		}
-		return _localctx;
-	}
-
-	public partial class Pr_ElementContext : ParserRuleContext {
-		public Pr_ElementBlock1Context E_Block;
-		public Pr_ElementValueContext E_value;
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_ElementValueContext pr_ElementValue() {
-			return GetRuleContext<Pr_ElementValueContext>(0);
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_ElementBlock1Context pr_ElementBlock1() {
-			return GetRuleContext<Pr_ElementBlock1Context>(0);
-		}
-		public Pr_ElementContext(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
-		{
-		}
-		public override int RuleIndex { get { return RULE_pr_Element; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitPr_Element(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-
-	[RuleVersion(0)]
-	public Pr_ElementContext pr_Element() {
-		Pr_ElementContext _localctx = new Pr_ElementContext(Context, State);
-		EnterRule(_localctx, 14, RULE_pr_Element);
-		try {
-			EnterOuterAlt(_localctx, 1);
-			{
-			State = 187;
-			ErrorHandler.Sync(this);
-			switch ( Interpreter.AdaptivePredict(TokenStream,7,Context) ) {
-			case 1:
-				{
-				State = 186;
-				_localctx.E_Block = pr_ElementBlock1();
-				}
-				break;
-			}
-			State = 189;
-			_localctx.E_value = pr_ElementValue();
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			ErrorHandler.ReportError(this, re);
-			ErrorHandler.Recover(this, re);
-		}
-		finally {
-			ExitRule();
-		}
-		return _localctx;
-	}
-
-	public partial class Pr_ElementValueContext : ParserRuleContext {
-		public Pr_ElementValueContext(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
-		{
-		}
-		public override int RuleIndex { get { return RULE_pr_ElementValue; } }
-	 
-		public Pr_ElementValueContext() { }
-		public virtual void CopyFrom(Pr_ElementValueContext context) {
-			base.CopyFrom(context);
-		}
-	}
-	public partial class Pr_ElementValueAlt3Context : Pr_ElementValueContext {
-		public Pr_FixedContext E_Fixed;
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_FixedContext pr_Fixed() {
-			return GetRuleContext<Pr_FixedContext>(0);
-		}
-		public Pr_ElementValueAlt3Context(Pr_ElementValueContext context) { CopyFrom(context); }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitPr_ElementValueAlt3(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-	public partial class Pr_ElementValueAlt4Context : Pr_ElementValueContext {
-		public Pr_RuleRefContext E_RuleRef;
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_RuleRefContext pr_RuleRef() {
-			return GetRuleContext<Pr_RuleRefContext>(0);
-		}
-		public Pr_ElementValueAlt4Context(Pr_ElementValueContext context) { CopyFrom(context); }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitPr_ElementValueAlt4(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-	public partial class Pr_ElementValueAlt1Context : Pr_ElementValueContext {
-		public Pr_BlockContext E_Block;
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_BlockContext pr_Block() {
-			return GetRuleContext<Pr_BlockContext>(0);
-		}
-		public Pr_ElementValueAlt1Context(Pr_ElementValueContext context) { CopyFrom(context); }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitPr_ElementValueAlt1(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-	public partial class Pr_ElementValueAlt2Context : Pr_ElementValueContext {
-		public Pr_Eof1Context E_Eof1;
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_Eof1Context pr_Eof1() {
-			return GetRuleContext<Pr_Eof1Context>(0);
-		}
-		public Pr_ElementValueAlt2Context(Pr_ElementValueContext context) { CopyFrom(context); }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitPr_ElementValueAlt2(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-
-	[RuleVersion(0)]
-	public Pr_ElementValueContext pr_ElementValue() {
-		Pr_ElementValueContext _localctx = new Pr_ElementValueContext(Context, State);
-		EnterRule(_localctx, 16, RULE_pr_ElementValue);
-		try {
-			State = 195;
-			ErrorHandler.Sync(this);
-			switch ( Interpreter.AdaptivePredict(TokenStream,8,Context) ) {
-			case 1:
-				_localctx = new Pr_ElementValueAlt1Context(_localctx);
-				EnterOuterAlt(_localctx, 1);
-				{
-				State = 191;
-				((Pr_ElementValueAlt1Context)_localctx).E_Block = pr_Block();
-				}
-				break;
-			case 2:
-				_localctx = new Pr_ElementValueAlt2Context(_localctx);
-				EnterOuterAlt(_localctx, 2);
-				{
-				State = 192;
-				((Pr_ElementValueAlt2Context)_localctx).E_Eof1 = pr_Eof1();
-				}
-				break;
-			case 3:
-				_localctx = new Pr_ElementValueAlt3Context(_localctx);
-				EnterOuterAlt(_localctx, 3);
-				{
-				State = 193;
-				((Pr_ElementValueAlt3Context)_localctx).E_Fixed = pr_Fixed();
-				}
-				break;
-			case 4:
-				_localctx = new Pr_ElementValueAlt4Context(_localctx);
-				EnterOuterAlt(_localctx, 4);
-				{
-				State = 194;
-				((Pr_ElementValueAlt4Context)_localctx).E_RuleRef = pr_RuleRef();
-				}
-				break;
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			ErrorHandler.ReportError(this, re);
-			ErrorHandler.Recover(this, re);
-		}
-		finally {
-			ExitRule();
-		}
-		return _localctx;
-	}
-
-	public partial class Pr_BlockContext : ParserRuleContext {
-		public Pr_ParserAnnotationContext _pr_ParserAnnotation;
-		public IList<Pr_ParserAnnotationContext> _E_annotations = new List<Pr_ParserAnnotationContext>();
-		public IToken E_TLParen;
-		public Pr_BlockAlternativeContext E_alternatives1;
-		public IToken _LR_TBar;
-		public IList<IToken> _E_TBar1 = new List<IToken>();
-		public Pr_BlockAlternativeContext _pr_BlockAlternative;
-		public IList<Pr_BlockAlternativeContext> _E_alternatives2 = new List<Pr_BlockAlternativeContext>();
-		public IToken E_TRParen;
-		public Pr_MultiplicityContext E_multiplicity;
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TLParen() { return GetToken(CompilerParser.LR_TLParen, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_BlockAlternativeContext[] pr_BlockAlternative() {
-			return GetRuleContexts<Pr_BlockAlternativeContext>();
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_BlockAlternativeContext pr_BlockAlternative(int i) {
-			return GetRuleContext<Pr_BlockAlternativeContext>(i);
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TRParen() { return GetToken(CompilerParser.LR_TRParen, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_ParserAnnotationContext[] pr_ParserAnnotation() {
-			return GetRuleContexts<Pr_ParserAnnotationContext>();
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_ParserAnnotationContext pr_ParserAnnotation(int i) {
-			return GetRuleContext<Pr_ParserAnnotationContext>(i);
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode[] LR_TBar() { return GetTokens(CompilerParser.LR_TBar); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TBar(int i) {
-			return GetToken(CompilerParser.LR_TBar, i);
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_MultiplicityContext pr_Multiplicity() {
-			return GetRuleContext<Pr_MultiplicityContext>(0);
-		}
-		public Pr_BlockContext(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
-		{
-		}
-		public override int RuleIndex { get { return RULE_pr_Block; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitPr_Block(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-
-	[RuleVersion(0)]
-	public Pr_BlockContext pr_Block() {
-		Pr_BlockContext _localctx = new Pr_BlockContext(Context, State);
-		EnterRule(_localctx, 18, RULE_pr_Block);
-		int _la;
-		try {
-			EnterOuterAlt(_localctx, 1);
-			{
-			State = 200;
-			ErrorHandler.Sync(this);
-			_la = TokenStream.LA(1);
-			while (_la==LR_TLBracket) {
-				{
-				{
-				State = 197;
-				_localctx._pr_ParserAnnotation = pr_ParserAnnotation();
-				_localctx._E_annotations.Add(_localctx._pr_ParserAnnotation);
-				}
-				}
-				State = 202;
-				ErrorHandler.Sync(this);
-				_la = TokenStream.LA(1);
-			}
-			State = 203;
-			_localctx.E_TLParen = Match(LR_TLParen);
-			State = 204;
-			_localctx.E_alternatives1 = pr_BlockAlternative();
-			State = 209;
-			ErrorHandler.Sync(this);
-			_la = TokenStream.LA(1);
-			while (_la==LR_TBar) {
-				{
-				{
-				State = 205;
-				_localctx._LR_TBar = Match(LR_TBar);
-				_localctx._E_TBar1.Add(_localctx._LR_TBar);
-				State = 206;
-				_localctx._pr_BlockAlternative = pr_BlockAlternative();
-				_localctx._E_alternatives2.Add(_localctx._pr_BlockAlternative);
-				}
-				}
-				State = 211;
-				ErrorHandler.Sync(this);
-				_la = TokenStream.LA(1);
-			}
-			State = 212;
-			_localctx.E_TRParen = Match(LR_TRParen);
-			State = 214;
-			ErrorHandler.Sync(this);
-			_la = TokenStream.LA(1);
-			if ((((_la) & ~0x3f) == 0 && ((1L << _la) & 2113929216L) != 0)) {
-				{
-				State = 213;
-				_localctx.E_multiplicity = pr_Multiplicity();
-				}
-			}
-
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			ErrorHandler.ReportError(this, re);
-			ErrorHandler.Recover(this, re);
-		}
-		finally {
-			ExitRule();
-		}
-		return _localctx;
-	}
-
-	public partial class Pr_BlockAlternativeContext : ParserRuleContext {
-		public Pr_ElementContext _pr_Element;
-		public IList<Pr_ElementContext> _E_elements = new List<Pr_ElementContext>();
-		public Pr_BlockAlternativeBlock1Context E_Block;
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_ElementContext[] pr_Element() {
-			return GetRuleContexts<Pr_ElementContext>();
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_ElementContext pr_Element(int i) {
-			return GetRuleContext<Pr_ElementContext>(i);
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_BlockAlternativeBlock1Context pr_BlockAlternativeBlock1() {
-			return GetRuleContext<Pr_BlockAlternativeBlock1Context>(0);
-		}
-		public Pr_BlockAlternativeContext(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
-		{
-		}
-		public override int RuleIndex { get { return RULE_pr_BlockAlternative; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitPr_BlockAlternative(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-
-	[RuleVersion(0)]
-	public Pr_BlockAlternativeContext pr_BlockAlternative() {
-		Pr_BlockAlternativeContext _localctx = new Pr_BlockAlternativeContext(Context, State);
-		EnterRule(_localctx, 20, RULE_pr_BlockAlternative);
-		int _la;
-		try {
-			EnterOuterAlt(_localctx, 1);
-			{
-			State = 217;
-			ErrorHandler.Sync(this);
-			_la = TokenStream.LA(1);
-			do {
-				{
-				{
-				State = 216;
-				_localctx._pr_Element = pr_Element();
-				_localctx._E_elements.Add(_localctx._pr_Element);
-				}
-				}
-				State = 219;
-				ErrorHandler.Sync(this);
-				_la = TokenStream.LA(1);
-			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & 7881299348434176L) != 0) );
-			State = 222;
-			ErrorHandler.Sync(this);
-			_la = TokenStream.LA(1);
-			if (_la==LR_TEqGt) {
-				{
-				State = 221;
-				_localctx.E_Block = pr_BlockAlternativeBlock1();
-				}
-			}
-
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			ErrorHandler.ReportError(this, re);
-			ErrorHandler.Recover(this, re);
-		}
-		finally {
-			ExitRule();
-		}
-		return _localctx;
-	}
-
-	public partial class Pr_RuleRefContext : ParserRuleContext {
-		public Pr_RuleRefContext(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
-		{
-		}
-		public override int RuleIndex { get { return RULE_pr_RuleRef; } }
-	 
-		public Pr_RuleRefContext() { }
-		public virtual void CopyFrom(Pr_RuleRefContext context) {
-			base.CopyFrom(context);
-		}
-	}
-	public partial class Pr_RuleRefAlt2Context : Pr_RuleRefContext {
-		public Pr_ParserAnnotationContext _pr_ParserAnnotation;
-		public IList<Pr_ParserAnnotationContext> _E_annotations1 = new List<Pr_ParserAnnotationContext>();
-		public IToken E_THash;
-		public Pr_TypeReferenceContext E_referencedTypes;
-		public Pr_MultiplicityContext E_multiplicity1;
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_THash() { return GetToken(CompilerParser.LR_THash, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_TypeReferenceContext pr_TypeReference() {
-			return GetRuleContext<Pr_TypeReferenceContext>(0);
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_ParserAnnotationContext[] pr_ParserAnnotation() {
-			return GetRuleContexts<Pr_ParserAnnotationContext>();
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_ParserAnnotationContext pr_ParserAnnotation(int i) {
-			return GetRuleContext<Pr_ParserAnnotationContext>(i);
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_MultiplicityContext pr_Multiplicity() {
-			return GetRuleContext<Pr_MultiplicityContext>(0);
-		}
-		public Pr_RuleRefAlt2Context(Pr_RuleRefContext context) { CopyFrom(context); }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitPr_RuleRefAlt2(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-	public partial class Pr_RuleRefAlt1Context : Pr_RuleRefContext {
-		public Pr_ParserAnnotationContext _pr_ParserAnnotation;
-		public IList<Pr_ParserAnnotationContext> _E_annotations = new List<Pr_ParserAnnotationContext>();
-		public Pr_IdentifierContext E_grammarRule;
-		public Pr_MultiplicityContext E_multiplicity;
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_IdentifierContext pr_Identifier() {
-			return GetRuleContext<Pr_IdentifierContext>(0);
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_ParserAnnotationContext[] pr_ParserAnnotation() {
-			return GetRuleContexts<Pr_ParserAnnotationContext>();
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_ParserAnnotationContext pr_ParserAnnotation(int i) {
-			return GetRuleContext<Pr_ParserAnnotationContext>(i);
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_MultiplicityContext pr_Multiplicity() {
-			return GetRuleContext<Pr_MultiplicityContext>(0);
-		}
-		public Pr_RuleRefAlt1Context(Pr_RuleRefContext context) { CopyFrom(context); }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitPr_RuleRefAlt1(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-	public partial class Pr_RuleRefAlt3Context : Pr_RuleRefContext {
-		public Pr_ParserAnnotationContext _pr_ParserAnnotation;
-		public IList<Pr_ParserAnnotationContext> _E_annotations2 = new List<Pr_ParserAnnotationContext>();
-		public IToken E_THashLBrace;
-		public Pr_TypeReferenceContext E_referencedTypes1;
-		public IToken _LR_TComma;
-		public IList<IToken> _E_TComma1 = new List<IToken>();
-		public Pr_TypeReferenceContext _pr_TypeReference;
-		public IList<Pr_TypeReferenceContext> _E_referencedTypes2 = new List<Pr_TypeReferenceContext>();
-		public Pr_RuleRefAlt3Block1Context E_Block;
-		public IToken E_TRBrace;
-		public Pr_MultiplicityContext E_multiplicity2;
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_THashLBrace() { return GetToken(CompilerParser.LR_THashLBrace, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_TypeReferenceContext[] pr_TypeReference() {
-			return GetRuleContexts<Pr_TypeReferenceContext>();
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_TypeReferenceContext pr_TypeReference(int i) {
-			return GetRuleContext<Pr_TypeReferenceContext>(i);
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TRBrace() { return GetToken(CompilerParser.LR_TRBrace, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_ParserAnnotationContext[] pr_ParserAnnotation() {
-			return GetRuleContexts<Pr_ParserAnnotationContext>();
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_ParserAnnotationContext pr_ParserAnnotation(int i) {
-			return GetRuleContext<Pr_ParserAnnotationContext>(i);
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode[] LR_TComma() { return GetTokens(CompilerParser.LR_TComma); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TComma(int i) {
-			return GetToken(CompilerParser.LR_TComma, i);
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_RuleRefAlt3Block1Context pr_RuleRefAlt3Block1() {
-			return GetRuleContext<Pr_RuleRefAlt3Block1Context>(0);
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_MultiplicityContext pr_Multiplicity() {
-			return GetRuleContext<Pr_MultiplicityContext>(0);
-		}
-		public Pr_RuleRefAlt3Context(Pr_RuleRefContext context) { CopyFrom(context); }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitPr_RuleRefAlt3(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-
-	[RuleVersion(0)]
-	public Pr_RuleRefContext pr_RuleRef() {
-		Pr_RuleRefContext _localctx = new Pr_RuleRefContext(Context, State);
-		EnterRule(_localctx, 22, RULE_pr_RuleRef);
-		int _la;
-		try {
-			State = 267;
-			ErrorHandler.Sync(this);
-			switch ( Interpreter.AdaptivePredict(TokenStream,22,Context) ) {
-			case 1:
-				_localctx = new Pr_RuleRefAlt1Context(_localctx);
-				EnterOuterAlt(_localctx, 1);
-				{
-				State = 227;
-				ErrorHandler.Sync(this);
-				_la = TokenStream.LA(1);
-				while (_la==LR_TLBracket) {
-					{
-					{
-					State = 224;
-					((Pr_RuleRefAlt1Context)_localctx)._pr_ParserAnnotation = pr_ParserAnnotation();
-					((Pr_RuleRefAlt1Context)_localctx)._E_annotations.Add(((Pr_RuleRefAlt1Context)_localctx)._pr_ParserAnnotation);
-					}
-					}
-					State = 229;
+					State = 132;
+					_localctx.E_KNamespace = Match(LR_KNamespace);
+					State = 133;
+					_localctx.E_Qualifier = pr_Qualifier();
+					State = 134;
+					_localctx.E_TSemicolon = Match(LR_TSemicolon);
+					State = 138;
 					ErrorHandler.Sync(this);
 					_la = TokenStream.LA(1);
-				}
-				State = 230;
-				((Pr_RuleRefAlt1Context)_localctx).E_grammarRule = pr_Identifier();
-				State = 232;
-				ErrorHandler.Sync(this);
-				_la = TokenStream.LA(1);
-				if ((((_la) & ~0x3f) == 0 && ((1L << _la) & 2113929216L) != 0)) {
+					while (_la == LR_KUsing)
 					{
-					State = 231;
-					((Pr_RuleRefAlt1Context)_localctx).E_multiplicity = pr_Multiplicity();
+						{
+							{
+								State = 135;
+								_localctx._pr_MainBlock1 = pr_MainBlock1();
+								_localctx._E_Block.Add(_localctx._pr_MainBlock1);
+							}
+						}
+						State = 140;
+						ErrorHandler.Sync(this);
+						_la = TokenStream.LA(1);
 					}
+					State = 141;
+					_localctx.E_Block1 = pr_MainBlock2();
+					State = 142;
+					_localctx.E_EndOfFileToken = Match(Eof);
 				}
+			}
+			catch (RecognitionException re)
+			{
+				_localctx.exception = re;
+				ErrorHandler.ReportError(this, re);
+				ErrorHandler.Recover(this, re);
+			}
+			finally
+			{
+				ExitRule();
+			}
+			return _localctx;
+		}
 
-				}
-				break;
-			case 2:
-				_localctx = new Pr_RuleRefAlt2Context(_localctx);
-				EnterOuterAlt(_localctx, 2);
-				{
-				State = 237;
+		public partial class Pr_UsingContext : ParserRuleContext
+		{
+			public Pr_UsingContext(ParserRuleContext parent, int invokingState)
+				: base(parent, invokingState)
+			{
+			}
+			public override int RuleIndex { get { return RULE_pr_Using; } }
+
+			public Pr_UsingContext() { }
+			public virtual void CopyFrom(Pr_UsingContext context)
+			{
+				base.CopyFrom(context);
+			}
+		}
+		public partial class Pr_UsingMetaModelContext : Pr_UsingContext
+		{
+			public IToken E_KMetamodel;
+			public Pr_QualifierContext E_metaModels;
+			[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_KMetamodel() { return GetToken(CompilerParser.LR_KMetamodel, 0); }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_QualifierContext pr_Qualifier()
+			{
+				return GetRuleContext<Pr_QualifierContext>(0);
+			}
+			public Pr_UsingMetaModelContext(Pr_UsingContext context) { CopyFrom(context); }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor)
+			{
+				ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
+				if (typedVisitor != null) return typedVisitor.VisitPr_UsingMetaModel(this);
+				else return visitor.VisitChildren(this);
+			}
+		}
+		public partial class Pr_UsingAlt2Context : Pr_UsingContext
+		{
+			public Pr_QualifierContext E_namespaces;
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_QualifierContext pr_Qualifier()
+			{
+				return GetRuleContext<Pr_QualifierContext>(0);
+			}
+			public Pr_UsingAlt2Context(Pr_UsingContext context) { CopyFrom(context); }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor)
+			{
+				ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
+				if (typedVisitor != null) return typedVisitor.VisitPr_UsingAlt2(this);
+				else return visitor.VisitChildren(this);
+			}
+		}
+
+		[RuleVersion(0)]
+		public Pr_UsingContext pr_Using()
+		{
+			Pr_UsingContext _localctx = new Pr_UsingContext(Context, State);
+			EnterRule(_localctx, 2, RULE_pr_Using);
+			try
+			{
+				State = 147;
 				ErrorHandler.Sync(this);
-				_la = TokenStream.LA(1);
-				while (_la==LR_TLBracket) {
-					{
-					{
-					State = 234;
-					((Pr_RuleRefAlt2Context)_localctx)._pr_ParserAnnotation = pr_ParserAnnotation();
-					((Pr_RuleRefAlt2Context)_localctx)._E_annotations1.Add(((Pr_RuleRefAlt2Context)_localctx)._pr_ParserAnnotation);
-					}
-					}
-					State = 239;
+				switch (TokenStream.LA(1))
+				{
+					case LR_KMetamodel:
+						_localctx = new Pr_UsingMetaModelContext(_localctx);
+						EnterOuterAlt(_localctx, 1);
+						{
+							State = 144;
+							((Pr_UsingMetaModelContext)_localctx).E_KMetamodel = Match(LR_KMetamodel);
+							State = 145;
+							((Pr_UsingMetaModelContext)_localctx).E_metaModels = pr_Qualifier();
+						}
+						break;
+					case LR_TIdentifier:
+					case LR_TVerbatimIdentifier:
+						_localctx = new Pr_UsingAlt2Context(_localctx);
+						EnterOuterAlt(_localctx, 2);
+						{
+							State = 146;
+							((Pr_UsingAlt2Context)_localctx).E_namespaces = pr_Qualifier();
+						}
+						break;
+					default:
+						throw new NoViableAltException(this);
+				}
+			}
+			catch (RecognitionException re)
+			{
+				_localctx.exception = re;
+				ErrorHandler.ReportError(this, re);
+				ErrorHandler.Recover(this, re);
+			}
+			finally
+			{
+				ExitRule();
+			}
+			return _localctx;
+		}
+
+		public partial class Pr_LanguageDeclarationContext : ParserRuleContext
+		{
+			public IToken E_KLanguage;
+			public Pr_NameContext E_Name;
+			public IToken E_TSemicolon;
+			public Pr_GrammarContext E_grammar;
+			[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_KLanguage() { return GetToken(CompilerParser.LR_KLanguage, 0); }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_NameContext pr_Name()
+			{
+				return GetRuleContext<Pr_NameContext>(0);
+			}
+			[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TSemicolon() { return GetToken(CompilerParser.LR_TSemicolon, 0); }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_GrammarContext pr_Grammar()
+			{
+				return GetRuleContext<Pr_GrammarContext>(0);
+			}
+			public Pr_LanguageDeclarationContext(ParserRuleContext parent, int invokingState)
+				: base(parent, invokingState)
+			{
+			}
+			public override int RuleIndex { get { return RULE_pr_LanguageDeclaration; } }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor)
+			{
+				ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
+				if (typedVisitor != null) return typedVisitor.VisitPr_LanguageDeclaration(this);
+				else return visitor.VisitChildren(this);
+			}
+		}
+
+		[RuleVersion(0)]
+		public Pr_LanguageDeclarationContext pr_LanguageDeclaration()
+		{
+			Pr_LanguageDeclarationContext _localctx = new Pr_LanguageDeclarationContext(Context, State);
+			EnterRule(_localctx, 4, RULE_pr_LanguageDeclaration);
+			try
+			{
+				EnterOuterAlt(_localctx, 1);
+				{
+					State = 149;
+					_localctx.E_KLanguage = Match(LR_KLanguage);
+					State = 150;
+					_localctx.E_Name = pr_Name();
+					State = 151;
+					_localctx.E_TSemicolon = Match(LR_TSemicolon);
+					State = 152;
+					_localctx.E_grammar = pr_Grammar();
+				}
+			}
+			catch (RecognitionException re)
+			{
+				_localctx.exception = re;
+				ErrorHandler.ReportError(this, re);
+				ErrorHandler.Recover(this, re);
+			}
+			finally
+			{
+				ExitRule();
+			}
+			return _localctx;
+		}
+
+		public partial class Pr_GrammarContext : ParserRuleContext
+		{
+			public Pr_GrammarBlock1Context E_Block;
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_GrammarBlock1Context pr_GrammarBlock1()
+			{
+				return GetRuleContext<Pr_GrammarBlock1Context>(0);
+			}
+			public Pr_GrammarContext(ParserRuleContext parent, int invokingState)
+				: base(parent, invokingState)
+			{
+			}
+			public override int RuleIndex { get { return RULE_pr_Grammar; } }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor)
+			{
+				ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
+				if (typedVisitor != null) return typedVisitor.VisitPr_Grammar(this);
+				else return visitor.VisitChildren(this);
+			}
+		}
+
+		[RuleVersion(0)]
+		public Pr_GrammarContext pr_Grammar()
+		{
+			Pr_GrammarContext _localctx = new Pr_GrammarContext(Context, State);
+			EnterRule(_localctx, 6, RULE_pr_Grammar);
+			try
+			{
+				EnterOuterAlt(_localctx, 1);
+				{
+					State = 154;
+					_localctx.E_Block = pr_GrammarBlock1();
+				}
+			}
+			catch (RecognitionException re)
+			{
+				_localctx.exception = re;
+				ErrorHandler.ReportError(this, re);
+				ErrorHandler.Recover(this, re);
+			}
+			finally
+			{
+				ExitRule();
+			}
+			return _localctx;
+		}
+
+		public partial class Pr_GrammarRuleContext : ParserRuleContext
+		{
+			public Pr_GrammarRuleContext(ParserRuleContext parent, int invokingState)
+				: base(parent, invokingState)
+			{
+			}
+			public override int RuleIndex { get { return RULE_pr_GrammarRule; } }
+
+			public Pr_GrammarRuleContext() { }
+			public virtual void CopyFrom(Pr_GrammarRuleContext context)
+			{
+				base.CopyFrom(context);
+			}
+		}
+		public partial class Pr_GrammarRuleAlt1Context : Pr_GrammarRuleContext
+		{
+			public Pr_RuleContext E_Rule;
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_RuleContext pr_Rule()
+			{
+				return GetRuleContext<Pr_RuleContext>(0);
+			}
+			public Pr_GrammarRuleAlt1Context(Pr_GrammarRuleContext context) { CopyFrom(context); }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor)
+			{
+				ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
+				if (typedVisitor != null) return typedVisitor.VisitPr_GrammarRuleAlt1(this);
+				else return visitor.VisitChildren(this);
+			}
+		}
+		public partial class Pr_GrammarRuleAlt2Context : Pr_GrammarRuleContext
+		{
+			public Pr_LexerRuleContext E_LexerRule;
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_LexerRuleContext pr_LexerRule()
+			{
+				return GetRuleContext<Pr_LexerRuleContext>(0);
+			}
+			public Pr_GrammarRuleAlt2Context(Pr_GrammarRuleContext context) { CopyFrom(context); }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor)
+			{
+				ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
+				if (typedVisitor != null) return typedVisitor.VisitPr_GrammarRuleAlt2(this);
+				else return visitor.VisitChildren(this);
+			}
+		}
+
+		[RuleVersion(0)]
+		public Pr_GrammarRuleContext pr_GrammarRule()
+		{
+			Pr_GrammarRuleContext _localctx = new Pr_GrammarRuleContext(Context, State);
+			EnterRule(_localctx, 8, RULE_pr_GrammarRule);
+			try
+			{
+				State = 158;
+				ErrorHandler.Sync(this);
+				switch (Interpreter.AdaptivePredict(TokenStream, 2, Context))
+				{
+					case 1:
+						_localctx = new Pr_GrammarRuleAlt1Context(_localctx);
+						EnterOuterAlt(_localctx, 1);
+						{
+							State = 156;
+							((Pr_GrammarRuleAlt1Context)_localctx).E_Rule = pr_Rule();
+						}
+						break;
+					case 2:
+						_localctx = new Pr_GrammarRuleAlt2Context(_localctx);
+						EnterOuterAlt(_localctx, 2);
+						{
+							State = 157;
+							((Pr_GrammarRuleAlt2Context)_localctx).E_LexerRule = pr_LexerRule();
+						}
+						break;
+				}
+			}
+			catch (RecognitionException re)
+			{
+				_localctx.exception = re;
+				ErrorHandler.ReportError(this, re);
+				ErrorHandler.Recover(this, re);
+			}
+			finally
+			{
+				ExitRule();
+			}
+			return _localctx;
+		}
+
+		public partial class Pr_RuleContext : ParserRuleContext
+		{
+			public Pr_ParserAnnotationContext _pr_ParserAnnotation;
+			public IList<Pr_ParserAnnotationContext> _E_annotations = new List<Pr_ParserAnnotationContext>();
+			public Pr_RuleBlock1Context E_Block;
+			public IToken E_TColon;
+			public Pr_AlternativeContext E_alternatives1;
+			public IToken _LR_TBar;
+			public IList<IToken> _E_TBar1 = new List<IToken>();
+			public Pr_AlternativeContext _pr_Alternative;
+			public IList<Pr_AlternativeContext> _E_alternatives2 = new List<Pr_AlternativeContext>();
+			public IToken E_TSemicolon;
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_RuleBlock1Context pr_RuleBlock1()
+			{
+				return GetRuleContext<Pr_RuleBlock1Context>(0);
+			}
+			[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TColon() { return GetToken(CompilerParser.LR_TColon, 0); }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_AlternativeContext[] pr_Alternative()
+			{
+				return GetRuleContexts<Pr_AlternativeContext>();
+			}
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_AlternativeContext pr_Alternative(int i)
+			{
+				return GetRuleContext<Pr_AlternativeContext>(i);
+			}
+			[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TSemicolon() { return GetToken(CompilerParser.LR_TSemicolon, 0); }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_ParserAnnotationContext[] pr_ParserAnnotation()
+			{
+				return GetRuleContexts<Pr_ParserAnnotationContext>();
+			}
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_ParserAnnotationContext pr_ParserAnnotation(int i)
+			{
+				return GetRuleContext<Pr_ParserAnnotationContext>(i);
+			}
+			[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode[] LR_TBar() { return GetTokens(CompilerParser.LR_TBar); }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public ITerminalNode LR_TBar(int i)
+			{
+				return GetToken(CompilerParser.LR_TBar, i);
+			}
+			public Pr_RuleContext(ParserRuleContext parent, int invokingState)
+				: base(parent, invokingState)
+			{
+			}
+			public override int RuleIndex { get { return RULE_pr_Rule; } }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor)
+			{
+				ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
+				if (typedVisitor != null) return typedVisitor.VisitPr_Rule(this);
+				else return visitor.VisitChildren(this);
+			}
+		}
+
+		[RuleVersion(0)]
+		public Pr_RuleContext pr_Rule()
+		{
+			Pr_RuleContext _localctx = new Pr_RuleContext(Context, State);
+			EnterRule(_localctx, 10, RULE_pr_Rule);
+			int _la;
+			try
+			{
+				EnterOuterAlt(_localctx, 1);
+				{
+					State = 163;
 					ErrorHandler.Sync(this);
 					_la = TokenStream.LA(1);
-				}
-				State = 240;
-				((Pr_RuleRefAlt2Context)_localctx).E_THash = Match(LR_THash);
-				State = 241;
-				((Pr_RuleRefAlt2Context)_localctx).E_referencedTypes = pr_TypeReference();
-				State = 243;
-				ErrorHandler.Sync(this);
-				_la = TokenStream.LA(1);
-				if ((((_la) & ~0x3f) == 0 && ((1L << _la) & 2113929216L) != 0)) {
+					while (_la == LR_TLBracket)
 					{
-					State = 242;
-					((Pr_RuleRefAlt2Context)_localctx).E_multiplicity1 = pr_Multiplicity();
+						{
+							{
+								State = 160;
+								_localctx._pr_ParserAnnotation = pr_ParserAnnotation();
+								_localctx._E_annotations.Add(_localctx._pr_ParserAnnotation);
+							}
+						}
+						State = 165;
+						ErrorHandler.Sync(this);
+						_la = TokenStream.LA(1);
 					}
-				}
-
-				}
-				break;
-			case 3:
-				_localctx = new Pr_RuleRefAlt3Context(_localctx);
-				EnterOuterAlt(_localctx, 3);
-				{
-				State = 248;
-				ErrorHandler.Sync(this);
-				_la = TokenStream.LA(1);
-				while (_la==LR_TLBracket) {
-					{
-					{
-					State = 245;
-					((Pr_RuleRefAlt3Context)_localctx)._pr_ParserAnnotation = pr_ParserAnnotation();
-					((Pr_RuleRefAlt3Context)_localctx)._E_annotations2.Add(((Pr_RuleRefAlt3Context)_localctx)._pr_ParserAnnotation);
-					}
-					}
-					State = 250;
+					State = 166;
+					_localctx.E_Block = pr_RuleBlock1();
+					State = 167;
+					_localctx.E_TColon = Match(LR_TColon);
+					State = 168;
+					_localctx.E_alternatives1 = pr_Alternative();
+					State = 173;
 					ErrorHandler.Sync(this);
 					_la = TokenStream.LA(1);
+					while (_la == LR_TBar)
+					{
+						{
+							{
+								State = 169;
+								_localctx._LR_TBar = Match(LR_TBar);
+								_localctx._E_TBar1.Add(_localctx._LR_TBar);
+								State = 170;
+								_localctx._pr_Alternative = pr_Alternative();
+								_localctx._E_alternatives2.Add(_localctx._pr_Alternative);
+							}
+						}
+						State = 175;
+						ErrorHandler.Sync(this);
+						_la = TokenStream.LA(1);
+					}
+					State = 176;
+					_localctx.E_TSemicolon = Match(LR_TSemicolon);
 				}
-				State = 251;
-				((Pr_RuleRefAlt3Context)_localctx).E_THashLBrace = Match(LR_THashLBrace);
-				State = 252;
-				((Pr_RuleRefAlt3Context)_localctx).E_referencedTypes1 = pr_TypeReference();
-				State = 257;
-				ErrorHandler.Sync(this);
-				_la = TokenStream.LA(1);
-				while (_la==LR_TComma) {
+			}
+			catch (RecognitionException re)
+			{
+				_localctx.exception = re;
+				ErrorHandler.ReportError(this, re);
+				ErrorHandler.Recover(this, re);
+			}
+			finally
+			{
+				ExitRule();
+			}
+			return _localctx;
+		}
+
+		public partial class Pr_AlternativeContext : ParserRuleContext
+		{
+			public Pr_AlternativeBlock1Context E_Block;
+			public Pr_ElementContext _pr_Element;
+			public IList<Pr_ElementContext> _E_elements = new List<Pr_ElementContext>();
+			public Pr_AlternativeBlock2Context E_Block1;
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_AlternativeBlock1Context pr_AlternativeBlock1()
+			{
+				return GetRuleContext<Pr_AlternativeBlock1Context>(0);
+			}
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_ElementContext[] pr_Element()
+			{
+				return GetRuleContexts<Pr_ElementContext>();
+			}
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_ElementContext pr_Element(int i)
+			{
+				return GetRuleContext<Pr_ElementContext>(i);
+			}
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_AlternativeBlock2Context pr_AlternativeBlock2()
+			{
+				return GetRuleContext<Pr_AlternativeBlock2Context>(0);
+			}
+			public Pr_AlternativeContext(ParserRuleContext parent, int invokingState)
+				: base(parent, invokingState)
+			{
+			}
+			public override int RuleIndex { get { return RULE_pr_Alternative; } }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor)
+			{
+				ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
+				if (typedVisitor != null) return typedVisitor.VisitPr_Alternative(this);
+				else return visitor.VisitChildren(this);
+			}
+		}
+
+		[RuleVersion(0)]
+		public Pr_AlternativeContext pr_Alternative()
+		{
+			Pr_AlternativeContext _localctx = new Pr_AlternativeContext(Context, State);
+			EnterRule(_localctx, 12, RULE_pr_Alternative);
+			int _la;
+			try
+			{
+				EnterOuterAlt(_localctx, 1);
+				{
+					State = 179;
+					ErrorHandler.Sync(this);
+					switch (Interpreter.AdaptivePredict(TokenStream, 5, Context))
 					{
-					{
-					State = 253;
-					((Pr_RuleRefAlt3Context)_localctx)._LR_TComma = Match(LR_TComma);
-					((Pr_RuleRefAlt3Context)_localctx)._E_TComma1.Add(((Pr_RuleRefAlt3Context)_localctx)._LR_TComma);
-					State = 254;
-					((Pr_RuleRefAlt3Context)_localctx)._pr_TypeReference = pr_TypeReference();
-					((Pr_RuleRefAlt3Context)_localctx)._E_referencedTypes2.Add(((Pr_RuleRefAlt3Context)_localctx)._pr_TypeReference);
+						case 1:
+							{
+								State = 178;
+								_localctx.E_Block = pr_AlternativeBlock1();
+							}
+							break;
 					}
-					}
-					State = 259;
+					State = 182;
 					ErrorHandler.Sync(this);
 					_la = TokenStream.LA(1);
-				}
-				State = 261;
-				ErrorHandler.Sync(this);
-				_la = TokenStream.LA(1);
-				if (_la==LR_TBar) {
+					do
 					{
-					State = 260;
-					((Pr_RuleRefAlt3Context)_localctx).E_Block = pr_RuleRefAlt3Block1();
+						{
+							{
+								State = 181;
+								_localctx._pr_Element = pr_Element();
+								_localctx._E_elements.Add(_localctx._pr_Element);
+							}
+						}
+						State = 184;
+						ErrorHandler.Sync(this);
+						_la = TokenStream.LA(1);
+					} while ((((_la) & ~0x3f) == 0 && ((1L << _la) & 15762598696332544L) != 0));
+					State = 187;
+					ErrorHandler.Sync(this);
+					_la = TokenStream.LA(1);
+					if (_la == LR_TEqGt)
+					{
+						{
+							State = 186;
+							_localctx.E_Block1 = pr_AlternativeBlock2();
+						}
+					}
+
+				}
+			}
+			catch (RecognitionException re)
+			{
+				_localctx.exception = re;
+				ErrorHandler.ReportError(this, re);
+				ErrorHandler.Recover(this, re);
+			}
+			finally
+			{
+				ExitRule();
+			}
+			return _localctx;
+		}
+
+		public partial class Pr_ElementContext : ParserRuleContext
+		{
+			public Pr_ElementBlock1Context E_Block;
+			public Pr_ElementValueContext E_value;
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_ElementValueContext pr_ElementValue()
+			{
+				return GetRuleContext<Pr_ElementValueContext>(0);
+			}
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_ElementBlock1Context pr_ElementBlock1()
+			{
+				return GetRuleContext<Pr_ElementBlock1Context>(0);
+			}
+			public Pr_ElementContext(ParserRuleContext parent, int invokingState)
+				: base(parent, invokingState)
+			{
+			}
+			public override int RuleIndex { get { return RULE_pr_Element; } }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor)
+			{
+				ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
+				if (typedVisitor != null) return typedVisitor.VisitPr_Element(this);
+				else return visitor.VisitChildren(this);
+			}
+		}
+
+		[RuleVersion(0)]
+		public Pr_ElementContext pr_Element()
+		{
+			Pr_ElementContext _localctx = new Pr_ElementContext(Context, State);
+			EnterRule(_localctx, 14, RULE_pr_Element);
+			try
+			{
+				EnterOuterAlt(_localctx, 1);
+				{
+					State = 190;
+					ErrorHandler.Sync(this);
+					switch (Interpreter.AdaptivePredict(TokenStream, 8, Context))
+					{
+						case 1:
+							{
+								State = 189;
+								_localctx.E_Block = pr_ElementBlock1();
+							}
+							break;
+					}
+					State = 192;
+					_localctx.E_value = pr_ElementValue();
+				}
+			}
+			catch (RecognitionException re)
+			{
+				_localctx.exception = re;
+				ErrorHandler.ReportError(this, re);
+				ErrorHandler.Recover(this, re);
+			}
+			finally
+			{
+				ExitRule();
+			}
+			return _localctx;
+		}
+
+		public partial class Pr_ElementValueContext : ParserRuleContext
+		{
+			public Pr_ElementValueContext(ParserRuleContext parent, int invokingState)
+				: base(parent, invokingState)
+			{
+			}
+			public override int RuleIndex { get { return RULE_pr_ElementValue; } }
+
+			public Pr_ElementValueContext() { }
+			public virtual void CopyFrom(Pr_ElementValueContext context)
+			{
+				base.CopyFrom(context);
+			}
+		}
+		public partial class Pr_ElementValueAlt3Context : Pr_ElementValueContext
+		{
+			public Pr_FixedContext E_Fixed;
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_FixedContext pr_Fixed()
+			{
+				return GetRuleContext<Pr_FixedContext>(0);
+			}
+			public Pr_ElementValueAlt3Context(Pr_ElementValueContext context) { CopyFrom(context); }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor)
+			{
+				ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
+				if (typedVisitor != null) return typedVisitor.VisitPr_ElementValueAlt3(this);
+				else return visitor.VisitChildren(this);
+			}
+		}
+		public partial class Pr_ElementValueAlt4Context : Pr_ElementValueContext
+		{
+			public Pr_RuleRefContext E_RuleRef;
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_RuleRefContext pr_RuleRef()
+			{
+				return GetRuleContext<Pr_RuleRefContext>(0);
+			}
+			public Pr_ElementValueAlt4Context(Pr_ElementValueContext context) { CopyFrom(context); }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor)
+			{
+				ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
+				if (typedVisitor != null) return typedVisitor.VisitPr_ElementValueAlt4(this);
+				else return visitor.VisitChildren(this);
+			}
+		}
+		public partial class Pr_ElementValueAlt1Context : Pr_ElementValueContext
+		{
+			public Pr_BlockContext E_Block;
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_BlockContext pr_Block()
+			{
+				return GetRuleContext<Pr_BlockContext>(0);
+			}
+			public Pr_ElementValueAlt1Context(Pr_ElementValueContext context) { CopyFrom(context); }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor)
+			{
+				ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
+				if (typedVisitor != null) return typedVisitor.VisitPr_ElementValueAlt1(this);
+				else return visitor.VisitChildren(this);
+			}
+		}
+		public partial class Pr_ElementValueAlt2Context : Pr_ElementValueContext
+		{
+			public Pr_Eof1Context E_Eof1;
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_Eof1Context pr_Eof1()
+			{
+				return GetRuleContext<Pr_Eof1Context>(0);
+			}
+			public Pr_ElementValueAlt2Context(Pr_ElementValueContext context) { CopyFrom(context); }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor)
+			{
+				ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
+				if (typedVisitor != null) return typedVisitor.VisitPr_ElementValueAlt2(this);
+				else return visitor.VisitChildren(this);
+			}
+		}
+
+		[RuleVersion(0)]
+		public Pr_ElementValueContext pr_ElementValue()
+		{
+			Pr_ElementValueContext _localctx = new Pr_ElementValueContext(Context, State);
+			EnterRule(_localctx, 16, RULE_pr_ElementValue);
+			try
+			{
+				State = 198;
+				ErrorHandler.Sync(this);
+				switch (Interpreter.AdaptivePredict(TokenStream, 9, Context))
+				{
+					case 1:
+						_localctx = new Pr_ElementValueAlt1Context(_localctx);
+						EnterOuterAlt(_localctx, 1);
+						{
+							State = 194;
+							((Pr_ElementValueAlt1Context)_localctx).E_Block = pr_Block();
+						}
+						break;
+					case 2:
+						_localctx = new Pr_ElementValueAlt2Context(_localctx);
+						EnterOuterAlt(_localctx, 2);
+						{
+							State = 195;
+							((Pr_ElementValueAlt2Context)_localctx).E_Eof1 = pr_Eof1();
+						}
+						break;
+					case 3:
+						_localctx = new Pr_ElementValueAlt3Context(_localctx);
+						EnterOuterAlt(_localctx, 3);
+						{
+							State = 196;
+							((Pr_ElementValueAlt3Context)_localctx).E_Fixed = pr_Fixed();
+						}
+						break;
+					case 4:
+						_localctx = new Pr_ElementValueAlt4Context(_localctx);
+						EnterOuterAlt(_localctx, 4);
+						{
+							State = 197;
+							((Pr_ElementValueAlt4Context)_localctx).E_RuleRef = pr_RuleRef();
+						}
+						break;
+				}
+			}
+			catch (RecognitionException re)
+			{
+				_localctx.exception = re;
+				ErrorHandler.ReportError(this, re);
+				ErrorHandler.Recover(this, re);
+			}
+			finally
+			{
+				ExitRule();
+			}
+			return _localctx;
+		}
+
+		public partial class Pr_BlockContext : ParserRuleContext
+		{
+			public Pr_ParserAnnotationContext _pr_ParserAnnotation;
+			public IList<Pr_ParserAnnotationContext> _E_annotations = new List<Pr_ParserAnnotationContext>();
+			public IToken E_TLParen;
+			public Pr_BlockAlternativeContext E_alternatives1;
+			public IToken _LR_TBar;
+			public IList<IToken> _E_TBar1 = new List<IToken>();
+			public Pr_BlockAlternativeContext _pr_BlockAlternative;
+			public IList<Pr_BlockAlternativeContext> _E_alternatives2 = new List<Pr_BlockAlternativeContext>();
+			public IToken E_TRParen;
+			public Pr_MultiplicityContext E_multiplicity;
+			[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TLParen() { return GetToken(CompilerParser.LR_TLParen, 0); }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_BlockAlternativeContext[] pr_BlockAlternative()
+			{
+				return GetRuleContexts<Pr_BlockAlternativeContext>();
+			}
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_BlockAlternativeContext pr_BlockAlternative(int i)
+			{
+				return GetRuleContext<Pr_BlockAlternativeContext>(i);
+			}
+			[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TRParen() { return GetToken(CompilerParser.LR_TRParen, 0); }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_ParserAnnotationContext[] pr_ParserAnnotation()
+			{
+				return GetRuleContexts<Pr_ParserAnnotationContext>();
+			}
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_ParserAnnotationContext pr_ParserAnnotation(int i)
+			{
+				return GetRuleContext<Pr_ParserAnnotationContext>(i);
+			}
+			[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode[] LR_TBar() { return GetTokens(CompilerParser.LR_TBar); }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public ITerminalNode LR_TBar(int i)
+			{
+				return GetToken(CompilerParser.LR_TBar, i);
+			}
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_MultiplicityContext pr_Multiplicity()
+			{
+				return GetRuleContext<Pr_MultiplicityContext>(0);
+			}
+			public Pr_BlockContext(ParserRuleContext parent, int invokingState)
+				: base(parent, invokingState)
+			{
+			}
+			public override int RuleIndex { get { return RULE_pr_Block; } }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor)
+			{
+				ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
+				if (typedVisitor != null) return typedVisitor.VisitPr_Block(this);
+				else return visitor.VisitChildren(this);
+			}
+		}
+
+		[RuleVersion(0)]
+		public Pr_BlockContext pr_Block()
+		{
+			Pr_BlockContext _localctx = new Pr_BlockContext(Context, State);
+			EnterRule(_localctx, 18, RULE_pr_Block);
+			int _la;
+			try
+			{
+				EnterOuterAlt(_localctx, 1);
+				{
+					State = 203;
+					ErrorHandler.Sync(this);
+					_la = TokenStream.LA(1);
+					while (_la == LR_TLBracket)
+					{
+						{
+							{
+								State = 200;
+								_localctx._pr_ParserAnnotation = pr_ParserAnnotation();
+								_localctx._E_annotations.Add(_localctx._pr_ParserAnnotation);
+							}
+						}
+						State = 205;
+						ErrorHandler.Sync(this);
+						_la = TokenStream.LA(1);
+					}
+					State = 206;
+					_localctx.E_TLParen = Match(LR_TLParen);
+					State = 207;
+					_localctx.E_alternatives1 = pr_BlockAlternative();
+					State = 212;
+					ErrorHandler.Sync(this);
+					_la = TokenStream.LA(1);
+					while (_la == LR_TBar)
+					{
+						{
+							{
+								State = 208;
+								_localctx._LR_TBar = Match(LR_TBar);
+								_localctx._E_TBar1.Add(_localctx._LR_TBar);
+								State = 209;
+								_localctx._pr_BlockAlternative = pr_BlockAlternative();
+								_localctx._E_alternatives2.Add(_localctx._pr_BlockAlternative);
+							}
+						}
+						State = 214;
+						ErrorHandler.Sync(this);
+						_la = TokenStream.LA(1);
+					}
+					State = 215;
+					_localctx.E_TRParen = Match(LR_TRParen);
+					State = 217;
+					ErrorHandler.Sync(this);
+					_la = TokenStream.LA(1);
+					if ((((_la) & ~0x3f) == 0 && ((1L << _la) & 2113929216L) != 0))
+					{
+						{
+							State = 216;
+							_localctx.E_multiplicity = pr_Multiplicity();
+						}
+					}
+
+				}
+			}
+			catch (RecognitionException re)
+			{
+				_localctx.exception = re;
+				ErrorHandler.ReportError(this, re);
+				ErrorHandler.Recover(this, re);
+			}
+			finally
+			{
+				ExitRule();
+			}
+			return _localctx;
+		}
+
+		public partial class Pr_BlockAlternativeContext : ParserRuleContext
+		{
+			public Pr_ElementContext _pr_Element;
+			public IList<Pr_ElementContext> _E_elements = new List<Pr_ElementContext>();
+			public Pr_BlockAlternativeBlock1Context E_Block;
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_ElementContext[] pr_Element()
+			{
+				return GetRuleContexts<Pr_ElementContext>();
+			}
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_ElementContext pr_Element(int i)
+			{
+				return GetRuleContext<Pr_ElementContext>(i);
+			}
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_BlockAlternativeBlock1Context pr_BlockAlternativeBlock1()
+			{
+				return GetRuleContext<Pr_BlockAlternativeBlock1Context>(0);
+			}
+			public Pr_BlockAlternativeContext(ParserRuleContext parent, int invokingState)
+				: base(parent, invokingState)
+			{
+			}
+			public override int RuleIndex { get { return RULE_pr_BlockAlternative; } }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor)
+			{
+				ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
+				if (typedVisitor != null) return typedVisitor.VisitPr_BlockAlternative(this);
+				else return visitor.VisitChildren(this);
+			}
+		}
+
+		[RuleVersion(0)]
+		public Pr_BlockAlternativeContext pr_BlockAlternative()
+		{
+			Pr_BlockAlternativeContext _localctx = new Pr_BlockAlternativeContext(Context, State);
+			EnterRule(_localctx, 20, RULE_pr_BlockAlternative);
+			int _la;
+			try
+			{
+				EnterOuterAlt(_localctx, 1);
+				{
+					State = 220;
+					ErrorHandler.Sync(this);
+					_la = TokenStream.LA(1);
+					do
+					{
+						{
+							{
+								State = 219;
+								_localctx._pr_Element = pr_Element();
+								_localctx._E_elements.Add(_localctx._pr_Element);
+							}
+						}
+						State = 222;
+						ErrorHandler.Sync(this);
+						_la = TokenStream.LA(1);
+					} while ((((_la) & ~0x3f) == 0 && ((1L << _la) & 15762598696332544L) != 0));
+					State = 225;
+					ErrorHandler.Sync(this);
+					_la = TokenStream.LA(1);
+					if (_la == LR_TEqGt)
+					{
+						{
+							State = 224;
+							_localctx.E_Block = pr_BlockAlternativeBlock1();
+						}
+					}
+
+				}
+			}
+			catch (RecognitionException re)
+			{
+				_localctx.exception = re;
+				ErrorHandler.ReportError(this, re);
+				ErrorHandler.Recover(this, re);
+			}
+			finally
+			{
+				ExitRule();
+			}
+			return _localctx;
+		}
+
+		public partial class Pr_RuleRefContext : ParserRuleContext
+		{
+			public Pr_RuleRefContext(ParserRuleContext parent, int invokingState)
+				: base(parent, invokingState)
+			{
+			}
+			public override int RuleIndex { get { return RULE_pr_RuleRef; } }
+
+			public Pr_RuleRefContext() { }
+			public virtual void CopyFrom(Pr_RuleRefContext context)
+			{
+				base.CopyFrom(context);
+			}
+		}
+		public partial class Pr_RuleRefAlt2Context : Pr_RuleRefContext
+		{
+			public Pr_ParserAnnotationContext _pr_ParserAnnotation;
+			public IList<Pr_ParserAnnotationContext> _E_annotations1 = new List<Pr_ParserAnnotationContext>();
+			public IToken E_THash;
+			public Pr_TypeReferenceContext E_referencedTypes;
+			public Pr_MultiplicityContext E_multiplicity1;
+			[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_THash() { return GetToken(CompilerParser.LR_THash, 0); }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_TypeReferenceContext pr_TypeReference()
+			{
+				return GetRuleContext<Pr_TypeReferenceContext>(0);
+			}
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_ParserAnnotationContext[] pr_ParserAnnotation()
+			{
+				return GetRuleContexts<Pr_ParserAnnotationContext>();
+			}
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_ParserAnnotationContext pr_ParserAnnotation(int i)
+			{
+				return GetRuleContext<Pr_ParserAnnotationContext>(i);
+			}
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_MultiplicityContext pr_Multiplicity()
+			{
+				return GetRuleContext<Pr_MultiplicityContext>(0);
+			}
+			public Pr_RuleRefAlt2Context(Pr_RuleRefContext context) { CopyFrom(context); }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor)
+			{
+				ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
+				if (typedVisitor != null) return typedVisitor.VisitPr_RuleRefAlt2(this);
+				else return visitor.VisitChildren(this);
+			}
+		}
+		public partial class Pr_RuleRefAlt1Context : Pr_RuleRefContext
+		{
+			public Pr_ParserAnnotationContext _pr_ParserAnnotation;
+			public IList<Pr_ParserAnnotationContext> _E_annotations = new List<Pr_ParserAnnotationContext>();
+			public Pr_IdentifierContext E_grammarRule;
+			public Pr_MultiplicityContext E_multiplicity;
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_IdentifierContext pr_Identifier()
+			{
+				return GetRuleContext<Pr_IdentifierContext>(0);
+			}
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_ParserAnnotationContext[] pr_ParserAnnotation()
+			{
+				return GetRuleContexts<Pr_ParserAnnotationContext>();
+			}
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_ParserAnnotationContext pr_ParserAnnotation(int i)
+			{
+				return GetRuleContext<Pr_ParserAnnotationContext>(i);
+			}
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_MultiplicityContext pr_Multiplicity()
+			{
+				return GetRuleContext<Pr_MultiplicityContext>(0);
+			}
+			public Pr_RuleRefAlt1Context(Pr_RuleRefContext context) { CopyFrom(context); }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor)
+			{
+				ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
+				if (typedVisitor != null) return typedVisitor.VisitPr_RuleRefAlt1(this);
+				else return visitor.VisitChildren(this);
+			}
+		}
+		public partial class Pr_RuleRefAlt3Context : Pr_RuleRefContext
+		{
+			public Pr_ParserAnnotationContext _pr_ParserAnnotation;
+			public IList<Pr_ParserAnnotationContext> _E_annotations2 = new List<Pr_ParserAnnotationContext>();
+			public IToken E_THashLBrace;
+			public Pr_TypeReferenceContext E_referencedTypes1;
+			public IToken _LR_TComma;
+			public IList<IToken> _E_TComma1 = new List<IToken>();
+			public Pr_TypeReferenceContext _pr_TypeReference;
+			public IList<Pr_TypeReferenceContext> _E_referencedTypes2 = new List<Pr_TypeReferenceContext>();
+			public Pr_RuleRefAlt3Block1Context E_Block;
+			public IToken E_TRBrace;
+			public Pr_MultiplicityContext E_multiplicity2;
+			[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_THashLBrace() { return GetToken(CompilerParser.LR_THashLBrace, 0); }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_TypeReferenceContext[] pr_TypeReference()
+			{
+				return GetRuleContexts<Pr_TypeReferenceContext>();
+			}
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_TypeReferenceContext pr_TypeReference(int i)
+			{
+				return GetRuleContext<Pr_TypeReferenceContext>(i);
+			}
+			[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TRBrace() { return GetToken(CompilerParser.LR_TRBrace, 0); }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_ParserAnnotationContext[] pr_ParserAnnotation()
+			{
+				return GetRuleContexts<Pr_ParserAnnotationContext>();
+			}
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_ParserAnnotationContext pr_ParserAnnotation(int i)
+			{
+				return GetRuleContext<Pr_ParserAnnotationContext>(i);
+			}
+			[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode[] LR_TComma() { return GetTokens(CompilerParser.LR_TComma); }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public ITerminalNode LR_TComma(int i)
+			{
+				return GetToken(CompilerParser.LR_TComma, i);
+			}
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_RuleRefAlt3Block1Context pr_RuleRefAlt3Block1()
+			{
+				return GetRuleContext<Pr_RuleRefAlt3Block1Context>(0);
+			}
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_MultiplicityContext pr_Multiplicity()
+			{
+				return GetRuleContext<Pr_MultiplicityContext>(0);
+			}
+			public Pr_RuleRefAlt3Context(Pr_RuleRefContext context) { CopyFrom(context); }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor)
+			{
+				ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
+				if (typedVisitor != null) return typedVisitor.VisitPr_RuleRefAlt3(this);
+				else return visitor.VisitChildren(this);
+			}
+		}
+
+		[RuleVersion(0)]
+		public Pr_RuleRefContext pr_RuleRef()
+		{
+			Pr_RuleRefContext _localctx = new Pr_RuleRefContext(Context, State);
+			EnterRule(_localctx, 22, RULE_pr_RuleRef);
+			int _la;
+			try
+			{
+				State = 270;
+				ErrorHandler.Sync(this);
+				switch (Interpreter.AdaptivePredict(TokenStream, 23, Context))
+				{
+					case 1:
+						_localctx = new Pr_RuleRefAlt1Context(_localctx);
+						EnterOuterAlt(_localctx, 1);
+						{
+							State = 230;
+							ErrorHandler.Sync(this);
+							_la = TokenStream.LA(1);
+							while (_la == LR_TLBracket)
+							{
+								{
+									{
+										State = 227;
+										((Pr_RuleRefAlt1Context)_localctx)._pr_ParserAnnotation = pr_ParserAnnotation();
+										((Pr_RuleRefAlt1Context)_localctx)._E_annotations.Add(((Pr_RuleRefAlt1Context)_localctx)._pr_ParserAnnotation);
+									}
+								}
+								State = 232;
+								ErrorHandler.Sync(this);
+								_la = TokenStream.LA(1);
+							}
+							State = 233;
+							((Pr_RuleRefAlt1Context)_localctx).E_grammarRule = pr_Identifier();
+							State = 235;
+							ErrorHandler.Sync(this);
+							_la = TokenStream.LA(1);
+							if ((((_la) & ~0x3f) == 0 && ((1L << _la) & 2113929216L) != 0))
+							{
+								{
+									State = 234;
+									((Pr_RuleRefAlt1Context)_localctx).E_multiplicity = pr_Multiplicity();
+								}
+							}
+
+						}
+						break;
+					case 2:
+						_localctx = new Pr_RuleRefAlt2Context(_localctx);
+						EnterOuterAlt(_localctx, 2);
+						{
+							State = 240;
+							ErrorHandler.Sync(this);
+							_la = TokenStream.LA(1);
+							while (_la == LR_TLBracket)
+							{
+								{
+									{
+										State = 237;
+										((Pr_RuleRefAlt2Context)_localctx)._pr_ParserAnnotation = pr_ParserAnnotation();
+										((Pr_RuleRefAlt2Context)_localctx)._E_annotations1.Add(((Pr_RuleRefAlt2Context)_localctx)._pr_ParserAnnotation);
+									}
+								}
+								State = 242;
+								ErrorHandler.Sync(this);
+								_la = TokenStream.LA(1);
+							}
+							State = 243;
+							((Pr_RuleRefAlt2Context)_localctx).E_THash = Match(LR_THash);
+							State = 244;
+							((Pr_RuleRefAlt2Context)_localctx).E_referencedTypes = pr_TypeReference();
+							State = 246;
+							ErrorHandler.Sync(this);
+							_la = TokenStream.LA(1);
+							if ((((_la) & ~0x3f) == 0 && ((1L << _la) & 2113929216L) != 0))
+							{
+								{
+									State = 245;
+									((Pr_RuleRefAlt2Context)_localctx).E_multiplicity1 = pr_Multiplicity();
+								}
+							}
+
+						}
+						break;
+					case 3:
+						_localctx = new Pr_RuleRefAlt3Context(_localctx);
+						EnterOuterAlt(_localctx, 3);
+						{
+							State = 251;
+							ErrorHandler.Sync(this);
+							_la = TokenStream.LA(1);
+							while (_la == LR_TLBracket)
+							{
+								{
+									{
+										State = 248;
+										((Pr_RuleRefAlt3Context)_localctx)._pr_ParserAnnotation = pr_ParserAnnotation();
+										((Pr_RuleRefAlt3Context)_localctx)._E_annotations2.Add(((Pr_RuleRefAlt3Context)_localctx)._pr_ParserAnnotation);
+									}
+								}
+								State = 253;
+								ErrorHandler.Sync(this);
+								_la = TokenStream.LA(1);
+							}
+							State = 254;
+							((Pr_RuleRefAlt3Context)_localctx).E_THashLBrace = Match(LR_THashLBrace);
+							State = 255;
+							((Pr_RuleRefAlt3Context)_localctx).E_referencedTypes1 = pr_TypeReference();
+							State = 260;
+							ErrorHandler.Sync(this);
+							_la = TokenStream.LA(1);
+							while (_la == LR_TComma)
+							{
+								{
+									{
+										State = 256;
+										((Pr_RuleRefAlt3Context)_localctx)._LR_TComma = Match(LR_TComma);
+										((Pr_RuleRefAlt3Context)_localctx)._E_TComma1.Add(((Pr_RuleRefAlt3Context)_localctx)._LR_TComma);
+										State = 257;
+										((Pr_RuleRefAlt3Context)_localctx)._pr_TypeReference = pr_TypeReference();
+										((Pr_RuleRefAlt3Context)_localctx)._E_referencedTypes2.Add(((Pr_RuleRefAlt3Context)_localctx)._pr_TypeReference);
+									}
+								}
+								State = 262;
+								ErrorHandler.Sync(this);
+								_la = TokenStream.LA(1);
+							}
+							State = 264;
+							ErrorHandler.Sync(this);
+							_la = TokenStream.LA(1);
+							if (_la == LR_TBar)
+							{
+								{
+									State = 263;
+									((Pr_RuleRefAlt3Context)_localctx).E_Block = pr_RuleRefAlt3Block1();
+								}
+							}
+
+							State = 266;
+							((Pr_RuleRefAlt3Context)_localctx).E_TRBrace = Match(LR_TRBrace);
+							State = 268;
+							ErrorHandler.Sync(this);
+							_la = TokenStream.LA(1);
+							if ((((_la) & ~0x3f) == 0 && ((1L << _la) & 2113929216L) != 0))
+							{
+								{
+									State = 267;
+									((Pr_RuleRefAlt3Context)_localctx).E_multiplicity2 = pr_Multiplicity();
+								}
+							}
+
+						}
+						break;
+				}
+			}
+			catch (RecognitionException re)
+			{
+				_localctx.exception = re;
+				ErrorHandler.ReportError(this, re);
+				ErrorHandler.Recover(this, re);
+			}
+			finally
+			{
+				ExitRule();
+			}
+			return _localctx;
+		}
+
+		public partial class Pr_Eof1Context : ParserRuleContext
+		{
+			public IToken E_KEof;
+			[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_KEof() { return GetToken(CompilerParser.LR_KEof, 0); }
+			public Pr_Eof1Context(ParserRuleContext parent, int invokingState)
+				: base(parent, invokingState)
+			{
+			}
+			public override int RuleIndex { get { return RULE_pr_Eof1; } }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor)
+			{
+				ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
+				if (typedVisitor != null) return typedVisitor.VisitPr_Eof1(this);
+				else return visitor.VisitChildren(this);
+			}
+		}
+
+		[RuleVersion(0)]
+		public Pr_Eof1Context pr_Eof1()
+		{
+			Pr_Eof1Context _localctx = new Pr_Eof1Context(Context, State);
+			EnterRule(_localctx, 24, RULE_pr_Eof1);
+			try
+			{
+				EnterOuterAlt(_localctx, 1);
+				{
+					State = 272;
+					_localctx.E_KEof = Match(LR_KEof);
+				}
+			}
+			catch (RecognitionException re)
+			{
+				_localctx.exception = re;
+				ErrorHandler.ReportError(this, re);
+				ErrorHandler.Recover(this, re);
+			}
+			finally
+			{
+				ExitRule();
+			}
+			return _localctx;
+		}
+
+		public partial class Pr_FixedContext : ParserRuleContext
+		{
+			public Pr_ParserAnnotationContext _pr_ParserAnnotation;
+			public IList<Pr_ParserAnnotationContext> _E_annotations = new List<Pr_ParserAnnotationContext>();
+			public IToken E_text;
+			public Pr_MultiplicityContext E_multiplicity;
+			[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TString() { return GetToken(CompilerParser.LR_TString, 0); }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_ParserAnnotationContext[] pr_ParserAnnotation()
+			{
+				return GetRuleContexts<Pr_ParserAnnotationContext>();
+			}
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_ParserAnnotationContext pr_ParserAnnotation(int i)
+			{
+				return GetRuleContext<Pr_ParserAnnotationContext>(i);
+			}
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_MultiplicityContext pr_Multiplicity()
+			{
+				return GetRuleContext<Pr_MultiplicityContext>(0);
+			}
+			public Pr_FixedContext(ParserRuleContext parent, int invokingState)
+				: base(parent, invokingState)
+			{
+			}
+			public override int RuleIndex { get { return RULE_pr_Fixed; } }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor)
+			{
+				ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
+				if (typedVisitor != null) return typedVisitor.VisitPr_Fixed(this);
+				else return visitor.VisitChildren(this);
+			}
+		}
+
+		[RuleVersion(0)]
+		public Pr_FixedContext pr_Fixed()
+		{
+			Pr_FixedContext _localctx = new Pr_FixedContext(Context, State);
+			EnterRule(_localctx, 26, RULE_pr_Fixed);
+			int _la;
+			try
+			{
+				EnterOuterAlt(_localctx, 1);
+				{
+					State = 277;
+					ErrorHandler.Sync(this);
+					_la = TokenStream.LA(1);
+					while (_la == LR_TLBracket)
+					{
+						{
+							{
+								State = 274;
+								_localctx._pr_ParserAnnotation = pr_ParserAnnotation();
+								_localctx._E_annotations.Add(_localctx._pr_ParserAnnotation);
+							}
+						}
+						State = 279;
+						ErrorHandler.Sync(this);
+						_la = TokenStream.LA(1);
+					}
+					State = 280;
+					_localctx.E_text = Match(LR_TString);
+					State = 282;
+					ErrorHandler.Sync(this);
+					_la = TokenStream.LA(1);
+					if ((((_la) & ~0x3f) == 0 && ((1L << _la) & 2113929216L) != 0))
+					{
+						{
+							State = 281;
+							_localctx.E_multiplicity = pr_Multiplicity();
+						}
+					}
+
+				}
+			}
+			catch (RecognitionException re)
+			{
+				_localctx.exception = re;
+				ErrorHandler.ReportError(this, re);
+				ErrorHandler.Recover(this, re);
+			}
+			finally
+			{
+				ExitRule();
+			}
+			return _localctx;
+		}
+
+		public partial class Pr_LexerRuleContext : ParserRuleContext
+		{
+			public Pr_LexerRuleContext(ParserRuleContext parent, int invokingState)
+				: base(parent, invokingState)
+			{
+			}
+			public override int RuleIndex { get { return RULE_pr_LexerRule; } }
+
+			public Pr_LexerRuleContext() { }
+			public virtual void CopyFrom(Pr_LexerRuleContext context)
+			{
+				base.CopyFrom(context);
+			}
+		}
+		public partial class Pr_LexerRuleAlt1Context : Pr_LexerRuleContext
+		{
+			public Pr_TokenContext E_Token;
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_TokenContext pr_Token()
+			{
+				return GetRuleContext<Pr_TokenContext>(0);
+			}
+			public Pr_LexerRuleAlt1Context(Pr_LexerRuleContext context) { CopyFrom(context); }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor)
+			{
+				ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
+				if (typedVisitor != null) return typedVisitor.VisitPr_LexerRuleAlt1(this);
+				else return visitor.VisitChildren(this);
+			}
+		}
+		public partial class Pr_LexerRuleAlt2Context : Pr_LexerRuleContext
+		{
+			public Pr_FragmentContext E_Fragment;
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_FragmentContext pr_Fragment()
+			{
+				return GetRuleContext<Pr_FragmentContext>(0);
+			}
+			public Pr_LexerRuleAlt2Context(Pr_LexerRuleContext context) { CopyFrom(context); }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor)
+			{
+				ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
+				if (typedVisitor != null) return typedVisitor.VisitPr_LexerRuleAlt2(this);
+				else return visitor.VisitChildren(this);
+			}
+		}
+
+		[RuleVersion(0)]
+		public Pr_LexerRuleContext pr_LexerRule()
+		{
+			Pr_LexerRuleContext _localctx = new Pr_LexerRuleContext(Context, State);
+			EnterRule(_localctx, 28, RULE_pr_LexerRule);
+			try
+			{
+				State = 286;
+				ErrorHandler.Sync(this);
+				switch (TokenStream.LA(1))
+				{
+					case LR_TLBracket:
+					case LR_KToken:
+					case LR_KHidden:
+						_localctx = new Pr_LexerRuleAlt1Context(_localctx);
+						EnterOuterAlt(_localctx, 1);
+						{
+							State = 284;
+							((Pr_LexerRuleAlt1Context)_localctx).E_Token = pr_Token();
+						}
+						break;
+					case LR_KFragment:
+						_localctx = new Pr_LexerRuleAlt2Context(_localctx);
+						EnterOuterAlt(_localctx, 2);
+						{
+							State = 285;
+							((Pr_LexerRuleAlt2Context)_localctx).E_Fragment = pr_Fragment();
+						}
+						break;
+					default:
+						throw new NoViableAltException(this);
+				}
+			}
+			catch (RecognitionException re)
+			{
+				_localctx.exception = re;
+				ErrorHandler.ReportError(this, re);
+				ErrorHandler.Recover(this, re);
+			}
+			finally
+			{
+				ExitRule();
+			}
+			return _localctx;
+		}
+
+		public partial class Pr_TokenContext : ParserRuleContext
+		{
+			public Pr_LexerAnnotationContext _pr_LexerAnnotation;
+			public IList<Pr_LexerAnnotationContext> _E_annotations = new List<Pr_LexerAnnotationContext>();
+			public Pr_TokenBlock1Context E_Block;
+			public IToken E_TColon;
+			public Pr_LAlternativeContext E_alternatives1;
+			public IToken _LR_TBar;
+			public IList<IToken> _E_TBar1 = new List<IToken>();
+			public Pr_LAlternativeContext _pr_LAlternative;
+			public IList<Pr_LAlternativeContext> _E_alternatives2 = new List<Pr_LAlternativeContext>();
+			public IToken E_TSemicolon;
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_TokenBlock1Context pr_TokenBlock1()
+			{
+				return GetRuleContext<Pr_TokenBlock1Context>(0);
+			}
+			[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TColon() { return GetToken(CompilerParser.LR_TColon, 0); }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_LAlternativeContext[] pr_LAlternative()
+			{
+				return GetRuleContexts<Pr_LAlternativeContext>();
+			}
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_LAlternativeContext pr_LAlternative(int i)
+			{
+				return GetRuleContext<Pr_LAlternativeContext>(i);
+			}
+			[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TSemicolon() { return GetToken(CompilerParser.LR_TSemicolon, 0); }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_LexerAnnotationContext[] pr_LexerAnnotation()
+			{
+				return GetRuleContexts<Pr_LexerAnnotationContext>();
+			}
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_LexerAnnotationContext pr_LexerAnnotation(int i)
+			{
+				return GetRuleContext<Pr_LexerAnnotationContext>(i);
+			}
+			[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode[] LR_TBar() { return GetTokens(CompilerParser.LR_TBar); }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public ITerminalNode LR_TBar(int i)
+			{
+				return GetToken(CompilerParser.LR_TBar, i);
+			}
+			public Pr_TokenContext(ParserRuleContext parent, int invokingState)
+				: base(parent, invokingState)
+			{
+			}
+			public override int RuleIndex { get { return RULE_pr_Token; } }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor)
+			{
+				ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
+				if (typedVisitor != null) return typedVisitor.VisitPr_Token(this);
+				else return visitor.VisitChildren(this);
+			}
+		}
+
+		[RuleVersion(0)]
+		public Pr_TokenContext pr_Token()
+		{
+			Pr_TokenContext _localctx = new Pr_TokenContext(Context, State);
+			EnterRule(_localctx, 30, RULE_pr_Token);
+			int _la;
+			try
+			{
+				EnterOuterAlt(_localctx, 1);
+				{
+					State = 291;
+					ErrorHandler.Sync(this);
+					_la = TokenStream.LA(1);
+					while (_la == LR_TLBracket)
+					{
+						{
+							{
+								State = 288;
+								_localctx._pr_LexerAnnotation = pr_LexerAnnotation();
+								_localctx._E_annotations.Add(_localctx._pr_LexerAnnotation);
+							}
+						}
+						State = 293;
+						ErrorHandler.Sync(this);
+						_la = TokenStream.LA(1);
+					}
+					State = 294;
+					_localctx.E_Block = pr_TokenBlock1();
+					State = 295;
+					_localctx.E_TColon = Match(LR_TColon);
+					State = 296;
+					_localctx.E_alternatives1 = pr_LAlternative();
+					State = 301;
+					ErrorHandler.Sync(this);
+					_la = TokenStream.LA(1);
+					while (_la == LR_TBar)
+					{
+						{
+							{
+								State = 297;
+								_localctx._LR_TBar = Match(LR_TBar);
+								_localctx._E_TBar1.Add(_localctx._LR_TBar);
+								State = 298;
+								_localctx._pr_LAlternative = pr_LAlternative();
+								_localctx._E_alternatives2.Add(_localctx._pr_LAlternative);
+							}
+						}
+						State = 303;
+						ErrorHandler.Sync(this);
+						_la = TokenStream.LA(1);
+					}
+					State = 304;
+					_localctx.E_TSemicolon = Match(LR_TSemicolon);
+				}
+			}
+			catch (RecognitionException re)
+			{
+				_localctx.exception = re;
+				ErrorHandler.ReportError(this, re);
+				ErrorHandler.Recover(this, re);
+			}
+			finally
+			{
+				ExitRule();
+			}
+			return _localctx;
+		}
+
+		public partial class Pr_FragmentContext : ParserRuleContext
+		{
+			public IToken E_KFragment;
+			public Pr_NameContext E_Name;
+			public IToken E_TColon;
+			public Pr_LAlternativeContext E_alternatives1;
+			public IToken _LR_TBar;
+			public IList<IToken> _E_TBar1 = new List<IToken>();
+			public Pr_LAlternativeContext _pr_LAlternative;
+			public IList<Pr_LAlternativeContext> _E_alternatives2 = new List<Pr_LAlternativeContext>();
+			public IToken E_TSemicolon;
+			[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_KFragment() { return GetToken(CompilerParser.LR_KFragment, 0); }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_NameContext pr_Name()
+			{
+				return GetRuleContext<Pr_NameContext>(0);
+			}
+			[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TColon() { return GetToken(CompilerParser.LR_TColon, 0); }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_LAlternativeContext[] pr_LAlternative()
+			{
+				return GetRuleContexts<Pr_LAlternativeContext>();
+			}
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_LAlternativeContext pr_LAlternative(int i)
+			{
+				return GetRuleContext<Pr_LAlternativeContext>(i);
+			}
+			[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TSemicolon() { return GetToken(CompilerParser.LR_TSemicolon, 0); }
+			[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode[] LR_TBar() { return GetTokens(CompilerParser.LR_TBar); }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public ITerminalNode LR_TBar(int i)
+			{
+				return GetToken(CompilerParser.LR_TBar, i);
+			}
+			public Pr_FragmentContext(ParserRuleContext parent, int invokingState)
+				: base(parent, invokingState)
+			{
+			}
+			public override int RuleIndex { get { return RULE_pr_Fragment; } }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor)
+			{
+				ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
+				if (typedVisitor != null) return typedVisitor.VisitPr_Fragment(this);
+				else return visitor.VisitChildren(this);
+			}
+		}
+
+		[RuleVersion(0)]
+		public Pr_FragmentContext pr_Fragment()
+		{
+			Pr_FragmentContext _localctx = new Pr_FragmentContext(Context, State);
+			EnterRule(_localctx, 32, RULE_pr_Fragment);
+			int _la;
+			try
+			{
+				EnterOuterAlt(_localctx, 1);
+				{
+					State = 306;
+					_localctx.E_KFragment = Match(LR_KFragment);
+					State = 307;
+					_localctx.E_Name = pr_Name();
+					State = 308;
+					_localctx.E_TColon = Match(LR_TColon);
+					State = 309;
+					_localctx.E_alternatives1 = pr_LAlternative();
+					State = 314;
+					ErrorHandler.Sync(this);
+					_la = TokenStream.LA(1);
+					while (_la == LR_TBar)
+					{
+						{
+							{
+								State = 310;
+								_localctx._LR_TBar = Match(LR_TBar);
+								_localctx._E_TBar1.Add(_localctx._LR_TBar);
+								State = 311;
+								_localctx._pr_LAlternative = pr_LAlternative();
+								_localctx._E_alternatives2.Add(_localctx._pr_LAlternative);
+							}
+						}
+						State = 316;
+						ErrorHandler.Sync(this);
+						_la = TokenStream.LA(1);
+					}
+					State = 317;
+					_localctx.E_TSemicolon = Match(LR_TSemicolon);
+				}
+			}
+			catch (RecognitionException re)
+			{
+				_localctx.exception = re;
+				ErrorHandler.ReportError(this, re);
+				ErrorHandler.Recover(this, re);
+			}
+			finally
+			{
+				ExitRule();
+			}
+			return _localctx;
+		}
+
+		public partial class Pr_LAlternativeContext : ParserRuleContext
+		{
+			public Pr_LElementContext _pr_LElement;
+			public IList<Pr_LElementContext> _E_elements = new List<Pr_LElementContext>();
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_LElementContext[] pr_LElement()
+			{
+				return GetRuleContexts<Pr_LElementContext>();
+			}
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_LElementContext pr_LElement(int i)
+			{
+				return GetRuleContext<Pr_LElementContext>(i);
+			}
+			public Pr_LAlternativeContext(ParserRuleContext parent, int invokingState)
+				: base(parent, invokingState)
+			{
+			}
+			public override int RuleIndex { get { return RULE_pr_LAlternative; } }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor)
+			{
+				ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
+				if (typedVisitor != null) return typedVisitor.VisitPr_LAlternative(this);
+				else return visitor.VisitChildren(this);
+			}
+		}
+
+		[RuleVersion(0)]
+		public Pr_LAlternativeContext pr_LAlternative()
+		{
+			Pr_LAlternativeContext _localctx = new Pr_LAlternativeContext(Context, State);
+			EnterRule(_localctx, 34, RULE_pr_LAlternative);
+			int _la;
+			try
+			{
+				EnterOuterAlt(_localctx, 1);
+				{
+					State = 322;
+					ErrorHandler.Sync(this);
+					_la = TokenStream.LA(1);
+					while ((((_la) & ~0x3f) == 0 && ((1L << _la) & 15762598695895296L) != 0))
+					{
+						{
+							{
+								State = 319;
+								_localctx._pr_LElement = pr_LElement();
+								_localctx._E_elements.Add(_localctx._pr_LElement);
+							}
+						}
+						State = 324;
+						ErrorHandler.Sync(this);
+						_la = TokenStream.LA(1);
 					}
 				}
+			}
+			catch (RecognitionException re)
+			{
+				_localctx.exception = re;
+				ErrorHandler.ReportError(this, re);
+				ErrorHandler.Recover(this, re);
+			}
+			finally
+			{
+				ExitRule();
+			}
+			return _localctx;
+		}
 
-				State = 263;
-				((Pr_RuleRefAlt3Context)_localctx).E_TRBrace = Match(LR_TRBrace);
-				State = 265;
-				ErrorHandler.Sync(this);
-				_la = TokenStream.LA(1);
-				if ((((_la) & ~0x3f) == 0 && ((1L << _la) & 2113929216L) != 0)) {
+		public partial class Pr_LElementContext : ParserRuleContext
+		{
+			public IToken E_isNegated;
+			public Pr_LElementValueContext E_value;
+			public Pr_MultiplicityContext E_multiplicity;
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_LElementValueContext pr_LElementValue()
+			{
+				return GetRuleContext<Pr_LElementValueContext>(0);
+			}
+			[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TTilde() { return GetToken(CompilerParser.LR_TTilde, 0); }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_MultiplicityContext pr_Multiplicity()
+			{
+				return GetRuleContext<Pr_MultiplicityContext>(0);
+			}
+			public Pr_LElementContext(ParserRuleContext parent, int invokingState)
+				: base(parent, invokingState)
+			{
+			}
+			public override int RuleIndex { get { return RULE_pr_LElement; } }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor)
+			{
+				ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
+				if (typedVisitor != null) return typedVisitor.VisitPr_LElement(this);
+				else return visitor.VisitChildren(this);
+			}
+		}
+
+		[RuleVersion(0)]
+		public Pr_LElementContext pr_LElement()
+		{
+			Pr_LElementContext _localctx = new Pr_LElementContext(Context, State);
+			EnterRule(_localctx, 36, RULE_pr_LElement);
+			int _la;
+			try
+			{
+				EnterOuterAlt(_localctx, 1);
+				{
+					State = 326;
+					ErrorHandler.Sync(this);
+					_la = TokenStream.LA(1);
+					if (_la == LR_TTilde)
 					{
-					State = 264;
-					((Pr_RuleRefAlt3Context)_localctx).E_multiplicity2 = pr_Multiplicity();
+						{
+							State = 325;
+							_localctx.E_isNegated = Match(LR_TTilde);
+						}
+					}
+
+					State = 328;
+					_localctx.E_value = pr_LElementValue();
+					State = 330;
+					ErrorHandler.Sync(this);
+					_la = TokenStream.LA(1);
+					if ((((_la) & ~0x3f) == 0 && ((1L << _la) & 2113929216L) != 0))
+					{
+						{
+							State = 329;
+							_localctx.E_multiplicity = pr_Multiplicity();
+						}
+					}
+
+				}
+			}
+			catch (RecognitionException re)
+			{
+				_localctx.exception = re;
+				ErrorHandler.ReportError(this, re);
+				ErrorHandler.Recover(this, re);
+			}
+			finally
+			{
+				ExitRule();
+			}
+			return _localctx;
+		}
+
+		public partial class Pr_LElementValueContext : ParserRuleContext
+		{
+			public Pr_LElementValueContext(ParserRuleContext parent, int invokingState)
+				: base(parent, invokingState)
+			{
+			}
+			public override int RuleIndex { get { return RULE_pr_LElementValue; } }
+
+			public Pr_LElementValueContext() { }
+			public virtual void CopyFrom(Pr_LElementValueContext context)
+			{
+				base.CopyFrom(context);
+			}
+		}
+		public partial class Pr_LElementValueAlt5Context : Pr_LElementValueContext
+		{
+			public Pr_LReferenceContext E_LReference;
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_LReferenceContext pr_LReference()
+			{
+				return GetRuleContext<Pr_LReferenceContext>(0);
+			}
+			public Pr_LElementValueAlt5Context(Pr_LElementValueContext context) { CopyFrom(context); }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor)
+			{
+				ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
+				if (typedVisitor != null) return typedVisitor.VisitPr_LElementValueAlt5(this);
+				else return visitor.VisitChildren(this);
+			}
+		}
+		public partial class Pr_LElementValueAlt3Context : Pr_LElementValueContext
+		{
+			public Pr_LWildCardContext E_LWildCard;
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_LWildCardContext pr_LWildCard()
+			{
+				return GetRuleContext<Pr_LWildCardContext>(0);
+			}
+			public Pr_LElementValueAlt3Context(Pr_LElementValueContext context) { CopyFrom(context); }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor)
+			{
+				ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
+				if (typedVisitor != null) return typedVisitor.VisitPr_LElementValueAlt3(this);
+				else return visitor.VisitChildren(this);
+			}
+		}
+		public partial class Pr_LElementValueAlt4Context : Pr_LElementValueContext
+		{
+			public Pr_LRangeContext E_LRange;
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_LRangeContext pr_LRange()
+			{
+				return GetRuleContext<Pr_LRangeContext>(0);
+			}
+			public Pr_LElementValueAlt4Context(Pr_LElementValueContext context) { CopyFrom(context); }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor)
+			{
+				ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
+				if (typedVisitor != null) return typedVisitor.VisitPr_LElementValueAlt4(this);
+				else return visitor.VisitChildren(this);
+			}
+		}
+		public partial class Pr_LElementValueAlt1Context : Pr_LElementValueContext
+		{
+			public Pr_LBlockContext E_LBlock;
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_LBlockContext pr_LBlock()
+			{
+				return GetRuleContext<Pr_LBlockContext>(0);
+			}
+			public Pr_LElementValueAlt1Context(Pr_LElementValueContext context) { CopyFrom(context); }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor)
+			{
+				ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
+				if (typedVisitor != null) return typedVisitor.VisitPr_LElementValueAlt1(this);
+				else return visitor.VisitChildren(this);
+			}
+		}
+		public partial class Pr_LElementValueAlt2Context : Pr_LElementValueContext
+		{
+			public Pr_LFixedContext E_LFixed;
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_LFixedContext pr_LFixed()
+			{
+				return GetRuleContext<Pr_LFixedContext>(0);
+			}
+			public Pr_LElementValueAlt2Context(Pr_LElementValueContext context) { CopyFrom(context); }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor)
+			{
+				ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
+				if (typedVisitor != null) return typedVisitor.VisitPr_LElementValueAlt2(this);
+				else return visitor.VisitChildren(this);
+			}
+		}
+
+		[RuleVersion(0)]
+		public Pr_LElementValueContext pr_LElementValue()
+		{
+			Pr_LElementValueContext _localctx = new Pr_LElementValueContext(Context, State);
+			EnterRule(_localctx, 38, RULE_pr_LElementValue);
+			try
+			{
+				State = 337;
+				ErrorHandler.Sync(this);
+				switch (Interpreter.AdaptivePredict(TokenStream, 33, Context))
+				{
+					case 1:
+						_localctx = new Pr_LElementValueAlt1Context(_localctx);
+						EnterOuterAlt(_localctx, 1);
+						{
+							State = 332;
+							((Pr_LElementValueAlt1Context)_localctx).E_LBlock = pr_LBlock();
+						}
+						break;
+					case 2:
+						_localctx = new Pr_LElementValueAlt2Context(_localctx);
+						EnterOuterAlt(_localctx, 2);
+						{
+							State = 333;
+							((Pr_LElementValueAlt2Context)_localctx).E_LFixed = pr_LFixed();
+						}
+						break;
+					case 3:
+						_localctx = new Pr_LElementValueAlt3Context(_localctx);
+						EnterOuterAlt(_localctx, 3);
+						{
+							State = 334;
+							((Pr_LElementValueAlt3Context)_localctx).E_LWildCard = pr_LWildCard();
+						}
+						break;
+					case 4:
+						_localctx = new Pr_LElementValueAlt4Context(_localctx);
+						EnterOuterAlt(_localctx, 4);
+						{
+							State = 335;
+							((Pr_LElementValueAlt4Context)_localctx).E_LRange = pr_LRange();
+						}
+						break;
+					case 5:
+						_localctx = new Pr_LElementValueAlt5Context(_localctx);
+						EnterOuterAlt(_localctx, 5);
+						{
+							State = 336;
+							((Pr_LElementValueAlt5Context)_localctx).E_LReference = pr_LReference();
+						}
+						break;
+				}
+			}
+			catch (RecognitionException re)
+			{
+				_localctx.exception = re;
+				ErrorHandler.ReportError(this, re);
+				ErrorHandler.Recover(this, re);
+			}
+			finally
+			{
+				ExitRule();
+			}
+			return _localctx;
+		}
+
+		public partial class Pr_LReferenceContext : ParserRuleContext
+		{
+			public Pr_IdentifierContext E_rule;
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_IdentifierContext pr_Identifier()
+			{
+				return GetRuleContext<Pr_IdentifierContext>(0);
+			}
+			public Pr_LReferenceContext(ParserRuleContext parent, int invokingState)
+				: base(parent, invokingState)
+			{
+			}
+			public override int RuleIndex { get { return RULE_pr_LReference; } }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor)
+			{
+				ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
+				if (typedVisitor != null) return typedVisitor.VisitPr_LReference(this);
+				else return visitor.VisitChildren(this);
+			}
+		}
+
+		[RuleVersion(0)]
+		public Pr_LReferenceContext pr_LReference()
+		{
+			Pr_LReferenceContext _localctx = new Pr_LReferenceContext(Context, State);
+			EnterRule(_localctx, 40, RULE_pr_LReference);
+			try
+			{
+				EnterOuterAlt(_localctx, 1);
+				{
+					State = 339;
+					_localctx.E_rule = pr_Identifier();
+				}
+			}
+			catch (RecognitionException re)
+			{
+				_localctx.exception = re;
+				ErrorHandler.ReportError(this, re);
+				ErrorHandler.Recover(this, re);
+			}
+			finally
+			{
+				ExitRule();
+			}
+			return _localctx;
+		}
+
+		public partial class Pr_LFixedContext : ParserRuleContext
+		{
+			public IToken E_text;
+			[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TString() { return GetToken(CompilerParser.LR_TString, 0); }
+			public Pr_LFixedContext(ParserRuleContext parent, int invokingState)
+				: base(parent, invokingState)
+			{
+			}
+			public override int RuleIndex { get { return RULE_pr_LFixed; } }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor)
+			{
+				ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
+				if (typedVisitor != null) return typedVisitor.VisitPr_LFixed(this);
+				else return visitor.VisitChildren(this);
+			}
+		}
+
+		[RuleVersion(0)]
+		public Pr_LFixedContext pr_LFixed()
+		{
+			Pr_LFixedContext _localctx = new Pr_LFixedContext(Context, State);
+			EnterRule(_localctx, 42, RULE_pr_LFixed);
+			try
+			{
+				EnterOuterAlt(_localctx, 1);
+				{
+					State = 341;
+					_localctx.E_text = Match(LR_TString);
+				}
+			}
+			catch (RecognitionException re)
+			{
+				_localctx.exception = re;
+				ErrorHandler.ReportError(this, re);
+				ErrorHandler.Recover(this, re);
+			}
+			finally
+			{
+				ExitRule();
+			}
+			return _localctx;
+		}
+
+		public partial class Pr_LWildCardContext : ParserRuleContext
+		{
+			public IToken E_TDot;
+			[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TDot() { return GetToken(CompilerParser.LR_TDot, 0); }
+			public Pr_LWildCardContext(ParserRuleContext parent, int invokingState)
+				: base(parent, invokingState)
+			{
+			}
+			public override int RuleIndex { get { return RULE_pr_LWildCard; } }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor)
+			{
+				ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
+				if (typedVisitor != null) return typedVisitor.VisitPr_LWildCard(this);
+				else return visitor.VisitChildren(this);
+			}
+		}
+
+		[RuleVersion(0)]
+		public Pr_LWildCardContext pr_LWildCard()
+		{
+			Pr_LWildCardContext _localctx = new Pr_LWildCardContext(Context, State);
+			EnterRule(_localctx, 44, RULE_pr_LWildCard);
+			try
+			{
+				EnterOuterAlt(_localctx, 1);
+				{
+					State = 343;
+					_localctx.E_TDot = Match(LR_TDot);
+				}
+			}
+			catch (RecognitionException re)
+			{
+				_localctx.exception = re;
+				ErrorHandler.ReportError(this, re);
+				ErrorHandler.Recover(this, re);
+			}
+			finally
+			{
+				ExitRule();
+			}
+			return _localctx;
+		}
+
+		public partial class Pr_LRangeContext : ParserRuleContext
+		{
+			public IToken E_startChar;
+			public IToken E_TDotDot;
+			public IToken E_endChar;
+			[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode[] LR_TString() { return GetTokens(CompilerParser.LR_TString); }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public ITerminalNode LR_TString(int i)
+			{
+				return GetToken(CompilerParser.LR_TString, i);
+			}
+			[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TDotDot() { return GetToken(CompilerParser.LR_TDotDot, 0); }
+			public Pr_LRangeContext(ParserRuleContext parent, int invokingState)
+				: base(parent, invokingState)
+			{
+			}
+			public override int RuleIndex { get { return RULE_pr_LRange; } }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor)
+			{
+				ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
+				if (typedVisitor != null) return typedVisitor.VisitPr_LRange(this);
+				else return visitor.VisitChildren(this);
+			}
+		}
+
+		[RuleVersion(0)]
+		public Pr_LRangeContext pr_LRange()
+		{
+			Pr_LRangeContext _localctx = new Pr_LRangeContext(Context, State);
+			EnterRule(_localctx, 46, RULE_pr_LRange);
+			try
+			{
+				EnterOuterAlt(_localctx, 1);
+				{
+					State = 345;
+					_localctx.E_startChar = Match(LR_TString);
+					State = 346;
+					_localctx.E_TDotDot = Match(LR_TDotDot);
+					State = 347;
+					_localctx.E_endChar = Match(LR_TString);
+				}
+			}
+			catch (RecognitionException re)
+			{
+				_localctx.exception = re;
+				ErrorHandler.ReportError(this, re);
+				ErrorHandler.Recover(this, re);
+			}
+			finally
+			{
+				ExitRule();
+			}
+			return _localctx;
+		}
+
+		public partial class Pr_LBlockContext : ParserRuleContext
+		{
+			public IToken E_TLParen;
+			public Pr_LAlternativeContext E_alternatives1;
+			public IToken _LR_TBar;
+			public IList<IToken> _E_TBar1 = new List<IToken>();
+			public Pr_LAlternativeContext _pr_LAlternative;
+			public IList<Pr_LAlternativeContext> _E_alternatives2 = new List<Pr_LAlternativeContext>();
+			public IToken E_TRParen;
+			[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TLParen() { return GetToken(CompilerParser.LR_TLParen, 0); }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_LAlternativeContext[] pr_LAlternative()
+			{
+				return GetRuleContexts<Pr_LAlternativeContext>();
+			}
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_LAlternativeContext pr_LAlternative(int i)
+			{
+				return GetRuleContext<Pr_LAlternativeContext>(i);
+			}
+			[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TRParen() { return GetToken(CompilerParser.LR_TRParen, 0); }
+			[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode[] LR_TBar() { return GetTokens(CompilerParser.LR_TBar); }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public ITerminalNode LR_TBar(int i)
+			{
+				return GetToken(CompilerParser.LR_TBar, i);
+			}
+			public Pr_LBlockContext(ParserRuleContext parent, int invokingState)
+				: base(parent, invokingState)
+			{
+			}
+			public override int RuleIndex { get { return RULE_pr_LBlock; } }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor)
+			{
+				ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
+				if (typedVisitor != null) return typedVisitor.VisitPr_LBlock(this);
+				else return visitor.VisitChildren(this);
+			}
+		}
+
+		[RuleVersion(0)]
+		public Pr_LBlockContext pr_LBlock()
+		{
+			Pr_LBlockContext _localctx = new Pr_LBlockContext(Context, State);
+			EnterRule(_localctx, 48, RULE_pr_LBlock);
+			int _la;
+			try
+			{
+				EnterOuterAlt(_localctx, 1);
+				{
+					State = 349;
+					_localctx.E_TLParen = Match(LR_TLParen);
+					State = 350;
+					_localctx.E_alternatives1 = pr_LAlternative();
+					State = 355;
+					ErrorHandler.Sync(this);
+					_la = TokenStream.LA(1);
+					while (_la == LR_TBar)
+					{
+						{
+							{
+								State = 351;
+								_localctx._LR_TBar = Match(LR_TBar);
+								_localctx._E_TBar1.Add(_localctx._LR_TBar);
+								State = 352;
+								_localctx._pr_LAlternative = pr_LAlternative();
+								_localctx._E_alternatives2.Add(_localctx._pr_LAlternative);
+							}
+						}
+						State = 357;
+						ErrorHandler.Sync(this);
+						_la = TokenStream.LA(1);
+					}
+					State = 358;
+					_localctx.E_TRParen = Match(LR_TRParen);
+				}
+			}
+			catch (RecognitionException re)
+			{
+				_localctx.exception = re;
+				ErrorHandler.ReportError(this, re);
+				ErrorHandler.Recover(this, re);
+			}
+			finally
+			{
+				ExitRule();
+			}
+			return _localctx;
+		}
+
+		public partial class Pr_ExpressionContext : ParserRuleContext
+		{
+			public Pr_ExpressionContext(ParserRuleContext parent, int invokingState)
+				: base(parent, invokingState)
+			{
+			}
+			public override int RuleIndex { get { return RULE_pr_Expression; } }
+
+			public Pr_ExpressionContext() { }
+			public virtual void CopyFrom(Pr_ExpressionContext context)
+			{
+				base.CopyFrom(context);
+			}
+		}
+		public partial class Pr_ExpressionAlt1Context : Pr_ExpressionContext
+		{
+			public Pr_SingleExpressionContext E_SingleExpression;
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_SingleExpressionContext pr_SingleExpression()
+			{
+				return GetRuleContext<Pr_SingleExpressionContext>(0);
+			}
+			public Pr_ExpressionAlt1Context(Pr_ExpressionContext context) { CopyFrom(context); }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor)
+			{
+				ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
+				if (typedVisitor != null) return typedVisitor.VisitPr_ExpressionAlt1(this);
+				else return visitor.VisitChildren(this);
+			}
+		}
+		public partial class Pr_ExpressionAlt2Context : Pr_ExpressionContext
+		{
+			public Pr_ArrayExpressionContext E_ArrayExpression;
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_ArrayExpressionContext pr_ArrayExpression()
+			{
+				return GetRuleContext<Pr_ArrayExpressionContext>(0);
+			}
+			public Pr_ExpressionAlt2Context(Pr_ExpressionContext context) { CopyFrom(context); }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor)
+			{
+				ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
+				if (typedVisitor != null) return typedVisitor.VisitPr_ExpressionAlt2(this);
+				else return visitor.VisitChildren(this);
+			}
+		}
+
+		[RuleVersion(0)]
+		public Pr_ExpressionContext pr_Expression()
+		{
+			Pr_ExpressionContext _localctx = new Pr_ExpressionContext(Context, State);
+			EnterRule(_localctx, 50, RULE_pr_Expression);
+			try
+			{
+				State = 362;
+				ErrorHandler.Sync(this);
+				switch (TokenStream.LA(1))
+				{
+					case LR_KBool:
+					case LR_KInt:
+					case LR_KDouble:
+					case LR_KString:
+					case LR_KType:
+					case LR_KSymbol:
+					case LR_KObject:
+					case LR_KVoid:
+					case LR_KNull:
+					case LR_KTrue:
+					case LR_KFalse:
+					case LR_TInteger:
+					case LR_TDecimal:
+					case LR_TIdentifier:
+					case LR_TVerbatimIdentifier:
+					case LR_TString:
+						_localctx = new Pr_ExpressionAlt1Context(_localctx);
+						EnterOuterAlt(_localctx, 1);
+						{
+							State = 360;
+							((Pr_ExpressionAlt1Context)_localctx).E_SingleExpression = pr_SingleExpression();
+						}
+						break;
+					case LR_TLBrace:
+						_localctx = new Pr_ExpressionAlt2Context(_localctx);
+						EnterOuterAlt(_localctx, 2);
+						{
+							State = 361;
+							((Pr_ExpressionAlt2Context)_localctx).E_ArrayExpression = pr_ArrayExpression();
+						}
+						break;
+					default:
+						throw new NoViableAltException(this);
+				}
+			}
+			catch (RecognitionException re)
+			{
+				_localctx.exception = re;
+				ErrorHandler.ReportError(this, re);
+				ErrorHandler.Recover(this, re);
+			}
+			finally
+			{
+				ExitRule();
+			}
+			return _localctx;
+		}
+
+		public partial class Pr_SingleExpressionContext : ParserRuleContext
+		{
+			public Pr_SingleExpressionContext(ParserRuleContext parent, int invokingState)
+				: base(parent, invokingState)
+			{
+			}
+			public override int RuleIndex { get { return RULE_pr_SingleExpression; } }
+
+			public Pr_SingleExpressionContext() { }
+			public virtual void CopyFrom(Pr_SingleExpressionContext context)
+			{
+				base.CopyFrom(context);
+			}
+		}
+		public partial class Pr_SingleExpressionAlt2Context : Pr_SingleExpressionContext
+		{
+			public Pr_QualifierContext E_value1;
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_QualifierContext pr_Qualifier()
+			{
+				return GetRuleContext<Pr_QualifierContext>(0);
+			}
+			public Pr_SingleExpressionAlt2Context(Pr_SingleExpressionContext context) { CopyFrom(context); }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor)
+			{
+				ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
+				if (typedVisitor != null) return typedVisitor.VisitPr_SingleExpressionAlt2(this);
+				else return visitor.VisitChildren(this);
+			}
+		}
+		public partial class Pr_SingleExpressionAlt1Context : Pr_SingleExpressionContext
+		{
+			public Pr_SingleExpressionAlt1Block1Context E_value;
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_SingleExpressionAlt1Block1Context pr_SingleExpressionAlt1Block1()
+			{
+				return GetRuleContext<Pr_SingleExpressionAlt1Block1Context>(0);
+			}
+			public Pr_SingleExpressionAlt1Context(Pr_SingleExpressionContext context) { CopyFrom(context); }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor)
+			{
+				ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
+				if (typedVisitor != null) return typedVisitor.VisitPr_SingleExpressionAlt1(this);
+				else return visitor.VisitChildren(this);
+			}
+		}
+
+		[RuleVersion(0)]
+		public Pr_SingleExpressionContext pr_SingleExpression()
+		{
+			Pr_SingleExpressionContext _localctx = new Pr_SingleExpressionContext(Context, State);
+			EnterRule(_localctx, 52, RULE_pr_SingleExpression);
+			try
+			{
+				State = 366;
+				ErrorHandler.Sync(this);
+				switch (TokenStream.LA(1))
+				{
+					case LR_KBool:
+					case LR_KInt:
+					case LR_KDouble:
+					case LR_KString:
+					case LR_KType:
+					case LR_KSymbol:
+					case LR_KObject:
+					case LR_KVoid:
+					case LR_KNull:
+					case LR_KTrue:
+					case LR_KFalse:
+					case LR_TInteger:
+					case LR_TDecimal:
+					case LR_TString:
+						_localctx = new Pr_SingleExpressionAlt1Context(_localctx);
+						EnterOuterAlt(_localctx, 1);
+						{
+							State = 364;
+							((Pr_SingleExpressionAlt1Context)_localctx).E_value = pr_SingleExpressionAlt1Block1();
+						}
+						break;
+					case LR_TIdentifier:
+					case LR_TVerbatimIdentifier:
+						_localctx = new Pr_SingleExpressionAlt2Context(_localctx);
+						EnterOuterAlt(_localctx, 2);
+						{
+							State = 365;
+							((Pr_SingleExpressionAlt2Context)_localctx).E_value1 = pr_Qualifier();
+						}
+						break;
+					default:
+						throw new NoViableAltException(this);
+				}
+			}
+			catch (RecognitionException re)
+			{
+				_localctx.exception = re;
+				ErrorHandler.ReportError(this, re);
+				ErrorHandler.Recover(this, re);
+			}
+			finally
+			{
+				ExitRule();
+			}
+			return _localctx;
+		}
+
+		public partial class Pr_ArrayExpressionContext : ParserRuleContext
+		{
+			public IToken E_TLBrace;
+			public Pr_ArrayExpressionBlock1Context E_Block;
+			public IToken E_TRBrace;
+			[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TLBrace() { return GetToken(CompilerParser.LR_TLBrace, 0); }
+			[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TRBrace() { return GetToken(CompilerParser.LR_TRBrace, 0); }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_ArrayExpressionBlock1Context pr_ArrayExpressionBlock1()
+			{
+				return GetRuleContext<Pr_ArrayExpressionBlock1Context>(0);
+			}
+			public Pr_ArrayExpressionContext(ParserRuleContext parent, int invokingState)
+				: base(parent, invokingState)
+			{
+			}
+			public override int RuleIndex { get { return RULE_pr_ArrayExpression; } }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor)
+			{
+				ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
+				if (typedVisitor != null) return typedVisitor.VisitPr_ArrayExpression(this);
+				else return visitor.VisitChildren(this);
+			}
+		}
+
+		[RuleVersion(0)]
+		public Pr_ArrayExpressionContext pr_ArrayExpression()
+		{
+			Pr_ArrayExpressionContext _localctx = new Pr_ArrayExpressionContext(Context, State);
+			EnterRule(_localctx, 54, RULE_pr_ArrayExpression);
+			int _la;
+			try
+			{
+				EnterOuterAlt(_localctx, 1);
+				{
+					State = 368;
+					_localctx.E_TLBrace = Match(LR_TLBrace);
+					State = 370;
+					ErrorHandler.Sync(this);
+					_la = TokenStream.LA(1);
+					if ((((_la) & ~0x3f) == 0 && ((1L << _la) & 17944577373634560L) != 0))
+					{
+						{
+							State = 369;
+							_localctx.E_Block = pr_ArrayExpressionBlock1();
+						}
+					}
+
+					State = 372;
+					_localctx.E_TRBrace = Match(LR_TRBrace);
+				}
+			}
+			catch (RecognitionException re)
+			{
+				_localctx.exception = re;
+				ErrorHandler.ReportError(this, re);
+				ErrorHandler.Recover(this, re);
+			}
+			finally
+			{
+				ExitRule();
+			}
+			return _localctx;
+		}
+
+		public partial class Pr_ParserAnnotationContext : ParserRuleContext
+		{
+			public IToken E_TLBracket;
+			public Pr_QualifierContext E_attributeClass;
+			public Pr_ParserAnnotationBlock1Context E_Block;
+			public IToken E_TRBracket;
+			[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TLBracket() { return GetToken(CompilerParser.LR_TLBracket, 0); }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_QualifierContext pr_Qualifier()
+			{
+				return GetRuleContext<Pr_QualifierContext>(0);
+			}
+			[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TRBracket() { return GetToken(CompilerParser.LR_TRBracket, 0); }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_ParserAnnotationBlock1Context pr_ParserAnnotationBlock1()
+			{
+				return GetRuleContext<Pr_ParserAnnotationBlock1Context>(0);
+			}
+			public Pr_ParserAnnotationContext(ParserRuleContext parent, int invokingState)
+				: base(parent, invokingState)
+			{
+			}
+			public override int RuleIndex { get { return RULE_pr_ParserAnnotation; } }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor)
+			{
+				ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
+				if (typedVisitor != null) return typedVisitor.VisitPr_ParserAnnotation(this);
+				else return visitor.VisitChildren(this);
+			}
+		}
+
+		[RuleVersion(0)]
+		public Pr_ParserAnnotationContext pr_ParserAnnotation()
+		{
+			Pr_ParserAnnotationContext _localctx = new Pr_ParserAnnotationContext(Context, State);
+			EnterRule(_localctx, 56, RULE_pr_ParserAnnotation);
+			int _la;
+			try
+			{
+				EnterOuterAlt(_localctx, 1);
+				{
+					State = 374;
+					_localctx.E_TLBracket = Match(LR_TLBracket);
+					State = 375;
+					_localctx.E_attributeClass = pr_Qualifier();
+					State = 377;
+					ErrorHandler.Sync(this);
+					_la = TokenStream.LA(1);
+					if (_la == LR_TLParen)
+					{
+						{
+							State = 376;
+							_localctx.E_Block = pr_ParserAnnotationBlock1();
+						}
+					}
+
+					State = 379;
+					_localctx.E_TRBracket = Match(LR_TRBracket);
+				}
+			}
+			catch (RecognitionException re)
+			{
+				_localctx.exception = re;
+				ErrorHandler.ReportError(this, re);
+				ErrorHandler.Recover(this, re);
+			}
+			finally
+			{
+				ExitRule();
+			}
+			return _localctx;
+		}
+
+		public partial class Pr_LexerAnnotationContext : ParserRuleContext
+		{
+			public IToken E_TLBracket;
+			public Pr_QualifierContext E_attributeClass;
+			public Pr_LexerAnnotationBlock1Context E_Block;
+			public IToken E_TRBracket;
+			[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TLBracket() { return GetToken(CompilerParser.LR_TLBracket, 0); }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_QualifierContext pr_Qualifier()
+			{
+				return GetRuleContext<Pr_QualifierContext>(0);
+			}
+			[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TRBracket() { return GetToken(CompilerParser.LR_TRBracket, 0); }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_LexerAnnotationBlock1Context pr_LexerAnnotationBlock1()
+			{
+				return GetRuleContext<Pr_LexerAnnotationBlock1Context>(0);
+			}
+			public Pr_LexerAnnotationContext(ParserRuleContext parent, int invokingState)
+				: base(parent, invokingState)
+			{
+			}
+			public override int RuleIndex { get { return RULE_pr_LexerAnnotation; } }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor)
+			{
+				ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
+				if (typedVisitor != null) return typedVisitor.VisitPr_LexerAnnotation(this);
+				else return visitor.VisitChildren(this);
+			}
+		}
+
+		[RuleVersion(0)]
+		public Pr_LexerAnnotationContext pr_LexerAnnotation()
+		{
+			Pr_LexerAnnotationContext _localctx = new Pr_LexerAnnotationContext(Context, State);
+			EnterRule(_localctx, 58, RULE_pr_LexerAnnotation);
+			int _la;
+			try
+			{
+				EnterOuterAlt(_localctx, 1);
+				{
+					State = 381;
+					_localctx.E_TLBracket = Match(LR_TLBracket);
+					State = 382;
+					_localctx.E_attributeClass = pr_Qualifier();
+					State = 384;
+					ErrorHandler.Sync(this);
+					_la = TokenStream.LA(1);
+					if (_la == LR_TLParen)
+					{
+						{
+							State = 383;
+							_localctx.E_Block = pr_LexerAnnotationBlock1();
+						}
+					}
+
+					State = 386;
+					_localctx.E_TRBracket = Match(LR_TRBracket);
+				}
+			}
+			catch (RecognitionException re)
+			{
+				_localctx.exception = re;
+				ErrorHandler.ReportError(this, re);
+				ErrorHandler.Recover(this, re);
+			}
+			finally
+			{
+				ExitRule();
+			}
+			return _localctx;
+		}
+
+		public partial class Pr_AnnotationArgumentContext : ParserRuleContext
+		{
+			public Pr_AnnotationArgumentBlock1Context E_Block;
+			public Pr_ExpressionContext E_value;
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_ExpressionContext pr_Expression()
+			{
+				return GetRuleContext<Pr_ExpressionContext>(0);
+			}
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_AnnotationArgumentBlock1Context pr_AnnotationArgumentBlock1()
+			{
+				return GetRuleContext<Pr_AnnotationArgumentBlock1Context>(0);
+			}
+			public Pr_AnnotationArgumentContext(ParserRuleContext parent, int invokingState)
+				: base(parent, invokingState)
+			{
+			}
+			public override int RuleIndex { get { return RULE_pr_AnnotationArgument; } }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor)
+			{
+				ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
+				if (typedVisitor != null) return typedVisitor.VisitPr_AnnotationArgument(this);
+				else return visitor.VisitChildren(this);
+			}
+		}
+
+		[RuleVersion(0)]
+		public Pr_AnnotationArgumentContext pr_AnnotationArgument()
+		{
+			Pr_AnnotationArgumentContext _localctx = new Pr_AnnotationArgumentContext(Context, State);
+			EnterRule(_localctx, 60, RULE_pr_AnnotationArgument);
+			try
+			{
+				EnterOuterAlt(_localctx, 1);
+				{
+					State = 389;
+					ErrorHandler.Sync(this);
+					switch (Interpreter.AdaptivePredict(TokenStream, 40, Context))
+					{
+						case 1:
+							{
+								State = 388;
+								_localctx.E_Block = pr_AnnotationArgumentBlock1();
+							}
+							break;
+					}
+					State = 391;
+					_localctx.E_value = pr_Expression();
+				}
+			}
+			catch (RecognitionException re)
+			{
+				_localctx.exception = re;
+				ErrorHandler.ReportError(this, re);
+				ErrorHandler.Recover(this, re);
+			}
+			finally
+			{
+				ExitRule();
+			}
+			return _localctx;
+		}
+
+		public partial class Pr_AssignmentContext : ParserRuleContext
+		{
+			public IToken E_Token;
+			[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TEq() { return GetToken(CompilerParser.LR_TEq, 0); }
+			[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TQuestionEq() { return GetToken(CompilerParser.LR_TQuestionEq, 0); }
+			[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TExclEq() { return GetToken(CompilerParser.LR_TExclEq, 0); }
+			[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TPlusEq() { return GetToken(CompilerParser.LR_TPlusEq, 0); }
+			public Pr_AssignmentContext(ParserRuleContext parent, int invokingState)
+				: base(parent, invokingState)
+			{
+			}
+			public override int RuleIndex { get { return RULE_pr_Assignment; } }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor)
+			{
+				ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
+				if (typedVisitor != null) return typedVisitor.VisitPr_Assignment(this);
+				else return visitor.VisitChildren(this);
+			}
+		}
+
+		[RuleVersion(0)]
+		public Pr_AssignmentContext pr_Assignment()
+		{
+			Pr_AssignmentContext _localctx = new Pr_AssignmentContext(Context, State);
+			EnterRule(_localctx, 62, RULE_pr_Assignment);
+			int _la;
+			try
+			{
+				EnterOuterAlt(_localctx, 1);
+				{
+					State = 393;
+					_localctx.E_Token = TokenStream.LT(1);
+					_la = TokenStream.LA(1);
+					if (!((((_la) & ~0x3f) == 0 && ((1L << _la) & 31457280L) != 0)))
+					{
+						_localctx.E_Token = ErrorHandler.RecoverInline(this);
+					}
+					else
+					{
+						ErrorHandler.ReportMatch(this);
+						Consume();
 					}
 				}
-
-				}
-				break;
 			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			ErrorHandler.ReportError(this, re);
-			ErrorHandler.Recover(this, re);
-		}
-		finally {
-			ExitRule();
-		}
-		return _localctx;
-	}
-
-	public partial class Pr_Eof1Context : ParserRuleContext {
-		public IToken E_KEof;
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_KEof() { return GetToken(CompilerParser.LR_KEof, 0); }
-		public Pr_Eof1Context(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
-		{
-		}
-		public override int RuleIndex { get { return RULE_pr_Eof1; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitPr_Eof1(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-
-	[RuleVersion(0)]
-	public Pr_Eof1Context pr_Eof1() {
-		Pr_Eof1Context _localctx = new Pr_Eof1Context(Context, State);
-		EnterRule(_localctx, 24, RULE_pr_Eof1);
-		try {
-			EnterOuterAlt(_localctx, 1);
+			catch (RecognitionException re)
 			{
-			State = 269;
-			_localctx.E_KEof = Match(LR_KEof);
+				_localctx.exception = re;
+				ErrorHandler.ReportError(this, re);
+				ErrorHandler.Recover(this, re);
 			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			ErrorHandler.ReportError(this, re);
-			ErrorHandler.Recover(this, re);
-		}
-		finally {
-			ExitRule();
-		}
-		return _localctx;
-	}
-
-	public partial class Pr_FixedContext : ParserRuleContext {
-		public Pr_ParserAnnotationContext _pr_ParserAnnotation;
-		public IList<Pr_ParserAnnotationContext> _E_annotations = new List<Pr_ParserAnnotationContext>();
-		public IToken E_text;
-		public Pr_MultiplicityContext E_multiplicity;
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TString() { return GetToken(CompilerParser.LR_TString, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_ParserAnnotationContext[] pr_ParserAnnotation() {
-			return GetRuleContexts<Pr_ParserAnnotationContext>();
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_ParserAnnotationContext pr_ParserAnnotation(int i) {
-			return GetRuleContext<Pr_ParserAnnotationContext>(i);
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_MultiplicityContext pr_Multiplicity() {
-			return GetRuleContext<Pr_MultiplicityContext>(0);
-		}
-		public Pr_FixedContext(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
-		{
-		}
-		public override int RuleIndex { get { return RULE_pr_Fixed; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitPr_Fixed(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-
-	[RuleVersion(0)]
-	public Pr_FixedContext pr_Fixed() {
-		Pr_FixedContext _localctx = new Pr_FixedContext(Context, State);
-		EnterRule(_localctx, 26, RULE_pr_Fixed);
-		int _la;
-		try {
-			EnterOuterAlt(_localctx, 1);
+			finally
 			{
-			State = 274;
-			ErrorHandler.Sync(this);
-			_la = TokenStream.LA(1);
-			while (_la==LR_TLBracket) {
-				{
-				{
-				State = 271;
-				_localctx._pr_ParserAnnotation = pr_ParserAnnotation();
-				_localctx._E_annotations.Add(_localctx._pr_ParserAnnotation);
-				}
-				}
-				State = 276;
-				ErrorHandler.Sync(this);
-				_la = TokenStream.LA(1);
+				ExitRule();
 			}
-			State = 277;
-			_localctx.E_text = Match(LR_TString);
-			State = 279;
-			ErrorHandler.Sync(this);
-			_la = TokenStream.LA(1);
-			if ((((_la) & ~0x3f) == 0 && ((1L << _la) & 2113929216L) != 0)) {
-				{
-				State = 278;
-				_localctx.E_multiplicity = pr_Multiplicity();
-				}
-			}
+			return _localctx;
+		}
 
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			ErrorHandler.ReportError(this, re);
-			ErrorHandler.Recover(this, re);
-		}
-		finally {
-			ExitRule();
-		}
-		return _localctx;
-	}
-
-	public partial class Pr_LexerRuleContext : ParserRuleContext {
-		public Pr_LexerRuleContext(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
+		public partial class Pr_MultiplicityContext : ParserRuleContext
 		{
+			public IToken E_Token;
+			[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TQuestion() { return GetToken(CompilerParser.LR_TQuestion, 0); }
+			[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TAsterisk() { return GetToken(CompilerParser.LR_TAsterisk, 0); }
+			[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TPlus() { return GetToken(CompilerParser.LR_TPlus, 0); }
+			[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TQuestionQuestion() { return GetToken(CompilerParser.LR_TQuestionQuestion, 0); }
+			[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TAsteriskQuestion() { return GetToken(CompilerParser.LR_TAsteriskQuestion, 0); }
+			[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TPlusQuestion() { return GetToken(CompilerParser.LR_TPlusQuestion, 0); }
+			public Pr_MultiplicityContext(ParserRuleContext parent, int invokingState)
+				: base(parent, invokingState)
+			{
+			}
+			public override int RuleIndex { get { return RULE_pr_Multiplicity; } }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor)
+			{
+				ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
+				if (typedVisitor != null) return typedVisitor.VisitPr_Multiplicity(this);
+				else return visitor.VisitChildren(this);
+			}
 		}
-		public override int RuleIndex { get { return RULE_pr_LexerRule; } }
-	 
-		public Pr_LexerRuleContext() { }
-		public virtual void CopyFrom(Pr_LexerRuleContext context) {
-			base.CopyFrom(context);
-		}
-	}
-	public partial class Pr_LexerRuleAlt1Context : Pr_LexerRuleContext {
-		public Pr_TokenContext E_Token;
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_TokenContext pr_Token() {
-			return GetRuleContext<Pr_TokenContext>(0);
-		}
-		public Pr_LexerRuleAlt1Context(Pr_LexerRuleContext context) { CopyFrom(context); }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitPr_LexerRuleAlt1(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-	public partial class Pr_LexerRuleAlt2Context : Pr_LexerRuleContext {
-		public Pr_FragmentContext E_Fragment;
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_FragmentContext pr_Fragment() {
-			return GetRuleContext<Pr_FragmentContext>(0);
-		}
-		public Pr_LexerRuleAlt2Context(Pr_LexerRuleContext context) { CopyFrom(context); }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitPr_LexerRuleAlt2(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
 
-	[RuleVersion(0)]
-	public Pr_LexerRuleContext pr_LexerRule() {
-		Pr_LexerRuleContext _localctx = new Pr_LexerRuleContext(Context, State);
-		EnterRule(_localctx, 28, RULE_pr_LexerRule);
-		try {
-			State = 283;
-			ErrorHandler.Sync(this);
-			switch (TokenStream.LA(1)) {
-			case LR_TLBracket:
-			case LR_KToken:
-			case LR_KHidden:
-				_localctx = new Pr_LexerRuleAlt1Context(_localctx);
+		[RuleVersion(0)]
+		public Pr_MultiplicityContext pr_Multiplicity()
+		{
+			Pr_MultiplicityContext _localctx = new Pr_MultiplicityContext(Context, State);
+			EnterRule(_localctx, 64, RULE_pr_Multiplicity);
+			int _la;
+			try
+			{
 				EnterOuterAlt(_localctx, 1);
 				{
-				State = 281;
-				((Pr_LexerRuleAlt1Context)_localctx).E_Token = pr_Token();
-				}
-				break;
-			case LR_KFragment:
-				_localctx = new Pr_LexerRuleAlt2Context(_localctx);
-				EnterOuterAlt(_localctx, 2);
-				{
-				State = 282;
-				((Pr_LexerRuleAlt2Context)_localctx).E_Fragment = pr_Fragment();
-				}
-				break;
-			default:
-				throw new NoViableAltException(this);
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			ErrorHandler.ReportError(this, re);
-			ErrorHandler.Recover(this, re);
-		}
-		finally {
-			ExitRule();
-		}
-		return _localctx;
-	}
-
-	public partial class Pr_TokenContext : ParserRuleContext {
-		public Pr_LexerAnnotationContext _pr_LexerAnnotation;
-		public IList<Pr_LexerAnnotationContext> _E_annotations = new List<Pr_LexerAnnotationContext>();
-		public Pr_TokenBlock1Context E_Block;
-		public IToken E_TColon;
-		public Pr_LAlternativeContext E_alternatives1;
-		public IToken _LR_TBar;
-		public IList<IToken> _E_TBar1 = new List<IToken>();
-		public Pr_LAlternativeContext _pr_LAlternative;
-		public IList<Pr_LAlternativeContext> _E_alternatives2 = new List<Pr_LAlternativeContext>();
-		public IToken E_TSemicolon;
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_TokenBlock1Context pr_TokenBlock1() {
-			return GetRuleContext<Pr_TokenBlock1Context>(0);
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TColon() { return GetToken(CompilerParser.LR_TColon, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_LAlternativeContext[] pr_LAlternative() {
-			return GetRuleContexts<Pr_LAlternativeContext>();
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_LAlternativeContext pr_LAlternative(int i) {
-			return GetRuleContext<Pr_LAlternativeContext>(i);
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TSemicolon() { return GetToken(CompilerParser.LR_TSemicolon, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_LexerAnnotationContext[] pr_LexerAnnotation() {
-			return GetRuleContexts<Pr_LexerAnnotationContext>();
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_LexerAnnotationContext pr_LexerAnnotation(int i) {
-			return GetRuleContext<Pr_LexerAnnotationContext>(i);
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode[] LR_TBar() { return GetTokens(CompilerParser.LR_TBar); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TBar(int i) {
-			return GetToken(CompilerParser.LR_TBar, i);
-		}
-		public Pr_TokenContext(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
-		{
-		}
-		public override int RuleIndex { get { return RULE_pr_Token; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitPr_Token(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-
-	[RuleVersion(0)]
-	public Pr_TokenContext pr_Token() {
-		Pr_TokenContext _localctx = new Pr_TokenContext(Context, State);
-		EnterRule(_localctx, 30, RULE_pr_Token);
-		int _la;
-		try {
-			EnterOuterAlt(_localctx, 1);
-			{
-			State = 288;
-			ErrorHandler.Sync(this);
-			_la = TokenStream.LA(1);
-			while (_la==LR_TLBracket) {
-				{
-				{
-				State = 285;
-				_localctx._pr_LexerAnnotation = pr_LexerAnnotation();
-				_localctx._E_annotations.Add(_localctx._pr_LexerAnnotation);
-				}
-				}
-				State = 290;
-				ErrorHandler.Sync(this);
-				_la = TokenStream.LA(1);
-			}
-			State = 291;
-			_localctx.E_Block = pr_TokenBlock1();
-			State = 292;
-			_localctx.E_TColon = Match(LR_TColon);
-			State = 293;
-			_localctx.E_alternatives1 = pr_LAlternative();
-			State = 298;
-			ErrorHandler.Sync(this);
-			_la = TokenStream.LA(1);
-			while (_la==LR_TBar) {
-				{
-				{
-				State = 294;
-				_localctx._LR_TBar = Match(LR_TBar);
-				_localctx._E_TBar1.Add(_localctx._LR_TBar);
-				State = 295;
-				_localctx._pr_LAlternative = pr_LAlternative();
-				_localctx._E_alternatives2.Add(_localctx._pr_LAlternative);
-				}
-				}
-				State = 300;
-				ErrorHandler.Sync(this);
-				_la = TokenStream.LA(1);
-			}
-			State = 301;
-			_localctx.E_TSemicolon = Match(LR_TSemicolon);
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			ErrorHandler.ReportError(this, re);
-			ErrorHandler.Recover(this, re);
-		}
-		finally {
-			ExitRule();
-		}
-		return _localctx;
-	}
-
-	public partial class Pr_FragmentContext : ParserRuleContext {
-		public IToken E_KFragment;
-		public Pr_NameContext E_Name;
-		public IToken E_TColon;
-		public Pr_LAlternativeContext E_alternatives1;
-		public IToken _LR_TBar;
-		public IList<IToken> _E_TBar1 = new List<IToken>();
-		public Pr_LAlternativeContext _pr_LAlternative;
-		public IList<Pr_LAlternativeContext> _E_alternatives2 = new List<Pr_LAlternativeContext>();
-		public IToken E_TSemicolon;
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_KFragment() { return GetToken(CompilerParser.LR_KFragment, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_NameContext pr_Name() {
-			return GetRuleContext<Pr_NameContext>(0);
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TColon() { return GetToken(CompilerParser.LR_TColon, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_LAlternativeContext[] pr_LAlternative() {
-			return GetRuleContexts<Pr_LAlternativeContext>();
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_LAlternativeContext pr_LAlternative(int i) {
-			return GetRuleContext<Pr_LAlternativeContext>(i);
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TSemicolon() { return GetToken(CompilerParser.LR_TSemicolon, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode[] LR_TBar() { return GetTokens(CompilerParser.LR_TBar); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TBar(int i) {
-			return GetToken(CompilerParser.LR_TBar, i);
-		}
-		public Pr_FragmentContext(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
-		{
-		}
-		public override int RuleIndex { get { return RULE_pr_Fragment; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitPr_Fragment(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-
-	[RuleVersion(0)]
-	public Pr_FragmentContext pr_Fragment() {
-		Pr_FragmentContext _localctx = new Pr_FragmentContext(Context, State);
-		EnterRule(_localctx, 32, RULE_pr_Fragment);
-		int _la;
-		try {
-			EnterOuterAlt(_localctx, 1);
-			{
-			State = 303;
-			_localctx.E_KFragment = Match(LR_KFragment);
-			State = 304;
-			_localctx.E_Name = pr_Name();
-			State = 305;
-			_localctx.E_TColon = Match(LR_TColon);
-			State = 306;
-			_localctx.E_alternatives1 = pr_LAlternative();
-			State = 311;
-			ErrorHandler.Sync(this);
-			_la = TokenStream.LA(1);
-			while (_la==LR_TBar) {
-				{
-				{
-				State = 307;
-				_localctx._LR_TBar = Match(LR_TBar);
-				_localctx._E_TBar1.Add(_localctx._LR_TBar);
-				State = 308;
-				_localctx._pr_LAlternative = pr_LAlternative();
-				_localctx._E_alternatives2.Add(_localctx._pr_LAlternative);
-				}
-				}
-				State = 313;
-				ErrorHandler.Sync(this);
-				_la = TokenStream.LA(1);
-			}
-			State = 314;
-			_localctx.E_TSemicolon = Match(LR_TSemicolon);
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			ErrorHandler.ReportError(this, re);
-			ErrorHandler.Recover(this, re);
-		}
-		finally {
-			ExitRule();
-		}
-		return _localctx;
-	}
-
-	public partial class Pr_LAlternativeContext : ParserRuleContext {
-		public Pr_LElementContext _pr_LElement;
-		public IList<Pr_LElementContext> _E_elements = new List<Pr_LElementContext>();
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_LElementContext[] pr_LElement() {
-			return GetRuleContexts<Pr_LElementContext>();
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_LElementContext pr_LElement(int i) {
-			return GetRuleContext<Pr_LElementContext>(i);
-		}
-		public Pr_LAlternativeContext(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
-		{
-		}
-		public override int RuleIndex { get { return RULE_pr_LAlternative; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitPr_LAlternative(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-
-	[RuleVersion(0)]
-	public Pr_LAlternativeContext pr_LAlternative() {
-		Pr_LAlternativeContext _localctx = new Pr_LAlternativeContext(Context, State);
-		EnterRule(_localctx, 34, RULE_pr_LAlternative);
-		int _la;
-		try {
-			EnterOuterAlt(_localctx, 1);
-			{
-			State = 319;
-			ErrorHandler.Sync(this);
-			_la = TokenStream.LA(1);
-			while (_la==LR_TTilde) {
-				{
-				{
-				State = 316;
-				_localctx._pr_LElement = pr_LElement();
-				_localctx._E_elements.Add(_localctx._pr_LElement);
-				}
-				}
-				State = 321;
-				ErrorHandler.Sync(this);
-				_la = TokenStream.LA(1);
-			}
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			ErrorHandler.ReportError(this, re);
-			ErrorHandler.Recover(this, re);
-		}
-		finally {
-			ExitRule();
-		}
-		return _localctx;
-	}
-
-	public partial class Pr_LElementContext : ParserRuleContext {
-		public IToken E_isNegated;
-		public Pr_LElementValueContext E_value;
-		public Pr_MultiplicityContext E_multiplicity;
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TTilde() { return GetToken(CompilerParser.LR_TTilde, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_LElementValueContext pr_LElementValue() {
-			return GetRuleContext<Pr_LElementValueContext>(0);
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_MultiplicityContext pr_Multiplicity() {
-			return GetRuleContext<Pr_MultiplicityContext>(0);
-		}
-		public Pr_LElementContext(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
-		{
-		}
-		public override int RuleIndex { get { return RULE_pr_LElement; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitPr_LElement(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-
-	[RuleVersion(0)]
-	public Pr_LElementContext pr_LElement() {
-		Pr_LElementContext _localctx = new Pr_LElementContext(Context, State);
-		EnterRule(_localctx, 36, RULE_pr_LElement);
-		int _la;
-		try {
-			EnterOuterAlt(_localctx, 1);
-			{
-			State = 322;
-			_localctx.E_isNegated = Match(LR_TTilde);
-			State = 323;
-			_localctx.E_value = pr_LElementValue();
-			State = 325;
-			ErrorHandler.Sync(this);
-			_la = TokenStream.LA(1);
-			if ((((_la) & ~0x3f) == 0 && ((1L << _la) & 2113929216L) != 0)) {
-				{
-				State = 324;
-				_localctx.E_multiplicity = pr_Multiplicity();
-				}
-			}
-
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			ErrorHandler.ReportError(this, re);
-			ErrorHandler.Recover(this, re);
-		}
-		finally {
-			ExitRule();
-		}
-		return _localctx;
-	}
-
-	public partial class Pr_LElementValueContext : ParserRuleContext {
-		public Pr_LElementValueContext(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
-		{
-		}
-		public override int RuleIndex { get { return RULE_pr_LElementValue; } }
-	 
-		public Pr_LElementValueContext() { }
-		public virtual void CopyFrom(Pr_LElementValueContext context) {
-			base.CopyFrom(context);
-		}
-	}
-	public partial class Pr_LElementValueAlt5Context : Pr_LElementValueContext {
-		public Pr_LReferenceContext E_LReference;
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_LReferenceContext pr_LReference() {
-			return GetRuleContext<Pr_LReferenceContext>(0);
-		}
-		public Pr_LElementValueAlt5Context(Pr_LElementValueContext context) { CopyFrom(context); }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitPr_LElementValueAlt5(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-	public partial class Pr_LElementValueAlt3Context : Pr_LElementValueContext {
-		public Pr_LWildCardContext E_LWildCard;
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_LWildCardContext pr_LWildCard() {
-			return GetRuleContext<Pr_LWildCardContext>(0);
-		}
-		public Pr_LElementValueAlt3Context(Pr_LElementValueContext context) { CopyFrom(context); }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitPr_LElementValueAlt3(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-	public partial class Pr_LElementValueAlt4Context : Pr_LElementValueContext {
-		public Pr_LRangeContext E_LRange;
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_LRangeContext pr_LRange() {
-			return GetRuleContext<Pr_LRangeContext>(0);
-		}
-		public Pr_LElementValueAlt4Context(Pr_LElementValueContext context) { CopyFrom(context); }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitPr_LElementValueAlt4(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-	public partial class Pr_LElementValueAlt1Context : Pr_LElementValueContext {
-		public Pr_LBlockContext E_LBlock;
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_LBlockContext pr_LBlock() {
-			return GetRuleContext<Pr_LBlockContext>(0);
-		}
-		public Pr_LElementValueAlt1Context(Pr_LElementValueContext context) { CopyFrom(context); }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitPr_LElementValueAlt1(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-	public partial class Pr_LElementValueAlt2Context : Pr_LElementValueContext {
-		public Pr_LFixedContext E_LFixed;
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_LFixedContext pr_LFixed() {
-			return GetRuleContext<Pr_LFixedContext>(0);
-		}
-		public Pr_LElementValueAlt2Context(Pr_LElementValueContext context) { CopyFrom(context); }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitPr_LElementValueAlt2(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-
-	[RuleVersion(0)]
-	public Pr_LElementValueContext pr_LElementValue() {
-		Pr_LElementValueContext _localctx = new Pr_LElementValueContext(Context, State);
-		EnterRule(_localctx, 38, RULE_pr_LElementValue);
-		try {
-			State = 332;
-			ErrorHandler.Sync(this);
-			switch ( Interpreter.AdaptivePredict(TokenStream,31,Context) ) {
-			case 1:
-				_localctx = new Pr_LElementValueAlt1Context(_localctx);
-				EnterOuterAlt(_localctx, 1);
-				{
-				State = 327;
-				((Pr_LElementValueAlt1Context)_localctx).E_LBlock = pr_LBlock();
-				}
-				break;
-			case 2:
-				_localctx = new Pr_LElementValueAlt2Context(_localctx);
-				EnterOuterAlt(_localctx, 2);
-				{
-				State = 328;
-				((Pr_LElementValueAlt2Context)_localctx).E_LFixed = pr_LFixed();
-				}
-				break;
-			case 3:
-				_localctx = new Pr_LElementValueAlt3Context(_localctx);
-				EnterOuterAlt(_localctx, 3);
-				{
-				State = 329;
-				((Pr_LElementValueAlt3Context)_localctx).E_LWildCard = pr_LWildCard();
-				}
-				break;
-			case 4:
-				_localctx = new Pr_LElementValueAlt4Context(_localctx);
-				EnterOuterAlt(_localctx, 4);
-				{
-				State = 330;
-				((Pr_LElementValueAlt4Context)_localctx).E_LRange = pr_LRange();
-				}
-				break;
-			case 5:
-				_localctx = new Pr_LElementValueAlt5Context(_localctx);
-				EnterOuterAlt(_localctx, 5);
-				{
-				State = 331;
-				((Pr_LElementValueAlt5Context)_localctx).E_LReference = pr_LReference();
-				}
-				break;
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			ErrorHandler.ReportError(this, re);
-			ErrorHandler.Recover(this, re);
-		}
-		finally {
-			ExitRule();
-		}
-		return _localctx;
-	}
-
-	public partial class Pr_LReferenceContext : ParserRuleContext {
-		public Pr_IdentifierContext E_rule;
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_IdentifierContext pr_Identifier() {
-			return GetRuleContext<Pr_IdentifierContext>(0);
-		}
-		public Pr_LReferenceContext(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
-		{
-		}
-		public override int RuleIndex { get { return RULE_pr_LReference; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitPr_LReference(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-
-	[RuleVersion(0)]
-	public Pr_LReferenceContext pr_LReference() {
-		Pr_LReferenceContext _localctx = new Pr_LReferenceContext(Context, State);
-		EnterRule(_localctx, 40, RULE_pr_LReference);
-		try {
-			EnterOuterAlt(_localctx, 1);
-			{
-			State = 334;
-			_localctx.E_rule = pr_Identifier();
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			ErrorHandler.ReportError(this, re);
-			ErrorHandler.Recover(this, re);
-		}
-		finally {
-			ExitRule();
-		}
-		return _localctx;
-	}
-
-	public partial class Pr_LFixedContext : ParserRuleContext {
-		public IToken E_text;
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TString() { return GetToken(CompilerParser.LR_TString, 0); }
-		public Pr_LFixedContext(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
-		{
-		}
-		public override int RuleIndex { get { return RULE_pr_LFixed; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitPr_LFixed(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-
-	[RuleVersion(0)]
-	public Pr_LFixedContext pr_LFixed() {
-		Pr_LFixedContext _localctx = new Pr_LFixedContext(Context, State);
-		EnterRule(_localctx, 42, RULE_pr_LFixed);
-		try {
-			EnterOuterAlt(_localctx, 1);
-			{
-			State = 336;
-			_localctx.E_text = Match(LR_TString);
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			ErrorHandler.ReportError(this, re);
-			ErrorHandler.Recover(this, re);
-		}
-		finally {
-			ExitRule();
-		}
-		return _localctx;
-	}
-
-	public partial class Pr_LWildCardContext : ParserRuleContext {
-		public IToken E_TDot;
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TDot() { return GetToken(CompilerParser.LR_TDot, 0); }
-		public Pr_LWildCardContext(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
-		{
-		}
-		public override int RuleIndex { get { return RULE_pr_LWildCard; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitPr_LWildCard(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-
-	[RuleVersion(0)]
-	public Pr_LWildCardContext pr_LWildCard() {
-		Pr_LWildCardContext _localctx = new Pr_LWildCardContext(Context, State);
-		EnterRule(_localctx, 44, RULE_pr_LWildCard);
-		try {
-			EnterOuterAlt(_localctx, 1);
-			{
-			State = 338;
-			_localctx.E_TDot = Match(LR_TDot);
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			ErrorHandler.ReportError(this, re);
-			ErrorHandler.Recover(this, re);
-		}
-		finally {
-			ExitRule();
-		}
-		return _localctx;
-	}
-
-	public partial class Pr_LRangeContext : ParserRuleContext {
-		public IToken E_startChar;
-		public IToken E_TDotDot;
-		public IToken E_endChar;
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode[] LR_TString() { return GetTokens(CompilerParser.LR_TString); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TString(int i) {
-			return GetToken(CompilerParser.LR_TString, i);
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TDotDot() { return GetToken(CompilerParser.LR_TDotDot, 0); }
-		public Pr_LRangeContext(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
-		{
-		}
-		public override int RuleIndex { get { return RULE_pr_LRange; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitPr_LRange(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-
-	[RuleVersion(0)]
-	public Pr_LRangeContext pr_LRange() {
-		Pr_LRangeContext _localctx = new Pr_LRangeContext(Context, State);
-		EnterRule(_localctx, 46, RULE_pr_LRange);
-		try {
-			EnterOuterAlt(_localctx, 1);
-			{
-			State = 340;
-			_localctx.E_startChar = Match(LR_TString);
-			State = 341;
-			_localctx.E_TDotDot = Match(LR_TDotDot);
-			State = 342;
-			_localctx.E_endChar = Match(LR_TString);
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			ErrorHandler.ReportError(this, re);
-			ErrorHandler.Recover(this, re);
-		}
-		finally {
-			ExitRule();
-		}
-		return _localctx;
-	}
-
-	public partial class Pr_LBlockContext : ParserRuleContext {
-		public IToken E_TLParen;
-		public Pr_LAlternativeContext E_alternatives1;
-		public IToken _LR_TBar;
-		public IList<IToken> _E_TBar1 = new List<IToken>();
-		public Pr_LAlternativeContext _pr_LAlternative;
-		public IList<Pr_LAlternativeContext> _E_alternatives2 = new List<Pr_LAlternativeContext>();
-		public IToken E_TRParen;
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TLParen() { return GetToken(CompilerParser.LR_TLParen, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_LAlternativeContext[] pr_LAlternative() {
-			return GetRuleContexts<Pr_LAlternativeContext>();
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_LAlternativeContext pr_LAlternative(int i) {
-			return GetRuleContext<Pr_LAlternativeContext>(i);
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TRParen() { return GetToken(CompilerParser.LR_TRParen, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode[] LR_TBar() { return GetTokens(CompilerParser.LR_TBar); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TBar(int i) {
-			return GetToken(CompilerParser.LR_TBar, i);
-		}
-		public Pr_LBlockContext(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
-		{
-		}
-		public override int RuleIndex { get { return RULE_pr_LBlock; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitPr_LBlock(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-
-	[RuleVersion(0)]
-	public Pr_LBlockContext pr_LBlock() {
-		Pr_LBlockContext _localctx = new Pr_LBlockContext(Context, State);
-		EnterRule(_localctx, 48, RULE_pr_LBlock);
-		int _la;
-		try {
-			EnterOuterAlt(_localctx, 1);
-			{
-			State = 344;
-			_localctx.E_TLParen = Match(LR_TLParen);
-			State = 345;
-			_localctx.E_alternatives1 = pr_LAlternative();
-			State = 350;
-			ErrorHandler.Sync(this);
-			_la = TokenStream.LA(1);
-			while (_la==LR_TBar) {
-				{
-				{
-				State = 346;
-				_localctx._LR_TBar = Match(LR_TBar);
-				_localctx._E_TBar1.Add(_localctx._LR_TBar);
-				State = 347;
-				_localctx._pr_LAlternative = pr_LAlternative();
-				_localctx._E_alternatives2.Add(_localctx._pr_LAlternative);
-				}
-				}
-				State = 352;
-				ErrorHandler.Sync(this);
-				_la = TokenStream.LA(1);
-			}
-			State = 353;
-			_localctx.E_TRParen = Match(LR_TRParen);
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			ErrorHandler.ReportError(this, re);
-			ErrorHandler.Recover(this, re);
-		}
-		finally {
-			ExitRule();
-		}
-		return _localctx;
-	}
-
-	public partial class Pr_ExpressionContext : ParserRuleContext {
-		public Pr_ExpressionContext(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
-		{
-		}
-		public override int RuleIndex { get { return RULE_pr_Expression; } }
-	 
-		public Pr_ExpressionContext() { }
-		public virtual void CopyFrom(Pr_ExpressionContext context) {
-			base.CopyFrom(context);
-		}
-	}
-	public partial class Pr_ExpressionAlt1Context : Pr_ExpressionContext {
-		public Pr_SingleExpressionContext E_SingleExpression;
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_SingleExpressionContext pr_SingleExpression() {
-			return GetRuleContext<Pr_SingleExpressionContext>(0);
-		}
-		public Pr_ExpressionAlt1Context(Pr_ExpressionContext context) { CopyFrom(context); }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitPr_ExpressionAlt1(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-	public partial class Pr_ExpressionAlt2Context : Pr_ExpressionContext {
-		public Pr_ArrayExpressionContext E_ArrayExpression;
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_ArrayExpressionContext pr_ArrayExpression() {
-			return GetRuleContext<Pr_ArrayExpressionContext>(0);
-		}
-		public Pr_ExpressionAlt2Context(Pr_ExpressionContext context) { CopyFrom(context); }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitPr_ExpressionAlt2(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-
-	[RuleVersion(0)]
-	public Pr_ExpressionContext pr_Expression() {
-		Pr_ExpressionContext _localctx = new Pr_ExpressionContext(Context, State);
-		EnterRule(_localctx, 50, RULE_pr_Expression);
-		try {
-			State = 357;
-			ErrorHandler.Sync(this);
-			switch (TokenStream.LA(1)) {
-			case LR_KBool:
-			case LR_KInt:
-			case LR_KDouble:
-			case LR_KString:
-			case LR_KType:
-			case LR_KSymbol:
-			case LR_KObject:
-			case LR_KVoid:
-			case LR_KNull:
-			case LR_KTrue:
-			case LR_KFalse:
-			case LR_TInteger:
-			case LR_TDecimal:
-			case LR_TIdentifier:
-			case LR_TVerbatimIdentifier:
-			case LR_TString:
-				_localctx = new Pr_ExpressionAlt1Context(_localctx);
-				EnterOuterAlt(_localctx, 1);
-				{
-				State = 355;
-				((Pr_ExpressionAlt1Context)_localctx).E_SingleExpression = pr_SingleExpression();
-				}
-				break;
-			case LR_TLBrace:
-				_localctx = new Pr_ExpressionAlt2Context(_localctx);
-				EnterOuterAlt(_localctx, 2);
-				{
-				State = 356;
-				((Pr_ExpressionAlt2Context)_localctx).E_ArrayExpression = pr_ArrayExpression();
-				}
-				break;
-			default:
-				throw new NoViableAltException(this);
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			ErrorHandler.ReportError(this, re);
-			ErrorHandler.Recover(this, re);
-		}
-		finally {
-			ExitRule();
-		}
-		return _localctx;
-	}
-
-	public partial class Pr_SingleExpressionContext : ParserRuleContext {
-		public Pr_SingleExpressionContext(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
-		{
-		}
-		public override int RuleIndex { get { return RULE_pr_SingleExpression; } }
-	 
-		public Pr_SingleExpressionContext() { }
-		public virtual void CopyFrom(Pr_SingleExpressionContext context) {
-			base.CopyFrom(context);
-		}
-	}
-	public partial class Pr_SingleExpressionAlt2Context : Pr_SingleExpressionContext {
-		public Pr_QualifierContext E_value1;
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_QualifierContext pr_Qualifier() {
-			return GetRuleContext<Pr_QualifierContext>(0);
-		}
-		public Pr_SingleExpressionAlt2Context(Pr_SingleExpressionContext context) { CopyFrom(context); }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitPr_SingleExpressionAlt2(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-	public partial class Pr_SingleExpressionAlt1Context : Pr_SingleExpressionContext {
-		public Pr_SingleExpressionAlt1Block1Context E_value;
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_SingleExpressionAlt1Block1Context pr_SingleExpressionAlt1Block1() {
-			return GetRuleContext<Pr_SingleExpressionAlt1Block1Context>(0);
-		}
-		public Pr_SingleExpressionAlt1Context(Pr_SingleExpressionContext context) { CopyFrom(context); }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitPr_SingleExpressionAlt1(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-
-	[RuleVersion(0)]
-	public Pr_SingleExpressionContext pr_SingleExpression() {
-		Pr_SingleExpressionContext _localctx = new Pr_SingleExpressionContext(Context, State);
-		EnterRule(_localctx, 52, RULE_pr_SingleExpression);
-		try {
-			State = 361;
-			ErrorHandler.Sync(this);
-			switch (TokenStream.LA(1)) {
-			case LR_KBool:
-			case LR_KInt:
-			case LR_KDouble:
-			case LR_KString:
-			case LR_KType:
-			case LR_KSymbol:
-			case LR_KObject:
-			case LR_KVoid:
-			case LR_KNull:
-			case LR_KTrue:
-			case LR_KFalse:
-			case LR_TInteger:
-			case LR_TDecimal:
-			case LR_TString:
-				_localctx = new Pr_SingleExpressionAlt1Context(_localctx);
-				EnterOuterAlt(_localctx, 1);
-				{
-				State = 359;
-				((Pr_SingleExpressionAlt1Context)_localctx).E_value = pr_SingleExpressionAlt1Block1();
-				}
-				break;
-			case LR_TIdentifier:
-			case LR_TVerbatimIdentifier:
-				_localctx = new Pr_SingleExpressionAlt2Context(_localctx);
-				EnterOuterAlt(_localctx, 2);
-				{
-				State = 360;
-				((Pr_SingleExpressionAlt2Context)_localctx).E_value1 = pr_Qualifier();
-				}
-				break;
-			default:
-				throw new NoViableAltException(this);
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			ErrorHandler.ReportError(this, re);
-			ErrorHandler.Recover(this, re);
-		}
-		finally {
-			ExitRule();
-		}
-		return _localctx;
-	}
-
-	public partial class Pr_ArrayExpressionContext : ParserRuleContext {
-		public IToken E_TLBrace;
-		public Pr_ArrayExpressionBlock1Context E_Block;
-		public IToken E_TRBrace;
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TLBrace() { return GetToken(CompilerParser.LR_TLBrace, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TRBrace() { return GetToken(CompilerParser.LR_TRBrace, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_ArrayExpressionBlock1Context pr_ArrayExpressionBlock1() {
-			return GetRuleContext<Pr_ArrayExpressionBlock1Context>(0);
-		}
-		public Pr_ArrayExpressionContext(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
-		{
-		}
-		public override int RuleIndex { get { return RULE_pr_ArrayExpression; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitPr_ArrayExpression(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-
-	[RuleVersion(0)]
-	public Pr_ArrayExpressionContext pr_ArrayExpression() {
-		Pr_ArrayExpressionContext _localctx = new Pr_ArrayExpressionContext(Context, State);
-		EnterRule(_localctx, 54, RULE_pr_ArrayExpression);
-		int _la;
-		try {
-			EnterOuterAlt(_localctx, 1);
-			{
-			State = 363;
-			_localctx.E_TLBrace = Match(LR_TLBrace);
-			State = 365;
-			ErrorHandler.Sync(this);
-			_la = TokenStream.LA(1);
-			if ((((_la) & ~0x3f) == 0 && ((1L << _la) & 8972562490982400L) != 0)) {
-				{
-				State = 364;
-				_localctx.E_Block = pr_ArrayExpressionBlock1();
-				}
-			}
-
-			State = 367;
-			_localctx.E_TRBrace = Match(LR_TRBrace);
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			ErrorHandler.ReportError(this, re);
-			ErrorHandler.Recover(this, re);
-		}
-		finally {
-			ExitRule();
-		}
-		return _localctx;
-	}
-
-	public partial class Pr_ParserAnnotationContext : ParserRuleContext {
-		public IToken E_TLBracket;
-		public Pr_QualifierContext E_attributeClass;
-		public Pr_ParserAnnotationBlock1Context E_Block;
-		public IToken E_TRBracket;
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TLBracket() { return GetToken(CompilerParser.LR_TLBracket, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_QualifierContext pr_Qualifier() {
-			return GetRuleContext<Pr_QualifierContext>(0);
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TRBracket() { return GetToken(CompilerParser.LR_TRBracket, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_ParserAnnotationBlock1Context pr_ParserAnnotationBlock1() {
-			return GetRuleContext<Pr_ParserAnnotationBlock1Context>(0);
-		}
-		public Pr_ParserAnnotationContext(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
-		{
-		}
-		public override int RuleIndex { get { return RULE_pr_ParserAnnotation; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitPr_ParserAnnotation(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-
-	[RuleVersion(0)]
-	public Pr_ParserAnnotationContext pr_ParserAnnotation() {
-		Pr_ParserAnnotationContext _localctx = new Pr_ParserAnnotationContext(Context, State);
-		EnterRule(_localctx, 56, RULE_pr_ParserAnnotation);
-		int _la;
-		try {
-			EnterOuterAlt(_localctx, 1);
-			{
-			State = 369;
-			_localctx.E_TLBracket = Match(LR_TLBracket);
-			State = 370;
-			_localctx.E_attributeClass = pr_Qualifier();
-			State = 372;
-			ErrorHandler.Sync(this);
-			_la = TokenStream.LA(1);
-			if (_la==LR_TLParen) {
-				{
-				State = 371;
-				_localctx.E_Block = pr_ParserAnnotationBlock1();
-				}
-			}
-
-			State = 374;
-			_localctx.E_TRBracket = Match(LR_TRBracket);
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			ErrorHandler.ReportError(this, re);
-			ErrorHandler.Recover(this, re);
-		}
-		finally {
-			ExitRule();
-		}
-		return _localctx;
-	}
-
-	public partial class Pr_LexerAnnotationContext : ParserRuleContext {
-		public IToken E_TLBracket;
-		public Pr_QualifierContext E_attributeClass;
-		public Pr_LexerAnnotationBlock1Context E_Block;
-		public IToken E_TRBracket;
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TLBracket() { return GetToken(CompilerParser.LR_TLBracket, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_QualifierContext pr_Qualifier() {
-			return GetRuleContext<Pr_QualifierContext>(0);
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TRBracket() { return GetToken(CompilerParser.LR_TRBracket, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_LexerAnnotationBlock1Context pr_LexerAnnotationBlock1() {
-			return GetRuleContext<Pr_LexerAnnotationBlock1Context>(0);
-		}
-		public Pr_LexerAnnotationContext(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
-		{
-		}
-		public override int RuleIndex { get { return RULE_pr_LexerAnnotation; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitPr_LexerAnnotation(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-
-	[RuleVersion(0)]
-	public Pr_LexerAnnotationContext pr_LexerAnnotation() {
-		Pr_LexerAnnotationContext _localctx = new Pr_LexerAnnotationContext(Context, State);
-		EnterRule(_localctx, 58, RULE_pr_LexerAnnotation);
-		int _la;
-		try {
-			EnterOuterAlt(_localctx, 1);
-			{
-			State = 376;
-			_localctx.E_TLBracket = Match(LR_TLBracket);
-			State = 377;
-			_localctx.E_attributeClass = pr_Qualifier();
-			State = 379;
-			ErrorHandler.Sync(this);
-			_la = TokenStream.LA(1);
-			if (_la==LR_TLParen) {
-				{
-				State = 378;
-				_localctx.E_Block = pr_LexerAnnotationBlock1();
-				}
-			}
-
-			State = 381;
-			_localctx.E_TRBracket = Match(LR_TRBracket);
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			ErrorHandler.ReportError(this, re);
-			ErrorHandler.Recover(this, re);
-		}
-		finally {
-			ExitRule();
-		}
-		return _localctx;
-	}
-
-	public partial class Pr_AnnotationArgumentContext : ParserRuleContext {
-		public Pr_AnnotationArgumentBlock1Context E_Block;
-		public Pr_ExpressionContext E_value;
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_ExpressionContext pr_Expression() {
-			return GetRuleContext<Pr_ExpressionContext>(0);
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_AnnotationArgumentBlock1Context pr_AnnotationArgumentBlock1() {
-			return GetRuleContext<Pr_AnnotationArgumentBlock1Context>(0);
-		}
-		public Pr_AnnotationArgumentContext(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
-		{
-		}
-		public override int RuleIndex { get { return RULE_pr_AnnotationArgument; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitPr_AnnotationArgument(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-
-	[RuleVersion(0)]
-	public Pr_AnnotationArgumentContext pr_AnnotationArgument() {
-		Pr_AnnotationArgumentContext _localctx = new Pr_AnnotationArgumentContext(Context, State);
-		EnterRule(_localctx, 60, RULE_pr_AnnotationArgument);
-		try {
-			EnterOuterAlt(_localctx, 1);
-			{
-			State = 384;
-			ErrorHandler.Sync(this);
-			switch ( Interpreter.AdaptivePredict(TokenStream,38,Context) ) {
-			case 1:
-				{
-				State = 383;
-				_localctx.E_Block = pr_AnnotationArgumentBlock1();
-				}
-				break;
-			}
-			State = 386;
-			_localctx.E_value = pr_Expression();
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			ErrorHandler.ReportError(this, re);
-			ErrorHandler.Recover(this, re);
-		}
-		finally {
-			ExitRule();
-		}
-		return _localctx;
-	}
-
-	public partial class Pr_AssignmentContext : ParserRuleContext {
-		public IToken E_Token;
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TEq() { return GetToken(CompilerParser.LR_TEq, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TQuestionEq() { return GetToken(CompilerParser.LR_TQuestionEq, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TExclEq() { return GetToken(CompilerParser.LR_TExclEq, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TPlusEq() { return GetToken(CompilerParser.LR_TPlusEq, 0); }
-		public Pr_AssignmentContext(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
-		{
-		}
-		public override int RuleIndex { get { return RULE_pr_Assignment; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitPr_Assignment(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-
-	[RuleVersion(0)]
-	public Pr_AssignmentContext pr_Assignment() {
-		Pr_AssignmentContext _localctx = new Pr_AssignmentContext(Context, State);
-		EnterRule(_localctx, 62, RULE_pr_Assignment);
-		int _la;
-		try {
-			EnterOuterAlt(_localctx, 1);
-			{
-			State = 388;
-			_localctx.E_Token = TokenStream.LT(1);
-			_la = TokenStream.LA(1);
-			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & 31457280L) != 0)) ) {
-				_localctx.E_Token = ErrorHandler.RecoverInline(this);
-			}
-			else {
-				ErrorHandler.ReportMatch(this);
-			    Consume();
-			}
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			ErrorHandler.ReportError(this, re);
-			ErrorHandler.Recover(this, re);
-		}
-		finally {
-			ExitRule();
-		}
-		return _localctx;
-	}
-
-	public partial class Pr_MultiplicityContext : ParserRuleContext {
-		public IToken E_Token;
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TQuestion() { return GetToken(CompilerParser.LR_TQuestion, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TAsterisk() { return GetToken(CompilerParser.LR_TAsterisk, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TPlus() { return GetToken(CompilerParser.LR_TPlus, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TQuestionQuestion() { return GetToken(CompilerParser.LR_TQuestionQuestion, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TAsteriskQuestion() { return GetToken(CompilerParser.LR_TAsteriskQuestion, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TPlusQuestion() { return GetToken(CompilerParser.LR_TPlusQuestion, 0); }
-		public Pr_MultiplicityContext(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
-		{
-		}
-		public override int RuleIndex { get { return RULE_pr_Multiplicity; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitPr_Multiplicity(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-
-	[RuleVersion(0)]
-	public Pr_MultiplicityContext pr_Multiplicity() {
-		Pr_MultiplicityContext _localctx = new Pr_MultiplicityContext(Context, State);
-		EnterRule(_localctx, 64, RULE_pr_Multiplicity);
-		int _la;
-		try {
-			EnterOuterAlt(_localctx, 1);
-			{
-			State = 390;
-			_localctx.E_Token = TokenStream.LT(1);
-			_la = TokenStream.LA(1);
-			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & 2113929216L) != 0)) ) {
-				_localctx.E_Token = ErrorHandler.RecoverInline(this);
-			}
-			else {
-				ErrorHandler.ReportMatch(this);
-			    Consume();
-			}
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			ErrorHandler.ReportError(this, re);
-			ErrorHandler.Recover(this, re);
-		}
-		finally {
-			ExitRule();
-		}
-		return _localctx;
-	}
-
-	public partial class Pr_TypeReferenceIdentifierContext : ParserRuleContext {
-		public Pr_TypeReferenceIdentifierContext(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
-		{
-		}
-		public override int RuleIndex { get { return RULE_pr_TypeReferenceIdentifier; } }
-	 
-		public Pr_TypeReferenceIdentifierContext() { }
-		public virtual void CopyFrom(Pr_TypeReferenceIdentifierContext context) {
-			base.CopyFrom(context);
-		}
-	}
-	public partial class Pr_TypeReferenceIdentifierAlt1Context : Pr_TypeReferenceIdentifierContext {
-		public Pr_PrimitiveTypeContext E_PrimitiveType;
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_PrimitiveTypeContext pr_PrimitiveType() {
-			return GetRuleContext<Pr_PrimitiveTypeContext>(0);
-		}
-		public Pr_TypeReferenceIdentifierAlt1Context(Pr_TypeReferenceIdentifierContext context) { CopyFrom(context); }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitPr_TypeReferenceIdentifierAlt1(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-	public partial class Pr_TypeReferenceIdentifierAlt2Context : Pr_TypeReferenceIdentifierContext {
-		public Pr_IdentifierContext E_Identifier;
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_IdentifierContext pr_Identifier() {
-			return GetRuleContext<Pr_IdentifierContext>(0);
-		}
-		public Pr_TypeReferenceIdentifierAlt2Context(Pr_TypeReferenceIdentifierContext context) { CopyFrom(context); }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitPr_TypeReferenceIdentifierAlt2(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-
-	[RuleVersion(0)]
-	public Pr_TypeReferenceIdentifierContext pr_TypeReferenceIdentifier() {
-		Pr_TypeReferenceIdentifierContext _localctx = new Pr_TypeReferenceIdentifierContext(Context, State);
-		EnterRule(_localctx, 66, RULE_pr_TypeReferenceIdentifier);
-		try {
-			State = 394;
-			ErrorHandler.Sync(this);
-			switch (TokenStream.LA(1)) {
-			case LR_KBool:
-			case LR_KInt:
-			case LR_KDouble:
-			case LR_KString:
-			case LR_KType:
-			case LR_KSymbol:
-			case LR_KObject:
-			case LR_KVoid:
-				_localctx = new Pr_TypeReferenceIdentifierAlt1Context(_localctx);
-				EnterOuterAlt(_localctx, 1);
-				{
-				State = 392;
-				((Pr_TypeReferenceIdentifierAlt1Context)_localctx).E_PrimitiveType = pr_PrimitiveType();
-				}
-				break;
-			case LR_TIdentifier:
-			case LR_TVerbatimIdentifier:
-				_localctx = new Pr_TypeReferenceIdentifierAlt2Context(_localctx);
-				EnterOuterAlt(_localctx, 2);
-				{
-				State = 393;
-				((Pr_TypeReferenceIdentifierAlt2Context)_localctx).E_Identifier = pr_Identifier();
-				}
-				break;
-			default:
-				throw new NoViableAltException(this);
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			ErrorHandler.ReportError(this, re);
-			ErrorHandler.Recover(this, re);
-		}
-		finally {
-			ExitRule();
-		}
-		return _localctx;
-	}
-
-	public partial class Pr_TypeReferenceContext : ParserRuleContext {
-		public Pr_TypeReferenceContext(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
-		{
-		}
-		public override int RuleIndex { get { return RULE_pr_TypeReference; } }
-	 
-		public Pr_TypeReferenceContext() { }
-		public virtual void CopyFrom(Pr_TypeReferenceContext context) {
-			base.CopyFrom(context);
-		}
-	}
-	public partial class Pr_TypeReferenceAlt1Context : Pr_TypeReferenceContext {
-		public Pr_PrimitiveTypeContext E_PrimitiveType;
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_PrimitiveTypeContext pr_PrimitiveType() {
-			return GetRuleContext<Pr_PrimitiveTypeContext>(0);
-		}
-		public Pr_TypeReferenceAlt1Context(Pr_TypeReferenceContext context) { CopyFrom(context); }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitPr_TypeReferenceAlt1(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-	public partial class Pr_TypeReferenceAlt2Context : Pr_TypeReferenceContext {
-		public Pr_QualifierContext E_Qualifier;
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_QualifierContext pr_Qualifier() {
-			return GetRuleContext<Pr_QualifierContext>(0);
-		}
-		public Pr_TypeReferenceAlt2Context(Pr_TypeReferenceContext context) { CopyFrom(context); }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitPr_TypeReferenceAlt2(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-
-	[RuleVersion(0)]
-	public Pr_TypeReferenceContext pr_TypeReference() {
-		Pr_TypeReferenceContext _localctx = new Pr_TypeReferenceContext(Context, State);
-		EnterRule(_localctx, 68, RULE_pr_TypeReference);
-		try {
-			State = 398;
-			ErrorHandler.Sync(this);
-			switch (TokenStream.LA(1)) {
-			case LR_KBool:
-			case LR_KInt:
-			case LR_KDouble:
-			case LR_KString:
-			case LR_KType:
-			case LR_KSymbol:
-			case LR_KObject:
-			case LR_KVoid:
-				_localctx = new Pr_TypeReferenceAlt1Context(_localctx);
-				EnterOuterAlt(_localctx, 1);
-				{
-				State = 396;
-				((Pr_TypeReferenceAlt1Context)_localctx).E_PrimitiveType = pr_PrimitiveType();
-				}
-				break;
-			case LR_TIdentifier:
-			case LR_TVerbatimIdentifier:
-				_localctx = new Pr_TypeReferenceAlt2Context(_localctx);
-				EnterOuterAlt(_localctx, 2);
-				{
-				State = 397;
-				((Pr_TypeReferenceAlt2Context)_localctx).E_Qualifier = pr_Qualifier();
-				}
-				break;
-			default:
-				throw new NoViableAltException(this);
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			ErrorHandler.ReportError(this, re);
-			ErrorHandler.Recover(this, re);
-		}
-		finally {
-			ExitRule();
-		}
-		return _localctx;
-	}
-
-	public partial class Pr_PrimitiveTypeContext : ParserRuleContext {
-		public IToken E_Token;
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_KBool() { return GetToken(CompilerParser.LR_KBool, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_KInt() { return GetToken(CompilerParser.LR_KInt, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_KDouble() { return GetToken(CompilerParser.LR_KDouble, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_KString() { return GetToken(CompilerParser.LR_KString, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_KType() { return GetToken(CompilerParser.LR_KType, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_KSymbol() { return GetToken(CompilerParser.LR_KSymbol, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_KObject() { return GetToken(CompilerParser.LR_KObject, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_KVoid() { return GetToken(CompilerParser.LR_KVoid, 0); }
-		public Pr_PrimitiveTypeContext(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
-		{
-		}
-		public override int RuleIndex { get { return RULE_pr_PrimitiveType; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitPr_PrimitiveType(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-
-	[RuleVersion(0)]
-	public Pr_PrimitiveTypeContext pr_PrimitiveType() {
-		Pr_PrimitiveTypeContext _localctx = new Pr_PrimitiveTypeContext(Context, State);
-		EnterRule(_localctx, 70, RULE_pr_PrimitiveType);
-		int _la;
-		try {
-			EnterOuterAlt(_localctx, 1);
-			{
-			State = 400;
-			_localctx.E_Token = TokenStream.LT(1);
-			_la = TokenStream.LA(1);
-			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & 547608330240L) != 0)) ) {
-				_localctx.E_Token = ErrorHandler.RecoverInline(this);
-			}
-			else {
-				ErrorHandler.ReportMatch(this);
-			    Consume();
-			}
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			ErrorHandler.ReportError(this, re);
-			ErrorHandler.Recover(this, re);
-		}
-		finally {
-			ExitRule();
-		}
-		return _localctx;
-	}
-
-	public partial class Pr_NameContext : ParserRuleContext {
-		public Pr_IdentifierContext E_Identifier;
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_IdentifierContext pr_Identifier() {
-			return GetRuleContext<Pr_IdentifierContext>(0);
-		}
-		public Pr_NameContext(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
-		{
-		}
-		public override int RuleIndex { get { return RULE_pr_Name; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitPr_Name(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-
-	[RuleVersion(0)]
-	public Pr_NameContext pr_Name() {
-		Pr_NameContext _localctx = new Pr_NameContext(Context, State);
-		EnterRule(_localctx, 72, RULE_pr_Name);
-		try {
-			EnterOuterAlt(_localctx, 1);
-			{
-			State = 402;
-			_localctx.E_Identifier = pr_Identifier();
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			ErrorHandler.ReportError(this, re);
-			ErrorHandler.Recover(this, re);
-		}
-		finally {
-			ExitRule();
-		}
-		return _localctx;
-	}
-
-	public partial class Pr_QualifierContext : ParserRuleContext {
-		public Pr_IdentifierContext E_Identifier1;
-		public IToken _LR_TDot;
-		public IList<IToken> _E_TDot1 = new List<IToken>();
-		public Pr_IdentifierContext _pr_Identifier;
-		public IList<Pr_IdentifierContext> _E_Identifier2 = new List<Pr_IdentifierContext>();
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_IdentifierContext[] pr_Identifier() {
-			return GetRuleContexts<Pr_IdentifierContext>();
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_IdentifierContext pr_Identifier(int i) {
-			return GetRuleContext<Pr_IdentifierContext>(i);
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode[] LR_TDot() { return GetTokens(CompilerParser.LR_TDot); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TDot(int i) {
-			return GetToken(CompilerParser.LR_TDot, i);
-		}
-		public Pr_QualifierContext(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
-		{
-		}
-		public override int RuleIndex { get { return RULE_pr_Qualifier; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitPr_Qualifier(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-
-	[RuleVersion(0)]
-	public Pr_QualifierContext pr_Qualifier() {
-		Pr_QualifierContext _localctx = new Pr_QualifierContext(Context, State);
-		EnterRule(_localctx, 74, RULE_pr_Qualifier);
-		int _la;
-		try {
-			EnterOuterAlt(_localctx, 1);
-			{
-			State = 404;
-			_localctx.E_Identifier1 = pr_Identifier();
-			State = 409;
-			ErrorHandler.Sync(this);
-			_la = TokenStream.LA(1);
-			while (_la==LR_TDot) {
-				{
-				{
-				State = 405;
-				_localctx._LR_TDot = Match(LR_TDot);
-				_localctx._E_TDot1.Add(_localctx._LR_TDot);
-				State = 406;
-				_localctx._pr_Identifier = pr_Identifier();
-				_localctx._E_Identifier2.Add(_localctx._pr_Identifier);
-				}
-				}
-				State = 411;
-				ErrorHandler.Sync(this);
-				_la = TokenStream.LA(1);
-			}
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			ErrorHandler.ReportError(this, re);
-			ErrorHandler.Recover(this, re);
-		}
-		finally {
-			ExitRule();
-		}
-		return _localctx;
-	}
-
-	public partial class Pr_IdentifierContext : ParserRuleContext {
-		public IToken E_Token;
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TIdentifier() { return GetToken(CompilerParser.LR_TIdentifier, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TVerbatimIdentifier() { return GetToken(CompilerParser.LR_TVerbatimIdentifier, 0); }
-		public Pr_IdentifierContext(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
-		{
-		}
-		public override int RuleIndex { get { return RULE_pr_Identifier; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitPr_Identifier(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-
-	[RuleVersion(0)]
-	public Pr_IdentifierContext pr_Identifier() {
-		Pr_IdentifierContext _localctx = new Pr_IdentifierContext(Context, State);
-		EnterRule(_localctx, 76, RULE_pr_Identifier);
-		int _la;
-		try {
-			EnterOuterAlt(_localctx, 1);
-			{
-			State = 412;
-			_localctx.E_Token = TokenStream.LT(1);
-			_la = TokenStream.LA(1);
-			if ( !(_la==LR_TIdentifier || _la==LR_TVerbatimIdentifier) ) {
-				_localctx.E_Token = ErrorHandler.RecoverInline(this);
-			}
-			else {
-				ErrorHandler.ReportMatch(this);
-			    Consume();
-			}
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			ErrorHandler.ReportError(this, re);
-			ErrorHandler.Recover(this, re);
-		}
-		finally {
-			ExitRule();
-		}
-		return _localctx;
-	}
-
-	public partial class Pr_MainBlock1Context : ParserRuleContext {
-		public Pr_LanguageDeclarationContext E_declarations;
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_LanguageDeclarationContext pr_LanguageDeclaration() {
-			return GetRuleContext<Pr_LanguageDeclarationContext>(0);
-		}
-		public Pr_MainBlock1Context(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
-		{
-		}
-		public override int RuleIndex { get { return RULE_pr_MainBlock1; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitPr_MainBlock1(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-
-	[RuleVersion(0)]
-	public Pr_MainBlock1Context pr_MainBlock1() {
-		Pr_MainBlock1Context _localctx = new Pr_MainBlock1Context(Context, State);
-		EnterRule(_localctx, 78, RULE_pr_MainBlock1);
-		try {
-			EnterOuterAlt(_localctx, 1);
-			{
-			State = 414;
-			_localctx.E_declarations = pr_LanguageDeclaration();
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			ErrorHandler.ReportError(this, re);
-			ErrorHandler.Recover(this, re);
-		}
-		finally {
-			ExitRule();
-		}
-		return _localctx;
-	}
-
-	public partial class Pr_GrammarBlock1Context : ParserRuleContext {
-		public Pr_GrammarRuleContext _pr_GrammarRule;
-		public IList<Pr_GrammarRuleContext> _E_grammarRules = new List<Pr_GrammarRuleContext>();
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_GrammarRuleContext[] pr_GrammarRule() {
-			return GetRuleContexts<Pr_GrammarRuleContext>();
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_GrammarRuleContext pr_GrammarRule(int i) {
-			return GetRuleContext<Pr_GrammarRuleContext>(i);
-		}
-		public Pr_GrammarBlock1Context(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
-		{
-		}
-		public override int RuleIndex { get { return RULE_pr_GrammarBlock1; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitPr_GrammarBlock1(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-
-	[RuleVersion(0)]
-	public Pr_GrammarBlock1Context pr_GrammarBlock1() {
-		Pr_GrammarBlock1Context _localctx = new Pr_GrammarBlock1Context(Context, State);
-		EnterRule(_localctx, 80, RULE_pr_GrammarBlock1);
-		int _la;
-		try {
-			EnterOuterAlt(_localctx, 1);
-			{
-			State = 419;
-			ErrorHandler.Sync(this);
-			_la = TokenStream.LA(1);
-			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & 3404635608465408L) != 0)) {
-				{
-				{
-				State = 416;
-				_localctx._pr_GrammarRule = pr_GrammarRule();
-				_localctx._E_grammarRules.Add(_localctx._pr_GrammarRule);
-				}
-				}
-				State = 421;
-				ErrorHandler.Sync(this);
-				_la = TokenStream.LA(1);
-			}
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			ErrorHandler.ReportError(this, re);
-			ErrorHandler.Recover(this, re);
-		}
-		finally {
-			ExitRule();
-		}
-		return _localctx;
-	}
-
-	public partial class Pr_RuleBlock1Context : ParserRuleContext {
-		public Pr_RuleBlock1Context(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
-		{
-		}
-		public override int RuleIndex { get { return RULE_pr_RuleBlock1; } }
-	 
-		public Pr_RuleBlock1Context() { }
-		public virtual void CopyFrom(Pr_RuleBlock1Context context) {
-			base.CopyFrom(context);
-		}
-	}
-	public partial class Pr_RuleBlock1Alt1Context : Pr_RuleBlock1Context {
-		public Pr_TypeReferenceIdentifierContext E_returnType;
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_TypeReferenceIdentifierContext pr_TypeReferenceIdentifier() {
-			return GetRuleContext<Pr_TypeReferenceIdentifierContext>(0);
-		}
-		public Pr_RuleBlock1Alt1Context(Pr_RuleBlock1Context context) { CopyFrom(context); }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitPr_RuleBlock1Alt1(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-	public partial class Pr_RuleBlock1Alt2Context : Pr_RuleBlock1Context {
-		public Pr_IdentifierContext E_Identifier;
-		public IToken E_KReturns;
-		public Pr_TypeReferenceContext E_returnType1;
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_IdentifierContext pr_Identifier() {
-			return GetRuleContext<Pr_IdentifierContext>(0);
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_KReturns() { return GetToken(CompilerParser.LR_KReturns, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_TypeReferenceContext pr_TypeReference() {
-			return GetRuleContext<Pr_TypeReferenceContext>(0);
-		}
-		public Pr_RuleBlock1Alt2Context(Pr_RuleBlock1Context context) { CopyFrom(context); }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitPr_RuleBlock1Alt2(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-
-	[RuleVersion(0)]
-	public Pr_RuleBlock1Context pr_RuleBlock1() {
-		Pr_RuleBlock1Context _localctx = new Pr_RuleBlock1Context(Context, State);
-		EnterRule(_localctx, 82, RULE_pr_RuleBlock1);
-		try {
-			State = 427;
-			ErrorHandler.Sync(this);
-			switch ( Interpreter.AdaptivePredict(TokenStream,43,Context) ) {
-			case 1:
-				_localctx = new Pr_RuleBlock1Alt1Context(_localctx);
-				EnterOuterAlt(_localctx, 1);
-				{
-				State = 422;
-				((Pr_RuleBlock1Alt1Context)_localctx).E_returnType = pr_TypeReferenceIdentifier();
-				}
-				break;
-			case 2:
-				_localctx = new Pr_RuleBlock1Alt2Context(_localctx);
-				EnterOuterAlt(_localctx, 2);
-				{
-				State = 423;
-				((Pr_RuleBlock1Alt2Context)_localctx).E_Identifier = pr_Identifier();
-				State = 424;
-				((Pr_RuleBlock1Alt2Context)_localctx).E_KReturns = Match(LR_KReturns);
-				State = 425;
-				((Pr_RuleBlock1Alt2Context)_localctx).E_returnType1 = pr_TypeReference();
-				}
-				break;
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			ErrorHandler.ReportError(this, re);
-			ErrorHandler.Recover(this, re);
-		}
-		finally {
-			ExitRule();
-		}
-		return _localctx;
-	}
-
-	public partial class Pr_RulealternativesBlockContext : ParserRuleContext {
-		public IToken E_TBar1;
-		public Pr_AlternativeContext E_alternatives2;
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TBar() { return GetToken(CompilerParser.LR_TBar, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_AlternativeContext pr_Alternative() {
-			return GetRuleContext<Pr_AlternativeContext>(0);
-		}
-		public Pr_RulealternativesBlockContext(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
-		{
-		}
-		public override int RuleIndex { get { return RULE_pr_RulealternativesBlock; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitPr_RulealternativesBlock(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-
-	[RuleVersion(0)]
-	public Pr_RulealternativesBlockContext pr_RulealternativesBlock() {
-		Pr_RulealternativesBlockContext _localctx = new Pr_RulealternativesBlockContext(Context, State);
-		EnterRule(_localctx, 84, RULE_pr_RulealternativesBlock);
-		try {
-			EnterOuterAlt(_localctx, 1);
-			{
-			State = 429;
-			_localctx.E_TBar1 = Match(LR_TBar);
-			State = 430;
-			_localctx.E_alternatives2 = pr_Alternative();
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			ErrorHandler.ReportError(this, re);
-			ErrorHandler.Recover(this, re);
-		}
-		finally {
-			ExitRule();
-		}
-		return _localctx;
-	}
-
-	public partial class Pr_AlternativeBlock1Context : ParserRuleContext {
-		public Pr_ParserAnnotationContext _pr_ParserAnnotation;
-		public IList<Pr_ParserAnnotationContext> _E_annotations = new List<Pr_ParserAnnotationContext>();
-		public IToken E_KAlt;
-		public Pr_NameContext E_Name;
-		public Pr_AlternativeBlock1Block1Context E_Block;
-		public IToken E_TColon;
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_KAlt() { return GetToken(CompilerParser.LR_KAlt, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_NameContext pr_Name() {
-			return GetRuleContext<Pr_NameContext>(0);
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TColon() { return GetToken(CompilerParser.LR_TColon, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_ParserAnnotationContext[] pr_ParserAnnotation() {
-			return GetRuleContexts<Pr_ParserAnnotationContext>();
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_ParserAnnotationContext pr_ParserAnnotation(int i) {
-			return GetRuleContext<Pr_ParserAnnotationContext>(i);
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_AlternativeBlock1Block1Context pr_AlternativeBlock1Block1() {
-			return GetRuleContext<Pr_AlternativeBlock1Block1Context>(0);
-		}
-		public Pr_AlternativeBlock1Context(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
-		{
-		}
-		public override int RuleIndex { get { return RULE_pr_AlternativeBlock1; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitPr_AlternativeBlock1(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-
-	[RuleVersion(0)]
-	public Pr_AlternativeBlock1Context pr_AlternativeBlock1() {
-		Pr_AlternativeBlock1Context _localctx = new Pr_AlternativeBlock1Context(Context, State);
-		EnterRule(_localctx, 86, RULE_pr_AlternativeBlock1);
-		int _la;
-		try {
-			EnterOuterAlt(_localctx, 1);
-			{
-			State = 435;
-			ErrorHandler.Sync(this);
-			_la = TokenStream.LA(1);
-			while (_la==LR_TLBracket) {
-				{
-				{
-				State = 432;
-				_localctx._pr_ParserAnnotation = pr_ParserAnnotation();
-				_localctx._E_annotations.Add(_localctx._pr_ParserAnnotation);
-				}
-				}
-				State = 437;
-				ErrorHandler.Sync(this);
-				_la = TokenStream.LA(1);
-			}
-			State = 438;
-			_localctx.E_KAlt = Match(LR_KAlt);
-			State = 439;
-			_localctx.E_Name = pr_Name();
-			State = 441;
-			ErrorHandler.Sync(this);
-			_la = TokenStream.LA(1);
-			if (_la==LR_KReturns) {
-				{
-				State = 440;
-				_localctx.E_Block = pr_AlternativeBlock1Block1();
-				}
-			}
-
-			State = 443;
-			_localctx.E_TColon = Match(LR_TColon);
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			ErrorHandler.ReportError(this, re);
-			ErrorHandler.Recover(this, re);
-		}
-		finally {
-			ExitRule();
-		}
-		return _localctx;
-	}
-
-	public partial class Pr_AlternativeBlock1Block1Context : ParserRuleContext {
-		public IToken E_KReturns;
-		public Pr_TypeReferenceContext E_returnType;
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_KReturns() { return GetToken(CompilerParser.LR_KReturns, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_TypeReferenceContext pr_TypeReference() {
-			return GetRuleContext<Pr_TypeReferenceContext>(0);
-		}
-		public Pr_AlternativeBlock1Block1Context(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
-		{
-		}
-		public override int RuleIndex { get { return RULE_pr_AlternativeBlock1Block1; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitPr_AlternativeBlock1Block1(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-
-	[RuleVersion(0)]
-	public Pr_AlternativeBlock1Block1Context pr_AlternativeBlock1Block1() {
-		Pr_AlternativeBlock1Block1Context _localctx = new Pr_AlternativeBlock1Block1Context(Context, State);
-		EnterRule(_localctx, 88, RULE_pr_AlternativeBlock1Block1);
-		try {
-			EnterOuterAlt(_localctx, 1);
-			{
-			State = 445;
-			_localctx.E_KReturns = Match(LR_KReturns);
-			State = 446;
-			_localctx.E_returnType = pr_TypeReference();
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			ErrorHandler.ReportError(this, re);
-			ErrorHandler.Recover(this, re);
-		}
-		finally {
-			ExitRule();
-		}
-		return _localctx;
-	}
-
-	public partial class Pr_AlternativeBlock2Context : ParserRuleContext {
-		public IToken E_TEqGt;
-		public Pr_ExpressionContext E_returnValue;
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TEqGt() { return GetToken(CompilerParser.LR_TEqGt, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_ExpressionContext pr_Expression() {
-			return GetRuleContext<Pr_ExpressionContext>(0);
-		}
-		public Pr_AlternativeBlock2Context(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
-		{
-		}
-		public override int RuleIndex { get { return RULE_pr_AlternativeBlock2; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitPr_AlternativeBlock2(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-
-	[RuleVersion(0)]
-	public Pr_AlternativeBlock2Context pr_AlternativeBlock2() {
-		Pr_AlternativeBlock2Context _localctx = new Pr_AlternativeBlock2Context(Context, State);
-		EnterRule(_localctx, 90, RULE_pr_AlternativeBlock2);
-		try {
-			EnterOuterAlt(_localctx, 1);
-			{
-			State = 448;
-			_localctx.E_TEqGt = Match(LR_TEqGt);
-			State = 449;
-			_localctx.E_returnValue = pr_Expression();
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			ErrorHandler.ReportError(this, re);
-			ErrorHandler.Recover(this, re);
-		}
-		finally {
-			ExitRule();
-		}
-		return _localctx;
-	}
-
-	public partial class Pr_ElementBlock1Context : ParserRuleContext {
-		public Pr_ParserAnnotationContext _pr_ParserAnnotation;
-		public IList<Pr_ParserAnnotationContext> _E_annotations = new List<Pr_ParserAnnotationContext>();
-		public Pr_NameContext E_Name;
-		public Pr_AssignmentContext E_assignment;
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_NameContext pr_Name() {
-			return GetRuleContext<Pr_NameContext>(0);
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_AssignmentContext pr_Assignment() {
-			return GetRuleContext<Pr_AssignmentContext>(0);
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_ParserAnnotationContext[] pr_ParserAnnotation() {
-			return GetRuleContexts<Pr_ParserAnnotationContext>();
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_ParserAnnotationContext pr_ParserAnnotation(int i) {
-			return GetRuleContext<Pr_ParserAnnotationContext>(i);
-		}
-		public Pr_ElementBlock1Context(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
-		{
-		}
-		public override int RuleIndex { get { return RULE_pr_ElementBlock1; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitPr_ElementBlock1(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-
-	[RuleVersion(0)]
-	public Pr_ElementBlock1Context pr_ElementBlock1() {
-		Pr_ElementBlock1Context _localctx = new Pr_ElementBlock1Context(Context, State);
-		EnterRule(_localctx, 92, RULE_pr_ElementBlock1);
-		int _la;
-		try {
-			EnterOuterAlt(_localctx, 1);
-			{
-			State = 454;
-			ErrorHandler.Sync(this);
-			_la = TokenStream.LA(1);
-			while (_la==LR_TLBracket) {
-				{
-				{
-				State = 451;
-				_localctx._pr_ParserAnnotation = pr_ParserAnnotation();
-				_localctx._E_annotations.Add(_localctx._pr_ParserAnnotation);
-				}
-				}
-				State = 456;
-				ErrorHandler.Sync(this);
-				_la = TokenStream.LA(1);
-			}
-			State = 457;
-			_localctx.E_Name = pr_Name();
-			State = 458;
-			_localctx.E_assignment = pr_Assignment();
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			ErrorHandler.ReportError(this, re);
-			ErrorHandler.Recover(this, re);
-		}
-		finally {
-			ExitRule();
-		}
-		return _localctx;
-	}
-
-	public partial class Pr_BlockalternativesBlockContext : ParserRuleContext {
-		public IToken E_TBar1;
-		public Pr_BlockAlternativeContext E_alternatives2;
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TBar() { return GetToken(CompilerParser.LR_TBar, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_BlockAlternativeContext pr_BlockAlternative() {
-			return GetRuleContext<Pr_BlockAlternativeContext>(0);
-		}
-		public Pr_BlockalternativesBlockContext(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
-		{
-		}
-		public override int RuleIndex { get { return RULE_pr_BlockalternativesBlock; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitPr_BlockalternativesBlock(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-
-	[RuleVersion(0)]
-	public Pr_BlockalternativesBlockContext pr_BlockalternativesBlock() {
-		Pr_BlockalternativesBlockContext _localctx = new Pr_BlockalternativesBlockContext(Context, State);
-		EnterRule(_localctx, 94, RULE_pr_BlockalternativesBlock);
-		try {
-			EnterOuterAlt(_localctx, 1);
-			{
-			State = 460;
-			_localctx.E_TBar1 = Match(LR_TBar);
-			State = 461;
-			_localctx.E_alternatives2 = pr_BlockAlternative();
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			ErrorHandler.ReportError(this, re);
-			ErrorHandler.Recover(this, re);
-		}
-		finally {
-			ExitRule();
-		}
-		return _localctx;
-	}
-
-	public partial class Pr_BlockAlternativeBlock1Context : ParserRuleContext {
-		public IToken E_TEqGt;
-		public Pr_ExpressionContext E_returnValue;
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TEqGt() { return GetToken(CompilerParser.LR_TEqGt, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_ExpressionContext pr_Expression() {
-			return GetRuleContext<Pr_ExpressionContext>(0);
-		}
-		public Pr_BlockAlternativeBlock1Context(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
-		{
-		}
-		public override int RuleIndex { get { return RULE_pr_BlockAlternativeBlock1; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitPr_BlockAlternativeBlock1(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-
-	[RuleVersion(0)]
-	public Pr_BlockAlternativeBlock1Context pr_BlockAlternativeBlock1() {
-		Pr_BlockAlternativeBlock1Context _localctx = new Pr_BlockAlternativeBlock1Context(Context, State);
-		EnterRule(_localctx, 96, RULE_pr_BlockAlternativeBlock1);
-		try {
-			EnterOuterAlt(_localctx, 1);
-			{
-			State = 463;
-			_localctx.E_TEqGt = Match(LR_TEqGt);
-			State = 464;
-			_localctx.E_returnValue = pr_Expression();
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			ErrorHandler.ReportError(this, re);
-			ErrorHandler.Recover(this, re);
-		}
-		finally {
-			ExitRule();
-		}
-		return _localctx;
-	}
-
-	public partial class Pr_RuleRefAlt3referencedTypesBlockContext : ParserRuleContext {
-		public IToken E_TComma1;
-		public Pr_TypeReferenceContext E_referencedTypes2;
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TComma() { return GetToken(CompilerParser.LR_TComma, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_TypeReferenceContext pr_TypeReference() {
-			return GetRuleContext<Pr_TypeReferenceContext>(0);
-		}
-		public Pr_RuleRefAlt3referencedTypesBlockContext(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
-		{
-		}
-		public override int RuleIndex { get { return RULE_pr_RuleRefAlt3referencedTypesBlock; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitPr_RuleRefAlt3referencedTypesBlock(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-
-	[RuleVersion(0)]
-	public Pr_RuleRefAlt3referencedTypesBlockContext pr_RuleRefAlt3referencedTypesBlock() {
-		Pr_RuleRefAlt3referencedTypesBlockContext _localctx = new Pr_RuleRefAlt3referencedTypesBlockContext(Context, State);
-		EnterRule(_localctx, 98, RULE_pr_RuleRefAlt3referencedTypesBlock);
-		try {
-			EnterOuterAlt(_localctx, 1);
-			{
-			State = 466;
-			_localctx.E_TComma1 = Match(LR_TComma);
-			State = 467;
-			_localctx.E_referencedTypes2 = pr_TypeReference();
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			ErrorHandler.ReportError(this, re);
-			ErrorHandler.Recover(this, re);
-		}
-		finally {
-			ExitRule();
-		}
-		return _localctx;
-	}
-
-	public partial class Pr_RuleRefAlt3Block1Context : ParserRuleContext {
-		public IToken E_TBar;
-		public Pr_IdentifierContext E_grammarRule;
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TBar() { return GetToken(CompilerParser.LR_TBar, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_IdentifierContext pr_Identifier() {
-			return GetRuleContext<Pr_IdentifierContext>(0);
-		}
-		public Pr_RuleRefAlt3Block1Context(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
-		{
-		}
-		public override int RuleIndex { get { return RULE_pr_RuleRefAlt3Block1; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitPr_RuleRefAlt3Block1(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-
-	[RuleVersion(0)]
-	public Pr_RuleRefAlt3Block1Context pr_RuleRefAlt3Block1() {
-		Pr_RuleRefAlt3Block1Context _localctx = new Pr_RuleRefAlt3Block1Context(Context, State);
-		EnterRule(_localctx, 100, RULE_pr_RuleRefAlt3Block1);
-		try {
-			EnterOuterAlt(_localctx, 1);
-			{
-			State = 469;
-			_localctx.E_TBar = Match(LR_TBar);
-			State = 470;
-			_localctx.E_grammarRule = pr_Identifier();
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			ErrorHandler.ReportError(this, re);
-			ErrorHandler.Recover(this, re);
-		}
-		finally {
-			ExitRule();
-		}
-		return _localctx;
-	}
-
-	public partial class Pr_TokenBlock1Context : ParserRuleContext {
-		public Pr_TokenBlock1Context(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
-		{
-		}
-		public override int RuleIndex { get { return RULE_pr_TokenBlock1; } }
-	 
-		public Pr_TokenBlock1Context() { }
-		public virtual void CopyFrom(Pr_TokenBlock1Context context) {
-			base.CopyFrom(context);
-		}
-	}
-	public partial class Pr_TokenBlock1Alt1Context : Pr_TokenBlock1Context {
-		public IToken E_KToken;
-		public Pr_NameContext E_Name;
-		public Pr_TokenBlock1Alt1Block1Context E_Block;
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_KToken() { return GetToken(CompilerParser.LR_KToken, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_NameContext pr_Name() {
-			return GetRuleContext<Pr_NameContext>(0);
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_TokenBlock1Alt1Block1Context pr_TokenBlock1Alt1Block1() {
-			return GetRuleContext<Pr_TokenBlock1Alt1Block1Context>(0);
-		}
-		public Pr_TokenBlock1Alt1Context(Pr_TokenBlock1Context context) { CopyFrom(context); }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitPr_TokenBlock1Alt1(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-	public partial class Pr_TokenBlock1Alt2Context : Pr_TokenBlock1Context {
-		public IToken E_isTrivia;
-		public Pr_NameContext E_Name1;
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_KHidden() { return GetToken(CompilerParser.LR_KHidden, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_NameContext pr_Name() {
-			return GetRuleContext<Pr_NameContext>(0);
-		}
-		public Pr_TokenBlock1Alt2Context(Pr_TokenBlock1Context context) { CopyFrom(context); }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitPr_TokenBlock1Alt2(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-
-	[RuleVersion(0)]
-	public Pr_TokenBlock1Context pr_TokenBlock1() {
-		Pr_TokenBlock1Context _localctx = new Pr_TokenBlock1Context(Context, State);
-		EnterRule(_localctx, 102, RULE_pr_TokenBlock1);
-		int _la;
-		try {
-			State = 479;
-			ErrorHandler.Sync(this);
-			switch (TokenStream.LA(1)) {
-			case LR_KToken:
-				_localctx = new Pr_TokenBlock1Alt1Context(_localctx);
-				EnterOuterAlt(_localctx, 1);
-				{
-				State = 472;
-				((Pr_TokenBlock1Alt1Context)_localctx).E_KToken = Match(LR_KToken);
-				State = 473;
-				((Pr_TokenBlock1Alt1Context)_localctx).E_Name = pr_Name();
-				State = 475;
-				ErrorHandler.Sync(this);
-				_la = TokenStream.LA(1);
-				if (_la==LR_KReturns) {
+					State = 395;
+					_localctx.E_Token = TokenStream.LT(1);
+					_la = TokenStream.LA(1);
+					if (!((((_la) & ~0x3f) == 0 && ((1L << _la) & 2113929216L) != 0)))
 					{
-					State = 474;
-					((Pr_TokenBlock1Alt1Context)_localctx).E_Block = pr_TokenBlock1Alt1Block1();
+						_localctx.E_Token = ErrorHandler.RecoverInline(this);
+					}
+					else
+					{
+						ErrorHandler.ReportMatch(this);
+						Consume();
 					}
 				}
+			}
+			catch (RecognitionException re)
+			{
+				_localctx.exception = re;
+				ErrorHandler.ReportError(this, re);
+				ErrorHandler.Recover(this, re);
+			}
+			finally
+			{
+				ExitRule();
+			}
+			return _localctx;
+		}
 
-				}
-				break;
-			case LR_KHidden:
-				_localctx = new Pr_TokenBlock1Alt2Context(_localctx);
-				EnterOuterAlt(_localctx, 2);
+		public partial class Pr_TypeReferenceIdentifierContext : ParserRuleContext
+		{
+			public Pr_TypeReferenceIdentifierContext(ParserRuleContext parent, int invokingState)
+				: base(parent, invokingState)
+			{
+			}
+			public override int RuleIndex { get { return RULE_pr_TypeReferenceIdentifier; } }
+
+			public Pr_TypeReferenceIdentifierContext() { }
+			public virtual void CopyFrom(Pr_TypeReferenceIdentifierContext context)
+			{
+				base.CopyFrom(context);
+			}
+		}
+		public partial class Pr_TypeReferenceIdentifierAlt1Context : Pr_TypeReferenceIdentifierContext
+		{
+			public Pr_PrimitiveTypeContext E_PrimitiveType;
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_PrimitiveTypeContext pr_PrimitiveType()
+			{
+				return GetRuleContext<Pr_PrimitiveTypeContext>(0);
+			}
+			public Pr_TypeReferenceIdentifierAlt1Context(Pr_TypeReferenceIdentifierContext context) { CopyFrom(context); }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor)
+			{
+				ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
+				if (typedVisitor != null) return typedVisitor.VisitPr_TypeReferenceIdentifierAlt1(this);
+				else return visitor.VisitChildren(this);
+			}
+		}
+		public partial class Pr_TypeReferenceIdentifierAlt2Context : Pr_TypeReferenceIdentifierContext
+		{
+			public Pr_IdentifierContext E_Identifier;
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_IdentifierContext pr_Identifier()
+			{
+				return GetRuleContext<Pr_IdentifierContext>(0);
+			}
+			public Pr_TypeReferenceIdentifierAlt2Context(Pr_TypeReferenceIdentifierContext context) { CopyFrom(context); }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor)
+			{
+				ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
+				if (typedVisitor != null) return typedVisitor.VisitPr_TypeReferenceIdentifierAlt2(this);
+				else return visitor.VisitChildren(this);
+			}
+		}
+
+		[RuleVersion(0)]
+		public Pr_TypeReferenceIdentifierContext pr_TypeReferenceIdentifier()
+		{
+			Pr_TypeReferenceIdentifierContext _localctx = new Pr_TypeReferenceIdentifierContext(Context, State);
+			EnterRule(_localctx, 66, RULE_pr_TypeReferenceIdentifier);
+			try
+			{
+				State = 399;
+				ErrorHandler.Sync(this);
+				switch (TokenStream.LA(1))
 				{
-				State = 477;
-				((Pr_TokenBlock1Alt2Context)_localctx).E_isTrivia = Match(LR_KHidden);
-				State = 478;
-				((Pr_TokenBlock1Alt2Context)_localctx).E_Name1 = pr_Name();
+					case LR_KBool:
+					case LR_KInt:
+					case LR_KDouble:
+					case LR_KString:
+					case LR_KType:
+					case LR_KSymbol:
+					case LR_KObject:
+					case LR_KVoid:
+						_localctx = new Pr_TypeReferenceIdentifierAlt1Context(_localctx);
+						EnterOuterAlt(_localctx, 1);
+						{
+							State = 397;
+							((Pr_TypeReferenceIdentifierAlt1Context)_localctx).E_PrimitiveType = pr_PrimitiveType();
+						}
+						break;
+					case LR_TIdentifier:
+					case LR_TVerbatimIdentifier:
+						_localctx = new Pr_TypeReferenceIdentifierAlt2Context(_localctx);
+						EnterOuterAlt(_localctx, 2);
+						{
+							State = 398;
+							((Pr_TypeReferenceIdentifierAlt2Context)_localctx).E_Identifier = pr_Identifier();
+						}
+						break;
+					default:
+						throw new NoViableAltException(this);
 				}
-				break;
-			default:
-				throw new NoViableAltException(this);
 			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			ErrorHandler.ReportError(this, re);
-			ErrorHandler.Recover(this, re);
-		}
-		finally {
-			ExitRule();
-		}
-		return _localctx;
-	}
-
-	public partial class Pr_TokenBlock1Alt1Block1Context : ParserRuleContext {
-		public IToken E_KReturns;
-		public Pr_TypeReferenceContext E_returnType;
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_KReturns() { return GetToken(CompilerParser.LR_KReturns, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_TypeReferenceContext pr_TypeReference() {
-			return GetRuleContext<Pr_TypeReferenceContext>(0);
-		}
-		public Pr_TokenBlock1Alt1Block1Context(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
-		{
-		}
-		public override int RuleIndex { get { return RULE_pr_TokenBlock1Alt1Block1; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitPr_TokenBlock1Alt1Block1(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-
-	[RuleVersion(0)]
-	public Pr_TokenBlock1Alt1Block1Context pr_TokenBlock1Alt1Block1() {
-		Pr_TokenBlock1Alt1Block1Context _localctx = new Pr_TokenBlock1Alt1Block1Context(Context, State);
-		EnterRule(_localctx, 104, RULE_pr_TokenBlock1Alt1Block1);
-		try {
-			EnterOuterAlt(_localctx, 1);
+			catch (RecognitionException re)
 			{
-			State = 481;
-			_localctx.E_KReturns = Match(LR_KReturns);
-			State = 482;
-			_localctx.E_returnType = pr_TypeReference();
+				_localctx.exception = re;
+				ErrorHandler.ReportError(this, re);
+				ErrorHandler.Recover(this, re);
 			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			ErrorHandler.ReportError(this, re);
-			ErrorHandler.Recover(this, re);
-		}
-		finally {
-			ExitRule();
-		}
-		return _localctx;
-	}
-
-	public partial class Pr_TokenalternativesBlockContext : ParserRuleContext {
-		public IToken E_TBar1;
-		public Pr_LAlternativeContext E_alternatives2;
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TBar() { return GetToken(CompilerParser.LR_TBar, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_LAlternativeContext pr_LAlternative() {
-			return GetRuleContext<Pr_LAlternativeContext>(0);
-		}
-		public Pr_TokenalternativesBlockContext(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
-		{
-		}
-		public override int RuleIndex { get { return RULE_pr_TokenalternativesBlock; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitPr_TokenalternativesBlock(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-
-	[RuleVersion(0)]
-	public Pr_TokenalternativesBlockContext pr_TokenalternativesBlock() {
-		Pr_TokenalternativesBlockContext _localctx = new Pr_TokenalternativesBlockContext(Context, State);
-		EnterRule(_localctx, 106, RULE_pr_TokenalternativesBlock);
-		try {
-			EnterOuterAlt(_localctx, 1);
+			finally
 			{
-			State = 484;
-			_localctx.E_TBar1 = Match(LR_TBar);
-			State = 485;
-			_localctx.E_alternatives2 = pr_LAlternative();
+				ExitRule();
 			}
+			return _localctx;
 		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			ErrorHandler.ReportError(this, re);
-			ErrorHandler.Recover(this, re);
-		}
-		finally {
-			ExitRule();
-		}
-		return _localctx;
-	}
 
-	public partial class Pr_FragmentalternativesBlockContext : ParserRuleContext {
-		public IToken E_TBar1;
-		public Pr_LAlternativeContext E_alternatives2;
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TBar() { return GetToken(CompilerParser.LR_TBar, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_LAlternativeContext pr_LAlternative() {
-			return GetRuleContext<Pr_LAlternativeContext>(0);
-		}
-		public Pr_FragmentalternativesBlockContext(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
+		public partial class Pr_TypeReferenceContext : ParserRuleContext
 		{
-		}
-		public override int RuleIndex { get { return RULE_pr_FragmentalternativesBlock; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitPr_FragmentalternativesBlock(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-
-	[RuleVersion(0)]
-	public Pr_FragmentalternativesBlockContext pr_FragmentalternativesBlock() {
-		Pr_FragmentalternativesBlockContext _localctx = new Pr_FragmentalternativesBlockContext(Context, State);
-		EnterRule(_localctx, 108, RULE_pr_FragmentalternativesBlock);
-		try {
-			EnterOuterAlt(_localctx, 1);
+			public Pr_TypeReferenceContext(ParserRuleContext parent, int invokingState)
+				: base(parent, invokingState)
 			{
-			State = 487;
-			_localctx.E_TBar1 = Match(LR_TBar);
-			State = 488;
-			_localctx.E_alternatives2 = pr_LAlternative();
 			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			ErrorHandler.ReportError(this, re);
-			ErrorHandler.Recover(this, re);
-		}
-		finally {
-			ExitRule();
-		}
-		return _localctx;
-	}
+			public override int RuleIndex { get { return RULE_pr_TypeReference; } }
 
-	public partial class Pr_LBlockalternativesBlockContext : ParserRuleContext {
-		public IToken E_TBar1;
-		public Pr_LAlternativeContext E_alternatives2;
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TBar() { return GetToken(CompilerParser.LR_TBar, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_LAlternativeContext pr_LAlternative() {
-			return GetRuleContext<Pr_LAlternativeContext>(0);
-		}
-		public Pr_LBlockalternativesBlockContext(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
-		{
-		}
-		public override int RuleIndex { get { return RULE_pr_LBlockalternativesBlock; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitPr_LBlockalternativesBlock(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-
-	[RuleVersion(0)]
-	public Pr_LBlockalternativesBlockContext pr_LBlockalternativesBlock() {
-		Pr_LBlockalternativesBlockContext _localctx = new Pr_LBlockalternativesBlockContext(Context, State);
-		EnterRule(_localctx, 110, RULE_pr_LBlockalternativesBlock);
-		try {
-			EnterOuterAlt(_localctx, 1);
+			public Pr_TypeReferenceContext() { }
+			public virtual void CopyFrom(Pr_TypeReferenceContext context)
 			{
-			State = 490;
-			_localctx.E_TBar1 = Match(LR_TBar);
-			State = 491;
-			_localctx.E_alternatives2 = pr_LAlternative();
+				base.CopyFrom(context);
 			}
 		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			ErrorHandler.ReportError(this, re);
-			ErrorHandler.Recover(this, re);
-		}
-		finally {
-			ExitRule();
-		}
-		return _localctx;
-	}
-
-	public partial class Pr_SingleExpressionAlt1Block1Context : ParserRuleContext {
-		public Pr_SingleExpressionAlt1Block1Context(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
+		public partial class Pr_TypeReferenceAlt1Context : Pr_TypeReferenceContext
 		{
+			public Pr_PrimitiveTypeContext E_PrimitiveType;
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_PrimitiveTypeContext pr_PrimitiveType()
+			{
+				return GetRuleContext<Pr_PrimitiveTypeContext>(0);
+			}
+			public Pr_TypeReferenceAlt1Context(Pr_TypeReferenceContext context) { CopyFrom(context); }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor)
+			{
+				ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
+				if (typedVisitor != null) return typedVisitor.VisitPr_TypeReferenceAlt1(this);
+				else return visitor.VisitChildren(this);
+			}
 		}
-		public override int RuleIndex { get { return RULE_pr_SingleExpressionAlt1Block1; } }
-	 
-		public Pr_SingleExpressionAlt1Block1Context() { }
-		public virtual void CopyFrom(Pr_SingleExpressionAlt1Block1Context context) {
-			base.CopyFrom(context);
+		public partial class Pr_TypeReferenceAlt2Context : Pr_TypeReferenceContext
+		{
+			public Pr_QualifierContext E_Qualifier;
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_QualifierContext pr_Qualifier()
+			{
+				return GetRuleContext<Pr_QualifierContext>(0);
+			}
+			public Pr_TypeReferenceAlt2Context(Pr_TypeReferenceContext context) { CopyFrom(context); }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor)
+			{
+				ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
+				if (typedVisitor != null) return typedVisitor.VisitPr_TypeReferenceAlt2(this);
+				else return visitor.VisitChildren(this);
+			}
 		}
-	}
-	public partial class Pr_SingleExpressionAlt1Block1Alt4Context : Pr_SingleExpressionAlt1Block1Context {
-		public IToken E_TString;
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TString() { return GetToken(CompilerParser.LR_TString, 0); }
-		public Pr_SingleExpressionAlt1Block1Alt4Context(Pr_SingleExpressionAlt1Block1Context context) { CopyFrom(context); }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitPr_SingleExpressionAlt1Block1Alt4(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-	public partial class Pr_SingleExpressionAlt1Block1Alt5Context : Pr_SingleExpressionAlt1Block1Context {
-		public IToken E_TInteger;
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TInteger() { return GetToken(CompilerParser.LR_TInteger, 0); }
-		public Pr_SingleExpressionAlt1Block1Alt5Context(Pr_SingleExpressionAlt1Block1Context context) { CopyFrom(context); }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitPr_SingleExpressionAlt1Block1Alt5(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-	public partial class Pr_SingleExpressionAlt1Block1Alt6Context : Pr_SingleExpressionAlt1Block1Context {
-		public IToken E_TDecimal;
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TDecimal() { return GetToken(CompilerParser.LR_TDecimal, 0); }
-		public Pr_SingleExpressionAlt1Block1Alt6Context(Pr_SingleExpressionAlt1Block1Context context) { CopyFrom(context); }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitPr_SingleExpressionAlt1Block1Alt6(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-	public partial class Pr_SingleExpressionAlt1Block1Alt7Context : Pr_SingleExpressionAlt1Block1Context {
-		public Pr_PrimitiveTypeContext E_PrimitiveType;
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_PrimitiveTypeContext pr_PrimitiveType() {
-			return GetRuleContext<Pr_PrimitiveTypeContext>(0);
-		}
-		public Pr_SingleExpressionAlt1Block1Alt7Context(Pr_SingleExpressionAlt1Block1Context context) { CopyFrom(context); }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitPr_SingleExpressionAlt1Block1Alt7(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-	public partial class Pr_SingleExpressionAlt1Block1Alt1Context : Pr_SingleExpressionAlt1Block1Context {
-		public IToken E_KNull;
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_KNull() { return GetToken(CompilerParser.LR_KNull, 0); }
-		public Pr_SingleExpressionAlt1Block1Alt1Context(Pr_SingleExpressionAlt1Block1Context context) { CopyFrom(context); }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitPr_SingleExpressionAlt1Block1Alt1(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-	public partial class Pr_SingleExpressionAlt1Block1Alt2Context : Pr_SingleExpressionAlt1Block1Context {
-		public IToken E_KTrue;
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_KTrue() { return GetToken(CompilerParser.LR_KTrue, 0); }
-		public Pr_SingleExpressionAlt1Block1Alt2Context(Pr_SingleExpressionAlt1Block1Context context) { CopyFrom(context); }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitPr_SingleExpressionAlt1Block1Alt2(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-	public partial class Pr_SingleExpressionAlt1Block1Alt3Context : Pr_SingleExpressionAlt1Block1Context {
-		public IToken E_KFalse;
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_KFalse() { return GetToken(CompilerParser.LR_KFalse, 0); }
-		public Pr_SingleExpressionAlt1Block1Alt3Context(Pr_SingleExpressionAlt1Block1Context context) { CopyFrom(context); }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitPr_SingleExpressionAlt1Block1Alt3(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
 
-	[RuleVersion(0)]
-	public Pr_SingleExpressionAlt1Block1Context pr_SingleExpressionAlt1Block1() {
-		Pr_SingleExpressionAlt1Block1Context _localctx = new Pr_SingleExpressionAlt1Block1Context(Context, State);
-		EnterRule(_localctx, 112, RULE_pr_SingleExpressionAlt1Block1);
-		try {
-			State = 500;
-			ErrorHandler.Sync(this);
-			switch (TokenStream.LA(1)) {
-			case LR_KNull:
-				_localctx = new Pr_SingleExpressionAlt1Block1Alt1Context(_localctx);
+		[RuleVersion(0)]
+		public Pr_TypeReferenceContext pr_TypeReference()
+		{
+			Pr_TypeReferenceContext _localctx = new Pr_TypeReferenceContext(Context, State);
+			EnterRule(_localctx, 68, RULE_pr_TypeReference);
+			try
+			{
+				State = 403;
+				ErrorHandler.Sync(this);
+				switch (TokenStream.LA(1))
+				{
+					case LR_KBool:
+					case LR_KInt:
+					case LR_KDouble:
+					case LR_KString:
+					case LR_KType:
+					case LR_KSymbol:
+					case LR_KObject:
+					case LR_KVoid:
+						_localctx = new Pr_TypeReferenceAlt1Context(_localctx);
+						EnterOuterAlt(_localctx, 1);
+						{
+							State = 401;
+							((Pr_TypeReferenceAlt1Context)_localctx).E_PrimitiveType = pr_PrimitiveType();
+						}
+						break;
+					case LR_TIdentifier:
+					case LR_TVerbatimIdentifier:
+						_localctx = new Pr_TypeReferenceAlt2Context(_localctx);
+						EnterOuterAlt(_localctx, 2);
+						{
+							State = 402;
+							((Pr_TypeReferenceAlt2Context)_localctx).E_Qualifier = pr_Qualifier();
+						}
+						break;
+					default:
+						throw new NoViableAltException(this);
+				}
+			}
+			catch (RecognitionException re)
+			{
+				_localctx.exception = re;
+				ErrorHandler.ReportError(this, re);
+				ErrorHandler.Recover(this, re);
+			}
+			finally
+			{
+				ExitRule();
+			}
+			return _localctx;
+		}
+
+		public partial class Pr_PrimitiveTypeContext : ParserRuleContext
+		{
+			public IToken E_Token;
+			[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_KBool() { return GetToken(CompilerParser.LR_KBool, 0); }
+			[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_KInt() { return GetToken(CompilerParser.LR_KInt, 0); }
+			[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_KDouble() { return GetToken(CompilerParser.LR_KDouble, 0); }
+			[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_KString() { return GetToken(CompilerParser.LR_KString, 0); }
+			[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_KType() { return GetToken(CompilerParser.LR_KType, 0); }
+			[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_KSymbol() { return GetToken(CompilerParser.LR_KSymbol, 0); }
+			[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_KObject() { return GetToken(CompilerParser.LR_KObject, 0); }
+			[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_KVoid() { return GetToken(CompilerParser.LR_KVoid, 0); }
+			public Pr_PrimitiveTypeContext(ParserRuleContext parent, int invokingState)
+				: base(parent, invokingState)
+			{
+			}
+			public override int RuleIndex { get { return RULE_pr_PrimitiveType; } }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor)
+			{
+				ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
+				if (typedVisitor != null) return typedVisitor.VisitPr_PrimitiveType(this);
+				else return visitor.VisitChildren(this);
+			}
+		}
+
+		[RuleVersion(0)]
+		public Pr_PrimitiveTypeContext pr_PrimitiveType()
+		{
+			Pr_PrimitiveTypeContext _localctx = new Pr_PrimitiveTypeContext(Context, State);
+			EnterRule(_localctx, 70, RULE_pr_PrimitiveType);
+			int _la;
+			try
+			{
 				EnterOuterAlt(_localctx, 1);
 				{
-				State = 493;
-				((Pr_SingleExpressionAlt1Block1Alt1Context)_localctx).E_KNull = Match(LR_KNull);
+					State = 405;
+					_localctx.E_Token = TokenStream.LT(1);
+					_la = TokenStream.LA(1);
+					if (!((((_la) & ~0x3f) == 0 && ((1L << _la) & 547608330240L) != 0)))
+					{
+						_localctx.E_Token = ErrorHandler.RecoverInline(this);
+					}
+					else
+					{
+						ErrorHandler.ReportMatch(this);
+						Consume();
+					}
 				}
-				break;
-			case LR_KTrue:
-				_localctx = new Pr_SingleExpressionAlt1Block1Alt2Context(_localctx);
-				EnterOuterAlt(_localctx, 2);
-				{
-				State = 494;
-				((Pr_SingleExpressionAlt1Block1Alt2Context)_localctx).E_KTrue = Match(LR_KTrue);
-				}
-				break;
-			case LR_KFalse:
-				_localctx = new Pr_SingleExpressionAlt1Block1Alt3Context(_localctx);
-				EnterOuterAlt(_localctx, 3);
-				{
-				State = 495;
-				((Pr_SingleExpressionAlt1Block1Alt3Context)_localctx).E_KFalse = Match(LR_KFalse);
-				}
-				break;
-			case LR_TString:
-				_localctx = new Pr_SingleExpressionAlt1Block1Alt4Context(_localctx);
-				EnterOuterAlt(_localctx, 4);
-				{
-				State = 496;
-				((Pr_SingleExpressionAlt1Block1Alt4Context)_localctx).E_TString = Match(LR_TString);
-				}
-				break;
-			case LR_TInteger:
-				_localctx = new Pr_SingleExpressionAlt1Block1Alt5Context(_localctx);
-				EnterOuterAlt(_localctx, 5);
-				{
-				State = 497;
-				((Pr_SingleExpressionAlt1Block1Alt5Context)_localctx).E_TInteger = Match(LR_TInteger);
-				}
-				break;
-			case LR_TDecimal:
-				_localctx = new Pr_SingleExpressionAlt1Block1Alt6Context(_localctx);
-				EnterOuterAlt(_localctx, 6);
-				{
-				State = 498;
-				((Pr_SingleExpressionAlt1Block1Alt6Context)_localctx).E_TDecimal = Match(LR_TDecimal);
-				}
-				break;
-			case LR_KBool:
-			case LR_KInt:
-			case LR_KDouble:
-			case LR_KString:
-			case LR_KType:
-			case LR_KSymbol:
-			case LR_KObject:
-			case LR_KVoid:
-				_localctx = new Pr_SingleExpressionAlt1Block1Alt7Context(_localctx);
-				EnterOuterAlt(_localctx, 7);
-				{
-				State = 499;
-				((Pr_SingleExpressionAlt1Block1Alt7Context)_localctx).E_PrimitiveType = pr_PrimitiveType();
-				}
-				break;
-			default:
-				throw new NoViableAltException(this);
+			}
+			catch (RecognitionException re)
+			{
+				_localctx.exception = re;
+				ErrorHandler.ReportError(this, re);
+				ErrorHandler.Recover(this, re);
+			}
+			finally
+			{
+				ExitRule();
+			}
+			return _localctx;
+		}
+
+		public partial class Pr_NameContext : ParserRuleContext
+		{
+			public Pr_IdentifierContext E_Identifier;
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_IdentifierContext pr_Identifier()
+			{
+				return GetRuleContext<Pr_IdentifierContext>(0);
+			}
+			public Pr_NameContext(ParserRuleContext parent, int invokingState)
+				: base(parent, invokingState)
+			{
+			}
+			public override int RuleIndex { get { return RULE_pr_Name; } }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor)
+			{
+				ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
+				if (typedVisitor != null) return typedVisitor.VisitPr_Name(this);
+				else return visitor.VisitChildren(this);
 			}
 		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			ErrorHandler.ReportError(this, re);
-			ErrorHandler.Recover(this, re);
-		}
-		finally {
-			ExitRule();
-		}
-		return _localctx;
-	}
 
-	public partial class Pr_ArrayExpressionBlock1Context : ParserRuleContext {
-		public Pr_SingleExpressionContext E_items1;
-		public IToken _LR_TComma;
-		public IList<IToken> _E_TComma1 = new List<IToken>();
-		public Pr_SingleExpressionContext _pr_SingleExpression;
-		public IList<Pr_SingleExpressionContext> _E_items2 = new List<Pr_SingleExpressionContext>();
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_SingleExpressionContext[] pr_SingleExpression() {
-			return GetRuleContexts<Pr_SingleExpressionContext>();
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_SingleExpressionContext pr_SingleExpression(int i) {
-			return GetRuleContext<Pr_SingleExpressionContext>(i);
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode[] LR_TComma() { return GetTokens(CompilerParser.LR_TComma); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TComma(int i) {
-			return GetToken(CompilerParser.LR_TComma, i);
-		}
-		public Pr_ArrayExpressionBlock1Context(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
+		[RuleVersion(0)]
+		public Pr_NameContext pr_Name()
 		{
-		}
-		public override int RuleIndex { get { return RULE_pr_ArrayExpressionBlock1; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitPr_ArrayExpressionBlock1(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-
-	[RuleVersion(0)]
-	public Pr_ArrayExpressionBlock1Context pr_ArrayExpressionBlock1() {
-		Pr_ArrayExpressionBlock1Context _localctx = new Pr_ArrayExpressionBlock1Context(Context, State);
-		EnterRule(_localctx, 114, RULE_pr_ArrayExpressionBlock1);
-		int _la;
-		try {
-			EnterOuterAlt(_localctx, 1);
+			Pr_NameContext _localctx = new Pr_NameContext(Context, State);
+			EnterRule(_localctx, 72, RULE_pr_Name);
+			try
 			{
-			State = 502;
-			_localctx.E_items1 = pr_SingleExpression();
-			State = 507;
-			ErrorHandler.Sync(this);
-			_la = TokenStream.LA(1);
-			while (_la==LR_TComma) {
+				EnterOuterAlt(_localctx, 1);
 				{
+					State = 407;
+					_localctx.E_Identifier = pr_Identifier();
+				}
+			}
+			catch (RecognitionException re)
+			{
+				_localctx.exception = re;
+				ErrorHandler.ReportError(this, re);
+				ErrorHandler.Recover(this, re);
+			}
+			finally
+			{
+				ExitRule();
+			}
+			return _localctx;
+		}
+
+		public partial class Pr_QualifierContext : ParserRuleContext
+		{
+			public Pr_IdentifierContext E_Identifier1;
+			public IToken _LR_TDot;
+			public IList<IToken> _E_TDot1 = new List<IToken>();
+			public Pr_IdentifierContext _pr_Identifier;
+			public IList<Pr_IdentifierContext> _E_Identifier2 = new List<Pr_IdentifierContext>();
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_IdentifierContext[] pr_Identifier()
+			{
+				return GetRuleContexts<Pr_IdentifierContext>();
+			}
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_IdentifierContext pr_Identifier(int i)
+			{
+				return GetRuleContext<Pr_IdentifierContext>(i);
+			}
+			[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode[] LR_TDot() { return GetTokens(CompilerParser.LR_TDot); }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public ITerminalNode LR_TDot(int i)
+			{
+				return GetToken(CompilerParser.LR_TDot, i);
+			}
+			public Pr_QualifierContext(ParserRuleContext parent, int invokingState)
+				: base(parent, invokingState)
+			{
+			}
+			public override int RuleIndex { get { return RULE_pr_Qualifier; } }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor)
+			{
+				ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
+				if (typedVisitor != null) return typedVisitor.VisitPr_Qualifier(this);
+				else return visitor.VisitChildren(this);
+			}
+		}
+
+		[RuleVersion(0)]
+		public Pr_QualifierContext pr_Qualifier()
+		{
+			Pr_QualifierContext _localctx = new Pr_QualifierContext(Context, State);
+			EnterRule(_localctx, 74, RULE_pr_Qualifier);
+			int _la;
+			try
+			{
+				EnterOuterAlt(_localctx, 1);
 				{
-				State = 503;
-				_localctx._LR_TComma = Match(LR_TComma);
-				_localctx._E_TComma1.Add(_localctx._LR_TComma);
-				State = 504;
-				_localctx._pr_SingleExpression = pr_SingleExpression();
-				_localctx._E_items2.Add(_localctx._pr_SingleExpression);
+					State = 409;
+					_localctx.E_Identifier1 = pr_Identifier();
+					State = 414;
+					ErrorHandler.Sync(this);
+					_la = TokenStream.LA(1);
+					while (_la == LR_TDot)
+					{
+						{
+							{
+								State = 410;
+								_localctx._LR_TDot = Match(LR_TDot);
+								_localctx._E_TDot1.Add(_localctx._LR_TDot);
+								State = 411;
+								_localctx._pr_Identifier = pr_Identifier();
+								_localctx._E_Identifier2.Add(_localctx._pr_Identifier);
+							}
+						}
+						State = 416;
+						ErrorHandler.Sync(this);
+						_la = TokenStream.LA(1);
+					}
 				}
+			}
+			catch (RecognitionException re)
+			{
+				_localctx.exception = re;
+				ErrorHandler.ReportError(this, re);
+				ErrorHandler.Recover(this, re);
+			}
+			finally
+			{
+				ExitRule();
+			}
+			return _localctx;
+		}
+
+		public partial class Pr_IdentifierContext : ParserRuleContext
+		{
+			public IToken E_Token;
+			[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TIdentifier() { return GetToken(CompilerParser.LR_TIdentifier, 0); }
+			[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TVerbatimIdentifier() { return GetToken(CompilerParser.LR_TVerbatimIdentifier, 0); }
+			public Pr_IdentifierContext(ParserRuleContext parent, int invokingState)
+				: base(parent, invokingState)
+			{
+			}
+			public override int RuleIndex { get { return RULE_pr_Identifier; } }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor)
+			{
+				ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
+				if (typedVisitor != null) return typedVisitor.VisitPr_Identifier(this);
+				else return visitor.VisitChildren(this);
+			}
+		}
+
+		[RuleVersion(0)]
+		public Pr_IdentifierContext pr_Identifier()
+		{
+			Pr_IdentifierContext _localctx = new Pr_IdentifierContext(Context, State);
+			EnterRule(_localctx, 76, RULE_pr_Identifier);
+			int _la;
+			try
+			{
+				EnterOuterAlt(_localctx, 1);
+				{
+					State = 417;
+					_localctx.E_Token = TokenStream.LT(1);
+					_la = TokenStream.LA(1);
+					if (!(_la == LR_TIdentifier || _la == LR_TVerbatimIdentifier))
+					{
+						_localctx.E_Token = ErrorHandler.RecoverInline(this);
+					}
+					else
+					{
+						ErrorHandler.ReportMatch(this);
+						Consume();
+					}
 				}
+			}
+			catch (RecognitionException re)
+			{
+				_localctx.exception = re;
+				ErrorHandler.ReportError(this, re);
+				ErrorHandler.Recover(this, re);
+			}
+			finally
+			{
+				ExitRule();
+			}
+			return _localctx;
+		}
+
+		public partial class Pr_MainBlock1Context : ParserRuleContext
+		{
+			public IToken E_KUsing;
+			public Pr_UsingContext E_Using;
+			public IToken E_TSemicolon;
+			[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_KUsing() { return GetToken(CompilerParser.LR_KUsing, 0); }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_UsingContext pr_Using()
+			{
+				return GetRuleContext<Pr_UsingContext>(0);
+			}
+			[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TSemicolon() { return GetToken(CompilerParser.LR_TSemicolon, 0); }
+			public Pr_MainBlock1Context(ParserRuleContext parent, int invokingState)
+				: base(parent, invokingState)
+			{
+			}
+			public override int RuleIndex { get { return RULE_pr_MainBlock1; } }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor)
+			{
+				ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
+				if (typedVisitor != null) return typedVisitor.VisitPr_MainBlock1(this);
+				else return visitor.VisitChildren(this);
+			}
+		}
+
+		[RuleVersion(0)]
+		public Pr_MainBlock1Context pr_MainBlock1()
+		{
+			Pr_MainBlock1Context _localctx = new Pr_MainBlock1Context(Context, State);
+			EnterRule(_localctx, 78, RULE_pr_MainBlock1);
+			try
+			{
+				EnterOuterAlt(_localctx, 1);
+				{
+					State = 419;
+					_localctx.E_KUsing = Match(LR_KUsing);
+					State = 420;
+					_localctx.E_Using = pr_Using();
+					State = 421;
+					_localctx.E_TSemicolon = Match(LR_TSemicolon);
+				}
+			}
+			catch (RecognitionException re)
+			{
+				_localctx.exception = re;
+				ErrorHandler.ReportError(this, re);
+				ErrorHandler.Recover(this, re);
+			}
+			finally
+			{
+				ExitRule();
+			}
+			return _localctx;
+		}
+
+		public partial class Pr_MainBlock2Context : ParserRuleContext
+		{
+			public Pr_LanguageDeclarationContext E_declarations;
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_LanguageDeclarationContext pr_LanguageDeclaration()
+			{
+				return GetRuleContext<Pr_LanguageDeclarationContext>(0);
+			}
+			public Pr_MainBlock2Context(ParserRuleContext parent, int invokingState)
+				: base(parent, invokingState)
+			{
+			}
+			public override int RuleIndex { get { return RULE_pr_MainBlock2; } }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor)
+			{
+				ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
+				if (typedVisitor != null) return typedVisitor.VisitPr_MainBlock2(this);
+				else return visitor.VisitChildren(this);
+			}
+		}
+
+		[RuleVersion(0)]
+		public Pr_MainBlock2Context pr_MainBlock2()
+		{
+			Pr_MainBlock2Context _localctx = new Pr_MainBlock2Context(Context, State);
+			EnterRule(_localctx, 80, RULE_pr_MainBlock2);
+			try
+			{
+				EnterOuterAlt(_localctx, 1);
+				{
+					State = 423;
+					_localctx.E_declarations = pr_LanguageDeclaration();
+				}
+			}
+			catch (RecognitionException re)
+			{
+				_localctx.exception = re;
+				ErrorHandler.ReportError(this, re);
+				ErrorHandler.Recover(this, re);
+			}
+			finally
+			{
+				ExitRule();
+			}
+			return _localctx;
+		}
+
+		public partial class Pr_GrammarBlock1Context : ParserRuleContext
+		{
+			public Pr_GrammarRuleContext _pr_GrammarRule;
+			public IList<Pr_GrammarRuleContext> _E_grammarRules = new List<Pr_GrammarRuleContext>();
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_GrammarRuleContext[] pr_GrammarRule()
+			{
+				return GetRuleContexts<Pr_GrammarRuleContext>();
+			}
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_GrammarRuleContext pr_GrammarRule(int i)
+			{
+				return GetRuleContext<Pr_GrammarRuleContext>(i);
+			}
+			public Pr_GrammarBlock1Context(ParserRuleContext parent, int invokingState)
+				: base(parent, invokingState)
+			{
+			}
+			public override int RuleIndex { get { return RULE_pr_GrammarBlock1; } }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor)
+			{
+				ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
+				if (typedVisitor != null) return typedVisitor.VisitPr_GrammarBlock1(this);
+				else return visitor.VisitChildren(this);
+			}
+		}
+
+		[RuleVersion(0)]
+		public Pr_GrammarBlock1Context pr_GrammarBlock1()
+		{
+			Pr_GrammarBlock1Context _localctx = new Pr_GrammarBlock1Context(Context, State);
+			EnterRule(_localctx, 82, RULE_pr_GrammarBlock1);
+			int _la;
+			try
+			{
+				EnterOuterAlt(_localctx, 1);
+				{
+					State = 428;
+					ErrorHandler.Sync(this);
+					_la = TokenStream.LA(1);
+					while ((((_la) & ~0x3f) == 0 && ((1L << _la) & 6808723608059904L) != 0))
+					{
+						{
+							{
+								State = 425;
+								_localctx._pr_GrammarRule = pr_GrammarRule();
+								_localctx._E_grammarRules.Add(_localctx._pr_GrammarRule);
+							}
+						}
+						State = 430;
+						ErrorHandler.Sync(this);
+						_la = TokenStream.LA(1);
+					}
+				}
+			}
+			catch (RecognitionException re)
+			{
+				_localctx.exception = re;
+				ErrorHandler.ReportError(this, re);
+				ErrorHandler.Recover(this, re);
+			}
+			finally
+			{
+				ExitRule();
+			}
+			return _localctx;
+		}
+
+		public partial class Pr_RuleBlock1Context : ParserRuleContext
+		{
+			public Pr_RuleBlock1Context(ParserRuleContext parent, int invokingState)
+				: base(parent, invokingState)
+			{
+			}
+			public override int RuleIndex { get { return RULE_pr_RuleBlock1; } }
+
+			public Pr_RuleBlock1Context() { }
+			public virtual void CopyFrom(Pr_RuleBlock1Context context)
+			{
+				base.CopyFrom(context);
+			}
+		}
+		public partial class Pr_RuleBlock1Alt1Context : Pr_RuleBlock1Context
+		{
+			public Pr_TypeReferenceIdentifierContext E_returnType;
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_TypeReferenceIdentifierContext pr_TypeReferenceIdentifier()
+			{
+				return GetRuleContext<Pr_TypeReferenceIdentifierContext>(0);
+			}
+			public Pr_RuleBlock1Alt1Context(Pr_RuleBlock1Context context) { CopyFrom(context); }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor)
+			{
+				ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
+				if (typedVisitor != null) return typedVisitor.VisitPr_RuleBlock1Alt1(this);
+				else return visitor.VisitChildren(this);
+			}
+		}
+		public partial class Pr_RuleBlock1Alt2Context : Pr_RuleBlock1Context
+		{
+			public Pr_IdentifierContext E_Identifier;
+			public IToken E_KReturns;
+			public Pr_TypeReferenceContext E_returnType1;
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_IdentifierContext pr_Identifier()
+			{
+				return GetRuleContext<Pr_IdentifierContext>(0);
+			}
+			[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_KReturns() { return GetToken(CompilerParser.LR_KReturns, 0); }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_TypeReferenceContext pr_TypeReference()
+			{
+				return GetRuleContext<Pr_TypeReferenceContext>(0);
+			}
+			public Pr_RuleBlock1Alt2Context(Pr_RuleBlock1Context context) { CopyFrom(context); }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor)
+			{
+				ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
+				if (typedVisitor != null) return typedVisitor.VisitPr_RuleBlock1Alt2(this);
+				else return visitor.VisitChildren(this);
+			}
+		}
+
+		[RuleVersion(0)]
+		public Pr_RuleBlock1Context pr_RuleBlock1()
+		{
+			Pr_RuleBlock1Context _localctx = new Pr_RuleBlock1Context(Context, State);
+			EnterRule(_localctx, 84, RULE_pr_RuleBlock1);
+			try
+			{
+				State = 436;
+				ErrorHandler.Sync(this);
+				switch (Interpreter.AdaptivePredict(TokenStream, 45, Context))
+				{
+					case 1:
+						_localctx = new Pr_RuleBlock1Alt1Context(_localctx);
+						EnterOuterAlt(_localctx, 1);
+						{
+							State = 431;
+							((Pr_RuleBlock1Alt1Context)_localctx).E_returnType = pr_TypeReferenceIdentifier();
+						}
+						break;
+					case 2:
+						_localctx = new Pr_RuleBlock1Alt2Context(_localctx);
+						EnterOuterAlt(_localctx, 2);
+						{
+							State = 432;
+							((Pr_RuleBlock1Alt2Context)_localctx).E_Identifier = pr_Identifier();
+							State = 433;
+							((Pr_RuleBlock1Alt2Context)_localctx).E_KReturns = Match(LR_KReturns);
+							State = 434;
+							((Pr_RuleBlock1Alt2Context)_localctx).E_returnType1 = pr_TypeReference();
+						}
+						break;
+				}
+			}
+			catch (RecognitionException re)
+			{
+				_localctx.exception = re;
+				ErrorHandler.ReportError(this, re);
+				ErrorHandler.Recover(this, re);
+			}
+			finally
+			{
+				ExitRule();
+			}
+			return _localctx;
+		}
+
+		public partial class Pr_RulealternativesBlockContext : ParserRuleContext
+		{
+			public IToken E_TBar1;
+			public Pr_AlternativeContext E_alternatives2;
+			[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TBar() { return GetToken(CompilerParser.LR_TBar, 0); }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_AlternativeContext pr_Alternative()
+			{
+				return GetRuleContext<Pr_AlternativeContext>(0);
+			}
+			public Pr_RulealternativesBlockContext(ParserRuleContext parent, int invokingState)
+				: base(parent, invokingState)
+			{
+			}
+			public override int RuleIndex { get { return RULE_pr_RulealternativesBlock; } }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor)
+			{
+				ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
+				if (typedVisitor != null) return typedVisitor.VisitPr_RulealternativesBlock(this);
+				else return visitor.VisitChildren(this);
+			}
+		}
+
+		[RuleVersion(0)]
+		public Pr_RulealternativesBlockContext pr_RulealternativesBlock()
+		{
+			Pr_RulealternativesBlockContext _localctx = new Pr_RulealternativesBlockContext(Context, State);
+			EnterRule(_localctx, 86, RULE_pr_RulealternativesBlock);
+			try
+			{
+				EnterOuterAlt(_localctx, 1);
+				{
+					State = 438;
+					_localctx.E_TBar1 = Match(LR_TBar);
+					State = 439;
+					_localctx.E_alternatives2 = pr_Alternative();
+				}
+			}
+			catch (RecognitionException re)
+			{
+				_localctx.exception = re;
+				ErrorHandler.ReportError(this, re);
+				ErrorHandler.Recover(this, re);
+			}
+			finally
+			{
+				ExitRule();
+			}
+			return _localctx;
+		}
+
+		public partial class Pr_AlternativeBlock1Context : ParserRuleContext
+		{
+			public Pr_ParserAnnotationContext _pr_ParserAnnotation;
+			public IList<Pr_ParserAnnotationContext> _E_annotations = new List<Pr_ParserAnnotationContext>();
+			public IToken E_KAlt;
+			public Pr_NameContext E_Name;
+			public Pr_AlternativeBlock1Block1Context E_Block;
+			public IToken E_TColon;
+			[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_KAlt() { return GetToken(CompilerParser.LR_KAlt, 0); }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_NameContext pr_Name()
+			{
+				return GetRuleContext<Pr_NameContext>(0);
+			}
+			[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TColon() { return GetToken(CompilerParser.LR_TColon, 0); }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_ParserAnnotationContext[] pr_ParserAnnotation()
+			{
+				return GetRuleContexts<Pr_ParserAnnotationContext>();
+			}
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_ParserAnnotationContext pr_ParserAnnotation(int i)
+			{
+				return GetRuleContext<Pr_ParserAnnotationContext>(i);
+			}
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_AlternativeBlock1Block1Context pr_AlternativeBlock1Block1()
+			{
+				return GetRuleContext<Pr_AlternativeBlock1Block1Context>(0);
+			}
+			public Pr_AlternativeBlock1Context(ParserRuleContext parent, int invokingState)
+				: base(parent, invokingState)
+			{
+			}
+			public override int RuleIndex { get { return RULE_pr_AlternativeBlock1; } }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor)
+			{
+				ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
+				if (typedVisitor != null) return typedVisitor.VisitPr_AlternativeBlock1(this);
+				else return visitor.VisitChildren(this);
+			}
+		}
+
+		[RuleVersion(0)]
+		public Pr_AlternativeBlock1Context pr_AlternativeBlock1()
+		{
+			Pr_AlternativeBlock1Context _localctx = new Pr_AlternativeBlock1Context(Context, State);
+			EnterRule(_localctx, 88, RULE_pr_AlternativeBlock1);
+			int _la;
+			try
+			{
+				EnterOuterAlt(_localctx, 1);
+				{
+					State = 444;
+					ErrorHandler.Sync(this);
+					_la = TokenStream.LA(1);
+					while (_la == LR_TLBracket)
+					{
+						{
+							{
+								State = 441;
+								_localctx._pr_ParserAnnotation = pr_ParserAnnotation();
+								_localctx._E_annotations.Add(_localctx._pr_ParserAnnotation);
+							}
+						}
+						State = 446;
+						ErrorHandler.Sync(this);
+						_la = TokenStream.LA(1);
+					}
+					State = 447;
+					_localctx.E_KAlt = Match(LR_KAlt);
+					State = 448;
+					_localctx.E_Name = pr_Name();
+					State = 450;
+					ErrorHandler.Sync(this);
+					_la = TokenStream.LA(1);
+					if (_la == LR_KReturns)
+					{
+						{
+							State = 449;
+							_localctx.E_Block = pr_AlternativeBlock1Block1();
+						}
+					}
+
+					State = 452;
+					_localctx.E_TColon = Match(LR_TColon);
+				}
+			}
+			catch (RecognitionException re)
+			{
+				_localctx.exception = re;
+				ErrorHandler.ReportError(this, re);
+				ErrorHandler.Recover(this, re);
+			}
+			finally
+			{
+				ExitRule();
+			}
+			return _localctx;
+		}
+
+		public partial class Pr_AlternativeBlock1Block1Context : ParserRuleContext
+		{
+			public IToken E_KReturns;
+			public Pr_TypeReferenceContext E_returnType;
+			[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_KReturns() { return GetToken(CompilerParser.LR_KReturns, 0); }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_TypeReferenceContext pr_TypeReference()
+			{
+				return GetRuleContext<Pr_TypeReferenceContext>(0);
+			}
+			public Pr_AlternativeBlock1Block1Context(ParserRuleContext parent, int invokingState)
+				: base(parent, invokingState)
+			{
+			}
+			public override int RuleIndex { get { return RULE_pr_AlternativeBlock1Block1; } }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor)
+			{
+				ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
+				if (typedVisitor != null) return typedVisitor.VisitPr_AlternativeBlock1Block1(this);
+				else return visitor.VisitChildren(this);
+			}
+		}
+
+		[RuleVersion(0)]
+		public Pr_AlternativeBlock1Block1Context pr_AlternativeBlock1Block1()
+		{
+			Pr_AlternativeBlock1Block1Context _localctx = new Pr_AlternativeBlock1Block1Context(Context, State);
+			EnterRule(_localctx, 90, RULE_pr_AlternativeBlock1Block1);
+			try
+			{
+				EnterOuterAlt(_localctx, 1);
+				{
+					State = 454;
+					_localctx.E_KReturns = Match(LR_KReturns);
+					State = 455;
+					_localctx.E_returnType = pr_TypeReference();
+				}
+			}
+			catch (RecognitionException re)
+			{
+				_localctx.exception = re;
+				ErrorHandler.ReportError(this, re);
+				ErrorHandler.Recover(this, re);
+			}
+			finally
+			{
+				ExitRule();
+			}
+			return _localctx;
+		}
+
+		public partial class Pr_AlternativeBlock2Context : ParserRuleContext
+		{
+			public IToken E_TEqGt;
+			public Pr_ExpressionContext E_returnValue;
+			[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TEqGt() { return GetToken(CompilerParser.LR_TEqGt, 0); }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_ExpressionContext pr_Expression()
+			{
+				return GetRuleContext<Pr_ExpressionContext>(0);
+			}
+			public Pr_AlternativeBlock2Context(ParserRuleContext parent, int invokingState)
+				: base(parent, invokingState)
+			{
+			}
+			public override int RuleIndex { get { return RULE_pr_AlternativeBlock2; } }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor)
+			{
+				ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
+				if (typedVisitor != null) return typedVisitor.VisitPr_AlternativeBlock2(this);
+				else return visitor.VisitChildren(this);
+			}
+		}
+
+		[RuleVersion(0)]
+		public Pr_AlternativeBlock2Context pr_AlternativeBlock2()
+		{
+			Pr_AlternativeBlock2Context _localctx = new Pr_AlternativeBlock2Context(Context, State);
+			EnterRule(_localctx, 92, RULE_pr_AlternativeBlock2);
+			try
+			{
+				EnterOuterAlt(_localctx, 1);
+				{
+					State = 457;
+					_localctx.E_TEqGt = Match(LR_TEqGt);
+					State = 458;
+					_localctx.E_returnValue = pr_Expression();
+				}
+			}
+			catch (RecognitionException re)
+			{
+				_localctx.exception = re;
+				ErrorHandler.ReportError(this, re);
+				ErrorHandler.Recover(this, re);
+			}
+			finally
+			{
+				ExitRule();
+			}
+			return _localctx;
+		}
+
+		public partial class Pr_ElementBlock1Context : ParserRuleContext
+		{
+			public Pr_ParserAnnotationContext _pr_ParserAnnotation;
+			public IList<Pr_ParserAnnotationContext> _E_annotations = new List<Pr_ParserAnnotationContext>();
+			public Pr_NameContext E_Name;
+			public Pr_AssignmentContext E_assignment;
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_NameContext pr_Name()
+			{
+				return GetRuleContext<Pr_NameContext>(0);
+			}
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_AssignmentContext pr_Assignment()
+			{
+				return GetRuleContext<Pr_AssignmentContext>(0);
+			}
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_ParserAnnotationContext[] pr_ParserAnnotation()
+			{
+				return GetRuleContexts<Pr_ParserAnnotationContext>();
+			}
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_ParserAnnotationContext pr_ParserAnnotation(int i)
+			{
+				return GetRuleContext<Pr_ParserAnnotationContext>(i);
+			}
+			public Pr_ElementBlock1Context(ParserRuleContext parent, int invokingState)
+				: base(parent, invokingState)
+			{
+			}
+			public override int RuleIndex { get { return RULE_pr_ElementBlock1; } }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor)
+			{
+				ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
+				if (typedVisitor != null) return typedVisitor.VisitPr_ElementBlock1(this);
+				else return visitor.VisitChildren(this);
+			}
+		}
+
+		[RuleVersion(0)]
+		public Pr_ElementBlock1Context pr_ElementBlock1()
+		{
+			Pr_ElementBlock1Context _localctx = new Pr_ElementBlock1Context(Context, State);
+			EnterRule(_localctx, 94, RULE_pr_ElementBlock1);
+			int _la;
+			try
+			{
+				EnterOuterAlt(_localctx, 1);
+				{
+					State = 463;
+					ErrorHandler.Sync(this);
+					_la = TokenStream.LA(1);
+					while (_la == LR_TLBracket)
+					{
+						{
+							{
+								State = 460;
+								_localctx._pr_ParserAnnotation = pr_ParserAnnotation();
+								_localctx._E_annotations.Add(_localctx._pr_ParserAnnotation);
+							}
+						}
+						State = 465;
+						ErrorHandler.Sync(this);
+						_la = TokenStream.LA(1);
+					}
+					State = 466;
+					_localctx.E_Name = pr_Name();
+					State = 467;
+					_localctx.E_assignment = pr_Assignment();
+				}
+			}
+			catch (RecognitionException re)
+			{
+				_localctx.exception = re;
+				ErrorHandler.ReportError(this, re);
+				ErrorHandler.Recover(this, re);
+			}
+			finally
+			{
+				ExitRule();
+			}
+			return _localctx;
+		}
+
+		public partial class Pr_BlockalternativesBlockContext : ParserRuleContext
+		{
+			public IToken E_TBar1;
+			public Pr_BlockAlternativeContext E_alternatives2;
+			[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TBar() { return GetToken(CompilerParser.LR_TBar, 0); }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_BlockAlternativeContext pr_BlockAlternative()
+			{
+				return GetRuleContext<Pr_BlockAlternativeContext>(0);
+			}
+			public Pr_BlockalternativesBlockContext(ParserRuleContext parent, int invokingState)
+				: base(parent, invokingState)
+			{
+			}
+			public override int RuleIndex { get { return RULE_pr_BlockalternativesBlock; } }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor)
+			{
+				ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
+				if (typedVisitor != null) return typedVisitor.VisitPr_BlockalternativesBlock(this);
+				else return visitor.VisitChildren(this);
+			}
+		}
+
+		[RuleVersion(0)]
+		public Pr_BlockalternativesBlockContext pr_BlockalternativesBlock()
+		{
+			Pr_BlockalternativesBlockContext _localctx = new Pr_BlockalternativesBlockContext(Context, State);
+			EnterRule(_localctx, 96, RULE_pr_BlockalternativesBlock);
+			try
+			{
+				EnterOuterAlt(_localctx, 1);
+				{
+					State = 469;
+					_localctx.E_TBar1 = Match(LR_TBar);
+					State = 470;
+					_localctx.E_alternatives2 = pr_BlockAlternative();
+				}
+			}
+			catch (RecognitionException re)
+			{
+				_localctx.exception = re;
+				ErrorHandler.ReportError(this, re);
+				ErrorHandler.Recover(this, re);
+			}
+			finally
+			{
+				ExitRule();
+			}
+			return _localctx;
+		}
+
+		public partial class Pr_BlockAlternativeBlock1Context : ParserRuleContext
+		{
+			public IToken E_TEqGt;
+			public Pr_ExpressionContext E_returnValue;
+			[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TEqGt() { return GetToken(CompilerParser.LR_TEqGt, 0); }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_ExpressionContext pr_Expression()
+			{
+				return GetRuleContext<Pr_ExpressionContext>(0);
+			}
+			public Pr_BlockAlternativeBlock1Context(ParserRuleContext parent, int invokingState)
+				: base(parent, invokingState)
+			{
+			}
+			public override int RuleIndex { get { return RULE_pr_BlockAlternativeBlock1; } }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor)
+			{
+				ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
+				if (typedVisitor != null) return typedVisitor.VisitPr_BlockAlternativeBlock1(this);
+				else return visitor.VisitChildren(this);
+			}
+		}
+
+		[RuleVersion(0)]
+		public Pr_BlockAlternativeBlock1Context pr_BlockAlternativeBlock1()
+		{
+			Pr_BlockAlternativeBlock1Context _localctx = new Pr_BlockAlternativeBlock1Context(Context, State);
+			EnterRule(_localctx, 98, RULE_pr_BlockAlternativeBlock1);
+			try
+			{
+				EnterOuterAlt(_localctx, 1);
+				{
+					State = 472;
+					_localctx.E_TEqGt = Match(LR_TEqGt);
+					State = 473;
+					_localctx.E_returnValue = pr_Expression();
+				}
+			}
+			catch (RecognitionException re)
+			{
+				_localctx.exception = re;
+				ErrorHandler.ReportError(this, re);
+				ErrorHandler.Recover(this, re);
+			}
+			finally
+			{
+				ExitRule();
+			}
+			return _localctx;
+		}
+
+		public partial class Pr_RuleRefAlt3referencedTypesBlockContext : ParserRuleContext
+		{
+			public IToken E_TComma1;
+			public Pr_TypeReferenceContext E_referencedTypes2;
+			[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TComma() { return GetToken(CompilerParser.LR_TComma, 0); }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_TypeReferenceContext pr_TypeReference()
+			{
+				return GetRuleContext<Pr_TypeReferenceContext>(0);
+			}
+			public Pr_RuleRefAlt3referencedTypesBlockContext(ParserRuleContext parent, int invokingState)
+				: base(parent, invokingState)
+			{
+			}
+			public override int RuleIndex { get { return RULE_pr_RuleRefAlt3referencedTypesBlock; } }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor)
+			{
+				ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
+				if (typedVisitor != null) return typedVisitor.VisitPr_RuleRefAlt3referencedTypesBlock(this);
+				else return visitor.VisitChildren(this);
+			}
+		}
+
+		[RuleVersion(0)]
+		public Pr_RuleRefAlt3referencedTypesBlockContext pr_RuleRefAlt3referencedTypesBlock()
+		{
+			Pr_RuleRefAlt3referencedTypesBlockContext _localctx = new Pr_RuleRefAlt3referencedTypesBlockContext(Context, State);
+			EnterRule(_localctx, 100, RULE_pr_RuleRefAlt3referencedTypesBlock);
+			try
+			{
+				EnterOuterAlt(_localctx, 1);
+				{
+					State = 475;
+					_localctx.E_TComma1 = Match(LR_TComma);
+					State = 476;
+					_localctx.E_referencedTypes2 = pr_TypeReference();
+				}
+			}
+			catch (RecognitionException re)
+			{
+				_localctx.exception = re;
+				ErrorHandler.ReportError(this, re);
+				ErrorHandler.Recover(this, re);
+			}
+			finally
+			{
+				ExitRule();
+			}
+			return _localctx;
+		}
+
+		public partial class Pr_RuleRefAlt3Block1Context : ParserRuleContext
+		{
+			public IToken E_TBar;
+			public Pr_IdentifierContext E_grammarRule;
+			[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TBar() { return GetToken(CompilerParser.LR_TBar, 0); }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_IdentifierContext pr_Identifier()
+			{
+				return GetRuleContext<Pr_IdentifierContext>(0);
+			}
+			public Pr_RuleRefAlt3Block1Context(ParserRuleContext parent, int invokingState)
+				: base(parent, invokingState)
+			{
+			}
+			public override int RuleIndex { get { return RULE_pr_RuleRefAlt3Block1; } }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor)
+			{
+				ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
+				if (typedVisitor != null) return typedVisitor.VisitPr_RuleRefAlt3Block1(this);
+				else return visitor.VisitChildren(this);
+			}
+		}
+
+		[RuleVersion(0)]
+		public Pr_RuleRefAlt3Block1Context pr_RuleRefAlt3Block1()
+		{
+			Pr_RuleRefAlt3Block1Context _localctx = new Pr_RuleRefAlt3Block1Context(Context, State);
+			EnterRule(_localctx, 102, RULE_pr_RuleRefAlt3Block1);
+			try
+			{
+				EnterOuterAlt(_localctx, 1);
+				{
+					State = 478;
+					_localctx.E_TBar = Match(LR_TBar);
+					State = 479;
+					_localctx.E_grammarRule = pr_Identifier();
+				}
+			}
+			catch (RecognitionException re)
+			{
+				_localctx.exception = re;
+				ErrorHandler.ReportError(this, re);
+				ErrorHandler.Recover(this, re);
+			}
+			finally
+			{
+				ExitRule();
+			}
+			return _localctx;
+		}
+
+		public partial class Pr_TokenBlock1Context : ParserRuleContext
+		{
+			public Pr_TokenBlock1Context(ParserRuleContext parent, int invokingState)
+				: base(parent, invokingState)
+			{
+			}
+			public override int RuleIndex { get { return RULE_pr_TokenBlock1; } }
+
+			public Pr_TokenBlock1Context() { }
+			public virtual void CopyFrom(Pr_TokenBlock1Context context)
+			{
+				base.CopyFrom(context);
+			}
+		}
+		public partial class Pr_TokenBlock1Alt1Context : Pr_TokenBlock1Context
+		{
+			public IToken E_KToken;
+			public Pr_NameContext E_Name;
+			public Pr_TokenBlock1Alt1Block1Context E_Block;
+			[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_KToken() { return GetToken(CompilerParser.LR_KToken, 0); }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_NameContext pr_Name()
+			{
+				return GetRuleContext<Pr_NameContext>(0);
+			}
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_TokenBlock1Alt1Block1Context pr_TokenBlock1Alt1Block1()
+			{
+				return GetRuleContext<Pr_TokenBlock1Alt1Block1Context>(0);
+			}
+			public Pr_TokenBlock1Alt1Context(Pr_TokenBlock1Context context) { CopyFrom(context); }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor)
+			{
+				ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
+				if (typedVisitor != null) return typedVisitor.VisitPr_TokenBlock1Alt1(this);
+				else return visitor.VisitChildren(this);
+			}
+		}
+		public partial class Pr_TokenBlock1Alt2Context : Pr_TokenBlock1Context
+		{
+			public IToken E_isTrivia;
+			public Pr_NameContext E_Name1;
+			[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_KHidden() { return GetToken(CompilerParser.LR_KHidden, 0); }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_NameContext pr_Name()
+			{
+				return GetRuleContext<Pr_NameContext>(0);
+			}
+			public Pr_TokenBlock1Alt2Context(Pr_TokenBlock1Context context) { CopyFrom(context); }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor)
+			{
+				ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
+				if (typedVisitor != null) return typedVisitor.VisitPr_TokenBlock1Alt2(this);
+				else return visitor.VisitChildren(this);
+			}
+		}
+
+		[RuleVersion(0)]
+		public Pr_TokenBlock1Context pr_TokenBlock1()
+		{
+			Pr_TokenBlock1Context _localctx = new Pr_TokenBlock1Context(Context, State);
+			EnterRule(_localctx, 104, RULE_pr_TokenBlock1);
+			int _la;
+			try
+			{
+				State = 488;
+				ErrorHandler.Sync(this);
+				switch (TokenStream.LA(1))
+				{
+					case LR_KToken:
+						_localctx = new Pr_TokenBlock1Alt1Context(_localctx);
+						EnterOuterAlt(_localctx, 1);
+						{
+							State = 481;
+							((Pr_TokenBlock1Alt1Context)_localctx).E_KToken = Match(LR_KToken);
+							State = 482;
+							((Pr_TokenBlock1Alt1Context)_localctx).E_Name = pr_Name();
+							State = 484;
+							ErrorHandler.Sync(this);
+							_la = TokenStream.LA(1);
+							if (_la == LR_KReturns)
+							{
+								{
+									State = 483;
+									((Pr_TokenBlock1Alt1Context)_localctx).E_Block = pr_TokenBlock1Alt1Block1();
+								}
+							}
+
+						}
+						break;
+					case LR_KHidden:
+						_localctx = new Pr_TokenBlock1Alt2Context(_localctx);
+						EnterOuterAlt(_localctx, 2);
+						{
+							State = 486;
+							((Pr_TokenBlock1Alt2Context)_localctx).E_isTrivia = Match(LR_KHidden);
+							State = 487;
+							((Pr_TokenBlock1Alt2Context)_localctx).E_Name1 = pr_Name();
+						}
+						break;
+					default:
+						throw new NoViableAltException(this);
+				}
+			}
+			catch (RecognitionException re)
+			{
+				_localctx.exception = re;
+				ErrorHandler.ReportError(this, re);
+				ErrorHandler.Recover(this, re);
+			}
+			finally
+			{
+				ExitRule();
+			}
+			return _localctx;
+		}
+
+		public partial class Pr_TokenBlock1Alt1Block1Context : ParserRuleContext
+		{
+			public IToken E_KReturns;
+			public Pr_TypeReferenceContext E_returnType;
+			[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_KReturns() { return GetToken(CompilerParser.LR_KReturns, 0); }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_TypeReferenceContext pr_TypeReference()
+			{
+				return GetRuleContext<Pr_TypeReferenceContext>(0);
+			}
+			public Pr_TokenBlock1Alt1Block1Context(ParserRuleContext parent, int invokingState)
+				: base(parent, invokingState)
+			{
+			}
+			public override int RuleIndex { get { return RULE_pr_TokenBlock1Alt1Block1; } }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor)
+			{
+				ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
+				if (typedVisitor != null) return typedVisitor.VisitPr_TokenBlock1Alt1Block1(this);
+				else return visitor.VisitChildren(this);
+			}
+		}
+
+		[RuleVersion(0)]
+		public Pr_TokenBlock1Alt1Block1Context pr_TokenBlock1Alt1Block1()
+		{
+			Pr_TokenBlock1Alt1Block1Context _localctx = new Pr_TokenBlock1Alt1Block1Context(Context, State);
+			EnterRule(_localctx, 106, RULE_pr_TokenBlock1Alt1Block1);
+			try
+			{
+				EnterOuterAlt(_localctx, 1);
+				{
+					State = 490;
+					_localctx.E_KReturns = Match(LR_KReturns);
+					State = 491;
+					_localctx.E_returnType = pr_TypeReference();
+				}
+			}
+			catch (RecognitionException re)
+			{
+				_localctx.exception = re;
+				ErrorHandler.ReportError(this, re);
+				ErrorHandler.Recover(this, re);
+			}
+			finally
+			{
+				ExitRule();
+			}
+			return _localctx;
+		}
+
+		public partial class Pr_TokenalternativesBlockContext : ParserRuleContext
+		{
+			public IToken E_TBar1;
+			public Pr_LAlternativeContext E_alternatives2;
+			[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TBar() { return GetToken(CompilerParser.LR_TBar, 0); }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_LAlternativeContext pr_LAlternative()
+			{
+				return GetRuleContext<Pr_LAlternativeContext>(0);
+			}
+			public Pr_TokenalternativesBlockContext(ParserRuleContext parent, int invokingState)
+				: base(parent, invokingState)
+			{
+			}
+			public override int RuleIndex { get { return RULE_pr_TokenalternativesBlock; } }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor)
+			{
+				ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
+				if (typedVisitor != null) return typedVisitor.VisitPr_TokenalternativesBlock(this);
+				else return visitor.VisitChildren(this);
+			}
+		}
+
+		[RuleVersion(0)]
+		public Pr_TokenalternativesBlockContext pr_TokenalternativesBlock()
+		{
+			Pr_TokenalternativesBlockContext _localctx = new Pr_TokenalternativesBlockContext(Context, State);
+			EnterRule(_localctx, 108, RULE_pr_TokenalternativesBlock);
+			try
+			{
+				EnterOuterAlt(_localctx, 1);
+				{
+					State = 493;
+					_localctx.E_TBar1 = Match(LR_TBar);
+					State = 494;
+					_localctx.E_alternatives2 = pr_LAlternative();
+				}
+			}
+			catch (RecognitionException re)
+			{
+				_localctx.exception = re;
+				ErrorHandler.ReportError(this, re);
+				ErrorHandler.Recover(this, re);
+			}
+			finally
+			{
+				ExitRule();
+			}
+			return _localctx;
+		}
+
+		public partial class Pr_FragmentalternativesBlockContext : ParserRuleContext
+		{
+			public IToken E_TBar1;
+			public Pr_LAlternativeContext E_alternatives2;
+			[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TBar() { return GetToken(CompilerParser.LR_TBar, 0); }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_LAlternativeContext pr_LAlternative()
+			{
+				return GetRuleContext<Pr_LAlternativeContext>(0);
+			}
+			public Pr_FragmentalternativesBlockContext(ParserRuleContext parent, int invokingState)
+				: base(parent, invokingState)
+			{
+			}
+			public override int RuleIndex { get { return RULE_pr_FragmentalternativesBlock; } }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor)
+			{
+				ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
+				if (typedVisitor != null) return typedVisitor.VisitPr_FragmentalternativesBlock(this);
+				else return visitor.VisitChildren(this);
+			}
+		}
+
+		[RuleVersion(0)]
+		public Pr_FragmentalternativesBlockContext pr_FragmentalternativesBlock()
+		{
+			Pr_FragmentalternativesBlockContext _localctx = new Pr_FragmentalternativesBlockContext(Context, State);
+			EnterRule(_localctx, 110, RULE_pr_FragmentalternativesBlock);
+			try
+			{
+				EnterOuterAlt(_localctx, 1);
+				{
+					State = 496;
+					_localctx.E_TBar1 = Match(LR_TBar);
+					State = 497;
+					_localctx.E_alternatives2 = pr_LAlternative();
+				}
+			}
+			catch (RecognitionException re)
+			{
+				_localctx.exception = re;
+				ErrorHandler.ReportError(this, re);
+				ErrorHandler.Recover(this, re);
+			}
+			finally
+			{
+				ExitRule();
+			}
+			return _localctx;
+		}
+
+		public partial class Pr_LBlockalternativesBlockContext : ParserRuleContext
+		{
+			public IToken E_TBar1;
+			public Pr_LAlternativeContext E_alternatives2;
+			[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TBar() { return GetToken(CompilerParser.LR_TBar, 0); }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_LAlternativeContext pr_LAlternative()
+			{
+				return GetRuleContext<Pr_LAlternativeContext>(0);
+			}
+			public Pr_LBlockalternativesBlockContext(ParserRuleContext parent, int invokingState)
+				: base(parent, invokingState)
+			{
+			}
+			public override int RuleIndex { get { return RULE_pr_LBlockalternativesBlock; } }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor)
+			{
+				ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
+				if (typedVisitor != null) return typedVisitor.VisitPr_LBlockalternativesBlock(this);
+				else return visitor.VisitChildren(this);
+			}
+		}
+
+		[RuleVersion(0)]
+		public Pr_LBlockalternativesBlockContext pr_LBlockalternativesBlock()
+		{
+			Pr_LBlockalternativesBlockContext _localctx = new Pr_LBlockalternativesBlockContext(Context, State);
+			EnterRule(_localctx, 112, RULE_pr_LBlockalternativesBlock);
+			try
+			{
+				EnterOuterAlt(_localctx, 1);
+				{
+					State = 499;
+					_localctx.E_TBar1 = Match(LR_TBar);
+					State = 500;
+					_localctx.E_alternatives2 = pr_LAlternative();
+				}
+			}
+			catch (RecognitionException re)
+			{
+				_localctx.exception = re;
+				ErrorHandler.ReportError(this, re);
+				ErrorHandler.Recover(this, re);
+			}
+			finally
+			{
+				ExitRule();
+			}
+			return _localctx;
+		}
+
+		public partial class Pr_SingleExpressionAlt1Block1Context : ParserRuleContext
+		{
+			public Pr_SingleExpressionAlt1Block1Context(ParserRuleContext parent, int invokingState)
+				: base(parent, invokingState)
+			{
+			}
+			public override int RuleIndex { get { return RULE_pr_SingleExpressionAlt1Block1; } }
+
+			public Pr_SingleExpressionAlt1Block1Context() { }
+			public virtual void CopyFrom(Pr_SingleExpressionAlt1Block1Context context)
+			{
+				base.CopyFrom(context);
+			}
+		}
+		public partial class Pr_SingleExpressionAlt1Block1Alt4Context : Pr_SingleExpressionAlt1Block1Context
+		{
+			public IToken E_TString;
+			[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TString() { return GetToken(CompilerParser.LR_TString, 0); }
+			public Pr_SingleExpressionAlt1Block1Alt4Context(Pr_SingleExpressionAlt1Block1Context context) { CopyFrom(context); }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor)
+			{
+				ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
+				if (typedVisitor != null) return typedVisitor.VisitPr_SingleExpressionAlt1Block1Alt4(this);
+				else return visitor.VisitChildren(this);
+			}
+		}
+		public partial class Pr_SingleExpressionAlt1Block1Alt5Context : Pr_SingleExpressionAlt1Block1Context
+		{
+			public IToken E_TInteger;
+			[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TInteger() { return GetToken(CompilerParser.LR_TInteger, 0); }
+			public Pr_SingleExpressionAlt1Block1Alt5Context(Pr_SingleExpressionAlt1Block1Context context) { CopyFrom(context); }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor)
+			{
+				ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
+				if (typedVisitor != null) return typedVisitor.VisitPr_SingleExpressionAlt1Block1Alt5(this);
+				else return visitor.VisitChildren(this);
+			}
+		}
+		public partial class Pr_SingleExpressionAlt1Block1Alt6Context : Pr_SingleExpressionAlt1Block1Context
+		{
+			public IToken E_TDecimal;
+			[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TDecimal() { return GetToken(CompilerParser.LR_TDecimal, 0); }
+			public Pr_SingleExpressionAlt1Block1Alt6Context(Pr_SingleExpressionAlt1Block1Context context) { CopyFrom(context); }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor)
+			{
+				ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
+				if (typedVisitor != null) return typedVisitor.VisitPr_SingleExpressionAlt1Block1Alt6(this);
+				else return visitor.VisitChildren(this);
+			}
+		}
+		public partial class Pr_SingleExpressionAlt1Block1Alt7Context : Pr_SingleExpressionAlt1Block1Context
+		{
+			public Pr_PrimitiveTypeContext E_PrimitiveType;
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_PrimitiveTypeContext pr_PrimitiveType()
+			{
+				return GetRuleContext<Pr_PrimitiveTypeContext>(0);
+			}
+			public Pr_SingleExpressionAlt1Block1Alt7Context(Pr_SingleExpressionAlt1Block1Context context) { CopyFrom(context); }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor)
+			{
+				ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
+				if (typedVisitor != null) return typedVisitor.VisitPr_SingleExpressionAlt1Block1Alt7(this);
+				else return visitor.VisitChildren(this);
+			}
+		}
+		public partial class Pr_SingleExpressionAlt1Block1Alt1Context : Pr_SingleExpressionAlt1Block1Context
+		{
+			public IToken E_KNull;
+			[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_KNull() { return GetToken(CompilerParser.LR_KNull, 0); }
+			public Pr_SingleExpressionAlt1Block1Alt1Context(Pr_SingleExpressionAlt1Block1Context context) { CopyFrom(context); }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor)
+			{
+				ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
+				if (typedVisitor != null) return typedVisitor.VisitPr_SingleExpressionAlt1Block1Alt1(this);
+				else return visitor.VisitChildren(this);
+			}
+		}
+		public partial class Pr_SingleExpressionAlt1Block1Alt2Context : Pr_SingleExpressionAlt1Block1Context
+		{
+			public IToken E_KTrue;
+			[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_KTrue() { return GetToken(CompilerParser.LR_KTrue, 0); }
+			public Pr_SingleExpressionAlt1Block1Alt2Context(Pr_SingleExpressionAlt1Block1Context context) { CopyFrom(context); }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor)
+			{
+				ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
+				if (typedVisitor != null) return typedVisitor.VisitPr_SingleExpressionAlt1Block1Alt2(this);
+				else return visitor.VisitChildren(this);
+			}
+		}
+		public partial class Pr_SingleExpressionAlt1Block1Alt3Context : Pr_SingleExpressionAlt1Block1Context
+		{
+			public IToken E_KFalse;
+			[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_KFalse() { return GetToken(CompilerParser.LR_KFalse, 0); }
+			public Pr_SingleExpressionAlt1Block1Alt3Context(Pr_SingleExpressionAlt1Block1Context context) { CopyFrom(context); }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor)
+			{
+				ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
+				if (typedVisitor != null) return typedVisitor.VisitPr_SingleExpressionAlt1Block1Alt3(this);
+				else return visitor.VisitChildren(this);
+			}
+		}
+
+		[RuleVersion(0)]
+		public Pr_SingleExpressionAlt1Block1Context pr_SingleExpressionAlt1Block1()
+		{
+			Pr_SingleExpressionAlt1Block1Context _localctx = new Pr_SingleExpressionAlt1Block1Context(Context, State);
+			EnterRule(_localctx, 114, RULE_pr_SingleExpressionAlt1Block1);
+			try
+			{
 				State = 509;
 				ErrorHandler.Sync(this);
-				_la = TokenStream.LA(1);
-			}
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			ErrorHandler.ReportError(this, re);
-			ErrorHandler.Recover(this, re);
-		}
-		finally {
-			ExitRule();
-		}
-		return _localctx;
-	}
-
-	public partial class Pr_ArrayExpressionBlock1itemsBlockContext : ParserRuleContext {
-		public IToken E_TComma1;
-		public Pr_SingleExpressionContext E_items2;
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TComma() { return GetToken(CompilerParser.LR_TComma, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_SingleExpressionContext pr_SingleExpression() {
-			return GetRuleContext<Pr_SingleExpressionContext>(0);
-		}
-		public Pr_ArrayExpressionBlock1itemsBlockContext(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
-		{
-		}
-		public override int RuleIndex { get { return RULE_pr_ArrayExpressionBlock1itemsBlock; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitPr_ArrayExpressionBlock1itemsBlock(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-
-	[RuleVersion(0)]
-	public Pr_ArrayExpressionBlock1itemsBlockContext pr_ArrayExpressionBlock1itemsBlock() {
-		Pr_ArrayExpressionBlock1itemsBlockContext _localctx = new Pr_ArrayExpressionBlock1itemsBlockContext(Context, State);
-		EnterRule(_localctx, 116, RULE_pr_ArrayExpressionBlock1itemsBlock);
-		try {
-			EnterOuterAlt(_localctx, 1);
-			{
-			State = 510;
-			_localctx.E_TComma1 = Match(LR_TComma);
-			State = 511;
-			_localctx.E_items2 = pr_SingleExpression();
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			ErrorHandler.ReportError(this, re);
-			ErrorHandler.Recover(this, re);
-		}
-		finally {
-			ExitRule();
-		}
-		return _localctx;
-	}
-
-	public partial class Pr_ParserAnnotationBlock1Context : ParserRuleContext {
-		public IToken E_TLParen;
-		public Pr_AnnotationArgumentContext E_arguments1;
-		public IToken _LR_TComma;
-		public IList<IToken> _E_TComma1 = new List<IToken>();
-		public Pr_AnnotationArgumentContext _pr_AnnotationArgument;
-		public IList<Pr_AnnotationArgumentContext> _E_arguments2 = new List<Pr_AnnotationArgumentContext>();
-		public IToken E_TRParen;
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TLParen() { return GetToken(CompilerParser.LR_TLParen, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_AnnotationArgumentContext[] pr_AnnotationArgument() {
-			return GetRuleContexts<Pr_AnnotationArgumentContext>();
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_AnnotationArgumentContext pr_AnnotationArgument(int i) {
-			return GetRuleContext<Pr_AnnotationArgumentContext>(i);
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TRParen() { return GetToken(CompilerParser.LR_TRParen, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode[] LR_TComma() { return GetTokens(CompilerParser.LR_TComma); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TComma(int i) {
-			return GetToken(CompilerParser.LR_TComma, i);
-		}
-		public Pr_ParserAnnotationBlock1Context(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
-		{
-		}
-		public override int RuleIndex { get { return RULE_pr_ParserAnnotationBlock1; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitPr_ParserAnnotationBlock1(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-
-	[RuleVersion(0)]
-	public Pr_ParserAnnotationBlock1Context pr_ParserAnnotationBlock1() {
-		Pr_ParserAnnotationBlock1Context _localctx = new Pr_ParserAnnotationBlock1Context(Context, State);
-		EnterRule(_localctx, 118, RULE_pr_ParserAnnotationBlock1);
-		int _la;
-		try {
-			EnterOuterAlt(_localctx, 1);
-			{
-			State = 513;
-			_localctx.E_TLParen = Match(LR_TLParen);
-			State = 514;
-			_localctx.E_arguments1 = pr_AnnotationArgument();
-			State = 519;
-			ErrorHandler.Sync(this);
-			_la = TokenStream.LA(1);
-			while (_la==LR_TComma) {
+				switch (TokenStream.LA(1))
 				{
+					case LR_KNull:
+						_localctx = new Pr_SingleExpressionAlt1Block1Alt1Context(_localctx);
+						EnterOuterAlt(_localctx, 1);
+						{
+							State = 502;
+							((Pr_SingleExpressionAlt1Block1Alt1Context)_localctx).E_KNull = Match(LR_KNull);
+						}
+						break;
+					case LR_KTrue:
+						_localctx = new Pr_SingleExpressionAlt1Block1Alt2Context(_localctx);
+						EnterOuterAlt(_localctx, 2);
+						{
+							State = 503;
+							((Pr_SingleExpressionAlt1Block1Alt2Context)_localctx).E_KTrue = Match(LR_KTrue);
+						}
+						break;
+					case LR_KFalse:
+						_localctx = new Pr_SingleExpressionAlt1Block1Alt3Context(_localctx);
+						EnterOuterAlt(_localctx, 3);
+						{
+							State = 504;
+							((Pr_SingleExpressionAlt1Block1Alt3Context)_localctx).E_KFalse = Match(LR_KFalse);
+						}
+						break;
+					case LR_TString:
+						_localctx = new Pr_SingleExpressionAlt1Block1Alt4Context(_localctx);
+						EnterOuterAlt(_localctx, 4);
+						{
+							State = 505;
+							((Pr_SingleExpressionAlt1Block1Alt4Context)_localctx).E_TString = Match(LR_TString);
+						}
+						break;
+					case LR_TInteger:
+						_localctx = new Pr_SingleExpressionAlt1Block1Alt5Context(_localctx);
+						EnterOuterAlt(_localctx, 5);
+						{
+							State = 506;
+							((Pr_SingleExpressionAlt1Block1Alt5Context)_localctx).E_TInteger = Match(LR_TInteger);
+						}
+						break;
+					case LR_TDecimal:
+						_localctx = new Pr_SingleExpressionAlt1Block1Alt6Context(_localctx);
+						EnterOuterAlt(_localctx, 6);
+						{
+							State = 507;
+							((Pr_SingleExpressionAlt1Block1Alt6Context)_localctx).E_TDecimal = Match(LR_TDecimal);
+						}
+						break;
+					case LR_KBool:
+					case LR_KInt:
+					case LR_KDouble:
+					case LR_KString:
+					case LR_KType:
+					case LR_KSymbol:
+					case LR_KObject:
+					case LR_KVoid:
+						_localctx = new Pr_SingleExpressionAlt1Block1Alt7Context(_localctx);
+						EnterOuterAlt(_localctx, 7);
+						{
+							State = 508;
+							((Pr_SingleExpressionAlt1Block1Alt7Context)_localctx).E_PrimitiveType = pr_PrimitiveType();
+						}
+						break;
+					default:
+						throw new NoViableAltException(this);
+				}
+			}
+			catch (RecognitionException re)
+			{
+				_localctx.exception = re;
+				ErrorHandler.ReportError(this, re);
+				ErrorHandler.Recover(this, re);
+			}
+			finally
+			{
+				ExitRule();
+			}
+			return _localctx;
+		}
+
+		public partial class Pr_ArrayExpressionBlock1Context : ParserRuleContext
+		{
+			public Pr_SingleExpressionContext E_items1;
+			public IToken _LR_TComma;
+			public IList<IToken> _E_TComma1 = new List<IToken>();
+			public Pr_SingleExpressionContext _pr_SingleExpression;
+			public IList<Pr_SingleExpressionContext> _E_items2 = new List<Pr_SingleExpressionContext>();
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_SingleExpressionContext[] pr_SingleExpression()
+			{
+				return GetRuleContexts<Pr_SingleExpressionContext>();
+			}
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_SingleExpressionContext pr_SingleExpression(int i)
+			{
+				return GetRuleContext<Pr_SingleExpressionContext>(i);
+			}
+			[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode[] LR_TComma() { return GetTokens(CompilerParser.LR_TComma); }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public ITerminalNode LR_TComma(int i)
+			{
+				return GetToken(CompilerParser.LR_TComma, i);
+			}
+			public Pr_ArrayExpressionBlock1Context(ParserRuleContext parent, int invokingState)
+				: base(parent, invokingState)
+			{
+			}
+			public override int RuleIndex { get { return RULE_pr_ArrayExpressionBlock1; } }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor)
+			{
+				ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
+				if (typedVisitor != null) return typedVisitor.VisitPr_ArrayExpressionBlock1(this);
+				else return visitor.VisitChildren(this);
+			}
+		}
+
+		[RuleVersion(0)]
+		public Pr_ArrayExpressionBlock1Context pr_ArrayExpressionBlock1()
+		{
+			Pr_ArrayExpressionBlock1Context _localctx = new Pr_ArrayExpressionBlock1Context(Context, State);
+			EnterRule(_localctx, 116, RULE_pr_ArrayExpressionBlock1);
+			int _la;
+			try
+			{
+				EnterOuterAlt(_localctx, 1);
 				{
-				State = 515;
-				_localctx._LR_TComma = Match(LR_TComma);
-				_localctx._E_TComma1.Add(_localctx._LR_TComma);
-				State = 516;
-				_localctx._pr_AnnotationArgument = pr_AnnotationArgument();
-				_localctx._E_arguments2.Add(_localctx._pr_AnnotationArgument);
+					State = 511;
+					_localctx.E_items1 = pr_SingleExpression();
+					State = 516;
+					ErrorHandler.Sync(this);
+					_la = TokenStream.LA(1);
+					while (_la == LR_TComma)
+					{
+						{
+							{
+								State = 512;
+								_localctx._LR_TComma = Match(LR_TComma);
+								_localctx._E_TComma1.Add(_localctx._LR_TComma);
+								State = 513;
+								_localctx._pr_SingleExpression = pr_SingleExpression();
+								_localctx._E_items2.Add(_localctx._pr_SingleExpression);
+							}
+						}
+						State = 518;
+						ErrorHandler.Sync(this);
+						_la = TokenStream.LA(1);
+					}
 				}
-				}
-				State = 521;
-				ErrorHandler.Sync(this);
-				_la = TokenStream.LA(1);
 			}
-			State = 522;
-			_localctx.E_TRParen = Match(LR_TRParen);
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			ErrorHandler.ReportError(this, re);
-			ErrorHandler.Recover(this, re);
-		}
-		finally {
-			ExitRule();
-		}
-		return _localctx;
-	}
-
-	public partial class Pr_ParserAnnotationBlock1argumentsBlockContext : ParserRuleContext {
-		public IToken E_TComma1;
-		public Pr_AnnotationArgumentContext E_arguments2;
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TComma() { return GetToken(CompilerParser.LR_TComma, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_AnnotationArgumentContext pr_AnnotationArgument() {
-			return GetRuleContext<Pr_AnnotationArgumentContext>(0);
-		}
-		public Pr_ParserAnnotationBlock1argumentsBlockContext(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
-		{
-		}
-		public override int RuleIndex { get { return RULE_pr_ParserAnnotationBlock1argumentsBlock; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitPr_ParserAnnotationBlock1argumentsBlock(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-
-	[RuleVersion(0)]
-	public Pr_ParserAnnotationBlock1argumentsBlockContext pr_ParserAnnotationBlock1argumentsBlock() {
-		Pr_ParserAnnotationBlock1argumentsBlockContext _localctx = new Pr_ParserAnnotationBlock1argumentsBlockContext(Context, State);
-		EnterRule(_localctx, 120, RULE_pr_ParserAnnotationBlock1argumentsBlock);
-		try {
-			EnterOuterAlt(_localctx, 1);
+			catch (RecognitionException re)
 			{
-			State = 524;
-			_localctx.E_TComma1 = Match(LR_TComma);
-			State = 525;
-			_localctx.E_arguments2 = pr_AnnotationArgument();
+				_localctx.exception = re;
+				ErrorHandler.ReportError(this, re);
+				ErrorHandler.Recover(this, re);
+			}
+			finally
+			{
+				ExitRule();
+			}
+			return _localctx;
+		}
+
+		public partial class Pr_ArrayExpressionBlock1itemsBlockContext : ParserRuleContext
+		{
+			public IToken E_TComma1;
+			public Pr_SingleExpressionContext E_items2;
+			[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TComma() { return GetToken(CompilerParser.LR_TComma, 0); }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_SingleExpressionContext pr_SingleExpression()
+			{
+				return GetRuleContext<Pr_SingleExpressionContext>(0);
+			}
+			public Pr_ArrayExpressionBlock1itemsBlockContext(ParserRuleContext parent, int invokingState)
+				: base(parent, invokingState)
+			{
+			}
+			public override int RuleIndex { get { return RULE_pr_ArrayExpressionBlock1itemsBlock; } }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor)
+			{
+				ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
+				if (typedVisitor != null) return typedVisitor.VisitPr_ArrayExpressionBlock1itemsBlock(this);
+				else return visitor.VisitChildren(this);
 			}
 		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			ErrorHandler.ReportError(this, re);
-			ErrorHandler.Recover(this, re);
-		}
-		finally {
-			ExitRule();
-		}
-		return _localctx;
-	}
 
-	public partial class Pr_LexerAnnotationBlock1Context : ParserRuleContext {
-		public IToken E_TLParen;
-		public Pr_AnnotationArgumentContext E_arguments1;
-		public IToken _LR_TComma;
-		public IList<IToken> _E_TComma1 = new List<IToken>();
-		public Pr_AnnotationArgumentContext _pr_AnnotationArgument;
-		public IList<Pr_AnnotationArgumentContext> _E_arguments2 = new List<Pr_AnnotationArgumentContext>();
-		public IToken E_TRParen;
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TLParen() { return GetToken(CompilerParser.LR_TLParen, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_AnnotationArgumentContext[] pr_AnnotationArgument() {
-			return GetRuleContexts<Pr_AnnotationArgumentContext>();
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_AnnotationArgumentContext pr_AnnotationArgument(int i) {
-			return GetRuleContext<Pr_AnnotationArgumentContext>(i);
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TRParen() { return GetToken(CompilerParser.LR_TRParen, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode[] LR_TComma() { return GetTokens(CompilerParser.LR_TComma); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TComma(int i) {
-			return GetToken(CompilerParser.LR_TComma, i);
-		}
-		public Pr_LexerAnnotationBlock1Context(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
+		[RuleVersion(0)]
+		public Pr_ArrayExpressionBlock1itemsBlockContext pr_ArrayExpressionBlock1itemsBlock()
 		{
-		}
-		public override int RuleIndex { get { return RULE_pr_LexerAnnotationBlock1; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitPr_LexerAnnotationBlock1(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-
-	[RuleVersion(0)]
-	public Pr_LexerAnnotationBlock1Context pr_LexerAnnotationBlock1() {
-		Pr_LexerAnnotationBlock1Context _localctx = new Pr_LexerAnnotationBlock1Context(Context, State);
-		EnterRule(_localctx, 122, RULE_pr_LexerAnnotationBlock1);
-		int _la;
-		try {
-			EnterOuterAlt(_localctx, 1);
+			Pr_ArrayExpressionBlock1itemsBlockContext _localctx = new Pr_ArrayExpressionBlock1itemsBlockContext(Context, State);
+			EnterRule(_localctx, 118, RULE_pr_ArrayExpressionBlock1itemsBlock);
+			try
 			{
-			State = 527;
-			_localctx.E_TLParen = Match(LR_TLParen);
-			State = 528;
-			_localctx.E_arguments1 = pr_AnnotationArgument();
-			State = 533;
-			ErrorHandler.Sync(this);
-			_la = TokenStream.LA(1);
-			while (_la==LR_TComma) {
+				EnterOuterAlt(_localctx, 1);
 				{
+					State = 519;
+					_localctx.E_TComma1 = Match(LR_TComma);
+					State = 520;
+					_localctx.E_items2 = pr_SingleExpression();
+				}
+			}
+			catch (RecognitionException re)
+			{
+				_localctx.exception = re;
+				ErrorHandler.ReportError(this, re);
+				ErrorHandler.Recover(this, re);
+			}
+			finally
+			{
+				ExitRule();
+			}
+			return _localctx;
+		}
+
+		public partial class Pr_ParserAnnotationBlock1Context : ParserRuleContext
+		{
+			public IToken E_TLParen;
+			public Pr_AnnotationArgumentContext E_arguments1;
+			public IToken _LR_TComma;
+			public IList<IToken> _E_TComma1 = new List<IToken>();
+			public Pr_AnnotationArgumentContext _pr_AnnotationArgument;
+			public IList<Pr_AnnotationArgumentContext> _E_arguments2 = new List<Pr_AnnotationArgumentContext>();
+			public IToken E_TRParen;
+			[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TLParen() { return GetToken(CompilerParser.LR_TLParen, 0); }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_AnnotationArgumentContext[] pr_AnnotationArgument()
+			{
+				return GetRuleContexts<Pr_AnnotationArgumentContext>();
+			}
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_AnnotationArgumentContext pr_AnnotationArgument(int i)
+			{
+				return GetRuleContext<Pr_AnnotationArgumentContext>(i);
+			}
+			[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TRParen() { return GetToken(CompilerParser.LR_TRParen, 0); }
+			[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode[] LR_TComma() { return GetTokens(CompilerParser.LR_TComma); }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public ITerminalNode LR_TComma(int i)
+			{
+				return GetToken(CompilerParser.LR_TComma, i);
+			}
+			public Pr_ParserAnnotationBlock1Context(ParserRuleContext parent, int invokingState)
+				: base(parent, invokingState)
+			{
+			}
+			public override int RuleIndex { get { return RULE_pr_ParserAnnotationBlock1; } }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor)
+			{
+				ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
+				if (typedVisitor != null) return typedVisitor.VisitPr_ParserAnnotationBlock1(this);
+				else return visitor.VisitChildren(this);
+			}
+		}
+
+		[RuleVersion(0)]
+		public Pr_ParserAnnotationBlock1Context pr_ParserAnnotationBlock1()
+		{
+			Pr_ParserAnnotationBlock1Context _localctx = new Pr_ParserAnnotationBlock1Context(Context, State);
+			EnterRule(_localctx, 120, RULE_pr_ParserAnnotationBlock1);
+			int _la;
+			try
+			{
+				EnterOuterAlt(_localctx, 1);
 				{
-				State = 529;
-				_localctx._LR_TComma = Match(LR_TComma);
-				_localctx._E_TComma1.Add(_localctx._LR_TComma);
-				State = 530;
-				_localctx._pr_AnnotationArgument = pr_AnnotationArgument();
-				_localctx._E_arguments2.Add(_localctx._pr_AnnotationArgument);
+					State = 522;
+					_localctx.E_TLParen = Match(LR_TLParen);
+					State = 523;
+					_localctx.E_arguments1 = pr_AnnotationArgument();
+					State = 528;
+					ErrorHandler.Sync(this);
+					_la = TokenStream.LA(1);
+					while (_la == LR_TComma)
+					{
+						{
+							{
+								State = 524;
+								_localctx._LR_TComma = Match(LR_TComma);
+								_localctx._E_TComma1.Add(_localctx._LR_TComma);
+								State = 525;
+								_localctx._pr_AnnotationArgument = pr_AnnotationArgument();
+								_localctx._E_arguments2.Add(_localctx._pr_AnnotationArgument);
+							}
+						}
+						State = 530;
+						ErrorHandler.Sync(this);
+						_la = TokenStream.LA(1);
+					}
+					State = 531;
+					_localctx.E_TRParen = Match(LR_TRParen);
 				}
+			}
+			catch (RecognitionException re)
+			{
+				_localctx.exception = re;
+				ErrorHandler.ReportError(this, re);
+				ErrorHandler.Recover(this, re);
+			}
+			finally
+			{
+				ExitRule();
+			}
+			return _localctx;
+		}
+
+		public partial class Pr_ParserAnnotationBlock1argumentsBlockContext : ParserRuleContext
+		{
+			public IToken E_TComma1;
+			public Pr_AnnotationArgumentContext E_arguments2;
+			[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TComma() { return GetToken(CompilerParser.LR_TComma, 0); }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_AnnotationArgumentContext pr_AnnotationArgument()
+			{
+				return GetRuleContext<Pr_AnnotationArgumentContext>(0);
+			}
+			public Pr_ParserAnnotationBlock1argumentsBlockContext(ParserRuleContext parent, int invokingState)
+				: base(parent, invokingState)
+			{
+			}
+			public override int RuleIndex { get { return RULE_pr_ParserAnnotationBlock1argumentsBlock; } }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor)
+			{
+				ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
+				if (typedVisitor != null) return typedVisitor.VisitPr_ParserAnnotationBlock1argumentsBlock(this);
+				else return visitor.VisitChildren(this);
+			}
+		}
+
+		[RuleVersion(0)]
+		public Pr_ParserAnnotationBlock1argumentsBlockContext pr_ParserAnnotationBlock1argumentsBlock()
+		{
+			Pr_ParserAnnotationBlock1argumentsBlockContext _localctx = new Pr_ParserAnnotationBlock1argumentsBlockContext(Context, State);
+			EnterRule(_localctx, 122, RULE_pr_ParserAnnotationBlock1argumentsBlock);
+			try
+			{
+				EnterOuterAlt(_localctx, 1);
+				{
+					State = 533;
+					_localctx.E_TComma1 = Match(LR_TComma);
+					State = 534;
+					_localctx.E_arguments2 = pr_AnnotationArgument();
 				}
-				State = 535;
-				ErrorHandler.Sync(this);
-				_la = TokenStream.LA(1);
 			}
-			State = 536;
-			_localctx.E_TRParen = Match(LR_TRParen);
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			ErrorHandler.ReportError(this, re);
-			ErrorHandler.Recover(this, re);
-		}
-		finally {
-			ExitRule();
-		}
-		return _localctx;
-	}
-
-	public partial class Pr_LexerAnnotationBlock1argumentsBlockContext : ParserRuleContext {
-		public IToken E_TComma1;
-		public Pr_AnnotationArgumentContext E_arguments2;
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TComma() { return GetToken(CompilerParser.LR_TComma, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_AnnotationArgumentContext pr_AnnotationArgument() {
-			return GetRuleContext<Pr_AnnotationArgumentContext>(0);
-		}
-		public Pr_LexerAnnotationBlock1argumentsBlockContext(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
-		{
-		}
-		public override int RuleIndex { get { return RULE_pr_LexerAnnotationBlock1argumentsBlock; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitPr_LexerAnnotationBlock1argumentsBlock(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-
-	[RuleVersion(0)]
-	public Pr_LexerAnnotationBlock1argumentsBlockContext pr_LexerAnnotationBlock1argumentsBlock() {
-		Pr_LexerAnnotationBlock1argumentsBlockContext _localctx = new Pr_LexerAnnotationBlock1argumentsBlockContext(Context, State);
-		EnterRule(_localctx, 124, RULE_pr_LexerAnnotationBlock1argumentsBlock);
-		try {
-			EnterOuterAlt(_localctx, 1);
+			catch (RecognitionException re)
 			{
-			State = 538;
-			_localctx.E_TComma1 = Match(LR_TComma);
-			State = 539;
-			_localctx.E_arguments2 = pr_AnnotationArgument();
+				_localctx.exception = re;
+				ErrorHandler.ReportError(this, re);
+				ErrorHandler.Recover(this, re);
 			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			ErrorHandler.ReportError(this, re);
-			ErrorHandler.Recover(this, re);
-		}
-		finally {
-			ExitRule();
-		}
-		return _localctx;
-	}
-
-	public partial class Pr_AnnotationArgumentBlock1Context : ParserRuleContext {
-		public Pr_IdentifierContext E_namedParameter;
-		public IToken E_TColon;
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_IdentifierContext pr_Identifier() {
-			return GetRuleContext<Pr_IdentifierContext>(0);
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TColon() { return GetToken(CompilerParser.LR_TColon, 0); }
-		public Pr_AnnotationArgumentBlock1Context(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
-		{
-		}
-		public override int RuleIndex { get { return RULE_pr_AnnotationArgumentBlock1; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitPr_AnnotationArgumentBlock1(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-
-	[RuleVersion(0)]
-	public Pr_AnnotationArgumentBlock1Context pr_AnnotationArgumentBlock1() {
-		Pr_AnnotationArgumentBlock1Context _localctx = new Pr_AnnotationArgumentBlock1Context(Context, State);
-		EnterRule(_localctx, 126, RULE_pr_AnnotationArgumentBlock1);
-		try {
-			EnterOuterAlt(_localctx, 1);
+			finally
 			{
-			State = 541;
-			_localctx.E_namedParameter = pr_Identifier();
-			State = 542;
-			_localctx.E_TColon = Match(LR_TColon);
+				ExitRule();
 			}
+			return _localctx;
 		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			ErrorHandler.ReportError(this, re);
-			ErrorHandler.Recover(this, re);
-		}
-		finally {
-			ExitRule();
-		}
-		return _localctx;
-	}
 
-	public partial class Pr_QualifierIdentifierBlockContext : ParserRuleContext {
-		public IToken E_TDot1;
-		public Pr_IdentifierContext E_Identifier2;
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TDot() { return GetToken(CompilerParser.LR_TDot, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public Pr_IdentifierContext pr_Identifier() {
-			return GetRuleContext<Pr_IdentifierContext>(0);
-		}
-		public Pr_QualifierIdentifierBlockContext(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
+		public partial class Pr_LexerAnnotationBlock1Context : ParserRuleContext
 		{
-		}
-		public override int RuleIndex { get { return RULE_pr_QualifierIdentifierBlock; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitPr_QualifierIdentifierBlock(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-
-	[RuleVersion(0)]
-	public Pr_QualifierIdentifierBlockContext pr_QualifierIdentifierBlock() {
-		Pr_QualifierIdentifierBlockContext _localctx = new Pr_QualifierIdentifierBlockContext(Context, State);
-		EnterRule(_localctx, 128, RULE_pr_QualifierIdentifierBlock);
-		try {
-			EnterOuterAlt(_localctx, 1);
+			public IToken E_TLParen;
+			public Pr_AnnotationArgumentContext E_arguments1;
+			public IToken _LR_TComma;
+			public IList<IToken> _E_TComma1 = new List<IToken>();
+			public Pr_AnnotationArgumentContext _pr_AnnotationArgument;
+			public IList<Pr_AnnotationArgumentContext> _E_arguments2 = new List<Pr_AnnotationArgumentContext>();
+			public IToken E_TRParen;
+			[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TLParen() { return GetToken(CompilerParser.LR_TLParen, 0); }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_AnnotationArgumentContext[] pr_AnnotationArgument()
 			{
-			State = 544;
-			_localctx.E_TDot1 = Match(LR_TDot);
-			State = 545;
-			_localctx.E_Identifier2 = pr_Identifier();
+				return GetRuleContexts<Pr_AnnotationArgumentContext>();
+			}
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_AnnotationArgumentContext pr_AnnotationArgument(int i)
+			{
+				return GetRuleContext<Pr_AnnotationArgumentContext>(i);
+			}
+			[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TRParen() { return GetToken(CompilerParser.LR_TRParen, 0); }
+			[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode[] LR_TComma() { return GetTokens(CompilerParser.LR_TComma); }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public ITerminalNode LR_TComma(int i)
+			{
+				return GetToken(CompilerParser.LR_TComma, i);
+			}
+			public Pr_LexerAnnotationBlock1Context(ParserRuleContext parent, int invokingState)
+				: base(parent, invokingState)
+			{
+			}
+			public override int RuleIndex { get { return RULE_pr_LexerAnnotationBlock1; } }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor)
+			{
+				ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
+				if (typedVisitor != null) return typedVisitor.VisitPr_LexerAnnotationBlock1(this);
+				else return visitor.VisitChildren(this);
 			}
 		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			ErrorHandler.ReportError(this, re);
-			ErrorHandler.Recover(this, re);
-		}
-		finally {
-			ExitRule();
-		}
-		return _localctx;
-	}
 
-	private static int[] _serializedATN = {
-		4,1,57,548,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,6,2,7,
+		[RuleVersion(0)]
+		public Pr_LexerAnnotationBlock1Context pr_LexerAnnotationBlock1()
+		{
+			Pr_LexerAnnotationBlock1Context _localctx = new Pr_LexerAnnotationBlock1Context(Context, State);
+			EnterRule(_localctx, 124, RULE_pr_LexerAnnotationBlock1);
+			int _la;
+			try
+			{
+				EnterOuterAlt(_localctx, 1);
+				{
+					State = 536;
+					_localctx.E_TLParen = Match(LR_TLParen);
+					State = 537;
+					_localctx.E_arguments1 = pr_AnnotationArgument();
+					State = 542;
+					ErrorHandler.Sync(this);
+					_la = TokenStream.LA(1);
+					while (_la == LR_TComma)
+					{
+						{
+							{
+								State = 538;
+								_localctx._LR_TComma = Match(LR_TComma);
+								_localctx._E_TComma1.Add(_localctx._LR_TComma);
+								State = 539;
+								_localctx._pr_AnnotationArgument = pr_AnnotationArgument();
+								_localctx._E_arguments2.Add(_localctx._pr_AnnotationArgument);
+							}
+						}
+						State = 544;
+						ErrorHandler.Sync(this);
+						_la = TokenStream.LA(1);
+					}
+					State = 545;
+					_localctx.E_TRParen = Match(LR_TRParen);
+				}
+			}
+			catch (RecognitionException re)
+			{
+				_localctx.exception = re;
+				ErrorHandler.ReportError(this, re);
+				ErrorHandler.Recover(this, re);
+			}
+			finally
+			{
+				ExitRule();
+			}
+			return _localctx;
+		}
+
+		public partial class Pr_LexerAnnotationBlock1argumentsBlockContext : ParserRuleContext
+		{
+			public IToken E_TComma1;
+			public Pr_AnnotationArgumentContext E_arguments2;
+			[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TComma() { return GetToken(CompilerParser.LR_TComma, 0); }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_AnnotationArgumentContext pr_AnnotationArgument()
+			{
+				return GetRuleContext<Pr_AnnotationArgumentContext>(0);
+			}
+			public Pr_LexerAnnotationBlock1argumentsBlockContext(ParserRuleContext parent, int invokingState)
+				: base(parent, invokingState)
+			{
+			}
+			public override int RuleIndex { get { return RULE_pr_LexerAnnotationBlock1argumentsBlock; } }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor)
+			{
+				ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
+				if (typedVisitor != null) return typedVisitor.VisitPr_LexerAnnotationBlock1argumentsBlock(this);
+				else return visitor.VisitChildren(this);
+			}
+		}
+
+		[RuleVersion(0)]
+		public Pr_LexerAnnotationBlock1argumentsBlockContext pr_LexerAnnotationBlock1argumentsBlock()
+		{
+			Pr_LexerAnnotationBlock1argumentsBlockContext _localctx = new Pr_LexerAnnotationBlock1argumentsBlockContext(Context, State);
+			EnterRule(_localctx, 126, RULE_pr_LexerAnnotationBlock1argumentsBlock);
+			try
+			{
+				EnterOuterAlt(_localctx, 1);
+				{
+					State = 547;
+					_localctx.E_TComma1 = Match(LR_TComma);
+					State = 548;
+					_localctx.E_arguments2 = pr_AnnotationArgument();
+				}
+			}
+			catch (RecognitionException re)
+			{
+				_localctx.exception = re;
+				ErrorHandler.ReportError(this, re);
+				ErrorHandler.Recover(this, re);
+			}
+			finally
+			{
+				ExitRule();
+			}
+			return _localctx;
+		}
+
+		public partial class Pr_AnnotationArgumentBlock1Context : ParserRuleContext
+		{
+			public Pr_IdentifierContext E_namedParameter;
+			public IToken E_TColon;
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_IdentifierContext pr_Identifier()
+			{
+				return GetRuleContext<Pr_IdentifierContext>(0);
+			}
+			[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TColon() { return GetToken(CompilerParser.LR_TColon, 0); }
+			public Pr_AnnotationArgumentBlock1Context(ParserRuleContext parent, int invokingState)
+				: base(parent, invokingState)
+			{
+			}
+			public override int RuleIndex { get { return RULE_pr_AnnotationArgumentBlock1; } }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor)
+			{
+				ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
+				if (typedVisitor != null) return typedVisitor.VisitPr_AnnotationArgumentBlock1(this);
+				else return visitor.VisitChildren(this);
+			}
+		}
+
+		[RuleVersion(0)]
+		public Pr_AnnotationArgumentBlock1Context pr_AnnotationArgumentBlock1()
+		{
+			Pr_AnnotationArgumentBlock1Context _localctx = new Pr_AnnotationArgumentBlock1Context(Context, State);
+			EnterRule(_localctx, 128, RULE_pr_AnnotationArgumentBlock1);
+			try
+			{
+				EnterOuterAlt(_localctx, 1);
+				{
+					State = 550;
+					_localctx.E_namedParameter = pr_Identifier();
+					State = 551;
+					_localctx.E_TColon = Match(LR_TColon);
+				}
+			}
+			catch (RecognitionException re)
+			{
+				_localctx.exception = re;
+				ErrorHandler.ReportError(this, re);
+				ErrorHandler.Recover(this, re);
+			}
+			finally
+			{
+				ExitRule();
+			}
+			return _localctx;
+		}
+
+		public partial class Pr_QualifierIdentifierBlockContext : ParserRuleContext
+		{
+			public IToken E_TDot1;
+			public Pr_IdentifierContext E_Identifier2;
+			[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_TDot() { return GetToken(CompilerParser.LR_TDot, 0); }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public Pr_IdentifierContext pr_Identifier()
+			{
+				return GetRuleContext<Pr_IdentifierContext>(0);
+			}
+			public Pr_QualifierIdentifierBlockContext(ParserRuleContext parent, int invokingState)
+				: base(parent, invokingState)
+			{
+			}
+			public override int RuleIndex { get { return RULE_pr_QualifierIdentifierBlock; } }
+			[System.Diagnostics.DebuggerNonUserCode]
+			public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor)
+			{
+				ICompilerParserVisitor<TResult> typedVisitor = visitor as ICompilerParserVisitor<TResult>;
+				if (typedVisitor != null) return typedVisitor.VisitPr_QualifierIdentifierBlock(this);
+				else return visitor.VisitChildren(this);
+			}
+		}
+
+		[RuleVersion(0)]
+		public Pr_QualifierIdentifierBlockContext pr_QualifierIdentifierBlock()
+		{
+			Pr_QualifierIdentifierBlockContext _localctx = new Pr_QualifierIdentifierBlockContext(Context, State);
+			EnterRule(_localctx, 130, RULE_pr_QualifierIdentifierBlock);
+			try
+			{
+				EnterOuterAlt(_localctx, 1);
+				{
+					State = 553;
+					_localctx.E_TDot1 = Match(LR_TDot);
+					State = 554;
+					_localctx.E_Identifier2 = pr_Identifier();
+				}
+			}
+			catch (RecognitionException re)
+			{
+				_localctx.exception = re;
+				ErrorHandler.ReportError(this, re);
+				ErrorHandler.Recover(this, re);
+			}
+			finally
+			{
+				ExitRule();
+			}
+			return _localctx;
+		}
+
+		private static int[] _serializedATN = {
+		4,1,58,557,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,6,2,7,
 		7,7,2,8,7,8,2,9,7,9,2,10,7,10,2,11,7,11,2,12,7,12,2,13,7,13,2,14,7,14,
 		2,15,7,15,2,16,7,16,2,17,7,17,2,18,7,18,2,19,7,19,2,20,7,20,2,21,7,21,
 		2,22,7,22,2,23,7,23,2,24,7,24,2,25,7,25,2,26,7,26,2,27,7,27,2,28,7,28,
@@ -4617,177 +5531,180 @@ public partial class CompilerParser : global::MetaDslx.CodeAnalysis.Parsers.Antl
 		2,43,7,43,2,44,7,44,2,45,7,45,2,46,7,46,2,47,7,47,2,48,7,48,2,49,7,49,
 		2,50,7,50,2,51,7,51,2,52,7,52,2,53,7,53,2,54,7,54,2,55,7,55,2,56,7,56,
 		2,57,7,57,2,58,7,58,2,59,7,59,2,60,7,60,2,61,7,61,2,62,7,62,2,63,7,63,
-		2,64,7,64,1,0,1,0,1,0,1,0,5,0,135,8,0,10,0,12,0,138,9,0,1,0,1,0,1,0,1,
-		1,1,1,1,1,1,1,1,2,1,2,1,2,1,2,1,2,1,3,1,3,1,4,1,4,3,4,156,8,4,1,5,5,5,
-		159,8,5,10,5,12,5,162,9,5,1,5,1,5,1,5,1,5,1,5,5,5,169,8,5,10,5,12,5,172,
-		9,5,1,5,1,5,1,6,3,6,177,8,6,1,6,4,6,180,8,6,11,6,12,6,181,1,6,3,6,185,
-		8,6,1,7,3,7,188,8,7,1,7,1,7,1,8,1,8,1,8,1,8,3,8,196,8,8,1,9,5,9,199,8,
-		9,10,9,12,9,202,9,9,1,9,1,9,1,9,1,9,5,9,208,8,9,10,9,12,9,211,9,9,1,9,
-		1,9,3,9,215,8,9,1,10,4,10,218,8,10,11,10,12,10,219,1,10,3,10,223,8,10,
-		1,11,5,11,226,8,11,10,11,12,11,229,9,11,1,11,1,11,3,11,233,8,11,1,11,5,
-		11,236,8,11,10,11,12,11,239,9,11,1,11,1,11,1,11,3,11,244,8,11,1,11,5,11,
-		247,8,11,10,11,12,11,250,9,11,1,11,1,11,1,11,1,11,5,11,256,8,11,10,11,
-		12,11,259,9,11,1,11,3,11,262,8,11,1,11,1,11,3,11,266,8,11,3,11,268,8,11,
-		1,12,1,12,1,13,5,13,273,8,13,10,13,12,13,276,9,13,1,13,1,13,3,13,280,8,
-		13,1,14,1,14,3,14,284,8,14,1,15,5,15,287,8,15,10,15,12,15,290,9,15,1,15,
-		1,15,1,15,1,15,1,15,5,15,297,8,15,10,15,12,15,300,9,15,1,15,1,15,1,16,
-		1,16,1,16,1,16,1,16,1,16,5,16,310,8,16,10,16,12,16,313,9,16,1,16,1,16,
-		1,17,5,17,318,8,17,10,17,12,17,321,9,17,1,18,1,18,1,18,3,18,326,8,18,1,
-		19,1,19,1,19,1,19,1,19,3,19,333,8,19,1,20,1,20,1,21,1,21,1,22,1,22,1,23,
-		1,23,1,23,1,23,1,24,1,24,1,24,1,24,5,24,349,8,24,10,24,12,24,352,9,24,
-		1,24,1,24,1,25,1,25,3,25,358,8,25,1,26,1,26,3,26,362,8,26,1,27,1,27,3,
-		27,366,8,27,1,27,1,27,1,28,1,28,1,28,3,28,373,8,28,1,28,1,28,1,29,1,29,
-		1,29,3,29,380,8,29,1,29,1,29,1,30,3,30,385,8,30,1,30,1,30,1,31,1,31,1,
-		32,1,32,1,33,1,33,3,33,395,8,33,1,34,1,34,3,34,399,8,34,1,35,1,35,1,36,
-		1,36,1,37,1,37,1,37,5,37,408,8,37,10,37,12,37,411,9,37,1,38,1,38,1,39,
-		1,39,1,40,5,40,418,8,40,10,40,12,40,421,9,40,1,41,1,41,1,41,1,41,1,41,
-		3,41,428,8,41,1,42,1,42,1,42,1,43,5,43,434,8,43,10,43,12,43,437,9,43,1,
-		43,1,43,1,43,3,43,442,8,43,1,43,1,43,1,44,1,44,1,44,1,45,1,45,1,45,1,46,
-		5,46,453,8,46,10,46,12,46,456,9,46,1,46,1,46,1,46,1,47,1,47,1,47,1,48,
-		1,48,1,48,1,49,1,49,1,49,1,50,1,50,1,50,1,51,1,51,1,51,3,51,476,8,51,1,
-		51,1,51,3,51,480,8,51,1,52,1,52,1,52,1,53,1,53,1,53,1,54,1,54,1,54,1,55,
-		1,55,1,55,1,56,1,56,1,56,1,56,1,56,1,56,1,56,3,56,501,8,56,1,57,1,57,1,
-		57,5,57,506,8,57,10,57,12,57,509,9,57,1,58,1,58,1,58,1,59,1,59,1,59,1,
-		59,5,59,518,8,59,10,59,12,59,521,9,59,1,59,1,59,1,60,1,60,1,60,1,61,1,
-		61,1,61,1,61,5,61,532,8,61,10,61,12,61,535,9,61,1,61,1,61,1,62,1,62,1,
-		62,1,63,1,63,1,63,1,64,1,64,1,64,1,64,0,0,65,0,2,4,6,8,10,12,14,16,18,
-		20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62,64,66,
-		68,70,72,74,76,78,80,82,84,86,88,90,92,94,96,98,100,102,104,106,108,110,
-		112,114,116,118,120,122,124,126,128,0,4,1,0,21,24,1,0,25,30,1,0,31,38,
-		1,0,50,51,546,0,130,1,0,0,0,2,142,1,0,0,0,4,146,1,0,0,0,6,151,1,0,0,0,
-		8,155,1,0,0,0,10,160,1,0,0,0,12,176,1,0,0,0,14,187,1,0,0,0,16,195,1,0,
-		0,0,18,200,1,0,0,0,20,217,1,0,0,0,22,267,1,0,0,0,24,269,1,0,0,0,26,274,
-		1,0,0,0,28,283,1,0,0,0,30,288,1,0,0,0,32,303,1,0,0,0,34,319,1,0,0,0,36,
-		322,1,0,0,0,38,332,1,0,0,0,40,334,1,0,0,0,42,336,1,0,0,0,44,338,1,0,0,
-		0,46,340,1,0,0,0,48,344,1,0,0,0,50,357,1,0,0,0,52,361,1,0,0,0,54,363,1,
-		0,0,0,56,369,1,0,0,0,58,376,1,0,0,0,60,384,1,0,0,0,62,388,1,0,0,0,64,390,
-		1,0,0,0,66,394,1,0,0,0,68,398,1,0,0,0,70,400,1,0,0,0,72,402,1,0,0,0,74,
-		404,1,0,0,0,76,412,1,0,0,0,78,414,1,0,0,0,80,419,1,0,0,0,82,427,1,0,0,
-		0,84,429,1,0,0,0,86,435,1,0,0,0,88,445,1,0,0,0,90,448,1,0,0,0,92,454,1,
-		0,0,0,94,460,1,0,0,0,96,463,1,0,0,0,98,466,1,0,0,0,100,469,1,0,0,0,102,
-		479,1,0,0,0,104,481,1,0,0,0,106,484,1,0,0,0,108,487,1,0,0,0,110,490,1,
-		0,0,0,112,500,1,0,0,0,114,502,1,0,0,0,116,510,1,0,0,0,118,513,1,0,0,0,
-		120,524,1,0,0,0,122,527,1,0,0,0,124,538,1,0,0,0,126,541,1,0,0,0,128,544,
-		1,0,0,0,130,131,5,3,0,0,131,132,3,74,37,0,132,136,5,4,0,0,133,135,3,2,
-		1,0,134,133,1,0,0,0,135,138,1,0,0,0,136,134,1,0,0,0,136,137,1,0,0,0,137,
-		139,1,0,0,0,138,136,1,0,0,0,139,140,3,78,39,0,140,141,5,0,0,1,141,1,1,
-		0,0,0,142,143,5,5,0,0,143,144,3,74,37,0,144,145,5,4,0,0,145,3,1,0,0,0,
-		146,147,5,6,0,0,147,148,3,72,36,0,148,149,5,4,0,0,149,150,3,6,3,0,150,
-		5,1,0,0,0,151,152,3,80,40,0,152,7,1,0,0,0,153,156,3,10,5,0,154,156,3,28,
-		14,0,155,153,1,0,0,0,155,154,1,0,0,0,156,9,1,0,0,0,157,159,3,56,28,0,158,
-		157,1,0,0,0,159,162,1,0,0,0,160,158,1,0,0,0,160,161,1,0,0,0,161,163,1,
-		0,0,0,162,160,1,0,0,0,163,164,3,82,41,0,164,165,5,7,0,0,165,170,3,12,6,
-		0,166,167,5,40,0,0,167,169,3,12,6,0,168,166,1,0,0,0,169,172,1,0,0,0,170,
-		168,1,0,0,0,170,171,1,0,0,0,171,173,1,0,0,0,172,170,1,0,0,0,173,174,5,
-		4,0,0,174,11,1,0,0,0,175,177,3,86,43,0,176,175,1,0,0,0,176,177,1,0,0,0,
-		177,179,1,0,0,0,178,180,3,14,7,0,179,178,1,0,0,0,180,181,1,0,0,0,181,179,
-		1,0,0,0,181,182,1,0,0,0,182,184,1,0,0,0,183,185,3,90,45,0,184,183,1,0,
-		0,0,184,185,1,0,0,0,185,13,1,0,0,0,186,188,3,92,46,0,187,186,1,0,0,0,187,
-		188,1,0,0,0,188,189,1,0,0,0,189,190,3,16,8,0,190,15,1,0,0,0,191,196,3,
-		18,9,0,192,196,3,24,12,0,193,196,3,26,13,0,194,196,3,22,11,0,195,191,1,
-		0,0,0,195,192,1,0,0,0,195,193,1,0,0,0,195,194,1,0,0,0,196,17,1,0,0,0,197,
-		199,3,56,28,0,198,197,1,0,0,0,199,202,1,0,0,0,200,198,1,0,0,0,200,201,
-		1,0,0,0,201,203,1,0,0,0,202,200,1,0,0,0,203,204,5,8,0,0,204,209,3,20,10,
-		0,205,206,5,40,0,0,206,208,3,20,10,0,207,205,1,0,0,0,208,211,1,0,0,0,209,
-		207,1,0,0,0,209,210,1,0,0,0,210,212,1,0,0,0,211,209,1,0,0,0,212,214,5,
-		9,0,0,213,215,3,64,32,0,214,213,1,0,0,0,214,215,1,0,0,0,215,19,1,0,0,0,
-		216,218,3,14,7,0,217,216,1,0,0,0,218,219,1,0,0,0,219,217,1,0,0,0,219,220,
-		1,0,0,0,220,222,1,0,0,0,221,223,3,96,48,0,222,221,1,0,0,0,222,223,1,0,
-		0,0,223,21,1,0,0,0,224,226,3,56,28,0,225,224,1,0,0,0,226,229,1,0,0,0,227,
-		225,1,0,0,0,227,228,1,0,0,0,228,230,1,0,0,0,229,227,1,0,0,0,230,232,3,
-		76,38,0,231,233,3,64,32,0,232,231,1,0,0,0,232,233,1,0,0,0,233,268,1,0,
-		0,0,234,236,3,56,28,0,235,234,1,0,0,0,236,239,1,0,0,0,237,235,1,0,0,0,
-		237,238,1,0,0,0,238,240,1,0,0,0,239,237,1,0,0,0,240,241,5,10,0,0,241,243,
-		3,68,34,0,242,244,3,64,32,0,243,242,1,0,0,0,243,244,1,0,0,0,244,268,1,
-		0,0,0,245,247,3,56,28,0,246,245,1,0,0,0,247,250,1,0,0,0,248,246,1,0,0,
-		0,248,249,1,0,0,0,249,251,1,0,0,0,250,248,1,0,0,0,251,252,5,11,0,0,252,
-		257,3,68,34,0,253,254,5,1,0,0,254,256,3,68,34,0,255,253,1,0,0,0,256,259,
-		1,0,0,0,257,255,1,0,0,0,257,258,1,0,0,0,258,261,1,0,0,0,259,257,1,0,0,
-		0,260,262,3,100,50,0,261,260,1,0,0,0,261,262,1,0,0,0,262,263,1,0,0,0,263,
-		265,5,12,0,0,264,266,3,64,32,0,265,264,1,0,0,0,265,266,1,0,0,0,266,268,
-		1,0,0,0,267,227,1,0,0,0,267,237,1,0,0,0,267,248,1,0,0,0,268,23,1,0,0,0,
-		269,270,5,13,0,0,270,25,1,0,0,0,271,273,3,56,28,0,272,271,1,0,0,0,273,
-		276,1,0,0,0,274,272,1,0,0,0,274,275,1,0,0,0,275,277,1,0,0,0,276,274,1,
-		0,0,0,277,279,5,52,0,0,278,280,3,64,32,0,279,278,1,0,0,0,279,280,1,0,0,
-		0,280,27,1,0,0,0,281,284,3,30,15,0,282,284,3,32,16,0,283,281,1,0,0,0,283,
-		282,1,0,0,0,284,29,1,0,0,0,285,287,3,58,29,0,286,285,1,0,0,0,287,290,1,
-		0,0,0,288,286,1,0,0,0,288,289,1,0,0,0,289,291,1,0,0,0,290,288,1,0,0,0,
-		291,292,3,102,51,0,292,293,5,7,0,0,293,298,3,34,17,0,294,295,5,40,0,0,
-		295,297,3,34,17,0,296,294,1,0,0,0,297,300,1,0,0,0,298,296,1,0,0,0,298,
-		299,1,0,0,0,299,301,1,0,0,0,300,298,1,0,0,0,301,302,5,4,0,0,302,31,1,0,
-		0,0,303,304,5,14,0,0,304,305,3,72,36,0,305,306,5,7,0,0,306,311,3,34,17,
-		0,307,308,5,40,0,0,308,310,3,34,17,0,309,307,1,0,0,0,310,313,1,0,0,0,311,
-		309,1,0,0,0,311,312,1,0,0,0,312,314,1,0,0,0,313,311,1,0,0,0,314,315,5,
-		4,0,0,315,33,1,0,0,0,316,318,3,36,18,0,317,316,1,0,0,0,318,321,1,0,0,0,
-		319,317,1,0,0,0,319,320,1,0,0,0,320,35,1,0,0,0,321,319,1,0,0,0,322,323,
-		5,15,0,0,323,325,3,38,19,0,324,326,3,64,32,0,325,324,1,0,0,0,325,326,1,
-		0,0,0,326,37,1,0,0,0,327,333,3,48,24,0,328,333,3,42,21,0,329,333,3,44,
-		22,0,330,333,3,46,23,0,331,333,3,40,20,0,332,327,1,0,0,0,332,328,1,0,0,
-		0,332,329,1,0,0,0,332,330,1,0,0,0,332,331,1,0,0,0,333,39,1,0,0,0,334,335,
-		3,76,38,0,335,41,1,0,0,0,336,337,5,52,0,0,337,43,1,0,0,0,338,339,5,16,
-		0,0,339,45,1,0,0,0,340,341,5,52,0,0,341,342,5,17,0,0,342,343,5,52,0,0,
-		343,47,1,0,0,0,344,345,5,8,0,0,345,350,3,34,17,0,346,347,5,40,0,0,347,
-		349,3,34,17,0,348,346,1,0,0,0,349,352,1,0,0,0,350,348,1,0,0,0,350,351,
-		1,0,0,0,351,353,1,0,0,0,352,350,1,0,0,0,353,354,5,9,0,0,354,49,1,0,0,0,
-		355,358,3,52,26,0,356,358,3,54,27,0,357,355,1,0,0,0,357,356,1,0,0,0,358,
-		51,1,0,0,0,359,362,3,112,56,0,360,362,3,74,37,0,361,359,1,0,0,0,361,360,
-		1,0,0,0,362,53,1,0,0,0,363,365,5,18,0,0,364,366,3,114,57,0,365,364,1,0,
-		0,0,365,366,1,0,0,0,366,367,1,0,0,0,367,368,5,12,0,0,368,55,1,0,0,0,369,
-		370,5,19,0,0,370,372,3,74,37,0,371,373,3,118,59,0,372,371,1,0,0,0,372,
-		373,1,0,0,0,373,374,1,0,0,0,374,375,5,20,0,0,375,57,1,0,0,0,376,377,5,
-		19,0,0,377,379,3,74,37,0,378,380,3,122,61,0,379,378,1,0,0,0,379,380,1,
-		0,0,0,380,381,1,0,0,0,381,382,5,20,0,0,382,59,1,0,0,0,383,385,3,126,63,
-		0,384,383,1,0,0,0,384,385,1,0,0,0,385,386,1,0,0,0,386,387,3,50,25,0,387,
-		61,1,0,0,0,388,389,7,0,0,0,389,63,1,0,0,0,390,391,7,1,0,0,391,65,1,0,0,
-		0,392,395,3,70,35,0,393,395,3,76,38,0,394,392,1,0,0,0,394,393,1,0,0,0,
-		395,67,1,0,0,0,396,399,3,70,35,0,397,399,3,74,37,0,398,396,1,0,0,0,398,
-		397,1,0,0,0,399,69,1,0,0,0,400,401,7,2,0,0,401,71,1,0,0,0,402,403,3,76,
-		38,0,403,73,1,0,0,0,404,409,3,76,38,0,405,406,5,16,0,0,406,408,3,76,38,
-		0,407,405,1,0,0,0,408,411,1,0,0,0,409,407,1,0,0,0,409,410,1,0,0,0,410,
-		75,1,0,0,0,411,409,1,0,0,0,412,413,7,3,0,0,413,77,1,0,0,0,414,415,3,4,
-		2,0,415,79,1,0,0,0,416,418,3,8,4,0,417,416,1,0,0,0,418,421,1,0,0,0,419,
-		417,1,0,0,0,419,420,1,0,0,0,420,81,1,0,0,0,421,419,1,0,0,0,422,428,3,66,
-		33,0,423,424,3,76,38,0,424,425,5,39,0,0,425,426,3,68,34,0,426,428,1,0,
-		0,0,427,422,1,0,0,0,427,423,1,0,0,0,428,83,1,0,0,0,429,430,5,40,0,0,430,
-		431,3,12,6,0,431,85,1,0,0,0,432,434,3,56,28,0,433,432,1,0,0,0,434,437,
-		1,0,0,0,435,433,1,0,0,0,435,436,1,0,0,0,436,438,1,0,0,0,437,435,1,0,0,
-		0,438,439,5,41,0,0,439,441,3,72,36,0,440,442,3,88,44,0,441,440,1,0,0,0,
-		441,442,1,0,0,0,442,443,1,0,0,0,443,444,5,7,0,0,444,87,1,0,0,0,445,446,
-		5,39,0,0,446,447,3,68,34,0,447,89,1,0,0,0,448,449,5,42,0,0,449,450,3,50,
-		25,0,450,91,1,0,0,0,451,453,3,56,28,0,452,451,1,0,0,0,453,456,1,0,0,0,
-		454,452,1,0,0,0,454,455,1,0,0,0,455,457,1,0,0,0,456,454,1,0,0,0,457,458,
-		3,72,36,0,458,459,3,62,31,0,459,93,1,0,0,0,460,461,5,40,0,0,461,462,3,
-		20,10,0,462,95,1,0,0,0,463,464,5,42,0,0,464,465,3,50,25,0,465,97,1,0,0,
-		0,466,467,5,1,0,0,467,468,3,68,34,0,468,99,1,0,0,0,469,470,5,40,0,0,470,
-		471,3,76,38,0,471,101,1,0,0,0,472,473,5,43,0,0,473,475,3,72,36,0,474,476,
-		3,104,52,0,475,474,1,0,0,0,475,476,1,0,0,0,476,480,1,0,0,0,477,478,5,44,
-		0,0,478,480,3,72,36,0,479,472,1,0,0,0,479,477,1,0,0,0,480,103,1,0,0,0,
-		481,482,5,39,0,0,482,483,3,68,34,0,483,105,1,0,0,0,484,485,5,40,0,0,485,
-		486,3,34,17,0,486,107,1,0,0,0,487,488,5,40,0,0,488,489,3,34,17,0,489,109,
-		1,0,0,0,490,491,5,40,0,0,491,492,3,34,17,0,492,111,1,0,0,0,493,501,5,45,
-		0,0,494,501,5,46,0,0,495,501,5,47,0,0,496,501,5,52,0,0,497,501,5,48,0,
-		0,498,501,5,49,0,0,499,501,3,70,35,0,500,493,1,0,0,0,500,494,1,0,0,0,500,
-		495,1,0,0,0,500,496,1,0,0,0,500,497,1,0,0,0,500,498,1,0,0,0,500,499,1,
-		0,0,0,501,113,1,0,0,0,502,507,3,52,26,0,503,504,5,1,0,0,504,506,3,52,26,
-		0,505,503,1,0,0,0,506,509,1,0,0,0,507,505,1,0,0,0,507,508,1,0,0,0,508,
-		115,1,0,0,0,509,507,1,0,0,0,510,511,5,1,0,0,511,512,3,52,26,0,512,117,
-		1,0,0,0,513,514,5,8,0,0,514,519,3,60,30,0,515,516,5,1,0,0,516,518,3,60,
-		30,0,517,515,1,0,0,0,518,521,1,0,0,0,519,517,1,0,0,0,519,520,1,0,0,0,520,
-		522,1,0,0,0,521,519,1,0,0,0,522,523,5,9,0,0,523,119,1,0,0,0,524,525,5,
-		1,0,0,525,526,3,60,30,0,526,121,1,0,0,0,527,528,5,8,0,0,528,533,3,60,30,
-		0,529,530,5,1,0,0,530,532,3,60,30,0,531,529,1,0,0,0,532,535,1,0,0,0,533,
-		531,1,0,0,0,533,534,1,0,0,0,534,536,1,0,0,0,535,533,1,0,0,0,536,537,5,
-		9,0,0,537,123,1,0,0,0,538,539,5,1,0,0,539,540,3,60,30,0,540,125,1,0,0,
-		0,541,542,3,76,38,0,542,543,5,7,0,0,543,127,1,0,0,0,544,545,5,16,0,0,545,
-		546,3,76,38,0,546,129,1,0,0,0,53,136,155,160,170,176,181,184,187,195,200,
-		209,214,219,222,227,232,237,243,248,257,261,265,267,274,279,283,288,298,
-		311,319,325,332,350,357,361,365,372,379,384,394,398,409,419,427,435,441,
-		454,475,479,500,507,519,533
+		2,64,7,64,2,65,7,65,1,0,1,0,1,0,1,0,5,0,137,8,0,10,0,12,0,140,9,0,1,0,
+		1,0,1,0,1,1,1,1,1,1,3,1,148,8,1,1,2,1,2,1,2,1,2,1,2,1,3,1,3,1,4,1,4,3,
+		4,159,8,4,1,5,5,5,162,8,5,10,5,12,5,165,9,5,1,5,1,5,1,5,1,5,1,5,5,5,172,
+		8,5,10,5,12,5,175,9,5,1,5,1,5,1,6,3,6,180,8,6,1,6,4,6,183,8,6,11,6,12,
+		6,184,1,6,3,6,188,8,6,1,7,3,7,191,8,7,1,7,1,7,1,8,1,8,1,8,1,8,3,8,199,
+		8,8,1,9,5,9,202,8,9,10,9,12,9,205,9,9,1,9,1,9,1,9,1,9,5,9,211,8,9,10,9,
+		12,9,214,9,9,1,9,1,9,3,9,218,8,9,1,10,4,10,221,8,10,11,10,12,10,222,1,
+		10,3,10,226,8,10,1,11,5,11,229,8,11,10,11,12,11,232,9,11,1,11,1,11,3,11,
+		236,8,11,1,11,5,11,239,8,11,10,11,12,11,242,9,11,1,11,1,11,1,11,3,11,247,
+		8,11,1,11,5,11,250,8,11,10,11,12,11,253,9,11,1,11,1,11,1,11,1,11,5,11,
+		259,8,11,10,11,12,11,262,9,11,1,11,3,11,265,8,11,1,11,1,11,3,11,269,8,
+		11,3,11,271,8,11,1,12,1,12,1,13,5,13,276,8,13,10,13,12,13,279,9,13,1,13,
+		1,13,3,13,283,8,13,1,14,1,14,3,14,287,8,14,1,15,5,15,290,8,15,10,15,12,
+		15,293,9,15,1,15,1,15,1,15,1,15,1,15,5,15,300,8,15,10,15,12,15,303,9,15,
+		1,15,1,15,1,16,1,16,1,16,1,16,1,16,1,16,5,16,313,8,16,10,16,12,16,316,
+		9,16,1,16,1,16,1,17,5,17,321,8,17,10,17,12,17,324,9,17,1,18,3,18,327,8,
+		18,1,18,1,18,3,18,331,8,18,1,19,1,19,1,19,1,19,1,19,3,19,338,8,19,1,20,
+		1,20,1,21,1,21,1,22,1,22,1,23,1,23,1,23,1,23,1,24,1,24,1,24,1,24,5,24,
+		354,8,24,10,24,12,24,357,9,24,1,24,1,24,1,25,1,25,3,25,363,8,25,1,26,1,
+		26,3,26,367,8,26,1,27,1,27,3,27,371,8,27,1,27,1,27,1,28,1,28,1,28,3,28,
+		378,8,28,1,28,1,28,1,29,1,29,1,29,3,29,385,8,29,1,29,1,29,1,30,3,30,390,
+		8,30,1,30,1,30,1,31,1,31,1,32,1,32,1,33,1,33,3,33,400,8,33,1,34,1,34,3,
+		34,404,8,34,1,35,1,35,1,36,1,36,1,37,1,37,1,37,5,37,413,8,37,10,37,12,
+		37,416,9,37,1,38,1,38,1,39,1,39,1,39,1,39,1,40,1,40,1,41,5,41,427,8,41,
+		10,41,12,41,430,9,41,1,42,1,42,1,42,1,42,1,42,3,42,437,8,42,1,43,1,43,
+		1,43,1,44,5,44,443,8,44,10,44,12,44,446,9,44,1,44,1,44,1,44,3,44,451,8,
+		44,1,44,1,44,1,45,1,45,1,45,1,46,1,46,1,46,1,47,5,47,462,8,47,10,47,12,
+		47,465,9,47,1,47,1,47,1,47,1,48,1,48,1,48,1,49,1,49,1,49,1,50,1,50,1,50,
+		1,51,1,51,1,51,1,52,1,52,1,52,3,52,485,8,52,1,52,1,52,3,52,489,8,52,1,
+		53,1,53,1,53,1,54,1,54,1,54,1,55,1,55,1,55,1,56,1,56,1,56,1,57,1,57,1,
+		57,1,57,1,57,1,57,1,57,3,57,510,8,57,1,58,1,58,1,58,5,58,515,8,58,10,58,
+		12,58,518,9,58,1,59,1,59,1,59,1,60,1,60,1,60,1,60,5,60,527,8,60,10,60,
+		12,60,530,9,60,1,60,1,60,1,61,1,61,1,61,1,62,1,62,1,62,1,62,5,62,541,8,
+		62,10,62,12,62,544,9,62,1,62,1,62,1,63,1,63,1,63,1,64,1,64,1,64,1,65,1,
+		65,1,65,1,65,0,0,66,0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,
+		38,40,42,44,46,48,50,52,54,56,58,60,62,64,66,68,70,72,74,76,78,80,82,84,
+		86,88,90,92,94,96,98,100,102,104,106,108,110,112,114,116,118,120,122,124,
+		126,128,130,0,4,1,0,21,24,1,0,25,30,1,0,31,38,1,0,51,52,556,0,132,1,0,
+		0,0,2,147,1,0,0,0,4,149,1,0,0,0,6,154,1,0,0,0,8,158,1,0,0,0,10,163,1,0,
+		0,0,12,179,1,0,0,0,14,190,1,0,0,0,16,198,1,0,0,0,18,203,1,0,0,0,20,220,
+		1,0,0,0,22,270,1,0,0,0,24,272,1,0,0,0,26,277,1,0,0,0,28,286,1,0,0,0,30,
+		291,1,0,0,0,32,306,1,0,0,0,34,322,1,0,0,0,36,326,1,0,0,0,38,337,1,0,0,
+		0,40,339,1,0,0,0,42,341,1,0,0,0,44,343,1,0,0,0,46,345,1,0,0,0,48,349,1,
+		0,0,0,50,362,1,0,0,0,52,366,1,0,0,0,54,368,1,0,0,0,56,374,1,0,0,0,58,381,
+		1,0,0,0,60,389,1,0,0,0,62,393,1,0,0,0,64,395,1,0,0,0,66,399,1,0,0,0,68,
+		403,1,0,0,0,70,405,1,0,0,0,72,407,1,0,0,0,74,409,1,0,0,0,76,417,1,0,0,
+		0,78,419,1,0,0,0,80,423,1,0,0,0,82,428,1,0,0,0,84,436,1,0,0,0,86,438,1,
+		0,0,0,88,444,1,0,0,0,90,454,1,0,0,0,92,457,1,0,0,0,94,463,1,0,0,0,96,469,
+		1,0,0,0,98,472,1,0,0,0,100,475,1,0,0,0,102,478,1,0,0,0,104,488,1,0,0,0,
+		106,490,1,0,0,0,108,493,1,0,0,0,110,496,1,0,0,0,112,499,1,0,0,0,114,509,
+		1,0,0,0,116,511,1,0,0,0,118,519,1,0,0,0,120,522,1,0,0,0,122,533,1,0,0,
+		0,124,536,1,0,0,0,126,547,1,0,0,0,128,550,1,0,0,0,130,553,1,0,0,0,132,
+		133,5,3,0,0,133,134,3,74,37,0,134,138,5,4,0,0,135,137,3,78,39,0,136,135,
+		1,0,0,0,137,140,1,0,0,0,138,136,1,0,0,0,138,139,1,0,0,0,139,141,1,0,0,
+		0,140,138,1,0,0,0,141,142,3,80,40,0,142,143,5,0,0,1,143,1,1,0,0,0,144,
+		145,5,5,0,0,145,148,3,74,37,0,146,148,3,74,37,0,147,144,1,0,0,0,147,146,
+		1,0,0,0,148,3,1,0,0,0,149,150,5,6,0,0,150,151,3,72,36,0,151,152,5,4,0,
+		0,152,153,3,6,3,0,153,5,1,0,0,0,154,155,3,82,41,0,155,7,1,0,0,0,156,159,
+		3,10,5,0,157,159,3,28,14,0,158,156,1,0,0,0,158,157,1,0,0,0,159,9,1,0,0,
+		0,160,162,3,56,28,0,161,160,1,0,0,0,162,165,1,0,0,0,163,161,1,0,0,0,163,
+		164,1,0,0,0,164,166,1,0,0,0,165,163,1,0,0,0,166,167,3,84,42,0,167,168,
+		5,7,0,0,168,173,3,12,6,0,169,170,5,41,0,0,170,172,3,12,6,0,171,169,1,0,
+		0,0,172,175,1,0,0,0,173,171,1,0,0,0,173,174,1,0,0,0,174,176,1,0,0,0,175,
+		173,1,0,0,0,176,177,5,4,0,0,177,11,1,0,0,0,178,180,3,88,44,0,179,178,1,
+		0,0,0,179,180,1,0,0,0,180,182,1,0,0,0,181,183,3,14,7,0,182,181,1,0,0,0,
+		183,184,1,0,0,0,184,182,1,0,0,0,184,185,1,0,0,0,185,187,1,0,0,0,186,188,
+		3,92,46,0,187,186,1,0,0,0,187,188,1,0,0,0,188,13,1,0,0,0,189,191,3,94,
+		47,0,190,189,1,0,0,0,190,191,1,0,0,0,191,192,1,0,0,0,192,193,3,16,8,0,
+		193,15,1,0,0,0,194,199,3,18,9,0,195,199,3,24,12,0,196,199,3,26,13,0,197,
+		199,3,22,11,0,198,194,1,0,0,0,198,195,1,0,0,0,198,196,1,0,0,0,198,197,
+		1,0,0,0,199,17,1,0,0,0,200,202,3,56,28,0,201,200,1,0,0,0,202,205,1,0,0,
+		0,203,201,1,0,0,0,203,204,1,0,0,0,204,206,1,0,0,0,205,203,1,0,0,0,206,
+		207,5,8,0,0,207,212,3,20,10,0,208,209,5,41,0,0,209,211,3,20,10,0,210,208,
+		1,0,0,0,211,214,1,0,0,0,212,210,1,0,0,0,212,213,1,0,0,0,213,215,1,0,0,
+		0,214,212,1,0,0,0,215,217,5,9,0,0,216,218,3,64,32,0,217,216,1,0,0,0,217,
+		218,1,0,0,0,218,19,1,0,0,0,219,221,3,14,7,0,220,219,1,0,0,0,221,222,1,
+		0,0,0,222,220,1,0,0,0,222,223,1,0,0,0,223,225,1,0,0,0,224,226,3,98,49,
+		0,225,224,1,0,0,0,225,226,1,0,0,0,226,21,1,0,0,0,227,229,3,56,28,0,228,
+		227,1,0,0,0,229,232,1,0,0,0,230,228,1,0,0,0,230,231,1,0,0,0,231,233,1,
+		0,0,0,232,230,1,0,0,0,233,235,3,76,38,0,234,236,3,64,32,0,235,234,1,0,
+		0,0,235,236,1,0,0,0,236,271,1,0,0,0,237,239,3,56,28,0,238,237,1,0,0,0,
+		239,242,1,0,0,0,240,238,1,0,0,0,240,241,1,0,0,0,241,243,1,0,0,0,242,240,
+		1,0,0,0,243,244,5,10,0,0,244,246,3,68,34,0,245,247,3,64,32,0,246,245,1,
+		0,0,0,246,247,1,0,0,0,247,271,1,0,0,0,248,250,3,56,28,0,249,248,1,0,0,
+		0,250,253,1,0,0,0,251,249,1,0,0,0,251,252,1,0,0,0,252,254,1,0,0,0,253,
+		251,1,0,0,0,254,255,5,11,0,0,255,260,3,68,34,0,256,257,5,1,0,0,257,259,
+		3,68,34,0,258,256,1,0,0,0,259,262,1,0,0,0,260,258,1,0,0,0,260,261,1,0,
+		0,0,261,264,1,0,0,0,262,260,1,0,0,0,263,265,3,102,51,0,264,263,1,0,0,0,
+		264,265,1,0,0,0,265,266,1,0,0,0,266,268,5,12,0,0,267,269,3,64,32,0,268,
+		267,1,0,0,0,268,269,1,0,0,0,269,271,1,0,0,0,270,230,1,0,0,0,270,240,1,
+		0,0,0,270,251,1,0,0,0,271,23,1,0,0,0,272,273,5,13,0,0,273,25,1,0,0,0,274,
+		276,3,56,28,0,275,274,1,0,0,0,276,279,1,0,0,0,277,275,1,0,0,0,277,278,
+		1,0,0,0,278,280,1,0,0,0,279,277,1,0,0,0,280,282,5,53,0,0,281,283,3,64,
+		32,0,282,281,1,0,0,0,282,283,1,0,0,0,283,27,1,0,0,0,284,287,3,30,15,0,
+		285,287,3,32,16,0,286,284,1,0,0,0,286,285,1,0,0,0,287,29,1,0,0,0,288,290,
+		3,58,29,0,289,288,1,0,0,0,290,293,1,0,0,0,291,289,1,0,0,0,291,292,1,0,
+		0,0,292,294,1,0,0,0,293,291,1,0,0,0,294,295,3,104,52,0,295,296,5,7,0,0,
+		296,301,3,34,17,0,297,298,5,41,0,0,298,300,3,34,17,0,299,297,1,0,0,0,300,
+		303,1,0,0,0,301,299,1,0,0,0,301,302,1,0,0,0,302,304,1,0,0,0,303,301,1,
+		0,0,0,304,305,5,4,0,0,305,31,1,0,0,0,306,307,5,14,0,0,307,308,3,72,36,
+		0,308,309,5,7,0,0,309,314,3,34,17,0,310,311,5,41,0,0,311,313,3,34,17,0,
+		312,310,1,0,0,0,313,316,1,0,0,0,314,312,1,0,0,0,314,315,1,0,0,0,315,317,
+		1,0,0,0,316,314,1,0,0,0,317,318,5,4,0,0,318,33,1,0,0,0,319,321,3,36,18,
+		0,320,319,1,0,0,0,321,324,1,0,0,0,322,320,1,0,0,0,322,323,1,0,0,0,323,
+		35,1,0,0,0,324,322,1,0,0,0,325,327,5,15,0,0,326,325,1,0,0,0,326,327,1,
+		0,0,0,327,328,1,0,0,0,328,330,3,38,19,0,329,331,3,64,32,0,330,329,1,0,
+		0,0,330,331,1,0,0,0,331,37,1,0,0,0,332,338,3,48,24,0,333,338,3,42,21,0,
+		334,338,3,44,22,0,335,338,3,46,23,0,336,338,3,40,20,0,337,332,1,0,0,0,
+		337,333,1,0,0,0,337,334,1,0,0,0,337,335,1,0,0,0,337,336,1,0,0,0,338,39,
+		1,0,0,0,339,340,3,76,38,0,340,41,1,0,0,0,341,342,5,53,0,0,342,43,1,0,0,
+		0,343,344,5,16,0,0,344,45,1,0,0,0,345,346,5,53,0,0,346,347,5,17,0,0,347,
+		348,5,53,0,0,348,47,1,0,0,0,349,350,5,8,0,0,350,355,3,34,17,0,351,352,
+		5,41,0,0,352,354,3,34,17,0,353,351,1,0,0,0,354,357,1,0,0,0,355,353,1,0,
+		0,0,355,356,1,0,0,0,356,358,1,0,0,0,357,355,1,0,0,0,358,359,5,9,0,0,359,
+		49,1,0,0,0,360,363,3,52,26,0,361,363,3,54,27,0,362,360,1,0,0,0,362,361,
+		1,0,0,0,363,51,1,0,0,0,364,367,3,114,57,0,365,367,3,74,37,0,366,364,1,
+		0,0,0,366,365,1,0,0,0,367,53,1,0,0,0,368,370,5,18,0,0,369,371,3,116,58,
+		0,370,369,1,0,0,0,370,371,1,0,0,0,371,372,1,0,0,0,372,373,5,12,0,0,373,
+		55,1,0,0,0,374,375,5,19,0,0,375,377,3,74,37,0,376,378,3,120,60,0,377,376,
+		1,0,0,0,377,378,1,0,0,0,378,379,1,0,0,0,379,380,5,20,0,0,380,57,1,0,0,
+		0,381,382,5,19,0,0,382,384,3,74,37,0,383,385,3,124,62,0,384,383,1,0,0,
+		0,384,385,1,0,0,0,385,386,1,0,0,0,386,387,5,20,0,0,387,59,1,0,0,0,388,
+		390,3,128,64,0,389,388,1,0,0,0,389,390,1,0,0,0,390,391,1,0,0,0,391,392,
+		3,50,25,0,392,61,1,0,0,0,393,394,7,0,0,0,394,63,1,0,0,0,395,396,7,1,0,
+		0,396,65,1,0,0,0,397,400,3,70,35,0,398,400,3,76,38,0,399,397,1,0,0,0,399,
+		398,1,0,0,0,400,67,1,0,0,0,401,404,3,70,35,0,402,404,3,74,37,0,403,401,
+		1,0,0,0,403,402,1,0,0,0,404,69,1,0,0,0,405,406,7,2,0,0,406,71,1,0,0,0,
+		407,408,3,76,38,0,408,73,1,0,0,0,409,414,3,76,38,0,410,411,5,16,0,0,411,
+		413,3,76,38,0,412,410,1,0,0,0,413,416,1,0,0,0,414,412,1,0,0,0,414,415,
+		1,0,0,0,415,75,1,0,0,0,416,414,1,0,0,0,417,418,7,3,0,0,418,77,1,0,0,0,
+		419,420,5,39,0,0,420,421,3,2,1,0,421,422,5,4,0,0,422,79,1,0,0,0,423,424,
+		3,4,2,0,424,81,1,0,0,0,425,427,3,8,4,0,426,425,1,0,0,0,427,430,1,0,0,0,
+		428,426,1,0,0,0,428,429,1,0,0,0,429,83,1,0,0,0,430,428,1,0,0,0,431,437,
+		3,66,33,0,432,433,3,76,38,0,433,434,5,40,0,0,434,435,3,68,34,0,435,437,
+		1,0,0,0,436,431,1,0,0,0,436,432,1,0,0,0,437,85,1,0,0,0,438,439,5,41,0,
+		0,439,440,3,12,6,0,440,87,1,0,0,0,441,443,3,56,28,0,442,441,1,0,0,0,443,
+		446,1,0,0,0,444,442,1,0,0,0,444,445,1,0,0,0,445,447,1,0,0,0,446,444,1,
+		0,0,0,447,448,5,42,0,0,448,450,3,72,36,0,449,451,3,90,45,0,450,449,1,0,
+		0,0,450,451,1,0,0,0,451,452,1,0,0,0,452,453,5,7,0,0,453,89,1,0,0,0,454,
+		455,5,40,0,0,455,456,3,68,34,0,456,91,1,0,0,0,457,458,5,43,0,0,458,459,
+		3,50,25,0,459,93,1,0,0,0,460,462,3,56,28,0,461,460,1,0,0,0,462,465,1,0,
+		0,0,463,461,1,0,0,0,463,464,1,0,0,0,464,466,1,0,0,0,465,463,1,0,0,0,466,
+		467,3,72,36,0,467,468,3,62,31,0,468,95,1,0,0,0,469,470,5,41,0,0,470,471,
+		3,20,10,0,471,97,1,0,0,0,472,473,5,43,0,0,473,474,3,50,25,0,474,99,1,0,
+		0,0,475,476,5,1,0,0,476,477,3,68,34,0,477,101,1,0,0,0,478,479,5,41,0,0,
+		479,480,3,76,38,0,480,103,1,0,0,0,481,482,5,44,0,0,482,484,3,72,36,0,483,
+		485,3,106,53,0,484,483,1,0,0,0,484,485,1,0,0,0,485,489,1,0,0,0,486,487,
+		5,45,0,0,487,489,3,72,36,0,488,481,1,0,0,0,488,486,1,0,0,0,489,105,1,0,
+		0,0,490,491,5,40,0,0,491,492,3,68,34,0,492,107,1,0,0,0,493,494,5,41,0,
+		0,494,495,3,34,17,0,495,109,1,0,0,0,496,497,5,41,0,0,497,498,3,34,17,0,
+		498,111,1,0,0,0,499,500,5,41,0,0,500,501,3,34,17,0,501,113,1,0,0,0,502,
+		510,5,46,0,0,503,510,5,47,0,0,504,510,5,48,0,0,505,510,5,53,0,0,506,510,
+		5,49,0,0,507,510,5,50,0,0,508,510,3,70,35,0,509,502,1,0,0,0,509,503,1,
+		0,0,0,509,504,1,0,0,0,509,505,1,0,0,0,509,506,1,0,0,0,509,507,1,0,0,0,
+		509,508,1,0,0,0,510,115,1,0,0,0,511,516,3,52,26,0,512,513,5,1,0,0,513,
+		515,3,52,26,0,514,512,1,0,0,0,515,518,1,0,0,0,516,514,1,0,0,0,516,517,
+		1,0,0,0,517,117,1,0,0,0,518,516,1,0,0,0,519,520,5,1,0,0,520,521,3,52,26,
+		0,521,119,1,0,0,0,522,523,5,8,0,0,523,528,3,60,30,0,524,525,5,1,0,0,525,
+		527,3,60,30,0,526,524,1,0,0,0,527,530,1,0,0,0,528,526,1,0,0,0,528,529,
+		1,0,0,0,529,531,1,0,0,0,530,528,1,0,0,0,531,532,5,9,0,0,532,121,1,0,0,
+		0,533,534,5,1,0,0,534,535,3,60,30,0,535,123,1,0,0,0,536,537,5,8,0,0,537,
+		542,3,60,30,0,538,539,5,1,0,0,539,541,3,60,30,0,540,538,1,0,0,0,541,544,
+		1,0,0,0,542,540,1,0,0,0,542,543,1,0,0,0,543,545,1,0,0,0,544,542,1,0,0,
+		0,545,546,5,9,0,0,546,125,1,0,0,0,547,548,5,1,0,0,548,549,3,60,30,0,549,
+		127,1,0,0,0,550,551,3,76,38,0,551,552,5,7,0,0,552,129,1,0,0,0,553,554,
+		5,16,0,0,554,555,3,76,38,0,555,131,1,0,0,0,55,138,147,158,163,173,179,
+		184,187,190,198,203,212,217,222,225,230,235,240,246,251,260,264,268,270,
+		277,282,286,291,301,314,322,326,330,337,355,362,366,370,377,384,389,399,
+		403,414,428,436,444,450,463,484,488,509,516,528,542
 	};
 
-	public static readonly ATN _ATN =
-		new ATNDeserializer().Deserialize(_serializedATN);
+		public static readonly ATN _ATN =
+			new ATNDeserializer().Deserialize(_serializedATN);
 
 
+	}
 }
-} // namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler

@@ -12,7 +12,7 @@ using System.Threading;
 
 namespace MetaDslx.CodeAnalysis.Binding
 {
-    public class DefineBinder : Binder, IDefineBinder, IValueBinder
+    public class DefineBinder : ValueBinder, IDefineBinder
     {
         private enum CandidateSymbolKind
         {
@@ -21,18 +21,15 @@ namespace MetaDslx.CodeAnalysis.Binding
             Defined
         }
 
-        private readonly Type? _type;
-        private readonly bool _isScope;
         private ImmutableArray<Symbol> _nestingSymbols;
         private ImmutableArray<Symbol> _definedSymbols;
 
-        public DefineBinder(Type? type = null, bool isScope = true)
+        public DefineBinder(Type type = default)
+            : base(type)
         {
-            _type = type;
-            _isScope = isScope;
         }
 
-        public Type? Type => _type;
+        public new Type Type => base.Type.OriginalType;
 
         protected override ImmutableArray<SingleDeclaration> BuildDeclarationTree(SingleDeclarationBuilder builder)
         {
@@ -131,7 +128,7 @@ namespace MetaDslx.CodeAnalysis.Binding
             valueBinders.Add(this);
         }
 
-        protected override ImmutableArray<object?> BindValues(CancellationToken cancellationToken = default)
+        protected override ImmutableArray<object?> ComputeValues(MetaType expectedType, DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             ComputeDefinedSymbols(cancellationToken);
             return _definedSymbols.Cast<Symbol, object?>();

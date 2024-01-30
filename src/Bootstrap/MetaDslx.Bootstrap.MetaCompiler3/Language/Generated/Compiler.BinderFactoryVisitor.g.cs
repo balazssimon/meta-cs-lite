@@ -32,57 +32,16 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Binding
                 {
                     this.End(__annot0);
                 }
-                var @usingList = node.Using;
-                for (var @usingIndex = 0; @usingIndex < @usingList.Count; ++@usingIndex)
+                var block1List = node.Block1;
+                for (var block1Index = 0; block1Index < block1List.Count; ++block1Index)
                 {
-                    bool __itemHandled = false;
-                    bool __sepHandled = false;
-                    if (!__itemHandled && @usingIndex < node.Using.Count)
-                    {
-                        this.Visit(node.Using[@usingIndex]);
-                    }
-                    if (!__sepHandled && @usingIndex < node.Using.SeparatorCount)
-                    {
-                        //this.VisitToken(node.Using.GetSeparator(@usingIndex));
-                    }
+                    this.Visit(node.Block1[block1Index]);
                 }
                 var __annot1 = new MetaDslx.CodeAnalysis.Binding.ScopeBinder();
-                this.Begin(__annot1, node.Block);
+                this.Begin(__annot1, node.Block2);
                 try
                 {
-                    this.Visit(node.Block);
-                }
-                finally
-                {
-                    this.End(__annot1);
-                }
-            }
-            finally
-            {
-                this.End(__annot2);
-            }
-        }
-
-        public virtual void VisitUsingAlt1(UsingAlt1Syntax node)
-        {
-            var __annot2 = new MetaDslx.CodeAnalysis.Binding.DefineBinder(type: typeof(MetaDslx.CodeAnalysis.Symbols.ImportSymbol));
-            this.Begin(__annot2, node);
-            try
-            {
-                var __annot1 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "namespaces");
-                this.Begin(__annot1, node.Namespaces);
-                try
-                {
-                    var __annot0 = new MetaDslx.CodeAnalysis.Binding.UseBinder(types: ImmutableArray.Create<System.Type>(typeof(MetaDslx.CodeAnalysis.Symbols.NamespaceSymbol)));
-                    this.Begin(__annot0, node.Namespaces);
-                    try
-                    {
-                        this.Visit(node.Namespaces);
-                    }
-                    finally
-                    {
-                        this.End(__annot0);
-                    }
+                    this.Visit(node.Block2);
                 }
                 finally
                 {
@@ -110,6 +69,38 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Binding
                     try
                     {
                         this.Visit(node.MetaModels);
+                    }
+                    finally
+                    {
+                        this.End(__annot0);
+                    }
+                }
+                finally
+                {
+                    this.End(__annot1);
+                }
+            }
+            finally
+            {
+                this.End(__annot2);
+            }
+        }
+
+        public virtual void VisitUsingAlt2(UsingAlt2Syntax node)
+        {
+            var __annot2 = new MetaDslx.CodeAnalysis.Binding.DefineBinder(type: typeof(MetaDslx.CodeAnalysis.Symbols.ImportSymbol));
+            this.Begin(__annot2, node);
+            try
+            {
+                var __annot1 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "namespaces");
+                this.Begin(__annot1, node.Namespaces);
+                try
+                {
+                    var __annot0 = new MetaDslx.CodeAnalysis.Binding.UseBinder(types: ImmutableArray.Create<System.Type>(typeof(MetaDslx.CodeAnalysis.Symbols.NamespaceSymbol)));
+                    this.Begin(__annot0, node.Namespaces);
+                    try
+                    {
+                        this.Visit(node.Namespaces);
                     }
                     finally
                     {
@@ -1737,12 +1728,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Binding
             }
         }
 
-        public virtual void VisitMainUsingBlock(MainUsingBlockSyntax node)
+        public virtual void VisitMainBlock1(MainBlock1Syntax node)
         {
             this.Visit(node.Using);
         }
 
-        public virtual void VisitMainBlock1(MainBlock1Syntax node)
+        public virtual void VisitMainBlock2(MainBlock2Syntax node)
         {
             var __annot1 = new MetaDslx.CodeAnalysis.Binding.ScopeBinder();
             this.Begin(__annot1, node);

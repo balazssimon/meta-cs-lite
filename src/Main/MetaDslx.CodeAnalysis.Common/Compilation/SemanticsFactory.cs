@@ -1,5 +1,6 @@
 ﻿using MetaDslx.CodeAnalysis.Binding;
 using MetaDslx.CodeAnalysis.PooledObjects;
+using MetaDslx.CodeAnalysis.Symbols;
 using System;
 using System.Collections.Generic;
 using System.Text;

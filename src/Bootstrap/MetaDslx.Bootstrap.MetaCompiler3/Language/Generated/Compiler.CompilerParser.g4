@@ -6,11 +6,11 @@ options
 } 
 
 pr_Main
-    :  E_KNamespace=LR_KNamespace  E_Qualifier=pr_Qualifier  E_TSemicolon=LR_TSemicolon  (E_KUsing1+=LR_KUsing E_Using1+=pr_Using)*  E_Block=pr_MainBlock1  E_EndOfFileToken=EOF
+    :  E_KNamespace=LR_KNamespace  E_Qualifier=pr_Qualifier  E_TSemicolon=LR_TSemicolon  E_Block+=pr_MainBlock1*  E_Block1=pr_MainBlock2  E_EndOfFileToken=EOF
     ;
 pr_Using
-    :  E_namespaces=pr_Qualifier #pr_UsingAlt1
-    |  E_KMetamodel=LR_KMetamodel  E_metaModels=pr_Qualifier #pr_UsingMetaModel
+    :  E_KMetamodel=LR_KMetamodel  E_metaModels=pr_Qualifier #pr_UsingMetaModel
+    |  E_namespaces=pr_Qualifier #pr_UsingAlt2
     ;
 pr_LanguageDeclaration
     :  E_KLanguage=LR_KLanguage  E_Name=pr_Name  E_TSemicolon=LR_TSemicolon  E_grammar=pr_Grammar
@@ -138,10 +138,10 @@ pr_Qualifier
 pr_Identifier
     :  E_Token=(LR_TIdentifier | LR_TVerbatimIdentifier)
     ;
-pr_MainUsingBlock
-    :  E_KUsing1=LR_KUsing  E_Using1=pr_Using
-    ;
 pr_MainBlock1
+    :  E_KUsing=LR_KUsing  E_Using=pr_Using  E_TSemicolon=LR_TSemicolon
+    ;
+pr_MainBlock2
     :  E_declarations=pr_LanguageDeclaration
     ;
 pr_GrammarBlock1

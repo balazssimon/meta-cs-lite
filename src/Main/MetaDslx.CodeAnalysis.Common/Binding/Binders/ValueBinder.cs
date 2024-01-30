@@ -14,34 +14,49 @@ namespace MetaDslx.CodeAnalysis.Binding
 {
     public class ValueBinder : Binder, IValueBinder
     {
-        private readonly Type? _type;
+        private MetaType _type;
         private string? _rawValue;
 
-        public ValueBinder(Type? type = null)
+        public ValueBinder(MetaType type = default)
         {
             _type = type;
         }
 
-        public Type? Type => _type;
+        public MetaType Type
+        {
+            get
+            {
+                CacheRawValue();
+                return _type;
+            }
+        }
 
         public string RawValue
         {
             get
             {
-                CacheRawValue(default);
+                CacheRawValue();
                 return _rawValue;
             }
         }
 
         private void CacheRawValue(CancellationToken cancellationToken = default)
         {
-            var rawValue = ComputeRawValue(cancellationToken) ?? string.Empty;
+            if (_rawValue is not null) return;
+            var type = ComputeType(this.Diagnostics, cancellationToken);
+            _type.InterlockedInitialize(type);
+            var rawValue = ComputeRawValue(this.Diagnostics, cancellationToken) ?? string.Empty;
             Interlocked.CompareExchange(ref _rawValue, rawValue, null);
         }
 
-        protected virtual string? ComputeRawValue(CancellationToken cancellationToken = default)
+        protected virtual string? ComputeRawValue(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             return this.Syntax.ToString();
+        }
+
+        protected virtual MetaType ComputeType(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        {
+            return _type;
         }
 
         protected override ImmutableArray<SingleDeclaration> BuildDeclarationTree(SingleDeclarationBuilder builder)
@@ -66,49 +81,26 @@ namespace MetaDslx.CodeAnalysis.Binding
             valueBinders.Add(this);
         }
 
-        protected override ImmutableArray<object?> BindValues(CancellationToken cancellationToken = default)
+        protected sealed override ImmutableArray<object?> BindValues(CancellationToken cancellationToken = default)
         {
-            return ImmutableArray.Create(ComputeValue(cancellationToken));
-        }
-
-        private object? ComputeValue(CancellationToken cancellationToken)
-        {
-            CacheRawValue(cancellationToken);
             var propertyBinder = GetEnclosingPropertyBinder();
-            if (propertyBinder is null)
-            {
-                AddDiagnostic(Diagnostic.Create(CommonErrorCode.ERR_BindingError, Location, $"Value '{RawValue}' is not enclosed in an IPropertyBinder."));
-            }
-            else
-            {
-                var expectedType = _type ?? propertyBinder.GetValueType(cancellationToken);
-                var diagnostics = DiagnosticBag.GetInstance();
-                var success = ComputeValue(expectedType, out var value, diagnostics, cancellationToken);
-                AddDiagnostics(diagnostics);
-                diagnostics.Free();
-                if (success)
-                {
-                    return value;
-                }
-                else
-                {
-                    AddDiagnostic(Diagnostic.Create(CommonErrorCode.ERR_BindingError, Location, $"Value '{RawValue}' cannot be converted to type '{expectedType.FullName}'. Are you missing a TypeConverter or a custom value binder?"));
-                }
-            }
-            return null;
+            var expectedType = propertyBinder?.Type ?? Type;
+            return ComputeValues(expectedType, cancellationToken);
         }
 
-        protected virtual bool ComputeValue(MetaType expectedType, out object? value, DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        private ImmutableArray<object?> ComputeValues(MetaType expectedType, CancellationToken cancellationToken)
         {
-            if (expectedType == typeof(MetaType))
-            {
-                value = MetaType.FromName(RawValue);
-                return true;
-            }
-            else
-            {
-                return Language.SyntaxFacts.TryExtractValue(expectedType, RawValue, out value);
-            }
+            var diagnostics = DiagnosticBag.GetInstance();
+            var values = ComputeValues(expectedType, diagnostics, cancellationToken);
+            AddDiagnostics(diagnostics);
+            diagnostics.Free();
+            return values;
+        }
+
+        protected virtual ImmutableArray<object?> ComputeValues(MetaType expectedType, DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        {
+            if (Language.SyntaxFacts.TryExtractValue(expectedType, RawValue, out var value)) return ImmutableArray.Create(value);
+            else return ImmutableArray<object?>.Empty;
         }
 
         public override string ToString()

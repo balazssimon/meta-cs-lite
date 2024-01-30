@@ -39,11 +39,19 @@ public interface ICompilerParserVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitPr_Main([NotNull] CompilerParser.Pr_MainContext context);
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="CompilerParser.pr_Using"/>.
+	/// Visit a parse tree produced by the <c>pr_UsingMetaModel</c>
+	/// labeled alternative in <see cref="CompilerParser.pr_Using"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	Result VisitPr_Using([NotNull] CompilerParser.Pr_UsingContext context);
+	Result VisitPr_UsingMetaModel([NotNull] CompilerParser.Pr_UsingMetaModelContext context);
+	/// <summary>
+	/// Visit a parse tree produced by the <c>pr_UsingAlt2</c>
+	/// labeled alternative in <see cref="CompilerParser.pr_Using"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitPr_UsingAlt2([NotNull] CompilerParser.Pr_UsingAlt2Context context);
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="CompilerParser.pr_LanguageDeclaration"/>.
 	/// </summary>
@@ -386,6 +394,12 @@ public interface ICompilerParserVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
 	Result VisitPr_MainBlock1([NotNull] CompilerParser.Pr_MainBlock1Context context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="CompilerParser.pr_MainBlock2"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitPr_MainBlock2([NotNull] CompilerParser.Pr_MainBlock2Context context);
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="CompilerParser.pr_GrammarBlock1"/>.
 	/// </summary>

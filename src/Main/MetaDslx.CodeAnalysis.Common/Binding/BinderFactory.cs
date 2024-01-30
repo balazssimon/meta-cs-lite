@@ -37,25 +37,36 @@ namespace MetaDslx.CodeAnalysis.Binding
             {
                 if (_rootBinder is null)
                 {
-                    var rootBinders = BuildBinderTree(_syntaxTree.GetRoot());
-                    var rootBinder = rootBinders.OfType<RootBinder>().FirstOrDefault();
-                    Debug.Assert(rootBinder is not null);
+                    var rootBinder = BuildBinderTreeRoot(_syntaxTree.GetRoot());
                     Interlocked.CompareExchange(ref _rootBinder, rootBinder, null);
                 }
                 return _rootBinder;
             }
         }
 
-        public ImmutableArray<Binder> BuildBinderTree(SyntaxNodeOrToken root, LazyBinder? lazyBinder = null)
+        private RootBinder BuildBinderTreeRoot(SyntaxNodeOrToken root)
         {
             Debug.Assert(root != null);
-            var isRoot = lazyBinder is null;
-            Binder rootBinder = isRoot ? _compilation.BuckStopsHereBinder : lazyBinder;
+            var rootBinder = new RootBinder(_syntaxTree);
+            rootBinder.InitBinder(_compilation.BuckStopsHereBinder, root);
             BinderFactoryVisitor visitor = _pool.Allocate();
-            visitor.Initialize(isRoot, root.SpanStart, root.IsToken, -1);
+            visitor.Initialize(true, root.SpanStart, root.IsToken, -1);
             visitor.Begin(rootBinder, root);
             visitor.Visit(root.IsNode ? root.AsNode() : root.Parent);
-            var result = visitor.End(rootBinder);
+            visitor.End(rootBinder);
+            _pool.Free(visitor);
+            return rootBinder;
+        }
+
+        public ImmutableArray<Binder> BuildBinderTreeLazy(SyntaxNodeOrToken root, LazyBinder lazyBinder)
+        {
+            Debug.Assert(root != null);
+            Debug.Assert(lazyBinder != null);
+            BinderFactoryVisitor visitor = _pool.Allocate();
+            visitor.Initialize(false, root.SpanStart, root.IsToken, -1);
+            visitor.Begin(lazyBinder, root);
+            visitor.Visit(root.IsNode ? root.AsNode() : root.Parent);
+            var result = visitor.End(lazyBinder);
             _pool.Free(visitor);
             return result;
         }

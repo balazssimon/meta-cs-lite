@@ -87,8 +87,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
 
         // Rules:
         Main,
-        UsingAlt1,
         UsingMetaModel,
+        UsingAlt2,
         LanguageDeclaration,
         Grammar,
         GrammarRuleAlt1,
@@ -141,8 +141,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
         Name,
         Qualifier,
         Identifier,
-        MainUsingBlock,
         MainBlock1,
+        MainBlock2,
         GrammarBlock1,
         RuleBlock1Alt1,
         RuleBlock1Alt2,

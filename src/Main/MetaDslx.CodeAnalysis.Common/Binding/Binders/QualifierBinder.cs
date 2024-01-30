@@ -12,7 +12,7 @@ using System.Threading;
 
 namespace MetaDslx.CodeAnalysis.Binding
 {
-    public class QualifierBinder : Binder, IQualifierBinder, IValueBinder
+    public class QualifierBinder : ValueBinder, IQualifierBinder
     {
         private ImmutableArray<IIdentifierBinder> _identifiers;
         private object? _symbols;
@@ -44,7 +44,7 @@ namespace MetaDslx.CodeAnalysis.Binding
             if (IsTopMostQualifier) valueBinders.Add(this);
         }
 
-        protected override ImmutableArray<object?> BindValues(CancellationToken cancellationToken = default)
+        protected override ImmutableArray<object?> ComputeValues(MetaType expectedType, DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             CacheIdentifiers(cancellationToken);
             if (_symbols is ImmutableArray<Symbol> symbolArray)
@@ -75,7 +75,7 @@ namespace MetaDslx.CodeAnalysis.Binding
 
         public bool IsName => GetEnclosingNameBinder() is not null;
 
-        private void CacheIdentifiers(CancellationToken cancellationToken = default)
+        private void CacheIdentifiers(CancellationToken cancellationToken)
         {
             if (_identifiers.IsDefault)
             {
@@ -89,7 +89,7 @@ namespace MetaDslx.CodeAnalysis.Binding
             }
         }
 
-        private ImmutableArray<Symbol?> ResolveDefinition(CancellationToken cancellationToken = default)
+        private ImmutableArray<Symbol?> ResolveDefinition(CancellationToken cancellationToken)
         {
             var result = new Symbol?[_identifiers.Length];
             var lastIdentifier = (Binder)_identifiers[_identifiers.Length - 1];
@@ -126,7 +126,7 @@ namespace MetaDslx.CodeAnalysis.Binding
             return result.ToImmutableArray();
         }
 
-        private object ResolveUse(CancellationToken cancellationToken = default)
+        private object ResolveUse(CancellationToken cancellationToken)
         {
             var identifiers = _identifiers.SelectAsArray(b => ((Binder)b).Syntax);
             var multiLookup = this.GetEnclosingMultiLookupBinder();

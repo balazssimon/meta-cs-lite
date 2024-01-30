@@ -9,11 +9,12 @@ using System.Threading;
 
 namespace MetaDslx.CodeAnalysis.Binding
 {
-    public class ConstantBinder : Binder, IValueBinder
+    public class ConstantBinder : ValueBinder
     {
         private readonly object? _value;
 
         public ConstantBinder(object? value)
+            : base(value?.GetType() ?? typeof(object))
         {
             _value = value;
         }
@@ -39,7 +40,7 @@ namespace MetaDslx.CodeAnalysis.Binding
             valueBinders.Add(this);
         }
 
-        protected override ImmutableArray<object?> BindValues(CancellationToken cancellationToken = default)
+        protected override ImmutableArray<object?> ComputeValues(MetaType expectedType, DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             return ImmutableArray.Create(Value);
         }

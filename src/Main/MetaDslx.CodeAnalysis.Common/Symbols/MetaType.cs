@@ -23,12 +23,17 @@ namespace MetaDslx.CodeAnalysis
 
         private object? _original;
 
+        public MetaType()
+        {
+            _original = typeof(Default);
+        }
+
         private MetaType(string name)
         {
             _original = name;
         }
 
-        private MetaType(Type type)
+        private MetaType(Type? type)
         {
             _original = type;
         }
@@ -50,9 +55,11 @@ namespace MetaDslx.CodeAnalysis
 
         public bool InterlockedInitialize(MetaType value)
         {
-            return Interlocked.CompareExchange(ref _original, value._original, null) == null;
+            return Interlocked.CompareExchange(ref _original, value._original, typeof(Default)) as Type == typeof(Default);
         }
 
+        public bool IsDefault => OriginalType == typeof(Default);
+        public bool IsDefaultOrNull => IsDefault || IsNull;
         public bool IsNull => _original is null;
         public bool IsName => _original is string;
         public bool IsType => _original is Type;
@@ -990,7 +997,7 @@ namespace MetaDslx.CodeAnalysis
 
         public TypeSymbol? AsTypeSymbol(Compilation compilation)
         {
-            if (compilation is null || OriginalTypeSymbol.DeclaringCompilation == compilation) return OriginalTypeSymbol;
+            if (compilation is null || OriginalTypeSymbol?.DeclaringCompilation == compilation) return OriginalTypeSymbol;
             return compilation.ResolveType(FullName);
         }
 
@@ -1092,7 +1099,7 @@ namespace MetaDslx.CodeAnalysis
             return MetaType.FromName(fullTypeName);
         }
 
-        public static implicit operator MetaType(Type type)
+        public static implicit operator MetaType(Type? type)
         {
             return MetaType.FromType(type);
         }
@@ -1137,6 +1144,10 @@ namespace MetaDslx.CodeAnalysis
                 }
             }
             return null;
+        }
+
+        private class Default
+        {
         }
     }
 }

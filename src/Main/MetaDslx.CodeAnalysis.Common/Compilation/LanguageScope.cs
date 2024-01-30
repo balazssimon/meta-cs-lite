@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using MetaDslx.CodeAnalysis.Binding;
+using MetaDslx.CodeAnalysis.Symbols;
 using MetaDslx.CodeAnalysis.Symbols.Errors;
 using System;
 using System.Collections.Generic;
@@ -13,9 +14,10 @@ namespace MetaDslx.CodeAnalysis
         private readonly Compilation _compilation;
         private readonly Language _language;
         private readonly ILifetimeScope _serviceScope;
-        private SemanticsFactory _semanticsFactory;
-        private DefaultLookupValidator _defaultLookupValidator;
-        private ErrorSymbolFactory _errorSymbolFactory;
+        private SemanticsFactory? _semanticsFactory;
+        private DefaultLookupValidator? _defaultLookupValidator;
+        private ErrorSymbolFactory? _errorSymbolFactory;
+        private SymbolValueConverter? _symbolValueConverter;
 
         public LanguageScope(Compilation compilation, Language language, ILifetimeScope serviceScope)
         {
@@ -63,5 +65,6 @@ namespace MetaDslx.CodeAnalysis
                 return _errorSymbolFactory;
             }
         }
+
     }
 }

@@ -28,6 +28,7 @@ namespace MetaDslx.CodeAnalysis.Binding
         public SyntaxNodeOrToken Syntax => _syntax;
         public SourceLocation? Location => (_syntax.GetLocation() as SourceLocation) ?? SourceLocation.None;
         public TextSpan FullSpan => _syntax.FullSpan;
+        public DiagnosticBag Diagnostics => _compilation.BinderDiagnostics;
 
         public Compilation Compilation
         {
@@ -399,17 +400,17 @@ namespace MetaDslx.CodeAnalysis.Binding
 
         protected void AddDiagnostic(Diagnostic diagnostic)
         {
-            Compilation.AddBinderDiagnostic(diagnostic);
+            Diagnostics.Add(diagnostic);
         }
 
         protected void AddDiagnostics(DiagnosticBag diagnostics)
         {
-            Compilation.AddBinderDiagnostics(diagnostics);
+            Diagnostics.AddRange(diagnostics);
         }
 
         protected void AddDiagnostics(IEnumerable<Diagnostic> diagnostics)
         {
-            Compilation.AddBinderDiagnostics(diagnostics);
+            Diagnostics.AddRange(diagnostics);
         }
 
         public override string ToString()

@@ -7,6 +7,7 @@ using MetaDslx.CodeAnalysis.Symbols.Errors;
 using MetaDslx.CodeAnalysis.Symbols.Model;
 using MetaDslx.CodeAnalysis.Symbols.Source;
 using MetaDslx.Modeling;
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using System;
 using System.Collections.Generic;
@@ -85,6 +86,11 @@ namespace MetaDslx.CodeAnalysis
         internal virtual CSharpSymbolFactory CreateCSharpSymbolFactory(Compilation compilation)
         {
             return new CSharpSymbolFactory();
+        }
+
+        public virtual SymbolValueConverter SymbolValueConverter(Compilation compilation)
+        {
+            return new SymbolValueConverter(compilation);
         }
     }
 }

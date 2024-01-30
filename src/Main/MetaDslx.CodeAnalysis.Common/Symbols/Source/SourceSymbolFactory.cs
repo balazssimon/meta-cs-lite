@@ -212,41 +212,36 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
 
         private ImmutableArray<TValue> GetNonModelSymbolPropertyValues<TValue>(ISourceSymbol symbol, string symbolProperty, DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
+            var converter = Compilation.SymbolValueConverter;
+            if (converter is null) return ImmutableArray<TValue>.Empty;
             var builder = ArrayBuilder<TValue>.GetInstance();
             foreach (var decl in symbol.DeclaringSyntaxReferences)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 if (decl.IsNull) continue;
-                Binder? declBinder = null;
-                var binder = Compilation.GetBinder(decl);
-                while (binder is not null)
-                {
-                    if (binder is IDefineBinder defineBinder && defineBinder.DefinedSymbols.Contains((Symbol)symbol))
-                    {
-                        declBinder = binder;
-                        break;
-                    }
-                    binder = binder.ParentBinder;
-                }
-                Debug.Assert(declBinder is not null);
-                if (declBinder is not null)
+                if (TryGetDeclarationBinder(symbol, decl, out var declBinder))
                 {
                     var propBinders = declBinder.GetPropertyBinders(symbolProperty, cancellationToken);
                     foreach (var propBinder in propBinders)
                     {
-                        var values = ((Binder)propBinder).Bind(cancellationToken);
-                        foreach (var value in values)
+                        var valueBinders = propBinder.GetValueBinders(propBinder, cancellationToken);
+                        foreach (var valueBinder in valueBinders)
                         {
-                            if (value is TValue tvalue)
+                            var values = ((Binder)valueBinder).Bind(cancellationToken);
+                            foreach (var value in values)
                             {
-                                builder.Add(tvalue);
-                            }
-                            else
-                            {
-                                diagnostics.Add(Diagnostic.Create(CommonErrorCode.ERR_InvalidSymbolPropertyValue, decl.GetLocation(), value, value.GetType(), symbolProperty, typeof(TValue)));
+                                var symbolValueSuccess = converter.TryConvertTo(value, typeof(TValue), out var symbolValue, (Binder)valueBinder, diagnostics, cancellationToken);
+                                if (symbolValueSuccess)
+                                {
+                                    builder.Add((TValue)symbolValue);
+                                }
                             }
                         }
                     }
+                }
+                else //if (!isNesting)
+                {
+                    diagnostics.Add(Diagnostic.Create(ErrorCode.ERR_InternalError, decl.GetLocation(), $"Could not resolve declaration of '{symbol.Declaration.Name}' in SourceSymbolFactory."));
                 }
             }
             return builder.ToImmutableAndFree();
@@ -257,6 +252,8 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
             if (symbol is null) return ImmutableArray<TValue>.Empty;
             var modelObject = modelSymbol.ModelObject;
             if (modelObject is null) return ImmutableArray<TValue>.Empty;
+            var converter = Compilation.SymbolValueConverter;
+            if (converter is null) return ImmutableArray<TValue>.Empty;
             var builder = ArrayBuilder<TValue>.GetInstance();
             foreach (var prop in modelObject.MInfo.PublicProperties.Where(prop => prop.SymbolProperty == symbolProperty))
             {
@@ -266,95 +263,30 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
                 {
                     cancellationToken.ThrowIfCancellationRequested();
                     if (decl.IsNull) continue;
-                    Binder? declBinder = null;
-                    var binder = Compilation.GetBinder(decl);
-                    var isNesting = false;
-                    while (binder is not null)
-                    {
-                        if (binder is IDefineBinder defineBinder)
-                        {
-                            if (defineBinder.DefinedSymbols.Contains((Symbol)symbol))
-                            {
-                                declBinder = binder;
-                            }
-                            else if (defineBinder.NestingSymbols.Contains((Symbol)symbol))
-                            {
-                                declBinder = null;
-                                isNesting = true;
-                            }
-                            break;
-                        }
-                        binder = binder.ParentBinder;
-                    }
-                    if (declBinder is not null)
+                    if (TryGetDeclarationBinder(symbol, decl, out var declBinder))
                     {
                         var propBinders = declBinder.GetPropertyBinders(prop.Name, cancellationToken);
                         foreach (var propBinder in propBinders)
                         {
-                            var values = ((Binder)propBinder).Bind(cancellationToken);
-                            foreach (var value in values)
+                            var valueBinders = propBinder.GetValueBinders(propBinder, cancellationToken);
+                            foreach (var valueBinder in valueBinders)
                             {
-                                if (value is null) continue;
-                                var error = false;
-                                if (typeof(TValue) == typeof(MetaType) && value is TypeSymbol typeSymbol)
+                                var values = ((Binder)valueBinder).Bind(cancellationToken);
+                                foreach (var value in values)
                                 {
-                                    builder.Add((TValue)(object)MetaType.FromTypeSymbol(typeSymbol));
-                                }
-                                else if (typeof(TValue) == typeof(TypeSymbol) && value is MetaType metaType)
-                                {
-                                    //var ts = metaType.AsTypeSymbol(this.Compilation);
-                                    var ts = metaType.OriginalTypeSymbol;
-                                    builder.Add((TValue)(object)ts);
-                                }
-                                else if (typeof(TValue) == typeof(MetaSymbol) && value is Symbol valueSymbol)
-                                {
-                                    builder.Add((TValue)(object)MetaSymbol.FromSymbol(valueSymbol));
-                                }
-                                else if (value is TValue tvalue)
-                                {
-                                    builder.Add(tvalue);
-                                }
-                                else
-                                {
-                                    error = true;
-                                    diagnostics.Add(Diagnostic.Create(CommonErrorCode.ERR_InvalidSymbolPropertyValue, decl.GetLocation(), value, value.GetType(), symbolProperty, typeof(TValue)));
-                                }
-                                if (!error)
-                                {
-                                    try
+                                    var symbolValueSuccess = converter.TryConvertTo(value, typeof(TValue), out var symbolValue, (Binder)valueBinder, diagnostics, cancellationToken);
+                                    var mobjValueSuccess = converter.TryConvertTo(value, slot.Property.SlotProperty.Type, out var mobjValue, (Binder)valueBinder, diagnostics, cancellationToken);
+                                    if (symbolValueSuccess && mobjValueSuccess)
                                     {
-                                        Box? box;
-                                        if (prop.Type.IsAssignableTo(typeof(Symbol)) && prop.Type.IsAssignableFrom(value.GetType()))
-                                        {
-                                            box = slot.Add(value);
-                                        }
-                                        else if (value is Symbol symbolValue)
-                                        {
-                                            var modelObjectValue = (symbolValue as IModelSymbol)?.ModelObject;
-                                            if (modelObjectValue is not null && prop.Type.IsAssignableFrom(modelObjectValue.MInfo.MetaType))
-                                            {
-                                                box = slot.Add(modelObjectValue);
-                                            }
-                                            else
-                                            {
-                                                box = slot.Add(value);
-                                            }
-                                        }
-                                        else
-                                        {
-                                            box = slot.Add(value);
-                                        }
-                                        if (box is not null) box.Syntax = ((Binder)propBinder).Syntax;
-                                    }
-                                    catch (ModelException ex)
-                                    {
-                                        diagnostics.Add(Diagnostic.Create(CommonErrorCode.ERR_InvalidModelObjectPropertyValue, decl.GetLocation(), value, value.GetType(), prop.Name, prop.Type));
+                                        builder.Add((TValue)symbolValue);
+                                        var box = slot.Add(mobjValue);
+                                        if (box is not null) box.Syntax = ((Binder)valueBinder).Syntax;
                                     }
                                 }
                             }
                         }
                     }
-                    else if (!isNesting)
+                    else //if (!isNesting)
                     {
                         diagnostics.Add(Diagnostic.Create(ErrorCode.ERR_InternalError, decl.GetLocation(), $"Could not resolve declaration of '{symbol.Declaration.Name}' in SourceSymbolFactory."));
                     }
@@ -370,23 +302,13 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
             if (modelSymbol is null) return;
             var modelObject = modelSymbol.ModelObject;
             if (modelObject is null) return;
+            var converter = Compilation.SymbolValueConverter;
+            if (converter is null) return;
             foreach (var decl in symbol.DeclaringSyntaxReferences)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 if (decl.IsNull) continue;
-                Binder? declBinder = null;
-                var binder = Compilation.GetBinder(decl);
-                while (binder is not null)
-                {
-                    if (binder is IDefineBinder defineBinder && defineBinder.DefinedSymbols.Contains((Symbol)symbol))
-                    {
-                        declBinder = binder;
-                        break;
-                    }
-                    binder = binder.ParentBinder;
-                }
-                //Debug.Assert(declBinder is not null || (symbol is NamespaceSymbol ns && ns.IsGlobalNamespace));
-                if (declBinder is not null)
+                if (TryGetDeclarationBinder(symbol, decl, out var declBinder))
                 {
                     var propBinders = declBinder.GetPropertyBinders(propertyName: null, cancellationToken);
                     foreach (var propBinder in propBinders)
@@ -396,43 +318,53 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
                         {
                             var slot = modelObject.MGetSlot(prop);
                             if (slot is null) continue;
-                            var values = ((Binder)propBinder).Bind(cancellationToken);
-                            foreach (var value in values)
+                            var valueBinders = propBinder.GetValueBinders(propBinder, cancellationToken);
+                            foreach (var valueBinder in valueBinders)
                             {
-                                try
+                                var values = ((Binder)valueBinder).Bind(cancellationToken);
+                                foreach (var value in values)
                                 {
-                                    Box? box;
-                                    if (prop.Type.IsAssignableTo(typeof(Symbol)) && prop.Type.IsAssignableFrom(value.GetType()))
+                                    var mobjValueSuccess = converter.TryConvertTo(value, slot.Property.SlotProperty.Type, out var mobjValue, (Binder)valueBinder, diagnostics, cancellationToken);
+                                    if (mobjValueSuccess)
                                     {
-                                        box = slot.Add(value);
+                                        var box = slot.Add(mobjValue);
+                                        if (box is not null) box.Syntax = ((Binder)valueBinder).Syntax;
                                     }
-                                    else if (value is Symbol symbolValue)
-                                    {
-                                        var modelObjectValue = (symbolValue as IModelSymbol)?.ModelObject;
-                                        if (modelObjectValue is not null && prop.Type.IsAssignableFrom(modelObjectValue.MInfo.MetaType))
-                                        {
-                                            box = slot.Add(modelObjectValue);
-                                        }
-                                        else
-                                        {
-                                            box = slot.Add(value);
-                                        }
-                                    }
-                                    else
-                                    {
-                                        box = slot.Add(value);
-                                    }
-                                    if (box is not null) box.Syntax = ((Binder)propBinder).Syntax;
-                                }
-                                catch (ModelException ex)
-                                {
-                                    diagnostics.Add(Diagnostic.Create(CommonErrorCode.ERR_InvalidModelObjectPropertyValue, decl.GetLocation(), value, value.GetType(), prop.Name, prop.Type));
                                 }
                             }
                         }
                     }
                 }
+                else 
+                {
+                    diagnostics.Add(Diagnostic.Create(ErrorCode.ERR_InternalError, decl.GetLocation(), $"Could not resolve declaration of '{symbol.Declaration.Name}' in SourceSymbolFactory."));
+                }
             }
+        }
+
+        protected bool TryGetDeclarationBinder(ISourceSymbol? symbol, SyntaxNodeOrToken declaration, out Binder? binder)
+        {
+            binder = null;
+            var declBinder = Compilation.GetBinder(declaration);
+            var isNesting = false;
+            while (declBinder is not null)
+            {
+                if (declBinder is IDefineBinder defineBinder)
+                {
+                    if (defineBinder.DefinedSymbols.Contains((Symbol)symbol))
+                    {
+                        binder = declBinder;
+                        return true;
+                    }
+                    else if (defineBinder.NestingSymbols.Contains((Symbol)symbol))
+                    {
+                        isNesting = true;
+                    }
+                    return false;
+                }
+                declBinder = declBinder.ParentBinder;
+            }
+            return false;
         }
     }
 }
