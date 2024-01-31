@@ -93,16 +93,8 @@ namespace MetaDslx.CodeAnalysis
 
         public Symbol? AsSymbol(Compilation compilation)
         {
-            if (compilation is null) return OriginalSymbol;
-            if (_original is DeclarationSymbol declared)
-            {
-                if (declared.DeclaringCompilation == compilation) return declared;
-                else return compilation.ResolveType(SymbolDisplayFormat.QualifiedNameOnlyFormat.ToString(declared));
-            }
-            if (IsModelObject)
-            {
-                return compilation.ResolveModelObject(OriginalModelObject);
-            }
+            if (IsSymbol) return OriginalSymbol;
+            if (IsModelObject) return compilation.ResolveModelObject(OriginalModelObject);
             return OriginalSymbol;
         }
 

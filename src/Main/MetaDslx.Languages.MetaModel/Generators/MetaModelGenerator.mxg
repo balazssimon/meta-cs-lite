@@ -180,7 +180,7 @@ public sealed class [mm.Name] : __MetaModel, I[mm.Name]
         __CustomImpl.[mm.Name](this);
         [foreach (var obj in Objects)]
             [foreach (var child in obj.MChildren)]
-                ((__IModelObject)[GetName(obj)]).MChildren.Add((__IModelObject)[GetName(child)]);
+                [GetName(obj)].MChildren.Add([GetName(child)]);
             [end foreach]
             [foreach (var prop in obj.MInfo.PublicProperties)]
                 [var slot = obj.MGetSlot(prop)]
@@ -331,7 +331,7 @@ internal class [cls.Name]_Impl : __MetaModelObject, [cls.Name]
     {
         [foreach (var slot in metaCls.Slots)]
             [if (!slot.DefaultValue.IsNull)]
-                ((__IModelObject)this).Init([ToCSharp(slot.SlotProperty)], ([ToCSharp(slot.SlotProperty.Type)])[ToCSharpValue(slot.SlotProperty.Type, slot.DefaultValue)]);
+                this.MGetSlot([ToCSharp(slot.SlotProperty)])?.Init(([ToCSharp(slot.SlotProperty.Type)])[ToCSharpValue(slot.SlotProperty.Type, slot.DefaultValue)]);
             [end if]
         [end foreach]
         [foreach (var baseType in metaCls.AllBaseTypes.Reverse())]

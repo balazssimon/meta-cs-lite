@@ -149,7 +149,7 @@ namespace MetaDslx.BuildTools
                 {
                     compilation = compilation.AddReferences(PackageReferences);
                     await CompileMetaModels(compilation, mxmFiles);
-                    await CompileMetaLanguages(compilation, mxlFiles);
+                    //await CompileMetaLanguages(compilation, mxlFiles);
                 }
                 //*/
                 // Perform analysis...
@@ -231,6 +231,8 @@ namespace MetaDslx.BuildTools
                 foreach (var mxm in model.Objects.OfType<MetaDslx.Languages.MetaModel.Model.MetaModel>())
                 {
                     var modelFilePath = mxm.MSourceLocation?.GetLineSpan().Path;
+                    var xmi = new XmiSerializer();
+                    xmi.WriteModelToFile(Path.Combine(modelFilePath + ".xmi"), model);
                     if (!mxmDiagnostics.Any(diag => diag.Severity == DiagnosticSeverity.Error && diag.Location?.GetLineSpan().Path == modelFilePath))
                     {
 #if MetaDslxBootstrap

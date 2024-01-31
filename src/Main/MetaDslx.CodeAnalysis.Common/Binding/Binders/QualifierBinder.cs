@@ -22,7 +22,7 @@ namespace MetaDslx.CodeAnalysis.Binding
             builder.BeginQualifier();
             try
             {
-                return base.BuildDeclarationTree(builder);
+                return BuildChildDeclarationTree(builder);
             }
             finally
             {

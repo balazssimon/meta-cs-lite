@@ -997,7 +997,7 @@ namespace MetaDslx.CodeAnalysis
 
         public TypeSymbol? AsTypeSymbol(Compilation compilation)
         {
-            if (compilation is null || OriginalTypeSymbol?.DeclaringCompilation == compilation) return OriginalTypeSymbol;
+            if (IsTypeSymbol) return OriginalTypeSymbol;
             return compilation.ResolveType(FullName);
         }
 

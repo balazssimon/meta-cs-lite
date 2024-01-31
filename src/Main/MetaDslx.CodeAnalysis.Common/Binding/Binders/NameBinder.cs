@@ -29,7 +29,7 @@ namespace MetaDslx.CodeAnalysis.Binding
             builder.BeginName(_qualifierType, _qualifierProperty?.Name);
             try
             {
-                var result = base.BuildDeclarationTree(builder);
+                var result = BuildChildDeclarationTree(builder);
                 if (!builder.HasName)
                 {
                     var name = this.Language.SyntaxFacts.ExtractName(this.Syntax);

@@ -18,7 +18,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Binding
 
 public virtual void VisitMain(MainSyntax node)
 {
-    if (this.IsRoot)
+    /*if (this.IsRoot)
     {
         var __rootAnnot = new global::MetaDslx.CodeAnalysis.Binding.RootBinder(node.SyntaxTree);
         this.Begin(__rootAnnot, node);
@@ -66,15 +66,15 @@ public virtual void VisitMain(MainSyntax node)
         }
     }
     else
-    {
+    {*/
     	var __annot2 = new MetaDslx.CodeAnalysis.Binding.DefineBinder(type: typeof(MetaDslx.Languages.MetaModel.Model.MetaNamespace));
     	this.Begin(__annot2, node);
     	try
     	{
-    	    var __annot1 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Name");
-    	    this.Begin(__annot1, node.Name);
-    	    try
-    	    {
+    	    //var __annot1 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Name");
+    	    //this.Begin(__annot1, node.Name);
+    	    //try
+    	    //{
     	        var __annot0 = new MetaDslx.CodeAnalysis.Binding.NameBinder(qualifierProperty: MetaDslx.Languages.MetaModel.Model.Meta.MetaDeclaration_Declarations);
     	        this.Begin(__annot0, node.Name);
     	        try
@@ -85,11 +85,11 @@ public virtual void VisitMain(MainSyntax node)
     	        {
     	            this.End(__annot0);
     	        }
-    	    }
-    	    finally
-    	    {
-    	        this.End(__annot1);
-    	    }
+    	    //}
+    	    //finally
+    	    //{
+    	    //    this.End(__annot1);
+    	    //}
     	    var usingListList = node.UsingList;
     	    for (var usingListIndex = 0; usingListIndex < usingListList.Count; ++usingListIndex)
     	    {
@@ -102,7 +102,7 @@ public virtual void VisitMain(MainSyntax node)
     	{
     	    this.End(__annot2);
     	}
-    }
+    //}
 }
 
 public virtual void VisitUsing(UsingSyntax node)
