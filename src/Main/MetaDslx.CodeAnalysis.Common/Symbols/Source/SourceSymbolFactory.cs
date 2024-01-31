@@ -219,12 +219,12 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 if (decl.IsNull) continue;
-                if (TryGetDeclarationBinder(symbol, decl, out var declBinder))
+                if (TryGetDeclarationBinder(symbol, decl, out var declBinder, out var isNesting))
                 {
                     var propBinders = declBinder.GetPropertyBinders(symbolProperty, cancellationToken);
                     foreach (var propBinder in propBinders)
                     {
-                        var valueBinders = propBinder.GetValueBinders(propBinder, cancellationToken);
+                        var valueBinders = propBinder.GetValueBinders(cancellationToken);
                         foreach (var valueBinder in valueBinders)
                         {
                             var values = ((Binder)valueBinder).Bind(cancellationToken);
@@ -239,7 +239,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
                         }
                     }
                 }
-                else //if (!isNesting)
+                else if (!isNesting)
                 {
                     diagnostics.Add(Diagnostic.Create(ErrorCode.ERR_InternalError, decl.GetLocation(), $"Could not resolve declaration of '{symbol.Declaration.Name}' in SourceSymbolFactory."));
                 }
@@ -263,12 +263,12 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
                 {
                     cancellationToken.ThrowIfCancellationRequested();
                     if (decl.IsNull) continue;
-                    if (TryGetDeclarationBinder(symbol, decl, out var declBinder))
+                    if (TryGetDeclarationBinder(symbol, decl, out var declBinder, out var isNesting))
                     {
                         var propBinders = declBinder.GetPropertyBinders(prop.Name, cancellationToken);
                         foreach (var propBinder in propBinders)
                         {
-                            var valueBinders = propBinder.GetValueBinders(propBinder, cancellationToken);
+                            var valueBinders = propBinder.GetValueBinders(cancellationToken);
                             foreach (var valueBinder in valueBinders)
                             {
                                 var values = ((Binder)valueBinder).Bind(cancellationToken);
@@ -286,7 +286,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
                             }
                         }
                     }
-                    else //if (!isNesting)
+                    else if (!isNesting)
                     {
                         diagnostics.Add(Diagnostic.Create(ErrorCode.ERR_InternalError, decl.GetLocation(), $"Could not resolve declaration of '{symbol.Declaration.Name}' in SourceSymbolFactory."));
                     }
@@ -308,7 +308,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 if (decl.IsNull) continue;
-                if (TryGetDeclarationBinder(symbol, decl, out var declBinder))
+                if (TryGetDeclarationBinder(symbol, decl, out var declBinder, out var isNesting))
                 {
                     var propBinders = declBinder.GetPropertyBinders(propertyName: null, cancellationToken);
                     foreach (var propBinder in propBinders)
@@ -318,7 +318,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
                         {
                             var slot = modelObject.MGetSlot(prop);
                             if (slot is null) continue;
-                            var valueBinders = propBinder.GetValueBinders(propBinder, cancellationToken);
+                            var valueBinders = propBinder.GetValueBinders(cancellationToken);
                             foreach (var valueBinder in valueBinders)
                             {
                                 var values = ((Binder)valueBinder).Bind(cancellationToken);
@@ -335,25 +335,25 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
                         }
                     }
                 }
-                else 
+                else if (!isNesting) 
                 {
                     diagnostics.Add(Diagnostic.Create(ErrorCode.ERR_InternalError, decl.GetLocation(), $"Could not resolve declaration of '{symbol.Declaration.Name}' in SourceSymbolFactory."));
                 }
             }
         }
 
-        protected bool TryGetDeclarationBinder(ISourceSymbol? symbol, SyntaxNodeOrToken declaration, out Binder? binder)
+        protected bool TryGetDeclarationBinder(ISourceSymbol? symbol, SyntaxNodeOrToken declaration, out IDefineBinder? binder, out bool isNesting)
         {
             binder = null;
             var declBinder = Compilation.GetBinder(declaration);
-            var isNesting = false;
+            isNesting = false;
             while (declBinder is not null)
             {
                 if (declBinder is IDefineBinder defineBinder)
                 {
                     if (defineBinder.DefinedSymbols.Contains((Symbol)symbol))
                     {
-                        binder = declBinder;
+                        binder = defineBinder;
                         return true;
                     }
                     else if (defineBinder.NestingSymbols.Contains((Symbol)symbol))

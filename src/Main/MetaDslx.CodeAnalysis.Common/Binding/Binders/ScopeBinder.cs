@@ -38,22 +38,6 @@ namespace MetaDslx.CodeAnalysis.Binding
             }
         }
 
-        protected override void CollectNameBinders(ArrayBuilder<INameBinder> nameBinders, CancellationToken cancellationToken)
-        {
-        }
-
-        protected override void CollectQualifierBinders(ArrayBuilder<IQualifierBinder> qualifierBinders, CancellationToken cancellationToken)
-        {
-        }
-
-        protected override void CollectIdentifierBinders(ArrayBuilder<IIdentifierBinder> identifierBinders, CancellationToken cancellationToken)
-        {
-        }
-
-        protected override void CollectValueBinders(IPropertyBinder propertyBinder, ArrayBuilder<IValueBinder> valueBinders, CancellationToken cancellationToken)
-        {
-        }
-
         public override string ToString()
         {
             var builder = PooledStringBuilder.GetInstance();

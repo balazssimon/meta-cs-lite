@@ -26,20 +26,6 @@ namespace MetaDslx.CodeAnalysis.Binding
             return ImmutableArray<SingleDeclaration>.Empty;
         }
 
-
-        protected override void CollectQualifierBinders(ArrayBuilder<IQualifierBinder> qualifierBinders, CancellationToken cancellationToken)
-        {
-        }
-
-        protected override void CollectIdentifierBinders(ArrayBuilder<IIdentifierBinder> identifierBinders, CancellationToken cancellationToken)
-        {
-        }
-
-        protected override void CollectValueBinders(IPropertyBinder propertyBinder, ArrayBuilder<IValueBinder> valueBinders, CancellationToken cancellationToken)
-        {
-            valueBinders.Add(this);
-        }
-
         protected override ImmutableArray<object?> ComputeValues(MetaType expectedType, DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             return ImmutableArray.Create(Value);

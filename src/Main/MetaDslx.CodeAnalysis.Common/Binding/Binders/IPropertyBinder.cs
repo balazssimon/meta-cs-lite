@@ -12,6 +12,6 @@ namespace MetaDslx.CodeAnalysis.Binding
         ImmutableArray<object?> ValuesOpt { get; }
         MetaType OwnerType { get; }
         MetaType Type { get; }
-        ImmutableArray<IValueBinder> GetValueBinders(IPropertyBinder propertyBinder, CancellationToken cancellationToken = default);
+        ImmutableArray<IValueBinder> GetValueBinders(CancellationToken cancellationToken = default);
     }
 }

@@ -8,6 +8,5 @@ namespace MetaDslx.CodeAnalysis.Binding
 {
     public interface INameBinder
     {
-        ImmutableArray<IQualifierBinder> GetQualifierBinders(CancellationToken cancellationToken = default);
     }
 }

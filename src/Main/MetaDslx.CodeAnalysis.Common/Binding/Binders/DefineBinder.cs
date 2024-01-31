@@ -107,25 +107,30 @@ namespace MetaDslx.CodeAnalysis.Binding
 
         public override ImmutableArray<Symbol> ContainingDefinedSymbols => this.DefinedSymbols;
 
-        protected override void CollectNameBinders(ArrayBuilder<INameBinder> nameBinders, CancellationToken cancellationToken)
+        public ImmutableArray<IPropertyBinder> GetPropertyBinders(string? propertyName, CancellationToken cancellationToken = default)
         {
-        }
-
-        protected override void CollectQualifierBinders(ArrayBuilder<IQualifierBinder> qualifierBinders, CancellationToken cancellationToken)
-        {
-        }
-
-        protected override void CollectIdentifierBinders(ArrayBuilder<IIdentifierBinder> identifierBinders, CancellationToken cancellationToken)
-        {
-        }
-
-        protected override void CollectPropertyBinders(string? propertyName, ArrayBuilder<IPropertyBinder> propertyBinders, CancellationToken cancellationToken)
-        {
-        }
-
-        protected override void CollectValueBinders(IPropertyBinder propertyBinder, ArrayBuilder<IValueBinder> valueBinders, CancellationToken cancellationToken)
-        {
-            valueBinders.Add(this);
+            var propertyBinders = ArrayBuilder<IPropertyBinder>.GetInstance();
+            var queue = ArrayBuilder<Binder>.GetInstance();
+            queue.Add(this);
+            int i = 0;
+            while (i < queue.Count)
+            {
+                var binder = queue[i];
+                if (binder is IPropertyBinder propertyBinder)
+                {
+                    if (propertyName is null || propertyBinder.Name == propertyName)
+                    {
+                        propertyBinders.Add(propertyBinder);
+                    }
+                }
+                foreach (var child in binder.GetChildBinders(false, cancellationToken))
+                {
+                    if (child is not IDefineBinder) queue.Add(child);
+                }
+                ++i;
+            }
+            queue.Free();
+            return propertyBinders.ToImmutableAndFree();
         }
 
         protected override ImmutableArray<object?> ComputeValues(MetaType expectedType, DiagnosticBag diagnostics, CancellationToken cancellationToken)

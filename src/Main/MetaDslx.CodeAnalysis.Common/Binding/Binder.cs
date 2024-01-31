@@ -213,14 +213,11 @@ namespace MetaDslx.CodeAnalysis.Binding
         public virtual ImmutableArray<DeclarationSymbol> ContainingScopeSymbols => ParentBinder?.ContainingScopeSymbols ?? ImmutableArray<DeclarationSymbol>.Empty;
 
         public virtual ImmutableArray<Symbol> ContainingDefinedSymbols => ParentBinder?.ContainingDefinedSymbols ?? ImmutableArray<Symbol>.Empty;
-
+        /*
         public ImmutableArray<INameBinder> GetNameBinders(CancellationToken cancellationToken = default)
         {
             var nameBinders = ArrayBuilder<INameBinder>.GetInstance();
-            foreach (var child in GetChildBinders(false, cancellationToken))
-            {
-                child.CollectNameBinders(nameBinders, cancellationToken);
-            }
+            CollectNameBinders(nameBinders, cancellationToken);
             return nameBinders.ToImmutableAndFree();
         }
 
@@ -235,10 +232,7 @@ namespace MetaDslx.CodeAnalysis.Binding
         public ImmutableArray<IQualifierBinder> GetQualifierBinders(CancellationToken cancellationToken = default)
         {
             var qualifierBinders = ArrayBuilder<IQualifierBinder>.GetInstance();
-            foreach (var child in GetChildBinders(false, cancellationToken))
-            {
-                child.CollectQualifierBinders(qualifierBinders, cancellationToken);
-            }
+            CollectQualifierBinders(qualifierBinders, cancellationToken);
             return qualifierBinders.ToImmutableAndFree();
         }
 
@@ -253,10 +247,7 @@ namespace MetaDslx.CodeAnalysis.Binding
         public ImmutableArray<IIdentifierBinder> GetIdentifierBinders(CancellationToken cancellationToken = default)
         {
             var identifierBinders = ArrayBuilder<IIdentifierBinder>.GetInstance();
-            foreach (var child in GetChildBinders(false, cancellationToken))
-            {
-                child.CollectIdentifierBinders(identifierBinders, cancellationToken);
-            }
+            CollectIdentifierBinders(identifierBinders, cancellationToken);
             return identifierBinders.ToImmutableAndFree();
         }
 
@@ -271,10 +262,7 @@ namespace MetaDslx.CodeAnalysis.Binding
         public ImmutableArray<IPropertyBinder> GetPropertyBinders(string? propertyName = null, CancellationToken cancellationToken = default)
         {
             var propertyBinders = ArrayBuilder<IPropertyBinder>.GetInstance();
-            foreach (var child in GetChildBinders(false, cancellationToken))
-            {
-                child.CollectPropertyBinders(propertyName, propertyBinders, cancellationToken);
-            }
+            CollectPropertyBinders(propertyName, propertyBinders, cancellationToken);
             return propertyBinders.ToImmutableAndFree();
         }
 
@@ -289,10 +277,7 @@ namespace MetaDslx.CodeAnalysis.Binding
         public ImmutableArray<IValueBinder> GetValueBinders(IPropertyBinder propertyBinder, CancellationToken cancellationToken = default)
         {
             var valueBinders = ArrayBuilder<IValueBinder>.GetInstance();
-            foreach (var child in GetChildBinders(false, cancellationToken))
-            {
-                child.CollectValueBinders(propertyBinder, valueBinders, cancellationToken);
-            }
+            CollectValueBinders(propertyBinder, valueBinders, cancellationToken);
             return valueBinders.ToImmutableAndFree();
         }
 
@@ -303,7 +288,7 @@ namespace MetaDslx.CodeAnalysis.Binding
                 child.CollectValueBinders(propertyBinder, valueBinders, cancellationToken);
             }
         }
-
+        */
         protected IMultiLookupBinder? GetEnclosingMultiLookupBinder()
         {
             var currentBinder = this;

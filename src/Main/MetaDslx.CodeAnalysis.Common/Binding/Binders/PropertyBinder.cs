@@ -74,35 +74,47 @@ namespace MetaDslx.CodeAnalysis.Binding
             }
         }
 
-        protected override void CollectQualifierBinders(ArrayBuilder<IQualifierBinder> qualifierBinders, CancellationToken cancellationToken)
+        public ImmutableArray<IValueBinder> GetValueBinders(CancellationToken cancellationToken = default)
         {
-            if (!ValuesOpt.IsDefault) base.CollectQualifierBinders(qualifierBinders, cancellationToken);
-        }
-
-        protected override void CollectIdentifierBinders(ArrayBuilder<IIdentifierBinder> identifierBinders, CancellationToken cancellationToken)
-        {
-            if (!ValuesOpt.IsDefault) base.CollectIdentifierBinders(identifierBinders, cancellationToken);
-        }
-        
-        protected override void CollectPropertyBinders(string? propertyName, ArrayBuilder<IPropertyBinder> propertyBinders, CancellationToken cancellationToken)
-        {
-            if (propertyName is null || propertyName == this.Name) propertyBinders.Add(this);
-            base.CollectPropertyBinders(propertyName, propertyBinders, cancellationToken);
-        }
-
-        protected override void CollectValueBinders(IPropertyBinder propertyBinder, ArrayBuilder<IValueBinder> valueBinders, CancellationToken cancellationToken)
-        {
-            if (propertyBinder == this)
+            if (!this.ValuesOpt.IsDefault) return ImmutableArray.Create<IValueBinder>(this);
+            var valueBinders = ArrayBuilder<IValueBinder>.GetInstance();
+            var queue = ArrayBuilder<Binder>.GetInstance();
+            queue.Add(this);
+            int i = 0;
+            while (i < queue.Count)
             {
-                if (ValuesOpt.IsDefault)
+                var binder = queue[i];
+                var addChildren = true;
+                if (i > 0)
                 {
-                    base.CollectValueBinders(propertyBinder, valueBinders, cancellationToken);
+                    if (binder is IPropertyBinder propertyBinder)
+                    {
+                        if (propertyBinder.ValuesOpt.IsDefault)
+                        {
+                            addChildren = false;
+                        }
+                    }
+                    else if (binder is IValueBinder valueBinder)
+                    {
+                        valueBinders.Add(valueBinder);
+                        addChildren = false;
+                    }
+                    else if (binder is IScopeBinder)
+                    {
+                        addChildren = false;
+                    }
                 }
-                else
+                if (addChildren)
                 {
-                    valueBinders.Add(this);
+                    foreach (var child in binder.GetChildBinders(false, cancellationToken))
+                    {
+                        queue.Add(child);
+                    }
                 }
+                ++i;
             }
+            queue.Free();
+            return valueBinders.ToImmutableAndFree();
         }
 
         protected override IPropertyBinder? GetEnclosingPropertyBinder()
@@ -116,7 +128,7 @@ namespace MetaDslx.CodeAnalysis.Binding
             if (ValuesOpt.IsDefault)
             {
                 var result = ArrayBuilder<object?>.GetInstance();
-                var valueBinders = GetValueBinders(this, cancellationToken);
+                var valueBinders = GetValueBinders(cancellationToken);
                 foreach (var valueBinder in valueBinders)
                 {
                     var binder = (Binder)valueBinder;

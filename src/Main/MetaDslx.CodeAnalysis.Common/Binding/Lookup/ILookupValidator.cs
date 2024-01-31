@@ -31,14 +31,5 @@ namespace MetaDslx.CodeAnalysis.Binding
         /// <param name="resultSymbol">The result symbol to be validated.</param>
         /// <param name="unwrappedSymbol">If the result symbol is an alias, the unwrapped symbol is its target. Otherwise, the result symbol and the unwrapped symbol are the same.</param>
         SingleLookupResult ValidateResult(LookupContext context, DeclarationSymbol resultSymbol, DeclarationSymbol unwrappedSymbol);
-
-        /// <summary>
-        /// Optionally updates the diagnostic resulting from a lookup error. Useful for
-        /// providing extra context information in the diagnostic message.
-        /// </summary>
-        /// <param name="context">The constraints of the current lookup</param>
-        /// <param name="diagnostic">The diagnostic resulting from a lookup error</param>
-        /// <returns></returns>
-        Diagnostic UpdateDiagnostic(LookupContext context, Diagnostic diagnostic);
     }
 }

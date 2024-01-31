@@ -30,18 +30,41 @@ namespace MetaDslx.CodeAnalysis.Binding
             }
         }
 
-        protected override void CollectNameBinders(ArrayBuilder<INameBinder> nameBinders, CancellationToken cancellationToken)
+        public ImmutableArray<IIdentifierBinder> GetIdentifierBinders(CancellationToken cancellationToken = default)
         {
-        }
-
-        protected override void CollectQualifierBinders(ArrayBuilder<IQualifierBinder> qualifierBinders, CancellationToken cancellationToken)
-        {
-            qualifierBinders.Add(this);
-        }
-
-        protected override void CollectValueBinders(IPropertyBinder propertyBinder, ArrayBuilder<IValueBinder> valueBinders, CancellationToken cancellationToken)
-        {
-            if (IsTopMostQualifier) valueBinders.Add(this);
+            if (!IsTopMostQualifier) return ImmutableArray<IIdentifierBinder>.Empty;
+            var identifierBinders = ArrayBuilder<IIdentifierBinder>.GetInstance();
+            var queue = ArrayBuilder<Binder>.GetInstance();
+            queue.Add(this);
+            int i = 0;
+            while (i < queue.Count)
+            {
+                var binder = queue[i];
+                var addChildren = true;
+                if (binder is IIdentifierBinder identifierBinder)
+                {
+                    identifierBinders.Add(identifierBinder);
+                    addChildren = false;
+                }
+                else if (binder is IQualifierBinder)
+                {
+                    addChildren = true;
+                }
+                else if (binder is IValueBinder || binder is IScopeBinder)
+                {
+                    addChildren = false;
+                }
+                if (addChildren)
+                {
+                    foreach (var child in binder.GetChildBinders(false, cancellationToken))
+                    {
+                        queue.Add(child);
+                    }
+                }
+                ++i;
+            }
+            queue.Free();
+            return identifierBinders.ToImmutableAndFree();
         }
 
         protected override ImmutableArray<object?> ComputeValues(MetaType expectedType, DiagnosticBag diagnostics, CancellationToken cancellationToken)

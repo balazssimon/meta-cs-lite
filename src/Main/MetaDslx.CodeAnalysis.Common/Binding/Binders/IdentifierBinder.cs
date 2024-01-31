@@ -71,11 +71,6 @@ namespace MetaDslx.CodeAnalysis.Binding
             return this.Language.SyntaxFacts.ExtractMetadataName(this.Syntax);
         }
 
-        protected override void CollectIdentifierBinders(ArrayBuilder<IIdentifierBinder> identifierBinders, CancellationToken cancellationToken)
-        {
-            identifierBinders.Add(this);
-        }
-
         protected sealed override ImmutableArray<object?> ComputeValues(MetaType expectedType, DiagnosticBag diagnostics, CancellationToken cancellationToken = default)
         {
             CacheNameAndMetadataName(cancellationToken);

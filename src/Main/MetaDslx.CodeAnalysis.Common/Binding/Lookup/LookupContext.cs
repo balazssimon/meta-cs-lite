@@ -342,12 +342,6 @@ namespace MetaDslx.CodeAnalysis.Binding
             else return DefaultLookupValidator.ValidateResult(this, symbol, unwrappedSymbol);
         }
 
-        public Diagnostic UpdateDiagnostic(Diagnostic diagnostic)
-        {
-            if (_originalBinder is not null) return ((ILookupValidator)_originalBinder).UpdateDiagnostic(this, diagnostic);
-            else return DefaultLookupValidator.UpdateDiagnostic(this, diagnostic);
-        }
-
         public bool AddResult(DeclarationSymbol symbol)
         {
             var viable = IsViable(symbol);

@@ -67,11 +67,6 @@ namespace MetaDslx.CodeAnalysis.Binding
             return DefaultLookupValidator.ValidateResult(context, resultSymbol, unwrappedSymbol);
         }
 
-        protected virtual Diagnostic UpdateDiagnostic(LookupContext context, Diagnostic diagnostic)
-        {
-            return DefaultLookupValidator.UpdateDiagnostic(context, diagnostic);
-        }
-
         bool ILookupValidator.IsViable(LookupContext context, DeclarationSymbol symbol)
         {
             return this.IsViable(context, symbol);
@@ -80,11 +75,6 @@ namespace MetaDslx.CodeAnalysis.Binding
         SingleLookupResult ILookupValidator.ValidateResult(LookupContext context, DeclarationSymbol resultSymbol, DeclarationSymbol unwrappedSymbol)
         {
             return this.ValidateResult(context, resultSymbol, unwrappedSymbol);
-        }
-
-        Diagnostic ILookupValidator.UpdateDiagnostic(LookupContext context, Diagnostic diagnostic)
-        {
-            return this.UpdateDiagnostic(context, diagnostic);
         }
 
         public Binder LookupSymbols(LookupContext context)

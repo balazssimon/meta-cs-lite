@@ -64,23 +64,6 @@ namespace MetaDslx.CodeAnalysis.Binding
             return ImmutableArray<SingleDeclaration>.Empty;
         }
 
-        protected override void CollectNameBinders(ArrayBuilder<INameBinder> nameBinders, CancellationToken cancellationToken)
-        {
-        }
-
-        protected override void CollectQualifierBinders(ArrayBuilder<IQualifierBinder> qualifierBinders, CancellationToken cancellationToken)
-        {
-        }
-
-        protected override void CollectIdentifierBinders(ArrayBuilder<IIdentifierBinder> identifierBinders, CancellationToken cancellationToken)
-        {
-        }
-
-        protected override void CollectValueBinders(IPropertyBinder propertyBinder, ArrayBuilder<IValueBinder> valueBinders, CancellationToken cancellationToken)
-        {
-            valueBinders.Add(this);
-        }
-
         protected sealed override ImmutableArray<object?> BindValues(CancellationToken cancellationToken = default)
         {
             var propertyBinder = GetEnclosingPropertyBinder();
