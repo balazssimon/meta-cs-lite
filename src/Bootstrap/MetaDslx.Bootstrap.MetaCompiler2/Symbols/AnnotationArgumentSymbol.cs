@@ -166,7 +166,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Symbols
             var csType = msType is null ? null : csParam?.SymbolFactory.GetSymbol<TypeSymbol>(msType, diagnostics, cancellationToken);
             var mtType = MetaType.FromTypeSymbol(csType);
             if (mtType.IsNullable) mtType.TryExtractNullableType(out mtType, diagnostics, cancellationToken);
-            if (mtType.TryGetCoreType(out var coreType, diagnostics, cancellationToken) && !coreType.IsNull)
+            if (mtType.TryGetCoreType(out var coreType, diagnostics, cancellationToken) && !coreType.IsDefaultOrNull)
             {
                 var typeSlot = ModelObject.MGetSlot(MetaDslx.Bootstrap.MetaCompiler2.Model.Compiler.AnnotationArgument_ParameterType);
                 typeSlot?.Add(mtType);

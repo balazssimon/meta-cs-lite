@@ -204,7 +204,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Symbols
         protected virtual MetaType CompleteProperty_ReturnType(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             var returnType = SymbolFactory.GetSymbolPropertyValue<MetaType>(this, nameof(ReturnType), diagnostics, cancellationToken);
-            if (returnType.IsNull)
+            if (returnType.IsDefaultOrNull)
             {
                 var rule = this.ContainingParserRuleSymbol;
                 if (rule is not null)
@@ -227,7 +227,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Symbols
 
         protected virtual MetaType CompleteProperty_ExpectedType(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            if (!this.ReturnType.IsNull)
+            if (!this.ReturnType.IsDefaultOrNull)
             {
                 return this.ReturnType;
             }

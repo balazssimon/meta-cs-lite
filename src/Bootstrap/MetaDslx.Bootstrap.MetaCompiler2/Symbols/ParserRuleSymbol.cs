@@ -110,7 +110,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Symbols
         protected virtual MetaType CompleteProperty_ReturnType(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             var returnType = SymbolFactory.GetSymbolPropertyValue<MetaType>(this, nameof(ReturnType), diagnostics, cancellationToken);
-            if (returnType.IsNull)
+            if (returnType.IsDefaultOrNull)
             {
                 diagnostics.Add(Diagnostic.Create(CommonErrorCode.ERR_BindingError, Location, $"Could not determine the return type of the rule '{Name}'"));
             }
@@ -126,7 +126,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Symbols
         {
             base.CompletePart_Validate(diagnostics, cancellationToken);
             var returnType = this.ReturnType;
-            if (!returnType.IsNull)
+            if (!returnType.IsDefaultOrNull)
             {
                 foreach (var alt in this.Alternatives)
                 {

@@ -45,7 +45,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Symbols
         {
             get
             {
-                if (_expectedType.IsNull)
+                if (_expectedType.IsDefault)
                 {
                     var diagnostics = DiagnosticBag.GetInstance();
                     var expectedType = GetExpectedType(diagnostics, cancellationToken: default);
@@ -92,8 +92,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Symbols
             {
                 _modelObjectType = containingAlt.ReturnType.AsTypeSymbol(Compilation);
             }
-            if (result.IsNull) return default;
-            if (result.TryGetCoreType(out var coreType, diagnostics, cancellationToken) && !coreType.IsNull)
+            if (result.IsDefaultOrNull) return default;
+            if (result.TryGetCoreType(out var coreType, diagnostics, cancellationToken) && !coreType.IsDefaultOrNull)
             {
                 return coreType;
             }

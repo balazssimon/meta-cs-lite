@@ -172,7 +172,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Symbols
             if (!this.Value.IsNull)
             {
                 var valueType = this.Value.Type;
-                if (!valueType.IsNull)
+                if (!valueType.IsDefaultOrNull)
                 {
                     var expectedType = this.ExpectedType;
                     if (expectedType.TryGetCoreType(out var coreType, diagnostics, cancellationToken))

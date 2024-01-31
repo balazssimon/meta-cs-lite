@@ -195,7 +195,7 @@ namespace MetaDslx.CodeAnalysis.Binding
                     if (modelProperty is not null)
                     {
                         propertyType = modelProperty.Type;
-                        if (!propertyType.IsDefaultOrNull)
+                        if (propertyType.IsDefaultOrNull)
                         {
                             diagnostics.Add(Diagnostic.Create(CommonErrorCode.ERR_BindingError, Location, $"Property '{Name}' of model object '{modelObjectType}' has no type."));
                         }

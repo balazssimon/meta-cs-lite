@@ -105,7 +105,7 @@ namespace MetaDslx.CodeAnalysis.Syntax
 
         public virtual bool TryExtractValue(MetaType expectedType, string? valueText, out object? value)
         {
-            if (expectedType.IsNull || expectedType.SpecialType == SpecialType.MetaDslx_CodeAnalysis_MetaSymbol)
+            if (expectedType.IsDefaultOrNull || expectedType.SpecialType == SpecialType.MetaDslx_CodeAnalysis_MetaSymbol)
             {
                 if (valueText == null)
                 {

@@ -23,44 +23,39 @@ namespace MetaDslx.CodeAnalysis
 
         private object? _original;
 
-        public MetaType()
+        private MetaType(string? name)
         {
-            _original = typeof(Default);
-        }
-
-        private MetaType(string name)
-        {
-            _original = name;
+            _original = name ?? (object)typeof(Null);
         }
 
         private MetaType(Type? type)
         {
-            _original = type;
+            _original = type ?? typeof(Null);
         }
 
-        private MetaType(TypeSymbol typeSymbol)
+        private MetaType(TypeSymbol? typeSymbol)
         {
-            _original = typeSymbol;
+            _original = typeSymbol ?? (object)typeof(Null);
         }
 
-        private MetaType(IModelObject modelObject)
+        private MetaType(IModelObject? modelObject)
         {
-            _original = modelObject;
+            _original = modelObject ?? (object)typeof(Null);
         }
 
-        public static MetaType FromName(string name) => new MetaType(name);
+        public static MetaType FromName(string? name) => new MetaType(name);
         public static MetaType FromType(Type? type) => new MetaType(type);
         public static MetaType FromTypeSymbol(TypeSymbol? typeSymbol) => new MetaType(typeSymbol);
         public static MetaType FromModelObject(IModelObject? modelObject) => new MetaType(modelObject);
 
         public bool InterlockedInitialize(MetaType value)
         {
-            return Interlocked.CompareExchange(ref _original, value._original, typeof(Default)) as Type == typeof(Default);
+            return Interlocked.CompareExchange(ref _original, value._original, null) == null;
         }
 
-        public bool IsDefault => OriginalType == typeof(Default);
+        public bool IsDefault => OriginalType == null;
         public bool IsDefaultOrNull => IsDefault || IsNull;
-        public bool IsNull => _original is null;
+        public bool IsNull => (_original as Type) == typeof(Null);
         public bool IsName => _original is string;
         public bool IsType => _original is Type;
         public bool IsTypeSymbol => _original is TypeSymbol;
@@ -83,7 +78,7 @@ namespace MetaDslx.CodeAnalysis
         {
             get
             {
-                if (IsNull) return null;
+                if (IsDefaultOrNull) return null;
                 if (IsType) return OriginalType.Name;
                 if (IsTypeSymbol) return OriginalTypeSymbol.Name;
                 if (IsModelObject) return OriginalModelObject.MName;
@@ -98,7 +93,7 @@ namespace MetaDslx.CodeAnalysis
         {
             get
             {
-                if (IsNull) return null;
+                if (IsDefaultOrNull) return null;
                 switch (this.SpecialType)
                 {
                     case SpecialType.None:
@@ -238,7 +233,7 @@ namespace MetaDslx.CodeAnalysis
         {
             get
             {
-                if (IsNull) return null;
+                if (IsDefaultOrNull) return null;
                 string? result = null;
                 if (result is null && IsName) result = (string)_original;
                 if (result is null && IsType) result = OriginalType.FullName;
@@ -1033,7 +1028,7 @@ namespace MetaDslx.CodeAnalysis
 
         public bool IsAssignableFrom(MetaType type)
         {
-            if (type.IsNull) return false;
+            if (type.IsDefaultOrNull) return false;
             if (this.Equals(type)) return true;
             if (type.IsTypeSymbol)
             {
@@ -1050,7 +1045,7 @@ namespace MetaDslx.CodeAnalysis
 
         public bool IsAssignableTo(MetaType type)
         {
-            if (type.IsNull) return false;
+            if (type.IsDefaultOrNull) return false;
             return type.IsAssignableFrom(this);
         }
 
@@ -1066,7 +1061,7 @@ namespace MetaDslx.CodeAnalysis
         public override bool Equals(object obj)
         {
             if (obj is MetaType mt) return Equals(mt);
-            else return this.IsNull && obj is null;
+            else return this.IsDefault && obj is null;
         }
 
         public override int GetHashCode()
@@ -1146,7 +1141,7 @@ namespace MetaDslx.CodeAnalysis
             return null;
         }
 
-        private class Default
+        private class Null
         {
         }
     }

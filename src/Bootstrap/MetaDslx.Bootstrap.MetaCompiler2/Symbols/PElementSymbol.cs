@@ -180,7 +180,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Symbols
             var qualifierOpt = this.GetOutermostContainingSymbol<PAlternativeSymbol>()?.ReturnType;
             if (!qualifierOpt.HasValue) return default;
             var qualifier = qualifierOpt.Value;
-            if (qualifier.IsNull) return default;
+            if (qualifier.IsDefaultOrNull) return default;
             var nameBlock = this.Syntax?.Block;
             if (nameBlock is null) return default;
             var nameSyntax = nameBlock.Name;
@@ -220,8 +220,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Symbols
             if (result.IsNullable) result.TryExtractNullableType(out result, diagnostics, cancellationToken);
             if (result.IsCollection) kind = ExpectedTypeKind.Collection;
             else if (result.SpecialType == SpecialType.System_Boolean) kind = ExpectedTypeKind.Bool;
-            else if (!result.IsNull) kind = ExpectedTypeKind.Simple;
-            if (result.TryGetCoreType(out var coreType, diagnostics, cancellationToken) && !coreType.IsNull)
+            else if (!result.IsDefaultOrNull) kind = ExpectedTypeKind.Simple;
+            if (result.TryGetCoreType(out var coreType, diagnostics, cancellationToken) && !coreType.IsDefaultOrNull)
             {
                 result = coreType;
             }
@@ -258,7 +258,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Symbols
             if (IsNamedElement)
             {
                 var expType = this.ExpectedType;
-                if (!expType.IsNull)
+                if (!expType.IsDefaultOrNull)
                 {
                     if (expType.TryGetCoreType(out var coreType, diagnostics, cancellationToken))
                     {
