@@ -53,7 +53,7 @@ namespace MetaDslx.CodeAnalysis
             return Interlocked.CompareExchange(ref _original, value._original, null) == null;
         }
 
-        public bool IsDefault => OriginalType == null;
+        public bool IsDefault => _original == null;
         public bool IsDefaultOrNull => IsDefault || IsNull;
         public bool IsNull => (_original as Type) == typeof(Null);
         public bool IsName => _original is string;

@@ -14,7 +14,7 @@ using MetaDslx.Bootstrap.MetaCompiler2.Model;
 language Compiler;
 
 Main returns Namespace:
-	'namespace' [Name(qualifierProperty:Declarations)]Qualifier ';'
+	'namespace' [Name(qualifierProperty:"Declarations")]Qualifier ';'
 	('using' Using ';')*
 	[Scope](declarations+=LanguageDeclaration)
 	eof;
