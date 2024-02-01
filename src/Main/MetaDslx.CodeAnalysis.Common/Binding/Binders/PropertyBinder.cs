@@ -21,15 +21,16 @@ namespace MetaDslx.CodeAnalysis.Binding
         private readonly string _name;
         private MetaType _type;
 
-        public PropertyBinder(string name)
+        public PropertyBinder(ModelProperty property, ImmutableArray<object?> values = default)
         {
-            _name = name;
+            _name = property.Name;
+            s_valuesOpt.Add(this, values);
         }
 
-        public PropertyBinder(string name, ImmutableArray<object?> valuesOpt = default)
+        public PropertyBinder(string name, ImmutableArray<object?> values = default)
         {
             _name = name;
-            s_valuesOpt.Add(this, valuesOpt);
+            s_valuesOpt.Add(this, values);
         }
 
         public string Name => _name;

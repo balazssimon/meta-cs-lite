@@ -198,7 +198,7 @@ public virtual void VisitMetaClass(MetaClassSyntax node)
 	{
 	    if (node.IsAbstract.GetMetaKind() != MetaSyntaxKind.None)
 	    {
-	        var __annot0 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "IsAbstract", valuesOpt: ImmutableArray.Create<object?>(true));
+	        var __annot0 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "IsAbstract", values: ImmutableArray.Create<object?>(true));
 	        this.Begin(__annot0, node.IsAbstract);
 	        try
 	        {
@@ -499,7 +499,7 @@ public virtual void VisitMetaProperty(MetaPropertySyntax node)
 	            switch (node.Tokens.GetMetaKind())
 	            {
 	                case MetaSyntaxKind.KContains:
-	                    var __annot0 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "IsContainment", valuesOpt: ImmutableArray.Create<object?>(true));
+	                    var __annot0 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "IsContainment", values: ImmutableArray.Create<object?>(true));
 	                    this.Begin(__annot0, node.Tokens);
 	                    try
 	                    {
@@ -511,7 +511,7 @@ public virtual void VisitMetaProperty(MetaPropertySyntax node)
 	                    }
 	                    break;
 	                case MetaSyntaxKind.KDerived:
-	                    var __annot1 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "IsDerived", valuesOpt: ImmutableArray.Create<object?>(true));
+	                    var __annot1 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "IsDerived", values: ImmutableArray.Create<object?>(true));
 	                    this.Begin(__annot1, node.Tokens);
 	                    try
 	                    {

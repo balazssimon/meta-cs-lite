@@ -864,7 +864,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Binding
             {
                 if (node.IsNegated.GetCompilerKind() != CompilerSyntaxKind.None)
                 {
-                    var __annot0 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "IsNegated", valuesOpt: ImmutableArray.Create<object?>(true));
+                    var __annot0 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "IsNegated", values: ImmutableArray.Create<object?>(true));
                     this.Begin(__annot0, node.IsNegated);
                     try
                     {
@@ -1932,7 +1932,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Binding
 
         public virtual void VisitTokenBlock1Alt2(TokenBlock1Alt2Syntax node)
         {
-            var __annot0 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "IsTrivia", valuesOpt: ImmutableArray.Create<object?>(true));
+            var __annot0 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "IsTrivia", values: ImmutableArray.Create<object?>(true));
             this.Begin(__annot0, node.IsTrivia);
             try
             {

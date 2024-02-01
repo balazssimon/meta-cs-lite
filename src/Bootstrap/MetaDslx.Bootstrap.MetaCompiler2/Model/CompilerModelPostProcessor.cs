@@ -12,12 +12,14 @@ using System.Text;
 using System.Threading.Tasks;
 using Roslyn.Utilities;
 using System.Xml.Linq;
+using MetaDslx.CodeAnalysis.Symbols.Model;
 
 namespace MetaDslx.Bootstrap.MetaCompiler2.Model
 {
     public class CompilerModelPostProcessor
     {
         private static readonly string DefaultReferenceFullName = typeof(DefaultReferenceAnnotation).FullName!;
+        private static readonly string MetaModelFullName = typeof(MetaDslx.Modeling.MetaModel).FullName!;
 
         private readonly MetaDslx.Modeling.Model _model;
         private CancellationToken _cancellationToken;
@@ -132,15 +134,16 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Model
                         var ftElem = f.LElement();
                         ftAlt.Elements.Add(ftElem);
                         var ftFixed = f.LFixed();
-                        ftElem.Value = ftFixed;
                         ftFixed.Text = fixedValue.Text;
+                        ftElem.Value = ftFixed;
                         _fixedTokens.Add(fixedValue.Text, fixedToken);
                         _grammar.Tokens.Add(fixedToken);
                     }
                     var tokenRef = f.RuleRef();
                     tokenRef.GrammarRule = fixedToken;
+                    tokenRef.Multiplicity = fixedValue.Multiplicity;
                     elem.Value = tokenRef;
-                    tokenRef.MSourceLocation = fixedValue.MSourceLocation;
+                    tokenRef.MSyntax = fixedValue.MSyntax;
                     _model.DeleteObject(fixedValue, _cancellationToken);
                 }
             }
@@ -294,12 +297,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Model
                         {
                             foreach (var item in array.Items)
                             {
-                                rarg.Values.Add(GetAnnotationArgumentValue(item?.Value ?? default));
+                                rarg.Values.Add(GetAnnotationArgumentValue(coreType, item?.Value ?? default));
                             }
                         }
                         else
                         {
-                            rarg.Values.Add(GetAnnotationArgumentValue(carg.Value?.Value ?? default));
+                            rarg.Values.Add(GetAnnotationArgumentValue(coreType, carg.Value?.Value ?? default));
                         }
                         binder.Arguments.Add(rarg);
                     }
@@ -307,16 +310,40 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Model
             }
         }
 
-        private string GetAnnotationArgumentValue(MetaSymbol value)
+        private string GetAnnotationArgumentValue(MetaType type, MetaSymbol value)
         {
             if (value.OriginalSymbol is not null)
             {
+                if (type.FullName == typeof(ModelProperty).FullName)
+                {
+                    var propertySymbol = value.OriginalSymbol;
+                    var ownerSymbol = propertySymbol.ContainingSymbol;
+                    var namespaceSymbol = ownerSymbol?.ContainingNamespace;
+                    var metaModelSymbol = namespaceSymbol?.ContainedSymbols.Where(IsMetaModelSymbol).FirstOrDefault();
+                    if (metaModelSymbol is not null)
+                    {
+                        return $"{SymbolDisplayFormat.QualifiedNameOnlyFormat.ToString(namespaceSymbol)}.{metaModelSymbol.Name}.{ownerSymbol.Name}_{propertySymbol.Name}";
+                    }
+                }
                 return SymbolDisplayFormat.QualifiedNameOnlyFormat.ToString(value.OriginalSymbol);
             }
             else
             {
                 return value.ToString();
             }
+        }
+
+        private bool IsMetaModelSymbol(Symbol? symbol)
+        {
+            if (symbol is IModelSymbol ms && ms.ModelObjectType == typeof(MetaDslx.Languages.MetaModel.Model.MetaModel))
+            {
+                return true;
+            }
+            if (symbol is TypeSymbol ts && ts.BaseTypes.Any(bt => bt.Name == "MetaModel" && SymbolDisplayFormat.QualifiedNameOnlyFormat.ToString(bt) == MetaModelFullName))
+            {
+                return true;
+            }
+            return false;
         }
 
         private void AddRules()
@@ -364,7 +391,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Model
                     constBinder.TypeName = typeof(MetaDslx.CodeAnalysis.Binding.ConstantBinder).FullName!;
                     var constValue = f.BinderArgument();
                     constValue.Name = "value";
-                    constValue.TypeName = typeof(object).FullName!;
+                    constValue.TypeName = "object?";
                     constValue.IsArray = false;
                     var value = alt.ReturnValue.Value;
                     if (value.IsModelObject || value.IsSymbol) constValue.Values.Add(value.FullName ?? string.Empty);
@@ -415,16 +442,16 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Model
                     propBinder.IsNegated = elem.Assignment == Assignment.NegatedAssign;
                     var propName = f.BinderArgument();
                     propName.Name = "name";
-                    propName.TypeName = typeof(string).FullName!;
+                    propName.TypeName = "string";
                     propName.IsArray = false;
-                    propName.Values.Add(name.ToPascalCase());
+                    propName.Values.Add(name.ToPascalCase().EncodeString());
                     propBinder.Arguments.Add(propName);
                     if (elem.Assignment == Assignment.QuestionAssign || elem.Assignment == Assignment.NegatedAssign)
                     {
                         var propValue = f.BinderArgument();
-                        propValue.Name = "value";
-                        propValue.TypeName = typeof(object).FullName!;
-                        propValue.IsArray = false;
+                        propValue.Name = "values";
+                        propValue.TypeName = "object?";
+                        propValue.IsArray = true;
                         propValue.Values.Add("true");
                         propBinder.Arguments.Add(propValue);
                     }
@@ -864,6 +891,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Model
         private string AddRuleName(string? ruleName, bool tryWithoutIndex, int indexHint = -1)
         {
             if (string.IsNullOrEmpty(ruleName)) ruleName = "Rule";
+            ruleName = ruleName.ToPascalCase();
             if (tryWithoutIndex && !_ruleNames.Contains(ruleName, StringComparer.OrdinalIgnoreCase))
             {
                 _ruleNames.Add(ruleName);
@@ -898,6 +926,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Model
                 defaultName = "Element";
                 tryWithoutIndex = false;
             }
+            defaultName = defaultName.ToPascalCase();
             if (tryWithoutIndex && !usedElementNames.Contains(defaultName, StringComparer.InvariantCultureIgnoreCase))
             {
                 usedElementNames.Add(defaultName);
