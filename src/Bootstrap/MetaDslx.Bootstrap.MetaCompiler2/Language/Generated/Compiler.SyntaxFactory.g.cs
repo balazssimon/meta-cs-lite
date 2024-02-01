@@ -517,6 +517,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
 
         public LElementSyntax LElement(__SyntaxToken isNegated, LElementValueSyntax value, MultiplicitySyntax multiplicity)
         {
+            if (isNegated.RawKind != (int)__InternalSyntaxKind.None && (isNegated.RawKind != (int)CompilerSyntaxKind.TTilde)) throw new __ArgumentException(nameof(isNegated));
             if (value is null) throw new __ArgumentNullException(nameof(value));
             return (LElementSyntax)CompilerLanguage.Instance.InternalSyntaxFactory.LElement((__InternalSyntaxToken)isNegated.Node, (InternalSyntax.LElementValueGreen)value.Green, (InternalSyntax.MultiplicityGreen)multiplicity.Green).CreateRed();
         }

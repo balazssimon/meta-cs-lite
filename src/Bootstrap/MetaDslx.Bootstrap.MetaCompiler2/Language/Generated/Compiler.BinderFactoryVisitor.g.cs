@@ -7,7 +7,6 @@ using MetaDslx.CodeAnalysis;
 namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Binding
 {
     using global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax;
-    using MetaDslx.Bootstrap.MetaCompiler2.Symbols;
 
     public class CompilerBinderFactoryVisitor : MetaDslx.CodeAnalysis.Binding.BinderFactoryVisitor, ICompilerSyntaxVisitor
     {
@@ -1210,7 +1209,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Binding
                 this.Begin(__annot1, node.AttributeClass);
                 try
                 {
-                    var __annot0 = new MetaDslx.CodeAnalysis.Binding.UseBinder(types: ImmutableArray.Create<System.Type>(typeof(MetaDslx.CodeAnalysis.Binding.Binder), typeof(MetaDslx.CodeAnalysis.Annotations.Annotation)), suffixes: ImmutableArray.Create<System.String>("Binder", "Annotation"));
+                    var __annot0 = new MetaDslx.CodeAnalysis.Binding.UseBinder(types: ImmutableArray.Create<System.Type>(typeof(MetaDslx.CodeAnalysis.Binding.Binder), typeof(MetaDslx.CodeAnalysis.Annotations.Annotation)), suffixes: ImmutableArray.Create<string>("Binder", "Annotation"));
                     this.Begin(__annot0, node.AttributeClass);
                     try
                     {
@@ -1246,7 +1245,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Binding
                 this.Begin(__annot1, node.AttributeClass);
                 try
                 {
-                    var __annot0 = new MetaDslx.CodeAnalysis.Binding.UseBinder(types: ImmutableArray.Create<System.Type>(typeof(MetaDslx.CodeAnalysis.Syntax.TokenKind), typeof(MetaDslx.CodeAnalysis.Annotations.Annotation)), suffixes: ImmutableArray.Create<System.String>("TokenKind", "Annotation"));
+                    var __annot0 = new MetaDslx.CodeAnalysis.Binding.UseBinder(types: ImmutableArray.Create<System.Type>(typeof(MetaDslx.CodeAnalysis.Syntax.TokenKind), typeof(MetaDslx.CodeAnalysis.Annotations.Annotation)), suffixes: ImmutableArray.Create<string>("TokenKind", "Annotation"));
                     this.Begin(__annot0, node.AttributeClass);
                     try
                     {
@@ -1458,16 +1457,16 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Binding
 
         public virtual void VisitTypeReferenceIdentifierAlt2(TypeReferenceIdentifierAlt2Syntax node)
         {
-                var __annot0 = new MetaDslx.CodeAnalysis.Binding.UseBinder(types: ImmutableArray.Create<System.Type>(typeof(MetaDslx.CodeAnalysis.MetaType)));
-                this.Begin(__annot0, node.Identifier);
-                try
-                {
-                    this.Visit(node.Identifier);
-                }
-                finally
-                {
-                    this.End(__annot0);
-                }
+            var __annot0 = new MetaDslx.CodeAnalysis.Binding.UseBinder(types: ImmutableArray.Create<System.Type>(typeof(MetaDslx.CodeAnalysis.MetaType)));
+            this.Begin(__annot0, node.Identifier);
+            try
+            {
+                this.Visit(node.Identifier);
+            }
+            finally
+            {
+                this.End(__annot0);
+            }
         }
 
         public virtual void VisitTypeReferenceAlt1(TypeReferenceAlt1Syntax node)
@@ -1617,46 +1616,47 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Binding
 
         public virtual void VisitQualifier(QualifierSyntax node)
         {
-            var __annot1 = new MetaDslx.CodeAnalysis.Binding.QualifierBinder();
-            this.Begin(__annot1, node);
+            var __annot0 = new MetaDslx.CodeAnalysis.Binding.QualifierBinder();
+            this.Begin(__annot0, node);
             try
             {
-                    var identifierList = node.Identifier;
-                    for (var identifierIndex = 0; identifierIndex < identifierList.Count; ++identifierIndex)
+                var identifierList = node.Identifier;
+                for (var identifierIndex = 0; identifierIndex < identifierList.Count; ++identifierIndex)
+                {
+                    bool __itemHandled = false;
+                    bool __sepHandled = false;
+                    if (identifierIndex == 0)
                     {
-                        bool __itemHandled = false;
-                        bool __sepHandled = false;
-                        if (identifierIndex == 0)
-                        {
-                            this.Visit(node.Identifier[identifierIndex]);
-                            __itemHandled = true;
-                        }
-                        if (!__itemHandled && identifierIndex < node.Identifier.Count)
-                        {
-                            this.Visit(node.Identifier[identifierIndex]);
-                        }
-                        if (!__sepHandled && identifierIndex < node.Identifier.SeparatorCount)
-                        {
-                            //this.VisitToken(node.Identifier.GetSeparator(identifierIndex));
-                        }
+                        this.Visit(node.Identifier[identifierIndex]);
+                        __itemHandled = true;
                     }
+                    if (!__itemHandled && identifierIndex < node.Identifier.Count)
+                    {
+                        this.Visit(node.Identifier[identifierIndex]);
+                    }
+                    if (!__sepHandled && identifierIndex < node.Identifier.SeparatorCount)
+                    {
+                        //this.VisitToken(node.Identifier.GetSeparator(identifierIndex));
+                    }
+                }
             }
             finally
             {
-                this.End(__annot1);
+                this.End(__annot0);
             }
         }
 
         public virtual void VisitIdentifier(IdentifierSyntax node)
         {
-            var __annot4 = new MetaDslx.CodeAnalysis.Binding.IdentifierBinder();
-            this.Begin(__annot4, node);
+            var __annot0 = new MetaDslx.CodeAnalysis.Binding.IdentifierBinder();
+            this.Begin(__annot0, node);
             try
             {
+                
             }
             finally
             {
-                this.End(__annot4);
+                this.End(__annot0);
             }
         }
 

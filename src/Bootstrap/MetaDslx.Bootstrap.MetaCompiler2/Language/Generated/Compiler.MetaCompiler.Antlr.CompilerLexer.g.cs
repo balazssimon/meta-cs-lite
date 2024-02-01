@@ -299,4 +299,4 @@ public partial class CompilerLexer : global::MetaDslx.CodeAnalysis.Parsers.Antlr
 
 
 }
-}
+} // namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler

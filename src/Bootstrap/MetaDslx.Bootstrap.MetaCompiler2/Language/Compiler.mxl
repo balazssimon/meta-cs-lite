@@ -102,14 +102,14 @@ PrimitiveType returns type
 	;
 
 [Name]
-Name returns object: Identifier;
+Name returns void: Identifier;
 
 [Qualifier]
-Qualifier returns object: Identifier ('.' Identifier)*;
+Qualifier returns void: Identifier ('.' Identifier)*;
 
 [DefaultReference]
 [Identifier]
-Identifier returns object: TIdentifier | TVerbatimIdentifier;
+Identifier returns void: TIdentifier | TVerbatimIdentifier;
 
 [Number]
 token TInteger returns int: '0'| '1'..'9' ('0'..'9')* ;

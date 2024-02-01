@@ -4885,4 +4885,4 @@ public partial class CompilerParser : global::MetaDslx.CodeAnalysis.Parsers.Antl
 
 
 }
-}
+} // namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler
