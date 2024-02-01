@@ -34,4 +34,12 @@
 		<AdditionalFiles Include="Language\*.mxl" />
 		<AdditionalFiles Include="Generators\*.mxg" />
 	</ItemGroup>
+	<ItemGroup>
+		<None Remove="tools\antlr-4.13.0-complete.jar" />
+	</ItemGroup>
+	<ItemGroup>
+		<Content Include="tools\antlr-4.13.0-complete.jar">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
 </Project>

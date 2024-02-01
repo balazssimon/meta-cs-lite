@@ -678,8 +678,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
         internal LElementGreen LElement(__InternalSyntaxToken isNegated, LElementValueGreen value, MultiplicityGreen multiplicity)
         {
             #if DEBUG
-                if (isNegated is null) throw new __ArgumentNullException(nameof(isNegated));
-                if (isNegated.RawKind != (int)CompilerSyntaxKind.TTilde) throw new __ArgumentException(nameof(isNegated));
                 if (value is null) throw new __ArgumentNullException(nameof(value));
             #endif
             int hash;

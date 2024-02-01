@@ -1,4 +1,5 @@
 ﻿using MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax;
+using MetaDslx.Bootstrap.MetaCompiler2.Model;
 using MetaDslx.CodeAnalysis;
 using MetaDslx.CodeAnalysis.Declarations;
 using MetaDslx.CodeAnalysis.PooledObjects;
@@ -162,8 +163,24 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Symbols
 
         protected virtual (MetaSymbol Value, ImmutableArray<MetaSymbol> Values) CompleteProperty_Value(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            var values = SymbolFactory.GetSymbolPropertyValues<MetaSymbol>(this, nameof(Value), diagnostics, cancellationToken);
-            return (values.FirstOrDefault(), values);
+            if (this.ModelObjectType == typeof(ArrayExpression))
+            {
+                var results = ArrayBuilder<MetaSymbol>.GetInstance();
+                foreach (var exprSymbol in this.ContainedSymbols.OfType<ExpressionSymbol>())
+                {
+                    foreach (var value in exprSymbol.Values)
+                    {
+                        results.Add(value);
+                    }
+                }
+                var values = results.ToImmutableAndFree();
+                return (values.FirstOrDefault(), values);
+            }
+            else
+            {
+                var values = SymbolFactory.GetSymbolPropertyValues<MetaSymbol>(this, nameof(Value), diagnostics, cancellationToken);
+                return (values.FirstOrDefault(), values);
+            }
         }
 
         protected override void CompletePart_Validate(DiagnosticBag diagnostics, CancellationToken cancellationToken)

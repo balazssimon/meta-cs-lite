@@ -68,7 +68,7 @@ pr_LAlternative
     :  E_elements+=pr_LElement*
     ;
 pr_LElement
-    :  E_isNegated=LR_TTilde  E_value=pr_LElementValue  E_multiplicity=pr_Multiplicity?
+    :  E_isNegated=LR_TTilde?  E_value=pr_LElementValue  E_multiplicity=pr_Multiplicity?
     ;
 pr_LElementValue
     :  E_LBlock=pr_LBlock #pr_LElementValueAlt1

@@ -1234,7 +1234,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
         }
     
         public __InternalSyntaxToken KMetamodel { get { return _kMetamodel; } }
-        public QualifierGreen MetaModels { get { return _metaModels; } }
+        public QualifierGreen metaModels { get { return _metaModels; } }
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
@@ -1321,7 +1321,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
             this.flags &= ~NodeFlags.IsNotMissing;
         }
     
-        public QualifierGreen Namespaces { get { return _namespaces; } }
+        public QualifierGreen namespaces { get { return _namespaces; } }
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
@@ -1444,7 +1444,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
         public __InternalSyntaxToken KLanguage { get { return _kLanguage; } }
         public NameGreen Name { get { return _name; } }
         public __InternalSyntaxToken TSemicolon { get { return _tSemicolon; } }
-        public GrammarGreen Grammar { get { return _grammar; } }
+        public GrammarGreen grammar { get { return _grammar; } }
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
@@ -1847,10 +1847,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
             this.flags &= ~NodeFlags.IsNotMissing;
         }
     
-        public global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<ParserAnnotationGreen> Annotations1 { get { return new global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<ParserAnnotationGreen>(_annotations1); } }
+        public global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<ParserAnnotationGreen> annotations1 { get { return new global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<ParserAnnotationGreen>(_annotations1); } }
         public RuleBlock1Green Block { get { return _block; } }
         public __InternalSyntaxToken TColon { get { return _tColon; } }
-        public global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<AlternativeGreen> Alternatives { get { return new global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<AlternativeGreen>(_alternatives, reversed: false); } }
+        public global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<AlternativeGreen> alternatives { get { return new global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<AlternativeGreen>(_alternatives, reversed: false); } }
         public __InternalSyntaxToken TSemicolon { get { return _tSemicolon; } }
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
@@ -1965,7 +1965,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
         }
     
         public AlternativeBlock1Green Block1 { get { return _block1; } }
-        public global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<ElementGreen> Elements { get { return new global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<ElementGreen>(_elements); } }
+        public global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<ElementGreen> elements { get { return new global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<ElementGreen>(_elements); } }
         public AlternativeBlock2Green Block2 { get { return _block2; } }
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
@@ -2067,7 +2067,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
         }
     
         public ElementBlock1Green Block { get { return _block; } }
-        public ElementValueGreen Value { get { return _value; } }
+        public ElementValueGreen value { get { return _value; } }
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
@@ -2553,11 +2553,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
             this.flags &= ~NodeFlags.IsNotMissing;
         }
     
-        public global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<ParserAnnotationGreen> Annotations1 { get { return new global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<ParserAnnotationGreen>(_annotations1); } }
+        public global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<ParserAnnotationGreen> annotations1 { get { return new global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<ParserAnnotationGreen>(_annotations1); } }
         public __InternalSyntaxToken TLParen { get { return _tLParen; } }
-        public global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<BlockAlternativeGreen> Alternatives { get { return new global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<BlockAlternativeGreen>(_alternatives, reversed: false); } }
+        public global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<BlockAlternativeGreen> alternatives { get { return new global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<BlockAlternativeGreen>(_alternatives, reversed: false); } }
         public __InternalSyntaxToken TRParen { get { return _tRParen; } }
-        public MultiplicityGreen Multiplicity { get { return _multiplicity; } }
+        public MultiplicityGreen multiplicity { get { return _multiplicity; } }
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
@@ -2659,7 +2659,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
             this.flags &= ~NodeFlags.IsNotMissing;
         }
     
-        public global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<ElementGreen> Elements { get { return new global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<ElementGreen>(_elements); } }
+        public global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<ElementGreen> elements { get { return new global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<ElementGreen>(_elements); } }
         public BlockAlternativeBlock1Green Block { get { return _block; } }
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
@@ -2779,9 +2779,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
             this.flags &= ~NodeFlags.IsNotMissing;
         }
     
-        public global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<ParserAnnotationGreen> Annotations1 { get { return new global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<ParserAnnotationGreen>(_annotations1); } }
-        public IdentifierGreen GrammarRule { get { return _grammarRule; } }
-        public MultiplicityGreen Multiplicity { get { return _multiplicity; } }
+        public global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<ParserAnnotationGreen> annotations1 { get { return new global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<ParserAnnotationGreen>(_annotations1); } }
+        public IdentifierGreen grammarRule { get { return _grammarRule; } }
+        public MultiplicityGreen multiplicity { get { return _multiplicity; } }
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
@@ -2902,10 +2902,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
             this.flags &= ~NodeFlags.IsNotMissing;
         }
     
-        public global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<ParserAnnotationGreen> Annotations1 { get { return new global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<ParserAnnotationGreen>(_annotations1); } }
+        public global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<ParserAnnotationGreen> annotations1 { get { return new global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<ParserAnnotationGreen>(_annotations1); } }
         public __InternalSyntaxToken THash { get { return _tHash; } }
-        public TypeReferenceGreen ReferencedTypes { get { return _referencedTypes; } }
-        public MultiplicityGreen Multiplicity { get { return _multiplicity; } }
+        public TypeReferenceGreen referencedTypes { get { return _referencedTypes; } }
+        public MultiplicityGreen multiplicity { get { return _multiplicity; } }
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
@@ -3049,12 +3049,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
             this.flags &= ~NodeFlags.IsNotMissing;
         }
     
-        public global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<ParserAnnotationGreen> Annotations1 { get { return new global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<ParserAnnotationGreen>(_annotations1); } }
+        public global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<ParserAnnotationGreen> annotations1 { get { return new global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<ParserAnnotationGreen>(_annotations1); } }
         public __InternalSyntaxToken THashLBrace { get { return _tHashLBrace; } }
-        public global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<TypeReferenceGreen> ReferencedTypes { get { return new global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<TypeReferenceGreen>(_referencedTypes, reversed: false); } }
+        public global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<TypeReferenceGreen> referencedTypes { get { return new global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<TypeReferenceGreen>(_referencedTypes, reversed: false); } }
         public RuleRefAlt3Block1Green Block { get { return _block; } }
         public __InternalSyntaxToken TRBrace { get { return _tRBrace; } }
-        public MultiplicityGreen Multiplicity { get { return _multiplicity; } }
+        public MultiplicityGreen multiplicity { get { return _multiplicity; } }
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
@@ -3255,9 +3255,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
             this.flags &= ~NodeFlags.IsNotMissing;
         }
     
-        public global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<ParserAnnotationGreen> Annotations1 { get { return new global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<ParserAnnotationGreen>(_annotations1); } }
-        public __InternalSyntaxToken Text { get { return _text; } }
-        public MultiplicityGreen Multiplicity { get { return _multiplicity; } }
+        public global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<ParserAnnotationGreen> annotations1 { get { return new global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<ParserAnnotationGreen>(_annotations1); } }
+        public __InternalSyntaxToken text { get { return _text; } }
+        public MultiplicityGreen multiplicity { get { return _multiplicity; } }
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
@@ -3572,10 +3572,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
             this.flags &= ~NodeFlags.IsNotMissing;
         }
     
-        public global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<LexerAnnotationGreen> Annotations1 { get { return new global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<LexerAnnotationGreen>(_annotations1); } }
+        public global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<LexerAnnotationGreen> annotations1 { get { return new global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<LexerAnnotationGreen>(_annotations1); } }
         public TokenBlock1Green Block { get { return _block; } }
         public __InternalSyntaxToken TColon { get { return _tColon; } }
-        public global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<LAlternativeGreen> Alternatives { get { return new global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<LAlternativeGreen>(_alternatives, reversed: false); } }
+        public global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<LAlternativeGreen> alternatives { get { return new global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<LAlternativeGreen>(_alternatives, reversed: false); } }
         public __InternalSyntaxToken TSemicolon { get { return _tSemicolon; } }
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
@@ -3714,7 +3714,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
         public __InternalSyntaxToken KFragment { get { return _kFragment; } }
         public NameGreen Name { get { return _name; } }
         public __InternalSyntaxToken TColon { get { return _tColon; } }
-        public global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<LAlternativeGreen> Alternatives { get { return new global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<LAlternativeGreen>(_alternatives, reversed: false); } }
+        public global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<LAlternativeGreen> alternatives { get { return new global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<LAlternativeGreen>(_alternatives, reversed: false); } }
         public __InternalSyntaxToken TSemicolon { get { return _tSemicolon; } }
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
@@ -3806,7 +3806,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
             this.flags &= ~NodeFlags.IsNotMissing;
         }
     
-        public global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<LElementGreen> Elements { get { return new global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<LElementGreen>(_elements); } }
+        public global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<LElementGreen> elements { get { return new global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<LElementGreen>(_elements); } }
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
@@ -3915,9 +3915,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
             this.flags &= ~NodeFlags.IsNotMissing;
         }
     
-        public __InternalSyntaxToken IsNegated { get { return _isNegated; } }
-        public LElementValueGreen Value { get { return _value; } }
-        public MultiplicityGreen Multiplicity { get { return _multiplicity; } }
+        public __InternalSyntaxToken isNegated { get { return _isNegated; } }
+        public LElementValueGreen value { get { return _value; } }
+        public MultiplicityGreen multiplicity { get { return _multiplicity; } }
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
@@ -4446,7 +4446,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
             this.flags &= ~NodeFlags.IsNotMissing;
         }
     
-        public IdentifierGreen Rule { get { return _rule; } }
+        public IdentifierGreen rule { get { return _rule; } }
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
@@ -4533,7 +4533,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
             this.flags &= ~NodeFlags.IsNotMissing;
         }
     
-        public __InternalSyntaxToken Text { get { return _text; } }
+        public __InternalSyntaxToken text { get { return _text; } }
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
@@ -4729,9 +4729,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
             this.flags &= ~NodeFlags.IsNotMissing;
         }
     
-        public __InternalSyntaxToken StartChar { get { return _startChar; } }
+        public __InternalSyntaxToken startChar { get { return _startChar; } }
         public __InternalSyntaxToken TDotDot { get { return _tDotDot; } }
-        public __InternalSyntaxToken EndChar { get { return _endChar; } }
+        public __InternalSyntaxToken endChar { get { return _endChar; } }
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
@@ -4843,7 +4843,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
         }
     
         public __InternalSyntaxToken TLParen { get { return _tLParen; } }
-        public global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<LAlternativeGreen> Alternatives { get { return new global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<LAlternativeGreen>(_alternatives, reversed: false); } }
+        public global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<LAlternativeGreen> alternatives { get { return new global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<LAlternativeGreen>(_alternatives, reversed: false); } }
         public __InternalSyntaxToken TRParen { get { return _tRParen; } }
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
@@ -5124,7 +5124,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
             this.flags &= ~NodeFlags.IsNotMissing;
         }
     
-        public SingleExpressionAlt1Block1Green Value { get { return _value; } }
+        public SingleExpressionAlt1Block1Green value { get { return _value; } }
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
@@ -5210,7 +5210,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
             this.flags &= ~NodeFlags.IsNotMissing;
         }
     
-        public QualifierGreen Value { get { return _value; } }
+        public QualifierGreen value { get { return _value; } }
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
@@ -5444,7 +5444,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
         }
     
         public __InternalSyntaxToken TLBracket { get { return _tLBracket; } }
-        public QualifierGreen AttributeClass { get { return _attributeClass; } }
+        public QualifierGreen attributeClass { get { return _attributeClass; } }
         public ParserAnnotationBlock1Green Block { get { return _block; } }
         public __InternalSyntaxToken TRBracket { get { return _tRBracket; } }
     
@@ -5570,7 +5570,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
         }
     
         public __InternalSyntaxToken TLBracket { get { return _tLBracket; } }
-        public QualifierGreen AttributeClass { get { return _attributeClass; } }
+        public QualifierGreen attributeClass { get { return _attributeClass; } }
         public LexerAnnotationBlock1Green Block { get { return _block; } }
         public __InternalSyntaxToken TRBracket { get { return _tRBracket; } }
     
@@ -5674,7 +5674,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
         }
     
         public AnnotationArgumentBlock1Green Block { get { return _block; } }
-        public ExpressionGreen Value { get { return _value; } }
+        public ExpressionGreen value { get { return _value; } }
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
@@ -6761,7 +6761,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
             this.flags &= ~NodeFlags.IsNotMissing;
         }
     
-        public LanguageDeclarationGreen Declarations { get { return _declarations; } }
+        public LanguageDeclarationGreen declarations { get { return _declarations; } }
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
@@ -6848,7 +6848,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
             this.flags &= ~NodeFlags.IsNotMissing;
         }
     
-        public global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<GrammarRuleGreen> GrammarRules { get { return new global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<GrammarRuleGreen>(_grammarRules); } }
+        public global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<GrammarRuleGreen> grammarRules { get { return new global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<GrammarRuleGreen>(_grammarRules); } }
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
@@ -6944,7 +6944,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
             this.flags &= ~NodeFlags.IsNotMissing;
         }
     
-        public TypeReferenceIdentifierGreen ReturnType { get { return _returnType; } }
+        public TypeReferenceIdentifierGreen returnType { get { return _returnType; } }
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
@@ -7054,7 +7054,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
     
         public IdentifierGreen Identifier { get { return _identifier; } }
         public __InternalSyntaxToken KReturns { get { return _kReturns; } }
-        public TypeReferenceGreen ReturnType { get { return _returnType; } }
+        public TypeReferenceGreen returnType { get { return _returnType; } }
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
@@ -7155,7 +7155,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
         }
     
         public __InternalSyntaxToken TBar { get { return _tBar; } }
-        public AlternativeGreen Alternatives { get { return _alternatives; } }
+        public AlternativeGreen alternatives { get { return _alternatives; } }
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
@@ -7287,7 +7287,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
             this.flags &= ~NodeFlags.IsNotMissing;
         }
     
-        public global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<ParserAnnotationGreen> Annotations1 { get { return new global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<ParserAnnotationGreen>(_annotations1); } }
+        public global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<ParserAnnotationGreen> annotations1 { get { return new global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<ParserAnnotationGreen>(_annotations1); } }
         public __InternalSyntaxToken KAlt { get { return _kAlt; } }
         public NameGreen Name { get { return _name; } }
         public AlternativeBlock1Block1Green Block { get { return _block; } }
@@ -7394,7 +7394,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
         }
     
         public __InternalSyntaxToken KReturns { get { return _kReturns; } }
-        public TypeReferenceGreen ReturnType { get { return _returnType; } }
+        public TypeReferenceGreen returnType { get { return _returnType; } }
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
@@ -7494,7 +7494,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
         }
     
         public __InternalSyntaxToken TEqGt { get { return _tEqGt; } }
-        public ExpressionGreen ReturnValue { get { return _returnValue; } }
+        public ExpressionGreen returnValue { get { return _returnValue; } }
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
@@ -7604,9 +7604,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
             this.flags &= ~NodeFlags.IsNotMissing;
         }
     
-        public global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<ParserAnnotationGreen> Annotations1 { get { return new global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<ParserAnnotationGreen>(_annotations1); } }
+        public global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<ParserAnnotationGreen> annotations1 { get { return new global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<ParserAnnotationGreen>(_annotations1); } }
         public NameGreen Name { get { return _name; } }
-        public AssignmentGreen Assignment { get { return _assignment; } }
+        public AssignmentGreen assignment { get { return _assignment; } }
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
@@ -7707,7 +7707,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
         }
     
         public __InternalSyntaxToken TBar { get { return _tBar; } }
-        public BlockAlternativeGreen Alternatives { get { return _alternatives; } }
+        public BlockAlternativeGreen alternatives { get { return _alternatives; } }
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
@@ -7807,7 +7807,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
         }
     
         public __InternalSyntaxToken TEqGt { get { return _tEqGt; } }
-        public ExpressionGreen ReturnValue { get { return _returnValue; } }
+        public ExpressionGreen returnValue { get { return _returnValue; } }
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
@@ -7907,7 +7907,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
         }
     
         public __InternalSyntaxToken TComma { get { return _tComma; } }
-        public TypeReferenceGreen ReferencedTypes { get { return _referencedTypes; } }
+        public TypeReferenceGreen referencedTypes { get { return _referencedTypes; } }
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
@@ -8007,7 +8007,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
         }
     
         public __InternalSyntaxToken TBar { get { return _tBar; } }
-        public IdentifierGreen GrammarRule { get { return _grammarRule; } }
+        public IdentifierGreen grammarRule { get { return _grammarRule; } }
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
@@ -8227,7 +8227,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
             this.flags &= ~NodeFlags.IsNotMissing;
         }
     
-        public __InternalSyntaxToken IsTrivia { get { return _isTrivia; } }
+        public __InternalSyntaxToken isTrivia { get { return _isTrivia; } }
         public NameGreen Name { get { return _name; } }
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
@@ -8328,7 +8328,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
         }
     
         public __InternalSyntaxToken KReturns { get { return _kReturns; } }
-        public TypeReferenceGreen ReturnType { get { return _returnType; } }
+        public TypeReferenceGreen returnType { get { return _returnType; } }
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
@@ -8428,7 +8428,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
         }
     
         public __InternalSyntaxToken TBar { get { return _tBar; } }
-        public LAlternativeGreen Alternatives { get { return _alternatives; } }
+        public LAlternativeGreen alternatives { get { return _alternatives; } }
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
@@ -8528,7 +8528,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
         }
     
         public __InternalSyntaxToken TBar { get { return _tBar; } }
-        public LAlternativeGreen Alternatives { get { return _alternatives; } }
+        public LAlternativeGreen alternatives { get { return _alternatives; } }
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
@@ -8628,7 +8628,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
         }
     
         public __InternalSyntaxToken TBar { get { return _tBar; } }
-        public LAlternativeGreen Alternatives { get { return _alternatives; } }
+        public LAlternativeGreen alternatives { get { return _alternatives; } }
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
@@ -9328,7 +9328,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
             this.flags &= ~NodeFlags.IsNotMissing;
         }
     
-        public global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<SingleExpressionGreen> Items { get { return new global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<SingleExpressionGreen>(_items, reversed: false); } }
+        public global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<SingleExpressionGreen> items { get { return new global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<SingleExpressionGreen>(_items, reversed: false); } }
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
@@ -9427,7 +9427,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
         }
     
         public __InternalSyntaxToken TComma { get { return _tComma; } }
-        public SingleExpressionGreen Items { get { return _items; } }
+        public SingleExpressionGreen items { get { return _items; } }
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
@@ -9538,7 +9538,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
         }
     
         public __InternalSyntaxToken TLParen { get { return _tLParen; } }
-        public global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<AnnotationArgumentGreen> Arguments { get { return new global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<AnnotationArgumentGreen>(_arguments, reversed: false); } }
+        public global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<AnnotationArgumentGreen> arguments { get { return new global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<AnnotationArgumentGreen>(_arguments, reversed: false); } }
         public __InternalSyntaxToken TRParen { get { return _tRParen; } }
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
@@ -9640,7 +9640,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
         }
     
         public __InternalSyntaxToken TComma { get { return _tComma; } }
-        public AnnotationArgumentGreen Arguments { get { return _arguments; } }
+        public AnnotationArgumentGreen arguments { get { return _arguments; } }
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
@@ -9751,7 +9751,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
         }
     
         public __InternalSyntaxToken TLParen { get { return _tLParen; } }
-        public global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<AnnotationArgumentGreen> Arguments { get { return new global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<AnnotationArgumentGreen>(_arguments, reversed: false); } }
+        public global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<AnnotationArgumentGreen> arguments { get { return new global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<AnnotationArgumentGreen>(_arguments, reversed: false); } }
         public __InternalSyntaxToken TRParen { get { return _tRParen; } }
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
@@ -9853,7 +9853,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
         }
     
         public __InternalSyntaxToken TComma { get { return _tComma; } }
-        public AnnotationArgumentGreen Arguments { get { return _arguments; } }
+        public AnnotationArgumentGreen arguments { get { return _arguments; } }
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
@@ -9952,7 +9952,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
             this.flags &= ~NodeFlags.IsNotMissing;
         }
     
-        public IdentifierGreen NamedParameter { get { return _namedParameter; } }
+        public IdentifierGreen namedParameter { get { return _namedParameter; } }
         public __InternalSyntaxToken TColon { get { return _tColon; } }
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)

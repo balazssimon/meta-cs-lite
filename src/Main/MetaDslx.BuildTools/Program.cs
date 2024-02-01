@@ -149,7 +149,7 @@ namespace MetaDslx.BuildTools
                 {
                     compilation = compilation.AddReferences(PackageReferences);
                     await CompileMetaModels(compilation, mxmFiles);
-                    //await CompileMetaLanguages(compilation, mxlFiles);
+                    await CompileMetaLanguages(compilation, mxlFiles);
                 }
                 //*/
                 // Perform analysis...

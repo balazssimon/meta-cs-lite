@@ -112,18 +112,8 @@ namespace MetaDslx.CodeAnalysis.Symbols
             {
                 var tmpValue = value;
                 Symbol? valueSymbol;
-                if (tmpValue is string rawValue)
-                {
-                    if (TryConvertFromString(rawValue, expectedType, out var convertedTmpValue, valueBinder, diagnostics, cancellationToken))
-                    {
-                        tmpValue = convertedTmpValue;
-                    }
-                    else
-                    {
-                        tmpValue = MetaSymbol.FromValue(rawValue).AsSymbol(this.Compilation);
-                    }
-                }
-                if (tmpValue is MetaType mt) tmpValue = mt.Original;
+                if (tmpValue is string s) tmpValue = MetaSymbol.FromValue(s).AsSymbol(this.Compilation);
+                else if (tmpValue is MetaType mt) tmpValue = mt.Original;
                 if (tmpValue is IModelObject mo) valueSymbol = MetaSymbol.FromModelObject(mo).AsSymbol(this.Compilation);
                 else if (tmpValue is Symbol sym)
                 {
@@ -145,9 +135,9 @@ namespace MetaDslx.CodeAnalysis.Symbols
                     }
                     if (expectedType.SpecialType == SpecialType.MetaDslx_CodeAnalysis_MetaSymbol)
                     {
-                        if (value is string stringValue && TryConvertFromString(stringValue, expectedType, out convertedValue, valueBinder, diagnostics, cancellationToken))
+                        if (value is MetaSymbol ms2)
                         {
-                            convertedValue = MetaSymbol.FromValue(convertedValue);
+                            convertedValue = ms2;
                             return true;
                         }
                         else
@@ -210,26 +200,21 @@ namespace MetaDslx.CodeAnalysis.Symbols
                     return true;
                 }
             }
-            if (expectedType.IsAssignableFrom(value.GetType()))
+            if (value is not null && expectedType.IsAssignableFrom(value.GetType()))
             {
                 convertedValue = value;
                 return true;
             }
-            else if (value is string stringValue && TryConvertFromString(stringValue, expectedType, out convertedValue, valueBinder, diagnostics, cancellationToken))
-            {
-                value = convertedValue;
-            }
-            if (expectedType.IsAssignableFrom(value.GetType()))
-            {
-                convertedValue = value;
-                return true;
-            }
-            else
+            else 
             {
                 if (value is Symbol valueSymbol && valueSymbol.IsError)
                 {
                     convertedValue = null;
                     return false;
+                }
+                if (value is string stringValue && TryConvertFromString(stringValue, expectedType, out convertedValue, valueBinder, diagnostics, cancellationToken))
+                {
+                    return true;
                 }
                 convertedValue = null;
                 diagnostics.Add(Diagnostic.Create(CommonErrorCode.ERR_BindingError, valueBinder.Location, $"Could not convert value '{value}' to {expectedType.FullName}."));
@@ -245,11 +230,6 @@ namespace MetaDslx.CodeAnalysis.Symbols
 
         protected virtual bool TryConvertFromString(string rawValue, MetaType expectedType, out object? convertedValue, Binder valueBinder, DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            if (rawValue == null)
-            {
-                convertedValue = null;
-                return true;
-            }
             if (rawValue == "null")
             {
                 convertedValue = null;

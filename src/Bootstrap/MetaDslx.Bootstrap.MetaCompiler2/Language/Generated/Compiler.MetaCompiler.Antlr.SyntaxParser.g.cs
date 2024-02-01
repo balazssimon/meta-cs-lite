@@ -574,7 +574,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
             public override GreenNode? VisitPr_LElement(CompilerParser.Pr_LElementContext? context)
             {
                 if (context == null) return LElementGreen.__Missing;
-                var isNegated = (InternalSyntaxToken?)this.VisitTerminal(context.E_isNegated, CompilerSyntaxKind.TTilde);
+                var isNegated = (InternalSyntaxToken?)this.VisitTerminal(context.E_isNegated);
                 LElementValueGreen? value = null;
                 if (context.E_value is not null) value = (LElementValueGreen?)this.Visit(context.E_value) ?? LElementValueGreen.__Missing;
                 else value = LElementValueGreen.__Missing;

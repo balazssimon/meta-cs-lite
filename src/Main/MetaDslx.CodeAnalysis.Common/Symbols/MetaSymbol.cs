@@ -33,7 +33,8 @@ namespace MetaDslx.CodeAnalysis
 
         private MetaSymbol(object? value)
         {
-            _original = value ?? NullValue;
+            if (value is MetaSymbol metaSymbol) _original = metaSymbol._original;
+            else _original = value ?? NullValue;
         }
 
         public static MetaSymbol FromSymbol(Symbol? symbol) => new MetaSymbol(symbol);

@@ -1703,13 +1703,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
         public virtual SyntaxNode VisitUsingMetaModel(UsingMetaModelSyntax node)
         {
             var kMetamodel = this.VisitToken(node.KMetamodel);
-            var metaModels = (QualifierSyntax)this.Visit(node.MetaModels);
+            var metaModels = (QualifierSyntax)this.Visit(node.metaModels);
             return node.Update(kMetamodel, metaModels);
         }
 
         public virtual SyntaxNode VisitUsingAlt2(UsingAlt2Syntax node)
         {
-            var namespaces = (QualifierSyntax)this.Visit(node.Namespaces);
+            var namespaces = (QualifierSyntax)this.Visit(node.namespaces);
             return node.Update(namespaces);
         }
 
@@ -1718,7 +1718,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
             var kLanguage = this.VisitToken(node.KLanguage);
             var name = (NameSyntax)this.Visit(node.Name);
             var tSemicolon = this.VisitToken(node.TSemicolon);
-            var grammar = (GrammarSyntax)this.Visit(node.Grammar);
+            var grammar = (GrammarSyntax)this.Visit(node.grammar);
             return node.Update(kLanguage, name, tSemicolon, grammar);
         }
 
@@ -1742,10 +1742,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
 
         public virtual SyntaxNode VisitRule(RuleSyntax node)
         {
-            var annotations1 = this.VisitList(node.Annotations1);
+            var annotations1 = this.VisitList(node.annotations1);
             var block = (RuleBlock1Syntax)this.Visit(node.Block);
             var tColon = this.VisitToken(node.TColon);
-            var alternatives = this.VisitList(node.Alternatives);
+            var alternatives = this.VisitList(node.alternatives);
             var tSemicolon = this.VisitToken(node.TSemicolon);
             return node.Update(annotations1, block, tColon, alternatives, tSemicolon);
         }
@@ -1753,7 +1753,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
         public virtual SyntaxNode VisitAlternative(AlternativeSyntax node)
         {
             var block1 = (AlternativeBlock1Syntax)this.Visit(node.Block1);
-            var elements = this.VisitList(node.Elements);
+            var elements = this.VisitList(node.elements);
             var block2 = (AlternativeBlock2Syntax)this.Visit(node.Block2);
             return node.Update(block1, elements, block2);
         }
@@ -1761,7 +1761,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
         public virtual SyntaxNode VisitElement(ElementSyntax node)
         {
             var block = (ElementBlock1Syntax)this.Visit(node.Block);
-            var value = (ElementValueSyntax)this.Visit(node.Value);
+            var value = (ElementValueSyntax)this.Visit(node.value);
             return node.Update(block, value);
         }
 
@@ -1791,46 +1791,46 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
 
         public virtual SyntaxNode VisitBlock(BlockSyntax node)
         {
-            var annotations1 = this.VisitList(node.Annotations1);
+            var annotations1 = this.VisitList(node.annotations1);
             var tLParen = this.VisitToken(node.TLParen);
-            var alternatives = this.VisitList(node.Alternatives);
+            var alternatives = this.VisitList(node.alternatives);
             var tRParen = this.VisitToken(node.TRParen);
-            var multiplicity = (MultiplicitySyntax)this.Visit(node.Multiplicity);
+            var multiplicity = (MultiplicitySyntax)this.Visit(node.multiplicity);
             return node.Update(annotations1, tLParen, alternatives, tRParen, multiplicity);
         }
 
         public virtual SyntaxNode VisitBlockAlternative(BlockAlternativeSyntax node)
         {
-            var elements = this.VisitList(node.Elements);
+            var elements = this.VisitList(node.elements);
             var block = (BlockAlternativeBlock1Syntax)this.Visit(node.Block);
             return node.Update(elements, block);
         }
 
         public virtual SyntaxNode VisitRuleRefAlt1(RuleRefAlt1Syntax node)
         {
-            var annotations1 = this.VisitList(node.Annotations1);
-            var grammarRule = (IdentifierSyntax)this.Visit(node.GrammarRule);
-            var multiplicity = (MultiplicitySyntax)this.Visit(node.Multiplicity);
+            var annotations1 = this.VisitList(node.annotations1);
+            var grammarRule = (IdentifierSyntax)this.Visit(node.grammarRule);
+            var multiplicity = (MultiplicitySyntax)this.Visit(node.multiplicity);
             return node.Update(annotations1, grammarRule, multiplicity);
         }
 
         public virtual SyntaxNode VisitRuleRefAlt2(RuleRefAlt2Syntax node)
         {
-            var annotations1 = this.VisitList(node.Annotations1);
+            var annotations1 = this.VisitList(node.annotations1);
             var tHash = this.VisitToken(node.THash);
-            var referencedTypes = (TypeReferenceSyntax)this.Visit(node.ReferencedTypes);
-            var multiplicity = (MultiplicitySyntax)this.Visit(node.Multiplicity);
+            var referencedTypes = (TypeReferenceSyntax)this.Visit(node.referencedTypes);
+            var multiplicity = (MultiplicitySyntax)this.Visit(node.multiplicity);
             return node.Update(annotations1, tHash, referencedTypes, multiplicity);
         }
 
         public virtual SyntaxNode VisitRuleRefAlt3(RuleRefAlt3Syntax node)
         {
-            var annotations1 = this.VisitList(node.Annotations1);
+            var annotations1 = this.VisitList(node.annotations1);
             var tHashLBrace = this.VisitToken(node.THashLBrace);
-            var referencedTypes = this.VisitList(node.ReferencedTypes);
+            var referencedTypes = this.VisitList(node.referencedTypes);
             var block = (RuleRefAlt3Block1Syntax)this.Visit(node.Block);
             var tRBrace = this.VisitToken(node.TRBrace);
-            var multiplicity = (MultiplicitySyntax)this.Visit(node.Multiplicity);
+            var multiplicity = (MultiplicitySyntax)this.Visit(node.multiplicity);
             return node.Update(annotations1, tHashLBrace, referencedTypes, block, tRBrace, multiplicity);
         }
 
@@ -1842,9 +1842,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
 
         public virtual SyntaxNode VisitFixed(FixedSyntax node)
         {
-            var annotations1 = this.VisitList(node.Annotations1);
-            var text = this.VisitToken(node.Text);
-            var multiplicity = (MultiplicitySyntax)this.Visit(node.Multiplicity);
+            var annotations1 = this.VisitList(node.annotations1);
+            var text = this.VisitToken(node.text);
+            var multiplicity = (MultiplicitySyntax)this.Visit(node.multiplicity);
             return node.Update(annotations1, text, multiplicity);
         }
 
@@ -1862,10 +1862,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
 
         public virtual SyntaxNode VisitToken(TokenSyntax node)
         {
-            var annotations1 = this.VisitList(node.Annotations1);
+            var annotations1 = this.VisitList(node.annotations1);
             var block = (TokenBlock1Syntax)this.Visit(node.Block);
             var tColon = this.VisitToken(node.TColon);
-            var alternatives = this.VisitList(node.Alternatives);
+            var alternatives = this.VisitList(node.alternatives);
             var tSemicolon = this.VisitToken(node.TSemicolon);
             return node.Update(annotations1, block, tColon, alternatives, tSemicolon);
         }
@@ -1875,22 +1875,22 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
             var kFragment = this.VisitToken(node.KFragment);
             var name = (NameSyntax)this.Visit(node.Name);
             var tColon = this.VisitToken(node.TColon);
-            var alternatives = this.VisitList(node.Alternatives);
+            var alternatives = this.VisitList(node.alternatives);
             var tSemicolon = this.VisitToken(node.TSemicolon);
             return node.Update(kFragment, name, tColon, alternatives, tSemicolon);
         }
 
         public virtual SyntaxNode VisitLAlternative(LAlternativeSyntax node)
         {
-            var elements = this.VisitList(node.Elements);
+            var elements = this.VisitList(node.elements);
             return node.Update(elements);
         }
 
         public virtual SyntaxNode VisitLElement(LElementSyntax node)
         {
-            var isNegated = this.VisitToken(node.IsNegated);
-            var value = (LElementValueSyntax)this.Visit(node.Value);
-            var multiplicity = (MultiplicitySyntax)this.Visit(node.Multiplicity);
+            var isNegated = this.VisitToken(node.isNegated);
+            var value = (LElementValueSyntax)this.Visit(node.value);
+            var multiplicity = (MultiplicitySyntax)this.Visit(node.multiplicity);
             return node.Update(isNegated, value, multiplicity);
         }
 
@@ -1926,13 +1926,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
 
         public virtual SyntaxNode VisitLReference(LReferenceSyntax node)
         {
-            var rule = (IdentifierSyntax)this.Visit(node.Rule);
+            var rule = (IdentifierSyntax)this.Visit(node.rule);
             return node.Update(rule);
         }
 
         public virtual SyntaxNode VisitLFixed(LFixedSyntax node)
         {
-            var text = this.VisitToken(node.Text);
+            var text = this.VisitToken(node.text);
             return node.Update(text);
         }
 
@@ -1944,16 +1944,16 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
 
         public virtual SyntaxNode VisitLRange(LRangeSyntax node)
         {
-            var startChar = this.VisitToken(node.StartChar);
+            var startChar = this.VisitToken(node.startChar);
             var tDotDot = this.VisitToken(node.TDotDot);
-            var endChar = this.VisitToken(node.EndChar);
+            var endChar = this.VisitToken(node.endChar);
             return node.Update(startChar, tDotDot, endChar);
         }
 
         public virtual SyntaxNode VisitLBlock(LBlockSyntax node)
         {
             var tLParen = this.VisitToken(node.TLParen);
-            var alternatives = this.VisitList(node.Alternatives);
+            var alternatives = this.VisitList(node.alternatives);
             var tRParen = this.VisitToken(node.TRParen);
             return node.Update(tLParen, alternatives, tRParen);
         }
@@ -1972,13 +1972,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
 
         public virtual SyntaxNode VisitSingleExpressionAlt1(SingleExpressionAlt1Syntax node)
         {
-            var value = (SingleExpressionAlt1Block1Syntax)this.Visit(node.Value);
+            var value = (SingleExpressionAlt1Block1Syntax)this.Visit(node.value);
             return node.Update(value);
         }
 
         public virtual SyntaxNode VisitSingleExpressionAlt2(SingleExpressionAlt2Syntax node)
         {
-            var value = (QualifierSyntax)this.Visit(node.Value);
+            var value = (QualifierSyntax)this.Visit(node.value);
             return node.Update(value);
         }
 
@@ -1993,7 +1993,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
         public virtual SyntaxNode VisitParserAnnotation(ParserAnnotationSyntax node)
         {
             var tLBracket = this.VisitToken(node.TLBracket);
-            var attributeClass = (QualifierSyntax)this.Visit(node.AttributeClass);
+            var attributeClass = (QualifierSyntax)this.Visit(node.attributeClass);
             var block = (ParserAnnotationBlock1Syntax)this.Visit(node.Block);
             var tRBracket = this.VisitToken(node.TRBracket);
             return node.Update(tLBracket, attributeClass, block, tRBracket);
@@ -2002,7 +2002,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
         public virtual SyntaxNode VisitLexerAnnotation(LexerAnnotationSyntax node)
         {
             var tLBracket = this.VisitToken(node.TLBracket);
-            var attributeClass = (QualifierSyntax)this.Visit(node.AttributeClass);
+            var attributeClass = (QualifierSyntax)this.Visit(node.attributeClass);
             var block = (LexerAnnotationBlock1Syntax)this.Visit(node.Block);
             var tRBracket = this.VisitToken(node.TRBracket);
             return node.Update(tLBracket, attributeClass, block, tRBracket);
@@ -2011,7 +2011,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
         public virtual SyntaxNode VisitAnnotationArgument(AnnotationArgumentSyntax node)
         {
             var block = (AnnotationArgumentBlock1Syntax)this.Visit(node.Block);
-            var value = (ExpressionSyntax)this.Visit(node.Value);
+            var value = (ExpressionSyntax)this.Visit(node.value);
             return node.Update(block, value);
         }
 
@@ -2085,19 +2085,19 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
 
         public virtual SyntaxNode VisitMainBlock2(MainBlock2Syntax node)
         {
-            var declarations = (LanguageDeclarationSyntax)this.Visit(node.Declarations);
+            var declarations = (LanguageDeclarationSyntax)this.Visit(node.declarations);
             return node.Update(declarations);
         }
 
         public virtual SyntaxNode VisitGrammarBlock1(GrammarBlock1Syntax node)
         {
-            var grammarRules = this.VisitList(node.GrammarRules);
+            var grammarRules = this.VisitList(node.grammarRules);
             return node.Update(grammarRules);
         }
 
         public virtual SyntaxNode VisitRuleBlock1Alt1(RuleBlock1Alt1Syntax node)
         {
-            var returnType = (TypeReferenceIdentifierSyntax)this.Visit(node.ReturnType);
+            var returnType = (TypeReferenceIdentifierSyntax)this.Visit(node.returnType);
             return node.Update(returnType);
         }
 
@@ -2105,20 +2105,20 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
         {
             var identifier = (IdentifierSyntax)this.Visit(node.Identifier);
             var kReturns = this.VisitToken(node.KReturns);
-            var returnType = (TypeReferenceSyntax)this.Visit(node.ReturnType);
+            var returnType = (TypeReferenceSyntax)this.Visit(node.returnType);
             return node.Update(identifier, kReturns, returnType);
         }
 
         public virtual SyntaxNode VisitRulealternativesBlock(RulealternativesBlockSyntax node)
         {
             var tBar = this.VisitToken(node.TBar);
-            var alternatives = (AlternativeSyntax)this.Visit(node.Alternatives);
+            var alternatives = (AlternativeSyntax)this.Visit(node.alternatives);
             return node.Update(tBar, alternatives);
         }
 
         public virtual SyntaxNode VisitAlternativeBlock1(AlternativeBlock1Syntax node)
         {
-            var annotations1 = this.VisitList(node.Annotations1);
+            var annotations1 = this.VisitList(node.annotations1);
             var kAlt = this.VisitToken(node.KAlt);
             var name = (NameSyntax)this.Visit(node.Name);
             var block = (AlternativeBlock1Block1Syntax)this.Visit(node.Block);
@@ -2129,50 +2129,50 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
         public virtual SyntaxNode VisitAlternativeBlock1Block1(AlternativeBlock1Block1Syntax node)
         {
             var kReturns = this.VisitToken(node.KReturns);
-            var returnType = (TypeReferenceSyntax)this.Visit(node.ReturnType);
+            var returnType = (TypeReferenceSyntax)this.Visit(node.returnType);
             return node.Update(kReturns, returnType);
         }
 
         public virtual SyntaxNode VisitAlternativeBlock2(AlternativeBlock2Syntax node)
         {
             var tEqGt = this.VisitToken(node.TEqGt);
-            var returnValue = (ExpressionSyntax)this.Visit(node.ReturnValue);
+            var returnValue = (ExpressionSyntax)this.Visit(node.returnValue);
             return node.Update(tEqGt, returnValue);
         }
 
         public virtual SyntaxNode VisitElementBlock1(ElementBlock1Syntax node)
         {
-            var annotations1 = this.VisitList(node.Annotations1);
+            var annotations1 = this.VisitList(node.annotations1);
             var name = (NameSyntax)this.Visit(node.Name);
-            var assignment = (AssignmentSyntax)this.Visit(node.Assignment);
+            var assignment = (AssignmentSyntax)this.Visit(node.assignment);
             return node.Update(annotations1, name, assignment);
         }
 
         public virtual SyntaxNode VisitBlockalternativesBlock(BlockalternativesBlockSyntax node)
         {
             var tBar = this.VisitToken(node.TBar);
-            var alternatives = (BlockAlternativeSyntax)this.Visit(node.Alternatives);
+            var alternatives = (BlockAlternativeSyntax)this.Visit(node.alternatives);
             return node.Update(tBar, alternatives);
         }
 
         public virtual SyntaxNode VisitBlockAlternativeBlock1(BlockAlternativeBlock1Syntax node)
         {
             var tEqGt = this.VisitToken(node.TEqGt);
-            var returnValue = (ExpressionSyntax)this.Visit(node.ReturnValue);
+            var returnValue = (ExpressionSyntax)this.Visit(node.returnValue);
             return node.Update(tEqGt, returnValue);
         }
 
         public virtual SyntaxNode VisitRuleRefAlt3referencedTypesBlock(RuleRefAlt3referencedTypesBlockSyntax node)
         {
             var tComma = this.VisitToken(node.TComma);
-            var referencedTypes = (TypeReferenceSyntax)this.Visit(node.ReferencedTypes);
+            var referencedTypes = (TypeReferenceSyntax)this.Visit(node.referencedTypes);
             return node.Update(tComma, referencedTypes);
         }
 
         public virtual SyntaxNode VisitRuleRefAlt3Block1(RuleRefAlt3Block1Syntax node)
         {
             var tBar = this.VisitToken(node.TBar);
-            var grammarRule = (IdentifierSyntax)this.Visit(node.GrammarRule);
+            var grammarRule = (IdentifierSyntax)this.Visit(node.grammarRule);
             return node.Update(tBar, grammarRule);
         }
 
@@ -2186,7 +2186,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
 
         public virtual SyntaxNode VisitTokenBlock1Alt2(TokenBlock1Alt2Syntax node)
         {
-            var isTrivia = this.VisitToken(node.IsTrivia);
+            var isTrivia = this.VisitToken(node.isTrivia);
             var name = (NameSyntax)this.Visit(node.Name);
             return node.Update(isTrivia, name);
         }
@@ -2194,28 +2194,28 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
         public virtual SyntaxNode VisitTokenBlock1Alt1Block1(TokenBlock1Alt1Block1Syntax node)
         {
             var kReturns = this.VisitToken(node.KReturns);
-            var returnType = (TypeReferenceSyntax)this.Visit(node.ReturnType);
+            var returnType = (TypeReferenceSyntax)this.Visit(node.returnType);
             return node.Update(kReturns, returnType);
         }
 
         public virtual SyntaxNode VisitTokenalternativesBlock(TokenalternativesBlockSyntax node)
         {
             var tBar = this.VisitToken(node.TBar);
-            var alternatives = (LAlternativeSyntax)this.Visit(node.Alternatives);
+            var alternatives = (LAlternativeSyntax)this.Visit(node.alternatives);
             return node.Update(tBar, alternatives);
         }
 
         public virtual SyntaxNode VisitFragmentalternativesBlock(FragmentalternativesBlockSyntax node)
         {
             var tBar = this.VisitToken(node.TBar);
-            var alternatives = (LAlternativeSyntax)this.Visit(node.Alternatives);
+            var alternatives = (LAlternativeSyntax)this.Visit(node.alternatives);
             return node.Update(tBar, alternatives);
         }
 
         public virtual SyntaxNode VisitLBlockalternativesBlock(LBlockalternativesBlockSyntax node)
         {
             var tBar = this.VisitToken(node.TBar);
-            var alternatives = (LAlternativeSyntax)this.Visit(node.Alternatives);
+            var alternatives = (LAlternativeSyntax)this.Visit(node.alternatives);
             return node.Update(tBar, alternatives);
         }
 
@@ -2263,21 +2263,21 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
 
         public virtual SyntaxNode VisitArrayExpressionBlock1(ArrayExpressionBlock1Syntax node)
         {
-            var items = this.VisitList(node.Items);
+            var items = this.VisitList(node.items);
             return node.Update(items);
         }
 
         public virtual SyntaxNode VisitArrayExpressionBlock1itemsBlock(ArrayExpressionBlock1itemsBlockSyntax node)
         {
             var tComma = this.VisitToken(node.TComma);
-            var items = (SingleExpressionSyntax)this.Visit(node.Items);
+            var items = (SingleExpressionSyntax)this.Visit(node.items);
             return node.Update(tComma, items);
         }
 
         public virtual SyntaxNode VisitParserAnnotationBlock1(ParserAnnotationBlock1Syntax node)
         {
             var tLParen = this.VisitToken(node.TLParen);
-            var arguments = this.VisitList(node.Arguments);
+            var arguments = this.VisitList(node.arguments);
             var tRParen = this.VisitToken(node.TRParen);
             return node.Update(tLParen, arguments, tRParen);
         }
@@ -2285,14 +2285,14 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
         public virtual SyntaxNode VisitParserAnnotationBlock1argumentsBlock(ParserAnnotationBlock1argumentsBlockSyntax node)
         {
             var tComma = this.VisitToken(node.TComma);
-            var arguments = (AnnotationArgumentSyntax)this.Visit(node.Arguments);
+            var arguments = (AnnotationArgumentSyntax)this.Visit(node.arguments);
             return node.Update(tComma, arguments);
         }
 
         public virtual SyntaxNode VisitLexerAnnotationBlock1(LexerAnnotationBlock1Syntax node)
         {
             var tLParen = this.VisitToken(node.TLParen);
-            var arguments = this.VisitList(node.Arguments);
+            var arguments = this.VisitList(node.arguments);
             var tRParen = this.VisitToken(node.TRParen);
             return node.Update(tLParen, arguments, tRParen);
         }
@@ -2300,13 +2300,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
         public virtual SyntaxNode VisitLexerAnnotationBlock1argumentsBlock(LexerAnnotationBlock1argumentsBlockSyntax node)
         {
             var tComma = this.VisitToken(node.TComma);
-            var arguments = (AnnotationArgumentSyntax)this.Visit(node.Arguments);
+            var arguments = (AnnotationArgumentSyntax)this.Visit(node.arguments);
             return node.Update(tComma, arguments);
         }
 
         public virtual SyntaxNode VisitAnnotationArgumentBlock1(AnnotationArgumentBlock1Syntax node)
         {
-            var namedParameter = (IdentifierSyntax)this.Visit(node.NamedParameter);
+            var namedParameter = (IdentifierSyntax)this.Visit(node.namedParameter);
             var tColon = this.VisitToken(node.TColon);
             return node.Update(namedParameter, tColon);
         }
