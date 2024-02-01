@@ -1,5 +1,5 @@
 #line (1,10)-(1,54) 10 "LanguageGenerator.mxg"
-namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
+namespace MetaDslx.Bootstrap.MetaCompiler3.Generators
 #line hidden
 
 {
@@ -8,7 +8,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
     #line hidden
     global::
     #line (3,7)-(3,45) 13 "LanguageGenerator.mxg"
-    MetaDslx.Bootstrap.MetaCompiler2.Model;
+    MetaDslx.Bootstrap.MetaCompiler3.Model;
     #line hidden
     #line (4,1)-(4,6) 5 "LanguageGenerator.mxg"
     using

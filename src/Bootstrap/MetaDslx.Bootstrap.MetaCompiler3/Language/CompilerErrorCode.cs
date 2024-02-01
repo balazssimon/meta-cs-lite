@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MetaDslx.Bootstrap.MetaCompiler2
+namespace MetaDslx.Bootstrap.MetaCompiler3
 {
     public static class CompilerErrorCode
     {

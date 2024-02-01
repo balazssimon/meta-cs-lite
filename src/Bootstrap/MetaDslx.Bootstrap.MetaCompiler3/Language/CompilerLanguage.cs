@@ -1,4 +1,4 @@
-﻿using MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax;
+﻿using MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax;
 using MetaDslx.CodeAnalysis;
 using MetaDslx.CodeAnalysis.Syntax;
 using System;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler
+namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler
 {
     public partial class CompilerLanguage
     {

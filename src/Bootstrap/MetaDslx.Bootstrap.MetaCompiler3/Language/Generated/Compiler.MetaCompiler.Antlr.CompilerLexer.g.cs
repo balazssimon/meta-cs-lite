@@ -19,7 +19,7 @@
 // Ambiguous reference in cref attribute
 #pragma warning disable 419
 
-namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler {
+namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler {
 using System;
 using System.IO;
 using System.Text;
@@ -299,4 +299,4 @@ public partial class CompilerLexer : global::MetaDslx.CodeAnalysis.Parsers.Antlr
 
 
 }
-} // namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler
+} // namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler

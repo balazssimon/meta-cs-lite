@@ -9,7 +9,7 @@ pr_Main
     :  E_KNamespace=LR_KNamespace  E_Qualifier=pr_Qualifier  E_TSemicolon=LR_TSemicolon  E_Block+=pr_MainBlock1*  E_Block1=pr_MainBlock2  E_EndOfFileToken=EOF
     ;
 pr_Using
-    :  E_KMetamodel=LR_KMetamodel  E_metaModels=pr_Qualifier #pr_UsingMetaModel
+    :  E_KMetamodel=LR_KMetamodel  E_metaModelSymbols=pr_Qualifier #pr_UsingMetaModel
     |  E_namespaces=pr_Qualifier #pr_UsingAlt2
     ;
 pr_LanguageDeclaration

@@ -1,4 +1,4 @@
-﻿using MetaDslx.Bootstrap.MetaCompiler2.Symbols;
+﻿using MetaDslx.Bootstrap.MetaCompiler3.Symbols;
 using MetaDslx.CodeAnalysis;
 using MetaDslx.CodeAnalysis.Symbols.Source;
 using System;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler
+namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler
 {
     internal class CustomCompilerCompilationFactory : CompilationFactory
     {

@@ -11,7 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MetaDslx.Bootstrap.MetaCompiler2.Symbols
+namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
 {
     internal class AnnotationArgumentBinder : UseBinder, IMultiLookupBinder
     {

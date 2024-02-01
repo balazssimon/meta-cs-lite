@@ -1,4 +1,4 @@
-﻿using MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax;
+﻿using MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax;
 using MetaDslx.CodeAnalysis;
 using MetaDslx.CodeAnalysis.Binding;
 using MetaDslx.CodeAnalysis.Binding.Lookup;
@@ -15,7 +15,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace MetaDslx.Bootstrap.MetaCompiler2.Symbols
+namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
 {
     internal class ExpressionValueBinder : UseBinder
     {

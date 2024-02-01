@@ -12,7 +12,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 
-namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
+namespace MetaDslx.Bootstrap.MetaCompiler3.Generators
 {
     public class AntlrTool
     {

@@ -1,6 +1,6 @@
 #nullable enable
 
-namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
+namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
 {
     internal class CompilerInternalSyntaxVisitor : global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.InternalSyntaxVisitor
     {

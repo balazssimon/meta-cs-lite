@@ -1,6 +1,6 @@
-namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
+namespace MetaDslx.Bootstrap.MetaCompiler3.Generators
 
-using MetaDslx.Bootstrap.MetaCompiler2.Model
+using MetaDslx.Bootstrap.MetaCompiler3.Model
 using System.Collections.Generic
 using System.Collections.Immutable
 using System.Linq
@@ -110,8 +110,8 @@ template GenerateBinderFactoryVisitBinder(Binder binder, string nodeName, string
 end template
 
 template GenerateBinderFactoryVisitElement(Alternative alt, Element elem, ref int annotIndex)
-    [var isList = MetaDslx.Bootstrap.MetaCompiler2.Model.MultiplicityExtensions.IsList(elem.Value.Multiplicity)]
-    [var isOptional = MetaDslx.Bootstrap.MetaCompiler2.Model.MultiplicityExtensions.IsOptional(elem.Value.Multiplicity)]
+    [var isList = MetaDslx.Bootstrap.MetaCompiler3.Model.MultiplicityExtensions.IsList(elem.Value.Multiplicity)]
+    [var isOptional = MetaDslx.Bootstrap.MetaCompiler3.Model.MultiplicityExtensions.IsOptional(elem.Value.Multiplicity)]
     [if (isList)]
         [var elemName = "node."+elem.PropertyName+".Node"]
         [var body = GenerateBinderFactoryVisitListElements(alt, elem, ref annotIndex)]

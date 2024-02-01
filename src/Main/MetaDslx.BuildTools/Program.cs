@@ -287,8 +287,13 @@ namespace MetaDslx.BuildTools
                                 initialCompilation: initialCompilation,
                                 references: new[]
                                 {
-                                    MetadataReference.CreateFromMetaModel(MetaCompiler.Model.Compiler.MInstance)
-                                },
+#if MetaDslxBootstrap
+                                    MetadataReference.CreateFromMetaModel(MetaDslx.Bootstrap.MetaCompiler2.Model.Compiler.MInstance)
+                                    //MetadataReference.CreateFromModel(MetaDslx.Bootstrap.MetaCompiler2.Model.Compiler.MInstance.MModel)
+#else
+                                    MetadataReference.CreateFromMetaModel(MetaDslx.Bootstrap.MetaCompiler.Model.Compiler.MInstance)
+#endif
+            },
                                 options: CompilationOptions.Default.WithConcurrentBuild(false));
                 mxlCompiler.Compile();
                 var diagnostics = mxlCompiler.GetDiagnostics();

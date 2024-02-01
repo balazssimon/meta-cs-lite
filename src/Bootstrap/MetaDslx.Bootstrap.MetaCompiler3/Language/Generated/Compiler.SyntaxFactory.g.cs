@@ -1,6 +1,6 @@
 #nullable enable
 
-namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
+namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
 {
     using __Type = global::System.Type;
     using __Debug = global::System.Diagnostics.Debug;
@@ -267,17 +267,17 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
             return this.Main(this.Token(CompilerSyntaxKind.KNamespace), qualifier, this.Token(CompilerSyntaxKind.TSemicolon), block1, block2, this.Token(CompilerSyntaxKind.Eof));
         }
 
-        public UsingMetaModelSyntax UsingMetaModel(__SyntaxToken kMetamodel, QualifierSyntax metaModels)
+        public UsingMetaModelSyntax UsingMetaModel(__SyntaxToken kMetamodel, QualifierSyntax metaModelSymbols)
         {
             if (kMetamodel.RawKind != (int)__InternalSyntaxKind.None) throw new __ArgumentNullException(nameof(kMetamodel));
             if (kMetamodel.RawKind != (int)CompilerSyntaxKind.KMetamodel) throw new __ArgumentException(nameof(kMetamodel));
-            if (metaModels is null) throw new __ArgumentNullException(nameof(metaModels));
-            return (UsingMetaModelSyntax)CompilerLanguage.Instance.InternalSyntaxFactory.UsingMetaModel((__InternalSyntaxToken)kMetamodel.Node, (InternalSyntax.QualifierGreen)metaModels.Green).CreateRed();
+            if (metaModelSymbols is null) throw new __ArgumentNullException(nameof(metaModelSymbols));
+            return (UsingMetaModelSyntax)CompilerLanguage.Instance.InternalSyntaxFactory.UsingMetaModel((__InternalSyntaxToken)kMetamodel.Node, (InternalSyntax.QualifierGreen)metaModelSymbols.Green).CreateRed();
         }
         
-        public UsingMetaModelSyntax UsingMetaModel(QualifierSyntax metaModels)
+        public UsingMetaModelSyntax UsingMetaModel(QualifierSyntax metaModelSymbols)
         {
-            return this.UsingMetaModel(this.Token(CompilerSyntaxKind.KMetamodel), metaModels);
+            return this.UsingMetaModel(this.Token(CompilerSyntaxKind.KMetamodel), metaModelSymbols);
         }
 
         public UsingAlt2Syntax UsingAlt2(QualifierSyntax namespaces)

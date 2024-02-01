@@ -1,6 +1,6 @@
-﻿namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
+﻿namespace MetaDslx.Bootstrap.MetaCompiler3.Generators
 
-using MetaDslx.Bootstrap.MetaCompiler2.Model
+using MetaDslx.Bootstrap.MetaCompiler3.Model
 using System.Collections.Generic
 using System.Collections.Immutable
 using System.Linq
@@ -635,7 +635,7 @@ template GenerateSyntaxRuleAlt(Rule parent, Alternative alt)
 
         [foreach (var elem in alt.Elements)]
             [var elemIndex = alt.Elements.IndexOf(elem)]
-            [var isList = MetaDslx.Bootstrap.MetaCompiler2.Model.MultiplicityExtensions.IsList(elem.Value.Multiplicity)]
+            [var isList = MetaDslx.Bootstrap.MetaCompiler3.Model.MultiplicityExtensions.IsList(elem.Value.Multiplicity)]
             public [elem.RedPropertyType] [elem.PropertyName] 
             { 
                 get
@@ -685,7 +685,7 @@ template GenerateSyntaxRuleAlt(Rule parent, Alternative alt)
         }
 
         [foreach (var elem in alt.Elements)]
-            [var isList = MetaDslx.Bootstrap.MetaCompiler2.Model.MultiplicityExtensions.IsList(elem.Value.Multiplicity) || elem.Value is SeparatedList]
+            [var isList = MetaDslx.Bootstrap.MetaCompiler3.Model.MultiplicityExtensions.IsList(elem.Value.Multiplicity) || elem.Value is SeparatedList]
             public [alt.RedName] With[elem.PropertyName]([elem.RedPropertyType] [elem.ParameterName])
             {
                 return this.Update([foreach (var field in alt.Elements) separator ", "][field == elem ? field.ParameterName : "this."+field.PropertyName][end foreach]);

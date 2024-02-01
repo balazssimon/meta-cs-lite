@@ -5,7 +5,7 @@ using MetaDslx.CodeAnalysis.Binding;
 
 #nullable enable
 
-namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler
+namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler
 {
     public class CompilerCompilationFactory : CompilationFactory
     {

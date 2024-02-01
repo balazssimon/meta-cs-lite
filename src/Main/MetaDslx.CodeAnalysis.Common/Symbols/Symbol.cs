@@ -134,7 +134,7 @@ namespace MetaDslx.CodeAnalysis.Symbols
                 if (this is IModelSymbol modelSymbol)
                 {
                     sb.Append("[");
-                    sb.Append(modelSymbol.ModelObjectType.Name);
+                    sb.Append(modelSymbol.ModelObjectType?.Name);
                     sb.Append("]");
                 }
                 return builder.ToStringAndFree();

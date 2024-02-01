@@ -13,7 +13,7 @@ using MetaDslx.CodeAnalysis.Symbols.CSharp;
 using System.Threading;
 using MetaDslx.CodeAnalysis.PooledObjects;
 
-namespace MetaDslx.Bootstrap.MetaCompiler2.Symbols
+namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
 {
     using INamedTypeSymbol = Microsoft.CodeAnalysis.INamedTypeSymbol;
     using IMethodSymbol = Microsoft.CodeAnalysis.IMethodSymbol;

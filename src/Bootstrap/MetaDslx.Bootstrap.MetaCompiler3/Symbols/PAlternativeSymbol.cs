@@ -10,11 +10,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Collections.Immutable;
 using MetaDslx.CodeAnalysis.PooledObjects;
-using MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax;
-using MetaDslx.Bootstrap.MetaCompiler2.Model;
+using MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax;
+using MetaDslx.Bootstrap.MetaCompiler3.Model;
 using Roslyn.Utilities;
 
-namespace MetaDslx.Bootstrap.MetaCompiler2.Symbols
+namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
 {
     internal class PAlternativeSymbol : SourceDeclarationSymbol
     {

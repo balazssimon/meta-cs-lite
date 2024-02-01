@@ -5,7 +5,7 @@ using MetaDslx.CodeAnalysis.Binding;
 
 #nullable enable
 
-namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler
+namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler
 {
     public class CompilerSemanticsFactory : SemanticsFactory
     {
@@ -16,7 +16,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler
 
         public override BinderFactoryVisitor CreateBinderFactoryVisitor(BinderFactory binderFactory)
         {
-            return new global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Binding.CompilerBinderFactoryVisitor(binderFactory);
+            return new global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Binding.CompilerBinderFactoryVisitor(binderFactory);
         }
     }
 }

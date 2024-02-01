@@ -1,6 +1,6 @@
 #nullable enable
 
-namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
+namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
 {
     using __Debug = System.Diagnostics.Debug;
     using __Language = global::MetaDslx.CodeAnalysis.Language;
@@ -1125,7 +1125,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
-            return new global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.MainSyntax(this, (CompilerSyntaxNode)parent, position);
+            return new global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.MainSyntax(this, (CompilerSyntaxNode)parent, position);
         }
     
         protected override __GreenNode GetSlot(int index)
@@ -1193,9 +1193,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
     {
         internal static new readonly UsingMetaModelGreen __Missing = new UsingMetaModelGreen();
         private __InternalSyntaxToken _kMetamodel;
-        private QualifierGreen _metaModels;
+        private QualifierGreen _metaModelSymbols;
     
-        public UsingMetaModelGreen(CompilerSyntaxKind kind, __InternalSyntaxToken kMetamodel, QualifierGreen metaModels)
+        public UsingMetaModelGreen(CompilerSyntaxKind kind, __InternalSyntaxToken kMetamodel, QualifierGreen metaModelSymbols)
             : base(kind, null, null)
         {
             SlotCount = 2;
@@ -1204,14 +1204,14 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
                 AdjustFlagsAndWidth(kMetamodel);
                 _kMetamodel = kMetamodel;
             }
-            if (metaModels != null)
+            if (metaModelSymbols != null)
             {
-                AdjustFlagsAndWidth(metaModels);
-                _metaModels = metaModels;
+                AdjustFlagsAndWidth(metaModelSymbols);
+                _metaModelSymbols = metaModelSymbols;
             }
         }
     
-        public UsingMetaModelGreen(CompilerSyntaxKind kind, __InternalSyntaxToken kMetamodel, QualifierGreen metaModels, __DiagnosticInfo[] diagnostics, __SyntaxAnnotation[] annotations)
+        public UsingMetaModelGreen(CompilerSyntaxKind kind, __InternalSyntaxToken kMetamodel, QualifierGreen metaModelSymbols, __DiagnosticInfo[] diagnostics, __SyntaxAnnotation[] annotations)
             : base(kind, diagnostics, annotations)
         {
             SlotCount = 2;
@@ -1220,10 +1220,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
                 AdjustFlagsAndWidth(kMetamodel);
                 _kMetamodel = kMetamodel;
             }
-            if (metaModels != null)
+            if (metaModelSymbols != null)
             {
-                AdjustFlagsAndWidth(metaModels);
-                _metaModels = metaModels;
+                AdjustFlagsAndWidth(metaModelSymbols);
+                _metaModelSymbols = metaModelSymbols;
             }
         }
     
@@ -1234,11 +1234,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
         }
     
         public __InternalSyntaxToken KMetamodel { get { return _kMetamodel; } }
-        public QualifierGreen MetaModels { get { return _metaModels; } }
+        public QualifierGreen MetaModelSymbols { get { return _metaModelSymbols; } }
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
-            return new global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.UsingMetaModelSyntax(this, (CompilerSyntaxNode)parent, position);
+            return new global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.UsingMetaModelSyntax(this, (CompilerSyntaxNode)parent, position);
         }
     
         protected override __GreenNode GetSlot(int index)
@@ -1246,7 +1246,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
             switch (index)
             {
                 case 0: return _kMetamodel;
-                case 1: return _metaModels;
+                case 1: return _metaModelSymbols;
                 default: return null;
             }
         }
@@ -1257,25 +1257,25 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
     
         public override __InternalSyntaxNode WithDiagnostics(__DiagnosticInfo[] diagnostics)
         {
-            return new UsingMetaModelGreen(this.Kind, _kMetamodel, _metaModels, diagnostics, this.GetAnnotations());
+            return new UsingMetaModelGreen(this.Kind, _kMetamodel, _metaModelSymbols, diagnostics, this.GetAnnotations());
         }
     
         public override __InternalSyntaxNode WithAnnotations(__SyntaxAnnotation[] annotations)
         {
-            return new UsingMetaModelGreen(this.Kind, _kMetamodel, _metaModels, this.GetDiagnostics(), annotations);
+            return new UsingMetaModelGreen(this.Kind, _kMetamodel, _metaModelSymbols, this.GetDiagnostics(), annotations);
         }
     
         public override __GreenNode Clone()
         {
-            return new UsingMetaModelGreen(this.Kind, _kMetamodel, _metaModels, this.GetDiagnostics(), this.GetAnnotations());
+            return new UsingMetaModelGreen(this.Kind, _kMetamodel, _metaModelSymbols, this.GetDiagnostics(), this.GetAnnotations());
         }
     
     
-        public UsingMetaModelGreen Update(__InternalSyntaxToken kMetamodel, QualifierGreen metaModels)
+        public UsingMetaModelGreen Update(__InternalSyntaxToken kMetamodel, QualifierGreen metaModelSymbols)
         {
-            if (_kMetamodel != kMetamodel || _metaModels != metaModels)
+            if (_kMetamodel != kMetamodel || _metaModelSymbols != metaModelSymbols)
             {
-                __InternalSyntaxNode newNode = CompilerLanguage.Instance.InternalSyntaxFactory.UsingMetaModel(kMetamodel, metaModels);
+                __InternalSyntaxNode newNode = CompilerLanguage.Instance.InternalSyntaxFactory.UsingMetaModel(kMetamodel, metaModelSymbols);
                 var diags = this.GetDiagnostics();
                 if (diags != null && diags.Length > 0)
                     newNode = newNode.WithDiagnostics(diags);
@@ -1325,7 +1325,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
-            return new global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.UsingAlt2Syntax(this, (CompilerSyntaxNode)parent, position);
+            return new global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.UsingAlt2Syntax(this, (CompilerSyntaxNode)parent, position);
         }
     
         protected override __GreenNode GetSlot(int index)
@@ -1448,7 +1448,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
-            return new global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.LanguageDeclarationSyntax(this, (CompilerSyntaxNode)parent, position);
+            return new global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.LanguageDeclarationSyntax(this, (CompilerSyntaxNode)parent, position);
         }
     
         protected override __GreenNode GetSlot(int index)
@@ -1538,7 +1538,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
-            return new global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.GrammarSyntax(this, (CompilerSyntaxNode)parent, position);
+            return new global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.GrammarSyntax(this, (CompilerSyntaxNode)parent, position);
         }
     
         protected override __GreenNode GetSlot(int index)
@@ -1634,7 +1634,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
-            return new global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.GrammarRuleAlt1Syntax(this, (CompilerSyntaxNode)parent, position);
+            return new global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.GrammarRuleAlt1Syntax(this, (CompilerSyntaxNode)parent, position);
         }
     
         protected override __GreenNode GetSlot(int index)
@@ -1720,7 +1720,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
-            return new global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.GrammarRuleAlt2Syntax(this, (CompilerSyntaxNode)parent, position);
+            return new global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.GrammarRuleAlt2Syntax(this, (CompilerSyntaxNode)parent, position);
         }
     
         protected override __GreenNode GetSlot(int index)
@@ -1855,7 +1855,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
-            return new global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.RuleSyntax(this, (CompilerSyntaxNode)parent, position);
+            return new global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.RuleSyntax(this, (CompilerSyntaxNode)parent, position);
         }
     
         protected override __GreenNode GetSlot(int index)
@@ -1970,7 +1970,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
-            return new global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.AlternativeSyntax(this, (CompilerSyntaxNode)parent, position);
+            return new global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.AlternativeSyntax(this, (CompilerSyntaxNode)parent, position);
         }
     
         protected override __GreenNode GetSlot(int index)
@@ -2071,7 +2071,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
-            return new global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.ElementSyntax(this, (CompilerSyntaxNode)parent, position);
+            return new global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.ElementSyntax(this, (CompilerSyntaxNode)parent, position);
         }
     
         protected override __GreenNode GetSlot(int index)
@@ -2168,7 +2168,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
-            return new global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.ElementValueAlt1Syntax(this, (CompilerSyntaxNode)parent, position);
+            return new global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.ElementValueAlt1Syntax(this, (CompilerSyntaxNode)parent, position);
         }
     
         protected override __GreenNode GetSlot(int index)
@@ -2254,7 +2254,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
-            return new global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.ElementValueAlt2Syntax(this, (CompilerSyntaxNode)parent, position);
+            return new global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.ElementValueAlt2Syntax(this, (CompilerSyntaxNode)parent, position);
         }
     
         protected override __GreenNode GetSlot(int index)
@@ -2340,7 +2340,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
-            return new global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.ElementValueAlt3Syntax(this, (CompilerSyntaxNode)parent, position);
+            return new global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.ElementValueAlt3Syntax(this, (CompilerSyntaxNode)parent, position);
         }
     
         protected override __GreenNode GetSlot(int index)
@@ -2426,7 +2426,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
-            return new global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.ElementValueAlt4Syntax(this, (CompilerSyntaxNode)parent, position);
+            return new global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.ElementValueAlt4Syntax(this, (CompilerSyntaxNode)parent, position);
         }
     
         protected override __GreenNode GetSlot(int index)
@@ -2561,7 +2561,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
-            return new global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.BlockSyntax(this, (CompilerSyntaxNode)parent, position);
+            return new global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.BlockSyntax(this, (CompilerSyntaxNode)parent, position);
         }
     
         protected override __GreenNode GetSlot(int index)
@@ -2664,7 +2664,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
-            return new global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.BlockAlternativeSyntax(this, (CompilerSyntaxNode)parent, position);
+            return new global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.BlockAlternativeSyntax(this, (CompilerSyntaxNode)parent, position);
         }
     
         protected override __GreenNode GetSlot(int index)
@@ -2785,7 +2785,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
-            return new global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.RuleRefAlt1Syntax(this, (CompilerSyntaxNode)parent, position);
+            return new global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.RuleRefAlt1Syntax(this, (CompilerSyntaxNode)parent, position);
         }
     
         protected override __GreenNode GetSlot(int index)
@@ -2909,7 +2909,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
-            return new global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.RuleRefAlt2Syntax(this, (CompilerSyntaxNode)parent, position);
+            return new global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.RuleRefAlt2Syntax(this, (CompilerSyntaxNode)parent, position);
         }
     
         protected override __GreenNode GetSlot(int index)
@@ -3058,7 +3058,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
-            return new global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.RuleRefAlt3Syntax(this, (CompilerSyntaxNode)parent, position);
+            return new global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.RuleRefAlt3Syntax(this, (CompilerSyntaxNode)parent, position);
         }
     
         protected override __GreenNode GetSlot(int index)
@@ -3150,7 +3150,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
-            return new global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.Eof1Syntax(this, (CompilerSyntaxNode)parent, position);
+            return new global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.Eof1Syntax(this, (CompilerSyntaxNode)parent, position);
         }
     
         protected override __GreenNode GetSlot(int index)
@@ -3261,7 +3261,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
-            return new global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.FixedSyntax(this, (CompilerSyntaxNode)parent, position);
+            return new global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.FixedSyntax(this, (CompilerSyntaxNode)parent, position);
         }
     
         protected override __GreenNode GetSlot(int index)
@@ -3359,7 +3359,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
-            return new global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.LexerRuleAlt1Syntax(this, (CompilerSyntaxNode)parent, position);
+            return new global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.LexerRuleAlt1Syntax(this, (CompilerSyntaxNode)parent, position);
         }
     
         protected override __GreenNode GetSlot(int index)
@@ -3445,7 +3445,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
-            return new global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.LexerRuleAlt2Syntax(this, (CompilerSyntaxNode)parent, position);
+            return new global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.LexerRuleAlt2Syntax(this, (CompilerSyntaxNode)parent, position);
         }
     
         protected override __GreenNode GetSlot(int index)
@@ -3580,7 +3580,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
-            return new global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.TokenSyntax(this, (CompilerSyntaxNode)parent, position);
+            return new global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.TokenSyntax(this, (CompilerSyntaxNode)parent, position);
         }
     
         protected override __GreenNode GetSlot(int index)
@@ -3719,7 +3719,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
-            return new global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.FragmentSyntax(this, (CompilerSyntaxNode)parent, position);
+            return new global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.FragmentSyntax(this, (CompilerSyntaxNode)parent, position);
         }
     
         protected override __GreenNode GetSlot(int index)
@@ -3810,7 +3810,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
-            return new global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.LAlternativeSyntax(this, (CompilerSyntaxNode)parent, position);
+            return new global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.LAlternativeSyntax(this, (CompilerSyntaxNode)parent, position);
         }
     
         protected override __GreenNode GetSlot(int index)
@@ -3921,7 +3921,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
-            return new global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.LElementSyntax(this, (CompilerSyntaxNode)parent, position);
+            return new global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.LElementSyntax(this, (CompilerSyntaxNode)parent, position);
         }
     
         protected override __GreenNode GetSlot(int index)
@@ -4019,7 +4019,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
-            return new global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.LElementValueAlt1Syntax(this, (CompilerSyntaxNode)parent, position);
+            return new global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.LElementValueAlt1Syntax(this, (CompilerSyntaxNode)parent, position);
         }
     
         protected override __GreenNode GetSlot(int index)
@@ -4105,7 +4105,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
-            return new global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.LElementValueAlt2Syntax(this, (CompilerSyntaxNode)parent, position);
+            return new global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.LElementValueAlt2Syntax(this, (CompilerSyntaxNode)parent, position);
         }
     
         protected override __GreenNode GetSlot(int index)
@@ -4191,7 +4191,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
-            return new global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.LElementValueAlt3Syntax(this, (CompilerSyntaxNode)parent, position);
+            return new global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.LElementValueAlt3Syntax(this, (CompilerSyntaxNode)parent, position);
         }
     
         protected override __GreenNode GetSlot(int index)
@@ -4277,7 +4277,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
-            return new global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.LElementValueAlt4Syntax(this, (CompilerSyntaxNode)parent, position);
+            return new global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.LElementValueAlt4Syntax(this, (CompilerSyntaxNode)parent, position);
         }
     
         protected override __GreenNode GetSlot(int index)
@@ -4363,7 +4363,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
-            return new global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.LElementValueAlt5Syntax(this, (CompilerSyntaxNode)parent, position);
+            return new global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.LElementValueAlt5Syntax(this, (CompilerSyntaxNode)parent, position);
         }
     
         protected override __GreenNode GetSlot(int index)
@@ -4450,7 +4450,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
-            return new global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.LReferenceSyntax(this, (CompilerSyntaxNode)parent, position);
+            return new global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.LReferenceSyntax(this, (CompilerSyntaxNode)parent, position);
         }
     
         protected override __GreenNode GetSlot(int index)
@@ -4537,7 +4537,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
-            return new global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.LFixedSyntax(this, (CompilerSyntaxNode)parent, position);
+            return new global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.LFixedSyntax(this, (CompilerSyntaxNode)parent, position);
         }
     
         protected override __GreenNode GetSlot(int index)
@@ -4624,7 +4624,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
-            return new global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.LWildCardSyntax(this, (CompilerSyntaxNode)parent, position);
+            return new global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.LWildCardSyntax(this, (CompilerSyntaxNode)parent, position);
         }
     
         protected override __GreenNode GetSlot(int index)
@@ -4735,7 +4735,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
-            return new global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.LRangeSyntax(this, (CompilerSyntaxNode)parent, position);
+            return new global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.LRangeSyntax(this, (CompilerSyntaxNode)parent, position);
         }
     
         protected override __GreenNode GetSlot(int index)
@@ -4848,7 +4848,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
-            return new global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.LBlockSyntax(this, (CompilerSyntaxNode)parent, position);
+            return new global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.LBlockSyntax(this, (CompilerSyntaxNode)parent, position);
         }
     
         protected override __GreenNode GetSlot(int index)
@@ -4946,7 +4946,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
-            return new global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.ExpressionAlt1Syntax(this, (CompilerSyntaxNode)parent, position);
+            return new global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.ExpressionAlt1Syntax(this, (CompilerSyntaxNode)parent, position);
         }
     
         protected override __GreenNode GetSlot(int index)
@@ -5032,7 +5032,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
-            return new global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.ExpressionAlt2Syntax(this, (CompilerSyntaxNode)parent, position);
+            return new global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.ExpressionAlt2Syntax(this, (CompilerSyntaxNode)parent, position);
         }
     
         protected override __GreenNode GetSlot(int index)
@@ -5128,7 +5128,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
-            return new global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.SingleExpressionAlt1Syntax(this, (CompilerSyntaxNode)parent, position);
+            return new global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.SingleExpressionAlt1Syntax(this, (CompilerSyntaxNode)parent, position);
         }
     
         protected override __GreenNode GetSlot(int index)
@@ -5214,7 +5214,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
-            return new global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.SingleExpressionAlt2Syntax(this, (CompilerSyntaxNode)parent, position);
+            return new global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.SingleExpressionAlt2Syntax(this, (CompilerSyntaxNode)parent, position);
         }
     
         protected override __GreenNode GetSlot(int index)
@@ -5325,7 +5325,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
-            return new global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.ArrayExpressionSyntax(this, (CompilerSyntaxNode)parent, position);
+            return new global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.ArrayExpressionSyntax(this, (CompilerSyntaxNode)parent, position);
         }
     
         protected override __GreenNode GetSlot(int index)
@@ -5450,7 +5450,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
-            return new global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.ParserAnnotationSyntax(this, (CompilerSyntaxNode)parent, position);
+            return new global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.ParserAnnotationSyntax(this, (CompilerSyntaxNode)parent, position);
         }
     
         protected override __GreenNode GetSlot(int index)
@@ -5576,7 +5576,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
-            return new global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.LexerAnnotationSyntax(this, (CompilerSyntaxNode)parent, position);
+            return new global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.LexerAnnotationSyntax(this, (CompilerSyntaxNode)parent, position);
         }
     
         protected override __GreenNode GetSlot(int index)
@@ -5678,7 +5678,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
-            return new global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.AnnotationArgumentSyntax(this, (CompilerSyntaxNode)parent, position);
+            return new global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.AnnotationArgumentSyntax(this, (CompilerSyntaxNode)parent, position);
         }
     
         protected override __GreenNode GetSlot(int index)
@@ -5766,7 +5766,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
-            return new global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.AssignmentSyntax(this, (CompilerSyntaxNode)parent, position);
+            return new global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.AssignmentSyntax(this, (CompilerSyntaxNode)parent, position);
         }
     
         protected override __GreenNode GetSlot(int index)
@@ -5853,7 +5853,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
-            return new global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.MultiplicitySyntax(this, (CompilerSyntaxNode)parent, position);
+            return new global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.MultiplicitySyntax(this, (CompilerSyntaxNode)parent, position);
         }
     
         protected override __GreenNode GetSlot(int index)
@@ -5949,7 +5949,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
-            return new global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.TypeReferenceIdentifierAlt1Syntax(this, (CompilerSyntaxNode)parent, position);
+            return new global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.TypeReferenceIdentifierAlt1Syntax(this, (CompilerSyntaxNode)parent, position);
         }
     
         protected override __GreenNode GetSlot(int index)
@@ -6035,7 +6035,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
-            return new global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.TypeReferenceIdentifierAlt2Syntax(this, (CompilerSyntaxNode)parent, position);
+            return new global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.TypeReferenceIdentifierAlt2Syntax(this, (CompilerSyntaxNode)parent, position);
         }
     
         protected override __GreenNode GetSlot(int index)
@@ -6131,7 +6131,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
-            return new global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.TypeReferenceAlt1Syntax(this, (CompilerSyntaxNode)parent, position);
+            return new global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.TypeReferenceAlt1Syntax(this, (CompilerSyntaxNode)parent, position);
         }
     
         protected override __GreenNode GetSlot(int index)
@@ -6217,7 +6217,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
-            return new global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.TypeReferenceAlt2Syntax(this, (CompilerSyntaxNode)parent, position);
+            return new global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.TypeReferenceAlt2Syntax(this, (CompilerSyntaxNode)parent, position);
         }
     
         protected override __GreenNode GetSlot(int index)
@@ -6304,7 +6304,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
-            return new global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.PrimitiveTypeSyntax(this, (CompilerSyntaxNode)parent, position);
+            return new global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.PrimitiveTypeSyntax(this, (CompilerSyntaxNode)parent, position);
         }
     
         protected override __GreenNode GetSlot(int index)
@@ -6391,7 +6391,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
-            return new global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.NameSyntax(this, (CompilerSyntaxNode)parent, position);
+            return new global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.NameSyntax(this, (CompilerSyntaxNode)parent, position);
         }
     
         protected override __GreenNode GetSlot(int index)
@@ -6478,7 +6478,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
-            return new global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.QualifierSyntax(this, (CompilerSyntaxNode)parent, position);
+            return new global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.QualifierSyntax(this, (CompilerSyntaxNode)parent, position);
         }
     
         protected override __GreenNode GetSlot(int index)
@@ -6565,7 +6565,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
-            return new global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.IdentifierSyntax(this, (CompilerSyntaxNode)parent, position);
+            return new global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.IdentifierSyntax(this, (CompilerSyntaxNode)parent, position);
         }
     
         protected override __GreenNode GetSlot(int index)
@@ -6676,7 +6676,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
-            return new global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.MainBlock1Syntax(this, (CompilerSyntaxNode)parent, position);
+            return new global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.MainBlock1Syntax(this, (CompilerSyntaxNode)parent, position);
         }
     
         protected override __GreenNode GetSlot(int index)
@@ -6765,7 +6765,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
-            return new global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.MainBlock2Syntax(this, (CompilerSyntaxNode)parent, position);
+            return new global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.MainBlock2Syntax(this, (CompilerSyntaxNode)parent, position);
         }
     
         protected override __GreenNode GetSlot(int index)
@@ -6852,7 +6852,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
-            return new global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.GrammarBlock1Syntax(this, (CompilerSyntaxNode)parent, position);
+            return new global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.GrammarBlock1Syntax(this, (CompilerSyntaxNode)parent, position);
         }
     
         protected override __GreenNode GetSlot(int index)
@@ -6948,7 +6948,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
-            return new global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.RuleBlock1Alt1Syntax(this, (CompilerSyntaxNode)parent, position);
+            return new global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.RuleBlock1Alt1Syntax(this, (CompilerSyntaxNode)parent, position);
         }
     
         protected override __GreenNode GetSlot(int index)
@@ -7058,7 +7058,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
-            return new global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.RuleBlock1Alt2Syntax(this, (CompilerSyntaxNode)parent, position);
+            return new global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.RuleBlock1Alt2Syntax(this, (CompilerSyntaxNode)parent, position);
         }
     
         protected override __GreenNode GetSlot(int index)
@@ -7159,7 +7159,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
-            return new global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.RulealternativesBlockSyntax(this, (CompilerSyntaxNode)parent, position);
+            return new global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.RulealternativesBlockSyntax(this, (CompilerSyntaxNode)parent, position);
         }
     
         protected override __GreenNode GetSlot(int index)
@@ -7295,7 +7295,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
-            return new global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.AlternativeBlock1Syntax(this, (CompilerSyntaxNode)parent, position);
+            return new global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.AlternativeBlock1Syntax(this, (CompilerSyntaxNode)parent, position);
         }
     
         protected override __GreenNode GetSlot(int index)
@@ -7398,7 +7398,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
-            return new global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.AlternativeBlock1Block1Syntax(this, (CompilerSyntaxNode)parent, position);
+            return new global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.AlternativeBlock1Block1Syntax(this, (CompilerSyntaxNode)parent, position);
         }
     
         protected override __GreenNode GetSlot(int index)
@@ -7498,7 +7498,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
-            return new global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.AlternativeBlock2Syntax(this, (CompilerSyntaxNode)parent, position);
+            return new global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.AlternativeBlock2Syntax(this, (CompilerSyntaxNode)parent, position);
         }
     
         protected override __GreenNode GetSlot(int index)
@@ -7610,7 +7610,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
-            return new global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.ElementBlock1Syntax(this, (CompilerSyntaxNode)parent, position);
+            return new global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.ElementBlock1Syntax(this, (CompilerSyntaxNode)parent, position);
         }
     
         protected override __GreenNode GetSlot(int index)
@@ -7711,7 +7711,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
-            return new global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.BlockalternativesBlockSyntax(this, (CompilerSyntaxNode)parent, position);
+            return new global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.BlockalternativesBlockSyntax(this, (CompilerSyntaxNode)parent, position);
         }
     
         protected override __GreenNode GetSlot(int index)
@@ -7811,7 +7811,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
-            return new global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.BlockAlternativeBlock1Syntax(this, (CompilerSyntaxNode)parent, position);
+            return new global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.BlockAlternativeBlock1Syntax(this, (CompilerSyntaxNode)parent, position);
         }
     
         protected override __GreenNode GetSlot(int index)
@@ -7911,7 +7911,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
-            return new global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.RuleRefAlt3referencedTypesBlockSyntax(this, (CompilerSyntaxNode)parent, position);
+            return new global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.RuleRefAlt3referencedTypesBlockSyntax(this, (CompilerSyntaxNode)parent, position);
         }
     
         protected override __GreenNode GetSlot(int index)
@@ -8011,7 +8011,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
-            return new global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.RuleRefAlt3Block1Syntax(this, (CompilerSyntaxNode)parent, position);
+            return new global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.RuleRefAlt3Block1Syntax(this, (CompilerSyntaxNode)parent, position);
         }
     
         protected override __GreenNode GetSlot(int index)
@@ -8132,7 +8132,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
-            return new global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.TokenBlock1Alt1Syntax(this, (CompilerSyntaxNode)parent, position);
+            return new global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.TokenBlock1Alt1Syntax(this, (CompilerSyntaxNode)parent, position);
         }
     
         protected override __GreenNode GetSlot(int index)
@@ -8232,7 +8232,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
-            return new global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.TokenBlock1Alt2Syntax(this, (CompilerSyntaxNode)parent, position);
+            return new global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.TokenBlock1Alt2Syntax(this, (CompilerSyntaxNode)parent, position);
         }
     
         protected override __GreenNode GetSlot(int index)
@@ -8332,7 +8332,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
-            return new global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.TokenBlock1Alt1Block1Syntax(this, (CompilerSyntaxNode)parent, position);
+            return new global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.TokenBlock1Alt1Block1Syntax(this, (CompilerSyntaxNode)parent, position);
         }
     
         protected override __GreenNode GetSlot(int index)
@@ -8432,7 +8432,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
-            return new global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.TokenalternativesBlockSyntax(this, (CompilerSyntaxNode)parent, position);
+            return new global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.TokenalternativesBlockSyntax(this, (CompilerSyntaxNode)parent, position);
         }
     
         protected override __GreenNode GetSlot(int index)
@@ -8532,7 +8532,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
-            return new global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.FragmentalternativesBlockSyntax(this, (CompilerSyntaxNode)parent, position);
+            return new global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.FragmentalternativesBlockSyntax(this, (CompilerSyntaxNode)parent, position);
         }
     
         protected override __GreenNode GetSlot(int index)
@@ -8632,7 +8632,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
-            return new global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.LBlockalternativesBlockSyntax(this, (CompilerSyntaxNode)parent, position);
+            return new global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.LBlockalternativesBlockSyntax(this, (CompilerSyntaxNode)parent, position);
         }
     
         protected override __GreenNode GetSlot(int index)
@@ -8729,7 +8729,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
-            return new global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.SingleExpressionAlt1Block1Alt1Syntax(this, (CompilerSyntaxNode)parent, position);
+            return new global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.SingleExpressionAlt1Block1Alt1Syntax(this, (CompilerSyntaxNode)parent, position);
         }
     
         protected override __GreenNode GetSlot(int index)
@@ -8815,7 +8815,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
-            return new global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.SingleExpressionAlt1Block1Alt2Syntax(this, (CompilerSyntaxNode)parent, position);
+            return new global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.SingleExpressionAlt1Block1Alt2Syntax(this, (CompilerSyntaxNode)parent, position);
         }
     
         protected override __GreenNode GetSlot(int index)
@@ -8901,7 +8901,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
-            return new global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.SingleExpressionAlt1Block1Alt3Syntax(this, (CompilerSyntaxNode)parent, position);
+            return new global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.SingleExpressionAlt1Block1Alt3Syntax(this, (CompilerSyntaxNode)parent, position);
         }
     
         protected override __GreenNode GetSlot(int index)
@@ -8987,7 +8987,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
-            return new global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.SingleExpressionAlt1Block1Alt4Syntax(this, (CompilerSyntaxNode)parent, position);
+            return new global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.SingleExpressionAlt1Block1Alt4Syntax(this, (CompilerSyntaxNode)parent, position);
         }
     
         protected override __GreenNode GetSlot(int index)
@@ -9073,7 +9073,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
-            return new global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.SingleExpressionAlt1Block1Alt5Syntax(this, (CompilerSyntaxNode)parent, position);
+            return new global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.SingleExpressionAlt1Block1Alt5Syntax(this, (CompilerSyntaxNode)parent, position);
         }
     
         protected override __GreenNode GetSlot(int index)
@@ -9159,7 +9159,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
-            return new global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.SingleExpressionAlt1Block1Alt6Syntax(this, (CompilerSyntaxNode)parent, position);
+            return new global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.SingleExpressionAlt1Block1Alt6Syntax(this, (CompilerSyntaxNode)parent, position);
         }
     
         protected override __GreenNode GetSlot(int index)
@@ -9245,7 +9245,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
-            return new global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.SingleExpressionAlt1Block1Alt7Syntax(this, (CompilerSyntaxNode)parent, position);
+            return new global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.SingleExpressionAlt1Block1Alt7Syntax(this, (CompilerSyntaxNode)parent, position);
         }
     
         protected override __GreenNode GetSlot(int index)
@@ -9332,7 +9332,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
-            return new global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.ArrayExpressionBlock1Syntax(this, (CompilerSyntaxNode)parent, position);
+            return new global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.ArrayExpressionBlock1Syntax(this, (CompilerSyntaxNode)parent, position);
         }
     
         protected override __GreenNode GetSlot(int index)
@@ -9431,7 +9431,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
-            return new global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.ArrayExpressionBlock1itemsBlockSyntax(this, (CompilerSyntaxNode)parent, position);
+            return new global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.ArrayExpressionBlock1itemsBlockSyntax(this, (CompilerSyntaxNode)parent, position);
         }
     
         protected override __GreenNode GetSlot(int index)
@@ -9543,7 +9543,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
-            return new global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.ParserAnnotationBlock1Syntax(this, (CompilerSyntaxNode)parent, position);
+            return new global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.ParserAnnotationBlock1Syntax(this, (CompilerSyntaxNode)parent, position);
         }
     
         protected override __GreenNode GetSlot(int index)
@@ -9644,7 +9644,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
-            return new global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.ParserAnnotationBlock1argumentsBlockSyntax(this, (CompilerSyntaxNode)parent, position);
+            return new global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.ParserAnnotationBlock1argumentsBlockSyntax(this, (CompilerSyntaxNode)parent, position);
         }
     
         protected override __GreenNode GetSlot(int index)
@@ -9756,7 +9756,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
-            return new global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.LexerAnnotationBlock1Syntax(this, (CompilerSyntaxNode)parent, position);
+            return new global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.LexerAnnotationBlock1Syntax(this, (CompilerSyntaxNode)parent, position);
         }
     
         protected override __GreenNode GetSlot(int index)
@@ -9857,7 +9857,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
-            return new global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.LexerAnnotationBlock1argumentsBlockSyntax(this, (CompilerSyntaxNode)parent, position);
+            return new global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.LexerAnnotationBlock1argumentsBlockSyntax(this, (CompilerSyntaxNode)parent, position);
         }
     
         protected override __GreenNode GetSlot(int index)
@@ -9957,7 +9957,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
-            return new global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.AnnotationArgumentBlock1Syntax(this, (CompilerSyntaxNode)parent, position);
+            return new global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.AnnotationArgumentBlock1Syntax(this, (CompilerSyntaxNode)parent, position);
         }
     
         protected override __GreenNode GetSlot(int index)
@@ -10057,7 +10057,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
-            return new global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.QualifierIdentifierBlockSyntax(this, (CompilerSyntaxNode)parent, position);
+            return new global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.QualifierIdentifierBlockSyntax(this, (CompilerSyntaxNode)parent, position);
         }
     
         protected override __GreenNode GetSlot(int index)

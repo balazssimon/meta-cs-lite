@@ -57,7 +57,7 @@ class MetaClass : MetaType
 {
 	type? SymbolType;
 	bool IsAbstract;
-	MetaClass[] BaseTypes;
+	MetaClass[] $BaseTypes;
 	contains MetaProperty[] Properties subsets MetaDeclaration.Declarations;
 	contains MetaOperation[] Operations subsets MetaDeclaration.Declarations;
 }

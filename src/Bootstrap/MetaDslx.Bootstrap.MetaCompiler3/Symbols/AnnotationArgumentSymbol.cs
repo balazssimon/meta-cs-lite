@@ -9,13 +9,13 @@ using System.Collections.Immutable;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MetaDslx.Bootstrap.MetaCompiler2.Model;
-using MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax;
+using MetaDslx.Bootstrap.MetaCompiler3.Model;
+using MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax;
 using MetaDslx.CodeAnalysis.PooledObjects;
 using MetaDslx.CodeAnalysis.Symbols.CSharp;
 using Antlr4.Runtime.Misc;
 
-namespace MetaDslx.Bootstrap.MetaCompiler2.Symbols
+namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
 {
     using IParameterSymbol = Microsoft.CodeAnalysis.IParameterSymbol;
 
@@ -158,7 +158,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Symbols
                 diagnostics.Add(Diagnostic.Create(CommonErrorCode.ERR_BindingError, this.Location, "Could not resolve the parameter corresponding to this argument"));
                 return default;
             }
-            var slot = ModelObject.MGetSlot(MetaDslx.Bootstrap.MetaCompiler2.Model.Compiler.AnnotationArgument_Parameter);
+            var slot = ModelObject.MGetSlot(MetaDslx.Bootstrap.MetaCompiler3.Model.Compiler.AnnotationArgument_Parameter);
             slot?.Add(param);
             var csParam = param as ICSharpSymbol;
             var msProp = csParam?.CSharpSymbol as IParameterSymbol;
@@ -168,7 +168,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Symbols
             if (mtType.IsNullable) mtType.TryExtractNullableType(out mtType, diagnostics, cancellationToken);
             if (mtType.TryGetCoreType(out var coreType, diagnostics, cancellationToken) && !coreType.IsDefaultOrNull)
             {
-                var typeSlot = ModelObject.MGetSlot(MetaDslx.Bootstrap.MetaCompiler2.Model.Compiler.AnnotationArgument_ParameterType);
+                var typeSlot = ModelObject.MGetSlot(MetaDslx.Bootstrap.MetaCompiler3.Model.Compiler.AnnotationArgument_ParameterType);
                 typeSlot?.Add(mtType);
             }
             else

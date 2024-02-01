@@ -20,7 +20,7 @@ Main returns Namespace:
 	eof;
 
 Using returns ImportSymbol 
-	: alt UsingMetaModel returns ImportMetaModelSymbol: 'metamodel' metaModels+=#{MetaDslx.Modeling.MetaModel|Qualifier}
+	: alt UsingMetaModel returns ImportMetaModelSymbol: 'metamodel' metaModelSymbols+=#{MetaDslx.Modeling.MetaModel,MetaDslx.Languages.MetaModel.Model.MetaModel|Qualifier}
 	| namespaces+=#{NamespaceSymbol|Qualifier} 
 	;
 

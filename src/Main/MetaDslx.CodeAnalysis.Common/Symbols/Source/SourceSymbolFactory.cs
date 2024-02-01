@@ -30,6 +30,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
             _module = module;
             Register<AliasSymbol>((s, d) => new SourceAliasSymbol(s, d));
             Register<ImportSymbol>((s, d) => new SourceImportSymbol(s, d));
+            Register<ImportMetaModelSymbol>((s, d) => new ImportMetaModelSymbol(s, d));
             Register<Symbol>((s, d, mo) => new SourceSymbol(s, d, mo));
             Register<AttributeSymbol>((s, d, mo) => new SourceAttributeSymbol(s, d, mo));
             Register<NamespaceSymbol>((s, d, mo) => new SourceNamespaceSymbol(s, d, mo));
@@ -101,7 +102,7 @@ namespace MetaDslx.CodeAnalysis.Symbols.Source
                 if (info is null)
                 {
                     var objectName = container is SourceRootNamespaceSymbol ? "the root namespace" : $"the declaration '{declaration.Name}'";
-                    var diagnostic = Diagnostic.Create(CommonErrorCode.ERR_DeclarationError, location, $"Could not determine the model object information for {objectName} of type '{declaration.ModelObjectType.FullName}'. Are you missing a meta model reference?");
+                    var diagnostic = Diagnostic.Create(CommonErrorCode.ERR_DeclarationError, location, $"Could not determine the model object information for {objectName} of type '{declaration.ModelObjectType.FullName}'. Are you missing a meta model reference? Are you missing an entry in the SourceSymbolFactory?");
                     diagnostics.Add(diagnostic);
                     return Compilation[declaration.Language].ErrorSymbolFactory.CreateSymbol(symbolType, (Symbol)container, new ErrorSymbolInfo(declaration.Name, declaration.MetadataName, ImmutableArray<Symbol>.Empty, diagnostic));
                 }

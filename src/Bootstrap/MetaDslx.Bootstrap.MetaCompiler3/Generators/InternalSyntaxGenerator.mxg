@@ -1,6 +1,6 @@
-﻿namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
+﻿namespace MetaDslx.Bootstrap.MetaCompiler3.Generators
 
-using MetaDslx.Bootstrap.MetaCompiler2.Model
+using MetaDslx.Bootstrap.MetaCompiler3.Model
 using System.Collections.Generic
 using System.Collections.Immutable
 using System.Linq

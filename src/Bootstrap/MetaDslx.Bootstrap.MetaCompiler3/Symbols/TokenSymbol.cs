@@ -1,4 +1,4 @@
-﻿using MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax;
+﻿using MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax;
 using MetaDslx.CodeAnalysis.Declarations;
 using MetaDslx.CodeAnalysis.Symbols.Source;
 using MetaDslx.CodeAnalysis.Symbols;
@@ -11,7 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MetaDslx.Bootstrap.MetaCompiler2.Symbols
+namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
 {
     internal class TokenSymbol : SourceDeclarationSymbol
     {

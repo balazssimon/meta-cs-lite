@@ -1,6 +1,6 @@
 #nullable enable
 
-namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
+namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
 {
     using __Debug = System.Diagnostics.Debug;
     using __Language = global::MetaDslx.CodeAnalysis.Language;
@@ -98,7 +98,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
         {
             get
             {
-                var slot = ((global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax.GreenSkippedTokensTriviaSyntax)this.Green).Tokens;
+                var slot = ((global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax.GreenSkippedTokensTriviaSyntax)this.Green).Tokens;
                 if (slot != null)
                 {
                     return new __SyntaxTokenList(this, slot.Node, this.GetChildPosition(0), this.GetChildIndex(0));
@@ -183,7 +183,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
         { 
             get
             {
-            var green = (global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax.MainGreen)this.Green;
+            var green = (global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax.MainGreen)this.Green;
             var greenToken = green.KNamespace;
             return new __SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
             } 
@@ -200,7 +200,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
         { 
             get
             {
-            var green = (global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax.MainGreen)this.Green;
+            var green = (global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax.MainGreen)this.Green;
             var greenToken = green.TSemicolon;
             return new __SyntaxToken(this, greenToken, this.GetChildPosition(2), this.GetChildIndex(2));
             } 
@@ -225,7 +225,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
         { 
             get
             {
-            var green = (global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax.MainGreen)this.Green;
+            var green = (global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax.MainGreen)this.Green;
             var greenToken = green.EndOfFileToken;
             return new __SyntaxToken(this, greenToken, this.GetChildPosition(5), this.GetChildIndex(5));
             } 
@@ -333,7 +333,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
     
     public sealed class UsingMetaModelSyntax : UsingSyntax
     {
-        private QualifierSyntax _metaModels;
+        private QualifierSyntax _metaModelSymbols;
     
         public UsingMetaModelSyntax(__InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
             : base(green, syntaxTree, position)
@@ -349,16 +349,16 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
         { 
             get
             {
-            var green = (global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax.UsingMetaModelGreen)this.Green;
+            var green = (global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax.UsingMetaModelGreen)this.Green;
             var greenToken = green.KMetamodel;
             return new __SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
             } 
         }
-        public QualifierSyntax MetaModels 
+        public QualifierSyntax MetaModelSymbols 
         { 
             get
             {
-            var red = this.GetRed(ref this._metaModels, 1);
+            var red = this.GetRed(ref this._metaModelSymbols, 1);
             return red;
             } 
         }
@@ -367,7 +367,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
         {
             switch (index)
             {
-                case 1: return this.GetRed(ref this._metaModels, 1);
+                case 1: return this.GetRed(ref this._metaModelSymbols, 1);
                 default: return null;
             }
         }
@@ -376,27 +376,27 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
         {
             switch (index)
             {
-                case 1: return this._metaModels;
+                case 1: return this._metaModelSymbols;
                 default: return null;
             }
         }
     
         public UsingMetaModelSyntax WithKMetamodel(__SyntaxToken kMetamodel)
         {
-            return this.Update(kMetamodel, this.MetaModels);
+            return this.Update(kMetamodel, this.MetaModelSymbols);
         }
     
-        public UsingMetaModelSyntax WithMetaModels(QualifierSyntax metaModels)
+        public UsingMetaModelSyntax WithMetaModelSymbols(QualifierSyntax metaModelSymbols)
         {
-            return this.Update(this.KMetamodel, metaModels);
+            return this.Update(this.KMetamodel, metaModelSymbols);
         }
     
     
-        public UsingMetaModelSyntax Update(__SyntaxToken kMetamodel, QualifierSyntax metaModels)
+        public UsingMetaModelSyntax Update(__SyntaxToken kMetamodel, QualifierSyntax metaModelSymbols)
         {
-            if (this.KMetamodel != kMetamodel || this.MetaModels != metaModels)
+            if (this.KMetamodel != kMetamodel || this.MetaModelSymbols != metaModelSymbols)
             {
-                var newNode = CompilerLanguage.Instance.SyntaxFactory.UsingMetaModel(kMetamodel, metaModels);
+                var newNode = CompilerLanguage.Instance.SyntaxFactory.UsingMetaModel(kMetamodel, metaModelSymbols);
                 var annotations = this.GetAnnotations();
                 if (annotations != null && annotations.Length > 0)
                    newNode = __SyntaxExtensions.WithAnnotations(newNode, annotations);
@@ -517,7 +517,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
         { 
             get
             {
-            var green = (global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax.LanguageDeclarationGreen)this.Green;
+            var green = (global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax.LanguageDeclarationGreen)this.Green;
             var greenToken = green.KLanguage;
             return new __SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
             } 
@@ -534,7 +534,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
         { 
             get
             {
-            var green = (global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax.LanguageDeclarationGreen)this.Green;
+            var green = (global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax.LanguageDeclarationGreen)this.Green;
             var greenToken = green.TSemicolon;
             return new __SyntaxToken(this, greenToken, this.GetChildPosition(2), this.GetChildIndex(2));
             } 
@@ -897,7 +897,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
         { 
             get
             {
-            var green = (global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax.RuleGreen)this.Green;
+            var green = (global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax.RuleGreen)this.Green;
             var greenToken = green.TColon;
             return new __SyntaxToken(this, greenToken, this.GetChildPosition(2), this.GetChildIndex(2));
             } 
@@ -914,7 +914,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
         { 
             get
             {
-            var green = (global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax.RuleGreen)this.Green;
+            var green = (global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax.RuleGreen)this.Green;
             var greenToken = green.TSemicolon;
             return new __SyntaxToken(this, greenToken, this.GetChildPosition(4), this.GetChildIndex(4));
             } 
@@ -1560,7 +1560,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
         { 
             get
             {
-            var green = (global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax.BlockGreen)this.Green;
+            var green = (global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax.BlockGreen)this.Green;
             var greenToken = green.TLParen;
             return new __SyntaxToken(this, greenToken, this.GetChildPosition(1), this.GetChildIndex(1));
             } 
@@ -1577,7 +1577,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
         { 
             get
             {
-            var green = (global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax.BlockGreen)this.Green;
+            var green = (global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax.BlockGreen)this.Green;
             var greenToken = green.TRParen;
             return new __SyntaxToken(this, greenToken, this.GetChildPosition(3), this.GetChildIndex(3));
             } 
@@ -1930,7 +1930,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
         { 
             get
             {
-            var green = (global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax.RuleRefAlt2Green)this.Green;
+            var green = (global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax.RuleRefAlt2Green)this.Green;
             var greenToken = green.THash;
             return new __SyntaxToken(this, greenToken, this.GetChildPosition(1), this.GetChildIndex(1));
             } 
@@ -2058,7 +2058,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
         { 
             get
             {
-            var green = (global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax.RuleRefAlt3Green)this.Green;
+            var green = (global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax.RuleRefAlt3Green)this.Green;
             var greenToken = green.THashLBrace;
             return new __SyntaxToken(this, greenToken, this.GetChildPosition(1), this.GetChildIndex(1));
             } 
@@ -2083,7 +2083,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
         { 
             get
             {
-            var green = (global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax.RuleRefAlt3Green)this.Green;
+            var green = (global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax.RuleRefAlt3Green)this.Green;
             var greenToken = green.TRBrace;
             return new __SyntaxToken(this, greenToken, this.GetChildPosition(4), this.GetChildIndex(4));
             } 
@@ -2209,7 +2209,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
         { 
             get
             {
-            var green = (global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax.Eof1Green)this.Green;
+            var green = (global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax.Eof1Green)this.Green;
             var greenToken = green.KEof;
             return new __SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
             } 
@@ -2294,7 +2294,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
         { 
             get
             {
-            var green = (global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax.FixedGreen)this.Green;
+            var green = (global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax.FixedGreen)this.Green;
             var greenToken = green.Text;
             return new __SyntaxToken(this, greenToken, this.GetChildPosition(1), this.GetChildIndex(1));
             } 
@@ -2580,7 +2580,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
         { 
             get
             {
-            var green = (global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax.TokenGreen)this.Green;
+            var green = (global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax.TokenGreen)this.Green;
             var greenToken = green.TColon;
             return new __SyntaxToken(this, greenToken, this.GetChildPosition(2), this.GetChildIndex(2));
             } 
@@ -2597,7 +2597,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
         { 
             get
             {
-            var green = (global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax.TokenGreen)this.Green;
+            var green = (global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax.TokenGreen)this.Green;
             var greenToken = green.TSemicolon;
             return new __SyntaxToken(this, greenToken, this.GetChildPosition(4), this.GetChildIndex(4));
             } 
@@ -2710,7 +2710,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
         { 
             get
             {
-            var green = (global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax.FragmentGreen)this.Green;
+            var green = (global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax.FragmentGreen)this.Green;
             var greenToken = green.KFragment;
             return new __SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
             } 
@@ -2727,7 +2727,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
         { 
             get
             {
-            var green = (global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax.FragmentGreen)this.Green;
+            var green = (global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax.FragmentGreen)this.Green;
             var greenToken = green.TColon;
             return new __SyntaxToken(this, greenToken, this.GetChildPosition(2), this.GetChildIndex(2));
             } 
@@ -2744,7 +2744,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
         { 
             get
             {
-            var green = (global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax.FragmentGreen)this.Green;
+            var green = (global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax.FragmentGreen)this.Green;
             var greenToken = green.TSemicolon;
             return new __SyntaxToken(this, greenToken, this.GetChildPosition(4), this.GetChildIndex(4));
             } 
@@ -2932,7 +2932,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
         { 
             get
             {
-            var green = (global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax.LElementGreen)this.Green;
+            var green = (global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax.LElementGreen)this.Green;
             var greenToken = green.IsNegated;
             return new __SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
             } 
@@ -3507,7 +3507,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
         { 
             get
             {
-            var green = (global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax.LFixedGreen)this.Green;
+            var green = (global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax.LFixedGreen)this.Green;
             var greenToken = green.Text;
             return new __SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
             } 
@@ -3582,7 +3582,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
         { 
             get
             {
-            var green = (global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax.LWildCardGreen)this.Green;
+            var green = (global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax.LWildCardGreen)this.Green;
             var greenToken = green.TDot;
             return new __SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
             } 
@@ -3657,7 +3657,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
         { 
             get
             {
-            var green = (global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax.LRangeGreen)this.Green;
+            var green = (global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax.LRangeGreen)this.Green;
             var greenToken = green.StartChar;
             return new __SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
             } 
@@ -3666,7 +3666,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
         { 
             get
             {
-            var green = (global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax.LRangeGreen)this.Green;
+            var green = (global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax.LRangeGreen)this.Green;
             var greenToken = green.TDotDot;
             return new __SyntaxToken(this, greenToken, this.GetChildPosition(1), this.GetChildIndex(1));
             } 
@@ -3675,7 +3675,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
         { 
             get
             {
-            var green = (global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax.LRangeGreen)this.Green;
+            var green = (global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax.LRangeGreen)this.Green;
             var greenToken = green.EndChar;
             return new __SyntaxToken(this, greenToken, this.GetChildPosition(2), this.GetChildIndex(2));
             } 
@@ -3761,7 +3761,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
         { 
             get
             {
-            var green = (global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax.LBlockGreen)this.Green;
+            var green = (global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax.LBlockGreen)this.Green;
             var greenToken = green.TLParen;
             return new __SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
             } 
@@ -3778,7 +3778,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
         { 
             get
             {
-            var green = (global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax.LBlockGreen)this.Green;
+            var green = (global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax.LBlockGreen)this.Green;
             var greenToken = green.TRParen;
             return new __SyntaxToken(this, greenToken, this.GetChildPosition(2), this.GetChildIndex(2));
             } 
@@ -4201,7 +4201,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
         { 
             get
             {
-            var green = (global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax.ArrayExpressionGreen)this.Green;
+            var green = (global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax.ArrayExpressionGreen)this.Green;
             var greenToken = green.TLBrace;
             return new __SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
             } 
@@ -4218,7 +4218,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
         { 
             get
             {
-            var green = (global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax.ArrayExpressionGreen)this.Green;
+            var green = (global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax.ArrayExpressionGreen)this.Green;
             var greenToken = green.TRBrace;
             return new __SyntaxToken(this, greenToken, this.GetChildPosition(2), this.GetChildIndex(2));
             } 
@@ -4307,7 +4307,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
         { 
             get
             {
-            var green = (global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax.ParserAnnotationGreen)this.Green;
+            var green = (global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax.ParserAnnotationGreen)this.Green;
             var greenToken = green.TLBracket;
             return new __SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
             } 
@@ -4332,7 +4332,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
         { 
             get
             {
-            var green = (global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax.ParserAnnotationGreen)this.Green;
+            var green = (global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax.ParserAnnotationGreen)this.Green;
             var greenToken = green.TRBracket;
             return new __SyntaxToken(this, greenToken, this.GetChildPosition(3), this.GetChildIndex(3));
             } 
@@ -4428,7 +4428,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
         { 
             get
             {
-            var green = (global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax.LexerAnnotationGreen)this.Green;
+            var green = (global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax.LexerAnnotationGreen)this.Green;
             var greenToken = green.TLBracket;
             return new __SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
             } 
@@ -4453,7 +4453,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
         { 
             get
             {
-            var green = (global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax.LexerAnnotationGreen)this.Green;
+            var green = (global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax.LexerAnnotationGreen)this.Green;
             var greenToken = green.TRBracket;
             return new __SyntaxToken(this, greenToken, this.GetChildPosition(3), this.GetChildIndex(3));
             } 
@@ -4640,7 +4640,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
         { 
             get
             {
-            var green = (global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax.AssignmentGreen)this.Green;
+            var green = (global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax.AssignmentGreen)this.Green;
             var greenToken = green.Token;
             return new __SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
             } 
@@ -4715,7 +4715,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
         { 
             get
             {
-            var green = (global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax.MultiplicityGreen)this.Green;
+            var green = (global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax.MultiplicityGreen)this.Green;
             var greenToken = green.Token;
             return new __SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
             } 
@@ -5120,7 +5120,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
         { 
             get
             {
-            var green = (global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax.PrimitiveTypeGreen)this.Green;
+            var green = (global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax.PrimitiveTypeGreen)this.Green;
             var greenToken = green.Token;
             return new __SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
             } 
@@ -5354,7 +5354,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
         { 
             get
             {
-            var green = (global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax.IdentifierGreen)this.Green;
+            var green = (global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax.IdentifierGreen)this.Green;
             var greenToken = green.Token;
             return new __SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
             } 
@@ -5430,7 +5430,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
         { 
             get
             {
-            var green = (global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax.MainBlock1Green)this.Green;
+            var green = (global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax.MainBlock1Green)this.Green;
             var greenToken = green.KUsing;
             return new __SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
             } 
@@ -5447,7 +5447,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
         { 
             get
             {
-            var green = (global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax.MainBlock1Green)this.Green;
+            var green = (global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax.MainBlock1Green)this.Green;
             var greenToken = green.TSemicolon;
             return new __SyntaxToken(this, greenToken, this.GetChildPosition(2), this.GetChildIndex(2));
             } 
@@ -5791,7 +5791,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
         { 
             get
             {
-            var green = (global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax.RuleBlock1Alt2Green)this.Green;
+            var green = (global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax.RuleBlock1Alt2Green)this.Green;
             var greenToken = green.KReturns;
             return new __SyntaxToken(this, greenToken, this.GetChildPosition(1), this.GetChildIndex(1));
             } 
@@ -5889,7 +5889,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
         { 
             get
             {
-            var green = (global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax.RulealternativesBlockGreen)this.Green;
+            var green = (global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax.RulealternativesBlockGreen)this.Green;
             var greenToken = green.TBar;
             return new __SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
             } 
@@ -5990,7 +5990,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
         { 
             get
             {
-            var green = (global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax.AlternativeBlock1Green)this.Green;
+            var green = (global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax.AlternativeBlock1Green)this.Green;
             var greenToken = green.KAlt;
             return new __SyntaxToken(this, greenToken, this.GetChildPosition(1), this.GetChildIndex(1));
             } 
@@ -6015,7 +6015,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
         { 
             get
             {
-            var green = (global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax.AlternativeBlock1Green)this.Green;
+            var green = (global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax.AlternativeBlock1Green)this.Green;
             var greenToken = green.TColon;
             return new __SyntaxToken(this, greenToken, this.GetChildPosition(4), this.GetChildIndex(4));
             } 
@@ -6122,7 +6122,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
         { 
             get
             {
-            var green = (global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax.AlternativeBlock1Block1Green)this.Green;
+            var green = (global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax.AlternativeBlock1Block1Green)this.Green;
             var greenToken = green.KReturns;
             return new __SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
             } 
@@ -6213,7 +6213,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
         { 
             get
             {
-            var green = (global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax.AlternativeBlock2Green)this.Green;
+            var green = (global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax.AlternativeBlock2Green)this.Green;
             var greenToken = green.TEqGt;
             return new __SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
             } 
@@ -6418,7 +6418,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
         { 
             get
             {
-            var green = (global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax.BlockalternativesBlockGreen)this.Green;
+            var green = (global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax.BlockalternativesBlockGreen)this.Green;
             var greenToken = green.TBar;
             return new __SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
             } 
@@ -6509,7 +6509,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
         { 
             get
             {
-            var green = (global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax.BlockAlternativeBlock1Green)this.Green;
+            var green = (global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax.BlockAlternativeBlock1Green)this.Green;
             var greenToken = green.TEqGt;
             return new __SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
             } 
@@ -6600,7 +6600,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
         { 
             get
             {
-            var green = (global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax.RuleRefAlt3referencedTypesBlockGreen)this.Green;
+            var green = (global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax.RuleRefAlt3referencedTypesBlockGreen)this.Green;
             var greenToken = green.TComma;
             return new __SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
             } 
@@ -6691,7 +6691,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
         { 
             get
             {
-            var green = (global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax.RuleRefAlt3Block1Green)this.Green;
+            var green = (global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax.RuleRefAlt3Block1Green)this.Green;
             var greenToken = green.TBar;
             return new __SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
             } 
@@ -6795,7 +6795,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
         { 
             get
             {
-            var green = (global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax.TokenBlock1Alt1Green)this.Green;
+            var green = (global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax.TokenBlock1Alt1Green)this.Green;
             var greenToken = green.KToken;
             return new __SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
             } 
@@ -6900,7 +6900,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
         { 
             get
             {
-            var green = (global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax.TokenBlock1Alt2Green)this.Green;
+            var green = (global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax.TokenBlock1Alt2Green)this.Green;
             var greenToken = green.IsTrivia;
             return new __SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
             } 
@@ -6991,7 +6991,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
         { 
             get
             {
-            var green = (global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax.TokenBlock1Alt1Block1Green)this.Green;
+            var green = (global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax.TokenBlock1Alt1Block1Green)this.Green;
             var greenToken = green.KReturns;
             return new __SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
             } 
@@ -7082,7 +7082,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
         { 
             get
             {
-            var green = (global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax.TokenalternativesBlockGreen)this.Green;
+            var green = (global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax.TokenalternativesBlockGreen)this.Green;
             var greenToken = green.TBar;
             return new __SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
             } 
@@ -7173,7 +7173,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
         { 
             get
             {
-            var green = (global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax.FragmentalternativesBlockGreen)this.Green;
+            var green = (global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax.FragmentalternativesBlockGreen)this.Green;
             var greenToken = green.TBar;
             return new __SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
             } 
@@ -7264,7 +7264,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
         { 
             get
             {
-            var green = (global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax.LBlockalternativesBlockGreen)this.Green;
+            var green = (global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax.LBlockalternativesBlockGreen)this.Green;
             var greenToken = green.TBar;
             return new __SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
             } 
@@ -7366,7 +7366,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
         { 
             get
             {
-            var green = (global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax.SingleExpressionAlt1Block1Alt1Green)this.Green;
+            var green = (global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax.SingleExpressionAlt1Block1Alt1Green)this.Green;
             var greenToken = green.KNull;
             return new __SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
             } 
@@ -7440,7 +7440,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
         { 
             get
             {
-            var green = (global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax.SingleExpressionAlt1Block1Alt2Green)this.Green;
+            var green = (global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax.SingleExpressionAlt1Block1Alt2Green)this.Green;
             var greenToken = green.KTrue;
             return new __SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
             } 
@@ -7514,7 +7514,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
         { 
             get
             {
-            var green = (global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax.SingleExpressionAlt1Block1Alt3Green)this.Green;
+            var green = (global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax.SingleExpressionAlt1Block1Alt3Green)this.Green;
             var greenToken = green.KFalse;
             return new __SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
             } 
@@ -7588,7 +7588,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
         { 
             get
             {
-            var green = (global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax.SingleExpressionAlt1Block1Alt4Green)this.Green;
+            var green = (global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax.SingleExpressionAlt1Block1Alt4Green)this.Green;
             var greenToken = green.TString;
             return new __SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
             } 
@@ -7662,7 +7662,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
         { 
             get
             {
-            var green = (global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax.SingleExpressionAlt1Block1Alt5Green)this.Green;
+            var green = (global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax.SingleExpressionAlt1Block1Alt5Green)this.Green;
             var greenToken = green.TInteger;
             return new __SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
             } 
@@ -7736,7 +7736,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
         { 
             get
             {
-            var green = (global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax.SingleExpressionAlt1Block1Alt6Green)this.Green;
+            var green = (global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax.SingleExpressionAlt1Block1Alt6Green)this.Green;
             var greenToken = green.TDecimal;
             return new __SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
             } 
@@ -7970,7 +7970,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
         { 
             get
             {
-            var green = (global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax.ArrayExpressionBlock1itemsBlockGreen)this.Green;
+            var green = (global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax.ArrayExpressionBlock1itemsBlockGreen)this.Green;
             var greenToken = green.TComma;
             return new __SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
             } 
@@ -8061,7 +8061,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
         { 
             get
             {
-            var green = (global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax.ParserAnnotationBlock1Green)this.Green;
+            var green = (global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax.ParserAnnotationBlock1Green)this.Green;
             var greenToken = green.TLParen;
             return new __SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
             } 
@@ -8078,7 +8078,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
         { 
             get
             {
-            var green = (global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax.ParserAnnotationBlock1Green)this.Green;
+            var green = (global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax.ParserAnnotationBlock1Green)this.Green;
             var greenToken = green.TRParen;
             return new __SyntaxToken(this, greenToken, this.GetChildPosition(2), this.GetChildIndex(2));
             } 
@@ -8171,7 +8171,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
         { 
             get
             {
-            var green = (global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax.ParserAnnotationBlock1argumentsBlockGreen)this.Green;
+            var green = (global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax.ParserAnnotationBlock1argumentsBlockGreen)this.Green;
             var greenToken = green.TComma;
             return new __SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
             } 
@@ -8262,7 +8262,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
         { 
             get
             {
-            var green = (global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax.LexerAnnotationBlock1Green)this.Green;
+            var green = (global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax.LexerAnnotationBlock1Green)this.Green;
             var greenToken = green.TLParen;
             return new __SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
             } 
@@ -8279,7 +8279,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
         { 
             get
             {
-            var green = (global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax.LexerAnnotationBlock1Green)this.Green;
+            var green = (global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax.LexerAnnotationBlock1Green)this.Green;
             var greenToken = green.TRParen;
             return new __SyntaxToken(this, greenToken, this.GetChildPosition(2), this.GetChildIndex(2));
             } 
@@ -8372,7 +8372,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
         { 
             get
             {
-            var green = (global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax.LexerAnnotationBlock1argumentsBlockGreen)this.Green;
+            var green = (global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax.LexerAnnotationBlock1argumentsBlockGreen)this.Green;
             var greenToken = green.TComma;
             return new __SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
             } 
@@ -8471,7 +8471,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
         { 
             get
             {
-            var green = (global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax.AnnotationArgumentBlock1Green)this.Green;
+            var green = (global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax.AnnotationArgumentBlock1Green)this.Green;
             var greenToken = green.TColon;
             return new __SyntaxToken(this, greenToken, this.GetChildPosition(1), this.GetChildIndex(1));
             } 
@@ -8554,7 +8554,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
         { 
             get
             {
-            var green = (global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax.QualifierIdentifierBlockGreen)this.Green;
+            var green = (global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax.QualifierIdentifierBlockGreen)this.Green;
             var greenToken = green.TDot;
             return new __SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
             } 

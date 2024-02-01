@@ -6,7 +6,7 @@ using Antlr4.Runtime;
 
 #nullable enable
 
-namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
+namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
 {
     public partial class CompilerInternalSyntaxFactory : IAntlrSyntaxFactory
     {

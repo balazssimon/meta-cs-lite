@@ -11,10 +11,10 @@ using System.Threading.Tasks;
 using MetaDslx.CodeAnalysis.Symbols.CSharp;
 using System.Collections.Immutable;
 using MetaDslx.CodeAnalysis.PooledObjects;
-using MetaDslx.Bootstrap.MetaCompiler2.Model;
-using MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax;
+using MetaDslx.Bootstrap.MetaCompiler3.Model;
+using MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax;
 
-namespace MetaDslx.Bootstrap.MetaCompiler2.Symbols
+namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
 {
     using IPropertySymbol = Microsoft.CodeAnalysis.IPropertySymbol;
 

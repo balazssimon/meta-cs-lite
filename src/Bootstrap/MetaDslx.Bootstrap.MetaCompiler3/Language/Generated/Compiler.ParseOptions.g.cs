@@ -9,7 +9,7 @@ using Roslyn.Utilities;
 
 #nullable enable
 
-namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
+namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
 {
     /// <summary>
     /// This class stores several source parsing related options and offers access to their values.

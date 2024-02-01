@@ -6,7 +6,7 @@ using MetaDslx.CodeAnalysis.Parsers.Antlr;
 
 #nullable enable
 
-namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
+namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
 {
     public partial class CompilerSyntaxLexer : AntlrSyntaxLexer
     {

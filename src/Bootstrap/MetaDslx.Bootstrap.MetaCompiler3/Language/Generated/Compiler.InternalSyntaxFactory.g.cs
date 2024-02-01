@@ -1,6 +1,6 @@
 #nullable enable
 
-namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
+namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
 {
     using __Debug = System.Diagnostics.Debug;
     using __Language = global::MetaDslx.CodeAnalysis.Language;
@@ -267,18 +267,18 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
             return new MainGreen(CompilerSyntaxKind.Main, kNamespace, qualifier, tSemicolon, block1.Node, block2, endOfFileToken);
         }
         
-        internal UsingMetaModelGreen UsingMetaModel(__InternalSyntaxToken kMetamodel, QualifierGreen metaModels)
+        internal UsingMetaModelGreen UsingMetaModel(__InternalSyntaxToken kMetamodel, QualifierGreen metaModelSymbols)
         {
             #if DEBUG
                 if (kMetamodel is null) throw new __ArgumentNullException(nameof(kMetamodel));
                 if (kMetamodel.RawKind != (int)CompilerSyntaxKind.KMetamodel) throw new __ArgumentException(nameof(kMetamodel));
-                if (metaModels is null) throw new __ArgumentNullException(nameof(metaModels));
+                if (metaModelSymbols is null) throw new __ArgumentNullException(nameof(metaModelSymbols));
             #endif
             int hash;
-            var cached = __SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.UsingMetaModel, kMetamodel, metaModels, out hash);
+            var cached = __SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.UsingMetaModel, kMetamodel, metaModelSymbols, out hash);
             if (cached != null) return (UsingMetaModelGreen)cached;
         
-            var result = new UsingMetaModelGreen(CompilerSyntaxKind.UsingMetaModel, kMetamodel, metaModels);
+            var result = new UsingMetaModelGreen(CompilerSyntaxKind.UsingMetaModel, kMetamodel, metaModelSymbols);
             if (hash >= 0)
             {
                 __SyntaxNodeCache.AddNode(result, hash);

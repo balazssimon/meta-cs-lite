@@ -11,7 +11,7 @@ using MetaDslx.CodeAnalysis.Syntax.InternalSyntax;
 
 #nullable enable
 
-namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
+namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
 {
 
     public interface ICompilerSyntaxVisitor
@@ -1703,8 +1703,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
         public virtual SyntaxNode VisitUsingMetaModel(UsingMetaModelSyntax node)
         {
             var kMetamodel = this.VisitToken(node.KMetamodel);
-            var metaModels = (QualifierSyntax)this.Visit(node.MetaModels);
-            return node.Update(kMetamodel, metaModels);
+            var metaModelSymbols = (QualifierSyntax)this.Visit(node.MetaModelSymbols);
+            return node.Update(kMetamodel, metaModelSymbols);
         }
 
         public virtual SyntaxNode VisitUsingAlt2(UsingAlt2Syntax node)

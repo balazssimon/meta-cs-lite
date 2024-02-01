@@ -5,10 +5,10 @@ using MetaDslx.CodeAnalysis.Syntax.InternalSyntax;
 
 #nullable enable
 
-namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler
+namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler
 {
-    using global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax;
-    using global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax;
+    using global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax;
+    using global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax;
 
     public sealed partial class CompilerLanguage : Language
     {

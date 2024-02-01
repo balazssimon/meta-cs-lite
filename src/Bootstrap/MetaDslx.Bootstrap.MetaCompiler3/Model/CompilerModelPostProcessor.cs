@@ -14,7 +14,7 @@ using Roslyn.Utilities;
 using System.Xml.Linq;
 using MetaDslx.CodeAnalysis.Symbols.Model;
 
-namespace MetaDslx.Bootstrap.MetaCompiler2.Model
+namespace MetaDslx.Bootstrap.MetaCompiler3.Model
 {
     public class CompilerModelPostProcessor
     {

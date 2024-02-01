@@ -10,12 +10,12 @@ using MetaDslx.CodeAnalysis;
 using MetaDslx.CodeAnalysis.Syntax;
 using MetaDslx.CodeAnalysis.Syntax.InternalSyntax;
 using MetaDslx.CodeAnalysis.Text;
-using MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax;
-using MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax;
+using MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax;
+using MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax;
 
 #nullable enable
 
-namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler
+namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler
 {
     
     /// <summary>

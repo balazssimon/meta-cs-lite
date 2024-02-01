@@ -260,6 +260,12 @@ namespace MetaDslx.CodeAnalysis
                 assembly.DangerousSetModules(modulesBuilder.ToImmutableAndFree());
             }
             var modelSymbolFactory = compilationFactory.CreateModelSymbolFactory(compilation);
+            foreach (var reference in compilation.ExternalReferences.OfType<MetaModelReference>())
+            {
+                var module = new ModelModuleSymbol(modelSymbolFactory, reference.MetaModel.MModel);
+                modelSymbolFactory.AddSymbol(reference.MetaModel.MModel, module);
+                referencedModulesBuilder.Add(module);
+            }
             foreach (var reference in compilation.ExternalReferences.OfType<ModelReference>())
             {
                 var module = new ModelModuleSymbol(modelSymbolFactory, reference.Model);

@@ -1,6 +1,6 @@
-﻿using MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax;
-using MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax;
-using MetaDslx.Bootstrap.MetaCompiler2.Model;
+﻿using MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax;
+using MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax;
+using MetaDslx.Bootstrap.MetaCompiler3.Model;
 using MetaDslx.CodeAnalysis;
 using MetaDslx.CodeAnalysis.Declarations;
 using MetaDslx.CodeAnalysis.PooledObjects;
@@ -14,7 +14,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MetaDslx.Bootstrap.MetaCompiler2.Symbols
+namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
 {
     internal class ParserRuleSymbol : SourceDeclarationSymbol
     {

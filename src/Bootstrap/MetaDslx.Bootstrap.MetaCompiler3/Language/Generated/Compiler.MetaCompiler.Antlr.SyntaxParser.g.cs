@@ -11,11 +11,11 @@ using MetaDslx.CodeAnalysis.Syntax;
 using MetaDslx.CodeAnalysis.Syntax.InternalSyntax;
 using MetaDslx.CodeAnalysis.Text;
 using MetaDslx.CodeAnalysis.Parsers.Antlr;
-using MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax;
+using MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax;
 
 #nullable enable
 
-namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
+namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
 {
     public partial class CompilerSyntaxParser : AntlrSyntaxParser
     {
@@ -126,10 +126,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
             {
                 if (context == null) return UsingMetaModelGreen.__Missing;
                 var kMetamodel = (InternalSyntaxToken?)this.VisitTerminal(context.E_KMetamodel, CompilerSyntaxKind.KMetamodel);
-                QualifierGreen? metaModels = null;
-                if (context.E_metaModels is not null) metaModels = (QualifierGreen?)this.Visit(context.E_metaModels) ?? QualifierGreen.__Missing;
-                else metaModels = QualifierGreen.__Missing;
-                return _factory.UsingMetaModel(kMetamodel, metaModels);
+                QualifierGreen? metaModelSymbols = null;
+                if (context.E_metaModelSymbols is not null) metaModelSymbols = (QualifierGreen?)this.Visit(context.E_metaModelSymbols) ?? QualifierGreen.__Missing;
+                else metaModelSymbols = QualifierGreen.__Missing;
+                return _factory.UsingMetaModel(kMetamodel, metaModelSymbols);
             }
             
             public override GreenNode? VisitPr_UsingAlt2(CompilerParser.Pr_UsingAlt2Context? context)

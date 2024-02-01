@@ -17,10 +17,12 @@ using MetaDslx.Bootstrap.MetaCompiler2.Model;
 using System.ComponentModel;
 using Roslyn.Utilities;
 using MetaDslx.CodeAnalysis.Binding;
+using MetaDslx.CodeAnalysis.Symbols.Model;
 
 namespace MetaDslx.Bootstrap.MetaCompiler2.Symbols
 {
     using IPropertySymbol = Microsoft.CodeAnalysis.IPropertySymbol;
+    using MetaProperty = MetaDslx.Languages.MetaModel.Model.MetaProperty;
 
     internal class PElementSymbol : SourceDeclarationSymbol
     {
@@ -210,11 +212,17 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Symbols
                 diagnostics.AddRange(ctx.Diagnostics);
                 ctx.Free();
                 if (prop is null) return default;
-                var csProp = prop as ICSharpSymbol;
-                var msProp = csProp?.CSharpSymbol as IPropertySymbol;
-                var msType = msProp?.Type;
-                var csType = msType is null ? null : csProp?.SymbolFactory.GetSymbol<TypeSymbol>(msType, diagnostics, cancellationToken);
-                result = MetaType.FromTypeSymbol(csType);
+                if (prop is ICSharpSymbol csProp)
+                {
+                    var msProp = csProp?.CSharpSymbol as IPropertySymbol;
+                    var msType = msProp?.Type;
+                    var csType = msType is null ? null : csProp?.SymbolFactory.GetSymbol<TypeSymbol>(msType, diagnostics, cancellationToken);
+                    result = MetaType.FromTypeSymbol(csType);
+                }
+                else if (prop is IModelSymbol msProp && msProp.ModelObject is MetaProperty mProp)
+                {
+                    result = mProp.Type;
+                }
             }
             var kind = ExpectedTypeKind.None;
             if (result.IsNullable) result.TryExtractNullableType(out result, diagnostics, cancellationToken);

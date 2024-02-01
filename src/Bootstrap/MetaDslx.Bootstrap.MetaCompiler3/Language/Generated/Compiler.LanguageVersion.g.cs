@@ -3,7 +3,7 @@ using Roslyn.Utilities;
 
 #nullable enable
 
-namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler
+namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler
 {
     /// <summary>
     /// Specifies the language version.

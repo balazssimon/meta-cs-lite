@@ -1,4 +1,4 @@
-﻿using MetaDslx.Bootstrap.MetaCompiler2.Model;
+﻿using MetaDslx.Bootstrap.MetaCompiler3.Model;
 using MetaDslx.CodeAnalysis.PooledObjects;
 using System;
 using System.Collections.Generic;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
+namespace MetaDslx.Bootstrap.MetaCompiler3.Generators
 {
     using DiagnosticBag = MetaDslx.CodeAnalysis.DiagnosticBag;
     using ErrorCode = MetaDslx.CodeAnalysis.ErrorCode;

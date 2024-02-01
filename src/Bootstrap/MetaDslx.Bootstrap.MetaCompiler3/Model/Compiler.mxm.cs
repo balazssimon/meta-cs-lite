@@ -1,6 +1,6 @@
 #nullable enable
 
-namespace MetaDslx.Bootstrap.MetaCompiler2.Model
+namespace MetaDslx.Bootstrap.MetaCompiler3.Model
 {
     using __MetaMetaModel = global::MetaDslx.Languages.MetaModel.Model.Meta;
     using __MetaModelFactory = global::MetaDslx.Languages.MetaModel.Model.MetaModelFactory;
@@ -244,12 +244,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Model
             _Alternative_ReturnValue = new __ModelProperty(typeof(Alternative), "ReturnValue", typeof(Expression), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Single, "ReturnValue");
             _ElementValue_GreenSyntaxCondition = new __ModelProperty(typeof(ElementValue), "GreenSyntaxCondition", typeof(global::System.String), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
             _ElementValue_GreenType = new __ModelProperty(typeof(ElementValue), "GreenType", typeof(global::System.String), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
-            _ElementValue_Multiplicity = new __ModelProperty(typeof(ElementValue), "Multiplicity", typeof(global::MetaDslx.Bootstrap.MetaCompiler2.Model.Multiplicity), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.EnumType | __ModelPropertyFlags.Single, null);
+            _ElementValue_Multiplicity = new __ModelProperty(typeof(ElementValue), "Multiplicity", typeof(global::MetaDslx.Bootstrap.MetaCompiler3.Model.Multiplicity), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.EnumType | __ModelPropertyFlags.Single, null);
             _ElementValue_RedType = new __ModelProperty(typeof(ElementValue), "RedType", typeof(global::System.String), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
             _Block_GreenSyntaxCondition = new __ModelProperty(typeof(Block), "GreenSyntaxCondition", typeof(global::System.String), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
             _Block_GreenType = new __ModelProperty(typeof(Block), "GreenType", typeof(global::System.String), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
             _Block_RedType = new __ModelProperty(typeof(Block), "RedType", typeof(global::System.String), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
-            _Element_Assignment = new __ModelProperty(typeof(Element), "Assignment", typeof(global::MetaDslx.Bootstrap.MetaCompiler2.Model.Assignment), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.EnumType | __ModelPropertyFlags.Single, "Assignment");
+            _Element_Assignment = new __ModelProperty(typeof(Element), "Assignment", typeof(global::MetaDslx.Bootstrap.MetaCompiler3.Model.Assignment), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.EnumType | __ModelPropertyFlags.Single, "Assignment");
             _Element_FieldName = new __ModelProperty(typeof(Element), "FieldName", typeof(global::System.String), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
             _Element_GreenFieldType = new __ModelProperty(typeof(Element), "GreenFieldType", typeof(global::System.String), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
             _Element_GreenParameterValue = new __ModelProperty(typeof(Element), "GreenParameterValue", typeof(global::System.String), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
@@ -302,7 +302,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Model
             _LElement_FixedText = new __ModelProperty(typeof(LElement), "FixedText", typeof(global::System.String), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
             _LElement_IsFixed = new __ModelProperty(typeof(LElement), "IsFixed", typeof(global::System.Boolean), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
             _LElement_IsNegated = new __ModelProperty(typeof(LElement), "IsNegated", typeof(global::System.Boolean), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single, null);
-            _LElement_Multiplicity = new __ModelProperty(typeof(LElement), "Multiplicity", typeof(global::MetaDslx.Bootstrap.MetaCompiler2.Model.Multiplicity), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.EnumType | __ModelPropertyFlags.Single, null);
+            _LElement_Multiplicity = new __ModelProperty(typeof(LElement), "Multiplicity", typeof(global::MetaDslx.Bootstrap.MetaCompiler3.Model.Multiplicity), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.EnumType | __ModelPropertyFlags.Single, null);
             _LElement_Value = new __ModelProperty(typeof(LElement), "Value", typeof(LElementValue), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Single, null);
             _LElementValue_FixedText = new __ModelProperty(typeof(LElementValue), "FixedText", typeof(global::System.String), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
             _LElementValue_IsFixed = new __ModelProperty(typeof(LElementValue), "IsFixed", typeof(global::System.Boolean), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
@@ -771,7 +771,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Model
             obj2.Parent = obj1;
             ((__IModelObject)obj3).MChildren.Add((__IModelObject)obj4);
             obj3.Declarations.Add(obj4);
-            obj3.Name = "MetaCompiler2";
+            obj3.Name = "MetaCompiler3";
             obj3.Parent = obj2;
             ((__IModelObject)obj4).MChildren.Add((__IModelObject)obj5);
             ((__IModelObject)obj4).MChildren.Add((__IModelObject)obj6);
@@ -928,7 +928,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Model
             ((__IModelObject)obj10).MChildren.Add((__IModelObject)obj78);
             obj10.Properties.Add(obj77);
             obj10.Properties.Add(obj78);
-            obj10.SymbolType = typeof(global::MetaDslx.Bootstrap.MetaCompiler2.Symbols.AnnotationSymbol);
+            obj10.SymbolType = typeof(global::MetaDslx.Bootstrap.MetaCompiler3.Symbols.AnnotationSymbol);
             obj10.Declarations.Add(obj77);
             obj10.Declarations.Add(obj78);
             obj10.Name = "Annotation";
@@ -941,7 +941,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Model
             obj11.Properties.Add(obj81);
             obj11.Properties.Add(obj82);
             obj11.Properties.Add(obj83);
-            obj11.SymbolType = typeof(global::MetaDslx.Bootstrap.MetaCompiler2.Symbols.AnnotationArgumentSymbol);
+            obj11.SymbolType = typeof(global::MetaDslx.Bootstrap.MetaCompiler3.Symbols.AnnotationArgumentSymbol);
             obj11.Declarations.Add(obj80);
             obj11.Declarations.Add(obj81);
             obj11.Declarations.Add(obj82);
@@ -1055,7 +1055,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Model
             obj19.Properties.Add(obj119);
             obj19.Properties.Add(obj120);
             obj19.Properties.Add(obj121);
-            obj19.SymbolType = typeof(global::MetaDslx.Bootstrap.MetaCompiler2.Symbols.TokenSymbol);
+            obj19.SymbolType = typeof(global::MetaDslx.Bootstrap.MetaCompiler3.Symbols.TokenSymbol);
             obj19.Declarations.Add(obj119);
             obj19.Declarations.Add(obj120);
             obj19.Declarations.Add(obj121);
@@ -1223,7 +1223,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Model
             obj33.Properties.Add(obj177);
             obj33.Properties.Add(obj178);
             obj33.Properties.Add(obj179);
-            obj33.SymbolType = typeof(global::MetaDslx.Bootstrap.MetaCompiler2.Symbols.ParserRuleSymbol);
+            obj33.SymbolType = typeof(global::MetaDslx.Bootstrap.MetaCompiler3.Symbols.ParserRuleSymbol);
             obj33.Declarations.Add(obj175);
             obj33.Declarations.Add(obj176);
             obj33.Declarations.Add(obj177);
@@ -1263,7 +1263,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Model
             obj34.Properties.Add(obj194);
             obj34.Properties.Add(obj195);
             obj34.Properties.Add(obj196);
-            obj34.SymbolType = typeof(global::MetaDslx.Bootstrap.MetaCompiler2.Symbols.PAlternativeSymbol);
+            obj34.SymbolType = typeof(global::MetaDslx.Bootstrap.MetaCompiler3.Symbols.PAlternativeSymbol);
             obj34.Declarations.Add(obj182);
             obj34.Declarations.Add(obj183);
             obj34.Declarations.Add(obj184);
@@ -1344,7 +1344,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Model
             obj36.Properties.Add(obj223);
             obj36.Properties.Add(obj224);
             obj36.Properties.Add(obj225);
-            obj36.SymbolType = typeof(global::MetaDslx.Bootstrap.MetaCompiler2.Symbols.PElementSymbol);
+            obj36.SymbolType = typeof(global::MetaDslx.Bootstrap.MetaCompiler3.Symbols.PElementSymbol);
             obj36.Declarations.Add(obj202);
             obj36.Declarations.Add(obj203);
             obj36.Declarations.Add(obj204);
@@ -1403,7 +1403,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Model
             obj38.Properties.Add(obj241);
             obj38.Properties.Add(obj242);
             obj38.Properties.Add(obj243);
-            obj38.SymbolType = typeof(global::MetaDslx.Bootstrap.MetaCompiler2.Symbols.PReferenceSymbol);
+            obj38.SymbolType = typeof(global::MetaDslx.Bootstrap.MetaCompiler3.Symbols.PReferenceSymbol);
             obj38.Declarations.Add(obj237);
             obj38.Declarations.Add(obj238);
             obj38.Declarations.Add(obj239);
@@ -1454,7 +1454,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Model
             obj42.Properties.Add(obj259);
             obj42.Properties.Add(obj260);
             obj42.Properties.Add(obj261);
-            obj42.SymbolType = typeof(global::MetaDslx.Bootstrap.MetaCompiler2.Symbols.PBlockSymbol);
+            obj42.SymbolType = typeof(global::MetaDslx.Bootstrap.MetaCompiler3.Symbols.PBlockSymbol);
             obj42.Declarations.Add(obj259);
             obj42.Declarations.Add(obj260);
             obj42.Declarations.Add(obj261);
@@ -1501,7 +1501,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Model
             obj43.Parent = obj4;
             ((__IModelObject)obj44).MChildren.Add((__IModelObject)obj280);
             obj44.Properties.Add(obj280);
-            obj44.SymbolType = typeof(global::MetaDslx.Bootstrap.MetaCompiler2.Symbols.ExpressionSymbol);
+            obj44.SymbolType = typeof(global::MetaDslx.Bootstrap.MetaCompiler3.Symbols.ExpressionSymbol);
             obj44.Declarations.Add(obj280);
             obj44.Name = "Expression";
             obj44.Parent = obj4;
@@ -2289,9 +2289,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Model
         }
     
         public override string MName => nameof(Compiler);
-        public override string MNamespace => "MetaDslx.Bootstrap.MetaCompiler2.Model";
+        public override string MNamespace => "MetaDslx.Bootstrap.MetaCompiler3.Model";
         public override __ModelVersion MVersion => default;
-        public override string MUri => "MetaDslx.Bootstrap.MetaCompiler2.Model.Compiler";
+        public override string MUri => "MetaDslx.Bootstrap.MetaCompiler3.Model.Compiler";
         public override string MPrefix => "c";
         public override __Model MModel => _model;
     
@@ -2887,7 +2887,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Model
     
     }
 
-    public interface ArrayExpression : global::MetaDslx.Bootstrap.MetaCompiler2.Model.Expression
+    public interface ArrayExpression : global::MetaDslx.Bootstrap.MetaCompiler3.Model.Expression
     {
         global::MetaDslx.Modeling.ICollectionSlot<Expression> Items { get; }
     
@@ -2930,7 +2930,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Model
     
     }
 
-    public interface Alternative : global::MetaDslx.Bootstrap.MetaCompiler2.Model.Declaration, global::MetaDslx.Bootstrap.MetaCompiler2.Model.CSharpElement
+    public interface Alternative : global::MetaDslx.Bootstrap.MetaCompiler3.Model.Declaration, global::MetaDslx.Bootstrap.MetaCompiler3.Model.CSharpElement
     {
         global::MetaDslx.Modeling.ICollectionSlot<Element> Elements { get; }
         global::System.String GreenConstructorArguments { get; }
@@ -2950,16 +2950,16 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Model
     
     }
 
-    public interface ElementValue : global::MetaDslx.Bootstrap.MetaCompiler2.Model.CSharpElement
+    public interface ElementValue : global::MetaDslx.Bootstrap.MetaCompiler3.Model.CSharpElement
     {
         global::System.String? GreenSyntaxCondition { get; }
         global::System.String GreenType { get; }
-        global::MetaDslx.Bootstrap.MetaCompiler2.Model.Multiplicity Multiplicity { get; set; }
+        global::MetaDslx.Bootstrap.MetaCompiler3.Model.Multiplicity Multiplicity { get; set; }
         global::System.String RedType { get; }
     
     }
 
-    public interface Block : global::MetaDslx.Bootstrap.MetaCompiler2.Model.ElementValue, global::MetaDslx.Bootstrap.MetaCompiler2.Model.Rule
+    public interface Block : global::MetaDslx.Bootstrap.MetaCompiler3.Model.ElementValue, global::MetaDslx.Bootstrap.MetaCompiler3.Model.Rule
     {
         new global::System.String? GreenSyntaxCondition { get; }
         new global::System.String GreenType { get; }
@@ -2967,9 +2967,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Model
     
     }
 
-    public interface Element : global::MetaDslx.Bootstrap.MetaCompiler2.Model.CSharpElement
+    public interface Element : global::MetaDslx.Bootstrap.MetaCompiler3.Model.CSharpElement
     {
-        global::MetaDslx.Bootstrap.MetaCompiler2.Model.Assignment Assignment { get; set; }
+        global::MetaDslx.Bootstrap.MetaCompiler3.Model.Assignment Assignment { get; set; }
         global::System.String FieldName { get; }
         global::System.String GreenFieldType { get; }
         global::System.String GreenParameterValue { get; }
@@ -2996,7 +2996,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Model
     
     }
 
-    public interface Eof : global::MetaDslx.Bootstrap.MetaCompiler2.Model.ElementValue
+    public interface Eof : global::MetaDslx.Bootstrap.MetaCompiler3.Model.ElementValue
     {
         new global::System.String? GreenSyntaxCondition { get; }
         new global::System.String GreenType { get; }
@@ -3010,27 +3010,27 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Model
     
     }
 
-    public interface Fixed : global::MetaDslx.Bootstrap.MetaCompiler2.Model.ElementValue
+    public interface Fixed : global::MetaDslx.Bootstrap.MetaCompiler3.Model.ElementValue
     {
         global::System.String Text { get; set; }
     
     }
 
-    public interface GrammarRule : global::MetaDslx.Bootstrap.MetaCompiler2.Model.Declaration, global::MetaDslx.Bootstrap.MetaCompiler2.Model.CSharpElement
+    public interface GrammarRule : global::MetaDslx.Bootstrap.MetaCompiler3.Model.Declaration, global::MetaDslx.Bootstrap.MetaCompiler3.Model.CSharpElement
     {
         Grammar Grammar { get; set; }
         Language Language { get; }
     
     }
 
-    public interface Language : global::MetaDslx.Bootstrap.MetaCompiler2.Model.Declaration
+    public interface Language : global::MetaDslx.Bootstrap.MetaCompiler3.Model.Declaration
     {
         Grammar Grammar { get; set; }
         global::System.String Namespace { get; }
     
     }
 
-    public interface LexerRule : global::MetaDslx.Bootstrap.MetaCompiler2.Model.GrammarRule
+    public interface LexerRule : global::MetaDslx.Bootstrap.MetaCompiler3.Model.GrammarRule
     {
         global::MetaDslx.Modeling.ICollectionSlot<LAlternative> Alternatives { get; }
         global::System.String? FixedText { get; }
@@ -3038,12 +3038,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Model
     
     }
 
-    public interface Fragment : global::MetaDslx.Bootstrap.MetaCompiler2.Model.LexerRule
+    public interface Fragment : global::MetaDslx.Bootstrap.MetaCompiler3.Model.LexerRule
     {
     
     }
 
-    public interface Grammar : global::MetaDslx.Bootstrap.MetaCompiler2.Model.Declaration
+    public interface Grammar : global::MetaDslx.Bootstrap.MetaCompiler3.Model.Declaration
     {
         global::MetaDslx.Modeling.ICollectionSlot<Block> Blocks { get; }
         Token? DefaultEndOfLine { get; set; }
@@ -3072,7 +3072,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Model
         global::System.String? FixedText { get; }
         global::System.Boolean IsFixed { get; }
         global::System.Boolean IsNegated { get; set; }
-        global::MetaDslx.Bootstrap.MetaCompiler2.Model.Multiplicity Multiplicity { get; set; }
+        global::MetaDslx.Bootstrap.MetaCompiler3.Model.Multiplicity Multiplicity { get; set; }
         LElementValue Value { get; set; }
     
     }
@@ -3084,7 +3084,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Model
     
     }
 
-    public interface LBlock : global::MetaDslx.Bootstrap.MetaCompiler2.Model.LElementValue
+    public interface LBlock : global::MetaDslx.Bootstrap.MetaCompiler3.Model.LElementValue
     {
         global::MetaDslx.Modeling.ICollectionSlot<LAlternative> Alternatives { get; }
         new global::System.String? FixedText { get; }
@@ -3092,7 +3092,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Model
     
     }
 
-    public interface LFixed : global::MetaDslx.Bootstrap.MetaCompiler2.Model.LElementValue
+    public interface LFixed : global::MetaDslx.Bootstrap.MetaCompiler3.Model.LElementValue
     {
         new global::System.String? FixedText { get; }
         new global::System.Boolean IsFixed { get; }
@@ -3100,7 +3100,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Model
     
     }
 
-    public interface LRange : global::MetaDslx.Bootstrap.MetaCompiler2.Model.LElementValue
+    public interface LRange : global::MetaDslx.Bootstrap.MetaCompiler3.Model.LElementValue
     {
         global::System.String EndChar { get; set; }
         new global::System.String? FixedText { get; }
@@ -3109,7 +3109,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Model
     
     }
 
-    public interface LReference : global::MetaDslx.Bootstrap.MetaCompiler2.Model.LElementValue
+    public interface LReference : global::MetaDslx.Bootstrap.MetaCompiler3.Model.LElementValue
     {
         new global::System.String? FixedText { get; }
         new global::System.Boolean IsFixed { get; }
@@ -3117,7 +3117,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Model
     
     }
 
-    public interface LSet : global::MetaDslx.Bootstrap.MetaCompiler2.Model.LElementValue
+    public interface LSet : global::MetaDslx.Bootstrap.MetaCompiler3.Model.LElementValue
     {
         new global::System.String? FixedText { get; }
         new global::System.Boolean IsFixed { get; }
@@ -3132,7 +3132,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Model
     
     }
 
-    public interface LSetChar : global::MetaDslx.Bootstrap.MetaCompiler2.Model.LSetItem
+    public interface LSetChar : global::MetaDslx.Bootstrap.MetaCompiler3.Model.LSetItem
     {
         global::System.String Char { get; set; }
         new global::System.String? FixedText { get; }
@@ -3140,7 +3140,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Model
     
     }
 
-    public interface LSetRange : global::MetaDslx.Bootstrap.MetaCompiler2.Model.LSetItem
+    public interface LSetRange : global::MetaDslx.Bootstrap.MetaCompiler3.Model.LSetItem
     {
         global::System.String EndChar { get; set; }
         new global::System.String? FixedText { get; }
@@ -3149,19 +3149,19 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Model
     
     }
 
-    public interface LWildCard : global::MetaDslx.Bootstrap.MetaCompiler2.Model.LElementValue
+    public interface LWildCard : global::MetaDslx.Bootstrap.MetaCompiler3.Model.LElementValue
     {
         new global::System.String? FixedText { get; }
         new global::System.Boolean IsFixed { get; }
     
     }
 
-    public interface Namespace : global::MetaDslx.Bootstrap.MetaCompiler2.Model.Declaration
+    public interface Namespace : global::MetaDslx.Bootstrap.MetaCompiler3.Model.Declaration
     {
     
     }
 
-    public interface Rule : global::MetaDslx.Bootstrap.MetaCompiler2.Model.GrammarRule
+    public interface Rule : global::MetaDslx.Bootstrap.MetaCompiler3.Model.GrammarRule
     {
         global::MetaDslx.Modeling.ICollectionSlot<Alternative> Alternatives { get; }
         Alternative? BaseRule { get; set; }
@@ -3171,7 +3171,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Model
     
     }
 
-    public interface RuleRef : global::MetaDslx.Bootstrap.MetaCompiler2.Model.ElementValue
+    public interface RuleRef : global::MetaDslx.Bootstrap.MetaCompiler3.Model.ElementValue
     {
         GrammarRule GrammarRule { get; set; }
         new global::System.String? GreenSyntaxCondition { get; }
@@ -3183,7 +3183,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Model
     
     }
 
-    public interface SeparatedList : global::MetaDslx.Bootstrap.MetaCompiler2.Model.ElementValue
+    public interface SeparatedList : global::MetaDslx.Bootstrap.MetaCompiler3.Model.ElementValue
     {
         global::MetaDslx.Modeling.ICollectionSlot<Element> FirstItems { get; }
         global::MetaDslx.Modeling.ICollectionSlot<Element> FirstSeparators { get; }
@@ -3200,7 +3200,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Model
     
     }
 
-    public interface Token : global::MetaDslx.Bootstrap.MetaCompiler2.Model.LexerRule
+    public interface Token : global::MetaDslx.Bootstrap.MetaCompiler3.Model.LexerRule
     {
         global::System.Boolean IsTrivia { get; set; }
         global::MetaDslx.CodeAnalysis.MetaType ReturnType { get; set; }
@@ -3208,7 +3208,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Model
     
     }
 
-    public interface TokenAlts : global::MetaDslx.Bootstrap.MetaCompiler2.Model.ElementValue
+    public interface TokenAlts : global::MetaDslx.Bootstrap.MetaCompiler3.Model.ElementValue
     {
         new global::System.String? GreenSyntaxCondition { get; }
         new global::System.String GreenType { get; }
@@ -4556,7 +4556,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Model
     }
 }
 
-namespace MetaDslx.Bootstrap.MetaCompiler2.Model.__Impl
+namespace MetaDslx.Bootstrap.MetaCompiler3.Model.__Impl
 {
     using __Model = global::MetaDslx.Modeling.Model;
     using __MetaModel = global::MetaDslx.Modeling.MetaModel;
@@ -4694,7 +4694,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Model.__Impl
             public override __MetaModel MetaModel => Compiler.MInstance;
             public override __MetaType MetaType => typeof(Annotation);
     
-            public override __MetaType SymbolType => typeof(global::MetaDslx.Bootstrap.MetaCompiler2.Symbols.AnnotationSymbol);
+            public override __MetaType SymbolType => typeof(global::MetaDslx.Bootstrap.MetaCompiler3.Symbols.AnnotationSymbol);
             public override __ModelProperty? NameProperty => null;
             public override __ModelProperty? TypeProperty => null;
             public override global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo> BaseTypes => _baseTypes;
@@ -4805,7 +4805,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Model.__Impl
             public override __MetaModel MetaModel => Compiler.MInstance;
             public override __MetaType MetaType => typeof(AnnotationArgument);
     
-            public override __MetaType SymbolType => typeof(global::MetaDslx.Bootstrap.MetaCompiler2.Symbols.AnnotationArgumentSymbol);
+            public override __MetaType SymbolType => typeof(global::MetaDslx.Bootstrap.MetaCompiler3.Symbols.AnnotationArgumentSymbol);
             public override __ModelProperty? NameProperty => null;
             public override __ModelProperty? TypeProperty => null;
             public override global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo> BaseTypes => _baseTypes;
@@ -4901,7 +4901,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Model.__Impl
             public override __MetaModel MetaModel => Compiler.MInstance;
             public override __MetaType MetaType => typeof(ArrayExpression);
     
-            public override __MetaType SymbolType => typeof(global::MetaDslx.Bootstrap.MetaCompiler2.Symbols.ExpressionSymbol);
+            public override __MetaType SymbolType => typeof(global::MetaDslx.Bootstrap.MetaCompiler3.Symbols.ExpressionSymbol);
             public override __ModelProperty? NameProperty => null;
             public override __ModelProperty? TypeProperty => null;
             public override global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo> BaseTypes => _baseTypes;
@@ -5607,7 +5607,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Model.__Impl
             public override __MetaModel MetaModel => Compiler.MInstance;
             public override __MetaType MetaType => typeof(Alternative);
     
-            public override __MetaType SymbolType => typeof(global::MetaDslx.Bootstrap.MetaCompiler2.Symbols.PAlternativeSymbol);
+            public override __MetaType SymbolType => typeof(global::MetaDslx.Bootstrap.MetaCompiler3.Symbols.PAlternativeSymbol);
             public override __ModelProperty? NameProperty => Compiler.Declaration_Name;
             public override __ModelProperty? TypeProperty => null;
             public override global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo> BaseTypes => _baseTypes;
@@ -5658,10 +5658,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Model.__Impl
             get => Compiler.__CustomImpl.ElementValue_GreenType(this);
         }
     
-        public global::MetaDslx.Bootstrap.MetaCompiler2.Model.Multiplicity Multiplicity
+        public global::MetaDslx.Bootstrap.MetaCompiler3.Model.Multiplicity Multiplicity
         {
-            get => MGet<global::MetaDslx.Bootstrap.MetaCompiler2.Model.Multiplicity>(Compiler.ElementValue_Multiplicity);
-            set => MSet<global::MetaDslx.Bootstrap.MetaCompiler2.Model.Multiplicity>(Compiler.ElementValue_Multiplicity, value);
+            get => MGet<global::MetaDslx.Bootstrap.MetaCompiler3.Model.Multiplicity>(Compiler.ElementValue_Multiplicity);
+            set => MSet<global::MetaDslx.Bootstrap.MetaCompiler3.Model.Multiplicity>(Compiler.ElementValue_Multiplicity, value);
         }
     
         public global::System.String RedType
@@ -5827,10 +5827,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Model.__Impl
             get => Compiler.__CustomImpl.Block_GreenType(this);
         }
     
-        public global::MetaDslx.Bootstrap.MetaCompiler2.Model.Multiplicity Multiplicity
+        public global::MetaDslx.Bootstrap.MetaCompiler3.Model.Multiplicity Multiplicity
         {
-            get => MGet<global::MetaDslx.Bootstrap.MetaCompiler2.Model.Multiplicity>(Compiler.ElementValue_Multiplicity);
-            set => MSet<global::MetaDslx.Bootstrap.MetaCompiler2.Model.Multiplicity>(Compiler.ElementValue_Multiplicity, value);
+            get => MGet<global::MetaDslx.Bootstrap.MetaCompiler3.Model.Multiplicity>(Compiler.ElementValue_Multiplicity);
+            set => MSet<global::MetaDslx.Bootstrap.MetaCompiler3.Model.Multiplicity>(Compiler.ElementValue_Multiplicity, value);
         }
     
         [global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)]
@@ -6010,7 +6010,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Model.__Impl
             public override __MetaModel MetaModel => Compiler.MInstance;
             public override __MetaType MetaType => typeof(Block);
     
-            public override __MetaType SymbolType => typeof(global::MetaDslx.Bootstrap.MetaCompiler2.Symbols.PBlockSymbol);
+            public override __MetaType SymbolType => typeof(global::MetaDslx.Bootstrap.MetaCompiler3.Symbols.PBlockSymbol);
             public override __ModelProperty? NameProperty => Compiler.Declaration_Name;
             public override __ModelProperty? TypeProperty => null;
             public override global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo> BaseTypes => _baseTypes;
@@ -6051,10 +6051,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Model.__Impl
     
         public override __ModelClassInfo MInfo => __Info.Instance;
     
-        public global::MetaDslx.Bootstrap.MetaCompiler2.Model.Assignment Assignment
+        public global::MetaDslx.Bootstrap.MetaCompiler3.Model.Assignment Assignment
         {
-            get => MGet<global::MetaDslx.Bootstrap.MetaCompiler2.Model.Assignment>(Compiler.Element_Assignment);
-            set => MSet<global::MetaDslx.Bootstrap.MetaCompiler2.Model.Assignment>(Compiler.Element_Assignment, value);
+            get => MGet<global::MetaDslx.Bootstrap.MetaCompiler3.Model.Assignment>(Compiler.Element_Assignment);
+            set => MSet<global::MetaDslx.Bootstrap.MetaCompiler3.Model.Assignment>(Compiler.Element_Assignment, value);
         }
     
         public global::System.String FieldName
@@ -6300,7 +6300,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Model.__Impl
             public override __MetaModel MetaModel => Compiler.MInstance;
             public override __MetaType MetaType => typeof(Element);
     
-            public override __MetaType SymbolType => typeof(global::MetaDslx.Bootstrap.MetaCompiler2.Symbols.PElementSymbol);
+            public override __MetaType SymbolType => typeof(global::MetaDslx.Bootstrap.MetaCompiler3.Symbols.PElementSymbol);
             public override __ModelProperty? NameProperty => Compiler.Element_Name;
             public override __ModelProperty? TypeProperty => null;
             public override global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo> BaseTypes => _baseTypes;
@@ -6369,10 +6369,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Model.__Impl
             get => Compiler.__CustomImpl.Eof_GreenType(this);
         }
     
-        public global::MetaDslx.Bootstrap.MetaCompiler2.Model.Multiplicity Multiplicity
+        public global::MetaDslx.Bootstrap.MetaCompiler3.Model.Multiplicity Multiplicity
         {
-            get => MGet<global::MetaDslx.Bootstrap.MetaCompiler2.Model.Multiplicity>(Compiler.ElementValue_Multiplicity);
-            set => MSet<global::MetaDslx.Bootstrap.MetaCompiler2.Model.Multiplicity>(Compiler.ElementValue_Multiplicity, value);
+            get => MGet<global::MetaDslx.Bootstrap.MetaCompiler3.Model.Multiplicity>(Compiler.ElementValue_Multiplicity);
+            set => MSet<global::MetaDslx.Bootstrap.MetaCompiler3.Model.Multiplicity>(Compiler.ElementValue_Multiplicity, value);
         }
     
         [global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)]
@@ -6558,7 +6558,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Model.__Impl
             public override __MetaModel MetaModel => Compiler.MInstance;
             public override __MetaType MetaType => typeof(Expression);
     
-            public override __MetaType SymbolType => typeof(global::MetaDslx.Bootstrap.MetaCompiler2.Symbols.ExpressionSymbol);
+            public override __MetaType SymbolType => typeof(global::MetaDslx.Bootstrap.MetaCompiler3.Symbols.ExpressionSymbol);
             public override __ModelProperty? NameProperty => null;
             public override __ModelProperty? TypeProperty => null;
             public override global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo> BaseTypes => _baseTypes;
@@ -6616,10 +6616,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Model.__Impl
             get => Compiler.__CustomImpl.ElementValue_GreenType(this);
         }
     
-        public global::MetaDslx.Bootstrap.MetaCompiler2.Model.Multiplicity Multiplicity
+        public global::MetaDslx.Bootstrap.MetaCompiler3.Model.Multiplicity Multiplicity
         {
-            get => MGet<global::MetaDslx.Bootstrap.MetaCompiler2.Model.Multiplicity>(Compiler.ElementValue_Multiplicity);
-            set => MSet<global::MetaDslx.Bootstrap.MetaCompiler2.Model.Multiplicity>(Compiler.ElementValue_Multiplicity, value);
+            get => MGet<global::MetaDslx.Bootstrap.MetaCompiler3.Model.Multiplicity>(Compiler.ElementValue_Multiplicity);
+            set => MSet<global::MetaDslx.Bootstrap.MetaCompiler3.Model.Multiplicity>(Compiler.ElementValue_Multiplicity, value);
         }
     
         public global::System.String RedType
@@ -7732,10 +7732,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Model.__Impl
             set => MSet<global::System.Boolean>(Compiler.LElement_IsNegated, value);
         }
     
-        public global::MetaDslx.Bootstrap.MetaCompiler2.Model.Multiplicity Multiplicity
+        public global::MetaDslx.Bootstrap.MetaCompiler3.Model.Multiplicity Multiplicity
         {
-            get => MGet<global::MetaDslx.Bootstrap.MetaCompiler2.Model.Multiplicity>(Compiler.LElement_Multiplicity);
-            set => MSet<global::MetaDslx.Bootstrap.MetaCompiler2.Model.Multiplicity>(Compiler.LElement_Multiplicity, value);
+            get => MGet<global::MetaDslx.Bootstrap.MetaCompiler3.Model.Multiplicity>(Compiler.LElement_Multiplicity);
+            set => MSet<global::MetaDslx.Bootstrap.MetaCompiler3.Model.Multiplicity>(Compiler.LElement_Multiplicity, value);
         }
     
         public LElementValue Value
@@ -9238,7 +9238,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Model.__Impl
             public override __MetaModel MetaModel => Compiler.MInstance;
             public override __MetaType MetaType => typeof(Rule);
     
-            public override __MetaType SymbolType => typeof(global::MetaDslx.Bootstrap.MetaCompiler2.Symbols.ParserRuleSymbol);
+            public override __MetaType SymbolType => typeof(global::MetaDslx.Bootstrap.MetaCompiler3.Symbols.ParserRuleSymbol);
             public override __ModelProperty? NameProperty => Compiler.Declaration_Name;
             public override __ModelProperty? TypeProperty => null;
             public override global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo> BaseTypes => _baseTypes;
@@ -9328,10 +9328,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Model.__Impl
             get => Compiler.__CustomImpl.RuleRef_GreenType(this);
         }
     
-        public global::MetaDslx.Bootstrap.MetaCompiler2.Model.Multiplicity Multiplicity
+        public global::MetaDslx.Bootstrap.MetaCompiler3.Model.Multiplicity Multiplicity
         {
-            get => MGet<global::MetaDslx.Bootstrap.MetaCompiler2.Model.Multiplicity>(Compiler.ElementValue_Multiplicity);
-            set => MSet<global::MetaDslx.Bootstrap.MetaCompiler2.Model.Multiplicity>(Compiler.ElementValue_Multiplicity, value);
+            get => MGet<global::MetaDslx.Bootstrap.MetaCompiler3.Model.Multiplicity>(Compiler.ElementValue_Multiplicity);
+            set => MSet<global::MetaDslx.Bootstrap.MetaCompiler3.Model.Multiplicity>(Compiler.ElementValue_Multiplicity, value);
         }
     
         [global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)]
@@ -9437,7 +9437,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Model.__Impl
             public override __MetaModel MetaModel => Compiler.MInstance;
             public override __MetaType MetaType => typeof(RuleRef);
     
-            public override __MetaType SymbolType => typeof(global::MetaDslx.Bootstrap.MetaCompiler2.Symbols.PReferenceSymbol);
+            public override __MetaType SymbolType => typeof(global::MetaDslx.Bootstrap.MetaCompiler3.Symbols.PReferenceSymbol);
             public override __ModelProperty? NameProperty => null;
             public override __ModelProperty? TypeProperty => null;
             public override global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo> BaseTypes => _baseTypes;
@@ -9556,10 +9556,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Model.__Impl
             get => Compiler.__CustomImpl.SeparatedList_GreenType(this);
         }
     
-        public global::MetaDslx.Bootstrap.MetaCompiler2.Model.Multiplicity Multiplicity
+        public global::MetaDslx.Bootstrap.MetaCompiler3.Model.Multiplicity Multiplicity
         {
-            get => MGet<global::MetaDslx.Bootstrap.MetaCompiler2.Model.Multiplicity>(Compiler.ElementValue_Multiplicity);
-            set => MSet<global::MetaDslx.Bootstrap.MetaCompiler2.Model.Multiplicity>(Compiler.ElementValue_Multiplicity, value);
+            get => MGet<global::MetaDslx.Bootstrap.MetaCompiler3.Model.Multiplicity>(Compiler.ElementValue_Multiplicity);
+            set => MSet<global::MetaDslx.Bootstrap.MetaCompiler3.Model.Multiplicity>(Compiler.ElementValue_Multiplicity, value);
         }
     
         [global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)]
@@ -9887,7 +9887,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Model.__Impl
             public override __MetaModel MetaModel => Compiler.MInstance;
             public override __MetaType MetaType => typeof(Token);
     
-            public override __MetaType SymbolType => typeof(global::MetaDslx.Bootstrap.MetaCompiler2.Symbols.TokenSymbol);
+            public override __MetaType SymbolType => typeof(global::MetaDslx.Bootstrap.MetaCompiler3.Symbols.TokenSymbol);
             public override __ModelProperty? NameProperty => Compiler.Declaration_Name;
             public override __ModelProperty? TypeProperty => null;
             public override global::System.Collections.Immutable.ImmutableArray<__ModelClassInfo> BaseTypes => _baseTypes;
@@ -9961,10 +9961,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Model.__Impl
             get => Compiler.__CustomImpl.TokenAlts_GreenType(this);
         }
     
-        public global::MetaDslx.Bootstrap.MetaCompiler2.Model.Multiplicity Multiplicity
+        public global::MetaDslx.Bootstrap.MetaCompiler3.Model.Multiplicity Multiplicity
         {
-            get => MGet<global::MetaDslx.Bootstrap.MetaCompiler2.Model.Multiplicity>(Compiler.ElementValue_Multiplicity);
-            set => MSet<global::MetaDslx.Bootstrap.MetaCompiler2.Model.Multiplicity>(Compiler.ElementValue_Multiplicity, value);
+            get => MGet<global::MetaDslx.Bootstrap.MetaCompiler3.Model.Multiplicity>(Compiler.ElementValue_Multiplicity);
+            set => MSet<global::MetaDslx.Bootstrap.MetaCompiler3.Model.Multiplicity>(Compiler.ElementValue_Multiplicity, value);
         }
     
         [global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)]

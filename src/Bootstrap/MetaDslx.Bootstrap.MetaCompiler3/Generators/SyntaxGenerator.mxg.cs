@@ -1,5 +1,5 @@
 #line (1,10)-(1,54) 10 "SyntaxGenerator.mxg"
-namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
+namespace MetaDslx.Bootstrap.MetaCompiler3.Generators
 #line hidden
 
 {
@@ -8,7 +8,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
     #line hidden
     global::
     #line (3,7)-(3,45) 13 "SyntaxGenerator.mxg"
-    MetaDslx.Bootstrap.MetaCompiler2.Model;
+    MetaDslx.Bootstrap.MetaCompiler3.Model;
     #line hidden
     #line (4,1)-(4,6) 5 "SyntaxGenerator.mxg"
     using
@@ -8178,7 +8178,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
                 #line hidden
                 
                 #line (638,14)-(638,120) 17 "SyntaxGenerator.mxg"
-                var isList = MetaDslx.Bootstrap.MetaCompiler2.Model.MultiplicityExtensions.IsList(elem.Value.Multiplicity);
+                var isList = MetaDslx.Bootstrap.MetaCompiler3.Model.MultiplicityExtensions.IsList(elem.Value.Multiplicity);
                 #line hidden
                 
                 __cb.Push("    ");
@@ -9005,7 +9005,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Generators
                     __first123 = false;
                 }
                 #line (688,14)-(688,151) 17 "SyntaxGenerator.mxg"
-                var isList = MetaDslx.Bootstrap.MetaCompiler2.Model.MultiplicityExtensions.IsList(elem.Value.Multiplicity) || elem.Value is SeparatedList;
+                var isList = MetaDslx.Bootstrap.MetaCompiler3.Model.MultiplicityExtensions.IsList(elem.Value.Multiplicity) || elem.Value is SeparatedList;
                 #line hidden
                 
                 __cb.Push("    ");

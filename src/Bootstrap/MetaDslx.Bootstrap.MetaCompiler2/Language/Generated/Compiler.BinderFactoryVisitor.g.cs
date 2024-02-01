@@ -60,11 +60,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Binding
             this.Begin(__annot2, node);
             try
             {
-                var __annot1 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "MetaModels");
+                var __annot1 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "MetaModelSymbols");
                 this.Begin(__annot1, node.MetaModels);
                 try
                 {
-                    var __annot0 = new MetaDslx.CodeAnalysis.Binding.UseBinder(types: ImmutableArray.Create<System.Type>(typeof(MetaDslx.Modeling.MetaModel)));
+                    var __annot0 = new MetaDslx.CodeAnalysis.Binding.UseBinder(types: ImmutableArray.Create<System.Type>(typeof(MetaDslx.Modeling.MetaModel), typeof(MetaDslx.Languages.MetaModel.Model.MetaModel)));
                     this.Begin(__annot0, node.MetaModels);
                     try
                     {

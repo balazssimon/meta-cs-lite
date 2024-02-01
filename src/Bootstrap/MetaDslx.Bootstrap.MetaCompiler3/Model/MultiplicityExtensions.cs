@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MetaDslx.Bootstrap.MetaCompiler2.Model
+namespace MetaDslx.Bootstrap.MetaCompiler3.Model
 {
     public static class MultiplicityExtensions
     {

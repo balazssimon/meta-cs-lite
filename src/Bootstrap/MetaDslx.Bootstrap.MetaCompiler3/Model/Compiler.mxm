@@ -1,7 +1,7 @@
-namespace MetaDslx.Bootstrap.MetaCompiler2.Model;
+namespace MetaDslx.Bootstrap.MetaCompiler3.Model;
 
 using MetaDslx.CodeAnalysis.Symbols;
-using MetaDslx.Bootstrap.MetaCompiler2.Symbols;
+using MetaDslx.Bootstrap.MetaCompiler3.Symbols;
 
 metamodel Compiler;
 

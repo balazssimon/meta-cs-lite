@@ -10,7 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Collections.Immutable;
 
-namespace MetaDslx.Bootstrap.MetaCompiler2.Symbols
+namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
 {
     internal class PReferenceSymbol : SourceDeclarationSymbol
     {

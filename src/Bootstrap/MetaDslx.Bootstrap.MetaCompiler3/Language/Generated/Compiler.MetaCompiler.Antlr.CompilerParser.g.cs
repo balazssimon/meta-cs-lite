@@ -19,7 +19,7 @@
 // Ambiguous reference in cref attribute
 #pragma warning disable 419
 
-namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler {
+namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler {
 using System;
 using System.IO;
 using System.Text;
@@ -244,7 +244,7 @@ public partial class CompilerParser : global::MetaDslx.CodeAnalysis.Parsers.Antl
 	}
 	public partial class Pr_UsingMetaModelContext : Pr_UsingContext {
 		public IToken E_KMetamodel;
-		public Pr_QualifierContext E_metaModels;
+		public Pr_QualifierContext E_metaModelSymbols;
 		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LR_KMetamodel() { return GetToken(CompilerParser.LR_KMetamodel, 0); }
 		[System.Diagnostics.DebuggerNonUserCode] public Pr_QualifierContext pr_Qualifier() {
 			return GetRuleContext<Pr_QualifierContext>(0);
@@ -286,7 +286,7 @@ public partial class CompilerParser : global::MetaDslx.CodeAnalysis.Parsers.Antl
 				State = 144;
 				((Pr_UsingMetaModelContext)_localctx).E_KMetamodel = Match(LR_KMetamodel);
 				State = 145;
-				((Pr_UsingMetaModelContext)_localctx).E_metaModels = pr_Qualifier();
+				((Pr_UsingMetaModelContext)_localctx).E_metaModelSymbols = pr_Qualifier();
 				}
 				break;
 			case LR_TIdentifier:
@@ -4885,4 +4885,4 @@ public partial class CompilerParser : global::MetaDslx.CodeAnalysis.Parsers.Antl
 
 
 }
-} // namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler
+} // namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler
