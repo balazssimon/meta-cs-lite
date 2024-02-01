@@ -96,6 +96,120 @@ namespace MetaDslx.CodeAnalysis.Syntax
             else return identifier;
         }
 
+        public object? ExtractValue(SyntaxNodeOrToken nodeOrToken)
+        {
+            if (TryExtractValue(default, nodeOrToken, out var value)) return value;
+            else return null;
+        }
+
+        public object? ExtractValue(MetaType expectedType, SyntaxNodeOrToken nodeOrToken)
+        {
+            if (TryExtractValue(expectedType, nodeOrToken, out var value)) return value;
+            else return null;
+        }
+
+        public bool TryExtractValue(MetaType expectedType, SyntaxNodeOrToken nodeOrToken, out object? value)
+        {
+            if (nodeOrToken.IsToken)
+            {
+                return TryExtractValue(expectedType, nodeOrToken.AsToken().Text, out value);
+            }
+            else
+            {
+                return TryExtractValue(expectedType, nodeOrToken.AsNode()?.ToString(), out value);
+            }
+        }
+
+        public virtual bool TryExtractValue(MetaType expectedType, string? valueText, out object? value)
+        {
+            if (expectedType.IsDefaultOrNull || expectedType.SpecialType == SpecialType.MetaDslx_CodeAnalysis_MetaSymbol ||
+                expectedType.SpecialType == SpecialType.System_String || expectedType.SpecialType == SpecialType.System_Object)
+            {
+                if (valueText == null)
+                {
+                    value = null;
+                    return true;
+                }
+                if (valueText == "null")
+                {
+                    value = null;
+                    return true;
+                }
+                if (valueText.Length >= 3 && valueText.StartsWith("@\'") && valueText.EndsWith("\'"))
+                {
+                    value = valueText.Substring(2, valueText.Length - 3).Replace("\'\'", "\'");
+                    return true;
+                }
+                else if (valueText.Length >= 2 && valueText.StartsWith("\'") && valueText.EndsWith("\'"))
+                {
+                    value = StringUtilities.DecodeString(valueText);
+                    return true;
+                }
+                else if (valueText.Length >= 3 && valueText.StartsWith("@\"") && valueText.EndsWith("\""))
+                {
+                    value = valueText.Substring(2, valueText.Length - 3).Replace("\"\"", "\"");
+                    return true;
+                }
+                else if (valueText.Length >= 2 && valueText.StartsWith("\"") && valueText.EndsWith("\""))
+                {
+                    value = StringUtilities.DecodeString(valueText);
+                    return true;
+                }
+            }
+            if (expectedType.IsDefaultOrNull || expectedType.SpecialType == SpecialType.MetaDslx_CodeAnalysis_MetaSymbol ||
+                expectedType.SpecialType == SpecialType.System_Object)
+            {
+                bool boolValue;
+                if (bool.TryParse(valueText, out boolValue))
+                {
+                    value = boolValue;
+                    return true;
+                }
+                int intValue;
+                if (int.TryParse(valueText, out intValue))
+                {
+                    value = intValue;
+                    return true;
+                }
+                long longValue;
+                if (long.TryParse(valueText, out longValue))
+                {
+                    value = longValue;
+                    return true;
+                }
+                float floatValue;
+                if (float.TryParse(valueText, out floatValue))
+                {
+                    value = floatValue;
+                    return true;
+                }
+                double doubleValue;
+                if (double.TryParse(valueText, out doubleValue))
+                {
+                    value = doubleValue;
+                    return true;
+                }
+                value = valueText;
+                return true;
+            }
+            var type = expectedType.AsType();
+            if (type is not null)
+            {
+                try
+                {
+                    value = TypeDescriptor.GetConverter(expectedType).ConvertFromInvariantString(valueText);
+                    return true;
+                }
+                catch (NotSupportedException)
+                {
+                    value = null;
+                    return false;
+                }
+            }
+            value = null;
+            return false;
+        }
+
         public virtual bool IsTriviaWithEndOfLine(GreenNode trivia)
         {
             if (trivia is InternalSyntaxTrivia internalSyntaxTrivia)

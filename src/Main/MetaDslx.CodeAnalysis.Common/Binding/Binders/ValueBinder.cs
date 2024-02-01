@@ -14,8 +14,10 @@ namespace MetaDslx.CodeAnalysis.Binding
 {
     public class ValueBinder : Binder, IValueBinder
     {
+        private readonly object NoValue = new object();
+
         private MetaType _type;
-        private string? _rawValue;
+        private object? _rawValue;
 
         public ValueBinder(MetaType type = default)
         {
@@ -26,37 +28,46 @@ namespace MetaDslx.CodeAnalysis.Binding
         {
             get
             {
-                CacheRawValue();
+                if (_type.IsDefault)
+                {
+                    var type = ComputeType(this.Diagnostics, default);
+                    _type.InterlockedInitialize(type);
+                }
                 return _type;
             }
         }
 
-        public string RawValue
+        public object? RawValue
         {
             get
             {
-                CacheRawValue();
-                return _rawValue;
+                if (_rawValue is null)
+                {
+                    var rawValue = ComputeRawValue(this.Diagnostics, default) ?? NoValue;
+                    Interlocked.CompareExchange(ref _rawValue, rawValue, null);
+                }
+                return _rawValue == NoValue ? null : _rawValue;
             }
         }
 
-        private void CacheRawValue(CancellationToken cancellationToken = default)
+        public MetaType ExpectedType
         {
-            if (_rawValue is not null) return;
-            var type = ComputeType(this.Diagnostics, cancellationToken);
-            _type.InterlockedInitialize(type);
-            var rawValue = ComputeRawValue(this.Diagnostics, cancellationToken) ?? string.Empty;
-            Interlocked.CompareExchange(ref _rawValue, rawValue, null);
+            get
+            {
+                var propertyBinder = GetEnclosingPropertyBinder();
+                return propertyBinder?.Type ?? Type;
+            }
         }
 
-        protected virtual string? ComputeRawValue(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        protected virtual object? ComputeRawValue(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            return this.Syntax.ToString();
+            if (Language.SyntaxFacts.TryExtractValue(ExpectedType, this.Syntax, out var value)) return value;
+            else return this.Syntax.ToString();
         }
 
         protected virtual MetaType ComputeType(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            return _type;
+            return _type.IsDefault ? MetaType.Null : _type;
         }
 
         protected override ImmutableArray<SingleDeclaration> BuildDeclarationTree(SingleDeclarationBuilder builder)

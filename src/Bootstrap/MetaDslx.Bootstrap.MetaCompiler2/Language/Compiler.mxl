@@ -44,7 +44,7 @@ RuleRef
 	| annotations+=ParserAnnotation* '#{' referencedTypes+=TypeReference (',' referencedTypes+=TypeReference)* ('|' grammarRule=#GrammarRule)? '}'  multiplicity=Multiplicity?
 	;
 Eof1 returns Eof: 'eof';
-Fixed: annotations+=ParserAnnotation* text=[DecodeString]TString multiplicity=Multiplicity?;
+Fixed: annotations+=ParserAnnotation* text=TString multiplicity=Multiplicity?;
 
 LexerRule: Token | Fragment;
 Token: annotations+=LexerAnnotation* ('token' Name ('returns' returnType=TypeReference)? | isTrivia?='hidden' Name) ':' alternatives+=LAlternative ('|' alternatives+=LAlternative)* ';';
@@ -53,9 +53,9 @@ LAlternative: elements+=LElement*;
 LElement: isNegated?='~'? value=LElementValue multiplicity=Multiplicity?;
 LElementValue: LBlock | LFixed | LWildCard | LRange | LReference /*| LSet*/;
 LReference: rule=#LexerRule;
-LFixed: text=[DecodeString]TString;
+LFixed: text=TString;
 LWildCard: '.';
-LRange: startChar=[DecodeString]TString '..' endChar=[DecodeString]TString;
+LRange: startChar=TString '..' endChar=TString;
 // TODO: add sets when lexer modes are available
 //LSet: '[' items+=LSetItem* ']';
 //LSetItem: LSetChar | LSetRange;

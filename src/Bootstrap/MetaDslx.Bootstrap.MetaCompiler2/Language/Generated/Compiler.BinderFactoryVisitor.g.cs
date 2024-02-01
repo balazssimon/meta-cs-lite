@@ -668,7 +668,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Binding
                 this.Begin(__annot2, node.Text);
                 try
                 {
-                    var __annot1 = new DecodeStringBinder();
+                    var __annot1 = new MetaDslx.CodeAnalysis.Binding.ValueBinder(type: typeof(string));
                     this.Begin(__annot1, node.Text);
                     try
                     {
@@ -972,7 +972,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Binding
                 this.Begin(__annot1, node.Text);
                 try
                 {
-                    var __annot0 = new DecodeStringBinder();
+                    var __annot0 = new MetaDslx.CodeAnalysis.Binding.ValueBinder(type: typeof(string));
                     this.Begin(__annot0, node.Text);
                     try
                     {
@@ -1018,7 +1018,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Binding
                 this.Begin(__annot1, node.StartChar);
                 try
                 {
-                    var __annot0 = new DecodeStringBinder();
+                    var __annot0 = new MetaDslx.CodeAnalysis.Binding.ValueBinder(type: typeof(string));
                     this.Begin(__annot0, node.StartChar);
                     try
                     {
@@ -1037,7 +1037,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Binding
                 this.Begin(__annot3, node.EndChar);
                 try
                 {
-                    var __annot2 = new DecodeStringBinder();
+                    var __annot2 = new MetaDslx.CodeAnalysis.Binding.ValueBinder(type: typeof(string));
                     this.Begin(__annot2, node.EndChar);
                     try
                     {

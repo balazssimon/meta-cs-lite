@@ -43,7 +43,7 @@ namespace MetaDslx.CodeAnalysis.Binding
             }
         }
 
-        public string RawValue => ValuesOpt.ToString();
+        public object? RawValue => ValuesOpt;
 
         public MetaType Type
         {
