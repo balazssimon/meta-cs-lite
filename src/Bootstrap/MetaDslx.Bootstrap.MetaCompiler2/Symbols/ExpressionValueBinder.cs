@@ -92,7 +92,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Symbols
             {
                 _modelObjectType = containingAlt.ReturnType.AsTypeSymbol(Compilation);
             }
-            if (result.IsDefaultOrNull) return default;
+            if (result.IsDefaultOrNull) return result;
             if (result.TryGetCoreType(out var coreType, diagnostics, cancellationToken) && !coreType.IsDefaultOrNull)
             {
                 return coreType;

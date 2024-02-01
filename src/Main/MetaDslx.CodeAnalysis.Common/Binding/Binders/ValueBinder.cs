@@ -82,8 +82,15 @@ namespace MetaDslx.CodeAnalysis.Binding
 
         protected virtual ImmutableArray<object?> ComputeValues(MetaType expectedType, DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
-            if (Language.SyntaxFacts.TryExtractValue(expectedType, RawValue, out var value)) return ImmutableArray.Create(value);
-            else return ImmutableArray<object?>.Empty;
+            if (Compilation.SymbolValueConverter.TryConvertTo(RawValue, expectedType, out var convertedValue, this, diagnostics, cancellationToken))
+            {
+                return ImmutableArray.Create(convertedValue);
+            }
+            else
+            {
+                diagnostics.Add(Diagnostic.Create(CommonErrorCode.ERR_BindingError, this.Location, $"Could not convert value '{RawValue}' to type '{expectedType}'."));
+                return ImmutableArray<object?>.Empty;
+            }
         }
 
         public override string ToString()

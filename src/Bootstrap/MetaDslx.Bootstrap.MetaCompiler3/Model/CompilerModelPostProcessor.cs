@@ -81,7 +81,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Model
             foreach (var fixedToken in allTokens.Where(t => t.IsFixed))
             {
                 AddTokenKindFor(fixedToken);
-                if (!fixedToken.ReturnType.IsNull)
+                if (!fixedToken.ReturnType.IsDefaultOrNull)
                 {
                     var valueBinder = f.Binder();
                     valueBinder.TypeName = typeof(MetaDslx.CodeAnalysis.Binding.ValueBinder).FullName!;
@@ -151,7 +151,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Model
             foreach (var token in allTokens.Where(t => !t.IsFixed))
             {
                 AddTokenKindFor(token);
-                if (!token.ReturnType.IsNull)
+                if (!token.ReturnType.IsDefaultOrNull)
                 {
                     var valueBinder = f.Binder();
                     valueBinder.TypeName = typeof(MetaDslx.CodeAnalysis.Binding.ValueBinder).FullName!;
@@ -372,7 +372,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Model
                     constBinder.Arguments.Add(constValue);
                     alt.Binders.Add(constBinder);
                 }
-                else if (!alt.ReturnType.IsNull)
+                else if (!alt.ReturnType.IsDefaultOrNull)
                 {
                     var skipDefineBinder = false;
                     if (alt.Elements.Count == 1)
@@ -417,7 +417,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Model
                     propName.Name = "name";
                     propName.TypeName = typeof(string).FullName!;
                     propName.IsArray = false;
-                    propName.Values.Add(name);
+                    propName.Values.Add(name.ToPascalCase());
                     propBinder.Arguments.Add(propName);
                     if (elem.Assignment == Assignment.QuestionAssign || elem.Assignment == Assignment.NegatedAssign)
                     {
@@ -431,7 +431,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Model
                     elem.Binders.Add(propBinder);
                 }
                 var value = elem.Value;
-                AddBinders(value.Binders, value.Annotations);
+                if (value is not null) AddBinders(value.Binders, value.Annotations);
                 if (value is RuleRef rr)
                 {
                     if (rr.ReferencedTypes.Count > 0)

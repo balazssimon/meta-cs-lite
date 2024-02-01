@@ -5536,7 +5536,7 @@ namespace MetaDslx.Languages.MetaModel.Generators
                 }
                 var __first49 = true;
                 #line (333,14)-(333,44) 17 "C:\Users\Balazs\source\repos\meta-cs-lite\src\Main\MetaDslx.Languages.MetaModel\Generators\MetaModelGenerator.mxg"
-                if (!slot.DefaultValue.IsNull)
+                if (!slot.DefaultValue.IsDefaultOrNull)
                 #line hidden
                 
                 {

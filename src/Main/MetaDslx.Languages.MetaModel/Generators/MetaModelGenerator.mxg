@@ -330,7 +330,7 @@ internal class [cls.Name]_Impl : __MetaModelObject, [cls.Name]
         : base(id)
     {
         [foreach (var slot in metaCls.Slots)]
-            [if (!slot.DefaultValue.IsNull)]
+            [if (!slot.DefaultValue.IsDefaultOrNull)]
                 this.MGetSlot([ToCSharp(slot.SlotProperty)])?.Init(([ToCSharp(slot.SlotProperty.Type)])[ToCSharpValue(slot.SlotProperty.Type, slot.DefaultValue)]);
             [end if]
         [end foreach]

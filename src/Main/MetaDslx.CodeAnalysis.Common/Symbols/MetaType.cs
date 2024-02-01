@@ -19,28 +19,31 @@ namespace MetaDslx.CodeAnalysis
 
     public struct MetaType : IEquatable<MetaType>
     {
+        public static readonly MetaType Null = new MetaType((string?)null);
+        private static readonly object? DefaultValue = null;
+        private static readonly object? NullValue = new object();
         private const string EnumFullName = "global::System.Enum";
 
         private object? _original;
 
         private MetaType(string? name)
         {
-            _original = name ?? (object)typeof(Null);
+            _original = name ?? NullValue;
         }
 
         private MetaType(Type? type)
         {
-            _original = type ?? typeof(Null);
+            _original = type ?? NullValue;
         }
 
         private MetaType(TypeSymbol? typeSymbol)
         {
-            _original = typeSymbol ?? (object)typeof(Null);
+            _original = typeSymbol ?? NullValue;
         }
 
         private MetaType(IModelObject? modelObject)
         {
-            _original = modelObject ?? (object)typeof(Null);
+            _original = modelObject ?? NullValue;
         }
 
         public static MetaType FromName(string? name) => new MetaType(name);
@@ -50,18 +53,18 @@ namespace MetaDslx.CodeAnalysis
 
         public bool InterlockedInitialize(MetaType value)
         {
-            return Interlocked.CompareExchange(ref _original, value._original, null) == null;
+            return Interlocked.CompareExchange(ref _original, value._original, DefaultValue) == DefaultValue;
         }
 
-        public bool IsDefault => _original == null;
+        public bool IsDefault => _original == DefaultValue;
         public bool IsDefaultOrNull => IsDefault || IsNull;
-        public bool IsNull => (_original as Type) == typeof(Null);
+        public bool IsNull => _original == NullValue;
         public bool IsName => _original is string;
         public bool IsType => _original is Type;
         public bool IsTypeSymbol => _original is TypeSymbol;
         public bool IsModelObject => _original is IModelObject || _original is IModelSymbol ms && ms.ModelObject is not null;
 
-        public object? Original => _original;
+        public object? Original => IsDefaultOrNull ? null : _original;
         public Type? OriginalType => _original as Type;
         public TypeSymbol? OriginalTypeSymbol => _original as TypeSymbol;
         public IModelObject? OriginalModelObject
@@ -74,7 +77,7 @@ namespace MetaDslx.CodeAnalysis
             }
         }
 
-        public string Name
+        public string? Name
         {
             get
             {
@@ -89,7 +92,7 @@ namespace MetaDslx.CodeAnalysis
             }
         }
 
-        public string MetadataName
+        public string? MetadataName
         {
             get
             {
@@ -229,7 +232,7 @@ namespace MetaDslx.CodeAnalysis
             }
         }
 
-        public string FullName
+        public string? FullName
         {
             get
             {
@@ -1061,7 +1064,7 @@ namespace MetaDslx.CodeAnalysis
         public override bool Equals(object obj)
         {
             if (obj is MetaType mt) return Equals(mt);
-            else return this.IsDefault && obj is null;
+            else return this.IsDefaultOrNull && obj is null;
         }
 
         public override int GetHashCode()
@@ -1074,6 +1077,8 @@ namespace MetaDslx.CodeAnalysis
 
         public override string ToString()
         {
+            if (IsDefault) return "default";
+            if (IsNull) return "null";
             var specialName = this.MetaKeyword;
             if (specialName is not null) return specialName;
             else return FullName;
@@ -1139,10 +1144,6 @@ namespace MetaDslx.CodeAnalysis
                 }
             }
             return null;
-        }
-
-        private class Null
-        {
         }
     }
 }

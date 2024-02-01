@@ -16,40 +16,45 @@ namespace MetaDslx.CodeAnalysis
 
     public struct MetaSymbol : IEquatable<MetaSymbol>
     {
+        public static readonly MetaSymbol Null = new MetaSymbol((object?)null);
+        private static readonly object? DefaultValue = null;
+        private static readonly object? NullValue = new object();
         private object? _original;
 
-        private MetaSymbol(Symbol symbol)
+        private MetaSymbol(Symbol? symbol)
         {
-            _original = symbol;
+            _original = symbol ?? NullValue;
         }
 
-        private MetaSymbol(IModelObject modelObject)
+        private MetaSymbol(IModelObject? modelObject)
         {
-            _original = modelObject;
+            _original = modelObject ?? NullValue;
         }
 
         private MetaSymbol(object? value)
         {
-            _original = value;
+            _original = value ?? NullValue;
         }
 
-        public static MetaSymbol FromSymbol(Symbol symbol) => new MetaSymbol(symbol);
-        public static MetaSymbol FromModelObject(IModelObject modelObject) => new MetaSymbol(modelObject);
+        public static MetaSymbol FromSymbol(Symbol? symbol) => new MetaSymbol(symbol);
+        public static MetaSymbol FromModelObject(IModelObject? modelObject) => new MetaSymbol(modelObject);
         public static MetaSymbol FromValue(object? value) => new MetaSymbol(value);
 
         public bool InterlockedInitialize(MetaSymbol value)
         {
-            return Interlocked.CompareExchange(ref _original, value._original, null) == null;
+            return Interlocked.CompareExchange(ref _original, value._original, DefaultValue) == DefaultValue;
         }
 
-        public bool IsNull => _original is null;
+        public bool IsDefault => _original == DefaultValue;
+        public bool IsNull => _original == NullValue;
+        public bool IsDefaultOrNull => IsDefault || IsNull;
         public bool IsSymbol => _original is Symbol;
         public bool IsModelObject => _original is IModelObject;
-        public bool IsValueOnly => !IsSymbol && !IsModelObject;
+        public bool IsValueOnly => !IsDefaultOrNull && !IsSymbol && !IsModelObject;
 
         public IModelObject? OriginalModelObject => _original as IModelObject;
         public Symbol? OriginalSymbol => _original as Symbol;
-        public object? OriginalValue => _original;
+        public object? OriginalValue => IsDefaultOrNull ? null : _original;
 
         public string? Name
         {
@@ -75,6 +80,8 @@ namespace MetaDslx.CodeAnalysis
         {
             get
             {
+                if (IsDefault) return default;
+                if (IsNull) return MetaType.Null;
                 if (IsModelObject)
                 {
                     return OriginalModelObject.MInfo.MetaType;
@@ -137,6 +144,8 @@ namespace MetaDslx.CodeAnalysis
 
         public override string ToString()
         {
+            if (IsDefault) return "default";
+            if (IsNull) return "null";
             return _original?.ToString();
         }
 

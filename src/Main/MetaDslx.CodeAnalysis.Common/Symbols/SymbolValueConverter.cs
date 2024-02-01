@@ -1,7 +1,9 @@
 ﻿using MetaDslx.CodeAnalysis.Binding;
 using MetaDslx.Modeling;
+using Roslyn.Utilities;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 using System.Threading;
 
@@ -110,9 +112,19 @@ namespace MetaDslx.CodeAnalysis.Symbols
             {
                 var tmpValue = value;
                 Symbol? valueSymbol;
+                if (tmpValue is string rawValue)
+                {
+                    if (TryConvertFromString(rawValue, expectedType, out var convertedTmpValue, valueBinder, diagnostics, cancellationToken))
+                    {
+                        tmpValue = convertedTmpValue;
+                    }
+                    else
+                    {
+                        tmpValue = MetaSymbol.FromValue(rawValue).AsSymbol(this.Compilation);
+                    }
+                }
                 if (tmpValue is MetaType mt) tmpValue = mt.Original;
-                if (tmpValue is string s) valueSymbol = MetaSymbol.FromValue(s).AsSymbol(this.Compilation);
-                else if (tmpValue is IModelObject mo) valueSymbol = MetaSymbol.FromModelObject(mo).AsSymbol(this.Compilation);
+                if (tmpValue is IModelObject mo) valueSymbol = MetaSymbol.FromModelObject(mo).AsSymbol(this.Compilation);
                 else if (tmpValue is Symbol sym)
                 {
                     if (sym.IsError)
@@ -133,8 +145,16 @@ namespace MetaDslx.CodeAnalysis.Symbols
                     }
                     if (expectedType.SpecialType == SpecialType.MetaDslx_CodeAnalysis_MetaSymbol)
                     {
-                        convertedValue = MetaSymbol.FromValue(value);
-                        return true;
+                        if (value is string stringValue && TryConvertFromString(stringValue, expectedType, out convertedValue, valueBinder, diagnostics, cancellationToken))
+                        {
+                            convertedValue = MetaSymbol.FromValue(convertedValue);
+                            return true;
+                        }
+                        else
+                        {
+                            convertedValue = MetaSymbol.FromValue(value);
+                            return true;
+                        }
                     }
                     else
                     {
@@ -195,7 +215,16 @@ namespace MetaDslx.CodeAnalysis.Symbols
                 convertedValue = value;
                 return true;
             }
-            else 
+            else if (value is string stringValue && TryConvertFromString(stringValue, expectedType, out convertedValue, valueBinder, diagnostics, cancellationToken))
+            {
+                value = convertedValue;
+            }
+            if (expectedType.IsAssignableFrom(value.GetType()))
+            {
+                convertedValue = value;
+                return true;
+            }
+            else
             {
                 if (value is Symbol valueSymbol && valueSymbol.IsError)
                 {
@@ -212,6 +241,86 @@ namespace MetaDslx.CodeAnalysis.Symbols
         {
             if (TryConvertTo(value, expectedType, out var convertedValue, valueBinder, diagnostics, cancellationToken)) return convertedValue;
             else return null;
+        }
+
+        protected virtual bool TryConvertFromString(string rawValue, MetaType expectedType, out object? convertedValue, Binder valueBinder, DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        {
+            if (rawValue == null)
+            {
+                convertedValue = null;
+                return true;
+            }
+            if (rawValue == "null")
+            {
+                convertedValue = null;
+                return true;
+            }
+            if (rawValue.Length >= 3 && rawValue.StartsWith("@\'") && rawValue.EndsWith("\'"))
+            {
+                convertedValue = rawValue.Substring(2, rawValue.Length - 3).Replace("\'\'", "\'");
+                return true;
+            }
+            else if (rawValue.Length >= 2 && rawValue.StartsWith("\'") && rawValue.EndsWith("\'"))
+            {
+                convertedValue = StringUtilities.DecodeString(rawValue);
+                return true;
+            }
+            else if (rawValue.Length >= 3 && rawValue.StartsWith("@\"") && rawValue.EndsWith("\""))
+            {
+                convertedValue = rawValue.Substring(2, rawValue.Length - 3).Replace("\"\"", "\"");
+                return true;
+            }
+            else if (rawValue.Length >= 2 && rawValue.StartsWith("\"") && rawValue.EndsWith("\""))
+            {
+                convertedValue = StringUtilities.DecodeString(rawValue);
+                return true;
+            }
+            bool boolValue;
+            if (bool.TryParse(rawValue, out boolValue))
+            {
+                convertedValue = boolValue;
+                return true;
+            }
+            int intValue;
+            if (int.TryParse(rawValue, out intValue))
+            {
+                convertedValue = intValue;
+                return true;
+            }
+            long longValue;
+            if (long.TryParse(rawValue, out longValue))
+            {
+                convertedValue = longValue;
+                return true;
+            }
+            float floatValue;
+            if (float.TryParse(rawValue, out floatValue))
+            {
+                convertedValue = floatValue;
+                return true;
+            }
+            double doubleValue;
+            if (double.TryParse(rawValue, out doubleValue))
+            {
+                convertedValue = doubleValue;
+                return true;
+            }
+            var type = expectedType.AsType(tryResolveType: true);
+            if (type is not null)
+            {
+                try
+                {
+                    convertedValue = TypeDescriptor.GetConverter(expectedType).ConvertFromInvariantString(rawValue);
+                    return true;
+                }
+                catch (NotSupportedException)
+                {
+                    convertedValue = null;
+                    return false;
+                }
+            }
+            convertedValue = null;
+            return false;
         }
     }
 }
