@@ -272,16 +272,16 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Symbols
                                     var prefRule = pref.Rule;
                                     if (prefRule.OriginalSymbol is ParserRuleSymbol pr)
                                     {
-                                        if (!pr.ReturnType.IsAssignableTo(coreType) && pr.ReturnType.SpecialType != SpecialType.System_Object)
+                                        if (!pr.ReturnType.IsAssignableTo(coreType))
                                         {
-                                            diagnostics.Add(Diagnostic.Create(CompilerErrorCode.ERR_ValueTypeMismatch, this.Location, pr.ReturnType, coreType));
+                                            diagnostics.Add(Diagnostic.Create(CompilerErrorCode.ERR_ValueTypeMismatch, pref.Location, pr.ReturnType, coreType));
                                         }
                                     }
-                                    else if (prefRule.OriginalSymbol is TokenSymbol lr && lr.ReturnType.SpecialType != SpecialType.System_Object)
+                                    else if (prefRule.OriginalSymbol is TokenSymbol lr)
                                     {
                                         if (!lr.ReturnType.IsAssignableTo(coreType))
                                         {
-                                            diagnostics.Add(Diagnostic.Create(CompilerErrorCode.ERR_ValueTypeMismatch, this.Location, lr.ReturnType, coreType));
+                                            diagnostics.Add(Diagnostic.Create(CompilerErrorCode.ERR_ValueTypeMismatch, pref.Location, lr.ReturnType, coreType));
                                         }
                                     }
                                 }
@@ -291,7 +291,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Symbols
                                     {
                                         if (!prefType.IsAssignableTo(coreType))
                                         {
-                                            diagnostics.Add(Diagnostic.Create(CompilerErrorCode.ERR_ValueTypeMismatch, this.Location, prefType, coreType));
+                                            diagnostics.Add(Diagnostic.Create(CompilerErrorCode.ERR_ValueTypeMismatch, pref.Location, prefType, coreType));
                                         }
                                     }
                                 }
@@ -302,9 +302,30 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Symbols
             }
             else
             {
-                if (Value.OriginalSymbol is ParserRuleSymbol pr && alt.Elements.Length != 1)
+                if (Value.OriginalSymbol is PReferenceSymbol pref && alt.Elements.Length != 1)
                 {
-                    diagnostics.Add(Diagnostic.Create(CompilerErrorCode.WRN_RuleWithTypeMissingAssignment, this.Location, pr.Name, pr.ReturnType));
+                    var prefRule = pref.Rule;
+                    if (pref.ReferencedTypes.Length == 0)
+                    {
+                        if (prefRule.OriginalSymbol is ParserRuleSymbol pr)
+                        {
+                            if (!pr.ReturnType.IsDefaultOrNull && pr.ReturnType.SpecialType != SpecialType.System_Void)
+                            {
+                                diagnostics.Add(Diagnostic.Create(CompilerErrorCode.WRN_RuleWithTypeMissingAssignment, pref.Location, pr.Name, pr.ReturnType));
+                            }
+                        }
+                        else if (prefRule.OriginalSymbol is TokenSymbol lr)
+                        {
+                            if (!lr.ReturnType.IsDefaultOrNull && lr.ReturnType.SpecialType != SpecialType.System_Void)
+                            {
+                                diagnostics.Add(Diagnostic.Create(CompilerErrorCode.WRN_RuleWithTypeMissingAssignment, pref.Location, lr.Name, lr.ReturnType));
+                            }
+                        }
+                    }
+                    else
+                    {
+                        diagnostics.Add(Diagnostic.Create(CompilerErrorCode.WRN_RuleWithTypeMissingAssignment, pref.Location, prefRule.Name, string.Join(", ", pref.ReferencedTypes)));
+                    }
                 }
             }
         }

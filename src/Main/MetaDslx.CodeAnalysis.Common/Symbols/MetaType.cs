@@ -352,6 +352,16 @@ namespace MetaDslx.CodeAnalysis
             }
         }
 
+        public string? CSharpFullName
+        {
+            get
+            {
+                var keyword = CSharpKeyword;
+                if (keyword is not null) return keyword;
+                else return FullName;
+            }
+        }
+
         public string? CSharpKeyword
         {
             get

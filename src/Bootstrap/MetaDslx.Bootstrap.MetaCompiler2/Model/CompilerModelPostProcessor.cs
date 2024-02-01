@@ -83,7 +83,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Model
             foreach (var fixedToken in allTokens.Where(t => t.IsFixed))
             {
                 AddTokenKindFor(fixedToken);
-                if (!fixedToken.ReturnType.IsDefaultOrNull)
+                if (!fixedToken.ReturnType.IsDefaultOrNull && fixedToken.ReturnType.SpecialType != SpecialType.System_Void)
                 {
                     var valueBinder = f.Binder();
                     valueBinder.TypeName = typeof(MetaDslx.CodeAnalysis.Binding.ValueBinder).FullName!;
@@ -91,7 +91,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Model
                     valueType.Name = "type";
                     valueType.TypeName = typeof(Type).FullName!;
                     valueType.IsArray = false;
-                    valueType.Values.Add(fixedToken.ReturnType.FullName);
+                    valueType.Values.Add(fixedToken.ReturnType.CSharpFullName);
                     valueBinder.Arguments.Add(valueType);
                     fixedToken.Binders.Add(valueBinder);
                 }
@@ -154,7 +154,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Model
             foreach (var token in allTokens.Where(t => !t.IsFixed))
             {
                 AddTokenKindFor(token);
-                if (!token.ReturnType.IsDefaultOrNull)
+                if (!token.ReturnType.IsDefaultOrNull && token.ReturnType.SpecialType != SpecialType.System_Void)
                 {
                     var valueBinder = f.Binder();
                     valueBinder.TypeName = typeof(MetaDslx.CodeAnalysis.Binding.ValueBinder).FullName!;
@@ -162,7 +162,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Model
                     valueType.Name = "type";
                     valueType.TypeName = typeof(Type).FullName!;
                     valueType.IsArray = false;
-                    valueType.Values.Add(token.ReturnType.FullName);
+                    valueType.Values.Add(token.ReturnType.CSharpFullName);
                     valueBinder.Arguments.Add(valueType);
                     token.Binders.Add(valueBinder);
                 }
@@ -292,7 +292,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Model
                         rarg.Name = name;
                         rarg.IsArray = carg.ParameterType.IsCollection;
                         carg.ParameterType.TryGetCoreType(out var coreType);
-                        rarg.TypeName = coreType.FullName;
+                        rarg.TypeName = coreType.CSharpFullName;
                         if (carg.Value is ArrayExpression array)
                         {
                             foreach (var item in array.Items)
@@ -326,6 +326,14 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Model
                     }
                 }
                 return SymbolDisplayFormat.QualifiedNameOnlyFormat.ToString(value.OriginalSymbol);
+            }
+            else if (type.SpecialType == SpecialType.System_String)
+            {
+                return value.ToString().EncodeString();
+            }
+            else if (type.SpecialType == SpecialType.System_Char)
+            {
+                return value.ToString().EncodeString('\'');
             }
             else
             {
@@ -399,7 +407,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Model
                     constBinder.Arguments.Add(constValue);
                     alt.Binders.Add(constBinder);
                 }
-                else if (!alt.ReturnType.IsDefaultOrNull)
+                else if (!alt.ReturnType.IsDefaultOrNull && alt.ReturnType.SpecialType != SpecialType.System_Void)
                 {
                     var skipDefineBinder = false;
                     if (alt.Elements.Count == 1)
@@ -407,7 +415,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Model
                         var celem = alt.Elements[0];
                         if (celem.Value.Multiplicity == Multiplicity.ExactlyOne && string.IsNullOrEmpty(celem.Name))
                         {
-                            if (celem.Value is RuleRef rr && rr.Rule is not null) skipDefineBinder = true;
+                            if (celem.Value is RuleRef rr && (rr.Rule is not null || rr.ReferencedTypes.Count > 0)) skipDefineBinder = true;
                         }
                     }
                     if (!skipDefineBinder)
@@ -420,7 +428,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Model
                         defType.Name = "type";
                         defType.TypeName = typeof(Type).FullName!;
                         defType.IsArray = false;
-                        defType.Values.Add(alt.ReturnType.FullName);
+                        defType.Values.Add(alt.ReturnType.CSharpFullName);
                         defBinder.Arguments.Add(defType);
                         alt.Binders.Add(defBinder);
                     }
@@ -472,7 +480,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Model
                         useTypes.IsArray = true;
                         foreach (var type in rr.ReferencedTypes)
                         {
-                            useTypes.Values.Add(type.FullName);
+                            useTypes.Values.Add(type.CSharpFullName);
                         }
                         useBinder.Arguments.Add(useTypes);
                         value.Binders.Add(useBinder);
