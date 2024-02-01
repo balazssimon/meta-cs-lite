@@ -20,10 +20,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Symbols
     {
         public new static class CompletionParts
         {
-            public static readonly CompletionPart StartComputingProperty_ReturnType = new CompletionPart(nameof(StartComputingProperty_ReturnType));
-            public static readonly CompletionPart FinishComputingProperty_ReturnType = new CompletionPart(nameof(FinishComputingProperty_ReturnType));
             public static readonly CompletionPart StartComputingProperty_Elements = new CompletionPart(nameof(StartComputingProperty_Elements));
             public static readonly CompletionPart FinishComputingProperty_Elements = new CompletionPart(nameof(FinishComputingProperty_Elements));
+            public static readonly CompletionPart StartComputingProperty_ReturnType = new CompletionPart(nameof(StartComputingProperty_ReturnType));
+            public static readonly CompletionPart FinishComputingProperty_ReturnType = new CompletionPart(nameof(FinishComputingProperty_ReturnType));
             public static readonly CompletionPart StartComputingProperty_ReturnValue = new CompletionPart(nameof(StartComputingProperty_ReturnValue));
             public static readonly CompletionPart FinishComputingProperty_ReturnValue = new CompletionPart(nameof(FinishComputingProperty_ReturnValue));
             public static readonly CompletionPart StartComputingProperty_ExpectedType = new CompletionPart(nameof(StartComputingProperty_ExpectedType));
@@ -38,8 +38,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Symbols
             public static readonly CompletionPart FinishComputingProperty_Attributes = Symbol.CompletionParts.FinishComputingProperty_Attributes;
             public static readonly CompletionGraph CompletionGraph =
                 CompletionGraph.CreateFromParts(
-                    StartComputingProperty_ReturnType, FinishComputingProperty_ReturnType,
                     StartComputingProperty_Elements, FinishComputingProperty_Elements,
+                    StartComputingProperty_ReturnType, FinishComputingProperty_ReturnType,
                     StartComputingProperty_ReturnValue, FinishComputingProperty_ReturnValue,
                     StartComputingProperty_ExpectedType, FinishComputingProperty_ExpectedType,
                     StartComputingProperty_Members, FinishComputingProperty_Members,
@@ -137,20 +137,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Symbols
 
         protected override bool ForceCompletePart(ref CompletionPart incompletePart, SourceLocation? locationOpt, CancellationToken cancellationToken)
         {
-            if (incompletePart == CompletionParts.StartComputingProperty_ReturnType || incompletePart == CompletionParts.FinishComputingProperty_ReturnType)
-            {
-                if (NotePartComplete(CompletionParts.StartComputingProperty_ReturnType))
-                {
-                    var diagnostics = DiagnosticBag.GetInstance();
-                    _returnType = CompleteProperty_ReturnType(diagnostics, cancellationToken);
-                    if (ModelObject is Alternative palt) palt.ReturnType = _returnType;
-                    AddSymbolDiagnostics(diagnostics);
-                    diagnostics.Free();
-                    NotePartComplete(CompletionParts.FinishComputingProperty_ReturnType);
-                }
-                return true;
-            }
-            else if (incompletePart == CompletionParts.StartComputingProperty_Elements || incompletePart == CompletionParts.FinishComputingProperty_Elements)
+            if (incompletePart == CompletionParts.StartComputingProperty_Elements || incompletePart == CompletionParts.FinishComputingProperty_Elements)
             {
                 if (NotePartComplete(CompletionParts.StartComputingProperty_Elements))
                 {
@@ -161,6 +148,19 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Symbols
                     diagnostics.Free();
                     NotePartComplete(CompletionParts.FinishComputingProperty_Elements);
                     _isResolvingExpectedType = false;
+                }
+                return true;
+            }
+            else if (incompletePart == CompletionParts.StartComputingProperty_ReturnType || incompletePart == CompletionParts.FinishComputingProperty_ReturnType)
+            {
+                if (NotePartComplete(CompletionParts.StartComputingProperty_ReturnType))
+                {
+                    var diagnostics = DiagnosticBag.GetInstance();
+                    _returnType = CompleteProperty_ReturnType(diagnostics, cancellationToken);
+                    if (ModelObject is Alternative palt) palt.ReturnType = _returnType;
+                    AddSymbolDiagnostics(diagnostics);
+                    diagnostics.Free();
+                    NotePartComplete(CompletionParts.FinishComputingProperty_ReturnType);
                 }
                 return true;
             }
@@ -201,11 +201,27 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Symbols
             return Declaration.Language.SyntaxFacts.ExtractName(nameSyntax);
         }
 
+        protected virtual ImmutableArray<PElementSymbol> CompleteProperty_Elements(DiagnosticBag diagnostics, CancellationToken cancellationToken)
+        {
+            return SymbolFactory.GetSymbolPropertyValues<PElementSymbol>(this, nameof(Elements), diagnostics, cancellationToken);
+        }
+
         protected virtual MetaType CompleteProperty_ReturnType(DiagnosticBag diagnostics, CancellationToken cancellationToken)
         {
             var returnType = SymbolFactory.GetSymbolPropertyValue<MetaType>(this, nameof(ReturnType), diagnostics, cancellationToken);
             if (returnType.IsDefaultOrNull)
             {
+                if (this.Elements.Length == 1)
+                {
+                    var elem = this.Elements[0];
+                    if (elem is not null && !elem.IsNamedElement && elem.Value.OriginalSymbol is PReferenceSymbol pref && !pref.Rule.IsDefaultOrNull)
+                    {
+                        if (pref.Rule.OriginalSymbol is ParserRuleSymbol pr)
+                        {
+                            return pr.ReturnType;
+                        }
+                    }
+                }
                 var rule = this.ContainingParserRuleSymbol;
                 if (rule is not null)
                 {
@@ -213,11 +229,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Symbols
                 }
             }
             return returnType;
-        }
-
-        protected virtual ImmutableArray<PElementSymbol> CompleteProperty_Elements(DiagnosticBag diagnostics, CancellationToken cancellationToken)
-        {
-            return SymbolFactory.GetSymbolPropertyValues<PElementSymbol>(this, nameof(Elements), diagnostics, cancellationToken);
         }
 
         protected virtual ExpressionSymbol CompleteProperty_ReturnValue(DiagnosticBag diagnostics, CancellationToken cancellationToken)
