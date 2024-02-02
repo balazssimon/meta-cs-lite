@@ -50,6 +50,11 @@ namespace MetaDslx.CodeAnalysis.Syntax
         internal protected abstract IEnumerable<int> GetReservedKeywordRawKinds();
         internal protected abstract IEnumerable<int> GetContextualKeywordRawKinds();
 
+        public virtual TokenKind? GetTokenKind(int rawSyntaxKind)
+        {
+            return null;
+        }
+
         public virtual bool IsValidIdentifier(string identifier)
         {
             return s_IdentifierPattern.IsMatch(identifier);

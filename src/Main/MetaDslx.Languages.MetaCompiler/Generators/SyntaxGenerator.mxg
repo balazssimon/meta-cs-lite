@@ -83,6 +83,10 @@ template GenerateSyntaxFacts()
 
         public class [Lang]SyntaxFacts : global::MetaDslx.CodeAnalysis.Syntax.SyntaxFacts
         {
+            [foreach (var tokenKind in TokenKinds)]
+            private [tokenKind.TypeName] TK_[tokenKind.Name] = new [tokenKind.TypeName]();
+            [end foreach]
+
             public [Lang]SyntaxKind DefaultWhitespaceKind => [Lang]SyntaxKind.[Grammar.DefaultWhitespace?.CSharpName ?? "None"];
             public [Lang]SyntaxKind DefaultEndOfLineKind => [Lang]SyntaxKind.[Grammar.DefaultEndOfLine?.CSharpName ?? "None"];
             public [Lang]SyntaxKind DefaultSeparatorKind => [Lang]SyntaxKind.[Grammar.DefaultSeparator?.CSharpName ?? "None"];
@@ -94,6 +98,29 @@ template GenerateSyntaxFacts()
             protected override int DefaultSeparatorRawKind => (int)DefaultSeparatorKind;
             protected override int DefaultIdentifierRawKind => (int)DefaultIdentifierKind;
             protected override int CompilationUnitRawKind => (int)CompilationUnitKind;
+
+            public global::MetaDslx.CodeAnalysis.Syntax.TokenKind? GetTokenKind([Lang]SyntaxKind syntaxKind)
+            {
+                switch (syntaxKind)
+                {
+                    [foreach (var tokenKind in TokenKinds)]
+                        [var tokens = Tokens.Where(t => t.TokenKind == tokenKind).ToList()]
+                        [if (tokens.Count > 0)]
+                            [foreach (var token in Tokens.Where(t => t.TokenKind == tokenKind))]
+                                case [Lang]SyntaxKind.[token.CSharpName]:
+                            [end foreach]
+                            return TK_[tokenKind.Name];
+                        [end if]
+                    [end foreach]
+                    default:
+                        return null;
+                }
+            }
+            
+            public override global::MetaDslx.CodeAnalysis.Syntax.TokenKind? GetTokenKind(int rawSyntaxKind)
+            {
+                return GetTokenKind(([Lang]SyntaxKind)rawSyntaxKind);
+            }
 
             public bool IsToken([Lang]SyntaxKind kind)
             {

@@ -7,6 +7,18 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
 
     public class MetaSyntaxFacts : global::MetaDslx.CodeAnalysis.Syntax.SyntaxFacts
     {
+        private MetaDslx.CodeAnalysis.Syntax.KeywordTokenKind TK_Keyword = new MetaDslx.CodeAnalysis.Syntax.KeywordTokenKind();
+        private MetaDslx.CodeAnalysis.Syntax.DefaultSeparatorTokenKind TK_DefaultSeparator = new MetaDslx.CodeAnalysis.Syntax.DefaultSeparatorTokenKind();
+        private MetaDslx.CodeAnalysis.Syntax.WhitespaceTokenKind TK_Whitespace = new MetaDslx.CodeAnalysis.Syntax.WhitespaceTokenKind();
+        private MetaDslx.CodeAnalysis.Syntax.NumberTokenKind TK_Number = new MetaDslx.CodeAnalysis.Syntax.NumberTokenKind();
+        private MetaDslx.CodeAnalysis.Syntax.DefaultIdentifierTokenKind TK_DefaultIdentifier = new MetaDslx.CodeAnalysis.Syntax.DefaultIdentifierTokenKind();
+        private MetaDslx.CodeAnalysis.Syntax.IdentifierTokenKind TK_Identifier = new MetaDslx.CodeAnalysis.Syntax.IdentifierTokenKind();
+        private MetaDslx.CodeAnalysis.Syntax.StringTokenKind TK_String = new MetaDslx.CodeAnalysis.Syntax.StringTokenKind();
+        private MetaDslx.CodeAnalysis.Syntax.DefaultWhitespaceTokenKind TK_DefaultWhitespace = new MetaDslx.CodeAnalysis.Syntax.DefaultWhitespaceTokenKind();
+        private MetaDslx.CodeAnalysis.Syntax.DefaultEndOfLineTokenKind TK_DefaultEndOfLine = new MetaDslx.CodeAnalysis.Syntax.DefaultEndOfLineTokenKind();
+        private MetaDslx.CodeAnalysis.Syntax.SingleLineCommentTokenKind TK_SingleLineComment = new MetaDslx.CodeAnalysis.Syntax.SingleLineCommentTokenKind();
+        private MetaDslx.CodeAnalysis.Syntax.MultiLineCommentTokenKind TK_MultiLineComment = new MetaDslx.CodeAnalysis.Syntax.MultiLineCommentTokenKind();
+
         public MetaSyntaxKind DefaultWhitespaceKind => MetaSyntaxKind.TWhitespace;
         public MetaSyntaxKind DefaultEndOfLineKind => MetaSyntaxKind.TLineEnd;
         public MetaSyntaxKind DefaultSeparatorKind => MetaSyntaxKind.TComma;
@@ -18,6 +30,72 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         protected override int DefaultSeparatorRawKind => (int)DefaultSeparatorKind;
         protected override int DefaultIdentifierRawKind => (int)DefaultIdentifierKind;
         protected override int CompilationUnitRawKind => (int)CompilationUnitKind;
+
+        public global::MetaDslx.CodeAnalysis.Syntax.TokenKind? GetTokenKind(MetaSyntaxKind syntaxKind)
+        {
+            switch (syntaxKind)
+            {
+                case MetaSyntaxKind.KNamespace:
+                case MetaSyntaxKind.KUsing:
+                case MetaSyntaxKind.KMetamodel:
+                case MetaSyntaxKind.KConst:
+                case MetaSyntaxKind.KEnum:
+                case MetaSyntaxKind.KAbstract:
+                case MetaSyntaxKind.KClass:
+                case MetaSyntaxKind.KObject:
+                case MetaSyntaxKind.KBool:
+                case MetaSyntaxKind.KChar:
+                case MetaSyntaxKind.KString:
+                case MetaSyntaxKind.KByte:
+                case MetaSyntaxKind.KSbyte:
+                case MetaSyntaxKind.KShort:
+                case MetaSyntaxKind.KUshort:
+                case MetaSyntaxKind.KInt:
+                case MetaSyntaxKind.KUint:
+                case MetaSyntaxKind.KLong:
+                case MetaSyntaxKind.KUlong:
+                case MetaSyntaxKind.KFloat:
+                case MetaSyntaxKind.KDouble:
+                case MetaSyntaxKind.KDecimal:
+                case MetaSyntaxKind.KType:
+                case MetaSyntaxKind.KSymbol:
+                case MetaSyntaxKind.KVoid:
+                case MetaSyntaxKind.KContains:
+                case MetaSyntaxKind.KDerived:
+                case MetaSyntaxKind.KOpposite:
+                case MetaSyntaxKind.KSubsets:
+                case MetaSyntaxKind.KRedefines:
+                return TK_Keyword;
+                case MetaSyntaxKind.TComma:
+                return TK_DefaultSeparator;
+                case MetaSyntaxKind.TUtf8Bom:
+                return TK_Whitespace;
+                case MetaSyntaxKind.TInteger:
+                case MetaSyntaxKind.TDecimal:
+                return TK_Number;
+                case MetaSyntaxKind.TIdentifier:
+                return TK_DefaultIdentifier;
+                case MetaSyntaxKind.TVerbatimIdentifier:
+                return TK_Identifier;
+                case MetaSyntaxKind.TString:
+                return TK_String;
+                case MetaSyntaxKind.TWhitespace:
+                return TK_DefaultWhitespace;
+                case MetaSyntaxKind.TLineEnd:
+                return TK_DefaultEndOfLine;
+                case MetaSyntaxKind.TSingleLineComment:
+                return TK_SingleLineComment;
+                case MetaSyntaxKind.TMultiLineComment:
+                return TK_MultiLineComment;
+                default:
+                    return null;
+            }
+        }
+            
+        public override global::MetaDslx.CodeAnalysis.Syntax.TokenKind? GetTokenKind(int rawSyntaxKind)
+        {
+            return GetTokenKind((MetaSyntaxKind)rawSyntaxKind);
+        }
 
         public bool IsToken(MetaSyntaxKind kind)
         {

@@ -38,11 +38,11 @@ namespace MetaDslx.BuildTools
         [
 #if MetaDslxBootstrap
             //@"..\..\..\..\MetaDslx.Languages.MetaModel",
-            //@"..\..\..\..\MetaDslx.Languages.MetaCompiler",
             @"..\..\..\..\..\Bootstrap\MetaDslx.Bootstrap.MetaCompiler3"
 #else
-            @"..\..\..\..\MetaDslx.Languages.MetaModel",
-            //@"..\..\..\..\..\Bootstrap\MetaDslx.Bootstrap.MetaCompiler3"
+            //@"..\..\..\..\MetaDslx.Languages.MetaModel",
+            //@"..\..\..\..\MetaDslx.Languages.MetaCompiler",
+            @"..\..\..\..\..\Bootstrap\MetaDslx.Bootstrap.MetaCompiler3"
 #endif
         ];
         private static Microsoft.CodeAnalysis.MetadataReference[] PackageReferences;

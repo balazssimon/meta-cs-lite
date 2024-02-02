@@ -47,6 +47,11 @@
     <IncludeDebugSymbolsInLocalVSIXDeployment>false</IncludeDebugSymbolsInLocalVSIXDeployment>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Languages\MetaCompiler\Classification\MetaCompilerClassificationDefinitions.cs" />
+    <Compile Include="Languages\MetaCompiler\Classification\MetaCompilerClassificationProvider.cs" />
+    <Compile Include="Languages\MetaCompiler\Classification\MetaCompilerClassificationTypes.cs" />
+    <Compile Include="Languages\MetaCompiler\Classification\MetaCompilerClassifier.cs" />
+    <Compile Include="Languages\MetaCompiler\MetaCompilerDefinition.cs" />
     <Compile Include="Languages\MetaGenerator\Classification\MetaGeneratorClassificationDefinitions.cs" />
     <Compile Include="Languages\MetaGenerator\Classification\MetaGeneratorClassificationProvider.cs" />
     <Compile Include="Languages\MetaGenerator\Classification\MetaGeneratorClassificationTypes.cs" />
@@ -102,6 +107,10 @@
     <ProjectReference Include="..\MetaDslx.CodeAnalysis.Parsers.Antlr\MetaDslx.CodeAnalysis.Parsers.Antlr.csproj">
       <Project>{1635a5db-6336-4ad5-aa87-aa568e352da8}</Project>
       <Name>MetaDslx.CodeAnalysis.Parsers.Antlr</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MetaDslx.Languages.MetaCompiler\MetaDslx.Languages.MetaCompiler.csproj">
+      <Project>{594e745b-cc1e-4ba2-a2d6-bed7fe44b5d2}</Project>
+      <Name>MetaDslx.Languages.MetaCompiler</Name>
     </ProjectReference>
     <ProjectReference Include="..\MetaDslx.Languages.MetaGenerator\MetaDslx.Languages.MetaGenerator.csproj">
       <Project>{95212699-0E82-40A4-907C-E348A58F6ADE}</Project>

@@ -1,4 +1,4 @@
-#line (1,10)-(1,54) 10 "SemanticsGenerator.mxg"
+#line (1,10)-(1,53) 10 "SemanticsGenerator.mxg"
 namespace MetaDslx.Languages.MetaCompiler.Generators
 #line hidden
 
@@ -7,7 +7,7 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
     using
     #line hidden
     global::
-    #line (3,7)-(3,45) 13 "SemanticsGenerator.mxg"
+    #line (3,7)-(3,44) 13 "SemanticsGenerator.mxg"
     MetaDslx.Languages.MetaCompiler.Model;
     #line hidden
     #line (4,1)-(4,6) 5 "SemanticsGenerator.mxg"
@@ -896,11 +896,11 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
         #line hidden
         {
             var __cb = global::MetaDslx.CodeGeneration.CodeBuilder.GetInstance();
-            #line (113,6)-(113,112) 13 "SemanticsGenerator.mxg"
+            #line (113,6)-(113,111) 13 "SemanticsGenerator.mxg"
             var isList = MetaDslx.Languages.MetaCompiler.Model.MultiplicityExtensions.IsList(elem.Value.Multiplicity);
             #line hidden
             
-            #line (114,6)-(114,120) 13 "SemanticsGenerator.mxg"
+            #line (114,6)-(114,119) 13 "SemanticsGenerator.mxg"
             var isOptional = MetaDslx.Languages.MetaCompiler.Model.MultiplicityExtensions.IsOptional(elem.Value.Multiplicity);
             #line hidden
             
