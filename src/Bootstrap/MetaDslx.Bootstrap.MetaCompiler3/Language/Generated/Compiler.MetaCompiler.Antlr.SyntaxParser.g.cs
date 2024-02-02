@@ -840,13 +840,23 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
             {
                 if (context == null) return PrimitiveTypeGreen.__Missing;
                 InternalSyntaxToken? token = null;
+                if (context.LR_KObject() is not null) token = (InternalSyntaxToken?)this.VisitTerminal(context.LR_KObject());
                 if (context.LR_KBool() is not null) token = (InternalSyntaxToken?)this.VisitTerminal(context.LR_KBool());
-                if (context.LR_KInt() is not null) token = (InternalSyntaxToken?)this.VisitTerminal(context.LR_KInt());
-                if (context.LR_KDouble() is not null) token = (InternalSyntaxToken?)this.VisitTerminal(context.LR_KDouble());
+                if (context.LR_KChar() is not null) token = (InternalSyntaxToken?)this.VisitTerminal(context.LR_KChar());
                 if (context.LR_KString() is not null) token = (InternalSyntaxToken?)this.VisitTerminal(context.LR_KString());
+                if (context.LR_KByte() is not null) token = (InternalSyntaxToken?)this.VisitTerminal(context.LR_KByte());
+                if (context.LR_KSbyte() is not null) token = (InternalSyntaxToken?)this.VisitTerminal(context.LR_KSbyte());
+                if (context.LR_KShort() is not null) token = (InternalSyntaxToken?)this.VisitTerminal(context.LR_KShort());
+                if (context.LR_KUshort() is not null) token = (InternalSyntaxToken?)this.VisitTerminal(context.LR_KUshort());
+                if (context.LR_KInt() is not null) token = (InternalSyntaxToken?)this.VisitTerminal(context.LR_KInt());
+                if (context.LR_KUint() is not null) token = (InternalSyntaxToken?)this.VisitTerminal(context.LR_KUint());
+                if (context.LR_KLong() is not null) token = (InternalSyntaxToken?)this.VisitTerminal(context.LR_KLong());
+                if (context.LR_KUlong() is not null) token = (InternalSyntaxToken?)this.VisitTerminal(context.LR_KUlong());
+                if (context.LR_KFloat() is not null) token = (InternalSyntaxToken?)this.VisitTerminal(context.LR_KFloat());
+                if (context.LR_KDouble() is not null) token = (InternalSyntaxToken?)this.VisitTerminal(context.LR_KDouble());
+                if (context.LR_KDecimal() is not null) token = (InternalSyntaxToken?)this.VisitTerminal(context.LR_KDecimal());
                 if (context.LR_KType() is not null) token = (InternalSyntaxToken?)this.VisitTerminal(context.LR_KType());
                 if (context.LR_KSymbol() is not null) token = (InternalSyntaxToken?)this.VisitTerminal(context.LR_KSymbol());
-                if (context.LR_KObject() is not null) token = (InternalSyntaxToken?)this.VisitTerminal(context.LR_KObject());
                 if (context.LR_KVoid() is not null) token = (InternalSyntaxToken?)this.VisitTerminal(context.LR_KVoid());
                 if (token is null) token = _factory.None;
                 return _factory.PrimitiveType(token);
@@ -980,23 +990,33 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
                 var annotations1 = annotations1Builder.ToList();
                 _pool.Free(annotations1Builder);
                 var kAlt = (InternalSyntaxToken?)this.VisitTerminal(context.E_KAlt, CompilerSyntaxKind.KAlt);
-                NameGreen? name = null;
-                if (context.E_Name is not null) name = (NameGreen?)this.Visit(context.E_Name) ?? NameGreen.__Missing;
-                else name = NameGreen.__Missing;
                 AlternativeBlock1Block1Green? block = null;
-                if (context.E_Block is not null) block = (AlternativeBlock1Block1Green?)this.Visit(context.E_Block);
+                if (context.E_Block is not null) block = (AlternativeBlock1Block1Green?)this.Visit(context.E_Block) ?? AlternativeBlock1Block1Green.__Missing;
+                else block = AlternativeBlock1Block1Green.__Missing;
                 var tColon = (InternalSyntaxToken?)this.VisitTerminal(context.E_TColon, CompilerSyntaxKind.TColon);
-                return _factory.AlternativeBlock1(annotations1, kAlt, name, block, tColon);
+                return _factory.AlternativeBlock1(annotations1, kAlt, block, tColon);
             }
             
-            public override GreenNode? VisitPr_AlternativeBlock1Block1(CompilerParser.Pr_AlternativeBlock1Block1Context? context)
+            public override GreenNode? VisitPr_AlternativeBlock1Block1Alt1(CompilerParser.Pr_AlternativeBlock1Block1Alt1Context? context)
             {
-                if (context == null) return AlternativeBlock1Block1Green.__Missing;
+                if (context == null) return AlternativeBlock1Block1Alt1Green.__Missing;
+                TypeReferenceIdentifierGreen? returnType = null;
+                if (context.E_returnType is not null) returnType = (TypeReferenceIdentifierGreen?)this.Visit(context.E_returnType) ?? TypeReferenceIdentifierGreen.__Missing;
+                else returnType = TypeReferenceIdentifierGreen.__Missing;
+                return _factory.AlternativeBlock1Block1Alt1(returnType);
+            }
+            
+            public override GreenNode? VisitPr_AlternativeBlock1Block1Alt2(CompilerParser.Pr_AlternativeBlock1Block1Alt2Context? context)
+            {
+                if (context == null) return AlternativeBlock1Block1Alt2Green.__Missing;
+                IdentifierGreen? identifier = null;
+                if (context.E_Identifier is not null) identifier = (IdentifierGreen?)this.Visit(context.E_Identifier) ?? IdentifierGreen.__Missing;
+                else identifier = IdentifierGreen.__Missing;
                 var kReturns = (InternalSyntaxToken?)this.VisitTerminal(context.E_KReturns, CompilerSyntaxKind.KReturns);
                 TypeReferenceGreen? returnType = null;
-                if (context.E_returnType is not null) returnType = (TypeReferenceGreen?)this.Visit(context.E_returnType) ?? TypeReferenceGreen.__Missing;
+                if (context.E_returnType1 is not null) returnType = (TypeReferenceGreen?)this.Visit(context.E_returnType1) ?? TypeReferenceGreen.__Missing;
                 else returnType = TypeReferenceGreen.__Missing;
-                return _factory.AlternativeBlock1Block1(kReturns, returnType);
+                return _factory.AlternativeBlock1Block1Alt2(identifier, kReturns, returnType);
             }
             
             public override GreenNode? VisitPr_AlternativeBlock2(CompilerParser.Pr_AlternativeBlock2Context? context)

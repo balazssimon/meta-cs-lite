@@ -10,86 +10,83 @@ using MetaDslx.Languages.MetaModel.Model;
 language Meta;
 
 Main returns MetaNamespace:
-	'namespace' name=[Name(qualifierProperty:Declarations)]Qualifier ';'
+	'namespace' [Name(qualifierProperty:Declarations)]Qualifier ';'
 	Using*
-	Declarations
+	declarations+=MetaModel
+	declarations+=MetaDeclaration*
 	eof;
 
 Using returns ImportSymbol: 'using' namespaces+=#NamespaceSymbol ';';
 
-[Scope]
-block Declarations: declarations+=MetaDeclaration*;
+MetaModel: 'metamodel' Name ';';
 
-MetaModel: 'metamodel' name=Name ';';
+MetaDeclaration: MetaConstant | MetaEnum | MetaClass;
 
-MetaDeclaration: MetaModel | MetaConstant | MetaEnum | MetaClass;
+MetaConstant: 'const' @type=MetaTypeReference Name ';';
 
-MetaConstant: 'const' @type=TypeReference name=Name ';';
+MetaEnum: 'enum' Name '{' literals+=MetaEnumLiteral (',' literals+=MetaEnumLiteral)* '}';
+MetaEnumLiteral: 
+	alt MetaEnumLiteral returns MetaEnumLiteral: Name;
 
-MetaEnum: 'enum' name=Name EnumBody;
-[Scope]
-block EnumBody: '{' EnumLiterals? '}';
-block EnumLiterals : literals+=MetaEnumLiteral (',' literals+=MetaEnumLiteral)* ;
-MetaEnumLiteral: name=Name;
+MetaClass: 
+	isAbstract?='abstract'? 'class' [Name](Identifier? '$' symbolType=[Use(types: Symbol, suffixes: "Symbol")]Identifier | Identifier) 
+	(':' baseTypes+=#MetaClass (',' baseTypes+=#MetaClass)*)?
+	[Scope]('{' (properties+=MetaProperty | operations+=MetaOperation)* '}');
 
-MetaClass: isAbstract?='abstract'? 'class' [Name]ClassName BaseClasses? ClassBody;
-[Name]
-[Identifier]
-block ClassName: Identifier? '$' symbolType=[Use(types: Symbol, suffixes: Symbol)]Identifier | Identifier;
-block BaseClasses: ':' baseTypes+=#{MetaClass} (',' baseTypes+=#{MetaClass})*;
-[Scope]
-block ClassBody: '{' ClassMember* '}';
+MetaProperty: 
+	(isContainment?='contains' | isDerived?='derived')? @type=MetaTypeReference [Name](Identifier? '$' symbolProperty=[Value(string)]Identifier | Identifier) 
+	(   'opposite' oppositeProperties+=#MetaProperty (',' oppositeProperties+=#MetaProperty)* 
+	|	'subsets' subsettedProperties+=#MetaProperty (',' subsettedProperties+=#MetaProperty)* 
+	|	'redefines' redefinedProperties+=#MetaProperty (',' redefinedProperties+=#MetaProperty)*
+	)* 
+	';';
 
-block ClassMember: properties+=MetaProperty | operations+=MetaOperation;
+MetaOperation: returnType=MetaTypeReference Name '(' (parameters+=MetaParameter (',' parameters+=MetaParameter)*)? ')' ';';
+MetaParameter: @type=MetaTypeReference Name;
 
-MetaProperty: (isContainment?='contains' | isDerived?='derived')? @type=TypeReference [Name]PropertyName (PropertyOpposite | PropertySubsets | PropertyRedefines)* ';';
-[Name]
-[Identifier]
-block PropertyName: Identifier? '$' symbolProperty=[Value(string)]Identifier | Identifier;
-block PropertyOpposite: 'opposite' oppositeProperties+=#MetaProperty (',' oppositeProperties+=#MetaProperty)*;
-block PropertySubsets: 'subsets' subsettedProperties+=#MetaProperty (',' subsettedProperties+=#MetaProperty)*;
-block PropertyRedefines: 'redefines' redefinedProperties+=#MetaProperty (',' redefinedProperties+=#MetaProperty)*;
+MetaTypeReference returns type
+	: alt SimpleTypeReference returns type: TypeReference 
+	| alt MetaArrayType: itemType=MetaTypeReference '[' ']'
+	| alt MetaNullableType: innerType=MetaTypeReference '?';
 
-MetaOperation: returnType=TypeReference name=Name '(' ParameterList? ')' ';';
-block ParameterList: parameters+=MetaParameter (',' parameters+=MetaParameter)*;
-MetaParameter: @type=TypeReference name=Name;
+TypeReference returns type: PrimitiveType | #type;
 
-TypeReference returns MetaDslx.CodeAnalysis.MetaType: SimpleTypeReference | MetaArrayType | MetaNullableType;
-MetaArrayType: itemType=TypeReference '[' ']';
-MetaNullableType: innerType=TypeReference '?';
-
-block SimpleTypeReference: [Value(MetaDslx.CodeAnalysis.MetaType)] PrimitiveType | [Use(MetaDslx.CodeAnalysis.MetaType)] Qualifier;
-
-block PrimitiveType
-	: 'bool'
-	| 'int'
+PrimitiveType returns type
+	: 'object'
+	| 'bool'
+	| 'char'
 	| 'string'
+	| 'byte'
+	| 'sbyte'
+	| 'short'
+	| 'ushort'
+	| 'int'
+	| 'uint'
+	| 'long'
+	| 'ulong'
+	| 'float'
+	| 'double'
+	| 'decimal'
 	| 'type'
 	| 'symbol'
-	| 'object'
 	| 'void'
 	;
 
 [Name]
-block Name: Identifier;
+Name returns void: Identifier;
 
 [DefaultReference]
 [Qualifier]
-block Qualifier: Identifier ('.' Identifier)*;
-
-block QualifierList: Qualifier (',' Qualifier)*;
+Qualifier returns void: Identifier ('.' Identifier)*;
 
 [Identifier]
-block Identifier: TIdentifier | TVerbatimIdentifier;
-
-block SimpleQualifier: SimpleIdentifier ('.' SimpleIdentifier)*;
-block SimpleIdentifier: TIdentifier | TVerbatimIdentifier;
+Identifier returns void: TIdentifier | TVerbatimIdentifier;
 
 [Number]
-token TInteger returns int32: '0'| '1'..'9' ('0'..'9')* ;
+token TInteger returns int: '0'| '1'..'9' ('0'..'9')* ;
 
 [Number]
-token TDecimal returns double: ('0'|'1'..'9' ('0'..'9')*) '.' ('0'..'9')+ ;
+token TDecimal returns string: ('0'|'1'..'9' ('0'..'9')*) '.' ('0'..'9')+ ;
 
 [DefaultIdentifier]
 token TIdentifier: ('_'|'a'..'z'|'A'..'Z')+('_'|'a'..'z'|'A'..'Z'|'0'..'9')*;

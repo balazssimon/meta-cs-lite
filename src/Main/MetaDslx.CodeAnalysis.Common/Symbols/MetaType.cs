@@ -657,7 +657,7 @@ namespace MetaDslx.CodeAnalysis
                 var msts = csts?.CSharpSymbol as ITypeSymbol;
                 if (msts is not null && msts.NullableAnnotation == NullableAnnotation.Annotated)
                 {
-                    if (msts.TypeKind == TypeKind.Struct && msts is INamedTypeSymbol nts && nts.Name == "Nullable" && nts.TypeArguments.Length == 1)
+                    if (msts is INamedTypeSymbol nts && nts.Name == "Nullable" && nts.TypeArguments.Length == 1 && SymbolDisplayFormat.QualifiedNameOnlyFormat.ToString(csts) == "System.Nullable")
                     {
                         return true;
                     }
@@ -686,7 +686,7 @@ namespace MetaDslx.CodeAnalysis
             var msts = csts?.CSharpSymbol as ITypeSymbol;
             if (msts is not null && msts.NullableAnnotation == NullableAnnotation.Annotated)
             {
-                if (msts.TypeKind == TypeKind.Struct && msts is INamedTypeSymbol nts && nts.Name == "Nullable" && nts.TypeArguments.Length == 1)
+                if (msts is INamedTypeSymbol nts && nts.Name == "Nullable" && nts.TypeArguments.Length == 1 && SymbolDisplayFormat.QualifiedNameOnlyFormat.ToString(csts) == "System.Nullable")
                 {
                     bool freeDiagnostics = diagnostics is null;
                     if (freeDiagnostics) diagnostics = DiagnosticBag.GetInstance();
@@ -747,7 +747,7 @@ namespace MetaDslx.CodeAnalysis
                 var msts = csts?.CSharpSymbol as INamedTypeSymbol;
                 if (msts is not null && msts.IsGenericType && msts.TypeArguments.Length == 1)
                 {
-                    if (msts.ToDisplayString(Microsoft.CodeAnalysis.SymbolDisplayFormat.FullyQualifiedFormat).StartsWith("global::System.Nullable<")) return false;
+                    if (SymbolDisplayFormat.QualifiedNameOnlyFormat.ToString(csts) == "System.Nullable") return false;
                     else return true;
                 }
                 return false;
@@ -1043,6 +1043,11 @@ namespace MetaDslx.CodeAnalysis
         {
             if (type.IsDefaultOrNull) return false;
             if (this.Equals(type)) return true;
+            if (type.MetaKeyword is not null)
+            {
+                if (this.SpecialType == SpecialType.MetaDslx_CodeAnalysis_MetaType) return true;
+                if (this.SpecialType == SpecialType.MetaDslx_CodeAnalysis_TypeSymbol) return true;
+            }
             if (type.IsTypeSymbol)
             {
                 if (this.SpecialType == SpecialType.System_Type || this.SpecialType == SpecialType.MetaDslx_CodeAnalysis_MetaType) return true;

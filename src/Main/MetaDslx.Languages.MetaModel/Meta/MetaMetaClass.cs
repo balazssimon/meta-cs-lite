@@ -18,7 +18,7 @@ namespace MetaDslx.Languages.MetaModel.Meta
         public MetaMetaClass(MetaDslx.CodeAnalysis.MetaType underlyingType) 
             : base(underlyingType)
         {
-            _symbolType = UnderlyingClass.SymbolType?.Original;
+            _symbolType = UnderlyingClass.SymbolType.Original;
         }
 
         public MetaClass UnderlyingClass => (MetaClass)UnderlyingType.OriginalModelObject;

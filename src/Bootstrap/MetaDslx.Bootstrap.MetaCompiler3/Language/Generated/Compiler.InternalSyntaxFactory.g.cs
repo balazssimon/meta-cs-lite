@@ -1133,7 +1133,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
         {
             #if DEBUG
                 if (token is null) throw new __ArgumentNullException(nameof(token));
-                if (token.RawKind != (int)CompilerSyntaxKind.KBool && token.RawKind != (int)CompilerSyntaxKind.KInt && token.RawKind != (int)CompilerSyntaxKind.KDouble && token.RawKind != (int)CompilerSyntaxKind.KString && token.RawKind != (int)CompilerSyntaxKind.KType && token.RawKind != (int)CompilerSyntaxKind.KSymbol && token.RawKind != (int)CompilerSyntaxKind.KObject && token.RawKind != (int)CompilerSyntaxKind.KVoid) throw new __ArgumentException(nameof(token));
+                if (token.RawKind != (int)CompilerSyntaxKind.KObject && token.RawKind != (int)CompilerSyntaxKind.KBool && token.RawKind != (int)CompilerSyntaxKind.KChar && token.RawKind != (int)CompilerSyntaxKind.KString && token.RawKind != (int)CompilerSyntaxKind.KByte && token.RawKind != (int)CompilerSyntaxKind.KSbyte && token.RawKind != (int)CompilerSyntaxKind.KShort && token.RawKind != (int)CompilerSyntaxKind.KUshort && token.RawKind != (int)CompilerSyntaxKind.KInt && token.RawKind != (int)CompilerSyntaxKind.KUint && token.RawKind != (int)CompilerSyntaxKind.KLong && token.RawKind != (int)CompilerSyntaxKind.KUlong && token.RawKind != (int)CompilerSyntaxKind.KFloat && token.RawKind != (int)CompilerSyntaxKind.KDouble && token.RawKind != (int)CompilerSyntaxKind.KDecimal && token.RawKind != (int)CompilerSyntaxKind.KType && token.RawKind != (int)CompilerSyntaxKind.KSymbol && token.RawKind != (int)CompilerSyntaxKind.KVoid) throw new __ArgumentException(nameof(token));
             #endif
             int hash;
             var cached = __SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.PrimitiveType, token, out hash);
@@ -1318,30 +1318,49 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
             return result;
         }
         
-        internal AlternativeBlock1Green AlternativeBlock1(global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<ParserAnnotationGreen> annotations1, __InternalSyntaxToken kAlt, NameGreen name, AlternativeBlock1Block1Green block, __InternalSyntaxToken tColon)
+        internal AlternativeBlock1Green AlternativeBlock1(global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<ParserAnnotationGreen> annotations1, __InternalSyntaxToken kAlt, AlternativeBlock1Block1Green block, __InternalSyntaxToken tColon)
         {
             #if DEBUG
                 if (kAlt is null) throw new __ArgumentNullException(nameof(kAlt));
                 if (kAlt.RawKind != (int)CompilerSyntaxKind.KAlt) throw new __ArgumentException(nameof(kAlt));
-                if (name is null) throw new __ArgumentNullException(nameof(name));
+                if (block is null) throw new __ArgumentNullException(nameof(block));
                 if (tColon is null) throw new __ArgumentNullException(nameof(tColon));
                 if (tColon.RawKind != (int)CompilerSyntaxKind.TColon) throw new __ArgumentException(nameof(tColon));
             #endif
-            return new AlternativeBlock1Green(CompilerSyntaxKind.AlternativeBlock1, annotations1.Node, kAlt, name, block, tColon);
+            return new AlternativeBlock1Green(CompilerSyntaxKind.AlternativeBlock1, annotations1.Node, kAlt, block, tColon);
         }
         
-        internal AlternativeBlock1Block1Green AlternativeBlock1Block1(__InternalSyntaxToken kReturns, TypeReferenceGreen returnType)
+        internal AlternativeBlock1Block1Alt1Green AlternativeBlock1Block1Alt1(TypeReferenceIdentifierGreen returnType)
         {
             #if DEBUG
+                if (returnType is null) throw new __ArgumentNullException(nameof(returnType));
+            #endif
+            int hash;
+            var cached = __SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.AlternativeBlock1Block1Alt1, returnType, out hash);
+            if (cached != null) return (AlternativeBlock1Block1Alt1Green)cached;
+        
+            var result = new AlternativeBlock1Block1Alt1Green(CompilerSyntaxKind.AlternativeBlock1Block1Alt1, returnType);
+            if (hash >= 0)
+            {
+                __SyntaxNodeCache.AddNode(result, hash);
+            }
+        
+            return result;
+        }
+        
+        internal AlternativeBlock1Block1Alt2Green AlternativeBlock1Block1Alt2(IdentifierGreen identifier, __InternalSyntaxToken kReturns, TypeReferenceGreen returnType)
+        {
+            #if DEBUG
+                if (identifier is null) throw new __ArgumentNullException(nameof(identifier));
                 if (kReturns is null) throw new __ArgumentNullException(nameof(kReturns));
                 if (kReturns.RawKind != (int)CompilerSyntaxKind.KReturns) throw new __ArgumentException(nameof(kReturns));
                 if (returnType is null) throw new __ArgumentNullException(nameof(returnType));
             #endif
             int hash;
-            var cached = __SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.AlternativeBlock1Block1, kReturns, returnType, out hash);
-            if (cached != null) return (AlternativeBlock1Block1Green)cached;
+            var cached = __SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.AlternativeBlock1Block1Alt2, identifier, kReturns, returnType, out hash);
+            if (cached != null) return (AlternativeBlock1Block1Alt2Green)cached;
         
-            var result = new AlternativeBlock1Block1Green(CompilerSyntaxKind.AlternativeBlock1Block1, kReturns, returnType);
+            var result = new AlternativeBlock1Block1Alt2Green(CompilerSyntaxKind.AlternativeBlock1Block1Alt2, identifier, kReturns, returnType);
             if (hash >= 0)
             {
                 __SyntaxNodeCache.AddNode(result, hash);

@@ -1494,7 +1494,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Binding
             {
                 switch (node.Token.GetCompilerKind())
                 {
-                    case CompilerSyntaxKind.KBool:
+                    case CompilerSyntaxKind.KObject:
                         var __annot0 = new MetaDslx.CodeAnalysis.Binding.ValueBinder(type: typeof(MetaDslx.CodeAnalysis.MetaType));
                         this.Begin(__annot0, node.Token);
                         try
@@ -1506,7 +1506,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Binding
                             this.End(__annot0);
                         }
                         break;
-                    case CompilerSyntaxKind.KInt:
+                    case CompilerSyntaxKind.KBool:
                         var __annot1 = new MetaDslx.CodeAnalysis.Binding.ValueBinder(type: typeof(MetaDslx.CodeAnalysis.MetaType));
                         this.Begin(__annot1, node.Token);
                         try
@@ -1518,7 +1518,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Binding
                             this.End(__annot1);
                         }
                         break;
-                    case CompilerSyntaxKind.KDouble:
+                    case CompilerSyntaxKind.KChar:
                         var __annot2 = new MetaDslx.CodeAnalysis.Binding.ValueBinder(type: typeof(MetaDslx.CodeAnalysis.MetaType));
                         this.Begin(__annot2, node.Token);
                         try
@@ -1542,7 +1542,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Binding
                             this.End(__annot3);
                         }
                         break;
-                    case CompilerSyntaxKind.KType:
+                    case CompilerSyntaxKind.KByte:
                         var __annot4 = new MetaDslx.CodeAnalysis.Binding.ValueBinder(type: typeof(MetaDslx.CodeAnalysis.MetaType));
                         this.Begin(__annot4, node.Token);
                         try
@@ -1554,7 +1554,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Binding
                             this.End(__annot4);
                         }
                         break;
-                    case CompilerSyntaxKind.KSymbol:
+                    case CompilerSyntaxKind.KSbyte:
                         var __annot5 = new MetaDslx.CodeAnalysis.Binding.ValueBinder(type: typeof(MetaDslx.CodeAnalysis.MetaType));
                         this.Begin(__annot5, node.Token);
                         try
@@ -1566,7 +1566,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Binding
                             this.End(__annot5);
                         }
                         break;
-                    case CompilerSyntaxKind.KObject:
+                    case CompilerSyntaxKind.KShort:
                         var __annot6 = new MetaDslx.CodeAnalysis.Binding.ValueBinder(type: typeof(MetaDslx.CodeAnalysis.MetaType));
                         this.Begin(__annot6, node.Token);
                         try
@@ -1578,7 +1578,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Binding
                             this.End(__annot6);
                         }
                         break;
-                    case CompilerSyntaxKind.KVoid:
+                    case CompilerSyntaxKind.KUshort:
                         var __annot7 = new MetaDslx.CodeAnalysis.Binding.ValueBinder(type: typeof(MetaDslx.CodeAnalysis.MetaType));
                         this.Begin(__annot7, node.Token);
                         try
@@ -1588,6 +1588,126 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Binding
                         finally
                         {
                             this.End(__annot7);
+                        }
+                        break;
+                    case CompilerSyntaxKind.KInt:
+                        var __annot8 = new MetaDslx.CodeAnalysis.Binding.ValueBinder(type: typeof(MetaDslx.CodeAnalysis.MetaType));
+                        this.Begin(__annot8, node.Token);
+                        try
+                        {
+                            //this.VisitToken(node.Token);
+                        }
+                        finally
+                        {
+                            this.End(__annot8);
+                        }
+                        break;
+                    case CompilerSyntaxKind.KUint:
+                        var __annot9 = new MetaDslx.CodeAnalysis.Binding.ValueBinder(type: typeof(MetaDslx.CodeAnalysis.MetaType));
+                        this.Begin(__annot9, node.Token);
+                        try
+                        {
+                            //this.VisitToken(node.Token);
+                        }
+                        finally
+                        {
+                            this.End(__annot9);
+                        }
+                        break;
+                    case CompilerSyntaxKind.KLong:
+                        var __annot10 = new MetaDslx.CodeAnalysis.Binding.ValueBinder(type: typeof(MetaDslx.CodeAnalysis.MetaType));
+                        this.Begin(__annot10, node.Token);
+                        try
+                        {
+                            //this.VisitToken(node.Token);
+                        }
+                        finally
+                        {
+                            this.End(__annot10);
+                        }
+                        break;
+                    case CompilerSyntaxKind.KUlong:
+                        var __annot11 = new MetaDslx.CodeAnalysis.Binding.ValueBinder(type: typeof(MetaDslx.CodeAnalysis.MetaType));
+                        this.Begin(__annot11, node.Token);
+                        try
+                        {
+                            //this.VisitToken(node.Token);
+                        }
+                        finally
+                        {
+                            this.End(__annot11);
+                        }
+                        break;
+                    case CompilerSyntaxKind.KFloat:
+                        var __annot12 = new MetaDslx.CodeAnalysis.Binding.ValueBinder(type: typeof(MetaDslx.CodeAnalysis.MetaType));
+                        this.Begin(__annot12, node.Token);
+                        try
+                        {
+                            //this.VisitToken(node.Token);
+                        }
+                        finally
+                        {
+                            this.End(__annot12);
+                        }
+                        break;
+                    case CompilerSyntaxKind.KDouble:
+                        var __annot13 = new MetaDslx.CodeAnalysis.Binding.ValueBinder(type: typeof(MetaDslx.CodeAnalysis.MetaType));
+                        this.Begin(__annot13, node.Token);
+                        try
+                        {
+                            //this.VisitToken(node.Token);
+                        }
+                        finally
+                        {
+                            this.End(__annot13);
+                        }
+                        break;
+                    case CompilerSyntaxKind.KDecimal:
+                        var __annot14 = new MetaDslx.CodeAnalysis.Binding.ValueBinder(type: typeof(MetaDslx.CodeAnalysis.MetaType));
+                        this.Begin(__annot14, node.Token);
+                        try
+                        {
+                            //this.VisitToken(node.Token);
+                        }
+                        finally
+                        {
+                            this.End(__annot14);
+                        }
+                        break;
+                    case CompilerSyntaxKind.KType:
+                        var __annot15 = new MetaDslx.CodeAnalysis.Binding.ValueBinder(type: typeof(MetaDslx.CodeAnalysis.MetaType));
+                        this.Begin(__annot15, node.Token);
+                        try
+                        {
+                            //this.VisitToken(node.Token);
+                        }
+                        finally
+                        {
+                            this.End(__annot15);
+                        }
+                        break;
+                    case CompilerSyntaxKind.KSymbol:
+                        var __annot16 = new MetaDslx.CodeAnalysis.Binding.ValueBinder(type: typeof(MetaDslx.CodeAnalysis.MetaType));
+                        this.Begin(__annot16, node.Token);
+                        try
+                        {
+                            //this.VisitToken(node.Token);
+                        }
+                        finally
+                        {
+                            this.End(__annot16);
+                        }
+                        break;
+                    case CompilerSyntaxKind.KVoid:
+                        var __annot17 = new MetaDslx.CodeAnalysis.Binding.ValueBinder(type: typeof(MetaDslx.CodeAnalysis.MetaType));
+                        this.Begin(__annot17, node.Token);
+                        try
+                        {
+                            //this.VisitToken(node.Token);
+                        }
+                        finally
+                        {
+                            this.End(__annot17);
                         }
                         break;
                     default:
@@ -1792,24 +1912,62 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Binding
             {
                 this.End(__annot0);
             }
-            this.Visit(node.Name);
-            if (node.Block != null)
+            var __annot1 = new MetaDslx.CodeAnalysis.Binding.NameBinder();
+            this.Begin(__annot1, node.Block);
+            try
             {
                 this.Visit(node.Block);
             }
+            finally
+            {
+                this.End(__annot1);
+            }
         }
 
-        public virtual void VisitAlternativeBlock1Block1(AlternativeBlock1Block1Syntax node)
+        public virtual void VisitAlternativeBlock1Block1Alt1(AlternativeBlock1Block1Alt1Syntax node)
         {
-            var __annot0 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "ReturnType");
-            this.Begin(__annot0, node.ReturnType);
+            var __annot1 = new MetaDslx.CodeAnalysis.Binding.NameBinder();
+            this.Begin(__annot1, node);
             try
             {
-                this.Visit(node.ReturnType);
+                var __annot0 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "ReturnType");
+                this.Begin(__annot0, node.ReturnType);
+                try
+                {
+                    this.Visit(node.ReturnType);
+                }
+                finally
+                {
+                    this.End(__annot0);
+                }
             }
             finally
             {
-                this.End(__annot0);
+                this.End(__annot1);
+            }
+        }
+
+        public virtual void VisitAlternativeBlock1Block1Alt2(AlternativeBlock1Block1Alt2Syntax node)
+        {
+            var __annot1 = new MetaDslx.CodeAnalysis.Binding.NameBinder();
+            this.Begin(__annot1, node);
+            try
+            {
+                this.Visit(node.Identifier);
+                var __annot0 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "ReturnType");
+                this.Begin(__annot0, node.ReturnType);
+                try
+                {
+                    this.Visit(node.ReturnType);
+                }
+                finally
+                {
+                    this.End(__annot0);
+                }
+            }
+            finally
+            {
+                this.End(__annot1);
             }
         }
 

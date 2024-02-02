@@ -108,7 +108,6 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("");
@@ -123,7 +122,6 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("");
@@ -261,7 +259,6 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
@@ -309,7 +306,6 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("    ");
@@ -503,7 +499,6 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("");
@@ -518,7 +513,6 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("");
@@ -611,7 +605,6 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
@@ -758,7 +751,6 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
@@ -806,7 +798,6 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("\t\t");
@@ -947,7 +938,6 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
@@ -1022,7 +1012,6 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("        ");
@@ -1346,7 +1335,6 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("            ");
@@ -1427,7 +1415,6 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("            ");
@@ -1526,7 +1513,6 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("            ");
@@ -1766,7 +1752,6 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("            ");
@@ -1826,7 +1811,6 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("            ");
@@ -2060,7 +2044,6 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("            ");
@@ -2126,33 +2109,31 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
-            var __first24 = true;
+            var __first107 = true;
             #line (137,14)-(137,41) 13 "AntlrSyntaxGenerator.mxg"
             foreach (var rule in Rules)
             #line hidden
             
             {
-                if (__first24)
+                if (__first107)
                 {
-                    __first24 = false;
+                    __first107 = false;
                 }
-                var __first25 = true;
+                var __first108 = true;
                 #line (138,18)-(138,56) 17 "AntlrSyntaxGenerator.mxg"
                 foreach (var alt in rule.Alternatives)
                 #line hidden
                 
                 {
-                    if (__first25)
+                    if (__first108)
                     {
-                        __first25 = false;
+                        __first108 = false;
                     }
-                    __cb.Push("");
                     __cb.WriteLine();
                     __cb.Pop();
-                    __cb.Push("");
+                    __cb.Push("            ");
                     #line (140,13)-(140,19) 33 "AntlrSyntaxGenerator.mxg"
                     __cb.Write("public");
                     #line hidden
@@ -2200,13 +2181,13 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
                     #line hidden
                     __cb.WriteLine();
                     __cb.Pop();
-                    __cb.Push("");
+                    __cb.Push("            ");
                     #line (141,13)-(141,14) 33 "AntlrSyntaxGenerator.mxg"
                     __cb.Write("{");
                     #line hidden
                     __cb.WriteLine();
                     __cb.Pop();
-                    __cb.Push("   \t");
+                    __cb.Push("               \t");
                     #line (142,17)-(142,19) 33 "AntlrSyntaxGenerator.mxg"
                     __cb.Write("if");
                     #line hidden
@@ -2245,27 +2226,27 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
                     #line hidden
                     __cb.WriteLine();
                     __cb.Pop();
-                    var __first26 = true;
+                    var __first109 = true;
                     #line (143,18)-(143,52) 21 "AntlrSyntaxGenerator.mxg"
                     foreach (var elem in alt.Elements)
                     #line hidden
                     
                     {
-                        if (__first26)
+                        if (__first109)
                         {
-                            __first26 = false;
+                            __first109 = false;
                         }
-                        var __first27 = true;
+                        var __first110 = true;
                         #line (144,22)-(144,57) 25 "AntlrSyntaxGenerator.mxg"
                         if (elem.Value is SeparatedList sl)
                         #line hidden
                         
                         {
-                            if (__first27)
+                            if (__first110)
                             {
-                                __first27 = false;
+                                __first110 = false;
                             }
-                            __cb.Push("    ");
+                            __cb.Push("                ");
                             #line (145,18)-(145,54) 40 "AntlrSyntaxGenerator.mxg"
                             __cb.Write(GenerateVisitSeparatedList(elem, sl));
                             #line hidden
@@ -2277,11 +2258,11 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
                         #line hidden
                         
                         {
-                            if (__first27)
+                            if (__first110)
                             {
-                                __first27 = false;
+                                __first110 = false;
                             }
-                            __cb.Push("    ");
+                            __cb.Push("                ");
                             #line (147,18)-(147,41) 40 "AntlrSyntaxGenerator.mxg"
                             __cb.Write(GenerateVisitList(elem));
                             #line hidden
@@ -2293,11 +2274,11 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
                         #line hidden
                         
                         {
-                            if (__first27)
+                            if (__first110)
                             {
-                                __first27 = false;
+                                __first110 = false;
                             }
-                            __cb.Push("    ");
+                            __cb.Push("                ");
                             #line (149,18)-(149,57) 40 "AntlrSyntaxGenerator.mxg"
                             __cb.Write(GenerateVisitTokenAlts(elem, tokenAlts));
                             #line hidden
@@ -2309,11 +2290,11 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
                         #line hidden
                         
                         {
-                            if (__first27)
+                            if (__first110)
                             {
-                                __first27 = false;
+                                __first110 = false;
                             }
-                            __cb.Push("    ");
+                            __cb.Push("                ");
                             #line (151,17)-(151,20) 41 "AntlrSyntaxGenerator.mxg"
                             __cb.Write("var");
                             #line hidden
@@ -2358,21 +2339,21 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
                         #line hidden
                         
                         {
-                            if (__first27)
+                            if (__first110)
                             {
-                                __first27 = false;
+                                __first110 = false;
                             }
-                            var __first28 = true;
+                            var __first111 = true;
                             #line (153,26)-(153,51) 29 "AntlrSyntaxGenerator.mxg"
                             if (rr.Token is not null)
                             #line hidden
                             
                             {
-                                if (__first28)
+                                if (__first111)
                                 {
-                                    __first28 = false;
+                                    __first111 = false;
                                 }
-                                __cb.Push("    ");
+                                __cb.Push("                ");
                                 #line (154,17)-(154,20) 45 "AntlrSyntaxGenerator.mxg"
                                 __cb.Write("var");
                                 #line hidden
@@ -2397,15 +2378,15 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
                                 #line (154,94)-(154,108) 44 "AntlrSyntaxGenerator.mxg"
                                 __cb.Write(elem.AntlrName);
                                 #line hidden
-                                var __first29 = true;
+                                var __first112 = true;
                                 #line (154,110)-(154,146) 33 "AntlrSyntaxGenerator.mxg"
                                 if (!elem.Multiplicity.IsOptional())
                                 #line hidden
                                 
                                 {
-                                    if (__first29)
+                                    if (__first112)
                                     {
-                                        __first29 = false;
+                                        __first112 = false;
                                     }
                                     #line (154,147)-(154,148) 49 "AntlrSyntaxGenerator.mxg"
                                     __cb.Write(",");
@@ -2434,11 +2415,11 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
                             #line hidden
                             
                             {
-                                if (__first28)
+                                if (__first111)
                                 {
-                                    __first28 = false;
+                                    __first111 = false;
                                 }
-                                __cb.Push("    ");
+                                __cb.Push("                ");
                                 #line (156,18)-(156,30) 44 "AntlrSyntaxGenerator.mxg"
                                 __cb.Write(rr.GreenType);
                                 #line hidden
@@ -2465,7 +2446,7 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
                                 #line hidden
                                 __cb.WriteLine();
                                 __cb.Pop();
-                                __cb.Push("    ");
+                                __cb.Push("                ");
                                 #line (157,17)-(157,19) 45 "AntlrSyntaxGenerator.mxg"
                                 __cb.Write("if");
                                 #line hidden
@@ -2526,15 +2507,15 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
                                 #line (157,134)-(157,135) 45 "AntlrSyntaxGenerator.mxg"
                                 __cb.Write(")");
                                 #line hidden
-                                var __first30 = true;
+                                var __first113 = true;
                                 #line (157,136)-(157,172) 33 "AntlrSyntaxGenerator.mxg"
                                 if (!elem.Multiplicity.IsOptional())
                                 #line hidden
                                 
                                 {
-                                    if (__first30)
+                                    if (__first113)
                                     {
-                                        __first30 = false;
+                                        __first113 = false;
                                     }
                                     #line (157,173)-(157,174) 49 "AntlrSyntaxGenerator.mxg"
                                     __cb.Write(" ");
@@ -2557,17 +2538,17 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
                                 #line hidden
                                 __cb.WriteLine();
                                 __cb.Pop();
-                                var __first31 = true;
+                                var __first114 = true;
                                 #line (158,30)-(158,66) 33 "AntlrSyntaxGenerator.mxg"
                                 if (!elem.Multiplicity.IsOptional())
                                 #line hidden
                                 
                                 {
-                                    if (__first31)
+                                    if (__first114)
                                     {
-                                        __first31 = false;
+                                        __first114 = false;
                                     }
-                                    __cb.Push("    ");
+                                    __cb.Push("                ");
                                     #line (159,17)-(159,21) 49 "AntlrSyntaxGenerator.mxg"
                                     __cb.Write("else");
                                     #line hidden
@@ -2595,24 +2576,24 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
                                     __cb.WriteLine();
                                     __cb.Pop();
                                 }
-                                if (!__first31) __cb.AppendLine();
+                                if (!__first114) __cb.AppendLine();
                             }
                             #line (161,26)-(161,30) 29 "AntlrSyntaxGenerator.mxg"
                             else
                             #line hidden
                             
                             {
-                                if (__first28)
+                                if (__first111)
                                 {
-                                    __first28 = false;
+                                    __first111 = false;
                                 }
                             }
-                            if (!__first28) __cb.AppendLine();
+                            if (!__first111) __cb.AppendLine();
                         }
-                        if (!__first27) __cb.AppendLine();
+                        if (!__first110) __cb.AppendLine();
                     }
-                    if (!__first26) __cb.AppendLine();
-                    __cb.Push("\t");
+                    if (!__first109) __cb.AppendLine();
+                    __cb.Push("            \t");
                     #line (165,14)-(165,20) 33 "AntlrSyntaxGenerator.mxg"
                     __cb.Write("return");
                     #line hidden
@@ -2636,23 +2617,23 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
                     #line hidden
                     __cb.WriteLine();
                     __cb.Pop();
-                    __cb.Push("");
+                    __cb.Push("            ");
                     #line (166,13)-(166,14) 33 "AntlrSyntaxGenerator.mxg"
                     __cb.Write("}");
                     #line hidden
                     __cb.WriteLine();
                     __cb.Pop();
                 }
-                if (!__first25) __cb.AppendLine();
+                if (!__first108) __cb.AppendLine();
             }
-            if (!__first24) __cb.AppendLine();
-            __cb.Push("");
+            if (!__first107) __cb.AppendLine();
+            __cb.Push("        ");
             #line (169,9)-(169,10) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("}");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
+            __cb.Push("    ");
             #line (170,5)-(170,6) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("}");
             #line hidden
@@ -2696,15 +2677,15 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            var __first32 = true;
+            var __first115 = true;
             #line (176,2)-(176,41) 13 "AntlrSyntaxGenerator.mxg"
             foreach (var token in tokenAlts.Tokens)
             #line hidden
             
             {
-                if (__first32)
+                if (__first115)
                 {
-                    __first32 = false;
+                    __first115 = false;
                 }
                 __cb.Push("");
                 #line (177,1)-(177,3) 29 "AntlrSyntaxGenerator.mxg"
@@ -2767,16 +2748,16 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
                 __cb.WriteLine();
                 __cb.Pop();
             }
-            if (!__first32) __cb.AppendLine();
-            var __first33 = true;
+            if (!__first115) __cb.AppendLine();
+            var __first116 = true;
             #line (179,2)-(179,38) 13 "AntlrSyntaxGenerator.mxg"
             if (!elem.Multiplicity.IsOptional())
             #line hidden
             
             {
-                if (__first33)
+                if (__first116)
                 {
-                    __first33 = false;
+                    __first116 = false;
                 }
                 __cb.Push("");
                 #line (180,1)-(180,3) 29 "AntlrSyntaxGenerator.mxg"
@@ -2824,7 +2805,7 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
                 __cb.WriteLine();
                 __cb.Pop();
             }
-            if (!__first33) __cb.AppendLine();
+            if (!__first116) __cb.AppendLine();
             return __cb.ToStringAndFree();
         }
         
@@ -2962,15 +2943,15 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            var __first34 = true;
+            var __first117 = true;
             #line (189,14)-(189,30) 13 "AntlrSyntaxGenerator.mxg"
             if(elem.IsToken)
             #line hidden
             
             {
-                if (__first34)
+                if (__first117)
                 {
-                    __first34 = false;
+                    __first117 = false;
                 }
                 __cb.Push("    ");
                 #line (190,6)-(190,24) 28 "AntlrSyntaxGenerator.mxg"
@@ -2999,9 +2980,9 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             #line hidden
             
             {
-                if (__first34)
+                if (__first117)
                 {
-                    __first34 = false;
+                    __first117 = false;
                 }
                 __cb.Push("    ");
                 #line (192,5)-(192,7) 29 "AntlrSyntaxGenerator.mxg"
@@ -3106,7 +3087,7 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
                 __cb.WriteLine();
                 __cb.Pop();
             }
-            if (!__first34) __cb.AppendLine();
+            if (!__first117) __cb.AppendLine();
             __cb.Push("");
             #line (195,1)-(195,2) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("}");
@@ -3203,25 +3184,25 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            var __first35 = true;
+            var __first118 = true;
             #line (203,6)-(203,83) 13 "AntlrSyntaxGenerator.mxg"
             for (int i = 0; i < sl.FirstItems.Count && i < sl.FirstSeparators.Count; ++i)
             #line hidden
             
             {
-                if (__first35)
+                if (__first118)
                 {
-                    __first35 = false;
+                    __first118 = false;
                 }
-                var __first36 = true;
+                var __first119 = true;
                 #line (204,10)-(204,32) 17 "AntlrSyntaxGenerator.mxg"
                 if (sl.SeparatorFirst)
                 #line hidden
                 
                 {
-                    if (__first36)
+                    if (__first119)
                     {
-                        __first36 = false;
+                        __first119 = false;
                     }
                     __cb.Push("");
                     #line (205,2)-(205,69) 32 "AntlrSyntaxGenerator.mxg"
@@ -3241,9 +3222,9 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
                 #line hidden
                 
                 {
-                    if (__first36)
+                    if (__first119)
                     {
-                        __first36 = false;
+                        __first119 = false;
                     }
                     __cb.Push("");
                     #line (208,2)-(208,59) 32 "AntlrSyntaxGenerator.mxg"
@@ -3258,18 +3239,18 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
                     __cb.WriteLine();
                     __cb.Pop();
                 }
-                if (!__first36) __cb.AppendLine();
+                if (!__first119) __cb.AppendLine();
             }
-            if (!__first35) __cb.AppendLine();
-            var __first37 = true;
+            if (!__first118) __cb.AppendLine();
+            var __first120 = true;
             #line (212,6)-(212,57) 13 "AntlrSyntaxGenerator.mxg"
             if (sl.FirstItems.Count > sl.FirstSeparators.Count)
             #line hidden
             
             {
-                if (__first37)
+                if (__first120)
                 {
-                    __first37 = false;
+                    __first120 = false;
                 }
                 __cb.Push("");
                 #line (213,2)-(213,79) 28 "AntlrSyntaxGenerator.mxg"
@@ -3278,16 +3259,16 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
                 __cb.WriteLine();
                 __cb.Pop();
             }
-            if (!__first37) __cb.AppendLine();
-            var __first38 = true;
+            if (!__first120) __cb.AppendLine();
+            var __first121 = true;
             #line (215,6)-(215,57) 13 "AntlrSyntaxGenerator.mxg"
             if (sl.FirstSeparators.Count > sl.FirstItems.Count)
             #line hidden
             
             {
-                if (__first38)
+                if (__first121)
                 {
-                    __first38 = false;
+                    __first121 = false;
                 }
                 __cb.Push("");
                 #line (216,2)-(216,94) 28 "AntlrSyntaxGenerator.mxg"
@@ -3296,7 +3277,7 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
                 __cb.WriteLine();
                 __cb.Pop();
             }
-            if (!__first38) __cb.AppendLine();
+            if (!__first121) __cb.AppendLine();
             __cb.Push("");
             #line (218,1)-(218,4) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("var");
@@ -3426,15 +3407,15 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            var __first39 = true;
+            var __first122 = true;
             #line (222,6)-(222,36) 13 "AntlrSyntaxGenerator.mxg"
             if (sl.RepeatedSeparatorFirst)
             #line hidden
             
             {
-                if (__first39)
+                if (__first122)
                 {
-                    __first39 = false;
+                    __first122 = false;
                 }
                 __cb.Push("    ");
                 #line (223,5)-(223,7) 29 "AntlrSyntaxGenerator.mxg"
@@ -3535,9 +3516,9 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             #line hidden
             
             {
-                if (__first39)
+                if (__first122)
                 {
-                    __first39 = false;
+                    __first122 = false;
                 }
                 __cb.Push("    ");
                 #line (233,6)-(233,67) 28 "AntlrSyntaxGenerator.mxg"
@@ -3633,32 +3614,32 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
                 __cb.WriteLine();
                 __cb.Pop();
             }
-            if (!__first39) __cb.AppendLine();
+            if (!__first122) __cb.AppendLine();
             __cb.Push("");
             #line (243,1)-(243,2) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("}");
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            var __first40 = true;
+            var __first123 = true;
             #line (244,6)-(244,81) 13 "AntlrSyntaxGenerator.mxg"
             for (int i = 0; i < sl.LastItems.Count && i < sl.LastSeparators.Count; ++i)
             #line hidden
             
             {
-                if (__first40)
+                if (__first123)
                 {
-                    __first40 = false;
+                    __first123 = false;
                 }
-                var __first41 = true;
+                var __first124 = true;
                 #line (245,10)-(245,40) 17 "AntlrSyntaxGenerator.mxg"
                 if (sl.RepeatedSeparatorFirst)
                 #line hidden
                 
                 {
-                    if (__first41)
+                    if (__first124)
                     {
-                        __first41 = false;
+                        __first124 = false;
                     }
                     __cb.Push("");
                     #line (246,2)-(246,68) 32 "AntlrSyntaxGenerator.mxg"
@@ -3678,9 +3659,9 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
                 #line hidden
                 
                 {
-                    if (__first41)
+                    if (__first124)
                     {
-                        __first41 = false;
+                        __first124 = false;
                     }
                     __cb.Push("");
                     #line (249,2)-(249,64) 32 "AntlrSyntaxGenerator.mxg"
@@ -3695,18 +3676,18 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
                     __cb.WriteLine();
                     __cb.Pop();
                 }
-                if (!__first41) __cb.AppendLine();
+                if (!__first124) __cb.AppendLine();
             }
-            if (!__first40) __cb.AppendLine();
-            var __first42 = true;
+            if (!__first123) __cb.AppendLine();
+            var __first125 = true;
             #line (253,6)-(253,55) 13 "AntlrSyntaxGenerator.mxg"
             if (sl.LastItems.Count > sl.LastSeparators.Count)
             #line hidden
             
             {
-                if (__first42)
+                if (__first125)
                 {
-                    __first42 = false;
+                    __first125 = false;
                 }
                 __cb.Push("");
                 #line (254,2)-(254,77) 28 "AntlrSyntaxGenerator.mxg"
@@ -3715,16 +3696,16 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
                 __cb.WriteLine();
                 __cb.Pop();
             }
-            if (!__first42) __cb.AppendLine();
-            var __first43 = true;
+            if (!__first125) __cb.AppendLine();
+            var __first126 = true;
             #line (256,6)-(256,55) 13 "AntlrSyntaxGenerator.mxg"
             if (sl.LastSeparators.Count > sl.LastItems.Count)
             #line hidden
             
             {
-                if (__first43)
+                if (__first126)
                 {
-                    __first43 = false;
+                    __first126 = false;
                 }
                 __cb.Push("");
                 #line (257,2)-(257,92) 28 "AntlrSyntaxGenerator.mxg"
@@ -3733,7 +3714,7 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
                 __cb.WriteLine();
                 __cb.Pop();
             }
-            if (!__first43) __cb.AppendLine();
+            if (!__first126) __cb.AppendLine();
             __cb.Push("");
             #line (259,1)-(259,4) 25 "AntlrSyntaxGenerator.mxg"
             __cb.Write("var");
@@ -3886,15 +3867,15 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            var __first44 = true;
+            var __first127 = true;
             #line (266,6)-(266,42) 13 "AntlrSyntaxGenerator.mxg"
             if (!elem.Multiplicity.IsOptional())
             #line hidden
             
             {
-                if (__first44)
+                if (__first127)
                 {
-                    __first44 = false;
+                    __first127 = false;
                 }
                 __cb.Push("");
                 #line (267,1)-(267,5) 29 "AntlrSyntaxGenerator.mxg"
@@ -3918,7 +3899,7 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
                 __cb.WriteLine();
                 __cb.Pop();
             }
-            if (!__first44) __cb.AppendLine();
+            if (!__first127) __cb.AppendLine();
             return __cb.ToStringAndFree();
         }
         
@@ -3957,15 +3938,15 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            var __first45 = true;
+            var __first128 = true;
             #line (273,6)-(273,41) 13 "AntlrSyntaxGenerator.mxg"
             if (elem.Multiplicity.IsOptional())
             #line hidden
             
             {
-                if (__first45)
+                if (__first128)
                 {
-                    __first45 = false;
+                    __first128 = false;
                 }
                 __cb.Push("");
                 #line (274,1)-(274,3) 29 "AntlrSyntaxGenerator.mxg"
@@ -4024,9 +4005,9 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             #line hidden
             
             {
-                if (__first45)
+                if (__first128)
                 {
-                    __first45 = false;
+                    __first128 = false;
                 }
                 __cb.Push("");
                 #line (276,2)-(276,9) 28 "AntlrSyntaxGenerator.mxg"
@@ -4059,7 +4040,7 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
                 __cb.WriteLine();
                 __cb.Pop();
             }
-            if (!__first45) __cb.AppendLine();
+            if (!__first128) __cb.AppendLine();
             return __cb.ToStringAndFree();
         }
         
@@ -4167,15 +4148,15 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            var __first46 = true;
+            var __first129 = true;
             #line (283,6)-(283,42) 13 "AntlrSyntaxGenerator.mxg"
             if (!elem.Multiplicity.IsOptional())
             #line hidden
             
             {
-                if (__first46)
+                if (__first129)
                 {
-                    __first46 = false;
+                    __first129 = false;
                 }
                 __cb.Push("");
                 #line (284,1)-(284,5) 29 "AntlrSyntaxGenerator.mxg"
@@ -4199,7 +4180,7 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
                 __cb.WriteLine();
                 __cb.Pop();
             }
-            if (!__first46) __cb.AppendLine();
+            if (!__first129) __cb.AppendLine();
             return __cb.ToStringAndFree();
         }
         
@@ -4247,15 +4228,15 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            var __first47 = true;
+            var __first130 = true;
             #line (290,6)-(290,41) 13 "AntlrSyntaxGenerator.mxg"
             if (elem.Multiplicity.IsOptional())
             #line hidden
             
             {
-                if (__first47)
+                if (__first130)
                 {
-                    __first47 = false;
+                    __first130 = false;
                 }
                 __cb.Push("");
                 #line (291,1)-(291,3) 29 "AntlrSyntaxGenerator.mxg"
@@ -4308,9 +4289,9 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             #line hidden
             
             {
-                if (__first47)
+                if (__first130)
                 {
-                    __first47 = false;
+                    __first130 = false;
                 }
                 __cb.Push("");
                 #line (293,2)-(293,9) 28 "AntlrSyntaxGenerator.mxg"
@@ -4337,7 +4318,7 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
                 __cb.WriteLine();
                 __cb.Pop();
             }
-            if (!__first47) __cb.AppendLine();
+            if (!__first130) __cb.AppendLine();
             return __cb.ToStringAndFree();
         }
         
@@ -4406,7 +4387,6 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("");
@@ -4421,7 +4401,6 @@ namespace MetaDslx.Languages.MetaCompiler.Generators
             #line hidden
             __cb.WriteLine();
             __cb.Pop();
-            __cb.Push("");
             __cb.WriteLine();
             __cb.Pop();
             __cb.Push("");

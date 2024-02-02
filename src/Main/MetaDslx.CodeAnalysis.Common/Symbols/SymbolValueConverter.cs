@@ -47,6 +47,28 @@ namespace MetaDslx.CodeAnalysis.Symbols
                 else valueTypeSymbol = null;
                 if (valueTypeSymbol is null)
                 {
+                    if (value is string stringValue)
+                    {
+                        var specialType = MetaType.FromName(stringValue);
+                        if (specialType.MetaKeyword is not null)
+                        {
+                            convertedValue = specialType;
+                            return true;
+                        }
+                    }
+                    if (expectedType.SpecialType == SpecialType.MetaDslx_CodeAnalysis_MetaType)
+                    {
+                        if (value is MetaType mt2)
+                        {
+                            convertedValue = mt2;
+                            return true;
+                        }
+                        else
+                        {
+                            convertedValue = MetaSymbol.FromValue(value);
+                            return true;
+                        }
+                    }
                     if (value is Symbol valueSymbol && valueSymbol.IsError)
                     {
                         convertedValue = null;

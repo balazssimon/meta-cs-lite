@@ -17,10 +17,12 @@ using MetaDslx.Bootstrap.MetaCompiler3.Model;
 using System.ComponentModel;
 using Roslyn.Utilities;
 using MetaDslx.CodeAnalysis.Binding;
+using MetaDslx.CodeAnalysis.Symbols.Model;
 
 namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
 {
     using IPropertySymbol = Microsoft.CodeAnalysis.IPropertySymbol;
+    using MetaProperty = MetaDslx.Languages.MetaModel.Model.MetaProperty;
 
     internal class PElementSymbol : SourceDeclarationSymbol
     {
@@ -210,11 +212,17 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
                 diagnostics.AddRange(ctx.Diagnostics);
                 ctx.Free();
                 if (prop is null) return default;
-                var csProp = prop as ICSharpSymbol;
-                var msProp = csProp?.CSharpSymbol as IPropertySymbol;
-                var msType = msProp?.Type;
-                var csType = msType is null ? null : csProp?.SymbolFactory.GetSymbol<TypeSymbol>(msType, diagnostics, cancellationToken);
-                result = MetaType.FromTypeSymbol(csType);
+                if (prop is ICSharpSymbol csProp)
+                {
+                    var msProp = csProp?.CSharpSymbol as IPropertySymbol;
+                    var msType = msProp?.Type;
+                    var csType = msType is null ? null : csProp?.SymbolFactory.GetSymbol<TypeSymbol>(msType, diagnostics, cancellationToken);
+                    result = MetaType.FromTypeSymbol(csType);
+                }
+                else if (prop is IModelSymbol msProp && msProp.ModelObject is MetaProperty mProp)
+                {
+                    result = mProp.Type;
+                }
             }
             var kind = ExpectedTypeKind.None;
             if (result.IsNullable) result.TryExtractNullableType(out result, diagnostics, cancellationToken);
@@ -272,14 +280,18 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
                                     var prefRule = pref.Rule;
                                     if (prefRule.OriginalSymbol is ParserRuleSymbol pr)
                                     {
-                                        if (!pr.ReturnType.IsAssignableTo(coreType))
+                                        // TODO:MetaDslx
+                                        // Replace non-void check with smarter type inference for Binder return types
+                                        if (!pr.ReturnType.IsAssignableTo(coreType) && pr.ReturnType.SpecialType != SpecialType.System_Void)
                                         {
                                             diagnostics.Add(Diagnostic.Create(CompilerErrorCode.ERR_ValueTypeMismatch, pref.Location, pr.ReturnType, coreType));
                                         }
                                     }
                                     else if (prefRule.OriginalSymbol is TokenSymbol lr)
                                     {
-                                        if (!lr.ReturnType.IsAssignableTo(coreType))
+                                        // TODO:MetaDslx
+                                        // Replace non-void check with smarter type inference for Binder return types
+                                        if (!lr.ReturnType.IsAssignableTo(coreType) && lr.ReturnType.SpecialType != SpecialType.System_Void)
                                         {
                                             diagnostics.Add(Diagnostic.Create(CompilerErrorCode.ERR_ValueTypeMismatch, pref.Location, lr.ReturnType, coreType));
                                         }
@@ -309,6 +321,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
                     {
                         if (prefRule.OriginalSymbol is ParserRuleSymbol pr)
                         {
+                            // TODO:MetaDslx
+                            // Replace non-void check with smarter type inference for Binder return types
                             if (!pr.ReturnType.IsDefaultOrNull && pr.ReturnType.SpecialType != SpecialType.System_Void)
                             {
                                 diagnostics.Add(Diagnostic.Create(CompilerErrorCode.WRN_RuleWithTypeMissingAssignment, pref.Location, pr.Name, pr.ReturnType));
@@ -316,6 +330,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
                         }
                         else if (prefRule.OriginalSymbol is TokenSymbol lr)
                         {
+                            // TODO:MetaDslx
+                            // Replace non-void check with smarter type inference for Binder return types
                             if (!lr.ReturnType.IsDefaultOrNull && lr.ReturnType.SpecialType != SpecialType.System_Void)
                             {
                                 diagnostics.Add(Diagnostic.Create(CompilerErrorCode.WRN_RuleWithTypeMissingAssignment, pref.Location, lr.Name, lr.ReturnType));

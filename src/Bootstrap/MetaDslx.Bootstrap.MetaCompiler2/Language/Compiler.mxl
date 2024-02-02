@@ -33,7 +33,7 @@ Grammar: [Scope](grammarRules+=GrammarRule*);
 GrammarRule: Rule | LexerRule;
 
 Rule: annotations+=ParserAnnotation* [Name](returnType=TypeReferenceIdentifier | Identifier 'returns' returnType=TypeReference) ':' alternatives+=Alternative ('|' alternatives+=Alternative)* ';';
-Alternative: (annotations+=ParserAnnotation* 'alt' Name ('returns' returnType=TypeReference)? ':')? elements+=Element+ ('=>' returnValue=Expression)?;
+Alternative: (annotations+=ParserAnnotation* 'alt' [Name](returnType=TypeReferenceIdentifier | Identifier 'returns' returnType=TypeReference) ':')? elements+=Element+ ('=>' returnValue=Expression)?;
 Element: (annotations+=ParserAnnotation* Name assignment=Assignment)? value=ElementValue;
 ElementValue: Block | Eof1 | Fixed | RuleRef;
 Block: annotations+=ParserAnnotation* '(' alternatives+=BlockAlternative ('|' alternatives+=BlockAlternative)* ')' multiplicity=Multiplicity?;
@@ -87,17 +87,27 @@ Multiplicity
 	| '+?' => NonGreedyOneOrMore
 	;
 
-TypeReferenceIdentifier returns type: PrimitiveType | #MetaType;
-TypeReference returns type: PrimitiveType | #{MetaType|Qualifier};
+TypeReferenceIdentifier returns type: PrimitiveType | #type;
+TypeReference returns type: PrimitiveType | #{type|Qualifier};
 
 PrimitiveType returns type
-	: 'bool'
-	| 'int'
-	| 'double'
+	: 'object'
+	| 'bool'
+	| 'char'
 	| 'string'
+	| 'byte'
+	| 'sbyte'
+	| 'short'
+	| 'ushort'
+	| 'int'
+	| 'uint'
+	| 'long'
+	| 'ulong'
+	| 'float'
+	| 'double'
+	| 'decimal'
 	| 'type'
 	| 'symbol'
-	| 'object'
 	| 'void'
 	;
 

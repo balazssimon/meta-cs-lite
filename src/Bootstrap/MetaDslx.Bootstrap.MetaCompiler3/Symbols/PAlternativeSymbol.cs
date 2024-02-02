@@ -48,7 +48,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
                     StartComputingProperty_Attributes, FinishComputingProperty_Attributes);
         }
 
-        private bool _isResolvingExpectedType;
         private MetaType _expectedType;
         private MetaType _returnType;
         private ExpressionSymbol _returnValue;
@@ -141,13 +140,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
             {
                 if (NotePartComplete(CompletionParts.StartComputingProperty_Elements))
                 {
-                    _isResolvingExpectedType = true;
                     var diagnostics = DiagnosticBag.GetInstance();
                     _elements = CompleteProperty_Elements(diagnostics, cancellationToken);
                     AddSymbolDiagnostics(diagnostics);
                     diagnostics.Free();
                     NotePartComplete(CompletionParts.FinishComputingProperty_Elements);
-                    _isResolvingExpectedType = false;
                 }
                 return true;
             }
@@ -193,12 +190,6 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
                 return true;
             }
             return false;
-        }
-
-        protected override string? CompleteProperty_Name(DiagnosticBag diagnostics, CancellationToken cancellationToken)
-        {
-            var nameSyntax = this.Syntax?.Block1?.Name;
-            return Declaration.Language.SyntaxFacts.ExtractName(nameSyntax);
         }
 
         protected virtual ImmutableArray<PElementSymbol> CompleteProperty_Elements(DiagnosticBag diagnostics, CancellationToken cancellationToken)

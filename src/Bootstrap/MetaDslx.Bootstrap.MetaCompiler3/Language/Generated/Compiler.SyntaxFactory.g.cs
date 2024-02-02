@@ -732,7 +732,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
         public PrimitiveTypeSyntax PrimitiveType(__SyntaxToken token)
         {
             if (token.RawKind != (int)__InternalSyntaxKind.None) throw new __ArgumentNullException(nameof(token));
-            if (token.RawKind != (int)CompilerSyntaxKind.KBool && token.RawKind != (int)CompilerSyntaxKind.KInt && token.RawKind != (int)CompilerSyntaxKind.KDouble && token.RawKind != (int)CompilerSyntaxKind.KString && token.RawKind != (int)CompilerSyntaxKind.KType && token.RawKind != (int)CompilerSyntaxKind.KSymbol && token.RawKind != (int)CompilerSyntaxKind.KObject && token.RawKind != (int)CompilerSyntaxKind.KVoid) throw new __ArgumentException(nameof(token));
+            if (token.RawKind != (int)CompilerSyntaxKind.KObject && token.RawKind != (int)CompilerSyntaxKind.KBool && token.RawKind != (int)CompilerSyntaxKind.KChar && token.RawKind != (int)CompilerSyntaxKind.KString && token.RawKind != (int)CompilerSyntaxKind.KByte && token.RawKind != (int)CompilerSyntaxKind.KSbyte && token.RawKind != (int)CompilerSyntaxKind.KShort && token.RawKind != (int)CompilerSyntaxKind.KUshort && token.RawKind != (int)CompilerSyntaxKind.KInt && token.RawKind != (int)CompilerSyntaxKind.KUint && token.RawKind != (int)CompilerSyntaxKind.KLong && token.RawKind != (int)CompilerSyntaxKind.KUlong && token.RawKind != (int)CompilerSyntaxKind.KFloat && token.RawKind != (int)CompilerSyntaxKind.KDouble && token.RawKind != (int)CompilerSyntaxKind.KDecimal && token.RawKind != (int)CompilerSyntaxKind.KType && token.RawKind != (int)CompilerSyntaxKind.KSymbol && token.RawKind != (int)CompilerSyntaxKind.KVoid) throw new __ArgumentException(nameof(token));
             return (PrimitiveTypeSyntax)CompilerLanguage.Instance.InternalSyntaxFactory.PrimitiveType((__InternalSyntaxToken)token.Node).CreateRed();
         }
 
@@ -813,32 +813,39 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
             return this.RulealternativesBlock(this.Token(CompilerSyntaxKind.TBar), alternatives);
         }
 
-        public AlternativeBlock1Syntax AlternativeBlock1(global::MetaDslx.CodeAnalysis.SyntaxList<ParserAnnotationSyntax> annotations1, __SyntaxToken kAlt, NameSyntax name, AlternativeBlock1Block1Syntax block, __SyntaxToken tColon)
+        public AlternativeBlock1Syntax AlternativeBlock1(global::MetaDslx.CodeAnalysis.SyntaxList<ParserAnnotationSyntax> annotations1, __SyntaxToken kAlt, AlternativeBlock1Block1Syntax block, __SyntaxToken tColon)
         {
             if (kAlt.RawKind != (int)__InternalSyntaxKind.None) throw new __ArgumentNullException(nameof(kAlt));
             if (kAlt.RawKind != (int)CompilerSyntaxKind.KAlt) throw new __ArgumentException(nameof(kAlt));
-            if (name is null) throw new __ArgumentNullException(nameof(name));
+            if (block is null) throw new __ArgumentNullException(nameof(block));
             if (tColon.RawKind != (int)__InternalSyntaxKind.None) throw new __ArgumentNullException(nameof(tColon));
             if (tColon.RawKind != (int)CompilerSyntaxKind.TColon) throw new __ArgumentException(nameof(tColon));
-            return (AlternativeBlock1Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.AlternativeBlock1(__GreenNodeExtensions.ToGreenList<InternalSyntax.ParserAnnotationGreen>(annotations1.Node), (__InternalSyntaxToken)kAlt.Node, (InternalSyntax.NameGreen)name.Green, (InternalSyntax.AlternativeBlock1Block1Green)block.Green, (__InternalSyntaxToken)tColon.Node).CreateRed();
+            return (AlternativeBlock1Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.AlternativeBlock1(__GreenNodeExtensions.ToGreenList<InternalSyntax.ParserAnnotationGreen>(annotations1.Node), (__InternalSyntaxToken)kAlt.Node, (InternalSyntax.AlternativeBlock1Block1Green)block.Green, (__InternalSyntaxToken)tColon.Node).CreateRed();
         }
         
-        public AlternativeBlock1Syntax AlternativeBlock1(global::MetaDslx.CodeAnalysis.SyntaxList<ParserAnnotationSyntax> annotations1, NameSyntax name)
+        public AlternativeBlock1Syntax AlternativeBlock1(global::MetaDslx.CodeAnalysis.SyntaxList<ParserAnnotationSyntax> annotations1, AlternativeBlock1Block1Syntax block)
         {
-            return this.AlternativeBlock1(annotations1, this.Token(CompilerSyntaxKind.KAlt), name, default, this.Token(CompilerSyntaxKind.TColon));
+            return this.AlternativeBlock1(annotations1, this.Token(CompilerSyntaxKind.KAlt), block, this.Token(CompilerSyntaxKind.TColon));
         }
 
-        public AlternativeBlock1Block1Syntax AlternativeBlock1Block1(__SyntaxToken kReturns, TypeReferenceSyntax returnType)
+        public AlternativeBlock1Block1Alt1Syntax AlternativeBlock1Block1Alt1(TypeReferenceIdentifierSyntax returnType)
         {
+            if (returnType is null) throw new __ArgumentNullException(nameof(returnType));
+            return (AlternativeBlock1Block1Alt1Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.AlternativeBlock1Block1Alt1((InternalSyntax.TypeReferenceIdentifierGreen)returnType.Green).CreateRed();
+        }
+
+        public AlternativeBlock1Block1Alt2Syntax AlternativeBlock1Block1Alt2(IdentifierSyntax identifier, __SyntaxToken kReturns, TypeReferenceSyntax returnType)
+        {
+            if (identifier is null) throw new __ArgumentNullException(nameof(identifier));
             if (kReturns.RawKind != (int)__InternalSyntaxKind.None) throw new __ArgumentNullException(nameof(kReturns));
             if (kReturns.RawKind != (int)CompilerSyntaxKind.KReturns) throw new __ArgumentException(nameof(kReturns));
             if (returnType is null) throw new __ArgumentNullException(nameof(returnType));
-            return (AlternativeBlock1Block1Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.AlternativeBlock1Block1((__InternalSyntaxToken)kReturns.Node, (InternalSyntax.TypeReferenceGreen)returnType.Green).CreateRed();
+            return (AlternativeBlock1Block1Alt2Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.AlternativeBlock1Block1Alt2((InternalSyntax.IdentifierGreen)identifier.Green, (__InternalSyntaxToken)kReturns.Node, (InternalSyntax.TypeReferenceGreen)returnType.Green).CreateRed();
         }
         
-        public AlternativeBlock1Block1Syntax AlternativeBlock1Block1(TypeReferenceSyntax returnType)
+        public AlternativeBlock1Block1Alt2Syntax AlternativeBlock1Block1Alt2(IdentifierSyntax identifier, TypeReferenceSyntax returnType)
         {
-            return this.AlternativeBlock1Block1(this.Token(CompilerSyntaxKind.KReturns), returnType);
+            return this.AlternativeBlock1Block1Alt2(identifier, this.Token(CompilerSyntaxKind.KReturns), returnType);
         }
 
         public AlternativeBlock2Syntax AlternativeBlock2(__SyntaxToken tEqGt, ExpressionSyntax returnValue)
@@ -1217,7 +1224,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
                 typeof(RuleBlock1Alt2Syntax),
                 typeof(RulealternativesBlockSyntax),
                 typeof(AlternativeBlock1Syntax),
-                typeof(AlternativeBlock1Block1Syntax),
+                typeof(AlternativeBlock1Block1Alt1Syntax),
+                typeof(AlternativeBlock1Block1Alt2Syntax),
                 typeof(AlternativeBlock2Syntax),
                 typeof(ElementBlock1Syntax),
                 typeof(BlockalternativesBlockSyntax),

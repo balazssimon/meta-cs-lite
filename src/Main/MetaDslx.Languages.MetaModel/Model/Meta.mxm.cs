@@ -739,7 +739,7 @@ namespace MetaDslx.Languages.MetaModel.Model
         bool IsAbstract { get; set; }
         global::MetaDslx.Modeling.ICollectionSlot<MetaOperation> Operations { get; }
         global::MetaDslx.Modeling.ICollectionSlot<MetaProperty> Properties { get; }
-        __MetaType? SymbolType { get; set; }
+        __MetaType SymbolType { get; set; }
     
     }
 
@@ -1748,10 +1748,10 @@ namespace MetaDslx.Languages.MetaModel.Model.__Impl
             get => MGetCollection<MetaProperty>(Meta.MetaClass_Properties);
         }
     
-        public __MetaType? SymbolType
+        public __MetaType SymbolType
         {
-            get => MGet<__MetaType?>(Meta.MetaClass_SymbolType);
-            set => MSet<__MetaType?>(Meta.MetaClass_SymbolType, value);
+            get => MGet<__MetaType>(Meta.MetaClass_SymbolType);
+            set => MSet<__MetaType>(Meta.MetaClass_SymbolType, value);
         }
     
         public global::MetaDslx.Modeling.ICollectionSlot<MetaDeclaration> Declarations

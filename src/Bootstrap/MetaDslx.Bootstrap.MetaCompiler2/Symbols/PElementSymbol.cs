@@ -280,14 +280,18 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Symbols
                                     var prefRule = pref.Rule;
                                     if (prefRule.OriginalSymbol is ParserRuleSymbol pr)
                                     {
-                                        if (!pr.ReturnType.IsAssignableTo(coreType))
+                                        // TODO:MetaDslx
+                                        // Replace non-void check with smarter type inference for Binder return types
+                                        if (!pr.ReturnType.IsAssignableTo(coreType) && pr.ReturnType.SpecialType != SpecialType.System_Void)
                                         {
                                             diagnostics.Add(Diagnostic.Create(CompilerErrorCode.ERR_ValueTypeMismatch, pref.Location, pr.ReturnType, coreType));
                                         }
                                     }
                                     else if (prefRule.OriginalSymbol is TokenSymbol lr)
                                     {
-                                        if (!lr.ReturnType.IsAssignableTo(coreType))
+                                        // TODO:MetaDslx
+                                        // Replace non-void check with smarter type inference for Binder return types
+                                        if (!lr.ReturnType.IsAssignableTo(coreType) && lr.ReturnType.SpecialType != SpecialType.System_Void)
                                         {
                                             diagnostics.Add(Diagnostic.Create(CompilerErrorCode.ERR_ValueTypeMismatch, pref.Location, lr.ReturnType, coreType));
                                         }

@@ -127,7 +127,7 @@ pr_TypeReference
     |  E_Qualifier=pr_Qualifier #pr_TypeReferenceAlt2
     ;
 pr_PrimitiveType
-    :  E_Token=(LR_KBool | LR_KInt | LR_KDouble | LR_KString | LR_KType | LR_KSymbol | LR_KObject | LR_KVoid)
+    :  E_Token=(LR_KObject | LR_KBool | LR_KChar | LR_KString | LR_KByte | LR_KSbyte | LR_KShort | LR_KUshort | LR_KInt | LR_KUint | LR_KLong | LR_KUlong | LR_KFloat | LR_KDouble | LR_KDecimal | LR_KType | LR_KSymbol | LR_KVoid)
     ;
 pr_Name
     :  E_Identifier=pr_Identifier
@@ -155,10 +155,11 @@ pr_RulealternativesBlock
     :  E_TBar1=LR_TBar  E_alternatives2=pr_Alternative
     ;
 pr_AlternativeBlock1
-    :  E_annotations+=pr_ParserAnnotation*  E_KAlt=LR_KAlt  E_Name=pr_Name  E_Block=pr_AlternativeBlock1Block1?  E_TColon=LR_TColon
+    :  E_annotations+=pr_ParserAnnotation*  E_KAlt=LR_KAlt  E_Block=pr_AlternativeBlock1Block1  E_TColon=LR_TColon
     ;
 pr_AlternativeBlock1Block1
-    :  E_KReturns=LR_KReturns  E_returnType=pr_TypeReference
+    :  E_returnType=pr_TypeReferenceIdentifier #pr_AlternativeBlock1Block1Alt1
+    |  E_Identifier=pr_Identifier  E_KReturns=LR_KReturns  E_returnType1=pr_TypeReference #pr_AlternativeBlock1Block1Alt2
     ;
 pr_AlternativeBlock2
     :  E_TEqGt=LR_TEqGt  E_returnValue=pr_Expression

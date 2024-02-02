@@ -79,7 +79,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
         void VisitRuleBlock1Alt2(RuleBlock1Alt2Syntax node);
         void VisitRulealternativesBlock(RulealternativesBlockSyntax node);
         void VisitAlternativeBlock1(AlternativeBlock1Syntax node);
-        void VisitAlternativeBlock1Block1(AlternativeBlock1Block1Syntax node);
+        void VisitAlternativeBlock1Block1Alt1(AlternativeBlock1Block1Alt1Syntax node);
+        void VisitAlternativeBlock1Block1Alt2(AlternativeBlock1Block1Alt2Syntax node);
         void VisitAlternativeBlock2(AlternativeBlock2Syntax node);
         void VisitElementBlock1(ElementBlock1Syntax node);
         void VisitBlockalternativesBlock(BlockalternativesBlockSyntax node);
@@ -426,7 +427,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
             this.DefaultVisit(node);
         }
 
-        public virtual void VisitAlternativeBlock1Block1(AlternativeBlock1Block1Syntax node)
+        public virtual void VisitAlternativeBlock1Block1Alt1(AlternativeBlock1Block1Alt1Syntax node)
+        {
+            this.DefaultVisit(node);
+        }
+
+        public virtual void VisitAlternativeBlock1Block1Alt2(AlternativeBlock1Block1Alt2Syntax node)
         {
             this.DefaultVisit(node);
         }
@@ -633,7 +639,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
         TResult VisitRuleBlock1Alt2(RuleBlock1Alt2Syntax node);
         TResult VisitRulealternativesBlock(RulealternativesBlockSyntax node);
         TResult VisitAlternativeBlock1(AlternativeBlock1Syntax node);
-        TResult VisitAlternativeBlock1Block1(AlternativeBlock1Block1Syntax node);
+        TResult VisitAlternativeBlock1Block1Alt1(AlternativeBlock1Block1Alt1Syntax node);
+        TResult VisitAlternativeBlock1Block1Alt2(AlternativeBlock1Block1Alt2Syntax node);
         TResult VisitAlternativeBlock2(AlternativeBlock2Syntax node);
         TResult VisitElementBlock1(ElementBlock1Syntax node);
         TResult VisitBlockalternativesBlock(BlockalternativesBlockSyntax node);
@@ -980,7 +987,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
             return this.DefaultVisit(node);
         }
 
-        public virtual TResult VisitAlternativeBlock1Block1(AlternativeBlock1Block1Syntax node)
+        public virtual TResult VisitAlternativeBlock1Block1Alt1(AlternativeBlock1Block1Alt1Syntax node)
+        {
+            return this.DefaultVisit(node);
+        }
+
+        public virtual TResult VisitAlternativeBlock1Block1Alt2(AlternativeBlock1Block1Alt2Syntax node)
         {
             return this.DefaultVisit(node);
         }
@@ -1187,7 +1199,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
         TResult VisitRuleBlock1Alt2(RuleBlock1Alt2Syntax node, TArg argument);
         TResult VisitRulealternativesBlock(RulealternativesBlockSyntax node, TArg argument);
         TResult VisitAlternativeBlock1(AlternativeBlock1Syntax node, TArg argument);
-        TResult VisitAlternativeBlock1Block1(AlternativeBlock1Block1Syntax node, TArg argument);
+        TResult VisitAlternativeBlock1Block1Alt1(AlternativeBlock1Block1Alt1Syntax node, TArg argument);
+        TResult VisitAlternativeBlock1Block1Alt2(AlternativeBlock1Block1Alt2Syntax node, TArg argument);
         TResult VisitAlternativeBlock2(AlternativeBlock2Syntax node, TArg argument);
         TResult VisitElementBlock1(ElementBlock1Syntax node, TArg argument);
         TResult VisitBlockalternativesBlock(BlockalternativesBlockSyntax node, TArg argument);
@@ -1534,7 +1547,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
             return this.DefaultVisit(node, argument);
         }
 
-        public virtual TResult VisitAlternativeBlock1Block1(AlternativeBlock1Block1Syntax node, TArg argument)
+        public virtual TResult VisitAlternativeBlock1Block1Alt1(AlternativeBlock1Block1Alt1Syntax node, TArg argument)
+        {
+            return this.DefaultVisit(node, argument);
+        }
+
+        public virtual TResult VisitAlternativeBlock1Block1Alt2(AlternativeBlock1Block1Alt2Syntax node, TArg argument)
         {
             return this.DefaultVisit(node, argument);
         }
@@ -2120,17 +2138,23 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
         {
             var annotations1 = this.VisitList(node.Annotations1);
             var kAlt = this.VisitToken(node.KAlt);
-            var name = (NameSyntax)this.Visit(node.Name);
             var block = (AlternativeBlock1Block1Syntax)this.Visit(node.Block);
             var tColon = this.VisitToken(node.TColon);
-            return node.Update(annotations1, kAlt, name, block, tColon);
+            return node.Update(annotations1, kAlt, block, tColon);
         }
 
-        public virtual SyntaxNode VisitAlternativeBlock1Block1(AlternativeBlock1Block1Syntax node)
+        public virtual SyntaxNode VisitAlternativeBlock1Block1Alt1(AlternativeBlock1Block1Alt1Syntax node)
         {
+            var returnType = (TypeReferenceIdentifierSyntax)this.Visit(node.ReturnType);
+            return node.Update(returnType);
+        }
+
+        public virtual SyntaxNode VisitAlternativeBlock1Block1Alt2(AlternativeBlock1Block1Alt2Syntax node)
+        {
+            var identifier = (IdentifierSyntax)this.Visit(node.Identifier);
             var kReturns = this.VisitToken(node.KReturns);
             var returnType = (TypeReferenceSyntax)this.Visit(node.ReturnType);
-            return node.Update(kReturns, returnType);
+            return node.Update(identifier, kReturns, returnType);
         }
 
         public virtual SyntaxNode VisitAlternativeBlock2(AlternativeBlock2Syntax node)
