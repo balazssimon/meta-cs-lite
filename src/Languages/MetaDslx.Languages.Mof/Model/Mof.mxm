@@ -37,10 +37,6 @@ class Tag $Symbol
 {
 	string $Name;
 	string? Value;
-	string XStr = "abc";
-	int XInt = 4;
-	double XDouble = 3.5;
-	bool XBool = true;
 	Element[] Element opposite Element.Tag;
 }
 

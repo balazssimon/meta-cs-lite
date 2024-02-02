@@ -5528,12 +5528,12 @@ namespace MetaDslx.Languages.MetaModel.Generators
                 {
                     __first48 = false;
                 }
-                #line (334,14)-(334,89) 17 "MetaModelGenerator.mxg"
+                #line (334,14)-(334,102) 17 "MetaModelGenerator.mxg"
                 var defaultValue = ToCSharpValue(slot.SlotProperty.Type, slot.SlotProperty.DefaultValue);
                 #line hidden
                 
                 var __first49 = true;
-                #line (335,14)-(335,82) 17 "MetaModelGenerator.mxg"
+                #line (335,14)-(335,83) 17 "MetaModelGenerator.mxg"
                 if (!string.IsNullOrEmpty(defaultValue) && defaultValue != "default")
                 #line hidden
                 
