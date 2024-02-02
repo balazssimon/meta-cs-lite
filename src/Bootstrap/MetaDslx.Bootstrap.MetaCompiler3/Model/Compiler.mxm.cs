@@ -42,6 +42,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model
         private static readonly __ModelProperty _Declaration_Declarations;
         private static readonly __ModelProperty _Declaration_FullName;
         private static readonly __ModelProperty _Language_Namespace;
+        private static readonly __ModelProperty _Language_BaseLanguages;
         private static readonly __ModelProperty _Language_Grammar;
         private static readonly __ModelProperty _Grammar_Language;
         private static readonly __ModelProperty _Grammar_GrammarRules;
@@ -204,87 +205,88 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model
         static Compiler()
         {
             _Annotation_Arguments = new __ModelProperty(typeof(Annotation), "Arguments", typeof(AnnotationArgument), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection, "Arguments");
-            _Annotation_AttributeClass = new __ModelProperty(typeof(Annotation), "AttributeClass", typeof(global::MetaDslx.CodeAnalysis.MetaType), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single, "AttributeClass");
-            _AnnotationArgument_NamedParameter = new __ModelProperty(typeof(AnnotationArgument), "NamedParameter", typeof(global::MetaDslx.CodeAnalysis.MetaSymbol), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Collection, "NamedParameter");
+            _Annotation_AttributeClass = new __ModelProperty(typeof(Annotation), "AttributeClass", typeof(__MetaType), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single, "AttributeClass");
+            _AnnotationArgument_NamedParameter = new __ModelProperty(typeof(AnnotationArgument), "NamedParameter", typeof(__MetaSymbol), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Collection, "NamedParameter");
             _AnnotationArgument_Parameter = new __ModelProperty(typeof(AnnotationArgument), "Parameter", typeof(global::MetaDslx.CodeAnalysis.Symbols.DeclarationSymbol), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.Single, "Parameter");
-            _AnnotationArgument_ParameterType = new __ModelProperty(typeof(AnnotationArgument), "ParameterType", typeof(global::MetaDslx.CodeAnalysis.MetaType), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single, null);
+            _AnnotationArgument_ParameterType = new __ModelProperty(typeof(AnnotationArgument), "ParameterType", typeof(__MetaType), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single, null);
             _AnnotationArgument_Value = new __ModelProperty(typeof(AnnotationArgument), "Value", typeof(Expression), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Single, "Value");
             _ArrayExpression_Items = new __ModelProperty(typeof(ArrayExpression), "Items", typeof(Expression), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Collection, null);
             _Binder_Arguments = new __ModelProperty(typeof(Binder), "Arguments", typeof(BinderArgument), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection, null);
-            _Binder_ConstructorArguments = new __ModelProperty(typeof(Binder), "ConstructorArguments", typeof(global::System.String), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
-            _Binder_IsNegated = new __ModelProperty(typeof(Binder), "IsNegated", typeof(global::System.Boolean), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single, null);
-            _Binder_TypeName = new __ModelProperty(typeof(Binder), "TypeName", typeof(global::System.String), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single, null);
-            _BinderArgument_IsArray = new __ModelProperty(typeof(BinderArgument), "IsArray", typeof(global::System.Boolean), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single, null);
-            _BinderArgument_Name = new __ModelProperty(typeof(BinderArgument), "Name", typeof(global::System.String), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single, null);
-            _BinderArgument_TypeName = new __ModelProperty(typeof(BinderArgument), "TypeName", typeof(global::System.String), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single, null);
-            _BinderArgument_Values = new __ModelProperty(typeof(BinderArgument), "Values", typeof(global::System.String), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Collection, null);
+            _Binder_ConstructorArguments = new __ModelProperty(typeof(Binder), "ConstructorArguments", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
+            _Binder_IsNegated = new __ModelProperty(typeof(Binder), "IsNegated", typeof(bool), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single, null);
+            _Binder_TypeName = new __ModelProperty(typeof(Binder), "TypeName", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single, null);
+            _BinderArgument_IsArray = new __ModelProperty(typeof(BinderArgument), "IsArray", typeof(bool), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single, null);
+            _BinderArgument_Name = new __ModelProperty(typeof(BinderArgument), "Name", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single, null);
+            _BinderArgument_TypeName = new __ModelProperty(typeof(BinderArgument), "TypeName", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single, null);
+            _BinderArgument_Values = new __ModelProperty(typeof(BinderArgument), "Values", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Collection, null);
             _CSharpElement_Annotations = new __ModelProperty(typeof(CSharpElement), "Annotations", typeof(Annotation), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection, null);
-            _CSharpElement_AntlrName = new __ModelProperty(typeof(CSharpElement), "AntlrName", typeof(global::System.String), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single, null);
+            _CSharpElement_AntlrName = new __ModelProperty(typeof(CSharpElement), "AntlrName", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single, null);
             _CSharpElement_Binders = new __ModelProperty(typeof(CSharpElement), "Binders", typeof(Binder), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection, null);
-            _CSharpElement_ContainsBinders = new __ModelProperty(typeof(CSharpElement), "ContainsBinders", typeof(global::System.Boolean), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single, null);
-            _CSharpElement_CSharpName = new __ModelProperty(typeof(CSharpElement), "CSharpName", typeof(global::System.String), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single, null);
+            _CSharpElement_ContainsBinders = new __ModelProperty(typeof(CSharpElement), "ContainsBinders", typeof(bool), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single, null);
+            _CSharpElement_CSharpName = new __ModelProperty(typeof(CSharpElement), "CSharpName", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single, null);
             _Declaration_Declarations = new __ModelProperty(typeof(Declaration), "Declarations", typeof(Declaration), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection, null);
-            _Declaration_FullName = new __ModelProperty(typeof(Declaration), "FullName", typeof(global::System.String), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
-            _Declaration_Name = new __ModelProperty(typeof(Declaration), "Name", typeof(global::System.String), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.Name, "Name");
+            _Declaration_FullName = new __ModelProperty(typeof(Declaration), "FullName", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
+            _Declaration_Name = new __ModelProperty(typeof(Declaration), "Name", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.Name, "Name");
             _Declaration_Parent = new __ModelProperty(typeof(Declaration), "Parent", typeof(Declaration), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Single, null);
             _Alternative_Elements = new __ModelProperty(typeof(Alternative), "Elements", typeof(Element), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection, "Elements");
-            _Alternative_GreenConstructorArguments = new __ModelProperty(typeof(Alternative), "GreenConstructorArguments", typeof(global::System.String), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
-            _Alternative_GreenConstructorParameters = new __ModelProperty(typeof(Alternative), "GreenConstructorParameters", typeof(global::System.String), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
-            _Alternative_GreenName = new __ModelProperty(typeof(Alternative), "GreenName", typeof(global::System.String), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
-            _Alternative_GreenUpdateArguments = new __ModelProperty(typeof(Alternative), "GreenUpdateArguments", typeof(global::System.String), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
-            _Alternative_GreenUpdateParameters = new __ModelProperty(typeof(Alternative), "GreenUpdateParameters", typeof(global::System.String), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
-            _Alternative_HasRedToGreenOptionalArguments = new __ModelProperty(typeof(Alternative), "HasRedToGreenOptionalArguments", typeof(global::System.Boolean), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
-            _Alternative_RedName = new __ModelProperty(typeof(Alternative), "RedName", typeof(global::System.String), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
-            _Alternative_RedOptionalUpdateParameters = new __ModelProperty(typeof(Alternative), "RedOptionalUpdateParameters", typeof(global::System.String), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
-            _Alternative_RedToGreenArgumentList = new __ModelProperty(typeof(Alternative), "RedToGreenArgumentList", typeof(global::System.String), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
-            _Alternative_RedToGreenOptionalArgumentList = new __ModelProperty(typeof(Alternative), "RedToGreenOptionalArgumentList", typeof(global::System.String), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
-            _Alternative_RedUpdateArguments = new __ModelProperty(typeof(Alternative), "RedUpdateArguments", typeof(global::System.String), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
-            _Alternative_RedUpdateParameters = new __ModelProperty(typeof(Alternative), "RedUpdateParameters", typeof(global::System.String), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
-            _Alternative_ReturnType = new __ModelProperty(typeof(Alternative), "ReturnType", typeof(global::MetaDslx.CodeAnalysis.MetaType), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single, "ReturnType");
+            _Alternative_GreenConstructorArguments = new __ModelProperty(typeof(Alternative), "GreenConstructorArguments", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
+            _Alternative_GreenConstructorParameters = new __ModelProperty(typeof(Alternative), "GreenConstructorParameters", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
+            _Alternative_GreenName = new __ModelProperty(typeof(Alternative), "GreenName", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
+            _Alternative_GreenUpdateArguments = new __ModelProperty(typeof(Alternative), "GreenUpdateArguments", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
+            _Alternative_GreenUpdateParameters = new __ModelProperty(typeof(Alternative), "GreenUpdateParameters", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
+            _Alternative_HasRedToGreenOptionalArguments = new __ModelProperty(typeof(Alternative), "HasRedToGreenOptionalArguments", typeof(bool), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
+            _Alternative_RedName = new __ModelProperty(typeof(Alternative), "RedName", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
+            _Alternative_RedOptionalUpdateParameters = new __ModelProperty(typeof(Alternative), "RedOptionalUpdateParameters", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
+            _Alternative_RedToGreenArgumentList = new __ModelProperty(typeof(Alternative), "RedToGreenArgumentList", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
+            _Alternative_RedToGreenOptionalArgumentList = new __ModelProperty(typeof(Alternative), "RedToGreenOptionalArgumentList", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
+            _Alternative_RedUpdateArguments = new __ModelProperty(typeof(Alternative), "RedUpdateArguments", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
+            _Alternative_RedUpdateParameters = new __ModelProperty(typeof(Alternative), "RedUpdateParameters", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
+            _Alternative_ReturnType = new __ModelProperty(typeof(Alternative), "ReturnType", typeof(__MetaType), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single, "ReturnType");
             _Alternative_ReturnValue = new __ModelProperty(typeof(Alternative), "ReturnValue", typeof(Expression), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Single, "ReturnValue");
-            _ElementValue_GreenSyntaxCondition = new __ModelProperty(typeof(ElementValue), "GreenSyntaxCondition", typeof(global::System.String), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
-            _ElementValue_GreenType = new __ModelProperty(typeof(ElementValue), "GreenType", typeof(global::System.String), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
+            _ElementValue_GreenSyntaxCondition = new __ModelProperty(typeof(ElementValue), "GreenSyntaxCondition", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
+            _ElementValue_GreenType = new __ModelProperty(typeof(ElementValue), "GreenType", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
             _ElementValue_Multiplicity = new __ModelProperty(typeof(ElementValue), "Multiplicity", typeof(global::MetaDslx.Bootstrap.MetaCompiler3.Model.Multiplicity), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.EnumType | __ModelPropertyFlags.Single, null);
-            _ElementValue_RedType = new __ModelProperty(typeof(ElementValue), "RedType", typeof(global::System.String), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
-            _Block_GreenSyntaxCondition = new __ModelProperty(typeof(Block), "GreenSyntaxCondition", typeof(global::System.String), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
-            _Block_GreenType = new __ModelProperty(typeof(Block), "GreenType", typeof(global::System.String), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
-            _Block_RedType = new __ModelProperty(typeof(Block), "RedType", typeof(global::System.String), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
+            _ElementValue_RedType = new __ModelProperty(typeof(ElementValue), "RedType", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
+            _Block_GreenSyntaxCondition = new __ModelProperty(typeof(Block), "GreenSyntaxCondition", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
+            _Block_GreenType = new __ModelProperty(typeof(Block), "GreenType", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
+            _Block_RedType = new __ModelProperty(typeof(Block), "RedType", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
             _Element_Assignment = new __ModelProperty(typeof(Element), "Assignment", typeof(global::MetaDslx.Bootstrap.MetaCompiler3.Model.Assignment), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.EnumType | __ModelPropertyFlags.Single, "Assignment");
-            _Element_FieldName = new __ModelProperty(typeof(Element), "FieldName", typeof(global::System.String), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
-            _Element_GreenFieldType = new __ModelProperty(typeof(Element), "GreenFieldType", typeof(global::System.String), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
-            _Element_GreenParameterValue = new __ModelProperty(typeof(Element), "GreenParameterValue", typeof(global::System.String), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
-            _Element_GreenPropertyType = new __ModelProperty(typeof(Element), "GreenPropertyType", typeof(global::System.String), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
-            _Element_GreenPropertyValue = new __ModelProperty(typeof(Element), "GreenPropertyValue", typeof(global::System.String), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
-            _Element_GreenSyntaxCondition = new __ModelProperty(typeof(Element), "GreenSyntaxCondition", typeof(global::System.String), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
-            _Element_GreenSyntaxNullCondition = new __ModelProperty(typeof(Element), "GreenSyntaxNullCondition", typeof(global::System.String), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
-            _Element_IsList = new __ModelProperty(typeof(Element), "IsList", typeof(global::System.Boolean), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
-            _Element_IsOptionalUpdateParameter = new __ModelProperty(typeof(Element), "IsOptionalUpdateParameter", typeof(global::System.Boolean), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
-            _Element_IsToken = new __ModelProperty(typeof(Element), "IsToken", typeof(global::System.Boolean), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
-            _Element_Name = new __ModelProperty(typeof(Element), "Name", typeof(global::System.String), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.Name, "Name");
-            _Element_ParameterName = new __ModelProperty(typeof(Element), "ParameterName", typeof(global::System.String), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
-            _Element_PropertyName = new __ModelProperty(typeof(Element), "PropertyName", typeof(global::System.String), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
-            _Element_RedFieldType = new __ModelProperty(typeof(Element), "RedFieldType", typeof(global::System.String), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
-            _Element_RedParameterValue = new __ModelProperty(typeof(Element), "RedParameterValue", typeof(global::System.String), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
-            _Element_RedPropertyType = new __ModelProperty(typeof(Element), "RedPropertyType", typeof(global::System.String), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
-            _Element_RedPropertyValue = new __ModelProperty(typeof(Element), "RedPropertyValue", typeof(global::System.String), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
-            _Element_RedSyntaxCondition = new __ModelProperty(typeof(Element), "RedSyntaxCondition", typeof(global::System.String), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
-            _Element_RedSyntaxNullCondition = new __ModelProperty(typeof(Element), "RedSyntaxNullCondition", typeof(global::System.String), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
-            _Element_RedToGreenArgument = new __ModelProperty(typeof(Element), "RedToGreenArgument", typeof(global::System.String), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
-            _Element_RedToGreenOptionalArgument = new __ModelProperty(typeof(Element), "RedToGreenOptionalArgument", typeof(global::System.String), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
+            _Element_FieldName = new __ModelProperty(typeof(Element), "FieldName", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
+            _Element_GreenFieldType = new __ModelProperty(typeof(Element), "GreenFieldType", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
+            _Element_GreenParameterValue = new __ModelProperty(typeof(Element), "GreenParameterValue", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
+            _Element_GreenPropertyType = new __ModelProperty(typeof(Element), "GreenPropertyType", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
+            _Element_GreenPropertyValue = new __ModelProperty(typeof(Element), "GreenPropertyValue", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
+            _Element_GreenSyntaxCondition = new __ModelProperty(typeof(Element), "GreenSyntaxCondition", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
+            _Element_GreenSyntaxNullCondition = new __ModelProperty(typeof(Element), "GreenSyntaxNullCondition", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
+            _Element_IsList = new __ModelProperty(typeof(Element), "IsList", typeof(bool), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
+            _Element_IsOptionalUpdateParameter = new __ModelProperty(typeof(Element), "IsOptionalUpdateParameter", typeof(bool), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
+            _Element_IsToken = new __ModelProperty(typeof(Element), "IsToken", typeof(bool), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
+            _Element_Name = new __ModelProperty(typeof(Element), "Name", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.Name, "Name");
+            _Element_ParameterName = new __ModelProperty(typeof(Element), "ParameterName", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
+            _Element_PropertyName = new __ModelProperty(typeof(Element), "PropertyName", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
+            _Element_RedFieldType = new __ModelProperty(typeof(Element), "RedFieldType", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
+            _Element_RedParameterValue = new __ModelProperty(typeof(Element), "RedParameterValue", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
+            _Element_RedPropertyType = new __ModelProperty(typeof(Element), "RedPropertyType", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
+            _Element_RedPropertyValue = new __ModelProperty(typeof(Element), "RedPropertyValue", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
+            _Element_RedSyntaxCondition = new __ModelProperty(typeof(Element), "RedSyntaxCondition", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
+            _Element_RedSyntaxNullCondition = new __ModelProperty(typeof(Element), "RedSyntaxNullCondition", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
+            _Element_RedToGreenArgument = new __ModelProperty(typeof(Element), "RedToGreenArgument", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
+            _Element_RedToGreenOptionalArgument = new __ModelProperty(typeof(Element), "RedToGreenOptionalArgument", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
             _Element_Value = new __ModelProperty(typeof(Element), "Value", typeof(ElementValue), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Single, "Value");
-            _Element_VisitCall = new __ModelProperty(typeof(Element), "VisitCall", typeof(global::System.String), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
-            _Eof_GreenSyntaxCondition = new __ModelProperty(typeof(Eof), "GreenSyntaxCondition", typeof(global::System.String), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
-            _Eof_GreenType = new __ModelProperty(typeof(Eof), "GreenType", typeof(global::System.String), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
-            _Eof_RedType = new __ModelProperty(typeof(Eof), "RedType", typeof(global::System.String), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
-            _Expression_Value = new __ModelProperty(typeof(Expression), "Value", typeof(global::MetaDslx.CodeAnalysis.MetaSymbol), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single, "Value");
-            _Fixed_Text = new __ModelProperty(typeof(Fixed), "Text", typeof(global::System.String), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single, null);
+            _Element_VisitCall = new __ModelProperty(typeof(Element), "VisitCall", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
+            _Eof_GreenSyntaxCondition = new __ModelProperty(typeof(Eof), "GreenSyntaxCondition", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
+            _Eof_GreenType = new __ModelProperty(typeof(Eof), "GreenType", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
+            _Eof_RedType = new __ModelProperty(typeof(Eof), "RedType", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
+            _Expression_Value = new __ModelProperty(typeof(Expression), "Value", typeof(__MetaSymbol), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single, "Value");
+            _Fixed_Text = new __ModelProperty(typeof(Fixed), "Text", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single, null);
             _GrammarRule_Grammar = new __ModelProperty(typeof(GrammarRule), "Grammar", typeof(Grammar), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Single, null);
             _GrammarRule_Language = new __ModelProperty(typeof(GrammarRule), "Language", typeof(Language), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
+            _Language_BaseLanguages = new __ModelProperty(typeof(Language), "BaseLanguages", typeof(__MetaType), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Collection, null);
             _Language_Grammar = new __ModelProperty(typeof(Language), "Grammar", typeof(Grammar), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Single, null);
-            _Language_Namespace = new __ModelProperty(typeof(Language), "Namespace", typeof(global::System.String), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
+            _Language_Namespace = new __ModelProperty(typeof(Language), "Namespace", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
             _LexerRule_Alternatives = new __ModelProperty(typeof(LexerRule), "Alternatives", typeof(LAlternative), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection, null);
-            _LexerRule_FixedText = new __ModelProperty(typeof(LexerRule), "FixedText", typeof(global::System.String), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
-            _LexerRule_IsFixed = new __ModelProperty(typeof(LexerRule), "IsFixed", typeof(global::System.Boolean), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
+            _LexerRule_FixedText = new __ModelProperty(typeof(LexerRule), "FixedText", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
+            _LexerRule_IsFixed = new __ModelProperty(typeof(LexerRule), "IsFixed", typeof(bool), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
             _Grammar_Blocks = new __ModelProperty(typeof(Grammar), "Blocks", typeof(Block), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Collection, null);
             _Grammar_DefaultEndOfLine = new __ModelProperty(typeof(Grammar), "DefaultEndOfLine", typeof(Token), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Single, null);
             _Grammar_DefaultIdentifier = new __ModelProperty(typeof(Grammar), "DefaultIdentifier", typeof(Token), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Single, null);
@@ -297,75 +299,75 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model
             _Grammar_TokenKinds = new __ModelProperty(typeof(Grammar), "TokenKinds", typeof(TokenKind), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection, null);
             _Grammar_Tokens = new __ModelProperty(typeof(Grammar), "Tokens", typeof(Token), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection, null);
             _LAlternative_Elements = new __ModelProperty(typeof(LAlternative), "Elements", typeof(LElement), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection, null);
-            _LAlternative_FixedText = new __ModelProperty(typeof(LAlternative), "FixedText", typeof(global::System.String), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
-            _LAlternative_IsFixed = new __ModelProperty(typeof(LAlternative), "IsFixed", typeof(global::System.Boolean), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
-            _LElement_FixedText = new __ModelProperty(typeof(LElement), "FixedText", typeof(global::System.String), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
-            _LElement_IsFixed = new __ModelProperty(typeof(LElement), "IsFixed", typeof(global::System.Boolean), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
-            _LElement_IsNegated = new __ModelProperty(typeof(LElement), "IsNegated", typeof(global::System.Boolean), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single, null);
+            _LAlternative_FixedText = new __ModelProperty(typeof(LAlternative), "FixedText", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
+            _LAlternative_IsFixed = new __ModelProperty(typeof(LAlternative), "IsFixed", typeof(bool), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
+            _LElement_FixedText = new __ModelProperty(typeof(LElement), "FixedText", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
+            _LElement_IsFixed = new __ModelProperty(typeof(LElement), "IsFixed", typeof(bool), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
+            _LElement_IsNegated = new __ModelProperty(typeof(LElement), "IsNegated", typeof(bool), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single, null);
             _LElement_Multiplicity = new __ModelProperty(typeof(LElement), "Multiplicity", typeof(global::MetaDslx.Bootstrap.MetaCompiler3.Model.Multiplicity), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.EnumType | __ModelPropertyFlags.Single, null);
             _LElement_Value = new __ModelProperty(typeof(LElement), "Value", typeof(LElementValue), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Single, null);
-            _LElementValue_FixedText = new __ModelProperty(typeof(LElementValue), "FixedText", typeof(global::System.String), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
-            _LElementValue_IsFixed = new __ModelProperty(typeof(LElementValue), "IsFixed", typeof(global::System.Boolean), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
+            _LElementValue_FixedText = new __ModelProperty(typeof(LElementValue), "FixedText", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
+            _LElementValue_IsFixed = new __ModelProperty(typeof(LElementValue), "IsFixed", typeof(bool), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
             _LBlock_Alternatives = new __ModelProperty(typeof(LBlock), "Alternatives", typeof(LAlternative), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection, null);
-            _LBlock_FixedText = new __ModelProperty(typeof(LBlock), "FixedText", typeof(global::System.String), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
-            _LBlock_IsFixed = new __ModelProperty(typeof(LBlock), "IsFixed", typeof(global::System.Boolean), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
-            _LFixed_FixedText = new __ModelProperty(typeof(LFixed), "FixedText", typeof(global::System.String), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
-            _LFixed_IsFixed = new __ModelProperty(typeof(LFixed), "IsFixed", typeof(global::System.Boolean), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
-            _LFixed_Text = new __ModelProperty(typeof(LFixed), "Text", typeof(global::System.String), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single, null);
-            _LRange_EndChar = new __ModelProperty(typeof(LRange), "EndChar", typeof(global::System.String), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single, null);
-            _LRange_FixedText = new __ModelProperty(typeof(LRange), "FixedText", typeof(global::System.String), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
-            _LRange_IsFixed = new __ModelProperty(typeof(LRange), "IsFixed", typeof(global::System.Boolean), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
-            _LRange_StartChar = new __ModelProperty(typeof(LRange), "StartChar", typeof(global::System.String), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single, null);
-            _LReference_FixedText = new __ModelProperty(typeof(LReference), "FixedText", typeof(global::System.String), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
-            _LReference_IsFixed = new __ModelProperty(typeof(LReference), "IsFixed", typeof(global::System.Boolean), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
+            _LBlock_FixedText = new __ModelProperty(typeof(LBlock), "FixedText", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
+            _LBlock_IsFixed = new __ModelProperty(typeof(LBlock), "IsFixed", typeof(bool), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
+            _LFixed_FixedText = new __ModelProperty(typeof(LFixed), "FixedText", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
+            _LFixed_IsFixed = new __ModelProperty(typeof(LFixed), "IsFixed", typeof(bool), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
+            _LFixed_Text = new __ModelProperty(typeof(LFixed), "Text", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single, null);
+            _LRange_EndChar = new __ModelProperty(typeof(LRange), "EndChar", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single, null);
+            _LRange_FixedText = new __ModelProperty(typeof(LRange), "FixedText", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
+            _LRange_IsFixed = new __ModelProperty(typeof(LRange), "IsFixed", typeof(bool), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
+            _LRange_StartChar = new __ModelProperty(typeof(LRange), "StartChar", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single, null);
+            _LReference_FixedText = new __ModelProperty(typeof(LReference), "FixedText", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
+            _LReference_IsFixed = new __ModelProperty(typeof(LReference), "IsFixed", typeof(bool), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
             _LReference_Rule = new __ModelProperty(typeof(LReference), "Rule", typeof(LexerRule), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Single, null);
-            _LSet_FixedText = new __ModelProperty(typeof(LSet), "FixedText", typeof(global::System.String), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
-            _LSet_IsFixed = new __ModelProperty(typeof(LSet), "IsFixed", typeof(global::System.Boolean), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
+            _LSet_FixedText = new __ModelProperty(typeof(LSet), "FixedText", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
+            _LSet_IsFixed = new __ModelProperty(typeof(LSet), "IsFixed", typeof(bool), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
             _LSet_Items = new __ModelProperty(typeof(LSet), "Items", typeof(LSetItem), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection, null);
-            _LSetItem_FixedText = new __ModelProperty(typeof(LSetItem), "FixedText", typeof(global::System.String), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
-            _LSetItem_IsFixed = new __ModelProperty(typeof(LSetItem), "IsFixed", typeof(global::System.Boolean), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
-            _LSetChar_Char = new __ModelProperty(typeof(LSetChar), "Char", typeof(global::System.String), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single, null);
-            _LSetChar_FixedText = new __ModelProperty(typeof(LSetChar), "FixedText", typeof(global::System.String), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
-            _LSetChar_IsFixed = new __ModelProperty(typeof(LSetChar), "IsFixed", typeof(global::System.Boolean), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
-            _LSetRange_EndChar = new __ModelProperty(typeof(LSetRange), "EndChar", typeof(global::System.String), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single, null);
-            _LSetRange_FixedText = new __ModelProperty(typeof(LSetRange), "FixedText", typeof(global::System.String), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
-            _LSetRange_IsFixed = new __ModelProperty(typeof(LSetRange), "IsFixed", typeof(global::System.Boolean), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
-            _LSetRange_StartChar = new __ModelProperty(typeof(LSetRange), "StartChar", typeof(global::System.String), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single, null);
-            _LWildCard_FixedText = new __ModelProperty(typeof(LWildCard), "FixedText", typeof(global::System.String), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
-            _LWildCard_IsFixed = new __ModelProperty(typeof(LWildCard), "IsFixed", typeof(global::System.Boolean), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
+            _LSetItem_FixedText = new __ModelProperty(typeof(LSetItem), "FixedText", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
+            _LSetItem_IsFixed = new __ModelProperty(typeof(LSetItem), "IsFixed", typeof(bool), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
+            _LSetChar_Char = new __ModelProperty(typeof(LSetChar), "Char", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single, null);
+            _LSetChar_FixedText = new __ModelProperty(typeof(LSetChar), "FixedText", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
+            _LSetChar_IsFixed = new __ModelProperty(typeof(LSetChar), "IsFixed", typeof(bool), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
+            _LSetRange_EndChar = new __ModelProperty(typeof(LSetRange), "EndChar", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single, null);
+            _LSetRange_FixedText = new __ModelProperty(typeof(LSetRange), "FixedText", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
+            _LSetRange_IsFixed = new __ModelProperty(typeof(LSetRange), "IsFixed", typeof(bool), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
+            _LSetRange_StartChar = new __ModelProperty(typeof(LSetRange), "StartChar", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single, null);
+            _LWildCard_FixedText = new __ModelProperty(typeof(LWildCard), "FixedText", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
+            _LWildCard_IsFixed = new __ModelProperty(typeof(LWildCard), "IsFixed", typeof(bool), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
             _Rule_Alternatives = new __ModelProperty(typeof(Rule), "Alternatives", typeof(Alternative), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection, "Alternatives");
             _Rule_BaseRule = new __ModelProperty(typeof(Rule), "BaseRule", typeof(Alternative), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Single, null);
-            _Rule_GreenName = new __ModelProperty(typeof(Rule), "GreenName", typeof(global::System.String), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
-            _Rule_RedName = new __ModelProperty(typeof(Rule), "RedName", typeof(global::System.String), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
-            _Rule_ReturnType = new __ModelProperty(typeof(Rule), "ReturnType", typeof(global::MetaDslx.CodeAnalysis.MetaType), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single, "ReturnType");
+            _Rule_GreenName = new __ModelProperty(typeof(Rule), "GreenName", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
+            _Rule_RedName = new __ModelProperty(typeof(Rule), "RedName", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
+            _Rule_ReturnType = new __ModelProperty(typeof(Rule), "ReturnType", typeof(__MetaType), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single, "ReturnType");
             _RuleRef_GrammarRule = new __ModelProperty(typeof(RuleRef), "GrammarRule", typeof(GrammarRule), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Single, "Rule");
-            _RuleRef_GreenSyntaxCondition = new __ModelProperty(typeof(RuleRef), "GreenSyntaxCondition", typeof(global::System.String), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
-            _RuleRef_GreenType = new __ModelProperty(typeof(RuleRef), "GreenType", typeof(global::System.String), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
-            _RuleRef_RedType = new __ModelProperty(typeof(RuleRef), "RedType", typeof(global::System.String), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
-            _RuleRef_ReferencedTypes = new __ModelProperty(typeof(RuleRef), "ReferencedTypes", typeof(global::MetaDslx.CodeAnalysis.MetaType), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Collection, "ReferencedTypes");
+            _RuleRef_GreenSyntaxCondition = new __ModelProperty(typeof(RuleRef), "GreenSyntaxCondition", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
+            _RuleRef_GreenType = new __ModelProperty(typeof(RuleRef), "GreenType", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
+            _RuleRef_RedType = new __ModelProperty(typeof(RuleRef), "RedType", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
+            _RuleRef_ReferencedTypes = new __ModelProperty(typeof(RuleRef), "ReferencedTypes", typeof(__MetaType), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Collection, "ReferencedTypes");
             _RuleRef_Rule = new __ModelProperty(typeof(RuleRef), "Rule", typeof(Rule), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
             _RuleRef_Token = new __ModelProperty(typeof(RuleRef), "Token", typeof(Token), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
             _SeparatedList_FirstItems = new __ModelProperty(typeof(SeparatedList), "FirstItems", typeof(Element), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection, null);
             _SeparatedList_FirstSeparators = new __ModelProperty(typeof(SeparatedList), "FirstSeparators", typeof(Element), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection, null);
-            _SeparatedList_GreenSyntaxCondition = new __ModelProperty(typeof(SeparatedList), "GreenSyntaxCondition", typeof(global::System.String), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
-            _SeparatedList_GreenType = new __ModelProperty(typeof(SeparatedList), "GreenType", typeof(global::System.String), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
+            _SeparatedList_GreenSyntaxCondition = new __ModelProperty(typeof(SeparatedList), "GreenSyntaxCondition", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
+            _SeparatedList_GreenType = new __ModelProperty(typeof(SeparatedList), "GreenType", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
             _SeparatedList_LastItems = new __ModelProperty(typeof(SeparatedList), "LastItems", typeof(Element), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection, null);
             _SeparatedList_LastSeparators = new __ModelProperty(typeof(SeparatedList), "LastSeparators", typeof(Element), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection, null);
-            _SeparatedList_RedType = new __ModelProperty(typeof(SeparatedList), "RedType", typeof(global::System.String), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
+            _SeparatedList_RedType = new __ModelProperty(typeof(SeparatedList), "RedType", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
             _SeparatedList_RepeatedBlock = new __ModelProperty(typeof(SeparatedList), "RepeatedBlock", typeof(Element), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Single, null);
             _SeparatedList_RepeatedItem = new __ModelProperty(typeof(SeparatedList), "RepeatedItem", typeof(Element), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Single, null);
             _SeparatedList_RepeatedSeparator = new __ModelProperty(typeof(SeparatedList), "RepeatedSeparator", typeof(Element), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Single, null);
-            _SeparatedList_RepeatedSeparatorFirst = new __ModelProperty(typeof(SeparatedList), "RepeatedSeparatorFirst", typeof(global::System.Boolean), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single, null);
-            _SeparatedList_SeparatorFirst = new __ModelProperty(typeof(SeparatedList), "SeparatorFirst", typeof(global::System.Boolean), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single, null);
-            _Token_IsTrivia = new __ModelProperty(typeof(Token), "IsTrivia", typeof(global::System.Boolean), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single, null);
-            _Token_ReturnType = new __ModelProperty(typeof(Token), "ReturnType", typeof(global::MetaDslx.CodeAnalysis.MetaType), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single, "ReturnType");
+            _SeparatedList_RepeatedSeparatorFirst = new __ModelProperty(typeof(SeparatedList), "RepeatedSeparatorFirst", typeof(bool), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single, null);
+            _SeparatedList_SeparatorFirst = new __ModelProperty(typeof(SeparatedList), "SeparatorFirst", typeof(bool), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single, null);
+            _Token_IsTrivia = new __ModelProperty(typeof(Token), "IsTrivia", typeof(bool), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single, null);
+            _Token_ReturnType = new __ModelProperty(typeof(Token), "ReturnType", typeof(__MetaType), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single, "ReturnType");
             _Token_TokenKind = new __ModelProperty(typeof(Token), "TokenKind", typeof(TokenKind), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Single, null);
-            _TokenAlts_GreenSyntaxCondition = new __ModelProperty(typeof(TokenAlts), "GreenSyntaxCondition", typeof(global::System.String), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
-            _TokenAlts_GreenType = new __ModelProperty(typeof(TokenAlts), "GreenType", typeof(global::System.String), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
-            _TokenAlts_RedType = new __ModelProperty(typeof(TokenAlts), "RedType", typeof(global::System.String), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
+            _TokenAlts_GreenSyntaxCondition = new __ModelProperty(typeof(TokenAlts), "GreenSyntaxCondition", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
+            _TokenAlts_GreenType = new __ModelProperty(typeof(TokenAlts), "GreenType", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
+            _TokenAlts_RedType = new __ModelProperty(typeof(TokenAlts), "RedType", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived, null);
             _TokenAlts_Tokens = new __ModelProperty(typeof(TokenAlts), "Tokens", typeof(RuleRef), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection, null);
-            _TokenKind_Name = new __ModelProperty(typeof(TokenKind), "Name", typeof(global::System.String), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single, null);
-            _TokenKind_TypeName = new __ModelProperty(typeof(TokenKind), "TypeName", typeof(global::System.String), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single, null);
+            _TokenKind_Name = new __ModelProperty(typeof(TokenKind), "Name", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single, null);
+            _TokenKind_TypeName = new __ModelProperty(typeof(TokenKind), "TypeName", typeof(string), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single, null);
             _instance = new Compiler();
         }
     
@@ -535,7 +537,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model
             var obj54 = f.MetaProperty();
             var obj55 = f.MetaProperty();
             var obj56 = f.MetaProperty();
-            var obj57 = f.MetaProperty();
+            var obj57 = f.MetaArrayType();
             var obj58 = f.MetaProperty();
             var obj59 = f.MetaProperty();
             var obj60 = f.MetaProperty();
@@ -545,123 +547,123 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model
             var obj64 = f.MetaProperty();
             var obj65 = f.MetaProperty();
             var obj66 = f.MetaProperty();
-            var obj67 = f.MetaArrayType();
-            var obj68 = f.MetaArrayType();
+            var obj67 = f.MetaProperty();
+            var obj68 = f.MetaProperty();
             var obj69 = f.MetaArrayType();
             var obj70 = f.MetaArrayType();
             var obj71 = f.MetaArrayType();
-            var obj72 = f.MetaNullableType();
-            var obj73 = f.MetaNullableType();
+            var obj72 = f.MetaArrayType();
+            var obj73 = f.MetaArrayType();
             var obj74 = f.MetaNullableType();
             var obj75 = f.MetaNullableType();
             var obj76 = f.MetaNullableType();
-            var obj77 = f.MetaProperty();
-            var obj78 = f.MetaProperty();
-            var obj79 = f.MetaArrayType();
+            var obj77 = f.MetaNullableType();
+            var obj78 = f.MetaNullableType();
+            var obj79 = f.MetaProperty();
             var obj80 = f.MetaProperty();
-            var obj81 = f.MetaProperty();
+            var obj81 = f.MetaArrayType();
             var obj82 = f.MetaProperty();
             var obj83 = f.MetaProperty();
-            var obj84 = f.MetaArrayType();
+            var obj84 = f.MetaProperty();
             var obj85 = f.MetaProperty();
-            var obj86 = f.MetaProperty();
+            var obj86 = f.MetaArrayType();
             var obj87 = f.MetaProperty();
             var obj88 = f.MetaProperty();
-            var obj89 = f.MetaArrayType();
+            var obj89 = f.MetaProperty();
             var obj90 = f.MetaProperty();
-            var obj91 = f.MetaProperty();
+            var obj91 = f.MetaArrayType();
             var obj92 = f.MetaProperty();
             var obj93 = f.MetaProperty();
-            var obj94 = f.MetaArrayType();
-            var obj95 = f.MetaNullableType();
-            var obj96 = f.MetaProperty();
-            var obj97 = f.MetaProperty();
+            var obj94 = f.MetaProperty();
+            var obj95 = f.MetaProperty();
+            var obj96 = f.MetaArrayType();
+            var obj97 = f.MetaNullableType();
             var obj98 = f.MetaProperty();
             var obj99 = f.MetaProperty();
             var obj100 = f.MetaProperty();
-            var obj101 = f.MetaArrayType();
-            var obj102 = f.MetaArrayType();
-            var obj103 = f.MetaProperty();
-            var obj104 = f.MetaProperty();
-            var obj105 = f.MetaEnumLiteral();
-            var obj106 = f.MetaEnumLiteral();
+            var obj101 = f.MetaProperty();
+            var obj102 = f.MetaProperty();
+            var obj103 = f.MetaArrayType();
+            var obj104 = f.MetaArrayType();
+            var obj105 = f.MetaProperty();
+            var obj106 = f.MetaProperty();
             var obj107 = f.MetaEnumLiteral();
             var obj108 = f.MetaEnumLiteral();
             var obj109 = f.MetaEnumLiteral();
             var obj110 = f.MetaEnumLiteral();
             var obj111 = f.MetaEnumLiteral();
-            var obj112 = f.MetaProperty();
-            var obj113 = f.MetaProperty();
+            var obj112 = f.MetaEnumLiteral();
+            var obj113 = f.MetaEnumLiteral();
             var obj114 = f.MetaProperty();
             var obj115 = f.MetaProperty();
             var obj116 = f.MetaProperty();
-            var obj117 = f.MetaArrayType();
-            var obj118 = f.MetaNullableType();
-            var obj119 = f.MetaProperty();
-            var obj120 = f.MetaProperty();
+            var obj117 = f.MetaProperty();
+            var obj118 = f.MetaProperty();
+            var obj119 = f.MetaArrayType();
+            var obj120 = f.MetaNullableType();
             var obj121 = f.MetaProperty();
-            var obj122 = f.MetaNullableType();
+            var obj122 = f.MetaProperty();
             var obj123 = f.MetaProperty();
-            var obj124 = f.MetaProperty();
+            var obj124 = f.MetaNullableType();
             var obj125 = f.MetaProperty();
-            var obj126 = f.MetaNullableType();
-            var obj127 = f.MetaArrayType();
-            var obj128 = f.MetaProperty();
-            var obj129 = f.MetaProperty();
+            var obj126 = f.MetaProperty();
+            var obj127 = f.MetaProperty();
+            var obj128 = f.MetaNullableType();
+            var obj129 = f.MetaArrayType();
             var obj130 = f.MetaProperty();
             var obj131 = f.MetaProperty();
             var obj132 = f.MetaProperty();
-            var obj133 = f.MetaNullableType();
+            var obj133 = f.MetaProperty();
             var obj134 = f.MetaProperty();
-            var obj135 = f.MetaProperty();
-            var obj136 = f.MetaNullableType();
+            var obj135 = f.MetaNullableType();
+            var obj136 = f.MetaProperty();
             var obj137 = f.MetaProperty();
-            var obj138 = f.MetaProperty();
+            var obj138 = f.MetaNullableType();
             var obj139 = f.MetaProperty();
-            var obj140 = f.MetaNullableType();
+            var obj140 = f.MetaProperty();
             var obj141 = f.MetaProperty();
-            var obj142 = f.MetaProperty();
+            var obj142 = f.MetaNullableType();
             var obj143 = f.MetaProperty();
-            var obj144 = f.MetaNullableType();
+            var obj144 = f.MetaProperty();
             var obj145 = f.MetaProperty();
-            var obj146 = f.MetaProperty();
-            var obj147 = f.MetaNullableType();
+            var obj146 = f.MetaNullableType();
+            var obj147 = f.MetaProperty();
             var obj148 = f.MetaProperty();
-            var obj149 = f.MetaProperty();
+            var obj149 = f.MetaNullableType();
             var obj150 = f.MetaProperty();
             var obj151 = f.MetaProperty();
-            var obj152 = f.MetaNullableType();
+            var obj152 = f.MetaProperty();
             var obj153 = f.MetaProperty();
-            var obj154 = f.MetaProperty();
+            var obj154 = f.MetaNullableType();
             var obj155 = f.MetaProperty();
-            var obj156 = f.MetaNullableType();
-            var obj157 = f.MetaArrayType();
-            var obj158 = f.MetaProperty();
-            var obj159 = f.MetaProperty();
-            var obj160 = f.MetaNullableType();
+            var obj156 = f.MetaProperty();
+            var obj157 = f.MetaProperty();
+            var obj158 = f.MetaNullableType();
+            var obj159 = f.MetaArrayType();
+            var obj160 = f.MetaProperty();
             var obj161 = f.MetaProperty();
-            var obj162 = f.MetaProperty();
+            var obj162 = f.MetaNullableType();
             var obj163 = f.MetaProperty();
-            var obj164 = f.MetaNullableType();
+            var obj164 = f.MetaProperty();
             var obj165 = f.MetaProperty();
-            var obj166 = f.MetaProperty();
+            var obj166 = f.MetaNullableType();
             var obj167 = f.MetaProperty();
             var obj168 = f.MetaProperty();
-            var obj169 = f.MetaNullableType();
+            var obj169 = f.MetaProperty();
             var obj170 = f.MetaProperty();
-            var obj171 = f.MetaProperty();
+            var obj171 = f.MetaNullableType();
             var obj172 = f.MetaProperty();
-            var obj173 = f.MetaNullableType();
-            var obj174 = f.MetaArrayType();
-            var obj175 = f.MetaProperty();
-            var obj176 = f.MetaProperty();
+            var obj173 = f.MetaProperty();
+            var obj174 = f.MetaProperty();
+            var obj175 = f.MetaNullableType();
+            var obj176 = f.MetaArrayType();
             var obj177 = f.MetaProperty();
             var obj178 = f.MetaProperty();
             var obj179 = f.MetaProperty();
-            var obj180 = f.MetaArrayType();
-            var obj181 = f.MetaNullableType();
-            var obj182 = f.MetaProperty();
-            var obj183 = f.MetaProperty();
+            var obj180 = f.MetaProperty();
+            var obj181 = f.MetaProperty();
+            var obj182 = f.MetaArrayType();
+            var obj183 = f.MetaNullableType();
             var obj184 = f.MetaProperty();
             var obj185 = f.MetaProperty();
             var obj186 = f.MetaProperty();
@@ -675,13 +677,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model
             var obj194 = f.MetaProperty();
             var obj195 = f.MetaProperty();
             var obj196 = f.MetaProperty();
-            var obj197 = f.MetaArrayType();
-            var obj198 = f.MetaEnumLiteral();
-            var obj199 = f.MetaEnumLiteral();
+            var obj197 = f.MetaProperty();
+            var obj198 = f.MetaProperty();
+            var obj199 = f.MetaArrayType();
             var obj200 = f.MetaEnumLiteral();
             var obj201 = f.MetaEnumLiteral();
-            var obj202 = f.MetaProperty();
-            var obj203 = f.MetaProperty();
+            var obj202 = f.MetaEnumLiteral();
+            var obj203 = f.MetaEnumLiteral();
             var obj204 = f.MetaProperty();
             var obj205 = f.MetaProperty();
             var obj206 = f.MetaProperty();
@@ -704,45 +706,45 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model
             var obj223 = f.MetaProperty();
             var obj224 = f.MetaProperty();
             var obj225 = f.MetaProperty();
-            var obj226 = f.MetaNullableType();
-            var obj227 = f.MetaNullableType();
+            var obj226 = f.MetaProperty();
+            var obj227 = f.MetaProperty();
             var obj228 = f.MetaNullableType();
             var obj229 = f.MetaNullableType();
             var obj230 = f.MetaNullableType();
             var obj231 = f.MetaNullableType();
-            var obj232 = f.MetaProperty();
-            var obj233 = f.MetaProperty();
+            var obj232 = f.MetaNullableType();
+            var obj233 = f.MetaNullableType();
             var obj234 = f.MetaProperty();
             var obj235 = f.MetaProperty();
-            var obj236 = f.MetaNullableType();
+            var obj236 = f.MetaProperty();
             var obj237 = f.MetaProperty();
-            var obj238 = f.MetaProperty();
+            var obj238 = f.MetaNullableType();
             var obj239 = f.MetaProperty();
             var obj240 = f.MetaProperty();
             var obj241 = f.MetaProperty();
             var obj242 = f.MetaProperty();
             var obj243 = f.MetaProperty();
-            var obj244 = f.MetaArrayType();
-            var obj245 = f.MetaNullableType();
-            var obj246 = f.MetaNullableType();
+            var obj244 = f.MetaProperty();
+            var obj245 = f.MetaProperty();
+            var obj246 = f.MetaArrayType();
             var obj247 = f.MetaNullableType();
-            var obj248 = f.MetaProperty();
-            var obj249 = f.MetaProperty();
+            var obj248 = f.MetaNullableType();
+            var obj249 = f.MetaNullableType();
             var obj250 = f.MetaProperty();
-            var obj251 = f.MetaNullableType();
+            var obj251 = f.MetaProperty();
             var obj252 = f.MetaProperty();
-            var obj253 = f.MetaProperty();
+            var obj253 = f.MetaNullableType();
             var obj254 = f.MetaProperty();
             var obj255 = f.MetaProperty();
             var obj256 = f.MetaProperty();
-            var obj257 = f.MetaArrayType();
-            var obj258 = f.MetaNullableType();
-            var obj259 = f.MetaProperty();
-            var obj260 = f.MetaProperty();
+            var obj257 = f.MetaProperty();
+            var obj258 = f.MetaProperty();
+            var obj259 = f.MetaArrayType();
+            var obj260 = f.MetaNullableType();
             var obj261 = f.MetaProperty();
-            var obj262 = f.MetaNullableType();
+            var obj262 = f.MetaProperty();
             var obj263 = f.MetaProperty();
-            var obj264 = f.MetaProperty();
+            var obj264 = f.MetaNullableType();
             var obj265 = f.MetaProperty();
             var obj266 = f.MetaProperty();
             var obj267 = f.MetaProperty();
@@ -753,67 +755,69 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model
             var obj272 = f.MetaProperty();
             var obj273 = f.MetaProperty();
             var obj274 = f.MetaProperty();
-            var obj275 = f.MetaArrayType();
-            var obj276 = f.MetaArrayType();
+            var obj275 = f.MetaProperty();
+            var obj276 = f.MetaProperty();
             var obj277 = f.MetaArrayType();
             var obj278 = f.MetaArrayType();
-            var obj279 = f.MetaNullableType();
-            var obj280 = f.MetaProperty();
-            var obj281 = f.MetaProperty();
-            var obj282 = f.MetaArrayType();
+            var obj279 = f.MetaArrayType();
+            var obj280 = f.MetaArrayType();
+            var obj281 = f.MetaNullableType();
+            var obj282 = f.MetaProperty();
+            var obj283 = f.MetaProperty();
+            var obj284 = f.MetaArrayType();
             __CustomImpl.Compiler(this);
-            ((__IModelObject)obj1).MChildren.Add((__IModelObject)obj2);
+            obj1.MChildren.Add(obj2);
             obj1.Declarations.Add(obj2);
             obj1.Name = "MetaDslx";
-            ((__IModelObject)obj2).MChildren.Add((__IModelObject)obj3);
+            obj2.MChildren.Add(obj3);
             obj2.Declarations.Add(obj3);
             obj2.Name = "Bootstrap";
             obj2.Parent = obj1;
-            ((__IModelObject)obj3).MChildren.Add((__IModelObject)obj4);
+            obj3.MChildren.Add(obj4);
             obj3.Declarations.Add(obj4);
             obj3.Name = "MetaCompiler3";
             obj3.Parent = obj2;
-            ((__IModelObject)obj4).MChildren.Add((__IModelObject)obj5);
-            ((__IModelObject)obj4).MChildren.Add((__IModelObject)obj6);
-            ((__IModelObject)obj4).MChildren.Add((__IModelObject)obj7);
-            ((__IModelObject)obj4).MChildren.Add((__IModelObject)obj8);
-            ((__IModelObject)obj4).MChildren.Add((__IModelObject)obj9);
-            ((__IModelObject)obj4).MChildren.Add((__IModelObject)obj10);
-            ((__IModelObject)obj4).MChildren.Add((__IModelObject)obj11);
-            ((__IModelObject)obj4).MChildren.Add((__IModelObject)obj12);
-            ((__IModelObject)obj4).MChildren.Add((__IModelObject)obj13);
-            ((__IModelObject)obj4).MChildren.Add((__IModelObject)obj14);
-            ((__IModelObject)obj4).MChildren.Add((__IModelObject)obj15);
-            ((__IModelObject)obj4).MChildren.Add((__IModelObject)obj16);
-            ((__IModelObject)obj4).MChildren.Add((__IModelObject)obj17);
-            ((__IModelObject)obj4).MChildren.Add((__IModelObject)obj18);
-            ((__IModelObject)obj4).MChildren.Add((__IModelObject)obj19);
-            ((__IModelObject)obj4).MChildren.Add((__IModelObject)obj20);
-            ((__IModelObject)obj4).MChildren.Add((__IModelObject)obj21);
-            ((__IModelObject)obj4).MChildren.Add((__IModelObject)obj22);
-            ((__IModelObject)obj4).MChildren.Add((__IModelObject)obj23);
-            ((__IModelObject)obj4).MChildren.Add((__IModelObject)obj24);
-            ((__IModelObject)obj4).MChildren.Add((__IModelObject)obj25);
-            ((__IModelObject)obj4).MChildren.Add((__IModelObject)obj26);
-            ((__IModelObject)obj4).MChildren.Add((__IModelObject)obj27);
-            ((__IModelObject)obj4).MChildren.Add((__IModelObject)obj28);
-            ((__IModelObject)obj4).MChildren.Add((__IModelObject)obj29);
-            ((__IModelObject)obj4).MChildren.Add((__IModelObject)obj30);
-            ((__IModelObject)obj4).MChildren.Add((__IModelObject)obj31);
-            ((__IModelObject)obj4).MChildren.Add((__IModelObject)obj32);
-            ((__IModelObject)obj4).MChildren.Add((__IModelObject)obj33);
-            ((__IModelObject)obj4).MChildren.Add((__IModelObject)obj34);
-            ((__IModelObject)obj4).MChildren.Add((__IModelObject)obj35);
-            ((__IModelObject)obj4).MChildren.Add((__IModelObject)obj36);
-            ((__IModelObject)obj4).MChildren.Add((__IModelObject)obj37);
-            ((__IModelObject)obj4).MChildren.Add((__IModelObject)obj38);
-            ((__IModelObject)obj4).MChildren.Add((__IModelObject)obj39);
-            ((__IModelObject)obj4).MChildren.Add((__IModelObject)obj40);
-            ((__IModelObject)obj4).MChildren.Add((__IModelObject)obj41);
-            ((__IModelObject)obj4).MChildren.Add((__IModelObject)obj42);
-            ((__IModelObject)obj4).MChildren.Add((__IModelObject)obj43);
-            ((__IModelObject)obj4).MChildren.Add((__IModelObject)obj44);
-            ((__IModelObject)obj4).MChildren.Add((__IModelObject)obj45);
+            obj4.MChildren.Add(obj5);
+            obj4.MChildren.Add(obj6);
+            obj4.MChildren.Add(obj7);
+            obj4.MChildren.Add(obj8);
+            obj4.MChildren.Add(obj9);
+            obj4.MChildren.Add(obj10);
+            obj4.MChildren.Add(obj11);
+            obj4.MChildren.Add(obj12);
+            obj4.MChildren.Add(obj13);
+            obj4.MChildren.Add(obj14);
+            obj4.MChildren.Add(obj15);
+            obj4.MChildren.Add(obj16);
+            obj4.MChildren.Add(obj17);
+            obj4.MChildren.Add(obj18);
+            obj4.MChildren.Add(obj19);
+            obj4.MChildren.Add(obj20);
+            obj4.MChildren.Add(obj21);
+            obj4.MChildren.Add(obj22);
+            obj4.MChildren.Add(obj23);
+            obj4.MChildren.Add(obj24);
+            obj4.MChildren.Add(obj25);
+            obj4.MChildren.Add(obj26);
+            obj4.MChildren.Add(obj27);
+            obj4.MChildren.Add(obj28);
+            obj4.MChildren.Add(obj29);
+            obj4.MChildren.Add(obj30);
+            obj4.MChildren.Add(obj31);
+            obj4.MChildren.Add(obj32);
+            obj4.MChildren.Add(obj33);
+            obj4.MChildren.Add(obj34);
+            obj4.MChildren.Add(obj35);
+            obj4.MChildren.Add(obj36);
+            obj4.MChildren.Add(obj37);
+            obj4.MChildren.Add(obj38);
+            obj4.MChildren.Add(obj39);
+            obj4.MChildren.Add(obj40);
+            obj4.MChildren.Add(obj41);
+            obj4.MChildren.Add(obj42);
+            obj4.MChildren.Add(obj43);
+            obj4.MChildren.Add(obj44);
+            obj4.MChildren.Add(obj45);
             obj4.Declarations.Add(obj5);
             obj4.Declarations.Add(obj6);
             obj4.Declarations.Add(obj7);
@@ -859,10 +863,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model
             obj4.Parent = obj3;
             obj5.Name = "Compiler";
             obj5.Parent = obj4;
-            ((__IModelObject)obj6).MChildren.Add((__IModelObject)obj46);
-            ((__IModelObject)obj6).MChildren.Add((__IModelObject)obj47);
-            ((__IModelObject)obj6).MChildren.Add((__IModelObject)obj48);
-            ((__IModelObject)obj6).MChildren.Add((__IModelObject)obj49);
+            obj6.MChildren.Add(obj46);
+            obj6.MChildren.Add(obj47);
+            obj6.MChildren.Add(obj48);
+            obj6.MChildren.Add(obj49);
             obj6.IsAbstract = true;
             obj6.Properties.Add(obj46);
             obj6.Properties.Add(obj47);
@@ -879,29 +883,30 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model
             obj7.SymbolType = typeof(global::MetaDslx.CodeAnalysis.Symbols.NamespaceSymbol);
             obj7.Name = "Namespace";
             obj7.Parent = obj4;
-            ((__IModelObject)obj8).MChildren.Add((__IModelObject)obj54);
-            ((__IModelObject)obj8).MChildren.Add((__IModelObject)obj55);
+            obj8.MChildren.Add(obj54);
+            obj8.MChildren.Add(obj55);
+            obj8.MChildren.Add(obj56);
             obj8.BaseTypes.Add(obj6);
             obj8.Properties.Add(obj54);
             obj8.Properties.Add(obj55);
+            obj8.Properties.Add(obj56);
             obj8.Declarations.Add(obj54);
             obj8.Declarations.Add(obj55);
+            obj8.Declarations.Add(obj56);
             obj8.Name = "Language";
             obj8.Parent = obj4;
-            ((__IModelObject)obj9).MChildren.Add((__IModelObject)obj56);
-            ((__IModelObject)obj9).MChildren.Add((__IModelObject)obj57);
-            ((__IModelObject)obj9).MChildren.Add((__IModelObject)obj58);
-            ((__IModelObject)obj9).MChildren.Add((__IModelObject)obj59);
-            ((__IModelObject)obj9).MChildren.Add((__IModelObject)obj60);
-            ((__IModelObject)obj9).MChildren.Add((__IModelObject)obj61);
-            ((__IModelObject)obj9).MChildren.Add((__IModelObject)obj62);
-            ((__IModelObject)obj9).MChildren.Add((__IModelObject)obj63);
-            ((__IModelObject)obj9).MChildren.Add((__IModelObject)obj64);
-            ((__IModelObject)obj9).MChildren.Add((__IModelObject)obj65);
-            ((__IModelObject)obj9).MChildren.Add((__IModelObject)obj66);
+            obj9.MChildren.Add(obj58);
+            obj9.MChildren.Add(obj59);
+            obj9.MChildren.Add(obj60);
+            obj9.MChildren.Add(obj61);
+            obj9.MChildren.Add(obj62);
+            obj9.MChildren.Add(obj63);
+            obj9.MChildren.Add(obj64);
+            obj9.MChildren.Add(obj65);
+            obj9.MChildren.Add(obj66);
+            obj9.MChildren.Add(obj67);
+            obj9.MChildren.Add(obj68);
             obj9.BaseTypes.Add(obj6);
-            obj9.Properties.Add(obj56);
-            obj9.Properties.Add(obj57);
             obj9.Properties.Add(obj58);
             obj9.Properties.Add(obj59);
             obj9.Properties.Add(obj60);
@@ -911,8 +916,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model
             obj9.Properties.Add(obj64);
             obj9.Properties.Add(obj65);
             obj9.Properties.Add(obj66);
-            obj9.Declarations.Add(obj56);
-            obj9.Declarations.Add(obj57);
+            obj9.Properties.Add(obj67);
+            obj9.Properties.Add(obj68);
             obj9.Declarations.Add(obj58);
             obj9.Declarations.Add(obj59);
             obj9.Declarations.Add(obj60);
@@ -922,334 +927,334 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model
             obj9.Declarations.Add(obj64);
             obj9.Declarations.Add(obj65);
             obj9.Declarations.Add(obj66);
+            obj9.Declarations.Add(obj67);
+            obj9.Declarations.Add(obj68);
             obj9.Name = "Grammar";
             obj9.Parent = obj4;
-            ((__IModelObject)obj10).MChildren.Add((__IModelObject)obj77);
-            ((__IModelObject)obj10).MChildren.Add((__IModelObject)obj78);
-            obj10.Properties.Add(obj77);
-            obj10.Properties.Add(obj78);
+            obj10.MChildren.Add(obj79);
+            obj10.MChildren.Add(obj80);
+            obj10.Properties.Add(obj79);
+            obj10.Properties.Add(obj80);
             obj10.SymbolType = typeof(global::MetaDslx.Bootstrap.MetaCompiler3.Symbols.AnnotationSymbol);
-            obj10.Declarations.Add(obj77);
-            obj10.Declarations.Add(obj78);
+            obj10.Declarations.Add(obj79);
+            obj10.Declarations.Add(obj80);
             obj10.Name = "Annotation";
             obj10.Parent = obj4;
-            ((__IModelObject)obj11).MChildren.Add((__IModelObject)obj80);
-            ((__IModelObject)obj11).MChildren.Add((__IModelObject)obj81);
-            ((__IModelObject)obj11).MChildren.Add((__IModelObject)obj82);
-            ((__IModelObject)obj11).MChildren.Add((__IModelObject)obj83);
-            obj11.Properties.Add(obj80);
-            obj11.Properties.Add(obj81);
+            obj11.MChildren.Add(obj82);
+            obj11.MChildren.Add(obj83);
+            obj11.MChildren.Add(obj84);
+            obj11.MChildren.Add(obj85);
             obj11.Properties.Add(obj82);
             obj11.Properties.Add(obj83);
+            obj11.Properties.Add(obj84);
+            obj11.Properties.Add(obj85);
             obj11.SymbolType = typeof(global::MetaDslx.Bootstrap.MetaCompiler3.Symbols.AnnotationArgumentSymbol);
-            obj11.Declarations.Add(obj80);
-            obj11.Declarations.Add(obj81);
             obj11.Declarations.Add(obj82);
             obj11.Declarations.Add(obj83);
+            obj11.Declarations.Add(obj84);
+            obj11.Declarations.Add(obj85);
             obj11.Name = "AnnotationArgument";
             obj11.Parent = obj4;
-            ((__IModelObject)obj12).MChildren.Add((__IModelObject)obj85);
-            ((__IModelObject)obj12).MChildren.Add((__IModelObject)obj86);
-            ((__IModelObject)obj12).MChildren.Add((__IModelObject)obj87);
-            ((__IModelObject)obj12).MChildren.Add((__IModelObject)obj88);
-            obj12.Properties.Add(obj85);
-            obj12.Properties.Add(obj86);
+            obj12.MChildren.Add(obj87);
+            obj12.MChildren.Add(obj88);
+            obj12.MChildren.Add(obj89);
+            obj12.MChildren.Add(obj90);
             obj12.Properties.Add(obj87);
             obj12.Properties.Add(obj88);
-            obj12.Declarations.Add(obj85);
-            obj12.Declarations.Add(obj86);
+            obj12.Properties.Add(obj89);
+            obj12.Properties.Add(obj90);
             obj12.Declarations.Add(obj87);
             obj12.Declarations.Add(obj88);
+            obj12.Declarations.Add(obj89);
+            obj12.Declarations.Add(obj90);
             obj12.Name = "Binder";
             obj12.Parent = obj4;
-            ((__IModelObject)obj13).MChildren.Add((__IModelObject)obj90);
-            ((__IModelObject)obj13).MChildren.Add((__IModelObject)obj91);
-            ((__IModelObject)obj13).MChildren.Add((__IModelObject)obj92);
-            ((__IModelObject)obj13).MChildren.Add((__IModelObject)obj93);
-            obj13.Properties.Add(obj90);
-            obj13.Properties.Add(obj91);
+            obj13.MChildren.Add(obj92);
+            obj13.MChildren.Add(obj93);
+            obj13.MChildren.Add(obj94);
+            obj13.MChildren.Add(obj95);
             obj13.Properties.Add(obj92);
             obj13.Properties.Add(obj93);
-            obj13.Declarations.Add(obj90);
-            obj13.Declarations.Add(obj91);
+            obj13.Properties.Add(obj94);
+            obj13.Properties.Add(obj95);
             obj13.Declarations.Add(obj92);
             obj13.Declarations.Add(obj93);
+            obj13.Declarations.Add(obj94);
+            obj13.Declarations.Add(obj95);
             obj13.Name = "BinderArgument";
             obj13.Parent = obj4;
-            ((__IModelObject)obj14).MChildren.Add((__IModelObject)obj96);
-            ((__IModelObject)obj14).MChildren.Add((__IModelObject)obj97);
-            ((__IModelObject)obj14).MChildren.Add((__IModelObject)obj98);
-            ((__IModelObject)obj14).MChildren.Add((__IModelObject)obj99);
-            ((__IModelObject)obj14).MChildren.Add((__IModelObject)obj100);
-            obj14.Properties.Add(obj96);
-            obj14.Properties.Add(obj97);
+            obj14.MChildren.Add(obj98);
+            obj14.MChildren.Add(obj99);
+            obj14.MChildren.Add(obj100);
+            obj14.MChildren.Add(obj101);
+            obj14.MChildren.Add(obj102);
             obj14.Properties.Add(obj98);
             obj14.Properties.Add(obj99);
             obj14.Properties.Add(obj100);
-            obj14.Declarations.Add(obj96);
-            obj14.Declarations.Add(obj97);
+            obj14.Properties.Add(obj101);
+            obj14.Properties.Add(obj102);
             obj14.Declarations.Add(obj98);
             obj14.Declarations.Add(obj99);
             obj14.Declarations.Add(obj100);
+            obj14.Declarations.Add(obj101);
+            obj14.Declarations.Add(obj102);
             obj14.Name = "CSharpElement";
             obj14.Parent = obj4;
-            ((__IModelObject)obj15).MChildren.Add((__IModelObject)obj103);
-            ((__IModelObject)obj15).MChildren.Add((__IModelObject)obj104);
-            obj15.Properties.Add(obj103);
-            obj15.Properties.Add(obj104);
-            obj15.Declarations.Add(obj103);
-            obj15.Declarations.Add(obj104);
+            obj15.MChildren.Add(obj105);
+            obj15.MChildren.Add(obj106);
+            obj15.Properties.Add(obj105);
+            obj15.Properties.Add(obj106);
+            obj15.Declarations.Add(obj105);
+            obj15.Declarations.Add(obj106);
             obj15.Name = "TokenKind";
             obj15.Parent = obj4;
-            ((__IModelObject)obj16).MChildren.Add((__IModelObject)obj105);
-            ((__IModelObject)obj16).MChildren.Add((__IModelObject)obj106);
-            ((__IModelObject)obj16).MChildren.Add((__IModelObject)obj107);
-            ((__IModelObject)obj16).MChildren.Add((__IModelObject)obj108);
-            ((__IModelObject)obj16).MChildren.Add((__IModelObject)obj109);
-            ((__IModelObject)obj16).MChildren.Add((__IModelObject)obj110);
-            ((__IModelObject)obj16).MChildren.Add((__IModelObject)obj111);
-            obj16.Literals.Add(obj105);
-            obj16.Literals.Add(obj106);
+            obj16.MChildren.Add(obj107);
+            obj16.MChildren.Add(obj108);
+            obj16.MChildren.Add(obj109);
+            obj16.MChildren.Add(obj110);
+            obj16.MChildren.Add(obj111);
+            obj16.MChildren.Add(obj112);
+            obj16.MChildren.Add(obj113);
             obj16.Literals.Add(obj107);
             obj16.Literals.Add(obj108);
             obj16.Literals.Add(obj109);
             obj16.Literals.Add(obj110);
             obj16.Literals.Add(obj111);
-            obj16.Declarations.Add(obj105);
-            obj16.Declarations.Add(obj106);
+            obj16.Literals.Add(obj112);
+            obj16.Literals.Add(obj113);
             obj16.Declarations.Add(obj107);
             obj16.Declarations.Add(obj108);
             obj16.Declarations.Add(obj109);
             obj16.Declarations.Add(obj110);
             obj16.Declarations.Add(obj111);
+            obj16.Declarations.Add(obj112);
+            obj16.Declarations.Add(obj113);
             obj16.Name = "Multiplicity";
             obj16.Parent = obj4;
-            ((__IModelObject)obj17).MChildren.Add((__IModelObject)obj112);
-            ((__IModelObject)obj17).MChildren.Add((__IModelObject)obj113);
+            obj17.MChildren.Add(obj114);
+            obj17.MChildren.Add(obj115);
             obj17.BaseTypes.Add(obj6);
             obj17.BaseTypes.Add(obj14);
             obj17.IsAbstract = true;
-            obj17.Properties.Add(obj112);
-            obj17.Properties.Add(obj113);
-            obj17.Declarations.Add(obj112);
-            obj17.Declarations.Add(obj113);
+            obj17.Properties.Add(obj114);
+            obj17.Properties.Add(obj115);
+            obj17.Declarations.Add(obj114);
+            obj17.Declarations.Add(obj115);
             obj17.Name = "GrammarRule";
             obj17.Parent = obj4;
-            ((__IModelObject)obj18).MChildren.Add((__IModelObject)obj114);
-            ((__IModelObject)obj18).MChildren.Add((__IModelObject)obj115);
-            ((__IModelObject)obj18).MChildren.Add((__IModelObject)obj116);
+            obj18.MChildren.Add(obj116);
+            obj18.MChildren.Add(obj117);
+            obj18.MChildren.Add(obj118);
             obj18.BaseTypes.Add(obj17);
             obj18.IsAbstract = true;
-            obj18.Properties.Add(obj114);
-            obj18.Properties.Add(obj115);
             obj18.Properties.Add(obj116);
-            obj18.Declarations.Add(obj114);
-            obj18.Declarations.Add(obj115);
+            obj18.Properties.Add(obj117);
+            obj18.Properties.Add(obj118);
             obj18.Declarations.Add(obj116);
+            obj18.Declarations.Add(obj117);
+            obj18.Declarations.Add(obj118);
             obj18.Name = "LexerRule";
             obj18.Parent = obj4;
-            ((__IModelObject)obj19).MChildren.Add((__IModelObject)obj119);
-            ((__IModelObject)obj19).MChildren.Add((__IModelObject)obj120);
-            ((__IModelObject)obj19).MChildren.Add((__IModelObject)obj121);
+            obj19.MChildren.Add(obj121);
+            obj19.MChildren.Add(obj122);
+            obj19.MChildren.Add(obj123);
             obj19.BaseTypes.Add(obj18);
-            obj19.Properties.Add(obj119);
-            obj19.Properties.Add(obj120);
             obj19.Properties.Add(obj121);
+            obj19.Properties.Add(obj122);
+            obj19.Properties.Add(obj123);
             obj19.SymbolType = typeof(global::MetaDslx.Bootstrap.MetaCompiler3.Symbols.TokenSymbol);
-            obj19.Declarations.Add(obj119);
-            obj19.Declarations.Add(obj120);
             obj19.Declarations.Add(obj121);
+            obj19.Declarations.Add(obj122);
+            obj19.Declarations.Add(obj123);
             obj19.Name = "Token";
             obj19.Parent = obj4;
             obj20.BaseTypes.Add(obj18);
             obj20.Name = "Fragment";
             obj20.Parent = obj4;
-            ((__IModelObject)obj21).MChildren.Add((__IModelObject)obj123);
-            ((__IModelObject)obj21).MChildren.Add((__IModelObject)obj124);
-            ((__IModelObject)obj21).MChildren.Add((__IModelObject)obj125);
-            obj21.Properties.Add(obj123);
-            obj21.Properties.Add(obj124);
+            obj21.MChildren.Add(obj125);
+            obj21.MChildren.Add(obj126);
+            obj21.MChildren.Add(obj127);
             obj21.Properties.Add(obj125);
+            obj21.Properties.Add(obj126);
+            obj21.Properties.Add(obj127);
             obj21.SymbolType = typeof(global::MetaDslx.CodeAnalysis.Symbols.Symbol);
-            obj21.Declarations.Add(obj123);
-            obj21.Declarations.Add(obj124);
             obj21.Declarations.Add(obj125);
+            obj21.Declarations.Add(obj126);
+            obj21.Declarations.Add(obj127);
             obj21.Name = "LAlternative";
             obj21.Parent = obj4;
-            ((__IModelObject)obj22).MChildren.Add((__IModelObject)obj128);
-            ((__IModelObject)obj22).MChildren.Add((__IModelObject)obj129);
-            ((__IModelObject)obj22).MChildren.Add((__IModelObject)obj130);
-            ((__IModelObject)obj22).MChildren.Add((__IModelObject)obj131);
-            ((__IModelObject)obj22).MChildren.Add((__IModelObject)obj132);
-            obj22.Properties.Add(obj128);
-            obj22.Properties.Add(obj129);
+            obj22.MChildren.Add(obj130);
+            obj22.MChildren.Add(obj131);
+            obj22.MChildren.Add(obj132);
+            obj22.MChildren.Add(obj133);
+            obj22.MChildren.Add(obj134);
             obj22.Properties.Add(obj130);
             obj22.Properties.Add(obj131);
             obj22.Properties.Add(obj132);
+            obj22.Properties.Add(obj133);
+            obj22.Properties.Add(obj134);
             obj22.SymbolType = typeof(global::MetaDslx.CodeAnalysis.Symbols.Symbol);
-            obj22.Declarations.Add(obj128);
-            obj22.Declarations.Add(obj129);
             obj22.Declarations.Add(obj130);
             obj22.Declarations.Add(obj131);
             obj22.Declarations.Add(obj132);
+            obj22.Declarations.Add(obj133);
+            obj22.Declarations.Add(obj134);
             obj22.Name = "LElement";
             obj22.Parent = obj4;
-            ((__IModelObject)obj23).MChildren.Add((__IModelObject)obj134);
-            ((__IModelObject)obj23).MChildren.Add((__IModelObject)obj135);
+            obj23.MChildren.Add(obj136);
+            obj23.MChildren.Add(obj137);
             obj23.IsAbstract = true;
-            obj23.Properties.Add(obj134);
-            obj23.Properties.Add(obj135);
+            obj23.Properties.Add(obj136);
+            obj23.Properties.Add(obj137);
             obj23.SymbolType = typeof(global::MetaDslx.CodeAnalysis.Symbols.Symbol);
-            obj23.Declarations.Add(obj134);
-            obj23.Declarations.Add(obj135);
+            obj23.Declarations.Add(obj136);
+            obj23.Declarations.Add(obj137);
             obj23.Name = "LElementValue";
             obj23.Parent = obj4;
-            ((__IModelObject)obj24).MChildren.Add((__IModelObject)obj137);
-            ((__IModelObject)obj24).MChildren.Add((__IModelObject)obj138);
-            ((__IModelObject)obj24).MChildren.Add((__IModelObject)obj139);
+            obj24.MChildren.Add(obj139);
+            obj24.MChildren.Add(obj140);
+            obj24.MChildren.Add(obj141);
             obj24.BaseTypes.Add(obj23);
-            obj24.Properties.Add(obj137);
-            obj24.Properties.Add(obj138);
             obj24.Properties.Add(obj139);
-            obj24.Declarations.Add(obj137);
-            obj24.Declarations.Add(obj138);
+            obj24.Properties.Add(obj140);
+            obj24.Properties.Add(obj141);
             obj24.Declarations.Add(obj139);
+            obj24.Declarations.Add(obj140);
+            obj24.Declarations.Add(obj141);
             obj24.Name = "LReference";
             obj24.Parent = obj4;
-            ((__IModelObject)obj25).MChildren.Add((__IModelObject)obj141);
-            ((__IModelObject)obj25).MChildren.Add((__IModelObject)obj142);
-            ((__IModelObject)obj25).MChildren.Add((__IModelObject)obj143);
+            obj25.MChildren.Add(obj143);
+            obj25.MChildren.Add(obj144);
+            obj25.MChildren.Add(obj145);
             obj25.BaseTypes.Add(obj23);
-            obj25.Properties.Add(obj141);
-            obj25.Properties.Add(obj142);
             obj25.Properties.Add(obj143);
-            obj25.Declarations.Add(obj141);
-            obj25.Declarations.Add(obj142);
+            obj25.Properties.Add(obj144);
+            obj25.Properties.Add(obj145);
             obj25.Declarations.Add(obj143);
+            obj25.Declarations.Add(obj144);
+            obj25.Declarations.Add(obj145);
             obj25.Name = "LFixed";
             obj25.Parent = obj4;
-            ((__IModelObject)obj26).MChildren.Add((__IModelObject)obj145);
-            ((__IModelObject)obj26).MChildren.Add((__IModelObject)obj146);
+            obj26.MChildren.Add(obj147);
+            obj26.MChildren.Add(obj148);
             obj26.BaseTypes.Add(obj23);
-            obj26.Properties.Add(obj145);
-            obj26.Properties.Add(obj146);
-            obj26.Declarations.Add(obj145);
-            obj26.Declarations.Add(obj146);
+            obj26.Properties.Add(obj147);
+            obj26.Properties.Add(obj148);
+            obj26.Declarations.Add(obj147);
+            obj26.Declarations.Add(obj148);
             obj26.Name = "LWildCard";
             obj26.Parent = obj4;
-            ((__IModelObject)obj27).MChildren.Add((__IModelObject)obj148);
-            ((__IModelObject)obj27).MChildren.Add((__IModelObject)obj149);
-            ((__IModelObject)obj27).MChildren.Add((__IModelObject)obj150);
-            ((__IModelObject)obj27).MChildren.Add((__IModelObject)obj151);
+            obj27.MChildren.Add(obj150);
+            obj27.MChildren.Add(obj151);
+            obj27.MChildren.Add(obj152);
+            obj27.MChildren.Add(obj153);
             obj27.BaseTypes.Add(obj23);
-            obj27.Properties.Add(obj148);
-            obj27.Properties.Add(obj149);
             obj27.Properties.Add(obj150);
             obj27.Properties.Add(obj151);
-            obj27.Declarations.Add(obj148);
-            obj27.Declarations.Add(obj149);
+            obj27.Properties.Add(obj152);
+            obj27.Properties.Add(obj153);
             obj27.Declarations.Add(obj150);
             obj27.Declarations.Add(obj151);
+            obj27.Declarations.Add(obj152);
+            obj27.Declarations.Add(obj153);
             obj27.Name = "LRange";
             obj27.Parent = obj4;
-            ((__IModelObject)obj28).MChildren.Add((__IModelObject)obj153);
-            ((__IModelObject)obj28).MChildren.Add((__IModelObject)obj154);
-            ((__IModelObject)obj28).MChildren.Add((__IModelObject)obj155);
+            obj28.MChildren.Add(obj155);
+            obj28.MChildren.Add(obj156);
+            obj28.MChildren.Add(obj157);
             obj28.BaseTypes.Add(obj23);
-            obj28.Properties.Add(obj153);
-            obj28.Properties.Add(obj154);
             obj28.Properties.Add(obj155);
-            obj28.Declarations.Add(obj153);
-            obj28.Declarations.Add(obj154);
+            obj28.Properties.Add(obj156);
+            obj28.Properties.Add(obj157);
             obj28.Declarations.Add(obj155);
+            obj28.Declarations.Add(obj156);
+            obj28.Declarations.Add(obj157);
             obj28.Name = "LSet";
             obj28.Parent = obj4;
-            ((__IModelObject)obj29).MChildren.Add((__IModelObject)obj158);
-            ((__IModelObject)obj29).MChildren.Add((__IModelObject)obj159);
+            obj29.MChildren.Add(obj160);
+            obj29.MChildren.Add(obj161);
             obj29.IsAbstract = true;
-            obj29.Properties.Add(obj158);
-            obj29.Properties.Add(obj159);
-            obj29.Declarations.Add(obj158);
-            obj29.Declarations.Add(obj159);
+            obj29.Properties.Add(obj160);
+            obj29.Properties.Add(obj161);
+            obj29.Declarations.Add(obj160);
+            obj29.Declarations.Add(obj161);
             obj29.Name = "LSetItem";
             obj29.Parent = obj4;
-            ((__IModelObject)obj30).MChildren.Add((__IModelObject)obj161);
-            ((__IModelObject)obj30).MChildren.Add((__IModelObject)obj162);
-            ((__IModelObject)obj30).MChildren.Add((__IModelObject)obj163);
+            obj30.MChildren.Add(obj163);
+            obj30.MChildren.Add(obj164);
+            obj30.MChildren.Add(obj165);
             obj30.BaseTypes.Add(obj29);
-            obj30.Properties.Add(obj161);
-            obj30.Properties.Add(obj162);
             obj30.Properties.Add(obj163);
-            obj30.Declarations.Add(obj161);
-            obj30.Declarations.Add(obj162);
+            obj30.Properties.Add(obj164);
+            obj30.Properties.Add(obj165);
             obj30.Declarations.Add(obj163);
+            obj30.Declarations.Add(obj164);
+            obj30.Declarations.Add(obj165);
             obj30.Name = "LSetChar";
             obj30.Parent = obj4;
-            ((__IModelObject)obj31).MChildren.Add((__IModelObject)obj165);
-            ((__IModelObject)obj31).MChildren.Add((__IModelObject)obj166);
-            ((__IModelObject)obj31).MChildren.Add((__IModelObject)obj167);
-            ((__IModelObject)obj31).MChildren.Add((__IModelObject)obj168);
+            obj31.MChildren.Add(obj167);
+            obj31.MChildren.Add(obj168);
+            obj31.MChildren.Add(obj169);
+            obj31.MChildren.Add(obj170);
             obj31.BaseTypes.Add(obj29);
-            obj31.Properties.Add(obj165);
-            obj31.Properties.Add(obj166);
             obj31.Properties.Add(obj167);
             obj31.Properties.Add(obj168);
-            obj31.Declarations.Add(obj165);
-            obj31.Declarations.Add(obj166);
+            obj31.Properties.Add(obj169);
+            obj31.Properties.Add(obj170);
             obj31.Declarations.Add(obj167);
             obj31.Declarations.Add(obj168);
+            obj31.Declarations.Add(obj169);
+            obj31.Declarations.Add(obj170);
             obj31.Name = "LSetRange";
             obj31.Parent = obj4;
-            ((__IModelObject)obj32).MChildren.Add((__IModelObject)obj170);
-            ((__IModelObject)obj32).MChildren.Add((__IModelObject)obj171);
-            ((__IModelObject)obj32).MChildren.Add((__IModelObject)obj172);
+            obj32.MChildren.Add(obj172);
+            obj32.MChildren.Add(obj173);
+            obj32.MChildren.Add(obj174);
             obj32.BaseTypes.Add(obj23);
-            obj32.Properties.Add(obj170);
-            obj32.Properties.Add(obj171);
             obj32.Properties.Add(obj172);
-            obj32.Declarations.Add(obj170);
-            obj32.Declarations.Add(obj171);
+            obj32.Properties.Add(obj173);
+            obj32.Properties.Add(obj174);
             obj32.Declarations.Add(obj172);
+            obj32.Declarations.Add(obj173);
+            obj32.Declarations.Add(obj174);
             obj32.Name = "LBlock";
             obj32.Parent = obj4;
-            ((__IModelObject)obj33).MChildren.Add((__IModelObject)obj175);
-            ((__IModelObject)obj33).MChildren.Add((__IModelObject)obj176);
-            ((__IModelObject)obj33).MChildren.Add((__IModelObject)obj177);
-            ((__IModelObject)obj33).MChildren.Add((__IModelObject)obj178);
-            ((__IModelObject)obj33).MChildren.Add((__IModelObject)obj179);
+            obj33.MChildren.Add(obj177);
+            obj33.MChildren.Add(obj178);
+            obj33.MChildren.Add(obj179);
+            obj33.MChildren.Add(obj180);
+            obj33.MChildren.Add(obj181);
             obj33.BaseTypes.Add(obj17);
-            obj33.Properties.Add(obj175);
-            obj33.Properties.Add(obj176);
             obj33.Properties.Add(obj177);
             obj33.Properties.Add(obj178);
             obj33.Properties.Add(obj179);
+            obj33.Properties.Add(obj180);
+            obj33.Properties.Add(obj181);
             obj33.SymbolType = typeof(global::MetaDslx.Bootstrap.MetaCompiler3.Symbols.ParserRuleSymbol);
-            obj33.Declarations.Add(obj175);
-            obj33.Declarations.Add(obj176);
             obj33.Declarations.Add(obj177);
             obj33.Declarations.Add(obj178);
             obj33.Declarations.Add(obj179);
+            obj33.Declarations.Add(obj180);
+            obj33.Declarations.Add(obj181);
             obj33.Name = "Rule";
             obj33.Parent = obj4;
-            ((__IModelObject)obj34).MChildren.Add((__IModelObject)obj182);
-            ((__IModelObject)obj34).MChildren.Add((__IModelObject)obj183);
-            ((__IModelObject)obj34).MChildren.Add((__IModelObject)obj184);
-            ((__IModelObject)obj34).MChildren.Add((__IModelObject)obj185);
-            ((__IModelObject)obj34).MChildren.Add((__IModelObject)obj186);
-            ((__IModelObject)obj34).MChildren.Add((__IModelObject)obj187);
-            ((__IModelObject)obj34).MChildren.Add((__IModelObject)obj188);
-            ((__IModelObject)obj34).MChildren.Add((__IModelObject)obj189);
-            ((__IModelObject)obj34).MChildren.Add((__IModelObject)obj190);
-            ((__IModelObject)obj34).MChildren.Add((__IModelObject)obj191);
-            ((__IModelObject)obj34).MChildren.Add((__IModelObject)obj192);
-            ((__IModelObject)obj34).MChildren.Add((__IModelObject)obj193);
-            ((__IModelObject)obj34).MChildren.Add((__IModelObject)obj194);
-            ((__IModelObject)obj34).MChildren.Add((__IModelObject)obj195);
-            ((__IModelObject)obj34).MChildren.Add((__IModelObject)obj196);
+            obj34.MChildren.Add(obj184);
+            obj34.MChildren.Add(obj185);
+            obj34.MChildren.Add(obj186);
+            obj34.MChildren.Add(obj187);
+            obj34.MChildren.Add(obj188);
+            obj34.MChildren.Add(obj189);
+            obj34.MChildren.Add(obj190);
+            obj34.MChildren.Add(obj191);
+            obj34.MChildren.Add(obj192);
+            obj34.MChildren.Add(obj193);
+            obj34.MChildren.Add(obj194);
+            obj34.MChildren.Add(obj195);
+            obj34.MChildren.Add(obj196);
+            obj34.MChildren.Add(obj197);
+            obj34.MChildren.Add(obj198);
             obj34.BaseTypes.Add(obj6);
             obj34.BaseTypes.Add(obj14);
-            obj34.Properties.Add(obj182);
-            obj34.Properties.Add(obj183);
             obj34.Properties.Add(obj184);
             obj34.Properties.Add(obj185);
             obj34.Properties.Add(obj186);
@@ -1263,9 +1268,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model
             obj34.Properties.Add(obj194);
             obj34.Properties.Add(obj195);
             obj34.Properties.Add(obj196);
+            obj34.Properties.Add(obj197);
+            obj34.Properties.Add(obj198);
             obj34.SymbolType = typeof(global::MetaDslx.Bootstrap.MetaCompiler3.Symbols.PAlternativeSymbol);
-            obj34.Declarations.Add(obj182);
-            obj34.Declarations.Add(obj183);
             obj34.Declarations.Add(obj184);
             obj34.Declarations.Add(obj185);
             obj34.Declarations.Add(obj186);
@@ -1279,49 +1284,49 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model
             obj34.Declarations.Add(obj194);
             obj34.Declarations.Add(obj195);
             obj34.Declarations.Add(obj196);
+            obj34.Declarations.Add(obj197);
+            obj34.Declarations.Add(obj198);
             obj34.Name = "Alternative";
             obj34.Parent = obj4;
-            ((__IModelObject)obj35).MChildren.Add((__IModelObject)obj198);
-            ((__IModelObject)obj35).MChildren.Add((__IModelObject)obj199);
-            ((__IModelObject)obj35).MChildren.Add((__IModelObject)obj200);
-            ((__IModelObject)obj35).MChildren.Add((__IModelObject)obj201);
-            obj35.Literals.Add(obj198);
-            obj35.Literals.Add(obj199);
+            obj35.MChildren.Add(obj200);
+            obj35.MChildren.Add(obj201);
+            obj35.MChildren.Add(obj202);
+            obj35.MChildren.Add(obj203);
             obj35.Literals.Add(obj200);
             obj35.Literals.Add(obj201);
-            obj35.Declarations.Add(obj198);
-            obj35.Declarations.Add(obj199);
+            obj35.Literals.Add(obj202);
+            obj35.Literals.Add(obj203);
             obj35.Declarations.Add(obj200);
             obj35.Declarations.Add(obj201);
+            obj35.Declarations.Add(obj202);
+            obj35.Declarations.Add(obj203);
             obj35.Name = "Assignment";
             obj35.Parent = obj4;
-            ((__IModelObject)obj36).MChildren.Add((__IModelObject)obj202);
-            ((__IModelObject)obj36).MChildren.Add((__IModelObject)obj203);
-            ((__IModelObject)obj36).MChildren.Add((__IModelObject)obj204);
-            ((__IModelObject)obj36).MChildren.Add((__IModelObject)obj205);
-            ((__IModelObject)obj36).MChildren.Add((__IModelObject)obj206);
-            ((__IModelObject)obj36).MChildren.Add((__IModelObject)obj207);
-            ((__IModelObject)obj36).MChildren.Add((__IModelObject)obj208);
-            ((__IModelObject)obj36).MChildren.Add((__IModelObject)obj209);
-            ((__IModelObject)obj36).MChildren.Add((__IModelObject)obj210);
-            ((__IModelObject)obj36).MChildren.Add((__IModelObject)obj211);
-            ((__IModelObject)obj36).MChildren.Add((__IModelObject)obj212);
-            ((__IModelObject)obj36).MChildren.Add((__IModelObject)obj213);
-            ((__IModelObject)obj36).MChildren.Add((__IModelObject)obj214);
-            ((__IModelObject)obj36).MChildren.Add((__IModelObject)obj215);
-            ((__IModelObject)obj36).MChildren.Add((__IModelObject)obj216);
-            ((__IModelObject)obj36).MChildren.Add((__IModelObject)obj217);
-            ((__IModelObject)obj36).MChildren.Add((__IModelObject)obj218);
-            ((__IModelObject)obj36).MChildren.Add((__IModelObject)obj219);
-            ((__IModelObject)obj36).MChildren.Add((__IModelObject)obj220);
-            ((__IModelObject)obj36).MChildren.Add((__IModelObject)obj221);
-            ((__IModelObject)obj36).MChildren.Add((__IModelObject)obj222);
-            ((__IModelObject)obj36).MChildren.Add((__IModelObject)obj223);
-            ((__IModelObject)obj36).MChildren.Add((__IModelObject)obj224);
-            ((__IModelObject)obj36).MChildren.Add((__IModelObject)obj225);
+            obj36.MChildren.Add(obj204);
+            obj36.MChildren.Add(obj205);
+            obj36.MChildren.Add(obj206);
+            obj36.MChildren.Add(obj207);
+            obj36.MChildren.Add(obj208);
+            obj36.MChildren.Add(obj209);
+            obj36.MChildren.Add(obj210);
+            obj36.MChildren.Add(obj211);
+            obj36.MChildren.Add(obj212);
+            obj36.MChildren.Add(obj213);
+            obj36.MChildren.Add(obj214);
+            obj36.MChildren.Add(obj215);
+            obj36.MChildren.Add(obj216);
+            obj36.MChildren.Add(obj217);
+            obj36.MChildren.Add(obj218);
+            obj36.MChildren.Add(obj219);
+            obj36.MChildren.Add(obj220);
+            obj36.MChildren.Add(obj221);
+            obj36.MChildren.Add(obj222);
+            obj36.MChildren.Add(obj223);
+            obj36.MChildren.Add(obj224);
+            obj36.MChildren.Add(obj225);
+            obj36.MChildren.Add(obj226);
+            obj36.MChildren.Add(obj227);
             obj36.BaseTypes.Add(obj14);
-            obj36.Properties.Add(obj202);
-            obj36.Properties.Add(obj203);
             obj36.Properties.Add(obj204);
             obj36.Properties.Add(obj205);
             obj36.Properties.Add(obj206);
@@ -1344,9 +1349,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model
             obj36.Properties.Add(obj223);
             obj36.Properties.Add(obj224);
             obj36.Properties.Add(obj225);
+            obj36.Properties.Add(obj226);
+            obj36.Properties.Add(obj227);
             obj36.SymbolType = typeof(global::MetaDslx.Bootstrap.MetaCompiler3.Symbols.PElementSymbol);
-            obj36.Declarations.Add(obj202);
-            obj36.Declarations.Add(obj203);
             obj36.Declarations.Add(obj204);
             obj36.Declarations.Add(obj205);
             obj36.Declarations.Add(obj206);
@@ -1369,112 +1374,112 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model
             obj36.Declarations.Add(obj223);
             obj36.Declarations.Add(obj224);
             obj36.Declarations.Add(obj225);
+            obj36.Declarations.Add(obj226);
+            obj36.Declarations.Add(obj227);
             obj36.Name = "Element";
             obj36.Parent = obj4;
-            ((__IModelObject)obj37).MChildren.Add((__IModelObject)obj232);
-            ((__IModelObject)obj37).MChildren.Add((__IModelObject)obj233);
-            ((__IModelObject)obj37).MChildren.Add((__IModelObject)obj234);
-            ((__IModelObject)obj37).MChildren.Add((__IModelObject)obj235);
+            obj37.MChildren.Add(obj234);
+            obj37.MChildren.Add(obj235);
+            obj37.MChildren.Add(obj236);
+            obj37.MChildren.Add(obj237);
             obj37.BaseTypes.Add(obj14);
             obj37.IsAbstract = true;
-            obj37.Properties.Add(obj232);
-            obj37.Properties.Add(obj233);
             obj37.Properties.Add(obj234);
             obj37.Properties.Add(obj235);
+            obj37.Properties.Add(obj236);
+            obj37.Properties.Add(obj237);
             obj37.SymbolType = typeof(global::MetaDslx.CodeAnalysis.Symbols.Symbol);
-            obj37.Declarations.Add(obj232);
-            obj37.Declarations.Add(obj233);
             obj37.Declarations.Add(obj234);
             obj37.Declarations.Add(obj235);
+            obj37.Declarations.Add(obj236);
+            obj37.Declarations.Add(obj237);
             obj37.Name = "ElementValue";
             obj37.Parent = obj4;
-            ((__IModelObject)obj38).MChildren.Add((__IModelObject)obj237);
-            ((__IModelObject)obj38).MChildren.Add((__IModelObject)obj238);
-            ((__IModelObject)obj38).MChildren.Add((__IModelObject)obj239);
-            ((__IModelObject)obj38).MChildren.Add((__IModelObject)obj240);
-            ((__IModelObject)obj38).MChildren.Add((__IModelObject)obj241);
-            ((__IModelObject)obj38).MChildren.Add((__IModelObject)obj242);
-            ((__IModelObject)obj38).MChildren.Add((__IModelObject)obj243);
+            obj38.MChildren.Add(obj239);
+            obj38.MChildren.Add(obj240);
+            obj38.MChildren.Add(obj241);
+            obj38.MChildren.Add(obj242);
+            obj38.MChildren.Add(obj243);
+            obj38.MChildren.Add(obj244);
+            obj38.MChildren.Add(obj245);
             obj38.BaseTypes.Add(obj37);
-            obj38.Properties.Add(obj237);
-            obj38.Properties.Add(obj238);
             obj38.Properties.Add(obj239);
             obj38.Properties.Add(obj240);
             obj38.Properties.Add(obj241);
             obj38.Properties.Add(obj242);
             obj38.Properties.Add(obj243);
+            obj38.Properties.Add(obj244);
+            obj38.Properties.Add(obj245);
             obj38.SymbolType = typeof(global::MetaDslx.Bootstrap.MetaCompiler3.Symbols.PReferenceSymbol);
-            obj38.Declarations.Add(obj237);
-            obj38.Declarations.Add(obj238);
             obj38.Declarations.Add(obj239);
             obj38.Declarations.Add(obj240);
             obj38.Declarations.Add(obj241);
             obj38.Declarations.Add(obj242);
             obj38.Declarations.Add(obj243);
+            obj38.Declarations.Add(obj244);
+            obj38.Declarations.Add(obj245);
             obj38.Name = "RuleRef";
             obj38.Parent = obj4;
-            ((__IModelObject)obj39).MChildren.Add((__IModelObject)obj248);
-            ((__IModelObject)obj39).MChildren.Add((__IModelObject)obj249);
-            ((__IModelObject)obj39).MChildren.Add((__IModelObject)obj250);
+            obj39.MChildren.Add(obj250);
+            obj39.MChildren.Add(obj251);
+            obj39.MChildren.Add(obj252);
             obj39.BaseTypes.Add(obj37);
-            obj39.Properties.Add(obj248);
-            obj39.Properties.Add(obj249);
             obj39.Properties.Add(obj250);
-            obj39.Declarations.Add(obj248);
-            obj39.Declarations.Add(obj249);
+            obj39.Properties.Add(obj251);
+            obj39.Properties.Add(obj252);
             obj39.Declarations.Add(obj250);
+            obj39.Declarations.Add(obj251);
+            obj39.Declarations.Add(obj252);
             obj39.Name = "Eof";
             obj39.Parent = obj4;
-            ((__IModelObject)obj40).MChildren.Add((__IModelObject)obj252);
+            obj40.MChildren.Add(obj254);
             obj40.BaseTypes.Add(obj37);
-            obj40.Properties.Add(obj252);
-            obj40.Declarations.Add(obj252);
+            obj40.Properties.Add(obj254);
+            obj40.Declarations.Add(obj254);
             obj40.Name = "Fixed";
             obj40.Parent = obj4;
-            ((__IModelObject)obj41).MChildren.Add((__IModelObject)obj253);
-            ((__IModelObject)obj41).MChildren.Add((__IModelObject)obj254);
-            ((__IModelObject)obj41).MChildren.Add((__IModelObject)obj255);
-            ((__IModelObject)obj41).MChildren.Add((__IModelObject)obj256);
+            obj41.MChildren.Add(obj255);
+            obj41.MChildren.Add(obj256);
+            obj41.MChildren.Add(obj257);
+            obj41.MChildren.Add(obj258);
             obj41.BaseTypes.Add(obj37);
-            obj41.Properties.Add(obj253);
-            obj41.Properties.Add(obj254);
             obj41.Properties.Add(obj255);
             obj41.Properties.Add(obj256);
-            obj41.Declarations.Add(obj253);
-            obj41.Declarations.Add(obj254);
+            obj41.Properties.Add(obj257);
+            obj41.Properties.Add(obj258);
             obj41.Declarations.Add(obj255);
             obj41.Declarations.Add(obj256);
+            obj41.Declarations.Add(obj257);
+            obj41.Declarations.Add(obj258);
             obj41.Name = "TokenAlts";
             obj41.Parent = obj4;
-            ((__IModelObject)obj42).MChildren.Add((__IModelObject)obj259);
-            ((__IModelObject)obj42).MChildren.Add((__IModelObject)obj260);
-            ((__IModelObject)obj42).MChildren.Add((__IModelObject)obj261);
+            obj42.MChildren.Add(obj261);
+            obj42.MChildren.Add(obj262);
+            obj42.MChildren.Add(obj263);
             obj42.BaseTypes.Add(obj37);
             obj42.BaseTypes.Add(obj33);
-            obj42.Properties.Add(obj259);
-            obj42.Properties.Add(obj260);
             obj42.Properties.Add(obj261);
+            obj42.Properties.Add(obj262);
+            obj42.Properties.Add(obj263);
             obj42.SymbolType = typeof(global::MetaDslx.Bootstrap.MetaCompiler3.Symbols.PBlockSymbol);
-            obj42.Declarations.Add(obj259);
-            obj42.Declarations.Add(obj260);
             obj42.Declarations.Add(obj261);
+            obj42.Declarations.Add(obj262);
+            obj42.Declarations.Add(obj263);
             obj42.Name = "Block";
             obj42.Parent = obj4;
-            ((__IModelObject)obj43).MChildren.Add((__IModelObject)obj263);
-            ((__IModelObject)obj43).MChildren.Add((__IModelObject)obj264);
-            ((__IModelObject)obj43).MChildren.Add((__IModelObject)obj265);
-            ((__IModelObject)obj43).MChildren.Add((__IModelObject)obj266);
-            ((__IModelObject)obj43).MChildren.Add((__IModelObject)obj267);
-            ((__IModelObject)obj43).MChildren.Add((__IModelObject)obj268);
-            ((__IModelObject)obj43).MChildren.Add((__IModelObject)obj269);
-            ((__IModelObject)obj43).MChildren.Add((__IModelObject)obj270);
-            ((__IModelObject)obj43).MChildren.Add((__IModelObject)obj271);
-            ((__IModelObject)obj43).MChildren.Add((__IModelObject)obj272);
-            ((__IModelObject)obj43).MChildren.Add((__IModelObject)obj273);
-            ((__IModelObject)obj43).MChildren.Add((__IModelObject)obj274);
+            obj43.MChildren.Add(obj265);
+            obj43.MChildren.Add(obj266);
+            obj43.MChildren.Add(obj267);
+            obj43.MChildren.Add(obj268);
+            obj43.MChildren.Add(obj269);
+            obj43.MChildren.Add(obj270);
+            obj43.MChildren.Add(obj271);
+            obj43.MChildren.Add(obj272);
+            obj43.MChildren.Add(obj273);
+            obj43.MChildren.Add(obj274);
+            obj43.MChildren.Add(obj275);
+            obj43.MChildren.Add(obj276);
             obj43.BaseTypes.Add(obj37);
-            obj43.Properties.Add(obj263);
-            obj43.Properties.Add(obj264);
             obj43.Properties.Add(obj265);
             obj43.Properties.Add(obj266);
             obj43.Properties.Add(obj267);
@@ -1485,8 +1490,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model
             obj43.Properties.Add(obj272);
             obj43.Properties.Add(obj273);
             obj43.Properties.Add(obj274);
-            obj43.Declarations.Add(obj263);
-            obj43.Declarations.Add(obj264);
+            obj43.Properties.Add(obj275);
+            obj43.Properties.Add(obj276);
             obj43.Declarations.Add(obj265);
             obj43.Declarations.Add(obj266);
             obj43.Declarations.Add(obj267);
@@ -1497,794 +1502,801 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model
             obj43.Declarations.Add(obj272);
             obj43.Declarations.Add(obj273);
             obj43.Declarations.Add(obj274);
+            obj43.Declarations.Add(obj275);
+            obj43.Declarations.Add(obj276);
             obj43.Name = "SeparatedList";
             obj43.Parent = obj4;
-            ((__IModelObject)obj44).MChildren.Add((__IModelObject)obj280);
-            obj44.Properties.Add(obj280);
+            obj44.MChildren.Add(obj282);
+            obj44.Properties.Add(obj282);
             obj44.SymbolType = typeof(global::MetaDslx.Bootstrap.MetaCompiler3.Symbols.ExpressionSymbol);
-            obj44.Declarations.Add(obj280);
+            obj44.Declarations.Add(obj282);
             obj44.Name = "Expression";
             obj44.Parent = obj4;
-            ((__IModelObject)obj45).MChildren.Add((__IModelObject)obj281);
+            obj45.MChildren.Add(obj283);
             obj45.BaseTypes.Add(obj44);
-            obj45.Properties.Add(obj281);
-            obj45.Declarations.Add(obj281);
+            obj45.Properties.Add(obj283);
+            obj45.Declarations.Add(obj283);
             obj45.Name = "ArrayExpression";
             obj45.Parent = obj4;
-            ((__IModelObject)obj46).MChildren.Add((__IModelObject)obj50);
+            obj46.MChildren.Add(obj50);
             obj46.SymbolProperty = "Name";
             obj46.Type = __MetaType.FromModelObject((__IModelObject)obj50);
             obj46.Name = "Name";
             obj46.Parent = obj6;
-            ((__IModelObject)obj47).MChildren.Add((__IModelObject)obj51);
+            obj47.MChildren.Add(obj51);
             obj47.OppositeProperties.Add(obj48);
             obj47.Type = __MetaType.FromModelObject((__IModelObject)obj51);
             obj47.Name = "Parent";
             obj47.Parent = obj6;
-            ((__IModelObject)obj48).MChildren.Add((__IModelObject)obj52);
+            obj48.MChildren.Add(obj52);
             obj48.IsContainment = true;
             obj48.OppositeProperties.Add(obj47);
             obj48.Type = __MetaType.FromModelObject((__IModelObject)obj52);
             obj48.Name = "Declarations";
             obj48.Parent = obj6;
-            ((__IModelObject)obj49).MChildren.Add((__IModelObject)obj53);
+            obj49.MChildren.Add(obj53);
             obj49.IsDerived = true;
             obj49.Type = __MetaType.FromModelObject((__IModelObject)obj53);
             obj49.Name = "FullName";
             obj49.Parent = obj6;
-            obj50.InnerType = typeof(global::System.String);
+            obj50.InnerType = typeof(string);
             obj51.InnerType = __MetaType.FromModelObject((__IModelObject)obj6);
             obj52.ItemType = __MetaType.FromModelObject((__IModelObject)obj6);
-            obj53.InnerType = typeof(global::System.String);
+            obj53.InnerType = typeof(string);
             obj54.IsDerived = true;
-            obj54.Type = typeof(global::System.String);
+            obj54.Type = typeof(string);
             obj54.Name = "Namespace";
             obj54.Parent = obj8;
-            obj55.IsContainment = true;
-            obj55.SubsettedProperties.Add(obj48);
-            obj55.Type = __MetaType.FromModelObject((__IModelObject)obj9);
-            obj55.Name = "Grammar";
+            obj55.MChildren.Add(obj57);
+            obj55.Type = __MetaType.FromModelObject((__IModelObject)obj57);
+            obj55.Name = "BaseLanguages";
             obj55.Parent = obj8;
-            obj56.RedefinedProperties.Add(obj47);
-            obj56.Type = __MetaType.FromModelObject((__IModelObject)obj8);
-            obj56.Name = "Language";
-            obj56.Parent = obj9;
-            ((__IModelObject)obj57).MChildren.Add((__IModelObject)obj67);
-            obj57.IsContainment = true;
-            obj57.RedefinedProperties.Add(obj48);
-            obj57.Type = __MetaType.FromModelObject((__IModelObject)obj67);
-            obj57.Name = "GrammarRules";
-            obj57.Parent = obj9;
-            ((__IModelObject)obj58).MChildren.Add((__IModelObject)obj68);
-            obj58.IsContainment = true;
-            obj58.Type = __MetaType.FromModelObject((__IModelObject)obj68);
-            obj58.Name = "TokenKinds";
+            obj56.IsContainment = true;
+            obj56.SubsettedProperties.Add(obj48);
+            obj56.Type = __MetaType.FromModelObject((__IModelObject)obj9);
+            obj56.Name = "Grammar";
+            obj56.Parent = obj8;
+            obj57.ItemType = typeof(__MetaType);
+            obj58.RedefinedProperties.Add(obj47);
+            obj58.Type = __MetaType.FromModelObject((__IModelObject)obj8);
+            obj58.Name = "Language";
             obj58.Parent = obj9;
-            ((__IModelObject)obj59).MChildren.Add((__IModelObject)obj69);
+            obj59.MChildren.Add(obj69);
             obj59.IsContainment = true;
-            obj59.SubsettedProperties.Add(obj57);
+            obj59.RedefinedProperties.Add(obj48);
             obj59.Type = __MetaType.FromModelObject((__IModelObject)obj69);
-            obj59.Name = "Tokens";
+            obj59.Name = "GrammarRules";
             obj59.Parent = obj9;
-            ((__IModelObject)obj60).MChildren.Add((__IModelObject)obj70);
+            obj60.MChildren.Add(obj70);
             obj60.IsContainment = true;
-            obj60.SubsettedProperties.Add(obj57);
             obj60.Type = __MetaType.FromModelObject((__IModelObject)obj70);
-            obj60.Name = "Rules";
+            obj60.Name = "TokenKinds";
             obj60.Parent = obj9;
-            ((__IModelObject)obj61).MChildren.Add((__IModelObject)obj71);
+            obj61.MChildren.Add(obj71);
+            obj61.IsContainment = true;
+            obj61.SubsettedProperties.Add(obj59);
             obj61.Type = __MetaType.FromModelObject((__IModelObject)obj71);
-            obj61.Name = "Blocks";
+            obj61.Name = "Tokens";
             obj61.Parent = obj9;
-            ((__IModelObject)obj62).MChildren.Add((__IModelObject)obj72);
+            obj62.MChildren.Add(obj72);
+            obj62.IsContainment = true;
+            obj62.SubsettedProperties.Add(obj59);
             obj62.Type = __MetaType.FromModelObject((__IModelObject)obj72);
-            obj62.Name = "DefaultWhitespace";
+            obj62.Name = "Rules";
             obj62.Parent = obj9;
-            ((__IModelObject)obj63).MChildren.Add((__IModelObject)obj73);
+            obj63.MChildren.Add(obj73);
             obj63.Type = __MetaType.FromModelObject((__IModelObject)obj73);
-            obj63.Name = "DefaultEndOfLine";
+            obj63.Name = "Blocks";
             obj63.Parent = obj9;
-            ((__IModelObject)obj64).MChildren.Add((__IModelObject)obj74);
+            obj64.MChildren.Add(obj74);
             obj64.Type = __MetaType.FromModelObject((__IModelObject)obj74);
-            obj64.Name = "DefaultSeparator";
+            obj64.Name = "DefaultWhitespace";
             obj64.Parent = obj9;
-            ((__IModelObject)obj65).MChildren.Add((__IModelObject)obj75);
+            obj65.MChildren.Add(obj75);
             obj65.Type = __MetaType.FromModelObject((__IModelObject)obj75);
-            obj65.Name = "DefaultIdentifier";
+            obj65.Name = "DefaultEndOfLine";
             obj65.Parent = obj9;
-            ((__IModelObject)obj66).MChildren.Add((__IModelObject)obj76);
+            obj66.MChildren.Add(obj76);
             obj66.Type = __MetaType.FromModelObject((__IModelObject)obj76);
-            obj66.Name = "MainRule";
+            obj66.Name = "DefaultSeparator";
             obj66.Parent = obj9;
-            obj67.ItemType = __MetaType.FromModelObject((__IModelObject)obj17);
-            obj68.ItemType = __MetaType.FromModelObject((__IModelObject)obj15);
-            obj69.ItemType = __MetaType.FromModelObject((__IModelObject)obj19);
-            obj70.ItemType = __MetaType.FromModelObject((__IModelObject)obj33);
-            obj71.ItemType = __MetaType.FromModelObject((__IModelObject)obj42);
-            obj72.InnerType = __MetaType.FromModelObject((__IModelObject)obj19);
-            obj73.InnerType = __MetaType.FromModelObject((__IModelObject)obj19);
+            obj67.MChildren.Add(obj77);
+            obj67.Type = __MetaType.FromModelObject((__IModelObject)obj77);
+            obj67.Name = "DefaultIdentifier";
+            obj67.Parent = obj9;
+            obj68.MChildren.Add(obj78);
+            obj68.Type = __MetaType.FromModelObject((__IModelObject)obj78);
+            obj68.Name = "MainRule";
+            obj68.Parent = obj9;
+            obj69.ItemType = __MetaType.FromModelObject((__IModelObject)obj17);
+            obj70.ItemType = __MetaType.FromModelObject((__IModelObject)obj15);
+            obj71.ItemType = __MetaType.FromModelObject((__IModelObject)obj19);
+            obj72.ItemType = __MetaType.FromModelObject((__IModelObject)obj33);
+            obj73.ItemType = __MetaType.FromModelObject((__IModelObject)obj42);
             obj74.InnerType = __MetaType.FromModelObject((__IModelObject)obj19);
             obj75.InnerType = __MetaType.FromModelObject((__IModelObject)obj19);
-            obj76.InnerType = __MetaType.FromModelObject((__IModelObject)obj33);
-            obj77.SymbolProperty = "AttributeClass";
-            obj77.Type = typeof(global::MetaDslx.CodeAnalysis.MetaType);
-            obj77.Name = "AttributeClass";
-            obj77.Parent = obj10;
-            ((__IModelObject)obj78).MChildren.Add((__IModelObject)obj79);
-            obj78.IsContainment = true;
-            obj78.SymbolProperty = "Arguments";
-            obj78.Type = __MetaType.FromModelObject((__IModelObject)obj79);
-            obj78.Name = "Arguments";
-            obj78.Parent = obj10;
-            obj79.ItemType = __MetaType.FromModelObject((__IModelObject)obj11);
-            ((__IModelObject)obj80).MChildren.Add((__IModelObject)obj84);
-            obj80.SymbolProperty = "NamedParameter";
-            obj80.Type = __MetaType.FromModelObject((__IModelObject)obj84);
-            obj80.Name = "NamedParameter";
-            obj80.Parent = obj11;
-            obj81.SymbolProperty = "Parameter";
-            obj81.Type = typeof(global::MetaDslx.CodeAnalysis.Symbols.DeclarationSymbol);
-            obj81.Name = "Parameter";
-            obj81.Parent = obj11;
-            obj82.Type = typeof(global::MetaDslx.CodeAnalysis.MetaType);
-            obj82.Name = "ParameterType";
+            obj76.InnerType = __MetaType.FromModelObject((__IModelObject)obj19);
+            obj77.InnerType = __MetaType.FromModelObject((__IModelObject)obj19);
+            obj78.InnerType = __MetaType.FromModelObject((__IModelObject)obj33);
+            obj79.SymbolProperty = "AttributeClass";
+            obj79.Type = typeof(__MetaType);
+            obj79.Name = "AttributeClass";
+            obj79.Parent = obj10;
+            obj80.MChildren.Add(obj81);
+            obj80.IsContainment = true;
+            obj80.SymbolProperty = "Arguments";
+            obj80.Type = __MetaType.FromModelObject((__IModelObject)obj81);
+            obj80.Name = "Arguments";
+            obj80.Parent = obj10;
+            obj81.ItemType = __MetaType.FromModelObject((__IModelObject)obj11);
+            obj82.MChildren.Add(obj86);
+            obj82.SymbolProperty = "NamedParameter";
+            obj82.Type = __MetaType.FromModelObject((__IModelObject)obj86);
+            obj82.Name = "NamedParameter";
             obj82.Parent = obj11;
-            obj83.IsContainment = true;
-            obj83.SymbolProperty = "Value";
-            obj83.Type = __MetaType.FromModelObject((__IModelObject)obj44);
-            obj83.Name = "Value";
+            obj83.SymbolProperty = "Parameter";
+            obj83.Type = typeof(global::MetaDslx.CodeAnalysis.Symbols.DeclarationSymbol);
+            obj83.Name = "Parameter";
             obj83.Parent = obj11;
-            obj84.ItemType = typeof(global::MetaDslx.CodeAnalysis.MetaSymbol);
-            obj85.Type = typeof(global::System.String);
-            obj85.Name = "TypeName";
-            obj85.Parent = obj12;
-            ((__IModelObject)obj86).MChildren.Add((__IModelObject)obj89);
-            obj86.IsContainment = true;
-            obj86.Type = __MetaType.FromModelObject((__IModelObject)obj89);
-            obj86.Name = "Arguments";
-            obj86.Parent = obj12;
-            obj87.Type = typeof(global::System.Boolean);
-            obj87.Name = "IsNegated";
+            obj84.Type = typeof(__MetaType);
+            obj84.Name = "ParameterType";
+            obj84.Parent = obj11;
+            obj85.IsContainment = true;
+            obj85.SymbolProperty = "Value";
+            obj85.Type = __MetaType.FromModelObject((__IModelObject)obj44);
+            obj85.Name = "Value";
+            obj85.Parent = obj11;
+            obj86.ItemType = typeof(__MetaSymbol);
+            obj87.Type = typeof(string);
+            obj87.Name = "TypeName";
             obj87.Parent = obj12;
-            obj88.IsDerived = true;
-            obj88.Type = typeof(global::System.String);
-            obj88.Name = "ConstructorArguments";
+            obj88.MChildren.Add(obj91);
+            obj88.IsContainment = true;
+            obj88.Type = __MetaType.FromModelObject((__IModelObject)obj91);
+            obj88.Name = "Arguments";
             obj88.Parent = obj12;
-            obj89.ItemType = __MetaType.FromModelObject((__IModelObject)obj13);
-            obj90.Type = typeof(global::System.String);
-            obj90.Name = "Name";
-            obj90.Parent = obj13;
-            obj91.Type = typeof(global::System.String);
-            obj91.Name = "TypeName";
-            obj91.Parent = obj13;
-            obj92.Type = typeof(global::System.Boolean);
-            obj92.Name = "IsArray";
+            obj89.Type = typeof(bool);
+            obj89.Name = "IsNegated";
+            obj89.Parent = obj12;
+            obj90.IsDerived = true;
+            obj90.Type = typeof(string);
+            obj90.Name = "ConstructorArguments";
+            obj90.Parent = obj12;
+            obj91.ItemType = __MetaType.FromModelObject((__IModelObject)obj13);
+            obj92.Type = typeof(string);
+            obj92.Name = "Name";
             obj92.Parent = obj13;
-            ((__IModelObject)obj93).MChildren.Add((__IModelObject)obj94);
-            obj93.Type = __MetaType.FromModelObject((__IModelObject)obj94);
-            obj93.Name = "Values";
+            obj93.Type = typeof(string);
+            obj93.Name = "TypeName";
             obj93.Parent = obj13;
-            ((__IModelObject)obj94).MChildren.Add((__IModelObject)obj95);
-            obj94.ItemType = __MetaType.FromModelObject((__IModelObject)obj95);
-            obj95.InnerType = typeof(global::System.String);
-            ((__IModelObject)obj96).MChildren.Add((__IModelObject)obj101);
-            obj96.IsContainment = true;
-            obj96.Type = __MetaType.FromModelObject((__IModelObject)obj101);
-            obj96.Name = "Annotations";
-            obj96.Parent = obj14;
-            obj97.Type = typeof(global::System.String);
-            obj97.Name = "CSharpName";
-            obj97.Parent = obj14;
-            obj98.Type = typeof(global::System.String);
-            obj98.Name = "AntlrName";
+            obj94.Type = typeof(bool);
+            obj94.Name = "IsArray";
+            obj94.Parent = obj13;
+            obj95.MChildren.Add(obj96);
+            obj95.Type = __MetaType.FromModelObject((__IModelObject)obj96);
+            obj95.Name = "Values";
+            obj95.Parent = obj13;
+            obj96.MChildren.Add(obj97);
+            obj96.ItemType = __MetaType.FromModelObject((__IModelObject)obj97);
+            obj97.InnerType = typeof(string);
+            obj98.MChildren.Add(obj103);
+            obj98.IsContainment = true;
+            obj98.Type = __MetaType.FromModelObject((__IModelObject)obj103);
+            obj98.Name = "Annotations";
             obj98.Parent = obj14;
-            ((__IModelObject)obj99).MChildren.Add((__IModelObject)obj102);
-            obj99.IsContainment = true;
-            obj99.Type = __MetaType.FromModelObject((__IModelObject)obj102);
-            obj99.Name = "Binders";
+            obj99.Type = typeof(string);
+            obj99.Name = "CSharpName";
             obj99.Parent = obj14;
-            obj100.Type = typeof(global::System.Boolean);
-            obj100.Name = "ContainsBinders";
+            obj100.Type = typeof(string);
+            obj100.Name = "AntlrName";
             obj100.Parent = obj14;
-            obj101.ItemType = __MetaType.FromModelObject((__IModelObject)obj10);
-            obj102.ItemType = __MetaType.FromModelObject((__IModelObject)obj12);
-            obj103.Type = typeof(global::System.String);
-            obj103.Name = "Name";
-            obj103.Parent = obj15;
-            obj104.Type = typeof(global::System.String);
-            obj104.Name = "TypeName";
-            obj104.Parent = obj15;
-            obj105.Name = "ExactlyOne";
-            obj105.Parent = obj16;
-            obj106.Name = "ZeroOrOne";
-            obj106.Parent = obj16;
-            obj107.Name = "ZeroOrMore";
+            obj101.MChildren.Add(obj104);
+            obj101.IsContainment = true;
+            obj101.Type = __MetaType.FromModelObject((__IModelObject)obj104);
+            obj101.Name = "Binders";
+            obj101.Parent = obj14;
+            obj102.Type = typeof(bool);
+            obj102.Name = "ContainsBinders";
+            obj102.Parent = obj14;
+            obj103.ItemType = __MetaType.FromModelObject((__IModelObject)obj10);
+            obj104.ItemType = __MetaType.FromModelObject((__IModelObject)obj12);
+            obj105.Type = typeof(string);
+            obj105.Name = "Name";
+            obj105.Parent = obj15;
+            obj106.Type = typeof(string);
+            obj106.Name = "TypeName";
+            obj106.Parent = obj15;
+            obj107.Name = "ExactlyOne";
             obj107.Parent = obj16;
-            obj108.Name = "OneOrMore";
+            obj108.Name = "ZeroOrOne";
             obj108.Parent = obj16;
-            obj109.Name = "NonGreedyZeroOrOne";
+            obj109.Name = "ZeroOrMore";
             obj109.Parent = obj16;
-            obj110.Name = "NonGreedyZeroOrMore";
+            obj110.Name = "OneOrMore";
             obj110.Parent = obj16;
-            obj111.Name = "NonGreedyOneOrMore";
+            obj111.Name = "NonGreedyZeroOrOne";
             obj111.Parent = obj16;
-            obj112.IsDerived = true;
-            obj112.Type = __MetaType.FromModelObject((__IModelObject)obj8);
-            obj112.Name = "Language";
-            obj112.Parent = obj17;
-            obj113.RedefinedProperties.Add(obj47);
-            obj113.Type = __MetaType.FromModelObject((__IModelObject)obj9);
-            obj113.Name = "Grammar";
-            obj113.Parent = obj17;
-            ((__IModelObject)obj114).MChildren.Add((__IModelObject)obj117);
-            obj114.IsContainment = true;
-            obj114.Type = __MetaType.FromModelObject((__IModelObject)obj117);
-            obj114.Name = "Alternatives";
-            obj114.Parent = obj18;
-            obj115.IsDerived = true;
-            obj115.Type = typeof(global::System.Boolean);
-            obj115.Name = "IsFixed";
-            obj115.Parent = obj18;
-            ((__IModelObject)obj116).MChildren.Add((__IModelObject)obj118);
-            obj116.IsDerived = true;
-            obj116.Type = __MetaType.FromModelObject((__IModelObject)obj118);
-            obj116.Name = "FixedText";
+            obj112.Name = "NonGreedyZeroOrMore";
+            obj112.Parent = obj16;
+            obj113.Name = "NonGreedyOneOrMore";
+            obj113.Parent = obj16;
+            obj114.IsDerived = true;
+            obj114.Type = __MetaType.FromModelObject((__IModelObject)obj8);
+            obj114.Name = "Language";
+            obj114.Parent = obj17;
+            obj115.RedefinedProperties.Add(obj47);
+            obj115.Type = __MetaType.FromModelObject((__IModelObject)obj9);
+            obj115.Name = "Grammar";
+            obj115.Parent = obj17;
+            obj116.MChildren.Add(obj119);
+            obj116.IsContainment = true;
+            obj116.Type = __MetaType.FromModelObject((__IModelObject)obj119);
+            obj116.Name = "Alternatives";
             obj116.Parent = obj18;
-            obj117.ItemType = __MetaType.FromModelObject((__IModelObject)obj21);
-            obj118.InnerType = typeof(global::System.String);
-            obj119.SymbolProperty = "ReturnType";
-            obj119.Type = typeof(global::MetaDslx.CodeAnalysis.MetaType);
-            obj119.Name = "ReturnType";
-            obj119.Parent = obj19;
-            obj120.Type = typeof(global::System.Boolean);
-            obj120.Name = "IsTrivia";
-            obj120.Parent = obj19;
-            ((__IModelObject)obj121).MChildren.Add((__IModelObject)obj122);
-            obj121.Type = __MetaType.FromModelObject((__IModelObject)obj122);
-            obj121.Name = "TokenKind";
+            obj117.IsDerived = true;
+            obj117.Type = typeof(bool);
+            obj117.Name = "IsFixed";
+            obj117.Parent = obj18;
+            obj118.MChildren.Add(obj120);
+            obj118.IsDerived = true;
+            obj118.Type = __MetaType.FromModelObject((__IModelObject)obj120);
+            obj118.Name = "FixedText";
+            obj118.Parent = obj18;
+            obj119.ItemType = __MetaType.FromModelObject((__IModelObject)obj21);
+            obj120.InnerType = typeof(string);
+            obj121.SymbolProperty = "ReturnType";
+            obj121.Type = typeof(__MetaType);
+            obj121.Name = "ReturnType";
             obj121.Parent = obj19;
-            obj122.InnerType = __MetaType.FromModelObject((__IModelObject)obj15);
-            obj123.IsDerived = true;
-            obj123.Type = typeof(global::System.Boolean);
-            obj123.Name = "IsFixed";
-            obj123.Parent = obj21;
-            ((__IModelObject)obj124).MChildren.Add((__IModelObject)obj126);
-            obj124.IsDerived = true;
-            obj124.Type = __MetaType.FromModelObject((__IModelObject)obj126);
-            obj124.Name = "FixedText";
-            obj124.Parent = obj21;
-            ((__IModelObject)obj125).MChildren.Add((__IModelObject)obj127);
-            obj125.IsContainment = true;
-            obj125.Type = __MetaType.FromModelObject((__IModelObject)obj127);
-            obj125.Name = "Elements";
+            obj122.Type = typeof(bool);
+            obj122.Name = "IsTrivia";
+            obj122.Parent = obj19;
+            obj123.MChildren.Add(obj124);
+            obj123.Type = __MetaType.FromModelObject((__IModelObject)obj124);
+            obj123.Name = "TokenKind";
+            obj123.Parent = obj19;
+            obj124.InnerType = __MetaType.FromModelObject((__IModelObject)obj15);
+            obj125.IsDerived = true;
+            obj125.Type = typeof(bool);
+            obj125.Name = "IsFixed";
             obj125.Parent = obj21;
-            obj126.InnerType = typeof(global::System.String);
-            obj127.ItemType = __MetaType.FromModelObject((__IModelObject)obj22);
-            obj128.IsDerived = true;
-            obj128.Type = typeof(global::System.Boolean);
-            obj128.Name = "IsFixed";
-            obj128.Parent = obj22;
-            ((__IModelObject)obj129).MChildren.Add((__IModelObject)obj133);
-            obj129.IsDerived = true;
-            obj129.Type = __MetaType.FromModelObject((__IModelObject)obj133);
-            obj129.Name = "FixedText";
-            obj129.Parent = obj22;
-            obj130.Type = typeof(global::System.Boolean);
-            obj130.Name = "IsNegated";
+            obj126.MChildren.Add(obj128);
+            obj126.IsDerived = true;
+            obj126.Type = __MetaType.FromModelObject((__IModelObject)obj128);
+            obj126.Name = "FixedText";
+            obj126.Parent = obj21;
+            obj127.MChildren.Add(obj129);
+            obj127.IsContainment = true;
+            obj127.Type = __MetaType.FromModelObject((__IModelObject)obj129);
+            obj127.Name = "Elements";
+            obj127.Parent = obj21;
+            obj128.InnerType = typeof(string);
+            obj129.ItemType = __MetaType.FromModelObject((__IModelObject)obj22);
+            obj130.IsDerived = true;
+            obj130.Type = typeof(bool);
+            obj130.Name = "IsFixed";
             obj130.Parent = obj22;
-            obj131.IsContainment = true;
-            obj131.Type = __MetaType.FromModelObject((__IModelObject)obj23);
-            obj131.Name = "Value";
+            obj131.MChildren.Add(obj135);
+            obj131.IsDerived = true;
+            obj131.Type = __MetaType.FromModelObject((__IModelObject)obj135);
+            obj131.Name = "FixedText";
             obj131.Parent = obj22;
-            obj132.Type = __MetaType.FromModelObject((__IModelObject)obj16);
-            obj132.Name = "Multiplicity";
+            obj132.Type = typeof(bool);
+            obj132.Name = "IsNegated";
             obj132.Parent = obj22;
-            obj133.InnerType = typeof(global::System.String);
-            obj134.IsDerived = true;
-            obj134.Type = typeof(global::System.Boolean);
-            obj134.Name = "IsFixed";
-            obj134.Parent = obj23;
-            ((__IModelObject)obj135).MChildren.Add((__IModelObject)obj136);
-            obj135.IsDerived = true;
-            obj135.Type = __MetaType.FromModelObject((__IModelObject)obj136);
-            obj135.Name = "FixedText";
-            obj135.Parent = obj23;
-            obj136.InnerType = typeof(global::System.String);
+            obj133.IsContainment = true;
+            obj133.Type = __MetaType.FromModelObject((__IModelObject)obj23);
+            obj133.Name = "Value";
+            obj133.Parent = obj22;
+            obj134.Type = __MetaType.FromModelObject((__IModelObject)obj16);
+            obj134.Name = "Multiplicity";
+            obj134.Parent = obj22;
+            obj135.InnerType = typeof(string);
+            obj136.IsDerived = true;
+            obj136.Type = typeof(bool);
+            obj136.Name = "IsFixed";
+            obj136.Parent = obj23;
+            obj137.MChildren.Add(obj138);
             obj137.IsDerived = true;
-            obj137.Type = typeof(global::System.Boolean);
-            obj137.Name = "IsFixed";
-            obj137.Parent = obj24;
-            ((__IModelObject)obj138).MChildren.Add((__IModelObject)obj140);
-            obj138.IsDerived = true;
-            obj138.Type = __MetaType.FromModelObject((__IModelObject)obj140);
-            obj138.Name = "FixedText";
-            obj138.Parent = obj24;
-            obj139.Type = __MetaType.FromModelObject((__IModelObject)obj18);
-            obj139.Name = "Rule";
+            obj137.Type = __MetaType.FromModelObject((__IModelObject)obj138);
+            obj137.Name = "FixedText";
+            obj137.Parent = obj23;
+            obj138.InnerType = typeof(string);
+            obj139.IsDerived = true;
+            obj139.Type = typeof(bool);
+            obj139.Name = "IsFixed";
             obj139.Parent = obj24;
-            obj140.InnerType = typeof(global::System.String);
-            obj141.IsDerived = true;
-            obj141.Type = typeof(global::System.Boolean);
-            obj141.Name = "IsFixed";
-            obj141.Parent = obj25;
-            ((__IModelObject)obj142).MChildren.Add((__IModelObject)obj144);
-            obj142.IsDerived = true;
-            obj142.Type = __MetaType.FromModelObject((__IModelObject)obj144);
-            obj142.Name = "FixedText";
-            obj142.Parent = obj25;
-            obj143.Type = typeof(global::System.String);
-            obj143.Name = "Text";
+            obj140.MChildren.Add(obj142);
+            obj140.IsDerived = true;
+            obj140.Type = __MetaType.FromModelObject((__IModelObject)obj142);
+            obj140.Name = "FixedText";
+            obj140.Parent = obj24;
+            obj141.Type = __MetaType.FromModelObject((__IModelObject)obj18);
+            obj141.Name = "Rule";
+            obj141.Parent = obj24;
+            obj142.InnerType = typeof(string);
+            obj143.IsDerived = true;
+            obj143.Type = typeof(bool);
+            obj143.Name = "IsFixed";
             obj143.Parent = obj25;
-            obj144.InnerType = typeof(global::System.String);
-            obj145.IsDerived = true;
-            obj145.Type = typeof(global::System.Boolean);
-            obj145.Name = "IsFixed";
-            obj145.Parent = obj26;
-            ((__IModelObject)obj146).MChildren.Add((__IModelObject)obj147);
-            obj146.IsDerived = true;
-            obj146.Type = __MetaType.FromModelObject((__IModelObject)obj147);
-            obj146.Name = "FixedText";
-            obj146.Parent = obj26;
-            obj147.InnerType = typeof(global::System.String);
+            obj144.MChildren.Add(obj146);
+            obj144.IsDerived = true;
+            obj144.Type = __MetaType.FromModelObject((__IModelObject)obj146);
+            obj144.Name = "FixedText";
+            obj144.Parent = obj25;
+            obj145.Type = typeof(string);
+            obj145.Name = "Text";
+            obj145.Parent = obj25;
+            obj146.InnerType = typeof(string);
+            obj147.IsDerived = true;
+            obj147.Type = typeof(bool);
+            obj147.Name = "IsFixed";
+            obj147.Parent = obj26;
+            obj148.MChildren.Add(obj149);
             obj148.IsDerived = true;
-            obj148.Type = typeof(global::System.Boolean);
-            obj148.Name = "IsFixed";
-            obj148.Parent = obj27;
-            ((__IModelObject)obj149).MChildren.Add((__IModelObject)obj152);
-            obj149.IsDerived = true;
-            obj149.Type = __MetaType.FromModelObject((__IModelObject)obj152);
-            obj149.Name = "FixedText";
-            obj149.Parent = obj27;
-            obj150.Type = typeof(global::System.String);
-            obj150.Name = "StartChar";
+            obj148.Type = __MetaType.FromModelObject((__IModelObject)obj149);
+            obj148.Name = "FixedText";
+            obj148.Parent = obj26;
+            obj149.InnerType = typeof(string);
+            obj150.IsDerived = true;
+            obj150.Type = typeof(bool);
+            obj150.Name = "IsFixed";
             obj150.Parent = obj27;
-            obj151.Type = typeof(global::System.String);
-            obj151.Name = "EndChar";
+            obj151.MChildren.Add(obj154);
+            obj151.IsDerived = true;
+            obj151.Type = __MetaType.FromModelObject((__IModelObject)obj154);
+            obj151.Name = "FixedText";
             obj151.Parent = obj27;
-            obj152.InnerType = typeof(global::System.String);
-            obj153.IsDerived = true;
-            obj153.Type = typeof(global::System.Boolean);
-            obj153.Name = "IsFixed";
-            obj153.Parent = obj28;
-            ((__IModelObject)obj154).MChildren.Add((__IModelObject)obj156);
-            obj154.IsDerived = true;
-            obj154.Type = __MetaType.FromModelObject((__IModelObject)obj156);
-            obj154.Name = "FixedText";
-            obj154.Parent = obj28;
-            ((__IModelObject)obj155).MChildren.Add((__IModelObject)obj157);
-            obj155.IsContainment = true;
-            obj155.Type = __MetaType.FromModelObject((__IModelObject)obj157);
-            obj155.Name = "Items";
+            obj152.Type = typeof(string);
+            obj152.Name = "StartChar";
+            obj152.Parent = obj27;
+            obj153.Type = typeof(string);
+            obj153.Name = "EndChar";
+            obj153.Parent = obj27;
+            obj154.InnerType = typeof(string);
+            obj155.IsDerived = true;
+            obj155.Type = typeof(bool);
+            obj155.Name = "IsFixed";
             obj155.Parent = obj28;
-            obj156.InnerType = typeof(global::System.String);
-            obj157.ItemType = __MetaType.FromModelObject((__IModelObject)obj29);
-            obj158.IsDerived = true;
-            obj158.Type = typeof(global::System.Boolean);
-            obj158.Name = "IsFixed";
-            obj158.Parent = obj29;
-            ((__IModelObject)obj159).MChildren.Add((__IModelObject)obj160);
-            obj159.IsDerived = true;
-            obj159.Type = __MetaType.FromModelObject((__IModelObject)obj160);
-            obj159.Name = "FixedText";
-            obj159.Parent = obj29;
-            obj160.InnerType = typeof(global::System.String);
+            obj156.MChildren.Add(obj158);
+            obj156.IsDerived = true;
+            obj156.Type = __MetaType.FromModelObject((__IModelObject)obj158);
+            obj156.Name = "FixedText";
+            obj156.Parent = obj28;
+            obj157.MChildren.Add(obj159);
+            obj157.IsContainment = true;
+            obj157.Type = __MetaType.FromModelObject((__IModelObject)obj159);
+            obj157.Name = "Items";
+            obj157.Parent = obj28;
+            obj158.InnerType = typeof(string);
+            obj159.ItemType = __MetaType.FromModelObject((__IModelObject)obj29);
+            obj160.IsDerived = true;
+            obj160.Type = typeof(bool);
+            obj160.Name = "IsFixed";
+            obj160.Parent = obj29;
+            obj161.MChildren.Add(obj162);
             obj161.IsDerived = true;
-            obj161.Type = typeof(global::System.Boolean);
-            obj161.Name = "IsFixed";
-            obj161.Parent = obj30;
-            ((__IModelObject)obj162).MChildren.Add((__IModelObject)obj164);
-            obj162.IsDerived = true;
-            obj162.Type = __MetaType.FromModelObject((__IModelObject)obj164);
-            obj162.Name = "FixedText";
-            obj162.Parent = obj30;
-            obj163.Type = typeof(global::System.String);
-            obj163.Name = "Char";
+            obj161.Type = __MetaType.FromModelObject((__IModelObject)obj162);
+            obj161.Name = "FixedText";
+            obj161.Parent = obj29;
+            obj162.InnerType = typeof(string);
+            obj163.IsDerived = true;
+            obj163.Type = typeof(bool);
+            obj163.Name = "IsFixed";
             obj163.Parent = obj30;
-            obj164.InnerType = typeof(global::System.String);
-            obj165.IsDerived = true;
-            obj165.Type = typeof(global::System.Boolean);
-            obj165.Name = "IsFixed";
-            obj165.Parent = obj31;
-            ((__IModelObject)obj166).MChildren.Add((__IModelObject)obj169);
-            obj166.IsDerived = true;
-            obj166.Type = __MetaType.FromModelObject((__IModelObject)obj169);
-            obj166.Name = "FixedText";
-            obj166.Parent = obj31;
-            obj167.Type = typeof(global::System.String);
-            obj167.Name = "StartChar";
+            obj164.MChildren.Add(obj166);
+            obj164.IsDerived = true;
+            obj164.Type = __MetaType.FromModelObject((__IModelObject)obj166);
+            obj164.Name = "FixedText";
+            obj164.Parent = obj30;
+            obj165.Type = typeof(string);
+            obj165.Name = "Char";
+            obj165.Parent = obj30;
+            obj166.InnerType = typeof(string);
+            obj167.IsDerived = true;
+            obj167.Type = typeof(bool);
+            obj167.Name = "IsFixed";
             obj167.Parent = obj31;
-            obj168.Type = typeof(global::System.String);
-            obj168.Name = "EndChar";
+            obj168.MChildren.Add(obj171);
+            obj168.IsDerived = true;
+            obj168.Type = __MetaType.FromModelObject((__IModelObject)obj171);
+            obj168.Name = "FixedText";
             obj168.Parent = obj31;
-            obj169.InnerType = typeof(global::System.String);
-            obj170.IsDerived = true;
-            obj170.Type = typeof(global::System.Boolean);
-            obj170.Name = "IsFixed";
-            obj170.Parent = obj32;
-            ((__IModelObject)obj171).MChildren.Add((__IModelObject)obj173);
-            obj171.IsDerived = true;
-            obj171.Type = __MetaType.FromModelObject((__IModelObject)obj173);
-            obj171.Name = "FixedText";
-            obj171.Parent = obj32;
-            ((__IModelObject)obj172).MChildren.Add((__IModelObject)obj174);
-            obj172.IsContainment = true;
-            obj172.Type = __MetaType.FromModelObject((__IModelObject)obj174);
-            obj172.Name = "Alternatives";
+            obj169.Type = typeof(string);
+            obj169.Name = "StartChar";
+            obj169.Parent = obj31;
+            obj170.Type = typeof(string);
+            obj170.Name = "EndChar";
+            obj170.Parent = obj31;
+            obj171.InnerType = typeof(string);
+            obj172.IsDerived = true;
+            obj172.Type = typeof(bool);
+            obj172.Name = "IsFixed";
             obj172.Parent = obj32;
-            obj173.InnerType = typeof(global::System.String);
-            obj174.ItemType = __MetaType.FromModelObject((__IModelObject)obj21);
-            obj175.SymbolProperty = "ReturnType";
-            obj175.Type = typeof(global::MetaDslx.CodeAnalysis.MetaType);
-            obj175.Name = "ReturnType";
-            obj175.Parent = obj33;
-            ((__IModelObject)obj176).MChildren.Add((__IModelObject)obj180);
-            obj176.IsContainment = true;
-            obj176.SymbolProperty = "Alternatives";
-            obj176.Type = __MetaType.FromModelObject((__IModelObject)obj180);
-            obj176.Name = "Alternatives";
-            obj176.Parent = obj33;
-            ((__IModelObject)obj177).MChildren.Add((__IModelObject)obj181);
-            obj177.Type = __MetaType.FromModelObject((__IModelObject)obj181);
-            obj177.Name = "BaseRule";
+            obj173.MChildren.Add(obj175);
+            obj173.IsDerived = true;
+            obj173.Type = __MetaType.FromModelObject((__IModelObject)obj175);
+            obj173.Name = "FixedText";
+            obj173.Parent = obj32;
+            obj174.MChildren.Add(obj176);
+            obj174.IsContainment = true;
+            obj174.Type = __MetaType.FromModelObject((__IModelObject)obj176);
+            obj174.Name = "Alternatives";
+            obj174.Parent = obj32;
+            obj175.InnerType = typeof(string);
+            obj176.ItemType = __MetaType.FromModelObject((__IModelObject)obj21);
+            obj177.SymbolProperty = "ReturnType";
+            obj177.Type = typeof(__MetaType);
+            obj177.Name = "ReturnType";
             obj177.Parent = obj33;
-            obj178.IsDerived = true;
-            obj178.Type = typeof(global::System.String);
-            obj178.Name = "GreenName";
+            obj178.MChildren.Add(obj182);
+            obj178.IsContainment = true;
+            obj178.SymbolProperty = "Alternatives";
+            obj178.Type = __MetaType.FromModelObject((__IModelObject)obj182);
+            obj178.Name = "Alternatives";
             obj178.Parent = obj33;
-            obj179.IsDerived = true;
-            obj179.Type = typeof(global::System.String);
-            obj179.Name = "RedName";
+            obj179.MChildren.Add(obj183);
+            obj179.Type = __MetaType.FromModelObject((__IModelObject)obj183);
+            obj179.Name = "BaseRule";
             obj179.Parent = obj33;
-            obj180.ItemType = __MetaType.FromModelObject((__IModelObject)obj34);
-            obj181.InnerType = __MetaType.FromModelObject((__IModelObject)obj34);
-            obj182.SymbolProperty = "ReturnType";
-            obj182.Type = typeof(global::MetaDslx.CodeAnalysis.MetaType);
-            obj182.Name = "ReturnType";
-            obj182.Parent = obj34;
-            obj183.IsContainment = true;
-            obj183.SymbolProperty = "ReturnValue";
-            obj183.Type = __MetaType.FromModelObject((__IModelObject)obj44);
-            obj183.Name = "ReturnValue";
-            obj183.Parent = obj34;
-            ((__IModelObject)obj184).MChildren.Add((__IModelObject)obj197);
-            obj184.IsContainment = true;
-            obj184.SymbolProperty = "Elements";
-            obj184.Type = __MetaType.FromModelObject((__IModelObject)obj197);
-            obj184.Name = "Elements";
+            obj180.IsDerived = true;
+            obj180.Type = typeof(string);
+            obj180.Name = "GreenName";
+            obj180.Parent = obj33;
+            obj181.IsDerived = true;
+            obj181.Type = typeof(string);
+            obj181.Name = "RedName";
+            obj181.Parent = obj33;
+            obj182.ItemType = __MetaType.FromModelObject((__IModelObject)obj34);
+            obj183.InnerType = __MetaType.FromModelObject((__IModelObject)obj34);
+            obj184.SymbolProperty = "ReturnType";
+            obj184.Type = typeof(__MetaType);
+            obj184.Name = "ReturnType";
             obj184.Parent = obj34;
-            obj185.IsDerived = true;
-            obj185.Type = typeof(global::System.String);
-            obj185.Name = "GreenName";
+            obj185.IsContainment = true;
+            obj185.SymbolProperty = "ReturnValue";
+            obj185.Type = __MetaType.FromModelObject((__IModelObject)obj44);
+            obj185.Name = "ReturnValue";
             obj185.Parent = obj34;
-            obj186.IsDerived = true;
-            obj186.Type = typeof(global::System.String);
-            obj186.Name = "GreenConstructorParameters";
+            obj186.MChildren.Add(obj199);
+            obj186.IsContainment = true;
+            obj186.SymbolProperty = "Elements";
+            obj186.Type = __MetaType.FromModelObject((__IModelObject)obj199);
+            obj186.Name = "Elements";
             obj186.Parent = obj34;
             obj187.IsDerived = true;
-            obj187.Type = typeof(global::System.String);
-            obj187.Name = "GreenConstructorArguments";
+            obj187.Type = typeof(string);
+            obj187.Name = "GreenName";
             obj187.Parent = obj34;
             obj188.IsDerived = true;
-            obj188.Type = typeof(global::System.String);
-            obj188.Name = "GreenUpdateParameters";
+            obj188.Type = typeof(string);
+            obj188.Name = "GreenConstructorParameters";
             obj188.Parent = obj34;
             obj189.IsDerived = true;
-            obj189.Type = typeof(global::System.String);
-            obj189.Name = "GreenUpdateArguments";
+            obj189.Type = typeof(string);
+            obj189.Name = "GreenConstructorArguments";
             obj189.Parent = obj34;
             obj190.IsDerived = true;
-            obj190.Type = typeof(global::System.String);
-            obj190.Name = "RedName";
+            obj190.Type = typeof(string);
+            obj190.Name = "GreenUpdateParameters";
             obj190.Parent = obj34;
             obj191.IsDerived = true;
-            obj191.Type = typeof(global::System.String);
-            obj191.Name = "RedUpdateParameters";
+            obj191.Type = typeof(string);
+            obj191.Name = "GreenUpdateArguments";
             obj191.Parent = obj34;
             obj192.IsDerived = true;
-            obj192.Type = typeof(global::System.String);
-            obj192.Name = "RedUpdateArguments";
+            obj192.Type = typeof(string);
+            obj192.Name = "RedName";
             obj192.Parent = obj34;
             obj193.IsDerived = true;
-            obj193.Type = typeof(global::System.String);
-            obj193.Name = "RedOptionalUpdateParameters";
+            obj193.Type = typeof(string);
+            obj193.Name = "RedUpdateParameters";
             obj193.Parent = obj34;
             obj194.IsDerived = true;
-            obj194.Type = typeof(global::System.String);
-            obj194.Name = "RedToGreenArgumentList";
+            obj194.Type = typeof(string);
+            obj194.Name = "RedUpdateArguments";
             obj194.Parent = obj34;
             obj195.IsDerived = true;
-            obj195.Type = typeof(global::System.String);
-            obj195.Name = "RedToGreenOptionalArgumentList";
+            obj195.Type = typeof(string);
+            obj195.Name = "RedOptionalUpdateParameters";
             obj195.Parent = obj34;
             obj196.IsDerived = true;
-            obj196.Type = typeof(global::System.Boolean);
-            obj196.Name = "HasRedToGreenOptionalArguments";
+            obj196.Type = typeof(string);
+            obj196.Name = "RedToGreenArgumentList";
             obj196.Parent = obj34;
-            obj197.ItemType = __MetaType.FromModelObject((__IModelObject)obj36);
-            obj198.Name = "Assign";
-            obj198.Parent = obj35;
-            obj199.Name = "QuestionAssign";
-            obj199.Parent = obj35;
-            obj200.Name = "NegatedAssign";
+            obj197.IsDerived = true;
+            obj197.Type = typeof(string);
+            obj197.Name = "RedToGreenOptionalArgumentList";
+            obj197.Parent = obj34;
+            obj198.IsDerived = true;
+            obj198.Type = typeof(bool);
+            obj198.Name = "HasRedToGreenOptionalArguments";
+            obj198.Parent = obj34;
+            obj199.ItemType = __MetaType.FromModelObject((__IModelObject)obj36);
+            obj200.Name = "Assign";
             obj200.Parent = obj35;
-            obj201.Name = "PlusAssign";
+            obj201.Name = "QuestionAssign";
             obj201.Parent = obj35;
-            ((__IModelObject)obj202).MChildren.Add((__IModelObject)obj226);
-            obj202.SymbolProperty = "Name";
-            obj202.Type = __MetaType.FromModelObject((__IModelObject)obj226);
-            obj202.Name = "Name";
-            obj202.Parent = obj36;
-            obj203.SymbolProperty = "Assignment";
-            obj203.Type = __MetaType.FromModelObject((__IModelObject)obj35);
-            obj203.Name = "Assignment";
-            obj203.Parent = obj36;
-            obj204.IsContainment = true;
-            obj204.SymbolProperty = "Value";
-            obj204.Type = __MetaType.FromModelObject((__IModelObject)obj37);
-            obj204.Name = "Value";
+            obj202.Name = "NegatedAssign";
+            obj202.Parent = obj35;
+            obj203.Name = "PlusAssign";
+            obj203.Parent = obj35;
+            obj204.MChildren.Add(obj228);
+            obj204.SymbolProperty = "Name";
+            obj204.Type = __MetaType.FromModelObject((__IModelObject)obj228);
+            obj204.Name = "Name";
             obj204.Parent = obj36;
-            obj205.IsDerived = true;
-            obj205.Type = typeof(global::System.Boolean);
-            obj205.Name = "IsToken";
+            obj205.SymbolProperty = "Assignment";
+            obj205.Type = __MetaType.FromModelObject((__IModelObject)obj35);
+            obj205.Name = "Assignment";
             obj205.Parent = obj36;
-            obj206.IsDerived = true;
-            obj206.Type = typeof(global::System.Boolean);
-            obj206.Name = "IsList";
+            obj206.IsContainment = true;
+            obj206.SymbolProperty = "Value";
+            obj206.Type = __MetaType.FromModelObject((__IModelObject)obj37);
+            obj206.Name = "Value";
             obj206.Parent = obj36;
             obj207.IsDerived = true;
-            obj207.Type = typeof(global::System.String);
-            obj207.Name = "FieldName";
+            obj207.Type = typeof(bool);
+            obj207.Name = "IsToken";
             obj207.Parent = obj36;
             obj208.IsDerived = true;
-            obj208.Type = typeof(global::System.String);
-            obj208.Name = "ParameterName";
+            obj208.Type = typeof(bool);
+            obj208.Name = "IsList";
             obj208.Parent = obj36;
             obj209.IsDerived = true;
-            obj209.Type = typeof(global::System.String);
-            obj209.Name = "PropertyName";
+            obj209.Type = typeof(string);
+            obj209.Name = "FieldName";
             obj209.Parent = obj36;
             obj210.IsDerived = true;
-            obj210.Type = typeof(global::System.String);
-            obj210.Name = "GreenFieldType";
+            obj210.Type = typeof(string);
+            obj210.Name = "ParameterName";
             obj210.Parent = obj36;
             obj211.IsDerived = true;
-            obj211.Type = typeof(global::System.String);
-            obj211.Name = "GreenParameterValue";
+            obj211.Type = typeof(string);
+            obj211.Name = "PropertyName";
             obj211.Parent = obj36;
             obj212.IsDerived = true;
-            obj212.Type = typeof(global::System.String);
-            obj212.Name = "GreenPropertyType";
+            obj212.Type = typeof(string);
+            obj212.Name = "GreenFieldType";
             obj212.Parent = obj36;
             obj213.IsDerived = true;
-            obj213.Type = typeof(global::System.String);
-            obj213.Name = "GreenPropertyValue";
+            obj213.Type = typeof(string);
+            obj213.Name = "GreenParameterValue";
             obj213.Parent = obj36;
-            ((__IModelObject)obj214).MChildren.Add((__IModelObject)obj227);
             obj214.IsDerived = true;
-            obj214.Type = __MetaType.FromModelObject((__IModelObject)obj227);
-            obj214.Name = "GreenSyntaxNullCondition";
+            obj214.Type = typeof(string);
+            obj214.Name = "GreenPropertyType";
             obj214.Parent = obj36;
-            ((__IModelObject)obj215).MChildren.Add((__IModelObject)obj228);
             obj215.IsDerived = true;
-            obj215.Type = __MetaType.FromModelObject((__IModelObject)obj228);
-            obj215.Name = "GreenSyntaxCondition";
+            obj215.Type = typeof(string);
+            obj215.Name = "GreenPropertyValue";
             obj215.Parent = obj36;
+            obj216.MChildren.Add(obj229);
             obj216.IsDerived = true;
-            obj216.Type = typeof(global::System.Boolean);
-            obj216.Name = "IsOptionalUpdateParameter";
+            obj216.Type = __MetaType.FromModelObject((__IModelObject)obj229);
+            obj216.Name = "GreenSyntaxNullCondition";
             obj216.Parent = obj36;
+            obj217.MChildren.Add(obj230);
             obj217.IsDerived = true;
-            obj217.Type = typeof(global::System.String);
-            obj217.Name = "RedFieldType";
+            obj217.Type = __MetaType.FromModelObject((__IModelObject)obj230);
+            obj217.Name = "GreenSyntaxCondition";
             obj217.Parent = obj36;
             obj218.IsDerived = true;
-            obj218.Type = typeof(global::System.String);
-            obj218.Name = "RedParameterValue";
+            obj218.Type = typeof(bool);
+            obj218.Name = "IsOptionalUpdateParameter";
             obj218.Parent = obj36;
             obj219.IsDerived = true;
-            obj219.Type = typeof(global::System.String);
-            obj219.Name = "RedPropertyType";
+            obj219.Type = typeof(string);
+            obj219.Name = "RedFieldType";
             obj219.Parent = obj36;
             obj220.IsDerived = true;
-            obj220.Type = typeof(global::System.String);
-            obj220.Name = "RedPropertyValue";
+            obj220.Type = typeof(string);
+            obj220.Name = "RedParameterValue";
             obj220.Parent = obj36;
             obj221.IsDerived = true;
-            obj221.Type = typeof(global::System.String);
-            obj221.Name = "RedToGreenArgument";
+            obj221.Type = typeof(string);
+            obj221.Name = "RedPropertyType";
             obj221.Parent = obj36;
             obj222.IsDerived = true;
-            obj222.Type = typeof(global::System.String);
-            obj222.Name = "RedToGreenOptionalArgument";
+            obj222.Type = typeof(string);
+            obj222.Name = "RedPropertyValue";
             obj222.Parent = obj36;
-            ((__IModelObject)obj223).MChildren.Add((__IModelObject)obj229);
             obj223.IsDerived = true;
-            obj223.Type = __MetaType.FromModelObject((__IModelObject)obj229);
-            obj223.Name = "RedSyntaxNullCondition";
+            obj223.Type = typeof(string);
+            obj223.Name = "RedToGreenArgument";
             obj223.Parent = obj36;
-            ((__IModelObject)obj224).MChildren.Add((__IModelObject)obj230);
             obj224.IsDerived = true;
-            obj224.Type = __MetaType.FromModelObject((__IModelObject)obj230);
-            obj224.Name = "RedSyntaxCondition";
+            obj224.Type = typeof(string);
+            obj224.Name = "RedToGreenOptionalArgument";
             obj224.Parent = obj36;
-            ((__IModelObject)obj225).MChildren.Add((__IModelObject)obj231);
+            obj225.MChildren.Add(obj231);
             obj225.IsDerived = true;
             obj225.Type = __MetaType.FromModelObject((__IModelObject)obj231);
-            obj225.Name = "VisitCall";
+            obj225.Name = "RedSyntaxNullCondition";
             obj225.Parent = obj36;
-            obj226.InnerType = typeof(global::System.String);
-            obj227.InnerType = typeof(global::System.String);
-            obj228.InnerType = typeof(global::System.String);
-            obj229.InnerType = typeof(global::System.String);
-            obj230.InnerType = typeof(global::System.String);
-            obj231.InnerType = typeof(global::System.String);
-            obj232.Type = __MetaType.FromModelObject((__IModelObject)obj16);
-            obj232.Name = "Multiplicity";
-            obj232.Parent = obj37;
-            obj233.IsDerived = true;
-            obj233.Type = typeof(global::System.String);
-            obj233.Name = "GreenType";
-            obj233.Parent = obj37;
-            ((__IModelObject)obj234).MChildren.Add((__IModelObject)obj236);
-            obj234.IsDerived = true;
-            obj234.Type = __MetaType.FromModelObject((__IModelObject)obj236);
-            obj234.Name = "GreenSyntaxCondition";
+            obj226.MChildren.Add(obj232);
+            obj226.IsDerived = true;
+            obj226.Type = __MetaType.FromModelObject((__IModelObject)obj232);
+            obj226.Name = "RedSyntaxCondition";
+            obj226.Parent = obj36;
+            obj227.MChildren.Add(obj233);
+            obj227.IsDerived = true;
+            obj227.Type = __MetaType.FromModelObject((__IModelObject)obj233);
+            obj227.Name = "VisitCall";
+            obj227.Parent = obj36;
+            obj228.InnerType = typeof(string);
+            obj229.InnerType = typeof(string);
+            obj230.InnerType = typeof(string);
+            obj231.InnerType = typeof(string);
+            obj232.InnerType = typeof(string);
+            obj233.InnerType = typeof(string);
+            obj234.Type = __MetaType.FromModelObject((__IModelObject)obj16);
+            obj234.Name = "Multiplicity";
             obj234.Parent = obj37;
             obj235.IsDerived = true;
-            obj235.Type = typeof(global::System.String);
-            obj235.Name = "RedType";
+            obj235.Type = typeof(string);
+            obj235.Name = "GreenType";
             obj235.Parent = obj37;
-            obj236.InnerType = typeof(global::System.String);
-            obj237.SymbolProperty = "Rule";
-            obj237.Type = __MetaType.FromModelObject((__IModelObject)obj17);
-            obj237.Name = "GrammarRule";
-            obj237.Parent = obj38;
-            ((__IModelObject)obj238).MChildren.Add((__IModelObject)obj244);
-            obj238.SymbolProperty = "ReferencedTypes";
-            obj238.Type = __MetaType.FromModelObject((__IModelObject)obj244);
-            obj238.Name = "ReferencedTypes";
-            obj238.Parent = obj38;
-            ((__IModelObject)obj239).MChildren.Add((__IModelObject)obj245);
-            obj239.IsDerived = true;
-            obj239.Type = __MetaType.FromModelObject((__IModelObject)obj245);
-            obj239.Name = "Token";
+            obj236.MChildren.Add(obj238);
+            obj236.IsDerived = true;
+            obj236.Type = __MetaType.FromModelObject((__IModelObject)obj238);
+            obj236.Name = "GreenSyntaxCondition";
+            obj236.Parent = obj37;
+            obj237.IsDerived = true;
+            obj237.Type = typeof(string);
+            obj237.Name = "RedType";
+            obj237.Parent = obj37;
+            obj238.InnerType = typeof(string);
+            obj239.SymbolProperty = "Rule";
+            obj239.Type = __MetaType.FromModelObject((__IModelObject)obj17);
+            obj239.Name = "GrammarRule";
             obj239.Parent = obj38;
-            ((__IModelObject)obj240).MChildren.Add((__IModelObject)obj246);
-            obj240.IsDerived = true;
+            obj240.MChildren.Add(obj246);
+            obj240.SymbolProperty = "ReferencedTypes";
             obj240.Type = __MetaType.FromModelObject((__IModelObject)obj246);
-            obj240.Name = "Rule";
+            obj240.Name = "ReferencedTypes";
             obj240.Parent = obj38;
+            obj241.MChildren.Add(obj247);
             obj241.IsDerived = true;
-            obj241.Type = typeof(global::System.String);
-            obj241.Name = "GreenType";
+            obj241.Type = __MetaType.FromModelObject((__IModelObject)obj247);
+            obj241.Name = "Token";
             obj241.Parent = obj38;
-            ((__IModelObject)obj242).MChildren.Add((__IModelObject)obj247);
+            obj242.MChildren.Add(obj248);
             obj242.IsDerived = true;
-            obj242.Type = __MetaType.FromModelObject((__IModelObject)obj247);
-            obj242.Name = "GreenSyntaxCondition";
+            obj242.Type = __MetaType.FromModelObject((__IModelObject)obj248);
+            obj242.Name = "Rule";
             obj242.Parent = obj38;
             obj243.IsDerived = true;
-            obj243.Type = typeof(global::System.String);
-            obj243.Name = "RedType";
+            obj243.Type = typeof(string);
+            obj243.Name = "GreenType";
             obj243.Parent = obj38;
-            obj244.ItemType = typeof(global::MetaDslx.CodeAnalysis.MetaType);
-            obj245.InnerType = __MetaType.FromModelObject((__IModelObject)obj19);
-            obj246.InnerType = __MetaType.FromModelObject((__IModelObject)obj33);
-            obj247.InnerType = typeof(global::System.String);
-            obj248.IsDerived = true;
-            obj248.Type = typeof(global::System.String);
-            obj248.Name = "GreenType";
-            obj248.Parent = obj39;
-            ((__IModelObject)obj249).MChildren.Add((__IModelObject)obj251);
-            obj249.IsDerived = true;
-            obj249.Type = __MetaType.FromModelObject((__IModelObject)obj251);
-            obj249.Name = "GreenSyntaxCondition";
-            obj249.Parent = obj39;
+            obj244.MChildren.Add(obj249);
+            obj244.IsDerived = true;
+            obj244.Type = __MetaType.FromModelObject((__IModelObject)obj249);
+            obj244.Name = "GreenSyntaxCondition";
+            obj244.Parent = obj38;
+            obj245.IsDerived = true;
+            obj245.Type = typeof(string);
+            obj245.Name = "RedType";
+            obj245.Parent = obj38;
+            obj246.ItemType = typeof(__MetaType);
+            obj247.InnerType = __MetaType.FromModelObject((__IModelObject)obj19);
+            obj248.InnerType = __MetaType.FromModelObject((__IModelObject)obj33);
+            obj249.InnerType = typeof(string);
             obj250.IsDerived = true;
-            obj250.Type = typeof(global::System.String);
-            obj250.Name = "RedType";
+            obj250.Type = typeof(string);
+            obj250.Name = "GreenType";
             obj250.Parent = obj39;
-            obj251.InnerType = typeof(global::System.String);
-            obj252.Type = typeof(global::System.String);
-            obj252.Name = "Text";
-            obj252.Parent = obj40;
-            ((__IModelObject)obj253).MChildren.Add((__IModelObject)obj257);
-            obj253.IsContainment = true;
-            obj253.Type = __MetaType.FromModelObject((__IModelObject)obj257);
-            obj253.Name = "Tokens";
-            obj253.Parent = obj41;
-            obj254.IsDerived = true;
-            obj254.Type = typeof(global::System.String);
-            obj254.Name = "GreenType";
-            obj254.Parent = obj41;
-            ((__IModelObject)obj255).MChildren.Add((__IModelObject)obj258);
-            obj255.IsDerived = true;
-            obj255.Type = __MetaType.FromModelObject((__IModelObject)obj258);
-            obj255.Name = "GreenSyntaxCondition";
+            obj251.MChildren.Add(obj253);
+            obj251.IsDerived = true;
+            obj251.Type = __MetaType.FromModelObject((__IModelObject)obj253);
+            obj251.Name = "GreenSyntaxCondition";
+            obj251.Parent = obj39;
+            obj252.IsDerived = true;
+            obj252.Type = typeof(string);
+            obj252.Name = "RedType";
+            obj252.Parent = obj39;
+            obj253.InnerType = typeof(string);
+            obj254.Type = typeof(string);
+            obj254.Name = "Text";
+            obj254.Parent = obj40;
+            obj255.MChildren.Add(obj259);
+            obj255.IsContainment = true;
+            obj255.Type = __MetaType.FromModelObject((__IModelObject)obj259);
+            obj255.Name = "Tokens";
             obj255.Parent = obj41;
             obj256.IsDerived = true;
-            obj256.Type = typeof(global::System.String);
-            obj256.Name = "RedType";
+            obj256.Type = typeof(string);
+            obj256.Name = "GreenType";
             obj256.Parent = obj41;
-            obj257.ItemType = __MetaType.FromModelObject((__IModelObject)obj38);
-            obj258.InnerType = typeof(global::System.String);
-            obj259.IsDerived = true;
-            obj259.Type = typeof(global::System.String);
-            obj259.Name = "GreenType";
-            obj259.Parent = obj42;
-            ((__IModelObject)obj260).MChildren.Add((__IModelObject)obj262);
-            obj260.IsDerived = true;
-            obj260.Type = __MetaType.FromModelObject((__IModelObject)obj262);
-            obj260.Name = "GreenSyntaxCondition";
-            obj260.Parent = obj42;
+            obj257.MChildren.Add(obj260);
+            obj257.IsDerived = true;
+            obj257.Type = __MetaType.FromModelObject((__IModelObject)obj260);
+            obj257.Name = "GreenSyntaxCondition";
+            obj257.Parent = obj41;
+            obj258.IsDerived = true;
+            obj258.Type = typeof(string);
+            obj258.Name = "RedType";
+            obj258.Parent = obj41;
+            obj259.ItemType = __MetaType.FromModelObject((__IModelObject)obj38);
+            obj260.InnerType = typeof(string);
             obj261.IsDerived = true;
-            obj261.Type = typeof(global::System.String);
-            obj261.Name = "RedType";
+            obj261.Type = typeof(string);
+            obj261.Name = "GreenType";
             obj261.Parent = obj42;
-            obj262.InnerType = typeof(global::System.String);
-            obj263.Type = typeof(global::System.Boolean);
-            obj263.Name = "SeparatorFirst";
-            obj263.Parent = obj43;
-            obj264.Type = typeof(global::System.Boolean);
-            obj264.Name = "RepeatedSeparatorFirst";
-            obj264.Parent = obj43;
-            ((__IModelObject)obj265).MChildren.Add((__IModelObject)obj275);
-            obj265.IsContainment = true;
-            obj265.Type = __MetaType.FromModelObject((__IModelObject)obj275);
-            obj265.Name = "FirstItems";
+            obj262.MChildren.Add(obj264);
+            obj262.IsDerived = true;
+            obj262.Type = __MetaType.FromModelObject((__IModelObject)obj264);
+            obj262.Name = "GreenSyntaxCondition";
+            obj262.Parent = obj42;
+            obj263.IsDerived = true;
+            obj263.Type = typeof(string);
+            obj263.Name = "RedType";
+            obj263.Parent = obj42;
+            obj264.InnerType = typeof(string);
+            obj265.Type = typeof(bool);
+            obj265.Name = "SeparatorFirst";
             obj265.Parent = obj43;
-            ((__IModelObject)obj266).MChildren.Add((__IModelObject)obj276);
-            obj266.IsContainment = true;
-            obj266.Type = __MetaType.FromModelObject((__IModelObject)obj276);
-            obj266.Name = "FirstSeparators";
+            obj266.Type = typeof(bool);
+            obj266.Name = "RepeatedSeparatorFirst";
             obj266.Parent = obj43;
+            obj267.MChildren.Add(obj277);
             obj267.IsContainment = true;
-            obj267.Type = __MetaType.FromModelObject((__IModelObject)obj36);
-            obj267.Name = "RepeatedBlock";
+            obj267.Type = __MetaType.FromModelObject((__IModelObject)obj277);
+            obj267.Name = "FirstItems";
             obj267.Parent = obj43;
-            obj268.Type = __MetaType.FromModelObject((__IModelObject)obj36);
-            obj268.Name = "RepeatedItem";
+            obj268.MChildren.Add(obj278);
+            obj268.IsContainment = true;
+            obj268.Type = __MetaType.FromModelObject((__IModelObject)obj278);
+            obj268.Name = "FirstSeparators";
             obj268.Parent = obj43;
+            obj269.IsContainment = true;
             obj269.Type = __MetaType.FromModelObject((__IModelObject)obj36);
-            obj269.Name = "RepeatedSeparator";
+            obj269.Name = "RepeatedBlock";
             obj269.Parent = obj43;
-            ((__IModelObject)obj270).MChildren.Add((__IModelObject)obj277);
-            obj270.IsContainment = true;
-            obj270.Type = __MetaType.FromModelObject((__IModelObject)obj277);
-            obj270.Name = "LastItems";
+            obj270.Type = __MetaType.FromModelObject((__IModelObject)obj36);
+            obj270.Name = "RepeatedItem";
             obj270.Parent = obj43;
-            ((__IModelObject)obj271).MChildren.Add((__IModelObject)obj278);
-            obj271.IsContainment = true;
-            obj271.Type = __MetaType.FromModelObject((__IModelObject)obj278);
-            obj271.Name = "LastSeparators";
+            obj271.Type = __MetaType.FromModelObject((__IModelObject)obj36);
+            obj271.Name = "RepeatedSeparator";
             obj271.Parent = obj43;
-            obj272.IsDerived = true;
-            obj272.Type = typeof(global::System.String);
-            obj272.Name = "GreenType";
+            obj272.MChildren.Add(obj279);
+            obj272.IsContainment = true;
+            obj272.Type = __MetaType.FromModelObject((__IModelObject)obj279);
+            obj272.Name = "LastItems";
             obj272.Parent = obj43;
-            ((__IModelObject)obj273).MChildren.Add((__IModelObject)obj279);
-            obj273.IsDerived = true;
-            obj273.Type = __MetaType.FromModelObject((__IModelObject)obj279);
-            obj273.Name = "GreenSyntaxCondition";
+            obj273.MChildren.Add(obj280);
+            obj273.IsContainment = true;
+            obj273.Type = __MetaType.FromModelObject((__IModelObject)obj280);
+            obj273.Name = "LastSeparators";
             obj273.Parent = obj43;
             obj274.IsDerived = true;
-            obj274.Type = typeof(global::System.String);
-            obj274.Name = "RedType";
+            obj274.Type = typeof(string);
+            obj274.Name = "GreenType";
             obj274.Parent = obj43;
-            obj275.ItemType = __MetaType.FromModelObject((__IModelObject)obj36);
-            obj276.ItemType = __MetaType.FromModelObject((__IModelObject)obj36);
+            obj275.MChildren.Add(obj281);
+            obj275.IsDerived = true;
+            obj275.Type = __MetaType.FromModelObject((__IModelObject)obj281);
+            obj275.Name = "GreenSyntaxCondition";
+            obj275.Parent = obj43;
+            obj276.IsDerived = true;
+            obj276.Type = typeof(string);
+            obj276.Name = "RedType";
+            obj276.Parent = obj43;
             obj277.ItemType = __MetaType.FromModelObject((__IModelObject)obj36);
             obj278.ItemType = __MetaType.FromModelObject((__IModelObject)obj36);
-            obj279.InnerType = typeof(global::System.String);
-            obj280.SymbolProperty = "Value";
-            obj280.Type = typeof(global::MetaDslx.CodeAnalysis.MetaSymbol);
-            obj280.Name = "Value";
-            obj280.Parent = obj44;
-            ((__IModelObject)obj281).MChildren.Add((__IModelObject)obj282);
-            obj281.Type = __MetaType.FromModelObject((__IModelObject)obj282);
-            obj281.Name = "Items";
-            obj281.Parent = obj45;
-            obj282.ItemType = __MetaType.FromModelObject((__IModelObject)obj44);
+            obj279.ItemType = __MetaType.FromModelObject((__IModelObject)obj36);
+            obj280.ItemType = __MetaType.FromModelObject((__IModelObject)obj36);
+            obj281.InnerType = typeof(string);
+            obj282.SymbolProperty = "Value";
+            obj282.Type = typeof(__MetaSymbol);
+            obj282.Name = "Value";
+            obj282.Parent = obj44;
+            obj283.MChildren.Add(obj284);
+            obj283.Type = __MetaType.FromModelObject((__IModelObject)obj284);
+            obj283.Name = "Items";
+            obj283.Parent = obj45;
+            obj284.ItemType = __MetaType.FromModelObject((__IModelObject)obj44);
             _model.IsSealed = true;
         }
     
@@ -2403,6 +2415,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model
         public static __ModelProperty GrammarRule_Grammar => _GrammarRule_Grammar;
         public static __ModelClassInfo LanguageInfo => __Impl.Language_Impl.__Info.Instance;
         public static __ModelProperty Language_Namespace => _Language_Namespace;
+        public static __ModelProperty Language_BaseLanguages => _Language_BaseLanguages;
         public static __ModelProperty Language_Grammar => _Language_Grammar;
         public static __ModelClassInfo LexerRuleInfo => __Impl.LexerRule_Impl.__Info.Instance;
         public static __ModelProperty LexerRule_Alternatives => _LexerRule_Alternatives;
@@ -2874,15 +2887,15 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model
     public interface Annotation : __IModelObject
     {
         global::MetaDslx.Modeling.ICollectionSlot<AnnotationArgument> Arguments { get; }
-        global::MetaDslx.CodeAnalysis.MetaType AttributeClass { get; set; }
+        __MetaType AttributeClass { get; set; }
     
     }
 
     public interface AnnotationArgument : __IModelObject
     {
-        global::MetaDslx.Modeling.ICollectionSlot<global::MetaDslx.CodeAnalysis.MetaSymbol> NamedParameter { get; }
+        global::MetaDslx.Modeling.ICollectionSlot<__MetaSymbol> NamedParameter { get; }
         global::MetaDslx.CodeAnalysis.Symbols.DeclarationSymbol Parameter { get; set; }
-        global::MetaDslx.CodeAnalysis.MetaType ParameterType { get; set; }
+        __MetaType ParameterType { get; set; }
         Expression Value { get; set; }
     
     }
@@ -2896,36 +2909,36 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model
     public interface Binder : __IModelObject
     {
         global::MetaDslx.Modeling.ICollectionSlot<BinderArgument> Arguments { get; }
-        global::System.String ConstructorArguments { get; }
-        global::System.Boolean IsNegated { get; set; }
-        global::System.String TypeName { get; set; }
+        string ConstructorArguments { get; }
+        bool IsNegated { get; set; }
+        string TypeName { get; set; }
     
     }
 
     public interface BinderArgument : __IModelObject
     {
-        global::System.Boolean IsArray { get; set; }
-        global::System.String Name { get; set; }
-        global::System.String TypeName { get; set; }
-        global::MetaDslx.Modeling.ICollectionSlot<global::System.String?> Values { get; }
+        bool IsArray { get; set; }
+        string Name { get; set; }
+        string TypeName { get; set; }
+        global::MetaDslx.Modeling.ICollectionSlot<string?> Values { get; }
     
     }
 
     public interface CSharpElement : __IModelObject
     {
         global::MetaDslx.Modeling.ICollectionSlot<Annotation> Annotations { get; }
-        global::System.String AntlrName { get; set; }
+        string AntlrName { get; set; }
         global::MetaDslx.Modeling.ICollectionSlot<Binder> Binders { get; }
-        global::System.Boolean ContainsBinders { get; set; }
-        global::System.String CSharpName { get; set; }
+        bool ContainsBinders { get; set; }
+        string CSharpName { get; set; }
     
     }
 
     public interface Declaration : __IModelObject
     {
         global::MetaDslx.Modeling.ICollectionSlot<Declaration> Declarations { get; }
-        global::System.String? FullName { get; }
-        global::System.String? Name { get; set; }
+        string? FullName { get; }
+        string? Name { get; set; }
         Declaration? Parent { get; set; }
     
     }
@@ -2933,86 +2946,86 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model
     public interface Alternative : global::MetaDslx.Bootstrap.MetaCompiler3.Model.Declaration, global::MetaDslx.Bootstrap.MetaCompiler3.Model.CSharpElement
     {
         global::MetaDslx.Modeling.ICollectionSlot<Element> Elements { get; }
-        global::System.String GreenConstructorArguments { get; }
-        global::System.String GreenConstructorParameters { get; }
-        global::System.String GreenName { get; }
-        global::System.String GreenUpdateArguments { get; }
-        global::System.String GreenUpdateParameters { get; }
-        global::System.Boolean HasRedToGreenOptionalArguments { get; }
-        global::System.String RedName { get; }
-        global::System.String RedOptionalUpdateParameters { get; }
-        global::System.String RedToGreenArgumentList { get; }
-        global::System.String RedToGreenOptionalArgumentList { get; }
-        global::System.String RedUpdateArguments { get; }
-        global::System.String RedUpdateParameters { get; }
-        global::MetaDslx.CodeAnalysis.MetaType ReturnType { get; set; }
+        string GreenConstructorArguments { get; }
+        string GreenConstructorParameters { get; }
+        string GreenName { get; }
+        string GreenUpdateArguments { get; }
+        string GreenUpdateParameters { get; }
+        bool HasRedToGreenOptionalArguments { get; }
+        string RedName { get; }
+        string RedOptionalUpdateParameters { get; }
+        string RedToGreenArgumentList { get; }
+        string RedToGreenOptionalArgumentList { get; }
+        string RedUpdateArguments { get; }
+        string RedUpdateParameters { get; }
+        __MetaType ReturnType { get; set; }
         Expression ReturnValue { get; set; }
     
     }
 
     public interface ElementValue : global::MetaDslx.Bootstrap.MetaCompiler3.Model.CSharpElement
     {
-        global::System.String? GreenSyntaxCondition { get; }
-        global::System.String GreenType { get; }
+        string? GreenSyntaxCondition { get; }
+        string GreenType { get; }
         global::MetaDslx.Bootstrap.MetaCompiler3.Model.Multiplicity Multiplicity { get; set; }
-        global::System.String RedType { get; }
+        string RedType { get; }
     
     }
 
     public interface Block : global::MetaDslx.Bootstrap.MetaCompiler3.Model.ElementValue, global::MetaDslx.Bootstrap.MetaCompiler3.Model.Rule
     {
-        new global::System.String? GreenSyntaxCondition { get; }
-        new global::System.String GreenType { get; }
-        new global::System.String RedType { get; }
+        new string? GreenSyntaxCondition { get; }
+        new string GreenType { get; }
+        new string RedType { get; }
     
     }
 
     public interface Element : global::MetaDslx.Bootstrap.MetaCompiler3.Model.CSharpElement
     {
         global::MetaDslx.Bootstrap.MetaCompiler3.Model.Assignment Assignment { get; set; }
-        global::System.String FieldName { get; }
-        global::System.String GreenFieldType { get; }
-        global::System.String GreenParameterValue { get; }
-        global::System.String GreenPropertyType { get; }
-        global::System.String GreenPropertyValue { get; }
-        global::System.String? GreenSyntaxCondition { get; }
-        global::System.String? GreenSyntaxNullCondition { get; }
-        global::System.Boolean IsList { get; }
-        global::System.Boolean IsOptionalUpdateParameter { get; }
-        global::System.Boolean IsToken { get; }
-        global::System.String? Name { get; set; }
-        global::System.String ParameterName { get; }
-        global::System.String PropertyName { get; }
-        global::System.String RedFieldType { get; }
-        global::System.String RedParameterValue { get; }
-        global::System.String RedPropertyType { get; }
-        global::System.String RedPropertyValue { get; }
-        global::System.String? RedSyntaxCondition { get; }
-        global::System.String? RedSyntaxNullCondition { get; }
-        global::System.String RedToGreenArgument { get; }
-        global::System.String RedToGreenOptionalArgument { get; }
+        string FieldName { get; }
+        string GreenFieldType { get; }
+        string GreenParameterValue { get; }
+        string GreenPropertyType { get; }
+        string GreenPropertyValue { get; }
+        string? GreenSyntaxCondition { get; }
+        string? GreenSyntaxNullCondition { get; }
+        bool IsList { get; }
+        bool IsOptionalUpdateParameter { get; }
+        bool IsToken { get; }
+        string? Name { get; set; }
+        string ParameterName { get; }
+        string PropertyName { get; }
+        string RedFieldType { get; }
+        string RedParameterValue { get; }
+        string RedPropertyType { get; }
+        string RedPropertyValue { get; }
+        string? RedSyntaxCondition { get; }
+        string? RedSyntaxNullCondition { get; }
+        string RedToGreenArgument { get; }
+        string RedToGreenOptionalArgument { get; }
         ElementValue Value { get; set; }
-        global::System.String? VisitCall { get; }
+        string? VisitCall { get; }
     
     }
 
     public interface Eof : global::MetaDslx.Bootstrap.MetaCompiler3.Model.ElementValue
     {
-        new global::System.String? GreenSyntaxCondition { get; }
-        new global::System.String GreenType { get; }
-        new global::System.String RedType { get; }
+        new string? GreenSyntaxCondition { get; }
+        new string GreenType { get; }
+        new string RedType { get; }
     
     }
 
     public interface Expression : __IModelObject
     {
-        global::MetaDslx.CodeAnalysis.MetaSymbol Value { get; set; }
+        __MetaSymbol Value { get; set; }
     
     }
 
     public interface Fixed : global::MetaDslx.Bootstrap.MetaCompiler3.Model.ElementValue
     {
-        global::System.String Text { get; set; }
+        string Text { get; set; }
     
     }
 
@@ -3025,16 +3038,17 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model
 
     public interface Language : global::MetaDslx.Bootstrap.MetaCompiler3.Model.Declaration
     {
+        global::MetaDslx.Modeling.ICollectionSlot<__MetaType> BaseLanguages { get; }
         Grammar Grammar { get; set; }
-        global::System.String Namespace { get; }
+        string Namespace { get; }
     
     }
 
     public interface LexerRule : global::MetaDslx.Bootstrap.MetaCompiler3.Model.GrammarRule
     {
         global::MetaDslx.Modeling.ICollectionSlot<LAlternative> Alternatives { get; }
-        global::System.String? FixedText { get; }
-        global::System.Boolean IsFixed { get; }
+        string? FixedText { get; }
+        bool IsFixed { get; }
     
     }
 
@@ -3062,16 +3076,16 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model
     public interface LAlternative : __IModelObject
     {
         global::MetaDslx.Modeling.ICollectionSlot<LElement> Elements { get; }
-        global::System.String? FixedText { get; }
-        global::System.Boolean IsFixed { get; }
+        string? FixedText { get; }
+        bool IsFixed { get; }
     
     }
 
     public interface LElement : __IModelObject
     {
-        global::System.String? FixedText { get; }
-        global::System.Boolean IsFixed { get; }
-        global::System.Boolean IsNegated { get; set; }
+        string? FixedText { get; }
+        bool IsFixed { get; }
+        bool IsNegated { get; set; }
         global::MetaDslx.Bootstrap.MetaCompiler3.Model.Multiplicity Multiplicity { get; set; }
         LElementValue Value { get; set; }
     
@@ -3079,80 +3093,80 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model
 
     public interface LElementValue : __IModelObject
     {
-        global::System.String? FixedText { get; }
-        global::System.Boolean IsFixed { get; }
+        string? FixedText { get; }
+        bool IsFixed { get; }
     
     }
 
     public interface LBlock : global::MetaDslx.Bootstrap.MetaCompiler3.Model.LElementValue
     {
         global::MetaDslx.Modeling.ICollectionSlot<LAlternative> Alternatives { get; }
-        new global::System.String? FixedText { get; }
-        new global::System.Boolean IsFixed { get; }
+        new string? FixedText { get; }
+        new bool IsFixed { get; }
     
     }
 
     public interface LFixed : global::MetaDslx.Bootstrap.MetaCompiler3.Model.LElementValue
     {
-        new global::System.String? FixedText { get; }
-        new global::System.Boolean IsFixed { get; }
-        global::System.String Text { get; set; }
+        new string? FixedText { get; }
+        new bool IsFixed { get; }
+        string Text { get; set; }
     
     }
 
     public interface LRange : global::MetaDslx.Bootstrap.MetaCompiler3.Model.LElementValue
     {
-        global::System.String EndChar { get; set; }
-        new global::System.String? FixedText { get; }
-        new global::System.Boolean IsFixed { get; }
-        global::System.String StartChar { get; set; }
+        string EndChar { get; set; }
+        new string? FixedText { get; }
+        new bool IsFixed { get; }
+        string StartChar { get; set; }
     
     }
 
     public interface LReference : global::MetaDslx.Bootstrap.MetaCompiler3.Model.LElementValue
     {
-        new global::System.String? FixedText { get; }
-        new global::System.Boolean IsFixed { get; }
+        new string? FixedText { get; }
+        new bool IsFixed { get; }
         LexerRule Rule { get; set; }
     
     }
 
     public interface LSet : global::MetaDslx.Bootstrap.MetaCompiler3.Model.LElementValue
     {
-        new global::System.String? FixedText { get; }
-        new global::System.Boolean IsFixed { get; }
+        new string? FixedText { get; }
+        new bool IsFixed { get; }
         global::MetaDslx.Modeling.ICollectionSlot<LSetItem> Items { get; }
     
     }
 
     public interface LSetItem : __IModelObject
     {
-        global::System.String? FixedText { get; }
-        global::System.Boolean IsFixed { get; }
+        string? FixedText { get; }
+        bool IsFixed { get; }
     
     }
 
     public interface LSetChar : global::MetaDslx.Bootstrap.MetaCompiler3.Model.LSetItem
     {
-        global::System.String Char { get; set; }
-        new global::System.String? FixedText { get; }
-        new global::System.Boolean IsFixed { get; }
+        string Char { get; set; }
+        new string? FixedText { get; }
+        new bool IsFixed { get; }
     
     }
 
     public interface LSetRange : global::MetaDslx.Bootstrap.MetaCompiler3.Model.LSetItem
     {
-        global::System.String EndChar { get; set; }
-        new global::System.String? FixedText { get; }
-        new global::System.Boolean IsFixed { get; }
-        global::System.String StartChar { get; set; }
+        string EndChar { get; set; }
+        new string? FixedText { get; }
+        new bool IsFixed { get; }
+        string StartChar { get; set; }
     
     }
 
     public interface LWildCard : global::MetaDslx.Bootstrap.MetaCompiler3.Model.LElementValue
     {
-        new global::System.String? FixedText { get; }
-        new global::System.Boolean IsFixed { get; }
+        new string? FixedText { get; }
+        new bool IsFixed { get; }
     
     }
 
@@ -3165,19 +3179,19 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model
     {
         global::MetaDslx.Modeling.ICollectionSlot<Alternative> Alternatives { get; }
         Alternative? BaseRule { get; set; }
-        global::System.String GreenName { get; }
-        global::System.String RedName { get; }
-        global::MetaDslx.CodeAnalysis.MetaType ReturnType { get; set; }
+        string GreenName { get; }
+        string RedName { get; }
+        __MetaType ReturnType { get; set; }
     
     }
 
     public interface RuleRef : global::MetaDslx.Bootstrap.MetaCompiler3.Model.ElementValue
     {
         GrammarRule GrammarRule { get; set; }
-        new global::System.String? GreenSyntaxCondition { get; }
-        new global::System.String GreenType { get; }
-        new global::System.String RedType { get; }
-        global::MetaDslx.Modeling.ICollectionSlot<global::MetaDslx.CodeAnalysis.MetaType> ReferencedTypes { get; }
+        new string? GreenSyntaxCondition { get; }
+        new string GreenType { get; }
+        new string RedType { get; }
+        global::MetaDslx.Modeling.ICollectionSlot<__MetaType> ReferencedTypes { get; }
         Rule? Rule { get; }
         Token? Token { get; }
     
@@ -3187,40 +3201,40 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model
     {
         global::MetaDslx.Modeling.ICollectionSlot<Element> FirstItems { get; }
         global::MetaDslx.Modeling.ICollectionSlot<Element> FirstSeparators { get; }
-        new global::System.String? GreenSyntaxCondition { get; }
-        new global::System.String GreenType { get; }
+        new string? GreenSyntaxCondition { get; }
+        new string GreenType { get; }
         global::MetaDslx.Modeling.ICollectionSlot<Element> LastItems { get; }
         global::MetaDslx.Modeling.ICollectionSlot<Element> LastSeparators { get; }
-        new global::System.String RedType { get; }
+        new string RedType { get; }
         Element RepeatedBlock { get; set; }
         Element RepeatedItem { get; set; }
         Element RepeatedSeparator { get; set; }
-        global::System.Boolean RepeatedSeparatorFirst { get; set; }
-        global::System.Boolean SeparatorFirst { get; set; }
+        bool RepeatedSeparatorFirst { get; set; }
+        bool SeparatorFirst { get; set; }
     
     }
 
     public interface Token : global::MetaDslx.Bootstrap.MetaCompiler3.Model.LexerRule
     {
-        global::System.Boolean IsTrivia { get; set; }
-        global::MetaDslx.CodeAnalysis.MetaType ReturnType { get; set; }
+        bool IsTrivia { get; set; }
+        __MetaType ReturnType { get; set; }
         TokenKind? TokenKind { get; set; }
     
     }
 
     public interface TokenAlts : global::MetaDslx.Bootstrap.MetaCompiler3.Model.ElementValue
     {
-        new global::System.String? GreenSyntaxCondition { get; }
-        new global::System.String GreenType { get; }
-        new global::System.String RedType { get; }
+        new string? GreenSyntaxCondition { get; }
+        new string GreenType { get; }
+        new string RedType { get; }
         global::MetaDslx.Modeling.ICollectionSlot<RuleRef> Tokens { get; }
     
     }
 
     public interface TokenKind : __IModelObject
     {
-        global::System.String Name { get; set; }
-        global::System.String TypeName { get; set; }
+        string Name { get; set; }
+        string TypeName { get; set; }
     
     }
 
@@ -3426,222 +3440,222 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model
         /// <summary>
         /// Computation of the derived property Binder.ConstructorArguments
         /// </summary>
-        global::System.String Binder_ConstructorArguments(Binder _this);
+        string Binder_ConstructorArguments(Binder _this);
     
         /// <summary>
         /// Computation of the derived property Declaration.FullName
         /// </summary>
-        global::System.String? Declaration_FullName(Declaration _this);
+        string? Declaration_FullName(Declaration _this);
     
         /// <summary>
         /// Computation of the derived property Alternative.GreenName
         /// </summary>
-        global::System.String Alternative_GreenName(Alternative _this);
+        string Alternative_GreenName(Alternative _this);
     
         /// <summary>
         /// Computation of the derived property Alternative.GreenConstructorParameters
         /// </summary>
-        global::System.String Alternative_GreenConstructorParameters(Alternative _this);
+        string Alternative_GreenConstructorParameters(Alternative _this);
     
         /// <summary>
         /// Computation of the derived property Alternative.GreenConstructorArguments
         /// </summary>
-        global::System.String Alternative_GreenConstructorArguments(Alternative _this);
+        string Alternative_GreenConstructorArguments(Alternative _this);
     
         /// <summary>
         /// Computation of the derived property Alternative.GreenUpdateParameters
         /// </summary>
-        global::System.String Alternative_GreenUpdateParameters(Alternative _this);
+        string Alternative_GreenUpdateParameters(Alternative _this);
     
         /// <summary>
         /// Computation of the derived property Alternative.GreenUpdateArguments
         /// </summary>
-        global::System.String Alternative_GreenUpdateArguments(Alternative _this);
+        string Alternative_GreenUpdateArguments(Alternative _this);
     
         /// <summary>
         /// Computation of the derived property Alternative.RedName
         /// </summary>
-        global::System.String Alternative_RedName(Alternative _this);
+        string Alternative_RedName(Alternative _this);
     
         /// <summary>
         /// Computation of the derived property Alternative.RedUpdateParameters
         /// </summary>
-        global::System.String Alternative_RedUpdateParameters(Alternative _this);
+        string Alternative_RedUpdateParameters(Alternative _this);
     
         /// <summary>
         /// Computation of the derived property Alternative.RedUpdateArguments
         /// </summary>
-        global::System.String Alternative_RedUpdateArguments(Alternative _this);
+        string Alternative_RedUpdateArguments(Alternative _this);
     
         /// <summary>
         /// Computation of the derived property Alternative.RedOptionalUpdateParameters
         /// </summary>
-        global::System.String Alternative_RedOptionalUpdateParameters(Alternative _this);
+        string Alternative_RedOptionalUpdateParameters(Alternative _this);
     
         /// <summary>
         /// Computation of the derived property Alternative.RedToGreenArgumentList
         /// </summary>
-        global::System.String Alternative_RedToGreenArgumentList(Alternative _this);
+        string Alternative_RedToGreenArgumentList(Alternative _this);
     
         /// <summary>
         /// Computation of the derived property Alternative.RedToGreenOptionalArgumentList
         /// </summary>
-        global::System.String Alternative_RedToGreenOptionalArgumentList(Alternative _this);
+        string Alternative_RedToGreenOptionalArgumentList(Alternative _this);
     
         /// <summary>
         /// Computation of the derived property Alternative.HasRedToGreenOptionalArguments
         /// </summary>
-        global::System.Boolean Alternative_HasRedToGreenOptionalArguments(Alternative _this);
+        bool Alternative_HasRedToGreenOptionalArguments(Alternative _this);
     
         /// <summary>
         /// Computation of the derived property ElementValue.GreenType
         /// </summary>
-        global::System.String ElementValue_GreenType(ElementValue _this);
+        string ElementValue_GreenType(ElementValue _this);
     
         /// <summary>
         /// Computation of the derived property ElementValue.GreenSyntaxCondition
         /// </summary>
-        global::System.String? ElementValue_GreenSyntaxCondition(ElementValue _this);
+        string? ElementValue_GreenSyntaxCondition(ElementValue _this);
     
         /// <summary>
         /// Computation of the derived property ElementValue.RedType
         /// </summary>
-        global::System.String ElementValue_RedType(ElementValue _this);
+        string ElementValue_RedType(ElementValue _this);
     
         /// <summary>
         /// Computation of the derived property Block.GreenType
         /// </summary>
-        global::System.String Block_GreenType(Block _this);
+        string Block_GreenType(Block _this);
     
         /// <summary>
         /// Computation of the derived property Block.GreenSyntaxCondition
         /// </summary>
-        global::System.String? Block_GreenSyntaxCondition(Block _this);
+        string? Block_GreenSyntaxCondition(Block _this);
     
         /// <summary>
         /// Computation of the derived property Block.RedType
         /// </summary>
-        global::System.String Block_RedType(Block _this);
+        string Block_RedType(Block _this);
     
         /// <summary>
         /// Computation of the derived property Element.IsToken
         /// </summary>
-        global::System.Boolean Element_IsToken(Element _this);
+        bool Element_IsToken(Element _this);
     
         /// <summary>
         /// Computation of the derived property Element.IsList
         /// </summary>
-        global::System.Boolean Element_IsList(Element _this);
+        bool Element_IsList(Element _this);
     
         /// <summary>
         /// Computation of the derived property Element.FieldName
         /// </summary>
-        global::System.String Element_FieldName(Element _this);
+        string Element_FieldName(Element _this);
     
         /// <summary>
         /// Computation of the derived property Element.ParameterName
         /// </summary>
-        global::System.String Element_ParameterName(Element _this);
+        string Element_ParameterName(Element _this);
     
         /// <summary>
         /// Computation of the derived property Element.PropertyName
         /// </summary>
-        global::System.String Element_PropertyName(Element _this);
+        string Element_PropertyName(Element _this);
     
         /// <summary>
         /// Computation of the derived property Element.GreenFieldType
         /// </summary>
-        global::System.String Element_GreenFieldType(Element _this);
+        string Element_GreenFieldType(Element _this);
     
         /// <summary>
         /// Computation of the derived property Element.GreenParameterValue
         /// </summary>
-        global::System.String Element_GreenParameterValue(Element _this);
+        string Element_GreenParameterValue(Element _this);
     
         /// <summary>
         /// Computation of the derived property Element.GreenPropertyType
         /// </summary>
-        global::System.String Element_GreenPropertyType(Element _this);
+        string Element_GreenPropertyType(Element _this);
     
         /// <summary>
         /// Computation of the derived property Element.GreenPropertyValue
         /// </summary>
-        global::System.String Element_GreenPropertyValue(Element _this);
+        string Element_GreenPropertyValue(Element _this);
     
         /// <summary>
         /// Computation of the derived property Element.GreenSyntaxNullCondition
         /// </summary>
-        global::System.String? Element_GreenSyntaxNullCondition(Element _this);
+        string? Element_GreenSyntaxNullCondition(Element _this);
     
         /// <summary>
         /// Computation of the derived property Element.GreenSyntaxCondition
         /// </summary>
-        global::System.String? Element_GreenSyntaxCondition(Element _this);
+        string? Element_GreenSyntaxCondition(Element _this);
     
         /// <summary>
         /// Computation of the derived property Element.IsOptionalUpdateParameter
         /// </summary>
-        global::System.Boolean Element_IsOptionalUpdateParameter(Element _this);
+        bool Element_IsOptionalUpdateParameter(Element _this);
     
         /// <summary>
         /// Computation of the derived property Element.RedFieldType
         /// </summary>
-        global::System.String Element_RedFieldType(Element _this);
+        string Element_RedFieldType(Element _this);
     
         /// <summary>
         /// Computation of the derived property Element.RedParameterValue
         /// </summary>
-        global::System.String Element_RedParameterValue(Element _this);
+        string Element_RedParameterValue(Element _this);
     
         /// <summary>
         /// Computation of the derived property Element.RedPropertyType
         /// </summary>
-        global::System.String Element_RedPropertyType(Element _this);
+        string Element_RedPropertyType(Element _this);
     
         /// <summary>
         /// Computation of the derived property Element.RedPropertyValue
         /// </summary>
-        global::System.String Element_RedPropertyValue(Element _this);
+        string Element_RedPropertyValue(Element _this);
     
         /// <summary>
         /// Computation of the derived property Element.RedToGreenArgument
         /// </summary>
-        global::System.String Element_RedToGreenArgument(Element _this);
+        string Element_RedToGreenArgument(Element _this);
     
         /// <summary>
         /// Computation of the derived property Element.RedToGreenOptionalArgument
         /// </summary>
-        global::System.String Element_RedToGreenOptionalArgument(Element _this);
+        string Element_RedToGreenOptionalArgument(Element _this);
     
         /// <summary>
         /// Computation of the derived property Element.RedSyntaxNullCondition
         /// </summary>
-        global::System.String? Element_RedSyntaxNullCondition(Element _this);
+        string? Element_RedSyntaxNullCondition(Element _this);
     
         /// <summary>
         /// Computation of the derived property Element.RedSyntaxCondition
         /// </summary>
-        global::System.String? Element_RedSyntaxCondition(Element _this);
+        string? Element_RedSyntaxCondition(Element _this);
     
         /// <summary>
         /// Computation of the derived property Element.VisitCall
         /// </summary>
-        global::System.String? Element_VisitCall(Element _this);
+        string? Element_VisitCall(Element _this);
     
         /// <summary>
         /// Computation of the derived property Eof.GreenType
         /// </summary>
-        global::System.String Eof_GreenType(Eof _this);
+        string Eof_GreenType(Eof _this);
     
         /// <summary>
         /// Computation of the derived property Eof.GreenSyntaxCondition
         /// </summary>
-        global::System.String? Eof_GreenSyntaxCondition(Eof _this);
+        string? Eof_GreenSyntaxCondition(Eof _this);
     
         /// <summary>
         /// Computation of the derived property Eof.RedType
         /// </summary>
-        global::System.String Eof_RedType(Eof _this);
+        string Eof_RedType(Eof _this);
     
         /// <summary>
         /// Computation of the derived property GrammarRule.Language
@@ -3651,147 +3665,147 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model
         /// <summary>
         /// Computation of the derived property Language.Namespace
         /// </summary>
-        global::System.String Language_Namespace(Language _this);
+        string Language_Namespace(Language _this);
     
         /// <summary>
         /// Computation of the derived property LexerRule.IsFixed
         /// </summary>
-        global::System.Boolean LexerRule_IsFixed(LexerRule _this);
+        bool LexerRule_IsFixed(LexerRule _this);
     
         /// <summary>
         /// Computation of the derived property LexerRule.FixedText
         /// </summary>
-        global::System.String? LexerRule_FixedText(LexerRule _this);
+        string? LexerRule_FixedText(LexerRule _this);
     
         /// <summary>
         /// Computation of the derived property LAlternative.IsFixed
         /// </summary>
-        global::System.Boolean LAlternative_IsFixed(LAlternative _this);
+        bool LAlternative_IsFixed(LAlternative _this);
     
         /// <summary>
         /// Computation of the derived property LAlternative.FixedText
         /// </summary>
-        global::System.String? LAlternative_FixedText(LAlternative _this);
+        string? LAlternative_FixedText(LAlternative _this);
     
         /// <summary>
         /// Computation of the derived property LElement.IsFixed
         /// </summary>
-        global::System.Boolean LElement_IsFixed(LElement _this);
+        bool LElement_IsFixed(LElement _this);
     
         /// <summary>
         /// Computation of the derived property LElement.FixedText
         /// </summary>
-        global::System.String? LElement_FixedText(LElement _this);
+        string? LElement_FixedText(LElement _this);
     
         /// <summary>
         /// Computation of the derived property LElementValue.IsFixed
         /// </summary>
-        global::System.Boolean LElementValue_IsFixed(LElementValue _this);
+        bool LElementValue_IsFixed(LElementValue _this);
     
         /// <summary>
         /// Computation of the derived property LElementValue.FixedText
         /// </summary>
-        global::System.String? LElementValue_FixedText(LElementValue _this);
+        string? LElementValue_FixedText(LElementValue _this);
     
         /// <summary>
         /// Computation of the derived property LBlock.IsFixed
         /// </summary>
-        global::System.Boolean LBlock_IsFixed(LBlock _this);
+        bool LBlock_IsFixed(LBlock _this);
     
         /// <summary>
         /// Computation of the derived property LBlock.FixedText
         /// </summary>
-        global::System.String? LBlock_FixedText(LBlock _this);
+        string? LBlock_FixedText(LBlock _this);
     
         /// <summary>
         /// Computation of the derived property LFixed.IsFixed
         /// </summary>
-        global::System.Boolean LFixed_IsFixed(LFixed _this);
+        bool LFixed_IsFixed(LFixed _this);
     
         /// <summary>
         /// Computation of the derived property LFixed.FixedText
         /// </summary>
-        global::System.String? LFixed_FixedText(LFixed _this);
+        string? LFixed_FixedText(LFixed _this);
     
         /// <summary>
         /// Computation of the derived property LRange.IsFixed
         /// </summary>
-        global::System.Boolean LRange_IsFixed(LRange _this);
+        bool LRange_IsFixed(LRange _this);
     
         /// <summary>
         /// Computation of the derived property LRange.FixedText
         /// </summary>
-        global::System.String? LRange_FixedText(LRange _this);
+        string? LRange_FixedText(LRange _this);
     
         /// <summary>
         /// Computation of the derived property LReference.IsFixed
         /// </summary>
-        global::System.Boolean LReference_IsFixed(LReference _this);
+        bool LReference_IsFixed(LReference _this);
     
         /// <summary>
         /// Computation of the derived property LReference.FixedText
         /// </summary>
-        global::System.String? LReference_FixedText(LReference _this);
+        string? LReference_FixedText(LReference _this);
     
         /// <summary>
         /// Computation of the derived property LSet.IsFixed
         /// </summary>
-        global::System.Boolean LSet_IsFixed(LSet _this);
+        bool LSet_IsFixed(LSet _this);
     
         /// <summary>
         /// Computation of the derived property LSet.FixedText
         /// </summary>
-        global::System.String? LSet_FixedText(LSet _this);
+        string? LSet_FixedText(LSet _this);
     
         /// <summary>
         /// Computation of the derived property LSetItem.IsFixed
         /// </summary>
-        global::System.Boolean LSetItem_IsFixed(LSetItem _this);
+        bool LSetItem_IsFixed(LSetItem _this);
     
         /// <summary>
         /// Computation of the derived property LSetItem.FixedText
         /// </summary>
-        global::System.String? LSetItem_FixedText(LSetItem _this);
+        string? LSetItem_FixedText(LSetItem _this);
     
         /// <summary>
         /// Computation of the derived property LSetChar.IsFixed
         /// </summary>
-        global::System.Boolean LSetChar_IsFixed(LSetChar _this);
+        bool LSetChar_IsFixed(LSetChar _this);
     
         /// <summary>
         /// Computation of the derived property LSetChar.FixedText
         /// </summary>
-        global::System.String? LSetChar_FixedText(LSetChar _this);
+        string? LSetChar_FixedText(LSetChar _this);
     
         /// <summary>
         /// Computation of the derived property LSetRange.IsFixed
         /// </summary>
-        global::System.Boolean LSetRange_IsFixed(LSetRange _this);
+        bool LSetRange_IsFixed(LSetRange _this);
     
         /// <summary>
         /// Computation of the derived property LSetRange.FixedText
         /// </summary>
-        global::System.String? LSetRange_FixedText(LSetRange _this);
+        string? LSetRange_FixedText(LSetRange _this);
     
         /// <summary>
         /// Computation of the derived property LWildCard.IsFixed
         /// </summary>
-        global::System.Boolean LWildCard_IsFixed(LWildCard _this);
+        bool LWildCard_IsFixed(LWildCard _this);
     
         /// <summary>
         /// Computation of the derived property LWildCard.FixedText
         /// </summary>
-        global::System.String? LWildCard_FixedText(LWildCard _this);
+        string? LWildCard_FixedText(LWildCard _this);
     
         /// <summary>
         /// Computation of the derived property Rule.GreenName
         /// </summary>
-        global::System.String Rule_GreenName(Rule _this);
+        string Rule_GreenName(Rule _this);
     
         /// <summary>
         /// Computation of the derived property Rule.RedName
         /// </summary>
-        global::System.String Rule_RedName(Rule _this);
+        string Rule_RedName(Rule _this);
     
         /// <summary>
         /// Computation of the derived property RuleRef.Token
@@ -3806,47 +3820,47 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model
         /// <summary>
         /// Computation of the derived property RuleRef.GreenType
         /// </summary>
-        global::System.String RuleRef_GreenType(RuleRef _this);
+        string RuleRef_GreenType(RuleRef _this);
     
         /// <summary>
         /// Computation of the derived property RuleRef.GreenSyntaxCondition
         /// </summary>
-        global::System.String? RuleRef_GreenSyntaxCondition(RuleRef _this);
+        string? RuleRef_GreenSyntaxCondition(RuleRef _this);
     
         /// <summary>
         /// Computation of the derived property RuleRef.RedType
         /// </summary>
-        global::System.String RuleRef_RedType(RuleRef _this);
+        string RuleRef_RedType(RuleRef _this);
     
         /// <summary>
         /// Computation of the derived property SeparatedList.GreenType
         /// </summary>
-        global::System.String SeparatedList_GreenType(SeparatedList _this);
+        string SeparatedList_GreenType(SeparatedList _this);
     
         /// <summary>
         /// Computation of the derived property SeparatedList.GreenSyntaxCondition
         /// </summary>
-        global::System.String? SeparatedList_GreenSyntaxCondition(SeparatedList _this);
+        string? SeparatedList_GreenSyntaxCondition(SeparatedList _this);
     
         /// <summary>
         /// Computation of the derived property SeparatedList.RedType
         /// </summary>
-        global::System.String SeparatedList_RedType(SeparatedList _this);
+        string SeparatedList_RedType(SeparatedList _this);
     
         /// <summary>
         /// Computation of the derived property TokenAlts.GreenType
         /// </summary>
-        global::System.String TokenAlts_GreenType(TokenAlts _this);
+        string TokenAlts_GreenType(TokenAlts _this);
     
         /// <summary>
         /// Computation of the derived property TokenAlts.GreenSyntaxCondition
         /// </summary>
-        global::System.String? TokenAlts_GreenSyntaxCondition(TokenAlts _this);
+        string? TokenAlts_GreenSyntaxCondition(TokenAlts _this);
     
         /// <summary>
         /// Computation of the derived property TokenAlts.RedType
         /// </summary>
-        global::System.String TokenAlts_RedType(TokenAlts _this);
+        string TokenAlts_RedType(TokenAlts _this);
     
     
     }
@@ -4130,222 +4144,222 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model
         /// <summary>
         /// Computation of the derived property Binder.ConstructorArguments
         /// </summary>
-        public abstract global::System.String Binder_ConstructorArguments(Binder _this);
+        public abstract string Binder_ConstructorArguments(Binder _this);
     
         /// <summary>
         /// Computation of the derived property Declaration.FullName
         /// </summary>
-        public abstract global::System.String? Declaration_FullName(Declaration _this);
+        public abstract string? Declaration_FullName(Declaration _this);
     
         /// <summary>
         /// Computation of the derived property Alternative.GreenName
         /// </summary>
-        public abstract global::System.String Alternative_GreenName(Alternative _this);
+        public abstract string Alternative_GreenName(Alternative _this);
     
         /// <summary>
         /// Computation of the derived property Alternative.GreenConstructorParameters
         /// </summary>
-        public abstract global::System.String Alternative_GreenConstructorParameters(Alternative _this);
+        public abstract string Alternative_GreenConstructorParameters(Alternative _this);
     
         /// <summary>
         /// Computation of the derived property Alternative.GreenConstructorArguments
         /// </summary>
-        public abstract global::System.String Alternative_GreenConstructorArguments(Alternative _this);
+        public abstract string Alternative_GreenConstructorArguments(Alternative _this);
     
         /// <summary>
         /// Computation of the derived property Alternative.GreenUpdateParameters
         /// </summary>
-        public abstract global::System.String Alternative_GreenUpdateParameters(Alternative _this);
+        public abstract string Alternative_GreenUpdateParameters(Alternative _this);
     
         /// <summary>
         /// Computation of the derived property Alternative.GreenUpdateArguments
         /// </summary>
-        public abstract global::System.String Alternative_GreenUpdateArguments(Alternative _this);
+        public abstract string Alternative_GreenUpdateArguments(Alternative _this);
     
         /// <summary>
         /// Computation of the derived property Alternative.RedName
         /// </summary>
-        public abstract global::System.String Alternative_RedName(Alternative _this);
+        public abstract string Alternative_RedName(Alternative _this);
     
         /// <summary>
         /// Computation of the derived property Alternative.RedUpdateParameters
         /// </summary>
-        public abstract global::System.String Alternative_RedUpdateParameters(Alternative _this);
+        public abstract string Alternative_RedUpdateParameters(Alternative _this);
     
         /// <summary>
         /// Computation of the derived property Alternative.RedUpdateArguments
         /// </summary>
-        public abstract global::System.String Alternative_RedUpdateArguments(Alternative _this);
+        public abstract string Alternative_RedUpdateArguments(Alternative _this);
     
         /// <summary>
         /// Computation of the derived property Alternative.RedOptionalUpdateParameters
         /// </summary>
-        public abstract global::System.String Alternative_RedOptionalUpdateParameters(Alternative _this);
+        public abstract string Alternative_RedOptionalUpdateParameters(Alternative _this);
     
         /// <summary>
         /// Computation of the derived property Alternative.RedToGreenArgumentList
         /// </summary>
-        public abstract global::System.String Alternative_RedToGreenArgumentList(Alternative _this);
+        public abstract string Alternative_RedToGreenArgumentList(Alternative _this);
     
         /// <summary>
         /// Computation of the derived property Alternative.RedToGreenOptionalArgumentList
         /// </summary>
-        public abstract global::System.String Alternative_RedToGreenOptionalArgumentList(Alternative _this);
+        public abstract string Alternative_RedToGreenOptionalArgumentList(Alternative _this);
     
         /// <summary>
         /// Computation of the derived property Alternative.HasRedToGreenOptionalArguments
         /// </summary>
-        public abstract global::System.Boolean Alternative_HasRedToGreenOptionalArguments(Alternative _this);
+        public abstract bool Alternative_HasRedToGreenOptionalArguments(Alternative _this);
     
         /// <summary>
         /// Computation of the derived property ElementValue.GreenType
         /// </summary>
-        public abstract global::System.String ElementValue_GreenType(ElementValue _this);
+        public abstract string ElementValue_GreenType(ElementValue _this);
     
         /// <summary>
         /// Computation of the derived property ElementValue.GreenSyntaxCondition
         /// </summary>
-        public abstract global::System.String? ElementValue_GreenSyntaxCondition(ElementValue _this);
+        public abstract string? ElementValue_GreenSyntaxCondition(ElementValue _this);
     
         /// <summary>
         /// Computation of the derived property ElementValue.RedType
         /// </summary>
-        public abstract global::System.String ElementValue_RedType(ElementValue _this);
+        public abstract string ElementValue_RedType(ElementValue _this);
     
         /// <summary>
         /// Computation of the derived property Block.GreenType
         /// </summary>
-        public abstract global::System.String Block_GreenType(Block _this);
+        public abstract string Block_GreenType(Block _this);
     
         /// <summary>
         /// Computation of the derived property Block.GreenSyntaxCondition
         /// </summary>
-        public abstract global::System.String? Block_GreenSyntaxCondition(Block _this);
+        public abstract string? Block_GreenSyntaxCondition(Block _this);
     
         /// <summary>
         /// Computation of the derived property Block.RedType
         /// </summary>
-        public abstract global::System.String Block_RedType(Block _this);
+        public abstract string Block_RedType(Block _this);
     
         /// <summary>
         /// Computation of the derived property Element.IsToken
         /// </summary>
-        public abstract global::System.Boolean Element_IsToken(Element _this);
+        public abstract bool Element_IsToken(Element _this);
     
         /// <summary>
         /// Computation of the derived property Element.IsList
         /// </summary>
-        public abstract global::System.Boolean Element_IsList(Element _this);
+        public abstract bool Element_IsList(Element _this);
     
         /// <summary>
         /// Computation of the derived property Element.FieldName
         /// </summary>
-        public abstract global::System.String Element_FieldName(Element _this);
+        public abstract string Element_FieldName(Element _this);
     
         /// <summary>
         /// Computation of the derived property Element.ParameterName
         /// </summary>
-        public abstract global::System.String Element_ParameterName(Element _this);
+        public abstract string Element_ParameterName(Element _this);
     
         /// <summary>
         /// Computation of the derived property Element.PropertyName
         /// </summary>
-        public abstract global::System.String Element_PropertyName(Element _this);
+        public abstract string Element_PropertyName(Element _this);
     
         /// <summary>
         /// Computation of the derived property Element.GreenFieldType
         /// </summary>
-        public abstract global::System.String Element_GreenFieldType(Element _this);
+        public abstract string Element_GreenFieldType(Element _this);
     
         /// <summary>
         /// Computation of the derived property Element.GreenParameterValue
         /// </summary>
-        public abstract global::System.String Element_GreenParameterValue(Element _this);
+        public abstract string Element_GreenParameterValue(Element _this);
     
         /// <summary>
         /// Computation of the derived property Element.GreenPropertyType
         /// </summary>
-        public abstract global::System.String Element_GreenPropertyType(Element _this);
+        public abstract string Element_GreenPropertyType(Element _this);
     
         /// <summary>
         /// Computation of the derived property Element.GreenPropertyValue
         /// </summary>
-        public abstract global::System.String Element_GreenPropertyValue(Element _this);
+        public abstract string Element_GreenPropertyValue(Element _this);
     
         /// <summary>
         /// Computation of the derived property Element.GreenSyntaxNullCondition
         /// </summary>
-        public abstract global::System.String? Element_GreenSyntaxNullCondition(Element _this);
+        public abstract string? Element_GreenSyntaxNullCondition(Element _this);
     
         /// <summary>
         /// Computation of the derived property Element.GreenSyntaxCondition
         /// </summary>
-        public abstract global::System.String? Element_GreenSyntaxCondition(Element _this);
+        public abstract string? Element_GreenSyntaxCondition(Element _this);
     
         /// <summary>
         /// Computation of the derived property Element.IsOptionalUpdateParameter
         /// </summary>
-        public abstract global::System.Boolean Element_IsOptionalUpdateParameter(Element _this);
+        public abstract bool Element_IsOptionalUpdateParameter(Element _this);
     
         /// <summary>
         /// Computation of the derived property Element.RedFieldType
         /// </summary>
-        public abstract global::System.String Element_RedFieldType(Element _this);
+        public abstract string Element_RedFieldType(Element _this);
     
         /// <summary>
         /// Computation of the derived property Element.RedParameterValue
         /// </summary>
-        public abstract global::System.String Element_RedParameterValue(Element _this);
+        public abstract string Element_RedParameterValue(Element _this);
     
         /// <summary>
         /// Computation of the derived property Element.RedPropertyType
         /// </summary>
-        public abstract global::System.String Element_RedPropertyType(Element _this);
+        public abstract string Element_RedPropertyType(Element _this);
     
         /// <summary>
         /// Computation of the derived property Element.RedPropertyValue
         /// </summary>
-        public abstract global::System.String Element_RedPropertyValue(Element _this);
+        public abstract string Element_RedPropertyValue(Element _this);
     
         /// <summary>
         /// Computation of the derived property Element.RedToGreenArgument
         /// </summary>
-        public abstract global::System.String Element_RedToGreenArgument(Element _this);
+        public abstract string Element_RedToGreenArgument(Element _this);
     
         /// <summary>
         /// Computation of the derived property Element.RedToGreenOptionalArgument
         /// </summary>
-        public abstract global::System.String Element_RedToGreenOptionalArgument(Element _this);
+        public abstract string Element_RedToGreenOptionalArgument(Element _this);
     
         /// <summary>
         /// Computation of the derived property Element.RedSyntaxNullCondition
         /// </summary>
-        public abstract global::System.String? Element_RedSyntaxNullCondition(Element _this);
+        public abstract string? Element_RedSyntaxNullCondition(Element _this);
     
         /// <summary>
         /// Computation of the derived property Element.RedSyntaxCondition
         /// </summary>
-        public abstract global::System.String? Element_RedSyntaxCondition(Element _this);
+        public abstract string? Element_RedSyntaxCondition(Element _this);
     
         /// <summary>
         /// Computation of the derived property Element.VisitCall
         /// </summary>
-        public abstract global::System.String? Element_VisitCall(Element _this);
+        public abstract string? Element_VisitCall(Element _this);
     
         /// <summary>
         /// Computation of the derived property Eof.GreenType
         /// </summary>
-        public abstract global::System.String Eof_GreenType(Eof _this);
+        public abstract string Eof_GreenType(Eof _this);
     
         /// <summary>
         /// Computation of the derived property Eof.GreenSyntaxCondition
         /// </summary>
-        public abstract global::System.String? Eof_GreenSyntaxCondition(Eof _this);
+        public abstract string? Eof_GreenSyntaxCondition(Eof _this);
     
         /// <summary>
         /// Computation of the derived property Eof.RedType
         /// </summary>
-        public abstract global::System.String Eof_RedType(Eof _this);
+        public abstract string Eof_RedType(Eof _this);
     
         /// <summary>
         /// Computation of the derived property GrammarRule.Language
@@ -4355,147 +4369,147 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model
         /// <summary>
         /// Computation of the derived property Language.Namespace
         /// </summary>
-        public abstract global::System.String Language_Namespace(Language _this);
+        public abstract string Language_Namespace(Language _this);
     
         /// <summary>
         /// Computation of the derived property LexerRule.IsFixed
         /// </summary>
-        public abstract global::System.Boolean LexerRule_IsFixed(LexerRule _this);
+        public abstract bool LexerRule_IsFixed(LexerRule _this);
     
         /// <summary>
         /// Computation of the derived property LexerRule.FixedText
         /// </summary>
-        public abstract global::System.String? LexerRule_FixedText(LexerRule _this);
+        public abstract string? LexerRule_FixedText(LexerRule _this);
     
         /// <summary>
         /// Computation of the derived property LAlternative.IsFixed
         /// </summary>
-        public abstract global::System.Boolean LAlternative_IsFixed(LAlternative _this);
+        public abstract bool LAlternative_IsFixed(LAlternative _this);
     
         /// <summary>
         /// Computation of the derived property LAlternative.FixedText
         /// </summary>
-        public abstract global::System.String? LAlternative_FixedText(LAlternative _this);
+        public abstract string? LAlternative_FixedText(LAlternative _this);
     
         /// <summary>
         /// Computation of the derived property LElement.IsFixed
         /// </summary>
-        public abstract global::System.Boolean LElement_IsFixed(LElement _this);
+        public abstract bool LElement_IsFixed(LElement _this);
     
         /// <summary>
         /// Computation of the derived property LElement.FixedText
         /// </summary>
-        public abstract global::System.String? LElement_FixedText(LElement _this);
+        public abstract string? LElement_FixedText(LElement _this);
     
         /// <summary>
         /// Computation of the derived property LElementValue.IsFixed
         /// </summary>
-        public abstract global::System.Boolean LElementValue_IsFixed(LElementValue _this);
+        public abstract bool LElementValue_IsFixed(LElementValue _this);
     
         /// <summary>
         /// Computation of the derived property LElementValue.FixedText
         /// </summary>
-        public abstract global::System.String? LElementValue_FixedText(LElementValue _this);
+        public abstract string? LElementValue_FixedText(LElementValue _this);
     
         /// <summary>
         /// Computation of the derived property LBlock.IsFixed
         /// </summary>
-        public abstract global::System.Boolean LBlock_IsFixed(LBlock _this);
+        public abstract bool LBlock_IsFixed(LBlock _this);
     
         /// <summary>
         /// Computation of the derived property LBlock.FixedText
         /// </summary>
-        public abstract global::System.String? LBlock_FixedText(LBlock _this);
+        public abstract string? LBlock_FixedText(LBlock _this);
     
         /// <summary>
         /// Computation of the derived property LFixed.IsFixed
         /// </summary>
-        public abstract global::System.Boolean LFixed_IsFixed(LFixed _this);
+        public abstract bool LFixed_IsFixed(LFixed _this);
     
         /// <summary>
         /// Computation of the derived property LFixed.FixedText
         /// </summary>
-        public abstract global::System.String? LFixed_FixedText(LFixed _this);
+        public abstract string? LFixed_FixedText(LFixed _this);
     
         /// <summary>
         /// Computation of the derived property LRange.IsFixed
         /// </summary>
-        public abstract global::System.Boolean LRange_IsFixed(LRange _this);
+        public abstract bool LRange_IsFixed(LRange _this);
     
         /// <summary>
         /// Computation of the derived property LRange.FixedText
         /// </summary>
-        public abstract global::System.String? LRange_FixedText(LRange _this);
+        public abstract string? LRange_FixedText(LRange _this);
     
         /// <summary>
         /// Computation of the derived property LReference.IsFixed
         /// </summary>
-        public abstract global::System.Boolean LReference_IsFixed(LReference _this);
+        public abstract bool LReference_IsFixed(LReference _this);
     
         /// <summary>
         /// Computation of the derived property LReference.FixedText
         /// </summary>
-        public abstract global::System.String? LReference_FixedText(LReference _this);
+        public abstract string? LReference_FixedText(LReference _this);
     
         /// <summary>
         /// Computation of the derived property LSet.IsFixed
         /// </summary>
-        public abstract global::System.Boolean LSet_IsFixed(LSet _this);
+        public abstract bool LSet_IsFixed(LSet _this);
     
         /// <summary>
         /// Computation of the derived property LSet.FixedText
         /// </summary>
-        public abstract global::System.String? LSet_FixedText(LSet _this);
+        public abstract string? LSet_FixedText(LSet _this);
     
         /// <summary>
         /// Computation of the derived property LSetItem.IsFixed
         /// </summary>
-        public abstract global::System.Boolean LSetItem_IsFixed(LSetItem _this);
+        public abstract bool LSetItem_IsFixed(LSetItem _this);
     
         /// <summary>
         /// Computation of the derived property LSetItem.FixedText
         /// </summary>
-        public abstract global::System.String? LSetItem_FixedText(LSetItem _this);
+        public abstract string? LSetItem_FixedText(LSetItem _this);
     
         /// <summary>
         /// Computation of the derived property LSetChar.IsFixed
         /// </summary>
-        public abstract global::System.Boolean LSetChar_IsFixed(LSetChar _this);
+        public abstract bool LSetChar_IsFixed(LSetChar _this);
     
         /// <summary>
         /// Computation of the derived property LSetChar.FixedText
         /// </summary>
-        public abstract global::System.String? LSetChar_FixedText(LSetChar _this);
+        public abstract string? LSetChar_FixedText(LSetChar _this);
     
         /// <summary>
         /// Computation of the derived property LSetRange.IsFixed
         /// </summary>
-        public abstract global::System.Boolean LSetRange_IsFixed(LSetRange _this);
+        public abstract bool LSetRange_IsFixed(LSetRange _this);
     
         /// <summary>
         /// Computation of the derived property LSetRange.FixedText
         /// </summary>
-        public abstract global::System.String? LSetRange_FixedText(LSetRange _this);
+        public abstract string? LSetRange_FixedText(LSetRange _this);
     
         /// <summary>
         /// Computation of the derived property LWildCard.IsFixed
         /// </summary>
-        public abstract global::System.Boolean LWildCard_IsFixed(LWildCard _this);
+        public abstract bool LWildCard_IsFixed(LWildCard _this);
     
         /// <summary>
         /// Computation of the derived property LWildCard.FixedText
         /// </summary>
-        public abstract global::System.String? LWildCard_FixedText(LWildCard _this);
+        public abstract string? LWildCard_FixedText(LWildCard _this);
     
         /// <summary>
         /// Computation of the derived property Rule.GreenName
         /// </summary>
-        public abstract global::System.String Rule_GreenName(Rule _this);
+        public abstract string Rule_GreenName(Rule _this);
     
         /// <summary>
         /// Computation of the derived property Rule.RedName
         /// </summary>
-        public abstract global::System.String Rule_RedName(Rule _this);
+        public abstract string Rule_RedName(Rule _this);
     
         /// <summary>
         /// Computation of the derived property RuleRef.Token
@@ -4510,47 +4524,47 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model
         /// <summary>
         /// Computation of the derived property RuleRef.GreenType
         /// </summary>
-        public abstract global::System.String RuleRef_GreenType(RuleRef _this);
+        public abstract string RuleRef_GreenType(RuleRef _this);
     
         /// <summary>
         /// Computation of the derived property RuleRef.GreenSyntaxCondition
         /// </summary>
-        public abstract global::System.String? RuleRef_GreenSyntaxCondition(RuleRef _this);
+        public abstract string? RuleRef_GreenSyntaxCondition(RuleRef _this);
     
         /// <summary>
         /// Computation of the derived property RuleRef.RedType
         /// </summary>
-        public abstract global::System.String RuleRef_RedType(RuleRef _this);
+        public abstract string RuleRef_RedType(RuleRef _this);
     
         /// <summary>
         /// Computation of the derived property SeparatedList.GreenType
         /// </summary>
-        public abstract global::System.String SeparatedList_GreenType(SeparatedList _this);
+        public abstract string SeparatedList_GreenType(SeparatedList _this);
     
         /// <summary>
         /// Computation of the derived property SeparatedList.GreenSyntaxCondition
         /// </summary>
-        public abstract global::System.String? SeparatedList_GreenSyntaxCondition(SeparatedList _this);
+        public abstract string? SeparatedList_GreenSyntaxCondition(SeparatedList _this);
     
         /// <summary>
         /// Computation of the derived property SeparatedList.RedType
         /// </summary>
-        public abstract global::System.String SeparatedList_RedType(SeparatedList _this);
+        public abstract string SeparatedList_RedType(SeparatedList _this);
     
         /// <summary>
         /// Computation of the derived property TokenAlts.GreenType
         /// </summary>
-        public abstract global::System.String TokenAlts_GreenType(TokenAlts _this);
+        public abstract string TokenAlts_GreenType(TokenAlts _this);
     
         /// <summary>
         /// Computation of the derived property TokenAlts.GreenSyntaxCondition
         /// </summary>
-        public abstract global::System.String? TokenAlts_GreenSyntaxCondition(TokenAlts _this);
+        public abstract string? TokenAlts_GreenSyntaxCondition(TokenAlts _this);
     
         /// <summary>
         /// Computation of the derived property TokenAlts.RedType
         /// </summary>
-        public abstract global::System.String TokenAlts_RedType(TokenAlts _this);
+        public abstract string TokenAlts_RedType(TokenAlts _this);
     
     
     }
@@ -4644,10 +4658,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model.__Impl
             get => MGetCollection<AnnotationArgument>(Compiler.Annotation_Arguments);
         }
     
-        public global::MetaDslx.CodeAnalysis.MetaType AttributeClass
+        public __MetaType AttributeClass
         {
-            get => MGet<global::MetaDslx.CodeAnalysis.MetaType>(Compiler.Annotation_AttributeClass);
-            set => MSet<global::MetaDslx.CodeAnalysis.MetaType>(Compiler.Annotation_AttributeClass, value);
+            get => MGet<__MetaType>(Compiler.Annotation_AttributeClass);
+            set => MSet<__MetaType>(Compiler.Annotation_AttributeClass, value);
         }
     
     
@@ -4734,9 +4748,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model.__Impl
     
         public override __ModelClassInfo MInfo => __Info.Instance;
     
-        public global::MetaDslx.Modeling.ICollectionSlot<global::MetaDslx.CodeAnalysis.MetaSymbol> NamedParameter
+        public global::MetaDslx.Modeling.ICollectionSlot<__MetaSymbol> NamedParameter
         {
-            get => MGetCollection<global::MetaDslx.CodeAnalysis.MetaSymbol>(Compiler.AnnotationArgument_NamedParameter);
+            get => MGetCollection<__MetaSymbol>(Compiler.AnnotationArgument_NamedParameter);
         }
     
         public global::MetaDslx.CodeAnalysis.Symbols.DeclarationSymbol Parameter
@@ -4745,10 +4759,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model.__Impl
             set => MSet<global::MetaDslx.CodeAnalysis.Symbols.DeclarationSymbol>(Compiler.AnnotationArgument_Parameter, value);
         }
     
-        public global::MetaDslx.CodeAnalysis.MetaType ParameterType
+        public __MetaType ParameterType
         {
-            get => MGet<global::MetaDslx.CodeAnalysis.MetaType>(Compiler.AnnotationArgument_ParameterType);
-            set => MSet<global::MetaDslx.CodeAnalysis.MetaType>(Compiler.AnnotationArgument_ParameterType, value);
+            get => MGet<__MetaType>(Compiler.AnnotationArgument_ParameterType);
+            set => MSet<__MetaType>(Compiler.AnnotationArgument_ParameterType, value);
         }
     
         public Expression Value
@@ -4851,10 +4865,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model.__Impl
             get => MGetCollection<Expression>(Compiler.ArrayExpression_Items);
         }
     
-        public global::MetaDslx.CodeAnalysis.MetaSymbol Value
+        public __MetaSymbol Value
         {
-            get => MGet<global::MetaDslx.CodeAnalysis.MetaSymbol>(Compiler.Expression_Value);
-            set => MSet<global::MetaDslx.CodeAnalysis.MetaSymbol>(Compiler.Expression_Value, value);
+            get => MGet<__MetaSymbol>(Compiler.Expression_Value);
+            set => MSet<__MetaSymbol>(Compiler.Expression_Value, value);
         }
     
     
@@ -4946,21 +4960,21 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model.__Impl
             get => MGetCollection<BinderArgument>(Compiler.Binder_Arguments);
         }
     
-        public global::System.String ConstructorArguments
+        public string ConstructorArguments
         {
             get => Compiler.__CustomImpl.Binder_ConstructorArguments(this);
         }
     
-        public global::System.Boolean IsNegated
+        public bool IsNegated
         {
-            get => MGet<global::System.Boolean>(Compiler.Binder_IsNegated);
-            set => MSet<global::System.Boolean>(Compiler.Binder_IsNegated, value);
+            get => MGet<bool>(Compiler.Binder_IsNegated);
+            set => MSet<bool>(Compiler.Binder_IsNegated, value);
         }
     
-        public global::System.String TypeName
+        public string TypeName
         {
-            get => MGet<global::System.String>(Compiler.Binder_TypeName);
-            set => MSet<global::System.String>(Compiler.Binder_TypeName, value);
+            get => MGet<string>(Compiler.Binder_TypeName);
+            set => MSet<string>(Compiler.Binder_TypeName, value);
         }
     
     
@@ -5051,27 +5065,27 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model.__Impl
     
         public override __ModelClassInfo MInfo => __Info.Instance;
     
-        public global::System.Boolean IsArray
+        public bool IsArray
         {
-            get => MGet<global::System.Boolean>(Compiler.BinderArgument_IsArray);
-            set => MSet<global::System.Boolean>(Compiler.BinderArgument_IsArray, value);
+            get => MGet<bool>(Compiler.BinderArgument_IsArray);
+            set => MSet<bool>(Compiler.BinderArgument_IsArray, value);
         }
     
-        public global::System.String Name
+        public string Name
         {
-            get => MGet<global::System.String>(Compiler.BinderArgument_Name);
-            set => MSet<global::System.String>(Compiler.BinderArgument_Name, value);
+            get => MGet<string>(Compiler.BinderArgument_Name);
+            set => MSet<string>(Compiler.BinderArgument_Name, value);
         }
     
-        public global::System.String TypeName
+        public string TypeName
         {
-            get => MGet<global::System.String>(Compiler.BinderArgument_TypeName);
-            set => MSet<global::System.String>(Compiler.BinderArgument_TypeName, value);
+            get => MGet<string>(Compiler.BinderArgument_TypeName);
+            set => MSet<string>(Compiler.BinderArgument_TypeName, value);
         }
     
-        public global::MetaDslx.Modeling.ICollectionSlot<global::System.String?> Values
+        public global::MetaDslx.Modeling.ICollectionSlot<string?> Values
         {
-            get => MGetCollection<global::System.String>(Compiler.BinderArgument_Values);
+            get => MGetCollection<string>(Compiler.BinderArgument_Values);
         }
     
     
@@ -5167,10 +5181,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model.__Impl
             get => MGetCollection<Annotation>(Compiler.CSharpElement_Annotations);
         }
     
-        public global::System.String AntlrName
+        public string AntlrName
         {
-            get => MGet<global::System.String>(Compiler.CSharpElement_AntlrName);
-            set => MSet<global::System.String>(Compiler.CSharpElement_AntlrName, value);
+            get => MGet<string>(Compiler.CSharpElement_AntlrName);
+            set => MSet<string>(Compiler.CSharpElement_AntlrName, value);
         }
     
         public global::MetaDslx.Modeling.ICollectionSlot<Binder> Binders
@@ -5178,16 +5192,16 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model.__Impl
             get => MGetCollection<Binder>(Compiler.CSharpElement_Binders);
         }
     
-        public global::System.Boolean ContainsBinders
+        public bool ContainsBinders
         {
-            get => MGet<global::System.Boolean>(Compiler.CSharpElement_ContainsBinders);
-            set => MSet<global::System.Boolean>(Compiler.CSharpElement_ContainsBinders, value);
+            get => MGet<bool>(Compiler.CSharpElement_ContainsBinders);
+            set => MSet<bool>(Compiler.CSharpElement_ContainsBinders, value);
         }
     
-        public global::System.String CSharpName
+        public string CSharpName
         {
-            get => MGet<global::System.String>(Compiler.CSharpElement_CSharpName);
-            set => MSet<global::System.String>(Compiler.CSharpElement_CSharpName, value);
+            get => MGet<string>(Compiler.CSharpElement_CSharpName);
+            set => MSet<string>(Compiler.CSharpElement_CSharpName, value);
         }
     
     
@@ -5285,15 +5299,15 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model.__Impl
             get => MGetCollection<Declaration>(Compiler.Declaration_Declarations);
         }
     
-        public global::System.String? FullName
+        public string? FullName
         {
             get => Compiler.__CustomImpl.Declaration_FullName(this);
         }
     
-        public global::System.String? Name
+        public string? Name
         {
-            get => MGet<global::System.String?>(Compiler.Declaration_Name);
-            set => MSet<global::System.String?>(Compiler.Declaration_Name, value);
+            get => MGet<string?>(Compiler.Declaration_Name);
+            set => MSet<string?>(Compiler.Declaration_Name, value);
         }
     
         public Declaration? Parent
@@ -5397,70 +5411,70 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model.__Impl
             get => MGetCollection<Element>(Compiler.Alternative_Elements);
         }
     
-        public global::System.String GreenConstructorArguments
+        public string GreenConstructorArguments
         {
             get => Compiler.__CustomImpl.Alternative_GreenConstructorArguments(this);
         }
     
-        public global::System.String GreenConstructorParameters
+        public string GreenConstructorParameters
         {
             get => Compiler.__CustomImpl.Alternative_GreenConstructorParameters(this);
         }
     
-        public global::System.String GreenName
+        public string GreenName
         {
             get => Compiler.__CustomImpl.Alternative_GreenName(this);
         }
     
-        public global::System.String GreenUpdateArguments
+        public string GreenUpdateArguments
         {
             get => Compiler.__CustomImpl.Alternative_GreenUpdateArguments(this);
         }
     
-        public global::System.String GreenUpdateParameters
+        public string GreenUpdateParameters
         {
             get => Compiler.__CustomImpl.Alternative_GreenUpdateParameters(this);
         }
     
-        public global::System.Boolean HasRedToGreenOptionalArguments
+        public bool HasRedToGreenOptionalArguments
         {
             get => Compiler.__CustomImpl.Alternative_HasRedToGreenOptionalArguments(this);
         }
     
-        public global::System.String RedName
+        public string RedName
         {
             get => Compiler.__CustomImpl.Alternative_RedName(this);
         }
     
-        public global::System.String RedOptionalUpdateParameters
+        public string RedOptionalUpdateParameters
         {
             get => Compiler.__CustomImpl.Alternative_RedOptionalUpdateParameters(this);
         }
     
-        public global::System.String RedToGreenArgumentList
+        public string RedToGreenArgumentList
         {
             get => Compiler.__CustomImpl.Alternative_RedToGreenArgumentList(this);
         }
     
-        public global::System.String RedToGreenOptionalArgumentList
+        public string RedToGreenOptionalArgumentList
         {
             get => Compiler.__CustomImpl.Alternative_RedToGreenOptionalArgumentList(this);
         }
     
-        public global::System.String RedUpdateArguments
+        public string RedUpdateArguments
         {
             get => Compiler.__CustomImpl.Alternative_RedUpdateArguments(this);
         }
     
-        public global::System.String RedUpdateParameters
+        public string RedUpdateParameters
         {
             get => Compiler.__CustomImpl.Alternative_RedUpdateParameters(this);
         }
     
-        public global::MetaDslx.CodeAnalysis.MetaType ReturnType
+        public __MetaType ReturnType
         {
-            get => MGet<global::MetaDslx.CodeAnalysis.MetaType>(Compiler.Alternative_ReturnType);
-            set => MSet<global::MetaDslx.CodeAnalysis.MetaType>(Compiler.Alternative_ReturnType, value);
+            get => MGet<__MetaType>(Compiler.Alternative_ReturnType);
+            set => MSet<__MetaType>(Compiler.Alternative_ReturnType, value);
         }
     
         public Expression ReturnValue
@@ -5474,10 +5488,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model.__Impl
             get => MGetCollection<Annotation>(Compiler.CSharpElement_Annotations);
         }
     
-        public global::System.String AntlrName
+        public string AntlrName
         {
-            get => MGet<global::System.String>(Compiler.CSharpElement_AntlrName);
-            set => MSet<global::System.String>(Compiler.CSharpElement_AntlrName, value);
+            get => MGet<string>(Compiler.CSharpElement_AntlrName);
+            set => MSet<string>(Compiler.CSharpElement_AntlrName, value);
         }
     
         public global::MetaDslx.Modeling.ICollectionSlot<Binder> Binders
@@ -5485,16 +5499,16 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model.__Impl
             get => MGetCollection<Binder>(Compiler.CSharpElement_Binders);
         }
     
-        public global::System.Boolean ContainsBinders
+        public bool ContainsBinders
         {
-            get => MGet<global::System.Boolean>(Compiler.CSharpElement_ContainsBinders);
-            set => MSet<global::System.Boolean>(Compiler.CSharpElement_ContainsBinders, value);
+            get => MGet<bool>(Compiler.CSharpElement_ContainsBinders);
+            set => MSet<bool>(Compiler.CSharpElement_ContainsBinders, value);
         }
     
-        public global::System.String CSharpName
+        public string CSharpName
         {
-            get => MGet<global::System.String>(Compiler.CSharpElement_CSharpName);
-            set => MSet<global::System.String>(Compiler.CSharpElement_CSharpName, value);
+            get => MGet<string>(Compiler.CSharpElement_CSharpName);
+            set => MSet<string>(Compiler.CSharpElement_CSharpName, value);
         }
     
         public global::MetaDslx.Modeling.ICollectionSlot<Declaration> Declarations
@@ -5502,15 +5516,15 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model.__Impl
             get => MGetCollection<Declaration>(Compiler.Declaration_Declarations);
         }
     
-        public global::System.String? FullName
+        public string? FullName
         {
             get => Compiler.__CustomImpl.Declaration_FullName(this);
         }
     
-        public global::System.String? Name
+        public string? Name
         {
-            get => MGet<global::System.String?>(Compiler.Declaration_Name);
-            set => MSet<global::System.String?>(Compiler.Declaration_Name, value);
+            get => MGet<string?>(Compiler.Declaration_Name);
+            set => MSet<string?>(Compiler.Declaration_Name, value);
         }
     
         public Declaration? Parent
@@ -5648,12 +5662,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model.__Impl
     
         public override __ModelClassInfo MInfo => __Info.Instance;
     
-        public global::System.String? GreenSyntaxCondition
+        public string? GreenSyntaxCondition
         {
             get => Compiler.__CustomImpl.ElementValue_GreenSyntaxCondition(this);
         }
     
-        public global::System.String GreenType
+        public string GreenType
         {
             get => Compiler.__CustomImpl.ElementValue_GreenType(this);
         }
@@ -5664,7 +5678,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model.__Impl
             set => MSet<global::MetaDslx.Bootstrap.MetaCompiler3.Model.Multiplicity>(Compiler.ElementValue_Multiplicity, value);
         }
     
-        public global::System.String RedType
+        public string RedType
         {
             get => Compiler.__CustomImpl.ElementValue_RedType(this);
         }
@@ -5674,10 +5688,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model.__Impl
             get => MGetCollection<Annotation>(Compiler.CSharpElement_Annotations);
         }
     
-        public global::System.String AntlrName
+        public string AntlrName
         {
-            get => MGet<global::System.String>(Compiler.CSharpElement_AntlrName);
-            set => MSet<global::System.String>(Compiler.CSharpElement_AntlrName, value);
+            get => MGet<string>(Compiler.CSharpElement_AntlrName);
+            set => MSet<string>(Compiler.CSharpElement_AntlrName, value);
         }
     
         public global::MetaDslx.Modeling.ICollectionSlot<Binder> Binders
@@ -5685,16 +5699,16 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model.__Impl
             get => MGetCollection<Binder>(Compiler.CSharpElement_Binders);
         }
     
-        public global::System.Boolean ContainsBinders
+        public bool ContainsBinders
         {
-            get => MGet<global::System.Boolean>(Compiler.CSharpElement_ContainsBinders);
-            set => MSet<global::System.Boolean>(Compiler.CSharpElement_ContainsBinders, value);
+            get => MGet<bool>(Compiler.CSharpElement_ContainsBinders);
+            set => MSet<bool>(Compiler.CSharpElement_ContainsBinders, value);
         }
     
-        public global::System.String CSharpName
+        public string CSharpName
         {
-            get => MGet<global::System.String>(Compiler.CSharpElement_CSharpName);
-            set => MSet<global::System.String>(Compiler.CSharpElement_CSharpName, value);
+            get => MGet<string>(Compiler.CSharpElement_CSharpName);
+            set => MSet<string>(Compiler.CSharpElement_CSharpName, value);
         }
     
     
@@ -5800,29 +5814,29 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model.__Impl
     
         public override __ModelClassInfo MInfo => __Info.Instance;
     
-        public global::System.String? GreenSyntaxCondition
+        public string? GreenSyntaxCondition
         {
             get => Compiler.__CustomImpl.Block_GreenSyntaxCondition(this);
         }
     
-        public global::System.String GreenType
+        public string GreenType
         {
             get => Compiler.__CustomImpl.Block_GreenType(this);
         }
     
-        public global::System.String RedType
+        public string RedType
         {
             get => Compiler.__CustomImpl.Block_RedType(this);
         }
     
         [global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)]
-        global::System.String? ElementValue.GreenSyntaxCondition
+        string? ElementValue.GreenSyntaxCondition
         {
             get => Compiler.__CustomImpl.Block_GreenSyntaxCondition(this);
         }
     
         [global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)]
-        global::System.String ElementValue.GreenType
+        string ElementValue.GreenType
         {
             get => Compiler.__CustomImpl.Block_GreenType(this);
         }
@@ -5834,7 +5848,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model.__Impl
         }
     
         [global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)]
-        global::System.String ElementValue.RedType
+        string ElementValue.RedType
         {
             get => Compiler.__CustomImpl.Block_RedType(this);
         }
@@ -5850,20 +5864,20 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model.__Impl
             set => MSet<Alternative?>(Compiler.Rule_BaseRule, value);
         }
     
-        public global::System.String GreenName
+        public string GreenName
         {
             get => Compiler.__CustomImpl.Rule_GreenName(this);
         }
     
-        public global::System.String RedName
+        public string RedName
         {
             get => Compiler.__CustomImpl.Rule_RedName(this);
         }
     
-        public global::MetaDslx.CodeAnalysis.MetaType ReturnType
+        public __MetaType ReturnType
         {
-            get => MGet<global::MetaDslx.CodeAnalysis.MetaType>(Compiler.Rule_ReturnType);
-            set => MSet<global::MetaDslx.CodeAnalysis.MetaType>(Compiler.Rule_ReturnType, value);
+            get => MGet<__MetaType>(Compiler.Rule_ReturnType);
+            set => MSet<__MetaType>(Compiler.Rule_ReturnType, value);
         }
     
         public Grammar Grammar
@@ -5882,10 +5896,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model.__Impl
             get => MGetCollection<Annotation>(Compiler.CSharpElement_Annotations);
         }
     
-        public global::System.String AntlrName
+        public string AntlrName
         {
-            get => MGet<global::System.String>(Compiler.CSharpElement_AntlrName);
-            set => MSet<global::System.String>(Compiler.CSharpElement_AntlrName, value);
+            get => MGet<string>(Compiler.CSharpElement_AntlrName);
+            set => MSet<string>(Compiler.CSharpElement_AntlrName, value);
         }
     
         public global::MetaDslx.Modeling.ICollectionSlot<Binder> Binders
@@ -5893,16 +5907,16 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model.__Impl
             get => MGetCollection<Binder>(Compiler.CSharpElement_Binders);
         }
     
-        public global::System.Boolean ContainsBinders
+        public bool ContainsBinders
         {
-            get => MGet<global::System.Boolean>(Compiler.CSharpElement_ContainsBinders);
-            set => MSet<global::System.Boolean>(Compiler.CSharpElement_ContainsBinders, value);
+            get => MGet<bool>(Compiler.CSharpElement_ContainsBinders);
+            set => MSet<bool>(Compiler.CSharpElement_ContainsBinders, value);
         }
     
-        public global::System.String CSharpName
+        public string CSharpName
         {
-            get => MGet<global::System.String>(Compiler.CSharpElement_CSharpName);
-            set => MSet<global::System.String>(Compiler.CSharpElement_CSharpName, value);
+            get => MGet<string>(Compiler.CSharpElement_CSharpName);
+            set => MSet<string>(Compiler.CSharpElement_CSharpName, value);
         }
     
         public global::MetaDslx.Modeling.ICollectionSlot<Declaration> Declarations
@@ -5910,15 +5924,15 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model.__Impl
             get => MGetCollection<Declaration>(Compiler.Declaration_Declarations);
         }
     
-        public global::System.String? FullName
+        public string? FullName
         {
             get => Compiler.__CustomImpl.Declaration_FullName(this);
         }
     
-        public global::System.String? Name
+        public string? Name
         {
-            get => MGet<global::System.String?>(Compiler.Declaration_Name);
-            set => MSet<global::System.String?>(Compiler.Declaration_Name, value);
+            get => MGet<string?>(Compiler.Declaration_Name);
+            set => MSet<string?>(Compiler.Declaration_Name, value);
         }
     
         public Declaration? Parent
@@ -6057,108 +6071,108 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model.__Impl
             set => MSet<global::MetaDslx.Bootstrap.MetaCompiler3.Model.Assignment>(Compiler.Element_Assignment, value);
         }
     
-        public global::System.String FieldName
+        public string FieldName
         {
             get => Compiler.__CustomImpl.Element_FieldName(this);
         }
     
-        public global::System.String GreenFieldType
+        public string GreenFieldType
         {
             get => Compiler.__CustomImpl.Element_GreenFieldType(this);
         }
     
-        public global::System.String GreenParameterValue
+        public string GreenParameterValue
         {
             get => Compiler.__CustomImpl.Element_GreenParameterValue(this);
         }
     
-        public global::System.String GreenPropertyType
+        public string GreenPropertyType
         {
             get => Compiler.__CustomImpl.Element_GreenPropertyType(this);
         }
     
-        public global::System.String GreenPropertyValue
+        public string GreenPropertyValue
         {
             get => Compiler.__CustomImpl.Element_GreenPropertyValue(this);
         }
     
-        public global::System.String? GreenSyntaxCondition
+        public string? GreenSyntaxCondition
         {
             get => Compiler.__CustomImpl.Element_GreenSyntaxCondition(this);
         }
     
-        public global::System.String? GreenSyntaxNullCondition
+        public string? GreenSyntaxNullCondition
         {
             get => Compiler.__CustomImpl.Element_GreenSyntaxNullCondition(this);
         }
     
-        public global::System.Boolean IsList
+        public bool IsList
         {
             get => Compiler.__CustomImpl.Element_IsList(this);
         }
     
-        public global::System.Boolean IsOptionalUpdateParameter
+        public bool IsOptionalUpdateParameter
         {
             get => Compiler.__CustomImpl.Element_IsOptionalUpdateParameter(this);
         }
     
-        public global::System.Boolean IsToken
+        public bool IsToken
         {
             get => Compiler.__CustomImpl.Element_IsToken(this);
         }
     
-        public global::System.String? Name
+        public string? Name
         {
-            get => MGet<global::System.String?>(Compiler.Element_Name);
-            set => MSet<global::System.String?>(Compiler.Element_Name, value);
+            get => MGet<string?>(Compiler.Element_Name);
+            set => MSet<string?>(Compiler.Element_Name, value);
         }
     
-        public global::System.String ParameterName
+        public string ParameterName
         {
             get => Compiler.__CustomImpl.Element_ParameterName(this);
         }
     
-        public global::System.String PropertyName
+        public string PropertyName
         {
             get => Compiler.__CustomImpl.Element_PropertyName(this);
         }
     
-        public global::System.String RedFieldType
+        public string RedFieldType
         {
             get => Compiler.__CustomImpl.Element_RedFieldType(this);
         }
     
-        public global::System.String RedParameterValue
+        public string RedParameterValue
         {
             get => Compiler.__CustomImpl.Element_RedParameterValue(this);
         }
     
-        public global::System.String RedPropertyType
+        public string RedPropertyType
         {
             get => Compiler.__CustomImpl.Element_RedPropertyType(this);
         }
     
-        public global::System.String RedPropertyValue
+        public string RedPropertyValue
         {
             get => Compiler.__CustomImpl.Element_RedPropertyValue(this);
         }
     
-        public global::System.String? RedSyntaxCondition
+        public string? RedSyntaxCondition
         {
             get => Compiler.__CustomImpl.Element_RedSyntaxCondition(this);
         }
     
-        public global::System.String? RedSyntaxNullCondition
+        public string? RedSyntaxNullCondition
         {
             get => Compiler.__CustomImpl.Element_RedSyntaxNullCondition(this);
         }
     
-        public global::System.String RedToGreenArgument
+        public string RedToGreenArgument
         {
             get => Compiler.__CustomImpl.Element_RedToGreenArgument(this);
         }
     
-        public global::System.String RedToGreenOptionalArgument
+        public string RedToGreenOptionalArgument
         {
             get => Compiler.__CustomImpl.Element_RedToGreenOptionalArgument(this);
         }
@@ -6169,7 +6183,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model.__Impl
             set => MSet<ElementValue>(Compiler.Element_Value, value);
         }
     
-        public global::System.String? VisitCall
+        public string? VisitCall
         {
             get => Compiler.__CustomImpl.Element_VisitCall(this);
         }
@@ -6179,10 +6193,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model.__Impl
             get => MGetCollection<Annotation>(Compiler.CSharpElement_Annotations);
         }
     
-        public global::System.String AntlrName
+        public string AntlrName
         {
-            get => MGet<global::System.String>(Compiler.CSharpElement_AntlrName);
-            set => MSet<global::System.String>(Compiler.CSharpElement_AntlrName, value);
+            get => MGet<string>(Compiler.CSharpElement_AntlrName);
+            set => MSet<string>(Compiler.CSharpElement_AntlrName, value);
         }
     
         public global::MetaDslx.Modeling.ICollectionSlot<Binder> Binders
@@ -6190,16 +6204,16 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model.__Impl
             get => MGetCollection<Binder>(Compiler.CSharpElement_Binders);
         }
     
-        public global::System.Boolean ContainsBinders
+        public bool ContainsBinders
         {
-            get => MGet<global::System.Boolean>(Compiler.CSharpElement_ContainsBinders);
-            set => MSet<global::System.Boolean>(Compiler.CSharpElement_ContainsBinders, value);
+            get => MGet<bool>(Compiler.CSharpElement_ContainsBinders);
+            set => MSet<bool>(Compiler.CSharpElement_ContainsBinders, value);
         }
     
-        public global::System.String CSharpName
+        public string CSharpName
         {
-            get => MGet<global::System.String>(Compiler.CSharpElement_CSharpName);
-            set => MSet<global::System.String>(Compiler.CSharpElement_CSharpName, value);
+            get => MGet<string>(Compiler.CSharpElement_CSharpName);
+            set => MSet<string>(Compiler.CSharpElement_CSharpName, value);
         }
     
     
@@ -6342,29 +6356,29 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model.__Impl
     
         public override __ModelClassInfo MInfo => __Info.Instance;
     
-        public global::System.String? GreenSyntaxCondition
+        public string? GreenSyntaxCondition
         {
             get => Compiler.__CustomImpl.Eof_GreenSyntaxCondition(this);
         }
     
-        public global::System.String GreenType
+        public string GreenType
         {
             get => Compiler.__CustomImpl.Eof_GreenType(this);
         }
     
-        public global::System.String RedType
+        public string RedType
         {
             get => Compiler.__CustomImpl.Eof_RedType(this);
         }
     
         [global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)]
-        global::System.String? ElementValue.GreenSyntaxCondition
+        string? ElementValue.GreenSyntaxCondition
         {
             get => Compiler.__CustomImpl.Eof_GreenSyntaxCondition(this);
         }
     
         [global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)]
-        global::System.String ElementValue.GreenType
+        string ElementValue.GreenType
         {
             get => Compiler.__CustomImpl.Eof_GreenType(this);
         }
@@ -6376,7 +6390,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model.__Impl
         }
     
         [global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)]
-        global::System.String ElementValue.RedType
+        string ElementValue.RedType
         {
             get => Compiler.__CustomImpl.Eof_RedType(this);
         }
@@ -6386,10 +6400,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model.__Impl
             get => MGetCollection<Annotation>(Compiler.CSharpElement_Annotations);
         }
     
-        public global::System.String AntlrName
+        public string AntlrName
         {
-            get => MGet<global::System.String>(Compiler.CSharpElement_AntlrName);
-            set => MSet<global::System.String>(Compiler.CSharpElement_AntlrName, value);
+            get => MGet<string>(Compiler.CSharpElement_AntlrName);
+            set => MSet<string>(Compiler.CSharpElement_AntlrName, value);
         }
     
         public global::MetaDslx.Modeling.ICollectionSlot<Binder> Binders
@@ -6397,16 +6411,16 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model.__Impl
             get => MGetCollection<Binder>(Compiler.CSharpElement_Binders);
         }
     
-        public global::System.Boolean ContainsBinders
+        public bool ContainsBinders
         {
-            get => MGet<global::System.Boolean>(Compiler.CSharpElement_ContainsBinders);
-            set => MSet<global::System.Boolean>(Compiler.CSharpElement_ContainsBinders, value);
+            get => MGet<bool>(Compiler.CSharpElement_ContainsBinders);
+            set => MSet<bool>(Compiler.CSharpElement_ContainsBinders, value);
         }
     
-        public global::System.String CSharpName
+        public string CSharpName
         {
-            get => MGet<global::System.String>(Compiler.CSharpElement_CSharpName);
-            set => MSet<global::System.String>(Compiler.CSharpElement_CSharpName, value);
+            get => MGet<string>(Compiler.CSharpElement_CSharpName);
+            set => MSet<string>(Compiler.CSharpElement_CSharpName, value);
         }
     
     
@@ -6510,10 +6524,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model.__Impl
     
         public override __ModelClassInfo MInfo => __Info.Instance;
     
-        public global::MetaDslx.CodeAnalysis.MetaSymbol Value
+        public __MetaSymbol Value
         {
-            get => MGet<global::MetaDslx.CodeAnalysis.MetaSymbol>(Compiler.Expression_Value);
-            set => MSet<global::MetaDslx.CodeAnalysis.MetaSymbol>(Compiler.Expression_Value, value);
+            get => MGet<__MetaSymbol>(Compiler.Expression_Value);
+            set => MSet<__MetaSymbol>(Compiler.Expression_Value, value);
         }
     
     
@@ -6600,18 +6614,18 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model.__Impl
     
         public override __ModelClassInfo MInfo => __Info.Instance;
     
-        public global::System.String Text
+        public string Text
         {
-            get => MGet<global::System.String>(Compiler.Fixed_Text);
-            set => MSet<global::System.String>(Compiler.Fixed_Text, value);
+            get => MGet<string>(Compiler.Fixed_Text);
+            set => MSet<string>(Compiler.Fixed_Text, value);
         }
     
-        public global::System.String? GreenSyntaxCondition
+        public string? GreenSyntaxCondition
         {
             get => Compiler.__CustomImpl.ElementValue_GreenSyntaxCondition(this);
         }
     
-        public global::System.String GreenType
+        public string GreenType
         {
             get => Compiler.__CustomImpl.ElementValue_GreenType(this);
         }
@@ -6622,7 +6636,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model.__Impl
             set => MSet<global::MetaDslx.Bootstrap.MetaCompiler3.Model.Multiplicity>(Compiler.ElementValue_Multiplicity, value);
         }
     
-        public global::System.String RedType
+        public string RedType
         {
             get => Compiler.__CustomImpl.ElementValue_RedType(this);
         }
@@ -6632,10 +6646,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model.__Impl
             get => MGetCollection<Annotation>(Compiler.CSharpElement_Annotations);
         }
     
-        public global::System.String AntlrName
+        public string AntlrName
         {
-            get => MGet<global::System.String>(Compiler.CSharpElement_AntlrName);
-            set => MSet<global::System.String>(Compiler.CSharpElement_AntlrName, value);
+            get => MGet<string>(Compiler.CSharpElement_AntlrName);
+            set => MSet<string>(Compiler.CSharpElement_AntlrName, value);
         }
     
         public global::MetaDslx.Modeling.ICollectionSlot<Binder> Binders
@@ -6643,16 +6657,16 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model.__Impl
             get => MGetCollection<Binder>(Compiler.CSharpElement_Binders);
         }
     
-        public global::System.Boolean ContainsBinders
+        public bool ContainsBinders
         {
-            get => MGet<global::System.Boolean>(Compiler.CSharpElement_ContainsBinders);
-            set => MSet<global::System.Boolean>(Compiler.CSharpElement_ContainsBinders, value);
+            get => MGet<bool>(Compiler.CSharpElement_ContainsBinders);
+            set => MSet<bool>(Compiler.CSharpElement_ContainsBinders, value);
         }
     
-        public global::System.String CSharpName
+        public string CSharpName
         {
-            get => MGet<global::System.String>(Compiler.CSharpElement_CSharpName);
-            set => MSet<global::System.String>(Compiler.CSharpElement_CSharpName, value);
+            get => MGet<string>(Compiler.CSharpElement_CSharpName);
+            set => MSet<string>(Compiler.CSharpElement_CSharpName, value);
         }
     
     
@@ -6773,10 +6787,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model.__Impl
             get => MGetCollection<Annotation>(Compiler.CSharpElement_Annotations);
         }
     
-        public global::System.String AntlrName
+        public string AntlrName
         {
-            get => MGet<global::System.String>(Compiler.CSharpElement_AntlrName);
-            set => MSet<global::System.String>(Compiler.CSharpElement_AntlrName, value);
+            get => MGet<string>(Compiler.CSharpElement_AntlrName);
+            set => MSet<string>(Compiler.CSharpElement_AntlrName, value);
         }
     
         public global::MetaDslx.Modeling.ICollectionSlot<Binder> Binders
@@ -6784,16 +6798,16 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model.__Impl
             get => MGetCollection<Binder>(Compiler.CSharpElement_Binders);
         }
     
-        public global::System.Boolean ContainsBinders
+        public bool ContainsBinders
         {
-            get => MGet<global::System.Boolean>(Compiler.CSharpElement_ContainsBinders);
-            set => MSet<global::System.Boolean>(Compiler.CSharpElement_ContainsBinders, value);
+            get => MGet<bool>(Compiler.CSharpElement_ContainsBinders);
+            set => MSet<bool>(Compiler.CSharpElement_ContainsBinders, value);
         }
     
-        public global::System.String CSharpName
+        public string CSharpName
         {
-            get => MGet<global::System.String>(Compiler.CSharpElement_CSharpName);
-            set => MSet<global::System.String>(Compiler.CSharpElement_CSharpName, value);
+            get => MGet<string>(Compiler.CSharpElement_CSharpName);
+            set => MSet<string>(Compiler.CSharpElement_CSharpName, value);
         }
     
         public global::MetaDslx.Modeling.ICollectionSlot<Declaration> Declarations
@@ -6801,15 +6815,15 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model.__Impl
             get => MGetCollection<Declaration>(Compiler.Declaration_Declarations);
         }
     
-        public global::System.String? FullName
+        public string? FullName
         {
             get => Compiler.__CustomImpl.Declaration_FullName(this);
         }
     
-        public global::System.String? Name
+        public string? Name
         {
-            get => MGet<global::System.String?>(Compiler.Declaration_Name);
-            set => MSet<global::System.String?>(Compiler.Declaration_Name, value);
+            get => MGet<string?>(Compiler.Declaration_Name);
+            set => MSet<string?>(Compiler.Declaration_Name, value);
         }
     
         public Declaration? Parent
@@ -6921,13 +6935,18 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model.__Impl
     
         public override __ModelClassInfo MInfo => __Info.Instance;
     
+        public global::MetaDslx.Modeling.ICollectionSlot<__MetaType> BaseLanguages
+        {
+            get => MGetCollection<__MetaType>(Compiler.Language_BaseLanguages);
+        }
+    
         public Grammar Grammar
         {
             get => MGet<Grammar>(Compiler.Language_Grammar);
             set => MSet<Grammar>(Compiler.Language_Grammar, value);
         }
     
-        public global::System.String Namespace
+        public string Namespace
         {
             get => Compiler.__CustomImpl.Language_Namespace(this);
         }
@@ -6937,15 +6956,15 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model.__Impl
             get => MGetCollection<Declaration>(Compiler.Declaration_Declarations);
         }
     
-        public global::System.String? FullName
+        public string? FullName
         {
             get => Compiler.__CustomImpl.Declaration_FullName(this);
         }
     
-        public global::System.String? Name
+        public string? Name
         {
-            get => MGet<global::System.String?>(Compiler.Declaration_Name);
-            set => MSet<global::System.String?>(Compiler.Declaration_Name, value);
+            get => MGet<string?>(Compiler.Declaration_Name);
+            set => MSet<string?>(Compiler.Declaration_Name, value);
         }
     
         public Declaration? Parent
@@ -6976,10 +6995,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model.__Impl
             {
                 _baseTypes = __ImmutableArray.Create<__ModelClassInfo>(Compiler.DeclarationInfo);
                 _allBaseTypes = __ImmutableArray.Create<__ModelClassInfo>(Compiler.DeclarationInfo);
-                _declaredProperties = __ImmutableArray.Create<__ModelProperty>(Compiler.Language_Grammar, Compiler.Language_Namespace);
-                _allDeclaredProperties = __ImmutableArray.Create<__ModelProperty>(Compiler.Language_Grammar, Compiler.Language_Namespace, Compiler.Declaration_Declarations, Compiler.Declaration_FullName, Compiler.Declaration_Name, Compiler.Declaration_Parent);
-                _publicProperties = __ImmutableArray.Create<__ModelProperty>(Compiler.Language_Grammar, Compiler.Language_Namespace, Compiler.Declaration_Declarations, Compiler.Declaration_FullName, Compiler.Declaration_Name, Compiler.Declaration_Parent);
+                _declaredProperties = __ImmutableArray.Create<__ModelProperty>(Compiler.Language_BaseLanguages, Compiler.Language_Grammar, Compiler.Language_Namespace);
+                _allDeclaredProperties = __ImmutableArray.Create<__ModelProperty>(Compiler.Language_BaseLanguages, Compiler.Language_Grammar, Compiler.Language_Namespace, Compiler.Declaration_Declarations, Compiler.Declaration_FullName, Compiler.Declaration_Name, Compiler.Declaration_Parent);
+                _publicProperties = __ImmutableArray.Create<__ModelProperty>(Compiler.Language_BaseLanguages, Compiler.Language_Grammar, Compiler.Language_Namespace, Compiler.Declaration_Declarations, Compiler.Declaration_FullName, Compiler.Declaration_Name, Compiler.Declaration_Parent);
                 var publicPropertiesByName = __ImmutableDictionary.CreateBuilder<string, __ModelProperty>();
+                publicPropertiesByName.Add("BaseLanguages", Compiler.Language_BaseLanguages);
                 publicPropertiesByName.Add("Grammar", Compiler.Language_Grammar);
                 publicPropertiesByName.Add("Namespace", Compiler.Language_Namespace);
                 publicPropertiesByName.Add("Declarations", Compiler.Declaration_Declarations);
@@ -6988,6 +7008,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model.__Impl
                 publicPropertiesByName.Add("Parent", Compiler.Declaration_Parent);
                 _publicPropertiesByName = publicPropertiesByName.ToImmutable();
                 var modelPropertyInfos = __ImmutableDictionary.CreateBuilder<__ModelProperty, __ModelPropertyInfo>();
+                modelPropertyInfos.Add(Compiler.Language_BaseLanguages, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Language_BaseLanguages, __ImmutableArray.Create<__ModelProperty>(Compiler.Language_BaseLanguages), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Collection), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
                 modelPropertyInfos.Add(Compiler.Language_Grammar, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Language_Grammar, __ImmutableArray.Create<__ModelProperty>(Compiler.Language_Grammar), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Single), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(Compiler.Declaration_Declarations), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
                 modelPropertyInfos.Add(Compiler.Language_Namespace, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Language_Namespace, __ImmutableArray.Create<__ModelProperty>(Compiler.Language_Namespace), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ValueType | __ModelPropertyFlags.BuiltInType | __ModelPropertyFlags.Single | __ModelPropertyFlags.ReadOnly | __ModelPropertyFlags.Derived), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
                 modelPropertyInfos.Add(Compiler.Declaration_Declarations, new __ModelPropertyInfo(new __ModelPropertySlot(Compiler.Declaration_Declarations, __ImmutableArray.Create<__ModelProperty>(Compiler.Declaration_Declarations), null, __ModelPropertyFlags.None | __ModelPropertyFlags.ReferenceType | __ModelPropertyFlags.NullableType | __ModelPropertyFlags.ModelObjectType | __ModelPropertyFlags.Containment | __ModelPropertyFlags.Collection), __ImmutableArray.Create<__ModelProperty>(Compiler.Declaration_Parent), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(Compiler.Language_Grammar), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>(), __ImmutableArray.Create<__ModelProperty>()));
@@ -7054,12 +7075,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model.__Impl
             get => MGetCollection<LAlternative>(Compiler.LexerRule_Alternatives);
         }
     
-        public global::System.String? FixedText
+        public string? FixedText
         {
             get => Compiler.__CustomImpl.LexerRule_FixedText(this);
         }
     
-        public global::System.Boolean IsFixed
+        public bool IsFixed
         {
             get => Compiler.__CustomImpl.LexerRule_IsFixed(this);
         }
@@ -7080,10 +7101,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model.__Impl
             get => MGetCollection<Annotation>(Compiler.CSharpElement_Annotations);
         }
     
-        public global::System.String AntlrName
+        public string AntlrName
         {
-            get => MGet<global::System.String>(Compiler.CSharpElement_AntlrName);
-            set => MSet<global::System.String>(Compiler.CSharpElement_AntlrName, value);
+            get => MGet<string>(Compiler.CSharpElement_AntlrName);
+            set => MSet<string>(Compiler.CSharpElement_AntlrName, value);
         }
     
         public global::MetaDslx.Modeling.ICollectionSlot<Binder> Binders
@@ -7091,16 +7112,16 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model.__Impl
             get => MGetCollection<Binder>(Compiler.CSharpElement_Binders);
         }
     
-        public global::System.Boolean ContainsBinders
+        public bool ContainsBinders
         {
-            get => MGet<global::System.Boolean>(Compiler.CSharpElement_ContainsBinders);
-            set => MSet<global::System.Boolean>(Compiler.CSharpElement_ContainsBinders, value);
+            get => MGet<bool>(Compiler.CSharpElement_ContainsBinders);
+            set => MSet<bool>(Compiler.CSharpElement_ContainsBinders, value);
         }
     
-        public global::System.String CSharpName
+        public string CSharpName
         {
-            get => MGet<global::System.String>(Compiler.CSharpElement_CSharpName);
-            set => MSet<global::System.String>(Compiler.CSharpElement_CSharpName, value);
+            get => MGet<string>(Compiler.CSharpElement_CSharpName);
+            set => MSet<string>(Compiler.CSharpElement_CSharpName, value);
         }
     
         public global::MetaDslx.Modeling.ICollectionSlot<Declaration> Declarations
@@ -7108,15 +7129,15 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model.__Impl
             get => MGetCollection<Declaration>(Compiler.Declaration_Declarations);
         }
     
-        public global::System.String? FullName
+        public string? FullName
         {
             get => Compiler.__CustomImpl.Declaration_FullName(this);
         }
     
-        public global::System.String? Name
+        public string? Name
         {
-            get => MGet<global::System.String?>(Compiler.Declaration_Name);
-            set => MSet<global::System.String?>(Compiler.Declaration_Name, value);
+            get => MGet<string?>(Compiler.Declaration_Name);
+            set => MSet<string?>(Compiler.Declaration_Name, value);
         }
     
         public Declaration? Parent
@@ -7242,12 +7263,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model.__Impl
             get => MGetCollection<LAlternative>(Compiler.LexerRule_Alternatives);
         }
     
-        public global::System.String? FixedText
+        public string? FixedText
         {
             get => Compiler.__CustomImpl.LexerRule_FixedText(this);
         }
     
-        public global::System.Boolean IsFixed
+        public bool IsFixed
         {
             get => Compiler.__CustomImpl.LexerRule_IsFixed(this);
         }
@@ -7268,10 +7289,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model.__Impl
             get => MGetCollection<Annotation>(Compiler.CSharpElement_Annotations);
         }
     
-        public global::System.String AntlrName
+        public string AntlrName
         {
-            get => MGet<global::System.String>(Compiler.CSharpElement_AntlrName);
-            set => MSet<global::System.String>(Compiler.CSharpElement_AntlrName, value);
+            get => MGet<string>(Compiler.CSharpElement_AntlrName);
+            set => MSet<string>(Compiler.CSharpElement_AntlrName, value);
         }
     
         public global::MetaDslx.Modeling.ICollectionSlot<Binder> Binders
@@ -7279,16 +7300,16 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model.__Impl
             get => MGetCollection<Binder>(Compiler.CSharpElement_Binders);
         }
     
-        public global::System.Boolean ContainsBinders
+        public bool ContainsBinders
         {
-            get => MGet<global::System.Boolean>(Compiler.CSharpElement_ContainsBinders);
-            set => MSet<global::System.Boolean>(Compiler.CSharpElement_ContainsBinders, value);
+            get => MGet<bool>(Compiler.CSharpElement_ContainsBinders);
+            set => MSet<bool>(Compiler.CSharpElement_ContainsBinders, value);
         }
     
-        public global::System.String CSharpName
+        public string CSharpName
         {
-            get => MGet<global::System.String>(Compiler.CSharpElement_CSharpName);
-            set => MSet<global::System.String>(Compiler.CSharpElement_CSharpName, value);
+            get => MGet<string>(Compiler.CSharpElement_CSharpName);
+            set => MSet<string>(Compiler.CSharpElement_CSharpName, value);
         }
     
         public global::MetaDslx.Modeling.ICollectionSlot<Declaration> Declarations
@@ -7296,15 +7317,15 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model.__Impl
             get => MGetCollection<Declaration>(Compiler.Declaration_Declarations);
         }
     
-        public global::System.String? FullName
+        public string? FullName
         {
             get => Compiler.__CustomImpl.Declaration_FullName(this);
         }
     
-        public global::System.String? Name
+        public string? Name
         {
-            get => MGet<global::System.String?>(Compiler.Declaration_Name);
-            set => MSet<global::System.String?>(Compiler.Declaration_Name, value);
+            get => MGet<string?>(Compiler.Declaration_Name);
+            set => MSet<string?>(Compiler.Declaration_Name, value);
         }
     
         public Declaration? Parent
@@ -7488,15 +7509,15 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model.__Impl
             get => MGetCollection<Declaration>(Compiler.Declaration_Declarations);
         }
     
-        public global::System.String? FullName
+        public string? FullName
         {
             get => Compiler.__CustomImpl.Declaration_FullName(this);
         }
     
-        public global::System.String? Name
+        public string? Name
         {
-            get => MGet<global::System.String?>(Compiler.Declaration_Name);
-            set => MSet<global::System.String?>(Compiler.Declaration_Name, value);
+            get => MGet<string?>(Compiler.Declaration_Name);
+            set => MSet<string?>(Compiler.Declaration_Name, value);
         }
     
         public Declaration? Parent
@@ -7620,12 +7641,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model.__Impl
             get => MGetCollection<LElement>(Compiler.LAlternative_Elements);
         }
     
-        public global::System.String? FixedText
+        public string? FixedText
         {
             get => Compiler.__CustomImpl.LAlternative_FixedText(this);
         }
     
-        public global::System.Boolean IsFixed
+        public bool IsFixed
         {
             get => Compiler.__CustomImpl.LAlternative_IsFixed(this);
         }
@@ -7716,20 +7737,20 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model.__Impl
     
         public override __ModelClassInfo MInfo => __Info.Instance;
     
-        public global::System.String? FixedText
+        public string? FixedText
         {
             get => Compiler.__CustomImpl.LElement_FixedText(this);
         }
     
-        public global::System.Boolean IsFixed
+        public bool IsFixed
         {
             get => Compiler.__CustomImpl.LElement_IsFixed(this);
         }
     
-        public global::System.Boolean IsNegated
+        public bool IsNegated
         {
-            get => MGet<global::System.Boolean>(Compiler.LElement_IsNegated);
-            set => MSet<global::System.Boolean>(Compiler.LElement_IsNegated, value);
+            get => MGet<bool>(Compiler.LElement_IsNegated);
+            set => MSet<bool>(Compiler.LElement_IsNegated, value);
         }
     
         public global::MetaDslx.Bootstrap.MetaCompiler3.Model.Multiplicity Multiplicity
@@ -7834,12 +7855,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model.__Impl
     
         public override __ModelClassInfo MInfo => __Info.Instance;
     
-        public global::System.String? FixedText
+        public string? FixedText
         {
             get => Compiler.__CustomImpl.LElementValue_FixedText(this);
         }
     
-        public global::System.Boolean IsFixed
+        public bool IsFixed
         {
             get => Compiler.__CustomImpl.LElementValue_IsFixed(this);
         }
@@ -7934,24 +7955,24 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model.__Impl
             get => MGetCollection<LAlternative>(Compiler.LBlock_Alternatives);
         }
     
-        public global::System.String? FixedText
+        public string? FixedText
         {
             get => Compiler.__CustomImpl.LBlock_FixedText(this);
         }
     
-        public global::System.Boolean IsFixed
+        public bool IsFixed
         {
             get => Compiler.__CustomImpl.LBlock_IsFixed(this);
         }
     
         [global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)]
-        global::System.String? LElementValue.FixedText
+        string? LElementValue.FixedText
         {
             get => Compiler.__CustomImpl.LBlock_FixedText(this);
         }
     
         [global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)]
-        global::System.Boolean LElementValue.IsFixed
+        bool LElementValue.IsFixed
         {
             get => Compiler.__CustomImpl.LBlock_IsFixed(this);
         }
@@ -8045,30 +8066,30 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model.__Impl
     
         public override __ModelClassInfo MInfo => __Info.Instance;
     
-        public global::System.String? FixedText
+        public string? FixedText
         {
             get => Compiler.__CustomImpl.LFixed_FixedText(this);
         }
     
-        public global::System.Boolean IsFixed
+        public bool IsFixed
         {
             get => Compiler.__CustomImpl.LFixed_IsFixed(this);
         }
     
-        public global::System.String Text
+        public string Text
         {
-            get => MGet<global::System.String>(Compiler.LFixed_Text);
-            set => MSet<global::System.String>(Compiler.LFixed_Text, value);
+            get => MGet<string>(Compiler.LFixed_Text);
+            set => MSet<string>(Compiler.LFixed_Text, value);
         }
     
         [global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)]
-        global::System.String? LElementValue.FixedText
+        string? LElementValue.FixedText
         {
             get => Compiler.__CustomImpl.LFixed_FixedText(this);
         }
     
         [global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)]
-        global::System.Boolean LElementValue.IsFixed
+        bool LElementValue.IsFixed
         {
             get => Compiler.__CustomImpl.LFixed_IsFixed(this);
         }
@@ -8162,36 +8183,36 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model.__Impl
     
         public override __ModelClassInfo MInfo => __Info.Instance;
     
-        public global::System.String EndChar
+        public string EndChar
         {
-            get => MGet<global::System.String>(Compiler.LRange_EndChar);
-            set => MSet<global::System.String>(Compiler.LRange_EndChar, value);
+            get => MGet<string>(Compiler.LRange_EndChar);
+            set => MSet<string>(Compiler.LRange_EndChar, value);
         }
     
-        public global::System.String? FixedText
+        public string? FixedText
         {
             get => Compiler.__CustomImpl.LRange_FixedText(this);
         }
     
-        public global::System.Boolean IsFixed
+        public bool IsFixed
         {
             get => Compiler.__CustomImpl.LRange_IsFixed(this);
         }
     
-        public global::System.String StartChar
+        public string StartChar
         {
-            get => MGet<global::System.String>(Compiler.LRange_StartChar);
-            set => MSet<global::System.String>(Compiler.LRange_StartChar, value);
+            get => MGet<string>(Compiler.LRange_StartChar);
+            set => MSet<string>(Compiler.LRange_StartChar, value);
         }
     
         [global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)]
-        global::System.String? LElementValue.FixedText
+        string? LElementValue.FixedText
         {
             get => Compiler.__CustomImpl.LRange_FixedText(this);
         }
     
         [global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)]
-        global::System.Boolean LElementValue.IsFixed
+        bool LElementValue.IsFixed
         {
             get => Compiler.__CustomImpl.LRange_IsFixed(this);
         }
@@ -8287,12 +8308,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model.__Impl
     
         public override __ModelClassInfo MInfo => __Info.Instance;
     
-        public global::System.String? FixedText
+        public string? FixedText
         {
             get => Compiler.__CustomImpl.LReference_FixedText(this);
         }
     
-        public global::System.Boolean IsFixed
+        public bool IsFixed
         {
             get => Compiler.__CustomImpl.LReference_IsFixed(this);
         }
@@ -8304,13 +8325,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model.__Impl
         }
     
         [global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)]
-        global::System.String? LElementValue.FixedText
+        string? LElementValue.FixedText
         {
             get => Compiler.__CustomImpl.LReference_FixedText(this);
         }
     
         [global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)]
-        global::System.Boolean LElementValue.IsFixed
+        bool LElementValue.IsFixed
         {
             get => Compiler.__CustomImpl.LReference_IsFixed(this);
         }
@@ -8404,12 +8425,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model.__Impl
     
         public override __ModelClassInfo MInfo => __Info.Instance;
     
-        public global::System.String? FixedText
+        public string? FixedText
         {
             get => Compiler.__CustomImpl.LSet_FixedText(this);
         }
     
-        public global::System.Boolean IsFixed
+        public bool IsFixed
         {
             get => Compiler.__CustomImpl.LSet_IsFixed(this);
         }
@@ -8420,13 +8441,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model.__Impl
         }
     
         [global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)]
-        global::System.String? LElementValue.FixedText
+        string? LElementValue.FixedText
         {
             get => Compiler.__CustomImpl.LSet_FixedText(this);
         }
     
         [global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)]
-        global::System.Boolean LElementValue.IsFixed
+        bool LElementValue.IsFixed
         {
             get => Compiler.__CustomImpl.LSet_IsFixed(this);
         }
@@ -8519,12 +8540,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model.__Impl
     
         public override __ModelClassInfo MInfo => __Info.Instance;
     
-        public global::System.String? FixedText
+        public string? FixedText
         {
             get => Compiler.__CustomImpl.LSetItem_FixedText(this);
         }
     
-        public global::System.Boolean IsFixed
+        public bool IsFixed
         {
             get => Compiler.__CustomImpl.LSetItem_IsFixed(this);
         }
@@ -8614,30 +8635,30 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model.__Impl
     
         public override __ModelClassInfo MInfo => __Info.Instance;
     
-        public global::System.String Char
+        public string Char
         {
-            get => MGet<global::System.String>(Compiler.LSetChar_Char);
-            set => MSet<global::System.String>(Compiler.LSetChar_Char, value);
+            get => MGet<string>(Compiler.LSetChar_Char);
+            set => MSet<string>(Compiler.LSetChar_Char, value);
         }
     
-        public global::System.String? FixedText
+        public string? FixedText
         {
             get => Compiler.__CustomImpl.LSetChar_FixedText(this);
         }
     
-        public global::System.Boolean IsFixed
+        public bool IsFixed
         {
             get => Compiler.__CustomImpl.LSetChar_IsFixed(this);
         }
     
         [global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)]
-        global::System.String? LSetItem.FixedText
+        string? LSetItem.FixedText
         {
             get => Compiler.__CustomImpl.LSetChar_FixedText(this);
         }
     
         [global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)]
-        global::System.Boolean LSetItem.IsFixed
+        bool LSetItem.IsFixed
         {
             get => Compiler.__CustomImpl.LSetChar_IsFixed(this);
         }
@@ -8731,36 +8752,36 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model.__Impl
     
         public override __ModelClassInfo MInfo => __Info.Instance;
     
-        public global::System.String EndChar
+        public string EndChar
         {
-            get => MGet<global::System.String>(Compiler.LSetRange_EndChar);
-            set => MSet<global::System.String>(Compiler.LSetRange_EndChar, value);
+            get => MGet<string>(Compiler.LSetRange_EndChar);
+            set => MSet<string>(Compiler.LSetRange_EndChar, value);
         }
     
-        public global::System.String? FixedText
+        public string? FixedText
         {
             get => Compiler.__CustomImpl.LSetRange_FixedText(this);
         }
     
-        public global::System.Boolean IsFixed
+        public bool IsFixed
         {
             get => Compiler.__CustomImpl.LSetRange_IsFixed(this);
         }
     
-        public global::System.String StartChar
+        public string StartChar
         {
-            get => MGet<global::System.String>(Compiler.LSetRange_StartChar);
-            set => MSet<global::System.String>(Compiler.LSetRange_StartChar, value);
+            get => MGet<string>(Compiler.LSetRange_StartChar);
+            set => MSet<string>(Compiler.LSetRange_StartChar, value);
         }
     
         [global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)]
-        global::System.String? LSetItem.FixedText
+        string? LSetItem.FixedText
         {
             get => Compiler.__CustomImpl.LSetRange_FixedText(this);
         }
     
         [global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)]
-        global::System.Boolean LSetItem.IsFixed
+        bool LSetItem.IsFixed
         {
             get => Compiler.__CustomImpl.LSetRange_IsFixed(this);
         }
@@ -8856,24 +8877,24 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model.__Impl
     
         public override __ModelClassInfo MInfo => __Info.Instance;
     
-        public global::System.String? FixedText
+        public string? FixedText
         {
             get => Compiler.__CustomImpl.LWildCard_FixedText(this);
         }
     
-        public global::System.Boolean IsFixed
+        public bool IsFixed
         {
             get => Compiler.__CustomImpl.LWildCard_IsFixed(this);
         }
     
         [global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)]
-        global::System.String? LElementValue.FixedText
+        string? LElementValue.FixedText
         {
             get => Compiler.__CustomImpl.LWildCard_FixedText(this);
         }
     
         [global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)]
-        global::System.Boolean LElementValue.IsFixed
+        bool LElementValue.IsFixed
         {
             get => Compiler.__CustomImpl.LWildCard_IsFixed(this);
         }
@@ -8970,15 +8991,15 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model.__Impl
             get => MGetCollection<Declaration>(Compiler.Declaration_Declarations);
         }
     
-        public global::System.String? FullName
+        public string? FullName
         {
             get => Compiler.__CustomImpl.Declaration_FullName(this);
         }
     
-        public global::System.String? Name
+        public string? Name
         {
-            get => MGet<global::System.String?>(Compiler.Declaration_Name);
-            set => MSet<global::System.String?>(Compiler.Declaration_Name, value);
+            get => MGet<string?>(Compiler.Declaration_Name);
+            set => MSet<string?>(Compiler.Declaration_Name, value);
         }
     
         public Declaration? Parent
@@ -9089,20 +9110,20 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model.__Impl
             set => MSet<Alternative?>(Compiler.Rule_BaseRule, value);
         }
     
-        public global::System.String GreenName
+        public string GreenName
         {
             get => Compiler.__CustomImpl.Rule_GreenName(this);
         }
     
-        public global::System.String RedName
+        public string RedName
         {
             get => Compiler.__CustomImpl.Rule_RedName(this);
         }
     
-        public global::MetaDslx.CodeAnalysis.MetaType ReturnType
+        public __MetaType ReturnType
         {
-            get => MGet<global::MetaDslx.CodeAnalysis.MetaType>(Compiler.Rule_ReturnType);
-            set => MSet<global::MetaDslx.CodeAnalysis.MetaType>(Compiler.Rule_ReturnType, value);
+            get => MGet<__MetaType>(Compiler.Rule_ReturnType);
+            set => MSet<__MetaType>(Compiler.Rule_ReturnType, value);
         }
     
         public Grammar Grammar
@@ -9121,10 +9142,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model.__Impl
             get => MGetCollection<Annotation>(Compiler.CSharpElement_Annotations);
         }
     
-        public global::System.String AntlrName
+        public string AntlrName
         {
-            get => MGet<global::System.String>(Compiler.CSharpElement_AntlrName);
-            set => MSet<global::System.String>(Compiler.CSharpElement_AntlrName, value);
+            get => MGet<string>(Compiler.CSharpElement_AntlrName);
+            set => MSet<string>(Compiler.CSharpElement_AntlrName, value);
         }
     
         public global::MetaDslx.Modeling.ICollectionSlot<Binder> Binders
@@ -9132,16 +9153,16 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model.__Impl
             get => MGetCollection<Binder>(Compiler.CSharpElement_Binders);
         }
     
-        public global::System.Boolean ContainsBinders
+        public bool ContainsBinders
         {
-            get => MGet<global::System.Boolean>(Compiler.CSharpElement_ContainsBinders);
-            set => MSet<global::System.Boolean>(Compiler.CSharpElement_ContainsBinders, value);
+            get => MGet<bool>(Compiler.CSharpElement_ContainsBinders);
+            set => MSet<bool>(Compiler.CSharpElement_ContainsBinders, value);
         }
     
-        public global::System.String CSharpName
+        public string CSharpName
         {
-            get => MGet<global::System.String>(Compiler.CSharpElement_CSharpName);
-            set => MSet<global::System.String>(Compiler.CSharpElement_CSharpName, value);
+            get => MGet<string>(Compiler.CSharpElement_CSharpName);
+            set => MSet<string>(Compiler.CSharpElement_CSharpName, value);
         }
     
         public global::MetaDslx.Modeling.ICollectionSlot<Declaration> Declarations
@@ -9149,15 +9170,15 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model.__Impl
             get => MGetCollection<Declaration>(Compiler.Declaration_Declarations);
         }
     
-        public global::System.String? FullName
+        public string? FullName
         {
             get => Compiler.__CustomImpl.Declaration_FullName(this);
         }
     
-        public global::System.String? Name
+        public string? Name
         {
-            get => MGet<global::System.String?>(Compiler.Declaration_Name);
-            set => MSet<global::System.String?>(Compiler.Declaration_Name, value);
+            get => MGet<string?>(Compiler.Declaration_Name);
+            set => MSet<string?>(Compiler.Declaration_Name, value);
         }
     
         public Declaration? Parent
@@ -9286,24 +9307,24 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model.__Impl
             set => MSet<GrammarRule>(Compiler.RuleRef_GrammarRule, value);
         }
     
-        public global::System.String? GreenSyntaxCondition
+        public string? GreenSyntaxCondition
         {
             get => Compiler.__CustomImpl.RuleRef_GreenSyntaxCondition(this);
         }
     
-        public global::System.String GreenType
+        public string GreenType
         {
             get => Compiler.__CustomImpl.RuleRef_GreenType(this);
         }
     
-        public global::System.String RedType
+        public string RedType
         {
             get => Compiler.__CustomImpl.RuleRef_RedType(this);
         }
     
-        public global::MetaDslx.Modeling.ICollectionSlot<global::MetaDslx.CodeAnalysis.MetaType> ReferencedTypes
+        public global::MetaDslx.Modeling.ICollectionSlot<__MetaType> ReferencedTypes
         {
-            get => MGetCollection<global::MetaDslx.CodeAnalysis.MetaType>(Compiler.RuleRef_ReferencedTypes);
+            get => MGetCollection<__MetaType>(Compiler.RuleRef_ReferencedTypes);
         }
     
         public Rule? Rule
@@ -9317,13 +9338,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model.__Impl
         }
     
         [global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)]
-        global::System.String? ElementValue.GreenSyntaxCondition
+        string? ElementValue.GreenSyntaxCondition
         {
             get => Compiler.__CustomImpl.RuleRef_GreenSyntaxCondition(this);
         }
     
         [global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)]
-        global::System.String ElementValue.GreenType
+        string ElementValue.GreenType
         {
             get => Compiler.__CustomImpl.RuleRef_GreenType(this);
         }
@@ -9335,7 +9356,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model.__Impl
         }
     
         [global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)]
-        global::System.String ElementValue.RedType
+        string ElementValue.RedType
         {
             get => Compiler.__CustomImpl.RuleRef_RedType(this);
         }
@@ -9345,10 +9366,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model.__Impl
             get => MGetCollection<Annotation>(Compiler.CSharpElement_Annotations);
         }
     
-        public global::System.String AntlrName
+        public string AntlrName
         {
-            get => MGet<global::System.String>(Compiler.CSharpElement_AntlrName);
-            set => MSet<global::System.String>(Compiler.CSharpElement_AntlrName, value);
+            get => MGet<string>(Compiler.CSharpElement_AntlrName);
+            set => MSet<string>(Compiler.CSharpElement_AntlrName, value);
         }
     
         public global::MetaDslx.Modeling.ICollectionSlot<Binder> Binders
@@ -9356,16 +9377,16 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model.__Impl
             get => MGetCollection<Binder>(Compiler.CSharpElement_Binders);
         }
     
-        public global::System.Boolean ContainsBinders
+        public bool ContainsBinders
         {
-            get => MGet<global::System.Boolean>(Compiler.CSharpElement_ContainsBinders);
-            set => MSet<global::System.Boolean>(Compiler.CSharpElement_ContainsBinders, value);
+            get => MGet<bool>(Compiler.CSharpElement_ContainsBinders);
+            set => MSet<bool>(Compiler.CSharpElement_ContainsBinders, value);
         }
     
-        public global::System.String CSharpName
+        public string CSharpName
         {
-            get => MGet<global::System.String>(Compiler.CSharpElement_CSharpName);
-            set => MSet<global::System.String>(Compiler.CSharpElement_CSharpName, value);
+            get => MGet<string>(Compiler.CSharpElement_CSharpName);
+            set => MSet<string>(Compiler.CSharpElement_CSharpName, value);
         }
     
     
@@ -9489,12 +9510,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model.__Impl
             get => MGetCollection<Element>(Compiler.SeparatedList_FirstSeparators);
         }
     
-        public global::System.String? GreenSyntaxCondition
+        public string? GreenSyntaxCondition
         {
             get => Compiler.__CustomImpl.SeparatedList_GreenSyntaxCondition(this);
         }
     
-        public global::System.String GreenType
+        public string GreenType
         {
             get => Compiler.__CustomImpl.SeparatedList_GreenType(this);
         }
@@ -9509,7 +9530,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model.__Impl
             get => MGetCollection<Element>(Compiler.SeparatedList_LastSeparators);
         }
     
-        public global::System.String RedType
+        public string RedType
         {
             get => Compiler.__CustomImpl.SeparatedList_RedType(this);
         }
@@ -9532,26 +9553,26 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model.__Impl
             set => MSet<Element>(Compiler.SeparatedList_RepeatedSeparator, value);
         }
     
-        public global::System.Boolean RepeatedSeparatorFirst
+        public bool RepeatedSeparatorFirst
         {
-            get => MGet<global::System.Boolean>(Compiler.SeparatedList_RepeatedSeparatorFirst);
-            set => MSet<global::System.Boolean>(Compiler.SeparatedList_RepeatedSeparatorFirst, value);
+            get => MGet<bool>(Compiler.SeparatedList_RepeatedSeparatorFirst);
+            set => MSet<bool>(Compiler.SeparatedList_RepeatedSeparatorFirst, value);
         }
     
-        public global::System.Boolean SeparatorFirst
+        public bool SeparatorFirst
         {
-            get => MGet<global::System.Boolean>(Compiler.SeparatedList_SeparatorFirst);
-            set => MSet<global::System.Boolean>(Compiler.SeparatedList_SeparatorFirst, value);
+            get => MGet<bool>(Compiler.SeparatedList_SeparatorFirst);
+            set => MSet<bool>(Compiler.SeparatedList_SeparatorFirst, value);
         }
     
         [global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)]
-        global::System.String? ElementValue.GreenSyntaxCondition
+        string? ElementValue.GreenSyntaxCondition
         {
             get => Compiler.__CustomImpl.SeparatedList_GreenSyntaxCondition(this);
         }
     
         [global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)]
-        global::System.String ElementValue.GreenType
+        string ElementValue.GreenType
         {
             get => Compiler.__CustomImpl.SeparatedList_GreenType(this);
         }
@@ -9563,7 +9584,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model.__Impl
         }
     
         [global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)]
-        global::System.String ElementValue.RedType
+        string ElementValue.RedType
         {
             get => Compiler.__CustomImpl.SeparatedList_RedType(this);
         }
@@ -9573,10 +9594,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model.__Impl
             get => MGetCollection<Annotation>(Compiler.CSharpElement_Annotations);
         }
     
-        public global::System.String AntlrName
+        public string AntlrName
         {
-            get => MGet<global::System.String>(Compiler.CSharpElement_AntlrName);
-            set => MSet<global::System.String>(Compiler.CSharpElement_AntlrName, value);
+            get => MGet<string>(Compiler.CSharpElement_AntlrName);
+            set => MSet<string>(Compiler.CSharpElement_AntlrName, value);
         }
     
         public global::MetaDslx.Modeling.ICollectionSlot<Binder> Binders
@@ -9584,16 +9605,16 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model.__Impl
             get => MGetCollection<Binder>(Compiler.CSharpElement_Binders);
         }
     
-        public global::System.Boolean ContainsBinders
+        public bool ContainsBinders
         {
-            get => MGet<global::System.Boolean>(Compiler.CSharpElement_ContainsBinders);
-            set => MSet<global::System.Boolean>(Compiler.CSharpElement_ContainsBinders, value);
+            get => MGet<bool>(Compiler.CSharpElement_ContainsBinders);
+            set => MSet<bool>(Compiler.CSharpElement_ContainsBinders, value);
         }
     
-        public global::System.String CSharpName
+        public string CSharpName
         {
-            get => MGet<global::System.String>(Compiler.CSharpElement_CSharpName);
-            set => MSet<global::System.String>(Compiler.CSharpElement_CSharpName, value);
+            get => MGet<string>(Compiler.CSharpElement_CSharpName);
+            set => MSet<string>(Compiler.CSharpElement_CSharpName, value);
         }
     
     
@@ -9719,16 +9740,16 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model.__Impl
     
         public override __ModelClassInfo MInfo => __Info.Instance;
     
-        public global::System.Boolean IsTrivia
+        public bool IsTrivia
         {
-            get => MGet<global::System.Boolean>(Compiler.Token_IsTrivia);
-            set => MSet<global::System.Boolean>(Compiler.Token_IsTrivia, value);
+            get => MGet<bool>(Compiler.Token_IsTrivia);
+            set => MSet<bool>(Compiler.Token_IsTrivia, value);
         }
     
-        public global::MetaDslx.CodeAnalysis.MetaType ReturnType
+        public __MetaType ReturnType
         {
-            get => MGet<global::MetaDslx.CodeAnalysis.MetaType>(Compiler.Token_ReturnType);
-            set => MSet<global::MetaDslx.CodeAnalysis.MetaType>(Compiler.Token_ReturnType, value);
+            get => MGet<__MetaType>(Compiler.Token_ReturnType);
+            set => MSet<__MetaType>(Compiler.Token_ReturnType, value);
         }
     
         public TokenKind? TokenKind
@@ -9742,12 +9763,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model.__Impl
             get => MGetCollection<LAlternative>(Compiler.LexerRule_Alternatives);
         }
     
-        public global::System.String? FixedText
+        public string? FixedText
         {
             get => Compiler.__CustomImpl.LexerRule_FixedText(this);
         }
     
-        public global::System.Boolean IsFixed
+        public bool IsFixed
         {
             get => Compiler.__CustomImpl.LexerRule_IsFixed(this);
         }
@@ -9768,10 +9789,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model.__Impl
             get => MGetCollection<Annotation>(Compiler.CSharpElement_Annotations);
         }
     
-        public global::System.String AntlrName
+        public string AntlrName
         {
-            get => MGet<global::System.String>(Compiler.CSharpElement_AntlrName);
-            set => MSet<global::System.String>(Compiler.CSharpElement_AntlrName, value);
+            get => MGet<string>(Compiler.CSharpElement_AntlrName);
+            set => MSet<string>(Compiler.CSharpElement_AntlrName, value);
         }
     
         public global::MetaDslx.Modeling.ICollectionSlot<Binder> Binders
@@ -9779,16 +9800,16 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model.__Impl
             get => MGetCollection<Binder>(Compiler.CSharpElement_Binders);
         }
     
-        public global::System.Boolean ContainsBinders
+        public bool ContainsBinders
         {
-            get => MGet<global::System.Boolean>(Compiler.CSharpElement_ContainsBinders);
-            set => MSet<global::System.Boolean>(Compiler.CSharpElement_ContainsBinders, value);
+            get => MGet<bool>(Compiler.CSharpElement_ContainsBinders);
+            set => MSet<bool>(Compiler.CSharpElement_ContainsBinders, value);
         }
     
-        public global::System.String CSharpName
+        public string CSharpName
         {
-            get => MGet<global::System.String>(Compiler.CSharpElement_CSharpName);
-            set => MSet<global::System.String>(Compiler.CSharpElement_CSharpName, value);
+            get => MGet<string>(Compiler.CSharpElement_CSharpName);
+            set => MSet<string>(Compiler.CSharpElement_CSharpName, value);
         }
     
         public global::MetaDslx.Modeling.ICollectionSlot<Declaration> Declarations
@@ -9796,15 +9817,15 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model.__Impl
             get => MGetCollection<Declaration>(Compiler.Declaration_Declarations);
         }
     
-        public global::System.String? FullName
+        public string? FullName
         {
             get => Compiler.__CustomImpl.Declaration_FullName(this);
         }
     
-        public global::System.String? Name
+        public string? Name
         {
-            get => MGet<global::System.String?>(Compiler.Declaration_Name);
-            set => MSet<global::System.String?>(Compiler.Declaration_Name, value);
+            get => MGet<string?>(Compiler.Declaration_Name);
+            set => MSet<string?>(Compiler.Declaration_Name, value);
         }
     
         public Declaration? Parent
@@ -9929,17 +9950,17 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model.__Impl
     
         public override __ModelClassInfo MInfo => __Info.Instance;
     
-        public global::System.String? GreenSyntaxCondition
+        public string? GreenSyntaxCondition
         {
             get => Compiler.__CustomImpl.TokenAlts_GreenSyntaxCondition(this);
         }
     
-        public global::System.String GreenType
+        public string GreenType
         {
             get => Compiler.__CustomImpl.TokenAlts_GreenType(this);
         }
     
-        public global::System.String RedType
+        public string RedType
         {
             get => Compiler.__CustomImpl.TokenAlts_RedType(this);
         }
@@ -9950,13 +9971,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model.__Impl
         }
     
         [global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)]
-        global::System.String? ElementValue.GreenSyntaxCondition
+        string? ElementValue.GreenSyntaxCondition
         {
             get => Compiler.__CustomImpl.TokenAlts_GreenSyntaxCondition(this);
         }
     
         [global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)]
-        global::System.String ElementValue.GreenType
+        string ElementValue.GreenType
         {
             get => Compiler.__CustomImpl.TokenAlts_GreenType(this);
         }
@@ -9968,7 +9989,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model.__Impl
         }
     
         [global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)]
-        global::System.String ElementValue.RedType
+        string ElementValue.RedType
         {
             get => Compiler.__CustomImpl.TokenAlts_RedType(this);
         }
@@ -9978,10 +9999,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model.__Impl
             get => MGetCollection<Annotation>(Compiler.CSharpElement_Annotations);
         }
     
-        public global::System.String AntlrName
+        public string AntlrName
         {
-            get => MGet<global::System.String>(Compiler.CSharpElement_AntlrName);
-            set => MSet<global::System.String>(Compiler.CSharpElement_AntlrName, value);
+            get => MGet<string>(Compiler.CSharpElement_AntlrName);
+            set => MSet<string>(Compiler.CSharpElement_AntlrName, value);
         }
     
         public global::MetaDslx.Modeling.ICollectionSlot<Binder> Binders
@@ -9989,16 +10010,16 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model.__Impl
             get => MGetCollection<Binder>(Compiler.CSharpElement_Binders);
         }
     
-        public global::System.Boolean ContainsBinders
+        public bool ContainsBinders
         {
-            get => MGet<global::System.Boolean>(Compiler.CSharpElement_ContainsBinders);
-            set => MSet<global::System.Boolean>(Compiler.CSharpElement_ContainsBinders, value);
+            get => MGet<bool>(Compiler.CSharpElement_ContainsBinders);
+            set => MSet<bool>(Compiler.CSharpElement_ContainsBinders, value);
         }
     
-        public global::System.String CSharpName
+        public string CSharpName
         {
-            get => MGet<global::System.String>(Compiler.CSharpElement_CSharpName);
-            set => MSet<global::System.String>(Compiler.CSharpElement_CSharpName, value);
+            get => MGet<string>(Compiler.CSharpElement_CSharpName);
+            set => MSet<string>(Compiler.CSharpElement_CSharpName, value);
         }
     
     
@@ -10104,16 +10125,16 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Model.__Impl
     
         public override __ModelClassInfo MInfo => __Info.Instance;
     
-        public global::System.String Name
+        public string Name
         {
-            get => MGet<global::System.String>(Compiler.TokenKind_Name);
-            set => MSet<global::System.String>(Compiler.TokenKind_Name, value);
+            get => MGet<string>(Compiler.TokenKind_Name);
+            set => MSet<string>(Compiler.TokenKind_Name, value);
         }
     
-        public global::System.String TypeName
+        public string TypeName
         {
-            get => MGet<global::System.String>(Compiler.TokenKind_TypeName);
-            set => MSet<global::System.String>(Compiler.TokenKind_TypeName, value);
+            get => MGet<string>(Compiler.TokenKind_TypeName);
+            set => MSet<string>(Compiler.TokenKind_TypeName, value);
         }
     
     

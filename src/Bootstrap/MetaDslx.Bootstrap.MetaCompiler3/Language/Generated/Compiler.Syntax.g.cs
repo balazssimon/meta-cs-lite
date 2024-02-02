@@ -501,6 +501,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
     public sealed class LanguageDeclarationSyntax : CompilerSyntaxNode
     {
         private NameSyntax _name;
+        private LanguageDeclarationBlock1Syntax _block;
         private GrammarSyntax _grammar;
     
         public LanguageDeclarationSyntax(__InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
@@ -530,20 +531,28 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
             return red;
             } 
         }
+        public LanguageDeclarationBlock1Syntax Block 
+        { 
+            get
+            {
+            var red = this.GetRed(ref this._block, 2);
+            return red;
+            } 
+        }
         public __SyntaxToken TSemicolon 
         { 
             get
             {
             var green = (global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax.LanguageDeclarationGreen)this.Green;
             var greenToken = green.TSemicolon;
-            return new __SyntaxToken(this, greenToken, this.GetChildPosition(2), this.GetChildIndex(2));
+            return new __SyntaxToken(this, greenToken, this.GetChildPosition(3), this.GetChildIndex(3));
             } 
         }
         public GrammarSyntax Grammar 
         { 
             get
             {
-            var red = this.GetRed(ref this._grammar, 3);
+            var red = this.GetRed(ref this._grammar, 4);
             return red;
             } 
         }
@@ -553,7 +562,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
             switch (index)
             {
                 case 1: return this.GetRed(ref this._name, 1);
-                case 3: return this.GetRed(ref this._grammar, 3);
+                case 2: return this.GetRed(ref this._block, 2);
+                case 4: return this.GetRed(ref this._grammar, 4);
                 default: return null;
             }
         }
@@ -563,37 +573,43 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
             switch (index)
             {
                 case 1: return this._name;
-                case 3: return this._grammar;
+                case 2: return this._block;
+                case 4: return this._grammar;
                 default: return null;
             }
         }
     
         public LanguageDeclarationSyntax WithKLanguage(__SyntaxToken kLanguage)
         {
-            return this.Update(kLanguage, this.Name, this.TSemicolon, this.Grammar);
+            return this.Update(kLanguage, this.Name, this.Block, this.TSemicolon, this.Grammar);
         }
     
         public LanguageDeclarationSyntax WithName(NameSyntax name)
         {
-            return this.Update(this.KLanguage, name, this.TSemicolon, this.Grammar);
+            return this.Update(this.KLanguage, name, this.Block, this.TSemicolon, this.Grammar);
+        }
+    
+        public LanguageDeclarationSyntax WithBlock(LanguageDeclarationBlock1Syntax block)
+        {
+            return this.Update(this.KLanguage, this.Name, block, this.TSemicolon, this.Grammar);
         }
     
         public LanguageDeclarationSyntax WithTSemicolon(__SyntaxToken tSemicolon)
         {
-            return this.Update(this.KLanguage, this.Name, tSemicolon, this.Grammar);
+            return this.Update(this.KLanguage, this.Name, this.Block, tSemicolon, this.Grammar);
         }
     
         public LanguageDeclarationSyntax WithGrammar(GrammarSyntax grammar)
         {
-            return this.Update(this.KLanguage, this.Name, this.TSemicolon, grammar);
+            return this.Update(this.KLanguage, this.Name, this.Block, this.TSemicolon, grammar);
         }
     
     
-        public LanguageDeclarationSyntax Update(__SyntaxToken kLanguage, NameSyntax name, __SyntaxToken tSemicolon, GrammarSyntax grammar)
+        public LanguageDeclarationSyntax Update(__SyntaxToken kLanguage, NameSyntax name, LanguageDeclarationBlock1Syntax block, __SyntaxToken tSemicolon, GrammarSyntax grammar)
         {
-            if (this.KLanguage != kLanguage || this.Name != name || this.TSemicolon != tSemicolon || this.Grammar != grammar)
+            if (this.KLanguage != kLanguage || this.Name != name || this.Block != block || this.TSemicolon != tSemicolon || this.Grammar != grammar)
             {
-                var newNode = CompilerLanguage.Instance.SyntaxFactory.LanguageDeclaration(kLanguage, name, tSemicolon, grammar);
+                var newNode = CompilerLanguage.Instance.SyntaxFactory.LanguageDeclaration(kLanguage, name, block, tSemicolon, grammar);
                 var annotations = this.GetAnnotations();
                 if (annotations != null && annotations.Length > 0)
                    newNode = __SyntaxExtensions.WithAnnotations(newNode, annotations);
@@ -5590,6 +5606,193 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
         public override void Accept(ICompilerSyntaxVisitor visitor)
         {
             visitor.VisitMainBlock2(this);
+        }
+    
+    }
+    
+    public sealed class LanguageDeclarationBlock1Syntax : CompilerSyntaxNode
+    {
+        private __SyntaxNode _baseLanguages;
+    
+        public LanguageDeclarationBlock1Syntax(__InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
+            : base(green, syntaxTree, position)
+        {
+        }
+    
+        public LanguageDeclarationBlock1Syntax(__InternalSyntaxNode green, CompilerSyntaxNode parent, int position)
+            : base(green, parent, position)
+        {
+        }
+    
+        public __SyntaxToken TColon 
+        { 
+            get
+            {
+            var green = (global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax.LanguageDeclarationBlock1Green)this.Green;
+            var greenToken = green.TColon;
+            return new __SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
+            } 
+        }
+        public global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<QualifierSyntax> BaseLanguages 
+        { 
+            get
+            {
+            var red = this.GetRed(ref this._baseLanguages, 1);
+            return red == null ? default : new global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<QualifierSyntax>(red, this.GetChildIndex(1), reversed: false);
+            } 
+        }
+    
+        protected override __SyntaxNode GetNodeSlot(int index)
+        {
+            switch (index)
+            {
+                case 1: return this.GetRed(ref this._baseLanguages, 1);
+                default: return null;
+            }
+        }
+    
+        protected override __SyntaxNode GetCachedSlot(int index)
+        {
+            switch (index)
+            {
+                case 1: return this._baseLanguages;
+                default: return null;
+            }
+        }
+    
+        public LanguageDeclarationBlock1Syntax WithTColon(__SyntaxToken tColon)
+        {
+            return this.Update(tColon, this.BaseLanguages);
+        }
+    
+        public LanguageDeclarationBlock1Syntax WithBaseLanguages(global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<QualifierSyntax> baseLanguages)
+        {
+            return this.Update(this.TColon, baseLanguages);
+        }
+    
+        public LanguageDeclarationBlock1Syntax AddBaseLanguages(params QualifierSyntax[] baseLanguages)
+        {
+            return this.WithBaseLanguages(this.BaseLanguages.AddRange(baseLanguages));
+        }
+    
+    
+        public LanguageDeclarationBlock1Syntax Update(__SyntaxToken tColon, global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<QualifierSyntax> baseLanguages)
+        {
+            if (this.TColon != tColon || this.BaseLanguages != baseLanguages)
+            {
+                var newNode = CompilerLanguage.Instance.SyntaxFactory.LanguageDeclarationBlock1(tColon, baseLanguages);
+                var annotations = this.GetAnnotations();
+                if (annotations != null && annotations.Length > 0)
+                   newNode = __SyntaxExtensions.WithAnnotations(newNode, annotations);
+                return (LanguageDeclarationBlock1Syntax)newNode;
+            }
+            return this;
+        }
+    
+        public override TResult Accept<TArg, TResult>(ICompilerSyntaxVisitor<TArg, TResult> visitor, TArg argument)
+        {
+            return visitor.VisitLanguageDeclarationBlock1(this, argument);
+        }
+    
+        public override TResult Accept<TResult>(ICompilerSyntaxVisitor<TResult> visitor)
+        {
+            return visitor.VisitLanguageDeclarationBlock1(this);
+        }
+    
+        public override void Accept(ICompilerSyntaxVisitor visitor)
+        {
+            visitor.VisitLanguageDeclarationBlock1(this);
+        }
+    
+    }
+    
+    public sealed class LanguageDeclarationBlock1baseLanguagesBlockSyntax : CompilerSyntaxNode
+    {
+        private QualifierSyntax _baseLanguages;
+    
+        public LanguageDeclarationBlock1baseLanguagesBlockSyntax(__InternalSyntaxNode green, CompilerSyntaxTree syntaxTree, int position)
+            : base(green, syntaxTree, position)
+        {
+        }
+    
+        public LanguageDeclarationBlock1baseLanguagesBlockSyntax(__InternalSyntaxNode green, CompilerSyntaxNode parent, int position)
+            : base(green, parent, position)
+        {
+        }
+    
+        public __SyntaxToken TComma 
+        { 
+            get
+            {
+            var green = (global::MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax.LanguageDeclarationBlock1baseLanguagesBlockGreen)this.Green;
+            var greenToken = green.TComma;
+            return new __SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
+            } 
+        }
+        public QualifierSyntax BaseLanguages 
+        { 
+            get
+            {
+            var red = this.GetRed(ref this._baseLanguages, 1);
+            return red;
+            } 
+        }
+    
+        protected override __SyntaxNode GetNodeSlot(int index)
+        {
+            switch (index)
+            {
+                case 1: return this.GetRed(ref this._baseLanguages, 1);
+                default: return null;
+            }
+        }
+    
+        protected override __SyntaxNode GetCachedSlot(int index)
+        {
+            switch (index)
+            {
+                case 1: return this._baseLanguages;
+                default: return null;
+            }
+        }
+    
+        public LanguageDeclarationBlock1baseLanguagesBlockSyntax WithTComma(__SyntaxToken tComma)
+        {
+            return this.Update(tComma, this.BaseLanguages);
+        }
+    
+        public LanguageDeclarationBlock1baseLanguagesBlockSyntax WithBaseLanguages(QualifierSyntax baseLanguages)
+        {
+            return this.Update(this.TComma, baseLanguages);
+        }
+    
+    
+        public LanguageDeclarationBlock1baseLanguagesBlockSyntax Update(__SyntaxToken tComma, QualifierSyntax baseLanguages)
+        {
+            if (this.TComma != tComma || this.BaseLanguages != baseLanguages)
+            {
+                var newNode = CompilerLanguage.Instance.SyntaxFactory.LanguageDeclarationBlock1baseLanguagesBlock(tComma, baseLanguages);
+                var annotations = this.GetAnnotations();
+                if (annotations != null && annotations.Length > 0)
+                   newNode = __SyntaxExtensions.WithAnnotations(newNode, annotations);
+                return (LanguageDeclarationBlock1baseLanguagesBlockSyntax)newNode;
+            }
+            return this;
+        }
+    
+        public override TResult Accept<TArg, TResult>(ICompilerSyntaxVisitor<TArg, TResult> visitor, TArg argument)
+        {
+            return visitor.VisitLanguageDeclarationBlock1baseLanguagesBlock(this, argument);
+        }
+    
+        public override TResult Accept<TResult>(ICompilerSyntaxVisitor<TResult> visitor)
+        {
+            return visitor.VisitLanguageDeclarationBlock1baseLanguagesBlock(this);
+        }
+    
+        public override void Accept(ICompilerSyntaxVisitor visitor)
+        {
+            visitor.VisitLanguageDeclarationBlock1baseLanguagesBlock(this);
         }
     
     }

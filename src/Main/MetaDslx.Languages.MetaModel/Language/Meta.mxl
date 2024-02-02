@@ -23,7 +23,7 @@ MetaDeclaration: MetaConstant | MetaEnum | MetaClass;
 
 MetaConstant: 'const' @type=MetaTypeReference Name ';';
 
-MetaEnum: 'enum' Name '{' literals+=MetaEnumLiteral (',' literals+=MetaEnumLiteral)* '}';
+MetaEnum: 'enum' Name [Scope]('{' literals+=MetaEnumLiteral (',' literals+=MetaEnumLiteral)* '}');
 MetaEnumLiteral: Name;
 
 MetaClass: 

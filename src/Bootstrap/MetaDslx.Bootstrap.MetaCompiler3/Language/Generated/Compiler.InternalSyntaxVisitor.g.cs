@@ -62,6 +62,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
         public virtual void VisitIdentifierGreen(IdentifierGreen node) => this.DefaultVisit(node);
         public virtual void VisitMainBlock1Green(MainBlock1Green node) => this.DefaultVisit(node);
         public virtual void VisitMainBlock2Green(MainBlock2Green node) => this.DefaultVisit(node);
+        public virtual void VisitLanguageDeclarationBlock1Green(LanguageDeclarationBlock1Green node) => this.DefaultVisit(node);
+        public virtual void VisitLanguageDeclarationBlock1baseLanguagesBlockGreen(LanguageDeclarationBlock1baseLanguagesBlockGreen node) => this.DefaultVisit(node);
         public virtual void VisitGrammarBlock1Green(GrammarBlock1Green node) => this.DefaultVisit(node);
         public virtual void VisitRuleBlock1Alt1Green(RuleBlock1Alt1Green node) => this.DefaultVisit(node);
         public virtual void VisitRuleBlock1Alt2Green(RuleBlock1Alt2Green node) => this.DefaultVisit(node);
@@ -158,6 +160,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
         public virtual TResult VisitIdentifierGreen(IdentifierGreen node) => this.DefaultVisit(node);
         public virtual TResult VisitMainBlock1Green(MainBlock1Green node) => this.DefaultVisit(node);
         public virtual TResult VisitMainBlock2Green(MainBlock2Green node) => this.DefaultVisit(node);
+        public virtual TResult VisitLanguageDeclarationBlock1Green(LanguageDeclarationBlock1Green node) => this.DefaultVisit(node);
+        public virtual TResult VisitLanguageDeclarationBlock1baseLanguagesBlockGreen(LanguageDeclarationBlock1baseLanguagesBlockGreen node) => this.DefaultVisit(node);
         public virtual TResult VisitGrammarBlock1Green(GrammarBlock1Green node) => this.DefaultVisit(node);
         public virtual TResult VisitRuleBlock1Alt1Green(RuleBlock1Alt1Green node) => this.DefaultVisit(node);
         public virtual TResult VisitRuleBlock1Alt2Green(RuleBlock1Alt2Green node) => this.DefaultVisit(node);

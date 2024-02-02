@@ -125,6 +125,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Binding
             try
             {
                 this.Visit(node.Name);
+                if (node.Block != null)
+                {
+                    this.Visit(node.Block);
+                }
                 var __annot0 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Grammar");
                 this.Begin(__annot0, node.Grammar);
                 try
@@ -1796,6 +1800,88 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Binding
                 try
                 {
                     this.Visit(node.Declarations);
+                }
+                finally
+                {
+                    this.End(__annot0);
+                }
+            }
+            finally
+            {
+                this.End(__annot1);
+            }
+        }
+
+        public virtual void VisitLanguageDeclarationBlock1(LanguageDeclarationBlock1Syntax node)
+        {
+            var baseLanguagesList = node.BaseLanguages;
+            for (var baseLanguagesIndex = 0; baseLanguagesIndex < baseLanguagesList.Count; ++baseLanguagesIndex)
+            {
+                bool __itemHandled = false;
+                bool __sepHandled = false;
+                if (baseLanguagesIndex == 0)
+                {
+                    var __annot1 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "BaseLanguages");
+                    this.Begin(__annot1, node.BaseLanguages[baseLanguagesIndex]);
+                    try
+                    {
+                        var __annot0 = new MetaDslx.CodeAnalysis.Binding.UseBinder(types: ImmutableArray.Create<System.Type>(typeof(MetaDslx.CodeAnalysis.Language)));
+                        this.Begin(__annot0, node.BaseLanguages[baseLanguagesIndex]);
+                        try
+                        {
+                            this.Visit(node.BaseLanguages[baseLanguagesIndex]);
+                        }
+                        finally
+                        {
+                            this.End(__annot0);
+                        }
+                    }
+                    finally
+                    {
+                        this.End(__annot1);
+                    }
+                    __itemHandled = true;
+                }
+                if (!__itemHandled && baseLanguagesIndex < node.BaseLanguages.Count)
+                {
+                    var __annot3 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "BaseLanguages");
+                    this.Begin(__annot3, node.BaseLanguages[baseLanguagesIndex]);
+                    try
+                    {
+                        var __annot2 = new MetaDslx.CodeAnalysis.Binding.UseBinder(types: ImmutableArray.Create<System.Type>(typeof(MetaDslx.CodeAnalysis.Language)));
+                        this.Begin(__annot2, node.BaseLanguages[baseLanguagesIndex]);
+                        try
+                        {
+                            this.Visit(node.BaseLanguages[baseLanguagesIndex]);
+                        }
+                        finally
+                        {
+                            this.End(__annot2);
+                        }
+                    }
+                    finally
+                    {
+                        this.End(__annot3);
+                    }
+                }
+                if (!__sepHandled && baseLanguagesIndex < node.BaseLanguages.SeparatorCount)
+                {
+                    //this.VisitToken(node.BaseLanguages.GetSeparator(baseLanguagesIndex));
+                }
+            }
+        }
+
+        public virtual void VisitLanguageDeclarationBlock1baseLanguagesBlock(LanguageDeclarationBlock1baseLanguagesBlockSyntax node)
+        {
+            var __annot1 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "BaseLanguages");
+            this.Begin(__annot1, node.BaseLanguages);
+            try
+            {
+                var __annot0 = new MetaDslx.CodeAnalysis.Binding.UseBinder(types: ImmutableArray.Create<System.Type>(typeof(MetaDslx.CodeAnalysis.Language)));
+                this.Begin(__annot0, node.BaseLanguages);
+                try
+                {
+                    this.Visit(node.BaseLanguages);
                 }
                 finally
                 {

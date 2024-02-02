@@ -141,58 +141,40 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Binding
 
         public virtual void VisitMetaEnum(MetaEnumSyntax node)
         {
-            var __annot2 = new MetaDslx.CodeAnalysis.Binding.DefineBinder(type: typeof(MetaDslx.Languages.MetaModel.Model.MetaEnum));
-            this.Begin(__annot2, node);
+            var __annot1 = new MetaDslx.CodeAnalysis.Binding.DefineBinder(type: typeof(MetaDslx.Languages.MetaModel.Model.MetaEnum));
+            this.Begin(__annot1, node);
             try
             {
                 this.Visit(node.Name);
-                var literalsList = node.Literals;
-                for (var literalsIndex = 0; literalsIndex < literalsList.Count; ++literalsIndex)
+                var __annot0 = new MetaDslx.CodeAnalysis.Binding.ScopeBinder();
+                this.Begin(__annot0, node.Block);
+                try
                 {
-                    bool __itemHandled = false;
-                    bool __sepHandled = false;
-                    if (literalsIndex == 0)
-                    {
-                        var __annot0 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Literals");
-                        this.Begin(__annot0, node.Literals[literalsIndex]);
-                        try
-                        {
-                            this.Visit(node.Literals[literalsIndex]);
-                        }
-                        finally
-                        {
-                            this.End(__annot0);
-                        }
-                        __itemHandled = true;
-                    }
-                    if (!__itemHandled && literalsIndex < node.Literals.Count)
-                    {
-                        var __annot1 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Literals");
-                        this.Begin(__annot1, node.Literals[literalsIndex]);
-                        try
-                        {
-                            this.Visit(node.Literals[literalsIndex]);
-                        }
-                        finally
-                        {
-                            this.End(__annot1);
-                        }
-                    }
-                    if (!__sepHandled && literalsIndex < node.Literals.SeparatorCount)
-                    {
-                        //this.VisitToken(node.Literals.GetSeparator(literalsIndex));
-                    }
+                    this.Visit(node.Block);
+                }
+                finally
+                {
+                    this.End(__annot0);
                 }
             }
             finally
             {
-                this.End(__annot2);
+                this.End(__annot1);
             }
         }
 
         public virtual void VisitMetaEnumLiteral(MetaEnumLiteralSyntax node)
         {
-            this.Visit(node.Name);
+            var __annot0 = new MetaDslx.CodeAnalysis.Binding.DefineBinder(type: typeof(MetaDslx.Languages.MetaModel.Model.MetaEnumLiteral));
+            this.Begin(__annot0, node);
+            try
+            {
+                this.Visit(node.Name);
+            }
+            finally
+            {
+                this.End(__annot0);
+            }
         }
 
         public virtual void VisitMetaClass(MetaClassSyntax node)
@@ -738,7 +720,57 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Binding
             }
         }
 
-        public virtual void VisitMetaEnumliteralsBlock(MetaEnumliteralsBlockSyntax node)
+        public virtual void VisitMetaEnumBlock1(MetaEnumBlock1Syntax node)
+        {
+            var __annot2 = new MetaDslx.CodeAnalysis.Binding.ScopeBinder();
+            this.Begin(__annot2, node);
+            try
+            {
+                var literalsList = node.Literals;
+                for (var literalsIndex = 0; literalsIndex < literalsList.Count; ++literalsIndex)
+                {
+                    bool __itemHandled = false;
+                    bool __sepHandled = false;
+                    if (literalsIndex == 0)
+                    {
+                        var __annot0 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Literals");
+                        this.Begin(__annot0, node.Literals[literalsIndex]);
+                        try
+                        {
+                            this.Visit(node.Literals[literalsIndex]);
+                        }
+                        finally
+                        {
+                            this.End(__annot0);
+                        }
+                        __itemHandled = true;
+                    }
+                    if (!__itemHandled && literalsIndex < node.Literals.Count)
+                    {
+                        var __annot1 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Literals");
+                        this.Begin(__annot1, node.Literals[literalsIndex]);
+                        try
+                        {
+                            this.Visit(node.Literals[literalsIndex]);
+                        }
+                        finally
+                        {
+                            this.End(__annot1);
+                        }
+                    }
+                    if (!__sepHandled && literalsIndex < node.Literals.SeparatorCount)
+                    {
+                        //this.VisitToken(node.Literals.GetSeparator(literalsIndex));
+                    }
+                }
+            }
+            finally
+            {
+                this.End(__annot2);
+            }
+        }
+
+        public virtual void VisitMetaEnumBlock1literalsBlock(MetaEnumBlock1literalsBlockSyntax node)
         {
             var __annot0 = new MetaDslx.CodeAnalysis.Binding.PropertyBinder(name: "Literals");
             this.Begin(__annot0, node.Literals);

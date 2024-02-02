@@ -179,11 +179,17 @@ public interface IMetaParserVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitPr_MainBlock1([NotNull] MetaParser.Pr_MainBlock1Context context);
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="MetaParser.pr_MetaEnumliteralsBlock"/>.
+	/// Visit a parse tree produced by <see cref="MetaParser.pr_MetaEnumBlock1"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	Result VisitPr_MetaEnumliteralsBlock([NotNull] MetaParser.Pr_MetaEnumliteralsBlockContext context);
+	Result VisitPr_MetaEnumBlock1([NotNull] MetaParser.Pr_MetaEnumBlock1Context context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="MetaParser.pr_MetaEnumBlock1literalsBlock"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitPr_MetaEnumBlock1literalsBlock([NotNull] MetaParser.Pr_MetaEnumBlock1literalsBlockContext context);
 	/// <summary>
 	/// Visit a parse tree produced by the <c>pr_MetaClassBlock1Alt1</c>
 	/// labeled alternative in <see cref="MetaParser.pr_MetaClassBlock1"/>.

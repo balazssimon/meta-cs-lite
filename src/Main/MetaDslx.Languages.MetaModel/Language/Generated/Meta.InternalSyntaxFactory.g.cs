@@ -378,18 +378,25 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
             return new MetaConstantGreen(MetaSyntaxKind.MetaConstant, kConst, type, name, tSemicolon);
         }
         
-        internal MetaEnumGreen MetaEnum(__InternalSyntaxToken kEnum, NameGreen name, __InternalSyntaxToken tLBrace, global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<MetaEnumLiteralGreen> literals, __InternalSyntaxToken tRBrace)
+        internal MetaEnumGreen MetaEnum(__InternalSyntaxToken kEnum, NameGreen name, MetaEnumBlock1Green block)
         {
             #if DEBUG
                 if (kEnum is null) throw new __ArgumentNullException(nameof(kEnum));
                 if (kEnum.RawKind != (int)MetaSyntaxKind.KEnum) throw new __ArgumentException(nameof(kEnum));
                 if (name is null) throw new __ArgumentNullException(nameof(name));
-                if (tLBrace is null) throw new __ArgumentNullException(nameof(tLBrace));
-                if (tLBrace.RawKind != (int)MetaSyntaxKind.TLBrace) throw new __ArgumentException(nameof(tLBrace));
-                if (tRBrace is null) throw new __ArgumentNullException(nameof(tRBrace));
-                if (tRBrace.RawKind != (int)MetaSyntaxKind.TRBrace) throw new __ArgumentException(nameof(tRBrace));
+                if (block is null) throw new __ArgumentNullException(nameof(block));
             #endif
-            return new MetaEnumGreen(MetaSyntaxKind.MetaEnum, kEnum, name, tLBrace, literals.Node, tRBrace);
+            int hash;
+            var cached = __SyntaxNodeCache.TryGetNode((int)(MetaSyntaxKind)MetaSyntaxKind.MetaEnum, kEnum, name, block, out hash);
+            if (cached != null) return (MetaEnumGreen)cached;
+        
+            var result = new MetaEnumGreen(MetaSyntaxKind.MetaEnum, kEnum, name, block);
+            if (hash >= 0)
+            {
+                __SyntaxNodeCache.AddNode(result, hash);
+            }
+        
+            return result;
         }
         
         internal MetaEnumLiteralGreen MetaEnumLiteral(NameGreen name)
@@ -654,7 +661,28 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
             return result;
         }
         
-        internal MetaEnumliteralsBlockGreen MetaEnumliteralsBlock(__InternalSyntaxToken tComma, MetaEnumLiteralGreen literals)
+        internal MetaEnumBlock1Green MetaEnumBlock1(__InternalSyntaxToken tLBrace, global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<MetaEnumLiteralGreen> literals, __InternalSyntaxToken tRBrace)
+        {
+            #if DEBUG
+                if (tLBrace is null) throw new __ArgumentNullException(nameof(tLBrace));
+                if (tLBrace.RawKind != (int)MetaSyntaxKind.TLBrace) throw new __ArgumentException(nameof(tLBrace));
+                if (tRBrace is null) throw new __ArgumentNullException(nameof(tRBrace));
+                if (tRBrace.RawKind != (int)MetaSyntaxKind.TRBrace) throw new __ArgumentException(nameof(tRBrace));
+            #endif
+            int hash;
+            var cached = __SyntaxNodeCache.TryGetNode((int)(MetaSyntaxKind)MetaSyntaxKind.MetaEnumBlock1, tLBrace, literals.Node, tRBrace, out hash);
+            if (cached != null) return (MetaEnumBlock1Green)cached;
+        
+            var result = new MetaEnumBlock1Green(MetaSyntaxKind.MetaEnumBlock1, tLBrace, literals.Node, tRBrace);
+            if (hash >= 0)
+            {
+                __SyntaxNodeCache.AddNode(result, hash);
+            }
+        
+            return result;
+        }
+        
+        internal MetaEnumBlock1literalsBlockGreen MetaEnumBlock1literalsBlock(__InternalSyntaxToken tComma, MetaEnumLiteralGreen literals)
         {
             #if DEBUG
                 if (tComma is null) throw new __ArgumentNullException(nameof(tComma));
@@ -662,10 +690,10 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
                 if (literals is null) throw new __ArgumentNullException(nameof(literals));
             #endif
             int hash;
-            var cached = __SyntaxNodeCache.TryGetNode((int)(MetaSyntaxKind)MetaSyntaxKind.MetaEnumliteralsBlock, tComma, literals, out hash);
-            if (cached != null) return (MetaEnumliteralsBlockGreen)cached;
+            var cached = __SyntaxNodeCache.TryGetNode((int)(MetaSyntaxKind)MetaSyntaxKind.MetaEnumBlock1literalsBlock, tComma, literals, out hash);
+            if (cached != null) return (MetaEnumBlock1literalsBlockGreen)cached;
         
-            var result = new MetaEnumliteralsBlockGreen(MetaSyntaxKind.MetaEnumliteralsBlock, tComma, literals);
+            var result = new MetaEnumBlock1literalsBlockGreen(MetaSyntaxKind.MetaEnumBlock1literalsBlock, tComma, literals);
             if (hash >= 0)
             {
                 __SyntaxNodeCache.AddNode(result, hash);

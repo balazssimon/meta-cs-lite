@@ -192,32 +192,10 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                 NameGreen? name = null;
                 if (context.E_Name is not null) name = (NameGreen?)this.Visit(context.E_Name) ?? NameGreen.__Missing;
                 else name = NameGreen.__Missing;
-                var tLBrace = (InternalSyntaxToken?)this.VisitTerminal(context.E_TLBrace, MetaSyntaxKind.TLBrace);
-                var literalsBuilder = _pool.AllocateSeparated<MetaEnumLiteralGreen>(reversed: false);
-                var E_literals1Context = context.E_literals1;
-                if (E_literals1Context is not null) literalsBuilder.Add((MetaEnumLiteralGreen?)this.Visit(E_literals1Context) ?? MetaEnumLiteralGreen.__Missing);
-                else literalsBuilder.Add(MetaEnumLiteralGreen.__Missing);
-                var E_literals2Context = context._E_literals2;
-                var E_TComma1Context = context._E_TComma1;
-                for (int i = 0; i < E_literals2Context.Count; ++i)
-                {
-                    if (i < E_TComma1Context.Count)
-                    {
-                        var _separator = E_TComma1Context[i];
-                        literalsBuilder.AddSeparator((InternalSyntaxToken?)this.VisitTerminal(_separator, MetaSyntaxKind.TComma));
-                    }
-                    else
-                    {
-                        literalsBuilder.AddSeparator((InternalSyntaxToken?)this.VisitTerminal((IToken?)null, MetaSyntaxKind.TComma));
-                    }
-                    var _item = E_literals2Context[i];
-                    if (_item is not null) literalsBuilder.Add((MetaEnumLiteralGreen?)this.Visit(_item) ?? MetaEnumLiteralGreen.__Missing);
-                    else literalsBuilder.Add(MetaEnumLiteralGreen.__Missing);
-                }
-                var literals = literalsBuilder.ToList();
-                _pool.Free(literalsBuilder);
-                var tRBrace = (InternalSyntaxToken?)this.VisitTerminal(context.E_TRBrace, MetaSyntaxKind.TRBrace);
-                return _factory.MetaEnum(kEnum, name, tLBrace, literals, tRBrace);
+                MetaEnumBlock1Green? block = null;
+                if (context.E_Block is not null) block = (MetaEnumBlock1Green?)this.Visit(context.E_Block) ?? MetaEnumBlock1Green.__Missing;
+                else block = MetaEnumBlock1Green.__Missing;
+                return _factory.MetaEnum(kEnum, name, block);
             }
             
             public override GreenNode? VisitPr_MetaEnumLiteral(MetaParser.Pr_MetaEnumLiteralContext? context)
@@ -438,14 +416,45 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                 return _factory.MainBlock1(declarations1, declarations2);
             }
             
-            public override GreenNode? VisitPr_MetaEnumliteralsBlock(MetaParser.Pr_MetaEnumliteralsBlockContext? context)
+            public override GreenNode? VisitPr_MetaEnumBlock1(MetaParser.Pr_MetaEnumBlock1Context? context)
             {
-                if (context == null) return MetaEnumliteralsBlockGreen.__Missing;
+                if (context == null) return MetaEnumBlock1Green.__Missing;
+                var tLBrace = (InternalSyntaxToken?)this.VisitTerminal(context.E_TLBrace, MetaSyntaxKind.TLBrace);
+                var literalsBuilder = _pool.AllocateSeparated<MetaEnumLiteralGreen>(reversed: false);
+                var E_literals1Context = context.E_literals1;
+                if (E_literals1Context is not null) literalsBuilder.Add((MetaEnumLiteralGreen?)this.Visit(E_literals1Context) ?? MetaEnumLiteralGreen.__Missing);
+                else literalsBuilder.Add(MetaEnumLiteralGreen.__Missing);
+                var E_literals2Context = context._E_literals2;
+                var E_TComma1Context = context._E_TComma1;
+                for (int i = 0; i < E_literals2Context.Count; ++i)
+                {
+                    if (i < E_TComma1Context.Count)
+                    {
+                        var _separator = E_TComma1Context[i];
+                        literalsBuilder.AddSeparator((InternalSyntaxToken?)this.VisitTerminal(_separator, MetaSyntaxKind.TComma));
+                    }
+                    else
+                    {
+                        literalsBuilder.AddSeparator((InternalSyntaxToken?)this.VisitTerminal((IToken?)null, MetaSyntaxKind.TComma));
+                    }
+                    var _item = E_literals2Context[i];
+                    if (_item is not null) literalsBuilder.Add((MetaEnumLiteralGreen?)this.Visit(_item) ?? MetaEnumLiteralGreen.__Missing);
+                    else literalsBuilder.Add(MetaEnumLiteralGreen.__Missing);
+                }
+                var literals = literalsBuilder.ToList();
+                _pool.Free(literalsBuilder);
+                var tRBrace = (InternalSyntaxToken?)this.VisitTerminal(context.E_TRBrace, MetaSyntaxKind.TRBrace);
+                return _factory.MetaEnumBlock1(tLBrace, literals, tRBrace);
+            }
+            
+            public override GreenNode? VisitPr_MetaEnumBlock1literalsBlock(MetaParser.Pr_MetaEnumBlock1literalsBlockContext? context)
+            {
+                if (context == null) return MetaEnumBlock1literalsBlockGreen.__Missing;
                 var tComma = (InternalSyntaxToken?)this.VisitTerminal(context.E_TComma1, MetaSyntaxKind.TComma);
                 MetaEnumLiteralGreen? literals = null;
                 if (context.E_literals2 is not null) literals = (MetaEnumLiteralGreen?)this.Visit(context.E_literals2) ?? MetaEnumLiteralGreen.__Missing;
                 else literals = MetaEnumLiteralGreen.__Missing;
-                return _factory.MetaEnumliteralsBlock(tComma, literals);
+                return _factory.MetaEnumBlock1literalsBlock(tComma, literals);
             }
             
             public override GreenNode? VisitPr_MetaClassBlock1Alt1(MetaParser.Pr_MetaClassBlock1Alt1Context? context)

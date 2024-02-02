@@ -21,6 +21,7 @@ class Language : Declaration
 {
 	derived string Namespace;
 
+	type[] BaseLanguages;
 	contains Grammar Grammar subsets Declaration.Declarations;
 }
 

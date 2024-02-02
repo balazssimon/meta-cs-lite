@@ -331,21 +331,18 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
             return this.MetaConstant(this.Token(MetaSyntaxKind.KConst), type, name, this.Token(MetaSyntaxKind.TSemicolon));
         }
 
-        public MetaEnumSyntax MetaEnum(__SyntaxToken kEnum, NameSyntax name, __SyntaxToken tLBrace, global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<MetaEnumLiteralSyntax> literals, __SyntaxToken tRBrace)
+        public MetaEnumSyntax MetaEnum(__SyntaxToken kEnum, NameSyntax name, MetaEnumBlock1Syntax block)
         {
             if (kEnum.RawKind != (int)__InternalSyntaxKind.None) throw new __ArgumentNullException(nameof(kEnum));
             if (kEnum.RawKind != (int)MetaSyntaxKind.KEnum) throw new __ArgumentException(nameof(kEnum));
             if (name is null) throw new __ArgumentNullException(nameof(name));
-            if (tLBrace.RawKind != (int)__InternalSyntaxKind.None) throw new __ArgumentNullException(nameof(tLBrace));
-            if (tLBrace.RawKind != (int)MetaSyntaxKind.TLBrace) throw new __ArgumentException(nameof(tLBrace));
-            if (tRBrace.RawKind != (int)__InternalSyntaxKind.None) throw new __ArgumentNullException(nameof(tRBrace));
-            if (tRBrace.RawKind != (int)MetaSyntaxKind.TRBrace) throw new __ArgumentException(nameof(tRBrace));
-            return (MetaEnumSyntax)MetaLanguage.Instance.InternalSyntaxFactory.MetaEnum((__InternalSyntaxToken)kEnum.Node, (InternalSyntax.NameGreen)name.Green, (__InternalSyntaxToken)tLBrace.Node, __GreenNodeExtensions.ToGreenSeparatedList<InternalSyntax.MetaEnumLiteralGreen>(literals.Node, reversed: false), (__InternalSyntaxToken)tRBrace.Node).CreateRed();
+            if (block is null) throw new __ArgumentNullException(nameof(block));
+            return (MetaEnumSyntax)MetaLanguage.Instance.InternalSyntaxFactory.MetaEnum((__InternalSyntaxToken)kEnum.Node, (InternalSyntax.NameGreen)name.Green, (InternalSyntax.MetaEnumBlock1Green)block.Green).CreateRed();
         }
         
-        public MetaEnumSyntax MetaEnum(NameSyntax name, global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<MetaEnumLiteralSyntax> literals)
+        public MetaEnumSyntax MetaEnum(NameSyntax name, MetaEnumBlock1Syntax block)
         {
-            return this.MetaEnum(this.Token(MetaSyntaxKind.KEnum), name, this.Token(MetaSyntaxKind.TLBrace), literals, this.Token(MetaSyntaxKind.TRBrace));
+            return this.MetaEnum(this.Token(MetaSyntaxKind.KEnum), name, block);
         }
 
         public MetaEnumLiteralSyntax MetaEnumLiteral(NameSyntax name)
@@ -485,17 +482,31 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
             return (MainBlock1Syntax)MetaLanguage.Instance.InternalSyntaxFactory.MainBlock1((InternalSyntax.MetaModelGreen)declarations1.Green, __GreenNodeExtensions.ToGreenList<InternalSyntax.MetaDeclarationGreen>(declarations2.Node)).CreateRed();
         }
 
-        public MetaEnumliteralsBlockSyntax MetaEnumliteralsBlock(__SyntaxToken tComma, MetaEnumLiteralSyntax literals)
+        public MetaEnumBlock1Syntax MetaEnumBlock1(__SyntaxToken tLBrace, global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<MetaEnumLiteralSyntax> literals, __SyntaxToken tRBrace)
+        {
+            if (tLBrace.RawKind != (int)__InternalSyntaxKind.None) throw new __ArgumentNullException(nameof(tLBrace));
+            if (tLBrace.RawKind != (int)MetaSyntaxKind.TLBrace) throw new __ArgumentException(nameof(tLBrace));
+            if (tRBrace.RawKind != (int)__InternalSyntaxKind.None) throw new __ArgumentNullException(nameof(tRBrace));
+            if (tRBrace.RawKind != (int)MetaSyntaxKind.TRBrace) throw new __ArgumentException(nameof(tRBrace));
+            return (MetaEnumBlock1Syntax)MetaLanguage.Instance.InternalSyntaxFactory.MetaEnumBlock1((__InternalSyntaxToken)tLBrace.Node, __GreenNodeExtensions.ToGreenSeparatedList<InternalSyntax.MetaEnumLiteralGreen>(literals.Node, reversed: false), (__InternalSyntaxToken)tRBrace.Node).CreateRed();
+        }
+        
+        public MetaEnumBlock1Syntax MetaEnumBlock1(global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<MetaEnumLiteralSyntax> literals)
+        {
+            return this.MetaEnumBlock1(this.Token(MetaSyntaxKind.TLBrace), literals, this.Token(MetaSyntaxKind.TRBrace));
+        }
+
+        public MetaEnumBlock1literalsBlockSyntax MetaEnumBlock1literalsBlock(__SyntaxToken tComma, MetaEnumLiteralSyntax literals)
         {
             if (tComma.RawKind != (int)__InternalSyntaxKind.None) throw new __ArgumentNullException(nameof(tComma));
             if (tComma.RawKind != (int)MetaSyntaxKind.TComma) throw new __ArgumentException(nameof(tComma));
             if (literals is null) throw new __ArgumentNullException(nameof(literals));
-            return (MetaEnumliteralsBlockSyntax)MetaLanguage.Instance.InternalSyntaxFactory.MetaEnumliteralsBlock((__InternalSyntaxToken)tComma.Node, (InternalSyntax.MetaEnumLiteralGreen)literals.Green).CreateRed();
+            return (MetaEnumBlock1literalsBlockSyntax)MetaLanguage.Instance.InternalSyntaxFactory.MetaEnumBlock1literalsBlock((__InternalSyntaxToken)tComma.Node, (InternalSyntax.MetaEnumLiteralGreen)literals.Green).CreateRed();
         }
         
-        public MetaEnumliteralsBlockSyntax MetaEnumliteralsBlock(MetaEnumLiteralSyntax literals)
+        public MetaEnumBlock1literalsBlockSyntax MetaEnumBlock1literalsBlock(MetaEnumLiteralSyntax literals)
         {
-            return this.MetaEnumliteralsBlock(this.Token(MetaSyntaxKind.TComma), literals);
+            return this.MetaEnumBlock1literalsBlock(this.Token(MetaSyntaxKind.TComma), literals);
         }
 
         public MetaClassBlock1Alt1Syntax MetaClassBlock1Alt1(IdentifierSyntax identifier, __SyntaxToken tDollar, IdentifierSyntax symbolType)
@@ -743,7 +754,8 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                 typeof(QualifierSyntax),
                 typeof(IdentifierSyntax),
                 typeof(MainBlock1Syntax),
-                typeof(MetaEnumliteralsBlockSyntax),
+                typeof(MetaEnumBlock1Syntax),
+                typeof(MetaEnumBlock1literalsBlockSyntax),
                 typeof(MetaClassBlock1Alt1Syntax),
                 typeof(MetaClassBlock1Alt2Syntax),
                 typeof(MetaClassBlock2Syntax),

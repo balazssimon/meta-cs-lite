@@ -216,10 +216,16 @@ namespace MetaDslx.CodeAnalysis.Symbols
                     diagnostics.Add(Diagnostic.Create(CommonErrorCode.ERR_BindingError, valueBinder.Location, $"Could not resolve ModelObject for '{value}'."));
                     return false;
                 }
-                else
+                else if (expectedType.IsAssignableFrom(valueMObj.GetType()))
                 {
                     convertedValue = valueMObj;
                     return true;
+                }
+                else
+                {
+                    convertedValue = null;
+                    diagnostics.Add(Diagnostic.Create(CommonErrorCode.ERR_BindingError, valueBinder.Location, $"Could not convert '{value}' to {expectedType}."));
+                    return false;
                 }
             }
             if (value is not null && expectedType.IsAssignableFrom(value.GetType()))

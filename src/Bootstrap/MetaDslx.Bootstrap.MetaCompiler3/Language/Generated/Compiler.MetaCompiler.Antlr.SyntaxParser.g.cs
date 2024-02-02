@@ -148,11 +148,13 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
                 NameGreen? name = null;
                 if (context.E_Name is not null) name = (NameGreen?)this.Visit(context.E_Name) ?? NameGreen.__Missing;
                 else name = NameGreen.__Missing;
+                LanguageDeclarationBlock1Green? block = null;
+                if (context.E_Block is not null) block = (LanguageDeclarationBlock1Green?)this.Visit(context.E_Block);
                 var tSemicolon = (InternalSyntaxToken?)this.VisitTerminal(context.E_TSemicolon, CompilerSyntaxKind.TSemicolon);
                 GrammarGreen? grammar = null;
                 if (context.E_grammar is not null) grammar = (GrammarGreen?)this.Visit(context.E_grammar) ?? GrammarGreen.__Missing;
                 else grammar = GrammarGreen.__Missing;
-                return _factory.LanguageDeclaration(kLanguage, name, tSemicolon, grammar);
+                return _factory.LanguageDeclaration(kLanguage, name, block, tSemicolon, grammar);
             }
             
             public override GreenNode? VisitPr_Grammar(CompilerParser.Pr_GrammarContext? context)
@@ -928,6 +930,46 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
                 if (context.E_declarations is not null) declarations = (LanguageDeclarationGreen?)this.Visit(context.E_declarations) ?? LanguageDeclarationGreen.__Missing;
                 else declarations = LanguageDeclarationGreen.__Missing;
                 return _factory.MainBlock2(declarations);
+            }
+            
+            public override GreenNode? VisitPr_LanguageDeclarationBlock1(CompilerParser.Pr_LanguageDeclarationBlock1Context? context)
+            {
+                if (context == null) return LanguageDeclarationBlock1Green.__Missing;
+                var tColon = (InternalSyntaxToken?)this.VisitTerminal(context.E_TColon, CompilerSyntaxKind.TColon);
+                var baseLanguagesBuilder = _pool.AllocateSeparated<QualifierGreen>(reversed: false);
+                var E_baseLanguages1Context = context.E_baseLanguages1;
+                if (E_baseLanguages1Context is not null) baseLanguagesBuilder.Add((QualifierGreen?)this.Visit(E_baseLanguages1Context) ?? QualifierGreen.__Missing);
+                else baseLanguagesBuilder.Add(QualifierGreen.__Missing);
+                var E_baseLanguages2Context = context._E_baseLanguages2;
+                var E_TComma1Context = context._E_TComma1;
+                for (int i = 0; i < E_baseLanguages2Context.Count; ++i)
+                {
+                    if (i < E_TComma1Context.Count)
+                    {
+                        var _separator = E_TComma1Context[i];
+                        baseLanguagesBuilder.AddSeparator((InternalSyntaxToken?)this.VisitTerminal(_separator, CompilerSyntaxKind.TComma));
+                    }
+                    else
+                    {
+                        baseLanguagesBuilder.AddSeparator((InternalSyntaxToken?)this.VisitTerminal((IToken?)null, CompilerSyntaxKind.TComma));
+                    }
+                    var _item = E_baseLanguages2Context[i];
+                    if (_item is not null) baseLanguagesBuilder.Add((QualifierGreen?)this.Visit(_item) ?? QualifierGreen.__Missing);
+                    else baseLanguagesBuilder.Add(QualifierGreen.__Missing);
+                }
+                var baseLanguages = baseLanguagesBuilder.ToList();
+                _pool.Free(baseLanguagesBuilder);
+                return _factory.LanguageDeclarationBlock1(tColon, baseLanguages);
+            }
+            
+            public override GreenNode? VisitPr_LanguageDeclarationBlock1baseLanguagesBlock(CompilerParser.Pr_LanguageDeclarationBlock1baseLanguagesBlockContext? context)
+            {
+                if (context == null) return LanguageDeclarationBlock1baseLanguagesBlockGreen.__Missing;
+                var tComma = (InternalSyntaxToken?)this.VisitTerminal(context.E_TComma1, CompilerSyntaxKind.TComma);
+                QualifierGreen? baseLanguages = null;
+                if (context.E_baseLanguages2 is not null) baseLanguages = (QualifierGreen?)this.Visit(context.E_baseLanguages2) ?? QualifierGreen.__Missing;
+                else baseLanguages = QualifierGreen.__Missing;
+                return _factory.LanguageDeclarationBlock1baseLanguagesBlock(tComma, baseLanguages);
             }
             
             public override GreenNode? VisitPr_GrammarBlock1(CompilerParser.Pr_GrammarBlock1Context? context)

@@ -32,8 +32,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                 case MetaSyntaxKind.KMetamodel:
                 case MetaSyntaxKind.KConst:
                 case MetaSyntaxKind.KEnum:
-                case MetaSyntaxKind.TLBrace:
-                case MetaSyntaxKind.TRBrace:
                 case MetaSyntaxKind.KAbstract:
                 case MetaSyntaxKind.KClass:
                 case MetaSyntaxKind.TLParen:
@@ -59,6 +57,8 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                 case MetaSyntaxKind.KType:
                 case MetaSyntaxKind.KSymbol:
                 case MetaSyntaxKind.KVoid:
+                case MetaSyntaxKind.TLBrace:
+                case MetaSyntaxKind.TRBrace:
                 case MetaSyntaxKind.TDollar:
                 case MetaSyntaxKind.TColon:
                 case MetaSyntaxKind.KContains:
@@ -100,8 +100,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                 case MetaSyntaxKind.KMetamodel:
                 case MetaSyntaxKind.KConst:
                 case MetaSyntaxKind.KEnum:
-                case MetaSyntaxKind.TLBrace:
-                case MetaSyntaxKind.TRBrace:
                 case MetaSyntaxKind.KAbstract:
                 case MetaSyntaxKind.KClass:
                 case MetaSyntaxKind.TLParen:
@@ -127,6 +125,8 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                 case MetaSyntaxKind.KType:
                 case MetaSyntaxKind.KSymbol:
                 case MetaSyntaxKind.KVoid:
+                case MetaSyntaxKind.TLBrace:
+                case MetaSyntaxKind.TRBrace:
                 case MetaSyntaxKind.TDollar:
                 case MetaSyntaxKind.TColon:
                 case MetaSyntaxKind.KContains:
@@ -166,10 +166,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                     return MetaSyntaxKind.KConst;
                 case "enum": 
                     return MetaSyntaxKind.KEnum;
-                case "{": 
-                    return MetaSyntaxKind.TLBrace;
-                case "}": 
-                    return MetaSyntaxKind.TRBrace;
                 case "abstract": 
                     return MetaSyntaxKind.KAbstract;
                 case "class": 
@@ -220,6 +216,10 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                     return MetaSyntaxKind.KSymbol;
                 case "void": 
                     return MetaSyntaxKind.KVoid;
+                case "{": 
+                    return MetaSyntaxKind.TLBrace;
+                case "}": 
+                    return MetaSyntaxKind.TRBrace;
                 case "$": 
                     return MetaSyntaxKind.TDollar;
                 case ":": 
@@ -291,10 +291,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                     return "KConst";
                 case MetaSyntaxKind.KEnum: 
                     return "KEnum";
-                case MetaSyntaxKind.TLBrace: 
-                    return "TLBrace";
-                case MetaSyntaxKind.TRBrace: 
-                    return "TRBrace";
                 case MetaSyntaxKind.KAbstract: 
                     return "KAbstract";
                 case MetaSyntaxKind.KClass: 
@@ -345,6 +341,10 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                     return "KSymbol";
                 case MetaSyntaxKind.KVoid: 
                     return "KVoid";
+                case MetaSyntaxKind.TLBrace: 
+                    return "TLBrace";
+                case MetaSyntaxKind.TRBrace: 
+                    return "TRBrace";
                 case MetaSyntaxKind.TDollar: 
                     return "TDollar";
                 case MetaSyntaxKind.TColon: 
@@ -427,8 +427,10 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                     return "Identifier";
                 case MetaSyntaxKind.MainBlock1: 
                     return "MainBlock1";
-                case MetaSyntaxKind.MetaEnumliteralsBlock: 
-                    return "MetaEnumliteralsBlock";
+                case MetaSyntaxKind.MetaEnumBlock1: 
+                    return "MetaEnumBlock1";
+                case MetaSyntaxKind.MetaEnumBlock1literalsBlock: 
+                    return "MetaEnumBlock1literalsBlock";
                 case MetaSyntaxKind.MetaClassBlock1Alt1: 
                     return "MetaClassBlock1Alt1";
                 case MetaSyntaxKind.MetaClassBlock1Alt2: 
@@ -499,10 +501,6 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                     return "const";
                 case MetaSyntaxKind.KEnum: 
                     return "enum";
-                case MetaSyntaxKind.TLBrace: 
-                    return "{";
-                case MetaSyntaxKind.TRBrace: 
-                    return "}";
                 case MetaSyntaxKind.KAbstract: 
                     return "abstract";
                 case MetaSyntaxKind.KClass: 
@@ -553,6 +551,10 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
                     return "symbol";
                 case MetaSyntaxKind.KVoid: 
                     return "void";
+                case MetaSyntaxKind.TLBrace: 
+                    return "{";
+                case MetaSyntaxKind.TRBrace: 
+                    return "}";
                 case MetaSyntaxKind.TDollar: 
                     return "$";
                 case MetaSyntaxKind.TColon: 

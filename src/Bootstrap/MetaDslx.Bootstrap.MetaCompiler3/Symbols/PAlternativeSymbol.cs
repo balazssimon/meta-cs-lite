@@ -207,7 +207,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Symbols
                     var elem = this.Elements[0];
                     if (elem is not null && !elem.IsNamedElement && elem.Value.OriginalSymbol is PReferenceSymbol pref && !pref.Rule.IsDefaultOrNull)
                     {
-                        if (pref.Rule.OriginalSymbol is ParserRuleSymbol pr)
+                        if (pref.Rule.OriginalSymbol is ParserRuleSymbol pr && pr.ReturnType.SpecialType != SpecialType.System_Void)
                         {
                             return pr.ReturnType;
                         }

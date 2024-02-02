@@ -894,7 +894,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
     public sealed class MetaEnumSyntax : MetaSyntaxNode
     {
         private NameSyntax _name;
-        private __SyntaxNode _literals;
+        private MetaEnumBlock1Syntax _block;
     
         public MetaEnumSyntax(__InternalSyntaxNode green, MetaSyntaxTree syntaxTree, int position)
             : base(green, syntaxTree, position)
@@ -923,30 +923,12 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
             return red;
             } 
         }
-        public __SyntaxToken TLBrace 
+        public MetaEnumBlock1Syntax Block 
         { 
             get
             {
-            var green = (global::MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax.MetaEnumGreen)this.Green;
-            var greenToken = green.TLBrace;
-            return new __SyntaxToken(this, greenToken, this.GetChildPosition(2), this.GetChildIndex(2));
-            } 
-        }
-        public global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<MetaEnumLiteralSyntax> Literals 
-        { 
-            get
-            {
-            var red = this.GetRed(ref this._literals, 3);
-            return red == null ? default : new global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<MetaEnumLiteralSyntax>(red, this.GetChildIndex(3), reversed: false);
-            } 
-        }
-        public __SyntaxToken TRBrace 
-        { 
-            get
-            {
-            var green = (global::MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax.MetaEnumGreen)this.Green;
-            var greenToken = green.TRBrace;
-            return new __SyntaxToken(this, greenToken, this.GetChildPosition(4), this.GetChildIndex(4));
+            var red = this.GetRed(ref this._block, 2);
+            return red;
             } 
         }
     
@@ -955,7 +937,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
             switch (index)
             {
                 case 1: return this.GetRed(ref this._name, 1);
-                case 3: return this.GetRed(ref this._literals, 3);
+                case 2: return this.GetRed(ref this._block, 2);
                 default: return null;
             }
         }
@@ -965,47 +947,32 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
             switch (index)
             {
                 case 1: return this._name;
-                case 3: return this._literals;
+                case 2: return this._block;
                 default: return null;
             }
         }
     
         public MetaEnumSyntax WithKEnum(__SyntaxToken kEnum)
         {
-            return this.Update(kEnum, this.Name, this.TLBrace, this.Literals, this.TRBrace);
+            return this.Update(kEnum, this.Name, this.Block);
         }
     
         public MetaEnumSyntax WithName(NameSyntax name)
         {
-            return this.Update(this.KEnum, name, this.TLBrace, this.Literals, this.TRBrace);
+            return this.Update(this.KEnum, name, this.Block);
         }
     
-        public MetaEnumSyntax WithTLBrace(__SyntaxToken tLBrace)
+        public MetaEnumSyntax WithBlock(MetaEnumBlock1Syntax block)
         {
-            return this.Update(this.KEnum, this.Name, tLBrace, this.Literals, this.TRBrace);
-        }
-    
-        public MetaEnumSyntax WithLiterals(global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<MetaEnumLiteralSyntax> literals)
-        {
-            return this.Update(this.KEnum, this.Name, this.TLBrace, literals, this.TRBrace);
-        }
-    
-        public MetaEnumSyntax AddLiterals(params MetaEnumLiteralSyntax[] literals)
-        {
-            return this.WithLiterals(this.Literals.AddRange(literals));
-        }
-    
-        public MetaEnumSyntax WithTRBrace(__SyntaxToken tRBrace)
-        {
-            return this.Update(this.KEnum, this.Name, this.TLBrace, this.Literals, tRBrace);
+            return this.Update(this.KEnum, this.Name, block);
         }
     
     
-        public MetaEnumSyntax Update(__SyntaxToken kEnum, NameSyntax name, __SyntaxToken tLBrace, global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<MetaEnumLiteralSyntax> literals, __SyntaxToken tRBrace)
+        public MetaEnumSyntax Update(__SyntaxToken kEnum, NameSyntax name, MetaEnumBlock1Syntax block)
         {
-            if (this.KEnum != kEnum || this.Name != name || this.TLBrace != tLBrace || this.Literals != literals || this.TRBrace != tRBrace)
+            if (this.KEnum != kEnum || this.Name != name || this.Block != block)
             {
-                var newNode = MetaLanguage.Instance.SyntaxFactory.MetaEnum(kEnum, name, tLBrace, literals, tRBrace);
+                var newNode = MetaLanguage.Instance.SyntaxFactory.MetaEnum(kEnum, name, block);
                 var annotations = this.GetAnnotations();
                 if (annotations != null && annotations.Length > 0)
                    newNode = __SyntaxExtensions.WithAnnotations(newNode, annotations);
@@ -2488,16 +2455,126 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
     
     }
     
-    public sealed class MetaEnumliteralsBlockSyntax : MetaSyntaxNode
+    public sealed class MetaEnumBlock1Syntax : MetaSyntaxNode
     {
-        private MetaEnumLiteralSyntax _literals;
+        private __SyntaxNode _literals;
     
-        public MetaEnumliteralsBlockSyntax(__InternalSyntaxNode green, MetaSyntaxTree syntaxTree, int position)
+        public MetaEnumBlock1Syntax(__InternalSyntaxNode green, MetaSyntaxTree syntaxTree, int position)
             : base(green, syntaxTree, position)
         {
         }
     
-        public MetaEnumliteralsBlockSyntax(__InternalSyntaxNode green, MetaSyntaxNode parent, int position)
+        public MetaEnumBlock1Syntax(__InternalSyntaxNode green, MetaSyntaxNode parent, int position)
+            : base(green, parent, position)
+        {
+        }
+    
+        public __SyntaxToken TLBrace 
+        { 
+            get
+            {
+            var green = (global::MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax.MetaEnumBlock1Green)this.Green;
+            var greenToken = green.TLBrace;
+            return new __SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
+            } 
+        }
+        public global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<MetaEnumLiteralSyntax> Literals 
+        { 
+            get
+            {
+            var red = this.GetRed(ref this._literals, 1);
+            return red == null ? default : new global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<MetaEnumLiteralSyntax>(red, this.GetChildIndex(1), reversed: false);
+            } 
+        }
+        public __SyntaxToken TRBrace 
+        { 
+            get
+            {
+            var green = (global::MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax.MetaEnumBlock1Green)this.Green;
+            var greenToken = green.TRBrace;
+            return new __SyntaxToken(this, greenToken, this.GetChildPosition(2), this.GetChildIndex(2));
+            } 
+        }
+    
+        protected override __SyntaxNode GetNodeSlot(int index)
+        {
+            switch (index)
+            {
+                case 1: return this.GetRed(ref this._literals, 1);
+                default: return null;
+            }
+        }
+    
+        protected override __SyntaxNode GetCachedSlot(int index)
+        {
+            switch (index)
+            {
+                case 1: return this._literals;
+                default: return null;
+            }
+        }
+    
+        public MetaEnumBlock1Syntax WithTLBrace(__SyntaxToken tLBrace)
+        {
+            return this.Update(tLBrace, this.Literals, this.TRBrace);
+        }
+    
+        public MetaEnumBlock1Syntax WithLiterals(global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<MetaEnumLiteralSyntax> literals)
+        {
+            return this.Update(this.TLBrace, literals, this.TRBrace);
+        }
+    
+        public MetaEnumBlock1Syntax AddLiterals(params MetaEnumLiteralSyntax[] literals)
+        {
+            return this.WithLiterals(this.Literals.AddRange(literals));
+        }
+    
+        public MetaEnumBlock1Syntax WithTRBrace(__SyntaxToken tRBrace)
+        {
+            return this.Update(this.TLBrace, this.Literals, tRBrace);
+        }
+    
+    
+        public MetaEnumBlock1Syntax Update(__SyntaxToken tLBrace, global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<MetaEnumLiteralSyntax> literals, __SyntaxToken tRBrace)
+        {
+            if (this.TLBrace != tLBrace || this.Literals != literals || this.TRBrace != tRBrace)
+            {
+                var newNode = MetaLanguage.Instance.SyntaxFactory.MetaEnumBlock1(tLBrace, literals, tRBrace);
+                var annotations = this.GetAnnotations();
+                if (annotations != null && annotations.Length > 0)
+                   newNode = __SyntaxExtensions.WithAnnotations(newNode, annotations);
+                return (MetaEnumBlock1Syntax)newNode;
+            }
+            return this;
+        }
+    
+        public override TResult Accept<TArg, TResult>(IMetaSyntaxVisitor<TArg, TResult> visitor, TArg argument)
+        {
+            return visitor.VisitMetaEnumBlock1(this, argument);
+        }
+    
+        public override TResult Accept<TResult>(IMetaSyntaxVisitor<TResult> visitor)
+        {
+            return visitor.VisitMetaEnumBlock1(this);
+        }
+    
+        public override void Accept(IMetaSyntaxVisitor visitor)
+        {
+            visitor.VisitMetaEnumBlock1(this);
+        }
+    
+    }
+    
+    public sealed class MetaEnumBlock1literalsBlockSyntax : MetaSyntaxNode
+    {
+        private MetaEnumLiteralSyntax _literals;
+    
+        public MetaEnumBlock1literalsBlockSyntax(__InternalSyntaxNode green, MetaSyntaxTree syntaxTree, int position)
+            : base(green, syntaxTree, position)
+        {
+        }
+    
+        public MetaEnumBlock1literalsBlockSyntax(__InternalSyntaxNode green, MetaSyntaxNode parent, int position)
             : base(green, parent, position)
         {
         }
@@ -2506,7 +2583,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
         { 
             get
             {
-            var green = (global::MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax.MetaEnumliteralsBlockGreen)this.Green;
+            var green = (global::MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax.MetaEnumBlock1literalsBlockGreen)this.Green;
             var greenToken = green.TComma;
             return new __SyntaxToken(this, greenToken, this.GetChildPosition(0), this.GetChildIndex(0));
             } 
@@ -2538,43 +2615,43 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax
             }
         }
     
-        public MetaEnumliteralsBlockSyntax WithTComma(__SyntaxToken tComma)
+        public MetaEnumBlock1literalsBlockSyntax WithTComma(__SyntaxToken tComma)
         {
             return this.Update(tComma, this.Literals);
         }
     
-        public MetaEnumliteralsBlockSyntax WithLiterals(MetaEnumLiteralSyntax literals)
+        public MetaEnumBlock1literalsBlockSyntax WithLiterals(MetaEnumLiteralSyntax literals)
         {
             return this.Update(this.TComma, literals);
         }
     
     
-        public MetaEnumliteralsBlockSyntax Update(__SyntaxToken tComma, MetaEnumLiteralSyntax literals)
+        public MetaEnumBlock1literalsBlockSyntax Update(__SyntaxToken tComma, MetaEnumLiteralSyntax literals)
         {
             if (this.TComma != tComma || this.Literals != literals)
             {
-                var newNode = MetaLanguage.Instance.SyntaxFactory.MetaEnumliteralsBlock(tComma, literals);
+                var newNode = MetaLanguage.Instance.SyntaxFactory.MetaEnumBlock1literalsBlock(tComma, literals);
                 var annotations = this.GetAnnotations();
                 if (annotations != null && annotations.Length > 0)
                    newNode = __SyntaxExtensions.WithAnnotations(newNode, annotations);
-                return (MetaEnumliteralsBlockSyntax)newNode;
+                return (MetaEnumBlock1literalsBlockSyntax)newNode;
             }
             return this;
         }
     
         public override TResult Accept<TArg, TResult>(IMetaSyntaxVisitor<TArg, TResult> visitor, TArg argument)
         {
-            return visitor.VisitMetaEnumliteralsBlock(this, argument);
+            return visitor.VisitMetaEnumBlock1literalsBlock(this, argument);
         }
     
         public override TResult Accept<TResult>(IMetaSyntaxVisitor<TResult> visitor)
         {
-            return visitor.VisitMetaEnumliteralsBlock(this);
+            return visitor.VisitMetaEnumBlock1literalsBlock(this);
         }
     
         public override void Accept(IMetaSyntaxVisitor visitor)
         {
-            visitor.VisitMetaEnumliteralsBlock(this);
+            visitor.VisitMetaEnumBlock1literalsBlock(this);
         }
     
     }

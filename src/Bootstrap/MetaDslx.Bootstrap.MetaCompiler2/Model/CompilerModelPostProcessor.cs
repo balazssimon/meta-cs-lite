@@ -419,7 +419,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Model
                         var celem = alt.Elements[0];
                         if (celem.Value.Multiplicity == Multiplicity.ExactlyOne && string.IsNullOrEmpty(celem.Name))
                         {
-                            if (celem.Value is RuleRef rr && (rr.Rule is not null || rr.ReferencedTypes.Count > 0)) skipDefineBinder = true;
+                            if (celem.Value is RuleRef rr && (rr.Rule is not null && rr.Rule.ReturnType.SpecialType != SpecialType.System_Void || rr.ReferencedTypes.Count > 0)) skipDefineBinder = true;
                         }
                     }
                     if (!skipDefineBinder)

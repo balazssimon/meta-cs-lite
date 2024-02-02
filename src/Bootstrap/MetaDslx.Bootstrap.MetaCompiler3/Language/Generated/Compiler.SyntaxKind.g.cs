@@ -153,6 +153,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax
         Identifier,
         MainBlock1,
         MainBlock2,
+        LanguageDeclarationBlock1,
+        LanguageDeclarationBlock1baseLanguagesBlock,
         GrammarBlock1,
         RuleBlock1Alt1,
         RuleBlock1Alt2,

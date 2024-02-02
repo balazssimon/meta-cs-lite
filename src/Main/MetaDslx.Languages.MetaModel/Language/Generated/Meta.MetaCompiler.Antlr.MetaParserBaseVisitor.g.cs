@@ -274,7 +274,7 @@ public partial class MetaParserBaseVisitor<Result> : AbstractParseTreeVisitor<Re
 	/// <return>The visitor result.</return>
 	public virtual Result VisitPr_MainBlock1([NotNull] MetaParser.Pr_MainBlock1Context context) { return VisitChildren(context); }
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="MetaParser.pr_MetaEnumliteralsBlock"/>.
+	/// Visit a parse tree produced by <see cref="MetaParser.pr_MetaEnumBlock1"/>.
 	/// <para>
 	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
 	/// on <paramref name="context"/>.
@@ -282,7 +282,17 @@ public partial class MetaParserBaseVisitor<Result> : AbstractParseTreeVisitor<Re
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	public virtual Result VisitPr_MetaEnumliteralsBlock([NotNull] MetaParser.Pr_MetaEnumliteralsBlockContext context) { return VisitChildren(context); }
+	public virtual Result VisitPr_MetaEnumBlock1([NotNull] MetaParser.Pr_MetaEnumBlock1Context context) { return VisitChildren(context); }
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="MetaParser.pr_MetaEnumBlock1literalsBlock"/>.
+	/// <para>
+	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
+	/// on <paramref name="context"/>.
+	/// </para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	public virtual Result VisitPr_MetaEnumBlock1literalsBlock([NotNull] MetaParser.Pr_MetaEnumBlock1literalsBlockContext context) { return VisitChildren(context); }
 	/// <summary>
 	/// Visit a parse tree produced by the <c>pr_MetaClassBlock1Alt1</c>
 	/// labeled alternative in <see cref="MetaParser.pr_MetaClassBlock1"/>.

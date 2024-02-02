@@ -1805,14 +1805,12 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
         internal static new readonly MetaEnumGreen __Missing = new MetaEnumGreen();
         private __InternalSyntaxToken _kEnum;
         private NameGreen _name;
-        private __InternalSyntaxToken _tLBrace;
-        private __GreenNode _literals;
-        private __InternalSyntaxToken _tRBrace;
+        private MetaEnumBlock1Green _block;
     
-        public MetaEnumGreen(MetaSyntaxKind kind, __InternalSyntaxToken kEnum, NameGreen name, __InternalSyntaxToken tLBrace, __GreenNode literals, __InternalSyntaxToken tRBrace)
+        public MetaEnumGreen(MetaSyntaxKind kind, __InternalSyntaxToken kEnum, NameGreen name, MetaEnumBlock1Green block)
             : base(kind, null, null)
         {
-            SlotCount = 5;
+            SlotCount = 3;
             if (kEnum != null)
             {
                 AdjustFlagsAndWidth(kEnum);
@@ -1823,27 +1821,17 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
                 AdjustFlagsAndWidth(name);
                 _name = name;
             }
-            if (tLBrace != null)
+            if (block != null)
             {
-                AdjustFlagsAndWidth(tLBrace);
-                _tLBrace = tLBrace;
-            }
-            if (literals != null)
-            {
-                AdjustFlagsAndWidth(literals);
-                _literals = literals;
-            }
-            if (tRBrace != null)
-            {
-                AdjustFlagsAndWidth(tRBrace);
-                _tRBrace = tRBrace;
+                AdjustFlagsAndWidth(block);
+                _block = block;
             }
         }
     
-        public MetaEnumGreen(MetaSyntaxKind kind, __InternalSyntaxToken kEnum, NameGreen name, __InternalSyntaxToken tLBrace, __GreenNode literals, __InternalSyntaxToken tRBrace, __DiagnosticInfo[] diagnostics, __SyntaxAnnotation[] annotations)
+        public MetaEnumGreen(MetaSyntaxKind kind, __InternalSyntaxToken kEnum, NameGreen name, MetaEnumBlock1Green block, __DiagnosticInfo[] diagnostics, __SyntaxAnnotation[] annotations)
             : base(kind, diagnostics, annotations)
         {
-            SlotCount = 5;
+            SlotCount = 3;
             if (kEnum != null)
             {
                 AdjustFlagsAndWidth(kEnum);
@@ -1854,20 +1842,10 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
                 AdjustFlagsAndWidth(name);
                 _name = name;
             }
-            if (tLBrace != null)
+            if (block != null)
             {
-                AdjustFlagsAndWidth(tLBrace);
-                _tLBrace = tLBrace;
-            }
-            if (literals != null)
-            {
-                AdjustFlagsAndWidth(literals);
-                _literals = literals;
-            }
-            if (tRBrace != null)
-            {
-                AdjustFlagsAndWidth(tRBrace);
-                _tRBrace = tRBrace;
+                AdjustFlagsAndWidth(block);
+                _block = block;
             }
         }
     
@@ -1879,9 +1857,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
     
         public __InternalSyntaxToken KEnum { get { return _kEnum; } }
         public NameGreen Name { get { return _name; } }
-        public __InternalSyntaxToken TLBrace { get { return _tLBrace; } }
-        public global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<MetaEnumLiteralGreen> Literals { get { return new global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<MetaEnumLiteralGreen>(_literals, reversed: false); } }
-        public __InternalSyntaxToken TRBrace { get { return _tRBrace; } }
+        public MetaEnumBlock1Green Block { get { return _block; } }
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
@@ -1894,9 +1870,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
             {
                 case 0: return _kEnum;
                 case 1: return _name;
-                case 2: return _tLBrace;
-                case 3: return _literals;
-                case 4: return _tRBrace;
+                case 2: return _block;
                 default: return null;
             }
         }
@@ -1907,25 +1881,25 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
     
         public override __InternalSyntaxNode WithDiagnostics(__DiagnosticInfo[] diagnostics)
         {
-            return new MetaEnumGreen(this.Kind, _kEnum, _name, _tLBrace, _literals, _tRBrace, diagnostics, this.GetAnnotations());
+            return new MetaEnumGreen(this.Kind, _kEnum, _name, _block, diagnostics, this.GetAnnotations());
         }
     
         public override __InternalSyntaxNode WithAnnotations(__SyntaxAnnotation[] annotations)
         {
-            return new MetaEnumGreen(this.Kind, _kEnum, _name, _tLBrace, _literals, _tRBrace, this.GetDiagnostics(), annotations);
+            return new MetaEnumGreen(this.Kind, _kEnum, _name, _block, this.GetDiagnostics(), annotations);
         }
     
         public override __GreenNode Clone()
         {
-            return new MetaEnumGreen(this.Kind, _kEnum, _name, _tLBrace, _literals, _tRBrace, this.GetDiagnostics(), this.GetAnnotations());
+            return new MetaEnumGreen(this.Kind, _kEnum, _name, _block, this.GetDiagnostics(), this.GetAnnotations());
         }
     
     
-        public MetaEnumGreen Update(__InternalSyntaxToken kEnum, NameGreen name, __InternalSyntaxToken tLBrace, global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<MetaEnumLiteralGreen> literals, __InternalSyntaxToken tRBrace)
+        public MetaEnumGreen Update(__InternalSyntaxToken kEnum, NameGreen name, MetaEnumBlock1Green block)
         {
-            if (_kEnum != kEnum || _name != name || _tLBrace != tLBrace || _literals != literals.Node || _tRBrace != tRBrace)
+            if (_kEnum != kEnum || _name != name || _block != block)
             {
-                __InternalSyntaxNode newNode = MetaLanguage.Instance.InternalSyntaxFactory.MetaEnum(kEnum, name, tLBrace, literals, tRBrace);
+                __InternalSyntaxNode newNode = MetaLanguage.Instance.InternalSyntaxFactory.MetaEnum(kEnum, name, block);
                 var diags = this.GetDiagnostics();
                 if (diags != null && diags.Length > 0)
                     newNode = newNode.WithDiagnostics(diags);
@@ -3493,13 +3467,126 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
     }
     
     
-    internal class MetaEnumliteralsBlockGreen : GreenSyntaxNode
+    internal class MetaEnumBlock1Green : GreenSyntaxNode
     {
-        internal static new readonly MetaEnumliteralsBlockGreen __Missing = new MetaEnumliteralsBlockGreen();
+        internal static new readonly MetaEnumBlock1Green __Missing = new MetaEnumBlock1Green();
+        private __InternalSyntaxToken _tLBrace;
+        private __GreenNode _literals;
+        private __InternalSyntaxToken _tRBrace;
+    
+        public MetaEnumBlock1Green(MetaSyntaxKind kind, __InternalSyntaxToken tLBrace, __GreenNode literals, __InternalSyntaxToken tRBrace)
+            : base(kind, null, null)
+        {
+            SlotCount = 3;
+            if (tLBrace != null)
+            {
+                AdjustFlagsAndWidth(tLBrace);
+                _tLBrace = tLBrace;
+            }
+            if (literals != null)
+            {
+                AdjustFlagsAndWidth(literals);
+                _literals = literals;
+            }
+            if (tRBrace != null)
+            {
+                AdjustFlagsAndWidth(tRBrace);
+                _tRBrace = tRBrace;
+            }
+        }
+    
+        public MetaEnumBlock1Green(MetaSyntaxKind kind, __InternalSyntaxToken tLBrace, __GreenNode literals, __InternalSyntaxToken tRBrace, __DiagnosticInfo[] diagnostics, __SyntaxAnnotation[] annotations)
+            : base(kind, diagnostics, annotations)
+        {
+            SlotCount = 3;
+            if (tLBrace != null)
+            {
+                AdjustFlagsAndWidth(tLBrace);
+                _tLBrace = tLBrace;
+            }
+            if (literals != null)
+            {
+                AdjustFlagsAndWidth(literals);
+                _literals = literals;
+            }
+            if (tRBrace != null)
+            {
+                AdjustFlagsAndWidth(tRBrace);
+                _tRBrace = tRBrace;
+            }
+        }
+    
+        private MetaEnumBlock1Green()
+            : base((MetaSyntaxKind)MetaSyntaxKind.MetaEnumBlock1, null, null)
+        {
+            this.flags &= ~NodeFlags.IsNotMissing;
+        }
+    
+        public __InternalSyntaxToken TLBrace { get { return _tLBrace; } }
+        public global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<MetaEnumLiteralGreen> Literals { get { return new global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<MetaEnumLiteralGreen>(_literals, reversed: false); } }
+        public __InternalSyntaxToken TRBrace { get { return _tRBrace; } }
+    
+        protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
+        {
+            return new global::MetaDslx.Languages.MetaModel.Compiler.Syntax.MetaEnumBlock1Syntax(this, (MetaSyntaxNode)parent, position);
+        }
+    
+        protected override __GreenNode GetSlot(int index)
+        {
+            switch (index)
+            {
+                case 0: return _tLBrace;
+                case 1: return _literals;
+                case 2: return _tRBrace;
+                default: return null;
+            }
+        }
+    
+        public override TResult Accept<TResult>(MetaInternalSyntaxVisitor<TResult> visitor) => visitor.VisitMetaEnumBlock1Green(this);
+    
+        public override void Accept(MetaInternalSyntaxVisitor visitor) => visitor.VisitMetaEnumBlock1Green(this);
+    
+        public override __InternalSyntaxNode WithDiagnostics(__DiagnosticInfo[] diagnostics)
+        {
+            return new MetaEnumBlock1Green(this.Kind, _tLBrace, _literals, _tRBrace, diagnostics, this.GetAnnotations());
+        }
+    
+        public override __InternalSyntaxNode WithAnnotations(__SyntaxAnnotation[] annotations)
+        {
+            return new MetaEnumBlock1Green(this.Kind, _tLBrace, _literals, _tRBrace, this.GetDiagnostics(), annotations);
+        }
+    
+        public override __GreenNode Clone()
+        {
+            return new MetaEnumBlock1Green(this.Kind, _tLBrace, _literals, _tRBrace, this.GetDiagnostics(), this.GetAnnotations());
+        }
+    
+    
+        public MetaEnumBlock1Green Update(__InternalSyntaxToken tLBrace, global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<MetaEnumLiteralGreen> literals, __InternalSyntaxToken tRBrace)
+        {
+            if (_tLBrace != tLBrace || _literals != literals.Node || _tRBrace != tRBrace)
+            {
+                __InternalSyntaxNode newNode = MetaLanguage.Instance.InternalSyntaxFactory.MetaEnumBlock1(tLBrace, literals, tRBrace);
+                var diags = this.GetDiagnostics();
+                if (diags != null && diags.Length > 0)
+                    newNode = newNode.WithDiagnostics(diags);
+                var annotations = this.GetAnnotations();
+                if (annotations != null && annotations.Length > 0)
+                    newNode = newNode.WithAnnotations(annotations);
+                return (MetaEnumBlock1Green)newNode;
+            }
+            return this;
+        }
+    }
+    
+    
+    internal class MetaEnumBlock1literalsBlockGreen : GreenSyntaxNode
+    {
+        internal static new readonly MetaEnumBlock1literalsBlockGreen __Missing = new MetaEnumBlock1literalsBlockGreen();
         private __InternalSyntaxToken _tComma;
         private MetaEnumLiteralGreen _literals;
     
-        public MetaEnumliteralsBlockGreen(MetaSyntaxKind kind, __InternalSyntaxToken tComma, MetaEnumLiteralGreen literals)
+        public MetaEnumBlock1literalsBlockGreen(MetaSyntaxKind kind, __InternalSyntaxToken tComma, MetaEnumLiteralGreen literals)
             : base(kind, null, null)
         {
             SlotCount = 2;
@@ -3515,7 +3602,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
             }
         }
     
-        public MetaEnumliteralsBlockGreen(MetaSyntaxKind kind, __InternalSyntaxToken tComma, MetaEnumLiteralGreen literals, __DiagnosticInfo[] diagnostics, __SyntaxAnnotation[] annotations)
+        public MetaEnumBlock1literalsBlockGreen(MetaSyntaxKind kind, __InternalSyntaxToken tComma, MetaEnumLiteralGreen literals, __DiagnosticInfo[] diagnostics, __SyntaxAnnotation[] annotations)
             : base(kind, diagnostics, annotations)
         {
             SlotCount = 2;
@@ -3531,8 +3618,8 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
             }
         }
     
-        private MetaEnumliteralsBlockGreen()
-            : base((MetaSyntaxKind)MetaSyntaxKind.MetaEnumliteralsBlock, null, null)
+        private MetaEnumBlock1literalsBlockGreen()
+            : base((MetaSyntaxKind)MetaSyntaxKind.MetaEnumBlock1literalsBlock, null, null)
         {
             this.flags &= ~NodeFlags.IsNotMissing;
         }
@@ -3542,7 +3629,7 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
     
         protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
         {
-            return new global::MetaDslx.Languages.MetaModel.Compiler.Syntax.MetaEnumliteralsBlockSyntax(this, (MetaSyntaxNode)parent, position);
+            return new global::MetaDslx.Languages.MetaModel.Compiler.Syntax.MetaEnumBlock1literalsBlockSyntax(this, (MetaSyntaxNode)parent, position);
         }
     
         protected override __GreenNode GetSlot(int index)
@@ -3555,38 +3642,38 @@ namespace MetaDslx.Languages.MetaModel.Compiler.Syntax.InternalSyntax
             }
         }
     
-        public override TResult Accept<TResult>(MetaInternalSyntaxVisitor<TResult> visitor) => visitor.VisitMetaEnumliteralsBlockGreen(this);
+        public override TResult Accept<TResult>(MetaInternalSyntaxVisitor<TResult> visitor) => visitor.VisitMetaEnumBlock1literalsBlockGreen(this);
     
-        public override void Accept(MetaInternalSyntaxVisitor visitor) => visitor.VisitMetaEnumliteralsBlockGreen(this);
+        public override void Accept(MetaInternalSyntaxVisitor visitor) => visitor.VisitMetaEnumBlock1literalsBlockGreen(this);
     
         public override __InternalSyntaxNode WithDiagnostics(__DiagnosticInfo[] diagnostics)
         {
-            return new MetaEnumliteralsBlockGreen(this.Kind, _tComma, _literals, diagnostics, this.GetAnnotations());
+            return new MetaEnumBlock1literalsBlockGreen(this.Kind, _tComma, _literals, diagnostics, this.GetAnnotations());
         }
     
         public override __InternalSyntaxNode WithAnnotations(__SyntaxAnnotation[] annotations)
         {
-            return new MetaEnumliteralsBlockGreen(this.Kind, _tComma, _literals, this.GetDiagnostics(), annotations);
+            return new MetaEnumBlock1literalsBlockGreen(this.Kind, _tComma, _literals, this.GetDiagnostics(), annotations);
         }
     
         public override __GreenNode Clone()
         {
-            return new MetaEnumliteralsBlockGreen(this.Kind, _tComma, _literals, this.GetDiagnostics(), this.GetAnnotations());
+            return new MetaEnumBlock1literalsBlockGreen(this.Kind, _tComma, _literals, this.GetDiagnostics(), this.GetAnnotations());
         }
     
     
-        public MetaEnumliteralsBlockGreen Update(__InternalSyntaxToken tComma, MetaEnumLiteralGreen literals)
+        public MetaEnumBlock1literalsBlockGreen Update(__InternalSyntaxToken tComma, MetaEnumLiteralGreen literals)
         {
             if (_tComma != tComma || _literals != literals)
             {
-                __InternalSyntaxNode newNode = MetaLanguage.Instance.InternalSyntaxFactory.MetaEnumliteralsBlock(tComma, literals);
+                __InternalSyntaxNode newNode = MetaLanguage.Instance.InternalSyntaxFactory.MetaEnumBlock1literalsBlock(tComma, literals);
                 var diags = this.GetDiagnostics();
                 if (diags != null && diags.Length > 0)
                     newNode = newNode.WithDiagnostics(diags);
                 var annotations = this.GetAnnotations();
                 if (annotations != null && annotations.Length > 0)
                     newNode = newNode.WithAnnotations(annotations);
-                return (MetaEnumliteralsBlockGreen)newNode;
+                return (MetaEnumBlock1literalsBlockGreen)newNode;
             }
             return this;
         }

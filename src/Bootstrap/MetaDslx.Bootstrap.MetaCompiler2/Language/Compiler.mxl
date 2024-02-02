@@ -25,7 +25,7 @@ Using returns ImportSymbol
 	;
 
 LanguageDeclaration returns MetaDslx.Bootstrap.MetaCompiler2.Model.Language: 
-	'language' Name ';' 
+	'language' Name (':' baseLanguages+=#{MetaDslx.CodeAnalysis.Language|Qualifier} (',' baseLanguages+=#{MetaDslx.CodeAnalysis.Language|Qualifier})*)? ';' 
 	grammar=Grammar;
 
 Grammar: [Scope](grammarRules+=GrammarRule*);

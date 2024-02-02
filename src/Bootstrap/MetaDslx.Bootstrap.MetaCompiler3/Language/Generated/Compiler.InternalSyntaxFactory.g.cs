@@ -305,7 +305,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
             return result;
         }
         
-        internal LanguageDeclarationGreen LanguageDeclaration(__InternalSyntaxToken kLanguage, NameGreen name, __InternalSyntaxToken tSemicolon, GrammarGreen grammar)
+        internal LanguageDeclarationGreen LanguageDeclaration(__InternalSyntaxToken kLanguage, NameGreen name, LanguageDeclarationBlock1Green block, __InternalSyntaxToken tSemicolon, GrammarGreen grammar)
         {
             #if DEBUG
                 if (kLanguage is null) throw new __ArgumentNullException(nameof(kLanguage));
@@ -315,7 +315,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
                 if (tSemicolon.RawKind != (int)CompilerSyntaxKind.TSemicolon) throw new __ArgumentException(nameof(tSemicolon));
                 if (grammar is null) throw new __ArgumentNullException(nameof(grammar));
             #endif
-            return new LanguageDeclarationGreen(CompilerSyntaxKind.LanguageDeclaration, kLanguage, name, tSemicolon, grammar);
+            return new LanguageDeclarationGreen(CompilerSyntaxKind.LanguageDeclaration, kLanguage, name, block, tSemicolon, grammar);
         }
         
         internal GrammarGreen Grammar(GrammarBlock1Green block)
@@ -1234,6 +1234,45 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Syntax.InternalSyntax
             if (cached != null) return (MainBlock2Green)cached;
         
             var result = new MainBlock2Green(CompilerSyntaxKind.MainBlock2, declarations);
+            if (hash >= 0)
+            {
+                __SyntaxNodeCache.AddNode(result, hash);
+            }
+        
+            return result;
+        }
+        
+        internal LanguageDeclarationBlock1Green LanguageDeclarationBlock1(__InternalSyntaxToken tColon, global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<QualifierGreen> baseLanguages)
+        {
+            #if DEBUG
+                if (tColon is null) throw new __ArgumentNullException(nameof(tColon));
+                if (tColon.RawKind != (int)CompilerSyntaxKind.TColon) throw new __ArgumentException(nameof(tColon));
+            #endif
+            int hash;
+            var cached = __SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.LanguageDeclarationBlock1, tColon, baseLanguages.Node, out hash);
+            if (cached != null) return (LanguageDeclarationBlock1Green)cached;
+        
+            var result = new LanguageDeclarationBlock1Green(CompilerSyntaxKind.LanguageDeclarationBlock1, tColon, baseLanguages.Node);
+            if (hash >= 0)
+            {
+                __SyntaxNodeCache.AddNode(result, hash);
+            }
+        
+            return result;
+        }
+        
+        internal LanguageDeclarationBlock1baseLanguagesBlockGreen LanguageDeclarationBlock1baseLanguagesBlock(__InternalSyntaxToken tComma, QualifierGreen baseLanguages)
+        {
+            #if DEBUG
+                if (tComma is null) throw new __ArgumentNullException(nameof(tComma));
+                if (tComma.RawKind != (int)CompilerSyntaxKind.TComma) throw new __ArgumentException(nameof(tComma));
+                if (baseLanguages is null) throw new __ArgumentNullException(nameof(baseLanguages));
+            #endif
+            int hash;
+            var cached = __SyntaxNodeCache.TryGetNode((int)(CompilerSyntaxKind)CompilerSyntaxKind.LanguageDeclarationBlock1baseLanguagesBlock, tComma, baseLanguages, out hash);
+            if (cached != null) return (LanguageDeclarationBlock1baseLanguagesBlockGreen)cached;
+        
+            var result = new LanguageDeclarationBlock1baseLanguagesBlockGreen(CompilerSyntaxKind.LanguageDeclarationBlock1baseLanguagesBlock, tComma, baseLanguages);
             if (hash >= 0)
             {
                 __SyntaxNodeCache.AddNode(result, hash);

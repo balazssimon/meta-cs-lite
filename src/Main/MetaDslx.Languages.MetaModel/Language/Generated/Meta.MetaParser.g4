@@ -23,7 +23,7 @@ pr_MetaConstant
     :  E_KConst=LR_KConst  E_type=pr_MetaTypeReference  E_Name=pr_Name  E_TSemicolon=LR_TSemicolon
     ;
 pr_MetaEnum
-    :  E_KEnum=LR_KEnum  E_Name=pr_Name  E_TLBrace=LR_TLBrace   E_literals1=pr_MetaEnumLiteral(E_TComma1+=LR_TComma E_literals2+=pr_MetaEnumLiteral)*  E_TRBrace=LR_TRBrace
+    :  E_KEnum=LR_KEnum  E_Name=pr_Name  E_Block=pr_MetaEnumBlock1
     ;
 pr_MetaEnumLiteral
     :  E_Name=pr_Name
@@ -64,7 +64,10 @@ pr_Identifier
 pr_MainBlock1
     :  E_declarations=pr_MetaModel  E_declarations1+=pr_MetaDeclaration*
     ;
-pr_MetaEnumliteralsBlock
+pr_MetaEnumBlock1
+    :  E_TLBrace=LR_TLBrace   E_literals1=pr_MetaEnumLiteral(E_TComma1+=LR_TComma E_literals2+=pr_MetaEnumLiteral)*  E_TRBrace=LR_TRBrace
+    ;
+pr_MetaEnumBlock1literalsBlock
     :  E_TComma1=LR_TComma  E_literals2=pr_MetaEnumLiteral
     ;
 pr_MetaClassBlock1
