@@ -36,10 +36,10 @@ namespace MetaDslx.BuildTools
     {
         private static readonly string[] BootstrapProjects =
         [
-            //@"..\..\..\..\MetaDslx.Languages.MetaModel",
-            //@"..\..\..\..\MetaDslx.Languages.MetaCompiler",
 #if MetaDslxBootstrap
-            @"..\..\..\..\..\Bootstrap\MetaDslx.Bootstrap.MetaCompiler3"
+            @"..\..\..\..\MetaDslx.Languages.MetaModel",
+            //@"..\..\..\..\MetaDslx.Languages.MetaCompiler",
+            //@"..\..\..\..\..\Bootstrap\MetaDslx.Bootstrap.MetaCompiler3"
 #else
             @"..\..\..\..\..\Bootstrap\MetaDslx.Bootstrap.MetaCompiler"
 #endif

@@ -335,6 +335,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Model
             {
                 return value.ToString().EncodeString('\'');
             }
+            else if (type.SpecialType == SpecialType.System_Type || type.SpecialType == SpecialType.MetaDslx_CodeAnalysis_MetaType)
+            {
+                return $"typeof({value})";
+            }
             else
             {
                 return value.ToString();

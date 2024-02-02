@@ -433,11 +433,19 @@ public interface ICompilerParserVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitPr_AlternativeBlock1([NotNull] CompilerParser.Pr_AlternativeBlock1Context context);
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="CompilerParser.pr_AlternativeBlock1Block1"/>.
+	/// Visit a parse tree produced by the <c>pr_AlternativeBlock1Block1Alt1</c>
+	/// labeled alternative in <see cref="CompilerParser.pr_AlternativeBlock1Block1"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	Result VisitPr_AlternativeBlock1Block1([NotNull] CompilerParser.Pr_AlternativeBlock1Block1Context context);
+	Result VisitPr_AlternativeBlock1Block1Alt1([NotNull] CompilerParser.Pr_AlternativeBlock1Block1Alt1Context context);
+	/// <summary>
+	/// Visit a parse tree produced by the <c>pr_AlternativeBlock1Block1Alt2</c>
+	/// labeled alternative in <see cref="CompilerParser.pr_AlternativeBlock1Block1"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitPr_AlternativeBlock1Block1Alt2([NotNull] CompilerParser.Pr_AlternativeBlock1Block1Alt2Context context);
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="CompilerParser.pr_AlternativeBlock2"/>.
 	/// </summary>

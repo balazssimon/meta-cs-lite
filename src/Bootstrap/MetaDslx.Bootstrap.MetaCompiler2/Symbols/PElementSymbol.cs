@@ -321,6 +321,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Symbols
                     {
                         if (prefRule.OriginalSymbol is ParserRuleSymbol pr)
                         {
+                            // TODO:MetaDslx
+                            // Replace non-void check with smarter type inference for Binder return types
                             if (!pr.ReturnType.IsDefaultOrNull && pr.ReturnType.SpecialType != SpecialType.System_Void)
                             {
                                 diagnostics.Add(Diagnostic.Create(CompilerErrorCode.WRN_RuleWithTypeMissingAssignment, pref.Location, pr.Name, pr.ReturnType));
@@ -328,6 +330,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Symbols
                         }
                         else if (prefRule.OriginalSymbol is TokenSymbol lr)
                         {
+                            // TODO:MetaDslx
+                            // Replace non-void check with smarter type inference for Binder return types
                             if (!lr.ReturnType.IsDefaultOrNull && lr.ReturnType.SpecialType != SpecialType.System_Void)
                             {
                                 diagnostics.Add(Diagnostic.Create(CompilerErrorCode.WRN_RuleWithTypeMissingAssignment, pref.Location, lr.Name, lr.ReturnType));

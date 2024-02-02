@@ -25,8 +25,7 @@ MetaDeclaration: MetaConstant | MetaEnum | MetaClass;
 MetaConstant: 'const' @type=MetaTypeReference Name ';';
 
 MetaEnum: 'enum' Name '{' literals+=MetaEnumLiteral (',' literals+=MetaEnumLiteral)* '}';
-MetaEnumLiteral: 
-	alt MetaEnumLiteral returns MetaEnumLiteral: Name;
+MetaEnumLiteral: Name;
 
 MetaClass: 
 	isAbstract?='abstract'? 'class' [Name](Identifier? '$' symbolType=[Use(types: Symbol, suffixes: "Symbol")]Identifier | Identifier) 

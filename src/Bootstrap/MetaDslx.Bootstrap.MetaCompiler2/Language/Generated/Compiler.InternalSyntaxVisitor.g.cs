@@ -67,7 +67,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
         public virtual void VisitRuleBlock1Alt2Green(RuleBlock1Alt2Green node) => this.DefaultVisit(node);
         public virtual void VisitRulealternativesBlockGreen(RulealternativesBlockGreen node) => this.DefaultVisit(node);
         public virtual void VisitAlternativeBlock1Green(AlternativeBlock1Green node) => this.DefaultVisit(node);
-        public virtual void VisitAlternativeBlock1Block1Green(AlternativeBlock1Block1Green node) => this.DefaultVisit(node);
+        public virtual void VisitAlternativeBlock1Block1Alt1Green(AlternativeBlock1Block1Alt1Green node) => this.DefaultVisit(node);
+        public virtual void VisitAlternativeBlock1Block1Alt2Green(AlternativeBlock1Block1Alt2Green node) => this.DefaultVisit(node);
         public virtual void VisitAlternativeBlock2Green(AlternativeBlock2Green node) => this.DefaultVisit(node);
         public virtual void VisitElementBlock1Green(ElementBlock1Green node) => this.DefaultVisit(node);
         public virtual void VisitBlockalternativesBlockGreen(BlockalternativesBlockGreen node) => this.DefaultVisit(node);
@@ -162,7 +163,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
         public virtual TResult VisitRuleBlock1Alt2Green(RuleBlock1Alt2Green node) => this.DefaultVisit(node);
         public virtual TResult VisitRulealternativesBlockGreen(RulealternativesBlockGreen node) => this.DefaultVisit(node);
         public virtual TResult VisitAlternativeBlock1Green(AlternativeBlock1Green node) => this.DefaultVisit(node);
-        public virtual TResult VisitAlternativeBlock1Block1Green(AlternativeBlock1Block1Green node) => this.DefaultVisit(node);
+        public virtual TResult VisitAlternativeBlock1Block1Alt1Green(AlternativeBlock1Block1Alt1Green node) => this.DefaultVisit(node);
+        public virtual TResult VisitAlternativeBlock1Block1Alt2Green(AlternativeBlock1Block1Alt2Green node) => this.DefaultVisit(node);
         public virtual TResult VisitAlternativeBlock2Green(AlternativeBlock2Green node) => this.DefaultVisit(node);
         public virtual TResult VisitElementBlock1Green(ElementBlock1Green node) => this.DefaultVisit(node);
         public virtual TResult VisitBlockalternativesBlockGreen(BlockalternativesBlockGreen node) => this.DefaultVisit(node);

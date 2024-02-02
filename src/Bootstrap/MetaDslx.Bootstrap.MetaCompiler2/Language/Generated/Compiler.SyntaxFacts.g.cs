@@ -54,13 +54,23 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
                 case CompilerSyntaxKind.TQuestionQuestion:
                 case CompilerSyntaxKind.TAsteriskQuestion:
                 case CompilerSyntaxKind.TPlusQuestion:
+                case CompilerSyntaxKind.KObject:
                 case CompilerSyntaxKind.KBool:
-                case CompilerSyntaxKind.KInt:
-                case CompilerSyntaxKind.KDouble:
+                case CompilerSyntaxKind.KChar:
                 case CompilerSyntaxKind.KString:
+                case CompilerSyntaxKind.KByte:
+                case CompilerSyntaxKind.KSbyte:
+                case CompilerSyntaxKind.KShort:
+                case CompilerSyntaxKind.KUshort:
+                case CompilerSyntaxKind.KInt:
+                case CompilerSyntaxKind.KUint:
+                case CompilerSyntaxKind.KLong:
+                case CompilerSyntaxKind.KUlong:
+                case CompilerSyntaxKind.KFloat:
+                case CompilerSyntaxKind.KDouble:
+                case CompilerSyntaxKind.KDecimal:
                 case CompilerSyntaxKind.KType:
                 case CompilerSyntaxKind.KSymbol:
-                case CompilerSyntaxKind.KObject:
                 case CompilerSyntaxKind.KVoid:
                 case CompilerSyntaxKind.KUsing:
                 case CompilerSyntaxKind.KReturns:
@@ -127,13 +137,23 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
                 case CompilerSyntaxKind.TQuestionQuestion:
                 case CompilerSyntaxKind.TAsteriskQuestion:
                 case CompilerSyntaxKind.TPlusQuestion:
+                case CompilerSyntaxKind.KObject:
                 case CompilerSyntaxKind.KBool:
-                case CompilerSyntaxKind.KInt:
-                case CompilerSyntaxKind.KDouble:
+                case CompilerSyntaxKind.KChar:
                 case CompilerSyntaxKind.KString:
+                case CompilerSyntaxKind.KByte:
+                case CompilerSyntaxKind.KSbyte:
+                case CompilerSyntaxKind.KShort:
+                case CompilerSyntaxKind.KUshort:
+                case CompilerSyntaxKind.KInt:
+                case CompilerSyntaxKind.KUint:
+                case CompilerSyntaxKind.KLong:
+                case CompilerSyntaxKind.KUlong:
+                case CompilerSyntaxKind.KFloat:
+                case CompilerSyntaxKind.KDouble:
+                case CompilerSyntaxKind.KDecimal:
                 case CompilerSyntaxKind.KType:
                 case CompilerSyntaxKind.KSymbol:
-                case CompilerSyntaxKind.KObject:
                 case CompilerSyntaxKind.KVoid:
                 case CompilerSyntaxKind.KUsing:
                 case CompilerSyntaxKind.KReturns:
@@ -220,20 +240,40 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
                     return CompilerSyntaxKind.TAsteriskQuestion;
                 case "+?": 
                     return CompilerSyntaxKind.TPlusQuestion;
+                case "object": 
+                    return CompilerSyntaxKind.KObject;
                 case "bool": 
                     return CompilerSyntaxKind.KBool;
-                case "int": 
-                    return CompilerSyntaxKind.KInt;
-                case "double": 
-                    return CompilerSyntaxKind.KDouble;
+                case "char": 
+                    return CompilerSyntaxKind.KChar;
                 case "string": 
                     return CompilerSyntaxKind.KString;
+                case "byte": 
+                    return CompilerSyntaxKind.KByte;
+                case "sbyte": 
+                    return CompilerSyntaxKind.KSbyte;
+                case "short": 
+                    return CompilerSyntaxKind.KShort;
+                case "ushort": 
+                    return CompilerSyntaxKind.KUshort;
+                case "int": 
+                    return CompilerSyntaxKind.KInt;
+                case "uint": 
+                    return CompilerSyntaxKind.KUint;
+                case "long": 
+                    return CompilerSyntaxKind.KLong;
+                case "ulong": 
+                    return CompilerSyntaxKind.KUlong;
+                case "float": 
+                    return CompilerSyntaxKind.KFloat;
+                case "double": 
+                    return CompilerSyntaxKind.KDouble;
+                case "decimal": 
+                    return CompilerSyntaxKind.KDecimal;
                 case "type": 
                     return CompilerSyntaxKind.KType;
                 case "symbol": 
                     return CompilerSyntaxKind.KSymbol;
-                case "object": 
-                    return CompilerSyntaxKind.KObject;
                 case "void": 
                     return CompilerSyntaxKind.KVoid;
                 case "using": 
@@ -355,20 +395,40 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
                     return "TAsteriskQuestion";
                 case CompilerSyntaxKind.TPlusQuestion: 
                     return "TPlusQuestion";
+                case CompilerSyntaxKind.KObject: 
+                    return "KObject";
                 case CompilerSyntaxKind.KBool: 
                     return "KBool";
-                case CompilerSyntaxKind.KInt: 
-                    return "KInt";
-                case CompilerSyntaxKind.KDouble: 
-                    return "KDouble";
+                case CompilerSyntaxKind.KChar: 
+                    return "KChar";
                 case CompilerSyntaxKind.KString: 
                     return "KString";
+                case CompilerSyntaxKind.KByte: 
+                    return "KByte";
+                case CompilerSyntaxKind.KSbyte: 
+                    return "KSbyte";
+                case CompilerSyntaxKind.KShort: 
+                    return "KShort";
+                case CompilerSyntaxKind.KUshort: 
+                    return "KUshort";
+                case CompilerSyntaxKind.KInt: 
+                    return "KInt";
+                case CompilerSyntaxKind.KUint: 
+                    return "KUint";
+                case CompilerSyntaxKind.KLong: 
+                    return "KLong";
+                case CompilerSyntaxKind.KUlong: 
+                    return "KUlong";
+                case CompilerSyntaxKind.KFloat: 
+                    return "KFloat";
+                case CompilerSyntaxKind.KDouble: 
+                    return "KDouble";
+                case CompilerSyntaxKind.KDecimal: 
+                    return "KDecimal";
                 case CompilerSyntaxKind.KType: 
                     return "KType";
                 case CompilerSyntaxKind.KSymbol: 
                     return "KSymbol";
-                case CompilerSyntaxKind.KObject: 
-                    return "KObject";
                 case CompilerSyntaxKind.KVoid: 
                     return "KVoid";
                 case CompilerSyntaxKind.KUsing: 
@@ -535,8 +595,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
                     return "RulealternativesBlock";
                 case CompilerSyntaxKind.AlternativeBlock1: 
                     return "AlternativeBlock1";
-                case CompilerSyntaxKind.AlternativeBlock1Block1: 
-                    return "AlternativeBlock1Block1";
+                case CompilerSyntaxKind.AlternativeBlock1Block1Alt1: 
+                    return "AlternativeBlock1Block1Alt1";
+                case CompilerSyntaxKind.AlternativeBlock1Block1Alt2: 
+                    return "AlternativeBlock1Block1Alt2";
                 case CompilerSyntaxKind.AlternativeBlock2: 
                     return "AlternativeBlock2";
                 case CompilerSyntaxKind.ElementBlock1: 
@@ -665,20 +727,40 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
                     return "*?";
                 case CompilerSyntaxKind.TPlusQuestion: 
                     return "+?";
+                case CompilerSyntaxKind.KObject: 
+                    return "object";
                 case CompilerSyntaxKind.KBool: 
                     return "bool";
-                case CompilerSyntaxKind.KInt: 
-                    return "int";
-                case CompilerSyntaxKind.KDouble: 
-                    return "double";
+                case CompilerSyntaxKind.KChar: 
+                    return "char";
                 case CompilerSyntaxKind.KString: 
                     return "string";
+                case CompilerSyntaxKind.KByte: 
+                    return "byte";
+                case CompilerSyntaxKind.KSbyte: 
+                    return "sbyte";
+                case CompilerSyntaxKind.KShort: 
+                    return "short";
+                case CompilerSyntaxKind.KUshort: 
+                    return "ushort";
+                case CompilerSyntaxKind.KInt: 
+                    return "int";
+                case CompilerSyntaxKind.KUint: 
+                    return "uint";
+                case CompilerSyntaxKind.KLong: 
+                    return "long";
+                case CompilerSyntaxKind.KUlong: 
+                    return "ulong";
+                case CompilerSyntaxKind.KFloat: 
+                    return "float";
+                case CompilerSyntaxKind.KDouble: 
+                    return "double";
+                case CompilerSyntaxKind.KDecimal: 
+                    return "decimal";
                 case CompilerSyntaxKind.KType: 
                     return "type";
                 case CompilerSyntaxKind.KSymbol: 
                     return "symbol";
-                case CompilerSyntaxKind.KObject: 
-                    return "object";
                 case CompilerSyntaxKind.KVoid: 
                     return "void";
                 case CompilerSyntaxKind.KUsing: 
@@ -741,13 +823,23 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
                 case CompilerSyntaxKind.KLanguage: 
                 case CompilerSyntaxKind.KEof: 
                 case CompilerSyntaxKind.KFragment: 
+                case CompilerSyntaxKind.KObject: 
                 case CompilerSyntaxKind.KBool: 
-                case CompilerSyntaxKind.KInt: 
-                case CompilerSyntaxKind.KDouble: 
+                case CompilerSyntaxKind.KChar: 
                 case CompilerSyntaxKind.KString: 
+                case CompilerSyntaxKind.KByte: 
+                case CompilerSyntaxKind.KSbyte: 
+                case CompilerSyntaxKind.KShort: 
+                case CompilerSyntaxKind.KUshort: 
+                case CompilerSyntaxKind.KInt: 
+                case CompilerSyntaxKind.KUint: 
+                case CompilerSyntaxKind.KLong: 
+                case CompilerSyntaxKind.KUlong: 
+                case CompilerSyntaxKind.KFloat: 
+                case CompilerSyntaxKind.KDouble: 
+                case CompilerSyntaxKind.KDecimal: 
                 case CompilerSyntaxKind.KType: 
                 case CompilerSyntaxKind.KSymbol: 
-                case CompilerSyntaxKind.KObject: 
                 case CompilerSyntaxKind.KVoid: 
                 case CompilerSyntaxKind.KUsing: 
                 case CompilerSyntaxKind.KReturns: 
@@ -775,13 +867,23 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
             yield return CompilerSyntaxKind.KLanguage;
             yield return CompilerSyntaxKind.KEof;
             yield return CompilerSyntaxKind.KFragment;
+            yield return CompilerSyntaxKind.KObject;
             yield return CompilerSyntaxKind.KBool;
-            yield return CompilerSyntaxKind.KInt;
-            yield return CompilerSyntaxKind.KDouble;
+            yield return CompilerSyntaxKind.KChar;
             yield return CompilerSyntaxKind.KString;
+            yield return CompilerSyntaxKind.KByte;
+            yield return CompilerSyntaxKind.KSbyte;
+            yield return CompilerSyntaxKind.KShort;
+            yield return CompilerSyntaxKind.KUshort;
+            yield return CompilerSyntaxKind.KInt;
+            yield return CompilerSyntaxKind.KUint;
+            yield return CompilerSyntaxKind.KLong;
+            yield return CompilerSyntaxKind.KUlong;
+            yield return CompilerSyntaxKind.KFloat;
+            yield return CompilerSyntaxKind.KDouble;
+            yield return CompilerSyntaxKind.KDecimal;
             yield return CompilerSyntaxKind.KType;
             yield return CompilerSyntaxKind.KSymbol;
-            yield return CompilerSyntaxKind.KObject;
             yield return CompilerSyntaxKind.KVoid;
             yield return CompilerSyntaxKind.KUsing;
             yield return CompilerSyntaxKind.KReturns;
@@ -813,20 +915,40 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
                     return CompilerSyntaxKind.KEof;
                 case "fragment": 
                     return CompilerSyntaxKind.KFragment;
+                case "object": 
+                    return CompilerSyntaxKind.KObject;
                 case "bool": 
                     return CompilerSyntaxKind.KBool;
-                case "int": 
-                    return CompilerSyntaxKind.KInt;
-                case "double": 
-                    return CompilerSyntaxKind.KDouble;
+                case "char": 
+                    return CompilerSyntaxKind.KChar;
                 case "string": 
                     return CompilerSyntaxKind.KString;
+                case "byte": 
+                    return CompilerSyntaxKind.KByte;
+                case "sbyte": 
+                    return CompilerSyntaxKind.KSbyte;
+                case "short": 
+                    return CompilerSyntaxKind.KShort;
+                case "ushort": 
+                    return CompilerSyntaxKind.KUshort;
+                case "int": 
+                    return CompilerSyntaxKind.KInt;
+                case "uint": 
+                    return CompilerSyntaxKind.KUint;
+                case "long": 
+                    return CompilerSyntaxKind.KLong;
+                case "ulong": 
+                    return CompilerSyntaxKind.KUlong;
+                case "float": 
+                    return CompilerSyntaxKind.KFloat;
+                case "double": 
+                    return CompilerSyntaxKind.KDouble;
+                case "decimal": 
+                    return CompilerSyntaxKind.KDecimal;
                 case "type": 
                     return CompilerSyntaxKind.KType;
                 case "symbol": 
                     return CompilerSyntaxKind.KSymbol;
-                case "object": 
-                    return CompilerSyntaxKind.KObject;
                 case "void": 
                     return CompilerSyntaxKind.KVoid;
                 case "using": 
