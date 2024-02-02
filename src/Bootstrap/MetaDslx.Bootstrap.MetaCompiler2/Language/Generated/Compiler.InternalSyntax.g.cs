@@ -1380,13 +1380,14 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
         internal static new readonly LanguageDeclarationGreen __Missing = new LanguageDeclarationGreen();
         private __InternalSyntaxToken _kLanguage;
         private NameGreen _name;
+        private LanguageDeclarationBlock1Green _block;
         private __InternalSyntaxToken _tSemicolon;
         private GrammarGreen _grammar;
     
-        public LanguageDeclarationGreen(CompilerSyntaxKind kind, __InternalSyntaxToken kLanguage, NameGreen name, __InternalSyntaxToken tSemicolon, GrammarGreen grammar)
+        public LanguageDeclarationGreen(CompilerSyntaxKind kind, __InternalSyntaxToken kLanguage, NameGreen name, LanguageDeclarationBlock1Green block, __InternalSyntaxToken tSemicolon, GrammarGreen grammar)
             : base(kind, null, null)
         {
-            SlotCount = 4;
+            SlotCount = 5;
             if (kLanguage != null)
             {
                 AdjustFlagsAndWidth(kLanguage);
@@ -1396,6 +1397,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
             {
                 AdjustFlagsAndWidth(name);
                 _name = name;
+            }
+            if (block != null)
+            {
+                AdjustFlagsAndWidth(block);
+                _block = block;
             }
             if (tSemicolon != null)
             {
@@ -1409,10 +1415,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
             }
         }
     
-        public LanguageDeclarationGreen(CompilerSyntaxKind kind, __InternalSyntaxToken kLanguage, NameGreen name, __InternalSyntaxToken tSemicolon, GrammarGreen grammar, __DiagnosticInfo[] diagnostics, __SyntaxAnnotation[] annotations)
+        public LanguageDeclarationGreen(CompilerSyntaxKind kind, __InternalSyntaxToken kLanguage, NameGreen name, LanguageDeclarationBlock1Green block, __InternalSyntaxToken tSemicolon, GrammarGreen grammar, __DiagnosticInfo[] diagnostics, __SyntaxAnnotation[] annotations)
             : base(kind, diagnostics, annotations)
         {
-            SlotCount = 4;
+            SlotCount = 5;
             if (kLanguage != null)
             {
                 AdjustFlagsAndWidth(kLanguage);
@@ -1422,6 +1428,11 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
             {
                 AdjustFlagsAndWidth(name);
                 _name = name;
+            }
+            if (block != null)
+            {
+                AdjustFlagsAndWidth(block);
+                _block = block;
             }
             if (tSemicolon != null)
             {
@@ -1443,6 +1454,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
     
         public __InternalSyntaxToken KLanguage { get { return _kLanguage; } }
         public NameGreen Name { get { return _name; } }
+        public LanguageDeclarationBlock1Green Block { get { return _block; } }
         public __InternalSyntaxToken TSemicolon { get { return _tSemicolon; } }
         public GrammarGreen Grammar { get { return _grammar; } }
     
@@ -1457,8 +1469,9 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
             {
                 case 0: return _kLanguage;
                 case 1: return _name;
-                case 2: return _tSemicolon;
-                case 3: return _grammar;
+                case 2: return _block;
+                case 3: return _tSemicolon;
+                case 4: return _grammar;
                 default: return null;
             }
         }
@@ -1469,25 +1482,25 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
     
         public override __InternalSyntaxNode WithDiagnostics(__DiagnosticInfo[] diagnostics)
         {
-            return new LanguageDeclarationGreen(this.Kind, _kLanguage, _name, _tSemicolon, _grammar, diagnostics, this.GetAnnotations());
+            return new LanguageDeclarationGreen(this.Kind, _kLanguage, _name, _block, _tSemicolon, _grammar, diagnostics, this.GetAnnotations());
         }
     
         public override __InternalSyntaxNode WithAnnotations(__SyntaxAnnotation[] annotations)
         {
-            return new LanguageDeclarationGreen(this.Kind, _kLanguage, _name, _tSemicolon, _grammar, this.GetDiagnostics(), annotations);
+            return new LanguageDeclarationGreen(this.Kind, _kLanguage, _name, _block, _tSemicolon, _grammar, this.GetDiagnostics(), annotations);
         }
     
         public override __GreenNode Clone()
         {
-            return new LanguageDeclarationGreen(this.Kind, _kLanguage, _name, _tSemicolon, _grammar, this.GetDiagnostics(), this.GetAnnotations());
+            return new LanguageDeclarationGreen(this.Kind, _kLanguage, _name, _block, _tSemicolon, _grammar, this.GetDiagnostics(), this.GetAnnotations());
         }
     
     
-        public LanguageDeclarationGreen Update(__InternalSyntaxToken kLanguage, NameGreen name, __InternalSyntaxToken tSemicolon, GrammarGreen grammar)
+        public LanguageDeclarationGreen Update(__InternalSyntaxToken kLanguage, NameGreen name, LanguageDeclarationBlock1Green block, __InternalSyntaxToken tSemicolon, GrammarGreen grammar)
         {
-            if (_kLanguage != kLanguage || _name != name || _tSemicolon != tSemicolon || _grammar != grammar)
+            if (_kLanguage != kLanguage || _name != name || _block != block || _tSemicolon != tSemicolon || _grammar != grammar)
             {
-                __InternalSyntaxNode newNode = CompilerLanguage.Instance.InternalSyntaxFactory.LanguageDeclaration(kLanguage, name, tSemicolon, grammar);
+                __InternalSyntaxNode newNode = CompilerLanguage.Instance.InternalSyntaxFactory.LanguageDeclaration(kLanguage, name, block, tSemicolon, grammar);
                 var diags = this.GetDiagnostics();
                 if (diags != null && diags.Length > 0)
                     newNode = newNode.WithDiagnostics(diags);
@@ -6809,6 +6822,206 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.InternalSyntax
                 if (annotations != null && annotations.Length > 0)
                     newNode = newNode.WithAnnotations(annotations);
                 return (MainBlock2Green)newNode;
+            }
+            return this;
+        }
+    }
+    
+    
+    internal class LanguageDeclarationBlock1Green : GreenSyntaxNode
+    {
+        internal static new readonly LanguageDeclarationBlock1Green __Missing = new LanguageDeclarationBlock1Green();
+        private __InternalSyntaxToken _tColon;
+        private __GreenNode _baseLanguages;
+    
+        public LanguageDeclarationBlock1Green(CompilerSyntaxKind kind, __InternalSyntaxToken tColon, __GreenNode baseLanguages)
+            : base(kind, null, null)
+        {
+            SlotCount = 2;
+            if (tColon != null)
+            {
+                AdjustFlagsAndWidth(tColon);
+                _tColon = tColon;
+            }
+            if (baseLanguages != null)
+            {
+                AdjustFlagsAndWidth(baseLanguages);
+                _baseLanguages = baseLanguages;
+            }
+        }
+    
+        public LanguageDeclarationBlock1Green(CompilerSyntaxKind kind, __InternalSyntaxToken tColon, __GreenNode baseLanguages, __DiagnosticInfo[] diagnostics, __SyntaxAnnotation[] annotations)
+            : base(kind, diagnostics, annotations)
+        {
+            SlotCount = 2;
+            if (tColon != null)
+            {
+                AdjustFlagsAndWidth(tColon);
+                _tColon = tColon;
+            }
+            if (baseLanguages != null)
+            {
+                AdjustFlagsAndWidth(baseLanguages);
+                _baseLanguages = baseLanguages;
+            }
+        }
+    
+        private LanguageDeclarationBlock1Green()
+            : base((CompilerSyntaxKind)CompilerSyntaxKind.LanguageDeclarationBlock1, null, null)
+        {
+            this.flags &= ~NodeFlags.IsNotMissing;
+        }
+    
+        public __InternalSyntaxToken TColon { get { return _tColon; } }
+        public global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<QualifierGreen> BaseLanguages { get { return new global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<QualifierGreen>(_baseLanguages, reversed: false); } }
+    
+        protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
+        {
+            return new global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.LanguageDeclarationBlock1Syntax(this, (CompilerSyntaxNode)parent, position);
+        }
+    
+        protected override __GreenNode GetSlot(int index)
+        {
+            switch (index)
+            {
+                case 0: return _tColon;
+                case 1: return _baseLanguages;
+                default: return null;
+            }
+        }
+    
+        public override TResult Accept<TResult>(CompilerInternalSyntaxVisitor<TResult> visitor) => visitor.VisitLanguageDeclarationBlock1Green(this);
+    
+        public override void Accept(CompilerInternalSyntaxVisitor visitor) => visitor.VisitLanguageDeclarationBlock1Green(this);
+    
+        public override __InternalSyntaxNode WithDiagnostics(__DiagnosticInfo[] diagnostics)
+        {
+            return new LanguageDeclarationBlock1Green(this.Kind, _tColon, _baseLanguages, diagnostics, this.GetAnnotations());
+        }
+    
+        public override __InternalSyntaxNode WithAnnotations(__SyntaxAnnotation[] annotations)
+        {
+            return new LanguageDeclarationBlock1Green(this.Kind, _tColon, _baseLanguages, this.GetDiagnostics(), annotations);
+        }
+    
+        public override __GreenNode Clone()
+        {
+            return new LanguageDeclarationBlock1Green(this.Kind, _tColon, _baseLanguages, this.GetDiagnostics(), this.GetAnnotations());
+        }
+    
+    
+        public LanguageDeclarationBlock1Green Update(__InternalSyntaxToken tColon, global::MetaDslx.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<QualifierGreen> baseLanguages)
+        {
+            if (_tColon != tColon || _baseLanguages != baseLanguages.Node)
+            {
+                __InternalSyntaxNode newNode = CompilerLanguage.Instance.InternalSyntaxFactory.LanguageDeclarationBlock1(tColon, baseLanguages);
+                var diags = this.GetDiagnostics();
+                if (diags != null && diags.Length > 0)
+                    newNode = newNode.WithDiagnostics(diags);
+                var annotations = this.GetAnnotations();
+                if (annotations != null && annotations.Length > 0)
+                    newNode = newNode.WithAnnotations(annotations);
+                return (LanguageDeclarationBlock1Green)newNode;
+            }
+            return this;
+        }
+    }
+    
+    
+    internal class LanguageDeclarationBlock1baseLanguagesBlockGreen : GreenSyntaxNode
+    {
+        internal static new readonly LanguageDeclarationBlock1baseLanguagesBlockGreen __Missing = new LanguageDeclarationBlock1baseLanguagesBlockGreen();
+        private __InternalSyntaxToken _tComma;
+        private QualifierGreen _baseLanguages;
+    
+        public LanguageDeclarationBlock1baseLanguagesBlockGreen(CompilerSyntaxKind kind, __InternalSyntaxToken tComma, QualifierGreen baseLanguages)
+            : base(kind, null, null)
+        {
+            SlotCount = 2;
+            if (tComma != null)
+            {
+                AdjustFlagsAndWidth(tComma);
+                _tComma = tComma;
+            }
+            if (baseLanguages != null)
+            {
+                AdjustFlagsAndWidth(baseLanguages);
+                _baseLanguages = baseLanguages;
+            }
+        }
+    
+        public LanguageDeclarationBlock1baseLanguagesBlockGreen(CompilerSyntaxKind kind, __InternalSyntaxToken tComma, QualifierGreen baseLanguages, __DiagnosticInfo[] diagnostics, __SyntaxAnnotation[] annotations)
+            : base(kind, diagnostics, annotations)
+        {
+            SlotCount = 2;
+            if (tComma != null)
+            {
+                AdjustFlagsAndWidth(tComma);
+                _tComma = tComma;
+            }
+            if (baseLanguages != null)
+            {
+                AdjustFlagsAndWidth(baseLanguages);
+                _baseLanguages = baseLanguages;
+            }
+        }
+    
+        private LanguageDeclarationBlock1baseLanguagesBlockGreen()
+            : base((CompilerSyntaxKind)CompilerSyntaxKind.LanguageDeclarationBlock1baseLanguagesBlock, null, null)
+        {
+            this.flags &= ~NodeFlags.IsNotMissing;
+        }
+    
+        public __InternalSyntaxToken TComma { get { return _tComma; } }
+        public QualifierGreen BaseLanguages { get { return _baseLanguages; } }
+    
+        protected override __SyntaxNode CreateRed(__SyntaxNode parent, int position)
+        {
+            return new global::MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax.LanguageDeclarationBlock1baseLanguagesBlockSyntax(this, (CompilerSyntaxNode)parent, position);
+        }
+    
+        protected override __GreenNode GetSlot(int index)
+        {
+            switch (index)
+            {
+                case 0: return _tComma;
+                case 1: return _baseLanguages;
+                default: return null;
+            }
+        }
+    
+        public override TResult Accept<TResult>(CompilerInternalSyntaxVisitor<TResult> visitor) => visitor.VisitLanguageDeclarationBlock1baseLanguagesBlockGreen(this);
+    
+        public override void Accept(CompilerInternalSyntaxVisitor visitor) => visitor.VisitLanguageDeclarationBlock1baseLanguagesBlockGreen(this);
+    
+        public override __InternalSyntaxNode WithDiagnostics(__DiagnosticInfo[] diagnostics)
+        {
+            return new LanguageDeclarationBlock1baseLanguagesBlockGreen(this.Kind, _tComma, _baseLanguages, diagnostics, this.GetAnnotations());
+        }
+    
+        public override __InternalSyntaxNode WithAnnotations(__SyntaxAnnotation[] annotations)
+        {
+            return new LanguageDeclarationBlock1baseLanguagesBlockGreen(this.Kind, _tComma, _baseLanguages, this.GetDiagnostics(), annotations);
+        }
+    
+        public override __GreenNode Clone()
+        {
+            return new LanguageDeclarationBlock1baseLanguagesBlockGreen(this.Kind, _tComma, _baseLanguages, this.GetDiagnostics(), this.GetAnnotations());
+        }
+    
+    
+        public LanguageDeclarationBlock1baseLanguagesBlockGreen Update(__InternalSyntaxToken tComma, QualifierGreen baseLanguages)
+        {
+            if (_tComma != tComma || _baseLanguages != baseLanguages)
+            {
+                __InternalSyntaxNode newNode = CompilerLanguage.Instance.InternalSyntaxFactory.LanguageDeclarationBlock1baseLanguagesBlock(tComma, baseLanguages);
+                var diags = this.GetDiagnostics();
+                if (diags != null && diags.Length > 0)
+                    newNode = newNode.WithDiagnostics(diags);
+                var annotations = this.GetAnnotations();
+                if (annotations != null && annotations.Length > 0)
+                    newNode = newNode.WithAnnotations(annotations);
+                return (LanguageDeclarationBlock1baseLanguagesBlockGreen)newNode;
             }
             return this;
         }

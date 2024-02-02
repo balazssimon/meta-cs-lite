@@ -585,6 +585,10 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
                     return "MainBlock1";
                 case CompilerSyntaxKind.MainBlock2: 
                     return "MainBlock2";
+                case CompilerSyntaxKind.LanguageDeclarationBlock1: 
+                    return "LanguageDeclarationBlock1";
+                case CompilerSyntaxKind.LanguageDeclarationBlock1baseLanguagesBlock: 
+                    return "LanguageDeclarationBlock1baseLanguagesBlock";
                 case CompilerSyntaxKind.GrammarBlock1: 
                     return "GrammarBlock1";
                 case CompilerSyntaxKind.RuleBlock1Alt1: 

@@ -286,7 +286,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
             return (UsingAlt2Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.UsingAlt2((InternalSyntax.QualifierGreen)namespaces.Green).CreateRed();
         }
 
-        public LanguageDeclarationSyntax LanguageDeclaration(__SyntaxToken kLanguage, NameSyntax name, __SyntaxToken tSemicolon, GrammarSyntax grammar)
+        public LanguageDeclarationSyntax LanguageDeclaration(__SyntaxToken kLanguage, NameSyntax name, LanguageDeclarationBlock1Syntax block, __SyntaxToken tSemicolon, GrammarSyntax grammar)
         {
             if (kLanguage.RawKind != (int)__InternalSyntaxKind.None) throw new __ArgumentNullException(nameof(kLanguage));
             if (kLanguage.RawKind != (int)CompilerSyntaxKind.KLanguage) throw new __ArgumentException(nameof(kLanguage));
@@ -294,12 +294,12 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
             if (tSemicolon.RawKind != (int)__InternalSyntaxKind.None) throw new __ArgumentNullException(nameof(tSemicolon));
             if (tSemicolon.RawKind != (int)CompilerSyntaxKind.TSemicolon) throw new __ArgumentException(nameof(tSemicolon));
             if (grammar is null) throw new __ArgumentNullException(nameof(grammar));
-            return (LanguageDeclarationSyntax)CompilerLanguage.Instance.InternalSyntaxFactory.LanguageDeclaration((__InternalSyntaxToken)kLanguage.Node, (InternalSyntax.NameGreen)name.Green, (__InternalSyntaxToken)tSemicolon.Node, (InternalSyntax.GrammarGreen)grammar.Green).CreateRed();
+            return (LanguageDeclarationSyntax)CompilerLanguage.Instance.InternalSyntaxFactory.LanguageDeclaration((__InternalSyntaxToken)kLanguage.Node, (InternalSyntax.NameGreen)name.Green, (InternalSyntax.LanguageDeclarationBlock1Green)block.Green, (__InternalSyntaxToken)tSemicolon.Node, (InternalSyntax.GrammarGreen)grammar.Green).CreateRed();
         }
         
         public LanguageDeclarationSyntax LanguageDeclaration(NameSyntax name, GrammarSyntax grammar)
         {
-            return this.LanguageDeclaration(this.Token(CompilerSyntaxKind.KLanguage), name, this.Token(CompilerSyntaxKind.TSemicolon), grammar);
+            return this.LanguageDeclaration(this.Token(CompilerSyntaxKind.KLanguage), name, default, this.Token(CompilerSyntaxKind.TSemicolon), grammar);
         }
 
         public GrammarSyntax Grammar(GrammarBlock1Syntax block)
@@ -775,6 +775,31 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
             return (MainBlock2Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.MainBlock2((InternalSyntax.LanguageDeclarationGreen)declarations.Green).CreateRed();
         }
 
+        public LanguageDeclarationBlock1Syntax LanguageDeclarationBlock1(__SyntaxToken tColon, global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<QualifierSyntax> baseLanguages)
+        {
+            if (tColon.RawKind != (int)__InternalSyntaxKind.None) throw new __ArgumentNullException(nameof(tColon));
+            if (tColon.RawKind != (int)CompilerSyntaxKind.TColon) throw new __ArgumentException(nameof(tColon));
+            return (LanguageDeclarationBlock1Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.LanguageDeclarationBlock1((__InternalSyntaxToken)tColon.Node, __GreenNodeExtensions.ToGreenSeparatedList<InternalSyntax.QualifierGreen>(baseLanguages.Node, reversed: false)).CreateRed();
+        }
+        
+        public LanguageDeclarationBlock1Syntax LanguageDeclarationBlock1(global::MetaDslx.CodeAnalysis.SeparatedSyntaxList<QualifierSyntax> baseLanguages)
+        {
+            return this.LanguageDeclarationBlock1(this.Token(CompilerSyntaxKind.TColon), baseLanguages);
+        }
+
+        public LanguageDeclarationBlock1baseLanguagesBlockSyntax LanguageDeclarationBlock1baseLanguagesBlock(__SyntaxToken tComma, QualifierSyntax baseLanguages)
+        {
+            if (tComma.RawKind != (int)__InternalSyntaxKind.None) throw new __ArgumentNullException(nameof(tComma));
+            if (tComma.RawKind != (int)CompilerSyntaxKind.TComma) throw new __ArgumentException(nameof(tComma));
+            if (baseLanguages is null) throw new __ArgumentNullException(nameof(baseLanguages));
+            return (LanguageDeclarationBlock1baseLanguagesBlockSyntax)CompilerLanguage.Instance.InternalSyntaxFactory.LanguageDeclarationBlock1baseLanguagesBlock((__InternalSyntaxToken)tComma.Node, (InternalSyntax.QualifierGreen)baseLanguages.Green).CreateRed();
+        }
+        
+        public LanguageDeclarationBlock1baseLanguagesBlockSyntax LanguageDeclarationBlock1baseLanguagesBlock(QualifierSyntax baseLanguages)
+        {
+            return this.LanguageDeclarationBlock1baseLanguagesBlock(this.Token(CompilerSyntaxKind.TComma), baseLanguages);
+        }
+
         public GrammarBlock1Syntax GrammarBlock1(global::MetaDslx.CodeAnalysis.SyntaxList<GrammarRuleSyntax> grammarRules)
         {
             return (GrammarBlock1Syntax)CompilerLanguage.Instance.InternalSyntaxFactory.GrammarBlock1(__GreenNodeExtensions.ToGreenList<InternalSyntax.GrammarRuleGreen>(grammarRules.Node)).CreateRed();
@@ -1219,6 +1244,8 @@ namespace MetaDslx.Bootstrap.MetaCompiler2.Compiler.Syntax
                 typeof(IdentifierSyntax),
                 typeof(MainBlock1Syntax),
                 typeof(MainBlock2Syntax),
+                typeof(LanguageDeclarationBlock1Syntax),
+                typeof(LanguageDeclarationBlock1baseLanguagesBlockSyntax),
                 typeof(GrammarBlock1Syntax),
                 typeof(RuleBlock1Alt1Syntax),
                 typeof(RuleBlock1Alt2Syntax),

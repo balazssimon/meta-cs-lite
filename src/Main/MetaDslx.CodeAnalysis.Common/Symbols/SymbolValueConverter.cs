@@ -218,6 +218,11 @@ namespace MetaDslx.CodeAnalysis.Symbols
                 }
                 else if (expectedType.IsAssignableFrom(valueMObj.GetType()))
                 {
+                    if (value is Symbol valueSymbol && valueSymbol.IsError)
+                    {
+                        convertedValue = null;
+                        return false;
+                    }
                     convertedValue = valueMObj;
                     return true;
                 }

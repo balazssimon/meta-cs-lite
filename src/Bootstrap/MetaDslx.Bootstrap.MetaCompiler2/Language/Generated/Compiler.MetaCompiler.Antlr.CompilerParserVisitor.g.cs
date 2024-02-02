@@ -401,6 +401,18 @@ public interface ICompilerParserVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitPr_MainBlock2([NotNull] CompilerParser.Pr_MainBlock2Context context);
 	/// <summary>
+	/// Visit a parse tree produced by <see cref="CompilerParser.pr_LanguageDeclarationBlock1"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitPr_LanguageDeclarationBlock1([NotNull] CompilerParser.Pr_LanguageDeclarationBlock1Context context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="CompilerParser.pr_LanguageDeclarationBlock1baseLanguagesBlock"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitPr_LanguageDeclarationBlock1baseLanguagesBlock([NotNull] CompilerParser.Pr_LanguageDeclarationBlock1baseLanguagesBlockContext context);
+	/// <summary>
 	/// Visit a parse tree produced by <see cref="CompilerParser.pr_GrammarBlock1"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>

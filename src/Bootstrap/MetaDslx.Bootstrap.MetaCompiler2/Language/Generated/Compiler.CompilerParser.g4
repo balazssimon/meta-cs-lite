@@ -13,7 +13,7 @@ pr_Using
     |  E_namespaces=pr_Qualifier #pr_UsingAlt2
     ;
 pr_LanguageDeclaration
-    :  E_KLanguage=LR_KLanguage  E_Name=pr_Name  E_TSemicolon=LR_TSemicolon  E_grammar=pr_Grammar
+    :  E_KLanguage=LR_KLanguage  E_Name=pr_Name  E_Block=pr_LanguageDeclarationBlock1?  E_TSemicolon=LR_TSemicolon  E_grammar=pr_Grammar
     ;
 pr_Grammar
     :  E_Block=pr_GrammarBlock1
@@ -143,6 +143,12 @@ pr_MainBlock1
     ;
 pr_MainBlock2
     :  E_declarations=pr_LanguageDeclaration
+    ;
+pr_LanguageDeclarationBlock1
+    :  E_TColon=LR_TColon   E_baseLanguages1=pr_Qualifier(E_TComma1+=LR_TComma E_baseLanguages2+=pr_Qualifier)*
+    ;
+pr_LanguageDeclarationBlock1baseLanguagesBlock
+    :  E_TComma1=LR_TComma  E_baseLanguages2=pr_Qualifier
     ;
 pr_GrammarBlock1
     :  E_grammarRules+=pr_GrammarRule*

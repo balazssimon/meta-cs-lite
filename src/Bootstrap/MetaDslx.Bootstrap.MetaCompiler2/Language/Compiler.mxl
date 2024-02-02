@@ -9,9 +9,8 @@ using MetaDslx.CodeAnalysis.Symbols;
 using MetaDslx.Modeling;
 using MetaDslx.Bootstrap.MetaCompiler2.Symbols;
 using MetaDslx.Bootstrap.MetaCompiler2.Model;
-//using metamodel MetaDslx.Bootstrap.MetaCompiler2.Model.Compiler;
 
-language Compiler;
+language Compiler : Common;
 
 Main returns Namespace:
 	'namespace' [Name(qualifierProperty:Declarations)]Qualifier ';'
@@ -25,7 +24,7 @@ Using returns ImportSymbol
 	;
 
 LanguageDeclaration returns MetaDslx.Bootstrap.MetaCompiler2.Model.Language: 
-	'language' Name (':' baseLanguages+=#{MetaDslx.CodeAnalysis.Language|Qualifier} (',' baseLanguages+=#{MetaDslx.CodeAnalysis.Language|Qualifier})*)? ';' 
+	'language' Name (':' baseLanguages+=[Use(types:MetaDslx.CodeAnalysis.Language,suffixes:"Language")]Qualifier (',' baseLanguages+=[Use(types:MetaDslx.CodeAnalysis.Language,suffixes:"Language")]Qualifier)*)? ';' 
 	grammar=Grammar;
 
 Grammar: [Scope](grammarRules+=GrammarRule*);

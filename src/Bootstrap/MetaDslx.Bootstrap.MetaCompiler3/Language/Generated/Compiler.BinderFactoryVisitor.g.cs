@@ -1825,7 +1825,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Binding
                     this.Begin(__annot1, node.BaseLanguages[baseLanguagesIndex]);
                     try
                     {
-                        var __annot0 = new MetaDslx.CodeAnalysis.Binding.UseBinder(types: ImmutableArray.Create<System.Type>(typeof(MetaDslx.CodeAnalysis.Language)));
+                        var __annot0 = new MetaDslx.CodeAnalysis.Binding.UseBinder(types: ImmutableArray.Create<System.Type>(typeof(MetaDslx.CodeAnalysis.Language)), suffixes: ImmutableArray.Create<string>("Language"));
                         this.Begin(__annot0, node.BaseLanguages[baseLanguagesIndex]);
                         try
                         {
@@ -1848,7 +1848,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Binding
                     this.Begin(__annot3, node.BaseLanguages[baseLanguagesIndex]);
                     try
                     {
-                        var __annot2 = new MetaDslx.CodeAnalysis.Binding.UseBinder(types: ImmutableArray.Create<System.Type>(typeof(MetaDslx.CodeAnalysis.Language)));
+                        var __annot2 = new MetaDslx.CodeAnalysis.Binding.UseBinder(types: ImmutableArray.Create<System.Type>(typeof(MetaDslx.CodeAnalysis.Language)), suffixes: ImmutableArray.Create<string>("Language"));
                         this.Begin(__annot2, node.BaseLanguages[baseLanguagesIndex]);
                         try
                         {
@@ -1877,7 +1877,7 @@ namespace MetaDslx.Bootstrap.MetaCompiler3.Compiler.Binding
             this.Begin(__annot1, node.BaseLanguages);
             try
             {
-                var __annot0 = new MetaDslx.CodeAnalysis.Binding.UseBinder(types: ImmutableArray.Create<System.Type>(typeof(MetaDslx.CodeAnalysis.Language)));
+                var __annot0 = new MetaDslx.CodeAnalysis.Binding.UseBinder(types: ImmutableArray.Create<System.Type>(typeof(MetaDslx.CodeAnalysis.Language)), suffixes: ImmutableArray.Create<string>("Language"));
                 this.Begin(__annot0, node.BaseLanguages);
                 try
                 {
